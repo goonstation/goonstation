@@ -34,8 +34,8 @@
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Nuke/Rev</b>
 	<a href='?src=\ref[src];action=nukeop'>Nuke Op</a> |
-	<a href='?src=\ref[src];action=nukeop-commander'>Nuke Op Commander</a> |
-	<a href='?src=\ref[src];action=nukeop-gunbot'>Nuke Op Gunbot</a> |
+	<a href='?src=\ref[src];action=nukeop_commander'>Nuke Op Commander</a> |
+	<a href='?src=\ref[src];action=nukeop_gunbot'>Nuke Op Gunbot</a> |
 	<a href='?src=\ref[src];action=revhead'>Rev Head</a> |
 	<a href='?src=\ref[src];action=revved'>Revved</a> |
 	<a href='?src=\ref[src];action=derevved'>De-Revved</a>
@@ -167,13 +167,13 @@
 			if ("nukeop")
 				window_title = "Nuclear Operative Basics"
 				filename = "html/traitorTips/nukeopTips.html"
-			if ("nukeop-commander")
+			if ("nukeop_commander")
 				window_title = "Nuclear Commander Basics"
 				filename = "html/traitorTips/nukeopcommanderTips.html"
-			if ("nukeop-gunbot")
+			if ("nukeop_gunbot")
 				window_title = "Nuclear Gun-Bot Basics"
 				filename = "html/traitorTips/nukeopgunbotTips.html"
-			if ("revhead")
+			if (ROLE_HEAD_REVOLUTIONARY)
 				window_title = "Revolutionary Head Goals"
 				filename = "html/traitorTips/revTips.html"
 			if ("revved")

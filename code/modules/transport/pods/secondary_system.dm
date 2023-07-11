@@ -66,6 +66,7 @@
 	name = "Alloyed Solutions Ore Scoop/Hold"
 	desc = "Allows the ship to scoop up ore automatically."
 	var/capacity = 300
+	var/max_stack_scoop = 20 //! if you try to put stacks inside the item, this one limits how much you can in one action. Creating 100 items out of a stack in a single action should not happen.
 	hud_state = "cargo"
 	f_active = 1
 	icon_state = "ore_hold"
@@ -874,6 +875,7 @@
 	walk(src, 0)
 	in_bump = 1
 	crashhits--
+	logTheThing(LOG_COMBAT, ship.pilot, "uses a SEED to crash into [A] at [log_loc(A)]")
 	if(isturf(A))
 		if((istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced)) && prob(40))
 			in_bump = 0
@@ -914,14 +916,14 @@
 	if(isobj(A))
 		var/obj/O = A
 		var/turf/T = get_turf(O)
-		if(O.density && O.anchored != 2 && !isrestrictedz(T?.z))
+		if(O.density && O.anchored != ANCHORED_ALWAYS && !isrestrictedz(T?.z))
 			boutput(ship.pilot, "<span class='alert'><B>You crash into [O]!</B></span>")
 			boutput(O, "<span class='alert'><B>[ship] crashes into you!</B></span>")
 			var/turf/target = get_edge_target_turf(ship, ship.dir)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			if(O.bound_width==32 && O.bound_height==32)
-				O.anchored = 0
+				O.anchored = UNANCHORED
 			O.throw_at(target, 4, 2)
 			if (istype(O, /obj/machinery/vehicle))
 				A.meteorhit(src)

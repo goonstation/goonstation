@@ -664,8 +664,7 @@ datum/preferences
 					tgui_alert(usr, "No usable special styles detected for this mutantrace.", "Error")
 					return
 				var/list/style_list = typeinfo.special_styles
-				var/current_index = style_list.Find(AH.special_style) // do they already have a special style in their prefs
-				var/new_style = style_list[current_index + 1 > length(style_list) ? 1 : current_index + 1]
+				var/new_style = tgui_input_list(usr, "Select a style pattern", "Special Style", style_list)
 				if (new_style)
 					AH.special_style = new_style
 					update_preview_icon()
@@ -1062,7 +1061,7 @@ datum/preferences
 			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 
-		var/datum/mutantrace/mutantRace = null
+		var/datum/mutantrace/mutantRace = /datum/mutantrace/human
 		for (var/ID in traitPreferences.traits_selected)
 			var/datum/trait/T = getTraitById(ID)
 			if (T?.mutantRace)
@@ -1662,6 +1661,7 @@ datum/preferences
 		if (link_tags["b_changeling"])
 			src.be_changeling = !( src.be_changeling )
 			src.SetChoices(user)
+			return
 
 		if (link_tags["b_wizard"])
 			src.be_wizard = !( src.be_wizard)
@@ -1769,7 +1769,7 @@ datum/preferences
 
 		if (ishuman(character))
 			var/mob/living/carbon/human/H = character
-			if (H.mutantrace && H.mutantrace.voice_override)
+			if (H.mutantrace?.voice_override) //yass TODO: find different way of handling this
 				H.voice_type = H.mutantrace.voice_override
 
 	proc/apply_post_new_stuff(mob/living/character)
@@ -2018,10 +2018,10 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	var/type_first
 	if (AH.gender == MALE)
 		if (prob(5)) // small chance to have a hairstyle more geared to the other gender
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style,.proc/isfem))
+			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/isfem))
 			AH.customization_first = new type_first
 		else // otherwise just use one standard to the current gender
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style,.proc/ismasc))
+			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/ismasc))
 			AH.customization_first = new type_first
 
 		if (prob(33)) // since we're a guy, a chance for facial hair
@@ -2031,10 +2031,10 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 
 	else // if FEMALE
 		if (prob(8)) // same as above for guys, just reversed and with a slightly higher chance since it's ~more appropriate~ for ladies to have guy haircuts than vice versa  :I
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style,.proc/ismasc))
+			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/ismasc))
 			AH.customization_first = new type_first
 		else // ss13 is coded with gender stereotypes IN ITS VERY CORE
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style,.proc/isfem))
+			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/isfem))
 			AH.customization_first = new type_first
 
 	if (!has_second)

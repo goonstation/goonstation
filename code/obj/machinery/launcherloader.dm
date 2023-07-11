@@ -10,7 +10,7 @@
 	density = 0
 	opacity = 0
 	layer = 2.6
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/obj/machinery/mass_driver/driver = null
@@ -113,7 +113,7 @@
 	desc = "Scans the barcode on objects and reroutes them accordingly."
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 	plane = PLANE_NOSHADOW_BELOW
 
@@ -388,15 +388,15 @@
 			src.updateUsrDialog()
 
 	attackby(var/obj/item/I, mob/user)
-		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
-			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
+		var/obj/item/card/id/id_card = get_id_card(I)
+		if (istype(id_card))
 			boutput(user, "<span class='notice'>You swipe the ID card.</span>")
-			account = FindBankAccountByName(I:registered)
+			account = FindBankAccountByName(id_card.registered)
 			if(account)
 				var/enterpin = user.enter_pin("Barcode Computer")
-				if (enterpin == I:pin)
+				if (enterpin == id_card.pin)
 					boutput(user, "<span class='notice'>Card authorized.</span>")
-					src.scan = I
+					src.scan = id_card
 					src.updateUsrDialog()
 				else
 					boutput(user, "<span class='alert'>Pin number incorrect.</span>")
@@ -457,7 +457,9 @@
 	attack()
 		return
 
-	afterattack(atom/target as mob|obj|turf, mob/user as mob, reach, params)
+	afterattack(atom/target, mob/user, reach, params)
+		if ((target.plane == PLANE_HUD && !isitem(target)) || isgrab(target)) //just don't stick hud stuff or grabs PLEASE
+			return
 		if(BOUNDS_DIST(get_turf(target), get_turf(src)) == 0 && istype(target, /atom/movable))
 			if(target==loc && target != user) return //Backpack or something
 			target:delivery_destination = destination

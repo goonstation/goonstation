@@ -93,7 +93,7 @@
 "P" = (
 /obj/table/wood/round,
 /obj/machinery/light/small/floor/cool/very,
-/obj/item/spacecash/random/small{
+/obj/item/currency/spacecash/small{
 	pixel_x = 2;
 	pixel_y = 6
 	},

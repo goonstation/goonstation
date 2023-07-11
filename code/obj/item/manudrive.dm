@@ -51,6 +51,9 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 		icon_state = "datadiskcom"
 		temp_recipe_string = list(/datum/manufacture/mechanics/lawrack)
 
+		singleuse
+			fablimit = 1
+
 	interdictor_parts //Compacts the parts into a single manudrive
 		name = "Engineering Manudrive: Spatial Interdictor Assembly Blueprints"
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture spatial interdictor hardware."
@@ -70,3 +73,9 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture cleaning grenades."
 		icon_state = "datadisk1"
 		temp_recipe_string = list(/datum/manufacture/cleaner_grenade)
+
+	lasers
+		name = "Engineering Manudrive: Laser Component Blueprints"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture laser mirrors and beam splitters."
+		icon_state = "datadiskeng"
+		temp_recipe_string = list(/datum/manufacture/mechanics/laser_mirror, /datum/manufacture/mechanics/laser_splitter)

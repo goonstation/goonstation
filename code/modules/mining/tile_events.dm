@@ -61,7 +61,7 @@
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
-		new /obj/critter/rockworm(AST)
+		new /mob/living/critter/rockworm(AST)
 
 /datum/ore/event/loot_crate
 	analysis_string = "Caution! Large object embedded in rock!"
@@ -130,7 +130,7 @@
 		SPAWN(timer)
 			if (istype(AST)) //Wire note: Fix for Undefined variable /turf/simulated/floor/plating/airless/asteroid/var/invincible
 				AST.invincible = 0
-				explosion(AST, AST, 1, 2, 3, 4, 1)
+				explosion(AST, AST, 1, 2, 3, 4)
 
 /datum/ore/event/radioactive
 	analysis_string = "Caution! Radioactive mineral deposits detected!"

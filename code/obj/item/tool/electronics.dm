@@ -289,17 +289,26 @@
 /obj/item/electronics/frame/proc/deploy(mob/user)
 	var/turf/T = get_turf(src)
 	var/obj/O = null
+	src.stored?.transfer_stored_item(src, T, user = user)
 	if (deconstructed_thing)
 		O = deconstructed_thing
 		deconstructed_thing = null
 		O.set_loc(T)
 		O.set_dir(src.dir)
 		O.was_built_from_frame(user, 0)
+
+		// if we have a material, give it to the object if the object doesn't have one
+		if (src.material && !O.material)
+			O.setMaterial(src.material)
 	else
 		O = new store_type(T)
 		O.set_dir(src.dir)
 		if(istype(O))
 			O.was_built_from_frame(user, 1)
+
+		if (src.material && !O.material)
+			O.setMaterial(src.material)
+
 	if(istype(O))
 		O.deconstruct_flags |= DECON_BUILT
 	qdel(src)
@@ -453,7 +462,7 @@
 
 	New()
 		. = ..()
-		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, .proc/pre_attackby)
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby))
 
 	get_desc()
 		// We display this on a separate line and with a different color to show emphasis
@@ -503,7 +512,7 @@
 	desc = "A device that takes data scans from a device analyser, then interprets and encodes them into blueprints for fabricators to read."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "rkit"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 	//var/datum/electronics/electronics_items/link = null
@@ -576,7 +585,7 @@
 			newsignal.data["command"] = "DROP"
 		newsignal.data["address_tag"] = "TRANSRKIT"
 		newsignal.data["sender"] = src.net_id
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 
 /obj/machinery/rkit/proc/upload_blueprint(var/datum/electronics/scanned_item/O, var/target, var/internal)
 	SPAWN(0.5 SECONDS) //This proc sends responses so there must be a delay
@@ -594,7 +603,7 @@
 		newsignal.data["address_1"] = target
 		newsignal.data["sender"] = src.net_id
 		newsignal.data_file = scanFile
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 
 /obj/machinery/rkit/proc/pda_message(var/target, var/message)
 	SPAWN(0.5 SECONDS) //response proc
@@ -962,6 +971,9 @@
 			boutput(user, "<span class='alert'>[target] cannot be deconstructed.</span>")
 			if (O.deconstruct_flags & DECON_NULL_ACCESS)
 				boutput(user, "<span class='alert'>[target] is under an access lock and must have its access requirements removed first.</span>")
+			return
+		if (istext(decon_complexity))
+			boutput(user, "<span class='alert'>[decon_complexity]</span>")
 			return
 		if (issilicon(user) && (O.deconstruct_flags & DECON_NOBORG))
 			boutput(user, "<span class='alert'>Cyborgs cannot deconstruct this [target].</span>")

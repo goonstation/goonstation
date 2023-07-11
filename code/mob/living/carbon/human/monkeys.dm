@@ -12,14 +12,12 @@
 #ifdef IN_MAP_EDITOR
 	icon_state = "monkey"
 #endif
-	static_type_override = /datum/mutantrace/monkey
+	default_mutantrace = /datum/mutantrace/monkey
 
 	New()
 		..()
 		SPAWN(0.5 SECONDS)
 			if (!src.disposed)
-				src.bioHolder.AddEffect("monkey")
-				src.get_static_image()
 				if (src.name == "monkey" || !src.name)
 					src.name = pick_string_autokey("names/monkey.txt")
 				src.real_name = src.name
@@ -193,20 +191,19 @@
 #ifdef IN_MAP_EDITOR
 	icon_state = "monkey"
 #endif
-	static_type_override = /datum/mutantrace/monkey
 	ai_aggressive = 0
 	ai_calm_down = 1
 	ai_default_intent = INTENT_HELP
 	var/list/shitlist = list()
 	var/ai_aggression_timeout = 600
 	var/ai_poke_thing_chance = 1
+	default_mutantrace = /datum/mutantrace/monkey
 
 	New()
 		..()
 		START_TRACKING
 		if (!src.disposed)
 			src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-			src.bioHolder.AddEffect("monkey")
 			if (src.name == "monkey" || !src.name)
 				src.name = pick_string_autokey("names/monkey.txt")
 			src.real_name = src.name
@@ -632,15 +629,13 @@
 /mob/living/carbon/human/npc/monkey/sea
 	name = "sea monkey"
 	max_health = 150
-	static_type_override = /datum/mutantrace/monkey/seamonkey
 	ai_useitems = FALSE // or they eat all the floor pills and die before anyone visits
+	default_mutantrace = /datum/mutantrace/monkey/seamonkey
 
 	New()
 		..()
 		SPAWN(0.5 SECONDS)
 			if (!src.disposed)
-				src.bioHolder.AddEffect("seamonkey")
-				src.get_static_image()
 				if (src.name == "sea monkey" || !src.name)
 					src.name = pick_string_autokey("names/monkey.txt")
 				src.real_name = src.name

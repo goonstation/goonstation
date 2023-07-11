@@ -53,7 +53,7 @@
 /// the power cable object
 /obj/cable
 	level = 1
-	anchored = TRUE
+	anchored = ANCHORED
 	pass_unstable = FALSE
 	var/tmp/netnum = 0
 	name = "power cable"
@@ -121,6 +121,11 @@
 
 /obj/cable/New(var/newloc, var/obj/item/cable_coil/source)
 	..()
+	#ifdef CHECK_MORE_RUNTIMES
+	// manually varedited cables
+	if(current_state <= GAME_STATE_MAP_LOAD && (d1 != 0 || d2 != 1))
+		CRASH("Cable \ref[src] ([src.x], [src.y], [src.z]) has d1 or d2 set to a non-zero value during map load.")
+	#endif
 	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
 	d1 = text2num( icon_state )
 
@@ -157,7 +162,7 @@
 			var/datum/powernet/PN = powernets[netnum]
 			PN.cut_cable(src)									// updated the powernets
 	else
-		defer_powernet_rebuild = 2
+		deferred_powernet_objs |= src
 
 		if(netnum && powernets && length(powernets) >= netnum) //NEED FOR CLEAN GC IN EXPLOSIONS
 			powernets[netnum].cables -= src
@@ -219,9 +224,12 @@
 /obj/cable/attackby(obj/item/W, mob/user)
 
 	var/turf/T = src.loc
-	if (T.intact)
+	if (istype(W, /obj/item/tile)) //let people repair floors underneath cables
+		T.Attackby(W, user)
 		return
 
+	if (T.intact)
+		return
 	if (issnippingtool(W))
 		src.cut(user,T)
 		return	// not needed, but for clarity
@@ -423,7 +431,7 @@
 	layer = CABLE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 	color = "#DD0000"
-	anchored = TRUE
+	anchored = ANCHORED
 	// this would make it connect to the centre, for like terminals and whatnot
 	// subtype node sets this to true
 	var/override_centre_connection = FALSE

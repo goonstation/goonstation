@@ -68,7 +68,7 @@
 	cooldown = 0
 	targeted = 0
 	target_anything = 0
-	restricted_area_check = 2
+	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 
 	cast(atom/target)
 		if (..())
@@ -89,6 +89,10 @@
 		if (T.bioHolder.HasEffect("husk"))
 			boutput(usr, "<span class='alert'>This creature has already been drained...</span>")
 			return 1
+		if (isnpc(T))
+			boutput(C, "<span class='alert'>The DNA of this target seems inferior somehow, you have no desire to feed on it.</span>")
+			return 1
+
 
 		actions.start(new/datum/action/bar/icon/abominationDevour(T, src), C)
 		return 0
@@ -183,7 +187,7 @@
 	cooldown = 0
 	targeted = 0
 	target_anything = 0
-	restricted_area_check = 2
+	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 
 	cast(atom/target)
 		if (..())

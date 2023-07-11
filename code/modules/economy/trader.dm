@@ -36,6 +36,7 @@
 	var/pickupdialoguefailure = null
 	var/list/trader_area = "/area/trade_outpost/martian"
 	var/doing_a_thing = 0
+	var/log_trades = TRUE
 
 	var/datum/dialogueMaster/dialogue = null //dialogue will open on click if available. otherwise open trade directly.
 	var/lastWindowName = ""
@@ -99,16 +100,16 @@
 		return
 
 	attackby(obj/item/I, mob/user)
-		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
-			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
+		var/obj/item/card/id/id_card = get_id_card(I)
+		if (istype(id_card))
 			boutput(user, "<span class='notice'>You swipe the ID card in the card reader.</span>")
 			var/datum/db_record/account = null
-			account = FindBankAccountByName(I:registered)
+			account = FindBankAccountByName(id_card.registered)
 			if(account)
 				var/enterpin = user.enter_pin("Card Reader")
-				if (enterpin == I:pin)
+				if (enterpin == id_card.pin)
 					boutput(user, "<span class='notice'>Card authorized.</span>")
-					src.scan = I
+					src.scan = id_card
 				else
 					boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 					src.scan = null
@@ -195,6 +196,8 @@
 							barter_customers[usr] -= P.price * quantity
 						else
 							account["current_money"] -= P.price * quantity
+						if(log_trades)
+							logTheThing(LOG_STATION, usr, "bought ([quantity]) [P.comtype] from [src] at [log_loc(get_turf(src))]")
 						while(quantity-- > 0)
 							shopping_cart += new P.comtype()
 						src.temp = {"[pick(successful_purchase_dialogue)]<BR>
@@ -335,11 +338,15 @@
 					doing_a_thing = 1
 					src.temp = pick(src.successful_sale_dialogue) + "<BR>"
 					src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
-					if(account)
-						account["current_money"] += sold_item(tradetype, sellitem) * src.sellitem.amount
-					else
-						barter_customers[usr]  += sold_item(tradetype, sellitem) * src.sellitem.amount
+
+					var/value = sold_item(tradetype, sellitem, src.sellitem.amount, usr)
+					if(log_trades)
+						logTheThing(LOG_STATION, usr, "sold ([src.sellitem.amount])[sellitem.type] to [src] for [value] at [log_loc(get_turf(src))]")
 					qdel (src.sellitem)
+					if(account)
+						account["current_money"] += value
+					else
+						barter_customers[usr]  += value
 					src.sellitem = null
 					src.add_fingerprint(usr)
 					src.updateUsrDialog()
@@ -382,17 +389,16 @@
 	proc/card_scan()
 		if (src.scan) src.scan = null
 		else
-			var/obj/item/I = usr.equipped()
-			if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
-				if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
+			var/obj/item/card/id/id_card = get_id_card(usr.equipped())
+			if (istype(id_card))
 				boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
 				var/datum/db_record/account = null
-				account = FindBankAccountByName(I:registered)
+				account = FindBankAccountByName(id_card.registered)
 				if(account)
 					var/enterpin = usr.enter_pin("Card Reader")
-					if (enterpin == I:pin)
+					if (enterpin == id_card.pin)
 						boutput(usr, "<span class='notice'>Card authorized.</span>")
-						src.scan = I
+						src.scan = id_card
 					else
 						boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
 						src.scan = null
@@ -529,8 +535,8 @@
 	///////////////////////////////////////////////
 	////// special handling for selling an item ///
 	///////////////////////////////////////////////
-	proc/sold_item(datum/commodity/C, obj/S)
-		. = C.price
+	proc/sold_item(datum/commodity/C, obj/S, count, mob/user as mob)
+		. = C.price * count
 
 	///////////////////////////////////
 	////// batch selling - cogwerks ///
@@ -574,11 +580,15 @@
 				user.visible_message("<span class='notice'>[src] rummages through [user]'s [O].</span>")
 				playsound(src.loc, "rustle", 60, 1)
 				var/cratevalue = null
+				var/list/sold_string = list()
 				for (var/obj/item/sellitem in O.contents)
 					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, sellitem)
 					if(tradetype)
-						cratevalue += sold_item(tradetype, sellitem) * sellitem.amount
+						cratevalue += sold_item(tradetype, sellitem, sellitem.amount, user)
 						qdel(sellitem)
+						sold_string[sellitem.type] += sellitem.amount
+				if(log_trades && length(sold_string))
+					logTheThing(LOG_STATION, user, "sold ([json_encode(sold_string)]) to [src] for [cratevalue] at [log_loc(get_turf(src))]")
 				if(cratevalue)
 					boutput(user, "<span class='notice'>[src] takes what they want from [O]. [cratevalue] [currency] have been transferred to your account.</span>")
 					if(account)
@@ -804,6 +814,7 @@
 				src.goods_sell += new /datum/commodity/contraband/ntso_uniform(src)
 				src.goods_sell += new /datum/commodity/contraband/ntso_beret(src)
 				src.goods_sell += new /datum/commodity/contraband/ntso_vest(src)
+				src.goods_sell += new /datum/commodity/contraband/swatmask(src)
 				src.goods_sell += new /datum/commodity/drugs/methamphetamine(src)
 				src.goods_sell += new /datum/commodity/drugs/crank(src)
 				//src.goods_sell += new /datum/commodity/drugs/bathsalts(src)
@@ -868,7 +879,7 @@
 				src.goods_sell += new /datum/commodity/podparts/artillery(src)
 				src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
 				src.goods_sell += new /datum/commodity/contraband/ai_kit_syndie(src)
-#ifdef MAP_OVERRIDE_MANTA
+#ifdef UNDERWATER_MAP
 				src.goods_sell += new /datum/commodity/HEtorpedo(src)
 #endif
 
@@ -1137,10 +1148,13 @@
 		src.goods_sell += new /datum/commodity/sticker/googly_eyes_angry(src)
 		src.goods_sell += new /datum/commodity/toygun(src)
 		src.goods_sell += new /datum/commodity/toygunammo(src)
+		src.goods_sell += new /datum/commodity/clownsabre(src)
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)
 		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
 		src.goods_sell += new /datum/commodity/junk/ai_kit_clown(src)
+		src.goods_sell += new /datum/commodity/foam_dart_grenade(src)
+
 
 
 		/////////////////////////////////////////////////////////

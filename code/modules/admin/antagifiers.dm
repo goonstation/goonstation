@@ -3,7 +3,7 @@
 	//var/allowAntagStacking = 0 // If set to 1, permits people to use multiple traitorifier types TODO: Figure out how to make this work intelligently
 	name = "An Offer You Couldn't Refuse"
 	desc = "In this economy you'd be stupid to turn this down."
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "pda-s"
 	var/attachedObjective = "For the free market!"
@@ -27,9 +27,7 @@
 
 	proc/makeAntag(mob/M as mob)
 		M.show_text("<h2><font color=red><B>You have defected and become a traitor!</B></font></h2>", "red")
-		M.mind.special_role = ROLE_TRAITOR
-		M.verbs += /client/proc/gearspawn_traitor
-		M.show_antag_popup("traitorradio")
+		M.mind.add_antagonist(ROLE_TRAITOR)
 
 /obj/traitorifier/wizard
 	name = "Eldritch Altar"
@@ -80,7 +78,7 @@
 	name = "Ferocious Alien Skull"
 	desc = "Fancy a game?"
 	attachedObjective = "Blood, blood, blood!"
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/skull.dmi'
 	icon_state = "skullP"
 	color = "#FF0000"
 
@@ -97,7 +95,7 @@
 
 	makeAntag(mob/M as mob)
 		M.show_text("<h2><font color=red><B>You have become a werewolf!</B></font></h2>", "red")
-		M.mind.add_antagonist(ROLE_WEREWOLF)
+		M.mind?.add_antagonist(ROLE_WEREWOLF)
 
 /obj/traitorifier/omnitraitor
 	name = "Ugly Amalgamation"
@@ -123,12 +121,12 @@
 	name = "Viscous Puddle"
 	desc = "This does not look refreshing."
 	icon = 'icons/mob/blob.dmi'
-	icon_state = "nucleus"
+	icon_state = "0"
 	color = "#44FF44"
 	attachedObjective = "GET FAT"
 
 	makeAntag(mob/M as mob)
-		M.make_blob()
+		M.mind?.add_antagonist(ROLE_BLOB)
 
 
 

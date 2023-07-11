@@ -196,19 +196,16 @@
 						return
 
 				transfer_blood(target, src, src.amount_per_transfer_from_this)
+				user.visible_message("<span class='alert'>[user.name] draws blood from [target == user ? himself_or_herself(user) : target.name] with [src]!</span>",\
+				"<span class='notice'>You fill [src] with [src.amount_per_transfer_from_this] units of [target == user ? "your own" : target.name + "'s"] blood.</span>")
+				logTheThing(LOG_COMBAT, user, "draws 5 units of reagents from [constructTarget(target,"combat")] [log_reagents(target)] with a syringe [log_reagents(src)] at [log_loc(user)].")
 
-				if (target != user)
-					target.visible_message("<span class='alert'>[user] draws blood from [target]!</span>")
-					logTheThing(LOG_COMBAT, user, "draws 5 units of reagents from [constructTarget(target,"combat")] [log_reagents(target)] with a syringe [log_reagents(src)] at [log_loc(user)].")
-				else
-					boutput(user, "<span class='notice'>You fill [src] with [src.amount_per_transfer_from_this] units of [target]'s blood.</span>")
-					
 			if(S_INJECT)
 				src.reagents.reaction(target, INGEST, src.amount_per_transfer_from_this)
 				src.reagents.trans_to(target, src.amount_per_transfer_from_this)
-				if (target != user)
-					target.visible_message("<span class='alert'>[user] injects [target] with the [src]!</span>")
-					logTheThing(LOG_COMBAT, user, "injects [constructTarget(target,"combat")] with a [src.name] [log_reagents(src)] at [log_loc(user)].")
+				user.visible_message("<span class='alert'>[user.name] injects [target == user ? himself_or_herself(user) : target.name] with [src]!</span>",\
+				"<span class='notice'>You inject [target == user ? "yourself" : target.name] with [src]!</span>")
+				logTheThing(LOG_COMBAT, user, "injects [constructTarget(target,"combat")] with a [src.name] [log_reagents(src)] at [log_loc(user)].")
 
 		user.update_inhands()
 

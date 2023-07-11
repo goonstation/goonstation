@@ -449,17 +449,15 @@
 	name = "Sting"
 	desc = "Sting a mob, injecting them with venom."
 	icon_state = "bee_sting"
-	cooldown = 50
-	targeted = 1
-	target_anything = 1
+	cooldown = 5 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 	var/venom1 = "histamine"
 	var/amt1 = 5
 	var/venom2 = "toxin"
 	var/amt2 = 4
 	var/list/sting_adjectives = list("nubby little","stubby little","tiny little")
 	var/brute_damage = 2
-
-	var/datum/projectile/slam/proj = new
 
 	cast(atom/target)
 		if (..())
@@ -523,11 +521,9 @@
 	name = "Swallow"
 	desc = "Swallow a mob, trapping them in honey."
 	icon_state = "bee_swallow"
-	cooldown = 300
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 30 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -551,6 +547,8 @@
 			SPAWN(2 SECONDS)
 				var/obj/icecube/honeycube = new /obj/icecube(src)
 				MT.set_loc(honeycube)
+				honeycube.melttemp = T20C
+				honeycube.cooltemp = T20C
 				honeycube.name = "block of honey"
 				honeycube.desc = "It's a block of honey. I guess there's someone trapped inside? Is it Han Solo?"
 				honeycube.steam_on_death = 0
@@ -570,12 +568,10 @@
 	name = "Stare"
 	desc = "Stare at a mob, teleporting them away after a short time."
 	icon_state = "bee_teleport"
-	cooldown = 300
-	targeted = 1
-	target_anything = 1
-	var/do_buzz = 1
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 30 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
+	var/do_buzz = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -858,9 +854,9 @@
 				src.visible_message("<b>[src]</b> regurgitates a...key? Huh!")
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				if (src.name == "sun bee")
-					new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow.";} (src.loc)
+					new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow."; icon_state = "key_solar";} (src.loc)
 				else
-					new /obj/item/device/key {name = "lunar key"; desc = "A metal key with a moon icon on the bow.";} (src.loc)
+					new /obj/item/device/key {name = "lunar key"; desc = "A metal key with a moon icon on the bow."; icon_state = "key_lunar";} (src.loc)
 
 /mob/living/critter/small_animal/bee/overbee
 	name = "THE OVERBEE"

@@ -6,7 +6,7 @@
 	icon_state = "wizard-1" // it's technically pointless to set this but it makes it easier to find in the dreammaker tree
 	opacity = 0
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	artifact = 1
 	mat_changename = 0
 	mat_changedesc = 0
@@ -112,7 +112,7 @@
 	icon_state = "wizard-1" // it's technically pointless to set this but it makes it easier to find in the dreammaker tree
 	opacity = 0
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	artifact = 1
 	mat_changename = 0
 	mat_changedesc = 0

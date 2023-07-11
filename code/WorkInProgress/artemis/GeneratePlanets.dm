@@ -38,6 +38,14 @@
 						T.UpdateOverlays(planet.ambient_light, "ambient")
 						return TRUE
 
+	proc/get_generator(turf/T)
+		if(T.z >= minimum_z)
+			for(var/datum/allocated_region/region in regions)
+				if(region.turf_in_region(T))
+					var/datum/planetData/planet = regions[region]
+					if(planet)
+						return planet.generator
+
 var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 /proc/GeneratePlanetChunk(width=null, height=null, prefabs_to_place=1, datum/map_generator/generator=/datum/map_generator/desert_generator, color=null, name=null, use_lrt=TRUE, seed_ore=TRUE, mapgen_flags=null)
@@ -172,6 +180,8 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 	return turfs
 /datum/map_generator/asteroids
+	clear_turf_type = /turf/space
+
 	generate_terrain(var/list/turfs, var/reuse_seed, var/flags)
 		if(!length(seeds))
 			seeds = list(null)
@@ -182,6 +192,8 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 				T.generate_worldgen()
 
 /datum/map_generator/sea_caves
+	clear_turf_type = /turf/space/fluid/trench
+
 	generate_terrain(var/list/turfs, var/reuse_seed, var/flags)
 		if(!length(seeds))
 			seeds = list(null)
@@ -206,8 +218,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 			for(var/turf/space/space_turf in turfs)
 				space_turf.ReplaceWith(/turf/space/fluid/trench)
-				space_turf.name = ocean_name
-				space_turf.color = ocean_color
+				space_turf.name = "ocean floor"
 				space_turf.RL_Init()
 
 				if (prob(1))
@@ -233,7 +244,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 						new /obj/overlay/tile_effect/cracks/spawner/pikaia(space_turf)
 
 					if (prob(1) && prob(16))
-						new /mob/living/critter/small_animal/hallucigenia/ai_controlled(space_turf)
+						new /mob/living/critter/small_animal/hallucigenia(space_turf)
 					else if (prob(1) && prob(15))
 						new /obj/overlay/tile_effect/cracks/spawner/pikaia(space_turf)
 
@@ -256,7 +267,7 @@ obj/decal/teleport_mark
 	icon = 'icons/misc/artemis/temps.dmi'
 	icon_state = "decal_tele"
 	name = "teleport mark"
-	anchored = 1
+	anchored = ANCHORED
 	layer = FLOOR_EQUIP_LAYER1
 	alpha = 180
 

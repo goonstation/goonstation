@@ -47,7 +47,7 @@
 	cooldown = 0
 	last_cast = 0
 	check_range = 0
-	var/disabled = 0
+	disabled = 0
 	var/toggled = 0
 	var/is_on = 0   // used if a toggle ability
 	preferred_holder_type = /datum/abilityHolder/cruiser

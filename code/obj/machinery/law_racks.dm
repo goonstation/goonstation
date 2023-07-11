@@ -4,7 +4,7 @@
 	icon_state = "airack_empty"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_WRENCH | DECON_NOBORG
 	layer = EFFECTS_LAYER_UNDER_1 //high layer, same as trees which are also tall as shit
 	_health = 120 //more resistant to damage since it can no longer be mechscanned, CE manudrive is the only source of blueprint
@@ -54,6 +54,12 @@
 		src.drop_all_modules()
 		UpdateIcon()
 		. = ..()
+
+	build_deconstruction_buttons(mob/user) //mild hack to give a custom "can't be deconstructed" message
+		for (var/i in 1 to MAX_CIRCUITS)
+			if (src.law_circuits[i])
+				return "[src] cannot be deconstructed while it still has law modules inside!"
+		return ..()
 
 	was_deconstructed_to_frame(mob/user)
 		logTheThing(LOG_STATION, user, "<b>deconstructed</b> rack [constructName(src)]")
@@ -207,13 +213,13 @@
 		src.material?.triggerExp(src, severity)
 		switch(severity)
 			if(1)
-				changeHealth(rand(-105,-90),"explosion severity [severity]")
+				changeHealth(rand(-90,-70),"explosion severity [severity]")
 				return
 			if(2)
-				changeHealth(rand(-80,-50),"explosion severity [severity]")
+				changeHealth(rand(-60,-40),"explosion severity [severity]")
 				return
 			if(3)
-				changeHealth(rand(-30,-10),"explosion severity [severity]")
+				changeHealth(rand(-20,-10),"explosion severity [severity]")
 				return
 
 	bullet_act(obj/projectile/P)
@@ -313,7 +319,7 @@
 			if(!inserted)
 				boutput(user,"<span class='alert'>There's no more space on the rack!</span>")
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/insert_module_callback, list(count,user,AIM), user.equipped().appearance, null, \
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(insert_module_callback), list(count,user,AIM), user.equipped().appearance, null, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		else if (istype(I, /obj/item/clothing/mask/moustache/))
 			for_by_tcl(M, /mob/living/silicon/ai)
@@ -324,7 +330,7 @@
 		else if (istype(I, /obj/item/peripheral/videocard))
 			var/obj/item/peripheral/videocard/V = I
 			if (GET_COOLDOWN(src, "mine_cooldown") == 0)
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/insert_videocard_callback, list(user,V), user.equipped().appearance, null, \
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(insert_videocard_callback), list(user,V), user.equipped().appearance, null, \
 						"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 			else
 				user.visible_message("<span class='alert'>The [src]'s graphics port isn't ready to accept [I] yet.</span>")
@@ -395,8 +401,7 @@
 					else
 						ui.user.visible_message("<span class='alert'>[ui.user] starts welding a module in place!</span>", "<span class='alert'>You start to weld the module in place!</span>")
 					var/positions = src.get_welding_positions(slotNum)
-					playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-					actions.start(new /datum/action/bar/private/welding(ui.user, src, 6 SECONDS, .proc/toggle_welded_callback, list(slotNum,ui.user), \
+					actions.start(new /datum/action/bar/private/welding(ui.user, src, 6 SECONDS, PROC_REF(toggle_welded_callback), list(slotNum,ui.user), \
 			  		"",	positions[1], positions[2]), ui.user)
 
 				return
@@ -416,7 +421,7 @@
 				else
 					ui.user.visible_message("<span class='alert'>[ui.user] starts screwing a module in place!</span>", "<span class='alert'>You start to screw the module in place!</span>")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, .proc/toggle_screwed_callback, list(slotNum,ui.user), ui.user.equipped().icon, ui.user.equipped().icon_state, \
+				SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, PROC_REF(toggle_screwed_callback), list(slotNum,ui.user), ui.user.equipped().icon, ui.user.equipped().icon_state, \
 				"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 				return
@@ -435,7 +440,7 @@
 						boutput(ui.user,"Your clunky robot hands can't grip the module!")
 						return
 					ui.user.visible_message("<span class='alert'>[ui.user] starts removing a module!</span>", "<span class='alert'>You start removing the module!</span>")
-					SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, .proc/remove_module_callback, list(slotNum,ui.user), law_circuits[slotNum].icon, law_circuits[slotNum].icon_state, \
+					SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, PROC_REF(remove_module_callback), list(slotNum,ui.user), law_circuits[slotNum].icon, law_circuits[slotNum].icon_state, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 				else
 					var/equipped = ui.user.equipped()
@@ -447,7 +452,7 @@
 						return
 
 					ui.user.visible_message("<span class='alert'>[ui.user] starts inserting a module!</span>", "<span class='alert'>You start inserting the module!</span>")
-					SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, .proc/insert_module_callback, list(slotNum,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
+					SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, PROC_REF(insert_module_callback), list(slotNum,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 
@@ -587,7 +592,8 @@
 						current_abilities |= ability.type
 					var/list/abilities_to_remove = current_abilities - ai_abilities
 					for(ability_type in abilities_to_remove)
-						aiAH.removeAbility(ability_type)
+						if (ispath(ability_type, /datum/targetable/ai/module))
+							aiAH.removeAbility(ability_type)
 					var/list/abilities_to_add = ai_abilities - current_abilities
 					for(ability_type in abilities_to_add)
 						aiAH.addAbility(ability_type)
@@ -680,7 +686,7 @@
 			for (var/i in 1 to 10)
 				sleep(0.4 SECONDS)
 				if(src && prob(60))
-					var/obj/mined = new /obj/item/spacecash/buttcoin
+					var/obj/mined = new /obj/item/currency/spacecash/buttcoin
 					mined.set_loc(src.loc)
 					target = get_step(src, rand(1,8))
 					for (var/mob/living/mob in view(7,src))

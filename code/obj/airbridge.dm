@@ -17,7 +17,7 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "airbr"
 	invisibility = INVIS_ALWAYS_ISH
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 	var/tunnel_width = 1
@@ -82,15 +82,14 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 			for(var/turf/simulated/T in maintaining_turfs)
 				if(!T.air && T.density)
 					continue
-				ZERO_BASE_GASES(T.air)
+				ZERO_GASES(T.air)
 #ifdef ATMOS_ARCHIVING
-				ZERO_ARCHIVED_BASE_GASES(T.air)
+				ZERO_ARCHIVED_GASES(T.air)
 				T.air.ARCHIVED(temperature) = null
 #endif
 				T.air.oxygen = MOLES_O2STANDARD
 				T.air.nitrogen = MOLES_N2STANDARD
 				T.air.fuel_burnt = 0
-				T.air.remove_trace_gas()
 				T.air.temperature = T20C
 				LAGCHECK(LAG_LOW)
 
@@ -282,7 +281,7 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 		if (src.emergency && emergency_shuttle) // emergency_shuttle is the controller datum
 			emergency_shuttle.airbridges += src
 		if (src.connected_dock)
-			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, .proc/dock_signal_handler)
+			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, PROC_REF(dock_signal_handler))
 
 	initialize()
 		..()
@@ -496,7 +495,7 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 	desc = ""
 	var/id = "noodles"
 	var/state = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	attack_hand(mob/user)
 		for(var/obj/airbridge_controller/C in range(3, src))

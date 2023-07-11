@@ -9,7 +9,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	flags = FPRINT | FLUID_SUBMERGE | ACCEPTS_MOUSEDROP_REAGENTS
 	object_flags = NO_GHOSTCRITTER
 	pressure_resistance = 2*ONE_ATMOSPHERE
@@ -90,7 +90,7 @@
 	icon_state = "spaceants"
 	layer = MOB_LAYER
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	amount_per_transfer_from_this = 5
 
 	New()
@@ -118,7 +118,7 @@
 	icon_state = "spaceants"
 	layer = MOB_LAYER
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	amount_per_transfer_from_this = 5
 	color = "#160505"
 
@@ -170,7 +170,7 @@
 	desc = "A specialised high-pressure water tank for holding large amounts of water."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertankbig"
-	anchored = 0
+	anchored = UNANCHORED
 	amount_per_transfer_from_this = 25
 
 	attackby(obj/item/W, mob/user)
@@ -178,11 +178,11 @@
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				src.anchored = 1
+				src.anchored = ANCHORED
 			else
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				src.anchored = 0
+				src.anchored = UNANCHORED
 			return
 
 	New()
@@ -197,7 +197,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	name = "water cooler"
 	desc = "A popular gathering place for NanoTrasen's finest bureaucrats and pencil-pushers."
 	icon_state = "coolerbase"
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
 	capacity = 500
 
@@ -271,7 +271,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 				user.show_text("You start unscrewing [src] from the floor.", "blue")
 				if (do_after(user, 3 SECONDS))
 					user.show_text("You unscrew [src] from the floor.", "blue")
-					src.anchored = 0
+					src.anchored = UNANCHORED
 					return
 			else
 				var/turf/T = get_turf(src)
@@ -283,7 +283,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 					user.show_text("You start securing [src] to [T].", "blue")
 					if (do_after(user, 3 SECONDS))
 						user.show_text("You secure [src] to [T].", "blue")
-						src.anchored = 1
+						src.anchored = ANCHORED
 						return
 		..()
 
@@ -401,6 +401,68 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		..()
 		reagents.add_reagent("beer",1000)
 
+/obj/reagent_dispensers/chemicalbarrel
+	name = "chemical barrel"
+	desc = "For storing medical chemicals and less savory things. It can be labeled with a pen."
+	icon = 'icons/obj/objects.dmi'
+	var/base_icon_state = "barrel-blue"
+	icon_state = "barrel-blue-closed"
+	amount_per_transfer_from_this = 25
+	p_class = 3
+	flags = FPRINT | FLUID_SUBMERGE | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+
+	New()
+		..()
+		src.set_icon_state(base_icon_state + (src.is_open_container() ? "-open" : "-closed"))
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/pen) && (src.name == initial(src.name)))
+			var/t = tgui_input_text(user, "Enter a label for the barrel.", "Label", "chemical", 24)
+			if(t && t != src.name)
+				phrase_log.log_phrase("barrel", t, no_duplicates=TRUE)
+			t = copytext(strip_html(t), 1, 24)
+			if (isnull(t) || !length(t) || t == " ")
+				return
+			if (!findtext(t, "barrel"))     //so we don't see lube barrel barrel
+				t += " barrel"          	//so it's clear it's a barrel, and not just "lube"
+			if (!in_interact_range(src, user) && src.loc != user)
+				return
+
+			src.name = t
+
+			src.desc = "For storing medical chemicals and less savory things."
+
+		if (istool(W, TOOL_WRENCHING))
+			if(src.flags & OPENCONTAINER)
+				user.visible_message("<b>[user]</b> wrenches the [src]'s lid closed!")
+			else
+				user.visible_message("<b>[user]</b> wrenches the [src]'s lid open!")
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			src.flags ^= OPENCONTAINER
+			src.set_icon_state(base_icon_state + (src.is_open_container() ? "-open" : "-closed"))
+		else
+			..()
+
+	bullet_act()
+		..()
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 30, 1)
+
+	red
+		icon_state = "barrel-red-closed"
+		base_icon_state = "barrel-red"
+	yellow
+		icon_state = "barrel-yellow-closed"
+		base_icon_state = "barrel-yellow"
+	oil
+		icon_state = "barrel-flamable-closed"
+		base_icon_state = "barrel-flamable"
+		name = "oil barrel"
+		desc = "A barrel for storing large amounts of oil."
+
+		New()
+			..()
+			reagents.add_reagent("oil", 4000)
+
 /obj/reagent_dispensers/beerkeg/rum
 	name = "barrel of rum"
 	desc = "It better not be empty."
@@ -416,7 +478,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	desc = "A device that mulches up unwanted produce into usable fertiliser."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "compost"
-	anchored = 0
+	anchored = UNANCHORED
 	amount_per_transfer_from_this = 30
 	event_handler_flags = NO_MOUSEDROP_QOL
 	New()
@@ -435,11 +497,11 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				src.anchored = 1
+				src.anchored = ANCHORED
 			else
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				src.anchored = 0
+				src.anchored = UNANCHORED
 			return
 		var/load = 1
 		if (istype(W,/obj/item/reagent_containers/food/snacks/plant/)) src.reagents.add_reagent("poo", 20)
@@ -625,4 +687,3 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			src.underlays += src.fluid_image
 		else
 			src.icon_state = initial(src.icon_state)
-

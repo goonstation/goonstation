@@ -15,6 +15,8 @@
 
 		//Find a suitable corpse
 		var/mob/living/carbon/human/H
+		if (ishuman(target))
+			H = target
 		if (isturf(target))
 			for (var/mob/living/carbon/human/mob_target in target.contents)
 				if (!isdead(mob_target))
@@ -23,12 +25,13 @@
 					continue
 				H = mob_target
 				break
-		else if (ishuman(target))
-			H = target
+		if (ishuman(H))
 			if (!isdead(H))
 				boutput(holder.owner, "<span class='alert'>The living consciousness controlling this body shields it from being absorbed.</span>")
 				return 1
-
+			if (H.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
+				boutput(holder.owner, "<span class='alert'>That corpse is already too decomposed.</span>")
+				return 1
 			//check for formaldehyde. if there's more than the wraith's tol amt, we can't absorb right away.
 			var/mob/living/intangible/wraith/W = src.holder.owner
 			if (istype(W))

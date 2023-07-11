@@ -363,7 +363,7 @@ TYPEINFO(/obj/vehicle/segway)
 		// drsingh for undef variable silicon/robot/var/shoes
 		// i guess a borg got on a segway? maybe someone was riding one with nanites
 		if (ishuman(M))
-			if(!istype(M:shoes, /obj/item/clothing/shoes/sandal))
+			if(!istype(M:shoes, /obj/item/clothing/shoes/sandal/magic))
 				M.changeStatus("stunned", 5 SECONDS)
 				M.changeStatus("weakened", 5 SECONDS)
 				M.force_laydown_standup()
@@ -539,8 +539,7 @@ TYPEINFO(/obj/vehicle/segway)
 		return
 
 	var/msg
-
-	if(target == user && !user.stat)	// if drop self, then climbed in
+	if(target == user && can_act(user))	// if drop self, then climbed in
 		msg = "[user.name] climbs onto the [src]."
 		boutput(user, "<span class='notice'>You climb onto \the [src].</span>")
 	else if(target != user && !user.restrained())
@@ -568,7 +567,7 @@ TYPEINFO(/obj/vehicle/segway)
 	if(usr != rider)
 		..()
 		return
-	if(!(usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat))
+	if(can_act(usr))
 		eject_rider(0, 1)
 	return
 
@@ -856,7 +855,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 
 	var/msg
 
-	if(target == user && !user.stat)	// if drop self, then climbed in
+	if(target == user && can_act(user))	// if drop self, then climbed in
 		msg = "[user.name] climbs onto the [src]."
 		boutput(user, "<span class='notice'>You climb onto \the [src].</span>")
 		src.log_rider(user, 0)
@@ -977,7 +976,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn/clowncar, /obj/ability_button/drop_peel, /obj/ability_button/stopthebus/clowncar)
 	soundproofing = 5
 	var/second_icon = "clowncar2" //animated jiggling for the clowncar
-	var/peel_count = 0
+	var/peel_count = 5
 
 /obj/vehicle/clowncar/do_special_on_relay(mob/user as mob, dir)
 	for (var/mob/living/L in src)
@@ -996,11 +995,43 @@ TYPEINFO(/obj/vehicle/clowncar)
 		//play engine sound
 	return
 
+/obj/vehicle/clowncar/proc/stuff_inside(mob/user, mob/victim)
+	victim.set_loc(src)
+	src.log_me(user, victim, "pax_enter", 1)
+	src.visible_message("[user.name] stuffs [victim.name] into the back of the [src]!")
+	boutput(user, "<span class='notice'>You stuff [victim.name] into the back of the [src]!</span>")
+
+/obj/vehicle/clowncar/proc/eject_all(mob/user)
+	if(!length(src.contents))
+		return
+	if (user)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
+		src.visible_message("<span class='alert'><b>[user] opens up the [src], spilling the contents out!</b></span>")
+	else
+		src.visible_message("<span class='alert'><b>Everything in the [src] flies out!</b></span>")
+
+	for(var/atom/A in src.contents)
+		if(ismob(A))
+			var/mob/N = A
+			if (N != src.rider)
+				src.log_me(src.rider, N, "pax_exit")
+				if (user)
+					N.show_message("<span class='alert'><b>You are let out of the [src] by [user]!</b></span>", 1)
+				else
+					N.show_message("<span class='alert'><b>You are flung out of the [src]!</b></span>", 1)
+				N.set_loc(src.loc)
+			else
+				N.changeStatus("weakened", 2 SECONDS)
+				src.eject_rider()
+		else if (isobj(A))
+			var/obj/O = A
+			O.set_loc(src.loc)
+
 /obj/vehicle/clowncar/Click()
 	if(usr != rider)
 		..()
 		return
-	if(!(usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat))
+	if(can_act(usr))
 		eject_rider(0, 1, 0)
 	return
 
@@ -1024,21 +1055,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 		eject_rider(0, 0, 0)
 	else
 		if(src.contents.len)
-			playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-			src.visible_message("<span class='alert'><b>[M] opens up the [src], spilling the contents out!</b></span>")
-			for(var/atom/A in src.contents)
-				if(ismob(A))
-					var/mob/N = A
-					if (N != src.rider)
-						src.log_me(src.rider, N, "pax_exit")
-						N.show_message(text("<span class='alert'><b>You are let out of the [] by []!</b></span>", src, M), 1)
-						N.set_loc(src.loc)
-					else
-						N.changeStatus("weakened", 2 SECONDS)
-						src.eject_rider()
-				else if (isobj(A))
-					var/obj/O = A
-					O.set_loc(src.loc)
+			src.eject_all()
 		else
 			boutput(M, "<span class='notice'>There's nothing inside of the [src].</span>")
 
@@ -1058,17 +1075,13 @@ TYPEINFO(/obj/vehicle/clowncar)
 
 	var/clown_tally = 0
 	if(ishuman(user))
-		if(istype(user:w_uniform, /obj/item/clothing/under/misc/clown))
-			clown_tally += 1
-		if(istype(user:shoes, /obj/item/clothing/shoes/clown_shoes))
-			clown_tally += 1
-		if(istype(user:wear_mask, /obj/item/clothing/mask/clown_hat))
-			clown_tally += 1
+		var/mob/living/carbon/human/human = user
+		clown_tally = human.clown_tally()
 	if(clown_tally < 2 && !IS_LIVING_OBJECT_USING_SELF(user))
 		boutput(user, "<span class='notice'>You don't feel funny enough to use the [src].</span>")
 		return
 
-	if(mob_target == user && !user.stat)	// if drop self, then climbed in
+	if(mob_target == user && can_act(user))	// if drop self, then climbed in
 		if(rider)
 			return
 		mob_target.set_loc(src)
@@ -1078,10 +1091,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 		msg = "[user.name] climbs into the driver's seat of the [src]."
 		boutput(user, "<span class='notice'>You climb into the driver's seat of the [src].</span>")
 	else if(mob_target != user && !user.restrained() && is_incapacitated(mob_target))
-		mob_target.set_loc(src)
-		src.log_me(user, mob_target, "pax_enter", 1)
-		msg = "[user.name] stuffs [mob_target.name] into the back of the [src]!"
-		boutput(user, "<span class='notice'>You stuff [mob_target.name] into the back of the [src]!</span>")
+		src.stuff_inside(user, mob_target)
 	else
 		return
 	for (var/mob/C in AIviewers(src))
@@ -1198,18 +1208,8 @@ TYPEINFO(/obj/vehicle/clowncar)
 		rider.throw_at(target, 5, 1)
 		rider = null
 		icon_state = "clowncar"
-		if(prob(40) && length(src.contents))
-			for(var/mob/O in AIviewers(src, null))
-				O.show_message(text("<span class='alert'><b>Everything in the [] flies out!</b></span>", src), 1)
-			for(var/atom/A in src.contents)
-				if(ismob(A))
-					src.log_me(null, A, "pax_exit")
-					var/mob/N = A
-					N.show_message(text("<span class='alert'><b>You are flung out of the []!</b></span>", src), 1)
-					N.set_loc(src.loc)
-				else if (isobj(A))
-					var/obj/O = A
-					O.set_loc(src.loc)
+		if(prob(40))
+			src.eject_all()
 		return
 	if(selfdismount)
 		boutput(rider, "<span class='notice'>You climb out of the [src].</span>")
@@ -1242,15 +1242,11 @@ TYPEINFO(/obj/vehicle/clowncar)
 	var/obj/item/grab/G = I
 	if(istype(G))	// handle grabbed mob
 		if(ismob(G.affecting))
-			var/mob/GM = G.affecting
-			GM.set_loc(src)
-			boutput(user, "<span class='notice'>You stuff [GM.name] into the back of the [src].</span>")
-			boutput(GM, "<span class='alert'><b>[user] stuffs you into the back of the [src]!</b></span>")
-			src.log_me(user, GM, "pax_enter", 1)
+			src.stuff_inside(user, G.affecting)
 			for (var/mob/C in AIviewers(src))
 				if(C == user)
 					continue
-				C.show_message("<span class='alert'><b>[GM.name] has been stuffed into the back of the [src] by [user]!</b></span>", 3)
+				C.show_message("<span class='alert'><b>[G.affecting.name] has been stuffed into the back of the [src] by [user]!</b></span>", 3)
 			qdel(G)
 			return
 	..()
@@ -1277,6 +1273,30 @@ TYPEINFO(/obj/vehicle/clowncar)
 				logTheThing(LOG_VEHICLE, pax, "[action == "pax_enter" ? "is stuffed into" : "is ejected from"] [src.name] ([forced_in == 1 ? "Forced by" : "Driven by"]: [rider && ismob(rider) ? "[constructTarget(logtarget,"vehicle")]" : "N/A or unknown"]) at [log_loc(src)].")
 
 	return
+
+/obj/vehicle/clowncar/train
+	name = "clown train"
+	desc = "This car seems... Old fashioned?"
+
+/obj/vehicle/clowncar/train/stuff_inside(mob/user, mob/victim)
+	var/atom/movable/current = src
+	while (current.GetComponent(/datum/component/train))
+		var/datum/component/train/train = current.GetComponent(/datum/component/train)
+		current = train.cart
+		if (current == victim) //don't attach them if they're already in the chain
+			return
+	current.AddComponent(/datum/component/train, victim)
+	victim.set_loc(get_turf(current))
+	src.visible_message("[user.name] attaches [victim.name] to the back of the [src]!")
+	boutput(user, "<span class='notice'>You attach [victim.name] to the back of the [src]!</span>")
+
+/obj/vehicle/clowncar/train/eject_all(mob/user)
+	var/atom/movable/current = src
+	while (current.GetComponent(/datum/component/train))
+		var/datum/component/train/train = current.GetComponent(/datum/component/train)
+		var/next = train.cart
+		train.RemoveComponent()
+		current = next
 
 /obj/vehicle/clowncar/cluwne
 	name = "cluwne car"
@@ -1322,7 +1342,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 		boutput(user, "<span class='alert'>You think it's a REALLY bad idea to use the [src].</span>")
 		return
 
-	if(target == user && !user.stat)	// if drop self, then climbed in
+	if(target == user && can_act(user))	// if drop self, then climbed in
 		if(rider)
 			return
 		rider = target
@@ -1472,12 +1492,12 @@ TYPEINFO(/obj/vehicle/clowncar)
 	return
 
 /obj/vehicle/cat/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || user.hasStatus(list("weakened", "paralysis", "stunned")) || user.stat || isAI(user))
+	if (rider || !istype(target) || target.buckled || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || user.hasStatus(list("weakened", "paralysis", "stunned")) || !can_act(user) || isAI(user))
 		return
 
 	var/msg
 
-	if(target == user && !user.stat)	// if drop self, then climbed in
+	if(target == user && can_act(user))	// if drop self, then climbed in
 		msg = "[user.name] climbs onto the [src]."
 		boutput(user, "<span class='notice'>You climb onto the [src].</span>")
 	else if(target != user && !user.restrained())
@@ -1504,7 +1524,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 	if(usr != rider)
 		..()
 		return
-	if(!(usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat))
+	if(can_act(usr))
 		eject_rider(0, 1)
 	return
 
@@ -1702,7 +1722,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 			return
 		..()
 		return
-	if(!(usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat))
+	if(can_act(usr))
 		eject_rider(0, 1, 0)
 	return
 
@@ -1777,7 +1797,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 		boutput(user, "<span class='notice'>You don't feel cool enough to use the [src].</span>")
 		return
 
-	if(target == user && !user.stat)	// if drop self, then climbed in
+	if(target == user && can_act(usr))	// if drop self, then climbed in
 		target.set_loc(src)
 		if(rider)
 			msg = "[user.name] climbs into the front of the [src]."
@@ -1988,7 +2008,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 	set name = "Toggle Gib On Collision"
 	set desc = "Toggle gibbing when colliding with mobs."
 
-	if(usr.stat)
+	if(!can_act(usr))
 		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
 	if(istype(usr.loc, /obj/vehicle/adminbus))
@@ -2167,7 +2187,7 @@ TYPEINFO(/obj/vehicle/forklift)
 	name = "forklift"
 	desc = "A vehicle used to transport crates."
 	icon_state = "forklift"
-	anchored = 1
+	anchored = ANCHORED
 	health = 80
 	health_max = 80
 	var/list/helditems = list()	//Items being held by the forklift
@@ -2213,7 +2233,7 @@ TYPEINFO(/obj/vehicle/forklift)
 	set src in oview(1)
 	set category = "Local"
 
-	if (usr.stat)
+	if (!can_act(usr) || !in_interact_range(src, usr))
 		return
 
 	if(!ishuman(usr))
@@ -2238,7 +2258,7 @@ TYPEINFO(/obj/vehicle/forklift)
 	set src in oview(1)
 	set category = "Local"
 
-	if (usr.stat)
+	if (!can_act(usr))
 		return
 
 	if (usr.loc != src)
@@ -2255,7 +2275,7 @@ TYPEINFO(/obj/vehicle/forklift)
 		..()
 		return
 
-	if (usr.stat)
+	if (!can_act(usr))
 		return
 
 	eject_rider()
@@ -2286,7 +2306,7 @@ TYPEINFO(/obj/vehicle/forklift)
 // (ghost riders, phantom crates) when combined with the base relaymove
 /obj/vehicle/forklift/relaymove(mob/user as mob, direction)
 
-	if (user.stat)
+	if (!can_act(user))
 		return
 
 	if (broken)
@@ -2321,7 +2341,7 @@ TYPEINFO(/obj/vehicle/forklift)
 	set category = "Forklift"
 	set src = usr.loc
 
-	if (usr.stat)
+	if (!can_act(usr))
 		return
 
 	if (broken)
@@ -2341,7 +2361,7 @@ TYPEINFO(/obj/vehicle/forklift)
 
 /obj/vehicle/forklift/MouseDrop_T(atom/movable/A as obj|mob, mob/user as mob)
 
-	if (user.stat)
+	if (!can_act(user) || !in_interact_range(src, user))
 		return
 
 	//pick up crates with forklift
@@ -2395,7 +2415,7 @@ TYPEINFO(/obj/vehicle/forklift)
 	set category = "Forklift"
 	set src = usr.loc
 
-	if (usr.stat)
+	if (!can_act(usr))
 		return
 
 	var/turf/T = get_turf(src)

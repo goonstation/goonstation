@@ -7,7 +7,7 @@
 	plane = PLANE_NOSHADOW_BELOW
 	desc = "A board for pinning important notices upon."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/notices = 0
 
 

@@ -27,7 +27,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	name = "area power controller"
 	desc = "The smaller, more numerous sibling of the SMES. Controls the power of entire rooms, and if the generator goes offline, can supply electricity from an internal cell."
 	icon_state = "apc0"
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_ABOVE
 	req_access = list(access_engineering_power)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
@@ -503,9 +503,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		if (istype(W, /obj/item/robojumper))
 			return
 		else return src.Attackhand(user)
-	else if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (istype(W, /obj/item/card/id))			// trying to unlock the interface with an ID card
+	else if (istype(get_id_card(W), /obj/item/card/id))			// trying to unlock the interface with an ID card
 		if(emagged)
 			boutput(user, "The interface is broken")
 		else if(opened)
@@ -1275,7 +1273,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		if(chargemode && charging == 1 && operating)
 			if(excess > 0)		// check to make sure we have enough to charge
 				// Max charge is perapc share, capped to cell capacity, or % per second constant (Whichever is smallest)
-				var/ch = min(perapc, (cell.maxcharge - cell.charge), (cell.maxcharge*CHARGELEVEL))
+				var/ch = min(perapc, (cell.maxcharge - cell.charge), (cell.maxcharge * CHARGELEVEL * PROCESSING_TIER_MULTI(src)))
 				add_load(ch) // Removes the power we're taking from the grid
 				cell.give(ch) // actually recharge the cell
 
@@ -1297,7 +1295,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			// require that we have sufficient power for 10 cycles before we start actually charging
 			// TODO: consider not doing this and just trickle charging?
 			if(!charging)
-				if(excess > cell.maxcharge*CHARGELEVEL)
+				if(excess > cell.maxcharge * CHARGELEVEL * PROCESSING_TIER_MULTI(src))
 					chargecount++
 				else
 					chargecount = 0
@@ -1379,7 +1377,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 /obj/machinery/power/apc/meteorhit(var/obj/O as obj)
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
-		explosion(src, src.loc, 1, 2, 4, 6, 1)
+		explosion(src, src.loc, 1, 2, 4, 6)
 		SPAWN(1 DECI SECOND)
 			qdel(src)
 	else set_broken()
@@ -1388,7 +1386,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 /obj/machinery/power/apc/ex_act(severity)
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
-		explosion(src, src.loc, 1, 2, 4, 6, 1)
+		explosion(src, src.loc, 1, 2, 4, 6)
 		SPAWN(1 DECI SECOND)
 			qdel(src)
 	else
@@ -1409,7 +1407,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 /obj/machinery/power/apc/temperature_expose(null, temp, volume)
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
-		explosion(src, src.loc, 1, 2, 4, 6, 1)
+		explosion(src, src.loc, 1, 2, 4, 6)
 		SPAWN(1 DECI SECOND)
 			qdel (src)
 
@@ -1432,7 +1430,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	if(!get_connection() || !operating || shorted)
 		return
 	if( cell?.charge>=20)
-		cell.charge-=20;
+		cell.use(20)
 		SPAWN(0)
 			for(var/obj/machinery/light/L in area)
 				if (L.type == /obj/machinery/light/emergency && omit_emergency_lights)
@@ -1532,10 +1530,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 					if (!isnull(newEnviron))
 						environ = round(clamp(newEnviron, 0, 3))
 
-					if (newCover)
-						coverlocked = 1
-					else
-						coverlocked = 0
+					if (!isnull(newCover))
+						coverlocked = newCover ? TRUE : FALSE
 
 					UpdateIcon()
 					update()

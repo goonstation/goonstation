@@ -23,8 +23,11 @@
 	else if ((M.health <= 0 || M.find_ailment_by_type(/datum/ailment/malady/flatline)) && src.health >= -75.0)
 		if (src == M && src.is_bleeding())
 			src.staunch_bleeding(M) // if they've got SOMETHING to do let's not just harass them for trying to do CPR on themselves
-		else
+		else if (ishuman(M))
 			src.administer_CPR(M)
+		else
+			src.visible_message("<span class='notice'>[src] shakes [M], trying to wake them up!</span>")
+			hit_twitch(M)
 	else if (M.is_bleeding())
 		src.staunch_bleeding(M)
 	else if (src.health > 0)
@@ -313,6 +316,10 @@
 
 	//if (target.melee_attack_test(src, null, null, 1) != 1)
 	//	return
+	for(var/obj/item/grab/grab in target.equipped_list()) //if we're disarming the person grabbing us then resist instead
+		if (grab.affecting == src)
+			grab.do_resist()
+			return
 
 	var/datum/attackResults/disarm/msgs = calculate_disarm_attack(target, 0, 0, extra_damage, is_special)
 	msgs.damage_type = damtype
@@ -676,11 +683,12 @@
 	if (!(src.traitHolder && src.traitHolder.hasTrait("glasscannon")))
 		msgs.stamina_self -= STAMINA_HTH_COST
 
-	//set attack message
-	if(pre_armor_damage > 0 && damage <= 0 )
-		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target], but [target]'s armor blocks it!</B></span>"
-	else
-		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
+	if(!do_kick)
+		//set attack message
+		if(pre_armor_damage > 0 && damage <= 0 )
+			msgs.base_attack_message = "<span class='alert'><B>[src] [do_punch ? src.punchMessage : "attacks"] [target], but [target]'s armor blocks it!</B></span>"
+		else
+			msgs.base_attack_message = "<span class='alert'><B>[src] [do_punch ? src.punchMessage : "attacks"] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
 
 	//check godmode/sanctuary/etc
 	var/attack_resistance = msgs.target.check_attack_resistance()
@@ -1009,30 +1017,28 @@
 				target.attackby_finished(owner)
 			target.UpdateDamageIcon()
 
+			if (damage > 1)
+				if (isrevolutionary(owner))	//attacker is rev, all heads who see the attack get mutiny buff
+					for (var/datum/mind/M in ticker?.mode?.get_living_heads())
+						if (M.current)
+							if (GET_DIST(owner,M.current) <= 7)
+								if (owner in viewers(7,M.current))
+									M.current.changeStatus("mutiny", 10 SECONDS)
 
-			if (ticker.mode && ticker.mode.type == /datum/game_mode/revolution)
-				var/datum/game_mode/revolution/R = ticker.mode
-
-				if (damage > 1)
-					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))	//attacker is rev, all heads who see the attack get mutiny buff
-						for (var/datum/mind/M in R.get_living_heads())
-							if (M.current)
-								if (GET_DIST(owner,M.current) <= 7)
-									if (owner in viewers(7,M.current))
-										M.current.changeStatus("mutiny", 10 SECONDS)
-
-				if(target.client && target.health < 0 && ishuman(target)) //Only do rev stuff if they have a client and are low health
-					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
-						if (R.add_revolutionary(target.mind))
-							target.changeStatus("newcause", 5 SECONDS)
-							target.HealDamage("All", max(30 - target.health,0), 0)
-							target.HealDamage("All", 0, max(30 - target.health,0))
+			if(target.client && target.health < 0 && ishuman(target)) //Only do rev stuff if they have a client and are low health
+				var/mob/living/carbon/human/H = target
+				if (H.can_be_converted_to_the_revolution())
+					if (isrevolutionary(owner))
+						if (H.mind?.add_antagonist(ROLE_REVOLUTIONARY, source = ANTAGONIST_SOURCE_CONVERTED))
+							H.changeStatus("newcause", 5 SECONDS)
+							H.HealDamage("All", max(30 - H.health,0), 0)
+							H.HealDamage("All", 0, max(30 - H.health,0))
 					else
-						if (R.remove_revolutionary(target.mind))
-							target.delStatus("derevving") //Make sure they lose this status upon completion
-							target.changeStatus("newcause", 5 SECONDS)
-							target.HealDamage("All", max(30 - target.health,0), 0)
-							target.HealDamage("All", 0, max(30 - target.health,0))
+						if (H.mind?.remove_antagonist(ROLE_REVOLUTIONARY))
+							H.delStatus("derevving") //Make sure they lose this status upon completion
+							H.changeStatus("newcause", 5 SECONDS)
+							H.HealDamage("All", max(30 - H.health,0), 0)
+							H.HealDamage("All", 0, max(30 - H.health,0))
 		clear(null)
 
 /datum/attackResults/disarm

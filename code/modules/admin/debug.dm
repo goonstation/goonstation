@@ -403,8 +403,11 @@ var/global/debug_messages = 0
 		src.verbs += /client/proc/cmd_debug_del_all_cancel
 		src.verbs += /client/proc/cmd_debug_del_all_check
 		boutput(usr, "Deleting [hsbitem]...")
+		var/station_only = alert("Only delete from the station Z?",,"Yes" ,"No")
 		var/numdeleted = 0
 		for(var/atom/O as anything in find_all_by_type(hsbitem, lagcheck=(background == "yes")))
+			if ((station_only == "Yes") && O.z != Z_LEVEL_STATION)
+				continue
 			qdel(O)
 			numdeleted++
 			if(background == "Yes")
@@ -443,9 +446,12 @@ var/global/debug_messages = 0
 		src.verbs += /client/proc/cmd_debug_del_all_cancel
 		src.verbs += /client/proc/cmd_debug_del_all_check
 		boutput(usr, "Deleting [hsbitem]...")
+		var/station_only = alert("Only delete from the station Z?",,"Yes" ,"No")
 		var/numdeleted = 0
 		var/numtotal = 0
 		for(var/atom/O as anything in find_all_by_type(hsbitem, lagcheck=(background == "yes")))
+			if ((station_only == "Yes") && O.z != Z_LEVEL_STATION)
+				continue
 			numtotal++
 			if(prob(50))
 				qdel(O)
@@ -518,8 +524,6 @@ var/global/debug_messages = 0
 	if (!race)
 		return
 
-	if(H.mutantrace)
-		qdel(H.mutantrace)
 	H.set_mutantrace(race)
 	H.set_face_icon_dirty()
 	H.set_body_icon_dirty()
@@ -577,13 +581,9 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Check Gang Scores"
 
-	if(!(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)))
-		alert("It isn't gang mode, dummy!")
-		return
-
 	boutput(usr, "Gang scores:")
 
-	for(var/datum/gang/G in ticker.mode:gangs)
+	for(var/datum/gang/G in get_all_gangs())
 		boutput(usr, "[G.gang_name]: [G.gang_score()] ([G.num_areas_controlled()] areas)")
 
 /client/proc/scenario()
@@ -780,7 +780,7 @@ body
 	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 	if (thetype)
 		boutput(usr, "<span class='notice'><b>All instances of [thetype]: </b></span>")
-		var/list/all_instances = find_all_by_type(thetype, .proc/print_instance, src)
+		var/list/all_instances = find_all_by_type(thetype, PROC_REF(print_instance), src)
 		boutput(usr, "<span class='notice'>Found [length(all_instances)] instances total.</span>")
 	else
 		boutput(usr, "No type matches for [typename].")

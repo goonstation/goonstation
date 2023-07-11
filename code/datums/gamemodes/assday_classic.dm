@@ -89,7 +89,7 @@
 				traitor.current.show_antag_popup("traitorhard")
 
 			if (ROLE_WRAITH)
-				traitor.add_antagonist(ROLE_WRAITH)
+				traitor.add_antagonist(ROLE_WRAITH, source = ANTAGONIST_SOURCE_ROUND_START)
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()

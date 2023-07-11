@@ -102,21 +102,21 @@
 			else if (donor_cell.charge <= jumper.charge_amount)
 				boutput(user, "<span class='alert'>[jumper.positive ? "You don't" : "[apc] doesn't"] have enough power to transfer!</span>")
 			else if (overspill >= jumper.charge_amount)
-				donor_cell.charge -= overspill
+				donor_cell.use(overspill)
 				recipient_cell.charge += overspill
 				if (jumper.positive)
 					user.visible_message("<span class='notice'>[user] transfers some of their power to [apc]!</span>", "<span class='notice'>You transfer [overspill] charge. The APC is now fully charged.</span>")
 				else
-					user.visible_message("<span class='notice'>[user] transfers some of the power from [apc] to yourself!</span>", "<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>")
-					logTheThing(LOG_STATION, user, "drains [overspill] power from the APC [apc] [log_loc(apc)]")
+					user.visible_message("<span class='notice'>[user] transfers some of the power from [apc] to themselves!</span>", "<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>")
+					logTheThing(LOG_STATION, user, "drains [overspill] power from the APC [apc] now [100*apc.cell.charge/apc.cell.maxcharge]% [log_loc(apc)]")
 			else
-				donor_cell.charge -= jumper.charge_amount
+				donor_cell.use(jumper.charge_amount)
 				recipient_cell.charge += jumper.charge_amount
 				if (jumper.positive)
 					user.visible_message("<span class='notice'>[user] transfers some of their power to [apc]!</span>", "<span class='notice'>You transfer [jumper.charge_amount] charge.</span>")
 				else
 					user.visible_message("<span class='notice'>[user] transfers some of the power from [apc] to yourself!</span>", "<span class='notice'>You transfer [jumper.charge_amount] charge.</span>")
-					logTheThing(LOG_STATION, user, "drains [jumper.charge_amount] power from the APC [apc] [log_loc(apc)]")
+					logTheThing(LOG_STATION, user, "drains [jumper.charge_amount] power from the APC [apc] now [100*apc.cell.charge/apc.cell.maxcharge]% [log_loc(apc)]")
 				restart = TRUE
 			apc.charging = apc.chargemode
 
@@ -321,7 +321,7 @@
 	if (issilicon(user))
 		var/mob/living/silicon/S = user
 		if (S.cell)
-			S.cell.charge -= cost
+			S.cell.use(cost)
 	else
 		if (metal_ammo > 0) //shouldn't be possible to fail
 			metal_ammo--
@@ -500,7 +500,7 @@
 
 			if (isrobot(user)) // Carbon mobs might end up using the synthesizer somehow, I guess?
 				var/mob/living/silicon/robot/R = user
-				if (R.cell) R.cell.charge -= 100
+				if (R.cell) R.cell.use(100)
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] dispenses a [src.vend_this]!</span>", "<span class='notice'>You dispense a [src.vend_this]!</span>")
 			src.last_use = world.time
