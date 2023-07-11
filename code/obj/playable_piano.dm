@@ -401,8 +401,7 @@ TYPEINFO(/obj/player_piano)
 		src.desc = "A piano that can take raw text and turn it into music! The future is now! The free user essentials box has been raided!" //jaaaaaaaank
 
 	proc/start_storing_pianos(obj/item/I, mob/user)
-		I.AddComponent(/datum/component/player_piano_auto_linker)
-		SEND_SIGNAL(I, COMSIG_START_STORING_PIANOS, src, user)
+		I.AddComponent(/datum/component/player_piano_auto_linker, src, user)
 
 #undef MIN_TIMING
 #undef MAX_TIMING

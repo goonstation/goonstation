@@ -1,15 +1,21 @@
 /datum/component/player_piano_auto_linker
 	var/list/pianos
 
-/datum/component/player_piano_auto_linker/Initialize(var/datum/component/mechanics_holder/C)
+TYPEINFO(/datum/component/player_piano_auto_linker)
+	initialization_args = list(
+		ARG_INFO("start_piano", DATA_INPUT_REF, "The first piano to store", null),
+		ARG_INFO("user", DATA_INPUT_REF, "The user who's using this", null)
+	)
+
+/datum/component/player_piano_auto_linker/Initialize(atom/start_piano, atom/user)
 	. = ..()
-	if(!ispulsingtool(parent))
+	if (!ispulsingtool(parent) || start_piano == null || user == null || !istype(start_piano, /obj/player_piano) || !istype(user, /mob))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_START_STORING_PIANOS, PROC_REF(start_storing_pianos))
 	RegisterSignal(parent, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE, PROC_REF(is_active))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(store_piano))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(finish_storing_pianos))
 	src.pianos = list()
+	src.start_storing_pianos(start_piano, user)
 
 /datum/component/player_piano_auto_linker/proc/can_store_piano(obj/player_piano/piano, mob/user)
 	if (piano.is_busy)
@@ -43,7 +49,7 @@
 			link_to.add_piano(link_from)
 			sleep(0.1 SECOND)
 
-/datum/component/player_piano_auto_linker/proc/start_storing_pianos(obj/item/pulser, obj/player_piano/piano, mob/user)
+/datum/component/player_piano_auto_linker/proc/start_storing_pianos(obj/player_piano/piano, mob/user)
 	if (!src.can_store_piano(piano, user))
 		src.RemoveComponent()
 		return
@@ -79,7 +85,6 @@
 	return TRUE
 
 /datum/component/player_piano_auto_linker/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_START_STORING_PIANOS)
 	UnregisterSignal(parent, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACKBY_PRE)
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)

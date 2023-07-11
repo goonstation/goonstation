@@ -139,5 +139,4 @@
 
 // ---- Player Piano Automatic Linking ----
 
-#define COMSIG_START_STORING_PIANOS "start_storing_pianos"
 #define COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE "is_player_piano_auto_linker_active"
