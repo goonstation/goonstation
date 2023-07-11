@@ -1,0 +1,189 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/cleanable/blood/drip/med{
+	dry = 1
+	},
+/obj/item/disk/data/floppy/read_only/network_progs{
+	pixel_y = 0;
+	layer = 4;
+	shrunk = -1;
+	desc = "A collection of network management tools, found wedged in an engineer's chest cavity. You swear you can hear it breathing.";
+	uses_material_appearance = 1
+	},
+/obj/cable/yellow{
+	icon_state = "1-2";
+	default_material = "bone";
+	uses_material_appearance = 1;
+	insulator_default = "flesh"
+	},
+/obj/dialogueobj/engineerscorpse{
+	pixel_y = -5;
+	desc = "A dead engineer with a gnarly dent in their head and a floppy disc...embedded in their chest. Eugh..."
+	},
+/obj/decal/cleanable/blood/drip/high{
+	pixel_y = -18;
+	dry = 1
+	},
+/turf/simulated/floor/industrial,
+/area/dmm_suite/clear_area{
+	sound_fx_1 = 'sound/ambience/station/Machinery_Computers1.ogg';
+	sound_environment = 10
+	})
+"c" = (
+/obj/decal/cleanable/robot_debris{
+	pixel_y = 11
+	},
+/obj/item/paper/thermal{
+	pixel_y = 15;
+	pixel_x = -7;
+	info = "<center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center><center>I WILL NOT DIE</center>"
+	},
+/obj/decal/cleanable/molten_item,
+/obj/cable/yellow{
+	icon_state = "0-2";
+	uses_material_appearance = 1;
+	insulator_default = "flesh"
+	},
+/obj/item/cable_coil/yellow/cut{
+	spawn_insulator_name = "flesh"
+	},
+/turf/simulated/floor/industrial{
+	burnt = 1
+	},
+/area/dmm_suite/clear_area{
+	sound_fx_1 = 'sound/ambience/station/Machinery_Computers1.ogg';
+	sound_environment = 12
+	})
+"m" = (
+/obj/decal/cleanable/blood/gibs/core{
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/obj/item/raw_material/scrap_metal{
+	pixel_y = -4;
+	pixel_x = -12;
+	layer = 4
+	},
+/turf/simulated/floor/industrial{
+	burnt = 1
+	},
+/area/dmm_suite/clear_area{
+	sound_fx_1 = 'sound/ambience/station/Machinery_Computers1.ogg';
+	sound_environment = 10
+	})
+"r" = (
+/obj/decal/cleanable/oil/streak,
+/obj/decal/fakeobjects/operatorconsole{
+	pixel_y = -1;
+	pixel_x = -1;
+	name = "dusty computer tower";
+	desc = "An old computer operating console. Most of the lights have gone out, except for one that's gently flashing red. You can hear a faint humming coming from it..."
+	},
+/obj/overlay/simple_light/disco_lighting/oscillator{
+	color_1 = "#000000";
+	color_2 = "#BB0B05";
+	pixel_y = -39;
+	pixel_x = -24;
+	shrunk = 5
+	},
+/obj/machinery/power/terminal/netlink,
+/turf/simulated/floor/plating/scorched,
+/area/dmm_suite/clear_area{
+	sound_fx_1 = 'sound/ambience/station/Machinery_Computers1.ogg';
+	sound_environment = 10;
+	sound_loop = 'sound/ambience/station/Machinery_Computers1.ogg'
+	})
+"B" = (
+/obj/decal/cleanable/robot_debris/limb{
+	pixel_x = -7;
+	pixel_y = 23
+	},
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/industrial,
+/area/dmm_suite/clear_area{
+	sound_fx_1 = 'sound/ambience/station/Machinery_Computers1.ogg';
+	sound_environment = 10
+	})
+"D" = (
+/obj/decal/cleanable/dirt,
+/obj/item/crowbar/yellow{
+	pixel_x = -10
+	},
+/turf/simulated/floor/industrial,
+/area/dmm_suite/clear_area{
+	sound_fx_1 = 'sound/ambience/station/Machinery_Computers1.ogg';
+	sound_environment = 10
+	})
+"G" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/item/disk/data/memcard{
+	default_material = "flesh";
+	name = "melted circuit board";
+	desc = "It's melted straight into the drive and won't budge.";
+	pixel_x = -18;
+	pixel_y = -3;
+	layer = 2
+	},
+/turf/simulated/floor/industrial{
+	burnt = 1
+	},
+/area/dmm_suite/clear_area{
+	sound_fx_1 = 'sound/ambience/station/Machinery_Computers1.ogg';
+	sound_environment = 10
+	})
+"T" = (
+/obj/decal/cleanable/molten_item,
+/turf/simulated/floor/industrial,
+/area/dmm_suite/clear_area{
+	sound_fx_1 = 'sound/ambience/station/Machinery_Computers1.ogg';
+	sound_environment = 10
+	})
+"X" = (
+/obj/item/cable_coil/yellow/cut{
+	amount = 3;
+	pixel_x = 1;
+	pixel_y = 7
+	},
+/obj/decal/fakeobjects/skeleton{
+	layer = 2;
+	pixel_y = 4;
+	pixel_x = -3;
+	desc = "The remains of a human. Their bones look scorched.";
+	color = "#404040";
+	name = "burnt skeleton"
+	},
+/obj/decal/cleanable/blood/drip/high{
+	color = "#2c0e0e";
+	dry = 1;
+	mat_changename = 0;
+	desc = "Blood, dried and burnt.";
+	mat_changedesc = 0;
+	name = "burnt blood"
+	},
+/obj/item/wirecutters/yellow{
+	pixel_y = -5;
+	pixel_x = 4
+	},
+/turf/simulated/floor/industrial{
+	burnt = 1
+	},
+/area/dmm_suite/clear_area{
+	sound_fx_1 = 'sound/ambience/station/Machinery_Computers1.ogg';
+	sound_environment = 10
+	})
+
+(1,1,1) = {"
+r
+c
+a
+"}
+(2,1,1) = {"
+G
+m
+T
+"}
+(3,1,1) = {"
+X
+B
+D
+"}

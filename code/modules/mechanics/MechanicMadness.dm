@@ -728,7 +728,7 @@
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
-			AM.set_loc(src.loc)
+			AM.set_loc(get_turf(src))
 			AM.pipe_eject(0)
 			AM?.throw_at(target, 5, 1)
 
@@ -2828,7 +2828,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	density = 0
 	can_rotate = 1
 	var/obj/item/gun/Gun = null
-	var/list/compatible_guns = list(/obj/item/gun/kinetic, /obj/item/gun/flamethrower)
+	var/list/compatible_guns = list(/obj/item/gun/kinetic, /obj/item/gun/flamethrower, /obj/item/gun/reagent)
 	cabinet_banned = TRUE // non-functional thankfully
 	get_desc()
 		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot(null) ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"

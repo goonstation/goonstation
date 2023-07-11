@@ -558,7 +558,7 @@
 	var/imdrone
 	if((imrobot = isrobot(other.loc)) || (imdrone = isghostdrone(other.loc)) || istype(other.loc, /obj/item/magtractor))
 		if (imrobot)
-			max_stack = 500
+			max_stack = 300
 		else if (imdrone)
 			max_stack = 1000
 		if (other != src && check_valid_stack(src))
