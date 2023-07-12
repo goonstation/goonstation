@@ -468,8 +468,14 @@ TYPEINFO(/obj/item/device/reagentscanner)
 		user.visible_message("<span class='notice'><b>[user]</b> scans [A] with [src]!</span>",\
 		"<span class='notice'>You scan [A] with [src]!</span>")
 
-		src.scan_results = scan_reagents(A, visible = 1)
-		tooltip_rebuild = 1
+		src.scan_results = scan_reagents(A, visible = TRUE)
+		if (isturf(A))
+			var/turf/T = A
+			if (T.active_liquid)
+				src.scan_results += scan_reagents(T.active_liquid, visible = TRUE)
+			if (T.active_airborne_liquid)
+				src.scan_results += scan_reagents(T.active_airborne_liquid, visible = TRUE)
+		tooltip_rebuild = TRUE
 
 		if (!isnull(A.reagents))
 			if (A.reagents.reagent_list.len > 0)
