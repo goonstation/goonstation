@@ -465,7 +465,7 @@
 	record_prog.mode = 1
 	pda.AttackSelf(usr)
 
-/proc/scan_reagents(atom/A as turf|obj|mob, show_temp = TRUE, var/single_line = FALSE, visible = FALSE, medical = FALSE, admin = FALSE)
+/proc/scan_reagents(atom/A, show_temp = TRUE, var/single_line = FALSE, visible = FALSE, medical = FALSE, admin = FALSE)
 	if (!A)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
 

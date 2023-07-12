@@ -33,6 +33,9 @@
 	proc/attackby_pre(source, atom/target, mob/user)
 		if (target && user && (src.last_fished < TIME + src.fishing_delay))
 			var/datum/fishing_spot/fishing_spot = null
+			if (isturf(target))
+				var/turf/T = target
+				target = T.active_liquid || target
 			var/fishing_spot_type = target.type
 			while (fishing_spot_type != null)
 				fishing_spot = global.fishing_spots[fishing_spot_type]

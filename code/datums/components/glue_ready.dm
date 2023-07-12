@@ -134,7 +134,7 @@ TYPEINFO(/datum/component/glue_ready)
 		return
 	if(!can_reach(user, target))
 		return
-	if(istype(target, /obj/fluid) || istype(target, /obj/effect))
+	if(istype(target, /obj/effect))
 		target = get_turf(target)
 	glue_things(target, parent, user, user)
 	if("icon-x" in params)
@@ -146,7 +146,7 @@ TYPEINFO(/datum/component/glue_ready)
 		return
 	if(isfloor(target))
 		return
-	if(istype(target, /obj/fluid) || istype(target, /obj/effect))
+	if(istype(target, /obj/effect))
 		target = get_turf(target)
 	glue_things(target, parent, null, thrown_thing.user)
 	return TRUE

@@ -83,7 +83,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 		//smoke/fluid :
 		var/turf/my_turf = get_turf(src)
 		if (my_turf)
-			var/obj/fluid/F = my_turf.active_airborne_liquid
+			var/obj/fluid/airborne/F = my_turf.active_airborne_liquid
 			if (F?.group)
 				active_power_usage += (inlet_flow / 8) * 5 KILO WATTS
 				F.group.drain(F, inlet_flow / 8, src.buffer)

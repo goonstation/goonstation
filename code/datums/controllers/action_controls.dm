@@ -1733,7 +1733,7 @@ var/datum/action_controller/actions
 	New(Mop, Target)
 		mop = Mop
 		target = Target
-		duration = istype(target,/obj/fluid) ? 0 : 10
+		duration = istype(target, /obj/fluid) ? 0 : 10
 		..()
 
 	onUpdate()
