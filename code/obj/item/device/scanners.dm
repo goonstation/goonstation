@@ -469,12 +469,6 @@ TYPEINFO(/obj/item/device/reagentscanner)
 		"<span class='notice'>You scan [A] with [src]!</span>")
 
 		src.scan_results = scan_reagents(A, visible = TRUE)
-		if (isturf(A))
-			var/turf/T = A
-			if (T.active_liquid)
-				src.scan_results += "\n[scan_reagents(T.active_liquid, visible = TRUE)]"
-			if (T.active_airborne_liquid)
-				src.scan_results += "\n[scan_reagents(T.active_airborne_liquid, visible = TRUE)]"
 		tooltip_rebuild = TRUE
 
 		if (!isnull(A.reagents))

@@ -64,10 +64,10 @@
 		name = "Reagent Scan"
 		size = 6
 
-		scan_atom(atom/A as mob|obj|turf|area)
+		scan_atom(atom/A)
 			if (..())
 				return
-			. = scan_reagents(A, visible = 1)
+			. = scan_reagents(A, visible = TRUE)
 
 	//Plant scanner
 	plant_scan
