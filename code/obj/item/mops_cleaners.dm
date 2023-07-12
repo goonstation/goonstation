@@ -341,7 +341,7 @@ WET FLOOR SIGN
 		if (mopcount > 0)
 			mopcount--
 	else if (T)
-		U.clean_forensic()
+		T.clean_forensic()
 		user.show_text("You have mopped up [A]!", "blue", group = "mop")
 	else
 		A.clean_forensic()
@@ -552,9 +552,7 @@ WET FLOOR SIGN
 				choices |= "Soak up"
 			if (T.wet)
 				choices |= "Dry"
-			if (src.reagents.total_volume)
-				choices |= "Wipe down"
-		if (src.reagents.total_volume && !target_is_fluid)
+		if (src.reagents.total_volume)
 			choices |= "Wipe down"
 			if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
 				choices |= "Wring out"

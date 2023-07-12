@@ -498,7 +498,6 @@
 		var/targetalpha = max(25, (src.average_color.a / 255) * src.max_alpha)
 		var/targetcolor = rgb(src.average_color.r, src.average_color.g, src.average_color.b)
 
-		src.master_reagent_name = src.reagents?.get_master_reagent_name()
 		src.master_reagent_id = src.reagents?.get_master_reagent_id()
 
 		var/master_opacity = !src.drains_floor && src.reagents?.get_master_reagent_gas_opaque()
