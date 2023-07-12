@@ -54,7 +54,7 @@
 /area/mining/hangar)
 "aE" = (
 /obj/item/cigbutt,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/security)
 "aM" = (
@@ -388,7 +388,7 @@
 "je" = (
 /obj/decal/cleanable/cobweb2,
 /obj/item/scrap,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/damaged3,
 /area/noGenerate)
 "jZ" = (
@@ -1570,7 +1570,7 @@
 /obj/decal/fakeobjects/lighttube_broken{
 	dir = 4
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/bridge)
 "tz" = (
@@ -2367,7 +2367,7 @@
 /turf/simulated/floor,
 /area/mining/quarters)
 "yk" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
 "yl" = (
@@ -4706,7 +4706,7 @@
 /obj/crevice{
 	pixel_y = 30
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/lattice,
 /turf/simulated/floor/martian,
 /area/noGenerate)

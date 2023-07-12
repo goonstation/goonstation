@@ -384,9 +384,7 @@
 /area/pod_wars/team1/hangar)
 "bH" = (
 /obj/machinery/light/incandescent/netural,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "bL" = (
@@ -1296,9 +1294,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "eW" = (
@@ -1415,9 +1411,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "fq" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/yellow/side{
 	dir = 4
 	},
@@ -2051,9 +2045,7 @@
 	},
 /area/pod_wars/team2/bridge)
 "hE" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/yellow/corner{
 	dir = 8
 	},
@@ -2343,9 +2335,7 @@
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
 "iH" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -2695,9 +2685,7 @@
 	icon_state = "4-8"
 	},
 /obj/stool/bar,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "kj" = (
@@ -2885,9 +2873,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "kW" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
@@ -3044,9 +3030,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/primary)
 "lD" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team2/hangar)
 "lF" = (
@@ -3463,9 +3447,7 @@
 /area/pod_wars/asteroid/major/maj_7)
 "ne" = (
 /obj/machinery/light/incandescent/netural,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/red/side{
 	dir = 1
 	},
@@ -3866,9 +3848,7 @@
 /obj/stool/chair/comfy/blue{
 	dir = 4
 	},
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/blue/side{
 	dir = 4
 	},
@@ -3932,9 +3912,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/mess)
 "oN" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "oS" = (
@@ -4014,9 +3992,7 @@
 /obj/stool/chair/comfy/blue{
 	dir = 8
 	},
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/blue/side{
 	dir = 8
 	},
@@ -4684,9 +4660,7 @@
 /area/pod_wars/team1/manufacturing)
 "rp" = (
 /obj/stool/chair/comfy/blue,
-/obj/landmark/start{
-	name = "NanoTrasen Commander"
-	},
+/obj/landmark/start/job/podwars/NT/commander,
 /turf/unsimulated/floor/blue/side,
 /area/pod_wars/team1/bridge)
 "rr" = (
@@ -5221,9 +5195,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/landingpads)
 "tE" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team1/hangar)
 "tF" = (
@@ -5796,9 +5768,7 @@
 /obj/stool/chair/comfy/red{
 	dir = 1
 	},
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/red/side{
 	dir = 1
 	},
@@ -6092,9 +6062,7 @@
 /area/pod_wars/spacejunk/fstation)
 "wE" = (
 /obj/stool/chair/comfy/red,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/red/side,
 /area/pod_wars/team2/bridge)
 "wF" = (
@@ -7670,9 +7638,7 @@
 	icon_state = "1-2"
 	},
 /obj/stool/bar,
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "Cx" = (
@@ -7779,9 +7745,7 @@
 /obj/stool/chair/comfy/red{
 	dir = 4
 	},
-/obj/landmark/start{
-	name = "Syndicate Commander"
-	},
+/obj/landmark/start/job/podwars/syndie/commander,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bridge)
 "CZ" = (
@@ -7801,9 +7765,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/simulated/floor/engine,
 /area/pod_wars/team1/powergen)
 "De" = (
@@ -7882,9 +7844,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/simulated/floor/engine,
 /area/pod_wars/team1/powergen)
 "Dx" = (
@@ -7912,9 +7872,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team2/hangar)
 "DB" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
@@ -7995,9 +7953,7 @@
 /area/pod_wars/team2/bridge)
 "DP" = (
 /obj/stool/bar,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "DQ" = (
@@ -8412,9 +8368,7 @@
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
 "Fq" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -9097,9 +9051,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/fstation/computercore)
 "HY" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "HZ" = (
@@ -9478,9 +9430,7 @@
 	icon_state = "1-8"
 	},
 /obj/stool/bar,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "JA" = (
@@ -9718,9 +9668,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/simulated/floor/engine,
 /area/pod_wars/team2/power)
 "Ku" = (
@@ -10041,9 +9989,7 @@
 /turf/space,
 /area/pod_wars/spacejunk/dorgun)
 "LK" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -10138,9 +10084,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team1/manufacturing)
 "Mc" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/yellow/corner{
 	dir = 1
 	},
@@ -10476,9 +10420,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "NF" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -10518,9 +10460,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/secdock)
 "NP" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/yellow/corner{
 	dir = 8
 	},
@@ -10787,9 +10727,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team1/hangar)
 "OH" = (
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/mess)
 "OJ" = (
@@ -11086,9 +11024,7 @@
 	},
 /area/pod_wars/team1/mining)
 "PR" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -12361,9 +12297,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team1/manufacturing)
 "US" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
 "UT" = (
@@ -12914,9 +12848,7 @@
 	},
 /area/space)
 "WX" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/yellow/side,
 /area/pod_wars/team1/mining)
@@ -13015,9 +12947,7 @@
 /area/pod_wars/spacejunk/reliant)
 "Xt" = (
 /obj/stool/bar,
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "Xu" = (
@@ -13252,9 +13182,7 @@
 /turf/space,
 /area/space)
 "Yj" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/yellow/corner{
 	dir = 1
 	},
@@ -13277,9 +13205,7 @@
 	icon_state = "2-4"
 	},
 /obj/stool/bar,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "Yn" = (
@@ -13454,9 +13380,7 @@
 	},
 /area/pod_wars/spacejunk/memorial_stats)
 "YR" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "YS" = (
