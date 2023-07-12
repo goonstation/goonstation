@@ -506,18 +506,18 @@
 			if (show_temp)
 				data += "<br><span class='notice'>Overall temperature: [reagents.total_temperature] K</span>"
 		else
-			data = "<span class='notice'>No active chemical agents found in [A].</span>"
+			data = "<b class='notice'>No active chemical agents found in [A].</b>"
 	else
-		data = "<span class='notice'>No significant chemical agents found in [A].</span>"
+		data = "<b class='notice'>No significant chemical agents found in [A].</b>"
 
 	if (isturf(A))
 		var/turf/T = A
 		var/obj/fluid/liquid = T.active_liquid
 		var/obj/fluid/airborne/gas = T.active_airborne_liquid
 		if (liquid)
-			data += "\n[scan_reagents(liquid, show_temp, visible, medical, admin)]"
+			data += "<br>[scan_reagents(liquid, show_temp, visible, medical, admin)]"
 		if (gas)
-			data += "\n[scan_reagents(gas, show_temp, visible, medical, admin)]"
+			data += "<br>[scan_reagents(gas, show_temp, visible, medical, admin)]"
 
 	return data
 
