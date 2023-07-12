@@ -36,7 +36,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "15"
 	anchored = ANCHORED_ALWAYS
-	mouse_opacity = 1
+	mouse_opacity = FALSE
 	layer = FLUID_LAYER
 
 	event_handler_flags = IMMUNE_MANTA_PUSH
