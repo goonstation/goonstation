@@ -107,7 +107,6 @@
 	var/obj/fluid/last_reacted = 0
 
 	var/datum/color/average_color = 0
-	var/master_reagent_name = 0
 	var/master_reagent_id = 0
 
 	var/can_update = 1 //flag is set to 0 temporarily when doing a split operation
@@ -551,8 +550,6 @@
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			//Same shit here with UpdateIcon
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-			fluid_ma.name = src.master_reagent_name //maybe obscure later?
 
 			F.finalalpha = targetalpha
 			F.finalcolor = targetcolor

@@ -165,7 +165,6 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		if (isturf(src.loc))
 			src.turf_remove_cleanup(src.loc)
 
-		name = "fluid"
 		fluid_ma.icon_state = "15"
 		fluid_ma.alpha = 255
 		fluid_ma.color = "#ffffff"
@@ -370,7 +369,6 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 					if (!F || !src.group || src.group.disposed) continue //set_up may decide to remove F
 
 					F.amt = src.group.amt_per_tile
-					F.name = src.name
 					F.color = src.finalcolor
 					F.finalcolor = src.finalcolor
 					F.alpha = src.finalalpha
@@ -546,8 +544,6 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 	update_icon(var/neighbor_was_removed = 0)  //BE WARNED THIS PROC HAS A REPLICA UP ABOVE IN FLUID GROUP UPDATE_LOOP. DO NOT CHANGE THIS ONE WITHOUT MAKING THE SAME CHANGES UP THERE OH GOD I HATE THIS
 
 		if (!src.group || !src.group.reagents) return
-
-		src.name = src.group.master_reagent_name ? src.group.master_reagent_name : src.group.reagents.get_master_reagent_name() //maybe obscure later?
 
 		var/color_changed = 0
 		var/datum/color/average = src.group.average_color ? src.group.average_color : src.group.reagents.get_average_color()
