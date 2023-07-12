@@ -74,7 +74,7 @@ datum/mind
 
 		Z_LOG_DEBUG("Mind/TransferTo", "New mob: \ref[new_character] ([new_character])")
 		if (new_character.disposed)
-			boutput(current, "You were about to be transferred into another body, but that body was pending deletion! You're a ghost now instead! Adminhelp if this is a problem.")
+			boutput(current, "<h3 class='alert'>You were about to be transferred into another body, but that body was pending deletion! You're a ghost now instead! Adminhelp if this is a problem.</h3>")
 			message_admins("Tried to transfer mind of mob [identify_object(current)] to qdel'd mob [identify_object(new_character)] God damnit.")
 			var/mob/dead/observer/obs = new(src.current)
 			src.transfer_to(obs)
@@ -85,7 +85,7 @@ datum/mind
 
 		if (new_character.client)
 			if (current)
-				boutput(current, "You were about to be transferred into another body, but that body was occupied!")
+				boutput(current, "<h3 class='alert'>You were about to be transferred into another body, but that body was occupied!</h3>")
 				var/errmsg = "Tried to transfer mind of mob [identify_object(current)] to mob with an existing client [identify_object(new_character)]"
 				message_admins(errmsg)
 				stack_trace(errmsg)

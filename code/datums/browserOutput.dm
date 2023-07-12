@@ -386,6 +386,9 @@ var/global
 		return "<img style=\"position: relative; left: -1px; bottom: -3px;\" class=\"icon [obj:icon_state]\" src=\"data:image/png;base64,[baseData]\" />"
 
 /proc/boutput(target = 0, message = "", group = "", forceScroll=FALSE)
+	// if (findtext(message, "<") != 1)
+	// 	stack_trace("Message \"[message]\" being sent via boutput without HTML tag wrapping.")
+
 	if (target == world)
 		for (var/client/C in clients)
 			boutput(C, message, group, forceScroll)

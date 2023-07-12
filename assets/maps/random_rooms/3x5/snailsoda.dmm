@@ -1,0 +1,289 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/item/instrument/large/jukebox{
+	pixel_x = -6;
+	pixel_y = 0;
+	instrument_sound_directory = "sound/musical_instruments/piano/guitar/";
+	density = 0;
+	layer = 5
+	},
+/obj/decal/poster/wallsign/poster_beach{
+	pixel_x = -23;
+	pixel_y = 10;
+	desc = "Sun, sea, sand, and snails!"
+	},
+/obj/item/clothing/suit/rugged_jacket{
+	pixel_y = -8;
+	pixel_x = 3
+	},
+/obj/decal/cleanable/slime{
+	pixel_y = 1;
+	pixel_x = -31
+	},
+/obj/decal/cleanable/ripped_poster{
+	pixel_y = -26;
+	pixel_x = 4
+	},
+/obj/decal/poster/wallsign/poster_rand{
+	pixel_x = -26;
+	pixel_y = -6
+	},
+/obj/decal/poster/wallsign/coffee{
+	pixel_x = -10;
+	pixel_y = -21;
+	color = "#60f542";
+	desc = "A cute little cup poster...seems a bit slimy, though."
+	},
+/turf/simulated/floor/white/checker2,
+/area/dmm_suite/clear_area)
+"q" = (
+/obj/table/neon/auto,
+/obj/item/plate{
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/snacks/plant/lettuce{
+	pixel_y = 0;
+	name = "chef's special";
+	desc = "Snaily's Favorite!";
+	doants = 0;
+	heal_amt = 2;
+	rand_pos = 0
+	},
+/obj/item/kitchen/utensil/fork{
+	dir = 4;
+	pixel_y = -2
+	},
+/turf/simulated/floor/white/checker2,
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/stool/neon,
+/turf/simulated/floor/white/checker2,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/decal/cleanable/slime,
+/obj/item/clothing/under/gimmick/dinerdress_pink{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/item/clothing/under/gimmick/dinerdress_mint{
+	pixel_y = 0
+	},
+/turf/simulated/floor/white/checker2,
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/decal/cleanable/slime,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	pixel_y = 0;
+	dir = 4
+	},
+/turf/simulated/floor/white/checker2,
+/area/dmm_suite/clear_area)
+"y" = (
+/obj/table/neon/auto,
+/obj/item/shaker/ketchup{
+	pixel_y = -6;
+	layer = 4
+	},
+/obj/item/shaker/mustard{
+	pixel_x = 6;
+	pixel_y = -2;
+	layer = 4
+	},
+/obj/item/paper{
+	info = "snaily softserve's slowstop soda shop is a salt allergy-safe enviroment.";
+	name = "slimy paper";
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/shaker/pepper{
+	pixel_y = 12;
+	pixel_x = 7
+	},
+/turf/simulated/floor/white/checker2,
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/table/neon/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{
+	pixel_y = -3;
+	whitelist = list("bilk","milk","chocolate_milk","strawberry_milk","ectocooler","cola","coffee","espresso","decafespresso","energydrink","tea","honey_tea","chocolate","nectar","honey","royal_jelly","eggnog","juice_lime","juice_cran","juice_orange","juice_lemon","juice_tomato","juice_strawberry","juice_cherry","juice_pineapple","juice_apple","coconut_milk","lemonade","halfandhalf","mint_tea","tomcollins","mintjulep","cremedementhe","grassgro","limeade","juice_peach","green_goop");
+	pixel_x = -2;
+	layer = 4
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{
+	pixel_y = -6;
+	whitelist = list("bilk","milk","chocolate_milk","strawberry_milk","ectocooler","cola","coffee","espresso","decafespresso","energydrink","tea","honey_tea","chocolate","nectar","honey","royal_jelly","eggnog","juice_lime","juice_cran","juice_orange","juice_lemon","juice_tomato","juice_strawberry","juice_cherry","juice_pineapple","juice_apple","coconut_milk","lemonade","halfandhalf","mint_tea","tomcollins","mintjulep","cremedementhe","grassgro","limeade","juice_peach","green_goop");
+	pixel_x = 6
+	},
+/obj/machinery/cashreg{
+	pixel_x = -5;
+	pixel_y = 4;
+	name = "Snaily Softserve's Soda Slowstop"
+	},
+/turf/simulated/floor/white/checker2,
+/area/dmm_suite/clear_area)
+"H" = (
+/obj/machinery/illuminated_sign/open_neon{
+	pixel_y = 25;
+	on = 1;
+	name = "Snaily Softserve's Slowstop Soda Shop"
+	},
+/obj/storage/secure/closet/fridge{
+	pixel_y = 0;
+	locked = 0;
+	spawn_contents = list(/obj/item/reagent_containers/food/drinks/cola=3,/obj/item/storage/box/cocktail_doodads,);
+	color = "#69ffe3";
+	layer = 2
+	},
+/obj/random_item_spawner{
+	max_amt2spawn = 10;
+	amt2spawn = 5;
+	items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/orange,/obj/item/reagent_containers/food/drinks/bottle/soda/lime./obj/item/reagent_containers/food/drinks/bottle/soda/gingerale,/obj/item/reagent_containers/food/drinks/bottle/soda/pink,/obj/item/reagent_containers/food/drinks/milk,/obj/item/reagent_containers/food/drinks/fruitmilk,/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,/obj/item/reagent_containers/food/drinks/energyshake);
+	rare_items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza,/obj/item/reagent_containers/food/snacks/greengoo,/obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop,/obj/item/reagent_containers/food/drinks/milk/clownspider,/obj/item/reagent_containers/food/snacks/ice_cream/random,/obj/item/reagent_containers/food/drinks/weightloss_shake,/obj/critter/snail);
+	rare_chance = 15;
+	min_amt2spawn = 5
+	},
+/obj/item/storage/box/costume/roller_disco,
+/obj/item/reagent_containers/food/snacks/plant/lettuce{
+	pixel_y = 11;
+	name = "chef's special";
+	desc = "Snaily's Favorite!";
+	doants = 0;
+	heal_amt = 2;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/lettuce{
+	pixel_y = 11;
+	name = "chef's special";
+	desc = "Snaily's Favorite!";
+	doants = 0;
+	heal_amt = 2;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/lettuce{
+	pixel_y = 11;
+	name = "chef's special";
+	desc = "Snaily's Favorite!";
+	doants = 0;
+	heal_amt = 2;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/lettuce{
+	pixel_y = 11;
+	name = "chef's lunch";
+	desc = "There's a tiny snail-sized note that says this is Snaily's lunch.";
+	doants = 0;
+	heal_amt = 2;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/lettuce{
+	pixel_y = 11;
+	name = "chef's special";
+	desc = "Snaily's Favorite!";
+	doants = 0;
+	heal_amt = 2;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/lettuce{
+	pixel_y = 11;
+	name = "chef's special";
+	desc = "Snaily's Favorite!";
+	doants = 0;
+	heal_amt = 2;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/lettuce{
+	pixel_y = 11;
+	name = "chef's special";
+	desc = "Snaily's Favorite!";
+	doants = 0;
+	heal_amt = 2;
+	rand_pos = 0
+	},
+/turf/simulated/floor/white/checker2,
+/area/dmm_suite/clear_area)
+"Q" = (
+/obj/stool/bar,
+/obj/machinery/light/incandescent/cool{
+	dir = 8
+	},
+/turf/simulated/floor/white/checker2,
+/area/dmm_suite/clear_area)
+"U" = (
+/obj/decal/poster/wallsign/neonretro{
+	pixel_y = -19;
+	dir = 4
+	},
+/obj/machinery/light/small/floor/blueish,
+/obj/machinery/chem_dispenser/soda{
+	pixel_y = -2;
+	density = 0;
+	layer = 5;
+	dispensable_reagents = list("cola","ginger_ale","juice_lime","juice_lemon","juice_cran","juice_cherry","juice_pineapple","sugar","sodawater","vanilla","grenadine","green_goop", "milk");
+	name = "60s soda fountain";
+	desc = "It looks like one of those old diner soda fountains! Seems a bit old, but it probably still works!";
+	color = "#a1cbed"
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	pixel_y = 10
+	},
+/turf/simulated/floor/white/checker2,
+/area/dmm_suite/clear_area)
+"V" = (
+/obj/decal/cleanable/rust,
+/obj/decal/poster/wallsign/neonsparkle{
+	pixel_y = 44;
+	dir = 4
+	},
+/obj/machinery/light/small/floor/purpleish,
+/obj/decal/poster/wallsign/lesb_flag{
+	pixel_y = 6;
+	pixel_x = -25;
+	desc = "Neato!"
+	},
+/turf/simulated/floor/white/checker2,
+/area/dmm_suite/clear_area)
+"W" = (
+/obj/decal/poster/wallsign/framed_award{
+	pixel_y = -3;
+	pixel_x = 25;
+	desc = "This is Snaily's diploma from culinary school!";
+	award_name = "Snaily's culinary school diploma";
+	name = "Snaily's Diploma";
+	award_type = /obj/item/reagent_containers/food/snacks/plant/lettuce;
+	icon_award = "rddiploma1";
+	owner_job = "Mixologist"
+	},
+/obj/stool/neon,
+/mob/living/critter/small_animal/slug/snail/diner{
+	dir = 1;
+	pixel_y = 4
+	},
+/turf/simulated/floor/white/checker2,
+/area/dmm_suite/clear_area)
+"Z" = (
+/obj/decal/cleanable/slime,
+/obj/decal/cleanable/rust,
+/turf/simulated/floor/white/checker2,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+V
+Q
+s
+Q
+a
+"}
+(2,1,1) = {"
+s
+A
+y
+q
+v
+"}
+(3,1,1) = {"
+H
+W
+u
+Z
+U
+"}
