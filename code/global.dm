@@ -413,7 +413,7 @@ var/global
 	list/airlockIndexToFlag
 	list/airlockIndexToWireColor
 	list/airlockWireColorToIndex
-	list/APCWireColorToFlag = RandomAPCWires()
+	list/APCWireColorToFlag
 	list/APCIndexToFlag
 	list/APCIndexToWireColor
 	list/APCWireColorToIndex
