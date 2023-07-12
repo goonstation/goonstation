@@ -544,103 +544,100 @@ WET FLOOR SIGN
 	if (!src.reagents)
 		return ..()
 
-	if (!isarea(target))
-		var/list/choices = list()
-		if (istype(target, /turf/simulated))
-			var/turf/simulated/T = target
-			if (T.reagents && T.reagents.total_volume || T.active_liquid)
-				choices |= "Soak up"
-			if (T.wet)
-				choices |= "Dry"
-		if (src.reagents.total_volume)
-			choices |= "Wipe down"
-			if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
-				choices |= "Wring out"
-		if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)) || istype(target, /obj/mopbucket))
-			if (istype(target, /obj/submachine/chef_sink) || (target.reagents && target.reagents.total_volume))
-				choices |= "Wet"
+	var/list/choices = list()
+	if (istype(target, /turf/simulated))
+		var/turf/simulated/T = target
+		if (T.reagents && T.reagents.total_volume || T.active_liquid)
+			choices |= "Soak up"
+		if (T.wet)
+			choices |= "Dry"
+	if (src.reagents.total_volume)
+		choices |= "Wipe down"
+		if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
+			choices |= "Wring out"
+	if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)) || istype(target, /obj/mopbucket))
+		if (istype(target, /obj/submachine/chef_sink) || (target.reagents && target.reagents.total_volume))
+			choices |= "Wet"
 
-		if (!length(choices))
-			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
-			return
+	if (!length(choices))
+		boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
+		return
 
-		var/selection
-		if (length(choices) == 1) // at spy's request the sponge will default to the only thing it can do ARE YOU HAPPY NOW SPY
-			selection = choices[1]
-		else
-			selection = input(user, "What do you want to do with [src]?", "Selection") as null|anything in choices
-		if (isnull(selection) || user.equipped() != src || BOUNDS_DIST(user, target) > 0)
-			return
-
-		switch (selection)
-			if ("Soak up")
-				if (src.reagents.total_volume >= src.reagents.maximum_volume)
-					user.show_text("[src] is full! Wring it out first.", "blue")
-					return
-
-				var/turf/T = target
-				var/obj/fluid/F
-
-				if (T.active_liquid)
-					F = T.active_liquid
-
-				if (!(T.reagents) && !F)
-					return
-
-				if (F)
-					if (F.group)
-						F.group.drain(F,1,src)
-					else
-						F.removed()
-					user.visible_message("[user] soaks up [F] with [src].",\
-					"<span class='notice'>You soak up [F] with [src].</span>", group="soak")
-				else
-					target.reagents.trans_to(src, 15)
-					user.visible_message("[user] soaks up the mess on [target] with [src].",\
-					"<span class='notice'>You soak up the mess on [target] with [src].</span>", group="soak")
-
-				JOB_XP(user, "Janitor", 1)
-
-			if ("Dry")
-				if (!istype(target, /turf/simulated)) // really, how?? :I
-					return
-				var/turf/simulated/T = target
-				user.visible_message("[user] dries up [T] with [src].",\
-				"<span class='notice'>You dry up [T] with [src].</span>")
-				JOB_XP(user, "Janitor", 1)
-				src.reagents.add_reagent("water", rand(5,15))
-				T.wet = 0
-
-			if ("Wipe down")
-				user.visible_message("[user] wipes down [target] with [src].",\
-				"<span class='notice'>You wipe down [target] with [src].</span>")
-				if (src.reagents.has_reagent("water"))
-					target.clean_forensic()
-				src.reagents.reaction(target, TOUCH, 5)
-				src.reagents.remove_any(5)
-				JOB_XP(user, "Janitor", 3)
-				if (target.reagents)
-					target.reagents.trans_to(src, 5)
-				target.remove_filter(list("paint_color", "paint_pattern"))
-				playsound(src, 'sound/items/sponge.ogg', 20, 1)
-				if (ismob(target))
-					animate_smush(target)
-
-			if ("Wring out")
-				user.visible_message("<span class='alert'>[user] wrings [src] out into [target].</span>")
-				if (target.reagents)
-					src.reagents.trans_to(target, src.reagents.total_volume)
-
-			if ("Wet")
-				var/fill_amt = (src.reagents.maximum_volume - src.reagents.total_volume)
-				user.visible_message("<span class='alert'>[user] wets [src] in [target].</span>")
-				if (target.reagents)
-					target.reagents.trans_to(src, fill_amt)
-				else
-					src.reagents.add_reagent("water", fill_amt)
-					JOB_XP(user, "Janitor", 1)
+	var/selection
+	if (length(choices) == 1) // at spy's request the sponge will default to the only thing it can do ARE YOU HAPPY NOW SPY
+		selection = choices[1]
 	else
-		..()
+		selection = input(user, "What do you want to do with [src]?", "Selection") as null|anything in choices
+	if (isnull(selection) || user.equipped() != src || BOUNDS_DIST(user, target) > 0)
+		return
+
+	switch (selection)
+		if ("Soak up")
+			if (src.reagents.total_volume >= src.reagents.maximum_volume)
+				user.show_text("[src] is full! Wring it out first.", "blue")
+				return
+
+			var/turf/T = target
+			var/obj/fluid/F
+
+			if (T.active_liquid)
+				F = T.active_liquid
+
+			if (!(T.reagents) && !F)
+				return
+
+			if (F)
+				if (F.group)
+					F.group.drain(F,1,src)
+				else
+					F.removed()
+				user.visible_message("[user] soaks up [F] with [src].",\
+				"<span class='notice'>You soak up [F] with [src].</span>", group="soak")
+			else
+				target.reagents.trans_to(src, 15)
+				user.visible_message("[user] soaks up the mess on [target] with [src].",\
+				"<span class='notice'>You soak up the mess on [target] with [src].</span>", group="soak")
+
+			JOB_XP(user, "Janitor", 1)
+
+		if ("Dry")
+			if (!istype(target, /turf/simulated)) // really, how?? :I
+				return
+			var/turf/simulated/T = target
+			user.visible_message("[user] dries up [T] with [src].",\
+			"<span class='notice'>You dry up [T] with [src].</span>")
+			JOB_XP(user, "Janitor", 1)
+			src.reagents.add_reagent("water", rand(5,15))
+			T.wet = 0
+
+		if ("Wipe down")
+			user.visible_message("[user] wipes down [target] with [src].",\
+			"<span class='notice'>You wipe down [target] with [src].</span>")
+			if (src.reagents.has_reagent("water"))
+				target.clean_forensic()
+			src.reagents.reaction(target, TOUCH, 5)
+			src.reagents.remove_any(5)
+			JOB_XP(user, "Janitor", 3)
+			if (target.reagents)
+				target.reagents.trans_to(src, 5)
+			target.remove_filter(list("paint_color", "paint_pattern"))
+			playsound(src, 'sound/items/sponge.ogg', 20, 1)
+			if (ismob(target))
+				animate_smush(target)
+
+		if ("Wring out")
+			user.visible_message("<span class='alert'>[user] wrings [src] out into [target].</span>")
+			if (target.reagents)
+				src.reagents.trans_to(target, src.reagents.total_volume)
+
+		if ("Wet")
+			var/fill_amt = (src.reagents.maximum_volume - src.reagents.total_volume)
+			user.visible_message("<span class='alert'>[user] wets [src] in [target].</span>")
+			if (target.reagents)
+				target.reagents.trans_to(src, fill_amt)
+			else
+				src.reagents.add_reagent("water", fill_amt)
+				JOB_XP(user, "Janitor", 1)
 /obj/item/sponge/ghostdronesafe
 	name = "Integrated sponge"
 	desc = "A cleaning utensil with an associated drainage system to prevent excess fluids from dripping when wrung out."
