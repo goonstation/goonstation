@@ -213,15 +213,12 @@ TYPEINFO(/obj/player_piano)
 		return 0
 
 	proc/is_pulser_auto_linking(var/mob/M)
-		var/atom/held_item = null
-		if(hasvar(M, "l_hand") && ispulsingtool(M:l_hand)) held_item = M:l_hand
-		if(hasvar(M, "r_hand") && ispulsingtool(M:r_hand)) held_item = M:r_hand
+		if(hasvar(M, "l_hand") && ispulsingtool(M.l_hand) && SEND_SIGNAL(M.l_hand, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)) return TRUE
+		if(hasvar(M, "r_hand") && ispulsingtool(M.r_hand) && SEND_SIGNAL(M.r_hand, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)) return TRUE
 		if(hasvar(M, "module_states"))
 			for(var/atom/A in M:module_states)
-				if(ispulsingtool(A))
-					held_item = A
-		if (held_item != null)
-			return SEND_SIGNAL(held_item, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)
+				if(ispulsingtool(A) && SEND_SIGNAL(A, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE))
+					return TRUE
 		return FALSE
 
 	proc/clean_input() //breaks our big input string into chunks
