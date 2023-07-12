@@ -1722,7 +1722,6 @@ var/datum/action_controller/actions
 				flash.flash_mob(target, owner)
 
 /datum/action/bar/icon/mop_thing
-	duration = 30
 	interrupt_flags = INTERRUPT_STUNNED
 	id = "mop_thing"
 	icon = 'icons/obj/janitor.dmi' //In these two vars you can define an icon you want to have on your little progress bar.
@@ -1733,7 +1732,7 @@ var/datum/action_controller/actions
 	New(Mop, Target)
 		mop = Mop
 		target = Target
-		duration = istype(target, /obj/fluid) ? 0 : 10
+		duration = istype(target, /obj/fluid) ? 0.1 SECONDS : 1 SECOND
 		..()
 
 	onUpdate()

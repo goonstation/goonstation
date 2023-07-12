@@ -328,12 +328,13 @@ WET FLOOR SIGN
 	if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && length(src.reagents.reagent_list) > 1)))
 		logTheThing(LOG_CHEMISTRY, user, "mops [T && isturf(T) ? "[T]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
 
+	var/obj/fluid/target_fluid = T.active_liquid || A // we check for existing fluid here because we create a fluid below if there isn't one
+
 	if (T)
-		src.reagents.reaction(T, 1,5)
+		src.reagents.reaction(T, 1, 5)
 		src.reagents.remove_any(5)
 		mopcount++
 
-	var/obj/fluid/target_fluid = T.active_liquid || A
 	if (istype(target_fluid))
 		user.show_text("You soak up [target_fluid] with [src].", "blue", group = "mop")
 		if (src.reagents && target_fluid.group)
@@ -455,6 +456,11 @@ WET FLOOR SIGN
 			sponge_size(S, size)
 		return 0
 
+#define SPONGE_SOAK "Soak up"
+#define SPONGE_DRY "Dry"
+#define SPONGE_WIPE "Wipe down"
+#define SPONGE_WRING "Wring out"
+#define SPONGE_WET "Wet"
 /obj/item/sponge
 	name = "sponge"
 	desc = "After careful analysis, you've come to the conclusion that the strange object is, in fact, a sponge."
@@ -540,24 +546,32 @@ WET FLOOR SIGN
 	if (T.active_liquid && T.active_liquid.group)
 		T.active_liquid.group.drain(T.active_liquid,1,src)
 
-/obj/item/sponge/afterattack(atom/target, mob/user as mob)
+/obj/item/sponge/proc/get_action_options(atom/target)
+	if (issimulatedturf(target))
+		var/turf/simulated/T = target
+		if (T.active_liquid)
+			return list(SPONGE_SOAK) // only soak if we click a fluid
+
+	. = list()
+	if (istype(target, /turf/simulated))
+		var/turf/simulated/T = target
+		if (T.reagents?.total_volume)
+			. |= SPONGE_SOAK
+		else if (T.wet)
+			. |= SPONGE_DRY
+	if (src.reagents.total_volume)
+		. |= SPONGE_WIPE
+		if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
+			. |= SPONGE_WRING
+	if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)) || istype(target, /obj/mopbucket))
+		if (istype(target, /obj/submachine/chef_sink) || (target.reagents && target.reagents.total_volume))
+			. |= SPONGE_WET
+
+/obj/item/sponge/afterattack(atom/target, mob/user)
 	if (!src.reagents)
 		return ..()
 
-	var/list/choices = list()
-	if (istype(target, /turf/simulated))
-		var/turf/simulated/T = target
-		if (T.reagents && T.reagents.total_volume || T.active_liquid)
-			choices |= "Soak up"
-		if (T.wet)
-			choices |= "Dry"
-	if (src.reagents.total_volume)
-		choices |= "Wipe down"
-		if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
-			choices |= "Wring out"
-	if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)) || istype(target, /obj/mopbucket))
-		if (istype(target, /obj/submachine/chef_sink) || (target.reagents && target.reagents.total_volume))
-			choices |= "Wet"
+	var/list/choices = src.get_action_options(target)
 
 	if (!length(choices))
 		boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
@@ -572,7 +586,7 @@ WET FLOOR SIGN
 		return
 
 	switch (selection)
-		if ("Soak up")
+		if (SPONGE_SOAK)
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				user.show_text("[src] is full! Wring it out first.", "blue")
 				return
@@ -600,7 +614,7 @@ WET FLOOR SIGN
 
 			JOB_XP(user, "Janitor", 1)
 
-		if ("Dry")
+		if (SPONGE_DRY)
 			if (!istype(target, /turf/simulated)) // really, how?? :I
 				return
 			var/turf/simulated/T = target
@@ -610,7 +624,7 @@ WET FLOOR SIGN
 			src.reagents.add_reagent("water", rand(5,15))
 			T.wet = 0
 
-		if ("Wipe down")
+		if (SPONGE_WIPE)
 			user.visible_message("[user] wipes down [target] with [src].",\
 			"<span class='notice'>You wipe down [target] with [src].</span>")
 			if (src.reagents.has_reagent("water"))
@@ -625,12 +639,12 @@ WET FLOOR SIGN
 			if (ismob(target))
 				animate_smush(target)
 
-		if ("Wring out")
+		if (SPONGE_WRING)
 			user.visible_message("<span class='alert'>[user] wrings [src] out into [target].</span>")
 			if (target.reagents)
 				src.reagents.trans_to(target, src.reagents.total_volume)
 
-		if ("Wet")
+		if (SPONGE_WET)
 			var/fill_amt = (src.reagents.maximum_volume - src.reagents.total_volume)
 			user.visible_message("<span class='alert'>[user] wets [src] in [target].</span>")
 			if (target.reagents)
@@ -655,6 +669,14 @@ WET FLOOR SIGN
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "sponge-cheese"
 	item_state = "sponge"
+
+#undef SPONGE_SOAK
+#undef SPONGE_DRY
+#undef SPONGE_WIPE
+#undef SPONGE_WRING
+#undef SPONGE_WET
+
+
 
 
 /obj/item/caution
