@@ -200,8 +200,10 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 
 
 	attack_hand(mob/user)
-		var/turf/T = src.loc
-		T.Attackhand(user)
+		CRASH("[identify_object(user)] hit a fluid with their hand somehow. They shouldn't be able to do that.")
+
+	attackby(obj/item/W, mob/user)
+		CRASH("[identify_object(user)] hit a fluid with [identify_object(W)] somehow. They shouldn't be able to do that.")
 
 	proc/add_reagents(var/datum/reagents/R, var/volume) //should be called right after new() on inital group creation
 		if (!src.group) return
