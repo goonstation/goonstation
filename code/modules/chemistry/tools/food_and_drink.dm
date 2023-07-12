@@ -636,9 +636,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			boutput(user, "<span class='alert'>[src] is sealed.</span>")
 			return
 		user.lastattacked = target
-		if (istype(target, /turf) && target:active_liquid) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
-			var/turf/T = target
-			var/obj/fluid/F = T.active_liquid
+		// this shit sucks but there's no space for a cast since the following section is an if-else
+		var/turf/target_turf = isturf(target) ? target : null
+		if (target_turf?.active_liquid) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
+			var/obj/fluid/F = target_turf.active_liquid
 			if (!src.reagents.total_volume)
 				if (!F.group || !F.group.reagents.total_volume)
 					boutput(user, "<span class='alert'>[target] is empty. (this is a bug, whooops!)</span>")
@@ -658,8 +659,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
 				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
-				var/trans = src.reagents.trans_to(T, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
-				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [T].</span>")
+				var/trans = src.reagents.trans_to(target_turf, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
+				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [target_turf].</span>")
 
 		else if (is_reagent_dispenser(target)|| (target.is_open_container() == -1 && target.reagents)) //A dispenser. Transfer FROM it TO us.
 			if (!target.reagents.total_volume && target.reagents)

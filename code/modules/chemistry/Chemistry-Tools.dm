@@ -164,6 +164,9 @@ proc/ui_describe_reagents(atom/A)
 	// this proc is a mess ow
 	afterattack(obj/target, mob/user , flag)
 		user.lastattacked = target
+
+		// this shit sucks but this is an if-else so there's no space to fit a cast in there
+		var/turf/target_turf = isturf(target) ? target : null
 		if (ismob(target) && !target.is_open_container()) // pour reagents down their neck (if possible)
 			if (!src.reagents.total_volume)
 				boutput(user, "<span class='alert'>Your [src.name] is empty!</span>")
@@ -209,9 +212,8 @@ proc/ui_describe_reagents(atom/A)
 					src.reagents.reaction(target, TOUCH, min(src.amount_per_transfer_from_this, src.reagents.total_volume))
 					src.reagents.remove_any(src.amount_per_transfer_from_this)
 
-		else if (istype(target, /turf) && target:active_liquid) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
-			var/turf/T = target
-			var/obj/fluid/F = T.active_liquid
+		else if (target_turf?.active_liquid) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
+			var/obj/fluid/F = target_turf.active_liquid
 			if (!src.reagents.total_volume)
 				if (reagents.total_volume >= reagents.maximum_volume)
 					boutput(user, "<span class='alert'>[src] is full.</span>")
@@ -224,8 +226,8 @@ proc/ui_describe_reagents(atom/A)
 				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
 				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
-				var/trans = src.reagents.trans_to(T, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
-				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [T].</span>")
+				var/trans = src.reagents.trans_to(target_turf, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
+				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [target_turf].</span>")
 
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
