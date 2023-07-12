@@ -209,20 +209,15 @@ proc/ui_describe_reagents(atom/A)
 					src.reagents.reaction(target, TOUCH, min(src.amount_per_transfer_from_this, src.reagents.total_volume))
 					src.reagents.remove_any(src.amount_per_transfer_from_this)
 
-		else if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
-			var/obj/fluid/F = target
+		else if (istype(target, /turf) && target:active_liquid) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
+			var/turf/T = target
+			var/obj/fluid/F = T.active_liquid
 			if (!src.reagents.total_volume)
-				if (!F.group || !F.group.reagents.total_volume)
-					boutput(user, "<span class='alert'>[target] is empty. (this is a bug, whooops!)</span>")
-					F.removed()
-					return
-
 				if (reagents.total_volume >= reagents.maximum_volume)
 					boutput(user, "<span class='alert'>[src] is full.</span>")
 					return
-				//var/transferamt = min(src.reagents.maximum_volume - src.reagents.total_volume, F.amt)
 
-				F.group.reagents.skip_next_update = 1
+				F.group.reagents.skip_next_update = TRUE
 				F.group.update_amt_per_tile()
 				var/amt = min(F.group.amt_per_tile, reagents.maximum_volume - reagents.total_volume)
 				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [target].</span>")
