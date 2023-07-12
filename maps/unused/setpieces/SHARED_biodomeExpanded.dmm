@@ -311,12 +311,6 @@
 	icon_state = "rootfloor_2"
 	},
 /area/swampzone/ground/canyon)
-"asU" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/unsimulated/floor/wood/eight{
-	dir = 8
-	},
-/area/swampzone/interiors/outbuildings)
 "atf" = (
 /obj/shrub{
 	dir = 8
@@ -387,6 +381,16 @@
 	dir = 4
 	},
 /area/swampzone/interiors/bonktek/waffletek)
+"avP" = (
+/obj/shrub{
+	dir = 1
+	},
+/obj/map/light/graveyard,
+/mob/living/critter/zombie/security,
+/turf/unsimulated/grasstodirt{
+	dir = 1
+	},
+/area/crypt/graveyard)
 "awm" = (
 /obj/railing/cyan,
 /turf/unsimulated/wall/trench{
@@ -918,6 +922,11 @@
 	name = "strange surface"
 	},
 /area/crater/cave)
+"bbZ" = (
+/obj/stool/chair/office,
+/mob/living/critter/zombie/scientist,
+/turf/unsimulated/floor/white/grime,
+/area/crypt/sigma/lab)
 "bcj" = (
 /turf/unsimulated/floor/stairs/medical/wide,
 /area/swampzone/ground)
@@ -1474,16 +1483,6 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek/blastotek)
-"bMG" = (
-/obj/shrub{
-	dir = 1
-	},
-/obj/map/light/graveyard,
-/mob/living/critter/zombie/security,
-/turf/unsimulated/grasstodirt{
-	dir = 1
-	},
-/area/crypt/graveyard)
 "bMH" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray{
 	dir = 4;
@@ -1796,12 +1795,6 @@
 	},
 /turf/space/fluid/cenote,
 /area/crater)
-"cee" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/unsimulated/wall/cave{
-	name = "rock"
-	},
-/area/swampzone/ground)
 "ceg" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/cave,
@@ -2122,6 +2115,15 @@
 "cBm" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray,
 /area/syndicate_station)
+"cBo" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/twenty{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/currency/spacecash/twenty,
+/turf/unsimulated/floor/carpet/grime,
+/area/swampzone/interiors/outbuildings)
 "cBV" = (
 /obj/submachine/mixer,
 /obj/table/auto,
@@ -2159,10 +2161,6 @@
 /turf/unsimulated/floor/bluewhite{
 	dir = 4
 	},
-/area/swampzone/interiors/outbuildings)
-"cEg" = (
-/obj/mapping_helper/wingrille_spawn/auto/tuff,
-/turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "cEs" = (
 /obj/river{
@@ -3052,6 +3050,10 @@
 /obj/item/raw_material/telecrystal,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
+"dIA" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/unsimulated/wall/auto/supernorn/wood,
+/area/swampzone/interiors/outbuildings)
 "dIX" = (
 /turf/space,
 /area/space)
@@ -3384,6 +3386,15 @@
 /obj/machinery/cell_charger,
 /turf/unsimulated/floor/black,
 /area/syndicate_station)
+"ebD" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
+	},
+/mob/living/critter/zombie/scientist,
+/turf/unsimulated/floor/carpet/grime,
+/area/crypt/sigma/crew)
 "ecg" = (
 /obj/rack/lunar,
 /obj/item/ammo/bullets/a12,
@@ -3539,6 +3550,10 @@
 /obj/item/reagent_containers/food/snacks/agar_block,
 /turf/unsimulated/floor/specialroom/bar,
 /area/crater/biodome/maint)
+"emF" = (
+/mob/living/critter/zombie/scientist,
+/turf/unsimulated/floor/white/grime,
+/area/crypt/sigma/lab)
 "ena" = (
 /obj/map/light/graveyard,
 /turf/unsimulated/wall/setpieces/leadwindow/gray{
@@ -3932,6 +3947,12 @@
 	},
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
+"eJX" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/psych,
+/mob/living/critter/zombie,
+/turf/unsimulated/floor/sanitary/white,
+/area/swampzone/interiors/outbuildings)
 "eKA" = (
 /turf/unsimulated/floor/setpieces/swampgrass_edging,
 /area/swampzone/deeps)
@@ -4009,12 +4030,6 @@
 	},
 /turf/unsimulated/floor/cave,
 /area/swampzone/interiors/quarry)
-"eOA" = (
-/obj/mapping_helper/wingrille_spawn/auto/tuff,
-/turf/unsimulated/floor/bluewhite{
-	dir = 4
-	},
-/area/swampzone/interiors/outbuildings)
 "eOY" = (
 /obj/decoration/syndiepc/syndiepc10,
 /turf/unsimulated/floor/black,
@@ -4962,6 +4977,12 @@
 /obj/decal/stalagtite,
 /turf/unsimulated/floor/cave,
 /area/crater)
+"fMn" = (
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
+/turf/unsimulated/floor/bluewhite{
+	dir = 5
+	},
+/area/swampzone/interiors/outbuildings)
 "fMs" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/swampzone/interiors/tunnels)
@@ -4976,6 +4997,10 @@
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crypt/graveyard)
+"fNy" = (
+/obj/landmark/spawner/artifact,
+/turf/unsimulated/floor/cave,
+/area/crater/cave)
 "fNz" = (
 /obj/table/reinforced/auto,
 /obj/bedsheetbin,
@@ -5197,12 +5222,6 @@
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/north)
-"gat" = (
-/obj/mapping_helper/wingrille_spawn/bulletproof,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/swampzone/heights)
 "gaB" = (
 /obj/decal/mushrooms/type6,
 /obj/sneaky_wall_trigger,
@@ -5305,6 +5324,11 @@
 	dir = 10
 	},
 /area/swampzone/interiors)
+"giK" = (
+/obj/decal/cleanable/dirt,
+/mob/living/critter/zombie/security,
+/turf/unsimulated/floor/plating/scorched,
+/area/crypt/sigma/storage)
 "giL" = (
 /obj/machinery/door/unpowered/wood/stall,
 /turf/unsimulated/floor/sanitary,
@@ -5315,6 +5339,12 @@
 	icon_state = "rootfloor_3"
 	},
 /area/crypt/mausoleum)
+"gjD" = (
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
+/turf/unsimulated/floor/bluewhite{
+	dir = 1
+	},
+/area/swampzone/interiors/outbuildings)
 "gkg" = (
 /turf/unsimulated/floor/caution/south{
 	dir = 1
@@ -5621,6 +5651,12 @@
 /mob/living/critter/skeleton,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
+"gBg" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/mushrooms/type1,
+/obj/landmark/spawner/artifact,
+/turf/unsimulated/floor/cave,
+/area/crater/cave)
 "gCg" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -5653,6 +5689,12 @@
 	dir = 1
 	},
 /area/crypt/graveyard)
+"gCR" = (
+/mob/living/critter/zombie/security,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/swampzone/interiors/outbuildings)
 "gCY" = (
 /turf/unsimulated/floor/stairs/wide{
 	dir = 8
@@ -5951,13 +5993,6 @@
 "gZT" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/sw,
 /area/swampzone/interiors/bonktek/blastotek)
-"haC" = (
-/obj/machinery/optable{
-	name = "Autopsy Table"
-	},
-/mob/living/critter/zombie,
-/turf/unsimulated/floor/sanitary,
-/area/crypt/sigma/morgue)
 "haN" = (
 /obj/window/cubicle{
 	dir = 8
@@ -5988,11 +6023,6 @@
 	},
 /turf/unsimulated/floor/green/corner,
 /area/crater/biodome/south)
-"hcq" = (
-/obj/map/light/graveyard,
-/mob/living/critter/zombie/scientist,
-/turf/unsimulated/floor/auto/dirt,
-/area/crypt/graveyard)
 "hcE" = (
 /turf/unsimulated/floor/carpet{
 	dir = 1;
@@ -7193,11 +7223,6 @@
 /obj/structure/woodwall,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
-"iBP" = (
-/obj/decal/cleanable/dirt,
-/mob/living/critter/zombie/security,
-/turf/unsimulated/floor/plating/scorched,
-/area/crypt/sigma/storage)
 "iCn" = (
 /obj/spacevine{
 	density = 1;
@@ -7319,15 +7344,6 @@
 	dir = 4
 	},
 /area/crypt/graveyard)
-"iHn" = (
-/obj/table/reinforced/auto,
-/obj/item/currency/spacecash/twenty{
-	pixel_x = 5;
-	pixel_y = -4
-	},
-/obj/item/currency/spacecash/twenty,
-/turf/unsimulated/floor/carpet/grime,
-/area/swampzone/interiors/outbuildings)
 "iHU" = (
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone)
@@ -7666,6 +7682,10 @@
 	icon_state = "floor"
 	},
 /area/crypt/sigma)
+"jaC" = (
+/mob/living/critter/zombie/scientist,
+/turf/unsimulated/floor/white,
+/area/swampzone/interiors/outbuildings)
 "jaR" = (
 /turf/unsimulated/floor/green/side{
 	dir = 1
@@ -9246,10 +9266,6 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor,
 /area/crater/biodome/maint)
-"kOF" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/unsimulated/wall/auto/supernorn/wood,
-/area/swampzone/interiors/outbuildings)
 "kPg" = (
 /obj/item/storage/wall/clothingrack/hatrack/hatrack_2,
 /turf/unsimulated/floor/black,
@@ -9592,12 +9608,6 @@
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
-"lmy" = (
-/mob/living/critter/zombie/security,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/swampzone/interiors/outbuildings)
 "lnw" = (
 /obj/machinery/light/flamp,
 /turf/unsimulated/floor/auto/grass/leafy,
@@ -9620,11 +9630,6 @@
 	name = "strange surface"
 	},
 /area/crater/cave/lower)
-"loa" = (
-/mob/living/critter/zombie/wrestler,
-/obj/machinery/optable,
-/turf/unsimulated/floor/engine,
-/area/crypt/sigma/lab)
 "lod" = (
 /obj/machinery/conveyor/SN,
 /obj/railing/orange/reinforced,
@@ -9720,15 +9725,6 @@
 	},
 /turf/space/fluid/cenote,
 /area/crater)
-"luh" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "yellow";
-	icon_state = "bedsheet-yellow"
-	},
-/mob/living/critter/zombie/scientist,
-/turf/unsimulated/floor/carpet/grime,
-/area/crypt/sigma/crew)
 "luy" = (
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
@@ -9779,10 +9775,6 @@
 "lxy" = (
 /turf/unsimulated/wall/auto/reinforced,
 /area/swampzone/deeps)
-"lxH" = (
-/mob/living/critter/zombie/scientist,
-/turf/unsimulated/floor/white,
-/area/swampzone/interiors/outbuildings)
 "lys" = (
 /obj/fluid_pipe/sink/outlet_pump{
 	dir = 8
@@ -10262,12 +10254,6 @@
 /obj/storage/closet/dresser,
 /turf/unsimulated/floor/carpet/office,
 /area/swampzone/interiors/bonktek)
-"mcw" = (
-/obj/mapping_helper/wingrille_spawn/auto/tuff,
-/turf/unsimulated/floor/bluewhite{
-	dir = 8
-	},
-/area/swampzone/interiors/outbuildings)
 "mcH" = (
 /obj/shrub{
 	dir = 8
@@ -11177,6 +11163,11 @@
 /obj/machinery/computer3/generic/personal,
 /turf/unsimulated/floor/black,
 /area/syndicate_station)
+"niG" = (
+/obj/map/light/graveyard,
+/mob/living/critter/zombie/scientist,
+/turf/unsimulated/floor/auto/dirt,
+/area/crypt/graveyard)
 "nje" = (
 /obj/table/wood/auto,
 /obj/submachine/mixing_desk,
@@ -11656,6 +11647,22 @@
 /obj/item/ammo/bullets/rifle_3006,
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/northsouth,
 /area/swampzone/interiors/bonktek/blastotek)
+"nMI" = (
+/obj/decal/cleanable/cobweb,
+/obj/storage/crate,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/twenty,
+/obj/item/currency/spacecash/twenty,
+/obj/item/device/light/zippo,
+/obj/item/plant/herb/cannabis,
+/obj/item/plant/herb/cannabis,
+/obj/item/plant/herb/cannabis,
+/obj/item/plant/herb/cannabis,
+/turf/unsimulated/floor/cave,
+/area/crater/cave)
 "nMT" = (
 /obj/machinery/networked/storage/tape_drive,
 /turf/unsimulated/floor/circuit/purple,
@@ -12285,6 +12292,10 @@
 	dir = 8
 	},
 /area/crypt/graveyard)
+"oxV" = (
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
+/turf/unsimulated/floor/white,
+/area/swampzone/interiors/outbuildings)
 "oxW" = (
 /obj/table/auto,
 /obj/item/reagent_containers/glass/petridish{
@@ -12568,6 +12579,12 @@
 	},
 /turf/unsimulated/floor/black,
 /area/syndicate_station)
+"oTd" = (
+/obj/mapping_helper/wingrille_spawn/bulletproof,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/swampzone/heights)
 "oTm" = (
 /turf/unsimulated/floor/stairs{
 	dir = 1
@@ -13689,12 +13706,6 @@
 /obj/item/storage/toolbox/electrical,
 /turf/unsimulated/floor/wood/four,
 /area/swampzone/interiors/outbuildings)
-"qor" = (
-/obj/mapping_helper/wingrille_spawn/auto/tuff,
-/turf/unsimulated/floor/bluewhite{
-	dir = 5
-	},
-/area/swampzone/interiors/outbuildings)
 "qoX" = (
 /turf/unsimulated/floor/setpieces/rootfloor{
 	icon_state = "rootfloor_2"
@@ -14434,6 +14445,12 @@
 "rhI" = (
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek)
+"rhP" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/unsimulated/floor/wood/eight{
+	dir = 8
+	},
+/area/swampzone/interiors/outbuildings)
 "ric" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -14588,10 +14605,6 @@
 	icon_state = "leadwindow_2"
 	},
 /area/crater/biodome/research)
-"rpr" = (
-/mob/living/critter/zombie/scientist,
-/turf/unsimulated/floor/white/grime,
-/area/crypt/sigma/lab)
 "rqq" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -15540,6 +15553,11 @@
 	dir = 4
 	},
 /area/crater/biodome/research)
+"sEx" = (
+/mob/living/critter/zombie/wrestler,
+/obj/machinery/optable,
+/turf/unsimulated/floor/engine,
+/area/crypt/sigma/lab)
 "sEA" = (
 /obj/machinery/door/airlock/pyro/security,
 /turf/unsimulated/floor,
@@ -15757,10 +15775,6 @@
 "sPT" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/storage)
-"sQQ" = (
-/mob/living/critter/zombie,
-/turf/unsimulated/floor/white,
-/area/swampzone/interiors/outbuildings)
 "sRB" = (
 /obj/item/storage/toilet/random{
 	dir = 8
@@ -16073,11 +16087,6 @@
 	dir = 1
 	},
 /area/crater/biodome/research)
-"tgD" = (
-/obj/machinery/drainage,
-/mob/living/critter/zombie/scientist,
-/turf/unsimulated/floor/white/grime,
-/area/crypt/sigma/lab)
 "thh" = (
 /obj/shrub{
 	dir = 8
@@ -16390,11 +16399,6 @@
 /obj/item/plank,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/maint)
-"tBs" = (
-/obj/map/light/graveyard,
-/mob/living/critter/zombie,
-/turf/unsimulated/floor/auto/dirt,
-/area/crypt/graveyard)
 "tBE" = (
 /turf/unsimulated/floor/stairs/wood2/wide{
 	dir = 8
@@ -16552,6 +16556,13 @@
 	icon_state = "rootfloor_2"
 	},
 /area/swampzone/ground)
+"tKz" = (
+/obj/machinery/optable{
+	name = "Autopsy Table"
+	},
+/mob/living/critter/zombie,
+/turf/unsimulated/floor/sanitary,
+/area/crypt/sigma/morgue)
 "tKL" = (
 /turf/unsimulated/wall/auto/supernorn/wood,
 /area/swampzone/interiors/bonktek/funktek)
@@ -16780,12 +16791,6 @@
 /obj/item/storage/wall/clothingrack/hatrack/hatrack_3,
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek)
-"tYK" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/psych,
-/mob/living/critter/zombie,
-/turf/unsimulated/floor/sanitary/white,
-/area/swampzone/interiors/outbuildings)
 "tYU" = (
 /obj/railing/cyan{
 	dir = 8
@@ -16877,6 +16882,12 @@
 	name = "swamp wall"
 	},
 /area/swampzone/deeps)
+"ues" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/unsimulated/wall/cave{
+	name = "rock"
+	},
+/area/swampzone/ground)
 "ueD" = (
 /obj/machinery/light/incandescent/small{
 	dir = 1;
@@ -16906,12 +16917,6 @@
 "ugr" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/ne,
 /area/swampzone/interiors/bonktek/funktek)
-"ugu" = (
-/obj/mapping_helper/wingrille_spawn/bulletproof,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/someplace)
 "ugJ" = (
 /obj/decal/tile_edge/line/white{
 	icon_state = "noedge-tile1"
@@ -17654,12 +17659,6 @@
 	},
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
-"uUR" = (
-/obj/mapping_helper/wingrille_spawn/auto/tuff,
-/turf/unsimulated/floor/bluewhite{
-	dir = 1
-	},
-/area/swampzone/interiors/outbuildings)
 "uVc" = (
 /obj/decal/cleanable/cobwebFloor,
 /turf/unsimulated/floor/cave,
@@ -18118,22 +18117,6 @@
 /obj/tree/elm_random,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground)
-"vzB" = (
-/obj/decal/cleanable/cobweb,
-/obj/storage/crate,
-/obj/item/currency/spacecash/hundred,
-/obj/item/currency/spacecash/hundred,
-/obj/item/currency/spacecash/hundred,
-/obj/item/currency/spacecash/thousand,
-/obj/item/currency/spacecash/twenty,
-/obj/item/currency/spacecash/twenty,
-/obj/item/device/light/zippo,
-/obj/item/plant/herb/cannabis,
-/obj/item/plant/herb/cannabis,
-/obj/item/plant/herb/cannabis,
-/obj/item/plant/herb/cannabis,
-/turf/unsimulated/floor/cave,
-/area/crater/cave)
 "vzW" = (
 /turf/unsimulated/floor/black/side{
 	dir = 6
@@ -18938,12 +18921,6 @@
 	dir = 4
 	},
 /area/crypt/graveyard/swamp)
-"wrL" = (
-/obj/decal/cleanable/dirt,
-/obj/decal/mushrooms/type1,
-/obj/landmark/artifact,
-/turf/unsimulated/floor/cave,
-/area/crater/cave)
 "wrX" = (
 /obj/stool/bed,
 /turf/unsimulated/floor/wood/seven,
@@ -18956,6 +18933,12 @@
 "wsQ" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/swampzone/interiors/bonktek/funktek)
+"wtf" = (
+/obj/mapping_helper/wingrille_spawn/bulletproof,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/someplace)
 "wtn" = (
 /turf/unsimulated/grasstodirt{
 	dir = 4;
@@ -19109,6 +19092,12 @@
 	name = "strange surface"
 	},
 /area/crater/cave/lower)
+"wzM" = (
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
+/turf/unsimulated/floor/bluewhite{
+	dir = 8
+	},
+/area/swampzone/interiors/outbuildings)
 "wAC" = (
 /obj/spacevine{
 	icon_state = "vine-light3"
@@ -19402,10 +19391,6 @@
 /obj/item/storage/box/record/radio/one,
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/eastwest,
 /area/swampzone/interiors/bonktek/funktek)
-"wPR" = (
-/obj/landmark/artifact,
-/turf/unsimulated/floor/cave,
-/area/crater/cave)
 "wQa" = (
 /obj/decal/cliff{
 	dir = 4
@@ -19637,6 +19622,10 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/space/fluid/cenote,
 /area/swampzone/interiors/quarry)
+"xfe" = (
+/mob/living/critter/zombie,
+/turf/unsimulated/floor/white,
+/area/swampzone/interiors/outbuildings)
 "xfI" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/electronics/fuse,
@@ -19834,11 +19823,6 @@
 	},
 /turf/unsimulated/floor/cave,
 /area/syndicate_station)
-"xwn" = (
-/obj/stool/chair/office,
-/mob/living/critter/zombie/scientist,
-/turf/unsimulated/floor/white/grime,
-/area/crypt/sigma/lab)
 "xwG" = (
 /obj/spacevine{
 	density = 1;
@@ -20064,6 +20048,11 @@
 /obj/map/light/graveyard,
 /turf/unsimulated/floor/auto/dirt,
 /area/crypt/graveyard)
+"xQz" = (
+/obj/map/light/graveyard,
+/mob/living/critter/zombie,
+/turf/unsimulated/floor/auto/dirt,
+/area/crypt/graveyard)
 "xQB" = (
 /obj/decal/cleanable/dirt,
 /obj/item/raw_material/syreline,
@@ -20082,6 +20071,12 @@
 "xSc" = (
 /obj/machinery/computer/pathology,
 /turf/unsimulated/floor/white,
+/area/swampzone/interiors/outbuildings)
+"xSs" = (
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
+/turf/unsimulated/floor/bluewhite{
+	dir = 4
+	},
 /area/swampzone/interiors/outbuildings)
 "xSt" = (
 /turf/unsimulated/floor/stairs/wood2/wide{
@@ -20272,6 +20267,11 @@
 	dir = 6
 	},
 /area/swampzone/interiors/outbuildings)
+"xZO" = (
+/obj/machinery/drainage,
+/mob/living/critter/zombie/scientist,
+/turf/unsimulated/floor/white/grime,
+/area/crypt/sigma/lab)
 "xZT" = (
 /obj/decal/cleanable/dirt,
 /obj/table/wood/auto,
@@ -21017,11 +21017,11 @@ tGO
 vNK
 tGO
 xJc
-kOF
-kOF
+dIA
+dIA
 xJc
 xJc
-asU
+rhP
 xJc
 xJc
 uNh
@@ -21041,7 +21041,7 @@ cns
 cns
 xJc
 xJc
-asU
+rhP
 xJc
 xJc
 tGO
@@ -21345,41 +21345,41 @@ xJc
 dXN
 dXN
 dXN
-asU
+rhP
 roE
 roE
 aqC
 tGO
 tGO
 xJc
-asU
-asU
+rhP
+rhP
 xJc
 tGO
 tGO
 tGO
 xJc
-asU
-asU
+rhP
+rhP
 xJc
 tGO
 tGO
 tGO
 xJc
 xJc
-asU
-asU
+rhP
+rhP
 xJc
-asU
-asU
+rhP
+rhP
 xJc
 xJc
 roE
 tGO
 tGO
 xJc
-asU
-asU
+rhP
+rhP
 xJc
 kfi
 uNh
@@ -21620,14 +21620,14 @@ sHe
 sHe
 dQM
 roE
-asU
+rhP
 wrX
 dXN
 tnh
 dXN
 dXN
 dXN
-asU
+rhP
 roE
 roE
 aPR
@@ -21647,7 +21647,7 @@ tnh
 dXN
 dXN
 wrX
-asU
+rhP
 roE
 roE
 roE
@@ -21947,7 +21947,7 @@ hKF
 nMp
 xJc
 xJc
-asU
+rhP
 xJc
 xJc
 roE
@@ -21960,14 +21960,14 @@ dXN
 dXN
 xJc
 xJc
-asU
+rhP
 xJc
 xJc
 xJc
 aqH
 xJc
 xJc
-asU
+rhP
 xJc
 xJc
 eFo
@@ -21979,12 +21979,12 @@ dXN
 dXN
 xJc
 xJc
-asU
+rhP
 xJc
 xJc
 dXN
 dXN
-asU
+rhP
 tGO
 tGO
 jxC
@@ -22286,7 +22286,7 @@ tnh
 dXN
 dXN
 wrX
-asU
+rhP
 tGO
 tGO
 jxC
@@ -22588,7 +22588,7 @@ tnh
 dXN
 dXN
 dXN
-asU
+rhP
 tGO
 tGO
 jxC
@@ -22866,14 +22866,14 @@ dXN
 dXN
 xJc
 xJc
-asU
+rhP
 xJc
 xJc
 xJc
 saR
 xJc
 xJc
-asU
+rhP
 xJc
 xJc
 dXN
@@ -22885,12 +22885,12 @@ dXN
 dXN
 xJc
 xJc
-asU
+rhP
 xJc
 xJc
 dXN
 dXN
-asU
+rhP
 tGO
 tGO
 jxC
@@ -23466,15 +23466,15 @@ sHe
 sHe
 sHe
 xJc
-asU
-asU
+rhP
+rhP
 xJc
 sHe
 sHe
 sHe
 xJc
-asU
-asU
+rhP
+rhP
 xJc
 pdS
 pdS
@@ -23487,13 +23487,13 @@ moX
 dXN
 dXN
 dXN
-asU
+rhP
 jxC
 jxC
 roE
 xJc
-asU
-asU
+rhP
+rhP
 xJc
 tGO
 tGO
@@ -23781,7 +23781,7 @@ kEa
 pdS
 pdS
 pPv
-asU
+rhP
 dXN
 dXN
 rOW
@@ -23789,7 +23789,7 @@ rOW
 dXN
 dXN
 dXN
-asU
+rhP
 jxC
 jxC
 jxC
@@ -24083,7 +24083,7 @@ eSa
 pdS
 pdS
 pPv
-asU
+rhP
 dXN
 dXN
 dXN
@@ -24091,7 +24091,7 @@ dXN
 dXN
 dXN
 dXN
-asU
+rhP
 jxC
 jqP
 jxC
@@ -24265,8 +24265,8 @@ sHe
 sHe
 xJc
 xJc
-asU
-asU
+rhP
+rhP
 xJc
 xJc
 sHe
@@ -24393,7 +24393,7 @@ dXN
 dXN
 dXN
 dXN
-asU
+rhP
 jxC
 jqP
 jqP
@@ -24570,7 +24570,7 @@ uEW
 uEW
 uEW
 uEW
-asU
+rhP
 rSo
 txZ
 sHe
@@ -24663,7 +24663,7 @@ qmG
 pdS
 xJc
 xJc
-asU
+rhP
 xJc
 xJc
 roE
@@ -24872,7 +24872,7 @@ uEW
 uEW
 uEW
 uEW
-asU
+rhP
 pdS
 fKD
 roE
@@ -25269,7 +25269,7 @@ dXN
 dXN
 dXN
 nSF
-asU
+rhP
 roE
 vbO
 sHe
@@ -25294,9 +25294,9 @@ jxC
 jxC
 roE
 roE
-asU
+rhP
 dXN
-asU
+rhP
 jxC
 jxC
 jxC
@@ -25471,7 +25471,7 @@ jxC
 syB
 pdS
 pdS
-asU
+rhP
 uEW
 uEW
 uEW
@@ -25539,14 +25539,14 @@ roE
 jxC
 jxC
 jxC
-asU
+rhP
 wrX
 dXN
 tnh
 dXN
 dXN
 dXN
-asU
+rhP
 jxC
 jxC
 jxC
@@ -25596,9 +25596,9 @@ hKd
 jxC
 jxC
 roE
-asU
+rhP
 htV
-asU
+rhP
 jxC
 jxC
 jqP
@@ -25867,11 +25867,11 @@ xJc
 dXN
 dXN
 xJc
-asU
-asU
+rhP
+rhP
 xJc
 xJc
-asU
+rhP
 xJc
 xJc
 roE
@@ -26080,7 +26080,7 @@ uEW
 uEW
 uEW
 uEW
-asU
+rhP
 pdS
 fKD
 jxC
@@ -26144,24 +26144,24 @@ jxC
 jxC
 jxC
 xJc
-kOF
-kOF
+dIA
+dIA
 xJc
 xJc
-asU
+rhP
 xJc
 xJc
 jxC
 jxC
 jxC
-asU
+rhP
 dXN
 dXN
 dXN
 tnh
 dXN
 dXN
-asU
+rhP
 jqP
 jqP
 jxC
@@ -26382,7 +26382,7 @@ uEW
 uEW
 uEW
 uEW
-asU
+rhP
 qBO
 mOs
 jxC
@@ -26468,8 +26468,8 @@ jqP
 jqP
 jqP
 xJc
-asU
-asU
+rhP
+rhP
 xJc
 jqP
 jxC
@@ -26501,11 +26501,11 @@ jqP
 jqP
 jqP
 jqP
-asU
+rhP
 dXN
 dXN
 dXN
-asU
+rhP
 jxC
 jxC
 jxC
@@ -26681,8 +26681,8 @@ jxC
 jxC
 xJc
 xJc
-asU
-asU
+rhP
+rhP
 xJc
 xJc
 jxC
@@ -26760,8 +26760,8 @@ jxC
 jxC
 xJc
 xJc
-asU
-asU
+rhP
+rhP
 xJc
 xJc
 xJc
@@ -27107,7 +27107,7 @@ jqP
 jqP
 xJc
 xJc
-asU
+rhP
 xJc
 xJc
 jxC
@@ -31621,10 +31621,10 @@ rVB
 roE
 jxC
 xJc
-asU
-asU
-asU
-asU
+rhP
+rhP
+rhP
+rhP
 xJc
 jqP
 jqP
@@ -31922,12 +31922,12 @@ roE
 roE
 roE
 jxC
-asU
+rhP
 mYg
 uEW
 qmr
 cnA
-asU
+rhP
 jqP
 jqP
 jqP
@@ -32224,12 +32224,12 @@ roE
 roE
 sUI
 exZ
-asU
+rhP
 amJ
 uEW
 fKS
 icd
-asU
+rhP
 jqP
 jqP
 jqP
@@ -33135,7 +33135,7 @@ uEW
 uEW
 uEW
 kMi
-asU
+rhP
 jxC
 jqP
 jqP
@@ -34022,7 +34022,7 @@ jqP
 jqP
 jqP
 jqP
-asU
+rhP
 uEW
 uEW
 naW
@@ -34034,7 +34034,7 @@ sHe
 roE
 roE
 roE
-asU
+rhP
 rXO
 uEW
 naW
@@ -34324,7 +34324,7 @@ jqP
 jqP
 jqP
 jqP
-asU
+rhP
 rXO
 xKz
 xJc
@@ -34336,13 +34336,13 @@ sHe
 roE
 vbO
 pqX
-asU
+rhP
 rXO
 eKZ
 xJc
 uEW
 uEW
-asU
+rhP
 roE
 roE
 jxC
@@ -34644,7 +34644,7 @@ xJc
 xJc
 uEW
 uEW
-asU
+rhP
 roE
 roE
 jxC
@@ -34940,7 +34940,7 @@ sHe
 roE
 roE
 roE
-asU
+rhP
 rXO
 uEW
 naW
@@ -35242,13 +35242,13 @@ sHe
 roE
 vbO
 roE
-asU
+rhP
 rXO
 eKZ
 xJc
 uEW
 uEW
-asU
+rhP
 roE
 roE
 roE
@@ -35533,7 +35533,7 @@ jqP
 jqP
 jxC
 jxC
-asU
+rhP
 uEW
 uEW
 naW
@@ -35550,7 +35550,7 @@ xJc
 xJc
 uEW
 uEW
-asU
+rhP
 roE
 roE
 roE
@@ -35835,7 +35835,7 @@ jqP
 jxC
 jxC
 jxC
-asU
+rhP
 rXO
 xKz
 xJc
@@ -35846,7 +35846,7 @@ sHe
 roE
 roE
 roE
-asU
+rhP
 rXO
 uEW
 naW
@@ -36148,7 +36148,7 @@ sHe
 roE
 vbO
 roE
-asU
+rhP
 rXO
 eKZ
 xJc
@@ -37343,7 +37343,7 @@ jxC
 qNY
 jxC
 jxC
-asU
+rhP
 rXO
 xKz
 xJc
@@ -37645,7 +37645,7 @@ jxC
 jxC
 jxC
 jxC
-asU
+rhP
 uEW
 uEW
 naW
@@ -38265,7 +38265,7 @@ pdS
 naW
 uEW
 uEW
-asU
+rhP
 roE
 jxC
 jxC
@@ -38567,7 +38567,7 @@ kWi
 xJc
 eWT
 rXO
-asU
+rhP
 roE
 jxC
 jqP
@@ -40650,8 +40650,8 @@ fFv
 wud
 roE
 xJc
-asU
-asU
+rhP
+rhP
 xJc
 fKD
 roE
@@ -41558,7 +41558,7 @@ uEW
 uEW
 uEW
 uEW
-asU
+rhP
 fKD
 tgt
 roE
@@ -47290,9 +47290,9 @@ ixV
 ixV
 ixV
 iej
-cee
-cee
-cee
+ues
+ues
+ues
 jxC
 jxC
 jxC
@@ -47591,8 +47591,8 @@ ixV
 sHe
 sHe
 ixV
-cee
-cee
+ues
+ues
 jxC
 jxC
 jxC
@@ -48248,7 +48248,7 @@ fja
 roE
 mDX
 pqT
-lmy
+gCR
 oDn
 usR
 iKa
@@ -48258,7 +48258,7 @@ mDX
 uFh
 cuN
 oBb
-tYK
+eJX
 mDX
 roE
 fja
@@ -49161,7 +49161,7 @@ iKa
 iKa
 iKa
 mDX
-sQQ
+xfe
 iKa
 iKa
 iKa
@@ -49767,7 +49767,7 @@ sel
 mDX
 uFh
 uFh
-lxH
+jaC
 oxW
 mDX
 roE
@@ -51276,7 +51276,7 @@ sel
 ixQ
 kUz
 uFh
-lxH
+jaC
 uFh
 rwh
 mDX
@@ -58442,7 +58442,7 @@ maf
 uFh
 uFh
 bcB
-mcw
+wzM
 bIM
 pFn
 vQk
@@ -58744,7 +58744,7 @@ akC
 uFh
 uFh
 uFh
-cEg
+oxV
 uFh
 kmO
 mwe
@@ -59348,7 +59348,7 @@ pvB
 nFA
 uFh
 uFh
-cEg
+oxV
 uFh
 kmO
 mwe
@@ -59650,7 +59650,7 @@ maf
 nFA
 uFh
 iMp
-eOA
+xSs
 jCD
 fPg
 vQk
@@ -60854,7 +60854,7 @@ mwe
 twl
 pLd
 fCx
-uUR
+gjD
 uFh
 uFh
 vmr
@@ -61156,7 +61156,7 @@ mwe
 fTs
 twl
 twl
-qor
+fMn
 cDX
 trh
 xZF
@@ -68780,7 +68780,7 @@ sHe
 nVH
 whT
 mjc
-iHn
+cBo
 kzK
 roE
 roE
@@ -85088,7 +85088,7 @@ wIQ
 tMZ
 mIt
 xPx
-luh
+ebD
 tMZ
 mIt
 xPx
@@ -87501,13 +87501,13 @@ rHp
 pnA
 ahQ
 iRq
-xwn
+bbZ
 aFE
 ouY
 cHT
 fIh
 hLo
-loa
+sEx
 jDP
 qFo
 hmX
@@ -87833,7 +87833,7 @@ vsV
 lKq
 lKq
 lKq
-iBP
+giK
 sPT
 feN
 laQ
@@ -88085,7 +88085,7 @@ hgP
 kIy
 ciN
 ciN
-bMG
+avP
 hgP
 hgP
 kIy
@@ -89010,7 +89010,7 @@ jkm
 hMb
 pnA
 ahQ
-tgD
+xZO
 erh
 aFE
 aFE
@@ -89287,7 +89287,7 @@ eDN
 dIX
 feN
 dRF
-bMG
+avP
 hgP
 etd
 jQf
@@ -89901,7 +89901,7 @@ thh
 hgP
 hgP
 hgP
-hcq
+niG
 bia
 wmv
 hgP
@@ -90216,7 +90216,7 @@ jtQ
 mYB
 yht
 aFE
-rpr
+emF
 aFE
 hep
 aFE
@@ -91726,7 +91726,7 @@ sVc
 qOE
 uLO
 qRJ
-haC
+tKz
 hKo
 qOE
 pVc
@@ -92913,7 +92913,7 @@ feN
 dRF
 qSk
 hgP
-tBs
+xQz
 eDC
 kGP
 gCw
@@ -190222,7 +190222,7 @@ sJa
 auI
 auI
 auI
-vzB
+nMI
 iej
 auI
 auI
@@ -190828,7 +190828,7 @@ auI
 auI
 iej
 iej
-wrL
+gBg
 auI
 auI
 dIX
@@ -194124,7 +194124,7 @@ auI
 auI
 iej
 auI
-wPR
+fNy
 iej
 iej
 iej
@@ -198347,7 +198347,7 @@ auI
 aTS
 hSL
 sDP
-wPR
+fNy
 auI
 aTS
 qti
@@ -218385,11 +218385,11 @@ mrF
 jvM
 ktw
 dOb
-gat
-gat
-gat
-gat
-gat
+oTd
+oTd
+oTd
+oTd
+oTd
 dOb
 dOb
 dOb
@@ -218687,11 +218687,11 @@ mrF
 jvM
 ktw
 dOb
-gat
+oTd
 vxg
 tOT
 vxg
-gat
+oTd
 dOb
 dOb
 dOb
@@ -218989,11 +218989,11 @@ mrF
 jvM
 ktw
 dOb
-gat
+oTd
 vxg
 tOT
 vxg
-gat
+oTd
 dOb
 dOb
 dOb
@@ -219593,11 +219593,11 @@ dgb
 jvM
 ktw
 dOb
-gat
+oTd
 tOT
 tOT
 tOT
-gat
+oTd
 dOb
 dOb
 dOb
@@ -220197,11 +220197,11 @@ mrF
 jvM
 ktw
 dOb
-gat
+oTd
 vGg
 tOT
 vGg
-gat
+oTd
 dOb
 dOb
 dOb
@@ -220499,11 +220499,11 @@ mrF
 jvM
 ktw
 dOb
-gat
+oTd
 vGg
 tOT
 vGg
-gat
+oTd
 dOb
 dOb
 dOb
@@ -220801,11 +220801,11 @@ mrF
 jvM
 ktw
 dOb
-gat
-gat
-gat
-gat
-gat
+oTd
+oTd
+oTd
+oTd
+oTd
 dOb
 dOb
 dOb
@@ -244357,11 +244357,11 @@ mrF
 mrF
 mrF
 dOb
-ugu
-ugu
-ugu
-ugu
-ugu
+wtf
+wtf
+wtf
+wtf
+wtf
 dOb
 dOb
 dOb
@@ -244659,11 +244659,11 @@ mrF
 mrF
 mrF
 oyP
-ugu
+wtf
 jOJ
 hBl
 jOJ
-ugu
+wtf
 dOb
 dOb
 dOb
@@ -244961,11 +244961,11 @@ mrF
 mrF
 mrF
 oyP
-ugu
+wtf
 jOJ
 hBl
 jOJ
-ugu
+wtf
 dOb
 dOb
 dOb
@@ -245565,11 +245565,11 @@ mrF
 mrF
 mrF
 mrF
-ugu
+wtf
 hBl
 hBl
 hBl
-ugu
+wtf
 sGV
 mkS
 wbs
@@ -246169,11 +246169,11 @@ mrF
 mrF
 mrF
 oyP
-ugu
+wtf
 iTk
 hBl
 iTk
-ugu
+wtf
 oyP
 oyP
 oyP
@@ -246471,11 +246471,11 @@ mrF
 mrF
 mrF
 oyP
-ugu
+wtf
 iTk
 hBl
 iTk
-ugu
+wtf
 oyP
 oyP
 oyP
@@ -246773,11 +246773,11 @@ mrF
 mrF
 mrF
 oyP
-gat
-gat
-gat
-gat
-gat
+oTd
+oTd
+oTd
+oTd
+oTd
 oyP
 oyP
 oyP

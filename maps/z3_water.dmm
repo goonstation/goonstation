@@ -13,6 +13,11 @@
 "ax" = (
 /turf/unsimulated/wall/auto/supernorn,
 /area/dank_trench)
+"aN" = (
+/obj/item/raw_material/shard/glass,
+/obj/landmark/fall/sea/polaris,
+/turf/space/fluid/noexplosion,
+/area/wrecknsspolaris/outside)
 "aS" = (
 /turf/unsimulated/wall/trench,
 /area/space)
@@ -57,6 +62,10 @@
 /area/wrecknsspolaris)
 "bi" = (
 /obj/grille/steel,
+/turf/unsimulated/floor/plating,
+/area/wrecknsspolaris)
+"bj" = (
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "bk" = (
@@ -414,6 +423,26 @@
 	},
 /turf/unsimulated/floor/carpet/arcade,
 /area/wrecknsspolaris)
+"cn" = (
+/obj/machinery/door/airlock/pyro/command{
+	dir = 8;
+	icon_state = "com_closed";
+	name = "Sergeant's Office";
+	req_access = null
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/wood/two,
+/area/wrecknsspolaris)
+"co" = (
+/obj/machinery/door/airlock/pyro/command{
+	dir = 8;
+	icon_state = "com_closed";
+	name = "Sergeant's Private Quarters";
+	req_access = null
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/wood/two,
+/area/wrecknsspolaris)
 "cq" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -636,6 +665,14 @@
 	icon_state = "camerax";
 	name = "security camera"
 	},
+/turf/unsimulated/floor/black,
+/area/wrecknsspolaris)
+"cS" = (
+/obj/machinery/door/airlock/pyro/command{
+	name = "Bridge";
+	req_access = null
+	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
 "cT" = (
@@ -1616,6 +1653,16 @@
 /obj/item/sheet/steel,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
+"fb" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/simulated/floor/black,
+/area/wrecknsspolaris/vault)
+"fc" = (
+/obj/machinery/door/airlock/pyro/weapons/noemag,
+/obj/mapping_helper/access/polariscargo,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/black,
+/area/wrecknsspolaris/vault)
 "fd" = (
 /obj/dialogueobj/securitycorpse7,
 /obj/decal/cleanable/blood/splatter{
@@ -1752,6 +1799,13 @@
 	icon_state = "floor"
 	},
 /area/wrecknsspolaris)
+"fy" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/unsimulated/floor/yellow,
+/area/wrecknsspolaris)
 "fz" = (
 /obj/item/scrap,
 /obj/decal/fakeobjects{
@@ -1764,6 +1818,15 @@
 	},
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
+"fA" = (
+/obj/machinery/door/airlock/pyro/weapons/noemag{
+	id = "polarisdoor";
+	name = "Secure Vault"
+	},
+/obj/mapping_helper/access/polarisimportant,
+/obj/mapping_helper/firedoor_spawn,
+/turf/unsimulated/floor/black,
+/area/wrecknsspolaris/vault)
 "fB" = (
 /obj/decal/cleanable/dirt/dirt4,
 /turf/unsimulated/floor/black,
@@ -1827,12 +1890,33 @@
 /obj/dialogueobj/engineerscorpse,
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
-"fP" = (
-/obj/landmark{
-	name = "polarisfall"
+"fM" = (
+/obj/machinery/door/airlock/pyro/maintenance,
+/obj/mapping_helper/firedoor_spawn,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "floor"
 	},
-/turf/space/fluid/noexplosion,
-/area/wrecknsspolaris/outside/teleport)
+/area/wrecknsspolaris)
+"fN" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 8;
+	icon_state = "maint_closed";
+	name = "Maintenance"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/unsimulated/floor/plating,
+/area/wrecknsspolaris)
+"fO" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	name = "NSS Polaris"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "floor"
+	},
+/area/wrecknsspolaris)
 "fQ" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -1949,6 +2033,14 @@
 	},
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
+"gg" = (
+/obj/machinery/door/airlock/pyro/weapons/noemag{
+	name = "Cargo Bay"
+	},
+/obj/mapping_helper/access/polariscargo,
+/obj/mapping_helper/firedoor_spawn,
+/turf/unsimulated/floor/black,
+/area/wrecknsspolaris/vault)
 "gh" = (
 /obj/grille/catwalk{
 	dir = 6;
@@ -2031,39 +2123,16 @@
 /obj/item/scrap,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
-"gt" = (
-/obj/item/raw_material/rock,
-/obj/landmark{
-	name = "polarisfall"
-	},
-/turf/space/fluid/noexplosion,
-/area/wrecknsspolaris/outside/teleport)
-"gu" = (
-/obj/landmark{
-	name = "polarisfall"
-	},
-/turf/space/fluid/noexplosion,
-/area/wrecknsspolaris/outside)
-"gv" = (
-/obj/item/raw_material/shard/glass,
-/obj/landmark{
-	name = "polarisfall"
-	},
-/turf/space/fluid/noexplosion,
-/area/wrecknsspolaris/outside)
-"gw" = (
-/obj/item/raw_material/rock,
-/obj/landmark{
-	name = "polarisfall"
-	},
-/turf/space/fluid/noexplosion,
-/area/wrecknsspolaris/outside)
 "gx" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/space/fluid/noexplosion,
 /area/dank_trench)
 "gy" = (
 /turf/unsimulated/wall/trench/side,
+/area/dank_trench)
+"gz" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
 /area/dank_trench)
 "gA" = (
 /obj/item/scrap,
@@ -2106,13 +2175,6 @@
 "gG" = (
 /obj/sea_plant/seaweed,
 /obj/item/crowbar/red,
-/turf/space/fluid/noexplosion/nospawn,
-/area/dank_trench)
-"gH" = (
-/obj/landmark{
-	name = "marjfall"
-	},
-/obj/sea_plant/seaweed,
 /turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
 "gI" = (
@@ -2661,12 +2723,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
-"ia" = (
-/obj/landmark{
-	name = "marjfall"
-	},
-/turf/space/fluid/noexplosion,
-/area/dank_trench)
 "ib" = (
 /obj/rack,
 /obj/item/clothing/head/emerg,
@@ -2958,24 +3014,14 @@
 /obj/item/clothing/suit/space/suv,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"pq" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor/black,
-/area/wrecknsspolaris/vault)
+"ob" = (
+/obj/landmark/fall/sea/marj,
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
 "pX" = (
 /obj/storage/crate/loot,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"rn" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 8;
-	icon_state = "com_closed";
-	name = "Sergeant's Private Quarters";
-	req_access = null
-	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/wood/two,
-/area/wrecknsspolaris)
 "rt" = (
 /obj/decal/aliencomputer{
 	pixel_x = 32
@@ -2999,6 +3045,10 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"uw" = (
+/obj/landmark/fall/sea/polaris,
+/turf/space/fluid/noexplosion,
+/area/wrecknsspolaris/outside)
 "uV" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -3007,35 +3057,16 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"vo" = (
-/obj/machinery/door/airlock/pyro/maintenance,
-/obj/mapping_helper/firedoor_spawn,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "floor"
-	},
-/area/wrecknsspolaris)
 "xd" = (
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"xh" = (
-/obj/machinery/door/airlock/pyro/weapons/noemag,
-/obj/mapping_helper/access/polariscargo,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/black,
-/area/wrecknsspolaris/vault)
-"zb" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	dir = 8;
-	icon_state = "maint_closed";
-	name = "Maintenance"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/unsimulated/floor/plating,
-/area/wrecknsspolaris)
+"yn" = (
+/obj/landmark/spawner/artifact,
+/turf/unsimulated/floor/martian,
+/area/evilreaver/security)
 "AJ" = (
 /obj/ladder{
 	icon_state = "ladder_wall";
@@ -3057,15 +3088,6 @@
 "Co" = (
 /turf/unsimulated/floor/longtile/black,
 /area/mantavault)
-"CA" = (
-/obj/machinery/door/airlock/pyro/weapons/noemag{
-	id = "polarisdoor";
-	name = "Secure Vault"
-	},
-/obj/mapping_helper/access/polarisimportant,
-/obj/mapping_helper/firedoor_spawn,
-/turf/unsimulated/floor/black,
-/area/wrecknsspolaris/vault)
 "Dz" = (
 /obj/item/device/infra_sensor,
 /turf/unsimulated/floor/martian,
@@ -3097,14 +3119,11 @@
 /obj/critter/martian/warrior,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"Hg" = (
-/obj/machinery/door/airlock/pyro/command{
-	name = "Bridge";
-	req_access = null
-	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/unsimulated/floor/black,
-/area/wrecknsspolaris)
+"Hd" = (
+/obj/landmark/fall/sea/marj,
+/obj/sea_plant/seaweed,
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
 "Hn" = (
 /turf/unsimulated/wall/auto/adventure/martian,
 /area/evilreaver/security)
@@ -3131,28 +3150,16 @@
 /obj/critter/martian/soldier,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"KR" = (
-/obj/landmark/artifact,
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
+"LL" = (
+/obj/landmark/fall/sea/polaris,
+/turf/space/fluid/noexplosion,
+/area/wrecknsspolaris/outside/teleport)
 "Mi" = (
 /obj/marker/supplymarker,
 /obj/decal/fakeobjects/teleport_pad,
 /obj/map/light/dimred,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"MH" = (
-/obj/machinery/door/airlock/pyro/weapons/noemag{
-	name = "Cargo Bay"
-	},
-/obj/mapping_helper/access/polariscargo,
-/obj/mapping_helper/firedoor_spawn,
-/turf/unsimulated/floor/black,
-/area/wrecknsspolaris/vault)
-"MJ" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/unsimulated/floor/plating,
-/area/wrecknsspolaris)
 "Na" = (
 /obj/item/paper/courtroom{
 	name = "paper- 'A Crash Course in Legal SOP"
@@ -3170,23 +3177,6 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"PQ" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/unsimulated/floor/yellow,
-/area/wrecknsspolaris)
-"PX" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 8;
-	icon_state = "com_closed";
-	name = "Sergeant's Office";
-	req_access = null
-	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/wood/two,
-/area/wrecknsspolaris)
 "Qm" = (
 /obj/machinery/martianbomb,
 /turf/unsimulated/floor/martian,
@@ -3232,16 +3222,16 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"Xz" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	name = "NSS Polaris"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "floor"
-	},
-/area/wrecknsspolaris)
+"VN" = (
+/obj/item/raw_material/rock,
+/obj/landmark/fall/sea/polaris,
+/turf/space/fluid/noexplosion,
+/area/wrecknsspolaris/outside/teleport)
+"Xs" = (
+/obj/item/raw_material/rock,
+/obj/landmark/fall/sea/polaris,
+/turf/space/fluid/noexplosion,
+/area/wrecknsspolaris/outside)
 "XC" = (
 /obj/map/light/white,
 /turf/unsimulated/wall/auto/adventure/martian,
@@ -3250,10 +3240,6 @@
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"YH" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/unsimulated/floor/plating,
-/area/dank_trench)
 
 (1,1,1) = {"
 ab
@@ -4174,19 +4160,19 @@ ab
 aS
 aS
 aW
-fP
+LL
 fj
 bb
 bb
 aZ
 aZ
-gw
+Xs
 aZ
 aZ
 aZ
 aZ
 bc
-gu
+uw
 cC
 aZ
 aS
@@ -5083,7 +5069,7 @@ aW
 bb
 bb
 bb
-fP
+LL
 aZ
 aZ
 aZ
@@ -5382,7 +5368,7 @@ ab
 aS
 aS
 aW
-gt
+VN
 bb
 bb
 bb
@@ -5678,7 +5664,7 @@ In
 JZ
 Yb
 UF
-KR
+yn
 Hn
 ab
 aS
@@ -5701,7 +5687,7 @@ bN
 bU
 cM
 br
-MJ
+bj
 ct
 cy
 cy
@@ -5712,7 +5698,7 @@ cy
 cy
 cy
 cu
-MJ
+bj
 br
 ek
 el
@@ -5997,7 +5983,7 @@ aZ
 aZ
 bk
 aZ
-MJ
+bj
 bF
 bR
 ce
@@ -6008,7 +5994,7 @@ cr
 cy
 cP
 eC
-pq
+fb
 dV
 eC
 ga
@@ -6299,7 +6285,7 @@ aZ
 aZ
 aZ
 bf
-MJ
+bj
 bL
 bV
 bF
@@ -6310,7 +6296,7 @@ dM
 cy
 cQ
 eL
-xh
+fc
 dV
 dV
 gb
@@ -6580,7 +6566,7 @@ gW
 (12,1,1) = {"
 ab
 Hn
-KR
+yn
 Ns
 xd
 Qw
@@ -6594,7 +6580,7 @@ bb
 bb
 bb
 bb
-gu
+uw
 aZ
 aZ
 aZ
@@ -6604,7 +6590,7 @@ aZ
 br
 br
 br
-PX
+cn
 br
 br
 cU
@@ -6612,7 +6598,7 @@ dN
 cy
 dq
 dV
-pq
+fb
 cQ
 fB
 dV
@@ -6908,7 +6894,7 @@ bB
 ch
 bG
 cg
-Hg
+cS
 cr
 dO
 cy
@@ -6925,11 +6911,11 @@ br
 fv
 br
 br
-PQ
+fy
 br
 br
 br
-zb
+fN
 br
 dp
 fn
@@ -7519,10 +7505,10 @@ cy
 dT
 dV
 fr
-CA
+fA
 fX
 eL
-MH
+gg
 cr
 dt
 cr
@@ -7531,11 +7517,11 @@ cr
 cr
 cx
 fK
-vo
+fM
 fv
 fJ
 cx
-Xz
+fO
 fp
 fT
 dA
@@ -7792,18 +7778,18 @@ In
 Yb
 kw
 Ns
-KR
+yn
 Hn
 ab
 aS
 aS
 aW
-fP
+LL
 bb
 bb
 bb
 aZ
-gv
+aN
 aZ
 bi
 bo
@@ -8107,16 +8093,16 @@ bb
 aZ
 aZ
 aZ
-MJ
+bj
 bw
-MJ
+bj
 br
 br
 bH
 cl
 ch
 cj
-Hg
+cS
 cF
 cr
 cy
@@ -8133,11 +8119,11 @@ br
 br
 br
 br
-PQ
+fy
 br
 br
 br
-zb
+fN
 br
 br
 fq
@@ -8416,7 +8402,7 @@ aZ
 br
 br
 br
-rn
+co
 br
 br
 cs
@@ -8424,7 +8410,7 @@ dQ
 cy
 dY
 dV
-pq
+fb
 dV
 dV
 gc
@@ -8715,7 +8701,7 @@ bf
 aZ
 aZ
 aZ
-MJ
+bj
 bI
 bY
 bJ
@@ -8726,7 +8712,7 @@ cr
 cy
 dZ
 eL
-xh
+fc
 dV
 dV
 gd
@@ -9028,7 +9014,7 @@ cr
 cy
 ea
 eQ
-pq
+fb
 dZ
 fZ
 gf
@@ -9325,7 +9311,7 @@ br
 cI
 br
 br
-MJ
+bj
 ct
 cy
 cy
@@ -9336,7 +9322,7 @@ cy
 cy
 cy
 ct
-MJ
+bj
 br
 ft
 eZ
@@ -9921,7 +9907,7 @@ aZ
 du
 bd
 aZ
-gu
+uw
 bf
 br
 br
@@ -10220,7 +10206,7 @@ ab
 aS
 aW
 ba
-gu
+uw
 aZ
 aZ
 aZ
@@ -11434,7 +11420,7 @@ aZ
 aZ
 aZ
 aZ
-gu
+uw
 aZ
 aZ
 aS
@@ -12937,7 +12923,7 @@ gP
 Ip
 gy
 hT
-ia
+ob
 gP
 ac
 Ip
@@ -13242,7 +13228,7 @@ gP
 gP
 aa
 gP
-ia
+ob
 Ip
 Ip
 Ip
@@ -13838,14 +13824,14 @@ ax
 ax
 ax
 ax
-YH
-YH
-YH
+gz
+gz
+gz
 ax
 Ip
 gy
 gP
-ia
+ob
 gP
 aa
 Ip
@@ -14453,7 +14439,7 @@ hS
 gP
 gP
 gP
-gH
+Hd
 Ip
 Ip
 Ip
@@ -14737,7 +14723,7 @@ Ip
 gy
 gx
 aa
-YH
+gz
 gB
 gJ
 ax
@@ -14753,7 +14739,7 @@ ax
 ax
 ax
 iq
-ia
+ob
 aa
 gA
 Ip
@@ -15039,11 +15025,11 @@ Ip
 gy
 ac
 gP
-YH
+gz
 gC
 gE
 gQ
-YH
+gz
 hf
 hl
 ht
@@ -15341,7 +15327,7 @@ Ip
 gy
 gA
 aa
-YH
+gz
 gD
 gK
 gK
@@ -15643,11 +15629,11 @@ Ip
 gy
 gP
 gx
-YH
+gz
 gE
 gL
 gR
-YH
+gz
 gK
 hn
 hu
@@ -15945,7 +15931,7 @@ Ip
 gy
 aa
 gP
-YH
+gz
 gF
 gN
 ax
@@ -15964,7 +15950,7 @@ Ip
 Ip
 Ip
 gy
-ia
+ob
 aa
 Ip
 ab

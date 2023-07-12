@@ -234,12 +234,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
-"aC" = (
-/obj/landmark/start{
-	name = "Security Officer"
-	},
-/turf/simulated/floor/red,
-/area/station/security/main)
 "aD" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -381,6 +375,13 @@
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/plating,
 /area/station/security/main)
+"aS" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Cell 1"
+	},
+/obj/mapping_helper/access/security,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "aT" = (
 /obj/machinery/door_timer/solitary{
 	name = "Brig Timer";
@@ -388,6 +389,13 @@
 	pixel_y = 0
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/security/main)
+"aU" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Cell 2"
+	},
+/obj/mapping_helper/access/security,
+/turf/simulated/floor/red,
 /area/station/security/main)
 "aV" = (
 /obj/storage/secure/crate/weapon/armory/shotgun,
@@ -465,16 +473,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"bf" = (
-/obj/stool/chair/office/red{
-	dir = 4;
-	icon_state = "office_chair_red"
-	},
-/obj/landmark/start{
-	name = "Security Officer"
-	},
-/turf/simulated/floor/red,
-/area/station/security/main)
 "bg" = (
 /obj/machinery/computer/secure_data{
 	dir = 8;
@@ -593,6 +591,23 @@
 /obj/machinery/vending/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"br" = (
+/obj/machinery/door/airlock/pyro/command{
+	aiControlDisabled = 1;
+	dir = 4;
+	icon_state = "com_closed";
+	name = "Armory";
+	req_access = null;
+	req_access_txt = "0"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/hos,
+/turf/simulated/floor/red,
+/area/station/ai_monitored/armory)
 "bs" = (
 /obj/cable{
 	d1 = 4;
@@ -629,8 +644,28 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"bx" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/security{
+	req_access = null
+	},
+/obj/mapping_helper/access/security,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "by" = (
 /turf/simulated/wall/auto/supernorn,
+/area/station/security/main)
+"bz" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Security Lockers"
+	},
+/obj/mapping_helper/access/security,
+/turf/simulated/floor/red,
 /area/station/security/main)
 "bA" = (
 /obj/machinery/traymachine/morgue{
@@ -722,6 +757,15 @@
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/red,
 /area/station/storage/warehouse)
+"bI" = (
+/obj/machinery/door/airlock/pyro/security{
+	dir = 4;
+	name = "Morgue";
+	req_access = null
+	},
+/obj/mapping_helper/access/security,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "bJ" = (
 /turf/simulated/floor/specialroom/freezer,
 /area/station/security/main)
@@ -980,6 +1024,16 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/main)
+"ct" = (
+/obj/disposalpipe/segment,
+/obj/machinery/door/airlock/pyro/security{
+	name = "Morgue";
+	req_access = null
+	},
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/access/chapel_office,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/security/main)
 "cu" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -1038,6 +1092,14 @@
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "cE" = (
+/turf/simulated/floor/grass,
+/area/station/crew_quarters/garden)
+"cF" = (
+/obj/machinery/door/airlock/pyro/security{
+	dir = 4;
+	name = "CMDS - Security Block"
+	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "cG" = (
@@ -1153,30 +1215,26 @@
 	},
 /turf/simulated/floor/neutral,
 /area/station/quartermaster/office)
-"cS" = (
-/obj/stool/chair{
-	dir = 1;
-	icon_state = "chair"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/landmark/start{
-	name = "Quartermaster"
-	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/neutral,
-/area/station/quartermaster/office)
 "cT" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/neutral,
+/area/station/quartermaster/office)
+"cU" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	req_access = null;
+	req_access_txt = "0"
+	},
+/obj/mapping_helper/access/engineering,
+/obj/mapping_helper/access/engineering_mechanic,
+/obj/mapping_helper/access/mining,
+/obj/mapping_helper/access/cargo,
+/turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "cV" = (
 /obj/disposalpipe/junction{
@@ -1244,15 +1302,21 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
-"dd" = (
-/obj/stool,
-/obj/landmark/start{
-	name = "Detective"
-	},
-/turf/simulated/floor/grass,
-/area/station/crew_quarters/garden)
 "de" = (
 /obj/stool,
+/turf/simulated/floor/grass,
+/area/station/crew_quarters/garden)
+"df" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "CMDS - Engineering Block";
+	req_access = null;
+	req_access_txt = "0"
+	},
+/obj/mapping_helper/access/engineering,
+/obj/mapping_helper/access/cargo,
+/obj/mapping_helper/access/engineering_mechanic,
+/obj/mapping_helper/access/mining,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "dg" = (
@@ -1356,6 +1420,30 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/elect)
+"ds" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	name = "EngineCore";
+	req_access = null;
+	req_access_txt = "0"
+	},
+/obj/mapping_helper/access/engineering,
+/obj/mapping_helper/access/engineering_mechanic,
+/obj/mapping_helper/access/mining,
+/turf/simulated/floor/engine,
 /area/station/engine/elect)
 "dt" = (
 /obj/disposalpipe/segment{
@@ -1623,12 +1711,6 @@
 /obj/item/pen/crayon/rainbow,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
-"ea" = (
-/obj/landmark/start{
-	name = "Clown"
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/clown)
 "eb" = (
 /obj/grille/steel,
 /obj/window/crystal/reinforced/west,
@@ -1658,12 +1740,6 @@
 	icon_state = "tube1";
 	layer = 9.1;
 	pixel_x = -10
-	},
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/kitchen)
-"ef" = (
-/obj/landmark/start{
-	name = "Chef"
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
@@ -2095,15 +2171,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"fb" = (
-/obj/decal/cleanable/dirt,
-/obj/stool/bed,
-/obj/item/paper/book/from_file/the_trial,
-/obj/landmark/start{
-	name = "Clown"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/crew_quarters/clown)
 "fc" = (
 /obj/decal/cleanable/dirt,
 /obj/marker/supplymarker,
@@ -2320,12 +2387,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
-"fF" = (
-/obj/landmark/start{
-	name = "Botanist"
-	},
-/turf/simulated/floor/grass,
-/area/station/crew_quarters/garden)
 "fG" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2352,21 +2413,6 @@
 	dir = 10;
 	icon_state = "intact"
 	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"fK" = (
-/obj/machinery/power/terminal{
-	dir = 1;
-	icon_state = "term"
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/landmark/start{
-	name = "Engineer"
-	},
-/obj/storage/secure/closet/engineering/engineer,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "fL" = (
@@ -2480,19 +2526,6 @@
 	icon_state = "fblue1"
 	},
 /area/station/bridge)
-"ga" = (
-/obj/stool/chair/comfy/blue{
-	dir = 4;
-	icon_state = "chair_comfy-blue"
-	},
-/obj/landmark/start{
-	name = "Research Director"
-	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue2"
-	},
-/area/station/bridge)
 "gb" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/lounge)
@@ -2561,21 +2594,21 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"gl" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "Gas Storage";
+	req_access = null;
+	req_access_txt = "0"
+	},
+/obj/mapping_helper/access/engineering,
+/turf/simulated/floor/plating,
+/area/station/engine/core)
 "gm" = (
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "gn" = (
 /obj/storage/closet/biohazard,
-/turf/simulated/floor/plating,
-/area/station/janitor/supply)
-"go" = (
-/obj/landmark/start{
-	name = "Janitor"
-	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
 "gp" = (
@@ -2654,47 +2687,11 @@
 	icon_state = "fblue2"
 	},
 /area/station/bridge)
-"gv" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/landmark/start{
-	name = "Captain"
-	},
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fblue1"
-	},
-/area/station/bridge)
-"gw" = (
-/obj/stool/chair/comfy/blue{
-	dir = 4;
-	icon_state = "chair_comfy-blue"
-	},
-/obj/landmark/start{
-	name = "Medical Director"
-	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue2"
-	},
-/area/station/bridge)
 "gx" = (
 /obj/table/wood/auto,
 /obj/item/gun/russianrevolver,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
-"gy" = (
-/obj/landmark/start{
-	name = "Bartender"
-	},
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/bar)
 "gz" = (
 /obj/table/wood/auto,
 /obj/machinery/microwave,
@@ -2947,19 +2944,6 @@
 	icon_state = "fblue1"
 	},
 /area/station/bridge)
-"gY" = (
-/obj/stool/chair/comfy/blue{
-	dir = 4;
-	icon_state = "chair_comfy-blue"
-	},
-/obj/landmark/start{
-	name = "Chief Engineer"
-	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue2"
-	},
-/area/station/bridge)
 "gZ" = (
 /obj/machinery/chem_dispenser/soda,
 /turf/simulated/floor/specialroom/bar,
@@ -3020,16 +3004,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"hf" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 1
-	},
-/obj/landmark/start{
-	name = "Miner"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "hg" = (
 /obj/machinery/atmospherics/binary/passive_gate{
 	dir = 2;
@@ -3055,16 +3029,17 @@
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"hj" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 9
+"hk" = (
+/obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "1-2"
 	},
-/obj/landmark/start{
-	name = "Mechanic"
+/obj/machinery/door/airlock/pyro{
+	name = "Janitor's Supply Closet"
 	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
+/obj/mapping_helper/access/janitor,
+/turf/simulated/floor/plating,
+/area/station/janitor/supply)
 "hl" = (
 /obj/storage/secure/closet/command/medical_director,
 /turf/simulated/floor/carpet{
@@ -3141,6 +3116,26 @@
 "hu" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/customs)
+"hv" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/command{
+	name = "Customs";
+	req_access = null
+	},
+/obj/mapping_helper/access/heads,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/security/checkpoint/customs)
 "hw" = (
 /obj/machinery/bathtub{
 	dir = 4
@@ -3173,6 +3168,14 @@
 /area/station/engine/core)
 "hA" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/lab)
+"hB" = (
+/obj/machinery/door/airlock/pyro/medical{
+	name = "Gas Storage";
+	req_access = null
+	},
+/obj/mapping_helper/access/tox_storage,
+/turf/simulated/floor/plating,
 /area/station/science/lab)
 "hC" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -3236,6 +3239,25 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"hH" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/command{
+	name = "Bridge";
+	req_access = null
+	},
+/obj/mapping_helper/access/heads,
+/turf/simulated/floor/darkblue,
+/area/station/bridge)
+"hI" = (
+/obj/machinery/door/airlock/pyro{
+	name = "Outdoor Bar"
+	},
+/obj/mapping_helper/access/bar,
+/obj/mapping_helper/access/kitchen,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
 "hJ" = (
 /obj/submachine/ice_cream_dispenser,
 /turf/simulated/floor/grass,
@@ -3426,29 +3448,6 @@
 	icon_state = "wooden"
 	},
 /area/station/security/checkpoint/customs)
-"ii" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/landmark/start{
-	name = "Head of Personnel"
-	},
-/obj/stool/chair/comfy/blue{
-	dir = 8;
-	icon_state = "chair_comfy-blue"
-	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/security/checkpoint/customs)
 "ij" = (
 /obj/grille/catwalk{
 	dir = 10;
@@ -3526,18 +3525,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
-"io" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/landmark{
-	name = "Observer-Start"
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/engine/hotloop)
 "ip" = (
 /obj/cable{
 	d1 = 4;
@@ -3601,22 +3588,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/turf/simulated/floor/white,
-/area/station/science/lab)
-"iu" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 1;
-	icon_state = "manifold";
-	level = 2
-	},
-/obj/landmark/start{
-	name = "Scientist"
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -4225,6 +4196,15 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/chapel/sanctuary)
+"jE" = (
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "CMDS - Research Block";
+	req_access = null
+	},
+/obj/mapping_helper/access/research,
+/turf/simulated/floor/grass,
+/area/station/crew_quarters/garden)
 "jF" = (
 /obj/window/cubicle{
 	dir = 2;
@@ -4232,6 +4212,15 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/garden)
+"jG" = (
+/obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/maintenance,
+/obj/mapping_helper/access/maint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "jH" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -4374,6 +4363,33 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lobby)
+"jT" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/medical{
+	name = "Toxins Lab";
+	req_access = null
+	},
+/obj/mapping_helper/access/tox,
+/turf/simulated/floor/white,
+/area/station/science/lab)
+"jU" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/command{
+	name = "AI Chamber";
+	req_access = null
+	},
+/obj/mapping_helper/access/heads,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/station/turret_protected/ai)
 "jV" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/apc{
@@ -4389,21 +4405,6 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"jW" = (
-/obj/item/storage/toilet{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/white,
-/area/station/crew_quarters/bathroom)
 "jX" = (
 /turf/simulated/floor/white,
 /area/station/crew_quarters/bathroom)
@@ -4413,17 +4414,15 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
-"jZ" = (
-/obj/landmark/start{
-	name = "Chaplain"
+"ka" = (
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "CMDS - Medical Sector";
+	req_access = null
 	},
-/obj/storage/closet/wardrobe/black/chaplain,
-/obj/machinery/light,
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "fred2"
-	},
-/area/station/chapel/sanctuary)
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/grass,
+/area/station/crew_quarters/garden)
 "kb" = (
 /turf/simulated/floor/white,
 /area/station/crew_quarters/garden)
@@ -4623,6 +4622,18 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lobby)
+"kt" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "Research Sector";
+	req_access = null
+	},
+/obj/mapping_helper/access/research,
+/turf/simulated/floor/plating,
+/area/station/science/lobby)
 "ku" = (
 /obj/disposalpipe/junction{
 	dir = 1;
@@ -4698,11 +4709,45 @@
 "kG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/teleporter)
+"kH" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/medical{
+	name = "Telescience";
+	req_access = null
+	},
+/obj/mapping_helper/access/research,
+/turf/simulated/floor/white,
+/area/station/science/teleporter)
 "kI" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/chemistry)
+"kJ" = (
+/obj/machinery/door/airlock/pyro/medical{
+	name = "Chemistry";
+	req_access = null
+	},
+/obj/mapping_helper/access/chemistry,
+/turf/simulated/floor/white,
+/area/station/science/chemistry)
 "kK" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/artifact)
+"kL" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/medical{
+	name = "Artifact Research";
+	req_access = null
+	},
+/obj/mapping_helper/access/research,
+/turf/simulated/floor/white,
 /area/station/science/artifact)
 "kM" = (
 /obj/disposalpipe/segment,
@@ -4733,12 +4778,6 @@
 /area/station/maintenance/central)
 "kQ" = (
 /obj/machinery/clone_scanner,
-/turf/simulated/floor/white,
-/area/station/medical/research)
-"kR" = (
-/obj/landmark/start{
-	name = "Geneticist"
-	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "kT" = (
@@ -4964,16 +5003,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
-"lm" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/test_apparatus/heater,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/landmark/artifact,
-/turf/simulated/floor/white,
-/area/station/science/artifact)
 "ln" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/apc{
@@ -4999,24 +5028,6 @@
 /obj/machinery/genetics_scanner,
 /turf/simulated/floor/white,
 /area/station/medical/research)
-"lq" = (
-/obj/landmark/start{
-	name = "Roboticist"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/research)
-"lr" = (
-/obj/machinery/recharge_station,
-/obj/landmark/start{
-	name = "Cyborg"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/research)
 "ls" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -5032,42 +5043,10 @@
 	allows_vehicles = 0
 	},
 /area/station/science/teleporter)
-"lt" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/landmark/start{
-	name = "Scientist"
-	},
-/obj/stool/chair/office{
-	dir = 8;
-	icon_state = "office_chair"
-	},
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
-	},
-/area/station/science/teleporter)
 "lu" = (
 /obj/machinery/chem_master{
 	dir = 4;
 	pixel_x = -4
-	},
-/turf/simulated/floor/white,
-/area/station/science/chemistry)
-"lv" = (
-/obj/stool/chair/office{
-	dir = 8;
-	icon_state = "office_chair"
-	},
-/obj/landmark/start{
-	name = "Scientist"
 	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
@@ -5239,41 +5218,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
-"lJ" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/landmark/start{
-	name = "Scientist"
-	},
-/obj/stool/chair/office{
-	dir = 8;
-	icon_state = "office_chair"
-	},
-/turf/simulated/floor/white,
-/area/station/science/artifact)
-"lK" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/test_apparatus/impact_pad,
-/obj/landmark/artifact,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/white,
-/area/station/science/artifact)
 "lL" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/apc{
@@ -5289,6 +5233,20 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"lM" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/medical{
+	name = "Medical Research";
+	req_access = null
+	},
+/obj/mapping_helper/access/robotics,
+/obj/mapping_helper/access/medlab,
+/turf/simulated/floor/white,
+/area/station/medical/research)
 "lN" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/white,
@@ -5516,17 +5474,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"mp" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 1;
-	icon_state = "manifold";
-	level = 2
-	},
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "mq" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
@@ -5582,6 +5529,20 @@
 /area/station/maintenance/central)
 "mv" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/medical/medbay/surgery)
+"mw" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/obj/machinery/door/airlock/pyro/medical{
+	name = "Operating Theater";
+	req_access = null
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "my" = (
 /obj/machinery/meter,
@@ -5661,6 +5622,14 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
+"mJ" = (
+/obj/machinery/door/airlock/pyro/medical{
+	name = "Cryogenics";
+	req_access = null
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "mK" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/glass/petridish,
@@ -5678,17 +5647,6 @@
 	icon_state = "tube1";
 	layer = 9.1;
 	pixel_x = -10
-	},
-/turf/simulated/floor/white,
-/area/station/medical/cdc)
-"mL" = (
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
@@ -5758,6 +5716,21 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
+"mS" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "Operating Theater";
+	req_access = null
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "mT" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -5767,6 +5740,21 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"mU" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "Pathology";
+	req_access = null
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "mV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -5929,6 +5917,15 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay)
+"no" = (
+/obj/disposalpipe/segment,
+/obj/machinery/door/airlock/pyro/medical{
+	name = "Medbay";
+	req_access = null
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/plating,
+/area/station/medical/cdc)
 "np" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -6097,17 +6094,6 @@
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/station/crew_quarters/lounge)
-"nJ" = (
-/obj/landmark{
-	name = "JoinLate"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
-/turf/unsimulated/floor/carpet/grime,
-/area/station/crew_quarters/lounge)
 "nK" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -6143,25 +6129,6 @@
 	},
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
-"nO" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/landmark{
-	name = "AI-Sat"
-	},
-/obj/landmark/start{
-	name = "AI"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "nP" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -6496,19 +6463,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"pV" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "CMDS - Engineering Block";
-	req_access = null;
-	req_access_txt = "0"
-	},
-/obj/mapping_helper/access/engineering,
-/obj/mapping_helper/access/cargo,
-/obj/mapping_helper/access/engineering_mechanic,
-/obj/mapping_helper/access/mining,
-/turf/simulated/floor/grass,
-/area/station/crew_quarters/garden)
 "qo" = (
 /obj/storage/secure/closet/security/forensics,
 /obj/item/reagent_containers/glass/bottle/formaldehyde,
@@ -6532,16 +6486,10 @@
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/security/main)
-"qt" = (
-/obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/security{
-	name = "Morgue";
-	req_access = null
-	},
-/obj/mapping_helper/access/security,
-/obj/mapping_helper/access/chapel_office,
-/turf/simulated/floor/specialroom/freezer,
-/area/station/security/main)
+"qp" = (
+/obj/landmark/start/job/chef,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/kitchen)
 "qT" = (
 /obj/machinery/lawrack{
 	dir = 8
@@ -6560,39 +6508,39 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"rl" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/medical{
-	name = "Artifact Research";
-	req_access = null
-	},
-/obj/mapping_helper/access/research,
+"rj" = (
+/obj/landmark/start/job/geneticist,
 /turf/simulated/floor/white,
-/area/station/science/artifact)
-"uk" = (
+/area/station/medical/research)
+"ta" = (
+/obj/stool/chair/comfy/blue{
+	dir = 4;
+	icon_state = "chair_comfy-blue"
+	},
+/obj/landmark/start/job/medical_director,
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue2"
+	},
+/area/station/bridge)
+"tr" = (
+/obj/landmark/start/job/security_officer,
+/turf/simulated/floor/red,
+/area/station/security/main)
+"ty" = (
+/obj/machinery/power/data_terminal,
 /obj/cable{
-	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/landmark/start/job/AI,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
 	},
-/obj/machinery/door/airlock/pyro/command{
-	name = "Customs";
-	req_access = null
-	},
-/obj/mapping_helper/access/heads,
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/security/checkpoint/customs)
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "uG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -6609,21 +6557,27 @@
 /obj/decal/fakeobjects/sink,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
-"vA" = (
+"vl" = (
 /obj/cable{
-	icon_state = "4-8"
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/landmark/start/job/head_of_personnel,
+/obj/stool/chair/comfy/blue{
+	dir = 8;
+	icon_state = "chair_comfy-blue"
 	},
-/obj/machinery/door/airlock/pyro/medical{
+/obj/machinery/light{
 	dir = 4;
-	name = "Pathology";
-	req_access = null
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = 10
 	},
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/white,
-/area/station/medical/cdc)
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/security/checkpoint/customs)
 "vP" = (
 /obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/red,
@@ -6649,7 +6603,158 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
-"xT" = (
+"xm" = (
+/obj/landmark/start/job/medical_doctor,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
+"xV" = (
+/obj/grille/catwalk,
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/mining/magnet)
+"yG" = (
+/obj/stool,
+/obj/landmark/start/job/detective,
+/turf/simulated/floor/grass,
+/area/station/crew_quarters/garden)
+"zH" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/test_apparatus/impact_pad,
+/obj/landmark/spawner/artifact,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/white,
+/area/station/science/artifact)
+"zJ" = (
+/obj/landmark/start/job/clown,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
+"zQ" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	icon_state = "manifold";
+	level = 2
+	},
+/obj/landmark/start/job/scientist,
+/turf/simulated/floor/white,
+/area/station/science/lab)
+"Ai" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 4;
+	frequency = 1229;
+	icon_state = "intact_on";
+	id = "Chamber One Outlet";
+	on = 1;
+	target_pressure = 1000
+	},
+/obj/machinery/dispenser,
+/turf/simulated/floor/caution/west,
+/area/station/science/lab)
+"AP" = (
+/obj/item/storage/toilet{
+	dir = 4
+	},
+/obj/landmark/start/job/assistant,
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/bathroom)
+"Ct" = (
+/obj/machinery/clonepod,
+/turf/simulated/floor/white,
+/area/station/medical/research)
+"Cy" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/landmark/start/job/scientist,
+/obj/stool/chair/office{
+	dir = 8;
+	icon_state = "office_chair"
+	},
+/turf/simulated/floor/white,
+/area/station/science/artifact)
+"CA" = (
+/obj/machinery/power/terminal{
+	dir = 1;
+	icon_state = "term"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/landmark/start/job/engineer,
+/obj/storage/secure/closet/engineering/engineer,
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"FS" = (
+/obj/stool/chair/comfy/blue{
+	dir = 4;
+	icon_state = "chair_comfy-blue"
+	},
+/obj/landmark/start/job/chief_engineer,
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue2"
+	},
+/area/station/bridge)
+"Gd" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4;
+	icon_state = "intact"
+	},
+/obj/grille/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/obj/machinery/computer/magnet{
+	dir = 4;
+	icon_state = "mmagnet"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6;
+	layer = 2
+	},
+/area/station/engine/coldloop)
+"Gm" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4;
 	icon_state = "intact"
@@ -6675,61 +6780,12 @@
 	layer = 2
 	},
 /area/station/engine/coldloop)
-"yw" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/medical{
-	name = "Medical Research";
-	req_access = null
-	},
-/obj/mapping_helper/access/robotics,
-/obj/mapping_helper/access/medlab,
-/turf/simulated/floor/white,
-/area/station/medical/research)
-"yJ" = (
-/obj/disposalpipe/segment,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/maintenance,
-/obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating,
-/area/station/maintenance/central)
-"AK" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4;
-	name = "Research Sector";
-	req_access = null
-	},
-/obj/mapping_helper/access/research,
-/turf/simulated/floor/plating,
-/area/station/science/lobby)
-"BB" = (
-/obj/machinery/door/airlock/pyro/medical{
-	name = "Chemistry";
-	req_access = null
-	},
-/obj/mapping_helper/access/chemistry,
-/turf/simulated/floor/white,
-/area/station/science/chemistry)
-"Cs" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Cell 2"
-	},
-/obj/mapping_helper/access/security,
-/turf/simulated/floor/red,
-/area/station/security/main)
-"Ct" = (
-/obj/machinery/clonepod,
-/turf/simulated/floor/white,
-/area/station/medical/research)
-"CF" = (
+"GM" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
+"Hr" = (
 /obj/grille/catwalk{
 	dir = 4
 	},
@@ -6745,294 +6801,11 @@
 	
 	},
 /area/mining/magnet)
-"CX" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Gas Storage";
-	req_access = null;
-	req_access_txt = "0"
-	},
-/obj/mapping_helper/access/engineering,
-/turf/simulated/floor/plating,
-/area/station/engine/core)
-"Ds" = (
-/obj/machinery/door/airlock/pyro/medical{
-	name = "Cryogenics";
-	req_access = null
-	},
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
-"EW" = (
-/obj/machinery/door/airlock/pyro/command{
-	aiControlDisabled = 1;
-	dir = 4;
-	icon_state = "com_closed";
-	name = "Armory";
-	req_access = null;
-	req_access_txt = "0"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/hos,
-/turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
-"Fm" = (
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4;
-	name = "CMDS - Research Block";
-	req_access = null
-	},
-/obj/mapping_helper/access/research,
+"Ht" = (
+/obj/landmark/start/job/botanist,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
-"GM" = (
-/obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/bar)
-"Hf" = (
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4;
-	name = "CMDS - Medical Sector";
-	req_access = null
-	},
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/grass,
-/area/station/crew_quarters/garden)
-"Hk" = (
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	name = "Morgue";
-	req_access = null
-	},
-/obj/mapping_helper/access/security,
-/turf/simulated/floor/red,
-/area/station/security/main)
-"Hl" = (
-/obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/medical{
-	name = "Medbay";
-	req_access = null
-	},
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/plating,
-/area/station/medical/cdc)
-"Hw" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	icon_state = "intact"
-	},
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/obj/machinery/computer/magnet{
-	dir = 4;
-	icon_state = "mmagnet"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 6;
-	layer = 2
-	},
-/area/station/engine/coldloop)
-"IF" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	icon_state = "intact"
-	},
-/obj/grille/catwalk{
-	dir = 6
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 2;
-	icon_state = "catwalk_cross";
-	layer = 2
-	},
-/area/station/engine/coldloop)
-"IX" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
-	dir = 4
-	},
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/medical/medbay)
-"Jq" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 4;
-	frequency = 1229;
-	icon_state = "intact_on";
-	id = "Chamber One Outlet";
-	on = 1;
-	target_pressure = 1000
-	},
-/obj/machinery/dispenser,
-/turf/simulated/floor/caution/west,
-/area/station/science/lab)
-"Jt" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/command{
-	name = "Bridge";
-	req_access = null
-	},
-/obj/mapping_helper/access/heads,
-/turf/simulated/floor/darkblue,
-/area/station/bridge)
-"La" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Cell 1"
-	},
-/obj/mapping_helper/access/security,
-/turf/simulated/floor/red,
-/area/station/security/main)
-"LP" = (
-/obj/machinery/door/airlock/pyro/medical{
-	name = "Gas Storage";
-	req_access = null
-	},
-/obj/mapping_helper/access/tox_storage,
-/turf/simulated/floor/plating,
-/area/station/science/lab)
-"Me" = (
-/obj/disposalpipe/segment,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro{
-	name = "Janitor's Supply Closet"
-	},
-/obj/mapping_helper/access/janitor,
-/turf/simulated/floor/plating,
-/area/station/janitor/supply)
-"MY" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/medical{
-	name = "Toxins Lab";
-	req_access = null
-	},
-/obj/mapping_helper/access/tox,
-/turf/simulated/floor/white,
-/area/station/science/lab)
-"PK" = (
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	name = "CMDS - Security Block"
-	},
-/obj/mapping_helper/access/security,
-/turf/simulated/floor/grass,
-/area/station/crew_quarters/garden)
-"Ri" = (
-/obj/machinery/recharger/wall/sticky{
-	dir = 1
-	},
-/turf/simulated/floor/red,
-/area/station/security/main)
-"Sa" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/medical{
-	name = "Operating Theater";
-	req_access = null
-	},
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
-"Th" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/command{
-	name = "AI Chamber";
-	req_access = null
-	},
-/obj/mapping_helper/access/heads,
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/turret_protected/ai)
-"Tl" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	icon_state = "intact"
-	},
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 6;
-	layer = 2
-	},
-/area/station/engine/coldloop)
-"TP" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/security{
-	req_access = null
-	},
-/obj/mapping_helper/access/security,
-/turf/simulated/floor/red,
-/area/station/security/main)
-"Ur" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/medical{
-	name = "Telescience";
-	req_access = null
-	},
-/obj/mapping_helper/access/research,
-/turf/simulated/floor/white,
-/area/station/science/teleporter)
-"UN" = (
-/obj/table/wood/auto,
-/obj/item/card_box/plain,
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/kitchen)
-"VN" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4;
-	name = "Operating Theater";
-	req_access = null
-	},
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
-"VV" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Security Lockers"
-	},
-/obj/mapping_helper/access/security,
-/turf/simulated/floor/red,
-/area/station/security/main)
-"Wo" = (
+"HP" = (
 /obj/grille/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
@@ -7065,66 +6838,226 @@
 	layer = 2
 	},
 /area/mining/magnet)
-"WE" = (
-/obj/grille/catwalk,
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/turf/simulated/floor/airless/plating/catwalk,
-/area/mining/magnet)
-"YP" = (
+"HZ" = (
+/obj/decal/cleanable/dirt,
+/obj/stool/bed,
+/obj/item/paper/book/from_file/the_trial,
+/obj/landmark/start/job/clown,
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/clown)
+"It" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/test_apparatus/heater,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/landmark/spawner/artifact,
+/turf/simulated/floor/white,
+/area/station/science/artifact)
+"Jy" = (
+/obj/landmark/start/latejoin,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
+/turf/unsimulated/floor/carpet/grime,
+/area/station/crew_quarters/lounge)
+"KT" = (
+/obj/landmark/start/job/chaplain,
+/obj/storage/closet/wardrobe/black/chaplain,
+/obj/machinery/light,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fred2"
 	},
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "EngineCore";
-	req_access = null;
-	req_access_txt = "0"
-	},
-/obj/mapping_helper/access/engineering,
-/obj/mapping_helper/access/engineering_mechanic,
-/obj/mapping_helper/access/mining,
-/turf/simulated/floor/engine,
-/area/station/engine/elect)
-"Zk" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro/engineering{
+/area/station/chapel/sanctuary)
+"Ll" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4;
-	req_access = null;
-	req_access_txt = "0"
+	icon_state = "intact"
 	},
-/obj/mapping_helper/access/engineering,
-/obj/mapping_helper/access/engineering_mechanic,
-/obj/mapping_helper/access/mining,
-/obj/mapping_helper/access/cargo,
+/obj/grille/catwalk{
+	dir = 6
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 2;
+	icon_state = "catwalk_cross";
+	layer = 2
+	},
+/area/station/engine/coldloop)
+"LR" = (
+/obj/landmark/start/job/roboticist,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/research)
+"LW" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	icon_state = "manifold";
+	level = 2
+	},
+/obj/landmark/start/job/medical_doctor,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
+"MA" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
+	dir = 4
+	},
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/medical/medbay)
+"MV" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/landmark/observer,
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/hotloop)
+"Pk" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4;
+	icon_state = "intact"
+	},
+/obj/grille/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6;
+	layer = 2
+	},
+/area/station/engine/coldloop)
+"Ql" = (
+/obj/landmark/start/job/janitor,
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
-"Zs" = (
-/obj/machinery/door/airlock/pyro{
-	name = "Outdoor Bar"
+/area/station/janitor/supply)
+"Qs" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
-/obj/mapping_helper/access/bar,
-/obj/mapping_helper/access/kitchen,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/landmark/start/job/scientist,
+/obj/stool/chair/office{
+	dir = 8;
+	icon_state = "office_chair"
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0
+	},
+/area/station/science/teleporter)
+"QU" = (
+/obj/machinery/recharge_station,
+/obj/landmark/start/job/cyborg,
+/turf/simulated/floor/white,
+/area/station/medical/research)
+"Ri" = (
+/obj/machinery/recharger/wall/sticky{
+	dir = 1
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
+"Rr" = (
+/obj/stool/chair/office/red{
+	dir = 4;
+	icon_state = "office_chair_red"
+	},
+/obj/landmark/start/job/security_officer,
+/turf/simulated/floor/red,
+/area/station/security/main)
+"RR" = (
+/obj/stool/chair/comfy/blue{
+	dir = 4;
+	icon_state = "chair_comfy-blue"
+	},
+/obj/landmark/start/job/research_director,
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue2"
+	},
+/area/station/bridge)
+"RV" = (
+/obj/stool/chair{
+	dir = 1;
+	icon_state = "chair"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/landmark/start/job/quartermaster,
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/neutral,
+/area/station/quartermaster/office)
+"Sa" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 1
+	},
+/obj/landmark/start/job/miner,
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"UN" = (
+/obj/table/wood/auto,
+/obj/item/card_box/plain,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/kitchen)
+"Vp" = (
+/obj/stool/chair/office{
+	dir = 8;
+	icon_state = "office_chair"
+	},
+/obj/landmark/start/job/scientist,
+/turf/simulated/floor/white,
+/area/station/science/chemistry)
+"Wb" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 9
+	},
+/obj/landmark/start/job/engineer,
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"WF" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/start/job/captain,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue1"
+	},
+/area/station/bridge)
+"Yv" = (
+/obj/landmark/start/job/bartender,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 
@@ -43824,7 +43757,7 @@ ic
 iB
 jf
 jx
-jW
+AP
 kw
 aa
 aa
@@ -44111,17 +44044,17 @@ aa
 aa
 bX
 cw
-dd
+yG
 dH
-ef
+qp
 uX
 fg
 fA
 fZ
-gv
+WF
 gX
 hm
-Jt
+hH
 id
 iC
 jf
@@ -44419,9 +44352,9 @@ eg
 eF
 fg
 fB
-ga
-gw
-gY
+RR
+ta
+FS
 hn
 fg
 ie
@@ -45024,7 +44957,7 @@ eH
 fh
 fC
 gc
-gy
+Yv
 gZ
 ho
 hp
@@ -45329,7 +45262,7 @@ fi
 fi
 fi
 fi
-Zs
+hI
 cE
 iE
 ji
@@ -45938,7 +45871,7 @@ cE
 iG
 jk
 jC
-jZ
+KT
 ky
 aa
 dM
@@ -47130,8 +47063,8 @@ cH
 ke
 cH
 bX
-PK
-pV
+cF
+df
 dM
 cE
 cE
@@ -47145,8 +47078,8 @@ hJ
 cE
 iI
 dM
-Fm
-Hf
+jE
+ka
 bX
 dM
 dM
@@ -47438,8 +47371,8 @@ dM
 cE
 cE
 cE
-fF
-fF
+Ht
+Ht
 gB
 gB
 hu
@@ -47744,9 +47677,9 @@ eJ
 eJ
 gC
 hc
-uk
+hv
 hK
-ii
+vl
 iJ
 hu
 oz
@@ -50145,7 +50078,7 @@ cm
 aa
 gb
 lY
-nJ
+Jy
 oj
 oj
 oq
@@ -50465,7 +50398,7 @@ fo
 fo
 fo
 ik
-xT
+Gm
 jn
 dk
 cO
@@ -50767,7 +50700,7 @@ fo
 fo
 fo
 ik
-IF
+Ll
 jn
 jJ
 nq
@@ -51069,7 +51002,7 @@ fo
 fo
 fo
 ik
-Tl
+Pk
 jn
 dl
 cO
@@ -51370,8 +51303,8 @@ fo
 fo
 fo
 fo
-CF
-Hw
+Hr
+Gd
 jn
 dl
 cO
@@ -51672,7 +51605,7 @@ fo
 fo
 fo
 fo
-CF
+Hr
 en
 ad
 dl
@@ -51973,8 +51906,8 @@ fp
 fp
 fp
 fp
-WE
-Wo
+xV
+HP
 en
 ad
 jK
@@ -52877,7 +52810,7 @@ fq
 fI
 gg
 gJ
-hf
+Sa
 hy
 hO
 in
@@ -53165,7 +53098,7 @@ aI
 ax
 bl
 bu
-TP
+bx
 bG
 cK
 cb
@@ -53182,17 +53115,17 @@ gK
 hg
 hy
 nQ
-io
+MV
 iS
 jp
 jO
 ki
 oa
-kR
+rj
 le
-lq
+LR
 lC
-yw
+lM
 lV
 mj
 mv
@@ -53473,12 +53406,12 @@ cK
 cb
 cb
 cR
-YP
+ds
 dR
 es
 eU
 fs
-fK
+CA
 gi
 gL
 hh
@@ -53492,7 +53425,7 @@ kj
 kF
 Ct
 wZ
-lr
+QU
 lD
 nx
 lW
@@ -53799,7 +53732,7 @@ kh
 nx
 lX
 ml
-Sa
+mw
 mG
 mQ
 nb
@@ -54085,9 +54018,9 @@ fu
 fM
 gk
 gM
-hj
+Wb
 hA
-Jq
+Ai
 ir
 iV
 mh
@@ -54385,7 +54318,7 @@ dU
 eW
 fv
 fN
-CX
+gl
 fN
 fN
 hA
@@ -54395,10 +54328,10 @@ iW
 mh
 jS
 km
-Ur
+kH
 kU
 lh
-lt
+Qs
 lF
 ny
 lZ
@@ -54668,14 +54601,14 @@ aa
 ab
 ah
 aq
-aC
+tr
 aJ
-La
+aS
 ax
-bf
+Rr
 bp
 ax
-VV
+bz
 ax
 bO
 cK
@@ -54707,7 +54640,7 @@ nz
 nz
 nD
 nD
-VN
+mS
 mv
 nl
 ns
@@ -54977,7 +54910,7 @@ aZ
 bg
 bq
 ax
-VV
+bz
 ax
 vP
 cK
@@ -54994,7 +54927,7 @@ fP
 gN
 hA
 hU
-iu
+zQ
 iY
 jr
 hA
@@ -55007,7 +54940,7 @@ lG
 lN
 ma
 mo
-IX
+MA
 nz
 og
 ne
@@ -55272,9 +55205,9 @@ aa
 ab
 ah
 aq
-aC
+tr
 aK
-Cs
+aU
 ax
 bh
 bm
@@ -55294,23 +55227,23 @@ mF
 fP
 gm
 gm
-LP
+hB
 hV
 iv
 iZ
 js
-MY
+jT
 ko
-BB
+kJ
 kW
 kW
-lv
+Vp
 kW
 lO
 mb
-mp
+LW
 my
-Ds
+mJ
 uG
 nf
 nm
@@ -55884,11 +55817,11 @@ iX
 bm
 aq
 aq
-Hk
+bI
 aq
 cK
 ch
-cS
+RV
 dw
 dX
 ew
@@ -55915,7 +55848,7 @@ mc
 mc
 mc
 mc
-vA
+mU
 mc
 mc
 ns
@@ -56183,7 +56116,7 @@ as
 aW
 bb
 as
-EW
+br
 as
 bA
 bJ
@@ -56205,7 +56138,7 @@ hX
 ix
 jb
 ju
-Th
+jU
 kq
 kK
 oc
@@ -56492,36 +56425,36 @@ bK
 bR
 cK
 cK
-Zk
+cU
 dy
 bL
 ey
 bL
 fx
 fS
-go
+Ql
 gQ
 fx
-nO
+ty
 hY
 iy
 hY
 jv
 hC
 kr
-rl
+kL
 kZ
 ll
 ly
-lJ
+Cy
 lQ
 nA
 ms
 mB
-mL
+xm
 mW
 ni
-Hl
+no
 nt
 ab
 aa
@@ -56793,12 +56726,12 @@ qo
 bJ
 bS
 bU
-qt
+ct
 cV
 dz
 dZ
 ez
-fb
+HZ
 fx
 fT
 gp
@@ -56813,9 +56746,9 @@ hC
 ks
 kK
 la
-lm
+It
 lz
-lK
+zH
 lR
 nA
 oe
@@ -57098,7 +57031,7 @@ aq
 aq
 cW
 dz
-ea
+zJ
 ez
 fc
 fx
@@ -57112,7 +57045,7 @@ hC
 hC
 hC
 hC
-AK
+kt
 kK
 kK
 kK
@@ -57397,7 +57330,7 @@ be
 at
 at
 bV
-yJ
+jG
 cX
 dA
 eb
@@ -57407,7 +57340,7 @@ fy
 fV
 gq
 gT
-Me
+hk
 hG
 ia
 iA
