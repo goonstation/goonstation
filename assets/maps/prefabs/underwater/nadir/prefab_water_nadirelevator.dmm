@@ -60,9 +60,7 @@
 /turf/space/fluid/acid/clear,
 /area/noGenerate)
 "dd" = (
-/obj/landmark{
-	name = "seafall"
-	},
+/obj/landmark/fall/sea/elevator,
 /turf/simulated/floor/plating,
 /area/shuttle/sea_elevator/lower)
 "dh" = (
@@ -996,9 +994,7 @@
 /area/diner/kitchen)
 "Jv" = (
 /obj/submachine/chef_oven,
-/obj/landmark{
-	name = "shitty_bill_respawn"
-	},
+/obj/landmark/bill_spawn,
 /turf/simulated/floor/black/grime,
 /area/diner/kitchen)
 "JO" = (
