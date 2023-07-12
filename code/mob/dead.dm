@@ -75,7 +75,7 @@
 	logTheThing(LOG_DIARY, src, "(GHOST): [message]", "say")
 
 	if (src.client && src.client.ismuted())
-		boutput(src, "You are currently muted and may not speak.")
+		boutput(src, "<b class='alert'>You are currently muted and may not speak.</b>")
 		return
 
 	if(src?.client?.preferences.auto_capitalization)

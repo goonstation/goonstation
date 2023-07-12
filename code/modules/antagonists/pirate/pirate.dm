@@ -71,6 +71,14 @@
 		image_group.remove_mind_mob_overlay(src.owner)
 		image_group.remove_mind(src.owner)
 
+	relocate()
+		var/mob/M = src.owner.current
+		if (id == ROLE_PIRATE_CAPTAIN)
+			M.set_loc(pick_landmark(LANDMARK_PIRATE_CAPTAIN, LANDMARK_LATEJOIN)) // Needed because if not spawned pirate get nulled
+		else if (id == ROLE_PIRATE_FIRST_MATE)
+			M.set_loc(pick_landmark(LANDMARK_PIRATE_FIRST_MATE, LANDMARK_LATEJOIN))
+		else
+			M.set_loc(pick_landmark(LANDMARK_PIRATE, LANDMARK_LATEJOIN))
 
 	first_mate
 		id = ROLE_PIRATE_FIRST_MATE

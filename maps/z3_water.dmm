@@ -1913,9 +1913,7 @@
 	},
 /area/wrecknsspolaris)
 "fP" = (
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
 "fQ" = (
@@ -2126,29 +2124,21 @@
 /area/wrecknsspolaris/outside/teleport)
 "gt" = (
 /obj/item/raw_material/rock,
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
 "gu" = (
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "gv" = (
 /obj/item/raw_material/shard/glass,
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "gw" = (
 /obj/item/raw_material/rock,
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "gx" = (
@@ -2206,9 +2196,7 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
 "gH" = (
-/obj/landmark{
-	name = "marjfall"
-	},
+/obj/landmark/fall/sea/marj,
 /obj/sea_plant/seaweed,
 /turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
@@ -2759,9 +2747,7 @@
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "ia" = (
-/obj/landmark{
-	name = "marjfall"
-	},
+/obj/landmark/fall/sea/marj,
 /turf/space/fluid/noexplosion,
 /area/dank_trench)
 "ib" = (
@@ -3199,7 +3185,7 @@
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "KR" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Mi" = (

@@ -932,7 +932,7 @@
 		boutput(src, "<span class='alert'>Sorry, this server does not have medals enabled.</span>")
 		return
 
-	boutput(src, "Retrieving your medal information...")
+	boutput(src, "<span class='hint'>Retrieving your medal information...</span>")
 
 	SPAWN(0)
 		var/list/output = list()
@@ -3115,7 +3115,7 @@
 	if(target)
 		var/success = src.help_examine(target)
 		if(!success)
-			boutput(src, "Sadly \the [target] has no help message attached.")
+			boutput(src, "<span class='alert'>Sadly \the [target] has no help message attached.</span>")
 	else
 		boutput(src, {"<span class='helpmsg'>
 			You can use this command by right clicking an object and selecting Help (not all objects support this).<br>
@@ -3135,7 +3135,7 @@
 
 	var/success = usr.help_examine(src)
 	if(!success)
-		boutput(usr, "Sadly \the [src] has no help message attached.")
+		boutput(usr, "<span class='alert'>Sadly \the [src] has no help message attached.</span>")
 
 /// Same as help_verb but this one except visible, added dynamically when requested by signals
 /atom/proc/help_verb_dynamic()
@@ -3148,7 +3148,7 @@
 
 	var/success = usr.help_examine(src)
 	if(!success)
-		boutput(usr, "Sadly \the [src] has no help message attached.")
+		boutput(usr, "<span class='alert'>Sadly \the [src] has no help message attached.</span>")
 
 /mob/living/verb/interact_verb(atom/A as mob|obj|turf in oview(1, usr))
 	set name = "Pick Up / Left Click"

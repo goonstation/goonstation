@@ -161,7 +161,7 @@
 /obj/decal/aliencomputer{
 	pixel_y = 32
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "S" = (
@@ -207,7 +207,7 @@
 /turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "Y" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 

@@ -1586,9 +1586,9 @@ datum/preferences
 			if (src == usr.client.preferences)
 				process_link(usr, href_list)
 			else
-				boutput(usr, "Those aren't your prefs!")
+				boutput(usr, "<h3 class='alert'>Those aren't your prefs!</h3>")
 		else
-			boutput(usr, "Something went wrong with preferences. Call a coder.")
+			boutput(usr, "<h3 class='alert'>Something went wrong with preferences. Call a coder.</span>")
 		..()
 
 	proc/process_link(mob/user, list/link_tags)
@@ -1813,7 +1813,7 @@ datum/preferences
 			if (ismob(M) && M.client)
 				C = M.client
 			else
-				boutput(C,"Something went wrong. Maybe the game isn't done loading yet, give it a minute!")
+				boutput(C, "<h3 class='alert'>Something went wrong. Maybe the game isn't done loading yet, give it a minute!</h3>")
 				return
 		if (C.preferences.use_wasd)
 			winset( C, "menu.wasd_controls", "is-checked=true" )
