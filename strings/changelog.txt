@@ -1,5 +1,9 @@
 
 (t)wed jul 12 23
+(u)Ikea
+(p)14911
+(e)💅🤖|C-QoL, A-Silicons
+(*)Silicons now only WOOP or BZZT when first stunned.
 (u)Blackrep
 (p)14536
 (e)⚖🎩|C-Balance, A-Clothing
