@@ -425,7 +425,7 @@
 
 	harm(mob/target, var/mob/user)
 		if (isghostcritter(user) && ishuman(target) && target.health < target.max_health * 0.8)
-			boutput(user, "Your spectral conscience refuses to damage this human any further.")
+			boutput(user, "<span class='alert'>Your spectral conscience refuses to damage this human any further.")
 			return 0
 		..()
 
@@ -1436,7 +1436,7 @@
 		if(check_target_immunity( target ))
 			return 0
 		if (isghostcritter(user) && ishuman(target) && target.health < 75)
-			boutput(user, "Your spectral conscience refuses to damage this human any further.")
+			boutput(user, "<span class='alert'>Your spectral conscience refuses to damage this human any further.</span>")
 			return 0
 		var/quality = src.holder.quality
 		if (no_logs != 1)

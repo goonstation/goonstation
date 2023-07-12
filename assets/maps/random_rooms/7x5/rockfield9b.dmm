@@ -9,7 +9,7 @@
 /turf/unsimulated/wall/trench/side,
 /area/space)
 "J" = (
-/obj/landmark/artifact/random_room,
+/obj/landmark/spawner/artifact,
 /turf/space/fluid/acid/clear,
 /area/space)
 

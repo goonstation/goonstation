@@ -468,10 +468,7 @@
 
 	if(src.find_type_in_hand(/obj/item/megaphone))
 		var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
-		if(megaphone.makes_you_quieter)
-			loudness -= 1
-		else
-			loudness += 1
+		loudness += megaphone.loudness_mod
 
 	if (src.speech_void)
 		text = voidSpeak(text)
@@ -544,7 +541,9 @@
 
 	if(class)
 		class = " class='game [class]'"
-	if (loudness > 0)
+	if (loudness > 1)
+		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<strong style='font-size:36px'><b [class? class : ""]>[text]</b></strong>[font_accent ? "</font>" : null][second_quote]"
+	else if (loudness > 0)
 		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<big><strong><b [class? class : ""]>[text]</b></strong></big>[font_accent ? "</font>" : null][second_quote]"
 	else if (loudness < 0)
 		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<small [class? class : ""]>[text]</small>[font_accent ? "</font>" : null][second_quote]"
