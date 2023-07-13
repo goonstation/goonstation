@@ -19158,10 +19158,6 @@
 	},
 /turf/unsimulated/floor/lava,
 /area/iomoon)
-"bqO" = (
-/mob/living/critter/small_animal/crab,
-/turf/unsimulated/iomoon/floor,
-/area/iomoon)
 "bqP" = (
 /turf/unsimulated/iomoon/floor{
 	dir = 9;
@@ -92513,7 +92509,7 @@ wXY
 wXY
 wXY
 bpD
-bqO
+rAs
 bqp
 boW
 boW
