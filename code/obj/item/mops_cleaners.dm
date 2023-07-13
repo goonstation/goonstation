@@ -45,7 +45,7 @@ WET FLOOR SIGN
 		..()
 		reagents.add_reagent("luminol", initial_volume)
 
-/obj/item/spraybottle/cleaner/
+/obj/item/spraybottle/cleaner
 	name = "cleaner spray bottle"
 	desc = "A spray bottle labeled 'Poo-b-Gone Space Cleaner'."
 
@@ -405,7 +405,7 @@ WET FLOOR SIGN
 
 			// Some people use mops for heat-delayed fireballs and stuff.
 			// Mopping the floor with just water isn't of any interest, however (Convair880).
-			if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && src.reagents.reagent_list.len > 1)))
+			if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && length(src.reagents.reagent_list) > 1)))
 				logTheThing(LOG_COMBAT, user, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
 
 			mopcount++

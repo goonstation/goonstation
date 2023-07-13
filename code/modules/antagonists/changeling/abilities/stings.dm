@@ -150,7 +150,7 @@
 
 	onAttach(var/datum/abilityHolder/G)
 		var/datum/abilityHolder/changeling/H = G
-		if (istype(H) && H.absorbed_dna.len > 0)
+		if (istype(H) && length(H.absorbed_dna) > 0)
 			dna_sting_target = H.absorbed_dna[H.absorbed_dna[1]]
 
 	cast(atom/target)

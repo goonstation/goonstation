@@ -9,7 +9,7 @@
 // obj/submachine/seed.dm: The splicer and reagent extractor are in here.
 
 ABSTRACT_TYPE(/datum/plant)
-/datum/plant/
+/datum/plant
 	// Standard variables for plants are added here.
 	var/name = "plant species name" // Name of the plant species
 	var/sprite = null         // The plant's normal sprite - overridden by special_icon
@@ -235,7 +235,7 @@ ABSTRACT_TYPE(/datum/plant)
 			if (prob(damage_prob))
 				S.seeddamage += damage_amt
 
-/datum/plantgenes/
+/datum/plantgenes
 	var/growtime = 0 // These vars are pretty much bonuses/penalties applied on top of the
 	var/harvtime = 0 // same vars found in /datum/plant honestly. They go largely towards
 	var/harvests = 0 // the same purpose for the most part.
@@ -267,7 +267,7 @@ ABSTRACT_TYPE(/datum/plant)
 			// optimise this later
 
 	/// This gives out a plant stat, modified by all commuts that affect produce
-	proc/get_effective_value(gene_stat as text) 
+	proc/get_effective_value(gene_stat as text)
 		var/output_base = 0
 		switch(gene_stat)
 			if("growtime")

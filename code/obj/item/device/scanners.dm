@@ -472,7 +472,7 @@ TYPEINFO(/obj/item/device/reagentscanner)
 		tooltip_rebuild = TRUE
 
 		if (!isnull(A.reagents))
-			if (A.reagents.reagent_list.len > 0)
+			if (length(A.reagents.reagent_list) > 0)
 				set_icon_state("reagentscan-results")
 			else
 				set_icon_state("reagentscan-no")
