@@ -330,8 +330,8 @@ TYPEINFO(/obj/item/pinpointer)
 			blood_dna = B.blood_DNA
 		else if(istype(A, /obj/item))
 			blood_dna = A.blood_DNA
-		else if (isturf(A))
-			var/turf/T = A
+		else if (A.level =< 1)
+			var/turf/T = get_turf(A)
 			blood_dna = T.active_liquid.blood_DNA // I guess this prevents you from scanning the blood in a gas? so rarely relevant I don't care
 		if(!blood_dna)
 			var/datum/reagents/reagents = A.reagents
