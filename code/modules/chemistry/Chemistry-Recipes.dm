@@ -2378,9 +2378,12 @@ datum
 					if(holder.total_temperature > T20C)
 						var/extra_product = clamp((holder.total_temperature - T20C) / 10, 1, 15)
 						var/extra_heat = clamp(extra_product + 10, 10, 30)
-						if(istype(holder.my_atom, /obj/item/reagent_containers) && (holder.maximum_volume <= holder.total_volume)) //not enough space for the extra sulfuric acid = beaker shattered + acid vapors leak out
-							var/obj/item/reagent_containers/container = holder.my_atom
-							container.shatter()
+						if(istype(holder.my_atom, /obj) && (holder.maximum_volume <= holder.total_volume)) //not enough space for the extra sulfuric acid = beaker shattered + acid vapors leak out
+							var/obj/container = holder.my_atom
+							if(container.shatter_chemically())
+								var/datum/reagents/smokeContents = new/datum/reagents/
+								smokeContents.add_reagent("acid", 20)
+								smoke_reaction(smokeContents, 2, location)
 							return
 						holder.add_reagent("acid", extra_product, temp_new = holder.total_temperature, chemical_reaction = TRUE)
 						holder.temperature_reagents(holder.total_temperature + extra_heat)

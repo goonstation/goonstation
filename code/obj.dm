@@ -209,6 +209,9 @@
 
 	proc/initialize()
 
+	proc/shatter_chemically() //!shatter effect, caused by chemicals inside object, should return TRUE if object actually shatters
+		return FALSE
+
 	attackby(obj/item/I, mob/user)
 // grabsmash
 		if (istype(I, /obj/item/grab/))

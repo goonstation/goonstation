@@ -148,9 +148,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		current_lid = null
 		src.UpdateOverlays(null, "lid")
 
-	proc/shatter()
-		return
-
 ///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
 ///Note that this is not a built in TGUI proc
 proc/ui_describe_reagents(atom/A)
@@ -485,7 +482,7 @@ proc/ui_describe_reagents(atom/A)
 				src.reagents.reaction(get_turf(user), TOUCH)
 				src.reagents.clear_reagents()
 
-	shatter()
+	shatter_chemically()
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<span class='alert'>The <B>[src.name]</B> shatters!</span>")
 		playsound(src.loc, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
@@ -493,6 +490,7 @@ proc/ui_describe_reagents(atom/A)
 		var/obj/item/raw_material/shard/glass/shard = new /obj/item/raw_material/shard/glass
 		shard.set_loc(get_turf(src))
 		qdel(src)
+		return TRUE
 
 	is_open_container()
 		if(..() && !istype(src.loc, /obj/machinery/chem_dispenser))

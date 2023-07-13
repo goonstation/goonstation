@@ -447,6 +447,14 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		..()
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 30, 1)
 
+	shatter_chemically() //needs sound probably definitely for sure
+		for(var/mob/M in AIviewers(src))
+			boutput(M, "<span class='alert'>The <B>[src.name]</B> breaks open!</span>")
+		var/obj/shattered_barrel/shattered_barrel = new /obj/shattered_barrel
+		shattered_barrel.icon_state = "[src.base_icon_state]-shattered"
+		shattered_barrel.set_loc(get_turf(src))
+		src.smash()
+		return TRUE
 	red
 		icon_state = "barrel-red-closed"
 		base_icon_state = "barrel-red"
@@ -462,6 +470,13 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		New()
 			..()
 			reagents.add_reagent("oil", 4000)
+
+/obj/shattered_barrel
+	name = "shattered chemical barrel"
+	desc = "It's been totally wrecked. Just unbarrelable. Fuck."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "barrel-blue-shattered"
+	anchored = UNANCHORED
 
 /obj/reagent_dispensers/beerkeg/rum
 	name = "barrel of rum"

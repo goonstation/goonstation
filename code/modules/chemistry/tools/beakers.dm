@@ -226,7 +226,7 @@
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
-		src.shatter()
+		src.shatter_chemically()
 
 /obj/item/reagent_containers/glass/flask/round
 	name = "round flask"
