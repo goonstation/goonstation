@@ -4344,7 +4344,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/obj/item/organ/tail/lizard/tail_memory = null
 	var/maxsteps = 5
 	var/currentsteps = 0
-	var/primary_color =	"#21a833"
+	var/primary_color = "#21a833"
 	var/secondary_color = "#000000"
 
 	New()
