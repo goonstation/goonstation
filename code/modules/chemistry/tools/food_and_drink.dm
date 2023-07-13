@@ -637,15 +637,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			return
 		user.lastattacked = target
 		// this shit sucks but there's no space for a cast since the following section is an if-else
-		var/turf/target_turf = isturf(target) ? target : null
+		var/turf/target_turf = target.level <= 1 ? get_turf(target) : null
 		if (target_turf?.active_liquid) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
 			var/obj/fluid/F = target_turf.active_liquid
 			if (!src.reagents.total_volume)
-				if (!F.group || !F.group.reagents.total_volume)
-					boutput(user, "<span class='alert'>[target] is empty. (this is a bug, whooops!)</span>")
-					F.removed()
-					return
-
 				if (reagents.total_volume >= reagents.maximum_volume)
 					boutput(user, "<span class='alert'>[src] is full.</span>")
 					return
@@ -654,7 +649,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				F.group.reagents.skip_next_update = 1
 				F.group.update_amt_per_tile()
 				var/amt = min(F.group.amt_per_tile, reagents.maximum_volume - reagents.total_volume)
-				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [target].</span>")
+				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [F].</span>")
 				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
 
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids

@@ -307,8 +307,8 @@ WET FLOOR SIGN
 /obj/item/mop/afterattack(atom/A, mob/user)// the main utility of all moppage and mopkind
 	if (ismob(A))
 		return
-	if (isturf(A))
-		var/turf/T = A
+	if (A.level <= 1)
+		var/turf/T = get_turf(A)
 		A = T.active_liquid || A // if we target a turf with an active liquid, target the liquid. else target the initial target
 
 	if ((src.reagents.total_volume < 1 || mopcount >= 9) && !istype(A, /obj/fluid))
@@ -547,14 +547,14 @@ WET FLOOR SIGN
 		T.active_liquid.group.drain(T.active_liquid,1,src)
 
 /obj/item/sponge/proc/get_action_options(atom/target)
-	if (issimulatedturf(target))
-		var/turf/simulated/T = target
+	if (target.level <= 1)
+		var/turf/T = get_turf(target)
 		if (T.active_liquid)
 			return list(SPONGE_SOAK) // only soak if we click a fluid
 
 	. = list()
-	if (istype(target, /turf/simulated))
-		var/turf/simulated/T = target
+	if (target.level <= 1)
+		var/turf/simulated/T = get_turf(target)
 		if (T.reagents?.total_volume)
 			. |= SPONGE_SOAK
 		else if (T.wet)
@@ -591,14 +591,11 @@ WET FLOOR SIGN
 				user.show_text("[src] is full! Wring it out first.", "blue")
 				return
 
-			var/turf/T = target
+			var/turf/T = get_turf(target)
 			var/obj/fluid/F
 
 			if (T.active_liquid)
 				F = T.active_liquid
-
-			if (!(T.reagents) && !F)
-				return
 
 			if (F)
 				if (F.group)

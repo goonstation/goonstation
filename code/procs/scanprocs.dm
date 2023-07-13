@@ -510,8 +510,8 @@
 	else
 		data = "<b class='notice'>No significant chemical agents found in [A].</b>"
 
-	if (isturf(A))
-		var/turf/T = A
+	if (A.level <= 1)
+		var/turf/T = get_turf(A)
 		var/obj/fluid/liquid = T.active_liquid
 		var/obj/fluid/airborne/gas = T.active_airborne_liquid
 		if (liquid)

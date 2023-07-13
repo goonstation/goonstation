@@ -166,7 +166,7 @@ proc/ui_describe_reagents(atom/A)
 		user.lastattacked = target
 
 		// this shit sucks but this is an if-else so there's no space to fit a cast in there
-		var/turf/target_turf = isturf(target) ? target : null
+		var/turf/target_turf = target.level <= 1 ? get_turf(target) : null
 		if (ismob(target) && !target.is_open_container()) // pour reagents down their neck (if possible)
 			if (!src.reagents.total_volume)
 				boutput(user, "<span class='alert'>Your [src.name] is empty!</span>")
@@ -222,7 +222,7 @@ proc/ui_describe_reagents(atom/A)
 				F.group.reagents.skip_next_update = TRUE
 				F.group.update_amt_per_tile()
 				var/amt = min(F.group.amt_per_tile, reagents.maximum_volume - reagents.total_volume)
-				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [target].</span>")
+				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [F].</span>")
 				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
 				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
