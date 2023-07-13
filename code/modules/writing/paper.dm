@@ -936,28 +936,56 @@
 	var/headline = ""
 	desc = "This is a newspaper. It appears to lack a headline. And text."
 	icon_state = "newspaper_blank"
+	item_state = "newspaper_blank"
+	sealed = TRUE // these will have their headlines written not by pens.
 
 	var/folded = FALSE
 	two_handed = TRUE
 	c_flags = COVERSEYES | COVERSMOUTH // this might not work as i want it to
 
 /obj/item/paper/newspaper/folded
+	icon_state = "newspaper_folded"
+	item_state = "newspaper_folded"
 	folded = TRUE
 	two_handed = FALSE
-	c_flags = FALSE // how do i uncover the eyes and mouth lol
+	c_flags = FALSE // hopefully this uncovers the eyes and mouth lol
 
-
+/// A blank newspaper, ready to have its headline written.
 /obj/item/paper/newspaper/New()
 	. = ..()
 	if (src.headline)
 		src.icon_state = "newspaper"
 		src.desc = "This is a newspaper. Its headline reads: [src.headline]"
 
+/obj/item/paper/newspaper/proc/fold()
+	if (src.folded) // unfolding it
+		if (src.headline)
+			src.icon_state = "newspaper"
+			src.item_state = "newspaper"
+		else
+			src.icon_state = "newspaper_blank"
+			src.item_state = "newspaper_blank"
+		src.folded = FALSE
+		src.two_handed = TRUE
+		src.c_flags = COVERSEYES | COVERSMOUTH
+	else // folding it
+		src.icon_state = "newspaper_folded"
+		src.item_state = "newspaper_folded"
+		src.folded = TRUE
+		src.two_handed = FALSE
+		src.c_flags = FALSE
 
-/// This newspaper starts out with a random headline at roundstart
+
+/// This newspaper starts out with a random headline at roundstart. And folded. Intended for mapping
 /obj/item/paper/newspaper/random
-	icon_state = "newspaper"
+	icon_state = "newspaper_folded"
+	item_state = "newspaper_folded"
+	folded = TRUE
+	two_handed = FALSE
+	c_flags = FALSE
+
 
 /obj/item/paper/newspaper/random/New()
-	src.headline = pick(list(thingy))
+	src.headline = pick(list()) // i'll come up with some later. Or write an algorithm to generate some.
 	. = ..()
+
