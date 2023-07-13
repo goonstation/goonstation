@@ -233,7 +233,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 					src.heal_amt = 0
 				else
 					var/flavor = null
-					if (all_functional_reagent_ids.len > 0)
+					if (length(all_functional_reagent_ids) > 0)
 						flavor = pick(all_functional_reagent_ids)
 					else
 						flavor = "sugar"

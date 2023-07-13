@@ -144,13 +144,13 @@
 		if (!islist(src.learned_phrases))
 			src.learned_phrases = list()
 
-		if (!learn_phrase && src.learn_words_max > 0 && src.learned_words.len >= src.learn_words_max)
+		if (!learn_phrase && src.learn_words_max > 0 && length(src.learned_words) >= src.learn_words_max)
 			if (prob(5))
 				var/dump_word = pick(src.learned_words)
 				src.learned_words -= dump_word
 			else
 				return
-		if (learn_phrase && src.learn_phrase_max > 0 && src.learned_phrases.len >= src.learn_phrase_max)
+		if (learn_phrase && src.learn_phrase_max > 0 && length(src.learned_phrases) >= src.learn_phrase_max)
 			if (prob(5))
 				var/dump_phrase = pick(src.learned_phrases)
 				src.learned_phrases -= dump_phrase

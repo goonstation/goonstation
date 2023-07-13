@@ -737,7 +737,7 @@
 			for(var/obj/ability_button/B in ability_buttons)
 				B.the_item = src
 				B.name = B.name + " ([src.name])"
-//		if(ability_buttons.len > 0)
+//		if(length(ability_buttons) > 0)
 //			SPAWN(0) check_abilities()
 		..()
 

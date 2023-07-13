@@ -522,7 +522,7 @@
 					nerds += L
 				else
 					continue
-			if (nerds.len >= 1)
+			if (length(nerds) >= 1)
 				POT.visible_message("<span class='alert'><b>[POT.name]</b> slaps [pick(nerds)] with a fish!</span>")
 				playsound(POT, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
 

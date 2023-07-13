@@ -140,7 +140,7 @@
 						boutput(user, "<span class='alert'>You need to catch your breath first!</span>")
 						return
 					var/list/animal_types = list("bee", "dog", "spider", "pie", "owl", "rockworm", "martian", "fermid", "fish")
-					if (!animal_types || animal_types.len <= 0)
+					if (!animal_types || length(animal_types) <= 0)
 						user.show_text("You can't think of anything to make with [src].", "red")
 						return
 					var/animal = input(user, "What do you want to make?") as null|anything in animal_types

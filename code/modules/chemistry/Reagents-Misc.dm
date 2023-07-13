@@ -808,7 +808,7 @@ datum
 				var/volume_mult = 1
 
 				if (length(covered))
-					if (volume/covered.len < 2) //reduce time based on dilution
+					if (volume/length(covered) < 2) //reduce time based on dilution
 						volume_mult = min(volume / 9, 1)
 
 				if (istype(T))
@@ -898,7 +898,7 @@ datum
 				var/volume_mult = 1
 
 				if (length(covered))
-					if (volume/covered.len < 2) //reduce time based on dilution
+					if (volume/length(covered) < 2) //reduce time based on dilution
 						volume_mult = min(volume / 9, 1)
 
 				if (istype(T))
@@ -1177,7 +1177,7 @@ datum
 						silent = 1
 
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 3)
+				if (length(covered) > 3)
 					silent = 1
 
 				if (method == TOUCH)
@@ -1328,10 +1328,10 @@ datum
 				if (!src.reacting && (holder && !holder.has_reagent("chlorine"))) // need this to be higher to make propylene possible
 					src.reacting = 1
 					var/list/covered = holder.covered_turf()
-					if (covered.len < 4 || (volume / holder.total_volume) > min_req_fluid)
+					if (length(covered) < 4 || (volume / holder.total_volume) > min_req_fluid)
 						for(var/turf/location in covered)
 							fireflash(location, clamp(volume/40, 0, 8))
-							if (covered.len < 4 || prob(10))
+							if (length(covered) < 4 || prob(10))
 								location.visible_message("<b>The oil burns!</b>")
 								var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 								smoke.set_up(1, 0, location)
@@ -2289,7 +2289,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 
 				if (!istype(T, /turf/space))
@@ -2777,7 +2777,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 
 				if (!istype(T, /turf/space))
@@ -2844,7 +2844,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 				if (!istype(T, /turf/space))
 					if (volume >= 5)
@@ -3184,7 +3184,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 
 				if (volume > 10)
@@ -3310,7 +3310,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/vomit) in T)
@@ -3333,7 +3333,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/greenpuke) in T)
@@ -3362,7 +3362,7 @@ datum
 				return*/
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 				if (volume > 10)
 					return 1
@@ -3384,7 +3384,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 				if (volume > 10)
 					return 1

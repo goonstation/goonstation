@@ -651,7 +651,7 @@
 			for (var/mob/dead/target_observer/hivemind_observer/obs in C.hivemind)
 				boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
 				obs.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
-			if (C.hivemind.len > 0)
+			if (length(C.hivemind) > 0)
 				boutput(src, "Contact with the hivemind has been lost.")
 			C.hivemind = list()
 			if(C.master != C.temp_controller)
@@ -2921,7 +2921,7 @@
 		var/count = 0
 		for (var/obj/O in src.juggling)
 			count ++
-			if (src.juggling.len > 1 && count == src.juggling.len)
+			if (length(src.juggling) > 1 && count == src.juggling.len)
 				items += " and [O]"
 				continue
 			items += ", [O]"

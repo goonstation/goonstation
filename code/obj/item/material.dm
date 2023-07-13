@@ -766,7 +766,7 @@
 		if (active)
 			boutput(user, "<span class='alert'>It's already working! Give it a moment!</span>")
 			return
-		if (src.contents.len < 1)
+		if (length(src.contents) < 1)
 			boutput(user, "<span class='alert'>There's nothing inside to reclaim.</span>")
 			return
 		leftovers = list()

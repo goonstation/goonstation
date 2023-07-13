@@ -559,9 +559,9 @@ proc/debug_map_apc_count(delim,zlim)
 			for(var/obj/decal/cleanable/writing/arte in theTurf)
 				built += "[arte.icon_state] artpiece by [arte.artist]"
 				artists |= arte.artist
-			if(artists.len >= 2)
+			if(length(artists) >= 2)
 				img.app.color = "#7f0000"
-			else if(artists.len == 1)
+			else if(length(artists) == 1)
 				img.app.color = debug_color_of(artists[1])
 			img.app.desc = built.Join("<br/>")
 
@@ -582,7 +582,7 @@ proc/debug_map_apc_count(delim,zlim)
 				img.app.alpha = 0
 			else if(0 in netnums)
 				img.app.color = "#ff0000"
-			else if(netnums.len >= 2)
+			else if(length(netnums) >= 2)
 				img.app.color = "#ffffff"
 			else
 				img.app.color = debug_color_of(netnums[1])

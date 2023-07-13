@@ -613,7 +613,7 @@ var/list/special_pa_observing_verbs = list(
 	if (src.holder)
 		src.holder.owner = src
 		for(var/i = 1; i < 9; i++)
-			if (src.holder.level + 2 >= i && admin_verbs.len >= i && !isnull(admin_verbs[i]))
+			if (src.holder.level + 2 >= i && length(admin_verbs) >= i && !isnull(admin_verbs[i]))
 				src.verbs += admin_verbs[i]
 
 		// certain ranks get special treatment while observing
@@ -1269,7 +1269,7 @@ var/list/fun_images = list()
 		//Make every space tile bright pink (for further processing via local image manipulation)
 		for (var/turf/space/S in world)
 			LAGCHECK(LAG_LOW)
-			if (S.contents.len == 0 && S.overlays.len <= 1)//== 0) //Doesnt pinkify tiles with crap on top of them (transparant overlays fuck with the image processing later)
+			if (length(S.contents) == 0 && length(S.overlays) <= 1)//== 0) //Doesnt pinkify tiles with crap on top of them (transparant overlays fuck with the image processing later)
 				S.icon = 'icons/effects/ULIcons.dmi'
 				S.icon_state = "etc"
 				S.color = transparentColor
