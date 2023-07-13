@@ -3987,6 +3987,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently pets", "rubs", "cuddles, coddles")
+	var/can_hat = TRUE
 
 	faction = FACTION_AQUATIC
 
@@ -3999,7 +4000,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		return null
 
 	attackby(obj/item/W, mob/living/user)
-		if (!is_incapacitated(src) && istype(W, /obj/item/clothing/head/cowboy))
+		if (is_incapacitated(src) || !src.is_npc)
+			return ..()
+		if (istype(W, /obj/item/clothing/head/cowboy) && src.can_hat)
 			user.visible_message("<b>[user]</b> gives [src] \the [W]!","You give [src] \the [W].")
 			qdel(W)
 			src.visible_message("[src] starts dancing!")
@@ -4029,6 +4032,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	real_name = "party crab"
 	desc = "This crab is having way more fun than you."
 	icon_state = "crab_party"
+	can_hat = FALSE
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -4061,7 +4065,31 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 45
 	health_burn = 20
 	is_npc = FALSE
+	can_hat = FALSE
 	add_abilities = list(/datum/targetable/critter/frenzy/crabmaul)
+
+/mob/living/critter/small_animal/crab/lava
+	name = "magma crab"
+	desc = "A strange beast resembling a crab boulder.  Not to be confused with a rock lobster."
+	icon_state = "lavacrab"
+	icon_state_dead = "lavacrab-dead"
+	density = TRUE
+	anchored = ANCHORED
+	butcherable = FALSE
+	health_burn_vuln = 0.1
+	health_brute_vuln = 0.5
+	death_text = "%src% flops over dead!"
+	ai_type = /datum/aiHolder/empty
+	can_hat = FALSE
+
+	death(var/gibbed)
+		src.anchored = UNANCHORED
+		..()
+
+/mob/living/critter/small_animal/crab/lava/deep
+	name = "deep magma crab"
+	health_brute = 30
+	health_burn = 30
 
 /* =============================================== */
 /* ------------------- trilobite ----------------- */
@@ -4322,4 +4350,3 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			else
 				src.emote("flip")
 				src.ai.move_away(target,1)
-

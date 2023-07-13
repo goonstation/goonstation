@@ -19159,7 +19159,7 @@
 /turf/unsimulated/floor/lava,
 /area/iomoon)
 "bqO" = (
-/obj/critter/lavacrab,
+/mob/living/critter/small_animal/crab,
 /turf/unsimulated/iomoon/floor,
 /area/iomoon)
 "bqP" = (
@@ -21084,10 +21084,7 @@
 /turf/unsimulated/floor/caution/west,
 /area/iomoon/base/underground)
 "byZ" = (
-/obj/critter/lavacrab{
-	health = 60;
-	name = "deep magma crab"
-	},
+/mob/living/critter/small_animal/crab/lava/deep,
 /turf/unsimulated/iomoon/floor{
 	name = "silicate cave floor";
 	temperature = 313.15
@@ -47276,10 +47273,7 @@
 	},
 /area/iomoon/caves)
 "dbg" = (
-/obj/critter/lavacrab{
-	health = 60;
-	name = "deep magma crab"
-	},
+/mob/living/critter/small_animal/crab/lava/deep,
 /obj/decal/fakeobjects/pipe/heat{
 	dir = 4
 	},
@@ -47522,7 +47516,7 @@
 	},
 /area/iomoon)
 "dcd" = (
-/obj/critter/lavacrab,
+/mob/living/critter/small_animal/crab/lava,
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
 "dce" = (
@@ -52511,7 +52505,7 @@
 	})
 "dxp" = (
 /obj/decal/cleanable/rust/jen,
-/obj/critter/lavacrab,
+/mob/living/critter/small_animal/crab/lava,
 /turf/unsimulated/greek/cave/floor,
 /area/centcom/offices/zewaka)
 "dxq" = (
