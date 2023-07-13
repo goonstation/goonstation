@@ -72161,6 +72161,10 @@
 	dir = 4
 	},
 /area/centcom/offices/adhara)
+"rAs" = (
+/mob/living/critter/small_animal/crab/lava,
+/turf/unsimulated/iomoon/floor,
+/area/iomoon)
 "rAC" = (
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/south,
@@ -78030,10 +78034,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/katzen)
-"ydi" = (
-/obj/map/light/lava,
-/turf/unsimulated/floor/plating,
-/area/iomoon)
 "yea" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm11"
@@ -79558,7 +79558,7 @@ boW
 boW
 boW
 boW
-ydi
+boB
 boW
 boH
 aaa
@@ -100080,7 +100080,7 @@ bpT
 bpD
 bpD
 bpD
-bqO
+rAs
 bpD
 bpD
 bpD
@@ -102500,7 +102500,7 @@ bpD
 bpD
 bpD
 bpD
-bqO
+rAs
 bpD
 bpD
 bpD
