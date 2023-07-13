@@ -931,3 +931,33 @@
 				item_info = 0
 			placeholder_info += "<br><br><b>[commander_item.name]</b>: [item_info]"
 		info = placeholder_info
+
+/obj/item/paper/newspaper
+	var/headline = ""
+	desc = "This is a newspaper. It appears to lack a headline. And text."
+	icon_state = "newspaper_blank"
+
+	var/folded = FALSE
+	two_handed = TRUE
+	c_flags = COVERSEYES | COVERSMOUTH // this might not work as i want it to
+
+/obj/item/paper/newspaper/folded
+	folded = TRUE
+	two_handed = FALSE
+	c_flags = FALSE // how do i uncover the eyes and mouth lol
+
+
+/obj/item/paper/newspaper/New()
+	. = ..()
+	if (src.headline)
+		src.icon_state = "newspaper"
+		src.desc = "This is a newspaper. Its headline reads: [src.headline]"
+
+
+/// This newspaper starts out with a random headline at roundstart
+/obj/item/paper/newspaper/random
+	icon_state = "newspaper"
+
+/obj/item/paper/newspaper/random/New()
+	src.headline = pick(list(thingy))
+	. = ..()
