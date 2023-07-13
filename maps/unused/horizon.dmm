@@ -7112,9 +7112,7 @@
 /area/station/medical/medbay/treatment1)
 "atZ" = (
 /obj/item/clothing/glasses/blindfold,
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "aub" = (
@@ -7498,9 +7496,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
 "avj" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "avk" = (
@@ -7512,9 +7508,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "avl" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -7537,9 +7531,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "avn" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
@@ -8120,9 +8112,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "awM" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -19985,9 +19975,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
 "bbj" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /obj/item/device/radio/intercom/science,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -30425,9 +30413,7 @@
 	dir = 8;
 	name = "Farty Justice Chair"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
-	},
+/mob/living/carbon/human/npc/monkey/tanhony,
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
@@ -34751,9 +34737,7 @@
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bPH" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bPI" = (
@@ -36154,9 +36138,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -44168,9 +44150,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
 "cnu" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -53020,9 +53000,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/security/main)
 "hJH" = (
-/obj/landmark/spawner{
-	name = "dolly"
-	},
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "hKn" = (
@@ -53917,9 +53895,7 @@
 /turf/simulated/floor/wood,
 /area/station/hallway/secondary/west)
 "jhn" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/darkblue/checker,
 /area/station/teleporter)
@@ -56701,9 +56677,7 @@
 /area/station/hallway/primary/central)
 "nHP" = (
 /obj/item/storage/toilet,
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
 "nJw" = (

@@ -3003,10 +3003,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment,
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
@@ -14702,10 +14699,7 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor{
 	icon_state = "carpetSE"
 	},
@@ -16623,10 +16617,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "aSw" = (
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aSx" = (
@@ -18035,10 +18026,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/arcade/dungeon)
 "aWl" = (
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_tanhony"
-	},
+/mob/living/carbon/human/npc/monkey/tanhony,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -32467,10 +32455,7 @@
 	icon_state = "1-8"
 	},
 /obj/disposalpipe/segment,
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -41768,10 +41753,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor/caution/north{
 	dir = 8
 	},
@@ -45270,10 +45252,7 @@
 "cmM" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/telepad,
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -47336,10 +47315,7 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "csp" = (
@@ -61449,10 +61425,7 @@
 	},
 /area/station/medical/dome)
 "dda" = (
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -61921,10 +61894,7 @@
 	},
 /area/station/medical/dome)
 "deF" = (
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -62130,10 +62100,7 @@
 	layer = 10;
 	name = "palm tree"
 	},
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -62267,10 +62234,7 @@
 	},
 /area/station/medical/medbay)
 "dfJ" = (
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -62480,10 +62444,7 @@
 	layer = 10;
 	name = "palm tree"
 	},
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -67776,9 +67737,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/routing/depot)
 "gKa" = (
-/obj/landmark/spawner{
-	name = "dolly"
-	},
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "gKl" = (

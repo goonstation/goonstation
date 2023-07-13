@@ -1210,9 +1210,7 @@
 	},
 /area/russian/radiation)
 "aHx" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -8716,9 +8714,7 @@
 /area/russian/radiation)
 "brl" = (
 /obj/item/clothing/glasses/blindfold,
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass{
 	broken = 1;
 	icon_old = "grass";
@@ -8986,9 +8982,7 @@
 	},
 /area/russian/radiation)
 "brY" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass{
 	broken = 1;
 	icon_old = "grass";
@@ -9004,9 +8998,7 @@
 /turf/simulated/floor/grass,
 /area/russian/radiation)
 "bsa" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -9029,9 +9021,7 @@
 /turf/simulated/floor/grass,
 /area/russian/radiation)
 "bsc" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
@@ -9321,9 +9311,7 @@
 /turf/simulated/floor/grass,
 /area/russian/radiation)
 "bsL" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass{
 	broken = 1;
 	icon_old = "grass";
@@ -23993,9 +23981,7 @@
 	},
 /area/russian/radiation)
 "cDq" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /obj/item/device/radio/intercom/science,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -24502,9 +24488,7 @@
 	},
 /area/russian/radiation)
 "cFt" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/darkblue/checker{
 	desc = " It is made of steel.";
@@ -39379,9 +39363,7 @@
 	dir = 8;
 	name = "Farty Justice Chair"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
-	},
+/mob/living/carbon/human/npc/monkey/tanhony,
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
@@ -46344,9 +46326,7 @@
 /turf/simulated/floor/pool/no_animate,
 /area/russian/radiation)
 "hWx" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/pool/no_animate{
 	dir = 1
 	},
@@ -47017,9 +46997,7 @@
 /area/russian/radiation)
 "iof" = (
 /obj/item/storage/toilet,
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor/white{
 	desc = " It is made of steel.";
 	name = "steel floor"
@@ -54838,9 +54816,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /obj/disposalpipe/segment/brig,
 /turf/space,
 /area/russian/radiation)
@@ -70408,9 +70384,7 @@
 	},
 /area/station/ranch)
 "tiO" = (
-/obj/landmark/spawner{
-	name = "dolly"
-	},
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy{
 	broken = 1;
 	icon_old = "grass_leafy";
@@ -73730,9 +73704,7 @@
 	},
 /area/russian/radiation)
 "uYN" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /obj/disposalpipe/segment{
 	dir = 4
 	},

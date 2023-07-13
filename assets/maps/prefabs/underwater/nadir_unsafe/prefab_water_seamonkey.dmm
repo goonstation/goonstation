@@ -32,9 +32,7 @@
 	foldable = 0;
 	icon_state = "chair_pool"
 	},
-/obj/landmark/spawner{
-	name = "seamonkeyspawn_rich"
-	},
+/mob/living/carbon/human/npc/monkey/sea/rich,
 /turf/simulated/floor/grass,
 /area/prefab/sea_monkey_hideout)
 "ai" = (
@@ -433,9 +431,7 @@
 /turf/simulated/floor/black/grime,
 /area/prefab/sea_monkey_hideout)
 "bB" = (
-/obj/landmark/spawner{
-	name = "seamonkeyspawn_lab"
-	},
+/mob/living/carbon/human/npc/monkey/sea/lab,
 /turf/simulated/floor/black/grime,
 /area/prefab/sea_monkey_hideout)
 "bC" = (
@@ -576,9 +572,7 @@
 /turf/simulated/floor/carpet,
 /area/prefab/sea_monkey_hideout)
 "bU" = (
-/obj/landmark/spawner{
-	name = "seamonkeyspawn_gang"
-	},
+/mob/living/carbon/human/npc/monkey/sea/gang,
 /turf/simulated/floor/carpet,
 /area/prefab/sea_monkey_hideout)
 "bV" = (
@@ -823,9 +817,7 @@
 /turf/simulated/floor/plating/random,
 /area/prefab/sea_monkey_hideout)
 "cG" = (
-/obj/landmark/spawner{
-	name = "seamonkeyspawn_gang"
-	},
+/mob/living/carbon/human/npc/monkey/sea/gang,
 /turf/simulated/floor/plating/random,
 /area/prefab/sea_monkey_hideout)
 "cH" = (
@@ -989,9 +981,7 @@
 /turf/simulated/floor/grass,
 /area/prefab/sea_monkey_hideout)
 "dg" = (
-/obj/landmark/spawner{
-	name = "seamonkeyspawn_gang_gun"
-	},
+/mob/living/carbon/human/npc/monkey/sea/gang_gun,
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "stairs_middle"

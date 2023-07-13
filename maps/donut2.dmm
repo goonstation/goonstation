@@ -8028,10 +8028,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aFb" = (
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "aFd" = (
@@ -30042,10 +30039,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "hHT" = (
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_tanhony"
-	},
+/mob/living/carbon/human/npc/monkey/tanhony,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "hHZ" = (
@@ -33265,10 +33259,7 @@
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "kkq" = (
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "kkX" = (
@@ -37939,10 +37930,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "nDp" = (
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -39963,10 +39951,7 @@
 /obj/decal/poster/wallsign/portrait_scientist{
 	pixel_y = 29
 	},
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "oWd" = (
@@ -40812,10 +40797,7 @@
 /area/ghostdrone_factory)
 "pCR" = (
 /obj/stool/bar,
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /obj/item/device/radio/intercom/catering{
 	dir = 4
 	},
@@ -43057,10 +43039,7 @@
 	},
 /area/station/hallway/primary/south)
 "rnP" = (
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -43239,9 +43218,7 @@
 /area/station/hallway/secondary/exit)
 "rtN" = (
 /obj/machinery/light/incandescent,
-/obj/landmark/spawner{
-	name = "dolly"
-	},
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "rtO" = (
@@ -46357,10 +46334,7 @@
 /turf/simulated/floor,
 /area/station/science/testchamber)
 "tCo" = (
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
@@ -47542,10 +47516,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "uyr" = (
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -47569,10 +47540,7 @@
 /turf/simulated/floor,
 /area/station/engine/ptl)
 "uAd" = (
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "uAu" = (
@@ -47946,10 +47914,7 @@
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
 "uRa" = (
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor,
 /area/station/maintenance/north)
 "uRp" = (
@@ -48031,10 +47996,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert";
-	icon_state = "chimp-start"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "uTF" = (
@@ -48979,10 +48941,7 @@
 	},
 /area/station/science/lobby)
 "vEn" = (
-/obj/landmark/spawner{
-	icon_state = "chimp-start";
-	name = "monkeyspawn_krimpus"
-	},
+/mob/living/carbon/human/npc/monkey/krimpus,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "vEO" = (

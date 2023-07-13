@@ -4421,9 +4421,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "ato" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -5206,9 +5204,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
 "awv" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters)
 "aww" = (
@@ -5674,9 +5670,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "ayu" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "ayv" = (
@@ -12097,9 +12091,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "aZh" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor/orangeblack/side,
 /area/station/engine/singcore)
 "aZi" = (
@@ -14583,9 +14575,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/research)
 "bhP" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass,
 /area/station/medical/research)
 "bhQ" = (
@@ -14863,16 +14853,12 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass,
 /area/station/medical/research)
 "biO" = (
 /obj/machinery/light,
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass,
 /area/station/medical/research)
 "biP" = (
@@ -20536,9 +20522,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "eSA" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor,
 /area/station/security/brig)
 "eSL" = (
@@ -21674,9 +21658,7 @@
 /turf/simulated/floor/airless/plating/jen,
 /area/station/turret_protected/AIbaseoutside)
 "gll" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "glx" = (
@@ -30212,9 +30194,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "pYF" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -35490,9 +35470,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "vrm" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_krimpus"
-	},
+/mob/living/carbon/human/npc/monkey/krimpus,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "vsI" = (
@@ -36125,9 +36103,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "vXM" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
-	},
+/mob/living/carbon/human/npc/monkey/tanhony,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
@@ -36987,9 +36963,7 @@
 /area/station/science/lab)
 "wUa" = (
 /obj/table/reinforced/bar/auto,
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "carpet2";

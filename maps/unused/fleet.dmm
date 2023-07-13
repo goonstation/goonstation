@@ -18327,9 +18327,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor/specialroom/arcade,
 /area/research_outpost/indigo_rye)
 "LE" = (
@@ -20625,9 +20623,7 @@
 	name = "Demeter Primary Zone"
 	})
 "Pq" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"

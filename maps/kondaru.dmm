@@ -3468,9 +3468,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
-	},
+/mob/living/carbon/human/npc/monkey/tanhony,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio/news_office)
 "ali" = (
@@ -8666,9 +8664,7 @@
 	on = 1;
 	target_pressure = 1000
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor/redblack,
 /area/station/engine/hotloop)
 "aEd" = (
@@ -11995,9 +11991,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "aRD" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -12287,9 +12281,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "aSF" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/machinery/light,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
@@ -15023,9 +15015,7 @@
 	name = "Diplomatic Quarters"
 	})
 "bdK" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "bdL" = (
@@ -22727,9 +22717,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bIn" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /obj/stool,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -30456,9 +30444,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor/specialroom/arcade,
 /area/research_outpost/indigo_rye)
 "ckE" = (
@@ -42979,9 +42965,7 @@
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
 /area/station/crew_quarters/cafeteria)
 "kBY" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "kCm" = (
@@ -45812,9 +45796,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "mRv" = (
@@ -52957,9 +52939,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/south)
 "sMt" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor,
 /area/station/storage/warehouse)
 "sMG" = (
@@ -55930,9 +55910,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "vaO" = (
-/obj/landmark/spawner{
-	name = "dolly"
-	},
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "vaW" = (

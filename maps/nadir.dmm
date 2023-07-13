@@ -7933,9 +7933,7 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
 "dEt" = (
-/obj/landmark/spawner{
-	name = "dolly"
-	},
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "dEI" = (
@@ -12658,9 +12656,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "fLp" = (
@@ -12832,9 +12828,7 @@
 /turf/simulated/floor/black,
 /area/pasiphae/survey)
 "fNH" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor/black/grime,
 /area/station/storage/warehouse)
 "fNN" = (
@@ -13423,9 +13417,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "gbR" = (
@@ -23480,9 +23472,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
 "kio" = (
@@ -30114,9 +30104,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "mPl" = (
@@ -30564,9 +30552,7 @@
 	})
 "mZZ" = (
 /obj/item/storage/toilet,
-/obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
-	},
+/mob/living/carbon/human/npc/monkey/tanhony,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -40377,9 +40363,7 @@
 	},
 /area/station/engine/elect)
 "rHP" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "rHX" = (
@@ -52382,9 +52366,7 @@
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
 "xbO" = (

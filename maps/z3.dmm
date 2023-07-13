@@ -3545,9 +3545,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/landmark/spawner{
-	name = "father_jack"
-	},
+/mob/living/carbon/human/fatherjack,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -18734,9 +18732,7 @@
 /area/diner/dining)
 "hro" = (
 /obj/stool/bar,
-/obj/landmark/spawner{
-	name = "don_glab"
-	},
+/mob/living/carbon/human/don_glab,
 /turf/simulated/floor/carpet{
 	dir = 10
 	},
@@ -19703,9 +19699,7 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "big_yank"
-	},
+/mob/living/carbon/human/big_yank,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},

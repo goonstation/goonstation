@@ -119,9 +119,7 @@
 	icon_state = "1-2"
 	},
 /obj/stool/chair/wooden,
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fgreen2"
@@ -4570,9 +4568,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "asH" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
-	},
+/mob/living/carbon/human/npc/monkey/tanhony,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "asJ" = (
@@ -5522,9 +5518,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "avU" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_krimpus"
-	},
+/mob/living/carbon/human/npc/monkey/krimpus,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "avV" = (
@@ -5611,9 +5605,7 @@
 /area/station/ranch)
 "awd" = (
 /obj/disposalpipe/segment,
-/obj/landmark/spawner{
-	name = "dolly"
-	},
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "awf" = (
@@ -6512,9 +6504,7 @@
 	},
 /area/station/crew_quarters/bar)
 "azx" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -13802,9 +13792,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
 "bht" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -37838,9 +37826,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -38386,9 +38372,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "rPk" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "rQd" = (
@@ -39311,9 +39295,7 @@
 /area/station/crewquarters/cryotron)
 "sGi" = (
 /obj/machinery/drainage,
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -43530,9 +43512,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "weJ" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /obj/item/device/radio/beacon,
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
@@ -43892,9 +43872,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},

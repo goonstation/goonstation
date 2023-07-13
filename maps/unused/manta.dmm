@@ -1225,9 +1225,7 @@
 /obj/stool/chair/wooden{
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "shitty_bill"
-	},
+/mob/living/carbon/human/biker,
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "adZ" = (
@@ -1352,9 +1350,7 @@
 /area/diner/kitchen)
 "aez" = (
 /obj/stool/chair/wooden,
-/obj/landmark/spawner{
-	name = "don_glab"
-	},
+/mob/living/carbon/human/don_glab,
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "aeA" = (
@@ -1399,9 +1395,7 @@
 /area/diner/kitchen)
 "aeH" = (
 /obj/stool/bar,
-/obj/landmark/spawner{
-	name = "father_jack"
-	},
+/mob/living/carbon/human/fatherjack,
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "aeI" = (
@@ -17474,9 +17468,7 @@
 	},
 /area/station/medical/research)
 "aXZ" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -17727,9 +17719,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/research)
 "aYL" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -17980,17 +17970,13 @@
 /turf/simulated/floor/green,
 /area/station/medical/research)
 "aZs" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
 /area/station/medical/research)
 "aZt" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/shrub,
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -35472,9 +35458,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
 "hkU" = (
-/obj/landmark/spawner{
-	name = "dolly"
-	},
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "hlB" = (
@@ -38968,9 +38952,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
 "pFX" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor,
 /area/station/security/brig/genpop)
 "pGE" = (

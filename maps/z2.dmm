@@ -61114,9 +61114,7 @@
 /area/crypt/graveyard/swamp)
 "fSc" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/landmark/spawner{
-	name = "john_bill"
-	},
+/mob/living/carbon/human/john,
 /obj/machinery/computer/transit_shuttle/johnbus{
 	embed = 1;
 	icon_state = "shuttle-embed";
@@ -68961,9 +68959,7 @@
 /turf/unsimulated/floor/plating,
 /area/crater/biodome/crew)
 "ogV" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_syndicate"
-	},
+/mob/living/carbon/human/npc/monkey/oppenheimer,
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "ohf" = (

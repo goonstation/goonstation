@@ -6625,9 +6625,7 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "big_yank"
-	},
+/mob/living/carbon/human/big_yank,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -7361,9 +7359,7 @@
 /obj/machinery/computer/shuttle_bus/embedded/south{
 	plane = 6
 	},
-/obj/landmark/spawner{
-	name = "john_bill"
-	},
+/mob/living/carbon/human/john,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -9482,9 +9478,7 @@
 /turf/unsimulated/floor/red,
 /area/space)
 "yb" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_syndicate"
-	},
+/mob/living/carbon/human/npc/monkey/oppenheimer,
 /obj/cable{
 	icon_state = "2-8"
 	},

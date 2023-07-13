@@ -370,9 +370,7 @@
 /area/station/medical/cdc)
 "abf" = (
 /obj/window/reinforced/west,
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/medical/cdc)
 "abg" = (
@@ -1690,9 +1688,7 @@
 /turf/simulated/floor/plating,
 /area/russian)
 "aeA" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/medical/research)
 "aeB" = (
@@ -3978,9 +3974,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/medical/cdc)
 "alT" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/medical/cdc)
 "alU" = (
@@ -4118,9 +4112,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/medical/cdc)
 "amD" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -10097,9 +10089,7 @@
 /turf/simulated/floor,
 /area/station/atmos/highcap_storage)
 "aGE" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_krimpus"
-	},
+/mob/living/carbon/human/npc/monkey/krimpus,
 /turf/simulated/floor,
 /area/station/atmos/highcap_storage)
 "aGF" = (
@@ -13283,9 +13273,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aRJ" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor{
 	icon_state = "carpet2"
 	},
@@ -17853,9 +17841,7 @@
 /area/station/crew_quarters/bar)
 "bhz" = (
 /obj/table/auto,
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "bhA" = (
@@ -23353,9 +23339,7 @@
 /area/station/maintenance/south)
 "bve" = (
 /obj/table/reinforced/auto,
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor{
 	icon_state = "carpetS"
 	},
@@ -26255,9 +26239,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/science/lobby)
 "bEc" = (
@@ -26832,9 +26814,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/science/lobby)
 "bFj" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/science/lobby)
 "bFk" = (
@@ -28029,9 +28009,7 @@
 	c_tag = "Jury Box";
 	dir = 4
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/science/chemistry)
 "eNv" = (
@@ -29540,9 +29518,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "jsS" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/science/chemistry)
 "jtg" = (
@@ -32069,9 +32045,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/science/chemistry)
 "qzw" = (
@@ -32159,9 +32133,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/science/lobby)
 "qNq" = (
@@ -32607,9 +32579,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/observatory)
 "rPJ" = (
@@ -34037,9 +34007,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "vwB" = (

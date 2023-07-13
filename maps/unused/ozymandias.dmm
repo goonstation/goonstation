@@ -687,9 +687,7 @@
 /turf/simulated/floor/plating,
 /area/station/mining/refinery)
 "ajt" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "ajG" = (
@@ -11357,9 +11355,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/aviary)
 "dbc" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/decal/tile_edge/line/green{
 	dir = 8;
 	icon_state = "line1"
@@ -27368,9 +27364,7 @@
 /obj/stool/chair/office/green{
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_krimpus"
-	},
+/mob/living/carbon/human/npc/monkey/krimpus,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "hfn" = (
@@ -30251,9 +30245,7 @@
 	name = "Hydroponics Staff Section"
 	})
 "hQq" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -49074,9 +49066,7 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "mHY" = (
@@ -55877,9 +55867,7 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/west)
 "oxm" = (
-/obj/landmark/spawner{
-	name = "dolly"
-	},
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "oxs" = (
@@ -60994,9 +60982,7 @@
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "pMt" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -67223,9 +67209,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "rsy" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -68680,9 +68664,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor/grime,
 /area/station/security/brig/genpop)
 "rLZ" = (
@@ -68872,9 +68854,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
-	},
+/mob/living/carbon/human/npc/monkey/tanhony,
 /turf/simulated/floor/plating/random,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -70355,9 +70335,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "sdP" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -70396,9 +70374,7 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor/engine/caution/west,
 /area/station/science/teleporter)
 "seu" = (
@@ -86932,9 +86908,7 @@
 /area/listeningpost)
 "vZz" = (
 /obj/decal/cleanable/dirt,
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "vZE" = (

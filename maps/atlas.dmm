@@ -4377,9 +4377,7 @@
 	pixel_x = 10
 	},
 /obj/machinery/drainage,
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor/sanitary,
 /area/station/security/brig/genpop)
 "aoE" = (
@@ -5007,9 +5005,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aqQ" = (
@@ -6836,9 +6832,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "aws" = (
@@ -8552,9 +8546,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor/black,
 /area/station/storage/tech)
 "aBI" = (
@@ -14398,9 +14390,7 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "aTN" = (
@@ -14962,9 +14952,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark/spawner{
-	name = "dolly"
-	},
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aVw" = (

@@ -3226,9 +3226,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "age" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -12309,9 +12307,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "ayu" = (
@@ -12693,9 +12689,7 @@
 	},
 /area/station/medical/research)
 "azj" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "azk" = (
@@ -12986,9 +12980,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "azK" = (
@@ -23431,9 +23423,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor{
 	tag = "icon-carpet2 (WEST)";
 	icon_state = "carpet2";
@@ -25717,9 +25707,7 @@
 /turf/simulated/floor/engine,
 /area/space)
 "aWL" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor/engine,
 /area/space)
 "aWM" = (

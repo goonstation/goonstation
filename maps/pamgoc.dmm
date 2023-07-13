@@ -3668,9 +3668,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor,
 /area/station/engine/hotloop)
 "afN" = (
@@ -7706,9 +7704,7 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "anl" = (
@@ -28796,21 +28792,15 @@
 	},
 /area/station/hydroponics/bay)
 "bfv" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "bfw" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/observatory)
 "bfy" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor,
 /area/station/crew_quarters/supplylobby)
 "bfA" = (
@@ -28820,17 +28810,13 @@
 	},
 /area/station/medical/dome)
 "bfB" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/purplewhite/corner{
 	dir = 8
 	},
 /area/station/science/chemistry)
 "bfC" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bfD" = (
@@ -30131,9 +30117,7 @@
 /area/station/crew_quarters/cafeteria)
 "biC" = (
 /obj/machinery/atmospherics/pipe/simple,
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "biD" = (
@@ -50094,9 +50078,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
-	},
+/mob/living/carbon/human/npc/monkey/tanhony,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -66668,9 +66650,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/staff)
 "mcK" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
@@ -70260,9 +70240,7 @@
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "tXp" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -70490,9 +70468,7 @@
 /turf/simulated/floor,
 /area/station/security/hos)
 "uut" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_krimpus"
-	},
+/mob/living/carbon/human/npc/monkey/krimpus,
 /obj/disposalpipe/segment{
 	dir = 8
 	},

@@ -1194,9 +1194,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/black,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -4666,9 +4664,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "boE" = (
-/obj/landmark/spawner{
-	name = "dolly"
-	},
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "bpb" = (
@@ -8262,9 +8258,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor/carpet/grime,
 /area/station/hallway/primary/southeast)
 "cqt" = (
@@ -15702,9 +15696,7 @@
 	},
 /area/station/solar/east)
 "eKn" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_krimpus"
-	},
+/mob/living/carbon/human/npc/monkey/krimpus,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "eKv" = (
@@ -22464,9 +22456,7 @@
 	},
 /area/station/hallway/primary/west)
 "gNA" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/machinery/drainage,
 /obj/cable{
 	icon_state = "4-8"
@@ -26593,9 +26583,7 @@
 /area/station/storage/primary)
 "idd" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "idq" = (
@@ -29214,9 +29202,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/junction/right/south,
-/obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
-	},
+/mob/living/carbon/human/npc/monkey/tanhony,
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "iUp" = (
@@ -36522,9 +36508,7 @@
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/kitchen)
 "lgN" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fblue1"
@@ -48678,9 +48662,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
 "oSr" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -52301,9 +52283,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "pWV" = (
@@ -57271,9 +57251,7 @@
 	pixel_x = 10;
 	pixel_y = 20
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
@@ -57436,9 +57414,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
 	},
@@ -60658,9 +60634,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce)
 "swZ" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 9
 	},
@@ -66064,9 +66038,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "ukP" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "ulb" = (
