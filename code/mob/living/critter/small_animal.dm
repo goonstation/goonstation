@@ -4082,9 +4082,21 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_type = /datum/aiHolder/empty
 	can_hat = FALSE
 
-	death(var/gibbed)
-		src.anchored = UNANCHORED
-		..()
+/mob/living/critter/small_animal/crab/lava/New()
+	..()
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, "lava_crab", 100)
+
+/mob/living/critter/small_animal/crab/lava/death(var/gibbed)
+	src.anchored = UNANCHORED
+	..()
+
+/mob/living/critter/small_animal/crab/lava/Login()
+	..()
+	src.anchored = UNANCHORED
+
+/mob/living/critter/small_animal/crab/lava/Logout()
+	..()
+	src.anchored = initial(src.anchored)
 
 /mob/living/critter/small_animal/crab/lava/deep
 	name = "deep magma crab"
