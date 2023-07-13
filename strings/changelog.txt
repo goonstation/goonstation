@@ -1,4 +1,9 @@
 
+(t)thu jul 13 23
+(u)Caio029
+(p)14556
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Conveyor belts are now buildable! Use a device analyzer on a conveyor belt and a conveyor switch, then go ham. See the help message on a conveyor belt for more information.
 (t)wed jul 12 23
 (u)Ikea
 (p)14911
