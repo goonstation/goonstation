@@ -366,7 +366,7 @@
 	msgGain = "You begin to sense an odd chemical taste in your mouth."
 	msgLose = "The chemical taste in your mouth fades."
 	occur_in_genepools = 1 //this is going to be very goddamn rare and very fucking difficult to unlock.
-	mob_exclusive = /mob/living/carbon/human/
+	mob_exclusive = /mob/living/carbon/human
 	probability = 1
 	blockCount = 5
 	can_research = 0

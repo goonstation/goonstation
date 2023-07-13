@@ -1,4 +1,4 @@
-/datum/plantmutation/
+/datum/plantmutation
 	var/name = null // If this is set, plants will use this instead of regular plant name
 	var/crop = null // What crop does it give?
 	var/plant_icon = null // same as in base plant thing really
@@ -603,7 +603,7 @@
 	dont_rename_crop = TRUE
 	iconmod = "LasherBerries"
 	harvest_override = 1
-	crop = /obj/item/reagent_containers/food/snacks/plant/lashberry/
+	crop = /obj/item/reagent_containers/food/snacks/plant/lashberry
 	chance = 20
 
 

@@ -5,7 +5,7 @@
 
 //Electronics parts
 
-/obj/item/electronics/
+/obj/item/electronics
 	name = "electronic thing"
 	icon = 'icons/obj/electronics.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'

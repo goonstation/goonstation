@@ -45,7 +45,7 @@ WET FLOOR SIGN
 		..()
 		reagents.add_reagent("luminol", initial_volume)
 
-/obj/item/spraybottle/cleaner/
+/obj/item/spraybottle/cleaner
 	name = "cleaner spray bottle"
 	desc = "A spray bottle labeled 'Poo-b-Gone Space Cleaner'."
 

@@ -530,7 +530,7 @@
 	material_name = "Fabric"
 	scoopable = 0
 
-/obj/item/raw_material/cotton/
+/obj/item/raw_material/cotton
 	name = "cotton wad"
 	desc = "It's a big puffy white thing. Most likely not a cloud though."
 	icon_state = "cotton"

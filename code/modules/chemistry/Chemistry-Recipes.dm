@@ -2167,7 +2167,7 @@
 				boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
 			if(holder?.my_atom?.is_open_container())
 				// A slightly less stupid way of smoking contents. Maybe.
-				var/datum/reagents/smokeContents = new/datum/reagents/
+				var/datum/reagents/smokeContents = new/datum/reagents
 				smokeContents.add_reagent("saxitoxin", created_volume / 6)
 				smoke_reaction(smokeContents, 2, location)
 				return

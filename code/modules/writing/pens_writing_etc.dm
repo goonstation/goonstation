@@ -1470,7 +1470,7 @@
 		boutput(user, "<span class='notice'>\The [src] ejects \the [src.stored_paper].</span>")
 		if(!ON_COOLDOWN(src, "eject_sound", 3 SECONDS))
 			playsound(src.loc, 'sound/machines/typewriter.ogg', 60, 0)
-			// CC0 license on the sound, source here: https://freesound.org/people/tams_kp/sounds/43559/
+			// CC0 license on the sound, source here: https://freesound.org/people/tams_kp/sounds/43559
 		src.stored_paper.set_loc(target)
 		src.stored_paper = null
 		src.UpdateIcon()

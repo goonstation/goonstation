@@ -1,4 +1,4 @@
-/datum/job/
+/datum/job
 	var/name = null
 	var/list/alias_names = null
 	var/initial_name = null
@@ -2326,7 +2326,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_ears = list()
 	slot_mask = list(/obj/item/clothing/mask/gas/swat/syndicate)
-	slot_card = null		///obj/item/card/id/
+	slot_card = null		///obj/item/card/id
 	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 	slot_poc2 = list(/obj/item/storage/pouch/bullet_9mm)
 	slot_lhan = list()
@@ -2370,7 +2370,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_ears = list(/obj/item/device/radio/headset/syndicate) //needs their own secret channel
 	slot_mask = list(/obj/item/clothing/mask/gas/swat/syndicate)
-	slot_card = /obj/item/card/id/
+	slot_card = /obj/item/card/id
 	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 	slot_poc2 = list(/obj/item/storage/pouch/assault_rifle)
 	slot_lhan = list()

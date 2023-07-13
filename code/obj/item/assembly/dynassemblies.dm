@@ -19,7 +19,7 @@ For fruit DynAssemblies see: fruithat.dm
 //If you are happy and you have a valid combo, screwdriver it to create your product.
 
 
-/obj/item/dynassembly/
+/obj/item/dynassembly
 	name = "assembly"
 	w_class = W_CLASS_BULKY
 	var/list/partnames = list() //the names of the parts we have, individually

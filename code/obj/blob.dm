@@ -508,7 +508,7 @@
 		if (!istype(T) || !T.can_blob_spread_here(null, null, isadmin(overmind) || overmind.admin_override))
 			return
 
-		var/blob_type = /obj/blob/
+		var/blob_type = /obj/blob
 		if (ispath(src.spread_type))
 			blob_type = src.spread_type
 

@@ -716,7 +716,7 @@
 // please just use ..() instead of copy/pasting this stuff unless you have a REALLY GOOD REASON to override New()!!
 // tia, with love, haine
 
-/obj/item/
+/obj/item
 
 	var/list/abilities = null//list("")
 	var/list/ability_buttons = null//new/list()

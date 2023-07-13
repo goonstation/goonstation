@@ -829,7 +829,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 ////////////////////////// Gimmick bombs /////////////////////////////////
 
-/obj/item/gimmickbomb/
+/obj/item/gimmickbomb
 	name = "Don't spawn this directly!"
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = ""

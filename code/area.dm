@@ -1811,7 +1811,7 @@ ABSTRACT_TYPE(/area/station/communications)
 ABSTRACT_TYPE(/area/station/maintenance)
 TYPEINFO(/area/station/maintenance)
 	valid_bounty_area = FALSE
-/area/station/maintenance/
+/area/station/maintenance
 	name = "Maintenance"
 	icon_state = "maintcentral"
 	sound_environment = 12
@@ -2075,7 +2075,7 @@ ABSTRACT_TYPE(/area/station/maintenance/outer)
 ABSTRACT_TYPE(/area/station/hallway)
 TYPEINFO(/area/station/hallway)
 	valid_bounty_area = FALSE
-/area/station/hallway/
+/area/station/hallway
 	name = "Hallway"
 	icon_state = "hallC"
 	sound_environment = 10
@@ -3950,7 +3950,7 @@ ABSTRACT_TYPE(/area/mining)
 	name = "Mining Outpost Refinery"
 	icon_state = "yellow"
 
-/area/mining/hangar/
+/area/mining/hangar
 	name = "Mining Dock"
 	icon_state = "storage"
 	sound_environment = 10
@@ -4330,7 +4330,7 @@ area/station/communications
 		name = "Communications Office Bedroom"
 		icon_state = "communicationsoffice-bedroom"
 
-/area/station2/maintenance/
+/area/station2/maintenance
 	name = "Maintenance"
 	icon_state = "maintcentral"
 	sound_environment = 12
@@ -4417,7 +4417,7 @@ area/station/communications
 	name = "Upper Starboard Maintenance"
 	icon_state = "upper_starboard_maintenance"
 
-/area/station2/hallway/
+/area/station2/hallway
 	name = "Hallway"
 	icon_state = "hallC"
 	sound_environment = 10
