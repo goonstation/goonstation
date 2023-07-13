@@ -1,4 +1,18 @@
 
+(t)wed jul 12 23
+(u)Ikea
+(p)14911
+(e)💅🤖|C-QoL, A-Silicons
+(*)Silicons now only WOOP or BZZT when first stunned.
+(u)Blackrep
+(p)14536
+(e)⚖🎩|C-Balance, A-Clothing
+(+)Surplus vests from Sketchy D-5 are now made of carbon nanofiber.
+(t)tue jul 11 23
+(u)Amylizzle & Garash
+(p)14694
+(e)🆕🗺🎨🔧|C-Feature, A-Mapping, C-Sprites, A-Tooling
+(*)Cogmap now comes with a random engine type, or a rare chance to use the brand new NT Engine Teleportation System, which lets engineers select the engine they want to use.
 (t)mon jul 10 23
 (u)Kubius
 (p)14863
