@@ -4347,56 +4347,56 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/primary_color = "#21a833"
 	var/secondary_color = "#000000"
 
-	New()
-		..()
-		src.maxsteps = rand(5, 15)
-		if (!tail_memory)
-			src.primary_color = rgb(rand(50,190), rand(50,190), rand(50,190))
-			src.secondary_color = rgb(rand(50,190), rand(50,190), rand(50,190))
-		src.setup_overlays()
+/mob/living/critter/small_animal/livingtail/New()
+	..()
+	src.maxsteps = rand(5, 15)
+	if (!tail_memory)
+		src.primary_color = rgb(rand(50,190), rand(50,190), rand(50,190))
+		src.secondary_color = rgb(rand(50,190), rand(50,190), rand(50,190))
+	src.setup_overlays()
 
-	Move()
-		. = ..()
-		if (src.currentsteps++ >= src.maxsteps)
-			src.death()
+/mob/living/critter/small_animal/livingtail/Move()
+	. = ..()
+	if (src.currentsteps++ >= src.maxsteps)
+		src.death()
 
-	setup_overlays()
-		var/image/overlayprimary = image('icons/misc/critter.dmi', "twitchytail_colorkey1")
-		overlayprimary.color = primary_color
-		var/image/overlaysecondary = image('icons/misc/critter.dmi', "twitchytail_colorkey2")
-		overlaysecondary.color = secondary_color
-		src.UpdateOverlays(overlayprimary, "bottomdetail")
-		src.UpdateOverlays(overlaysecondary, "topdetail")
+/mob/living/critter/small_animal/livingtail/setup_overlays()
+	var/image/overlayprimary = image('icons/misc/critter.dmi', "twitchytail_colorkey1")
+	overlayprimary.color = primary_color
+	var/image/overlaysecondary = image('icons/misc/critter.dmi', "twitchytail_colorkey2")
+	overlaysecondary.color = secondary_color
+	src.UpdateOverlays(overlayprimary, "bottomdetail")
+	src.UpdateOverlays(overlaysecondary, "topdetail")
 
-	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
+/mob/living/critter/small_animal/livingtail/Life(datum/controller/process/mobs/parent)
+	if (..(parent))
+		return 1
 
-		if (prob(70))
-			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
-			make_cleanable(/obj/decal/cleanable/blood/splatter, src.loc)
-		..()
+	if (prob(70))
+		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+		make_cleanable(/obj/decal/cleanable/blood/splatter, src.loc)
+	..()
 
-	death(var/gibbed)
-		if (gibbed)
-			return ..()
-		if (tail_memory)
-			tail_memory.set_loc(get_turf(src))
-		else
-			var/obj/item/organ/tail/lizard/tail = new /obj/item/organ/tail/lizard(get_turf(src))
-			tail.organ_color_1 = src.secondary_color
-			tail.organ_color_2 = src.primary_color
-			tail.update_tail_icon()
-		..()
-		qdel(src)
+/mob/living/critter/small_animal/livingtail/death(var/gibbed)
+	if (gibbed)
+		return ..()
+	if (tail_memory)
+		tail_memory.set_loc(get_turf(src))
+	else
+		var/obj/item/organ/tail/lizard/tail = new /obj/item/organ/tail/lizard(get_turf(src))
+		tail.organ_color_1 = src.secondary_color
+		tail.organ_color_2 = src.primary_color
+		tail.update_tail_icon()
+	..()
+	qdel(src)
 
-	Crossed(atom/movable/M as mob)
-		..()
-		if (!isalive(src))
-			return
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(prob(25))
-				src.visible_message("<span class='combat'>[src] weaves around [H]'s legs and trips [him_or_her(H)]!</span>")
-				H.setStatus("resting", duration = INFINITE_STATUS)
-				H.force_laydown_standup()
+/mob/living/critter/small_animal/livingtail/Crossed(atom/movable/M as mob)
+	..()
+	if (!isalive(src))
+		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(prob(25))
+			src.visible_message("<span class='combat'>[src] weaves around [H]'s legs and trips [him_or_her(H)]!</span>")
+			H.setStatus("resting", duration = INFINITE_STATUS)
+			H.force_laydown_standup()
