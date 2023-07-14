@@ -2197,7 +2197,7 @@
 				boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
 			if(holder?.my_atom?.is_open_container())
 				// A slightly less stupid way of smoking contents. Maybe.
-				var/datum/reagents/smokeContents = new/datum/reagents/
+				var/datum/reagents/smokeContents = new/datum/reagents
 				smokeContents.add_reagent("saxitoxin", created_volume / 6)
 				smoke_reaction(smokeContents, 2, location)
 				return
@@ -3271,7 +3271,7 @@
 						boutput(M, "<span class='notice'>With nowhere to go, the bubbles settle.</span>")
 					return
 			var/turf/location = 0
-			if (holder.my_atom && holder.covered_cache.len <= 1)
+			if (holder.my_atom && length(holder.covered_cache) <= 1)
 				location = get_turf(holder.my_atom)
 				for(var/mob/M in AIviewers(5, location))
 					boutput(M, "<span class='alert'>The solution violently bubbles!</span>")
@@ -3313,7 +3313,7 @@
 						boutput(M, "<span class='notice'>With nowhere to go, the metal settles.</span>")
 					return
 
-			if (holder.my_atom && holder.covered_cache.len <= 1)
+			if (holder.my_atom && length(holder.covered_cache) <= 1)
 				location = get_turf(holder.my_atom)
 				for(var/mob/M in AIviewers(5, location))
 					boutput(M, "<span class='alert'>The solution spews out a metalic foam!</span>")

@@ -810,7 +810,7 @@ datum
 
 				var/do_stunny = 1
 				var/list/covered = old_holder.covered_turf()
-				if (covered.len > 1)
+				if (length(covered) > 1)
 					do_stunny = prob(100/covered.len)
 
 				//var/mob/living/carbon/human/H = M
@@ -2273,7 +2273,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 
 				if(volume >= 5 && prob(10))
@@ -2785,7 +2785,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (volume >= 10 && covered.len < 2)
+				if (volume >= 10 && length(covered) < 2)
 					if (!T.messy)
 						make_cleanable(/obj/decal/cleanable/saltpile,T)
 					else
@@ -2852,7 +2852,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume) //Makes the kechup splats
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 
 				if (volume >= 5)
@@ -4058,7 +4058,7 @@ datum
 
 				var/list/covered = holder.covered_turf()
 				var/do_stunny = 1
-				if (covered.len > 1)
+				if (length(covered) > 1)
 					do_stunny = prob(100/covered.len)
 
 				//var/mob/living/carbon/human/H = M

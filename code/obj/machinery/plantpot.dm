@@ -1011,7 +1011,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		if(!user) return
 		var/satchelpick = 0
 		if(SA)
-			if(SA.contents.len >= SA.maxitems)
+			if(length(SA.contents) >= SA.maxitems)
 				boutput(user, "<span class='alert'>Your satchel is already full! Free some space up first.</span>")
 				return
 			else
@@ -1322,7 +1322,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(SA)
 				// If we're putting stuff in a satchel, this is where we do it.
 				for(var/obj/item/I in src.contents)
-					if(SA.contents.len >= SA.maxitems)
+					if(length(SA.contents) >= SA.maxitems)
 						boutput(user, "<span class='alert'>Your satchel is full! You dump the rest on the floor.</span>")
 						break
 					if(istype(I,/obj/item/seed/))
@@ -1726,7 +1726,7 @@ proc/HYPnewcommutcheck(var/datum/plant/P,var/datum/plantgenes/DNA, var/frequency
 	if(!P || !DNA) return
 	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/stabilizer))
 		return
-	if(P.commuts.len > 0)
+	if(length(P.commuts) > 0)
 		var/datum/plant_gene_strain/MUT = null
 		for (var/datum/plant_gene_strain/X in P.commuts)
 			if(HYPCheckCommut(DNA,X.type))
