@@ -5965,10 +5965,6 @@
 /obj/machinery/turret/construction,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
-"asN" = (
-/obj/machinery/vending/monkey/research,
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
 "asO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -8141,14 +8137,6 @@
 	},
 /turf/simulated/floor/red,
 /area/research_outpost/toxins)
-"azm" = (
-/obj/machinery/door_control{
-	id = "test_chamber";
-	name = "Test Chamber Blast Door Control";
-	pixel_y = -24
-	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
 "azn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16536,12 +16524,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/toxins)
-"bbE" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
 "bbF" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 1
@@ -16588,15 +16570,6 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
-"bbP" = (
-/obj/machinery/portable_atmospherics/canister/empty,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bca" = (
-/obj/machinery/light_switch/auto,
-/obj/iv_stand,
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
 "bcb" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -16683,14 +16656,6 @@
 	},
 /obj/machinery/meter,
 /obj/machinery/light/small/floor/greenish,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bcs" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bct" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bcC" = (
@@ -24734,11 +24699,6 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
-"bDl" = (
-/obj/machinery/light/incandescent/netural,
-/obj/cabinet/pathology,
-/turf/simulated/floor/green,
-/area/research_outpost/pathology)
 "bDm" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -35715,6 +35675,10 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
+"cHC" = (
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/simulated/floor,
+/area/research_outpost/chamber)
 "cHH" = (
 /obj/item/furniture_parts/wheelchair,
 /turf/simulated/floor/plating/random,
@@ -35857,6 +35821,18 @@
 /obj/landmark/random_room/size3x3,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
+"cZP" = (
+/obj/window_blinds/cog2/middle,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "test_chamber";
+	name = "Test Chamber Blast Door";
+	opacity = 0;
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/research_outpost/pathology)
 "dav" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Medical Director";
@@ -35943,19 +35919,16 @@
 	},
 /area/station/hallway/secondary/exit)
 "djw" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/dropper/mechanical{
-	pixel_x = 9
+/obj/window_blinds/cog2/left,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "test_chamber";
+	name = "Test Chamber Blast Door";
+	opacity = 0;
+	dir = 4
 	},
-/obj/item/clothing/glasses/spectro{
-	pixel_x = -5;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/dropper{
-	pixel_x = -4
-	},
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/green,
+/turf/simulated/floor/plating/random,
 /area/research_outpost/pathology)
 "dkm" = (
 /obj/cable{
@@ -36074,6 +36047,10 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"duV" = (
+/obj/machinery/vending/monkey/research,
+/turf/simulated/floor/engine,
+/area/research_outpost/pathology)
 "dvD" = (
 /obj/disposalpipe/trunk/mail/north,
 /obj/machinery/disposal/mail/small/autoname{
@@ -36163,6 +36140,21 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"dAA" = (
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "test_chamber";
+	name = "Test Chamber Blast Door";
+	opacity = 0
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/research_outpost/chamber)
 "dBL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -36402,6 +36394,9 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
+"dXG" = (
+/turf/simulated/floor,
+/area/research_outpost/chamber)
 "dYU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -36619,6 +36614,25 @@
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
+"eqN" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/reagent_containers/iv_drip/saline{
+	pixel_x = 6
+	},
+/obj/item/handcuffs,
+/obj/item/clothing/glasses/blindfold,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_y = -4
+	},
+/turf/simulated/floor,
+/area/research_outpost/pathology)
 "erh" = (
 /obj/disposalpipe/segment,
 /obj/machinery/door_control{
@@ -36650,9 +36664,9 @@
 /area/station/bridge/customs)
 "etl" = (
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-8"
 	},
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "euI" = (
@@ -36824,25 +36838,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/research_outpost)
-"eKd" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/iv_drip/saline{
-	pixel_x = 6
-	},
-/obj/item/handcuffs,
-/obj/item/clothing/glasses/blindfold,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 5;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/item/reagent_containers/syringe{
-	pixel_y = -4
-	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
 "eKI" = (
 /obj/disposalpipe/switch_junction/left/north,
 /turf/simulated/floor/purple/side{
@@ -36942,8 +36937,21 @@
 /area/station/crew_quarters/quartersA)
 "eSP" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/microscope,
-/turf/simulated/floor/green,
+/obj/item/kitchen/utensil/knife{
+	pixel_x = -3
+	},
+/obj/item/kitchen/utensil/fork,
+/obj/item/kitchen/utensil/spoon{
+	pixel_x = 3
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor,
 /area/research_outpost/pathology)
 "eSW" = (
 /obj/machinery/door/airlock/pyro/alt{
@@ -37326,6 +37334,12 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
+"fDs" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/research_outpost/pathology)
 "fDH" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/mapping_helper/firedoor_spawn,
@@ -37409,17 +37423,6 @@
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
-"fJX" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "test_chamber";
-	name = "Test Chamber Blast Door";
-	opacity = 0
-	},
-/turf/simulated/floor/black,
-/area/research_outpost/chamber)
 "fKh" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37675,7 +37678,6 @@
 	dir = 4;
 	name = "Mixing Port"
 	},
-/obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "gcA" = (
@@ -37929,6 +37931,12 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/shuttlebay,
 /area/research_outpost/hangar)
+"gyF" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/research_outpost)
 "gyX" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Courtroom"
@@ -37943,7 +37951,10 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "gzH" = (
-/turf/simulated/floor/green,
+/obj/stool/chair/office/purple{
+	dir = 8
+	},
+/turf/simulated/floor,
 /area/research_outpost/pathology)
 "gCF" = (
 /obj/storage/crate,
@@ -37993,6 +38004,20 @@
 /turf/simulated/floor,
 /area/research_outpost/hangar)
 "gEZ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "test_chamber";
+	name = "Test Chamber Blast Door";
+	opacity = 0
+	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -38084,10 +38109,6 @@
 /obj/item/storage/box/mousetraps,
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
-"gNp" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
 "gNA" = (
 /obj/machinery/vending/player/chemicals,
 /obj/disposalpipe/trunk/mail/south,
@@ -38157,10 +38178,6 @@
 /turf/simulated/floor,
 /area/station/hangar/main)
 "gTY" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/portable_atmospherics/canister/toxins,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
@@ -38291,12 +38308,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
-"heQ" = (
-/obj/stool/chair/office/purple{
-	dir = 8
-	},
-/turf/simulated/floor/green,
-/area/research_outpost/pathology)
 "hhX" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/alt,
@@ -38380,6 +38391,9 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
 /area/station/bridge)
+"hsm" = (
+/turf/simulated/floor/engine,
+/area/research_outpost/pathology)
 "hsq" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
@@ -38622,17 +38636,6 @@
 	icon_state = "blue2"
 	},
 /area/station/bridge)
-"hXu" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/toolbox/emergency,
-/obj/item/device/analyzer/atmospheric{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/device/reagentscanner,
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
 "hXO" = (
 /obj/machinery/atmospherics/portables_connector,
 /turf/simulated/floor,
@@ -38664,6 +38667,15 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor,
 /area/station/medical/medbay/pharmacy)
+"iaG" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/engine,
+/area/research_outpost/pathology)
 "ibd" = (
 /obj/stool,
 /turf/simulated/floor/specialroom/arcade,
@@ -38892,6 +38904,12 @@
 	dir = 10
 	},
 /area/station/crew_quarters/kitchen)
+"iAN" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/research_outpost/chamber)
 "iCh" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor,
@@ -38944,6 +38962,13 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "iGQ" = (
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 4
+	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
 	icon_state = "4-8"
@@ -38955,7 +38980,7 @@
 	name = "Test Chamber Blast Door";
 	opacity = 0
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor,
 /area/research_outpost/chamber)
 "iHN" = (
 /obj/table/reinforced/auto,
@@ -39126,6 +39151,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
+"iWO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/engine,
+/area/research_outpost/pathology)
 "iXw" = (
 /obj/stool/chair/green,
 /turf/simulated/floor/green,
@@ -39403,6 +39435,10 @@
 /obj/machinery/manufacturer/science,
 /turf/simulated/floor,
 /area/research_outpost/hangar)
+"jzK" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/engine,
+/area/research_outpost/pathology)
 "jBU" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/machinery/light/incandescent/netural,
@@ -39711,6 +39747,16 @@
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/hangar)
@@ -39725,10 +39771,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
-"jYT" = (
-/obj/storage/closet/biohazard,
-/turf/simulated/floor/green,
-/area/research_outpost/pathology)
 "jZj" = (
 /obj/machinery/turretid{
 	pixel_x = -24;
@@ -39779,6 +39821,9 @@
 "keX" = (
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -40043,6 +40088,16 @@
 	},
 /turf/simulated/floor,
 /area/station/chapel/sanctuary)
+"kDW" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "test_chamber";
+	name = "Test Chamber Blast Door";
+	opacity = 0
+	},
+/turf/simulated/floor/engine,
+/area/research_outpost/pathology)
 "kGF" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -40109,7 +40164,7 @@
 /obj/stool/chair/office/purple{
 	dir = 4
 	},
-/turf/simulated/floor/green,
+/turf/simulated/floor,
 /area/research_outpost/pathology)
 "kNJ" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
@@ -40244,12 +40299,8 @@
 /turf/simulated/floor/black,
 /area/station/medical/medbay/restroom)
 "lbd" = (
-/obj/machinery/optable,
-/obj/machinery/drainage,
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/engine,
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/turf/simulated/floor,
 /area/research_outpost/chamber)
 "lbx" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -40335,6 +40386,18 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
 /area/station/science/artifact)
+"lfe" = (
+/obj/window_blinds/cog2/right,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "test_chamber";
+	name = "Test Chamber Blast Door";
+	opacity = 0;
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/research_outpost/pathology)
 "lfy" = (
 /obj/stool/chair{
 	dir = 4
@@ -40493,6 +40556,12 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"ltl" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/research_outpost/pathology)
 "lut" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail{
@@ -40631,6 +40700,14 @@
 	dir = 1
 	},
 /area/station/storage/eeva)
+"lIr" = (
+/obj/machinery/door_control{
+	id = "test_chamber";
+	name = "Test Chamber Blast Door Control";
+	pixel_y = -24
+	},
+/turf/simulated/floor/engine,
+/area/research_outpost/pathology)
 "lIv" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/mail,
@@ -40809,7 +40886,6 @@
 /obj/machinery/atmospherics/portables_connector{
 	name = "Mixing Port"
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
@@ -40824,13 +40900,8 @@
 	},
 /area/station/crew_quarters/quartersA)
 "mdQ" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/engine,
+/obj/machinery/portable_atmospherics/canister/empty,
+/turf/simulated/floor,
 /area/research_outpost/chamber)
 "mdS" = (
 /obj/machinery/door/airlock/pyro/alt{
@@ -40939,6 +41010,10 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "mlI" = (
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
 	},
@@ -40947,7 +41022,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/chamber)
 "mlT" = (
 /obj/machinery/disposal,
@@ -41924,10 +41999,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/medical)
-"nVR" = (
-/obj/machinery/pathogen_manipulator,
-/turf/simulated/floor/green,
-/area/research_outpost/pathology)
 "nYa" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -42264,7 +42335,8 @@
 /area/diner/kitchen)
 "oNw" = (
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/green,
+/obj/blind_switch/area/west,
+/turf/simulated/floor,
 /area/research_outpost/pathology)
 "oNR" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
@@ -42609,6 +42681,10 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
+"psm" = (
+/obj/machinery/door/airlock/pyro/sci_alt,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
 "pso" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/mapping_helper/firedoor_spawn,
@@ -42617,8 +42693,8 @@
 	name = "Catering Hangar"
 	})
 "psD" = (
-/obj/machinery/synthomatic,
-/turf/simulated/floor/green,
+/obj/table/reinforced/chemistry/auto,
+/turf/simulated/floor,
 /area/research_outpost/pathology)
 "puB" = (
 /turf/simulated/shuttle/wall/cockpit/flock{
@@ -42771,11 +42847,9 @@
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "pIW" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 8;
-	pixel_x = 4
-	},
-/turf/simulated/floor/green,
+/obj/machinery/light_switch/auto,
+/obj/iv_stand,
+/turf/simulated/floor/engine,
 /area/research_outpost/pathology)
 "pJg" = (
 /obj/machinery/door/airlock/pyro/sci_alt{
@@ -42900,10 +42974,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/green,
+/turf/simulated/floor,
 /area/research_outpost/pathology)
 "pUJ" = (
 /obj/cable{
@@ -43501,11 +43572,6 @@
 /obj/decal/fakeobjects/flock/antenna/end,
 /turf/simulated/shuttle/wall/flock,
 /area/space)
-"qXe" = (
-/obj/machinery/vending/pathology,
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/green,
-/area/research_outpost/pathology)
 "qYb" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -43966,15 +44032,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
-"rRJ" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
 "rTW" = (
 /obj/stool/chair/wooden{
 	dir = 8
@@ -44061,10 +44118,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
-"sex" = (
-/obj/machinery/centrifuge,
-/turf/simulated/floor/green,
-/area/research_outpost/pathology)
 "sfy" = (
 /obj/table/auto,
 /obj/machinery/networked/printer{
@@ -44156,6 +44209,16 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
+"spj" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "test_chamber";
+	name = "Test Chamber Blast Door";
+	opacity = 0
+	},
+/turf/simulated/floor/black,
+/area/research_outpost/chamber)
 "spy" = (
 /obj/table/auto,
 /obj/item/spraybottle/cleaner,
@@ -44244,13 +44307,6 @@
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
-"sIF" = (
-/obj/item/device/radio/beacon,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
 "sJE" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/morgue,
@@ -44822,13 +44878,6 @@
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"tUQ" = (
-/obj/submachine/chef_sink/chem_sink{
-	layer = 3;
-	pixel_y = 8
-	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
 "tVl" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/AI,
@@ -44986,6 +45035,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
+"ujV" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor,
+/area/research_outpost/chamber)
 "umj" = (
 /obj/shrub{
 	dir = 6
@@ -45059,7 +45112,6 @@
 	dir = 1;
 	name = "Mixing Port"
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "uvs" = (
@@ -45169,12 +45221,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
-"uHc" = (
-/obj/machinery/computer/pathology{
-	dir = 8
-	},
-/turf/simulated/floor/green,
-/area/research_outpost/pathology)
 "uJr" = (
 /obj/stool/chair/comfy{
 	dir = 4
@@ -45427,6 +45473,14 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/sci_alt,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/sci_alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/pathology,
 /turf/simulated/floor/green,
@@ -45517,12 +45571,21 @@
 /area/station/maintenance/northwest)
 "vvT" = (
 /obj/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/optable,
+/obj/machinery/drainage,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/sci_alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/pathology,
-/turf/simulated/floor/green,
+/turf/simulated/floor/engine,
 /area/research_outpost/pathology)
 "vwo" = (
 /obj/table/reinforced/auto{
@@ -45567,17 +45630,6 @@
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
-"vzQ" = (
-/obj/machinery/autoclave,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/green,
-/area/research_outpost/pathology)
 "vAC" = (
 /obj/fishing_pool/portable,
 /turf/simulated/floor/green,
@@ -45758,6 +45810,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/sci_alt,
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
 "vTd" = (
@@ -45825,6 +45878,20 @@
 /obj/landmark/pest,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"vZr" = (
+/obj/submachine/chef_sink/chem_sink{
+	layer = 3;
+	pixel_y = 8
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
 "wal" = (
 /obj/stool/bed,
 /obj/item/item_box/assorted/stickers/stickers_limited,
@@ -46048,6 +46115,16 @@
 "wxP" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/space)
+"wxW" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "test_chamber";
+	name = "Test Chamber Blast Door";
+	opacity = 0
+	},
+/turf/simulated/floor/black,
+/area/research_outpost/pathology)
 "wyq" = (
 /obj/cable/reinforced{
 	icon_state = "2-8-thick"
@@ -46163,6 +46240,15 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
+"wGy" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/research_outpost/pathology)
 "wGG" = (
 /obj/stool/chair/office/purple{
 	dir = 4
@@ -46236,6 +46322,17 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/hangar/science)
+"wMy" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/storage/toolbox/emergency,
+/obj/item/device/analyzer/atmospheric{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/device/reagentscanner,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor,
+/area/research_outpost/pathology)
 "wNK" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -46467,12 +46564,6 @@
 	dir = 10
 	},
 /area/station/crew_quarters/info)
-"xea" = (
-/obj/machinery/incubator{
-	dir = 1
-	},
-/turf/simulated/floor/green,
-/area/research_outpost/pathology)
 "xfL" = (
 /obj/stool/chair{
 	dir = 8
@@ -46488,6 +46579,10 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
+"xhx" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/simulated/floor,
+/area/research_outpost/chamber)
 "xhN" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -46551,11 +46646,7 @@
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/bar)
 "xqV" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_south,
-/turf/simulated/floor/green,
+/turf/simulated/floor,
 /area/research_outpost/pathology)
 "xsB" = (
 /obj/table/reinforced/auto,
@@ -46575,11 +46666,20 @@
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
+"xvk" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "test_chamber";
+	name = "Test Chamber Blast Door";
+	opacity = 0
+	},
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
 "xvt" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/machinery/microscope,
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/green,
+/obj/table/reinforced/chemistry/auto,
+/turf/simulated/floor,
 /area/research_outpost/pathology)
 "xvG" = (
 /obj/securearea{
@@ -46642,14 +46742,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/medical/medbay/restroom)
-"xHB" = (
-/obj/machinery/power/apc/autoname_south,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
 "xIk" = (
 /obj/stool/chair/office/purple,
 /obj/stool/chair/office/purple,
@@ -46915,17 +47007,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
-"yjH" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/kitchen/utensil/knife{
-	pixel_x = -3
-	},
-/obj/item/kitchen/utensil/fork,
-/obj/item/kitchen/utensil/spoon{
-	pixel_x = 3
-	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
 "ykH" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/glow/blue{
@@ -129803,13 +129884,13 @@ aTq
 iwt
 jgs
 bZd
-tDZ
+gyF
+bcL
+bcL
+bcL
+bcL
 bcL
 bdx
-bcL
-bcL
-bcL
-bcL
 bcL
 bcL
 bds
@@ -130100,18 +130181,18 @@ aQb
 bZF
 baX
 aTq
-bbP
-bcs
+aTq
+aTq
 etl
 bcV
 afT
-bdx
+bcL
 cxH
-bdx
+bcL
 bcL
 umv
 bcL
-bcL
+bdx
 bcL
 umv
 bds
@@ -130120,7 +130201,7 @@ bds
 bds
 bbg
 ksg
-ksg
+jwF
 bec
 oqP
 aqn
@@ -130402,20 +130483,20 @@ aRN
 baZ
 bbk
 aTq
-bbP
-bcs
+aTq
+aTq
 gTY
 bcV
 bZE
 iGQ
-gEZ
+dAA
 mlI
+dAA
 gEZ
-gEZ
-bZE
-iUQ
-iUQ
-iUQ
+xvk
+wGy
+kDW
+kDW
 iUQ
 bcl
 aqn
@@ -130704,20 +130785,20 @@ aRO
 bZF
 bbq
 aTq
-gNp
-bct
-xHB
-bcV
-bdl
-rRJ
-beh
+aTq
+aTq
+aTq
+psm
+dXG
+dXG
+dXG
 mdQ
-bZn
-bZn
-eKd
-iUQ
-jYT
-gzH
+bZE
+bdl
+beh
+iaG
+hsm
+hsm
 iUQ
 iUQ
 iUQ
@@ -131010,16 +131091,16 @@ hXO
 eqg
 bcE
 bcW
+cHC
+dXG
+dXG
+mdQ
+bZE
 bcS
 bZn
-bZn
-bbE
-bZn
-bZn
-hXu
-iUQ
-bDl
-gzH
+fDs
+hsm
+hsm
 djw
 eSP
 psD
@@ -131312,18 +131393,18 @@ hXO
 eqg
 rwx
 bdf
+cHC
+dXG
+dXG
+mdQ
+bZE
 sRT
 bZn
-bZn
-bbE
-bZn
-bZn
-yjH
-iUQ
-gzH
-gzH
-gzH
-heQ
+fDs
+hsm
+hsm
+lfe
+xqV
 gzH
 oNw
 bdt
@@ -131614,19 +131695,19 @@ jBU
 uvr
 bcF
 bdf
-tUQ
-bZn
-bZn
+ujV
+ujV
+dXG
 lbd
-sIF
-beh
-beh
+bZE
+vZr
+bZn
 vvT
+iWO
+ltl
 vSg
-vSg
-vSg
-vSg
-vSg
+pTG
+pTG
 pTG
 vjk
 fhb
@@ -131916,19 +131997,19 @@ aMD
 bcV
 bcV
 bdf
+ujV
+ujV
+dXG
+lbd
+bZE
 fsJ
 bZn
-bZn
-bZn
-bZn
-bZn
-azm
-iUQ
-xea
-gzH
-gzH
-gzH
-gzH
+hsm
+hsm
+lIr
+djw
+eqN
+xqV
 xqV
 bdt
 sso
@@ -132218,20 +132299,20 @@ aqn
 aqn
 aqn
 eoE
+bZE
+dXG
+iAN
+dXG
+bZE
 bcS
 bZn
-bZn
-bZn
-bZn
-bZn
-bcS
-iUQ
-vzQ
-gzH
-gzH
-gzH
+hsm
+hsm
+jzK
+cZP
+wMy
 kNs
-gzH
+xqV
 bdt
 gcE
 eXS
@@ -132521,18 +132602,18 @@ aqn
 aqn
 eoE
 bZE
-bZn
+xhx
+xhx
+xhx
+bZE
 bZn
 cKm
-asN
-bZn
-bca
-iUQ
-qXe
+duV
+hsm
 pIW
-sex
-nVR
-uHc
+lfe
+psD
+psD
 xvt
 bdt
 vNP
@@ -132824,12 +132905,12 @@ aqn
 uEG
 bZE
 bZE
-fJX
-fJX
-fJX
-bZE
-bZE
-iUQ
+dAA
+dAA
+dAA
+spj
+spj
+wxW
 iUQ
 iUQ
 iUQ
