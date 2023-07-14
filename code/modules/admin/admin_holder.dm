@@ -125,6 +125,7 @@
 
 			"View Variables",\
 			"View Fingerprints",\
+			"Check Reagents",\
 			"Delete",\
 			"Create Poster",\
 			"Set Material",\
