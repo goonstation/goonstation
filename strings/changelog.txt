@@ -1,7 +1,7 @@
 
 (t)fri jul 14 23
 (u)aloe
-(*)Conspiracy mode has been disabled on RP pending a rework.
+(*)Conspiracy mode has been disabled on RP pending a rework. The pick weight from conspiracy has gone to Gang mode instead.
 (u)colossusqw
 (p)14951
 (e)⚖🐁|C-Balance, A-Critters
