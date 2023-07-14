@@ -2506,9 +2506,6 @@
 
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
-		if (!src.canmove)
-			if (isalive(src))
-				src.lastgasp() // calling lastgasp() here because we just got knocked out
 		if (src.misstep_chance > 0)
 			switch(misstep_chance)
 				if(50 to INFINITY)

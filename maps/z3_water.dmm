@@ -60,7 +60,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "bj" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "bk" = (
@@ -425,7 +425,7 @@
 	name = "Sergeant's Office";
 	req_access = null
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood/two,
 /area/wrecknsspolaris)
 "co" = (
@@ -435,7 +435,7 @@
 	name = "Sergeant's Private Quarters";
 	req_access = null
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood/two,
 /area/wrecknsspolaris)
 "cq" = (
@@ -667,7 +667,7 @@
 	name = "Bridge";
 	req_access = null
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
 "cT" = (
@@ -1649,13 +1649,13 @@
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "fb" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/black,
 /area/wrecknsspolaris/vault)
 "fc" = (
 /obj/machinery/door/airlock/pyro/weapons/noemag,
-/obj/access_spawn/polariscargo,
-/obj/firedoor_spawn,
+/obj/mapping_helper/access/polariscargo,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/wrecknsspolaris/vault)
 "fd" = (
@@ -1798,7 +1798,7 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "fz" = (
@@ -1818,8 +1818,8 @@
 	id = "polarisdoor";
 	name = "Secure Vault"
 	},
-/obj/access_spawn/polarisimportant,
-/obj/firedoor_spawn,
+/obj/mapping_helper/access/polarisimportant,
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "fB" = (
@@ -1887,7 +1887,7 @@
 /area/wrecknsspolaris)
 "fM" = (
 /obj/machinery/door/airlock/pyro/maintenance,
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "floor"
@@ -1899,23 +1899,21 @@
 	icon_state = "maint_closed";
 	name = "Maintenance"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "fO" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	name = "NSS Polaris"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "floor"
 	},
 /area/wrecknsspolaris)
 "fP" = (
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
 "fQ" = (
@@ -2038,8 +2036,8 @@
 /obj/machinery/door/airlock/pyro/weapons/noemag{
 	name = "Cargo Bay"
 	},
-/obj/access_spawn/polariscargo,
-/obj/firedoor_spawn,
+/obj/mapping_helper/access/polariscargo,
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "gh" = (
@@ -2126,29 +2124,21 @@
 /area/wrecknsspolaris/outside/teleport)
 "gt" = (
 /obj/item/raw_material/rock,
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
 "gu" = (
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "gv" = (
 /obj/item/raw_material/shard/glass,
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "gw" = (
 /obj/item/raw_material/rock,
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "gx" = (
@@ -2159,7 +2149,7 @@
 /turf/unsimulated/wall/trench/side,
 /area/dank_trench)
 "gz" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "gA" = (
@@ -2206,9 +2196,7 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
 "gH" = (
-/obj/landmark{
-	name = "marjfall"
-	},
+/obj/landmark/fall/sea/marj,
 /obj/sea_plant/seaweed,
 /turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
@@ -2759,9 +2747,7 @@
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "ia" = (
-/obj/landmark{
-	name = "marjfall"
-	},
+/obj/landmark/fall/sea/marj,
 /turf/space/fluid/noexplosion,
 /area/dank_trench)
 "ib" = (
@@ -3199,7 +3185,7 @@
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "KR" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Mi" = (

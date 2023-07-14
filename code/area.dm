@@ -620,7 +620,7 @@ TYPEINFO(/area)
 			var/list/found_areas = get_area_turfs(current_battle_spawn,1)
 			if (length(found_areas) == 0)
 				jerk.set_loc(pick(get_area_turfs(/area/station/maintenance/,1)))
-				boutput(jerk, "You somehow land in maintenance! Weird!")
+				boutput(jerk, "<h3 class='alert'>You somehow land in maintenance! Weird!</h3>")
 			else
 				jerk.set_loc(pick(found_areas))
 			jerk.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
@@ -1529,12 +1529,12 @@ ABSTRACT_TYPE(/area/prefab)
 	icon_state = "blue"
 
 /area/shuttle/sea_elevator/lower
-	name = "Sea Elevator Shaft"
+	name = "Lower Sea Elevator Shaft"
 	icon_state = "shuttle2"
 	filler_turf = "/turf/simulated/floor/plating"
 
 /area/shuttle/sea_elevator/upper
-	name = "Sea Elevator Shaft"
+	name = "Upper Sea Elevator Shaft"
 	icon_state = "shuttle"
 	filler_turf = "/turf/simulated/floor/specialroom/sea_elevator_shaft"
 
@@ -1624,7 +1624,7 @@ ABSTRACT_TYPE(/area/prefab)
 	icon_state = "purple"
 
 /area/prefab/sea_mining
-	name = "Mining Outpost"
+	name = "Ocean Mining Outpost"
 	icon_state = "purple"
 
 TYPEINFO(/area/station/turret_protected/sea_crashed)
