@@ -1,5 +1,7 @@
 
 (t)thu jul 13 23
+(u)aloe
+(+)The cloaking shield generator is now sneakier, and will copy the appearance of doors, windows, and grilles. It's also a little easier to use.
 (u)TemThrush
 (p)14887
 (e)🎨|C-Sprites
