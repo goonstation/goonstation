@@ -546,7 +546,7 @@
 	proc/build_icon()
 		src.ClearAllOverlays()
 
-		if (damage_overlays.len == 4)
+		if (length(damage_overlays) == 4)
 			switch(src.health)
 				if (70 to 94)
 					src.UpdateOverlays(damage_overlays[1], "magnet_damage")
@@ -1387,7 +1387,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			var/turf/simulated/wall/auto/asteroid/AST
 			while (distributions > 0)
 				distributions--
-				if (usable_turfs.len < 1)
+				if (length(usable_turfs) < 1)
 					break
 				AST = pick(usable_turfs)
 				AST.event = E
@@ -2216,7 +2216,7 @@ TYPEINFO(/obj/item/cargotele)
 			if (E.scan_decal)
 				mining_scandecal(L, AST, E.scan_decal)
 	var/found_string = ""
-	if (ores_found.len > 0)
+	if (length(ores_found) > 0)
 		var/list_counter = 1
 		for (var/X in ores_found)
 			found_string += X
@@ -2596,7 +2596,7 @@ TYPEINFO(/obj/item/ore_scoop)
 			if (!satchel)
 				boutput(user, "<span class='alert'>There's no satchel in [src] to dump out.</span>")
 				return
-			if (satchel.contents.len < 1)
+			if (length(satchel.contents) < 1)
 				boutput(user, "<span class='alert'>The satchel in [src] is empty.</span>")
 				return
 			user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")

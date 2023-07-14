@@ -473,7 +473,7 @@
 			if (O.decon_contexts)
 				success_feedback(target, user)
 				O.decon_contexts -= src
-				if (O.decon_contexts.len <= 0)
+				if (length(O.decon_contexts) <= 0)
 					user.show_text("Looks like [target] is ready to be deconstructed with the device.", "blue")
 				else
 					user.showContextActions(O.decon_contexts, O)

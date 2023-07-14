@@ -32,7 +32,7 @@
 
 	var/list/possible_blobs = get_possible_enemies(ROLE_BLOB, num_blobs)
 
-	if (!possible_blobs || !islist(possible_blobs) || !possible_blobs.len || possible_blobs.len < blobs_minimum)
+	if (!possible_blobs || !islist(possible_blobs) || !possible_blobs.len || length(possible_blobs) < blobs_minimum)
 		return 0
 
 	token_players = antag_token_list()

@@ -59,7 +59,7 @@
 	Q.caller = usr
 	Q.sharkspeed = speed
 
-/obj/banshark/
+/obj/banshark
 	name = "banshark"
 	desc = "This is the most terrifying thing you've ever laid eyes on."
 	icon = 'icons/misc/banshark.dmi'
@@ -130,7 +130,7 @@
 		playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 		qdel(src)
 
-/obj/gibshark/
+/obj/gibshark
 	name = "gibshark"
 	desc = "This is the second most terrifying thing you've ever laid eyes on."
 	icon = 'icons/misc/banshark.dmi'

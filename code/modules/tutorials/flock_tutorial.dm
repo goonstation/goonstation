@@ -266,7 +266,7 @@
 		var/msg = "Human resource containers convert into Flock resource fabricators."
 		src.ftutorial.make_maptext(locate(/obj/machinery/vending) in range(10, src.ftutorial.center), msg)
 
-		var/obj/flock_structure/compute/type = /obj/flock_structure/compute/
+		var/obj/flock_structure/compute/type = /obj/flock_structure/compute
 		msg = "Human computers convert into Flock compute nodes. Each provides [initial(type.compute)] compute."
 		src.ftutorial.make_maptext(locate(/obj/machinery/computer) in range(10, src.ftutorial.center), msg)
 

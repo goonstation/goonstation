@@ -1,7 +1,7 @@
 // MASTER DATUMS
 
 ABSTRACT_TYPE(/datum/artifact/)
-/datum/artifact/
+/datum/artifact
 	/// the actual /obj type that is the artifact for this datum
 	var/associated_object = null
 	/// a weighted commonness, the higher it is the more often the artifact will appear
