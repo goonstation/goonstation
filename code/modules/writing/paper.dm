@@ -956,9 +956,9 @@
 /obj/item/paper/newspaper/rolled/random
 
 /// pick a random headline
-/obj/item/paper/newspaper/random/New()
-	src.headline = pick(list()) // i'll come up with some later. Or write an algorithm to generate some.
+/obj/item/paper/newspaper/rolled/random/New()
 	. = ..()
+	src.headline = pick(list()) // i'll come up with some later. Or write an algorithm to generate some.
 
 /obj/item/paper/newspaper/New()
 	. = ..()
@@ -966,10 +966,9 @@
 		src.icon_state = "newspaper"
 		src.desc = "Its headline reads: [src.headline]"
 
-/obj/item/paper/newspaper/attackby(obj/item/P, mob/living/user)
-	if (!P)
-		src.rollup()
+/obj/item/paper/newspaper/attack_hand(mob/user)
 	. = ..()
+	src.rollup()
 
 /obj/item/paper/newspaper/proc/rollup()
 	if (src.rolled) // unrolling it
