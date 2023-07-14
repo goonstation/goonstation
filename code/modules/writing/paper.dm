@@ -932,6 +932,7 @@
 			placeholder_info += "<br><br><b>[commander_item.name]</b>: [item_info]"
 		info = placeholder_info
 
+/// A blank newspaper, ready to have its headline written.
 /obj/item/paper/newspaper
 	var/headline = ""
 	desc = "This is a newspaper. It appears to lack a headline. And text."
@@ -943,22 +944,35 @@
 	two_handed = TRUE
 	c_flags = COVERSEYES | COVERSMOUTH // this might not work as i want it to
 
-/obj/item/paper/newspaper/folded
-	icon_state = "newspaper_folded"
-	item_state = "newspaper_folded"
+/// a rolled up newspaper
+/obj/item/paper/newspaper/rolled
+	icon_state = "newspaper_rolled"
+	item_state = "newspaper_rolled"
 	folded = TRUE
 	two_handed = FALSE
 	c_flags = FALSE // hopefully this uncovers the eyes and mouth lol
 
-/// A blank newspaper, ready to have its headline written.
+/// This newspaper starts out with a random headline at roundstart. Intended for mapping
+/obj/item/paper/newspaper/rolled/random
+	icon_state = "newspaper_folded"
+	item_state = "newspaper_folded"
+	folded = TRUE
+	two_handed = FALSE
+	c_flags = FALSE
+
+/// pick a random headline
+/obj/item/paper/newspaper/random/New()
+	src.headline = pick(list()) // i'll come up with some later. Or write an algorithm to generate some.
+	. = ..()
+
 /obj/item/paper/newspaper/New()
 	. = ..()
 	if (src.headline)
 		src.icon_state = "newspaper"
-		src.desc = "This is a newspaper. Its headline reads: [src.headline]"
+		src.desc = "Its headline reads: [src.headline]"
 
 /obj/item/paper/newspaper/proc/fold()
-	if (src.folded) // unfolding it
+	if (src.folded) // unrolling it
 		if (src.headline)
 			src.icon_state = "newspaper"
 			src.item_state = "newspaper"
@@ -968,24 +982,15 @@
 		src.folded = FALSE
 		src.two_handed = TRUE
 		src.c_flags = COVERSEYES | COVERSMOUTH
-	else // folding it
-		src.icon_state = "newspaper_folded"
-		src.item_state = "newspaper_folded"
+	else // rolling
+		src.icon_state = "newspaper_rolled"
+		src.item_state = "newspaper_rolled"
 		src.folded = TRUE
 		src.two_handed = FALSE
 		src.c_flags = FALSE
 
-
-/// This newspaper starts out with a random headline at roundstart. And folded. Intended for mapping
-/obj/item/paper/newspaper/random
-	icon_state = "newspaper_folded"
-	item_state = "newspaper_folded"
-	folded = TRUE
-	two_handed = FALSE
-	c_flags = FALSE
-
-
-/obj/item/paper/newspaper/random/New()
-	src.headline = pick(list()) // i'll come up with some later. Or write an algorithm to generate some.
-	. = ..()
-
+/// give the newspaper a custom headline and article
+/obj/item/paper/newspaper/proc/write_contents()
+	src.headline = ""
+	src.desc = "Its headline reads: [src.headline]"
+	src.info = ""
