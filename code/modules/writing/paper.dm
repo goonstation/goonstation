@@ -940,7 +940,7 @@
 	item_state = "newspaper_blank"
 	sealed = TRUE // these will have their headlines written not by pens.
 
-	var/folded = FALSE
+	var/rolled = FALSE
 	two_handed = TRUE
 	c_flags = COVERSEYES | COVERSMOUTH // this might not work as i want it to
 
@@ -948,17 +948,12 @@
 /obj/item/paper/newspaper/rolled
 	icon_state = "newspaper_rolled"
 	item_state = "newspaper_rolled"
-	folded = TRUE
+	rolled = TRUE
 	two_handed = FALSE
 	c_flags = FALSE // hopefully this uncovers the eyes and mouth lol
 
 /// This newspaper starts out with a random headline at roundstart. Intended for mapping
 /obj/item/paper/newspaper/rolled/random
-	icon_state = "newspaper_folded"
-	item_state = "newspaper_folded"
-	folded = TRUE
-	two_handed = FALSE
-	c_flags = FALSE
 
 /// pick a random headline
 /obj/item/paper/newspaper/random/New()
@@ -972,20 +967,20 @@
 		src.desc = "Its headline reads: [src.headline]"
 
 /obj/item/paper/newspaper/proc/fold()
-	if (src.folded) // unrolling it
+	if (src.rolled) // unrolling it
 		if (src.headline)
 			src.icon_state = "newspaper"
 			src.item_state = "newspaper"
 		else
 			src.icon_state = "newspaper_blank"
 			src.item_state = "newspaper_blank"
-		src.folded = FALSE
+		src.rolled = FALSE
 		src.two_handed = TRUE
 		src.c_flags = COVERSEYES | COVERSMOUTH
 	else // rolling
 		src.icon_state = "newspaper_rolled"
-		src.item_state = "newspaper_rolled"
-		src.folded = TRUE
+		src.item_state = "paper"
+		src.rolled = TRUE
 		src.two_handed = FALSE
 		src.c_flags = FALSE
 
@@ -994,3 +989,5 @@
 	src.headline = ""
 	src.desc = "Its headline reads: [src.headline]"
 	src.info = ""
+	src.icon_state = "newspaper"
+	src.item_state = "newspaper"
