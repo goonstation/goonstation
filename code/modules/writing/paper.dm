@@ -947,7 +947,7 @@
 /// a rolled up newspaper
 /obj/item/paper/newspaper/rolled
 	icon_state = "newspaper_rolled"
-	item_state = "newspaper_rolled"
+	item_state = "paper"
 	rolled = TRUE
 	two_handed = FALSE
 	c_flags = FALSE // hopefully this uncovers the eyes and mouth lol
