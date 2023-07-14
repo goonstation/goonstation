@@ -216,7 +216,7 @@
 		src.next_click = world.time + (COMBAT_CLICK_DELAY)
 
 /mob/living/proc/grab_block() //this is sorta an ugly but fuck it!!!!
-	if (src.grabbed_by && src.grabbed_by.len > 0)
+	if (src.grabbed_by && length(src.grabbed_by) > 0)
 		return 0
 
 	.= 1

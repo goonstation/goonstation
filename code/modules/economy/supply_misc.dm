@@ -1,5 +1,5 @@
 ABSTRACT_TYPE(/area/supply)
-/area/supply/
+/area/supply
 	expandable = FALSE
 
 /area/supply/spawn_point //the area supplies are spawned at and fired from

@@ -82,7 +82,7 @@
 		SPAWN(0)
 			if (src.reagents)
 				var/flavor = null
-				if (all_functional_reagent_ids.len > 1)
+				if (length(all_functional_reagent_ids) > 1)
 					flavor = pick(all_functional_reagent_ids)
 				else
 					flavor = "vanilla"

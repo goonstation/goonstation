@@ -82,7 +82,7 @@
 			for (var/obj/critter/C in view(5, src))
 				if (C.alive)
 					targets += C
-		if (targets.len > 0)
+		if (length(targets) > 0)
 			if (!isPopping())
 				if (isDown())
 					popUp()

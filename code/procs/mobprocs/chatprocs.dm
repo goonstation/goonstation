@@ -79,7 +79,7 @@
 			choices += channel_name
 
 		var/choice = 0
-		if (choices.len == 1)
+		if (length(choices) == 1)
 			choice = choices[1]
 		else
 			choice = input("", "Select Radio and Channel", null) as null|anything in choices
@@ -122,7 +122,7 @@
 
 
 			var/choice = 0
-			if (choices.len == 1)
+			if (length(choices) == 1)
 				choice = choices[1]
 			else
 				choice = input("", "Select Radio Channel", null) as null|anything in choices
