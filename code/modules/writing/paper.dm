@@ -942,7 +942,7 @@
 
 	var/rolled = FALSE
 	two_handed = TRUE
-	c_flags = COVERSEYES | COVERSMOUTH // this might not work as i want it to
+	c_flags = COVERSEYES | COVERSMOUTH// this might not work as i want it to
 
 /// a rolled up newspaper
 /obj/item/paper/newspaper/rolled
@@ -950,7 +950,7 @@
 	item_state = "paper"
 	rolled = TRUE
 	two_handed = FALSE
-	c_flags = FALSE // hopefully this uncovers the eyes and mouth lol
+	c_flags = ONBELT // hopefully this uncovers the eyes and mouth lol
 
 /// This newspaper starts out with a random headline at roundstart. Intended for mapping
 /obj/item/paper/newspaper/rolled/random
@@ -966,7 +966,12 @@
 		src.icon_state = "newspaper"
 		src.desc = "Its headline reads: [src.headline]"
 
-/obj/item/paper/newspaper/proc/fold()
+/obj/item/paper/newspaper/attackby(obj/item/P, mob/living/user)
+	if (!P)
+		src.rollup()
+	. = ..()
+
+/obj/item/paper/newspaper/proc/rollup()
 	if (src.rolled) // unrolling it
 		if (src.headline)
 			src.icon_state = "newspaper"
@@ -982,7 +987,7 @@
 		src.item_state = "paper"
 		src.rolled = TRUE
 		src.two_handed = FALSE
-		src.c_flags = FALSE
+		src.c_flags = ONBELT
 
 /// give the newspaper a custom headline and article
 /obj/item/paper/newspaper/proc/write_contents()
