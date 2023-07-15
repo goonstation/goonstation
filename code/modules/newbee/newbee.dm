@@ -18,9 +18,9 @@
 		logTheThing(LOG_DEBUG, src, "check_newbee() failed, unable to fetch round stats.")
 		return
 	#ifdef RP_MODE
-	if (round_stats?["participated_rp"] <= NEWBEE_ROUNDS_RP)
+	if ((round_stats["participated_rp"] + (0.2 * round_stats["participated"] )) <= NEWBEE_ROUNDS_RP)
 	#else
-	if (round_stats?["participated"] <= NEWBEE_ROUNDS)
+	if ((round_stats["participated"] + (0.2 * round_stats["participated_rp"] )) <= NEWBEE_ROUNDS)
 	#endif
 		//welcome new bee!
 		player.is_newbee = TRUE
