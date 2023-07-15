@@ -15,7 +15,6 @@
 		return //already marked as newbee
 	var/list/round_stats = src.player?.get_round_stats(TRUE)
 	if (!round_stats)
-		round_stats = list("participated"=1)
 		logTheThing(LOG_DEBUG, src, "check_newbee() failed, unable to fetch round stats.")
 		return
 	#ifdef RP_MODE
