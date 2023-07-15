@@ -159,21 +159,26 @@
 	health_burn_vuln = 1.2
 
 	critter_attack(var/mob/target)
-		var/obj/item/grab/G = src.equipped()
-		if (istype(G))
-			if (G.state < GRAB_CHOKE)
-				G.AttackSelf(src)
-			else if (prob(10))
+		if (src.equipped())
+			var/obj/item/grab/G = src.equipped()
+			if (istype(G))
+				if (G.state < GRAB_CHOKE)
+					G.AttackSelf(src)
+				else if (prob(20) || (target.get_oxygen_deprivation < 60))
+					src.drop_item()
+					ON_COOLDOWN(src, "warrior_grab", 10 SECONDS)
+			else
 				src.drop_item()
-				ON_COOLDOWN(src, "warrior_grab", 10 SECONDS)
-		else if (is_incapacitated(target) && !target.grabbed_by && !GET_COOLDOWN(src, "warrior_grab"))
+		else if (is_incapacitated(target) && !length(target.grabbed_by) && !GET_COOLDOWN(src, "warrior_grab"))
 			src.set_a_intent(INTENT_GRAB)
 			src.hand_attack(target)
-			G.AttackSelf(src)
 		else
-			src.drop_item()
 			src.set_a_intent(INTENT_HARM)
 			src.hand_attack(target)
+
+	was_harmed(var/mob/M, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		if (src.equipped())
+			src.drop_item()
 
 /mob/living/critter/martian/soldier
 	name = "martian soldier"
@@ -359,3 +364,72 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 //	martian_type = "mancer"
 //	icon_state = "martianM"
 //	icon_state_dead = "martianM-dead"
+
+/obj/machinery/martianbomb
+	name = "martian bomb"
+	desc = "You'd best destroy this thing fast."
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "mbomb-off"
+	anchored = ANCHORED
+	density = 1
+	var/health = 100
+	var/active = 0
+	var/timeleft = 300
+
+	process()
+		if (src.active)
+			src.icon_state = "mbomb-timing"
+			src.timeleft -= 1
+			if (src.timeleft <= 30) src.icon_state = "mbomb-det"
+			if (src.timeleft == 0)
+				explosion_new(src, src.loc, 62)
+				qdel (src)
+			//proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
+		else
+			src.icon_state = "mbomb-off"
+
+	ex_act(severity)
+		if(severity)
+			src.visible_message("<span class='notice'><B>[src]</B> crumbles away into dust!</span>")
+			qdel (src)
+		return
+
+	bullet_act(var/obj/projectile/P)
+		var/damage = 0
+		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
+
+		if(src.material) src.material.triggerOnBullet(src, src, P)
+
+		if(P.proj_data.damage_type == D_KINETIC)
+			if(damage >= 20)
+				src.health -= damage
+			else
+				damage = 0
+		else if(P.proj_data.damage_type == D_PIERCING)
+			src.health -= (damage*2)
+		else if(P.proj_data.damage_type == D_ENERGY)
+			src.health -= damage
+		else
+			damage = 0
+
+		if(damage >= 15)
+			if (src.active && src.timeleft > 10)
+				for(var/mob/O in hearers(src, null))
+					O.show_message("<span class='alert'><B>[src]</B> begins buzzing loudly!</span>", 1)
+				src.timeleft = 10
+
+		if (src.health <= 0)
+			src.visible_message("<span class='notice'><B>[src]</B> crumbles away into dust!</span>")
+			qdel (src)
+
+	attackby(obj/item/W, mob/user)
+		..()
+		src.health -= W.force
+		if (src.active && src.timeleft > 10)
+			for(var/mob/O in hearers(src, null))
+				O.show_message("<span class='alert'><B>[src]</B> begins buzzing loudly!</span>", 1)
+			src.timeleft = 10
+		if (src.health <= 0)
+			src.visible_message("<span class='notice'><B>[src]</B> crumbles away into dust!</span>")
+			qdel (src)
+
