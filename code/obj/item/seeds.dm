@@ -1,5 +1,5 @@
 
-/obj/item/seed/
+/obj/item/seed
 	name = "plant seed"
 	desc = "Plant this in soil to grow something."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
@@ -146,27 +146,27 @@
 		else
 			return 0 // Passes an "Everything went fine" code to the manipulator.
 
-/obj/item/seed/grass/
+/obj/item/seed/grass
 	name = "grass seed"
 	seedcolor = "#CCFF99"
 	auxillary_datum = /datum/plant/herb/grass
 
-/obj/item/seed/maneater/
+/obj/item/seed/maneater
 	name = "strange seed"
 	icon_state = "seeds-maneater"
 	auxillary_datum = /datum/plant/maneater
 
-/obj/item/seed/creeper/
+/obj/item/seed/creeper
 	name = "creeper seed"
 	seedcolor = "#CC00FF"
 	auxillary_datum = /datum/plant/weed/creeper
 
-/obj/item/seed/crystal/
+/obj/item/seed/crystal
 	name = "crystal seed"
 	seedcolor = "#DDFFFF"
 	auxillary_datum = /datum/plant/crystal
 
-/obj/item/seed/cannabis/
+/obj/item/seed/cannabis
 	name = "cannabis seed"
 	seedcolor = "#00FF00"
 	auxillary_datum = /datum/plant/herb/cannabis

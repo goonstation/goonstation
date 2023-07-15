@@ -150,7 +150,7 @@
 	else
 		var/list/blood_list = params2list(src.blood_DNA)
 		blood_list -= b_uid
-		if(blood_list.len >= 6)
+		if(length(blood_list) >= 6)
 			blood_list = blood_list.Copy(blood_list.len - 5, 0)
 		blood_list += b_uid
 		src.blood_DNA = list2params(blood_list)

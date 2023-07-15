@@ -13,11 +13,6 @@
 "ax" = (
 /turf/unsimulated/wall/auto/supernorn,
 /area/dank_trench)
-"aN" = (
-/obj/item/raw_material/shard/glass,
-/obj/landmark/fall/sea/polaris,
-/turf/space/fluid/noexplosion,
-/area/wrecknsspolaris/outside)
 "aS" = (
 /turf/unsimulated/wall/trench,
 /area/space)
@@ -1917,6 +1912,10 @@
 	icon_state = "floor"
 	},
 /area/wrecknsspolaris)
+"fP" = (
+/obj/landmark/fall/sea/polaris,
+/turf/space/fluid/noexplosion,
+/area/wrecknsspolaris/outside/teleport)
 "fQ" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -2123,6 +2122,25 @@
 /obj/item/scrap,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
+"gt" = (
+/obj/item/raw_material/rock,
+/obj/landmark/fall/sea/polaris,
+/turf/space/fluid/noexplosion,
+/area/wrecknsspolaris/outside/teleport)
+"gu" = (
+/obj/landmark/fall/sea/polaris,
+/turf/space/fluid/noexplosion,
+/area/wrecknsspolaris/outside)
+"gv" = (
+/obj/item/raw_material/shard/glass,
+/obj/landmark/fall/sea/polaris,
+/turf/space/fluid/noexplosion,
+/area/wrecknsspolaris/outside)
+"gw" = (
+/obj/item/raw_material/rock,
+/obj/landmark/fall/sea/polaris,
+/turf/space/fluid/noexplosion,
+/area/wrecknsspolaris/outside)
 "gx" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/space/fluid/noexplosion,
@@ -2175,6 +2193,11 @@
 "gG" = (
 /obj/sea_plant/seaweed,
 /obj/item/crowbar/red,
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
+"gH" = (
+/obj/landmark/fall/sea/marj,
+/obj/sea_plant/seaweed,
 /turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
 "gI" = (
@@ -2723,6 +2746,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
+"ia" = (
+/obj/landmark/fall/sea/marj,
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
 "ib" = (
 /obj/rack,
 /obj/item/clothing/head/emerg,
@@ -2985,6 +3012,10 @@
 /obj/item/reagent_containers/glass/bottle/holywater,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"kd" = (
+/mob/living/critter/martian/mutant,
+/turf/unsimulated/floor/martian,
+/area/evilreaver/security)
 "kw" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gib1"
@@ -2993,6 +3024,10 @@
 /area/evilreaver/security)
 "lr" = (
 /obj/item/clothing/suit/cardboard_box/captain,
+/turf/unsimulated/floor/martian,
+/area/evilreaver/security)
+"lE" = (
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "ne" = (
@@ -3014,10 +3049,6 @@
 /obj/item/clothing/suit/space/suv,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"ob" = (
-/obj/landmark/fall/sea/marj,
-/turf/space/fluid/noexplosion,
-/area/dank_trench)
 "pX" = (
 /obj/storage/crate/loot,
 /turf/unsimulated/floor/martian,
@@ -3045,10 +3076,6 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"uw" = (
-/obj/landmark/fall/sea/polaris,
-/turf/space/fluid/noexplosion,
-/area/wrecknsspolaris/outside)
 "uV" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -3063,8 +3090,8 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"yn" = (
-/obj/landmark/spawner/artifact,
+"yj" = (
+/mob/living/critter/martian/warrior,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "AJ" = (
@@ -3111,19 +3138,6 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"Gj" = (
-/obj/critter/martian/soldier/dead,
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
-"Go" = (
-/obj/critter/martian/warrior,
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
-"Hd" = (
-/obj/landmark/fall/sea/marj,
-/obj/sea_plant/seaweed,
-/turf/space/fluid/noexplosion/nospawn,
-/area/dank_trench)
 "Hn" = (
 /turf/unsimulated/wall/auto/adventure/martian,
 /area/evilreaver/security)
@@ -3142,18 +3156,10 @@
 "Ip" = (
 /turf/unsimulated/wall/trench,
 /area/dank_trench)
-"Iz" = (
-/obj/critter/martian/psychic,
+"KR" = (
+/obj/landmark/spawner/artifact,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"JZ" = (
-/obj/critter/martian/soldier,
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
-"LL" = (
-/obj/landmark/fall/sea/polaris,
-/turf/space/fluid/noexplosion,
-/area/wrecknsspolaris/outside/teleport)
 "Mi" = (
 /obj/marker/supplymarker,
 /obj/decal/fakeobjects/teleport_pad,
@@ -3222,22 +3228,16 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"VN" = (
-/obj/item/raw_material/rock,
-/obj/landmark/fall/sea/polaris,
-/turf/space/fluid/noexplosion,
-/area/wrecknsspolaris/outside/teleport)
-"Xs" = (
-/obj/item/raw_material/rock,
-/obj/landmark/fall/sea/polaris,
-/turf/space/fluid/noexplosion,
-/area/wrecknsspolaris/outside)
 "XC" = (
 /obj/map/light/white,
 /turf/unsimulated/wall/auto/adventure/martian,
 /area/evilreaver/security)
 "Yb" = (
 /obj/decal/cleanable/blood,
+/turf/unsimulated/floor/martian,
+/area/evilreaver/security)
+"Zz" = (
+/mob/living/critter/martian/soldier,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 
@@ -4160,19 +4160,19 @@ ab
 aS
 aS
 aW
-LL
+fP
 fj
 bb
 bb
 aZ
 aZ
-Xs
+gw
 aZ
 aZ
 aZ
 aZ
 bc
-uw
+gu
 cC
 aZ
 aS
@@ -5069,7 +5069,7 @@ aW
 bb
 bb
 bb
-LL
+fP
 aZ
 aZ
 aZ
@@ -5368,7 +5368,7 @@ ab
 aS
 aS
 aW
-VN
+gt
 bb
 bb
 bb
@@ -5661,10 +5661,10 @@ gW
 ab
 Hn
 In
-JZ
+Zz
 Yb
 UF
-yn
+KR
 Hn
 ab
 aS
@@ -6268,7 +6268,7 @@ Ns
 Ns
 Ns
 Ns
-JZ
+Zz
 Hn
 ab
 aS
@@ -6566,7 +6566,7 @@ gW
 (12,1,1) = {"
 ab
 Hn
-yn
+KR
 Ns
 xd
 Qw
@@ -6580,7 +6580,7 @@ bb
 bb
 bb
 bb
-uw
+gu
 aZ
 aZ
 aZ
@@ -6870,7 +6870,7 @@ ab
 Hn
 Ns
 Ns
-Go
+yj
 Ns
 tO
 Hn
@@ -7473,7 +7473,7 @@ gW
 ab
 Hn
 Ns
-JZ
+Zz
 Ns
 Ns
 Ns
@@ -7778,18 +7778,18 @@ In
 Yb
 kw
 Ns
-yn
+KR
 Hn
 ab
 aS
 aS
 aW
-LL
+fP
 bb
 bb
 bb
 aZ
-aN
+gv
 aZ
 bi
 bo
@@ -8380,7 +8380,7 @@ ab
 Hn
 Pt
 Ns
-JZ
+Zz
 Ns
 Ns
 Hn
@@ -9889,7 +9889,7 @@ gW
 ab
 Hn
 pX
-Gj
+lE
 Ns
 Ns
 Ns
@@ -9907,7 +9907,7 @@ aZ
 du
 bd
 aZ
-uw
+gu
 bf
 br
 br
@@ -10206,7 +10206,7 @@ ab
 aS
 aW
 ba
-uw
+gu
 aZ
 aZ
 aZ
@@ -11098,7 +11098,7 @@ ab
 Hn
 pX
 Ns
-Gj
+lE
 Ns
 FT
 Hn
@@ -11407,7 +11407,7 @@ Hn
 Hn
 lr
 Ns
-Iz
+kd
 Ns
 Hn
 ab
@@ -11420,7 +11420,7 @@ aZ
 aZ
 aZ
 aZ
-uw
+gu
 aZ
 aZ
 aS
@@ -12923,7 +12923,7 @@ gP
 Ip
 gy
 hT
-ob
+ia
 gP
 ac
 Ip
@@ -13228,7 +13228,7 @@ gP
 gP
 aa
 gP
-ob
+ia
 Ip
 Ip
 Ip
@@ -13831,7 +13831,7 @@ ax
 Ip
 gy
 gP
-ob
+ia
 gP
 aa
 Ip
@@ -14439,7 +14439,7 @@ hS
 gP
 gP
 gP
-Hd
+gH
 Ip
 Ip
 Ip
@@ -14739,7 +14739,7 @@ ax
 ax
 ax
 iq
-ob
+ia
 aa
 gA
 Ip
@@ -15950,7 +15950,7 @@ Ip
 Ip
 Ip
 gy
-ob
+ia
 aa
 Ip
 ab

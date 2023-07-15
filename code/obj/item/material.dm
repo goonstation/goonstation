@@ -530,7 +530,7 @@
 	material_name = "Fabric"
 	scoopable = 0
 
-/obj/item/raw_material/cotton/
+/obj/item/raw_material/cotton
 	name = "cotton wad"
 	desc = "It's a big puffy white thing. Most likely not a cloud though."
 	icon_state = "cotton"
@@ -766,7 +766,7 @@
 		if (active)
 			boutput(user, "<span class='alert'>It's already working! Give it a moment!</span>")
 			return
-		if (src.contents.len < 1)
+		if (length(src.contents) < 1)
 			boutput(user, "<span class='alert'>There's nothing inside to reclaim.</span>")
 			return
 		leftovers = list()

@@ -355,7 +355,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			return 0
 		if (!active_hand)
 			return 0
-		if (hands.len >= active_hand)
+		if (length(hands) >= active_hand)
 			return 1
 		return 0
 
@@ -1377,6 +1377,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		src.set_a_intent(INTENT_HARM)
 		src.hand_attack(target)
 		return TRUE
+
+	/// Used for generic critter mobAI - override if you need special retailation behaviour
+	proc/critter_retaliate(var/mob/target)
+		src.critter_attack(target)
 
 	/// Used for generic critter mobAI - returns TRUE when the mob is able to attack. For handling cooldowns, or other attack blocking conditions.
 	proc/can_critter_attack()
