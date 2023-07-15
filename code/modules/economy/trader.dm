@@ -695,14 +695,14 @@
 		var/list/selltypes = typesof(pick(commercetypes))
 		var/list/buytypes = typesof(pick(commercetypes))
 
-		while(selltypes.len > 0 && src.goods_sell.len < items_for_sale)
+		while(length(selltypes) > 0 && length(src.goods_sell) < items_for_sale)
 			var/pickedselltype = pick(selltypes)
 			var/datum/commodity/sellitem = new pickedselltype(src)
 			selltypes -= pickedselltype
 			if(sellitem.comtype != null)
 				src.goods_sell += sellitem
 
-		while(buytypes.len > 0 && src.goods_buy.len < items_wanted)
+		while(length(buytypes) > 0 && length(src.goods_buy) < items_wanted)
 			var/pickedbuytype = pick(buytypes)
 			var/datum/commodity/buyitem = new pickedbuytype(src)
 			buytypes -= pickedbuytype

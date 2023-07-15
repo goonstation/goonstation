@@ -142,7 +142,7 @@
 	var/capacity = 2
 
 	attack_self(var/mob/user as mob)
-		if (src.contents.len == 0) boutput(user, "<span class='alert'>You have nothing stored!</span>")
+		if (length(src.contents) == 0) boutput(user, "<span class='alert'>You have nothing stored!</span>")
 		else
 			if (user.loc != get_turf(user.loc))
 				boutput(user, "<span class='alert'>You're in too small a space to drop anything!</span>")

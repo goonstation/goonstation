@@ -114,7 +114,7 @@
 
 
 	var/list/viewports = client.getViewportsByType("AI: Viewport")
-	if(viewports.len >= 5)
+	if(length(viewports) >= 5)
 		boutput( src, "<b>You can only have up to 5 active viewports. Close an existing viewport to create another.</b>" )
 		return
 
@@ -134,7 +134,7 @@
 
 
 	var/list/viewports = client.getViewportsByType("Blob: Viewport")
-	if(viewports.len >= 5)
+	if(length(viewports) >= 5)
 		boutput( src, "<b>You can only have up to 5 active viewports. Close an existing viewport to create another.</b>" )
 		return
 

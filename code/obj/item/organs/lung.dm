@@ -35,21 +35,6 @@
 				donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
-	on_transplant(var/mob/M as mob)
-		..()
-		if (src.robotic)
-			APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, icon_state, 2)
-			src.donor.add_stam_mod_max(icon_state, 10)
-		return
-
-	on_removal()
-		if (donor)
-			if (src.robotic)
-				REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, icon_state)
-				src.donor.remove_stam_mod_max(icon_state)
-		..()
-		return
-
 	// on_broken()
 	// 	if (body_side == L_ORGAN)
 	// 		if (src.holder.left_lung && src.holder.left_lung.get_damage() > fail_damage && prob(src.get_damage() * 0.2))

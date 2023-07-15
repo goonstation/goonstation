@@ -41,7 +41,7 @@
 				// absolutely everything
 				potential_reagents = all_functional_reagent_ids
 
-		if (potential_reagents.len > 0)
+		if (length(potential_reagents) > 0)
 			var/looper = rand(1,3)
 			while (looper > 0)
 				looper--
@@ -52,7 +52,7 @@
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
 			return
-		if (user.reagents && injection_reagents.len > 0)
+		if (user.reagents && length(injection_reagents) > 0)
 			var/turf/T = get_turf(O)
 			T.visible_message("<b>[O]</b> jabs [user] with a needle and injects something!")
 			for (var/X in injection_reagents)
