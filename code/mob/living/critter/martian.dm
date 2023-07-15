@@ -164,12 +164,12 @@
 			if (istype(G))
 				if (G.state < GRAB_CHOKE)
 					G.AttackSelf(src)
-				else if (prob(20) || (target.get_oxygen_deprivation < 60))
+				else if (prob(20) || (target.get_oxygen_deprivation() < 60))
 					src.drop_item()
 					ON_COOLDOWN(src, "warrior_grab", 10 SECONDS)
 			else
 				src.drop_item()
-		else if (is_incapacitated(target) && !length(target.grabbed_by) && !GET_COOLDOWN(src, "warrior_grab"))
+		else if (is_incapacitated(target) && !length(target.grabbed_by) && !GET_COOLDOWN(src, "warrior_grab") && ishuman(target))
 			src.set_a_intent(INTENT_GRAB)
 			src.hand_attack(target)
 		else
