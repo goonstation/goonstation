@@ -37,6 +37,19 @@
 			container.update_icon()
 		M.death(FALSE)
 
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian
+	name = "Random Martian Corpse Spawn"
+	icon_state = "corpse-critter-rand"
+	var/static/list/spawns = list(
+		/mob/living/critter/martian,
+		/mob/living/critter/martian/warrior,
+		/mob/living/critter/martian/mutant,
+		/mob/living/critter/martian/soldier)
+
+	initialize()
+		src.spawn_type = pick(spawns)
+		..()
+
 /obj/mapping_helper/mob_spawn/corpse/human // Human spawner handles some randomisation / customisation
 	name = "Human Corpse Spawn"
 	icon_state = "corpse-human"
