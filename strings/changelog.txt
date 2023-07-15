@@ -1,4 +1,9 @@
 
+(t)sat jul 15 23
+(u)MitchSmith
+(p)14605
+(e)🎨📦|C-Sprites, A-Game-Objects
+(*)A large amount of inhands have been improved.
 (t)fri jul 14 23
 (u)aloe
 (*)Conspiracy mode has been disabled on RP pending a rework. The pick weight from conspiracy has gone to Gang mode instead.
