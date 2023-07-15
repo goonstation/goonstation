@@ -917,7 +917,7 @@ datum
 
 			reaction_obj(var/obj/O, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 16)
+				if (length(covered) > 16)
 					volume = (volume/covered.len)
 
 				if (istype(O,/obj/fluid))

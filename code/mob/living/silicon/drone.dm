@@ -12,7 +12,7 @@
 			if (D.signal_tag == src.signal_tag)
 				drone_list += D
 
-		if (drone_list.len < 1)
+		if (length(drone_list) < 1)
 			boutput(user, "<span class='alert'>No usable drones detected.</span>")
 			return
 

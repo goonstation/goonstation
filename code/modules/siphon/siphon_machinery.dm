@@ -359,7 +359,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		if (istype(over_object,/obj/item/satchel/mining))
 			var/obj/item/satchel/mining/satchel = over_object
 			usr.visible_message("<span class='notice'>[usr] begins unloading ore into [satchel].</span>")
-			if (satchel.contents.len < satchel.maxitems)
+			if (length(satchel.contents) < satchel.maxitems)
 				var/staystill = usr.loc
 				var/interval = 0
 				for (var/obj/item/I in src.contents)
@@ -372,11 +372,11 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 						src.update_storage_bar()
 					sleep(0.1 SECONDS)
 					if (usr.loc != staystill) break
-					if (satchel.contents.len >= satchel.maxitems)
+					if (length(satchel.contents) >= satchel.maxitems)
 						boutput(usr, "<span class='notice'>\The [satchel] is now full!</span>")
 						break
 				var/incomplete = 1 //you're not done filling
-				if(satchel.contents.len == satchel.maxitems || !length(src.contents)) incomplete = 0
+				if(length(satchel.contents) == satchel.maxitems || !length(src.contents)) incomplete = 0
 				boutput(usr, "<span class='notice'>You [incomplete ? "stop" : "finish"] filling \the [satchel].</span>")
 				satchel.UpdateIcon()
 				satchel.tooltip_rebuild = 1
