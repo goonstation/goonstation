@@ -761,6 +761,7 @@
 
 		var looc_class = ""
 		var display_name = src.key
+		var/looc_icon = ""
 
 		if (src.client.stealth || src.client.alt_key)
 			if (!C.holder)
@@ -777,9 +778,16 @@
 			looc_class = "mentorlooc"
 		else if (src.client.player.is_newbee)
 			looc_class = "newbeelooc"
+			looc_icon = "Newbee"
 
 		var/rendered = "<span class=\"looc [looc_class]\"><span class=\"prefix\">LOOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
-
+		if (looc_icon)
+			rendered = {"
+			<div class="icon-popup-container">
+				<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[looc_icon].png")]\">
+				<div class="icon-popup">[looc_icon]</div>
+			</div>
+			 "} + rendered
 		if (C.holder)
 			rendered = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[rendered]</span>"
 
