@@ -96,6 +96,28 @@
 		user.u_equip(src)
 		qdel(src)
 
+/obj/item/clothing/material_trigger_on_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/on_person = FALSE, var/situation_modifier)
+	// if someone wearing this gets attacked, only trigger this if the corresponding zone is hit
+	if (on_person && src.equipped_in_slot && situation_modifier && istext(situation_modifier))
+		var/targeted_zone = parse_zone(situation_modifier)
+		if (!src.check_for_covered(targeted_zone))
+			return
+	..()
+
+///This proc returns true if the zone specified is covered by the clothing in question
+/obj/item/clothing/proc/check_for_covered(var/checked_zone as text)
+	var/target_zone = parse_zone(checked_zone)
+	if ((src.body_parts_covered & HEAD) && (target_zone in list("head", "brain", "left eye", "right eye", "both eyes")))
+		return TRUE
+	if ((src.body_parts_covered & TORSO) && (target_zone in list("torso", "butt", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")))
+		return TRUE
+	if ((src.body_parts_covered & LEGS) && (target_zone in list("left leg", "right leg", "both legs")))
+		return TRUE
+	if ((src.body_parts_covered & ARMS) && (target_zone in list("right arm", "left arm", "both arms")))
+		return TRUE
+	return FALSE
+
+
 /obj/item/clothing/under
 	equipped(var/mob/user, var/slot)
 		..()
