@@ -411,8 +411,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 //Use these if you want the stom in general to interact in a special way with the items procs e.g. spears on attack triggering the tip, but on pickup the shafts material
 //situation_modifier is for when you want something like specifying "chest" or "L_hand" for clothes
 
-/// Called when an atom or someone wearing the material is attacked for mat effects
-/atom/proc/material_trigger_on_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/on_person = FALSE, var/situation_modifier)
+/// Called when a mob holding this atom is attacked
+/atom/proc/material_trigger_on_mob_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/situation_modifier)
 	//on_person checks if the call was because of
 	if (src.material)
 		src.material?.triggerOnAttacked(src, attacker, attacked, weapon)
@@ -423,6 +423,15 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	if (src.material)
 		src.material?.triggerOnBullet(owner, src, projectile)
 	return
+
+/// Called when an atom or someone wearing the material is attacked for mat effects
+/atom/proc/material_trigger_on_blob_attacked(var/atom/owner, var/blobPower, var/situation_modifier)
+	//on_person checks if the call was because of
+	if (src.material)
+		src.material?.triggerOnBlobHit(owner, blobPower)
+	return
+
+
 
 ///Called when an item is picked up for mat effects
 /obj/item/proc/material_on_pickup(mob/user)

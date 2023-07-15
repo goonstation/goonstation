@@ -96,9 +96,9 @@
 		user.u_equip(src)
 		qdel(src)
 
-/obj/item/clothing/material_trigger_on_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/on_person = FALSE, var/situation_modifier)
+/obj/item/clothing/material_trigger_on_mob_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/situation_modifier)
 	// if someone wearing this gets attacked, only trigger this if the corresponding zone is hit
-	if (on_person && src.equipped_in_slot && situation_modifier && istext(situation_modifier))
+	if (src.equipped_in_slot && situation_modifier && istext(situation_modifier))
 		var/targeted_zone = parse_zone(situation_modifier)
 		if (!src.check_for_covered(targeted_zone))
 			return

@@ -1576,7 +1576,7 @@
 	if (gloves?.material)
 		gloves.material.triggerOnAttack(gloves, M, src)
 	for (var/atom/A in src)
-		A.material_trigger_on_attacked(M, src, gloves, TRUE, location)
+		A.material_trigger_on_mob_attacked(M, src, gloves, location)
 
 	M.viral_transmission(src,"Contact",1)
 

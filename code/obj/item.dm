@@ -382,10 +382,10 @@
 		return 1
 	..()
 
-/obj/item/material_trigger_on_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/on_person = FALSE, var/situation_modifier)
+/obj/item/material_trigger_on_mob_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/situation_modifier)
 	// don't trigger this items material effect if the item is not equipped and you get attacked while it is on you (e.g. items, pockets)
 	// with the exception that it will trigger if you are blocking or having a person in a grab with the item
-	if (on_person && !(src.equipped_in_slot) && !(src.c_flags && src.c_flags & HAS_GRAB_EQUIP))
+	if (!(src.equipped_in_slot) && !(src.c_flags && src.c_flags & HAS_GRAB_EQUIP))
 		return
 	..()
 
@@ -1222,7 +1222,7 @@
 	if (src.material)
 		src.material.triggerOnAttack(src, user, M)
 	for (var/atom/A in M)
-		A.material_trigger_on_attacked(user, M, src, TRUE, hit_area)
+		A.material_trigger_on_mob_attacked(user, M, src, hit_area)
 
 	user.violate_hippocratic_oath()
 
