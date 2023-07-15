@@ -935,7 +935,8 @@ TYPEINFO(/obj/item/chair/folded)
 	else
 		C = new/obj/stool/chair(user.loc)
 	if (src.material)
-		C.setMaterial(src.material)
+		if (!isSameMaterial(src.material, C.material))
+			C.setMaterial(src.material)
 	if (src.c_color)
 		C.icon_state = src.c_color
 	C.set_dir(user.dir)
