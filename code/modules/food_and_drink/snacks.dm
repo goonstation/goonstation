@@ -1145,7 +1145,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_cateyes")
 	meal_time_flags = MEAL_TIME_SNACK
 
-/obj/item/reagent_containers/food/snacks/spaghetti/
+/obj/item/reagent_containers/food/snacks/spaghetti
 	name = "spaghetti noodles"
 	desc = "Just noodles on their own."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'

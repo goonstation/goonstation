@@ -28,7 +28,7 @@
 		src.create_reagents(1000)
 		SPAWN(4 SECONDS)
 			if(reagents && !reagents.total_volume)
-				if (all_functional_reagent_ids.len > 0)
+				if (length(all_functional_reagent_ids) > 0)
 					src.reagent_id = pick(all_functional_reagent_ids)
 				else
 					src.reagent_id = "water"

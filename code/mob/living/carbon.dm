@@ -1,5 +1,5 @@
 
-/mob/living/carbon/
+/mob/living/carbon
 	gender = MALE // WOW RUDE
 	var/last_eating = 0
 

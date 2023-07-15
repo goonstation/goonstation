@@ -1,5 +1,5 @@
 
-/obj/item/reagent_containers/food/snacks/sandwich/
+/obj/item/reagent_containers/food/snacks/sandwich
 	icon = 'icons/obj/foodNdrink/food_bread.dmi'
 	bites_left = 4
 	heal_amt = 2

@@ -3521,7 +3521,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				var/key = map[i]
 				var/val = map[key]
 				mapLines.Add("[key]: [val]")
-		if (map.len > 10)
+		if (length(map) > 10)
 			mapLines.Add("Use a multitool to view all associations")
 		return length(mapLines) ? mapLines.Join("<br>") : ""
 

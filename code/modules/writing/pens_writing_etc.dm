@@ -1113,7 +1113,7 @@
 	attackby(obj/item/P, mob/user)
 
 		if (istype(P, /obj/item/paper) || istype(P, /obj/item/photo))
-			if (src.contents.len < 15)
+			if (length(src.contents) < 15)
 				user.drop_item()
 				P.set_loc(src)
 			else
@@ -1187,7 +1187,7 @@
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/paper))
-			if (src.contents.len < 10)
+			if (length(src.contents) < 10)
 				boutput(user, "You cram the paper into the folder.")
 				user.drop_item()
 				W.set_loc(src)
@@ -1343,7 +1343,7 @@
 				src.pages += P
 				P.set_loc(src)
 				S.ammo--
-				if (pages.len >= 10 && !icon_state == "booklet-thick")
+				if (length(pages) >= 10 && !icon_state == "booklet-thick")
 					src.icon_state = "booklet-thick"
 				src.visible_message("[user] staples [P] at the back of [src].")
 				playsound(user,'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
@@ -1470,7 +1470,7 @@
 		boutput(user, "<span class='notice'>\The [src] ejects \the [src.stored_paper].</span>")
 		if(!ON_COOLDOWN(src, "eject_sound", 3 SECONDS))
 			playsound(src.loc, 'sound/machines/typewriter.ogg', 60, 0)
-			// CC0 license on the sound, source here: https://freesound.org/people/tams_kp/sounds/43559/
+			// CC0 license on the sound, source here: https://freesound.org/people/tams_kp/sounds/43559
 		src.stored_paper.set_loc(target)
 		src.stored_paper = null
 		src.UpdateIcon()
