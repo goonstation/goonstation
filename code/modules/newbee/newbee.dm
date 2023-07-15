@@ -18,7 +18,7 @@
 		logTheThing(LOG_DEBUG, src, "check_newbee() failed, unable to fetch round stats.")
 		return
 	#ifdef RP_MODE
-	if (round_stats?["participated_rp"] <= NEWBEE_ROUNDS)
+	if (round_stats?["participated_rp"] <= NEWBEE_ROUNDS_RP)
 	#else
 	if (round_stats?["participated"] <= NEWBEE_ROUNDS)
 	#endif
