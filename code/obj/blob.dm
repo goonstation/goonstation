@@ -348,7 +348,7 @@
 				if (prob(chunk_chance))
 					create_chunk(get_turf(user))
 
-		src.material_trigger_on_mob_attacked(user, src, W)
+		src.material_trigger_when_attacked(W, user, 1)
 
 		src.take_damage(damage,damage_mult,damtype,user)
 

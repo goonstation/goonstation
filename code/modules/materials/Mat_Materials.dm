@@ -252,7 +252,7 @@ ABSTRACT_TYPE(/datum/material)
 			X.execute(owner, blobPower)
 		return
 
-	proc/triggerOnHit(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
+	proc/triggerOnHit(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/meleeorthrow)
 		for(var/datum/materialProc/X in triggersOnHit)
 			X.execute(owner, attackobj, attacker, meleeorthrow)
 		return

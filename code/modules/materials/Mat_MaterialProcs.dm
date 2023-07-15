@@ -626,7 +626,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				wall_owner.dismantle_wall(1)
 
 /datum/materialProc/cardboard_on_hit // MARK: add to ignorant children
-	execute(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
+	execute(var/atom/owner, var/atom/attackobj, var/mob/attacker, var/meleeorthrow)
 		if (meleeorthrow == 1) //if it was a melee attack
 			if (issnippingtool(attackobj)||iscuttingtool(attackobj))
 				if (isExploitableObject(owner))

@@ -224,7 +224,7 @@ TYPEINFO(/turf/simulated/wall)
 		else
 			if (prob(70))
 				playsound(user.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-				src.material_trigger_on_mob_attacked(user, user, src)
+				src.material_trigger_when_attacked(user, user, 1)
 				for (var/mob/N in AIviewers(user, null))
 					if (N.client)
 						shake_camera(N, 4, 8, 0.5)
