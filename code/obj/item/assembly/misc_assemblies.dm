@@ -937,13 +937,13 @@ ABSTRACT_TYPE(/datum/pipeshotrecipe)
 
 /datum/pipeshotrecipe/scrap
 	thingsneeded = 1
-	result = /obj/item/ammo/bullets/pipeshot/scrap/
+	result = /obj/item/ammo/bullets/pipeshot/scrap
 	accepteditem = /obj/item/raw_material/scrap_metal
 	craftname = "scrap chunk"
 
 /datum/pipeshotrecipe/glass
 	thingsneeded = 2
-	result = /obj/item/ammo/bullets/pipeshot/glass/
+	result = /obj/item/ammo/bullets/pipeshot/glass
 	accepteditem = /obj/item/raw_material/shard
 	craftname = "shard"
 

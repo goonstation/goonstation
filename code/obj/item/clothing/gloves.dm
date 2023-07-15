@@ -380,7 +380,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "swat_NT"
 	item_state = "swat_NT"
 
-/obj/item/clothing/gloves/stungloves/
+/obj/item/clothing/gloves/stungloves
 	name = "stun gloves"
 	desc = "These gloves are electrically charged."
 	icon_state = "stun"

@@ -320,7 +320,7 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 	setup_equipment_slots()
 		equipment += new /datum/equipmentHolder/ears(src)
 		equipment += new /datum/equipmentHolder/head(src)
-		//equipment += new /datum/equipmentHolder/
+		//equipment += new /datum/equipmentHolder
 
 	New()
 		..()

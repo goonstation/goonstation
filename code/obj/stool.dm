@@ -1518,7 +1518,7 @@ TYPEINFO(/obj/stool/chair/wooden)
 
 		if (netnum)
 			var/datum/powernet/PN
-			if (powernets && powernets.len >= netnum)
+			if (powernets && length(powernets) >= netnum)
 				PN = powernets[netnum]
 				return PN.avail
 

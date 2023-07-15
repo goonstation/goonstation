@@ -118,7 +118,7 @@ TYPEINFO(/obj/item/motherboard)
 				src.icon_state = "1"
 
 			if (istype(P, /obj/item/peripheral))
-				if(src.peripherals.len < src.max_peripherals)
+				if(length(src.peripherals) < src.max_peripherals)
 					user.drop_item()
 					src.peripherals.Add(P)
 					P.set_loc(src)
