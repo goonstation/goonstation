@@ -188,7 +188,7 @@
 		particleMaster.SpawnSystem(new /datum/particleSystem/blobattack(T,overmind.color))
 		if (T?.density)
 			T.blob_act(overmind.attack_power * 20)
-			T.material_trigger_on_blob_attacked(T, overmind.attack_power * 20)
+			T.material_trigger_on_blob_attacked(overmind.attack_power * 20)
 
 		else
 			for (var/mob/M in T.contents)
@@ -198,7 +198,7 @@
 					L.was_harmed(src)
 			for (var/obj/O in T.contents)
 				O.blob_act(overmind.attack_power * 20)
-				O.material_trigger_on_blob_attacked(O, overmind.attack_power * 20)
+				O.material_trigger_on_blob_attacked(overmind.attack_power * 20)
 
 
 	proc/attack_random()

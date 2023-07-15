@@ -766,7 +766,7 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 
 /obj/machinery/door/unpowered/wood/attackby(obj/item/I, mob/user)
 	if (I) // eh, this'll work well enough.
-		src.material?.triggerOnHit(src, I, user, 1)
+		src.material_trigger_when_attacked(I, user, 1)
 	if (src.operating)
 		return
 	src.add_fingerprint(user)
