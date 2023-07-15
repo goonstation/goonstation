@@ -45,7 +45,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 	proc/create(var/mob/creator)
 		var/obj/storage/S
-		if (!ispath(containertype) && contains.len > 1)
+		if (!ispath(containertype) && length(contains) > 1)
 			containertype = text2path(containertype)
 			if (!ispath(containertype))
 				containertype = /obj/storage/crate // this did not need to be a string

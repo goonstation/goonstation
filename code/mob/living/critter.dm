@@ -355,7 +355,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			return 0
 		if (!active_hand)
 			return 0
-		if (hands.len >= active_hand)
+		if (length(hands) >= active_hand)
 			return 1
 		return 0
 

@@ -1,4 +1,109 @@
 
+(t)fri jul 14 23
+(u)aloe
+(*)Conspiracy mode has been disabled on RP pending a rework. The pick weight from conspiracy has gone to Gang mode instead.
+(u)colossusqw
+(p)14951
+(e)⚖🐁|C-Balance, A-Critters
+(+)Rattlesnake bite injected reajents cut from 40 to 20 to account for them not flushing themselves anymore.
+(t)thu jul 13 23
+(u)aloe
+(+)The cloaking shield generator is now sneakier, and will copy the appearance of doors, windows, and grilles. It's also a little easier to use.
+(u)TemThrush
+(p)14887
+(e)🎨|C-Sprites
+(*)Added 14 new hairstyles into the game, see minor changes for the list!
+(+)New hairstyle options are; Salty, Wolfcut, Brushed, Walnut, Mop, Acorn, Curtain, Scott, Curly Bob, Charming, Spoon, Messy Waves, Blunt Bob, Jelly.
+(u)Caio029
+(p)14556
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Conveyor belts are now buildable! Use a device analyzer on a conveyor belt and a conveyor switch, then go ham. See the help message on a conveyor belt for more information.
+(t)wed jul 12 23
+(u)Ikea
+(p)14911
+(e)💅🤖|C-QoL, A-Silicons
+(*)Silicons now only WOOP or BZZT when first stunned.
+(u)Blackrep
+(p)14536
+(e)⚖🎩|C-Balance, A-Clothing
+(+)Surplus vests from Sketchy D-5 are now made of carbon nanofiber.
+(t)tue jul 11 23
+(u)Amylizzle & Garash
+(p)14694
+(e)🆕🗺🎨🔧|C-Feature, A-Mapping, C-Sprites, A-Tooling
+(*)Cogmap now comes with a random engine type, or a rare chance to use the brand new NT Engine Teleportation System, which lets engineers select the engine they want to use.
+(t)mon jul 10 23
+(u)Kubius
+(p)14863
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Nadir's breach hull has gone dark, and its second GardenGear is back.
+(u)tarmunora
+(*)Poisoned surgical tools only transfer poison during surgery.
+(+)Cyberlungs no longer grant stamina bonuses.
+(u)Flappybat
+(p)14856
+(e)🗺⚖🤖|A-Mapping, C-Balance, A-Silicons
+(*)AI camera coverage of Cogmap1 maintenance has been significantly reduced.
+(t)sun jul 09 23
+(u)aloe
+(*)Added a new traitor item, the Fingerprinter. Costs 1 TC, is a little scanner that lets you read fingerprints off of things and plant them onto other things. Also gives you the names of the fingerprints owners and works with glove IDs.
+(u)aloe & Phrogge
+(+)*nod-ing while wearing a flipped-up welding mask now flips it down.
+(u)DeeDotVeeA
+(p)14823
+(e)🗺🔄|A-Mapping, C-Rework
+(+)Clarion QM is now slightly more spacious.
+(u)aloe
+(+)Gave the captain (and the gimmick leadership roles like VIP and RegDir) a new traitor item, the black market megaphone. It costs 5 TC and makes your text really, really large and annoying.
+(t)sat jul 08 23
+(u)aloe
+(+)Tripled the recharge rate and charge capacity of erebite power cells.
+(u)tarmunora
+(+)Pancuronium stun delay increased to match neurotoxin.
+(t)thu jul 06 23
+(u)Sian
+(p)14839
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Shrimps now butcher into raw shrimp meat.
+(+)Cooking a shrimp in the oven will now output cooked shrimp meat.
+(+)Cooked shrimp meat can be combined with a rice ball to make a shrimp nigiri roll.
+(t)tue jul 04 23
+(u)tarmunora
+(+)increase volume of microjetpacks and belt-sized oxygen tanks.
+(t)mon jul 03 23
+(u)RubberRats
+(p)14695
+(e)🪲🔎📦🚗|C-Bug, C-Code-Quality, A-Game-Objects, A-Vehicles
+(+)Plasma cutters and other mining weapons can break multiple asteroid tiles at once again.
+(t)sat jul 01 23
+(u)Lord_Earthfire
+(p)14758
+(e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
+(+)Fish can now be quickly stuffed into crates/lockers
+(t)fri jun 30 23
+(u)aloe
+(+)Syringe guns and similar fit in gun components now (the mechanics kind).
+(u)aloe
+(+)Spy thief stealing action bars are no longer interrupted by movement.
+(+)The click when a spy starts stealing an item is now only audible to the spy.
+(u)LeahTheTech
+(+)Chem dispensers now show the temperature of the reagents in their contained beaker.
+(+)Engineering cyborgs now start with 200 of their resources (sheets, glass etc.) as oppose to 500.
+(+)Engineering cyborgs now start with 300 reinforced cables on Oshan.
+(+)Reinforced cables can now be made at the engineering fabricator using pharosium and synthblubber.
+(+)Glowstick trees now glow even more: <br><img src="https://cdn.discordapp.com/attachments/890270178930217011/1124479831816536104/image.png" />
+(u)Retrino
+(p)14639
+(e)💅👽|C-QoL, A-Mutantraces
+(+)Werewolves will now speak normally again.
+(t)thu jun 29 23
+(u)armunoratay
+(*)Addedyay igpay atinlay accentyay utationmay
+(u)Tyrant
+(p)14684
+(e)🗺💅|A-Mapping, C-QoL
+(+)Genetics in Oshan now has a disposal chute.
+(+)Robotics Storage in Oshan now has a door connecting to the morgue directly.
 (t)wed jun 28 23
 (u)tarmunora
 (+)Port-a-puke, wrestling belt no longer in spythief bounty reward pool.

@@ -116,9 +116,6 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/real_goldfish = 5,\
 	/obj/item/fish/red_herring = 1)
 
-/datum/fishing_spot/toilet/random
-	fishing_atom_type = /obj/item/storage/toilet/random
-
 /datum/fishing_spot/spatial_tear
 	fishing_atom_type = /obj/forcefield/event
 	rod_tier_required = 3
@@ -208,9 +205,6 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 		var/atom/result = ..()
 		result.AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
 		return result
-
-/datum/fishing_spot/nuclear_reactor/prefilled
-	fishing_atom_type = /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal
 
 // Gannets new fishing spots
 // todo adjust availible fish lists & balance probabilities.
@@ -370,9 +364,6 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/lionfish = 15,\
 	/obj/item/fish/betta = 30)
 
-/datum/fishing_spot/watertank/big
-	fishing_atom_type = /obj/reagent_dispensers/watertank/big
-
 /datum/fishing_spot/river
 	fishing_atom_type = /obj/river
 	rod_tier_required = 1
@@ -417,10 +408,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/cigbutt = 20,\
 	/obj/item/reagent_containers/food/drinks/bottle/empty = 20,\
 	/obj/item/fish/real_goldfish = 5,\
-	/obj/machinery/light/small/broken = 20)
-
-/datum/fishing_spot/disposal_chute/small
-	fishing_atom_type = /obj/machinery/disposal/small
+	/obj/item/light/bulb/yellow/broken = 20)
 
 /datum/fishing_spot/janitor_bucket
 	fishing_atom_type = /obj/mopbucket
@@ -732,7 +720,7 @@ datum/fishing_spot/golden_toilet
 	/obj/item/raw_material/shard/glass = 10,\
 	/obj/item/cigbutt = 20,\
 	/obj/item/reagent_containers/food/drinks/bottle/empty = 20,\
-	/obj/machinery/light/small/broken = 20)
+	/obj/item/light/bulb/yellow/broken = 20)
 
 //nadir ocean
 /datum/fishing_spot/nadir_ocean
