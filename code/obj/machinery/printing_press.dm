@@ -1,4 +1,5 @@
-/obj/machinery/printing_press //this makes books
+/// makes books and pamphlets.
+/obj/machinery/printing_press
 	name = "\improper Academy automated printing press"
 	desc = "This is an Aurora Lithographics 'Academy' model automated printing press, used to reproduce books and pamphlets. This doesn't still use stone plates, does it?"
 	icon = 'icons/obj/large/64x32.dmi'
@@ -10,10 +11,14 @@
 	var/const/paper_max = 70
 	var/const/ink_max = 500
 
-	var/paper_amt = 0 //empty by default, 0 to 70
-	var/was_paper = 0 //workaround for now, need to update icon if paper_amt is 0 to clear overlay
-	var/is_running = 0 //1 if its working, 0 when idle/depowered
-	var/colors_upgrade = 0 //0 by default, set to 1 when ink colors upgrade is installed
+	/// empty by default, 0 to 70
+	var/paper_amt = 0
+	/// workaround for now, need to update icon if paper_amt is 0 to clear overlay
+	var/was_paper = 0
+	/// TRUE if its working, FALSE when idle/depowered
+	var/is_running = FALSE
+	/// FALSE by default, set to TRUE when ink colors upgrade is installed
+	var/colors_upgrade = FALSE
 	var/books_upgrade = 0 //0 by default, set to 1 when custom book covers upgrade is installed
 	var/forbidden_upgrade = 0 //0 by default, set to 1 when forbidden covers/symbols/styles upgrade is installed
 	var/ink_level = 100 //decrements by 2 for each book printed, can be refilled (expensively)
@@ -187,7 +192,7 @@
 					if (colors_upgrade)
 						src.visible_message("\The [src] already has that upgrade installed.")
 						return
-					colors_upgrade = 1
+					colors_upgrade = TRUE
 					press_modes += "Ink color"
 					src.visible_message("\The [src] accepts the upgrade.")
 				if ("press_books")
@@ -453,7 +458,7 @@
 /////////////////////
 
 	proc/make_books() //alright so this makes our books
-		is_running = 1
+		is_running = TRUE
 		var/books_to_make = book_amount
 		while (books_to_make)
 
@@ -463,7 +468,7 @@
 				if (ink_level < 2) // ...or enough ink
 					src.visible_message("\The [src] runs out of ink and stops printing.")
 
-				is_running = 0
+				is_running = FALSE
 				UpdateIcon()
 				break
 
@@ -530,7 +535,7 @@
 			ink_level -= 2
 			paper_amt -= 2
 
-		is_running = 0
+		is_running = FALSE
 		UpdateIcon() //just in case?
 		src.visible_message("\The [src] finishes printing and shuts down.")
 
