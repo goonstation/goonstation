@@ -1398,6 +1398,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		src.hand_attack(target)
 		return TRUE
 
+	/// Used for generic critter mobAI - override if you need special retailation behaviour
+	proc/critter_retaliate(var/mob/target)
+		src.critter_attack(target)
+
 	/// Used for generic critter mobAI - returns TRUE when the mob is able to attack. For handling cooldowns, or other attack blocking conditions.
 	proc/can_critter_attack()
 		var/datum/handHolder/HH = get_active_hand()

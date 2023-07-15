@@ -789,7 +789,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					/mob/living/critter/zombie,
 					/mob/living/critter/bear,
 					/mob/living/carbon/human/npc/syndicate,
-					/obj/critter/martian/soldier,
+					/mob/living/critter/martian/soldier,
 					/mob/living/critter/lion,
 					/obj/critter/yeti,
 					/obj/critter/gunbot/drone,

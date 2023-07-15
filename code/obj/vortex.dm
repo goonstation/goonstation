@@ -107,7 +107,7 @@
 				/obj/critter/killertomato,
 				/obj/critter/spore,
 				/mob/living/critter/small_animal/rattlesnake,
-				/obj/critter/martian/warrior,
+				/mob/living/critter/martian/warrior,
 				/obj/machinery/bot/firebot/emagged,
 				/obj/machinery/bot/secbot/emagged,
 				/obj/machinery/bot/medbot/mysterious/emagged,
