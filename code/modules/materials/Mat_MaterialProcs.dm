@@ -576,7 +576,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/reflective_onbullet
-	execute(var/obj/item/owner, var/atom/attacked, var/obj/projectile/projectile)
+	execute(var/atom/owner, var/atom/attacked, var/obj/projectile/projectile)
+		if(ismob(owner) && (owner != attacked)) //i fixed that not working on mobs, but let's not make reflective boots make you reflect laser shots, lol
+			return
 		if(projectile.proj_data.damage_type & D_BURNING || projectile.proj_data.damage_type & D_ENERGY)
 			shoot_reflected_bounce(projectile, owner, 4) //shoot_reflected_to_sender()
 		return

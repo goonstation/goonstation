@@ -981,7 +981,7 @@ TYPEINFO(/atom)
 //Return an atom if you want to make the projectile's effects affect that instead.
 
 /atom/proc/bullet_act(var/obj/projectile/P)
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 	return
 
 

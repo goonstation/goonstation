@@ -232,8 +232,7 @@
 				src.visible_message("<span class='alert'>[src] is hit by the [P] but it deflects harmlessly.</span>")
 			return
 
-		if (src.material)
-			src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		switch (P.proj_data.damage_type)
 			if (D_KINETIC)

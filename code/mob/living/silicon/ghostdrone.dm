@@ -1101,7 +1101,7 @@
 		if (damage < 1)
 			return
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		if (!dmgtype) //brute only
 			src.TakeDamage("All", damage)

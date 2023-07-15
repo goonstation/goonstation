@@ -411,11 +411,18 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 //Use these if you want the item in general to interact in a special way with the items procs e.g. spears on attack triggering the tip, but on pickup the shafts material
 //situation_modifier is for when you want something like specifying "chest" or "L_hand" for clothes
 
-/// Called when a stom out of this material or someone wearing the material is atacked
+/// Called when an atom out of this material or someone wearing the material is atacked
 /atom/proc/material_trigger_on_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/on_person = FALSE, var/situation_modifier)
 	//on_person checks if the call was because of
 	if (src.material)
 		src.material?.triggerOnAttacked(src, attacker, attacked, weapon)
+	return
+
+/// Called when an atom out of this material is hit by a bullet
+/atom/proc/material_trigger_on_bullet(var/atom/owner, var/obj/projectile/projectile, var/situation_modifier)
+	//on_person checks if the call was because of
+	if (src.material)
+		src.material?.triggerOnBullet(owner, src, projectile)
 	return
 
 

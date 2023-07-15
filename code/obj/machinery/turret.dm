@@ -221,7 +221,7 @@
 			theAI.notify_attacked()
 	damage = round((P.power*P.proj_data.ks_ratio), 1.0)
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 
 	if(P.proj_data.damage_type == D_KINETIC)
 		src.health -= damage

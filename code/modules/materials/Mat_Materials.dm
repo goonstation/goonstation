@@ -192,7 +192,7 @@ ABSTRACT_TYPE(/datum/material)
 			X.execute(owner, attacker, attacked, weapon)
 		return
 
-	proc/triggerOnBullet(var/obj/item/owner, var/atom/attacked, var/obj/projectile/projectile)
+	proc/triggerOnBullet(var/atom/owner, var/atom/attacked, var/obj/projectile/projectile)
 		for(var/datum/materialProc/X in triggersOnBullet)
 			X.execute(owner, attacked, projectile)
 		return

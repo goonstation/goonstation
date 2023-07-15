@@ -471,7 +471,7 @@
 
 		log_shot(P, src)
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		var/damage = round(P.power, 1.0)
 
