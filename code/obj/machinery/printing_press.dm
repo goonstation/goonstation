@@ -180,304 +180,301 @@
 //Interaction stuff//
 /////////////////////
 
-	attackby(var/obj/item/W, mob/user)
-		if (istype(W, /obj/item/paper_bin))
-			var/obj/item/paper_bin/P = W
-			if (P.amount > 0 && paper_amt <= paper_max) //if the paper bin has paper, and adding the paper bin doesnt add too much paper
-				boutput(user, "You load \the [P] into \the [src].")
-				var/amount_to_take = paper_max - paper_amt
-				var/amount_taken = min(amount_to_take, P.amount)
-				paper_amt += amount_taken
-				UpdateIcon()
-				P.amount = P.amount - amount_taken
-				P.update()
-				return
-			else
-				if (P.amount <= 0)
-					if (length(P.contents) > 0)
-						boutput(user, "\The [P] has no unsoiled sheets left in it.") // someone put junk paper in the bin
-					else
-						boutput(user, "\The [P] has no paper left in it.") // its just plain empty
-					return
-				boutput(user, "\The [src] is already fully loaded with paper!")
-
-		else if (istype(W, /obj/item/paper) && !istype(W, /obj/item/paper/book)) //should also exclude all other weird paper subtypes, but i think books are the only one
-			if (paper_amt < paper_max)
-				boutput(user, "You load \the [W] into \the [src].")
-				paper_amt++
-				UpdateIcon()
-				user.drop_item()
-				qdel(W)
-			else
-				boutput(user, "\The [src] is too full for that!")
-				return
-
-		else if (istype(W, /obj/item/press_upgrade))
-			switch (W.icon_state)
-				if ("press_colors")
-					if (colors_upgrade)
-						src.visible_message("\The [src] already has that upgrade installed.")
-						return
-					colors_upgrade = TRUE
-					press_modes += "Ink color"
-					src.visible_message("\The [src] accepts the upgrade.")
-				if ("press_books")
-					if (books_upgrade)
-						src.visible_message("\The [src] already has that upgrade installed.")
-						return
-					books_upgrade = TRUE
-					press_modes += "Customise cover"
-					src.visible_message("\The [src] accepts the upgrade.")
-				if ("press_forbidden")
-					if (forbidden_upgrade)
-						src.visible_message("\The [src] already has that upgrade installed.")
-						return
-					forbidden_upgrade = TRUE
-					standard_symbols += list("Anarchy", "Syndie")
-					colorable_symbols += list("FixMe")
-					standard_flairs += list("Fire")
-					cover_designs += list("Necronomicon", "Old", "Bible")
-					src.visible_message("\The [src] accepts the upgrade.")
-				if ("press_ink")
-					if ((ink_level + 100) <= ink_max) //500ink internal resevoir
-						ink_level += 100
-						boutput(user, "Ink refilled.")
-						UpdateIcon() //to show ink level change
-					else
-						boutput(user, "\The [src] doesn't need an ink refill yet.")
-						return
-				else //in case some wiseguy tries the parent im watching u
-					boutput(user, "no good, asshole >:\[")
-					return
-			qdel(W)
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-
+/obj/machinery/printing_press/attackby(var/obj/item/W, mob/user)
+	if (istype(W, /obj/item/paper_bin))
+		var/obj/item/paper_bin/P = W
+		if (P.amount > 0 && paper_amt <= paper_max) //if the paper bin has paper, and adding the paper bin doesnt add too much paper
+			boutput(user, "You load \the [P] into \the [src].")
+			var/amount_to_take = paper_max - paper_amt
+			var/amount_taken = min(amount_to_take, P.amount)
+			paper_amt += amount_taken
+			UpdateIcon()
+			P.amount = P.amount - amount_taken
+			P.update()
+			return
 		else
-			..()
-
-	attack_hand(var/mob/user) //all of our mode controls and setters here, these control what the books are/look like/have as contents
-		if (is_running)
-			boutput(user, "\The [src] is busy.") //machine is running
-			return
-		var/mode_sel = input("What would you like to do?", "Mode Control") as null|anything in press_modes
-		if (!mode_sel) //just in case? idk if this is necessary
-			return
-
-		switch (lowertext(mode_sel))
-
-			if ("choose cover")
-				var/cover_sel = input("What cover design would you like?", "Cover Control", book_cover) as null|anything in cover_designs
-				if (!cover_sel)
-					book_cover = "book0"
+			if (P.amount <= 0)
+				if (length(P.contents) > 0)
+					boutput(user, "\The [P] has no unsoiled sheets left in it.") // someone put junk paper in the bin
 				else
-					switch (lowertext(cover_sel))
-						if ("grey")
-							book_cover = "book0"
-						if ("dull red")
-							book_cover = "book1"
-						if ("red")
-							book_cover = "book7"
-						if ("blue")
-							book_cover = "book2"
-						if ("green")
-							book_cover = "book3"
-						if ("yellow")
-							book_cover = "book6"
-						if ("dummies")
-							book_cover = "book4"
-						if ("robuddy")
-							book_cover = "book5"
-						if ("skull")
-							book_cover = "sbook"
-						if ("latch")
-							book_cover = "bookcc"
-						if ("bee")
-							book_cover = "booktth"
-						if ("albert")
-							book_cover = "bookadps"
-						if ("surgery")
-							book_cover = "surgical_textbook"
-						if ("law")
-							book_cover = "spacelaw"
-						if ("nuke")
-							book_cover = "nuclearguide"
-						if ("rat")
-							book_cover = "ratbook"
-						if ("pharma")
-							book_cover = "pharmacopia"
-						if ("bar")
-							book_cover = "barguide"
-						if ("necronomicon")
-							book_cover = "necronomicon"
-						if ("bible")
-							book_cover = "bible"
-						if ("old")
-							book_cover = "oldbook"
-						else
-							book_cover = "book0"
-				boutput(user, "Book cover set.")
+					boutput(user, "\The [P] has no paper left in it.") // its just plain empty
 				return
+			boutput(user, "\The [src] is already fully loaded with paper!")
 
-			if ("set book info")
-				var/name_sel = input("What do you want the title of your book to be?", "Information Control", book_name) //total information control! the patriots control the memes, snake!
-				if (length(name_sel) > info_len_lim)
-					boutput(user, "Aborting, title too long.")
-					return
-				book_name = strip_html(name_sel)
-				var/author_sel = input("Who is the author of your book?", "Information Control", book_author)
-				if (length(author_sel) > info_len_lim)
-					boutput(user, "Aborting, author name too long.")
-					return
-				book_author = strip_html(author_sel)
-				boutput(user, "Information set.")
-				return
+	else if (istype(W, /obj/item/paper) && !istype(W, /obj/item/paper/book)) //should also exclude all other weird paper subtypes, but i think books are the only one
+		if (paper_amt < paper_max)
+			boutput(user, "You load \the [W] into \the [src].")
+			paper_amt++
+			UpdateIcon()
+			user.drop_item()
+			qdel(W)
+		else
+			boutput(user, "\The [src] is too full for that!")
+			return
 
-			if ("set book contents")
-				var/info_sel = input("What do you want your book to say?", "Content Control", book_info_raw) as null|message
-				if (!info_sel)
+	else if (istype(W, /obj/item/press_upgrade))
+		switch (W.icon_state)
+			if ("press_colors")
+				if (colors_upgrade)
+					src.visible_message("\The [src] already has that upgrade installed.")
 					return
-				info_sel = copytext(html_encode(info_sel), 1, 4*MAX_MESSAGE_LEN) //for now this is ~700 words, 4096 characters, please increase if people say that its too restrictive/low
-				book_info_raw = info_sel
-				info_sel = replacetext(info_sel, "\n", "<BR>")
-				info_sel = replacetext(info_sel, "\[b\]", "<B>")
-				info_sel = replacetext(info_sel, "\[/b\]", "</B>")
-				info_sel = replacetext(info_sel, "\[i\]", "<I>")
-				info_sel = replacetext(info_sel, "\[/i\]", "</I>")
-				info_sel = replacetext(info_sel, "\[u\]", "<U>")
-				info_sel = replacetext(info_sel, "\[/u\]", "</U>")
-				info_sel = replacetext(info_sel, "\[hr\]", "<HR>")
-				info_sel = replacetext(info_sel, "\[/hr\]", "</HR>")
-				info_sel = replacetext(info_sel, "\[sup\]", "<SUP>")
-				info_sel = replacetext(info_sel, "\[/sup\]", "</SUP>")
-				info_sel = replacetext(info_sel, "\[h1\]", "<H1>")
-				info_sel = replacetext(info_sel, "\[/h1\]", "</H1>")
-				info_sel = replacetext(info_sel, "\[h2\]", "<H2>")
-				info_sel = replacetext(info_sel, "\[/h2\]", "</H2>")
-				info_sel = replacetext(info_sel, "\[h3\]", "<H3>")
-				info_sel = replacetext(info_sel, "\[/h3\]", "</H3>")
-				info_sel = replacetext(info_sel, "\[h4\]", "<H4>")
-				info_sel = replacetext(info_sel, "\[/h4\]", "</H4>")
-				info_sel = replacetext(info_sel, "\[li\]", "<LI>")
-				info_sel = replacetext(info_sel, "\[/li\]", "</LI>")
-				info_sel = replacetext(info_sel, "\[bq\]", "<BLOCKQUOTE>")
-				info_sel = replacetext(info_sel, "\[/bq\]", "</BLOCKQUOTE>")
-				book_info = info_sel
-				boutput(user, "Book contents set.")
-				return
-
-			if ("amount to make")
-				var/amount_sel = input("How many books do you want to make? ([round(paper_amt / 2)] max)", "Ream Control", book_amount) as num
-/*				if ((amount_sel * 2) > paper_amt) //2*amount sel is the amount of paper
-					boutput(user, "Not enough paper.")
-					return*/
-				if (amount_sel > 0 && amount_sel <= (paper_amt / 2)) //is the number in range?
-					boutput(user, "Book amount set.")
-					book_amount = amount_sel
+				colors_upgrade = TRUE
+				press_modes += "Ink color"
+				src.visible_message("\The [src] accepts the upgrade.")
+			if ("press_books")
+				if (books_upgrade)
+					src.visible_message("\The [src] already has that upgrade installed.")
+					return
+				books_upgrade = TRUE
+				press_modes += "Customise cover"
+				src.visible_message("\The [src] accepts the upgrade.")
+			if ("press_forbidden")
+				if (forbidden_upgrade)
+					src.visible_message("\The [src] already has that upgrade installed.")
+					return
+				forbidden_upgrade = TRUE
+				standard_symbols += list("Anarchy", "Syndie")
+				colorable_symbols += list("FixMe")
+				standard_flairs += list("Fire")
+				cover_designs += list("Necronomicon", "Old", "Bible")
+				src.visible_message("\The [src] accepts the upgrade.")
+			if ("press_ink")
+				if ((ink_level + 100) <= ink_max) //500ink internal resevoir
+					ink_level += 100
+					boutput(user, "Ink refilled.")
+					UpdateIcon() //to show ink level change
 				else
-					boutput(user, "Amount out of range.")
-
-			if ("print books")
-				if (is_running)
-					boutput(user, "\The [src] is busy.")
+					boutput(user, "\The [src] doesn't need an ink refill yet.")
 					return
-				if (!book_amount)
-					boutput(user, "Invalid book amount.")
-					return
-				if (ink_level < 2)
-					// you can't even print a single book. nice one, doofus
-					src.visible_message("Not enough ink.")
-					return
-				logTheThing(LOG_SAY, user, "made some books with the name: [book_name] | the author: [book_author] | the contents: [book_info]") //book logging
-				make_books()
+			else //in case some wiseguy tries the parent im watching u
+				boutput(user, "no good, asshole >:\[")
 				return
+		qdel(W)
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
-			if ("ink color")
-				if (colors_upgrade) //can never be too safe
-					var/color_sel = input("What colour would you like the ink to be?", "Ink Control") as color
-					if (color_sel)
-						ink_color = color_sel
+	else
+		..()
 
-			if ("customise cover")
-				if (books_upgrade) //can never be too safe
-					book_cover = "custom" //so we can bypass normal cover selection in the bookmaking process
-					var/cover_color_sel = input("What colour would you like the cover to be?", "Cover Control") as color
-					if (cover_color_sel)
-						cover_color = cover_color_sel
+/obj/machinery/printing_press/attack_hand(var/mob/user) //all of our mode controls and setters here, these control what the books are/look like/have as contents
+	if (is_running)
+		boutput(user, "\The [src] is busy.") //machine is running
+		return
+	var/mode_sel = input("What would you like to do?", "Mode Control") as null|anything in press_modes
+	if (!mode_sel) //just in case? idk if this is necessary
+		return
 
-					var/s_cat_sel = input("What type of symbol would you like?", "Cover Control") as null|anything in list("Standard", "Colorable", "Alchemical", "Alphanumeric")
-					switch (lowertext(s_cat_sel))
-						if ("standard")
-							var/symbol_sel = input("What would you like the symbol to be?", "Cover Control") as null|anything in standard_symbols
-							if (symbol_sel)
-								cover_symbol = lowertext(symbol_sel)
-								symbol_colorable = FALSE
-							else
-								cover_symbol = "none"
+	switch (lowertext(mode_sel))
 
-						if ("colorable")
-							var/symbol_sel = input("What would you like the symbol to be?", "Cover Control") as null|anything in colorable_symbols
-							if (symbol_sel)
-								cover_symbol = lowertext(symbol_sel)
-								var/color_sel = input("What color would you like the symbol to be?", "Cover Control") as color
-								if (color_sel)
-									symbol_color = color_sel
-									symbol_colorable = TRUE
-							else
-								cover_symbol = "none"
+		if ("choose cover")
+			var/cover_sel = input("What cover design would you like?", "Cover Control", book_cover) as null|anything in cover_designs
+			if (!cover_sel)
+				book_cover = "book0"
+			else
+				switch (lowertext(cover_sel))
+					if ("grey")
+						book_cover = "book0"
+					if ("dull red")
+						book_cover = "book1"
+					if ("red")
+						book_cover = "book7"
+					if ("blue")
+						book_cover = "book2"
+					if ("green")
+						book_cover = "book3"
+					if ("yellow")
+						book_cover = "book6"
+					if ("dummies")
+						book_cover = "book4"
+					if ("robuddy")
+						book_cover = "book5"
+					if ("skull")
+						book_cover = "sbook"
+					if ("latch")
+						book_cover = "bookcc"
+					if ("bee")
+						book_cover = "booktth"
+					if ("albert")
+						book_cover = "bookadps"
+					if ("surgery")
+						book_cover = "surgical_textbook"
+					if ("law")
+						book_cover = "spacelaw"
+					if ("nuke")
+						book_cover = "nuclearguide"
+					if ("rat")
+						book_cover = "ratbook"
+					if ("pharma")
+						book_cover = "pharmacopia"
+					if ("bar")
+						book_cover = "barguide"
+					if ("necronomicon")
+						book_cover = "necronomicon"
+					if ("bible")
+						book_cover = "bible"
+					if ("old")
+						book_cover = "oldbook"
+					else
+						book_cover = "book0"
+			boutput(user, "Book cover set.")
+			return
 
-						if ("alchemical")
-							var/symbol_sel = input("What would you like the symbol to be?", "Cover Control") as null|anything in alchemical_symbols
-							if (symbol_sel)
-								cover_symbol = lowertext(symbol_sel)
-								symbol_colorable = FALSE
-							else
-								cover_symbol = "none"
+		if ("set book info")
+			var/name_sel = input("What do you want the title of your book to be?", "Information Control", book_name) //total information control! the patriots control the memes, snake!
+			if (length(name_sel) > info_len_lim)
+				boutput(user, "Aborting, title too long.")
+				return
+			book_name = strip_html(name_sel)
+			var/author_sel = input("Who is the author of your book?", "Information Control", book_author)
+			if (length(author_sel) > info_len_lim)
+				boutput(user, "Aborting, author name too long.")
+				return
+			book_author = strip_html(author_sel)
+			boutput(user, "Information set.")
+			return
 
-						if ("alphanumeric")
-							var/symbol_sel = input("What would you like the symbol to be?", "Cover Control") as null|anything in alphanumeric_symbols
-							if (symbol_sel)
-								cover_symbol = lowertext(symbol_sel)
-								var/color_sel = input("What color would you like the symbol to be?", "Cover Control") as color
-								if (color_sel)
-									symbol_color = color_sel
-									symbol_colorable = TRUE
-							else
-								cover_symbol = "none"
+		if ("set book contents")
+			var/info_sel = input("What do you want your book to say?", "Content Control", book_info_raw) as null|message
+			if (!info_sel)
+				return
+			info_sel = copytext(html_encode(info_sel), 1, 4*MAX_MESSAGE_LEN) //for now this is ~700 words, 4096 characters, please increase if people say that its too restrictive/low
+			book_info_raw = info_sel
+			info_sel = replacetext(info_sel, "\n", "<BR>")
+			info_sel = replacetext(info_sel, "\[b\]", "<B>")
+			info_sel = replacetext(info_sel, "\[/b\]", "</B>")
+			info_sel = replacetext(info_sel, "\[i\]", "<I>")
+			info_sel = replacetext(info_sel, "\[/i\]", "</I>")
+			info_sel = replacetext(info_sel, "\[u\]", "<U>")
+			info_sel = replacetext(info_sel, "\[/u\]", "</U>")
+			info_sel = replacetext(info_sel, "\[hr\]", "<HR>")
+			info_sel = replacetext(info_sel, "\[/hr\]", "</HR>")
+			info_sel = replacetext(info_sel, "\[sup\]", "<SUP>")
+			info_sel = replacetext(info_sel, "\[/sup\]", "</SUP>")
+			info_sel = replacetext(info_sel, "\[h1\]", "<H1>")
+			info_sel = replacetext(info_sel, "\[/h1\]", "</H1>")
+			info_sel = replacetext(info_sel, "\[h2\]", "<H2>")
+			info_sel = replacetext(info_sel, "\[/h2\]", "</H2>")
+			info_sel = replacetext(info_sel, "\[h3\]", "<H3>")
+			info_sel = replacetext(info_sel, "\[/h3\]", "</H3>")
+			info_sel = replacetext(info_sel, "\[h4\]", "<H4>")
+			info_sel = replacetext(info_sel, "\[/h4\]", "</H4>")
+			info_sel = replacetext(info_sel, "\[li\]", "<LI>")
+			info_sel = replacetext(info_sel, "\[/li\]", "</LI>")
+			info_sel = replacetext(info_sel, "\[bq\]", "<BLOCKQUOTE>")
+			info_sel = replacetext(info_sel, "\[/bq\]", "</BLOCKQUOTE>")
+			book_info = info_sel
+			boutput(user, "Book contents set.")
+			return
 
-					var/f_cat_sel = input("What type of flair would you like?", "Cover Control") as null|anything in list("Standard", "Colorable")
+		if ("amount to make")
+			var/amount_sel = input("How many books do you want to make? ([round(paper_amt / 2)] max)", "Ream Control", book_amount) as num
+			if (amount_sel > 0 && amount_sel <= (paper_amt / 2)) //is the number in range?
+				boutput(user, "Book amount set.")
+				book_amount = amount_sel
+			else
+				boutput(user, "Amount out of range.")
 
-					if (f_cat_sel == "Standard")
-						var/flair_sel = input("What would you like the flair to be?", "Cover Control") as null|anything in standard_flairs
-						if (flair_sel)
-							cover_flair = lowertext(flair_sel)
-							flair_colorable = FALSE
+		if ("print books")
+			if (is_running)
+				boutput(user, "\The [src] is busy.")
+				return
+			if (!book_amount)
+				boutput(user, "Invalid book amount.")
+				return
+			if (ink_level < 2)
+				// you can't even print a single book. nice one, doofus
+				src.visible_message("Not enough ink.")
+				return
+			logTheThing(LOG_SAY, user, "made some books with the name: [book_name] | the author: [book_author] | the contents: [book_info]") //book logging
+			make_books()
+			return
+
+		if ("ink color")
+			if (colors_upgrade) //can never be too safe
+				var/color_sel = input("What colour would you like the ink to be?", "Ink Control") as color
+				if (color_sel)
+					ink_color = color_sel
+
+		if ("customise cover")
+			if (books_upgrade) //can never be too safe
+				book_cover = "custom" //so we can bypass normal cover selection in the bookmaking process
+				var/cover_color_sel = input("What colour would you like the cover to be?", "Cover Control") as color
+				if (cover_color_sel)
+					cover_color = cover_color_sel
+
+				var/s_cat_sel = input("What type of symbol would you like?", "Cover Control") as null|anything in list("Standard", "Colorable", "Alchemical", "Alphanumeric")
+				switch (lowertext(s_cat_sel))
+					if ("standard")
+						var/symbol_sel = input("What would you like the symbol to be?", "Cover Control") as null|anything in standard_symbols
+						if (symbol_sel)
+							cover_symbol = lowertext(symbol_sel)
+							symbol_colorable = FALSE
 						else
-							cover_flair = "none"
+							cover_symbol = "none"
 
-					else if (f_cat_sel == "Colorable")
-						var/flair_sel = input("What would you like the flair to be?", "Cover Control") as null|anything in colorable_flairs
-						if (flair_sel)
-							cover_flair = lowertext(flair_sel)
-							var/color_sel = input("What color would you like the flair to be?", "Cover Control") as color
+					if ("colorable")
+						var/symbol_sel = input("What would you like the symbol to be?", "Cover Control") as null|anything in colorable_symbols
+						if (symbol_sel)
+							cover_symbol = lowertext(symbol_sel)
+							var/color_sel = input("What color would you like the symbol to be?", "Cover Control") as color
 							if (color_sel)
-								flair_color = color_sel
-								flair_colorable = TRUE
+								symbol_color = color_sel
+								symbol_colorable = TRUE
 						else
-							cover_flair = "none"
+							cover_symbol = "none"
 
-			if ("view information")
-				if (book_author)
-					boutput(user, "The author is [book_author].")
-				else
-					boutput(user, "There is no author set.")
-				if (book_name)
-					boutput(user, "The title is [book_name].")
-				else
-					boutput(user, "There is no title set.")
-				return
+					if ("alchemical")
+						var/symbol_sel = input("What would you like the symbol to be?", "Cover Control") as null|anything in alchemical_symbols
+						if (symbol_sel)
+							cover_symbol = lowertext(symbol_sel)
+							symbol_colorable = FALSE
+						else
+							cover_symbol = "none"
 
-			else //just in case, yell at me if this is bad
-				return
+					if ("alphanumeric")
+						var/symbol_sel = input("What would you like the symbol to be?", "Cover Control") as null|anything in alphanumeric_symbols
+						if (symbol_sel)
+							cover_symbol = lowertext(symbol_sel)
+							var/color_sel = input("What color would you like the symbol to be?", "Cover Control") as color
+							if (color_sel)
+								symbol_color = color_sel
+								symbol_colorable = TRUE
+						else
+							cover_symbol = "none"
+
+				var/f_cat_sel = input("What type of flair would you like?", "Cover Control") as null|anything in list("Standard", "Colorable")
+
+				if (f_cat_sel == "Standard")
+					var/flair_sel = input("What would you like the flair to be?", "Cover Control") as null|anything in standard_flairs
+					if (flair_sel)
+						cover_flair = lowertext(flair_sel)
+						flair_colorable = FALSE
+					else
+						cover_flair = "none"
+
+				else if (f_cat_sel == "Colorable")
+					var/flair_sel = input("What would you like the flair to be?", "Cover Control") as null|anything in colorable_flairs
+					if (flair_sel)
+						cover_flair = lowertext(flair_sel)
+						var/color_sel = input("What color would you like the flair to be?", "Cover Control") as color
+						if (color_sel)
+							flair_color = color_sel
+							flair_colorable = TRUE
+					else
+						cover_flair = "none"
+
+		if ("view information")
+			if (book_author)
+				boutput(user, "The author is [book_author].")
+			else
+				boutput(user, "There is no author set.")
+			if (book_name)
+				boutput(user, "The title is [book_name].")
+			else
+				boutput(user, "There is no title set.")
+			return
+
+		else //just in case, yell at me if this is bad
+			return
 
 /////////////////////
 //Book making stuff//
