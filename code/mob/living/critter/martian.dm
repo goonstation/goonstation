@@ -183,6 +183,7 @@
 	was_harmed(var/mob/M, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		if (src.equipped())
 			src.drop_item()
+		..()
 
 /mob/living/critter/martian/soldier
 	name = "martian soldier"
