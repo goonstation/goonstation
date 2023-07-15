@@ -19,31 +19,52 @@
 	var/is_running = FALSE
 	/// FALSE by default, set to TRUE when ink colors upgrade is installed
 	var/colors_upgrade = FALSE
-	var/books_upgrade = 0 //0 by default, set to 1 when custom book covers upgrade is installed
-	var/forbidden_upgrade = 0 //0 by default, set to 1 when forbidden covers/symbols/styles upgrade is installed
-	var/ink_level = 100 //decrements by 2 for each book printed, can be refilled (expensively)
+	/// FALSE by default, set to TRUE when custom book covers upgrade is installed
+	var/books_upgrade = FALSE
+	/// FALSE by default, set to TRUE when forbidden covers/symbols/styles upgrade is installed
+	var/forbidden_upgrade = FALSE
+	/// decrements by 2 for each book printed, can be refilled (expensively)
+	var/ink_level = 100
+	/// the default modes, can be expanded to have "Ink Colors" and "Custom Cover"
 	var/list/press_modes = list("Choose cover", "Set book info", "Set book contents",\
-	"Amount to make", "Print books", "View Information") //default, can be expanded to have "Ink Colors" and "Custom Cover"
+	"Amount to make", "Print books", "View Information")
 
-	var/book_amount = 0 //how many books to make?
-	var/book_cover = "" //what cover design to use?
-	var/book_info = "" //what text will the made books have?
-	var/book_info_raw = "" // raw version of the text, for editing.
-	var/book_name = "" //whats the made books name?
-	var/const/info_len_lim = 64 //64 character titles/author names max
-	var/book_author = "" //who made the book?
-	var/ink_color = "#000000" //what color is the text written in?
+	/// how many books to make?
+	var/book_amount = 0
+	/// what cover design to use?
+	var/book_cover = ""
+	/// what text will the made books have?
+	var/book_info = ""
+	/// raw version of the text, for editing.
+	var/book_info_raw = ""
+	/// whats the made book's name?
+	var/book_name = ""
+	/// 64 character titles/author names max
+	var/const/info_len_lim = 64
+	/// who made the book?
+	var/book_author = ""
+	/// what color is the text written in?
+	var/ink_color = "#000000"
+	/// list of covers to choose from
 	var/list/cover_designs = list("Grey", "Dull red", "Red", "Blue", "Green", "Yellow", "Dummies", "Robuddy", "Skull", "Latch", "Bee",\
-	"Albert", "Surgery", "Law", "Nuke", "Rat", "Pharma", "Bar") //list of covers to choose from
-	var/list/non_writing_icons = list("bible") //just the bible for now. !!!add covers to this list if their icon file isnt icons/obj/writing.dmi!!!
+	"Albert", "Surgery", "Law", "Nuke", "Rat", "Pharma", "Bar")
+	/// just the bible for now. add covers to this list if their icon file isnt icons/obj/writing.dmi
+	var/list/non_writing_icons = list("bible")
 
-	var/cover_color = "#FFFFFF" //white by default, what colour will our book be?
-	var/cover_symbol = "" //what symbol is on our front cover?
-	var/symbol_color = "#FFFFFF" //white by default, if our symbol is colourable, what colour is it?
-	var/cover_flair = "" //whats the "flair" thing on the book?
-	var/flair_color = "#FFFFFF" //white by default, whats the color of the flair (if its colorable)?
-	var/symbol_colorable = 0 //this is a bugfix for non-colourable symbols being coloured
-	var/flair_colorable = 0 //this is a bugfix for non-colourable flairs being coloured
+	/// white by default, what colour will our book be?
+	var/cover_color = "#FFFFFF"
+	/// what symbol is on our front cover?
+	var/cover_symbol = ""
+	/// white by default, if our symbol is colourable, what colour is it?
+	var/symbol_color = "#FFFFFF"
+	/// whats the "flair" thing on the book?
+	var/cover_flair = ""
+	/// white by default, whats the color of the flair (if its colorable)?
+	var/flair_color = "#FFFFFF"
+	/// this is a bugfix for non-colourable symbols being coloured
+	var/symbol_colorable = FALSE
+	/// this is a bugfix for non-colourable flairs being coloured
+	var/flair_colorable = FALSE
 
 	var/list/standard_symbols = list("None", "Bee", "Blood", "Eye", "No", "Clown", "Wizhat", "CoolS", "Brimstone", "Duck", "Planet+Moon", "Sol",\
 	"Candle", "Shelterbee")//symbols that cant be colored
@@ -199,14 +220,14 @@
 					if (books_upgrade)
 						src.visible_message("\The [src] already has that upgrade installed.")
 						return
-					books_upgrade = 1
+					books_upgrade = TRUE
 					press_modes += "Customise cover"
 					src.visible_message("\The [src] accepts the upgrade.")
 				if ("press_forbidden")
 					if (forbidden_upgrade)
 						src.visible_message("\The [src] already has that upgrade installed.")
 						return
-					forbidden_upgrade = 1
+					forbidden_upgrade = TRUE
 					standard_symbols += list("Anarchy", "Syndie")
 					colorable_symbols += list("FixMe")
 					standard_flairs += list("Fire")
@@ -384,7 +405,7 @@
 							var/symbol_sel = input("What would you like the symbol to be?", "Cover Control") as null|anything in standard_symbols
 							if (symbol_sel)
 								cover_symbol = lowertext(symbol_sel)
-								symbol_colorable = 0
+								symbol_colorable = FALSE
 							else
 								cover_symbol = "none"
 
@@ -395,7 +416,7 @@
 								var/color_sel = input("What color would you like the symbol to be?", "Cover Control") as color
 								if (color_sel)
 									symbol_color = color_sel
-									symbol_colorable = 1
+									symbol_colorable = TRUE
 							else
 								cover_symbol = "none"
 
@@ -403,7 +424,7 @@
 							var/symbol_sel = input("What would you like the symbol to be?", "Cover Control") as null|anything in alchemical_symbols
 							if (symbol_sel)
 								cover_symbol = lowertext(symbol_sel)
-								symbol_colorable = 0
+								symbol_colorable = FALSE
 							else
 								cover_symbol = "none"
 
@@ -414,7 +435,7 @@
 								var/color_sel = input("What color would you like the symbol to be?", "Cover Control") as color
 								if (color_sel)
 									symbol_color = color_sel
-									symbol_colorable = 1
+									symbol_colorable = TRUE
 							else
 								cover_symbol = "none"
 
@@ -424,7 +445,7 @@
 						var/flair_sel = input("What would you like the flair to be?", "Cover Control") as null|anything in standard_flairs
 						if (flair_sel)
 							cover_flair = lowertext(flair_sel)
-							flair_colorable = 0
+							flair_colorable = FALSE
 						else
 							cover_flair = "none"
 
@@ -435,7 +456,7 @@
 							var/color_sel = input("What color would you like the flair to be?", "Cover Control") as color
 							if (color_sel)
 								flair_color = color_sel
-								flair_colorable = 1
+								flair_colorable = TRUE
 						else
 							cover_flair = "none"
 
