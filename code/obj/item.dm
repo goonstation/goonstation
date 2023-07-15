@@ -1599,7 +1599,7 @@
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	#endif
 
-	if(src.material) src.material.triggerDrop(user, src)
+	src.material_on_drop(user)
 	if (islist(src.ability_buttons))
 		for(var/obj/ability_button/B in ability_buttons)
 			B.OnDrop()
@@ -1618,7 +1618,7 @@
 	#ifdef COMSIG_MOB_PICKUP
 	SEND_SIGNAL(user, COMSIG_MOB_PICKUP, src)
 	#endif
-	src.material?.triggerPickup(user, src)
+	src.material_on_pickup(user)
 	set_mob(user)
 	show_buttons()
 	if (src.inventory_counter)
