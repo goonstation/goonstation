@@ -13,7 +13,7 @@
 	set waitfor = FALSE
 	if (player.is_newbee)
 		return //already marked as newbee
-	var/list/round_stats = src.player?.get_round_stats(TRUE)
+	var/list/round_stats = src.player.get_round_stats(TRUE)
 	if (!round_stats)
 		logTheThing(LOG_DEBUG, src, "check_newbee() failed, unable to fetch round stats.")
 		return
