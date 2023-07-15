@@ -483,87 +483,60 @@
 //Book making stuff//
 /////////////////////
 
-	proc/make_books() //alright so this makes our books
-		is_running = TRUE
-		var/books_to_make = book_amount
-		while (books_to_make)
+/obj/machinery/printing_press/proc/make_books() //alright so this makes our books
+	is_running = TRUE
+	var/books_to_make = book_amount
+	while (books_to_make)
 
-			if (paper_amt < 2 || ink_level < 2) // can we keep doin printing?
-				if (paper_amt < 2) // If we don't have enough paper to print...
-					src.visible_message("\The [src] runs out of paper and stops printing.")
-				if (ink_level < 2) // ...or enough ink
-					src.visible_message("\The [src] runs out of ink and stops printing.")
+		if (paper_amt < 2 || ink_level < 2) // can we keep doin printing?
+			if (paper_amt < 2) // If we don't have enough paper to print...
+				src.visible_message("\The [src] runs out of paper and stops printing.")
+			if (ink_level < 2) // ...or enough ink
+				src.visible_message("\The [src] runs out of ink and stops printing.")
 
-				is_running = FALSE
-				UpdateIcon()
-				break
-
-			playsound(src.loc, 'sound/machines/printer_press.ogg', 50, 1)
+			is_running = FALSE
 			UpdateIcon()
+			break
 
-			var/obj/item/paper/book/custom/B = new
+		playsound(src.loc, 'sound/machines/printer_press.ogg', 50, 1)
+		UpdateIcon()
 
-			if (book_name)
-				B.name = src.book_name
-			else
-				B.name = "unnamed book"
+		var/obj/item/paper/book/custom/B = new
 
-			B.desc = "A book printed by a machine! The future is now! (if you live in the 15th century)"
-			if (book_author)
-				B.desc += " It says it was written by [src.book_author]."
-			else
-				B.desc += " It says it was written by... anonymous."
+		if (book_name)
+			B.name = src.book_name
+		else
+			B.name = "unnamed book"
 
-			if (src.book_cover)
-				if (src.book_cover == "custom")
-					B.custom_cover = 1
-					B.cover_color = src.cover_color
-					B.cover_symbol = src.cover_symbol
-					B.symbol_color = src.symbol_color
-					B.cover_flair = src.cover_flair
-					B.flair_color = src.cover_flair
-					B.symbol_colorable = src.symbol_colorable
-					B.flair_colorable = src.flair_colorable
-				B.info = src.book_info
-				B.ink_color = src.ink_color
-				B.book_cover = src.book_cover
-				B.build_custom_book()
-				B.layer = src.layer + 0.1
-			TRANSFER_OR_DROP(src, B)
-/*					if (cover_color) //should always be yes
-						var/image/I = SafeGetOverlayImage("cover", B.icon, "base-colorable")
-						I.color = cover_color
-						B.UpdateOverlays(I, "cover")
-					if (cover_symbol)
-						var/image/I = SafeGetOverlayImage("symbol", B.icon, "symbol-[cover_symbol]")
-						if (symbol_colorable)
-							I.color = symbol_color
-						B.UpdateOverlays(I, "symbol")
-					if (cover_flair)
-						var/image/I = SafeGetOverlayImage("flair", B.icon, "flair-[cover_flair]")
-						if (flair_colorable)
-							I.color = flair_color
-						B.UpdateOverlays(I, "flair")
-				else
-					if (book_cover in non_writing_icons) //for our non-writing.dmi icons
-						switch (book_cover)
-							if ("bible")
-								B.icon = 'icons/obj/items/storage.dmi'
-								B.icon_state = book_cover
-					else
-						B.icon_state = book_cover
-			else
-				B.icon_state = "book0"
-			if (book_info)
-				B.info = "<span style=\"color:[src.ink_color]\">[src.book_info]</span>"*/
+		B.desc = "A book printed by a machine! The future is now! (if you live in the 15th century)"
+		if (book_author)
+			B.desc += " It says it was written by [src.book_author]."
+		else
+			B.desc += " It says it was written by... anonymous."
 
-			books_to_make--
-			ink_level -= 2
-			paper_amt -= 2
+		if (src.book_cover)
+			if (src.book_cover == "custom")
+				B.custom_cover = 1
+				B.cover_color = src.cover_color
+				B.cover_symbol = src.cover_symbol
+				B.symbol_color = src.symbol_color
+				B.cover_flair = src.cover_flair
+				B.flair_color = src.cover_flair
+				B.symbol_colorable = src.symbol_colorable
+				B.flair_colorable = src.flair_colorable
+			B.info = src.book_info
+			B.ink_color = src.ink_color
+			B.book_cover = src.book_cover
+			B.build_custom_book()
+			B.layer = src.layer + 0.1
+		TRANSFER_OR_DROP(src, B)
+		books_to_make--
+		ink_level -= 2
+		paper_amt -= 2
 
-		is_running = FALSE
-		UpdateIcon() //just in case?
-		src.visible_message("\The [src] finishes printing and shuts down.")
+	is_running = FALSE
+	UpdateIcon() //just in case?
+	src.visible_message("\The [src] finishes printing and shuts down.")
 
 /obj/item/press_upgrade //parent just to i dont have to set name and icon a bunch i am PEAK lazy
 	name = "printing press upgrade module"
