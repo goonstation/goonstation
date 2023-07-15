@@ -1,0 +1,30 @@
+#define NEWBEE_ROUNDS 10
+#define NEWBEE_ROUNDS_RP 25
+
+/// indicates if this is a player who is new to goonstation
+/datum/player/var/is_newbee = FALSE
+
+/client/New()
+	. = ..()
+	check_newbee()
+
+/// marks a player as a newbee if they are below the newbee rounds threshold. Grants them various new player indicators.
+/client/proc/check_newbee()
+	set waitfor = FALSE
+	if (player.is_newbee)
+		return //already marked as newbee
+	var/list/round_stats = src.player?.get_round_stats(TRUE)
+	if (!round_stats)
+		round_stats = list("participated"=1)
+		logTheThing(LOG_DEBUG, src, "check_newbee() failed, unable to fetch round stats.")
+		return
+	#ifdef RP_MODE
+	if (round_stats?["participated_rp"] <= NEWBEE_ROUNDS)
+	#else
+	if (round_stats?["participated"] <= NEWBEE_ROUNDS)
+	#endif
+		//welcome new bee!
+		player.is_newbee = TRUE
+
+#undef NEWBEE_ROUNDS
+#undef NEWBEE_ROUNDS_RP
