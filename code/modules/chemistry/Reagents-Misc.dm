@@ -818,6 +818,7 @@ datum
 					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
+					playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 					var/obj/grille/catwalk/catwalk = null
 					if (istype(T, /turf/simulated/floor/airless/plating/catwalk)) //guh
 						catwalk = locate() in T
@@ -852,6 +853,7 @@ datum
 						wet.blend_mode = BLEND_ADD
 						wet.alpha = 60
 						T.UpdateOverlays(wet, "wet_overlay")
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 					T.wet = 3
 					SPAWN(80 SECONDS)
 						if (istype(T))
