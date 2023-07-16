@@ -1782,7 +1782,7 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				if(volume < 1)
+				if(volume < 1 || istype(M, /mob/living/critter/spider))
 					return
 				if(method == TOUCH)
 					. = 0 // for depleting fluid pools
@@ -1825,6 +1825,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
+				if(istype(M, /mob/living/critter/spider))
+					return
 				var/turf/T = get_turf(M)
 				if (prob(50))
 					random_brute_damage(M, 1 * mult)
