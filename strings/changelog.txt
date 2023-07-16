@@ -1,4 +1,14 @@
 
+(t)sun jul 16 23
+(u)Sord
+(+)Light Engineering space suit recipe now requires extremely tough metal (bohrum)
+(u)Tyrant
+(p)14944
+(e)🗺💅|A-Mapping, C-QoL
+(+)Atlas's catering rooms should be a little easier to get around.
+(u)Flappybat
+(e)⚖|C-Balance
+(+)Trophy belt has been removed from maps, making it exclusive to the Hunter antag.
 (t)sat jul 15 23
 (u)MitchSmith
 (p)14605

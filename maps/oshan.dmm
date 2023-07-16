@@ -120,7 +120,7 @@
 "aaA" = (
 /obj/rack,
 /obj/item/clothing/under/misc/tourist,
-/obj/item/storage/belt/hunter,
+/obj/item/storage/belt/utility,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 "aaB" = (
