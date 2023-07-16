@@ -117,16 +117,11 @@
 /datum/limb/hitscan
 	var/brute = 5
 	var/burn = 0
-	var/cooldown = 30
-	var/next_shot_at = 0
 	var/image/default_obscurer
 
 	attack_range(atom/target, var/mob/user, params)
-		if (next_shot_at > ticker.round_elapsed_ticks)
-			return
 		user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
 		playsound(user.loc, 'sound/weapons/lasermed.ogg', 100, 1)
-		next_shot_at = ticker.round_elapsed_ticks + cooldown
 		if (ismob(target))
 			var/mob/MT = target
 			if (prob(30))
@@ -134,11 +129,8 @@
 			else
 				MT.TakeDamageAccountArmor(user.zone_sel ? user.zone_sel.selecting : "All", brute, burn, 0, burn ? DAMAGE_BURN : DAMAGE_BLUNT)
 		elecflash(target.loc,power = 2)
+		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
 
-	is_on_cooldown()
-		if (ticker.round_elapsed_ticks < next_shot_at)
-			return next_shot_at - ticker.round_elapsed_ticks
-		return 0
 
 /datum/limb/railgun
 	var/cooldown = 50

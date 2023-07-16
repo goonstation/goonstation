@@ -1,4 +1,14 @@
 
+(t)sun jul 16 23
+(u)Tyrant
+(p)14944
+(e)🗺💅|A-Mapping, C-QoL
+(+)Atlas's catering rooms should be a little easier to get around.
+(t)sat jul 15 23
+(u)MitchSmith
+(p)14605
+(e)🎨📦|C-Sprites, A-Game-Objects
+(*)A large amount of inhands have been improved.
 (t)fri jul 14 23
 (u)aloe
 (*)Conspiracy mode has been disabled on RP pending a rework. The pick weight from conspiracy has gone to Gang mode instead.
