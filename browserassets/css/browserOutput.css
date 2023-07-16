@@ -29,22 +29,6 @@ img.icon {
 	width: 16px;
 	height: 16px;
 }
-
-.icon-popup-container:hover .icon-popup {
-	display: inline;
-}
-.icon-popup {
-	display: none;
-	position: absolute;
-	padding: 5px;
-	background-color: #000;
-	color: #fff;
-	font-size: 14px;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	white-space: nowrap;
-	border-radius: 5px;
-}
-
 a {color: #0000ff;}
 a:visited {color: #ff00ff;}
 a.popt {text-decoration: none;}

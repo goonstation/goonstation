@@ -661,9 +661,9 @@
 		var/rendered = "<span class=\"ooc [ooc_class]\"><span class=\"prefix\">OOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
 		if (ooc_icon)
 			rendered = {"
-			<div class="icon-popup-container">
+			<div class='tooltip'>
 				<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[ooc_icon].png")]\">
-				<div class="icon-popup">[ooc_icon]</div>
+				<span class="tooltiptext">[ooc_icon]</span>
 			</div>
 			 "} + rendered
 		if (C.holder)
@@ -783,9 +783,9 @@
 		var/rendered = "<span class=\"looc [looc_class]\"><span class=\"prefix\">LOOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
 		if (looc_icon)
 			rendered = {"
-			<div class="icon-popup-container">
+			<div class='tooltip'>
 				<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[looc_icon].png")]\">
-				<div class="icon-popup">[looc_icon]</div>
+				<span class="tooltiptext">[looc_icon]</span>
 			</div>
 			 "} + rendered
 		if (C.holder)
