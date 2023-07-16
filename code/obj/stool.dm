@@ -553,6 +553,7 @@ TYPEINFO(/obj/stool/wooden)
 	scoot_sounds = list( 'sound/misc/chair/normal/scoot1.ogg', 'sound/misc/chair/normal/scoot2.ogg', 'sound/misc/chair/normal/scoot3.ogg', 'sound/misc/chair/normal/scoot4.ogg', 'sound/misc/chair/normal/scoot5.ogg' )
 	parts_type = null
 	material_amt = 0.1
+	mat_appearances_to_ignore = "steel"
 
 	moveable
 		anchored = UNANCHORED
@@ -935,8 +936,7 @@ TYPEINFO(/obj/item/chair/folded)
 	else
 		C = new/obj/stool/chair(user.loc)
 	if (src.material)
-		if (!isSameMaterial(src.material, C.material))
-			C.setMaterial(src.material)
+		C.setMaterial(src.material)
 	if (src.c_color)
 		C.icon_state = src.c_color
 	C.set_dir(user.dir)
