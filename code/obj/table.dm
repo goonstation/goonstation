@@ -792,7 +792,7 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 				/obj/item/reagent_containers/glass/beaker/large,
 				/obj/item/clothing/glasses/spectro = 2,
 				/obj/item/device/reagentscanner = 2,
-				/obj/item/reagent_containers/dropper/mechanica)
+				/obj/item/reagent_containers/dropper/mechanical)
 
 
 /obj/table/reinforced/chemistry/clericalsup
