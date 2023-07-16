@@ -1,14 +1,14 @@
 
 /obj/machinery/atmospherics/trinary/manifold_valve
-	icon = 'icons/obj/atmospherics/manifold_valve.dmi'
-	icon_state = "manifold_valve0"
-
 	name = "manifold valve"
 	desc = "A pipe valve"
-
+	icon = 'icons/obj/atmospherics/manifold_valve.dmi'
+	icon_state = "manifold_valve0"
+	/// Diverts gas flow into the middle node.
 	var/divert = FALSE
-
+	/// What frequency we are listening on.
 	var/frequency = FREQ_AIR_ALARM_CONTROL
+	/// What label is used to contact us on packets?
 	var/id = null
 
 /obj/machinery/atmospherics/trinary/manifold_valve/New()
@@ -109,7 +109,7 @@
 
 /obj/machinery/atmospherics/trinary/manifold_valve/process()
 	..()
-	
+
 	var/datum/signal/signal = get_free_signal()
 	signal.transmission_method = TRANSMISSION_RADIO
 	signal.data["tag"] = src.id

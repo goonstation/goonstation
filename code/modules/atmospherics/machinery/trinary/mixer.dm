@@ -10,15 +10,18 @@
 	icon_state = "intact_off"
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
-
+	/// ID tag used to refer to us.
 	var/id_tag
+	/// Who controls us?
 	var/master_id
 	var/on = FALSE
-
+	/// Pressure we output at.
 	var/target_pressure = ONE_ATMOSPHERE
+	/// Ratio of gas from node1.
 	var/node1_ratio = 0.5
+	/// Ratio of gas from node2.
 	var/node2_ratio = 0.5
-
+	/// What frequency we listening on.
 	var/frequency
 
 /obj/machinery/atmospherics/trinary/mixer/New()
