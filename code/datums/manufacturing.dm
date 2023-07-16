@@ -54,10 +54,10 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 	proc/modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		// use this if you want the outputted item to be customised in any way by the manufacturer
-		if (M.malfunction && M.text_bad_output_adjective.len > 0 && prob(66))
+		if (M.malfunction && length(M.text_bad_output_adjective) > 0 && prob(66))
 			A.name = "[pick(M.text_bad_output_adjective)] [A.name]"
 			//A.quality -= rand(25,50)
-		if (src.apply_material && materials.len > 0)
+		if (src.apply_material && length(materials) > 0)
 			A.setMaterial(M.get_our_material(materials[materials[1]]))
 		return 1
 
@@ -75,7 +75,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 		if (istype(A,/obj/item/electronics/frame/))
 			var/obj/item/electronics/frame/F = A
 			if (ispath(src.frame_path))
-				if(src.apply_material && materials.len > 0)
+				if(src.apply_material && length(materials) > 0)
 					F.removeMaterial()
 					var/atom/thing = new frame_path(F)
 					thing.setMaterial(M.get_our_material(materials[materials[1]]))

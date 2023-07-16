@@ -1912,12 +1912,6 @@
 	icon_state = "floor"
 	},
 /area/wrecknsspolaris)
-"fP" = (
-/obj/landmark{
-	name = "polarisfall"
-	},
-/turf/space/fluid/noexplosion,
-/area/wrecknsspolaris/outside/teleport)
 "fQ" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -2124,33 +2118,6 @@
 /obj/item/scrap,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
-"gt" = (
-/obj/item/raw_material/rock,
-/obj/landmark{
-	name = "polarisfall"
-	},
-/turf/space/fluid/noexplosion,
-/area/wrecknsspolaris/outside/teleport)
-"gu" = (
-/obj/landmark{
-	name = "polarisfall"
-	},
-/turf/space/fluid/noexplosion,
-/area/wrecknsspolaris/outside)
-"gv" = (
-/obj/item/raw_material/shard/glass,
-/obj/landmark{
-	name = "polarisfall"
-	},
-/turf/space/fluid/noexplosion,
-/area/wrecknsspolaris/outside)
-"gw" = (
-/obj/item/raw_material/rock,
-/obj/landmark{
-	name = "polarisfall"
-	},
-/turf/space/fluid/noexplosion,
-/area/wrecknsspolaris/outside)
 "gx" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/space/fluid/noexplosion,
@@ -2203,13 +2170,6 @@
 "gG" = (
 /obj/sea_plant/seaweed,
 /obj/item/crowbar/red,
-/turf/space/fluid/noexplosion/nospawn,
-/area/dank_trench)
-"gH" = (
-/obj/landmark{
-	name = "marjfall"
-	},
-/obj/sea_plant/seaweed,
 /turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
 "gI" = (
@@ -2758,12 +2718,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
-"ia" = (
-/obj/landmark{
-	name = "marjfall"
-	},
-/turf/space/fluid/noexplosion,
-/area/dank_trench)
 "ib" = (
 /obj/rack,
 /obj/item/clothing/head/emerg,
@@ -3044,6 +2998,10 @@
 /obj/item/clothing/suit/cardboard_box/captain,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"me" = (
+/obj/landmark/spawner/artifact,
+/turf/unsimulated/floor/martian,
+/area/evilreaver/security)
 "ne" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -3063,6 +3021,11 @@
 /obj/item/clothing/suit/space/suv,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"oP" = (
+/obj/landmark/fall/sea/marj,
+/obj/sea_plant/seaweed,
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
 "pX" = (
 /obj/storage/crate/loot,
 /turf/unsimulated/floor/martian,
@@ -3081,6 +3044,11 @@
 /obj/item/paper/sop,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"tm" = (
+/obj/item/raw_material/shard/glass,
+/obj/landmark/fall/sea/polaris,
+/turf/space/fluid/noexplosion,
+/area/wrecknsspolaris/outside)
 "tO" = (
 /obj/crevice{
 	pixel_y = -30
@@ -3098,10 +3066,18 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"wO" = (
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/unsimulated/floor/martian,
+/area/evilreaver/security)
 "xd" = (
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
 	},
+/turf/unsimulated/floor/martian,
+/area/evilreaver/security)
+"zo" = (
+/mob/living/critter/martian/warrior,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "AE" = (
@@ -3134,22 +3110,44 @@
 "Bg" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/mantavault)
+"Br" = (
+/obj/landmark/fall/sea/marj,
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
 "Co" = (
 /turf/unsimulated/floor/longtile/black,
 /area/mantavault)
+"Cp" = (
+/obj/item/raw_material/rock,
+/obj/landmark/fall/sea/polaris,
+/turf/space/fluid/noexplosion,
+/area/wrecknsspolaris/outside/teleport)
 "Cr" = (
 /turf/space,
 /turf/space,
 /area/space)
+"CC" = (
+/obj/item/raw_material/rock,
+/obj/landmark/fall/sea/polaris,
+/turf/space/fluid/noexplosion,
+/area/wrecknsspolaris/outside)
 "Dz" = (
 /obj/item/device/infra_sensor,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"DD" = (
+/obj/landmark/fall/sea/polaris,
+/turf/space/fluid/noexplosion,
+/area/wrecknsspolaris/outside)
 "Em" = (
 /obj/map/light/dimred,
 /obj/portalmartian,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"Fm" = (
+/obj/landmark/fall/sea/polaris,
+/turf/space/fluid/noexplosion,
+/area/wrecknsspolaris/outside/teleport)
 "FF" = (
 /obj/crevice{
 	pixel_x = -28
@@ -3162,14 +3160,6 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
-"Gj" = (
-/obj/critter/martian/soldier/dead,
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
-"Go" = (
-/obj/critter/martian/warrior,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Hn" = (
@@ -3190,18 +3180,6 @@
 "Ip" = (
 /turf/unsimulated/wall/trench,
 /area/dank_trench)
-"Iz" = (
-/obj/critter/martian/psychic,
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
-"JZ" = (
-/obj/critter/martian/soldier,
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
-"KR" = (
-/obj/landmark/artifact,
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
 "Mi" = (
 /obj/marker/supplymarker,
 /obj/decal/fakeobjects/teleport_pad,
@@ -3223,6 +3201,10 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
+/turf/unsimulated/floor/martian,
+/area/evilreaver/security)
+"PN" = (
+/mob/living/critter/martian/mutant,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Qm" = (
@@ -3250,6 +3232,10 @@
 /area/evilreaver/security)
 "Sk" = (
 /obj/npc/trader/martian,
+/turf/unsimulated/floor/martian,
+/area/evilreaver/security)
+"Sp" = (
+/mob/living/critter/martian/soldier,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Td" = (
@@ -4198,19 +4184,19 @@ ab
 aS
 aS
 aW
-fP
+Fm
 fj
 bb
 bb
 aZ
 aZ
-gw
+CC
 aZ
 aZ
 aZ
 aZ
 bc
-gu
+DD
 cC
 aZ
 aS
@@ -5107,7 +5093,7 @@ aW
 bb
 bb
 bb
-fP
+Fm
 aZ
 aZ
 aZ
@@ -5406,7 +5392,7 @@ ab
 aS
 aS
 aW
-gt
+Cp
 bb
 bb
 bb
@@ -5699,10 +5685,10 @@ gW
 ab
 Hn
 In
-JZ
+Sp
 Yb
 UF
-KR
+me
 Hn
 ab
 aS
@@ -6306,7 +6292,7 @@ Ns
 Ns
 Ns
 Ns
-JZ
+Sp
 Hn
 ab
 aS
@@ -6604,7 +6590,7 @@ gW
 (12,1,1) = {"
 ab
 Hn
-KR
+me
 Ns
 xd
 Qw
@@ -6618,7 +6604,7 @@ bb
 bb
 bb
 bb
-gu
+DD
 aZ
 aZ
 aZ
@@ -6908,7 +6894,7 @@ ab
 Hn
 Ns
 Ns
-Go
+zo
 Ns
 tO
 Hn
@@ -7511,7 +7497,7 @@ gW
 ab
 Hn
 Ns
-JZ
+Sp
 Ns
 Ns
 Ns
@@ -7816,18 +7802,18 @@ In
 Yb
 kw
 Ns
-KR
+me
 Hn
 ab
 aS
 aS
 aW
-fP
+Fm
 bb
 bb
 bb
 aZ
-gv
+tm
 aZ
 bi
 bo
@@ -8418,7 +8404,7 @@ ab
 Hn
 Pt
 Ns
-JZ
+Sp
 Ns
 Ns
 Hn
@@ -9927,7 +9913,7 @@ gW
 ab
 Hn
 pX
-Gj
+wO
 Ns
 Ns
 Ns
@@ -9945,7 +9931,7 @@ aZ
 du
 bd
 aZ
-gu
+DD
 bf
 br
 br
@@ -10244,7 +10230,7 @@ ab
 aS
 aW
 ba
-gu
+DD
 aZ
 aZ
 aZ
@@ -11136,7 +11122,7 @@ ab
 Hn
 pX
 Ns
-Gj
+wO
 Ns
 FT
 Hn
@@ -11445,7 +11431,7 @@ Hn
 Hn
 lr
 Ns
-Iz
+PN
 Ns
 Hn
 ab
@@ -11458,7 +11444,7 @@ aZ
 aZ
 aZ
 aZ
-gu
+DD
 aZ
 aZ
 aS
@@ -12961,7 +12947,7 @@ gP
 Ip
 gy
 hT
-ia
+Br
 gP
 ac
 Ip
@@ -13266,7 +13252,7 @@ gP
 gP
 aa
 gP
-ia
+Br
 Ip
 Ip
 Ip
@@ -13869,7 +13855,7 @@ ax
 Ip
 gy
 gP
-ia
+Br
 gP
 aa
 Ip
@@ -14477,7 +14463,7 @@ hS
 gP
 gP
 gP
-gH
+oP
 Ip
 Ip
 Ip
@@ -14777,7 +14763,7 @@ ax
 ax
 ax
 iq
-ia
+Br
 aa
 gA
 Ip
@@ -15988,7 +15974,7 @@ Ip
 Ip
 Ip
 gy
-ia
+Br
 aa
 Ip
 ab

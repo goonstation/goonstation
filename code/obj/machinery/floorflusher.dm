@@ -223,7 +223,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 			return
 
 		// 	check for items in disposal - if there is a mob in there, flush.
-		if(contents.len > 0)
+		if(length(contents) > 0)
 			var/mob/living/M = locate() in contents
 			if(M)
 				flush = 1

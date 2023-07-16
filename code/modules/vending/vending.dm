@@ -862,7 +862,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		src.seconds_electrified--
 
 	//Pitch to the people!  Really sell it!
-	if (prob(src.slogan_chance) && ((src.last_slogan + src.slogan_delay) <= world.time) && (src.slogan_list.len > 0))
+	if (prob(src.slogan_chance) && ((src.last_slogan + src.slogan_delay) <= world.time) && (length(src.slogan_list) > 0))
 		var/slogan = pick(src.slogan_list)
 		src.speak(slogan)
 		src.last_slogan = world.time
@@ -1123,7 +1123,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		return 0
 
 	var/datum/powernet/PN			// find the powernet
-	if (powernets && powernets.len >= netnum)
+	if (powernets && length(powernets) >= netnum)
 		PN = powernets[netnum]
 
 	elecflash(src)

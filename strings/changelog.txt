@@ -1,5 +1,50 @@
 
+(t)sat jul 15 23
+(u)MitchSmith
+(p)14605
+(e)🎨📦|C-Sprites, A-Game-Objects
+(*)A large amount of inhands have been improved.
+(t)fri jul 14 23
+(u)aloe
+(*)Conspiracy mode has been disabled on RP pending a rework. The pick weight from conspiracy has gone to Gang mode instead.
+(u)colossusqw
+(p)14951
+(e)⚖🐁|C-Balance, A-Critters
+(+)Rattlesnake bite injected reajents cut from 40 to 20 to account for them not flushing themselves anymore.
+(t)thu jul 13 23
+(u)aloe
+(+)The cloaking shield generator is now sneakier, and will copy the appearance of doors, windows, and grilles. It's also a little easier to use.
+(u)TemThrush
+(p)14887
+(e)🎨|C-Sprites
+(*)Added 14 new hairstyles into the game, see minor changes for the list!
+(+)New hairstyle options are; Salty, Wolfcut, Brushed, Walnut, Mop, Acorn, Curtain, Scott, Curly Bob, Charming, Spoon, Messy Waves, Blunt Bob, Jelly.
+(u)Caio029
+(p)14556
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Conveyor belts are now buildable! Use a device analyzer on a conveyor belt and a conveyor switch, then go ham. See the help message on a conveyor belt for more information.
+(t)wed jul 12 23
+(u)Ikea
+(p)14911
+(e)💅🤖|C-QoL, A-Silicons
+(*)Silicons now only WOOP or BZZT when first stunned.
+(u)Blackrep
+(p)14536
+(e)⚖🎩|C-Balance, A-Clothing
+(+)Surplus vests from Sketchy D-5 are now made of carbon nanofiber.
+(t)tue jul 11 23
+(u)Amylizzle & Garash
+(p)14694
+(e)🆕🗺🎨🔧|C-Feature, A-Mapping, C-Sprites, A-Tooling
+(*)Cogmap now comes with a random engine type, or a rare chance to use the brand new NT Engine Teleportation System, which lets engineers select the engine they want to use.
 (t)mon jul 10 23
+(u)Kubius
+(p)14863
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Nadir's breach hull has gone dark, and its second GardenGear is back.
+(u)tarmunora
+(*)Poisoned surgical tools only transfer poison during surgery.
+(+)Cyberlungs no longer grant stamina bonuses.
 (u)Flappybat
 (p)14856
 (e)🗺⚖🤖|A-Mapping, C-Balance, A-Silicons
