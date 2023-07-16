@@ -534,6 +534,8 @@ TYPEINFO(/obj/stool/wooden)
 /* ================================================ */
 /* -------------------- Chairs -------------------- */
 /* ================================================ */
+TYPEINFO(/obj/stool/chair)
+	mat_appearances_to_ignore = list("steel")
 
 /obj/stool/chair
 	name = "chair"
@@ -553,7 +555,6 @@ TYPEINFO(/obj/stool/wooden)
 	scoot_sounds = list( 'sound/misc/chair/normal/scoot1.ogg', 'sound/misc/chair/normal/scoot2.ogg', 'sound/misc/chair/normal/scoot3.ogg', 'sound/misc/chair/normal/scoot4.ogg', 'sound/misc/chair/normal/scoot5.ogg' )
 	parts_type = null
 	material_amt = 0.1
-	mat_appearances_to_ignore = "steel"
 
 	moveable
 		anchored = UNANCHORED
