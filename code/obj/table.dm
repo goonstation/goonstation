@@ -789,12 +789,10 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	drawer_contents = list(/obj/item/storage/box/beakerbox,
 				/obj/item/storage/box/patchbox,
 				/obj/item/storage/box/syringes,
-				/obj/item/reagent_containers/food/drinks/fueltank,
 				/obj/item/reagent_containers/glass/beaker/large,
 				/obj/item/clothing/glasses/spectro = 2,
 				/obj/item/device/reagentscanner = 2,
-				/obj/item/reagent_containers/dropper/mechanical,
-				/obj/item/reagent_containers/iv_drip = 2)
+				/obj/item/reagent_containers/dropper/mechanica)
 
 
 /obj/table/reinforced/chemistry/clericalsup
