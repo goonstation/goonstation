@@ -1,5 +1,7 @@
 
 (t)sun jul 16 23
+(u)Sord
+(+)Light Engineering space suit recipe now requires extremely tough metal (bohrum)
 (u)Tyrant
 (p)14944
 (e)🗺💅|A-Mapping, C-QoL
