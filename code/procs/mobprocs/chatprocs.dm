@@ -665,7 +665,7 @@
 				<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[ooc_icon].png")]\">
 				<span class="tooltiptext">[ooc_icon]</span>
 			</div>
-			 "} + rendered
+			"} + rendered
 		if (C.holder)
 			rendered = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[rendered]</span>"
 
@@ -787,7 +787,7 @@
 				<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[looc_icon].png")]\">
 				<span class="tooltiptext">[looc_icon]</span>
 			</div>
-			 "} + rendered
+			"} + rendered
 		if (C.holder)
 			rendered = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[rendered]</span>"
 
