@@ -708,6 +708,13 @@
 	[interesting_data ? "<br><i>Energy signature analysis:</i><span class='notice'> [interesting_data]</span>" : null]\
 	"
 
+	if (isturf(A))
+		var/turf/T = A
+		if (T.active_liquid)
+			data += scan_forensic(T.active_liquid, visible)
+		if (T.active_airborne_liquid)
+			data += scan_forensic(T.active_airborne_liquid, visible)
+
 	return data
 
 // Made this a global proc instead of 10 or so instances of duplicate code spread across the codebase (Convair880).
