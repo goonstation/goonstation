@@ -436,8 +436,8 @@
 
 	var/static/savefile/save = new/savefile("data/blueprints.dat")
 
-	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(GET_DIST(src,target) > 2) return
+	pixelaction(atom/target as mob|obj|turf, params, mob/user as mob)
+	//	if(GET_DIST(src,target) > 2) return
 
 		if(!isturf(target)) target = get_turf(target)
 
@@ -483,10 +483,12 @@
 			if (using?.client)
 				using.client.images -= roomList[target]
 			roomList.Remove(target)
+			playsound(src.loc, 'sound/machines/button.ogg', 25, 0.1)
 		else
 			roomList.Add(target)
 			roomList[target] = image('icons/misc/old_or_unused.dmi',target,"tiletag", layer = HUD_LAYER)
 			updateOverlays()
+			playsound(src.loc, 'sound/machines/tone_beep.ogg', 15, 0.1)
 
 		return
 
