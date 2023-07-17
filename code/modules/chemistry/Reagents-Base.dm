@@ -518,7 +518,7 @@ datum
 							.= 0
 				if (volume >= 50)
 					if (I.type == /obj/item/handcuffs)
-						I.setMaterial(getMaterial("silver"), copy = FALSE)
+						I.setMaterial(getMaterial("silver"))
 						holder.remove_reagent(src.id, 50)
 						.= 0
 

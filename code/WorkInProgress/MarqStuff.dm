@@ -401,7 +401,7 @@
 
 	proc/setShaftMaterial(var/datum/material/M)
 		shaft_material = M
-		src.setMaterial(shaft_material,copy = 0, appearance = 0, setname = 0)
+		src.setMaterial(shaft_material, appearance = 0, setname = 0)
 		overlays -= shaft
 		if (M)
 			shaft.color = M.getColor()

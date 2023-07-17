@@ -473,7 +473,7 @@ TYPEINFO(/obj/machinery/processor)
 			return
 
 		if(W.material != null)
-			if(!W.material.canMix)
+			if(!W.material.getCanMix())
 				boutput(user, "<span class='alert'>This material can not be used in \the [src].</span>")
 				return
 
@@ -495,7 +495,7 @@ TYPEINFO(/obj/machinery/processor)
 		user.set_loc(src)
 
 		var/datum/material/M = new /datum/material/organic/flesh {desc="A disgusting wad of flesh."; color="#881111";} ()
-		M.name = "[user.real_name] flesh"
+		M.setName("[user.real_name] flesh")
 
 		var/obj/item/material_piece/wad/dummyItem = new /obj/item/material_piece/wad
 		dummyItem.set_loc(src)
@@ -523,11 +523,11 @@ TYPEINFO(/obj/machinery/processor)
 				boutput(user, "<span class='alert'>No significant material found in \the [target].</span>")
 			else
 				boutput(user, "<span class='notice'><u>[capitalize(W.material.getName())]</u></span>")
-				boutput(user, "<span class='notice'>[W.material.desc]</span>")
+				boutput(user, "<span class='notice'>[W.material.getDesc()]</span>")
 
-				if(W.material.properties.len)
+				if(W.material.getMaterialProperties().len)
 					boutput(user, "<span class='notice'><u>The material is:</u></span>")
-					for(var/datum/material_property/X in W.material.properties)
+					for(var/datum/material_property/X in W.material.getMaterialProperties())
 						var/value = W.material.getProperty(X.id)
 						boutput(user, "<span class='notice'>• [X.getAdjective(W.material)] ([value])</span>")
 				else

@@ -18,9 +18,9 @@ ABSTRACT_TYPE(/datum/material_property)
 	var/prefix_low_max = 3
 
 	proc/changeValue(datum/material/M, newValue)
-		if (src in M.properties)
-			M.properties[src] = clamp(newValue, min_value, max_value)
-			onValueChanged(M, M.properties[src])
+		if (src in M.getMaterialProperties())
+			M.getMaterialProperties()[src] = clamp(newValue, min_value, max_value)
+			onValueChanged(M, M.getMaterialProperties()[src])
 
 	proc/onValueChanged(var/datum/material/M, var/new_value)
 		return

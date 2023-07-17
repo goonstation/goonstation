@@ -196,7 +196,7 @@
 				if(istype(opt, /obj/item/mining_mod/conc))
 					newObj.blasting = 1
 
-				newObj.setMaterial(mat1 = head.material, appearance = 1, setname = 1, copy = 1, use_descriptors = 0)
+				newObj.setMaterial(mat1 = head.material, appearance = 1, setname = 1, use_descriptors = 0)
 
 				if(newObj.blasting)
 					newObj.remove_prefixes(99)
@@ -686,7 +686,7 @@
 			var/obj/item/material_piece/wad/W = new /obj/item/material_piece/wad
 
 			if(refined?.material)
-				mat.canMix = 0
+				mat.setCanMix(0)
 				mat.setName("[master_chem_name]-infused [mat.getName()]")
 				mat.setID("[master_chem_name][mat.getID()]")
 				W.setMaterial(mat)

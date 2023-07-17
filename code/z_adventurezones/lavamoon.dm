@@ -1323,7 +1323,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 		return
 	var/found_negative = (src.material.getID() == "negativematter")
 	if(!found_negative)
-		for(var/datum/material/parent_mat in src.material.parent_materials)
+		for(var/datum/material/parent_mat in src.material.getParentMaterials())
 			if(parent_mat.getID() == "negativematter")
 				found_negative = TRUE
 				break

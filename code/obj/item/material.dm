@@ -27,7 +27,7 @@
 		src.pixel_x = rand(0 - wiggle, wiggle)
 		src.pixel_y = rand(0 - wiggle, wiggle)
 		setup_material()
-		if(src.material?.name)
+		if(src.material?.getName())
 			initial_material_name = src.material.getName()
 
 	proc/setup_material() // Overwrite for ore specific setup

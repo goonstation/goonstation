@@ -144,7 +144,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			else
 				set_opacity(0)
 
-			if(src.material.special_naming)
+			if(src.material.usesSpecialNaming())
 				name = src.material.specialNaming(src)
 
 		if (istype(reinforcement))
@@ -157,7 +157,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			stab_resist 	+= round(reinforcement.getProperty("hard") * 5)
 			corrode_resist 	+= round(reinforcement.getProperty("chemical") * 5)
 
-			name = "[reinforcement.name]-reinforced " + name
+			name = "[reinforcement.getName()]-reinforced " + name
 
 	proc/set_reinforcement(var/datum/material/M)
 		if (!M)

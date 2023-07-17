@@ -37,7 +37,7 @@
 		var/hasSteel = 0
 		var/hasKosh = 0
 
-		for(var/datum/material/CM in M.parent_materials)
+		for(var/datum/material/CM in M.getParentMaterials())
 			if(CM.getID() == "soulsteel") hasSteel = 1
 			if(CM.getID() == "koshmarite") hasKosh = 1
 
@@ -55,7 +55,7 @@
 		var/hasSoul = 0
 		var/hasSteel = 0
 
-		for(var/datum/material/CM in M.parent_materials)
+		for(var/datum/material/CM in M.getParentMaterials())
 			if(CM.getID() == "ectoplasm") hasSoul = 1
 			if(CM.getID() == "steel") hasSteel = 1
 
@@ -73,7 +73,7 @@
 		var/one = 0
 		var/two = 0
 
-		for(var/datum/material/CM in M.parent_materials)
+		for(var/datum/material/CM in M.getParentMaterials())
 			if(CM.getID() == "mauxite") one = 1
 			if(CM.getID() == "char") two = 1
 
@@ -88,7 +88,7 @@
 		var/one = 0
 		var/two = 0
 
-		for(var/datum/material/CM in M.parent_materials)
+		for(var/datum/material/CM in M.getParentMaterials())
 			if(CM.getID() == "pharosium") one = 1
 			if(CM.getID() == "char") two = 1
 
@@ -103,7 +103,7 @@
 		var/one = 0
 		var/two = 0
 
-		for(var/datum/material/CM in M.parent_materials)
+		for(var/datum/material/CM in M.getParentMaterials())
 			if(CM.getID() == "gold") one = 1
 			if(CM.getID() == "cobryl") two = 1
 
@@ -118,7 +118,7 @@
 		var/one = 0
 		var/two = 0
 
-		for(var/datum/material/CM in M.parent_materials)
+		for(var/datum/material/CM in M.getParentMaterials())
 			if(CM.getID() == "plasmastone") one = 1
 			if(CM.getID() == "steel") two = 1
 
@@ -135,7 +135,7 @@
 		var/one = 0
 		var/two = 0
 
-		for(var/datum/material/CM in M.parent_materials)
+		for(var/datum/material/CM in M.getParentMaterials())
 			if(CM.getID() == "plasmastone") one = 1
 			if(CM.getID() == "glass") two = 1
 
@@ -153,7 +153,7 @@
 		var/hasCarbon = 0
 		var/hasSilk = 0
 
-		for(var/datum/material/CM in M.parent_materials)
+		for(var/datum/material/CM in M.getParentMaterials())
 			if(CM.getID() == "carbonfibre") hasCarbon = 1
 			if(CM.getID() == "spidersilk") hasSilk = 1
 
@@ -171,7 +171,7 @@
 		var/one = 0
 		var/two = 0
 
-		for(var/datum/material/CM in M.parent_materials)
+		for(var/datum/material/CM in M.getParentMaterials())
 			if(CM.getID() == "latex") one = 1
 			if(CM.getID() == "cotton") two = 1
 
@@ -188,7 +188,7 @@
 
 		var/regex/R = regex("rubber")
 
-		for(var/datum/material/CM in M.parent_materials)
+		for(var/datum/material/CM in M.getParentMaterials())
 			if(CM.getID() == "coral") one = 1
 			if(R.Find(CM.getID())) two = 1
 

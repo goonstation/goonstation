@@ -377,7 +377,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			return material
 		var/datum/material/interpolated/alloy = material
 		if (istype(alloy))
-			return locate(/datum/material/crystal/molitz) in alloy.parent_materials
+			return locate(/datum/material/crystal/molitz) in alloy.getParentMaterials()
 
 	execute(var/atom/owner, var/temp, var/agent_b=FALSE)
 		if(temp < 500) return //less than reaction temp

@@ -172,7 +172,7 @@
 	name = "Unprocessed Material"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!I.material.canMix) return 0
+		if(!I.material.getCanMix()) return 0
 		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
 		return ..()
 
@@ -213,7 +213,7 @@
 
 	/// Does the object match our conditions?
 	proc/checkMatch(var/obj/item/I)
-		if(I.material && I.material.mixOnly) return 0
+		if(I.material && I.material.getMixOnly()) return 0
 		if(I.amount >= required_amount)
 			return 1
 		return -1 //Return -1 if theres not enough of the material. This will show up differently on the fab.

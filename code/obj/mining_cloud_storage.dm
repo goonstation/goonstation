@@ -105,7 +105,7 @@
 			var/amtload = 0
 			var/rejected = 0
 			for (var/obj/item/raw_material/M in dropped.contents)
-				if(M.material?.name != M.initial_material_name)
+				if(M.material?.getName() != M.initial_material_name)
 					rejected += M.amount
 					continue
 				amtload += M.amount
@@ -129,7 +129,7 @@
 			return
 		if(istype(O,/obj/item/raw_material/))
 			var/obj/item/raw_material/R = O
-			if(R.material?.name != R.initial_material_name)
+			if(R.material?.getName() != R.initial_material_name)
 				boutput(user, "<span class='alert'>[src] rejects the anomalous ore.</span>")
 				return
 		else
@@ -144,7 +144,7 @@
 				continue
 			if(!O.material.isSameMaterial(M.material))
 				continue
-			if(M.material?.name != M.initial_material_name)
+			if(M.material?.getName() != M.initial_material_name)
 				continue
 			if (O.loc == user)
 				continue
@@ -167,7 +167,7 @@
 
 		if (istype(W, /obj/item/raw_material/) && src.accept_loading(user))
 			var/obj/item/raw_material/R = W
-			if(R.material?.name != R.initial_material_name)
+			if(R.material?.getName() != R.initial_material_name)
 				boutput(user, "<span class='alert'>[src] rejects the anomalous ore.</span>")
 				return
 			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
@@ -178,7 +178,7 @@
 			var/amtload = 0
 			for (var/obj/item/loading in W.contents)
 				var/obj/item/raw_material/R = loading
-				if (R.material?.name != R.initial_material_name)
+				if (R.material?.getName() != R.initial_material_name)
 					continue
 				src.load_item(R, user)
 				amtload++
@@ -244,7 +244,7 @@
 			return "no properties"
 		if (istype(mat, /datum/material/crystal/gemstone)) return "varied levels of hardness and density"
 		var/list/stat_list = list()
-		for(var/datum/material_property/stat in mat.properties)
+		for(var/datum/material_property/stat in mat.getMaterialProperties())
 			stat_list += stat.getAdjective(mat)
 		if (!stat_list.len) return "no properties"
 		return stat_list.Join(", ")

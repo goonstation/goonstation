@@ -151,6 +151,18 @@ ABSTRACT_TYPE(/datum/material)
 	proc/getEdible()
 		return src.edible
 
+	proc/getCanMix()
+		return src.canMix
+
+	proc/getMixOnly()
+		return src.mixOnly
+
+	proc/getMaterialProperties()
+		return src.properties.Copy()
+
+	proc/getParentMaterials()
+		return src.parent_materials.Copy()
+
 	//setters for protected vars
 	proc/setID(var/id)
 		if(!src.mutable)
@@ -166,6 +178,11 @@ ABSTRACT_TYPE(/datum/material)
 		if(!src.mutable)
 			CRASH("Attempted to mutate an immutatble material!")
 		src.color = color
+
+	proc/setCanMix(var/mix)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		src.canMix = mix
 
 	//mutability procs
 
@@ -412,6 +429,95 @@ ABSTRACT_TYPE(/datum/material)
 	name = "imcoderium"
 	desc = "You should not be seeing this"
 	color = "#6f00ff"
+
+	New(var/datum/material/mat1,var/datum/material/mat2,var/t)
+		..()
+		var/ot = 1 - t
+		src.quality = round(mat1.quality * ot + mat2.quality * t)
+
+		src.prefixes = (mat1.prefixes | mat2.prefixes)
+		src.suffixes = (mat1.suffixes | mat2.suffixes)
+
+		src.value = round(mat1.value * ot + mat2.value * t)
+		src.name = mat1.interpolateName(mat2, 0.5)
+		src.desc = "This is an alloy of [mat1.name] and [mat2.name]"
+		src.mat_id = "([mat1.getID()]+[mat2.getID()])"
+		src.alpha = round(mat1.alpha * ot + mat2.alpha * t)
+		if(islist(mat1.color) || islist(mat2.color))
+			var/list/colA = normalize_color_to_matrix(mat1.color)
+			var/list/colB = normalize_color_to_matrix(mat2.color)
+			src.color = list()
+			for(var/i in 1 to length(colA))
+				src.color += colA[i] * ot + colB[i] * t
+		else
+			src.color = rgb(round(GetRedPart(mat1.color) * ot + GetRedPart(mat2.color) * t), round(GetGreenPart(mat1.color) * ot + GetGreenPart(mat2.color) * t), round(GetBluePart(mat1.color) * ot + GetBluePart(mat2.color) * t))
+		src.properties = mergeProperties(mat1.properties, mat2.properties, t)
+
+		src.edible_exact = round(mat1.edible_exact * ot + mat2.edible_exact * t)
+		if(src.edible_exact >= 0.5) src.edible = TRUE
+		else src.edible = FALSE
+
+		src.special_naming = FALSE // the naming proc doesn't carry over anyway
+
+		src.mixOnly = FALSE
+
+		//--
+		src.triggersTemp = getFusedTriggers(mat1.triggersTemp, mat2.triggersTemp, src)
+		src.triggersChem = getFusedTriggers(mat1.triggersChem, mat2.triggersChem, src)
+		src.triggersPickup = getFusedTriggers(mat1.triggersPickup, mat2.triggersPickup, src)
+		src.triggersDrop = getFusedTriggers(mat1.triggersDrop, mat2.triggersDrop, src)
+		src.triggersExp = getFusedTriggers(mat1.triggersExp, mat2.triggersExp, src)
+		src.triggersOnAdd = getFusedTriggers(mat1.triggersOnAdd, mat2.triggersOnAdd, src)
+		src.triggersOnLife = getFusedTriggers(mat1.triggersOnLife, mat2.triggersOnLife, src)
+		src.triggersOnAttack = getFusedTriggers(mat1.triggersOnAttack, mat2.triggersOnAttack, src)
+		src.triggersOnAttacked = getFusedTriggers(mat1.triggersOnAttacked, mat2.triggersOnAttacked, src)
+		src.triggersOnEntered = getFusedTriggers(mat1.triggersOnEntered, mat2.triggersOnEntered, src)
+
+		handleTriggerGenerations(src.triggersTemp)
+		handleTriggerGenerations(src.triggersChem)
+		handleTriggerGenerations(src.triggersPickup)
+		handleTriggerGenerations(src.triggersDrop)
+		handleTriggerGenerations(src.triggersExp)
+		handleTriggerGenerations(src.triggersOnAdd)
+		handleTriggerGenerations(src.triggersOnLife)
+		handleTriggerGenerations(src.triggersOnAttack)
+		handleTriggerGenerations(src.triggersOnAttacked)
+		handleTriggerGenerations(src.triggersOnEntered)
+
+		//Make sure the newly merged properties are informed about the fact that they just changed. Has to happen after triggers.
+		for(var/datum/material_property/nProp in src.properties)
+			nProp.onValueChanged(src, src.properties[nProp])
+
+		//--
+
+		//Texture merging. SUPER DUPER UGLY AAAAH
+		if(mat2.texture && !mat1.texture)
+			src.texture = mat2.texture
+			src.texture_blend = mat2.texture_blend
+		else if (mat1.texture && !mat2.texture)
+			src.texture = mat1.texture
+			src.texture_blend = mat1.texture_blend
+		else if (mat1.texture && mat2.texture)
+			if(mat1.generation == mat2.generation)
+				//Mat1 has higher priority in this case. Optional: implement some shitty blended texture thing. probably a bad idea.
+				src.texture = mat1.texture
+				src.texture_blend = mat1.texture_blend
+			else
+				if(mat1.generation < mat2.generation)
+					src.texture = mat1.texture
+					src.texture_blend = mat1.texture_blend
+				else
+					src.texture = mat2.texture
+					src.texture_blend = mat2.texture_blend
+		//
+
+		src.material_flags = mat1.material_flags | mat2.material_flags
+
+		src.parent_materials.Add(mat1)
+		src.parent_materials.Add(mat2)
+
+		//RUN VALUE CHANGED ON ALL PROPERTIES TO TRIGGER PROPERS EVENTS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 
 // Metals
 

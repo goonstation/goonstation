@@ -238,98 +238,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 /// Merges two materials and returns result as new material.
 /proc/getFusedMaterial(var/datum/material/mat1,var/datum/material/mat2)
-	return getInterpolatedMaterial(mat1, mat2, 0.5)
-
-/proc/getInterpolatedMaterial(var/datum/material/mat1,var/datum/material/mat2,var/t)
-	var/ot = 1 - t
-	var/datum/material/interpolated/newMat = new()
-
-	newMat.quality = round(mat1.quality * ot + mat2.quality * t)
-
-	newMat.prefixes = (mat1.prefixes | mat2.prefixes)
-	newMat.suffixes = (mat1.suffixes | mat2.suffixes)
-
-	newMat.value = round(mat1.value * ot + mat2.value * t)
-	newMat.name = mat1.interpolateName(mat2, 0.5)
-	newMat.desc = "This is an alloy of [mat1.name] and [mat2.name]"
-	newMat.mat_id = "([mat1.getID()]+[mat2.getID()])"
-	newMat.alpha = round(mat1.alpha * ot + mat2.alpha * t)
-	if(islist(mat1.color) || islist(mat2.color))
-		var/list/colA = normalize_color_to_matrix(mat1.color)
-		var/list/colB = normalize_color_to_matrix(mat2.color)
-		newMat.color = list()
-		for(var/i in 1 to length(colA))
-			newMat.color += colA[i] * ot + colB[i] * t
-	else
-		newMat.color = rgb(round(GetRedPart(mat1.color) * ot + GetRedPart(mat2.color) * t), round(GetGreenPart(mat1.color) * ot + GetGreenPart(mat2.color) * t), round(GetBluePart(mat1.color) * ot + GetBluePart(mat2.color) * t))
-	newMat.properties = mergeProperties(mat1.properties, mat2.properties, t)
-
-	newMat.edible_exact = round(mat1.edible_exact * ot + mat2.edible_exact * t)
-	if(newMat.edible_exact >= 0.5) newMat.edible = TRUE
-	else newMat.edible = FALSE
-
-	newMat.special_naming = FALSE // the naming proc doesn't carry over anyway
-
-	newMat.mixOnly = FALSE
-
-	//--
-	newMat.triggersTemp = getFusedTriggers(mat1.triggersTemp, mat2.triggersTemp, newMat)
-	newMat.triggersChem = getFusedTriggers(mat1.triggersChem, mat2.triggersChem, newMat)
-	newMat.triggersPickup = getFusedTriggers(mat1.triggersPickup, mat2.triggersPickup, newMat)
-	newMat.triggersDrop = getFusedTriggers(mat1.triggersDrop, mat2.triggersDrop, newMat)
-	newMat.triggersExp = getFusedTriggers(mat1.triggersExp, mat2.triggersExp, newMat)
-	newMat.triggersOnAdd = getFusedTriggers(mat1.triggersOnAdd, mat2.triggersOnAdd, newMat)
-	newMat.triggersOnLife = getFusedTriggers(mat1.triggersOnLife, mat2.triggersOnLife, newMat)
-	newMat.triggersOnAttack = getFusedTriggers(mat1.triggersOnAttack, mat2.triggersOnAttack, newMat)
-	newMat.triggersOnAttacked = getFusedTriggers(mat1.triggersOnAttacked, mat2.triggersOnAttacked, newMat)
-	newMat.triggersOnEntered = getFusedTriggers(mat1.triggersOnEntered, mat2.triggersOnEntered, newMat)
-
-	handleTriggerGenerations(newMat.triggersTemp)
-	handleTriggerGenerations(newMat.triggersChem)
-	handleTriggerGenerations(newMat.triggersPickup)
-	handleTriggerGenerations(newMat.triggersDrop)
-	handleTriggerGenerations(newMat.triggersExp)
-	handleTriggerGenerations(newMat.triggersOnAdd)
-	handleTriggerGenerations(newMat.triggersOnLife)
-	handleTriggerGenerations(newMat.triggersOnAttack)
-	handleTriggerGenerations(newMat.triggersOnAttacked)
-	handleTriggerGenerations(newMat.triggersOnEntered)
-
-	//Make sure the newly merged properties are informed about the fact that they just changed. Has to happen after triggers.
-	for(var/datum/material_property/nProp in newMat.properties)
-		nProp.onValueChanged(newMat, newMat.properties[nProp])
-
-	//--
-
-	//Texture merging. SUPER DUPER UGLY AAAAH
-	if(mat2.texture && !mat1.texture)
-		newMat.texture = mat2.texture
-		newMat.texture_blend = mat2.texture_blend
-	else if (mat1.texture && !mat2.texture)
-		newMat.texture = mat1.texture
-		newMat.texture_blend = mat1.texture_blend
-	else if (mat1.texture && mat2.texture)
-		if(mat1.generation == mat2.generation)
-			//Mat1 has higher priority in this case. Optional: implement some shitty blended texture thing. probably a bad idea.
-			newMat.texture = mat1.texture
-			newMat.texture_blend = mat1.texture_blend
-		else
-			if(mat1.generation < mat2.generation)
-				newMat.texture = mat1.texture
-				newMat.texture_blend = mat1.texture_blend
-			else
-				newMat.texture = mat2.texture
-				newMat.texture_blend = mat2.texture_blend
-	//
-
-	newMat.material_flags = mat1.material_flags | mat2.material_flags
-
-	newMat.parent_materials.Add(mat1)
-	newMat.parent_materials.Add(mat2)
-
-	//RUN VALUE CHANGED ON ALL PROPERTIES TO TRIGGER PROPERS EVENTS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-	return newMat
+	return new /datum/material/interpolated(mat1, mat2, 0.5)
 
 /// Merges two material names into one.
 /proc/getInterpolatedName(var/mat1, var/mat2, var/t)
@@ -456,8 +365,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 /proc/searchMatTree(var/datum/material/M, var/id, var/current_depth, var/max_depth = 3)
 	if(!M || !id) return null
-	if(!M.parent_materials.len) return null
-	for(var/datum/material/CM in M.parent_materials)
+	if(!M.getParentMaterials().len) return null
+	for(var/datum/material/CM in M.getParentMaterials())
 		if(CM.getID() == id) return CM
 		if(current_depth + 1 <= max_depth)
 			var/temp = searchMatTree(CM, id, current_depth + 1, max_depth)
@@ -489,10 +398,10 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		coil.conductor = conductor
 
 		if (coil.insulator)
-			coil.setMaterial(coil.insulator, copy = copy_material)
+			coil.setMaterial(coil.insulator, mutable = copy_material)
 			coil.color = coil.insulator.getColor()
 		else
-			coil.setMaterial(coil.conductor, copy = copy_material)
+			coil.setMaterial(coil.conductor, mutable = copy_material)
 			coil.color = coil.conductor.getColor()
 		coil.updateName()
 
