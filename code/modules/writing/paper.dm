@@ -945,6 +945,18 @@
 	two_handed = TRUE
 	c_flags = COVERSEYES | COVERSMOUTH// this might not work as i want it to
 
+/obj/item/paper/newspaper/New()
+	. = ..()
+	if (src.headline)
+		if (!src.publisher)
+			src.publisher = pick(list("Nanotrasen Weekly", "The Daily Bulletin","The Mostly Independent",
+				"The Nanotrasen Times", "Headline Daily",
+			))
+	else
+		pickrandominfo()
+	src.icon_state = "newspaper"
+	src.desc = "Its from [src.publisher]. Its headline reads: [src.headline]"
+
 /// a rolled up newspaper
 /obj/item/paper/newspaper/rolled
 	icon_state = "newspaper_rolled"
@@ -955,17 +967,17 @@
 
 /// This newspaper starts out with a random headline at roundstart. Intended for mapping
 /obj/item/paper/newspaper/rolled/random
-	publisher = pick(list(
-		"Nanotrasen Weekly",
-		"The Daily Bulletin",
-		"The Mostly Independent",
-		"The Nanotrasen Times",
-		"Headline Daily",
-	))
 
 /// pick a random headline
 /obj/item/paper/newspaper/rolled/random/New()
 	. = ..()
+	pickrandominfo()
+
+/obj/item/paper/newspaper/proc/pickrandominfo()
+	if (!src.publisher)
+		src.publisher = pick(list("Nanotrasen Weekly", "The Daily Bulletin","The Mostly Independent",
+			"The Nanotrasen Times", "Headline Daily",
+		))
 	src.headline = pick(list(
 		"John Nanotrasen casually admits to committing multiple felonies in leaked meeting recordings.",
 		"Study by PSFCSO shows presence of Owls directly correlated with station longevity.",
@@ -994,12 +1006,6 @@
 		"Highest peak on Mundus climbed for first time. Climber says 'hardest part was actually getting there'.",
 		"Pug detective sniffs out crimes."
 	))
-
-/obj/item/paper/newspaper/New()
-	. = ..()
-	if (src.headline)
-		src.icon_state = "newspaper"
-		src.desc = "Its headline reads: [src.headline]"
 
 /obj/item/paper/newspaper/attack_hand(mob/user)
 	. = ..()
