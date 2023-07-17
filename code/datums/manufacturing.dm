@@ -159,7 +159,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Security Robot"
 	item_paths = list("POW-1","MET-2","CON-1")
 	item_amounts = list(10,10,10)
-	frame_path = /obj/critter/gunbot/heavy
+	frame_path = /mob/living/critter/robotic/gunbot
 	time = 15 SECONDS
 	create = 1
 
