@@ -965,14 +965,6 @@
 	two_handed = FALSE
 	c_flags = ONBELT // hopefully this uncovers the eyes and mouth lol
 
-/// This newspaper starts out with a random headline at roundstart. Intended for mapping
-/obj/item/paper/newspaper/rolled/random
-
-/// pick a random headline
-/obj/item/paper/newspaper/rolled/random/New()
-	. = ..()
-	pickrandominfo()
-
 /obj/item/paper/newspaper/proc/pickrandominfo()
 	if (!src.publisher)
 		src.publisher = pick(list("Nanotrasen Weekly", "The Daily Bulletin","The Mostly Independent",
