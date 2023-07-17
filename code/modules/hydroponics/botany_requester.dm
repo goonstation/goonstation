@@ -46,8 +46,8 @@ var/list/datum/botany_request/botany_requests = list()
 	ui_static_data(mob/user)
 		. = list()
 		var/list/produce = list()
-		for (var/plant in concrete_typesof(/datum/plant))
-			produce[lowertext(plant.produce_name)] = plant
+		for (var/datum/plant/plant in concrete_typesof(/datum/plant))
+			produce[lowertext(plant.name)] = plant
 		.["produce"] = sortList(produce, /proc/cmp_text_asc)
 		.["max_amount"] = src.max_amount
 
@@ -133,7 +133,7 @@ var/list/datum/botany_request/botany_requests = list()
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
-			ui = new(user, src, "ChemRequestReceiver")
+			ui = new(user, src, "BotanyRequestReceiver")
 			ui.open()
 
 	ui_data(mob/user)
