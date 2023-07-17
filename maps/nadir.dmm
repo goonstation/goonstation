@@ -29545,6 +29545,7 @@
 /obj/table/wood/round/auto,
 /obj/item/clothing/suit/cultist/nerd,
 /obj/item/clothing/mask/skull,
+/obj/item/clothing/head/apprentice,
 /turf/simulated/floor/carpet/red/fancy/innercorner/west,
 /area/station/crew_quarters/arcade/dungeon)
 "mDc" = (
