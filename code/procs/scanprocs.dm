@@ -708,8 +708,8 @@
 	[interesting_data ? "<br><i>Energy signature analysis:</i><span class='notice'> [interesting_data]</span>" : null]\
 	"
 
-	if (isturf(A))
-		var/turf/T = A
+	if (A.level <= 1)
+		var/turf/T = get_turf(A)
 		if (T.active_liquid)
 			data += scan_forensic(T.active_liquid, visible)
 		if (T.active_airborne_liquid)
