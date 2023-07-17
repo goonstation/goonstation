@@ -20960,6 +20960,7 @@
 "jcG" = (
 /obj/storage/closet/office,
 /obj/item/camera,
+/obj/item/storage/toolbox/artistic,
 /turf/simulated/floor/grey/side{
 	dir = 9
 	},
