@@ -1,5 +1,7 @@
 
 (t)mon jul 17 23
+(u)tambourine
+(+)space lube pre-stun removed, superlube pre-stun reduced.
 (u)Flappybat
 (e)⚖🐁|C-Balance, A-Critters
 (+)Rattlesnake venom injection reduced from 20 to 12.
