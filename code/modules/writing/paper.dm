@@ -934,16 +934,14 @@
 
 /// A blank newspaper, ready to have its headline written.
 /obj/item/paper/newspaper
+	name = "Newspaper"
+	desc = "This is a newspaper. It appears to lack a headline. And text."
+	icon_state = "newspaper"
+	item_state = "newspaper"
+	sealed = TRUE
+	two_handed = TRUE
 	var/headline = ""
 	var/publisher = ""
-	desc = "This is a newspaper. It appears to lack a headline. And text."
-	icon_state = "newspaper_blank"
-	item_state = "newspaper_blank"
-	sealed = TRUE // these will have their headlines written not by pens.
-
-	var/rolled = FALSE
-	two_handed = TRUE
-	c_flags = COVERSEYES | COVERSMOUTH// this might not work as i want it to
 
 /obj/item/paper/newspaper/New()
 	. = ..()
@@ -954,6 +952,7 @@
 			))
 	else
 		pickrandominfo()
+	src.name = "[src.publisher] newspaper"
 	src.icon_state = "newspaper"
 	src.desc = "Its from [src.publisher]. Its headline reads: [src.headline]"
 
@@ -965,6 +964,7 @@
 	two_handed = FALSE
 	c_flags = ONBELT // hopefully this uncovers the eyes and mouth lol
 
+/// picks a random headline. If there's no set publisher, set that too.
 /obj/item/paper/newspaper/proc/pickrandominfo()
 	if (!src.publisher)
 		src.publisher = pick(list("Nanotrasen Weekly", "The Daily Bulletin","The Mostly Independent",
@@ -1004,27 +1004,12 @@
 	src.rollup()
 
 /obj/item/paper/newspaper/proc/rollup()
-	if (src.rolled) // unrolling it
-		if (src.headline)
-			src.icon_state = "newspaper"
-			src.item_state = "newspaper"
-		else
-			src.icon_state = "newspaper_blank"
-			src.item_state = "newspaper_blank"
-		src.rolled = FALSE
-		src.two_handed = TRUE
-		src.c_flags = COVERSEYES | COVERSMOUTH
-	else // rolling
+	if (src.two_handed) // rolling it up
+		src.two_handed = FALSE
 		src.icon_state = "newspaper_rolled"
 		src.item_state = "paper"
-		src.rolled = TRUE
-		src.two_handed = FALSE
-		src.c_flags = ONBELT
+	else // unrolling it
+		src.two_handed = TRUE
+		src.icon_state = "newspaper"
+		src.item_state = "newspaper"
 
-/// give the newspaper a custom headline and article
-/obj/item/paper/newspaper/proc/write_contents()
-	src.headline = ""
-	src.desc = "Its headline reads: [src.headline]"
-	src.info = ""
-	src.icon_state = "newspaper"
-	src.item_state = "newspaper"
