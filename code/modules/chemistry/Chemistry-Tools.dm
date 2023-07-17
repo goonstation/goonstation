@@ -691,6 +691,7 @@ proc/ui_describe_reagents(atom/A)
 	splash_all_contents = FALSE
 	object_flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
 	initial_volume = 100
+	accepts_lid = TRUE
 	var/obj/item/current_container = null //! the container currently attached to the condenser
 
 	mouse_drop(atom/over_object, src_location, over_location)

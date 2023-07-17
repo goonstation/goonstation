@@ -521,7 +521,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				src.active_reactions -= C
 				continue
 			if(C.temperature_change)
-				src.total_temperature += C.temperature_change
+				src.set_reagent_temp(src.total_temperature += C.temperature_change, react = TRUE)
 			var/speed = C.reaction_speed
 			for (var/reagent in C.required_reagents)
 				var/required_amount = C.required_reagents[reagent] * speed / C.result_amount
