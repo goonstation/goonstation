@@ -1,5 +1,9 @@
 
 (t)mon jul 17 23
+(u)Cheffie
+(p)14759
+(e)🗺🔧🔒⚖🔄🐁|A-Mapping, A-Tooling, A-Secret, C-Balance, C-Rework, A-Critters
+(+)Robots in space are now mobs and are resistant to unarmed strikes. Bring something heavy!
 (u)tambourine
 (+)space lube pre-stun removed, superlube pre-stun reduced.
 (u)Flappybat
