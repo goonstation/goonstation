@@ -1111,6 +1111,13 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				..()
 				access.access = get_access("Captain")
 
+		sleeper // implanted on sleeper rolls
+			desc = "This implant works like an ID card, opening doors for the implantee. Wait, isn't this access ID illegal?"
+			icon_state = "implant-r"
+			New()
+				..()
+				access.access = get_access(access_syndicate_shuttle)
+
 /* ============================================================ */
 /* --------------------- Artifact Implants -------------------- */
 /* ============================================================ */
