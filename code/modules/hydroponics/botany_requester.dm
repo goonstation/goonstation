@@ -4,9 +4,9 @@ var/list/datum/botany_request/botany_requests = list()
 
 /datum/botany_request
 	var/requester_name = ""
-	var/reagent_id = ""
-	var/reagent_name = ""
-	var/reagent_color = null
+	var/produce_id = ""
+	var/produce_name = ""
+	var/produce_color = null
 	var/note = ""
 	var/amount = 1
 	var/area_name = "Somewhere"
@@ -38,7 +38,7 @@ var/list/datum/botany_request/botany_requests = list()
 			.["card"] = list("name" = src.card.registered, "role" = src.card.assignment)
 		else
 			.["card"] = null
-		.["selected_produce"] = src.request.name
+		.["selected_produce"] = src.request.produce_name
 		.["notes"] = src.request.note
 		.["amount"] = src.request.amount
 		.["silicon_user"] = issilicon(user) || isAI(user)
@@ -47,14 +47,14 @@ var/list/datum/botany_request/botany_requests = list()
 		. = list()
 		var/list/produce = list()
 		for (var/plant in concrete_typesof(/datum/plant))
-			produce[lowertext(id.name)] = id
+			produce[lowertext(plant.produce_name)] = plant
 		.["produce"] = sortList(produce, /proc/cmp_text_asc)
 		.["max_amount"] = src.max_amount
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
-			ui = new(user, src, "ChemRequester")
+			ui = new(user, src, "BotanyRequester")
 			ui.open()
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -76,12 +76,9 @@ var/list/datum/botany_request/botany_requests = list()
 						silicon = silicon.mainframe
 					src.card = silicon.botcard
 				. = TRUE
-			if ("set_reagent")
-				src.request.reagent_name = params["reagent_name"]
-				src.request.reagent_id = params["reagent_id"]
-				var/datum/reagent/reagent = reagents_cache[params["reagent_id"]]
-				if (reagent)
-					src.request.reagent_color = list(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
+			if ("set_produce")
+				src.request.produce_name = params["produce_name"]
+				src.request.produce_id = params["produce_id"]
 				. = TRUE
 			if ("set_notes")
 				src.request.note = strip_html(copytext(params["notes"], 1, 66))
@@ -94,9 +91,9 @@ var/list/datum/botany_request/botany_requests = list()
 				src.request.time = ticker.round_elapsed_ticks
 				//byond jank, lists are only associative if they aren't int indexed
 				botany_requests["[src.request.id]"] = src.request
-				logTheThing(LOG_STATION, src, "[constructTarget(ui.user)] placed a chemical request for [src.request.amount] units of [src.request.reagent_id] using [src.request.requester_name]'s ID at [log_loc(src)], notes: \"[src.request.note]\"")
+				logTheThing(LOG_STATION, src, "[constructTarget(ui.user)] placed a botanical request for [src.request.amount] [src.request.produce_id][src.request.amount > 1 ? "s" : ""] using [src.request.requester_name]'s ID at [log_loc(src)], notes: \"[src.request.note]\"")
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RESEARCH-MAILBOT",  "group"=list(MGD_SCIENCE), "sender"="00000000", "message"="Notification: new chemical request received.")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="HYDROPONICS-MAILBOT",  "group"=list(MGD_BOTANY), "sender"="00000000", "message"="Notification: new botanical request received.")
 				radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 				src.request = new
 				. = TRUE
@@ -115,11 +112,11 @@ var/list/datum/botany_request/botany_requests = list()
 	medical
 		area_name = "Medbay"
 
-/obj/machinery/computer/chem_request_receiver
-	name = "Chemical request display"
+/obj/machinery/computer/botany_request_receiver
+	name = "Hydroponic request display"
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "chemreq"
-	req_access = list(access_chemistry)
+	icon_state = "botanyreq"
+	req_access = list(access_hydro)
 	object_flags = CAN_REPROGRAM_ACCESS
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
@@ -146,9 +143,9 @@ var/list/datum/botany_request/botany_requests = list()
 			requests += list(list(
 				"id" = request_id,
 				"name" = request.requester_name,
-				"reagent_name" = request.reagent_name,
+				"produce_name" = request.produce_name,
 				"amount" = request.amount,
-				"reagent_color" = request.reagent_color,
+				"produce_color" = request.produce_color,
 				"notes" = copytext(request.note, 1, 80),
 				"area" = request.area_name,
 				"state" = request.state,
@@ -165,11 +162,11 @@ var/list/datum/botany_request/botany_requests = list()
 				var/datum/botany_request/request = botany_requests["[params["id"]]"]
 				if (request)
 					request.state = "denied"
-					logTheThing(LOG_STATION, src, "[constructTarget(ui.user)] denied [request.requester_name]'s chemical request for [request.amount] units of [request.reagent_id] at [log_loc(src)]")
+					logTheThing(LOG_STATION, src, "[constructTarget(ui.user)] denied [request.requester_name]'s chemical request for [request.amount] units of [request.produce_id] at [log_loc(src)]")
 				. = TRUE
 			if ("fulfil")
 				var/datum/botany_request/request = botany_requests["[params["id"]]"]
 				if (request)
-					logTheThing(LOG_STATION, src, "[constructTarget(ui.user)] fulfilled [request.requester_name]'s chemical request for [request.amount] units of [request.reagent_id] at [log_loc(src)]")
+					logTheThing(LOG_STATION, src, "[constructTarget(ui.user)] fulfilled [request.requester_name]'s chemical request for [request.amount] units of [request.produce_id] at [log_loc(src)]")
 					request.state = "fulfilled"
 				. = TRUE
