@@ -117,6 +117,7 @@
 			admin_interact_verbs["turf"] = list(\
 			"Jump To Turf",\
 			"Air Status",\
+			"Check Reagents",\
 			"Create Explosion",\
 			"Create Fluid",\
 			"Create Smoke",\
@@ -125,7 +126,6 @@
 
 			"View Variables",\
 			"View Fingerprints",\
-			"Check Reagents",\
 			"Delete",\
 			"Create Poster",\
 			"Set Material",\
