@@ -254,7 +254,7 @@ ABSTRACT_TYPE(/datum/material)
 
 	proc/triggerOnHit(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/meleeorthrow)
 		for(var/datum/materialProc/X in triggersOnHit)
-			X.execute(owner, attackobj, attacker, meleeorthrow)
+			X.execute(owner, attackatom, attacker, meleeorthrow)
 		return
 
 

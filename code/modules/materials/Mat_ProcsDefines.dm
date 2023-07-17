@@ -431,11 +431,11 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		src.material?.triggerOnBlobHit(src, blobPower)
 	return
 
-/// Called when the item is attacked with another item for mat effects
-/atom/proc/material_trigger_when_attacked(var/obj/attackobj, var/mob/attacker, var/meleeorthrow, var/situation_modifier)
+/// Called when the item is attacked with another atom for mat effects
+/atom/proc/material_trigger_when_attacked(var/atom/attackatom, var/mob/attacker, var/meleeorthrow, var/situation_modifier)
 	//on_person checks if the call was because of
 	if (src.material)
-		src.material?.triggerOnHit(src, attackobj, attacker, meleeorthrow)
+		src.material?.triggerOnHit(src, attackatom, attacker, meleeorthrow)
 	return
 
 ///Called when an item is picked up for mat effects

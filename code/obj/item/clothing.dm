@@ -98,10 +98,13 @@
 
 /obj/item/clothing/material_trigger_on_mob_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/situation_modifier)
 	// if someone wearing this gets attacked, only trigger this if the corresponding zone is hit
-	if (src.equipped_in_slot && situation_modifier && istext(situation_modifier))
-		var/targeted_zone = parse_zone(situation_modifier)
-		if (!src.check_for_covered(targeted_zone))
-			return
+	if (src.material && src.equipped_in_slot)
+		var/targeted_zone = "chest"
+		if (situation_modifier && istext(situation_modifier))
+			targeted_zone = parse_zone(situation_modifier)
+		if (src.check_for_covered(targeted_zone))
+			src.material?.triggerOnAttacked(src, attacker, attacked, weapon)
+		return
 	..()
 
 ///This proc returns true if the zone specified is covered by the clothing in question

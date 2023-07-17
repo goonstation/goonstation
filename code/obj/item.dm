@@ -383,9 +383,34 @@
 	..()
 
 /obj/item/material_trigger_on_mob_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/situation_modifier)
-	// don't trigger this items material effect if the item is not equipped and you get attacked while it is on you (e.g. items, pockets)
-	// with the exception that it will trigger if you are blocking or having a person in a grab with the item
-	if (!(src.equipped_in_slot) && !(src.c_flags && src.c_flags & HAS_GRAB_EQUIP))
+	var/hitchance = 10
+	// if the item is in you, you get a chance, depending on the size, that it gets hit
+	switch(src.w_class)
+		if (-INFINITY to W_CLASS_TINY)
+			hitchance = 10
+		if (W_CLASS_SMALL)
+			hitchance = 20
+		if (W_CLASS_NORMAL)
+			hitchance = 30
+		if (W_CLASS_BULKY)
+			hitchance = 60
+		if (W_CLASS_HUGE to INFINITY)
+			hitchance = 100
+	// It won't trigger when you are carrying it in your hand and it isnt targeted, with the exception that it will always trigger if you are blocking or having a person in a grab with the item
+	if (attacked.l_hand == src  || attacked.r_hand == src)
+		if ((src.c_flags && src.c_flags & HAS_GRAB_EQUIP))
+			hitchance = 100
+		else
+			// if the arm you are holding the item is target, the chance gets doubled
+			if (situation_modifier && istext(situation_modifier))
+				var/targeted_zone = parse_zone(situation_modifier)
+				if(targeted_zone == "both arms" || (attacked.l_hand == src && targeted_zone =="left arm") || (attacked.r_hand == src && targeted_zone == "right arm"))
+					hitchance *= 2
+				else
+					hitchance = 0
+			else
+				hitchance = 0
+	if(!prob(hitchance))
 		return
 	..()
 

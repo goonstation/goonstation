@@ -626,29 +626,33 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				wall_owner.dismantle_wall(1)
 
 /datum/materialProc/cardboard_on_hit // MARK: add to ignorant children
-	execute(var/atom/owner, var/atom/attackobj, var/mob/attacker, var/meleeorthrow)
+	execute(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/meleeorthrow)
 		if (meleeorthrow == 1) //if it was a melee attack
-			if (issnippingtool(attackobj)||iscuttingtool(attackobj))
+			if (issnippingtool(attackatom)||iscuttingtool(attackatom))
 				if (isExploitableObject(owner))
 					boutput(attacker, "Cutting [owner] into a sheet isn't possible.")
 					return
 				attacker.visible_message("<span class='alert'>[attacker] starts cutting [owner] apart.</span>", "<span class='notice'>You start cutting [owner] apart.</span>", "You hear the sound of cutting cardboard.")
-				var/datum/action/bar/icon/hitthingwithitem/action_bar = new /datum/action/bar/icon/hitthingwithitem(attacker, attacker, attackobj, owner, src, 3 SECONDS, /datum/materialProc/cardboard_on_hit/proc/snip_end,\
-				list(owner, attacker, attackobj), attackobj.icon, attackobj.icon_state)
+				var/datum/action/bar/icon/hitthingwithitem/action_bar = new /datum/action/bar/icon/hitthingwithitem(attacker, attacker, attackatom, owner, src, 3 SECONDS, /datum/materialProc/cardboard_on_hit/proc/snip_end,\
+				list(owner, attacker, attackatom), attackatom.icon, attackatom.icon_state)
 				action_bar.interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED // uh, is this how I'm supposed to do this?
 				actions.start(action_bar, attacker)
 				return
 
 		var/crumple = FALSE
 		if (meleeorthrow == 1)
-			if (!isitem(attackobj))
-				CRASH("meleeorthrow should only be set to 1 when attackobj is an item")
-			var/obj/item/meleeitem = attackobj
-			if (prob(meleeitem.force*3))
-				crumple = TRUE
+			if (isitem(attackatom))
+				var/obj/item/meleeitem = attackatom
+				if (prob(meleeitem.force*3))
+					crumple = TRUE
+			else
+				if (ismob(attackatom) && prob(15)) //for bashing someone else or your laywer hands on cardboard, we calculate with ~ 5 damage
+					crumple = TRUE
 		else
-			if (prob(attackobj.throwforce*3))
-				crumple = TRUE
+			if(ismovable(attackatom))
+				var/atom/movable/thrownatom = attackatom
+				if (prob(thrownatom.throwforce*3))
+					crumple = TRUE
 		if(crumple)
 			if (istype(owner, /obj))
 				owner.visible_message("<span class='alert'>[owner] crumples!</span>", "<span class='alert'>You hear a crumpling sound.</span>")
@@ -659,8 +663,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			else if (istype(owner, /turf))
 				if (istype(owner, /turf/simulated/wall))
 					var/turf/simulated/wall/wall_owner = owner
-					owner.visible_message("<span class='alert'>[owner] shears apart under the force of [attackobj]! </span>","<span class='alert'>You hear a crumpling sound.</span>")
-					logTheThing(LOG_STATION, attacker ? attacker : null, null, "bashed apart a cardboard wall ([owner.name]) using \a [attackobj] at [attacker ? get_area(attacker) : get_area(owner)] ([attacker ? showCoords(attacker.x, attacker.y, attacker.z) : showCoords(owner.x, owner.y, owner.z)])[attacker ? null : ", attacker is unknown, shown location is of the wall"][meleeorthrow == 1 ? ", this was a thrown item" : null]")
+					owner.visible_message("<span class='alert'>[owner] shears apart under the force of [attackatom]! </span>","<span class='alert'>You hear a crumpling sound.</span>")
+					logTheThing(LOG_STATION, attacker ? attacker : null, null, "bashed apart a cardboard wall ([owner.name]) using \a [attackatom] at [attacker ? get_area(attacker) : get_area(owner)] ([attacker ? showCoords(attacker.x, attacker.y, attacker.z) : showCoords(owner.x, owner.y, owner.z)])[attacker ? null : ", attacker is unknown, shown location is of the wall"][meleeorthrow == 1 ? ", this was a thrown item" : null]")
 					wall_owner.dismantle_wall(1, 0)
 
 				else if (istype(owner, /turf/simulated/floor))
@@ -679,7 +683,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 						floor_owner.break_tile()
 						owner.visible_message("The top layer of [owner] crumples!", "You hear a crumpling sound.")
 
-/datum/materialProc/cardboard_on_hit/proc/snip_end(var/atom/owner, var/mob/attacker, var/obj/attackobj)
+/datum/materialProc/cardboard_on_hit/proc/snip_end(var/atom/owner, var/mob/attacker, var/atom/attackatom)
 	if (istype(owner, /obj))
 		attacker.visible_message("<span class='alert'>[attacker] cuts [owner] into a sheet.</span>","<span class='notice'>You finish cutting [owner] into a sheet.</span>","The sound of cutting cardboard stops.")
 		var/obj/item/sheet/createdsheet = new /obj/item/sheet(get_turf(owner))
@@ -695,7 +699,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				attacker.visible_message("<span class='alert'>[attacker] cuts the reinforcment off [owner].</span>","You cut the reinforcement off [owner].","The sound of cutting cardboard stops.")
 			else
 				attacker.visible_message("<span class='alert'>[attacker] cuts apart the outer cover of [owner]</span>.","<span class='notice'>You cut apart the outer cover of [owner]</span>.","The sound of cutting cardboard stops.")
-				logTheThing(LOG_STATION, attacker, "cut apart a cardboard wall ([owner.name]) using \a [attackobj] at [get_area(attacker)] ([log_loc(attacker)])")
+				logTheThing(LOG_STATION, attacker, "cut apart a cardboard wall ([owner.name]) using \a [attackatom] at [get_area(attacker)] ([log_loc(attacker)])")
 			wall_owner.dismantle_wall(0, 0)
 		else if (istype(owner, /turf/simulated/floor))
 			var/turf/simulated/floor/floor_owner = owner
@@ -718,7 +722,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			if (!floor_owner.intact)
 				var/atom/A = new /obj/item/tile(src)
 				A.setMaterial(owner.material)
-				logTheThing(LOG_STATION, attacker, "cut apart a cardboard floor ([owner.name]) using \a [attackobj] at [get_area(attacker)] ([log_loc(attacker)])")
+				logTheThing(LOG_STATION, attacker, "cut apart a cardboard floor ([owner.name]) using \a [attackatom] at [get_area(attacker)] ([log_loc(attacker)])")
 				attacker.visible_message("<span class='alert'>Cuts apart [owner], revealing space!</span>","<span class='alert'>You finish cutting apart [owner], revealing space.</span>","The sound of cutting cardboard stops.")
 				floor_owner.ReplaceWithSpace()
 				return
