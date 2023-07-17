@@ -172,10 +172,9 @@
 				var/atom/target = get_edge_target_turf(M, M.dir)
 				switch (src.lube)
 					if (1) //lube
-						M.changeStatus("weakened", 3.5 SECONDS)
 						M.throw_at(target, 12, 1, throw_type = THROW_SLIP)
 					if (2) //harmlube
-						M.changeStatus("weakened", 6 SECONDS)
+						M.changeStatus("weakened", 3.5 SECONDS)
 						M.throw_at(target, 30, 1, throw_type = THROW_SLIP)
 						random_brute_damage(M, 10)
 			if(M.throwing)
