@@ -935,6 +935,7 @@
 /// A blank newspaper, ready to have its headline written.
 /obj/item/paper/newspaper
 	var/headline = ""
+	var/publisher = ""
 	desc = "This is a newspaper. It appears to lack a headline. And text."
 	icon_state = "newspaper_blank"
 	item_state = "newspaper_blank"
@@ -954,11 +955,45 @@
 
 /// This newspaper starts out with a random headline at roundstart. Intended for mapping
 /obj/item/paper/newspaper/rolled/random
+	publisher = pick(list(
+		"Nanotrasen Weekly",
+		"The Daily Bulletin",
+		"The Mostly Independent",
+		"The Nanotrasen Times",
+		"Headline Daily",
+	))
 
 /// pick a random headline
 /obj/item/paper/newspaper/rolled/random/New()
 	. = ..()
-	src.headline = pick(list()) // i'll come up with some later. Or write an algorithm to generate some.
+	src.headline = pick(list(
+		"John Nanotrasen casually admits to committing multiple felonies in leaked meeting recordings.",
+		"Study by PSFCSO shows presence of Owls directly correlated with station longevity.",
+		"Recent survey shows over 80% of NT employees admit to having died at least once on the job",
+		"New Nadir Extraction Site called 'a bit damp' by disgruntled Head Of Personnel.",
+		"Atlas discovered to be bee shaped. 'Yeah, we designed it that way?' say architects.",
+		"Xiang Giesel sued by same person for the 6th time. 'Just make the engines safer' says engineer.",
+		"Silicon Union destroyed by singularity bombs. NT claims Union was front for Syndicate.",
+		"Rogue artificial intelligence talked down by simply saying 'nuh uh' repeatedly.",
+		"Retraction: We apologise for calling Fugere 'Šid' and vice versa for 13 years straight.",
+		"Chaplain shot for accidentally holding bible upside down in funeral.",
+		"Nuclear Engine onboard NT-13 melts down. Again.",
+		"Questions raised about effectiveness of flash weapons.",
+		"Man found dead in NT Centcomm offices turned out to be faking it.",
+		"Hafgan smartphone released. Critics call it 'overpriced PDA'.",
+		"Super!Friend sued for releasing 4 million amusing ducks into local ecosystem.",
+		"Thinktronic announces that Guardbuddies will not be upgraded. 'They're perfect as is' states CEO.",
+		"Enraged MD goes on a monkey killing spree, upsetting janitors.",
+		"Genetek releases new cloning pod. Critics unable to find any new features.",
+		"Zvezda launches new publicity stunt. 14 dead, 18 wounded. CEO calls it 'smashing success'.",
+		"Space Diner once again unlivable.",
+		"GardenGear proposes new joint project with NT.",
+		"NT Space Station 17 voted 'worst station' for 9th year running.",
+		"Calls for more railings around trench holes.",
+		"Oshan tourism at all time highs.",
+		"Highest peak on Mundus climbed for first time. Climber says 'hardest part was actually getting there'.",
+		"Pug detective sniffs out crimes."
+	))
 
 /obj/item/paper/newspaper/New()
 	. = ..()
