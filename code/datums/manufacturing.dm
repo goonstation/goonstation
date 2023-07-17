@@ -2150,7 +2150,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/lightengspacesuit
 	name = "Light Engineering Space Suit Set"
-	item_paths = list("FAB-1","MET-1","CRY-1", "ORG|RUB")
+	item_paths = list("FAB-1","MET-3","CRY-1", "ORG|RUB")
 	item_amounts = list(10,5,2,5)
 	item_outputs = list(/obj/item/clothing/suit/space/light/engineer,/obj/item/clothing/head/helmet/space/light/engineer)
 	time = 15 SECONDS
