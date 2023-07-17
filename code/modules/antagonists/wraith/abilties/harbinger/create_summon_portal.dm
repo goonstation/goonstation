@@ -63,7 +63,7 @@
 					if("Brullbars")
 						mob_choice = /mob/living/critter/brullbar
 					if("Heavy gunner drones")
-						mob_choice = /obj/critter/gunbot/heavy
+						mob_choice = /mob/living/critter/robotic/gunbot
 					if("Random")
 						mob_choice = null
 				boutput(holder.owner, "You gather your energy and open a portal")
