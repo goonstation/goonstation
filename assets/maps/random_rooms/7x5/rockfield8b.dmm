@@ -6,7 +6,7 @@
 /turf/space/fluid/acid,
 /area/space)
 "v" = (
-/obj/landmark/artifact/random_room,
+/obj/landmark/spawner/artifact,
 /turf/space/fluid/acid/clear,
 /area/space)
 "V" = (

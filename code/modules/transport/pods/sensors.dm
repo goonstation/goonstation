@@ -128,7 +128,7 @@
 				var/obj/item/shipcomponent/sensor/target_sensor = target_pod.sensors
 				if (istype(target_sensor))
 					target_sensor.whos_tracking_me -= src.ship
-					if (islist(target_sensor.whos_tracking_me) && target_sensor.whos_tracking_me.len == 0)
+					if (islist(target_sensor.whos_tracking_me) && length(target_sensor.whos_tracking_me) == 0)
 						target_pod.myhud.sensor_lock.icon_state = "off"
 						target_pod.myhud.sensor_lock.mouse_opacity = 0
 
