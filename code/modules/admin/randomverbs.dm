@@ -1284,12 +1284,19 @@
 	set desc = "Checks the reagents of something."
 	ADMIN_ONLY
 
-	src.check_reagents_internal(target,)
+	src.check_reagents_internal(target)
 
 /client/proc/check_reagents_internal(var/atom/target as null|mob|obj|turf in world, refresh = 0)
 	if (!target)
 		return
 		//target = input(usr, "Target", "Target") as mob|obj|turf in world
+
+	if (isturf(target))
+		var/turf/T = target
+		if (T.active_liquid)
+			src.check_reagents_internal(T.active_liquid, refresh)
+		if (T.active_airborne_liquid)
+			src.check_reagents_internal(T.active_airborne_liquid, refresh)
 
 	var/datum/reagents/reagents = 0
 	if (!target.reagents) // || !target.reagents.total_volume)
@@ -1412,7 +1419,6 @@
 
 	logTheThing(LOG_ADMIN, usr, "checked the reagents of [target] <i>(<b>Contents:</b>[log_reagents])</i>. <b>Temp:</b> <i>[reagents.total_temperature] K</i>) [log_loc(target)]")
 	logTheThing(LOG_DIARY, usr, "checked the reagents of [target] <i>(<b>Contents:</b>[log_reagents])</i>. <b>Temp:</b> <i>[reagents.total_temperature] K</i>) [log_loc(target)]", "admin")
-	return
 
 /client/proc/popt_key(var/client/ckey in clients)
 	set name = "Popt Key"
