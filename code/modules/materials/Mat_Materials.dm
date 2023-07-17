@@ -331,22 +331,39 @@ ABSTRACT_TYPE(/datum/material)
 				return 1
 		return 0
 
-	proc/addTrigger(var/list/L, var/datum/materialProc/D)
+	///Triggers is specified using one of the TRIGGER_ON_ defines
+	proc/addTrigger(var/triggerListName as text, var/datum/materialProc/D)
 		if(!src.mutable)
 			CRASH("Attempted to mutate an immutatble material!")
+		var/list/L = src.vars[triggerListName]
 		for(var/datum/materialProc/P in L)
 			if(P.type == D.type) return 0
 		L.Add(D)
 		L[D] = 0
 		return
 
-	proc/removeTrigger(var/list/L, var/inType)
+	///Triggers is specified using one of the TRIGGER_ON_ defines
+	proc/removeTrigger(var/triggerListName as text, var/inType)
 		if(!src.mutable)
 			CRASH("Attempted to mutate an immutatble material!")
+		var/list/L = src.vars[triggerListName]
 		for(var/datum/materialProc/P in L)
 			if(P.type == inType)
 				L.Remove(P)
 		return
+
+	///Triggers is specified using one of the TRIGGER_ON_ defines
+	proc/removeAllTriggers(var/triggerListName as text)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		var/list/L = src.vars[triggerListName]
+		L.Cut()
+		return
+
+	///Triggers is specified using one of the TRIGGER_ON_ defines
+	proc/countTriggers(var/triggerListName as text)
+		var/list/L = src.vars[triggerListName]
+		return length(L)
 
 	proc/interpolateName(datum/material/other, t)
 		. = getInterpolatedName(src.name, other.name, t)
@@ -672,7 +689,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 2)
 		setProperty("reflective", 8)
 
-		addTrigger(triggersOnAdd, new /datum/materialProc/gold_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
 
 
 /datum/material/metal/gold
@@ -692,7 +709,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 7)
 		setProperty("thermal", 7)
 
-		addTrigger(triggersOnAdd, new /datum/materialProc/gold_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
 
 
 /datum/material/metal/silver
@@ -770,7 +787,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		..()
 		setProperty("density", 8)
 		setProperty("hard", 1)
-		addTrigger(triggersOnAdd, new /datum/materialProc/spacelag_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/spacelag_add())
 
 
 /datum/material/metal/iridiumalloy
@@ -798,7 +815,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	New()
 		..()
 		material_flags |= MATERIAL_ENERGY
-		addTrigger(triggersOnAdd, new /datum/materialProc/negative_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/negative_add())
 
 
 //GIVE THIS STATS AND SPECIAL EFFECTS.
@@ -813,7 +830,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		material_flags|= MATERIAL_ENERGY
 		setProperty("density", 4)
 		setProperty("hard", 2)
-		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
+		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/soulsteel_entered())
 
 
 // Crystals
@@ -854,8 +871,8 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		..()
 		setProperty("density", 3)
 		setProperty("hard", 4)
-		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
-		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/molitz_temp())
+		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/molitz_exp())
 
 	beta
 		mat_id = "molitz_b"
@@ -866,8 +883,8 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		New()
 			..()
 			// no need to remove molitz_on_hit, all it does is call molitz_temp
-			removeTrigger(triggersTemp, /datum/materialProc/molitz_temp)
-			addTrigger(triggersTemp, new /datum/materialProc/molitz_temp/agent_b())
+			removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/molitz_temp)
+			addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/molitz_temp/agent_b())
 			return
 
 /datum/material/crystal/claretine
@@ -897,12 +914,12 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("electrical", 6)
 		setProperty("radioactive", 8)
 
-		addTrigger(triggersOnAdd, new /datum/materialProc/erebite_flash())
-		addTrigger(triggersTemp, new /datum/materialProc/erebite_temp())
-		addTrigger(triggersExp, new /datum/materialProc/erebite_exp())
-		addTrigger(triggersOnAttack, new /datum/materialProc/generic_explode_attack(33))
-		addTrigger(triggersOnAttacked, new /datum/materialProc/generic_explode_attack(33))
-		addTrigger(triggersOnHit, new /datum/materialProc/generic_explode_attack(33))
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/erebite_flash())
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/erebite_temp())
+		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/erebite_exp())
+		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/generic_explode_attack(33))
+		addTrigger(TRIGGERS_ON_ATTACKED, new /datum/materialProc/generic_explode_attack(33))
+		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/generic_explode_attack(33))
 
 
 /datum/material/crystal/plasmastone
@@ -920,9 +937,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("radioactive", 2)
 		setProperty("flammable", 8)
 
-		addTrigger(triggersTemp, new /datum/materialProc/plasmastone())
-		addTrigger(triggersExp, new /datum/materialProc/plasmastone())
-		addTrigger(triggersOnHit, new /datum/materialProc/plasmastone_on_hit())
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/plasmastone())
+		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/plasmastone())
+		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/plasmastone_on_hit())
 
 
 /datum/material/crystal/plasmaglass
@@ -955,7 +972,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 				name = "clear [src.name]"
 				setProperty("density", 6)
 				setProperty("hard", 7)
-				addTrigger(triggersOnAdd, new /datum/materialProc/gold_add())
+				addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
 			if(2)
 				value = 500
 				name = "flawed [src.name]"
@@ -1141,9 +1158,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 1)
 		setProperty("hard", 2)
 		setProperty("reflective", 8)
-		addTrigger(triggersOnLife, new /datum/materialProc/telecrystal_life())
-		addTrigger(triggersOnEntered, new /datum/materialProc/telecrystal_entered())
-		addTrigger(triggersOnAttack, new /datum/materialProc/telecrystal_onattack())
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/telecrystal_life())
+		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/telecrystal_entered())
+		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/telecrystal_onattack())
 
 
 
@@ -1155,14 +1172,14 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 	New()
 		..()
-		addTrigger(triggersOnAdd, new /datum/materialProc/miracle_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/miracle_add())
 		quality = rand(-50, 100)
 		alpha = rand(20, 255)
 		setProperty("density", rand(1, 8))
 		setProperty("hard", rand(1, 8))
 		setProperty("reflective", rand(1, 9))
 		setProperty("chemical", rand(1, 8))
-		addTrigger(triggersTemp, new /datum/materialProc/temp_miraclium())
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/temp_miraclium())
 
 
 /datum/material/crystal/starstone
@@ -1180,7 +1197,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 9)
 		setProperty("hard", 9)
 		setProperty("electrical", 1)
-		addTrigger(triggersOnAdd, new /datum/materialProc/gold_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
 
 
 /datum/material/crystal/ice
@@ -1198,9 +1215,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("electrical", 6)
 		setProperty("density", 1)
 		setProperty("hard", 2)
-		addTrigger(triggersOnLife, new /datum/materialProc/ice_life())
-		addTrigger(triggersOnAttack, new /datum/materialProc/slippery_attack())
-		addTrigger(triggersOnEntered, new /datum/materialProc/slippery_entered())
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/ice_life())
+		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/slippery_attack())
+		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/slippery_entered())
 
 
 /datum/material/crystal/wizard
@@ -1212,7 +1229,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		..()
 		setProperty("density", 6)
 		setProperty("hard", 6)
-		addTrigger(triggersOnAdd, new /datum/materialProc/enchanted_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/enchanted_add())
 
 
 	quartz // basically wizard glass
@@ -1280,7 +1297,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 5)
 		setProperty("hard", 1)
 		setProperty("flammable", 5)
-		addTrigger(triggersOnEat, new /datum/materialProc/oneat_blob())
+		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_blob())
 
 
 
@@ -1298,7 +1315,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		material_flags |= MATERIAL_CLOTH
 		setProperty("density", 3)
 		setProperty("hard", 1)
-		//addTrigger(triggersOnEat, new /datum/materialProc/oneat_flesh())
+		//addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_flesh())
 
 
 	butt
@@ -1311,8 +1328,8 @@ ABSTRACT_TYPE(/datum/material/organic)
 
 		New()
 			..()
-			addTrigger(triggersPickup, new /datum/materialProc/onpickup_butt)
-			addTrigger(triggersOnHit, new /datum/materialProc/onpickup_butt)
+			addTrigger(TRIGGERS_ON_PICKUP, new /datum/materialProc/onpickup_butt)
+			addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/onpickup_butt)
 
 /datum/material/organic/char
 	mat_id = "char"
@@ -1358,7 +1375,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("hard", 1)
 		setProperty("chemical", 6)
 		setProperty("flammable", 2)
-		addTrigger(triggersOnEat, new /datum/materialProc/oneat_viscerite())
+		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_viscerite())
 
 
 /datum/material/organic/bone
@@ -1414,8 +1431,8 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 2)
 		setProperty("hard", 1)
 		setProperty("flammable", 4)
-		addTrigger(triggersOnBlobHit, new /datum/materialProc/cardboard_blob_hit())
-		addTrigger(triggersOnHit, new /datum/materialProc/cardboard_on_hit())
+		addTrigger(TRIGGERS_ON_BLOBHIT, new /datum/materialProc/cardboard_blob_hit())
+		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/cardboard_on_hit())
 
 
 /datum/material/organic/chitin
@@ -1457,7 +1474,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 2)
 		setProperty("hard", 1)
 		setProperty("flammable", 4)
-		// addTrigger(triggersOnEat, new /datum/materialProc/oneat_honey())
+		// addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_honey())
 		// maybe make it sticky somehow?
 
 
@@ -1472,8 +1489,8 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 3)
 		setProperty("hard", 2)
 		setProperty("thermal", 1)
-		addTrigger(triggersOnAdd, new /datum/materialProc/ffart_add())
-		addTrigger(triggersPickup, new /datum/materialProc/ffart_pickup())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/ffart_add())
+		addTrigger(TRIGGERS_ON_PICKUP, new /datum/materialProc/ffart_pickup())
 
 
 /datum/material/organic/hamburgris
@@ -1488,7 +1505,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("chemical", 7)
 		setProperty("thermal", 2)
 		setProperty("flammable", 1)
-		addTrigger(triggersOnLife, new /datum/materialProc/generic_reagent_onlife("cholesterol", 1))
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/generic_reagent_onlife("cholesterol", 1))
 
 
 
@@ -1533,7 +1550,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		material_flags |= MATERIAL_ENERGY
 		setProperty("density", 1)
 		setProperty("hard", 1)
-		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/ethereal_add())
 // Fabrics
 
 ABSTRACT_TYPE(/datum/material/fabric)
@@ -1673,7 +1690,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 
 	New()
 		..()
-		addTrigger(triggersOnLife, new /datum/materialProc/generic_itchy_onlife())
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/generic_itchy_onlife())
 
 
 /datum/material/fabric/spidersilk
@@ -1717,8 +1734,8 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("density", 1)
 		setProperty("hard", 1)
 		setProperty("electrical", 1)
-		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
-		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/ethereal_add())
+		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/soulsteel_entered())
 
 
 /datum/material/fabric/ectofibre
@@ -1736,7 +1753,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("thermal", 9)
 		setProperty("radioactive", 3)
 		setProperty("electrical", 7)
-		addTrigger(triggersOnLife, new /datum/materialProc/generic_itchy_onlife())
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/generic_itchy_onlife())
 
 
 /datum/material/fabric/dyneema

@@ -8,8 +8,7 @@ var/global/list/material_cache = buildMaterialCache()
 	if(istype(A, /obj/item/tile) || istype(A, /obj/item/rods) || istype(A, /obj/item/sheet) || istype(A, /obj/item/cable_coil) || istype(A, /obj/item/raw_material/shard)) return 1
 	return 0
 
-/// This contains the names of the trigger lists on materials. Required for copying materials. Remember to keep this updated if you add new triggers.
-var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "triggersTemp", "triggersChem", "triggersPickup", "triggersDrop", "triggersExp", "triggersOnAdd", "triggersOnLife", "triggersOnAttack", "triggersOnAttacked", "triggersOnEntered")
+
 
 /// Returns one of the base materials by id.
 /proc/getMaterial(mat)
@@ -83,7 +82,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 	src.material?.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
 
-	if(length(mat1?.triggersOnEntered))
+	if(mat1?.countTriggers(TRIGGERS_ON_ENTERED))
 		mat1.RegisterSignal(src, COMSIG_ATOM_CROSSED, /datum/material/proc/triggerOnEntered)
 
 	if (src.mat_changename && setname)
@@ -365,7 +364,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 /proc/searchMatTree(var/datum/material/M, var/id, var/current_depth, var/max_depth = 3)
 	if(!M || !id) return null
-	if(!M.getParentMaterials().len) return null
+	if(!length(M.getParentMaterials())) return null
 	for(var/datum/material/CM in M.getParentMaterials())
 		if(CM.getID() == id) return CM
 		if(current_depth + 1 <= max_depth)

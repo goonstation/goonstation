@@ -1331,6 +1331,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				MAT.set_loc(src)
 
 				if(MAT.material)
+					//If we don't use quality anymore, remove this
+					MAT.material = MAT.material.getMutable()
 					if(MAT.material.getQuality() != 0) //If it's 0 then that's probably the default, so let's use the asteroids quality only if it's higher. That way materials that have a quality by default will not occur at any quality less than the set one. And materials that do not have a quality by default, use the asteroids quality instead.
 						var/newQual = max(MAT.material.getQuality(), src.quality)
 						MAT.material.setQuality(newQual)

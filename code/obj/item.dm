@@ -274,7 +274,7 @@
 			else
 				burn_type = 0
 
-		if (src.material.triggersOnLife.len)
+		if (src.material.countTriggers(TRIGGERS_ON_LIFE))
 			src.AddComponent(/datum/component/loctargeting/mat_triggersonlife)
 		else
 			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
@@ -282,7 +282,7 @@
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 
 	removeMaterial()
-		if (src.material && length(src.material.triggersOnLife))
+		if (src.material && src.material.countTriggers(TRIGGERS_ON_LIFE))
 			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
 			if (C)
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)

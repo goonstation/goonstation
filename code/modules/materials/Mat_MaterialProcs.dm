@@ -192,7 +192,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			attacked.reagents.add_reagent(reag_id, reag_amt, null, T0C)
 			if(!charges_left)
 				if(owner.material)
-					owner.material.triggersOnAttack.Remove(src)
+					owner.material.removeTrigger(TRIGGERS_ON_ATTACK, src.type)
 		return
 
 /datum/materialProc/generic_reagent_onattack
@@ -243,7 +243,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			added += reag_amt * mult
 			if(added >= max_volume)
 				if(I.material)
-					I.material.triggersOnLife.Remove(src)
+					I.material.removeTrigger(TRIGGERS_ON_LIFE, src.type)
 		return
 
 /datum/materialProc/generic_explosive

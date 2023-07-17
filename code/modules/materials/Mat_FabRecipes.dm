@@ -676,12 +676,12 @@
 			var/datum/material/mat = refined.material.getMutable()
 
 			var/datum/materialProc/generic_reagent_onlife/O = new/datum/materialProc/generic_reagent_onlife(master_chem,1)
-			mat.triggersOnLife.Cut()
-			mat.addTrigger(mat.triggersOnLife, O)
+			mat.removeAllTriggers(TRIGGERS_ON_LIFE)
+			mat.addTrigger(TRIGGERS_ON_LIFE, O)
 
 			var/datum/materialProc/generic_reagent_onattack_depleting/A = new/datum/materialProc/generic_reagent_onattack_depleting(master_chem,1,10,25)
-			mat.triggersOnAttack.Cut()
-			mat.addTrigger(mat.triggersOnAttack, A)
+			mat.removeAllTriggers(TRIGGERS_ON_ATTACK)
+			mat.addTrigger(TRIGGERS_ON_ATTACK, A)
 
 			var/obj/item/material_piece/wad/W = new /obj/item/material_piece/wad
 
