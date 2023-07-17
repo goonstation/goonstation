@@ -184,6 +184,11 @@ ABSTRACT_TYPE(/datum/material)
 			CRASH("Attempted to mutate an immutatble material!")
 		src.canMix = mix
 
+	proc/setQuality(var/quality)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		src.quality = quality
+
 	//mutability procs
 
 	///Returns a mutable version of this material. Will return a copy of this material if it is already mutable.
@@ -294,9 +299,9 @@ ABSTRACT_TYPE(/datum/material)
 			CRASH("Attempted to mutate an immutatble material!")
 		for(var/datum/material_property/P in properties)
 			if(P.id == property)
-				P.changeValue(src, properties[P] + value)
+				src.properties[P] = clamp(properties[P]+value, P.min_value, P.max_value)
+				P.onValueChanged(src, properties[P])
 				return
-		//setProperty(property, value)
 		return
 
 	proc/setProperty(var/property, var/value)
@@ -304,18 +309,20 @@ ABSTRACT_TYPE(/datum/material)
 			CRASH("Attempted to mutate an immutatble material!")
 		for(var/datum/material_property/P in properties)
 			if(P.id == property)
-				P.changeValue(src, value)
+				src.properties[P] = clamp(value, P.min_value, P.max_value)
+				P.onValueChanged(src, src.properties[P])
 				return
 
-		if(!materialProps.len) //Required so that compile time object materials can have properties.
+		if(!length(materialProps)) //Required so that compile time object materials can have properties.
 			buildMaterialPropertyCache()
 
-		for(var/datum/material_property/X in materialProps)
-			if(X.id == property)
-				properties.Add(X)
-				X.onAdded(src, value)
-				X.changeValue(src, value)
-
+		//if it's not already in .properties, add it and trigger onadd
+		for(var/datum/material_property/P in materialProps)
+			if(P.id == property)
+				properties.Add(P)
+				P.onAdded(src, value)
+				src.properties[P] = clamp(value, P.min_value, P.max_value)
+				P.onValueChanged(src, src.properties[P])
 		return
 
 	proc/hasProperty(var/property)
@@ -424,6 +431,7 @@ ABSTRACT_TYPE(/datum/material)
 
 //Material definitions
 
+ABSTRACT_TYPE(/datum/material/interpolated)
 /datum/material/interpolated
 	mat_id = "imcoderium"
 	name = "imcoderium"

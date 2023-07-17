@@ -525,7 +525,7 @@ TYPEINFO(/obj/machinery/processor)
 				boutput(user, "<span class='notice'><u>[capitalize(W.material.getName())]</u></span>")
 				boutput(user, "<span class='notice'>[W.material.getDesc()]</span>")
 
-				if(W.material.getMaterialProperties().len)
+				if(length(W.material.getMaterialProperties()))
 					boutput(user, "<span class='notice'><u>The material is:</u></span>")
 					for(var/datum/material_property/X in W.material.getMaterialProperties())
 						var/value = W.material.getProperty(X.id)

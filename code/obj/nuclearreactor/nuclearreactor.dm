@@ -615,7 +615,7 @@
 			SPAWN(4 SECONDS)
 				playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, 1)
 				var/obj/item/reactor_component/fuel_rod/meat_rod = new /obj/item/reactor_component/fuel_rod("flesh")
-				meat_rod.material.getName() = user.name
+				meat_rod.material.setName(user.name)
 				if(user.bioHolder && user.bioHolder.HasEffect("radioactive"))
 					meat_rod.material.setProperty("radioactive", 3)
 				meat_rod.setMaterial(meat_rod.material)
