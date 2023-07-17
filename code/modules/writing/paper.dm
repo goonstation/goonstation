@@ -936,6 +936,7 @@
 /obj/item/paper/newspaper
 	name = "Newspaper"
 	desc = "This is a newspaper. It appears to lack a headline. And text."
+	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "newspaper"
 	item_state = "newspaper"
 	sealed = TRUE
@@ -958,6 +959,7 @@
 
 /// a rolled up newspaper
 /obj/item/paper/newspaper/rolled
+	icon = 'icons/obj/writing.dmi'
 	icon_state = "newspaper_rolled"
 	item_state = "paper"
 	rolled = TRUE
@@ -1006,10 +1008,12 @@
 /obj/item/paper/newspaper/proc/rollup()
 	if (src.two_handed) // rolling it up
 		src.two_handed = FALSE
+		src.icon = 'icons/obj/writing.dmi'
 		src.icon_state = "newspaper_rolled"
 		src.item_state = "paper"
 	else // unrolling it
 		src.two_handed = TRUE
+		src.icon =  = 'icons/obj/large/64x32.dmi'
 		src.icon_state = "newspaper"
 		src.item_state = "newspaper"
 
