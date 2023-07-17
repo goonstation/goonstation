@@ -95,9 +95,9 @@ Ctrl + Alt + Shift Left Click          - Edit Precipitation Controller<br>
 			L = concrete_typesof(/datum/reagent)
 
 		var/type
-		if(L.len == 1)
+		if(length(L) == 1)
 			type = L[1]
-		else if(L.len > 1)
+		else if(length(L) > 1)
 			type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
 		else
 			usr.show_text("No reagents matching that name", "red")
@@ -237,9 +237,9 @@ Ctrl + Alt + Shift Left Click          - Edit Precipitation Controller<br>
 		L = concrete_typesof(/datum/reagent)
 
 	var/type
-	if(L.len == 1)
+	if(length(L) == 1)
 		type = L[1]
-	else if(L.len > 1)
+	else if(length(L) > 1)
 		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
 	else
 		usr.show_text("No reagents matching that name", "red")

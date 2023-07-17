@@ -86,12 +86,12 @@
 					src.master.add_fingerprint(usr)
 					return
 
-				if(!emitter_ids || emitter_ids.len <= 0)
+				if(!emitter_ids || length(emitter_ids) <= 0)
 					src.print_text("<b>Error:</b> Insufficient emitters detected.")
 					src.master.add_fingerprint(usr)
 					return
 
-				if(!fieldgen_ids || fieldgen_ids.len < 4)
+				if(!fieldgen_ids || length(fieldgen_ids) < 4)
 					src.print_text("<b>Error:</b> Insufficient field generators detected.")
 					src.master.add_fingerprint(usr)
 					return

@@ -790,14 +790,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			boutput(user, "This fitting isn't user-serviceable.")
 			return
 
+		var/lamp_cost = null
 		if (!inserted_lamp) //Taking charge/sheets
 			if (!M.check_ammo(user, M.cost_empty))
 				return
-			M.take_ammo(user, M.cost_empty)
+			lamp_cost = M.cost_empty
 		else
 			if (!M.check_ammo(user, M.cost_broken))
 				return
-			M.take_ammo(user, M.cost_broken)
+			lamp_cost = M.cost_broken
 		var/obj/item/light/L = null
 
 		if (fitting == "tube")
@@ -813,6 +814,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		insert(user, L)
 		if (!isghostdrone(user)) // Same as ghostdrone RCDs, no sparks
 			elecflash(user)
+		M.take_ammo(user, lamp_cost)
 		return
 
 

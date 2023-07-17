@@ -703,7 +703,7 @@ datum/pathogeneffects/malevolent/serious_paranoia
 					var/list/mob/living/OL = list()
 					for (var/mob/living/O in oview(7, M))
 						OL += O
-					if (OL.len == 0)
+					if (length(OL) == 0)
 						return
 					var/event = pick(list(1, 2, 3, 4, 5, 6))
 					switch (event)
@@ -739,7 +739,7 @@ datum/pathogeneffects/malevolent/serious_paranoia
 					var/list/mob/living/OL = list()
 					for (var/mob/living/O in oview(7, M))
 						OL += O
-					if (OL.len == 0)
+					if (length(OL) == 0)
 						return
 					var/event = pick(list(1, 2, 3, 4, 5, 6))
 					switch (event)
@@ -819,7 +819,7 @@ datum/pathogeneffects/malevolent/serious_paranoia/mild
 					var/list/mob/living/OL = list()
 					for (var/mob/living/O in oview(7, M))
 						OL += O
-					if (OL.len == 0)
+					if (length(OL) == 0)
 						return
 					var/event = pick(list(1, 2, 3))
 					switch (event)
@@ -836,7 +836,7 @@ datum/pathogeneffects/malevolent/serious_paranoia/mild
 					var/list/mob/living/OL = list()
 					for (var/mob/living/O in oview(7, M))
 						OL += O
-					if (OL.len == 0)
+					if (length(OL) == 0)
 						return
 					var/event = pick(list(1, 2, 3))
 					switch (event)

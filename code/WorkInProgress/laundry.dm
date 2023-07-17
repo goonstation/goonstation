@@ -177,7 +177,7 @@
 		else if ((!istype(W, /obj/item/clothing) || !istype(W, /obj/item/grab)) && W.w_class > W_CLASS_HUGE)
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [W] is too big to fit!")
 			return
-		else if (src.contents.len >= src.load_max)
+		else if (length(src.contents) >= src.load_max)
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [src] is too full!")
 			return
 		else if (W.cant_drop || W.cant_self_remove)

@@ -167,7 +167,7 @@ var/list/rollList = list()
 			Pal.loc:u_equip(Pal)
 		Pal.set_loc(src)
 
-		if(src.dicePals.len == 1) //magic trick time
+		if(length(src.dicePals) == 1) //magic trick time
 			src.colorcache = src.color //removes src color, then overlays a decoy image to make the icon look unchanged
 			src.color = null
 			src.decoyimageicon = new /icon(src.icon,src.icon_state)
@@ -612,7 +612,7 @@ var/list/rollList = list()
 				src.addeddice++
 				if(diceposition == 5)
 					break
-			if(D.dicePals.len == src.addeddice)
+			if(length(D.dicePals) == src.addeddice)
 				D.dicePals = list()
 				if(D.colorcache)
 					D.color = D.colorcache

@@ -151,7 +151,7 @@ var/datum/signal_holder/global_signal_holder
 		var/list/components_of_type = dc[I]
 		if(length(components_of_type))	//
 			var/list/subtracted = components_of_type - src
-			if(subtracted.len == 1)	//only 1 guy left
+			if(length(subtracted) == 1)	//only 1 guy left
 				dc[I] = subtracted[1]	//make him special
 			else
 				dc[I] = subtracted

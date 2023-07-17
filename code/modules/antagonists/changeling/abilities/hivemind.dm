@@ -31,7 +31,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 			if (O.client)
 				eligible[O.real_name] = O
 
-		if (eligible.len < 1)
+		if (length(eligible) < 1)
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return TRUE
 

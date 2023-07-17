@@ -3015,7 +3015,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/derelict_ai_sat/core)
 "anu" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/industrial,
 /area/space)
 "anv" = (
@@ -5686,7 +5686,7 @@
 	},
 /area/space)
 "aAV" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/plating/scorched,
 /area/space)
 "aBi" = (
@@ -6679,7 +6679,7 @@
 /area/abandonedship)
 "aHS" = (
 /obj/decal/cleanable/dirt,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "aHU" = (
@@ -6747,7 +6747,7 @@
 /area/abandonedmedicalship)
 "aIc" = (
 /obj/item/cable_coil/cut,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "aId" = (
@@ -7699,13 +7699,13 @@
 	name = "GLOMAR Salvager"
 	})
 "aLf" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "aLg" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
@@ -8826,7 +8826,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aOw" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aOy" = (
@@ -12097,7 +12097,7 @@
 /turf/simulated/floor/plating/airless,
 /area/h7)
 "aXu" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
@@ -12372,7 +12372,7 @@
 /turf/simulated/floor/plating,
 /area/iss)
 "aYf" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/damaged2,
 /area/h7)
 "aYg" = (
@@ -13038,7 +13038,7 @@
 	pixel_y = 32
 	},
 /obj/decal/cleanable/oil,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/white/grime,
 /area/iss)
 "baJ" = (
@@ -13263,7 +13263,7 @@
 	dir = 4;
 	icon_state = "floattiles2"
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "bbu" = (
@@ -13324,7 +13324,7 @@
 /area/iss)
 "bbC" = (
 /obj/machinery/light/small,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/white/grime,
 /area/iss)
 "bbD" = (
@@ -13334,7 +13334,7 @@
 "bbE" = (
 /obj/item/tile/steel,
 /obj/decal/cleanable/machine_debris,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating,
 /area/iss)
 "bbF" = (
@@ -15866,7 +15866,7 @@
 	},
 /area/salyut)
 "bkr" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -23824,7 +23824,7 @@
 	},
 /area/diner/tug)
 "vel" = (
-/obj/item/storage/belt/hunter,
+/obj/item/storage/belt/utility,
 /obj/item/clothing/under/misc/tourist,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)

@@ -174,7 +174,7 @@
 					MV.Add(text2num(temp))
 					i++
 
-			if (MV.len >= 6)
+			if (length(MV) >= 6)
 				input = matrix(MV[1], MV[2], MV[3], MV[4], MV[5], MV[6])
 
 			else

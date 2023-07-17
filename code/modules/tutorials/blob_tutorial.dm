@@ -115,7 +115,7 @@
 			return 1
 
 		MayAdvance()
-			return must_spread_to.len == 0
+			return length(must_spread_to) == 0
 
 	attack
 		name = "Destroying obstacles"

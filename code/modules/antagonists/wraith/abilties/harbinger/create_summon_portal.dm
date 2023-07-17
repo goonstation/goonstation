@@ -46,7 +46,7 @@
 				if("Brullbars")
 					mob_choice = /mob/living/critter/brullbar
 				if("Heavy gunner drones")
-					mob_choice = /obj/critter/gunbot/heavy
+					mob_choice = /mob/living/critter/robotic/gunbot
 				if("Random")
 					mob_choice = null
 			boutput(holder.owner, "<span class='success'>You gather your energy and open a portal.</span>")
@@ -66,5 +66,5 @@
 		. = ..()
 		var/mob/living/intangible/wraith/W = src.holder.owner
 		if (!W.density)
-			boutput(W, "<span class='alert>Your connection to the physical plane is too weak. You must be manifested to do this.</span>")
+			boutput(W, "<span class='alert'>Your connection to the physical plane is too weak. You must be manifested to do this.</span>")
 			return FALSE
