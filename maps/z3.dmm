@@ -23824,7 +23824,7 @@
 	},
 /area/diner/tug)
 "vel" = (
-/obj/item/storage/belt/hunter,
+/obj/item/storage/belt/utility,
 /obj/item/clothing/under/misc/tourist,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
