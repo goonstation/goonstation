@@ -371,7 +371,7 @@
 	if (!bypass_resistance && !src.disease_resistance_check(null,A.name))
 		return null
 
-	logTheThing(LOG_COMBAT, src, " gained the [src] disease.")
+	logTheThing(LOG_COMBAT, src, " gained the [ailment_name] ([ailment_path]) disease.")
 
 	if (istype(A, /datum/ailment/disease/))
 		var/datum/ailment/disease/D = A
