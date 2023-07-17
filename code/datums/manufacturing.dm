@@ -4,7 +4,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	else
 		var/datum/material/nice_mat = getMaterial(mat)
 		if (istype(nice_mat))
-			return capitalize(nice_mat.name)
+			return capitalize(nice_mat.getName())
 		return capitalize(mat) //if all else fails (probably a category instead of a material)
 
 ABSTRACT_TYPE(/datum/manufacture)

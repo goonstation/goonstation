@@ -89,7 +89,7 @@ TYPEINFO(/atom)
 		// Lets stop having 5 implementations of this that all do it differently
 		if (!src.material && default_material)
 			var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
-			src.setMaterial(mat, src.uses_material_appearance, src.mat_changename, copy = FALSE)
+			src.setMaterial(mat, src.uses_material_appearance, src.mat_changename)
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()

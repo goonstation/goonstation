@@ -98,9 +98,10 @@
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = INVIS_SPOOKY
 		src.see_in_dark = SEE_DARK_FULL
-		my_material = copyMaterial(getMaterial("blob"))
-		my_material.color = "#ffffff"
-		initial_material = copyMaterial(getMaterial("blob"))
+		src.my_material = getMaterial("blob")
+		src.my_material = src.my_material.getMutable()
+		src.my_material.setColor("#ffffff")
+		initial_material = getMaterial("blob")
 
 		//set start grace-period timestamp
 		var/extraGrace = rand(600, 1800) //add between 1 min and 3 mins extra
@@ -353,9 +354,10 @@
 		src.upgrade_id = 1
 		src.lipids = new()
 		src.nuclei = new()
-		src.my_material = copyMaterial(getMaterial("blob"))
-		src.my_material.color = "#ffffff"
-		src.initial_material = copyMaterial(getMaterial("blob"))
+		src.my_material = getMaterial("blob")
+		src.my_material = src.my_material.getMutable()
+		src.my_material.setColor("#ffffff")
+		src.initial_material = getMaterial("blob")
 		src.organ_color = initial(src.organ_color)
 		src.debuff_timestamp = 0
 

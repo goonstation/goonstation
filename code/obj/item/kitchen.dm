@@ -746,7 +746,7 @@ TRAYS
 			var/obj/O = new /obj/item/raw_material/shard/glass
 			O.set_loc(T)
 			if(src.material)
-				O.setMaterial(copyMaterial(src.material))
+				O.setMaterial(src.material)
 			O.throw_at(get_offset_target_turf(T, rand(-4,4), rand(-4,4)), 7, 1)
 
 		src.shit_goes_everywhere(depth + 1)

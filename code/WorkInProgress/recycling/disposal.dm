@@ -487,7 +487,7 @@
 		C.color = src.color
 		C.name = src.name
 		if (src.material)
-			C.setMaterial(src.material, copy=FALSE)
+			C.setMaterial(src.material)
 		C.update()
 
 		qdel(src)

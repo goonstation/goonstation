@@ -142,7 +142,7 @@
 				continue
 			if (M.type != O.type)
 				continue
-			if(!isSameMaterial(O.material,M.material))
+			if(!O.material.isSameMaterial(M.material))
 				continue
 			if(M.material?.name != M.initial_material_name)
 				continue
@@ -234,8 +234,7 @@
 		OCD.amount += max(delta,0)
 		if(ore.material)
 			for(var/i in 1 to delta) //make some copies of the material if this is a stack
-				var/datum/material/matCopy = copyMaterial(ore.material)
-				matCopy.owner = null
+				var/datum/material/matCopy = ore.material
 				OCD.stats += matCopy
 		OCD.amount = round(max(OCD.amount,0)) //floor values to avoid float imprecision
 		ores[material_name] = OCD
@@ -281,7 +280,7 @@
 				var/obj/item/raw_material/ore = new OCD.type_path(src)
 				ore.removeMaterial()
 				ore.setMaterial(OCD.stats[length(OCD.stats)], TRUE, (lowertext(ore.initial_material_name) != lowertext(ore.material_name)), FALSE) //for the most part, this will only affect gemstones by preserving their type, but also quality
-				ore.initial_material_name = ore.material.name
+				ore.initial_material_name = ore.material.getName()
 				OCD.stats.Cut(length(OCD.stats))
 				ore.set_loc(eject_location)
 				OCD.amount--

@@ -13,7 +13,7 @@
 			I.material.setProperty("density", 1)
 		if(!I.material.hasProperty("hard"))
 			I.material.setProperty("hard", 1)
-		if(I.material.mat_id=="ice") //ice is cold
+		if(I.material.getID()=="ice") //ice is cold
 			I.temperature = T0C-10
 
 /datum/matfab_recipe/simple/nuclear/fuel_rod
@@ -201,12 +201,12 @@
 				if(newObj.blasting)
 					newObj.remove_prefixes(99)
 					newObj.name_prefix("Blasting")
-					newObj.name_prefix(head.material.name ? head.material.name : "")
+					newObj.name_prefix(head.material.getName() ? head.material.getName() : "")
 					newObj.UpdateName()
 				else if(newObj.powered)
 					newObj.remove_prefixes(99)
 					newObj.name_prefix("Powered")
-					newObj.name_prefix(head.material.name ? head.material.name : "")
+					newObj.name_prefix(head.material.getName() ? head.material.getName() : "")
 					newObj.UpdateName()
 
 				newObj.desc = "[initial(newObj.desc)] It has \a [head.name]."
@@ -375,9 +375,9 @@
 			var/obj/item/source = getObjectByPartName("Glasses")
 			if(source?.material)
 				newObj.setMaterial(source.material)
-				newObj.color_r = GetRedPart(source.material.color) / 255
-				newObj.color_g = GetGreenPart(source.material.color) / 255
-				newObj.color_b = GetBluePart(source.material.color) / 255
+				newObj.color_r = GetRedPart(source.material.getColor()) / 255
+				newObj.color_g = GetGreenPart(source.material.getColor()) / 255
+				newObj.color_b = GetBluePart(source.material.getColor()) / 255
 
 			newObj.set_loc(getOutputLocation(owner))
 		return
@@ -458,10 +458,10 @@
 			var/obj/item/toe = getObjectByPartName("Optional Toe Tip")
 			if(toe && toe.material)
 				newObj.setMaterial(toe.material)
-				newObj.desc = "[toe.material.name]-toed [upper.material.name] shoes. The soles are made of [sole.material.name]."
+				newObj.desc = "[toe.material.getName()]-toed [upper.material.getName()] shoes. The soles are made of [sole.material.getName()]."
 			else if(upper && upper.material)
 				newObj.setMaterial(upper.material)
-				newObj.desc = newObj.desc + " The soles are made of [sole.material.name]."
+				newObj.desc = newObj.desc + " The soles are made of [sole.material.getName()]."
 
 			newObj.set_loc(getOutputLocation(owner))
 		return
@@ -482,15 +482,15 @@
 			var/obj/item/casingObj = getObjectByPartName("Casing")
 			var/obj/item/device/light/flashlight/newObj
 			if(lensObj?.material)
-				var/R = GetRedPart(lensObj.material.color) / 255
-				var/G = GetGreenPart(lensObj.material.color) / 255
-				var/B = GetBluePart(lensObj.material.color) / 255
+				var/R = GetRedPart(lensObj.material.getColor()) / 255
+				var/G = GetGreenPart(lensObj.material.getColor()) / 255
+				var/B = GetBluePart(lensObj.material.getColor()) / 255
 				newObj = new(null, R, G, B)
 			else
 				newObj = new
 			if(casingObj?.material)
 				newObj.setMaterial(casingObj.material)
-				newObj.desc = newObj.desc + " It has a [lensObj.material.name] lens."
+				newObj.desc = newObj.desc + " It has a [lensObj.material.getName()] lens."
 
 			newObj.set_loc(getOutputLocation(owner))
 		return
@@ -512,10 +512,10 @@
 			var/obj/item/casingObj = getObjectByPartName("Casing")
 			if(casingObj?.material && lensObj?.material)
 				newObj.setMaterial(lensObj.material)
-				newObj.desc = newObj.desc + " Its made from [lensObj.material.name]."
-				newObj.color_r = GetRedPart(lensObj.material.color) / 255
-				newObj.color_g = GetGreenPart(lensObj.material.color) / 255
-				newObj.color_b = GetBluePart(lensObj.material.color) / 255
+				newObj.desc = newObj.desc + " Its made from [lensObj.material.getName()]."
+				newObj.color_r = GetRedPart(lensObj.material.getColor()) / 255
+				newObj.color_g = GetGreenPart(lensObj.material.getColor()) / 255
+				newObj.color_b = GetBluePart(lensObj.material.getColor()) / 255
 
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -538,10 +538,10 @@
 			var/obj/item/casingObj = getObjectByPartName("Casing")
 			if(casingObj?.material && lensObj?.material)
 				newObj.setMaterial(lensObj.material)
-				newObj.desc = newObj.desc + " Its made from [lensObj.material.name]."
-				newObj.color_r = GetRedPart(lensObj.material.color) / 255
-				newObj.color_g = GetGreenPart(lensObj.material.color) / 255
-				newObj.color_b = GetBluePart(lensObj.material.color) / 255
+				newObj.desc = newObj.desc + " Its made from [lensObj.material.getName()]."
+				newObj.color_r = GetRedPart(lensObj.material.getColor()) / 255
+				newObj.color_g = GetGreenPart(lensObj.material.getColor()) / 255
+				newObj.color_b = GetBluePart(lensObj.material.getColor()) / 255
 
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -564,8 +564,8 @@
 			var/obj/item/casingObj = getObjectByPartName("Casing")
 			if(casingObj?.material && lensObj?.material)
 				newObj.setMaterial(lensObj.material)
-				newObj.desc = newObj.desc + " Its made from [lensObj.material.name]."
-				newObj.light.set_color(GetRedPart(lensObj.material.color) / 255, GetGreenPart(lensObj.material.color) / 255, GetBluePart(lensObj.material.color) / 255)
+				newObj.desc = newObj.desc + " Its made from [lensObj.material.getName()]."
+				newObj.light.set_color(GetRedPart(lensObj.material.getColor()) / 255, GetGreenPart(lensObj.material.getColor()) / 255, GetBluePart(lensObj.material.getColor()) / 255)
 
 			newObj.set_loc(getOutputLocation(owner))
 		return
@@ -673,7 +673,7 @@
 			var/master_chem = chemical.reagents.get_master_reagent()
 			var/master_chem_name = chemical.reagents.get_master_reagent_name()
 
-			var/datum/material/mat = copyMaterial(refined.material)
+			var/datum/material/mat = refined.material.getMutable()
 
 			var/datum/materialProc/generic_reagent_onlife/O = new/datum/materialProc/generic_reagent_onlife(master_chem,1)
 			mat.triggersOnLife.Cut()
@@ -687,8 +687,8 @@
 
 			if(refined?.material)
 				mat.canMix = 0
-				mat.name = "[master_chem_name]-infused [mat.name]"
-				mat.mat_id = "[master_chem_name][mat.mat_id]"
+				mat.setName("[master_chem_name]-infused [mat.getName()]")
+				mat.setID("[master_chem_name][mat.getID()]")
 				W.setMaterial(mat)
 				W.change_stack_amount(9)
 

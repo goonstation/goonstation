@@ -14,66 +14,241 @@
 	*/
 ABSTRACT_TYPE(/datum/material)
 /datum/material
-	/// The atom that this material is applied to
-	var/atom/owner = null
+	///Is this a mutable instance? Defaults to true so creating new materials returns a mutable instance by default
+	VAR_PRIVATE/tmp/mutable = TRUE
 	/// used to retrieve instances of these base materials from the cache.
-	var/mat_id = "ohshitium"
+	VAR_PROTECTED/mat_id = "ohshitium"
 	/// Name of the material, used for combination and scanning
-	var/name = "Youshouldneverseemeium"
+	VAR_PROTECTED/name = "Youshouldneverseemeium"
 	/// Description of the material, used for scanning
-	var/desc = "This is a custom material."
-
-	/// Holds the parent materials.
-	var/list/parent_materials = list()
+	VAR_PROTECTED/desc = "This is a custom material."
 	/// List of all the various [/datum/material_property] that apply.
-	var/list/properties = list()
-
-	/// Compound generation
-	var/generation = 0
-
-	/// Can this be mixed with other materials?
-	var/canMix = 1
-	/// Can this only be used after being combined with another material?
-	var/mixOnly = 0
-
+	VAR_PROTECTED/list/properties = list()
 	/// Various flags. See [material_properties.dm]
-	var/material_flags = 0
+	VAR_PROTECTED/material_flags = 0
 	/// In percent of a base value. How much this sells for.
-	var/value = 100
+	VAR_PROTECTED/value = 100
 
+	//naming stuff
 	/// words that go before the name, used in combination
-	var/list/prefixes = list()
+	VAR_PROTECTED/list/prefixes = list()
 	/// words that go after the name, used in combination
-	var/list/suffixes = list()
+	VAR_PROTECTED/list/suffixes = list()
 	/// Whether the specaialNaming proc is called when this material is applied.
-	var/special_naming = FALSE
+	VAR_PROTECTED/special_naming = FALSE
 
+	//Vars for alloys
+	/// Holds the parent materials.
+	VAR_PROTECTED/list/parent_materials = list()
+	/// Compound generation
+	VAR_PROTECTED/generation = 0
+	/// Can this be mixed with other materials?
+	VAR_PROTECTED/canMix = 1
+	/// Can this only be used after being combined with another material?
+	VAR_PROTECTED/mixOnly = 0
+
+	//material appearance vars
 	/// if not null, texture will be set when mat is applied.
-	var/texture = ""
+	VAR_PROTECTED/texture = ""
 	/// How to blend the [/datum/material/var/texture].
-	var/texture_blend = BLEND_ADD
-
+	VAR_PROTECTED/texture_blend = BLEND_ADD
 	/// Should this even color the objects made from it? Mostly used for base station materials like steel
-	var/applyColor = 1
+	VAR_PROTECTED/applyColor = TRUE
 	/// The color of the material
-	var/color = "#FFFFFF"
+	VAR_PROTECTED/color = "#FFFFFF"
 	/// The "transparency" of the material. Kept as alpha for logical reasons. Displayed as percentage ingame.
-	var/alpha = 255
+	VAR_PROTECTED/alpha = 255
 	/// The 'quality' of the material
-	var/quality = 0
+	VAR_PROTECTED/quality = 0
 
 	/// The actual value of edibility. Changes internally and sets [/datum/material/var/edible].
-	var/edible_exact = 0
+	VAR_PROTECTED/edible_exact = 0
 	/// The functional value of edibility. Edible or not? This is what you check from the outside to see if material is edible. See [/datum/material/var/edible_exact].
-	var/edible = 0
+	VAR_PROTECTED/edible = 0
 
-	var/owner_hasentered_added = FALSE
+	//triggers
+	/// Called when exposed to temperatures.
+	VAR_PROTECTED/list/triggersTemp = list()
+	/// Called when exposed to chemicals.
+	VAR_PROTECTED/list/triggersChem = list()
+	/// Called when owning object is picked up.
+	VAR_PROTECTED/list/triggersPickup = list()
+	/// Called when owning object is dropped.
+	VAR_PROTECTED/list/triggersDrop = list()
+	/// Called when exposed to explosions.
+	VAR_PROTECTED/list/triggersExp = list()
+	/// Called when the material is added to an object
+	VAR_PROTECTED/list/triggersOnAdd = list()
+	/// Called when the material is removed from an object
+	VAR_PROTECTED/list/triggersOnRemove = list()
+	/// Called when the life proc of a mob that has the owning item equipped runs.
+	VAR_PROTECTED/list/triggersOnLife = list()
+	/// Called when the owning object is used to attack something or someone.
+	VAR_PROTECTED/list/triggersOnAttack = list()
+	/// Called when a mob wearing the owning object is attacked.
+	VAR_PROTECTED/list/triggersOnAttacked = list()
+	/// Called when a mob wearing the owning object is shot.
+	VAR_PROTECTED/list/triggersOnBullet = list()
+	/// Called when *something* enters a turf with the material assigned. Also called on all objects on the turf with a material.
+	VAR_PROTECTED/list/triggersOnEntered = list()
+	/// Called when someone eats a thing with this material assigned.
+	VAR_PROTECTED/list/triggersOnEat = list()
+	/// Called when blob hits something with this material assigned.
+	VAR_PROTECTED/list/triggersOnBlobHit = list()
+	/// Called when an obj hits something with this material assigned.
+	VAR_PROTECTED/list/triggersOnHit = list()
+
 
 	New()
 		. = ..()
 		for(var/datum/material_property/propPath as anything in concrete_typesof(/datum/material_property))
 			if(initial(propPath.default_value) > 0)
 				src.setProperty(initial(propPath.id), initial(propPath.default_value))
+
+	//getters for all the protected vars
+	proc/getID()
+		return src.mat_id
+
+	proc/getName()
+		return src.name
+
+	proc/getDesc()
+		return src.desc
+
+	proc/getMaterialFlags()
+		return src.material_flags
+
+	proc/getValue()
+		return src.value
+
+	proc/getQuality()
+		return src.quality
+
+	proc/usesSpecialNaming()
+		return src.special_naming
+
+	proc/getPrefixes()
+		return src.prefixes.Copy()
+
+	proc/getSuffixes()
+		return src.suffixes.Copy()
+
+	proc/getTexture()
+		return src.texture
+
+	proc/getTextureBlendMode()
+		return src.texture_blend
+
+	proc/shouldApplyColor()
+		return src.applyColor
+
+	proc/getColor()
+		return src.color
+
+	proc/getAlpha()
+		return src.alpha
+
+	proc/getEdible()
+		return src.edible
+
+	//setters for protected vars
+	proc/setID(var/id)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		src.mat_id = id
+
+	proc/setName(var/name)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		src.name = name
+
+	proc/setColor(var/color)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		src.color = color
+
+	//mutability procs
+
+	///Returns a mutable version of this material. Will return a copy of this material if it is already mutable.
+	proc/getMutable()
+		return src.copyMaterial() //copy is mutable by default
+
+	///Returns an immutable version of this material. Will return this material if it is already immutable.
+	proc/getImmutable()
+		if(!src.mutable)
+			return src
+		else
+			var/datum/material/immutable = src.copyMaterial()
+			immutable.mutable = FALSE
+			return immutable
+
+	proc/copyMaterial()
+		var/datum/material/M = new src.type()
+		M.properties = mergeProperties(src.properties, rightBias = 0)
+		for(var/X in src.vars)
+			if(!issaved(X)) continue
+			if(X in triggerVars)
+				M.vars[X] = getFusedTriggers(src.vars[X], list(), M) //Pass in an empty list to basically copy the first one.
+			else
+				if(istype(src.vars[X],/list))
+					var/list/oldList = src.vars[X]
+					M.vars[X] = oldList.Copy()
+				else
+					M.vars[X] = src.vars[X]
+		return M
+
+	///Compares a material to this one to determine if stacking should be allowed.
+	proc/isSameMaterial(var/datum/material/M2)
+		if(src == M2) //since we're actually doing mutable/immutable now, we can frequently shortcut this with an actual equal check
+			return TRUE
+
+		if(isnull(M2))
+			return FALSE
+
+		if(src.properties.len != M2.properties.len || src.getID() != M2.getID())
+			return FALSE
+
+		if(src.value != M2.value || src.name != M2.name  || src.color ~! M2.color ||src.alpha != M2.alpha || src.getMaterialFlags() != M2.getMaterialFlags() || src.texture != M2.texture)
+			return FALSE
+
+		for(var/datum/material_property/P1 in src.properties)
+			if(M2.getProperty(P1.id) != src.properties[P1]) return FALSE
+		for(var/datum/material_property/P2 in M2.properties)
+			if(src.getProperty(P2.id) != M2.properties[P2]) return FALSE
+
+		for(var/X in triggerVars)
+			for(var/datum/material_property/A in src.vars[X])
+				if(!(locate(A.type) in M2.vars[X])) return FALSE
+
+			for(var/datum/material_property/B in M2.vars[X])
+				if(!(locate(B.type) in src.vars[X])) return FALSE
+
+		return TRUE
+
+	//utility procs
+
+	///Time for some super verbose proc names.
+	proc/getMaterialTraitDesc()
+		var/string = ""
+		var/list/allTriggers = (src.triggersTemp + src.triggersChem + src.triggersPickup + src.triggersDrop + src.triggersExp + src.triggersOnAdd + src.triggersOnLife + src.triggersOnAttack + src.triggersOnAttacked + src.triggersOnEntered)
+		for(var/datum/materialProc/P in allTriggers)
+			if(length(P.desc))
+				if(length(string))
+					if(!findtext(string,P.desc))
+						string += " " + P.desc
+				else
+					string = P.desc
+		return string
+
+	proc/getMaterialPrefixList()
+		. = list()
+		for(var/datum/material_property/P as anything in src.properties)
+			if(src.properties[P] >= P.prefix_high_min)
+				. |= P.getAdjective(src)
+			else if(src.properties[P] <= P.prefix_low_max)
+				. |= P.getAdjective(src)
+
+	//material procs
 
 	proc/getProperty(var/property, var/type = VALUE_CURRENT)
 		for(var/datum/material_property/P in properties)
@@ -88,6 +263,8 @@ ABSTRACT_TYPE(/datum/material)
 		return 0
 
 	proc/removeProperty(var/property)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
 		for(var/datum/material_property/P in properties)
 			if(P.id == property)
 				P.onRemoved(src)
@@ -96,6 +273,8 @@ ABSTRACT_TYPE(/datum/material)
 		return
 
 	proc/adjustProperty(var/property, var/value)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
 		for(var/datum/material_property/P in properties)
 			if(P.id == property)
 				P.changeValue(src, properties[P] + value)
@@ -104,6 +283,8 @@ ABSTRACT_TYPE(/datum/material)
 		return
 
 	proc/setProperty(var/property, var/value)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
 		for(var/datum/material_property/P in properties)
 			if(P.id == property)
 				P.changeValue(src, value)
@@ -127,10 +308,20 @@ ABSTRACT_TYPE(/datum/material)
 		return 0
 
 	proc/addTrigger(var/list/L, var/datum/materialProc/D)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
 		for(var/datum/materialProc/P in L)
 			if(P.type == D.type) return 0
 		L.Add(D)
 		L[D] = 0
+		return
+
+	proc/removeTrigger(var/list/L, var/inType)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		for(var/datum/materialProc/P in L)
+			if(P.type == inType)
+				L.Remove(P)
 		return
 
 	proc/interpolateName(datum/material/other, t)
@@ -138,49 +329,6 @@ ABSTRACT_TYPE(/datum/material)
 
 	proc/specialNaming(atom/target)
 		. = target.name
-
-	proc/removeTrigger(var/list/L, var/inType)
-		for(var/datum/materialProc/P in L)
-			if(P.type == inType)
-				L.Remove(P)
-		return
-
-	proc/fail()
-		del(owner)
-		return
-
-	/// Called when exposed to temperatures.
-	var/list/triggersTemp = list()
-	/// Called when exposed to chemicals.
-	var/list/triggersChem = list()
-	/// Called when owning object is picked up.
-	var/list/triggersPickup = list()
-	/// Called when owning object is dropped.
-	var/list/triggersDrop = list()
-	/// Called when exposed to explosions.
-	var/list/triggersExp = list()
-	/// Called when the material is added to an object
-	var/list/triggersOnAdd = list()
-	/// Called when the material is removed from an object
-	var/list/triggersOnRemove = list()
-	/// Called when the life proc of a mob that has the owning item equipped runs.
-	var/list/triggersOnLife = list()
-	/// Called when the owning object is used to attack something or someone.
-	var/list/triggersOnAttack = list()
-	/// Called when a mob wearing the owning object is attacked.
-	var/list/triggersOnAttacked = list()
-	/// Called when a mob wearing the owning object is shot.
-	var/list/triggersOnBullet = list()
-	/// Called when *something* enters a turf with the material assigned. Also called on all objects on the turf with a material.
-	var/list/triggersOnEntered = list()
-	/// Called when someone eats a thing with this material assigned.
-	var/list/triggersOnEat = list()
-	/// Called when blob hits something with this material assigned.
-	var/list/triggersOnBlobHit = list()
-	/// Called when an obj hits something with this material assigned.
-	var/list/triggersOnHit = list()
-
-
 
 	proc/triggerOnEntered(var/atom/owner, var/atom/entering)
 		for(var/datum/materialProc/X in triggersOnEntered)
@@ -257,6 +405,7 @@ ABSTRACT_TYPE(/datum/material)
 			X.execute(owner, attackobj, attacker, meleeorthrow)
 		return
 
+//Material definitions
 
 /datum/material/interpolated
 	mat_id = "imcoderium"

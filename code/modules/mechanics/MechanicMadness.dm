@@ -2711,7 +2711,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		. = ..()
 		if(isnull(src.material))
 			return
-		spooky = (src.material.mat_id == "soulsteel")
+		spooky = (src.material.getID() == "soulsteel")
 
 /obj/item/mechanics/trigger/buttonPanel
 	name = "Button Panel"

@@ -269,7 +269,7 @@
 		tooltip_rebuild = 1
 		if (istype(src.material))
 			burn_possible = src.material.getProperty("flammable") > 1 ? TRUE : FALSE
-			if (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL || src.material.material_flags & MATERIAL_RUBBER)
+			if (src.material.getMaterialFlags() & (MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_RUBBER))
 				burn_type = 1
 			else
 				burn_type = 0
@@ -392,7 +392,7 @@
 			return FALSE
 	var/edibility_override = SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED_PRE, user, src) || SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED_PRE, M, user)
 	var/can_matter_eat = by_matter_eater && (M == user) && M.bioHolder.HasEffect("mattereater")
-	var/edible_check = src.edible || (src.material?.edible) || (edibility_override & FORCE_EDIBILITY)
+	var/edible_check = src.edible || (src.material?.getEdible()) || (edibility_override & FORCE_EDIBILITY)
 	if (!edible_check && !can_matter_eat)
 		return FALSE
 
@@ -400,7 +400,7 @@
 		M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
 		"<span class='notice'>You take a bite of [src]!</span>")
 
-		if (src.material && (src.material.edible || edibility_override))
+		if (src.material && (src.material.getEdible() || edibility_override))
 			src.material.triggerEat(M, src)
 
 		if (src.reagents && src.reagents.total_volume)
@@ -438,7 +438,7 @@
 			"<span class='alert'><b>[user]</b> feeds you [src]!</span>")
 		logTheThing(LOG_COMBAT, user, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
-		if (src.material && (src.material.edible || edibility_override))
+		if (src.material && (src.material.getEdible() || edibility_override))
 			src.material.triggerEat(M, src)
 
 		if (src.reagents && src.reagents.total_volume)
@@ -598,7 +598,7 @@
 			return 0
 
 	if(O.material && src.material)
-		if(!isSameMaterial(O.material, src.material))
+		if(!O.material.isSameMaterial(src.material))
 			return 0
 	else if ((O.material && !src.material) || (!O.material && src.material))
 		return 0
@@ -610,7 +610,7 @@
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)
-		P.setMaterial(copyMaterial(src.material))
+		P.setMaterial(src.material)
 
 	src.change_stack_amount(-toRemove)
 	P.change_stack_amount(toRemove - P.amount)

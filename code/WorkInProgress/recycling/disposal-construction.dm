@@ -192,7 +192,7 @@
 					P.color = src.color
 					P.name = src.name
 					if (src.material)
-						P.setMaterial(src.material, copy=FALSE)
+						P.setMaterial(src.material)
 					P.UpdateIcon()
 					boutput(user, "You weld [P] in place.")
 					logTheThing(LOG_STATION, user, "welded the disposal pipe in place at [log_loc(P)]")

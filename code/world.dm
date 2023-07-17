@@ -135,8 +135,7 @@ var/global/mob/twitch_mob = 0
 	var/materialList = concrete_typesof(/datum/material)
 	for(var/mat in materialList)
 		var/datum/material/M = new mat()
-		material_cache.Add(M.mat_id)
-		material_cache[M.mat_id] = M
+		material_cache[M.getID()] = M.getImmutable()
 
 #ifdef TRACY_PROFILER_HOOK
 /proc/prof_init()
