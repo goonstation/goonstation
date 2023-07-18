@@ -210,7 +210,7 @@
 		changeHealth(-power*0.15,"blob")
 
 	ex_act(severity)
-		src.material?.triggerExp(src, severity)
+		src.material_trigger_on_explosion(severity)
 		switch(severity)
 			if(1)
 				changeHealth(rand(-90,-70),"explosion severity [severity]")

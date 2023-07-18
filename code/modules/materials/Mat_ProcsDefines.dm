@@ -413,7 +413,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 /// Called when a mob holding this atom is attacked for mat effects
 /atom/proc/material_trigger_on_mob_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/situation_modifier)
-	//on_person checks if the call was because of
 	if (src.material)
 		src.material?.triggerOnAttacked(src, attacker, attacked, weapon)
 	return
@@ -426,14 +425,19 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 /// Called when an atom or someone wearing the material is attacked for mat effects
 /atom/proc/material_trigger_on_blob_attacked(var/blobPower, var/situation_modifier)
-	//on_person checks if the call was because of
 	if (src.material)
 		src.material?.triggerOnBlobHit(src, blobPower)
 	return
 
-/// Called when the item is attacked with another atom for mat effects
+/// Called when an atom is caught in an explosion
+/atom/proc/material_trigger_on_explosion(var/severity)
+	if (src.material)
+		src.material?.triggerExp(src, severity)
+	return
+
+/// Called when the item is attacked with another atom for mat effects.
+/// If someone is smashed against the item or with hands, the mob itself is expected to be passed as attackatom
 /atom/proc/material_trigger_when_attacked(var/atom/attackatom, var/mob/attacker, var/meleeorthrow, var/situation_modifier)
-	//on_person checks if the call was because of
 	if (src.material)
 		src.material?.triggerOnHit(src, attackatom, attacker, meleeorthrow)
 	return
