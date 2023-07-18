@@ -962,7 +962,6 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "newspaper_rolled"
 	item_state = "paper"
-	rolled = TRUE
 	two_handed = FALSE
 	c_flags = ONBELT // hopefully this uncovers the eyes and mouth lol
 
@@ -1013,7 +1012,7 @@
 		src.item_state = "paper"
 	else // unrolling it
 		src.two_handed = TRUE
-		src.icon =  = 'icons/obj/large/64x32.dmi'
+		src.icon = 'icons/obj/large/64x32.dmi'
 		src.icon_state = "newspaper"
 		src.item_state = "newspaper"
 
