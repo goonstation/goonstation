@@ -52,6 +52,19 @@
 	var/list/standard_flairs = list("None", "Gold", "Latch", "Dirty", "Scratch", "Torn") //flairs that cant be coloured
 	var/list/colorable_flairs = list("None", "Corners", "Bookmark", "RightCover", "SpineCover") //flairs that can be coloured
 
+	// newspaper vars
+
+	/// headline of the newspaper. Saved separately to book title
+	var/newspaper_headline = ""
+	/// the name of the newspaper e.g. Nanotrasen Daily.
+	var/newspaper_publisher = ""
+	/// False by default, set to true when newspaper printing upgrade is installed.
+	var/newspaper_upgrade = TRUE // fuckit lets just start with newspapers for now
+	/// tells the printer whether to print books or newspapers
+	var/newspaper_mode_active = FALSE
+	/// headlines can be 128 characters max, unlike book titles
+	var/const/headline_len_lim = 128
+
 ////////////////////
 //Appearance stuff//
 ////////////////////
@@ -215,6 +228,12 @@
 					else
 						boutput(user, "\The [src] doesn't need an ink refill yet.")
 						return
+				if ("press_newspaper")
+					if (src.newspaper_upgrade)
+						src.visible_message("\The [src] already has that upgrade installed.")
+						return
+					src.newspaper_upgrade = TRUE
+					src.visible_message("\The [src] accepts the upgrade.")
 				else //in case some wiseguy tries the parent im watching u
 					boutput(user, "no good, asshole >:\[")
 					return
@@ -234,8 +253,18 @@
 
 		switch (lowertext(mode_sel))
 
+			if ("set mode")
+				if (src.newspaper_upgrade)
+					var/mode_sel = input("What are you printing?", "Print Mode",src.newspaper_mode_active) as anything in list("Books", "Newspapers")
+					if (mode_sel == "Newspapers")
+						src.newspaper_mode_active = TRUE
+					else
+						src.newspaper_mode_active = FALSE
+				else
+					src.newspaper_mode_active = FALSE
+					boutput(user, "Set to Book Mode")
 			if ("choose cover")
-				var/cover_sel = input("What cover design would you like?", "Cover Control", book_cover) as null|anything in cover_designs
+				var/cover_sel = input("What book cover design would you like?", "Cover Control", book_cover) as null|anything in cover_designs
 				if (!cover_sel)
 					book_cover = "book0"
 				else
@@ -300,6 +329,22 @@
 				book_author = strip_html(author_sel)
 				boutput(user, "Information set.")
 				return
+			if ("set newspaper infor")
+				if (!src.newspaper_mode_active)
+					boutput(user, "Your free trial of newspaper printing has expired. Please enter Newspaper Printing Upgrade.")
+					return
+				var/name_sel = input("What do you want the headline to be?", "Information Control", book_name)
+				if (length(name_sel) > src.headline_len_lim)
+					boutput(user, "Aborting, headline too long.")
+					return
+				src.newspaper_headline = strip_html(name_sel)
+				var/publisher_sel = input("Who is the publisher of your newspaper? What's the paper's name?", "Information Control", src.newspaper_publisher)
+				if (length(publisher_sel) > info_len_lim)
+					boutput(user, "Aborting, publisher name too long.")
+					return
+				src.newspaper_publisher = strip_html(publisher_sel)
+				boutput(user, "Information set.")
+				return
 
 			if ("set book contents")
 				var/info_sel = input("What do you want your book to say?", "Content Control", book_info_raw) as null|message
@@ -340,7 +385,7 @@
 					boutput(user, "Not enough paper.")
 					return*/
 				if (amount_sel > 0 && amount_sel <= (paper_amt / 2)) //is the number in range?
-					boutput(user, "Book amount set.")
+					boutput(user, "[src.newspaper_mode_active ? "Newspaper" : "Book"] amount set.")
 					book_amount = amount_sel
 				else
 					boutput(user, "Amount out of range.")
@@ -356,8 +401,12 @@
 					// you can't even print a single book. nice one, doofus
 					src.visible_message("Not enough ink.")
 					return
-				logTheThing(LOG_SAY, user, "made some books with the name: [book_name] | the author: [book_author] | the contents: [book_info]") //book logging
-				make_books()
+				if (src.newspaper_mode_active)
+					logTheThing(LOG_SAY, user, "made some newspapers with the headline: [book_name] | the author: [book_author] | the contents: [book_info]") //book logging
+					make_newspapers()
+				else
+					logTheThing(LOG_SAY, user, "made some books with the name: [book_name] | the author: [book_author] | the contents: [book_info]") //book logging
+					make_books()
 				return
 
 			if ("ink color")
@@ -534,6 +583,9 @@
 		UpdateIcon() //just in case?
 		src.visible_message("\The [src] finishes printing and shuts down.")
 
+/obj/machinery/printing_press/proc/make_newspapers()
+	return
+
 /obj/item/press_upgrade //parent just to i dont have to set name and icon a bunch i am PEAK lazy
 	name = "printing press upgrade module"
 	icon = 'icons/obj/module.dmi'
@@ -555,6 +607,10 @@
 	name = "bootleg printing press upgrade module"
 	desc = "This press upgrade looks sketchy as fuck."
 	icon_state = "press_forbidden"
+
+/obj/item/press_upgrade/newspaper //allows you to print newspapers
+	desc = "Looks like this upgrade module is for letting you print newspapers!"
+	icon_state = "press_newspaper"
 
 /obj/item/electronics/frame/press_frame //this is really dumb dont kill me, just wanna make it qm orderable
 	name = "Printing Press frame"
