@@ -7,32 +7,33 @@
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/on = FALSE
+	/// What output pressure we aiming for?
 	var/target_pressure = ONE_ATMOSPHERE
 	/// ID of the gas you wish to filter
 	var/filter_type = "toxins"
 
 /obj/machinery/atmospherics/trinary/filter/update_icon()
 	if(src.node1&&src.node2&&src.node3)
-		icon_state = "intact_[on?("on"):("off")]"
+		src.icon_state = "intact_[src.on?("on"):("off")]"
 	else
-		icon_state = "exposed_off"
+		src.icon_state = "exposed_off"
 
-		on = FALSE
+		src.on = FALSE
 
 /obj/machinery/atmospherics/trinary/filter/process()
 	..()
-	if(!on)
+	if(!src.on)
 		return FALSE
 
 	var/output_starting_pressure = MIXTURE_PRESSURE(src.air3)
 
-	if(output_starting_pressure >= target_pressure)
+	if(output_starting_pressure >= src.target_pressure)
 		//No need to mix if target is already full!
 		return TRUE
 
 	//Calculate necessary moles to transfer using PV=nRT
 
-	var/pressure_delta = target_pressure - output_starting_pressure
+	var/pressure_delta = src.target_pressure - output_starting_pressure
 	var/transfer_moles
 
 	if(src.air1.temperature > 0)
@@ -54,9 +55,9 @@
 		src.air2.merge(filtered_out)
 		src.air3.merge(removed)
 
-	network1?.update = TRUE
-	network2?.update = TRUE
-	network3?.update = TRUE
+	src.network1?.update = TRUE
+	src.network2?.update = TRUE
+	src.network3?.update = TRUE
 
 	return TRUE
 

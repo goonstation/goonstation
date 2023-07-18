@@ -31,11 +31,11 @@
 	var/emagged = FALSE
 
 /obj/machinery/atmospherics/trinary/retrofilter/update_icon()
-	if(node1&&node2&&node3)
-		icon_state = "intact_[(status & NOPOWER)?("off"):("on")]"
+	if(src.node1&&src.node2&&src.node3)
+		src.icon_state = "intact_[(src.status & NOPOWER)?("off"):("on")]"
 	else
-		icon_state = "" //bad but am lazy to make icons rn planning for a later retrofilter pr
-		status |= NOPOWER
+		src.icon_state = "" //bad but am lazy to make icons rn planning for a later retrofilter pr
+		src.status |= NOPOWER
 
 /obj/machinery/atmospherics/trinary/retrofilter/attack_hand(mob/user)
 	if(..())
@@ -52,16 +52,16 @@
 		else
 			dat += "[gases[i]]: <a href='?src=\ref[src];toggle_gas=[1 << (i - 1)]'>[(src.filter_mode & (1 << (i - 1))) ? "Releasing" : "Passing"]</a><br>"
 
-	var/pressure = MIXTURE_PRESSURE(air1)
-	var/total_moles = TOTAL_MOLES(air1)
+	var/pressure = MIXTURE_PRESSURE(src.air1)
+	var/total_moles = TOTAL_MOLES(src.air1)
 
 	dat += "<hr>Gas Levels: <br>Gas Pressure: [round(pressure,0.1)] kPa<br><br>"
 
 	if (total_moles)
-		var/o2_level = air1.oxygen/total_moles
-		var/n2_level = air1.nitrogen/total_moles
-		var/co2_level = air1.carbon_dioxide/total_moles
-		var/plasma_level = air1.toxins/total_moles
+		var/o2_level = src.air1.oxygen/total_moles
+		var/n2_level = src.air1.nitrogen/total_moles
+		var/co2_level = src.air1.carbon_dioxide/total_moles
+		var/plasma_level = src.air1.toxins/total_moles
 		var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
 
 		dat += "Nitrogen: [round(n2_level*100)]%<br>"
@@ -83,7 +83,7 @@
 	onclose(user, "pipefilter")
 
 /obj/machinery/atmospherics/trinary/retrofilter/Topic(href, href_list)
-	if(..() || (status & NOPOWER))
+	if(..() || (src.status & NOPOWER))
 		return
 
 	src.add_dialog(usr)
@@ -121,76 +121,76 @@
 	if (src.emagged)
 		src.overlays += image(src.icon, "filter-emag")
 	else
-		if (filter_mode & MODE_OXYGEN)
+		if (src.filter_mode & MODE_OXYGEN)
 			src.overlays += image(src.icon, "filter-o2")
-		if (filter_mode & MODE_NITROGEN)
+		if (src.filter_mode & MODE_NITROGEN)
 			src.overlays += image(src.icon, "filter-n2")
-		if (filter_mode & MODE_CO2)
+		if (src.filter_mode & MODE_CO2)
 			src.overlays += image(src.icon, "filter-co2")
-		if (filter_mode & MODE_PLASMA)
+		if (src.filter_mode & MODE_PLASMA)
 			src.overlays += image(src.icon, "filter-tox")
 
 /obj/machinery/atmospherics/trinary/retrofilter/process()
 	..()
-	if(status & NOPOWER)
+	if(src.status & NOPOWER)
 		return
 
-	if (!air3)
+	if (!src.air3)
 		return
 
-	var/output_starting_pressure = MIXTURE_PRESSURE(air2)
+	var/output_starting_pressure = MIXTURE_PRESSURE(src.air2)
 
-	if(output_starting_pressure >= target_pressure)
+	if(output_starting_pressure >= src.target_pressure)
 		//No need to mix if target is already full!
 		return TRUE
 
 	//Calculate necessary moles to transfer using PV=nRT
 
-	var/pressure_delta = target_pressure - output_starting_pressure
+	var/pressure_delta = src.target_pressure - output_starting_pressure
 	var/transfer_moles = 0
 
-	if(air1.temperature)
-		transfer_moles = ((pressure_delta*air3.volume)/(air1.temperature * R_IDEAL_GAS_EQUATION))
+	if(src.air1.temperature)
+		transfer_moles = ((pressure_delta*src.air3.volume)/(src.air1.temperature * R_IDEAL_GAS_EQUATION))
 
 	//Actually transfer the gas
 
 	if(transfer_moles > 0)
-		var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
+		var/datum/gas_mixture/removed = src.air1.remove_ratio(transfer_ratio)
 
 		var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
-		if(air1.temperature)
-			filtered_out.temperature = air1.temperature
+		if(src.air1.temperature)
+			filtered_out.temperature = src.air1.temperature
 
 		//Unlike the regular filter, we can pick and choose the gas to remove!
 		//One might say that a little filter being this advanced is rather unrealistic
 		//However, who gives a fuck.
-		if (filter_mode & MODE_PLASMA)
+		if (src.filter_mode & MODE_PLASMA)
 			if(removed.toxins)
 				filtered_out.toxins = removed.toxins
 				removed.toxins = 0
-		if (filter_mode & MODE_OXYGEN)
+		if (src.filter_mode & MODE_OXYGEN)
 			if(removed.oxygen)
 				filtered_out.oxygen = removed.oxygen
 				removed.oxygen = 0
-		if (filter_mode & MODE_NITROGEN)
+		if (src.filter_mode & MODE_NITROGEN)
 			if(removed.nitrogen)
 				filtered_out.nitrogen = removed.nitrogen
 				removed.nitrogen = 0
-		if (filter_mode & MODE_CO2)
+		if (src.filter_mode & MODE_CO2)
 			if(removed.carbon_dioxide)
 				filtered_out.carbon_dioxide = removed.carbon_dioxide
 				removed.carbon_dioxide = 0
 
-		air2.merge(filtered_out)
-		air3.merge(removed)
+		src.air2.merge(filtered_out)
+		src.air3.merge(removed)
 
-	if ((network3 && network1) && (network3 != network1))
-		network1.merge(network3)
-		network3 = network1
+	if ((src.network3 && src.network1) && (src.network3 != src.network1))
+		src.network1.merge(src.network3)
+		src.network3 = src.network1
 
-	network1?.update = TRUE
-	network2?.update = TRUE
-	network3?.update = TRUE
+	src.network1?.update = TRUE
+	src.network2?.update = TRUE
+	src.network3?.update = TRUE
 
 	return TRUE
 
@@ -219,6 +219,7 @@
 		if (src.hacked)
 			boutput(user, "<span class='alert'>Remove the foreign wires first!</span>")
 			return
+
 		if (src.allowed(user))
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
@@ -230,10 +231,12 @@
 		if(src.hacked)
 			user.show_message("<span class='alert'>Remove the foreign wires first!</span>", 1)
 			return
+
 		src.add_fingerprint(user)
 		user.show_message("<span class='alert'>Now [src.open ? "re" : "un"]securing the access system panel...</span>", 1)
 		if (!do_after(user, 3 SECONDS))
 			return
+
 		src.open = !src.open
 		user.show_message("<span class='alert'>Done!</span>",1)
 		src.update_overlays()
@@ -242,38 +245,44 @@
 		if(!src.open)
 			user.show_message("<span class='alert'>You must remove the panel first!</span>",1)
 			return
+
 		var/obj/item/cable_coil/C = W
 		if(C.amount >= 4)
 			user.show_message("<span class='alert'>You unravel some cable..</span>",1)
 		else
 			user.show_message("<span class='alert'>Not enough cable! <I>(Requires four pieces)</I></span>",1)
 			return
+
 		src.add_fingerprint(user)
 		user.show_message("<span class='alert'>Now bypassing the access system... <I>(This may take a while)</I></span>", 1)
 		if(!do_after(user, 10 SECONDS))
 			return
+
 		C.use(4)
 		src.hacked = TRUE
 		src.locked = FALSE
 		src.update_overlays()
 		return
+
 	else if (issnippingtool(W) && hacked)
 		src.add_fingerprint(user)
 		user.show_message("<span class='alert'>Now removing the bypass wires... <I>(This may take a while)</I></span>", 1)
 		if (!do_after(user, 5 SECONDS))
 			return
+
 		src.hacked = FALSE
 		src.update_overlays()
 		return
+
 	else
 		..()
 
 /obj/machinery/atmospherics/trinary/retrofilter/power_change()
-	if( powered(ENVIRON) )
-		status &= ~NOPOWER
+	if(powered(ENVIRON))
+		src.status &= ~NOPOWER
 	else
 		SPAWN(rand(0, 15))
-			status |= NOPOWER
+			src.status |= NOPOWER
 
 	src.update_overlays()
 

@@ -19,91 +19,94 @@
 	src.air2 = null
 	qdel(src.air3)
 	src.air3 = null
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
 
 /obj/machinery/atmospherics/trinary/manifold_valve/update_icon(animation)
 	if(animation)
 		flick("valve[src.divert][!src.divert]",src)
 		playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, 1)
 	else
-		icon_state = "manifold_valve[divert]"
+		src.icon_state = "manifold_valve[src.divert]"
 
 /obj/machinery/atmospherics/trinary/manifold_valve/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-	if(reference == node1)
-		network1 = new_network
-		if(!divert)
-			network3 = new_network
+	if(reference == src.node1)
+		src.network1 = new_network
+		if(!src.divert)
+			src.network3 = new_network
 		else
-			network2 = new_network
-	else if(reference == node2)
-		network2 = new_network
-		if(divert)
-			network1 = new_network
-	else if(reference == node3)
-		network3 = new_network
-		if(!divert)
-			network1 = new_network
+			src.network2 = new_network
+	else if(reference == src.node2)
+		src.network2 = new_network
+		if(src.divert)
+			src.network1 = new_network
+	else if(reference == src.node3)
+		src.network3 = new_network
+		if(!src.divert)
+			src.network1 = new_network
 
 	if(src in new_network.normal_members)
 		return FALSE
 
 	new_network.normal_members += src
 
-	if(!divert)
-		if(reference == node1)
-			if(!isnull(node3))
-				return node3.network_expand(new_network, src)
-		else if(reference == node3)
-			if(!isnull(node1))
-				return node1.network_expand(new_network, src)
+	if(!src.divert)
+		if(reference == src.node1)
+			if(!isnull(src.node3))
+				return src.node3.network_expand(new_network, src)
+		else if(reference == src.node3)
+			if(!isnull(src.node1))
+				return src.node1.network_expand(new_network, src)
 	else
-		if(reference == node1)
-			return node2.network_expand(new_network, src)
-		else if(reference == node2)
-			return node1.network_expand(new_network, src)
+		if(reference == src.node1)
+			return src.node2.network_expand(new_network, src)
+		else if(reference == src.node2)
+			return src.node1.network_expand(new_network, src)
+
+/// Divert gas flow from node3 to node2.
 /obj/machinery/atmospherics/trinary/manifold_valve/proc/divert()
-	if(divert)
+	if(src.divert)
 		return FALSE
 
-	divert = TRUE
+	src.divert = TRUE
 	UpdateIcon()
 
-	network1?.dispose()
-	network1 = null
+	src.network1?.dispose()
+	src.network1 = null
 
-	build_network()
+	src.build_network()
 
-	if(network1&&network2)
-		network1.merge(network2)
-		network2 = network1
+	if(src.network1&&src.network2)
+		src.network1.merge(src.network2)
+		src.network2 = src.network1
 
-	if(network1)
-		network1.update = TRUE
-	else if(network2)
-		network2.update = TRUE
+	if(src.network1)
+		src.network1.update = TRUE
+	else if(src.network2)
+		src.network2.update = TRUE
 
 	return TRUE
 
+/// Divert gas flow from node2 back to node3.
 /obj/machinery/atmospherics/trinary/manifold_valve/proc/undivert()
-	if(!divert)
+	if(!src.divert)
 		return FALSE
 
-	divert = FALSE
+	src.divert = FALSE
 	UpdateIcon()
 
-	network2?.dispose()
-	network2 = null
+	src.network2?.dispose()
+	src.network2 = null
 
 	build_network()
 
-	if(network1&&network3)
-		network3.merge(network1)
-		network1 = network3
+	if(src.network1&&src.network3)
+		src.network3.merge(src.network1)
+		src.network1 = src.network3
 
-	if(network1)
-		network1.update = TRUE
-	else if(network3)
-		network3.update = TRUE
+	if(src.network1)
+		src.network1.update = TRUE
+	else if(src.network3)
+		src.network3.update = TRUE
 
 	return TRUE
 
