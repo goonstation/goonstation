@@ -575,7 +575,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 
 /mob/living/critter/small_animal/cat/jones
 	name = "Jones"
-	desc = "The captain's loyal-ish companion! They feel a bit cold to the touch."
+	desc = "The captain's loyal-ish companion! The texture of their fur feels a bit off."
 	health = 30
 	randomize_name = FALSE
 	randomize_look = FALSE
