@@ -31,9 +31,7 @@
 /area/space)
 "aP" = (
 /obj/item/device/radio/beacon,
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "bi" = (
@@ -1340,12 +1338,6 @@
 /obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
-"Xi" = (
-/obj/landmark{
-	name = "JoinLate"
-	},
-/turf/simulated/floor/shuttle,
-/area/shuttle/arrival/station)
 "Xp" = (
 /obj/cable{
 	d2 = 2;
@@ -1385,9 +1377,7 @@
 	},
 /area/space)
 "Yy" = (
-/obj/landmark/start{
-	name = "AI"
-	},
+/obj/landmark/start/job/AI,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "YD" = (
@@ -46190,7 +46180,7 @@ xY
 xY
 xY
 tK
-Xi
+xY
 tK
 SL
 mb
