@@ -163,7 +163,7 @@
 				return
 			else
 				if (P.amount <= 0)
-					if (P.contents.len > 0)
+					if (length(P.contents) > 0)
 						boutput(user, "\The [P] has no unsoiled sheets left in it.") // someone put junk paper in the bin
 					else
 						boutput(user, "\The [P] has no paper left in it.") // its just plain empty

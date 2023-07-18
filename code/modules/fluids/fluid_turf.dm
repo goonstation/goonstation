@@ -336,7 +336,7 @@
 			. = ..()
 
 	proc/try_build_turf_list()
-		if (!L || L.len == 0)
+		if (!L || length(L) == 0)
 			for(var/turf/T in get_area_turfs(/area/trench_landing))
 				L+=T
 
@@ -390,7 +390,7 @@
 			under.icon_state = "pit"
 
 	try_build_turf_list()
-		if (!L || L.len == 0)
+		if (!L || length(L) == 0)
 			for(var/turf/space/fluid/T in range(8,locate(src.x,src.y,5)))
 				L += T
 				break

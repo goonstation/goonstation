@@ -347,7 +347,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			return
 
 		// 	check for items in disposal - occupied light
-		if (contents.len > 0)
+		if (length(contents) > 0)
 			var/image/I = GetOverlayImage("content_light")
 			if (!I)
 				I = image(src.icon, "[light_style]-full")

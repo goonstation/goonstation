@@ -23,7 +23,7 @@ A Flamethrower in various states of assembly
 
 #define MODE_TO_STRING(mode) mode == FLAMER_MODE_AUTO ? "auto" : mode == FLAMER_MODE_BURST ? "burst" :  mode == FLAMER_MODE_SINGLE ? "single" :  mode == FLAMER_MODE_BACKTANK ? "backtank" : "error"
 
-/obj/item/gun/flamethrower/
+/obj/item/gun/flamethrower
 	name = "flamethrower"
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
@@ -356,7 +356,7 @@ A Flamethrower in various states of assembly
 	..()
 	return
 
-/obj/item/gun/flamethrower/assembled/loaded/
+/obj/item/gun/flamethrower/assembled/loaded
 	icon_state = "flamethrower_oxy_fuel"
 
 	New()

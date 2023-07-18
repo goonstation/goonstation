@@ -72,7 +72,7 @@ TYPEINFO(/obj/item/device/disguiser)
 		for (var/obj/item/device/disguiser/D in user)
 			if (D.active)
 				number_of_devices += D
-		if (number_of_devices.len > 0)
+		if (length(number_of_devices) > 0)
 			return 0
 		RegisterSignal(user, COMSIG_MOB_DISGUISER_DEACTIVATE, PROC_REF(deactivate))
 		src.active = 1
