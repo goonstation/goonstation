@@ -1116,7 +1116,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			icon_state = "implant-r"
 			New()
 				..()
-				access.access = get_access(access_syndicate_shuttle)
+				access.access = get_access("Sleeper Agent")
 
 /* ============================================================ */
 /* --------------------- Artifact Implants -------------------- */
