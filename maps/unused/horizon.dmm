@@ -146,15 +146,13 @@
 /area/station/wreckage)
 "aaH" = (
 /obj/grille/steel,
-/obj/window/reinforced,
 /obj/structure/woodwall{
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters_east)
 "aaI" = (
-/obj/grille/steel,
-/obj/window/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters_east)
 "aaJ" = (
@@ -539,13 +537,11 @@
 	},
 /area/station/crew_quarters/lounge)
 "abS" = (
-/obj/grille/steel,
-/obj/window/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/lounge)
 "abT" = (
 /obj/grille/steel,
-/obj/window/reinforced,
 /obj/structure/woodwall{
 	opacity = 0
 	},
@@ -556,7 +552,6 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/window/reinforced,
 /obj/structure/woodwall,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/lounge)
@@ -1034,10 +1029,9 @@
 /area/station/wreckage)
 "ads" = (
 /obj/machinery/door/airlock{
-	icon_state = "door_locked";
-	locked = 1;
-	name = "bolted airlock"
+	name = "Guest Room"
 	},
+/obj/mapping_helper/airlock/bolter,
 /turf/simulated/floor/airless/carpet{
 	icon_state = "fgreen2"
 	},
@@ -1059,7 +1053,9 @@
 	},
 /area/station/crew_quarters/lounge)
 "adv" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /turf/simulated/floor/bluegreen,
 /area/station/crew_quarters/lounge)
 "adw" = (
@@ -1267,11 +1263,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/glass/command{
-	icon_state = "door_locked";
-	locked = 1;
-	name = "Conference Center"
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4
 	},
+/obj/mapping_helper/airlock/bolter,
 /turf/simulated/floor,
 /area/station/wreckage)
 "aee" = (
@@ -1339,7 +1334,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /turf/simulated/floor/bluegreen,
 /area/station/crew_quarters/lounge)
 "aem" = (
@@ -1472,11 +1469,10 @@
 /turf/simulated/floor,
 /area/station/wreckage)
 "aeJ" = (
-/obj/machinery/door/airlock/glass/command{
-	icon_state = "door_locked";
-	locked = 1;
-	name = "Conference Center"
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4
 	},
+/obj/mapping_helper/airlock/bolter,
 /turf/simulated/floor,
 /area/station/wreckage)
 "aeK" = (
@@ -1526,10 +1522,7 @@
 /area/station/crew_quarters/lounge)
 "aeS" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/door/airlock/glass/medical{
-	name = "Bar";
-	req_access = list(0)
-	},
+/obj/machinery/door/airlock/pyro/glass/botany,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/lounge)
 "aeT" = (
@@ -1826,8 +1819,8 @@
 /turf/simulated/floor/carpet/blue/standard/edge/ne,
 /area/station/crew_quarters/quarters_east)
 "afT" = (
-/obj/machinery/door/airlock/classic{
-	name = "WC"
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime-w"
@@ -1929,9 +1922,10 @@
 "agp" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "bloodydoor";
-	name = "broken airlock"
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "door_open";
+	name = "broken airlock";
+	dir = 4
 	},
 /turf/simulated/floor/airless/damaged3,
 /area/station/wreckage)
@@ -1943,10 +1937,9 @@
 "ags" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/airlock{
-	icon_state = "door_locked";
-	locked = 1;
-	name = "bolted airlock"
+	dir = 4
 	},
+/obj/mapping_helper/airlock/bolter,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge)
 "agt" = (
@@ -2173,8 +2166,7 @@
 /turf/simulated/floor/industrial,
 /area/space)
 "ahb" = (
-/obj/grille/steel,
-/obj/window/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/wreckage)
 "ahc" = (
@@ -2319,7 +2311,9 @@
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/pylon)
 "ahx" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/wreckage)
 "ahy" = (
@@ -2347,7 +2341,9 @@
 /area/station/crew_quarters/lounge)
 "ahC" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge)
 "ahD" = (
@@ -2386,8 +2382,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/classic{
-	name = "WC"
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime-w"
@@ -2675,9 +2671,8 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/engine/substation/pylon)
 "aiS" = (
-/obj/grille/steel,
-/obj/window/reinforced,
 /obj/disposalpipe/segment/vertical,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/lounge)
 "aiT" = (
@@ -13889,6 +13884,13 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/crew_quarters/ce)
+"aRp" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/space)
 "aRq" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 10;
@@ -29304,7 +29306,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 6
 	},
-/area/station/hydroponics/bay)
+/area/station/hydroponics/lobby)
 "bJv" = (
 /obj/cable{
 	d2 = 8;
@@ -40122,6 +40124,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se)
+"cnN" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
+	},
+/turf/simulated/floor/airless,
+/area/space)
 "cnW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -41319,8 +41327,7 @@
 /turf/simulated/floor/darkblue,
 /area/ghostdrone_factory)
 "csB" = (
-/obj/grille/steel,
-/obj/window/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/airless/random,
 /area/ghostdrone_factory)
 "csD" = (
@@ -41603,7 +41610,7 @@
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
 "ctu" = (
-/obj/window/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "ctv" = (
@@ -42149,9 +42156,7 @@
 /turf/simulated/floor/black/grime,
 /area/listeningpost)
 "cvo" = (
-/obj/machinery/door/airlock/classic{
-	name = "WC"
-	},
+/obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/grey/blackgrime,
 /area/listeningpost)
 "cvr" = (
@@ -45990,10 +45995,6 @@
 /obj/grille/catwalk{
 	dir = 10
 	},
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon_state = "wall3_trans"
-	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -46122,6 +46123,13 @@
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/plating/scorched,
 /area/listeningpost/power)
+"ecy" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/space)
 "ecU" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 8;
@@ -46551,6 +46559,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "eIS" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans";
+	dir = 8
+	},
 /turf/simulated/floor/airless,
 /area/space)
 "eJi" = (
@@ -47907,6 +47919,13 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/cloner)
+"gnw" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/space)
 "goi" = (
 /obj/cable{
 	d1 = 1;
@@ -48286,6 +48305,13 @@
 	dir = 4
 	},
 /area/station/solar/east)
+"gMn" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans";
+	dir = 4
+	},
+/turf/space,
+/area/space)
 "gMy" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -53637,8 +53663,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/classic,
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "ntf" = (
@@ -53833,18 +53859,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/hallway/secondary/west)
-"nEm" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon_state = "wall3_trans"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/space)
 "nEG" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -59335,7 +59349,7 @@
 	},
 /obj/machinery/vending/alcohol{
 	name = "??? hEaghra's Vaguely-Irish-Swill-Dispenser";
-	slogan_list = list("Please                                                                                                                                                                                                                                                                drink                                                                                                                                                                                                                                                                responsibly.","No                                                                                                                                                                                                                                                                Refunds.","Please                                                                                                                                                                                                                                                                enjoy                                                                                                                                                                                                                                                                your                                                                                                                                                                                                                                                                stay                                                                                                                                                                                                                                                                at                                                                                                                                                                                                                                                                the                                                                                                                                                                                                                                                                Kuiper                                                                                                                                                                                                                                                                Inn!","No                                                                                                                                                                                                                                                                admittance                                                                                                                                                                                                                                                                under                                                                                                                                                                                                                                                                the                                                                                                                                                                                                                                                                age                                                                                                                                                                                                                                                                of                                                                                                                                                                                                                                                                13.")
+	slogan_list = list("Please                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                drink                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                responsibly.","No                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Refunds.","Please                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                enjoy                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                your                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                stay                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                at                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                the                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Kuiper                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Inn!","No                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                admittance                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                under                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                the                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                age                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                of                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                13.")
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/lounge)
@@ -76531,7 +76545,7 @@ paA
 aaa
 aaa
 aaa
-cvN
+ecy
 aaa
 aaa
 aij
@@ -76822,8 +76836,8 @@ aaa
 aaa
 aaa
 aaa
-cvw
-cvN
+gnw
+ecy
 aaa
 pqC
 dVu
@@ -78033,11 +78047,11 @@ aaa
 pqC
 pqC
 aaa
-aco
-eIS
+aRp
+cnN
 cxs
 eIS
-afh
+gMn
 aaa
 pqC
 pqC
@@ -115652,7 +115666,7 @@ aaa
 aaa
 aaa
 aaa
-nEm
+nHy
 aFE
 aHa
 aIF
@@ -139709,7 +139723,7 @@ aaa
 aad
 aaE
 aaE
-aaF
+vYc
 ahx
 ahb
 aaj
@@ -140011,7 +140025,7 @@ vYc
 vYc
 vYc
 agp
-ahb
+vYc
 ahy
 aik
 aik
