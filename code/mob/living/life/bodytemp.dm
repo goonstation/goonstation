@@ -79,8 +79,7 @@
 			owner.handle_temperature_damage(ARMS, environment.temperature, environment_heat_capacity*thermal_divisor, mult)
 
 			for (var/atom/A in owner.contents)
-				if (A.material)
-					A.material.triggerTemp(A, environment.temperature)
+				A.material_trigger_on_temp(environment.temperature)
 
 		// decoupled this from environmental temp - this should be more for hypothermia/heatstroke stuff
 		//if (src.bodytemperature > src.base_body_temp || src.bodytemperature < src.base_body_temp)

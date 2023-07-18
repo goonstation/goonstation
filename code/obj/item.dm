@@ -548,8 +548,7 @@
 					firesource = I
 					break
 			src.combust(firesource)
-	if (src.material)
-		src.material.triggerTemp(src, temperature)
+	src.material_trigger_on_temp(temperature)
 	..() // call your fucking parents
 
 /// Gets the effective contraband level of an item. Use this instead of accessing .contraband directly
@@ -861,8 +860,7 @@
 
 /obj/item/attackby(obj/item/W, mob/user, params)
 	if (W.firesource)
-		if(src.material)
-			src.material.triggerTemp(src ,1500)
+		src.material_trigger_on_temp(1500)
 		if (src.burn_possible && src.burn_point <= 1500)
 			src.combust(W)
 		else
@@ -882,7 +880,7 @@
 	SHOULD_NOT_SLEEP(TRUE)
 	if (src.burning)
 		if (src.material && !(src.item_function_flags & COLD_BURN))
-			src.material.triggerTemp(src, src.burn_output + rand(1,200))
+			src.material_trigger_on_temp(src.burn_output + rand(1,200))
 		var/turf/T = get_turf(src.loc)
 		if (T && !(src.item_function_flags & COLD_BURN)) // runtime error fix
 			T.hotspot_expose((src.burn_output + rand(1,200)),5)
@@ -1015,8 +1013,7 @@
 /obj/item/ex_act(severity)
 	switch(severity)
 		if (2)
-			if (src.material)
-				src.material.triggerTemp(src ,7500)
+			src.material_trigger_on_temp(7500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 7500)
 				src.combust()
 			if (src.artifact)
@@ -1024,8 +1021,7 @@
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
 		if (3)
-			if (src.material)
-				src.material.triggerTemp(src, 3500)
+			src.material_trigger_on_temp(3500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 3500)
 				src.combust()
 			if (src.artifact)

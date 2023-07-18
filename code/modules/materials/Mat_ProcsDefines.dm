@@ -435,6 +435,12 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		src.material?.triggerExp(src, severity)
 	return
 
+/// Called when an atom is affected by a heat change
+/atom/proc/material_trigger_on_temp(var/temp)
+	if (src.material)
+		src.material?.triggerTemp(src, temp)
+	return
+
 /// Called when the item is attacked with another atom for mat effects.
 /// If someone is smashed against the item or with hands, the mob itself is expected to be passed as attackatom
 /atom/proc/material_trigger_when_attacked(var/atom/attackatom, var/mob/attacker, var/meleeorthrow, var/situation_modifier)

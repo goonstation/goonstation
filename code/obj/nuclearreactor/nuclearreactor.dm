@@ -258,7 +258,7 @@
 
 		processCaseRadiation(tmpRads)
 
-		src.material.triggerTemp(src,src.temperature)
+		src.material_trigger_on_temp(src.temperature)
 
 		total_thermal_e += src.thermal_mass * src.temperature
 		total_gas_volume += src.reactor_vessel_gas_volume

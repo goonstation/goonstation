@@ -15,5 +15,4 @@
 				location.hotspot_expose(T0C + 300, 400)
 
 			for (var/atom/A in owner.contents)
-				if (A.material)
-					A.material.triggerTemp(A, T0C + 900)
+				A.material_trigger_on_temp(T0C + 900)

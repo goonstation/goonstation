@@ -283,8 +283,7 @@
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		var/temp_difference = abs(temperature - src.ideal_temp)
 		var/tolerance = temp_tolerance
-		if (material)
-			material.triggerTemp(src, temperature)
+		src.material_trigger_on_temp(temperature)
 
 		if (src.has_upgrade(/datum/blob_upgrade/fire_resist))
 			tolerance *= 3
