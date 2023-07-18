@@ -455,30 +455,31 @@ ABSTRACT_TYPE(/datum/material/interpolated)
 	desc = "You should not be seeing this"
 	color = "#6f00ff"
 
-	New(var/datum/material/mat1,var/datum/material/mat2,var/t)
+	///Create an interpolated material from two input materials, with bias. Bias of 0 is entirely mat1, bias of 1 is entirely mat2
+	New(var/datum/material/mat1,var/datum/material/mat2,var/bias)
 		..()
-		var/ot = 1 - t
-		src.quality = round(mat1.quality * ot + mat2.quality * t)
+		var/left_bias = 1 - bias
+		src.quality = round(mat1.quality *left_bias+ mat2.quality * bias)
 
 		src.prefixes = (mat1.prefixes | mat2.prefixes)
 		src.suffixes = (mat1.suffixes | mat2.suffixes)
 
-		src.value = round(mat1.value * ot + mat2.value * t)
+		src.value = round(mat1.value *left_bias+ mat2.value * bias)
 		src.name = mat1.interpolateName(mat2, 0.5)
 		src.desc = "This is an alloy of [mat1.name] and [mat2.name]"
 		src.mat_id = "([mat1.getID()]+[mat2.getID()])"
-		src.alpha = round(mat1.alpha * ot + mat2.alpha * t)
+		src.alpha = round(mat1.alpha *left_bias+ mat2.alpha * bias)
 		if(islist(mat1.color) || islist(mat2.color))
 			var/list/colA = normalize_color_to_matrix(mat1.color)
 			var/list/colB = normalize_color_to_matrix(mat2.color)
 			src.color = list()
 			for(var/i in 1 to length(colA))
-				src.color += colA[i] * ot + colB[i] * t
+				src.color += colA[i] *left_bias+ colB[i] * bias
 		else
-			src.color = rgb(round(GetRedPart(mat1.color) * ot + GetRedPart(mat2.color) * t), round(GetGreenPart(mat1.color) * ot + GetGreenPart(mat2.color) * t), round(GetBluePart(mat1.color) * ot + GetBluePart(mat2.color) * t))
-		src.properties = mergeProperties(mat1.properties, mat2.properties, t)
+			src.color = rgb(round(GetRedPart(mat1.color) *left_bias+ GetRedPart(mat2.color) * bias), round(GetGreenPart(mat1.color) *left_bias+ GetGreenPart(mat2.color) * bias), round(GetBluePart(mat1.color) *left_bias+ GetBluePart(mat2.color) * bias))
+		src.properties = mergeProperties(mat1.properties, mat2.properties, bias)
 
-		src.edible_exact = round(mat1.edible_exact * ot + mat2.edible_exact * t)
+		src.edible_exact = round(mat1.edible_exact *left_bias+ mat2.edible_exact * bias)
 		if(src.edible_exact >= 0.5) src.edible = TRUE
 		else src.edible = FALSE
 
@@ -486,34 +487,14 @@ ABSTRACT_TYPE(/datum/material/interpolated)
 
 		src.mixOnly = FALSE
 
-		//--
-		src.triggersTemp = getFusedTriggers(mat1.triggersTemp, mat2.triggersTemp, src)
-		src.triggersChem = getFusedTriggers(mat1.triggersChem, mat2.triggersChem, src)
-		src.triggersPickup = getFusedTriggers(mat1.triggersPickup, mat2.triggersPickup, src)
-		src.triggersDrop = getFusedTriggers(mat1.triggersDrop, mat2.triggersDrop, src)
-		src.triggersExp = getFusedTriggers(mat1.triggersExp, mat2.triggersExp, src)
-		src.triggersOnAdd = getFusedTriggers(mat1.triggersOnAdd, mat2.triggersOnAdd, src)
-		src.triggersOnLife = getFusedTriggers(mat1.triggersOnLife, mat2.triggersOnLife, src)
-		src.triggersOnAttack = getFusedTriggers(mat1.triggersOnAttack, mat2.triggersOnAttack, src)
-		src.triggersOnAttacked = getFusedTriggers(mat1.triggersOnAttacked, mat2.triggersOnAttacked, src)
-		src.triggersOnEntered = getFusedTriggers(mat1.triggersOnEntered, mat2.triggersOnEntered, src)
-
-		handleTriggerGenerations(src.triggersTemp)
-		handleTriggerGenerations(src.triggersChem)
-		handleTriggerGenerations(src.triggersPickup)
-		handleTriggerGenerations(src.triggersDrop)
-		handleTriggerGenerations(src.triggersExp)
-		handleTriggerGenerations(src.triggersOnAdd)
-		handleTriggerGenerations(src.triggersOnLife)
-		handleTriggerGenerations(src.triggersOnAttack)
-		handleTriggerGenerations(src.triggersOnAttacked)
-		handleTriggerGenerations(src.triggersOnEntered)
+		//haha gross
+		for(var/triggername in triggerVars)
+			src.vars[triggername] = getFusedTriggers(mat1.vars[triggername], mat2.vars[triggername], src)
+			handleTriggerGenerations(src.vars[triggername])
 
 		//Make sure the newly merged properties are informed about the fact that they just changed. Has to happen after triggers.
 		for(var/datum/material_property/nProp in src.properties)
 			nProp.onValueChanged(src, src.properties[nProp])
-
-		//--
 
 		//Texture merging. SUPER DUPER UGLY AAAAH
 		if(mat2.texture && !mat1.texture)
