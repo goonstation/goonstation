@@ -584,7 +584,37 @@
 		src.visible_message("\The [src] finishes printing and shuts down.")
 
 /obj/machinery/printing_press/proc/make_newspapers()
-	return
+	src.is_running = TRUE
+	var/newspapers_to_print = src.book_amount
+	while (newspapers_to_print)
+		if (src.paper_amt < 2 || src.ink_level < 2) // can we keep doin printing?
+			if (src.paper_amt < 2) // If we don't have enough paper to print...
+				src.visible_message("\The [src] runs out of paper and stops printing.")
+			if (src.ink_level < 2) // ...or enough ink
+				src.visible_message("\The [src] runs out of ink and stops printing.")
+			src.is_running = FALSE
+			UpdateIcon()
+			break
+
+		var/obj/item/paper/newspaper/NP = new
+
+		if (src.newspaper_headline)
+			NP.headline = src.newspaper_headline
+		// if one is not given somehow, it'll automatically have one by default due to how New() works
+		if (src.newspaper_publisher)
+			NP.publisher = src.newspaper_publisher
+		NP.name = "[NP.publisher] newspaper"
+		NP.desc = "Its from [NP.publisher]. Its headline reads: [NP.headline]"
+
+		TRANSFER_OR_DROP(src, NP)
+		newspapers_to_print--
+		ink_level -= 2
+		paper_amt -= 2
+
+	is_running = FALSE
+	UpdateIcon()
+	src.visible_message("\The [src] finishes printing and shuts down.")
+
 
 /obj/item/press_upgrade //parent just to i dont have to set name and icon a bunch i am PEAK lazy
 	name = "printing press upgrade module"
