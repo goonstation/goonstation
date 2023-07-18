@@ -423,6 +423,12 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		src.material?.triggerOnBullet(src, attacked, projectile)
 	return
 
+/// Called when an atom is hit by a bullet for mat effects
+/atom/proc/material_trigger_on_chems(var/chem, var/amount)
+	if (src.material)
+		src.material?.triggerChem(src, chem, amount)
+	return
+
 /// Called when an atom or someone wearing the material is attacked for mat effects
 /atom/proc/material_trigger_on_blob_attacked(var/blobPower, var/situation_modifier)
 	if (src.material)
