@@ -436,9 +436,7 @@
 
 	var/static/savefile/save = new/savefile("data/blueprints.dat")
 
-	pixelaction(atom/target as mob|obj|turf, params, mob/user as mob)
-	//	if(GET_DIST(src,target) > 2) return
-
+	pixelaction(atom/target, params, mob/user)
 		if(!isturf(target)) target = get_turf(target)
 
 		var/maxSize = 20
