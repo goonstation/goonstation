@@ -1,5 +1,9 @@
 
 (t)mon jul 17 23
+(u)Bartimeus973
+(p)14988
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Trickster wraith can now spawn a slippery runetrap. Intangible mobs no longer trigger the runetrap.
 (u)Flappybat
 (p)14899
 (e)🗺⚖🤖|A-Mapping, C-Balance, A-Silicons
