@@ -255,8 +255,8 @@
 
 			if ("set mode")
 				if (src.newspaper_upgrade)
-					var/mode_sel = input("What are you printing?", "Print Mode",src.newspaper_mode_active) as anything in list("Books", "Newspapers")
-					if (mode_sel == "Newspapers")
+					var/newspaper_mode_sel = input("What are you printing?", "Print Mode",src.newspaper_mode_active) as anything in list("Books", "Newspapers")
+					if (newspaper_mode_sel == "Newspapers")
 						src.newspaper_mode_active = TRUE
 					else
 						src.newspaper_mode_active = FALSE
