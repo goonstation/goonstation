@@ -150,7 +150,7 @@
 	if(src.network2 == reference)
 		results += src.air2
 
-	if(nsrc.etwork3 == reference)
+	if(src.network3 == reference)
 		results += src.air3
 
 	return results
