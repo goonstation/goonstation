@@ -597,14 +597,21 @@
 			break
 
 		var/obj/item/paper/newspaper/NP = new
-
-		if (src.newspaper_headline)
-			NP.headline = src.newspaper_headline
-		// if one is not given somehow, it'll automatically have one by default due to how New() works
+		NP.desc = ""
 		if (src.newspaper_publisher)
 			NP.publisher = src.newspaper_publisher
-		NP.name = "[NP.publisher] newspaper"
-		NP.desc = "Its from [NP.publisher]. Its headline reads: [NP.headline]"
+			NP.name = "[NP.publisher] newspaper"
+			NP.desc += "Its from [NP.publisher]. "
+		else
+			NP.publisher = "error: no publisher"
+			NP.name = "newspaper"
+			NP.desc += "It doesn't appear to have a title or publisher. "
+		if (src.newspaper_headline)
+			NP.headline = src.newspaper_headline
+			NP.desc += "Its headline reads: [NP.headline]"
+		else
+			NP.headline = "error: no headline given"
+			NP.desc += "It doesn't appear to have a headline."
 
 		TRANSFER_OR_DROP(src, NP)
 		newspapers_to_print--
