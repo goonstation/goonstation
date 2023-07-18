@@ -34813,9 +34813,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
-"fVQ" = (
-/turf/space/fluid/manta,
-/area/listeningpost/syndicateassaultvessel)
 "fWd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -87031,7 +87028,7 @@ aaa
 aaa
 aaa
 aaa
-fVQ
+nnu
 soB
 soB
 sjf
