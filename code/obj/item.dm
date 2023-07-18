@@ -548,7 +548,6 @@
 					firesource = I
 					break
 			src.combust(firesource)
-	src.material_trigger_on_temp(temperature)
 	..() // call your fucking parents
 
 /// Gets the effective contraband level of an item. Use this instead of accessing .contraband directly
