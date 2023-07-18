@@ -579,8 +579,7 @@
 			playsound(A, 'sound/impact_sounds/Flesh_Stab_1.ogg', 75, 1)
 			var/obj/item/implant/projectile/body_visible/arrow/B = P.implanted
 			if (istype(B))
-				if (B.material)
-					B.material.triggerOnAttack(B, null, A)
+				B.material_on_attack_use(null, A)
 				B.arrow.reagents?.reaction(A, 2)
 				B.arrow.reagents?.trans_to(A, B.arrow.reagents.total_volume)
 			take_bleeding_damage(A, null, round(src.power / 2), src.hit_type)

@@ -435,6 +435,12 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		src.material?.triggerOnBlobHit(src, blobPower)
 	return
 
+/// Called when an atom is used for an attack a mob for mat effects
+/atom/proc/material_on_attack_use(var/mob/attacker, var/mob/attacked)
+	if (src.material)
+		src.material?.triggerOnAttack(src, attacker, attacked)
+	return
+
 /// Called when an atom is caught in an explosion
 /atom/proc/material_trigger_on_explosion(var/severity)
 	if (src.material)

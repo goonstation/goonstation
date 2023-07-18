@@ -1239,8 +1239,7 @@
 			var/momentum = getProperty("momemtum")
 			force += 5
 */
-	if (src.material)
-		src.material.triggerOnAttack(src, user, M)
+	src.material_on_attack_use(user, M)
 	for (var/atom/A in M)
 		A.material_trigger_on_mob_attacked(user, M, src, hit_area)
 
