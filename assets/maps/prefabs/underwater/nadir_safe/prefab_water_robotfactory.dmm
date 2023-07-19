@@ -146,9 +146,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
 "aC" = (
-/mob/living/critter/robotic/gunbot{
-	atksilicon = 0
-	},
+/mob/living/critter/robotic/gunbot,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
 "aD" = (
@@ -664,9 +662,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/prefab/replicant_lab)
 "bW" = (
-/mob/living/critter/robotic/gunbot{
-	atksilicon = 0
-	},
+/mob/living/critter/robotic/gunbot,
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine-blue"
 	},
