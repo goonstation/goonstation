@@ -17,7 +17,7 @@
 	var/books_upgrade = 0 //0 by default, set to 1 when custom book covers upgrade is installed
 	var/forbidden_upgrade = 0 //0 by default, set to 1 when forbidden covers/symbols/styles upgrade is installed
 	var/ink_level = 100 //decrements by 2 for each book printed, can be refilled (expensively)
-	var/list/press_modes = list("Choose cover", "Set book info", "Set book contents",\
+	var/list/press_modes = list("Set mode", "Choose cover", "Set book info", "Set newspaper info", "Set book contents",\
 	"Amount to make", "Print books", "View Information") //default, can be expanded to have "Ink Colors" and "Custom Cover"
 
 	var/book_amount = 0 //how many books to make?
@@ -329,7 +329,7 @@
 				book_author = strip_html(author_sel)
 				boutput(user, "Information set.")
 				return
-			if ("set newspaper infor")
+			if ("set newspaper info")
 				if (!src.newspaper_mode_active)
 					boutput(user, "Your free trial of newspaper printing has expired. Please enter Newspaper Printing Upgrade.")
 					return
@@ -381,9 +381,6 @@
 
 			if ("amount to make")
 				var/amount_sel = input("How many books do you want to make? ([round(paper_amt / 2)] max)", "Ream Control", book_amount) as num
-/*				if ((amount_sel * 2) > paper_amt) //2*amount sel is the amount of paper
-					boutput(user, "Not enough paper.")
-					return*/
 				if (amount_sel > 0 && amount_sel <= (paper_amt / 2)) //is the number in range?
 					boutput(user, "[src.newspaper_mode_active ? "Newspaper" : "Book"] amount set.")
 					book_amount = amount_sel
