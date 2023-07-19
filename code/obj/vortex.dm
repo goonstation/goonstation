@@ -92,7 +92,7 @@
 				/mob/living/critter/robotic/repairbot,
 				/mob/living/critter/robotic/repairbot/security,
 				/mob/living/critter/robotic/repairbot/security,
-				/obj/critter/gunbot/heavy,
+				/mob/living/critter/robotic/gunbot,
 				/obj/machinery/bot/medbot/terrifying,
 				/obj/machinery/bot/medbot/terrifying)
 				if(prob(3))

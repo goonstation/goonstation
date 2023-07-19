@@ -89,7 +89,7 @@
 /turf/simulated/floor/black,
 /area/prefab/sea_monkey_hideout)
 "as" = (
-/obj/critter/gunbot,
+/mob/living/critter/robotic/gunbot/light,
 /turf/simulated/floor/black,
 /area/prefab/sea_monkey_hideout)
 "at" = (

@@ -338,7 +338,7 @@
 				CRASH("TEMP WENT NEGATIVE")
 
 			. = src.current_gas
-		if(inGas)
+		if(inGas && (THERMAL_ENERGY(inGas) > 0))
 			src.current_gas = inGas.remove((src.reactor_vessel_gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
 			if(src.current_gas && TOTAL_MOLES(src.current_gas) < 1)
 				if(istype(., /datum/gas_mixture))
