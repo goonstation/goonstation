@@ -595,7 +595,7 @@
 			UpdateIcon()
 			break
 
-		var/obj/item/paper/newspaper/NP = new
+		var/obj/item/paper/newspaper/rolled/NP = new
 		NP.desc = ""
 		if (src.newspaper_publisher)
 			NP.publisher = src.newspaper_publisher
