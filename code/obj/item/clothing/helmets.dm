@@ -293,6 +293,7 @@
 		name = "engineering light space helmet"
 		desc = "A lightweight engineering space helmet. It's lacking any major padding or reinforcement."
 		icon_state = "spacelight-e"
+		see_face = 1
 
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
