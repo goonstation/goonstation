@@ -97,7 +97,7 @@
 		var/list/orders = list("0","1","2","3","4","5","6","7","8","9")
 		wire_text = list()
 		wire_order = list()
-		while(colours.len > 0)
+		while(length(colours) > 0)
 			var/colour = colours[ rand(1,colours.len) ]
 			wire_text += colour
 			colours -= colour

@@ -103,7 +103,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	proc/build_name(obj/item/W)
 		return "[istype(W, /obj/item/currency/spacecash) ? "[W.amount]-credit " : ""][pick("joint","doobie","spliff","roach","blunt","roll","fatty","reefer")]"
 
-/obj/item/plant/herb/cannabis/
+/obj/item/plant/herb/cannabis
 	name = "cannabis leaf"
 	desc = "Leafs for reefin'!"
 	icon_state = "cannabisleaf"
@@ -236,7 +236,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	desc = "A salty but healthy cereal crop. Just don't eat too much without water."
 	icon_state = "saltedoat"
 
-/obj/item/plant/sugar/
+/obj/item/plant/sugar
 	name = "sugar cane"
 	crop_suffix	= " cane"
 	desc = "Grown lovingly in our space plantations."
