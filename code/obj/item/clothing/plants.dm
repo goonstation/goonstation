@@ -13,7 +13,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
 		return src
 
-/obj/item/clothing/head/flower/rafflesia
+/obj/item/clothing/head/rafflesia
 	name = "rafflesia"
 	desc = "Usually reffered to as corpseflower due to its horrid odor, perfect for masking the smell of your stinky head."
 	icon_state = "rafflesiahat"
