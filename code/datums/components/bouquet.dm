@@ -51,7 +51,8 @@ TYPEINFO(/datum/component/bouquet)
 			user.visible_message("[user] rolls up the [source.name] into a bouquet.", "You roll up the [source.name] into a bouquet.")
 			user.put_in_hand_or_drop(new_bouquet)
 	if (istype(W, /obj/item/bouquet))
-		W.add_to_bouquet(src, user)
+		var/obj/item/bouquet/bouquet_holder = W
+		bouquet_holder.add_to_bouquet(src, user)
 
 /obj/item/bouquet
 	name = "bouquet"
