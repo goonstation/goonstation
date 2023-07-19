@@ -40,16 +40,18 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	desc = "Hydrangeas are popular ornamental flowers due to their colourful, pastel flower arrangements; this one has been trimmed nicely for wear as an accessory."
 	icon_state = "flower_hyd"
 	item_state = "flower_hyd"
-	can_bouquet = TRUE
-	pink
+
+/obj/item/clothing/head/flower/hydrangea/pink
 		name = "pink hydrangea"
 		icon_state = "flower_hyd-pink"
 		item_state = "flower_hyd-pink"
-	blue
+
+/obj/item/clothing/head/flower/hydrangea/blue
 		name = "blue hydrangea"
 		icon_state = "flower_hyd-blue"
 		item_state = "flower_hyd-blue"
-	purple
+
+/obj/item/clothing/head/flower/hydrangea/purple
 		name = "purple hydrangea"
 		icon_state = "flower_hyd-purple"
 		item_state = "flower_hyd-purple"

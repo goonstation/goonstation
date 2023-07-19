@@ -52552,7 +52552,7 @@
 /area/centcom/offices/drsingh)
 "dya" = (
 /obj/table/auto/desk,
-/obj/item/clothing/head/flower/rose,
+/obj/item/plant/flower/rose,
 /turf/unsimulated/floor/void,
 /area/centcom/offices/lyra)
 "dyc" = (
