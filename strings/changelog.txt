@@ -1,5 +1,9 @@
 
 (t)wed jul 19 23
+(u)Tyrant
+(p)14765
+(e)🗺⛔💊|A-Mapping, C-Removal, A-Medical
+(*)Pathology has been removed from Oshan, and has been replaced with a toxins storage room.
 (u)Lord_Earthfire
 (p)14616
 (e)⚖🌱|C-Balance, A-Hydroponics
