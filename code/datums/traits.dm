@@ -1004,6 +1004,13 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "You never were good at managing yourself slipping."
 	points = 1
 
+/datum/trait/picky_eater
+	name = "Picky eater"
+	icon_state = "foodstuff"
+	id = "picky_eater"
+	desc = "Your refined palate only tolerates a handful of foods."
+	points = 0
+
 //Infernal Contract Traits
 /datum/trait/hair
 	name = "Wickedly Good Hair"

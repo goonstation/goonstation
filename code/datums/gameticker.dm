@@ -194,6 +194,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	generate_crew_objectives()
 #endif
 
+	handle_picky_eaters()
+
 	//Equip characters
 	equip_characters()
 
@@ -367,6 +369,80 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			if(player.mind && player.mind.assigned_role)
 				if(player.mind.assigned_role != "MODE")
 					player.Equip_Rank(player.mind.assigned_role)
+
+	///Generates a list of all picky eaters then assigns them 5 favorite foods
+	proc/handle_picky_eaters()
+		var/list/blacklist = list(
+		/obj/item/reagent_containers/food/snacks/burger/humanburger,
+		/obj/item/reagent_containers/food/snacks/donut/custom/robust,
+		/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat,
+		/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock,
+		/obj/item/reagent_containers/food/snacks/ingredient/pepperoni,
+		/obj/item/reagent_containers/food/snacks/meatball,
+		/obj/item/reagent_containers/food/snacks/mushroom,
+		/obj/item/reagent_containers/food/snacks/pickle/trash,
+		/obj/item/reagent_containers/food/snacks/pizza/xmas,
+		/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
+		/obj/item/reagent_containers/food/snacks/soup/custom,
+		/obj/item/reagent_containers/food/snacks/condiment/syndisauce,
+		/obj/item/reagent_containers/food/snacks/donkpocket_w,
+		/obj/item/reagent_containers/food/snacks/surstromming,
+		/obj/item/reagent_containers/food/snacks/hotdog/syndicate,
+		/obj/item/reagent_containers/food/snacks/dippable/tortilla_chip_spawner,
+		/obj/item/reagent_containers/food/snacks/pancake/classic,
+		/obj/item/reagent_containers/food/snacks/wonton_spawner,
+		/obj/item/reagent_containers/food/snacks/agar_block,
+		/obj/item/reagent_containers/food/snacks/sushi_roll/custom,
+#ifndef UNDERWATER_MAP
+		/obj/item/reagent_containers/food/snacks/healgoo,
+		/obj/item/reagent_containers/food/snacks/greengoo,
+#endif
+		/obj/item/reagent_containers/food/snacks/snowball,
+		/obj/item/reagent_containers/food/snacks/burger/vr,
+		/obj/item/reagent_containers/food/snacks/slimjim,
+		/obj/item/reagent_containers/food/snacks/bite,
+		/obj/item/reagent_containers/food/snacks/pickle_holder,
+		/obj/item/reagent_containers/food/snacks/snack_cake,
+		/obj/item/reagent_containers/food/snacks/ingredient/tortilla,
+		/obj/item/reagent_containers/food/snacks/ingredient/pizza1,
+		/obj/item/reagent_containers/food/snacks/ingredient/pizza2,
+		/obj/item/reagent_containers/food/snacks/ingredient/pizza3,
+		/obj/item/reagent_containers/food/snacks/ingredient/pizzam,
+		/obj/item/reagent_containers/food/snacks/ingredient/pizzab,
+		/obj/item/reagent_containers/food/snacks/ingredient/pizzap,
+		/obj/item/reagent_containers/food/snacks/ingredient/pasta,
+		/obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet,
+		/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles,
+		/obj/item/reagent_containers/food/snacks/ingredient/chips,
+		/obj/item/reagent_containers/food/snacks/ingredient/spaghetti,
+		/obj/item/reagent_containers/food/snacks/ice_cream/random,
+		/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom
+		)
+		var/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks) - blacklist - concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
+
+		for (var/mob/living/carbon/human/H in mobs)
+			//Has to be a human, be a picky eater, and not already have favorite foods
+			if (H.client && H.traitHolder?.hasTrait("picky_eater") && H.mind.fav_foods.len <= 0)
+				var/choices[5]
+				var/list/names[5]
+				for(var/i in 1 to 5)
+					choices[i] = pick(ingredients)
+					var/choiceType = choices[i]
+					H.mind.fav_foods += choiceType
+					var/obj/item/reagent_containers/food/snacks/instance =  new choiceType
+					if(!instance.custom_food)
+						i--
+						continue
+					names[i] = instance.name
+				var/explanation_text = "<b>Your favorite foods are : </b>"
+				for (var/ingredient in names)
+					if (ingredient != names[5])
+						explanation_text += "[ingredient], "
+					else
+						explanation_text += "and [ingredient]<br/>"
+
+				boutput(H, explanation_text)
+				H.mind.store_memory(explanation_text)
 
 	proc/process()
 		if(current_state != GAME_STATE_PLAYING)
