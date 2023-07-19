@@ -1,4 +1,118 @@
 
+(t)wed jul 19 23
+(u)DimWhat
+(p)15004
+(e)⚖🎩|C-Balance, A-Clothing
+(+)Light space suit helmets and martian helmets no longer hide your face.
+(u)Tyrant
+(p)14765
+(e)🗺⛔💊|A-Mapping, C-Removal, A-Medical
+(*)Pathology has been removed from Oshan, and has been replaced with a toxins storage room.
+(u)Lord_Earthfire
+(p)14616
+(e)⚖🌱|C-Balance, A-Hydroponics
+(+)Seeds of hydrangea, birds of paradise and gardenia plants now start with the splice disabler gene strain rather than gaining these directly after planting/mutating.
+(+)Superior and inferior quality gene strains now work with negative potency values, e.g. superior quality making negative potency less bad.
+(t)mon jul 17 23
+(u)Bartimeus973
+(p)14988
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Trickster wraith can now spawn a slippery runetrap. Intangible mobs no longer trigger the runetrap.
+(u)Flappybat
+(p)14899
+(e)🗺⚖🤖|A-Mapping, C-Balance, A-Silicons
+(*)AI camera coverage of Clarion maintenance has been significantly reduced.
+(u)Cheffie
+(p)14759
+(e)🗺🔧🔒⚖🔄🐁|A-Mapping, A-Tooling, A-Secret, C-Balance, C-Rework, A-Critters
+(+)Robots in space are now mobs and are resistant to unarmed strikes. Bring something heavy!
+(u)tarmunora
+(+)space lube pre-stun removed, superlube pre-stun reduced.
+(u)Flappybat
+(e)⚖🐁|C-Balance, A-Critters
+(+)Rattlesnake venom injection reduced from 20 to 12.
+(t)sun jul 16 23
+(u)LeahTheTech
+(+)Lube now makes a noise when splashed on the floor.
+(u)Froggit Dogget
+(p)14968
+(e)|
+(+)Added paper to cigarette machines.
+(u)Sord
+(+)Light Engineering space suit recipe now requires extremely tough metal (bohrum)
+(u)Tyrant
+(p)14944
+(e)🗺💅|A-Mapping, C-QoL
+(+)Atlas's catering rooms should be a little easier to get around.
+(u)Flappybat
+(e)⚖|C-Balance
+(+)Trophy belt has been removed from maps, making it exclusive to the Hunter antag.
+(t)sat jul 15 23
+(u)MitchSmith
+(p)14605
+(e)🎨📦|C-Sprites, A-Game-Objects
+(*)A large amount of inhands have been improved.
+(t)fri jul 14 23
+(u)aloe
+(*)Conspiracy mode has been disabled on RP pending a rework. The pick weight from conspiracy has gone to Gang mode instead.
+(u)colossusqw
+(p)14951
+(e)⚖🐁|C-Balance, A-Critters
+(+)Rattlesnake bite injected reajents cut from 40 to 20 to account for them not flushing themselves anymore.
+(t)thu jul 13 23
+(u)aloe
+(+)The cloaking shield generator is now sneakier, and will copy the appearance of doors, windows, and grilles. It's also a little easier to use.
+(u)TemThrush
+(p)14887
+(e)🎨|C-Sprites
+(*)Added 14 new hairstyles into the game, see minor changes for the list!
+(+)New hairstyle options are; Salty, Wolfcut, Brushed, Walnut, Mop, Acorn, Curtain, Scott, Curly Bob, Charming, Spoon, Messy Waves, Blunt Bob, Jelly.
+(u)Caio029
+(p)14556
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Conveyor belts are now buildable! Use a device analyzer on a conveyor belt and a conveyor switch, then go ham. See the help message on a conveyor belt for more information.
+(t)wed jul 12 23
+(u)Ikea
+(p)14911
+(e)💅🤖|C-QoL, A-Silicons
+(*)Silicons now only WOOP or BZZT when first stunned.
+(u)Blackrep
+(p)14536
+(e)⚖🎩|C-Balance, A-Clothing
+(+)Surplus vests from Sketchy D-5 are now made of carbon nanofiber.
+(t)tue jul 11 23
+(u)Amylizzle & Garash
+(p)14694
+(e)🆕🗺🎨🔧|C-Feature, A-Mapping, C-Sprites, A-Tooling
+(*)Cogmap now comes with a random engine type, or a rare chance to use the brand new NT Engine Teleportation System, which lets engineers select the engine they want to use.
+(t)mon jul 10 23
+(u)Kubius
+(p)14863
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Nadir's breach hull has gone dark, and its second GardenGear is back.
+(u)tarmunora
+(*)Poisoned surgical tools only transfer poison during surgery.
+(+)Cyberlungs no longer grant stamina bonuses.
+(u)Flappybat
+(p)14856
+(e)🗺⚖🤖|A-Mapping, C-Balance, A-Silicons
+(*)AI camera coverage of Cogmap1 maintenance has been significantly reduced.
+(t)sun jul 09 23
+(u)aloe
+(*)Added a new traitor item, the Fingerprinter. Costs 1 TC, is a little scanner that lets you read fingerprints off of things and plant them onto other things. Also gives you the names of the fingerprints owners and works with glove IDs.
+(u)aloe & Phrogge
+(+)*nod-ing while wearing a flipped-up welding mask now flips it down.
+(u)DeeDotVeeA
+(p)14823
+(e)🗺🔄|A-Mapping, C-Rework
+(+)Clarion QM is now slightly more spacious.
+(u)aloe
+(+)Gave the captain (and the gimmick leadership roles like VIP and RegDir) a new traitor item, the black market megaphone. It costs 5 TC and makes your text really, really large and annoying.
+(t)sat jul 08 23
+(u)aloe
+(+)Tripled the recharge rate and charge capacity of erebite power cells.
+(u)tarmunora
+(+)Pancuronium stun delay increased to match neurotoxin.
 (t)thu jul 06 23
 (u)Sian
 (p)14839

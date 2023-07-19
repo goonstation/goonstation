@@ -1253,7 +1253,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 				undies_image.pixel_y = body_offset
 				src.body_standing.overlays += undies_image
 
-			if (src.bandaged.len > 0)
+			if (length(src.bandaged) > 0)
 				for (var/part in src.bandaged)
 					bandage_image.icon_state = "bandage-[part]"
 					bandage_image.pixel_y = body_offset

@@ -1039,7 +1039,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 250
 	maxhealth = 250
 	speed = 0.9
-	init_comms_type = /obj/item/shipcomponent/communications/
+	init_comms_type = /obj/item/shipcomponent/communications
 
 /obj/machinery/vehicle/pod_smooth/nt_robust
 	name = "Pod NTR-"
@@ -1049,7 +1049,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 500
 	maxhealth = 500
 	speed = 0.8
-	init_comms_type = /obj/item/shipcomponent/communications/
+	init_comms_type = /obj/item/shipcomponent/communications
 
 /obj/machinery/vehicle/pod_smooth/sy_light
 	name = "Pod SYL-"

@@ -18914,7 +18914,7 @@
 "wrL" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/mushrooms/type1,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "wrX" = (
@@ -19388,7 +19388,7 @@
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/eastwest,
 /area/swampzone/interiors/bonktek/funktek)
 "wPR" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "wQa" = (

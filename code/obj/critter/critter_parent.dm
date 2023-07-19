@@ -5,7 +5,7 @@
 //we can only attack people in pods etc if we're also in the pod etc
 #define ATTACK_CHECK(target) ((!ismob(target) || !((get_area(target))?:sanctuary)) && (isturf(target:loc) || target:loc == src.loc))
 
-/obj/critter/
+/obj/critter
 	name = "critter"
 	desc = "you shouldnt be able to see this"
 	icon = 'icons/misc/critter.dmi'

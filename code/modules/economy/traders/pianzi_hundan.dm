@@ -149,14 +149,14 @@
 
 /datum/commodity/trader/pianzi/herbs
 	comname = "Medical Herbs"
-	comtype = /obj/item/plant/herb/
+	comtype = /obj/item/plant/herb
 	price_boundary = list(30,250)
 	possible_names = list("My good friend, I am rather low on medical herbs right now. Perhaps you could sell me some, hmm?",
 	"Everyone's in need of medical herbs, and Pianzi is no exception! I'll pay top premium, as always!")
 
 /datum/commodity/trader/pianzi/crystalglass
 	comname = "Crystal Glass"
-	comtype = /obj/item/sheet/glass/crystal/
+	comtype = /obj/item/sheet/glass/crystal
 	price_boundary = list(400,600)
 	possible_names = list("I have need of some glass made from crystallised plasma, my good friend! I'll pay a very good price!",
 	"I'm currently paying a very good price for crystallised plasma glass! It's all the rage, I'm sure you know!")
@@ -170,14 +170,14 @@
 
 /datum/commodity/trader/pianzi/artifact
 	comname = "Useless Handheld Artifacts"
-	comtype = /obj/item/artifact/
+	comtype = /obj/item/artifact
 	price_boundary = list(1000,4000)
 	possible_names = list("I'm collecting handheld artifacts! I only want inert ones, though!",
 	"Right now i'd like to get my hands on some inert handheld artifacts! Keep the dangerous ones for yourself though.")
 
 /datum/commodity/trader/pianzi/cigarettes
 	comname = "Cigarettes"
-	comtype = /obj/item/clothing/mask/cigarette/
+	comtype = /obj/item/clothing/mask/cigarette
 	price_boundary = list(60,500)
 	possible_names = list("Cigarettes are always a good trade. Right now, I'd like to buy any you have!",
 	"Did you know cigarettes are currency on some colonies? That's why I'd like to buy any you can spare!")

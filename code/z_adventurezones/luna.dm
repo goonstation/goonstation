@@ -1644,7 +1644,7 @@ datum/computer/file/embedded_program/maintpanel
 			else if (istype(controlTarget, /obj/critter/mannequin))
 				src.device_entries += new /datum/maintpanel_device_entry/mannequin (src, controlTarget, entryName)
 
-		while (src.device_entries.len < 16)
+		while (length(src.device_entries) < 16)
 			src.device_entries += new /datum/maintpanel_device_entry/dummy (src, pick("GEN$$E$C", "MANNEA83IN 13", "M@____$CC DOOR $$S9", "########?3"))
 
 	receive_user_command(command)

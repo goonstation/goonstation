@@ -519,7 +519,7 @@ TRAYS
 			return
 		src.add_fingerprint(user)
 		var/list/obj/item/reagent_containers/food/snacks/myFoodList = src.contents
-		if(myFoodList.len >= 1)
+		if(length(myFoodList) >= 1)
 			var/obj/item/reagent_containers/food/snacks/myFood = myFoodList[myFoodList.len]
 			if(src.count >= 1)
 				src.count--

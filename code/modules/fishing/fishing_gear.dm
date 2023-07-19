@@ -301,7 +301,7 @@ TYPEINFO(/obj/item/fish_portal)
 			return
 		if (istype(W, /obj/item/storage/fish_box))
 			var/obj/item/storage/fish_box/S = W
-			if (S.contents.len < 1) boutput(user, "<span class='alert'>There's no fish in the portable aquarium!</span>")
+			if (length(S.contents) < 1) boutput(user, "<span class='alert'>There's no fish in the portable aquarium!</span>")
 			else
 				user.visible_message("<span class='notice'>[user] loads [S]'s contents into [src]!</span>")
 				var/amtload = 0
