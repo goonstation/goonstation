@@ -125,6 +125,12 @@ TYPEINFO(/datum/component/bouquet)
 			src.name = "[flowernames[1].name] bouquet"
 			src.desc = "A [flowernames[1]] in a nice wrapping. Try adding more flowers to it!"
 		if (2)
+			var/frontflowerindex = pick(list(1,2),list(2,1)) //picks a order for the flowers
+			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[flowernames[frontflowerindex[2]].name]_[pick("r","l")]")
+			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[flowernames[frontflowerindex[1]].name]_m")
+			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "bqwrap_front")
+			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flowernames[1].name]_m")
+			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_bqwrap_front")
 			src.desc = "A bouquet of beautiful flowers. This one contains both [flowernames[1]] and [flowernames[2]]."
 		if (3)
 			src.desc = "A bouquet of beautiful flowers. This one contains [flowernames[1]], [flowernames[2]] and [flowernames[3]]."
