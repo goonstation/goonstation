@@ -814,7 +814,7 @@
 		if(src.spell_soulguard == SOULGUARD_RING)	//istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport)
 			reappear_turf = get_turf(src)
 		else
-			reappear_turf = pick(job_start_locations["wizard"])
+			reappear_turf = pick_landmark(LANDMARK_WIZARD)
 
 	////////////////Set up the new body./////////////////
 
