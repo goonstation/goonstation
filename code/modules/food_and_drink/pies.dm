@@ -181,7 +181,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (contents)
 			var/atom/movable/randomContent
-			if (contents.len >= 1)
+			if (length(contents) >= 1)
 				randomContent = pick(contents)
 			else
 				randomContent = src

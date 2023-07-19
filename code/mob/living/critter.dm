@@ -355,7 +355,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			return 0
 		if (!active_hand)
 			return 0
-		if (hands.len >= active_hand)
+		if (length(hands) >= active_hand)
 			return 1
 		return 0
 
@@ -644,6 +644,20 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			return 1
 		return 0
 
+	proc/get_ranged_hands(var/mob/user)
+		var/list/ranged_hands = null
+		for (var/datum/handHolder/HH as anything in hands)
+			if (HH.can_range_attack)
+				ranged_hands.Add(HH)
+		return ranged_hands
+
+	proc/get_melee_hands(var/mob/user)
+		var/list/melee_hands = null
+		for (var/datum/handHolder/HH as anything in hands)
+			if (HH.can_attack)
+				melee_hands.Add(HH)
+		return melee_hands
+
 	swap_hand()
 		if (!handcheck())
 			return
@@ -661,14 +675,14 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			if(src.equipped())
 				SEND_SIGNAL(src.equipped(), COMSIG_ITEM_SWAP_TO, src)
 
-	hand_range_attack(atom/target, params)
-		.= 0
-		var/datum/handHolder/ch = get_active_hand()
-		if (ch && (ch.can_range_attack || ch.can_special_attack()) && ch.limb)
-			ch.limb.attack_range(target, src, params)
-			ch.set_cooldown_overlay()
-			.= 1
+	hand_range_attack(atom/target, params) // Returns true for successful attack false if on cooldown or HH is incorrect
+		var/datum/handHolder/HH = get_active_hand()
+		if (HH && (HH.can_range_attack || HH.can_special_attack()) && HH.limb)
+			HH.limb.attack_range(target, src, params)
+			HH.set_cooldown_overlay()
 			src.lastattacked = src
+			return TRUE
+		return FALSE
 
 	weapon_attack(atom/target, obj/item/W, reach, params)
 		if (isobj(target))
@@ -693,14 +707,17 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		var/datum/handHolder/HH = get_active_hand()
 		if (!L || !HH)
 			return
-		if (!HH.can_attack && (HH.can_range_attack || HH.can_special_attack()))
-			hand_range_attack(target, params)
-		else if (HH.can_attack)
+		if ((HH.can_range_attack || HH.can_special_attack()))
+			if (GET_DIST(src, target) > 1)
+				hand_range_attack(target, params)
+				return
+		if (HH.can_attack)
 			if (ismob(target))
 				if (a_intent != INTENT_HELP)
 					if (mob_flags & AT_GUNPOINT)
 						for(var/obj/item/grab/gunpoint/G in grabbed_by)
 							G.shoot()
+
 				switch (a_intent)
 					if (INTENT_HELP)
 						if (can_help)
@@ -714,6 +731,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 					if (INTENT_GRAB)
 						if (HH.can_hold_items && can_grab)
 							L.grab(target, src)
+				HH.set_cooldown_overlay()
+				src.lastattacked = target
+
 			else
 				L.attack_hand(target, src)
 				HH.set_cooldown_overlay()
@@ -1370,7 +1390,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 	/// How the critter should attack from range (Only applicable for ranged limbs)
 	proc/critter_range_attack(var/mob/target)
 		src.set_a_intent(INTENT_HARM)
-		src.hand_range_attack(target)
+		src.hand_attack(target)
 		return TRUE
 
 	///How the critter should use abilities, return TRUE to indicate ability usage success
@@ -1382,6 +1402,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		src.set_a_intent(INTENT_HARM)
 		src.hand_attack(target)
 		return TRUE
+
+	/// Used for generic critter mobAI - override if you need special retailation behaviour
+	proc/critter_retaliate(var/mob/target)
+		src.critter_attack(target)
 
 	/// Used for generic critter mobAI - returns TRUE when the mob is able to attack. For handling cooldowns, or other attack blocking conditions.
 	proc/can_critter_attack()

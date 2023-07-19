@@ -201,7 +201,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		stickers
 			name = "Sticker Box"
 			cost = 300
-			path = /obj/item/item_box/assorted/stickers/
+			path = /obj/item/item_box/assorted/stickers
 			icon = 'icons/obj/items/storage.dmi'
 			icon_state = "sticker_box_assorted"
 

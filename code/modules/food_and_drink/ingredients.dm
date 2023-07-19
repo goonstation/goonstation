@@ -113,6 +113,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 		food_color = "#FFECB7"
 		real_name = "small fish"
 
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/shrimp
+	name = "raw shrimp meat"
+	desc = "Meat of a freshly caught shrimp."
+	icon_state = "shrimp_meat"
+	food_color = "#f0ac98"
+
 /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat
 	name = "synthmeat"
 	desc = "Synthetic meat grown in hydroponics."

@@ -474,7 +474,7 @@
 /area/noGenerate)
 "bi" = (
 /obj/decal/cleanable/dirt,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless,
 /area/noGenerate)
 "bj" = (
@@ -554,9 +554,7 @@
 	desc = "A large bin, for trash.";
 	name = "Trash bin"
 	},
-/obj/landmark{
-	name = "replacewith_records"
-	},
+/obj/item/storage/box/record/radio/chronoquest,
 /turf/simulated/floor/airless/carpet{
 	dir = 6;
 	icon_state = "fred2"
@@ -922,14 +920,10 @@
 "cq" = (
 /obj/lattice,
 /obj/storage/closet,
-/obj/item/record/clown_collection/disco,
-/obj/item/record/clown_collection/eggshell,
-/obj/item/record/clown_collection/honk,
-/obj/item/record/clown_collection/poo,
-/obj/item/record/clown_collection/uguu,
 /obj/machinery/light/incandescent/broken{
 	dir = 4
 	},
+/obj/item/storage/box/record/clown_collection,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "cr" = (
@@ -1171,9 +1165,7 @@
 /area/noGenerate)
 "cV" = (
 /obj/lattice,
-/obj/landmark{
-	name = "replacewith_records"
-	},
+/obj/item/storage/box/record/radio/guitar,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "cW" = (

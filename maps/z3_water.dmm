@@ -1843,18 +1843,6 @@
 "fF" = (
 /turf/unsimulated/floor/damaged1,
 /area/wrecknsspolaris)
-"fG" = (
-/obj/machinery/handscanner{
-	pixel_y = 32
-	},
-/mob/living/critter/robotic/gunbot{
-	desc = "Painted in red and black, all indentifying marks have been scraped off. Darn.";
-	icon_state = "mars_nuke_bot";
-	interesting = "your scanner picks up a faint etching of a name. Even though your being shot at. Seems this one is named Ketchup.";
-	name = "Unmarked Robot"
-	},
-/turf/unsimulated/floor/black,
-/area/wrecknsspolaris/vault)
 "fH" = (
 /turf/unsimulated/floor/damaged2,
 /area/wrecknsspolaris)
@@ -1913,9 +1901,7 @@
 	},
 /area/wrecknsspolaris)
 "fP" = (
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
 "fQ" = (
@@ -1979,20 +1965,6 @@
 /area/wrecknsspolaris)
 "fX" = (
 /obj/decal/cleanable/blood/tracks,
-/turf/unsimulated/floor/black,
-/area/wrecknsspolaris/vault)
-"fY" = (
-/obj/decoration/weirdmark{
-	desc = "Yet another weid energy marking, this one going deeper into the vault. What the..";
-	pixel_y = 32
-	},
-/obj/map/light/green,
-/mob/living/critter/robotic/gunbot{
-	desc = "Painted in red and black, all indentifying marks have been scraped off. Darn.";
-	icon_state = "mars_nuke_bot";
-	interesting = "your scanner picks up a faint etching of a name. Even though your being shot at. Seems this one is named Mustard.";
-	name = "Unmarked Robot"
-	},
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "fZ" = (
@@ -2126,29 +2098,21 @@
 /area/wrecknsspolaris/outside/teleport)
 "gt" = (
 /obj/item/raw_material/rock,
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
 "gu" = (
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "gv" = (
 /obj/item/raw_material/shard/glass,
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "gw" = (
 /obj/item/raw_material/rock,
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "gx" = (
@@ -2206,9 +2170,7 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
 "gH" = (
-/obj/landmark{
-	name = "marjfall"
-	},
+/obj/landmark/fall/sea/marj,
 /obj/sea_plant/seaweed,
 /turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
@@ -2759,9 +2721,7 @@
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "ia" = (
-/obj/landmark{
-	name = "marjfall"
-	},
+/obj/landmark/fall/sea/marj,
 /turf/space/fluid/noexplosion,
 /area/dank_trench)
 "ib" = (
@@ -3104,6 +3064,10 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"xL" = (
+/mob/living/critter/martian/soldier,
+/turf/unsimulated/floor/martian,
+/area/evilreaver/security)
 "AE" = (
 /turf/space,
 /turf/unsimulated/wall/trench,
@@ -3141,6 +3105,10 @@
 /turf/space,
 /turf/space,
 /area/space)
+"Cz" = (
+/mob/living/critter/martian/mutant,
+/turf/unsimulated/floor/martian,
+/area/evilreaver/security)
 "Dz" = (
 /obj/item/device/infra_sensor,
 /turf/unsimulated/floor/martian,
@@ -3164,14 +3132,6 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"Gj" = (
-/obj/critter/martian/soldier/dead,
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
-"Go" = (
-/obj/critter/martian/warrior,
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
 "Hn" = (
 /turf/unsimulated/wall/auto/adventure/martian,
 /area/evilreaver/security)
@@ -3190,16 +3150,8 @@
 "Ip" = (
 /turf/unsimulated/wall/trench,
 /area/dank_trench)
-"Iz" = (
-/obj/critter/martian/psychic,
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
-"JZ" = (
-/obj/critter/martian/soldier,
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
 "KR" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Mi" = (
@@ -3256,6 +3208,15 @@
 /obj/machinery/door/unpowered/martian,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"To" = (
+/obj/decoration/weirdmark{
+	desc = "Yet another weid energy marking, this one going deeper into the vault. What the..";
+	pixel_y = 32
+	},
+/obj/map/light/green,
+/mob/living/critter/robotic/gunbot/syndicate/polaris/mustard,
+/turf/unsimulated/floor/black,
+/area/wrecknsspolaris/vault)
 "TR" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -3264,10 +3225,21 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"TX" = (
+/obj/machinery/handscanner{
+	pixel_y = 32
+	},
+/mob/living/critter/robotic/gunbot/syndicate/polaris/ketchup,
+/turf/unsimulated/floor/black,
+/area/wrecknsspolaris/vault)
 "UF" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibdown1"
 	},
+/turf/unsimulated/floor/martian,
+/area/evilreaver/security)
+"WJ" = (
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "XC" = (
@@ -3276,6 +3248,10 @@
 /area/evilreaver/security)
 "Yb" = (
 /obj/decal/cleanable/blood,
+/turf/unsimulated/floor/martian,
+/area/evilreaver/security)
+"Zq" = (
+/mob/living/critter/martian/warrior,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 
@@ -5699,7 +5675,7 @@ gW
 ab
 Hn
 In
-JZ
+xL
 Yb
 UF
 KR
@@ -6306,7 +6282,7 @@ Ns
 Ns
 Ns
 Ns
-JZ
+xL
 Hn
 ab
 aS
@@ -6908,7 +6884,7 @@ ab
 Hn
 Ns
 Ns
-Go
+Zq
 Ns
 tO
 Hn
@@ -7242,7 +7218,7 @@ dS
 eC
 fd
 fu
-fG
+TX
 dV
 cy
 cx
@@ -7511,7 +7487,7 @@ gW
 ab
 Hn
 Ns
-JZ
+xL
 Ns
 Ns
 Ns
@@ -7846,7 +7822,7 @@ dV
 dV
 dV
 cy
-fY
+To
 dV
 cy
 cr
@@ -8418,7 +8394,7 @@ ab
 Hn
 Pt
 Ns
-JZ
+xL
 Ns
 Ns
 Hn
@@ -9927,7 +9903,7 @@ gW
 ab
 Hn
 pX
-Gj
+WJ
 Ns
 Ns
 Ns
@@ -11136,7 +11112,7 @@ ab
 Hn
 pX
 Ns
-Gj
+WJ
 Ns
 FT
 Hn
@@ -11445,7 +11421,7 @@ Hn
 Hn
 lr
 Ns
-Iz
+Cz
 Ns
 Hn
 ab
