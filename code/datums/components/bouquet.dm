@@ -22,6 +22,7 @@ TYPEINFO(/datum/component/bouquet)
 
 /datum/component/bouquet/proc/construct_bouquet(obj/item/source, obj/item/W, mob/user)
 	if (!istype(W, /obj/item/paper) && !istype(W, /obj/item/wrapping_paper) && !istype(W, /obj/item/bouquet))
+		return
 	if (istype(W, /obj/item/paper/fortune) || istype(W, /obj/item/paper/printout))
 		// i feel like fortune cookie wrap is a little small, and printouts probably need a new texture
 		return
