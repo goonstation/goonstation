@@ -1,27 +1,23 @@
 ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 /obj/item/clothing/head/flower
-	// hi flourish. Plant pot stuff for in future can go here i guess.
+	name = "flower"
+	desc = "A pretty nice flower... you shouldn't see this, though."
+	icon_state = "flower_gard"
+	item_state = "flower_gard"
 	var/can_bouquet = FALSE
 	New()
 		. = ..()
 		src.AddComponent(/datum/component/bouquet, can_bouquet)
+
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
+		return src
 
 /obj/item/clothing/head/flower/rafflesia
 	name = "rafflesia"
 	desc = "Usually reffered to as corpseflower due to its horrid odor, perfect for masking the smell of your stinky head."
 	icon_state = "rafflesiahat"
 	item_state = "rafflesiahat"
-
-/obj/item/clothing/head/flower
-	name = "flower"
-	desc = "A pretty nice flower... you shouldn't see this, though."
-	icon_state = "flower_gard"
-	item_state = "flower_gard"
-
-	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
-		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
-		return src
-
 
 /obj/item/clothing/head/flower/gardenia
 	name = "gardenia"
@@ -41,17 +37,17 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	icon_state = "flower_hyd"
 	item_state = "flower_hyd"
 
-/obj/item/clothing/head/flower/hydrangea/pink
+	pink
 		name = "pink hydrangea"
 		icon_state = "flower_hyd-pink"
 		item_state = "flower_hyd-pink"
 
-/obj/item/clothing/head/flower/hydrangea/blue
+	blue
 		name = "blue hydrangea"
 		icon_state = "flower_hyd-blue"
 		item_state = "flower_hyd-blue"
 
-/obj/item/clothing/head/flower/hydrangea/purple
+	purple
 		name = "purple hydrangea"
 		icon_state = "flower_hyd-purple"
 		item_state = "flower_hyd-purple"
@@ -184,91 +180,3 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 		for(var/mob/living/silicon/M in mobs)
 			possible_names += M
 		return possible_names
-
-// I'm putting the bouquet code here because for some reason bouquet.dm wasnt compiling
-/obj/item/bouquet
-	name = "bouquet"
-	desc = "A lovely arrangement of flowers."
-	icon = 'icons/obj/items/bouquets.dmi'
-	inhand_image_icon = 'icons/obj/items/bouquets.dmi'
-	icon_state = "base"
-	var/flowernum = 0
-	var/wrapstyle = null
-	var/max_flowers = 3
-	var/min_flowers = 1 // can't have a bouquet with no flowers
-	var/hiddenitem = FALSE
-/*	So anywhere here's the naming convention for bouquet.dmi files
-	for the paper, it's either item/paper or item/wrapping_paper
-	so the naming for that is base_src.wrapstyle where wrapstyle is either 'paper' or the src.style of wrapping paper
-	the flowers are named by src.name_number from 1-3
-	the inhand versions are exactly the same except preceded by inhand_
- */
-/obj/item/bouquet/attackby(obj/item/W, mob/user)
-	// should give us back the paper and flowers when done with snipping tool
-	if (issnippingtool(W))
-		boutput(user, "<span class='notice'>You disassemble the [src].</span>")
-		playsound(src.loc, 'sound/items/Scissor.ogg', 30, 1)
-		qdel(src)
-	else if (istype(W, /obj/item/plant/herb))
-		var/obj/item/plant/herb/dummy_herb = W
-		if (!dummy_herb.can_bouquet)
-			boutput(user, "This herb can't be added into a bouquet!")
-			return
-		if (flowernum >= 3)
-			boutput(user, "This bouquet is full!")
-			return
-		src.add_flower(W, user)
-	else if (istype(W, /obj/item/clothing/head/flower))
-		var/obj/item/clothing/head/flower/dummy_flower = W
-		if (!dummy_flower.can_bouquet)
-			boutput(user, "This flower can't be added into a bouquet!")
-			return
-		if (flowernum >= 3)
-			boutput(user, "This bouquet is full!")
-			return
-		src.add_flower(W, user)
-	else if (flowernum == 1)
-		if (!hiddenitem) // only one hidden item allowed
-			W.set_loc(src)
-			src.hiddenitem = TRUE
-		else
-			boutput("This bouquet already has an item in it!")
-/obj/item/bouquet/attack_self(mob/user)
-	src.refresh()
-/obj/item/bouquet/proc/add_flower(obj/item/W, mob/user)
-	W.force_drop(user)
-	src.force_drop(user)
-	W.set_loc(src)
-	user.visible_message("[user] adds a [W.name] to the bouquet.", "You add a [W.name] to the bouquet.")
-	src.flowernum += 1
-	src.refresh()
-	user.put_in_hand_or_drop(src)
-
-/obj/item/bouquet/proc/refresh()
-	// overlays is for the icon, inhand_image is for, well, the inhand
-	// updating the icon also randomises the order (non negotiable)
-	// we'll also do the name and desc here because why not
-	var/temporder = pick(list(1, 2, 3), list(1, 3, 2), list(2, 1, 3), list(2, 3, 1), list(3, 1, 2), list(3, 2, 1))
-	var/flowernames = list()
-	var/hiddentext = ""
-	src.overlays = null
-	src.inhand_image.overlays = null
-	src.icon_state = "base_[src.wrapstyle]"
-	src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = "inhand_base_[src.wrapstyle]")
-	for (var/obj/item/temp in src.contents)
-		if (istype(temp, /obj/item/clothing/head/flower) || istype(temp, /obj/item/plant/herb))
-			flowernames += temp.name
-			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[temp.name]_[temporder[length(flowernames)]]")
-			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[temp.name]_[temporder[length(flowernames)]]")
-		// if (!istype(temp, /obj/item/paper) && !istype(temp, /obj/item/wrapping_paper) && !istype(temp, /obj/item/clothing/head/flower) && flowernum == 1)
-			// we want the hidden item to be toward the back, covered by other stuff
-			// src.overlays += image(temp.icon, icon_state = temp.icon_state)
-	src.name = "[flowernames[1]] bouquet"
-	if (src.hiddenitem)
-		hiddentext = " There seems to be something else inside it as well."
-	if (flowernum == 1)
-		src.desc = "A single [flowernames[1]] in a nice wrapping. Try adding more flowers to it![hiddentext]"
-	else if (flowernum == 2)
-		src.desc = "A bouquet of beautiful flowers. This one contains both a [flowernames[1]] and a [flowernames[2]].[hiddentext]"
-	else if (flowernum == 3)
-		src.desc = "A bouquet of beautiful flowers. This one contains a [flowernames[1]], [flowernames[2]] and [flowernames[3]].[hiddentext]"

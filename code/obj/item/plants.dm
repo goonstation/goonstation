@@ -393,6 +393,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 
 /obj/item/plant/herb/poppy
 	name = "poppy"
+	crop_suffix	= ""
 	desc = "A distinctive red flower."
 	icon_state = "poppy"
 
