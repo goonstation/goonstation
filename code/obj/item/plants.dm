@@ -109,7 +109,6 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	icon_state = "cannabisleaf"
 	brew_result = list("THC", "CBD")
 	contraband = 1
-	can_bouquet = TRUE
 	w_class = W_CLASS_TINY
 
 /obj/item/plant/herb/cannabis/spawnable
@@ -396,7 +395,6 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	name = "poppy"
 	desc = "A distinctive red flower."
 	icon_state = "poppy"
-	can_bouquet = TRUE
 
 /obj/item/plant/herb/tea
 	name = "tea leaves"
