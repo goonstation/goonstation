@@ -63,15 +63,19 @@
 /obj/item/wrench/yellow
 	desc = "A tool used to apply torque to turn nuts and bolts. This one has a bright yellow handle."
 	icon_state = "wrench-yellow"
+	item_state = "wrench"
 
 /obj/item/wrench/grey
 	desc = "A tool used to apply torque to turn nuts and bolts, sporting a droll grey grip."
 	icon_state = "wrench-grey"
+	item_state = "wrench"
 
 /obj/item/wrench/orange
 	desc = "A tool used to apply torque to turn nuts and bolts. But orange!"
 	icon_state = "wrench-orange"
+	item_state = "wrench"
 
 /obj/item/wrench/green
 	desc = "A tool used to apply torque to turn nuts and bolts. In green!"
 	icon_state = "wrench-green"
+	item_state = "wrench"

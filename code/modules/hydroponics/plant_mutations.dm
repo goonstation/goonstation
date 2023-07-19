@@ -1,4 +1,4 @@
-/datum/plantmutation/
+/datum/plantmutation
 	var/name = null // If this is set, plants will use this instead of regular plant name
 	var/crop = null // What crop does it give?
 	var/plant_icon = null // same as in base plant thing really
@@ -522,7 +522,7 @@
 					nerds += L
 				else
 					continue
-			if (nerds.len >= 1)
+			if (length(nerds) >= 1)
 				POT.visible_message("<span class='alert'><b>[POT.name]</b> slaps [pick(nerds)] with a fish!</span>")
 				playsound(POT, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
 
@@ -603,7 +603,7 @@
 	dont_rename_crop = TRUE
 	iconmod = "LasherBerries"
 	harvest_override = 1
-	crop = /obj/item/reagent_containers/food/snacks/plant/lashberry/
+	crop = /obj/item/reagent_containers/food/snacks/plant/lashberry
 	chance = 20
 
 

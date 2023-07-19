@@ -135,7 +135,7 @@
 				//boutput(world,"[react_amount]")
 
 		var/divisor = howmany
-		if (covered.len > 4)
+		if (length(covered) > 4)
 			divisor *= 1.2
 		source.fluid_react(holder, react_amount/divisor, airborne = 1)
 

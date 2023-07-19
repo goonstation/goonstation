@@ -53,20 +53,12 @@
 	name = "astroturf"
 	},
 /area/prefab/zoo)
-"k" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/plating/random,
-/area/prefab/zoo)
 "l" = (
 /turf/simulated/floor/black/grime,
 /area/prefab/zoo)
 "m" = (
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/black/grime,
-/area/prefab/zoo)
-"n" = (
-/obj/critter/martian/soldier/dead,
-/turf/simulated/floor/plating,
 /area/prefab/zoo)
 "o" = (
 /obj/storage/crate/loot,
@@ -166,6 +158,10 @@
 	name = "astroturf"
 	},
 /area/prefab/zoo)
+"W" = (
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/plating,
+/area/prefab/zoo)
 "X" = (
 /obj/decal/fakeobjects/skeleton,
 /obj/item/clothing/shoes/clown_shoes/blue,
@@ -174,6 +170,10 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
+/area/prefab/zoo)
+"Y" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating/random,
 /area/prefab/zoo)
 
 (1,1,1) = {"
@@ -221,7 +221,7 @@ b
 a
 a
 c
-n
+W
 q
 c
 w
@@ -276,7 +276,7 @@ b
 c
 d
 e
-k
+Y
 l
 l
 l
@@ -284,7 +284,7 @@ m
 l
 l
 l
-k
+Y
 e
 B
 c
@@ -295,7 +295,7 @@ b
 c
 e
 e
-k
+Y
 l
 l
 l
@@ -303,7 +303,7 @@ l
 l
 l
 l
-k
+Y
 X
 e
 c
@@ -333,15 +333,15 @@ b
 c
 f
 e
-k
+Y
 l
 l
-k
-k
-k
+Y
+Y
+Y
 l
 l
-k
+Y
 e
 C
 c
@@ -352,15 +352,15 @@ b
 c
 e
 i
-k
+Y
 l
 l
-k
+Y
 t
-k
+Y
 l
 l
-k
+Y
 e
 e
 c
@@ -374,9 +374,9 @@ c
 c
 l
 l
-k
+Y
 t
-k
+Y
 l
 l
 c
@@ -390,15 +390,15 @@ b
 c
 e
 e
-k
+Y
 l
 l
-k
+Y
 t
-k
+Y
 l
 l
-k
+Y
 A
 e
 c
@@ -409,15 +409,15 @@ b
 c
 J
 e
-k
+Y
 l
 l
-k
-k
-k
+Y
+Y
+Y
 l
 l
-k
+Y
 e
 M
 c
@@ -447,7 +447,7 @@ b
 c
 e
 j
-k
+Y
 l
 l
 l
@@ -455,7 +455,7 @@ l
 l
 l
 l
-k
+Y
 e
 e
 c
@@ -466,7 +466,7 @@ b
 c
 h
 e
-k
+Y
 l
 l
 l
@@ -474,7 +474,7 @@ l
 l
 l
 l
-k
+Y
 e
 U
 c

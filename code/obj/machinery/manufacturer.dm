@@ -200,7 +200,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (src.time_left < 1)
 				src.output_loop(src.queue[1])
 				SPAWN(0)
-					if (src.queue.len < 1)
+					if (length(src.queue) < 1)
 						src.manual_stop = 0
 						playsound(src.loc, src.sound_happy, 50, 1)
 						src.visible_message("<span class='notice'>[src] finishes its production queue.</span>")
@@ -504,7 +504,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			else if (istext(src.category) && src.category != A.category)
 				continue
 
-			can_be_made = (mats_used.len >= A.item_paths.len)
+			can_be_made = (length(mats_used) >= A.item_paths.len)
 			if(delete_allowed && src.download.Find(A))
 				delete_link = {"<span class='delete' onclick='delete_product("\ref[A]");'>DELETE</span>"}
 
@@ -1699,7 +1699,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	proc/check_enough_materials(datum/manufacture/M)
 		var/list/mats_used = get_materials_needed(M)
-		if (mats_used.len == M.item_paths.len) // we have enough materials, so return the materials list, else return null
+		if (length(mats_used) == M.item_paths.len) // we have enough materials, so return the materials list, else return null
 			return mats_used
 
 	proc/remove_materials(datum/manufacture/M)
@@ -1807,7 +1807,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (!istype(M,/datum/manufacture/))
 			return
 
-		if (M.item_outputs.len <= 0)
+		if (length(M.item_outputs) <= 0)
 			return
 		var/mcheck = check_enough_materials(M)
 		if(mcheck)
@@ -1888,7 +1888,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		animate_shake(src,5,rand(3,8),rand(3,8))
 		src.visible_message("<span class='alert'>[src] makes [pick(src.text_flipout_adjective)] [pick(src.text_flipout_noun)]!</span>")
 		playsound(src.loc, pick(src.sounds_malfunction), 50, 2)
-		if (prob(15) && src.contents.len > 4 && src.mode != "working")
+		if (prob(15) && length(src.contents) > 4 && src.mode != "working")
 			var/to_throw = rand(1,4)
 			var/obj/item/X = null
 			while(to_throw > 0)
@@ -1976,7 +1976,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			<td class='r'>[src.resource_amounts[mat_id]/10]</td>
 		</tr>
 			"}
-		if (dat.len == 1)
+		if (length(dat) == 1)
 			dat += {"
 		<tr>
 			<td colspan='2' class='c'>No materials loaded.</td>

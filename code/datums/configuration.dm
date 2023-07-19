@@ -503,6 +503,6 @@ var/list/server_authorized = null
 	if(!server_authorized)
 		if(!fexists( "../authorized_keys.txt" )) return 1// oh no!
 		server_authorized = splittext( file2text("../authorized_keys.txt"), ";" )
-	if(server_authorized.len == 0) return 1//TODO: Remove this?
+	if(length(server_authorized) == 0) return 1//TODO: Remove this?
 	if(server_authorized.Find( ckey )) return 1
 	return 0
