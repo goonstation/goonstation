@@ -40,6 +40,10 @@
   - lobsters
   - boogiebots
   - figures
+  - mentor / admin mice
+  - crabs
+	- party crabs
+	- lava crabs
 todo: add more small animals!
 */
 ABSTRACT_TYPE(/mob/living/critter/small_animal)
@@ -4087,8 +4091,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, "lava_crab", 100)
 
 /mob/living/critter/small_animal/crab/lava/death(var/gibbed)
-	src.anchored = UNANCHORED
 	..()
+	src.anchored = UNANCHORED
 
 /mob/living/critter/small_animal/crab/lava/Login()
 	..()
