@@ -63,7 +63,7 @@
 				setalive(owner)
 
 		else //Dead.
-			if (cant_lie || ismobcritter{owner})
+			if (cant_lie || ismobcritter(owner))
 				owner.lying = FALSE
 			else
 				owner.lying = TRUE

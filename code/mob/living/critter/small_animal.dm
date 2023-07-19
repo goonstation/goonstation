@@ -641,7 +641,6 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	health_burn = 30
 	ai_retaliate_patience = 4 //dogoos are big softies, you can hit them 4 times before they attack back
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP //attack until you're knocked down
-	can_lie = FALSE
 	ai_type = /datum/aiHolder/dog
 	var/dogtype = "pug"
 	var/sound/sound_bark = 'sound/voice/animal/dogbark.ogg'
@@ -1746,7 +1745,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
-		can_lie = 0
 		if (fur_color)
 			var/image/overlay = image('icons/misc/critter.dmi', "roach_colorkey-dead")
 			overlay.color = fur_color
@@ -2827,7 +2825,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (istype(C, /mob/living/critter/small_animal/mouse)) return TRUE
 
 	death(var/gibbed)
-		src.can_lie = FALSE
 		if (!gibbed)
 			src.reagents.add_reagent("beff", 50, null)
 		return ..()
@@ -2974,7 +2971,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.emote("dance")
 
 	death(var/gibbed)
-		src.can_lie = FALSE
 		if (!gibbed)
 			animate(src) // stop bumble / bounce
 			src.reagents.add_reagent("toxin", 50, null)
