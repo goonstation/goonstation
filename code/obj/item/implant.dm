@@ -1114,6 +1114,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		sleeper // implanted on sleeper rolls
 			desc = "This implant works like an ID card, opening doors for the implantee. Wait, isn't this access ID illegal?"
 			icon_state = "implant-r"
+			scan_category = "syndicate"
 			New()
 				..()
 				access.access = get_access("Sleeper Agent")
