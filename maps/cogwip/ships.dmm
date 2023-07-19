@@ -10789,7 +10789,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 "Br" = (
-/obj/item/storage/belt/hunter,
+/obj/item/storage/belt/utility,
 /obj/item/clothing/under/misc/tourist,
 /turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
