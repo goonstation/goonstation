@@ -9,11 +9,11 @@ TYPEINFO(/datum/component/bouquet)
 /// the bouquet component, that allows flowers of various parentage to be wrapped into bouquets
 /datum/component/bouquet
 	/// this is the internal component version of can_bouquet
-	var/can_bouquet_comp = FALSE
+	var/can_bouquet = FALSE
 
 /datum/component/bouquet/Initialize()
 	. = ..()
-	src.can_bouquet_comp = can_bouquet
+	src.can_bouquet = can_bouquet
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/construct_bouquet)
 
 /datum/component/bouquet/UnregisterFromParent()
@@ -24,7 +24,7 @@ TYPEINFO(/datum/component/bouquet)
 	if (istype(W, /obj/item/paper/fortune) || istype(W, /obj/item/paper/printout))
 		// i feel like fortune cookie wrap is a little small, and printouts probably need a new texture
 		return
-	if (src.can_bouquet_comp)
+	if (src.can_bouquet)
 		boutput("This flower can't be turned into a bouquet!")
 		return
 	if (istype(W, /obj/item/paper || /obj/item/wrapping_paper))
