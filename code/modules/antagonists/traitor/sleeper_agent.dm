@@ -6,9 +6,9 @@
 
 /datum/antagonist/sleeper_agent/announce()
 	var/mob/living/carbon/human/H = src.owner.current
-	boutput(owner.current, "<h3><span class='alert'>You have awakened as a Syndicate [display_name]!</span></h3>")
+	boutput(H, "<h3><span class='alert'>You have awakened as a Syndicate [display_name]!</span></h3>")
 	new /obj/item/implant/access/infinite/sleeper(H)
-	boutput(owner.current, "<h3><span class='alert'>You have been granted access to the local listening post due to a new implant, don't lose it!</span></h3>")
+	boutput(H, "<h3><span class='alert'>You have been granted access to the local listening post due to a new implant, don't lose it!</span></h3>")
 
 /datum/antagonist/sleeper_agent/assign_objectives()
 	// 1-3 regular objectives, plus a guaranteed gimmick objective and escape objective
