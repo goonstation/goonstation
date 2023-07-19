@@ -30,6 +30,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	desc = "Bird of Paradise flowers, or Crane Flowers, are named for their resemblance to the ACTUAL birds of the same name. Both look great sitting on your head either way."
 	icon_state = "flower_bop"
 	item_state = "flower_bop"
+	can_bouquet = TRUE
 
 /obj/item/clothing/head/flower/hydrangea
 	name = "hydrangea"

@@ -1,5 +1,6 @@
 #define HERB_SMOKE_TRANSFER_HARDCAP 20
 #define HERB_HOTBOX_MULTIPLIER 1.2
+// note: flowers that aren't in here are most likely wearable variants, and are in the clothing folder
 
 ABSTRACT_TYPE(/obj/item/plant)
 /// Inedible Produce
@@ -472,6 +473,7 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 	name = "rose"
 	desc = "By any other name, would smell just as sweet. This one likes to be called "
 	icon_state = "rose"
+	can_bouquet = TRUE
 	var/thorned = TRUE
 	var/backup_name_txt = "names/first.txt"
 
@@ -579,6 +581,7 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 	desc = "A holographic display of a Rose. This one likes to be called "
 	icon_state = "holorose"
 	backup_name_txt = "names/ai.txt"
+	can_bouquet = FALSE
 
 	possible_rose_names()
 		var/list/possible_names = list()
