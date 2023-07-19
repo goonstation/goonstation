@@ -17,8 +17,8 @@
 	var/books_upgrade = 0 //0 by default, set to 1 when custom book covers upgrade is installed
 	var/forbidden_upgrade = 0 //0 by default, set to 1 when forbidden covers/symbols/styles upgrade is installed
 	var/ink_level = 100 //decrements by 2 for each book printed, can be refilled (expensively)
-	var/list/press_modes = list("Set mode", "Choose cover", "Set book info", "Set newspaper info", "Set book contents",\
-	"Amount to make", "Print books", "View Information") //default, can be expanded to have "Ink Colors" and "Custom Cover"
+	var/list/press_modes = list("Choose cover", "Set book info", "Set book contents",
+	"Amount to make", "Print", "View Information") //default, can be expanded to have "Ink Colors" and "Custom Cover"
 
 	var/book_amount = 0 //how many books to make?
 	var/book_cover = "" //what cover design to use?
@@ -232,6 +232,8 @@
 					if (src.newspaper_upgrade)
 						src.visible_message("\The [src] already has that upgrade installed.")
 						return
+					src.press_modes += "Set newspaper info"
+					src.press_modes += "Toggle newspaper mode"
 					src.newspaper_upgrade = TRUE
 					src.visible_message("\The [src] accepts the upgrade.")
 				else //in case some wiseguy tries the parent im watching u
@@ -253,7 +255,7 @@
 
 		switch (lowertext(mode_sel))
 
-			if ("set mode")
+			if ("toggle newspaper mode")
 				if (src.newspaper_upgrade)
 					var/newspaper_mode_sel = input("What are you printing?", "Print Mode",src.newspaper_mode_active) as anything in list("Books", "Newspapers")
 					if (newspaper_mode_sel == "Newspapers")
@@ -330,7 +332,7 @@
 				boutput(user, "Information set.")
 				return
 			if ("set newspaper info")
-				if (!src.newspaper_mode_active)
+				if (!src.newspaper_upgrade)
 					boutput(user, "Your free trial of newspaper printing has expired. Please enter Newspaper Printing Upgrade.")
 					return
 				var/name_sel = input("What do you want the headline to be?", "Information Control", book_name)
@@ -387,7 +389,7 @@
 				else
 					boutput(user, "Amount out of range.")
 
-			if ("print books")
+			if ("print")
 				if (is_running)
 					boutput(user, "\The [src] is busy.")
 					return
