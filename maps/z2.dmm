@@ -59490,7 +59490,7 @@
 /obj/kudzu_marker{
 	icon_state = "kudzu-benign-3"
 	},
-/obj/item/clothing/head/flower/rose{
+/obj/item/plant/flower/rose{
 	burning = 0;
 	desc = "By any other name, would smell just as sweet. This one likes to be called Lily. Or ";
 	name = "extra-beautiful rose"
@@ -77233,7 +77233,7 @@
 /area/iomoon/base/underground)
 "xxs" = (
 /obj/table/wood/auto/desk,
-/obj/item/clothing/head/flower/rose/poisoned{
+/obj/item/plant/flower/rose/poisoned{
 	name = "very suspicious rose";
 	pixel_x = -4;
 	pixel_y = 8;
