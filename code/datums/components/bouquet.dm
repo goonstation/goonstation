@@ -90,7 +90,11 @@ TYPEINFO(/datum/component/bouquet)
 		else
 			boutput("This bouquet already has an item in it!")
 /obj/item/bouquet/attack_self(mob/user)
-	src.refresh()
+	. = ..()
+	src.refresh
+/obj/item/bouquet/attack_hand(mob/user)
+	. = ..()
+	src.refresh
 /obj/item/bouquet/proc/add_flower(obj/item/W, mob/user)
 	W.force_drop(user)
 	src.force_drop(user)
