@@ -42376,7 +42376,7 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
-/obj/item/clothing/head/flower/rose{
+/obj/item/plant/flower/rose{
 	name = "Rose of Apollo"
 	},
 /turf/simulated/floor/wood/seven,
