@@ -639,6 +639,7 @@
 	var/copied_desc = null
 	var/copied_name = null
 	var/copied_real_name = null
+	var/copied_pronouns = null
 	var/traps_laid = 0
 
 	New(var/mob/M)

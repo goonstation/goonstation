@@ -1,0 +1,97 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/ingredient/dough,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/dmm_suite/clear_area)
+"c" = (
+/obj/submachine/chef_sink,
+/obj/machinery/light{
+	dir = 1;
+	tag = "icon-tube1 (NORTH)"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/dmm_suite/clear_area)
+"f" = (
+/obj/submachine/chef_oven,
+/obj/landmark/bill_spawn,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/dmm_suite/clear_area)
+"j" = (
+/obj/machinery/chem_dispenser/chef,
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/dmm_suite/clear_area)
+"v" = (
+/turf/simulated/floor/specialroom/cafeteria,
+/area/dmm_suite/clear_area)
+"z" = (
+/obj/table/auto,
+/obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/dmm_suite/clear_area)
+"B" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/ingredient/dough_circle{
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/dough_circle{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/machinery/light{
+	tag = ""
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_x = -8
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/dmm_suite/clear_area)
+"R" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/donut/custom/frosted,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/dmm_suite/clear_area)
+"X" = (
+/obj/item/reagent_containers/food/snacks/ingredient/sugar,
+/obj/item/reagent_containers/food/snacks/ingredient/sugar,
+/obj/item/reagent_containers/food/snacks/ingredient/sugar,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/storage/crate,
+/obj/item/reagent_containers/food/snacks/plant/coconutmeat,
+/obj/item/reagent_containers/food/snacks/plant/coconutmeat,
+/obj/item/reagent_containers/food/snacks/plant/coconutmeat,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+X
+v
+a
+"}
+(2,1,1) = {"
+f
+v
+B
+"}
+(3,1,1) = {"
+v
+v
+v
+"}
+(4,1,1) = {"
+c
+v
+z
+"}
+(5,1,1) = {"
+j
+v
+R
+"}

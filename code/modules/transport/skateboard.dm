@@ -164,7 +164,7 @@
 
 	last_bumped_atom = AM
 	bumped_queue.Add(AM)
-	if(bumped_queue.len >= 9)
+	if(length(bumped_queue) >= 9)
 		bumped_queue.Cut(1,2)
 
 	if(isturf(AM) || istype(AM, /obj/window) || istype(AM, /obj/grille))

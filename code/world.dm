@@ -539,6 +539,9 @@ var/global/mob/twitch_mob = 0
 	clothingbooth_setup()
 	initialize_biomes()
 
+	Z_LOG_DEBUG("World/Init", "Setting up airlock/APC wires...")
+	airlockWireColorToFlag = RandomAirlockWires()
+	APCWireColorToFlag = RandomAPCWires()
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
 	global.initialise_fishing_spots()
 

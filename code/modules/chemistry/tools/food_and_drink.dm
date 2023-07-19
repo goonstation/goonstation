@@ -329,7 +329,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 						var/datum/plantgenes/DNA = P.plantgenes
 						var/datum/plantgenes/PDNA = S.plantgenes
 						if (!stored.hybrid && !stored.unique_seed)
-							S.generic_seed_setup(stored)
+							S.generic_seed_setup(stored, TRUE)
 						HYPpassplantgenes(DNA,PDNA)
 						if (stored.hybrid)
 							var/plantType = stored.type
@@ -1611,14 +1611,14 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	proc/fill_it_up()
 		var/flavor = null
 
-		if (islist(src.whitelist) && src.whitelist.len > 0)
-			if (islist(src.blacklist) && src.blacklist.len > 0)
+		if (islist(src.whitelist) && length(src.whitelist) > 0)
+			if (islist(src.blacklist) && length(src.blacklist) > 0)
 				flavor = pick(src.whitelist - src.blacklist)
 			else
 				flavor = pick(src.whitelist)
 
-		else if (islist(all_functional_reagent_ids) && all_functional_reagent_ids.len > 0)
-			if (islist(src.blacklist) && src.blacklist.len > 0)
+		else if (islist(all_functional_reagent_ids) && length(all_functional_reagent_ids) > 0)
+			if (islist(src.blacklist) && length(src.blacklist) > 0)
 				flavor = pick(all_functional_reagent_ids - src.blacklist)
 			else
 				flavor = pick(all_functional_reagent_ids)

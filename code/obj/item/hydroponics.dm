@@ -395,7 +395,7 @@ TYPEINFO(/obj/item/saw/elimbinator)
 TYPEINFO(/obj/item/plantanalyzer)
 	mats = 4
 
-/obj/item/plantanalyzer/
+/obj/item/plantanalyzer
 	name = "plant analyzer"
 	desc = "A device which examines the genes of plant seeds."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
@@ -444,7 +444,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 				S = new /obj/item/seed
 				S.set_loc(src.loc)
 				S.removecolor()
-			S.generic_seed_setup(selected)
+			S.generic_seed_setup(selected, FALSE)
 
 
 
@@ -554,7 +554,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 
 /////////////////////////////////////////// Compost bag ////////////////////////////////////////////////
 
-/obj/item/reagent_containers/glass/compostbag/
+/obj/item/reagent_containers/glass/compostbag
 	name = "compost bag"
 	desc = "A big bag of shit."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
