@@ -69,8 +69,6 @@
 	netpass_syndicate = "[rand(111,999)]DET[tempword]=[rand(1111,9999)]"
 	codewords -= tempword
 
-	//boutput(world, "debug:<br>head: [netpass_heads] <br> med: [netpass_medical] <br> sec: [netpass_security]<br> atm: [netpass_banking]<br> cargo: [netpass_cargo]")
-
 /proc/setup_organ_thresholds()
 	for(var/organ in cyberorgan_brute_threshold)
 		var/amt = rand(10, 60)

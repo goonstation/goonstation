@@ -7,7 +7,7 @@
 	probability = 33
 	msgGain = "Your skin feels oddly dry."
 	msgLose = "Your scales fall off."
-	mob_exclusive = /mob/living/carbon/human/
+	mob_exclusive = /mob/living/carbon/human
 	var/mutantrace_path = /datum/mutantrace/lizard
 	lockProb = 33
 	lockedGaps = 1

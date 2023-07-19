@@ -212,7 +212,7 @@
 				src.attachments += W
 				user.show_message("<span class='notice'>You stick the note onto the detonator assembly.</span>")
 			else if (W.is_detonator_attachment())
-				if (src.attachments.len < 3)
+				if (length(src.attachments) < 3)
 					W.set_loc(src)
 					W.master = src
 					user.u_equip(W)
