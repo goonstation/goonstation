@@ -6,7 +6,7 @@
 
 /datum/antagonist/sleeper_agent/announce()
 	var/mob/living/carbon/human/H = src.owner.current
-	boutput(owner.current, "<h3><span class='alert'>You have awakened as a Syndicate [display_name]!</span></h3>")
+	boutput(H, "<h3><span class='alert'>You have awakened as a Syndicate [display_name]!</span></h3>")
 	new /obj/item/implant/access/infinite/sleeper(H)
 	boutput(owner.current, "You feel something activate within you, and a vision of a place hidden in the asteroids near the station.")
 
