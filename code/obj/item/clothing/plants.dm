@@ -5,9 +5,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	icon_state = "flower_gard"
 	item_state = "flower_gard"
 	var/can_bouquet = FALSE
-	New()
-		. = ..()
-		src.AddComponent(/datum/component/bouquet, can_bouquet)
 
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
@@ -31,6 +28,10 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	icon_state = "flower_bop"
 	item_state = "flower_bop"
 	can_bouquet = TRUE
+
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/bouquet, can_bouquet)
 
 /obj/item/clothing/head/flower/hydrangea
 	name = "hydrangea"
@@ -61,5 +62,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	can_bouquet = TRUE
 
 	New()
+		src.AddComponent(/datum/component/bouquet, can_bouquet)
 		src.create_reagents(100)
 		..()

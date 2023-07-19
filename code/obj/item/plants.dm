@@ -491,6 +491,8 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 		return possible_names
 
 	New()
+		if (src.icon_state == "rose") // prevents holo roses entering bouquet
+			src.AddComponent(/datum/component/bouquet, can_bouquet)
 		..()
 		var/list/possible_names = possible_rose_names()
 		var/rose_name
