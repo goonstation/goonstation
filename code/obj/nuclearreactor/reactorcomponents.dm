@@ -395,7 +395,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 					T.assume_air(air_contents)
 			else
 				. = src.air_contents
-		if(inGas)
+		if(inGas && (THERMAL_ENERGY(inGas) > 0))
 			src.air_contents = inGas.remove((src.gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
 			src.air_contents?.volume = gas_volume
 			if(src.air_contents && TOTAL_MOLES(src.air_contents) < 1)
