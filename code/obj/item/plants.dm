@@ -421,11 +421,14 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	Crossed(atom/movable/AM as mob|obj)
 		var/mob/M = AM
 		if(iswerewolf(M))
-			M.changeStatus("weakened", 3 SECONDS)
-			M.force_laydown_standup()
-			M.TakeDamage("All", 0, 5, 0, DAMAGE_BURN)
-			M.visible_message("<span class='alert'>The [M] steps too close to [src] and falls down!</span>")
-			return
+			if(M.hasStatus("weakened"))
+				return
+			else
+				M.changeStatus("weakened", 3 SECONDS)
+				M.force_laydown_standup()
+				M.TakeDamage("All", 0, 5, 0, DAMAGE_BURN)
+				M.visible_message("<span class='alert'>The [M] steps too close to [src] and falls down!</span>")
+				return
 		..()
 	attack(mob/M, mob/user)
 		//if a wolf attacks with this, which they shouldn't be able to, they'll just drop it
