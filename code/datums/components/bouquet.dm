@@ -91,10 +91,10 @@ TYPEINFO(/datum/component/bouquet)
 			boutput("This bouquet already has an item in it!")
 /obj/item/bouquet/attack_self(mob/user)
 	. = ..()
-	src.refresh
+	src.refresh()
 /obj/item/bouquet/attack_hand(mob/user)
 	. = ..()
-	src.refresh
+	src.refresh()
 /obj/item/bouquet/proc/add_flower(obj/item/W, mob/user)
 	W.force_drop(user)
 	src.force_drop(user)
@@ -108,31 +108,58 @@ TYPEINFO(/datum/component/bouquet)
 	// overlays is for the icon, inhand_image is for, well, the inhand
 	// updating the icon also randomises the order (non negotiable)
 	// we'll also do the name and desc here because why not
-	var/list/flowernames = list()
+	var/obj/item/flower1 = null
+	var/obj/item/flower2 = null
+	var/obj/item/flower3 = null
 	src.overlays = null
 	src.inhand_image.overlays = null
 	src.icon_state = "bqwrap_back"
 	src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = "inhand_base_[src.wrapstyle]")
 	for (var/obj/item/temp in src.contents)
 		if (istype(temp, /obj/item/clothing/head/flower) || istype(temp, /obj/item/plant))
-			flowernames += temp.name
+			if (isnull(flower1))
+				flower1 = temp.name
+				continue
+			else if (isnull(flower2))
+				flower2 = temp.name
+				continue
+			else if (isnull(flower3))
+				flower3 = temp.name
+				continue
+			else
+				CRASH("More than 3 flowers in bouquet: [get_turf(src)]") // this shouldnt happen but eh
 	switch (src.flowernum)
 		if (1)
-			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[flowernames[1].name]_m")
+			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[flower1]_m")
 			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "bqwrap_front")
-			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flowernames[1].name]_m")
+			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flower1]_m")
 			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_bqwrap_front")
-			src.name = "[flowernames[1].name] bouquet"
-			src.desc = "A [flowernames[1]] in a nice wrapping. Try adding more flowers to it!"
+			src.name = "[flower1] bouquet"
+			src.desc = "A [flower1] in a nice wrapping. Try adding more flowers to it!"
 		if (2)
-			var/frontflowerindex = pick(list(1,2),list(2,1)) //picks a order for the flowers
-			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[flowernames[frontflowerindex[2]].name]_[pick("r","l")]")
-			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[flowernames[frontflowerindex[1]].name]_m")
+			var/rightorleft = pick("r", "l")
+			var/list/frontflowerindex = pick(list(flower1,flower2),list(flower2,flower1)) //picks a order for the flowers
+			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[frontflowerindex[1]]_[rightorleft]")
+			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[frontflowerindex[2]]_m")
 			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "bqwrap_front")
-			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flowernames[1].name]_m")
+			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[frontflowerindex[1]]_[rightorleft]")
+			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[frontflowerindex[2]]_m")
 			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_bqwrap_front")
-			src.desc = "A bouquet of beautiful flowers. This one contains both [flowernames[1]] and [flowernames[2]]."
+			src.desc = "A bouquet of beautiful flowers. This one contains both [flower2] and [flower1]."
 		if (3)
-			src.desc = "A bouquet of beautiful flowers. This one contains [flowernames[1]], [flowernames[2]] and [flowernames[3]]."
+			var/list/frontflowerindex = pick(
+				list(flower1, flower2, flower3), list(flower2, flower1, flower3),
+				list(flower1, flower3, flower2), list(flower2, flower3, flower1),
+				list(flower3, flower1, flower2), list(flower3, flower2, flower1)
+			) // pick a random order for the three to appear in.
+			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[frontflowerindex[1]]_r")
+			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[frontflowerindex[2]]_l")
+			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[frontflowerindex[3]]_m")
+			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "bqwrap_front")
+			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[frontflowerindex[1]]_r")
+			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[frontflowerindex[2]]_l")
+			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[frontflowerindex[3]]_m")
+			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_bqwrap_front")
+			src.desc = "A bouquet of beautiful flowers. This one contains [flower3], [flower2] and [flower1]."
 	if (src.hiddenitem)
 		src.desc += " There seems to be something else inside it as well."
