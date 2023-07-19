@@ -347,7 +347,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			return
 
 		// 	check for items in disposal - occupied light
-		if (contents.len > 0)
+		if (length(contents) > 0)
 			var/image/I = GetOverlayImage("content_light")
 			if (!I)
 				I = image(src.icon, "[light_style]-full")
@@ -465,7 +465,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
-			AM.set_loc(src.loc)
+			AM.set_loc(get_turf(src))
 			AM.pipe_eject(0)
 			AM.throw_at(target, 5, 1)
 

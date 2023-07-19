@@ -41,7 +41,7 @@
 	extra_item = /obj/item/clothing/head/butt
 	creates = "/obj/item/reagent_containers/food/snacks/burger/buttburger"
 
-/datum/recipe/roburger/
+/datum/recipe/roburger
 	flour_amount = 1
 	extra_item = /obj/item/parts/robot_parts/head
 	creates = "/obj/item/reagent_containers/food/snacks/burger/roburger"

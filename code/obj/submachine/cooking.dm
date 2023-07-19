@@ -667,6 +667,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/steak_s(src)
 			src.recipes += new /datum/cookingrecipe/steak_ling(src)
 			src.recipes += new /datum/cookingrecipe/fish_fingers(src)
+			src.recipes += new /datum/cookingrecipe/shrimp(src)
 			src.recipes += new /datum/cookingrecipe/hardboiled(src)
 			src.recipes += new /datum/cookingrecipe/bakedpotato(src)
 			src.recipes += new /datum/cookingrecipe/rice_ball(src)
@@ -940,7 +941,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/plant/, /obj/item/organ/brain, /obj/item/clothing/head/butt)
 
 	attack_hand(var/mob/user)
-		if (src.contents.len < 1)
+		if (length(src.contents) < 1)
 			boutput(user, "<span class='alert'>There is nothing in the processor!</span>")
 			return
 		if (src.working == 1)
@@ -1116,7 +1117,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/satchel/))
 			var/obj/item/satchel/S = W
-			if (S.contents.len < 1) boutput(user, "<span class='alert'>There's nothing in the satchel!</span>")
+			if (length(S.contents) < 1) boutput(user, "<span class='alert'>There's nothing in the satchel!</span>")
 			else
 				user.visible_message("<span class='notice'>[user] loads [S]'s contents into [src]!</span>")
 				var/amtload = 0

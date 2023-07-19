@@ -11,7 +11,7 @@
 /datum/chemicompiler_core/portableCore
 	maxReservoir = 6
 
-/obj/item/device/chemicompiler/
+/obj/item/device/chemicompiler
 	name = "sloppy-looking hackjob of a device"
 	desc = "you have no earthy idea what this pile of junk could be for."
 	icon = 'icons/obj/chemical.dmi'

@@ -103,7 +103,7 @@
 		return
 
 	Clickdrag_PodToObject(var/mob/living/user,var/atom/A)
-		if (contents.len < 1)
+		if (length(contents) < 1)
 			boutput(user, "<span class='alert'>[src] has nothing to unload.</span>")
 			return
 
@@ -181,7 +181,7 @@
 			return
 		if("Unload")
 			var/crate
-			if (load.len == 1)
+			if (length(load) == 1)
 				crate = load[1]
 			else
 				crate = input(usr, "Choose which cargo to unload..", "Choose cargo")  as null|anything in load
