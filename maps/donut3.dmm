@@ -21704,7 +21704,7 @@
 /area/station/medical/medbay/treatment)
 "gAp" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = "cargo"
+	mail_tag = "QM"
 	},
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor,
