@@ -12,8 +12,6 @@
 
 		last_object = "setup_radiocodes"
 		setup_radiocodes()
-		last_object = "setup_organ_thresholds"
-		setup_organ_thresholds()
 
 		last_object = "emergency_shuttle"
 		emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
