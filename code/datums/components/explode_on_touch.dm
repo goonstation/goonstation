@@ -16,6 +16,7 @@ TYPEINFO(/datum/component/explode_on_touch)
 	)
 
 /datum/component/explode_on_touch/Initialize(explosion_size=5, gib=FALSE, delete_self=TRUE, remove_limbs=0, turf_safe_explosion=FALSE)
+	. = ..()
 	if(!istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	src.explosion_size = explosion_size
@@ -23,7 +24,7 @@ TYPEINFO(/datum/component/explode_on_touch)
 	src.delete_self = delete_self
 	src.remove_limbs = remove_limbs
 	src.turf_safe_explosion = turf_safe_explosion
-	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/do_the_boom)
+	RegisterSignal(parent, COMSIG_ATTACKHAND, PROC_REF(do_the_boom))
 
 /datum/component/explode_on_touch/proc/do_the_boom(atom/movable/thing, mob/user)
 	boutput(user, "<span class='alert'>\The [thing] explodes.</span>")

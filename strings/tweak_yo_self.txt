@@ -1,3 +1,0 @@
-tweak@=creepy@,weird@,gross@,strange@,crunchy@,crispy@,tasty@,crazy@,awful@,terrible@,salacious@,scandalous@,offensive to some people
-tweakadj@=sort of@,kind of@,a little bit@,quite@,rather@,somewhat@,slightly@,possibly,not very@,barely@,incredibly@,amazingly@,could be construed as@,vaguely@,
-moustache@=diabolically@,madly@,evilly@,strangely@,scarily@,bewitchingly@,insanely@,crazily@,awkwardly@,excitedly@,hauntingly@,scandalously,suggestively@,ominously@,nonchalantly@,gloriously@,hairily

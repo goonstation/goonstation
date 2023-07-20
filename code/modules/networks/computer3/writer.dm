@@ -340,13 +340,13 @@
 
 					switch (commandList[1])
 						if ("print_index")
-							if (commandList.len > 1)
+							if (length(commandList) > 1)
 								known_printers = commandList.Copy(2)
 							else
 								known_printers = list()
 
 						if ("print_status")
-							if (commandList.len > 1)
+							if (length(commandList) > 1)
 								printer_status = commandList[2]
 							else
 								printer_status = "???"
@@ -464,7 +464,12 @@
 
 		local_print(var/print_title = "Printout")
 			var/obj/item/peripheral/printcard = find_peripheral("LAR_PRINTER")
-			if(!printcard || !src.notelist || !length(src.notelist))
+			if(!printcard)
+				printcard = find_peripheral("NET_ADAPTER") // terminal card
+				if (!istype(printcard, /obj/item/peripheral/network/powernet_card/terminal))
+					return 1
+
+			if(!src.notelist || !length(src.notelist))
 				return 1
 
 			var/datum/signal/signal = get_free_signal()

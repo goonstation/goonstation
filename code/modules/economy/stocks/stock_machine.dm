@@ -143,10 +143,9 @@
 	onclose(user, "computer")
 	return
 
-/obj/machinery/computer/stockexchange/attackby(obj/item/I as obj, mob/user as mob)
-	if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
-		if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
-		var/obj/item/card/id/ID = I
+/obj/machinery/computer/stockexchange/attackby(obj/item/I, mob/user)
+	var/obj/item/card/id/ID = get_id_card(I)
+	if (istype(ID))
 		boutput(user, "<span class='notice'>You swipe the ID card.</span>")
 		var/datum/db_record/account = null
 		account = FindBankAccountByName(ID.registered)

@@ -73,11 +73,11 @@
 	icon_state = "button_red_unpressed"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/button_type
 	var/pressed = 0
 
-	attack_hand(var/mob/living/user as mob)
+	attack_hand(var/mob/living/user)
 		if (!istype(user))
 			return
 		if (!(user in range(1)))

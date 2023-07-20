@@ -73,3 +73,4 @@
 
 /datum/ailment/disease/necrotic_degeneration/can_infect_more
 	zombie_mutantrace = /datum/mutantrace/zombie/can_infect
+	associated_reagent = "necrovirus_infectious"

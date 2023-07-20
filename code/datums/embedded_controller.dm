@@ -397,7 +397,7 @@ obj/machinery/embedded_controller
 
 	name = "Embedded Controller"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	var/on = 1
 
@@ -652,10 +652,8 @@ obj/machinery/embedded_controller/radio/department_controller
 
 		UpdateIcon()
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
-		if (istype(I, /obj/item/device/pda2) && I:ID_card)
-			I = I:ID_card
-		if(istype(I, /obj/item/card/id))
+	attackby(var/obj/item/I, mob/user)
+		if(istype(get_id_card(I), /obj/item/card/id))
 			if (src.allowed(user))
 				user.visible_message("[user] [src.locked ? "unlocks" : "locks"] the access panel.","You [src.locked ? "unlock" : "lock"] the access panel.")
 				src.locked = !src.locked

@@ -13,12 +13,11 @@
 	var/kick_bonus = 0 //some shoes will yield extra kick damage!
 	compatible_species = list("human")
 	protective_temperature = 500
-	permeability_coefficient = 0.50
-		//cogwerks - burn vars
+	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 800
 	burn_possible = 1
-	health = 25
+	health = 5
 	tooltip_flags = REBUILD_DIST
 	var/step_sound = "step_default"
 	var/step_priority = STEP_PRIORITY_NONE
@@ -30,6 +29,7 @@
 		..()
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 5)
+		setProperty("chemprot", 5)
 
 	get_desc(dist)
 		..()
@@ -42,11 +42,11 @@
 				if (LACES_CUT)
 					. += "The laces are cut."
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/emergency_oxygen) || istype(W, /obj/item/tank/jetpack))
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/mini_oxygen) || istype(W, /obj/item/tank/jetpack))
 			var/uses = 0
 
-			if(istype(W, /obj/item/tank/emergency_oxygen)) uses = 2
+			if(istype(W, /obj/item/tank/mini_oxygen)) uses = 2
 			else if(istype(W, /obj/item/tank/air)) uses = 4
 			else if(istype(W, /obj/item/tank/oxygen)) uses = 4
 			else if(istype(W, /obj/item/tank/jetpack)) uses = 6
@@ -170,12 +170,14 @@
 	name = "pink shoes"
 	icon_state = "pink"
 
+TYPEINFO(/obj/item/clothing/shoes/magnetic)
+	mats = 8
+
 /obj/item/clothing/shoes/magnetic
 	name = "magnetic shoes"
 	desc = "Keeps the wearer firmly anchored to the ground. Provided the ground is metal, of course."
 	icon_state = "magboots"
 	// c_flags = NOSLIP
-	mats = 8
 	burn_possible = 0
 	laces = LACES_NONE
 	kick_bonus = 2
@@ -188,21 +190,22 @@
 		src.setProperty("movespeed", 0.5)
 		src.setProperty("disorient_resist", 10)
 		step_sound = "step_lattice"
-		playsound(src.loc, "sound/items/miningtool_on.ogg", 30, 1)
+		playsound(src.loc, 'sound/items/miningtool_on.ogg', 30, 1)
 	proc/deactivate()
 		src.magnetic = 0
 		src.delProperty("movespeed")
 		src.delProperty("disorient_resist")
 		step_sound = "step_plating"
-		playsound(src.loc, "sound/items/miningtool_off.ogg", 30, 1)
+		playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 1)
+
+TYPEINFO(/obj/item/clothing/shoes/hermes)
+	mats = 0
 
 /obj/item/clothing/shoes/hermes
 	name = "sacred sandals" // The ultimate goal of material scientists.
 	desc = "Sandals blessed by the all-powerful goddess of victory and footwear."
 	icon_state = "wizard" //TODO: replace with custom sprite, thinking winged sandals
 	c_flags = NOSLIP
-	permeability_coefficient = 1
-	mats = 0
 	magical = 1
 	burn_possible = 0
 	laces = LACES_NONE
@@ -212,6 +215,10 @@
 	setupProperties()
 		..()
 		setProperty("movespeed", -2)
+		delProperty("chemprot")
+
+TYPEINFO(/obj/item/clothing/shoes/industrial)
+	mats = list("MET-3"= 15,"CON-2" = 10,"POW-3" = 10)
 
 /obj/item/clothing/shoes/industrial
 #ifdef UNDERWATER_MAP
@@ -223,24 +230,26 @@
 	name = "mechanised boots"
 	desc = "Industrial-grade boots fitted with mechanised balancers and stabilisers to increase running speed under a heavy workload."
 #endif
-	mats = 12
 	burn_possible = 0
 	laces = LACES_NONE
 	kick_bonus = 2
 
 /obj/item/clothing/shoes/industrial/equipped(mob/user, slot)
 	. = ..()
-	APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/mech_boots, src.type)
+	APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/reagent/energydrink, src.type)
 
 /obj/item/clothing/shoes/industrial/unequipped(mob/user)
 	. = ..()
-	REMOVE_MOVEMENT_MODIFIER(user, /datum/movement_modifier/mech_boots, src.type)
+	REMOVE_MOVEMENT_MODIFIER(user, /datum/movement_modifier/reagent/energydrink, src.type)
 
 /obj/item/clothing/shoes/white
 	name = "white shoes"
 	desc = "Protects you against biohazards that would enter your feet."
 	icon_state = "white"
-	permeability_coefficient = 0.05//25
+
+	setupProperties()
+		..()
+		setProperty("chemprot", 7)
 
 /obj/item/clothing/shoes/galoshes
 	name = "galoshes"
@@ -249,12 +258,21 @@
 	c_flags = NOSLIP
 	step_sound = "step_rubberboot"
 	step_priority = STEP_PRIORITY_LOW
-	permeability_coefficient = 0.05
+
+	setupProperties()
+		..()
+		setProperty("chemprot", 7)
 
 	torn
 		desc = "Rubber boots that would prevent slipping on wet surfaces, were they not all torn up. Like these are. Damn."
 		c_flags = null
-		permeability_coefficient = 1
+
+		setupProperties()
+			..()
+			delProperty("chemprot")
+
+	waders
+		name = "angler's waders"
 
 /obj/item/clothing/shoes/clown_shoes
 	name = "clown shoes"
@@ -268,7 +286,7 @@
 	var/list/crayons = list() // stonepillar's crayon project
 	var/max_crayons = 5
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/pen/crayon))
 			if (user.bioHolder.HasEffect("clumsy"))
 				var/obj/item/pen/crayon/C = W
@@ -290,7 +308,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (length(src.crayons) && src.loc == user)
 			if (!user.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>You aren't funny enough to do that. Wait, did the shoes just laugh at you?</span>")
@@ -303,7 +321,6 @@
 			return
 		return ..()
 
-
 /obj/item/clothing/shoes/clown_shoes/New()
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/tripsalot, list(SLOT_SHOES))
@@ -313,20 +330,22 @@
 	name = "flippers"
 	desc = "A pair of rubber flippers that improves swimming ability when worn."
 	icon_state = "flippers"
-	permeability_coefficient = 0.05
 	laces = LACES_NONE
 	step_sound = "step_flipflop"
 	step_priority = STEP_PRIORITY_LOW
 
 	New()
 		..()
+		setProperty("chemprot", 7)
 		setProperty("negate_fluid_speed_penalty",0.6)
+
+TYPEINFO(/obj/item/clothing/shoes/moon)
+	mats = 2
 
 /obj/item/clothing/shoes/moon
 	name = "moon shoes"
 	desc = "Recent developments in trampoline-miniaturization technology have made these little wonders possible."
 	icon_state = "moonshoes"
-	mats = 2
 
 	equipped(var/mob/user, var/slot)
 		..()
@@ -360,9 +379,16 @@
 	icon_state = "ziggy"
 
 /obj/item/clothing/shoes/sandal
+	name = "sandals"
+	desc = "Standard beach footwear, just in case you happen to find a space beach."
+	icon_state = "wizard"
+	laces = LACES_NONE
+	step_sound = "step_flipflop"
+	step_priority = STEP_PRIORITY_LOW
+
+/obj/item/clothing/shoes/sandal/magic
 	name = "magic sandals"
 	desc = "They magically stop you from slipping on magical hazards. It's not the mesh on the underside that does that. It's MAGIC. Read a fucking book."
-	icon_state = "wizard"
 	c_flags = NOSLIP
 	magical = 1
 	laces = LACES_NONE
@@ -370,12 +396,15 @@
 	step_priority = STEP_PRIORITY_LOW
 	duration_remove = 10 SECONDS
 
+	/// Subtype that wizards spawn with, and is in their vendor. Cows can wear them, unlike regular sandals (might also be useful in the future)
+/obj/item/clothing/shoes/sandal/magic/wizard
+	compatible_species = list("human", "cow")
+
 /obj/item/clothing/shoes/tourist
 	name = "flip-flops"
 	desc = "These cheap sandals don't look very comfortable."
 	icon_state = "tourist"
 	protective_temperature = 0
-	permeability_coefficient = 1
 	step_sound = "step_flipflop"
 	step_priority = STEP_PRIORITY_LOW
 
@@ -383,7 +412,7 @@
 		..()
 		setProperty("coldprot", 0)
 		setProperty("heatprot", 0)
-		setProperty("conductivity", 1)
+		delProperty("chemprot")
 
 /obj/item/clothing/shoes/detective
 	name = "worn boots"
@@ -394,19 +423,18 @@
 	name = "chef's clogs"
 	desc = "Sturdy shoes that minimize injury from falling objects or knives."
 	icon_state = "chef"
-	permeability_coefficient = 0.30
 	kick_bonus = 1
 	step_sound = "step_wood"
 	step_priority = STEP_PRIORITY_LOW
 	setupProperties()
 		..()
+		setProperty("chemprot", 7)
 		setProperty("meleeprot", 1)
 
 /obj/item/clothing/shoes/swat
 	name = "military boots"
 	desc = "Polished and very shiny military boots."
 	icon_state = "swat"
-	permeability_coefficient = 0.20
 	protective_temperature = 1250
 	step_sound = "step_military"
 	step_priority = STEP_PRIORITY_LOW
@@ -417,12 +445,14 @@
 		..()
 		setProperty("coldprot", 10)
 		setProperty("heatprot", 10)
+		setProperty("chemprot", 7)
 		setProperty("meleeprot", 1)
 
 /obj/item/clothing/shoes/swat/noslip
 	name = "hi-grip assault boots"
 	desc = "Specialist combat boots designed to provide enhanced grip and ankle stability."
 	icon_state = "swatheavy"
+	compatible_species = list("cow", "human")
 	c_flags = NOSLIP
 
 /obj/item/clothing/shoes/swat/heavy
@@ -443,9 +473,10 @@
 /obj/item/clothing/shoes/swat/knight // so heavy you can't get shoved!
 	name = "combat sabatons"
 	desc = "Massive, magnetic, slip-resistant armored footwear for syndicate super-heavies."
-	icon_state = "swatheavy"
+	icon_state = "knightboots"
 	magnetic = 1
 	c_flags = NOSLIP
+	compatible_species = list("cow", "human")
 
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"
@@ -484,7 +515,7 @@
 
 	New()
 		..()
-		src.tank = new /obj/item/tank/emergency_oxygen(src)
+		src.tank = new /obj/item/tank/mini_oxygen(src)
 
 	setupProperties()
 		..()
@@ -496,12 +527,12 @@
 		return
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tank))
 			if (src.tank)
 				boutput(user, "<span class='alert'>There's already a tank installed!</span>")
 				return
-			if (!istype(W, /obj/item/tank/emergency_oxygen))
+			if (!istype(W, /obj/item/tank/mini_oxygen))
 				boutput(user, "<span class='alert'>[W] doesn't fit!</span>")
 				return
 			boutput(user, "<span class='notice'>You install [W] into [src].</span>")
@@ -579,13 +610,13 @@
 /obj/item/clothing/shoes/scream
 	name = "scream shoes"
 	icon_state = "pink"
-	step_sound = list("sound/voice/screams/male_scream.ogg", "sound/voice/screams/mascream6.ogg", "sound/voice/screams/mascream7.ogg")
+	step_sound = list('sound/voice/screams/male_scream.ogg', 'sound/voice/screams/mascream6.ogg', 'sound/voice/screams/mascream7.ogg')
 	desc = "AAAAAAAAAAAAAAAAAAAAAAA"
 
 /obj/item/clothing/shoes/fart
 	name = "fart-flops"
 	icon_state = "tourist"
-	step_sound = list("sound/voice/farts/poo2.ogg", "sound/voice/farts/fart4.ogg", "sound/voice/farts/poo2_robot.ogg")
+	step_sound = list('sound/voice/farts/poo2.ogg', 'sound/voice/farts/fart4.ogg', 'sound/voice/farts/poo2_robot.ogg')
 	desc = "Do I really need to tell you what these do?"
 
 /obj/item/clothing/shoes/crafted

@@ -18,7 +18,8 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
+	power_usage = 250
 	var/locked = 1
 	var/open = 0
 	var/mainsupply = 1
@@ -83,7 +84,7 @@
 
 		t += "<FONT SIZE=+1><TABLE><tr><td colspan='2'><center>Main Supply<BR><FONT SIZE=+3><a href='?src=\ref[src];set_main=[mainsupply ? 0 : 1]'>[mainsupply ? "On" : "Off"]</A></center></font></td></tr>"
 
-		if(L.len > 0)
+		if(length(L) > 0)
 
 			var/side = 0
 
@@ -134,9 +135,7 @@
 		src.remove_dialog(usr)
 
 /obj/machinery/power/switchgear/process()
-	if(!(status & (NOPOWER|BROKEN)) )
-		use_power(250)
-
+	..()
 	src.updateDialog()
 
 /obj/machinery/power/switchgear/power_change()

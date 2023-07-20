@@ -12,7 +12,7 @@
 			if (D.signal_tag == src.signal_tag)
 				drone_list += D
 
-		if (drone_list.len < 1)
+		if (length(drone_list) < 1)
 			boutput(user, "<span class='alert'>No usable drones detected.</span>")
 			return
 
@@ -96,7 +96,7 @@
 			tally -= src.propulsion.speed
 		return tally
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(isweldingtool(W))
 			if (user.a_intent == INTENT_HARM)
 				if (W:try_weld(user,0,-1,0,0))
@@ -129,7 +129,7 @@
 			C.use(1)
 			src.health = clamp(src.health + 10, 1, src.health_max)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if (src.health >= 50)
 				boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 
@@ -148,7 +148,7 @@
 			if (src.health == 0)
 				src.visible_message("<span class='alert'><b>[src.name] is destroyed!</b></span>")
 				disconnect_user()
-				robogibs(src.loc,null)
+				robogibs(src.loc)
 				playsound(src.loc, src.sound_destroyed, 50, 2)
 				qdel(src)
 				return
@@ -184,7 +184,7 @@
 		if (use_delay && world.time < src.next_click)
 			return src.next_click - world.time
 
-		if (get_dist(src, target) > 0)
+		if (GET_DIST(src, target) > 0)
 			set_dir(get_dir(src, target))
 
 		var/reach = can_reach(target, src)
@@ -239,6 +239,7 @@
 			playsound(src.loc, beeps_n_boops[1], 30, 1)
 
 	emote(var/act)
+		..()
 		//var/param = null
 		if (findtext(act, " ", 1, null))
 			var/t1 = findtext(act, " ", 1, null)
@@ -322,7 +323,7 @@
 	icon_state = "frame-0"
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	var/construct_stage = 0
 	var/obj/item/device/radio/part_radio = null
 	var/obj/item/cell/part_cell = null
@@ -361,7 +362,7 @@
 			if(6)
 				. += "It looks almost finished, all that's left to add is extra optional components.\nWrench it together to activate it, or remove all parts and the power cell to deconstruct it."
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		switch(construct_stage)
 			if(3)
 				user.put_in_hand_or_drop(cable_type)
@@ -382,7 +383,7 @@
 			else
 				boutput(user, "You can't figure out what to do with it. Maybe a closer examination is in order.")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(isweldingtool(W))
 			if(W:try_weld(user, 1))
 				switch(construct_stage)

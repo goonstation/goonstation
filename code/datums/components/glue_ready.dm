@@ -9,6 +9,7 @@ TYPEINFO(/datum/component/glue_ready)
 	var/glue_removal_time
 
 /datum/component/glue_ready/Initialize(glue_duration=null, glue_removal_time=null)
+	. = ..()
 	if(!istype(src.parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	if(src.parent.GetComponent(/datum/component/glued))
@@ -18,10 +19,10 @@ TYPEINFO(/datum/component/glue_ready)
 	var/atom/movable/parent = src.parent
 	parent.add_filter("glue_ready_outline", 0, outline_filter(size=1, color="#e6e63c44"))
 	delayed_dry_up(glue_duration)
-	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/glue_thing_to_parent)
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/glue_parent_to_thing_afterattack) // won't do anything if not an item but it doesn't hurt
-	RegisterSignal(parent, COMSIG_ATOM_HITBY_THROWN, .proc/glue_thing_to_parent)
-	RegisterSignal(parent, COMSIG_MOVABLE_HIT_THROWN, .proc/glue_parent_to_thing_hit_thrown)
+	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(glue_thing_to_parent))
+	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(glue_parent_to_thing_afterattack)) // won't do anything if not an item but it doesn't hurt
+	RegisterSignal(parent, COMSIG_ATOM_HITBY_THROWN, PROC_REF(glue_thing_to_parent))
+	RegisterSignal(parent, COMSIG_MOVABLE_HIT_THROWN, PROC_REF(glue_parent_to_thing_hit_thrown))
 
 /datum/component/glue_ready/proc/delayed_dry_up(glue_duration)
 	set waitfor = FALSE
@@ -73,7 +74,7 @@ TYPEINFO(/datum/component/glue_ready)
 		return FALSE
 	if(istype(glued_to, /obj/machinery/door) || istype(glued_to, /obj/grille))
 		return FALSE
-	if(istype(glued_to, /mob/dead) || istype(glued_to, /mob/living/intangible) || istype(glued_to, /mob/living/seanceghost))
+	if(istype(glued_to, /mob/dead) || istype(glued_to, /mob/living/intangible) )
 		if(user)
 			boutput(user, "<span class='alert'>Your hand with [thing_glued] passes straight through \the [glued_to].</span>")
 		return FALSE
@@ -117,7 +118,7 @@ TYPEINFO(/datum/component/glue_ready)
 		T.visible_message("<span class='notice'>[user] glues [thing_glued] to [glued_to].</span>")
 	else
 		T.visible_message("<span class='notice'>[thing_glued] sticks to [glued_to].</span>")
-	logTheThing(log_user, null, "combat", "glued [ismob(thing_glued) ? constructTarget(thing_glued, "combat") : thing_glued] to [ismob(glued_to) ? constructTarget(glued_to, "combat") : glued_to] at [log_loc(glued_to)]")
+	logTheThing(LOG_COMBAT, log_user, "glued [ismob(thing_glued) ? constructTarget(thing_glued, "combat") : thing_glued] to [ismob(glued_to) ? constructTarget(glued_to, "combat") : glued_to] at [log_loc(glued_to)]")
 	qdel(src)
 
 /datum/component/glue_ready/proc/glue_thing_to_parent(atom/movable/parent, obj/item/item, user_or_datum_thrownthing)

@@ -91,7 +91,7 @@
 
 	var/num_common_products = 13 //how many of these to pick for sale
 
-	var/list/rare_products = list(/datum/commodity/contraband/radiojammer,/datum/commodity/contraband/stealthstorage,/datum/commodity/medical/injectorbelt,/datum/commodity/medical/injectormask,/datum/commodity/junk/voltron,/datum/commodity/laser_gun,/datum/commodity/relics/crown,/datum/commodity/contraband/egun,/datum/commodity/relics/armor,/datum/commodity/contraband/spareid,/datum/commodity/contraband/voicechanger,/datum/commodity/contraband/chamsuit,/datum/commodity/contraband/dnascram)
+	var/list/rare_products = list(/datum/commodity/contraband/radiojammer,/datum/commodity/contraband/stealthstorage,/datum/commodity/medical/injectorbelt,/datum/commodity/medical/injectormask,/datum/commodity/junk/voltron,/datum/commodity/laser_gun,/datum/commodity/relics/crown,/datum/commodity/contraband/egun,/datum/commodity/relics/armor,/datum/commodity/contraband/voicechanger,/datum/commodity/contraband/chamsuit,/datum/commodity/contraband/dnascram)
 	var/num_rare_products = 2 //how many of these to pick for sale
 
 	New()
@@ -163,7 +163,7 @@
 
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(..())
 			return
 		if(angry)
@@ -461,17 +461,16 @@
 		else if (href_list["card"])
 			if (src.scan) src.scan = null
 			else
-				var/obj/item/I = usr.equipped()
-				if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
-					if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
+				var/obj/item/card/id/id_card = get_id_card(usr.equipped())
+				if (istype(id_card))
 					boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
 					var/datum/db_record/account = null
-					account = FindBankAccountByName(I:registered)
+					account = FindBankAccountByName(id_card.registered)
 					if(account)
 						var/enterpin = usr.enter_pin("Card Reader")
-						if (enterpin == I:pin)
+						if (enterpin == id_card.pin)
 							boutput(usr, "<span class='notice'>Card authorized.</span>")
-							src.scan = I
+							src.scan = id_card
 						else
 							boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
 							src.scan = null

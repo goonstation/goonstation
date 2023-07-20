@@ -81,7 +81,7 @@
 				owner.changeStatus("weakened", 6 SECONDS)
 				animate(owner, alpha=255, time=3 SECONDS)
 
-				boutput(owner, "You no invisible.")
+				boutput(owner, "<b class='hint'>You reappear.</b>")
 		else if (points > MAX_POINTS)
 			points = MAX_POINTS
 
@@ -113,7 +113,7 @@
 	onAttach(var/datum/abilityHolder/H)
 		..()
 		if (src.unlock_message && src.holder && src.holder.owner)
-			boutput(src.holder.owner, __blue("<h3>[src.unlock_message]</h3>"))
+			boutput(src.holder.owner, "<span class='notice'><h3>[src.unlock_message]</h3></span>")
 		return
 
 	updateObject()
@@ -146,17 +146,17 @@
 			return 0
 
 		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, __red("You cannot use any powers in your current form."))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (can_cast_anytime && !isdead(M))
 			return 1
 		if (!can_act(M, 0))
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		//maybe have to be on kudzu to use power?
@@ -205,7 +205,7 @@
 	name = "benign kudzu"
 	desc = "A flowering subspecies of the kudzu plant that, is a non-invasive plant on space stations."
 	// invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = 'icons/misc/kudzu_plus.dmi'
@@ -237,7 +237,7 @@
 		..()
 
 	//mostly same as kudzu
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W) return
 		if (!user) return
 		var/dmg = 1
@@ -266,11 +266,11 @@
 		var/datum/abilityHolder/kudzu/HK = holder
 		if (!HK.stealthed)
 			HK.stealthed = 1
-			boutput(holder.owner, "You secrete nutriends to refract light.")
+			boutput(holder.owner, "<span class='hint'>You secrete nutrients to refract light.</span>")
 			animate(holder.owner, alpha=80, time=3 SECONDS)
 		else
 			HK.stealthed = 0
-			boutput(holder.owner, "You no invisible.")
+			boutput(holder.owner, "<span class='hint'>You reappear.</span>")
 			animate(holder.owner, alpha=255, time=3 SECONDS)
 		return 0
 
@@ -309,10 +309,9 @@
 			if (C.implant)
 				for (var/obj/item/implant/I in C.implant)
 					if (istype(I, /obj/item/implant/projectile))
-						boutput(C, "[I] falls out of you!")
+						boutput(C, "<span class='alert'>[I] falls out of you!</span>")
 						I.on_remove(C)
 						C.implant.Remove(I)
-						//del(I)
 						I.set_loc(get_turf(C))
 						continue
 
@@ -333,7 +332,7 @@
 	targeted = 0
 	target_anything = 0
 	interrupt_action_bars = 0
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	can_cast_anytime = 1
 	cast(atom/target)
 		if (..())
@@ -342,7 +341,7 @@
 		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
 		if (!message)
 			return
-		logTheThing("say", holder.owner, holder.owner.name, "[message]")
+		logTheThing(LOG_SAY, holder.owner, "[message]")
 		.= holder.owner.say_kudzu(message, holder)
 
 		return 0
@@ -436,7 +435,7 @@
 				S = new pick.unique_seed(holder.owner.loc)
 			else
 				S = new /obj/item/seed(holder.owner.loc,0)
-			S.generic_seed_setup(pick)
+			S.generic_seed_setup(pick, FALSE)
 			holder.owner.put_in_hand_or_drop(S)
 
 		return 0
@@ -511,7 +510,7 @@
 	cast()
 		var/mob/owner = holder?.owner
 		if (!istype(owner))
-			logTheThing("debug", null, null, "no owner for this kudzu ability. [src]")
+			logTheThing(LOG_DEBUG, null, "no owner for this kudzu ability. [src]")
 			return 1
 		//turn on
 		if (!active)
@@ -535,7 +534,7 @@
 					icon_state = "vine-1"
 					return 0	//we're done successfully
 				else
-					boutput(owner, "Something weird happened, you tried to pick up [vine], but no. Call 1-800-CODER.")
+					boutput(owner, "<h3 class='alert'>Something weird happened, you tried to pick up [vine], but no. Call 1-800-CODER.</span>")
 					return 1
 
 		//turn off
@@ -545,12 +544,8 @@
 			else
 				//if it's not in their hands, where it should be, check if it's in their contents, if not fail.
 				var/obj/item/kudzu/kudzumen_vine/V = locate(/obj/item/kudzu/kudzumen_vine) in holder?.owner.contents
-				if (istype(V))
+				if (V)
 					return attempt_vine_drop(V, owner)
-
-				else
-					boutput(owner, "Can't find your vine to put away. Call 1-800-CODER.")
-					return 1
 
 
 	//I know. success = 0 and failure = 1. Ask whoever wrote ability casts.
@@ -620,8 +615,8 @@
 			kudzu_controller = K
 			amount = length(K.kudzu)
 		else
-			boutput(usr, "messed up kudzu controller call 1-800-CODER")
-			logTheThing("debug", null, null, "Messed up kudzu controller for kudzuman")
+			boutput(usr, "<h3 class='alert'>Messed up kudzu controller call 1-800-CODER</h3>")
+			logTheThing(LOG_DEBUG, null, "Messed up kudzu controller for kudzuman")
 
 	disposing()
 		kudzu_controller = null
@@ -676,8 +671,8 @@
 	icon_state = "vine-item"
 	// inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	// item_state = "knife"
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
 	burn_type = 1
@@ -709,7 +704,7 @@
 			boutput(user, "<span class='alert'>[src] breaks apart in your hands.</span>")
 			qdel(src)
 
-	attack(mob/M as mob, mob/user as mob, def_zone, is_special = 0)
+	attack(mob/M, mob/user, def_zone, is_special = 0)
 		..()
 
 		if (prob(20))
@@ -741,7 +736,7 @@
 		src.vine_arm = vine_arm
 		src.creation_path = creation_path
 		if (!ispath(creation_path))
-			boutput(owner, "Invalid creation object path. Call 1-800-CODER")
+			boutput(owner, "<h3 class='alert'>Invalid creation object path. Call 1-800-CODER</span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		duration += extra_time
@@ -766,7 +761,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!iskudzuman(owner))
-			boutput(owner, "You're not a kudzuman, you can't bend the kudzu to your will!")
+			boutput(owner, "<span class='alert'>You're not a kudzuman, you can't bend the kudzu to your will!</span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -784,14 +779,4 @@
 //O is obj to be destroyed, W is obj used to destroy.
 //This is total shit too, but I'm in a hurry again. I'll be back, -Kyle
 /proc/destroys_kudzu_object(var/obj/O, var/obj/item/W as obj, var/mob/user)
-		var/destroyed = 0
-		if (istool(W, TOOL_CUTTING | TOOL_SAWING | TOOL_SCREWING | TOOL_SNIPPING | TOOL_WELDING)) destroyed = 1
-		else if (istype(W, /obj/item/axe)) destroyed = 1
-		else if (istype(W, /obj/item/circular_saw)) destroyed = 1
-		else if (istype(W, /obj/item/kitchen/utensil/knife)) destroyed = 1
-		else if (istype(W, /obj/item/scalpel)) destroyed = 1
-		else if (istype(W, /obj/item/sword)) destroyed = 1
-		else if (istype(W, /obj/item/saw)) destroyed = 1
-
-		return destroyed
-
+	return istool(W, TOOL_CUTTING | TOOL_SAWING | TOOL_SCREWING | TOOL_SNIPPING | TOOL_WELDING)

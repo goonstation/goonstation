@@ -1,4 +1,5 @@
-obj/effects/tatara
+
+/obj/effects/tatara
 	var/obj/spark_generator/sparks = new/obj/spark_generator
 
 	New()
@@ -8,14 +9,14 @@ obj/effects/tatara
 		sparks.particles.spawning = 0
 
 	proc/spark_up()
-		if(!ON_COOLDOWN(src,"spark_up",2.0 SECONDS))
+		if(!ON_COOLDOWN(src,"spark_up",2 SECONDS))
 			sparks.particles.spawning = 16
-			playsound(src, "sound/impact_sounds/burn_sizzle.ogg", 30)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 30)
 			SPAWN(1 SECONDS)
 				sparks.particles.spawning = 0
 
-obj/effects/welding
-	appearance_flags = RESET_COLOR | RESET_ALPHA
+/obj/effects/welding
+	appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
 	vis_flags = VIS_INHERIT_DIR
 	var/emitters = list(new/obj/spark_generator, new/obj/spark_generator/flame)
 	icon = 'icons/effects/fire.dmi'
@@ -40,7 +41,7 @@ obj/effects/welding
 		emitters = list(new/obj/spark_generator/directed, new/obj/spark_generator/flame)
 
 
-obj/spark_generator
+/obj/spark_generator
 	particles = new/particles/spark
 	plane = PLANE_NOSHADOW_ABOVE
 	alpha = 200
@@ -55,7 +56,7 @@ obj/spark_generator
 		particles = new/particles/spark/directed
 
 
-particles/spark
+/particles/spark
 	width = 32     // 500 x 500 image to cover a moderately sized map
 	height = 32
 	count = 32    // 2500 particles
@@ -136,6 +137,11 @@ particles/spark
 	friction = generator("num", 0, 0, NORMAL_RAND)
 	drift = generator("box", list(-0.1,-0.1,0), list(0.1,0.1,0), UNIFORM_RAND)
 
+/particles/arcfiend/robojumper
+	spawning = 2
+	count = 10
+	position = generator("circle", -20, 20, NORMAL_RAND)
+
 /particles/stink_lines
 	icon = 'icons/effects/particles.dmi'
 	icon_state = list("line")
@@ -148,3 +154,90 @@ particles/spark
 	friction = generator("num", 0.1, 0.3, NORMAL_RAND)
 	drift = generator("box", list(0.1,0.05,0), list(-0.1,0,0), UNIFORM_RAND)
 	rotation = generator("num", -45, 45, UNIFORM_RAND)
+
+/// Used for bloodlings, maybe would be cool for other stuff!
+/particles/bloody_aura
+	icon = 'icons/effects/particles.dmi'
+	icon_state = list("8x8circle")
+	color = generator("color", "#440020", "#86090B", UNIFORM_RAND)
+	spawning = 0.5
+	count = 40
+	lifespan = 15
+	fade = 6
+	fadein = 2
+	position = generator("circle", 6, 8, NORMAL_RAND)
+	scale = list(1.2, 1.2)
+	grow = list(-0.05, -0.05)
+	gravity = list(0, 1, 0)
+	friction = 0.5
+	drift = generator("vector", list(0.25,0,0), list(-0.25,0,0), UNIFORM_RAND)
+
+/particles/healing
+	icon = 'icons/effects/particles.dmi'
+	icon_state = list("plus")
+	color = generator("color", "#63c94e", "#368826", UNIFORM_RAND)
+	spawning = 0.75
+	lifespan = 15
+	fade = 6
+	fadein = 2
+	position = generator("circle", 6, 8, NORMAL_RAND)
+	scale = list(1.2, 1.2)
+	grow = list(-0.05, -0.05)
+	gravity = list(0, 1, 0)
+	friction = 0.5
+	drift = generator("vector", list(0.25,0,0), list(-0.25,0,0), UNIFORM_RAND)
+
+/particles/healing/flock
+	color = generator("color", "#89e2b8", "#5aeeb0", UNIFORM_RAND)
+
+/// Used for Lavender reagent
+/particles/petals
+	icon = 'icons/effects/particles.dmi'
+	icon_state = list("petal")
+	color = generator("color", "#e268ff", "#9a68ff", UNIFORM_RAND)
+	spawning = 0.2
+	count = 40
+	lifespan = 12
+	fade = 6
+	fadein = 2
+	position = generator("box", list(-15,15,0), list(12,-12,0), NORMAL_RAND)
+	scale = list(1.2, 1.2)
+	grow = list(-0.05, -0.05)
+	gravity = list(0, 1, 0)
+	spin =  generator("num", 10, -10, NORMAL_RAND)
+	friction = 0.5
+	drift = generator("vector", list(0.25,0,0), list(-0.25,0,0), UNIFORM_RAND)
+
+/particles/flintlock_smoke
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "smoke"
+	color = "#ffffff"
+	width = 200
+	height = 200
+	spawning = 10
+	count = 10
+	lifespan = 50
+	fade = 50
+	position = list(0, 0, 0)
+	friction = generator("num", 0.9, 0.4, UNIFORM_RAND)
+	drift = generator("box", list(1,1,0), list(-1,-1,0), UNIFORM_RAND)
+	scale = list(0.15, 0.15)
+	rotation = generator("num", 0, 360, UNIFORM_RAND)
+	grow = generator("vector", list(0.08,0.08,0), list(0.03,0.03,0), UNIFORM_RAND)
+	fadein = 5
+	spawning = 20
+
+/obj/effects/flintlock_smoke
+	plane = PLANE_NOSHADOW_ABOVE
+	particles = new/particles/flintlock_smoke
+
+	New()
+		..()
+		SPAWN(0.5 SECONDS)
+			src.particles?.spawning = 0
+			sleep(src.particles?.lifespan)
+			qdel(src)
+
+	// Takes x and y of a normalised vector to set direction of smoke.
+	proc/setdir(var/dir_x, var/dir_y)
+		particles.velocity = generator("box", list(50*dir_x - 0.5, 50*dir_y - 0.5, 0), list(40*dir_x + 0.5, 40*dir_y + 0.5, 0), UNIFORM_RAND)

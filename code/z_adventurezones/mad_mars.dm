@@ -86,13 +86,13 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(3.0)
+			if(3)
 				src.icon_state = "placeholder-ex1"
 				return
-			if(2.0)
+			if(2)
 				src.icon_state = "placeholder-ex2"
 				return
-			if(1.0)
+			if(1)
 				src.icon_state = "placeholder-ex3"
 				return
 		return
@@ -152,7 +152,7 @@
 	desc = "A statue of Kingsway Systems' Servotron"
 	icon = 'icons/misc/mars_outpost.dmi'
 	icon_state = "statue_robot"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/robot/servotron/old
@@ -160,7 +160,7 @@
 	desc = "A statue of Kingsway Systems' Servotron"
 	icon = 'icons/misc/mars_outpost.dmi'
 	icon_state = "statue_oldrobot"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/robot/servotron/older
@@ -168,7 +168,7 @@
 	desc = "A statue of Kingsway Systems' Servotron"
 	icon = 'icons/misc/mars_outpost.dmi'
 	icon_state = "statue_olderrobot"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 
@@ -176,7 +176,7 @@
 	name = "pedestal"
 	icon = 'icons/misc/mars_outpost.dmi'
 	icon_state = "statue_pedestal"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 
@@ -184,7 +184,7 @@
 	name = "robot arm"
 	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "marsfactory_arm"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	pixel_x = -22
 	pixel_y = 5
@@ -198,7 +198,7 @@
 	density = 1
 	var/has_beeped = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(has_beeped)
 			return ..()
 		else
@@ -262,7 +262,7 @@
 	desc = "A billboard for some backwater planetary outpost. How old is this?"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "mars_sign1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	pixel_x = -32
 
@@ -270,7 +270,7 @@
 	name = "dirt"
 	desc = "That isn't any old pile of dirt, it's martian dirt!"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "mars_dirt"
 
@@ -284,13 +284,13 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	item_state = "mars_blue"
 	c_flags = SPACEWEAR
-	permeability_coefficient = 0.1
 	protective_temperature = 700
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 20)
 		setProperty("heatprot", 80)
+		setProperty("chemprot", 20)
 
 /obj/item/clothing/head/helmet/mars
 	name = "ME-3 Helmet "
@@ -298,7 +298,7 @@
 	icon_state = "mars"
 	item_state = "mars"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
-	see_face = 0.0
+	see_face = TRUE
 
 
 /obj/critter/marsrobot
@@ -325,7 +325,7 @@
 
 	seek_target()
 		if(active)
-			src.anchored = 0
+			src.anchored = UNANCHORED
 			for (var/mob/living/C in hearers(src.seekrange,src))
 				if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 				if (iscarbon(C) && !src.atkcarbon) continue
@@ -379,10 +379,10 @@
 			boutput(O, "<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"")
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(active) ..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(active) ..()
 
 	CritterDeath()
@@ -397,14 +397,14 @@
 	icon_state = "rover_puzzle_base"
 	desc = "It looks like this rover was never finished."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/wheel = 0
 	var/oxy = 0
 	var/battery = 0
 	var/glass = 0
 	var/motherboard = 0
 
-	attackby(obj/item/P as obj, mob/user as mob)
+	attackby(obj/item/P, mob/user)
 		if (istype(P, /obj/item/mars_roverpart))
 			if ((istype(P, /obj/item/mars_roverpart/wheel))&&(!wheel))
 				boutput(user, "<span class='notice'>You attach the wheel to the rover's chassis.</span>")
@@ -470,6 +470,9 @@
 				pickedup = 1
 
 
+TYPEINFO(/obj/vehicle/marsrover)
+	mats = 8
+
 /obj/vehicle/marsrover
 	name = "Rover"
 	desc = "A rover designed to let researchers explore hazardous planets safely and efficiently. It looks pretty old."
@@ -477,7 +480,6 @@
 	rider_visible = 0
 	layer = MOB_LAYER + 1
 	sealed_cabin = 1
-	mats = 8
 
 /obj/vehicle/marsrover/proc/update()
 	if(rider)
@@ -485,7 +487,7 @@
 	else
 		icon_state = "marsrover"
 
-/obj/vehicle/marsrover/eject_rider(var/crashed, var/selfdismount)
+/obj/vehicle/marsrover/eject_rider(var/crashed, var/selfdismount, ejectall=TRUE)
 	var/mob/rider = src.rider
 	..()
 	rider.pixel_y = 0
@@ -566,7 +568,7 @@
 		eject_rider(0, 1)
 	return
 
-/obj/vehicle/marsrover/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/marsrover/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return
@@ -592,65 +594,38 @@
 /area/marsoutpost
 	name = "Abandoned Outpost"
 	icon_state = "red"
-	var/sound/mysound = null
 	sound_group = "mars"
+	sound_loop = 'sound/ambience/loop/Mars_Interior.ogg'
+	sound_loop_vol = 60
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/foreground/dust,
+		/atom/movable/screen/parallax_layer/foreground/dust/sparse,
+		)
+	occlude_foreground_parallax_layers = TRUE
 
-	New()
-		..()
-		var/sound/S = new/sound()
-		mysound = S
-		S.file = 'sound/ambience/loop/Mars_Interior.ogg'
-		S.repeat = 1
-		S.wait = 0
-		S.channel = 123
-		S.volume = 60
-		S.priority = 255
-		S.status = SOUND_UPDATE
-		SPAWN(1 SECOND) process()
+/area/marsoutpost/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-	Entered(atom/movable/Obj,atom/OldLoc)
-		..()
-		if(ismob(Obj))
-			if(Obj:client)
-				mysound.status = SOUND_UPDATE
-				Obj << mysound
-		return
+/area/marsoutpost/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
 
-	Exited(atom/movable/Obj)
-		..()
-		if(ismob(Obj))
-			if(Obj:client)
-				mysound.status = SOUND_PAUSED | SOUND_UPDATE
-				Obj << mysound
+/area/marsoutpost/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick(
+			'sound/ambience/nature/Mars_Rockslide1.ogg',\
+			'sound/ambience/industrial/MarsFacility_MovingEquipment.ogg',\
+			'sound/ambience/nature/Mars_Rockslide2.ogg',\
+			'sound/ambience/industrial/MarsFacility_Glitchy.ogg')
 
-	proc/process()
-		var/sound/S = null
-		var/sound_delay = 0
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(6 SECONDS)
-			if (current_state == GAME_STATE_PLAYING)
-				if(prob(10))
-					S = sound(file=pick('sound/ambience/nature/Mars_Rockslide1.ogg','sound/ambience/industrial/MarsFacility_MovingEquipment.ogg','sound/ambience/nature/Mars_Rockslide2.ogg','sound/ambience/industrial/MarsFacility_Glitchy.ogg'))
-					sound_delay = rand(0, 50)
-				else
-					S = null
-					continue
-
-				for(var/mob/living/carbon/human/H in src)
-					if(H.client)
-						mysound.status = SOUND_UPDATE
-						H << mysound
-						if(S)
-							SPAWN(sound_delay)
-								playsound(H, S, 70, channel = VOLUME_CHANNEL_AMBIENT)
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 60)
 
 /area/marsoutpost/duststorm
 	name = "Barren Planet"
 	icon_state = "yellow"
-
-	New()
-		..()
-		overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "dustverlay", layer = EFFECTS_LAYER_BASE)
+	occlude_foreground_parallax_layers = FALSE
 
 	Entered(atom/movable/O)
 		..()
@@ -668,6 +643,7 @@
 
 
 /area/marsoutpost/vault
+	name = "Abandoned Vault"
 	icon_state = "red"
 
 /obj/critter/gunbot/heavy
@@ -716,7 +692,7 @@
 
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		if(overheat == 10)
 			speak("WARNING : OVERHEATING")
 			sleep(5 SECONDS)
@@ -768,7 +744,7 @@
 	pixel_y = 8
 	var/triggered = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (..() || (status & (NOPOWER|BROKEN)))
 			return
 

@@ -26,7 +26,7 @@
 					src.throw_impact(A, thr)
 					. = TRUE
 
-/atom/movable/proc/throw_begin(atom/target)
+/atom/movable/proc/throw_begin(atom/target, turf/thrown_from, mob/thrown_by)
 
 // when an atom gets hit by a thrown object, returns the sound to play
 /atom/proc/hitby(atom/movable/AM, datum/thrown_thing/thr=null)
@@ -37,26 +37,30 @@
 		src.pixel_x = text2num(params["icon-x"]) - 16
 		src.pixel_y = text2num(params["icon-y"]) - 16
 
+/atom/movable/proc/overwrite_impact_sfx(original_sound, hit_atom, thr)
+	. = original_sound
+
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrown_thing/thr=null)
 	if(src.disposed)
-		return
+		return TRUE
 	var/area/AR = get_area(hit_atom)
 	if(AR?.sanctuary)
-		return
+		return TRUE
 	src.material?.triggerOnAttack(src, src, hit_atom)
 	hit_atom.material?.triggerOnHit(hit_atom, src, null, 2)
 	for(var/atom/A in hit_atom)
 		A.material?.triggerOnAttacked(A, src, hit_atom, src)
 
 	if(!hit_atom)
-		return
+		return TRUE
 
-	reagents?.physical_shock(20)
+	src.reagents?.physical_shock(20)
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_HIT_THROWN, hit_atom, thr))
 		return
 	if(SEND_SIGNAL(hit_atom, COMSIG_ATOM_HITBY_THROWN, src, thr))
 		return
 	var/impact_sfx = hit_atom.hitby(src, thr)
+	impact_sfx = src.overwrite_impact_sfx(impact_sfx,hit_atom, thr)
 	if(src && impact_sfx)
 		playsound(src, impact_sfx, 40, 1)
 
@@ -73,7 +77,7 @@
 	..()
 
 /atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
-			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
+			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
 	SHOULD_CALL_PARENT(TRUE)
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 	if(!throwing_controller) return
@@ -91,9 +95,14 @@
 			var/mob/M = src
 			M.force_laydown_standup()
 
+	if (istype(src.loc, /obj/vehicle))
+		var/obj/vehicle/V = src.loc
+		if (V.can_eject_items)
+			src.set_loc(get_turf(V))
+
 	src.last_throw_x = src.x
 	src.last_throw_y = src.y
-	src.throw_begin(target)
+	src.throw_begin(target, thrown_from, thrown_by)
 
 	src.throwforce += bonus_throwforce
 

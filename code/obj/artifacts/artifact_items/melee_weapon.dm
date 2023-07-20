@@ -4,7 +4,7 @@
 	associated_datum = /datum/artifact/melee
 	click_delay = COMBAT_CLICK_DELAY
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact

@@ -24,6 +24,8 @@
 	var/smashes_shit = 1
 	var/list/alert_sounds = list('sound/machines/whistlealert.ogg', 'sound/machines/whistlebeep.ogg')
 
+	faction = FACTION_SYNDICATE
+
 	New()
 		..()
 		setup_loot_table()
@@ -55,6 +57,7 @@
 		loot_table = list(/obj/item/device/prox_sensor = 25)
 
 	death(var/gibbed)
+		. = ..()
 		if (dying)
 			return
 		dying = 1
@@ -116,7 +119,7 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/gun/phaser
+		HH.limb = new /datum/limb/gun/energy/phaser
 		HH.name = "S-1 Light Anti-Personnel Energy Sling"
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handphs"

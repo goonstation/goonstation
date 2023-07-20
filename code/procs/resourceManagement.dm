@@ -8,7 +8,7 @@
 /proc/resource(file, group)
 	if (!file) return
 	if (cdn)
-		. = "[cdn]/[file]?v=[vcs_revision]"
+		. = "[cdn]/[file]?v=" + VCS_REVISION
 	else
 		if (findtext(file, "{{resource")) //Got here via the dumb regex proc (local only)
 			file = group
@@ -36,7 +36,7 @@
 
 			//Actually get the file contents from the CDN
 			var/datum/http_request/request = new()
-			request.prepare(RUSTG_HTTP_METHOD_GET, "[cdn]/[path]?v=[vcs_revision]", "", "")
+			request.prepare(RUSTG_HTTP_METHOD_GET, "[cdn]/[path]?v=" + VCS_REVISION, "", "")
 			request.begin_async()
 			UNTIL(request.is_complete())
 			var/datum/http_response/response = request.into_response()
@@ -88,8 +88,8 @@
 
 	disableResourceCache = !disableResourceCache
 	boutput(usr, "<span class='notice'>Toggled the resource cache [disableResourceCache ? "off" : "on"]</span>")
-	logTheThing("admin", usr, null, "toggled the resource cache [disableResourceCache ? "off" : "on"]")
-	logTheThing("diary", usr, null, "toggled the resource cache [disableResourceCache ? "off" : "on"]", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled the resource cache [disableResourceCache ? "off" : "on"]")
+	logTheThing(LOG_DIARY, usr, "toggled the resource cache [disableResourceCache ? "off" : "on"]", "admin")
 	message_admins("[key_name(usr)] toggled the resource cache [disableResourceCache ? "off" : "on"]")
 
 
@@ -165,11 +165,11 @@
 			if (copytext(newPath, -1) != "/" && fexists(newPath)) //"server" already has this file? apparently that causes ~problems~
 				fdel(newPath)
 			if (text2file(parsedFile, newPath)) //make a new file with the parsed text because byond fucking sucks at sending text as anything besides html
-				src << browse(file(newPath), "file=[r];display=0")
+				src << browse_rsc(file(newPath), r)
 			else
 				world.log << "RESOURCE ERROR: Failed to convert text in '[r]' to a temporary file"
 		else //file is binary just throw it at the client as is
-			src << browse(fileRef, "file=[r];display=0")
+			src << browse_rsc(fileRef, r)
 		if(i++ % 100 == 0)
 			sleep(1)
 

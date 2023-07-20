@@ -4,13 +4,13 @@
  * @license MIT
  */
 
-import { createLogger } from 'common/logging.js';
 import fs from 'fs';
 import os from 'os';
 import { basename } from 'path';
+import { DreamSeeker } from './dreamseeker.js';
+import { createLogger } from './logging.js';
 import { resolveGlob, resolvePath } from './util.js';
 import { regQuery } from './winreg.js';
-import { DreamSeeker } from './dreamseeker.js';
 
 const logger = createLogger('reloader');
 
@@ -67,7 +67,7 @@ export const findCacheRoot = async () => {
 
 const onCacheRootFound = cacheRoot => {
   logger.log(`found cache at '${cacheRoot}'`);
-  // Plant a dummy
+  // Plant a dummy browser window file, we'll be using this to avoid world topic. For byond 514.
   fs.closeSync(fs.openSync(cacheRoot + '/dummy', 'w'));
 };
 
@@ -93,6 +93,8 @@ export const reloadByondCache = async bundleDir => {
     // Clear garbage
     const garbage = await resolveGlob(cacheDir, './*.+(bundle|chunk|hot-update).*');
     try {
+      // Plant a dummy browser window file, we'll be using this to avoid world topic. For byond 515.
+      fs.closeSync(fs.openSync(cacheDir + '/dummy', 'w'));
       for (let file of garbage) {
         fs.unlinkSync(file);
       }

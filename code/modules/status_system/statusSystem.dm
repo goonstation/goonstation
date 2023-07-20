@@ -131,7 +131,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		setStatus(statusId, (isnull(S.maxDuration) ? (S.duration + duration):(min(S.duration + duration, S.maxDuration))), optional)
 		return S
 	else
-		if(duration > 0)
+		if(isnull(duration) || duration > 0)
 			return setStatus(statusId, (isnull(globalInstance.maxDuration) ? (duration):(min(duration, globalInstance.maxDuration))), optional)
 
 /**
@@ -209,7 +209,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 
 				if (duration)
 					duration = localInstance.duration + localInstance.modify_change(duration - localInstance.duration)
-					if (!duration) //if we ended up reducing it to 0, just clear it without ever applying
+					if (duration <= 0) //if we ended up reducing it to 0, just clear it without ever applying
 						localInstance.owner = null
 						return null
 

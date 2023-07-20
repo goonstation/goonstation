@@ -8,7 +8,7 @@
 	desc = "Jane Goodall is crying."
 	density = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 		src.visible_message("<B>[src]</B> screams!",1)
 		if (narrator_mode)
@@ -52,7 +52,7 @@
 	desc = ""
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "oldai_mem-0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = EFFECTS_LAYER_UNDER_1
 	pixel_x = -32
@@ -69,7 +69,7 @@
 				break
 			if(!ai) qdel(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!ai) return
 		if(!ai.on) return
 		if(!ai.ready_for_tapes) return
@@ -82,7 +82,7 @@
 			ai.tapes_loaded--
 			src.loaded = 0
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(!ai) return
 		if (istype(W, /obj/item/aiboss_tape/))
 			if(src.loaded)
@@ -119,7 +119,7 @@
 	desc = "Huh? You've never seen this type of computer before. Not even in any history books."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "oldai_01"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = EFFECTS_LAYER_UNDER_1
 	pixel_x = -32
@@ -151,7 +151,7 @@
 		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"")
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(istype(W,/obj/item/paper/brad_punchcard))
 
 			if(src.teaser_enabled) return
@@ -194,8 +194,9 @@
 
 	proc/do_teaser()
 		src.ready_for_tapes = 0
-		for(var/mob/O in hearers(src, null))
-			O << csound("sound/misc/satanellite_failedboot.ogg")
+		// for(var/mob/O in hearers(src, null))
+		// 	O << csound('sound/misc/satanellite_failedboot.ogg')
+		playsound(src, 'sound/misc/satanellite_failedboot.ogg', 80,1)
 		src.change_face("blink")
 		sleep(2 SECONDS)
 		src.change_face("static")
@@ -248,8 +249,9 @@
 			do_teaser()
 		else
 			src.change_face("static")
-			for(var/mob/O in hearers(src, null))
-				O << csound("sound/misc/satanellite_bootsignal.ogg")
+			// for(var/mob/O in hearers(src, null))
+			// 	O << csound('sound/misc/satanellite_bootsignal.ogg')
+			playsound(src, 'sound/misc/satanellite_bootsignal.ogg', 80,1)
 			sleep(17 SECONDS)
 			if(!on) return
 			src.ready_for_tapes = 1
@@ -288,23 +290,27 @@
 		switch(tapeno)
 			if(1)
 				src.change_face("static")
-				for(var/mob/O in hearers(src, null))
-					O << csound("sound/misc/satanellite_signal01.ogg")
+				// for(var/mob/O in hearers(src, null))
+				// 	O << csound('sound/misc/satanellite_signal01.ogg')
+				playsound(src, 'sound/misc/satanellite_signal01.ogg', 80,1)
 				sleep(69 SECONDS)
 			if(2)
 				src.change_face("static")
-				for(var/mob/O in hearers(src, null))
-					O << csound("sound/misc/satanellite_signal02.ogg")
+				// for(var/mob/O in hearers(src, null))
+				// 	O << csound('sound/misc/satanellite_signal02.ogg')
+				playsound(src, 'sound/misc/satanellite_signal02.ogg', 80,1)
 				sleep(69 SECONDS)
 			if(4)
 				src.change_face("static")
-				for(var/mob/O in hearers(src, null))
-					O << csound("sound/misc/satanellite_signal04.ogg")
+				// for(var/mob/O in hearers(src, null))
+				// 	O << csound('sound/misc/satanellite_signal04.ogg')
+				playsound(src, 'sound/misc/satanellite_signal04.ogg', 80,1)
 				sleep(69 SECONDS)
 			if(420)
 				src.change_face("static")
-				for(var/mob/O in hearers(src, null))
-					O << csound("sound/misc/satanellite_signal420.ogg")
+				// for(var/mob/O in hearers(src, null))
+				// 	O << csound('sound/misc/satanellite_signal420.ogg')
+				playsound(src, 'sound/misc/satanellite_signal420.ogg', 80,1)
 				sleep(69 SECONDS)
 		tapes_loaded++
 		src.change_face("dot")
@@ -343,7 +349,7 @@
 	info = {"<h3 style="border-bottom: 1px solid black; width: 80%;">Kingsway Systems LTD</h3>
 			<tt>
 			<br>Hello.
-			<br>We have recieved your order and will be sending out a shuttle containing the supplies that were requested by the R&D team right away.
+			<br>We have received your order and will be sending out a shuttle containing the supplies that were requested by the R&D team right away.
 			<br>We hope that your research is going well. Our moles have reported that our competitor's 'Asimov' line of systems will be announced within a few weeks.
 			<br>
 			<br>David Holman
@@ -357,7 +363,7 @@
 	info = {"<h3 style="border-bottom: 1px solid black; width: 80%;">Kingsway Systems LTD</h3>
 			<tt>
 			<br>Hello.
-			<br>Did you recieve the supplies? We've yet to have recieved any confirmation from our shipping company.
+			<br>Did you receive the supplies? We've yet to have received any confirmation from our shipping company.
 			<br>We hope you'll get back to us soon.
 			<br>
 			<br>David Holman

@@ -33,8 +33,7 @@
 		if(combined_heat_capacity > 0)
 			var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*air_contents.temperature
 			air_contents.temperature = combined_energy/combined_heat_capacity
-
-		//todo: have current temperature affected. require power to bring down current temperature again
+			use_power(round(abs(old_temperature-air_contents.temperature)), ENVIRON) // watt per degree kelvin changed
 
 		if(abs(old_temperature-air_contents.temperature) > 1 && network)
 			network.update = 1

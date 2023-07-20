@@ -60,7 +60,7 @@
 
 	New()
 		if (prob(10))
-			src.initial_reagents["grognardium"] = 5
+			src.initial_reagents["rum"] = 5
 		..()
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater
@@ -177,10 +177,9 @@
 /obj/item/reagent_containers/food/drinks/water
 	name = "water bottle"
 	desc = "I wonder if this is still fresh?"
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "bottlewater"
-	item_state = "contliquid"
-	initial_volume = 50
+	icon_state = "water"
+	item_state = "water"
+	initial_volume = 25
 	initial_reagents = "water"
 
 /obj/item/reagent_containers/food/drinks/mate
@@ -206,7 +205,7 @@
 		yerba_left -= water_amount
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/yerba))
 			src.icon_state = "mate"
 			yerba_left = 100
@@ -247,6 +246,52 @@
 	can_recycle = FALSE
 	initial_reagents = list("chickensoup"=30)
 
+/obj/item/reagent_containers/food/drinks/fruitmilk
+	name = "Creaca's Fruit Milk "
+	desc = "Milk and 'fruit' of undetermined origin; finally, together at last."
+	icon_state = "fruitmilk"
+	initial_volume = 50
+	can_recycle = FALSE
+	initial_reagents = list("milk"=20)
+
+	New()
+		switch(rand(1,10))
+			if (1)
+				src.name += "Synthetic Tropical Dawn flavor"
+				src.initial_reagents["juice_pineapple"] = 30
+			if (2)
+				src.name += "Changing Cherry Red flavor"
+				src.initial_reagents["juice_cherry"] = 30
+			if (3)
+				src.name += "Curdled Lemon Twist flavor"
+				src.initial_reagents["juice_lemon"] = 30
+			if (4)
+				src.name += "Earth Dreamer Lime flavor"
+				src.initial_reagents["juice_lime"] = 30
+			if (5)
+				src.name += "Odyssey Orange flavor"
+				src.initial_reagents["juice_orange"] = 30
+			if (6)
+				src.name += "Strawberry and Cream flavor"
+				src.initial_reagents["juice_strawberry"] = 30
+			if (7)
+				src.name += "Seasonal Peach Blossom flavor"
+				src.initial_reagents["juice_peach"] = 30
+			if (8)
+				src.name += "Surprise Mystery flavor"
+				src.initial_reagents["juice_pickle"] = 20
+				src.initial_reagents["neurodepressant"] = 5
+				src.initial_reagents["msg"] = 5
+			if (9)
+				src.name += "Little Soups flavor"
+				src.initial_reagents["juice_tomato"] = 30
+			if (10)
+				src.name += "Artifical Autumn flavor"
+				src.initial_reagents["juice_pumpkin"] = 30
+
+		..()
+
+
 /obj/item/reagent_containers/food/drinks/weightloss_shake
 	name = "Weight-Loss Shake"
 	desc = "A shake designed to cause weight loss.  The package proudly proclaims that it is 'tapeworm free.'"
@@ -266,15 +311,19 @@
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
 	can_chug = 0
+	splash_all_contents = FALSE
+	incompatible_with_chem_dispensers = TRUE
+	amount_per_transfer_from_this = 0
 	initial_reagents = list("cola"=20,"VHFCS"=10)
-	var/is_sealed = 1 //can you drink out of it?
+	is_sealed = TRUE
 	var/standard_override //is this a random cola or a standard cola (for crushed icons)
+	var/shaken = FALSE //sets to TRUE on *twirl emote
 
 	New()
 		..()
 		setup_soda()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (is_sealed)
 			boutput(user, "<span class='alert'>You can't drink out of a sealed can!</span>") //idiot
 			return
@@ -283,10 +332,19 @@
 	attack_self(mob/user as mob)
 		var/drop_this_shit = 0 //i promise this is useful
 		if (src.is_sealed)
-			user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			is_sealed = 0
 			can_chug = 1
-			playsound(src.loc, "sound/items/can_open.ogg", 50, 1)
+			splash_all_contents = TRUE
+			incompatible_with_chem_dispensers = FALSE
+			amount_per_transfer_from_this = 5
+			playsound(src.loc, 'sound/items/can_open.ogg', 50, 1)
+			if (src.shaken)
+				src.reagents.reaction(user)
+				src.reagents.clear_reagents()
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+				user.visible_message("<span class='notice'>[user] pops the tab on \the [src] and is sprayed with the contents!</span>", "<span class='notice'>You pop \the [src] open and are immediatly sprayed with it's contents. [pick("FUCK", "DAMMIT", "SHIT")]!</span>")
+			else
+				user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			return
 		if (!src.reagents || !src.reagents.total_volume)
 			var/zone = user.zone_sel.selecting
@@ -305,6 +363,10 @@
 				user.put_in_hand_or_drop(C)
 			qdel(src)
 
+	is_open_container()
+		return !is_sealed
+
+
 	proc/setup_soda() // made to be overridden, so that the Spess-Pepsi/Space-Coke debacle can continue
 		if (prob(50)) // without having to change the Space-Cola path
 			src.icon_state = "cola-2-small"
@@ -313,6 +375,7 @@
 	name = "crushed can"
 	desc = "This can's been totally crushed!"
 	icon = 'icons/obj/foodNdrink/can.dmi'
+	w_class = W_CLASS_TINY
 
 	proc/crush_can(var/name, var/icon_state)
 		src.name = "crushed [name]"
@@ -327,7 +390,7 @@
 		src.icon_state = "crushed-[iconsplit[2]]"
 
 /obj/item/reagent_containers/food/drinks/cola/random
-	name = "space cola"
+	name = "off-brand space cola"
 	desc = "You don't recognise this cola brand at all."
 	icon = 'icons/obj/foodNdrink/can.dmi'
 	heal_amt = 1
@@ -462,7 +525,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 			reagents.add_reagent("cryostylane", 5)
 		reagents.add_reagent("water", 25)
 		reagents.add_reagent("VHFCS", 5)
-		reagents.add_reagent(pick("methamphetamine", "crank", "space_drugs", "cat_drugs", "coffee"), 5)
+		reagents.add_reagent(pick("methamphetamine", "crank", "space_drugs", "catdrugs", "coffee"), 5)
 		for(var/i=0; i<3; i++)
 			reagents.add_reagent(pick("beff","ketchup","eggnog","yuck","chocolate","vanilla","cleaner","capsaicin","toxic_slurry","luminol","urine","nicotine","weedkiller","venom","jenkem","ectoplasm"), 5)
 

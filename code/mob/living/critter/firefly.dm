@@ -11,6 +11,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 	hand_count = 2
 	icon = 'icons/mob/insect.dmi'
 	icon_state = "firefly"
+	blood_id = "hemolymph"
 	var/light_color = "#ADFF2F"
 	var/image/bulb
 	var/image/bulb_light
@@ -64,7 +65,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 
 		hotkey("walk")
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		// Move to TYPEINFO if more containers are whitelisted, k thx
 		if(istype(W, /obj/item/reagent_containers/glass/jar) || istype(W, /obj/item/reagent_containers/glass/beaker/large))
 			W.AddComponent(/datum/component/bug_capture, W, src, user)
@@ -80,12 +81,12 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 		. = ..()
 
 		bulb = SafeGetOverlayImage("bulb", src.icon, "firefly-bulb")
-		bulb.appearance_flags = RESET_COLOR
+		bulb.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		bulb.color = light_color
 		UpdateOverlays(bulb, "bulb")
 
 		bulb_light = SafeGetOverlayImage("bulb-light", src.icon, "firefly-light")
-		bulb_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART
+		bulb_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 		bulb_light.layer = LIGHTING_LAYER_BASE
 		bulb_light.plane = PLANE_LIGHTING
 		bulb_light.blend_mode = BLEND_ADD
@@ -108,7 +109,6 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
-			reduce_lifeprocess_on_death()
 			..()
 
 /mob/living/critter/small_animal/firefly/pyre
@@ -158,7 +158,6 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
-			reduce_lifeprocess_on_death()
 			..()
 
 /obj/effects/firefly_pyre
@@ -176,7 +175,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 			A.vis_contents += src
 
 		var/image/fire_light = SafeGetOverlayImage("pyre_light", 'icons/effects/fire.dmi', "1old")
-		fire_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | NO_CLIENT_COLOR | KEEP_APART
+		fire_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 		fire_light.layer = LIGHTING_LAYER_BASE
 		fire_light.plane = PLANE_LIGHTING
 		fire_light.blend_mode = BLEND_ADD
@@ -226,7 +225,6 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
-			reduce_lifeprocess_on_death()
 			..()
 
 /obj/effects/firefly_lightning
@@ -236,17 +234,17 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 	icon_state = "energyorb"
 	vis_flags = VIS_INHERIT_ID
 	mouse_opacity = 0
-	var/list/color_on = list(1.0, 0.0, 0.0, -0.5, \
-					 0.0, 1.0, 0.0, -0.5, \
-					 0.0, 0.0, 1.0,  1.0, \
-					 0.0, 0.0, 0.0,  0.0, \
-					 0.0, 0.0, 0.0,  0.0 )
+	var/list/color_on = list(1.0, 0.0, 0.0, -0.5,
+					0.0, 1.0, 0.0, -0.5,
+					0.0, 0.0, 1.0,  1.0,
+					0.0, 0.0, 0.0,  0.0,
+					0.0, 0.0, 0.0,  0.0 )
 
-	var/list/color_off = list(1.0, 0.0, 0.0, -0.5, \
-					 0.0, 1.0, 0.0, -0.5, \
-					 0.0, 0.0, 1.0,  0.0, \
-					 0.0, 0.0, 0.0,  0.0, \
-					 0.0, 0.0, 0.0,  0.0 )
+	var/list/color_off = list(1.0, 0.0, 0.0, -0.5,
+					0.0, 1.0, 0.0, -0.5,
+					0.0, 0.0, 1.0,  0.0,
+					0.0, 0.0, 0.0,  0.0,
+					0.0, 0.0, 0.0,  0.0 )
 
 	New(newLoc)
 		..()
@@ -280,6 +278,7 @@ TYPEINFO(/mob/living/critter/small_animal/dragonfly)
 	hand_count = 2
 	icon = 'icons/mob/insect.dmi'
 	icon_state = "dragonfly"
+	blood_id = "hemolymph"
 
 	speechverb_say = "bzzs"
 	speechverb_exclaim = "bzzts"
@@ -291,7 +290,7 @@ TYPEINFO(/mob/living/critter/small_animal/dragonfly)
 	flags = TABLEPASS
 	fits_under_table = 1
 	base_move_delay = 1.3
-	base_walk_delay = 2.0
+	base_walk_delay = 2
 	health_brute = 10
 	health_burn = 10
 	isFlying = 1
@@ -307,14 +306,13 @@ TYPEINFO(/mob/living/critter/small_animal/dragonfly)
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
-			reduce_lifeprocess_on_death()
 			..()
 
 	Move(NewLoc, direct)
 		. = ..()
 		animate(src, time=5 SECONDS, pixel_x=rand(-4,4), pixel_y=rand(-8,8))
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(istype(W, /obj/item/reagent_containers/glass/jar) || istype(W, /obj/item/reagent_containers/glass/beaker/large))
 			W.AddComponent(/datum/component/bug_capture, W, src, user)
 		else
@@ -329,11 +327,12 @@ TYPEINFO(/datum/component/bug_capture)
 	initialization_args = list()
 
 /datum/component/bug_capture/Initialize(atom/A, mob/living/critter/B, mob/living/carbon/human/user)
+	. = ..()
 	if(add_bug(A, B, user))
-		RegisterSignal(parent, list(COMSIG_ITEM_PICKUP), .proc/pickup)
-		RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), .proc/dropped)
-		RegisterSignal(parent, list(COMSIG_ATOM_POST_UPDATE_ICON), .proc/update_icon)
-		RegisterSignal(parent, list(COMSIG_ATOM_REAGENT_CHANGE, COMSIG_ITEM_ATTACK_SELF), .proc/bye_bugs)
+		RegisterSignal(parent, COMSIG_ITEM_PICKUP, PROC_REF(pickup))
+		RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(dropped))
+		RegisterSignal(parent, COMSIG_ATOM_POST_UPDATE_ICON, PROC_REF(update_icon))
+		RegisterSignals(parent, list(COMSIG_ATOM_REAGENT_CHANGE, COMSIG_ITEM_ATTACK_SELF), PROC_REF(bye_bugs))
 
 		update_jar(A,user)
 	else
@@ -435,13 +434,13 @@ TYPEINFO(/datum/component/bug_capture)
 				firefly_image_count = 3
 
 		var/image/bulb = image('icons/mob/insect.dmi', "jar_fire_[firefly_image_count]", pixel_y=pixel_y_offset)
-		bulb.appearance_flags = RESET_COLOR
+		bulb.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		bulb.color = rgb(light_color[1], light_color[2], light_color[3])
 		A.underlays = list(bulb)
 
 		var/image/bulb_light = A.SafeGetOverlayImage("bulb-light", 'icons/mob/insect.dmi', "jar_glow")
 		bulb_light.pixel_y = pixel_y_offset
-		bulb_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART
+		bulb_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 		bulb_light.layer = LIGHTING_LAYER_BASE
 		bulb_light.plane = PLANE_LIGHTING
 		bulb_light.blend_mode = BLEND_ADD

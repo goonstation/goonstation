@@ -478,7 +478,7 @@ Returns:
 	var/turf/TLast = pick(L)
 	L.Remove(TLast)
 
-	while(L.len >= 1)
+	while(length(L) >= 1)
 		var/turf/TA = pick(L)
 		L.Remove(TA)
 		TLast.vis_contents += TLast
@@ -491,7 +491,7 @@ Returns:
 		if(T.z == 1)
 			L.Add(T)
 
-	while(L.len >= 1)
+	while(length(L) >= 1)
 		var/turf/TA = pick(L)
 		L.Remove(TA)
 		var/turf/TB = pick(L)
@@ -509,7 +509,7 @@ Returns:
 	desc = ""
 	density = 1
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/targetX = 2
 	var/targetY = 2
 	var/targetZ = 2
@@ -542,7 +542,7 @@ Returns:
 		return
 
 	onVarChanged(variable, oldval, newval)
-		. = 0
+		. = ..()
 		switch(variable)
 			if ("targetZ")
 				updateVis()
@@ -597,11 +597,11 @@ Returns:
 	desc = ""
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/targetZ = 2
 
 	onVarChanged(variable, oldval, newval)
-		. = 0
+		. = ..()
 		switch(variable)
 			if ("targetZ")
 				updateVis()
@@ -663,7 +663,7 @@ Returns:
 			if(A?.z == 1) //Basically, if the area has a turf on z1 ... Doesn't work as described in byond documentation. So we have to do it the slow way ...
 				areas.Add(A)
 
-	while(areas.len >= 2)
+	while(length(areas) >= 2)
 		var/area/one = pick(areas)
 		areas.Remove(one)
 		var/area/two = pick(areas)
@@ -739,7 +739,7 @@ Returns:
 			for(var/T in ignoreTypes)
 				if(istype(O, T)) continue oneOuter
 
-			if(twoTurfsExpend.len > 0)
+			if(length(twoTurfsExpend) > 0)
 				var/turf/T = pick(twoTurfsExpend)
 				twoTurfsExpend.Remove(T)
 				O.set_loc(T)
@@ -762,7 +762,7 @@ Returns:
 			for(var/T in ignoreTypes)
 				if(istype(O, T)) continue twoOuter
 
-			if(oneTurfsExpend.len > 0)
+			if(length(oneTurfsExpend) > 0)
 				var/turf/T = pick(oneTurfsExpend)
 				oneTurfsExpend.Remove(T)
 				O.set_loc(T)
@@ -776,7 +776,7 @@ Returns:
 	desc = "You can see a skeleton down there. It seems to be holding some sort of key."
 	icon = 'icons/misc/exploration.dmi'
 	icon_state = "valterak"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -785,7 +785,7 @@ Returns:
 	desc = "Upon closer inspection these seem to be the burnt remnants of a whip. How they are still there or even recognizable is beyond you."
 	icon = 'icons/misc/exploration.dmi'
 	icon_state = "vwhip"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -810,9 +810,9 @@ Returns:
 
 	handleCast(var/atom/selected)
 		var/mob/M = usr
-		var/dur = (get_dist(selected, M)*5)
+		var/dur = (GET_DIST(selected, M)*5)
 		var/ease = pick(LINEAR_EASING,SINE_EASING,CIRCULAR_EASING,QUAD_EASING,CUBIC_EASING,BOUNCE_EASING,ELASTIC_EASING,BACK_EASING)
-		boutput(world, "dur [dur] , ease : [ease] , dist : [get_dist(selected, M)] , selected : [selected]")
+		boutput(world, "dur [dur] , ease : [ease] , dist : [GET_DIST(selected, M)] , selected : [selected]")
 		cinLookAt(M, selected, dur, ease, 1, 1, 1)
 		sleep(dur+3)
 		cinShake(M,20,0.5,0,32,ease,1,1,1)
@@ -874,7 +874,7 @@ Returns:
 	canmove = 0
 	invisibility = INVIS_ALWAYS
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	proc/shake(var/steps = 20, var/length = 1, var/delay = 0, var/strength = 32, var/anim_easing = LINEAR_EASING)
 		SPAWN(0)
@@ -907,7 +907,7 @@ Returns:
 			if(freeze_source)
 				source.nodamage = 1
 				source.canmove = 0
-				source.anchored = 1
+				source.anchored = ANCHORED
 		return
 
 	proc/stop()
@@ -918,7 +918,7 @@ Returns:
 		if(freeze_source)
 			source.nodamage = 0
 			source.canmove = 1
-			source.anchored = 0
+			source.anchored = UNANCHORED
 
 		del(src)
 		return
@@ -942,7 +942,7 @@ Returns:
 /obj/wormhole
 	name = "nascent wormhole"
 	desc = "a small baby wormhole"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "whole-nascent"
@@ -979,7 +979,7 @@ Returns:
 	desc = ""
 	icon = 'icons/effects/meleeeffects.dmi'
 	icon_state = "sabre"
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_1
 
 	New()
@@ -1024,7 +1024,7 @@ Returns:
 	desc = ""
 	icon = null
 	icon_state = "sabre"
-	anchored = 1
+	anchored = ANCHORED
 	New(var/obj/item/experimental/melee/spear/S,var/atom/location)
 		src.set_loc(location)
 		var/image/I = image(S)
@@ -1055,7 +1055,7 @@ Returns:
 					last = get_turf(over_object)
 					beam.set_loc(get_turf(src))
 					animate(beam, transform=beam.transform, time=1)//, flags=ANIMATION_LINEAR_TRANSFORM)
-					animate(transform=getLineMatrix(get_turf(src),get_turf(over_object)), time= max(7-get_dist(get_turf(src),get_turf(over_object)), 2))
+					animate(transform=getLineMatrix(get_turf(src),get_turf(over_object)), time= max(7-GET_DIST(get_turf(src),get_turf(over_object)), 2))
 		return
 
 	onMouseDown(atom/target,location,control,params)
@@ -1189,7 +1189,7 @@ Returns:
 		for(var/mob/O in AIviewers(owner))
 			if(!seen.Find(O))
 				var/canSee = 0
-				switch(get_dist(O, user))
+				switch(GET_DIST(O, user))
 					if(0 to 1)
 						if(O.dir == turn(user.dir, 180)) //Only visible if looking directly at them in close range.
 							canSee = 1
@@ -1255,7 +1255,7 @@ Returns:
 			if((ismob(A) || A.density || istype(A, /obj/critter)) && !istype(A, /obj/table))
 				force = stabbyness
 
-				if(ismob(A) && get_dist(A, user) == 1 && (A.dir == user.dir || A:lying)) //It's a person and they are facing away from us. Bonus damage.
+				if(ismob(A) && GET_DIST(A, user) == 1 && (A.dir == user.dir || A:lying)) //It's a person and they are facing away from us. Bonus damage.
 					force = round(stabbyness * 2)
 					bloody = 1
 
@@ -1347,8 +1347,8 @@ Returns:
 			src.color = shaft.color
 			src.alpha = shaft.alpha
 		if(src.material && src.material.hasProperty("hard"))
-			src.force = round(src.material.getProperty("hard") / 5)
-			src.throwforce = round(src.material.getProperty("hard") / 3)
+			src.force = round(src.material.getProperty("hard") * 2)
+			src.throwforce = round(src.material.getProperty("hard") * 3)
 		return
 
 	proc/SetPrefix()
@@ -1520,7 +1520,7 @@ Returns:
 		var/partgreen = GetGreenPart(src.color) / 255
 		var/partblue  = GetBluePart(src.color) / 255
 
-		var/color_new = list(partred*2.5,0.30,0.30, 0.30,partgreen*2.5,0.30, 0.30,0.30,partblue*2.5, 0,0,0)
+		var/color_new = list(partred*2.5,0.30,0.30, 0.30,partgreen*2.5,0.30, 0.30,0.3,partblue*2.5, 0,0,0)
 		var/atom/effectLoc = null
 		var/obj/meleeeffect/M
 		switch(direction)
@@ -1556,18 +1556,18 @@ Returns:
 	icon ='icons/obj/objects.dmi'
 	icon_state = "statuefloorpills"
 	density = 1
+	default_material = "slag"
 
 	New()
 		..()
-		setMaterial(getMaterial("slag"))
+		AddComponent(/datum/component/radioactive,20,FALSE,FALSE)
 		name = "Statue of Dr.Floorpills"
 
-	attack_hand(mob/user as mob)
-		boutput(user, "[src] feels oddly warm ...")
-		user.changeStatus("radiation", 5 SECONDS)
+	attack_hand(mob/user)
+		boutput(user, "[src] feels oddly warm...")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(prob(8) && (!broken))
 			for(var/i=0, i<5, i++)
 				new/obj/item/material_piece/slag(src.loc)
@@ -1609,38 +1609,47 @@ Returns:
 					argcopy[r] = X
 			call(procpath)(arglist(argcopy))
 
-/datum/admins/proc/pixelexplosion()
+/datum/admins/proc/pixelexplosion(mode="explode" in list("explode", "pixelate"))
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Pixel explosion mode"
 	set desc = "Enter pixel explosion mode."
 	alert("Clicking on things will now explode them into pixels!")
-	pixelmagic()
+	pixelmagic(mode == "explode")
 
 /datum/targetable/pixelpicker
 	target_anything = 1
 	targeted = 1
 	max_range = 3000
+	var/explode = TRUE
 
 	castcheck(var/mob/M)
 		if (M.client && M.client.holder)
 			return 1
 
 	handleCast(var/atom/selected)
-		dothepixelthing(selected)
+		if(src.explode)
+			dothepixelthing(selected)
+		else
+			dothepixelthing(selected, /obj/item/apixel, FALSE)
 		var/mob/M = usr
 		var/datum/targetable/pixelpicker/R = new()
+		R.explode = src.explode
 		M.targeting_ability = R
 		M.update_cursor()
 		return 1
 
-/proc/pixelmagic()
+/proc/pixelmagic(explode=TRUE)
 	var/mob/M = usr
 	var/datum/targetable/pixelpicker/R = new()
+	R.explode = explode
 	M.targeting_ability = R
 	M.update_cursor()
 
-/proc/dothepixelthing(var/atom/A)
+/proc/dothepixelthing(var/atom/A, pixel_type=/obj/apixel, explode=TRUE)
 	if (isturf(A)) //deleting turfs is bad!
+		return
+
+	if(istype(A, /obj/item/apixel) || istype(A, /obj/apixel))
 		return
 
 	if (ismob(A)) //deleting mobs crashes them - lets transfer their client to a ghost first
@@ -1651,37 +1660,65 @@ Returns:
 	var/icon/I = getFlatIcon(A)
 	var/atom/movable/AT = A.loc
 
-	playsound(AT, 'sound/effects/ExplosionFirey.ogg', 75, 1)
+	if(explode)
+		playsound(AT, 'sound/effects/ExplosionFirey.ogg', 75, 1)
 	for(var/y = 1, y <= I.Height(), y++)
 		for(var/x = 1, x <= I.Width(), x++)
 			var/color = I.GetPixel(x, y)
 			if(color != null)
-				var/actX = A.pixel_x + x - 1
-				var/actY = A.pixel_y + y - 1
-				var/obj/apixel/P = new /obj/apixel
-				P.set_loc(A.loc)
+				var/actX = A.pixel_x + x - 1 - 16
+				var/actY = A.pixel_y + y - 1 - 16
+				var/obj/P = new pixel_type(A.loc, A)
 				P.pixel_x = actX
 				P.pixel_y = actY
 				P.color = color
 				P.layer = 15
-				animate_explode_pixel(P)
+				if(explode)
+					animate_explode_pixel(P)
 				pixels += P
 
 	qdel(A)
-	SPAWN(7 SECONDS)
-		for(var/datum/D in pixels)
-			qdel(D)
-
-	return
+	if(explode)
+		SPAWN(7 SECONDS)
+			for(var/datum/D in pixels)
+				qdel(D)
 
 /obj/apixel
 	name = ""
 	desc = "this is a single pixel. wow."
 	icon = 'icons/effects/1x1.dmi'
 	icon_state = "pixel"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
+	pixel_z = 16
+	pixel_w = 16
+
+/obj/item/apixel
+	name = ""
+	desc = "This is a single pixel. Wow."
+	icon = 'icons/effects/1x1.dmi'
+	icon_state = "pixel"
+	pixel_z = 16
+	pixel_w = 16
+	var/got_renamed = FALSE
+
+	New(loc, atom/original)
+		..(loc)
+		src.name = original.name
+		src.desc = "This is a single pixel of [original.name]. Wow."
+
+	pickup(mob/user)
+		. = ..()
+		icon = 'icons/effects/white.dmi'
+		if(!got_renamed)
+			got_renamed = TRUE
+			name = "pixel of [name]"
+
+	dropped(mob/user)
+		. = ..()
+		src.icon = initial(icon)
+
 
 /datum/admins/proc/turn_off_pixelexplosion()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -1726,7 +1763,7 @@ Returns:
 		src.setMaterial(head.material, appearance = 0, setname = 0)
 		return
 
-	attack(mob/M as mob, mob/user as mob) //TBI
+	attack(mob/M, mob/user) //TBI
 		return ..(M,user)
 
 /obj/item/craftedmelee
@@ -1761,7 +1798,7 @@ Returns:
 		desc = "Someone taped together \a [item1.name] and \a [item2.name]. Great."
 		return
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if(!item1 || !item2)
 			src.fall_apart()
 			return
@@ -1847,92 +1884,10 @@ Returns:
 	tube.rebuild()
 	return tube
 
-/obj/item/ghostboard
-	name = "\improper Ouija board"
-	desc = "A wooden board that allows for communication with spirits and such things. Or that's what the company that makes them claims, at least."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "lboard"
-	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
-	item_state = "ouijaboard"
-	w_class = W_CLASS_NORMAL
-	var/emoji_prob = 30
-	var/emoji_min = 1
-	var/emoji_max = 3
-	var/words_prob = 100
-	var/words_min = 7
-	var/words_max = 10
-
-	New()
-		. = ..()
-		START_TRACKING
-		BLOCK_SETUP(BLOCK_BOOK)
-
-	disposing()
-		. = ..()
-		STOP_TRACKING
-
-	proc/generate_words()
-		var/list/words = list()
-		if(prob(words_prob))
-			words |= get_ouija_word_list(src, words_min, words_max)
-		if(prob(emoji_prob))
-			for(var/i in 1 to rand(emoji_min, emoji_max))
-				words |= random_emoji()
-		return words
-
-	Click(location,control,params)
-		if(isobserver(usr) || iswraith(usr) || isAIeye(usr)) //explicitly added AIeye because AIeye is no longer dead and AI's are ghosts trapped in metal boxes.
-			if(isAIeye(usr))
-				boutput(usr, "<span class='notice'>Whoa, you can use this as an AI? Are you actually just a ghost trapped in a metal box??</span>")
-
-			if(ON_COOLDOWN(src, usr, 3 SECONDS))
-				usr.show_text("Please wait a moment before using the board again.", "red")
-				return
-
-			var/selected
-			do
-				var/list/words = list("*REFRESH*") + src.generate_words()
-				selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=TRUE)
-			while(selected == "*REFRESH*")
-
-			if(!selected)
-				return
-
-			animate_float(src, 1, 5, 1)
-			if(prob(20) && !ON_COOLDOWN(src, "bother chaplains", 1 MINUTE))
-				var/area/AR = get_area(src)
-				for(var/mob/M in by_cat[TR_CAT_CHAPLAINS])
-					if(M.client)
-						boutput(M, "<span class='notice'>You sense a disturbance emanating from \a [src] in \the [AR.name].</span>")
-			for (var/mob/O in observersviewers(7, src))
-				O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
-			#ifdef HALLOWEEN
-			if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
-				var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
-				GH.change_points(30)
-			#endif
-		else
-			return ..(location,control,params)
-
-/obj/item/ghostboard/emouija
-	name = "Emouija board"
-	desc = "A wooden board that allows for communication with spirits and such things. Wait, this one doesn't even have proper letters on it."
-	emoji_prob = 100
-	emoji_min = 5
-	emoji_max = 10
-	words_prob = 0
-
-
-/proc/fartes()
-	for(var/imageToLoad in flist("images/"))
-		usr << browse_rsc(file("images/[imageToLoad]"))
-		boutput(world, "[imageToLoad] - [file("images/[imageToLoad]")]")
-	return
-
 /obj/largetest
 	name = "test"
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 	icon = 'icons/misc/512x512.dmi'
@@ -1941,13 +1896,13 @@ Returns:
 /obj/peninscription
 	name = "mysterious inscription"
 	desc = "It's some form of inscription. It reads 'nij ud-bi-ta la-ba-jal-la: ki-sikil tur ur dam-ma-na-ka ce nu-ub-dur-re'. There is a small pictogram below it."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "pen"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/device/key))
 			boutput(user, "[W] disappears suddenly as you bring it close to the inscription ... huh")
 			del(W)
@@ -1956,190 +1911,11 @@ Returns:
 			playsound(src.loc, "hellhorn_12.ogg", 100, 1)
 		return
 
-/obj/burning_barrel
-	name = "burning barrel"
-	desc = "cozy."
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "barrel1"
-	density = 1
-	anchored = 1
-	opacity = 0
-
-	var/datum/particleSystem/barrelSmoke/smoke_part
-	var/datum/light/light
-
-	New()
-		UpdateParticles(new/particles/barrel_embers, "embers")
-		UpdateParticles(new/particles/barrel_smoke, "smoke")
-		light = new /datum/light/point
-		light.attach(src)
-		light.set_brightness(1)
-		light.set_color(0.5, 0.3, 0)
-		light.enable()
-		..()
-
-	disposing()
-		light.disable()
-		light.detach()
-		light = null
-		..()
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/clothing/mask/cigarette))
-			var/obj/item/clothing/mask/cigarette/C = W
-			if(!C.on)
-				C.light(user, "<span class='alert'>[user] lights the [C] with [src]. That seems appropriate.</span>")
-
-/*
-
-/obj/hh_portal_exit
-	icon = 'icons/misc/exploration.dmi'
-	icon_state = "riftexit"
-	name = "???"
-	desc = ""
-	anchored = 1
-	density = 1
-	opacity = 0
-
-	Bumped(atom/movable/AM)
-		if(!ismob(AM)) return
-		var/mob/M = AM
-
-		if(M.adventure_variables.hh_energy < 3)
-			boutput(M, "<span class='alert'>You can't seem to pass through the energy ... </span>")
-			return
-
-		var/mob/dead/hhghost/H = new(AM.loc)
-		H.client = M.client
-		H.original = M
-		M.set_loc(H)
-
-		AM = H
-
-		var/area/srcar = AM.loc.loc
-		srcar.Exited(AM)
-
-		var/obj/target = locate(/obj/landmark/hh_exit)
-
-		if (!istype(target))
-			return
-
-		var/turf/trg_turf = target.loc
-
-		var/area/trgar = trg_turf.loc
-		trgar.Entered(AM, AM.loc)
-
-		AM.set_loc(trg_turf)
-
-/obj/hh_portal_entry
-	icon = 'icons/misc/exploration.dmi'
-	icon_state = "atear"
-	name = "???"
-	desc = ""
-	anchored = 1
-	density = 1
-	opacity = 0
-
-	Bumped(atom/movable/AM)
-		if(!AM.reagents) return
-		if(!ismob(AM)) return
-
-		if(AM.reagents.has_reagent("anima") && !AM.reagents.has_reagent("anima", 10))
-			boutput(AM, "<span class='alert'>The portal briefly glows as you get near but quickly dulls again. It seems like you have done SOMETHING correctly but it isn't quite enough.</span>")
-			return
-
-		if(!AM.reagents.has_reagent("anima"))
-			boutput(AM, "<span class='alert'>The strange energy in front of you becomes solid as you approach ...</span>")
-			return
-
-		AM.reagents.del_reagent("anima")
-
-		var/area/srcar = AM.loc.loc
-		srcar.Exited(AM)
-
-		var/obj/target = locate(/obj/landmark/hh_entry)
-
-		if (!istype(target))
-			return
-
-		var/turf/trg_turf = target.loc
-
-		var/area/trgar = trg_turf.loc
-		trgar.Entered(AM, AM.loc)
-
-		AM.set_loc(trg_turf)
-
-		return
-
-/obj/landmark/hh_exit
-	name = "hh_exit"
-	//tag = "hh_exit"
-
-/obj/landmark/hh_entry
-	name = "hh_entry"
-	//tag = "hh_entry"
-
-/obj/hh_sfrag
-	name = "soul fragment"
-	desc = "a small portion of someones life energies ..."
-	icon = 'icons/misc/exploration.dmi'
-	icon_state = "empty"
-	anchored = 1
-	density = 0
-	opacity = 0
-	invisibility = INVIS_ALWAYS_ISH
-	var/image/oimage = null
-	event_handler_flags = USE_FLUID_ENTER
-
-	New()
-		oimage = image('icons/misc/exploration.dmi',src,"sfrag")
-		orbicons.Add(oimage)
-		return ..()
-
-	disposing()
-		orbicons.Remove(oimage)
-		del(oimage)
-		..()
-
-	Crossed(atom/movable/A)
-		if(!istype(A,/mob/dead/hhghost)) return
-		var/mob/dead/hhghost/M = A
-		M.adventure_variables.hh_soul += 1
-		particleMaster.SpawnSystem(new /datum/particleSystem/elecburst(M))
-
-		if(M.adventure_variables.hh_soul > 15)
-			M.original.set_loc(src.loc)
-			M.original.client = M.client
-			del(M)
-
-		del(src)
-		return
-
-/obj/hh_energyorb
-	name = "scintilating energy"
-	desc = "..."
-	icon = 'icons/misc/exploration.dmi'
-	icon_state = "eorb"
-	anchored = 1
-	density = 0
-	opacity = 0
-	event_handler_flags = USE_FLUID_ENTER
-
-	Crossed(atom/movable/A)
-		if(!ismob(A) || !isliving(A)) return
-		qdel(src)
-		var/mob/living/M = A
-		M.adventure_variables.hh_energy += 1
-		particleMaster.SpawnSystem(new /datum/particleSystem/energysp(M))
-		return
-
-*/
-
 /obj/decal/nothing
 	name = "nothing"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "blank"
-	anchored = 1
+	anchored = ANCHORED_ALWAYS
 	density = 0
 	opacity = 0
 	plane = PLANE_ABOVE_LIGHTING
@@ -2148,7 +1924,7 @@ Returns:
 	name = "nothing"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "blank-plug"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	plane = PLANE_ABOVE_LIGHTING
@@ -2157,7 +1933,7 @@ Returns:
 	name = "fire"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "hfireplug"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -2165,7 +1941,7 @@ Returns:
 	name = "fire"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "hfire"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -2173,7 +1949,7 @@ Returns:
 	name = "nothing"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "tileswish"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -2182,7 +1958,7 @@ Returns:
 	desc = "a swirling blue vortex"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "swirlthing"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -2240,7 +2016,7 @@ Returns:
 	name = "ProcTrigger"
 	desc = "If you see this and you're not an admin then that's sorta bad."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
 	icon = 'icons/effects/ULIcons.dmi'
@@ -2331,7 +2107,7 @@ Returns:
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "rup"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
 	var/spawn_rate = 100 	   //Time before a new object spaws after the previous is gone.
@@ -2394,7 +2170,7 @@ Returns:
 	icon = 'icons/effects/lines.dmi'
 	icon_state = "lght"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	pixel_y = -16
@@ -2403,40 +2179,13 @@ Returns:
 	var/atom/origin = null
 	var/atom/target = null
 
-/obj/fireworksbox
-	name = "Box of Fireworks"
-	desc = "The Label simply reads : \"Firwerks fun is having total family.\""
-	density = 0
-	anchored = 0
-	opacity = 0
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "fireworksbox"
-	var/fireworking = 0
-
-	attack_hand(mob/user as mob)
-		if(fireworking) return
-		fireworking = 1
-		boutput(user, "<span class='alert'>The fireworks go off as soon as you touch the box. This is some high quality stuff.</span>")
-		anchored = 1
-
-		SPAWN(0)
-			for(var/i=0, i<rand(30,40), i++)
-				particleMaster.SpawnSystem(new /datum/particleSystem/fireworks(src.loc))
-				sleep(rand(2, 15))
-
-			for(var/mob/O in oviewers(world.view, src))
-				O.show_message("<span class='notice'>The box of fireworks magically disappears.</span>", 1)
-
-			qdel(src)
-		return
-
 /obj/candle_light_2spoopy
 	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "candle"
 	name = "spooky candle"
 	desc = "It's a big candle. It's also floating."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	var/datum/light/light
 
@@ -2462,7 +2211,7 @@ Returns:
 	name = "candle"
 	desc = "It's a big candle"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 
 	var/datum/light/point/light
@@ -2482,14 +2231,14 @@ Returns:
 	name = "electricity"
 	plane = PLANE_ABOVE_LIGHTING
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
 /obj/elec_trg_dummy
 	name = ""
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
@@ -2503,7 +2252,7 @@ Returns:
 	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
-	force = 5.0
+	force = 5
 	flags = FPRINT | TABLEPASS | CONDUCT
 	var/state = 0
 	var/yo = null
@@ -2545,7 +2294,7 @@ Returns:
 	desc = "Pew Pew"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "shuttlecannonthing"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/ready = 1
 
@@ -2584,7 +2333,7 @@ Returns:
 		var/turf/fire_target_tile = get_step(get_step(get_step(get_step(src, src.dir), src.dir), direction), direction)
 
 		SPAWN(1 DECI SECOND)
-			playsound(src, "sound/weapons/rocket.ogg", 50, 1)
+			playsound(src, 'sound/weapons/rocket.ogg', 50, 1)
 
 			var/obj/item/rpg_rocket/R = new
 
@@ -2605,7 +2354,7 @@ Returns:
 	desc = "Don't move this thing or you're gonna have a bad time."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/areasize = ""
 	var/moving = 0
@@ -2676,7 +2425,7 @@ Returns:
 			if(!isturf(T)) continue
 			newareaturfs += T
 
-		if(newareaturfs.len < oldareaturfs.len) //Out of bounds. Fucking byond.
+		if(length(newareaturfs) < oldareaturfs.len) //Out of bounds. Fucking byond.
 			moving = 0
 			return
 
@@ -2772,10 +2521,10 @@ Returns:
 
 /obj/dfissure_to
 	name = "dimensional fissure"
-	desc = "a rip in time and space"
+	desc = "A rip in time and space."
 	opacity = 0
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "fissure"
 
@@ -2797,10 +2546,10 @@ Returns:
 
 /obj/dfissure_from
 	name = "dimensional fissure"
-	desc = "a rip in time and space"
+	desc = "A rip in time and space."
 	opacity = 0
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "fissure"
 
@@ -2826,19 +2575,19 @@ Returns:
 			eligible.Add(H)
 
 	var/mob/living/carbon/human/picked1
-	if(eligible.len > 0)
+	if(length(eligible) > 0)
 		picked1 = pick(eligible)
 		eligible -= picked1
 
 	var/mob/living/carbon/human/picked2
-	if(eligible.len > 0)
+	if(length(eligible) > 0)
 		picked2 = pick(eligible)
 
 	picked1?.zombify()
 
 	picked2?.zombify()
 
-	for(var/turf/T in wormholeturfs)
+	for(var/turf/T in random_floor_turfs)
 		if(prob(3))
 			new/obj/item/plank(T)
 			new/obj/item/plank(T)
@@ -2894,34 +2643,34 @@ Returns:
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "boomerang"
-		var/mob/user = thr.user
-		if(hit_atom == user)
-			if(prob(prob_clonk))
-				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
-				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-				user.changeStatus("stunned", 5 SECONDS)
-				user.changeStatus("weakened", 3 SECONDS)
-				user.changeStatus("paralysis", 2 SECONDS)
-				user.force_laydown_standup()
+		if(ishuman(thr.user))
+			var/mob/living/carbon/human/user = thr.user
+			if(hit_atom == user)
+				if(prob(prob_clonk))
+					user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
+					playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+					user.changeStatus("stunned", 5 SECONDS)
+					user.changeStatus("weakened", 3 SECONDS)
+					user.changeStatus("paralysis", 2 SECONDS)
+					user.force_laydown_standup()
+				else
+					src.Attackhand(user)
+				return
 			else
-				src.Attackhand(user)
-			return
-		else
-			if(ishuman(hit_atom))
-				var/mob/living/carbon/human/H = hit_atom
-				var/safari = (istype(H.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(H.head, /obj/item/clothing/head/safari))
-				if(safari)
-					H.changeStatus("stunned", 4 SECONDS)
-					H.changeStatus("weakened", 2 SECONDS)
-					H.force_laydown_standup()
-					//H.paralysis++
-					playsound(H.loc, "swing_hit", 50, 1)
+				if(ishuman(hit_atom))
+					var/mob/living/carbon/human/H = hit_atom
+					if(istype(user?.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(user?.head, /obj/item/clothing/head/safari))
+						H.changeStatus("stunned", 4 SECONDS)
+						H.changeStatus("weakened", 2 SECONDS)
+						H.force_laydown_standup()
+						//H.paralysis++
+						playsound(H.loc, "swing_hit", 50, 1)
 
-				prob_clonk = min(prob_clonk + 5, 40)
-				SPAWN(2 SECONDS)
-					prob_clonk = max(prob_clonk - 5, 0)
+					prob_clonk = min(prob_clonk + 5, 40)
+					SPAWN(2 SECONDS)
+						prob_clonk = max(prob_clonk - 5, 0)
 
-		return ..(hit_atom)
+			return ..(hit_atom)
 
 /proc/mod_color(var/atom/A)
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
@@ -2973,8 +2722,8 @@ Returns:
 			P.setTarget(target)
 			var/targetThing = isturf(target) ? "" : "[target] in "
 			targetThing += "[get_area(target)]"
-			logTheThing("admin", usr, null, "created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
-			logTheThing("diary", usr, null, "created a portal at [selected.x], [selected.y], [selected.z] ([get_area(selected)]) pointing to [target.x], [target.y], [target.z] ([targetThing])", "admin")
+			logTheThing(LOG_ADMIN, usr, "created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
+			logTheThing(LOG_DIARY, usr, "created a portal at [selected.x], [selected.y], [selected.z] ([get_area(selected)]) pointing to [target.x], [target.y], [target.z] ([targetThing])", "admin")
 			message_admins("[key_name(usr)] created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
 		else if (alert == "No")
 			var/mob/M = usr
@@ -3033,7 +2782,7 @@ Returns:
 /obj/perm_portal
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 	var/atom/target = null
@@ -3054,7 +2803,10 @@ Returns:
 	Bumped(atom/movable/AM)
 		if(target && istype(target))
 			if(ismob(AM))
-				logTheThing("combat", AM, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)]")
+				logTheThing(LOG_STATION, AM, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)]")
+			if (istype(AM, /obj/critter/gunbot/drone)) //stop teleporting the damn y-drone!
+				var/obj/critter/gunbot/drone/drone = AM
+				logTheThing(LOG_STATION, drone, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)] while chasing [key_name(drone.target)]")
 			AM.set_loc(target)
 		else
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
@@ -3091,13 +2843,13 @@ Returns:
 	amount = 1
 	heal_amt = 5
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if(ishuman(M))
 			if(M == user)
 				M.nutrition += src.heal_amt * 10
 				M.poo += 1
 				src.heal(M)
-				playsound(M.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 				boutput(user, "<span class='alert'>You eat the raisin and shed a single tear as you realise that you now have no raisin.</span>")
 				qdel(src)
 				return 1
@@ -3111,243 +2863,12 @@ Returns:
 				M.nutrition += src.heal_amt * 10
 				M.poo += 1
 				src.heal(M)
-				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(M.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
 				boutput(user, "<span class='alert'>[M] eats the raisin.</span>")
 				qdel(src)
 				return 1
 		return 0 */
 
-/obj/fire_foam
-	name = "Fire fighting foam"
-	desc = "It's foam."
-	opacity = 0
-	density = 0
-	anchored = 1
-	icon = 'icons/effects/fire.dmi'
-	icon_state = "foam"
-	animate_movement = SLIDE_STEPS
-	mouse_opacity = 0
-	var/my_dir = null
-
-	Move(NewLoc,Dir=0)
-		. = ..(NewLoc,Dir)
-		if(isnull(my_dir))
-			my_dir = pick(alldirs)
-		src.set_dir(my_dir)
-
-/obj/shifting_wall
-	name = "r wall"
-	desc = ""
-	opacity = 1
-	density = 1
-	anchored = 1
-
-	icon = 'icons/turf/walls.dmi'
-	icon_state = "r_wall"
-
-	New()
-		..()
-		update()
-
-	proc/update()
-		var/list/possible = new/list()
-
-		for(var/A in cardinal)
-			var/turf/current = get_step(src,A)
-			if(current.density) continue
-			if(is_blocked_turf(current)) continue
-			possible +=  current
-
-		if(!possible.len)
-			SPAWN(3 SECONDS) update()
-			return
-
-		var/turf/picked = pick(possible)
-		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
-		src.set_loc(picked)
-		SPAWN(0.5 SECONDS) picked.invisibility = INVIS_ALWAYS_ISH
-
-		SPAWN(rand(50,80)) update()
-
-/obj/shifting_wall/sneaky
-
-	var/sightrange = 8
-
-	proc/find_suitable_tiles()
-		var/list/possible = new/list()
-
-		for(var/A in cardinal)
-			var/turf/current = get_step(src,A)
-			if(current.density) continue
-			if(is_blocked_turf(current)) continue
-			if(someone_can_see(current)) continue
-			possible +=  current
-
-		return possible
-
-	proc/someone_can_see(var/atom/A)
-		for(var/mob/living/L in view(sightrange,A))
-			if(!L.sight_check(1)) continue
-			if(A in view(sightrange,L)) return 1
-		return 0
-
-	proc/someone_can_see_me()
-		for(var/mob/living/L in view(sightrange,src))
-			if(L.sight_check(1)) continue
-			if(src in view(sightrange,L)) return 1
-		return 0
-
-	update()
-		if(someone_can_see_me()) //Award for the most readable code GOES TO THIS LINE.
-			SPAWN(rand(50,80)) update()
-			return
-
-		var/list/possible = find_suitable_tiles()
-
-		if(!possible.len)
-			SPAWN(3 SECONDS) update()
-			return
-
-		var/turf/picked = pick(possible)
-		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
-		if(src.loc.opacity) src.loc.opacity = 0
-
-		src.set_loc(picked)
-
-		SPAWN(0.5 SECONDS)
-			picked.invisibility = INVIS_ALWAYS_ISH
-			picked.opacity = 1
-
-		SPAWN(rand(50,80)) update()
-
-
-/obj/pool
-	name = "pool"
-	density = 1
-	anchored = 1
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "pool"
-	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-
-
-	Cross(atom/movable/mover)
-		ENSURE_TYPE(mover)
-		if (mover?.throwing)
-			return 1
-		return ..()
-
-/obj/pool/ladder
-	name = "pool ladder"
-	anchored = 1
-	density = 0
-	dir = 8
-	icon = 'icons/obj/fluid.dmi'
-	icon_state = "ladder"
-
-/obj/pool/perspective
-	name = "pool"
-	density = 1
-	anchored = 1
-	icon = 'icons/obj/fluid.dmi'
-	plane = PLANE_FLOOR
-	icon_state = "pool"
-
-/obj/pool_springboard
-	name = "springboard"
-	density = 0
-	anchored = 1
-	layer = EFFECTS_LAYER_UNDER_2
-	pixel_x = -16
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "springboard"
-	var/in_use = 0
-	var/suiciding = 0
-	var/deadly = 0
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		return attack_hand(user)
-
-	MouseDrop_T(atom/target, mob/user)
-		if (BOUNDS_DIST(user, src) == 0 && target == user)
-			src.Attackhand(user)
-
-	attack_hand(mob/user as mob)
-		if(in_use)
-			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
-			return
-		else
-			in_use = 1
-			user.transforming = 1
-			var/range = pick(25;1,2,3)
-			var/turf/target = src.loc
-			for(var/i = 0, i<range, i++)
-				if(!suiciding && !deadly) target = get_step(target,WEST)
-				else target = get_step(target,EAST)
-			if(!suiciding && !deadly) user.set_dir(WEST)
-			else user.set_dir(EAST)
-			user.pixel_y = 15
-			user.layer = EFFECTS_LAYER_UNDER_1
-			user.set_loc(src.loc)
-			user.buckled = src
-			sleep(0.3 SECONDS)
-			user.pixel_x = -3
-			sleep(0.3 SECONDS)
-			user.pixel_x = -6
-			sleep(0.3 SECONDS)
-			user.pixel_x = -9
-			sleep(0.3 SECONDS)
-			user.pixel_x = -12
-			playsound(user, "sound/effects/spring.ogg", 60, 1)
-			sleep(0.3 SECONDS)
-			user.pixel_y = 25
-			sleep(0.5 SECONDS)
-			user.pixel_y = 15
-			playsound(user, "sound/effects/spring.ogg", 60, 1)
-			sleep(0.5 SECONDS)
-			user.pixel_y = 25
-			user.start_chair_flip_targeting(extrarange = 2)
-			sleep(0.5 SECONDS)
-			user.pixel_y = 15
-			playsound(user, "sound/effects/spring.ogg", 60, 1)
-			sleep(0.5 SECONDS)
-			user.pixel_y = 25
-			playsound(user, "sound/effects/brrp.ogg", 15, 1)
-			sleep(0.2 SECONDS)
-			if(range == 1) boutput(user, "<span class='alert'>You slip...</span>")
-			user.layer = MOB_LAYER
-			user.buckled = null
-			if (user.targeting_ability == user.chair_flip_ability) //we havent chair flipped, just do normal jump
-				user.throw_at(target, 5, 1)
-				user:changeStatus("weakened", 2 SECONDS)
-			user.end_chair_flip_targeting()
-			if(suiciding || deadly)
-				src.visible_message("<span class='alert'><b>[user.name] dives headfirst at the [target.name]!</b></span>")
-				SPAWN(0.3 SECONDS) //give them time to land
-					if (user)
-						user.TakeDamage("head", 200, 0)
-						playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
-			user.pixel_y = 0
-			user.pixel_x = 0
-			playsound(user, "sound/impact_sounds/Liquid_Hit_Big_1.ogg", 60, 1)
-			in_use = 0
-			suiciding = 0
-			user.transforming = 0
-
-	custom_suicide = 1
-	suicide(var/mob/user as mob)
-		if (!src.user_can_suicide(user))
-			return 0
-		if (in_use)
-			return 0
-		suiciding = 1 //reset in attack_hand() at the same time as in_use
-		attack_hand(user)
-
-		SPAWN(50 SECONDS)
-			if (src)
-				src.suiciding = 0
-			if (user && !isdead(user))
-				user.suiciding = 0
-		return 1
 
 //1.5 would be 50% slower, 2.0 would be 100% slower etc.
 var/const/lag_average_size = 20			 //Number of samples the average is based on.
@@ -3359,20 +2880,20 @@ var/list/lag_list = new/list()
 
 /proc/add_and_average(var/value)
 	lag_list.Insert(1,value)
-	if(lag_list.len > lag_average_size) lag_list.Cut(lag_average_size+1,0)
+	if(length(lag_list) > lag_average_size) lag_list.Cut(lag_average_size+1,0)
 	var/tempnum = 0
 	for(var/a in lag_list)
 		tempnum += a
-	if(lag_list.len >= lag_average_size) average_tenth = (tempnum / lag_list.len)
+	if(length(lag_list) >= lag_average_size) average_tenth = (tempnum / lag_list.len)
 
 	switch( ((average_tenth * world.cpu) / 100) )
-		if(0 to 0.100)
+		if(0 to 0.1)
 			lag_string = "Minimal"
-		if(0.101 to 0.180)
+		if(0.101 to 0.18)
 			lag_string = "Normal"
-		if(0.181 to 0.350)
+		if(0.181 to 0.35)
 			lag_string = "High"
-		if(0.351 to 0.500)
+		if(0.351 to 0.5)
 			lag_string = "Very High"
 		if(0.501 to INFINITY)
 			lag_string = "Oh Sh*t"
@@ -3387,10 +2908,10 @@ var/list/lag_list = new/list()
 	boutput(usr, "<span class='success'>[average_tenth] at [lag_list.len] samples.</span>")
 
 
-/obj/spook
+/obj/item/spook
 	var/active = 0
 	invisibility = INVIS_ALWAYS_ISH
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	icon = 'icons/misc/hstation.dmi'
 	icon_state = "null"
@@ -3400,21 +2921,20 @@ var/list/lag_list = new/list()
 
 	New()
 		startloc = get_turf(src)
-		loop()
-		return ..()
+		processing_items.Add(src)
+		. = ..()
 
-	proc/loop()
+	disposing()
+		processing_items.Remove(src)
+		. = ..()
 
-		if(active)
-			SPAWN(3 SECONDS) loop()
-			return
-
-
-		for(var/mob/living/L in hearers(world.view, src))
-			if(prob(20)) spook(L)
-			break
-
-		SPAWN(2 SECONDS) loop()
+	process()
+		if(!active)
+			for(var/mob/living/L in hearers(world.view, src))
+				if(prob(20))
+					SPAWN(0)
+						spook(L)
+				break
 
 	proc/spook(var/mob/living/L)
 		if (narrator_mode)
@@ -3430,8 +2950,8 @@ var/list/lag_list = new/list()
 		src.invisibility = INVIS_ALWAYS_ISH
 		src.set_loc(startloc)
 		walk(src,0)
-		SPAWN(10 SECONDS) active = 0
-
+		SPAWN(10 SECONDS)
+			active = 0
 
 /datum/engibox_mode
 	var/name = ""
@@ -3583,8 +3103,8 @@ var/list/lag_list = new/list()
 	desc = "Places a Conveyor belt - facing the direction you are facing."
 	used(atom/user, atom/target)
 		var/obj/machinery/conveyor/L = new/obj/machinery/conveyor(get_turf(target))
-		L.set_dir(user:dir)
-		L.basedir = L.dir
+		L.dir_in = user.dir
+		L.dir_out = turn(user.dir, 180)
 		return
 
 /datum/engibox_mode/poddoor
@@ -3682,7 +3202,7 @@ var/list/lag_list = new/list()
 	name = "Toggle opacity"
 	desc = "Toggles the opacity of an object."
 	used(atom/user, atom/target)
-		target.opacity = !target.opacity
+		target.set_opacity(!target.opacity)
 		boutput(usr, "<span class='notice'>Target opacity now: [target.opacity]</span>")
 		return
 
@@ -3761,13 +3281,13 @@ var/list/lag_list = new/list()
 /obj/signpost
 	icon = 'icons/misc/old_or_unused.dmi'
 	icon_state = "signpost"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		switch(alert("Travel back to ss13?",,"Yes","No"))
 			if("Yes")
 				user.set_loc(pick_landmark(LANDMARK_LATEJOIN))
@@ -3797,172 +3317,3 @@ var/list/lag_list = new/list()
 					for(var/mob/M in src)
 						if (M.client)
 							M.client.playAmbience(src, AMBIENCE_FX_2, 50)
-
-/obj/item/beach_ball
-	icon = 'icons/misc/beach.dmi'
-	icon_state = "ball"
-	name = "beach ball"
-	item_state = "clown"
-	density = 0
-	anchored = 0
-	w_class = W_CLASS_TINY
-	force = 0.0
-	throwforce = 0.0
-	throw_speed = 1
-	throw_range = 20
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		user.drop_item()
-		src.throw_at(target, throw_range, throw_speed)
-
-/* Camera test stuff
-
-/mob/living/intangible/aicamera
-	icon = 'icons/mob/ai.dmi'
-	icon_state = "a-eye"
-	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	density = 0
-	canmove = 1
-	blinded = 0
-	anchored = 1
-	name = "camera view"
-	var/list/blockers
-	//debug stuff
-	var/high_range = 1
-
-	is_spacefaring()
-		return 1
-
-	movement_delay()
-		if (src.client && src.client.check_key(KEY_RUN))
-			return 0.4
-		else
-			return 0.75
-
-/mob/living/intangible/aicamera/New()
-	. = ..()
-	src.invisibility = INVIS_NONE
-	src.sight = SEE_THRU
-	src.see_invisible = INVIS_NONE
-
-/obj/ai_static
-	name = "static"
-	alpha = 0
-	anchored = 1
-	density = 0
-	opacity = 0
-	icon = 'icons/mob/hud_common.dmi'
-	icon_state = "static"
-	screen_loc = "NORTH,WEST to SOUTH,EAST"
-	layer = 50
-	plane = 100
-	mouse_opacity = 1
-	var/blocking = 0
-
-	MouseEntered(location,control,params)
-		if(usr?.client)
-			usr.client.show_popup_menus = 0
-		return ..()
-
-	MouseExited(location,control,params)
-		if(usr?.client)
-			usr.client.show_popup_menus = 1
-		return ..()
-
-	MouseDrop_T()
-		if(usr?.client && blocking)
-			usr.client.show_popup_menus = 0
-		return ..()
-
-
-/mob/living/intangible/aicamera/proc/updateLOS()
-	if(!src.client) return
-
-	var/low_left_x = (src.x - src.client.view)
-	low_left_x = max(low_left_x, 1)
-	low_left_x = min(low_left_x, world.maxx)
-
-	var/low_left_y = (src.y - src.client.view)
-	low_left_y = max(low_left_y, 1)
-	low_left_y = min(low_left_y, world.maxy)
-
-	var/up_right_x = (src.x + src.client.view)
-	up_right_x = max(up_right_x, 1)
-	up_right_x = min(up_right_x, world.maxx)
-
-	var/up_right_y = (src.y + src.client.view)
-	up_right_y = max(up_right_y, 1)
-	up_right_y = min(up_right_y, world.maxy)
-
-	var/list/visible = list()
-	var/list/view_turfs	= block(locate(low_left_x, low_left_y, src.z), locate(up_right_x, up_right_y, src.z))
-
-	if(high_range)
-	//Uses all cameras within viewrange + camera range, significantly slower
-		for_by_tcl(C, /obj/machinery/camera)
-			if(C.z != src.z || get_dist(src, C) > (src.client.view + CAM_RANGE)) continue
-			visible = (visible | view(CAM_RANGE, C))
-	else
-	//Alternate version, uses only cameras on screen.
-		for(var/turf/T in view_turfs)
-			var/obj/machinery/camera/C = (locate(/obj/machinery/camera) in T)
-			if(C)
-				visible = (visible | view(CAM_RANGE, C))
-
-	for(var/turf/TC in view_turfs)
-		var/curr_x = (client.view + 1) - (src.x - TC.x)
-		var/curr_y = (client.view + 1) - (src.y - TC.y)
-
-		var/obj/ai_static/S = (blockers[curr_x][curr_y])
-		if(S)
-			if(!(TC in visible))
-				S.mouse_opacity = 2
-				S.blocking = 1
-				if(S.alpha != 255)
-					animate(S, alpha=255, time=2)
-				//S.alpha = 255
-			else
-				S.mouse_opacity = 0
-				S.blocking = 0
-				if(S.alpha != 0)
-					animate(S, alpha=0, time=2)
-				//S.alpha = 0
-
-/mob/living/intangible/aicamera/disposing()
-	..()
-	return
-
-/mob/living/intangible/aicamera/Login()
-	..()
-	if(!src.client)
-		return
-
-	var/sight_range = ((src.client.view * 2) + 1)
-	blockers = new/list(sight_range, sight_range)
-	for(var/x = 1, x <= sight_range, x++)
-		for(var/y = 1, y <= sight_range, y++)
-			var/obj/ai_static/S = new()
-			S.screen_loc = "[x],[y]"
-			S.alpha = 0
-			blockers[x][y] = S
-			src.client.screen += S
-
-	//client.show_popup_menus = 0
-	return
-
-/mob/living/intangible/aicamera/Logout()
-	..()
-	blockers = null
-	//client.show_popup_menus = 1
-	return
-
-/mob/living/intangible/aicamera/Life(datum/controller/process/mobs/parent)
-	..(parent)
-	updateLOS()
-	return
-
-/mob/living/intangible/aicamera/Move(var/turf/NewLoc, direct)
-	..(NewLoc, direct)
-	updateLOS()
-	return
-	*/

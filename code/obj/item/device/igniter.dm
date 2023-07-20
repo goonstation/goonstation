@@ -1,23 +1,26 @@
+TYPEINFO(/obj/item/device/igniter)
+	mats = 2
+
 /obj/item/device/igniter
 	name = "igniter"
 	desc = "A small electronic device can be paired with other electronics, or used to heat chemicals directly."
 	icon_state = "igniter"
-	var/status = 1.0
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT | USEDELAY
+	var/status = 1
+	flags = FPRINT | TABLEPASS| CONDUCT | USEDELAY
+	c_flags = ONBELT
 	item_state = "electronic"
 	m_amt = 100
 	throwforce = 5
 	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 10
-	mats = 2
 	firesource = FIRESOURCE_IGNITER
 
 	//blcok spamming shit because inventory uncaps click speed and kinda makes this an exploit
 	//its still a bit stronger than non-inventory interactions, why not
 	var/last_ignite = 0
 
-/obj/item/device/igniter/attack(mob/M as mob, mob/user as mob)
+/obj/item/device/igniter/attack(mob/M, mob/user)
 	if (ishuman(M))
 		if (M:bleeding || (M:butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
 			if (!src.cautery_surgery(M, user, 15))
@@ -25,7 +28,7 @@
 		else return ..()
 	else return ..()
 
-/obj/item/device/igniter/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/device/igniter/attackby(obj/item/W, mob/user)
 	if ((istype(W, /obj/item/device/radio/signaler) && !( src.status )))
 		var/obj/item/device/radio/signaler/S = W
 		if (!( S.b_stat ))

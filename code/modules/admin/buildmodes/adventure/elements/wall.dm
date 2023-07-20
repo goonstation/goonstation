@@ -31,7 +31,7 @@
 	desc = "A wall. Something seems off about it."
 	density = 1
 	opacity = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "door_normal_closed"
 	var/sliding = 0
 
@@ -75,5 +75,5 @@
 				sliding = 0
 				return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.show_message("<span class='alert'>[src] seems to be movable, but you cannot muster the strength to displace it.</span>")

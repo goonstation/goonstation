@@ -1,0 +1,94 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 5
+	},
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/table/clothred/auto,
+/obj/machinery/light/small/floor/cool/very,
+/obj/item/bananapeel{
+	pixel_y = 4;
+	name = "Peel of Legend";
+	desc = "Go forth, and slip them all.";
+	burn_possible = 0
+	},
+/obj/decal/lightshaft{
+	pixel_y = 1;
+	pixel_x = -11;
+	desc = "A spotlight, probably shining on something important.";
+	name = "Spotlight"
+	},
+/turf/simulated/grass,
+/area/dmm_suite/clear_area)
+"r" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 6
+	},
+/area/dmm_suite/clear_area)
+"z" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 9
+	},
+/area/dmm_suite/clear_area)
+"I" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/dmm_suite/clear_area)
+"L" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 4
+	},
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/grasstodirt,
+/area/dmm_suite/clear_area)
+"N" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 8
+	},
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 10
+	},
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+r
+L
+a
+"}
+(2,1,1) = {"
+M
+e
+I
+"}
+(3,1,1) = {"
+S
+N
+z
+"}

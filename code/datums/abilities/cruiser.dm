@@ -47,7 +47,7 @@
 	cooldown = 0
 	last_cast = 0
 	check_range = 0
-	var/disabled = 0
+	disabled = 0
 	var/toggled = 0
 	var/is_on = 0   // used if a toggle ability
 	preferred_holder_type = /datum/abilityHolder/cruiser
@@ -91,10 +91,10 @@
 
 	castcheck()
 		if (incapacitationCheck())
-			boutput(holder.owner, __red("Not while incapacitated."))
+			boutput(holder.owner, "<span class='alert'>Not while incapacitated.</span>")
 			return 0
 		if (disabled)
-			boutput(holder.owner, __red("You cannot use that ability at this time."))
+			boutput(holder.owner, "<span class='alert'>You cannot use that ability at this time.</span>")
 			return 0
 		return 1
 

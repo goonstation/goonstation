@@ -5,7 +5,7 @@
  */
 
 import { useBackend, useLocalState } from '../backend';
-import { Box, Flex, Section, Input, LabeledControls } from '../components';
+import { Flex, Section, Input } from '../components';
 import { ButtonCheckbox } from '../components/Button';
 import { Window } from '../layouts';
 
@@ -45,14 +45,13 @@ export const BugReportForm = (props, context) => {
   const { act, data } = useBackend(context);
 
   const [isSecret, setIsSecret] = useLocalState(context, 'is_secret', false);
-  const [chosenTag, setTag] = useLocalState(context, 'tag', 'BUG');
+  const [chosenTag, setTag] = useLocalState(context, 'tag', 'MINOR');
 
   const tags = [
-    ["Unclassified", "BUG"],
-    ["Trivial", "TRIVIAL"],
-    ["Minor", "MINOR"],
-    ["Major", "MAJOR"],
-    ["Critical", "CRITICAL"],
+    ["Trivial", "TRIVIAL", "A bug that is extremely trivial, such as a spelling issue."],
+    ["Minor", "MINOR", "A bug that does not impact usage of a feature. These are often visual issues."],
+    ["Major", "MAJOR", "A bug that significantly impacts the usage of a feature."],
+    ["Critical", "CRITICAL", "A bug that significantly impacts the progression of the round."],
   ];
 
   const submit = () => {
@@ -96,13 +95,15 @@ export const BugReportForm = (props, context) => {
             </Flex.Item>
             <Flex.Item my={2}>
               <h2>{"Tags"}</h2>
-              {tags.map(pair =>
+              {tags.map(tag =>
                 (
                   <ButtonCheckbox
-                    key={pair[1]}
-                    checked={pair[1] === chosenTag}
-                    onClick={() => setTag(pair[1])}>
-                    {pair[0]}
+                    key={tag[1]}
+                    checked={tag[1] === chosenTag}
+                    onClick={() => setTag(tag[1])}
+                    tooltip={tag[2]}
+                    tooltipPosition="bottom">
+                    {tag[0]}
                   </ButtonCheckbox>
                 )
               )}

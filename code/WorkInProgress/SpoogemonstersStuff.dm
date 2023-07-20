@@ -64,7 +64,7 @@
 /obj/machinery/chem_dispenser_admin/
 	name = "chem dispenser"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
 	flags = NOSPLASH
@@ -91,10 +91,10 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
 					return
@@ -253,7 +253,7 @@
 		R.my_atom = adminPatch
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!isadmin(user) && current_state < GAME_STATE_FINISHED)
 			boutput(user, "<span class='alert'>This dispenser is too powerful for you!</span>")
 			return
@@ -262,7 +262,7 @@
 	proc/panel()
 		set background = 1
 
-		if(beakerSpecs.len == 0)
+		if(length(beakerSpecs) == 0)
 			beakerSpecs.len++
 			beakerSpecs[beakerSpecs.len] = new /datum/beakerSpec()
 

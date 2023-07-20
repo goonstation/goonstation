@@ -199,7 +199,7 @@ chui/window
 		if( winget( cli, "\ref[src]", "is-visible" ) == "false" )
 			CDBG2( "Validation failed for [cli] -- Not visible." )
 			return 0
-		if( theAtom && (!isAI(cli.mob) && !issilicon(cli.mob)) && get_dist( cli.mob.loc, theAtom.loc ) > 2 )
+		if( theAtom && (!isAI(cli.mob) && !issilicon(cli.mob)) && GET_DIST( cli.mob.loc, theAtom.loc ) > 2 )
 			CDBG2( "Validation failed for [cli] -- Too far." )
 			return 0
 		return 1
@@ -315,7 +315,7 @@ chui/window
 	else
 		var/onCloseRef = winget(src, window, "on-close") //This exists to allow chui windows to work with the normal onclose.
 		var/list/split = splittext(onCloseRef, " ")		 //Unfortunately this ends up calling it twice if a window is closed by chui.
-		if(split.len >= 2) 								 //If anyone has a better solution go for it but don't just remove it because it will break things.
+		if(length(split) >= 2) 								 //If anyone has a better solution go for it but don't just remove it because it will break things.
 			var/datum/targetDatum = locate(split[2])
 			if (targetDatum)
 				targetDatum.Topic("close=1", params2list("close=1"), targetDatum)

@@ -8,30 +8,33 @@ Contains:
 
 //////////////////////////////////////// Laser tripwire //////////////////////////////
 
+TYPEINFO(/obj/item/device/infra)
+	mats = 3
+
 /obj/item/device/infra
 	name = "Laser Tripwire"
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
 	icon_state = "infrared0"
-	var/obj/beam/i_beam/first = null
-	var/state = 0.0
-	var/visible = 0.0
+	var/state = 0
+	var/visible = 0
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	m_amt = 150
-	mats = 3
 
 ///////////////////////////////////////// Infrared sensor ///////////////////////////////////////////
+
+TYPEINFO(/obj/item/device/infra_sensor)
+	mats = 4
 
 /obj/item/device/infra_sensor
 	name = "Infrared Sensor"
 	desc = "Scans for infrared beams in the vicinity."
 	icon_state = "infra_sensor"
-	var/passive = 1.0
+	var/passive = 1
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "electronic"
 	m_amt = 150
-	mats = 4
 
 /* When/if someone ever gets around to fixing these uncomment this
 /obj/item/device/infra_sensor/process()
@@ -145,7 +148,7 @@ Contains:
 		//src.first = null
 	return
 
-/obj/item/device/infra/attackby(obj/item/device/radio/signaler/S as obj, mob/user as mob)
+/obj/item/device/infra/attackby(obj/item/device/radio/signaler/S, mob/user)
 	if ((!( istype(S, /obj/item/device/radio/signaler) ) || !( S.b_stat )))
 		return
 	var/obj/item/assembly/rad_infra/R = new /obj/item/assembly/rad_infra( user )
@@ -254,7 +257,7 @@ Contains:
 	..()
 	return
 
-/obj/item/assembly/rad_infra/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/rad_infra/attackby(obj/item/W, mob/user)
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))

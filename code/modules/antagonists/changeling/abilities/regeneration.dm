@@ -17,17 +17,17 @@
 
 		var/datum/abilityHolder/changeling/H = holder
 		if (!istype(H))
-			boutput(holder.owner, __red("That ability is incompatible with our abilities. We should report this to a coder."))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
 		var/mob/living/carbon/human/C = holder.owner
-		if (alert("Are we sure?","Enter Regenerative Stasis?","Yes","No") != "Yes")
-			boutput(holder.owner, __blue("We change our mind."))
+		if (tgui_alert(C,"Are we sure?","Enter Regenerative Stasis?",list("Yes","No")) != "Yes")
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 
 		if(!H.in_fakedeath)
-			boutput(holder.owner, __blue("Repairing our wounds."))
-			logTheThing("combat", holder.owner, null, "enters regenerative stasis as a changeling [log_loc(holder.owner)].")
+			boutput(holder.owner, "<span class='notice'>Repairing our wounds.</span>")
+			logTheThing(LOG_COMBAT, holder.owner, "enters regenerative stasis as a changeling [log_loc(holder.owner)].")
 			var/list/implants = list()
 			for (var/obj/item/implant/I in holder.owner) //Still preserving implants
 				implants += I
@@ -47,18 +47,25 @@
 					C.HealDamage("All", 1000, 1000)
 					C.take_brain_damage(-INFINITY)
 					C.take_toxin_damage(-INFINITY)
+					C.change_misstep_chance(-INFINITY)
 					C.take_oxygen_deprivation(-INFINITY)
+					C.delStatus("drowsy")
+					C.delStatus("passing_out")
+					C.delStatus("n_radiation")
 					C.delStatus("paralysis")
+					C.delStatus("slowed")
 					C.delStatus("stunned")
 					C.delStatus("weakened")
 					C.delStatus("radiation")
+					C.take_radiation_dose(-INFINITY)
+					C.delStatus("disorient")
 					C.health = 100
 					C.reagents.clear_reagents()
 					C.lying = 0
 					C.canmove = 1
 					boutput(C, "<span class='notice'>We have regenerated.</span>")
-					logTheThing("combat", C, null, "[C] finishes regenerative statis as a changeling [log_loc(C)].")
-					C.visible_message(__red("<B>[C] appears to wake from the dead, having healed all wounds.</span>"))
+					logTheThing(LOG_COMBAT, C, "[C] finishes regenerative statis as a changeling [log_loc(C)].")
+					C.visible_message("<span class='alert'><B>[C] appears to wake from the dead, having healed all wounds.</span></span>")
 					for(var/obj/item/implant/I in implants)
 						if (istype(I, /obj/item/implant/projectile))
 							boutput(C, "<span class='alert'>\an [I] falls out of your abdomen.</span>")
@@ -66,6 +73,11 @@
 							C.implant.Remove(I)
 							I.set_loc(C.loc)
 							continue
+					if(C.bioHolder?.effects && length(C.bioHolder.effects))
+						for(var/bioEffectId in C.bioHolder.effects)
+							var/datum/bioEffect/gene = C.bioHolder.GetEffect(bioEffectId)
+							if (gene.curable_by_mutadone && gene.effectType == EFFECT_TYPE_DISABILITY)
+								C.bioHolder.RemoveEffect(gene.id)
 
 				C.set_clothing_icon_dirty()
 				H.in_fakedeath = 0
@@ -145,9 +157,10 @@
 			if(istype(O))
 				O.unbreakme()
 
-		if (prob(25))
+		if (!ON_COOLDOWN(C, "cling_visible_message", 3 SECONDS))
 			if (changer)
 				C.visible_message("<span class='alert'><B>[C]'s flesh is moving and sliding around oddly!</B></span>")
+				playsound(C, 'sound/misc/cling_flesh.ogg', 30, TRUE)
 
 /datum/targetable/changeling/regeneration
 	name = "Speed Regeneration"
@@ -159,27 +172,67 @@
 	targeted = 0
 	target_anything = 0
 	can_use_in_container = 1
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	ignore_holder_lock = 1
+
+	incapacitationCheck()
+		return FALSE
 
 	cast(atom/target)
 		if (..())
 			return 1
-		if (alert("Are we sure?","Speed Regenerate?","Yes","No") != "Yes")
+
+		var/datum/abilityHolder/changeling/aH = holder
+		if (!istype(aH))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
-		if (!src.cooldowncheck())
-			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((src.last_cast - world.time) / 10)] seconds.</span>")
+		var/mob/living/carbon/human/H = holder.owner
+		if (tgui_alert(H, "Are we sure?", "Speed regen?", list("Yes","No")) != "Yes")
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 
-		var/mob/living/carbon/human/C = holder.owner
-		if (!istype(C))
-			boutput(holder.owner, __red("We have no idea what we are, but it's damn sure not compatible."))
-			return 1
-		boutput(holder.owner, __blue("Your skin begins reforming around your skeleton."))
+		H.changeStatus("changeling_speedregen", 30 SECONDS)
+		return FALSE
 
-		while(C.health < C.max_health || !C.limbs.l_arm || !C.limbs.r_arm || !C.limbs.l_leg || !C.limbs.r_leg)
-			if(isdead(C))
-				break
-			sleep(3 SECONDS)
-			changeling_super_heal_step(C)
+/// changeling speedregen status effect
+/datum/statusEffect/c_regeneration
+
+	id = "changeling_speedregen"
+	name = "Speed regeneration"
+	desc = "You quickly heal the damage dealt to you."
+	icon_state = "heart+"
+	unique = TRUE
+	maxDuration = 30 SECONDS
+
+	onAdd(optional=null)
+		. = ..()
+		var/mob/living/carbon/human/H
+		if (ishuman(owner))
+			H = owner
+			boutput(H, "<span class='notice'>We start regenerating.</span>")
+			H.visible_message("<span class='alert'><B>[H]'s flesh starts moving and sliding around oddly, repairing their wounds!</B></span>")
+			return
+		else
+			owner.delStatus("changeling_speedregen")
+
+	onUpdate(timePassed)
+		var/mob/living/carbon/human/H
+		if (!ishuman(owner)) return
+		H = owner
+		if (!H.getStatusDuration("burning"))
+			if (!ON_COOLDOWN(H, "cling_regen", 2 SECONDS))
+				changeling_super_heal_step(H, 25, 25)
+		else // lings are vulnerable to fire so it stopping their regen makes sense
+			if (!ON_COOLDOWN(H, "cling_fire_regen_cancellation", 3 SECONDS))
+				boutput(H, "<span class='alert'>The fire stops us from regenerating! Put it out!</span>")
+				H.visible_message("<span class='alert'><B>[H]'s flesh is moving weirdly in contact with the fire!</B></span>")
+
+	onRemove()
+		. = ..()
+		var/mob/living/carbon/human/H
+		if (!ishuman(owner)) return
+		H = owner
+		boutput(H, "<span class='notice'>We stop regenerating.</span>")
+		H.visible_message("<span class='alert'><B>[H]'s flesh stops moving and sliding around!</B></span>")
+		return

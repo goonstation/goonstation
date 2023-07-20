@@ -12,7 +12,7 @@
 	icon_state = "medibot"
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	luminosity = 2
 	req_access = list(access_medical)
 	access_lookup = "Medical Doctor"
@@ -30,7 +30,7 @@
 	var/last_found = 0
 	/// Time after injecting someone before they'll try to inject them again. Encourages them to spread the love (and poison). Hitting the bot overrides the cooldown
 	var/last_patient_cooldown = 5 SECONDS
-	var/point_cooldown = 1 SECOND //Don't spam your pointer-finger
+	var/point_cooldown = 10 SECONDS //Don't spam your pointer-finger
 	var/currently_healing = 0
 	var/injection_amount = 10 //How much reagent do we inject at a time?
 	var/heal_threshold = 15 //Start healing when they have this much damage in a category
@@ -39,7 +39,7 @@
 	var/treatment_brute = "saline"
 	var/treatment_oxy = "salbutamol"
 	var/treatment_fire = "saline"
-	var/treatment_tox = "charcoal"
+	var/treatment_tox = "anti_rad"
 	var/treatment_virus = "spaceacillin"
 	/// the stuff the bot injects when emagged
 	var/list/dangerous_stuff = list()
@@ -55,7 +55,7 @@
 																				"haloperidol" = 15,
 																				"morphine" = 20,
 																				"cold_medicine" = 40,
-																				"simethicone" = 10,
+																				"anti_fart" = 10,
 																				"sulfonal" = 5, /* its an oldetimey sedative */
 																				"atropine" = 10,
 																				"methamphetamine" = 30,
@@ -80,7 +80,7 @@
 	density = 1
 	emagged = 1
 	terrifying = 1
-	anchored = 1 // don't drag it into space goddamn jerks
+	anchored = ANCHORED // don't drag it into space goddamn jerks
 	no_camera = 1
 	last_patient_cooldown = 5 SECONDS // There's usually only one target anyway, and we want to mess them up right good
 
@@ -200,7 +200,7 @@
 /obj/machinery/bot/medbot/attack_ai(mob/user as mob)
 	return toggle_power()
 
-/obj/machinery/bot/medbot/attack_hand(mob/user as mob, params)
+/obj/machinery/bot/medbot/attack_hand(mob/user, params)
 	if (src.terrifying)
 		return
 
@@ -289,7 +289,7 @@
 		src.on = 1
 		src.UpdateIcon()
 		src.pick_poison()
-		logTheThing("station", user, null, "emagged a [src] at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "emagged a [src] at [log_loc(src)].")
 		return 1
 	return 0
 
@@ -304,7 +304,7 @@
 	src.UpdateIcon()
 	return 1
 
-/obj/machinery/bot/medbot/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/bot/medbot/attackby(obj/item/W, mob/user)
 	//if (istype(W, /obj/item/card/emag)) // this gets to stay here because it is a good story
 		/*
 		I caught a fish once, real little feller, it was.
@@ -318,9 +318,7 @@
 		Also the override is here so you don't thwap the bot with the emag
 		*/
 		//return
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (istype(W, /obj/item/card/id))
+	if (istype(get_id_card(W), /obj/item/card/id))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
@@ -424,7 +422,7 @@
 		if (src.assess_patient(C))
 			src.patient = C
 			src.doing_something = 1
-			if (ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam these messages!
+			if (!ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam these messages!
 				src.point(src.patient, 1)
 				var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!","Don't worry, I'm trained for this!")
 				src.speak(message)
@@ -766,10 +764,10 @@
 
 /obj/machinery/bot/medbot/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.explode()
 			return
-		if(2.0)
+		if(2)
 			src.health -= 15
 			if (src.health <= 0)
 				src.explode()
@@ -803,7 +801,7 @@
 	src.exploding = 1
 	src.on = 0
 	src.audible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/storage/firstaid(Tsec)
@@ -829,16 +827,16 @@
 
 /obj/item/storage/firstaid/attackby(var/obj/item/parts/robot_parts/S, mob/user as mob)
 	if (!istype(S, /obj/item/parts/robot_parts/arm/))
-		if (src.contents.len >= 7)
+		if (src.storage.is_full())
 			return
-		if ((S.w_class >= W_CLASS_SMALL || istype(S, /obj/item/storage)))
+		if (S.w_class >= W_CLASS_SMALL || S.storage)
 			if (!istype(S,/obj/item/storage/pill_bottle))
 				boutput(user, "<span class='alert'>[S] won't fit into [src]!</span>")
 				return
 		..()
 		return
 
-	if (src.contents.len >= 1)
+	if (length(src.storage.get_contents()))
 		boutput(user, "<span class='alert'>You need to empty [src] out first!</span>")
 		return
 	else
@@ -863,7 +861,7 @@
 		qdel(S)
 		qdel(src)
 
-/obj/item/firstaid_arm_assembly/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/firstaid_arm_assembly/attackby(obj/item/W, mob/user)
 	if ((istype(W, /obj/item/device/analyzer/healthanalyzer)) && (!src.build_step))
 		src.build_step++
 		boutput(user, "You add the health sensor to [src]!")

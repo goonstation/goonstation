@@ -1,0 +1,84 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/circuit/red,
+/area/dmm_suite/clear_area)
+"b" = (
+/obj/item/aiModule/spaceodyssey{
+	pixel_x = 10;
+	pixel_y = -8
+	},
+/turf/simulated/floor/circuit/red,
+/area/dmm_suite/clear_area)
+"h" = (
+/obj/machinery/camera,
+/turf/simulated/floor/circuit/red,
+/area/dmm_suite/clear_area)
+"p" = (
+/obj/machinery/camera{
+	dir = 10
+	},
+/turf/simulated/floor/circuit/red,
+/area/dmm_suite/clear_area)
+"y" = (
+/obj/item/screwdriver{
+	pixel_x = 12;
+	pixel_y = 12
+	},
+/obj/item/weldingtool{
+	pixel_x = -10;
+	pixel_y = 4
+	},
+/turf/simulated/floor/circuit/red,
+/area/dmm_suite/clear_area)
+"C" = (
+/obj/decal/fakeobjects/lawrack,
+/obj/map/light/dimred,
+/turf/simulated/floor/circuit/red,
+/area/dmm_suite/clear_area)
+"Q" = (
+/obj/item/clothing/suit/space/emerg{
+	pixel_y = -6;
+	pixel_x = 4
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/turf/simulated/floor/circuit/red,
+/area/dmm_suite/clear_area)
+"T" = (
+/obj/machinery/camera{
+	dir = 6
+	},
+/obj/machinery/networked/printer{
+	pixel_x = -2;
+	pixel_y = 11;
+	density = 0
+	},
+/obj/item/paper/spaceodyssey{
+	pixel_y = -1
+	},
+/turf/simulated/floor/circuit/red,
+/area/dmm_suite/clear_area)
+"X" = (
+/obj/machinery/camera{
+	dir = 1
+	},
+/turf/simulated/floor/circuit/red,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+h
+b
+X
+"}
+(2,1,1) = {"
+a
+C
+y
+"}
+(3,1,1) = {"
+T
+Q
+p
+"}

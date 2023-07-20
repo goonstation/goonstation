@@ -15,12 +15,12 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to kick there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to kick there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to kick."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to kick.</span>")
 			return 1
 
 		var/mob/ow = holder.owner
@@ -34,7 +34,7 @@
 			var/kicktype = pick("kick", "roundhouse", "thrust")
 			ow.visible_message("<span class='alert'><B>[ow.name] [kickverb] [target] with a powerful [kicktype]!</B></span>")
 
-			playsound(ow.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+			playsound(ow.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 
 			ow.changeStatus("stunned", 1 SECOND)
 			ow.changeStatus("weakened", 1 SECOND)
@@ -60,7 +60,7 @@
 				if (1)
 					return
 
-			logTheThing("combat", ow, target, "uses Power Kick on [constructTarget(target,"combat")] at [log_loc(ow)].")
+			logTheThing(LOG_COMBAT, ow, "uses Power Kick on [constructTarget(target,"combat")] at [log_loc(ow)].")
 
 		else if (ismob(target))
 			var/mob/M = target
@@ -87,5 +87,5 @@
 				M.throw_at(T, 5, 2)
 				M.changeStatus("stunned", 1 SECOND)
 
-			logTheThing("combat", M, target, "uses Power Kick on [constructTarget(target,"combat")] at [log_loc(M)].")
+			logTheThing(LOG_COMBAT, M, "uses Power Kick on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0

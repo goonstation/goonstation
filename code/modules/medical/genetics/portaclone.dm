@@ -10,7 +10,7 @@
 	var/obj/machinery/computer/cloning/computer = null //Built-in computer for i/o.
 
 	//Portable object vars
-	anchored = 0
+	anchored = UNANCHORED
 	var/locked = 0
 
 	New()
@@ -37,7 +37,7 @@
 				computer.show_message("System ready.", "success")
 				return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (W)
 			if (istype(W, /obj/item/disk/data/floppy) || isscrewingtool(W) || istype(W, /obj/item/cloner_upgrade))
 				computer.Attackby(W,user)
@@ -47,9 +47,9 @@
 				scanner.Attackby(W,user)
 				src.add_fingerprint(user)
 
-			else if (istype(W, /obj/item/card/id) || (istype(W, /obj/item/device/pda2) && W:ID_card) || istype(W, /obj/item/card/emag) || istype(W, /obj/item/reagent_containers/glass))
+			else if (istype(get_id_card(W), /obj/item/card/id) || istype(W, /obj/item/card/emag) || istype(W, /obj/item/reagent_containers/glass))
 				pod1.Attackby(W,user)
 				src.add_fingerprint(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return computer.Attackhand(user)

@@ -6,7 +6,7 @@
 /datum/movement_controller/obj_control
 	var/obj/master
 	var/move_dir = 0
-	var/move_delay = 1.0
+	var/move_delay = 1
 	var/running = 0
 	var/next_move = 0
 

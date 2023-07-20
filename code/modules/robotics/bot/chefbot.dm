@@ -6,7 +6,7 @@
 	icon_state = "chefbot-idle"
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	on = 1 // ACTION
 	health = 5
 	var/raging = 0
@@ -167,7 +167,7 @@
 	src.emagged = 0
 	return 1
 
-/obj/machinery/bot/chefbot/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/bot/chefbot/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/card/emag))
 		emag_act(user, W)
 	else
@@ -184,7 +184,7 @@
 	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	var/turf/Tsec = get_turf(src)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	new /obj/item/clothing/head/dramachefhat(Tsec)

@@ -325,10 +325,13 @@
 		if (!members || !F) return
 		if (length(src.members) == 1)
 			var/turf/T
+			var/blocked
 			for( var/dir in cardinal )
 				T = get_step( F, dir )
-				if (! (istype(T,/turf/simulated/floor) || istype (T,/turf/unsimulated/floor)) ) continue
-				if (T.canpass())
+				if (! (istype(T, /turf/simulated/floor) || istype (T, /turf/unsimulated/floor)) )
+					blocked++
+					continue
+				if (T.Enter(src))
 					if (T.active_liquid && T.active_liquid.group)
 						T.active_liquid.group.join(src)
 					else
@@ -336,6 +339,10 @@
 						F.set_loc(T)
 						T.active_liquid = F
 					break
+				else
+					blocked++
+			if(blocked == length(cardinal)) // failed
+				src.remove(F,0,2)
 		else
 			var/turf/T
 			for( var/dir in cardinal )
@@ -390,6 +397,7 @@
 		var/reagents = 0
 
 		for(var/reagent_id in src.reagents.reagent_list)
+			if (QDELETED(src.reagents)) return
 			var/datum/reagent/current_reagent = src.reagents.reagent_list[reagent_id]
 
 			if (isnull(current_reagent))
@@ -470,6 +478,7 @@
 				break
 
 		LAGCHECK(LAG_MED)
+		if (src.qdeled) return 1
 
 		var/datum/color/last_color = src.average_color
 		src.average_color = src.reagents?.get_average_color()
@@ -485,6 +494,7 @@
 			return 1
 
 		LAGCHECK(LAG_MED)
+		if (src.qdeled) return 1
 
 		var/targetalpha = max(25, (src.average_color.a / 255) * src.max_alpha)
 		var/targetcolor = rgb(src.average_color.r, src.average_color.g, src.average_color.b)
@@ -653,7 +663,7 @@
 		if (length(members) && src.members[1] != drain_source)
 			if (length(src.members) <= 30)
 				var/list/L = drain_source.get_connected_fluids()
-				if (L.len == length(members))
+				if (length(L) == length(members))
 					src.members = L.Copy()// this is a bit of an ouch, but drains need to be able to finish off smallish puddles properly
 
 		var/list/fluids_removed = list()
@@ -669,7 +679,7 @@
 			fluids_removed += F
 			fluids_removed_avg_viscosity += F.avg_viscosity
 
-			if (fluids_removed.len >= fluids_to_remove)
+			if (length(fluids_removed) >= fluids_to_remove)
 				break
 
 		var/removed_len = length(fluids_removed)
@@ -730,7 +740,7 @@
 			//pass in adjacent_amt: get_connected will check the removal_key of each fluid, which will trigger an early abort if we determine no split is necessary
 			connected = split_liq.get_connected_fluids(adjacent_amt)
 
-		if (!connected || connected.len == length(src.members))
+		if (!connected || length(connected) == length(src.members))
 			return 0
 
 		if (!removed_loc || src.qdeled || !src.reagents || !src.reagents.total_volume) //trying to stop the weird bug were a bunch of simultaneous splits removes all reagents

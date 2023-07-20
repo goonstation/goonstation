@@ -43,7 +43,8 @@
 
 		// give back stored pills first
 		if (src.contents.len)
-			P = src.contents[src.contents.len]
+			for (var/i = src.contents.len; i > 0 && !istype(P, /obj/item/reagent_containers/pill), i--)
+				P = src.contents[i]
 
 		// otherwise create a new one from the reagent holder
 		else if (pcount)
@@ -79,7 +80,7 @@
 			src.desc = "A [src.pname] pill bottle. There [totalpills==1? "is [totalpills] pill." : "are [totalpills] pills." ]"
 			src.inventory_counter.update_number(totalpills)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/pill))
 			user.u_equip(W)
 			W.set_loc(src)
@@ -97,7 +98,7 @@
 				P.set_loc(T)
 				P = src.create_pill()
 				i--
-			if (src.pcount + src.contents.len > 0)
+			if (src.pcount + length(src.contents) > 0)
 				boutput(user, "<span class='notice'>You tip out a bunch of pills from [src] into [T].</span>")
 			else
 				boutput(user, "<span class='notice'>You tip out all the pills from [src] into [T].</span>")
@@ -106,7 +107,7 @@
 			boutput(user, "<span class='alert'>It's empty.</span>")
 			return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(user.r_hand == src || user.l_hand == src)
 			var/obj/item/reagent_containers/pill/P = src.create_pill()
 			if(istype(P))

@@ -7,6 +7,7 @@
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_BOTS
+	pass_unstable = TRUE
 	var/obj/item/card/id/botcard // ID card that the bot "holds".
 	var/access_lookup = "Assistant" // For the get_access() proc. Defaults to staff assistant.
 	var/locked = null
@@ -35,7 +36,7 @@
 	/// The noise that happens whenever the bot speaks
 	var/bot_voice = 'sound/misc/talk/bottalk_1.ogg'
 	/// The bot's speech bubble
-	var/static/image/bot_speech_bubble = image('icons/mob/mob.dmi', "speech")
+	var/static/mutable_appearance/bot_speech_bubble = mutable_appearance('icons/mob/mob.dmi', "speech")
 	var/use_speech_bubble = 1
 	/// Is this bot *dynamic* enough to need a higher processing tier when being watched?
 	/// Set to 0 for bots that don't typically directly interact with people, like ducks and floorbots
@@ -79,7 +80,7 @@
 
 	New()
 		..()
-		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, .proc/hitbyproj)
+		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, PROC_REF(hitbyproj))
 		if(!no_camera)
 			src.cam = new /obj/machinery/camera(src)
 			src.cam.c_tag = src.name
@@ -87,8 +88,7 @@
 		src.processing_tier = src.PT_idle
 		src.SubscribeToProcess()
 		if(!src.chat_text)
-			src.chat_text = new
-		src.vis_contents += src.chat_text
+			src.chat_text = new(null, src)
 		SPAWN(0.5 SECONDS)
 			src.botcard = new /obj/item/card/id(src)
 			src.botcard.access = get_access(src.access_lookup)
@@ -109,7 +109,7 @@
 			cam = null
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 		attack_particle(user,src)
 		hit_twitch(src)
@@ -235,13 +235,7 @@
 	if(!T) return
 	if(announce_it)
 		visible_message("<b>[src]</b> points at [target]!")
-	var/obj/decal/point/P = new(T)
-	P.pixel_x = target.pixel_x
-	P.pixel_y = target.pixel_y
-	P.color = src.bot_speech_color
-	SPAWN(2 SECONDS)
-		P.invisibility = INVIS_ALWAYS
-		qdel(P)
+	make_point(T, pixel_x=target.pixel_x, pixel_y=target.pixel_y, color=src.bot_speech_color, pointer=src)
 
 /obj/machinery/bot/emp_act()
 	src.emag_act()
@@ -270,7 +264,7 @@
 
 /obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=60)
 	var/target_turf = get_pathable_turf(the_target)
-	if((BOUNDS_DIST(the_target, src) == 0))
+	if((BOUNDS_DIST(the_target, src) < 0))
 		return
 	if(src.bot_mover?.the_target == target_turf && frustration == 0)
 		return 0
@@ -278,7 +272,8 @@
 		return 0
 
 	src.KillPathAndGiveUp(0)
-	src.bot_mover = new /datum/robot_mover(newmaster = src, _move_delay = move_delay, _target_turf = target_turf, _current_movepath = current_movepath, _adjacent = adjacent, _scanrate = scanrate, _max_dist = max_dist)
+	var/datum/robot_mover/mover = new /datum/robot_mover(newmaster = src, _move_delay = move_delay, _target_turf = target_turf, _current_movepath = current_movepath, _adjacent = adjacent, _scanrate = scanrate, _max_dist = max_dist)
+	src.bot_mover = !QDELETED(mover) ? mover : null
 	return 0
 
 /// movement control datum. Why yes, this is copied from secbot.dm. Which was copied from guardbot.dm
@@ -337,7 +332,7 @@
 			master.KillPathAndGiveUp(0)
 			return
 		var/compare_movepath = src.current_movepath
-		master.path = get_path_to(src.master, src.the_target, max_distance=src.max_dist, id=master.botcard, skip_first=FALSE, simulated_only=FALSE, cardinal_only=TRUE)
+		master.path = get_path_to(src.master, src.the_target, max_distance=src.max_dist, id=master.botcard, skip_first=FALSE, simulated_only=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
 		if(!length(master.path))
 			qdel(src)
 			return

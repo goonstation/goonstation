@@ -1,6 +1,7 @@
 /obj/storage/closet
 	name = "closet"
 	desc = "It's a closet! This one can be opened AND closed."
+	object_flags = NO_GHOSTCRITTER
 	soundproofing = 3
 	can_flip_bust = 1
 	p_class = 3
@@ -14,6 +15,7 @@
 	New()
 		. = ..()
 		START_TRACKING
+		src.AddComponent(/datum/component/bullet_holes, 10, 0)
 
 	disposing()
 		. = ..()
@@ -46,7 +48,7 @@
 		if(_health <= 0)
 			_health = 0
 			if (isnull(P))
-				logTheThing("combat", src, null, "is hit and broken open by a projectile at [log_loc(src)]. No projectile data.]")
+				logTheThing(LOG_COMBAT, src, "is hit and broken open by a projectile at [log_loc(src)]. No projectile data.]")
 			else
 				var/shooter_data = null
 				var/vehicle
@@ -62,9 +64,9 @@
 						shooter_data = V.pilot
 					vehicle = 1
 				if(shooter_data)
-					logTheThing("combat", shooter_data, src, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+					logTheThing(LOG_COMBAT, shooter_data, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 				else
-					logTheThing("combat", src, null, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+					logTheThing(LOG_COMBAT, src, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 			break_open()
 
 	proc/break_open()
@@ -96,8 +98,9 @@
 			if (prob(2))
 				new /obj/item/clothing/mask/gas/emergency(src)
 			for (var/i=rand(2,3), i>0, i--)
+				new /obj/item/tank/emergency_oxygen(src)
 				if (prob(40))
-					new /obj/item/tank/emergency_oxygen(src)
+					new /obj/item/tank/mini_oxygen(src)
 				if (prob(40))
 					new /obj/item/clothing/mask/breath(src)
 
@@ -138,7 +141,8 @@
 							/obj/item/clothing/shoes/galoshes,
 							/obj/item/reagent_containers/glass/bottle/cleaner,
 							/obj/item/storage/box/body_bag,
-							/obj/item/caution = 6)
+							/obj/item/caution = 6,
+							/obj/item/disk/data/floppy/manudrive/cleaner_grenade)
 
 /obj/storage/closet/law
 	name = "\improper Legal closet"
@@ -150,6 +154,8 @@
 	/obj/item/clothing/shoes/black,
 	/obj/item/storage/briefcase = 2)
 
+TYPEINFO(/obj/storage/closet/coffin)
+	mat_appearances_to_ignore = list("wood")
 /obj/storage/closet/coffin
 	name = "coffin"
 	desc = "A burial receptacle for the dearly departed."
@@ -215,7 +221,8 @@
 #endif
 	/obj/item/crowbar,
 	/obj/item/cell/supercell/charged,
-	/obj/item/device/multitool)
+	/obj/item/device/multitool,
+	/obj/item/storage/backpack/syndie)
 
 /obj/storage/closet/syndicate/nuclear
 	desc = "Nuclear preperations closet."
@@ -237,7 +244,7 @@
 /obj/storage/closet/thunderdome
 	name = "\improper Thunderdome closet"
 	desc = "Everything you need!"
-	anchored = 1
+	anchored = ANCHORED
 
 /* let us never forget this - haine
 /obj/closet/thunderdome/New()
@@ -288,7 +295,7 @@
 	name = "wrestling supplies closet"
 	desc = "A handy closet full of everything an aspiring fake showboater wrestler needs to launch his career."
 	spawn_contents = list(/obj/item/storage/belt/wrestling/fake = 3,
-	/obj/item/clothing/under/shorts/random = 3,
+	/obj/item/clothing/under/shorts/random_color = 3,
 	/obj/item/clothing/mask/wrestling/black = 1,
 	/obj/item/clothing/mask/wrestling/blue = 1,
 	/obj/item/clothing/mask/wrestling/green = 1)
@@ -397,7 +404,7 @@
 	icon_welded = "mantacontainerleft-welded"
 	bound_height = 96
 	bound_width = 32
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 	open(var/entangleLogic, mob/user)
 		if (src.open)
@@ -473,11 +480,11 @@
 			entangled.open(1)
 
 		src.UpdateIcon()
-		playsound(src.loc, "sound/effects/cargodoor.ogg", 15, 1, -3)
+		playsound(src.loc, 'sound/effects/cargodoor.ogg', 15, 1, -3)
 		SEND_SIGNAL(src, COMSIG_OBJ_STORAGE_CLOSED)
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cargotele))
 			return
 
@@ -501,6 +508,7 @@
 						I.set_loc(src)
 					amtload++
 				W:UpdateIcon()
+				W.tooltip_rebuild = 1
 				if (amtload)
 					user.show_text("[amtload] [W:itemstring] dumped into [W]!", "blue")
 				else
@@ -578,7 +586,7 @@
 	icon_welded = "mantacontainerright-welded"
 	bound_height = 96
 	bound_width = 32
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/storage/closet/radiation
 	name = "radiation supplies closet"
@@ -605,7 +613,7 @@
 					/obj/item/clothing/suit/nursedress = 3,
 					/obj/item/clothing/suit/wintercoat/medical = 3,
 					/obj/item/clothing/head/headmirror = 3,
-					/obj/item/clothing/suit/labcoat/medical = 3)
+					/obj/item/clothing/suit/labcoat = 2)
 
 /obj/storage/closet/command/ruined //replacements for azones and mining level flavor
 	name = "Dented command locker"
@@ -621,3 +629,11 @@
 	desc = "A banged up Head of Security locker. Looks like somebody took the law into their own hands."
 	spawn_contents = list(/obj/item/clothing/shoes/brown,
 	/obj/item/paper/iou)
+
+/obj/storage/closet/mauxite
+	desc = "This thing looks pretty robust!"
+	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "closed$$mauxite"
+	default_material = "mauxite"
+	uses_material_appearance = TRUE
+	mat_changename = TRUE

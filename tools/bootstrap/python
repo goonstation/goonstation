@@ -68,6 +68,8 @@ if [ "$(uname)" = "Linux" ] || [ ! -f "$PythonExe" ]; then
 		PythonExe="$PythonDir/bin/python"
 	elif [ -f "$PythonDir/scripts/python3.exe" ]; then
 		PythonExe="$PythonDir/scripts/python3.exe";
+	elif [ -f "$PythonDir/scripts/python.exe" ]; then
+		PythonExe="$PythonDir/scripts/python.exe";
 	else
 		echo "bootstrap/python failed to find the python executable inside its virtualenv"
 		exit 1
@@ -77,6 +79,7 @@ fi
 # Use pip to install our requirements
 if [ ! -f "$PythonDir/requirements.txt" ] || [ "$(b2sum < "$Sdk/requirements.txt")" != "$(b2sum < "$PythonDir/requirements.txt")" ]; then
 	echo "Updating dependencies..."
+	"$PythonExe" -m ensurepip || echo "ensurepip failed, continuing anyway..."
 	"$PythonExe" -m pip install -U wheel
 	"$PythonExe" -m pip install -U pip -r "$Sdk/requirements.txt"
 	cp "$Sdk/requirements.txt" "$PythonDir/requirements.txt"
@@ -105,6 +108,11 @@ if ! command -v tee >/dev/null 2>&1; then
 			echo "$line"
 		done
 	}
+fi
+
+if [ "$(uname -o)" = "Msys" ]; then
+	# replace /c/ with c:/ for Windows
+	Sdk=$(echo "$Sdk" | sed 's|^\(/.\)/|\1:/|')
 fi
 
 # Invoke python with all command-line arguments

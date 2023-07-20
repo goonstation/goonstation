@@ -8,15 +8,17 @@
 	desc = "Well, shit."
 	organ_holder_name = "head"
 	organ_holder_location = "head"
-	organ_holder_required_op_stage = 0.0
+	organ_holder_required_op_stage = 0
 	var/scalp_op_stage = 0.0 // Needed to track a scalp gash (brain and skull removal) separately from op_stage (head removal)
 	icon = 'icons/mob/human_head.dmi'
 	icon_state = "invis" // we'll overlay some shit on here
+	inhand_image_icon = 'icons/mob/inhand/hand_skulls.dmi'
+	item_state = ""
 	edible = 0
 	rand_pos = 0 // we wanna override it below
 	made_from = "bone"
 	tooltip_flags = REBUILD_ALWAYS //TODO: handle better??
-	MAX_DAMAGE = INFINITY
+	max_damage = INFINITY
 
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/skull/skull = null
@@ -29,12 +31,14 @@
 	/// Defines what kind of head this is, for things like lizards being able to colorchange a transplanted lizardhead
 	/// Since we can't easily swap out one head for a different type
 	var/head_type = HEAD_HUMAN
+	var/mob/living/carbon/human/linked_human = null
 
 	var/image/head_image = null
 	var/head_icon = null
 	var/head_state = null
 
 	var/image/head_image_eyes = null
+	var/image/head_image_nose = null
 	var/image/head_image_cust_one = null
 	var/image/head_image_cust_two = null
 	var/image/head_image_cust_three = null
@@ -51,6 +55,8 @@
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/glasses/glasses = null
 
+	appearance_flags = KEEP_TOGETHER
+
 	New()
 		..()
 		SPAWN(0)
@@ -65,12 +71,26 @@
 					src.UpdateIcon(/*makeshitup*/ 0)
 				else //The heck?
 					src.UpdateIcon(/*makeshitup*/ 1)
+				if (src.donor.eye != null)
+					src.donor.set_eye(null)
 			else
 				src.UpdateIcon(/*makeshitup*/ 1)
+			if (!src.chat_text)
+				src.chat_text = new(null, src)
 
 	disposing()
+		if (src.linked_human)
+			if (isskeleton(src.linked_human))
+				var/datum/mutantrace/skeleton/S = src.linked_human.mutantrace
+				S.head_tracker = null
+			src.UnregisterSignal(src.linked_human, COMSIG_CREATE_TYPING)
+			src.UnregisterSignal(src.linked_human, COMSIG_REMOVE_TYPING)
+			src.UnregisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE)
 		if (holder)
 			holder.head = null
+		if (donor_original?.eye == src)
+			donor_original.set_eye(null)
+			boutput(donor_original, "<span class='alert'><b>You feel your vision forcibly punted back to your body!</b></span>")
 		skull = null
 		brain = null
 		left_eye = null
@@ -80,6 +100,8 @@
 		ears = null
 		wear_mask = null
 		glasses = null
+		linked_human = null
+		chat_text = null
 
 		..()
 
@@ -123,6 +145,9 @@
 		if (!src.left_eye)
 			. += "<br><span class='alert'><B>[src.name]'s left eye is missing!</B></span>"
 
+		if (isalive(src.donor_original))
+			. += "<br><span class='notice'><B>[src.name] appears conscious!</B></span>"
+
 	/// This proc does a full rebuild of the head's stored data
 	/// only call it if something changes the head in a major way, like becoming a lizard
 	/// it will cause the head to be rebuilt from the mob's appearanceholder!
@@ -161,6 +186,13 @@
 		else if (src.head_appearance_flags & HAS_NO_EYES)
 			src.head_image_eyes = image('icons/mob/human_hair.dmi', "none", layer = MOB_FACE_LAYER)
 		src.head_image_eyes.color = AHead.e_color
+
+		// Add long nose if they have one
+		if (src.head_appearance_flags & HAS_LONG_NOSE)
+			src.head_image_nose = image(src.head_icon, "snout", layer = MOB_GLASSES_LAYER)
+			src.head_image_nose.color = src.skintone
+		else
+			src.head_image_nose = null
 
 		// Remove their hair first
 		src.head_image_cust_one = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
@@ -230,6 +262,9 @@
 		src.head_image_eyes.pixel_y = 0
 		src.overlays += src.head_image_eyes
 
+		if(src.head_image_nose)
+			src.overlays += src.head_image_nose
+
 		if (src.glasses && src.glasses.wear_image_icon)
 			src.overlays += image(src.glasses.wear_image_icon, src.glasses.icon_state, layer = MOB_GLASSES_LAYER)
 
@@ -239,7 +274,10 @@
 		if (src.ears && src.ears.wear_image_icon)
 			src.overlays += image(src.ears.wear_image_icon, src.ears.icon_state, layer = MOB_EARS_LAYER)
 
-		if (src.head && src.head.wear_image_icon)
+		if (src.head && src.head.wear_image)
+			src.overlays += src.head.wear_image
+
+		else if (src.head && src.head.wear_image_icon)
 			src.overlays += image(src.head.wear_image_icon, src.head.icon_state, layer = MOB_HEAD_LAYER2)
 
 		if(!(src.head && src.head.seal_hair))
@@ -267,12 +305,29 @@
 		src.pixel_y = rand(-20,-8)
 		src.pixel_x = rand(-8,8)
 
-	do_missing()
-		..()
+	on_transplant(mob/M)
+		. = ..()
+		// at this point in time, the head's "donor" is M, but the head's donor_appearance is the last person it was attached to's bioholder's mobappearance
+		if(!src.donor?.bioHolder?.mobAppearance)
+			return
 
+		var/datum/appearanceHolder/currentHeadAppearanceOwner = src.donor_appearance
+
+		// we will move the head's appearance onto its new owner's mobappearance and then update its appearance reference to that
+		src.donor.bioHolder.mobAppearance.CopyOtherHeadAppearance(currentHeadAppearanceOwner)
+		src.donor_appearance = src.donor.bioHolder.mobAppearance
 	on_removal()
-		donor.flags |= OPENCONTAINER
 		src.transplanted = 1
+		if (src.linked_human && (src.donor == src.linked_human))
+		 	// if we're typing, attempt to seamlessly transfer it
+			if (src.linked_human.has_typing_indicator && isskeleton(src.linked_human))
+				src.linked_human.remove_typing_indicator()
+				src.linked_human.has_typing_indicator = TRUE // proc above removes it
+				src.create_typing_indicator()
+
+			src.RegisterSignal(src.linked_human, COMSIG_CREATE_TYPING, PROC_REF(create_typing_indicator))
+			src.RegisterSignal(src.linked_human, COMSIG_REMOVE_TYPING, PROC_REF(remove_typing_indicator))
+			src.RegisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE, PROC_REF(speech_bubble))
 		. = ..()
 
 	///Taking items off a head
@@ -293,7 +348,7 @@
 		update_head_image()
 
 
-	attackby(obj/item/W as obj, mob/user as mob) // this is real ugly
+	attackby(obj/item/W, mob/user) // this is real ugly
 		if (!user)
 			return
 		//Putting stuff on heads
@@ -333,40 +388,47 @@
 			else
 				boutput(user, "<span class='alert'>[src.name] is already wearing [src.glasses.name]!</span>")
 			return
-
+		if (istype(W, /obj/item/cloth))
+			playsound(src, 'sound/items/towel.ogg', 25, 1)
+			user.visible_message("<span class='notice'>[user] [pick("buffs", "shines", "cleans", "wipes", "polishes")] [src] with [W].</span>")
+			src.clean_forensic()
+			return
+		if (istype(W, /obj/item/reagent_containers/food) && head_type == HEAD_SKELETON)
+			user.visible_message("<span class='notice'>[user] tries to feed [W] to [src] but it cannot swallow!</span>")
+			return
 
 		if (src.skull || src.brain)
 
 			// scalpel surgery
-			if (istype(W, /obj/item/scalpel) || istype(W, /obj/item/razor_blade) || istype(W, /obj/item/knife/butcher) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/raw_material/shard))
+			if (iscuttingtool(W))
 				if (src.right_eye && src.right_eye.op_stage == 1.0 && user.find_in_hand(W) == user.r_hand)
-					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> cuts away the flesh holding [src]'s right eye in with [W]!</span>",\
 					"<span class='alert'>You cut away the flesh holding [src]'s right eye in with [W]!</span>")
-					src.right_eye.op_stage = 2.0
+					src.right_eye.op_stage = 2
 				else if (src.left_eye && src.left_eye.op_stage == 1.0 && user.find_in_hand(W) == user.l_hand)
-					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> cuts away the flesh holding [src]'s left eye in with [W]!</span>",\
 					"<span class='alert'>You cut away the flesh holding [src]'s left eye in with [W]!</span>")
-					src.left_eye.op_stage = 2.0
+					src.left_eye.op_stage = 2
 				else if (src.brain)
 					if (src.brain.op_stage == 0.0)
-						playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 						user.visible_message("<span class='alert'><b>[user]</b> cuts [src] open with [W]!</span>",\
 						"<span class='alert'>You cut [src] open with [W]!</span>")
-						src.brain.op_stage = 1.0
-					else if (src.brain.op_stage == 2.0)
-						playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+						src.brain.op_stage = 1
+					else if (src.brain.op_stage == 2)
+						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 						user.visible_message("<span class='alert'><b>[user]</b> removes the connections to [src]'s brain with [W]!</span>",\
 						"<span class='alert'>You remove [src]'s connections to [src]'s brain with [W]!</span>")
-						src.brain.op_stage = 3.0
+						src.brain.op_stage = 3
 					else
 						return ..()
 				else if (src.skull && src.skull.op_stage == 0.0)
-					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> cuts [src]'s skull away from the skin with [W]!</span>",\
 					"<span class='alert'>You cut [src]'s skull away from the skin with [W]!</span>")
-					src.skull.op_stage = 1.0
+					src.skull.op_stage = 1
 				else
 					return ..()
 
@@ -374,12 +436,12 @@
 			else if (istype(W, /obj/item/circular_saw) || istype(W, /obj/item/saw) || istype(W, /obj/item/kitchen/utensil/fork))
 				if (src.brain)
 					if (src.brain.op_stage == 1.0)
-						playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 						user.visible_message("<span class='alert'><b>[user]</b> saws open [src]'s skull with [W]!</span>",\
 						"<span class='alert'>You saw open [src]'s skull with [W]!</span>")
-						src.brain.op_stage = 2.0
+						src.brain.op_stage = 2
 					else if (src.brain.op_stage == 3.0)
-						playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 						user.visible_message("<span class='alert'><b>[user]</b> saws open [src]'s skull with [W]!</span>",\
 						"<span class='alert'>You saw open [src]'s skull with [W]!</span>")
 						src.brain.set_loc(get_turf(src))
@@ -387,7 +449,7 @@
 					else
 						return ..()
 				else if (src.skull && src.skull.op_stage == 1.0)
-					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> saws [src]'s skull out with [W]!</span>",\
 					"<span class='alert'>You saw [src]'s skull out with [W]!</span>")
 					src.skull.set_loc(get_turf(src))
@@ -396,25 +458,25 @@
 					return ..()
 
 			// spoon surgery
-			else if (istype(W, /obj/item/surgical_spoon) || istype(W, /obj/item/kitchen/utensil/spoon))
+			else if (isspooningtool(W))
 				if (src.right_eye && src.right_eye.op_stage == 0.0 && user.find_in_hand(W) == user.r_hand)
-					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> inserts [W] into [src]'s right eye socket!</span>",\
 					"<span class='alert'>You insert [W] into [src]'s right eye socket!</span>")
-					src.right_eye.op_stage = 1.0
+					src.right_eye.op_stage = 1
 				else if (src.left_eye && src.left_eye.op_stage == 0.0 && user.find_in_hand(W) == user.l_hand)
-					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> inserts [W] into [src]'s left eye socket!</span>",\
 					"<span class='alert'>You insert [W] into [src]'s left eye socket!</span>")
-					src.left_eye.op_stage = 1.0
-				else if (src.right_eye && src.right_eye.op_stage == 2.0 && user.find_in_hand(W) == user.r_hand)
-					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					src.left_eye.op_stage = 1
+				else if (src.right_eye && src.right_eye.op_stage == 2 && user.find_in_hand(W) == user.r_hand)
+					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> removes [src]'s right eye with [W]!</span>",\
 					"<span class='alert'>You remove [src]'s right eye with [W]!</span>")
 					src.right_eye.set_loc(get_turf(src))
 					src.right_eye = null
-				else if (src.left_eye && src.left_eye.op_stage == 2.0 && user.find_in_hand(W) == user.l_hand)
-					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+				else if (src.left_eye && src.left_eye.op_stage == 2 && user.find_in_hand(W) == user.l_hand)
+					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> removes [src]'s left eye with [W]!</span>",\
 					"<span class='alert'>You remove [src]'s left eye with [W]!</span>")
 					src.left_eye.set_loc(get_turf(src))
@@ -429,27 +491,32 @@
 
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for attaching heads. */
+
+		if (src.linked_human && isskeleton(M))// return the typing indicator to the human only if we're put on a skeleton
+			src.UnregisterSignal(src.linked_human, COMSIG_CREATE_TYPING)
+			src.UnregisterSignal(src.linked_human, COMSIG_REMOVE_TYPING)
+			src.UnregisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE)
 		var/mob/living/carbon/human/H = M
-		if (!src.can_attach_organ(H, user))
+		if (!isskeleton(M) && !src.can_attach_organ(H, user))
 			return 0
 
 		var/fluff = pick("attach", "shove", "place", "drop", "smoosh", "squish")
-		if (!H.get_organ("head"))
+		if (!H.get_organ("head") && H.organHolder.receive_organ(src, "head", isskeleton(M) ? 0 : 3))
 
-			H.tri_message("<span class='alert'><b>[user]</b> [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto [H == user ? "[his_or_her(H)]" : "[H]'s"] neck stump!</span>",\
-			user, "<span class='alert'>You [fluff] [src] onto [user == H ? "your" : "[H]'s"] neck stump!</span>",\
-			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto your neck stump!</span>")
+			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto [H == user ? "[his_or_her(H)]" : "[H]'s"] neck stump!</span>",\
+				"<span class='alert'>You [fluff] [src] onto [user == H ? "your" : "[H]'s"] neck stump!</span>",\
+				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto your neck stump!</span>")
+			playsound(H, 'sound/effects/attach.ogg', 50, 1)
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
-			H.organHolder.receive_organ(src, "head", 3.0)
+			H.update_equipment_screen_loc()
 
 			SPAWN(rand(50,500))
-				if (H?.organHolder?.head && H.organHolder.head == src) // aaaaaa
-					if (src.op_stage != 0.0)
-						H.visible_message("<span class='alert'><b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b></span>",\
-						"<span class='alert'><b>Your head comes loose and tumbles off of your neck!</b></span>")
-						H.organHolder.drop_organ("head") // :I
+				if (H?.organHolder?.head == src && src.op_stage != 0.0) // head has not been secured
+					H.visible_message("<span class='alert'><b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b></span>",\
+					"<span class='alert'><b>Your head comes loose and tumbles off of your neck!</b></span>")
+					H.organHolder.drop_organ("head") // :I
 
 			return 1
 		else
@@ -461,8 +528,8 @@
 			// rebuild, start with a human head
 			src.name = "head"
 			src.desc = "Well, shit."
-			src.organ_holder_required_op_stage = 0.0
-			src.scalp_op_stage = 0.0
+			src.organ_holder_required_op_stage = 0
+			src.scalp_op_stage = 0
 			src.head_type = mutant_race
 
 			// then set the head icon
@@ -504,12 +571,13 @@
 				if(HEAD_WEREWOLF)
 					src.organ_name = "wolf head"
 					src.desc = "Definitely not a good boy."
-					src.MAX_DAMAGE = 250	// Robust head for a robust antag
-					src.FAIL_DAMAGE = 240
+					src.max_damage = 250	// Robust head for a robust antag
+					src.fail_damage = 240
 
 				if(HEAD_SKELETON)
 					src.organ_name = "bony head"
 					src.desc = "...does that skull have another skull inside it?"
+					src.item_state = "skull"
 
 				if(HEAD_SEAMONKEY)
 					src.organ_name = "seamonkey head"

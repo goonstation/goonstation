@@ -1,0 +1,93 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+"h" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/railing{
+	dir = 8
+	},
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+"j" = (
+/obj/railing,
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/decal/cleanable/cobweb,
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/decal/cleanable/leaves,
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+"G" = (
+/obj/decal/fakeobjects/skeleton{
+	pixel_x = -2
+	},
+/obj/item/clothing/shoes/cowboy{
+	pixel_x = -8;
+	pixel_y = -8
+	},
+/obj/item/clothing/head/cowboy{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/clothing/under/gimmick/chaps{
+	pixel_y = 2;
+	pixel_x = -8
+	},
+/obj/decal/cleanable/blood,
+/obj/railing{
+	dir = 4
+	},
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+"L" = (
+/obj/decal/cleanable/dirt/dirt4,
+/obj/decal/cleanable/leaves,
+/obj/railing{
+	dir = 1
+	},
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+"P" = (
+/obj/item/mop{
+	pixel_x = -4;
+	pixel_y = -2
+	},
+/obj/item/clothing/mask/horse_mask{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/snacks/plant/carrot{
+	pixel_x = 8;
+	pixel_y = -6
+	},
+/turf/simulated/floor/grass,
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/light/incandescent/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+u
+G
+a
+"}
+(2,1,1) = {"
+j
+P
+L
+"}
+(3,1,1) = {"
+S
+h
+D
+"}

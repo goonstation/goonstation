@@ -3,11 +3,11 @@
 	desc = "A punching bag. Can you get to speed level 4???"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "punchingbag"
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SIMPLE
 	layer = MOB_LAYER_BASE+1 // TODO LAYER
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.lastattacked = src
 		flick("[icon_state]2", src)
 		playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
@@ -34,7 +34,7 @@
 		desc = "A bop bag in the shape of a goofy clown."
 		icon_state = "bopbag"
 
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			user.lastattacked = src
 			flick("[icon_state]2", src)
 			if (narrator_mode)
@@ -51,11 +51,11 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "fitnesslifter"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_WRENCH
 	var/in_use = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(in_use)
 			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
 			return
@@ -99,11 +99,11 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "fitnessweight"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_WRENCH
 	var/in_use = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(in_use)
 			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
 			return
@@ -116,11 +116,11 @@
 			APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "fitness_machine")
 			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
-			var/obj/decal/W = new /obj/decal/
+			var/obj/decal/W = new /obj/decal
 			W.icon = 'icons/obj/stationobjs.dmi'
 			W.icon_state = "fitnessweight-w"
 			W.set_loc(loc)
-			W.anchored = 1
+			W.anchored = ANCHORED
 			W.layer = MOB_LAYER_BASE+1
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 			user.visible_message(text("<span class='alert'><B>[user] is [bragmessage]!</B></span>"))
@@ -153,41 +153,3 @@
 			qdel(W)
 			boutput(user, "<span class='notice'>[finishmessage]</span>")
 			user.changeStatus("fitness_stam_max", 100 SECONDS)
-
-/obj/item/rubberduck
-	name = "rubber duck"
-	desc = "Awww, it squeaks!"
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "rubber_duck"
-	item_state = "sponge"
-	throwforce = 1
-	w_class = W_CLASS_TINY
-	throw_speed = 3
-	throw_range = 15
-	var/spam_flag = 0
-
-/obj/item/rubberduck/attack_self(mob/user as mob)
-	if (spam_flag < world.time)
-		if (ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if (H.sims)
-				H.sims.affectMotive("fun", 1)
-		spam_flag = 1
-		if (narrator_mode)
-			playsound(user, 'sound/vox/duct.ogg', 50, 1)
-		else
-			playsound(user, 'sound/items/rubberduck.ogg', 50, 1)
-		if(prob(1))
-			user.drop_item()
-			playsound(user, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 50, 1) // this is gonna spook some people!!
-			var/wacka = 0
-			while (wacka++ < 50)
-				sleep(0.2 SECONDS)
-				pixel_x = rand(-6,6)
-				pixel_y = rand(-6,6)
-				sleep(0.1 SECONDS)
-				pixel_y = 0
-				pixel_x = 0
-		src.add_fingerprint(user)
-		spam_flag = world.time + 2 SECONDS
-	return

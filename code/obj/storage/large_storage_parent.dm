@@ -8,6 +8,7 @@
 
 #define RELAYMOVE_DELAY 50
 
+ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 /obj/storage
 	name = "storage"
 	desc = "this is a parent item you shouldn't see!!"
@@ -27,8 +28,8 @@
 	var/icon_closed = "closed"
 	var/icon_opened = "open"
 	var/icon_welded = "welded-closet"
-	var/open_sound = "sound/machines/click.ogg"
-	var/close_sound = "sound/machines/click.ogg"
+	var/open_sound = 'sound/machines/click.ogg'
+	var/close_sound = 'sound/machines/click.ogg'
 	var/volume = 15
 	var/max_capacity = 100 //Won't close past this many items.
 	var/open = 0
@@ -201,8 +202,8 @@
 				user.show_text("You kick at [src], but it doesn't budge!", "red")
 				user.unlock_medal("IT'S A TRAP", 1)
 				for (var/mob/M in hearers(src, null))
-					M.show_text("<font size=[max(0, 5 - get_dist(src, M))]>THUD, thud!</font>")
-				playsound(src, "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
+					M.show_text("<font size=[max(0, 5 - GET_DIST(src, M))]>THUD, thud!</font>")
+				playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
 				var/shakes = 5
 				while (shakes > 0)
 					shakes--
@@ -224,7 +225,7 @@
 		src.open(user=user)
 		src.visible_message("<span class='alert'><b>[user]</b> kicks [src] open!</span>")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(world.time == src.last_attackhand) // prevent double-attackhand when entering
 			return
 		if (!in_interact_range(src, user))
@@ -239,7 +240,7 @@
 		else if (!src.toggle(user))
 			return src.Attackby(null, user)
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/satchel/))
 			if(src.secure && src.locked)
 				user.show_text("Access Denied", "red")
@@ -267,23 +268,23 @@
 				return
 
 		if (src.open)
-			if ((src._health <= 0) && isweldingtool(I))
-				if(!I:try_weld(user, 1, burn_eyes = TRUE))
+			if (isweldingtool(I))
+				var/obj/item/weldingtool/weldingtool = I
+				if(weldingtool.welding)
+					if (src._health <= 0)
+						if(!weldingtool.try_weld(user, 1, burn_eyes = TRUE))
+							return
+						src._health = src._max_health
+						src.visible_message("<span class='alert'>[user] repairs [src] with [I].</span>")
+					else if (!src.is_short && !src.legholes)
+						if (!weldingtool.try_weld(user, 1))
+							return
+						src.legholes = 1
+						src.visible_message("<span class='alert'>[user] adds some holes to the bottom of [src] with [I].</span>")
 					return
-				src._health = src._max_health
-				src.visible_message("<span class='alert'>[user] repairs [src] with [I].</span>")
-				return
-			if (!src.is_short && isweldingtool(I))
-				if (!src.legholes)
-					if(!I:try_weld(user, 1))
-						return
-					src.legholes = 1
-					src.visible_message("<span class='alert'>[user] adds some holes to the bottom of [src] with [I].</span>")
-					return
-				else if(!issilicon(user))
+				if(!issilicon(user))
 					if(user.drop_item())
-						if (I)
-							I:set_loc(src.loc)
+						weldingtool?.set_loc(src.loc)
 					return
 
 			else if (iswrenchingtool(I))
@@ -309,9 +310,16 @@
 			if (src.emagged)
 				user.show_text("It appears to be broken.", "red")
 				return
-			else if (src.personal && istype(I, /obj/item/card/id))
-				var/obj/item/card/id/ID = I
-				if ((src.req_access && src.allowed(user)) || !src.registered || (istype(ID, /obj/item/card/id) && src.registered == ID.registered))
+			else if (src.personal)
+				var/obj/item/card/id/ID = null
+				if (istype(I, /obj/item/card/id))
+					ID = I
+				else
+					if (ishuman(user))
+						var/mob/living/carbon/human/H = user
+						if (H.wear_id)
+							ID = H.wear_id
+				if ((src.req_access && src.allowed(user)) || (ID && length(ID.registered) && (src.registered == ID.registered || !src.registered)))
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
 					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
@@ -357,7 +365,7 @@
 					found_negative = TRUE
 					break
 		if(found_negative)
-			src.AddComponent(/datum/component/extradimensional_storage)
+			src.AddComponent(/datum/component/extradimensional_storage/storage)
 
 	proc/weld_action(obj/item/W, mob/user)
 		if(src.open)
@@ -469,10 +477,9 @@
 			user.u_equip(O)
 			O.set_loc(get_turf(user))
 
-		else if(istype(O.loc, /obj/item/storage))
-			var/obj/item/storage/storage = O.loc
-			O.set_loc(get_turf(O))
-			storage.hud.remove_item(O)
+		else if(istype(O, /obj/item))
+			var/obj/item/I = O
+			I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 
 		SPAWN(0.5 SECONDS)
 			var/stuffed = FALSE
@@ -483,7 +490,8 @@
 				/obj/item/raw_material = "materials",
 				/obj/item/material_piece = "processed materials",
 				/obj/item/paper = "paper",
-				/obj/item/tile = "floor tiles")
+				/obj/item/tile = "floor tiles",
+				/obj/item/fish = "fish")
 			for(var/drag_type in draggable_types)
 				if(!istype(O, drag_type))
 					continue
@@ -495,8 +503,8 @@
 				for (var/obj/thing in view(1,user))
 					if(!istype(thing, drag_type))
 						continue
-					if (thing.material && thing.material.getProperty("radioactive") > 0)
-						user.changeStatus("radiation", (round(min(thing.material.getProperty("radioactive") / 2, 20))) SECONDS, 2)
+					if (thing.anchored)
+						continue
 					if (thing in user)
 						continue
 					if (!check_if_enterable(thing))
@@ -504,6 +512,7 @@
 					if (thing.loc == src || thing.loc == src.loc) // we're already there!
 						continue
 					thing.set_loc(T)
+					SEND_SIGNAL(thing,COMSIG_ATTACKHAND,user) //triggers radiation/explsion/glue stuff
 					sleep(0.5)
 					if (!src.open)
 						break
@@ -686,6 +695,8 @@
 		for(var/obj/O in T.contents)
 			if(!isitem(O) || O == src || O.anchored)
 				crate_contents--
+			if(O.cannot_be_stored)
+				crate_contents = INFINITY //too big to fit on the locker, it wont close
 		return crate_contents
 
 	proc/can_close()
@@ -713,7 +724,7 @@
 			if(istype(O,/obj/item/mousetrap))
 				var/obj/item/mousetrap/our_trap = O
 				if(our_trap.armed && user)
-					INVOKE_ASYNC(our_trap, /obj/item/mousetrap.proc/triggered,user)
+					INVOKE_ASYNC(our_trap, TYPE_PROC_REF(/obj/item/mousetrap, triggered), user)
 
 		for (var/mob/M in src)
 			M.set_loc(newloc)
@@ -725,7 +736,16 @@
 
 	proc/unlock()
 		if (src.locked)
-			src.locked = !src.locked
+			src.locked = FALSE
+			src.visible_message("[src] clicks[src.open ? "" : " unlocked"].")
+			src.UpdateIcon()
+
+	//why is everything defined on the parent type aa
+	proc/lock()
+		if (!src.locked)
+			src.locked = TRUE
+			src.visible_message("[src] clicks[src.open ? "" : " locked"].")
+			src.UpdateIcon()
 
 	proc/bust_out()
 		if (src.flip_health)
@@ -751,7 +771,7 @@
 			src.log_me(weldman, M, src.welded ? "welds" : "unwelds")
 
 	proc/crunch(var/mob/M as mob)
-		if (!M || istype(M, /mob/living/carbon/wall))
+		if (!M)
 			return
 
 		if (M.ckey && (M.ckey == owner_ckey))
@@ -783,7 +803,7 @@
 		if (!src || !occupant || !ismob(occupant) || !action)
 			return
 
-		logTheThing("station", user, occupant, "[action] [src] with [constructTarget(occupant,"station")] inside at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "[action] [src] with [constructTarget(occupant,"station")] inside at [log_loc(src)].")
 		return
 
 	verb/toggle_verb()
@@ -810,14 +830,14 @@
 			return
 
 		if (src.open)
-			step_towards(usr, src)
+			usr.step_towards_movedelay(src)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
 					usr.lying = 1
 				src.close()
 		else if (src.open(user=usr))
-			step_towards(usr, src)
+			usr.step_towards_movedelay(src)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
@@ -867,12 +887,12 @@
 
 	onStart()
 		..()
-		playsound(the_storage, "sound/items/Ratchet.ogg", 50, 1)
+		playsound(the_storage, 'sound/items/Ratchet.ogg', 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins taking apart [the_storage].</span>")
 
 	onEnd()
 		..()
-		playsound(the_storage, "sound/items/Deconstruct.ogg", 50, 1)
+		playsound(the_storage, 'sound/items/Deconstruct.ogg', 50, 1)
 		owner.visible_message("<span class='notice'>[owner] takes apart [the_storage].</span>")
 		var/obj/item/I = new /obj/item/sheet(get_turf(the_storage))
 		if (the_storage.material)
@@ -882,7 +902,11 @@
 			I.setMaterial(M)
 		qdel(the_storage)
 
-
+//this is written out manually because the linter got very angry when I tried to use .. in the macro version
+TYPEINFO(/obj/storage/secure)
+TYPEINFO_NEW(/obj/storage/secure)
+	. = ..()
+	admin_procs += list(/obj/storage/proc/lock, /obj/storage/proc/unlock)
 /obj/storage/secure
 	name = "secure storage"
 	icon_state = "secure"
@@ -958,9 +982,7 @@
 					. = 0
 					if (signal.data["pass"] == netpass_security)
 						. = 1
-						src.locked = !src.locked
-						src.visible_message("[src] clicks[src.open ? "" : " locked"].")
-						src.UpdateIcon()
+						src.lock()
 					if (.)
 						reply.data["command"] = "ack"
 					else
@@ -970,9 +992,7 @@
 					. = 0
 					if (signal.data["pass"] == netpass_security)
 						. = 1
-						src.locked = !src.locked
-						src.visible_message("[src] clicks[src.open ? "" : " unlocked"].")
-						src.UpdateIcon()
+						src.unlock()
 					if (.)
 						reply.data["command"] = "ack"
 					else

@@ -4,19 +4,19 @@
 	icon_state = "keypad"
 	density = 0
 	desc = "A device built straight into the wall. It looks like there is six slots for somekind of keys?"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()
 		dialogue = new/datum/dialogueMaster/keypanel(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/keypanel

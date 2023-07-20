@@ -6,7 +6,7 @@
 	capacity = 4
 	health = 140
 	maxhealth = 140
-	anchored = 0
+	anchored = UNANCHORED
 //////////Recon
 /obj/machinery/vehicle/recon
 	name = "Reconaissance Ship 7X-"
@@ -98,7 +98,7 @@
 	var/image/damaged = null
 	var/busted = 0
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/pod/paintjob))
 			src.paint_pod(W, user)
 		else return ..(W, user)
@@ -187,6 +187,7 @@ obj/machinery/vehicle/miniputt/pilot
 	maxhealth = 250
 	armor_score_multiplier = 0.7
 	speed = 0.8
+	acid_damage_multiplier = 0
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
@@ -233,7 +234,7 @@ obj/machinery/vehicle/miniputt/pilot
 	name = "Strelka-"
 	icon_state = "soviputt"
 	desc = "A little solo vehicle for scouting and exploration work. Seems to be a Russian model."
-	armor_score_multiplier = 1.0
+	armor_score_multiplier = 1
 	health = 225
 	maxhealth = 225
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
@@ -394,7 +395,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	var/cable_amt = null
 	var/vehicle_name = null
 	var/vehicle_type = null
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/item/putt/frame_box
@@ -406,7 +407,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	attack_self(mob/user as mob)
 		boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
 		var/obj/O = new /obj/structure/vehicleframe/puttframe( get_turf(user) )
-		logTheThing("station", user, null, "builds [O] in [get_area(user)] ([log_loc(user)])")
+		logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
 		O.fingerprints = src.fingerprints
 		O.fingerprints_full = src.fingerprints_full
 		qdel(src)
@@ -420,7 +421,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	attack_self(mob/user as mob)
 		boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
 		var/obj/O = new /obj/structure/vehicleframe/subframe( get_turf(user) )
-		logTheThing("station", user, null, "builds [O] in [get_area(user)] ([log_loc(user)])")
+		logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
 		O.fingerprints = src.fingerprints
 		O.fingerprints_full = src.fingerprints_full
 		qdel(src)
@@ -531,7 +532,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		// all other steps were tool applications, no more parts to create
 
 	O = new src.box_type( get_turf(src) )
-	logTheThing("station", usr, null, "deconstructs [src] in [get_area(usr)] ([log_loc(usr)])")
+	logTheThing(LOG_STATION, usr, "deconstructs [src] in [get_area(usr)] ([log_loc(usr)])")
 	O.fingerprints = src.fingerprints
 	O.fingerprints_full = src.fingerprints_full
 	qdel(src)
@@ -540,12 +541,12 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 /* Construction                */
 /*-----------------------------*/
 
-/obj/structure/vehicleframe/attackby(obj/item/W as obj, mob/living/user as mob)
+/obj/structure/vehicleframe/attackby(obj/item/W, mob/living/user)
 	switch(stage)
 		if(0)
 			if (iswrenchingtool(W))
 				boutput(user, "You begin to secure the frame...")
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
@@ -558,7 +559,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		if(1)
 			if (iswrenchingtool(W))
 				boutput(user, "You begin to secure the rest of the frame...")
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
@@ -590,7 +591,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 					boutput(user, "<span class='notice'>You need at least [src.cable_amt] lengths of cable.</span>")
 					return
 				boutput(user, "You begin to install the wiring...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS) || !C.use(src.cable_amt))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
@@ -603,7 +604,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		if(4)
 			if(istype(W, src.boards_type))
 				boutput(user, "You begin to install the circuit boards...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
@@ -623,7 +624,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 						boutput(user, text("<span class='alert'>You need at least [src.metal_amt] metal sheets to make the internal plating.</span>"))
 						return
 					boutput(user, "You begin to install the internal plating...")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if (!do_after(user, 3 SECONDS) || !S.change_stack_amount(-src.metal_amt))
 						boutput(user, "<span class='alert'>You were interrupted!</span>")
 						return
@@ -633,12 +634,12 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				else
 					boutput(user, "<span class='alert'>These sheets aren't the right kind of material. You need metal!</span>")
 			else
-				boutput(user, "You shouldn't just leave all those circuits exposed! That's dangerous! You'll need three sheets of metal to cover it all up.")
+				boutput(user, "You shouldn't just leave all those circuits exposed! That's dangerous! You'll need [src.metal_amt] sheets of metal to cover it all up.")
 
 		if(6)
 			if(istype(W, src.engine_type))
 				boutput(user, "You begin to install the engine...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
@@ -657,7 +658,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 					boutput(user, "That type of armor is not compatible with this frame.")
 					return
 				boutput(user, "You begin to install the [W]...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
@@ -689,7 +690,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		if(9)
 			if(istype(W, src.control_type))
 				boutput(user, "You begin to install the control system...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
@@ -715,7 +716,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 					boutput(user, text("<span class='alert'>You need at least [src.glass_amt] reinforced glass sheets to make the cockpit window and outer indicator surfaces.</span>"))
 					return
 				boutput(user, "You begin to install the glass...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS) || !S.change_stack_amount(-src.glass_amt))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
@@ -725,11 +726,11 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				if (src.armor_type == /obj/item/podarmor/armor_custom)
 					V.name = src.vehicle_name
 					V.setMaterial(src.material)
-				logTheThing("station", user, null, "finishes building a [V] in [get_area(user)] ([log_loc(user)])")
+				logTheThing(LOG_STATION, user, "finishes building a [V] in [get_area(user)] ([log_loc(user)])")
 				qdel(src)
 
 			else
-				boutput(user, "You weren't thinking of heading out without a reinforced cockpit, were you? Put some reinforced glass on it! Three [src.glass_amt] will do.")
+				boutput(user, "You weren't thinking of heading out without a reinforced cockpit, were you? Put some reinforced glass on it! Just [src.glass_amt] sheets will do.")
 
 /*-----------------------------*/
 /*                             */
@@ -818,12 +819,12 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			src.maxhealth = max(75, src.material.getProperty("density") * 5)
+			src.maxhealth = max(75, src.material.getProperty("density") * 40)
 			src.health = maxhealth
-			src.speed = clamp((src.material.getProperty("electrical")) / 30, 0.75, 1.5)
+			src.speed = 1 - (src.material.getProperty("electrical") - 5) / 15
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/pod/paintjob))
 			src.paint_pod(W, user)
 		else return ..(W, user)
@@ -853,17 +854,21 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 			if (shoot_dir == SOUTHEAST)
 				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), SOUTHEAST), PROJ, shoot_dir, src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 				var/turf/E = get_step(get_turf(src), EAST)
 				P = shoot_projectile_DIR(get_step(E, EAST), PROJ, shoot_dir, src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 			if (shoot_dir == SOUTHWEST)
 				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), WEST), PROJ, shoot_dir, src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 				P = shoot_projectile_DIR(get_step(get_turf(src), SOUTH), PROJ, shoot_dir, src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 
 			if (shoot_dir == NORTHEAST)
@@ -871,9 +876,11 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
 				var/obj/projectile/P = shoot_projectile_DIR(get_step(NE, NORTH), PROJ, shoot_dir, src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 				P = shoot_projectile_DIR(get_step(NE, EAST), PROJ, shoot_dir, src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 
 			if (shoot_dir == NORTHWEST)
@@ -881,13 +888,16 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				var/obj/projectile/P = shoot_projectile_DIR(get_step(N, WEST), PROJ, shoot_dir, src)
 				if (P)
 					P.mob_shooter = user
+					P.shooter = src
 				P = shoot_projectile_DIR(get_step(N, NORTH), PROJ, shoot_dir, src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 		else
 			if (shoot_dir == SOUTH || shoot_dir == WEST)
 				var/obj/projectile/P = shoot_projectile_DIR(src, PROJ, shoot_dir)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 					P.pixel_x = H * -5
 					P.pixel_y = V * -5
@@ -955,6 +965,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 500
 	maxhealth = 500
 	speed = 0.9
+	acid_damage_multiplier = 0
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	/*prearmed
@@ -1006,6 +1017,19 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	speed = 1.5
 	capacity = 4
 
+/obj/machinery/vehicle/pod_smooth/industrial/nadir
+	//special name, pre-equipped with drilling hardware
+	New()
+		..()
+		name += "[pick(" (The Orca)"," (Sea Pig)"," (The Iso-Pod)")]"
+		src.m_w_system = new /obj/item/shipcomponent/mainweapon/rockdrills(src)
+		src.m_w_system.ship = src
+		src.components += src.m_w_system
+		myhud.update_systems()
+		myhud.update_states()
+		src.overlays += image('icons/effects/64x64.dmi', "[src.m_w_system.appearanceString]")
+		return
+
 //pod wars ones//
 /obj/machinery/vehicle/pod_smooth/nt_light
 	name = "Pod NTL-"
@@ -1015,7 +1039,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 250
 	maxhealth = 250
 	speed = 0.9
-	init_comms_type = /obj/item/shipcomponent/communications/
+	init_comms_type = /obj/item/shipcomponent/communications
 
 /obj/machinery/vehicle/pod_smooth/nt_robust
 	name = "Pod NTR-"
@@ -1025,7 +1049,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 500
 	maxhealth = 500
 	speed = 0.8
-	init_comms_type = /obj/item/shipcomponent/communications/
+	init_comms_type = /obj/item/shipcomponent/communications
 
 /obj/machinery/vehicle/pod_smooth/sy_light
 	name = "Pod SYL-"
@@ -1303,6 +1327,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	overlay_state = "skin4"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/gold,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/gold)
+
 /obj/item/pod/frame_box
 	name = "Pod Frame Kit"
 	desc = "You can hear an awful lot of junk rattling around in this box."
@@ -1322,7 +1347,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 		for(T in checkturfs)
 			if (istype(T, /turf/space))
 				continue
-			if (!T.allows_vehicles)
+			if (!T.allows_vehicles || T.density)
 				canbuild = 0
 				boutput(user, "<span class='alert'>You can't build a pod here! It'd get stuck.</span>")
 				break
@@ -1338,7 +1363,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 		if (canbuild)
 			boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
 			var/obj/O = new /obj/structure/vehicleframe/podframe( get_turf(user) )
-			logTheThing("station", user, null, "builds [O] in [get_area(user)] ([log_loc(user)])")
+			logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
 			O.fingerprints = src.fingerprints
 			O.fingerprints_full = src.fingerprints_full
 			qdel(src)
@@ -1414,23 +1439,25 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 
 	finish_board_pod(var/mob/boarder)
 		..()
-		if (!src.pilot) return //if they were stopped from entering by other parts of the board proc from ..()
+		if (!src.pilot)
+			return //if they were stopped from entering by other parts of the board proc from ..()
 		SPAWN(0)
 			src.escape()
 
+	#define SHUTTLE_PERCENT_FROM_STATION emergency_shuttle.timeleft() / SHUTTLETRANSITTIME // both in seconds
 	proc/escape()
 		if(!launched)
 			launched = 1
-			anchored = 0
+			anchored = UNANCHORED
 			var/opened_door = 0
 			var/turf_in_front = get_step(src,src.dir)
 			for(var/obj/machinery/door/poddoor/D in turf_in_front)
 				D.open()
 				opened_door = 1
 			if(opened_door) sleep(2 SECONDS) //make sure it's fully open
-			playsound(src.loc, "sound/effects/bamf.ogg", 100, 0)
+			playsound(src.loc, 'sound/effects/bamf.ogg', 100, 0)
 			sleep(0.5 SECONDS)
-			playsound(src.loc, "sound/effects/flameswoosh.ogg", 100, 0)
+			playsound(src.loc, 'sound/effects/flameswoosh.ogg', 100, 0)
 			while(!failing)
 				var/loc = src.loc
 				step(src,src.dir)
@@ -1438,18 +1465,14 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 					explosion(src, src.loc, 1, 1, 2, 3)
 					break
 				steps_moved++
-				if(prob((steps_moved-7) * 3) && !succeeding)
+				if(prob((steps_moved-7) * 4 * (1 - SHUTTLE_PERCENT_FROM_STATION)) && !succeeding) // failure becomes more likely as the shuttle gets farther
 					fail()
-				if (prob((steps_moved-7) * 4))
+				if (prob((steps_moved-7) * 6 * SHUTTLE_PERCENT_FROM_STATION))
 					succeed()
 				sleep(0.4 SECONDS)
-
-	proc/test()
-		boutput(world,"shuttle loc is [emergency_shuttle.location]")
+	#undef SHUTTLE_PERCENT_FROM_STATION
 
 	proc/succeed()
-		if (succeeding && prob(3))
-			succeeding = 0
 		if (emergency_shuttle.location == SHUTTLE_LOC_TRANSIT & !did_warp) //lol sorry hardcoded a define thing
 			succeeding = 1
 			did_warp = 1
@@ -1462,7 +1485,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 			src.set_dir(map_settings ? map_settings.escape_dir : SOUTH)
 			P.target = T
 			src.set_loc(T)
-			logTheThing("station", src, null, "creates an escape portal at [log_loc(src)].")
+			logTheThing(LOG_STATION, src, "creates an escape portal at [log_loc(src)].")
 
 
 	proc/fail()

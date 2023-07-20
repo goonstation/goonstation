@@ -1,0 +1,195 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/item/canvas{
+	icon_state = "28x22_base"
+	},
+/obj/table/scrap/auto,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"f" = (
+/obj/item/paint_can/random{
+	pixel_x = 6
+	},
+/obj/item/paint_can/random{
+	pixel_x = -5
+	},
+/obj/rack,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"h" = (
+/obj/stool/chair/wooden/scrap{
+	dir = 8
+	},
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"l" = (
+/obj/item/cigbutt{
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/obj/item/cigbutt{
+	pixel_x = 9;
+	pixel_y = 6
+	},
+/obj/decal/cleanable/dirt/dirt5,
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"m" = (
+/obj/item/brick,
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"q" = (
+/obj/item/cigbutt{
+	pixel_x = 9;
+	pixel_y = 6
+	},
+/obj/item/cigbutt{
+	pixel_x = 6
+	},
+/obj/item/cigbutt{
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/item/cigbutt{
+	pixel_x = 9;
+	pixel_y = 6
+	},
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"I" = (
+/obj/machinery/vending/snack{
+	status = 1
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"N" = (
+/obj/item/cigbutt{
+	pixel_x = 6
+	},
+/obj/item/cigbutt{
+	pixel_x = -4;
+	pixel_y = -5
+	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"Q" = (
+/obj/item/storage/box/crayon{
+	pixel_x = -7;
+	pixel_y = 12
+	},
+/obj/item/storage/box/crayon{
+	pixel_y = 12
+	},
+/obj/item/storage/box/crayon{
+	pixel_x = 7;
+	pixel_y = 12
+	},
+/obj/item/storage/box/crayon{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/storage/box/crayon{
+	pixel_y = 6
+	},
+/obj/item/storage/box/crayon{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/storage/box/crayon{
+	pixel_x = -7
+	},
+/obj/item/storage/box/crayon,
+/obj/item/storage/box/crayon{
+	pixel_x = 7
+	},
+/obj/rack,
+/obj/rack,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/decal/exhibit{
+	exhibit_id = "ex_artroom_prefab_1";
+	pixel_y = 29;
+	spacebux_cost = 2500
+	},
+/obj/item/cigbutt{
+	pixel_x = 9;
+	pixel_y = 6
+	},
+/obj/machinery/light/small/warm{
+	dir = 8;
+	pixel_x = -8
+	},
+/obj/railing/red,
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"V" = (
+/obj/decal/cleanable/fungus,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"W" = (
+/obj/decal/exhibit{
+	exhibit_id = "ex_artroom_prefab_2";
+	pixel_y = 29;
+	spacebux_cost = 2500
+	},
+/obj/item/cigbutt{
+	pixel_x = -5;
+	pixel_y = -7
+	},
+/obj/item/cigbutt{
+	pixel_x = 6
+	},
+/obj/machinery/light/small/warm{
+	dir = 4;
+	pixel_x = 8
+	},
+/obj/railing/red,
+/obj/item/cable_coil/cut/small{
+	pixel_y = 4
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"X" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+S
+N
+a
+"}
+(2,1,1) = {"
+I
+l
+h
+"}
+(3,1,1) = {"
+M
+u
+m
+"}
+(4,1,1) = {"
+X
+V
+f
+"}
+(5,1,1) = {"
+W
+q
+Q
+"}

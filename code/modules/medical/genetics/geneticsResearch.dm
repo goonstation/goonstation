@@ -46,7 +46,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 		//I could just change this quietly, but this.
 		//THIS FUCKING ABOMINATION stays here as a memory of someone's shame.
 		//researchTreeTiered = bubblesort(researchTreeTiered)
-		researchTreeTiered = sortList(researchTreeTiered)
+		sortList(researchTreeTiered, /proc/cmp_text_asc)
 		return
 
 	proc/isResearched(var/type)
@@ -311,6 +311,21 @@ var/datum/geneticsResearchManager/genResearch = new()
 		genResearch.max_material += 50
 		..()
 
+/datum/geneticsResearchEntry/gene_booth_speedup_complex
+	name = "Complex Gene Booth Acceleration"
+	desc = "Increases the working speed of the Gene Booth by an additional +25%."
+	researchTime = 1200
+	researchCost = 150
+	tier = 2
+	requiredMutRes = list("early_secret_access")
+	requiredResearch = list(/datum/geneticsResearchEntry/genebooth)
+
+	onFinish()
+		var/obj/machinery/genetics_booth/type = /obj/machinery/genetics_booth
+		type.process_speedup += 0.25
+		type = type // we get warned about type being defined but unused and idk how else to make byond shut up
+		..()
+
 // TIER TWO
 
 /datum/geneticsResearchEntry/reclaimer
@@ -350,6 +365,20 @@ var/datum/geneticsResearchManager/genResearch = new()
 	tier = 2
 	requiredResearch = list(/datum/geneticsResearchEntry/rademitter)
 
+/datum/geneticsResearchEntry/gene_booth_speedup
+	name = "Gene Booth Injection Speedup"
+	desc = "Increases the working speed of the Gene Booth by 25%."
+	researchTime = 1200
+	researchCost = 75
+	tier = 2
+	requiredResearch = list(/datum/geneticsResearchEntry/genebooth)
+
+	onFinish()
+		var/obj/machinery/genetics_booth/type = /obj/machinery/genetics_booth
+		type.process_speedup += 0.25
+		type = type
+		..()
+
 // TIER THREE
 
 /datum/geneticsResearchEntry/saver
@@ -387,7 +416,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 
 /datum/geneticsResearchEntry/bio_rad_dampers
 	name = "Biotic Radiation Dampeners"
-	desc = "Applies genetic research to completley eliminate all harmful radiation from the emitters."
+	desc = "Applies genetic research to completely eliminate all harmful radiation from the emitters."
 	researchTime = 2500
 	researchCost = 100
 	tier = 3
@@ -396,6 +425,21 @@ var/datum/geneticsResearchManager/genResearch = new()
 
 	onFinish()
 		genResearch.emitter_radiation -= 30
+		..()
+
+
+/datum/geneticsResearchEntry/gene_booth_speedup_biotic
+	name = "Biotic Gene Booth Injection"
+	desc = "Increases the working speed of the Gene Booth by an additional +25%."
+	researchTime = 1800
+	researchCost = 100
+	tier = 3
+	requiredResearch = list(/datum/geneticsResearchEntry/genebooth, /datum/geneticsResearchEntry/gene_booth_speedup)
+
+	onFinish()
+		var/obj/machinery/genetics_booth/type = /obj/machinery/genetics_booth
+		type.process_speedup += 0.25
+		type = type
 		..()
 
 // TIER FOUR

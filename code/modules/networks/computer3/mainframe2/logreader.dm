@@ -8,15 +8,17 @@
 		..()
 		fields = list("logdir" = DEFAULT_LOG_PATH)
 
+TYPEINFO(/obj/machinery/networked/logreader)
+	mats = 14
+
 /obj/machinery/networked/logreader
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	name = "door access logs"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	device_tag = "PNET_LOGREADER"
 	timeout = 10
-	mats = 14
 	power_usage = 100
 	var/static/list/required_fields = list("card_name", "door_name", "time_t", "timestamp", "door_id", "action")
 	var/filter_name = null
@@ -51,7 +53,7 @@
 
 		src.add_dialog(user)
 
-		var/dat = {"<html><head><title>Access Log Reader</title><style>
+		var/list/dat = list({"<html><head><title>Access Log Reader</title><style>
 .conn-box {
 	float: right;
 	width: 12px;
@@ -73,7 +75,7 @@
 	background-color: #888888;
 }
 
-</style></head><body>"}
+</style></head><body>"})
 
 
 		var/readout_class = "conn-error"
@@ -139,7 +141,7 @@
 		else if (refreshing)
 			dat += "<i>Refreshing data, please wait...</i>"
 
-		user.Browse(dat,"window=net_logreader;size=545x302")
+		user.Browse(dat.Join(),"window=net_logreader;size=545x302")
 		onclose(user,"net_logreader")
 		return
 
@@ -271,7 +273,6 @@
 		..()
 		if(status & NOPOWER)
 			return
-		use_power(100)
 
 		if(!host_id || !link)
 			return
@@ -538,7 +539,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 				var/datum/computer/folder/logs_dir = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"=log_to))
 				if (istype(logs_dir))
 					var/idx = 0
-					while (logs_dir.contents.len >= ACCESSLOG_RECORDS_LIMIT)
+					while (length(logs_dir.contents) >= ACCESSLOG_RECORDS_LIMIT)
 						idx++
 						if (idx > logs_dir.contents.len)
 							message_user("Could not make space for new entry.")

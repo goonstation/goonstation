@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/gps)
+	mats = 2
+
 /obj/item/device/gps
 	name = "space GPS"
 	desc = "A navigation device that can tell you your position, and the position of other GPS devices. Uses coordinate beacons."
@@ -13,9 +16,9 @@
 	w_class = W_CLASS_SMALL
 	m_amt = 50
 	g_amt = 100
-	mats = 2
 	var/frequency = FREQ_GPS
 	var/net_id
+	var/wrenched_in = FALSE //! is this wrenched in a cabinet frame?
 
 	proc/get_z_info(var/turf/T)
 		. =  "Landmark: Unknown"
@@ -50,7 +53,7 @@
 		if (!user)
 			return
 		src.add_dialog(user)
-		var/HTML = {"<style type="text/css">
+		var/list/HTML = list({"<style type="text/css">
 		.desc {
 			background: #21272C;
 			width: calc(100% - 5px);
@@ -93,8 +96,8 @@
 			margin: 0;
 			font-size: 12px;
 		}
-		</style>"}
-		HTML += build_html_gps_form(src, false, src.tracking_target)
+		</style>"})
+		HTML += build_html_gps_form(src, FALSE, src.tracking_target)
 		HTML += "<div><div class='buttons refresh'><A href='byond://?src=\ref[src];refresh=6'>(Refresh)</A></div>"
 		HTML += "<div class='desc'>Each GPS is coined with a unique four digit number followed by a four letter identifier.<br>This GPS is assigned <b>[serial]-[identifier]</b>.</div><hr>"
 		HTML += "<HR>"
@@ -134,8 +137,34 @@
 			HTML += "<div class='buttons gps'><A href='byond://?src=\ref[src];dest_cords=1;x=[T.x];y=[T.y];z=[T.z];name=[B.name]'><span><b>[B.name]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></A></div>"
 		HTML += "<br></div>"
 
-		user.Browse(HTML, "window=gps_[src];title=GPS;size=400x540;override_setting=1")
+		user.Browse(HTML.Join(), "window=gps_[src];title=GPS;size=400x540;override_setting=1")
 		onclose(user, "gps")
+
+	attack_hand(mob/user)
+		if(src.wrenched_in) return
+		..()
+
+	attackby(obj/item/used_tool, mob/user)
+		if(iswrenchingtool(used_tool))
+			if(src.wrenched_in)
+				boutput(user, "You detach the [src] from the housing.")
+				logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the housing at [log_loc(src)].")
+				src.wrenched_in = FALSE
+				src.anchored = UNANCHORED
+				return
+
+			else
+				if(istype(src.stored?.linked_item,/obj/item/storage/mechanics))
+					boutput(user, "You attach the [src] to the housing.")
+					logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the housing  at [log_loc(src)].")
+					src.wrenched_in = TRUE
+					src.anchored = ANCHORED
+					return
+		..()
+
+	attack_ai(mob/user)
+		. = ..()
+		src.show_HTML(user)
 
 	attack_self(mob/user as mob)
 		if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0))
@@ -149,9 +178,9 @@
 		..()
 		if (usr.stat || usr.restrained() || usr.lying)
 			return
-		if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr)))
+		if (usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr) || issilicon(usr) || isAIeye(usr))
 			src.add_dialog(usr)
-			var/turf/T = get_turf(usr)
+			var/turf/T = get_turf(src)
 			if(href_list["getcords"])
 				boutput(usr, "<span class='notice'>Located at: <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
 				return
@@ -173,6 +202,7 @@
 				if(!t)
 					return
 				src.identifier = t
+				logTheThing(LOG_STATION, usr, "sets a GPS identification name to [t].")
 			if(href_list["help"])
 				if(!distress)
 					boutput(usr, "<span class='alert'>Sending distress signal.</span>")
@@ -192,12 +222,13 @@
 				active = null
 				icon_state = "gps-off"
 
-
-			if (!src.master)
-				src.updateSelfDialog()
-			else
-				src.master.updateSelfDialog()
-
+			var/obj/item/target = src.master || src
+			target.updateSelfDialog()
+			//we want this to do self dialog updates UNLESS the user is a silicon in which case we do regular updates
+			for (var/client/client in src.clients_operating)
+				var/mob/user = client.mob
+				if (issilicon(user) || isAIeye(user))
+					target.attack_ai(user)
 			src.add_fingerprint(usr)
 		else
 			usr.Browse(null, "window=gps_[src]")
@@ -270,7 +301,7 @@
 			return
 
 		src.set_dir(get_dir(src,tracking_target))
-		if (get_dist(src,tracking_target) == 0)
+		if (GET_DIST(src,tracking_target) == 0)
 			icon_state = "gps-direct"
 		else
 			icon_state = "gps"
@@ -288,7 +319,7 @@
 		var/sender = signal.data["sender"]
 
 		if (lowertext(signal.data["distress_alert"]))
-			var/senderName = signal.data["identifier"]
+			var/senderName = strip_html(signal.data["identifier"])
 			if (!senderName)
 				return
 			if (lowertext(signal.data["distress_alert"] == "help"))

@@ -27,7 +27,7 @@
 	//IM SORRY
 
 	proc/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
-		if (!affected_mob || !D)
+		if (QDELETED(affected_mob) || !D)
 			return 1
 		return 0
 
@@ -63,8 +63,6 @@
 	var/develop_resist = 0
 	var/associated_reagent = null // associated reagent, duh
 
-	var/list/disease_data = list() // A list of things for people to research about the disease to make it
-	var/list/strain_data = list()  // Used for Rhinovirus
 
 // IMPLEMENT PROPER CURE PROC
 
@@ -153,6 +151,7 @@
 	var/virulence = 100    // how likely is this disease to spread
 	var/develop_resist = 0 // can you develop a resistance to this?
 	var/cycles = 0         // does this disease have a cyclical nature? if so, how many cycles have elapsed?
+	var/list/strain_data = list()  // Used for Rhinovirus, basically arbitrary data storage
 
 	stage_act(var/mult)
 		if (!affected_mob || disposed)
@@ -229,6 +228,10 @@
 
 		return 0
 
+	disposing()
+		strain_data = null
+		..()
+
 /datum/ailment_data/addiction
 	var/associated_reagent = null
 	var/last_reagent_dose = 0
@@ -242,9 +245,9 @@
 /datum/ailment_data/parasite
 	var/was_setup = 0
 	var/surgery_prob = 50
-
-	var/source = null // for headspiders
+	var/mob/living/critter/changeling/headspider/source = null // for headspiders
 	var/stealth_asymptomatic = 0
+
 	proc/setup()
 		src.stage_prob = master.stage_prob
 		src.cure = master.cure
@@ -258,7 +261,7 @@
 			affected_mob.cure_disease(src)
 			return
 
-		if (istype(master, /datum/ailment/parasite/headspider) && !ismind(source))
+		if (istype(master, /datum/ailment/parasite/headspider) && !ismind(source?.mind))
 			affected_mob.cure_disease(src)
 			return
 
@@ -273,7 +276,7 @@
 
 
 		if(!stealth_asymptomatic)
-			master.stage_act(affected_mob,src,mult,source)
+			master.stage_act(affected_mob,src,mult)
 
 		return
 
@@ -309,7 +312,7 @@
 				mob_type = "Monkey"
 			else if (ishuman(src))
 				var/mob/living/carbon/human/H = src
-				if (H.mutantrace && !H.mutantrace.human_compatible)
+				if (!H.mutantrace.human_compatible)
 					mob_type = capitalize(H.mutantrace.name)
 				else
 					mob_type = "Human"
@@ -359,14 +362,16 @@
 	if (count >= A.max_stacks)
 		return null
 
-	if (ischangeling(src) || isvampire(src) || src.nodamage)
-		//Vampires and changelings are immune to disease, as are the godmoded.
+	if (ischangeling(src) || isvampire(src) || isvampiricthrall(src) || iszombie(src) || src.nodamage)
+		//Vampires, thralls, zombies and changelings are immune to disease, as are the godmoded.
 		//This is here rather than in the resistance check proc because otherwise certain things could bypass the
 		//hard immunity these folks are supposed to have
 		return null
 
 	if (!bypass_resistance && !src.disease_resistance_check(null,A.name))
 		return null
+
+	logTheThing(LOG_COMBAT, src, " gained the [ailment_name] ([ailment_path]) disease.")
 
 	if (istype(A, /datum/ailment/disease/))
 		var/datum/ailment/disease/D = A
@@ -383,9 +388,11 @@
 			AD.detectability = strain.detectability
 			AD.develop_resist = strain.develop_resist
 			AD.cure = strain.cure
+			AD.spread = strain.spread
 			AD.info = strain.info
 			AD.resistance_prob = strain.resistance_prob
 			AD.temperature_cure = strain.temperature_cure
+			AD.strain_data = strain.strain_data.Copy()
 		else
 			AD.name = D.name
 			AD.stage_prob = D.stage_prob
@@ -395,6 +402,7 @@
 			AD.detectability = D.detectability
 			AD.develop_resist = D.develop_resist
 			AD.cure = D.cure
+			AD.spread = D.spread
 			AD.info = D.info
 			AD.resistance_prob = D.resistance_prob
 			AD.temperature_cure = D.temperature_cure

@@ -1,12 +1,15 @@
+TYPEINFO(/obj/machinery/photocopier)
+	mats = 16 //just to make photocopiers mech copyable, how could this possibly go wrong?
+
 /obj/machinery/photocopier
 	name = "photocopier"
 	desc = "This machine uses paper to copy photos, work documents... anything paper-based, really. "
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/machines/photocopier.dmi'
 	icon_state = "close_sesame"
 	pixel_x = 2 //its just a bit limited by sprite width, needs a small offset
-	mats = 16 //just to make photocopiers mech copyable, how could this possibly go wrong?
+	power_usage = 10
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/use_state = 0 //0 is closed, 1 is open, 2 is busy, closed by default
 	var/paper_amount = 0.0 //starts at 0.0, increments by one for every paper added, max of... 30 sheets
@@ -63,7 +66,7 @@
 
 		return desc_string
 
-	attackby(var/obj/item/w as obj, var/mob/user as mob) //handles reloading with paper, scanning paper, scanning photos, scanning paper photos
+	attackby(var/obj/item/w, var/mob/user) //handles reloading with paper, scanning paper, scanning photos, scanning paper photos
 		if (src.use_state == 2) //photocopier is busy?
 			boutput(user, "<span class='alert'>/The [src] is busy! Try again later!</span>")
 			return
@@ -88,7 +91,7 @@
 				sleep(0.3 SECONDS)
 				src.icon_state = "close_sesame"
 				flick("scan", src)
-				playsound(src.loc, "sound/machines/scan.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/scan.ogg', 50, 1)
 				sleep(1.8 SECONDS)
 				src.icon_state = "open_sesame"
 				w.set_loc(get_turf(src))
@@ -106,7 +109,7 @@
 					src.paper_info["name"] = P.name
 					src.paper_info["desc"] = P.desc
 					src.paper_info["info"] = P.info
-					src.paper_info["stamps"] = P.stamps
+					src.paper_info["stamps"] = P.stamps?.Copy()
 					src.paper_info["form_fields"] = P.form_fields
 					src.paper_info["field_counter"] = P.field_counter
 					src.paper_info["icon_state"] = P.icon_state
@@ -128,6 +131,9 @@
 				if (src.paper_amount >= 30.0)
 					boutput(user, "<span class='alert'>You can't fit any more paper into \the [src].</span>")
 					return
+				var/obj/item/paper/P = w
+				if (P.info != "" && tgui_alert(user, "This paper has writing on it, are you sure you want to put it in the inlet tray?", "Warning", list("Yes", "No")) == "No")
+					return
 				boutput(user, "You load the sheet of paper into \the [src].")
 				src.paper_amount++
 				qdel(w)
@@ -140,25 +146,27 @@
 				boutput(user, "You load the paper bin into \the [src].")
 				var/obj/item/paper_bin/P = w
 				src.paper_amount += w.amount
-				P.amount = 0.0
+				P.amount = 0
 				P.update()
 				return
 
 		..()
 
-	attack_hand(var/mob/user as mob) //handles choosing amount, printing, scanning
+	attack_hand(var/mob/user) //handles choosing amount, printing, scanning
 		if (src.use_state == 2)
 			boutput(user, "<span class='alert'>\The [src] is busy right now! Try again later!</span>")
 			return
-		var/mode_sel =  input("Which do you want to do?", "Photocopier Controls") as null|anything in list("Reset Memory", "Print Copies", "Adjust Amount", "Toggle Lid")
+		var/mode_sel = tgui_input_list(user, "Which do you want to do?", "Photocopier Controls", list("Reset Memory", "Print Copies", "Adjust Amount", "Toggle Lid"))
 		if (BOUNDS_DIST(user, src) == 0)
+			if (!mode_sel)
+				return
 			switch(mode_sel)
 				if ("Reset Memory")
 					if (src.use_state == 2)
 						boutput(user, "\The [src] is busy right now! Try again later!")
 						return
 					src.reset_all()
-					playsound(src.loc, "sound/machines/bweep.ogg", 50, 1)
+					playsound(src.loc, 'sound/machines/bweep.ogg', 20, 1)
 					boutput(user, "<span class='notice'>You reset \the [src]'s memory.</span>")
 					return
 
@@ -178,7 +186,8 @@
 							break
 						flick("print", src)
 						sleep(1.8 SECONDS)
-						playsound(src.loc, "sound/machines/printer_thermal.ogg", 50, 1)
+						playsound(src.loc, 'sound/machines/printer_thermal.ogg', 30, 1)
+						use_power(5)
 						paper_amount --
 						src.print_stuff()
 					src.use_state = 0
@@ -194,7 +203,7 @@
 					if (isnum_safe(num_sel) && num_sel && BOUNDS_DIST(user, src) == 0)
 						if (num_sel <= src.paper_amount)
 							src.make_amount = num_sel
-							playsound(src.loc, "sound/machines/ping.ogg", 50, 1)
+							playsound(src.loc, 'sound/machines/ping.ogg', 20, 1)
 							boutput(user, "Amount set to: [num_sel] sheets.")
 							return
 						else
@@ -219,6 +228,7 @@
 			P.desc = src.paper_info["desc"]
 			P.info = src.paper_info["info"]
 			P.stamps = src.paper_info["stamps"]
+			P.stamps = P.stamps?.Copy()
 			P.form_fields = src.paper_info["form_fields"]
 			P.field_counter = src.paper_info["field_counter"]
 			P.icon_state = src.paper_info["icon_state"]
@@ -249,7 +259,7 @@
 			P.name = "butt"
 			P.desc = "butt butt butt"
 			P.info = "{<b>butt butt butt butt butt butt<br>butt butt<br>butt</b>}" //6 butts then 2 butts then 1 butt haha
-			P.icon = 'icons/obj/surgery.dmi'
+			P.icon = 'icons/obj/items/organs/butt.dmi'
 			P.icon_state = "butt"
 
 		else

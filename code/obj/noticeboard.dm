@@ -7,7 +7,7 @@
 	plane = PLANE_NOSHADOW_BELOW
 	desc = "A board for pinning important notices upon."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/notices = 0
 
 
@@ -15,7 +15,7 @@
 	qdel(src)
 
 
-/obj/noticeboard/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/noticeboard/attackby(var/obj/item/O, var/mob/user)
 	if (istype(O, /obj/item/paper) || istype(O, /obj/item/canvas))
 		if (src.notices < 15)
 			O.add_fingerprint(user)
@@ -34,7 +34,7 @@
 	src.icon_state = "nboard0[min(src.notices, 5)]"
 
 
-/obj/noticeboard/attack_hand(mob/user as mob)
+/obj/noticeboard/attack_hand(mob/user)
 	var/dat = "<B>Noticeboard</B><BR>"
 	for(var/obj/item/item in src)
 		if(istype(item, /obj/item/paper) || istype(item, /obj/item/canvas))
@@ -110,7 +110,7 @@
 				paper.name = book_info[1]
 				paper.info = book_info[2]
 				paper.fingerprintslast = book_info[3]
-				if(book_info.len >= 4) // Gotta love adding a line that will be useful exactly once on each server...
+				if(length(book_info) >= 4) // Gotta love adding a line that will be useful exactly once on each server...
 					paper.color = book_info[4]
 		if(version == 1)
 			for(var/list/info in our_data["things"])
@@ -161,11 +161,11 @@ proc/save_noticeboards()
 		board.save_stuff()
 		some_board = board
 	if(isnull(some_board))
-		logTheThing("debug", null, null, "No persistent noticeboards to save.")
+		logTheThing(LOG_DEBUG, null, "No persistent noticeboards to save.")
 		return
 	fdel(some_board.file_name)
 	var/json_data = json_encode(some_board.data)
-//	logTheThing("debug", null, null, "Persistent noticeboard save data: [json_data]")
+//	logTheThing(LOG_DEBUG, null, "Persistent noticeboard save data: [json_data]")
 	text2file(json_data, some_board.file_name)
 
 #undef PERSISTENT_NOTICEBOARD_VERSION

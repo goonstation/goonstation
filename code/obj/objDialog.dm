@@ -11,7 +11,7 @@ var/global/list/objects_using_dialogs
 	if (!objects_using_dialogs)
 		objects_using_dialogs = list(src)
 	else
-		if (!clients_operating || clients_operating.len <= 0)
+		if (!clients_operating || length(clients_operating) <= 0)
 			objects_using_dialogs += src
 
 	if (!clients_operating)
@@ -31,7 +31,7 @@ var/global/list/objects_using_dialogs
 	if (!objects_using_dialogs)
 		objects_using_dialogs = list()
 	else
-		if (clients_operating.len <= 0)
+		if (length(clients_operating) <= 0)
 			objects_using_dialogs -= src
 
 /obj/proc/remove_dialogs()
@@ -122,23 +122,6 @@ var/global/list/objects_using_dialogs
 /mob/proc/add_dialog(mob/user)
 
 /mob/proc/remove_dialog(mob/user)
-
-/mob/living/carbon/human/add_dialog(mob/user)
-	if (!user.client) return
-
-	if (!showing_inv)
-		showing_inv = list(user.client)
-	else
-		showing_inv |= user.client
-
-/mob/living/carbon/human/remove_dialog(mob/user)
-	if (!user.client) return
-
-	if (!showing_inv)
-		showing_inv = list()
-	else
-		showing_inv -= user.client
-
 
 //object stuyffs
 

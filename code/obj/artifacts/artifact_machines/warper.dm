@@ -39,10 +39,12 @@
 			teleports = 0
 			return
 		else
-			var/loc = (wormholer ? pick(wormholeturfs) : get_offset_target_turf(T, rand(-teleport_range, teleport_range), rand(-teleport_range, teleport_range)) )
+			var/loc = (wormholer ? pick(random_floor_turfs) : get_offset_target_turf(T, rand(-teleport_range, teleport_range), rand(-teleport_range, teleport_range)) )
 			playsound(O.loc, "warp", 50)
 			for (var/mob/living/M in orange(grab_range,O))
 				if (isintangible(M)) continue
-				M.set_loc(get_offset_target_turf(loc, rand(-grab_range, grab_range), rand(-grab_range, grab_range)))
+				var/warp_target = get_offset_target_turf(loc, rand(-grab_range, grab_range), rand(-grab_range, grab_range))
+				logTheThing(LOG_COMBAT, M, "was teleported by Warper artifact [O] from [log_loc(M)] to [log_loc(warp_target)].")
+				M.set_loc(warp_target)
 			O.set_loc(loc)
 			teleports++

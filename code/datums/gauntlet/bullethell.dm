@@ -50,7 +50,7 @@
 		proj_tracer_on_end(O)
 
 	projectile_speed = 24
-	power = 30
+	damage = 30
 	dissipation_delay = 8
 	dissipation_rate = 5
 
@@ -92,7 +92,7 @@
 	var/live_cycles = 1
 	var/broken = 1
 
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "secbot1"
@@ -135,11 +135,11 @@
 				current_schedule++
 				invulnerability = invulnerable_on_transition
 				tick_at = 1
-			if (schedules.len < current_schedule)
+			if (length(schedules) < current_schedule)
 				broken = 1
 				message_coders("Marquesas/Bullethell: We broke due to veering off schedule.")
 				return
-			if (maxticks.len < current_schedule)
+			if (length(maxticks) < current_schedule)
 				broken = 1
 				message_coders("Marquesas/Bullethell: We broke due to veering off schedule <maxticks>.")
 				return
@@ -264,7 +264,7 @@
 		if (health <= 0)
 			die()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		var/damtype = DT_NORMAL
 
 		if (W.hit_type == DAMAGE_BURN)

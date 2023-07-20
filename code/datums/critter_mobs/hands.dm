@@ -53,14 +53,15 @@
 	proc/set_cooldown_overlay()
 		if (!limb || !screenObj || cooldown_overlay)
 			return
-		var/cd = limb.is_on_cooldown()
+		var/cd = limb.is_on_cooldown(src.holder)
 		if (cd > 0)
 			cooldown_overlay = 1
 			screenObj.overlays += obscurer
 			SPAWN(cd)
 				cooldown_overlay = 0
-				screenObj.overlays -= obscurer
+				screenObj?.overlays -= obscurer
 
 	proc/can_special_attack()
-		if (!holder || !limb) return 0
-		.= (holder.a_intent == INTENT_DISARM && limb.disarm_special) || (holder.a_intent == INTENT_HARM && limb.harm_special)
+		if (!holder || !limb)
+			return FALSE
+		return (holder.a_intent == INTENT_DISARM && limb.disarm_special) || (holder.a_intent == INTENT_HARM && limb.harm_special)

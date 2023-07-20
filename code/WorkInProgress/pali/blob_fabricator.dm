@@ -1,5 +1,4 @@
 
-ABSTRACT_TYPE(/datum/manufacture/mechanics/blob)
 /datum/manufacture/mechanics/blob
 	name = "blob"
 	item_paths = list("ORG|RUB")
@@ -19,18 +18,6 @@ ABSTRACT_TYPE(/datum/manufacture/mechanics/blob)
 		time = 1 MINUTE
 		item_amounts = list(30)
 		frame_path = /obj/blob/nucleus
-
-	deposit
-		name = "deposit blob"
-		frame_path = /obj/blob/deposit
-
-	replicator
-		name = "replicator blob"
-		frame_path = /obj/blob/deposit/replicator
-
-	reclaimer
-		name = "reclaimer blob"
-		frame_path = /obj/blob/deposit/reclaimer
 
 	launcher
 		name = "slime launcher blob"
@@ -77,13 +64,12 @@ ABSTRACT_TYPE(/datum/manufacture/mechanics/blob)
 	frame_path = /mob/living/intangible/blob_overmind/ai/start_here
 
 /obj/machinery/manufacturer/blob
-	name = "Blob Fabricator"
-	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing blobs. What?."
+	name = "blob fabricator"
+	supplemental_desc = "This one is for producing blobs. What?"
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
-	accept_blueprints = TRUE
-	free_resource_amt = 0
-	free_resources = list()
+	default_material = "blob"
+	mat_changename = FALSE
 	available = list(
 		/datum/manufacture/mechanics/blob/base,
 		/datum/manufacture/mechanics/blob/wall,
@@ -95,19 +81,12 @@ ABSTRACT_TYPE(/datum/manufacture/mechanics/blob)
 		/datum/manufacture/mechanics/blob/plasmaphyll,
 		/datum/manufacture/mechanics/blob/lipid,
 		/datum/manufacture/mechanics/blob/ribosome,
-		/datum/manufacture/mechanics/blob/nucleus,
-		/datum/manufacture/mechanics/blob/deposit,
-		/datum/manufacture/mechanics/blob/replicator,
-		/datum/manufacture/mechanics/blob/reclaimer
+		/datum/manufacture/mechanics/blob/nucleus
 		)
 
 	hidden = list(
 		/datum/manufacture/mechanics/blob_overmind
 	)
-
-	New()
-		..()
-		src.setMaterial(getMaterial("blob"), setname=FALSE)
 
 /obj/machinery/manufacturer/blob/filled
 	free_resource_amt = 10

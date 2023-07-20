@@ -9,7 +9,7 @@
 // obj/submachine/seed.dm: The splicer and reagent extractor are in here.
 
 ABSTRACT_TYPE(/datum/plant)
-/datum/plant/
+/datum/plant
 	// Standard variables for plants are added here.
 	var/name = "plant species name" // Name of the plant species
 	var/sprite = null         // The plant's normal sprite - overridden by special_icon
@@ -32,20 +32,18 @@ ABSTRACT_TYPE(/datum/plant)
 	var/nectarlevel = 0 //If nonzero, slowly tries to maintain this level of nectar reagent.
 	var/list/assoc_reagents = list() // Used for extractions, harvesting, etc
 	var/list/commuts = list() // What general mutations can occur in this plant?
+	var/list/innate_commuts = list() //! What kind of mutations should every seed of this plant receive when it is generated
 	var/list/mutations = list() // what mutant variants does this plant have?
 	var/genome = 0 // Used for splicing - how "similar" the plants are = better odds of splice
 	var/stop_size_scaling // Stops the enlarging of sprites based on quality
-	var/list/harvest_tools // For plants that don't harvest normally and need some sort of special tool (mixed list of tool flags and item paths)
-	var/harvest_tool_message // An output message for plants with unique harvest messages (string)
-	var/harvest_tool_fail_message // A helpful output message to players when they attempt to harvest a plant by hand
 	var/no_extract // Stops the extraction of seeds in the PlantMaster
-	var/list/required_reagents // reagents required for the plant to grow - formated like: list(list(id="poo",amount=100),list(id="thing",amount=number))
 
 	var/special_proc = 0 // Does this plant do something special when it's in the pot?
 	var/attacked_proc = 0 // Does this plant react if you try to attack it?
 	var/harvested_proc = 0 // Take a guess
 
-	var/dont_rename_crop = false	// don't rename the crop after the plant
+	/// Don't rename the crop after the plant.
+	var/dont_rename_crop = FALSE
 
 
 	var/category = null // Used for vendor filtering
@@ -68,6 +66,8 @@ ABSTRACT_TYPE(/datum/plant)
 		else
 			return "[src.name]-G[grow_level]"
 
+	proc/getIconOverlay(grow_level, datum/plantmutation/MUT)
+		return
 
 	proc/getBase64Img()
 		var/path = src.type
@@ -134,7 +134,7 @@ ABSTRACT_TYPE(/datum/plant)
 		if (!POT) lasterr = 101
 		if (POT.dead || !POT.current) lasterr = 102
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			special_proc = 0
 		return lasterr
 
@@ -144,7 +144,7 @@ ABSTRACT_TYPE(/datum/plant)
 		if (!POT || !user) lasterr = 201
 		if (POT.dead || !POT.current) lasterr = 202
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			attacked_proc = 0
 		return lasterr
 
@@ -154,18 +154,18 @@ ABSTRACT_TYPE(/datum/plant)
 		if (POT.dead || !POT.current) return 302
 		if (!src.harvestable || !src.crop) return 303
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			harvested_proc = 0
 		return lasterr
 
 	proc/HYPinfusionP(var/obj/item/seed/S,var/reagent)
 		var/datum/plantgenes/DNA = S.plantgenes
 
-		var/damage_prob = 100 - (src.endurance + DNA.endurance)
+		var/damage_prob = 100 - (src.endurance + DNA?.get_effective_value("endurance"))
 		damage_prob = clamp(damage_prob, 0, 100)
 		var/damage_amt = 0
 		switch (reagent)
-			if ("phlogiston","infernite","thalmerite","sorium")
+			if ("phlogiston","infernite","pyrosium","sorium")
 				damage_amt = rand(80,100)
 			if ("pacid")
 				damage_amt = rand(75,80)
@@ -233,11 +233,10 @@ ABSTRACT_TYPE(/datum/plant)
 					DNA.endurance++
 
 		if (damage_amt)
-			if (prob(damage_prob)) S.seeddamage += damage_amt
-		if (S.seeddamage > 99)
-			return 99 // destroy the seed
+			if (prob(damage_prob))
+				S.seeddamage += damage_amt
 
-/datum/plantgenes/
+/datum/plantgenes
 	var/growtime = 0 // These vars are pretty much bonuses/penalties applied on top of the
 	var/harvtime = 0 // same vars found in /datum/plant honestly. They go largely towards
 	var/harvests = 0 // the same purpose for the most part.
@@ -246,23 +245,49 @@ ABSTRACT_TYPE(/datum/plant)
 	var/endurance = 0
 	var/list/commuts = null // General transferrable mutations
 	var/datum/plantmutation/mutation = null // is it mutated? if so which variation?
-	var/list/alleles = list(0,0,0,0,0,0,0)
-	// Order goes:
-	// Species, Growtime, Harvtime, Cropsize, Harvests, Potency, Endurance
+	// dominant?
+	var/d_species = FALSE
+	var/d_growtime = FALSE
+	var/d_harvtime = FALSE
+	var/d_cropsize = FALSE
+	var/d_harvests = FALSE
+	var/d_potency = FALSE
+	var/d_endurance = FALSE
 	// Species allele controls name, appearance, crop produce and mutations
-	// 1 is dominant, else recessive
 
-	New(var/loc,var/random_alleles = 1)
+	New(var/loc,var/random_alleles = TRUE)
 		..()
 		if (random_alleles)
-			src.alleles[1] = rand(0,1)
-			src.alleles[2] = rand(0,1)
-			src.alleles[3] = rand(0,1)
-			src.alleles[4] = rand(0,1)
-			src.alleles[5] = rand(0,1)
-			src.alleles[6] = rand(0,1)
-			src.alleles[7] = rand(0,1)
+			src.d_species = rand(0,1)
+			src.d_growtime = rand(0,1)
+			src.d_harvtime = rand(0,1)
+			src.d_cropsize = rand(0,1)
+			src.d_harvests = rand(0,1)
+			src.d_potency = rand(0,1)
+			src.d_endurance = rand(0,1)
 			// optimise this later
+
+	/// This gives out a plant stat, modified by all commuts that affect produce
+	proc/get_effective_value(gene_stat as text)
+		var/output_base = 0
+		switch(gene_stat)
+			if("growtime")
+				output_base = src.growtime
+			if("harvtime")
+				output_base = src.harvtime
+			if("harvests")
+				output_base = src.harvtime
+			if("cropsize")
+				output_base = src.cropsize
+			if("potency")
+				output_base = src.potency
+			if("endurance")
+				output_base = src.endurance
+		var/output_real = output_base
+		if (src.commuts)
+			for (var/datum/plant_gene_strain/X in src.commuts)
+				output_real +=  round(X.get_plant_stat_modifier(src, gene_stat, output_base))
+		return output_real
 
 /datum/action/bar/icon/harvest_plant  //In the words of my forebears, "I really don't know a good spot to put this, so im putting it here, fuck you." Adds a channeled action to harvesting flagged plants.
 	id = "harvest_plant"
@@ -287,9 +312,6 @@ ABSTRACT_TYPE(/datum/plant)
 			source = sourcerelay
 		if(duration2)
 			duration = duration2
-		if(plant_pot.current.harvest_tools && (source.equipped() != null))
-			var/obj/item/I = source.equipped()
-			toolcheck = I
 		..()
 
 	onUpdate()

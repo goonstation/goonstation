@@ -2,7 +2,7 @@
 	name = "cyborg module rewriter"
 	desc = "A machine used to reconfigure cyborg modules."
 	icon_state = "robot_module_rewriter"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	light_r =1
 	light_g = 0.4
@@ -11,7 +11,7 @@
 	var/list/obj/item/robot_module/modules = null
 	var/obj/item/robot_module/selectedModule = null
 
-/obj/machinery/computer/robot_module_rewriter/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/computer/robot_module_rewriter/attackby(obj/item/I, mob/user)
 	if (istype(I, /obj/item/robot_module))
 		user.drop_item()
 		I.set_loc(src)
@@ -94,8 +94,8 @@
 						switch (moduleId)
 							if ("brobocop")
 								moduleResetType = /obj/item/robot_module/brobocop
-							if ("chemistry")
-								moduleResetType = /obj/item/robot_module/chemistry
+							if ("science")
+								moduleResetType = /obj/item/robot_module/science
 							if ("civilian")
 								moduleResetType = /obj/item/robot_module/civilian
 							if ("engineering")

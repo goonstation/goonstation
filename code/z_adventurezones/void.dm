@@ -19,29 +19,39 @@ CONTENTS:
 	sound_group = "void"
 	sound_loop = 'sound/ambience/spooky/Void_Song.ogg'
 	ambient_light = rgb(6.9, 4.20, 6.9)
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/void,
+		/atom/movable/screen/parallax_layer/void/clouds_1,
+		/atom/movable/screen/parallax_layer/void/clouds_2,
+		)
 
-	New()
-		..()
-		SPAWN(1 SECOND)
-			process()
+/area/crunch/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-	proc/process()
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(10 SECONDS)
-			if (current_state == GAME_STATE_PLAYING)
-				if(!played_fx_2 && prob(10))
-					sound_fx_2 = pick('sound/ambience/spooky/Void_Hisses.ogg','sound/ambience/spooky/Void_Screaming.ogg','sound/ambience/spooky/Void_Wail.ogg','sound/ambience/spooky/Void_Calls.ogg')
-					for(var/mob/M in src)
-						if (M.client)
-							M.client.playAmbience(src, AMBIENCE_FX_2, 50)
+/area/crunch/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
 
+/area/crunch/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick('sound/ambience/spooky/Void_Hisses.ogg',\
+		'sound/ambience/spooky/Void_Screaming.ogg',\
+		'sound/ambience/spooky/Void_Wail.ogg',\
+		'sound/ambience/spooky/Void_Calls.ogg')
+
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 50)
+
+TYPEINFO(/turf/unsimulated/wall/void)
+	mat_appearances_to_ignore = list("steel")
 /turf/unsimulated/wall/void
 	name = "dense void"
 	icon = 'icons/turf/floors.dmi'
 	desc = "It seems solid..."
 	opacity = 1
 	density = 1
-	mat_appearances_to_ignore = list("steel")
+	plane = PLANE_SPACE
 #ifdef IN_MAP_EDITOR
 	icon_state = "darkvoid-map" //so we can actually the walls from the floor
 #else
@@ -51,16 +61,20 @@ CONTENTS:
 /turf/unsimulated/wall/void/crunch //putting these here for now
 	fullbright = 0
 
+TYPEINFO(/turf/unsimulated/floor/void)
+	mat_appearances_to_ignore = list("steel")
 /turf/unsimulated/floor/void
 	name = "void"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "void"
 	desc = "A strange shifting void ..."
-	mat_appearances_to_ignore = list("steel")
+	plane = PLANE_SPACE
 
 /turf/unsimulated/floor/void/crunch
 	fullbright = 0
 
+TYPEINFO(/turf/simulated/wall/void)
+	mat_appearances_to_ignore = list("steel")
 /turf/simulated/wall/void
 	name = "dense void"
 	icon = 'icons/turf/floors.dmi'
@@ -68,7 +82,7 @@ CONTENTS:
 	desc = "It seems solid..."
 	opacity = 1
 	density = 1
-	mat_appearances_to_ignore = list("steel")
+	plane = PLANE_SPACE
 
 	ex_act()
 		return
@@ -79,21 +93,23 @@ CONTENTS:
 	blob_act(var/power)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return
 
 
+TYPEINFO(/turf/simulated/floor/void)
+	mat_appearances_to_ignore = list("steel")
 /turf/simulated/floor/void
 	name = "void"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "void"
 	desc = "A strange shifting void ..."
+	plane = PLANE_SPACE
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
-	mat_appearances_to_ignore = list("steel")
 
 	ex_act()
 		return
@@ -104,10 +120,10 @@ CONTENTS:
 	blob_act(var/power)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return
 
 //////////////////////////////
@@ -118,7 +134,7 @@ CONTENTS:
 	name = "complicated contraption"
 	desc = "A big machine with lots of buttons and dials on it. Looks kinda dangerous."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	icon = 'icons/obj/machines/mindswap.dmi'
 	icon_state = "mindswap"
@@ -315,7 +331,7 @@ CONTENTS:
 		if(activating) return
 		activating = 1
 		src.updateUsrDialog()
-		playsound(src.loc, "sound/machines/computerboot_pc_start.ogg", 50, 0)
+		playsound(src.loc, 'sound/machines/computerboot_pc_start.ogg', 50, 0)
 
 		sleep(boot_duration / 2)
 		activating = 2
@@ -341,7 +357,7 @@ CONTENTS:
 
 	proc/make_some_noise()
 		do
-			playsound(src.loc, "sound/machines/computerboot_pc_loop.ogg", 50, 0)
+			playsound(src.loc, 'sound/machines/computerboot_pc_loop.ogg', 50, 0)
 			sleep(loop_duration)
 		while(active && !activating && remain_active-- > 0) //So it will shut itself down after a while
 
@@ -354,7 +370,7 @@ CONTENTS:
 	proc/deactivate()
 		if(!active || activating || operating) return
 		activating = 1
-		playsound(src.loc, "sound/machines/computerboot_pc_end.ogg", 50, 0)
+		playsound(src.loc, 'sound/machines/computerboot_pc_end.ogg', 50, 0)
 		sleep(2 SECONDS)
 		activating = 0
 		active = 0
@@ -374,23 +390,22 @@ CONTENTS:
 	proc/can_operate()
 		return valid_mindswap(chair1?.buckled_guy) && valid_mindswap(chair2?.buckled_guy)
 
-	proc/valid_mindswap(mob/M)
-		. = 0
-		if(isliving(M))
-			. = 1
+	proc/valid_mindswap(mob/living/L)
+		. = 1
+		if(!istype(L))
+			return
 
-		if(issilicon(M))
-			. = 0
-
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
 			if(H.on_chair)
 				. = 0
-		if(istype(M, /mob/living/critter))
-			var/mob/living/critter/C = M
+
+		if(istype(L, /mob/living/critter))
+			var/mob/living/critter/C = L
 			if(C.dormant || C.ghost_spawned)
 				. = 0
-		if(istype(M, /mob/living/critter/small_animal/mouse/weak/mentor) || istype(M, /mob/living/critter/flock) || istype(M, /mob/living/intangible))
+
+		if(!L.void_mindswappable)
 			. = 0
 
 	proc/do_swap()

@@ -6,7 +6,11 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bopbag"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
+
+	New()
+		..()
+		src.AddComponent(/datum/component/bullet_holes, 100, 0)
 
 	bullet_act(obj/projectile/P)
 		. = ..()

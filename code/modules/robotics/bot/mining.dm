@@ -4,9 +4,9 @@
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "digbot0"
 	var/const/base_sprite_pixels_from_floor = 5
-	layer = 5.0
+	layer = 5
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	on = 0
 	var/digging = 0
 	health = 25
@@ -70,14 +70,14 @@
 		src.UpdateOverlays(null, "hover")
 		var/const/volume = 50
 		var/const/vary = 1
-		playsound(src.loc, "sound/impact_sounds/Metal_Clang_3.ogg", volume, vary)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', volume, vary)
 		pixel_y = -base_sprite_pixels_from_floor
 	if(src.digging)
 		src.UpdateOverlays(display_tool_animated, "tool")
 	else
 		src.UpdateOverlays(display_tool_idle, "tool")
 
-/obj/machinery/bot/mining/attack_hand(user as mob)
+/obj/machinery/bot/mining/attack_hand(user)
 	src.add_fingerprint(user)
 	ui.show_ui(user)
 
@@ -95,7 +95,7 @@
 			O.show_message("<span class='alert bold'><B>[src] buzzes oddly!</span>", 1)
 		src.target = null
 		src.oldtarget = null
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.emagged = 1
 		if(!src.on)
 			turnOn()
@@ -144,7 +144,7 @@
 	if (src.target)
 		for (var/mob/O in hearers(src, null))
 			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> points and beeps, \"Doomed rock detected!\"</span></span>", 2)
-		make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y)
+		point(target)
 
 /obj/machinery/bot/mining/proc/buildPath()
 	if (!isturf(src.loc)) return
@@ -160,15 +160,15 @@
 
 /obj/machinery/bot/mining/proc/startDiggingEffects()
 	src.visible_message("<span class='alert'>[src] starts digging!</span>")
-	if (src.diglevel > 2) playsound(src.loc, "sound/items/Welder.ogg", 100, 1)
+	if (src.diglevel > 2) playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 	else playsound(src.loc, 'sound/impact_sounds/Stone_Cut_1.ogg', 100, 1)
 	src.digging = 1
-	src.anchored = 1
+	src.anchored = ANCHORED
 	setEffectOverlays()
 
 /obj/machinery/bot/mining/proc/stopDiggingEffects()
 	src.digging = 0
-	src.anchored = 0
+	src.anchored = UNANCHORED
 	setEffectOverlays()
 
 
@@ -247,12 +247,12 @@
 	proc/checkStillValid()
 		if(bot == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
-			return false
+			return FALSE
 		if(!bot.on || !istype(target, /turf/simulated/wall/auto/asteroid/))
 			bot.target = null
 			interrupt(INTERRUPT_ALWAYS)
-			return false
-		return true
+			return FALSE
+		return TRUE
 
 /datum/action/bar/icon/digbotdig/drill
 	id = "digbot_drill"

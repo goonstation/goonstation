@@ -1,6 +1,6 @@
 /datum/random_event/minor/gimmick_flood
 	name = "Random Flood"
-	disabled = 1 // disabled for now as we dismantle old Ass Jam stuff, find a reason to enable it later, this would be a good player-triggerable event. -warc
+	disabled = 1 // disabled for now, this would be a good player-triggerable event. -warc
 	weight = 30
 	customization_available = 1
 	var/reagent_type = null
@@ -20,9 +20,9 @@
 			else
 				L = concrete_typesof(/datum/reagent)
 
-			if(L.len == 1)
+			if(length(L) == 1)
 				reagent_type = L[1]
-			else if(L.len > 1)
+			else if(length(L) > 1)
 				reagent_type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
 			else
 				usr.show_text("No reagents matching that name", "red")
@@ -61,7 +61,7 @@
 		src.target.fluid_react_single(reagent.id, amount)
 
 
-		playsound(target,"sound/effects/teleport.ogg",50,1)
+		playsound(target, 'sound/effects/teleport.ogg', 50,1)
 
 		message_admins("Random flood event triggered on ([log_loc(target)]) with [amount] [reagent.name].")
 

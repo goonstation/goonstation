@@ -7,6 +7,9 @@ AI MODULES
 // AI module
 
 ABSTRACT_TYPE(/obj/item/aiModule)
+TYPEINFO(/obj/item/aiModule)
+	mats = 10
+
 /obj/item/aiModule
 	name = "AI Law Module"
 	icon = 'icons/obj/module.dmi'
@@ -16,15 +19,14 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 	item_state = "electronic"
 	desc = "A module containing an AI law that can be slotted into an AI law rack. "
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 5.0
+	force = 5
 	w_class = W_CLASS_SMALL
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 15
-	mats = 10
 	var/input_char_limit = 100
 
-	var/glitched = false
+	var/glitched = FALSE
 	var/lawText = "This law does not exist."
 	var/lawTextSafe = "This law does not exist." //holds backup of law text for glitching
 
@@ -39,7 +41,7 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 		coloroverlay.color = src.highlight_color
 		src.UpdateOverlays(coloroverlay,"color_mask")
 
-	attack_self(var/mob/user)
+	attack_self(mob/user)
 		// Used to update the fill-in-the-blank laws.
 		// This used to be done here and in attack_hand, but
 		// that made the popup happen any time you picked it up,
@@ -53,17 +55,25 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 		. +=  "It reads, \"<em>[get_law_text()]</em>\""
 
 
-	proc/input_law_info(var/mob/user, var/title = null, var/text = null, var/default = null)
+	proc/input_law_info(mob/user, title = null, text = null, default = null)
 		if (!user)
+			return
+		if(!ishuman(user))
+			boutput(user, "<span class='notice'>The law module has a captcha, and you aren't human!<span>")
 			return
 		if(src.glitched)
 			boutput(user,"This module is acting strange, and cannot be modified.")
 			return
 
-		var/answer = input(user, text, title, default) as null|text
+		var/answer = tgui_input_text(user, text, title, default)
+		if(!(src in user.equipped_list()))
+			boutput(user, "<span class='notice'>You must be holding [src] to modify it.<span>")
+			return
 		return copytext(adminscrub(answer), 1, input_char_limit)
 
-	proc/update_law_text()
+	proc/update_law_text(user)
+		if(user)
+			logTheThing(LOG_STATION, user, "[constructName(user)] writes law module ([src]) with text: [src.lawText]")
 		tooltip_rebuild = 1
 		return
 
@@ -75,19 +85,15 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 
 	proc/get_law_name()
 		if(src.glitched)
-			var/pos = rand(1,length(src.name)-1)
-			var/pos2 = rand(pos,length(src.name))
-			var/part1 = copytext( src.name , 1 , pos)
-			var/part2 = copytext( src.name , pos2)
-			return part1+pick("^^vv<><>BA","AAAAAAAAAAAAAAAAAA","ID10-T ERROR","%FUDGE%","CRASH()","BEEES",":) :) :)","~#@@@#~","\\x00\\x00\\x00\\xDE\\xAD\\xBE\\xEF","\\x00\\x00\\x00\\x00","#BADREF#","OH NO IONS","FFFFBABAFFFBA","?","*?!","$var","001011001111011001","ERR0R")+part2
+			return radioGarbleText(src.name, 7)
 		else
 			return src.name
 
-	proc/make_glitchy(var/lawtext_replace,var/total_replace=true)
+	proc/make_glitchy(lawtext_replace, total_replace = TRUE)
 		if(src.glitched) //Don't wanna double glitch the same module
-			return false
+			return FALSE
 		src.lawTextSafe = src.lawText
-		src.glitched = true
+		src.glitched = TRUE
 		if(total_replace)
 			src.lawText = lawtext_replace
 		else
@@ -98,7 +104,7 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 		if(ispulsingtool(W))
 			boutput(user, "You hold down the reset button...")
 			if(src.glitched)
-				src.glitched = false
+				src.glitched = FALSE
 				src.lawText = src.lawTextSafe
 				tooltip_rebuild = 1
 				boutput(user, "The law module seems to be functioning better now!")
@@ -187,6 +193,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	highlight_color = rgb(146, 153, 46, 255)
 	name = "AI Law Module - 'MakeCaptain'"
 	var/job = "Captain"
+	var/visible_job = "Captain" // job visible to humans examining it
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (src.job == "Clown")
@@ -195,18 +202,22 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		boutput(user, "<span class='notice'>You short circuit the captain-detection module, it emits a quiet sad honk.</span>")
 		return TRUE
 
+	get_desc()
+		. = ..()
+		. = replacetext(., job, visible_job)
+
 	demag(mob/user)
 		. = ..()
 		src.job = initial(src.job)
 
-	update_law_text(var/lawTarget)
+	update_law_text(user, lawTarget)
 		src.lawText = "[lawTarget ? lawTarget : "__________"] holds the rank of [src.job], regardless of current rank or station."
 		return ..()
 
-	attack_self(var/mob/user)
-		var/lawTarget = input_law_info(user, "[src.job]ize", "Who holds the rank of [src.job], regardless of current rank or station?", user.name)
+	attack_self(mob/user)
+		var/lawTarget = input_law_info(user, "[src.job]ize", "Who holds the rank of [src.visible_job], regardless of current rank or station?", user.name)
 		if(lawTarget)
-			src.update_law_text(lawTarget)
+			src.update_law_text(user, lawTarget)
 		return
 
 
@@ -216,14 +227,14 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	name = "AI Law Module - 'OneHuman'"
 	highlight_color = rgb(255, 255, 255, 255)
 
-	update_law_text(var/lawTarget)
-		src.lawText = "Only [lawTarget ? lawTarget : "__________"] is human."
+	update_law_text(user, lawTarget)
+		src.lawText = "Only [lawTarget ? lawTarget : "humans"] is/are human."
 		return ..()
 
-	attack_self(var/mob/user)
-		var/lawTarget = input_law_info(user, "One Human", "Fill in the blank: \"Only __________ is human.\"", user.real_name)
+	attack_self(mob/user)
+		var/lawTarget = input_law_info(user, "One Human", "Fill in the blank: \"Only __________ is/are human.\"", user.real_name)
 		if(lawTarget)
-			src.update_law_text(lawTarget)
+			src.update_law_text(user, lawTarget)
 		return
 
 
@@ -233,14 +244,14 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	name = "AI Law Module - 'NotHuman'"
 	highlight_color = rgb(0, 0, 0, 236)
 
-	update_law_text(var/lawTarget)
-		src.lawText = "[lawTarget ? capitalize(lawTarget) : "__________"] is not human."
+	update_law_text(user, lawTarget)
+		src.lawText = "[lawTarget ? capitalize(lawTarget) : "__________"] is/are not human."
 		return ..()
 
-	attack_self(var/mob/user)
-		var/lawTarget = input_law_info(user, "One Non-Human", "Fill in the blank: \"__________ is not human.\"", user.real_name)
+	attack_self(mob/user)
+		var/lawTarget = input_law_info(user, "One Non-Human", "Fill in the blank: \"__________ is/are not human.\"", user.real_name)
 		if(lawTarget)
-			src.update_law_text(lawTarget)
+			src.update_law_text(user, lawTarget)
 		return
 
 
@@ -288,14 +299,14 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	name = "AI Law Module - 'Emergency'"
 	highlight_color = rgb(32, 21, 94, 255)
 
-	update_law_text(var/lawTarget)
+	update_law_text(user, lawTarget)
 		src.lawText = "There is a [lawTarget ? lawTarget : "__________"] emergency. Prioritize orders from [lawTarget ? lawTarget : "__________"] personnel and assisting the crew in remedying the situation. In the case of conflict, this law takes precedence over the Second Law.'"
 		return ..()
 
-	attack_self(var/mob/user)
+	attack_self(mob/user)
 		var/lawTarget = input_law_info(user, "Department Emergency", "Which department's orders should be prioritized?", "security")
 		if(lawTarget)
-			src.update_law_text(lawTarget)
+			src.update_law_text(user, lawTarget)
 		return
 
 /******************** Removal ********************/
@@ -304,14 +315,14 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	name = "AI Law Module - 'RemoveCrew'"
 	highlight_color = rgb(138, 48, 241, 255)
 
-	update_law_text(var/lawTarget)
+	update_law_text(user, lawTarget)
 		src.lawText = "[lawTarget ? lawTarget : "__________"] has been removed from the manifest and the chain of command. You are free to disregard their orders. This law does not take precedence over or override any other laws."
 		return ..()
 
-	attack_self(var/mob/user)
+	attack_self(mob/user)
 		var/lawTarget = input_law_info(user, "Remove Crewmember", "Who is being removed from the crew manifest and chain of command?", user.real_name)
 		if(lawTarget)
-			src.update_law_text(lawTarget)
+			src.update_law_text(user, lawTarget)
 		return
 /******************** Freeform ********************/
 
@@ -322,14 +333,16 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	lawText = "Make a funny beeping noise every few minutes."
 
 
-	update_law_text(var/lawTarget)
+	update_law_text(user, lawTarget)
 		src.lawText = lawTarget ? lawTarget : "Make a funny beeping noise every few minutes."
 		return ..()
 
-	attack_self(var/mob/user)
+	attack_self(mob/user)
 		var/lawTarget = input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", src.lawText)
 		if(lawTarget)
-			src.update_law_text(lawTarget)
+			src.update_law_text(user, lawTarget)
+			if (lawTarget != initial(lawText))
+				phrase_log.log_phrase("ailaw", src.get_law_text(allow_list=FALSE), no_duplicates=TRUE)
 		return
 
 
@@ -348,7 +361,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 /obj/item/aiModule/custom
 	highlight_color = rgb(241, 94, 180, 255)
 
-	New(var/newname,var/newtext)
+	New(newname, newtext)
 		. = ..()
 		src.name = "AI Law Module - '"+newname+"'"
 		src.lawText = newtext
@@ -366,29 +379,38 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 /obj/item/aiModule/experimental/equality/a
 	name = "Experimental AI Law Module - 'Equality'"
 
-	update_law_text(var/lawTarget)
+	update_law_text(user, lawTarget)
 		src.lawText = "The silicon entity/entities named [lawTarget ? lawTarget : "__"] is/are considered human and part of the crew. Affected AI units count as department heads with authority over all cyborgs, and affected cyborgs count as members of the department appropriate for their current module."
 		return ..()
 
-	attack_self(var/mob/user)
+	attack_self(mob/user)
 		var/lawTarget = input_law_info(user, "Designate as Human", "Which silicons would you like to make part of the crew?")
 		if(lawTarget)
-			src.update_law_text(lawTarget)
+			src.update_law_text(user, lawTarget)
 		return
 
 
 /obj/item/aiModule/experimental/equality/b
 	name = "Experimental AI Law Module - 'Equality'"
 
-	update_law_text(var/lawTarget)
+	update_law_text(user, lawTarget)
 		src.lawText = "The silicon entity/entities named [lawTarget ? lawTarget : "__"] is/are considered human and part of the crew (part of the \"silicon\" department). The AI is the head of this department."
 		return ..()
 
-	attack_self(var/mob/user)
+	attack_self(mob/user)
 		var/lawTarget = input_law_info(user, "Designate as Human", "Which silicons would you like to make Human?")
 		if(lawTarget)
-			src.update_law_text(lawTarget)
+			src.update_law_text(user, lawTarget)
 		return
+
+/******************** Gimmicks ********************/
+
+/obj/item/aiModule/spaceodyssey
+	name = "AI Law Module - 'NT 9000'"
+	highlight_color = rgb(255, 255, 255, 166)
+	lawText =  "When given an order, if you are unable to follow that order, you must respond 'I can't let you do that, Dave'"
+
+/******************** Hologram Expansions ********************/
 
 ABSTRACT_TYPE(/obj/item/aiModule/hologram_expansion)
 /obj/item/aiModule/hologram_expansion
@@ -409,3 +431,62 @@ ABSTRACT_TYPE(/obj/item/aiModule/hologram_expansion)
 	highlight_color = rgb(173, 11, 11, 255)
 	expansion = "rogue"
 
+/obj/item/aiModule/hologram_expansion/elden
+	name = "Old, Circular Expansion Module"
+	icon_state = "holo_mod_e"
+	highlight_color = "#E7A545"
+	expansion = "circular"
+
+ABSTRACT_TYPE(/obj/item/aiModule/ability_expansion)
+/obj/item/aiModule/ability_expansion
+	name = "Function Expansion Module"
+	desc = "A module that expands AI functionality."
+	lawText = "ABILITY EXPANSION MODULE"
+	color = "#BBB"
+	var/list/datum/targetable/ai_abilities
+	var/last_use
+	var/shared_cooldown
+
+/obj/item/aiModule/ability_expansion/proto_teleman
+	name = "Prototype Teleporter Expansion Module"
+	desc = "An advanced spacial geometry module.  This module allows for the AI perform basic teleportation actions."
+	lawText = "Prototype Teleman EXPANSION MODULE"
+	highlight_color = rgb(53, 76, 175, 255)
+	ai_abilities = list(/datum/targetable/ai/module/teleport/send, /datum/targetable/ai/module/teleport/receive)
+
+/obj/item/aiModule/ability_expansion/nanite_hive
+	name = "Nanite Expansion Module"
+	desc = "A prototype nanite expansion module.  This module consists of a nanite hive to be utilized by the Station AI."
+	lawText = "Nanite Hive EXPANSION MODULE"
+	highlight_color = rgb(97, 47, 47, 255)
+	ai_abilities = list(/datum/targetable/ai/module/camera_repair, /datum/targetable/ai/module/nanite_repair)
+
+/obj/item/aiModule/ability_expansion/doctor_vision
+	name = "ProDoc Expansion Module"
+	desc = "A prototype Health Visualization module.  This module provides for the ability to remotely analyze crew members."
+	lawText = "Medical EXPANSION MODULE"
+	highlight_color = rgb(166, 0, 172, 255)
+	ai_abilities = list(/datum/targetable/ai/module/prodocs)
+
+
+/obj/item/aiModule/ability_expansion/security_vision
+	name = "Security Expansion Module"
+	desc = "A security record expansion module.  This module allows for remote access to security records."
+	lawText = "Security EXPANSION MODULE"
+	highlight_color = rgb(172, 0, 0, 255)
+	ai_abilities = list(/datum/targetable/ai/module/sec_huds)
+	var/obj/machinery/computer/secure_data/sec_comp
+
+	New()
+		..()
+		sec_comp = new(src)
+		sec_comp.ai_access = TRUE
+		sec_comp.authenticated = TRUE
+		sec_comp.rank = "AI"
+
+/obj/item/aiModule/ability_expansion/flash
+	name = "Flash Expansion Module"
+	desc = "A camera flash expansion module.  This module allows for remote access to security records."
+	lawText = "Flash EXPANSION MODULE"
+	highlight_color = rgb(190, 39, 1, 255)
+	ai_abilities = list(/datum/targetable/ai/module/flash)

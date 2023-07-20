@@ -6,9 +6,10 @@
 	name = "chest"
 	organ_name = "chest"
 	desc = "Oh, crap."
+	icon = 'icons/obj/items/organs/chest.dmi'
 	icon_state = "chest_m"
 	edible = 0
-	MAX_DAMAGE = INFINITY
+	max_damage = INFINITY
 
 	var/datum/appearanceHolder/donor_appearance = null
 	//var/datum/mutantrace/donor_mutantrace = null

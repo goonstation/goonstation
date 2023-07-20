@@ -32,13 +32,17 @@
 
 
 
+TYPEINFO(/obj/machinery/genetics_booth)
+	mats = 40
+
 /obj/machinery/genetics_booth
 	name = "gene booth"
 	desc = "A luxury booth that will exchange genetic upgrades for cash. It automatically bills your account using advanced magnet technology. It's safe!"
 	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "genebooth"
+	pass_unstable = TRUE
 	pixel_x = -3
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	event_handler_flags = USE_FLUID_ENTER
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | LONG_GLIDE
@@ -47,6 +51,7 @@
 	var/letgo_hp = 50
 	var/mob/living/carbon/human/occupant = null
 	var/process_time = 20 SECONDS
+	var/static/process_speedup = 0 // static since the genetek upgrade is universal
 	var/damage_per_tick = 1
 
 	var/image/screenoverlay = null
@@ -58,10 +63,8 @@
 	var/datum/geneboothproduct/selected_product = null
 	var/list/offered_genes = list()
 
-	var/spam_time = 0
 	var/started = 0
-	mats = 40
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
 
 	var/datum/light/light
 	var/light_r =0.88
@@ -134,6 +137,11 @@
 			user.show_text("[src] is currently occupied. Wait until it's done.", "blue")
 			return
 
+		if (status & (NOPOWER | BROKEN))
+			boutput(user, "<span class='alert'>The gene booth is currently nonfunctional.</span>")
+			return
+
+
 		if (length(offered_genes))
 			var/list/names = list()
 			show_admin_panel(user)
@@ -202,10 +210,9 @@
 						P = locate(href_list["op"])
 						if(P)
 							P.locked = !P.locked
-							if(!selected_product || selected_product.locked)
-								selected_product = null
-								just_pick_anything()
-								UpdateIcon()
+							if(selected_product?.locked)
+								select_product(null)
+								eject_occupant(0)
 							reload_contexts()
 
 			show_admin_panel(usr)
@@ -216,20 +223,14 @@
 
 	proc/select_product(var/datum/geneboothproduct/P)
 		selected_product = P
-		abilityoverlay = SafeGetOverlayImage("abil", P.BE.icon, P.BE.icon_state,src.layer + 0.1)
-		UpdateIcon()
-
-		usr.show_text("You have selected [P.name]. Walk into an opening on the side of this machine to purchase this item.", "blue")
-		playsound(src.loc, "sound/machines/keypress.ogg", 50, 1, extrarange = -15, pitch = 0.60)
-
-	proc/just_pick_anything()
-		for (var/datum/geneboothproduct/P as anything in offered_genes)
-			if(P.locked)
-				continue
-			selected_product = P
+		if(P)
 			abilityoverlay = SafeGetOverlayImage("abil", P.BE.icon, P.BE.icon_state,src.layer + 0.1)
 			UpdateIcon()
-			break
+			usr.show_text("You have selected [P.name]. Walk into an opening on the side of this machine to purchase this item.", "blue")
+			playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, extrarange = -15, pitch = 0.6)
+		else
+			abilityoverlay = SafeGetOverlayImage("abil", 'icons/mob/genetics_powers.dmi', "none")
+			UpdateIcon()
 
 	update_icon()
 		if (powered())
@@ -238,8 +239,9 @@
 				UpdateOverlays(workingoverlay, "abil", 0, 1)
 				UpdateOverlays(screenoverlay, "screen", 0, 1)
 				animate_shake(src,5,3,2, return_x = -3)
-				playsound(src.loc, "sound/impact_sounds/Metal_Clang_1.ogg", 30, 1, pitch = 1.4)
-				if (entry_time + process_time < world.timeofday)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, 1, pitch = 1.4)
+				var/adjusted_time = process_time - (process_time * process_speedup)
+				if (entry_time + adjusted_time < TIME)
 					eject_occupant()
 			else
 				UpdateOverlays(abilityoverlay, "abil", 0, 1)
@@ -295,13 +297,9 @@
 			if (selected_product.cost <= 0)
 				.= 1
 			else
-				var/obj/item/card/id/perp_id = M.equipped()
+				var/obj/item/card/id/perp_id = get_id_card(M.equipped())
 				if (!istype(perp_id))
-					if (istype(M.wear_id,/obj/item/device/pda2))
-						var/obj/item/device/pda2/PDA = M.wear_id
-						perp_id = PDA.ID_card
-					else
-						perp_id = M.wear_id
+					perp_id = get_id_card(M.wear_id)
 				if (istype(perp_id))
 
 					//subtract from perp bank account
@@ -356,34 +354,42 @@
 
 	Cross(var/mob/M)
 		.= ..()
-		if (M && M.y == src.y)
-			if (!occupant && selected_product && ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.bioHolder && !H.bioHolder.HasEffect(selected_product.id))
-					eject_dir = get_dir(M,src)
-					M.set_loc(src)
-					occupant = M
-					letgo_hp = initial(letgo_hp)
-					entry_time = world.timeofday
-					started = 0
+		if (!(src.status & (NOPOWER | BROKEN)) && ishuman(M) && M.y == src.y && !occupant && selected_product && !GET_COOLDOWN(M, "genebooth_debounce"))
+			return TRUE
 
-					if (world.time > spam_time + 3 SECONDS)
-						playsound(src.loc, "sound/machines/heater_on.ogg", 90, 1, pitch = 0.78)
-						M.show_text("[src] is warming up. Please hold still.", "blue")
-						spam_time = world.time
+	Crossed(var/mob/M, atom/oldLoc)
+		. = ..()
+		if (!M || M.y != src.y || GET_COOLDOWN(M, "genebooth_debounce"))
+			return
+		if (occupant || !selected_product || !ishuman(M))
+			return
+		var/mob/living/carbon/human/H = M
+		if (H.bioHolder)
+			ON_COOLDOWN(M, "genebooth_debounce", 2 SECONDS)
+			eject_dir = pick(EAST, WEST)
+			M.set_loc(src)
+			occupant = M
+			letgo_hp = initial(letgo_hp)
+			entry_time = TIME
+			started = 0
 
-					UpdateIcon()
-					.= 1
-				else
-					if (world.time > spam_time + 3 SECONDS)
+			UpdateIcon()
+
+			if (H.bioHolder.HasEffect(selected_product.id))
+				SPAWN(1 SECOND)
+					src.eject_occupant(add_power=0)
+					if (!ON_COOLDOWN(M, "genebooth_message_antispam", 3 SECONDS))
 						M.show_text("You already have the offered mutation!", "blue")
-						spam_time = world.time
+				return
 
+			if (!ON_COOLDOWN(M, "genebooth_message_antispam", 3 SECONDS))
+				playsound(src.loc, 'sound/machines/heater_on.ogg', 90, 1, pitch = 0.78)
+				M.show_text("[src] is warming up. Please hold still.", "blue")
 
 	mob_flip_inside(var/mob/user)
 		..(user)
 		user.show_text("<span class='alert'>[src] [pick("bends","shakes","groans")].</span>")
-		if (prob(8))
+		if (prob(33))
 			src.eject_occupant(add_power = 0)
 
 	relaymove(mob/user, direction)
@@ -392,14 +398,17 @@
 				if (occupant == user && !(started>1))
 					src.eject_occupant(0,0, direction)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 		letgo_hp -= W.force
 		attack_particle(user,src)
-		playsound(src.loc, "sound/impact_sounds/Metal_Clang_3.ogg", 50, 1, pitch = 0.8)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1, pitch = 0.8)
 
 		if (letgo_hp <= 0)
 			src.eject_occupant(add_power = 0)
+
+	was_deconstructed_to_frame(mob/user)
+		src.eject_occupant(do_throwing=FALSE)
 
 //next :
 	//sound effects

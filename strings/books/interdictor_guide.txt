@@ -14,7 +14,7 @@
 	<br>
 	Radiation pulses safely remodulated within field range
 	<br>
-	Radiation storms interdicted on a per-individual basis**
+	Radiation storms fully deflected from field area**
 	<br>
 	Solar flare disruptions reduced per onboard interdictor
 	<br>
@@ -25,7 +25,7 @@
 	<br>
 	<i>*WARNING: total interdiction impossible, and device must be active beforehand.</i>
 	<br>
-	<i>**ADVISORY: heavy interdiction cost. Multiple interdictors or powerful cell recommended for crowds.</i>
+	<i>**WARNING: heavy interdiction cost. An adequate grid supply MUST be present for reliable deflection, and a high-capacity cell is recommended.</i>
 	<br>
 	<i>***ADVISORY: as a countermeasure to capacitance failure, interdicting spatial tears will require reinitializing the interdictor if it was not installed near the tear at the time of the event.</i>
 	<br>
@@ -37,11 +37,37 @@
 	<br>
 	<br>
 	<hr>
+	<h3>MAINBOARD SELECTION</h3>
+	<br>
+	The spatial interdictor's mainboard manages current flow into the phase-control rod, and several variants are available for your manufacture.
+	<br>
+	Some of these variants are more costly to manufacture, but will provide additional secondary functionality of benefit to station operations. The following schematics are included:
+	<br>
+	<br>
+	Standard Mainboard: Cheapest selection. No additional functionality, but grants one additional standard unit of radius.
+	<br>
+	Nimbus Mainboard: Provides over-the-air recharging to cyborgs in range. Recommended for use in industrial circumstances where sensitive equipment is present and uptime is crucial.
+	<br>
+	Zephyr Mainboard: Creates a bioelectric field within the standard operating radius, with beneficial* effects on human physiology, primarily reflected as an improvement in stamina.
+	<br>
+	Devera Mainboard: Ionizes atmosphere within field bounds. Has a suppressive effect on exposed bacteria, with particular efficacy at containing miasma.
+	<br>
+	<br>
+	<i>*Please consult station physicians before use.</i>
+	<br>
+	<br>
+	<hr>
 	<h3>ASSEMBLING THE DEVICE</h3>
 	<br>
-	(I) Assemble the frame kit and phase-control rod at any manufacturer using the blueprints included with your Spatial Interdictor Starter Kit. Materials not provided.
+	(I) Fabricate the frame kit, mainboard and phase-control rod at any manufacturer using the drive included with your interdictor crate. Materials not provided.
 	<br>
-	Phase control rods may be manufactured in Lambda or Sigma configurations. Lambda rods cover a three-unit radius, while the advanced but more materially complex Sigma rods cover a seven-unit radius.
+	Phase control rods may be manufactured in Lambda, Sigma, Epsilon and Phi configurations.
+	<br>
+	Lambda and Sigma rods are recommended for typical operation; Lambda rods cover a four-unit radius, while the advanced but more materially complex Sigma rods cover a six-unit radius.
+	<br>
+	For circumstances where fine-tuning is advantageous, Epsilon and Phi rods are designed for prioritized radius or prioritized power efficiency respectively.
+	<br>
+	Epsilon rods provide a greater radius (ten units) but expend approximately 180% of normal cost, while Phi rods provide a reduced radius (two units) but expend approximately 60% of normal cost.
 	<br>
 	<i>Use of non-standard phase-control rods is not supported in this guide. Please consult a Nanotrasen certified engineer for a custom interdiction solution, including appropriate power cell.</i>
 	<br>
@@ -50,7 +76,9 @@
 	<br>
 	- Interdictor frame kit
 	<br>
-	- Interdictor mainboard
+	- Nanotrasen standard diameter wrench
+	<br>
+	- Interdictor mainboard of your choice
 	<br>
 	- Interdictor phase-control rod
 	<br>
@@ -58,12 +86,12 @@
 	<br>
 	- Four lengths of industry-compliant electrical cable
 	<br>
-	- Soldering iron
+	- Screwdriver (magnetic acceptable; however, installation using a rotary bit is not recommended)
 	<br>
 	- Four sheets of industry-compliant steel
 	<br>
 	<br>
-	(III) Assemble objects in the sequence they are listed in the enumeration. Once assembled, the device may be transported to the site of utilisation to be connected and activated.
+	(III) Assemble objects using the sequence listed in the enumeration. Once assembled, the device may be transported to the site of utilisation to be connected and activated.
 	<br>
 	<br>
 	<hr>
@@ -72,10 +100,15 @@
 	Due to the advanced technologies incorporated into the Spatial Interdictor's mainboard, it will automatically begin operating when conditions are suitable.
 	<br>
 	<br>
-	Suitable conditions are: Adequate internal cell charge, direct link to an electrical grid cable, active magnetic anchoring.
+	Suitable conditions are: Adequate internal cell charge (70% of capacity or greater), presence of an area power controller, and active magnetic anchoring.
 	<br>
 	<br>
-	To activate magnetic anchoring, simply touch the control pad located on the front side of the rectangular regulator unit.
+	For charging or operation, activate magnetic anchoring by touching the control pad located on the front side of the rectangular regulator unit.
+	<br>
+	<br>
+	Interdictors are by default configured to replenish up to one hundred of their cell units per cycle (placing 50,000 watts of load on area power systems);
+	<br>
+	authorized users may increase or decrease this rate limitation as desired with a multi-tool, though this should not be necessary with super-capacity power cells.
 	<br>
 	<br>
 	For safety purposes, activating or deactivating magnetic anchoring requires the user to possess an identification card with at least base-level Engineering access.
@@ -84,7 +117,7 @@
 	The Spatial Interdictor is equipped with three distinct indicators, each representing a different aspect of its functionality:
 	<br>
 	<br>
-	- The charge meter, located on the side of the interdiction pillar. This represents the current capacity of the buffer cell, and <b>must be full for interdiction to begin.</b>
+	- The charge meter, located on the side of the interdiction pillar. This represents the current capacity of the buffer cell; while all three segments are illuminated, the interdictor is ready to operate.
 	<br>
 	<br>
 	- The interdiction emitter, located on the top of the interdiction pillar. While illuminated, the Interdictor is currently active and protecting its surroundings.

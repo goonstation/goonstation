@@ -35,38 +35,42 @@
 		return 0
 	return src.forensic_trace[key]
 
-/atom/proc/add_fingerprint(mob/living/M as mob, hidden_only = FALSE)
+/// Add a mob's fingerprint to something. If `hidden_only` is TRUE, only add to admin-visible prints.
+/atom/proc/add_fingerprint(mob/living/M, hidden_only = FALSE)
 	if (!ismob(M) || isnull(M.key))
 		return
 	if (!(src.flags & FPRINT))
 		return
 	var/time = time2text(TIME, "hh:mm:ss")
-	if (!src.fingerprints_full)
-		src.fingerprints_full = list()
-	if (src.fingerprintslast != M.key) // don't really care about someone spam touching
-		src.fingerprints_full[time] = list("key" = M.key, "real_name" = M.real_name, "time" = time, "timestamp" = TIME)
-		src.fingerprintslast = M.key
-	if (hidden_only)
-		return
+	// The actual print that we save to the player-visible prints list
+	var/seen_print
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/list/L = src.fingerprints_full[time]
-		if (L)
-			L["color"] = H.mind.color
-		if(isnull(src.fingerprints))
-			src.fingerprints = list()
+		LAZYLISTINIT(src.fingerprints)
+
 		if (H.gloves) // Fixed: now adds distorted prints even if 'fingerprintslast == ckey'. Important for the clean_forensic proc (Convair880).
-			var/gloveprints = H.gloves.distort_prints(H.bioHolder.fingerprints, 1)
-			if (gloveprints)
-				src.fingerprints -= gloveprints
-				if (length(src.fingerprints) >= 6) // limit fingerprints in the list to 6
-					src.fingerprints -= src.fingerprints[1]
-				src.fingerprints += gloveprints
-				return
-		src.fingerprints -= H.bioHolder.fingerprints
-		if(length(src.fingerprints) >= 6)
-			src.fingerprints -= src.fingerprints[1]
-		src.fingerprints += H.bioHolder.fingerprints
+			seen_print = H.gloves.distort_prints(H.bioHolder.fingerprints, TRUE)
+		else
+			seen_print = H.bioHolder.fingerprints
+
+		if (seen_print && !hidden_only)
+			add_fingerprint_direct(seen_print)
+
+	LAZYLISTINIT(src.fingerprints_full)
+	if (src.fingerprintslast != M.key) // don't really care about someone spam touching
+		src.fingerprints_full[time] = list("key" = M.key, "real_name" = M.real_name, "time" = time, "timestamp" = TIME, "seen_print" = seen_print)
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			src.fingerprints_full[time]["color"] = H.mind.color
+		src.fingerprintslast = M.key
+
+/// Add a fingerprint to an atom directly. Doesn't interact with hidden prints at all
+/atom/proc/add_fingerprint_direct(print)
+	LAZYLISTINIT(src.fingerprints)
+	src.fingerprints -= print
+	if (length(src.fingerprints) >= 6) // limit fingerprints in the list to 6
+		src.fingerprints -= src.fingerprints[1]
+	src.fingerprints += print
 
 // WHAT THE ACTUAL FUCK IS THIS SHIT
 // WHO THE FUCK WROTE THIS
@@ -146,7 +150,7 @@
 	else
 		var/list/blood_list = params2list(src.blood_DNA)
 		blood_list -= b_uid
-		if(blood_list.len >= 6)
+		if(length(blood_list) >= 6)
 			blood_list = blood_list.Copy(blood_list.len - 5, 0)
 		blood_list += b_uid
 		src.blood_DNA = list2params(blood_list)
@@ -197,8 +201,7 @@
 		if (isobserver(src) || isintangible(src) || iswraith(src)) // Just in case.
 			return
 
-		if (src.color) //wash off paint! might be dangerous, so possibly move this check into humans only if it causes problems with critters
-			src.color = initial(src.color)
+		src.remove_filter(list("paint_color", "paint_pattern")) //wash off any paint
 
 		if (ishuman(src))
 			var/mob/living/carbon/human/M = src
@@ -293,7 +296,11 @@
 		return
 	if (HAS_ATOM_PROPERTY(src, PROP_MOB_BLOOD_TRACKING_ALWAYS) && (tracked_blood["count"] > 0))
 		return
+	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING))
+		return
 	var/turf/T = get_turf(src)
+	if(istype_exact(T, /turf/space)) //can't smear blood on space
+		return
 	var/obj/decal/cleanable/blood/dynamic/tracks/B = null
 	if (T.messy > 0)
 		B = locate(/obj/decal/cleanable/blood/dynamic) in T
@@ -304,6 +311,8 @@
 		if (T.active_liquid)
 			return
 		B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks,get_turf(src))
+		if(isnull(src.tracked_blood))
+			return
 		B.set_sample_reagent_custom(src.tracked_blood["sample_reagent"],0)
 
 	var/list/states = src.get_step_image_states()

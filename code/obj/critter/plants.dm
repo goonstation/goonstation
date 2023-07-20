@@ -20,10 +20,10 @@
 
 	New()
 		..()
-		playsound(src.loc, pick("sound/voice/MEilive.ogg"), 45, 0)
+		playsound(src.loc, pick('sound/voice/MEilive.ogg'), 45, 0)
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iscarbon(C) && !src.atkcarbon) continue
@@ -39,14 +39,14 @@
 				src.target = C
 				src.oldtarget_name = C.name
 				src.visible_message("<span class='combat'><b>[src]</b> charges at [C.name]!</span>")
-				playsound(src.loc, pick('sound/voice/MEhunger.ogg', 'sound/voice/MEraaargh.ogg', 'sound/voice/MEruncoward.ogg', 'sound/voice/MEbewarecoward.ogg'), 40, 0)
+				playsound(src.loc, pick('sound/voice/MEhunger.ogg', 'sound/voice/MEraaargh.ogg', 'sound/voice/MEruncoward.ogg', 'sound/voice/MEbewarecoward.ogg'), 25, 0)
 				src.task = "chasing"
 				break
 			else continue
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 		M.changeStatus("stunned", 2 SECONDS)
 		M.changeStatus("weakened", 2 SECONDS)
 
@@ -57,8 +57,8 @@
 			if (BOUNDS_DIST(src, M) == 0 && ((M:loc == target_lastloc)) && src.alive) // added a health check so dead maneaters stop eating people - cogwerks
 				if(iscarbon(M))
 					src.visible_message("<span class='combat'><B>[src]</B> ravenously wolfs down [M]!</span>")
-					logTheThing("combat", M, null, "was devoured by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
-					playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
+					logTheThing(LOG_COMBAT, M, "was devoured by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
+					playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 					M.death(TRUE)
 					var/atom/movable/overlay/animation = null
 					M.transforming = 1
@@ -77,7 +77,7 @@
 					sleeping = 2
 					src.target = null
 					src.task = "thinking"
-					playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
+					playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 			else
 				if (isliving(M))
 					var/mob/living/H = M
@@ -111,7 +111,7 @@
 	generic = 0
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iscarbon(C) && !src.atkcarbon) continue
@@ -127,7 +127,7 @@
 				src.target = C
 				src.oldtarget_name = C.name
 				src.visible_message("<span class='combat'><b>[src]</b> charges at [C:name]!</span>")
-				playsound(src.loc, pick('sound/voice/MEhunger.ogg', 'sound/voice/MEraaargh.ogg', 'sound/voice/MEruncoward.ogg', 'sound/voice/MEbewarecoward.ogg'), 40, 0)
+				playsound(src.loc, pick('sound/voice/MEhunger.ogg', 'sound/voice/MEraaargh.ogg', 'sound/voice/MEruncoward.ogg', 'sound/voice/MEbewarecoward.ogg'), 25, 0)
 				src.task = "chasing"
 				break
 			else
@@ -143,7 +143,7 @@
 
 	CritterDeath()
 		..()
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		var/obj/decal/cleanable/blood/B = make_cleanable(/obj/decal/cleanable/blood,src.loc)
 		B.name = "ruined tomato"
 		qdel (src)

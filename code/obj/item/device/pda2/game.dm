@@ -130,11 +130,11 @@
 				var/list/check_pass = list()
 				for(var/datum/robustris_block/B in superblock)
 					// drsingh for index out of bounds
-					if (blockmap.len < B.gridy + 1)
+					if (length(blockmap) < B.gridy + 1)
 						continue
 
 					var/list/blockx = blockmap[B.gridy + 1]
-					if (blockx.len < B.gridx + 1)
+					if (length(blockx) < B.gridx + 1)
 						continue
 
 					blockmap[B.gridy+1][B.gridx+1] = B
@@ -555,7 +555,7 @@
 			src.solution = ""
 
 		else if (href_list["giveup"])
-			if(alert("Are you sure you want to give up?","CodeBreaker","Yes","No") == "Yes")
+			if(tgui_alert(usr, "Are you sure you want to give up?", "CodeBreaker", list("Yes", "No")) == "Yes")
 				src.attempts = 0
 				src.playing = -1
 				src.temp = "<b>YOU LOSE!</b>"

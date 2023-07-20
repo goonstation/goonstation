@@ -1,0 +1,68 @@
+<body>
+<center><h1>SOLO</h1></center>
+<center>The family friendly and legally distinct playing card game for all ages! For 2-10 players.</center>
+<hr>
+
+<h2>Contents</h2>
+<p>Each box of SOLO playing cards has 108 cards of 4 main suits, as follows:</p>
+<ul>
+<li><b>19 Eldritch cards,</b> from 0 to 9</li>
+<li><b>19 Martian cards,</b> from 0 to 9</li>
+<li><b>19 Precursor cards,</b> from 0 to 9</li>
+<li><b>19 Wizard cards,</b> from 0 to 9</li>
+<li><b>8 Skip cards,</b> 2 of each Origin</li>
+<li><b>8 Reverse cards,</b> 2 of each Origin</li>
+<li><b>8 Draw 2 cards,</b> 2 of each Origin</li>
+<li><b>4 Wild cards</b></li>
+<li><b>4 Wild Draw 4 cards</b></li>
+</ul>
+<p> The 4 main suits are based of origins, Namely artifact origins, 4 main origins are used in SOLO: Eldritch, Martian, Precursor, and Wizard. Although there are also Wild card types within the deck,S they are not considered a suit.</p>
+<h2>Objective</h2>
+<p>The first player to play all of their cards within a round scores a number of points depending on the number of cards currently possessed by other players. The first player to 500 points wins the game.</p>
+
+<h2>Setup</h2>
+<p>At the beginning of a round, the deck is shuffled and each player is dealt seven cards by the dealer (known as the <b>first player</b>) from the deck face down into their hand. The deck is then placed face down to form a <b>DRAW</b> pile, and a card is drawn from the deck and placed down face up to form a <b>DISCARD</b> pile. If the <b>DISCARD</b> pile starts with a <b>Wild card</b> or <b>Wild Draw 4 card</b>, return the card to the deck and draw another card to form the <b>DISCARD</b> pile. For all other cards, follow the relevant instructions in the <b>Special Cards</b> section.</p>
+
+<h2>Rules of Play</h2>
+<p>For games with two players, please refer to the <b>2 Player Rules</b> section.</p>
+
+<p>Play begins from the dealer or <b>first player.</b> At the beginning of a player's turn, they may choose to place a card which matches the Origin or number of the top card on the <b>DISCARD</b> pile. Alternatively, a player can place a <b>Wild card</b> at any time or a <b>Wild Draw 4 card</b> when they have no other valid cards to place. If a player has no valid cards to place, they must a card from the <b>DRAW</b> pile. If they draw a card they can play, they may choose to play it. Their turn then ends and play continues to the next person. Before playing your next to last card, you must utter "SOLO". If you fail to do so and are caught before the next player starts their turn, you must draw 4 cards from the <b>DRAW</b> pile. If you are not caught before then, play continues as normal. Once a player plays their last card, the round is over. The player that plays their last card gains a number of points according to the following <b>Score Sheet</b> and a new round can begin.</p>
+
+<h2>Score Sheet</h2>
+<p>The point values of every card remaining in each player's hands is added and awarded to the winner of each round.</p>
+<ul>
+<li>All number cards (0-9): Face value</li>
+<li>Draw 2 cards: 20 points</li>
+<li>Reverse cards: 20 points</li>
+<li>Skip cards: 20 points</li>
+<li>Wild cards: 50 points</li>
+<li>Wild Draw 4 cards: 50 points</li>
+</ul>
+
+<h2>Special Cards</h2>
+<ul>
+<li><b>Skip card:</b> When played, the next player's turn is skipped and play passes on to the player after them. If this is the first card in the <b>DISCARD</b> pile, the first player's turn is skipped.</li>
+<li><b>Reverse card:</b> When played, the order of play is reversed from left to right or vice vice versa. If this is the first card in the <b>DISCARD</b> pile, the player to the right of the first player now plays first and play continues to the right.</li>
+<li><b>Draw 2 card:</b> When played, the next player must pick up two cards from the <b>DRAW</b> pile and forfeit their turn. If this is the first card in the <b>DISCARD</b> pile, the first player must draw two cards but does not forfeit their turn.</li>
+<li><b>Wild card:</b> When played, the player may change the color of the next card to be placed down on the <b>DISCARD</b> pile. This can be played at any time even if it is legal for the player to place another card from their hand.</li>
+<li><b>Wild Draw 4 card:</b> When played, the player may change the Origin of the next card to be placed down on the <b>DISCARD</b> pile and the next player must pick up two cards from the <b>DRAW</b> pile and forfeit their turn. A player can only play this card if they have no other cards they can legally played. If the player who is required to pick up the 4 cards suspects that another player has illegally played a <b>Wild Draw 4 card,</b> they may be challenged. When a player is challenged, they must reveal their hand to the player who initiated the challenge. If the challenged player is guilty of illegally playing a <b>Wild Draw 4 card,</b> they become the player which draws 4 cards alongside an additional 2 cards. If the challenged player is innocent,  the challenger must draw the 4 cards alongside an additional 2 cards.</li>
+</ul>
+
+<h2>2 Player Rules</h2>
+<p>The following special rules apply to games where there are only two players.</p>
+<ul>
+<li>Playing a <b>Reverse card</b> acts the same as a <b>Skip card.</b> If a <b>Reverse card</b> is played, the player which played the Reverse card can immediately play another turn.</li>
+<li>Playing a <b>Skip card</b> allows the player which played the <b>Skip card</b> to immediately play another turn.</li>
+<li>Playing a <b>Draw 2</b> or <b>Wild Draw 4 card</b> forces the next player to draw the prescribed number of cards and the player which played the <b>Draw 2</b> or <b>Wild Draw 4 card</b> can immediately play another turn.</li>
+</ul>
+
+<h2>House Rules</h2>
+<p>Sometimes, players do not adhere strictly to the rules of SOLO and include their own variations on the rules, for example:</p>
+<ul>
+<li>Eliminating the scoring system and declaring the winner of a round as the winner of the game.</li>
+<li>Stacking the effects of <b>Wild Draw 4</b> or <b>Draw 2 cards</b> to increase the amount of cards a subsequent player must pick up.</li>
+<li>Playing multiple legal cards on a single turn.</li>
+<li>Playing a 0 card allows you to swap hands with another player of your choice.</li>
+<li>Not ending a round once a player has played their last card and progressively eliminating those who play their last card until one player remains.</li>
+</ul>
+<p>This is not an exhaustive list of all the possible variations, but we here at SOLO - outside of officially sanctioned competitive games - encourage the player's freedom to remix and rework the rules of the game to their needs! We put family fun and accessibility first, and if the official rules of SOLO prevent this at the casual level of play, you may by all means choose to play the game how you wish to!</p>

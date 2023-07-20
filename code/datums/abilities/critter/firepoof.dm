@@ -7,7 +7,7 @@
 	max_range = 0
 	cooldown = 0
 	pointCost = 0
-	restricted_area_check = 1
+	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 
 	cast(mob/target)
 		if (!holder)
@@ -24,6 +24,6 @@
 		else
 			M.special_sprint |= SPRINT_FIRE
 
-		boutput(M, __blue("Fire Form toggled [(M.special_sprint & SPRINT_FIRE ) ? "on" : "off"]. (Hold Sprint to activate - consumes stamina)"))
+		boutput(M, "<span class='notice'>Fire Form toggled [(M.special_sprint & SPRINT_FIRE ) ? "on" : "off"]. (Hold Sprint to activate - consumes stamina)</span>")
 
 		return 0

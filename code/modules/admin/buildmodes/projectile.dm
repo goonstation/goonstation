@@ -6,7 +6,7 @@ Ctrl + RMB on buildmode button         = Edit projectile variables<br>
 Left Mouse Button                      = FIRE!<br>
 ***********************************************************"}
 	icon_state = "buildmode_zap"
-	var/tmp/datum/projectile/P
+	var/datum/projectile/P
 	var/proj_type = null
 
 	New(datum/buildmode_holder/H)
@@ -18,7 +18,8 @@ Left Mouse Button                      = FIRE!<br>
 		if (ctrl && P)
 			usr.client.debug_variables(P)
 		else
-			proj_type = input("Select projectile type.", "Projectile type", P) in childrentypesof(/datum/projectile)
+			proj_type = tgui_input_list(holder.owner, "Select a projectile type.", "Projectile type", childrentypesof(/datum/projectile), P?.type)
+			if (!proj_type) return
 			if (P)
 				if (proj_type == P.type)
 					return

@@ -1,0 +1,135 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"f" = (
+/obj/machinery/photocopier,
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"j" = (
+/obj/decal/cleanable/dirt,
+/obj/item/furniture_parts/office_chair,
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"k" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/table/wood/auto,
+/obj/machinery/computer3/generic/personal{
+	pixel_y = 5
+	},
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"q" = (
+/obj/storage/crate,
+/obj/item/camera,
+/obj/item/audio_tape,
+/obj/item/hand_labeler,
+/obj/item/device/audio_log{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/table/wood/auto,
+/obj/item/paper_bin{
+	pixel_x = -11;
+	pixel_y = 6
+	},
+/obj/item/paper_bin{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/staple_gun/red{
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"x" = (
+/obj/table/wood/auto,
+/obj/item/decoration/ashtray{
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/item/clothing/mask/cigarette/nicofree{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/drinks/coffee{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"C" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/pen{
+	pixel_y = 9;
+	pixel_x = -12
+	},
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/storage/secure/closet/personal/empty,
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"Q" = (
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"R" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+k
+a
+q
+"}
+(2,1,1) = {"
+v
+D
+j
+"}
+(3,1,1) = {"
+Q
+R
+Q
+"}
+(4,1,1) = {"
+x
+u
+M
+"}
+(5,1,1) = {"
+f
+Q
+C
+"}

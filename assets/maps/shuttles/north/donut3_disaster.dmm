@@ -278,7 +278,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "gI" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -286,11 +286,12 @@
 	},
 /area/centcom)
 "gJ" = (
-/obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
 /area/shuttle/escape/centcom)
 "gW" = (
 /obj/shrub,
@@ -564,7 +565,7 @@
 	},
 /area/centcom/outside)
 "qY" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
@@ -611,13 +612,6 @@
 "tF" = (
 /obj/machinery/computer/announcement,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom)
-"tL" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-R"
-	},
-/turf/space,
 /area/shuttle/escape/centcom)
 "uE" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -699,11 +693,12 @@
 /turf/unsimulated/floor/plating/damaged3,
 /area/shuttle/escape/centcom)
 "xe" = (
-/obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
 /area/shuttle/escape/centcom)
 "xf" = (
 /obj/stool/bench/blue/auto,
@@ -775,7 +770,7 @@
 	},
 /area/centcom/outside)
 "Be" = (
-/obj/critter/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor/void,
 /area/shuttle/escape/centcom)
 "Cf" = (
@@ -895,15 +890,15 @@
 /area/shuttle/escape/centcom)
 "Gc" = (
 /obj/table/auto,
-/obj/mug_rack{
-	pixel_x = -26;
-	pixel_y = 4
-	},
 /obj/machinery/coffeemaker{
 	pixel_x = -1;
 	pixel_y = 2
 	},
 /obj/machinery/light,
+/obj/drink_rack/mug{
+	pixel_x = -26;
+	pixel_y = 4
+	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Gh" = (
@@ -1069,7 +1064,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Ms" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Ng" = (
@@ -1148,11 +1143,12 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "PO" = (
-/obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
 /area/shuttle/escape/centcom)
 "PV" = (
 /obj/decal/cleanable/paper,
@@ -1499,7 +1495,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/shuttle/escape/centcom)
 "ZQ" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -2006,7 +2002,7 @@ VE
 dd
 KN
 Hx
-tL
+PO
 eL
 Cf
 qp

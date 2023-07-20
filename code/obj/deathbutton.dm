@@ -7,7 +7,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl0"
 	layer = EFFECTS_LAYER_UNDER_1
-	anchored = 1
+	anchored = ANCHORED
 	var/numkills = 0
 
 	get_desc()
@@ -19,7 +19,7 @@
 	ex_act()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user.stat)
 			//Yaaaaaaaaaaaaaaaay!!
 			user.AddComponent(/datum/component/death_confetti)
@@ -49,7 +49,7 @@
 		else if (numkills > 0)
 			. = " Like the last jerk that pressed it."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user || !ishuman(user))
 			return
 

@@ -61,7 +61,7 @@
 		animate(par, color = P.particle_destination_color, time = P.animation_time, loop = P.animation_loops, transform = M, pixel_x = x_destination, pixel_y = y_destination, alpha = end_alpha, easing = P.easing)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		Run()
 
 	verb/change_easing()
@@ -113,7 +113,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "holo_console1"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/user_input = input("What size?","Circle Tester") as num
 		if (user_input <= 0 || user_input > 30)
 			alert("fuck you nerd","what are you doing")

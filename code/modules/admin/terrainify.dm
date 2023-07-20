@@ -1,5 +1,6 @@
 #define TERRAINIFY_VEHICLE_FABS (1 << 0)
 #define TERRAINIFY_VEHICLE_CARS (1 << 1)
+#define TERRAINIFY_ALLOW_VEHCILES (1 << 2)
 
 /client/proc/cmd_terrainify_station()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -16,18 +17,35 @@ var/datum/station_zlevel_repair/station_repair = new
 /datum/station_zlevel_repair
 	var/datum/map_generator/station_generator
 	var/image/ambient_light
+	var/obj/ambient/ambient_obj
 	var/image/weather_img
 	var/obj/effects/weather_effect
 	var/overlay_delay
+	var/datum/gas_mixture/default_air
+	var/allows_vehicles = FALSE
 
-	proc/repair_turfs(turf/turfs)
+	New()
+		..()
+		default_air = new
+		default_air.oxygen = MOLES_O2STANDARD
+		default_air.nitrogen = MOLES_N2STANDARD
+		default_air.temperature = T20C
+
+	proc/repair_turfs(turf/turfs, clear=FALSE)
 		if(src.station_generator)
-			src.station_generator.generate_terrain(turfs,reuse_seed=TRUE)
+			var/gen_flags = MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA
+			gen_flags |= MAPGEN_ALLOW_VEHICLES * src.allows_vehicles
+			src.station_generator.generate_terrain(turfs, reuse_seed=TRUE, flags=gen_flags)
+
+			if(clear)
+				clear_out_turfs(turfs, ignore_contents=TRUE)
 
 		SPAWN(overlay_delay)
 			for(var/turf/T as anything in turfs)
 				if(src.ambient_light)
 					T.UpdateOverlays(src.ambient_light, "ambient")
+				if(src.ambient_obj)
+					T.vis_contents |= src.ambient_obj
 				if(src.weather_img)
 					T.UpdateOverlays(src.weather_img, "weather")
 				if(src.weather_effect)
@@ -35,10 +53,14 @@ var/datum/station_zlevel_repair/station_repair = new
 					if(!E)
 						new src.weather_effect(T)
 
-	proc/clean_up_station_level(replace_with_cars, add_sub)
+	proc/clean_up_station_level(replace_with_cars, add_sub, remove_parallax = TRUE)
 		mass_driver_fixup()
 		shipping_market_fixup()
 		land_vehicle_fixup(replace_with_cars, add_sub)
+		copy_gas_to_airless()
+		clear_around_beacons()
+		if (remove_parallax)
+			remove_all_parallax_layers(Z_LEVEL_STATION)
 
 	proc/land_vehicle_fixup(replace_with_cars, add_sub)
 		if(replace_with_cars)
@@ -62,6 +84,13 @@ var/datum/station_zlevel_repair/station_repair = new
 		var/list/turfs_to_fix = get_mass_driver_turfs()
 		clear_out_turfs(turfs_to_fix)
 
+	proc/clear_around_beacons()
+		var/list/turfs_to_fix = list()
+		for(var/obj/warp_beacon/W in by_type[/obj/warp_beacon])
+			for(var/turf/T in range(3,W))
+				turfs_to_fix |= T
+		clear_out_turfs(turfs_to_fix, by_type[/obj/warp_beacon])
+
 	proc/get_mass_driver_turfs()
 		var/list/turfs_to_fix = list()
 		for(var/obj/machinery/mass_driver/M as anything in machine_registry[MACHINES_MASSDRIVERS])
@@ -77,7 +106,7 @@ var/datum/station_zlevel_repair/station_repair = new
 		var/list/turfs_to_fix = shippingmarket.get_path_to_market()
 		clear_out_turfs(turfs_to_fix)
 
-	proc/clear_out_turfs(list/turf/to_clear)
+	proc/clear_out_turfs(list/turf/to_clear, list/ignore_list, ignore_contents=FALSE)
 		for(var/turf/T as anything in to_clear)
 			//Wacks asteroids and skip normal turfs that belong
 			if(istype(T, /turf/simulated/wall/auto/asteroid))
@@ -88,12 +117,30 @@ var/datum/station_zlevel_repair/station_repair = new
 				continue
 
 			//Uh, make sure we don't block the shipping lanes!
-			for(var/atom/A in T)
-				if(ismob(A) || iscritter(A)) // Lets not just KILL people... ha hahah HA
-					continue
-				if(A.density)
-					qdel(A)
+			if(!ignore_contents)
+				for(var/atom/A in T)
+					if(ismob(A) || iscritter(A)) // Lets not just KILL people... ha hahah HA
+						continue
+					if(A.density)
+						if(A in ignore_list)
+							continue
+						qdel(A)
 
+			if(station_repair.allows_vehicles)
+				T.allows_vehicles = station_repair.allows_vehicles
+
+			LAGCHECK(LAG_MED)
+
+	proc/copy_gas_to_airless()
+		var/list/zlevel_station_turfs = block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION))
+		. = list()
+		for(var/turf/T in zlevel_station_turfs)
+			if(istype(T, /turf/simulated/floor/airless) || istype(T, /turf/simulated/floor/plating/airless))
+				. |= T
+		for(var/turf/simulated/ST in .)
+			var/datum/gas_mixture/TG = ST.return_air()
+			TG.copy_from(src.default_air)
+			ST.update_nearby_tiles(need_rebuild=TRUE)
 			LAGCHECK(LAG_MED)
 
 ABSTRACT_TYPE(/datum/terrainify)
@@ -135,6 +182,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 						boutput(ui.user, "[params[option]] is not a valid option for [option] for [name]! Call 1-800-CODER!")
 						return
 
+			station_repair.allows_vehicles = (params["vehicle"] & TERRAINIFY_ALLOW_VEHCILES) == TERRAINIFY_ALLOW_VEHCILES
+
 			message_admins("[key_name(ui.user)] started Terrainify: [name].")
 			terrainify_lock = src
 			tgui_process.close_uis(ui.src_object)
@@ -148,28 +197,75 @@ ABSTRACT_TYPE(/datum/terrainify)
 		else
 			. = TRUE
 
+	proc/handle_mining(params, list/turfs)
+		var/mining = params["Mining"]
+		mining = (mining == "No") ? null : mining
+		if(mining)
+			var/list/turf/valid_spots = list()
+			for(var/turf/simulated/wall/auto/asteroid/AST in turfs)
+				valid_spots |= AST
+			if(length(valid_spots))
+				if(mining == "Rich")
+					var/ore_seeds = clamp( length(turfs)/80/4, 30, 50)
+					generate_mining(valid_spots, ore=ore_seeds, veins=rand(2,8), rarity=rand(5,80))
+				else
+					generate_mining(valid_spots)
+
+	proc/generate_mining(list/turfs, ore=30, veins, rarity)
+		if(isnull(veins))
+			veins = rand(1,3)
+		if(isnull(rarity))
+			rarity = rand(0,40)
+
+		for(var/i in 1 to ore)
+			var/turf/target_center = pick(turfs)
+			var/list/turf/ast_list = list()
+			for(var/turf/simulated/wall/auto/asteroid/AST in range(target_center, "[rand(3,9)]x[rand(3,9)]"))
+				ast_list |= AST
+			Turfspawn_Asteroid_SeedOre(ast_list, veins=rand(1,3), rarity_mod=rand(5,25), fullbright=FALSE)
+
+		for(var/i=0, i<ore, i++)
+			Turfspawn_Asteroid_SeedOre(turfs, veins=veins, rarity_mod=rarity, fullbright=FALSE)
+
+		for(var/i in 1 to ore/2)
+			Turfspawn_Asteroid_SeedEvents(turfs)
+
+	proc/convert_turfs(list/turfs)
+		station_repair.station_generator.generate_terrain(turfs, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
+
 /datum/terrainify/desertify
 	name = "Desert Station"
 	desc = "Turn space into into a nice desert full of sand and stones."
+	additional_options = list("Mining"=list("None","Normal","Rich"))
+	additional_toggles = list("Ambient Light Obj")
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
 			var/const/ambient_light = "#cfcfcf"
 			station_repair.station_generator = new/datum/map_generator/desert_generator
-			station_repair.ambient_light = new /image/ambient
-			station_repair.ambient_light.color = ambient_light
+			if(params["Ambient Light Obj"])
+				station_repair.ambient_obj = new /obj/ambient
+				station_repair.ambient_obj.color = ambient_light
+			else
+				station_repair.ambient_light = new /image/ambient
+				station_repair.ambient_light.color = ambient_light
+			station_repair.default_air.temperature = 330
 
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			station_repair.station_generator.generate_terrain(space)
+			convert_turfs(space)
 			for (var/turf/S in space)
-				S.UpdateOverlays(station_repair.ambient_light, "ambient")
+				if(params["Ambient Light Obj"])
+					S.vis_contents |= station_repair.ambient_obj
+				else
+					S.UpdateOverlays(station_repair.ambient_light, "ambient")
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
+			handle_mining(params, space)
 
-			logTheThing("admin", ui.user, null, "turned space into a desert.")
-			logTheThing("diary", ui.user, null, "turned space into a desert.", "admin")
+			logTheThing(LOG_ADMIN, ui.user, "turned space into a desert.")
+			logTheThing(LOG_DIARY, ui.user, "turned space into a desert.", "admin")
 			message_admins("[key_name(ui.user)] turned space into a desert.")
 
 
@@ -179,29 +275,51 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
-			station_repair.ambient_light = new /image/ambient
-			station_repair.ambient_light.color = rgb(6.9, 4.20, 6.9)
+			generate_void()
 
-			station_repair.station_generator = new/datum/map_generator/void_generator
+			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS, FALSE)
 
-			var/list/space = list()
-			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
-				space += S
-			station_repair.station_generator.generate_terrain(space)
-			for (var/turf/S in space)
-				S.UpdateOverlays(station_repair.ambient_light, "ambient")
-
-			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
-
-			logTheThing("admin", ui.user, null, "turned space into an THE VOID.")
-			logTheThing("diary", ui.user, null, "turned space into an THE VOID.", "admin")
+			logTheThing(LOG_ADMIN, ui.user, "turned space into an THE VOID.")
+			logTheThing(LOG_DIARY, ui.user, "turned space into an THE VOID.", "admin")
 			message_admins("[key_name(ui.user)] turned space into THE VOID.")
 
+
+/proc/generate_void(all_z_levels = FALSE)
+	station_repair.ambient_light = new /image/ambient
+	station_repair.ambient_light.color = rgb(6.9, 4.20, 6.9)
+
+	station_repair.station_generator = new/datum/map_generator/void_generator
+
+	var/list/space = list()
+	for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+		space += S
+	if (all_z_levels)
+		for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_DEBRIS), locate(world.maxx, world.maxy, Z_LEVEL_DEBRIS)))
+			space += S
+		for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_MINING), locate(world.maxx, world.maxy, Z_LEVEL_MINING)))
+			space += S
+
+	station_repair.station_generator.generate_terrain(space, flags = MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
+	for (var/turf/S in space)
+		S.UpdateOverlays(station_repair.ambient_light, "ambient")
+
+	station_repair.clean_up_station_level()
+
+	var/list/void_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/void,
+		/atom/movable/screen/parallax_layer/void/clouds_1,
+		/atom/movable/screen/parallax_layer/void/clouds_2,
+		)
+
+	add_global_parallax_layer(void_parallax_layers, z_level = Z_LEVEL_STATION)
+	if (all_z_levels)
+		add_global_parallax_layer(void_parallax_layers, z_level = Z_LEVEL_DEBRIS)
+		add_global_parallax_layer(void_parallax_layers, z_level = Z_LEVEL_MINING)
 
 /datum/terrainify/ice_moon
 	name = "Ice Moon Station"
 	desc = "Turns space into the Outpost Theta... CO2 + Ice. Ice Spiders, Seal Pups, Brullbar, and the occasional Yeti."
-	additional_options = list("Snowing"=list("Yes","No","Particles"))
+	additional_options = list("Snowing"=list("Yes","No","Particles"), "Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Pitch Black")
 
 	convert_station_level(params, datum/tgui/ui)
@@ -216,6 +334,11 @@ ABSTRACT_TYPE(/datum/terrainify)
 					station_repair.weather_img.plane = PLANE_NOSHADOW_ABOVE
 				else
 					station_repair.weather_effect = /obj/effects/precipitation/snow/grey/tile
+
+			station_repair.default_air.carbon_dioxide = 100
+			station_repair.default_air.nitrogen = 0
+			station_repair.default_air.oxygen = 0
+			station_repair.default_air.temperature = 100
 
 			if(!params["Pitch Black"])
 				station_repair.ambient_light = new /image/ambient
@@ -236,7 +359,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			station_repair.station_generator.generate_terrain(space)
+			convert_turfs(space)
 			for (var/turf/S in space)
 				if(snow)
 					if(snow == "Yes")
@@ -248,16 +371,19 @@ ABSTRACT_TYPE(/datum/terrainify)
 					station_repair.ambient_light.color = rgb(ambient_value,ambient_value+((rand()*1)),ambient_value+((rand()*1))) //randomly shift green&blue to reduce vertical banding
 					S.UpdateOverlays(station_repair.ambient_light, "ambient")
 			// Path to market does not need to be cleared because it was converted to ice.  Abyss will screw up everything!
+			remove_all_parallax_layers(Z_LEVEL_STATION)
+			handle_mining(params, space)
 
-			logTheThing("admin", ui.user, null, "turned space into an another outpost on Theta.")
-			logTheThing("diary", ui.user, null, "turned space into an another outpost on Theta.", "admin")
+			logTheThing(LOG_ADMIN, ui.user, "turned space into an another outpost on Theta.")
+			logTheThing(LOG_DIARY, ui.user, "turned space into an another outpost on Theta.", "admin")
 			message_admins("[key_name(ui.user)] turned space into an another outpost on Theta.")
 
 
 /datum/terrainify/swampify
 	name = "Swamp Station"
 	desc = "Turns space into a swamp"
-	additional_options = list("Rain"=list("Yes","No", "Particles"))
+	additional_options = list("Rain"=list("Yes","No", "Particles"), "Mining"=list("None","Normal","Rich"))
+	additional_toggles = list("Ambient Light Obj")
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
@@ -274,14 +400,19 @@ ABSTRACT_TYPE(/datum/terrainify)
 			else if(rain)
 				station_repair.weather_effect = /obj/effects/precipitation/rain/sideways/tile
 
-			station_repair.ambient_light = new /image/ambient
-			station_repair.ambient_light.color = ambient_light
+
+			if(params["Ambient Light Obj"])
+				station_repair.ambient_obj = new /obj/ambient
+				station_repair.ambient_obj.color = ambient_light
+			else
+				station_repair.ambient_light = new /image/ambient
+				station_repair.ambient_light.color = ambient_light
 
 
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			station_repair.station_generator.generate_terrain(space)
+			convert_turfs(space)
 			for (var/turf/S in space)
 				if(rain)
 					if(istype(S,/turf/unsimulated/floor/auto/swamp))
@@ -290,18 +421,23 @@ ABSTRACT_TYPE(/datum/terrainify)
 						S.UpdateOverlays(station_repair.weather_img, "rain")
 					else
 						new station_repair.weather_effect(S)
-				S.UpdateOverlays(station_repair.ambient_light, "ambient")
+				if(params["Ambient Light Obj"])
+					S.vis_contents |= station_repair.ambient_obj
+				else
+					S.UpdateOverlays(station_repair.ambient_light, "ambient")
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
+			handle_mining(params, space)
 
-			logTheThing("admin", ui.user, null, "turned space into a swamp.")
-			logTheThing("diary", ui.user, null, "turned space into a swamp.", "admin")
+			logTheThing(LOG_ADMIN, ui.user, "turned space into a swamp.")
+			logTheThing(LOG_DIARY, ui.user, "turned space into a swamp.", "admin")
 			message_admins("[key_name(ui.user)] turned space into a swamp.")
 
 
 /datum/terrainify/mars
 	name = "Mars Station"
 	desc = "Turns space into Mars.  A sprawl of stand, stone, and an unyielding wind."
+	additional_options = list("Mining"=list("None","Normal","Rich"))
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
@@ -311,10 +447,15 @@ ABSTRACT_TYPE(/datum/terrainify)
 			station_repair.weather_img = image(icon = 'icons/turf/areas.dmi', icon_state = "dustverlay", layer = EFFECTS_LAYER_BASE)
 			station_repair.ambient_light = new /image/ambient
 
+			station_repair.default_air.carbon_dioxide = 500
+			station_repair.default_air.nitrogen = 0
+			station_repair.default_air.oxygen = 0
+			station_repair.default_air.temperature = 100
+
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			station_repair.station_generator.generate_terrain(space)
+			convert_turfs(space)
 			sleep(3 SECONDS) // Let turfs initialize and re-orient before applying overlays
 			for (var/turf/S in space)
 				S.UpdateOverlays(station_repair.weather_img, "weather")
@@ -339,8 +480,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			ambient_value = lerp(20,80,0.5)
 			station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value)
-			logTheThing("admin", ui.user, null, "turned space into Mars.")
-			logTheThing("diary", ui.user, null, "turned space into Mars.", "admin")
+			handle_mining(params, space)
+
+			logTheThing(LOG_ADMIN, ui.user, "turned space into Mars.")
+			logTheThing(LOG_DIARY, ui.user, "turned space into Mars.", "admin")
 			message_admins("[key_name(ui.user)] turned space into Mars.")
 
 	special_repair(list/turf/TS)
@@ -405,7 +548,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 						new /obj/overlay/tile_effect/cracks/spawner/pikaia(space_turf)
 
 					if (prob(1) && prob(16))
-						new /mob/living/critter/small_animal/hallucigenia/ai_controlled(space_turf)
+						new /mob/living/critter/small_animal/hallucigenia(space_turf)
 					else if (prob(1) && prob(18))
 						new /obj/overlay/tile_effect/cracks/spawner/pikaia(space_turf)
 
@@ -417,23 +560,30 @@ ABSTRACT_TYPE(/datum/terrainify)
 				LAGCHECK(LAG_MED)
 			station_repair.clean_up_station_level(add_sub=params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
-			logTheThing("admin", ui.user, null, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
-			logTheThing("diary", ui.user, null, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].", "admin")
+			logTheThing(LOG_ADMIN, ui.user, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
+			logTheThing(LOG_DIARY, ui.user, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].", "admin")
 			message_admins("[key_name(ui.user)] generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
 
 
 /datum/terrainify/winterify
 	name = "Winter Station"
 	desc = "Turns space into a colder snowy place"
-	additional_options = list("Weather"=list("Snow", "Light Snow", "None"))
+	additional_options = list("Weather"=list("Snow", "Light Snow", "None"), "Mining"=list("None","Normal","Rich"))
+	additional_toggles = list("Ambient Light Obj")
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
 			var/const/ambient_light = "#222"
 			station_repair.station_generator = new/datum/map_generator/snow_generator
 
-			station_repair.ambient_light = new /image/ambient
-			station_repair.ambient_light.color = ambient_light
+			if(params["Ambient Light Obj"])
+				station_repair.ambient_obj = new /obj/ambient
+				station_repair.ambient_obj.color = ambient_light
+			else
+				station_repair.ambient_light = new /image/ambient
+				station_repair.ambient_light.color = ambient_light
+
+			station_repair.default_air.temperature = 235
 
 			var/snow = params["Weather"]
 			snow = (snow == "None") ? null : snow
@@ -445,18 +595,59 @@ ABSTRACT_TYPE(/datum/terrainify)
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			station_repair.station_generator.generate_terrain(space)
+			convert_turfs(space)
 			for (var/turf/S as anything in space)
-				S.UpdateOverlays(station_repair.ambient_light, "ambient")
+				if(params["Ambient Light Obj"])
+					S.vis_contents |= station_repair.ambient_obj
+				else
+					S.UpdateOverlays(station_repair.ambient_light, "ambient")
 				if(snow)
 					new station_repair.weather_effect(S)
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
+			handle_mining(params, space)
 
-			logTheThing("admin", ui.user, null, "turned space into a snowscape.")
-			logTheThing("diary", ui.user, null, "turned space into a snowscape.", "admin")
+			logTheThing(LOG_ADMIN, ui.user, "turned space into a snowscape.")
+			logTheThing(LOG_DIARY, ui.user, "turned space into a snowscape.", "admin")
 			message_admins("[key_name(ui.user)] turned space into a snowscape.")
 
+
+/datum/terrainify/plasma
+	name = "Plasma Station"
+	desc = "Fill space with plasma gas? Warning: this is as bad as it sounds."
+
+	convert_turfs(list/turfs)
+		for (var/turf/T in turfs)
+			T.ReplaceWith(/turf/space/plasma, keep_old_material=FALSE, handle_dir=FALSE, force=TRUE)
+
+	convert_station_level(params, datum/tgui/ui)
+		if (!..())
+			return
+		var/list/turf/space = list()
+		for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+			space += S
+		convert_turfs(space)
+
+		logTheThing(LOG_ADMIN, ui.user, "turned space into a plasma space.")
+		logTheThing(LOG_DIARY, ui.user, "turned space into a plasma space.", "admin")
+		message_admins("[key_name(ui.user)] turned space into a plasma space.")
+
+/datum/terrainify/storehouse
+	name = "Storehouse"
+	desc = "Load some nearby storehouse (Run before other Generators!)"
+
+	convert_station_level(params, datum/tgui/ui)
+		if (!..())
+			return
+		var/list/turf/space = list()
+		for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+			space += S
+		var/datum/map_generator/generator = new/datum/map_generator/storehouse_generator
+		generator.generate_terrain(space)
+
+		logTheThing(LOG_ADMIN, ui.user, "added some storehouses to space.")
+		logTheThing(LOG_DIARY, ui.user, "added some storehouses to space.", "admin")
+		message_admins("[key_name(ui.user)] added storehouse to space.")
 
 /datum/terrainify_editor
 	var/static/list/datum/terrainify/terrains
@@ -467,6 +658,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	var/terrain
 	var/fabricator
 	var/cars
+	var/allowVehicles
 	var/terrain_toggles
 	var/terrain_options
 
@@ -510,6 +702,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	data["activeToggles"] = active_toggles
 	data["fabricator"] = fabricator
 	data["cars"] = cars
+	data["allowVehicles"] = allowVehicles
 	return data
 
 /datum/terrainify_editor/ui_act(action, list/params, datum/tgui/ui)
@@ -540,6 +733,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 			cars = !cars
 			. = TRUE
 
+		if("allowVehicles")
+			allowVehicles = !allowVehicles
+			. = TRUE
+
 		if("toggle")
 			if(params["toggle"] in active_terrain.additional_toggles)
 				src.active_toggles[params["toggle"]] = !src.active_toggles[params["toggle"]]
@@ -555,7 +752,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			var/convert_params = list()
 			convert_params += active_toggles
 			convert_params += active_options
-			convert_params["vehicle"] = (cars * TERRAINIFY_VEHICLE_CARS) + (TERRAINIFY_VEHICLE_FABS * fabricator)
+			convert_params["vehicle"] = (TERRAINIFY_VEHICLE_CARS * cars) + (TERRAINIFY_VEHICLE_FABS * fabricator) + (TERRAINIFY_ALLOW_VEHCILES * allowVehicles)
 			var/datum/terrainify/T = locate(terrain) in terrains
 			if(T)
 				T.convert_station_level(convert_params, ui)

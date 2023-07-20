@@ -2,9 +2,9 @@
 	name = "smoke"
 	icon_state = "smoke"
 	opacity = 1
-	anchored = 0.0
+	anchored = UNANCHORED
 	mouse_opacity = 0
-	var/amount = 6.0
+	var/amount = 6
 	//Remove this bit to use the old smoke
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32

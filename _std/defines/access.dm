@@ -105,3 +105,12 @@
 
 //pathologist job
 #define access_pathology 84
+
+//extra research access
+#define access_researchfoyer 85
+#define access_artlab 86
+#define access_telesci 87
+#define access_robotdepot 88
+
+// Pirate ship access:
+#define access_pirate 89

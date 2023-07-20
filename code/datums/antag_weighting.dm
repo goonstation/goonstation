@@ -15,15 +15,10 @@ var/global/datum/antagWeighter/antagWeighter
 		..()
 		src.debug = debugMode ? debugMode : 0
 
-		//All picks during ass day are random
-#if ASS_JAM
-			src.variance = 100
-#endif
-
 
 	proc/debugLog(msg)
 		out(world, msg)
-		//logTheThing("debug", null, null, "<b>AntagWeighter</b> [msg]")
+		//logTheThing(LOG_DEBUG, null, "<b>AntagWeighter</b> [msg]")
 
 
 	/**
@@ -175,8 +170,16 @@ var/global/datum/antagWeighter/antagWeighter
 	 * @return list List of minds chosen
 	 */
 	proc/choose(list/pool = list(), role = "", amount = 0, recordChosen = 0)
-		if (!pool.len || !role || !amount)
-			throw EXCEPTION("Incorrect parameters given")
+		. = list()
+		if (!length(pool))
+			stack_trace("Incorrect parameters given to antagWeighter.choose(): Pool is empty.")
+			return
+		if (!role)
+			stack_trace("Incorrect parameters given to antagWeighter.choose(): No rank provided.")
+			return
+		if (!amount)
+			stack_trace("Incorrect parameters given to antagWeighter.choose(): Requested antag amount is 0.")
+			return
 
 		if (src.debug)
 			src.debugLog("---------- Starting antagWeighter.choose with role: [role] and amount: [amount] ----------")
@@ -198,7 +201,7 @@ var/global/datum/antagWeighter/antagWeighter
 		if (!ckeyMinds.len)
 			throw EXCEPTION("No minds with valid ckeys were given")
 
-		logTheThing("debug", null, null, "<b>AntagWeighter</b> Selecting [amount] out of [ckeyMinds.len] candidates for [role].")
+		logTheThing(LOG_DEBUG, null, "<b>AntagWeighter</b> Selecting [amount] out of [ckeyMinds.len] candidates for [role].")
 
 		if (src.debug)
 			src.debugLog("Sending payload: [json_encode(apiPayload)]")
@@ -269,13 +272,13 @@ var/global/datum/antagWeighter/antagWeighter
 			var/list/record = list()
 			for (var/datum/mind/M in chosen)
 				record[M.ckey] = role
-				logTheThing("debug", null, null, "<b>AntagWeighter</b> Selected [M.ckey] for [role]. (Weight: [chosen[M]["weight"]], Seen: [chosen[M]["seen"]])")
+				logTheThing(LOG_DEBUG, null, "<b>AntagWeighter</b> Selected [M.ckey] for [role]. (Weight: [chosen[M]["weight"]], Seen: [chosen[M]["seen"]])")
 			for (var/datum/mind/M in pool)
 				if(!M.ckey)
 					continue
 				if(M in chosen)
 					continue
-				logTheThing("debug", null, null, "<b>AntagWeighter</b> Did <b>not</b> select [M.ckey] for [role]. (Weight: [history[M.ckey]["weight"]], Seen: [history[M.ckey]["seen"]])")
+				logTheThing(LOG_DEBUG, null, "<b>AntagWeighter</b> Did <b>not</b> select [M.ckey] for [role]. (Weight: [history[M.ckey]["weight"]], Seen: [history[M.ckey]["seen"]])")
 
 
 			src.recordMultiple(players = record)
@@ -330,11 +333,6 @@ var/global/datum/antagWeighter/antagWeighter
 			apiPlayers["players\[[count]]\[role]"] = players[ckey]
 			apiPlayers["players\[[count]]\[ckey]"] = ckey
 			count++
-
-		//Selections during ass day don't count for weighting (but we still want to record that sweet sweet data yo)
-#if ASS_JAM
-			apiPlayers["assday"] = 1
-#endif
 
 		if (src.debug)
 			src.debugLog("Players list sending to API: [json_encode(apiPlayers)]")

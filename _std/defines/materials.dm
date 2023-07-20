@@ -16,6 +16,8 @@
 #define MATERIAL_ENERGY 16
 /// Rubber , latex etc
 #define MATERIAL_RUBBER 32
+/// Wood, or wood-like
+#define MATERIAL_WOOD 64
 
 /// Global static list of rarity color associations
 var/global/static/list/RARITY_COLOR = list("#9d9d9d", "#ffffff", "#1eff00", "#0070dd", "#a335ee", "#ff8000", "#ff0000")
@@ -27,18 +29,20 @@ var/global/list/material_category_names = list(
 	"CON-1" = "Conductive Material",
 	"CON-2" = "High Energy Conductor",
 	"CRY-1" = "Crystal",
-	"DEN-1" = "High Density Crystalline Matter",
-	"DEN-2" = "Very High Density Crystalline Matter",
-	"DEN-3" = "Extraordinarily Dense Crystalline Matter",
+	"DEN-1" = "High Density Matter",
+	"DEN-2" = "Very High Density Matter",
+	"CRY-2" = "Extraordinarily Dense Crystalline Matter",
 	"FAB-1" = "Fabric",
 	"INS-1" = "Insulative Material",
 	"INS-2" = "Highly Insulative Material",
 	"MET-1" = "Metal",
 	"MET-2" = "Sturdy Metal",
-	"MET-3" = "Dense Metal",
+	"MET-3" = "Extremely Tough Metal",
 	"POW-1" = "Power Source",
 	"POW-2" = "Significant Power Source",
 	"POW-3" = "Extreme Power Source",
 	"REF-1" = "Reflective Material",
-	"ORG|RUB" = "Organic or Rubber Material"
+	"ORG|RUB" = "Organic or Rubber Material",
+	"RUB" = "Rubber Material",
+	"WOOD" = "Wood"
 )

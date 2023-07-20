@@ -137,11 +137,11 @@ var/global/datum/controller/processScheduler/processScheduler
 			last_start[p] -= 36000
 
 		// If the process should be running by now, go ahead and queue it
-		if (TimeOfHour > last_start[p] + p.schedule_interval)
+		if (TimeOfHour > last_start[p] + p.schedule_interval + p.schedule_jitter)
 			setQueuedProcessState(p)
 
 /datum/controller/processScheduler/proc/runQueuedProcesses()
-	if (queued.len)
+	if (length(queued))
 		var/delay = 0
 		for (var/datum/controller/process/p as anything in queued)
 			runProcess(p, delay)
@@ -228,6 +228,9 @@ var/global/datum/controller/processScheduler/processScheduler
 	idle |= process
 
 /datum/controller/processScheduler/proc/setQueuedProcessState(var/datum/controller/process/process)
+	// Do jitter adjustments since we just queued (± in the !initial! jitter range)
+	process.schedule_jitter = ((rand() * 2) - 1) * initial(process.schedule_jitter)
+
 	running -= process
 	idle -= process
 	queued |= process
@@ -271,7 +274,7 @@ var/global/datum/controller/processScheduler/processScheduler
 		highest_run_time[process] = time
 
 	var/list/lastTwenty = last_twenty_run_times[process]
-	if (lastTwenty.len == 20)
+	if (length(lastTwenty) == 20)
 		lastTwenty.Cut(1, 2)
 	lastTwenty.len++
 	lastTwenty[lastTwenty.len] = time

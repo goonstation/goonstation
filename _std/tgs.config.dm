@@ -5,8 +5,8 @@
 #define TGS_WRITE_GLOBAL(Name, Value) global.##Name = ##Value
 #define TGS_WORLD_ANNOUNCE(message) boutput(world, "<B>[##message]</B>")
 #define TGS_NOTIFY_ADMINS(event) message_admins("TGS: [##event]")
-#define TGS_INFO_LOG(message) logTheThing("diary", null, null, "TGS Info: [##message]", "debug")
-#define TGS_WARNING_LOG(message) logTheThing("diary", null, null, "TGS Warning: [##message]", "debug")
-#define TGS_ERROR_LOG(message) logTheThing("diary", null, null, "TGS ERROR: [##message]", "debug")
+#define TGS_INFO_LOG(message) logTheThing(LOG_DIARY, null, "TGS Info: [##message]", "debug")
+#define TGS_WARNING_LOG(message) logTheThing(LOG_DIARY, null, "TGS Warning: [##message]", "debug")
+#define TGS_ERROR_LOG(message) logTheThing(LOG_DIARY, null, "TGS ERROR: [##message]", "debug")
 #define TGS_PROTECT_DATUM(Path) // No VV?
 #define TGS_CLIENT_COUNT length(clients)

@@ -19,21 +19,22 @@
 
 //This header was last guaranteed to be accurate 2022-?-? <-> BatElite
 #define TRAYMACHINE_DEFAULT_DRAW 250 //IDK I just put a number
-#define TANNING_BED_MAX_TIME 20 SECONDS //For adjusting on the tanning computer. The bed adds the SECONDS so don't worry about that.
+#define TANNING_BED_MAX_TIME 20 SECONDS //For adjusting on the tanning computer.
 
 //-----------------------------------------------------
 /*~ Tray Machine Parent ~*/
 //-----------------------------------------------------
 
 ABSTRACT_TYPE(/obj/machinery/traymachine)
+ADMIN_INTERACT_PROCS(/obj/machinery/traymachine, proc/eject_tray, proc/collect_tray)
 /obj/machinery/traymachine
 	name = "tray machine"
 	desc = "This thing sure has a big tray that goes vwwwwwwsh when you slide it in and out."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
 	density = TRUE
-	anchored = TRUE
-	power_usage = TRAYMACHINE_DEFAULT_DRAW
+	anchored = ANCHORED
+	power_usage = 50
 
 	//tray related variables
 	var/obj/machine_tray/my_tray = null
@@ -71,12 +72,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 				AM.set_loc(T)
 	. = ..()
 
-/obj/machinery/traymachine/process() //Hey guess what power consumption is only automated when something uses wired power
-	..()
-	if (!(status & NOPOWER)) //oh my *fucking* god there's no checks all the way between use_power and the channel info on APCs
-		use_power(power_usage, EQUIP)
-
-/obj/machinery/traymachine/attack_hand(mob/user as mob)
+/obj/machinery/traymachine/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	if (my_tray && my_tray.loc != src)
 		collect_tray()
@@ -87,7 +83,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	attack_hand(user) //finally silicons can open and close the fucking morgues
 
 //Fun fact you can label these things
-/obj/machinery/traymachine/attackby(P as obj, mob/user as mob)
+/obj/machinery/traymachine/attackby(P, mob/user)
 	src.add_fingerprint(user)
 	if (istype(P, /obj/item/pen))
 		var/t = input(user, "What would you like the label to be?", src.name, null) as null|text
@@ -108,11 +104,11 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 /obj/machinery/traymachine/ex_act(severity)
 	var/chance //This switch was just the same loop with different probabilities 3 times and fuck that
 	switch(severity)
-		if(1.0)
+		if(1)
 			chance = 100
-		if(2.0)
+		if(2)
 			chance = 50
-		if(3.0)
+		if(3)
 			chance = 5
 	if (prob(chance))
 		for(var/atom/movable/A in src) //The reason for this loop here (when there's a similar one in disposing) is contents also get exploded
@@ -131,12 +127,27 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 
 ///Tray comes out - probably override this if your tray should move weirdly
 /obj/machinery/traymachine/proc/eject_tray()
-	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+	set name = "open"
+
+	if (!is_cardinal(src.dir))
+		src.set_dir(src.dir & (NORTH | SOUTH))
 
 	var/turf/T_src = get_turf(src)
 	var/turf/T = T_src
 	for(var/i in 1 to src.bound_width / world.icon_size)
 		T = get_step(T, src.dir)
+
+	// stop the tray from extending into solid things
+	if (T.density && !istype(get_area(src), /area/solarium)) // Solarium gets an exception because this is a hilarious way to get Helios
+		playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
+		return
+	for(var/obj/O in T) // we still want to extend into mobs, no iterating over them
+		if (O.density && O.anchored) // it's ok to pull in unanchored stuff I guess!
+			playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
+			return
+
+	my_tray.set_dir(src.dir)
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 	//handle animation and ejection of contents
 	for(var/atom/movable/AM as anything in src)
@@ -154,11 +165,27 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 		animate(layer = orig_layer, easing = JUMP_EASING)
 	update()
 
+/obj/machinery/traymachine/set_dir(new_dir)
+	if(src.my_tray && src.my_tray.loc != src)
+		return
+	. = ..()
+
+/obj/machinery/traymachine/set_loc(atom/target)
+	if(src.my_tray && src.my_tray.loc != src)
+		return
+	. = ..()
+
+/obj/machinery/traymachine/Move(atom/target)
+	if(src.my_tray && src.my_tray.loc != src)
+		return
+	. = ..()
+
 ///Tray goes in
 /obj/machinery/traymachine/proc/collect_tray()
-	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+	set name = "close"
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 	for( var/atom/movable/A as mob|obj in my_tray.loc)
-		if (!( A.anchored )) //note the tray is anchored
+		if (!(A.anchored) && (istype(A, /obj/item) || (istype(A, /mob)))) //note the tray is anchored
 			A.set_loc(src)
 	my_tray.set_loc(src)
 	update()
@@ -188,10 +215,11 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 ABSTRACT_TYPE(/obj/machinery/traymachine/locking)
 /obj/machinery/traymachine/locking
 	var/locked = FALSE
+	power_usage = TRAYMACHINE_DEFAULT_DRAW
 	var/powerdraw_use = TRAYMACHINE_DEFAULT_DRAW  //same as power_usage by default
 	//crematoria/tanning beds also had a variable called cremating but from what I saw that and locked were always set together so
 
-/obj/machinery/traymachine/locking/attack_hand(mob/user as mob)
+/obj/machinery/traymachine/locking/attack_hand(mob/user)
 	if (locked)
 		boutput(user, "<span class='alert'>It's locked.</span>")
 		src.add_fingerprint(user) //because we're not reaching the parent call
@@ -216,7 +244,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	density = TRUE
 	layer = FLOOR_EQUIP_LAYER1
 	var/obj/machinery/traymachine/my_machine = null
-	anchored = TRUE
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 
 	//simple subtypes
@@ -241,7 +269,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	else
 		return ..()
 
-/obj/machine_tray/attack_hand(mob/user as mob)
+/obj/machine_tray/attack_hand(mob/user)
 	if (my_machine && my_machine != src.loc)
 		my_machine?.collect_tray()
 
@@ -322,6 +350,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	var/ashes = 0
 	power_usage = powerdraw_use //gotta chug them watts
 	icon_state = "crema_active"
+	playsound(src.loc, 'sound/machines/crematorium.ogg', 90, 0)
 
 	for (var/M in contents)
 		if (M in non_tray_contents) continue
@@ -342,7 +371,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 					if (prob(10))
 						W.set_loc(L.loc)
 
-				logTheThing("combat", user, L, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, user, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
 				L.remove()
 				ashes += 1
 
@@ -356,7 +385,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 			src.visible_message("<span class='alert'>\The [src.name] finishes and shuts down.</span>")
 			src.locked = FALSE
 			power_usage = initial(power_usage)
-			playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 
 			while (ashes > 0)
 				make_cleanable( /obj/decal/cleanable/ash,src)
@@ -373,9 +402,10 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	desc = "Burn baby burn!"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "crema_switch"
-	anchored = TRUE
+	anchored = ANCHORED
 	req_access = list(access_crematorium)
-	object_flags = CAN_REPROGRAM_ACCESS
+	plane = PLANE_NOSHADOW_ABOVE
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/area/area = null
 	var/otherarea = null
 	var/id = 1
@@ -391,7 +421,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	..()
 	UnsubscribeProcess()
 
-/obj/machinery/crema_switch/attack_hand(mob/user as mob)
+/obj/machinery/crema_switch/attack_hand(mob/user)
 	if (src.allowed(user))
 		if (!islist(src.crematoriums))
 			src.crematoriums = list()
@@ -417,7 +447,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	icon_state = "tanbed"
 	var/id = 2 //this gets used when the tanning computer links to the bed
 	powerdraw_use = 1000 //power cost while tanning
-	mats = 30
+	//mats = 30
 
 	icon_trayopen = "tanbed"
 	icon_unoccupied = "tanbed"
@@ -461,7 +491,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 			return
 
 		src.visible_message("<span class='alert'>You hear a faint buzz as \the [src] activates.</span>")
-		playsound(src.loc, "sound/machines/shieldup.ogg", 30, 1)
+		playsound(src.loc, 'sound/machines/shieldup.ogg', 30, 1)
 		src.locked = TRUE
 		power_usage = powerdraw_use
 		icon_state = "tanbed_active"
@@ -505,7 +535,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 				src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
 				src.locked = FALSE
 				power_usage = initial(power_usage)
-				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 				update() //clear the active sprite
 
 
@@ -561,7 +591,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		src.trayoverlay = null
 		. = ..()
 
-	attackby(var/obj/item/P as obj, mob/user as mob)
+	attackby(var/obj/item/P, mob/user)
 
 		if (istype(P, /obj/item/light/tube) && !length(src.contents))
 			var/obj/item/light/tube/G = P
@@ -594,7 +624,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	name = "tanning computer"
 	desc = "Used to control a tanning bed."
 	icon = 'icons/obj/stationobjs.dmi'
-	mats = 20
+	//mats = 20
 	id = 2
 	icon_state = "tanconsole"
 	var/state_str = ""
@@ -632,7 +662,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 
 		return "Unknown Error Encountered."
 
-	attack_hand(var/mob/user as mob, params)
+	attack_hand(var/mob/user, params)
 		if (..(user))
 			return
 
@@ -663,15 +693,15 @@ ABSTRACT_TYPE(/obj/machine_tray)
 
 		if (href_list["toggle"])
 			if (linked && !linked.locked && find_tray_tube() && linked.my_tray.loc == linked)
-				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
-				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([log_loc(usr)])")
+				playsound(src.loc, 'sound/machines/bweep.ogg', 20, 1)
+				logTheThing(LOG_STATION, usr, "activated the tanning bed at [usr.loc.loc] ([log_loc(usr)])")
 				linked.cremate()
 
 		else if (href_list["timer"])
 			sleep (10 SECONDS)
 			if (linked && !linked.locked && find_tray_tube() && linked.my_tray.loc == linked)
-				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
-				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([log_loc(usr)])")
+				playsound(src.loc, 'sound/machines/bweep.ogg', 20, 1)
+				logTheThing(LOG_STATION, usr, "activated the tanning bed at [usr.loc.loc] ([log_loc(usr)])")
 				linked.cremate()
 
 		else if (href_list["settime"])

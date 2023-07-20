@@ -7,7 +7,7 @@
 	desc = "Some strange transmitter."
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "beacon_synd"
-	anchored = TRUE
+	anchored = ANCHORED
 	density = TRUE
 	processing_tier = PROCESSING_SIXTEENTH
 	_max_health = 500
@@ -16,7 +16,7 @@
 	New()
 		..()
 		src.AddComponent(/datum/component/obj_projectile_damage)
-		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, .proc/hitby_proj)
+		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, PROC_REF(hitby_proj))
 
 	ex_act(severity)
 		summon_drones()

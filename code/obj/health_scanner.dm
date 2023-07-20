@@ -1,7 +1,10 @@
 
+TYPEINFO(/obj/health_scanner)
+	mats = list("CON-1" = 5, "CRY-1" = 2)
+
 /obj/health_scanner
 	icon = 'icons/obj/items/device.dmi'
-	anchored = 1
+	anchored = ANCHORED
 	var/id = 0.0 // who are we?
 	var/partner_range = 3 // how far away should we look?
 	var/find_in_range = 1
@@ -16,7 +19,7 @@
 		. = ..()
 		STOP_TRACKING
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (ispulsingtool(W))
 			var/new_id = input(user, "Please enter new ID", src.name, src.id) as null|text
 			if (!new_id || new_id == src.id)
@@ -84,6 +87,7 @@
 	New()
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		AddComponent(/datum/component/mechanics_holder)
 
 	find_partners(var/in_range = 0)
 		if (in_range)
@@ -106,11 +110,22 @@
 			data += "<font color='red'>ERROR: SCANNER ON COOLDOWN</font>"
 		else
 			for (var/mob/living/carbon/human/H in get_turf(src))
-				data += "[scan_health(H, 1, 1, 1, 1)]"
+				data += "[scan_health(H, 0, 0, 0, 1)]"
 				scan_health_overhead(H, H)
 				if (alert && H.health < 0)
 					src.crit_alert(H)
-			playsound(src.loc, "sound/machines/scan2.ogg", 30, 0)
+
+				// signal stuff
+				// this all ends up running twice because it's in scan_health too,
+				// but not broken out in a way that we need
+				var/health_percent = round(100 * H.health / (H.max_health||1))
+				var/oxy = round(H.get_oxygen_deprivation())
+				var/tox = round(H.get_toxin_damage())
+				var/burn = round(H.get_burn_damage())
+				var/brute = round(H.get_brute_damage())
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "health=[health_percent]&oxy=[oxy]&tox=[tox]&burn=[burn]&brute=[brute]")
+
+			playsound(src.loc, 'sound/machines/scan2.ogg', 30, 0)
 		return data
 
 	proc/crit_alert(var/mob/living/carbon/human/H)

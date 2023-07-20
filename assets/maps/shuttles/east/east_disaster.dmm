@@ -360,7 +360,9 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -422,7 +424,9 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "mY" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -667,7 +671,7 @@
 	},
 /area/centcom/outside)
 "wT" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "xn" = (
@@ -720,7 +724,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "zj" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -857,7 +861,7 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
 	},
-/obj/critter/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Da" = (
@@ -1176,7 +1180,9 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "NR" = (
-/obj/machinery/atmospherics/portables_connector/east,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -1352,7 +1358,7 @@
 	pixel_x = -1;
 	pixel_y = 2
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -26;
 	pixel_y = 4
 	},
@@ -1413,7 +1419,7 @@
 	},
 /area/centcom)
 "XO" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";

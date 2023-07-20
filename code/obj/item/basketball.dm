@@ -15,11 +15,14 @@
 	stamina_cost = 5
 	stamina_crit_chance = 5
 	custom_suicide = 1
+	contraband = 2 // Due to the illegalization of basketball in 2041
+	var/base_icon_state = "bball"
+	var/spinning_icon_state = "bball_spin"
 
-/obj/item/basketball/attack_hand(mob/user as mob)
+/obj/item/basketball/attack_hand(mob/user)
 	..()
 	if(user)
-		src.icon_state = "bball"
+		src.icon_state = base_icon_state
 
 /obj/item/basketball/suicide(var/mob/user as mob)
 	user.visible_message("<span class='alert'><b>[user] fouls out, permanently.</b></span>")
@@ -31,33 +34,38 @@
 
 /obj/item/basketball/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
-	src.icon_state = "bball"
+	src.icon_state = base_icon_state
 	if(hit_atom)
-		playsound(src.loc, "sound/items/bball_bounce.ogg", 65, 1)
+		playsound(src.loc, 'sound/items/bball_bounce.ogg', 65, 1)
 		if(ismob(hit_atom))
 			var/mob/M = hit_atom
 			if(ishuman(M))
-				if((prob(50) && M.bioHolder.HasEffect("clumsy")) || M.equipped() || get_dir(M, src) == M.dir)
+				if((prob(50) && M.bioHolder.HasEffect("clumsy")))
 					src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
 					M.changeStatus("stunned", 2 SECONDS)
 					JOB_XP(M, "Clown", 1)
 					return
-				// catch the ball!
-				src.Attackhand(M)
-				M.visible_message("<span class='combat'>[M] catches the [src.name]!</span>", "<span class='combat'>You catch the [src.name]!</span>")
-				logTheThing("combat", M, null, "catches [src]")
-				return
-			src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
-			logTheThing("combat", M, null, "is struck by [src]")
-			M.changeStatus("stunned", 2 SECONDS)
-			return
+				else
+					if (M.equipped() || get_dir(M, src) == M.dir)
+						src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
+						logTheThing(LOG_COMBAT, M, "is struck by [src]")
+						M.do_disorient(stamina_damage = 20, weakened = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
+					else
+						// catch the ball!
+						src.Attackhand(M)
+						M.visible_message("<span class='combat'>[M] catches the [src.name]!</span>", "<span class='combat'>You catch the [src.name]!</span>")
+						logTheThing(LOG_COMBAT, M, "catches [src]")
+			else
+				src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
+				logTheThing(LOG_COMBAT, M, "is struck by [src]")
+				M.do_disorient(stamina_damage = 20, weakened = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
 
 /obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
-			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
-	src.icon_state = "bball_spin"
+			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
+	src.icon_state = spinning_icon_state
 	. = ..()
 
-/obj/item/basketball/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/basketball/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/plutonium_core))
 		boutput(user, "<span class='notice'>You insert the [W.name] into the [src.name].</span>")
 		user.u_equip(W)
@@ -72,7 +80,7 @@
 	..(W, user)
 	return
 
-/obj/item/basketball/attack_hand(mob/user as mob)
+/obj/item/basketball/attack_hand(mob/user)
 	..()
 	var/mob/living/carbon/human/H = user
 	if(istype(H) && payload && istype(payload))
@@ -91,7 +99,7 @@
 	desc = "Can be mounted on walls."
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bbasket0"
 	event_handler_flags = USE_FLUID_ENTER
@@ -103,12 +111,12 @@
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && mounted)
 			src.visible_message("<span class='notice'><b>[user] removes [src].</b></span>")
 			src.pixel_y = 0
 			src.pixel_x = 0
-			src.anchored = 0
+			src.anchored = UNANCHORED
 			src.mounted = 0
 		else if (src.mounted && !istype(W, /obj/item/bballbasket))
 			if (W.cant_drop) return
@@ -124,14 +132,14 @@
 					src.visible_message("<span class='alert'>[user] whiffs the dunk.</span>")
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (mounted)
 			return
 		else
 			return ..(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (!mounted && get_dist(src, target) == 1)
+		if (!mounted && GET_DIST(src, target) == 1)
 			if (isturf(target) && target.density)
 				//if (get_dir(src,target) == NORTH || get_dir(src,target) == EAST || get_dir(src,target) == SOUTH || get_dir(src,target) == WEST)
 				if (get_dir(src,target) in cardinal)
@@ -139,7 +147,7 @@
 					user.drop_item()
 					src.set_loc(get_turf(user))
 					src.mounted = 1
-					src.anchored = 1
+					src.anchored = ANCHORED
 					src.set_dir(get_dir(src, target))
 					switch (src.dir)
 						if (NORTH)
@@ -226,19 +234,14 @@
 	proc/unplutonize(var/usrverbs)
 		usrverbs -= /mob/proc/chaos_dunk
 
-/obj/item/plutonium_core/attack_hand(mob/user as mob)
+/obj/item/plutonium_core/attack_hand(mob/user)
 	..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(!H.gloves)
 			boutput(H, "<span class='combat'>Your hand burns from grabbing the [src.name].</span>")
-			var/obj/item/affecting = H.organs["r_arm"]
-			if(H.hand)
-				affecting = H.organs["l_arm"]
-			if(affecting)
-				affecting.take_damage(0, 15)
-				H.UpdateDamageIcon()
-
+			var/zone = H.hand ? "l_arm" : "r_arm"
+			H.TakeDamage(zone, 0, 15, 0, DAMAGE_BURN)
 
 //BLOOD BOWL BALL
 
@@ -254,7 +257,7 @@
 	throwforce = 2
 	throw_spin = 0
 
-/obj/item/bloodbowlball/attack_hand(mob/user as mob)
+/obj/item/bloodbowlball/attack_hand(mob/user)
 	..()
 	if(user)
 		src.icon_state = "bloodbowlball"
@@ -263,7 +266,7 @@
 	..(hit_atom)
 	src.icon_state = "bloodbowlball"
 	if(hit_atom)
-		playsound(src.loc, "sound/items/bball_bounce.ogg", 65, 1)
+		playsound(src.loc, 'sound/items/bball_bounce.ogg', 65, 1)
 		if(ismob(hit_atom))
 			var/mob/M = hit_atom
 			if(ishuman(M))
@@ -272,14 +275,14 @@
 					for(var/mob/V in AIviewers(src, null))
 						if(V.client)
 							V.show_message("<span class='combat'>[T] gets stabbed by one of the [src.name]'s spikes.</span>", 1)
-							playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 65, 1)
+							playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_2.ogg', 65, 1)
 					T.changeStatus("stunned", 5 SECONDS)
 					T.TakeDamageAccountArmor("chest", 30, 0)
 					take_bleeding_damage(T, null, 15, DAMAGE_STAB)
 					return
 				else if (prob(50))
 					src.visible_message("<span class='combat'>[T] catches the [src.name] but gets cut.</span>")
-					T.TakeDamage(T.hand == 1 ? "l_arm" : "r_arm", 15, 0)
+					T.TakeDamage(T.hand == LEFT_HAND ? "l_arm" : "r_arm", 15, 0)
 					take_bleeding_damage(T, null, 10, DAMAGE_CUT)
 					src.Attackhand(T)
 					return
@@ -290,12 +293,12 @@
 					return
 	return
 
-/obj/item/bloodbowlball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
+/obj/item/bloodbowlball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = UNANCHORED, bonus_throwforce = 0)
 	src.icon_state = "bloodbowlball_air"
 	. = ..()
 
-/obj/item/bloodbowlball/attack(target as mob, mob/user as mob)
-	playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
+/obj/item/bloodbowlball/attack(target, mob/user)
+	playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 	if(iscarbon(target))
 		var/mob/living/carbon/targMob = target
 		if(!isdead(targMob))
@@ -304,10 +307,10 @@
 	if(prob(30))
 		if(prob(30))
 			boutput(user, "<span class='combat'>You accidentally cut your hand badly!</span>")
-			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 10, 0)
+			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 10, 0)
 			take_bleeding_damage(user, user, 5, DAMAGE_CUT)
 		else
 			boutput(user, "<span class='combat'>You accidentally cut your hand!</span>")
-			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 5, 0)
+			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 5, 0)
 			take_bleeding_damage(user, null, 1, DAMAGE_CUT, 0)
 

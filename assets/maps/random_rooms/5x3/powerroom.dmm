@@ -1,0 +1,146 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/cable{
+	icon_state = "4-6"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/dmm_suite/clear_area)
+"c" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/computer/power_monitor/smes{
+	dir = 8
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/dmm_suite/clear_area)
+"p" = (
+/obj/cable{
+	icon_state = "6-8"
+	},
+/obj/cable{
+	icon_state = "2-10"
+	},
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"q" = (
+/obj/item/wirecutters,
+/obj/machinery/power/terminal,
+/obj/cable,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/yellow/side{
+	dir = 5
+	},
+/area/dmm_suite/clear_area)
+"t" = (
+/obj/cable,
+/obj/item/cable_coil/cut,
+/turf/simulated/floor/yellow/side,
+/area/dmm_suite/clear_area)
+"B" = (
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/dmm_suite/clear_area)
+"C" = (
+/obj/machinery/power/furnace,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/item/device/multitool,
+/obj/machinery/light/small/floor,
+/obj/cable{
+	icon_state = "4-9"
+	},
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"I" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/dmm_suite/clear_area)
+"J" = (
+/obj/machinery/power/smes,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/dmm_suite/clear_area)
+"O" = (
+/obj/machinery/light/small/floor,
+/obj/item/storage/toolbox/electrical,
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"Q" = (
+/obj/cable{
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/yellow/side,
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/cable{
+	icon_state = "4-9"
+	},
+/turf/simulated/floor/yellow/side,
+/area/dmm_suite/clear_area)
+"W" = (
+/obj/machinery/power/furnace,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+a
+q
+J
+"}
+(2,1,1) = {"
+C
+D
+Q
+"}
+(3,1,1) = {"
+I
+p
+t
+"}
+(4,1,1) = {"
+W
+O
+S
+"}
+(5,1,1) = {"
+s
+B
+c
+"}

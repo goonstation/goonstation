@@ -11,7 +11,8 @@
 	icon = 'icons/obj/sec_tape.dmi'
 	icon_state = "sec_tape_roll"
 	w_class = W_CLASS_TINY
-	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT|ONBELT
+	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT
+	c_flags = ONBELT
 	rand_pos = 1
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab
@@ -55,7 +56,7 @@
 			qdel(src)
 		else
 			//Else we'll choke ourselves out
-			user.visible_message("<span class='alert'><b>[user] wraps some tape around \his neck and tightens it.</b></span>")
+			user.visible_message("<span class='alert'><b>[user] wraps some tape around [his_or_her(user)] neck and tightens it.</b></span>")
 			user.take_oxygen_deprivation(160)
 			SPAWN(50 SECONDS)
 				if (user && !isdead(user))

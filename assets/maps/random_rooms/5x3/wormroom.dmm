@@ -1,0 +1,117 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/railing/cyan/reinforced{
+	dir = 1
+	},
+/obj/item/reagent_containers/food/snacks/candy/gummy_worm{
+	pixel_y = -8;
+	pixel_x = -8
+	},
+/turf/simulated/floor/carpet/clowncarpet,
+/area/dmm_suite/clear_area)
+"d" = (
+/obj/item/reagent_containers/food/snacks/candy/gummy_worm{
+	icon_state = "gummyworm-3"
+	},
+/turf/simulated/floor/carpet/clowncarpet,
+/area/dmm_suite/clear_area)
+"f" = (
+/turf/simulated/floor/carpet/clowncarpet,
+/area/dmm_suite/clear_area)
+"l" = (
+/obj/item/kitchen/gummy_worms_bag{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/candy/gummy_worm{
+	pixel_y = 2;
+	pixel_x = 13;
+	icon_state = "gummyworm-2"
+	},
+/turf/simulated/floor/carpet/clowncarpet,
+/area/dmm_suite/clear_area)
+"o" = (
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/carpet/clowncarpet,
+/area/dmm_suite/clear_area)
+"q" = (
+/obj/railing/cyan/reinforced{
+	dir = 8
+	},
+/obj/item/toy/plush/small,
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/carpet/clowncarpet,
+/area/dmm_suite/clear_area)
+"r" = (
+/obj/railing/cyan/reinforced,
+/obj/item/reagent_containers/food/snacks/candy/gummy_worm,
+/obj/item/reagent_containers/food/snacks/candy/gummy_worm,
+/turf/simulated/floor/carpet/clowncarpet,
+/area/dmm_suite/clear_area)
+"w" = (
+/obj/item/reagent_containers/food/snacks/candy/gummy_worm{
+	pixel_y = -5;
+	icon_state = "gummyworm-3"
+	},
+/obj/item/reagent_containers/food/snacks/candy/gummy_worm{
+	pixel_y = 8;
+	pixel_x = 9;
+	icon_state = "gummyworm-2"
+	},
+/turf/simulated/floor/carpet/clowncarpet,
+/area/dmm_suite/clear_area)
+"z" = (
+/obj/railing/cyan/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/clowncarpet,
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/item/kitchen/gummy_worms_bag{
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/turf/simulated/floor/carpet/clowncarpet,
+/area/dmm_suite/clear_area)
+"G" = (
+/obj/railing/cyan/reinforced{
+	dir = 4
+	},
+/obj/stool/bee_bed,
+/obj/random_item_spawner/organs/bloody/one_to_three,
+/turf/simulated/floor/carpet/clowncarpet,
+/area/dmm_suite/clear_area)
+"P" = (
+/obj/railing/cyan/reinforced,
+/turf/simulated/floor/carpet/clowncarpet,
+/area/dmm_suite/clear_area)
+"Y" = (
+/obj/critter/spacerattlesnake,
+/turf/simulated/floor/carpet/clowncarpet,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+f
+w
+l
+"}
+(2,1,1) = {"
+P
+q
+a
+"}
+(3,1,1) = {"
+P
+Y
+z
+"}
+(4,1,1) = {"
+r
+G
+z
+"}
+(5,1,1) = {"
+A
+d
+o
+"}
