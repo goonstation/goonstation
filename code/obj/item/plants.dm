@@ -421,13 +421,14 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	Crossed(atom/movable/AM as mob|obj)
 		var/mob/M = AM
 		if(iswerewolf(M))
-			if(M.hasStatus("weakened"))
-				return
-			else
-				M.changeStatus("weakened", 3 SECONDS)
-				M.force_laydown_standup()
+			var/stun_duration
+			if (!GET_COOLDOWN(M, "aconite_stun"))
+				var/datum/statusEffect/stun_effect = M.changeStatus("weakened", 3 SECONDS)
 				M.TakeDamage("All", 0, 5, 0, DAMAGE_BURN)
 				M.visible_message("<span class='alert'>The [M] steps too close to [src] and falls down!</span>")
+				if (stun_effect)
+					stun_duration = stun_effect.duration //makes cooldown last the same as stun because the actual duration of applied effect is lower
+				ON_COOLDOWN(M, "aconite_stun", stun_duration)
 				return
 		..()
 	attack(mob/M, mob/user)
