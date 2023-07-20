@@ -92,6 +92,8 @@
 	var/list/flower1 = null
 	var/list/flower2 = null
 	var/list/flower3 = null
+	/// random appearance order for the flowers when shuffling them
+	var/list/frontflowerindex
 	src.overlays = null
 	src.inhand_image.overlays = null
 	src.icon_state = "paper_back"
@@ -114,6 +116,7 @@
 				continue
 			else
 				CRASH("More than 3 flowers in bouquet: [get_turf(src)]") // this shouldnt happen but eh
+	// note for the overlays: for appearance reasons, the middle flowers must always go on last
 	switch (src.flowernum)
 		if (1)
 			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[flower1[1]]_m")
@@ -123,7 +126,7 @@
 			src.desc = "A [flower1[2]] in a nice wrapping. Try adding more flowers to it!"
 		if (2)
 			var/rightorleft = pick("r", "l")
-			var/list/frontflowerindex = pick(list(flower1,flower2),list(flower2,flower1)) //picks a order for the flowers
+			frontflowerindex = pick(list(flower1,flower2),list(flower2,flower1))
 			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[frontflowerindex[1][1]]_[rightorleft]")
 			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[frontflowerindex[2][1]]_m")
 			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.wrapstyle]_front")
@@ -136,10 +139,10 @@
 				src.name = "mixed bouquet"
 				src.desc = "A bouquet of beautiful flowers. This one contains [flower2[2]] and [flower1[2]]."
 		if (3)
-			var/list/frontflowerindex = pick(
+			frontflowerindex = pick(
 				list(flower1, flower2, flower3), list(flower2, flower1, flower3),\
 				list(flower1, flower3, flower2), list(flower2, flower3, flower1),\
-				list(flower3, flower1, flower2), list(flower3, flower2, flower1)) // pick a random order for the three to appear in.
+				list(flower3, flower1, flower2), list(flower3, flower2, flower1))
 			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[frontflowerindex[1][1]]_r")
 			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[frontflowerindex[2][1]]_l")
 			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[frontflowerindex[3][1]]_m")
@@ -147,13 +150,12 @@
 			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[frontflowerindex[1][1]]_r")
 			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[frontflowerindex[2][1]]_l")
 			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[frontflowerindex[3][1]]_m")
-			if ((flower1[1] == flower2[1]) && (flower2[1] == flower3[1])) // all three flowers identical
+			// all match
+			if ((flower1[1] == flower2[1]) && (flower2[1] == flower3[1]))
 				src.name = "[flower1[2]] bouquet"
 				src.desc = "A bouquet of beautiful flowers. This one contains [flower1[2]]."
-			else if ((flower1[1] != flower2[1]) || (flower2[1] != flower3[1]) || (flower1[1] != flower3[1])) // all three flowers different
-				src.name = "mixed bouquet"
-				src.desc = "A bouquet of beautiful flowers. This one contains [flower3[2]], [flower2[2]] and [flower1[2]]."
-			else // two flowers match
+			// two match
+			else if ((flower1[1] == flower2[1]) || (flower2[1] == flower3[1]) || (flower1[1] == flower3[1]))
 				var/doubledflower = "" // the name of flower that matches
 				var/otherflower = "" // the name of the one that doesn't
 				if (flower1[1] == flower2[1])
@@ -167,8 +169,44 @@
 					otherflower = flower1[2]
 				src.name = "mixed bouquet"
 				src.desc = "A bouquet of beautiful flowers. This one contains [doubledflower] and [otherflower]."
+			// all different
+			else
+				src.name = "mixed bouquet"
+				src.desc = "A bouquet of beautiful flowers. This one contains [flower3[2]], [flower2[2]] and [flower1[2]]."
 		if (4)
 			CRASH("Bouquet at [get_turf(src)] somehow has 4 flowers in it")
 	src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.wrapstyle]_front")
 	if (src.hiddenitem)
 		src.desc += " There seems to be something else inside it as well."
+	src.ruffle()
+
+/// gently shakes the bouquet to indicate shuffling. mostly taken from hit_twitch()
+/obj/item/bouquet/proc/ruffle()
+	var/movepx = 0
+	var/movepy = 0
+	switch(pick(alldirs))
+		if (NORTH)
+			movepy = 3
+		if (WEST)
+			movepx = -3
+		if (SOUTH)
+			movepy = -3
+		if (EAST)
+			movepx = 3
+		if (NORTHEAST)
+			movepx = 2
+			movepy = 2
+		if (NORTHWEST)
+			movepx = -2
+			movepy = 2
+			movepy = -2
+		if (SOUTHEAST)
+			movepx = 2
+			movepy = -2
+		if (SOUTHWEST)
+			movepx = -2
+			movepy = -2
+		else
+			return
+	animate(src, pixel_x = movepx, pixel_y = movepy, time = 2, easing = EASE_IN, flags = ANIMATION_PARALLEL)
+	animate(pixel_x = movepx, pixel_y = movepy, time = 2, easing = EASE_IN)
