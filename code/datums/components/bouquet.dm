@@ -44,6 +44,7 @@
 		// finish up
 		W.set_loc(new_bouquet)
 		new_bouquet.refresh()
+		new_bouquet.ruffle()
 		user.visible_message("[user] rolls up the [source.name] into a bouquet.", "You roll up the [source.name] into a bouquet.")
 		user.put_in_hand_or_drop(new_bouquet)
 	// hit the flower with the bouquet, i.e. add self to existing bouquet

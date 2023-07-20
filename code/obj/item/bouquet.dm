@@ -40,6 +40,7 @@
 /obj/item/bouquet/attack_self(mob/user)
 	. = ..()
 	src.refresh()
+	src.ruffle()
 
 /// attempts to add a flower or item to the bouquet, with error handling
 /obj/item/bouquet/proc/add_to_bouquet(obj/item/W, mob/user)
@@ -84,6 +85,7 @@
 	src.flowernum += 1
 	src.refresh()
 	user.put_in_hand_or_drop(src)
+	src.ruffle()
 
 /obj/item/bouquet/proc/refresh()
 	// overlays is for the icon, inhand_image is for, well, the inhand
@@ -178,7 +180,6 @@
 	src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.wrapstyle]_front")
 	if (src.hiddenitem)
 		src.desc += " There seems to be something else inside it as well."
-	src.ruffle()
 
 /// gently shakes the bouquet to indicate shuffling. mostly taken from hit_twitch()
 /obj/item/bouquet/proc/ruffle()
@@ -210,3 +211,22 @@
 			return
 	animate(src, pixel_x = movepx, pixel_y = movepy, time = 2, easing = EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(pixel_x = movepx, pixel_y = movepy, time = 2, easing = EASE_IN)
+
+// pre prepared ones, for mapping
+ABSTRACT_TYPE(/obj/item/bouquet/premade)
+/obj/item/bouquet/premade
+	flowernum = 3
+	var/flowertype = null
+	New()
+		. = ..()
+		for (var/i in 1 to 3)
+			new flowertype(src)
+
+/obj/item/bouquet/premade/rose
+	flowertype = /obj/item/plant/flower/rose
+
+/obj/item/bouquet/premade/lavender
+	flowertype = /obj/item/clothing/head/flower/lavender
+
+/obj/item/bouquet/premade/bop
+	flowertype = /obj/item/clothing/head/flower/bop
