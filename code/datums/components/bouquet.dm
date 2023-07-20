@@ -1,19 +1,13 @@
 // attach this component only to things that have can_bouquet as a var.
 // so far this includes /obj/item/clothing/head/flower and /obj/item/plant
 
-TYPEINFO(/datum/component/bouquet)
-	initialization_args = list(
-		ARG_INFO("can_bouquet_comp", DATA_INPUT_BOOL, "Whether this item can be turned into a bouquet.", FALSE)
-	)
+// misleadingly, this file also contains the bouquet obj item
 
 /// the bouquet component, that allows flowers of various parentage to be wrapped into bouquets
 /datum/component/bouquet
-	/// this is the internal component version of can_bouquet
-	var/can_bouquet = FALSE
 
 /datum/component/bouquet/Initialize()
 	. = ..()
-	src.can_bouquet = can_bouquet
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/construct_bouquet)
 
 /datum/component/bouquet/UnregisterFromParent()
@@ -21,36 +15,43 @@ TYPEINFO(/datum/component/bouquet)
 	. = ..()
 
 /datum/component/bouquet/proc/construct_bouquet(obj/item/source, obj/item/W, mob/user)
+	// if it isnt paper, wrapping paper, or a bouquet, dont care
 	if (!istype(W, /obj/item/paper) && !istype(W, /obj/item/wrapping_paper) && !istype(W, /obj/item/bouquet))
 		return
+	// certain paper subtypes not accepted
 	if (istype(W, /obj/item/paper/fortune) || istype(W, /obj/item/paper/printout))
-		// i feel like fortune cookie wrap is a little small, and printouts probably need a new texture
 		return
-	if (src.can_bouquet) // this really shouldnt occur
+	// this really shouldnt occur, but if the component is erronously attached to a non bouquetable flower...
+	if (!src.can_bouquet)
 		boutput("This flower can't be turned into a bouquet!")
 		return
+	// attacked by a wrapping, make new bouquet
 	if (istype(W, /obj/item/paper || /obj/item/wrapping_paper))
 		if (istype(W, /obj/item/paper/folded))
 			boutput("You need to unfold this first!")
+			return
+		var/obj/item/bouquet/new_bouquet = new(user.loc)
+		// drop both bits just in case
+		W.force_drop(user)
+		source.force_drop(user)
+		// in case flower stacks become a thing, just put one single flower in
+		if (source.amount > 1)
+			var/obj/item/clothing/head/flower/allocated_flower = source.split_stack(1)
+			allocated_flower.set_loc(new_bouquet)
 		else
-			var/obj/item/bouquet/new_bouquet = new(user.loc)
-			W.force_drop(user)
-			source.force_drop(user)
-			new_bouquet.flowernum = 1
-			if (source.amount > 1) // in case flower stacks become a thing, just put one in
-				var/obj/item/clothing/head/flower/allocated_flower = source.split_stack(1)
-				allocated_flower.set_loc(new_bouquet)
-			else
-				source.set_loc(new_bouquet)
-			if (istype(W, /obj/item/wrapping_paper))
-				var/obj/item/wrapping_paper/dummy = W
-				new_bouquet.wrapstyle = "gw_[dummy.style]"
-			else if (istype(W, /obj/item/paper))
-				new_bouquet.wrapstyle = "paper"
-			W.set_loc(new_bouquet)
-			new_bouquet.refresh()
-			user.visible_message("[user] rolls up the [source.name] into a bouquet.", "You roll up the [source.name] into a bouquet.")
-			user.put_in_hand_or_drop(new_bouquet)
+			source.set_loc(new_bouquet)
+		// set the wrapstyle based on the wrap used
+		if (istype(W, /obj/item/wrapping_paper))
+			var/obj/item/wrapping_paper/dummy = W
+			new_bouquet.wrapstyle = "gw_[dummy.style]"
+		else if (istype(W, /obj/item/paper))
+			new_bouquet.wrapstyle = "paper"
+		// finish up
+		W.set_loc(new_bouquet)
+		new_bouquet.refresh()
+		user.visible_message("[user] rolls up the [source.name] into a bouquet.", "You roll up the [source.name] into a bouquet.")
+		user.put_in_hand_or_drop(new_bouquet)
+	// hit the flower with the bouquet, i.e. add self to existing bouquet
 	if (istype(W, /obj/item/bouquet))
 		var/obj/item/bouquet/bouquet_holder = W
 		bouquet_holder.add_to_bouquet(source, user)
@@ -62,10 +63,12 @@ TYPEINFO(/datum/component/bouquet)
 	inhand_image_icon = 'icons/obj/items/bouquets.dmi'
 	icon_state = "paper_back"
 	w_class = W_CLASS_SMALL
+	flags = SUPPRESSATTACK | TABLEPASS | FPRINT
 	/// how many flowers are there in the bouquet?
-	var/flowernum = 0
+	var/flowernum = 1
 	/// what kind of wrap is used in the bouquet?
 	var/wrapstyle = null
+	/// this is locked at 3 for sprite reasons
 	var/max_flowers = 3
 	/// is there a hidden item in the bouquet?
 	var/hiddenitem = FALSE
@@ -93,6 +96,7 @@ TYPEINFO(/datum/component/bouquet)
 	. = ..()
 	src.refresh()
 
+/// attempts to add a flower or item to the bouquet, with error handling
 /obj/item/bouquet/proc/add_to_bouquet(obj/item/W, mob/user)
 	// first check plants (i.e. for roses)
 	if (istype(W, /obj/item/plant))
@@ -104,7 +108,7 @@ TYPEINFO(/datum/component/bouquet)
 			boutput(user, "This bouquet is full!")
 			return
 		src.add_flower(W, user)
-	// most flowers are under this subtyping
+	// most flowers are under this subtyping, so check this too
 	else if (istype(W, /obj/item/clothing/head/flower))
 		var/obj/item/clothing/head/flower/dummy_flower = W
 		if (!dummy_flower.can_bouquet)
@@ -114,18 +118,20 @@ TYPEINFO(/datum/component/bouquet)
 			boutput(user, "This bouquet is full!")
 			return
 		src.add_flower(W, user)
-	// if its not a flower we know of, hide an item inside
-	else if (flowernum == 1)
-		if (W.w_class > W_CLASS_SMALL)
-			boutput("That won't fit!")
-			return
-		if (hiddenitem) // only one hidden item allowed
-			boutput("This bouquet already has something hidden in it!")
-			return
+	// if its not a flower we know of, try to hide an item inside
+	else if (hiddenitem) // only one hidden item allowed
+		boutput("This bouquet already has something hidden in it!")
+		return
+	else if (W.w_class > W_CLASS_SMALL) // item too big
+		boutput("That won't fit!")
+		return
+	else // successfully hide item
+		src.flags |= SUPPRESSATTACK
 		W.set_loc(src)
 		src.hiddenitem = TRUE
 
 /obj/item/bouquet/proc/add_flower(obj/item/W, mob/user)
+	src.flags |= SUPPRESSATTACK
 	W.force_drop(user)
 	src.force_drop(user)
 	W.set_loc(src)
@@ -216,7 +222,8 @@ TYPEINFO(/datum/component/bouquet)
 					otherflower = flower1[2]
 				src.name = "mixed bouquet"
 				src.desc = "A bouquet of beautiful flowers. This one contains [doubledflower] and [otherflower]."
-
+		if (4)
+			CRASH("Bouquet at [get_turf(src)] somehow has 4 flowers in it")
 	src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.wrapstyle]_front")
 	if (src.hiddenitem)
 		src.desc += " There seems to be something else inside it as well."
