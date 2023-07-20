@@ -31,6 +31,19 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		if (!ON_COOLDOWN(target, "changeling_remove_limb", 1.5 SECONDS))
+			var/list/valid_limbs = list("l_leg", "r_arm", "r_leg", "l_arm")
+			var/mob/living/carbon/human/H = target
+			H.TakeDamage("All", 15, 0, 0)
+			playsound(H, pick('sound/impact_sounds/Flesh_Tear_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Flesh_Tear_3.ogg'), 50)
+			for (var/L in valid_limbs)
+				var/possible_limb = H.limbs?[L]
+				if (possible_limb)
+					ownerMob.visible_message("<span class='combat bold'>[ownerMob] viciously tears off [H]'s [possible_limb]!</span>")
+					H.limbs.sever(L)
+					H.emote("scream", FALSE)
+					break
+
 	onStart()
 		..()
 		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour)
