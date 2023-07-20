@@ -3042,7 +3042,7 @@ datum
 				name = "glaucogen"
 				id = "glaucogen"
 				description = "A synthetically generated polysaccharide structure that mimics the main storage form of glucose in the body."
-				depletion_rate = 1
+				depletion_rate = 0.4
 
 		fooddrink/VHFCS
 			name = "very-high-fructose corn syrup"
