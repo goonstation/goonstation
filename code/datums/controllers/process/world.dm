@@ -68,9 +68,3 @@
 	tempword = pick(codewords)
 	netpass_syndicate = "[rand(111,999)]DET[tempword]=[rand(1111,9999)]"
 	codewords -= tempword
-
-/proc/setup_organ_thresholds()
-	for(var/organ in cyberorgan_brute_threshold)
-		var/amt = rand(10, 60)
-		cyberorgan_brute_threshold[organ] = amt + rand(-5, 5)
-		cyberorgan_burn_threshold[organ] = 70 - amt + rand(-5, 5)
