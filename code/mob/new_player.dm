@@ -396,65 +396,25 @@ mob/new_player
 
 	///Assigns 5 random favorite foods to a picky eater
 	proc/make_picky_eater(mob/living/carbon/human/player)
-		var/list/blacklist = list(
-		/obj/item/reagent_containers/food/snacks/burger/humanburger,
-		/obj/item/reagent_containers/food/snacks/donut/custom/robust,
-		/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat,
-		/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock,
-		/obj/item/reagent_containers/food/snacks/ingredient/pepperoni,
-		/obj/item/reagent_containers/food/snacks/meatball,
-		/obj/item/reagent_containers/food/snacks/mushroom,
-		/obj/item/reagent_containers/food/snacks/pickle/trash,
-		/obj/item/reagent_containers/food/snacks/pizza/xmas,
-		/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
-		/obj/item/reagent_containers/food/snacks/soup/custom,
-		/obj/item/reagent_containers/food/snacks/condiment/syndisauce,
-		/obj/item/reagent_containers/food/snacks/donkpocket_w,
-		/obj/item/reagent_containers/food/snacks/surstromming,
-		/obj/item/reagent_containers/food/snacks/hotdog/syndicate,
-		/obj/item/reagent_containers/food/snacks/dippable/tortilla_chip_spawner,
-		/obj/item/reagent_containers/food/snacks/pancake/classic,
-		/obj/item/reagent_containers/food/snacks/wonton_spawner,
-		/obj/item/reagent_containers/food/snacks/agar_block,
-		/obj/item/reagent_containers/food/snacks/sushi_roll/custom,
-#ifndef UNDERWATER_MAP
-		/obj/item/reagent_containers/food/snacks/healgoo,
-		/obj/item/reagent_containers/food/snacks/greengoo,
-#endif
-		/obj/item/reagent_containers/food/snacks/snowball,
-		/obj/item/reagent_containers/food/snacks/burger/vr,
-		/obj/item/reagent_containers/food/snacks/slimjim,
-		/obj/item/reagent_containers/food/snacks/bite,
-		/obj/item/reagent_containers/food/snacks/pickle_holder,
-		/obj/item/reagent_containers/food/snacks/snack_cake,
-		/obj/item/reagent_containers/food/snacks/ingredient/tortilla,
-		/obj/item/reagent_containers/food/snacks/ingredient/pizza1,
-		/obj/item/reagent_containers/food/snacks/ingredient/pizza2,
-		/obj/item/reagent_containers/food/snacks/ingredient/pizza3,
-		/obj/item/reagent_containers/food/snacks/ingredient/pizzam,
-		/obj/item/reagent_containers/food/snacks/ingredient/pizzab,
-		/obj/item/reagent_containers/food/snacks/ingredient/pizzap,
-		/obj/item/reagent_containers/food/snacks/ingredient/pasta,
-		/obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet,
-		/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles,
-		/obj/item/reagent_containers/food/snacks/ingredient/chips,
-		/obj/item/reagent_containers/food/snacks/ingredient/spaghetti,
-		/obj/item/reagent_containers/food/snacks/ice_cream/random,
-		/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom
-		)
-		var/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks) - blacklist - concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
-
 		var/choices[5]
 		var/list/names[5]
-		for(var/i in 1 to 5)
-			choices[i] = pick(ingredients)
+		var/i = 0
+		var/max_rolls = 30
+		var/current_rolls = 0
+		while (i < 5)
+			i++
+			choices[i] = pick(allowed_favorite_ingredients)
 			var/choiceType = choices[i]
-			player.mind.fav_foods += choiceType
 			var/obj/item/reagent_containers/food/snacks/instance =  new choiceType
-			if(!instance.custom_food)
+			if(instance.custom_food)
+				player.mind.fav_foods += choiceType
+				names[i] = instance.name
+			else
 				i--
-				continue
-			names[i] = instance.name
+			current_rolls++
+			if (current_rolls > max_rolls)
+				logTheThing(LOG_DEBUG, "Failed to generate a foodlist for picky eater [player]. Aborting.")
+				break
 		var/explanation_text = "<b>Your favorite foods are : </b>"
 		for (var/ingredient in names)
 			if (ingredient != names[5])
