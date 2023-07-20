@@ -20,10 +20,6 @@
 	// certain paper subtypes not accepted
 	if (istype(W, /obj/item/paper/fortune) || istype(W, /obj/item/paper/printout))
 		return
-	// this really shouldnt occur, but if the component is erronously attached to a non bouquetable flower...
-	if (!src.can_bouquet)
-		boutput("This flower can't be turned into a bouquet!")
-		return
 	// attacked by a wrapping, make new bouquet
 	if (istype(W, /obj/item/paper || /obj/item/wrapping_paper))
 		if (istype(W, /obj/item/paper/folded))
