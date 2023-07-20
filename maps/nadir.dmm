@@ -5104,6 +5104,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
+/obj/landmark/start/job/cyborg,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "coD" = (
@@ -11894,6 +11895,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/landmark/start/job/cyborg,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "fuo" = (
