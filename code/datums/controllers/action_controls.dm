@@ -1630,16 +1630,14 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		target.butcherer = owner
-		for(var/mob/O in AIviewers(owner))
-			O.show_message("<span class='alert'><B>[owner] begins to butcher [target].</B></span>", 1)
+		owner.visible_message("<span class='alert'><B>[owner] begins to butcher [target].</B></span>")
 
 	onEnd()
 		..()
 		target?.butcherer = null
 		if(owner && target)
 			target.butcher(owner)
-			for(var/mob/O in AIviewers(owner))
-				O.show_message("<span class='alert'><B>[owner] butchers [target].[target.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]</B></span>", 1)
+			owner.visible_message("<span class='alert'>[owner] butchers [target].[target.butcherable == BUTCHER_YOU_MONSTER ? " <b>WHAT A MONSTER!</b>" : null]","You butcher [target].</span>")
 
 /datum/action/bar/icon/critter_arm_removal // only supports things with left and right arms
 	duration = 60

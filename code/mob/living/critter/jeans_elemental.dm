@@ -10,7 +10,7 @@
 	can_throw = TRUE
 	can_grab = TRUE
 	can_disarm = TRUE
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	meat_type = /obj/item/material_piece/cloth/jean
 	custom_vomit_type = /obj/item/material_piece/cloth/jean
 	name_the_meat = FALSE

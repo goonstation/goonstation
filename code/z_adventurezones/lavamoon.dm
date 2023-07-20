@@ -515,7 +515,7 @@ var/sound/iomoon_alarm_sound = null
 	brutevuln = 0.4
 	angertext = "grumbles at"
 	death_text = "%src% flops over dead!"
-	butcherable = 0
+	butcherable = BUTCHER_NOT_ALLOWED
 
 	CritterAttack(mob/M)
 		src.attacking = 1
