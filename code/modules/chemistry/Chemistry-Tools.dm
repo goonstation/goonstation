@@ -272,6 +272,17 @@ proc/ui_describe_reagents(atom/A)
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
 		else if (is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume) && src.is_open_container()) //A dispenser. Transfer FROM it TO us.
+			if (istype(target, /obj/reagent_dispensers/chemicalbarrel))
+				var/obj/reagent_dispensers/chemicalbarrel/target_barrel = target
+				if(target_barrel.funnel_active)
+					if (target.reagents.total_volume >= target.reagents.maximum_volume)
+						boutput(user, "<span class='alert'>[target.name] is already full!</span>")
+						return
+					src.reagents.trans_to(target, src.amount_per_transfer_from_this)
+					user.visible_message("<span class='alert'>[user.name] pours some reagent from the [src.name] into the [target.name].</span>")
+					playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
+					return
+
 			if (target.reagents && !target.reagents.total_volume)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return

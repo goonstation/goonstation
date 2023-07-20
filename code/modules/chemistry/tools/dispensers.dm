@@ -405,15 +405,52 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	name = "chemical barrel"
 	desc = "For storing medical chemicals and less savory things. It can be labeled with a pen."
 	icon = 'icons/obj/objects.dmi'
-	var/base_icon_state = "barrel-blue"
-	icon_state = "barrel-blue-closed"
+	icon_state = "barrel-blue"
 	amount_per_transfer_from_this = 25
 	p_class = 3
 	flags = FPRINT | FLUID_SUBMERGE | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+	var/base_icon_state = "barrel-blue"
+	var/funnel_active = TRUE //if TRUE, allows players pouring liquids from beakers with just one click instead of clickdrag, for convenience
+	var/image/fluid_image = null
+	var/image/lid_image = null
+	var/image/spout_image = null
 
 	New()
 		..()
-		src.set_icon_state(base_icon_state + (src.is_open_container() ? "-open" : "-closed"))
+		src.UpdateIcon()
+
+	update_icon()
+		var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 9 + 1), 1, 9))
+		if (!src.fluid_image)
+			src.fluid_image = image(src.icon)
+		if (src.reagents && src.reagents.total_volume)
+			var/datum/color/average = reagents.get_average_color()
+			src.fluid_image.color = average.to_rgba()
+			src.fluid_image.icon_state = "fluid-barrel-[fluid_state]"
+		else
+			fluid_image.icon_state = "fluid-barrel-0"
+		src.UpdateOverlays(src.fluid_image, "fluid")
+
+		if (!src.lid_image)
+			src.lid_image = image(src.icon)
+			src.lid_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+		if(!src.is_open_container())
+			src.lid_image.icon_state = "[base_icon_state]-lid"
+			src.UpdateOverlays(src.lid_image, "lid")
+		else
+			src.lid_image.icon_state = null
+			src.UpdateOverlays(null, "lid")
+
+		if (!src.spout_image)
+			src.spout_image = image(src.icon)
+			src.spout_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+		if(src.funnel_active)
+			src.spout_image.icon_state = "[base_icon_state]-funnel"
+		else
+			src.spout_image.icon_state = "[base_icon_state]-spout"
+		src.UpdateOverlays(src.spout_image, "spout")
+
+		..()
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen) && (src.name == initial(src.name)))
@@ -439,13 +476,27 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 				user.visible_message("<b>[user]</b> wrenches the [src]'s lid open!")
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			src.set_open_container(!src.is_open_container())
-			src.set_icon_state(base_icon_state + (src.is_open_container() ? "-open" : "-closed"))
+			UpdateIcon()
 		else
 			..()
 
 	bullet_act()
 		..()
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 30, 1)
+
+	attack_hand(var/mob/user)
+		if(funnel_active)
+			funnel_active = FALSE
+			boutput(user, "<span class='notice'>You flip the funnel into spout mode on the [src.name].</span>")
+		else
+			funnel_active = TRUE
+			boutput(user, "<span class='notice'>You flip the spout into funnel mode on the [src.name].</span>")
+		UpdateIcon()
+		..()
+
+	on_reagent_change()
+		..()
+		src.UpdateIcon()
 
 	shatter_chemically() //needs sound probably definitely for sure
 		for(var/mob/M in AIviewers(src))
@@ -456,13 +507,13 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		src.smash()
 		return TRUE
 	red
-		icon_state = "barrel-red-closed"
+		icon_state = "barrel-red"
 		base_icon_state = "barrel-red"
 	yellow
-		icon_state = "barrel-yellow-closed"
+		icon_state = "barrel-yellow"
 		base_icon_state = "barrel-yellow"
 	oil
-		icon_state = "barrel-flamable-closed"
+		icon_state = "barrel-flamable"
 		base_icon_state = "barrel-flamable"
 		name = "oil barrel"
 		desc = "A barrel for storing large amounts of oil."
