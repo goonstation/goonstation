@@ -754,6 +754,7 @@
 			return
 		if (loaded)
 			boutput(user, "<span class='alert'>An arrow is already loaded onto the bow.</span>")
+			return
 
 		if(I.amount > 1)
 			var/obj/item/arrow/C = I.clone(src)
