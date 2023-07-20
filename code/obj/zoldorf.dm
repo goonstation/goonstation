@@ -300,7 +300,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 
 			if(src)
 				if(z.loc == src)
-					z.stat = 0
+					setalive(z)
 					boutput(z, "<span class='notice'><b>The whispers and wails of those parted fade into nothingness...</b></span>")
 				src.lightfade()
 				src.remove_simple_light("zoldorf")

@@ -310,7 +310,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
 			continue
-		if (M.stat > 1 && !istype(M, /mob/dead/target_observer))
+		if (isdead(M) && !istype(M, /mob/dead/target_observer))
 			var/thisR = rendered
 			if (M.client && M.client.holder && src.mind)
 				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"

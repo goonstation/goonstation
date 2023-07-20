@@ -381,7 +381,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 
 		update_medical_record(M)
 
-		if (M.stat > 1)
+		if (isdead(M))
 			user.unlock_medal("He's dead, Jim", 1)
 		return
 

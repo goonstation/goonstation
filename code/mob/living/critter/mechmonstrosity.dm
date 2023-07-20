@@ -2,16 +2,16 @@
 	name = "Mechanical Monstrosity"
 	real_name = "mechmonstrosity"
 	desc = "A severely disfigured human torso which is forcibly kept alive by the mechanical parts.."
-	density = 1
+	density = TRUE
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mechmonstrosity"
 	custom_gib_handler = /proc/robogibs
 	blood_id = "oil"
 	hand_count = 0
-	can_throw = 0
-	can_grab = 0
-	can_disarm = 0
-	can_help = 0
+	can_throw = FALSE
+	can_grab = FALSE
+	can_disarm = FALSE
+	can_help = FALSE
 	blood_id = "oil"
 	speechverb_say = "states"
 	speechverb_gasp = "states"
@@ -94,10 +94,10 @@
 	real_name = "V.I.V.I-SECT-10N"
 	desc = "You better wish that apples will keep this thing away from you.."
 	hand_count = 2
-	var/smashes_shit = 1
-	can_grab = 1
-	can_disarm = 1
-	can_help = 1
+	var/smashes_shit = TRUE
+	can_grab = TRUE
+	can_disarm = TRUE
+	can_help = TRUE
 
 	setup_hands()
 		..()
@@ -107,9 +107,9 @@
 		HH.icon_state = "syringegun"				// the icon state of the hand UI background
 		HH.limb_name = "Injector"					// name for the dummy holder
 		HH.limb = new /datum/limb/gun/kinetic/syringe	// if not null, the special limb to use when attack_handing
-		HH.can_hold_items = 0
-		HH.can_attack = 0
-		HH.can_range_attack = 1
+		HH.can_hold_items = FALSE
+		HH.can_attack = FALSE
+		HH.can_range_attack = TRUE
 
 		HH = hands[2]
 		HH.name = "Dual Saw"					// designation of the hand - purely for show
@@ -117,8 +117,8 @@
 		HH.icon_state = "saw"				// the icon state of the hand UI background
 		HH.limb_name = "Dual Saw"					// name for the dummy holder
 		HH.limb = new /datum/limb/dualsaw	// if not null, the special limb to use when attack_handing
-		HH.can_hold_items = 0
-		HH.can_attack = 1
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
 
 	bump(atom/movable/AM)
 		if(smashes_shit)
@@ -173,28 +173,28 @@
 	name = "Inject Corrupted Nanites"
 	desc = "Transfer corrupted nanites into your target."
 	icon_state = "inject"
-	var/stealthy = 0
+	var/stealthy = FALSE
 	var/venom_id = "corruptnanites"
 	var/inject_amount = 10
-	cooldown = 600
-	targeted = 1
-	target_anything = 1
+	cooldown = 60 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())
-			return 1
+			return TRUE
 		if (isobj(target))
 			target = get_turf(target)
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
 				boutput(holder.owner, "<span class='alert'>Nothing to inject there.</span>")
-				return 1
+				return TRUE
 		if (target == holder.owner)
-			return 1
+			return TRUE
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, "<span class='alert'>That is too far away to inject.</span>")
-			return 1
+			return TRUE
 		var/mob/MT = target
 		if (!MT.reagents)
 			boutput(holder.owner, "<span class='alert'>That does not hold reagents, apparently.</span>")
@@ -210,31 +210,31 @@
 	name = "Terrifying glare"
 	desc = "Stuns one target for a short time."
 	icon_state = "evilstare"
-	targeted = 1
-	target_nodamage_check = 1
+	targeted = TRUE
+	target_nodamage_check = TRUE
 	max_range = 14
-	cooldown = 600
+	cooldown = 60 SECONDS
 
 	cast(mob/target)
 		if (!holder)
-			return 1
+			return TRUE
 
 		var/mob/living/M = holder.owner
 
 		if (!M || !target || !ismob(target))
-			return 1
+			return TRUE
 
 		if (M == target)
 			boutput(M, "<span class='alert'>Why would you want to stun yourself?</span>")
-			return 1
+			return TRUE
 
 		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
-			return 1
+			return TRUE
 
-		if (target.stat == 2)
+		if (isdead(target))
 			boutput(M, "<span class='alert'>It would be a waste of time to stun the dead.</span>")
-			return 1
+			return TRUE
 
 		M.visible_message("<span class='alert'><B>[M] glares angrily at [target]!</B></span>")
 		target.apply_flash(5, 5)
@@ -242,10 +242,10 @@
 		target.emote("shiver")
 
 		logTheThing(LOG_COMBAT, M, "uses glare on [constructTarget(target,"combat")] at [log_loc(M)].")
-		return 0
+		return FALSE
 
 /datum/action/bar/icon/mechanimateAbility
-	duration = 80
+	duration = 8 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "mechanimate"
 	icon = 'icons/mob/critter_ui.dmi'
@@ -301,11 +301,11 @@
 /datum/targetable/critter/mechanimate
 	name = "Mechanically Animate"
 	desc = "After a short delay, convert a human corpse into a crawler."
-	cooldown = 0
-	var/actual_cooldown = 200
+	cooldown = 0 SECONDS
+	var/actual_cooldown = 20 SECONDS
 	icon_state = "pet"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 
 	proc/actionFinishCooldown()
 		cooldown = actual_cooldown
@@ -316,45 +316,45 @@
 		var/mob/living/M = holder.owner
 
 		if(!isdead(target))
-			return 1
+			return TRUE
 
 		if (M == target)
 			boutput(M, "<span class='alert'>You can't do that to yourself.</span>")
-			return 1
+			return TRUE
 
 		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
-			return 1
+			return TRUE
 		holder.owner.say("Transformation protocol engaged. Please stand clear of the recipient.")
 		actions.start(new/datum/action/bar/icon/mechanimateAbility(target, src), holder.owner)
-		return 0
+		return FALSE
 
 /datum/targetable/critter/dissect
 	name = "Dissect"
 	desc = "Removes ALL of the targets limbs."
 	icon_state = "dissect"
-	targeted = 1
-	target_nodamage_check = 1
+	targeted = TRUE
+	target_nodamage_check = TRUE
 	max_range = 1
-	cooldown = 600
+	cooldown = 60 SECONDS
 
 	cast(mob/target)
 		if (!holder)
-			return 1
+			return TRUE
 
 		var/mob/living/M = holder.owner
 		var/mob/living/carbon/human/H = target
 
 		if (!M || !target || !ismob(target))
-			return 1
+			return TRUE
 
 		if (M == target)
 			boutput(M, "<span class='alert'>Why would you want to dissect yourself?</span>")
-			return 1
+			return TRUE
 
 		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
-			return 1
+			return TRUE
 
 		M.visible_message("<span class='alert'><B>With their double saw whirling, [M] swiftly severs all [target]'s limbs!</B></span>")
 		H.sever_limb("r_arm")
@@ -365,7 +365,7 @@
 		boutput(target, "<span class='alert'>All of your limbs were severed by [M]!</span>")
 
 		logTheThing(LOG_COMBAT, M, "uses dissect on [constructTarget(target,"combat")] at [log_loc(M)].")
-		return 0
+		return FALSE
 
 /datum/projectile/syringefilled
 	name = "syringe"
@@ -382,8 +382,7 @@
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		if (ismob(hit))
 			if (hit.reagents)
-				hit.reagents.add_reagent( venom_id, inject_amount)
-
+				hit.reagents.add_reagent(venom_id, inject_amount)
 
 /datum/computer/file/record/replicants
 
@@ -430,7 +429,7 @@
 		..()
 		src.root.add_file( new /datum/computer/file/record/replicants/Profound_Medical01 {name = "Profound_Medical01";} (src))
 		src.root.add_file( new /datum/computer/file/record/replicants/Profound_Medical02 {name = "Profound_Medical02";} (src))
-		src.read_only = 1
+		src.read_only = TRUE
 
 /mob/living/critter/robotic/crawler
 	name = "Crawling Monstrosity"

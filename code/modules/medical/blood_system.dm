@@ -742,7 +742,7 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	var/mob/living/H = some_idiot
 
-	if (H.stat ==  2 || H.nodamage || !H.can_bleed || isvampire(H))
+	if (isdead(H) || H.nodamage || !H.can_bleed || isvampire(H))
 		if (H.bleeding)
 			H.bleeding = 0
 			H.bleeding_internal = 0
