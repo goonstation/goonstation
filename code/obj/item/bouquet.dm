@@ -228,5 +228,5 @@ ABSTRACT_TYPE(/obj/item/bouquet/premade)
 /obj/item/bouquet/premade/lavender
 	flowertype = /obj/item/clothing/head/flower/lavender
 
-/obj/item/bouquet/premade/bop
-	flowertype = /obj/item/clothing/head/flower/bop
+/obj/item/bouquet/premade/bird_of_paradise
+	flowertype = /obj/item/clothing/head/flower/bird_of_paradise
