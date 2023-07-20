@@ -18,12 +18,14 @@
 				W.copied_desc = H.get_desc()
 				W.copied_name = H.name
 				W.copied_real_name = H.real_name
+				W.copied_pronouns = he_or_she(H)
 				return 0
 			else if (W.copied_appearance != null)
 				W.copied_appearance = null
 				W.copied_desc = null
 				W.copied_name = null
 				W.copied_real_name = null
+				W.copied_pronouns = null
 				boutput(holder.owner, "We discard our disguise.")
 			else
 				boutput(holder.owner, "We cannot copy this appearance.")

@@ -313,17 +313,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/maru)
-"aP" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "yellow";
-	icon_state = "bedsheet-yellow"
-	},
-/obj/landmark/start{
-	name = "Mechanic"
-	},
-/turf/simulated/floor/grey,
-/area/station/crew_quarters/maru)
 "aQ" = (
 /obj/cable{
 	d1 = 4;
@@ -505,17 +494,6 @@
 /area/station/medical/medbay{
 	name = "Asclepius Primary Zone"
 	})
-"bi" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "yellow";
-	icon_state = "bedsheet-yellow"
-	},
-/obj/landmark/start{
-	name = "Engineer"
-	},
-/turf/simulated/floor/grey,
-/area/station/crew_quarters/maru)
 "bj" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -578,25 +556,6 @@
 	},
 /turf/space,
 /area/space)
-"br" = (
-/obj/stool/bed,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "pink";
-	icon_state = "bedsheet-pink"
-	},
-/obj/landmark/start{
-	name = "Scientist"
-	},
-/obj/item/storage/wall/emergency{
-	dir = 8;
-	pixel_x = 32
-	},
-/turf/simulated/floor/grey,
-/area/station/crew_quarters/tenebrae)
 "bs" = (
 /obj/cable{
 	icon_state = "5-9"
@@ -853,17 +812,6 @@
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
-	},
-/turf/simulated/floor/grey,
-/area/station/crew_quarters/tenebrae)
-"bR" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "pink";
-	icon_state = "bedsheet-pink"
-	},
-/obj/landmark/start{
-	name = "Scientist"
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/tenebrae)
@@ -1864,6 +1812,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
+"ed" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/obj/landmark/start/job/medical_doctor,
+/turf/simulated/floor/grey,
+/area/station/medical/staff{
+	name = "Asclepius Quarters"
+	})
 "ee" = (
 /obj/machinery/light{
 	dir = 1;
@@ -2018,20 +1975,6 @@
 /area/station/solar/small_backup2{
 	name = "Maru Solar Array"
 	})
-"et" = (
-/obj/machinery/networked/test_apparatus/heater,
-/obj/landmark/artifact,
-/obj/cable,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/darkblue/checker,
-/area/station/science/artifact)
-"eu" = (
-/obj/machinery/networked/test_apparatus/impact_pad,
-/obj/landmark/artifact,
-/obj/cable,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/caution/westeast,
-/area/station/science/artifact)
 "ev" = (
 /obj/machinery/light{
 	dir = 8;
@@ -2473,25 +2416,6 @@
 	},
 /turf/simulated/floor/purplewhite/corner,
 /area/station/science/tenebrae)
-"fv" = (
-/obj/stool/chair/comfy/purple{
-	dir = 8
-	},
-/obj/landmark/start{
-	name = "Research Director"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/station/science/research_director{
-	name = "Tenebrae Command Center"
-	})
 "fw" = (
 /obj/machinery/communications_dish,
 /obj/machinery/power/data_terminal,
@@ -3111,26 +3035,6 @@
 "gJ" = (
 /turf/simulated/floor/caution/west,
 /area/station/garden/owlery)
-"gK" = (
-/obj/stool/bed,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "yellow";
-	icon_state = "bedsheet-yellow"
-	},
-/obj/landmark/start{
-	name = "Engineer"
-	},
-/obj/item/storage/wall/emergency{
-	dir = 8;
-	pixel_x = 32
-	},
-/obj/machinery/light_switch/north,
-/turf/simulated/floor/grey,
-/area/station/crew_quarters/maru)
 "gL" = (
 /turf/simulated/floor,
 /area/station/garden/owlery)
@@ -3251,13 +3155,6 @@
 /area/station/maintenance/storage{
 	name = "Maru Power Room"
 	})
-"ha" = (
-/obj/stool/chair/yellow,
-/obj/landmark/start{
-	name = "Miner"
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/mining/staff_room)
 "hb" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
@@ -3976,41 +3873,7 @@
 /area/station/crew_quarters/locker{
 	name = "Hammer Crew Quarters"
 	})
-"iM" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "red";
-	icon_state = "bedsheet-red"
-	},
-/obj/landmark/start{
-	name = "Security Officer"
-	},
-/turf/simulated/floor/grey,
-/area/station/crew_quarters/locker{
-	name = "Hammer Crew Quarters"
-	})
 "iN" = (
-/turf/simulated/floor/grey,
-/area/station/crew_quarters/locker{
-	name = "Hammer Crew Quarters"
-	})
-"iO" = (
-/obj/stool/bed,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/item/storage/wall/emergency{
-	dir = 8;
-	pixel_x = 32
-	},
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "red";
-	icon_state = "bedsheet-red"
-	},
-/obj/landmark/start{
-	name = "Security Officer"
-	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/locker{
 	name = "Hammer Crew Quarters"
@@ -4022,29 +3885,6 @@
 	},
 /obj/grille/catwalk{
 	dir = 4
-	},
-/turf/simulated/floor/black,
-/area/station/engine/engineering/ce{
-	name = "Maru Bridge"
-	})
-"iQ" = (
-/obj/decal/tile_edge/line/yellow{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/stool/bed,
-/obj/landmark/start{
-	name = "Chief Engineer"
-	},
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "yellow";
-	icon_state = "bedsheet-yellow"
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce{
@@ -4109,25 +3949,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
-"iZ" = (
-/obj/stool/chair/office/yellow{
-	dir = 8
-	},
-/obj/landmark/start{
-	name = "Quartermaster"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/orangeblack/side{
-	dir = 8
-	},
-/area/station/quartermaster/office)
 "ja" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4157,30 +3978,6 @@
 /area/station/quartermaster/office)
 "je" = (
 /obj/machinery/manufacturer/mining,
-/turf/simulated/floor/orangeblack,
-/area/station/mining/staff_room)
-"jf" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/landmark/start{
-	name = "Miner"
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/mining/staff_room)
-"jg" = (
-/obj/landmark/start{
-	name = "Miner"
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/mining/staff_room)
-"jh" = (
-/obj/stool/chair/yellow{
-	dir = 8
-	},
-/obj/landmark/start{
-	name = "Miner"
-	},
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "ji" = (
@@ -4687,6 +4484,20 @@
 /area/station/engine/storage{
 	name = "Maru Equipment"
 	})
+"kk" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13"
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
+	})
 "kl" = (
 /obj/cable,
 /obj/cable{
@@ -4746,20 +4557,6 @@
 	},
 /area/station/security/secwing)
 "kr" = (
-/turf/simulated/floor/black,
-/area/station/security/secwing)
-"ks" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/stool/chair/red{
-	dir = 8
-	},
-/obj/landmark/start{
-	name = "Security Officer"
-	},
 /turf/simulated/floor/black,
 /area/station/security/secwing)
 "kt" = (
@@ -4906,6 +4703,20 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/storage{
 	name = "Maru Equipment"
+	})
+"kF" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/landmark/start/job/medical_doctor,
+/turf/simulated/floor/grey,
+/area/station/medical/staff{
+	name = "Asclepius Quarters"
 	})
 "kG" = (
 /obj/disposalpipe/segment/horizontal,
@@ -5685,18 +5496,6 @@
 "mm" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"mn" = (
-/obj/stool/chair/comfy{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Detective"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "mp" = (
 /obj/table/auto,
 /obj/item/shipcomponent/mainweapon/taser,
@@ -6188,27 +5987,6 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/security/hos{
-	name = "Hammer Command"
-	})
-"nk" = (
-/obj/stool/chair/comfy{
-	dir = 8
-	},
-/obj/landmark/start{
-	name = "Head of Security"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
 /area/station/security/hos{
 	name = "Hammer Command"
 	})
@@ -8006,64 +7784,7 @@
 /area/station/medical/staff{
 	name = "Asclepius Quarters"
 	})
-"qS" = (
-/obj/stool/chair{
-	dir = 8
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
-/turf/simulated/floor/grey,
-/area/station/medical/staff{
-	name = "Asclepius Quarters"
-	})
-"qT" = (
-/obj/stool/bed,
-/obj/landmark/start{
-	name = "Geneticist"
-	},
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "blue";
-	icon_state = "bedsheet-blue"
-	},
-/turf/simulated/floor/grey,
-/area/station/medical/staff{
-	name = "Asclepius Quarters"
-	})
 "qU" = (
-/turf/simulated/floor/grey,
-/area/station/medical/staff{
-	name = "Asclepius Quarters"
-	})
-"qV" = (
-/obj/stool/bed,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/item/storage/wall/emergency{
-	dir = 8;
-	pixel_x = 32
-	},
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "blue";
-	icon_state = "bedsheet-blue"
-	},
 /turf/simulated/floor/grey,
 /area/station/medical/staff{
 	name = "Asclepius Quarters"
@@ -8119,35 +7840,6 @@
 /obj/table/wood/round/auto,
 /obj/item/kitchen/food_box/donut_box{
 	pixel_y = 6
-	},
-/turf/simulated/floor/grey,
-/area/station/medical/staff{
-	name = "Asclepius Quarters"
-	})
-"rd" = (
-/obj/stool/chair{
-	dir = 8
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
-/turf/simulated/floor/grey,
-/area/station/medical/staff{
-	name = "Asclepius Quarters"
-	})
-"re" = (
-/obj/stool/bed,
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "blue";
-	icon_state = "bedsheet-blue"
 	},
 /turf/simulated/floor/grey,
 /area/station/medical/staff{
@@ -8276,6 +7968,15 @@
 /obj/item/staple_gun,
 /turf/simulated/floor/caution/south,
 /area/station/medical/robotics)
+"rq" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "pink";
+	icon_state = "bedsheet-pink"
+	},
+/obj/landmark/start/job/scientist,
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/tenebrae)
 "rr" = (
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/caution/south,
@@ -8287,17 +7988,6 @@
 	})
 "rt" = (
 /obj/machinery/vending/coffee,
-/turf/simulated/floor/grey,
-/area/station/medical/staff{
-	name = "Asclepius Quarters"
-	})
-"ru" = (
-/obj/stool/chair{
-	dir = 1
-	},
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
 /turf/simulated/floor/grey,
 /area/station/medical/staff{
 	name = "Asclepius Quarters"
@@ -8439,33 +8129,6 @@
 /area/station/medical/staff{
 	name = "Asclepius Quarters"
 	})
-"rM" = (
-/obj/stool/bed,
-/obj/landmark/start{
-	name = "Roboticist"
-	},
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "blue";
-	icon_state = "bedsheet-blue"
-	},
-/turf/simulated/floor/grey,
-/area/station/medical/staff{
-	name = "Asclepius Quarters"
-	})
-"rN" = (
-/obj/stool/bed,
-/obj/machinery/light/small,
-/obj/landmark/start{
-	name = "Roboticist"
-	},
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "blue";
-	icon_state = "bedsheet-blue"
-	},
-/turf/simulated/floor/grey,
-/area/station/medical/staff{
-	name = "Asclepius Quarters"
-	})
 "rO" = (
 /obj/cable{
 	d1 = 1;
@@ -8536,15 +8199,6 @@
 /area/station/crew_quarters/utility{
 	name = "Dionysus Cryocore"
 	})
-"rU" = (
-/obj/landmark{
-	name = "JoinLate"
-	},
-/obj/landmark/start/latejoin,
-/turf/simulated/floor/grey,
-/area/station/crew_quarters/utility{
-	name = "Dionysus Cryocore"
-	})
 "rV" = (
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/utility{
@@ -8600,13 +8254,6 @@
 	},
 /obj/decal/tile_edge/stripe{
 	dir = 1
-	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
-"sb" = (
-/obj/machinery/recharge_station,
-/obj/landmark/start{
-	name = "Cyborg"
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -8694,19 +8341,6 @@
 /area/station/medical/staff{
 	name = "Asclepius Quarters"
 	})
-"sm" = (
-/obj/stool/bed,
-/obj/landmark/start{
-	name = "Chef"
-	},
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "black";
-	icon_state = "bedsheet-black"
-	},
-/turf/simulated/floor/grey,
-/area/station/crew_quarters/utility{
-	name = "Dionysus Cryocore"
-	})
 "sn" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
@@ -8769,6 +8403,19 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
+"su" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "black";
+	icon_state = "bedsheet-black"
+	},
+/obj/landmark/start/job/bartender,
+/obj/machinery/phone/wall{
+	pixel_x = 24;
+	pixel_y = 4
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/bar)
 "sv" = (
 /obj/machinery/vending/standard,
 /turf/simulated/wall/auto/supernorn,
@@ -8991,6 +8638,18 @@
 /area/station/crew_quarters/utility{
 	name = "Dionysus Cryocore"
 	})
+"sQ" = (
+/obj/item/storage/wall/fire{
+	pixel_y = 32
+	},
+/obj/stool/chair,
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/neutral/side{
+	dir = 4
+	},
+/area/station/crew_quarters/captain{
+	name = "Meridian Primary Zone"
+	})
 "sR" = (
 /obj/table/auto,
 /obj/item/clipboard,
@@ -9035,6 +8694,11 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
+"sV" = (
+/obj/stool/chair/yellow,
+/obj/landmark/start/job/miner,
+/turf/simulated/floor/orangeblack,
+/area/station/mining/staff_room)
 "sW" = (
 /obj/machinery/light{
 	dir = 1;
@@ -9211,33 +8875,6 @@
 /area/station/crew_quarters/utility{
 	name = "Dionysus Cryocore"
 	})
-"to" = (
-/obj/stool/bed,
-/obj/landmark/start{
-	name = "Botanist"
-	},
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "green";
-	icon_state = "bedsheet-green"
-	},
-/turf/simulated/floor/grey,
-/area/station/crew_quarters/utility{
-	name = "Dionysus Cryocore"
-	})
-"tp" = (
-/obj/machinery/light/small,
-/obj/stool/bed,
-/obj/landmark/start{
-	name = "Botanist"
-	},
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "green";
-	icon_state = "bedsheet-green"
-	},
-/turf/simulated/floor/grey,
-/area/station/crew_quarters/utility{
-	name = "Dionysus Cryocore"
-	})
 "tq" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
@@ -9261,22 +8898,6 @@
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
-/area/station/medical/head{
-	name = "Asclepius Command"
-	})
-"ts" = (
-/obj/stool/chair/office/red{
-	dir = 8
-	},
-/obj/landmark/start{
-	name = "Medical Director"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/black,
 /area/station/medical/head{
 	name = "Asclepius Command"
 	})
@@ -9678,6 +9299,13 @@
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
 	})
+"uk" = (
+/obj/landmark/start/latejoin,
+/obj/landmark/start/latejoin,
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/utility{
+	name = "Dionysus Cryocore"
+	})
 "ul" = (
 /obj/machinery/chem_dispenser/alcohol,
 /turf/simulated/floor/black,
@@ -9850,6 +9478,20 @@
 /turf/simulated/floor/black,
 /area/station/medical/head{
 	name = "Asclepius Command"
+	})
+"uB" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/stool/chair/wooden{
+	dir = 4
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria{
+	name = "Dionysus Primary Zone"
 	})
 "uC" = (
 /obj/cable{
@@ -10067,21 +9709,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
-"uT" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "black";
-	icon_state = "bedsheet-black"
-	},
-/obj/landmark/start{
-	name = "Bartender"
-	},
-/obj/machinery/phone/wall{
-	pixel_x = 24;
-	pixel_y = 4
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
@@ -10503,22 +10130,6 @@
 /area/station/bridge/hos)
 "vJ" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/bridge/hos)
-"vK" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "green";
-	icon_state = "bedsheet-green"
-	},
-/obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/landmark/start{
-	name = "Head of Personnel"
-	},
-/turf/simulated/floor/wood/two,
 /area/station/bridge/hos)
 "vL" = (
 /obj/table/auto,
@@ -11276,15 +10887,6 @@
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
 	})
-"xg" = (
-/obj/stool/bar,
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/turf/simulated/floor/carpet/red/fancy/edge/south,
-/area/station/crew_quarters/cafeteria{
-	name = "Dionysus Primary Zone"
-	})
 "xh" = (
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/carpet/red/fancy/edge/se,
@@ -11510,6 +11112,17 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/wood/two,
 /area/station/bridge/hos)
+"xG" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red"
+	},
+/obj/landmark/start/job/security_officer,
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/locker{
+	name = "Hammer Crew Quarters"
+	})
 "xH" = (
 /obj/cable{
 	d1 = 4;
@@ -11778,22 +11391,6 @@
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
 	})
-"yk" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/cafeteria{
-	name = "Dionysus Primary Zone"
-	})
 "yl" = (
 /obj/cable{
 	d1 = 4;
@@ -11806,23 +11403,6 @@
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine{
 	pixel_y = 6
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/cafeteria{
-	name = "Dionysus Primary Zone"
-	})
-"ym" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/light,
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria{
@@ -12285,23 +11865,6 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/stairs/wood2,
-/area/station/maintenance/southeast{
-	name = "Dionysus Maintenance"
-	})
-"ze" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/stool/bed,
-/obj/landmark/start{
-	name = "Janitor"
-	},
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "pink";
-	icon_state = "bedsheet-pink"
-	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/southeast{
 	name = "Dionysus Maintenance"
 	})
@@ -13200,22 +12763,6 @@
 	},
 /turf/space,
 /area/station/storage/tech)
-"AS" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/landmark/start{
-	name = "AI"
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "AT" = (
 /obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
@@ -13223,25 +12770,6 @@
 /obj/machinery/crema_switch{
 	id = "crematorium";
 	pixel_y = 28
-	},
-/turf/simulated/floor/black,
-/area/station/chapel/sanctuary)
-"AU" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "black";
-	icon_state = "bedsheet-black"
-	},
-/obj/landmark/start{
-	name = "Chaplain"
-	},
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/machinery/phone/wall{
-	pixel_y = 32
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
@@ -13263,26 +12791,6 @@
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
-	},
-/turf/simulated/floor/grey,
-/area/station/crew_quarters/captain{
-	name = "Meridian Primary Zone"
-	})
-"AY" = (
-/obj/stool/chair{
-	dir = 8
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/turf/simulated/floor/grey,
-/area/station/crew_quarters/captain{
-	name = "Meridian Primary Zone"
-	})
-"AZ" = (
-/obj/stool/chair,
-/obj/landmark/start{
-	name = "Staff Assistant"
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/captain{
@@ -13435,13 +12943,6 @@
 /obj/marker/supplymarker,
 /turf/simulated/floor/carpet/arcade,
 /area/station/storage/tech)
-"Bs" = (
-/obj/stool/bed,
-/obj/landmark/start{
-	name = "Clown"
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/storage/tech)
 "Bt" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
@@ -13531,6 +13032,18 @@
 "BA" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
+"BB" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
+	})
 "BC" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -13699,20 +13212,6 @@
 /obj/item/card_box/tarot,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
-"BX" = (
-/obj/item/storage/wall/fire{
-	pixel_y = 32
-	},
-/obj/stool/chair,
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/turf/simulated/floor/neutral/side{
-	dir = 4
-	},
-/area/station/crew_quarters/captain{
-	name = "Meridian Primary Zone"
-	})
 "BY" = (
 /obj/table/auto,
 /obj/item/peripheral/drive/cart_reader,
@@ -14259,24 +13758,6 @@
 "CX" = (
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
-"CY" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/stool/chair{
-	dir = 1
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/turf/simulated/floor/neutral/side{
-	dir = 4
-	},
-/area/station/crew_quarters/captain{
-	name = "Meridian Primary Zone"
-	})
 "CZ" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 4;
@@ -14418,22 +13899,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/captain{
-	name = "Meridian Command"
-	})
-"Dn" = (
-/obj/stool/chair/comfy{
-	dir = 8
-	},
-/obj/landmark/start{
-	name = "Captain"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/grey,
 /area/station/bridge/captain{
 	name = "Meridian Command"
 	})
@@ -14602,20 +14067,6 @@
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
-	},
-/turf/simulated/floor/grass,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
-"DG" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/stool/chair/wooden{
-	dir = 1
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
 	},
 /turf/simulated/floor/grass,
 /area/station/garden/aviary{
@@ -15274,6 +14725,15 @@
 /area/station/crew_quarters/captain{
 	name = "Meridian Primary Zone"
 	})
+"ET" = (
+/obj/stool/bed,
+/obj/landmark/start/job/engineer,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/maru)
 "EU" = (
 /turf/simulated/floor{
 	icon = 'icons/misc/worlds.dmi';
@@ -15504,21 +14964,6 @@
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
-"Fo" = (
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/turf/simulated/floor/grass,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
 "Fp" = (
 /obj/shrub{
 	dir = 6
@@ -15702,6 +15147,17 @@
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
+	})
+"FJ" = (
+/obj/stool/bed,
+/obj/landmark/start/job/roboticist,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "blue";
+	icon_state = "bedsheet-blue"
+	},
+/turf/simulated/floor/grey,
+/area/station/medical/staff{
+	name = "Asclepius Quarters"
 	})
 "FK" = (
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
@@ -16006,17 +15462,6 @@
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
-"Gp" = (
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/turf/simulated/floor/grass,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
 "Gq" = (
 /obj/table/wood/round/auto,
 /obj/item/storage/lunchbox/food1,
@@ -16028,45 +15473,10 @@
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
-"Gr" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/turf/simulated/floor/grass,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
 "Gs" = (
 /obj/tree,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
-"Gt" = (
-/obj/stool/bench/blue/auto,
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/turf/simulated/floor/grass,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
-"Gu" = (
-/obj/stool/bench/blue/auto,
-/obj/machinery/phone/wall{
-	pixel_y = 32
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/turf/simulated/floor/grass,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
 "Gv" = (
 /obj/machinery/light{
 	dir = 4;
@@ -16209,20 +15619,6 @@
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
-"GI" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-10"
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/turf/simulated/floor/grass,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
 "GJ" = (
 /obj/shrub,
 /obj/cable{
@@ -16295,17 +15691,6 @@
 /obj/machinery/light,
 /obj/table/wood/round/auto,
 /obj/item/boardgame/chess,
-/turf/simulated/floor/grass,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
-"GT" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
 /turf/simulated/floor/grass,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
@@ -17660,6 +17045,11 @@
 /obj/item/bandage,
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
+"JG" = (
+/obj/stool/bed,
+/obj/landmark/start/job/clown,
+/turf/simulated/floor/carpet/arcade,
+/area/station/storage/tech)
 "JH" = (
 /obj/cable{
 	d1 = 1;
@@ -19053,6 +18443,25 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"MP" = (
+/obj/stool/bed,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/item/storage/wall/emergency{
+	dir = 8;
+	pixel_x = 32
+	},
+/obj/landmark/start/job/medical_doctor,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "blue";
+	icon_state = "bedsheet-blue"
+	},
+/turf/simulated/floor/grey,
+/area/station/medical/staff{
+	name = "Asclepius Quarters"
+	})
 "MQ" = (
 /obj/machinery/atmospherics/binary/passive_gate{
 	on = 1;
@@ -19696,6 +19105,16 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"NV" = (
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/obj/landmark/start/job/detective,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "NW" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
@@ -20183,26 +19602,6 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
-	})
-"OC" = (
-/obj/stool/bed,
-/obj/landmark/start{
-	name = "Geneticist"
-	},
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "blue";
-	icon_state = "bedsheet-blue"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/grey,
-/area/station/medical/staff{
-	name = "Asclepius Quarters"
 	})
 "OD" = (
 /obj/cable,
@@ -20749,6 +20148,17 @@
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
+"Pr" = (
+/obj/stool/bed,
+/obj/landmark/start/job/botanist,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "green";
+	icon_state = "bedsheet-green"
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/utility{
+	name = "Dionysus Cryocore"
+	})
 "Ps" = (
 /obj/shrub{
 	dir = 8
@@ -20905,22 +20315,6 @@
 	},
 /area/station/solar/east{
 	name = "Demeter Solar Array"
-	})
-"PD" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/turf/simulated/floor/grass,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
 	})
 "PE" = (
 /obj/machinery/camera{
@@ -21729,23 +21123,6 @@
 /area/station/solar/east{
 	name = "Demeter Solar Array"
 	})
-"QC" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "pink";
-	icon_state = "bedsheet-pink"
-	},
-/obj/landmark/start{
-	name = "Scientist"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/grey,
-/area/station/crew_quarters/tenebrae)
 "QD" = (
 /obj/grille/catwalk,
 /turf/space,
@@ -22079,17 +21456,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
-"Rs" = (
-/obj/stool/bed,
-/obj/landmark/start{
-	name = "Engineer"
-	},
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "yellow";
-	icon_state = "bedsheet-yellow"
-	},
-/turf/simulated/floor/grey,
-/area/station/crew_quarters/maru)
 "Rt" = (
 /obj/disposalpipe/segment/vertical,
 /obj/decal/fakeobjects/pipe/heat{
@@ -22334,6 +21700,18 @@
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
+"RX" = (
+/obj/machinery/light/small,
+/obj/stool/bed,
+/obj/landmark/start/job/botanist,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "green";
+	icon_state = "bedsheet-green"
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/utility{
+	name = "Dionysus Cryocore"
+	})
 "RZ" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -22441,6 +21819,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest{
 	name = "Erebus Maintenance Room"
+	})
+"Sm" = (
+/obj/stool/bed,
+/obj/landmark/start/job/chef,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "black";
+	icon_state = "bedsheet-black"
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/utility{
+	name = "Dionysus Cryocore"
 	})
 "So" = (
 /obj/machinery/atmospherics/binary/volume_pump{
@@ -22552,6 +21941,20 @@
 /area/station/engine/power{
 	name = "Erebus Power Room"
 	})
+"SC" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "green";
+	icon_state = "bedsheet-green"
+	},
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/landmark/start/job/head_of_personnel,
+/turf/simulated/floor/wood/two,
+/area/station/bridge/hos)
 "SD" = (
 /obj/stool/chair/wooden,
 /mob/living/critter/small_animal/bird/owl,
@@ -22721,6 +22124,13 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"SU" = (
+/obj/stool/bar,
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/carpet/red/fancy/edge/south,
+/area/station/crew_quarters/cafeteria{
+	name = "Dionysus Primary Zone"
+	})
 "SV" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 1;
@@ -22842,6 +22252,21 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
+	})
+"Tk" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/light,
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria{
+	name = "Dionysus Primary Zone"
 	})
 "Tl" = (
 /obj/table/reinforced/auto,
@@ -22995,6 +22420,21 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"TG" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "pink";
+	icon_state = "bedsheet-pink"
+	},
+/obj/landmark/start/job/scientist,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/tenebrae)
 "TH" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1;
@@ -23009,6 +22449,13 @@
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
+	})
+"TJ" = (
+/obj/stool/bench/blue/auto,
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
 	})
 "TK" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
@@ -23030,6 +22477,25 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
+	})
+"TO" = (
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/obj/landmark/start/job/head_of_security,
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/security/hos{
+	name = "Hammer Command"
 	})
 "TP" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -23209,6 +22675,21 @@
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
+"Ul" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/stool/bed,
+/obj/landmark/start/job/janitor,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "pink";
+	icon_state = "bedsheet-pink"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast{
+	name = "Dionysus Maintenance"
+	})
 "Um" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -23245,6 +22726,25 @@
 /turf/simulated/floor/grass,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
+	})
+"Ur" = (
+/obj/stool/bed,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/item/storage/wall/emergency{
+	dir = 8;
+	pixel_x = 32
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red"
+	},
+/obj/landmark/start/job/security_officer,
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/locker{
+	name = "Hammer Crew Quarters"
 	})
 "Ut" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -23291,6 +22791,13 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Uy" = (
+/obj/stool/chair,
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/captain{
+	name = "Meridian Primary Zone"
+	})
 "Uz" = (
 /obj/machinery/door/airlock/pyro/glass{
 	id = "scienceteleporter2";
@@ -23323,6 +22830,19 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest{
 	name = "Erebus Maintenance Room"
+	})
+"UD" = (
+/obj/machinery/atmospherics/trinary/mixer{
+	dir = 1;
+	frequency = 1225;
+	id_tag = "engine_combust";
+	master_id = "engine_combust_control";
+	name = "Gas Mixer (Combustion Chamber)"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "UF" = (
 /obj/storage/crate/furnacefuel,
@@ -23401,6 +22921,30 @@
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/secwing)
+"UQ" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "black";
+	icon_state = "bedsheet-black"
+	},
+/obj/landmark/start/job/chaplain,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
+/turf/simulated/floor/black,
+/area/station/chapel/sanctuary)
+"UR" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/start/job/miner,
+/turf/simulated/floor/orangeblack,
+/area/station/mining/staff_room)
 "US" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Primary Secure Zone"
@@ -23502,6 +23046,20 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Va" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/landmark/start/job/AI,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "Vc" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -23680,6 +23238,17 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/space,
 /area/space)
+"Vw" = (
+/obj/stool/bed,
+/obj/landmark/start/job/geneticist,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "blue";
+	icon_state = "bedsheet-blue"
+	},
+/turf/simulated/floor/grey,
+/area/station/medical/staff{
+	name = "Asclepius Quarters"
+	})
 "Vx" = (
 /obj/machinery/disposal_pipedispenser,
 /turf/simulated/floor/plating,
@@ -23758,6 +23327,13 @@
 /obj/mapping_helper/access/research,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
+"VF" = (
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/obj/landmark/start/job/miner,
+/turf/simulated/floor/orangeblack,
+/area/station/mining/staff_room)
 "VH" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
@@ -23797,6 +23373,10 @@
 	},
 /turf/space,
 /area/space)
+"VL" = (
+/obj/landmark/start/job/miner,
+/turf/simulated/floor/orangeblack,
+/area/station/mining/staff_room)
 "VM" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/east{
@@ -23815,6 +23395,18 @@
 /turf/simulated/floor/caution/west,
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
+	})
+"VO" = (
+/obj/stool/bed,
+/obj/machinery/light/small,
+/obj/landmark/start/job/roboticist,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "blue";
+	icon_state = "bedsheet-blue"
+	},
+/turf/simulated/floor/grey,
+/area/station/medical/staff{
+	name = "Asclepius Quarters"
 	})
 "VP" = (
 /obj/machinery/door/airlock/pyro/command/alt,
@@ -23886,6 +23478,23 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"VU" = (
+/obj/stool/chair/comfy/purple{
+	dir = 8
+	},
+/obj/landmark/start/job/research_director,
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/science/research_director{
+	name = "Tenebrae Command Center"
+	})
 "VV" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/machinery/atmospherics/binary/valve{
@@ -23904,6 +23513,24 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
+	})
+"VW" = (
+/obj/stool/bed,
+/obj/landmark/start/job/geneticist,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "blue";
+	icon_state = "bedsheet-blue"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/grey,
+/area/station/medical/staff{
+	name = "Asclepius Quarters"
 	})
 "VX" = (
 /obj/grille/catwalk{
@@ -23966,6 +23593,23 @@
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
+"Wc" = (
+/obj/stool/chair/office/yellow{
+	dir = 8
+	},
+/obj/landmark/start/job/quartermaster,
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/station/quartermaster/office)
 "Wd" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -24026,6 +23670,20 @@
 /turf/simulated/floor/black,
 /area/station/bridge/captain{
 	name = "Meridian Command"
+	})
+"Wm" = (
+/obj/stool/chair/office/red{
+	dir = 8
+	},
+/obj/landmark/start/job/medical_director,
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/head{
+	name = "Asclepius Command"
 	})
 "Wn" = (
 /obj/grille/catwalk{
@@ -24132,6 +23790,13 @@
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
+"Wv" = (
+/obj/machinery/networked/test_apparatus/impact_pad,
+/obj/landmark/spawner/artifact,
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/caution/westeast,
+/area/station/science/artifact)
 "Ww" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/portables_connector{
@@ -24152,6 +23817,27 @@
 	},
 /turf/space,
 /area/space)
+"Wz" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/landmark/start/job/medical_doctor,
+/turf/simulated/floor/grey,
+/area/station/medical/staff{
+	name = "Asclepius Quarters"
+	})
 "WA" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/engine,
@@ -24197,6 +23883,15 @@
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
+"WI" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
+	})
 "WJ" = (
 /obj/machinery/macrofab/emergency_pod{
 	color = "#DDDDDD";
@@ -24211,6 +23906,15 @@
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
+"WK" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
+	},
+/obj/landmark/start/job/engineer,
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/maru)
 "WN" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -24408,6 +24112,26 @@
 /area/station/crew_quarters/utility{
 	name = "Dionysus Cryocore"
 	})
+"Xo" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/stool/chair/wooden{
+	dir = 4
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
+	})
+"Xp" = (
+/obj/machinery/networked/test_apparatus/heater,
+/obj/landmark/spawner/artifact,
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/darkblue/checker,
+/area/station/science/artifact)
 "Xq" = (
 /obj/table/wood/auto,
 /obj/item/device/camera_viewer,
@@ -24507,6 +24231,18 @@
 /turf/simulated/floor/grey,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
+	})
+"XC" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-10"
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
 	})
 "XD" = (
 /obj/decal/tile_edge/line/yellow{
@@ -24634,6 +24370,24 @@
 	dir = 9
 	},
 /area/station/science/teleporter)
+"XP" = (
+/obj/stool/bed,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
+	},
+/obj/landmark/start/job/engineer,
+/obj/item/storage/wall/emergency{
+	dir = 8;
+	pixel_x = 32
+	},
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/maru)
 "XQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -24654,6 +24408,58 @@
 /area/station/science/research_director{
 	name = "Tenebrae Command Center"
 	})
+"XU" = (
+/obj/decal/tile_edge/line/yellow{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/stool/bed,
+/obj/landmark/start/job/chief_engineer,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
+	},
+/turf/simulated/floor/black,
+/area/station/engine/engineering/ce{
+	name = "Maru Bridge"
+	})
+"XV" = (
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/obj/landmark/start/job/captain,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grey,
+/area/station/bridge/captain{
+	name = "Meridian Command"
+	})
+"XW" = (
+/obj/stool/bed,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "pink";
+	icon_state = "bedsheet-pink"
+	},
+/obj/landmark/start/job/scientist,
+/obj/item/storage/wall/emergency{
+	dir = 8;
+	pixel_x = 32
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/tenebrae)
 "XX" = (
 /obj/decal/poster/wallsign/stencil/right/e{
 	pixel_x = 13
@@ -24706,6 +24512,11 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Yc" = (
+/obj/machinery/recharge_station,
+/obj/landmark/start/job/cyborg,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "Yd" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/machinery/light{
@@ -24805,6 +24616,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest{
 	name = "Erebus Maintenance Room"
+	})
+"Yo" = (
+/obj/stool/chair/wooden{
+	dir = 4
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
 	})
 "Yp" = (
 /obj/table/reinforced/auto,
@@ -24924,6 +24744,22 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"YH" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/stool/chair{
+	dir = 1
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/neutral/side{
+	dir = 4
+	},
+/area/station/crew_quarters/captain{
+	name = "Meridian Primary Zone"
+	})
 "YI" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
@@ -25019,19 +24855,6 @@
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
-"YP" = (
-/obj/machinery/atmospherics/trinary/mixer{
-	dir = 1;
-	frequency = 1225;
-	id_tag = "engine_combust";
-	master_id = "engine_combust_control";
-	name = "Gas Mixer (Combustion Chamber)"
-	},
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/engine,
-/area/station/engine/core{
-	name = "Erebus Plasmitics Zone"
-	})
 "YQ" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
@@ -25064,6 +24887,18 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"YS" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/stool/chair/red{
+	dir = 8
+	},
+/obj/landmark/start/job/security_officer,
+/turf/simulated/floor/black,
+/area/station/security/secwing)
 "YT" = (
 /obj/cable{
 	d1 = 1;
@@ -25162,6 +24997,16 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Zc" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
+	})
 "Zg" = (
 /obj/decal/poster/wallsign/stencil/left/u{
 	pixel_x = -2
@@ -25184,6 +25029,15 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
+	})
+"Zk" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/captain{
+	name = "Meridian Primary Zone"
 	})
 "Zl" = (
 /obj/machinery/door_control/podbay{
@@ -25224,6 +25078,17 @@
 /obj/mapping_helper/access/research,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
+"Zr" = (
+/obj/stool/bed,
+/obj/landmark/start/job/medical_doctor,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "blue";
+	icon_state = "bedsheet-blue"
+	},
+/turf/simulated/floor/grey,
+/area/station/medical/staff{
+	name = "Asclepius Quarters"
+	})
 "Zs" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -25302,6 +25167,18 @@
 	},
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
+	})
+"ZB" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/stool/chair/wooden{
+	dir = 1
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
 	})
 "ZC" = (
 /obj/cable{
@@ -51910,7 +51787,7 @@ gT
 lr
 lX
 mJ
-nk
+TO
 nP
 or
 ls
@@ -53167,7 +53044,7 @@ Ck
 Uq
 Ps
 EV
-Fo
+Xo
 FN
 Dh
 Dh
@@ -54076,12 +53953,12 @@ Dh
 Eb
 EY
 Qf
-Gp
-Gp
+Yo
+Yo
 Dh
 Dh
 Eb
-GT
+WI
 Ck
 BH
 BJ
@@ -54371,7 +54248,7 @@ PC
 PL
 PN
 Dd
-DG
+ZB
 Ec
 Dh
 Dh
@@ -54680,8 +54557,8 @@ EW
 Fq
 FQ
 Fq
-Gr
-GI
+BB
+XC
 Fp
 Dh
 Dh
@@ -55831,7 +55708,7 @@ hL
 hL
 jm
 jU
-ks
+YS
 kQ
 lx
 mg
@@ -56161,7 +56038,7 @@ aa
 aa
 Ut
 uQ
-vK
+SC
 wy
 xb
 xE
@@ -56494,7 +56371,7 @@ Dh
 Dh
 Dh
 Dh
-Gp
+Yo
 He
 Ho
 Hx
@@ -57096,9 +56973,9 @@ Fa
 Fs
 Fa
 Fa
-Gt
+TJ
 Dh
-PD
+kk
 Hg
 Hq
 Hz
@@ -57113,7 +56990,7 @@ aa
 cN
 dj
 dF
-fv
+VU
 eK
 eW
 cN
@@ -57338,10 +57215,10 @@ gT
 hx
 hO
 il
-iM
-iM
+xG
+xG
 iN
-iM
+xG
 ij
 wL
 mk
@@ -57368,7 +57245,7 @@ aa
 aa
 tG
 OG
-uT
+su
 vN
 ui
 xe
@@ -57398,7 +57275,7 @@ Fb
 Ft
 FS
 Fa
-Gu
+Zc
 Dh
 GU
 Hh
@@ -57942,10 +57819,10 @@ aa
 hx
 ka
 ij
-iO
-iM
-iM
-iM
+Ur
+xG
+xG
+xG
 kT
 lC
 ml
@@ -57975,7 +57852,7 @@ uj
 Oo
 uX
 wA
-xg
+SU
 xI
 yg
 uj
@@ -58277,7 +58154,7 @@ si
 uV
 uX
 wB
-xg
+SU
 xI
 xe
 yE
@@ -58552,7 +58429,7 @@ js
 js
 kU
 lE
-mn
+NV
 mU
 nx
 GB
@@ -58579,7 +58456,7 @@ si
 uW
 uX
 wC
-xg
+SU
 xI
 yh
 uj
@@ -58881,7 +58758,7 @@ SL
 uX
 uX
 wD
-xg
+SU
 xI
 yi
 uj
@@ -59183,7 +59060,7 @@ si
 uY
 uX
 wE
-xg
+SU
 xJ
 yj
 yF
@@ -59485,9 +59362,9 @@ ul
 uZ
 vP
 wA
-xg
+SU
 xe
-yk
+uB
 si
 yZ
 zn
@@ -59787,7 +59664,7 @@ um
 uX
 vQ
 wB
-xg
+SU
 xe
 yl
 uj
@@ -60089,9 +59966,9 @@ Om
 va
 vR
 wF
-xg
+SU
 xe
-ym
+Tk
 uj
 za
 zo
@@ -60986,10 +60863,10 @@ Xa
 qY
 rk
 rD
-rU
+uk
 rV
 rV
-to
+Pr
 tM
 tL
 vc
@@ -61291,7 +61168,7 @@ rD
 rV
 rV
 rV
-tp
+RX
 tM
 up
 vd
@@ -61301,7 +61178,7 @@ wH
 xN
 yq
 uj
-ze
+Ul
 zs
 zB
 zN
@@ -61316,7 +61193,7 @@ aa
 BN
 Cm
 CM
-Dn
+XV
 DO
 Eh
 BN
@@ -61591,9 +61468,9 @@ qY
 Cq
 rB
 Ok
-sm
+Sm
 sN
-to
+Pr
 tM
 uq
 ve
@@ -62541,10 +62418,10 @@ aa
 al
 bb
 bF
-bR
-bR
+rq
+rq
 bS
-bR
+rq
 bD
 bT
 dx
@@ -63145,10 +63022,10 @@ aa
 al
 PY
 bD
-br
-bR
-bR
-QC
+XW
+rq
+rq
+TG
 cK
 da
 dy
@@ -63378,7 +63255,7 @@ aa
 aa
 hR
 im
-iQ
+XU
 jw
 on
 ky
@@ -63757,7 +63634,7 @@ cK
 dc
 dA
 dV
-et
+Xp
 cZ
 Tt
 Iy
@@ -64028,7 +63905,7 @@ zX
 OD
 Ay
 AI
-AS
+Va
 PT
 Bz
 OX
@@ -64059,7 +63936,7 @@ cK
 dd
 dB
 dW
-eu
+Wv
 cK
 eS
 Iz
@@ -64934,7 +64811,7 @@ Oy
 OE
 OI
 AJ
-AU
+UQ
 Bi
 Zw
 Bi
@@ -66142,8 +66019,8 @@ Ag
 Ar
 AD
 AL
-AY
-AY
+Zk
+Zk
 BC
 BC
 BC
@@ -66700,7 +66577,7 @@ em
 hB
 hX
 iv
-iZ
+Wc
 jB
 hB
 kH
@@ -66749,9 +66626,9 @@ bA
 AM
 Bl
 At
-BX
+sQ
 Cy
-CY
+YH
 DA
 DW
 Qc
@@ -67029,7 +66906,7 @@ aa
 aa
 sp
 nH
-ts
+Wm
 tR
 uA
 vl
@@ -67048,7 +66925,7 @@ Ag
 Au
 AG
 AM
-AZ
+Uy
 OR
 BD
 BD
@@ -68807,10 +68684,10 @@ aa
 gy
 gF
 gV
-aP
-aP
+WK
+WK
 aS
-bi
+WK
 hF
 hH
 hH
@@ -69411,13 +69288,13 @@ aa
 gy
 dw
 gI
-gK
-bi
-bi
-Rs
+XP
+WK
+WK
+ET
 hF
 hV
-ha
+sV
 iB
 jH
 hH
@@ -69720,7 +69597,7 @@ hu
 hG
 oX
 iA
-jf
+UR
 iA
 RT
 kN
@@ -69767,7 +69644,7 @@ aa
 aa
 AP
 Be
-Bs
+JG
 Aq
 Cf
 Ce
@@ -70022,7 +69899,7 @@ Xy
 hG
 ic
 iB
-jg
+VL
 jI
 hH
 kM
@@ -70324,7 +70201,7 @@ aa
 hG
 id
 iB
-jh
+VF
 jJ
 hF
 kO
@@ -70650,7 +70527,7 @@ Bh
 ra
 rr
 rI
-sb
+Yc
 sv
 sY
 tA
@@ -71856,7 +71733,7 @@ qF
 qM
 qR
 rc
-ru
+ed
 rL
 rs
 sf
@@ -72156,10 +72033,10 @@ aa
 qz
 qG
 qN
-qS
-rd
+Wz
+kF
 rv
-rM
+FJ
 rs
 sy
 tb
@@ -72458,10 +72335,10 @@ aa
 qz
 qF
 qO
-OC
-qT
+VW
+Vw
 rw
-rN
+VO
 rs
 sz
 tc
@@ -73062,10 +72939,10 @@ aa
 qz
 yU
 qM
-qV
-re
-re
-re
+MP
+Zr
+Zr
+Zr
 rs
 sB
 te
@@ -78232,7 +78109,7 @@ SB
 Nz
 RS
 TL
-YP
+UD
 WN
 Za
 Sq

@@ -68,10 +68,13 @@
 
 		if(!player.mind)
 			player.mind = new (player)
+		var/datum/mind/mind = player.mind
+		mind.wipe_antagonists()
+		player = mind.current
+
 		player.mind.assigned_role = job.name
 		M.job = job.name
 		player.mind.transfer_to(M)
-		remove_antag(M, usr, 1, 1)
 		SPAWN(5 SECONDS)
 			if(player && !player:client)
 				qdel(player)

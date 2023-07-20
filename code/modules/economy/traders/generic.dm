@@ -192,14 +192,14 @@
 
 /datum/commodity/trader/generic/herbs
 	comname = "Medical Herbs"
-	comtype = /obj/item/plant/herb/
+	comtype = /obj/item/plant/herb
 	price_boundary = list(75,200)
 	possible_names = list("I'll buy any medical herbs you may have.",
 	"I need to restock on medical herbs. I'm willing to buy them from you for a good price.")
 
 /datum/commodity/trader/generic/shipcomponents
 	comname = "Ship/Pod Components"
-	comtype = /obj/item/shipcomponent/
+	comtype = /obj/item/shipcomponent
 	price_boundary = list(400,700)
 	possible_names = list("Our shipyards are low on ship-building components. Could you sell us some?",
 	"We're trying a new experimental pod construction technique and need all the ship components we can get.",
@@ -207,7 +207,7 @@
 
 /datum/commodity/trader/generic/jumpsuits
 	comname = "Jumpsuits"
-	comtype = /obj/item/clothing/under/
+	comtype = /obj/item/clothing/under
 	price_boundary = list(135,210)
 	possible_names = list("We're drafting in some new staff soon, and need new jumpsuits.",
 	"We need any jumpsuits you can spare. Don't ask.")
@@ -222,7 +222,7 @@
 
 /datum/commodity/trader/generic/pens
 	comname = "Writing Utensils"
-	comtype = /obj/item/pen/
+	comtype = /obj/item/pen
 	price_boundary = list(80, 150)
 	possible_names = list("We can't take notes! Send us something to write with, and make it snappy.",
 	"Our crew's been really starved creatively. Give us something we can doodle with.")

@@ -744,6 +744,9 @@
 		if(istype(src.law_circuits[slot],/obj/item/aiModule/hologram_expansion))
 			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slot]
 			src.holo_expansions -= holo.expansion
+		else if(istype(src.law_circuits[slot],/obj/item/aiModule/ability_expansion))
+			var/obj/item/aiModule/ability_expansion/expansion = src.law_circuits[slot]
+			src.ai_abilities -= expansion.ai_abilities
 		src.law_circuits[slot]=null
 		src.welded[slot] = FALSE
 		src.screwed[slot] = FALSE
