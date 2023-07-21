@@ -297,7 +297,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	icon = 'icons/obj/foodNdrink/food_candy.dmi'
 	icon_state = "lpop-0"
 	sugar_content = 5
-	var/icon_random = FALSE // does it just choose from the existing random colors?
+	var/icon_random = FALSE //! does it just choose from the existing random colors?
 	var/image/image_candy
 	heal_amt = 1
 	bites_left = 5
