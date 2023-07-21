@@ -6,7 +6,7 @@
 	icon_state = "metalfoam"
 	density = 1
 	opacity = 0 	// changed in New()
-	anchored = 1
+	anchored = ANCHORED
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	flags = FPRINT | CONDUCT | USEDELAY
@@ -22,10 +22,10 @@
 
 		update_nearby_tiles(1)
 		SPAWN(1 DECI SECOND)
-			RL_SetOpacity(1)
+			set_opacity(1)
 
 	disposing()
-		RL_SetOpacity(0)
+		set_opacity(0)
 		density = 0
 		update_nearby_tiles(1)
 		..()

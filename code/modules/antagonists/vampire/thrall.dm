@@ -1,6 +1,7 @@
 /datum/antagonist/subordinate/thrall
 	id = ROLE_VAMPTHRALL
 	display_name = "vampire thrall"
+	antagonist_icon = "vampthrall"
 	remove_on_death = TRUE
 	remove_on_clone = TRUE
 
@@ -13,9 +14,8 @@
 		if (istype(master, /datum/abilityHolder/vampire))
 			src.master_ability_holder = master
 
-			if (istype(src.master_ability_holder.owner, /mob))
-				src.owner = new_owner
-				src.owner.master = src.master_ability_holder.owner.ckey
+			if (istype(src.master_ability_holder.owner, /mob) && src.master_ability_holder.owner.mind)
+				src.master = src.master_ability_holder.owner.mind
 
 		. = ..()
 
@@ -51,8 +51,6 @@
 
 	remove_equipment()
 		var/mob/living/carbon/human/H = src.owner.current
-
-		remove_mindhack_status(H, "vthrall", "death")
 		var/datum/component/C = H.GetComponent(/datum/component/tracker_hud/vampthrall)
 		C?.RemoveComponent(/datum/component/tracker_hud/vampthrall)
 
@@ -64,11 +62,38 @@
 		src.ability_holder.removeAbility(/datum/targetable/vampire/vampire_bite/thrall)
 		H.remove_ability_holder(/datum/abilityHolder/vampiric_thrall)
 
+	add_to_image_groups()
+		. = ..()
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		var/datum/client_image_group/image_group = get_image_group(src.master_ability_holder)
+		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind(src.owner)
+
+	remove_from_image_groups()
+		. = ..()
+		var/datum/client_image_group/image_group = get_image_group(src.master_ability_holder)
+		image_group.remove_mind_mob_overlay(src.owner)
+		image_group.remove_mind(src.owner)
+
 	announce()
 		. = ..()
 		if (src.master)
-			boutput(src.owner.current, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [src.master.current.real_name]!</B></span>")
+			boutput(src.owner.current, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [src.master.current.real_name]!</b></span>")
 		else if (istype(src.master_ability_holder.owner, /mob))
-			boutput(src.owner.current, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [src.master_ability_holder.owner.real_name]!</B></span>")
+			boutput(src.owner.current, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [src.master_ability_holder.owner.real_name]!</b></span>")
 		else if (istype(src.master_ability_holder.owner, /obj/machinery/power/generatorTemp))
-			boutput(src.owner.current, "<span class='alert'><b>You awaken filled with purpose - you must serve the Bone Generator!</B></span>")
+			boutput(src.owner.current, "<span class='alert'><b>You awaken filled with purpose - you must serve the Bone Generator!</b></span>")
+
+	announce_removal(source)
+		. = ..()
+
+		switch (source)
+			if (ANTAGONIST_REMOVAL_SOURCE_DEATH)
+				src.owner.current.show_antag_popup("mindhackdeath")
+				boutput(src.owner.current, "<span class='alert'><b>As you have died, you are no longer subservient to [src.master.current.real_name]! Do not obey your former master's orders even if you've been brought back to life somehow.</b></span>")
+				logTheThing(LOG_COMBAT, src.owner.current, "(enthralled by [src.master.current ? "[constructTarget(src.master.current, "combat")]" : "*NOKEYFOUND*"]) has died, removing vampire thrall status.")
+
+			else
+				src.owner.current.show_antag_popup("mindhackexpired")
+				boutput(src.owner.current, "<span class='alert'><b>Your mind is your own again! You no longer feel the need to obey your former master's orders.</b></span>")
+				logTheThing(LOG_COMBAT, src.owner.current, "(enthralled by [src.master.current ? "[constructTarget(src.master.current, "combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing vampire thrall status.")

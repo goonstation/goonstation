@@ -69,7 +69,9 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 	//Generate and cleanup region
 	var/datum/allocated_region/region = global.region_allocator.allocate(width, height)
-	region.clean_up(main_area=/area/map_gen/planet)
+	var/area/planet_area = new /area/map_gen/planet
+	planet_area.name = name
+	region.clean_up(main_area=planet_area)
 
 	//Populate with Biome!
 	var/turfs = block(locate(region.bottom_left.x+1, region.bottom_left.y+1, region.bottom_left.z), locate(region.bottom_left.x+region.width-2, region.bottom_left.y+region.height-2, region.bottom_left.z) )
@@ -180,6 +182,8 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 	return turfs
 /datum/map_generator/asteroids
+	clear_turf_type = /turf/space
+
 	generate_terrain(var/list/turfs, var/reuse_seed, var/flags)
 		if(!length(seeds))
 			seeds = list(null)
@@ -190,6 +194,8 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 				T.generate_worldgen()
 
 /datum/map_generator/sea_caves
+	clear_turf_type = /turf/space/fluid/trench
+
 	generate_terrain(var/list/turfs, var/reuse_seed, var/flags)
 		if(!length(seeds))
 			seeds = list(null)
@@ -214,8 +220,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 			for(var/turf/space/space_turf in turfs)
 				space_turf.ReplaceWith(/turf/space/fluid/trench)
-				space_turf.name = ocean_name
-				space_turf.color = ocean_color
+				space_turf.name = "ocean floor"
 				space_turf.RL_Init()
 
 				if (prob(1))
@@ -241,7 +246,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 						new /obj/overlay/tile_effect/cracks/spawner/pikaia(space_turf)
 
 					if (prob(1) && prob(16))
-						new /mob/living/critter/small_animal/hallucigenia/ai_controlled(space_turf)
+						new /mob/living/critter/small_animal/hallucigenia(space_turf)
 					else if (prob(1) && prob(15))
 						new /obj/overlay/tile_effect/cracks/spawner/pikaia(space_turf)
 
@@ -264,7 +269,7 @@ obj/decal/teleport_mark
 	icon = 'icons/misc/artemis/temps.dmi'
 	icon_state = "decal_tele"
 	name = "teleport mark"
-	anchored = 1
+	anchored = ANCHORED
 	layer = FLOOR_EQUIP_LAYER1
 	alpha = 180
 

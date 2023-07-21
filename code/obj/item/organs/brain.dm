@@ -8,6 +8,7 @@
 	desc = "A human brain, gross."
 	organ_holder_name = "brain"
 	organ_holder_location = "head"
+	icon = 'icons/obj/items/organs/brain.dmi'
 	icon_state = "brain2"
 	item_state = "brain"
 	var/datum/mind/owner = null
@@ -47,7 +48,7 @@
 		return 0
 
 	get_desc()
-		if (usr?.traitHolder?.hasTrait("training_medical"))
+		if (usr && (usr.traitHolder?.hasTrait("training_medical") || GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH)))
 			if (src.owner?.key)
 				if (!find_ghost_by_key(src.owner?.key))
 					. += "<br><span class='notice'>This brain is slimy.</span>"

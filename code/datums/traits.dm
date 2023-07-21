@@ -203,7 +203,7 @@
 	proc/onAdd(var/mob/owner)
 		if(mutantRace && ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			H.mutantrace?.origAH.CopyOther(H.bioHolder.mobAppearance)
+			H.default_mutantrace = mutantRace
 			H.set_mutantrace(mutantRace)
 		return
 
@@ -797,9 +797,9 @@ ABSTRACT_TYPE(/datum/trait/job)
 		OTHER_START_TRACKING_CAT(owner, TR_CAT_CLOWN_DISBELIEF_MOBS)
 		if(owner.client)
 			src.turnOn(owner)
-		src.RegisterSignal(owner, COMSIG_MOB_LOGIN, .proc/turnOn)
-		src.RegisterSignal(owner, COMSIG_MOB_LOGOUT, .proc/turnOff)
-		src.RegisterSignal(owner, COMSIG_ATOM_EXAMINE, .proc/examined)
+		src.RegisterSignal(owner, COMSIG_MOB_LOGIN, PROC_REF(turnOn))
+		src.RegisterSignal(owner, COMSIG_MOB_LOGOUT, PROC_REF(turnOff))
+		src.RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(examined))
 
 	proc/turnOn(mob/owner)
 		for(var/image/I as anything in global.clown_disbelief_images)

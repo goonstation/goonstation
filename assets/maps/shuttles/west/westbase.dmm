@@ -49,7 +49,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
 "cu" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "cA" = (
@@ -386,7 +386,7 @@
 	dir = 4;
 	hardened = 1
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -397,7 +397,7 @@
 	name = "Secure Transport";
 	hardened = 1
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
@@ -578,7 +578,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "vp" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -630,7 +630,7 @@
 /turf/unsimulated/floor/stairs/dark/wide,
 /area/centcom/outside)
 "xq" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -1095,7 +1095,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "Qs" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";

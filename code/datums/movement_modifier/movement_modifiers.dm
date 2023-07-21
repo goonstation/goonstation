@@ -174,6 +174,9 @@
 /datum/movement_modifier/zombie
 	additive_slowdown = 3
 
+/datum/movement_modifier/golem
+	additive_slowdown = 2.5
+
 /datum/movement_modifier/revenant
 	maximum_slowdown = 2
 

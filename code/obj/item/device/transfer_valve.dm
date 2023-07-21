@@ -30,8 +30,8 @@ TYPEINFO(/obj/item/device/transfer_valve)
 
 	New()
 		..()
-		RegisterSignal(src, COMSIG_ITEM_BOMB_SIGNAL_START, .proc/signal_start)
-		RegisterSignal(src, COMSIG_ITEM_BOMB_SIGNAL_CANCEL, .proc/signal_cancel)
+		RegisterSignal(src, COMSIG_ITEM_BOMB_SIGNAL_START, PROC_REF(signal_start))
+		RegisterSignal(src, COMSIG_ITEM_BOMB_SIGNAL_CANCEL, PROC_REF(signal_cancel))
 		processing_items |= src
 
 	disposing()
@@ -379,7 +379,8 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				tank_two.air_contents.volume = tank_one.air_contents.volume
 				tank_two.air_contents.merge(temp)
 
-				temp = tank_two.air_contents.remove_ratio(0.5)
+				var/transfer_ratio = tank_one.air_contents.volume / (tank_one.air_contents.volume + tank_two.air_contents.volume)
+				temp = tank_two.air_contents.remove_ratio(transfer_ratio)
 				tank_one.air_contents.merge(temp)
 
 				SPAWN(2 SECONDS) // In case one tank bursts

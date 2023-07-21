@@ -41,6 +41,7 @@ MATERIAL
 
 /obj/item/sheet
 	name = "sheet"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "sheet-m_5"
 	//Used to determine the right icon_state: combined with suffixes for material/reinforcement in update_appearance and one for amount in change_stack_appearance
@@ -56,12 +57,16 @@ MATERIAL
 	stamina_cost = 23
 	stamina_crit_chance = 10
 	material_amt = 0.1
-	var/datum/material/reinforcement = null
+	var/reinforcement = null
 	rand_pos = 1
 	inventory_counter_enabled = 1
+	default_material = "steel"
+	uses_material_appearance = TRUE
 
 	New()
 		..()
+		if (src.reinforcement)
+			src.set_reinforcement(getMaterial(src.reinforcement))
 		SPAWN(0)
 			update_appearance()
 		create_inventory_counter()
@@ -100,8 +105,8 @@ MATERIAL
 			else
 				src.icon_state_base += "-m"
 			src.name = "[material.name] " + src.name
-			if (istype(reinforcement))
-				src.name = "[reinforcement.name]-reinforced " + src.name
+			if (reinforcement)
+				src.name = "[reinforcement]-reinforced " + src.name
 				src.icon_state_base += "-r"
 			src.color = src.material.color
 			src.alpha = src.material.alpha
@@ -245,10 +250,10 @@ MATERIAL
 			//boutput(world, "check valid stack check 4 failed")
 			return 0
 		if (src.reinforcement && S.reinforcement)
-			if (src.reinforcement.type != S.reinforcement.type)
+			if (src.reinforcement != S.reinforcement)
 				//boutput(world, "check valid stack check 5 failed")
 				return 0
-			if (!isSameMaterial(S.reinforcement, src.reinforcement))
+			if (!isSameMaterial(getMaterial(S.reinforcement), getMaterial(src.reinforcement)))
 				//boutput(world, "check valid stack check 6 failed")
 				return 0
 		return 1
@@ -275,7 +280,7 @@ MATERIAL
 
 		var/list/availableRecipes = list()
 		if (src?.material?.material_flags & MATERIAL_METAL)
-			if (istype(src.reinforcement))
+			if (src.reinforcement)
 				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/reinforced_metal))
 					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 
@@ -286,7 +291,7 @@ MATERIAL
 		if (src?.material?.material_flags & MATERIAL_CRYSTAL)
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/glass))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
-			if (istype(src.reinforcement))
+			if (src.reinforcement)
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(/datum/sheet_crafting_recipe/remetal/glass))
 		if (src?.material?.mat_id == "cardboard")
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/cardboard))
@@ -443,75 +448,60 @@ MATERIAL
 		return
 
 /obj/item/sheet/steel
-
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "sheet-metal"
-
-	New()
-		..()
-		var/datum/material/M = getMaterial("steel")
-		src.setMaterial(M)
+	default_material = "steel"
+	color = "#8C8C8C"
 
 	reinforced
 		icon_state = "sheet-m-r_5"
-		New()
-			..()
-			var/datum/material/M = getMaterial("steel")
-			src.set_reinforcement(M)
+		reinforcement = "steel"
 
 /obj/item/sheet/glass
-
 	icon_state = "sheet-g_5" //overriden in-game but shows up in map editors
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "sheet-glass"
-
-	New()
-		..()
-		var/datum/material/M = getMaterial("glass")
-		src.setMaterial(M)
+	default_material = "glass"
+	color = "#A3DCFF"
 
 	reinforced
 		icon_state = "sheet-g-r_5"
-		New()
-			..()
-			var/datum/material/M = getMaterial("steel")
-			src.set_reinforcement(M)
+		reinforcement = "steel"
 
 	crystal
-
-		New()
-			..()
-			var/datum/material/M = getMaterial("plasmaglass")
-			src.setMaterial(M)
+		default_material = "plasmaglass"
+		color = "#A114FF"
 
 		reinforced
 			icon_state = "sheet-g-r_5"
-			New()
-				..()
-				var/datum/material/M = getMaterial("steel")
-				src.set_reinforcement(M)
+			reinforcement = "steel"
 
 /obj/item/sheet/wood
-
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "sheet-metal"
+	icon_state = "sheet-m_5$wood"
+	default_material = "wood"
 	amount = 10
-
-	New()
-		..()
-		var/datum/material/M = getMaterial("wood")
-		src.setMaterial(M)
 
 /obj/item/sheet/bamboo
-
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "sheet-metal"
+	icon_state = "sheet-m_5$$bamboo"
+	default_material = "bamboo"
 	amount = 10
 
-	New()
-		..()
-		var/datum/material/M = getMaterial("bamboo")
-		src.setMaterial(M)
+/obj/item/sheet/mauxite
+	item_state = "sheet-metal"
+	icon_state = "sheet-m_5$$mauxite"
+	default_material = "mauxite"
+	amount = 10
+
+/obj/item/sheet/electrum
+	default_material = "electrum"
+	color = "#44ACAC"
+
+	change_stack_amount(var/use_amount)
+		if (!isnum(use_amount))
+			return
+		if (isrobot(usr))
+			var/mob/living/silicon/robot/R = usr
+			R.cell.use(use_amount * 200)
 
 // RODS
 /obj/item/rods
@@ -535,6 +525,7 @@ MATERIAL
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	material_amt = 0.05
+	uses_material_appearance = TRUE
 
 	New()
 		..()
@@ -706,7 +697,7 @@ MATERIAL
 	desc = "A human head impaled on a spike, dim-eyed, grinning faintly, blood blackening between the teeth."
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "head_spike"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	var/list/heads = list()
 	var/head_offset = 0 //so the ones at the botton don't teleport upwards when a head is removed
@@ -728,6 +719,9 @@ MATERIAL
 			head.pixel_x = rand(-8,8)
 			head.pixel_y = rand(-8,8)
 			heads -= head
+			if (head in src.vis_contents)
+				vis_contents -= head
+				head.vis_flags &= ~VIS_INHERIT_ID
 
 			if(!length(heads))
 				head_offset = 0
@@ -772,10 +766,11 @@ MATERIAL
 		return
 
 	proc/update()
-		src.overlays = null
 
 		if((length(heads) < 3 && head_offset > 0) || length(heads) == 0)
-			src.overlays += image('icons/obj/metal.dmi',"head_spike_blood")
+			src.UpdateOverlays(image('icons/obj/metal.dmi',"head_spike_blood"),"blood")
+		else
+			src.UpdateOverlays(null,"blood")
 
 		switch(length(heads)) //fuck it
 			if(0)
@@ -807,16 +802,22 @@ MATERIAL
 		if(length(heads) > 0)
 			var/pixely = 8 - 8*head_offset - 8*length(heads)
 			for(var/obj/item/organ/head/H in heads)
+				if (H in vis_contents) continue
 				H.pixel_x = 0
 				H.pixel_y = pixely
 				pixely += 8
 				H.set_dir(SOUTH)
-				src.overlays += H
+				src.vis_contents += H
+				H.vis_flags |= VIS_INHERIT_ID
 
-			src.overlays += image('icons/obj/metal.dmi',"head_spike_flies")
+			src.UpdateOverlays(image('icons/obj/metal.dmi',"head_spike_flies"),"flies")
+		else
+			src.UpdateOverlays(null,"flies")
 
 		if(anchored)
-			src.overlays += image('icons/obj/metal.dmi',"head_spike_weld")
+			src.UpdateOverlays(image('icons/obj/metal.dmi',"head_spike_weld"),"weld")
+		else
+			src.UpdateOverlays(null,"weld")
 
 
 	proc/has_space()
@@ -854,11 +855,12 @@ MATERIAL
 
 
 /obj/item/rods/steel
+	default_material = "steel"
 
-	New()
-		..()
-		var/datum/material/M = getMaterial("steel")
-		src.setMaterial(M)
+/obj/item/rods/mauxite
+	icon_state = "rods_5$$mauxite"
+	default_material = "mauxite"
+	amount = 10
 
 // TILES
 
@@ -1019,32 +1021,14 @@ MATERIAL
 #endif
 
 /obj/item/tile/steel
-
-	New()
-		..()
-		var/datum/material/M = getMaterial("steel")
-		src.setMaterial(M)
+	default_material = "steel"
+	color = "#8C8C8C"
 
 /obj/item/tile/cardboard // for drones
 	desc = "They keep the floor in a good and walkable condition. At least, they would if they were actually made of steel."
 	force = 0
-	New()
-		..()
-		var/datum/material/M = getMaterial("cardboard")
-
-		src.setMaterial(M)
-
-/obj/item/sheet/electrum
-	New()
-		..()
-		setMaterial(getMaterial("electrum"))
-
-	change_stack_amount(var/use_amount)
-		if (!isnum(use_amount))
-			return
-		if (isrobot(usr))
-			var/mob/living/silicon/robot/R = usr
-			R.cell.use(use_amount * 200)
+	default_material = "cardboard"
+	color = "#d3b173"
 
 // kinda needed for some stuff I'm making - haine
 /obj/item/sheet/steel/fullstack
@@ -1227,6 +1211,27 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			sheet_cost = 3
 			icon = 'icons/obj/vending.dmi'
 			icon_state = "standard-frame"
+		scrap_handle
+			recipe_id = "scrap_handle"
+			craftedType = /obj/item/scrapweapons/parts/handle
+			name = "Scrap Handle"
+			sheet_cost = 1
+			icon = 'icons/obj/items/scrapweapons.dmi'
+			icon_state = "handle"
+		scrap_blade
+			recipe_id = "scrap_blade"
+			craftedType = /obj/item/scrapweapons/parts/blade
+			name = "Scrap Blade"
+			sheet_cost = 3
+			icon = 'icons/obj/items/scrapweapons.dmi'
+			icon_state = "blade"
+		scrap_shaft
+			recipe_id = "scrap_shaft"
+			craftedType = /obj/item/scrapweapons/parts/shaft
+			name = "Scrap Shaft"
+			sheet_cost = 2
+			icon = 'icons/obj/items/scrapweapons.dmi'
+			icon_state = "shaft"
 
 	glass
 		smallwindow
@@ -1270,7 +1275,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 
 	wood
 		fl_tiles
-			recipe_id = "fl_tiles_wood"
+			recipe_id = "fl_tiles"
 			craftedType = /obj/item/tile
 			name = "Floor Tile"
 			yield = 4

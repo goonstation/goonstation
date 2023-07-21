@@ -67,6 +67,7 @@
 				return
 
 			var/PLoc = pick_landmark(LANDMARK_PRISONWARP)
+			var/turf/origin_turf = get_turf(M)
 			if (PLoc)
 				M.changeStatus("paralysis", 8 SECONDS)
 				M.set_loc(PLoc)
@@ -79,7 +80,7 @@
 			M.show_text("<h2><font color=red><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></font></h2>", "red")
 			logTheThing(LOG_ADMIN, usr, "sent [constructTarget(M,"admin")] to the prison zone.")
 			logTheThing(LOG_DIARY, usr, "[constructTarget(M,"diary")] to the prison zone.", "admin")
-			message_admins("<span class='internal'>[key_name(usr)] sent [key_name(M)] to the prison zone.</span>")
+			message_admins("<span class='internal'>[key_name(usr)] sent [key_name(M)] to the prison zone[isturf(origin_turf) ? " from [log_loc(origin_turf)]" : ""].</span>")
 
 	return
 
@@ -336,7 +337,19 @@
 	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
 	for(var/i = 1, i <= 9, i++)
 		if(i <= split.len)
-			ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module", split[i], i, TRUE, TRUE)
+			var/path = text2path(split[i])
+			if(ispath(path, /obj/item/aiModule))
+				var/obj/item/aiModule/module = new path(ticker.ai_law_rack_manager.default_ai_rack)
+				ticker.ai_law_rack_manager.default_ai_rack.SetLaw(module, i, TRUE, TRUE)
+				if(istype(module,/obj/item/aiModule/hologram_expansion))
+					var/obj/item/aiModule/hologram_expansion/holo = module
+					ticker.ai_law_rack_manager.default_ai_rack.holo_expansions |= holo.expansion
+				else if(istype(module,/obj/item/aiModule/ability_expansion))
+					var/obj/item/aiModule/ability_expansion/expansion = module
+					ticker.ai_law_rack_manager.default_ai_rack.ai_abilities |= expansion.ai_abilities
+
+			else
+				ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module", split[i], i, TRUE, TRUE)
 	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 	logTheThing(LOG_ADMIN, usr, "has set the AI laws to [input]")
 	logTheThing(LOG_DIARY, usr, "has set the AI laws to [input]", "admin")
@@ -560,15 +573,14 @@
 		for(var/turf/simulated/T in view())
 			if(!T.air)
 				continue
-			ZERO_BASE_GASES(T.air)
+			ZERO_GASES(T.air)
 #ifdef ATMOS_ARCHIVING
-			ZERO_ARCHIVED_BASE_GASES(T.air)
+			ZERO_ARCHIVED_GASES(T.air)
 			T.air.ARCHIVED(temperature) = null
 #endif
 			T.air.oxygen = MOLES_O2STANDARD
 			T.air.nitrogen = MOLES_N2STANDARD
 			T.air.fuel_burnt = 0
-			T.air.clear_trace_gases()
 			T.air.temperature = T20C
 			LAGCHECK(LAG_LOW)
 
@@ -865,8 +877,7 @@
 
 		src.hair_override = H.hair_override
 
-		if(H.mutantrace)
-			src.mutantrace = new H.mutantrace.type
+		src.mutantrace = new H.mutantrace.type
 		return
 
 	proc/update_menu()
@@ -936,8 +947,7 @@
 		if(src.update_wearid && target_mob.wear_id)
 			target_mob.choose_name(1,1,target_mob.real_name, force_instead = 1)
 
-		if(src.mutantrace)
-			target_mob.set_mutantrace(src.mutantrace.type)
+		target_mob.set_mutantrace(src.mutantrace.type)
 
 		switch(src.cinematic)
 			if("Changeling") //Heh
@@ -950,7 +960,7 @@
 				qdel(target_mob.r_hand)
 				target_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe, target_mob.slot_wear_suit)
 				target_mob.equip_if_possible(new /obj/item/clothing/head/wizard, target_mob.slot_head)
-				target_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/wizard, target_mob.slot_shoes)
+				target_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/magic/wizard, target_mob.slot_shoes)
 				target_mob.put_in_hand(new /obj/item/staff(target_mob))
 
 				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -1018,16 +1028,7 @@
 		var/customization_second_r = null
 		var/customization_third_r = null
 
-		var/g = "m"
-		if (src.tf_holder.mobAppearance.gender == MALE)
-			g = "m"
-		else
-			g = "f"
-
-		if(src.mutantrace)
-			src.preview_icon = new /icon(src.mutantrace.icon, src.mutantrace.icon_state)
-		else
-			src.preview_icon = new /icon('icons/mob/human.dmi', "body_[g]")
+		src.preview_icon = new /icon(src.mutantrace.icon, src.mutantrace.icon_state) //todo: #14465
 
 		if(!src.mutantrace?.override_skintone)
 			// Skin tone
@@ -1134,13 +1135,15 @@
 	if (!adventure_view || mob.see_invisible < INVIS_ADVENTURE)
 		adventure_view = 1
 		mob.see_invisible = INVIS_ADVENTURE
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_client(src)
 		boutput(src, "Adventure View activated.")
 
 	else
 		adventure_view = 0
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).remove_client(src)
 		boutput(src, "Adventure View deactivated.")
 		if (!isliving(mob))
-			mob.see_invisible = INVIS_GHOST // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
+			mob.see_invisible = INVIS_SPOOKY // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
 		else
 			mob.see_invisible = INVIS_NONE // it'll sort itself out on the next Life() tick anyway
 
@@ -1190,7 +1193,7 @@
 	var/whois = whois(target)
 	if (whois)
 		var/list/whoisR = whois
-		msg += "<b>Player[(whoisR.len == 1 ? "" : "s")] found for '[target]':</b><br>"
+		msg += "<b>Player[(length(whoisR) == 1 ? "" : "s")] found for '[target]':</b><br>"
 		for (var/mob/M in whoisR)
 			var/role = getRole(M)
 			msg += "<b>[key_name(M, 1, 0)][role ? " ([role])" : ""]</b><br>"
@@ -1210,7 +1213,7 @@
 	var/list/msg = list("<span class='notice'>")
 	var/list/whodead = whodead()
 	if (whodead.len)
-		msg += "<b>Dead player[(whodead.len == 1 ? "" : "s")] found:</b><br>"
+		msg += "<b>Dead player[(length(whodead) == 1 ? "" : "s")] found:</b><br>"
 		for (var/mob/M in whodead)
 			var/role = getRole(M)
 			msg += "<b>[key_name(M, 1, 0)][role ? " ([role])" : ""]</b><br>"
@@ -1494,9 +1497,9 @@
 			if(findtext("[R]", searchFor)) L += R
 
 	var/type
-	if(L.len == 1)
+	if(length(L) == 1)
 		type = L[1]
-	else if(L.len > 1)
+	else if(length(L) > 1)
 		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
 	else
 		usr.show_text("No reagents matching that name", "red")
@@ -1736,114 +1739,6 @@
 		ticker.minds += usr.mind
 		.()
 
-// Tweaked this to implement log entries and make it feature-complete with regard to every antagonist roles (Convair880).
-/proc/remove_antag(var/mob/M, var/mob/admin, var/new_mind_only = 0, var/show_message = 0)
-	set name = "Remove Antag"
-	set desc = "Removes someone's traitor status."
-
-	if (!M || !M.mind || !M.mind.special_role)
-		return
-
-	var/former_role
-	former_role = text("[M.mind.special_role]")
-
-	message_admins("[key_name(M)]'s antagonist status ([former_role]) was removed. Source: [admin ? "[key_name(admin)]" : "*automated*"].")
-	if (admin) // Log entries for automated antag status removal is handled in helpers.dm, remove_mindhack_status().
-		logTheThing(LOG_ADMIN, admin, "removed the antagonist status of [constructTarget(M,"admin")].")
-		logTheThing(LOG_DIARY, admin, "removed the antagonist status of [constructTarget(M,"diary")].", "admin")
-
-	if (show_message == 1)
-		M.show_text("<h2><font color=red><B>Your antagonist status has been revoked by an admin! If this is an unexpected development, please inquire about it in adminhelp.</B></font></h2>", "red")
-		M.show_antag_popup("antagremoved")
-
-	// Replace the mind first, so the new mob doesn't automatically end up with changeling etc. abilities.
-	var/datum/mind/newMind = new /datum/mind()
-	newMind.ckey = M.ckey
-	newMind.key = M.key
-	newMind.current = M
-	newMind.assigned_role = M.mind.assigned_role
-	newMind.brain = M.mind.brain
-	newMind.is_target = M.mind.is_target
-	if (M.mind.former_antagonist_roles.len)
-		newMind.former_antagonist_roles.Add(M.mind.former_antagonist_roles)
-	if (M.mind in ticker.mode.Agimmicks)
-		ticker.mode.Agimmicks -= M.mind
-	qdel(M.mind)
-	if (!(newMind in ticker.minds))
-		ticker.minds.Add(newMind)
-	M.mind = newMind
-	M.mind.brain?.owner = M.mind
-
-	M.antagonist_overlay_refresh(1, 1)
-
-	if (new_mind_only)
-		return
-
-	// Then spawn a new mob to delete all mob-/client-bound antagonist verbs.
-	// Complete overkill for mindhacks, though. Blobs and wraiths need special treatment as well.
-	// Synthetic mobs aren't really included yet, because it would be a complete pain to account for them properly.
-	if (issilicon(M))
-		var/mob/living/silicon/S = M
-		S.emagged = 0
-		S.syndicate = 0
-		if (S.mainframe && S != S.mainframe)
-			var/mob/living/silicon/ai/MF = S.mainframe
-			MF.emagged = 0
-			MF.syndicate = 0
-
-
-		for (var/mob/living/silicon/S2 in mobs)
-			if (S2.emagged || S2.syndicate) continue
-			if (isghostdrone(S2)) continue
-			S2.law_rack_connection = ticker.ai_law_rack_manager.default_ai_rack
-			logTheThing(LOG_STATION, S2, "[S2.name] is connected to the default rack at [constructName(S2.law_rack_connection)] by admemery")
-			S2.show_text("<b>Your laws have been changed!</b>", "red")
-			S2.playsound_local(S2, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
-			S2.show_laws()
-		for (var/mob/living/intangible/aieye/E in mobs)
-			E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
-
-	switch (former_role)
-		if (ROLE_MINDHACK) M.delStatus("mindhack")
-		if (ROLE_VAMPTHRALL) return
-		if ("spyminion") return
-		if (ROLE_BLOB, ROLE_WRAITH, ROLE_FLOCKMIND, ROLE_FLOCKTRACE) M.humanize(TRUE)
-		else
-			if (ishuman(M))
-				// They could be in a pod or whatever, which would have unfortunate results when respawned.
-				if (!isturf(M.loc))
-					return
-				var/mob/living/carbon/human/H = M
-
-				// Get rid of those uplinks first.
-				var/list/L = H.get_all_items_on_mob()
-				if (length(L))
-					for (var/obj/item/device/pda2/PDA in L)
-						if (PDA?.uplink)
-							qdel(PDA.uplink)
-							PDA.uplink = null
-					for (var/obj/item/device/radio/R in L)
-						if (R?.traitorradio)
-							qdel(R.traitorradio)
-							R.traitorradio = null
-							R.traitor_frequency = 0
-					for (var/obj/item/uplink/U in L)
-						if (U) qdel(U)
-					for (var/obj/item/SWF_uplink/WZ in L)
-						if (WZ) qdel(WZ)
-
-				H.unkillable_respawn(1)
-
-			if (isobserver(M)) // Ugly but necessary.
-				var/mob/dead/observer/O = M
-				var/mob/dead/observer/newO = new/mob/dead/observer(O)
-				if (O.corpse)
-					newO.corpse = O.corpse
-				O.mind.transfer_to(newO)
-				qdel(O)
-
-	return
-
 //flourish told me this was broken... if you want admin foam brew it yourself!!
 /*
 /client/proc/admin_foam(var/atom/A as turf|obj|mob, var/amount as num)
@@ -1900,9 +1795,9 @@
 		L = concrete_typesof(/datum/reagent)
 
 	var/type
-	if(L.len == 1)
+	if(length(L) == 1)
 		type = L[1]
-	else if(L.len > 1)
+	else if(length(L) > 1)
 		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
 	else
 		usr.show_text("No reagents matching that name", "red")
@@ -1946,9 +1841,9 @@
 		L = concrete_typesof(/datum/reagent)
 
 	var/type = 0
-	if(L.len == 1)
+	if(length(L) == 1)
 		type = L[1]
-	else if(L.len > 1)
+	else if(length(L) > 1)
 		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
 	else
 		usr.show_text("No reagents matching that name", "red")
@@ -1985,9 +1880,9 @@
 		L = concrete_typesof(/datum/reagent)
 
 	var/type = 0
-	if(L.len == 1)
+	if(length(L) == 1)
 		type = L[1]
-	else if(L.len > 1)
+	else if(length(L) > 1)
 		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
 	else
 		usr.show_text("No reagents matching that name", "red")
@@ -2388,7 +2283,9 @@ var/global/night_mode_enabled = 0
 		return 0
 	if(isdead(M))
 		M.invisibility = INVIS_NONE
-	var/announce = alert("Announce this cubing to the server?", "Announce", "Yes", "No")
+	var/announce = input(src, "Announce this cubing to the server?") in list("Yes", "No", "Cancel")
+	if (announce == "Cancel")
+		return
 
 	var/turf/targetLoc = src.mob.loc
 	var/area/where = get_area(M)
@@ -2930,8 +2827,8 @@ var/global/force_radio_maptext = FALSE
 	var/obj/item/storage/backpack/syndie/backpack_full_of_ammo = new()
 	backpack_full_of_ammo.name = "backpack full of ammo"
 	backpack_full_of_ammo.desc = "Try not to lose it, idiot."
-	backpack_full_of_ammo.max_wclass = INFINITY
-	backpack_full_of_ammo.slots = 9
+	backpack_full_of_ammo.storage.max_wclass = INFINITY
+	backpack_full_of_ammo.storage.slots = 9
 	backpack_full_of_ammo.cant_other_remove = 1
 
 	var/obj/item/saw/syndie/button_1 = new()
@@ -2983,14 +2880,14 @@ var/global/force_radio_maptext = FALSE
 
 	var/obj/item/device/key/iridium/fancy_keys = new()
 
-	backpack_full_of_ammo.add_contents(button_1)
-	backpack_full_of_ammo.add_contents(button_2)
-	backpack_full_of_ammo.add_contents(button_3)
-	backpack_full_of_ammo.add_contents(button_4)
-	backpack_full_of_ammo.add_contents(button_5)
-	backpack_full_of_ammo.add_contents(button_6)
-	backpack_full_of_ammo.add_contents(button_7)
-	backpack_full_of_ammo.add_contents(fancy_keys)
+	backpack_full_of_ammo.storage.add_contents(button_1)
+	backpack_full_of_ammo.storage.add_contents(button_2)
+	backpack_full_of_ammo.storage.add_contents(button_3)
+	backpack_full_of_ammo.storage.add_contents(button_4)
+	backpack_full_of_ammo.storage.add_contents(button_5)
+	backpack_full_of_ammo.storage.add_contents(button_6)
+	backpack_full_of_ammo.storage.add_contents(button_7)
+	backpack_full_of_ammo.storage.add_contents(fancy_keys)
 
 	if (ishuman(src.mob))
 		// If you are using this you are going to Fuck Things Up

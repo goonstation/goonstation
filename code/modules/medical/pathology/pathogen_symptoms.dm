@@ -590,7 +590,7 @@ obj/hallucinated_item
 	icon_state = null
 	name = ""
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	var/mob/owner = null
@@ -703,7 +703,7 @@ datum/pathogeneffects/malevolent/serious_paranoia
 					var/list/mob/living/OL = list()
 					for (var/mob/living/O in oview(7, M))
 						OL += O
-					if (OL.len == 0)
+					if (length(OL) == 0)
 						return
 					var/event = pick(list(1, 2, 3, 4, 5, 6))
 					switch (event)
@@ -739,7 +739,7 @@ datum/pathogeneffects/malevolent/serious_paranoia
 					var/list/mob/living/OL = list()
 					for (var/mob/living/O in oview(7, M))
 						OL += O
-					if (OL.len == 0)
+					if (length(OL) == 0)
 						return
 					var/event = pick(list(1, 2, 3, 4, 5, 6))
 					switch (event)
@@ -819,7 +819,7 @@ datum/pathogeneffects/malevolent/serious_paranoia/mild
 					var/list/mob/living/OL = list()
 					for (var/mob/living/O in oview(7, M))
 						OL += O
-					if (OL.len == 0)
+					if (length(OL) == 0)
 						return
 					var/event = pick(list(1, 2, 3))
 					switch (event)
@@ -836,7 +836,7 @@ datum/pathogeneffects/malevolent/serious_paranoia/mild
 					var/list/mob/living/OL = list()
 					for (var/mob/living/O in oview(7, M))
 						OL += O
-					if (OL.len == 0)
+					if (length(OL) == 0)
 						return
 					var/event = pick(list(1, 2, 3))
 					switch (event)
@@ -1220,7 +1220,7 @@ datum/pathogeneffects/malevolent/capacitor
 							M.visible_message("<span class='alert'>A burst of lightning jumps at [M] from [A].</span>", "<span class='alert'>A burst of lightning jumps at you from [A]. It burns!</span>", "<span class='alert'>You hear something spark.</span>")
 							M.TakeDamage("chest", 0, 5)
 							var/amt  = A.cell.charge / 6
-							A.cell.charge -= amt
+							A.cell.use(amt)
 							origin.symptom_data["capacitor"] += amt * 50
 							if (amt > 5000 && load > 5000)
 								M.show_message("<span class='notice'>You feel energized.</span>")
@@ -1263,7 +1263,7 @@ datum/pathogeneffects/malevolent/capacitor
 							M.visible_message("<span class='alert'>A burst of lightning jumps at [M] from [A].</span>", "<span class='alert'>A burst of lightning jumps at you from [A]. It burns!</span>", "<span class='alert'>You hear something spark.</span>")
 							M.TakeDamage("chest", 0, 5)
 							var/amt = A.cell.charge / 5 // apcs have a weirdly low capacity.
-							A.cell.charge -= amt
+							A.cell.use(amt)
 							origin.symptom_data["capacitor"] += amt * 50
 							if (amt > 5000 && load > 5000)
 								M.show_message("<span class='notice'>You feel energized.</span>")

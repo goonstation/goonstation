@@ -15,8 +15,8 @@ const resetOptions = [
     id: 'brobocop',
     name: 'Brobocop',
   }, {
-    id: 'research',
-    name: 'Research',
+    id: 'science',
+    name: 'Science',
   }, {
     id: 'civilian',
     name: 'Civilian',

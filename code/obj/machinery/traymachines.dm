@@ -33,7 +33,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/traymachine, proc/eject_tray, proc/collect_t
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
 	density = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	power_usage = 50
 
 	//tray related variables
@@ -128,12 +128,26 @@ ADMIN_INTERACT_PROCS(/obj/machinery/traymachine, proc/eject_tray, proc/collect_t
 ///Tray comes out - probably override this if your tray should move weirdly
 /obj/machinery/traymachine/proc/eject_tray()
 	set name = "open"
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+
+	if (!is_cardinal(src.dir))
+		src.set_dir(src.dir & (NORTH | SOUTH))
 
 	var/turf/T_src = get_turf(src)
 	var/turf/T = T_src
 	for(var/i in 1 to src.bound_width / world.icon_size)
 		T = get_step(T, src.dir)
+
+	// stop the tray from extending into solid things
+	if (T.density && !istype(get_area(src), /area/solarium)) // Solarium gets an exception because this is a hilarious way to get Helios
+		playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
+		return
+	for(var/obj/O in T) // we still want to extend into mobs, no iterating over them
+		if (O.density && O.anchored) // it's ok to pull in unanchored stuff I guess!
+			playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
+			return
+
+	my_tray.set_dir(src.dir)
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 	//handle animation and ejection of contents
 	for(var/atom/movable/AM as anything in src)
@@ -150,6 +164,21 @@ ADMIN_INTERACT_PROCS(/obj/machinery/traymachine, proc/eject_tray, proc/collect_t
 		animate(AM, 1 SECOND, easing = BOUNCE_EASING, pixel_x = 0, pixel_y = 0)
 		animate(layer = orig_layer, easing = JUMP_EASING)
 	update()
+
+/obj/machinery/traymachine/set_dir(new_dir)
+	if(src.my_tray && src.my_tray.loc != src)
+		return
+	. = ..()
+
+/obj/machinery/traymachine/set_loc(atom/target)
+	if(src.my_tray && src.my_tray.loc != src)
+		return
+	. = ..()
+
+/obj/machinery/traymachine/Move(atom/target)
+	if(src.my_tray && src.my_tray.loc != src)
+		return
+	. = ..()
 
 ///Tray goes in
 /obj/machinery/traymachine/proc/collect_tray()
@@ -215,7 +244,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	density = TRUE
 	layer = FLOOR_EQUIP_LAYER1
 	var/obj/machinery/traymachine/my_machine = null
-	anchored = TRUE
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 
 	//simple subtypes
@@ -321,6 +350,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	var/ashes = 0
 	power_usage = powerdraw_use //gotta chug them watts
 	icon_state = "crema_active"
+	playsound(src.loc, 'sound/machines/crematorium.ogg', 90, 0)
 
 	for (var/M in contents)
 		if (M in non_tray_contents) continue
@@ -372,7 +402,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	desc = "Burn baby burn!"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "crema_switch"
-	anchored = TRUE
+	anchored = ANCHORED
 	req_access = list(access_crematorium)
 	plane = PLANE_NOSHADOW_ABOVE
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER

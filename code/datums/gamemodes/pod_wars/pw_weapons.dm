@@ -53,7 +53,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 		projectiles = list(current_projectile)
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
 		if(istype(loc, /mob/living))
-			RegisterSignal(loc, COMSIG_MOB_DEATH, .proc/stop_charging)
+			RegisterSignal(loc, COMSIG_MOB_DEATH, PROC_REF(stop_charging))
 		..()
 
 
@@ -221,7 +221,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 		if (T)
 			playsound(T, 'sound/weapons/conc_grenade.ogg', 90, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
-			O.anchored = 1
+			O.anchored = ANCHORED
 			O.name = "Explosion"
 			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 			O.icon = 'icons/effects/64x64.dmi'

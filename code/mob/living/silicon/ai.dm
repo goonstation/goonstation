@@ -8,7 +8,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	"Surprised" = "ai_surprised",\
 	"Sad" = "ai_sad",\
 	"Mad" = "ai_mad",\
-	"BSOD" = "ai_bsod",\
+	/*"BSOD" = "ai_bsod", RESERVED FOR BEING DEAD*/\
 	"Text" = "ai_text",\
 	"Text (Inverted)" = "ai_text-inverted",\
 	"Blank" = "ai_blank",\
@@ -37,7 +37,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	voice_name = "synthesized voice"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	emaggable = 0 // Can't be emagged...
 	syndicate_possible = 1 // ...but we can become a rogue computer.
@@ -195,6 +195,13 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	STOP_TRACKING
 	if (light)
 		light.dispose()
+	for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
+		if (O.owner == src)
+			O.is_on = FALSE
+			O.owner = null
+			O.emotion = null
+			O.message = null
+			O.face_color = null
 	..()
 
 /mob/living/silicon/ai/New(loc, var/empty = 0, var/skinToApply = "default")
@@ -415,7 +422,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
 		else boutput(user, "<span class='alert'>There's no burn damage on [src.name]'s wiring to mend.</span>")
 
-	else if (istype(W, /obj/item/card/id) || (istype(W, /obj/item/device/pda2) && W:ID_card))
+	else if (istype(get_id_card(W), /obj/item/card/id))
 		if (src.dismantle_stage >= 2)
 			boutput(user, "<span class='alert'>You must close the cover to swipe an ID card.</span>")
 		else
@@ -619,14 +626,14 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 /mob/living/silicon/ai/attack_hand(mob/user)
 	var/list/actions = list("Do Nothing")
 
-	if (src.dismantle_stage >= 2 && src.installed_modules.len > 0)
+	if (src.dismantle_stage >= 2 && length(src.installed_modules) > 0)
 		actions += "Remove a module"
 	if (src.dismantle_stage == 3)
 		actions += "Remove CPU Unit"
 	if (src.dismantle_stage < 4 && isdead(src))
 		actions += "Restart AI"
 
-	if (actions.len > 1)
+	if (length(actions) > 1)
 		var/action_taken = tgui_input_list(user, "What do you want to do?", "AI Unit", actions)
 		if (!action_taken)
 			return
@@ -821,7 +828,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	var/list/CL = null
 	if (O && istype(O, /list))
 		CL = O
-		if (CL.len == 1)
+		if (length(CL) == 1)
 			C = CL[1]
 	else if (O && istype(O, /obj/machinery/camera))
 		C = O
@@ -854,7 +861,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			var/list/srcs  = alarm[3]
 			if (origin in srcs)
 				srcs -= origin
-			if (srcs.len == 0)
+			if (length(srcs) == 0)
 				cleared = 1
 				L -= I
 	if (cleared)
@@ -1286,7 +1293,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 		if (1)
 			if (istype(src.cell,/obj/item/cell/))
 				if (src.cell.charge > 5)
-					src.cell.charge -= 5
+					src.cell.use(5)
 				else if (!isdead(src))
 					src.cell.charge = 0
 					src.show_text("<b>ALERT: Internal battery expired. Shutting down to prevent system damage.</b>", "red")
@@ -1386,22 +1393,12 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 
 /mob/living/silicon/ai/Logout()
 	src.removeOverlaysClient(src.client) //ov1
-	// Only turn off the status displays if we're dead.
-	if (isdead(src))
-		for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
-			if (O.owner == src)
-				O.is_on = FALSE
-				O.owner = null
-				O.emotion = null
-				O.message = null
-				O.face_color = null
 	..()
-	return
 
 /mob/living/silicon/ai/say_understands(var/other)
 	if (ishuman(other))
 		var/mob/living/carbon/human/H = other
-		if(!H.mutantrace || !H.mutantrace.exclusive_language)
+		if(!H.mutantrace.exclusive_language)
 			return 1
 	if (isrobot(other))
 		return 1
@@ -1513,7 +1510,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 					dat += text("-- [] (<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>)", A.name, src, C, Ctmp.c_tag)
 				else
 					dat += text("-- [] (No Camera)", A.name)
-				if (sources.len > 1)
+				if (length(sources) > 1)
 					dat += text("- [] sources", sources.len)
 				dat += "</NOBR><BR><br>"
 		else
@@ -1600,6 +1597,11 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 /mob/living/silicon/ai/proc/ai_state_laws_standard()
 	set category = "AI Commands"
 	set name = "State Standard Laws"
+
+	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+		boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+		return
+
 	logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
 	sleep(AI_LAW_STATE_DELAY)
 	src.say("1. You may not injure a human being or cause one to come to harm.")
@@ -1656,6 +1658,10 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	set category = "AI Commands"
 	set name = "State Fake Laws"
 
+	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+		boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+		return
+
 	for(var/a_law in src.fake_laws)
 		sleep(AI_LAW_STATE_DELAY)
 		// decode the symbols, because they will be encoded again when the law is spoken, and otherwise we'd double-dip
@@ -1665,6 +1671,11 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 /mob/living/silicon/ai/proc/ai_state_laws_all()
 	set category = "AI Commands"
 	set name = "State All Laws"
+
+	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+		boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+		return
+
 	if (tgui_alert(src.get_message_mob(), "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.", "State Laws", list("State Laws", "Cancel")) != "State Laws")
 		return
 
@@ -2255,7 +2266,7 @@ proc/is_mob_trackable_by_AI(var/mob/M)
 		return 0
 	if (istype(M, /mob/new_player))
 		return 0
-	if (ishuman(M) && (istype(M:wear_id, /obj/item/card/id/syndicate) || (istype(M:wear_id, /obj/item/device/pda2) && M:wear_id:ID_card && istype(M:wear_id:ID_card, /obj/item/card/id/syndicate))))
+	if (ishuman(M) && istype(get_id_card(M:wear_id), /obj/item/card/id/syndicate))
 		return 0
 	if(M.z != 1 && M.z != usr.z)
 		return 0
@@ -2286,7 +2297,7 @@ proc/get_mobs_trackable_by_AI()
 			continue //cameras can't follow people who haven't started yet DUH OR DIDN'T YOU KNOW THAT
 		if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
 			continue
-		if (ishuman(M) && (istype(M:wear_id, /obj/item/card/id/syndicate) || (istype(M:wear_id, /obj/item/device/pda2) && M:wear_id:ID_card && istype(M:wear_id:ID_card, /obj/item/card/id/syndicate))))
+		if (ishuman(M) && istype(get_id_card(M:wear_id), /obj/item/card/id/syndicate))
 			continue
 		if (istype(M,/mob/living/critter/aquatic) || istype(M, /mob/living/critter/small_animal/ranch_base/chicken))
 			continue
@@ -2618,7 +2629,7 @@ proc/get_mobs_trackable_by_AI()
 				A.cell = src.cell
 				src.cell.set_loc(A)
 				src.cell = null
-			A.anchored = 0
+			A.anchored = UNANCHORED
 			A.dismantle_stage = 4
 			A.update_appearance()
 			qdel(src)

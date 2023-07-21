@@ -6,7 +6,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 	desc = "Sure we got our health insurance benefits cut, and yeah we don't get any overtime on holidays, but hey - free to play claw machines!"
 	icon = 'icons/obj/plushies.dmi'
 	icon_state = "claw"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_MULTITOOL | DECON_WRENCH | DECON_CROWBAR
 	var/busy = 0
@@ -81,6 +81,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 		return FALSE
 	src.visible_message("<span class='alert'><b>[user] crams [his_or_her(user)] whole body up through the prize chute! That looked painful!</b></span>")
 	user.set_loc(src) // contents is used as prize list, no special handling
+	user.unequip_all()
 	bleed(user, 50, 50)
 	random_brute_damage(user, 200, FALSE)
 	playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 80)

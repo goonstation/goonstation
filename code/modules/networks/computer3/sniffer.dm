@@ -38,7 +38,7 @@
 						src.link = test_link
 						src.link.master = src
 
-						anchored = 1
+						anchored = ANCHORED
 						mode = 1
 						user.visible_message("[user] attaches the [src] to the data terminal.","You attach the [src] to the data terminal.")
 
@@ -53,7 +53,7 @@
 					boutput(user, "Device must be placed over a free data terminal to attach to it.")
 					return
 			else
-				anchored = 0
+				anchored = UNANCHORED
 				mode = 0
 				user.visible_message("[user] detaches the [src] from the data terminal.","You detach the [src] from the data terminal.")
 				icon_state = "sniffer0"
@@ -157,7 +157,7 @@
 			newdat += "<br>Included file ([strip_html(signal.data_file.name)], [strip_html(signal.data_file.extension)]): [. ? . : "Not printable."]"
 
 		src.packet_data += newdat
-		if (src.packet_data.len > src.max_logs)
+		if (length(src.packet_data) > src.max_logs)
 			src.packet_data.Cut(1,2)
 		src.last_intercept = world.time
 		src.updateIntDialog()

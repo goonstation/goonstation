@@ -42,10 +42,18 @@
 
 	attack_self(mob/M)
 		if (!src.armed)
-			M.show_text("You start to arm the beartrap...", "blue")
-			var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 2 SECONDS, /obj/item/beartrap/proc/arm,\
-			list(M), src.icon, src.icon_state, "[M] finishes arming [src]")
-			actions.start(action_bar, M)
+			var/turf/T = M.loc
+			if (isturf(T))
+				for(var/obj/item/beartrap/B in T)
+					if (B.armed)
+						M.show_text("There is already an armed beartrap here!", "red")
+						return
+				M.show_text("You start to arm the beartrap...", "blue")
+				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 2 SECONDS, /obj/item/beartrap/proc/arm,\
+				list(M), src.icon, src.icon_state, "[M] finishes arming [src]")
+				actions.start(action_bar, M)
+			else
+				M.show_text("There's no way you could arm the beartrap in here and get out safely!", "red")
 		return
 
 	Crossed(atom/movable/AM)
@@ -62,7 +70,7 @@
 			set_icon_state("bear_trap-open")
 			M.drop_item(src)
 			src.armed = TRUE
-			src.anchored = TRUE
+			src.anchored = ANCHORED
 			playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 		return
 
@@ -71,7 +79,7 @@
 			playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 			set_icon_state("bear_trap-close")
 			src.armed = FALSE
-			src.anchored = FALSE
+			src.anchored = UNANCHORED
 		return
 
 	proc/triggered(mob/target)
@@ -94,6 +102,6 @@
 			playsound(target.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 80, 1)
 			set_icon_state("bear_trap-close")
 			src.armed = FALSE
-			src.anchored = FALSE
+			src.anchored = UNANCHORED
 			logTheThing(LOG_COMBAT, target, "triggers [src] at [log_loc(src)]")
 		return

@@ -307,6 +307,9 @@
 			if ("invtoggle")
 				var/obj/item/I = master.equipped()
 				if (I)
+					if (I.try_specific_equip(user))
+						return
+
 					// this doesnt unequip the original item because that'd cause all the items to drop if you swapped your jumpsuit, I expect this to cause problems though
 					// ^-- You don't say.
 					// you can write multiline macros with \, please god don't write 400 character macros on one line
@@ -340,13 +343,13 @@
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_back, back)
 
-					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt BEFORE trying storages, and only swap if its not a storage swap
+					if (!master.belt?.storage || I.storage) // belt BEFORE trying storages, and only swap if its not a storage swap
 						autoequip_slot(slot_belt, belt)
 						if (master.equipped() != I)
 							return
 
 					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
-						S.master.Attackby(I, user, params)
+						S.master.add_contents_safe(I, user)
 						if (master.equipped() != I)
 							return
 
@@ -387,6 +390,9 @@
 			if ("equip")
 				var/obj/item/I = master.equipped()
 				if (I)
+					if (I.try_specific_equip(user))
+						return
+
 					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; if(!master.put_in_hand(C)){master.drop_from_slot(C, get_turf(C))} } master.force_equip(I, master.slot); return }
 					autoequip_slot(slot_shoes, shoes)
 					autoequip_slot(slot_gloves, gloves)
@@ -399,13 +405,13 @@
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_back, back)
 
-					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt BEFORE trying storages, and only swap if its not a storage swap
+					if (!master.belt?.storage || I.storage) // belt BEFORE trying storages, and only swap if its not a storage swap
 						autoequip_slot(slot_belt, belt)
 						if (master.equipped() != I)
 							return
 
 					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
-						S.master.Attackby(I, user, params)
+						S.master.add_contents_safe(I, user)
 						if (master.equipped() != I)
 							return
 
@@ -492,10 +498,10 @@
 			if ("ability")
 				if(!master.abilityHolder.hidden)
 					master.abilityHolder.hidden = TRUE
-					boutput(master, "No longer showing abilities.")
+					boutput(master, "<b class='alert'>No longer showing abilities.</b>")
 				else
 					master.abilityHolder.hidden = FALSE
-					boutput(master, "Now showing abilities.")
+					boutput(master, "<b class='success'>Now showing abilities.</b>")
 
 				ability_toggle.icon_state = "[layouts[layout_style]["ability_icon"]][!master.abilityHolder.hidden]"
 				update_ability_hotbar()

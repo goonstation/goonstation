@@ -125,7 +125,7 @@
 		// Remove changeling critter antagonist roles, as the mind is removed from the critter prior to death.
 		for (var/datum/antagonist/antag in mind_to_be_transferred.antagonists)
 			if (istype(antag, /datum/antagonist/subordinate/changeling_critter))
-				mind_to_be_transferred.remove_antagonist(antag.id)
+				mind_to_be_transferred.remove_antagonist(antag)
 
 		// Remove any previous hivemind member roles, and add a new one.
 		mind_to_be_transferred.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)

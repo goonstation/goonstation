@@ -1,5 +1,5 @@
 /atom/movable/screen
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_HUD//wow WOW why won't you use /atom/movable/screen/hud, HUD OBJECTS???
 	animate_movement = SLIDE_STEPS
 	text = ""
@@ -489,7 +489,7 @@
 /// debug purposes only, call this to print ALL of the information you could ever need
 /datum/hud/proc/debug_print_all()
 	if (!length(src.hud_zones))
-		boutput(world, "no hud zones, aborting")
+		boutput(world, "<span class='admin'>no hud zones, aborting")
 		return
 
 	boutput(world, "-------------------------------------------")

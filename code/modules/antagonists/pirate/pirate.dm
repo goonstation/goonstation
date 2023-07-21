@@ -1,6 +1,7 @@
 /datum/antagonist/pirate
 	id = ROLE_PIRATE
 	display_name = "\improper Pirate"
+	antagonist_icon = "pirate"
 
 	is_compatible_with(datum/mind/mind)
 		return isliving(mind.current)
@@ -57,16 +58,40 @@
 
 		H.traitHolder.addTrait("training_drinker")
 
+	add_to_image_groups()
+		. = ..()
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		var/datum/client_image_group/image_group = get_image_group(ROLE_PIRATE)
+		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind(src.owner)
+
+	remove_from_image_groups()
+		. = ..()
+		var/datum/client_image_group/image_group = get_image_group(ROLE_PIRATE)
+		image_group.remove_mind_mob_overlay(src.owner)
+		image_group.remove_mind(src.owner)
+
+	relocate()
+		var/mob/M = src.owner.current
+		if (id == ROLE_PIRATE_CAPTAIN)
+			M.set_loc(pick_landmark(LANDMARK_PIRATE_CAPTAIN, LANDMARK_LATEJOIN)) // Needed because if not spawned pirate get nulled
+		else if (id == ROLE_PIRATE_FIRST_MATE)
+			M.set_loc(pick_landmark(LANDMARK_PIRATE_FIRST_MATE, LANDMARK_LATEJOIN))
+		else
+			M.set_loc(pick_landmark(LANDMARK_PIRATE, LANDMARK_LATEJOIN))
 
 	first_mate
 		id = ROLE_PIRATE_FIRST_MATE
 		display_name = "\improper Pirate First Mate"
+		antagonist_icon = "pirate_first_mate"
 
 	captain
 		id = ROLE_PIRATE_CAPTAIN
 		display_name = "\improper Pirate Captain"
+		antagonist_icon = "pirate_captain"
 
-
+TYPEINFO(/obj/gold_bee)
+	mat_appearances_to_ignore = list("gold")
 /obj/gold_bee
 	name = "\improper Gold Bee Statue"
 	desc = "The artist has painstainkly sculpted every individual strand of bee wool to achieve this breath-taking result. You could almost swear this bee is about to spontaneously take flight."
@@ -75,12 +100,13 @@
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
+	default_material = "gold"
+	mat_changename = FALSE
 	var/list/gibs = list()
 
 	New()
 		..()
-		src.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)
 		for(var/i in 1 to 7)
 			gibs.Add(new /obj/item/stamped_bullion)
 			gibs.Add(new /obj/item/raw_material/gold)

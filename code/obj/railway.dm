@@ -230,7 +230,7 @@
 
 	name = "railway vehicle"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/road_rage_force = 40
 
 	New()
@@ -379,7 +379,7 @@
 		var/dump_angle = 90
 
 		on_trigger()
-			if (contents.len > 0)
+			if (length(contents) > 0)
 				var/dump_dir = turn(dir, dump_angle)
 				var/turf/T = get_step(loc, dump_dir)
 				for (var/atom/movable/AM in src)

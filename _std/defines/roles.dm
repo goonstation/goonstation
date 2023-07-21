@@ -2,6 +2,7 @@
 #define ROLE_SPY_THIEF "spy_thief"
 #define ROLE_NUKEOP "nukeop"
 #define ROLE_NUKEOP_COMMANDER "nukeop_commander"
+#define ROLE_SYNDICATE_AGENT "syndicate_agent"
 #define ROLE_VAMPIRE "vampire"
 #define ROLE_GANG_LEADER "gang_leader"
 #define ROLE_WIZARD "wizard"
@@ -9,6 +10,9 @@
 #define ROLE_WEREWOLF "werewolf"
 #define ROLE_BLOB "blob"
 #define ROLE_WRAITH "wraith"
+#define ROLE_POLTERGEIST "poltergeist"
+#define ROLE_HARBINGER_SUMMON "harbinger_summon"
+#define ROLE_PLAGUE_RAT "plague_rat"
 #define ROLE_HEAD_REVOLUTIONARY "head_revolutionary"
 #define ROLE_REVOLUTIONARY "revolutionary"
 #define ROLE_CONSPIRATOR "conspirator"
@@ -16,6 +20,7 @@
 #define ROLE_FLOCKMIND "flockmind"
 #define ROLE_FLOCKTRACE "flocktrace"
 #define ROLE_SALVAGER "salvager"
+#define ROLE_ANTAGONIST_CRITTER "antagonist_critter"
 #define ROLE_MISC "misc"
 
 // special antagonist roles

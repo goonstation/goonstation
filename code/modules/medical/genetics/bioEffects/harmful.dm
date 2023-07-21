@@ -485,7 +485,7 @@
 			for(var/turf/simulated/floor/T in orange(L, 10))
 				randomturfs.Add(T)
 
-			if (randomturfs.len > 0)
+			if (length(randomturfs) > 0)
 				L.emote("hiccup")
 				var/turf/destination = pick(randomturfs)
 				logTheThing(LOG_COMBAT, L, "was teleported by Spatial Destabilization from [log_loc(L)] to [log_loc(destination)].")
@@ -702,7 +702,7 @@
 			pulse.icon = 'icons/effects/effects.dmi'
 			pulse.icon_state = "emppulse"
 			pulse.name = "emp pulse"
-			pulse.anchored = 1
+			pulse.anchored = ANCHORED
 			SPAWN(2 SECONDS)
 				if (pulse) qdel(pulse)
 
@@ -903,7 +903,7 @@
 					for(var/turf/simulated/floor/T in orange(L, 10))
 						randomturfs.Add(T)
 
-					if (randomturfs.len > 0)
+					if (length(randomturfs) > 0)
 						L.emote("hiccup")
 						L.set_loc(pick(randomturfs))
 				if (3)

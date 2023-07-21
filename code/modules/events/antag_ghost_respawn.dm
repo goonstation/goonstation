@@ -354,7 +354,6 @@
 			lucky_dude.random_event_special_role = 1
 			if (!(lucky_dude in ticker.mode.Agimmicks))
 				ticker.mode.Agimmicks.Add(lucky_dude)
-			M3.antagonist_overlay_refresh(1, 0)
 
 			if (!isnull(objective_path))
 				if (ispath(objective_path, /datum/objective_set))
@@ -379,11 +378,11 @@
 						else
 							M3.set_loc(ASLoc)
 					if (2)
-						if (!job_start_locations["wizard"])
+						if (!landmarks[LANDMARK_WIZARD])
 							boutput(M3, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 							M3.set_loc(ASLoc)
 						else
-							M3.set_loc(pick(job_start_locations["wizard"]))
+							M3.set_loc(pick_landmark(LANDMARK_WIZARD))
 					if (3)
 						M3.set_loc(ASLoc)
 			//nah

@@ -1,6 +1,9 @@
 /datum/antagonist/nuclear_operative
 	id = ROLE_NUKEOP
 	display_name = "\improper Syndicate Operative"
+	antagonist_icon = "syndicate"
+	faction = FACTION_SYNDICATE
+	uses_pref_name = FALSE
 
 	var/static/commander_title
 	var/static/available_callsigns
@@ -65,6 +68,19 @@
 		boutput(H, "<span class='alert'>Your headset allows you to communicate on the Syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
 		src.assign_name()
 
+	add_to_image_groups()
+		. = ..()
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		var/datum/client_image_group/image_group = get_image_group(ROLE_NUKEOP)
+		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind(src.owner)
+
+	remove_from_image_groups()
+		. = ..()
+		var/datum/client_image_group/image_group = get_image_group(ROLE_NUKEOP)
+		image_group.remove_mind_mob_overlay(src.owner)
+		image_group.remove_mind(src.owner)
+
 	relocate()
 		var/mob/M = src.owner.current
 		if (src.id == ROLE_NUKEOP_COMMANDER)
@@ -105,3 +121,4 @@
 /datum/antagonist/nuclear_operative/commander
 	id = ROLE_NUKEOP_COMMANDER
 	display_name = "\improper Syndicate Operative Commander"
+	antagonist_icon = "syndcomm"

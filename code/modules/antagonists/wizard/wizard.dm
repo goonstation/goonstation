@@ -1,7 +1,10 @@
 /datum/antagonist/wizard
 	id = ROLE_WIZARD
 	display_name = "wizard"
+	antagonist_icon = "wizard"
 	success_medal = "You're no Elminster!"
+	faction = FACTION_WIZARD
+	uses_pref_name = FALSE
 
 	/// The ability holder of this wizard, containing their respective abilities.
 	var/datum/abilityHolder/wizard/ability_holder
@@ -45,7 +48,7 @@
 		H.equip_if_possible(new /obj/item/device/radio/headset/wizard(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/clothing/suit/wizrobe(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/clothing/head/wizard(H), H.slot_head)
-		H.equip_if_possible(new /obj/item/clothing/shoes/sandal/wizard(H), H.slot_shoes)
+		H.equip_if_possible(new /obj/item/clothing/shoes/sandal/magic/wizard(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), H.slot_l_store)
 		H.equip_if_possible(new /obj/item/paper/Wizardry101(H), H.slot_r_store)
 		H.equip_if_possible(new /obj/item/staff(H), H.slot_r_hand)
@@ -97,11 +100,22 @@
 		SPAWN(2.5 SECONDS)
 			src.owner.current.assign_gimmick_skull()
 
+	add_to_image_groups()
+		. = ..()
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		var/datum/client_image_group/image_group = get_image_group(ROLE_WIZARD)
+		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind(src.owner)
+
+	remove_from_image_groups()
+		. = ..()
+		var/datum/client_image_group/image_group = get_image_group(ROLE_WIZARD)
+		image_group.remove_mind_mob_overlay(src.owner)
+		image_group.remove_mind(src.owner)
+
 	relocate()
-		if (!job_start_locations["wizard"])
-			boutput(src.owner.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
-		else
-			src.owner.current.set_loc(pick(job_start_locations["wizard"]))
+		var/mob/M = src.owner.current
+		M.set_loc(pick_landmark(LANDMARK_WIZARD))
 
 	assign_objectives()
 		ticker.mode.bestow_objective(src.owner, /datum/objective/regular/assassinate, src)

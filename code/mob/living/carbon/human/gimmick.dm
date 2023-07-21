@@ -35,7 +35,7 @@
 
 /mob/living/carbon/human/cluwne/floor
 	nodamage = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = 0
 	plane = PLANE_UNDERFLOOR
 
@@ -72,7 +72,7 @@
 // Come to collect a poor unfortunate soul
 /mob/living/carbon/human/satan
 	nodamage = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = 0
 	plane = PLANE_UNDERFLOOR
 	New()
@@ -86,7 +86,7 @@
 			src.bioHolder.AddEffect("aura_fire", 0, 0, 1)
 
 /mob/living/carbon/human/satan/gimmick
-	anchored = 1
+	anchored = ANCHORED
 	layer = 4
 	plane = PLANE_DEFAULT
 
@@ -187,14 +187,6 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		. = ..()
 		src.ai = new /datum/aiHolder/wanderer(src)
 
-/datum/aiHolder/wanderer
-	New()
-		. = ..()
-		var/datum/aiTask/timed/wander/W =  get_instance(/datum/aiTask/timed/wander, list(src))
-		W.transition_task = W
-		default_task = W
-
-
 // how you gonna have father ted and father jack and not father dougal? smh
 
 /mob/living/carbon/human/fatherted
@@ -256,6 +248,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 	New()
 		..()
 		src.bioHolder.AddEffect("cow")
+		src.default_mutantrace = /datum/mutantrace/cow
 
 	initializeBioholder()
 		. = ..()
@@ -295,8 +288,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	for (var/obj/item/I in src.contents)
 		if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts)) continue //FUCK
 		hudlist += I
-		if (istype(I,/obj/item/storage))
-			hudlist += I.contents
+		if (I.storage)
+			hudlist += I.storage.get_contents()
 	hudlist += src.item_abilities
 
 	var/list/close_match = list()
@@ -549,7 +542,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			if(length(dead_mobs) && prob(60)) //SpyGuy for undefined var/len (what the heck)
 				var/mob/M = pick(dead_mobs)
 				say("[BILL_PICK("deadguy")] [M.name]...")
-			else if (alive_mobs.len > 0)
+			else if (length(alive_mobs) > 0)
 				if (murray && !greeted_murray)
 					greeted_murray = 1
 					say("[BILL_PICK("greetings")] Murray! How's it [BILL_PICK("verbs")]?")
@@ -702,6 +695,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	New()
 		..()
 		src.bioHolder.AddEffect("cow")
+		src.default_mutantrace = /datum/mutantrace/cow
 
 
 // merchant
@@ -856,6 +850,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	New()
 		..()
 		src.bioHolder.AddEffect("cow")
+		src.default_mutantrace = /datum/mutantrace/cow
 
 
 /mob/living/carbon/human/tommy
@@ -926,9 +921,9 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	switch(type)
 		if("spacer")
-			constructed_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(80)?SPACER_PICK("pejoratives")+" ":SPACER_PICK("superlatives")+" "][prob(10)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")]"
+			constructed_name = "[prob(10) ? SPACER_PICK("honorifics")+" " :""][prob(80)?SPACER_PICK("pejoratives")+" ":SPACER_PICK("superlatives")+" "][prob(10) ? SPACER_PICK("stuff")+" " : ""][SPACER_PICK("firstnames")]"
 		if("juicer")
-			constructed_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(20)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")+" "][prob(80)?SPACER_PICK("nicknames")+" ":""][prob(50)?SPACER_PICK("firstnames"):SPACER_PICK("lastnames")]"
+			constructed_name = "[prob(10) ? SPACER_PICK("honorifics")+" " :""][prob(20)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")+" "][prob(80) ? SPACER_PICK("nicknames")+" " : ""][prob(50)?SPACER_PICK("firstnames") : SPACER_PICK("lastnames")]"
 
 	return constructed_name
 

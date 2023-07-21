@@ -61,7 +61,7 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/New()
 	..()
 	src.center_marker = new(locate(0,0,1))
-	src.center_marker.anchored = TRUE
+	src.center_marker.anchored = ANCHORED
 	src.center_marker.mouse_opacity = 0
 	src.center_marker.icon = 'icons/misc/featherzone-160x160.dmi'
 	src.center_marker.icon_state = "structure-relay"

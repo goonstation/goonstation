@@ -43,7 +43,8 @@
 
 		// give back stored pills first
 		if (src.contents.len)
-			P = src.contents[src.contents.len]
+			for (var/i = src.contents.len; i > 0 && !istype(P, /obj/item/reagent_containers/pill), i--)
+				P = src.contents[i]
 
 		// otherwise create a new one from the reagent holder
 		else if (pcount)
@@ -97,7 +98,7 @@
 				P.set_loc(T)
 				P = src.create_pill()
 				i--
-			if (src.pcount + src.contents.len > 0)
+			if (src.pcount + length(src.contents) > 0)
 				boutput(user, "<span class='notice'>You tip out a bunch of pills from [src] into [T].</span>")
 			else
 				boutput(user, "<span class='notice'>You tip out all the pills from [src] into [T].</span>")

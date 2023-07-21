@@ -16,7 +16,7 @@ TYPEINFO(/obj/machinery/networked/logreader)
 	icon_state = "computer_generic"
 	name = "door access logs"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	device_tag = "PNET_LOGREADER"
 	timeout = 10
 	power_usage = 100
@@ -539,7 +539,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 				var/datum/computer/folder/logs_dir = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"=log_to))
 				if (istype(logs_dir))
 					var/idx = 0
-					while (logs_dir.contents.len >= ACCESSLOG_RECORDS_LIMIT)
+					while (length(logs_dir.contents) >= ACCESSLOG_RECORDS_LIMIT)
 						idx++
 						if (idx > logs_dir.contents.len)
 							message_user("Could not make space for new entry.")

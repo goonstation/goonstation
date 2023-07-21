@@ -53,6 +53,8 @@ var/global
 	datum/hotspot_controller/hotspot_controller = new
 		//items that ask to be called every cycle
 
+	last_input_loop_time = 0
+
 	list/muted_keys = list()
 
 	server_start_time = 0
@@ -248,7 +250,7 @@ var/global
 	speechpopups = 1
 
 	monkeysspeakhuman = 0
-	traitorsseeeachother = FALSE
+	antagonists_see_each_other = FALSE
 	late_traitors = 1
 	no_automatic_ending = 0
 
@@ -407,11 +409,11 @@ var/global
 	//airlockWireColorToIndex takes a number representing the wire color, e.g. the orange wire is always 1, the dark red wire is always 2, etc. It returns the index for whatever that wire does.
 	//airlockIndexToWireColor does the opposite thing - it takes the index for what the wire does, for example AIRLOCK_WIRE_IDSCAN is 1, AIRLOCK_WIRE_POWER1 is 2, etc. It returns the wire color number.
 	//airlockWireColorToFlag takes the wire color number and returns the flag for it (1, 2, 4, 8, 16, etc)
-	list/airlockWireColorToFlag = RandomAirlockWires()
+	list/airlockWireColorToFlag
 	list/airlockIndexToFlag
 	list/airlockIndexToWireColor
 	list/airlockWireColorToIndex
-	list/APCWireColorToFlag = RandomAPCWires()
+	list/APCWireColorToFlag
 	list/APCIndexToFlag
 	list/APCIndexToWireColor
 	list/APCWireColorToIndex
@@ -426,45 +428,6 @@ var/global
 
 	//SpyGuy: The reagents cache is now an associative list
 	list/reagents_cache = list()
-
-	// Antag overlays for admin ghosts, Syndieborgs and the like (Convair880).
-	antag_generic = image('icons/mob/antag_overlays.dmi', icon_state = "generic")
-	antag_syndieborg = image('icons/mob/antag_overlays.dmi', icon_state = "syndieborg")
-	antag_traitor = image('icons/mob/antag_overlays.dmi', icon_state = "traitor")
-	antag_changeling = image('icons/mob/antag_overlays.dmi', icon_state = "changeling")
-	antag_wizard = image('icons/mob/antag_overlays.dmi', icon_state = "wizard")
-	antag_vampire = image('icons/mob/antag_overlays.dmi', icon_state = "vampire")
-	antag_hunter = image('icons/mob/antag_overlays.dmi', icon_state = "hunter")
-	antag_werewolf = image('icons/mob/antag_overlays.dmi', icon_state = "werewolf")
-	antag_emagged = image('icons/mob/antag_overlays.dmi', icon_state = "emagged")
-	antag_mindhack = image('icons/mob/antag_overlays.dmi', icon_state = "mindhack")
-	antag_master = image('icons/mob/antag_overlays.dmi', icon_state = "mindhack_master")
-	antag_vampthrall = image('icons/mob/antag_overlays.dmi', icon_state = "vampthrall")
-	antag_head = image('icons/mob/antag_overlays.dmi', icon_state = "head")
-	antag_rev = image('icons/mob/antag_overlays.dmi', icon_state = "rev")
-	antag_revhead = image('icons/mob/antag_overlays.dmi', icon_state = "rev_head")
-	antag_syndicate = image('icons/mob/antag_overlays.dmi', icon_state = "syndicate")
-	antag_syndicate_comm = image('icons/mob/antag_overlays.dmi', icon_state = "syndcomm")
-	antag_spyleader = image('icons/mob/antag_overlays.dmi', icon_state = "spy")
-	antag_spyminion = image('icons/mob/antag_overlays.dmi', icon_state = "spyminion")
-	antag_gang = image('icons/mob/antag_overlays.dmi', icon_state = "gang")
-	antag_gang_leader = image('icons/mob/antag_overlays.dmi', icon_state = "gang_head")
-	antag_grinch = image('icons/mob/antag_overlays.dmi', icon_state = "grinch")
-	antag_wraith = image('icons/mob/antag_overlays.dmi', icon_state = "wraith")
-	antag_omnitraitor = image('icons/mob/antag_overlays.dmi', icon_state = "omnitraitor")
-	antag_blob = image('icons/mob/antag_overlays.dmi', icon_state = "blob")
-	antag_wrestler = image('icons/mob/antag_overlays.dmi', icon_state = "wrestler")
-	antag_spy_theft = image('icons/mob/antag_overlays.dmi', icon_state = "spy_thief")
-	antag_arcfiend = image('icons/mob/antag_overlays.dmi', icon_state = "arcfiend")
-	antag_salvager = image('icons/mob/antag_overlays.dmi', icon_state = "salvager")
-	antag_pirate = image('icons/mob/antag_overlays.dmi', icon_state = "pirate")
-	antag_pirate_first_mate = image('icons/mob/antag_overlays.dmi', icon_state = "pirate_first_mate")
-	antag_pirate_captain = image('icons/mob/antag_overlays.dmi', icon_state = "pirate_captain")
-
-	pod_wars_NT = image('icons/mob/antag_overlays.dmi', icon_state = "nanotrasen")
-	pod_wars_NT_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "nanocomm")
-	pod_wars_SY = image('icons/mob/antag_overlays.dmi', icon_state = "syndicate")
-	pod_wars_SY_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "syndcomm")
 
 	//SpyGuy: Oh my fucking god the QM shit. *cry *wail *sob *weep *vomit *scream
 	list/datum/supply_packs/qm_supply_cache = list()
@@ -487,11 +450,6 @@ var/global
 
 	centralConn = 1 //Are we able to connect to the central server?
 	centralConnTries = 0 //How many times have we tried and failed to connect?
-
-	/* nuclear reactor & parameter set, if it exists */
-	obj/machinery/power/nuke/fchamber/nuke_core = null
-	obj/machinery/power/nuke/nuke_turbine/nturbine = null
-	datum/nuke_knobset/nuke_knobs = null
 
 	//Resource Management
 	list/localResources = list()

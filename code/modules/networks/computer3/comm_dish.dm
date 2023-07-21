@@ -5,7 +5,7 @@ TYPEINFO(/obj/machinery/communications_dish)
 	name = "Communications dish"
 	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "def_radar"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/list/messagetitle = list()
 	var/list/messagetext = list()
@@ -100,7 +100,7 @@ TYPEINFO(/obj/machinery/communications_dish)
 			if (src.status & (BROKEN|NOPOWER))
 				return
 
-			if (cargo_logs.len > 20)
+			if (length(cargo_logs) > 20)
 				cargo_logs.len = 10
 
 			var/shiftTime = round(ticker.round_elapsed_ticks / 600)
