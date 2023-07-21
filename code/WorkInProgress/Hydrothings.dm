@@ -766,7 +766,7 @@
 	brutevuln = 1
 	angertext = "hoots angrily at"
 	death_text = "%src% falls into a heap on the floor and releases a gargled hoot."
-	butcherable = BUTCHER_YOU_MONSTER
+	butcherable = BUTCHER_ALLOWED
 	flying = 1
 	chases_food = 1
 	scavenger = 1
