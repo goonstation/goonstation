@@ -23,7 +23,14 @@
 		return
 
 	doWork()
+		var/topHeat = 0
+		//calculate all heats
 		for(var/obj/decal/gangtag/I in by_cat[TR_CAT_GANGTAGS])
 			if (!I || I.disposed || I.qdeled)
 				continue
-			I.score_players()
+			topHeat = max(I.get_heat(), topHeat)
+
+		for(var/obj/decal/gangtag/I in by_cat[TR_CAT_GANGTAGS])
+			if (!I || I.disposed || I.qdeled)
+				continue
+			I.apply_score(topHeat)

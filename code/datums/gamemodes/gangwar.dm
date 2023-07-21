@@ -253,8 +253,9 @@
 	return pick(mindList)
 
 
-var/gangGreetings[] = list("Yo","Whassup","Hey","Sup","Hiya","Oi" )
-var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","Over n out.","lol" )
+var/gangGreetings[] = list("yo", "hey","hiya","oi", "psst", "pssst" )
+var/gangIntermediates[] = list("don't ask how I got your number.","heads up.", "help us out.")
+var/gangEndings[] = list("best of luck.", "maybe help them, yeah?", "stay in line and you'll probably live.", "don't think of stealing it.")
 /datum/game_mode/gang/proc/process_lootbag_spawn()
 	for(var/i = 1 to loot_drop_count)
 		var/area/loot_zone = pick(potential_hot_zones)
@@ -265,7 +266,7 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 		var/disposalList[0]
 		var/valid
 
-		var message = pick(gangGreetings) +", [prob(20) ? " don't ask how I got your number - " : null]"
+		var message = pick(gangGreetings) +", [prob(20) ? pick(gangIntermediates) : null]"
 		for (var/turf/simulated/floor/T in loot_zone.contents)
 			if (!T.density)
 				valid = 1
@@ -293,37 +294,39 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 			target.override_default_behaviour = 1
 			target.additional_items.Add(/obj/item/gang_loot/guns_and_gear)
 			target.max_uses = 1
+			target.spawn_chance = 75
 			target.last_use = 0
-			message += " we left some goods in a bush somewhere around [loot_zone]."
+
+			message += " we left some goods in a bush somewhere around \the [loot_zone]."
 
 		else if(length(crateList))
 			var/obj/storage/target = pick(crateList)
 			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
-			message += " we left a bag in [target], somewhere around [loot_zone]. "
+			message += " we left a bag in \the [target], somewhere around \the [loot_zone]. "
 
 		else if(length(disposalList))
 			var/obj/machinery/disposal/target = pick(disposalList)
 			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
-			message += " we left a bag in [target], somewhere around [loot_zone]. "
+			message += " we left a bag in \the [target], somewhere around \the [loot_zone]. "
 
 		else if(length(turfList))
 			var/turf/simulated/floor/target = pick(turfList)
 			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
 			target.contents.Add(loot)
 			loot.hide(target.intact)
-			message += " we had to hide a bag in [loot_zone], under the floor tiles. "
+			message += " we had to hide a bag in \the [loot_zone], under the floor tiles. "
 		else
 			var/turf/simulated/floor/target = pick(uncoveredTurfList)
 			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
 			target.contents.Add(loot)
 			loot.hide(target.intact)
-			message += " we had to hide a bag in [loot_zone]. "
+			message += " we had to hide a bag in \the [loot_zone]. "
 
 
-		message += "You won't find it useful, but there are some guys aboard who will. "
+		message += "You won't find it useful, but there are folks aboard who might come looking. "
 
 		if (prob(40))
-			message += pick(gangSalutations)
+			message += pick(gangEndings)
 		var/datum/mind/civvie = get_random_civvie()
 
 		var/datum/signal/newsignal = get_free_signal()
@@ -690,7 +693,7 @@ proc/broadcast_to_all_gangs(var/message)
 		tag.name = "[src.gang_name] tag"
 		tag.owners = src
 		tag.delete_same_tags()
-		src.claim_tiles(T, GANG_TAG_INFLUENCE, GANG_TAG_MINIMUM_RANGE)
+		src.claim_tiles(T, GANG_TAG_INFLUENCE, GANG_TAG_SIGHT_RANGE)
 		var/area/area = T.loc
 		T.tagged = TRUE
 		area.gang_owners = src
@@ -812,13 +815,13 @@ proc/broadcast_to_all_gangs(var/message)
 
 
 
-		for (var/obj/decal/gangtag/tag in orange(GANG_TAG_MINIMUM_RANGE,target))
-			if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_MINIMUM_RANGE)) continue
+		for (var/obj/decal/gangtag/tag in orange(GANG_TAG_SIGHT_RANGE,target))
+			if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_SIGHT_RANGE)) continue
 			if (tag.owners == user.get_gang())
 				boutput(user, "<span class='alert'>This is too close to an existing tag!</span>")
 				return
-		for (var/obj/ganglocker/locker in orange(GANG_TAG_MINIMUM_RANGE_LOCKER,target))
-			if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_MINIMUM_RANGE_LOCKER)) continue
+		for (var/obj/ganglocker/locker in orange(GANG_TAG_SIGHT_RANGE_LOCKER,target))
+			if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_SIGHT_RANGE_LOCKER)) continue
 			if (locker.gang == user.get_gang())
 				boutput(user, "<span class='alert'>This is too close to your locker!</span>")
 				return
@@ -878,29 +881,6 @@ proc/broadcast_to_all_gangs(var/message)
 			return
 		if(!ishuman(user))
 			boutput(user, "<span class='alert'>You don't have the dexterity to spray paint a gang tag!</span>")
-
-		if(getarea.gang_owners && getarea.gang_owners != gang && !turftarget.tagged)
-			boutput(user, "<span class='alert'>[getarea.gang_owners.gang_name] own this area! You must paint over their tag to capture it!</span>")
-			if (user.GetComponent(/datum/component/tracker_hud))
-				return
-			var/datum/game_mode/gang/mode = ticker.mode
-			if (!istype(mode))
-				return
-			for (var/datum/gang/other_gang in mode.gangs)
-				for (var/obj/decal/cleanable/gangtag/tag in other_gang.tags)
-					if (get_area(tag) == getarea)
-						user.AddComponent(/datum/component/tracker_hud/gang, get_turf(tag))
-						SPAWN(3 SECONDS)
-							var/datum/component/tracker_hud/gang/component = user.GetComponent(/datum/component/tracker_hud/gang)
-							component.RemoveComponent()
-						return
-			return
-		if(getarea.being_captured)
-			boutput(user, "<span class='alert'>Somebody is already tagging that area!</span>")
-			return
-		if(getarea.gang_owners == gang)
-			boutput(user, "<span class='alert'>This place is already owned by your gang!</span>")
-			return
 
 		user.visible_message("<span class='alert'>[user] begins to paint a gang tag on the [turftarget.name]!</span>")
 		actions.start(new/datum/action/bar/icon/spray_gang_tag(turftarget, src), user)
@@ -980,7 +960,7 @@ proc/broadcast_to_all_gangs(var/message)
 		S.in_use = FALSE
 		target_area.being_captured = FALSE
 		for (var/obj/decal/gangtag/otherTag in range(1,target_turf))
-			otherTag.owners.unclaim_tiles(target_turf,GANG_TAG_INFLUENCE, GANG_TAG_MINIMUM_RANGE)
+			otherTag.owners.unclaim_tiles(target_turf,GANG_TAG_INFLUENCE, GANG_TAG_SIGHT_RANGE)
 			otherTag.owners = null
 
 		src.gang.make_tag(target_turf)
@@ -1596,7 +1576,6 @@ proc/broadcast_to_all_gangs(var/message)
 			update_icon()
 			var/mob/living/carbon/human/H = O
 			var/obj/item/implant/imp= new/obj/item/implant/projectile/body_visible/janktanktwo(H)
-			imp.implanted(H, user)
 			qdel(src)
 
 /obj/item/tool/quickhack
@@ -1952,25 +1931,45 @@ proc/broadcast_to_all_gangs(var/message)
 	icon_state = "gangtag0"
 	var/datum/gang/owners = null
 	var/list/mobs[0]
+	var/heat = 0 // a rough estimation of how regularly this tag has people near it
+	var/image/heatTracker
+
 	proc/delete_same_tags()
 		for(var/obj/decal/gangtag/T in get_turf(src))
 			if(T.owners == src.owners && T != src) qdel(T)
 
 	proc/find_players()
-		for(var/mob/M in view(GANG_TAG_INFLUENCE, src.loc))
-			if(M.client)
+		for(var/mob/M in oview(GANG_TAG_SIGHT_RANGE, src.loc))
+			if (IN_EUCLIDEAN_RANGE(src,M,GANG_TAG_SIGHT_RANGE))
+			//if(M.client)
 				mobs[M] = 1
-	proc/score_players()
-		var/score = 0
-		for(var/thing in mobs)
-			score = score + GANG_TAG_POINTS_PER_VIEWER
 
+	proc/get_heat()
+		for(var/thing in mobs)
+			heat++
+
+		heat = round(heat * 0.7, 0.01) //slowly decay heat
+		mobs = list()
+		return heat
+
+	proc/apply_score(var/largestHeat)
+		var/mappedHeat
+		if (heat == 0 || largestHeat == 0)
+			mappedHeat = 0
+		else
+			var/pct = heat/largestHeat
+			var/calculatedHeat = log(10,10*pct)*5
+			if (calculatedHeat < 0)
+				mappedHeat = 0
+			else
+				mappedHeat = round(max(0,calculatedHeat))+1
+
+
+		var/score = 0
+		score = score + (mappedHeat * GANG_TAG_POINTS_PER_HEAT)
 		owners.score_turf += score
 		owners.add_points(score)
-
-		mobs = list()
-		boutput(world, "Scored [score] points for [owners.gang_name]")
-
+		heatTracker.icon_state = "gang_heat_[mappedHeat]"
 
 	New()
 		..()
@@ -1979,7 +1978,16 @@ proc/broadcast_to_all_gangs(var/message)
 			T.layer = 3
 
 		src.layer = 4
+
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		heatTracker = image('icons/effects/gang_tag.dmi', get_turf(src))
+		heatTracker.icon_state = "gang_heat_0"
+		imgroup.add_image(heatTracker)
+
+
 	Del()
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		imgroup.remove_image(heatTracker)
 		STOP_TRACKING_CAT(TR_CAT_GANGTAGS)
 		..()
 	setup()

@@ -976,7 +976,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		janktanktwo
 			name = "spent JankTank II"
 			pull_out_name = "syringe"
-			desc = "A large syringe ripped straight out of some poor, presumably dead gangbanger! What a waste."
+			desc = "A large syringe ripped straight out of some poor, presumably dead gang member!"
 			icon = 'icons/obj/syringe.dmi'
 			icon_state = "dna_scrambler_2"
 			var/full = TRUE
@@ -1006,21 +1006,19 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					//heal basic damage
 					H.take_oxygen_deprivation(-INFINITY)
 					H.take_brain_damage(-H.get_brain_damage())
+					var/desiredDamage = H.max_health * (1-JANKTANK2_DESIRED_HEALTH_PCT)
 					var/damage = H.max_health - H.health
-					var/desired = H.max_health * (JANKTANK2_DESIRED_HEALTH_PCT)
 					var/multi = 0
 					if (damage > 0)
-						multi = max(0,1-(desired/damage)) //what to multiply all damage by to get to desired HP,
+						multi = max(0,1-(desiredDamage/damage)) //what to multiply all damage by to get to desired HP,
 					H.blood_volume = max(min(H.blood_volume,550),480)
 					H.HealDamage("All", H.get_brute_damage()*multi, H.get_burn_damage()*multi, H.get_toxin_damage()*multi)
 
-					//fix poisons
 					H.visible_message("<span class='alert'>[H] shudders to life!</span>")
 					playsound(H.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 0)
 					playsound(H.loc, 'sound/misc/meat_plop.ogg', 30, 0)
 					H.reagents.reaction(get_turf(H.loc),TOUCH, H.reagents.total_volume)
 					H.vomit()
-
 					//un-kill organs
 					for (var/organ_slot in H.organHolder.organ_list)
 						var/obj/item/organ/O = H.organHolder.organ_list[organ_slot]
@@ -1047,7 +1045,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 						#ifdef USE_STAMINA_DISORIENT
 						H.do_disorient(H.get_stamina()+75, disorient = 100, remove_stamina_below_zero = 1, target_type = DISORIENT_NONE)
 						#endif
-
 
 
 
