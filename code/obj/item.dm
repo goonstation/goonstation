@@ -1242,6 +1242,8 @@
 	src.material_on_attack_use(user, M)
 	for (var/atom/A in M)
 		A.material_trigger_on_mob_attacked(user, M, src, hit_area)
+	for (var/atom/equipped_stuff in M.equipped())
+		equipped_stuff.material_trigger_on_mob_attacked(user, M, src, hit_area)
 
 	user.violate_hippocratic_oath()
 

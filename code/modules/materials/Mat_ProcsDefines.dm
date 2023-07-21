@@ -448,9 +448,9 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	return
 
 /// Called when an atom is affected by a heat change
-/atom/proc/material_trigger_on_temp(var/temp)
+/atom/proc/material_trigger_on_temp(var/temperature_applied)
 	if (src.material)
-		src.material?.triggerTemp(src, temp)
+		src.material?.triggerTemp(src, temperature_applied)
 	return
 
 /// Called when the item is attacked with another atom for mat effects.

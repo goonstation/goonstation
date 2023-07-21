@@ -175,6 +175,8 @@ datum
 			M.material_trigger_on_chems(src, volume)
 			for(var/atom/A in M)
 				A.material_trigger_on_chems(src, volume)
+			for(var/atom/equipped_stuff in M.equipped())
+				equipped_stuff.material_trigger_on_chems(src, volume)
 			return did_not_react
 
 		proc/reaction_obj(var/obj/O, var/volume) //By default we transfer a small part of the reagent to the object

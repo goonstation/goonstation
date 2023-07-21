@@ -48,8 +48,12 @@
 		return TRUE
 	src.material_on_attack_use(src, hit_atom)
 	hit_atom.material_trigger_when_attacked(src, null, 2)
-	for(var/atom/A in hit_atom)
-		A.material_trigger_on_mob_attacked(src, hit_atom, src, "chest")
+	if(ismob(hit_atom))
+		var/mob/hit_mob = hit_atom
+		for(var/atom/A in hit_mob)
+			A.material_trigger_on_mob_attacked(src, hit_atom, src, "chest")
+		for(var/atom/A in hit_mob.equipped())
+			A.material_trigger_on_mob_attacked(src, hit_atom, src, "chest")
 
 	if(!hit_atom)
 		return TRUE

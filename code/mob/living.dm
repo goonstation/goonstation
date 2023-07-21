@@ -1910,6 +1910,8 @@
 	src.material_trigger_on_bullet(src, P)
 	for (var/atom/A in src)
 		A.material_trigger_on_bullet(src, P)
+	for (var/atom/equipped_stuff in src.equipped())
+		equipped_stuff.material_trigger_on_bullet(src, P)
 
 	if (!P.proj_data)
 		return 0

@@ -504,6 +504,9 @@
 			for (var/atom/A in src.contents)
 				A.material_trigger_on_temp(T0C + 900)
 
+			for (var/atom/equipped_stuff in src.equipped())
+				equipped_stuff.material_trigger_on_temp(T0C + 900)
+
 			if(src.traitHolder && src.traitHolder.hasTrait("burning"))
 				if(prob(50))
 					src.update_burning(1)

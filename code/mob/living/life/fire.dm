@@ -16,3 +16,6 @@
 
 			for (var/atom/A in owner.contents)
 				A.material_trigger_on_temp(T0C + 900)
+
+			for (var/atom/equipped_stuff in owner.equipped())
+				equipped_stuff.material_trigger_on_temp(T0C + 900)

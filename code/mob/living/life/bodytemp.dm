@@ -81,6 +81,9 @@
 			for (var/atom/A in owner.contents)
 				A.material_trigger_on_temp(environment.temperature)
 
+			for (var/atom/equipped_stuff in owner.equipped())
+				equipped_stuff.material_trigger_on_temp(environment.temperature)
+
 		// decoupled this from environmental temp - this should be more for hypothermia/heatstroke stuff
 		//if (src.bodytemperature > src.base_body_temp || src.bodytemperature < src.base_body_temp)
 

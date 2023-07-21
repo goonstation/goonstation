@@ -195,6 +195,10 @@
 				M.blob_act(overmind.attack_power * 20)
 				if(isliving(M))
 					var/mob/living/L = M
+					for (var/obj/equipped_stuff in L.equipped())
+						equipped_stuff.material_trigger_on_blob_attacked(overmind.attack_power * 20)
+					for (var/obj/contained_stuff in L.contents)
+						contained_stuff.material_trigger_on_blob_attacked(overmind.attack_power * 20)
 					L.was_harmed(src)
 			for (var/obj/O in T.contents)
 				O.blob_act(overmind.attack_power * 20)
