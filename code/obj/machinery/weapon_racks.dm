@@ -227,7 +227,7 @@
 		if (src.malfunction)
 			user.shock(src, 7500, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, 0)
 
-			//Due to using attack_hand with items in hand line 274 and 286 this makes sure nothing unintended happenes while hacking like taking a weapon out with a tool
+			//Due to using attack_hand with items in hand this makes sure nothing unintended happenes while hacking like taking a weapon out with a tool
 		if ((user.find_tool_in_hand(TOOL_SNIPPING) || user.find_tool_in_hand(TOOL_PULSING)) && user.equipped())
 			return
 
