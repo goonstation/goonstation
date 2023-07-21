@@ -20962,6 +20962,7 @@
 "jcG" = (
 /obj/storage/closet/office,
 /obj/item/camera,
+/obj/item/storage/toolbox/artistic,
 /turf/simulated/floor/grey/side{
 	dir = 9
 	},
@@ -29546,6 +29547,7 @@
 /obj/table/wood/round/auto,
 /obj/item/clothing/suit/cultist/nerd,
 /obj/item/clothing/mask/skull,
+/obj/item/clothing/head/apprentice,
 /turf/simulated/floor/carpet/red/fancy/innercorner/west,
 /area/station/crew_quarters/arcade/dungeon)
 "mDc" = (
