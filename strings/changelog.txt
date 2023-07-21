@@ -1,5 +1,9 @@
 
 (t)fri jul 21 23
+(u)Tyrant
+(p)14945
+(e)🪲|C-Bug
+(+)Lollipops have colours once again.
 (u)Cheffie
 (p)15015
 (e)🪲🎨💅🐁|C-Bug, C-Sprites, C-QoL, A-Critters
