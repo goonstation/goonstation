@@ -1,6 +1,15 @@
-// attach this component only to things that have can_bouquet as a var.
+// WARNING: attach this component only to things that have can_bouquet as a var.
 // so far this includes /obj/item/clothing/head/flower and /obj/item/plant
 // Actual bouquets are in 'code/obj/item/bouquet.dm'
+
+/* STEPS TO ADDING A NEW FLOWER TO BE BOUQUETABLE
+1.	create three sprites for them in bouquets.dmi. names them name_l, name_m, and name_r for left middle and right.
+	Visually, the middle ones cover the ones at the sides. Keep that in mind.
+2.	Go to the flower involved and add the component in the New() proc. Look at lavender to see how it's done.
+3.	If your flower has spaces in its name, reference how bird of paradise is handled. Give its icon_state an alternate name.
+	At around line 108 of code/obj/item/bouquet.dm, add in the exception. the format is shown in the surrounding code.
+4. Optionally, at the bottom of code/obj/item/bouquet.dm, create a subtype of premade monotype bouquets
+*/
 
 /// the bouquet component, that allows flowers of various parentage to be wrapped into bouquets
 /datum/component/bouquet

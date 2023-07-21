@@ -1,5 +1,6 @@
 // note: bouquets work hand in hand with the bouquet component attached to flowers.
 // accessible at 'code/datums/components/bouquet.dm'
+// instructions on how to add new flowers are there
 
 /obj/item/bouquet
 	name = "bouquet"
