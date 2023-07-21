@@ -13,7 +13,7 @@ proc/make_cleanable(var/type,var/loc)
 
 /obj/decal/cleanable
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/can_sample = 0
 	var/sampled = 0
 	var/sample_amt = 10
@@ -239,7 +239,7 @@ proc/make_cleanable(var/type,var/loc)
 					new_overlay.color = add_color
 					src.last_color = add_color
 
-				if (src.overlays.len >= 4) //stop adding more overlays you're lagging client FPS!!!!
+				if (length(src.overlays) >= 4) //stop adding more overlays you're lagging client FPS!!!!
 					src.UpdateOverlays(new_overlay, "cleanablefinal")
 				else
 					src.UpdateOverlays(new_overlay, "cleanble[length(src.overlays)]")
@@ -566,7 +566,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/blood/gibs
 	name = "gibs"
 	desc = "Grisly..."
-	anchored = 0
+	anchored = UNANCHORED
 	layer = OBJ_LAYER
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gibbl5"
@@ -1025,7 +1025,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	name = "green vomit"
 	desc = "That's just wrong."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/effects/vomit.dmi'
 	icon_state = "green1"
 	var/dried = 0
@@ -1070,8 +1070,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 						M.show_message("<span class='notice'><b>[user]</b> is sticking their fingers into [src] and pushing it into [I]. It's all slimy and stringy. Oh god.</span>", 1)
 						if (prob(33) && ishuman(M) && !isdead(M))
 							M.show_message("<span class='alert'>You feel ill from watching that.</span>")
-							M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)]. Thanks, [user].</span>", 1)
-							M.vomit()
+							var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>"
+							M.vomit(0, null, vomit_message)
 
 				I.reagents.handle_reactions()
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
@@ -1201,7 +1201,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	layer = MOB_LAYER+1
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "cobweb1"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/decal/cleanable/molten_item
 	name = "gooey grey mass"
@@ -1209,7 +1209,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	layer = OBJ_LAYER
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "molten"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/decal/cleanable/cobweb2
 	name = "cobweb"
@@ -1279,13 +1279,12 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/martian_viscera
 	name = "chunky martian goop"
 	desc = "Gross alien flesh. Do not ingest. Do not apply to face."
-	anchored = 0
+	anchored = UNANCHORED
 	layer = OBJ_LAYER
 	sample_reagent = "martian_flesh"
 	sample_verb = "scoop"
 	can_sample = 1
-	icon = null
-	icon_state = "rel-gib2"
+	icon_state = "gib2"
 
 /obj/decal/cleanable/martian_viscera/fluid
 	name = "sticky martian goop"
@@ -1295,7 +1294,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/flockdrone_debris
 	name = "weird stringy crystal fibres"
 	desc = "Aw hell it's probably going to ruin your lungs if you breathe those. It's probably space alien asbestos or something. They're all sticky too, eww."
-	anchored = 0
+	anchored = UNANCHORED
 	layer = OBJ_LAYER
 	sample_reagent = "flockdrone_fluid"
 	sample_verb = "scoop"
@@ -1309,14 +1308,14 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	name = "viscous teal fluid"
 	desc = "Is it like weird alien blood? Weird alien oil? Aw man that looks like it'd never wash out."
 	random_icon_states = list("fluid1", "fluid2", "fluid3")
-	anchored = 1
+	anchored = ANCHORED
 	slippery = 50
 	stain = "teal-stained"
 
 /obj/decal/cleanable/machine_debris
 	name = "twisted shrapnel"
 	desc = "A chunk of broken and melted scrap metal."
-	anchored = 0
+	anchored = UNANCHORED
 	layer = OBJ_LAYER
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "gib1"
@@ -1330,7 +1329,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/robot_debris
 	name = "robot debris"
 	desc = "Useless heap of junk."
-	anchored = 0
+	anchored = UNANCHORED
 	layer = OBJ_LAYER
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "gib1"
@@ -1456,12 +1455,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
-		if (istype(AM, /obj/critter/slug))
-			var/obj/critter/slug/S = AM
-			S.visible_message("<span class='alert'>[S] shrivels up!</span>")
-			S.CritterDeath()
-			return
-		else if (!isliving(AM) || isobj(AM) || isintangible(AM))
+		if (!isliving(AM) || isobj(AM) || isintangible(AM))
 			return
 		var/mob/M = AM
 		var/oopschance = 0
@@ -1693,7 +1687,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	name = "gang tag"
 	desc = "A spraypainted gang tag."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	layer = OBJ_LAYER
 	icon = 'icons/obj/decals/graffiti.dmi'
 	icon_state = "gangtag0"

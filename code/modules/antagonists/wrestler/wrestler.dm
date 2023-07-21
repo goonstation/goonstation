@@ -1,6 +1,7 @@
 /datum/antagonist/wrestler
 	id = ROLE_WRESTLER
 	display_name = "wrestler"
+	antagonist_icon = "wrestler"
 	success_medal = "Cream of the Crop"
 	var/fake = FALSE
 
@@ -12,9 +13,43 @@
 
 	give_equipment(fake_equipment = FALSE)
 		src.fake = fake_equipment
+		src.owner.current.add_wrestle_powers(fake_equipment)
 		if (ismobcritter(src))
 			display_name = "wrestledoodle"
-		src.owner.current.add_wrestle_powers(fake_equipment)
+			return
+
+		// Assign wrestle attire.
+		if (ishuman(src.owner.current))
+			var/mob/living/carbon/human/H = src.owner.current
+			H.unequip_all(TRUE)
+			H.equip_new_if_possible(/obj/item/storage/backpack, H.slot_back)
+			H.equip_new_if_possible(/obj/item/device/radio/headset/civilian, H.slot_ears)
+			H.equip_new_if_possible(/obj/item/tank/emergency_oxygen/extended, H.slot_l_store)
+			if (prob(50)) // Are they a luchador or not?
+				var/obj/item/clothing/mask/rand_mask = get_random_subtype (/obj/item/clothing/mask/wrestling)
+				H.equip_new_if_possible(rand_mask, H.slot_wear_mask)
+				var/obj/item/clothing/under/shorts/luchador/rand_shorts = get_random_subtype (/obj/item/clothing/under/shorts/luchador)
+				H.equip_new_if_possible(rand_shorts, H.slot_w_uniform)
+			else
+				if (prob(50))
+					var/obj/item/clothing/under/shorts/rand_shorts = get_random_subtype (/obj/item/clothing/under/shorts)
+					H.equip_new_if_possible(rand_shorts, H.slot_w_uniform)
+				else
+					H.equip_new_if_possible(/obj/item/clothing/under/gimmick/macho/random_color, H.slot_w_uniform)
+				if (prob(33))
+					H.equip_new_if_possible(/obj/item/clothing/head/bandana/random_color, H.slot_head)
+			var/obj/item/clothing/under/shorts/rand_shoes
+			switch(pick(1, 2, 3, 4))
+				if(1)
+					rand_shoes = /obj/item/clothing/shoes/macho
+				if(2)
+					rand_shoes = /obj/item/clothing/shoes/cowboy
+				if(3)
+					rand_shoes = pick(/obj/item/clothing/shoes/bootsblk, /obj/item/clothing/shoes/bootswht, /obj/item/clothing/shoes/bootsblu)
+				if(4)
+					rand_shoes = /obj/item/clothing/shoes/black
+			H.equip_new_if_possible(rand_shoes, H.slot_shoes)
+			H.equip_new_if_possible(/obj/item/storage/belt/macho_belt, H.slot_belt)
 
 	remove_equipment()
 		src.owner.current.remove_wrestle_powers(src.fake)

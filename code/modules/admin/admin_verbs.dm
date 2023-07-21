@@ -72,7 +72,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_antag_popups,
 		/client/proc/retreat_to_office,
 		/client/proc/summon_office,
-
+		/client/proc/check_gamemode_stats,
 		),
 
 
@@ -228,8 +228,9 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_plain_message_all,
 		/client/proc/cmd_admin_fake_medal,
 		/datum/admins/proc/togglespeechpopups,
+		/datum/admins/proc/toggle_global_parallax,
 		/datum/admins/proc/togglemonkeyspeakhuman,
-		/datum/admins/proc/toggletraitorsseeeachother,
+		/datum/admins/proc/toggle_antagonists_seeing_each_other,
 		/datum/admins/proc/toggleautoending,
 		/datum/admins/proc/togglelatetraitors,
 		/datum/admins/proc/toggle_pull_slowing,
@@ -262,7 +263,6 @@ var/list/admin_verbs = list(
 		/client/proc/count_all_of,
 		/client/proc/admin_set_ai_vox,
 		/client/proc/cmd_makeshittyweapon,
-		/client/proc/rspawn_panel,
 		/client/proc/cmd_admin_manageabils,
 		/client/proc/create_all_wizard_rings,
 		/client/proc/toggle_vpn_blacklist,
@@ -291,6 +291,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_cluwnegib,
 		/client/proc/cmd_admin_buttgib,
 		/client/proc/cmd_admin_tysongib,
+		/client/proc/cmd_admin_smitegib,
 		/client/proc/removeOther,
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
@@ -368,6 +369,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_disco_lights,
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_terrainify_station,
+		/client/proc/cmd_caviewer,
 		/client/proc/cmd_custom_spawn_event,
 		/client/proc/cmd_special_shuttle,
 		/client/proc/toggle_radio_maptext,
@@ -406,7 +408,7 @@ var/list/admin_verbs = list(
 		/client/proc/debug_image_deletions,
 		/client/proc/debug_image_deletions_clear,
 #endif
-
+		/client/proc/distribute_tokens,
 		),
 
 	7 = list(
@@ -540,7 +542,7 @@ var/list/special_pa_observing_verbs = list(
 */
 /client/proc/update_admins(var/rank)
 	if(src.player.tempmin && src.player.perm_admin)
-		logTheThing("debug", src, null, "is somehow both tempminned and permadminned. This is a bug.")
+		logTheThing(LOG_DEBUG, src, "is somehow both tempminned and permadminned. This is a bug.")
 		stack_trace("[src] is somehow both tempminned and permadminned. This is a bug.")
 
 	// The idea is that player.tempmin and player.perm_admin are set when the given player
@@ -611,7 +613,7 @@ var/list/special_pa_observing_verbs = list(
 	if (src.holder)
 		src.holder.owner = src
 		for(var/i = 1; i < 9; i++)
-			if (src.holder.level + 2 >= i && admin_verbs.len >= i && !isnull(admin_verbs[i]))
+			if (src.holder.level + 2 >= i && length(admin_verbs) >= i && !isnull(admin_verbs[i]))
 				src.verbs += admin_verbs[i]
 
 		// certain ranks get special treatment while observing
@@ -737,13 +739,6 @@ var/list/special_pa_observing_verbs = list(
 		return
 	if (src.holder.level >= LEVEL_SA)
 		global.player_panel.ui_interact(src.mob)
-
-/client/proc/rspawn_panel()
-	set name = "Respawn Panel"
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	if (src.holder)
-		src.holder.s_respawn()
-	return
 
 /client/proc/jobbans(key as text)
 	set name = "Jobban Panel"
@@ -1145,17 +1140,18 @@ var/list/fun_images = list()
 
 	// You now get to chose (mostly) if you want to send the target to the arrival shuttle (Convair880).
 	var/send_to_arrival_shuttle = 0
-	if (iswraith(M))
-		if (M.mind && M.mind.special_role == ROLE_WRAITH)
-			remove_antag(M, src, 0, 1) // Can't complete specialist objectives as a human. Also, the proc takes care of the rest.
-			return
-		send_to_arrival_shuttle = 1
-	else if (isintangible(M))
-		if (M.mind && M.mind.special_role == ROLE_BLOB || M.mind.special_role == ROLE_FLOCKMIND || M.mind.special_role == ROLE_FLOCKTRACE)
-			remove_antag(M, src, FALSE, TRUE) // Ditto.
-			return
-		send_to_arrival_shuttle = 1
-	else if (isAI(M))
+	var/datum/mind/mind = M.mind
+	if (mind)
+		if (mind.remove_antagonist(ROLE_WRAITH))
+			send_to_arrival_shuttle = TRUE
+		if (mind.remove_antagonist(ROLE_BLOB))
+			send_to_arrival_shuttle = TRUE
+		if (mind.remove_antagonist(ROLE_FLOCKMIND))
+			send_to_arrival_shuttle = TRUE
+		if (mind.remove_antagonist(ROLE_FLOCKTRACE))
+			send_to_arrival_shuttle = TRUE
+	M = mind.current
+	if (isAI(M))
 		send_to_arrival_shuttle = 1
 	else
 		switch (input(src, "Send mob to arrival shuttle?", "Auto-teleport", "No") in list("Yes", "No", "Cancel"))
@@ -1274,10 +1270,11 @@ var/list/fun_images = list()
 		//Make every space tile bright pink (for further processing via local image manipulation)
 		for (var/turf/space/S in world)
 			LAGCHECK(LAG_LOW)
-			if (S.contents.len == 0 && S.overlays.len <= 1)//== 0) //Doesnt pinkify tiles with crap on top of them (transparant overlays fuck with the image processing later)
+			if (length(S.contents) == 0 && length(S.overlays) <= 1)//== 0) //Doesnt pinkify tiles with crap on top of them (transparant overlays fuck with the image processing later)
 				S.icon = 'icons/effects/ULIcons.dmi'
 				S.icon_state = "etc"
 				S.color = transparentColor
+				S.UpdateOverlays(null, "starlight", 1)
 
 	var/confirm5 = tgui_alert(src.mob, "Make everything full bright?", "Fullbright?", list("Yes", "No"))
 	if (confirm5 == "Yes")
@@ -1290,6 +1287,11 @@ var/list/fun_images = list()
 		winset(src, "menu.set_shadow", "is-checked=false")
 		src.apply_depth_filter()
 
+	var/confirm7 = tgui_alert(src.mob, "Reset client color matrix to identity matrix?", "Reset Color Matrix?", list("Yes", "No"))
+	if (confirm7 == "Yes")
+		src.set_saturation(1)
+		src.set_color(COLOR_MATRIX_IDENTITY, FALSE)
+
 	// Get fucked ghost HUD
 	for (var/atom/movable/screen/ability/hudItem in src.screen)
 		del(hudItem)
@@ -1299,7 +1301,7 @@ var/list/fun_images = list()
 		del(bgObj)
 
 	var/start_x = (viewport_width / 2) + 1
-	var/start_y = (viewport_height / 2) + 1
+	var/start_y = world.maxy - (viewport_height / 2) + 1
 
 	boutput(src, "<span class='notice'><B>Begining mapping.</B></span>")
 
@@ -1308,7 +1310,7 @@ var/list/fun_images = list()
 		for (var/curZ = 1; curZ <= world.maxz; curZ++)
 			if (safeAllZ && (curZ == 2 || curZ == 4))
 				continue //Skips centcom
-			for (var/y = start_y; y <= world.maxy; y += viewport_height)
+			for (var/y = start_y; y >= 0; y -= viewport_height)
 				for (var/x = start_x; x <= world.maxx; x += viewport_width)
 					src.mob.x = x
 					src.mob.y = y
@@ -1323,7 +1325,7 @@ var/list/fun_images = list()
 					return
 	//Or just one level I GUESS
 	else
-		for (var/y = start_y; y <= world.maxy; y += viewport_height)
+		for (var/y = start_y; y >= 0; y -= viewport_height)
 			for (var/x = start_x; x <= world.maxx; x += viewport_width)
 				src.mob.x = x
 				src.mob.y = y
@@ -1638,7 +1640,7 @@ var/list/fun_images = list()
 		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random")) as null|text
 	if (!pet_input)
 		return
-	var/pet_path = get_one_match(pet_input, /obj)
+	var/pet_path = get_one_match(pet_input, /atom/movable)
 	if (!pet_path)
 		return
 
@@ -1697,7 +1699,7 @@ var/list/fun_images = list()
 	set desc = "Show or hide the admin changelog"
 	ADMIN_ONLY
 
-	if (winget(src, "adminchanges", "is-visible") == "true")
+	if (winexists(src, "adminchanges") && winget(src, "adminchanges", "is-visible") == "true")
 		src.Browse(null, "window=adminchanges")
 	else
 		var/changelogHtml = grabResource("html/changelog.html")
@@ -2479,3 +2481,34 @@ var/list/fun_images = list()
 	else
 		boutput(usr, "Custom objective cleared, conspiracy will select a random objective.")
 		type.conspirator_objective = null
+
+/client/proc/check_gamemode_stats()
+	var/nukie_wins = world.load_intra_round_value("nukie_win") || 0
+	var/nukie_losses = world.load_intra_round_value("nukie_loss") || 0
+	var/data = "Nukie W/L: [nukie_wins]/[nukie_losses] ([nukie_wins/(nukie_losses + nukie_wins) * 100]%)<br>"
+
+	var/rev_wins = world.load_intra_round_value("rev_win") || 0
+	var/rev_losses = world.load_intra_round_value("rev_loss") || 0
+	data += "Revs W/L: [rev_wins]/[rev_losses] ([rev_wins/(world.load_intra_round_value("rev_total") || 1) * 100]%)<br>"
+
+	var/players = world.load_intra_round_value("flock_plays_total") || 0
+	var/builders = world.load_intra_round_value("flock_relays_total") || 0
+	var/winners = world.load_intra_round_value("flock_wins_total") || 0
+	data += "The Flock has been sighted [players] times, with [builders] building the Relay, and [winners] transmitting the Signal!<br>"
+
+	src.Browse(data, "window=gamemode_stats;size=480x320")
+
+/client/proc/distribute_tokens()
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Distribute Tokens"
+	set desc = "Give all roundstart antagonists an antag token. For when you blown up server oops."
+	ADMIN_ONLY
+	var/total = 0
+	for (var/client/client in clients)
+		for (var/datum/antagonist/antag in client.mob.mind.antagonists)
+			if (antag.assigned_by == ANTAGONIST_SOURCE_ROUND_START && !antag.pseudo)
+				boutput(src, "Giving token to roundstart [antag.display_name] [key_name(client.mob)]...")
+				total += 1
+				client.set_antag_tokens(client.antag_tokens + 1)
+				break
+	boutput(src, "Roundstart antags given tokens: [total]")

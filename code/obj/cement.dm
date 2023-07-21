@@ -2,7 +2,7 @@
 	name = "wet concrete"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "concrete_wet"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = OBJ_LAYER + 0.9
 
@@ -49,7 +49,7 @@
 	icon_state = "concrete"
 	density = 1
 	opacity = 0 	// changed in New()
-	anchored = 1
+	anchored = ANCHORED
 	desc = "A heavy duty wall made of concrete! This thing is gonna take some manual labour to get through..."
 	flags = FPRINT | CONDUCT | USEDELAY
 	var/const/baseHealth = 30
@@ -67,10 +67,10 @@
 
 		update_nearby_tiles(1)
 		SPAWN(0.1 SECONDS)
-			RL_SetOpacity(1)
+			set_opacity(1)
 
 	disposing()
-		RL_SetOpacity(0)
+		set_opacity(0)
 		density = 0
 		update_nearby_tiles(1)
 		..()

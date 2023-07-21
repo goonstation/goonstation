@@ -28,6 +28,8 @@
 	duration_put = 0.25 SECONDS //crime
 	var/is_dangerous = TRUE
 	var/detonating = 0
+	///damage when loaded into a 40mm convesion chamber
+	var/launcher_damage = 25
 
 
 	New()
@@ -57,7 +59,7 @@
 			else
 				boutput(user, "<span class='alert'>You need to add at least one beaker before locking the assembly.</span>")
 		else if (istype(W,/obj/item/reagent_containers/glass) && stage == 1)
-			if (beakers.len == 2)
+			if (length(beakers) == 2)
 				boutput(user, "<span class='alert'>The grenade can not hold more containers.</span>")
 				return
 			var/obj/item/reagent_containers/glass/G = W
@@ -245,6 +247,7 @@
 	icon_state_armed = "metalfoam1"
 	stage = 2
 	is_dangerous = FALSE
+	launcher_damage = 10
 
 	New()
 		..()
@@ -266,6 +269,7 @@
 	icon_state_armed = "firefighting1"
 	stage = 2
 	is_dangerous = FALSE
+	launcher_damage = 10
 
 	New()
 		..()
@@ -286,6 +290,7 @@
 	icon_state_armed = "cleaner1"
 	stage = 2
 	is_dangerous = FALSE
+	launcher_damage = 5
 
 	New()
 		..()
@@ -386,7 +391,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 							H.visible_message("<span class='notice'>The counter-revolutionary implant inside [H] shatters into one million pieces!</span>")
 
 						if (can_convert && !(H.mind?.get_antagonist(ROLE_REVOLUTIONARY)))
-							H.mind?.add_antagonist(ROLE_REVOLUTIONARY)
+							H.mind?.add_antagonist(ROLE_REVOLUTIONARY, source = ANTAGONIST_SOURCE_CONVERTED)
 
 			..()
 
@@ -463,6 +468,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon_state = "pepper"
 	icon_state_armed = "pepper1"
 	stage = 2
+	launcher_damage = 20
 
 	New()
 		..()
@@ -507,6 +513,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon_state_armed = "luminol1"
 	stage = 2
 	is_dangerous = FALSE
+	launcher_damage = 5
 
 	New()
 		..()
@@ -530,6 +537,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon_state_armed = "fog1"
 	stage = 2
 	is_dangerous = FALSE
+	launcher_damage = 10
 
 	New()
 		..()

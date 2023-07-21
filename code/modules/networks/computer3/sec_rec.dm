@@ -13,17 +13,18 @@
 #define FIELDNUM_NAME 1
 #define FIELDNUM_FULLNAME 2
 #define FIELDNUM_SEX 3
-#define FIELDNUM_AGE 4
-#define FIELDNUM_RANK 5
-#define FIELDNUM_PRINT 6
-#define FIELDNUM_PHOTO 7
-#define FIELDNUM_CRIMSTAT 8
-#define FIELDNUM_SECFLAG 9
-#define FIELDNUM_MINCRIM 10
-#define FIELDNUM_MINDET 11
-#define FIELDNUM_MAJCRIM 12
-#define FIELDNUM_MAJDET 13
-#define FIELDNUM_NOTES 14
+#define FIELDNUM_PRONOUNS 4
+#define FIELDNUM_AGE 5
+#define FIELDNUM_RANK 6
+#define FIELDNUM_PRINT 7
+#define FIELDNUM_PHOTO 8
+#define FIELDNUM_CRIMSTAT 9
+#define FIELDNUM_SECFLAG 10
+#define FIELDNUM_MINCRIM 11
+#define FIELDNUM_MINDET 12
+#define FIELDNUM_MAJCRIM 13
+#define FIELDNUM_MAJDET 14
+#define FIELDNUM_NOTES 15
 
 #define FIELDNUM_DELETE "d"
 #define FIELDNUM_NEWREC "new"
@@ -223,6 +224,7 @@
 					G["id"] = "[num2hex(rand(1, 1.6777215E7), 6)]"
 					G["rank"] = "Unassigned"
 					G["sex"] = "Other"
+					G["pronouns"] = "Unknown"
 					G["age"] = "Unknown"
 					G["fingerprint"] = "Unknown"
 					G["p_stat"] = "Active"
@@ -333,6 +335,18 @@
 						src.menu = MENU_FIELD_INPUT
 						return
 
+					if (FIELDNUM_PRONOUNS)
+						var/list/pronoun_types = filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable)
+						var/list/text_parts = list("Please select: ")
+						for (var/pronoun_type in pronoun_types)
+							var/datum/pronouns/pronouns = get_singleton(pronoun_type)
+							text_parts += pronouns.name
+							text_parts += ", "
+						text_parts += " (0) Back"
+						src.print_text(jointext(text_parts, ""))
+						src.menu = MENU_FIELD_INPUT
+						return
+
 					if (FIELDNUM_CRIMSTAT)
 						src.print_text("Please select: (1) Arrest (2) None (3) Incarcerated<br>(4) Parolled (5) Released (0) Back")
 						src.menu = MENU_FIELD_INPUT
@@ -376,6 +390,19 @@
 								return
 							else
 								return
+
+					if (FIELDNUM_PRONOUNS)
+						if (inputText == "0")
+							src.menu = MENU_IN_RECORD
+							return
+						var/list/pronoun_types = filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable)
+						for (var/pronoun_type in pronoun_types)
+							var/datum/pronouns/pronouns = get_singleton(pronoun_type)
+							if (pronouns.name == inputText)
+								src.active_general["pronouns"] = pronouns.name
+								return
+						src.print_text("Invalid pronouns.")
+						return
 
 					if (FIELDNUM_AGE)
 						var/newAge = round( min( text2num_safe(command), 99) )
@@ -651,13 +678,13 @@
 
 					switch (commandList[1])
 						if ("print_index")
-							if (commandList.len > 1)
+							if (length(commandList) > 1)
 								known_printers = commandList.Copy(2)
 							else
 								known_printers = list()
 
 						if ("print_status")
-							if (commandList.len > 1)
+							if (length(commandList) > 1)
 								printer_status = commandList[2]
 							else
 								printer_status = "???"
@@ -702,24 +729,25 @@
 			\[01]Name: [src.active_general["name"]] ID: [src.active_general["id"]]
 			<br>\[02]Full Name: [src.active_general["full_name"]]
 			<br>\[03]<b>Sex:</b> [src.active_general["sex"]]
-			<br>\[04]<b>Age:</b> [src.active_general["age"]]
-			<br>\[05]<b>Rank:</b> [src.active_general["rank"]]
-			<br>\[06]<b>Fingerprint:</b> [src.active_general["fingerprint"]]
+			<br>\[04]<b>Pronouns:</b> [src.active_general["pronouns"]]
+			<br>\[05]<b>Age:</b> [src.active_general["age"]]
+			<br>\[06]<b>Rank:</b> [src.active_general["rank"]]
+			<br>\[07]<b>Fingerprint:</b> [src.active_general["fingerprint"]]
 			<br>\[__]<b>DNA:</b> [src.active_general["dna"]]
-			<br>\[07]Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]
+			<br>\[08]Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]
 			<br>\[__]Physical Status: [src.active_general["p_stat"]]
 			<br>\[__]Mental Status: [src.active_general["m_stat"]]"}
 
 			if ((istype(src.active_secure, /datum/db_record) && data_core.security.has_record(src.active_secure)))
 				view_string +={"
 				<br><center><b>Security Data</b></center>
-				<br>\[08]<b>Criminal Status:</b> [src.active_secure["criminal"]]
-				<br>\[09]<b>SecHUD Flag:</b> [src.active_secure["sec_flag"]]
-				<br>\[10]<b>Minor Crimes:</b> [src.active_secure["mi_crim"]]
-				<br>\[11]<b>Details:</b> [src.active_secure["mi_crim_d"]]
-				<br>\[12]<b><br>Major Crimes:</b> [src.active_secure["ma_crim"]]
-				<br>\[13]<b>Details:</b> [src.active_secure["ma_crim_d"]]
-				<br>\[14]<b>Important Notes:</b> [src.active_secure["notes"]]"}
+				<br>\[09]<b>Criminal Status:</b> [src.active_secure["criminal"]]
+				<br>\[10]<b>SecHUD Flag:</b> [src.active_secure["sec_flag"]]
+				<br>\[11]<b>Minor Crimes:</b> [src.active_secure["mi_crim"]]
+				<br>\[12]<b>Details:</b> [src.active_secure["mi_crim_d"]]
+				<br>\[13]<b><br>Major Crimes:</b> [src.active_secure["ma_crim"]]
+				<br>\[14]<b>Details:</b> [src.active_secure["ma_crim_d"]]
+				<br>\[15]<b>Important Notes:</b> [src.active_secure["notes"]]"}
 			else
 				view_string += "<br><br><b>Security Record Lost!</b>"
 				view_string += "<br>\[[FIELDNUM_NEWREC]] Create New Security Record.<br>"
@@ -823,6 +851,7 @@
 				info += {"
 				Full Name: [src.active_general["full_name"]] ID: [src.active_general["id"]]
 				<br><br>Sex: [src.active_general["sex"]]
+				<br><br>Pronouns: [src.active_general["pronouns"]]
 				<br><br>Age: [src.active_general["age"]]
 				<br><br>Rank: [src.active_general["rank"]]
 				<br><br>Fingerprint: [src.active_general["fingerprint"]]
@@ -872,6 +901,7 @@
 
 					printRecord.fields += "Full Name: [src.active_general["full_name"]] ID: [src.active_general["id"]]"
 					printRecord.fields += "Sex: [src.active_general["sex"]]"
+					printRecord.fields += "Pronouns: [src.active_general["pronouns"]]"
 					printRecord.fields += "Age: [src.active_general["age"]]"
 					printRecord.fields += "Rank: [src.active_general["rank"]]"
 					printRecord.fields += "Fingerprint: [src.active_general["fingerprint"]]"
@@ -1004,6 +1034,7 @@
 #undef FIELDNUM_NAME
 #undef FIELDNUM_FULLNAME
 #undef FIELDNUM_SEX
+#undef FIELDNUM_PRONOUNS
 #undef FIELDNUM_AGE
 #undef FIELDNUM_RANK
 #undef FIELDNUM_PRINT

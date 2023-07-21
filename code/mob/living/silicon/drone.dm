@@ -12,7 +12,7 @@
 			if (D.signal_tag == src.signal_tag)
 				drone_list += D
 
-		if (drone_list.len < 1)
+		if (length(drone_list) < 1)
 			boutput(user, "<span class='alert'>No usable drones detected.</span>")
 			return
 
@@ -323,7 +323,7 @@
 	icon_state = "frame-0"
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	var/construct_stage = 0
 	var/obj/item/device/radio/part_radio = null
 	var/obj/item/cell/part_cell = null

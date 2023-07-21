@@ -59,14 +59,14 @@
 	Q.caller = usr
 	Q.sharkspeed = speed
 
-/obj/banshark/
+/obj/banshark
 	name = "banshark"
 	desc = "This is the most terrifying thing you've ever laid eyes on."
 	icon = 'icons/misc/banshark.dmi'
 	icon_state = "banshark1"
 	layer = EFFECTS_LAYER_2
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/mob/sharktarget2 = null
 	var/data = null
 	var/caller = null
@@ -130,14 +130,14 @@
 		playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 		qdel(src)
 
-/obj/gibshark/
+/obj/gibshark
 	name = "gibshark"
 	desc = "This is the second most terrifying thing you've ever laid eyes on."
 	icon = 'icons/misc/banshark.dmi'
 	icon_state = "banshark1"
 	layer = EFFECTS_LAYER_2
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/mob/sharktarget2 = null
 	var/sharkspeed = 1
 	var/mob/caller = null

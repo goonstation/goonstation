@@ -22,7 +22,7 @@ datum
 			description = "This appears to be beer mixed with milk."
 			reagent_state = LIQUID
 			value = 2
-			overdose = 30
+			overdose = 69
 			thirst_value = 0.4
 			bladder_value = -0.2
 			viscosity = 0.2
@@ -95,9 +95,29 @@ datum
 				. = ..()
 				if(M.mob_flags & IS_BONEY)
 					. = FALSE
-					M.HealDamage("All", clamp(1 * volume, 0, 20), clamp(1 * volume, 0, 20)) //put a cap on instant healing
-					if(prob(15))
-						boutput(M, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
+					if(!ON_COOLDOWN(M, "milk_heal", 1 DECI SECOND))
+						M.HealDamage("All", clamp(1 * volume, 0, 10), clamp(1 * volume, 0, 10)) //put a cap on instant healing
+						if(prob(15))
+							boutput(M, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
+		fooddrink/milk_powder
+			name = "milk powder"
+			id = "milk_powder"
+			description = "Powdered milk, made by evaporating milk. Add to water to make it into milk again."
+			reagent_state = SOLID
+			fluid_r = 255
+			fluid_g = 255
+			fluid_b = 255
+			transparency = 255
+			taste = "overly milky"
+			viscosity = 0.4
+
+		fooddrink/milk/super_milk
+			// i thought it was funny
+			name = "super milk"
+			id = "super_milk"
+			description = "This milk is far more milky than should be possible."
+			reagent_state = LIQUID
+
 		fooddrink/milk/chocolate_milk
 			name = "chocolate milk"
 			id = "chocolate_milk"
@@ -195,16 +215,17 @@ datum
 				if(!istype(holder) || !istype(holder.my_atom) || !ishuman(holder.my_atom))
 					return
 				var/mob/living/carbon/human/H = holder.my_atom
-				if(H.bioHolder.age < 21) // Yes. Its 21. This is Space America. That is canon now.
-					if(seen_by_camera(H))
-						// determine the name of the perp (goes by ID if wearing one)
-						var/perpname = H.name
-						if(H:wear_id && H:wear_id:registered)
-							perpname = H:wear_id:registered
-						var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
-						if(sec_record && sec_record["criminal"] != "*Arrest*")
-							sec_record["criminal"] = "*Arrest*"
-							sec_record["mi_crim"] = "Underage drinking."
+				if(seen_by_camera(H))
+					// determine the name of the perp (goes by ID if wearing one)
+					var/perpname = H.name
+					if(H:wear_id && H:wear_id:registered)
+						perpname = H:wear_id:registered
+					var/datum/db_record/gen_record = data_core.general.find_record("name", perpname)
+					var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
+					// Yes. Its 21. This is Space America. That is canon now.
+					if(gen_record && sec_record && text2num(gen_record["age"]) < 21 && sec_record["criminal"] != "*Arrest*")
+						sec_record["criminal"] = "*Arrest*"
+						sec_record["mi_crim"] = "Underage drinking."
 
 		fooddrink/alcoholic/hard_punch
 			name = "hard punch"
@@ -523,7 +544,7 @@ datum
 						var/mob/living/H = M
 						if (isalcoholresistant(H))
 							return
-						if (volume_passed + H.reagents.get_reagent_amount("bojack") > 10)
+						if (volume_passed + H.reagents.get_reagent_amount("bojack") > 10 && !H.reagents?.has_reagent("promethazine"))
 
 							boutput(M, "<span class='alert'>Oh god, this stuff is far too manly to keep down...!</span>")
 							SPAWN(pick(30,50,70))
@@ -683,6 +704,7 @@ datum
 						H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/dreads
 						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
 						H.real_name = "Captain [H.real_name]"
+						M.bioHolder.AddEffect("accent_pirate")
 
 						if(!istype(H.glasses, /obj/item/clothing/glasses/eyepatch))
 							var/obj/item/old_glasses = H.glasses
@@ -740,7 +762,9 @@ datum
 						return
 					boutput(M, text("<span class='alert'>You blink, and suddenly you're somewhere else!</span>"))
 					playsound(M.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
-					M.set_loc(pick(randomturfs))
+					var/turf/destination = pick(randomturfs)
+					logTheThing(LOG_COMBAT, M, "was teleported by Port reagent from [log_loc(M)] to [log_loc(destination)].")
+					M.set_loc(destination)
 				..()
 				return
 
@@ -786,7 +810,7 @@ datum
 
 				var/do_stunny = 1
 				var/list/covered = old_holder.covered_turf()
-				if (covered.len > 1)
+				if (length(covered) > 1)
 					do_stunny = prob(100/covered.len)
 
 				//var/mob/living/carbon/human/H = M
@@ -896,7 +920,7 @@ datum
 				if(!ishuman(holder?.my_atom))
 					return
 				var/mob/living/carbon/human/M = holder.my_atom
-				if(M.mutantrace && !src.orig_mutantrace)
+				if(!src.orig_mutantrace)
 					src.orig_mutantrace = M.mutantrace.type
 
 			on_mob_life_complete(var/mob/living/carbon/human/M)
@@ -1236,8 +1260,8 @@ datum
 				if(M.health > 10)
 					M.take_toxin_damage(2 * mult)
 				if(probmult(20))
-					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)]!</span>")
-					M.vomit()
+					var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)]!</span>"
+					M.vomit(0, null, vomit_message)
 				if(probmult(10))
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
@@ -1616,10 +1640,8 @@ datum
 				..()
 
 			on_mob_life_complete(var/mob/living/carbon/human/M)
-				if(M && istype(M))
-					if (!M.mutantrace)
-						if(M.bioHolder)
-							M.bioHolder.AddEffect("roach",0,bioeffect_length) //length of bioeffect proportionate to length grasshopper was in human
+				if(istype(M))
+					M.bioHolder?.AddEffect("roach",0,bioeffect_length) //length of bioeffect proportionate to length grasshopper was in human
 
 		fooddrink/alcoholic/freeze
 			name = "Freeze"
@@ -2251,7 +2273,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 
 				if(volume >= 5 && prob(10))
@@ -2763,7 +2785,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (volume >= 10 && covered.len < 2)
+				if (volume >= 10 && length(covered) < 2)
 					if (!T.messy)
 						make_cleanable(/obj/decal/cleanable/saltpile,T)
 					else
@@ -2774,10 +2796,6 @@ datum
 
 
 			reaction_obj(var/obj/O, var/volume)
-				if (istype(O, /obj/critter/slug))
-					var/obj/critter/slug/S = O
-					S.visible_message("<span class='alert'>[S] shrivels up!</span>")
-					S.CritterDeath()
 				if(istype(O, /obj/decal/icefloor))
 					qdel(O)
 				..(O, volume)
@@ -2834,7 +2852,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume) //Makes the kechup splats
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 
 				if (volume >= 5)
@@ -3024,7 +3042,7 @@ datum
 				name = "glaucogen"
 				id = "glaucogen"
 				description = "A synthetically generated polysaccharide structure that mimics the main storage form of glucose in the body."
-				depletion_rate = 1
+				depletion_rate = 0.4
 
 		fooddrink/VHFCS
 			name = "very-high-fructose corn syrup"
@@ -3704,7 +3722,7 @@ datum
 				if(probmult(10))
 					new /obj/decal/cleanable/urine(M.loc)
 
-				if(probmult(15))
+				if(probmult(15) && !M.reagents?.has_reagent("promethazine"))
 					M.visible_message("<span class='alert'>[M] pukes violently!</span>")
 					M.vomit()
 					if(prob(33))
@@ -3755,7 +3773,7 @@ datum
 
 					if(probmult(15)) boutput("<span class='alert'><B>FRUIT IN MY EYES!!!</B></span>")
 
-					if(probmult(25))
+					if(probmult(25) && !M.reagents?.has_reagent("promethazine"))
 						M.vomit()
 						new /obj/item/reagent_containers/food/snacks/plant/lime(M.loc)
 						new /obj/item/reagent_containers/food/snacks/plant/orange(M.loc)
@@ -4040,7 +4058,7 @@ datum
 
 				var/list/covered = holder.covered_turf()
 				var/do_stunny = 1
-				if (covered.len > 1)
+				if (length(covered) > 1)
 					do_stunny = prob(100/covered.len)
 
 				//var/mob/living/carbon/human/H = M

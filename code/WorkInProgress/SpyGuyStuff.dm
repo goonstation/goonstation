@@ -18,7 +18,7 @@ Fibre wire
 /obj/item/soulskull
 	name = "ominous skull"
 	desc = "This skull gives you the heebie-jeebies."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/skull.dmi'
 	icon_state = "skull_ominous"
 	var/being_mean = 0
 
@@ -306,7 +306,7 @@ proc/Create_Tommyname()
 	desc = "warning"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
-	anchored = 1
+	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS
 
 	Crossed(atom/movable/AM)
@@ -413,7 +413,7 @@ proc/Create_Tommyname()
 /obj/machinery/power/debug_generator
 	name = "mysterious petrol generator"
 	desc = "Holds untold powers. Literally. Untold power. Get it? Power. Watts? Ok, fine. This thing spits out unlimited watt-volts!! There. I said it!"
-	icon_state = "ggenoff"
+	icon_state = "ggen0"
 	density = 1
 	var/generating = 0
 	New()
@@ -425,11 +425,11 @@ proc/Create_Tommyname()
 		if(generating > 0)
 			SubscribeToProcess()
 			powernet = get_direct_powernet()
-			icon_state = "ggenoff"
+			icon_state = "ggen0"
 		else
 			UnsubscribeProcess()
 			powernet = null
-			icon_state = "ggen"
+			icon_state = "ggen1"
 
 	process()
 		..()
@@ -659,7 +659,7 @@ proc/Create_Tommyname()
 				move_and_delete_object(A)
 		sleep(DEFAULT_ANIMATION_TIME)
 
-	while(created_atoms.len > 0)
+	while(length(created_atoms) > 0)
 		var/atom/A = created_atoms[created_atoms.len]
 		created_atoms.len--
 		if(istype(A, /turf))
@@ -851,6 +851,7 @@ proc/Create_Tommyname()
 	w_class = W_CLASS_TINY
 	c_flags = EQUIPPED_WHILE_HELD
 	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER
+	hide_attack = ATTACK_FULLY_HIDDEN //we handle our own attack twitch
 
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "garrote0"
@@ -925,23 +926,23 @@ proc/Create_Tommyname()
 	// Also no strangling with flaccid wires, that's just weird.
 
 	if(!assailant || !target)
-		return 1
+		return FALSE
 
 	if(!wire_readied)
 		assailant.show_message("<span class='combat'>You have to have a firm grip of the wire before you can strangle [target]!</span>")
-		return 1
+		return FALSE
 
 	if(chokehold)
 		assailant.show_message("<span class='combat'>You're too busy strangling [chokehold.affecting] to strangle someone else!</span>")
-		return 1
+		return FALSE
 
 	// TODO: check that target has their back turned
 	if(is_behind_target(assailant, target))
 		// Try to grab a dude
 		actions.start(new/datum/action/bar/private/icon/garrote_target(target, src), assailant)
+		return TRUE
 	else
 		assailant.show_message("<span class='combat'>You have to be behind your target or they'll see you coming!</span>")
-		return 1
 
 // Actually apply the grab (called via action bar)
 /obj/item/garrote/try_grab(var/mob/living/target, var/mob/living/assailant)
@@ -1000,7 +1001,8 @@ proc/Create_Tommyname()
 	if (target && target == src.chokehold?.affecting)
 		src.try_upgrade_grab()
 	else
-		src.attempt_grab(user, target)
+		if (src.attempt_grab(user, target)) //if we successfully grab someone then do an attack twitch
+			attack_twitch(user)
 
 /datum/action/bar/private/icon/garrote_target
 	duration = 10

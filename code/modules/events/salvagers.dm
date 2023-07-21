@@ -147,7 +147,7 @@
 
 			if (istype(L))
 				L.mind?.wipe_antagonists()
-				L.mind?.add_antagonist(ROLE_SALVAGER, do_equip = TRUE, do_relocate = TRUE)
+				L.mind?.add_antagonist(ROLE_SALVAGER, do_equip = TRUE, do_relocate = TRUE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 			else
 				failed = TRUE
 
@@ -162,7 +162,6 @@
 			lucky_dude.random_event_special_role = 1
 			if (!(lucky_dude in ticker.mode.Agimmicks))
 				ticker.mode.Agimmicks.Add(lucky_dude)
-			M3.antagonist_overlay_refresh(TRUE, 0)
 
 			if (lucky_dude.current)
 				lucky_dude.current.show_text("<h3>You have been respawned as a Salvager.</h3>", "blue")

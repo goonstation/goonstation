@@ -746,7 +746,7 @@
 				null, \
 				FALSE \
 			)
-			RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
+			RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, PROC_REF(receive_signal))
 
 		on_unset_host(obj/item/device/pda2/pda)
 			qdel(get_radio_connection_by_id(pda, "pda"))
@@ -763,7 +763,7 @@
 				return
 
 			if(signal.data["command"] == "report_pda")
-				if(!message_on || !signal.data["sender"] || signal.data["sender"] == master.net_id)
+				if(!message_on || !signal.data["sender"] || signal.data["sender"] == master.net_id || !src.master.scannable)
 					return
 
 				var/datum/signal/newsignal = get_free_signal()

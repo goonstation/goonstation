@@ -64,7 +64,7 @@
 /obj/machinery/chem_dispenser_admin/
 	name = "chem dispenser"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
 	flags = NOSPLASH
@@ -262,7 +262,7 @@
 	proc/panel()
 		set background = 1
 
-		if(beakerSpecs.len == 0)
+		if(length(beakerSpecs) == 0)
 			beakerSpecs.len++
 			beakerSpecs[beakerSpecs.len] = new /datum/beakerSpec()
 

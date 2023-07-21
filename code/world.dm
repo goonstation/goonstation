@@ -115,8 +115,6 @@ var/global/mob/twitch_mob = 0
 		create_turf_html = grabResource("html/admin/create_object.html")
 		create_turf_html = replacetext(create_turf_html, "null /* object types */", "\"[turfjs]\"")
 
-var/f_color_selector_handler/F_Color_Selector
-
 /proc/buildMaterialPropertyCache()
 	if(materialProps.len) return
 	for(var/A in childrentypesof(/datum/material_property)) //Caching material props
@@ -148,7 +146,7 @@ var/f_color_selector_handler/F_Color_Selector
 		if(UNIX) lib = "libprof.so"
 		else CRASH("unsupported platform")
 
-	var/init = call(lib, "init")()
+	var/init = LIBCALL(lib, "init")()
 	if("0" != init) CRASH("[lib] init error: [init]")
 #endif
 
@@ -177,7 +175,7 @@ var/f_color_selector_handler/F_Color_Selector
 #endif
 		Z_LOG_DEBUG("Preload", "Map preload running.")
 
-#ifndef RUNTIME_CHECKING
+#ifndef CI_RUNTIME_CHECKING
 		world.log << ""
 		world.log << "========================================"
 		world.log << "\[[time2text(world.timeofday,"hh:mm:ss")]\] Starting new round"
@@ -513,7 +511,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 	Z_LOG_DEBUG("World/Init", "Notifying Discord of new round")
 	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker?.hide_mode) ? "secret" : master_mode))
-#ifndef RUNTIME_CHECKING
+#ifndef CI_RUNTIME_CHECKING
 	world.log << "Map: [getMapNameFromID(map_setting)]"
 	logTheThing(LOG_STATION, null, "Map: [getMapNameFromID(map_setting)]")
 #endif
@@ -528,14 +526,6 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Loading intraround jars...")
 	load_intraround_jars()
 
-	if (derelict_mode)
-		Z_LOG_DEBUG("World/Init", "Derelict mode stuff")
-		creepify_station()
-		voidify_world()
-		signal_loss = 80 // heh
-		bust_lights()
-		master_mode = "disaster" // heh pt. 2
-
 	//SpyStructures and caches live here
 	UPDATE_TITLE_STATUS("Updating cache")
 	Z_LOG_DEBUG("World/Init", "Building various caches...")
@@ -549,6 +539,9 @@ var/f_color_selector_handler/F_Color_Selector
 	clothingbooth_setup()
 	initialize_biomes()
 
+	Z_LOG_DEBUG("World/Init", "Setting up airlock/APC wires...")
+	airlockWireColorToFlag = RandomAirlockWires()
+	APCWireColorToFlag = RandomAPCWires()
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
 	global.initialise_fishing_spots()
 
@@ -560,6 +553,14 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
 	makeMiningLevel()
 	#endif
+
+	if (derelict_mode)
+		Z_LOG_DEBUG("World/Init", "Derelict mode stuff")
+		creepify_station()
+		voidify_world()
+		signal_loss = 80 // heh
+		bust_lights()
+		master_mode = "disaster" // heh pt. 2
 
 	UPDATE_TITLE_STATUS("Lighting up")
 	Z_LOG_DEBUG("World/Init", "RobustLight2 init...")
@@ -604,7 +605,7 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
 	map_settings.init()
 
-	#if !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(RUNTIME_CHECKING)
+	#if !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(CI_RUNTIME_CHECKING)
 	Z_LOG_DEBUG("World/Init", "Initializing region allocator...")
 	if(length(global.region_allocator.free_nodes) == 0)
 		global.region_allocator.add_z_level()
@@ -644,10 +645,13 @@ var/f_color_selector_handler/F_Color_Selector
 #ifdef PREFAB_CHECKING
 	placeAllPrefabs()
 #endif
-#ifdef RUNTIME_CHECKING
+#ifdef RANDOM_ROOM_CHECKING
+	placeAllRandomRooms()
+#endif
+#ifdef CI_RUNTIME_CHECKING
 	populate_station()
 	check_map_correctness()
-	SPAWN(10 SECONDS)
+	SPAWN(15 SECONDS)
 		Reboot_server()
 #endif
 #if defined(UNIT_TESTS) && !defined(UNIT_TESTS_RUN_TILL_COMPLETION)
@@ -692,7 +696,7 @@ var/f_color_selector_handler/F_Color_Selector
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
-#if defined(RUNTIME_CHECKING) || defined(UNIT_TESTS)
+#if defined(CI_RUNTIME_CHECKING) || defined(UNIT_TESTS)
 	for (var/client/C in clients)
 		ehjax.send(C, "browseroutput", "hardrestart")
 
@@ -708,7 +712,7 @@ var/f_color_selector_handler/F_Color_Selector
 			var/line = details["line"]
 			var/name = details["name"]
 			text2file("\[[timestamp]\] [file],[line]: [name]", "errors.log")
-#ifndef PREFAB_CHECKING
+#if !(defined(PREFAB_CHECKING) || defined(RANDOM_ROOM_CHECKING))
 	var/apc_error_str = debug_map_apc_count("\n", zlim=Z_LEVEL_STATION)
 	if (!is_blank_string(apc_error_str))
 		text2file(apc_error_str, "errors.log")
@@ -1077,8 +1081,8 @@ var/f_color_selector_handler/F_Color_Selector
 								for (var/obj/item/I in H.contents)
 									if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts) || istype(I,/atom/movable/screen/hud)) continue //FUCK
 									hudlist += I
-									if (istype(I,/obj/item/storage))
-										hudlist += I.contents
+									if (I.storage)
+										hudlist += I.storage.get_contents()
 
 							var/list/close_match = list()
 							for (var/obj/item/I in view(1,twitch_mob) + hudlist)
@@ -1545,6 +1549,8 @@ var/f_color_selector_handler/F_Color_Selector
 			if ("health")
 				var/ircmsg[] = new()
 				ircmsg["cpu"] = world.cpu
+				ircmsg["map_cpu"] = world.map_cpu
+				ircmsg["clients"] = length(clients)
 				ircmsg["queue_len"] = delete_queue ? delete_queue.count() : 0
 				var/curtime = world.timeofday
 				sleep(1 SECOND)
@@ -1552,16 +1558,29 @@ var/f_color_selector_handler/F_Color_Selector
 				ircmsg["ticklag"] = world.tick_lag
 				ircmsg["runtimes"] = global.runtime_count
 				if(world.system_type == "UNIX")
+					var/list/meminfos = list()
 					try
 						var/meminfo_file = "data/meminfo.txt"
-						fcopy("/proc/meminfo", "meminfo_file")
+						fcopy("/proc/meminfo", meminfo_file)
 						var/list/memory_info = splittext(file2text(meminfo_file), "\n")
 						if(length(memory_info) >= 3)
 							memory_info.len = 3
-							ircmsg["meminfo"] = jointext(memory_info, "\n")
+							meminfos += memory_info
 						fdel(meminfo_file)
 					catch(var/exception/e)
 						stack_trace("[e.name]\n[e.desc]")
+					try
+						var/statm_file = "data/statm.txt"
+						fcopy("/proc/self/statm", statm_file)
+						var/list/memory_info = splittext(file2text(statm_file), " ")
+						var/list/field_names = list("size", "resident", "share", "text", "lib", "data", "dt")
+						for(var/i = 1, i <= length(memory_info), i++)
+							meminfos += field_names[i] + ": " + memory_info[i]
+						fdel(statm_file)
+					catch(var/exception/e2)
+						stack_trace("[e2.name]\n[e2.desc]")
+					if(length(meminfos))
+						ircmsg["meminfo"] = jointext(meminfos, "\n")
 				return ircbot.response(ircmsg)
 
 			if ("rev")
@@ -1731,6 +1750,8 @@ var/f_color_selector_handler/F_Color_Selector
 					response["playtime"] = playtime_response.body
 
 				var/datum/player/player = make_player(plist["ckey"])
+				if(isnull(player.last_seen))
+					player.cache_round_stats_blocking()
 				if(player)
 					response["last_seen"] = player.last_seen
 				if(player.cloud_fetch())

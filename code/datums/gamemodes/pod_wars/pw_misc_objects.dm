@@ -2,7 +2,7 @@
 	name = "Critical System"
 	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "critical_system"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	bound_width = 64
 	bound_height = 64
@@ -175,7 +175,7 @@
 					else if (team_num == TEAM_SYNDICATE)
 						team = mode.team_SY
 				last_check = world.time
-				INVOKE_ASYNC(src, /obj/machinery/clonepod/pod_wars.proc/growclone_a_ghost)
+				INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/clonepod/pod_wars, growclone_a_ghost))
 		return..()
 
 	New()
@@ -560,7 +560,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	icon = 'icons/obj/control_point_computer.dmi'
 	icon_state = "control_point_computer"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	var/image/screen
 	var/image/screen_light
@@ -641,7 +641,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user),\
 			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!", null)
 		else
-			boutput(user, "You can't think of anything else to do on this console...")
+			boutput(user, "<span class='alert'>You can't think of anything else to do on this console...</span>")
 
 	proc/is_commander(var/mob/user)
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
@@ -716,7 +716,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "barricade"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1

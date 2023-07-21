@@ -564,8 +564,8 @@ obj/machinery/atmospherics/pipe
 		var/obj/machinery/atmospherics/node1
 
 		New()
-			initialize_directions = dir
 			..()
+			initialize_directions = dir
 
 		process()
 			..()
@@ -576,94 +576,85 @@ obj/machinery/atmospherics/pipe
 			name = "Pressure Tank (Carbon Dioxide)"
 
 			New()
+				..()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
 				air_temporary.carbon_dioxide = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
-				..()
-
 		toxins
 			icon = 'icons/obj/atmospherics/tanks/orange_pipe_tank.dmi'
 			name = "Pressure Tank (Plasma)"
 
 			New()
+				..()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
 				air_temporary.toxins = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
-				..()
-
 		oxygen_agent_b
 			icon = 'icons/obj/atmospherics/tanks/red_orange_pipe_tank.dmi'
 			name = "Pressure Tank (Oxygen + Plasma)"
 
 			New()
+				..()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T0C
 
-				var/datum/gas/oxygen_agent_b/trace_gas = air_temporary.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
-				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-				..()
+				air_temporary.oxygen_agent_b = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
 		oxygen
 			icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi'
 			name = "Pressure Tank (Oxygen)"
 
 			New()
+				..()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
 				air_temporary.oxygen = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
-				..()
-
 		nitrogen
 			icon = 'icons/obj/atmospherics/tanks/red_pipe_tank.dmi'
 			name = "Pressure Tank (Nitrogen)"
 
 			New()
+				..()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
 				air_temporary.nitrogen = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
-				..()
-
 		sleeping_agent
 			icon = 'icons/obj/atmospherics/tanks/red_white_pipe_tank.dmi'
 			name = "Pressure Tank (N2O)"
 
 			New()
+				..()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
-				var/datum/gas/sleeping_agent/trace_gas = air_temporary.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent/)
-				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-				..()
+				air_temporary.nitrous_oxide = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
 		air
 			icon = 'icons/obj/atmospherics/tanks/white_pipe_tank.dmi'
 			name = "Pressure Tank (Air)"
 
 			New()
+				..()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
 				air_temporary.oxygen = (50*ONE_ATMOSPHERE*O2STANDARD)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 				air_temporary.nitrogen = (50*ONE_ATMOSPHERE*N2STANDARD)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-				..()
 
 		// Experiment for improving the usefulness of air hookups. They have twice the capacity of portable
 		// canisters and contain 4 times the volume of their default air mixture (Convair880).
@@ -674,14 +665,13 @@ obj/machinery/atmospherics/pipe
 			volume = 2000
 
 			New()
+				..()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
 				air_temporary.oxygen = (180*ONE_ATMOSPHERE*O2STANDARD)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 				air_temporary.nitrogen = (180*ONE_ATMOSPHERE*N2STANDARD)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-				..()
 
 		disposing()
 			node1?.disconnect(src)
@@ -734,8 +724,8 @@ obj/machinery/atmospherics/pipe
 		var/obj/machinery/atmospherics/node1
 
 		New()
-			initialize_directions = dir
 			..()
+			initialize_directions = dir
 
 		process()
 			..()
@@ -751,13 +741,8 @@ obj/machinery/atmospherics/pipe
 			return list(node1)
 
 		update_icon()
-			if(node1)
-				icon_state = "intact"
-
-				dir = get_dir(src, node1)
-
-			else
-				icon_state = "exposed"
+			var/turf/T = get_turf(src)
+			src.hide(T.intact)
 
 		initialize()
 			var/connect_direction = dir
@@ -781,12 +766,12 @@ obj/machinery/atmospherics/pipe
 
 			return null
 
-		hide(var/i) //to make the little pipe section invisible, the icon changes.
-			if(node1)
-				icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
-				dir = get_dir(src, node1)
+		hide(var/intact) //to make the little pipe section invisible, the icon changes.
+			if (intact && istype(loc, /turf/simulated) && level == 1)
+				src.icon_state = "hvent"
 			else
-				icon_state = "exposed"
+				src.icon_state = src.node1 ? "intact" : ""
+
 
 	vertical_pipe
 		icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
@@ -801,8 +786,8 @@ obj/machinery/atmospherics/pipe
 		var/obj/machinery/atmospherics/node2
 
 		New()
-			initialize_directions = dir
 			..()
+			initialize_directions = dir
 
 		process()
 			..()
@@ -865,17 +850,8 @@ obj/machinery/atmospherics/pipe
 			level = 2
 
 		New()
-			switch(dir)
-				if(NORTH)
-					initialize_directions = EAST|SOUTH|WEST
-				if(SOUTH)
-					initialize_directions = WEST|NORTH|EAST
-				if(EAST)
-					initialize_directions = SOUTH|WEST|NORTH
-				if(WEST)
-					initialize_directions = NORTH|EAST|SOUTH
-
 			..()
+			initialize_directions = (NORTH|SOUTH|EAST|WEST) ^ dir
 
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))

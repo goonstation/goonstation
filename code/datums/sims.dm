@@ -204,6 +204,12 @@
 				else
 					return null
 
+		wolfy // for werewolves - depletes slower, but only regens hunger by feeding on humans
+			name = "Ravenous Hunger" // With the name changed, all the stuff that restores hunger won't restore this
+			icon_state = "ravenous"
+			desc = "Ravenous hunger can only be satiated by feeding on the living..."
+			depletion_rate = 0.039
+
 
 	social
 		name = "social"
@@ -253,7 +259,7 @@
 					return 0
 				// Devera-class interdictor: prevent passive hygiene decrease within the field
 				for_by_tcl(IX, /obj/machinery/interdictor)
-					if (IX.expend_interdict(2,src,TRUE,ITDR_DEVERA))
+					if (IX.expend_interdict(1,src,TRUE,ITDR_DEVERA))
 						return 0
 				return 1
 
@@ -647,6 +653,12 @@ var/global/datum/simsControl/simsController = new()
 			//addMotive(/datum/simsMotive/energy)
 			//addMotive(/datum/simsMotive/sanity)
 
+		wolf
+			make_motives()
+				addMotive(/datum/simsMotive/hunger/wolfy)
+				addMotive(/datum/simsMotive/hunger/thirst)
+				addMotive(/datum/simsMotive/hygiene)
+
 	New(var/mob/living/L)
 		..()
 		owner = L
@@ -752,7 +764,8 @@ var/global/datum/simsControl/simsController = new()
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "plum-desat"
 	mouse_opacity = 0
-	anchored = 1
+	anchored = ANCHORED
+	animate_movement = SYNC_STEPS
 	pixel_y = 32
 	var/mob/living/owner
 

@@ -6,7 +6,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "showerhead"
 	desc = "A shower head, for showering."
-	anchored = 1
+	anchored = ANCHORED
 	flags = OPENCONTAINER
 
 	var/on = 0 //Are we currently spraying???
@@ -82,7 +82,7 @@
 				if (ismob(A))
 					var/mob/M = A
 					if (!isdead(M))
-						if ((!src.reagents.has_reagent("water") && !src.reagents.has_reagent("cleaner")) || ((src.reagents.has_reagent("water") && src.reagents.has_reagent("cleaner")) && src.reagents.reagent_list.len > 2))
+						if ((!src.reagents.has_reagent("water") && !src.reagents.has_reagent("cleaner")) || ((src.reagents.has_reagent("water") && src.reagents.has_reagent("cleaner")) && length(src.reagents.reagent_list) > 2))
 							logTheThing(LOG_CHEMISTRY, M, "is hit by chemicals [log_reagents(src)] from a shower head at [log_loc(M)].")
 
 				spawn(0)

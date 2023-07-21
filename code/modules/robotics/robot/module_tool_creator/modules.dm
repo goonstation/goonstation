@@ -36,11 +36,11 @@
 	)
 
 // scientist.
-/datum/robot/module_tool_creator/recursive/module/research
+/datum/robot/module_tool_creator/recursive/module/science
 	definitions = list(
 		/obj/item/hand_labeler,
 		/obj/item/pen,
-		/obj/item/item_box/assorted/stickers/robot/research,
+		/obj/item/item_box/assorted/stickers/robot/science,
 		/obj/item/robot_chemaster,
 		// TODO: utility grenade fabricator?
 		/obj/item/reagent_containers/syringe,
@@ -81,6 +81,7 @@
 		/obj/item/ladle,
 		/obj/item/kitchen/rollingpin/light,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+		/obj/item/fishing_rod/basic,
 	)
 
 /datum/robot/module_tool_creator/recursive/module/common
@@ -142,6 +143,9 @@
 		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,
 		/datum/robot/module_tool_creator/item_type/amount/glass_sheet,
 		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
+		#ifdef MAP_OVERRIDE_OSHAN
+			/datum/robot/module_tool_creator/item_type/amount/cable_coil/reinforced,
+		#endif
 	)
 
 // medical doctor.

@@ -1,0 +1,87 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/item/organ/eye{
+	pixel_x = 7;
+	pixel_y = 13
+	},
+/turf/simulated/floor/blueblack/corner{
+	dir = 8
+	},
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/machinery/drainage,
+/obj/decal/cleanable/blood/gibs{
+	dir = 4;
+	icon_state = "gib6"
+	},
+/turf/simulated/floor/blue,
+/area/dmm_suite/clear_area)
+"h" = (
+/obj/item/material_piece/bone,
+/turf/simulated/floor/blueblack/corner{
+	dir = 1
+	},
+/area/dmm_suite/clear_area)
+"j" = (
+/obj/item/fishing_rod/basic,
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/dmm_suite/clear_area)
+"k" = (
+/obj/item/clothing/head/butt,
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/dmm_suite/clear_area)
+"m" = (
+/obj/decal/cleanable/blood/tracks{
+	icon_state = "gibmid2"
+	},
+/turf/simulated/floor/blueblack/corner{
+	dir = 4
+	},
+/area/dmm_suite/clear_area)
+"r" = (
+/obj/decal/cleanable/blood/gibs,
+/obj/item/organ/appendix{
+	pixel_x = -10;
+	pixel_y = 5
+	},
+/turf/simulated/floor/blueblack/corner,
+/area/dmm_suite/clear_area)
+"z" = (
+/obj/item/skull{
+	pixel_x = 12
+	},
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/dmm_suite/clear_area)
+"C" = (
+/obj/item/material_piece/bone,
+/obj/machinery/light/small/broken{
+	dir = 1
+	},
+/turf/simulated/floor/blueblack,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+r
+z
+a
+"}
+(2,1,1) = {"
+C
+g
+k
+"}
+(3,1,1) = {"
+m
+j
+h
+"}

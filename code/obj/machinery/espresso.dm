@@ -10,7 +10,7 @@ TYPEINFO(/obj/machinery/espresso_machine)
 	icon = 'icons/obj/foodNdrink/espresso.dmi'
 	icon_state = "espresso_machine"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	flags = FPRINT | NOSPLASH | TGUI_INTERACTIVE
 	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
@@ -196,7 +196,7 @@ TYPEINFO(/obj/machinery/coffeemaker)
 	icon = 'icons/obj/foodNdrink/espresso.dmi'
 	icon_state = "coffeemaker-gen"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	flags = FPRINT | NOSPLASH
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 	var/carafe_name = "coffee carafe"
@@ -323,13 +323,17 @@ TYPEINFO(/obj/machinery/coffeemaker)
 	icon_state = "coffeemaker-eng"
 	default_carafe = /obj/item/reagent_containers/food/drinks/carafe/engineering
 
+/obj/machinery/coffeemaker/command
+	icon_state = "coffeemaker-com"
+	default_carafe = /obj/item/reagent_containers/food/drinks/carafe/command
+
 /* ===================================================== */
 /* ---------------------- Racks --------------------- */
 /* ===================================================== */
 
 ABSTRACT_TYPE(/obj/drink_rack)
 /obj/drink_rack
-	anchored = 1
+	anchored = ANCHORED
 	var/amount_on_rack = null
 	var/max_amount = null
 	var/contained = null

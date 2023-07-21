@@ -6,7 +6,7 @@
 	flora_types = list(/obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
 	flora_density = 1
 
-	fauna_types = list(/obj/critter/sealpup=15, /mob/living/critter/brullbar=5, /obj/critter/yeti=1)
+	fauna_types = list(/mob/living/critter/small_animal/seal = 15, /mob/living/critter/brullbar = 5, /obj/critter/yeti = 1)
 	fauna_density = 0.5
 
 /datum/biome/icemoon/snow/trees
@@ -139,15 +139,6 @@
 	oxygen = 0
 	temperature = 100
 	fullbright = 0
-
-	update_icon()
-		var/image/ambient_light = src.GetOverlayImage("ambient")
-		var/image/weather = src.GetOverlayImage("weather")
-		..()
-		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
-			overlay_refs.len = 0
-		src.UpdateOverlays(ambient_light, "ambient")
-		src.UpdateOverlays(weather, "weather")
 
 
 /turf/unsimulated/floor/arctic/snow/autocliff

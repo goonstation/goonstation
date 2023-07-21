@@ -57,7 +57,7 @@
 
 	attackby(obj/item/W, mob/user)
 		..()
-		if (src.contents && src.contents.len > 0 && istype(W, /obj/item/device/analyzer/healthanalyzer))
+		if (src.contents && length(src.contents) > 0 && istype(W, /obj/item/device/analyzer/healthanalyzer))
 			var/output = ""
 			var/list/L = list()
 			for (var/obj/O in src.contents)

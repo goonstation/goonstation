@@ -78,7 +78,7 @@
 		return
 	..()
 	add_history()
-	if (src.history.len > src.history_max)
+	if (length(src.history) > src.history_max)
 		src.history.Cut(1, 2) //drop the oldest entry
 
 /obj/machinery/computer/power_monitor/proc/add_history()
@@ -104,7 +104,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	desc = "Shows the SMES usage and power produced by the engine."
 	window_tag = "smespowcomp"
 	circuit_type = /obj/item/circuitboard/powermonitor_smes

@@ -17,9 +17,13 @@
 	var/balloon_color = "white"
 	var/last_reag_total = 0
 	var/tied = FALSE
+	//how many breaths should this balloon fill with at a canister
+	var/breaths = 5
+	var/datum/gas_mixture/air = new
 
 	New()
 		..()
+		src.air.volume = 14 //source: I made it the fuck up
 		if (prob(1) && islist(rare_colors) && length(rare_colors))
 			balloon_color = pick(rare_colors)
 			UpdateIcon()
@@ -33,7 +37,16 @@
 		src.last_reag_total = src.reagents.total_volume
 		src.burst_chance()
 
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		src.reagents.maximum_volume = src.reagents.maximum_volume + passed_genes?.get_effective_value("endurance") // more endurance = larger and more sturdy balloons!
+		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
+		return src
+
 	update_icon()
+		if (TOTAL_MOLES(src.air) >= BREATH_VOLUME)
+			src.icon_state = "balloon_[src.balloon_color]_inflated"
+			src.item_state = src.icon_state
+			return
 		if (src.reagents)
 			if (src.reagents.total_volume)
 				src.icon_state = "balloon_[src.balloon_color]_[src.reagents.has_reagent("helium") || src.reagents.has_reagent("hydrogen") ? "inflated" : "full"]"
@@ -54,12 +67,12 @@
 			return
 		if (!user && usr)
 			user = usr
-		else if (!user && !user && ismob(src.loc))
+		else if (!user && ismob(src.loc))
 			user = src.loc
 		if (!ohshit)
 			ohshit = (src.reagents.total_volume /  (src.reagents.maximum_volume - 10)) * 33
 		if (prob(ohshit))
-			smash()
+			src.smash(user)
 			if (user)
 				user.visible_message("<span class='alert'>[src] bursts in [user]'s hands!</span>", \
 				"<span class='alert'>[src] bursts in your hands! <b>[curse]!</b></span>")
@@ -99,8 +112,9 @@
 		var/list/actions = list()
 		if (user.mind && user.mind.assigned_role == "Clown")
 			actions += "Make balloon animal"
-		if (src.reagents.total_volume > 0 && !src.tied)
+		if (src.reagents.total_volume > 0 || TOTAL_MOLES(src.air) >= BREATH_VOLUME)
 			actions += "Inhale"
+		if (!src.tied)
 			actions += "Tie off"
 		if (H.urine >= 2 && !src.tied)
 			actions += "Pee in it"
@@ -108,7 +122,11 @@
 			user.show_text("You can't think of anything to do with [src].", "red")
 			return
 
-		var/action = input(user, "What do you want to do with the balloon?") as null|anything in actions
+		var/action
+		if (length(actions) == 1 && actions[1] == "Inhale")
+			action = "Inhale"
+		else
+			action = input(user, "What do you want to do with the balloon?") as null|anything in actions
 
 		switch (action)
 			if ("Make balloon animal")
@@ -122,7 +140,7 @@
 						boutput(user, "<span class='alert'>You need to catch your breath first!</span>")
 						return
 					var/list/animal_types = list("bee", "dog", "spider", "pie", "owl", "rockworm", "martian", "fermid", "fish")
-					if (!animal_types || animal_types.len <= 0)
+					if (!animal_types || length(animal_types) <= 0)
 						user.show_text("You can't think of anything to make with [src].", "red")
 						return
 					var/animal = input(user, "What do you want to make?") as null|anything in animal_types
@@ -169,6 +187,14 @@
 				"<span class='alert'><b>You inhale the contents of [src]!</b></span>")
 				logTheThing(LOG_CHEMISTRY, H, "inhales from [src] [log_reagents(src)] at [log_loc(H)].")
 				src.reagents.trans_to(H, 40)
+				var/datum/lifeprocess/breath/breathing = H.lifeprocesses?[/datum/lifeprocess/breath]
+				if (breathing && TOTAL_MOLES(src.air) >= BREATH_VOLUME)
+					var/datum/gas_mixture/breath = src.air.remove(BREATH_VOLUME)
+					breath.volume = BREATH_VOLUME
+					if (breathing.handle_breath(breath))
+						//some extra O2 healing on top of the normal breath so this is even somewhat practical
+						user.take_oxygen_deprivation(-15)
+					src.UpdateIcon()
 				return
 
 			if ("Pee in it")
@@ -202,15 +228,12 @@
 	ex_act(severity)
 		src.smash()
 
-	proc/smash(var/turf/T)
-		if (src.reagents && src.reagents.total_volume < 10)
-			return
-		if (!T)
-			T = src.loc
+	proc/smash(var/atom/A)
+		if (!A)
+			A = src.loc
+		var/turf/T = get_turf(A)
 		if (src.reagents)
 			src.reagents.reaction(T)
-		if (ismob(T))
-			T = get_turf(T)
 		if (T)
 			T.visible_message("<span class='alert'>[src] bursts!</span>")
 		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)

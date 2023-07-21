@@ -192,6 +192,7 @@
 	..()
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/disability)
 
 /mob/living/silicon/hivebot/restore_life_processes()
 	..()
@@ -212,6 +213,7 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/robot_oil)
 	add_lifeprocess(/datum/lifeprocess/robot_locks)
+	add_lifeprocess(/datum/lifeprocess/disability)
 
 
 /mob/living/silicon/drone/restore_life_processes()
@@ -219,8 +221,11 @@
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 
+/mob/living/intangible/aieye/restore_life_processes()
+	. = ..()
+	add_lifeprocess(/datum/lifeprocess/disability) // for misstep
+
 /mob/living/Life(datum/controller/process/mobs/parent)
-	set invisibility = INVIS_NONE
 	if (..())
 		return 1
 
@@ -272,7 +277,7 @@
 			// Zephyr-class interdictor: carbon mobs in range gain a buff to stamina recovery, which can accumulate to linger briefly
 			if (iscarbon(src))
 				for_by_tcl(IX, /obj/machinery/interdictor)
-					if (IX.expend_interdict(10,src,TRUE,ITDR_ZEPHYR))
+					if (IX.expend_interdict(4,src,TRUE,ITDR_ZEPHYR))
 						src.changeStatus("zephyr_field", 3 SECONDS * life_mult)
 						break
 
@@ -289,7 +294,6 @@
 		if (src.client) //ov1
 			// overlays
 			src.updateOverlaysClient(src.client)
-			src.antagonist_overlay_refresh(0, 0)
 
 		if (src.observers.len)
 			for (var/mob/x in src.observers)
@@ -319,6 +323,8 @@
 
 	var/mult = (max(tick_spacing, TIME - last_human_life_tick) / tick_spacing)
 
+	src.mutantrace?.onLife(mult)
+
 	if (farty_party)
 		src.emote("fart")
 
@@ -340,9 +346,6 @@
 			var/obj/item/parts/human_parts/leg/D = src.limbs.r_leg
 			if(D.original_holder && src != D.original_holder)
 				D.foreign_limb_effect()
-
-	if (src.mutantrace)
-		src.mutantrace.onLife(mult)
 
 	if (!isdead(src)) // Marq was here, breaking everything.
 

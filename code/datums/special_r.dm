@@ -75,7 +75,7 @@ datum/special_respawn
 				//M.ckey = player:ckey
 
 				if(strip_antag)
-					remove_antag(M, usr, 1, 1)
+					M.mind?.wipe_antagonists()
 				r_number ++
 				SPAWN(5 SECONDS)
 					if(player && !player:client)
@@ -102,7 +102,7 @@ datum/special_respawn
 				player.mind.transfer_to(M)
 
 				if(strip_antag)
-					remove_antag(M, usr, 1, 1)
+					M.mind?.wipe_antagonists()
 				r_number ++
 				SPAWN(5 SECONDS)
 					if(player && !player:client)
@@ -241,6 +241,7 @@ datum/special_respawn
 		if(istype(T, /turf/simulated/floor))
 			var/turf/simulated/floor/F = T
 			if (was_eaten)
+				F.icon = 'icons/turf/floors.dmi'
 				F.icon_state = "bloodfloor_2"
 				F.name = "fleshy floor"
 			else

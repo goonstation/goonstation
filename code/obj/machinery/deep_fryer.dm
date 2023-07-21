@@ -6,7 +6,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	desc = "An industrial deep fryer.  A big hit at state fairs!"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "fryer0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	flags = NOSPLASH
 	status = REQ_PHYSICAL_ACCESS
@@ -79,7 +79,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		src.reagents.reaction(G.affecting, TOUCH)
 		return
 
-	if (W.w_class > src.max_wclass || istype(W, /obj/item/storage) || istype(W, /obj/item/storage/secure) || istype(W, /obj/item/plate))
+	if (W.w_class > src.max_wclass || W.storage || istype(W, /obj/item/plate))
 		boutput(user, "<span class='alert'>There is no way that could fit!</span>")
 		return
 
@@ -98,6 +98,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		return src.Attackby(W, user)
 
 /obj/machinery/deep_fryer/onVarChanged(variable, oldval, newval)
+	. = ..()
 	if (variable == "fryitem")
 		if (!oldval && newval)
 			SubscribeToProcess()
@@ -257,7 +258,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	fryholder.overlays = thing.overlays
 	if (isitem(thing))
 		var/obj/item/item = thing
-		fryholder.bites_left = item.w_class
+		fryholder.bites_left = round(item.w_class)
 		fryholder.w_class = item.w_class
 	else
 		fryholder.bites_left = 5

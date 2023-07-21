@@ -83,7 +83,7 @@
 		if (..())
 			return 1
 
-		if (L.mutantrace && !istype(L.mutantrace, /datum/mutantrace/lizard) || !L.organHolder)
+		if (!istype(L.mutantrace, /datum/mutantrace/lizard) || !L.organHolder)
 			boutput(L, "<span class='notice'>You don't have any chromatophores.</span>")
 			return 1
 
@@ -114,7 +114,7 @@
 		if (..())
 			return 1
 
-		if (L.mutantrace && !istype(L.mutantrace, /datum/mutantrace/lizard))
+		if (!istype(L.mutantrace, /datum/mutantrace/lizard))
 			boutput(L, "<span class='notice'>You don't have any chromatophores.</span>")
 			return 1
 
@@ -144,7 +144,7 @@
 		if (..())
 			return 1
 
-		if (L.mutantrace && !istype(L.mutantrace, /datum/mutantrace/lizard))
+		if (!istype(L.mutantrace, /datum/mutantrace/lizard))
 			boutput(L, "<span class='notice'>You're fresh out of chromatophores.</span>")
 			return 1
 
@@ -208,5 +208,5 @@
 		..()
 
 	onInterrupt()
-		boutput(L, "You were interrupted, snapping your [region_name] back to the color it was!")
+		boutput(L, "<span class='alert'>You were interrupted, snapping your [region_name] back to the color it was!")
 		..()

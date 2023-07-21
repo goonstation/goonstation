@@ -1,7 +1,8 @@
-ABSTRACT_TYPE(/datum/antagonist/changeling_critter)
+ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 /datum/antagonist/subordinate/changeling_critter
 	remove_on_death = TRUE
 	remove_on_clone = TRUE
+	antagonist_icon = "changeling"
 	var/critter_type = null
 	var/datum/abilityHolder/changeling/master_ability_holder
 
@@ -22,14 +23,24 @@ ABSTRACT_TYPE(/datum/antagonist/changeling_critter)
 		src.master_ability_holder.hivemind -= old_mob
 		src.master_ability_holder.hivemind += critter
 		critter.hivemind_owner = src.master_ability_holder
-		if (src.master?.current && critter.client)
-			var/I = image(antag_changeling, loc = src.master.current)
-			critter.client.images += I
 		src.owner.transfer_to(critter)
 		qdel(old_mob)
 
 	remove_equipment()
 		src.master_ability_holder.hivemind -= src.owner.current
+
+	add_to_image_groups()
+		. = ..()
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		var/datum/client_image_group/image_group = get_image_group(src.master_ability_holder)
+		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind(src.owner)
+
+	remove_from_image_groups()
+		. = ..()
+		var/datum/client_image_group/image_group = get_image_group(src.master_ability_holder)
+		image_group.remove_mind_mob_overlay(src.owner)
+		image_group.remove_mind(src.owner)
 
 	announce()
 		var/mob/living/critter/changeling/critter = src.owner.current
