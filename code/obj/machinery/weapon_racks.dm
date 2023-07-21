@@ -283,7 +283,7 @@
 			else if (src.isWireColorCut(twire)) src.mend(twire)
 			else src.cut(twire)
 			//src.updateUsrDialog() currently does nothing
-			src.Attackhand(usr) //shit way to refresh ui but it works
+			src.Attackhand(usr) //refreshes ui definitly not the most efficient way
 
 		if ((href_list["pulsewire"]) && (src.panelopen || isAI(usr)))
 			var/twire = text2num_safe(href_list["pulsewire"])
@@ -295,7 +295,7 @@
 				return
 			else src.pulse(twire)
 			//src.updateUsrDialog() currently does nothing
-			src.Attackhand(usr) //shit way to refresh ui but it works
+			src.Attackhand(usr) //refreshes ui definitly not the most efficient way
 
 	proc/isWireColorCut(var/wireColor)
 		var/wireFlag = APCWireColorToFlag[wireColor]
