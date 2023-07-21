@@ -1,5 +1,18 @@
 
+(t)thu jul 20 23
+(u)DimWhat
+(p)14974
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added a couple more bespoke lizard sprites.
 (t)wed jul 19 23
+(u)Retrino
+(p)15017
+(e)🗺|A-Mapping
+(+)adds 2 more roundstart borg spawns to nadir
+(u)DimWhat
+(p)15004
+(e)⚖🎩|C-Balance, A-Clothing
+(+)Light space suit helmets and martian helmets no longer hide your face.
 (u)Tyrant
 (p)14765
 (e)🗺⛔💊|A-Mapping, C-Removal, A-Medical
