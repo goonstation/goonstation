@@ -1,5 +1,9 @@
 
 (t)fri jul 21 23
+(u)Lord_Earthfire
+(p)14628
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The wifi signal splitter component can now have its checked string changed via mechcomp signals.
 (u)Blackrep
 (p)14811
 (e)⚖📦|C-Balance, A-Game-Objects
