@@ -1,4 +1,9 @@
 
+(t)fri jul 21 23
+(u)Cheffie
+(p)15015
+(e)🪲🎨💅🐁|C-Bug, C-Sprites, C-QoL, A-Critters
+(+)Mobs will now fit under flaps, give slowdown when grabbed and fit in low storage containers (crates, bodybags) when dead. This mostly applies to mob critters which now will not laydown on death.
 (t)thu jul 20 23
 (u)DimWhat
 (p)14974
