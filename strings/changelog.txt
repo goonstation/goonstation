@@ -1,5 +1,9 @@
 
 (t)fri jul 21 23
+(u)Blackrep
+(p)14811
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Buff: Pipeshot shells are now tiny objects.
 (u)Tyrant
 (p)14945
 (e)🪲|C-Bug
