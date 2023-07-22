@@ -1,5 +1,9 @@
 
 (t)fri jul 21 23
+(u)Mantwerp and Mcdangus
+(p)14999
+(e)🎨🔊📦|C-Sprites, C-Sound, A-Game-Objects
+(*)Added the electric guitar, which you can get from cargo. Sprites and sounds by Mcdangus.
 (u)Tyrant
 (p)14983
 (e)🗺💅|A-Mapping, C-QoL
