@@ -1061,7 +1061,7 @@ datum/preferences
 			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 
-		var/datum/mutantrace/mutantRace = null
+		var/datum/mutantrace/mutantRace = /datum/mutantrace/human
 		for (var/ID in traitPreferences.traits_selected)
 			var/datum/trait/T = getTraitById(ID)
 			if (T?.mutantRace)
@@ -1586,9 +1586,9 @@ datum/preferences
 			if (src == usr.client.preferences)
 				process_link(usr, href_list)
 			else
-				boutput(usr, "Those aren't your prefs!")
+				boutput(usr, "<h3 class='alert'>Those aren't your prefs!</h3>")
 		else
-			boutput(usr, "Something went wrong with preferences. Call a coder.")
+			boutput(usr, "<h3 class='alert'>Something went wrong with preferences. Call a coder.</span>")
 		..()
 
 	proc/process_link(mob/user, list/link_tags)
@@ -1769,7 +1769,7 @@ datum/preferences
 
 		if (ishuman(character))
 			var/mob/living/carbon/human/H = character
-			if (H.mutantrace && H.mutantrace.voice_override)
+			if (H.mutantrace?.voice_override) //yass TODO: find different way of handling this
 				H.voice_type = H.mutantrace.voice_override
 
 	proc/apply_post_new_stuff(mob/living/character)
@@ -1813,7 +1813,7 @@ datum/preferences
 			if (ismob(M) && M.client)
 				C = M.client
 			else
-				boutput(C,"Something went wrong. Maybe the game isn't done loading yet, give it a minute!")
+				boutput(C, "<h3 class='alert'>Something went wrong. Maybe the game isn't done loading yet, give it a minute!</h3>")
 				return
 		if (C.preferences.use_wasd)
 			winset( C, "menu.wasd_controls", "is-checked=true" )

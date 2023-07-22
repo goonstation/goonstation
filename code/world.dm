@@ -539,6 +539,9 @@ var/global/mob/twitch_mob = 0
 	clothingbooth_setup()
 	initialize_biomes()
 
+	Z_LOG_DEBUG("World/Init", "Setting up airlock/APC wires...")
+	airlockWireColorToFlag = RandomAirlockWires()
+	APCWireColorToFlag = RandomAPCWires()
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
 	global.initialise_fishing_spots()
 
@@ -642,6 +645,9 @@ var/global/mob/twitch_mob = 0
 #ifdef PREFAB_CHECKING
 	placeAllPrefabs()
 #endif
+#ifdef RANDOM_ROOM_CHECKING
+	placeAllRandomRooms()
+#endif
 #ifdef CI_RUNTIME_CHECKING
 	populate_station()
 	check_map_correctness()
@@ -706,7 +712,7 @@ var/global/mob/twitch_mob = 0
 			var/line = details["line"]
 			var/name = details["name"]
 			text2file("\[[timestamp]\] [file],[line]: [name]", "errors.log")
-#ifndef PREFAB_CHECKING
+#if !(defined(PREFAB_CHECKING) || defined(RANDOM_ROOM_CHECKING))
 	var/apc_error_str = debug_map_apc_count("\n", zlim=Z_LEVEL_STATION)
 	if (!is_blank_string(apc_error_str))
 		text2file(apc_error_str, "errors.log")
@@ -1552,16 +1558,29 @@ var/global/mob/twitch_mob = 0
 				ircmsg["ticklag"] = world.tick_lag
 				ircmsg["runtimes"] = global.runtime_count
 				if(world.system_type == "UNIX")
+					var/list/meminfos = list()
 					try
 						var/meminfo_file = "data/meminfo.txt"
-						fcopy("/proc/meminfo", "meminfo_file")
+						fcopy("/proc/meminfo", meminfo_file)
 						var/list/memory_info = splittext(file2text(meminfo_file), "\n")
 						if(length(memory_info) >= 3)
 							memory_info.len = 3
-							ircmsg["meminfo"] = jointext(memory_info, "\n")
+							meminfos += memory_info
 						fdel(meminfo_file)
 					catch(var/exception/e)
 						stack_trace("[e.name]\n[e.desc]")
+					try
+						var/statm_file = "data/statm.txt"
+						fcopy("/proc/self/statm", statm_file)
+						var/list/memory_info = splittext(file2text(statm_file), " ")
+						var/list/field_names = list("size", "resident", "share", "text", "lib", "data", "dt")
+						for(var/i = 1, i <= length(memory_info), i++)
+							meminfos += field_names[i] + ": " + memory_info[i]
+						fdel(statm_file)
+					catch(var/exception/e2)
+						stack_trace("[e2.name]\n[e2.desc]")
+					if(length(meminfos))
+						ircmsg["meminfo"] = jointext(meminfos, "\n")
 				return ircbot.response(ircmsg)
 
 			if ("rev")

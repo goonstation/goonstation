@@ -201,7 +201,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		stickers
 			name = "Sticker Box"
 			cost = 300
-			path = /obj/item/item_box/assorted/stickers/
+			path = /obj/item/item_box/assorted/stickers
 			icon = 'icons/obj/items/storage.dmi'
 			icon_state = "sticker_box_assorted"
 
@@ -466,7 +466,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		icon_dir = SOUTH
 
 		Create(var/mob/living/M)
-			var/obj/critter/frog/froggo = new(M.loc)
+			var/mob/living/critter/small_animal/frog/froggo = new(M.loc)
 			SPAWN(1 SECOND)
 				froggo.real_name = input(M.client, "Name your frog:", "Name your frog!", "frog")
 				phrase_log.log_phrase("name-frog", froggo.real_name, TRUE)

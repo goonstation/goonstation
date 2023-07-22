@@ -618,7 +618,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	icon_state = "windoor_closed"
 	icon_base = "windoor"
 	panel_icon_state = "windoor_panel_open"
-	welded_icon_state = "fdoor_weld"
+	welded_icon_state = "glassdoor_welded"
 	sound_airlock = 'sound/machines/windowdoor.ogg'
 	has_crush = FALSE
 	health = 500
@@ -1616,10 +1616,7 @@ About the new airlock wires panel:
 			src.set_density(0)
 
 			if (!istype(src, /obj/machinery/door/airlock/glass))
-				if (ignore_light_or_cam_opacity)
-					src.set_opacity(0)
-				else
-					src.RL_SetOpacity(0)
+				src.set_opacity(0)
 			src.operating = 0
 			src.UpdateIcon()
 
@@ -1633,10 +1630,7 @@ About the new airlock wires panel:
 			sleep(1.5 SECONDS)
 
 			if (src.visible)
-				if (ignore_light_or_cam_opacity)
-					src.set_opacity(1)
-				else
-					src.RL_SetOpacity(1)
+				src.set_opacity(1)
 			src.operating = 0
 			src.UpdateIcon()
 

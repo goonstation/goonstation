@@ -100,6 +100,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
+		var/obj/item/storage/mechanics/mechitem = null
 		if(status & BROKEN)
 			return
 		if (istype(I,/obj/item/deconstructor))
@@ -124,8 +125,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				src.update()
 				return
+		if(istype(I, /obj/item/storage/mechanics))
+			mechitem = I
 		//first time they click with a storage, it gets dumped. second time container itself is added
-		if (length(I.storage?.get_contents()) && user.a_intent == INTENT_HELP) //if they're not on help intent it'll default to placing it in while full
+		if (length(I.storage?.get_contents()) && user.a_intent == INTENT_HELP && (!mechitem || mechitem.open)) //if they're not on help intent it'll default to placing it in while full.
 			if(istype(I, /obj/item/storage/secure))
 				var/obj/item/storage/secure/secS = I
 				if (!src.fits_in(secS))
@@ -344,7 +347,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			return
 
 		// 	check for items in disposal - occupied light
-		if (contents.len > 0)
+		if (length(contents) > 0)
 			var/image/I = GetOverlayImage("content_light")
 			if (!I)
 				I = image(src.icon, "[light_style]-full")
@@ -462,7 +465,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
-			AM.set_loc(src.loc)
+			AM.set_loc(get_turf(src))
 			AM.pipe_eject(0)
 			AM.throw_at(target, 5, 1)
 

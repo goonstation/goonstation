@@ -111,7 +111,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
 		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
-		if("intrigue") src.mode = config.pick_mode(pick(prob(300);"mixed_rp", prob(200); "traitor", prob(75);"changeling","vampire", prob(50); "spy_theft","arcfiend","salvager", prob(50); "extended", prob(25); "gang", "conspiracy"))
+		if("intrigue") src.mode = config.pick_mode(pick(prob(300);"mixed_rp", prob(200); "traitor", prob(75);"changeling","vampire", prob(50); "spy_theft","arcfiend","salvager", prob(50); "extended", prob(50); "gang"))
 		if("pod_wars") src.mode = config.pick_mode("pod_wars")
 		else src.mode = config.pick_mode(master_mode)
 
@@ -264,8 +264,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	for(var/turf/T in job_start_locations["AI"])
 		if(isnull(locate(/mob/living/silicon/ai) in T))
 			new /obj/item/clothing/suit/cardboard_box/ai(T)
-
-	processScheduler.start()
+	if(!processScheduler.isRunning)
+		processScheduler.start()
 
 	if (total_clients() >= OVERLOAD_PLAYERCOUNT)
 		world.tick_lag = OVERLOADED_WORLD_TICKLAG
@@ -343,13 +343,13 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	proc/implant_skull_key()
 		//Hello, I will sneak in a solarium thing here.
-		if(!skull_key_assigned && ticker.minds.len > 5) //Okay enough gaming the system you pricks
+		if(!skull_key_assigned && length(ticker.minds) > 5) //Okay enough gaming the system you pricks
 			var/list/HL = list()
 			for (var/mob/living/carbon/human/human in mobs)
 				if (human.client)
 					HL += human
 
-			if(HL.len > 5)
+			if(length(HL) > 5)
 				var/mob/living/carbon/human/H = pick(HL)
 				if(istype(H))
 					skull_key_assigned = 1
@@ -534,7 +534,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				if (ishuman(player))
 					var/mob/living/carbon/human/H = player
-					if (H && istype(H) && H.implant && H.implant.len > 0)
+					if (H && istype(H) && H.implant && length(H.implant) > 0)
 						var/bullets = 0
 						for (var/obj/item/implant/I in H)
 							if (istype(I, /obj/item/implant/projectile))

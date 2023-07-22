@@ -329,7 +329,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 						var/datum/plantgenes/DNA = P.plantgenes
 						var/datum/plantgenes/PDNA = S.plantgenes
 						if (!stored.hybrid && !stored.unique_seed)
-							S.generic_seed_setup(stored)
+							S.generic_seed_setup(stored, TRUE)
 						HYPpassplantgenes(DNA,PDNA)
 						if (stored.hybrid)
 							var/plantType = stored.type
@@ -394,7 +394,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if(ethereal_eater)//ghost critters can get a little ingest reaction and a tiny amount of reagent, but won't actually take reagents
 					src.reagents.reaction(eater, INGEST, 3)
 					if(!ON_COOLDOWN(src, "critter_reagent_copy_\ref[eater]", 15 SECONDS))
-						src.reagents.copy_to(eater, 3/max(src.reagents.total_volume, 3)) //copy up to 3u total, once per food per 15 seconds
+						src.reagents.copy_to(eater.reagents, 3/max(src.reagents.total_volume, 3)) //copy up to 3u total, once per food per 15 seconds
 				else
 					var/obj/item/reagent_containers/food/snacks/bite/B = new /obj/item/reagent_containers/food/snacks/bite
 					B.set_loc(eater)
@@ -1611,14 +1611,14 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	proc/fill_it_up()
 		var/flavor = null
 
-		if (islist(src.whitelist) && src.whitelist.len > 0)
-			if (islist(src.blacklist) && src.blacklist.len > 0)
+		if (islist(src.whitelist) && length(src.whitelist) > 0)
+			if (islist(src.blacklist) && length(src.blacklist) > 0)
 				flavor = pick(src.whitelist - src.blacklist)
 			else
 				flavor = pick(src.whitelist)
 
-		else if (islist(all_functional_reagent_ids) && all_functional_reagent_ids.len > 0)
-			if (islist(src.blacklist) && src.blacklist.len > 0)
+		else if (islist(all_functional_reagent_ids) && length(all_functional_reagent_ids) > 0)
+			if (islist(src.blacklist) && length(src.blacklist) > 0)
 				flavor = pick(all_functional_reagent_ids - src.blacklist)
 			else
 				flavor = pick(all_functional_reagent_ids)
@@ -1899,6 +1899,10 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 /obj/item/reagent_containers/food/drinks/carafe/engineering
 	icon_state = "carafe-eng"
 	item_state = "carafe-eng"
+
+/obj/item/reagent_containers/food/drinks/carafe/command
+	icon_state = "carafe-com"
+	item_state = "carafe-com"
 
 /obj/item/reagent_containers/food/drinks/coconut
 	name = "Coconut"

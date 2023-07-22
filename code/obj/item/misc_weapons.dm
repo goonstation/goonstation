@@ -226,7 +226,7 @@ TYPEINFO(/obj/item/sword)
 		src.force = active_force
 		src.stamina_cost = active_stamina_cost
 		src.w_class = W_CLASS_BULKY
-		user.unlock_medal("The Force is strong with this one", 1)
+		user.unlock_medal("The Force is strong with this one")
 	else
 		src.UpdateIcon()
 		SET_BLOCKS(BLOCK_SWORD)
@@ -409,6 +409,52 @@ TYPEINFO(/obj/item/sword)
 
 /obj/item/sword/pink
 	bladecolor = "Pi"
+
+TYPEINFO(/obj/item/sword/pink/angel)
+	mats = null
+/obj/item/sword/pink/angel
+	name = "The Nyasaber"
+	desc = "A strange colour of saber, for a sith. You sense the dark side of the nya within it..."
+	active = TRUE
+	active_force = 5
+	icon_state = "sword1-Pi"
+	item_state = "sword1-Pi"
+
+	pickup(mob/user)
+		if(isadmin(user))
+			src.active_force = 60
+			if(src.active)
+				src.force = 60
+			. = ..()
+		else if(istype(user, /mob/living/critter/small_animal/cat))
+			boutput(user, "<span class='alert'>You can nyot use this!</span>")
+		else
+			src.active_force = initial(src.active_force)
+			if(src.active)
+				src.force = initial(src.force)
+			user.unequip_all()
+			user.make_critter(/mob/living/critter/small_animal/cat)
+			playsound(user.loc, 'sound/voice/animal/cat.ogg', 50, 1)
+
+	pull(mob/user)
+		if(isadmin(user))
+			return ..()
+		else if(istype(user, /mob/living/critter/small_animal/cat))
+			boutput(user, "<span class='alert'>You can nyot use this!</span>")
+		else
+			user.unequip_all()
+			user.make_critter(/mob/living/critter/small_animal/cat)
+			playsound(user.loc, 'sound/voice/animal/cat.ogg', 50, 1)
+
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+		if(isadmin(usr))
+			return ..()
+		else if(istype(usr, /mob/living/critter/small_animal/cat))
+			boutput(usr, "<span class='alert'>You can nyot use this!</span>")
+		else
+			usr.unequip_all()
+			usr.make_critter(/mob/living/critter/small_animal/cat)
+			playsound(usr.loc, 'sound/voice/animal/cat.ogg', 50, 1)
 
 /obj/item/sword/white
 	bladecolor = "W"
@@ -982,6 +1028,7 @@ TYPEINFO(/obj/item/bat)
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "baseballbat"
 	item_state = "baseballbat"
+	hitsound = 'sound/impact_sounds/bat_wood.ogg'
 	hit_type = DAMAGE_BLUNT
 	force = 12
 	throwforce = 7

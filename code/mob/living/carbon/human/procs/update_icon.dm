@@ -11,14 +11,9 @@
 		blood_image = image('icons/effects/blood.dmi')
 
 	// lol
-	var/head_offset = 0
-	var/hand_offset = 0
-	var/body_offset = 0
-
-	if (src.mutantrace)
-		head_offset = src.mutantrace.head_offset
-		hand_offset = src.mutantrace.hand_offset
-		body_offset = src.mutantrace.body_offset
+	var/head_offset = src.mutantrace.head_offset
+	var/hand_offset = src.mutantrace.hand_offset
+	var/body_offset = src.mutantrace.body_offset
 
 	src.update_lying()
 
@@ -811,9 +806,7 @@
 	var/image/i_r_hand = null
 	var/image/i_l_hand = null
 
-	var/hand_offset = 0
-	if (src.mutantrace)
-		hand_offset = src.mutantrace.hand_offset
+	var/hand_offset = src.mutantrace?.hand_offset
 
 	if (src.limbs)
 		if(src.l_hand && src.r_hand && src.l_hand == src.r_hand && src.l_hand.two_handed)
@@ -1260,7 +1253,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 				undies_image.pixel_y = body_offset
 				src.body_standing.overlays += undies_image
 
-			if (src.bandaged.len > 0)
+			if (length(src.bandaged) > 0)
 				for (var/part in src.bandaged)
 					bandage_image.icon_state = "bandage-[part]"
 					bandage_image.pixel_y = body_offset

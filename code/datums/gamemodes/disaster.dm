@@ -33,7 +33,7 @@
 
 /datum/game_mode/disaster/post_setup()
 	for(var/datum/mind/wraith in Agimmicks)
-		wraith.add_antagonist(ROLE_WRAITH) // this creates the wraith mob and such
+		wraith.add_antagonist(ROLE_WRAITH, source = ANTAGONIST_SOURCE_ROUND_START) // this creates the wraith mob and such
 		var/mob/living/intangible/wraith/W = wraith.current
 		if (istype(W))
 			W.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
@@ -58,11 +58,11 @@
 				var/junk_type = rand(1,4)
 				switch(junk_type)
 					if(1)
-						new/obj/candle_light(T)
+						new /obj/candle_light(T)
 					if(2)
-						new/obj/item/spook(T)
+						new /obj/item/spook(T)
 					if(3)
-						new/obj/critter/floateye(T)
+						new /mob/living/critter/small_animal/floateye(T)
 					if(4)
 						var/obj/item/device/light/glowstick/G = new/obj/item/device/light/glowstick(T)
 						SPAWN(2 SECONDS)
@@ -141,9 +141,9 @@
 			var/condition = survivors[survivor]
 			switch(condition)
 				if("shuttle")
-					boutput(world, "&emsp; <B><FONT size = 2>[survivor] escaped on the shuttle!</FONT></B>")
+					boutput(world, "<span>&emsp; <B><FONT size = 2>[survivor] escaped on the shuttle!</FONT></B></span>")
 				if("alive")
-					boutput(world, "&emsp; <FONT size = 1>[survivor] stayed alive. Whereabouts unknown.</FONT>")
+					boutput(world, "<span>&emsp; <FONT size = 1>[survivor] stayed alive. Whereabouts unknown.</FONT></span>")
 
 	else
 		boutput(world, "<span class='notice'><B>No one survived the [disaster_name] event!</B></span>")

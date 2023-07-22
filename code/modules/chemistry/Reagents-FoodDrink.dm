@@ -95,9 +95,29 @@ datum
 				. = ..()
 				if(M.mob_flags & IS_BONEY)
 					. = FALSE
-					M.HealDamage("All", clamp(1 * volume, 0, 20), clamp(1 * volume, 0, 20)) //put a cap on instant healing
-					if(prob(15))
-						boutput(M, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
+					if(!ON_COOLDOWN(M, "milk_heal", 1 DECI SECOND))
+						M.HealDamage("All", clamp(1 * volume, 0, 10), clamp(1 * volume, 0, 10)) //put a cap on instant healing
+						if(prob(15))
+							boutput(M, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
+		fooddrink/milk_powder
+			name = "milk powder"
+			id = "milk_powder"
+			description = "Powdered milk, made by evaporating milk. Add to water to make it into milk again."
+			reagent_state = SOLID
+			fluid_r = 255
+			fluid_g = 255
+			fluid_b = 255
+			transparency = 255
+			taste = "overly milky"
+			viscosity = 0.4
+
+		fooddrink/milk/super_milk
+			// i thought it was funny
+			name = "super milk"
+			id = "super_milk"
+			description = "This milk is far more milky than should be possible."
+			reagent_state = LIQUID
+
 		fooddrink/milk/chocolate_milk
 			name = "chocolate milk"
 			id = "chocolate_milk"
@@ -790,7 +810,7 @@ datum
 
 				var/do_stunny = 1
 				var/list/covered = old_holder.covered_turf()
-				if (covered.len > 1)
+				if (length(covered) > 1)
 					do_stunny = prob(100/covered.len)
 
 				//var/mob/living/carbon/human/H = M
@@ -900,7 +920,7 @@ datum
 				if(!ishuman(holder?.my_atom))
 					return
 				var/mob/living/carbon/human/M = holder.my_atom
-				if(M.mutantrace && !src.orig_mutantrace)
+				if(!src.orig_mutantrace)
 					src.orig_mutantrace = M.mutantrace.type
 
 			on_mob_life_complete(var/mob/living/carbon/human/M)
@@ -1620,10 +1640,8 @@ datum
 				..()
 
 			on_mob_life_complete(var/mob/living/carbon/human/M)
-				if(M && istype(M))
-					if (!M.mutantrace)
-						if(M.bioHolder)
-							M.bioHolder.AddEffect("roach",0,bioeffect_length) //length of bioeffect proportionate to length grasshopper was in human
+				if(istype(M))
+					M.bioHolder?.AddEffect("roach",0,bioeffect_length) //length of bioeffect proportionate to length grasshopper was in human
 
 		fooddrink/alcoholic/freeze
 			name = "Freeze"
@@ -2255,7 +2273,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 
 				if(volume >= 5 && prob(10))
@@ -2767,7 +2785,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (volume >= 10 && covered.len < 2)
+				if (volume >= 10 && length(covered) < 2)
 					if (!T.messy)
 						make_cleanable(/obj/decal/cleanable/saltpile,T)
 					else
@@ -2778,10 +2796,6 @@ datum
 
 
 			reaction_obj(var/obj/O, var/volume)
-				if (istype(O, /obj/critter/slug))
-					var/obj/critter/slug/S = O
-					S.visible_message("<span class='alert'>[S] shrivels up!</span>")
-					S.CritterDeath()
 				if(istype(O, /obj/decal/icefloor))
 					qdel(O)
 				..(O, volume)
@@ -2838,7 +2852,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume) //Makes the kechup splats
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 
 				if (volume >= 5)
@@ -3028,7 +3042,7 @@ datum
 				name = "glaucogen"
 				id = "glaucogen"
 				description = "A synthetically generated polysaccharide structure that mimics the main storage form of glucose in the body."
-				depletion_rate = 1
+				depletion_rate = 0.4
 
 		fooddrink/VHFCS
 			name = "very-high-fructose corn syrup"
@@ -4044,7 +4058,7 @@ datum
 
 				var/list/covered = holder.covered_turf()
 				var/do_stunny = 1
-				if (covered.len > 1)
+				if (length(covered) > 1)
 					do_stunny = prob(100/covered.len)
 
 				//var/mob/living/carbon/human/H = M

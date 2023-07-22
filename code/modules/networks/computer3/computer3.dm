@@ -286,45 +286,46 @@
 		src.UpdateOverlays(screen_image, "screen_image")
 
 	SPAWN(0.4 SECONDS)
-		if(ispath(src.setup_starting_peripheral1))
-			new src.setup_starting_peripheral1(src) //Peripherals add themselves automatically if spawned inside a computer3
+		if(!length(src.peripherals)) // make sure this is the first time we're initializing this computer
+			if(ispath(src.setup_starting_peripheral1))
+				new src.setup_starting_peripheral1(src) //Peripherals add themselves automatically if spawned inside a computer3
 
-		if(ispath(src.setup_starting_peripheral2))
-			new src.setup_starting_peripheral2(src)
+			if(ispath(src.setup_starting_peripheral2))
+				new src.setup_starting_peripheral2(src)
 
 
-		if(src.setup_idscan_path)
-			new src.setup_idscan_path(src)
+			if(src.setup_idscan_path)
+				new src.setup_idscan_path(src)
 
-		if(!hd && (setup_drive_size > 0))
-			if(src.setup_drive_type)
-				src.hd = new src.setup_drive_type
-				src.hd.set_loc(src)
-			else
-				src.hd = new /obj/item/disk/data/fixed_disk(src)
-			src.hd.file_amount = src.setup_drive_size
+			if(!hd && (setup_drive_size > 0))
+				if(src.setup_drive_type)
+					src.hd = new src.setup_drive_type
+					src.hd.set_loc(src)
+				else
+					src.hd = new /obj/item/disk/data/fixed_disk(src)
+				src.hd.file_amount = src.setup_drive_size
 
-		if(ispath(src.setup_starting_program))
-			var/datum/computer/file/terminal_program/starting = new src.setup_starting_program
+			if(ispath(src.setup_starting_program))
+				var/datum/computer/file/terminal_program/starting = new src.setup_starting_program
 
-			src.hd.file_amount = max(src.hd.file_amount, starting.size)
+				src.hd.file_amount = max(src.hd.file_amount, starting.size)
 
-			starting.transfer_holder(src.hd)
-			//src.processing_programs += src.active_program
+				starting.transfer_holder(src.hd)
+				//src.processing_programs += src.active_program
 
-		if(ispath(src.setup_starting_os) && src.hd)
-			var/datum/computer/file/terminal_program/os/os = new src.setup_starting_os
-			if((src.hd.root.size + os.size) >= src.hd.file_amount)
-				src.hd.file_amount += os.size
+			if(ispath(src.setup_starting_os) && src.hd)
+				var/datum/computer/file/terminal_program/os/os = new src.setup_starting_os
+				if((src.hd.root.size + os.size) >= src.hd.file_amount)
+					src.hd.file_amount += os.size
 
-			os.setup_string = src.setup_os_string
-			src.host_program = os
-			src.host_program.master = src
-			src.processing_programs += src.host_program
-			if(!src.active_program)
-				src.active_program = os
+				os.setup_string = src.setup_os_string
+				src.host_program = os
+				src.host_program.master = src
+				src.processing_programs += src.host_program
+				if(!src.active_program)
+					src.active_program = os
 
-			src.hd.root.add_file(os)
+				src.hd.root.add_file(os)
 
 		src.post_system()
 

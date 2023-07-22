@@ -20,8 +20,8 @@
 		var/mob/living/carbon/human/H = holder.owner
 		if(!istype(H))
 			return 1
-		if (H.mutantrace)
-			if (ismonkey(H))
+		if (ismonkey(H))
+			if (!istype(H.default_mutantrace, /datum/mutantrace/monkey))
 				if (tgui_alert(H,"Are we sure?","Exit this lesser form?",list("Yes","No")) != "Yes")
 					return 1
 				doCooldown()
@@ -50,11 +50,8 @@
 				H.abilityHolder.updateButtons()
 				logTheThing(LOG_COMBAT, H, "leaves lesser form as a changeling, [log_loc(H)].")
 				return 0
-			else if (isabomination(H))
-				boutput(H, "We cannot transform in this form.")
-				return 1
 			else
-				boutput(H, "We cannot transform in this form.")
+				boutput(H, "We cannot leave this form in this way.")
 				return 1
 		else
 			if (tgui_alert(H,"Are we sure?","Assume lesser form?",list("Yes","No")) != "Yes")
@@ -88,7 +85,7 @@
 			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
-		if (H.absorbed_dna.len < 2)
+		if (length(H.absorbed_dna) < 2)
 			boutput(holder.owner, "<span class='alert'>We need to absorb more DNA to use this ability.</span>")
 			return 1
 

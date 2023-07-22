@@ -4,8 +4,10 @@
 	- Transposed scientist
 	- Shades
 	- Repair bots
-	- blob men
+	- Town guards
+	- Blob men
 */
+/////////////// Transposed scientist ////////////////
 /mob/living/critter/crunched
 	name = "transposed scientist"
 	real_name = "transposed scientist"
@@ -425,6 +427,114 @@
 		src.desc = "A machine. Of some sort. It looks mad"
 		src.visible_message("<span class='combat'>[src] seems to power up!</span>")
 
+////////////// Town guards ////////////////
+/mob/living/critter/townguard
+	name = "town guard"
+	real_name = "town guard"
+	desc = "An angry man dressed in medieval armor."
+	icon_state = "townguard"
+	icon_state_dead = "townguard-dead"
+	hand_count = 2
+	can_throw = TRUE
+	can_grab = TRUE
+	can_disarm = TRUE
+	health_brute = 50
+	health_brute_vuln = 1
+	health_burn = 50
+	health_burn_vuln = 1
+	death_text = "%src% seizes up and falls limp, his eyes dead and lifeless..."
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
+	var/halt_cooldown = 3 SECONDS
+
+	passive
+		desc = "A strange man dressed in medieval armor."
+		ai_retaliate_patience = 2
+		ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
+		ai_type = /datum/aiHolder/wanderer
+
+	seek_target()
+		. = ..()
+
+		if (length(.) && prob(10))
+			HALT()
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream","halt")
+				if (src.emote_check(voluntary, 50))
+					HALT()
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream","halt")
+				return 2
+		return ..()
+
+	get_melee_protection(zone, damage_type)
+		return 4
+
+	get_ranged_protection()
+		return 1.5
+
+	setup_equipment_slots()
+		equipment += new /datum/equipmentHolder/ears(src)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.limb = new /datum/limb
+		HH.icon_state = "handl"
+		HH.limb_name = "left arm"
+
+		HH = hands[2]
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.limb = new /datum/limb/sword
+		HH.name = "right hand"
+		HH.suffix = "-R"
+		HH.icon_state = "blade"
+		HH.limb_name = "sword"
+		HH.can_hold_items = FALSE
+
+	setup_healths()
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
+
+	critter_basic_attack(mob/target)
+		HALT()
+		// Hand 2 = SWORD Hand 1 = ARM
+		if (is_incapacitated(target))
+			src.set_a_intent(INTENT_HARM)
+			src.active_hand = 1
+			return ..() // Punch / Kick them
+		if (prob(30))
+			src.set_a_intent(INTENT_DISARM)
+			src.active_hand = 1
+			return src.hand_attack(target) // Disarm them
+		src.set_a_intent(INTENT_HARM)
+		src.active_hand = 2
+		return ..() // Stab them
+
+	proc/HALT()
+		if(!ON_COOLDOWN(src, "say_HALT!", src.halt_cooldown))
+			src.say("HALT!")
+			playsound(src.loc, 'sound/voice/guard_halt.ogg', 50, 0)
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard
+	name = "\improper Town Guard egg"
+	desc = "This is not how humans reproduce. They do not lay eggs. <i>What the hell is this?</i>"
+	critter_type = /mob/living/critter/townguard
+	warm_count = 75
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard/passive
+	critter_type = /mob/living/critter/townguard/passive
+
+////////////// Blobman ////////////////
 /mob/living/critter/blobman
 	name = "mutant"
 	real_name = "mutant"
@@ -459,8 +569,8 @@
 		HH.icon_state = "handr"
 
 	setup_healths()
-		add_hh_robot(src.health_brute, src.health_brute_vuln)
-		add_hh_robot_burn(src.health_burn, src.health_burn_vuln)
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
 	critter_ability_attack(var/target)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)

@@ -11,6 +11,7 @@
 	organ_holder_name = "heart"
 	organ_holder_location = "chest"
 	organ_holder_required_op_stage = 9
+	icon = 'icons/obj/items/organs/heart.dmi'
 	icon_state = "heart"
 	item_state = "heart"
 	// var/broken = 0		//Might still want this. As like a "dead organ var", maybe not needed at all tho?
@@ -150,7 +151,7 @@ TYPEINFO(/obj/item/organ/heart/cyber)
 
 	emp_act()
 		..()
-		if (src.broken)
+		if (src.emagged)
 			boutput(donor, "<span class='alert'><B>Your cyberheart malfunctions and shuts down!</B></span>")
 			donor.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 

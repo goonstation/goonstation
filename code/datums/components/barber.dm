@@ -175,7 +175,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(!ishuman(M))
-		boutput(user, "You don't know how to shave that! At least without cutting its face off.")
+		boutput(user, "<span class='alert'>You don't know how to shave that! At least without cutting its face off.</span>")
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(iswizard(M))
@@ -285,8 +285,8 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 											"[user] slides [his_or_her(user)] razor across [isAI(M) ? "your screen" : "the front of your head"].",\
 									"You shave off a small patch of [isAI(M) ? "dust stuck to [M]'s screen" : "rust on [M]'s face"].")
 		return 0 // runtimes violate law 1, probably
-	else if(!M.mutantrace || M.hair_override)
-		return 1 // is human or mutant forced to be hairy, should be fine
+	else if((M.mutantrace.mutant_appearance_flags & HAS_HUMAN_HAIR) || M.hair_override)
+		return 1 // has human hair or mutant forced to be hairy, should be fine
 	else
 		var/datum/mutantrace/mutant = M.mutantrace.name
 		var/datum/mutantrace/mutant_us = "human"
@@ -312,14 +312,14 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 									 "[M]'s flubbery body flings the [barbery_type == "haircut" ? "scissors" : "razor"] out of your hand!")
 				return 0
 			if("flashy")
-				boutput(user, "[M]'s bright, flashing skin hurts your eyes.")
+				boutput(user, "<span class='alert'>[M]'s bright, flashing skin hurts your eyes.</span>")
 				user.take_eye_damage(1)
 				return 1
 			if("virtual")
-				boutput(user, "You prepare to modify M.bioHolder.mobAppearance.customization_[barbery_type == "haircut" ? "first" : "second"].")
+				boutput(user, "<span class='hint'>You prepare to modify M.bioHolder.mobAppearance.customization_[barbery_type == "haircut" ? "first" : "second"].</span>")
 				return 1
 			if("blank", "humanoid")
-				boutput(user, "You somehow correctly guess which end of [M] is forward.")
+				boutput(user, "<span class='hint'>You somehow correctly guess which end of [M] is forward.</span>")
 				return 1
 			if("grey")
 				if(barbery_type == "haircut")
@@ -340,10 +340,10 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 									 "You find a few overgrown scales on [M] head and give them a trim.")
 				return 0
 			if("zombie")
-				boutput(user, "Hair is hair, even if it is mashed full of rotted skin and attached to someone who wants to eat your brain.")
+				boutput(user, "<span class='hint'>Hair is hair, even if it is mashed full of rotted skin and attached to someone who wants to eat your brain.</span>")
 				return 1
 			if("vampiric thrall")
-				boutput(user, "Hair is hair, even if it is attached to someone who wants to drink your blood.")
+				boutput(user, "<span class='hint'>Hair is hair, even if it is attached to someone who wants to drink your blood.</span>")
 				return 1
 			if("skeleton")
 				if(barbery_type == "haircut")
@@ -416,7 +416,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				return 0
 			if("premature clone")
-				boutput(user, "You try to cut [M]'s hair very carefully, lest they fall over and explode.")
+				boutput(user, "<span class='hint'>You try to cut [M]'s hair very carefully, lest they fall over and explode.</span>")
 				return 1
 			if("mutilated")
 				M.emote("scream")
@@ -428,7 +428,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 									 "You suppress waves of nausea trying to [barbery_type == "haircut" ? "snip" : "cut"] your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head-shaped clump of decayed meat.")
 				return 0
 			if("cyclops")
-				boutput(user, "You mind [M]'s enormous fucking eyeball.")
+				boutput(user, "<span class='hint'>You mind [M]'s enormous fucking eyeball.</span>")
 			if("cat")
 				M.emote("scream")
 				playsound(M.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
@@ -446,7 +446,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 									 "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s massive frog head, knocking loose some... dead spaceflies?")
 				return 0
 			if("kudzu")
-				boutput(user, "You take a brief moment to figure out what part of [M]'s head isn't vines.")
+				boutput(user, "<span class='hint'>You take a brief moment to figure out what part of [M]'s head isn't vines.</span>")
 			if("cow")
 				if(barbery_type == "haircut")
 					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
@@ -464,7 +464,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				return 0
 			else
-				boutput(user, "You're not quite sure what that is, but decide to cut its hair anyway. If it has any.")
+				boutput(user, "<span class='hint'>You're not quite sure what that is, but decide to cut its hair anyway. If it has any.</span>")
 	return 1
 
 
@@ -758,7 +758,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 		..()
 
 	onInterrupt()
-		boutput(owner, "You were interrupted!")
+		boutput(owner, "<span class='alert'>You were interrupted!</span>")
 		..()
 
 /datum/action/bar/barber/haircut

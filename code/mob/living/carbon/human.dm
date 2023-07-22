@@ -165,8 +165,13 @@
 	can_bleed = 1
 	blood_id = "blood"
 	blood_volume = 500
+	dna_to_absorb = 10
+
+	void_mindswappable = TRUE
 
 	var/datum/humanInventory/inventory = null
+
+	var/default_mutantrace = /datum/mutantrace/human
 
 /mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	. = ..()
@@ -233,6 +238,7 @@
 			MB.power = microbombs_4_everyone
 
 	src.text = "<font color=#[random_hex(3)]>@"
+	src.set_mutantrace(src.default_mutantrace)
 	src.update_colorful_parts()
 
 	init_preferences?.apply_post_new_stuff(src)
@@ -481,7 +487,7 @@
 	return get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 
 /mob/living/carbon/human/is_open_container()
-	return !src.organHolder.head
+	return !(src.organHolder?.head)
 
 /mob/living/carbon/human/disposing()
 	for(var/obj/item/I in src)
@@ -573,8 +579,9 @@
 	..()
 
 /mob/living/carbon/human/death(gibbed)
-	if (ticker.mode)
-		ticker.mode.on_human_death(src)
+	if (ticker?.mode)
+		ticker.mode?.on_human_death(src)
+		ticker.mode?.check_win()
 	if(src.mind && src.mind.damned) // Ha you arent getting out of hell that easy.
 		src.hell_respawn()
 		return
@@ -624,7 +631,7 @@
 		return
 
 	//Zombies just rise again (after a delay)! Oh my!
-	if (src.mutantrace && src.mutantrace.onDeath(gibbed))
+	if (src.mutantrace.onDeath(gibbed))
 		return
 
 	if (src.bioHolder && src.bioHolder.HasEffect("revenant"))
@@ -644,7 +651,7 @@
 			for (var/mob/dead/target_observer/hivemind_observer/obs in C.hivemind)
 				boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
 				obs.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
-			if (C.hivemind.len > 0)
+			if (length(C.hivemind) > 0)
 				boutput(src, "Contact with the hivemind has been lost.")
 			C.hivemind = list()
 			if(C.master != C.temp_controller)
@@ -705,9 +712,10 @@
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			NORMAL BUSINESS
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-	emote("deathgasp") //let the world KNOW WE ARE DEAD
+	if (!HAS_ATOM_PROPERTY(src, PROP_MOB_SUPPRESS_DEATH_SOUND))
+		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
-	if (!src.mutantrace || inafterlife(src)) // wow fucking racist
+	if (!inafterlife(src))
 		modify_christmas_cheer(-7)
 
 	src.canmove = 0
@@ -760,8 +768,6 @@
 				if(locate(/obj/neon_lining) in T.contents)
 					src.unlock_medal("Party Hard", 1)
 
-	ticker.mode?.check_win()
-
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel
 	for (var/client/C)
@@ -808,7 +814,7 @@
 		if(src.spell_soulguard == SOULGUARD_RING)	//istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport)
 			reappear_turf = get_turf(src)
 		else
-			reappear_turf = pick(job_start_locations["wizard"])
+			reappear_turf = pick_landmark(LANDMARK_WIZARD)
 
 	////////////////Set up the new body./////////////////
 
@@ -1430,16 +1436,10 @@
 		return 1*/
 
 /mob/living/carbon/human/say_quote(var/text)
-	var/sayverb = null
-	if (src.mutantrace)
-		if (src.mutantrace.voice_message)
-			src.voice_name = src.mutantrace.voice_name
-			src.voice_message = src.mutantrace.voice_message
-		sayverb = src.mutantrace.say_verb()
-	else
-		src.voice_name = initial(src.voice_name)
-		src.voice_message = initial(src.voice_message)
-
+	if (src.mutantrace.voice_message)
+		src.voice_name = src.mutantrace.voice_name
+		src.voice_message = src.mutantrace.voice_message
+	var/sayverb = src.mutantrace.say_verb()
 	var/special = 0
 	if (src.stamina < STAMINA_WINDED_SPEAK_MIN)
 		special = "gasp_whisper"
@@ -2104,7 +2104,7 @@
 /mob/living/carbon/human/proc/can_equip(obj/item/I, slot)
 	switch (slot)
 		if (slot_l_store, slot_r_store)
-			if (I.w_class <= W_CLASS_SMALL && src.w_uniform)
+			if (I.w_class <= W_CLASS_POCKET_SIZED && src.w_uniform)
 				return TRUE
 		if (slot_l_hand)
 			if (src.limbs.l_arm)
@@ -2513,10 +2513,8 @@
 				return
 			if (iswerewolf(src))
 				if (src.handcuffs.werewolf_cant_rip())
-					boutput(src, "<span class='alert'>You can't seem to rip apart these silver handcuffs. They burn!</span>")
-					src.TakeDamage("l_arm", 0, 2, 0, DAMAGE_BURN)
-					src.TakeDamage("r_arm", 0, 2, 0, DAMAGE_BURN)
-					return
+					boutput(src, "<span class='alert'><b>[src.handcuffs] burn you! They'll take a longer time to remove...</b></span>")
+					// no return, proceed as normal
 				else
 					src.visible_message("<span class='alert'><B>[src] rips apart the handcuffs with pure brute strength!</b></span>")
 					boutput(src, "<span class='notice'>You rip apart your handcuffs.</span>")
@@ -2923,7 +2921,7 @@
 		var/count = 0
 		for (var/obj/O in src.juggling)
 			count ++
-			if (src.juggling.len > 1 && count == src.juggling.len)
+			if (length(src.juggling) > 1 && count == src.juggling.len)
 				items += " and [O]"
 				continue
 			items += ", [O]"
@@ -2952,6 +2950,8 @@
 
 /mob/living/carbon/human/set_mutantrace(var/datum/mutantrace/mutantrace_type)
 
+	if(!mutantrace_type)
+		mutantrace_type = src.default_mutantrace
 	if(src.mutantrace)
 		qdel(src.mutantrace) // so that disposing() runs and removes mutant traits
 		. = 1
@@ -2962,7 +2962,7 @@
 	if(ispath(mutantrace_type, /datum/mutantrace) )	//Set a new mutantrace only if passed one
 		src.mutantrace = new mutantrace_type(src)
 		src.mutantrace.MutateMutant(src, "set")
-		src.mutantrace.on_attach() // Mutant race initalization, to avoid issues with abstract representation in New()
+		src.mutantrace.on_attach(src) // Mutant race initalization, to avoid issues with abstract representation in New()
 		. = 1
 
 	if(.)
@@ -3113,9 +3113,7 @@
 		.= 4 * (src.hand ? 1 : -1) * (src.dir & WEST ? 1 : -1)
 
 /mob/living/carbon/human/get_hand_pixel_y()
-	.= -5
-	if (src.mutantrace)
-		.+= src.mutantrace.hand_offset
+	.= -5 + src.mutantrace.hand_offset
 
 /mob/living/carbon/human/verb/show_inventory()
 	set name = "Show Inventory"

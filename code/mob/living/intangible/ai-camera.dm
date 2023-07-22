@@ -21,7 +21,7 @@
 	stat = 0
 	mob_flags = SEE_THRU_CAMERAS | USR_DIALOG_UPDATES_RANGE
 
-	can_lie = 0 //can't lie down, you're a floating ghostly eyeball
+	can_lie = FALSE //can't lie down, you're a floating ghostly eyeball
 	can_bleed = FALSE
 	metabolizes = FALSE
 	blood_id = null
@@ -243,7 +243,7 @@
 	say_understands(var/other)
 		if (ishuman(other))
 			var/mob/living/carbon/human/H = other
-			if (!H.mutantrace || !H.mutantrace.exclusive_language)
+			if (!H.mutantrace.exclusive_language)
 				return 1
 		if (isrobot(other))
 			return 1

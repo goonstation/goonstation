@@ -248,6 +248,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 	New()
 		..()
 		src.bioHolder.AddEffect("cow")
+		src.default_mutantrace = /datum/mutantrace/cow
 
 	initializeBioholder()
 		. = ..()
@@ -541,7 +542,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			if(length(dead_mobs) && prob(60)) //SpyGuy for undefined var/len (what the heck)
 				var/mob/M = pick(dead_mobs)
 				say("[BILL_PICK("deadguy")] [M.name]...")
-			else if (alive_mobs.len > 0)
+			else if (length(alive_mobs) > 0)
 				if (murray && !greeted_murray)
 					greeted_murray = 1
 					say("[BILL_PICK("greetings")] Murray! How's it [BILL_PICK("verbs")]?")
@@ -694,6 +695,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	New()
 		..()
 		src.bioHolder.AddEffect("cow")
+		src.default_mutantrace = /datum/mutantrace/cow
 
 
 // merchant
@@ -848,6 +850,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	New()
 		..()
 		src.bioHolder.AddEffect("cow")
+		src.default_mutantrace = /datum/mutantrace/cow
 
 
 /mob/living/carbon/human/tommy

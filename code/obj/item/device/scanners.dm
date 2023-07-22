@@ -374,6 +374,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 
 		user.visible_message("<span class='alert'><b>[user]</b> has analyzed [M]'s vitals.</span>",\
 		"<span class='alert'>You have analyzed [M]'s vitals.</span>")
+		playsound(src.loc , 'sound/items/med_scanner.ogg', 20, 0)
 		boutput(user, scan_health(M, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1))
 
 		scan_health_overhead(M, user)
@@ -471,7 +472,7 @@ TYPEINFO(/obj/item/device/reagentscanner)
 		tooltip_rebuild = 1
 
 		if (!isnull(A.reagents))
-			if (A.reagents.reagent_list.len > 0)
+			if (length(A.reagents.reagent_list) > 0)
 				set_icon_state("reagentscan-results")
 			else
 				set_icon_state("reagentscan-no")

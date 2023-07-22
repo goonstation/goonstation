@@ -592,7 +592,7 @@
 	item_state = "belt"
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	c_flags = ONBELT
-	max_wclass = W_CLASS_SMALL
+	max_wclass = W_CLASS_POCKET_SIZED
 	opens_if_worn = TRUE
 	stamina_damage = 10
 	stamina_cost = 5
@@ -779,14 +779,14 @@
 	item_state = "rancher"
 	can_hold = list(
 		/obj/item/chicken_carrier,
-		/obj/item/fishing_rod)
+		/obj/item/fishing_rod/basic)
 	check_wclass = 1
 
 	prepared
 		spawn_contents = list(/obj/item/chicken_carrier,
 		/obj/item/chicken_carrier,
 		/obj/item/chicken_carrier,
-		/obj/item/fishing_rod)
+		/obj/item/fishing_rod/basic)
 
 /obj/item/storage/belt/hunter
 	name = "trophy belt"

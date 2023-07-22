@@ -34,7 +34,7 @@ TYPEINFO_NEW(/obj/table)
 	/// whether the storage can be accessed or not
 	var/drawer_locked = FALSE
 	/// id for key checks, keys with the same id can lock it
-	var/lock_id = FALSE
+	var/lock_id = null
 	HELP_MESSAGE_OVERRIDE({"You can use a <b>wrench</b> on <span class='harm'>harm</span> intent to disassemble it."})
 
 	New(loc)
@@ -354,7 +354,7 @@ TYPEINFO_NEW(/obj/table)
 		I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 		if (istype(I,/obj/item/satchel))
 			var/obj/item/satchel/S = I
-			if (S.contents.len < 1)
+			if (length(S.contents) < 1)
 				boutput(user, "<span class='alert'>There's nothing in [S]!</span>")
 			else
 				user.visible_message("<span class='notice'>[user] dumps out [S]'s contents onto [src]!</span>")
@@ -546,7 +546,7 @@ TYPEINFO_NEW(/obj/table/mauxite)
 	name = "table"
 	icon = 'icons/obj/furniture/table.dmi'
 	icon_state = "0$$mauxite"
-	uses_material_appearance = FALSE
+	uses_material_appearance = TRUE
 	mat_changename = TRUE
 	default_material = "mauxite"
 
@@ -618,6 +618,7 @@ TYPEINFO_NEW(/obj/table/nanotrasen)
 	desc = "An industrial grade table with an azure glass panel on the top. The glass looks extremely sturdy."
 	icon = 'icons/obj/furniture/table_nanotrasen.dmi'
 	parts_type = /obj/item/furniture_parts/table/nanotrasen
+	default_material = "glass"
 
 	auto
 		auto = TRUE
