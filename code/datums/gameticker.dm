@@ -244,6 +244,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		//Tell the participation recorder that we're done FAFFING ABOUT
 		participationRecorder.releaseHold()
 
+#ifdef BAD_MONKEY_NO_BANANA
+	for_by_tcl(monke, /mob/living/carbon/human/npc/monkey)
+		qdel(monke)
+#endif
+
 #ifdef MAP_OVERRIDE_NADIR
 	SPAWN(30 MINUTES) // special catalytic engine warning
 		for(var/obj/machinery/power/catalytic_generator/CG in machine_registry[MACHINES_POWER])
