@@ -356,6 +356,7 @@
 /obj/proc/alter_health()
 	return 1
 
+/// Whether or not to hide something based on the value of h.
 /obj/proc/hide(h)
 	return
 

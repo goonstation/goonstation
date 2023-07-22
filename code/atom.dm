@@ -11,7 +11,8 @@ TYPEINFO(/atom)
 /atom
 	layer = TURF_LAYER
 	plane = PLANE_DEFAULT
-	var/level = 2
+	/// Are we above or below the floor tile?
+	var/level = OVERFLOOR
 	var/flags = FPRINT
 	var/event_handler_flags = 0
 	var/tmp/temp_flags = 0
