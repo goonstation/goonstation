@@ -428,7 +428,6 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 				M.visible_message("<span class='alert'>The [M] steps too close to [src] and falls down!</span>")
 				if (stun_effect)
 					stun_duration = stun_effect.duration //makes cooldown last the same as stun because the actual duration of applied effect is lower
-				ON_COOLDOWN(M, "aconite_stun", stun_duration)
 				return
 		..()
 	attack(mob/M, mob/user)
