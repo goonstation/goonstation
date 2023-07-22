@@ -766,10 +766,29 @@ TRAYS
 		if (isitem(a) && can_reach(user, src) && can_reach(user, a))
 			src.add_contents(a, user, params2list(params))
 
-	attack_self(mob/user) // in case you only have one arm or you stacked too many MONSTERs or something just dump a random piece of food
+	// in case you only have one arm or you stacked too many MONSTERs or something just dump a random piece of food
+	// chefs are too fancy for that and will instead get to name the dish
+	attack_self(mob/user)
 		. = ..()
-		if (length(src.contents))
-			src.remove_contents(pick(src.contents))
+		if(user.traitHolder?.hasTrait("training_chef"))
+			tooltip_rebuild = 1
+			var/holder = src.loc
+			var/str = copytext(html_encode(tgui_input_text(user, "Dish name?", "Set name")), 1, 32)
+			if(str)
+				phrase_log.log_phrase("dish_name", str, no_duplicates=TRUE)
+			if (src.loc != holder)
+				return
+			if(url_regex?.Find(str))
+				return
+			if (length(str) > 64)
+				boutput(user, "<span class='alert'>name too long.</span>")
+				return
+			src.name = "'[str]'"
+			boutput(user, "<span class='notice'>You name the dish '[str]'.</span>")
+			logTheThing(LOG_STATION, user, "names a dish \"[str]\".")
+		else
+			if (length(src.contents))
+				src.remove_contents(pick(src.contents))
 
 	attack(mob/M, mob/user)
 		if(user.a_intent == INTENT_HARM && src.is_plate)
