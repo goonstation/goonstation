@@ -944,8 +944,7 @@ TYPEINFO(/obj/item/peripheral)
 
 		return_badge()
 			// label text, icon, contents
-			var/dat = list("label" = "Card","icon" = "edit","contents" = src.authid)
-			return dat
+			. = list("label" = "Card","icon" = "edit","contents" = src.authid)
 
 	register //A card scanner...that manages money??
 		name = "ATM card module"
@@ -955,8 +954,7 @@ TYPEINFO(/obj/item/peripheral)
 
 		return_badge()
 			// label text, icon, contents
-			var/dat = list("label" = "Card","icon" = "credit-card","contents" = src.authid)
-			return dat
+			. = list("label" = "Card","icon" = "credit-card","contents" = src.authid)
 
 		return_status_text()
 			var/status_text = "No card loaded"
@@ -973,8 +971,7 @@ TYPEINFO(/obj/item/peripheral)
 
 		return_badge()
 			// label text, icon, contents
-			var/dat = list("label" = "Card","icon" = "id-card","contents" = src.authid,"Clown" = TRUE)
-			return dat
+			. = list("label" = "Card","icon" = "id-card","contents" = src.authid,"Clown" = TRUE)
 
 	return_status_text()
 		var/status_text = "No card loaded"
@@ -988,8 +985,7 @@ TYPEINFO(/obj/item/peripheral)
 
 	return_badge()
 		// label text, icon, contents
-		var/dat = list("label" = "Card","icon" = "id-card","contents" = src.authid)
-		return dat
+		. = list("label" = "Card","icon" = "id-card","contents" = src.authid)
 
 	proc/eject_card()
 		if(src.authid)
@@ -1209,8 +1205,7 @@ TYPEINFO(/obj/item/peripheral)
 
 	return_badge()
 		// label text, icon, contents
-		var/dat = list("label" = "Disk","icon" = "rom","contents" = src.disk)
-		return dat
+		. = list("label" = "Disk","icon" = "rom","contents" = src.disk)
 
 	uninstalled()
 		src.disk?.set_loc(src)
@@ -1289,8 +1284,7 @@ TYPEINFO(/obj/item/peripheral)
 
 	return_badge()
 		// label text, icon, contents
-		var/dat = list("label" = "Cart","icon" = "microchip","contents" = src.disk)
-		return dat
+		. = list("label" = "Cart","icon" = "microchip","contents" = src.disk)
 
 	return_status_text()
 		var/status_text = "No cart loaded"
@@ -1313,8 +1307,7 @@ TYPEINFO(/obj/item/peripheral)
 
 	return_badge()
 		// label text, icon, contents
-		var/dat = list("label" = "Tape","icon" = "database","contents" = src.disk)
-		return dat
+		. = list("label" = "Tape","icon" = "database","contents" = src.disk)
 
 	return_status_text()
 		var/status_text = "No tape loaded"
@@ -1356,8 +1349,7 @@ TYPEINFO(/obj/item/peripheral)
 			var/charge_percentage = round((cell.charge/cell.maxcharge)*100)
 			status_text = "Cell: [charge_percentage]%"
 
-			var/dat = list("label" = status_text,"icon" = "id-card","contents" = cell)
-			return dat
+			. = list("label" = status_text,"icon" = "id-card","contents" = cell)
 
 
 
