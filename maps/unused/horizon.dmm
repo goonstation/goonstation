@@ -7320,7 +7320,6 @@
 	},
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
-/obj/item/clothing/suit/straight_jacket,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/specialroom/freezer/blue,
 /area/station/medical/cdc)
@@ -9270,7 +9269,6 @@
 /area/station/medical/medbay/treatment2)
 "azT" = (
 /obj/machinery/optable,
-/obj/item/clothing/suit/straight_jacket,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -50100,7 +50098,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/clothing/suit/straight_jacket,
 /turf/simulated/floor,
 /area/station/security/main)
 "dgU" = (

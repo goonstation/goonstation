@@ -34818,7 +34818,6 @@
 /area/station/medical/medbay/treatment2)
 "kYP" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/under/patient_gown,
 /obj/item/device/analyzer/healthanalyzer,

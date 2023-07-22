@@ -1548,7 +1548,7 @@
 "dI" = (
 /obj/table,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/bridge)
@@ -3559,7 +3559,7 @@
 /area/crew_quarters/courtroom)
 "is" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/crew_quarters/courtroom)
@@ -3747,7 +3747,7 @@
 /obj/table,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/medical/medbay)
@@ -5578,7 +5578,7 @@
 "nl" = (
 /obj/secure_closet/personal,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
@@ -6514,7 +6514,7 @@
 /obj/item/cleaner,
 /obj/item/cleaner,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/janitor)
@@ -6638,7 +6638,7 @@
 	network = "SS13"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/security/main)
@@ -6757,7 +6757,7 @@
 /area/hallway/secondary/exit)
 "qb" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/hallway/secondary/exit)
@@ -6939,7 +6939,7 @@
 "qF" = (
 /obj/closet/wardrobe/pink,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
@@ -6985,7 +6985,7 @@
 /area/atmos)
 "qO" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/computer/general_air_control{
 	frequency = 1441;
@@ -7996,7 +7996,7 @@
 	c_tag = "Bar"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
@@ -8045,7 +8045,7 @@
 /area/crew_quarters/cafeteria)
 "tr" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/crew_quarters/cafeteria)
@@ -11862,7 +11862,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/black,
 /area/turret_protected/aisat_interior)
@@ -15752,8 +15752,6 @@
 	reinf = 1
 	},
 /obj/table,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/mask/muzzle,
 /turf/simulated/floor/shuttle{
@@ -20832,7 +20830,7 @@
 /obj/stool/bed,
 /obj/landmark/start/job/captain,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/crew_quarters/captain)

@@ -9093,7 +9093,7 @@
 "aCS" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8;
-	
+
 	},
 /obj/machinery/light{
 	dir = 4
@@ -9611,7 +9611,7 @@
 "aEP" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8;
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -11895,8 +11895,6 @@
 /area/station/medical/medbay)
 "aNn" = (
 /obj/table/auto,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/clothing/glasses/blindfold,

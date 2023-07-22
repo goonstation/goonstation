@@ -687,7 +687,6 @@
 /area/hospital)
 "acQ" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/straight_jacket,
 /turf/unsimulated/floor/white,
 /area/hospital)
 "acY" = (
@@ -928,7 +927,6 @@
 "adH" = (
 /obj/stool/bed,
 /obj/window/south,
-/obj/item/clothing/suit/straight_jacket,
 /turf/unsimulated/floor/white,
 /area/hospital)
 "adJ" = (
