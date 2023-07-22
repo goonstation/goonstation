@@ -2200,8 +2200,8 @@ datum
 						M.addOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 						// oh no
 						if(probmult(max(2, (src.volume - gib_threshold)/5))) // i hate you more, players
-							H.flockbit_gib()
 							logTheThing(LOG_COMBAT, H, "was gibbed by reagent [name] at [log_loc(H)].")
+							H.flockbit_gib()
 							return
 					else
 						if (!istype(M.loc, /obj/flock_structure/cage))

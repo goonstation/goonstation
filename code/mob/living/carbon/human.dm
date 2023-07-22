@@ -2104,7 +2104,7 @@
 /mob/living/carbon/human/proc/can_equip(obj/item/I, slot)
 	switch (slot)
 		if (slot_l_store, slot_r_store)
-			if (I.w_class <= W_CLASS_SMALL && src.w_uniform)
+			if (I.w_class <= W_CLASS_POCKET_SIZED && src.w_uniform)
 				return TRUE
 		if (slot_l_hand)
 			if (src.limbs.l_arm)
