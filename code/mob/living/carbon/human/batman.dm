@@ -346,7 +346,7 @@
 				T.throw_at(tturf, 4, 2)
 		sleep(0.1 SECONDS)
 
-obj/item/batarang
+/obj/item/batarang
 	name = "Batarang"
 	desc = "A metal boomerang in the shape of a bat, it looks sharp."
 	icon = 'icons/obj/items/weapons.dmi'
