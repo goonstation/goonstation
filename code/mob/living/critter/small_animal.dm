@@ -500,7 +500,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 				var/mob/living/critter/small_animal/mouse/mouse = M
 				if (isdead(mouse)) continue
 				. += mouse
-		for (var/obj/critter/livingtail/tail in range(src, 3))
+		for (var/mob/living/critter/small_animal/livingtail/tail in range(src, 3))
 			. += tail
 
 		if (length(.) && prob(20))
@@ -575,7 +575,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 
 /mob/living/critter/small_animal/cat/jones
 	name = "Jones"
-	desc = "Jones the cat."
+	desc = "The captain's loyal-ish companion! The texture of their fur feels a bit off."
 	health = 30
 	randomize_name = FALSE
 	randomize_look = FALSE
@@ -641,7 +641,6 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	health_burn = 30
 	ai_retaliate_patience = 4 //dogoos are big softies, you can hit them 4 times before they attack back
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP //attack until you're knocked down
-	can_lie = FALSE
 	ai_type = /datum/aiHolder/dog
 	var/dogtype = "pug"
 	var/sound/sound_bark = 'sound/voice/animal/dogbark.ogg'
@@ -1746,7 +1745,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
-		can_lie = 0
 		if (fur_color)
 			var/image/overlay = image('icons/misc/critter.dmi', "roach_colorkey-dead")
 			overlay.color = fur_color
@@ -2827,7 +2825,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (istype(C, /mob/living/critter/small_animal/mouse)) return TRUE
 
 	death(var/gibbed)
-		src.can_lie = FALSE
 		if (!gibbed)
 			src.reagents.add_reagent("beff", 50, null)
 		return ..()
@@ -2974,7 +2971,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.emote("dance")
 
 	death(var/gibbed)
-		src.can_lie = FALSE
 		if (!gibbed)
 			animate(src) // stop bumble / bounce
 			src.reagents.add_reagent("toxin", 50, null)
@@ -3163,6 +3159,39 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 10
 	health_burn = 10
 	slime_chance = 11
+
+/mob/living/critter/small_animal/slug/snail/diner
+	name = "Snaily Softserve"
+	real_name = "snaildiner"
+	desc = "It's Snaily Softserve! She's a bit slimey and slow, but she means well."
+	icon_state = "snail"
+	icon_state_dead = "snail-dead"
+	blood_id = "hemolymph"
+	health_brute = 30
+	health_burn = 30
+	slime_chance = 25
+	blood_color = "#f846cc"
+	color = "#ffabfb"
+	pet_text = "gently pats"
+	speechverb_say = "blurps"
+	voice_name = "Snaily Softserve"
+	memory = "i love being a snail..."
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
+	dir_locked = 1
+
+	New()
+		..()
+		var/image/bow = image('icons/obj/clothing/item_hats.dmi', "hbow-mint")
+		bow.appearance_flags = KEEP_TOGETHER
+		bow.pixel_y= 3
+		bow.pixel_x= -9
+		bow.loc = src
+		bow.layer= src.layer +0.1
+		src.overlays += bow
+		/*src.UpdateOverlays(bow, "bow") */
+
+
+
 
 /* =============================================== */
 /* ------------------ Butterfly ------------------ */
@@ -4290,3 +4319,80 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.emote("flip")
 				src.ai.move_away(target,1)
 
+/* =============================================== */
+/* ----------------- living Tail ----------------- */
+/* =============================================== */
+
+/mob/living/critter/small_animal/livingtail
+	name = "Living tail"
+	desc = "A twitching saurian tail, you feel mildly uncomfortable looking at it."
+	icon_state = "twitchytail"
+	hand_count = 0
+	health_brute = 10
+	health_burn = 10
+	flags = NOSPLASH | TABLEPASS
+	generic = FALSE
+	butcherable = FALSE
+	no_stamina_stuns = TRUE
+
+	ai_retaliates = FALSE
+
+	var/obj/item/organ/tail/lizard/tail_memory = null
+	var/maxsteps = 5
+	var/currentsteps = 0
+	var/primary_color = "#21a833"
+	var/secondary_color = "#000000"
+
+/mob/living/critter/small_animal/livingtail/New()
+	..()
+	src.maxsteps = rand(5, 15)
+	if (!tail_memory)
+		src.primary_color = rgb(rand(50,190), rand(50,190), rand(50,190))
+		src.secondary_color = rgb(rand(50,190), rand(50,190), rand(50,190))
+	src.setup_overlays()
+
+/mob/living/critter/small_animal/livingtail/Move()
+	. = ..()
+	if (src.currentsteps++ >= src.maxsteps)
+		src.death()
+
+/mob/living/critter/small_animal/livingtail/setup_overlays()
+	var/image/overlayprimary = image('icons/misc/critter.dmi', "twitchytail_colorkey1")
+	overlayprimary.color = primary_color
+	var/image/overlaysecondary = image('icons/misc/critter.dmi', "twitchytail_colorkey2")
+	overlaysecondary.color = secondary_color
+	src.UpdateOverlays(overlayprimary, "bottomdetail")
+	src.UpdateOverlays(overlaysecondary, "topdetail")
+
+/mob/living/critter/small_animal/livingtail/Life(datum/controller/process/mobs/parent)
+	if (..(parent))
+		return 1
+
+	if (prob(70))
+		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+		make_cleanable(/obj/decal/cleanable/blood/splatter, src.loc)
+	..()
+
+/mob/living/critter/small_animal/livingtail/death(var/gibbed)
+	if (gibbed)
+		return ..()
+	if (tail_memory)
+		tail_memory.set_loc(get_turf(src))
+	else
+		var/obj/item/organ/tail/lizard/tail = new /obj/item/organ/tail/lizard(get_turf(src))
+		tail.organ_color_1 = src.secondary_color
+		tail.organ_color_2 = src.primary_color
+		tail.update_tail_icon()
+	..()
+	qdel(src)
+
+/mob/living/critter/small_animal/livingtail/Crossed(atom/movable/M as mob)
+	..()
+	if (!isalive(src))
+		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(prob(25))
+			src.visible_message("<span class='combat'>[src] weaves around [H]'s legs and trips [him_or_her(H)]!</span>")
+			H.setStatus("resting", duration = INFINITE_STATUS)
+			H.force_laydown_standup()

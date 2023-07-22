@@ -3015,7 +3015,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/derelict_ai_sat/core)
 "anu" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/industrial,
 /area/space)
 "anv" = (
@@ -3541,28 +3541,6 @@
 	},
 /turf/space,
 /area/space)
-"aqe" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/obj/landmark/spawner{
-	name = "father_jack"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-9"
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "red2"
-	},
-/area/diner/dining)
 "aqf" = (
 /obj/table/flock/auto,
 /obj/machinery/light/flock{
@@ -5686,7 +5664,7 @@
 	},
 /area/space)
 "aAV" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/plating/scorched,
 /area/space)
 "aBi" = (
@@ -6679,7 +6657,7 @@
 /area/abandonedship)
 "aHS" = (
 /obj/decal/cleanable/dirt,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "aHU" = (
@@ -6747,7 +6725,7 @@
 /area/abandonedmedicalship)
 "aIc" = (
 /obj/item/cable_coil/cut,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "aId" = (
@@ -7699,13 +7677,13 @@
 	name = "GLOMAR Salvager"
 	})
 "aLf" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "aLg" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
@@ -8826,7 +8804,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aOw" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aOy" = (
@@ -12097,7 +12075,7 @@
 /turf/simulated/floor/plating/airless,
 /area/h7)
 "aXu" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
@@ -12372,7 +12350,7 @@
 /turf/simulated/floor/plating,
 /area/iss)
 "aYf" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/damaged2,
 /area/h7)
 "aYg" = (
@@ -13038,7 +13016,7 @@
 	pixel_y = 32
 	},
 /obj/decal/cleanable/oil,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/white/grime,
 /area/iss)
 "baJ" = (
@@ -13263,7 +13241,7 @@
 	dir = 4;
 	icon_state = "floattiles2"
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "bbu" = (
@@ -13324,7 +13302,7 @@
 /area/iss)
 "bbC" = (
 /obj/machinery/light/small,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/white/grime,
 /area/iss)
 "bbD" = (
@@ -13334,7 +13312,7 @@
 "bbE" = (
 /obj/item/tile/steel,
 /obj/decal/cleanable/machine_debris,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating,
 /area/iss)
 "bbF" = (
@@ -15866,7 +15844,7 @@
 	},
 /area/salyut)
 "bkr" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -18732,15 +18710,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
-"hro" = (
-/obj/stool/bar,
-/obj/landmark/spawner{
-	name = "don_glab"
-	},
-/turf/simulated/floor/carpet{
-	dir = 10
-	},
-/area/diner/dining)
 "hso" = (
 /obj/machinery/r_door_control{
 	access_type = -1;
@@ -19699,17 +19668,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/black/grime,
 /area/diner/motel/chemstorage)
-"jTa" = (
-/obj/stool/chair/comfy{
-	dir = 8
-	},
-/obj/landmark/spawner{
-	name = "big_yank"
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/diner/tug)
 "jUl" = (
 /turf/simulated/floor/carpet{
 	icon_state = "red2"
@@ -19829,6 +19787,15 @@
 	},
 /turf/space,
 /area/diner/jucer_trader)
+"knd" = (
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/mob/living/carbon/human/big_yank,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/diner/tug)
 "knj" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
@@ -22067,6 +22034,13 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hangar)
+"qrK" = (
+/obj/stool/bar,
+/mob/living/carbon/human/don_glab,
+/turf/simulated/floor/carpet{
+	dir = 10
+	},
+/area/diner/dining)
 "qsv" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -23823,11 +23797,6 @@
 	icon_state = "floor2"
 	},
 /area/diner/tug)
-"vel" = (
-/obj/item/storage/belt/hunter,
-/obj/item/clothing/under/misc/tourist,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/abandonedship)
 "vem" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/airlock/pyro/classic{
@@ -23835,6 +23804,11 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
+"veG" = (
+/obj/item/storage/belt/utility,
+/obj/item/clothing/under/misc/tourist,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
 "vfm" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
@@ -24065,6 +24039,26 @@
 	},
 /turf/space,
 /area/abandonedmedicalship)
+"vPX" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/mob/living/carbon/human/fatherjack,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-9"
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "red2"
+	},
+/area/diner/dining)
 "vPY" = (
 /obj/item/poster/titled_photo/bee,
 /turf/simulated/wall/auto/reinforced/old,
@@ -49485,7 +49479,7 @@ aaa
 aaa
 iYn
 bla
-vel
+veG
 fqY
 aGD
 aaa
@@ -63301,7 +63295,7 @@ aaa
 aaa
 lEB
 jgo
-jTa
+knd
 scX
 lEB
 aaa
@@ -73574,7 +73568,7 @@ apj
 azq
 azq
 fXs
-hro
+qrK
 wli
 tkr
 cZx
@@ -77200,7 +77194,7 @@ cEM
 apQ
 tkr
 aqb
-aqe
+vPX
 apK
 ald
 mdB

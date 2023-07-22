@@ -728,7 +728,7 @@
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
-			AM.set_loc(src.loc)
+			AM.set_loc(get_turf(src))
 			AM.pipe_eject(0)
 			AM?.throw_at(target, 5, 1)
 
@@ -1250,7 +1250,13 @@
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"split", PROC_REF(split))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set trigger", PROC_REF(set_trigger_by_signal))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger Field",PROC_REF(setTrigger))
+
+	proc/set_trigger_by_signal(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		src.triggerSignal = input.signal
+		src.tooltip_rebuild = 1
 
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
@@ -3521,7 +3527,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				var/key = map[i]
 				var/val = map[key]
 				mapLines.Add("[key]: [val]")
-		if (map.len > 10)
+		if (length(map) > 10)
 			mapLines.Add("Use a multitool to view all associations")
 		return length(mapLines) ? mapLines.Join("<br>") : ""
 
