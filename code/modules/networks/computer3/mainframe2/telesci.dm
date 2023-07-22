@@ -789,7 +789,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					/mob/living/critter/zombie,
 					/mob/living/critter/bear,
 					/mob/living/carbon/human/npc/syndicate,
-					/obj/critter/martian/soldier,
+					/mob/living/critter/martian/soldier,
 					/mob/living/critter/lion,
 					/obj/critter/yeti,
 					/obj/critter/gunbot/drone,
@@ -1077,7 +1077,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			return
 
 		if (href_list["addbookmark"])
-			if(bookmarks.len >= max_bookmarks)
+			if(length(bookmarks) >= max_bookmarks)
 				boutput(usr, "<span class='alert'>Maximum number of Bookmarks reached.</span>")
 				return
 			var/datum/teleporter_bookmark/bm = new

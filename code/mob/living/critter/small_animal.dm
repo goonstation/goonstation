@@ -326,9 +326,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	New()
 		..()
-		if(src.name == "jons the catte")
-			src.is_pet = TRUE
-			src.is_annoying = TRUE
 		if (src.randomize_name)
 			src.name = pick_string_autokey("names/cats.txt")
 			src.real_name = src.name
@@ -578,7 +575,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 
 /mob/living/critter/small_animal/cat/jones
 	name = "Jones"
-	desc = "Jones the cat."
+	desc = "The captain's loyal-ish companion! The texture of their fur feels a bit off."
 	health = 30
 	randomize_name = FALSE
 	randomize_look = FALSE
@@ -615,6 +612,16 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 		else
 			..()
 
+/mob/living/critter/small_animal/cat/jons
+	name = "jons the catte"
+	desc = "How long has this cat been here?"
+	icon_state = "cat6"
+	icon_state_dead = "cat6-dead"
+	randomize_look = FALSE
+	randomize_name = FALSE
+	is_pet = TRUE
+	is_annoying = TRUE
+
 /* ============================================= */
 /* -------------------- Dog -------------------- */
 /* ============================================= */
@@ -634,7 +641,6 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	health_burn = 30
 	ai_retaliate_patience = 4 //dogoos are big softies, you can hit them 4 times before they attack back
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP //attack until you're knocked down
-	can_lie = FALSE
 	ai_type = /datum/aiHolder/dog
 	var/dogtype = "pug"
 	var/sound/sound_bark = 'sound/voice/animal/dogbark.ogg'
@@ -1739,7 +1745,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
-		can_lie = 0
 		if (fur_color)
 			var/image/overlay = image('icons/misc/critter.dmi', "roach_colorkey-dead")
 			overlay.color = fur_color
@@ -2820,7 +2825,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (istype(C, /mob/living/critter/small_animal/mouse)) return TRUE
 
 	death(var/gibbed)
-		src.can_lie = FALSE
 		if (!gibbed)
 			src.reagents.add_reagent("beff", 50, null)
 		return ..()
@@ -2967,7 +2971,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.emote("dance")
 
 	death(var/gibbed)
-		src.can_lie = FALSE
 		if (!gibbed)
 			animate(src) // stop bumble / bounce
 			src.reagents.add_reagent("toxin", 50, null)
@@ -3156,6 +3159,39 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 10
 	health_burn = 10
 	slime_chance = 11
+
+/mob/living/critter/small_animal/slug/snail/diner
+	name = "Snaily Softserve"
+	real_name = "snaildiner"
+	desc = "It's Snaily Softserve! She's a bit slimey and slow, but she means well."
+	icon_state = "snail"
+	icon_state_dead = "snail-dead"
+	blood_id = "hemolymph"
+	health_brute = 30
+	health_burn = 30
+	slime_chance = 25
+	blood_color = "#f846cc"
+	color = "#ffabfb"
+	pet_text = "gently pats"
+	speechverb_say = "blurps"
+	voice_name = "Snaily Softserve"
+	memory = "i love being a snail..."
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
+	dir_locked = 1
+
+	New()
+		..()
+		var/image/bow = image('icons/obj/clothing/item_hats.dmi', "hbow-mint")
+		bow.appearance_flags = KEEP_TOGETHER
+		bow.pixel_y= 3
+		bow.pixel_x= -9
+		bow.loc = src
+		bow.layer= src.layer +0.1
+		src.overlays += bow
+		/*src.UpdateOverlays(bow, "bow") */
+
+
+
 
 /* =============================================== */
 /* ------------------ Butterfly ------------------ */

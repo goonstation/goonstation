@@ -502,9 +502,9 @@
 							for (var/mob/living/carbon/human/M in view(1, src))
 								if (M != src && can_act(M, TRUE))
 									possible_recipients += M
-							if (possible_recipients.len > 1)
+							if (length(possible_recipients) > 1)
 								H = input(src, "Who would you like to hand your [thing] to?", "Choice") as null|anything in possible_recipients
-							else if (possible_recipients.len == 1)
+							else if (length(possible_recipients) == 1)
 								H = possible_recipients[1]
 
 #ifdef TWITCH_BOT_ALLOWED

@@ -80,7 +80,7 @@
 	id = "early_secret_access"
 	secret = 1
 	effectType = EFFECT_TYPE_POWER
-	mob_exclusive = /mob/living/carbon/human/
+	mob_exclusive = /mob/living/carbon/human
 	can_research = 0
 	blockCount = 1
 	probability = 35

@@ -592,7 +592,7 @@
 	item_state = "belt"
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	c_flags = ONBELT
-	max_wclass = W_CLASS_SMALL
+	max_wclass = W_CLASS_POCKET_SIZED
 	opens_if_worn = TRUE
 	stamina_damage = 10
 	stamina_cost = 5

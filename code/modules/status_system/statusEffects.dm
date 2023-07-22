@@ -962,6 +962,11 @@
 				playsound(owner, sound, 17, 1, 0.4, 1.6)
 				violent_twitch(owner)
 			. = ..(timePassed)
+		onAdd()
+			if(istype(owner, /mob/living/silicon/robot))
+				var/mob/living/silicon/robot/robot = owner
+				robot.lastgasp()
+			. = ..()
 
 	drunk
 		id = "drunk"

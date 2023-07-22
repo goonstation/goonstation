@@ -123,7 +123,8 @@ proc/ui_describe_reagents(atom/A)
 		maxVolume = R.maximum_volume,
 		totalVolume = R.total_volume,
 		contents = list(),
-		finalColor = "#000000"
+		finalColor = "#000000",
+		temperature = R.total_temperature
 	)
 
 	var/list/contents = thisContainerData["contents"]

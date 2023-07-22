@@ -589,7 +589,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ---------- SCALPEL - IMPLANT ---------- */
 	// else if (surgeon.zone_sel.selecting == "chest" && (surgeon.a_intent == "help" || surgeon.a_intent == "disarm"))
 	else if (surgeon.zone_sel.selecting == "chest")
-		if (patient.ailments.len > 0)
+		if (length(patient.ailments) > 0)
 			var/attempted_parasite_removal = 0
 			for (var/datum/ailment_data/an_ailment in patient.ailments)
 				if (an_ailment.cure == "Surgery")
@@ -606,7 +606,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					"<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out a parasite from you with [src]!</span>")
 				return 1
 
-		if (patient.implant.len > 0)
+		if (length(patient.implant) > 0)
 			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 			surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src]!</span>",\
 				"<span class='alert'>You cut into [surgeon == patient ? "your" : "[patient]'s"] chest with [src]!</span>",\

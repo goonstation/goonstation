@@ -1,6 +1,6 @@
 // This file is for premade paper/pamphlet things
 
-/obj/item/paper/alchemy/
+/obj/item/paper/alchemy
 	name = "'Chemistry Information'"
 
 /// Cloning Manual -- A big ol' manual.
