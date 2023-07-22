@@ -1,5 +1,9 @@
 
 (t)fri jul 21 23
+(u)Sian
+(p)14642
+(e)🎨📦🍝|C-Sprites, A-Game-Objects, A-Catering
+(*)Added Wall Trophy for fish available as a ticket purchase in Fishing Supplies Vendor.
 (u)Wisemonster
 (p)14903
 (e)💅🤖|C-QoL, A-Silicons
