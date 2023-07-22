@@ -1,3 +1,9 @@
+(t)tue jul 11 23
+(u)Azrun
+(*)Bulk law changes now support paths (Now you can add hologram and ability modules)
+(t)tue jun 27 23
+(u)tarmunora
+(*)Admin PMs will display admin keys as ckey (as altkey) if alt key is set
 (t)fri jun 16 23
 (u)Sord
 (+)ASAY now shows your current alt key if you have one set

@@ -94,15 +94,17 @@
 			F.explosion_immune = initial(F.explosion_immune)
 		. = ..()
 
-	update_icon()
+	proc/MarkGridForUpdate()
+		src._comp_grid_overlay_update = TRUE
 
+	update_icon()
 		//status lights
 		//gas input/output
-		if(TOTAL_MOLES(air1) > 100)
+		if(air1 && TOTAL_MOLES(air1) > 100)
 			src.UpdateOverlays(image(icon, "lights_cool"), "gas_input_lights")
 		else
 			src.UpdateOverlays(null, "gas_input_lights")
-		if(TOTAL_MOLES(air2) > 100)
+		if(air2 && TOTAL_MOLES(air2) > 100)
 			src.UpdateOverlays(image(icon, "lights_heat"), "gas_output_lights")
 		else
 			src.UpdateOverlays(null, "gas_output_lights")
@@ -336,7 +338,7 @@
 				CRASH("TEMP WENT NEGATIVE")
 
 			. = src.current_gas
-		if(inGas)
+		if(inGas && (THERMAL_ENERGY(inGas) > 0))
 			src.current_gas = inGas.remove((src.reactor_vessel_gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
 			if(src.current_gas && TOTAL_MOLES(src.current_gas) < 1)
 				if(istype(., /datum/gas_mixture))
@@ -694,14 +696,16 @@
 						src.component_grid[x][y] = new /obj/item/reactor_component/gas_channel/random_material
 					if(4)
 						src.component_grid[x][y] = new /obj/item/reactor_component/heat_exchanger/random_material
-
 		..()
 
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/meltdown
 	New()
 		for(var/x=2 to REACTOR_GRID_WIDTH-1)
 			for(var/y=2 to REACTOR_GRID_HEIGHT-1)
-				src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("plutonium")
+				if(x==4 && y==4)
+					src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("plutonium")
+				else
+					src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("cerenkite")
 		..()
 
 #undef REACTOR_GRID_WIDTH

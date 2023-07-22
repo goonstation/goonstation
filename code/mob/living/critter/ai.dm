@@ -220,14 +220,12 @@ var/list/ai_move_scheduled = list()
 	var/move_through_space = FALSE
 	/// for weighting the importance of the goal this sequence is in charge of
 	var/weight = 1
-	/// do we need to be AT the target specifically, or is being in 1 tile of it fine?
-	var/can_be_adjacent_to_target = 1
-
+	/// Distance we want to be away from the target for pathing in tiles 0 = same tile / 1 = next to / etc
+	var/distance_from_target = 1
 
 	New(parentHolder)
 		..()
 		holder = parentHolder
-
 		reset()
 
 	disposing()
@@ -271,7 +269,7 @@ var/list/ai_move_scheduled = list()
 					//fucking unsimulated ocean tiles fuck
 					simulated_only = FALSE
 #endif
-					var/tmp_best_path = get_path_to(holder.owner, A, max_dist*2, can_be_adjacent_to_target, null, simulated_only)
+					var/tmp_best_path = get_path_to(holder.owner, A, max_dist*2, distance_from_target, null, simulated_only)
 					if(length(tmp_best_path))
 						best_score = score
 						best_path = tmp_best_path
@@ -420,8 +418,12 @@ var/list/ai_move_scheduled = list()
 		..()
 
 	proc/add_task(var/datum/aiTask/succeedable/T)
-		if(T)
-			subtasks += T // add to end of the sequence
+		if (T)
+			subtasks.Add(T) // add to end of the sequence
+
+	proc/remove_task(var/datum/aiTask/succeedable/T)
+		if (T)
+			subtasks.Remove(T)
 
 	next_task()
 		if(terminated)
@@ -431,7 +433,7 @@ var/list/ai_move_scheduled = list()
 
 	tick()
 		..()
-		if(!subtasks || subtasks.len < 1 || !current_subtask)
+		if(!subtasks || length(subtasks) < 1 || !current_subtask)
 			terminated = 1 // we can't operate with no subtasks
 			return
 

@@ -279,7 +279,7 @@
 			if (src.amount <= 0)
 				src.icon_state = "bedbin0"
 		else
-			boutput(user, "There's no bedsheets left in [src]!")
+			boutput(user, "<span class='alert'>There's no bedsheets left in [src]!</span>")
 
 	get_desc()
 		. += "There's [src.amount ? src.amount : "no"] bedsheet[s_es(src.amount)] in [src]."
@@ -307,7 +307,7 @@
 			if (src.amount <= 0)
 				src.icon_state = "bedbin0"
 		else
-			boutput(user, "There's no towels left in [src]!")
+			boutput(user, "<span class='alert'>There's no towels left in [src]!</span>")
 
 	get_desc()
 		. += "There's [src.amount ? src.amount : "no"] towel[s_es(src.amount)] in [src]."

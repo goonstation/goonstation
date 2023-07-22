@@ -994,3 +994,19 @@
 		leet_chance *= (src.power - 1) * 2 + 1
 		message = accent_hacker(message, leet_chance)
 		return message
+
+/datum/bioEffect/speech/piglatin
+	name = "Frontal Gyrus Alteration Type-Igpay-Atinlay"
+	desc = "Makes you speak like an 8-year-old with something to hide."
+	id = "accent_piglatin"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "ouYay artstay eakingspay inay igpay atinlay."
+	msgLose = "You stop speaking in pig latin."
+	probability = 15
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = accent_piglatin(message)
+		return message

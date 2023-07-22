@@ -26,11 +26,15 @@ var/global/logLength = 0
 	var/forceNonDiaryLoggingToo = FALSE
 	var/area/A
 
+	if(istype(source, /mob/living/carbon/human/preview) && type == LOG_COMBAT)
+		return //we don't give a flying fuck about the preview mobs maving mutations - but maybe we care about debug etc.?
+
 	if (source)
 		A = get_area(source)
 		source = constructName(source, type)
 	else
 		if (type != LOG_DIARY) source = "<span class='blank'>(blank)</span>"
+
 
 	if (disable_log_lists) // lag reduction hack - ONLY print logs to the web versions
 		if (type == LOG_DIARY)
@@ -62,7 +66,7 @@ var/global/logLength = 0
 			if (LOG_WHISPER) logs[LOG_SPEECH] += ingameLog
 			if (LOG_STATION) logs[LOG_STATION] += ingameLog
 			if (LOG_COMBAT)
-				if (A?.dont_log_combat || istype(source, /mob/living/carbon/human/preview))
+				if (A?.dont_log_combat)
 					return
 				logs[LOG_COMBAT] += ingameLog
 			if (LOG_TELEPATHY) logs[LOG_TELEPATHY] += ingameLog

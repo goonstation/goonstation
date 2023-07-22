@@ -580,6 +580,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	ai_type = /datum/aiHolder/aggressive/scavenger
 	is_npc = TRUE
+	no_stamina_stuns = TRUE
 
 	setup_hands()
 		..()
@@ -609,7 +610,6 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		target.ghostize()
 
 	death(var/gibbed)
-		src.can_lie = FALSE
 		if (!gibbed)
 			src.reagents.add_reagent("shark_dna", 50, null)
 		..()

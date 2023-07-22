@@ -692,7 +692,7 @@ var/global/list/playersSeen = list()
 	if (fexists(banLog))
 		//Here we fetch the latest logID, increment it, then append our data as json
 		var/list/log = dd_file2list(banLog)
-		var/lastIndex = (log.len > 1 ? log.len - 1 : 1)
+		var/lastIndex = (length(log) > 1 ? log.len - 1 : 1)
 		var/lastRow = log[lastIndex]
 		var/list/rowDetails = splittext(lastRow, ":")
 		lastID = text2num(rowDetails[1])
@@ -844,7 +844,7 @@ var/global/list/playersSeen = list()
 	//Only operate on the log if it...exists and has stuff, naturally
 	if (fexists(banLog) && length(file2text(banLogF)) > 0)
 		var/list/log = dd_file2list(banLog)
-		var/lastIndex = (log.len > 1 ? log.len - 1 : 1)
+		var/lastIndex = (length(log) > 1 ? log.len - 1 : 1)
 		var/lastRow = log[lastIndex]
 		log = splittext(lastRow, ":")
 		latestLocalID = log[1]

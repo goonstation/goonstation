@@ -117,9 +117,9 @@ TYPEINFO(/datum/component/extradimensional_storage)
 /datum/component/extradimensional_storage/ladder/on_entered(atom/movable/thing,mob/user)
 	var/obj/ladder/ladder = src.parent
 	if (istype(ladder, /obj/ladder/embed))
-		boutput(user, "You enter the gap in the wall.")
+		boutput(user, "<span class='success'>You enter the gap in the wall.</span>")
 	else
-		boutput(user, "You climb [ladder.icon_state == "ladder" ? "down" : "up"] the ladder.")
+		boutput(user, "<span class='success'>You climb [ladder.icon_state == "ladder" ? "down" : "up"] the ladder.</span>")
 	user.set_loc(region.turf_at(rand(3, region.width - 2), rand(3, region.height - 2)))
 
 /datum/component/extradimensional_storage/ladder/UnregisterFromParent()
