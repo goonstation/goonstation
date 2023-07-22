@@ -2107,7 +2107,7 @@ obj/item/whetstone
 			H.TakeDamage("All", 25, 0, 0, DAMAGE_CRUSH)
 			H.setStatus("stunned", 2 SECONDS)
 			H.emote("scream")
-			setup_props(H)
+		setup_props(user)
 
 	attack(var/mob/target, var/mob/user, def_zone)
 		if (attached && (src.mode == OFFENSIVE_MODE))
