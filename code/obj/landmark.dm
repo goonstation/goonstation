@@ -443,6 +443,7 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/spawner/inside/monkey
 	name = "monkeyspawn_inside"
+	type_to_spawn = /mob/living/carbon/human/npc/monkey
 
 /obj/landmark/spawner/loot
 	name = "Loot Spawn (10%)"
