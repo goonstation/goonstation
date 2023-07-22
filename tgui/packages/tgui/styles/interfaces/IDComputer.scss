@@ -1,6 +1,6 @@
 /**
  * @file
- * @copyright 2022
+ * @copyright 2023
  * @author Garash (https://github.com/Garash2k)
  * @license ISC
  */
