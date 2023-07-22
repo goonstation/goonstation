@@ -90,8 +90,9 @@ Subtypes:
 
 	//attaching trophy to the wall
 	afterattack(var/turf/simulated/wall/T, var/mob/user)
-		T.attach_item(user, src)
-		playsound(src, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
+		. = T.attach_item(user, src)
+		if (.)
+			playsound(src, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
 		. = ..()
 
 	//unattaching the trophy from the wall
