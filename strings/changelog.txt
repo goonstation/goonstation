@@ -1,5 +1,9 @@
 
 (t)fri jul 21 23
+(u)Wisemonster
+(p)14903
+(e)💅🤖|C-QoL, A-Silicons
+(+)Silicons can now use the supply request consoles
 (u)Mantwerp and Mcdangus
 (p)14999
 (e)🎨🔊📦|C-Sprites, C-Sound, A-Game-Objects
