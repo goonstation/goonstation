@@ -2567,7 +2567,7 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 	var/msg = "\"[thing]\" ([thing.type])"
 	if (ismob(thing))
 		var/mob/mobthing = thing
-		msg += " {Key: [key_name(mobthing)]}" // IM RUNNING OUT OF BRACKET TYPES
+		msg += " {Key: [mobthing.ckey || "***NULL***"]}" // IM RUNNING OUT OF BRACKET TYPES
 	return msg
 
 /// For runtime logs- returns the above plus ref

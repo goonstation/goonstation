@@ -3662,15 +3662,6 @@
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"afM" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/mob/living/carbon/human/npc/monkey/mr_rathen,
-/turf/simulated/floor,
-/area/station/engine/hotloop)
 "afN" = (
 /obj/cable{
 	d1 = 1;
@@ -7694,19 +7685,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"ank" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/disposalpipe/segment/brig,
-/obj/disposalpipe/segment/ejection{
-	dir = 8
-	},
-/mob/living/carbon/human/npc/monkey/stirstir,
-/turf/simulated/floor/grime,
-/area/station/security/brig)
 "anl" = (
 /obj/cable{
 	d1 = 2;
@@ -28791,34 +28769,12 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
-"bfv" = (
-/mob/living/carbon/human/npc/monkey/albert,
-/turf/simulated/floor,
-/area/station/science/teleporter)
-"bfw" = (
-/mob/living/carbon/human/npc/monkey/horse,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/observatory)
-"bfy" = (
-/mob/living/carbon/human/npc/monkey/mrs_muggles,
-/turf/simulated/floor,
-/area/station/crew_quarters/supplylobby)
 "bfA" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
 /area/station/medical/dome)
-"bfB" = (
-/mob/living/carbon/human/npc/monkey,
-/turf/simulated/floor/purplewhite/corner{
-	dir = 8
-	},
-/area/station/science/chemistry)
-"bfC" = (
-/mob/living/carbon/human/npc/monkey,
-/turf/simulated/floor/pool/no_animate,
-/area/station/crew_quarters/pool)
 "bfD" = (
 /obj/lattice,
 /obj/cable{
@@ -29670,18 +29626,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/central)
-"bhC" = (
-/obj/machinery/atmospherics/mixer{
-	dir = 1;
-	flipped = 1;
-	frequency = 1225;
-	icon_state = "intact_flipped_off";
-	id_tag = "engine_combust";
-	master_id = "engine_combust_control";
-	name = "Gas Mixer (Combustion Chamber)"
-	},
-/turf/simulated/floor/black,
-/area/station/engine/hotloop)
 "bhD" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -30113,11 +30057,6 @@
 "biB" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/landmark/pest,
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/cafeteria)
-"biC" = (
-/obj/machinery/atmospherics/pipe/simple,
-/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "biD" = (
@@ -50074,15 +50013,6 @@
 /obj/landmark/start/assistant,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
-"cbR" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/mob/living/carbon/human/npc/monkey/tanhony,
-/turf/simulated/floor/carpet{
-	icon_state = "fred2"
-	},
-/area/station/crew_quarters/info)
 "cbS" = (
 /obj/stool/chair{
 	dir = 4
@@ -61791,6 +61721,12 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"cVr" = (
+/mob/living/carbon/human/npc/monkey,
+/turf/simulated/floor/purplewhite/corner{
+	dir = 8
+	},
+/area/station/science/chemistry)
 "cWi" = (
 /obj/cable{
 	d1 = 1;
@@ -62096,6 +62032,10 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/caution/westeast,
 /area/station/routing/sortingRoom)
+"dBv" = (
+/mob/living/carbon/human/npc/monkey/horse,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/observatory)
 "dIb" = (
 /obj/xmastree/ephemeral,
 /turf/simulated/floor/orangeblack/side,
@@ -62785,6 +62725,13 @@
 	dir = 8
 	},
 /area/space)
+"eVL" = (
+/mob/living/carbon/human/npc/monkey/krimpus,
+/obj/disposalpipe/segment{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
 "eWo" = (
 /obj/cable{
 	d1 = 1;
@@ -64506,6 +64453,15 @@
 /obj/landmark/start/security_assistant,
 /turf/simulated/floor,
 /area/station/security/main)
+"ilX" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
+/turf/simulated/floor,
+/area/station/engine/hotloop)
 "imB" = (
 /obj/machinery/door_control{
 	id = "dwaine_core";
@@ -64524,6 +64480,11 @@
 	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
+"imV" = (
+/obj/machinery/atmospherics/pipe/simple,
+/mob/living/carbon/human/npc/monkey/mr_muggles,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "ioZ" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -66649,22 +66610,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/staff)
-"mcK" = (
-/mob/living/carbon/human/npc/monkey,
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/dome)
 "mde" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Cafeteria"
@@ -67085,6 +67030,10 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"mWl" = (
+/mob/living/carbon/human/npc/monkey/albert,
+/turf/simulated/floor,
+/area/station/science/teleporter)
 "mWN" = (
 /obj/table/auto,
 /obj/cable{
@@ -67780,6 +67729,12 @@
 /obj/machinery/light/small/warm/very,
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
+"ore" = (
+/mob/living/carbon/human/npc/monkey,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/dome)
 "osb" = (
 /obj/lattice{
 	dir = 2;
@@ -69177,6 +69132,19 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"rOD" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment/brig,
+/obj/disposalpipe/segment/ejection{
+	dir = 8
+	},
+/mob/living/carbon/human/npc/monkey/stirstir,
+/turf/simulated/floor/grime,
+/area/station/security/brig)
 "rPX" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/medical)
@@ -70239,12 +70207,6 @@
 "tVo" = (
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
-"tXp" = (
-/mob/living/carbon/human/npc/monkey,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/dome)
 "tXG" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -70467,13 +70429,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/hos)
-"uut" = (
-/mob/living/carbon/human/npc/monkey/krimpus,
-/obj/disposalpipe/segment{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/station/hydroponics/bay)
 "uuu" = (
 /obj/cable/yellow{
 	d1 = 0;
@@ -70609,6 +70564,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
+"uRV" = (
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
+/turf/simulated/floor,
+/area/station/crew_quarters/supplylobby)
 "uSk" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -70967,6 +70926,22 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/medical/research)
+"vBJ" = (
+/mob/living/carbon/human/npc/monkey,
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/dome)
 "vCw" = (
 /obj/machinery/atmospherics/binary/valve{
 	desc = "furnace bypass valve";
@@ -71806,6 +71781,10 @@
 "xgp" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/research)
+"xgz" = (
+/mob/living/carbon/human/npc/monkey,
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
 "xiJ" = (
 /obj/cable{
 	d1 = 4;
@@ -72054,6 +72033,15 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/crew_quarters/supplylobby)
+"xZV" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/mob/living/carbon/human/npc/monkey/tanhony,
+/turf/simulated/floor/carpet{
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/info)
 "yaf" = (
 /obj/landmark/pest,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -72094,6 +72082,18 @@
 	},
 /turf/simulated/floor,
 /area/station/science/lobby)
+"ybX" = (
+/obj/machinery/atmospherics/trinary/mixer{
+	dir = 1;
+	flipped = 1;
+	frequency = 1225;
+	icon_state = "intact_flipped_off";
+	id_tag = "engine_combust";
+	master_id = "engine_combust_control";
+	name = "Gas Mixer (Combustion Chamber)"
+	},
+/turf/simulated/floor/black,
+/area/station/engine/hotloop)
 "ycW" = (
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
@@ -101294,7 +101294,7 @@ cuz
 eAc
 yaf
 jrp
-uut
+eVL
 cqD
 cxU
 cuw
@@ -108320,7 +108320,7 @@ beO
 aJE
 cvj
 cvm
-bfy
+uRV
 cmw
 cAi
 bmQ
@@ -115790,7 +115790,7 @@ biW
 biW
 biW
 biW
-biC
+imV
 biW
 bnA
 cxn
@@ -117962,7 +117962,7 @@ ahZ
 cWi
 ait
 amT
-afM
+ilX
 alV
 bld
 czJ
@@ -118863,7 +118863,7 @@ bjq
 bjJ
 czJ
 bkz
-bhC
+ybX
 mqc
 bDX
 czJ
@@ -120029,7 +120029,7 @@ chg
 cxY
 bUT
 cyO
-bfC
+xgz
 cyO
 bUP
 crB
@@ -122540,7 +122540,7 @@ bEU
 aZK
 cut
 cut
-tXp
+ore
 aYE
 bgb
 bgY
@@ -123141,7 +123141,7 @@ aJy
 cwO
 byZ
 wbP
-mcK
+vBJ
 cut
 cut
 bfA
@@ -123445,9 +123445,9 @@ eky
 pGC
 yaz
 cut
-tXp
+ore
 cut
-tXp
+ore
 bKC
 mLY
 bgN
@@ -124048,7 +124048,7 @@ cjF
 dOS
 eQQ
 bUF
-tXp
+ore
 cff
 pDy
 jUS
@@ -124824,7 +124824,7 @@ cCO
 bgP
 aZj
 crm
-bfw
+dBv
 bbE
 crm
 bDM
@@ -127918,7 +127918,7 @@ aRy
 aZe
 auV
 avd
-cbR
+xZV
 bbZ
 cBA
 bIS
@@ -130378,7 +130378,7 @@ aOk
 aAt
 aRx
 aoV
-bfB
+cVr
 cwH
 cgw
 axe
@@ -130588,7 +130588,7 @@ boL
 aGn
 aCe
 bBQ
-ank
+rOD
 aex
 aFq
 bri
@@ -130959,7 +130959,7 @@ cCO
 aVa
 bVG
 cqQ
-bfv
+mWl
 chO
 aKh
 cct

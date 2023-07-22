@@ -3458,19 +3458,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio/news_office)
-"alh" = (
-/obj/stool/chair/office{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/mob/living/carbon/human/npc/monkey/tanhony,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/radio/news_office)
 "ali" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/carpet/grime,
@@ -8655,18 +8642,6 @@
 	dir = 8
 	},
 /area/station/engine/hotloop)
-"aEc" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 4;
-	frequency = 1225;
-	icon_state = "intact_on";
-	id = "Hot Loop Gas Supply 2";
-	on = 1;
-	target_pressure = 1000
-	},
-/mob/living/carbon/human/npc/monkey/mr_rathen,
-/turf/simulated/floor/redblack,
-/area/station/engine/hotloop)
 "aEd" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -9754,16 +9729,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/caution/north,
-/area/station/engine/hotloop)
-"aIr" = (
-/obj/machinery/atmospherics/mixer{
-	dir = 4;
-	frequency = 1225;
-	id_tag = "engine_combust";
-	master_id = "engine_combust_control";
-	name = "Gas Mixer (Combustion Chamber)"
-	},
-/turf/simulated/floor/caution/corner/ne,
 /area/station/engine/hotloop)
 "aIs" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -11990,17 +11955,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
-"aRD" = (
-/mob/living/carbon/human/npc/monkey,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/horizontal,
-/obj/disposalpipe/segment/morgue{
-	dir = 1
-	},
-/turf/simulated/floor/grass,
-/area/station/medical/dome)
 "aRF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -12278,11 +12232,6 @@
 	},
 /area/station/medical/medbay/psychiatrist)
 "aSE" = (
-/turf/simulated/floor/grass,
-/area/station/medical/dome)
-"aSF" = (
-/mob/living/carbon/human/npc/monkey,
-/obj/machinery/light,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "aSG" = (
@@ -15014,10 +14963,6 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
-"bdK" = (
-/mob/living/carbon/human/npc/monkey,
-/turf/simulated/floor/grass,
-/area/station/medical/dome)
 "bdL" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -22716,11 +22661,6 @@
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
-"bIn" = (
-/mob/living/carbon/human/npc/monkey/stirstir,
-/obj/stool,
-/turf/simulated/floor/grime,
-/area/station/security/brig)
 "bIq" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8;
@@ -24354,6 +24294,13 @@
 	dir = 9
 	},
 /area/station/quartermaster/office)
+"bMX" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/mob/living/carbon/human/npc/monkey/horse,
+/turf/simulated/floor/specialroom/arcade,
+/area/research_outpost/indigo_rye)
 "bMZ" = (
 /obj/machinery/disposal/mail/autoname/qm,
 /obj/disposalpipe/trunk/mail/east,
@@ -30440,13 +30387,6 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/research_outpost/indigo_rye)
-"ckD" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/mob/living/carbon/human/npc/monkey/horse,
-/turf/simulated/floor/specialroom/arcade,
-/area/research_outpost/indigo_rye)
 "ckE" = (
 /obj/stool/chair/office{
 	dir = 1
@@ -32567,6 +32507,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/research_director)
+"cCi" = (
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "cCG" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -32940,6 +32884,16 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/grey,
 /area/station/maintenance/west)
+"cON" = (
+/obj/machinery/atmospherics/trinary/mixer{
+	dir = 4;
+	frequency = 1225;
+	id_tag = "engine_combust";
+	master_id = "engine_combust_control";
+	name = "Gas Mixer (Combustion Chamber)"
+	},
+/turf/simulated/floor/caution/corner/ne,
+/area/station/engine/hotloop)
 "cOU" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -38344,6 +38298,11 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/airless/grey,
 /area/station/maintenance/west)
+"gNQ" = (
+/mob/living/carbon/human/npc/monkey,
+/obj/machinery/light,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
 "gNR" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment/brig{
@@ -42290,6 +42249,17 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
+"jVy" = (
+/mob/living/carbon/human/npc/monkey,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/disposalpipe/segment/morgue{
+	dir = 1
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
 "jVU" = (
 /obj/disposalpipe/segment/brig{
 	dir = 2;
@@ -42963,10 +42933,6 @@
 	},
 /obj/item/clothing/head/cakehat,
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
-/area/station/crew_quarters/cafeteria)
-"kBY" = (
-/mob/living/carbon/human/npc/monkey/mr_muggles,
-/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "kCm" = (
 /obj/disposalpipe/switch_junction/right/west{
@@ -45789,16 +45755,6 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
-"mQI" = (
-/obj/cable{
-	icon_state = "4-5"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/mob/living/carbon/human/npc/monkey/albert,
-/turf/simulated/floor/engine,
-/area/station/science/teleporter)
 "mRv" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -46768,6 +46724,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"nJB" = (
+/mob/living/carbon/human/npc/monkey/mr_muggles,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "nKa" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -52938,10 +52898,6 @@
 /obj/landmark/halloween,
 /turf/simulated/floor,
 /area/station/hallway/secondary/south)
-"sMt" = (
-/mob/living/carbon/human/npc/monkey/mrs_muggles,
-/turf/simulated/floor,
-/area/station/storage/warehouse)
 "sMG" = (
 /obj/machinery/optable,
 /obj/item/device/analyzer/healthanalyzer{
@@ -53475,6 +53431,18 @@
 	dir = 5
 	},
 /area/station/hallway/primary/east)
+"ted" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 4;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Hot Loop Gas Supply 2";
+	on = 1;
+	target_pressure = 1000
+	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
+/turf/simulated/floor/redblack,
+/area/station/engine/hotloop)
 "tey" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -54601,6 +54569,11 @@
 /obj/machinery/shieldgenerator/energy_shield,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"tZm" = (
+/mob/living/carbon/human/npc/monkey/stirstir,
+/obj/stool,
+/turf/simulated/floor/grime,
+/area/station/security/brig)
 "tZy" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
 /area/station/bridge)
@@ -55909,10 +55882,6 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"vaO" = (
-/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "vaW" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
@@ -55966,6 +55935,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/core)
+"vde" = (
+/obj/cable{
+	icon_state = "4-5"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/mob/living/carbon/human/npc/monkey/albert,
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
 "vdG" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -56426,6 +56405,10 @@
 /obj/machinery/recharge_station,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"vuN" = (
+/mob/living/carbon/human/npc/monkey,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
 "vvg" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -56711,6 +56694,10 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
+"vKH" = (
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
+/turf/simulated/floor,
+/area/station/storage/warehouse)
 "vLW" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -58226,6 +58213,19 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/hangar/main)
+"wVq" = (
+/obj/stool/chair/office{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/mob/living/carbon/human/npc/monkey/tanhony,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/radio/news_office)
 "wVT" = (
 /obj/disposalpipe/junction/left/west,
 /turf/simulated/floor,
@@ -68818,7 +68818,7 @@ cjN
 cjZ
 cjy
 ckr
-ckD
+bMX
 ckP
 cjy
 psZ
@@ -96497,7 +96497,7 @@ aSE
 jwI
 aSE
 aRB
-bdK
+vuN
 aSE
 sNP
 dVT
@@ -97100,7 +97100,7 @@ aHT
 aQv
 aQv
 aQv
-aRD
+jVy
 beL
 aSE
 aQr
@@ -97404,7 +97404,7 @@ aSE
 tVf
 aRB
 aSE
-aSF
+gNQ
 aQr
 goc
 qEr
@@ -97973,7 +97973,7 @@ aho
 ait
 ajo
 ako
-alh
+wVq
 amf
 anm
 azw
@@ -98049,7 +98049,7 @@ bKw
 bLM
 bMN
 bOr
-mQI
+vde
 bLL
 cnB
 cnE
@@ -103180,7 +103180,7 @@ bGr
 bHI
 bJj
 bHG
-sMt
+vKH
 bHG
 bOA
 bPR
@@ -103731,7 +103731,7 @@ aaa
 aAU
 aDa
 aCW
-aEc
+ted
 ghB
 qME
 uEZ
@@ -104641,7 +104641,7 @@ aEf
 aFf
 qzL
 auN
-aIr
+cON
 jpe
 aKx
 aAT
@@ -111017,7 +111017,7 @@ buI
 wuc
 aup
 emI
-vaO
+cCi
 emI
 etm
 gba
@@ -114351,7 +114351,7 @@ bDA
 pdL
 xSq
 pSt
-bIn
+tZm
 bJM
 bLc
 bMo
@@ -121574,7 +121574,7 @@ bai
 bbm
 bcv
 rrq
-kBY
+nJB
 boB
 bgU
 gda
