@@ -771,6 +771,94 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	has_drawer = TRUE
 	drawer_contents = list(/obj/item/reagent_containers/glass/beaker = 7)
 
+/obj/table/reinforced/chemistry/basicsup
+	name = "basic supply lab counter"
+	desc = "Everything an aspiring chemist needs to start making chemicals!"
+	has_drawer = TRUE
+	drawer_contents = list(/obj/item/paper/book/from_file/pharmacopia,
+				/obj/item/storage/box/beakerbox = 2,
+				/obj/item/reagent_containers/glass/beaker/large = 2,
+				/obj/item/clothing/glasses/spectro,
+				/obj/item/device/reagentscanner = 2,
+				/obj/item/reagent_containers/dropper/mechanical = 2,
+				/obj/item/reagent_containers/dropper = 2)
+
+/obj/table/reinforced/chemistry/auxsup
+	name = "auxiliary supply lab counter"
+	desc = "Extra supplies for the discerning chemist."
+	has_drawer = TRUE
+	drawer_contents = list(/obj/item/storage/box/beakerbox,
+				/obj/item/storage/box/patchbox,
+				/obj/item/storage/box/syringes,
+				/obj/item/reagent_containers/glass/beaker/large,
+				/obj/item/clothing/glasses/spectro = 2,
+				/obj/item/device/reagentscanner = 2,
+				/obj/item/reagent_containers/dropper/mechanical)
+
+
+/obj/table/reinforced/chemistry/clericalsup
+	name = "clerical supply lab counter"
+	desc = "It's only science if you write it down! Or blow yourself up."
+	has_drawer = TRUE
+	drawer_contents = list(/obj/item/paper_bin = 2,
+				/obj/item/hand_labeler,
+				/obj/item/clipboard = 2,
+				/obj/item/pen,
+				/obj/item/stamp,
+				/obj/item/device/audio_log,
+				/obj/item/audio_tape = 2)
+
+
+/obj/table/reinforced/chemistry/firstaid
+	name = "toxin care lab counter"
+	desc = "These drawers have been labeled EMERGENCY TOXIN CARE, which means they're probably already close to empty."
+	has_drawer = TRUE
+	drawer_contents = list(/obj/item/storage/firstaid/toxin,
+				/obj/item/reagent_containers/emergency_injector/calomel)
+
+/obj/table/reinforced/chemistry/chemstorage
+	name = "chemical storage lab counter"
+	desc = "A set of basic precursor chemicals to expedite order fulfillment, increase efficiency, and synergize your workflow. Whatever the fuck that means."
+	has_drawer = TRUE
+	drawer_contents = list(/obj/item/reagent_containers/glass/bottle/oil,
+				/obj/item/reagent_containers/glass/bottle/phenol,
+				/obj/item/reagent_containers/glass/bottle/acid,
+				/obj/item/reagent_containers/glass/bottle/acetone,
+				/obj/item/reagent_containers/glass/bottle/diethylamine,
+				/obj/item/reagent_containers/glass/bottle/ammonia)
+
+/obj/table/reinforced/chemistry/drugs
+	name = "seedy-looking lab counter"
+	desc = ""
+	has_drawer = TRUE
+	drawer_contents = list(/obj/item/plant/herb/cannabis/spawnable = 2,
+				/obj/item/device/light/zippo,
+				/obj/item/reagent_containers/syringe/krokodil,
+				/obj/item/reagent_containers/syringe/morphine,
+				/obj/item/storage/pill_bottle/cyberpunk)
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind?.assigned_role == "Research Director")
+			. = "<br>A stash of drugs provided in an attempt to placate your underlings. Stocking this drawer was your greatest mistake."
+		else
+			. = "<br>A stash of drugs, and maybe the only positive contribution the RD ever made to the station. Too bad they cheaped out on the selection."
+
+/obj/table/reinforced/chemistry/allinone
+	name = "jam-packed lab counter"
+	desc = "The drawers on these barely close, and rattle loudly when moved. Guess they tried to put too much crap in it."
+	has_drawer = TRUE
+	drawer_contents = list(/obj/item/paper/book/from_file/pharmacopia,
+				/obj/item/storage/box/beakerbox = 2,
+				/obj/item/storage/box/syringes,
+				/obj/item/paper_bin,
+				/obj/item/hand_labeler,
+				/obj/item/reagent_containers/dropper/mechanical,
+				/obj/item/reagent_containers/dropper,
+				/obj/item/storage/firstaid/toxin,
+				/obj/item/clothing/glasses/spectro,
+				/obj/item/device/reagentscanner)
+
+
 TYPEINFO(/obj/table/reinforced/industrial)
 TYPEINFO_NEW(/obj/table/reinforced/industrial)
 	. = ..()
