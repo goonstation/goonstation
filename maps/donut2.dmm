@@ -2194,7 +2194,7 @@
 "aiG" = (
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	mail_tag = list("station","bridge","captain","cargo","chapel","chief_engineer","detective","electronics","engineering","genetics","hydroponics","kitchen","medbay","robotics","security","shuttlebay","storage","chemlink");
+	mail_tag = list("station","bar","bridge","captain","cargo","chapel","chief_engineer","detective","electronics","engineering","genetics","hydroponics","kitchen","medbay","mining","robotics","security","shuttlebay","storage","chemlink");
 	name = "station mail router"
 	},
 /turf/simulated/floor/green/side,
@@ -30302,8 +30302,7 @@
 "hWv" = (
 /obj/disposalpipe/switch_junction{
 	dir = 1;
-	mail_tag = "engineering";
-	name = "artlab mail router"
+	mail_tag = "engineering"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -31859,8 +31858,8 @@
 /obj/disposalpipe/switch_junction{
 	dir = 8;
 	icon_state = "pipe-sj2";
-	mail_tag = "mining";
-	name = "mining mail router"
+	mail_tag = "electronics";
+	name = "electronics mail router"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -49986,8 +49985,8 @@
 /obj/disposalpipe/switch_junction{
 	dir = 8;
 	icon_state = "pipe-sj2";
-	mail_tag = "electronics";
-	name = "electronics mail router"
+	mail_tag = "mining";
+	name = "mining mail router"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
