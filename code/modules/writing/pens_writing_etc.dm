@@ -880,6 +880,7 @@
 	name = "hand labeler"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "labeler"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "labeler"
 	desc = "Make things seem more important than they really are with the hand labeler!<br/>Can also name your fancy new area by naming the fancy new APC you created for it."
 	var/label = null
@@ -1113,7 +1114,7 @@
 	attackby(obj/item/P, mob/user)
 
 		if (istype(P, /obj/item/paper) || istype(P, /obj/item/photo))
-			if (src.contents.len < 15)
+			if (length(src.contents) < 15)
 				user.drop_item()
 				P.set_loc(src)
 			else
@@ -1187,7 +1188,7 @@
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/paper))
-			if (src.contents.len < 10)
+			if (length(src.contents) < 10)
 				boutput(user, "You cram the paper into the folder.")
 				user.drop_item()
 				W.set_loc(src)
@@ -1343,7 +1344,7 @@
 				src.pages += P
 				P.set_loc(src)
 				S.ammo--
-				if (pages.len >= 10 && !icon_state == "booklet-thick")
+				if (length(pages) >= 10 && !icon_state == "booklet-thick")
 					src.icon_state = "booklet-thick"
 				src.visible_message("[user] staples [P] at the back of [src].")
 				playsound(user,'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)

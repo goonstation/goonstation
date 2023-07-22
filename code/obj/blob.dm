@@ -1066,7 +1066,7 @@
 	if (!src)
 		return null
 
-	if (src.contents.len < 1)
+	if (length(src.contents) < 1)
 		return null
 
 	for (var/obj/O in src.contents)

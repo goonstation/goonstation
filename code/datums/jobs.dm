@@ -89,7 +89,7 @@
 								R.fields["imp"] = "\ref[I]"
 
 			var/give_access_implant = ismobcritter(M)
-			if(!spawn_id && (access.len > 0 || access.len == 1 && access[1] != access_fuck_all))
+			if(!spawn_id && (length(access) > 0 || length(access) == 1 && access[1] != access_fuck_all))
 				give_access_implant = 1
 			if (give_access_implant)
 				var/obj/item/implant/access/I = new /obj/item/implant/access(M)

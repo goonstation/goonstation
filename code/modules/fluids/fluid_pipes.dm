@@ -250,7 +250,7 @@ proc/find_augmenting_path(var/datum/flow_network/FN)
 	for(var/obj/fluid_pipe/source in FN.sources)
 		FN.clear_DFS_flags()
 		find_source_sink_path(source,stack)
-		if(stack.len > 0)
+		if(length(stack) > 0)
 			return stack
 	return null
 

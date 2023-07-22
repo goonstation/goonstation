@@ -26,9 +26,9 @@ TYPEINFO(/obj/machinery/conveyor) {
 	/// true if can operate (no broken segments in this belt run)
 	var/operable = TRUE
 	/// Direction for objects going into the conveyor.
-	var/dir_in = NORTH
+	var/dir_in = null
 	/// Direction for objects going out of the conveyor.
-	var/dir_out = SOUTH
+	var/dir_out = null
 	var/currentdir = SOUTH
 	/// Determines whether the conveyor can be modified and deconstructed. (Whether the cover is open.)
 	var/deconstructable = FALSE

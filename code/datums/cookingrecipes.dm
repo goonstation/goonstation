@@ -722,7 +722,7 @@ datum/cookingrecipe/flockbrainburger
 
 					//fillings += snack.name
 					if (snack.get_food_color())
-						if (fillingColors.len % 2 || fillingColors.len < (i*2))
+						if (fillingColors.len % 2 || length(fillingColors) < (i*2))
 							fillingColors += "B[snack.get_food_color()]"
 						else
 							fillingColors.Insert((i++*2), "B[snack.get_food_color()]")

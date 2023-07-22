@@ -3807,7 +3807,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				return
 
 		if (I.w_class < W_CLASS_BULKY)
-			if (src.contents.len < src.setup_max_objects)
+			if (length(src.contents) < src.setup_max_objects)
 				if(I.cant_drop)
 					return
 				if (mag)

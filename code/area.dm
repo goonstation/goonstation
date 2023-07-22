@@ -214,7 +214,7 @@ TYPEINFO(/area)
 			var/list/enteringMobs = get_all_mobs_in(A)
 
 			//If any mobs are entering, within a thing or otherwise
-			if (enteringMobs.len > 0)
+			if (length(enteringMobs) > 0)
 				for (var/mob/enteringM in enteringMobs) //each dumb mob
 					if( !(isliving(enteringM) || iswraith(enteringM)) ) continue
 					//Wake up a bunch of lazy darn critters
@@ -262,7 +262,7 @@ TYPEINFO(/area)
 			//Deal with this too
 			var/list/exitingMobs = get_all_mobs_in(A)
 
-			if (exitingMobs.len > 0)
+			if (length(exitingMobs) > 0)
 				for (var/mob/exitingM in exitingMobs)
 					if (exitingM.ckey && exitingM.client && exitingM.mind)
 						var/area/the_area = get_area(exitingM)
@@ -275,7 +275,7 @@ TYPEINFO(/area)
 						if (src.name != "Space" || src.name != "Ocean")
 							if (exitingM.mind in src.population)
 								src.population -= exitingM.mind
-							if (src.active && src.population.len == 0) //Only if this area is now empty
+							if (src.active && length(src.population) == 0) //Only if this area is now empty
 								src.active = 0
 								SEND_SIGNAL(src, COMSIG_AREA_DEACTIVATED)
 

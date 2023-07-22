@@ -996,7 +996,7 @@
 			boutput(user, "<span class='alert'>You cannot bring yourself to deconstruct [target] in this area.</span>")
 			return
 
-		if (O.decon_contexts && O.decon_contexts.len <= 0) //ready!!!
+		if (O.decon_contexts && length(O.decon_contexts) <= 0) //ready!!!
 			boutput(user, "Deconstructing [O], please remain still...")
 			playsound(user.loc, 'sound/effects/pop.ogg', 50, 1)
 			actions.start(new/datum/action/bar/icon/deconstruct_obj(target,src,(decon_complexity * 2.5 SECONDS)), user)
