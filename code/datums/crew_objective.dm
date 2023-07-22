@@ -477,8 +477,8 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 				i--
 			current_rolls++
 			if (current_rolls > max_rolls)
-				logTheThing(LOG_DEBUG, "Failed to generate a foodlist objective for chef. Aborting.")
-				break
+				stack_trace("Failed to generate a foodlist objective for chef. Aborting.")
+				return
 		explanation_text = "Create a custom, three-tier cake with layers of "
 		for (var/ingredient in names)
 			if (ingredient != names[CAKE_OBJ_COUNT])

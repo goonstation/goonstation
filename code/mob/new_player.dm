@@ -376,8 +376,12 @@ mob/new_player
 			// Apply any roundstart mutators to late join if applicable
 			roundstart_events(character)
 
-			if (ishuman(character) && character.traitHolder?.hasTrait("picky_eater") && character.mind.fav_foods.len <= 0)
-				make_picky_eater(character)
+			//picky eater trait handling
+			if (ishuman(character) && character.traitHolder?.hasTrait("picky_eater"))
+				var/datum/trait/picky_eater/eater_trait = character.traitHolder.getTrait("picky_eater")
+				if (length(eater_trait.fav_foods) > 0)
+					boutput(character, eater_trait.explanation_text)
+					character.mind.store_memory(eater_trait.explanation_text)
 
 			SPAWN(0)
 				qdel(src)
@@ -393,37 +397,6 @@ mob/new_player
 		for(var/datum/random_event/start/until_playing/RE in random_events.delayed_start)
 			if(RE.include_latejoin && RE.is_crew_affected(player))
 				RE.apply_to_player(player)
-
-	///Assigns 5 random favorite foods to a picky eater
-	proc/make_picky_eater(mob/living/carbon/human/player)
-		var/choices[5]
-		var/list/names[5]
-		var/i = 0
-		var/max_rolls = 30
-		var/current_rolls = 0
-		while (i < 5)
-			i++
-			choices[i] = pick(allowed_favorite_ingredients)
-			var/choiceType = choices[i]
-			var/obj/item/reagent_containers/food/snacks/instance =  new choiceType
-			if(instance.custom_food)
-				player.mind.fav_foods += choiceType
-				names[i] = instance.name
-			else
-				i--
-			current_rolls++
-			if (current_rolls > max_rolls)
-				logTheThing(LOG_DEBUG, "Failed to generate a foodlist for picky eater [player]. Aborting.")
-				break
-		var/explanation_text = "<b>Your favorite foods are : </b>"
-		for (var/ingredient in names)
-			if (ingredient != names[5])
-				explanation_text += "[ingredient], "
-			else
-				explanation_text += "and [ingredient]<br/>"
-
-		boutput(player, explanation_text)
-		player.mind.store_memory(explanation_text)
 
 	proc/LateJoinLink(var/datum/job/J)
 		// This is pretty ugly but: whatever! I don't care.

@@ -99,7 +99,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 		initial_reagents = list("juice_blueberry"=3)
 		desc = "A slice of blueberry pie. Blueberries cook up purple, who knew?"
 	cherry
-		name = "slice of cherrypie pie"
+		name = "slice of cherry pie"
 		icon_state = "cherrypie-slice"
 		initial_reagents = list("juice_cherry"=3)
 		desc = "A slice of cherry pie. It looks so good, it brings a tear to you eye."

@@ -248,19 +248,21 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but they have no head!</span>",\
 					"<span class='notice'>You try to take a bite of [src], but you have no head to chew with!</span>")
 					return 0
-				if (H.traitHolder.hasTrait("picky_eater") && H.mind.fav_foods.len > 0)
-					if(H.sims)
-						if (H.sims.getValue("Hunger") < SIMS_HUNGER_FAMISHED)
-							if(!check_favorite_food(H))
-								M.visible_message("<span class='notice'>[M] looks at [src] with a disgusted expression!</span>",\
-								"<span class='notice'>You won't eat [src], it just seems too disgusting to you! You're not hungry or desperate enough to eat that.</span>")
-								return 0
-							else
-								boutput(H, "<span class='notice'>Famished, starving, you reluctantly take a bite of [src].</span>")
-					else if(!check_favorite_food(H))
-						M.visible_message("<span class='notice'>[M] looks at [src] with a disgusted expression!</span>",\
-						"<span class='notice'>You won't eat [src], it just seems too disgusting to you!</span>")
-						return 0
+				if (H.traitHolder.hasTrait("picky_eater"))
+					var/datum/trait/picky_eater/eater_trait = H.traitHolder.getTrait("picky_eater")
+					if (length(eater_trait.fav_foods) > 0)
+						if(H.sims)
+							if (H.sims.getValue("Hunger") < SIMS_HUNGER_FAMISHED)
+								if(!check_favorite_food(H))
+									M.visible_message("<span class='notice'>[M] looks at [src] with a disgusted expression!</span>",\
+									"<span class='notice'>You won't eat [src], it just seems too disgusting to you! You're not hungry or desperate enough to eat that.</span>")
+									return 0
+								else
+									boutput(H, "<span class='notice'>Famished, starving, you reluctantly take a bite of [src].</span>")
+						else if(!check_favorite_food(H))
+							M.visible_message("<span class='notice'>[M] looks at [src] with a disgusted expression!</span>",\
+							"<span class='notice'>You won't eat [src], it just seems too disgusting to you!</span>")
+							return 0
 
 			src.take_a_bite(M, user)
 			return 1
@@ -318,11 +320,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		consumer.nutrition += src.heal_amt * 10
 		if (ishuman(consumer))
 			var/mob/living/carbon/human/H = consumer
-			if (H.traitHolder.hasTrait("picky_eater") && H.mind.fav_foods.len > 0)
-				if (check_favorite_food(H))
-					src.heal(H)
-				else
-					displease_picky_eater(H)
+			if (H.traitHolder.hasTrait("picky_eater"))
+				var/datum/trait/picky_eater/eater_trait = H.traitHolder.getTrait("picky_eater")
+				if (length(eater_trait.fav_foods) > 0)
+					if (check_favorite_food(H))
+						src.heal(H)
+					else
+						displease_picky_eater(H)
 		else
 			src.heal(consumer)
 		playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
@@ -407,7 +411,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	///Check wether the current food is in the list of favorite foods for a human
 	proc/check_favorite_food(var/mob/living/carbon/human/H)
-		for (var/food in H.mind.fav_foods)
+		var/datum/trait/picky_eater/eater_trait = H.traitHolder.getTrait("picky_eater")
+		for (var/food in eater_trait.fav_foods)
 			if (istype(src, food))
 				return TRUE
 		return FALSE
@@ -415,17 +420,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	///What happens when a picky eater is fed something they do not like
 	proc/displease_picky_eater(var/mob/living/carbon/human/H)
 		if (prob(30))
-			boutput(H, pick("<span class='notice'>That tasted <b>HORRIBLE</b>! Your mouth feels numb!</span>", "<span class='notice'>You feel like you're about to puke!</span>"))
+			boutput(H, pick("<span class='alert'>That tasted <b>HORRIBLE</b>! Your mouth feels numb!</span>", "<span class='alert'>You feel like you're about to puke!</span>"))
 		else
 			if (prob(30))
 				H.setStatus("paralysis", 2.5 SECONDS)
-				boutput(H, pick("<span class='notice'>The sudden assault of displeasing flavors on your tongue dazes you!</span>", "<span class='notice'>This ignoble meal makes you blank out!</span>"))
+				boutput(H, pick("<span class='alert'>The sudden assault of displeasing flavors on your tongue dazes you!</span>", "<span class='alert'>This ignoble meal makes you blank out!</span>"))
 			else if (prob(30))
-				boutput(H, pick("<span class='notice'>You can't keep down this <i>food</i>!</span>", "<span class='notice'>You fail to swallow this horrific meal!</span>"))
+				boutput(H, pick("<span class='alert'>You can't keep down this <i>food</i>!</span>", "<span class='alert'>You fail to swallow this horrific meal!</span>"))
 				SPAWN(1 SECOND)
 					H.vomit()
 			else
-				boutput(H, pick("<span class='notice'>It takes all your willpower to keep that food down! You feel dizzy!</span>", "<span class='notice'>The sensation of the bite chunk sliding down your throat makes you feel lightheaded!</span>"))
+				boutput(H, pick("<span class='alert'>It takes all your willpower to keep that food down! You feel dizzy!</span>", "<span class='alert'>The sensation of the displeasing chunk sliding down your throat makes you feel lightheaded!</span>"))
 				H.make_dizzy(10)
 				H.change_misstep_chance(25)
 
