@@ -2340,11 +2340,25 @@
 	id = "quick_charged"
 	name = "Quick charged"
 	icon_state = "stam-"
-	maxDuration = 7 MINUTES
+	maxDuration = 0 MINUTES
 
 	getTooltip()
 		. = "The recharge upgrade has quickly charged you, this now prevents you from using another one again until it's safe for your battery to quick charge again."
 
+/datum/statusEffect/moduledisabled
+	id = "module_disabled"
+	name = "Modules disabled"
+	icon_state = "stam-"
+	maxDuration = 5 SECONDS
+
+	getTooltip()
+		. = "Your modules are currently disabled"
+	onAdd()
+		if(istype(owner, /mob/living/silicon/robot))
+			var/mob/living/silicon/robot/robot = owner
+			for (var/obj/item/roboupgrade/R in robot.contents)
+				if (R.activated) R.upgrade_deactivate(robot)
+		. = ..()
 
 /datum/statusEffect/criticalcondition
 	id = "critical_condition"

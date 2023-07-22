@@ -994,7 +994,8 @@
 
 	emp_act()
 		vision.noise(60)
-		src.do_disorient(disorient = 5 SECONDS)
+		src.changeStatus("stunned", 5 SECONDS, optional=null)
+		src.changeStatus("module_disabled", 5 SECONDS, optional=null)
 		boutput(src, "<span class='alert'><B>*BZZZT*</B></span>")
 		for (var/obj/item/parts/robot_parts/RP in src.contents)
 			if (RP.ropart_take_damage(0,55) == 1) src.compborg_lose_limb(RP)
