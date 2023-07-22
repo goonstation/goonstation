@@ -2027,7 +2027,7 @@ obj/item/whetstone
 
 #define OFFENSIVE_MODE 1
 #define DEFENSIVE_MODE 2
-#define EMP 3 // For EMP only
+#define EMP 3 // For EMP only acts like its inactive until fixed
 
 /obj/item/armblade
 	name = "Visicar Armblade"
@@ -2085,13 +2085,14 @@ obj/item/whetstone
 		switch (src.mode)
 			if (EMP)
 				boutput(user, "<span class='alert'>[src] is totally fried, this will take time to fix!</span>")
-				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/item/armblade/proc/fix, user, src.icon, src.icon_state, "[user] resets the [src]!", INTERRUPT_ACT | INTERRUPT_MOVE | INTERRUPT_STUNNED)
+				SETUP_GENERIC_ACTIONBAR(user, src, 8 SECONDS, /obj/item/armblade/proc/fix, user, src.icon, src.icon_state, "[user] resets the [src]!", INTERRUPT_ACT | INTERRUPT_MOVE | INTERRUPT_STUNNED)
 			if (DEFENSIVE_MODE)
 				boutput(user, "<span class='alert'>[src] is now set for offence!</span>")
 				src.mode = OFFENSIVE_MODE
 			if (OFFENSIVE_MODE)
 				boutput(user, "<span class='alert'>[src] is now set for defence!</span>")
 				src.mode = DEFENSIVE_MODE
+		playsound(src, "sound/effects/sparks[rand(1, 6)].ogg", 30, 1, -1)
 		setup_props(user)
 		..()
 
@@ -2101,9 +2102,10 @@ obj/item/whetstone
 		src.mode = EMP
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
-			boutput(H, "<span class='alert'>[src] closes up on your arm and powers down!</span>")
-			playsound(H, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1, -1)
-			H.TakeDamage("All", 15, 0, 0, DAMAGE_CRUSH)
+			H.visible_message("<span class='alert'>[src] clamps down hard on [H]'s arm!</span>", "<span class='alert'>[src] closes up on your arm and powers down!</span>")
+			playsound(H, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1, -1)
+			H.TakeDamage("All", 25, 0, 0, DAMAGE_CRUSH)
+			H.setStatus("stunned", 2 SECONDS)
 			H.emote("scream")
 			setup_props(H)
 
