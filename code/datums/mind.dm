@@ -33,7 +33,6 @@ datum/mind
 	var/list/former_antagonist_roles = list()
 
 	var/list/datum/objective/objectives = list()
-
 	var/is_target = 0
 
 	var/list/intrinsic_verbs = list()
