@@ -8771,7 +8771,6 @@
 "brw" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
-/obj/item/clothing/suit/straight_jacket,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/space,
 /area/russian/radiation)
@@ -10386,7 +10385,6 @@
 /area/russian/radiation)
 "bwo" = (
 /obj/machinery/optable,
-/obj/item/clothing/suit/straight_jacket,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -52087,8 +52085,6 @@
 /area/russian/radiation)
 "kDk" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /turf/simulated/floor/red{
 	broken = 1;
 	desc = " It is made of steel.";

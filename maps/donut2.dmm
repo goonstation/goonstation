@@ -27352,8 +27352,6 @@
 /area/station/hallway/primary/east)
 "fto" = (
 /obj/table/auto,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/mask/muzzle,
 /obj/machinery/light/incandescent,
@@ -42197,8 +42195,6 @@
 /area/station/hallway/primary/west)
 "qCP" = (
 /obj/table/auto,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/reagent_containers/syringe/haloperidol{
 	pixel_x = 6
 	},

@@ -10250,8 +10250,6 @@
 /obj/machinery/light/incandescent/cool,
 /obj/disposalpipe/segment/mail,
 /obj/table/glass/auto,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/reagent_containers/syringe/haloperidol,
 /turf/simulated/floor/bluewhite,
@@ -47557,7 +47555,6 @@
 	icon_state = "1-2"
 	},
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/straight_jacket,
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "oAr" = (
@@ -50437,18 +50434,6 @@
 "ptY" = (
 /obj/table/reinforced/auto{
 	icon_state = "5"
-	},
-/obj/item/clothing/suit/straight_jacket{
-	pixel_x = -8;
-	pixel_y = 8
-	},
-/obj/item/clothing/suit/straight_jacket{
-	pixel_x = 1;
-	pixel_y = 8
-	},
-/obj/item/clothing/suit/straight_jacket{
-	pixel_x = 10;
-	pixel_y = 8
 	},
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/mask/muzzle{

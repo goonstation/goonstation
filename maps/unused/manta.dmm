@@ -21840,8 +21840,6 @@
 /area/station/medical/medbay/lobby)
 "bju" = (
 /obj/storage/crate/packing,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/device/radio/electropack,
 /obj/item/device/radio/electropack,
 /obj/item/clothing/mask/muzzle,

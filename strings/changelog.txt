@@ -1,4 +1,7 @@
 (t)sat jul 22 23
+(+)Flourish
+(e)🗺⚖⛔|A-Mapping, C-Balance, C-Removal,
+(+)Removed straightjackets.
 (u)Flappybat
 (e)⚖⚗|C-Balance, A-Chemistry
 (+)Sorium throw scaling reduced. A large quantity is now needed to throw more than a few tiles.

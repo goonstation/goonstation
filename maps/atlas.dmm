@@ -1279,8 +1279,6 @@
 	pixel_y = 25
 	},
 /obj/storage/cart/medcart,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/reagent_containers/syringe/haloperidol,
 /turf/simulated/floor/bluewhite{
 	dir = 1

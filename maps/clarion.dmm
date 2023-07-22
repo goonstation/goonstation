@@ -38734,10 +38734,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/storage/secure/closet/medical,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/clothing/mask/muzzle,

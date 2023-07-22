@@ -7852,9 +7852,6 @@
 	})
 "dCA" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/straight_jacket{
-	pixel_x = -3
-	},
 /obj/item/clothing/mask/muzzle,
 /obj/item/reagent_containers/syringe/haloperidol{
 	pixel_y = -4
@@ -16820,9 +16817,6 @@
 /area/flock_trader)
 "huq" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/straight_jacket{
-	pixel_x = -3
-	},
 /obj/item/clothing/mask/muzzle,
 /obj/item/reagent_containers/syringe/haloperidol{
 	pixel_y = -4

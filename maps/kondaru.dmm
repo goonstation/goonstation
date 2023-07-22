@@ -19021,7 +19021,6 @@
 /area/station/maintenance/west)
 "bus" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/reagent_containers/syringe/haloperidol,
@@ -19063,7 +19062,6 @@
 /area/station/medical/medbay/treatment1)
 "buv" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/reagent_containers/syringe/haloperidol,

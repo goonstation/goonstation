@@ -52202,8 +52202,6 @@
 /area/space)
 "nDo" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/mask/muzzle,
 /turf/simulated/floor/white,
@@ -85762,7 +85760,7 @@
 "vJl" = (
 /obj/machinery/manufacturer/general/grody{
 	free_resource_amt = 2;
-	
+
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
