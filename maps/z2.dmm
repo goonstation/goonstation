@@ -47737,6 +47737,7 @@
 "ddw" = (
 /obj/table/wood/round/auto,
 /obj/item/storage/box/nerd_kit,
+/obj/item/instrument/tambourine,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "fgreen2"
@@ -58745,10 +58746,18 @@
 /area/cavetiny)
 "dSO" = (
 /obj/table/wood/round/auto,
+/obj/map/light/white,
+/obj/item/cigpacket/cigarillo{
+	pixel_x = 8;
+	pixel_y = 5
+	},
 /obj/item/decoration/ashtray{
 	icon_state = "ashtray4"
 	},
-/obj/map/light/white,
+/obj/item/cigpacket/cigarillo{
+	pixel_x = -7;
+	pixel_y = 5
+	},
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dSP" = (
@@ -58793,20 +58802,14 @@
 /area/afterlife/bar)
 "dSV" = (
 /obj/table/wood/round/auto,
-/obj/item/decoration/ashtray,
 /obj/map/light/white,
+/obj/item/instrument/electricguitar{
+	pixel_y = 3
+	},
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dSW" = (
 /obj/table/wood/round/auto,
-/obj/item/cigpacket/cigarillo{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/cigpacket/cigarillo{
-	pixel_x = 4;
-	pixel_y = 1
-	},
 /obj/map/light/white,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
