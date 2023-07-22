@@ -2076,7 +2076,7 @@ obj/item/whetstone
 		src.shield = image("icon" = 'icons/obj/items/weapons.dmi', "icon_state" = "shield", "layer" = FLOAT_LAYER)
 		src.setItemSpecial(/datum/item_special/simple)
 
-	attack_self(mob/user)
+	attack_self(var/mob/user)
 		if (!attached)
 			boutput(user, "<span class='alert'> You need to attach the [src] first!</span>")
 			return ..()
@@ -2114,9 +2114,11 @@ obj/item/whetstone
 			target.changeStatus("burning", 10 SECONDS)
 		..()
 
-	proc/attach_unattach(var/mob/living/carbon/human/H)
-		if (!H)
+	proc/attach_unattach(var/mob/user)
+		if (!ishuman(user))
+			boutput(user, "<span class='alert'>[src] is not made for your arms and won't fit!</span>")
 			return
+		var/mob/living/carbon/human/H = user
 		if (!attached)
 			boutput(H, "<span class='alert'>The [src] is now attached firmly to your wrist.</span>")
 			attached = TRUE
@@ -2134,15 +2136,15 @@ obj/item/whetstone
 		playsound(src, 'sound/items/miningtool_on.ogg', 25, 0, -5, 1.5)
 		setup_props(user)
 
-	dropped(var/mob/living/carbon/human/H)
+	dropped(var/mob/user)
 		if (attached)
 			attached = FALSE
 			cant_self_remove = FALSE
 			cant_drop = FALSE
-		setup_props(H)
+		setup_props(user)
 		..()
 
-	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
+	handle_other_remove(var/mob/source, var/mob/target)
 		return TRUE // ignore cant_drop and can't other remove since we handle those and need it this way
 
 	proc/setup_props(var/mob/user) // I hate this
