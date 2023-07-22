@@ -1347,7 +1347,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 		for(T in checkturfs)
 			if (istype(T, /turf/space))
 				continue
-			if (!T.allows_vehicles)
+			if (!T.allows_vehicles || T.density)
 				canbuild = 0
 				boutput(user, "<span class='alert'>You can't build a pod here! It'd get stuck.</span>")
 				break
