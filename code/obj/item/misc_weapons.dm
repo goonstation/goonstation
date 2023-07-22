@@ -2031,7 +2031,7 @@ obj/item/whetstone
 
 /obj/item/armblade
 	name = "Visicar Armblade"
-	desc = "An experimental device used by Syndicate infiltators for breaching. Can break through asteroids."
+	desc = "An experimental device used by Syndicate infiltators for breaching, can break through asteroids. Doubles as a nasty incendiary weapon."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade-D"
@@ -2104,7 +2104,7 @@ obj/item/whetstone
 			var/mob/living/carbon/human/H = src.loc
 			H.visible_message("<span class='alert'>[src] clamps down hard on [H]'s arm!</span>", "<span class='alert'>[src] closes up on your arm and powers down!</span>")
 			playsound(H, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1, -1)
-			H.TakeDamage("All", 25, 0, 0, DAMAGE_CRUSH)
+			H.TakeDamage("All", 25, 0, 0, DAMAGE_CRUSH, TRUE)
 			H.setStatus("stunned", 2 SECONDS)
 			H.emote("scream")
 		setup_props(user)
@@ -2144,7 +2144,7 @@ obj/item/whetstone
 		setup_props(user)
 		..()
 
-	handle_other_remove(var/mob/source, var/mob/target)
+	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
 		return TRUE // ignore cant_drop and can't other remove since we handle those and need it this way
 
 	proc/setup_props(var/mob/user) // I hate this
