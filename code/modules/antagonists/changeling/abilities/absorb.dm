@@ -35,12 +35,14 @@
 			var/list/valid_limbs = list("l_leg", "r_arm", "r_leg", "l_arm")
 			var/mob/living/carbon/human/H = target
 			H.TakeDamage("All", 15, 0, 0)
-			playsound(H, pick('sound/impact_sounds/Flesh_Tear_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Flesh_Tear_3.ogg'), 50)
+			take_bleeding_damage(H, null, 8, DAMAGE_STAB, TRUE)
 			for (var/L in valid_limbs)
-				var/possible_limb = H.limbs?[L]
+				var/obj/item/parts/possible_limb = H.limbs?[L]
 				if (possible_limb)
-					ownerMob.visible_message("<span class='combat bold'>[ownerMob] viciously tears off [H]'s [possible_limb]!</span>")
-					H.limbs.sever(L)
+					ownerMob.visible_message("<span class='combat bold'>[ownerMob] viciously devours [H]'s [possible_limb]!</span>")
+					possible_limb.remove(FALSE)
+					qdel(possible_limb)
+					playsound(H, 'sound/voice/burp_alien.ogg', 35)
 					H.emote("scream", FALSE)
 					break
 
