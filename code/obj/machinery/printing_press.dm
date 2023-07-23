@@ -412,14 +412,22 @@
 						src.newspaper_amount = newspaper_amount_sel
 					else
 						boutput(user, "Amount out of range.")
-					return // this return prevents us checking for books
-			// using some weird logic here but basically it'll do book selection by default
-			var/amount_sel = input("How many books do you want to make? ([round(src.paper_amt / 2)] max)", "Ream Control", src.book_amount) as num
-			if (amount_sel > 0 && amount_sel <= (src.paper_amt / 2)) //is the number in range?
-				boutput(user, "Book amount set.")
-				src.book_amount = amount_sel
+					return
+				else if (mode_select == "Book")
+					var/amount_sel = input("How many books do you want to make? ([round(src.paper_amt / 2)] max)", "Ream Control", src.book_amount) as num
+					if (amount_sel > 0 && amount_sel <= (src.paper_amt / 2)) //is the number in range?
+						boutput(user, "Book amount set.")
+						src.book_amount = amount_sel
+					else
+						boutput(user, "Amount out of range.")
+					return
 			else
-				boutput(user, "Amount out of range.")
+				var/amount_sel = input("How many books do you want to make? ([round(src.paper_amt / 2)] max)", "Ream Control", src.book_amount) as num
+				if (amount_sel > 0 && amount_sel <= (src.paper_amt / 2)) //is the number in range?
+					boutput(user, "Book amount set.")
+					src.book_amount = amount_sel
+				else
+					boutput(user, "Amount out of range.")
 
 		if ("print")
 			if (src.is_running)
