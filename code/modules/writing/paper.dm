@@ -1000,7 +1000,6 @@
 	))
 
 /obj/item/paper/newspaper/attack_hand(mob/user)
-	. = ..()
 	src.force_drop(user)
 	src.rollup()
 	user.put_in_hand_or_drop(src)

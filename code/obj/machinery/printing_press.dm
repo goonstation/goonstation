@@ -405,7 +405,7 @@
 		if ("amount to make")
 			if (src.newspaper_upgrade)
 				var/mode_select = input("Books or newspapers?", "Mode Select", "Books") as anything in list("Books", "Newspapers")
-				if (mode_select == "Newspaper")
+				if (mode_select == "Newspapers")
 					var/newspaper_amount_sel = input("How many newspapers do you want to print? ([round(src.paper_amt / 2)] max)", "Ream Control", src.newspaper_amount) as num
 					if (newspaper_amount_sel > 0 && newspaper_amount_sel <= (src.paper_amt / 2)) //is the number in range?
 						boutput(user, "Newspaper amount set.")
@@ -413,7 +413,7 @@
 					else
 						boutput(user, "Amount out of range.")
 					return
-				else if (mode_select == "Book")
+				else if (mode_select == "Books")
 					var/amount_sel = input("How many books do you want to make? ([round(src.paper_amt / 2)] max)", "Ream Control", src.book_amount) as num
 					if (amount_sel > 0 && amount_sel <= (src.paper_amt / 2)) //is the number in range?
 						boutput(user, "Book amount set.")
