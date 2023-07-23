@@ -459,9 +459,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/prefab/blind_pig)
 "bB" = (
-/obj/landmark/spawner{
-	name = "waiter"
-	},
+/mob/living/carbon/human/waiter,
 /turf/simulated/floor/plating/random,
 /area/prefab/blind_pig)
 "bC" = (
