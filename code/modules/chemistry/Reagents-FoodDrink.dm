@@ -206,7 +206,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.reagents.add_reagent("ethanol", alch_strength * mult)
+				M.reagents.add_reagent("ethanol", alch_strength * mult * depletion_rate) //Multiplying by depletion rate makes alch_strength describe ABV, with 1 being 100% ABV
 				M.reagents.remove_reagent(src, 1 * mult)
 				..()
 				return
@@ -564,7 +564,7 @@ datum
 			fluid_g = 163
 			fluid_b = 30
 			transparency = 190
-			alch_strength = 0.1 //half vodka by content, half vodka strength
+			alch_strength = 0.25 //half vodka by content, half vodka strength
 
 		fooddrink/alcoholic/cocktail_bloodymary
 			name = "Bloody Mary"
@@ -576,7 +576,7 @@ datum
 			fluid_g = 53
 			fluid_b = 0
 			transparency = 190
-			alch_strength = 0.1
+			alch_strength = 0.25
 
 		fooddrink/alcoholic/cocktail_bloodyscary
 			name = "Bloody Scary"
@@ -980,7 +980,7 @@ datum
 			fluid_r = 248
 			fluid_g = 255
 			fluid_b = 206
-			alch_strength = 0.25
+			alch_strength = 0.15
 			description = "Don't question how it's fizzing without seltzer."
 			reagent_state = LIQUID
 			taste = "fizzy"
