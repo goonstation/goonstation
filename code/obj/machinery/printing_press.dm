@@ -26,8 +26,8 @@
 	/// decrements by 2 for each book printed, can be refilled (expensively)
 	var/ink_level = 100
 	/// the default modes, can be expanded to have "Ink Colors" and "Custom Cover"
-	var/list/press_modes = list("Choose cover", "Set book info", "Set book contents",\
-	"Amount to make", "Print books", "View Information")
+	var/list/press_modes = list("Choose cover", "Set book info", "Set book contents",
+	"Amount to make", "Print", "View Information")
 
 	/// how many books to make?
 	var/book_amount = 0
@@ -258,6 +258,14 @@
 				else
 					boutput(user, "\The [src] doesn't need an ink refill yet.")
 					return
+			if ("press_newspaper")
+				if (src.newspaper_upgrade)
+					src.visible_message("\The [src] already has that upgrade installed.")
+					return
+				src.press_modes += "Set newspaper info"
+				src.press_modes += "Toggle newspaper mode"
+				src.newspaper_upgrade = TRUE
+				src.visible_message("\The [src] accepts the upgrade.")
 			else //in case some wiseguy tries the parent im watching u
 				boutput(user, "no good, asshole >:\[")
 				return
@@ -276,9 +284,19 @@
 		return
 
 	switch (lowertext(mode_sel))
+		if ("toggle newspaper mode")
+			if (src.newspaper_upgrade)
+				var/newspaper_mode_sel = input("What are you printing?", "Print Mode",src.newspaper_mode_active) as anything in list("Books", "Newspapers")
+				if (newspaper_mode_sel == "Newspapers")
+					src.newspaper_mode_active = TRUE
+				else
+					src.newspaper_mode_active = FALSE
+			else
+				src.newspaper_mode_active = FALSE
+				boutput(user, "Set to Book Mode")
 
 		if ("choose cover")
-			var/cover_sel = input("What cover design would you like?", "Cover Control", book_cover) as null|anything in cover_designs
+			var/cover_sel = input("What book cover design would you like?", "Cover Control", book_cover) as null|anything in cover_designs
 			if (!cover_sel)
 				book_cover = "book0"
 			else
@@ -328,6 +346,23 @@
 					else
 						book_cover = "book0"
 			boutput(user, "Book cover set.")
+			return
+
+		if ("set newspaper info")
+			if (!src.newspaper_upgrade)
+				boutput(user, "Your free trial of newspaper printing has expired. Please enter Newspaper Printing Upgrade.")
+				return
+			var/name_sel = input("What do you want the headline to be?", "Information Control", book_name)
+			if (length(name_sel) > src.headline_len_lim)
+				boutput(user, "Aborting, headline too long.")
+				return
+			src.newspaper_headline = strip_html(name_sel)
+			var/publisher_sel = input("Who is the publisher of your newspaper? What's the paper's name?", "Information Control", src.newspaper_publisher)
+			if (length(publisher_sel) > info_len_lim)
+				boutput(user, "Aborting, publisher name too long.")
+				return
+			src.newspaper_publisher = strip_html(publisher_sel)
+			boutput(user, "Information set.")
 			return
 
 		if ("set book info")
@@ -380,12 +415,12 @@
 		if ("amount to make")
 			var/amount_sel = input("How many books do you want to make? ([round(paper_amt / 2)] max)", "Ream Control", book_amount) as num
 			if (amount_sel > 0 && amount_sel <= (paper_amt / 2)) //is the number in range?
-				boutput(user, "Book amount set.")
+				boutput(user, "[src.newspaper_mode_active ? "Newspaper" : "Book"] amount set.")
 				book_amount = amount_sel
 			else
 				boutput(user, "Amount out of range.")
 
-		if ("print books")
+		if ("print")
 			if (is_running)
 				boutput(user, "\The [src] is busy.")
 				return
@@ -396,8 +431,12 @@
 				// you can't even print a single book. nice one, doofus
 				src.visible_message("Not enough ink.")
 				return
-			logTheThing(LOG_SAY, user, "made some books with the name: [book_name] | the author: [book_author] | the contents: [book_info]") //book logging
-			make_books()
+			if (src.newspaper_mode_active)
+				logTheThing(LOG_SAY, user, "made some newspapers with the headline: [book_name] | the author: [book_author] | the contents: [book_info]") //book logging
+				make_newspapers()
+			else
+				logTheThing(LOG_SAY, user, "made some books with the name: [book_name] | the author: [book_author] | the contents: [book_info]") //book logging
+				make_books()
 			return
 
 		if ("ink color")
