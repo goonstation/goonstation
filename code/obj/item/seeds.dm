@@ -161,6 +161,11 @@
 	icon_state = "seeds-maneater"
 	auxillary_datum = /datum/plant/maneater
 
+	New()
+		..()
+		//since there is no way to generate maneater seeds save for syndicate buylist, and there is no proc to call on syndicate items spawned in, we can set up the seed here.
+		src.generic_seed_setup(src.planttype, FALSE)
+
 /obj/item/seed/creeper
 	name = "creeper seed"
 	seedcolor = "#CC00FF"
