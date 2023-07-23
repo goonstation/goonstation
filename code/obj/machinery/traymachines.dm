@@ -362,8 +362,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 			L.changeStatus("stunned", 10 SECONDS)
 
 	sleep(1 SECOND)
-	var/i
-	for (i = 1, i < 10, i++)
+	for (var/i in 1 to 10)
 		if(isnull(src))
 			return
 		sleep(1 SECOND)
