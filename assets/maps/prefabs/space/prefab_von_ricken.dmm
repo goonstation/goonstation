@@ -473,7 +473,7 @@
 /turf/simulated/floor/black,
 /area/prefab/von_ricken)
 "qm" = (
-/obj/critter/gunbot/heavy,
+/mob/living/critter/robotic/gunbot,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -642,7 +642,7 @@
 /turf/simulated/floor/black,
 /area/prefab/von_ricken)
 "wC" = (
-/obj/critter/gunbot/heavy,
+/mob/living/critter/robotic/gunbot,
 /obj/decal/cleanable/oil/streak,
 /turf/simulated/floor/specialroom/medbay,
 /area/prefab/von_ricken)
@@ -1214,7 +1214,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/prefab/von_ricken)
 "Pl" = (
-/obj/critter/gunbot/heavy,
+/mob/living/critter/robotic/gunbot,
 /turf/simulated/floor/wood,
 /area/prefab/von_ricken)
 "Pt" = (

@@ -2304,7 +2304,7 @@
 "aeF" = (
 /obj/rack,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -2652,7 +2652,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -3226,9 +3226,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "age" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -3515,7 +3513,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/janitor/office)
@@ -3559,7 +3557,7 @@
 /area/station/maintenance/northeast)
 "agU" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -4185,7 +4183,7 @@
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/mousetraps,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/grime,
 /area/station/janitor/office)
@@ -5892,7 +5890,7 @@
 /area/station/quartermaster/storage)
 "alp" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -8633,7 +8631,7 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -10789,7 +10787,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/maintenance/east)
@@ -12309,9 +12307,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "ayu" = (
@@ -12693,9 +12689,7 @@
 	},
 /area/station/medical/research)
 "azj" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "azk" = (
@@ -12986,9 +12980,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "azK" = (
@@ -15950,8 +15942,6 @@
 	dir = 5;
 	icon_state = "tabledir"
 	},
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/mask/muzzle,
 /obj/item/device/radio/intercom{
@@ -20753,7 +20743,7 @@
 /obj/poolwater,
 /mob/living/critter/small_animal/walrus{
 	name = "Willy the Space Walrus";
-	
+
 	},
 /turf/simulated/floor{
 	icon = 'icons/turf/floors.dmi';
@@ -23431,9 +23421,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor{
 	tag = "icon-carpet2 (WEST)";
 	icon_state = "carpet2";
@@ -25717,9 +25705,7 @@
 /turf/simulated/floor/engine,
 /area/space)
 "aWL" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor/engine,
 /area/space)
 "aWM" = (

@@ -383,6 +383,7 @@ proc/generate_space_color()
 	density = 1
 	opacity = 1
 	gas_impermeable = 1
+	allows_vehicles = FALSE
 
 	Enter()
 		return 0 // nope

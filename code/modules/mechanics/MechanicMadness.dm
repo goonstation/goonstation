@@ -1250,7 +1250,13 @@
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"split", PROC_REF(split))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set trigger", PROC_REF(set_trigger_by_signal))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger Field",PROC_REF(setTrigger))
+
+	proc/set_trigger_by_signal(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		src.triggerSignal = input.signal
+		src.tooltip_rebuild = 1
 
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
