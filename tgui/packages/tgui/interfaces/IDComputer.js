@@ -152,10 +152,10 @@ export const IDComputer = (_props, context) => {
                             {pronouns || "None"}
                           </Button>
                           {pronouns
-                      && (
-                        <Button onClick={() => act("pronouns", { pronouns: "remove" })}
-                          icon="trash" tooltip="Remove" />
-                      )}
+                        && (
+                          <Button onClick={() => act("pronouns", { pronouns: "remove" })}
+                            icon="trash" tooltip="Remove" />
+                        )}
                         </LabeledList.Item>
                         <LabeledList.Item label="PIN">
                           <Button
