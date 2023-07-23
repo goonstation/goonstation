@@ -9,7 +9,7 @@ var/country				= null // string
 var/country_iso			= null // string
 
 
-/datum/apiModel/PlayerConnection/New(
+/datum/apiModel/PlayerRes/PlayerConnection/New(
 	id,
 	player_id,
 	round_id,
@@ -33,7 +33,7 @@ var/country_iso			= null // string
 	src.country = country
 	src.country_iso = country_iso
 
-/datum/apiModel/PlayerConnection/VerifyIntegrity()
+/datum/apiModel/PlayerRes/PlayerConnection/VerifyIntegrity()
 	if (
 		isnull(src.id)
 		|| isnull(src.player_id)
@@ -48,7 +48,7 @@ var/country_iso			= null // string
 	)
 		return FALSE
 
-/datum/apiModel/PlayerConnection/ToString()
+/datum/apiModel/PlayerRes/PlayerConnection/ToString()
 	. = list()
 	.["id"] = src.id
 	.["player_id"] = src.player_id

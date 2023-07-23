@@ -31,8 +31,7 @@
 
 /datum/apiModel/BanDetail/VerifyIntegrity()
 	if (
-		isnull(src.id)
-		|| isnull(src.ban_id)
+		isnull(src.id) || isnull(src.ban_id)
 		|| isnull(src.ckey)
 		|| isnull(src.comp_id)
 		|| isnull(src.ip)

@@ -4,7 +4,7 @@
 	var/name		= null // string
 	var/data		= null // integer
 
-/datum/apiModel/PlayerSaveResource/New(
+/datum/apiModel/PlayerRes/PlayerSaveResource/New(
 	id,
 	player_id,
 	name,
@@ -20,7 +20,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/PlayerSaveResource/VerifyIntegrity()
+/datum/apiModel/PlayerRes/PlayerSaveResource/VerifyIntegrity()
 	if (
 		isnull(src.id)
 		|| isnull(src.player_id)
@@ -31,7 +31,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/PlayerSaveResource/ToString()
+/datum/apiModel/PlayerRes/PlayerSaveResource/ToString()
 	. = list()
 	.["id"] = src.id
 	.["player_id"] = src.player_id

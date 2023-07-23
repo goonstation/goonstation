@@ -7,7 +7,7 @@
 	var/round_id		= null // integer
 	var/note			= null // string
 
-/datum/apiModel/PlayerNoteResource/New(
+/datum/apiModel/PlayerRes/PlayerNoteResource/New(
 	id,
 	player_id,
 	ckey,
@@ -29,7 +29,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/PlayerNoteResource/VerifyIntegrity()
+/datum/apiModel/PlayerRes/PlayerNoteResource/VerifyIntegrity()
 	if (
 		isnull(src.id)
 		|| isnull(src.player_id)
@@ -43,7 +43,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/PlayerNoteResource/ToString()
+/datum/apiModel/PlayerRes/PlayerNoteResource/ToString()
 	. = list()
 	.["id"] = src.id
 	.["player_id"] = src.player_id

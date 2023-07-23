@@ -7,7 +7,7 @@
 	var/late_join		= null // boolean
 	var/weight_exempt	= null // string
 
-/datum/apiModel/PlayerAntagResource/New(
+/datum/apiModel/PlayerRes/PlayerAntagResource/New(
 	id,
 	player_id,
 	round_id,
@@ -27,7 +27,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/PlayerAntagResource/VerifyIntegrity()
+/datum/apiModel/PlayerRes/PlayerAntagResource/VerifyIntegrity()
 	if (
 		isnull(src.id)
 		|| isnull(src.player_id)
@@ -40,7 +40,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/PlayerAntagResource/ToString()
+/datum/apiModel/PlayerRes/PlayerAntagResource/ToString()
 	. = list()
 	.["id"] = src.id
 	.["player_id"] = src.player_id

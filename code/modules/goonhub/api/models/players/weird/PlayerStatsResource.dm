@@ -13,7 +13,7 @@
 	var/connected		= null // string
 	var/connected_rp	= null // string
 	var/time_played		= null // string
-	var/datum/apiModel/PlayerConnection/latest_connection = null // PlayerConnection
+	var/datum/apiModel/PlayerRes/PlayerConnection/latest_connection = null // PlayerConnection
 
 /datum/apiModel/PlayerStatsResource/New(
 	id,

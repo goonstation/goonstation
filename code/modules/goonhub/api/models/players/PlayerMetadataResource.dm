@@ -5,7 +5,7 @@
 	var/ckey	= null // string
 	var/data	= null // integer
 
-/datum/apiModel/PlayerMetadataResource/New(
+/datum/apiModel/PlayerRes/PlayerMetadataResource/New(
 	id,
 	player,
 	ckey,
@@ -21,7 +21,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/PlayerMetadataResource/VerifyIntegrity()
+/datum/apiModel/PlayerRes/PlayerMetadataResource/VerifyIntegrity()
 	if (
 		isnull(src.id)
 		|| isnull(src.player)
@@ -32,7 +32,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/PlayerMetadataResource/ToString()
+/datum/apiModel/PlayerRes/PlayerMetadataResource/ToString()
 	. = list()
 	.["id"] = src.id
 	.["player"] = src.player

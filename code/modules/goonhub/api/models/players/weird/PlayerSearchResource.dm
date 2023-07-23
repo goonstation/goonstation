@@ -3,6 +3,7 @@
 /datum/apiModel/PlayerSearchResource
 	var/ip			= null 	// string
 	var/comp_id		= null 	// string
+	var/player_id	= null 	// string
 	var/ckey		= null 	// string
 	var/created_at	= null 	// string
 

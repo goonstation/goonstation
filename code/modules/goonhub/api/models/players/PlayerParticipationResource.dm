@@ -4,7 +4,7 @@
 	var/round_id		= null // string
 	var/legacy_data		= null // string
 
-/datum/apiModel/PlayerParticipationResource/New(
+/datum/apiModel/PlayerRes/PlayerParticipationResource/New(
 	id,
 	player_id,
 	round_id,
@@ -20,7 +20,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/PlayerParticipationResource/VerifyIntegrity()
+/datum/apiModel/PlayerRes/PlayerParticipationResource/VerifyIntegrity()
 	if (
 		isnull(src.id)
 		|| isnull(src.player_id)
@@ -31,7 +31,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/PlayerParticipationResource/ToString()
+/datum/apiModel/PlayerRes/PlayerParticipationResource/ToString()
 	. = list()
 	.["id"] = src.id
 	.["player_id"] = src.player_id

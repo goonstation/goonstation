@@ -7,7 +7,7 @@ ABSTRACT_TYPE(/datum/apiModel/PlayerRes)
 	var/created_at	= null // date-time
 	var/updated_at	= null // date-time
 
-/datum/apiModel/PlayerSaveResource/New(
+/datum/apiModel/PlayerRes/New(
 	id,
 	player_id,
 	created_at,
@@ -19,7 +19,7 @@ ABSTRACT_TYPE(/datum/apiModel/PlayerRes)
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/PlayerSaveResource/VerifyIntegrity()
+/datum/apiModel/PlayerRes/VerifyIntegrity()
 	if (
 		isnull(src.id)
 		|| isnull(src.player_id)
@@ -28,7 +28,7 @@ ABSTRACT_TYPE(/datum/apiModel/PlayerRes)
 	)
 		return FALSE
 
-/datum/apiModel/PlayerSaveResource/ToString()
+/datum/apiModel/PlayerRes/ToString()
 	. = list()
 	.["id"] = src.id
 	.["player_id"] = src.player_id
