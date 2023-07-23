@@ -102,7 +102,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		reagent_amount = amt
 		..()
 
-	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
+	execute(var/atom/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
 		if(limit && limit_count >= limit) return
 		if(world.time - lastTrigger < trigger_delay) return
 		lastTrigger = world.time
@@ -124,7 +124,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		explode_limit = limit
 		..()
 
-	execute(var/obj/item/owner)
+	execute(var/atom/owner)
 		if(explode_limit && explode_count >= explode_limit) return
 		if(world.time - lastTrigger < 50) return
 		lastTrigger = world.time
@@ -133,7 +133,14 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/turf/tloc = get_turf(owner)
 			explosion(owner, tloc, 0, 1, 2, 3)
 			tloc.visible_message("<span class='alert'>[owner] explodes!</span>")
-			qdel(owner)
+			if(isitem(owner))
+				var/obj/item/deleted_item = owner
+				qdel(deleted_item)
+			if(owner && istype(owner, /turf/simulated/wall))
+				//if an erebite wall is exploded and still standing, let's rather dismantle it
+				//noone would like repeatable exploding of reinforced erebite walls
+				var/turf/simulated/wall/dismantled_wall = owner
+				dismantled_wall.dismantle_wall(1)
 		return
 
 /datum/materialProc/generic_fireflash
@@ -186,7 +193,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		charges_left = charges
 		..()
 
-	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
+	execute(var/atom/owner, var/mob/attacker, var/mob/attacked)
 		if(prob(reag_chance) && attacked?.reagents)
 			charges_left--
 			attacked.reagents.add_reagent(reag_id, reag_amt, null, T0C)
@@ -206,7 +213,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		reag_chance = chance
 		..()
 
-	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
+	execute(var/atom/owner, var/mob/attacker, var/mob/attacked)
 		if(prob(reag_chance) && attacked?.reagents)
 			attacked.reagents.add_reagent(reag_id, reag_amt, null, T0C)
 		return
@@ -263,7 +270,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	var/last_trigger = 0
 	desc = "Every now and then it produces some bright sparks."
 
-	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
+	execute(var/atom/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
 		if((world.time - last_trigger) >= 600)
 			last_trigger = world.time
 			attacked.visible_message("<span class='alert'>[owner] emits a flash of light!</span>")
@@ -275,7 +282,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	desc = "Faint wisps of smoke rise from it."
 	var/last_trigger = 0
 
-	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
+	execute(var/atom/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
 		if((world.time - last_trigger) >= 200)
 			last_trigger = world.time
 			attacked.visible_message("<span class='alert'>[owner] emits a puff of smoke!</span>")
@@ -307,7 +314,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 
 /datum/materialProc/telecrystal_onattack
-	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
+	execute(var/atom/owner, var/mob/attacker, var/mob/attacked)
 		var/turf/T = get_turf(attacked)
 		if(attacked.anchored || ON_COOLDOWN(attacked, "telecrystal_warp", 1 SECOND))
 			return
@@ -315,9 +322,10 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			if(istype(attacked) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
 				. = get_offset_target_turf(get_turf(attacked), rand(-8, 8), rand(-8, 8))
 				var/fail_msg = ""
-				if (prob(25) && attacker == attacked)
-					fail_msg = " but you lose [owner]!"
-					attacker.drop_item(owner)
+				if (prob(25) && attacker == attacked && isitem(owner))
+					var/obj/item/used_item = owner
+					fail_msg = " but you lose [used_item]!"
+					attacker.drop_item(used_item)
 					playsound(attacker.loc, 'sound/effects/poof.ogg', 90)
 				else
 					playsound(attacker.loc, "warp", 50)
@@ -524,11 +532,12 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/slippery_attack
-	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
-		if (prob(20))
-			boutput(attacker, "<span class='alert'>[owner] slips right out of your hand!</span>")
-			owner.set_loc(attacker.loc)
-			owner.dropped(attacker)
+	execute(var/atom/owner, var/mob/attacker, var/mob/attacked)
+		if (isitem(owner) && prob(20))
+			var/obj/item/handled_item = owner
+			boutput(attacker, "<span class='alert'>[handled_item] slips right out of your hand!</span>")
+			handled_item.set_loc(attacker.loc)
+			handled_item.dropped(attacker)
 		return
 
 /datum/materialProc/slippery_entered
