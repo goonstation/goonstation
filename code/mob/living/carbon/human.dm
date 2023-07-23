@@ -814,7 +814,7 @@
 		if(src.spell_soulguard == SOULGUARD_RING)	//istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport)
 			reappear_turf = get_turf(src)
 		else
-			reappear_turf = pick(job_start_locations["wizard"])
+			reappear_turf = pick_landmark(LANDMARK_WIZARD)
 
 	////////////////Set up the new body./////////////////
 
@@ -2104,7 +2104,7 @@
 /mob/living/carbon/human/proc/can_equip(obj/item/I, slot)
 	switch (slot)
 		if (slot_l_store, slot_r_store)
-			if (I.w_class <= W_CLASS_SMALL && src.w_uniform)
+			if (I.w_class <= W_CLASS_POCKET_SIZED && src.w_uniform)
 				return TRUE
 		if (slot_l_hand)
 			if (src.limbs.l_arm)

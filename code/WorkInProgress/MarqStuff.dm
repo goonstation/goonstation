@@ -750,9 +750,10 @@
 
 	attackby(var/obj/item/arrow/I, var/mob/user)
 		if (!istype(I))
-			return
+			return ..()
 		if (loaded)
 			boutput(user, "<span class='alert'>An arrow is already loaded onto the bow.</span>")
+			return
 
 		if(I.amount > 1)
 			var/obj/item/arrow/C = I.clone(src)

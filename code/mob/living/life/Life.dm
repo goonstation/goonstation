@@ -323,7 +323,7 @@
 
 	var/mult = (max(tick_spacing, TIME - last_human_life_tick) / tick_spacing)
 
-	src.mutantrace.onLife(mult)
+	src.mutantrace?.onLife(mult)
 
 	if (farty_party)
 		src.emote("fart")

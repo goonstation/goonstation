@@ -534,6 +534,8 @@ TYPEINFO(/obj/stool/wooden)
 /* ================================================ */
 /* -------------------- Chairs -------------------- */
 /* ================================================ */
+TYPEINFO(/obj/stool/chair)
+	mat_appearances_to_ignore = list("steel")
 
 /obj/stool/chair
 	name = "chair"

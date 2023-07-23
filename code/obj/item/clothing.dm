@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/obj/item/clothing)
 /obj/item/clothing
 	name = "clothing"
 	//var/obj/item/clothing/master = null
@@ -126,7 +127,7 @@
 		return TRUE
 	return FALSE
 
-
+ABSTRACT_TYPE(/obj/item/clothing/under)
 /obj/item/clothing/under
 	equipped(var/mob/user, var/slot)
 		..()

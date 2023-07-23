@@ -18323,15 +18323,6 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/research_outpost/indigo_rye)
-"LD" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
-/turf/simulated/floor/specialroom/arcade,
-/area/research_outpost/indigo_rye)
 "LE" = (
 /obj/stool/chair/office{
 	dir = 1
@@ -20621,14 +20612,6 @@
 	tag = ""
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
-"Pq" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -23538,6 +23521,13 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Vp" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/mob/living/carbon/human/npc/monkey/horse,
+/turf/simulated/floor/specialroom/arcade,
+/area/research_outpost/indigo_rye)
 "Vr" = (
 /obj/machinery/light,
 /obj/disposalpipe/segment/transport{
@@ -24733,6 +24723,19 @@
 /area/station/maintenance/southwest{
 	name = "Erebus Maintenance Room"
 	})
+"Yy" = (
+/obj/machinery/atmospherics/trinary/mixer{
+	dir = 1;
+	frequency = 1225;
+	id_tag = "engine_combust";
+	master_id = "engine_combust_control";
+	name = "Gas Mixer (Combustion Chamber)"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
 "Yz" = (
 /obj/cable{
 	d1 = 1;
@@ -24895,19 +24898,6 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
-	})
-"YP" = (
-/obj/machinery/atmospherics/mixer{
-	dir = 1;
-	frequency = 1225;
-	id_tag = "engine_combust";
-	master_id = "engine_combust_control";
-	name = "Gas Mixer (Combustion Chamber)"
-	},
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/engine,
-/area/station/engine/core{
-	name = "Erebus Plasmitics Zone"
 	})
 "YQ" = (
 /obj/machinery/atmospherics/pipe/manifold{
@@ -25346,6 +25336,12 @@
 	},
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
+	})
+"ZZ" = (
+/mob/living/carbon/human/npc/monkey,
+/turf/simulated/floor/pool/no_animate,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
 	})
 
 (1,1,1) = {"
@@ -55456,7 +55452,7 @@ BK
 Ck
 Pn
 Qa
-Pq
+ZZ
 Pn
 EB
 EY
@@ -67379,7 +67375,7 @@ II
 Lc
 HM
 Ls
-LD
+Vp
 LO
 HM
 LX
@@ -78109,7 +78105,7 @@ SB
 Nz
 RS
 TL
-YP
+Yy
 WN
 Za
 Sq

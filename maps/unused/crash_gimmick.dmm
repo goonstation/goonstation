@@ -1209,20 +1209,6 @@
 	desc = " It is made of temp."
 	},
 /area/russian/radiation)
-"aHx" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/grime{
-	broken = 1;
-	desc = " It is made of temp.";
-	icon_old = "grimy";
-	icon_state = "damaged5"
-	},
-/area/russian/radiation)
 "aHA" = (
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment{
@@ -8714,17 +8700,6 @@
 	name_old = "grass"
 	},
 /area/russian/radiation)
-"brl" = (
-/obj/item/clothing/glasses/blindfold,
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/turf/simulated/floor/grass{
-	broken = 1;
-	icon_old = "grass";
-	icon_state = "damaged1"
-	},
-/area/russian/radiation)
 "brm" = (
 /turf/simulated/floor/grass,
 /area/russian/radiation)
@@ -8796,7 +8771,6 @@
 "brw" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
-/obj/item/clothing/suit/straight_jacket,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/space,
 /area/russian/radiation)
@@ -8985,37 +8959,11 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
-"brY" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/turf/simulated/floor/grass{
-	broken = 1;
-	icon_old = "grass";
-	icon_state = "damaged1"
-	},
-/area/russian/radiation)
 "brZ" = (
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "4-9"
-	},
-/turf/simulated/floor/grass,
-/area/russian/radiation)
-"bsa" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
 	},
 /turf/simulated/floor/grass,
 /area/russian/radiation)
@@ -9026,17 +8974,6 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/beacon,
-/turf/simulated/floor/grass,
-/area/russian/radiation)
-"bsc" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "5-8"
-	},
 /turf/simulated/floor/grass,
 /area/russian/radiation)
 "bsd" = (
@@ -9319,16 +9256,6 @@
 /obj/storage/secure/closet/animal,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/grass,
-/area/russian/radiation)
-"bsL" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/turf/simulated/floor/grass{
-	broken = 1;
-	icon_old = "grass";
-	icon_state = "damaged3"
-	},
 /area/russian/radiation)
 "bsM" = (
 /obj/disposaloutlet{
@@ -10458,7 +10385,6 @@
 /area/russian/radiation)
 "bwo" = (
 /obj/machinery/optable,
-/obj/item/clothing/suit/straight_jacket,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -23992,22 +23918,6 @@
 	name = "steel reinforced floor"
 	},
 /area/russian/radiation)
-"cDq" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
-/obj/item/device/radio/intercom/science,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
-	},
-/turf/simulated/floor/engine{
-	desc = " It is made of steel.";
-	name = "steel reinforced floor"
-	},
-/area/russian/radiation)
 "cDr" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -24496,16 +24406,6 @@
 /area/russian/radiation)
 "cFs" = (
 /obj/machinery/light_switch/west,
-/turf/simulated/floor/darkblue/checker{
-	desc = " It is made of steel.";
-	name = "steel floor"
-	},
-/area/russian/radiation)
-"cFt" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
-/obj/landmark/gps_waypoint,
 /turf/simulated/floor/darkblue/checker{
 	desc = " It is made of steel.";
 	name = "steel floor"
@@ -38577,6 +38477,15 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
+"edh" = (
+/mob/living/carbon/human/npc/monkey,
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/grass,
+/area/russian/radiation)
 "egZ" = (
 /obj/item/storage/toilet{
 	dir = 8
@@ -39270,6 +39179,15 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
+"eNi" = (
+/obj/item/clothing/glasses/blindfold,
+/mob/living/carbon/human/npc/monkey,
+/turf/simulated/floor/grass{
+	broken = 1;
+	icon_old = "grass";
+	icon_state = "damaged1"
+	},
+/area/russian/radiation)
 "eNV" = (
 /obj/stool/chair{
 	dir = 4
@@ -39371,27 +39289,6 @@
 	desc = " It is made of steel.";
 	icon_old = "dark";
 	icon_state = "floorscorched2";
-	name = "steel floor"
-	},
-/area/russian/radiation)
-"ePH" = (
-/obj/stool/chair/comfy/red{
-	dir = 8;
-	name = "Farty Justice Chair"
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
-	},
-/obj/disposalpipe/segment/mineral{
-	dir = 4
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/black{
-	broken = 1;
-	burnt = 1;
-	desc = " It is made of steel.";
-	icon_old = "dark";
-	icon_state = "damaged5";
 	name = "steel floor"
 	},
 /area/russian/radiation)
@@ -42600,6 +42497,19 @@
 	icon_old = "dark";
 	icon_state = "damaged5";
 	name = "steel floor"
+	},
+/area/russian/radiation)
+"ghO" = (
+/mob/living/carbon/human/npc/monkey/horse,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating{
+	broken = 1;
+	desc = " It is made of steel.";
+	icon_old = "plating";
+	icon_state = "platingdmg3";
+	name = "steel plating"
 	},
 /area/russian/radiation)
 "ghQ" = (
@@ -45815,6 +45725,20 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
+"hJs" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 10
+	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
+/obj/disposalpipe/segment/brig,
+/turf/space,
+/area/russian/radiation)
 "hJt" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -46044,6 +45968,14 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
+"hPt" = (
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
+/turf/simulated/floor/grass/leafy{
+	broken = 1;
+	icon_old = "grass_leafy";
+	icon_state = "damaged3"
+	},
+/area/station/ranch)
 "hPS" = (
 /obj/machinery/plantpot,
 /obj/disposalpipe/segment/brig{
@@ -46342,14 +46274,6 @@
 	amount = 1200
 	},
 /turf/simulated/floor/pool/no_animate,
-/area/russian/radiation)
-"hWx" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/turf/simulated/floor/pool/no_animate{
-	dir = 1
-	},
 /area/russian/radiation)
 "hWQ" = (
 /turf/simulated/floor/pool/no_animate,
@@ -47010,16 +46934,6 @@
 /obj/random_item_spawner/med_kit,
 /obj/item/cigpacket/nicofree,
 /obj/storage/crate/bloody,
-/turf/simulated/floor/white{
-	desc = " It is made of steel.";
-	name = "steel floor"
-	},
-/area/russian/radiation)
-"iof" = (
-/obj/item/storage/toilet,
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
 /turf/simulated/floor/white{
 	desc = " It is made of steel.";
 	name = "steel floor"
@@ -48050,6 +47964,20 @@
 	},
 /turf/space,
 /area/space)
+"iOD" = (
+/mob/living/carbon/human/npc/monkey/mr_rathen,
+/obj/item/device/radio/intercom/science,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20
+	},
+/turf/simulated/floor/engine{
+	desc = " It is made of steel.";
+	name = "steel reinforced floor"
+	},
+/area/russian/radiation)
 "iOE" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -51850,6 +51778,14 @@
 	name = "wood floor"
 	},
 /area/russian/radiation)
+"kue" = (
+/mob/living/carbon/human/npc/monkey,
+/turf/simulated/floor/grass{
+	broken = 1;
+	icon_old = "grass";
+	icon_state = "damaged3"
+	},
+/area/russian/radiation)
 "kup" = (
 /obj/stool/bar,
 /obj/disposalpipe/segment{
@@ -52149,8 +52085,6 @@
 /area/russian/radiation)
 "kDk" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /turf/simulated/floor/red{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -52645,6 +52579,14 @@
 /turf/simulated/floor{
 	desc = " It is made of steel.";
 	name = "steel floor"
+	},
+/area/russian/radiation)
+"kQL" = (
+/mob/living/carbon/human/npc/monkey,
+/turf/simulated/floor/grass{
+	broken = 1;
+	icon_old = "grass";
+	icon_state = "damaged1"
 	},
 /area/russian/radiation)
 "kQW" = (
@@ -54827,22 +54769,6 @@
 	icon_state = "damaged5";
 	name = "wood floor"
 	},
-/area/russian/radiation)
-"lOu" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
-/obj/disposalpipe/segment/brig,
-/turf/space,
 /area/russian/radiation)
 "lOv" = (
 /obj/machinery/disposal,
@@ -58987,23 +58913,6 @@
 	opaque_atom_count = 2
 	},
 /area/russian/radiation)
-"nHL" = (
-/obj/machinery/atmospherics/mixer{
-	dir = 4;
-	frequency = 1225;
-	id_tag = "engine_combust";
-	master_id = "engine_combust_control";
-	name = "Gas Mixer (Combustion Chamber)"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/space,
-/area/russian/radiation)
 "nHU" = (
 /obj/cable{
 	d1 = 4;
@@ -59165,6 +59074,14 @@
 	topnumber = 2
 	},
 /area/space)
+"nNm" = (
+/obj/item/storage/toilet,
+/mob/living/carbon/human/npc/monkey/stirstir,
+/turf/simulated/floor/white{
+	desc = " It is made of steel.";
+	name = "steel floor"
+	},
+/area/russian/radiation)
 "nNs" = (
 /turf/simulated/wall/auto/asteroid/lighted{
 	color = "#d1e6ff";
@@ -63433,6 +63350,20 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
+"pLA" = (
+/mob/living/carbon/human/npc/monkey,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/grass,
+/area/russian/radiation)
 "pLX" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -63654,6 +63585,12 @@
 	icon_old = "fullyellow";
 	icon_state = "damaged1";
 	name = "steel floor"
+	},
+/area/russian/radiation)
+"pSb" = (
+/mob/living/carbon/human/npc/monkey,
+/turf/simulated/floor/pool/no_animate{
+	dir = 1
 	},
 /area/russian/radiation)
 "pSF" = (
@@ -66130,6 +66067,18 @@
 	name = "steel shuttle floor"
 	},
 /area/station/hallway/secondary/exit)
+"rbW" = (
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/grime{
+	broken = 1;
+	desc = " It is made of temp.";
+	icon_old = "grimy";
+	icon_state = "damaged5"
+	},
+/area/russian/radiation)
 "rcg" = (
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/shuttle{
@@ -68255,6 +68204,25 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
+"rXn" = (
+/obj/stool/chair/comfy/red{
+	dir = 8;
+	name = "Farty Justice Chair"
+	},
+/mob/living/carbon/human/npc/monkey/tanhony,
+/obj/disposalpipe/segment/mineral{
+	dir = 4
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/black{
+	broken = 1;
+	burnt = 1;
+	desc = " It is made of steel.";
+	icon_old = "dark";
+	icon_state = "damaged5";
+	name = "steel floor"
+	},
+/area/russian/radiation)
 "rXF" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/blueblack{
@@ -68308,6 +68276,23 @@
 	icon_state = "floorscorched2";
 	name = "steel floor"
 	},
+/area/russian/radiation)
+"rYP" = (
+/obj/machinery/atmospherics/trinary/mixer{
+	dir = 4;
+	frequency = 1225;
+	id_tag = "engine_combust";
+	master_id = "engine_combust_control";
+	name = "Gas Mixer (Combustion Chamber)"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/space,
 /area/russian/radiation)
 "rYS" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
@@ -70405,16 +70390,6 @@
 	broken = 1;
 	icon_old = "grass_leafy";
 	icon_state = "damaged5"
-	},
-/area/station/ranch)
-"tiO" = (
-/obj/landmark/spawner{
-	name = "dolly"
-	},
-/turf/simulated/floor/grass/leafy{
-	broken = 1;
-	icon_old = "grass_leafy";
-	icon_state = "damaged3"
 	},
 /area/station/ranch)
 "tjr" = (
@@ -73727,21 +73702,6 @@
 	icon_state = "platingdmg2";
 	name = "steel plating";
 	opaque_atom_count = -1
-	},
-/area/russian/radiation)
-"uYN" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/plating{
-	broken = 1;
-	desc = " It is made of steel.";
-	icon_old = "plating";
-	icon_state = "platingdmg3";
-	name = "steel plating"
 	},
 /area/russian/radiation)
 "uZz" = (
@@ -78344,6 +78304,14 @@
 "xuq" = (
 /obj/item/beach_ball,
 /turf/simulated/floor/black{
+	desc = " It is made of steel.";
+	name = "steel floor"
+	},
+/area/russian/radiation)
+"xuz" = (
+/mob/living/carbon/human/npc/monkey/albert,
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/darkblue/checker{
 	desc = " It is made of steel.";
 	name = "steel floor"
 	},
@@ -88983,7 +88951,7 @@ sql
 sDr
 sNV
 sXW
-tiO
+hPt
 jzr
 dGb
 dGb
@@ -100129,7 +100097,7 @@ dGb
 ykH
 ykH
 ykH
-ePH
+rXn
 fFU
 gqD
 hdm
@@ -103192,7 +103160,7 @@ uge
 dyo
 xpK
 uIc
-uYN
+ghO
 vor
 vCx
 vXS
@@ -108287,7 +108255,7 @@ eXE
 fPe
 guZ
 hke
-hWx
+pSb
 iLg
 tzb
 kjY
@@ -118659,7 +118627,7 @@ aok
 aoR
 aYw
 aEc
-aHx
+rbW
 aKu
 aqo
 aPF
@@ -133532,7 +133500,7 @@ cnp
 csY
 iow
 cBQ
-cFt
+xuz
 cJs
 cNR
 kFQ
@@ -135472,7 +135440,7 @@ iTe
 jDU
 ktl
 lih
-lOu
+hJs
 mBf
 nmF
 nXr
@@ -147400,7 +147368,7 @@ dGb
 dGb
 xHU
 bri
-brY
+kQL
 bsK
 cyH
 bva
@@ -147547,7 +147515,7 @@ fpN
 gdq
 gQW
 xHj
-iof
+nNm
 jdu
 xHj
 kGd
@@ -147703,7 +147671,7 @@ dGb
 xHU
 brj
 brZ
-brY
+kQL
 cyH
 bvb
 bvG
@@ -148004,7 +147972,7 @@ bpo
 bpo
 xHs
 brk
-bsa
+pLA
 brj
 brh
 bvc
@@ -148305,9 +148273,9 @@ boa
 bpo
 bpz
 bpW
-brl
+eNi
 bsb
-bsL
+kue
 xcJ
 yfm
 bvK
@@ -148608,7 +148576,7 @@ bpo
 bpB
 bpX
 brm
-bsc
+edh
 brm
 cyH
 xqy
@@ -155577,7 +155545,7 @@ ckk
 cqS
 cvk
 xHj
-cDq
+iOD
 cGU
 mUV
 cPh
@@ -162050,7 +162018,7 @@ kQW
 lyN
 moj
 mZb
-nHL
+rYP
 ruo
 oWg
 pyc
