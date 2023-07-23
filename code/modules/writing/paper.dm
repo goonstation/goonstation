@@ -941,6 +941,7 @@
 	item_state = "newspaper"
 	sealed = TRUE
 	two_handed = TRUE
+	info = ""
 	var/headline = ""
 	var/publisher = ""
 
@@ -956,6 +957,13 @@
 	src.name = "[src.publisher] newspaper"
 	src.icon_state = "newspaper"
 	src.desc = "Its from [src.publisher]. Its headline reads: [src.headline]"
+	src.info = "# [src.headline]\n"
+	src.info += "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin viverra, elit et feugiat scelerisque, urna leo egestas nisl, a aliquam purus sapien nec augue. Suspendisse laoreet nibh arcu, sit amet aliquam metus vulputate sed. Proin vitae laoreet sem. Quisque euismod turpis lectus, quis mattis tellus molestie vel. Morbi semper sapien leo, in dapibus turpis ullamcorper eget. Vestibulum eget sollicitudin risus. Phasellus eu ipsum enim. Curabitur id dolor porttitor, varius turpis faucibus, cursus dolor. In consequat accumsan est.\n"
+	src.info += "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In hac habitasse platea dictumst. Cras pharetra tincidunt ipsum, at maximus nisl egestas et. Vivamus sagittis ullamcorper convallis. Vivamus suscipit non nunc a dapibus. Cras hendrerit felis vitae ex varius, non mollis est auctor. Fusce imperdiet porttitor odio, fringilla tempus lacus rutrum eget. Pellentesque et justo ac nisl scelerisque ornare vitae sed neque.\n"
+	src.info += "Quisque sodales fermentum turpis, vitae vehicula orci viverra sit amet. Morbi in lobortis tellus, id hendrerit risus. Ut laoreet magna in diam tincidunt, nec lobortis metus auctor. Nullam arcu nulla, vestibulum sed facilisis pellentesque, porttitor et metus. Nullam vitae mollis nisl. Nam tincidunt mi leo, ut maximus felis gravida quis. Pellentesque sit amet facilisis leo, vitae luctus dolor. Nulla facilisi. Quisque at odio pharetra, condimentum diam pharetra, tristique erat. Quisque facilisis enim eu metus ultricies sollicitudin. Nunc dapibus aliquam pharetra. In eget volutpat mauris, at congue enim. Ut non risus semper, hendrerit tellus tincidunt, lobortis erat. Mauris pharetra nunc justo, eget vestibulum turpis tincidunt sed. Vivamus interdum quis ante vitae porta.\n"
+	src.info += "Etiam ac velit fringilla, tempus diam hendrerit, volutpat metus. Fusce consequat suscipit quam non sagittis. Nulla semper neque id sapien fringilla, non efficitur sem tempus. Vestibulum eu ultricies sem. Nam vitae elementum ex, id fermentum sapien. Vivamus sodales elit at neque pharetra, vitae condimentum neque finibus. Donec lobortis leo id quam bibendum rutrum. Maecenas eget leo a odio euismod convallis. Aliquam eleifend nisl a tincidunt tincidunt. Ut mi neque, maximus non nulla quis, varius pellentesque erat. Proin volutpat lorem a lacinia cursus. Cras faucibus mi lorem, quis scelerisque eros scelerisque quis. In laoreet nunc eu faucibus ultrices.\n"
+	src.info += "Integer at ante pellentesque, vehicula erat a, mattis eros. Aliquam et sapien aliquam, cursus erat nec, hendrerit libero. Etiam fringilla ornare feugiat. Donec id pretium ex. Donec feugiat sit amet orci non hendrerit. Phasellus mattis lobortis fermentum. Integer venenatis lectus in ornare tempus. In elementum, velit quis interdum finibus, lectus massa volutpat libero, sed efficitur elit odio et libero. Proin accumsan dui eget odio sollicitudin, a iaculis justo volutpat. Curabitur suscipit ante sed tellus laoreet pulvinar. Ut iaculis mi non orci porttitor varius. Suspendisse a neque at ex auctor laoreet. Donec dapibus mi sit amet dolor fringilla rhoncus.\n"
+	src.info += "Mauris interdum tincidunt massa, vitae dictum nunc pretium sit amet. Aenean sit amet suscipit massa. Quisque eget sapien neque. Mauris laoreet rhoncus diam id pulvinar. Cras id finibus massa. Ut a augue gravida, eleifend libero at, maximus justo. Integer eget dui faucibus, egestas purus sed, viverra magna. Phasellus elementum vestibulum ligula, in aliquam velit volutpat quis. In in ullamcorper mi. Integer ut condimentum orci, ut tristique erat."
 
 /// a rolled up newspaper
 /obj/item/paper/newspaper/rolled
@@ -999,8 +1007,6 @@
 		"Pug detective sniffs out crimes."
 	))
 
-/obj/item/paper/newspaper/ui_interact(mob/user, datum/tgui/ui)
-	return // don't open the paper's contents, see
 
 
 /obj/item/paper/newspaper/attack_hand(mob/user)

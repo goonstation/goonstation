@@ -642,9 +642,7 @@
 		if (src.newspaper_headline)
 			NP.headline = src.newspaper_headline
 			NP.desc += "Its headline reads: [NP.headline]"
-		else
-			NP.headline = "error: no headline given"
-			NP.desc += "It doesn't appear to have a headline."
+		// it can auto generate headlines if left alone.
 
 		TRANSFER_OR_DROP(src, NP)
 		newspapers_to_print--
