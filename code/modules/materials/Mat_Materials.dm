@@ -187,7 +187,7 @@ ABSTRACT_TYPE(/datum/material)
 			X.execute(owner, entering)
 		return
 
-	proc/triggerOnAttacked(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
+	proc/triggerOnAttacked(var/atom/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
 		for(var/datum/materialProc/X in triggersOnAttacked)
 			X.execute(owner, attacker, attacked, weapon)
 		return
@@ -197,7 +197,7 @@ ABSTRACT_TYPE(/datum/material)
 			X.execute(owner, attacked, projectile)
 		return
 
-	proc/triggerOnAttack(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
+	proc/triggerOnAttack(var/atom/owner, var/mob/attacker, var/atom/attacked)
 		for(var/datum/materialProc/X in triggersOnAttack)
 			X.execute(owner, attacker, attacked)
 		return

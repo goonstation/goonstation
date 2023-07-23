@@ -193,10 +193,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		charges_left = charges
 		..()
 
-	execute(var/atom/owner, var/mob/attacker, var/mob/attacked)
-		if(prob(reag_chance) && attacked?.reagents)
+	execute(var/atom/owner, var/mob/attacker, var/atom/attacked)
+		var/mob/attacked_mob = attacked
+		if(attacked_mob && prob(reag_chance) && attacked_mob?.reagents)
 			charges_left--
-			attacked.reagents.add_reagent(reag_id, reag_amt, null, T0C)
+			attacked_mob.reagents.add_reagent(reag_id, reag_amt, null, T0C)
 			if(!charges_left)
 				if(owner.material)
 					owner.material.triggersOnAttack.Remove(src)
@@ -213,9 +214,10 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		reag_chance = chance
 		..()
 
-	execute(var/atom/owner, var/mob/attacker, var/mob/attacked)
-		if(prob(reag_chance) && attacked?.reagents)
-			attacked.reagents.add_reagent(reag_id, reag_amt, null, T0C)
+	execute(var/atom/owner, var/mob/attacker, var/atom/attacked)
+		var/mob/attacked_mob = attacked
+		if(attacked_mob && prob(reag_chance) && attacked_mob?.reagents)
+			attacked_mob.reagents.add_reagent(reag_id, reag_amt, null, T0C)
 		return
 
 /datum/materialProc/generic_reagent_onlife
@@ -270,7 +272,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	var/last_trigger = 0
 	desc = "Every now and then it produces some bright sparks."
 
-	execute(var/atom/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
+	execute(var/atom/owner, var/mob/attacker, var/atom/attacked, var/atom/weapon)
 		if((world.time - last_trigger) >= 600)
 			last_trigger = world.time
 			attacked.visible_message("<span class='alert'>[owner] emits a flash of light!</span>")
@@ -282,7 +284,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	desc = "Faint wisps of smoke rise from it."
 	var/last_trigger = 0
 
-	execute(var/atom/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
+	execute(var/atom/owner, var/mob/attacker, var/atom/attacked, var/atom/weapon)
 		if((world.time - last_trigger) >= 200)
 			last_trigger = world.time
 			attacked.visible_message("<span class='alert'>[owner] emits a puff of smoke!</span>")
@@ -314,24 +316,25 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 
 /datum/materialProc/telecrystal_onattack
-	execute(var/atom/owner, var/mob/attacker, var/mob/attacked)
+	execute(var/atom/owner, var/mob/attacker, var/atom/attacked)
 		var/turf/T = get_turf(attacked)
-		if(attacked.anchored || ON_COOLDOWN(attacked, "telecrystal_warp", 1 SECOND))
+		var/mob/attacked_mob = attacked
+		if(!attacked_mob || attacked_mob.anchored || ON_COOLDOWN(attacked_mob, "telecrystal_warp", 1 SECOND))
 			return
 		if(prob(33))
-			if(istype(attacked) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
-				. = get_offset_target_turf(get_turf(attacked), rand(-8, 8), rand(-8, 8))
+			if(istype(attacked_mob) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
+				. = get_offset_target_turf(get_turf(attacked_mob), rand(-8, 8), rand(-8, 8))
 				var/fail_msg = ""
-				if (prob(25) && attacker == attacked && isitem(owner))
+				if (prob(25) && attacker == attacked_mob && isitem(owner))
 					var/obj/item/used_item = owner
 					fail_msg = " but you lose [used_item]!"
 					attacker.drop_item(used_item)
 					playsound(attacker.loc, 'sound/effects/poof.ogg', 90)
 				else
 					playsound(attacker.loc, "warp", 50)
-				attacked.visible_message("<span class='alert'>[attacked] is warped away!</span>")
-				boutput(attacked, "<span class='alert'>You suddenly teleport... [fail_msg]</span>")
-				attacked.set_loc(.)
+				attacked_mob.visible_message("<span class='alert'>[attacked_mob] is warped away!</span>")
+				boutput(attacked_mob, "<span class='alert'>You suddenly teleport... [fail_msg]</span>")
+				attacked_mob.set_loc(.)
 		return
 
 /datum/materialProc/telecrystal_life
@@ -532,7 +535,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/slippery_attack
-	execute(var/atom/owner, var/mob/attacker, var/mob/attacked)
+	execute(var/atom/owner, var/mob/attacker, var/atom/attacked)
 		if (isitem(owner) && prob(20))
 			var/obj/item/handled_item = owner
 			boutput(attacker, "<span class='alert'>[handled_item] slips right out of your hand!</span>")
@@ -586,7 +589,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/reflective_onbullet
 	execute(var/atom/owner, var/atom/attacked, var/obj/projectile/projectile)
-		if(ismob(attacked) && (owner != attacked)) //i fixed that not working on mobs, but let's not make reflective boots make you reflect laser shots, lol
+		if(ismob(attacked) && (owner != attacked)) //i made this working on mobs, but let's not make reflective boots make you reflect laser shots, lol
 			return
 		if(projectile.proj_data.damage_type & D_BURNING || projectile.proj_data.damage_type & D_ENERGY)
 			shoot_reflected_bounce(projectile, attacked, 4) //shoot_reflected_to_sender()
