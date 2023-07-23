@@ -999,6 +999,10 @@
 		"Pug detective sniffs out crimes."
 	))
 
+/obj/item/paper/newspaper/ui_interact(mob/user, datum/tgui/ui)
+	return // don't open the paper's contents, see
+
+
 /obj/item/paper/newspaper/attack_hand(mob/user)
 	src.force_drop(user)
 	src.rollup()
