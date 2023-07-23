@@ -775,7 +775,7 @@
 /area/station/hangar/main)
 "acA" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM")
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod  Bay","Security","QM")
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -15896,7 +15896,7 @@
 /area/station/security/checkpoint/podbay)
 "bhP" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod Bay","Research","Security","QM");
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod  Bay","Research","Security","QM");
 	dir = 4
 	},
 /obj/cable{
@@ -27275,7 +27275,7 @@
 /area/station/crew_quarters/market)
 "bZR" = (
 /obj/machinery/computer/barcode/qm{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM");
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod  Bay","Security","QM");
 	dir = 8
 	},
 /obj/machinery/alarm{
@@ -34751,7 +34751,7 @@
 /area/station/maintenance/inner/sw)
 "ecb" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod Bay","Research","Security","QM");
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod  Bay","Research","Security","QM");
 	dir = 4
 	},
 /obj/disposalpipe/segment/transport{
@@ -34811,22 +34811,12 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
 "eew" = (
-/obj/storage/closet{
-	name = "rancher supply closet"
-	},
-/obj/item/paper/ranch_guide,
-/obj/item/fishing_rod/basic,
-/obj/item/chicken_carrier,
-/obj/item/device/camera_viewer/ranch,
-/obj/item/storage/box/syringes,
-/obj/item/satchel/hydro,
-/obj/item/clothing/mask/chicken,
-/obj/item/storage/box/clothing/rancher,
 /obj/decal/tile_edge/line/black{
 	dir = 1;
 	icon_state = "line1"
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "eeR" = (
@@ -37690,7 +37680,7 @@
 /area/station/medical/medbay)
 "gow" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod Bay","Research","Security","QM");
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod  Bay","Research","Security","QM");
 	dir = 8
 	},
 /obj/cable{
@@ -44279,7 +44269,7 @@
 /area/station/crew_quarters/cafeteria)
 "lBy" = (
 /obj/machinery/computer/barcode/qm{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM")
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod  Bay","Security","QM")
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -47017,7 +47007,7 @@
 /area/station/security/main)
 "nTf" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Ejection","Engineering","Export","Medbay","Mining","Pod Bay","Research","Security","QM");
+	destinations = list("Catering","Disposal","Ejection","Engineering","Export","Medbay","Mining","Pod  Bay","Research","Security","QM");
 	dir = 4
 	},
 /obj/cable{
@@ -52378,7 +52368,7 @@
 /area/station/crew_quarters/courtroom)
 "sqi" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod Bay","Research","Security","QM");
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod  Bay","Research","Security","QM");
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
@@ -53552,7 +53542,7 @@
 /area/station/security/interrogation)
 "thB" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM")
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod  Bay","Security","QM")
 	},
 /obj/cable{
 	icon_state = "0-2"
