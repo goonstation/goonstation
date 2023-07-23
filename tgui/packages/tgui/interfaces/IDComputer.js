@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from "../backend";
-import { Button, Tabs, Section, NoticeBox, LabeledList, Image, Box } from "../components";
+import { Button, Tabs, Section, NoticeBox, LabeledList, Image, Box, Divider, Stack } from "../components";
 import { Window } from '../layouts';
 
 const DeptBox = (props, context) => {
@@ -103,14 +103,16 @@ export const IDComputer = (_props, context) => {
                 <LabeledList.Item label="Confirm identity">
                   <Button
                     onClick={() => act("scan")}
-                    icon="eject">
+                    icon="eject"
+                    preserveWhitespace>
                     {scan_name || "Insert card"}
                   </Button>
                 </LabeledList.Item>
                 <LabeledList.Item label="Target">
                   <Button
                     onClick={() => act("modify")}
-                    icon="eject">
+                    icon="eject"
+                    preserveWhitespace>
                     {target_name || "Insert card or inplant"}
                   </Button>
                 </LabeledList.Item>
@@ -120,37 +122,50 @@ export const IDComputer = (_props, context) => {
                 <>
                   <hr />
 
-                  <LabeledList>
-                    <LabeledList.Item label="Registered">
-                      <Button
-                        onClick={() => act("reg")}>
-                        {target_owner && target_owner.trim() || "(blank)"}
-                      </Button>
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Assignment">
-                      <Button
-                        onClick={() => act("assign", { assign: "Custom Assignment" })}>
-                        {target_rank && target_rank.trim() || "Unassigned"}
-                      </Button>
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Pronouns">
-                      <Button
-                        onClick={() => act("pronouns", { pronouns: "next" })}>
-                        {pronouns || "None"}
-                      </Button>
-                      {pronouns
+                  <Stack>
+                    <Stack.Item grow={2}>
+                      <LabeledList>
+                        <LabeledList.Item label="Registered">
+                          <Button
+                            onClick={() => act("reg")}
+                            preserveWhitespace>
+                            {target_owner && target_owner.trim() || "(blank)"}
+                          </Button>
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Assignment">
+                          <Button
+                            onClick={() => act("assign", { assign: "Custom Assignment" })}
+                            preserveWhitespace>
+                            {target_rank && target_rank.trim() || "Unassigned"}
+                          </Button>
+                        </LabeledList.Item>
+                      </LabeledList>
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Divider vertical />
+                    </Stack.Item>
+                    <Stack.Item grow={1}>
+                      <LabeledList>
+                        <LabeledList.Item label="Pronouns">
+                          <Button
+                            onClick={() => act("pronouns", { pronouns: "next" })}>
+                            {pronouns || "None"}
+                          </Button>
+                          {pronouns
                       && (
                         <Button onClick={() => act("pronouns", { pronouns: "remove" })}
                           icon="trash" tooltip="Remove" />
                       )}
-                    </LabeledList.Item>
-                    <LabeledList.Item label="PIN">
-                      <Button
-                        onClick={() => act("pin")}>
-                        ****
-                      </Button>
-                    </LabeledList.Item>
-                  </LabeledList>
+                        </LabeledList.Item>
+                        <LabeledList.Item label="PIN">
+                          <Button
+                            onClick={() => act("pin")}>
+                            ****
+                          </Button>
+                        </LabeledList.Item>
+                      </LabeledList>
+                    </Stack.Item>
+                  </Stack>
 
                   {/* Jobs organised into sections */}
                   <Section title="Standard Job Assignment">
