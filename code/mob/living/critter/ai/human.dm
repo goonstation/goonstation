@@ -171,7 +171,7 @@
 		..()
 
 
-/datum/aiTask/timed/targeted/human/boxing/
+/datum/aiTask/timed/targeted/human/boxing
 	name = "boxing"
 	minimum_task_ticks = 10
 	maximum_task_ticks = 26

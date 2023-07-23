@@ -230,7 +230,7 @@
 
 				if (sessionid in to_adjust)
 					var/list/worklist = to_adjust[sessionid]
-					if (istype(worklist) && worklist.len == 3 && datalist["status"] == "success")
+					if (istype(worklist) && length(worklist) == 3 && datalist["status"] == "success")
 						var/datum/computer/file/workfile = worklist[1]
 						if (istype(workfile))
 							var/newval = worklist[3]
@@ -782,7 +782,7 @@
 
 		driver_id &= ~ESIG_DATABIT
 		var/command = lowertext(initlist[1])
-		if (cmptext(command, "-p") && initlist.len > 2)
+		if (cmptext(command, "-p") && length(initlist) > 2)
 			. = text2num_safe(initlist[2])
 			if (isnum(.))
 				. = clamp(round(.), 0, 64)
@@ -799,7 +799,7 @@
 
 		switch (command)
 			if ("coords")
-				if (initlist.len >= 4)
+				if (length(initlist) >= 4)
 					var/new_x
 					var/new_y
 					var/new_z
@@ -889,7 +889,7 @@
 					message_user("Insufficient arguments (Need x y z).")
 
 			if ("relay")
-				if (initlist.len >= 4)
+				if (length(initlist) >= 4)
 					var/start_x
 					var/start_y
 					var/start_z
@@ -1021,7 +1021,7 @@
 				return list(nuke_time, nuke_active, auths.len, setup_auths_needed)
 
 			if ("auth")
-				if (auths.len >= setup_auths_needed)
+				if (length(auths) >= setup_auths_needed)
 					return ESIG_USR2
 
 				var/datum/computer/file/record/usdat = file
@@ -1040,7 +1040,7 @@
 					return ESIG_USR3
 				else
 					auths += userhash
-					if (auths.len >= setup_auths_needed)
+					if (length(auths) >= setup_auths_needed)
 						return ESIG_USR2
 					else
 						return ESIG_USR1
@@ -1073,7 +1073,7 @@
 				return ESIG_SUCCESS
 
 			if ("arm")
-				if (auths.len < setup_auths_needed)
+				if (length(auths) < setup_auths_needed)
 					return ESIG_USR1
 
 				if (nuke_active)
@@ -1085,7 +1085,7 @@
 				return ESIG_SUCCESS
 
 			if ("disarm")
-				if (auths.len < setup_auths_needed)
+				if (length(auths) < setup_auths_needed)
 					return ESIG_USR1
 
 				if (!nuke_active)
@@ -1192,7 +1192,7 @@
 		switch(command)
 			if ("status", "stat")
 				var/list/nuke_status = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"="report_status"))
-				if (istype(nuke_status) && (nuke_status.len >= 4))
+				if (istype(nuke_status) && (length(nuke_status) >= 4))
 					message_user("Detonator Status:|n ACTIVE: [(nuke_status[2] == 1) ? "YES" : "NO"]|n TIMER: [nuke_status[1]] second(s)|n AUTHS: ([nuke_status[3]]/[nuke_status[4]])","multiline")
 				else
 					message_user("Error: Could not associate with charge driver.")
@@ -1253,7 +1253,7 @@
 				message_user("Device driver for Wildfire MkVII Tactical Atomic Munitions. Version 3.009a.|nCopyright 2052 Thinktronic Data Systems.","multiline")
 
 			if ("time")
-				if (initlist.len >= 2)
+				if (length(initlist) >= 2)
 					var/newtime = text2num_safe(initlist[2])
 					if (isnum(newtime) && (newtime <= MAX_NUKE_TIME) && (newtime >= MIN_NUKE_TIME))
 						var/success = signal_program( 1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="settime","time"=newtime))
@@ -1602,7 +1602,7 @@
 				message_user("Known PR-6 Units:|n[listText]", "multiline")
 
 			if ("stat")
-				if (initlist.len < 2 || !(lowertext(initlist[2]) in driverlist))
+				if (length(initlist) < 2 || !(lowertext(initlist[2]) in driverlist))
 					message_user("Error: Unknown or invalid PR-6 Net ID")
 					mainframe_prog_exit
 					return
@@ -1631,12 +1631,12 @@
 				message_user(statmessage, "multiline")
 
 			if ("upload")
-				if (initlist.len < 2 || !(lowertext(initlist[2]) in driverlist))
+				if (length(initlist) < 2 || !(lowertext(initlist[2]) in driverlist))
 					message_user("Error: Unknown or invalid PR-6 Net ID")
 					mainframe_prog_exit
 					return
 
-				if (initlist.len < 3)
+				if (length(initlist) < 3)
 					message_user("Error: No task filepath supplied.")
 					mainframe_prog_exit
 					return
@@ -1668,8 +1668,8 @@
 					commandRec.fields += list("command=upload", "model=1", "fname=uploadtmp")
 
 					//Optional configuration file specification
-					if (initlist.len >= 4)
-						if (initlist.len > 4 && cmptext(initlist[4], "-f"))
+					if (length(initlist) >= 4)
+						if (length(initlist) > 4 && cmptext(initlist[4], "-f"))
 							if (!initlist[5])
 								initlist[5] = current
 								if(!initlist[5])
@@ -1708,7 +1708,7 @@
 
 
 			if ("wipe")
-				if (initlist.len < 2 || !(lowertext(initlist[2]) in driverlist))
+				if (length(initlist) < 2 || !(lowertext(initlist[2]) in driverlist))
 					message_user("Error: Unknown or invalid PR-6 Net ID")
 					mainframe_prog_exit
 					return
@@ -1728,7 +1728,7 @@
 
 
 			if ("wake")
-				if (initlist.len < 2 || !(lowertext(initlist[2]) in driverlist))
+				if (length(initlist) < 2 || !(lowertext(initlist[2]) in driverlist))
 					message_user("Error: Unknown or invalid PR-6 Net ID")
 					mainframe_prog_exit
 					return
@@ -1747,7 +1747,7 @@
 					message_user("Transmitting wake command...")
 
 			if ("recall")
-				if (initlist.len < 2)
+				if (length(initlist) < 2)
 					message_user("Error: No PR-6 Net ID specified.")
 					mainframe_prog_exit
 					return
@@ -1885,7 +1885,7 @@
 			if (cmptext(rc.name, dataList["_freq"]))
 				rc.contents += signalRecord
 				signalRecord.holding_folder = rc
-				if (rc.contents.len > 32)
+				if (length(rc.contents) > 32)
 					var/datum/computer/to_delete = rc.contents[1]
 					if (to_delete)
 						qdel(to_delete)
@@ -2646,7 +2646,7 @@
 					return
 
 				if (!isnull(readData))
-					if (knownReadings.len < knownReadingFields.len)
+					if (length(knownReadings) < knownReadingFields.len)
 						knownReadings.len = length(knownReadingFields)
 
 					for (var/i = 1, i <= knownReadingFields.len && i <= readData.len, i++)
@@ -2767,7 +2767,7 @@
 				if (copy)
 					copy.name = "tmp[copytext("\ref[copy]", 4, 12)]"
 					src.contents_mirror += copy
-					if (src.contents_mirror.len > 8)
+					if (length(src.contents_mirror) > 8)
 						src.contents_mirror.Cut(1,2)
 					siglist["args"] = siglist["args"] + " /mnt/_[src.name]/[copy.name]"
 
@@ -2844,7 +2844,7 @@
 
 			if ("status")
 				//Retrieve printer status value from the little record it keeps for exactly those purposes.
-				if (initlist.len > 1)
+				if (length(initlist) > 1)
 					var/printerName = copytext(ckeyEx(initlist[2]), 1,33)
 					var/datum/computer/file/record/printerStatus = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"="/mnt/lp-[printerName]/status"))
 					var/theStatus = "???"
@@ -2853,7 +2853,7 @@
 					message_user("print_status|n[theStatus]","multiline")
 
 			if ("print")
-				if (initlist.len > 2)
+				if (length(initlist) > 2)
 					var/printerName = copytext(ckeyEx(initlist[2]), 1,33)
 					var/toPrintPath = initlist[3]
 					if (!dd_hasprefix(toPrintPath, "/"))
@@ -2869,7 +2869,7 @@
 						message_user("nack")
 
 			if ("printall")
-				if (initlist.len > 1)
+				if (length(initlist) > 1)
 					var/toPrintPath = initlist[2]
 					if (!dd_hasprefix(toPrintPath, "/"))
 						toPrintPath = "/[toPrintPath]"

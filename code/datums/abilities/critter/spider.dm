@@ -368,7 +368,7 @@
 
 		if (istype(holder.owner, /mob/living/critter/spider/clownqueen))
 			var/mob/living/critter/spider/clownqueen/queen = holder.owner
-			if (islist(queen.babies) && queen.babies.len > queen.max_defensive_babies)
+			if (islist(queen.babies) && length(queen.babies) > queen.max_defensive_babies)
 				boutput(queen, "<span class='alert'><b>You make a new baby, but know in your [flavor_text] heart that it does not love you.</b></span>")
 
 

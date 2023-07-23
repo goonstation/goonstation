@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/obj/item/clothing)
 /obj/item/clothing
 	name = "clothing"
 	//var/obj/item/clothing/master = null
@@ -96,6 +97,7 @@
 		user.u_equip(src)
 		qdel(src)
 
+ABSTRACT_TYPE(/obj/item/clothing/under)
 /obj/item/clothing/under
 	equipped(var/mob/user, var/slot)
 		..()

@@ -375,7 +375,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 /obj/machinery/fluid_canister/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
-		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
+		if (length(porter.contents) >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
 		else
 			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")
 			src.contained = 1

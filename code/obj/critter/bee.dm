@@ -414,7 +414,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 				src.puke_honey()
 			qdel(W)
 		else if (istype(W, /obj/item/reagent_containers/glass))
-			if (W.reagents.has_reagent("menthol") && W.reagents.reagent_list.len == 1)
+			if (W.reagents.has_reagent("menthol") && length(W.reagents.reagent_list) == 1)
 				src.visible_message("<b>[src]</b> sniffles a bit.", 1)
 				src.health = min(initial(src.health), src.health+5)
 		else

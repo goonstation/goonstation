@@ -121,7 +121,7 @@
 
 	var/last_sleep = 0 //used for sleep_bubble
 
-	can_lie = 1
+	can_lie = TRUE
 
 	var/const/singing_prefix = "%"
 
@@ -350,16 +350,15 @@
 	target.Attackhand(src, params, location, control, origParams)
 
 /mob/living/proc/hand_range_attack(atom/target, params, location, control, origParams)
-	.= 0
 	var/datum/limb/L = src.equipped_limb()
-	if (L)
-		.= L.attack_range(target,src,params)
-		if (.)
-			src.lastattacked = src
+	if (L && L.attack_range(target, src, params))
+		src.lastattacked = src
+		return TRUE
+	return FALSE
 
 /mob/living/proc/weapon_attack(atom/target, obj/item/W, reach, params)
 	var/usingInner = 0
-	if (W.useInnerItem && W.contents.len > 0)
+	if (W.useInnerItem && length(W.contents) > 0)
 		var/obj/item/held = W.holding
 		if (!held)
 			held = pick(W.contents)
@@ -1090,7 +1089,7 @@
 				say_location = L
 
 		olocs = obj_loc_chain(say_location)
-		if(olocs.len > 0) // fix runtime list index out of bounds when loc is null (IT CAN HAPPEN, APPARENTLY)
+		if(length(olocs) > 0) // fix runtime list index out of bounds when loc is null (IT CAN HAPPEN, APPARENTLY)
 			for (var/atom/movable/AM in olocs)
 				thickness += AM.soundproofing
 
@@ -1761,8 +1760,8 @@
 						// else, ignore p_class*/
 						else if(ismob(A))
 							var/mob/M = A
-							//if they're lying, pull em slower, unless you have anext_move gang and they are in your gang.
-							if(M.lying)
+							//if they're lying or dead, pull em slower, unless you have anext_move gang and they are in your gang.
+							if(M.lying || isdead(M))
 								var/datum/gang/gang = src.get_gang()
 								if (gang && (gang == M.get_gang()))
 									. *= 1		//do nothing
@@ -1785,7 +1784,7 @@
 
 			if (G.state == GRAB_PASSIVE)
 				if (GET_DIST(src,M) > 0 && GET_DIST(move_target,M) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
-					if(ismob(M) && M.lying)
+					if(ismob(M) && (M.lying || isdead(M)))
 						. *= lerp(1, max(M.p_class, 1), pushpull_multiplier)
 			else
 				. *= lerp(1, max(M.p_class, 1), pushpull_multiplier)
