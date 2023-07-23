@@ -26,8 +26,8 @@
 	/// decrements by 2 for each book printed, can be refilled (expensively)
 	var/ink_level = 100
 	/// the default modes, can be expanded to have "Ink Colors" and "Custom Cover"
-	var/list/press_modes = list("Choose cover", "Set book info", "Set book contents",
-	"Amount to make", "Print", "View Information")
+	var/list/press_modes = list("Choose book cover", "Set book info", "Set book contents",
+	"Set newspaper info", "Amount to make", "Print", "View Information")
 
 	/// how many books to make?
 	var/book_amount = 0
@@ -90,10 +90,10 @@
 	var/newspaper_publisher = ""
 	/// False by default, set to true when newspaper printing upgrade is installed.
 	var/newspaper_upgrade = TRUE // fuckit lets just start with newspapers for now
-	/// tells the printer whether to print books or newspapers
-	var/newspaper_mode_active = FALSE
 	/// headlines can be 128 characters max, unlike book titles
 	var/const/headline_len_lim = 128
+	/// Amount of newspapers to print
+	var/newspaper_amount = 0
 
 ////////////////////
 //Appearance stuff//
@@ -285,18 +285,7 @@
 		return
 
 	switch (lowertext(mode_sel))
-		if ("toggle newspaper mode")
-			if (src.newspaper_upgrade)
-				var/newspaper_mode_sel = input("What are you printing?", "Print Mode",src.newspaper_mode_active) as anything in list("Books", "Newspapers")
-				if (newspaper_mode_sel == "Newspapers")
-					src.newspaper_mode_active = TRUE
-				else
-					src.newspaper_mode_active = FALSE
-			else
-				src.newspaper_mode_active = FALSE
-				boutput(user, "Set to Book Mode")
-
-		if ("choose cover")
+		if ("choose book cover")
 			var/cover_sel = input("What book cover design would you like?", "Cover Control", src.book_cover) as null|anything in src.cover_designs
 			if (!cover_sel)
 				src.book_cover = "book0"
@@ -414,9 +403,20 @@
 			return
 
 		if ("amount to make")
+			if (src.newspaper_upgrade)
+				var/mode_select = input("Books or newspapers?", "Mode Select", "Books") as anything in list("Books", "Newspapers")
+				if (mode_select == "Newspaper")
+					var/newspaper_amount_sel = input("How many newspapers do you want to print? ([round(src.paper_amt / 2)] max)", "Ream Control", src.newspaper_amount) as num
+					if (newspaper_amount_sel > 0 && newspaper_amount_sel <= (src.paper_amt / 2)) //is the number in range?
+						boutput(user, "Newspaper amount set.")
+						src.newspaper_amount = newspaper_amount_sel
+					else
+						boutput(user, "Amount out of range.")
+					return // this return prevents us checking for books
+			// using some weird logic here but basically it'll do book selection by default
 			var/amount_sel = input("How many books do you want to make? ([round(src.paper_amt / 2)] max)", "Ream Control", src.book_amount) as num
 			if (amount_sel > 0 && amount_sel <= (src.paper_amt / 2)) //is the number in range?
-				boutput(user, "[src.newspaper_mode_active ? "Newspaper" : "Book"] amount set.")
+				boutput(user, "Book amount set.")
 				src.book_amount = amount_sel
 			else
 				boutput(user, "Amount out of range.")
@@ -425,31 +425,42 @@
 			if (src.is_running)
 				boutput(user, "\The [src] is busy.")
 				return
-			if (!src.book_amount)
-				boutput(user, "Invalid book amount.")
+			var/printmode = "Book"
+			if (src.newspaper_upgrade)
+				printmode = input(user, "Books or Newspapers?", "Print Mode", "Book") as anything in list("Book", "Newspaper")
+			if (printmode == "Book")
+				if (!src.book_amount)
+					boutput(user, "Invalid book amount.")
+					return
+				if (src.ink_level < 2)
+					// you can't even print a single book. nice one, doofus
+					src.visible_message("Not enough ink.")
+					return
+				logTheThing(LOG_SAY, user, "made some books with the name: [src.book_name] | the author: [src.book_author] | the contents: [src.book_info]") //book logging
+				make_books()
 				return
-			if (src.ink_level < 2)
-				// you can't even print a single book. nice one, doofus
-				src.visible_message("Not enough ink.")
-				return
-			if (src.newspaper_mode_active)
+			else if (printmode == "Newspaper")
+				if (!src.newspaper_amount)
+					boutput(user, "Invalid newspaper amount.")
+					return
+				if (src.ink_level < 1)
+					src.visible_message("Not enough ink.")
+					return
 				logTheThing(LOG_SAY, user, "made some newspapers with the headline: [src.book_name] | the author: [src.book_author] | the contents: [src.book_info]") //book logging
 				make_newspapers()
 			else
-				logTheThing(LOG_SAY, user, "made some books with the name: [src.book_name] | the author: [src.book_author] | the contents: [src.book_info]") //book logging
-				make_books()
-			return
+				CRASH("Printing press somehow not having print mode selected.")
 
 		if ("ink color")
 			if (src.colors_upgrade) //can never be too safe
-				var/color_sel = input("What colour would you like the ink to be?", "Ink Control") as color
+				var/color_sel = input("What colour would you like the Book ink to be?", "Ink Control") as color
 				if (color_sel)
 					src.ink_color = color_sel
 
 		if ("customise cover")
 			if (src.books_upgrade) //can never be too safe
 				src.book_cover = "custom" //so we can bypass normal cover selection in the bookmaking process
-				var/cover_color_sel = input("What colour would you like the cover to be?", "Cover Control") as color
+				var/cover_color_sel = input("What colour would you like the book cover to be?", "Cover Control") as color
 				if (cover_color_sel)
 					src.cover_color = cover_color_sel
 
@@ -515,14 +526,24 @@
 						src.cover_flair = "none"
 
 		if ("view information")
+			boutput(user, "There are [src.paper_amt] sheets of paper left, and [src.ink_level] units of ink.")
 			if (src.book_author)
-				boutput(user, "The author is [src.book_author].")
+				boutput(user, "The author of the book is [src.book_author].")
 			else
-				boutput(user, "There is no author set.")
+				boutput(user, "There is no book author set.")
 			if (src.book_name)
-				boutput(user, "The title is [src.book_name].")
+				boutput(user, "The title of the book is [src.book_name].")
 			else
-				boutput(user, "There is no title set.")
+				boutput(user, "There is no book title set.")
+			if (src.newspaper_upgrade)
+				if (src.newspaper_publisher)
+					boutput(user, "The publisher of the newspaper is [src.newspaper_publisher].")
+				else
+					boutput(user, "There is no newspaper publisher set.")
+				if (src.newspaper_headline)
+					boutput(user, "The newspaper headline reads: [src.newspaper_headline]")
+				else
+					boutput(user, "There is no newspaper headline set.")
 			return
 
 		else //just in case, yell at me if this is bad
@@ -589,12 +610,12 @@
 
 /obj/machinery/printing_press/proc/make_newspapers()
 	src.is_running = TRUE
-	var/newspapers_to_print = src.book_amount
+	var/newspapers_to_print = src.newspaper_amount
 	while (newspapers_to_print)
-		if (src.paper_amt < 2 || src.ink_level < 2) // can we keep doin printing?
+		if (src.paper_amt < 2 || src.ink_level < 1) // can we keep doin printing?
 			if (src.paper_amt < 2) // If we don't have enough paper to print...
 				src.visible_message("\The [src] runs out of paper and stops printing.")
-			if (src.ink_level < 2) // ...or enough ink
+			if (src.ink_level < 1) // ...or enough ink
 				src.visible_message("\The [src] runs out of ink and stops printing.")
 			src.is_running = FALSE
 			UpdateIcon()
@@ -619,7 +640,7 @@
 
 		TRANSFER_OR_DROP(src, NP)
 		newspapers_to_print--
-		src.ink_level -= 2
+		src.ink_level -= 1
 		src.paper_amt -= 2
 
 	src.is_running = FALSE
