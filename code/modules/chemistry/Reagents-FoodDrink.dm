@@ -206,7 +206,9 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.reagents.add_reagent("ethanol", alch_strength * mult * depletion_rate) //Multiplying by depletion rate makes alch_strength describe ABV, with 1 being 100% ABV
+				M.reagents.add_reagent("ethanol", alch_strength * mult * depletion_rate)
+				//Multiplying by depletion rate makes alch_strength describe ABV, with 1 being 100% ABV
+				//This means that drinks ~15% ABV need a higher depletion rate so that the ethanol can accumulate
 				M.reagents.remove_reagent(src, 1 * mult)
 				..()
 				return
@@ -297,6 +299,7 @@ datum
 			fluid_g = 65
 			fluid_b = 7
 			alch_strength = 0.06
+			depletion_rate = 1
 			description = "An alcoholic beverage derived from apples."
 			taste = "fruity"
 			reagent_state = LIQUID
@@ -319,6 +322,7 @@ datum
 			fluid_g = 71
 			fluid_b = 231
 			alch_strength = 0.13
+			depletion_rate = 0.7
 			description = "An alcoholic beverage derived from grapes."
 			reagent_state = LIQUID
 			taste = "sweet"
@@ -338,6 +342,7 @@ datum
 			fluid_g = 140
 			fluid_b = 108
 			alch_strength = 0.12
+			depletion_rate = 0.7
 			description = "A fizzy alcoholic beverage derived from grapes, made in Champagne, France."
 			reagent_state = LIQUID
 			taste = "bubbly"
@@ -393,6 +398,7 @@ datum
 			fluid_g = 237
 			fluid_b = 198
 			alch_strength = 0.15
+			depletion_rate = 0.7
 			description = "An alcoholic beverage derived from fermented rice."
 			reagent_state = LIQUID
 			taste = "subdued"
@@ -420,6 +426,7 @@ datum
 			fluid_b = 56
 			transparency = 200
 			alch_strength = 0.1 //stronger than regular beer; fortified by the LAW
+			depletion_rate = 0.7
 			viscosity = 0.3
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -600,6 +607,7 @@ datum
 			fluid_g = 74
 			fluid_b = 37
 			alch_strength = 0.15
+			depletion_rate = 0.7
 
 		fooddrink/alcoholic/caipirinha
 			name = "Pineapple Caipirinha"
@@ -611,6 +619,7 @@ datum
 			fluid_g = 236
 			fluid_b = 110
 			alch_strength = 0.1
+			depletion_rate = 0.7
 
 		fooddrink/alcoholic/piscosour
 			name = "Pisco Sour"
@@ -787,6 +796,7 @@ datum
 			fluid_g = 71
 			fluid_b = 231
 			alch_strength = 0.15
+			depletion_rate = 0.7
 			description = "A fortified wine with botanicals for flavor."
 			reagent_state = LIQUID
 			taste = "sweet"
@@ -970,6 +980,7 @@ datum
 			fluid_g = 24
 			fluid_b = 24
 			alch_strength = 0.1
+			depletion_rate = 0.7
 			description = "Made to celebrate the liberation of Space Cuba in 2028."
 			reagent_state = LIQUID
 			taste = "festive"
@@ -981,6 +992,7 @@ datum
 			fluid_g = 255
 			fluid_b = 206
 			alch_strength = 0.15
+			depletion_rate = 0.7
 			description = "Don't question how it's fizzing."
 			reagent_state = LIQUID
 			taste = "fizzy"
@@ -1014,6 +1026,7 @@ datum
 			fluid_g = 244
 			fluid_b = 244
 			alch_strength = 0.15
+			depletion_rate = 0.7
 			description = "Nice drink, Dude."
 			reagent_state = LIQUID
 
@@ -1034,6 +1047,7 @@ datum
 			fluid_g = 42
 			fluid_b = 42
 			alch_strength = 0.1
+			depletion_rate = 0.7
 			description = "The breakfast of hung-over champions."
 			reagent_state = LIQUID
 			thirst_value = -0.5
@@ -1046,6 +1060,7 @@ datum
 			fluid_g = 206
 			fluid_b = 253
 			alch_strength = 0.1
+			depletion_rate = 0.7
 			description = "Well, at least it's not giving awful dating advice."
 			reagent_state = LIQUID
 			taste = "fruity"
@@ -1057,6 +1072,7 @@ datum
 			fluid_g = 121
 			fluid_b = 98
 			alch_strength = 0.1
+			depletion_rate = 0.7
 			description = "Fun fact: the previous name of this cocktail was deemed a war crime in 2025."
 			reagent_state = LIQUID
 			taste = "blissfully"
@@ -1069,6 +1085,7 @@ datum
 			fluid_b = 195
 			transparency = 50
 			alch_strength = 0.1
+			depletion_rate = 0.7
 			description = "Once made to make bitter medication taste better, now drunk for its flavor."
 			reagent_state = LIQUID
 
@@ -1080,6 +1097,7 @@ datum
 			fluid_b = 195
 			transparency = 50
 			alch_strength = 0.1
+			depletion_rate = 0.7
 			description = "All the bitterness of a gin and tonic, now without any other flavor but alcohol burn!"
 			reagent_state = LIQUID
 			taste = "caustic"
@@ -1127,6 +1145,7 @@ datum
 			fluid_g = 212
 			fluid_b = 212
 			alch_strength = 0.1
+			depletion_rate = 0.7
 			description = "A gin and tonic for people who think the gin gets in the way."
 			reagent_state = LIQUID
 			taste = "medicinal"
@@ -1424,6 +1443,7 @@ datum
 			fluid_g = 255
 			fluid_b = 204
 			alch_strength = 0.1
+			depletion_rate = 0.7
 			description = "I don't really like being caught in the rain all that much, to be honest."
 			reagent_state = LIQUID
 			taste = "tropical"
@@ -1435,6 +1455,7 @@ datum
 			fluid_g = 184
 			fluid_b = 1
 			alch_strength = 0.05
+			depletion_rate = 1
 			description = "Not a flower, but a sweet cocktail typically served at formal functions."
 			reagent_state = LIQUID
 			taste = "like sunshine"
@@ -1446,6 +1467,7 @@ datum
 			fluid_g = 147
 			fluid_b = 41
 			alch_strength = 0.15
+			depletion_rate = 0.7
 			description = "A strong champagne cocktail."
 			reagent_state = LIQUID
 			taste = "effervescent"
@@ -1457,6 +1479,7 @@ datum
 			fluid_g = 26
 			fluid_b = 54
 			alch_strength = 0.15
+			depletion_rate = 0.7
 			description = "A tasty fruit wine cocktail."
 			reagent_state = LIQUID
 			taste = list("rich", "fruity")
@@ -1501,6 +1524,7 @@ datum
 			fluid_g = 176
 			fluid_b = 163
 			alch_strength = 0.14
+			depletion_rate = 0.7
 			description = "Named after an Italian artist, peach purée and white wine mixed together."
 			reagent_state = LIQUID
 			taste = "perfumed"
@@ -1512,6 +1536,7 @@ datum
 			fluid_g = 163
 			fluid_b = 195
 			alch_strength = 0.14
+			depletion_rate = 0.7
 			description = "Named after an Italian composer and like a Bellini, but with strawberry purée instead of peach."
 			reagent_state = LIQUID
 			taste = "perfumed"
@@ -1523,6 +1548,7 @@ datum
 			fluid_g = 42
 			fluid_b = 86
 			alch_strength = 0.14
+			depletion_rate = 0.7
 			description = "This tart cocktail softens gin with blackberries and lemon juice."
 			reagent_state = LIQUID
 			taste = "tart"
@@ -1534,6 +1560,7 @@ datum
 			fluid_g = 111
 			fluid_b = 111
 			alch_strength = 0.14
+			depletion_rate = 0.7
 			description = "Vodka, raspberry liqueur, and pineapple juice. Not actually French."
 			reagent_state = LIQUID
 			taste = "delicate"
@@ -1545,6 +1572,7 @@ datum
 			fluid_g = 219
 			fluid_b = 238
 			alch_strength = 0.14
+			depletion_rate = 0.7
 			description = "This unnaturally blue lemonade looks too radical not to drink."
 			reagent_state = LIQUID
 			taste = "blue"
@@ -1556,6 +1584,7 @@ datum
 			fluid_g = 211
 			fluid_b = 118
 			alch_strength = 0.15
+			depletion_rate = 0.7
 			description = "A ginger ale and vodka concoction with a dash of lime."
 			reagent_state = LIQUID
 			taste = "astringent"
@@ -1567,6 +1596,7 @@ datum
 			fluid_g = 124
 			fluid_b = 30
 			alch_strength = 0.1
+			depletion_rate = 0.7
 			description = "A strikingly orange drink."
 			reagent_state = LIQUID
 			taste = "like sunshine"
@@ -1579,6 +1609,7 @@ datum
 			fluid_b = 183
 			description = "A delicious summer cocktail."
 			alch_strength = 0.1
+			depletion_rate = 0.7
 			taste = "tangy"
 
 		fooddrink/alcoholic/mintjulep
@@ -1588,6 +1619,7 @@ datum
 			fluid_g = 208
 			fluid_b = 83
 			alch_strength = 0.15
+			depletion_rate = 0.7
 			description = "A refreshing cocktail with a minty aftertaste."
 			reagent_state = LIQUID
 			taste = "refreshing"
@@ -1711,6 +1743,7 @@ datum
 			fluid_g = 217
 			fluid_b = 255
 			alch_strength = 0.1
+			depletion_rate = 0.7
 			description = "A visually and flavorfully pleasing cocktail."
 			reagent_state = LIQUID
 			taste = "seaworthy"
@@ -1765,6 +1798,7 @@ datum
 			fluid_g = 77
 			fluid_b = 65
 			alch_strength = 0.15
+			depletion_rate = 0.7
 			description = "A refreshing Spanish mixture of cola and wine."
 			reagent_state = LIQUID
 
@@ -1808,6 +1842,7 @@ datum
 			fluid_g = 127
 			fluid_b = 0
 			alch_strength = 0.1
+			depletion_rate = 0.7
 			description = "A mixture of tea and rum. Huh."
 			reagent_state = LIQUID
 			taste = "smoky"
@@ -1819,6 +1854,7 @@ datum
 			fluid_g = 116
 			fluid_b = 101
 			alch_strength = 0.1
+			depletion_rate = 0.7
 			description = "A refreshing mixed drink evocative of the seaside."
 			reagent_state = LIQUID
 			taste = "refreshing"
@@ -1863,6 +1899,7 @@ datum
 			fluid_g = 53
 			fluid_b = 8
 			alch_strength = 0.1
+			depletion_rate = 0.7
 			description = "¡Una cerveza preparada de perfecta para los sedientos habitantes de la estación espacial que quieren algo con un bocado!"
 			reagent_state = LIQUID
 
@@ -1873,6 +1910,7 @@ datum
 			fluid_g = 48
 			fluid_b = 22
 			alch_strength = 0.1
+			depletion_rate = 0.7
 			description = "Does this really count as a Martini?"
 			reagent_state = LIQUID
 			taste = list("smooth", "chocolatey")
@@ -1884,6 +1922,7 @@ datum
 			fluid_g = 215
 			fluid_b = 58
 			alch_strength = 0.1
+			depletion_rate = 0.7
 			description = "A lemonade and beer shandy."
 			reagent_state = LIQUID
 			taste = list("sweet", "sour")
