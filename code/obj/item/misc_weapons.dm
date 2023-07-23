@@ -2096,7 +2096,7 @@ obj/item/whetstone
 		setup_props(user)
 		..()
 
-	emp_act(var/mob/user)
+	emp_act()
 		if (!src.attached || (src.mode == EMP))
 			return
 		src.mode = EMP
@@ -2107,7 +2107,7 @@ obj/item/whetstone
 			H.TakeDamage("All", 25, 0, 0, DAMAGE_CRUSH, TRUE)
 			H.setStatus("stunned", 2 SECONDS)
 			H.emote("scream")
-		setup_props(user)
+			setup_props(H)
 
 	attack(var/mob/target, var/mob/user, def_zone)
 		if (attached && (src.mode == OFFENSIVE_MODE))
