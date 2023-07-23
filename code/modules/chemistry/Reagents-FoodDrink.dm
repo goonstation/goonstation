@@ -403,7 +403,7 @@ datum
 			fluid_r = 121
 			fluid_g = 171
 			fluid_b = 121
-			alch_strength = 0.6
+			alch_strength = 1.3
 			description = "An alcoholic beverage derived from maize. Also ghosts."
 			taste = "spooky"
 			viscosity = 0.4
@@ -471,7 +471,7 @@ datum
 			fluid_g = 65
 			fluid_b = 30
 			transparency = 190
-			alch_strength = 5
+			alch_strength = 26
 			depletion_rate = 0.2
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -493,7 +493,7 @@ datum
 			id = "bojack"
 			description = "A strong beverage. Drinking this will put hair on your chest. Maybe."
 			reagent_state = LIQUID
-			alch_strength = 5
+			alch_strength = 13
 			value = 0.25 //most of the alcohol content is handled below
 			taste = "manly"
 
@@ -588,7 +588,7 @@ datum
 			fluid_g = 53
 			fluid_b = 0
 			transparency = 200
-			alch_strength = 0.3
+			alch_strength = 2.3
 
 		fooddrink/alcoholic/snakebite
 			name = "Snakebite"
@@ -644,7 +644,7 @@ datum
 			fluid_g = 53
 			fluid_b = 0
 			transparency = 190
-			alch_strength = 1
+			alch_strength = 3
 
 		fooddrink/alcoholic/cocktail_grog
 			name = "grog"
@@ -658,7 +658,7 @@ datum
 			fluid_g = 255
 			fluid_b = 0
 			transparency = 255
-			alch_strength = 5 //1 unit grog = 100 ticks drunk
+			alch_strength = 13 //1 unit grog = 100 ticks drunk
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -889,7 +889,7 @@ datum
 			fluid_r = 255
 			fluid_g = 238
 			fluid_b = 238
-			alch_strength = 1.1
+			alch_strength = 3.5
 			transparency = 190
 			description = "Made from apples, mostly."
 			reagent_state = LIQUID
@@ -981,7 +981,7 @@ datum
 			fluid_g = 255
 			fluid_b = 206
 			alch_strength = 0.15
-			description = "Don't question how it's fizzing without seltzer."
+			description = "Don't question how it's fizzing."
 			reagent_state = LIQUID
 			taste = "fizzy"
 
@@ -1209,7 +1209,7 @@ datum
 			fluid_g = 163
 			fluid_b = 25
 			transparency = 190
-			alch_strength = 1 //its literally methanol
+			alch_strength = 2.5 //its literally methanol
 			depletion_rate = 0.4
 			thirst_value = -0.3
 
@@ -1742,7 +1742,7 @@ datum
 			fluid_r = 152
 			fluid_g = 171
 			fluid_b = 0
-			alch_strength = 0.5
+			alch_strength = 1.5
 			description = "A hellish cocktail that stinks of rotting garbage."
 			reagent_state = LIQUID
 			taste = "deathly"
@@ -1894,7 +1894,7 @@ datum
 			fluid_r = 178
 			fluid_g = 254
 			fluid_b = 15
-			alch_strength = 0.6
+			alch_strength = 1
 			description = "Contains no tea, and also no radioactive particles."
 			reagent_state = LIQUID
 			taste = "overwhelming"
@@ -4333,6 +4333,7 @@ datum
 			description = "Preferred by changelings, crew members, and the surprising overlap between them."
 			reagent_state = LIQUID
 			alch_strength = 0
+			depletion_rate = 0.1
 			fluid_r = 137
 			fluid_g = 158
 			fluid_b = 81
@@ -4343,7 +4344,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 0)
 
 				if (!M) M = holder.my_atom
-				alch_counter += rand(0,0.1) + 0.2 // RNG rolls moved to accumulation proc for consistency
+				alch_counter += rand(0,0.05) + 0.1 // RNG rolls moved to accumulation proc for consistency
 
 				..()
 

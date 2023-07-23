@@ -1207,7 +1207,7 @@
 		result = "ginfizz"
 		required_reagents = list("gin" = 1, "juice_lemon" = 1, "tonic" = 1)
 		result_amount = 3
-		mix_phrase = "The mixed drink starts fizzing on its own. Somehow."
+		mix_phrase = "The mixed drink starts fizzing. Somehow."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 
 	cocktail_gimlet
