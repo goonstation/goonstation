@@ -482,7 +482,7 @@
 		return ..()
 
 	pick_up_by(var/mob/M)
-		if(level == UNDERFLOOR) return ..()
+		if(level == OVERFLOOR) return ..()
 		//If it's anchored, it can't be picked up!
 
 	pickup()

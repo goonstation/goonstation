@@ -356,8 +356,8 @@
 /obj/proc/alter_health()
 	return 1
 
-/// Whether or not to hide something based on the value of h.
-/obj/proc/hide(h)
+/// Whether or not to hide something based on the value of hide, usually whether or not the turf is intact.
+/obj/proc/hide(hide)
 	return
 
 /obj/proc/replace_with_explosive()

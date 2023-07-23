@@ -10,7 +10,6 @@
 	var/obj/machinery/atmospherics/node
 	var/datum/pipe_network/network
 	var/on = 0
-	level = 0
 	layer = PIPE_LAYER
 
 	New()
