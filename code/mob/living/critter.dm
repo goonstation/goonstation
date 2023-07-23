@@ -1366,9 +1366,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			if (src.critter_ability_attack(target))
 				src.ai_attack_count = 0 //ability used successfully, reset the count
 				return
-		//default to a basic attack
+		//Check if we can range attack, if not default to a basic attack
 		var/datum/handHolder/hand = src.get_active_hand()
-		if (hand.can_range_attack)
+		if (hand && hand.can_range_attack)
 			if (src.critter_range_attack(target))
 				src.ai_attack_count += 1
 		else

@@ -9,18 +9,23 @@ st=0
 
 # Map Checks
 
-if grep -El '^\".+\" = \(.+\)' maps/**/*.dmm;	then
+if grep -El '^\".+\" = \(.+\)' +secret/**/*.dmm assets/maps/**/*.dmm maps/**/*.dmm;	then
    echo "ERROR: Non-TGM formatted map detected. Please convert it using Map Merger or StrongDMM!"
    st=1
 fi;
 
-if grep -P 'step_[xy]' maps/**/*.dmm;	then
+if grep -P '/obj/landmark/spawner{' +secret/**/*.dmm assets/maps/**/*.dmm maps/**/*.dmm;	then
+    echo "ERROR: instanced /obj/landmark/spawner detected on a map, please create a subtype."
+    st=1
+fi;
+
+if grep -P 'step_[xy]' +secret/**/*.dmm assets/maps/**/*.dmm maps/**/*.dmm;	then
     echo "ERROR: step_x/step_y variables detected in maps, please remove them."
     st=1
 fi;
 
 # We check for this as well to ensure people aren't actually using this mapping effect in their maps.
-if grep -P '/obj/merge_conflict_marker' maps/**/*.dmm; then
+if grep -P '/obj/merge_conflict_marker' +secret/**/*.dmm assets/maps/**/*.dmm maps/**/*.dmm; then
     echo "ERROR: Merge conflict markers detected in map, please resolve all merge failures!"
     st=1
 fi;

@@ -1,4 +1,16 @@
 
+(t)sat jul 22 23
+(u)Skeletonman0 and Garash
+(p)14895
+(e)🆕📄|C-Feature, A-UI
+(+)New UI for the station's advanced computers, go bother cargo for a Home Networking Kit and build your own dream computer today!
+(+)Flourish
+(e)🗺⚖⛔|A-Mapping, C-Balance, C-Removal,
+(+)Removed straightjackets.
+(u)Flappybat
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Sorium throw scaling reduced. A large quantity is now needed to throw more than a few tiles.
+(+)Sorium now throws anything on the same turf in a random direction.
 (t)fri jul 21 23
 (u)Sian
 (p)14642

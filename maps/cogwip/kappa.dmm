@@ -6970,9 +6970,7 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "big_yank"
-	},
+/mob/living/carbon/human/big_yank,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
