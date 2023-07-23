@@ -105,19 +105,21 @@
 	var/injection_amount_per_yield = 0.1 //how much their injection amount should scale with yield
 	var/stamina_per_potency = 3 // how much stamina each point of potency should add. With the inate stun resist, its equal to 3,75 stamina per potency
 	var/stamreg_per_potency = 0.1 // how much stamina regen each point of potency should add
-	var/maximum_stamreg = 30 // how much stamina regen should be the max. Don't want to have complete immunity to stun batoning
+	var/maxcap_stamreg = 30 // how much stamina regen should be the max. Don't want to have complete immunity to stun batoning
+	var/maxcap_stamina = 5000 //How much stamina the maneater should get at max. This is just to not have too high numbers for no reasons and i don't expect to be hit anytime soon.
+	var/maxcap_injection = 30 //how much the maneater should inject at most.
 
 	//first, we scale the health with on_spawn equals TRUE
 	src.update_health_by_endurance(passed_genes?.get_effective_value("endurance"), TRUE)
 
 	// Stamina modifiert scale of potency
-	APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "maneater_dna", min(round( passed_genes?.get_effective_value("potency") * stamreg_per_potency), maximum_stamreg))
-	src.add_stam_mod_max("maneater_dna", (passed_genes?.get_effective_value("potency") * stamina_per_potency))
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "maneater_dna", min(round( passed_genes?.get_effective_value("potency") * stamreg_per_potency), maxcap_stamreg))
+	src.add_stam_mod_max("maneater_dna", min((passed_genes?.get_effective_value("potency") * stamina_per_potency), maxcap_stamina))
 
 	// now, we set the arm injection up
 	if (length(origin_plant.assoc_reagents) > 0)
 		var/datum/limb/mouth/maneater/manipulated_limb = src.scaleable_limb
-		manipulated_limb.amount_to_inject = max(1, round(baseline_injection + injection_amount_per_yield * passed_genes?.get_effective_value("cropsize")))
+		manipulated_limb.amount_to_inject = clamp(round(baseline_injection + injection_amount_per_yield * passed_genes?.get_effective_value("cropsize")), 1, maxcap_injection )
 		manipulated_limb.chems_to_inject |= origin_plant.assoc_reagents
 	..()
 	return src
@@ -126,7 +128,8 @@
 /mob/living/critter/plant/maneater/proc/update_health_by_endurance(var/endurance, var/on_spawn = FALSE)
 	//this is in a different proc since the maneater should be able to scale its health while being out of the tray
 	var/health_per_endurance = 3 // how much health the maneater should get per point of endurance
-	var/scaled_health =max(10, round(src.baseline_health + (endurance * health_per_endurance)))
+	var/maxcap_health = 2000 //how much the maneater should scale up to. I think it will hit that once upon a blue moon but i'm here for the insanity :)
+	var/scaled_health = clamp(round(src.baseline_health + (endurance * health_per_endurance)), 10, maxcap_health)
 	var/health_multiplicator = min(scaled_health / src.max_health) //we use this to calculate %health on damaged maneaters
 	src.max_health = scaled_health
 	for (var/selected_damage_type in healthlist)
