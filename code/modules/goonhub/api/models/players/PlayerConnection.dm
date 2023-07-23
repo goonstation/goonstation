@@ -1,14 +1,10 @@
 
 /// PlayerConnection
-/datum/apiModel/PlayerConnection
-var/id					= null // integer
-var/player_id			= null // integer
+/datum/apiModel/PlayerRes/PlayerConnection
 var/round_id			= null // integer
 var/ip					= null // string
 var/comp_id				= null // string
 var/list/legacy_data	= null // [string]
-var/created_at			= null // date-time
-var/updated_at			= null // date-time
 var/country				= null // string
 var/country_iso			= null // string
 

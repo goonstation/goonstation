@@ -1,12 +1,13 @@
 
 /// PlayerSearchResource
 /datum/apiModel/PlayerSearchResource
-	var/id			= null 	// integer
 	var/ip			= null 	// string
 	var/comp_id		= null 	// string
-	var/player_id	= null 	// integer
 	var/ckey		= null 	// string
 	var/created_at	= null 	// string
+
+// ZEWAKA TODO: WTF NO UPDATED_AT????
+
 
 /datum/apiModel/PlayerSearchResource/New(
 	id,

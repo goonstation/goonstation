@@ -1,7 +1,10 @@
 
 
 ABSTRACT_TYPE(/datum/apiModel)
-/// Base apiModel datum
+/// Base apiModel datum - ABSTRACT
+/datum/apiModel
+	var/id = null // integer
+
 /datum/apiModel/New()
 	. = ..()
 	if (!VerifyIntegrity())
@@ -15,9 +18,13 @@ ABSTRACT_TYPE(/datum/apiModel)
 
 /// Override to verify that the model object is correctly formed. Return FALSE if not.
 /datum/apiModel/proc/VerifyIntegrity()
-	return TRUE
+	if (
+		isnull(src.id)
+	)
+		return FALSE
 
 /// Override to determine how this mdoel will get shown for debugging purposes
 /datum/apiModel/proc/ToString()
 	. = list()
+	.["id"] = src.id
 	return json_encode(.)

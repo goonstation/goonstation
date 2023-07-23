@@ -1,7 +1,6 @@
 
 /// PlayerStatsResource
 /datum/apiModel/PlayerStatsResource
-	var/id				= null // string
 	var/ckey			= null // string
 	var/key				= null // string
 	var/byond_join_date	= null // string

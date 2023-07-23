@@ -1,7 +1,6 @@
 
 /// GameRoundResource
 /datum/apiModel/GameRoundResource
-	var/id			= null // integer
 	var/server_id	= null // string
 	var/map			= null // string
 	var/game_type	= null // string
