@@ -118,6 +118,9 @@
 			boutput(user, "<span class='alert'>That tile too far away.</span>")
 			return
 
+		if (T.density)
+			return
+
 		for(var/obj/O in T.contents)
 			if(O.density)
 				boutput(user, "<span class='alert'>That tile is blocked by [O].</span>")
@@ -219,6 +222,9 @@
 			break
 	if (!inrange)
 		boutput(user, "<span class='alert'>That tile too far away.</span>")
+		return
+
+	if (T.density)
 		return
 
 	for(var/obj/O in T.contents)

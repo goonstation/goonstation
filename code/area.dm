@@ -200,8 +200,6 @@ TYPEINFO(/area)
 				if (sound_loop)
 					M.client.playAmbience(src, AMBIENCE_LOOPING, sound_loop_vol)
 
-				M.client.parallax_controller?.update_area_parallax_layers(src, lastarea)
-
 				if (!played_fx_1 && prob(AMBIENCE_ENTER_PROB))
 					src.pickAmbience()
 					M.client.playAmbience(src, AMBIENCE_FX_1, 18)

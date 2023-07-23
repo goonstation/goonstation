@@ -4997,10 +4997,6 @@
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crypt/graveyard)
-"fNy" = (
-/obj/landmark/spawner/artifact,
-/turf/unsimulated/floor/cave,
-/area/crater/cave)
 "fNz" = (
 /obj/table/reinforced/auto,
 /obj/bedsheetbin,
@@ -5607,13 +5603,6 @@
 	name = "strange surface"
 	},
 /area/crater/cave/lower)
-"gys" = (
-/obj/table/auto,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
-/turf/unsimulated/floor/white,
-/area/swampzone/interiors/outbuildings)
 "gyz" = (
 /turf/unsimulated/wall/setpieces/rootwall{
 	desc = "The foliage is too thick to see through here.";
@@ -5651,12 +5640,6 @@
 /mob/living/critter/skeleton,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
-"gBg" = (
-/obj/decal/cleanable/dirt,
-/obj/decal/mushrooms/type1,
-/obj/landmark/spawner/artifact,
-/turf/unsimulated/floor/cave,
-/area/crater/cave)
 "gCg" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -18921,6 +18904,12 @@
 	dir = 4
 	},
 /area/crypt/graveyard/swamp)
+"wrL" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/mushrooms/type1,
+/obj/landmark/spawner/artifact,
+/turf/unsimulated/floor/cave,
+/area/crater/cave)
 "wrX" = (
 /obj/stool/bed,
 /turf/unsimulated/floor/wood/seven,
@@ -19391,6 +19380,10 @@
 /obj/item/storage/box/record/radio/one,
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/eastwest,
 /area/swampzone/interiors/bonktek/funktek)
+"wPR" = (
+/obj/landmark/spawner/artifact,
+/turf/unsimulated/floor/cave,
+/area/crater/cave)
 "wQa" = (
 /obj/decal/cliff{
 	dir = 4
@@ -49466,7 +49459,7 @@ mDX
 uFh
 uFh
 bHc
-gys
+pVw
 mDX
 roE
 fja
@@ -190828,7 +190821,7 @@ auI
 auI
 iej
 iej
-gBg
+wrL
 auI
 auI
 dIX
@@ -194124,7 +194117,7 @@ auI
 auI
 iej
 auI
-fNy
+wPR
 iej
 iej
 iej
@@ -198347,7 +198340,7 @@ auI
 aTS
 hSL
 sDP
-fNy
+wPR
 auI
 aTS
 qti
