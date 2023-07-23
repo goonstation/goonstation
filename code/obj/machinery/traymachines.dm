@@ -366,16 +366,12 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		if(isnull(src))
 			return
 		sleep(1 SECOND)
-		for (var/M in contents)
-			if (M in non_tray_contents)
+		for (var/mob/living/L in contents)
+			if (L in non_tray_contents)
 				continue
-			if (M == my_tray)	//no cremating the tray tyvm
-				continue
-			if (isliving(M))
-				var/mob/living/L = M
-				L.TakeDamage("chest", 0, 30)
-				if (!isdead(L) && prob(25))
-					L.emote("scream")
+			L.TakeDamage("chest", 0, 30)
+			if (!isdead(L) && prob(25))
+				L.emote("scream")
 
 	if(isnull(src))
 		return
