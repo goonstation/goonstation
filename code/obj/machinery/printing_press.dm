@@ -84,7 +84,7 @@
 	var/list/colorable_flairs = list("None", "Corners", "Bookmark", "RightCover", "SpineCover")
 
 	// ------------- Newspaper vars
-	/// headline of the newspaper. Saved separately to book title
+	/// headline of the newspaper. Saved separately to book details.
 	var/newspaper_headline = ""
 	/// the name of the newspaper e.g. Nanotrasen Daily.
 	var/newspaper_publisher = ""

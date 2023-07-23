@@ -932,7 +932,7 @@
 			placeholder_info += "<br><br><b>[commander_item.name]</b>: [item_info]"
 		info = placeholder_info
 
-/// A blank newspaper, ready to have its headline written.
+/// A blank newspaper, which will randomly generate a headline usually.
 /obj/item/paper/newspaper
 	name = "Newspaper"
 	desc = "This is a newspaper. It appears to lack a headline. And text."
@@ -963,7 +963,6 @@
 	icon_state = "newspaper_rolled"
 	item_state = "paper"
 	two_handed = FALSE
-	c_flags = ONBELT // hopefully this uncovers the eyes and mouth lol
 
 /// picks a random headline. If there's no set publisher, set that too.
 /obj/item/paper/newspaper/proc/pickrandominfo()
@@ -1002,7 +1001,9 @@
 
 /obj/item/paper/newspaper/attack_hand(mob/user)
 	. = ..()
+	src.force_drop(user)
 	src.rollup()
+	user.put_in_hand_or_drop(src)
 
 /obj/item/paper/newspaper/proc/rollup()
 	if (src.two_handed) // rolling it up
