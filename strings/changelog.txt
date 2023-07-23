@@ -4,7 +4,7 @@
 (p)14895
 (e)🆕📄|C-Feature, A-UI
 (+)New UI for the station's advanced computers, go bother cargo for a Home Networking Kit and build your own dream computer today!
-(+)Flourish
+(u)Flourish
 (e)🗺⚖⛔|A-Mapping, C-Balance, C-Removal,
 (+)Removed straightjackets.
 (u)Flappybat
