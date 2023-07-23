@@ -1,4 +1,5 @@
 /// Base item. These are objects you can hold, generally.
+ABSTRACT_TYPE(/obj/item)
 /obj/item
 	/*_____*/
 	/*Basic*/

@@ -5871,7 +5871,7 @@
 "mx" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor/redwhite{
 	dir = 8
@@ -6155,8 +6155,6 @@
 /area/station/medical/medbay/surgery)
 "nd" = (
 /obj/table/auto,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/reagent_containers/syringe/haloperidol,
