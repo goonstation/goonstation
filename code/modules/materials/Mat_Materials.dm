@@ -67,6 +67,7 @@ ABSTRACT_TYPE(/datum/material)
 	VAR_PROTECTED/edible = 0
 
 	//triggers
+	//IF YOU CHANGE THESE IN ANY WAY, YOU MUST UPDATE _std/defines/materials.dm
 	/// Called when exposed to temperatures.
 	VAR_PROTECTED/list/triggersTemp = list()
 	/// Called when exposed to chemicals.
@@ -192,6 +193,8 @@ ABSTRACT_TYPE(/datum/material)
 	//mutability procs
 
 	///Returns a mutable version of this material. Will return a copy of this material if it is already mutable.
+	///The reason this is a separate proc and not using in getMaterial() is prevent cargo-culting accidentally reintroducing the
+	//issue this was supposed to fix. Force the coders to explicitly ask for a mutable instance, demand to know why they want it to be mutable in reviews!
 	proc/getMutable()
 		return src.copyMaterial() //copy is mutable by default
 
