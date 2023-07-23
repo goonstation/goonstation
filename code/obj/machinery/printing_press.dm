@@ -193,90 +193,88 @@
 /////////////////////
 
 /obj/machinery/printing_press/attackby(var/obj/item/W, mob/user)
-	if (!istype(W, /obj/item/paper_bin))
-		..()
-		return
-	var/obj/item/paper_bin/P = W
-	if (P.amount > 0 && src.paper_amt <= src.paper_max) //if the paper bin has paper, and adding the paper bin doesnt add too much paper
-		boutput(user, "You load \the [P] into \the [src].")
-		var/amount_to_take = src.paper_max - src.paper_amt
-		var/amount_taken = min(amount_to_take, P.amount)
-		src.paper_amt += amount_taken
-		UpdateIcon()
-		P.amount = P.amount - amount_taken
-		P.update()
-		return
-	else
-		if (P.amount <= 0)
-			if (length(P.contents) > 0)
-				boutput(user, "\The [P] has no unsoiled sheets left in it.") // someone put junk paper in the bin
-			else
-				boutput(user, "\The [P] has no paper left in it.") // its just plain empty
+	if (istype(W, /obj/item/paper_bin))
+		var/obj/item/paper_bin/P = W
+		if (P.amount > 0 && src.paper_amt <= src.paper_max) //if the paper bin has paper, and adding the paper bin doesnt add too much paper
+			boutput(user, "You load \the [P] into \the [src].")
+			var/amount_to_take = src.paper_max - src.paper_amt
+			var/amount_taken = min(amount_to_take, P.amount)
+			src.paper_amt += amount_taken
+			UpdateIcon()
+			P.amount = P.amount - amount_taken
+			P.update()
 			return
-		boutput(user, "\The [src] is already fully loaded with paper!")
-else if (istype(W, /obj/item/paper) && !istype(W, /obj/item/paper/book)) //should also exclude all other weird paper subtypes, but i think books are the only one
-	if (src.paper_amt < src.paper_max)
-		boutput(user, "You load \the [W] into \the [src].")
-		src.paper_amt++
-		UpdateIcon()
-		user.drop_item()
+		else
+			if (P.amount <= 0)
+				if (length(P.contents) > 0)
+					boutput(user, "\The [P] has no unsoiled sheets left in it.") // someone put junk paper in the bin
+				else
+					boutput(user, "\The [P] has no paper left in it.") // its just plain empty
+				return
+			boutput(user, "\The [src] is already fully loaded with paper!")
+	else if (istype(W, /obj/item/paper) && !istype(W, /obj/item/paper/book)) //should also exclude all other weird paper subtypes, but i think books are the only one
+		if (src.paper_amt < src.paper_max)
+			boutput(user, "You load \the [W] into \the [src].")
+			src.paper_amt ++
+			UpdateIcon()
+			user.drop_item()
+			qdel(W)
+		else
+			boutput(user, "\The [src] is too full for that!")
+			return
+
+	else if (istype(W, /obj/item/press_upgrade))
+		switch (W.icon_state)
+			if ("press_colors")
+				if (src.colors_upgrade)
+					src.visible_message("\The [src] already has that upgrade installed.")
+					return
+				src.colors_upgrade = TRUE
+				src.press_modes += "Ink color"
+				src.visible_message("\The [src] accepts the upgrade.")
+
+			if ("press_books")
+				if (src.books_upgrade)
+					src.visible_message("\The [src] already has that upgrade installed.")
+					return
+				src.books_upgrade = TRUE
+				src.press_modes += "Customise cover"
+				src.visible_message("\The [src] accepts the upgrade.")
+
+			if ("press_forbidden")
+				if (src.forbidden_upgrade)
+					src.visible_message("\The [src] already has that upgrade installed.")
+					return
+				src.forbidden_upgrade = TRUE
+				src.standard_symbols += list("Anarchy", "Syndie")
+				src.colorable_symbols += list("FixMe")
+				src.standard_flairs += list("Fire")
+				src.cover_designs += list("Necronomicon", "Old", "Bible")
+				src.visible_message("\The [src] accepts the upgrade.")
+
+			if ("press_ink")
+				if ((src.ink_level + 100) <= src.ink_max) //500ink internal resevoir
+					src.ink_level += 100
+					boutput(user, "Ink refilled.")
+					UpdateIcon() //to show ink level change
+				else
+					boutput(user, "\The [src] doesn't need an ink refill yet.")
+					return
+
+			if ("press_newspaper")
+				if (src.newspaper_upgrade)
+					src.visible_message("\The [src] already has that upgrade installed.")
+					return
+				src.press_modes += "Set newspaper info"
+				src.press_modes += "Toggle newspaper mode"
+				src.newspaper_upgrade = TRUE
+				src.visible_message("\The [src] accepts the upgrade.")
+
+			else //in case some wiseguy tries the parent im watching u
+				boutput(user, "no good, asshole >:\[")
+				return
 		qdel(W)
-	else
-		boutput(user, "\The [src] is too full for that!")
-		return
-
-else if (istype(W, /obj/item/press_upgrade))
-	switch (W.icon_state)
-		if ("press_colors")
-			if (src.colors_upgrade)
-				src.visible_message("\The [src] already has that upgrade installed.")
-				return
-			src.colors_upgrade = TRUE
-			src.press_modes += "Ink color"
-			src.visible_message("\The [src] accepts the upgrade.")
-
-		if ("press_books")
-			if (src.books_upgrade)
-				src.visible_message("\The [src] already has that upgrade installed.")
-				return
-			src.books_upgrade = TRUE
-			src.press_modes += "Customise cover"
-			src.visible_message("\The [src] accepts the upgrade.")
-
-		if ("press_forbidden")
-			if (src.forbidden_upgrade)
-				src.visible_message("\The [src] already has that upgrade installed.")
-				return
-			src.forbidden_upgrade = TRUE
-			src.standard_symbols += list("Anarchy", "Syndie")
-			src.colorable_symbols += list("FixMe")
-			src.standard_flairs += list("Fire")
-			src.cover_designs += list("Necronomicon", "Old", "Bible")
-			src.visible_message("\The [src] accepts the upgrade.")
-
-		if ("press_ink")
-			if ((src.ink_level + 100) <= src.ink_max) //500ink internal resevoir
-				src.ink_level += 100
-				boutput(user, "Ink refilled.")
-				UpdateIcon() //to show ink level change
-			else
-				boutput(user, "\The [src] doesn't need an ink refill yet.")
-				return
-
-		if ("press_newspaper")
-			if (src.newspaper_upgrade)
-				src.visible_message("\The [src] already has that upgrade installed.")
-				return
-			src.press_modes += "Set newspaper info"
-			src.press_modes += "Toggle newspaper mode"
-			src.newspaper_upgrade = TRUE
-			src.visible_message("\The [src] accepts the upgrade.")
-
-		else //in case some wiseguy tries the parent im watching u
-			boutput(user, "no good, asshole >:\[")
-			return
-	qdel(W)
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 /obj/machinery/printing_press/attack_hand(var/mob/user) //all of our mode controls and setters here, these control what the books are/look like/have as contents
 	if (src.is_running)
