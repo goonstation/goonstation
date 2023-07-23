@@ -2,6 +2,7 @@
 
 ABSTRACT_TYPE(/datum/apiModel)
 /// Base apiModel datum - ABSTRACT
+/// Everything is generally required unless annotated as such
 /datum/apiModel
 	var/id = null // integer
 

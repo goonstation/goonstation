@@ -1,6 +1,6 @@
 
-/// GameRoundResource
-/datum/apiModel/GameRoundResource
+/// GameRound
+/datum/apiModel/GameRound
 	var/server_id	= null // string
 	var/map			= null // string
 	var/game_type	= null // string
@@ -10,7 +10,7 @@
 	var/created_at	= null // date-time
 	var/updated_at	= null // date-time
 
-/datum/apiModel/GameRoundResource/New(
+/datum/apiModel/GameRound/New(
 	id,
 	server_id,
 	map,
@@ -32,7 +32,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/GameRoundResource/VerifyIntegrity()
+/datum/apiModel/GameRound/VerifyIntegrity()
 	if (
 		isnull(src.id)
 		|| isnull(src.server_id)
@@ -46,7 +46,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/GameRoundResource/ToString()
+/datum/apiModel/GameRound/ToString()
 	. = list()
 	.["id"] = src.id
 	.["server_id"] = src.server_id

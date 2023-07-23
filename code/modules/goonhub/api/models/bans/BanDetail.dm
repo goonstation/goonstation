@@ -1,7 +1,6 @@
 
 /// BanDetail
 /datum/apiModel/BanDetail
-	var/id			= null // integer
 	var/ban_id		= null // integer
 	var/ckey		= null // string
 	var/comp_id		= null // integer
