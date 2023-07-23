@@ -16749,9 +16749,7 @@
 	icon_state = "chair_couch-brown";
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/maintenance/disposal)
 "aLg" = (
@@ -18759,9 +18757,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "aPM" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "aPN" = (
@@ -18836,9 +18832,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "aPX" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "aPY" = (
@@ -20507,9 +20501,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "aTX" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "aTY" = (
@@ -30860,9 +30852,7 @@
 	},
 /area/station/storage/warehouse)
 "bqA" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor,
 /area/station/storage/warehouse)
 "bqB" = (
@@ -31005,9 +30995,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "bqR" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/machinery/light{
 	dir = 1;
 	icon_state = "tube1";
@@ -31457,9 +31445,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "brP" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "brQ" = (
@@ -32927,9 +32913,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
 "bvq" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/machinery/light,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
@@ -33144,9 +33128,7 @@
 	},
 /area/station/crew_quarters/pool)
 "bvR" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bvS" = (
@@ -33600,9 +33582,7 @@
 /turf/space,
 /area/space)
 "bwW" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_krimpus"
-	},
+/mob/living/carbon/human/npc/monkey/krimpus,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "bwX" = (
@@ -37541,9 +37521,7 @@
 /area/station/science/artifact)
 "bGo" = (
 /obj/disposalpipe/segment/mail,
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "bGp" = (
@@ -42220,9 +42198,7 @@
 /turf/simulated/floor/sandytile,
 /area/station/hallway/primary/south)
 "bQf" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
-	},
+/mob/living/carbon/human/npc/monkey/tanhony,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quarters_south)
 "bQg" = (
