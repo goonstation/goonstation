@@ -260,7 +260,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 // Weird Shit
 
 /datum/plant/maneater
-	name = "Man-Eating"
+	name = "Man-Eating Plant"
 	plant_icon = 'icons/obj/hydroponics/plants_alien.dmi'
 	sprite = "Maneater"
 	growthmode = "carnivore"
