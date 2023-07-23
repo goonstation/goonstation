@@ -557,7 +557,7 @@
 "aGx" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
 	dir = 2;
-	
+
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
@@ -5605,9 +5605,6 @@
 /area/crater/cave/lower)
 "gys" = (
 /obj/table/auto,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "gyz" = (
@@ -6954,7 +6951,7 @@
 "ikB" = (
 /obj/machinery/atmospherics/pipe/tank/toxins{
 	dir = 2;
-	
+
 	},
 /obj/cable{
 	icon_state = "1-4"
