@@ -780,7 +780,7 @@ TRAYS
 
 			phrase_log.log_phrase("dish_name", str, no_duplicates=TRUE)
 
-			if (!length(strc.loc != holder)
+			if (src.loc != holder)
 				return
 			if(url_regex?.Find(str))
 				return
