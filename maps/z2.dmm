@@ -685,11 +685,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/hospital)
-"acQ" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/straight_jacket,
-/turf/unsimulated/floor/white,
-/area/hospital)
 "acY" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -924,12 +919,6 @@
 /area/hospital)
 "adG" = (
 /turf/unsimulated/wall/setpieces/hospital/window,
-/area/hospital)
-"adH" = (
-/obj/stool/bed,
-/obj/window/south,
-/obj/item/clothing/suit/straight_jacket,
-/turf/unsimulated/floor/white,
 /area/hospital)
 "adJ" = (
 /obj/machinery/navbeacon{
@@ -7411,6 +7400,10 @@
 "aDY" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/lab)
+"aEa" = (
+/mob/living/critter/small_animal/crab/lava,
+/turf/unsimulated/iomoon/floor,
+/area/iomoon)
 "aEb" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -19114,10 +19107,6 @@
 	},
 /turf/unsimulated/floor/lava,
 /area/iomoon)
-"bqO" = (
-/obj/critter/lavacrab,
-/turf/unsimulated/iomoon/floor,
-/area/iomoon)
 "bqP" = (
 /turf/unsimulated/iomoon/floor{
 	dir = 9;
@@ -21033,16 +21022,6 @@
 	},
 /turf/unsimulated/floor/caution/west,
 /area/iomoon/base/underground)
-"byZ" = (
-/obj/critter/lavacrab{
-	health = 60;
-	name = "deep magma crab"
-	},
-/turf/unsimulated/iomoon/floor{
-	name = "silicate cave floor";
-	temperature = 313.15
-	},
-/area/iomoon/caves)
 "bza" = (
 /obj/map/light/lava,
 /obj/decal/fakeobjects/pipe/heat{
@@ -47053,19 +47032,6 @@
 	temperature = 313.15
 	},
 /area/iomoon/caves)
-"dbg" = (
-/obj/critter/lavacrab{
-	health = 60;
-	name = "deep magma crab"
-	},
-/obj/decal/fakeobjects/pipe/heat{
-	dir = 4
-	},
-/turf/unsimulated/iomoon/floor{
-	name = "silicate cave floor";
-	temperature = 313.15
-	},
-/area/iomoon/caves)
 "dbh" = (
 /obj/map/light/lava,
 /obj/decal/fakeobjects/pipe/heat{
@@ -47298,10 +47264,6 @@
 	dir = 8;
 	icon_state = "iocrust_corner"
 	},
-/area/iomoon)
-"dcd" = (
-/obj/critter/lavacrab,
-/turf/unsimulated/iomoon/plating,
 /area/iomoon)
 "dce" = (
 /turf/unsimulated/floor/caution/corner/sw{
@@ -52287,11 +52249,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"dxp" = (
-/obj/decal/cleanable/rust/jen,
-/obj/critter/lavacrab,
-/turf/unsimulated/greek/cave/floor,
-/area/centcom/offices/zewaka)
 "dxq" = (
 /obj/table/wood/auto/desk,
 /obj/item/reagent_containers/food/drinks/energyshake,
@@ -60922,18 +60879,6 @@
 	dir = 1
 	},
 /area/crypt/graveyard/swamp)
-"fSc" = (
-/obj/stool/chair/comfy/shuttle/brown,
-/obj/landmark/spawner{
-	name = "john_bill"
-	},
-/obj/machinery/computer/transit_shuttle/johnbus{
-	embed = 1;
-	icon_state = "shuttle-embed";
-	pixel_y = -25
-	},
-/turf/unsimulated/floor/shuttle/yellow,
-/area/shuttle/john/owlery)
 "fSK" = (
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/owlery/owllock)
@@ -61458,6 +61403,13 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"gsH" = (
+/mob/living/critter/small_animal/crab/lava/deep,
+/turf/unsimulated/iomoon/floor{
+	name = "silicate cave floor";
+	temperature = 313.15
+	},
+/area/iomoon/caves)
 "gsZ" = (
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/plating,
@@ -61497,6 +61449,16 @@
 	},
 /turf/unsimulated/floor/white/checker,
 /area/wizard_station)
+"gve" = (
+/mob/living/critter/small_animal/crab/lava/deep,
+/obj/decal/fakeobjects/pipe/heat{
+	dir = 4
+	},
+/turf/unsimulated/iomoon/floor{
+	name = "silicate cave floor";
+	temperature = 313.15
+	},
+/area/iomoon/caves)
 "gwj" = (
 /obj/decal/icefloor,
 /mob/living/critter/brullbar,
@@ -62264,6 +62226,11 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/leah)
+"hqU" = (
+/obj/stool/bed,
+/obj/window/south,
+/turf/unsimulated/floor/white,
+/area/hospital)
 "hrN" = (
 /obj/machinery/light{
 	dir = 8
@@ -63345,6 +63312,16 @@
 	dir = 9
 	},
 /area/centcom)
+"iwP" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/mob/living/carbon/human/john,
+/obj/machinery/computer/transit_shuttle/johnbus{
+	embed = 1;
+	icon_state = "shuttle-embed";
+	pixel_y = -25
+	},
+/turf/unsimulated/floor/shuttle/yellow,
+/area/shuttle/john/owlery)
 "iwU" = (
 /obj/overlay{
 	density = 1;
@@ -65514,6 +65491,10 @@
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/plating,
 /area/void_diner)
+"kMF" = (
+/obj/stool/bed,
+/turf/unsimulated/floor/white,
+/area/hospital)
 "kNc" = (
 /obj/machinery/drainage,
 /mob/living/critter/zombie/scientist,
@@ -68864,12 +68845,6 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
 /area/crater/biodome/crew)
-"ogV" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_syndicate"
-	},
-/turf/unsimulated/floor/black,
-/area/syndicate_station/battlecruiser)
 "ohf" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
@@ -70255,6 +70230,11 @@
 	dir = 4
 	},
 /area/iomoon/base)
+"pDc" = (
+/obj/decal/cleanable/rust/jen,
+/mob/living/critter/small_animal/crab/lava,
+/turf/unsimulated/greek/cave/floor,
+/area/centcom/offices/zewaka)
 "pDK" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
@@ -73070,6 +73050,10 @@
 /obj/item/shinai_bag,
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
+"sGQ" = (
+/mob/living/critter/small_animal/crab/lava,
+/turf/unsimulated/iomoon/plating,
+/area/iomoon)
 "sHI" = (
 /obj/machinery/door/unpowered/wood{
 	autoclose = 0;
@@ -73492,6 +73476,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"tll" = (
+/mob/living/carbon/human/npc/monkey/oppenheimer,
+/turf/unsimulated/floor/black,
+/area/syndicate_station/battlecruiser)
 "tlI" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
@@ -77988,10 +77976,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/katzen)
-"ydi" = (
-/obj/map/light/lava,
-/turf/unsimulated/floor/plating,
-/area/iomoon)
 "yea" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm11"
@@ -79516,7 +79500,7 @@ boW
 boW
 boW
 boW
-ydi
+boB
 boW
 boH
 aaa
@@ -80557,7 +80541,7 @@ caV
 cgG
 cmp
 aBL
-fSc
+iwP
 fth
 wyt
 cMR
@@ -84647,7 +84631,7 @@ boW
 boV
 bqw
 bpD
-dcd
+sGQ
 bpD
 bpD
 izT
@@ -92471,7 +92455,7 @@ wXY
 wXY
 wXY
 bpD
-bqO
+aEa
 bqp
 boW
 boW
@@ -100038,7 +100022,7 @@ bpT
 bpD
 bpD
 bpD
-bqO
+aEa
 bpD
 bpD
 bpD
@@ -102458,7 +102442,7 @@ bpD
 bpD
 bpD
 bpD
-bqO
+aEa
 bpD
 bpD
 bpD
@@ -108640,7 +108624,7 @@ cwg
 lzl
 dhw
 bqW
-ogV
+tll
 bqW
 dip
 lzl
@@ -118155,7 +118139,7 @@ aaD
 bwU
 bwU
 bwU
-dbg
+gve
 bwU
 bwU
 dbl
@@ -120089,9 +120073,9 @@ aaa
 aaa
 abp
 aeX
-acQ
+kMF
 adn
-adH
+hqU
 acb
 adS
 aer
@@ -121183,7 +121167,7 @@ txy
 bCB
 bCB
 bDT
-byZ
+gsH
 bwU
 txy
 txy
@@ -160064,7 +160048,7 @@ dyD
 wel
 dwr
 dwS
-dxp
+pDc
 wel
 dxZ
 dxZ

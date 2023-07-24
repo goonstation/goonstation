@@ -40,6 +40,10 @@
   - lobsters
   - boogiebots
   - figures
+  - mentor / admin mice
+  - crabs
+	- party crabs
+	- lava crabs
 todo: add more small animals!
 */
 ABSTRACT_TYPE(/mob/living/critter/small_animal)
@@ -500,7 +504,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 				var/mob/living/critter/small_animal/mouse/mouse = M
 				if (isdead(mouse)) continue
 				. += mouse
-		for (var/obj/critter/livingtail/tail in range(src, 3))
+		for (var/mob/living/critter/small_animal/livingtail/tail in range(src, 3))
 			. += tail
 
 		if (length(.) && prob(20))
@@ -3983,6 +3987,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently pets", "rubs", "cuddles, coddles")
+	var/can_hat = TRUE
 
 	faction = FACTION_AQUATIC
 
@@ -3995,7 +4000,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		return null
 
 	attackby(obj/item/W, mob/living/user)
-		if (!is_incapacitated(src) && istype(W, /obj/item/clothing/head/cowboy))
+		if (is_incapacitated(src) || !src.is_npc)
+			return ..()
+		if (istype(W, /obj/item/clothing/head/cowboy) && src.can_hat)
 			user.visible_message("<b>[user]</b> gives [src] \the [W]!","You give [src] \the [W].")
 			qdel(W)
 			src.visible_message("[src] starts dancing!")
@@ -4025,6 +4032,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	real_name = "party crab"
 	desc = "This crab is having way more fun than you."
 	icon_state = "crab_party"
+	can_hat = FALSE
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -4057,7 +4065,43 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 45
 	health_burn = 20
 	is_npc = FALSE
+	can_hat = FALSE
 	add_abilities = list(/datum/targetable/critter/frenzy/crabmaul)
+
+/mob/living/critter/small_animal/crab/lava
+	name = "magma crab"
+	desc = "A strange beast resembling a crab boulder.  Not to be confused with a rock lobster."
+	icon_state = "lavacrab"
+	icon_state_dead = "lavacrab-dead"
+	density = TRUE
+	anchored = ANCHORED
+	butcherable = FALSE
+	health_burn_vuln = 0.1
+	health_brute_vuln = 0.5
+	death_text = "%src% flops over dead!"
+	ai_type = /datum/aiHolder/empty
+	can_hat = FALSE
+
+/mob/living/critter/small_animal/crab/lava/New()
+	..()
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, "lava_crab", 100)
+
+/mob/living/critter/small_animal/crab/lava/death(var/gibbed)
+	..()
+	src.anchored = UNANCHORED
+
+/mob/living/critter/small_animal/crab/lava/Login()
+	..()
+	src.anchored = UNANCHORED
+
+/mob/living/critter/small_animal/crab/lava/Logout()
+	..()
+	src.anchored = initial(src.anchored)
+
+/mob/living/critter/small_animal/crab/lava/deep
+	name = "deep magma crab"
+	health_brute = 30
+	health_burn = 30
 
 /* =============================================== */
 /* ------------------- trilobite ----------------- */
@@ -4319,3 +4363,80 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.emote("flip")
 				src.ai.move_away(target,1)
 
+/* =============================================== */
+/* ----------------- living Tail ----------------- */
+/* =============================================== */
+
+/mob/living/critter/small_animal/livingtail
+	name = "Living tail"
+	desc = "A twitching saurian tail, you feel mildly uncomfortable looking at it."
+	icon_state = "twitchytail"
+	hand_count = 0
+	health_brute = 10
+	health_burn = 10
+	flags = NOSPLASH | TABLEPASS
+	generic = FALSE
+	butcherable = FALSE
+	no_stamina_stuns = TRUE
+
+	ai_retaliates = FALSE
+
+	var/obj/item/organ/tail/lizard/tail_memory = null
+	var/maxsteps = 5
+	var/currentsteps = 0
+	var/primary_color = "#21a833"
+	var/secondary_color = "#000000"
+
+/mob/living/critter/small_animal/livingtail/New()
+	..()
+	src.maxsteps = rand(5, 15)
+	if (!tail_memory)
+		src.primary_color = rgb(rand(50,190), rand(50,190), rand(50,190))
+		src.secondary_color = rgb(rand(50,190), rand(50,190), rand(50,190))
+	src.setup_overlays()
+
+/mob/living/critter/small_animal/livingtail/Move()
+	. = ..()
+	if (src.currentsteps++ >= src.maxsteps)
+		src.death()
+
+/mob/living/critter/small_animal/livingtail/setup_overlays()
+	var/image/overlayprimary = image('icons/misc/critter.dmi', "twitchytail_colorkey1")
+	overlayprimary.color = primary_color
+	var/image/overlaysecondary = image('icons/misc/critter.dmi', "twitchytail_colorkey2")
+	overlaysecondary.color = secondary_color
+	src.UpdateOverlays(overlayprimary, "bottomdetail")
+	src.UpdateOverlays(overlaysecondary, "topdetail")
+
+/mob/living/critter/small_animal/livingtail/Life(datum/controller/process/mobs/parent)
+	if (..(parent))
+		return 1
+
+	if (prob(70))
+		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+		make_cleanable(/obj/decal/cleanable/blood/splatter, src.loc)
+	..()
+
+/mob/living/critter/small_animal/livingtail/death(var/gibbed)
+	if (gibbed)
+		return ..()
+	if (tail_memory)
+		tail_memory.set_loc(get_turf(src))
+	else
+		var/obj/item/organ/tail/lizard/tail = new /obj/item/organ/tail/lizard(get_turf(src))
+		tail.organ_color_1 = src.secondary_color
+		tail.organ_color_2 = src.primary_color
+		tail.update_tail_icon()
+	..()
+	qdel(src)
+
+/mob/living/critter/small_animal/livingtail/Crossed(atom/movable/M as mob)
+	..()
+	if (!isalive(src))
+		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(prob(25))
+			src.visible_message("<span class='combat'>[src] weaves around [H]'s legs and trips [him_or_her(H)]!</span>")
+			H.setStatus("resting", duration = INFINITE_STATUS)
+			H.force_laydown_standup()

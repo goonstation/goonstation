@@ -454,6 +454,9 @@ TRAYS
 		allowed_food = /obj/item/reagent_containers/food/snacks/ingredient/egg
 		contained_food_name = "egg"
 
+		rancher
+			count = 4
+
 	lollipop
 		name = "lollipop bowl"
 		desc = "A little bowl of lollipops, totally healthy in every way! They're medicinal, after all!"
