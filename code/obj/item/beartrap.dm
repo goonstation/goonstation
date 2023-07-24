@@ -57,7 +57,8 @@
 		return
 
 	Crossed(atom/movable/AM)
-		if (src.armed &&  isliving(AM) && !(isintangible(AM) || isghostcritter(AM)))
+		//checking sawflies specifically because nukies get both, maybe should exclude all flying mobs?
+		if (src.armed && isliving(AM) && !(isintangible(AM) || isghostcritter(AM)) && !istype(AM, /mob/living/critter/robotic/sawfly))
 			var/mob/living/M = AM
 			src.triggered(M)
 			M.visible_message("<span class='alert'><B>[M] steps on the bear trap!</B></span>",\
