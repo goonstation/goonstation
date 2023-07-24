@@ -386,7 +386,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/pinpointer/bloodtracker,
 	/obj/item/device/flash,
 	/obj/item/camera_film,
-	/obj/item/storage/box/luminol_grenade_kit)
+	/obj/item/storage/box/luminol_grenade_kit,
+	/obj/item/clipboard)
 
 /obj/storage/secure/closet/security/armory
 	name = "\improper Special Equipment locker"
@@ -832,6 +833,21 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/reagent_containers/glass/wateringcan,
 	/obj/item/paper/book/from_file/hydroponicsguide,
 	/obj/item/device/appraisal)
+
+/obj/storage/secure/closet/civilian/ranch
+	name = "\improper Rancher supplies locker"
+	req_access = list(access_ranch)
+	spawn_contents = list(/obj/item/paper/ranch_guide,\
+	/obj/item/fishing_rod/basic,\
+	/obj/item/storage/box/clothing/rancher,\
+	/obj/item/device/camera_viewer/ranch,\
+	/obj/item/clothing/mask/chicken,\
+	/obj/item/chicken_carrier,\
+	/obj/item/storage/box/syringes,\
+	/obj/item/satchel/hydro,\
+	/obj/item/reagent_containers/glass/wateringcan,\
+	/obj/item/sponge,\
+	/obj/item/kitchen/food_box/egg_box/rancher)
 
 /obj/storage/secure/closet/civilian/kitchen
 	name = "\improper Catering supplies locker"

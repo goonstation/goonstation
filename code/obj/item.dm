@@ -1,4 +1,5 @@
 /// Base item. These are objects you can hold, generally.
+ABSTRACT_TYPE(/obj/item)
 /obj/item
 	/*_____*/
 	/*Basic*/
@@ -558,7 +559,7 @@
 	var/imdrone
 	if((imrobot = isrobot(other.loc)) || (imdrone = isghostdrone(other.loc)) || istype(other.loc, /obj/item/magtractor))
 		if (imrobot)
-			max_stack = 500
+			max_stack = 300
 		else if (imdrone)
 			max_stack = 1000
 		if (other != src && check_valid_stack(src))
@@ -969,6 +970,7 @@
 	. = src.afterattack(target, user, reach, params)
 
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
+	set waitfor = 0
 	PROTECTED_PROC(TRUE)
 	src.storage?.storage_item_after_attack(target, user, reach)
 	return
@@ -1082,6 +1084,7 @@
 	switch(src.w_class)
 		if (-INFINITY to W_CLASS_TINY) t = "tiny"
 		if (W_CLASS_SMALL) t = "small"
+		if (W_CLASS_POCKET_SIZED) t = "pocket-sized"
 		if (W_CLASS_NORMAL) t = "normal-sized"
 		if (W_CLASS_BULKY) t = "bulky"
 		if (W_CLASS_HUGE to INFINITY) t = "huge"
@@ -1154,7 +1157,7 @@
 		if (pickup_sfx)
 			playsound(oldloc_sfx, pickup_sfx, 56, vary=0.2)
 		else
-			playsound(oldloc_sfx, "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg", 56, vary=0.2)
+			playsound(oldloc_sfx, "sound/items/pickup_[clamp(round(src.w_class), 1, 3)].ogg", 56, vary=0.2)
 
 	return 1
 

@@ -292,6 +292,7 @@ TYPEINFO(/obj/item/furniture_parts/table/glass)
 	desc = "A collection of parts that can be used to make a rack."
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "rack_base_parts"
+	item_state = "rack_parts"
 	stamina_damage = 25
 	stamina_cost = 22
 	stamina_crit_chance = 15

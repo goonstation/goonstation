@@ -279,7 +279,7 @@
 			if (src.amount <= 0)
 				src.icon_state = "bedbin0"
 		else
-			boutput(user, "There's no bedsheets left in [src]!")
+			boutput(user, "<span class='alert'>There's no bedsheets left in [src]!</span>")
 
 	get_desc()
 		. += "There's [src.amount ? src.amount : "no"] bedsheet[s_es(src.amount)] in [src]."
@@ -307,7 +307,7 @@
 			if (src.amount <= 0)
 				src.icon_state = "bedbin0"
 		else
-			boutput(user, "There's no towels left in [src]!")
+			boutput(user, "<span class='alert'>There's no towels left in [src]!</span>")
 
 	get_desc()
 		. += "There's [src.amount ? src.amount : "no"] towel[s_es(src.amount)] in [src]."
@@ -356,7 +356,8 @@
 /obj/proc/alter_health()
 	return 1
 
-/obj/proc/hide(h)
+/// Whether or not to hide something based on the value of hide, usually whether or not the turf is intact.
+/obj/proc/hide(hide)
 	return
 
 /obj/proc/replace_with_explosive()

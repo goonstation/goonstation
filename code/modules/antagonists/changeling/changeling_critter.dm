@@ -1,4 +1,4 @@
-ABSTRACT_TYPE(/datum/antagonist/changeling_critter)
+ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 /datum/antagonist/subordinate/changeling_critter
 	remove_on_death = TRUE
 	remove_on_clone = TRUE
