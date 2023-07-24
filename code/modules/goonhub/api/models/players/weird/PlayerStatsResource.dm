@@ -6,8 +6,8 @@
 	var/byond_join_date	= null // string
 	var/byond_major		= null // string
 	var/byond_minor		= null // string
-	var/created_at		= null // string
-	var/updated_at		= null // string
+	var/created_at		= null // date-time
+	var/updated_at		= null // date-time
 	var/played			= null // string
 	var/played_rp		= null // string
 	var/connected		= null // string
@@ -49,20 +49,20 @@
 
 /datum/apiModel/PlayerStatsResource/VerifyIntegrity()
 	if (
-		isnull(id)
-		|| isnull(ckey)
-		|| isnull(key)
-		|| isnull(byond_join_date)
-		|| isnull(byond_major)
-		|| isnull(byond_minor)
-		|| isnull(created_at)
-		|| isnull(updated_at)
-		|| isnull(played)
-		|| isnull(played_rp)
-		|| isnull(connected)
-		|| isnull(connected_rp)
-		|| isnull(time_played)
-		|| isnull(latest_connection)
+		isnull(src.id)
+		|| isnull(src.ckey)
+		|| isnull(src.key)
+		|| isnull(src.byond_join_date)
+		|| isnull(src.byond_major)
+		|| isnull(src.byond_minor)
+		|| isnull(src.created_at)
+		|| isnull(src.updated_at)
+		|| isnull(src.played)
+		|| isnull(src.played_rp)
+		|| isnull(src.connected)
+		|| isnull(src.connected_rp)
+		|| isnull(src.time_played)
+		|| isnull(src.latest_connection)
 	)
 		return FALSE
 

@@ -29,11 +29,11 @@
 /datum/apiModel/PlayerSearchResource/VerifyIntegrity()
 	if (
 		isnull(id)
-		|| isnull(ip)
-		|| isnull(comp_id)
-		|| isnull(player_id)
-		|| isnull(ckey)
-		|| isnull(created_at)
+		|| isnull(src.ip)
+		|| isnull(src.comp_id)
+		|| isnull(src.player_id)
+		|| isnull(src.ckey)
+		|| isnull(src.created_at)
 	)
 		return FALSE
 
