@@ -773,15 +773,19 @@ TRAYS
 		if(user.traitHolder?.hasTrait("training_chef"))
 			tooltip_rebuild = 1
 			var/holder = src.loc
-			var/str = copytext(html_encode(tgui_input_text(user, "Dish name?", "Set name")), 1, 32)
-			if(str)
-				phrase_log.log_phrase("dish_name", str, no_duplicates=TRUE)
-			if (src.loc != holder)
+			var/str = copytext(html_encode(tgui_input_text(user, "Dish name?", "Set name")), 1, 64)
+
+			if (!length(str))
+				return
+
+			phrase_log.log_phrase("dish_name", str, no_duplicates=TRUE)
+
+			if (!length(strc.loc != holder)
 				return
 			if(url_regex?.Find(str))
 				return
 			if (length(str) > 64)
-				boutput(user, "<span class='alert'>name too long.</span>")
+				boutput(user, "<span class='alert'>Name too long.</span>")
 				return
 			src.name = "'[str]'"
 			boutput(user, "<span class='notice'>You name the dish '[str]'.</span>")
@@ -1225,4 +1229,4 @@ TRAYS
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "tongs"
 
-	// used in attackby procs of /obj/item/reagent_containers/food/snacks and /obj/item/kitchen/food_box
+	// used in attackby procs ofgent_coners/food/snacks and /obj/item/kitchen/food_box
