@@ -19,7 +19,8 @@
 	var/in_point_mode = FALSE
 	var/datum/hud/ghost_observer/hud
 	var/auto_tgui_open = TRUE
-
+	/// Observer menu TGUI datum. Can be null.
+	var/datum/observe_menu/observe_menu = null
 	mob_flags = MOB_HEARS_ALL
 
 /mob/dead/observer/disposing()
@@ -649,48 +650,9 @@
 	set name = "Observe"
 	set category = null
 
-	var/list/names = list()
-	var/list/namecounts = list()
-	var/list/creatures = list()
-
-	for (var/client/C in clients)
-		LAGCHECK(LAG_LOW)
-		// not sure how this could happen, but be safe about it
-		if (!C?.mob)
-			continue
-		var/mob/M = C.mob
-		// remove some types you cannot observe
-		if (!isliving(M) && !iswraith(M) && !isAI(M))
-			continue
-		// admins aren't observable unless they're in player mode
-		if (C.holder && !C.player_mode)
-			continue
-		// remove any secret mobs that someone is controlling
-		if (M.unobservable)
-			continue
-		// add to list
-		var/name = M.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		if (M.real_name && M.real_name != M.name)
-			name += " \[[M.real_name]\]"
-		if (isliving(M) && isdead(M) && !isAI(M))
-			name += " \[dead\]"
-		creatures[name] = M
-
-	var/eye_name = null
-	sortList(creatures, /proc/cmp_text_asc)
-	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
-
-	if (!eye_name)
-		return
-
-	insert_observer(creatures[eye_name])
-
+	if(isnull(src.observe_menu))
+		src.observe_menu = new()
+	src.observe_menu.ui_interact(src)
 
 /mob/dead/observer/verb/observe_object()
 	set name = "Observe Object"
