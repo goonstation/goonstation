@@ -451,6 +451,7 @@ ABSTRACT_TYPE(/datum/material)
 
 //Material definitions
 
+ABSTRACT_TYPE(/datum/material/interpolated)
 /datum/material/interpolated
 	mat_id = "imcoderium"
 	name = "imcoderium"
