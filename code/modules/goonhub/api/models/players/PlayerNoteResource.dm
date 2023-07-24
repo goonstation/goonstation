@@ -31,15 +31,15 @@
 
 /datum/apiModel/PlayerRes/PlayerNoteResource/VerifyIntegrity()
 	if (
-		isnull(src.id)
-		|| isnull(src.player_id)
-		|| isnull(src.ckey)
-		|| isnull(src.game_admin_id)
-		|| isnull(src.server_id)
-		|| isnull(src.round_id)
-		|| isnull(src.note)
-		|| isnull(src.created_at)
-		|| isnull(src.updated_at)
+		isnull(src.id) \
+		|| isnull(src.player_id) \
+		|| isnull(src.ckey) \
+		|| isnull(src.game_admin_id) \
+		|| isnull(src.server_id) \
+		|| isnull(src.round_id) \
+		|| isnull(src.note) \
+		|| isnull(src.created_at) \
+		|| isnull(src.updated_at) \
 	)
 		return FALSE
 

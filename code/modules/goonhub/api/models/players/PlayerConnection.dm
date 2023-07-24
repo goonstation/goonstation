@@ -1,12 +1,12 @@
 
 /// PlayerConnection
 /datum/apiModel/PlayerRes/PlayerConnection
-var/round_id			= null // integer
-var/ip					= null // string
-var/comp_id				= null // string
-var/list/legacy_data	= null // [string]
-var/country				= null // string
-var/country_iso			= null // string
+	var/round_id			= null // integer
+	var/ip					= null // string
+	var/comp_id				= null // string
+	var/list/legacy_data	= null // [string]
+	var/country				= null // string
+	var/country_iso			= null // string
 
 
 /datum/apiModel/PlayerRes/PlayerConnection/New(
@@ -35,16 +35,16 @@ var/country_iso			= null // string
 
 /datum/apiModel/PlayerRes/PlayerConnection/VerifyIntegrity()
 	if (
-		isnull(src.id)
-		|| isnull(src.player_id)
-		|| isnull(src.round_id)
-		|| isnull(src.ip)
-		|| isnull(src.comp_id)
-		|| isnull(src.legacy_data)
-		|| isnull(src.created_at)
-		|| isnull(src.updated_at)
-		|| isnull(src.country)
-		|| isnull(src.country_iso)
+		isnull(src.id) \
+		|| isnull(src.player_id) \
+		|| isnull(src.round_id) \
+		|| isnull(src.ip) \
+		|| isnull(src.comp_id) \
+		|| isnull(src.legacy_data) \
+		|| isnull(src.created_at) \
+		|| isnull(src.updated_at) \
+		|| isnull(src.country) \
+		|| isnull(src.country_iso) \
 	)
 		return FALSE
 

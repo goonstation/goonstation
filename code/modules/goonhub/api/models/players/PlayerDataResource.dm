@@ -22,12 +22,12 @@
 
 /datum/apiModel/PlayerRes/PlayerDataResource/VerifyIntegrity()
 	if (
-		isnull(src.id)
-		|| isnull(src.player_id)
-		|| isnull(src.key)
-		|| isnull(src.value)
-		|| isnull(src.created_at)
-		|| isnull(src.updated_at)
+		isnull(src.id) \
+		|| isnull(src.player_id) \
+		|| isnull(src.key) \
+		|| isnull(src.value) \
+		|| isnull(src.created_at) \
+		|| isnull(src.updated_at) \
 	)
 		return FALSE
 

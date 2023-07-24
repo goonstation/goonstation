@@ -31,14 +31,14 @@
 
 /datum/apiModel/MapSwitch/VerifyIntegrity()
 	if (
-		isnull(src.id)
-		|| isnull(src.game_admin_id)
-		|| isnull(src.round_id)
-		|| isnull(src.server_id)
-		|| isnull(src.map)
-		|| isnull(src.votes)
-		|| isnull(src.created_at)
-		|| isnull(src.updated_at)
+		isnull(src.id) \
+		|| isnull(src.game_admin_id) \
+		|| isnull(src.round_id) \
+		|| isnull(src.server_id) \
+		|| isnull(src.map) \
+		|| isnull(src.votes) \
+		|| isnull(src.created_at) \
+		|| isnull(src.updated_at) \
 	)
 		return FALSE
 

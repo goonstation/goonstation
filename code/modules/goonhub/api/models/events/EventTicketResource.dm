@@ -37,16 +37,16 @@
 
 /datum/apiModel/EventTicketResource/VerifyIntegrity()
 	if (
-		isnull(id)
-		|| isnull(src.round_id)
-		|| isnull(src.player_id)
-		|| isnull(src.target)
-		|| isnull(src.reason)
-		|| isnull(src.issuer)
-		|| isnull(src.issuer_job)
-		|| isnull(src.issuer_ckey)
-		|| isnull(src.created_at)
-		|| isnull(src.updated_at)
+		isnull(id) \
+		|| isnull(src.round_id) \
+		|| isnull(src.player_id) \
+		|| isnull(src.target) \
+		|| isnull(src.reason) \
+		|| isnull(src.issuer) \
+		|| isnull(src.issuer_job) \
+		|| isnull(src.issuer_ckey) \
+		|| isnull(src.created_at) \
+		|| isnull(src.updated_at) \
 	)
 		return FALSE
 

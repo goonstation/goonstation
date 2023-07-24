@@ -21,10 +21,10 @@ ABSTRACT_TYPE(/datum/apiModel/PlayerRes)
 
 /datum/apiModel/PlayerRes/VerifyIntegrity()
 	if (
-		isnull(src.id)
-		|| isnull(src.player_id)
-		|| isnull(src.created_at)
-		|| isnull(src.updated_at)
+		isnull(src.id) \
+		|| isnull(src.player_id) \
+		|| isnull(src.created_at) \
+		|| isnull(src.updated_at) \
 	)
 		return FALSE
 

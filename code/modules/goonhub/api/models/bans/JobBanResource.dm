@@ -37,16 +37,16 @@
 
 /datum/apiModel/JobBanResource/VerifyIntegrity()
 	if (
-		isnull(src.id)
-		|| isnull(src.server_id)
-		|| isnull(src.map)
-		|| isnull(src.game_type)
-		|| isnull(src.rp_mode)
-		|| isnull(src.crashed)
-		|| isnull(src.ended_at)
-		|| isnull(src.created_at)
-		|| isnull(src.updated_at)
-		|| isnull(src.game_admin)
+		isnull(src.id) \
+		|| isnull(src.server_id) \
+		|| isnull(src.map) \
+		|| isnull(src.game_type) \
+		|| isnull(src.rp_mode) \
+		|| isnull(src.crashed) \
+		|| isnull(src.ended_at) \
+		|| isnull(src.created_at) \
+		|| isnull(src.updated_at) \
+		|| isnull(src.game_admin) \
 	)
 		return FALSE
 

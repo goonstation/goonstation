@@ -46,19 +46,19 @@
 
 /datum/apiModel/BanResource/VerifyIntegrity()
 	if (
-		isnull(src.id)
-		|| isnull(src.round_id)
-		|| isnull(src.game_admin_id)
-		|| isnull(src.server_id)
-		|| isnull(src.reason)
-		|| isnull(src.expires_at)
-		|| isnull(src.created_at)
-		|| isnull(src.updated_at)
-		|| isnull(src.deleted_at)
-		|| isnull(src.game_admin)
-		|| isnull(src.game_round)
-		|| isnull(src.original_ban_detail)
-		|| isnull(src.details)
+		isnull(src.id) \
+		|| isnull(src.round_id) \
+		|| isnull(src.game_admin_id) \
+		|| isnull(src.server_id) \
+		|| isnull(src.reason) \
+		|| isnull(src.expires_at) \
+		|| isnull(src.created_at) \
+		|| isnull(src.updated_at) \
+		|| isnull(src.deleted_at) \
+		|| isnull(src.game_admin) \
+		|| isnull(src.game_round) \
+		|| isnull(src.original_ban_detail) \
+		|| isnull(src.details) \
 	)
 		return FALSE
 

@@ -31,13 +31,14 @@
 
 /datum/apiModel/BanDetail/VerifyIntegrity()
 	if (
-		isnull(src.id) || isnull(src.ban_id)
-		|| isnull(src.ckey)
-		|| isnull(src.comp_id)
-		|| isnull(src.ip)
-		|| isnull(src.created_at)
-		|| isnull(src.updated_at)
-		|| isnull(src.deleted_at)
+		isnull(src.id) \
+		|| isnull(src.ban_id) \
+		|| isnull(src.ckey) \
+		|| isnull(src.comp_id) \
+		|| isnull(src.ip) \
+		|| isnull(src.created_at) \
+		|| isnull(src.updated_at) \
+		|| isnull(src.deleted_at) \
 	)
 		return FALSE
 

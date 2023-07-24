@@ -31,14 +31,14 @@
 
 /datum/apiModel/VpnCheckResource/VerifyIntegrity()
 	if (
-		isnull(src.id)
-		|| isnull(round_id)
-		|| isnull(ip)
-		|| isnull(service)
-		|| isnull(response)
-		|| isnull(error)
-		|| isnull(created_at)
-		|| isnull(updated_at)
+		isnull(src.id) \
+		|| isnull(round_id) \
+		|| isnull(ip) \
+		|| isnull(service) \
+		|| isnull(response) \
+		|| isnull(error) \
+		|| isnull(created_at) \
+		|| isnull(updated_at) \
 	)
 		return FALSE
 
