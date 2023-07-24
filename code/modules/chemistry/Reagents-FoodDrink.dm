@@ -209,7 +209,6 @@ datum
 				M.reagents.add_reagent("ethanol", alch_strength * mult * depletion_rate)
 				//Multiplying by depletion rate makes alch_strength describe ABV, with 1 being 100% ABV
 				//This means that drinks ~15% ABV need a higher depletion rate so that the ethanol can accumulate
-				M.reagents.remove_reagent(src, 1 * mult)
 				..()
 				return
 
