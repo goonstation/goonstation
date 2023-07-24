@@ -1,16 +1,14 @@
 
 /// GameRound
-/datum/apiModel/GameRound
+/datum/apiModel/Tracked/GameRound
 	var/server_id	= null // string
 	var/map			= null // string
 	var/game_type	= null // string
 	var/rp_mode		= null // boolean
 	var/crashed		= null // boolean
 	var/ended_at	= null // date-time
-	var/created_at	= null // date-time
-	var/updated_at	= null // date-time
 
-/datum/apiModel/GameRound/New(
+/datum/apiModel/Tracked/GameRound/New(
 	id,
 	server_id,
 	map,
@@ -32,7 +30,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/GameRound/VerifyIntegrity()
+/datum/apiModel/Tracked/GameRound/VerifyIntegrity()
 	if (
 		isnull(src.id) \
 		|| isnull(src.server_id) \
@@ -46,7 +44,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/GameRound/ToString()
+/datum/apiModel/Tracked/GameRound/ToString()
 	. = list()
 	.["id"] = src.id
 	.["server_id"] = src.server_id

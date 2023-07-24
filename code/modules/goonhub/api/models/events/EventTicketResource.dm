@@ -1,6 +1,6 @@
 
 /// EventTicketResource
-/datum/apiModel/EventTicketResource
+/datum/apiModel/Tracked/EventTicketResource
 	var/round_id	= null // string
 	var/player_id	= null // string
 	var/target		= null // string
@@ -8,10 +8,8 @@
 	var/issuer		= null // string
 	var/issuer_job	= null // string
 	var/issuer_ckey	= null // string
-	var/created_at	= null // date-time
-	var/updated_at	= null // date-time
 
-/datum/apiModel/EventTicketResource/New(
+/datum/apiModel/Tracked/EventTicketResource/New(
 	id,
 	round_id,
 	player_id,
@@ -35,7 +33,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/EventTicketResource/VerifyIntegrity()
+/datum/apiModel/Tracked/EventTicketResource/VerifyIntegrity()
 	if (
 		isnull(id) \
 		|| isnull(src.round_id) \
@@ -50,7 +48,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/EventTicketResource/ToString()
+/datum/apiModel/Tracked/EventTicketResource/ToString()
 	. = list()
 	.["id"] = src.id
 	.["round_id"] = src.round_id

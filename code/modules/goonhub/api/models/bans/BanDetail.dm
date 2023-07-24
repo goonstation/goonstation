@@ -1,15 +1,13 @@
 
 /// BanDetail
-/datum/apiModel/BanDetail
+/datum/apiModel/Tracked/BanDetail
 	var/ban_id		= null // integer
 	var/ckey		= null // string
 	var/comp_id		= null // integer
 	var/ip			= null // integer
-	var/created_at	= null // date-time
-	var/updated_at	= null // date-time
 	var/deleted_at	= null // date-time
 
-/datum/apiModel/BanDetail/New(
+/datum/apiModel/Tracked/BanDetail/New(
 	id,
 	ban_id,
 	ckey,
@@ -29,7 +27,7 @@
 	src.updated_at = updated_at
 	src.deleted_at = deleted_at
 
-/datum/apiModel/BanDetail/VerifyIntegrity()
+/datum/apiModel/Tracked/BanDetail/VerifyIntegrity()
 	if (
 		isnull(src.id) \
 		|| isnull(src.ban_id) \
@@ -42,7 +40,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/BanDetail/ToString()
+/datum/apiModel/Tracked/BanDetail/ToString()
 	. = list()
 	.["id"] = src.id
 	.["ban_id"] = src.ban_id

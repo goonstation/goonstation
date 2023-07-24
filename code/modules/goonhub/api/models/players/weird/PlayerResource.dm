@@ -1,15 +1,13 @@
 
 /// PlayerResource
-/datum/apiModel/PlayerResource
+/datum/apiModel/Tracked/PlayerResource
 	var/ckey			= null // string
 	var/key				= null // string
 	var/byond_join_date	= null // string
 	var/byond_major		= null // integer
 	var/byond_minor		= null // integer
-	var/created_at		= null // date-time
-	var/updated_at		= null // date-time
 
-/datum/apiModel/PlayerResource/New(
+/datum/apiModel/Tracked/PlayerResource/New(
 	id,
 	ckey,
 	key,
@@ -29,7 +27,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/PlayerResource/VerifyIntegrity()
+/datum/apiModel/Tracked/PlayerResource/VerifyIntegrity()
 	if (
 		isnull(src.id) \
 		|| isnull(src.ckey) \
@@ -42,7 +40,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/PlayerResource/ToString()
+/datum/apiModel/Tracked/PlayerResource/ToString()
 	. = list()
 	.["id"] = src.id
 	.["ckey"] = src.ckey

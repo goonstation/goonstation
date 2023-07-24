@@ -1,10 +1,10 @@
 
 /// PlayerParticipationResource
-/datum/apiModel/PlayerRes/PlayerParticipationResource
+/datum/apiModel/Tracked/PlayerRes/PlayerParticipationResource
 	var/round_id		= null // string
 	var/legacy_data		= null // string
 
-/datum/apiModel/PlayerRes/PlayerParticipationResource/New(
+/datum/apiModel/Tracked/PlayerRes/PlayerParticipationResource/New(
 	id,
 	player_id,
 	round_id,
@@ -20,7 +20,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/PlayerRes/PlayerParticipationResource/VerifyIntegrity()
+/datum/apiModel/Tracked/PlayerRes/PlayerParticipationResource/VerifyIntegrity()
 	if (
 		isnull(src.id) \
 		|| isnull(src.player_id) \
@@ -31,7 +31,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/PlayerRes/PlayerParticipationResource/ToString()
+/datum/apiModel/Tracked/PlayerRes/PlayerParticipationResource/ToString()
 	. = list()
 	.["id"] = src.id
 	.["player_id"] = src.player_id

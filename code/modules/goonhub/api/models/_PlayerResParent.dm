@@ -1,13 +1,11 @@
 
-ABSTRACT_TYPE(/datum/apiModel/PlayerRes)
+ABSTRACT_TYPE(/datum/apiModel/Tracked/PlayerRes)
 /// PlayerRes - ABSTRACT
-/// All PlayerResourceXYZ inherit from this due to shared fields
-/datum/apiModel/PlayerRes
+/// All PlayerResourceXYZ inherit from this - shared player id field
+/datum/apiModel/Tracked/PlayerRes
 	var/player_id	= null // integer
-	var/created_at	= null // date-time
-	var/updated_at	= null // date-time
 
-/datum/apiModel/PlayerRes/New(
+/datum/apiModel/Tracked/PlayerRes/New(
 	id,
 	player_id,
 	created_at,
@@ -19,7 +17,7 @@ ABSTRACT_TYPE(/datum/apiModel/PlayerRes)
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/PlayerRes/VerifyIntegrity()
+/datum/apiModel/Tracked/PlayerRes/VerifyIntegrity()
 	if (
 		isnull(src.id) \
 		|| isnull(src.player_id) \
@@ -28,7 +26,7 @@ ABSTRACT_TYPE(/datum/apiModel/PlayerRes)
 	)
 		return FALSE
 
-/datum/apiModel/PlayerRes/ToString()
+/datum/apiModel/Tracked/PlayerRes/ToString()
 	. = list()
 	.["id"] = src.id
 	.["player_id"] = src.player_id

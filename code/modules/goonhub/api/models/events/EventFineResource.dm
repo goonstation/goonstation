@@ -1,6 +1,6 @@
 
 /// EventFineResource
-/datum/apiModel/EventFineResource
+/datum/apiModel/Tracked/EventFineResource
 	var/round_id	= null // string
 	var/player_id	= null // string
 	var/target		= null // string
@@ -9,10 +9,8 @@
 	var/issuer_job	= null // string
 	var/issuer_ckey	= null // string
 	var/amount		= null // string
-	var/created_at	= null // date-time
-	var/updated_at	= null // date-time
 
-/datum/apiModel/EventFineResource/New(
+/datum/apiModel/Tracked/EventFineResource/New(
 	id,
 	round_id,
 	player_id,
@@ -38,7 +36,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/EventFineResource/VerifyIntegrity()
+/datum/apiModel/Tracked/EventFineResource/VerifyIntegrity()
 	if (
 		isnull(id) \
 		|| isnull(src.round_id) \
@@ -54,7 +52,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/EventFineResource/ToString()
+/datum/apiModel/Tracked/EventFineResource/ToString()
 	. = list()
 	.["id"] = src.id
 	.["round_id"] = src.round_id

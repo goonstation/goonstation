@@ -1,6 +1,6 @@
 
 /// PlayerConnection
-/datum/apiModel/PlayerRes/PlayerConnection
+/datum/apiModel/Tracked/PlayerRes/PlayerConnection
 	var/round_id			= null // integer
 	var/ip					= null // string
 	var/comp_id				= null // string
@@ -9,7 +9,7 @@
 	var/country_iso			= null // string
 
 
-/datum/apiModel/PlayerRes/PlayerConnection/New(
+/datum/apiModel/Tracked/PlayerRes/PlayerConnection/New(
 	id,
 	player_id,
 	round_id,
@@ -33,7 +33,7 @@
 	src.country = country
 	src.country_iso = country_iso
 
-/datum/apiModel/PlayerRes/PlayerConnection/VerifyIntegrity()
+/datum/apiModel/Tracked/PlayerRes/PlayerConnection/VerifyIntegrity()
 	if (
 		isnull(src.id) \
 		|| isnull(src.player_id) \
@@ -48,7 +48,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/PlayerRes/PlayerConnection/ToString()
+/datum/apiModel/Tracked/PlayerRes/PlayerConnection/ToString()
 	. = list()
 	.["id"] = src.id
 	.["player_id"] = src.player_id

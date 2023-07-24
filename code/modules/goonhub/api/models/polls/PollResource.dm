@@ -1,8 +1,8 @@
 
 /// PollResource
-/datum/apiModel/PollResource
+/datum/apiModel/Tracked/PollResource
 	var/game_admin_id									= null // integer
-	var/datum/apiModel/GameAdmin/game_admin				= null // GameAdmin
+	var/datum/apiModel/Tracked/GameAdmin/game_admin		= null // GameAdmin
 	var/question										= null // string
 	var/list/datum/apiModel/PollOptionResource/options	= null // [PollOptionResource]
 	var/servers											= null // [string]
@@ -10,10 +10,8 @@
 	var/winning_option_id								= null // integer
 	var/multiple_choice									= null // boolean
 	var/expires_at										= null // date-time
-	var/created_at										= null // date-time
-	var/updated_at										= null // date-time
 
-/datum/apiModel/PollResource/New(
+/datum/apiModel/Tracked/PollResource/New(
 	id,
 	game_admin_id,
 	game_admin,
@@ -41,7 +39,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/PollResource/VerifyIntegrity()
+/datum/apiModel/Tracked/PollResource/VerifyIntegrity()
 	if (
 		isnull(src.id) \
 		|| isnull(src.game_admin_id) \
@@ -58,7 +56,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/PollResource/ToString()
+/datum/apiModel/Tracked/PollResource/ToString()
 	. = list()
 	.["id"] = src.id
 	.["game_admin_id"] = src.game_admin_id

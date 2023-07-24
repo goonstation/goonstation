@@ -1,13 +1,11 @@
 
 /// EventStationNameResource
-/datum/apiModel/EventStationNameResource
+/datum/apiModel/Tracked/EventStationNameResource
 	var/round_id	= null // string
 	var/player_id	= null // string
 	var/name		= null // string
-	var/created_at	= null // date-time
-	var/updated_at	= null // date-time
 
-/datum/apiModel/EventStationNameResource/New(
+/datum/apiModel/Tracked/EventStationNameResource/New(
 	id,
 	round_id,
 	player_id,
@@ -23,7 +21,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/EventStationNameResource/VerifyIntegrity()
+/datum/apiModel/Tracked/EventStationNameResource/VerifyIntegrity()
 	if (
 		isnull(id) \
 		|| isnull(src.round_id) \
@@ -34,7 +32,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/EventStationNameResource/ToString()
+/datum/apiModel/Tracked/EventStationNameResource/ToString()
 	. = list()
 	.["id"] = src.id
 	.["round_id"] = src.round_id

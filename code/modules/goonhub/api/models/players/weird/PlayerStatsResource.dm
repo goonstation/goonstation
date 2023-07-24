@@ -1,21 +1,19 @@
 
 /// PlayerStatsResource
-/datum/apiModel/PlayerStatsResource
+/datum/apiModel/Tracked/PlayerStatsResource
 	var/ckey			= null // string
 	var/key				= null // string
 	var/byond_join_date	= null // string
 	var/byond_major		= null // string
 	var/byond_minor		= null // string
-	var/created_at		= null // date-time
-	var/updated_at		= null // date-time
 	var/played			= null // string
 	var/played_rp		= null // string
 	var/connected		= null // string
 	var/connected_rp	= null // string
 	var/time_played		= null // string
-	var/datum/apiModel/PlayerRes/PlayerConnection/latest_connection = null // PlayerConnection
+	var/datum/apiModel/Tracked/PlayerRes/PlayerConnection/latest_connection = null // PlayerConnection
 
-/datum/apiModel/PlayerStatsResource/New(
+/datum/apiModel/Tracked/PlayerStatsResource/New(
 	id,
 	ckey,
 	key,
@@ -47,7 +45,7 @@
 	src.time_played = time_played
 	src.latest_connection = latest_connection
 
-/datum/apiModel/PlayerStatsResource/VerifyIntegrity()
+/datum/apiModel/Tracked/PlayerStatsResource/VerifyIntegrity()
 	if (
 		isnull(src.id) \
 		|| isnull(src.ckey) \
@@ -66,7 +64,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/PlayerStatsResource/ToString()
+/datum/apiModel/Tracked/PlayerStatsResource/ToString()
 	. = list()
 	.["id"] = src.id
 	.["ckey"] = src.ckey

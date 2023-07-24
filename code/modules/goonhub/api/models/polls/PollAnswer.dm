@@ -1,10 +1,10 @@
 
 
 /// PollAnswer
-/datum/apiModel/PlayerRes/PollAnswer
+/datum/apiModel/Tracked/PlayerRes/PollAnswer
 	var/poll_option_id	= null // integer
 
-/datum/apiModel/PlayerRes/PollAnswer/New(
+/datum/apiModel/Tracked/PlayerRes/PollAnswer/New(
 	id,
 	player_id,
 	poll_option_id,
@@ -18,7 +18,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/PlayerRes/PollAnswer/VerifyIntegrity()
+/datum/apiModel/Tracked/PlayerRes/PollAnswer/VerifyIntegrity()
 	if (
 		isnull(src.id) \
 		|| isnull(src.player_id) \
@@ -28,7 +28,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/PlayerRes/PollAnswer/ToString()
+/datum/apiModel/Tracked/PlayerRes/PollAnswer/ToString()
 	. = list()
 	.["id"] = src.id
 	.["player_id"] = src.player_id

@@ -1,6 +1,6 @@
 
 /// EventAiLawResource
-/datum/apiModel/EventAiLawResource
+/datum/apiModel/Tracked/EventAiLawResource
 	var/round_id		= null // string
 	var/player_id		= null // string
 	var/ai_name			= null // string
@@ -9,10 +9,8 @@
 	var/uploader_name	= null // string
 	var/uploader_job	= null // string
 	var/uploader_ckey	= null // string
-	var/created_at		= null // date-time
-	var/updated_at		= null // date-time
 
-/datum/apiModel/EventAiLawResource/New(
+/datum/apiModel/Tracked/EventAiLawResource/New(
 	id,
 	round_id,
 	player_id,
@@ -38,7 +36,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/EventAiLawResource/VerifyIntegrity()
+/datum/apiModel/Tracked/EventAiLawResource/VerifyIntegrity()
 	if (
 		isnull(id) \
 		|| isnull(src.round_id) \
@@ -54,7 +52,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/EventAiLawResource/ToString()
+/datum/apiModel/Tracked/EventAiLawResource/ToString()
 	. = list()
 	.["id"] = src.id
 	.["round_id"] = src.round_id

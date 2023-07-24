@@ -14,6 +14,7 @@ ABSTRACT_TYPE(/datum/apiModel)
 #elif DM_VERSION >= 515 || defined(OPENDREAM) // Yay, actual sanity!
 		throw EXCEPTION("malformed [__TYPE__] [src.ToString()]")
 #else
+		return
 		//throw EXCEPTION("malformed [....] [src.ToString()]")
 #endif
 

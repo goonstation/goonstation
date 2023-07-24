@@ -1,17 +1,15 @@
 
 /// JobBanResource
-/datum/apiModel/JobBanResource
+/datum/apiModel/Tracked/JobBanResource
 	var/server_id	= null // string
 	var/map			= null // string
 	var/game_type	= null // string
 	var/rp_mode		= null // boolean
 	var/crashed		= null // boolean
 	var/ended_at	= null // date-time
-	var/created_at	= null // date-time
-	var/updated_at	= null // date-time
 	var/game_admin	= null // { id: integer, ckey: string, name: string } - not required
 
-/datum/apiModel/JobBanResource/New(
+/datum/apiModel/Tracked/JobBanResource/New(
 	id,
 	server_id,
 	map,
@@ -35,7 +33,7 @@
 	src.updated_at = updated_at
 	src.game_admin = game_admin
 
-/datum/apiModel/JobBanResource/VerifyIntegrity()
+/datum/apiModel/Tracked/JobBanResource/VerifyIntegrity()
 	if (
 		isnull(src.id) \
 		|| isnull(src.server_id) \
@@ -50,7 +48,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/JobBanResource/ToString()
+/datum/apiModel/Tracked/JobBanResource/ToString()
 	. = list()
 	.["id"] = src.id
 	.["server_id"] = src.server_id

@@ -1,20 +1,18 @@
 
 /// BanResource
-/datum/apiModel/BanResource
-	var/round_id							= null // integer
-	var/game_admin_id						= null // integer
-	var/server_id							= null // string
-	var/reason								= null // string
-	var/expires_at							= null // date-time
-	var/created_at							= null // date-time
-	var/updated_at							= null // date-time
-	var/deleted_at							= null // string
-	var/game_admin							= null // { id: integer, ckey: string, name: string } - not required
-	var/datum/apiModel/GameRound/game_round	= null // /datum/apiModel/GameRound - not required
-	var/original_ban_detail					= null // { id: integer, ban_id: integer, ckey: string, comp_id: string, ip: string } - not required
-	var/list/datum/apiModel/BanDetail/details = null // [/datum/apiModel/BanDetail] - not required
+/datum/apiModel/Tracked/BanResource
+	var/round_id										= null // integer
+	var/game_admin_id									= null // integer
+	var/server_id										= null // string
+	var/reason											= null // string
+	var/expires_at										= null // date-time
+	var/deleted_at										= null // string
+	var/game_admin										= null // { id: integer, ckey: string, name: string } - not required
+	var/datum/apiModel/Tracked/GameRound/game_round		= null // /datum/apiModel/GameRound - not required
+	var/original_ban_detail								= null // { id: integer, ban_id: integer, ckey: string, comp_id: string, ip: string } - not required
+	var/list/datum/apiModel/Tracked/BanDetail/details	= null // [/datum/apiModel/BanDetail] - not required
 
-/datum/apiModel/BanResource/New(
+/datum/apiModel/Tracked/BanResource/New(
 	id,
 	round_id,
 	game_admin_id,
@@ -44,7 +42,7 @@
 	src.original_ban_detail = original_ban_detail
 	src.details = details
 
-/datum/apiModel/BanResource/VerifyIntegrity()
+/datum/apiModel/Tracked/BanResource/VerifyIntegrity()
 	if (
 		isnull(src.id) \
 		|| isnull(src.round_id) \
@@ -62,7 +60,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/BanResource/ToString()
+/datum/apiModel/Tracked/BanResource/ToString()
 	. = list()
 	.["id"] = src.id
 	.["round_id"] = src.round_id

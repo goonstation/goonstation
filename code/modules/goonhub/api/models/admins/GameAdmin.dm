@@ -1,16 +1,13 @@
 
-// TODO ZEWAKA CREATED AT
 
 /// GameAdmin
-/datum/apiModel/GameAdmin
+/datum/apiModel/Tracked/GameAdmin
 	var/ckey		= null // integer
 	var/name		= null // string
 	var/discord_id	= null // string
 	var/rank_id		= null // integer
-	var/created_at	= null // date-time
-	var/updated_at	= null // date-time
 
-/datum/apiModel/GameAdmin/New(
+/datum/apiModel/Tracked/GameAdmin/New(
 	id,
 	ckey,
 	name,
@@ -28,7 +25,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/GameAdmin/VerifyIntegrity()
+/datum/apiModel/Tracked/GameAdmin/VerifyIntegrity()
 	if (
 		isnull(src.id) \
 		|| isnull(src.ckey) \
@@ -40,7 +37,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/GameAdmin/ToString()
+/datum/apiModel/Tracked/GameAdmin/ToString()
 	. = list()
 	.["id"] = src.id
 	.["ckey"] = src.ckey

@@ -1,13 +1,13 @@
 
 /// PlayerNoteResource
-/datum/apiModel/PlayerRes/PlayerNoteResource
+/datum/apiModel/Tracked/PlayerRes/PlayerNoteResource
 	var/ckey			= null // string
 	var/game_admin_id	= null // integer
 	var/server_id		= null // string
 	var/round_id		= null // integer
 	var/note			= null // string
 
-/datum/apiModel/PlayerRes/PlayerNoteResource/New(
+/datum/apiModel/Tracked/PlayerRes/PlayerNoteResource/New(
 	id,
 	player_id,
 	ckey,
@@ -29,7 +29,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/PlayerRes/PlayerNoteResource/VerifyIntegrity()
+/datum/apiModel/Tracked/PlayerRes/PlayerNoteResource/VerifyIntegrity()
 	if (
 		isnull(src.id) \
 		|| isnull(src.player_id) \
@@ -43,7 +43,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/PlayerRes/PlayerNoteResource/ToString()
+/datum/apiModel/Tracked/PlayerRes/PlayerNoteResource/ToString()
 	. = list()
 	.["id"] = src.id
 	.["player_id"] = src.player_id

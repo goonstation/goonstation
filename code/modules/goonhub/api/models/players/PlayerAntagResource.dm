@@ -1,13 +1,13 @@
 
 
 /// PlayerAntagResource
-/datum/apiModel/PlayerRes/PlayerAntagResource
+/datum/apiModel/Tracked/PlayerRes/PlayerAntagResource
 	var/round_id		= null // integer
 	var/antag_role		= null // string
 	var/late_join		= null // boolean
 	var/weight_exempt	= null // string
 
-/datum/apiModel/PlayerRes/PlayerAntagResource/New(
+/datum/apiModel/Tracked/PlayerRes/PlayerAntagResource/New(
 	id,
 	player_id,
 	round_id,
@@ -27,7 +27,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/PlayerRes/PlayerAntagResource/VerifyIntegrity()
+/datum/apiModel/Tracked/PlayerRes/PlayerAntagResource/VerifyIntegrity()
 	if (
 		isnull(src.id) \
 		|| isnull(src.player_id) \
@@ -40,7 +40,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/PlayerRes/PlayerAntagResource/ToString()
+/datum/apiModel/Tracked/PlayerRes/PlayerAntagResource/ToString()
 	. = list()
 	.["id"] = src.id
 	.["player_id"] = src.player_id

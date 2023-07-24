@@ -1,15 +1,13 @@
 
 /// MapSwitch
-/datum/apiModel/MapSwitch
+/datum/apiModel/Tracked/MapSwitch
 	var/game_admin_id	= null // integer
 	var/round_id		= null // integer
 	var/server_id		= null // string
 	var/map				= null // string
 	var/votes			= null // integer
-	var/created_at		= null // date-time
-	var/updated_at		= null // date-time
 
-/datum/apiModel/MapSwitch/New(
+/datum/apiModel/Tracked/MapSwitch/New(
 	id,
 	game_admin_id,
 	round_id,
@@ -29,7 +27,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/MapSwitch/VerifyIntegrity()
+/datum/apiModel/Tracked/MapSwitch/VerifyIntegrity()
 	if (
 		isnull(src.id) \
 		|| isnull(src.game_admin_id) \
@@ -42,7 +40,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/MapSwitch/ToString()
+/datum/apiModel/Tracked/MapSwitch/ToString()
 	. = list()
 	.["id"] = src.id
 	.["game_admin_id"] = src.game_admin_id
