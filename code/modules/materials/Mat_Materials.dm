@@ -18,6 +18,8 @@ ABSTRACT_TYPE(/datum/material)
 	VAR_PRIVATE/tmp/mutable = TRUE
 	/// used to retrieve instances of these base materials from the cache.
 	VAR_PROTECTED/mat_id = "ohshitium"
+	/// Whether this material should be stored in the material cache - only used for base types, modifying at runtime has no effect
+	var/cached = TRUE
 	/// Name of the material, used for combination and scanning
 	VAR_PROTECTED/name = "Youshouldneverseemeium"
 	/// Description of the material, used for scanning
@@ -450,17 +452,18 @@ ABSTRACT_TYPE(/datum/material)
 		return
 
 //Material definitions
-
-ABSTRACT_TYPE(/datum/material/interpolated)
 /datum/material/interpolated
 	mat_id = "imcoderium"
 	name = "imcoderium"
 	desc = "You should not be seeing this"
 	color = "#6f00ff"
+	cached = FALSE
 
 	///Create an interpolated material from two input materials, with bias. Bias of 0 is entirely mat1, bias of 1 is entirely mat2
 	New(var/datum/material/mat1,var/datum/material/mat2,var/bias)
 		..()
+		if(isnull(mat1) || isnull(mat2))
+			CRASH("Tried to create alloy with null materials!")
 		var/left_bias = 1 - bias
 		src.quality = round(mat1.quality *left_bias+ mat2.quality * bias)
 
