@@ -139,8 +139,8 @@ TYPEINFO(/turf/simulated/wall)
 			break
 
 	if (!direction)
-		boutput(user, "<span class='alert'> Attaching [W] seems hard in this position...</span>")
-		return
+		boutput(user, "<span class='alert'> Attaching \the [W] seems hard in this position...</span>")
+		return FALSE
 
 	user.u_equip(W)
 	W.set_loc(get_turf(user))
@@ -161,7 +161,7 @@ TYPEINFO(/turf/simulated/wall)
 	src.add_fingerprint(user)
 	W.anchored = TRUE
 	boutput(user, "You attach \the [W] to [src].")
-	return
+	return TRUE
 
 /turf/simulated/wall/proc/finish_attaching(obj/item/W, mob/user, var/light_dir)
 	boutput(user, "You attach the light fixture to [src].")
