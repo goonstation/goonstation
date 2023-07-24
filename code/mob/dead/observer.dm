@@ -654,32 +654,9 @@
 		src.observe_menu = new()
 	src.observe_menu.ui_interact(src)
 
-/mob/dead/observer/verb/observe_object()
-	set name = "Observe Object"
-	set category = "Ghost"
 
-	var/list/all_observables = machine_registry[MACHINES_BOTS] + by_cat[TR_CAT_GHOST_OBSERVABLES]
-	var/list/observable_map = list() // List mapping label -> object (so we can include area in the label)
 
-	for (var/atom/A in all_observables)
-		// isghostrestrictedz also filters out objects in NULL
-		// bomb is only tracked in nuclear mode
-		if (isghostrestrictedz(A.z) && !istype(A, /obj/machinery/nuclearbomb) && !istype(A, /obj/item/football/the_big_one))
-			continue
-		// this doesn't distinguish objects with the same name on the same tile. that's fine
-		var/area/area = get_area(A)
-		var/turf/turf = get_turf(A)
-		observable_map["[A.name] at ([turf.x], [turf.y], [turf.z]) in [area.name]"] = A
-
-	sortList(observable_map, /proc/cmp_text_asc)
-	var/picked_label = tgui_input_list(src, "Please, select a target!", "Observe", observable_map)
-
-	if (!picked_label)
-		return
-
-	insert_observer(observable_map[picked_label])
-
-mob/dead/observer/proc/insert_observer(var/atom/target)
+/mob/dead/observer/proc/insert_observer(var/atom/target)
 	var/mob/dead/target_observer/newobs = new /mob/dead/target_observer
 	src.set_loc(newobs)
 	newobs.attach_hud(hud)
@@ -699,7 +676,7 @@ mob/dead/observer/proc/insert_observer(var/atom/target)
 	else if (src.client) //Wire: Fix for Cannot modify null.mob.
 		src.client.mob = newobs
 
-mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had to create a new proc aaaaaa
+/mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had to create a new proc aaaaaa
 	var/mob/dead/target_observer/slasher_ghost/newobs = new /mob/dead/target_observer/slasher_ghost
 	newobs.attach_hud(hud)
 	newobs.set_observe_target(target)

@@ -19,6 +19,7 @@
 	var/mob/dead/observer/user = ui.user
 	if(istype(user) && params["targetref"])
 		user.insert_observer(locate(params["targetref"]))
+		ui.close()
 
 
 /datum/observe_menu/ui_static_data(mob/user)
@@ -37,7 +38,10 @@
 		obs_data["job"] = null
 		obs_data["npc"] = FALSE
 		obs_data["antag"] = FALSE
-		obs_data["player"] = null
+		obs_data["player"] = FALSE
+		obs_data["dup_name_count"] = 0
+		for(var/mob/dead/target_observer/newobs in observable)
+			obs_data["ghost_count"]++
 
 		if(ismob(observable))
 			var/mob/M = observable
@@ -51,14 +55,15 @@
 			obs_data["real_name"] = M.real_name
 			obs_data["dead"] = isdead(M)
 			obs_data["job"] = M.job
-			obs_data["npc"] = (M.client == null)
+			obs_data["npc"] = (M.client == null && M.ghost == null) //dead players have no client, but should have a ghost
+			obs_data["player"] = (M.client != null || M.ghost != null) //okay, I know this is just !npc, but it won't ever get set for objects, so it's needed
 			if(DNRSet)
 				obs_data["antag"] = !isnull(M.mind?.special_role)
 
 		if (observable.name in namecounts) //in assoc lists, x in list checks keys for x
 			namecounts[observable.name]++
-			obs_data["name"] = "[observable.name] ([namecounts[observable.name]])"
+			obs_data["dup_name_count"] = namecounts[observable.name]
 		else
 			namecounts[observable.name] = 1
 		uidata += list(obs_data)
-	return uidata
+	return list("mydata"=uidata, "dnrset"=DNRSet)
