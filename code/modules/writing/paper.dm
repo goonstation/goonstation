@@ -945,17 +945,6 @@
 	var/headline = ""
 	var/publisher = ""
 
-/obj/item/paper/newspaper/New()
-	. = ..()
-	if (src.headline)
-		pick_smart_string("newspaper", "headline")
-	if (!src.publisher)
-		pick_smart_string("newspaper", "publisher")
-	src.name = "[src.publisher] newspaper"
-	src.icon_state = "newspaper"
-	src.desc = "Its from [src.publisher]. Its headline reads: [src.headline]"
-	src.info = "# [src.headline]\n [pick_smart_string("newspaper", "article")]"
-
 /// a rolled up newspaper
 /obj/item/paper/newspaper/rolled
 	icon = 'icons/obj/writing.dmi'
@@ -963,8 +952,17 @@
 	item_state = "paper"
 	two_handed = FALSE
 
+/obj/item/paper/newspaper/New()
+	. = ..()
+	if (src.headline)
+		pick_string("newspaper", "headline")
+	if (!src.publisher)
+		pick_string("newspaper", "publisher")
+	src.name = "[src.publisher] newspaper"
+	src.desc = "Its from [src.publisher]. Its headline reads: [src.headline]"
+	src.info = "# [src.headline]\n [pick_smart_string("newspaper", "article")]"
 
-/obj/item/paper/newspaper/attack_hand(mob/user)
+/obj/item/paper/newspaper/attack_self(mob/user)
 	src.force_drop(user)
 	src.rollup()
 	user.put_in_hand_or_drop(src)
