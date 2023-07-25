@@ -232,7 +232,7 @@ ABSTRACT_TYPE(/datum/material)
 		if(isnull(M2))
 			return FALSE
 
-		if(src.properties.len != M2.properties.len || src.getID() != M2.getID())
+		if(length(src.properties) != length(M2.properties) || src.getID() != M2.getID())
 			return FALSE
 
 		if(src.value != M2.value || src.name != M2.name  || src.color ~! M2.color ||src.alpha != M2.alpha || src.getMaterialFlags() != M2.getMaterialFlags() || src.texture != M2.texture)
@@ -291,7 +291,7 @@ ABSTRACT_TYPE(/datum/material)
 
 	proc/removeProperty(var/property)
 		if(!src.mutable)
-			CRASH("Attempted to mutate an immutatble material!")
+			CRASH("Attempted to mutate an immutable material!")
 		for(var/datum/material_property/P in properties)
 			if(P.id == property)
 				P.onRemoved(src)
@@ -301,7 +301,7 @@ ABSTRACT_TYPE(/datum/material)
 
 	proc/adjustProperty(var/property, var/value)
 		if(!src.mutable)
-			CRASH("Attempted to mutate an immutatble material!")
+			CRASH("Attempted to mutate an immutable material!")
 		for(var/datum/material_property/P in properties)
 			if(P.id == property)
 				src.properties[P] = clamp(properties[P]+value, P.min_value, P.max_value)
@@ -311,7 +311,7 @@ ABSTRACT_TYPE(/datum/material)
 
 	proc/setProperty(var/property, var/value)
 		if(!src.mutable)
-			CRASH("Attempted to mutate an immutatble material!")
+			CRASH("Attempted to mutate an immutable material!")
 		for(var/datum/material_property/P in properties)
 			if(P.id == property)
 				src.properties[P] = clamp(value, P.min_value, P.max_value)
