@@ -12,6 +12,7 @@ type Observable = {
   npc: boolean;
   antag: boolean;
   player: boolean;
+  dup_name_count: number;
   ghost_count: number;
 };
 
@@ -29,6 +30,8 @@ const ObserverButton = (props, context) => {
   if (obsObject.dead) { icon = "skull"; }
   if (obsObject.name !== obsObject.real_name) { displayed_name += " ("+obsObject.real_name+")"; }
   if (obsObject.job !== null) { extra = "Job: "+obsObject.job; }
+  if (obsObject.dup_name_count > 0) { displayed_name += " #"+obsObject.dup_name_count; }
+  if (obsObject.ghost_count > 0) { icon="ghost"; displayed_name = obsObject.ghost_count+" "+displayed_name; }
   return (
     <Button
       key={obsObject.ref}
