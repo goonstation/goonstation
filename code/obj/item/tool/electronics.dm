@@ -940,6 +940,7 @@
 		var/obj/item/electronics/frame/F = new
 		var/turf/target_loc = get_turf(target)
 		F.name = "[target.name] frame"
+		F.RegisterSignal(F, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
 		if(O.deconstruct_flags & DECON_DESTRUCT)
 			F.store_type = O.type
 			qdel(O)
@@ -957,9 +958,9 @@
 		F.w_class = W_CLASS_BULKY
 
 		elecflash(src,power=2)
-
-		O.was_deconstructed_to_frame(user)
-		F.RegisterSignal(O, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
+		if(!QDELETED(O))
+			O.was_deconstructed_to_frame(user)
+			F.RegisterSignal(O, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
 
 	MouseDrop_T(atom/target, mob/user)
 		if (!isobj(target))
