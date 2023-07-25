@@ -955,9 +955,9 @@
 /obj/item/paper/newspaper/New()
 	. = ..()
 	if (src.headline)
-		pick_string("newspaper", "headline")
+		pick_smart_string("newspaper.txt", "headline")
 	if (!src.publisher)
-		pick_string("newspaper", "publisher")
+		pick_smart_string("newspaper.txt", "publisher")
 	src.name = "[src.publisher] newspaper"
 	src.desc = "Its from [src.publisher]. Its headline reads: [src.headline]"
 	src.info = "# [src.headline]\n [pick_smart_string("newspaper", "article")]"
