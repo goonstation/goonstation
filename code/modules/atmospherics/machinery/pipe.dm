@@ -151,7 +151,7 @@ obj/machinery/atmospherics/pipe
 					alpha = 255
 
 		hide(var/i)
-			if(level == 1 && istype(loc, /turf/simulated))
+			if(level == UNDERFLOOR && istype(loc, /turf/simulated))
 				invisibility = i ? INVIS_ALWAYS : INVIS_NONE
 			UpdateIcon()
 
@@ -767,7 +767,7 @@ obj/machinery/atmospherics/pipe
 			return null
 
 		hide(var/intact) //to make the little pipe section invisible, the icon changes.
-			if (intact && istype(loc, /turf/simulated) && level == 1)
+			if (intact && istype(loc, /turf/simulated) && level == UNDERFLOOR)
 				src.icon_state = "hvent"
 			else
 				src.icon_state = src.node1 ? "intact" : ""
@@ -854,7 +854,7 @@ obj/machinery/atmospherics/pipe
 			initialize_directions = (NORTH|SOUTH|EAST|WEST) ^ dir
 
 		hide(var/i)
-			if(level == 1 && istype(loc, /turf/simulated))
+			if(level == UNDERFLOOR && istype(loc, /turf/simulated))
 				invisibility = i ? INVIS_ALWAYS : INVIS_NONE
 			UpdateIcon()
 

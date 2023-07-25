@@ -358,7 +358,7 @@ proc/generate_space_color()
 // override for space turfs, since they should never hide anything
 /turf/space/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1)
+		if(O.level == UNDERFLOOR)
 			O.hide(0)
 
 // override for space turfs, since they should never hide anything
@@ -383,6 +383,7 @@ proc/generate_space_color()
 	density = 1
 	opacity = 1
 	gas_impermeable = 1
+	allows_vehicles = FALSE
 
 	Enter()
 		return 0 // nope
@@ -536,7 +537,7 @@ proc/generate_space_color()
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1)
+		if(O.level == UNDERFLOOR)
 			O.hide(src.intact)
 
 /turf/unsimulated/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)

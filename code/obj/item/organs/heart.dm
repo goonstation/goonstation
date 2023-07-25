@@ -151,7 +151,7 @@ TYPEINFO(/obj/item/organ/heart/cyber)
 
 	emp_act()
 		..()
-		if (src.broken)
+		if (src.emagged)
 			boutput(donor, "<span class='alert'><B>Your cyberheart malfunctions and shuts down!</B></span>")
 			donor.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 

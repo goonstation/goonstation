@@ -15752,8 +15752,6 @@
 	reinf = 1
 	},
 /obj/table,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/mask/muzzle,
 /turf/simulated/floor/shuttle{

@@ -5605,9 +5605,6 @@
 /area/crater/cave/lower)
 "gys" = (
 /obj/table/auto,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "gyz" = (

@@ -140,6 +140,13 @@
 /obj/item/electronics/frame/proc/kickout(source, mob/stowaway)
 	if(istype(stowaway))
 		stowaway.set_loc(get_turf(source))
+	else
+		for(var/atom/movable/AM in stowaway)
+			kickout(source, AM)
+
+/obj/item/electronics/frame/Entered(atom/movable/AM, atom/OldLoc)
+	. = ..()
+	kickout(src, AM)
 
 /obj/item/electronics/frame/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/electronics/))
@@ -957,9 +964,9 @@
 		F.w_class = W_CLASS_BULKY
 
 		elecflash(src,power=2)
-
-		O.was_deconstructed_to_frame(user)
-		F.RegisterSignal(O, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
+		if(!QDELETED(O))
+			O.was_deconstructed_to_frame(user)
+			F.RegisterSignal(O, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
 
 	MouseDrop_T(atom/target, mob/user)
 		if (!isobj(target))

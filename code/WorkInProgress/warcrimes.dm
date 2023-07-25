@@ -153,6 +153,10 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 // bus driver
 /mob/living/carbon/human/john
 	real_name = "John Bill"
+#ifdef IN_MAP_EDITOR
+	icon = 'icons/mob/map_mob.dmi'
+	icon_state = "john_bill"
+#endif
 	interesting = "Found in a coffee can at age fifteen. Went to jail for fraud. Recently returned to the can."
 	gender = MALE
 	is_npc = TRUE
@@ -509,18 +513,18 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 
 
 
-obj/decal/fakeobjects/thrust
+/obj/decal/fakeobjects/thrust
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shieldsparkles"
 	name = "ionized exhaust"
 	desc = "Thankfully harmless, to registered employees anyway."
 
-obj/decal/fakeobjects/thrust/flames
+/obj/decal/fakeobjects/thrust/flames
 	icon_state = "engineshit"
-obj/decal/fakeobjects/thrust/flames2
+/obj/decal/fakeobjects/thrust/flames2
 	icon_state = "engineshit2"
 
-obj/item/paper/tug/invoice
+/obj/item/paper/tug/invoice
 	name = "Big Yank's Space Tugs, Limited."
 	desc = "Looks like a bill of sale."
 	info = {"<b>Client:</b> Bill, John
@@ -531,7 +535,7 @@ obj/item/paper/tug/invoice
 			<br><b>Total Charge:</b> 17,440 paid in full with value-added meat.
 			<br>Big Yank's Cheap Tug"}
 
-obj/item/paper/tug/warehouse
+/obj/item/paper/tug/warehouse
 	name = "Big Yank's Space Tugs, Limited."
 	desc = "Looks like a bill of sale. It is blank"
 	info = {"<b>Client:</b>

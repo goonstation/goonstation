@@ -3791,9 +3791,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -15291,17 +15289,13 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/catering)
 "aEu" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor,
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
 	})
 "aEv" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_krimpus"
-	},
+/mob/living/carbon/human/npc/monkey/krimpus,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "aEw" = (
@@ -15419,9 +15413,7 @@
 /area/station/maintenance/northeast)
 "aEH" = (
 /obj/disposalpipe/segment,
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "aEI" = (
@@ -16342,9 +16334,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "aGU" = (
@@ -17359,9 +17349,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aJh" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
-	},
+/mob/living/carbon/human/npc/monkey/tanhony,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aJi" = (
@@ -18731,8 +18719,6 @@
 /area/station/medical/medbay)
 "aMb" = (
 /obj/table/auto,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/reagent_containers/syringe/haloperidol,
@@ -19229,9 +19215,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/research)
 "aNe" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass,
 /area/station/medical/research)
 "aNf" = (
@@ -32245,9 +32229,7 @@
 	d1 = 2;
 	d2 = 4
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bmw" = (
@@ -32426,9 +32408,7 @@
 /turf/space,
 /area/space)
 "bmU" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bmV" = (
