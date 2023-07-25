@@ -80,6 +80,25 @@
 		if(one && two) return 1
 		else return 0
 
+/datum/material_recipe/censorium
+	name = "censorium"
+	result_id = "censorium"
+	result_item = /obj/item/material_piece/censorium
+
+	validate(var/datum/material/M)
+		var/hasChar = 0
+		var/hasRock = 0
+
+		for(var/datum/material/CM in M.parent_materials)
+			if(CM.mat_id == "char") hasChar = 1
+			if(CM.mat_id == "rock") hasRock = 1
+
+		if(M.mat_id == "char") hasChar = 1
+		if(M.mat_id == "rock") hasRock = 1
+
+		if(hasChar && hasRock) return 1
+		else return 0
+
 /datum/material_recipe/copper // this doesn't REALLY make sense how steel recipe does but I don't care. Need a way to make copper for coroisum
 	name = "copper"
 	result_id = "copper"

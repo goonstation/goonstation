@@ -1440,6 +1440,18 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("thermal", 9)
 		setProperty("electrical", 7)
 
+/datum/material/censorium
+	mat_id = "censorium"
+	name = "censorium"
+	desc = "A charred rock. Doesn't do much."
+	color = "#948686"
+
+	New()
+		..()
+		setProperty("flammable", 2)
+		setProperty("density", 2)
+		setProperty("hard", 2)
+		setProperty("thermal", 1)
 
 /datum/material/fabric/hauntium
 	mat_id = "hauntium"
