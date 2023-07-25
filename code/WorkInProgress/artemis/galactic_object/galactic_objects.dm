@@ -23,12 +23,21 @@
 	random_range = list(1,3)
 
 	New(datum/galaxy/G)
-		scale =  G.Rand.xor_randf(0.75, 1)
-		icon_state = G.Rand.xor_weighted_pick(list("mono_planets"=100,"planet_1"=10,"planet_2"=3,"planet_3"=2))
+		src.scale =  G.Rand.xor_randf(0.75, 1)
+		src.icon_state = G.Rand.xor_weighted_pick(list("mono_planets"=100,"planet_1"=10,"planet_2"=3,"planet_3"=2))
 		switch(icon_state)
 			if("mono_planets")
 				dir = G.Rand.xor_pick(cardinal)
 				color = G.Rand.xor_weighted_pick(list("#fffb00"=1, "#FF5D06"=1, "#009ae7"=1, "#03c53d"=1, "#9b59b6"=1, "#272e30"=1, "#FF69B4"=1, "#633221"=1, "#ffffff"=4))
+			if("planet_1")
+				color = G.Rand.xor_weighted_pick(list("#ffffff"=4,"#afafff"=1,"#afffc0"=1))
+			if("planet_2")
+				color = G.Rand.xor_weighted_pick(list("#ffee00"=4,"#fdf583"=1,"#fffbbf"=1))
+			if("planet_3")
+				color = G.Rand.xor_weighted_pick(list("#ffffff"=1))
+			else
+				color = "#ffffff"
+
 		light_value = clamp((log(G.Rand.xor_rand())*0.675)+0.997,0,1)
 		biome_seed += G.Rand.xor_rand()*50000
 		biome_seed += G.Rand.xor_rand()*50000
@@ -46,15 +55,21 @@
 #endif
 
 			SPAWN(1 SECOND)
+				if(!length(landmarks[LANDMARK_PLANETS]))
+					stack_trace("Landmarks were not ready!!!")
+				var/found = FALSE
 				for(var/turf/T in landmarks[LANDMARK_PLANETS])
 					if(landmarks[LANDMARK_PLANETS][T] == src.destination_name)
 						var/area/map_gen/planet/A = get_area(T)
-						var/r = hex2num(copytext(color, 2, 4))
-						var/g = hex2num(copytext(color, 4, 6))
-						var/b = hex2num(copytext(color, 6))
+						var/r = hex2num(copytext(src.color, 2, 4))
+						var/g = hex2num(copytext(src.color, 4, 6))
+						var/b = hex2num(copytext(src.color, 6))
 						var/hsv = rgb2hsv(r,g,b)
-						A.colorize_planet(hsv2rgb( hsv[1], hsv[2], light_value*100 ))
+						A.colorize_planet(hsv2rgb( hsv[1], hsv[2], src.light_value*100 ))
+						found = TRUE
 						break
+				if(!found)
+					stack_trace("Planet lighting not set?")
 
 		generate_name(G)
 		..()

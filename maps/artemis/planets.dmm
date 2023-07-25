@@ -38,7 +38,7 @@
 /area/ship/artemis)
 "aJ" = (
 /obj/landmark/destination_landmark{
-	destination_name = "planet8"
+	destination_name = "planet1"
 	},
 /turf/space,
 /area/map_gen/planet/alpha/no_prefab)
@@ -152,7 +152,7 @@
 /area/ship/artemis)
 "dF" = (
 /obj/landmark/destination_landmark{
-	destination_name = "planet3"
+	destination_name = "planet5"
 	},
 /turf/space,
 /area/map_gen/planet/echo/no_prefab)
@@ -886,7 +886,7 @@
 /area/ship/artemis)
 "xG" = (
 /obj/landmark/destination_landmark{
-	destination_name = "planet6"
+	destination_name = "planet8"
 	},
 /turf/space,
 /area/map_gen/planet/hotel/no_prefab)
@@ -1011,7 +1011,7 @@
 /area/ship/artemis)
 "Cd" = (
 /obj/landmark/destination_landmark{
-	destination_name = "planet1"
+	destination_name = "planet6"
 	},
 /turf/space,
 /area/map_gen/planet/foxtrot/no_prefab)
@@ -1091,7 +1091,7 @@
 /area/ship/artemis)
 "Dl" = (
 /obj/landmark/destination_landmark{
-	destination_name = "planet2"
+	destination_name = "planet3"
 	},
 /turf/space,
 /area/map_gen/planet/charlie/no_prefab)
@@ -1859,7 +1859,7 @@
 /area/ship/arjuna)
 "XF" = (
 /obj/landmark/destination_landmark{
-	destination_name = "planet1"
+	destination_name = "planet2"
 	},
 /turf/space,
 /area/map_gen/planet/beta/no_prefab)
