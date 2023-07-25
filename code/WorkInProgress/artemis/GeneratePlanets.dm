@@ -43,7 +43,7 @@ var/list/planet_seeds = list()
 						if(!M.check_biome_requirements(target))
 							count = INFINITY
 							break
-						var/ret = M.applyTo(target)
+						var/datum/loadedProperties/ret = M.applyTo(target)
 						if (!ret)
 							logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [showCoords(target.x, target.y, target.z)]")
 						else
@@ -52,6 +52,12 @@ var/list/planet_seeds = list()
 							if(istype(A,/area/map_gen/planet))
 								var/area/map_gen/planet/P = A
 								P.prefabs |= ret
+
+							var/space_turfs = block(locate(ret.sourceX, ret.sourceY, ret.sourceZ), locate(ret.maxX, ret.maxY, ret.maxZ))
+							for(var/turf/T in space_turfs)
+								if(!istype(T, /turf/space))
+									space_turfs -= T
+							A.map_generator.generate_terrain(space_turfs)
 						count++
 					if (count == maxTries)
 						logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""].")

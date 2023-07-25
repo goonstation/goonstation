@@ -678,11 +678,11 @@
 		var/broken_lights = rand(0,5)
 		switch(scenario)
 			if("Martians")
-				mob_types = list(/obj/critter/martian=50, /obj/critter/martian/soldier=10, /obj/critter/martian/psychic=1, /obj/critter/martian/psychic/weak=5, /obj/critter/martian/warrior=10, null=5)
+				mob_types = list(/mob/living/critter/martian=50, /mob/living/critter/martian/soldier=10, /mob/living/critter/martian/mutant=1, /mob/living/critter/martian/warrior=10, null=5)
 				mob_count = 10
 				body_count = 8
 			if("Zombies")
-				mob_types = list(/obj/critter/zombie/scientist=5,/obj/critter/zombie/radiation=2, /obj/critter/zombie/security=2, /obj/critter/zombie=10, null=1)
+				mob_types = list(/mob/living/critter/zombie/scientist=5,/mob/living/critter/zombie/radiation=2, /mob/living/critter/zombie/security=2, /mob/living/critter/zombie=10, null=1)
 				mob_count = 8
 				body_count = 2
 			if("Flock")

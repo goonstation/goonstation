@@ -417,6 +417,7 @@ var/global/datum/galaxy/GALAXY = new
 	pixel_y = -248
 
 /obj/landmark/destination_landmark
+	name = "Planet Drop"
 	var/destination_name = null
 	name_override = LANDMARK_PLANETS
 

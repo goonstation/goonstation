@@ -1,5 +1,3 @@
-#define PLANET_MAPBORDER 1
-
 TYPEINFO(/datum/mapPrefab/planet)
 	stored_as_subtypes = TRUE
 
@@ -155,5 +153,3 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_angry_birds.dmm"
 		prefabSizeX = 8
 		prefabSizeY = 6
-
-#undef PLANET_MAPBORDER

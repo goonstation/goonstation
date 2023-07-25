@@ -183,11 +183,13 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 		..()
 
 /obj/landmark/ship_marker
+	name = "ship marker"
 	var/ship_id = "artemis"
 	var/num_stars = 200
 	name_override = LANDMARK_SHIPS
 
 	New()
+		name = ship_id
 		src.data = src.ship_id
 		var/obj/background_star/S = null
 		for(var/i=0,i<num_stars,i++)
