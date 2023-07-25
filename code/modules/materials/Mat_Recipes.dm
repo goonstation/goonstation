@@ -80,11 +80,7 @@
 		if(one && two) return 1
 		else return 0
 
-<<<<<<< HEAD
-/datum/material_recipe/censorium //gets rid of char + rocks name in a fun way.
-=======
 /datum/material_recipe/censorium
->>>>>>> 8b3f7752e4255097cdf7776fe8ffa57ff0f23635
 	name = "censorium"
 	result_id = "censorium"
 	result_item = /obj/item/material_piece/metal/censorium
