@@ -32033,6 +32033,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "hyV" = (

@@ -243,7 +243,7 @@
 	qdel(src.flock_name_tag)
 	src.flock_name_tag = null
 	if (src.flock)
-		src.flock.deaths++
+		src.flock.stats.deaths++
 		src.flock.removeDrone(src)
 	playsound(src, 'sound/impact_sounds/Glass_Shatter_3.ogg', 50, 1)
 

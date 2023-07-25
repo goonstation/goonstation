@@ -15,6 +15,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 /datum/game_mode/football
 	name = "Football"
 	config_tag = "football"
+	regular = FALSE
 	var/score_red = 0
 	var/score_blue = 0
 	var/game_state = FOOTBALL_PREGAME

@@ -9,7 +9,7 @@
 
 	initialize()
 		selection = new /obj/adventurepuzzle/marker
-		button_type = input("Button type", "Button type", "ancient") in list("ancient", "red", "runes")
+		button_type = input("Button type", "Button type", "comp_button") in list("ancient", "red", "runes", "comp_button", "comp_switch")
 		color_rgb = input("Color", "Color", "#ffffff") as color
 		button_name = input("Button name", "Button name", "button") as text
 		var/bdstr = input("Is the button dense (impassable)?", "Passability", "yes") in list("yes", "no")
@@ -39,6 +39,8 @@
 				button.name = button_name
 				button.set_dir(holder.dir)
 				button.icon_state = "button_[button_type]_unpressed"
+				if(startswith(button_type, "comp")) //crimes
+					button.icon = 'icons/misc/mechanicsExpansion.dmi'
 				button.button_type = button_type
 				button.set_density(button.density)
 				button.triggered = selected_triggerable.Copy()

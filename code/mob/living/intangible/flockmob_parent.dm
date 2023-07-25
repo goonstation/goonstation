@@ -83,6 +83,12 @@
 		src.afk_counter = 0
 		src.previous_turf = get_turf(src)
 
+/mob/living/intangible/flock/death(datum/controller/process/mobs/parent)
+	var/datum/abilityHolder/flockmind/AH = src.abilityHolder
+	if (AH.drone_controller.drone)
+		AH.drone_controller.cast(AH.drone_controller.drone, FALSE)
+	..()
+
 /mob/living/intangible/flock/is_spacefaring() return 1
 /mob/living/intangible/flock/say_understands() return 1
 /mob/living/intangible/flock/can_use_hands() return 0
@@ -160,11 +166,16 @@
 		return
 
 	if (istype(target, /mob/living/critter/flock/drone))
-		src.select_drone(target)
-		return
-
+		var/mob/living/critter/flock/drone/flockdrone = target
+		if (!isdead(flockdrone))
+			if (flockdrone.selected_by || flockdrone.controller)
+				boutput(src, "<span class='alert'>This drone is receiving a command!</span>")
+				return
+			flockdrone.selected_by = src
+			src.select_drone(flockdrone)
+			return
 	//moved from flock_structure_ghost for interfering with ability targeting
-	if (istype(target, /obj/flock_structure/ghost))
+	else if (istype(target, /obj/flock_structure/ghost))
 		var/obj/flock_structure/ghost/tealprint = target
 		if (!tealprint.fake && tgui_alert(usr, "Cancel tealprint construction?", "Tealprint", list("Yes", "No")) == "Yes")
 			tealprint.cancelBuild()

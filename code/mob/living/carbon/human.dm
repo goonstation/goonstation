@@ -1034,7 +1034,7 @@
 		attack_twitch(src)
 		I.layer = initial(I.layer)
 		var/yeet = 0 // what the fuck am I doing
-		var/throw_dir = get_dir(target, src)
+		var/throw_dir = get_dir(src, target)
 		if(src.mind)
 			if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
 				yeet_chance = 1
@@ -1058,7 +1058,7 @@
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
 		if (istype(src.loc, /turf/space) || src.no_gravity) //they're in space, move em one space in the opposite direction
-			src.inertia_dir = throw_dir
+			src.inertia_dir = get_dir(target, src) // Float opposite direction from throw
 			step(src, inertia_dir)
 		if ((istype(I.loc, /turf/space) || I.no_gravity)  && ismob(I))
 			var/mob/M = I
@@ -1093,14 +1093,6 @@
 						src.set_a_intent(INTENT_DISARM)
 						.=..()
 						src.set_a_intent(INTENT_DISARM)
-				/*else if (params["middle"])
-					params["middle"] = 0
-					params["left"] = 1 //hacky again :)
-					var/prev = src.a_intent
-					src.set_a_intent(INTENT_GRAB)
-					.=..()
-					src.set_a_intent(prev)
-					return*/
 				else
 					src.set_a_intent(INTENT_HARM)
 					.=..()
@@ -1343,18 +1335,10 @@
 	if (src.organHolder && src.organHolder.brain && src.mind)
 		src.organHolder.brain.setOwner(src.mind)
 
-	/*
-	if (src.ckey == "wonkmin") //If you mention this i will shank you.
-		SPAWN(15 SECONDS)
-			src.make_critter(/mob/living/critter/small_animal/bird/owl/large/hooter)
-	*/
-	return
-
 /mob/living/carbon/human/Logout()
 	..()
 	if (!ai_active && is_npc)
 		ai_set_active(1)
-	return
 
 /mob/living/carbon/human/get_heard_name()
 	var/alt_name = ""

@@ -121,7 +121,7 @@
 
 	var/client/Mclient = M.client
 
-	var/msg = input("Message:", text("Plain message to [Mclient.key]")) as null|text
+	var/msg = input("Message:", "Plain message to [Mclient.key]") as null|message
 
 	if(!(src.holder.level >= LEVEL_PA))
 		msg = strip_html(msg)
@@ -143,7 +143,7 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	var/msg = input("Message:", text("Plain message to all")) as null|text
+	var/msg = input("Message:", "Plain message to all") as null|message
 
 	if(!(src.holder.level >= LEVEL_PA))
 		msg = strip_html(msg)

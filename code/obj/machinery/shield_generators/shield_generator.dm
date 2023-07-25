@@ -7,6 +7,7 @@
 	expandable = FALSE
 	do_not_irradiate = TRUE
 	requires_power = FALSE
+	minimaps_to_render_on = null
 
 /* ==================== Generator ==================== */
 

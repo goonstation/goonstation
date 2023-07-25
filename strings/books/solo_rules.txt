@@ -1,10 +1,10 @@
 <body>
-<center><h1>MONO</h1></center>
+<center><h1>SOLO</h1></center>
 <center>The family friendly and legally distinct playing card game for all ages! For 2-10 players.</center>
 <hr>
 
 <h2>Contents</h2>
-<p>Each box of MONO playing cards has 108 cards of 4 main suits, as follows:</p>
+<p>Each box of SOLO playing cards has 108 cards of 4 main suits, as follows:</p>
 <ul>
 <li><b>19 Eldritch cards,</b> from 0 to 9</li>
 <li><b>19 Martian cards,</b> from 0 to 9</li>
@@ -16,7 +16,7 @@
 <li><b>4 Wild cards</b></li>
 <li><b>4 Wild Draw 4 cards</b></li>
 </ul>
-<p> The 4 main suits are based of origins, Namely artifact origins, 4 main origins are used in mono: Eldritch, Martian, Precursor, and Wizard. Although there are also Wild card types within the deck,S they are not considered a suit.</p>
+<p> The 4 main suits are based of origins, Namely artifact origins, 4 main origins are used in SOLO: Eldritch, Martian, Precursor, and Wizard. Although there are also Wild card types within the deck,S they are not considered a suit.</p>
 <h2>Objective</h2>
 <p>The first player to play all of their cards within a round scores a number of points depending on the number of cards currently possessed by other players. The first player to 500 points wins the game.</p>
 
@@ -26,7 +26,7 @@
 <h2>Rules of Play</h2>
 <p>For games with two players, please refer to the <b>2 Player Rules</b> section.</p>
 
-<p>Play begins from the dealer or <b>first player.</b> At the beginning of a player's turn, they may choose to place a card which matches the Origin or number of the top card on the <b>DISCARD</b> pile. Alternatively, a player can place a <b>Wild card</b> at any time or a <b>Wild Draw 4 card</b> when they have no other valid cards to place. If a player has no valid cards to place, they must a card from the <b>DRAW</b> pile. If they draw a card they can play, they may choose to play it. Their turn then ends and play continues to the next person. Before playing your next to last card, you must utter "MONO". If you fail to do so and are caught before the next player starts their turn, you must draw 4 cards from the <b>DRAW</b> pile. If you are not caught before then, play continues as normal. Once a player plays their last card, the round is over. The player that plays their last card gains a number of points according to the following <b>Score Sheet</b> and a new round can begin.</p>
+<p>Play begins from the dealer or <b>first player.</b> At the beginning of a player's turn, they may choose to place a card which matches the Origin or number of the top card on the <b>DISCARD</b> pile. Alternatively, a player can place a <b>Wild card</b> at any time or a <b>Wild Draw 4 card</b> when they have no other valid cards to place. If a player has no valid cards to place, they must a card from the <b>DRAW</b> pile. If they draw a card they can play, they may choose to play it. Their turn then ends and play continues to the next person. Before playing your next to last card, you must utter "SOLO". If you fail to do so and are caught before the next player starts their turn, you must draw 4 cards from the <b>DRAW</b> pile. If you are not caught before then, play continues as normal. Once a player plays their last card, the round is over. The player that plays their last card gains a number of points according to the following <b>Score Sheet</b> and a new round can begin.</p>
 
 <h2>Score Sheet</h2>
 <p>The point values of every card remaining in each player's hands is added and awarded to the winner of each round.</p>
@@ -57,7 +57,7 @@
 </ul>
 
 <h2>House Rules</h2>
-<p>Sometimes, players do not adhere strictly to the rules of MONO and include their own variations on the rules, for example:</p>
+<p>Sometimes, players do not adhere strictly to the rules of SOLO and include their own variations on the rules, for example:</p>
 <ul>
 <li>Eliminating the scoring system and declaring the winner of a round as the winner of the game.</li>
 <li>Stacking the effects of <b>Wild Draw 4</b> or <b>Draw 2 cards</b> to increase the amount of cards a subsequent player must pick up.</li>
@@ -65,4 +65,4 @@
 <li>Playing a 0 card allows you to swap hands with another player of your choice.</li>
 <li>Not ending a round once a player has played their last card and progressively eliminating those who play their last card until one player remains.</li>
 </ul>
-<p>This is not an exhaustive list of all the possible variations, but we here at MONO - outside of officially sanctioned competitive games - encourage the player's freedom to remix and rework the rules of the game to their needs! We put family fun and accessibility first, and if the official rules of MONO prevent this at the casual level of play, you may by all means choose to play the game how you wish to!</p>
+<p>This is not an exhaustive list of all the possible variations, but we here at SOLO - outside of officially sanctioned competitive games - encourage the player's freedom to remix and rework the rules of the game to their needs! We put family fun and accessibility first, and if the official rules of SOLO prevent this at the casual level of play, you may by all means choose to play the game how you wish to!</p>

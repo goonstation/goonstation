@@ -197,6 +197,7 @@ ABSTRACT_TYPE(/datum/material_property)
 	prefix_high_min = 1
 	prefix_low_max = 9
 	default_value = 0
+	min_value = 0
 
 	getAdjective(var/datum/material/M)
 		switch(M.getProperty(id))
@@ -230,6 +231,7 @@ ABSTRACT_TYPE(/datum/material_property)
 	prefix_high_min = 1
 	prefix_low_max = 9
 	default_value = 0
+	min_value = 0
 
 
 	getAdjective(var/datum/material/M)

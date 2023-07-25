@@ -1957,6 +1957,7 @@ var/list/fun_images = list()
 	set desc = "Tired of boring map gimmicks on the pregame screen? Try HTML!"
 
 	ADMIN_ONLY
+	// Previous HTML (so you can replace without always resetting to the default)
 	if(pregameHTML)
 		if(alert("There's already some HTML shown. Do you want to remove or replace it?", "HTML clear?", "Remove", "Replace") == "Remove")
 			pregameHTML = null
@@ -1976,7 +1977,7 @@ var/list/fun_images = list()
 			return
 	var/newHTML = null
 	if(alert("Do you want to upload an HTML file, or type it in?", "HTML Source", "Here", "Upload") == "Here")
-		newHTML = input("Gib HTML, then.", "FEED ME HTML", "<b>memes</b>") as message
+		newHTML = input("Gib HTML, then.", "FEED ME HTML", pregameHTML) as message
 	else
 		newHTML = input("Upload that file!", "Upload that file!") as file
 		if(newHTML)

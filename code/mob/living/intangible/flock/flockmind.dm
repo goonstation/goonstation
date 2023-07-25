@@ -9,8 +9,6 @@
 	icon_state = "flockmind"
 
 	var/started = FALSE
-	///Pity respawn counter
-	var/current_try = 1
 	///Pity respawn max
 	var/max_tries = 3
 
@@ -25,6 +23,8 @@
 	src.flock = F || new /datum/flock()
 	src.real_name = "Flockmind [src.flock.name]"
 	src.name = src.real_name
+	if(src.flock.name == "ba.ba") //this easteregg used with permission from Hempuli. Thanks Hempuli!
+		src.icon_state = "baba"
 	src.update_name_tag()
 	src.flock.registerFlockmind(src)
 	if (!F)
@@ -80,7 +80,7 @@
 		return TRUE
 	if (!src.flock)
 		return
-	src.flock.peak_compute = max(src.flock.peak_compute, src.flock.total_compute())
+	src.flock.stats.peak_compute = max(src.flock.stats.peak_compute, src.flock.total_compute())
 	if (src.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD * 3 / 4)
 		if (!ON_COOLDOWN(src, "afk_message", FLOCK_AFK_COUNTER_THRESHOLD))
 			boutput(src, "<span class='flocksay'><b>\[SYSTEM: Sentience pause detected. Preparing promotion routines.\]</b></span>")
@@ -139,11 +139,11 @@
 	if (src.tutorial && !suicide)
 		return
 	src.emote("scream")
-	if (src.flock.peak_compute < 200 && src.current_try < src.max_tries)
+	if (src.flock && src.flock.stats.peak_compute < 200 && src.flock.stats.respawns < src.max_tries)
 		src.reset()
-		src.flock?.perish(FALSE)
-		src.current_try++
-		boutput(src, "<span class='alert'><b>With no drones left in your Flock you retreat back into the Signal, ready to open another rift. You are now iteration [src.current_try].</b></span>")
+		src.flock.perish(FALSE)
+		src.flock.stats.respawns++
+		boutput(src, "<span class='alert'><b>With no drones left in your Flock you retreat back into the Signal, ready to open another rift. You are now iteration [src.flock.stats.respawns].</b></span>")
 		return
 	. = ..()
 	if(src.client)

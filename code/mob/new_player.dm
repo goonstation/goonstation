@@ -669,19 +669,12 @@ a.latejoin-card:hover {
 							break
 
 					var/bad_type = null
-					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles)){
-
+					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles))
 						//Another one I need input on
 						if(ticker.mode.latejoin_antag_roles[ROLE_TRAITOR] != null)
-						{
 							bad_type = weighted_pick(ticker.mode.latejoin_antag_roles);
-						}
-						else{
+						else
 							bad_type = pick(ticker.mode.latejoin_antag_roles)
-						}
-						}
-
-
 					else
 						bad_type = ROLE_TRAITOR
 

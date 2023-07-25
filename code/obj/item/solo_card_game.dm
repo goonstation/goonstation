@@ -1,24 +1,24 @@
-/obj/item/card_group/mono
-	card_style = "mono"
+/obj/item/card_group/solo
+	card_style = "solo"
 	total_cards = 108
-	card_name = "MONO"
+	card_name = "SOLO"
 
 	New()
 		..()
 		//Add special cards
 		for(var/i in 1 to 4)
-			stored_cards += new /obj/item/playing_card/Mono(src, 5, 0)
-			stored_cards += new /obj/item/playing_card/Mono(src, 5, 1)
+			stored_cards += new /obj/item/playing_card/solo(src, 5, 0)
+			stored_cards += new /obj/item/playing_card/solo(src, 5, 1)
 
 		//Add one set of zeroes
 		for(var/i in 1 to 4)
-			stored_cards += new /obj/item/playing_card/Mono(src,i,0)
+			stored_cards += new /obj/item/playing_card/solo(src,i,0)
 
 		//Do rest of the numbers
 		for(var/i in 1 to 4)
 			for(var/j in 1 to 12)
-				stored_cards += new /obj/item/playing_card/Mono(src, i, j)
-				stored_cards += new /obj/item/playing_card/Mono(src, i, j)
+				stored_cards += new /obj/item/playing_card/solo(src, i, j)
+				stored_cards += new /obj/item/playing_card/solo(src, i, j)
 
 
 
@@ -26,15 +26,15 @@
 
 
 
-/obj/item/card_box/Mono
+/obj/item/card_box/solo
 	box_style = "red"
-	name = "box of MONO cards"
+	name = "box of SOLO cards"
 
 	New()
 		..()
-		stored_deck = new /obj/item/card_group/mono(src)
+		stored_deck = new /obj/item/card_group/solo(src)
 
-/obj/item/playing_card/Mono
+/obj/item/playing_card/solo
 	var/static/numToSpecial = list("10"="Block", "11"="Reverse", "12"="Draw 2")
 
 	New(atom/loc, var/suit, var/num)
@@ -65,10 +65,10 @@
 			else  //If I fuck up generation this will get people complaining
 				name = "Wild Draw 4"
 				num = 1
-		icon_state = "mono-[suit]-[num]"
+		icon_state = "solo-[suit]-[num]"
 		update_stored_info()
-		//Only meant to be used as with the mono card-game generation
+		//Only meant to be used as with the solo card-game generation
 		//Same as calling update_card_information on card holder
-		card_name = "MONO"
-		card_style = "mono"
+		card_name = "SOLO"
+		card_style = "solo"
 		total_cards = 108

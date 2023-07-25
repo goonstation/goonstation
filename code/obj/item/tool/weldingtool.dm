@@ -10,7 +10,7 @@
 	var/icon_state_variant_suffix = null
 	var/item_state_variant_suffix = null
 
-	var/welding = 0
+	var/welding = FALSE
 	var/status = 0 // flamethrower construction :shobon:
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = ONBELT
@@ -26,15 +26,16 @@
 	stamina_damage = 10
 	stamina_cost = 18
 	stamina_crit_chance = 0
-	rand_pos = 1
-	inventory_counter_enabled = 1
-	var/capacity = 20
+	rand_pos = TRUE
+	inventory_counter_enabled = TRUE
+	burn_possible = FALSE
+	var/fuel_capacity = 20
 
 	New()
 		..()
-		src.create_reagents(capacity)
-		reagents.add_reagent("fuel", capacity)
-		src.inventory_counter.update_number(get_fuel())
+		src.create_reagents(src.fuel_capacity)
+		src.reagents.add_reagent("fuel", src.fuel_capacity)
+		src.inventory_counter.update_number(src.get_fuel())
 
 		src.setItemSpecial(/datum/item_special/flame)
 
@@ -112,8 +113,8 @@
 			else return ..()
 		else return ..()
 
-	attackby(obj/item/W, mob/user)
-		if (isscrewingtool(W))
+	attackby(obj/item/I, mob/user)
+		if (isscrewingtool(I))
 			if (status)
 				status = 0
 				boutput(user, "<span class='notice'>You resecure the welder.</span>")
@@ -121,14 +122,14 @@
 				status = 1
 				boutput(user, "<span class='notice'>The welder can now be attached and modified.</span>")
 
-		else if (status == 1 && istype(W,/obj/item/rods))
+		else if (status == 1 && istype(I, /obj/item/rods))
 			if (src.loc != user)
 				boutput(user, "<span class='alert'>You need to be holding [src] to work on it!</span>")
 				return
 			boutput(user, "<span class='notice'>You attach the rod to the welding tool.</span>")
 			var/obj/item/rods/R = new /obj/item/rods
 			R.amount = 1
-			var/obj/item/rods/S = W
+			var/obj/item/rods/S = I
 			S.change_stack_amount(-1)
 			var/obj/item/assembly/weld_rod/F = new /obj/item/assembly/weld_rod( user )
 			src.set_loc(F)
@@ -144,13 +145,13 @@
 			src.add_fingerprint(user)
 
 
-	afterattack(obj/O as obj, mob/user as mob)
+	afterattack(obj/O, mob/user)
 		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && BOUNDS_DIST(src, O) == 0)
 			if  (!O.reagents.total_volume)
 				boutput(user, "<span class='alert'>The [O.name] is empty!</span>")
 				return
 			if ("fuel" in O.reagents.reagent_list)
-				O.reagents.trans_to(src, capacity, 1, 1, O.reagents.reagent_list.Find("fuel"))
+				O.reagents.trans_to(src, fuel_capacity, 1, do_fluid_react = TRUE, index = O.reagents.reagent_list.Find("fuel"))
 				src.inventory_counter.update_number(get_fuel())
 				boutput(user, "<span class='notice'>Welder refueled</span>")
 				playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
@@ -158,50 +159,20 @@
 		if (src.welding)
 			use_fuel((ismob(O) || istype(O, /obj/blob) || istype(O, /obj/critter)) ? 2 : 0.2)
 			if (get_fuel() <= 0)
-				boutput(user, "<span class='notice'>Need more fuel!</span>")
-				src.welding = 0
-				src.force = 3
-				hit_type = DAMAGE_BLUNT
-				set_icon_state("weldingtool-off" + src.icon_state_variant_suffix)
-				src.item_state = "weldingtool-off" + src.item_state_variant_suffix
-				user.update_inhands()
+				src.set_state(on = FALSE, user = user)
 			var/turf/location = user.loc
 			if (istype(location, /turf))
 				location.hotspot_expose(700, 50, 1)
 			if (O && !ismob(O) && O.reagents)
 				boutput(user, "<span class='notice'>You heat \the [O.name]</span>")
 				O.reagents.temperature_reagents(4000,50, 100, 100, 1)
-		return
 
 	attack_self(mob/user as mob)
 		if (status > 1) return
-		src.welding = !(src.welding)
 		src.firesource = !(src.firesource)
-		tooltip_rebuild = 1
-		if (src.welding)
-			if (get_fuel() <= 0)
-				boutput(user, "<span class='notice'>Need more fuel!</span>")
-				src.welding = 0
-				return 0
-			boutput(user, "<span class='notice'>You will now weld when you attack.</span>")
-			src.force = 15
-			hit_type = DAMAGE_BURN
-			set_icon_state("weldingtool-on" + src.icon_state_variant_suffix)
-			src.item_state = "weldingtool-on" + src.item_state_variant_suffix
-			processing_items |= src
-			if(user && !ON_COOLDOWN(src, "playsound", 1.3 SECONDS))
-				playsound(src.loc, 'sound/effects/welder_ignite.ogg', 65, 1)
-			SEND_SIGNAL(src, COMSIG_LIGHT_ENABLE)
-
-		else
-			boutput(user, "<span class='notice'>Not welding anymore.</span>")
-			src.force = 3
-			hit_type = DAMAGE_BLUNT
-			set_icon_state("weldingtool-off" + src.icon_state_variant_suffix)
-			src.item_state = "weldingtool-off" + src.item_state_variant_suffix
-			SEND_SIGNAL(src, COMSIG_LIGHT_DISABLE)
+		tooltip_rebuild = TRUE
+		src.set_state(on = !src.welding, user = user)
 		user.update_inhands()
-		return
 
 	blob_act(var/power)
 		if (prob(power * 0.5))
@@ -210,7 +181,6 @@
 	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 		if (exposed_temperature > 1000)
 			return ..()
-		return
 
 	firesource_interact()
 		if (reagents.get_reagent_amount("fuel"))
@@ -230,13 +200,7 @@
 		if (prob(10))
 			use_fuel(1)
 			if (!get_fuel())
-				welding = 0
-				force = 3
-				hit_type = DAMAGE_BLUNT
-				set_icon_state("weldingtool-off" + src.icon_state_variant_suffix)
-				src.item_state = "weldingtool-off" + src.item_state_variant_suffix
-				processing_items.Remove(src)
-				return
+				src.set_state(on = FALSE, user = ismob(src.loc) ? src.loc : null)
 
 	proc/get_fuel()
 		if (reagents)
@@ -247,45 +211,56 @@
 		if (reagents)
 			reagents.remove_reagent("fuel", amount)
 		src.inventory_counter.update_number(get_fuel())
-		return
+
+#define EYE_DAMAGE_IMMUNE 2
+#define EYE_DAMAGE_MINOR 1
+#define EYE_DAMAGE_NORMAL 0
+#define EYE_DAMAGE_EXTRA -1
 
 	proc/eyecheck(mob/user as mob)
 		if(user.isBlindImmune())
 			return
-		//check eye protection
-		var/safety = 0
+		/// Checks eye protection; positive value for protecting eyes, negative for increasing damage (thermals)
+		var/safety = EYE_DAMAGE_NORMAL
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			// we want to check for the thermals first so having a polarized eye doesn't protect you if you also have a thermal eye
 			if (istype(H.glasses, /obj/item/clothing/glasses/thermal) || H.eye_istype(/obj/item/organ/eye/cyber/thermal) || istype(H.glasses, /obj/item/clothing/glasses/nightvision) || H.eye_istype(/obj/item/organ/eye/cyber/nightvision))
-				safety = -1
+				safety = EYE_DAMAGE_EXTRA
 			else if (istype(H.head, /obj/item/clothing/head/helmet/welding))
 				var/obj/item/clothing/head/helmet/welding/WH = H.head
 				if(!WH.up)
-					safety = 2
+					safety = EYE_DAMAGE_IMMUNE
 				else
-					safety = 0
+					safety = EYE_DAMAGE_NORMAL
 			else if (istype(H.head, /obj/item/clothing/head/helmet/space/industrial))
 				var/obj/item/clothing/head/helmet/space/industrial/helmet = H.head
 				if (helmet.has_visor && helmet.visor_enabled)
-					safety = -1
+					safety = EYE_DAMAGE_EXTRA
 				else
-					safety = 2
+					safety = EYE_DAMAGE_IMMUNE
 			else if (istype(H.head, /obj/item/clothing/head/helmet/space))
-				safety = 2
+				safety = EYE_DAMAGE_IMMUNE
 			else if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses) || H.eye_istype(/obj/item/organ/eye/cyber/sunglass))
-				safety = 1
+				safety = EYE_DAMAGE_MINOR
 		switch (safety)
-			if (1)
+			// IMMUNE means nothing happens
+
+			if (EYE_DAMAGE_MINOR)
 				boutput(user, "<span class='alert'>Your eyes sting a little.</span>")
 				user.take_eye_damage(rand(1, 2))
-			if (0)
+			if (EYE_DAMAGE_NORMAL)
 				boutput(user, "<span class='alert'>Your eyes burn.</span>")
 				user.take_eye_damage(rand(2, 4))
-			if (-1)
+			if (EYE_DAMAGE_EXTRA)
 				boutput(user, "<span class='alert'><b>Your goggles intensify the welder's glow. Your eyes itch and burn severely.</b></span>")
 				user.change_eye_blurry(rand(12, 20))
 				user.take_eye_damage(rand(12, 16))
+
+#undef EYE_DAMAGE_IMMUNE
+#undef EYE_DAMAGE_MINOR
+#undef EYE_DAMAGE_NORMAL
+#undef EYE_DAMAGE_EXTRA
 
 	proc/cauterise(mob/living/carbon/human/H as mob, mob/living/carbon/user as mob, var/part)
 		if(!istype(H)) return
@@ -338,26 +313,58 @@
 		H.bioHolder.RemoveEffect("loose_robot_[part]")
 		return
 
-	proc/try_weld(mob/user, var/fuel_amt = 2, var/use_amt = -1, var/noisy=1, var/burn_eyes=1) //fuel amt is how much fuel is needed to weld, use_amt is how much fuel is used per action
+	/// fuel_amt is how much fuel is needed to weld, use_amt is how much fuel is used per action
+
+	proc/try_weld(mob/user, var/fuel_amt = 2, var/use_amt = -1, var/noisy=1, var/burn_eyes=1)
 		if (src.welding)
 			if(use_amt == -1)
 				use_amt = fuel_amt
 			if (src.get_fuel() < fuel_amt)
 				boutput(user, "<span class='notice'>Need more fuel!</span>")
-				return 0 //welding, doesnt have fuel
+				return FALSE //welding, doesnt have fuel
 			src.use_fuel(use_amt)
 			if(noisy)
 				playsound(user.loc, list('sound/items/Welder.ogg', 'sound/items/Welder2.ogg')[noisy], 40, 1)
 			if(burn_eyes)
 				src.eyecheck(user)
-			return 1 //welding, has fuel
-		return 0 //not welding
+			return TRUE //welding, has fuel
+		return FALSE //not welding
+
+	/** Set the stats for the weldingtool and handles side effects when transitioning on->off or off->on
+	  * `on` - TRUE for welding, FALSE for not welding
+	  * `user` - mob toggling the welder, if applicable. Can be null. Currently only used to send chat feedback
+	  */
+	proc/set_state(on, mob/user)
+		if (src.welding != on)
+			src.welding = on
+			if (src.welding)
+				if (get_fuel() <= 0)
+					boutput(user, "<span class='notice'>Need more fuel!</span>")
+					src.welding = FALSE
+					return FALSE
+				boutput(user, "<span class='notice'>You will now weld when you attack.</span>")
+				src.force = 15
+				hit_type = DAMAGE_BURN
+				set_icon_state("weldingtool-on" + src.icon_state_variant_suffix)
+				src.item_state = "weldingtool-on" + src.item_state_variant_suffix
+				processing_items |= src
+				if(user && !ON_COOLDOWN(src, "playsound", 1.3 SECONDS))
+					playsound(src.loc, 'sound/effects/welder_ignite.ogg', 65, 1)
+				SEND_SIGNAL(src, COMSIG_LIGHT_ENABLE)
+			else
+				boutput(user, "<span class='notice'>Not welding anymore.</span>")
+				src.force = 3
+				hit_type = DAMAGE_BLUNT
+				set_icon_state("weldingtool-off" + src.icon_state_variant_suffix)
+				src.item_state = "weldingtool-off" + src.item_state_variant_suffix
+				SEND_SIGNAL(src, COMSIG_LIGHT_DISABLE)
+
 
 /obj/item/weldingtool/yellow
 	icon_state = "weldingtool-off-yellow"
 	item_state = "weldingtool-off-yellow"
 	icon_state_variant_suffix = "-yellow"
-	uses_multiple_icon_states = 1
+	uses_multiple_icon_states = TRUE
 
 /obj/item/weldingtool/vr
 	icon_state = "weldingtool-off-vr"
@@ -365,4 +372,4 @@
 
 /obj/item/weldingtool/high_cap
 	name = "high-capacity weldingtool"
-	capacity = 100
+	fuel_capacity = 100

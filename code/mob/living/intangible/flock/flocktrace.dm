@@ -25,7 +25,7 @@
 	if(istype(F))
 		src.flock = F
 		src.flock.addTrace(src)
-		src.flock.partitions_made++
+		src.flock.stats.partitions_made++
 		if (free)
 			src.flock.free_traces++
 	else

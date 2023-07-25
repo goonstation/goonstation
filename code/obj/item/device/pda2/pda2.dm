@@ -267,6 +267,7 @@
 		name = "Engineer PDA"
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
+		setup_default_module = /obj/item/device/pda_module/tray //mechanics used to have these
 		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_RKIT, MGA_CRISIS)
 
@@ -274,6 +275,7 @@
 		name = "Technical Assistant PDA"
 		icon_state = "pda-e" //tech ass is too broad to have a set cartridge but should get alerts
 		mailgroups = list(MGD_STATIONREPAIR,MGD_PARTY)
+		setup_default_module = /obj/item/device/pda_module/tray
 		alertgroups = list(MGA_MAIL,MGA_RADIO)
 
 	mining
@@ -284,6 +286,7 @@
 	chiefengineer
 		icon_state = "pda-ce"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
+		setup_default_module = /obj/item/device/pda_module/tray
 		mailgroups = list(MGO_ENGINEER,MGD_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_SALES, MGA_CARGOREQUEST, MGA_SHIPPING, MGA_RKIT)
 

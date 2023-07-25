@@ -1,5 +1,5 @@
 /datum/game_mode/mixed
-	name = "mixed (action)"
+	name = "Mixed (Action)"
 	config_tag = "mixed"
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_WRESTLER = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
@@ -241,38 +241,7 @@
 		send_intercept()
 
 /datum/game_mode/mixed/send_intercept()
-	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
-	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
-
-	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "changeling")
-	possible_modes -= "[ticker.mode]"
-	var/number = pick(2, 3)
-	var/i = 0
-	for(i = 0, i < number, i++)
-		possible_modes.Remove(pick(possible_modes))
-	possible_modes.Insert(rand(possible_modes.len), "[ticker.mode]")
-
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		intercepttext += i_text.build(A, pick(traitors))
-/*
-	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
-		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
-			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
-			intercept.name = "paper- 'Cent. Com. Status Summary'"
-			intercept.info = intercepttext
-
-			comm.messagetitle.Add("Cent. Com. Status Summary")
-			comm.messagetext.Add(intercepttext)
-*/
-
-	for_by_tcl(C, /obj/machinery/communications_dish)
-		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
-
-	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-
-
+	..(src.traitors)
 /datum/game_mode/mixed/declare_completion()
 	. = ..()
 

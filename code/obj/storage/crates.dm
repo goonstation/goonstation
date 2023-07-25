@@ -185,6 +185,10 @@
 	desc = "Theoretically, items that are lost by a person are placed here so that the person may come and find them. This never happens."
 	spawn_contents = list(/obj/item/gnomechompski)
 
+/obj/storage/crate/bin/trash
+	name = "trash can"
+	desc = "A can for trash. Garbage. That kind of thing."
+
 /obj/storage/crate/adventure
 	name = "adventure crate"
 	desc = "Only distantly related to the adventure closet."

@@ -106,7 +106,11 @@
 	..()
 	var/area/area = get_area(src)
 	//if only these had a common parent...
-	if (istype(area, /area/station/turret_protected/ai) || istype(area, /area/station/turret_protected/ai_upload) || istype(area, /area/station/turret_protected/AIsat))
+	var/list/aiareas = list(/area/station/turret_protected/ai,
+							/area/station/turret_protected/ai_upload,
+							/area/station/turret_protected/AIsat,
+							/area/station/turret_protected/AIbasecore1)
+	if (locate(area) in aiareas)
 		src.ai_only = TRUE
 
 	AddComponent(/datum/component/camera_coverage_emitter)

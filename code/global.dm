@@ -389,6 +389,7 @@ var/global
 
 	// Zam note: this is horrible
 	forced_desussification = 0
+	forced_desussification_worse = 0
 
 	disable_next_click = 0
 

@@ -1,9 +1,10 @@
 /datum/game_mode/flock
-	name = "flock"
+	name = "Flock (Beta)"
 	config_tag = "flock"
+	regular = FALSE
 
-	shuttle_available = 2
-	shuttle_available_threshold = 12000 // 20 min, default value, probably change this
+	shuttle_available = SHUTTLE_AVAILABLE_DELAY
+	shuttle_available_threshold = 20 MINUTES // default value, probably change this
 
 	//NOTE: if you need to track something, put it here
 	var/list/datum/mind/flockminds = list()

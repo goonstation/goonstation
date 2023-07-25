@@ -81,11 +81,14 @@
 
 	return B
 
-var/global/obj/flashDummy
+var/global/obj/fuckyou/flashDummy
+
+// This runtimes due to abstract instantiation every time an arcflash occurs and I don't feel like fixing it so here's a magic concrete child
+/obj/fuckyou
 
 /proc/getFlashDummy()
 	if (!flashDummy)
-		flashDummy = new /obj(null)
+		flashDummy = new /obj/fuckyou(null)
 		flashDummy.set_density(0)
 		flashDummy.set_opacity(0)
 		flashDummy.anchored = 1
@@ -1251,8 +1254,10 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		for(var/mob/M as anything in by_cat[TR_CAT_OMNIPRESENT_MOBS])
 			if(get_step(M, 0)?.z == get_step(centre, 0)?.z)
 				. |= M
-
-
+	var/turf/T = get_turf(centre)
+	if(T?.vistarget)
+		// this turf is being shown elsewhere through a visual mirror, make sure they get to hear too
+		. |= all_hearers(range, T.vistarget)
 
 /proc/all_viewers(var/range,var/centre)
 	. = list()

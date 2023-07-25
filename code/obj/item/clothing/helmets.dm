@@ -950,16 +950,21 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 	icon_state = "indusred"
 	item_state = "indusred"
 	is_syndicate = 1
+	blocked_from_petasusaphilic = TRUE
 
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 7)
+
+TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
+	mats = list("MET-3"=20, "uqil"=10, "CON-2" = 10, "POW-2" = 10)
 
 /obj/item/clothing/head/helmet/space/industrial/salvager
 	name = "\improper Salvager juggernaut combat helmet"
 	desc = "A heavily modified industrial mining helmet, it's been retrofitted for combat use."
 	icon_state = "salvager-heavy"
 	item_state = "salvager-heavy"
+	blocked_from_petasusaphilic = TRUE
 	has_visor = TRUE
 	visor_color_lst = list(
 		"color_r" = 1.0,

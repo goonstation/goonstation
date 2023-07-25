@@ -34598,26 +34598,25 @@
 /area/station/engine/core)
 "bCq" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "4-10"
-	},
-/obj/machinery/atmospherics/portables_connector{
-	dir = 4
-	},
-/obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bCr" = (
+/obj/machinery/atmospherics/valve{
+	dir = 4;
+	name = "cold loop auxillary west"
+	},
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
-	icon_state = "4-10"
+	icon_state = "2-4"
 	},
+/obj/cable{
+	icon_state = "2-5"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"bCr" = (
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -34630,11 +34629,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bCs" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "6-8"
-	},
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
@@ -34650,6 +34644,11 @@
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -34688,11 +34687,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bCw" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "4-10"
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
 	},
@@ -34711,8 +34705,8 @@
 	opacity = 0
 	},
 /obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	d2 = 10;
+	icon_state = "0-10"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/core)
@@ -35558,42 +35552,12 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/core)
 "bEh" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "5-6"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bEi" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "4-5"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "5-8"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bEj" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "4-5"
-	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bEk" = (
@@ -35605,43 +35569,23 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bEl" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-9"
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bEm" = (
-/obj/cable{
-	icon_state = "2-5"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 8;
-	level = 2
-	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bEn" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/valve{
 	dir = 4;
 	name = "cold loop auxillary west"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "1-6"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -36598,6 +36542,14 @@
 /area/station/engine/core)
 "bGd" = (
 /obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
@@ -36605,17 +36557,10 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bGe" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bGf" = (
@@ -36630,26 +36575,7 @@
 	icon_state = "2-8"
 	},
 /obj/cable{
-	icon_state = "2-5"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-9"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "8-9"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "4-5"
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -36658,11 +36584,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/engine,
@@ -36675,8 +36596,8 @@
 	},
 /obj/cable{
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -38994,16 +38915,8 @@
 /area/station/engine/core)
 "bJW" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-2"
 	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bJX" = (
@@ -39017,42 +38930,25 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "1-6"
-	},
-/obj/cable{
-	icon_state = "1-10"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "8-10"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "4-6"
-	},
 /obj/stool/chair/yellow{
 	dir = 8
 	},
-/obj/cable,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bJY" = (
 /obj/cable{
-	d1 = 4;
+	d1 = 1;
 	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bJZ" = (
@@ -39923,65 +39819,13 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/core)
 "bLC" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "5-6"
-	},
 /obj/stool/chair/yellow{
 	dir = 4
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
 	},
 /obj/machinery/light,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"bLD" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "4-6"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "6-8"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bLE" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "4-6"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bLF" = (
-/obj/cable{
-	icon_state = "1-10"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "bLG" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "1-6"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
 	level = 2
@@ -41059,11 +40903,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "4-9"
-	},
-/obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -41076,11 +40915,6 @@
 	name = "hot loop auxillary west"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "4-9"
-	},
-/obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -41088,11 +40922,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bNu" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "5-8"
-	},
 /obj/machinery/meter,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -41105,6 +40934,11 @@
 	level = 2
 	},
 /obj/machinery/light,
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bNv" = (
@@ -41141,11 +40975,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bNx" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "4-9"
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
 	},
@@ -41167,8 +40996,8 @@
 	opacity = 0
 	},
 /obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-9";
+	d2 = 9
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/core)
@@ -119319,12 +119148,12 @@ bvh
 bxj
 byV
 bAD
-bCq
-bEi
+bNs
+bGc
 bGc
 bEk
 bGc
-bLD
+bGc
 bNs
 bOY
 bQp
@@ -119622,11 +119451,11 @@ bxk
 byV
 bAE
 bCr
-bEj
+bGc
 bGc
 bEk
 bGc
-bLE
+bGc
 bNt
 bNY
 bQp
@@ -119924,11 +119753,11 @@ bxl
 byW
 bAF
 bCs
-bEk
+bJW
 bGd
 bJZ
-bCu
-bEk
+bGd
+bJW
 bNu
 bAF
 bQq
@@ -120229,8 +120058,8 @@ bCv
 bEl
 bGe
 bIb
-bJW
-bLF
+bGe
+bEl
 bNw
 bAG
 bQr
@@ -120528,11 +120357,11 @@ bxn
 byY
 bAH
 bCu
-bEk
+bGc
 bGf
 bIc
 bJX
-bEk
+bGc
 bGc
 bOZ
 bQs
@@ -120830,10 +120659,10 @@ bxo
 byZ
 bAG
 bCM
-bEm
+bLG
 bGg
 bId
-bJY
+bGg
 bLG
 bNH
 bAG
@@ -121132,10 +120961,10 @@ bxo
 bza
 bAF
 bCw
-bEn
+bCq
 bGh
 bIe
-bJZ
+bJY
 bEn
 bNx
 bAF
