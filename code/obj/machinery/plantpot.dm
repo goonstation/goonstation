@@ -1896,12 +1896,15 @@ TYPEINFO(/obj/machinery/hydro_mister)
 	desc = "A device that constantly sprays small amounts of chemical onto nearby plants."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "fogmachine0"
+	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | ACCEPTS_MOUSEDROP_REAGENTS | OPENCONTAINER
 	density = 1
 	anchored = 0
 	var/active = 0
 	var/mode = 1
 
 	New()
+		if (prob(1))
+			name = pick ("Botanical Missus", "Botanical Miss") //in-joke for ESL folk
 		..()
 		src.create_reagents(5000)
 		reagents.add_reagent("water", 1000)
@@ -1958,6 +1961,3 @@ TYPEINFO(/obj/machinery/hydro_mister)
 
 		src.icon_state = "fogmachine[src.active]"
 		playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
-
-	is_open_container()
-		return 1 // :I

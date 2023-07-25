@@ -28,7 +28,7 @@
 
 /datum/matfab_recipe/mining_mod_conc
 	name = "Tool mod (Concussive)"
-	desc = "A mod for mining tools. Increases AOE."
+	desc = "A mod for mining tools. Increases area of effect."
 	category = "Mining Tools"
 
 	New()
@@ -44,7 +44,7 @@
 
 /datum/matfab_recipe/mining_head_pick
 	name = "Tool head (Pick)"
-	desc = "A Pick head. Picks have high power but no AOE."
+	desc = "A Pick head. Picks have high power but no area of effect."
 	category = "Mining Tools"
 
 	New()
@@ -64,7 +64,7 @@
 
 /datum/matfab_recipe/mining_head_blaster
 	name = "Tool head (Blaster)"
-	desc = "A Blaster head. Blasters have lower power but very high AOE."
+	desc = "A Blaster head. Blasters have lower power but very high area of effect."
 	category = "Mining Tools"
 
 	New()
@@ -83,7 +83,7 @@
 
 /datum/matfab_recipe/mining_head_hammer
 	name = "Tool head (Hammer)"
-	desc = "A Hammer head. Hammers have a wide AOE and normal power."
+	desc = "A Hammer head. Hammers have a wide area of effect and normal power."
 	category = "Mining Tools"
 
 	New()
@@ -102,7 +102,7 @@
 
 /datum/matfab_recipe/mining_head_drill
 	name = "Tool head (Drill)"
-	desc = "A Drill head. Hammers have a long AOE and normal power."
+	desc = "A Drill head. Drills have a long area of effect and normal power."
 	category = "Mining Tools"
 
 	New()
@@ -195,7 +195,7 @@
 
 /datum/matfab_recipe/spear
 	name = "Spear"
-	desc = "A simple spear with long reach. (This is very experimental and likely buggy)"
+	desc = "A simple spear with long reach."
 	category = "Weapons"
 
 	New()
@@ -280,7 +280,7 @@
 
 /datum/matfab_recipe/lens
 	name = "Lens"
-	desc = "A Lens used as a component in various objects."
+	desc = "A lens used as a component in various objects."
 	category = "Components"
 
 	New()
@@ -299,7 +299,7 @@
 
 /datum/matfab_recipe/tripod
 	name = "Tripod"
-	desc = "A tripod."
+	desc = "A tripod for attaching a light to."
 	category = "Components"
 
 	New()
@@ -505,7 +505,7 @@
 
 /datum/matfab_recipe/tripodbulb
 	name = "Tripod bulb"
-	desc = "a replacement tripod light bulb. Lens color affects light color."
+	desc = "A replacement tripod light bulb. Lens color affects light color."
 	category = "Lights"
 
 	New()
@@ -527,7 +527,7 @@
 		return
 
 /datum/matfab_recipe/sheet
-	name = "Material Sheet"
+	name = "Material sheet"
 	desc = "Sheets for construction purposes."
 	category = "Tools"
 

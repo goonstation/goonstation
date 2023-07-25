@@ -41136,7 +41136,6 @@
 /area/tech_outpost)
 "cdE" = (
 /obj/table/auto,
-/obj/machinery/recharger,
 /obj/item/device/light/flashlight,
 /turf/simulated/floor/grime,
 /area/tech_outpost)
