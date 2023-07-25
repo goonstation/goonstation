@@ -376,6 +376,13 @@ mob/new_player
 			// Apply any roundstart mutators to late join if applicable
 			roundstart_events(character)
 
+			//picky eater trait handling
+			if (ishuman(character) && character.traitHolder?.hasTrait("picky_eater"))
+				var/datum/trait/picky_eater/eater_trait = character.traitHolder.getTrait("picky_eater")
+				if (length(eater_trait.fav_foods) > 0)
+					boutput(character, eater_trait.explanation_text)
+					character.mind.store_memory(eater_trait.explanation_text)
+
 			SPAWN(0)
 				qdel(src)
 			global.latespawning.unlock()
