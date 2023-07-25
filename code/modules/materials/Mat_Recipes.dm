@@ -83,7 +83,7 @@
 /datum/material_recipe/censorium
 	name = "censorium"
 	result_id = "censorium"
-	result_item = /obj/item/material_piece/censorium
+	result_item = /obj/item/material_piece/metal/censorium
 
 	validate(var/datum/material/M)
 		var/hasChar = 0

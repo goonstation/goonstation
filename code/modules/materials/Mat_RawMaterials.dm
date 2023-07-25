@@ -365,7 +365,7 @@
 	icon_state = "bar"
 	default_material = "soulsteel"
 
-/obj/item/material_piece/censorium
+/obj/item/material_piece/metal/censorium
 	desc = "A bar of censorium. Nice try."
 	icon_state = "bar"
 	default_material = "censorium"
