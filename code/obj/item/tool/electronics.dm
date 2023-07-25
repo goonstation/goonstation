@@ -140,6 +140,9 @@
 /obj/item/electronics/frame/proc/kickout(source, mob/stowaway)
 	if(istype(stowaway))
 		stowaway.set_loc(get_turf(source))
+	else
+		for(var/atom/movable/AM in stowaway)
+			kickout(source, AM)
 
 /obj/item/electronics/frame/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/electronics/))
