@@ -144,7 +144,7 @@
 		for(var/atom/movable/AM in stowaway)
 			kickout(source, AM)
 
-/obj/electronics/frame/Entered(atom/movable/AM, atom/OldLoc)
+/obj/item/electronics/frame/Entered(atom/movable/AM, atom/OldLoc)
 	. = ..()
 	kickout(src, AM)
 
