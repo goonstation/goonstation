@@ -149,6 +149,12 @@
 	bullet_act()
 		return
 
+	proc/get_encounter_size(size, P)
+		. = size
+		if(!P || prob(P))
+			var/max_r = round(min(width,height)/2)-1
+			. = rand(size, max_r)
+
 	proc/erase_area()
 		var/turf/origin = get_turf(src)
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))

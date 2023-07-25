@@ -473,6 +473,9 @@ TYPEINFO(/area)
 		dispose()
 		..()
 
+	proc/store_biome(turf/T, datum/biome/B)
+		return
+
 /area/space // the base area you SHOULD be using for space/ocean/etc.
 
 // zewaka - adventure/technical/admin areas below //
