@@ -253,12 +253,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
-"abw" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/observatory)
 "abx" = (
 /obj/stool/chair{
 	dir = 1
@@ -7184,19 +7178,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
-"ays" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/disposalpipe/segment/brig,
-/obj/disposalpipe/segment/ejection{
-	dir = 4
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
-/turf/simulated/floor/grime,
-/area/station/security/brig)
 "ayt" = (
 /obj/table/reinforced/auto,
 /obj/window/cubicle{
@@ -7337,13 +7318,6 @@
 "ayK" = (
 /obj/stool/chair/comfy{
 	dir = 1
-	},
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/cafeteria)
-"ayL" = (
-/obj/machinery/atmospherics/pipe/simple,
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
@@ -12916,12 +12890,6 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
-/area/station/crew_quarters/pool)
-"aMW" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aMX" = (
 /obj/pool_springboard,
@@ -23939,17 +23907,6 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/info)
-"btl" = (
-/obj/stool/chair{
-	dir = 8
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
-	},
-/turf/simulated/floor/carpet{
-	icon_state = "fred2"
-	},
-/area/station/crew_quarters/info)
 "btn" = (
 /obj/machinery/light{
 	dir = 4
@@ -28531,12 +28488,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
-"bMT" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
-/turf/simulated/floor,
-/area/station/science/teleporter)
 "bMU" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -33555,12 +33506,6 @@
 /obj/stool,
 /turf/simulated/floor,
 /area/station/crew_quarters/supplylobby)
-"ccu" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/supplylobby)
 "ccv" = (
 /obj/machinery/vending/book,
 /obj/decal/stripe_caution,
@@ -38309,12 +38254,6 @@
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white,
-/area/station/science/chemistry)
-"cqu" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/turf/simulated/floor/purplewhite/corner,
 /area/station/science/chemistry)
 "cqv" = (
 /obj/machinery/drainage,
@@ -43216,6 +43155,13 @@
 	dir = 8;
 	icon_state = "Stairs2_wide"
 	},
+/area/station/hydroponics/bay)
+"dJW" = (
+/mob/living/carbon/human/npc/monkey/krimpus,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor,
 /area/station/hydroponics/bay)
 "dKw" = (
 /obj/grille/catwalk{
@@ -50277,6 +50223,10 @@
 /obj/submachine/weapon_vendor/fishing/portable,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
+"jYs" = (
+/mob/living/carbon/human/npc/monkey,
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
 "jZi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -51437,6 +51387,12 @@
 	dir = 5
 	},
 /area/space)
+"llo" = (
+/mob/living/carbon/human/npc/monkey,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/dome)
 "llS" = (
 /obj/machinery/conveyor/NS{
 	id = "cargo"
@@ -51842,6 +51798,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"lJH" = (
+/mob/living/carbon/human/npc/monkey,
+/turf/simulated/floor/purplewhite/corner,
+/area/station/science/chemistry)
 "lJN" = (
 /obj/machinery/light{
 	dir = 1;
@@ -52343,6 +52303,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/qm)
+"miE" = (
+/mob/living/carbon/human/npc/monkey,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/dome)
 "mjS" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -53180,6 +53152,17 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quartersA)
+"mUq" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/disposalpipe/segment/brig,
+/obj/disposalpipe/segment/ejection{
+	dir = 4
+	},
+/mob/living/carbon/human/npc/monkey/stirstir,
+/turf/simulated/floor/grime,
+/area/station/security/brig)
 "mVd" = (
 /obj/cable/brown{
 	icon_state = "4-8"
@@ -53610,6 +53593,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"nop" = (
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
+/turf/simulated/floor,
+/area/station/crew_quarters/supplylobby)
 "noq" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
@@ -53779,15 +53766,6 @@
 /obj/item/device/radio/intercom/medical,
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/lobby)
-"ntQ" = (
-/obj/machinery/atmospherics/mixer/flipped{
-	dir = 1;
-	frequency = 1225;
-	id_tag = "engine_combust";
-	master_id = "engine_combust_control"
-	},
-/turf/simulated/floor/red,
-/area/station/engine/hotloop)
 "nvh" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -54906,14 +54884,6 @@
 /area/station/maintenance/southwest)
 "owm" = (
 /obj/table/auto,
-/obj/item/clothing/suit/straight_jacket{
-	pixel_x = -10;
-	pixel_y = 7
-	},
-/obj/item/clothing/suit/straight_jacket{
-	pixel_x = -8;
-	pixel_y = -1
-	},
 /obj/item/reagent_containers/iv_drip/saline{
 	pixel_x = -7;
 	pixel_y = 2
@@ -54970,17 +54940,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"oyu" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/station/engine/hotloop)
 "oyV" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Kitchen";
@@ -55184,6 +55143,15 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)
+"oLE" = (
+/obj/machinery/atmospherics/trinary/mixer/flipped{
+	dir = 1;
+	frequency = 1225;
+	id_tag = "engine_combust";
+	master_id = "engine_combust_control"
+	},
+/turf/simulated/floor/red,
+/area/station/engine/hotloop)
 "oLV" = (
 /obj/machinery/light_switch{
 	name = "N light switch";
@@ -55756,6 +55724,10 @@
 /obj/machinery/computer/card/department/security,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
+"pjv" = (
+/mob/living/carbon/human/npc/monkey/albert,
+/turf/simulated/floor,
+/area/station/science/teleporter)
 "pjA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -56520,15 +56492,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
-"pXT" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_krimpus"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/hydroponics/bay)
 "pYM" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
@@ -58231,14 +58194,6 @@
 /obj/machinery/vending/cola/red,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"rBL" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/dome)
 "rBN" = (
 /obj/landmark/pest,
 /obj/disposalpipe/segment{
@@ -61557,6 +61512,15 @@
 	icon_state = "Stairs2_wide"
 	},
 /area/station/hydroponics/bay)
+"uqr" = (
+/mob/living/carbon/human/npc/monkey/mr_rathen,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/engine/hotloop)
 "urc" = (
 /obj/machinery/light,
 /turf/simulated/floor/yellow/side{
@@ -61637,6 +61601,11 @@
 /obj/landmark/pest,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
+"uvt" = (
+/obj/machinery/atmospherics/pipe/simple,
+/mob/living/carbon/human/npc/monkey/mr_muggles,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "uvz" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -61705,6 +61674,15 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"uzA" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/mob/living/carbon/human/npc/monkey/tanhony,
+/turf/simulated/floor/carpet{
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/info)
 "uzM" = (
 /obj/stool/chair{
 	dir = 4
@@ -63244,20 +63222,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"vUI" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/dome)
 "vUR" = (
 /obj/machinery/door/airlock/pyro/security{
 	aiControlDisabled = 1;
@@ -63332,6 +63296,10 @@
 	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
+"vZL" = (
+/mob/living/carbon/human/npc/monkey/horse,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/observatory)
 "wae" = (
 /obj/machinery/power/solar/east,
 /obj/cable/yellow{
@@ -97651,7 +97619,7 @@ adC
 que
 bKe
 bLr
-bMT
+pjv
 bOu
 bPJ
 uYN
@@ -97884,7 +97852,7 @@ ata
 aun
 avv
 lKp
-ays
+mUq
 azO
 aBu
 aCG
@@ -98278,7 +98246,7 @@ cma
 cjC
 cor
 cpu
-cqu
+lJH
 cpv
 csq
 cth
@@ -100650,7 +100618,7 @@ bqz
 brg
 brR
 cvg
-btl
+uzA
 hxx
 brd
 bvJ
@@ -103596,7 +103564,7 @@ adC
 aal
 abi
 abn
-abw
+vZL
 abC
 abn
 abR
@@ -104632,7 +104600,7 @@ ilc
 aKZ
 cxq
 cNC
-rBL
+llo
 jmw
 nVQ
 ckG
@@ -105237,9 +105205,9 @@ dvC
 ktW
 kca
 dhj
-rBL
+llo
 dhj
-rBL
+llo
 cyx
 gFk
 aah
@@ -105537,7 +105505,7 @@ bBK
 cwQ
 dUE
 vPw
-vUI
+miE
 dhj
 dhj
 myb
@@ -106144,7 +106112,7 @@ vql
 lDv
 dhj
 dhj
-rBL
+llo
 wQD
 aap
 aaq
@@ -108465,7 +108433,7 @@ aIj
 aIf
 aKC
 aLS
-aMW
+jYs
 aLS
 ave
 aLP
@@ -110319,7 +110287,7 @@ bwL
 bwW
 rlD
 vjx
-ntQ
+oLE
 xIC
 mVd
 fna
@@ -110626,7 +110594,7 @@ rrI
 sdU
 hzN
 giA
-oyu
+uqr
 vhW
 kYR
 bqk
@@ -112682,7 +112650,7 @@ atw
 atw
 atw
 atw
-ayL
+uvt
 atw
 aBQ
 aqP
@@ -120312,7 +120280,7 @@ rwL
 bYB
 bZO
 bTB
-ccu
+nop
 cdG
 ceU
 cgm
@@ -127178,7 +127146,7 @@ awJ
 gpQ
 qkY
 cHQ
-pXT
+dJW
 awG
 svZ
 jvO

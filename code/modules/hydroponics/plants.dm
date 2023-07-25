@@ -32,6 +32,7 @@ ABSTRACT_TYPE(/datum/plant)
 	var/nectarlevel = 0 //If nonzero, slowly tries to maintain this level of nectar reagent.
 	var/list/assoc_reagents = list() // Used for extractions, harvesting, etc
 	var/list/commuts = list() // What general mutations can occur in this plant?
+	var/list/innate_commuts = list() //! What kind of mutations should every seed of this plant receive when it is generated
 	var/list/mutations = list() // what mutant variants does this plant have?
 	var/genome = 0 // Used for splicing - how "similar" the plants are = better odds of splice
 	var/stop_size_scaling // Stops the enlarging of sprites based on quality
@@ -194,19 +195,19 @@ ABSTRACT_TYPE(/datum/plant)
 				HYPnewcommutcheck(src,DNA, 2)
 				HYPnewmutationcheck(src,DNA,null,1,S)
 				if (prob(2))
-					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/unstable)
+					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
 			if ("mutagen")
 				HYPmutateDNA(DNA,2)
 				HYPnewcommutcheck(src,DNA, 3)
 				HYPnewmutationcheck(src,DNA,null,1,S)
 				if (prob(5))
-					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/unstable)
+					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
 			if ("ammonia")
 				damage_amt = rand(10,20)
 				DNA.growtime += rand(5,10)
 				DNA.harvtime += rand(2,5)
 				if (prob(5))
-					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/accelerator)
+					HYPaddCommut(DNA,/datum/plant_gene_strain/accelerator)
 			if ("potash")
 				DNA.cropsize += rand(1,4)
 				DNA.harvests -= rand(0,2)
@@ -216,7 +217,7 @@ ABSTRACT_TYPE(/datum/plant)
 			if ("space_fungus")
 				DNA.endurance += rand(1,3)
 				if (prob(3))
-					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/damage_res)
+					HYPaddCommut(DNA,/datum/plant_gene_strain/damage_res)
 			if ("mutadone")
 				if (DNA.growtime < 0)
 					DNA.growtime++

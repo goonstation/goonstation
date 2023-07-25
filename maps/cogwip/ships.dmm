@@ -6621,17 +6621,6 @@
 	icon_state = "floor2"
 	},
 /area/space)
-"rG" = (
-/obj/stool/chair/comfy{
-	dir = 8
-	},
-/obj/landmark/spawner{
-	name = "big_yank"
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/space)
 "rH" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It won't budge.";
@@ -7352,18 +7341,6 @@
 "tc" = (
 /obj/item/match,
 /obj/stool/chair/comfy/shuttle/brown,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/space)
-"td" = (
-/obj/stool/chair/comfy/shuttle/brown,
-/obj/machinery/computer/shuttle_bus/embedded/south{
-	plane = 6
-	},
-/obj/landmark/spawner{
-	name = "john_bill"
-	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -9481,20 +9458,6 @@
 	},
 /turf/unsimulated/floor/red,
 /area/space)
-"yb" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_syndicate"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/unsimulated/floor/red,
-/area/space)
 "yc" = (
 /obj/cable{
 	d1 = 1;
@@ -10788,12 +10751,6 @@
 /turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
-"Br" = (
-/obj/item/storage/belt/hunter,
-/obj/item/clothing/under/misc/tourist,
-/turf/space,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/space)
 "Bs" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor,
@@ -10926,6 +10883,15 @@
 	icon_state = "floor4"
 	},
 /area/space)
+"EI" = (
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/mob/living/carbon/human/big_yank,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/space)
 "Gy" = (
 /obj/decal/cleanable/robot_debris{
 	icon_state = "gib5"
@@ -10958,6 +10924,22 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/shuttlebay,
 /area/space)
+"Lu" = (
+/obj/item/storage/belt/utility,
+/obj/item/clothing/under/misc/tourist,
+/turf/space,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/space)
+"NE" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/obj/machinery/computer/shuttle_bus/embedded/south{
+	plane = 6
+	},
+/mob/living/carbon/human/john,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/space)
 "SN" = (
 /turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
@@ -10970,6 +10952,18 @@
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadcap"
 	},
+/area/space)
+"Va" = (
+/mob/living/carbon/human/npc/monkey/oppenheimer,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/unsimulated/floor/red,
 /area/space)
 
 (1,1,1) = {"
@@ -11993,7 +11987,7 @@ aa
 aa
 aW
 ee
-rG
+EI
 sb
 aW
 aa
@@ -13896,7 +13890,7 @@ xf
 xr
 ai
 xO
-yb
+Va
 ym
 yt
 ym
@@ -16125,7 +16119,7 @@ aa
 aa
 ai
 nE
-Br
+Lu
 ai
 ny
 aa
@@ -23850,7 +23844,7 @@ sK
 sR
 sW
 ee
-td
+NE
 sM
 ti
 aa

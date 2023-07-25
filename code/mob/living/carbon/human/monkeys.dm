@@ -1,6 +1,5 @@
 
 #define IS_NPC_HATED_ITEM(x) ( \
-		istype(x, /obj/item/clothing/suit/straight_jacket) || \
 		istype(x, /obj/item/handcuffs) || \
 		istype(x, /obj/item/device/radio/electropack) || \
 		x:block_vision \
@@ -10,6 +9,7 @@
 	name = "monkey"
 	real_name = "monkey"
 #ifdef IN_MAP_EDITOR
+	icon = 'icons/mob/map_mob.dmi'
 	icon_state = "monkey"
 #endif
 	default_mutantrace = /datum/mutantrace/monkey
@@ -30,6 +30,9 @@
 /mob/living/carbon/human/npc/monkey/mr_muggles
 	name = "Mr. Muggles"
 	real_name = "Mr. Muggles"
+#ifdef IN_MAP_EDITOR
+	icon_state = "mr_muggles"
+#endif
 	gender = "male"
 	ai_offhand_pickup_chance = 1 // very civilized
 	New()
@@ -40,6 +43,9 @@
 /mob/living/carbon/human/npc/monkey/mrs_muggles
 	name = "Mrs. Muggles"
 	real_name = "Mrs. Muggles"
+#ifdef IN_MAP_EDITOR
+	icon_state = "mrs_muggles"
+#endif
 	gender = "female"
 	ai_offhand_pickup_chance = 1 // also very civilized
 	New()
@@ -50,6 +56,9 @@
 /mob/living/carbon/human/npc/monkey/mr_rathen
 	name = "Mr. Rathen"
 	real_name = "Mr. Rathen"
+#ifdef IN_MAP_EDITOR
+	icon_state = "mr_rathen"
+#endif
 	gender = "male"
 	ai_offhand_pickup_chance = 2 // learned that there's dangerous stuff in engineering!
 	ai_poke_thing_chance = 0.3 // don't mess up the engine too much
@@ -61,6 +70,9 @@
 /mob/living/carbon/human/npc/monkey/albert
 	name = "Albert"
 	real_name = "Albert"
+#ifdef IN_MAP_EDITOR
+	icon_state = "albert"
+#endif
 	gender = "male"
 	ai_offhand_pickup_chance = 10 // more curious than most monkeys
 	ai_poke_thing_chance = 3
@@ -74,6 +86,9 @@
 	name = "Von Braun"
 	real_name = "Von Braun"
 	gender = "male"
+#ifdef IN_MAP_EDITOR
+	icon_state = "oppenheimer" // Close enough
+#endif
 	ai_offhand_pickup_chance = 40 // went through training as a spy thief, skilled at snatching stuff
 	New()
 		..()
@@ -84,6 +99,9 @@
 /mob/living/carbon/human/npc/monkey/oppenheimer
 	name = "Oppenheimer"
 	real_name = "Oppenheimer"
+#ifdef IN_MAP_EDITOR
+	icon_state = "oppenheimer"
+#endif
 	gender = "male"
 	ai_offhand_pickup_chance = 40 // went through training as a spy thief, skilled at snatch- wait, I'm getting a feeling of deja vu
 	ai_poke_thing_chance = 2
@@ -139,6 +157,9 @@
 /mob/living/carbon/human/npc/monkey/horse
 	name = "????"
 	real_name = "????"
+#ifdef IN_MAP_EDITOR
+	icon_state = "horse"
+#endif
 	gender = "male"
 	New()
 		..()
@@ -150,6 +171,10 @@
 /mob/living/carbon/human/npc/monkey/tanhony
 	name = "Tanhony"
 	real_name = "Tanhony"
+#ifdef IN_MAP_EDITOR
+	icon = 'icons/mob/map_mob.dmi'
+	icon_state = "tanhony"
+#endif
 	gender = "female"
 	ai_offhand_pickup_chance = 5 // your base monkey
 	New()
@@ -160,6 +185,9 @@
 /mob/living/carbon/human/npc/monkey/krimpus
 	name = "Krimpus"
 	real_name = "Krimpus"
+#ifdef IN_MAP_EDITOR
+	icon_state = "krimpus"
+#endif
 	gender = "female"
 	ai_offhand_pickup_chance = 2.5 // some of the botany fruit is very dangerous, Krimpus learned not to eat
 	New()
@@ -171,6 +199,9 @@
 /mob/living/carbon/human/npc/monkey/stirstir
 	name = "Monsieur Stirstir"
 	real_name = "Monsieur Stirstir"
+#ifdef IN_MAP_EDITOR
+	icon_state = "stirstir"
+#endif
 	gender = "male"
 	ai_offhand_pickup_chance = 4 // a filthy thief but he's trying to play nice for now
 	ai_poke_thing_chance = 5 // maybe finds tools... breaks out of prison...
@@ -189,6 +220,7 @@
 	name = "monkey"
 	real_name = "monkey"
 #ifdef IN_MAP_EDITOR
+	icon = 'icons/mob/map_mob.dmi'
 	icon_state = "monkey"
 #endif
 	ai_aggressive = 0
@@ -628,6 +660,9 @@
 // sea monkeys
 /mob/living/carbon/human/npc/monkey/sea
 	name = "sea monkey"
+#ifdef IN_MAP_EDITOR
+	icon_state = "sea"
+#endif
 	max_health = 150
 	ai_useitems = FALSE // or they eat all the floor pills and die before anyone visits
 	default_mutantrace = /datum/mutantrace/monkey/seamonkey
@@ -644,6 +679,9 @@
 /mob/living/carbon/human/npc/monkey/sea/gang
 	//name = "sea monkey"
 	//real_name = "sea monkey"
+#ifdef IN_MAP_EDITOR
+	icon_state = "sea_gang"
+#endif
 	gender = "male"
 	ai_aggressive = 1
 	ai_calm_down = 0
@@ -652,11 +690,14 @@
 		..()
 		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
-			src.equip_new_if_possible(/obj/item/clothing/under, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/mobster/alt, slot_w_uniform)
 
 /mob/living/carbon/human/npc/monkey/sea/gang_gun
 	//name = "sea monkey"
 	//real_name = "sea monkey"
+#ifdef IN_MAP_EDITOR
+	icon_state = "sea_gang"
+#endif
 	gender = "female"
 	ai_aggressive = 1
 	ai_calm_down = 0
@@ -666,11 +707,14 @@
 		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
 			src.equip_new_if_possible(/obj/item/gun/kinetic/detectiverevolver, slot_l_hand)
-			src.equip_new_if_possible(/obj/item/clothing/under, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/mobster/alt, slot_w_uniform)
 
 /mob/living/carbon/human/npc/monkey/sea/rich
 	//name = "sea monkey"
 	//real_name = "sea monkey"
+#ifdef IN_MAP_EDITOR
+	icon_state = "sea_rich"
+#endif
 	gender = "female"
 	ai_aggressive = 1
 	ai_calm_down = 0
@@ -684,6 +728,9 @@
 	name = "Kimmy"
 	real_name = "Kimmy"
 	gender = "female"
+#ifdef IN_MAP_EDITOR
+	icon_state = "sea_sci"
+#endif
 	New()
 		..()
 		SPAWN(1 SECOND)
@@ -694,6 +741,9 @@
 /mob/living/carbon/human/monkey/mr_wigglesby
 	name = "Mr. Wigglesby"
 	real_name = "Mr. Wigglesby"
+#ifdef IN_MAP_EDITOR
+	icon_state = "mr_wigglesby"
+#endif
 	gender = "male"
 	New()
 		..()

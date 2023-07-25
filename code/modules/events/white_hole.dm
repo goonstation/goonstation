@@ -387,7 +387,7 @@
 		"hell" = list(
 			"fireflash" = 15,
 			/obj/hotspot = 10,
-			/obj/critter/lavacrab = 5,
+			/mob/living/critter/small_animal/crab/lava = 5,
 			/obj/submachine/slot_machine = 5,
 			#ifdef SECRETS_ENABLED
 			/obj/critter/slime/magma = 2,
