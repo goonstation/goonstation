@@ -171,7 +171,7 @@
 	targeted = 0
 	target_anything = 0
 	can_use_in_container = 1
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	ignore_holder_lock = 1
 
 	cast(atom/target)

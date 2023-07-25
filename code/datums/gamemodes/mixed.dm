@@ -15,7 +15,7 @@
 #if defined(MAP_OVERRIDE_NADIR)
 	var/list/major_threats = list(ROLE_WRAITH = 1, ROLE_FLOCKMIND = 1)
 #else
-	var/list/major_threats = list(ROLE_BLOB = 2, ROLE_WRAITH = 1, ROLE_FLOCKMIND = 1)
+	var/list/major_threats = list(ROLE_BLOB = 2, ROLE_WRAITH = 1, ROLE_FLOCKMIND = 2)
 #endif
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
@@ -62,7 +62,7 @@
 	src.latejoin_antag_roles[ROLE_GRINCH] = 1;
 #endif
 
-	var/major_threat_chance = length(src.major_threats) * 20
+	var/major_threat_chance = length(src.major_threats) * 15
 	if ((num_enemies >= 4 && prob(major_threat_chance)) || debug_mixed_forced_wraith || debug_mixed_forced_blob || debug_mixed_forced_flock)
 		var/chosen = weighted_pick(src.major_threats)
 		if (chosen == ROLE_WRAITH || debug_mixed_forced_wraith)

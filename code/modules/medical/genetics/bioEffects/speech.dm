@@ -241,7 +241,7 @@
 	OnAdd()
 		var/mob/living/L = owner
 		if (istype(L))
-			L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: red !important; text-shadow: 1px 1px 0 black; -dm-text-outline: 1px black;"
+			L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: red !important; text-shadow: 0 0 3px black; -dm-text-outline: 2px black;"
 
 	OnRemove()
 		var/mob/living/L = owner
@@ -906,4 +906,19 @@
 		if (!istext(message))
 			return ""
 		message = lolcat(message)
+		return message
+
+/datum/bioEffect/speech/pirate
+	name = "Frontal Gyrus Alteration Type-AR"
+	desc = "Forces the language center of the subject's brain to construct sentences as sailing on the Seven Seas."
+	id = "accent_pirate"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "Ye feel like a swashbucklin' pirate!"
+	msgLose = "You stop feeling like sailing the Seven Seas."
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = pirateify(message)
 		return message

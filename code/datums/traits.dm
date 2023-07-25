@@ -706,7 +706,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	var/list/allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
 	"haloperidol","epinephrine","insulin","silver_sulfadiazine","mutadone","ephedrine","penteticacid","antihistamine","styptic_powder","cryoxadone","atropine",\
 	"salbutamol","perfluorodecalin","mannitol","charcoal","antihol","ethanol","iron","mercury","oxygen","plasma","sugar","radium","water","bathsalts","jenkem","crank",\
-	"LSD","space_drugs","THC","nicotine","krokodil","catdrugs","triplemeth","methamphetamine","mutagen","neurotoxin","sarin","smokepowder","infernite","phlogiston","fuel",\
+	"LSD","space_drugs","THC","nicotine","krokodil","catdrugs","triplemeth","methamphetamine","mutagen","neurotoxin","saxitoxin","smokepowder","infernite","phlogiston","fuel",\
 	"anti_fart","lube","ectoplasm","cryostylane","oil","sewage","ants","spiders","poo","love","hugs","fartonium","blood","bloodc","vomit","urine","capsaicin","cheese",\
 	"coffee","chocolate","chickensoup","salt","grease","badgrease","msg","egg")
 
@@ -797,9 +797,9 @@ ABSTRACT_TYPE(/datum/trait/job)
 		OTHER_START_TRACKING_CAT(owner, TR_CAT_CLOWN_DISBELIEF_MOBS)
 		if(owner.client)
 			src.turnOn(owner)
-		src.RegisterSignal(owner, COMSIG_MOB_LOGIN, .proc/turnOn)
-		src.RegisterSignal(owner, COMSIG_MOB_LOGOUT, .proc/turnOff)
-		src.RegisterSignal(owner, COMSIG_ATOM_EXAMINE, .proc/examined)
+		src.RegisterSignal(owner, COMSIG_MOB_LOGIN, PROC_REF(turnOn))
+		src.RegisterSignal(owner, COMSIG_MOB_LOGOUT, PROC_REF(turnOff))
+		src.RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(examined))
 
 	proc/turnOn(mob/owner)
 		for(var/image/I as anything in global.clown_disbelief_images)

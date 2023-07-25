@@ -36,13 +36,12 @@
 
 	var/ai_paused = FALSE
 	var/wander_count = 0
+	var/obj/item/ammo/power_cell/self_charging/flockdrone/cell = null
 
 /mob/living/critter/flock/drone/New(var/atom/location, var/datum/flock/F=null)
 	src.ai = new /datum/aiHolder/flock/drone(src)
 	..()
-	var/datum/abilityHolder/composite/composite = new(src)
-	abilityHolder = composite
-	composite.addHolder(/datum/abilityHolder/critter/flockdrone)
+	src.add_ability_holder(/datum/abilityHolder/critter/flockdrone)
 
 	SPAWN(3 SECONDS)
 		//this is terrible, but diffracting a drone immediately causes a runtime
@@ -54,6 +53,8 @@
 	src.flock_name_tag = new
 	src.flock_name_tag.set_name(src.real_name)
 	src.vis_contents += src.flock_name_tag
+
+	src.RegisterSignal(src, COMSIG_MOB_GRABBED, PROC_REF(do_antigrab))
 
 	if(!F || src.dormant) // we'be been flagged as dormant in the map editor or something
 		src.dormantize()
@@ -70,7 +71,6 @@
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, FALSE, FALSE)
-	src.RegisterSignal(src, COMSIG_MOB_GRABBED, .proc/do_antigrab)
 
 /mob/living/critter/flock/drone/proc/do_antigrab(source, obj/item/grab/grab)
 	if(src.ai_paused) //wake up when grabbed
@@ -88,6 +88,10 @@
 		L.shock(src, 5000)
 		qdel(grab) //in case they don't fall over from our shock
 
+/mob/living/critter/flock/drone/gib()
+	qdel(src.cell)
+	..()
+
 /mob/living/critter/flock/drone/disposing()
 	if (src.flock)
 		if (controller)
@@ -99,6 +103,8 @@
 		AH.drone_controller.cast(src)
 	src.selected_by = null
 	src.remove_simple_light("drone_light")
+	qdel(src.cell)
+	src.cell = null
 	..()
 
 /mob/living/critter/flock/drone/describe_state()
@@ -151,7 +157,7 @@
 	src.ai.stop_move()
 	src.is_npc = FALSE
 	src.dormant = FALSE
-	src.anchored = FALSE
+	src.anchored = UNANCHORED
 	pilot.atom_hovered_over = null
 
 	var/datum/mind/mind = pilot.mind
@@ -186,6 +192,10 @@
 		if (flocktrace.dying)
 			src.addOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
 			src.updateOverlaysClient(src.client)
+	if (src.flock.relay_in_progress)
+		var/obj/flock_structure/relay/relay = locate() in src.flock.structures
+		if (relay)
+			src.AddComponent(/datum/component/tracker_hud/flock, relay)
 	if (give_alert)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] established.\]</b></span>")
 
@@ -240,6 +250,8 @@
 		controller = null
 		src.update_health_icon()
 		src.flock_name_tag.set_info_tag(capitalize(src.ai.current_task?.name))
+		var/datum/component/tracker_hud/flock/tracker = src.GetComponent(/datum/component/tracker_hud/flock)
+		tracker?.RemoveComponent()
 	if(!src.flock)
 		src.dormantize()
 
@@ -294,6 +306,7 @@
 /mob/living/critter/flock/drone/dormantize()
 	src.icon_state = "drone-dormant"
 	src.remove_simple_light("drone_light")
+	src.UnregisterSignal(src, COMSIG_MOB_GRABBED)
 
 	if (!src.flock)
 		..()
@@ -322,7 +335,6 @@
 	src.is_npc = TRUE // to ensure right flock_speak message
 	flock_speak(src, "Error: Out of signal range. Disconnecting.", src.flock)
 	src.is_npc = FALSE // turns off ai
-	src.UnregisterSignal(src, COMSIG_MOB_GRABBED)
 	..()
 
 /mob/living/critter/flock/drone/proc/move_controller_to_station()
@@ -337,13 +349,13 @@
 /mob/living/critter/flock/drone/proc/undormantize()
 	src.dormant = FALSE
 	src.canmove = TRUE
-	src.anchored = FALSE
+	src.anchored = UNANCHORED
 	src.damaged = -1
 	src.check_health() // handles updating the icon to something more appropriate
 	src.visible_message("<span class='notice'><b>[src]</b> begins to glow and hover.</span>")
 	src.set_a_intent(INTENT_HELP)
 	src.add_simple_light("drone_light", rgb2num(glow_color))
-	src.RegisterSignal(src, COMSIG_MOB_GRABBED, .proc/do_antigrab)
+	src.RegisterSignal(src, COMSIG_MOB_GRABBED, PROC_REF(do_antigrab))
 	if(src.client)
 		if(src.flock)
 			controller = new/mob/living/intangible/flock/trace(src, src.flock)
@@ -377,7 +389,7 @@
 	src.flock.total_compute -= FLOCK_DRONE_COMPUTE_HIBERNATE - src.compute
 	src.flock.update_computes()
 	src.ai_paused = FALSE
-	src.anchored = FALSE
+	src.anchored = UNANCHORED
 	src.wander_count = 0
 	src.damaged = -1 //force icon refresh
 	src.check_health() // handles updating the icon to something more appropriate
@@ -426,6 +438,12 @@
 
 /mob/living/critter/flock/drone/is_spacefaring()
 	return TRUE
+
+/mob/living/critter/flock/drone/special_movedelay_mod(delay,space_movement,aquatic_movement)
+	. = delay
+	var/turf/T = get_turf(src)
+	if (T?.turf_flags & CAN_BE_SPACE_SAMPLE)
+		. += 2
 
 /mob/living/critter/flock/drone/Cross(atom/movable/mover)
 	if(isflockmob(mover))
@@ -554,8 +572,9 @@
 		if (src.resources < 1)
 			src.end_floorrunning(TRUE)
 	if (!src.dormant && !src.flock?.z_level_check(src) && src.z != Z_LEVEL_NULL)
-		src.dormantize()
-		return
+		if (src.flock || !src.client)
+			src.dormantize()
+			return
 	if (src.dormant)
 		return
 	if(src.ai_paused)
@@ -608,7 +627,7 @@
 /mob/living/critter/flock/drone/proc/start_floorrunning()
 	if(src.floorrunning)
 		return
-	src.flock.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_FLOORRUN, src)
+	src.flock?.flockmind?.tutorial?.PerformSilentAction(FLOCK_ACTION_FLOORRUN, src)
 	playsound(src, 'sound/misc/flockmind/flockdrone_floorrun.ogg', 30, 1, extrarange = -10)
 	src.floorrunning = TRUE
 	src.set_density(FALSE)
@@ -719,7 +738,6 @@
 		return ..(NewLoc, direct)
 
 /mob/living/critter/flock/drone/was_harmed(mob/M, obj/item/weapon, special, intent)
-	. = ..()
 	if (!M) return
 	if(src.ai_paused)
 		src.wake_from_ai_pause()
@@ -732,6 +750,7 @@
 				emote("scream")
 				say("[pick_string("flockmind.txt", "flockdrone_enemy")] [M]", TRUE)
 		src.flock.updateEnemy(M)
+	. = ..()
 
 /mob/living/critter/flock/drone/bullet_act(var/obj/projectile/P)
 	if(floorrunning)
@@ -787,18 +806,6 @@
 /mob/living/critter/flock/drone/get_tracked_examine_atoms()
 	return ..() + src.flock.structures
 
-/mob/living/critter/flock/drone/proc/reduce_lifeprocess_on_death()
-	remove_lifeprocess(/datum/lifeprocess/blood)
-	remove_lifeprocess(/datum/lifeprocess/canmove)
-	remove_lifeprocess(/datum/lifeprocess/disability)
-	remove_lifeprocess(/datum/lifeprocess/fire)
-	remove_lifeprocess(/datum/lifeprocess/hud)
-	remove_lifeprocess(/datum/lifeprocess/mutations)
-	remove_lifeprocess(/datum/lifeprocess/organs)
-	remove_lifeprocess(/datum/lifeprocess/sight)
-	remove_lifeprocess(/datum/lifeprocess/skin)
-	remove_lifeprocess(/datum/lifeprocess/statusupdate)
-
 /mob/living/critter/flock/drone/death(var/gibbed)
 	if (src.selected_by)
 		var/mob/living/intangible/flock/selector = src.selected_by
@@ -821,7 +828,6 @@
 		src.pay_resources(src.resources) // just in case any weirdness happens let's pre-empt the dupe bug
 	..()
 	src.icon_state = "drone-dead"
-	src.reduce_lifeprocess_on_death()
 	src.set_density(FALSE)
 	src.desc = "[initial(desc)]<br><span class='alert'>\The [src] is a dead, broken heap.</span>"
 	src.remove_simple_light("drone_light")
@@ -961,11 +967,16 @@
 	else
 		src.ai = new /datum/aiHolder/flock/drone(src)
 
+/mob/living/critter/flock/drone/emp_act()
+	SEND_SIGNAL(src.cell, COMSIG_CELL_USE, src.cell.max_charge/2)
+
 /////////////////////////////////////////////////////////////////////////////////
 // FLOCKDRONE SPECIFIC LIMBS AND EQUIPMENT SLOTS
 /////////////////////////////////////////////////////////////////////////////////
 
 /datum/limb/flock_grip // an ordinary hand but with some modified messages
+	attack_strength_modifier = 0.2
+	can_gun_grab = FALSE
 	var/attack_hit_prob = 50
 	var/grab_mob_hit_prob = 30
 	var/dam_low = 4 // 2 is human baseline
@@ -1024,7 +1035,7 @@
 	if (!istype(user))
 		return
 
-	if (user.flock.flockmind.tutorial && !user.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_START_CONVERSION, target))
+	if (user.flock?.flockmind?.tutorial && !user.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_START_CONVERSION, target))
 		return
 	if(ismob(target) || iscritter(target)) //gods how I hate /obj/critter
 		if (!isflockmob(target))
@@ -1159,9 +1170,6 @@
 		return
 	if(isintangible(target))
 		return
-	if (!user.flock)
-		boutput(user, "<span class='alert'>You do not have access to the imprisonment matrix without flockmind authorization.</span>")
-		return
 	// IMPRISON TARGET
 	if(isflockmob(target))
 		boutput(user, "<span class='alert'>The imprisonment matrix doesn't work on flockdrones.</span>")
@@ -1199,7 +1207,11 @@
 /datum/limb/gun/flock_stunner/New()
 	..()
 	src.cell.set_loc(src.holder.holder)
-	RegisterSignal(src.cell, COMSIG_UPDATE_ICON, .proc/update_overlay)
+	var/mob/living/critter/flock/drone/drone = src.holder.holder
+	if (istype(drone))
+		drone.cell = src.cell
+	src.holder.holder.contents |= cell
+	RegisterSignal(src.cell, COMSIG_UPDATE_ICON, PROC_REF(update_overlay))
 
 /datum/limb/gun/flock_stunner/proc/update_overlay()
 	var/mob/living/critter/flock/drone/flockdrone = holder.holder
@@ -1307,6 +1319,8 @@
 
 	if(length(I.contents))
 		var/anything_tumbled = FALSE
+		for (var/obj/item/W as anything in I.storage?.get_contents())
+			I.storage.transfer_stored_item(W, get_turf(flock_owner), user = flock_owner)
 		for(var/obj/O in I.contents)
 			if(istype(O, /obj/item))
 				O.set_loc(flock_owner.loc)

@@ -2,6 +2,7 @@
 /datum/antagonist/sleeper_agent
 	id = ROLE_SLEEPER_AGENT
 	display_name = "sleeper agent"
+	antagonist_icon = "traitor"
 
 /datum/antagonist/sleeper_agent/announce()
 	boutput(owner.current, "<h3><span class='alert'>You have awakened as a Syndicate [display_name]!</span></h3>")
@@ -31,7 +32,7 @@
 	var/datum/objective/new_objective = null
 	for (var/i in 0 to rand(1, 3))
 		new_objective = pick(eligible_objectives)
-		objectives += new new_objective(null, owner)
+		objectives += new new_objective(null, owner, src)
 	var/datum/objective/escape/E = pick(escape_objectives)
-	objectives += new /datum/objective/regular/gimmick(null, owner)
-	objectives += new E(null, owner)
+	objectives += new /datum/objective/regular/gimmick(null, owner, src)
+	objectives += new E(null, owner, src)

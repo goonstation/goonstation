@@ -3,7 +3,7 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "artifact_form"
 	desc = "A standardized form for classifying different alien artifacts, with some extra strong adhesive on the back."
-	appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
+	appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
 	var/artifactName = ""
 	var/artifactOrigin = ""
 	var/artifactType = ""

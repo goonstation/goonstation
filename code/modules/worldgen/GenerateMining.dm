@@ -26,8 +26,9 @@ var/list/miningModifiers = list()
 		name = "variable floor"
 		icon_state = "floor"
 		place()
-			if(src.z == planetZLevel)
-				src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid/dark, FALSE, TRUE, FALSE, TRUE)
+			var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(src)
+			if(gen && gen.floor_turf_type)
+				src.ReplaceWith(gen.floor_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
 			else if (map_currently_underwater)
 				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 			else
@@ -37,18 +38,19 @@ var/list/miningModifiers = list()
 		name = "variable wall"
 		icon_state = "wall"
 		place()
-			if(src.z == planetZLevel)
-				src.ReplaceWith(/turf/simulated/wall/auto/asteroid/dark, FALSE, TRUE, FALSE, TRUE)
+			var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(src)
+			if(gen && gen.wall_turf_type)
+				src.ReplaceWith(gen.wall_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
 			else
-				src.ReplaceWith(/turf/simulated/wall/asteroid, FALSE, TRUE, FALSE, TRUE)
+				src.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
 
 	clear //Replaced with map appropriate clear tile for mining level (asteroid floor on oshan, space on other maps)
 		name = "variable clear"
 		icon_state = "clear"
 		place()
-			if(src.z == planetZLevel)
-				return // noop
-			if (map_currently_underwater)
+			if(PLANET_LOCATIONS.repair_planet(src))
+				//
+			else if (map_currently_underwater)
 				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 			else
 				src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
@@ -146,11 +148,11 @@ var/list/miningModifiers = list()
 		#endif
 
 		var/map[width][height]
-		for(var/x=1,x<=width,x++)
-			for(var/y=1,y<=height,y++)
+		for(var/x in 1 to width)
+			for(var/y in 1 to height)
 				map[x][y] = pick(90;1,100;0) //Initialize randomly.
 
-		for(var/i=0, i<n_iterations, i++) //5 Passes to smooth it out.
+		for(var/i in 0 to n_iterations-1) //5 Passes to smooth it out.
 			var/mapnew[width][height]
 			for(var/x=1,x<=width,x++)
 				for(var/y=1,y<=height,y++)
@@ -158,7 +160,7 @@ var/list/miningModifiers = list()
 					LAGCHECK(LAG_REALTIME)
 			map = mapnew
 
-		for(var/x=1,x<=width,x++)
+		for(var/x in 1 to width)
 			for(var/y=1,y<=height,y++)
 				var/map_x = clamp(round(x * x_scale), 1, width)
 				var/map_y = clamp(round(y * y_scale), 1, height)
@@ -172,7 +174,7 @@ var/list/miningModifiers = list()
 				LAGCHECK(LAG_REALTIME)
 
 		var/list/used = list()
-		for(var/s=0, s<20, s++)
+		for(var/s in 0 to 19)
 			var/turf/TU = pick(generated - used)
 			var/list/L = list()
 			for(var/turf/simulated/wall/auto/asteroid/A in orange(5,TU))
@@ -183,23 +185,23 @@ var/list/miningModifiers = list()
 			used.Add(TU)
 
 			var/list/holeList = list()
-			for(var/k=0, k<AST_RNGWALKINST, k++)
+			for(var/k in 0 to AST_RNGWALKINST-1)
 				var/turf/T = pick(L)
-				for(var/j=0, j<rand(AST_RNGWALKCNT,round(AST_RNGWALKCNT*1.5)), j++)
+				for(var/j in 0 to rand(AST_RNGWALKCNT,round(AST_RNGWALKCNT*1.5))-1)
 					holeList.Add(T)
 					T = get_step(T, pick(cardinal))
 					if(!istype(T, /turf/simulated/wall/auto/asteroid)) continue
 					var/turf/simulated/wall/auto/asteroid/ast = T
 					ast.destroy_asteroid(0)
 
-		for(var/i=0, i<ore_seeds, i++)
+		for(var/i in 0 to ore_seeds-1)
 			var/list/L = list()
 			for (var/turf/simulated/wall/auto/asteroid/dark/A in range(4,pick(generated)))
 				L+=A
 
 			Turfspawn_Asteroid_SeedOre(L, rand(2,8), rand(1,70))
 
-		for(var/i=0, i<ore_seeds, i++)
+		for(var/i in 0 to ore_seeds-1)
 			Turfspawn_Asteroid_SeedOre(generated)
 
 
@@ -209,7 +211,7 @@ var/list/miningModifiers = list()
 		//	else
 		//		Turfspawn_Asteroid_SeedOre(generated)
 
-		for(var/i=0, i<(ore_seeds/2), i++)
+		for(var/i in 0 to (ore_seeds/2)-1)
 			Turfspawn_Asteroid_SeedEvents(generated)
 
 		if(generate_borders)
@@ -224,7 +226,7 @@ var/list/miningModifiers = list()
 				new/area/cordon/dark(T)
 				LAGCHECK(LAG_REALTIME)
 
-		for (var/i=0, i<55, i++)
+		for (var/i in 0 to 54)
 			var/turf/T = locate(rand(min_x,max_x),rand(min_y,max_y),z_level)
 			for (var/turf/space/fluid/TT in range(rand(2,4),T))
 				TT.spawningFlags |= SPAWN_TRILOBITE
@@ -237,7 +239,7 @@ var/list/miningModifiers = list()
 		#ifdef UPSCALED_MAP
 		numAsteroidSeed *= 4
 		#endif
-		for(var/i=0, i<numAsteroidSeed, i++)
+		for(var/i in 0 to numAsteroidSeed-1)
 			var/turf/X = pick(miningZ)
 			var/quality = rand(-101,101)
 
@@ -297,9 +299,9 @@ var/list/miningModifiers = list()
 					seeds.Add(X)
 					seeds[X] = placed
 					var/list/holeList = list()
-					for(var/k=0, k<AST_RNGWALKINST, k++)
+					for(var/k in 0 to AST_RNGWALKINST-1)
 						var/turf/T = pick(placed)
-						for(var/j=0, j<rand(AST_RNGWALKCNT,round(AST_RNGWALKCNT*1.5)), j++)
+						for(var/j in 0 to rand(AST_RNGWALKCNT,round(AST_RNGWALKCNT*1.5))-1)
 							holeList.Add(T)
 							T = get_step(T, pick(NORTH,EAST,SOUTH,WEST))
 							if(!istype(T, /turf/simulated/wall/auto/asteroid)) continue
@@ -321,7 +323,7 @@ var/list/miningModifiers = list()
 	#ifdef UPSCALED_MAP
 	num_to_place *= 3
 	#endif
-	for (var/n = 1, n <= num_to_place, n++)
+	for (var/n in 1 to num_to_place)
 		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
 		var/datum/mapPrefab/mining/M = pick_map_prefab(/datum/mapPrefab/mining,
 			wanted_tags = map_currently_underwater ? list("underwater") : null,

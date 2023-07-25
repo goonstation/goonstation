@@ -26,10 +26,9 @@ var/global/totally_random_jobs = FALSE
 			continue
 		var/datum/preferences/P  = player.client.preferences
 		if(checktraitor(player))
-			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && J.cant_spawn_as_rev)
-				// Fixed AI, security etc spawning as rev heads. The special job picker doesn't care about that var yet,
-				// but I'm not gonna waste too much time tending to a basically abandoned game mode (Convair880).
-				continue
+			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
+				if (J.cant_spawn_as_rev || ("loyalist" in P.traitPreferences.traits_selected)) //Why would an NT Loyalist be a revolutionary?
+					continue
 			else if((ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)) && (job != "Staff Assistant"))
 				continue
 			else if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy)) && J.cant_spawn_as_con)
@@ -350,7 +349,7 @@ var/global/totally_random_jobs = FALSE
 		H.equip_new_if_possible(weighted_pick(JOB.slot_belt), H.slot_belt)
 	else if (length(JOB.slot_belt))
 		H.equip_new_if_possible(JOB.slot_belt[1], H.slot_belt)
-	if (JOB.slot_belt && length(JOB.items_in_belt) && istype(H.belt, /obj/item/storage))
+	if (JOB.slot_belt && length(JOB.items_in_belt) && H.belt?.storage)
 		for (var/X in JOB.items_in_belt)
 			if(ispath(X))
 				H.equip_new_if_possible(X, H.slot_in_belt)
@@ -411,9 +410,19 @@ var/global/totally_random_jobs = FALSE
 	else if (length(JOB.slot_rhan))
 		H.equip_new_if_possible(JOB.slot_rhan[1], H.slot_r_hand)
 
+	#ifdef APRIL_FOOLS
+	H.back?.setMaterial(getMaterial("jean"))
+	H.gloves?.setMaterial(getMaterial("jean"))
+	H.wear_suit?.setMaterial(getMaterial("jean"))
+	H.wear_mask?.setMaterial(getMaterial("jean"))
+	H.w_uniform?.setMaterial(getMaterial("jean"))
+	H.shoes?.setMaterial(getMaterial("jean"))
+	H.head?.setMaterial(getMaterial("jean"))
+	#endif
+
 //hey i changed this from a /human/proc to a /living/proc so that critters (from the job creator) would latejoin properly	-- MBC
 /mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn)
-
+	SHOULD_NOT_SLEEP(TRUE)
 	var/datum/job/JOB = find_job_in_controller_by_string(rank)
 	if (!JOB)
 		boutput(src, "<span class='alert'><b>Something went wrong setting up your rank and equipment! Report this to a coder.</b></span>")
@@ -452,10 +461,6 @@ var/global/totally_random_jobs = FALSE
 			H.traitHolder.removeTrait("pilot")
 			H.traitHolder.removeTrait("sleepy")
 			H.traitHolder.removeTrait("puritan")
-		if (map_setting == "NADIR") //Nadir: pilot trait screws the pilot and adds sub when sub should not otherwise exist.
-			if(H.traitHolder.hasTrait("pilot"))
-				H.traitHolder.removeTrait("pilot")
-				boutput(src, "<span class='alert'>Hazardous conditions prevented you from arriving in your pod.</span>")
 
 		H.Equip_Job_Slots(JOB)
 
@@ -484,7 +489,7 @@ var/global/totally_random_jobs = FALSE
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if (src.traitHolder && !src.traitHolder.hasTrait("stowaway"))
-			H.spawnId(rank)
+			H.spawnId(JOB)
 		if (src.traitHolder && src.traitHolder.hasTrait("stowaway"))
 			//Has the stowaway trait - they're hiding in a random locker
 			var/list/obj/storage/SL = list()
@@ -501,24 +506,25 @@ var/global/totally_random_jobs = FALSE
 				logTheThing(LOG_STATION, src, "has the Stowaway trait and spawns in storage at [log_loc(src)]")
 
 		if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
-			var/turf/pilotSpawnLocation = null
+			SPAWN(0) //pod creation sleeps for... reasons
+				var/turf/pilotSpawnLocation = null
 
-			#ifdef UNDERWATER_MAP										//This part of the code executes only if the map is a water one.
-			while(!istype(pilotSpawnLocation, /turf/space/fluid))		//Trying to find a valid spawn location.
-				pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_MINING)
-			if (pilotSpawnLocation)										//Sanity check.
-				src.set_loc(pilotSpawnLocation)
-			var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(pilotSpawnLocation)
-			#else														//This part of the code executes only if the map is a space one.
-			while(!istype(pilotSpawnLocation, /turf/space))				//Trying to find a valid spawn location.
-				pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), pick(Z_LEVEL_DEBRIS, Z_LEVEL_MINING))
-			if (pilotSpawnLocation)										//Sanity check.
-				src.set_loc(pilotSpawnLocation)
-			var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
-			#endif
-			for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
-				qdel(snappedDrone)
-			V.finish_board_pod(src)
+				#ifdef UNDERWATER_MAP										//This part of the code executes only if the map is a water one.
+				while(!istype(pilotSpawnLocation, /turf/space/fluid))		//Trying to find a valid spawn location.
+					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_MINING)
+				if (pilotSpawnLocation)										//Sanity check.
+					src.set_loc(pilotSpawnLocation)
+				var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(pilotSpawnLocation)
+				#else														//This part of the code executes only if the map is a space one.
+				while(!istype(pilotSpawnLocation, /turf/space))				//Trying to find a valid spawn location.
+					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), pick(Z_LEVEL_DEBRIS, Z_LEVEL_MINING))
+				if (pilotSpawnLocation)										//Sanity check.
+					src.set_loc(pilotSpawnLocation)
+				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
+				#endif
+				for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
+					qdel(snappedDrone)
+				V.finish_board_pod(src)
 
 		if (src.traitHolder && src.traitHolder.hasTrait("sleepy"))
 			var/list/valid_beds = list()
@@ -547,10 +553,10 @@ var/global/totally_random_jobs = FALSE
 				boutput(src, "<span class='notice'>The unlock code to your pod ([V]) is: [V.lock.code]</span>")
 				if (src.mind)
 					src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
-
-		set_clothing_icon_dirty()
-		sleep(0.1 SECONDS)
-		update_icons_if_needed()
+		SPAWN(0)
+			set_clothing_icon_dirty()
+			sleep(0.1 SECONDS)
+			update_icons_if_needed()
 
 		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
 			if (src.mind && src.mind.assigned_role) //ZeWaka: I'm adding this back here because hell if I know where it goes.
@@ -586,7 +592,7 @@ var/global/totally_random_jobs = FALSE
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
 	equip_job_items(JOB, src)
 	if (JOB.slot_back)
-		if (istype(src.back, /obj/item/storage))
+		if (src.back?.storage)
 			if(JOB.receives_disk)
 				var/obj/item/disk/data/floppy/read_only/D = new /obj/item/disk/data/floppy/read_only(src)
 				src.equip_if_possible(D, slot_in_backpack)
@@ -631,21 +637,21 @@ var/global/totally_random_jobs = FALSE
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
 		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
-		src.force_equip(E, slot_in_backpack)
+		src.force_equip(E, slot_in_backpack, TRUE)
 		#ifdef UNDERWATER_MAP
 		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
-		src.force_equip(SSW, slot_in_backpack)
+		src.force_equip(SSW, slot_in_backpack, TRUE)
 		var/obj/item/clothing/head/helmet/space/engineer/diving/civilian/SHW = new /obj/item/clothing/head/helmet/space/engineer/diving/civilian(src.loc)
-		src.force_equip(SHW, slot_in_backpack)
+		src.force_equip(SHW, slot_in_backpack, TRUE)
 		#else
 		var/obj/item/clothing/suit/space/emerg/SSS = new /obj/item/clothing/suit/space/emerg(src.loc)
-		src.force_equip(SSS, slot_in_backpack)
+		src.force_equip(SSS, slot_in_backpack, TRUE)
 		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
-		src.force_equip(SHS, slot_in_backpack)
+		src.force_equip(SHS, slot_in_backpack, TRUE)
 		#endif
 		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
-		src.force_equip(GPSDEVICE, slot_in_backpack)
+		src.force_equip(GPSDEVICE, slot_in_backpack, TRUE)
 
 	if (src.traitHolder?.hasTrait("stowaway") || src.traitHolder?.hasTrait("pilot"))
 		var/obj/item/device/pda2/pda = locate() in src
@@ -689,9 +695,9 @@ var/global/totally_random_jobs = FALSE
 		trinket.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
 		trinket.quality = rand(5,80)
 		var/equipped = 0
-		if (istype(src.back, /obj/item/storage) && src.equip_if_possible(trinket, slot_in_backpack))
+		if (src.back?.storage && src.equip_if_possible(trinket, slot_in_backpack))
 			equipped = 1
-		else if (istype(src.belt, /obj/item/storage) && src.equip_if_possible(trinket, slot_in_belt))
+		else if (src.belt?.storage && src.equip_if_possible(trinket, slot_in_belt))
 			equipped = 1
 		if (!equipped)
 			if (!src.l_store && src.equip_if_possible(trinket, slot_l_store))
@@ -734,14 +740,13 @@ var/global/totally_random_jobs = FALSE
 		else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
 			src.put_in_hand_or_drop(new /obj/item/joint_wax)
 
-		src.equip_sensory_items()
+	src.equip_sensory_items()
 
-/mob/living/carbon/human/proc/spawnId(rank)
+/mob/living/carbon/human/proc/spawnId(var/datum/job/JOB)
 #ifdef DEBUG_EVERYONE_GETS_CAPTAIN_ID
-	rank = "Captain"
+	JOB = new /datum/job/command/captain
 #endif
 	var/obj/item/card/id/C = null
-	var/datum/job/JOB = find_job_in_controller_by_string(rank)
 	if (!JOB || !JOB.slot_card)
 		return null
 
@@ -816,7 +821,7 @@ var/global/totally_random_jobs = FALSE
 	equip_job_items(JOB, src)
 
 	if (ishuman(src) && JOB.spawn_id)
-		src.spawnId(rank)
+		src.spawnId(JOB)
 
 	JOB.special_setup(src, no_special_spawn)
 
@@ -847,8 +852,6 @@ proc/antagify(mob/H, var/traitor_role, var/agimmick, var/do_objectives)
 		H.mind.special_role = traitor_role
 	else
 		H.mind.special_role = H.name
-	if (H.mind.current)
-		H.mind.current.antagonist_overlay_refresh(1, 0)
 
 //////////////////////////////////////////////
 // cogwerks - personalized trinkets project //

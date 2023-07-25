@@ -2,9 +2,10 @@
 	var/finished = FALSE
 
 /datum/component/proj_door_breach/Initialize()
+	. = ..()
 	if (!istype(parent, /obj/projectile))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_OBJ_PROJ_COLLIDE, .proc/check_breach)
+	RegisterSignal(parent, COMSIG_OBJ_PROJ_COLLIDE, PROC_REF(check_breach))
 
 /datum/component/proj_door_breach/proc/check_breach(var/obj/projectile/P, var/atom/hit)
 	var/turf/T = get_turf(hit)

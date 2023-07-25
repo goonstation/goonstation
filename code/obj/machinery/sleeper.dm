@@ -20,7 +20,7 @@ TYPEINFO(/obj/machinery/sleep_console)
 	desc = "A device that displays the vital signs of the occupant of the sleeper, and can dispense chemicals."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeperconsole"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL
 	var/timing = 0 // Timer running?
@@ -77,31 +77,37 @@ TYPEINFO(/obj/machinery/sleep_console)
 			playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 
 	process()
-		if (!src)
+		if (src.status & (NOPOWER | BROKEN))
 			return
-		if (src.status & (NOPOWER|BROKEN))
-			return
+
 		if (!src.our_sleeper)
 			src.time = 0
 			src.timing = 0
 			src.time_started = 0
 			src.updateDialog()
 			return
+
+		// non-anchored sleeper assumed to be portable, don't want to eject
+		// in case someone is using it for body transport
+		if (isdead(src.our_sleeper.occupant) && src.our_sleeper.anchored)
+			src.our_sleeper.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Alert! No life signs detected from occupant.\"") // TODO maptext-ize
+			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
+			src.time = 0
+			src.timing = 0
+			src.time_started = 0
+			src.our_sleeper.go_out()
+			src.updateDialog()
+			return
+
 		if (src.timing)
 			if ((src.time_started + src.time) > TIME) // is the time started plus the time we're set to greater than the current time? the mob hasn't waited long enough
 				var/mob/occupant = src.our_sleeper.occupant
 				if (occupant)
 					if (ishuman(occupant))
 						var/mob/living/carbon/human/O = occupant
-						if (isdead(O))
-							src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Alert! No further life signs detected from occupant.\"")
-							playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
-							src.timing = 0
-							src.time_started = 0
-						else
-							if (O.sleeping != 5)
-								O.sleeping = 5
-							src.our_sleeper.alter_health(O)
+						if (O.sleeping != 5)
+							O.sleeping = 5
+						src.our_sleeper.alter_health(O)
 				else
 					src.timing = 0
 					src.time_started = 0
@@ -110,6 +116,8 @@ TYPEINFO(/obj/machinery/sleep_console)
 				src.time = 0
 				src.timing = 0
 				src.time_started = 0
+
+
 
 			src.updateDialog()
 
@@ -236,7 +244,7 @@ TYPEINFO(/obj/machinery/sleeper)
 	icon_state = "sleeper"//_0"
 	desc = "An enterable machine that analyzes and stabilizes the vital signs of the occupant."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
 	event_handler_flags = USE_FLUID_ENTER
 	var/mob/occupant = null
@@ -660,7 +668,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 	name = "Port-A-Medbay"
 	desc = "A transportation and stabilization device for critically injured patients."
 	icon = 'icons/obj/porters.dmi'
-	anchored = 0
+	anchored = UNANCHORED
 	p_class = 1.2
 	var/homeloc = null
 	allow_self_service = 0
@@ -757,7 +765,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 	desc = "Has the same air supply and stabilization capabilites as your usual model, but compact this time. Wow!"
 	icon = 'icons/obj/compact_machines.dmi'
 	icon_state = "compact_sleeper"
-	anchored = TRUE
+	anchored = ANCHORED
 
 	New()
 		..()

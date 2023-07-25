@@ -4,7 +4,7 @@
 	icon_state = "puke_0"
 	desc = "A weapon of pure terror."
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	p_class = 1.5
 	processing_tier = PROCESSING_FULL
 	var/list/list/mob/occupant_buckets

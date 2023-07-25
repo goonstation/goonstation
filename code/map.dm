@@ -31,7 +31,7 @@ var/global/list/mapNames = list(
 	"1 pamgoC" =			list("id" = "PAMGOC",		"settings" = "pamgoc",			"playerPickable" = FALSE),
 	"Kondaru" =				list("id" = "KONDARU",		"settings" = "kondaru",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 	"Ozymandias" =			list("id" = "OZYMANDIAS",	"settings" = "ozymandias",		"playerPickable" = FALSE,	"MinPlayersAllowed" = 40),
-	"Nadir" =				list("id" = "NADIR",		"settings" = "nadir",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
+	"Nadir" =				list("id" = "NADIR",		"settings" = "nadir",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 70),
 	"Bellerophon Fleet" =	list("id" = "FLEET",		"settings" = "fleet",			"playerPickable" = FALSE),
 	//"Density" = 			list("id" = "DENSITY",		"settings" = "density",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
 	"Atlas" =				list("id" = "ATLAS",		"settings" = "atlas",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 30),
@@ -77,6 +77,12 @@ var/global/list/mapNames = list(
 	var/goonhub_map = "https://goonhub.com/maps/cogmap"
 	var/arrivals_type = MAP_SPAWN_SHUTTLE
 	var/dir_fore = null
+
+	var/list/atom/movable/screen/parallax_layer/parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
 
 	var/walls = /turf/simulated/wall/auto
 	var/rwalls = /turf/simulated/wall/auto/reinforced
@@ -179,7 +185,7 @@ var/global/list/mapNames = list(
 
 		shuttlePrefab.applyTo(start, overwrite_args=DMM_OVERWRITE_OBJS)
 
-		var/dmm_suite/dmm_suite = new
+		var/dmm_suite/dmm_suite = new(debug_id="shuttle [transit_path]")
 		src.transit_region = get_singleton(/datum/mapPrefab/allocated/shuttle_transit).load()
 		logTheThing(LOG_DEBUG, usr, "<b>Shuttle Transit</b>: Got bottom left corner [log_loc(src.transit_region.bottom_left)]")
 		var/turf/transit_start
@@ -202,6 +208,13 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
+	parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/typhon/donut2,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
 
 	escape_dir = WEST
 
@@ -240,6 +253,13 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 	walls = /turf/simulated/wall/auto/jen
 	rwalls = /turf/simulated/wall/auto/reinforced/jen
+
+	parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/typhon/donut3,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
 
 	escape_dir = NORTH
 	default_shuttle = "donut3"
@@ -297,6 +317,14 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
+	parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/typhon/cogmap,
+		/atom/movable/screen/parallax_layer/planet/mundus,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
+
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
 	rwindows = /obj/window/auto/reinforced
@@ -343,6 +371,14 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/cogmap2"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
+	parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/typhon/cogmap2,
+		/atom/movable/screen/parallax_layer/planet/iustitia,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -393,6 +429,11 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/destiny"
 	arrivals_type = MAP_SPAWN_CRYO
 	dir_fore = NORTH
+
+	parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1/south,
+		/atom/movable/screen/parallax_layer/space_2/south,
+		)
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
@@ -455,7 +496,6 @@ var/global/list/mapNames = list(
 		"the central research sector hub" = list(/area/station/science/lobby),
 		"the quartermaster's office" = list(/area/station/quartermaster/office),
 		"the thermo-electric generator room" = list(/area/station/engine/core),
-		"the courtroom" = list(/area/station/crew_quarters/courtroom),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/lobby),
 		"the bar" = list(/area/station/crew_quarters/bar),
 		//"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
@@ -542,6 +582,8 @@ var/global/list/mapNames = list(
 	style = "ship"
 	arrivals_type = MAP_SPAWN_CRYO
 
+	parallax_layers = list()
+
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
 	rwindows = /obj/window/auto/reinforced
@@ -619,6 +661,11 @@ var/global/list/mapNames = list(
 	arrivals_type = MAP_SPAWN_CRYO
 	dir_fore = NORTH
 
+	parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1/west,
+		/atom/movable/screen/parallax_layer/space_2/west,
+		)
+
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -656,6 +703,13 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/kondaru"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
+	parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/typhon/kondaru,
+		/atom/movable/screen/parallax_layer/asteroids_far/kondaru,
+		)
 
 	arrivals_type = MAP_SPAWN_CRYO
 
@@ -863,6 +917,8 @@ var/global/list/mapNames = list(
 
 	arrivals_type = MAP_SPAWN_MISSILE
 
+	parallax_layers = list()
+
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -913,6 +969,8 @@ var/global/list/mapNames = list(
 	display_name = "Nadir Extraction Site"
 	goonhub_map = "https://goonhub.com/maps/nadir"
 
+	parallax_layers = list()
+
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 	auto_walls = TRUE
@@ -953,9 +1011,6 @@ var/global/list/mapNames = list(
 		"the derelict southeast 'Warrens'" = list(/area/station/hallway/secondary/construction))
 
 	job_limits_from_landmarks = TRUE
-	job_limits_override = list(
-		/datum/job/engineering/miner = 0 //eventually, assay technicians?
-	)
 
 /datum/map_settings/wrestlemap
 	name = "WRESTLEMAP"
@@ -1004,6 +1059,12 @@ var/global/list/mapNames = list(
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 	style = "spess"
 
+	parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_far,
+		/atom/movable/screen/parallax_layer/asteroids_near,
+		)
 
 	arrivals_type = MAP_SPAWN_CRYO
 

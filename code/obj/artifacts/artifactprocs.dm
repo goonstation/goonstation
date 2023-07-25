@@ -25,9 +25,9 @@
 		return
 
 	if (istext(forceartiorigin))
-		new type(T,forceartiorigin)
+		. = new type(T,forceartiorigin)
 	else
-		new type(T)
+		. = new type(T)
 
 /obj/proc/ArtifactSanityCheck()
 	// This proc is called in any other proc or thing that uses the new artifact shit. If there was an improper artifact variable
@@ -101,6 +101,14 @@
 	A.fx_image.alpha = rand(AO.fx_alpha_min, AO.fx_alpha_max)
 	A.fx_image.plane = PLANE_ABOVE_LIGHTING
 
+	A.fx_fallback = new
+	A.fx_fallback.icon = src.icon
+	A.fx_fallback.icon_state = src.icon_state + "fx"
+	A.fx_fallback.color = A.fx_image.color
+	A.fx_fallback.alpha = A.fx_image.alpha
+	A.fx_fallback.vis_flags |= VIS_INHERIT_LAYER
+	A.fx_fallback.vis_flags |= VIS_INHERIT_PLANE
+
 	A.react_mpct[1] = AO.impact_reaction_one
 	A.react_mpct[2] = AO.impact_reaction_two
 	A.react_heat[1] = AO.heat_reaction_one
@@ -151,6 +159,7 @@
 		src.icon_state = src.icon_state + "fx"
 	else
 		src.vis_contents += A.fx_image
+		src.vis_contents += A.fx_fallback
 	A.effect_activate(src)
 
 /obj/proc/ArtifactDeactivated()
@@ -169,6 +178,7 @@
 		src.icon_state = src.icon_state - "fx"
 	else
 		src.vis_contents -= A.fx_image
+		src.vis_contents -= A.fx_fallback
 	A.effect_deactivate(src)
 
 /obj/proc/Artifact_emp_act()
@@ -376,6 +386,7 @@
 		if (prob(F.trigger_prob))
 			if (F.halt_loop)
 				halt = 1
+			logTheThing(LOG_COMBAT, src, "experienced an artifact fault [F.type_name] affecting [constructTarget(user,"combat")] at [log_loc(src)]")
 			F.deploy(src,user,cosmeticSource)
 		if (halt)
 			return FAULT_RESULT_STOP
@@ -580,6 +591,6 @@
 		logTheThing(type_of_action == "detonated" ? LOG_BOMBING : LOG_STATION, user, "an artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
 
 	if (trigger_alert)
-		message_admins("An artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.fingerprintslast)]")
+		message_admins("An <a href='byond://?src=%client_ref%;Refresh=\ref[O]'>artifact</a> ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.fingerprintslast)]")
 
 	return

@@ -25,7 +25,7 @@ obj/item/coin/bombini
 			stage++
 
 	proc/sync()
-		default_reagent = (pick("sarin","phlogiston","ants","radium","dbreath","beff","cheese","blood"))
+		default_reagent = (pick("saxitoxin","phlogiston","ants","radium","dbreath","beff","cheese","blood"))
 		if (a)
 			next_choice = a.next_choice
 			stage = a.stage

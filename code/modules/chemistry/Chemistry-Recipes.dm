@@ -1920,6 +1920,15 @@ datum
 			mix_phrase = "The drink smells vaguely like artifical autumn."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		lavenderlatte
+			name = "Lavender Latte"
+			id = "lavender_latte"
+			result = "lavender_latte"
+			required_reagents = list("lavender_essence"=1, "milk"= 2, "espresso"=1)
+			result_amount = 4
+			mix_phrase = "A sweet floral scent drifts up from the pale foamy mixture."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
 		explosion_potassium // get in
 			name = "Potassium Explosion"
 			id = "explosion_potassium"
@@ -2144,10 +2153,10 @@ datum
 					C.reagents.add_reagent("cyanide", (0.4 * created_volume) / length(mobs_affected))
 				return
 
-		sarin // oh god why am i adding this
-			name = "Sarin"
-			id = "sarin"
-			result = "sarin"
+		Saxitoxin // replacing Sarin - come back to this with new recipe
+			name = "Saxitoxin"
+			id = "saxitoxin"
+			result = "saxitoxin"
 			required_reagents = list("chlorine" = 1, "fuel" = 1, "oxygen" = 1, "phosphorus" = 1, "fluorine" = 1, "hydrogen" = 1, "acetone" = 1, "weedkiller" = 1)
 			result_amount = 3 // it is super potent
 			mix_phrase = "The mixture yields a colorless, odorless liquid."
@@ -2161,7 +2170,7 @@ datum
 				if(holder?.my_atom?.is_open_container())
 					// A slightly less stupid way of smoking contents. Maybe.
 					var/datum/reagents/smokeContents = new/datum/reagents/
-					smokeContents.add_reagent("sarin", created_volume / 6)
+					smokeContents.add_reagent("saxitoxin", created_volume / 6)
 					smoke_reaction(smokeContents, 2, location)
 					return
 
@@ -3186,7 +3195,7 @@ datum
 			name = "Foam surfactant"
 			id = "foam surfactant"
 			result = "fluorosurfactant"
-			required_reagents = list("fluorine" = 1, "oil" = 1, "acid" = 1)
+			required_reagents = list("fluorine" = 1, "carbon" = 1, "acid" = 1)
 			result_amount = 3
 			mix_phrase = "A head of foam results from the mixture's constant fizzing."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -3421,7 +3430,7 @@ datum
 			name = "Filgrastim"
 			id = "filgrastim"
 			result = "filgrastim"
-			required_reagents = list("blood" = 1, "dna_mutagen" = 1, "e.coli" = 1, "spaceacillin" = 1)
+			required_reagents = list("blood" = 1, "dna_mutagen" = 1, "beff" = 1, "spaceacillin" = 1)
 			result_amount = 2
 
 		ecoli // needed for filgrastim vOv
@@ -3725,9 +3734,9 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				CRITTER_REACTION_CHECK(reaction_count)
 				if (holder?.my_atom)
-					new /obj/critter/fermid(get_turf(holder.my_atom))
+					new /mob/living/critter/fermid(get_turf(holder.my_atom))
 				else
-					new /obj/critter/fermid(pick(holder.covered_cache))
+					new /mob/living/critter/fermid(pick(holder.covered_cache))
 				return
 
 		life
@@ -3754,7 +3763,7 @@ datum
 					if(1 to 70)
 						new /mob/living/carbon/cube/meat(location)
 					if(71 to 94)
-						var/critter = pick(/mob/living/critter/small_animal/cockroach,/obj/critter/pig,/mob/living/critter/small_animal/cat,/mob/living/critter/small_animal/mouse,/obj/critter/wasp,/obj/critter/owl,/obj/critter/goose,/obj/critter/goose/swan,/obj/critter/domestic_bee,/obj/critter/walrus,/obj/critter/sealpup)
+						var/critter = pick(/mob/living/critter/small_animal/cockroach, /obj/critter/pig, /mob/living/critter/small_animal/cat, /mob/living/critter/small_animal/mouse, /mob/living/critter/small_animal/wasp, /obj/critter/owl, /obj/critter/goose, /obj/critter/goose/swan, /obj/critter/domestic_bee, /obj/critter/walrus, /obj/critter/sealpup)
 						new critter(location)
 					if(95 to 97)
 						if (location.density)
@@ -4020,7 +4029,7 @@ datum
 			name = "Rajaijah"
 			id = "madness_toxin"
 			result = "madness_toxin"
-			required_reagents = list("prions" = 1, "sarin" = 1, "methamphetamine" = 1, "mercury" = 1, "haloperidol" = 1, "sulfonal" = 1, "plasma" = 1, "LSD" = 1)
+			required_reagents = list("prions" = 1, "methamphetamine" = 1, "mercury" = 1, "haloperidol" = 1, "sulfonal" = 1, "plasma" = 1, "LSD" = 1)
 			//required_temperature = 100 - T0C
 			result_amount = 8
 			mix_phrase = "The mixture forms a clear greenish liquid, emitting a nauseating smell reminiscent of chlorophyll and rubbing alcohol."

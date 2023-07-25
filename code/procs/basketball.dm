@@ -77,7 +77,7 @@
 
 	playsound(M.loc, "explosion", 50, 1)
 	var/obj/overlay/O = new/obj/overlay(get_turf(target))
-	O.anchored = 1
+	O.anchored = ANCHORED
 	O.name = "Explosion"
 	O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 	O.pixel_x = -92

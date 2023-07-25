@@ -4,6 +4,7 @@
 	icon = null
 	event_handler_flags = 0
 	var/atom/target
+	var/is_respawnable = TRUE
 
 	New()
 		..()
@@ -44,8 +45,6 @@
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
-		if (src.client && src.client.holder)
-			src.antagonist_overlay_refresh(0, 0)
 
 #ifdef TWITCH_BOT_ALLOWED
 		if (IS_TWITCH_CONTROLLED(src))
@@ -93,7 +92,7 @@
 		src.target = target
 		src.set_loc(target)
 		if(src.ghost?.auto_tgui_open)
-			RegisterSignal(target, COMSIG_TGUI_WINDOW_OPEN, .proc/open_tgui_if_interactive)
+			RegisterSignal(target, COMSIG_TGUI_WINDOW_OPEN, PROC_REF(open_tgui_if_interactive))
 		set_eye(target)
 
 		var/mob/living/M = target
@@ -105,7 +104,7 @@
 				src.attach_hud(hud)
 
 		if (isobj(target))
-			src.RegisterSignal(target, COMSIG_PARENT_PRE_DISPOSING, .verb/stop_observing)
+			src.RegisterSignal(target, COMSIG_PARENT_PRE_DISPOSING, VERB_REF(stop_observing))
 
 	click(atom/target, params, location, control)
 		if(!isnull(target) && (target.flags & TGUI_INTERACTIVE))
@@ -133,6 +132,7 @@
 
 /mob/dead/target_observer/slasher_ghost
 	name = "spooky not-quite ghost"
+	is_respawnable = FALSE
 	var/start_time
 
 	New()

@@ -32,7 +32,7 @@
 					breathtimerstage = 0
 					breathtimernotifredundant = 0
 				if (15 to 34)
-					// this statement is intentionally left blank
+					; // this statement is intentionally left blank
 				if (34 to 51)
 					if (prob(5)) owner.emote("gasp")
 					if (!breathtimernotifredundant)
@@ -49,7 +49,7 @@
 						breathtimerstage = 3
 			switch(breathtimerstage)
 				if (0)
-					// this statement is intentionally left blank
+					; // this statement is intentionally left blank
 				if (1)
 					boutput(owner, "<span class='alert'>You need to breathe!</span>")
 					breathtimernotifredundant = 1

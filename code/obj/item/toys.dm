@@ -305,12 +305,12 @@ TYPEINFO(/obj/item/toy/handheld)
 
 	New()
 		. = ..()
-		START_TRACKING
+		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 		BLOCK_SETUP(BLOCK_BOOK)
 
 	disposing()
 		. = ..()
-		STOP_TRACKING
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 	proc/generate_words()
 		var/list/words = list()

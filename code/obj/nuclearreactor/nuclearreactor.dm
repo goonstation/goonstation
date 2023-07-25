@@ -18,12 +18,13 @@
 	pixel_y = -64
 	bound_x = -64
 	bound_y = -64
-	anchored = TRUE
+	anchored = ANCHORED
 	density = TRUE
 	mat_changename = FALSE
 	dir = EAST
 	custom_suicide = TRUE
 	pixel_point = TRUE
+	machine_registry_idx = MACHINES_FISSION
 	/// 2D grid of reactor components, or null where there are no components. Size is REACTOR_GRID_WIDTH x REACTOR_GRID_HEIGHT
 	var/list/obj/item/reactor_component/component_grid[REACTOR_GRID_WIDTH][REACTOR_GRID_HEIGHT]
 	/// 2D grid of lists of neutrons in each grid slot of the component grid. Lists can be empty.
@@ -32,8 +33,12 @@
 	var/radiationLevel = 0
 	/// Current gas mixture to process
 	var/datum/gas_mixture/current_gas = null
+	/// gas that has been processed, primarily used for atmos analyser
+	var/datum/gas_mixture/air_contents = null
 	/// Reactor casing temperature
 	var/temperature = T20C
+	/// Thermal mass. Basically how much energy it takes to heat this up 1Kelvin
+	var/thermal_mass = 420*2000//specific heat capacity of steel (420 J/KgK) * mass of reactor (Kg)
 
 	/// Volume of gas to process each tick
 	var/reactor_vessel_gas_volume=200
@@ -45,11 +50,18 @@
 	var/melted = FALSE
 
 	/// INTERNAL: Used to detemine whether an icon update is needed for the component grid overlay
-	var/_comp_grid_overlay_update = TRUE
+	VAR_PRIVATE/_comp_grid_overlay_update = TRUE
 	/// ref to the turf the reactor light is stored on, because you can't center simple lights
-	var/turf/_light_turf
+	VAR_PRIVATE/turf/_light_turf
 	/// INTERNAL: count of old pending grid updates, for the flicker prevention code
-	var/_pending_grid_updates = 0
+	VAR_PRIVATE/_pending_grid_updates = 0
+	/// INTERNAL DEBUG: tracks total stored thermal energy in the reactor grid
+	VAR_PRIVATE/_last_total_thermal_e = 0
+	/// INTERNAL DEBUG: tracks total stored thermal energy in the coolant
+	VAR_PRIVATE/_last_total_coolant_e = 0
+	/// INTERNAL DEBUG: set to true to output debug messages
+	VAR_PRIVATE/_debug_mode = FALSE
+
 	New()
 		. = ..()
 		terminal = new /obj/machinery/power/terminal/netlink(src.loc)
@@ -57,13 +69,19 @@
 		terminal.set_dir(turn(src.dir,-90))
 		terminal.master = src
 
-		src.setMaterial(getMaterial("steel"))
+		src.setMaterial(getMaterial("steel"), appearance = FALSE)
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				src.flux_grid[x][y] = list()
 
+		//Prevents unreachable turfs from being damaged, so as not to ruin engineer rounds
+		for(var/turf/simulated/floor/F in src.locs)
+			F.explosion_immune = TRUE
+
+		src.air_contents = new /datum/gas_mixture()
+
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Control Rods", .proc/_set_controlrods_mechchomp)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Control Rods", PROC_REF(_set_controlrods_mechchomp))
 		src._light_turf = get_turf(src)
 		src._light_turf.add_medium_light("reactor_light", list(255,255,255,255))
 		_comp_grid_overlay_update = TRUE
@@ -71,6 +89,8 @@
 
 	disposing()
 		src._light_turf?.remove_medium_light("reactor_light")
+		for(var/turf/simulated/floor/F in src.locs) //restore the explosion immune state of the original turf
+			F.explosion_immune = initial(F.explosion_immune)
 		. = ..()
 
 	update_icon()
@@ -115,7 +135,7 @@
 			//this preserves the old image while sending the new one for half a second, which should hopefully prevent that
 			var/image/old_grid = src.GetOverlayImage("reactor_grid")
 			if(old_grid)
-				old_grid.layer = old_grid.layer+0.1
+				old_grid.layer -= 0.1
 				src.UpdateOverlays(old_grid, "old_grid")
 				_pending_grid_updates++
 				SPAWN(0.5 SECONDS)
@@ -137,6 +157,13 @@
 		. = ..()
 		if(melted)
 			return
+
+		//pass through last tick's air. We do this here so that atmos analyser can read it in between process calls
+		var/coolant_thermal_e = THERMAL_ENERGY(src.air_contents)
+		src.air2.merge(src.air_contents)
+		//after merge, the original gas mixture is deleted, so create a new one
+		src.air_contents = new /datum/gas_mixture()
+
 		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
 		var/tmpRads = 0
 
@@ -147,9 +174,11 @@
 		if(input_starting_pressure)
 			transfer_moles = (air1.volume*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*air1.temperature)
 		var/datum/gas_mixture/gas_input = air1.remove(transfer_moles)
-		var/datum/gas_mixture/gas_output = air2
+		air_contents.volume = air1.volume
+		gas_input?.volume = air_contents.volume
 		var/total_gas_volume = 0
-
+		_last_total_coolant_e = gas_input ? THERMAL_ENERGY(gas_input) : 0
+		var/total_thermal_e = 0
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				if(src.component_grid[x][y])
@@ -158,13 +187,18 @@
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
 					total_gas_volume += comp.gas_volume
 					var/datum/gas_mixture/gas = comp.processGas(gas_input)
-					if(gas) gas_output.merge(gas)
+					gas_input?.volume -= comp.gas_volume
+					if(gas)
+						src.air_contents.merge(gas)
 
 					//balance heat between components
 					comp.processHeat(src.getGridNeighbors(x,y))
 
 					//calculate neutron flux
 					src.flux_grid[x][y] = comp.processNeutrons(src.flux_grid[x][y])
+
+					total_thermal_e += comp.thermal_mass * comp.temperature
+
 				for(var/datum/neutron/N in src.flux_grid[x][y])
 					var/xmod = 0
 					var/ymod = 0
@@ -179,36 +213,37 @@
 						src.flux_grid[x][y]-=N
 						tmpRads++ //neutrons hitting the casing get blasted in to the room - have fun with that engineers!
 
+
 		var/datum/gas_mixture/gas = src.processCasingGas(gas_input) //the reactor has some inherent gas cooling channels
 		if(gas)
-			gas_output.merge(gas)
+			src.air_contents.merge(gas)
 
 		//if we somehow ended up with input gas still
-		gas_output.merge(gas_input)
+		src.air_contents.merge(gas_input)
 
 		if(temperature >= REACTOR_TOO_HOT_TEMP)
 			if(!src.GetParticles("overheat_smoke"))
 				src.UpdateParticles(new/particles/nuke_overheat_smoke(get_turf(src)),"overheat_smoke")
 				src.visible_message("<span class='alert'><b>The [src] begins to smoke!</b></span>")
-				logTheThing("station", src, "[src] is at [temperature]K and may meltdown")
+				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and may meltdown")
 				if(!ON_COOLDOWN(src, "pda_temp_alert", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has reached a dangerous temperature. Intervene immediately to prevent meltdown.")
 			if(temperature >= REACTOR_ON_FIRE_TEMP && !src.GetParticles("overheat_fire"))
 				src.UpdateParticles(new/particles/nuke_overheat_fire(get_turf(src)),"overheat_fire")
 				src.visible_message("<span class='alert'><b>The [src] begins to burn!</b></span>")
-				logTheThing("station", src, "[src] is at [temperature]K and is likely to meltdown")
+				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and is likely to meltdown")
 				if(!ON_COOLDOWN(src, "pda_temp_alert_critical", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has reached CRITICAL temperature. MELTDOWN IMMINENT.", crisis = TRUE)
 			else if(temperature < REACTOR_ON_FIRE_TEMP && src.GetParticles("overheat_fire"))
 				src.visible_message("<span class='alert'><b>The [src] stops burning.</b></span>")
-				logTheThing("station", src, "[src] is cooling from 2500K")
+				logTheThing(LOG_STATION, src, "[src] is cooling from 2500K")
 				src.ClearSpecificParticles("overheat_fire")
 				if(!ON_COOLDOWN(src, "pda_temp_alert_critical", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has cooled below critical temperature. Meltdown averted. Have a nice day.", crisis = TRUE)
 		else
 			if(src.GetParticles("overheat_smoke"))
 				src.visible_message("<span class='alert'><b>The [src] stops smoking.</b></span>")
-				logTheThing("station", src, "[src] is cooling from [temperature]K")
+				logTheThing(LOG_STATION, src, "[src] is cooling from [temperature]K")
 				src.ClearSpecificParticles("overheat_smoke")
 				if(!ON_COOLDOWN(src, "pda_temp_alert", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has cooled below dangerous temperature. Have a nice day.")
@@ -219,8 +254,17 @@
 			return
 
 		processCaseRadiation(tmpRads)
+
+		src.material.triggerTemp(src,src.temperature)
+
+		total_thermal_e += src.thermal_mass * src.temperature
 		total_gas_volume += src.reactor_vessel_gas_volume
+		if(src._debug_mode)
+			boutput(world, "Reactor dE: [engineering_notation(total_thermal_e - src._last_total_thermal_e)]J Coolant dE:[engineering_notation(coolant_thermal_e - src._last_total_coolant_e)]J")
+		src._last_total_thermal_e = total_thermal_e
+
 		src.air1.volume = total_gas_volume
+		src.air_contents.volume = total_gas_volume
 
 		src.network1?.update = TRUE
 		src.network2?.update = TRUE
@@ -249,36 +293,74 @@
 
 	proc/processCasingGas(var/datum/gas_mixture/inGas)
 		if(src.current_gas)
-			var/heat_transfer_mult = 0.95
-			//heat transfer equation = hA(T2-T1)
-			//assume A = 1m^2
-			var/deltaT = src.current_gas.temperature - src.temperature
-			//heat transfer coefficient
-			var/hTC = calculateHeatTransferCoefficient(null, src.material)
-			if(hTC>0)
-				var/gas_thermal_e = THERMAL_ENERGY(current_gas)
-				src.current_gas.temperature += heat_transfer_mult*-deltaT*hTC
-				//Q = mcT
-				//dQ = mc(dT)
-				//dQ/mc = dT
-				src.temperature += (gas_thermal_e - THERMAL_ENERGY(current_gas))/(420*7700*2.5)
+			//first, define some helpful vars
+			// temperature differential
+			var/deltaT = src.temperature - src.current_gas.temperature
+			// temp differential for radiative heating
+			//this is equivelant to (src.temperature ** 4) - (src.current_gas.temperature ** 4), but factored so its less likely to hit overflow
+			var/deltaTr = (src.temperature + src.current_gas.temperature)*(src.temperature - src.current_gas.temperature)*((src.temperature**2) + (src.current_gas.temperature**2))
+
+			//thermal conductivity
+			var/k = calculateHeatTransferCoefficient(null,src.material)
+			//surface area in thermal contact (m^2)
+			var/A = 1 * (MACHINE_PROC_INTERVAL*8) //multipied by process time to approximate flow rate
+
+			var/thermal_e = THERMAL_ENERGY(current_gas)
+
+			//commented out for later debugging purposes
+			//var/coe_check = thermal_e + src.temperature*src.thermal_mass
+
+			//okay, we're slightly abusing some things here. Notably we're using the thermal conductivity as a stand-in
+			//for the convective heat transfer coefficient(h). It's wrong, since h generally depends on flow rate, but we
+			//can assume a constant flow rate and then a dependence on the thermal conductivity of the material it's flowing over
+			//which in this case is given by k
+			//also radiative heating given by Steffan-Boltzman constant * area * (T1^4 - T2^4)
+			//since this is a discrete approximation, it breaks down when the temperature diffs are low. As such, we linearise the equation
+			//by clamping between hottest and coldest. It's not pretty, but it works.
+			var/hottest = max(src.current_gas.temperature, src.temperature)
+			var/coldest = min(src.current_gas.temperature, src.temperature)
+			//max limit on the energy transfered is bounded between the coldest and hottest temperature of the thermal mass, to ensure that the
+			//gas can't suck out more heat from the reactor than exists
+			var/max_delta_e = clamp(((k * A * deltaT) + (5.67037442e-8 * A * deltaTr)), src.temperature*src.thermal_mass - hottest*src.thermal_mass, src.temperature*src.thermal_mass - coldest*src.thermal_mass)
+			src.current_gas.temperature = clamp(src.current_gas.temperature + max_delta_e/HEAT_CAPACITY(src.current_gas), coldest, hottest)
+
+			//after we've transferred heat to the gas, we remove that energy from the gas channel to preserve CoE
+			src.temperature = clamp(src.temperature - (THERMAL_ENERGY(current_gas) - thermal_e)/src.thermal_mass, coldest, hottest)
+
+			//commented out for later debugging purposes
+			//var/coe2 = (THERMAL_ENERGY(current_gas) + src.temperature*src.thermal_mass)
+			//if(abs(coe2 - coe_check) > 64)
+			//	CRASH("COE VIOLATION REACTOR")
+			if(src.current_gas.temperature < 0 || src.temperature < 0)
+				CRASH("TEMP WENT NEGATIVE")
+
 			. = src.current_gas
 		if(inGas)
 			src.current_gas = inGas.remove((src.reactor_vessel_gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
+			if(src.current_gas && TOTAL_MOLES(src.current_gas) < 1)
+				if(istype(., /datum/gas_mixture))
+					var/datum/gas_mixture/result = .
+					result.merge(src.current_gas)
+					src.current_gas = null
+					return result
+				else
+					. = src.current_gas
+					src.current_gas = null
+					return .
 
 
 	proc/processCaseRadiation(var/rads)
 		if(rads <= 0)
 			return
 
-		src.AddComponent(/datum/component/radioactive, min(rads*2, 100), TRUE, FALSE, 5)
-		rads -= 10
+		src.AddComponent(/datum/component/radioactive, min(rads*3, 100), TRUE, FALSE, 5)
+		rads -= 5
 
 		if(rads <= 0)
 			return
 
-		for(var/i = min(round(rads/2),50),i>0,i--)
-			shoot_projectile_XY(src, new /datum/projectile/neutron(min(rads*2,100)), rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
+		for(var/i = min(ceil(rads / 2), 50), i>0, i--)
+			shoot_projectile_XY(src, new /datum/projectile/neutron(max(5, min(rads*2,100))), rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
 
 	proc/catastrophicOverload()
 		var/sound/alarm = sound('sound/misc/airraid_loop.ogg')
@@ -288,7 +370,7 @@
 		world << alarm //ew
 		command_alert("A nuclear reactor aboard the station has catastrophically overloaded. Radioactive debris, nuclear fallout, and coolant fires are likely. Immediate evacuation of the surrounding area is strongly advised.", "NUCLEAR MELTDOWN")
 
-		logTheThing("station", src, "[src] CATASTROPHICALLY OVERLOADS (this is bad)")
+		logTheThing(LOG_STATION, src, "[src] CATASTROPHICALLY OVERLOADS (this is bad)")
 		//explode, throw radioactive components everywhere, dump rad gas, throw radioactive debris everywhere
 		src.melted = TRUE
 		if(!src.current_gas)
@@ -417,7 +499,7 @@
 						return
 
 					ui.user.visible_message("<span class='alert'>[ui.user] starts removing a [component_grid[x][y]]!</span>", "<span class='alert'>You start removing the [component_grid[x][y]]!</span>")
-					var/datum/action/bar/icon/callback/A = new(ui.user, src, 1 SECONDS, .proc/remove_comp_callback, list(x,y,ui.user), component_grid[x][y].icon, component_grid[x][y].icon_state,\
+					var/datum/action/bar/icon/callback/A = new(ui.user, src, 1 SECONDS, PROC_REF(remove_comp_callback), list(x,y,ui.user), component_grid[x][y].icon, component_grid[x][y].icon_state,\
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 					A.maximum_range=3
 					actions.start(A,ui.user)
@@ -431,7 +513,7 @@
 						return
 
 					ui.user.visible_message("<span class='alert'>[ui.user] starts inserting \a [equipped]!</span>", "<span class='alert'>You start inserting the [equipped]!</span>")
-					var/datum/action/bar/icon/callback/A = new(ui.user, src, 1 SECONDS, .proc/insert_comp_callback, list(x,y,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
+					var/datum/action/bar/icon/callback/A = new(ui.user, src, 1 SECONDS, PROC_REF(insert_comp_callback), list(x,y,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 					A.maximum_range=3
 					actions.start(A,ui.user)
@@ -443,7 +525,7 @@
 		user.u_equip(equipped)
 		equipped.set_loc(src)
 		playsound(src, 'sound/machines/law_insert.ogg', 80)
-		logTheThing("station", user, "[constructName(user)] <b>inserts</b> component into nuclear reactor([src]): [equipped] at slot [x],[y]")
+		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> component into nuclear reactor([src]): [equipped] at slot [x],[y]")
 		user.visible_message("<span class='alert'>[user] slides \a [equipped] into the reactor</span>", "<span class='alert'>You slide the [equipped] into the reactor.</span>")
 		tgui_process.update_uis(src)
 		_comp_grid_overlay_update = TRUE
@@ -451,7 +533,7 @@
 
 	proc/remove_comp_callback(var/x,var/y,var/mob/user)
 		playsound(src, 'sound/machines/law_remove.ogg', 80)
-		logTheThing("station", user, "[constructName(user)] <b>removes</b> component from nuclear reactor([src]): [src.component_grid[x][y]] at slot [x],[y]")
+		logTheThing(LOG_STATION, user, "[constructName(user)] <b>removes</b> component from nuclear reactor([src]): [src.component_grid[x][y]] at slot [x],[y]")
 		user.visible_message("<span class='alert'>[user] slides \a [src.component_grid[x][y]] out of the reactor</span>", "<span class='alert'>You slide the [src.component_grid[x][y]] out of the reactor.</span>")
 		user.put_in_hand_or_drop(src.component_grid[x][y])
 		src.component_grid[x][y] = null
@@ -481,14 +563,14 @@
 				comp_throw_prob = 25
 			if(1.0)
 				comp_throw_prob = 100
-				logTheThing("station", src, "[src] has been destroyed in an explosion!")
+				logTheThing(LOG_STATION, src, "[src] has been destroyed in an explosion!")
 
 		var/turf/epicentre = get_turf(src)
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				if(src.component_grid[x][y] && prob(comp_throw_prob))
 					if(severity > 1)
-						logTheThing("station", src, "a [src.component_grid[x][y]] has been removed from the [src] by an explosion")
+						logTheThing(LOG_STATION, src, "a [src.component_grid[x][y]] has been removed from the [src] by an explosion")
 						_comp_grid_overlay_update = TRUE
 					if(prob(50))
 						var/obj/item/reactor_component/throwcomp = src.component_grid[x][y]
@@ -496,8 +578,7 @@
 						throwcomp.throw_at(get_ranged_target_turf(epicentre,pick(alldirs),rand(1,20)),rand(1,20),rand(1,20))
 					else
 						qdel(src.component_grid[x][y])
-						var/obj/decal/cleanable/debris = make_cleanable(/obj/decal/cleanable/machine_debris, epicentre)
-						debris.AddComponent(/datum/component/radioactive,100,TRUE,FALSE)
+						var/obj/decal/cleanable/debris = make_cleanable(/obj/decal/cleanable/machine_debris/radioactive, epicentre)
 						debris.streak_cleanable(dist_upper=20)
 					src.component_grid[x][y] = null //get rid of the internal ref once we've thrown it out
 		if(severity <= 1)
@@ -549,6 +630,12 @@
 			user.visible_message("<span class='alert'>[user] tries to climb into \the [src], but it's full. What a moron!</span>")
 			return FALSE
 
+	/// Transmuting nuclear engine into jeans sometimes causes a client crash
+	setMaterial(datum/material/mat1, appearance, setname, copy, use_descriptors)
+		if(mat1.mat_id == "jean")
+			return
+		. = ..()
+
 
 
 
@@ -584,6 +671,30 @@
 
 		src.component_grid[4][3] = new /obj/item/reactor_component/control_rod("bohrum")
 		src.component_grid[4][5] = new /obj/item/reactor_component/control_rod("bohrum")
+
+		//enable for faster debugging
+		if(src._debug_mode)
+			src.component_grid[4][2] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+			src.component_grid[4][4] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+			src.component_grid[4][6] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+
+
+		..()
+
+/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/random
+	New()
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
+				switch(rand(1,4))
+					if(1)
+						src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod/random_material
+					if(2)
+						src.component_grid[x][y] = new /obj/item/reactor_component/control_rod/random_material
+					if(3)
+						src.component_grid[x][y] = new /obj/item/reactor_component/gas_channel/random_material
+					if(4)
+						src.component_grid[x][y] = new /obj/item/reactor_component/heat_exchanger/random_material
+
 		..()
 
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/meltdown
@@ -617,7 +728,7 @@
 	window_pass = FALSE
 	silentshot = TRUE
 
-	New(power)
+	New(power=50)
 		..()
 		src.power = power
 		src.ks_ratio = 1
@@ -637,7 +748,7 @@
 			if(hit.material && prob(hit.material.getProperty("hard")*10))
 				//reflect
 				var/obj/projectile/reflected = shoot_reflected_bounce(O, hit)
-				reflected.power = O.power
+				reflected?.power = O.power
 				return FALSE
 
 			//then fission

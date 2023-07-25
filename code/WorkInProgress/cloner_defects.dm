@@ -66,6 +66,8 @@
 
 	/// Add a cloner defect of the given severity
 	proc/add_cloner_defect(severity)
+		if (!severity)
+			CRASH("Tried to add cloner defect with falsy severity [isnull(severity) ? "NULL" : severity].")
 		var/picked
 		var/is_valid = FALSE
 		while (!is_valid)
@@ -73,13 +75,12 @@
 			// If the picked defect can stack, pass automatically. If it can't stack, check if we have it already; if not, pass.
 			is_valid = initial(picked:stackable) || !src.has_defect(picked)
 		LAZYLISTADD(src.active_cloner_defects, new picked(src.owner))
-		logTheThing(LOG_COMBAT, src.owner, "gained the [picked] cloner defect.")
 
 	/// Add a cloner defect, rolling severity according to weights
-	proc/add_random_cloner_defect()
+	proc/add_random_cloner_defect(var/severity_override)
 		var/static/list/severity_weights = list(CLONER_DEFECT_SEVERITY_MINOR=CLONER_DEFECT_PROB_MINOR,
 												CLONER_DEFECT_SEVERITY_MAJOR=CLONER_DEFECT_PROB_MAJOR)
-		src.add_cloner_defect(weighted_pick(severity_weights))
+		src.add_cloner_defect(severity_override || weighted_pick(severity_weights))
 
 	/// Debug proc- add a cloner defect of a specific type.
 	proc/add_specific_cloner_defect(type)
@@ -107,7 +108,7 @@
 
 	/// Performs the above function after the mob moves. Used for cloning (only apply)
 	proc/apply_to_on_move(mob/living/carbon/human/target)
-		RegisterSignal(target, COMSIG_MOVABLE_SET_LOC, .proc/apply_to)
+		RegisterSignal(target, COMSIG_MOVABLE_SET_LOC, PROC_REF(apply_to))
 
 	/// Returns TRUE if this holder contains the given defect type, FALSE otherwise
 	proc/has_defect(defect_type)
@@ -143,6 +144,7 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 		if (!istype(target))
 			CRASH("Tried to apply [identify_object(src)] to non-human thing [identify_object(target)]")
 		src.owner = target
+		logTheThing(LOG_COMBAT, src.owner, "gained the [src] cloner defect. Data: [json_encode(src.data)]")
 		src.on_add()
 
 	disposing()
@@ -201,7 +203,7 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 	on_add()
 		. = ..()
 		var/obj/item/parts/lost_limb = src.owner.limbs.get_limb(data["lost_limb_string"])
-		lost_limb.delete()
+		lost_limb?.delete()
 
 /// Get some histamine after cloning
 /datum/cloner_defect/allergic
@@ -320,8 +322,8 @@ ABSTRACT_TYPE(/datum/cloner_defect/brain_damage)
 		// Ugly fix because I can't 'hook' into the brain damage proc- don't want to instantly kill people with weak organs
 		var/damage = src.data["amount"]
 		if (src.owner.traitHolder.hasTrait("weakorgans"))
-			damage /= 2 // ends up the same for frail people and non-frail
-		src.owner.take_brain_damage(data["amount"])
+			damage /= TRAIT_FRAIL_ORGAN_DAMAGE_MULT
+		src.owner.take_brain_damage(damage)
 
 
 /datum/cloner_defect/brain_damage/minor

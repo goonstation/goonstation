@@ -22,6 +22,7 @@
 
 /mob/verb/sa_verb(message as text)
 	set name = "sa"
+	set hidden = 1
 	src.say_verb(message)
 
 /mob/verb/say_radio()
@@ -266,14 +267,16 @@
 				chat_text.show_to(C)
 			continue
 
-		if (istype(M,/mob/dead/target_observer/hivemind_observer)) continue
-		if (istype(M,/mob/dead/target_observer/mentor_mouse_observer)) continue
+		if (istype(M, /mob/dead/target_observer))
+			var/mob/dead/target_observer/tobserver = M
+			if(!tobserver.is_respawnable)
+				continue
 		if (iswraith(M))
 			var/mob/living/intangible/wraith/the_wraith = M
 			if (!the_wraith.hearghosts)
 				continue
 
-		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/seanceghost))
+		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/intangible/seanceghost))
 			if(chat_text && !M.client.preferences.flying_chat_hidden)
 				chat_text.show_to(C)
 			boutput(M, rendered)
@@ -462,6 +465,13 @@
 
 	if (src.get_brain_damage() >= 60)
 		speechverb = pick("says","stutters","mumbles","slurs")
+
+	if(src.find_type_in_hand(/obj/item/megaphone))
+		var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
+		if(megaphone.makes_you_quieter)
+			loudness -= 1
+		else
+			loudness += 1
 
 	if (src.speech_void)
 		text = voidSpeak(text)
@@ -935,7 +945,7 @@
 				assoc_maptext.show_to(src.client)
 
 			if (isliving(src))
-				for (var/mob/dead/target_observer/M in src:observers)
+				for (var/mob/dead/target_observer/M in src.observers)
 					if(!just_maptext)
 						if (M.client?.holder && !M.client.player_mode)
 							if (M.mind)
@@ -1062,7 +1072,7 @@
 
 	var/class = "flocksay"
 
-	if(istype(mob_speaking, /mob/living/intangible/flock) && !involuntary)
+	if(istype(mob_speaking, /mob/living/intangible/flock) && !involuntary || speak_as_admin)
 		class += " sentient"
 		if (istype(mob_speaking, /mob/living/intangible/flock/flockmind))
 			class += " flockmind"
@@ -1100,7 +1110,13 @@
 
 		var/thisR = ""
 
-		if((isflockmob(M)) || (M.client.holder && !M.client.player_mode) || (isobserver(M) && !(istype(M, /mob/dead/target_observer/hivemind_observer))))
+		var/is_dead_observer = isobserver(M)
+		if (istype(M, /mob/dead/target_observer))
+			var/mob/dead/target_observer/tobserver = M
+			if(!tobserver.is_respawnable)
+				continue
+
+		if((isflockmob(M)) || (M.client.holder && !M.client.player_mode) || is_dead_observer)
 			thisR = rendered
 		if((M.robot_talk_understand || istype(M, /mob/living/intangible/aieye)) && (!involuntary && mob_speaking || prob(30)))
 			thisR = siliconrendered

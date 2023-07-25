@@ -249,7 +249,7 @@ Custom Books
 
 	density = 0
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "lawbook"
@@ -319,6 +319,12 @@ Custom Books
 	desc = "A book detailing the ruleset for the tabletop RPG, Stations and Syndicates. You don't know what happened to the previous 7 editions but maybe its probably not worth looking for them."
 	icon_state = "bookcc"
 	file_path = "strings/books/DNDrulebook.txt"
+
+/obj/item/paper/book/from_file/DWrulebook
+	name = "Stationfinder"
+	desc = "A book detailing the ruleset for the tabletop RPG, Stationfinder. It was made based on the Stations and Syndicates 5th edition SRD after a dispute over licensing."
+	icon_state = "bookcc"
+	file_path = "strings/books/stationfinder.txt"
 
 /obj/item/paper/book/from_file/solo_rules
 	name = "SOLO card game rules"
@@ -554,3 +560,9 @@ all for the love of you.</tt>"}
 	desc = "A guide to designing and operating nuclear reactors. Should idiots be doing that?"
 	icon_state = "nuclearguide"
 	file_path = "strings/books/nuclear_engineering.txt"
+
+/obj/item/paper/emergencycooler
+	name = "Emergency Cooler Instructions"
+	info = {"<h3>These coolers are for emergency use only</h3></br>
+			In the event of a meltdown scenario, activate the coolers and ensure the gas loop is pressurised.<br>
+			Use of these coolers outside of an emergency scenario will result in a loss of reactor efficiency and stalling of the turbine."}

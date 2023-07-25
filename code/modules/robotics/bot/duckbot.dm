@@ -15,7 +15,7 @@
 	icon_state = "duckbot"
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	on = 1 // ACTION
 	health = 5
 	bot_move_delay = DUCKBOT_MOVE_SPEED
@@ -44,7 +44,7 @@
 
 /obj/machinery/bot/duckbot/New()
 	. = ..()
-	MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 /// Makes the duckbot mill around aimlessly, or chase people if emagged
 /obj/machinery/bot/duckbot/proc/wakka_wakka()

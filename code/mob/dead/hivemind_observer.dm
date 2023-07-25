@@ -1,4 +1,5 @@
 /mob/dead/target_observer/hivemind_observer
+	is_respawnable = FALSE
 	var/datum/abilityHolder/changeling/hivemind_owner
 	var/can_exit_hivemind_time = 0
 	var/last_attack = 0
@@ -101,46 +102,6 @@
 				playsound(src, 'sound/weapons/flaregun.ogg', 30, 0.1, 0, 2.6)
 				.= 1
 
-	proc/boot()
-		var/mob/dead/observer/my_ghost = new(src.corpse)
-
-		if (!src.corpse)
-			my_ghost.name = src.name
-			my_ghost.real_name = src.real_name
-
-		if (corpse)
-			corpse.ghost = my_ghost
-			my_ghost.corpse = corpse
-
-		my_ghost.delete_on_logout = my_ghost.delete_on_logout_reset
-
-		if (src.client)
-			src.removeOverlaysClient(src.client)
-			client.mob = my_ghost
-
-		if (src.mind)
-			mind.transfer_to(my_ghost)
-
-		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-		if (target)
-			var/turf/T = get_turf(target)
-			if (T && (!isghostrestrictedz(T.z) || isghostrestrictedz(T.z) && (restricted_z_allowed(my_ghost, T) || my_ghost.client && my_ghost.client.holder)))
-				my_ghost.set_loc(T)
-			else
-				if (ASLoc)
-					my_ghost.set_loc(ASLoc)
-				else
-					my_ghost.z = 1
-		else
-			if (ASLoc)
-				my_ghost.set_loc(ASLoc)
-			else
-				my_ghost.z = 1
-
-		observers -= src
-		my_ghost.show_antag_popup("changeling_leave")
-		qdel(src)
-
 	proc/set_owner(var/datum/abilityHolder/changeling/new_owner)
 		if(!istype(new_owner)) return 0
 		//DEBUG_MESSAGE("Calling set_owner on [src] with abilityholder belonging to [new_owner.owner]")
@@ -175,9 +136,8 @@
 	usr = src
 
 	if(world.time >= can_exit_hivemind_time && hivemind_owner && hivemind_owner.master != src)
-		hivemind_owner.hivemind -= src
 		boutput(src, "<span class='alert'>You have parted with the hivemind.</span>")
-		src.boot()
+		src.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 	else
 		boutput(src, "<span class='alert'>You are not able to part from the hivemind at this time. You will be able to leave in [(can_exit_hivemind_time/10 - world.time/10)] seconds.</span>")
 

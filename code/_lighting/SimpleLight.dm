@@ -2,14 +2,14 @@
 
 /obj/overlay/simple_light
 	event_handler_flags = IMMUNE_SINGULARITY
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	mouse_opacity = 0
 	layer = LIGHTING_LAYER_BASE
 	plane = PLANE_LIGHTING
 	blend_mode = BLEND_ADD
 	icon = 'icons/effects/overlays/simplelight.dmi'
 	icon_state = "3x3"
-	appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART
+	appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART // PIXELSCALE omitted on purpose
 	pixel_x = -32
 	pixel_y = -32
 	text = ""

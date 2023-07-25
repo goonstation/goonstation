@@ -211,7 +211,7 @@
 		icon_state = "stam+"
 		maxDuration = 9 SECONDS
 		unique = 1
-		change = 8
+		change = 12
 
 		getTooltip()
 			. = "A feeling of invigoration permeates you."
@@ -372,7 +372,7 @@
 				var/mob/M = mob_owner
 				C.dropped(M)
 				M.u_equip(C)
-			owner.visible_message("<span class='alert'>\the [owner][message]</span>")
+			owner.visible_message("<span class='alert'>\The [owner][message]</span>")
 			if (ismob(owner))
 				var/mob/fucko = owner
 				fucko.ghostize()
@@ -683,7 +683,7 @@
 
 	simpledot/stimulant_withdrawl
 		id = "stimulant_withdrawl"
-		name = "Stimulant withdrawl"
+		name = "Stimulant withdrawal"
 		icon_state = "janktank-w"
 		desc = "You feel AWFUL!"
 		tickSpacing = 3 SECONDS
@@ -1255,7 +1255,7 @@
 			if (ismob(owner))
 				var/mob/M = owner
 				if (M.mind)
-					gang = M.mind.gang
+					gang = M.get_gang()
 
 		onRemove()
 			. = ..()
@@ -1346,8 +1346,8 @@
 
 	gang_drug_withdrawl
 		id = "janktank_withdrawl"
-		name = "janktank withdrawl"
-		desc = "You're going through withrawl of Janktank"
+		name = "Janktank withdrawal"
+		desc = "You're going through withdrawal of Janktank"
 		icon_state = "janktank-w"
 		duration = 9 MINUTES
 		maxDuration = 18 MINUTES
@@ -1756,7 +1756,7 @@
 		. = ..()
 		owner.add_filter("paint_color", 1, color_matrix_filter(normalize_color_to_matrix("#ff8820")))
 		if(istype(owner, /mob/living))
-			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/track_paint)
+			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(track_paint))
 
 	onRemove()
 		. = ..()
@@ -1766,6 +1766,8 @@
 
 	proc/track_paint(mob/living/M, oldLoc, direct)
 		var/turf/T = get_turf(M)
+		if(istype_exact(T, /turf/space)) //can't smear paint on space
+			return
 		var/obj/decal/cleanable/paint/P
 		if (T.messy > 0)
 			P = locate(/obj/decal/cleanable/paint) in T
@@ -1995,7 +1997,7 @@
 			//If dead, instaconvert.
 			if(isdead(H))
 				H.set_mutantrace(/datum/mutantrace/zombie/can_infect)
-				if (H.ghost?.mind && !(H.mind && H.mind.dnr)) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
+				if (H.ghost?.mind && !(H.mind && H.mind.get_player()?.dnr)) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
 					H.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
 					H.ghost.mind.transfer_to(H)
 				H.delStatus(id)
@@ -2065,7 +2067,7 @@
 
 	onAdd()
 		..()
-		RegisterSignal(owner, COMSIG_MOB_VOMIT, .proc/reduce_duration_on_vomit)
+		RegisterSignal(owner, COMSIG_MOB_VOMIT, PROC_REF(reduce_duration_on_vomit))
 
 	onRemove()
 		..()
@@ -2180,6 +2182,27 @@
 			M.bioHolder?.RemoveEffect("sims_stinky")
 		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_RANCID_STUFF)
 
+/datum/statusEffect/fragrant
+	id = "fragrant"
+	name = "Fragrant"
+	desc = "You smell very nice."
+	icon_state = "fragrant"
+	maxDuration = 5 MINUTES
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+	onAdd(optional)
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			var/particles/petals/P = new
+			M.UpdateParticles(P, "fragrant")
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			M.ClearSpecificParticles("fragrant")
+
 /datum/statusEffect/flock_absorb
 	id = "flock_absorbing"
 	name = "Absorbing"
@@ -2241,15 +2264,7 @@
 		. = ..()
 		desc = "You've been mindhacked by [hacker.real_name] and feel an unwavering loyalty towards [him_or_her(hacker)]."
 		var/mob/M = owner
-		if (M.mind && ticker.mode)
-			if (!M.mind.special_role)
-				M.mind.special_role = ROLE_MINDHACK
-			if (!(M.mind in ticker.mode.Agimmicks))
-				ticker.mode.Agimmicks += M.mind
-			M.mind.master = hacker.ckey
-
-		boutput(M, "<h2><span class='alert'>You feel an unwavering loyalty to [hacker.real_name]! You feel you must obey [his_or_her(hacker)] every order! Do not tell anyone about this unless [hacker.real_name] tells you to!</span></h2>")
-		M.show_antag_popup("mindhack")
+		M.mind?.add_subordinate_antagonist(ROLE_MINDHACK, master = hacker.mind)
 
 		if (custom_orders)
 			boutput(M, "<h2><span class='alert'>[hacker.real_name]'s will consumes your mind! <b>\"[custom_orders]\"</b> It <b>must</b> be done!</span></h2>")
@@ -2257,10 +2272,7 @@
 	onRemove()
 		..()
 		var/mob/M = owner
-		if (M.mind?.special_role == ROLE_MINDHACK)
-			remove_mindhack_status(M, "mindhack", "expired")
-		else if (M.mind?.master)
-			remove_mindhack_status(M, "otherhack", "expired")
+		M.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_EXPIRED)
 
 /datum/statusEffect/defib_charged
 	id = "defib_charged"
@@ -2376,3 +2388,8 @@
 		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent_trauma")
 		H.remove_stam_mod_max("recent_trauma")
 
+/datum/statusEffect/derevving //Status effect for converting a rev to a not rev
+	id = "derevving"
+	name = "De-revving"
+	desc = "An implant is attempting to convert you from the revolution! Remove the implant!"
+	icon_state = "mindhack"

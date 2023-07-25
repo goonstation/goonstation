@@ -1,9 +1,8 @@
 /datum/antagonist/salvager
 	id = ROLE_SALVAGER
 	display_name = ROLE_SALVAGER
+	antagonist_icon = "salvager"
 
-	var/static/datum/allocated_region/home_base
-	var/static/building_base = FALSE
 	var/static/starting_freq = null
 
 	is_compatible_with(datum/mind/mind)
@@ -31,6 +30,13 @@
 		else
 			headset.protected_radio = TRUE
 		headset.frequency = src.pick_radio_freq()
+		H.mind.store_memory("<b>Salvager Radio frequency:</b> [headset.frequency]")
+		// Allow for Salvagers to have a secure channel
+		//headset.secure_frequencies = list("z" = R_FREQ_SYNDICATE)
+		//headset.secure_classes = list(RADIOCL_OTHER)
+		//headset.secure_colors = list("#a18146")
+		//headset.set_secure_frequency("z", src.pick_radio_freq())
+		//headset.desc += " The headset is covered in scratch marks and the screws look nearly stripped."
 
 		H.equip_if_possible(new /obj/item/clothing/under/color/grey(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/storage/backpack/salvager(H), H.slot_back)
@@ -40,25 +46,33 @@
 		H.equip_if_possible(new /obj/item/clothing/shoes/magnetic(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/clothing/gloves/yellow(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/salvager(H), H.slot_belt)
+		H.equip_if_possible(new /obj/item/device/pda2/salvager(H), H.slot_wear_id)
+
+		H.equip_new_if_possible(/obj/item/storage/box/salvager_frame_compartment, H.slot_in_backpack)
+		H.equip_new_if_possible(/obj/item/salvager_hand_tele, H.slot_in_backpack)
+		H.equip_new_if_possible(/obj/item/deconstructor, H.slot_in_backpack)
+		H.equip_new_if_possible(/obj/item/tool/omnitool, H.slot_in_backpack)
+		H.equip_new_if_possible(/obj/item/weldingtool, H.slot_in_backpack)
+
 		H.traitHolder.addTrait("training_engineer")
 
+	add_to_image_groups()
+		. = ..()
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		var/datum/client_image_group/image_group = get_image_group(ROLE_SALVAGER)
+		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind(src.owner)
+
+	remove_from_image_groups()
+		. = ..()
+		var/datum/client_image_group/image_group = get_image_group(ROLE_SALVAGER)
+		image_group.remove_mind_mob_overlay(src.owner)
+		image_group.remove_mind(src.owner)
+
 	assign_objectives()
-		new /datum/objective_set/salvager(src.owner)
+		new /datum/objective_set/salvager(src.owner, src)
 
 	relocate()
-#ifdef SECRETS_ENABLED
-		var/time = TIME
-		while(building_base) // yield to builder for a bit
-			sleep(0.5 SECONDS)
-			if( (TIME - time ) > 20 SECONDS)
-				break
-		if(!src.home_base)
-			building_base = TRUE
-			src.home_base = get_singleton(/datum/mapPrefab/allocated/salvager).load()
-			sleep(0.5 SECONDS)
-			building_base = FALSE
-#endif
-
 		if (!landmarks[LANDMARK_SALVAGER])
 			message_admins("<span class='alert'><b>ERROR: couldn't find Salvager spawn landmark, aborting relocation.</b></span>")
 			return 0

@@ -17,7 +17,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			target = input(usr, "Select target", "Select target") as anything in world
 		if (target)
 			if (ismob(target))
-				p_image = target:build_flat_icon()
+				p_image = target:build_flat_icon(SOUTH)
 			else if (isobj(target) || isturf(target) || isarea(target))
 				p_image = getFlatIcon(target, SOUTH)
 			else
@@ -275,7 +275,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		decal.icon_state = "[src.icon_state]-rip2"
 		decal.pixel_x = src.pixel_x
 		decal.pixel_y = src.pixel_y
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.icon_state = "[src.icon_state]-rip1"
 		src.can_put_up = 0
 		user.put_in_hand_or_drop(src)
@@ -286,7 +286,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			"You attach [src] to [A].")
 			user.u_equip(src)
 			src.set_loc(A)
-			src.anchored = 1
+			src.anchored = ANCHORED
 		else
 			return ..()
 
@@ -296,7 +296,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 				"<span class='alert'>You shove [src] in [user == M ? "your own" : "[M]'s"] face!</span>",\
 				"<span class='alert'>[M == user ? "You shove" : "<b>[user]</b> shoves"] [src] in your[M == user ? " own" : null] face!</span>")
 			if (M.client)
-				SETUP_GENERIC_ACTIONBAR(user, M, 2 SECONDS, .proc/show_popup_win, M.client, src.icon, src.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED)
+				SETUP_GENERIC_ACTIONBAR(user, M, 2 SECONDS, PROC_REF(show_popup_win), M.client, src.icon, src.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED)
 			src.no_spam = ticker.round_elapsed_ticks
 		else
 			return // don't attack people with the poster thanks
@@ -391,7 +391,7 @@ TYPEINFO(/obj/submachine/poster_creator)
 	name = "wanted poster station"
 	desc = "A machine that can design and print out wanted posters."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "poster_printer"

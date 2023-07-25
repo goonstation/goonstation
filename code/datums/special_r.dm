@@ -8,7 +8,7 @@ datum/special_respawn
 
 		if (!eligible.len)
 			return 0
-		target = pick(eligible)
+		target = eligible[1]
 
 		if(target)
 			target.respawning = 1
@@ -22,7 +22,7 @@ datum/special_respawn
 
 		if (!eligible.len)
 			return 0
-		target = pick(eligible)
+		target = eligible[1]
 
 		if(target)
 			target.respawning = 1
@@ -180,10 +180,6 @@ datum/special_respawn
 	proc/eq_mob(var/type, var/mob/living/carbon/human/user)
 		if(!type) return
 		switch(type)
-
-			if("syndie")
-				equip_syndicate(user)
-				return
 			if("commando")
 				user.equip_new_if_possible(/obj/item/clothing/under/color/red, user.slot_w_uniform)
 				user.equip_new_if_possible(/obj/item/clothing/suit/armor/vest, user.slot_wear_suit)

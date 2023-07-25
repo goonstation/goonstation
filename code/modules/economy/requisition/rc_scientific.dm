@@ -174,15 +174,15 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		src.cropname = initial(plantalyze.name)
 
 		switch(rand(1,7))
-			if(1) src.gene_reqs["Maturation"] = rand(10,20) * -1
-			if(2) src.gene_reqs["Production"] = rand(10,20) * -1
+			if(1) src.gene_reqs["Maturation"] = rand(10,20)
+			if(2) src.gene_reqs["Production"] = rand(10,20)
 			if(3) src.gene_reqs["Lifespan"] = rand(3,5)
 			if(4) src.gene_reqs["Yield"] = rand(3,5)
 			if(5) src.gene_reqs["Potency"] = rand(3,5)
 			if(6) src.gene_reqs["Endurance"] = rand(3,5)
 			if(7)
-				src.gene_reqs["Maturation"] = rand(5,10) * -1
-				src.gene_reqs["Production"] = rand(5,10) * -1
+				src.gene_reqs["Maturation"] = rand(5,10)
+				src.gene_reqs["Production"] = rand(5,10)
 		..()
 
 

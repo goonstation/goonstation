@@ -11,7 +11,7 @@ TYPEINFO_NEW(/obj/table)
 	icon = 'icons/obj/furniture/table.dmi'
 	icon_state = "0"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
@@ -46,7 +46,7 @@ TYPEINFO_NEW(/obj/table)
 		#endif
 
 		SPAWN(0)
-			if (src.auto && src.icon_state == "0") // if someone's set up a special icon state don't mess with it
+			if (src.auto && src.materialless_icon_state() == "0") // if someone's set up a special icon state don't mess with it
 				src.set_up()
 				SPAWN(0)
 					for (var/obj/table/T in orange(1,src))
@@ -77,7 +77,7 @@ TYPEINFO_NEW(/obj/table)
 	proc/set_up()
 		var/connections = get_connected_directions_bitflag(get_typeinfo().smooth_list, cross_areas = TRUE, connect_diagonal = 1)
 		var/cardinals = connections % 16
-		icon_state = num2text(cardinals)
+		set_icon_state(num2text(cardinals))
 		var/ordinals = connectdirs_to_byonddirs(connections)
 
 		if((NORTHEAST & ordinals) == NORTHEAST)
@@ -85,6 +85,7 @@ TYPEINFO_NEW(/obj/table)
 				src.working_image = image(src.icon, "NE")
 			else
 				working_image.icon_state = "NE"
+			setMaterialAppearanceForImage(working_image)
 			src.UpdateOverlays(working_image, "NEcorner")
 		else
 			src.UpdateOverlays(null, "NEcorner")
@@ -93,6 +94,7 @@ TYPEINFO_NEW(/obj/table)
 				src.working_image = image(src.icon, "SE")
 			else
 				working_image.icon_state = "SE"
+			setMaterialAppearanceForImage(working_image)
 			src.UpdateOverlays(working_image, "SEcorner")
 		else
 			src.UpdateOverlays(null, "SEcorner")
@@ -101,6 +103,7 @@ TYPEINFO_NEW(/obj/table)
 				src.working_image = image(src.icon, "SW")
 			else
 				working_image.icon_state = "SW"
+			setMaterialAppearanceForImage(working_image)
 			src.UpdateOverlays(working_image, "SWcorner")
 		else
 			src.UpdateOverlays(null, "SWcorner")
@@ -110,6 +113,7 @@ TYPEINFO_NEW(/obj/table)
 				src.working_image = image(src.icon, "NW")
 			else
 				working_image.icon_state = "NW"
+			setMaterialAppearanceForImage(working_image)
 			src.UpdateOverlays(working_image, "NWcorner")
 		else
 			src.UpdateOverlays(null, "NWcorner")
@@ -263,7 +267,7 @@ TYPEINFO_NEW(/obj/table)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_ADJUST), user)
 				return
 
-		else if (iswrenchingtool(W) && !src.status) // shouldn't have status unless it's reinforced, maybe? hopefully?
+		else if (iswrenchingtool(W) && !src.status && user.a_intent == "harm") // shouldn't have status unless it's reinforced, maybe? hopefully?
 			if (istype(src, /obj/table/folding))
 				actions.start(new /datum/action/bar/icon/fold_folding_table(src, W), user)
 			else
@@ -297,7 +301,7 @@ TYPEINFO_NEW(/obj/table)
 			deconstruct()
 			return
 
-		if (src.has_storage && src.desk_drawer)
+		if (src.has_storage && src.desk_drawer && !istype(user, /mob/living/critter/small_animal))
 			src.mouse_drop(user, src.loc, user.loc)
 
 		if (ishuman(user))
@@ -343,10 +347,7 @@ TYPEINFO_NEW(/obj/table)
 		var/obj/item/I = O
 		if(I.equipped_in_slot && I.cant_self_remove)
 			return
-		if(istype(O.loc, /obj/item/storage))
-			var/obj/item/storage/storage = O.loc
-			I.set_loc(get_turf(O))
-			storage.hud.remove_item(O)
+		I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 		if (istype(I,/obj/item/satchel))
 			var/obj/item/satchel/S = I
 			if (S.contents.len < 1)
@@ -366,7 +367,7 @@ TYPEINFO_NEW(/obj/table)
 		return
 
 	mouse_drop(atom/over_object, src_location, over_location)
-		if (usr && usr == over_object && src.desk_drawer)
+		if (usr && usr == over_object && src.desk_drawer && !istype(usr, /mob/living/critter/small_animal))
 			return src.desk_drawer.MouseDrop(over_object, src_location, over_location)
 		..()
 
@@ -412,7 +413,7 @@ TYPEINFO_NEW(/obj/table)
 			return
 		if(!(ownerMob.flags & TABLEPASS))
 			ownerMob.flags |= TABLEPASS
-			thr.end_throw_callback = .proc/unset_tablepass_callback
+			thr.end_throw_callback = PROC_REF(unset_tablepass_callback)
 		for(var/O in AIviewers(ownerMob))
 			var/mob/M = O //inherently typed list
 			var/the_text = "[ownerMob] jumps over [the_railing]."
@@ -454,9 +455,12 @@ TYPEINFO_NEW(/obj/table/wood)
 	desc = "A table made from solid oak, which is quite rare in space."
 	icon = 'icons/obj/furniture/table_wood.dmi'
 	parts_type = /obj/item/furniture_parts/table/wood
+	mat_appearances_to_ignore = list("wood")
 
 	auto
 		auto = 1
+	constructed //no "wood wood table"
+		name = "table"
 
 /obj/table/wood/auto/desk
 	name = "wooden desk"
@@ -675,7 +679,7 @@ TYPEINFO_NEW(/obj/table/reinforced)
 		auto = 1
 
 	attackby(obj/item/W, mob/user)
-		if (isweldingtool(W) && W:try_weld(user,1))
+		if (isweldingtool(W) && user.a_intent == "harm" && W:try_weld(user,1))
 			if (src.status == 2)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_WEAKEN), user)
 				return
@@ -684,7 +688,7 @@ TYPEINFO_NEW(/obj/table/reinforced)
 				return
 			else
 				return ..()
-		else if (iswrenchingtool(W))
+		else if (iswrenchingtool(W) && user.a_intent == "harm")
 			if (src.status == 1)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE), user)
 				return
@@ -1006,6 +1010,8 @@ TYPEINFO_NEW(/obj/table/glass)
 			return ..()
 
 	harm_slam(mob/user, mob/victim)
+		if(src.glass_broken != GLASS_INTACT)
+			return ..()
 		victim.set_loc(src.loc)
 		victim.changeStatus("weakened", 4 SECONDS)
 		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src]!</b></span>")
@@ -1057,7 +1063,7 @@ TYPEINFO_NEW(/obj/table/glass)
 			var/turf/T = get_step(src, direction)
 			if (locate(auto_type) in T)
 				dirs |= direction
-		icon_state = num2text(dirs)
+		set_icon_state(num2text(dirs))
 
 		if (src.glass_broken == GLASS_BROKEN)
 			src.UpdateOverlays(null, "tabletop")
@@ -1073,6 +1079,7 @@ TYPEINFO_NEW(/obj/table/glass)
 			src.working_image = image(src.icon, "[R]g[num2text(dirs)]")
 		else
 			src.working_image.icon_state = "[R]g[num2text(dirs)]"
+			setMaterialAppearanceForImage(working_image)
 		src.UpdateOverlays(working_image, "tabletop")
 
 		var/obj/table/WT = locate(auto_type) in get_step(src, WEST)
@@ -1085,10 +1092,10 @@ TYPEINFO_NEW(/obj/table/glass)
 			var/obj/table/SWT = locate(auto_type) in get_step(src, SOUTHWEST)
 			if (SWT)
 				working_image.icon_state = "[R]gSWs"
-				src.UpdateOverlays(working_image, "SWcorner")
 			else
 				working_image.icon_state = "[R]gSW"
-				src.UpdateOverlays(working_image, "SWcorner")
+			setMaterialAppearanceForImage(working_image)
+			src.UpdateOverlays(working_image, "SWcorner")
 		else
 			src.UpdateOverlays(null, "SWcorner")
 
@@ -1097,10 +1104,10 @@ TYPEINFO_NEW(/obj/table/glass)
 			var/obj/table/SET = locate(auto_type) in get_step(src, SOUTHEAST)
 			if (SET)
 				working_image.icon_state = "[R]gSEs"
-				src.UpdateOverlays(working_image, "SEcorner")
 			else
 				working_image.icon_state = "[R]gSE"
-				src.UpdateOverlays(working_image, "SEcorner")
+			setMaterialAppearanceForImage(working_image)
+			src.UpdateOverlays(working_image, "SEcorner")
 		else
 			src.UpdateOverlays(null, "SEcorner")
 
@@ -1109,10 +1116,10 @@ TYPEINFO_NEW(/obj/table/glass)
 			var/obj/table/NET = locate(auto_type) in get_step(src, NORTHEAST)
 			if (NET)
 				working_image.icon_state = "[R]gNEs"
-				src.UpdateOverlays(working_image, "NEcorner")
 			else
 				working_image.icon_state = "[R]gNE"
-				src.UpdateOverlays(working_image, "NEcorner")
+			setMaterialAppearanceForImage(working_image)
+			src.UpdateOverlays(working_image, "NEcorner")
 		else
 			src.UpdateOverlays(null, "NEcorner")
 
@@ -1121,10 +1128,10 @@ TYPEINFO_NEW(/obj/table/glass)
 			var/obj/table/NWT = locate(auto_type) in get_step(src, NORTHWEST)
 			if (NWT)
 				working_image.icon_state = "[R]gNWs"
-				src.UpdateOverlays(working_image, "NWcorner")
 			else
 				working_image.icon_state = "[R]gNW"
-				src.UpdateOverlays(working_image, "NWcorner")
+			setMaterialAppearanceForImage(working_image)
+			src.UpdateOverlays(working_image, "NWcorner")
 		else
 			src.UpdateOverlays(null, "NWcorner")
 
@@ -1210,10 +1217,10 @@ TYPEINFO_NEW(/obj/table/glass)
 				playsound(the_table, 'sound/items/Ratchet.ogg', 50, 1)
 			if (TABLE_WEAKEN)
 				verbing = "weakening"
-				playsound(the_table, 'sound/items/Welder.ogg', 50, 1)
+				the_tool:try_weld(owner,0,-1)
 			if (TABLE_STRENGTHEN)
 				verbing = "strengthening"
-				playsound(the_table, 'sound/items/Welder.ogg', 50, 1)
+				the_tool:try_weld(owner,0,-1)
 			if (TABLE_ADJUST)
 				verbing = "adjusting the shape of"
 				playsound(the_table, 'sound/items/Screwdriver.ogg', 50, 1)

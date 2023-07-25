@@ -21,14 +21,10 @@
 
 			if (arrestState != "*Arrest*") // Contraband overrides non-arrest statuses, now check for contraband
 				if (locate(/obj/item/implant/counterrev) in H.implant)
-					if (ticker.mode && ticker.mode.type == /datum/game_mode/revolution)
-						var/datum/game_mode/revolution/R = ticker.mode
-						if (H.mind && H.mind.special_role == ROLE_HEAD_REV)
-							arrestState = "RevHead"
-						else if (H.mind in R.revolutionaries)
-							arrestState = "Loyal_Progress"
-						else
-							arrestState = "Loyal"
+					if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+						arrestState = "RevHead"
+					else if (H.mind?.get_antagonist(ROLE_REVOLUTIONARY))
+						arrestState = "Loyal_Progress"
 					else
 						arrestState = "Loyal"
 

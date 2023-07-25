@@ -19,7 +19,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 	var/score_red = 0
 	var/score_blue = 0
 	var/game_state = FOOTBALL_PREGAME
-	var/time_left = 15 MINUTES
+	var/time_left = 10 MINUTES
 	var/time_next_state = 15 SECONDS
 	var/obj/item/football/the_big_one/the_football = null
 	var/last_tick = 0
@@ -27,6 +27,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 	var/list/obj/decal/big_number/clock_num
 	var/list/obj/decal/big_number/red_num
 	var/list/obj/decal/big_number/blue_num
+	var/datum/allocated_region/stadium = null
 	do_antag_random_spawns = 0
 
 	announce()
@@ -34,6 +35,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 		boutput(world, "<B>Get ready to play some football!</B>")
 
 	pre_setup()
+		src.stadium = get_singleton(/datum/mapPrefab/allocated/football).load()
 		// EVERYONE IS A football player.
 		for(var/client/C)
 			var/mob/new_player/player = C.mob
@@ -42,7 +44,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 				if (player.mind)
 					src.init_player(player, 0, 1)
 
-		time_left = 15 MINUTES
+		time_left = 10 MINUTES
 		time_next_state = 30 SECONDS
 
 		clock_num = list(locate("football_clock1000"), locate("football_clock100"), locate("football_clock10"), locate("football_clock1"))
@@ -215,6 +217,8 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			var/mob/new_player/N = M
 			N.mind.assigned_role = "MODE"
 			footballer = N.create_character(new /datum/job/football)
+			footballer.traitHolder.removeAll()
+			footballer.full_heal()
 
 		if (!ishuman(footballer))
 			boutput(M, "something went wrong. dunno what. sorry. football machine broke")
@@ -246,6 +250,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			footballer.equip_if_possible(new /obj/item/clothing/suit/armor/football(footballer), footballer.slot_wear_suit)
 			footballer.equip_if_possible(new /obj/item/clothing/head/helmet/football(footballer), footballer.slot_head)
 			footballer.equip_if_possible(new /obj/item/clothing/under/football(footballer), footballer.slot_w_uniform)
+			footballer.add_filter("outline", 1, outline_filter(size=0.5, color=rgb(0,0,255)))
 			I.name = "Blue Team"
 			I.assignment = "Blue Team"
 			I.color = "#0000ff"
@@ -253,6 +258,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			footballer.equip_if_possible(new /obj/item/clothing/suit/armor/football/red(footballer), footballer.slot_wear_suit)
 			footballer.equip_if_possible(new /obj/item/clothing/head/helmet/football/red(footballer), footballer.slot_head)
 			footballer.equip_if_possible(new /obj/item/clothing/under/football/red(footballer), footballer.slot_w_uniform)
+			footballer.add_filter("outline", 1, outline_filter(size=0.5, color=rgb(255,0,0)))
 			I.name = "Red Team"
 			I.assignment = "Red Team"
 			I.color = "#ff0000"
@@ -275,7 +281,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 					if (!player.current || isdead(player.current))
 						if (!player.current.client)
 							continue //ZeWaka: fix for null.preferences
-						var/mob/living/carbon/human/newbody = new(null, null, player.current.client.preferences, TRUE)
+						var/mob/living/carbon/human/newbody = new(pick(football_spawns[team]), null, player.current.client.preferences, TRUE)
 
 						if (player) //Mind transfer also handles key transfer.
 							player.transfer_to(newbody)

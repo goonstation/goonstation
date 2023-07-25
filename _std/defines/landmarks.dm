@@ -35,6 +35,11 @@
 #define LANDMARK_SYNDICATE_ASSAULT_POD_TELE "Syndicate-Assault-Pod-Tele"
 #define LANDMARK_SYNDICATE_ASSAULT_POD_COMP "Syndicate-Assault-Pod-Comp"
 
+// Pirates. Yarr!
+#define LANDMARK_PIRATE "Pirate-Spawn"
+#define LANDMARK_PIRATE_FIRST_MATE "Pirate-First-Mate-Spawn"
+#define LANDMARK_PIRATE_CAPTAIN "Pirate-Captain-Spawn"
+
 // Salvagers
 
 #define LANDMARK_SALVAGER "Salvager-Spawn"

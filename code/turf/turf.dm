@@ -63,6 +63,8 @@
 	var/list/list/datum/disjoint_turf/connections
 
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
+	flags = OPENCONTAINER | FPRINT
+
 
 	New()
 		..()
@@ -162,7 +164,7 @@
 
 /obj/overlay/tile_effect
 	name = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	mouse_opacity = 0
 	alpha = 255
@@ -175,7 +177,7 @@
 
 /obj/overlay/tile_gas_effect
 	name = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	mouse_opacity = 0
 
@@ -327,7 +329,7 @@ proc/generate_space_color()
 	if(fullbright)
 		if(!starlight)
 			starlight = image('icons/effects/overlays/simplelight.dmi', "3x3", pixel_x = -32, pixel_y = -32)
-			starlight.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART
+			starlight.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 			starlight.layer = LIGHTING_LAYER_BASE
 			starlight.plane = PLANE_LIGHTING
 			starlight.blend_mode = BLEND_ADD
@@ -523,12 +525,13 @@ proc/generate_space_color()
 		if(O.level == 1)
 			O.hide(src.intact)
 
-/turf/unsimulated/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1, force = 0)
+/turf/unsimulated/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
 	if (can_replace_with_stuff || force)
 		return ..(what, keep_old_material = keep_old_material, handle_air = handle_air)
 	return
 
-/turf/proc/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1, force = 0)
+/turf/proc/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
+	SEND_SIGNAL(src, COMSIG_TURF_REPLACED, what)
 	var/turf/simulated/new_turf
 	var/old_dir = dir
 	var/old_liquid = active_liquid // replacing stuff wasn't clearing liquids properly
@@ -537,6 +540,7 @@ proc/generate_space_color()
 
 	var/datum/gas_mixture/oldair = null //Set if old turf is simulated and has air on it.
 	var/datum/air_group/oldparent = null //Ditto.
+	var/zero_new_turf_air = (turf_flags & CAN_BE_SPACE_SAMPLE)
 
 	//For unsimulated static air tiles such as ice moon surface.
 	var/temp_old = null
@@ -708,7 +712,7 @@ proc/generate_space_color()
 			var/turf/simulated/N = new_turf
 			if (oldair) //Simulated tile -> Simulated tile
 				N.air = oldair
-			else if(istype(N.air)) //Unsimulated tile (likely space) - > Simulated tile  // fix runtime: Cannot execute null.zero()
+			else if(zero_new_turf_air && istype(N.air)) // fix runtime: Cannot execute null.zero()
 				N.air.zero()
 
 			#define _OLD_GAS_VAR_NOT_NULL(GAS, ...) GAS ## _old ||
@@ -866,7 +870,6 @@ proc/generate_space_color()
 	can_write_on = 1
 	mat_appearances_to_ignore = list("steel")
 	text = "<font color=#aaa>."
-	flags = OPENCONTAINER | FPRINT
 
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
@@ -972,6 +975,7 @@ proc/generate_space_color()
 	density = 1
 	pathable = 0
 	turf_flags = ALWAYS_SOLID_FLUID
+	gas_impermeable = TRUE
 #ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors
 	plane = PLANE_WALL
 #else
@@ -1073,9 +1077,12 @@ proc/generate_space_color()
 		boutput(user, "<span class='alert'>You can't build here.</span>")
 		return
 	var/obj/item/rods/R = C
-	if (istype(R) && R.change_stack_amount(-1))
+	if (istype(R))
+		if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
+
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+		R.change_stack_amount(-1)
 		ReplaceWithLattice()
 		if (R.material)
 			src.setMaterial(C.material)

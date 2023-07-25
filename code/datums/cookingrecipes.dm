@@ -114,6 +114,36 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/buttburger
 
+/datum/cookingrecipe/synthbuttburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/clothing/head/butt/synth
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/buttburger/synth
+
+/datum/cookingrecipe/cyberbuttburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/clothing/head/butt/cyberbutt
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/buttburger/cyber
+
+/datum/cookingrecipe/synthheartburger
+	item1 = /obj/item/organ/heart/synth
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/heartburger/synth
+
+/datum/cookingrecipe/cyberheartburger
+	item1 = /obj/item/organ/heart/cyber
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/heartburger/cyber
+
+/datum/cookingrecipe/flockheartburger
+	item1 = /obj/item/organ/heart/flock
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/heartburger/flock
+
 /datum/cookingrecipe/heartburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/organ/heart
@@ -131,6 +161,24 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item2 = /obj/item/organ/brain
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/brainburger
+
+datum/cookingrecipe/synthbrainburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/organ/brain/synth
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/brainburger/synth
+
+datum/cookingrecipe/cyberbrainburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/organ/brain/latejoin
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/brainburger/cyber
+
+datum/cookingrecipe/flockbrainburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/organ/brain/flockdrone
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/brainburger/flock
 
 /datum/cookingrecipe/roburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
@@ -401,6 +449,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice/spooky
 	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/spooky
+
+/datum/cookingrecipe/toasted_french
+	item1 = /obj/item/reagent_containers/food/snacks/breadslice/french
+	cookbonus = 5
+	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/french
 
 /datum/cookingrecipe/sandwich_m_h
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
@@ -1600,7 +1653,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 
 /datum/cookingrecipe/pancake
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pancake_batter
-	cookbonus = 11
+	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/pancake
 
 /datum/cookingrecipe/mashedpotatoes
@@ -1641,7 +1694,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 /datum/cookingrecipe/sloppyjoe
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	cookbonus = 13
+	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/burger/sloppyjoe
 
 /datum/cookingrecipe/meatloaf
@@ -1848,6 +1901,14 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/sugar
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/dippable/churro
+
+/datum/cookingrecipe/french_toast
+	item1 = /obj/item/reagent_containers/food/snacks/breadslice/
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/egg
+	amt2 = 2
+	item3 = /obj/item/reagent_containers/food/drinks/milk
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/french_toast
 
 /datum/cookingrecipe/zongzi
 	item1 = /obj/item/reagent_containers/food/snacks/plant/bamboo

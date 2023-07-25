@@ -2780,7 +2780,7 @@
 "hu" = (
 /obj/decal/cleanable/dirt,
 /obj/table/wood/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/decoration/ashtray{
 	butts = 5;
 	name = "grubby old ashtray";

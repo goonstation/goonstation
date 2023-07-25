@@ -3,7 +3,7 @@
 	desc = "A cabinet whose sole purpose is to store your damn files."
 	icon = 'icons/obj/large_storage.dmi'//fucking stupid fucking ass nothing i do works to make this icon be closed if someone doesnt interact with the menu
 	icon_state = "filecabinet" //i guess its a feature now               ok bye
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	attackby(var/obj/item/W, var/mob/user)

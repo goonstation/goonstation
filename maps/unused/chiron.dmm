@@ -12229,7 +12229,7 @@
 /area/station/hallway/primary/east)
 "axA" = (
 /obj/table/wood/auto,
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 4
 	},
 /obj/disposalpipe/segment/brig{
@@ -21743,7 +21743,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "aRm" = (
@@ -25419,7 +25419,7 @@
 "aYl" = (
 /obj/table/wood/auto,
 /obj/item/device/radio/beacon,
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 1
@@ -27204,7 +27204,7 @@
 /area/station/chapel/sanctuary)
 "bbG" = (
 /obj/table/wood/auto,
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/carpet{
 	icon_state = "fred1";
 	dir = 8

@@ -14,52 +14,22 @@ obj/machinery/atmospherics/valve
 	var/datum/pipe_network/network_node1
 	var/datum/pipe_network/network_node2
 
-	vertical
-		dir = NORTH
-	horizontal
-		dir = EAST
-
 	purge
 		name = "purge valve"
 
-		vertical
-			dir = NORTH
-		horizontal
-			dir = EAST
-
 	notify_admins
 		high_risk = 1
-
-		vertical
-			dir = NORTH
-		horizontal
-			dir = EAST
 
 	digital		// can be controlled by AI
 		name = "digital valve"
 		desc = "A digitally controlled valve."
 		icon = 'icons/obj/atmospherics/digital_valve.dmi'
 
-		vertical
-			dir = NORTH
-		horizontal
-			dir = EAST
-
 		purge
 			name = "purge valve"
 
-			vertical
-				dir = NORTH
-			horizontal
-				dir = EAST
-
 		notify_admins
 			high_risk = 1
-
-			vertical
-				dir = NORTH
-			horizontal
-				dir = EAST
 
 		attack_ai(mob/user as mob)
 			return src.Attackhand(user)
@@ -337,15 +307,6 @@ obj/machinery/atmospherics/manifold_valve
 
 	var/frequency = "1439"
 	var/id = null
-
-	north
-		dir = NORTH
-	east
-		dir = EAST
-	south
-		dir = SOUTH
-	west
-		dir = WEST
 
 	update_icon(animation)
 		if(animation)

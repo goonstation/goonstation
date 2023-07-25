@@ -619,8 +619,12 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/outerwear)
 	path = /obj/item/clothing/suit/merchant
 
 /datum/clothingbooth_item/outerwear/jean_jacket
-	name = "Jean Jackett"
+	name = "Jean Jacket"
 	path = /obj/item/clothing/suit/jean_jacket
+
+/datum/clothingbooth_item/outerwear/jacketsjacket
+	name = "Baseball Jacket"
+	path = /obj/item/clothing/suit/jacketsjacket
 
 /datum/clothingbooth_item/outerwear/tuxedojacket
 	name = "Tuxedo Jacket"
@@ -960,6 +964,44 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/scifi)
 /datum/clothingbooth_item/scifi/racingsuitprp
 	name = "Purple and Black Racing Jumpsuit"
 	path = /obj/item/clothing/under/misc/racingsuitprp
+
+/datum/clothingbooth_item/scifi/cwhat
+	name = "Moebius-Brand Headwear"
+	path = /obj/item/clothing/head/cwhat
+	slot = SLOT_HEAD
+
+/datum/clothingbooth_item/scifi/fthat
+	name = "Trader's Headwear"
+	path = /obj/item/clothing/head/fthat
+	slot = SLOT_HEAD
+	cost = PAY_DOCTORATE/5
+
+/datum/clothingbooth_item/scifi/ftscanplate
+	name = "FTX-480 Scanner Plate"
+	path = /obj/item/clothing/glasses/ftscanplate
+	slot = SLOT_GLASSES
+	cost = PAY_DOCTORATE/5
+
+/datum/clothingbooth_item/scifi/cwfashion
+	name = "CW Fashionista's Outfit"
+	path = /obj/item/clothing/under/gimmick/cwfashion
+	cost = PAY_DOCTORATE/5
+
+/datum/clothingbooth_item/scifi/ftuniform
+	name = "Free Trader's Outfit"
+	path = /obj/item/clothing/under/gimmick/ftuniform
+
+/datum/clothingbooth_item/scifi/handcomp
+	name = "Compudyne 0451 Handcomp"
+	path = /obj/item/clothing/gloves/handcomp
+	slot = SLOT_GLOVES
+	cost = PAY_DOCTORATE/5
+
+/datum/clothingbooth_item/scifi/cwboots
+	name = "Macando Boots"
+	path = /obj/item/clothing/shoes/cwboots
+	slot = SLOT_SHOES
+	cost = PAY_DOCTORATE/5
 
 //Summer
 

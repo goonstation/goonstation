@@ -89,7 +89,7 @@
 				traitor.current.show_antag_popup("traitorhard")
 
 			if (ROLE_WRAITH)
-				generate_wraith_objectives(traitor)
+				traitor.add_antagonist(ROLE_WRAITH)
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()

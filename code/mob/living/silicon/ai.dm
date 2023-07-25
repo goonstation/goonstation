@@ -37,7 +37,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	voice_name = "synthesized voice"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	emaggable = 0 // Can't be emagged...
 	syndicate_possible = 1 // ...but we can become a rogue computer.
@@ -352,13 +352,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			if(src.law_rack_connection)
 				var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
 				if (raw == "Yes")
-					src.law_rack_connection = linker.linked_rack
-					logTheThing(LOG_STATION, src, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)] with a linker by [user]")
-					var/area/A = get_area(src.law_rack_connection)
-					boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
-					src.playsound_local(src, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
-					src.show_text("<h3>You have been connected to a law rack</h3>", "red")
-					src.show_laws()
+					src.set_law_rack(linker.linked_rack, user)
 		else
 			boutput(user,"Linker lost connection to the stored law rack!")
 		return
@@ -441,7 +435,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			user.drop_item()
 			W.set_loc(src)
 			var/obj/item/organ/brain/B = W
-			if (B.owner && (B.owner.dnr || jobban_isbanned(B.owner.current, "AI")))
+			if (B.owner && (B.owner.get_player()?.dnr || jobban_isbanned(B.owner.current, "AI")))
 				src.visible_message("<span class='alert'>\The [B] is hit by a spark of electricity from \the [src]!</span>")
 				B.combust()
 				return
@@ -1028,7 +1022,6 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 
 				if (M)
 					message = "<B>[src]</B> points to [M]."
-				else
 			m_type = 1
 
 		if ("panic","freakout")
@@ -2625,7 +2618,7 @@ proc/get_mobs_trackable_by_AI()
 				A.cell = src.cell
 				src.cell.set_loc(A)
 				src.cell = null
-			A.anchored = 0
+			A.anchored = UNANCHORED
 			A.dismantle_stage = 4
 			A.update_appearance()
 			qdel(src)
@@ -2666,6 +2659,12 @@ proc/get_mobs_trackable_by_AI()
 		src.UpdateOverlays(src.image_background_overlay, "background")
 		src.UpdateOverlays(src.image_top_overlay, "top")
 
+
+/mob/living/silicon/ai/latejoin
+	New()
+		..()
+		qdel(src.brain)
+		src.brain = new /obj/item/organ/brain/latejoin(src)
 
 ABSTRACT_TYPE(/obj/item/ai_plating_kit)
 /obj/item/ai_plating_kit

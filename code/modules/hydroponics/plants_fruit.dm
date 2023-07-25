@@ -373,3 +373,17 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	endurance = 6
 	genome = 19
 	commuts = list(/datum/plant_gene_strain/damage_res,/datum/plant_gene_strain/stabilizer)
+
+/datum/plant/fruit/mustard
+	name = "Mustard" //oh god
+	seedcolor = "#FFCC00"
+	crop = /obj/item/reagent_containers/food/snacks/plant/mustard
+	starthealth = 20
+	growtime = 60
+	harvtime = 200
+	cropsize = 3
+	harvests = 3
+	endurance = 6
+	genome = 12
+	assoc_reagents = list("mustard")
+	commuts = list(/datum/plant_gene_strain/damage_res,/datum/plant_gene_strain/metabolism_slow)

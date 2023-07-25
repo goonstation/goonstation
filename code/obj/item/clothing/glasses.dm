@@ -46,6 +46,10 @@
 	desc = "A strip of cloth painstakingly designed to wear around your eyes so you cannot see."
 	block_vision = 1
 
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 100)
+
 	attack(mob/M, mob/user, def_zone) //this is for equipping blindfolds on head attack.
 		if (user.zone_sel.selecting == "head" && ishuman(M)) //ishuman() works on monkeys too apparently.
 			if(user == M) //Accidentally blindfolding yourself might be annoying so I'm leaving that out.
@@ -375,6 +379,20 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		boutput(user, "You flip [src] around.")
 		if (pinhole)
 			block_eye = null
+
+	pirate
+		name = "pirate's eyepatch"
+		pinhole = TRUE
+		block_eye = null
+
+		New()
+			..()
+			var/eye_covered
+			if (prob(50))
+				eye_covered = "L"
+			else
+				eye_covered = "R"
+			src.icon_state = "eyepatch-[eye_covered]"
 
 /obj/item/clothing/glasses/vr
 	name = "\improper VR goggles"

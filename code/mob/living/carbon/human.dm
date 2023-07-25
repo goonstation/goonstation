@@ -9,7 +9,6 @@
 #else
 	icon_state = "blank"
 #endif
-	static_type_override = /mob/living/carbon/human
 	throw_range = 4
 	p_class = 1.5 // 1.5 while standing, 2.5 while resting)
 
@@ -131,7 +130,6 @@
 	var/static/image/bandage_image = image('icons/obj/surgery.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/blood_image = image('icons/effects/blood.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/handcuff_img = image('icons/mob/mob.dmi')
-	var/static/image/shield_image = image('icons/mob/mob.dmi', "icon_state" = "shield")
 	var/static/image/heart_image = image('icons/mob/human.dmi')
 	var/static/image/heart_emagged_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/spider_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
@@ -170,7 +168,6 @@
 	var/datum/humanInventory/inventory = null
 
 /mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
-	default_static_icon = human_static_base_idiocy_bullshit_crap // FUCK
 	. = ..()
 
 	image_eyes = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
@@ -232,9 +229,6 @@
 		if (isnum(microbombs_4_everyone))
 			var/obj/item/implant/revenge/microbomb/MB = new (src)
 			MB.power = microbombs_4_everyone
-			MB.implanted = TRUE
-			src.implant.Add(MB)
-			INVOKE_ASYNC(MB, /obj/item/implant/revenge/microbomb.proc/implanted, src)
 
 	src.text = "<font color=#[random_hex(3)]>@"
 	src.update_colorful_parts()
@@ -604,9 +598,14 @@
 	game_stats.Increment("deaths")
 #endif
 
+	if (src.mind?.key)
+		var/datum/player/P = find_player(src.mind.key)
+		P.last_death_time = world.timeofday
+
+
 	//The unkillable man just respawns nearby! Oh no!
 	if (src.unkillable || src.spell_soulguard)
-		if (src.unkillable && src.mind.dnr) //Unless they have dnr set in which case rip for good
+		if (src.unkillable && src.mind.get_player()?.dnr) //Unless they have dnr set in which case rip for good
 			logTheThing(LOG_COMBAT, src, "was about to be respawned (Unkillable) but had DNR set.")
 			if (!gibbed)
 				src.gib()
@@ -642,7 +641,7 @@
 				spider.hivemind_owner = 0
 			for (var/mob/dead/target_observer/hivemind_observer/obs in C.hivemind)
 				boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
-				obs.boot()
+				obs.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 			if (C.hivemind.len > 0)
 				boutput(src, "Contact with the hivemind has been lost.")
 			C.hivemind = list()
@@ -656,7 +655,7 @@
 				src.visible_message("<span class='alert'><B>[src]</B> head starts to shift around!</span>")
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
 				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(src) //we spawn the headspider inside this dude immediately.
-				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, .proc/remove) //if this dude gets grindered or cremated or whatever, we go with it
+				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove)) //if this dude gets grindered or cremated or whatever, we go with it
 				src.mind?.transfer_to(HS) //ok we're a headspider now
 				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
 				HS.changeling = C
@@ -723,7 +722,7 @@
 
 	if (istype(src.wear_suit, /obj/item/clothing/suit/armor/suicide_bomb))
 		var/obj/item/clothing/suit/armor/suicide_bomb/A = src.wear_suit
-		INVOKE_ASYNC(A, /obj/item/clothing/suit/armor/suicide_bomb.proc/trigger, src)
+		INVOKE_ASYNC(A, TYPE_PROC_REF(/obj/item/clothing/suit/armor/suicide_bomb, trigger), src)
 
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 
@@ -734,12 +733,6 @@
 			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
 #endif
 		src.mind.register_death()
-		if (src.mind.special_role == ROLE_MINDHACK)
-			remove_mindhack_status(src, "mindhack", "death")
-		else if (src.mind.special_role == ROLE_VAMPTHRALL)
-			remove_mindhack_status(src, "vthrall", "death")
-		else if (src.mind.master)
-			remove_mindhack_status(src, "otherhack", "death")
 
 	logTheThing(LOG_COMBAT, src, "dies [log_health(src)] at [log_loc(src)].")
 	//src.icon_state = "dead"
@@ -751,10 +744,8 @@
 		if (src.hasStatus("handcuffed"))
 			src.unlock_medal("Fell down the stairs", 1)
 
-		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			var/datum/game_mode/revolution/R = ticker.mode
-			if (src.mind && (src.mind in R.revolutionaries)) // maybe add a check to see if they've been de-revved?
-				src.unlock_medal("Expendable", 1)
+		if (src.mind?.get_antagonist(ROLE_REVOLUTIONARY))
+			src.unlock_medal("Expendable", 1)
 
 		if (src.getStatusDuration("burning") > 400)
 			src.unlock_medal("Black and Blue", 1)
@@ -812,7 +803,7 @@
 	if (!antag_removal && src.spell_soulguard)
 		boutput(src, "<span class='notice'>Your Soulguard enchantment activates and saves you...</span>")
 		//soulguard ring puts you in the same spot
-		if(src.spell_soulguard == 2)	//istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport)
+		if(src.spell_soulguard == SOULGUARD_RING)	//istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport)
 			reappear_turf = get_turf(src)
 		else
 			reappear_turf = pick(job_start_locations["wizard"])
@@ -875,14 +866,17 @@
 		animation.master = src
 		animation.icon_state = "ungibbed"
 		src.unkillable = 0 //Don't want this lying around to repeatedly die or whatever.
-		src.spell_soulguard = 0 // clear this as well
+		if (src.spell_soulguard)
+			newbody.RegisterSignal(newbody, COMSIG_MOB_PICKUP, /mob/proc/emp_touchy)
+			newbody.RegisterSignal(newbody, COMSIG_LIVING_LIFE_TICK, /mob/proc/emp_hands)
+		src.spell_soulguard = SOULGUARD_INACTIVE // clear this as well
 		src = null //Detach this, what if we get deleted before the animation ends??
 		SPAWN(0.7 SECONDS) //Length of animation.
 			newbody.set_loc(animation.loc)
 			qdel(animation)
 	else
 		src.unkillable = 0
-		src.spell_soulguard = 0
+		src.spell_soulguard = SOULGUARD_INACTIVE
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 		SPAWN(2.2 SECONDS) // Has to at least match the organ/limb replacement stuff (Convair880).
 			if (src) qdel(src)
@@ -895,14 +889,8 @@
 	statpanel("Status")
 	if (src.client.statpanel == "Status")
 		stat(null, " ")
-		if (src.mind && src.mind.stealth_objective)
-			if (src.mind.objectives && istype(src.mind.objectives, /list))
-				for (var/datum/objective/O in src.mind.objectives)
-					if (istype(O, /datum/objective/specialist/stealth))
-						stat("Stealth Points:", "[O:score] / [O:min_score]")
 
 		/*
-
 		//For some reason, this code was causing severe lag. Feel free to uncomment it if you want to figure out why - Emily
 
 		if (src.internal)
@@ -913,25 +901,20 @@
 				stat("Tank Pressure:", MIXTURE_PRESSURE(src.internal.air_contents))
 				stat("Distribution Pressure:", src.internal.distribute_pressure)
 		*/
+/mob/living/carbon/human/set_a_intent(intent)
+	. = ..()
+	src.hud?.update_intent()
 
 /mob/living/carbon/human/hotkey(name)
 	switch (name)
 		if ("help")
 			src.set_a_intent(INTENT_HELP)
-			hud.update_intent()
-			check_for_intent_trigger()
 		if ("disarm")
 			src.set_a_intent(INTENT_DISARM)
-			hud.update_intent()
-			check_for_intent_trigger()
 		if ("grab")
 			src.set_a_intent(INTENT_GRAB)
-			hud.update_intent()
-			check_for_intent_trigger()
 		if ("harm")
 			src.set_a_intent(INTENT_HARM)
-			hud.update_intent()
-			check_for_intent_trigger()
 		if ("drop")
 			src.drop_item(null, TRUE)
 		if ("swaphand")
@@ -1129,18 +1112,15 @@
 					src.set_cursor('icons/cursors/combat_barehand.dmi')
 				src.client.show_popup_menus = 0
 				src.set_a_intent(INTENT_DISARM)
-				src.hud.update_intent()
 				return
 			else if (src.client.check_key(KEY_PULL))
 				src.set_cursor('icons/cursors/combat_grab.dmi')
 				src.client.show_popup_menus = 0
 				src.set_a_intent(INTENT_GRAB)
-				src.hud.update_intent()
 				return
 			else if (src.client.show_popup_menus == 0)
 				src.client.show_popup_menus = 1
 				src.set_a_intent(INTENT_HELP)
-				src.hud.update_intent()
 		else
 			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
 				src.set_cursor('icons/cursors/throw.dmi')
@@ -1184,6 +1164,10 @@
 		. = FALSE
 	else if (istype(src.wear_suit) && !src.wear_suit.see_face)
 		. = FALSE
+	else if (istype(src.back, /obj/item/clothing))
+		var/obj/item/clothing/hider = src.back
+		if (!hider.see_face)
+			. = FALSE
 
 /mob/living/carbon/human/UpdateName()
 	var/id_name = src.wear_id?:registered
@@ -1393,8 +1377,7 @@
 		return
 
 	if (src.bioHolder.HasEffect("food_bad_breath"))
-		for (var/mob/living/L in view(2,src))
-			if (L == src) continue //You were able to vomit from your own breath. Maybe a good idea?
+		for (var/mob/living/L in oview(2,src))
 			if (prob(20))
 				boutput(L, "<span class='alert'>Good lord, [src]'s breath smells bad!</span>")
 				L.vomit()
@@ -1945,7 +1928,7 @@
 		if (slot_r_store)
 			return src.r_store
 
-/mob/living/carbon/human/proc/force_equip(obj/item/I, slot)
+/mob/living/carbon/human/proc/force_equip(obj/item/I, slot, role_equipped = FALSE)
 	//warning: icky code
 	var/equipped = 0
 	switch(slot)
@@ -2038,19 +2021,32 @@
 			if (!src.l_store)
 				src.l_store = I
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["storage1"])
+				if (I.storage && !I.storage.opens_if_worn) // from item/proc/equipped()
+					I.storage.hide_hud(src)
 				equipped = 1
 		if (slot_r_store)
 			if (!src.r_store)
 				src.r_store = I
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["storage2"])
+				if (I.storage && !I.storage.opens_if_worn)
+					I.storage.hide_hud(src)
 				equipped = 1
 		if (slot_in_backpack)
-			if (src.back && istype(src.back, /obj/item/storage))
-				I.set_loc(src.back)
-				equipped = 1
+			if (src.back?.storage)
+				if (role_equipped)
+					src.back.storage.add_contents(I, src, FALSE)
+					equipped = TRUE
+				else
+					src.back.storage.add_contents_safe(I, src)
+					equipped = (I in src.back.storage.get_contents())
 		if (slot_in_belt)
-			if (src.belt && istype(src.belt, /obj/item/storage))
-				I.set_loc(src.belt)
+			if (src.belt?.storage)
+				if (role_equipped)
+					src.belt.storage.add_contents(I, src, FALSE)
+					equipped = TRUE
+				else
+					src.belt.storage.add_contents_safe(I, src)
+					equipped = (I in src.belt.storage.get_contents())
 				equipped = 1
 
 	if (equipped)
@@ -2201,15 +2197,11 @@
 				else
 					return TRUE
 		if (slot_in_backpack) // this slot is stupid
-			if (src.back && istype(src.back, /obj/item/storage))
-				var/obj/item/storage/S = src.back
-				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
-					return TRUE
+			if (src.back?.storage?.check_can_hold(I) == STORAGE_CAN_HOLD)
+				return TRUE
 		if (slot_in_belt) // this slot is also stupid
-			if (src.belt && istype(src.belt, /obj/item/storage))
-				var/obj/item/storage/S = src.belt
-				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
-					return TRUE
+			if (src.belt?.storage?.check_can_hold(I) == STORAGE_CAN_HOLD)
+				return TRUE
 	return FALSE
 
 /mob/living/carbon/human/proc/equip_new_if_possible(path, slot)
@@ -2220,9 +2212,9 @@
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/human/proc/equip_if_possible(obj/item/I, slot)
+/mob/living/carbon/human/proc/equip_if_possible(obj/item/I, slot, role_equipped = TRUE)
 	if (can_equip(I, slot))
-		return force_equip(I, slot)
+		return force_equip(I, slot, role_equipped)
 	else
 		return 0
 
@@ -2555,8 +2547,7 @@
 
 /mob/living/carbon/human/proc/spidergib()
 	if (isobserver(src))
-		var/list/virus = src.ailments
-		gibs(src.loc, virus)
+		gibs(src.loc)
 		return
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
@@ -2967,7 +2958,6 @@
 	if(.)
 		src.set_face_icon_dirty()
 		src.set_body_icon_dirty()
-		src.get_static_image()
 	else // updates are called by the mutantrace datum. lets not call it a million times
 		src.update_body()
 		src.update_clothing()
@@ -3246,9 +3236,9 @@
 		abilityHolder.set_loc_callback(newloc)
 	..()
 
-/mob/living/carbon/human/get_id()
+/mob/living/carbon/human/get_id(not_worn = FALSE)
 	. = ..()
-	if(.)
+	if(. || not_worn)
 		return
 	if(istype(src.wear_id, /obj/item/card/id))
 		return src.wear_id
@@ -3272,7 +3262,6 @@
 	src.hand = h
 	if (src.juggling())
 		src.drop_juggle()
-
 
 /mob/living/carbon/human/special_movedelay_mod(delay,space_movement,aquatic_movement)
 	.= delay
@@ -3308,10 +3297,6 @@
 					. += T.active_liquid.movement_speed_mod
 				else if (istype(T,/turf/space/fluid))
 					. += 3
-
-/mob/living/carbon/human/proc/check_for_intent_trigger()
-	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER))
-		src.equipped().intent_switch_trigger(src)
 
 /mob/living/carbon/human/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
@@ -3425,3 +3410,12 @@
 		src.l_hand?.hear_talk(M, text, real_name, lang_id)
 	. = ..()
 
+///Returns the number of clown items someone is wearing
+/mob/living/carbon/human/proc/clown_tally()
+	. = 0
+	if(istype(src.w_uniform, /obj/item/clothing/under/misc/clown))
+		. += 1
+	if(istype(src.shoes, /obj/item/clothing/shoes/clown_shoes))
+		. += 1
+	if(istype(src.wear_mask, /obj/item/clothing/mask/clown_hat))
+		. += 1

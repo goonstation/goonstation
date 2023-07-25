@@ -456,7 +456,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 	cooldown = 100
 	targeted = 1
 	target_anything = 1
-	restricted_area_check = 1
+	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 
 	cast(atom/target)
 		if (..())
@@ -483,7 +483,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 	icon_state = "teleport"
 	cooldown = 600
 	targeted = 0
-	restricted_area_check = 1
+	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 
 	cast(atom/target)
 		if (..())

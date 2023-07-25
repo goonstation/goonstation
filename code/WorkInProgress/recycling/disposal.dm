@@ -175,7 +175,7 @@
 	icon = 'icons/obj/disposal.dmi'
 	name = "disposal pipe"
 	desc = "An underfloor disposal pipe."
-	anchored = 1
+	anchored = ANCHORED
 	density = FALSE
 	pass_unstable = FALSE
 	text = ""
@@ -286,7 +286,7 @@
 		missing_image.plane = PLANE_FLOOR
 		missing_image.color = MISSING_DISPOSAL_IMAGE_COLOR
 		missing_image.alpha = 180
-		missing_image.appearance_flags = RESET_ALPHA | RESET_COLOR
+		missing_image.appearance_flags = RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 
 		var/turf/simulated/T = get_turf(src)
 		if (!T.disposal_image)
@@ -305,10 +305,8 @@
 
 		var/turf/target
 
-		if(T.density)		// dense ouput turf, so stop holder
-			H.active = 0
-			H.set_loc(src)
-			return
+		if(!checkTurfPassable(T, source = get_turf(src)))	// dense ouput turf, so default to just ejecting them here
+			T = get_turf(src)
 		if(T.intact && istype(T,/turf/simulated/floor)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
 			//F.health	= 100
@@ -316,7 +314,7 @@
 			F.setIntact(FALSE)
 			F.levelupdate()
 			new /obj/item/tile/steel(H)	// add to holder so it will be thrown with other stuff
-			F.icon_state = "[F.burnt ? "panelscorched" : "plating"]"
+			F.icon_state = "plating"
 
 		if(direction)		// direction is specified
 			if(istype(T, /turf/space)) // if ended in space, then range is unlimited
@@ -435,6 +433,9 @@
 		if (isrestrictedz(z))
 			return
 		var/turf/T = src.loc
+		if (istype(I, /obj/item/tile)) //let people repair floors underneath pipes
+			T.Attackby(I, user)
+			return
 		if (T.intact)
 			return		// prevent interaction with T-scanner revealed pipes
 
@@ -918,6 +919,7 @@ TYPEINFO(/obj/disposalpipe/loafer)
 				for (var/atom/movable/O2 in H)
 					if(ismob(O2))
 						var/mob/M = O2
+						logTheThing(LOG_COMBAT, M, "was loafed by the [log_object(src)] at [log_loc(src)]")
 						M.ghostize()
 					qdel(O2)
 
@@ -938,8 +940,9 @@ TYPEINFO(/obj/disposalpipe/loafer)
 
 				else if (isliving(newIngredient))
 					playsound(src.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Liquid_Slosh_1.ogg','sound/impact_sounds/Wood_Hit_1.ogg','sound/impact_sounds/Slimy_Hit_3.ogg','sound/impact_sounds/Slimy_Hit_4.ogg','sound/impact_sounds/Flesh_Stab_1.ogg'), 30, 1)
-					var/mob/living/poorSoul = newIngredient
-					if (issilicon(poorSoul))
+					var/mob/living/M = newIngredient
+					logTheThing(LOG_COMBAT, M, "was loafed by the [log_object(src)] at [log_loc(src)]")
+					if (issilicon(M))
 						newLoaf.reagents.add_reagent("oil",10)
 						newLoaf.reagents.add_reagent("silicon",10)
 						newLoaf.reagents.add_reagent("iron",10)
@@ -951,11 +954,11 @@ TYPEINFO(/obj/disposalpipe/loafer)
 						newLoaf.loaf_factor += (newLoaf.loaf_factor / 5) + 50 // good god this is a weird value
 					else
 						newLoaf.loaf_factor += (newLoaf.loaf_factor / 10) + 50
-					if(!isdead(poorSoul))
-						poorSoul:emote("scream")
-					poorSoul.death()
-					if (poorSoul.mind || poorSoul.client)
-						poorSoul.ghostize()
+					if(!isdead(M))
+						M:emote("scream")
+					M.death()
+					if (M.mind || M.client)
+						M.ghostize()
 				else if (isitem(newIngredient))
 					var/obj/item/I = newIngredient
 					newLoaf.loaf_factor += I.w_class * 5
@@ -1042,11 +1045,10 @@ TYPEINFO(/obj/disposalpipe/loafer)
 		src.reagents.add_reagent("silicate",10)
 		src.reagents.add_reagent("space_fungus",3)
 		src.reagents.add_reagent("synthflesh",10)
-		START_TRACKING
 
 	disposing()
 		. = ..()
-		STOP_TRACKING
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES) // only relevant if strangelet
 
 	proc/update()
 		var/orderOfLoafitude = clamp(round(log(8, loaf_factor)), 0, MAXIMUM_LOAF_STATE_VALUE)
@@ -1141,6 +1143,7 @@ TYPEINFO(/obj/disposalpipe/loafer)
 				src.throwforce = 88
 				src.throw_range = 0
 				src.reagents.add_reagent("george_melonium",50)
+				START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 				if (!src.processing)
 					src.processing = TRUE
@@ -1182,9 +1185,9 @@ TYPEINFO(/obj/disposalpipe/loafer)
 		..()
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleactivation)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", .proc/activate)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", .proc/deactivate)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggleactivation))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", PROC_REF(activate))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", PROC_REF(deactivate))
 
 		SPAWN(1 SECOND)
 			switch_dir = turn(dir, 90)
@@ -1295,7 +1298,7 @@ TYPEINFO(/obj/disposalpipe/loafer)
 	name = "smart disposal outlet"
 	desc = "A disposal outlet with a little sonar sensor on the front, so it only dumps contents if it is unblocked."
 	icon_state = "unblockoutlet"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/turf/stuff_chucking_target
 
@@ -1741,7 +1744,7 @@ TYPEINFO(/obj/disposaloutlet)
 	icon = 'icons/obj/disposal.dmi'
 	icon_state = "outlet"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/range = 10
@@ -1921,7 +1924,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 					pipe.set_dir(new_dir)
 				break
 	pipe.fix_sprite()
-
+ABSTRACT_TYPE(/obj/disposalpipespawner)
 /obj/disposalpipespawner
 	icon = 'icons/obj/disposal.dmi'
 	name = "disposal pipe spawner"

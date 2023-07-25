@@ -37,7 +37,8 @@ var/global/runtime_count = 0
 
 	// if we're in a fucked up state and generating lots of runtimes we don't want to make the performance of the runtimes even worse
 	if(runtime_count < 1000)
-		usr?.unlock_medal("Call 1-800-CODER", 1)
+		if (istype(usr, /mob))
+			usr.unlock_medal("Call 1-800-CODER", 1)
 
 
 /client/proc/cmd_view_runtimes()

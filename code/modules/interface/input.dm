@@ -230,6 +230,9 @@ var/list/dirty_keystates = list()
 				filtered.Add(A)
 			if(filtered.len) object = pick(filtered)
 
+		if(control == "infowindow.info" && text2num(parameters["icon-x"]) > 32)
+			parameters["icon-x"] = "16"
+
 		var/next = user.click(object, parameters, location, control)
 
 		if (isnum(next) && src.preferences.use_click_buffer && src.queued_click != object && next <= max(user.click_delay, user.combat_click_delay))
@@ -323,6 +326,7 @@ var/list/dirty_keystates = list()
 /proc/start_input_loop()
 	SPAWN(0)
 		while (1)
+			last_input_loop_time = TIME
 			process_keystates()
 
 			for(var/client/C as anything in clients) // as() is ok here since we nullcheck

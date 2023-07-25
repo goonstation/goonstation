@@ -103,6 +103,7 @@
 		F["[profileNum]_be_blob"] << src.be_blob
 		F["[profileNum]_be_conspirator"] << src.be_conspirator
 		F["[profileNum]_be_flock"] << src.be_flock
+		F["[profileNum]_be_salvager"] << src.be_salvager
 		F["[profileNum]_be_misc"] << src.be_misc
 
 		// UI settings. Ehhhhh.
@@ -111,8 +112,6 @@
 
 		if(src.traitPreferences.isValid())
 			F["[profileNum]_traits"] << src.traitPreferences.traits_selected
-
-
 
 		// Global options
 		F["tooltip"] << (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS)
@@ -133,6 +132,9 @@
 		F["flying_chat_hidden"] << src.flying_chat_hidden
 		F["auto_capitalization"] << src.auto_capitalization
 		F["local_deachat"] << src.local_deadchat
+
+		F["tgui_fancy"] << src.tgui_fancy
+		F["tgui_lock"] << src.tgui_lock
 
 		if (returnSavefile)
 			return F
@@ -293,6 +295,7 @@
 		F["[profileNum]_be_blob"] >> src.be_blob
 		F["[profileNum]_be_conspirator"] >> src.be_conspirator
 		F["[profileNum]_be_flock"] >> src.be_flock
+		F["[profileNum]_be_salvager"] >> src.be_salvager
 		F["[profileNum]_be_misc"] >> src.be_misc
 
 		// UI settings...
@@ -321,6 +324,11 @@
 		F["flying_chat_hidden"] >> src.flying_chat_hidden
 		F["auto_capitalization"] >> src.auto_capitalization
 		F["local_deachat"] >> src.local_deadchat
+
+		F["tgui_fancy"] >> src.tgui_fancy
+		if(isnull(src.tgui_fancy))
+			src.tgui_fancy = 1
+		F["tgui_lock"] >> src.tgui_lock
 
 
 		if (isnull(src.name_first) || !length(src.name_first) || isnull(src.name_last) || !length(src.name_last))

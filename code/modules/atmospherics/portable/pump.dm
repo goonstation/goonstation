@@ -126,7 +126,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 		"direction_out" = src.direction_out
 	)
 
-	.["holding"] = src.holding.ui_describe()
+	.["holding"] = src.holding?.ui_describe()
 
 /obj/machinery/portable_atmospherics/pump/ui_static_data(mob/user)
 	. = list(

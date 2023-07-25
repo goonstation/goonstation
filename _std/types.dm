@@ -145,14 +145,14 @@ proc/maximal_subtype(var/list/L)
 // by_type and by_cat stuff
 
 // sometimes we want to have all objects of a certain type stored (bibles, staffs of cthulhu, ...)
-// to do that add START_TRACKING to New (or unpooled) and STOP_TRACKING to disposing, then use by_type[/obj/item/storage/bible] to access the list of things
+// to do that add START_TRACKING to New (or unpooled) and STOP_TRACKING to disposing, then use by_type[/obj/item/bible] to access the list of things
 
 #ifdef SPACEMAN_DMM // just don't ask
 	#define START_TRACKING
 	#define STOP_TRACKING
 #elif defined(OPENDREAM) // Yay, actual sanity!
-	#define START_TRACKING if(!by_type[opendream_procpath]) { by_type[opendream_procpath] = list() }; by_type[opendream_procpath][src] = 1
-	#define STOP_TRACKING by_type[opendream_procpath].Remove(src)
+	#define START_TRACKING if(!by_type[__TYPE__]) { by_type[__TYPE__] = list() }; by_type[__TYPE__][src] = 1
+	#define STOP_TRACKING by_type[__TYPE__].Remove(src)
 #else
 	/// we use an assoc list here because removing from one is a lot faster
 	#define START_TRACKING if(!by_type[......]) { by_type[......] = list() }; by_type[.......][src] = 1
@@ -215,6 +215,8 @@ var/list/list/by_cat = list()
 #define TR_CAT_FLOCK_STRUCTURE "flock_structure"
 #define TR_CAT_AREA_PROCESS "process_area"
 #define TR_CAT_RANCID_STUFF "rancid_stuff"
+#define TR_CAT_GHOST_OBSERVABLES "ghost_observables"
+#define TR_CAT_STATION_EMERGENCY_LIGHTS "emergency_lights"
 // powernets? processing_items?
 // mobs? ai-mobs?
 
@@ -336,7 +338,10 @@ proc/find_first_by_type(type)
 	while(ancestor != null)
 		if(ancestor in global.by_type)
 			if(length(global.by_type[ancestor]))
-				return global.by_type[ancestor][1]
+				for(var/instance in global.by_type[ancestor])
+					if(istype(instance, type))
+						return instance
+				return null
 			else
 				return null
 		ancestor = type2parent(ancestor)

@@ -581,21 +581,21 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 	air_master.active_super_conductivity += src
 
-/turf/simulated/proc/update_nearby_tiles(need_rebuild)
+/turf/proc/update_nearby_tiles(need_rebuild)
 	if(!air_master)
 		return FALSE
 
 	src.selftilenotify() //used in fluids.dm for displaced fluid
-
+	var/turf/simulated/center = src //this is fine and normal
 	var/turf/simulated/north = get_step(src,NORTH)
 	var/turf/simulated/south = get_step(src,SOUTH)
 	var/turf/simulated/east = get_step(src,EAST)
 	var/turf/simulated/west = get_step(src,WEST)
 
 	if(need_rebuild)
-		if(istype(src)) //Rebuild/update nearby group geometry
-			if(src.parent)
-				air_master.groups_to_rebuild |= src.parent
+		if(istype(center)) //Rebuild/update nearby group geometry
+			if(center.parent)
+				air_master.groups_to_rebuild |= center.parent
 			else
 				air_master.tiles_to_update |= src
 
@@ -624,7 +624,8 @@ var/global/list/turf/hotly_processed_turfs = list()
 			else
 				air_master.tiles_to_update |= west
 	else
-		if(istype(src)) air_master.tiles_to_update |= src
+		if(istype(center))
+			air_master.tiles_to_update |= src
 		if(istype(north))
 			north.tilenotify(src)
 			air_master.tiles_to_update |= north

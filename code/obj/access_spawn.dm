@@ -3,6 +3,7 @@
 	desc = "Sets access of machines on the same turf as it to its access, then destroys itself."
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "access_spawn"
+	layer = OBJ_LAYER + 1 // yeah let's consistently be above doors
 
 	/*
 	 * loop through valid objects in the same location and, if they have no access set, set it to this one
@@ -318,6 +319,11 @@
 /obj/access_spawn/syndie_shuttle
 	name = "syndie_shuttle access spawn"
 	req_access = list(access_syndicate_shuttle)
+	color = SECURITY
+
+/obj/access_spawn/pirate_ship
+	name = "pirate ship access spawn"
+	req_access = list(access_pirate)
 	color = SECURITY
 
 /obj/access_spawn/research_foyer
