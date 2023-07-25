@@ -100,7 +100,7 @@ TYPEINFO(/obj/machinery/communications_dish)
 			if (src.status & (BROKEN|NOPOWER))
 				return
 
-			if (cargo_logs.len > 20)
+			if (length(cargo_logs) > 20)
 				cargo_logs.len = 10
 
 			var/shiftTime = round(ticker.round_elapsed_ticks / 600)

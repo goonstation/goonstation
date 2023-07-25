@@ -105,7 +105,7 @@ proc/pool_deprecated(var/datum/to_pool)
 			type_pool = createPool(to_pool.type)
 
 
-		if(type_pool.len < get_pool_size_limit(to_pool.type))
+		if(length(type_pool) < get_pool_size_limit(to_pool.type))
 			#ifdef DETAILED_POOL_STATS
 			increment_pool_stats(to_pool.type, POOLINGS)
 			#endif

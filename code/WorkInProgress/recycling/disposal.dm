@@ -1423,7 +1423,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 				AM.set_loc(src.loc)
 				AM.pipe_eject(dir)
 				AM.throw_at(stuff_chucking_target, 3, 1)
-			if (H.contents.len < 1)
+			if (length(H.contents) < 1)
 				H.vent_gas(src.loc)
 				qdel(H)
 				return null
@@ -1497,7 +1497,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 		if(!isliving(usr))
 			return
 
-		if(istype(O, /obj/item/mechanics) && O.level == 2)
+		if(istype(O, /obj/item/mechanics) && O.level == OVERFLOOR)
 			boutput(usr, "<span class='alert'>[O] needs to be secured into place before it can be connected.</span>")
 			return
 

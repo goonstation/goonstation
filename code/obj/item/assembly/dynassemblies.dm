@@ -19,7 +19,7 @@ For fruit DynAssemblies see: fruithat.dm
 //If you are happy and you have a valid combo, screwdriver it to create your product.
 
 
-/obj/item/dynassembly/
+/obj/item/dynassembly
 	name = "assembly"
 	w_class = W_CLASS_BULKY
 	var/list/partnames = list() //the names of the parts we have, individually
@@ -38,7 +38,7 @@ For fruit DynAssemblies see: fruithat.dm
 			return
 		if ((validate && (W.type in validparts)) || (validate && (W.parent_type in validparts)) || (!validate && !isscrewingtool(W)))
 			var/obj/item/P = W
-			if ((!multipart && (P.type in src.contents) || (multipart && multitypes && !(P.type in src.multitypes) ) && contents.len >= 15)) //who really needs more than 15 parts
+			if ((!multipart && (P.type in src.contents) || (multipart && multitypes && !(P.type in src.multitypes) ) && length(contents) >= 15)) //who really needs more than 15 parts
 				boutput(user, "You can't add any more of this type of part!")
 			else
 				boutput(user, "<span class='notice'>You begin adding \the [P.name] to \the [src.name].</span>")

@@ -9,7 +9,7 @@
 // obj/submachine/seed.dm: The splicer and reagent extractor are in here.
 
 ABSTRACT_TYPE(/datum/plant)
-/datum/plant/
+/datum/plant
 	// Standard variables for plants are added here.
 	var/name = "plant species name" // Name of the plant species
 	var/sprite = null         // The plant's normal sprite - overridden by special_icon
@@ -32,6 +32,7 @@ ABSTRACT_TYPE(/datum/plant)
 	var/nectarlevel = 0 //If nonzero, slowly tries to maintain this level of nectar reagent.
 	var/list/assoc_reagents = list() // Used for extractions, harvesting, etc
 	var/list/commuts = list() // What general mutations can occur in this plant?
+	var/list/innate_commuts = list() //! What kind of mutations should every seed of this plant receive when it is generated
 	var/list/mutations = list() // what mutant variants does this plant have?
 	var/genome = 0 // Used for splicing - how "similar" the plants are = better odds of splice
 	var/stop_size_scaling // Stops the enlarging of sprites based on quality
@@ -194,19 +195,19 @@ ABSTRACT_TYPE(/datum/plant)
 				HYPnewcommutcheck(src,DNA, 2)
 				HYPnewmutationcheck(src,DNA,null,1,S)
 				if (prob(2))
-					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/unstable)
+					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
 			if ("mutagen")
 				HYPmutateDNA(DNA,2)
 				HYPnewcommutcheck(src,DNA, 3)
 				HYPnewmutationcheck(src,DNA,null,1,S)
 				if (prob(5))
-					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/unstable)
+					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
 			if ("ammonia")
 				damage_amt = rand(10,20)
 				DNA.growtime += rand(5,10)
 				DNA.harvtime += rand(2,5)
 				if (prob(5))
-					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/accelerator)
+					HYPaddCommut(DNA,/datum/plant_gene_strain/accelerator)
 			if ("potash")
 				DNA.cropsize += rand(1,4)
 				DNA.harvests -= rand(0,2)
@@ -216,7 +217,7 @@ ABSTRACT_TYPE(/datum/plant)
 			if ("space_fungus")
 				DNA.endurance += rand(1,3)
 				if (prob(3))
-					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/damage_res)
+					HYPaddCommut(DNA,/datum/plant_gene_strain/damage_res)
 			if ("mutadone")
 				if (DNA.growtime < 0)
 					DNA.growtime++
@@ -235,7 +236,7 @@ ABSTRACT_TYPE(/datum/plant)
 			if (prob(damage_prob))
 				S.seeddamage += damage_amt
 
-/datum/plantgenes/
+/datum/plantgenes
 	var/growtime = 0 // These vars are pretty much bonuses/penalties applied on top of the
 	var/harvtime = 0 // same vars found in /datum/plant honestly. They go largely towards
 	var/harvests = 0 // the same purpose for the most part.
@@ -267,7 +268,7 @@ ABSTRACT_TYPE(/datum/plant)
 			// optimise this later
 
 	/// This gives out a plant stat, modified by all commuts that affect produce
-	proc/get_effective_value(gene_stat as text) 
+	proc/get_effective_value(gene_stat as text)
 		var/output_base = 0
 		switch(gene_stat)
 			if("growtime")

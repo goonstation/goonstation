@@ -63,7 +63,7 @@
 	},
 /area/space)
 "aj" = (
-/obj/wingrille_spawn/bulletproof,
+/obj/mapping_helper/wingrille_spawn/bulletproof,
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 1;
 	icon_state = "alt_heater-R"
@@ -71,7 +71,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ak" = (
-/obj/wingrille_spawn/bulletproof,
+/obj/mapping_helper/wingrille_spawn/bulletproof,
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 1;
 	icon_state = "alt_heater-M"
@@ -79,7 +79,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "al" = (
-/obj/wingrille_spawn/bulletproof,
+/obj/mapping_helper/wingrille_spawn/bulletproof,
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 1;
 	icon_state = "alt_heater-L"
@@ -108,7 +108,7 @@
 	},
 /area/space)
 "ao" = (
-/obj/wingrille_spawn/bulletproof,
+/obj/mapping_helper/wingrille_spawn/bulletproof,
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 1;
 	icon_state = "alt_heater"
@@ -190,7 +190,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "aB" = (
-/obj/wingrille_spawn/bulletproof,
+/obj/mapping_helper/wingrille_spawn/bulletproof,
 /turf/simulated/floor/plating,
 /area/space)
 "aC" = (
@@ -418,7 +418,7 @@
 /turf/space,
 /area/space)
 "bh" = (
-/obj/wingrille_spawn/bulletproof,
+/obj/mapping_helper/wingrille_spawn/bulletproof,
 /obj/decal/fakeobjects/shuttleweapon/base{
 	dir = 8;
 	icon_state = "alt_heater"
@@ -535,7 +535,7 @@
 /turf/simulated/floor/circuit/red,
 /area/space)
 "bB" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/fakeobjects/shuttleweapon/base,
 /turf/simulated/floor/plating,
 /area/space)
@@ -553,7 +553,7 @@
 	},
 /area/space)
 "bE" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/fakeobjects/shuttleweapon/base,
 /turf/space,
 /area/space)
@@ -706,7 +706,7 @@
 	},
 /area/space)
 "cd" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
 /area/space)
 "ce" = (
@@ -786,7 +786,7 @@
 	},
 /area/space)
 "cr" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
 	icon_state = "alt_heater-R"
@@ -837,7 +837,7 @@
 	},
 /area/space)
 "cx" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -863,7 +863,7 @@
 	},
 /area/space)
 "cB" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
 	icon_state = "alt_heater-M"
@@ -911,7 +911,7 @@
 	},
 /area/space)
 "cJ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
 	icon_state = "alt_heater-L"
@@ -1004,7 +1004,7 @@
 /turf/unsimulated/floor/plating,
 /area/space)
 "cX" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-L"
@@ -1064,7 +1064,7 @@
 /turf/unsimulated/floor/plating,
 /area/space)
 "dg" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-M"
@@ -1108,7 +1108,7 @@
 /turf/unsimulated/floor/plating,
 /area/space)
 "dn" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-R"
@@ -1315,21 +1315,21 @@
 	},
 /area/space)
 "dQ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/floor/plating,
 /area/space)
 "dR" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
 /turf/unsimulated/floor/plating,
 /area/space)
 "dS" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},
@@ -1461,13 +1461,13 @@
 	},
 /area/space)
 "ej" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
 /area/space)
 "ek" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -1800,9 +1800,7 @@
 "fd" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/pink,
-/obj/landmark/start{
-	name = "wizard"
-	},
+/obj/landmark/antagonist/wizard,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "green2"
@@ -1883,9 +1881,7 @@
 /obj/window/south,
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/blue,
-/obj/landmark/start{
-	name = "wizard"
-	},
+/obj/landmark/antagonist/wizard,
 /turf/unsimulated/floor/carpet{
 	icon_state = "green2"
 	},
@@ -1994,7 +1990,7 @@
 	},
 /area/space)
 "fF" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/space)
 "fG" = (
@@ -2129,7 +2125,7 @@
 	},
 /area/space)
 "fZ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
 /area/space)
 "ga" = (
@@ -2243,9 +2239,7 @@
 /area/space)
 "go" = (
 /obj/stool/chair/comfy,
-/obj/landmark/start{
-	name = "wizard"
-	},
+/obj/landmark/antagonist/wizard,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "blue2"
@@ -2420,7 +2414,7 @@
 /turf/space,
 /area/space)
 "gI" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/black,
 /area/space)
 "gJ" = (
@@ -3050,7 +3044,7 @@
 /turf/simulated/floor/stairs,
 /area/space)
 "iA" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/black,
 /area/space)
@@ -3061,7 +3055,7 @@
 /turf/simulated/floor/wood/two,
 /area/space)
 "iC" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
 /obj/machinery/light/small{
 	base_state = "radio";
@@ -3138,7 +3132,7 @@
 /turf/simulated/floor/grime,
 /area/space)
 "iM" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
@@ -3178,7 +3172,7 @@
 /turf/simulated/floor/wood/two,
 /area/space)
 "iS" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right{
 	dir = 8
 	},
@@ -3712,7 +3706,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "kl" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor,
 /area/space)
 "km" = (
@@ -4776,11 +4770,11 @@
 	},
 /area/space)
 "mS" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/damaged2,
 /area/space)
 "mT" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/scorched,
 /area/space)
 "mU" = (
@@ -5295,7 +5289,7 @@
 /area/space)
 "oa" = (
 /obj/decal/cleanable/dirt,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/space)
 "ob" = (
@@ -5808,7 +5802,7 @@
 /area/space)
 "py" = (
 /obj/item/cable_coil/cut,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
 "pz" = (
@@ -6627,17 +6621,6 @@
 	icon_state = "floor2"
 	},
 /area/space)
-"rG" = (
-/obj/stool/chair/comfy{
-	dir = 8
-	},
-/obj/landmark/spawner{
-	name = "big_yank"
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/space)
 "rH" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It won't budge.";
@@ -7212,7 +7195,7 @@
 /turf/simulated/floor/white,
 /area/space)
 "sM" = (
-/obj/wingrille_spawn,
+/obj/mapping_helper/wingrille_spawn,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -7362,18 +7345,6 @@
 	icon_state = "floor2"
 	},
 /area/space)
-"td" = (
-/obj/stool/chair/comfy/shuttle/brown,
-/obj/machinery/computer/shuttle_bus/embedded/south{
-	plane = 6
-	},
-/obj/landmark/spawner{
-	name = "john_bill"
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/space)
 "te" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/item/shaker/mustard,
@@ -7396,7 +7367,7 @@
 /turf/space,
 /area/noGenerate)
 "th" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/plating/random,
 /area/space)
 "ti" = (
@@ -9487,20 +9458,6 @@
 	},
 /turf/unsimulated/floor/red,
 /area/space)
-"yb" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_syndicate"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/unsimulated/floor/red,
-/area/space)
 "yc" = (
 /obj/cable{
 	d1 = 1;
@@ -10291,7 +10248,7 @@
 /turf/space,
 /area/space)
 "Ab" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /turf/simulated/floor/black,
 /area/space)
 "Ac" = (
@@ -10794,12 +10751,6 @@
 /turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
-"Br" = (
-/obj/item/storage/belt/hunter,
-/obj/item/clothing/under/misc/tourist,
-/turf/space,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/space)
 "Bs" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor,
@@ -10932,6 +10883,15 @@
 	icon_state = "floor4"
 	},
 /area/space)
+"EI" = (
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/mob/living/carbon/human/big_yank,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/space)
 "Gy" = (
 /obj/decal/cleanable/robot_debris{
 	icon_state = "gib5"
@@ -10964,6 +10924,22 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/shuttlebay,
 /area/space)
+"Lu" = (
+/obj/item/storage/belt/utility,
+/obj/item/clothing/under/misc/tourist,
+/turf/space,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/space)
+"NE" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/obj/machinery/computer/shuttle_bus/embedded/south{
+	plane = 6
+	},
+/mob/living/carbon/human/john,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/space)
 "SN" = (
 /turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
@@ -10976,6 +10952,18 @@
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadcap"
 	},
+/area/space)
+"Va" = (
+/mob/living/carbon/human/npc/monkey/oppenheimer,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/unsimulated/floor/red,
 /area/space)
 
 (1,1,1) = {"
@@ -11999,7 +11987,7 @@ aa
 aa
 aW
 ee
-rG
+EI
 sb
 aW
 aa
@@ -13902,7 +13890,7 @@ xf
 xr
 ai
 xO
-yb
+Va
 ym
 yt
 ym
@@ -16131,7 +16119,7 @@ aa
 aa
 ai
 nE
-Br
+Lu
 ai
 ny
 aa
@@ -23856,7 +23844,7 @@ sK
 sR
 sW
 ee
-td
+NE
 sM
 ti
 aa
