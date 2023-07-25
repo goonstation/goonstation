@@ -323,17 +323,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			if (H.traitHolder.hasTrait("picky_eater"))
 				var/datum/trait/picky_eater/eater_trait = H.traitHolder.getTrait("picky_eater")
 				if (length(eater_trait.fav_foods) > 0)
-					if (check_favorite_food(H))
-						src.heal(H)
-					else
+					if (!check_favorite_food(H))
 						displease_picky_eater(H)
 				else
 					logTheThing(LOG_DEBUG, src, "Empty favorite foods list for [src] despite having the picky_eater trait.")
-					src.heal(H)
-			else
-				src.heal(H)
-		else
-			src.heal(consumer)
+		src.heal(consumer)
 		playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 		on_bite(consumer, feeder, ethereal_eater)
 		if (src.festivity)
