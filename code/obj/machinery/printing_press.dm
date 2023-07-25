@@ -88,6 +88,10 @@
 	var/newspaper_headline = ""
 	/// the name of the newspaper e.g. Nanotrasen Daily.
 	var/newspaper_publisher = ""
+	/// The contents of the article
+	var/newspaper_info = ""
+	/// raw version of newspaper_info, for editing
+	var/newspaper_info_raw = ""
 	/// False by default, set to true when newspaper printing upgrade is installed.
 	var/newspaper_upgrade = TRUE // fuckit lets just start with newspapers for now
 	/// headlines can be 128 characters max, unlike book titles
@@ -347,14 +351,23 @@
 				boutput(user, "Aborting, headline too long.")
 				return
 			src.newspaper_headline = strip_html(name_sel)
+			phrase_log.log_phrase("newspaperheadline", name_sel, TRUE, user, TRUE)
 			var/publisher_sel = input("Who is the publisher of your newspaper? What's the paper's name?", "Information Control", src.newspaper_publisher)
 			if (length(publisher_sel) > src.info_len_lim)
 				boutput(user, "Aborting, publisher name too long.")
 				return
 			src.newspaper_publisher = strip_html(publisher_sel)
+			phrase_log.log_phrase("newspaperpublisher", publisher_sel, TRUE, user, TRUE)
 			boutput(user, "Information set.")
 			return
-
+		if ("set newspaper contents")
+			var/info_sel = input(user, "What do you want the article to read?", "Information Control", src.newspaper_info_raw)
+			if (!info_sel)
+				return
+			src.declare_contents(info_sel, src.newspaper_info_raw, src.newspaper_info)
+			phrase_log.log_phrase("newspaperarticle", src.newspaper_info, TRUE, user, FALSE)
+			boutput(user, "Newspaper contents set.")
+			return
 		if ("set book info")
 			var/name_sel = input("What do you want the title of your book to be?", "Information Control", src.book_name) //total information control! the patriots control the memes, snake!
 			if (length(name_sel) > src.info_len_lim)
@@ -373,32 +386,7 @@
 			var/info_sel = input("What do you want your book to say?", "Content Control", src.book_info_raw) as null|message
 			if (!info_sel)
 				return
-			info_sel = copytext(html_encode(info_sel), 1, 4*MAX_MESSAGE_LEN) //for now this is ~700 words, 4096 characters, please increase if people say that its too restrictive/low
-			src.book_info_raw = info_sel
-			info_sel = replacetext(info_sel, "\n", "<BR>")
-			info_sel = replacetext(info_sel, "\[b\]", "<B>")
-			info_sel = replacetext(info_sel, "\[/b\]", "</B>")
-			info_sel = replacetext(info_sel, "\[i\]", "<I>")
-			info_sel = replacetext(info_sel, "\[/i\]", "</I>")
-			info_sel = replacetext(info_sel, "\[u\]", "<U>")
-			info_sel = replacetext(info_sel, "\[/u\]", "</U>")
-			info_sel = replacetext(info_sel, "\[hr\]", "<HR>")
-			info_sel = replacetext(info_sel, "\[/hr\]", "</HR>")
-			info_sel = replacetext(info_sel, "\[sup\]", "<SUP>")
-			info_sel = replacetext(info_sel, "\[/sup\]", "</SUP>")
-			info_sel = replacetext(info_sel, "\[h1\]", "<H1>")
-			info_sel = replacetext(info_sel, "\[/h1\]", "</H1>")
-			info_sel = replacetext(info_sel, "\[h2\]", "<H2>")
-			info_sel = replacetext(info_sel, "\[/h2\]", "</H2>")
-			info_sel = replacetext(info_sel, "\[h3\]", "<H3>")
-			info_sel = replacetext(info_sel, "\[/h3\]", "</H3>")
-			info_sel = replacetext(info_sel, "\[h4\]", "<H4>")
-			info_sel = replacetext(info_sel, "\[/h4\]", "</H4>")
-			info_sel = replacetext(info_sel, "\[li\]", "<LI>")
-			info_sel = replacetext(info_sel, "\[/li\]", "</LI>")
-			info_sel = replacetext(info_sel, "\[bq\]", "<BLOCKQUOTE>")
-			info_sel = replacetext(info_sel, "\[/bq\]", "</BLOCKQUOTE>")
-			src.book_info = info_sel
+			src.declare_contents(info_sel, src.book_info_raw, src.book_info)
 			boutput(user, "Book contents set.")
 			return
 
@@ -556,6 +544,35 @@
 
 		else //just in case, yell at me if this is bad
 			return
+
+/// sets book_info and book_info_raw, for newspapers as well.
+/obj/machinery/printing_press/proc/declare_contents(var/info_sel, var/raw_info, var/non_raw_info)
+	info_sel = copytext(html_encode(info_sel), 1, 4*MAX_MESSAGE_LEN) //for now this is ~700 words, 4096 characters, please increase if people say that its too restrictive/low
+	raw_info = info_sel
+	info_sel = replacetext(info_sel, "\n", "<BR>")
+	info_sel = replacetext(info_sel, "\[b\]", "<B>")
+	info_sel = replacetext(info_sel, "\[/b\]", "</B>")
+	info_sel = replacetext(info_sel, "\[i\]", "<I>")
+	info_sel = replacetext(info_sel, "\[/i\]", "</I>")
+	info_sel = replacetext(info_sel, "\[u\]", "<U>")
+	info_sel = replacetext(info_sel, "\[/u\]", "</U>")
+	info_sel = replacetext(info_sel, "\[hr\]", "<HR>")
+	info_sel = replacetext(info_sel, "\[/hr\]", "</HR>")
+	info_sel = replacetext(info_sel, "\[sup\]", "<SUP>")
+	info_sel = replacetext(info_sel, "\[/sup\]", "</SUP>")
+	info_sel = replacetext(info_sel, "\[h1\]", "<H1>")
+	info_sel = replacetext(info_sel, "\[/h1\]", "</H1>")
+	info_sel = replacetext(info_sel, "\[h2\]", "<H2>")
+	info_sel = replacetext(info_sel, "\[/h2\]", "</H2>")
+	info_sel = replacetext(info_sel, "\[h3\]", "<H3>")
+	info_sel = replacetext(info_sel, "\[/h3\]", "</H3>")
+	info_sel = replacetext(info_sel, "\[h4\]", "<H4>")
+	info_sel = replacetext(info_sel, "\[/h4\]", "</H4>")
+	info_sel = replacetext(info_sel, "\[li\]", "<LI>")
+	info_sel = replacetext(info_sel, "\[/li\]", "</LI>")
+	info_sel = replacetext(info_sel, "\[bq\]", "<BLOCKQUOTE>")
+	info_sel = replacetext(info_sel, "\[/bq\]", "</BLOCKQUOTE>")
+	non_raw_info = info_sel
 
 /////////////////////
 //Book making stuff//
