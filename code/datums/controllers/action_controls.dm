@@ -125,7 +125,7 @@ var/datum/action_controller/actions
 		if(interrupt_flags & flag || flag == INTERRUPT_ALWAYS)
 			if(state != ACTIONSTATE_INTERRUPTED)
 				interrupt_start = TIME
-			if(!can_resume)
+			if(!can_resume || flag == INTERRUPT_ALWAYS)
 				resumable = FALSE
 			state = ACTIONSTATE_INTERRUPTED
 			onInterrupt(flag)
