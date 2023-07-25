@@ -485,7 +485,7 @@ ABSTRACT_TYPE(/datum/material)
 			src.color = rgb(round(GetRedPart(mat1.color) *left_bias+ GetRedPart(mat2.color) * bias), round(GetGreenPart(mat1.color) *left_bias+ GetGreenPart(mat2.color) * bias), round(GetBluePart(mat1.color) *left_bias+ GetBluePart(mat2.color) * bias))
 		src.properties = mergeProperties(mat1.properties, mat2.properties, bias)
 
-		src.edible_exact = round(mat1.edible_exact *left_bias+ mat2.edible_exact * bias)
+		src.edible_exact = mat1.edible_exact * left_bias + mat2.edible_exact * bias
 		if(src.edible_exact >= 0.5) src.edible = TRUE
 		else src.edible = FALSE
 
