@@ -1178,8 +1178,7 @@
 			. = FALSE
 	for (var/obj/item/hand in list(src.l_hand, src.r_hand))
 		if (istype(hand, /obj/item/paper/newspaper))
-			var/obj/item/paper/newspaper/np = hand
-			if (np.two_handed)
+			if (hand.two_handed)
 				. = FALSE
 
 
