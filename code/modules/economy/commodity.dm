@@ -618,6 +618,13 @@
 	upperfluc = 2000
 	lowerfluc = -1000
 
+/datum/commodity/drugs/cyberpunk
+	comname = "Designer Drugs"
+	comtype = /obj/item/reagent_containers/pill/cyberpunk
+	price = 5
+	upperfluc = 0
+	lowerfluc = 0
+
 ///// things you can buy from the traders
 
 /datum/commodity/drugs/methamphetamine
@@ -2859,3 +2866,17 @@
 	price = 21000
 	upperfluc = 20000
 	lowerfluc = -28500
+
+//Tools commodity
+
+/datum/commodity/tools
+	desc = "Common use tools!"
+	onmarket = FALSE
+
+/datum/commodity/tools/welder
+	comname = "Welder"
+	desc = "I can't believe it's a basic welding tool"
+	comtype = /obj/item/weldingtool
+	price = 80
+	upperfluc = 10
+	lowerfluc = -10

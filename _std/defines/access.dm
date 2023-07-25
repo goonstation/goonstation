@@ -114,3 +114,22 @@
 
 // Pirate ship access:
 #define access_pirate 89
+
+// Morrigan Azone Access
+#define access_morrigan_teleporter 90
+#define access_morrigan_security 91
+#define access_morrigan_bridge 92
+#define access_morrigan_botany 93
+#define access_morrigan_medical 94
+#define access_morrigan_engineering 95
+#define access_morrigan_janitor 96
+#define access_morrigan_customs 97
+#define access_morrigan_factory 98
+#define access_morrigan_meetingroom 99
+#define access_morrigan_exit 100
+#define access_morrigan_science 101
+#define access_morrigan_HOS 102
+#define access_morrigan_CE 103
+#define access_morrigan_captain 104
+#define access_morrigan_RD 105
+#define access_morrigan_mdir 106

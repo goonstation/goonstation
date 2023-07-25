@@ -368,6 +368,80 @@
 	req_access = list(access_polarisimportant)
 	color = CARGO
 
+// Morrigan Access Spawners
+
+/obj/mapping_helper/access/morrigan
+	name = "Morrigan Access Spawner"
+	color = SPECIAL
+
+/obj/mapping_helper/access/morrigan/teleporter
+	req_access = list(access_morrigan_teleporter)
+	color = SECURITY
+
+/obj/mapping_helper/access/morrigan/security
+	req_access = list(access_morrigan_security)
+	color = SECURITY
+
+/obj/mapping_helper/access/morrigan/science
+	req_access = list(access_morrigan_science)
+	color = RESEARCH
+
+/obj/mapping_helper/access/morrigan/botany
+	req_access = list(access_morrigan_botany)
+	color = MORGUE_BLACK
+
+/obj/mapping_helper/access/morrigan/janitor
+	req_access = list(access_morrigan_janitor)
+	color = MORGUE_BLACK
+
+/obj/mapping_helper/access/morrigan/bridge
+	req_access = list(access_morrigan_bridge)
+	color = COMMAND
+
+/obj/mapping_helper/access/morrigan/meeting_room
+	req_access = list(access_morrigan_meetingroom)
+	color = SPECIAL
+
+/obj/mapping_helper/access/morrigan/factory
+	req_access = list(access_morrigan_factory)
+	color = SPECIAL
+
+/obj/mapping_helper/access/morrigan/hos
+	req_access = list(access_morrigan_HOS)
+	color = SECURITY
+
+/obj/mapping_helper/access/morrigan/medical
+	req_access = list(access_morrigan_medical)
+	color = MEDICAL
+
+/obj/mapping_helper/access/morrigan/ce
+	req_access = list(access_morrigan_CE)
+	color = ENGINEERING
+
+/obj/mapping_helper/access/morrigan/engineer
+	req_access = list(access_morrigan_engineering)
+	color = ENGINEERING
+
+/obj/mapping_helper/access/morrigan/customs
+	req_access = list(access_morrigan_customs)
+	color = COMMAND
+
+/obj/mapping_helper/access/morrigan/rd
+	req_access = list(access_morrigan_RD)
+	color = COMMAND
+
+/obj/mapping_helper/access/morrigan/mdir
+	req_access = list(access_morrigan_mdir)
+	color = COMMAND
+
+/obj/mapping_helper/access/morrigan/captain
+	req_access = list(access_morrigan_captain)
+	color = COMMAND
+
+/obj/mapping_helper/access/morrigan/exit
+	req_access = list(access_morrigan_exit)
+	color = SPECIAL
+
 #undef MEDICAL
 #undef SECURITY
 #undef MORGUE_BLACK

@@ -2144,6 +2144,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\z_adventurezones\luna.dm"
 #include "code\z_adventurezones\mad_mars.dm"
 #include "code\z_adventurezones\meatland.dm"
+#include "code\z_adventurezones\morrigan.dm"
 #include "code\z_adventurezones\numbersstation.dm"
 #include "code\z_adventurezones\old_bot_factory.dm"
 #include "code\z_adventurezones\owlzone.dm"
