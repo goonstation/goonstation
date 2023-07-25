@@ -45,6 +45,8 @@
 						return expansion
 
 /datum/targetable/ai/module
+	icon_state = "ai_template"
+
 	castcheck(atom/target)
 		. = ..()
 		if(.)
@@ -205,7 +207,7 @@
 						if (issilicon(cam))
 							var/mob/living/silicon/S = cam
 							if (S.cell)
-								S.cell.charge -= P.cost
+								S.cell.use(P.cost)
 						else
 							cam.use_power(P.cost / CELLRATE)
 					cam.remove_filter("charge_outline")

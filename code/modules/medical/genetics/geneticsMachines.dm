@@ -67,11 +67,7 @@
 		else
 			src.Attackhand(user)
 	else
-		var/obj/item/device/pda2/PDA = W
-		if (istype(PDA) && PDA.ID_card)
-			W = PDA.ID_card
-
-		var/obj/item/card/id/ID = W
+		var/obj/item/card/id/ID = get_id_card(W)
 		if (istype(ID))
 			registered_id = ID.registered
 			user.show_text("You swipe the ID on [src]. You will now receive a cut from gene booth sales.", "blue")
@@ -167,7 +163,7 @@
 					return 1
 		if("saver")
 			if(E && GBE?.research_level >= EFFECT_RESEARCH_DONE)
-				if (genResearch.isResearched(/datum/geneticsResearchEntry/saver) && src.saved_mutations.len < genResearch.max_save_slots)
+				if (genResearch.isResearched(/datum/geneticsResearchEntry/saver) && length(src.saved_mutations) < genResearch.max_save_slots)
 					return 1
 
 /obj/machinery/computer/genetics/proc/equipment_cooldown(var/equipment_num,var/time)
@@ -510,7 +506,7 @@
 			if (!istype(H) || isprematureclone(H))
 				return
 			var/datum/bioEffect/mutantrace/BE = locate(params["ref"])
-			if (H.mutantrace && !H.mutantrace?.genetics_removable)
+			if (!H.mutantrace?.genetics_removable)
 				//this should probably be a UI notification but I'm not touching that code with a ten foot pole
 				scanner_alert(ui.user, "Unable to purge corrupt genotype.")
 				return
@@ -625,7 +621,7 @@
 					var/datum/bioEffect/NEW = new E.type(GB)
 					copy_datum_vars(E, NEW)
 					GB.offered_genes += new /datum/geneboothproduct(NEW,booth_effect_desc,booth_effect_cost,registered_id)
-					if (GB.offered_genes.len == 1)
+					if (length(GB.offered_genes) == 1)
 						GB.select_product(GB.offered_genes[1])
 					scanner_alert(ui.user, "Sent 5 of '[NEW.name]' to gene booth.")
 					GB.reload_contexts()
@@ -723,7 +719,7 @@
 			if(!subject.bioHolder.HasEffect(E.id))
 				src.log_maybe_cheater(usr, "tried to store a [E.id] mutation")
 				return
-			if (saved_mutations.len >= genResearch.max_save_slots)
+			if (length(saved_mutations) >= genResearch.max_save_slots)
 				return
 			src.log_me(subject, "mutation removed", E)
 			src.saved_mutations += E
@@ -1083,7 +1079,7 @@
 					"precisionEmitter" = genResearch.isResearched(/datum/geneticsResearchEntry/rad_precision),
 					"materialMax" = genResearch.max_material,
 					"mutantRaces" = list(list(
-						"name" = "Human",
+						"name" = "Clear Mutantrace",
 						"icon" = "template",
 						"ref" = "\ref[null]",
 						)),

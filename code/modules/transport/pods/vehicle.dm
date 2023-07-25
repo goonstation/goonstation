@@ -56,7 +56,7 @@
 
 	/// I got sick of having the comms type swapping code in 17 New() ship types
 	/// so this is the initial type of comms array this vehicle will have
-	var/init_comms_type = /obj/item/shipcomponent/communications/
+	var/init_comms_type = /obj/item/shipcomponent/communications
 
 	//////////////////////////////////////////////////////
 	///////Life Support Stuff ////////////////////////////
@@ -343,6 +343,9 @@
 
 			else if (href_list["unm_w"])
 				if (src.m_w_system)
+					if (!src.m_w_system.removable)
+						boutput(usr, "<span class='alert'>[src.m_w_system] is fused to the hull and cannot be removed.</span>")
+						return
 					m_w_system.deactivate()
 					components -= m_w_system
 					if (uses_weapon_overlays && m_w_system.appearanceString)

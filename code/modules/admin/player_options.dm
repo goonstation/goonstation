@@ -240,7 +240,8 @@
 						<a href='[playeropt_link(M, "firegib")]'>Fire</a> &bull;
 						<a href='[playeropt_link(M, "elecgib")]'>Elec</a> &bull;
 						<a href='[playeropt_link(M, "icegib")]'>Ice</a> &bull;
-						<a href='[playeropt_link(M, "goldgib")]'>Gold</a>
+						<a href='[playeropt_link(M, "goldgib")]'>Gold</a> &bull;
+						<a href='[playeropt_link(M, "smite")]'>Smite</a>
 						<br>
 						<a href='[playeropt_link(M, "owlgib")]'>Owl</a> &bull;
 						<a href='[playeropt_link(M, "sharkgib")]'>Shark</a> &bull;
@@ -253,7 +254,8 @@
 					</div>
 					<div class='l'>Misc</div>
 					<div class='r'>
-						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a>
+						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a> &bull;
+						<a href='[playeropt_link(M, "halt")]'>Halt!</a>
 					</div>
 				</div>
 			</div>

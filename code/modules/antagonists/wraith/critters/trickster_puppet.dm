@@ -4,7 +4,6 @@
 	name = "Trickster puppet"
 	desc = "A strange shell of a person looking straight ahead with lifeless eyes."
 	density = 1
-	faction = MOB_AI_FACTION_WRAITH
 	icon_state = "shade"
 	speechverb_say = "says"
 	speechverb_exclaim = "exclaims"
@@ -20,12 +19,16 @@
 	var/traps_laid = 0
 	var/datum/abilityHolder/wraith/AH = null
 
-	New(var/turf/T, var/mob/living/intangible/wraith/wraith_trickster/M = null)
+	faction = FACTION_WRAITH
+
+	New(var/turf/T, var/mob/living/intangible/wraith/wraith_trickster/M = null, var/new_name = "Trickster puppet", var/new_real_name = "Trickster puppet")
 		..(T)
 		if(M != null)
 			src.master = M
 
 		last_life_update = TIME
+		src.name = new_name
+		src.real_name = new_real_name
 
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		AH = src.add_ability_holder(/datum/abilityHolder/wraith)

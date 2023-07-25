@@ -49,10 +49,10 @@
 			..()
 
 		trilobite
-			spawntype = /mob/living/critter/small_animal/trilobite/ai_controlled
+			spawntype = /mob/living/critter/small_animal/trilobite
 
 		pikaia
-			spawntype = /mob/living/critter/small_animal/pikaia/ai_controlled
+			spawntype = /mob/living/critter/small_animal/pikaia
 
 
 ///obj/overlay/tile_effect/cracks/trilobite

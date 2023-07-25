@@ -45,7 +45,6 @@ CONTAINS:
 	New()
 		..()
 		src.create_reagents(5)
-		AddComponent(/datum/component/transfer_on_attack)
 		setProperty("piercing", 80)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
@@ -116,7 +115,6 @@ CONTAINS:
 		..()
 		src.setItemSpecial(/datum/item_special/double)
 		src.create_reagents(5)
-		AddComponent(/datum/component/transfer_on_attack)
 		BLOCK_SETUP(BLOCK_LARGE)
 
 	attack(mob/living/carbon/M, mob/user)
@@ -183,7 +181,6 @@ CONTAINS:
 	New()
 		..()
 		src.create_reagents(5)
-		AddComponent(/datum/component/transfer_on_attack)
 		setProperty("piercing", 80)
 
 
@@ -974,7 +971,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	icon_state = "bodybag"
 	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS
-	object_flags = NO_GHOSTCRITTER
+	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH
 	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 1
@@ -1226,10 +1223,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	stamina_damage = 1
 	stamina_cost = 1
 	stamina_crit_chance = 1
-
-	New()
-		..()
-		src.setMaterial(getMaterial("synthrubber"))
+	default_material = "synthrubber"
 
 /* ================================================== */
 /* -------------------- Penlight -------------------- */

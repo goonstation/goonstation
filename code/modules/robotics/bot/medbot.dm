@@ -55,7 +55,7 @@
 																				"haloperidol" = 15,
 																				"morphine" = 20,
 																				"cold_medicine" = 40,
-																				"simethicone" = 10,
+																				"anti_fart" = 10,
 																				"sulfonal" = 5, /* its an oldetimey sedative */
 																				"atropine" = 10,
 																				"methamphetamine" = 30,
@@ -318,9 +318,7 @@
 		Also the override is here so you don't thwap the bot with the emag
 		*/
 		//return
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (istype(W, /obj/item/card/id))
+	if (istype(get_id_card(W), /obj/item/card/id))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")

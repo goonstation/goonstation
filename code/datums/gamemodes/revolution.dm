@@ -56,7 +56,7 @@
 	var/rev_number = 0
 	var/ideal_rev_number = clamp(round(num_players / pop_divisor), min_revheads, max_revheads)
 
-	if(revs_possible.len >= ideal_rev_number)
+	if(length(revs_possible) >= ideal_rev_number)
 		rev_number = ideal_rev_number
 	else
 		rev_number = length(revs_possible)
@@ -90,7 +90,7 @@
 #endif
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
-		rev_mind.add_antagonist(ROLE_HEAD_REVOLUTIONARY)
+		rev_mind.add_antagonist(ROLE_HEAD_REVOLUTIONARY, source = ANTAGONIST_SOURCE_ROUND_START)
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
@@ -158,7 +158,7 @@
 			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director","Communications Officer"))
 				heads += player.mind
 
-	if(heads.len < 1)
+	if(length(heads) < 1)
 		return null
 	else
 		return heads

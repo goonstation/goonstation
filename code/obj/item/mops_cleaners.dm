@@ -45,7 +45,7 @@ WET FLOOR SIGN
 		..()
 		reagents.add_reagent("luminol", initial_volume)
 
-/obj/item/spraybottle/cleaner/
+/obj/item/spraybottle/cleaner
 	name = "cleaner spray bottle"
 	desc = "A spray bottle labeled 'Poo-b-Gone Space Cleaner'."
 
@@ -329,7 +329,7 @@ WET FLOOR SIGN
 
 	// Some people use mops for heat-delayed fireballs and stuff.
 	// Mopping the floor with just water isn't of any interest, however (Convair880).
-	if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && src.reagents.reagent_list.len > 1)))
+	if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && length(src.reagents.reagent_list) > 1)))
 		logTheThing(LOG_CHEMISTRY, user, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
 
 	if (U && isturf(U))
@@ -345,10 +345,10 @@ WET FLOOR SIGN
 		if (mopcount > 0)
 			mopcount--
 	else if (U && isturf(U))
-		//U.clean_forensic()
+		U.clean_forensic()
 		user.show_text("You have mopped up [A]!", "blue", group = "mop")
 	else
-		//A.clean_forensic()
+		A.clean_forensic()
 		user.show_text("You have mopped up [A]!", "blue", group = "mop")
 
 	if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
@@ -411,7 +411,7 @@ WET FLOOR SIGN
 
 			// Some people use mops for heat-delayed fireballs and stuff.
 			// Mopping the floor with just water isn't of any interest, however (Convair880).
-			if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && src.reagents.reagent_list.len > 1)))
+			if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && length(src.reagents.reagent_list) > 1)))
 				logTheThing(LOG_COMBAT, user, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
 
 			mopcount++
@@ -579,7 +579,7 @@ WET FLOOR SIGN
 			return
 
 		var/selection
-		if (choices.len == 1) // at spy's request the sponge will default to the only thing it can do ARE YOU HAPPY NOW SPY
+		if (length(choices) == 1) // at spy's request the sponge will default to the only thing it can do ARE YOU HAPPY NOW SPY
 			selection = choices[1]
 		else
 			selection = input(user, "What do you want to do with [src]?", "Selection") as null|anything in choices
@@ -947,18 +947,16 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			special.pixelaction(target, params, user, reach) // a hack to let people disarm when clicking at close range
 		else if(istype(target, /obj/storage) && src.trashbag)
 			var/obj/storage/storage = target
-			for(var/obj/item/I in src.trashbag)
+			for(var/obj/item/I in src.trashbag.storage.get_contents())
 				I.set_loc(storage)
-			src.trashbag.calc_w_class(null)
 			boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
 			src.tooltip_rebuild = 1
 			return
 		else if(istype(target, /obj/machinery/disposal))
 			var/obj/machinery/disposal/disposal = target
 			if(src.trashbag)
-				for(var/obj/item/I in src.trashbag)
+				for(var/obj/item/I in src.trashbag.storage.get_contents())
 					I.set_loc(disposal)
-				src.trashbag.calc_w_class(null)
 				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
 				src.tooltip_rebuild = 1
 				disposal.update()
@@ -1032,7 +1030,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			if(isnull(src.trashbag))
 				boutput(user, "<span class='alert'>\The [src] tries to suck up [item_desc] but has no trashbag!</span>")
 				. = FALSE
-			else if(src.trashbag.current_stuff >= src.trashbag.max_stuff)
+			else if(src.trashbag.storage.is_full())
 				boutput(user, "<span class='alert'>\The [src] tries to suck up [item_desc] but its [src.trashbag] is full!</span>")
 				. = FALSE
 			else
@@ -1041,12 +1039,11 @@ TYPEINFO(/obj/item/handheld_vacuum)
 						I.set_loc(get_turf(user))
 				success = TRUE
 				SPAWN(0.5 SECONDS)
-					for(var/obj/item/I as anything in items_to_suck) // yes, this can go over capacity of the bag, that's intended
-						if(!I.anchored)
-							I.set_loc(src.trashbag)
-					src.trashbag.calc_w_class(null)
-					if(src.trashbag.current_stuff >= src.trashbag.max_stuff)
-						boutput(user, "<span class='notice'>[src]'s [src.trashbag] is now full.</span>")
+					for(var/obj/item/I as anything in items_to_suck)
+						src.trashbag.storage.add_contents_safe(I)
+						if(src.trashbag.storage.is_full())
+							boutput(user, "<span class='notice'>[src]'s [src.trashbag] is now full.</span>")
+							break
 
 		src.tooltip_rebuild = 1
 		. |= success

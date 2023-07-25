@@ -1,4 +1,4 @@
-/datum/job/
+/datum/job
 	var/name = null
 	var/list/alias_names = null
 	var/initial_name = null
@@ -59,6 +59,9 @@
 	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
 	var/map_can_autooverride = 1 // if set to 0 map can't change limit on this job automatically (it can still set it manually)
 
+	/// The faction to be assigned to the mob on setup uses flags from factions.dm
+	var/faction = 0
+
 	New()
 		..()
 		initial_name = name
@@ -70,7 +73,8 @@
 			M.verbs += /mob/proc/recite_miranda
 			M.verbs += /mob/proc/add_miranda
 			if (!isnull(M.mind))
-				M.mind.miranda = "You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you."
+				M.mind.miranda = DEFAULT_MIRANDA
+		M.faction |= src.faction
 
 		SPAWN(0)
 			if (receives_implant && ispath(receives_implant))
@@ -85,7 +89,7 @@
 								R.fields["imp"] = "\ref[I]"
 
 			var/give_access_implant = ismobcritter(M)
-			if(!spawn_id && (access.len > 0 || access.len == 1 && access[1] != access_fuck_all))
+			if(!spawn_id && (length(access) > 0 || length(access) == 1 && access[1] != access_fuck_all))
 				give_access_implant = 1
 			if (give_access_implant)
 				var/obj/item/implant/access/I = new /obj/item/implant/access(M)
@@ -206,6 +210,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_jump = list(/obj/item/clothing/under/suit/hop)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_ears = list(/obj/item/device/radio/headset/command/hop)
+	slot_poc1 = list(/obj/item/pocketwatch)
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash,/obj/item/storage/box/accessimp_kit)
 #else
 	slot_back = list(/obj/item/storage/backpack)
@@ -213,6 +218,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_jump = list(/obj/item/clothing/under/suit/hop)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_ears = list(/obj/item/device/radio/headset/command/hop)
+	slot_poc1 = list(/obj/item/pocketwatch)
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash,/obj/item/storage/box/accessimp_kit)
 #endif
 
@@ -883,6 +889,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_poc1 = list(/obj/item/paper/botany_guide)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 
+	faction = FACTION_BOTANY
+
 	New()
 		..()
 		src.access = get_access("Botanist")
@@ -983,6 +991,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	items_in_belt = list(/obj/item/cloth/towel/clown)
 	change_name_on_spawn = 1
 
+	faction = FACTION_CLOWN
+
 	New()
 		..()
 		src.access = get_access("Clown")
@@ -1056,7 +1066,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
 	slot_rhan = list(/obj/item/tank/jetpack)
 	slot_eyes = list(/obj/item/clothing/glasses/construction)
-	slot_poc1 = list(/obj/item/spacecash/fivehundred)
+	slot_poc1 = list(/obj/item/currency/spacecash/fivehundred)
 	slot_poc2 = list(/obj/item/room_planner)
 	slot_suit = list(/obj/item/clothing/suit/space/engineer)
 	slot_head = list(/obj/item/clothing/head/helmet/space/engineer)
@@ -1296,7 +1306,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_belt = list(/obj/item/storage/fanny)
 	slot_jump = list(/obj/item/clothing/under/misc/tourist)
 	slot_poc1 = list(/obj/item/camera_film)
-	slot_poc2 = list(/obj/item/spacecash/random/tourist) // Exact amount is randomized.
+	slot_poc2 = list(/obj/item/currency/spacecash/tourist) // Exact amount is randomized.
 	slot_foot = list(/obj/item/clothing/shoes/tourist)
 	slot_lhan = list(/obj/item/camera)
 	slot_rhan = list(/obj/item/storage/photo_album)
@@ -1467,6 +1477,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Inspector")
 		return
 
+	proc/inspector_miranda()
+		return "You have been found to be in breach of Nanotrasen corporate regulation [rand(1,100)][pick(uppercase_letters)]. You are allowed a grace period of 5 minutes to correct this infringement before you may be subjected to disciplinary action including but not limited to: strongly worded tickets, reduction in pay, and being buried in paperwork for the next [rand(10,20)] standard shifts."
+
 	special_setup(var/mob/living/carbon/human/M)
 		..()
 		if (!M)
@@ -1478,7 +1491,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 			var/obj/item/clipboard/with_pen/inspector/clipboard = new /obj/item/clipboard/with_pen/inspector(B)
 			B.storage.add_contents(clipboard)
 			clipboard.set_owner(M)
-
+		M.mind?.set_miranda(PROC_REF(inspector_miranda))
 		return
 
 /datum/job/special/random/director
@@ -1629,6 +1642,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	items_in_backpack = list(/obj/item/bee_egg_carton, /obj/item/bee_egg_carton, /obj/item/bee_egg_carton, /obj/item/reagent_containers/food/snacks/beefood, /obj/item/reagent_containers/food/snacks/beefood)
 	alt_names = list("Apiculturist", "Apiarist")
 
+	faction = FACTION_BOTANY
+
 	New()
 		..()
 		src.access = get_access("Apiculturist")
@@ -1646,6 +1661,22 @@ ABSTRACT_TYPE(/datum/job/civilian)
 			bee.name = replacetext(bee.name, "larva", "bee")
 
 		M.bioHolder.AddEffect("bee", magical=1) //They're one with the bees!
+
+
+/datum/job/special/random/angler
+	name = "Angler"
+	wages = PAY_TRADESMAN
+	slot_jump = list(/obj/item/clothing/under/rank/angler)
+	slot_head = list(/obj/item/clothing/head/black)
+	slot_foot = list(/obj/item/clothing/shoes/galoshes/waders)
+	slot_glov = list(/obj/item/clothing/gloves/black)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	items_in_backpack = list(/obj/item/fishing_rod/basic)
+
+	New()
+		..()
+		src.access = get_access("Rancher")
+		return
 
 /datum/job/special/random/souschef
 	name = "Sous-Chef"
@@ -1766,7 +1797,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = list(/obj/item/clothing/under/misc/casualjeansblue)
 	slot_head = list(/obj/item/clothing/head/mime_beret)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	slot_poc1 = list(/obj/item/spacecash/twenty)
+	slot_poc1 = list(/obj/item/currency/spacecash/twenty)
 	slot_poc2 = list(/obj/item/pen/pencil)
 	slot_lhan = list(/obj/item/storage/toolbox/artistic)
 	items_in_backpack = list(/obj/item/canvas, /obj/item/canvas, /obj/item/storage/box/crayon/basic ,/obj/item/paint_can/random)
@@ -1793,6 +1824,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_poc1 = list(/obj/item/bananapeel)
 	slot_poc2 = list(/obj/item/device/pda2/clown)
 	slot_lhan = list(/obj/item/instrument/bikehorn)
+
+	faction = FACTION_CLOWN
 
 	New()
 		..()
@@ -2261,6 +2294,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	var/leader = FALSE
 	add_to_manifest = FALSE
 
+	faction = FACTION_SYNDICATE
+
 	special_setup(var/mob/living/carbon/human/M)
 		..()
 		if (!M?.mind)
@@ -2291,7 +2326,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_ears = list()
 	slot_mask = list(/obj/item/clothing/mask/gas/swat/syndicate)
-	slot_card = null		///obj/item/card/id/
+	slot_card = null		///obj/item/card/id
 	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 	slot_poc2 = list(/obj/item/storage/pouch/bullet_9mm)
 	slot_lhan = list()
@@ -2299,16 +2334,20 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	items_in_backpack = list(
 		/obj/item/clothing/head/helmet/space/syndicate,
 		/obj/item/clothing/suit/space/syndicate)
+
+	faction = FACTION_SYNDICATE
 	radio_announcement = FALSE
 	add_to_manifest = FALSE
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
-		antagify(M, "Syndicate Agent", 0)
+		M.mind?.add_generic_antagonist(ROLE_SYNDICATE_AGENT, "Junior Syndicate Operative", source = ANTAGONIST_SOURCE_ADMIN)
 
 /datum/job/special/syndicate_weak/no_ammo
 	name = "Poorly Equipped Junior Syndicate Operative"
 	slot_poc2 = list()
+
+	faction = FACTION_SYNDICATE
 
 // hidden jobs for nt-so vs syndicate spec-ops
 
@@ -2331,7 +2370,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_ears = list(/obj/item/device/radio/headset/syndicate) //needs their own secret channel
 	slot_mask = list(/obj/item/clothing/mask/gas/swat/syndicate)
-	slot_card = /obj/item/card/id/
+	slot_card = /obj/item/card/id
 	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 	slot_poc2 = list(/obj/item/storage/pouch/assault_rifle)
 	slot_lhan = list()
@@ -2340,6 +2379,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/old_grenade/stinger/frag,
 							/obj/item/breaching_charge,
 							/obj/item/remote/syndicate_teleporter)
+
+	faction = FACTION_SYNDICATE
 	radio_announcement = FALSE
 	add_to_manifest = FALSE
 	special_spawn_location = LANDMARK_SYNDICATE
@@ -2352,7 +2393,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		antagify(M, "Syndicate Agent", 0)
+		M.mind?.add_generic_antagonist(ROLE_SYNDICATE_AGENT, "Syndicate Special Operative", source = ANTAGONIST_SOURCE_ADMIN)
 		M.show_text("<b>The assault has begun! Head over to the station and kill any and all Nanotrasen personnel you encounter!</b>", "red")
 
 /datum/job/special/pirate
@@ -2391,7 +2432,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 			if (antag.id == ROLE_PIRATE || antag.id == ROLE_PIRATE_FIRST_MATE || antag.id == ROLE_PIRATE_CAPTAIN)
 				antag.give_equipment()
 				return
-		M.mind.add_antagonist(rank)
+		M.mind.add_antagonist(rank, source = ANTAGONIST_SOURCE_ADMIN)
 
 
 	first_mate
@@ -2442,7 +2483,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/clothing/head/NTberet,
-							/obj/item/spacecash/fivehundred)
+							/obj/item/currency/spacecash/fivehundred)
+
+	faction = FACTION_NANOTRASEN
 
 	New()
 		..()
@@ -2481,6 +2524,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/device/flash,
 							/obj/item/sheet/steel/fullstack,
 							/obj/item/sheet/glass/reinforced/fullstack)
+
+	faction = FACTION_NANOTRASEN
 
 	New()
 		..()
@@ -2521,7 +2566,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/reagent_containers/glass/bottle/omnizine,
 							/obj/item/reagent_containers/glass/bottle/ether)
 
-
+	faction = FACTION_NANOTRASEN
 
 	New()
 		..()
@@ -2555,11 +2600,13 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/consultant) //needs their own secret channel
 	slot_card = /obj/item/card/id/command
 	slot_poc1 = list(/obj/item/device/pda2/ntso)
-	slot_poc2 = list(/obj/item/spacecash/fivehundred)
+	slot_poc2 = list(/obj/item/currency/spacecash/fivehundred)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/clothing/head/helmet/space/ntso,
 							/obj/item/clothing/suit/space/ntso,
 							/obj/item/cloth/handkerchief/nt)
+
+	faction = FACTION_NANOTRASEN
 
 	New()
 		..()
@@ -2611,7 +2658,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.mind?.add_antagonist(ROLE_MACHO_MAN)
+		M.mind?.add_antagonist(ROLE_MACHO_MAN, source = ANTAGONIST_SOURCE_ADMIN)
 
 /datum/job/special/meatcube
 	name = "Meatcube"
@@ -2787,7 +2834,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_belt = list(/obj/item/storage/fanny)
 	slot_jump = list(/obj/item/clothing/under/misc/tourist)
 	slot_poc1 = list(/obj/item/camera_film)
-	slot_poc2 = list(/obj/item/spacecash/random/tourist) // Exact amount is randomized.
+	slot_poc2 = list(/obj/item/currency/spacecash/tourist) // Exact amount is randomized.
 	slot_foot = list(/obj/item/clothing/shoes/tourist)
 	slot_lhan = list(/obj/item/camera)
 	slot_rhan = list(/obj/item/storage/photo_album)
@@ -2828,7 +2875,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.mind?.add_antagonist(ROLE_SLASHER)
+		M.mind?.add_antagonist(ROLE_SLASHER, source = ANTAGONIST_SOURCE_ADMIN)
 
 ABSTRACT_TYPE(/datum/job/special/pod_wars)
 /datum/job/special/pod_wars
@@ -2883,6 +2930,8 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		team = 1
 		overlay_icon = "nanotrasen"
 
+		faction = FACTION_NANOTRASEN
+
 		receives_implant = /obj/item/implant/pod_wars/nanotrasen
 		slot_back = list(/obj/item/storage/backpack/NT)
 		slot_belt = list(/obj/item/gun/energy/blaster_pod_wars/nanotrasen)
@@ -2896,7 +2945,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_glov = list(/obj/item/clothing/gloves/swat/NT)
 		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 		slot_poc2 = list(/obj/item/device/pda2/pod_wars/nanotrasen)
-		items_in_backpack = list(/obj/item/survival_machete, /obj/item/spacecash/hundred)
+		items_in_backpack = list(/obj/item/survival_machete, /obj/item/currency/spacecash/hundred)
 
 		commander
 			name = "NanoTrasen Commander"
@@ -2927,6 +2976,8 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		overlay_icon = "syndicate"
 		add_to_manifest = FALSE
 
+		faction = FACTION_SYNDICATE
+
 		receives_implant = /obj/item/implant/pod_wars/syndicate
 		slot_back = list(/obj/item/storage/backpack/syndie)
 		slot_belt = list(/obj/item/gun/energy/blaster_pod_wars/syndicate)
@@ -2940,7 +2991,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_glov = list(/obj/item/clothing/gloves/swat)
 		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 		slot_poc2 = list(/obj/item/device/pda2/pod_wars/syndicate)
-		items_in_backpack = list(/obj/item/survival_machete/syndicate, /obj/item/spacecash/hundred)
+		items_in_backpack = list(/obj/item/survival_machete/syndicate, /obj/item/currency/spacecash/hundred)
 
 		commander
 			name = "Syndicate Commander"

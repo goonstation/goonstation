@@ -25,6 +25,25 @@ As far as a timeline on getting your PR merged, there is none. This is a volunte
 
 *Note: Specifically for TGUI PRs, you don't really need to worry about merge conflicts due to their nature*.
 
+### Large scale PRs
+Large scale feature or rework PRs should be discussed **before** being written, so that feedback can be given at an early stage and to avoid wasted effort and frustration if the proposed content wouldn't pass review at a later stage.
+Examples of these kinds of PR include, but are not limited to:
+- Adding a new antagonist/gamemode or majorly reworking an old one
+- Adding a major department feature, like a new engine type
+- Fundamentally rewriting a major system (atmos, chemistry etc.)
+- New maps
+- New mutantraces
+- New traitor equipment
+- New roundstart jobs
+
+The discord [`#Player-Projects`](https://discord.com/channels/182249960895545344/1023681825060700180) forum exists specifically for contributors working on large projects to discuss their plans with other players and developers and to collaborate on group projects, and you are highly encouraged to make a post there to help develop your idea.
+
+Successful examples of such projects include:
+- Reworking the Flockmind antagonist (4 collaborators)
+- Rewriting the boardgame UI (2 collaborators)
+- Adding the nuclear fission engine (single person with sprites from multiple devs)
+
+Writing and submitting a large scale PR without seeking feedback first may result in potentially months of wasted effort, so you do so at your own peril!
 ### Issues
 
 As this is a purely volunteer open-source game, you may notice we have hundreds of unresolved issues. This is just how it is. Feel free to fix as many bugs as your heart desires - ideally [linking them as closed](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue) with `Fixes #1234` in your fix PR. If you are a member of the triage team (which is very easy to join, [it's a *tiny* form](#Triage-Team)) you can feel free to close duplicate or not-actually-a-bug issues.

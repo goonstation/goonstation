@@ -149,7 +149,7 @@
 		if (ishuman)
 			var/mob/living/carbon/human/H = M
 			if (H.pathogens.len)
-				pathogen_data = "<span class='alert'>Scans indicate the presence of [H.pathogens.len > 1 ? "[H.pathogens.len] " : null]pathogenic bodies.</span>"
+				pathogen_data = "<span class='alert'>Scans indicate the presence of [length(H.pathogens) > 1 ? "[H.pathogens.len] " : null]pathogenic bodies.</span>"
 				for (var/uid in H.pathogens)
 					var/datum/pathogen/P = H.pathogens[uid]
 					pathogen_data += "<br>&emsp;<span class='alert'>Strain [P.name] seems to be in stage [P.stage]. Suggested suppressant: [P.suppressant.therapy].</span>."
@@ -201,6 +201,8 @@
 				//Joke in case there is no organHolder
 				if (!H.organHolder)
 					organ_data = "<span class='alert'>Subject has no organs. Veeeerrrry curious.</span>"
+			else if (H.robotic_organs > 0)
+				organ_data = "<span style='color:purple'><b>Unknown augmented organs detected.</b></span>"
 
 
 	var/datum/statusEffect/simpledot/radiation/R = M.hasStatus("radiation")
@@ -483,7 +485,7 @@
 			reagents = P.occupant.reagents
 
 	if (reagents)
-		if (reagents.reagent_list.len > 0)
+		if (length(reagents.reagent_list) > 0)
 			if("cloak_juice" in reagents.reagent_list)
 				var/datum/reagent/cloaker = reagents.reagent_list["cloak_juice"]
 				if(cloaker.volume >= 5)
@@ -550,7 +552,7 @@
 		if (H.gunshot_residue) // Left by firing a kinetic gun.
 			forensic_data += "<br><span class='notice'>Gunshot residue found.</span>"
 
-		if (H.implant && H.implant.len > 0)
+		if (H.implant && length(H.implant) > 0)
 			var/wounds = null
 			for (var/obj/item/implant/I in H.implant)
 				if (istype(I, /obj/item/implant/projectile))
@@ -784,7 +786,7 @@
 			Pressure: [round(pressure, 0.1)] kPa<br>\
 			Temperature: [round(check_me.temperature)] K<br>\
 			Volume: [check_me.volume] L<br>\
-			[CONCENTRATION_REPORT(check_me, "<br>")]"
+			[SIMPLE_CONCENTRATION_REPORT(check_me, "<br>")]"
 
 	else
 		// Only used for "Atmospheric Scan" accessible through the PDA interface, which targets the turf

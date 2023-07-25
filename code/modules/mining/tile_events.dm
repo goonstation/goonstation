@@ -25,7 +25,7 @@
 	set_up(var/datum/ore/parent)
 		if (..() || !parent)
 			return 1
-		if (parent.gems.len < 1)
+		if (length(parent.gems) < 1)
 			return 1
 		gem_type = pick(parent.gems)
 
@@ -61,7 +61,7 @@
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
-		new /obj/critter/rockworm(AST)
+		new /mob/living/critter/rockworm(AST)
 
 /datum/ore/event/loot_crate
 	analysis_string = "Caution! Large object embedded in rock!"

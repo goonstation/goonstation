@@ -387,8 +387,8 @@
 	ammo_type = new/datum/projectile/bullet/minigun
 	icon_state = "lmg_ammo-old" // reusing old sprites for variety
 	icon_empty = "lmg_ammo-0-old"
-	amount_left = 100
-	max_amount = 100
+	amount_left = 200
+	max_amount = 200
 	ammo_cat = AMMO_AUTO_308
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
@@ -752,7 +752,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_cat = AMMO_SHOTGUN_HIGH
 	delete_on_reload = TRUE
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
-	w_class = W_CLASS_NORMAL
 
 /obj/item/ammo/bullets/pipeshot/plasglass // plasmaglass handmade shells
 	sname = "plasmaglass load"

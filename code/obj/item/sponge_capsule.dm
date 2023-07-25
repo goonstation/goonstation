@@ -20,8 +20,8 @@
 						/mob/living/critter/small_animal/mouse,
 						/obj/critter/opossum,
 						/obj/critter/parrot/eclectus,
-						/obj/critter/pig,
-						/obj/critter/walrus)
+						/mob/living/critter/small_animal/pig,
+						/mob/living/critter/small_animal/walrus)
 
 /obj/item/toy/sponge_capsule/syndicate
 	colors = list("#FF0000", "#7F0000", "#FF6A00", "#FFD800", "#7F3300", "#7F6A00")
@@ -31,7 +31,7 @@
 					/mob/living/critter/brullbar,
 					/obj/critter/bat/buff,
 					/mob/living/critter/spider/ice,
-					/obj/critter/townguard/passive,
+					/mob/living/critter/townguard,
 					/mob/living/critter/lion,
 					/mob/living/critter/fermid)
 
@@ -66,6 +66,9 @@
 	if(isnull(animal_to_spawn)) // can probably happen if spawned directly in water
 		animal_to_spawn = pick(animals)
 	var/atom/C = new animal_to_spawn(T)
+	if (ismobcritter(C))
+		var/mob/living/critter/M = C
+		M.faction |= FACTION_SPONGE
 	T.visible_message("<span class='notice'>What was once [src] has become [C.name]!</span>")
 	qdel(src)
 

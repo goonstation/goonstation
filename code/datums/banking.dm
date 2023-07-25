@@ -221,13 +221,12 @@
 
 	var/pin = null
 	attackby(var/obj/item/I, mob/user)
-		if (istype(I, /obj/item/device/pda2) && I:ID_card)
-			I = I:ID_card
-		if(istype(I, /obj/item/card/id))
+		var/obj/item/card/id/id_card = get_id_card(I)
+		if(istype(id_card))
 			boutput(user, "<span class='notice'>You swipe your ID card in the ATM.</span>")
-			src.scan = I
+			src.scan = id_card
 			return
-		if(istype(I, /obj/item/spacecash/))
+		if(istype(I, /obj/item/currency/spacecash/))
 			if (src.accessed_record)
 				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
 				src.accessed_record["current_money"] += I.amount
@@ -251,8 +250,8 @@
 				qdel(I)
 			else boutput(user, "<span class='alert'>You need to log in before inserting a ticket!</span>")
 			return
-		if(istype(I, /obj/item/spacebux))
-			var/obj/item/spacebux/SB = I
+		if(istype(I, /obj/item/currency/spacebux))
+			var/obj/item/currency/spacebux/SB = I
 			if(SB.spent == 1)
 				return
 			SB.spent = 1
@@ -260,12 +259,12 @@
 			user.client.add_to_bank(SB.amount)
 			boutput(user, "<span class='alert'>You deposit [SB.amount] spacebux into your account!</span>")
 			qdel(SB)
-		else if(istype(I, /obj/item/spacecash/))
+		else if(istype(I, /obj/item/currency/spacecash/))
 			if (src.accessed_record)
 				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
 
-				if(istype(I, /obj/item/spacecash/buttcoin))
-					boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
+				if(istype(I, /obj/item/currency/spacecash/buttcoin))
+					boutput(user, "<span class='success'>Your transaction will complete anywhere within 10 to 10e27 minutes from now.</span>")
 				else
 					src.accessed_record["current_money"] += I.amount
 
@@ -392,7 +391,7 @@
 					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
 				else
 					src.accessed_record["current_money"] -= amount
-					var/obj/item/spacecash/S = new /obj/item/spacecash
+					var/obj/item/currency/spacecash/S = new /obj/item/currency/spacecash
 					S.setup(src.loc, amount)
 					usr.put_in_hand_or_drop(S)
 
@@ -447,7 +446,7 @@
 				else
 					logTheThing(LOG_DIARY, usr, "withdrew a spacebux token worth [amount].")
 					usr.client.add_to_bank(-amount)
-					var/obj/item/spacebux/newbux = new(src.loc, amount)
+					var/obj/item/currency/spacebux/newbux = new(src.loc, amount)
 					usr.put_in_hand_or_drop(newbux)
 
 		src.updateUsrDialog()
@@ -776,16 +775,15 @@
 		if (broken)
 			boutput(user, "<span class='alert'>With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
 			return
-		if (istype(I, /obj/item/device/pda2) && I:ID_card)
-			I = I:ID_card
-		if (istype(I, /obj/item/card/id))
+		var/obj/item/card/id/id_card = get_id_card(I)
+		if(istype(id_card))
 			if (src.scan)
 				return
 			boutput(user, "<span class='notice'>You swipe your ID card in the ATM.</span>")
-			src.scan = I
+			src.scan = id_card
 			attack_hand(user)
 			return
-		if (istype(I, /obj/item/spacecash/))
+		if (istype(I, /obj/item/currency/spacecash/))
 			if (afterlife)
 				boutput(user, "<span class='alert'>On closer inspection, this ATM doesn't seem to have a deposit slot for credits!</span>")
 				return
@@ -821,8 +819,8 @@
 				qdel(I)
 			else boutput(user, "<span class='alert'>You need to log in before inserting a ticket!</span>")
 			return
-		if (istype(I, /obj/item/spacebux))
-			var/obj/item/spacebux/SB = I
+		if (istype(I, /obj/item/currency/spacebux))
+			var/obj/item/currency/spacebux/SB = I
 			if(SB.spent == 1)
 				return
 			SB.spent = 1
@@ -980,7 +978,7 @@
 					src.show_message("Insufficient funds in account.", "danger", "atm")
 				else
 					src.accessed_record["current_money"] -= amount
-					var/obj/item/spacecash/S = new /obj/item/spacecash
+					var/obj/item/currency/spacecash/S = new /obj/item/currency/spacecash
 					S.setup(src.loc, amount)
 					usr.put_in_hand_or_drop(S)
 					src.show_message("Withdrawal successful.", "success", "atm")
@@ -997,7 +995,7 @@
 				else
 					logTheThing(LOG_DIARY, usr, "withdrew a spacebux token worth [amount].")
 					usr.client.add_to_bank(-amount)
-					var/obj/item/spacebux/newbux = new(src.loc, amount)
+					var/obj/item/currency/spacebux/newbux = new(src.loc, amount)
 					usr.put_in_hand_or_drop(newbux)
 				. = TRUE
 		src.add_fingerprint(usr)
@@ -1017,7 +1015,7 @@
 			src.broken = 1
 			src.visible_message("<span class='alert'><b>The [src.name] breaks apart and spews out cash!</b></span>")
 			src.icon_state = "[src.icon_state]_broken"
-			var/obj/item/C = pick(/obj/item/spacecash/hundred, /obj/item/spacecash/fifty, /obj/item/spacecash/ten)
+			var/obj/item/C = pick(/obj/item/currency/spacecash/hundred, /obj/item/currency/spacecash/fifty, /obj/item/currency/spacecash/ten)
 			C = new C(get_turf(src))
 			playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
 			playsound(src.loc,'sound/machines/capsulebuy.ogg', 50, 2)

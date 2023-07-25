@@ -552,10 +552,12 @@ datum
 								H.visible_message("<span class='alert'><b>[H]</b> seems to prefer the afterlife!</span>")
 							H.make_jittery(1000)
 							SPAWN(rand(20, 100))
+								logTheThing(LOG_COMBAT, H, "is gibbed by puritan when resuscitated with strange reagent at [log_loc(H)].")
 								H.gib()
 							return
 					else // else just get whoever's the mind
 						G = find_ghost_by_key(M.mind?.key)
+					logTheThing(LOG_COMBAT, M, "is resuscitated with strange reagent at [log_loc(M)].")
 					if (G)
 						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
 							G.show_text("<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
@@ -806,7 +808,7 @@ datum
 				var/volume_mult = 1
 
 				if (length(covered))
-					if (volume/covered.len < 2) //reduce time based on dilution
+					if (volume/length(covered) < 2) //reduce time based on dilution
 						volume_mult = min(volume / 9, 1)
 
 				if (istype(T))
@@ -816,10 +818,16 @@ datum
 					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
+					playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+					var/obj/grille/catwalk/catwalk = null
+					if (istype(T, /turf/simulated/floor/airless/plating/catwalk)) //guh
+						catwalk = locate() in T
+						catwalk.UpdateOverlays(wet, "wet_overlay")
 					SPAWN(800 * volume_mult)
 						if (istype(T))
 							T.wet = 0
 							T.UpdateOverlays(null, "wet_overlay")
+							catwalk?.UpdateOverlays(null, "wet_overlay")
 				return
 
 		superlube
@@ -845,6 +853,7 @@ datum
 						wet.blend_mode = BLEND_ADD
 						wet.alpha = 60
 						T.UpdateOverlays(wet, "wet_overlay")
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 					T.wet = 3
 					SPAWN(80 SECONDS)
 						if (istype(T))
@@ -891,7 +900,7 @@ datum
 				var/volume_mult = 1
 
 				if (length(covered))
-					if (volume/covered.len < 2) //reduce time based on dilution
+					if (volume/length(covered) < 2) //reduce time based on dilution
 						volume_mult = min(volume / 9, 1)
 
 				if (istype(T))
@@ -936,7 +945,7 @@ datum
 					volume = min(volume, src.volume / (2 + 3 / length(covered)))
 				if(volume < 5)
 					return
-				O.AddComponent(/datum/component/glue_ready, volume * 5 SECONDS, 5 SECONDS)
+				O.AddComponent(/datum/component/glue_ready, volume * 20 SECONDS, 5 SECONDS)
 				var/turf/T = get_turf(O)
 				if(!silent)
 					T.visible_message("<span class='notice'>\The [O] is coated in a layer of glue!</span>")
@@ -1170,7 +1179,7 @@ datum
 						silent = 1
 
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 3)
+				if (length(covered) > 3)
 					silent = 1
 
 				if (method == TOUCH)
@@ -1321,10 +1330,10 @@ datum
 				if (!src.reacting && (holder && !holder.has_reagent("chlorine"))) // need this to be higher to make propylene possible
 					src.reacting = 1
 					var/list/covered = holder.covered_turf()
-					if (covered.len < 4 || (volume / holder.total_volume) > min_req_fluid)
+					if (length(covered) < 4 || (volume / holder.total_volume) > min_req_fluid)
 						for(var/turf/location in covered)
 							fireflash(location, clamp(volume/40, 0, 8))
-							if (covered.len < 4 || prob(10))
+							if (length(covered) < 4 || prob(10))
 								location.visible_message("<b>The oil burns!</b>")
 								var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 								smoke.set_up(1, 0, location)
@@ -1587,8 +1596,8 @@ datum
 					random_brute_damage(M, 1 * mult)
 				else if (our_amt < 10)
 					if (probmult(8))
-						M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>You puke all over yourself!</span>")
-						M.vomit()
+						var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>"
+						M.vomit(0, null, vomit_message)
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
 
@@ -1715,8 +1724,8 @@ datum
 					boutput(M, "<span class='alert'>Aaaagh! It tastes fucking horrendous!</span>")
 					SPAWN(1 SECOND)
 						if(!isdead(M) && volume >= 1)
-							M.visible_message("<span class='alert'>[M] pukes violently!</span>")
-							M.vomit()
+							var/vomit_message = "<span class='alert'>[M] pukes violently!</span>"
+							M.vomit(0, null, vomit_message)
 				else
 					boutput(M, "<span class='alert'>Oh god! It smells horrific! What the fuck IS this?!</span>")
 					if (prob(50))
@@ -1775,7 +1784,7 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				if(volume < 1)
+				if(volume < 1 || istype(M, /mob/living/critter/spider))
 					return
 				if(method == TOUCH)
 					. = 0 // for depleting fluid pools
@@ -1818,6 +1827,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
+				if(istype(M, /mob/living/critter/spider))
+					return
 				var/turf/T = get_turf(M)
 				if (prob(50))
 					random_brute_damage(M, 1 * mult)
@@ -1832,7 +1843,7 @@ datum
 					M.setStatusMin("weakened", 2 SECONDS * mult)
 					M.visible_message("<span class='alert'><b>[M.name]</b> tears at their own skin!</span>",\
 					"<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] GET THEM OUT![pick("", "!", "!!", "!!!", "!!!!")]</span>")
-				else if (prob(10))
+				else if (prob(10) && !M.reagents?.has_reagent("promethazine"))
 					if (!locate(/obj/decal/cleanable/vomit) in T)
 						M.vomit(0, /obj/decal/cleanable/vomit/spiders)
 						random_brute_damage(M, rand(4))
@@ -2189,8 +2200,8 @@ datum
 						M.addOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 						// oh no
 						if(probmult(max(2, (src.volume - gib_threshold)/5))) // i hate you more, players
-							H.flockbit_gib()
 							logTheThing(LOG_COMBAT, H, "was gibbed by reagent [name] at [log_loc(H)].")
+							H.flockbit_gib()
 							return
 					else
 						if (!istype(M.loc, /obj/flock_structure/cage))
@@ -2282,7 +2293,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 
 				if (!istype(T, /turf/space))
@@ -2770,7 +2781,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 
 				if (!istype(T, /turf/space))
@@ -2837,7 +2848,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 				if (!istype(T, /turf/space))
 					if (volume >= 5)
@@ -3177,7 +3188,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 
 				if (volume > 10)
@@ -3303,7 +3314,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/vomit) in T)
@@ -3326,7 +3337,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/greenpuke) in T)
@@ -3355,7 +3366,7 @@ datum
 				return*/
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 				if (volume > 10)
 					return 1
@@ -3377,7 +3388,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 				if (volume > 10)
 					return 1

@@ -286,7 +286,8 @@ TYPEINFO(/obj/item/rcd)
 
 			if (RCD_MODE_AIRLOCK)
 				// create_door handles all the other stuff.
-				create_door(A, user)
+				SPAWN(0) //let's not lock the entire attack call and let people attack with zero delay
+					create_door(A, user)
 				return
 
 			if (RCD_MODE_DECONSTRUCT)
@@ -534,7 +535,7 @@ TYPEINFO(/obj/item/rcd)
 		if (issilicon(user))
 			var/mob/living/silicon/S = user
 			if (S.cell)
-				S.cell.charge -= checkamt * silicon_cost_multiplier
+				S.cell.use(checkamt * silicon_cost_multiplier)
 		else
 			src.matter -= checkamt
 			boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter units.")

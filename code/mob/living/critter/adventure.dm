@@ -4,7 +4,10 @@
 	- Transposed scientist
 	- Shades
 	- Repair bots
+	- Town guards
+	- Blob men
 */
+/////////////// Transposed scientist ////////////////
 /mob/living/critter/crunched
 	name = "transposed scientist"
 	real_name = "transposed scientist"
@@ -24,7 +27,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 3
 	ai_retaliate_persistence = RETALIATE_ONCE // They don't really want to hurt you
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 
 	setup_hands()
@@ -125,7 +128,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 
 	setup_hands()
@@ -279,7 +282,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 	death_text = "%src% blows apart!"
 	custom_gib_handler = /proc/robogibs
@@ -367,8 +370,6 @@
 		if (istype(C, /mob/living/critter/robotic/repairbot)) return FALSE
 		return ..()
 
-	seek_target(var/range = 5)
-
 	critter_basic_attack(var/mob/target)
 		if(prob(30))
 			playsound(src.loc, pick('sound/misc/ancientbot_grump.ogg','sound/misc/ancientbot_grump2.ogg'), 50, 1)
@@ -399,6 +400,8 @@
 	health_burn_vuln = 0.6
 	var/activated = FALSE
 
+	faction = FACTION_SYNDICATE
+
 	active
 		New()
 			..()
@@ -423,3 +426,217 @@
 		src.icon_state = "drone_service_bot"
 		src.desc = "A machine. Of some sort. It looks mad"
 		src.visible_message("<span class='combat'>[src] seems to power up!</span>")
+
+////////////// Town guards ////////////////
+/mob/living/critter/townguard
+	name = "town guard"
+	real_name = "town guard"
+	desc = "An angry man dressed in medieval armor."
+	icon_state = "townguard"
+	icon_state_dead = "townguard-dead"
+	hand_count = 2
+	can_throw = TRUE
+	can_grab = TRUE
+	can_disarm = TRUE
+	health_brute = 50
+	health_brute_vuln = 1
+	health_burn = 50
+	health_burn_vuln = 1
+	death_text = "%src% seizes up and falls limp, his eyes dead and lifeless..."
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
+	var/halt_cooldown = 3 SECONDS
+
+	passive
+		desc = "A strange man dressed in medieval armor."
+		ai_retaliate_patience = 2
+		ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
+		ai_type = /datum/aiHolder/wanderer
+
+	seek_target()
+		. = ..()
+
+		if (length(.) && prob(10))
+			HALT()
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream","halt")
+				if (src.emote_check(voluntary, 50))
+					HALT()
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream","halt")
+				return 2
+		return ..()
+
+	get_melee_protection(zone, damage_type)
+		return 4
+
+	get_ranged_protection()
+		return 1.5
+
+	setup_equipment_slots()
+		equipment += new /datum/equipmentHolder/ears(src)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.limb = new /datum/limb
+		HH.icon_state = "handl"
+		HH.limb_name = "left arm"
+
+		HH = hands[2]
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.limb = new /datum/limb/sword
+		HH.name = "right hand"
+		HH.suffix = "-R"
+		HH.icon_state = "blade"
+		HH.limb_name = "sword"
+		HH.can_hold_items = FALSE
+
+	setup_healths()
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
+
+	critter_basic_attack(mob/target)
+		HALT()
+		// Hand 2 = SWORD Hand 1 = ARM
+		if (is_incapacitated(target))
+			src.set_a_intent(INTENT_HARM)
+			src.active_hand = 1
+			return ..() // Punch / Kick them
+		if (prob(30))
+			src.set_a_intent(INTENT_DISARM)
+			src.active_hand = 1
+			return src.hand_attack(target) // Disarm them
+		src.set_a_intent(INTENT_HARM)
+		src.active_hand = 2
+		return ..() // Stab them
+
+	proc/HALT()
+		if(!ON_COOLDOWN(src, "say_HALT!", src.halt_cooldown))
+			src.say("HALT!")
+			playsound(src.loc, 'sound/voice/guard_halt.ogg', 50, 0)
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard
+	name = "\improper Town Guard egg"
+	desc = "This is not how humans reproduce. They do not lay eggs. <i>What the hell is this?</i>"
+	critter_type = /mob/living/critter/townguard
+	warm_count = 75
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard/passive
+	critter_type = /mob/living/critter/townguard/passive
+
+////////////// Blobman ////////////////
+/mob/living/critter/blobman
+	name = "mutant"
+	real_name = "mutant"
+	desc = "Some sort of horrific, pulsating blob of flesh."
+	icon_state = "blobman"
+	icon_state_dead = "blobman-dead"
+	density = TRUE
+	hand_count = 2
+	health_brute = 10
+	health_brute_vuln = 0.5
+	health_burn = 10
+	health_burn_vuln = 0.75
+	death_text = "%src% collapses into viscera."
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
+	ai_attacks_per_ability = 4
+	add_abilities = list(/datum/targetable/critter/tackle)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.icon_state = "handl"
+
+		HH = hands[2]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.name = "right hand"
+		HH.suffix = "-R"
+		HH.icon_state = "handr"
+
+	setup_healths()
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
+
+	critter_ability_attack(var/target)
+		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
+		if (!tackle.disabled && tackle.cooldowncheck())
+			tackle.handleCast(target)
+			return TRUE
+
+/mob/living/critter/blobman/meat
+	real_name = "meaty martha"
+	death_text = null
+	ai_attacks_per_ability = 3
+
+	New()
+		..()
+		src.name = "[pick("grody", "clotty", "greasy", "meaty", "fleshy", "vile", "chunky", "putrid")] [pick("nugget", "bloblet", "pustule", "corpuscle", "viscera")]"
+		src.icon_state = pick("meaty_mouth", "polyp", "goop")
+
+	critter_ability_attack(var/target) // Kinda hacky
+		var/missing_arm = target_missing_limb(target)
+		if ((missing_arm == "r_arm" || missing_arm == "l_arm") && ishuman(target))
+			var/mob/living/carbon/human/H = target
+			src.visible_message("<span class='alert'><b>[src] latches onto [H]'s stump!!</b></span>")
+			boutput(H, "<span class='alert'>OH FUCK OH FUCK GET IT OFF GET IT OFF IT STINGS!</span>")
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+			H.emote("scream")
+			H.changeStatus("stunned", 2 SECONDS)
+			random_brute_damage(H, 5)
+			switch (missing_arm)
+				if ("r_arm")
+					var/obj/item/parts/human_parts/arm/meat_mutant/part = new /obj/item/parts/human_parts/arm/meat_mutant/right {remove_stage = 2;} (H)
+					H.limbs.vars["r_arm"] = part
+					part.holder = H
+
+				if ("l_arm")
+					var/obj/item/parts/human_parts/arm/meat_mutant/part = new /obj/item/parts/human_parts/arm/meat_mutant/left {remove_stage = 2;} (H)
+					H.limbs.vars["l_arm"] = part
+					part.holder = H
+
+			H.update_body()
+			H.update_clothing()
+			H.unlock_medal("My Bologna Has A First Name",1)
+			qdel(src)
+		else
+			..()
+
+	death(var/gibbed)
+		..()
+		if (!gibbed)
+			src.visible_message("<span class='alert'>[src] explodes into viscera!</span>")
+			src.unequip_all()
+			src.gib()
+
+	proc/update_meat_head_dialog(var/new_text)
+		if (!new_text || !length(ckey(new_text)))
+			return
+		var/obj/critter/monster_door/meat_head/main_meat_head = by_type[/obj/critter/monster_door/meat_head][1]
+		main_meat_head.update_meat_head_dialog(new_text)
+
+	proc/target_missing_limb(var/mob/living/carbon/human/testhuman)
+		if (!istype(testhuman) || !testhuman.limbs)
+			return null
+
+		if (!testhuman.limbs.l_arm)
+			return "l_arm"
+		else if (!testhuman.limbs.r_arm)
+			return "r_arm"
+
+		return null
+

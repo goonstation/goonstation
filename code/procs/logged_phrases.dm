@@ -31,7 +31,7 @@ var/global/datum/phrase_log/phrase_log = new
 
 /datum/phrase_log
 	var/list/phrases
-	var/max_length = 200
+	var/max_length = 600
 	var/filename = "data/logged_phrases.json"
 	var/uncool_words_filename = "data/uncool_words.json"
 	var/list/original_lengths
@@ -60,6 +60,8 @@ var/global/datum/phrase_log/phrase_log = new
 			"This law intentionally left blank.",
 			"Make a funny beeping noise over the radio every few minutes",
 			"The AI is the head of this department.",
+			" EXPANSION MODULE",
+			" Expansion Module",
 			//
 			"overrides? all",
 			"the shuttle",
@@ -104,7 +106,7 @@ var/global/datum/phrase_log/phrase_log = new
 		)
 		sussy_words = regex(jointext(sussy_word_list, "|"), "i")
 		var/list/ic_sussy_word_list = list(
-			@"\bl(:?ol)+",
+			@"\bl(:?ol)+\b",
 			@"\blmao+",
 			@"\bwt[hf]+\b",
 			@"\bsmh\b",
@@ -146,9 +148,11 @@ var/global/datum/phrase_log/phrase_log = new
 			return random_phrase(category, include_old, include_new)
 
 	/// Logs a phrase to a selected category duh
-	proc/log_phrase(category, phrase, no_duplicates=FALSE, mob/user = null)
+	proc/log_phrase(category, phrase, no_duplicates=FALSE, mob/user = null, strip_html=FALSE)
 		if (!user)
 			user = usr
+		if(strip_html)
+			phrase = strip_html_tags(phrase)
 		phrase = html_decode(phrase)
 		if(is_sussy(phrase))
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, "<span class=\"admin\">Sussy word - [key_name(user)] [category]: \"[phrase]\"</span>")
@@ -243,9 +247,9 @@ var/global/datum/phrase_log/phrase_log = new
 		return .
 
 	proc/random_station_name_replacement_proc(old_name)
-		if(!length(data_core.general))
+		if(!length(data_core.general.records))
 			return old_name
-		var/datum/db_record/record = pick(data_core.general)
+		var/datum/db_record/record = pick(data_core.general.records)
 		return record["name"]
 
 	proc/random_custom_ai_law(max_tries=20, replace_names=FALSE)

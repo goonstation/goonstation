@@ -365,7 +365,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 					found_negative = TRUE
 					break
 		if(found_negative)
-			src.AddComponent(/datum/component/extradimensional_storage)
+			src.AddComponent(/datum/component/extradimensional_storage/storage)
 
 	proc/weld_action(obj/item/W, mob/user)
 		if(src.open)
@@ -490,7 +490,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				/obj/item/raw_material = "materials",
 				/obj/item/material_piece = "processed materials",
 				/obj/item/paper = "paper",
-				/obj/item/tile = "floor tiles")
+				/obj/item/tile = "floor tiles",
+				/obj/item/fish = "fish")
 			for(var/drag_type in draggable_types)
 				if(!istype(O, drag_type))
 					continue
@@ -501,6 +502,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				var/staystill = user.loc
 				for (var/obj/thing in view(1,user))
 					if(!istype(thing, drag_type))
+						continue
+					if (thing.anchored)
 						continue
 					if (thing in user)
 						continue
@@ -634,11 +637,14 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				O.set_loc(src)
 
 		for (var/mob/M in get_turf(src))
+			if (isobserver(M) || iswraith(M) || isintangible(M) || islivingobject(M))
+				continue
 			if (M.anchored || M.buckled)
 				continue
-			if (src.is_short && !M.lying && ( M != src.loc ) ) // ignore movement when container is inside the mob (possessed)
-				step_away(M, src, 1)
-				continue
+			if (src.is_short && (M != src.loc) && !isdead(M))
+				if (!M.lying)
+					step_away(M, src, 1)
+					continue
 #ifdef HALLOWEEN
 			if (halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 				var/list/obj/storage/myPals = list()
@@ -653,8 +659,6 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				M.playsound_local(M.loc, "warp", 50, 1)
 				continue
 #endif
-			if (isobserver(M) || iswraith(M) || isintangible(M) || islivingobject(M))
-				continue
 			if (src.crunches_contents)
 				src.crunch(M)
 			M.set_loc(src)
@@ -827,14 +831,14 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			return
 
 		if (src.open)
-			step_towards(usr, src)
+			usr.step_towards_movedelay(src)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
 					usr.lying = 1
 				src.close()
 		else if (src.open(user=usr))
-			step_towards(usr, src)
+			usr.step_towards_movedelay(src)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)

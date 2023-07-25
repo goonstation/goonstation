@@ -190,6 +190,7 @@
 
 #define W_CLASS_TINY 1
 #define W_CLASS_SMALL 2
+#define W_CLASS_POCKET_SIZED 2.5
 #define W_CLASS_NORMAL 3
 #define W_CLASS_BULKY 4
 #define W_CLASS_HUGE 5
@@ -211,3 +212,7 @@
 #define ATTACK_FULLY_HIDDEN 1
 /// No attack message is shown and no particles are displayed, but the animation of the attacker still plays (genetics analyzer, autoinjectors)
 #define ATTACK_PARTIALLY_HIDDEN 2
+/// for matches
+#define MATCH_UNLIT 0
+#define MATCH_LIT 1
+#define MATCH_INERT 2 /// broken or burn out

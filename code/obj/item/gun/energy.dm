@@ -116,7 +116,7 @@ TYPEINFO(/obj/item/gun/energy)
 			var/mob/living/silicon/robot/R = user
 			if(R.cell)
 				if(R.cell.charge >= src.robocharge)
-					R.cell.charge -= src.robocharge
+					R.cell.use(src.robocharge)
 					return 1
 			return 0
 		else
@@ -360,7 +360,7 @@ TYPEINFO(/obj/item/gun/energy/egun)
 	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
 	muzzle_flash = "muzzle_flash_elec"
 	uses_charge_overlay = TRUE
-	charge_icon_state = "egunstun"
+	charge_icon_state = "energystun"
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt)
@@ -369,11 +369,11 @@ TYPEINFO(/obj/item/gun/energy/egun)
 		..()
 	update_icon()
 		if (current_projectile.type == /datum/projectile/laser)
-			charge_icon_state = "[icon_state]kill"
+			charge_icon_state = "energykill"
 			muzzle_flash = "muzzle_flash_laser"
 			item_state = "egun-kill"
 		else if (current_projectile.type == /datum/projectile/energy_bolt)
-			charge_icon_state = "[icon_state]stun"
+			charge_icon_state = "energystun"
 			muzzle_flash = "muzzle_flash_elec"
 			item_state = "egun"
 		..()
@@ -384,6 +384,14 @@ TYPEINFO(/obj/item/gun/energy/egun)
 
 	proc/noreward()
 		src.nojobreward = 1
+
+	captain
+		desc = "The Five Points Armory Energy Gun. Double emitters with switchable fire modes, for stun bolts or lethal laser fire. Decorated to match standard NT captain attire."
+		icon_state = "energy-cap"
+
+	head_of_security
+		desc = "The Five Points Armory Energy Gun. Double emitters with switchable fire modes, for stun bolts or lethal laser fire. 'HOS' is engraved in the side."
+		icon_state = "energy-hos"
 
 
 TYPEINFO(/obj/item/gun/energy/egun_jr)
@@ -670,7 +678,7 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 			else
 				continue
 
-		if (L.len < 2)
+		if (length(L) < 2)
 			user.show_text("Error: no working teleporters detected.", "red")
 			return
 
@@ -1359,7 +1367,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			are_you_the_law(M, msg[1])
 			return //AFAIK only humans have fingerprints/"palmprints(in judge dredd)" so just ignore any talk from non-humans arlight? it's not a big deal.
 
-		if(!src.projectiles && !src.projectiles.len > 1)
+		if(!src.projectiles && !length(src.projectiles) > 1)
 			boutput(M, "<span class='notice'>Gun broke. Call 1-800-CODER.</span>")
 			set_current_projectile(new/datum/projectile/energy_bolt/aoe)
 			item_state = "lawg-detain"
@@ -1732,6 +1740,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	rechargeable = 0
 	shoot_delay = 8 DECI SECONDS
 	spread_angle = 3
+	can_dual_wield = 0
 	var/extended = FALSE
 
 	New()

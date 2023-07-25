@@ -174,7 +174,7 @@
 					MV.Add(text2num(temp))
 					i++
 
-			if (MV.len >= 6)
+			if (length(MV) >= 6)
 				input = matrix(MV[1], MV[2], MV[3], MV[4], MV[5], MV[6])
 
 			else
@@ -309,12 +309,12 @@
 	var/datum/promise/promise = null
 	target_anything = TRUE
 	targeted = TRUE
-	max_range = 3000
+	check_range = FALSE
 	target_ghosts = TRUE
 	lock_holder = FALSE
 
-	castcheck(var/mob/M)
-		if (M.client && M.client.holder)
+	castcheck()
+		if (usr.client && usr.client.holder)
 			return TRUE
 
 	handleCast(var/atom/selected)

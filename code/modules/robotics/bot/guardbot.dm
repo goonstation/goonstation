@@ -63,7 +63,7 @@
 			master.path = thePath
 			if(adjacent && master.path && length(master.path)) //Make sure to check it isn't null!!
 				master.path.len-- //Only go UP to the target, not the same tile.
-			if(!master.path || !master.path.len || !the_target || (ismob(the_target) && master.path.len >= 21))
+			if(!master.path || !master.path.len || !the_target || (ismob(the_target) && length(master.path) >= 21))
 				master.task?.task_input("path_error")
 
 				master.moving = 0
@@ -480,9 +480,7 @@
 		return 1
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
-		if (istype(W, /obj/item/card/id))
+		if (istype(get_id_card(W), /obj/item/card/id))
 			if (src.gunlocklock)
 				speak(pick("Pass.", "No thanks.", "Nah, I'd rather not.", "Hands off the merchandise!",\
 				"Yeah I'm going to need a signed permission slip from your mother first",\
@@ -1126,7 +1124,7 @@
 		if (istype(src.budgun, /obj/item/gun/kinetic))
 			var/obj/item/gun/kinetic/shootgun = src.budgun	// first check if we have enough charge to reload
 			if (src?.cell?.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL && ((cell.charge - ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 0.75))) > (GUARDBOT_LOWPOWER_ALERT_LEVEL)))	// *scream
-				cell.charge -= ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 0.75))
+				cell.use((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 0.75))
 				shootgun.ammo.amount_left = shootgun.ammo.max_amount
 				return 1 // good2shoot!
 			else if (CheckMagCellWhatever())	// if not, do we have enough ammo to shoot?
@@ -1136,7 +1134,7 @@
 		else if (istype(src.budgun, /obj/item/gun/bling_blaster) && ammofab)	// Ammo is ammo, even if its money
 			var/obj/item/gun/bling_blaster/funds = src.budgun	// not sure why you'd do this, but it's an option, so functionality
 			if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL)) // I mean you can't even make much (if any) money off of this
-				cell.charge -= (funds.cash_max - funds.cash_amt)	// maybe you'd get lucky and the buddy'll shoot some diamonds
+				cell.use(funds.cash_max - funds.cash_amt)	// maybe you'd get lucky and the buddy'll shoot some diamonds
 				funds.cash_amt = funds.cash_max		// but on average, the payout is crap and takes forever and you have to keep charging the bot
 				return 1 // good2shoot!
 			else if (CheckMagCellWhatever()) // so i figured if you really want to do this, go for it
@@ -1199,7 +1197,7 @@
 				if(SEND_SIGNAL(budgun, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 					if (ret["charge"] < ret["max_charge"]) // is our gun not full?
 						if (src.cell.charge > (GUARDBOT_LOWPOWER_ALERT_LEVEL - 10 + (ret["max_charge"] - ret["charge"]))) // Can we charge it without tanking our battery?
-							src.cell.charge -= (ret["max_charge"] - ret["charge"]) // discharge us
+							src.cell.use(ret["max_charge"] - ret["charge"]) // discharge us
 							SEND_SIGNAL(budgun, COMSIG_CELL_CHARGE, ret["max_charge"])
 							return 1 // and we're good2shoot
 						else if (CheckMagCellWhatever()) // is there enough charge left in the gun?
@@ -1232,7 +1230,7 @@
 			var/list/mob/nearby_dorks = list()
 			for (var/mob/living/D in oview(7, src))
 				nearby_dorks.Add(D)
-			if(nearby_dorks.len > 0)
+			if(length(nearby_dorks) > 0)
 				var/griffed = pick(nearby_dorks)
 				shoot_projectile_ST_pixel(src, thing2shoot, griffed)
 				return griffed
@@ -1715,7 +1713,7 @@
 				return
 
 			src.tasks += newtask
-			if (src.tasks.len == 1)
+			if (length(src.tasks) == 1)
 				src.task = newtask
 			return
 
@@ -1986,6 +1984,7 @@
 			task.arrest_target.handcuffs = new /obj/item/handcuffs/guardbot(task.arrest_target)
 			task.arrest_target.setStatus("handcuffed", duration = INFINITE_STATUS)
 			boutput(task.arrest_target, "<span class='alert'>[master] gently handcuffs you!  It's like the cuffs are hugging your wrists.</span>")
+			logTheThing(LOG_COMBAT, master, "handcuffs [constructTarget(task.arrest_target,"combat")] at [log_loc(master)].")
 			task.arrest_target:set_clothing_icon_dirty()
 
 		if (length(task.arrested_messages))
@@ -2451,7 +2450,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						src.next_target()
 					else
 						var/auto_eject = 0
-						if(!dock_return && master.tasks.len >= 2)
+						if(!dock_return && length(master.tasks) >= 2)
 							auto_eject = 1
 						dock.connect_robot(master,auto_eject)
 						//master.snooze() //Connect autosnoozes the bot.
@@ -3201,7 +3200,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						if (!has_contraband_permit)
 							. += perp.back.get_contraband() * 0.5
 
-				if(perp.mutantrace && perp.mutantrace.jerk)
+				if(perp.mutantrace.jerk)
 //					if(istype(perp.mutantrace, /datum/mutantrace/zombie))
 //						return 5 //Zombies are bad news!
 

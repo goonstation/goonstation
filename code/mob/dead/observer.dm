@@ -4,7 +4,7 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	plane = PLANE_NOSHADOW_ABOVE
+	plane = PLANE_NOSHADOW_ABOVE_NOWARP
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP
 	density = FALSE
 	canmove = TRUE
@@ -152,20 +152,22 @@
 		src.bioHolder = newbio
 
 
-//#ifdef HALLOWEEN
+// Make sure to keep this JPS-cache safe
 /mob/dead/observer/Cross(atom/movable/mover)
 	if (src.icon_state != "doubleghost" && istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
 		if (proj.proj_data?.hits_ghosts)
 			return 0
+
+	return 1
+
 #ifdef HALLOWEEN
+/mob/dead/observer/Crossed(atom/movable/mover)
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
 		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
 		if (GH.spooking)
 			GH.stop_spooking()
 #endif
-
-	return 1
 
 /mob/dead/observer/bullet_act(var/obj/projectile/P)
 	if (src.icon_state == "doubleghost" || !P.proj_data?.hits_ghosts)
@@ -438,11 +440,11 @@
 	if (!health_shown)
 		health_shown = 1
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(src)
-		boutput(src, "Health status toggled on.")
+		boutput(src, "<span class='success'>Health status toggled on.</span>")
 	else
 		health_shown = 0
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(src)
-		boutput(src, "Health status toggled off.")
+		boutput(src, "<span class='alert'>Health status toggled off.</span>")
 
 /mob/dead/observer/verb/show_arrest()
 	set category = "Ghost"

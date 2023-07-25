@@ -673,21 +673,23 @@
 			var/master_chem = chemical.reagents.get_master_reagent()
 			var/master_chem_name = chemical.reagents.get_master_reagent_name()
 
+			var/datum/material/mat = copyMaterial(refined.material)
+
 			var/datum/materialProc/generic_reagent_onlife/O = new/datum/materialProc/generic_reagent_onlife(master_chem,1)
-			refined.material.triggersOnLife.Cut()
-			refined.material.addTrigger(refined.material.triggersOnLife, O)
+			mat.triggersOnLife.Cut()
+			mat.addTrigger(mat.triggersOnLife, O)
 
 			var/datum/materialProc/generic_reagent_onattack_depleting/A = new/datum/materialProc/generic_reagent_onattack_depleting(master_chem,1,10,25)
-			refined.material.triggersOnAttack.Cut()
-			refined.material.addTrigger(refined.material.triggersOnAttack, A)
+			mat.triggersOnAttack.Cut()
+			mat.addTrigger(mat.triggersOnAttack, A)
 
 			var/obj/item/material_piece/wad/W = new /obj/item/material_piece/wad
 
 			if(refined?.material)
-				refined.material.canMix = 0
-				refined.material.name = "[master_chem_name]-infused [refined.material.name]"
-				refined.material.mat_id = "[master_chem_name][refined.material.mat_id]"
-				W.setMaterial(refined.material)
+				mat.canMix = 0
+				mat.name = "[master_chem_name]-infused [mat.name]"
+				mat.mat_id = "[master_chem_name][mat.mat_id]"
+				W.setMaterial(mat)
 				W.change_stack_amount(9)
 
 			W.set_loc(getOutputLocation(owner))

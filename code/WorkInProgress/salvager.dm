@@ -334,7 +334,7 @@
 	icon_state = "whitesub_body"
 	health = 150
 	maxhealth = 150
-	acid_damage_multiplier = 0
+	acid_damage_multiplier = 0.5
 	init_comms_type = /obj/item/shipcomponent/communications/salvager
 	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
 
@@ -469,8 +469,7 @@
 	New()
 		..()
 
-		src.chat_text = new
-		src.vis_contents += src.chat_text
+		src.chat_text = new(null, src)
 
 		for(var/sell_type in concrete_typesof(/datum/commodity/magpie/sell))
 			src.goods_sell += new sell_type(src)

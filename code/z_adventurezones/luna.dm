@@ -711,7 +711,7 @@ Contents:
 					return
 
 
-				if (!(src.neat_things & NT_DISCOUNT) && !isdead(H) && (istype(H.wear_id, /obj/item/card/id) || (istype(H.wear_id, /obj/item/device/pda2) && H.wear_id:ID_card)))
+				if (!(src.neat_things & NT_DISCOUNT) && !isdead(H) && istype(get_id_card(H.wear_id), /obj/item/card/id))
 					FOUND_NEAT(NT_DISCOUNT)
 						speak_with_maptext("Nanotrasen employees may be eligible for an employee discount.  Now checking Museum Central, please hold...")
 						sleep(5.5 SECONDS)
@@ -729,7 +729,7 @@ Contents:
 						END_NEAT
 					return
 
-				if (!(src.neat_things & NT_PONZI) && (locate(/obj/item/spacecash/buttcoin) in AM.contents))
+				if (!(src.neat_things & NT_PONZI) && (locate(/obj/item/currency/spacecash/buttcoin) in AM.contents))
 					FOUND_NEAT(NT_PONZI)
 						speak_with_maptext("Um, I'm sorry [AM], we do not accept blockchain-based cryptocurrency as payment.  You aren't one of those guys who yell about gold on the apollo flag or something, right?")
 						H.unlock_medal("To the Moon!",1)
@@ -864,7 +864,7 @@ Contents:
 		src.icon_state = "bdoor[doordir]0"
 		SPAWN(1 SECOND)
 			src.set_density(0)
-			src.RL_SetOpacity(0)
+			src.set_opacity(0)
 			update_nearby_tiles()
 
 			if(operating == 1) //emag again
@@ -893,7 +893,7 @@ Contents:
 		src.icon_state = "bdoor[doordir]1"
 		src.set_density(1)
 		if (src.visible)
-			src.RL_SetOpacity(1)
+			src.set_opacity(1)
 		update_nearby_tiles()
 
 		sleep(1 SECOND)
@@ -1644,7 +1644,7 @@ datum/computer/file/embedded_program/maintpanel
 			else if (istype(controlTarget, /obj/critter/mannequin))
 				src.device_entries += new /datum/maintpanel_device_entry/mannequin (src, controlTarget, entryName)
 
-		while (src.device_entries.len < 16)
+		while (length(src.device_entries) < 16)
 			src.device_entries += new /datum/maintpanel_device_entry/dummy (src, pick("GEN$$E$C", "MANNEA83IN 13", "M@____$CC DOOR $$S9", "########?3"))
 
 	receive_user_command(command)

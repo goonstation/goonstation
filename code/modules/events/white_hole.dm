@@ -221,7 +221,7 @@
 			/obj/item/seashell = 2,
 			"trenchloot" = 5,
 			"ore" = 5,
-			/obj/critter/shark = 1,
+			/mob/living/critter/aquatic/shark = 1,
 			/obj/critter/gunbot/drone/gunshark = 0.5,
 			/obj/critter/gunbot/drone/buzzdrone/fish = 0.8,
 			/obj/naval_mine/standard = 0.2,
@@ -269,7 +269,7 @@
 		),
 		"asteroid" = list(
 			"ore" = 200,
-			/obj/critter/rockworm = 3,
+			/mob/living/critter/rockworm = 3,
 			/mob/living/critter/fermid = 10,
 			/obj/storage/crate/loot = 2,
 			/obj/storage/crate/loot/puzzle = 2,
@@ -387,7 +387,7 @@
 		"hell" = list(
 			"fireflash" = 15,
 			/obj/hotspot = 10,
-			/obj/critter/lavacrab = 5,
+			/mob/living/critter/small_animal/crab/lava = 5,
 			/obj/submachine/slot_machine = 5,
 			#ifdef SECRETS_ENABLED
 			/obj/critter/slime/magma = 2,
@@ -512,7 +512,7 @@
 			/mob/living/critter/small_animal/cat/jones = 5,
 			/obj/item/clothing/suit/bedsheet/captain = 2,
 			/obj/item/card/id/captains_spare = 0.1,
-			/obj/item/spacecash/random/small = 5,
+			/obj/item/currency/spacecash/small = 5,
 			/obj/item/stamp/hop = 1,
 			/obj/item/stamp/cap = 1,
 			/obj/item/stamp/centcom = 1,
@@ -635,12 +635,12 @@
 			/obj/item/sticker/postit = 0.5,
 		),
 		"cargo" = list(
-			/obj/item/spacecash/five = 10,
-			/obj/item/spacecash/ten = 10,
-			/obj/item/spacecash/twenty = 10,
-			/obj/item/spacecash/fifty = 5,
-			/obj/item/spacecash/hundred = 3,
-			/obj/item/spacecash/fivehundred = 0.3,
+			/obj/item/currency/spacecash/five = 10,
+			/obj/item/currency/spacecash/ten = 10,
+			/obj/item/currency/spacecash/twenty = 10,
+			/obj/item/currency/spacecash/fifty = 5,
+			/obj/item/currency/spacecash/hundred = 3,
+			/obj/item/currency/spacecash/fivehundred = 0.3,
 			/obj/item/paper = 15,
 			/obj/item/paper_bin = 5,
 			/obj/item/hand_labeler = 5,
@@ -1295,6 +1295,7 @@
 
 
 /datum/fishing_spot/whitehole
+	rod_tier_required = 2
 	fishing_atom_type = /obj/whitehole
 
 	generate_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)

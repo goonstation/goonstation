@@ -9,14 +9,22 @@
 	blockGaps = 1
 	msgGain = "Your skin begins to glow softly."
 	msgLose = "Your glow fades away."
+	var/list/color
 
 	OnAdd()
 		..()
-		owner.add_sm_light("glowy", list(rand(25,255), rand(25,255), rand(25,255), 150))
+		src.color = hsv2rgblist(randfloat(0, 360), randfloat(0, 100), 100)
+		src.color += list(50 + 75 * power)
+		owner.add_sm_light("glowy", src.color)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		src.color[4] = 75 + 50 * power
+		owner.add_sm_light("glowy", src.color)
 
 	OnRemove()
 		..()
-		owner.add_sm_light("glowy", list(rand(25,255), rand(25,255), rand(25,255), 150))
+		owner.remove_sm_light("glowy")
 
 /datum/bioEffect/horns
 	name = "Cranial Keratin Formation"
@@ -253,16 +261,10 @@
 
 	OnAdd()
 		. = ..()
-		owner.add_filter("dwarfism", 1, displacement_map_filter(size=src.size, render_source = src.distort.render_target))
-		owner.vis_contents += src.distort
-		src.filter = owner.get_filter("dwarfism")
-		animate(src.filter, size=0, time=0)
-		animate(size=src.size * power, time=0.7 SECONDS, easing=SINE_EASING)
+		src.applyFilter()
 
 	OnRemove()
-		owner.remove_filter("dwarfism")
-		owner.vis_contents -= src.distort
-		src.filter = null
+		src.removeFilter()
 		. = ..()
 
 	disposing()
@@ -270,16 +272,30 @@
 		src.distort = null
 		. = ..()
 
+	// We need to fully remove and remake the filter in these cases because the filter reverts to its original size when the animation is interrupted
+	// by another animation, like scan lines. Can't just animate to the correct size.
 	onVarChanged(variable, oldval, newval)
 		. = ..()
 		if(variable == "size" && src.filter)
-			animate(src.filter, size=0, time=0)
-			animate(size=src.size * power, time=0.7 SECONDS, easing=SINE_EASING)
+			src.removeFilter()
+			src.applyFilter()
 
 	onPowerChange(oldval, newval)
 		. = ..()
+		src.removeFilter()
+		src.applyFilter()
+
+	proc/applyFilter()
+		owner.add_filter("dwarfism", 1, displacement_map_filter(size=src.size * power, render_source = src.distort.render_target))
+		owner.vis_contents += src.distort
+		src.filter = owner.get_filter("dwarfism")
 		animate(src.filter, size=0, time=0)
 		animate(size=src.size * power, time=0.7 SECONDS, easing=SINE_EASING)
+
+	proc/removeFilter()
+		owner.remove_filter("dwarfism")
+		owner.vis_contents -= src.distort
+		src.filter = null
 
 /datum/bioEffect/drunk
 	name = "Ethanol Production"
@@ -350,7 +366,7 @@
 	msgGain = "You begin to sense an odd chemical taste in your mouth."
 	msgLose = "The chemical taste in your mouth fades."
 	occur_in_genepools = 1 //this is going to be very goddamn rare and very fucking difficult to unlock.
-	mob_exclusive = /mob/living/carbon/human/
+	mob_exclusive = /mob/living/carbon/human
 	probability = 1
 	blockCount = 5
 	can_research = 0
@@ -370,7 +386,7 @@
 
 	New()
 		..()
-		if (all_functional_reagent_ids.len > 1)
+		if (length(all_functional_reagent_ids) > 1)
 			reagent_to_add = pick(all_functional_reagent_ids)
 		else
 			reagent_to_add = "water"
@@ -385,7 +401,7 @@
 	stability_loss = 25
 
 	OnLife(var/mult)
-		if (prob(src.change_prob) && all_functional_reagent_ids.len > 1)
+		if (prob(src.change_prob) && length(all_functional_reagent_ids) > 1)
 			reagent_to_add = pick(all_functional_reagent_ids)
 		..()
 

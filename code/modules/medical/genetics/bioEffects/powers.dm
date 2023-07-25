@@ -11,7 +11,6 @@
 	blockGaps = 2
 	stability_loss = 10
 	var/using = 0
-	var/safety = 0
 	var/ability_path = /datum/targetable/geneticsAbility/cryokinesis
 	var/datum/targetable/geneticsAbility/ability = null
 
@@ -51,6 +50,7 @@
 
 	//varedit support for cooldowns
 	onVarChanged(variable, oldval, newval)
+		. = ..()
 		if (variable == "cooldown" && istype(src.ability))
 			src.ability.cooldown = newval
 			src.ability.holder?.updateButtons()
@@ -125,7 +125,7 @@
 	blockGaps = 2
 	stability_loss = 5
 	ability_path = /datum/targetable/geneticsAbility/mattereater
-	var/target_path = /obj/item/
+	var/target_path = /obj/item
 
 /datum/targetable/geneticsAbility/mattereater
 	name = "Matter Eater"
@@ -1246,9 +1246,9 @@
 
 		var/obj/the_object = target
 
-		var/base_path = /obj/item/
+		var/base_path = /obj/item
 		if (linked_power.power > 1)
-			base_path = /obj/
+			base_path = /obj
 
 		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
 
@@ -1292,9 +1292,9 @@
 		if(linked_power.using)
 			return 1
 
-		var/base_path = /obj/item/
+		var/base_path = /obj/item
 		if (linked_power.power > 1)
-			base_path = /obj/
+			base_path = /obj
 
 		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
 		if (!items.len)

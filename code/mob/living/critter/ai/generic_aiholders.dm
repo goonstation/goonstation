@@ -1,32 +1,53 @@
 /* this file is for AI Holders which are used by multiple different critters to reduce code duplication
 if there is otherwise unique behaviour which you add to another mob consider moving it to here */
 
+/// Empty AIholder for when you only want to add things to the prioritizer (such as retaliation tasks)
+/datum/aiHolder/empty
+	New()
+		..()
+		default_task = get_instance(/datum/aiTask/prioritizer/critter/empty, list(src))
+
+/datum/aiTask/prioritizer/critter/empty/New()
+	..()
+
 /// Wanderer
 /datum/aiHolder/wanderer
 	New()
-		. = ..()
-		var/datum/aiTask/timed/wander/W =  get_instance(/datum/aiTask/timed/wander, list(src))
-		W.transition_task = W
-		default_task = W
+		..()
+		default_task = get_instance(/datum/aiTask/prioritizer/critter/wanderer, list(src))
+
+/datum/aiTask/prioritizer/critter/wanderer/New()
+	..()
+	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander, list(src.holder, src))
 
 /// Aggressive Wanderer
-/datum/aiHolder/wanderer_aggressive
+/datum/aiHolder/aggressive
 	New()
 		..()
-		default_task = get_instance(/datum/aiTask/prioritizer/critter/wanderer_aggressive, list(src))
+		default_task = get_instance(/datum/aiTask/prioritizer/critter/aggressive, list(src))
 
-/datum/aiTask/prioritizer/critter/wanderer_aggressive/New()
+/datum/aiTask/prioritizer/critter/aggressive/New()
 	..()
 	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive, list(src.holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(src.holder, src))
 
 /// Agressive Wanderer scavenger
-/datum/aiHolder/wanderer_aggressive/scavenger
+/datum/aiHolder/aggressive/scavenger
 	New()
 		..()
-		default_task = get_instance(/datum/aiTask/prioritizer/critter/wanderer_aggressive/scavenger, list(src))
+		default_task = get_instance(/datum/aiTask/prioritizer/critter/aggressive/scavenger, list(src))
 
-/datum/aiTask/prioritizer/critter/wanderer_aggressive/scavenger/New()
+/datum/aiTask/prioritizer/critter/aggressive/scavenger/New()
 	..()
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/scavenge, list(holder, src))
 
+/// Aggressive wander with ranged attack
+/datum/aiHolder/ranged
+	New()
+		..()
+		default_task = get_instance(/datum/aiTask/prioritizer/critter/ranged, list(src))
+
+/datum/aiTask/prioritizer/critter/ranged/New()
+	..()
+	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive, list(src.holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/range_attack, list(src.holder, src))

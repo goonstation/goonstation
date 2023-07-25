@@ -615,16 +615,15 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	desc = "Radioactive waste produced as a by product of reprocessing fuel. It may still contain some fuel to be extracted."
 	icon = 'icons/misc/reactorcomponents.dmi'
 	icon_state = "waste"
+	default_material = "slag"
 
 	New()
 		. = ..()
-		src.setMaterial(getMaterial("slag"), FALSE, FALSE, TRUE)
 		src.AddComponent(/datum/component/radioactive, 20, FALSE, FALSE, 1)
 
 	ex_act(severity) //blowing up nuclear waste is always a good idea
 		var/turf/current_loc = get_turf(src)
 		var/datum/gas_mixture/leak_gas = new/datum/gas_mixture()
-		leak_gas.vacuum()
 		leak_gas.radgas += 100
 		current_loc.assume_air(leak_gas)
 		qdel(src)
@@ -643,3 +642,19 @@ TYPEINFO(/obj/item/reagent_containers/vape)
     The danger is unleashed only if you substantially disturb this place physically. This place is best shunned and left uninhabited.<br>
 	<br>
 	...spooky!"}
+
+/obj/item/boarvessel
+	name = "\improper Boar Vessel, 600-500 BC, Etruscan, ceramic"
+	desc = "Oh my God! A REAL Boar Vessel, 600-500 BC, Etruscan, ceramic."
+	icon_state = "boarvessel"
+
+	attack_self(mob/user as mob)
+		user.visible_message("<span class='notice'>[user] pets [src]!</span>", "<span class='notice'>You pet [src]!</span>")
+
+/obj/item/boarvessel/forgery
+	name = "\improper Boar Vessel, 600-500 BC, Etruscan, ceramic"
+	desc = "Whatever, it's probably not a REAL Boar Vessel, 600-500 BC, Etruscan, ceramic."
+
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/radioactive, 1, FALSE, FALSE, 1)

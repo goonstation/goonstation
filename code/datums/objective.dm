@@ -51,7 +51,7 @@ ABSTRACT_TYPE(/datum/objective)
 					continue
 				possible_targets += possible_target
 
-		if(possible_targets.len > 0)
+		if(length(possible_targets) > 0)
 			target = pick(possible_targets)
 			target.current.mind.is_target = 1
 
@@ -380,7 +380,7 @@ proc/create_fluff(datum/mind/target)
 	medal_name = "Untapped Potential"
 
 	check_completion()
-		if(ticker.mode.traitors.len + ticker.mode.Agimmicks.len <= 1)
+		if(ticker.mode.traitors.len + length(ticker.mode.Agimmicks) <= 1)
 			return 1 // Because apparently you can get this as a solo traitor aaaaaa
 		for (var/datum/mind/M in ticker.mode.traitors + ticker.mode.Agimmicks)
 			if (!M.current)
@@ -467,7 +467,7 @@ proc/create_fluff(datum/mind/target)
 			for (var/obj/item/device/pda2/PDA in L)
 				if (PDA.ID_card)
 					current_cash += PDA.ID_card.money
-			for (var/obj/item/spacecash/C in L)
+			for (var/obj/item/currency/spacecash/C in L)
 				current_cash += C.amount
 
 		current_cash += data_core.bank.find_record("id", owner.current.datacore_id)?["current_money"] || 0
@@ -760,11 +760,11 @@ proc/create_fluff(datum/mind/target)
 		if (!owner.current || isdead(owner.current))
 			return FALSE
 
-		for (var/datum/mind/mindCheck in get_all_antagonists(ROLE_GANG_LEADER))
-			if (mindCheck == owner)
+		for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists(ROLE_GANG_LEADER))
+			if (antagonist_role.owner == owner)
 				continue
 
-			if (mindCheck?.current && !isdead(mindCheck.current))
+			if (antagonist_role.owner.current && !isdead(antagonist_role.owner.current))
 				return FALSE
 
 		return TRUE
@@ -792,7 +792,7 @@ proc/create_fluff(datum/mind/target)
 		if (!istype(O))
 			return 0
 
-		if (O.blobs.len >= blobtiletarget)
+		if (length(O.blobs) >= blobtiletarget)
 			return 1
 
 /datum/objective/specialist/flock
@@ -851,7 +851,7 @@ proc/create_fluff(datum/mind/target)
 				if(possible_target.current.mind.is_target) continue
 				possible_targets += possible_target
 
-		if(possible_targets.len > 0)
+		if(length(possible_targets) > 0)
 			target = pick(possible_targets)
 			target.current.mind.is_target = 1
 
@@ -1177,7 +1177,7 @@ proc/create_fluff(datum/mind/target)
 					continue
 				possible_targets += possible_target
 
-		if(possible_targets.len > 0)
+		if(length(possible_targets) > 0)
 			target = pick(possible_targets)
 
 		if(!(target?.current))
@@ -1386,7 +1386,7 @@ proc/create_fluff(datum/mind/target)
 					continue
 				possible_targets += possible_target
 
-		if(possible_targets.len > 0)
+		if(length(possible_targets) > 0)
 			target = pick(possible_targets)
 			target.current.mind.is_target = 1
 
@@ -1533,7 +1533,7 @@ proc/create_fluff(datum/mind/target)
 			if(!initial(objective.enabled))
 				src.escape_choices -= X
 
-		if (escape_choices.len > 0)
+		if (length(escape_choices) > 0)
 			var/escape_path = pick(escape_choices)
 			if (ispath(escape_path))
 				var/datum/objective/objective = new escape_path(null, enemy)

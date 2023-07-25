@@ -922,3 +922,91 @@
 			return ""
 		message = pirateify(message)
 		return message
+
+
+/datum/bioEffect/speech/scrambled
+	name = "Fonratl Guyrs Alrtateion Tpye-SC"
+	desc = "Mkaes the lgnauage cnetre of the sbuejct's vicoe to eimt cuirous sntecenes."
+	id = "accent_scrambled"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "Yuo feel lkie yuor vicoe is sramlcbing."
+	msgLose = "Yuo feel yuor vicoe is no lnoger sramlcbing."
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = accent_scramble(message)
+		return message
+
+
+/datum/bioEffect/speech/word_scrambled
+	name = "Alteration Type Frontal Gyrus-WSC"
+	desc = "The to subject's emit the sentences brain language center curious of makes."
+	id = "accent_word_scrambled"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "Words your scrambled out come."
+	msgLose = "Scrambled no longer are your words."
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = accent_shuffle_words(message)
+		return message
+
+
+/datum/bioEffect/speech/mocking
+	name = "FrOnTaL gYrUs AlTeRaTiOn TyPe-Mc"
+	desc = "mAkEs ThE lAnGuAgE cEnTeR oF tHe SuBjEcT's BrAiN tO cOnStRuCt SeNtEnCeS aS mOcKiNg ThE sUbJeCt."
+	id = "accent_mocking"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	occur_in_genepools = FALSE
+	probability = 0
+	msgGain = "YoU fEeL lIkE mOcKiNg pEoPlE."
+	msgLose = "YoU dOn'T fEeL lIkE mOcKiNg pEoPlE aNyMoRe."
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = accent_mocking(message)
+		return message
+
+
+/datum/bioEffect/speech/leetspeak
+	name = "Fr0nT4l Gyrus 4lt3r4t10n TYP3-1337"
+	desc = "Makes you speak the secret language of hackers."
+	id = "accent_hacker"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "Y0u f33l l1k3 4 h4ck3r."
+	msgLose = "You don't feel like a hacker anymore."
+	probability = 15
+	var/leet_chance = 35
+
+	// TODO: maybe apply to PDA messages and robospeak too?
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		var/leet_chance = src.leet_chance
+		leet_chance *= (src.power - 1) * 2 + 1
+		message = accent_hacker(message, leet_chance)
+		return message
+
+/datum/bioEffect/speech/piglatin
+	name = "Frontal Gyrus Alteration Type-Igpay-Atinlay"
+	desc = "Makes you speak like an 8-year-old with something to hide."
+	id = "accent_piglatin"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "ouYay artstay eakingspay inay igpay atinlay."
+	msgLose = "You stop speaking in pig latin."
+	probability = 15
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = accent_piglatin(message)
+		return message

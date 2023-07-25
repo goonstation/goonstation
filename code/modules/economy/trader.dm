@@ -100,16 +100,16 @@
 		return
 
 	attackby(obj/item/I, mob/user)
-		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
-			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
+		var/obj/item/card/id/id_card = get_id_card(I)
+		if (istype(id_card))
 			boutput(user, "<span class='notice'>You swipe the ID card in the card reader.</span>")
 			var/datum/db_record/account = null
-			account = FindBankAccountByName(I:registered)
+			account = FindBankAccountByName(id_card.registered)
 			if(account)
 				var/enterpin = user.enter_pin("Card Reader")
-				if (enterpin == I:pin)
+				if (enterpin == id_card.pin)
 					boutput(user, "<span class='notice'>Card authorized.</span>")
-					src.scan = I
+					src.scan = id_card
 				else
 					boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 					src.scan = null
@@ -339,7 +339,7 @@
 					src.temp = pick(src.successful_sale_dialogue) + "<BR>"
 					src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
 
-					var/value = sold_item(tradetype, sellitem) * src.sellitem.amount
+					var/value = sold_item(tradetype, sellitem, src.sellitem.amount, usr)
 					if(log_trades)
 						logTheThing(LOG_STATION, usr, "sold ([src.sellitem.amount])[sellitem.type] to [src] for [value] at [log_loc(get_turf(src))]")
 					qdel (src.sellitem)
@@ -389,17 +389,16 @@
 	proc/card_scan()
 		if (src.scan) src.scan = null
 		else
-			var/obj/item/I = usr.equipped()
-			if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
-				if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
+			var/obj/item/card/id/id_card = get_id_card(usr.equipped())
+			if (istype(id_card))
 				boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
 				var/datum/db_record/account = null
-				account = FindBankAccountByName(I:registered)
+				account = FindBankAccountByName(id_card.registered)
 				if(account)
 					var/enterpin = usr.enter_pin("Card Reader")
-					if (enterpin == I:pin)
+					if (enterpin == id_card.pin)
 						boutput(usr, "<span class='notice'>Card authorized.</span>")
-						src.scan = I
+						src.scan = id_card
 					else
 						boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
 						src.scan = null
@@ -536,8 +535,8 @@
 	///////////////////////////////////////////////
 	////// special handling for selling an item ///
 	///////////////////////////////////////////////
-	proc/sold_item(datum/commodity/C, obj/S)
-		. = C.price
+	proc/sold_item(datum/commodity/C, obj/S, count, mob/user as mob)
+		. = C.price * count
 
 	///////////////////////////////////
 	////// batch selling - cogwerks ///
@@ -585,11 +584,11 @@
 				for (var/obj/item/sellitem in O.contents)
 					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, sellitem)
 					if(tradetype)
-						cratevalue += sold_item(tradetype, sellitem) * sellitem.amount
+						cratevalue += sold_item(tradetype, sellitem, sellitem.amount, user)
 						qdel(sellitem)
 						sold_string[sellitem.type] += sellitem.amount
 				if(log_trades && length(sold_string))
-					logTheThing(LOG_STATION, usr, "sold ([json_encode(sold_string)]) to [src] for [cratevalue] at [log_loc(get_turf(src))]")
+					logTheThing(LOG_STATION, user, "sold ([json_encode(sold_string)]) to [src] for [cratevalue] at [log_loc(get_turf(src))]")
 				if(cratevalue)
 					boutput(user, "<span class='notice'>[src] takes what they want from [O]. [cratevalue] [currency] have been transferred to your account.</span>")
 					if(account)
@@ -696,14 +695,14 @@
 		var/list/selltypes = typesof(pick(commercetypes))
 		var/list/buytypes = typesof(pick(commercetypes))
 
-		while(selltypes.len > 0 && src.goods_sell.len < items_for_sale)
+		while(length(selltypes) > 0 && length(src.goods_sell) < items_for_sale)
 			var/pickedselltype = pick(selltypes)
 			var/datum/commodity/sellitem = new pickedselltype(src)
 			selltypes -= pickedselltype
 			if(sellitem.comtype != null)
 				src.goods_sell += sellitem
 
-		while(buytypes.len > 0 && src.goods_buy.len < items_wanted)
+		while(length(buytypes) > 0 && length(src.goods_buy) < items_wanted)
 			var/pickedbuytype = pick(buytypes)
 			var/datum/commodity/buyitem = new pickedbuytype(src)
 			buytypes -= pickedbuytype
@@ -716,11 +715,11 @@
 		for(var/turf/T in get_area_turfs( get_area(src) ))
 			for(var/obj/decal/fakeobjects/teleport_pad/D in T)
 				var/N = pick(1,2)
-				var/obj/critter/martian/P = null
+				var/mob/living/critter/martian/P = null
 				if (N == 1)
-					P = new /obj/critter/martian/soldier
+					P = new /mob/living/critter/martian/soldier
 				else
-					P = new /obj/critter/martian/warrior
+					P = new /mob/living/critter/martian/warrior
 				P.set_loc(D.loc)
 				showswirl(P.loc)
 
@@ -787,7 +786,7 @@
 			boutput(M, "<B>[src.name]</B> yells, \"mortigi c^iujn!\"")
 		for(var/turf/T in get_area_turfs( get_area(src) ))
 			for(var/obj/decal/fakeobjects/teleport_pad/D in T)
-				var/obj/critter/martian/soldier/P = new /obj/critter/martian/soldier
+				var/mob/living/critter/martian/soldier/P = new /mob/living/critter/martian/soldier
 				P.set_loc(D.loc)
 				showswirl(P.loc)
 
@@ -1149,6 +1148,7 @@
 		src.goods_sell += new /datum/commodity/sticker/googly_eyes_angry(src)
 		src.goods_sell += new /datum/commodity/toygun(src)
 		src.goods_sell += new /datum/commodity/toygunammo(src)
+		src.goods_sell += new /datum/commodity/clownsabre(src)
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)
 		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)

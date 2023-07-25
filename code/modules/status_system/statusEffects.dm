@@ -372,7 +372,8 @@
 				var/mob/M = mob_owner
 				C.dropped(M)
 				M.u_equip(C)
-			owner.visible_message("<span class='alert'>\The [owner][message]</span>")
+			if (!isnull(src.message))
+				owner.visible_message("<span class='alert'>\The [owner][message]</span>")
 			if (ismob(owner))
 				var/mob/fucko = owner
 				fucko.ghostize()
@@ -961,6 +962,11 @@
 				playsound(owner, sound, 17, 1, 0.4, 1.6)
 				violent_twitch(owner)
 			. = ..(timePassed)
+		onAdd()
+			if(istype(owner, /mob/living/silicon/robot))
+				var/mob/living/silicon/robot/robot = owner
+				robot.lastgasp()
+			. = ..()
 
 	drunk
 		id = "drunk"
@@ -1560,7 +1566,7 @@
 	onUpdate()
 		if (H.blood_volume > 400 && H.blood_volume > 0)
 			H.blood_volume -= units
-		if (prob(5))
+		if (prob(5) && !H.reagents?.has_reagent("promethazine"))
 			var/damage = rand(1,5)
 			var/bleed = rand(3,5)
 			H.visible_message("<span class='alert'>[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span class='alert'>You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
@@ -1716,8 +1722,8 @@
 		if(weighted_average > 4)
 			weighted_average = 0
 		if(probmult(puke_prob))
-			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
-			L.vomit()
+			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			L.vomit(0, null, vomit_message)
 		return ..(timePassed)
 
 	proc/changeState()
@@ -2093,8 +2099,8 @@
 		if(prob(2))
 			L.change_eye_blurry(rand(5,10))
 		if(prob(puke_prob))
-			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
-			L.vomit()
+			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			L.vomit(0, null, vomit_message)
 
 	//firstly: sorry
 	//secondly: second arg is a proportional scale. 1 is standard, 5 is every port-a-puke tick, 10 is mass emesis.
@@ -2334,6 +2340,16 @@
 
 #undef LAUNDERED_COLDPROT_AMOUNT
 #undef LAUNDERED_STAIN_TEXT
+
+/datum/statusEffect/quickcharged
+	id = "quick_charged"
+	name = "Quick charged"
+	icon_state = "stam-"
+	maxDuration = 7 MINUTES
+
+	getTooltip()
+		. = "The recharge upgrade has quickly charged you, this now prevents you from using another one again until it's safe for your battery to quick charge again."
+
 
 /datum/statusEffect/criticalcondition
 	id = "critical_condition"

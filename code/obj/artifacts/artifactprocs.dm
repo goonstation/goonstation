@@ -14,7 +14,7 @@
 	if(forceartitype)
 		picked = forceartitype
 	else
-		if (artifactweights.len == 0)
+		if (length(artifactweights) == 0)
 			return
 		picked = weighted_pick(artifactweights)
 
@@ -99,7 +99,9 @@
 	A.fx_image.icon_state = src.icon_state + "fx"
 	A.fx_image.color = rgb(rand(AO.fx_red_min,AO.fx_red_max),rand(AO.fx_green_min,AO.fx_green_max),rand(AO.fx_blue_min,AO.fx_blue_max))
 	A.fx_image.alpha = rand(AO.fx_alpha_min, AO.fx_alpha_max)
-	A.fx_image.plane = PLANE_ABOVE_LIGHTING
+	A.fx_image.layer = 5
+	A.fx_image.blend_mode = BLEND_ADD
+	A.fx_image.plane = PLANE_LIGHTING
 
 	A.fx_fallback = new
 	A.fx_fallback.icon = src.icon
@@ -145,7 +147,7 @@
 	var/datum/artifact/A = src.artifact
 	if (A.activated)
 		return 1
-	if (A.triggers.len < 1 && !A.automatic_activation)
+	if (length(A.triggers) < 1 && !A.automatic_activation)
 		return 1 // can't activate these ones at all by design
 	if (!A.may_activate(src))
 		return 1
@@ -259,7 +261,7 @@
 			if (K.universal || A.artitype == K.artitype)
 				if (K.activator && !A.activated)
 					src.ArtifactActivated()
-					if(K.corrupting && A.faults.len < 10) // there's only so much corrupting you can do ok
+					if(K.corrupting && length(A.faults) < 10) // there's only so much corrupting you can do ok
 						for(var/i=1,i<rand(1,3),i++)
 							src.ArtifactDevelopFault(100)
 				else if (A.activated)
@@ -484,7 +486,7 @@
 		src.ArtifactStimulus("force", 1)
 		user.visible_message("<b>[user.name]</b> touches [src].")
 		if (istype(src.artifact,/datum/artifact))
-			if (A.touch_descriptors.len > 0)
+			if (length(A.touch_descriptors) > 0)
 				boutput(user, "[pick(A.touch_descriptors)]")
 			else
 				boutput(user, "You can't really tell how it feels.")

@@ -508,7 +508,7 @@
 		if (!istype(T) || !T.can_blob_spread_here(null, null, isadmin(overmind) || overmind.admin_override))
 			return
 
-		var/blob_type = /obj/blob/
+		var/blob_type = /obj/blob
 		if (ispath(src.spread_type))
 			blob_type = src.spread_type
 
@@ -583,6 +583,7 @@
 	fire_coefficient = 0.5
 	poison_coefficient = 0.5
 	poison_depletion = 3
+	anchored = ANCHORED_ALWAYS
 	var/nextAttackMsg = 0
 
 	New()
@@ -1065,7 +1066,7 @@
 	if (!src)
 		return null
 
-	if (src.contents.len < 1)
+	if (length(src.contents) < 1)
 		return null
 
 	for (var/obj/O in src.contents)

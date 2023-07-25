@@ -40,7 +40,7 @@
 				if(user_choice == "Cancel")
 					return
 				if(!(user_choice == "Wrap"))
-					var/a_used = 2 ** (src.w_class - 1)
+					var/a_used = round(2 ** (src.w_class - 1))
 					if (src.amount < a_used)
 						boutput(user, "<span class='notice'>You need more paper!</span>")
 						return
@@ -60,7 +60,7 @@
 			if(istype(W, /obj/item/phone_handset/))
 				boutput(user, "<span class='notice'>You can't wrap that, it has a cord attached!</span>")
 				return
-			var/a_used = 2 ** (src.w_class - 1)
+			var/a_used = round(2 ** (src.w_class - 1))
 			if (src.amount < a_used)
 				boutput(user, "<span class='notice'>You need more paper!</span>")
 				return
@@ -276,7 +276,7 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/pen/crayon/rainbow,
 	/obj/item/storage/box/crayon,
 	/obj/item/device/light/zippo/gold,
-	/obj/item/spacecash/random/really_small,
+	/obj/item/currency/spacecash/really_small,
 	/obj/item/rubberduck,
 	/obj/item/rubber_hammer,
 	/obj/item/bang_gun,
@@ -340,7 +340,7 @@ var/global/list/questionable_generic_gift_paths = list(/obj/item/relic,
 	/obj/item/old_grenade/moustache,
 	/obj/item/clothing/head/oddjob,
 	/obj/item/clothing/mask/anime,
-	/obj/item/clothing/under/gimmick,
+	/obj/item/clothing/under/gimmick/sailor,
 	/obj/item/clothing/suit/armor/sneaking_suit,
 	/obj/item/kitchen/everyflavor_box,
 	/obj/item/medical/bruise_pack/cyborg,
@@ -360,7 +360,7 @@ var/global/list/questionable_generic_gift_paths = list(/obj/item/relic,
 	/obj/item/gun/kinetic/beepsky,
 	/obj/item/gun/kinetic/gungun,
 #endif
-	/obj/item/spacecash/random/small)
+	/obj/item/currency/spacecash/small)
 
 var/global/list/xmas_gift_paths = list(/obj/item/clothing/suit/sweater,
 	/obj/item/clothing/suit/sweater/red,

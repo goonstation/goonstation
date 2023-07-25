@@ -351,8 +351,11 @@ var/bombini_saved
 /obj/machinery/computer/shuttle/attackby(var/obj/item/W, var/mob/user)
 	if(status & (BROKEN|NOPOWER))
 		return
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
+
+	var/obj/item/card/id/id_card = get_id_card(W)
+	if (istype(id_card))
+		W = id_card
+
 	if ((!( istype(W, /obj/item/card) ) || !( ticker ) || emergency_shuttle.location != SHUTTLE_LOC_STATION || !( user )))
 		return
 
@@ -384,7 +387,7 @@ var/bombini_saved
 					boutput(user, "The shuttle is already leaving in less than 60 seconds!")
 					return
 				src.authorized |= W:registered
-				if (src.auth_need - src.authorized.len > 0)
+				if (src.auth_need - length(src.authorized) > 0)
 					boutput(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
 				else
 					boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 60 seconds!</B></span>")

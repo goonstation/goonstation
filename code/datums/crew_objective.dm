@@ -586,7 +586,7 @@ ABSTRACT_TYPE(/datum/objective/crew/engineer)
 	check_completion()
 		if(isnull(check_result))
 			check_result = FALSE
-			if(mechanic_controls.scanned_items.len > 9)
+			if(length(mechanic_controls.scanned_items) > 9)
 				check_result = TRUE
 		return check_result
 /datum/objective/crew/engineer/teleporter
@@ -649,7 +649,7 @@ ABSTRACT_TYPE(/datum/objective/crew/miner)
 					var/datum/ore_cloud_data/OCD = ores[ore]
 					if(OCD.for_sale && OCD.amount)
 						materials |= ore
-			check_result = materials.len >= 10
+			check_result = length(materials) >= 10
 		return check_result
 
 ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
@@ -772,7 +772,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 		if(isnull(check_result))
 			check_result = FALSE
 			for(var/obj/machinery/computer/cloning/C as anything in machine_registry[MACHINES_CLONINGCONSOLES])
-				if(C.records.len > 4)
+				if(length(C.records) > 4)
 					check_result = TRUE
 		return check_result
 /datum/objective/crew/medicaldirector/cyborgs
@@ -863,7 +863,7 @@ ABSTRACT_TYPE(/datum/objective/crew/geneticist)
 		if(isnull(check_result))
 			check_result = FALSE
 			for(var/obj/machinery/computer/cloning/C as anything in machine_registry[MACHINES_CLONINGCONSOLES])
-				if(C.records.len > 4)
+				if(length(C.records) > 4)
 					check_result = TRUE
 		return check_result
 
@@ -987,8 +987,10 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 	check_completion()
 		if(owner.current && !isdead(owner.current) && ishuman(owner.current))
 			var/mob/living/carbon/human/H = owner.current
-			if(in_centcom(H) && H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
-			else return 0
+			if(in_centcom(H) && H.wear_id)
+				var/obj/item/card/id/id_card = get_id_card(H.wear_id)
+				if (istype(id_card) && id_card.registered == H.real_name && !(id_card.assignment in list("Technical Assistant","Staff Assistant","Medical Assistant")))
+					return TRUE
 
 /datum/objective/crew/staffassistant/clown
 	explanation_text = "Escape on the shuttle alive wearing at least one piece of clown clothing."
@@ -1066,8 +1068,10 @@ ABSTRACT_TYPE(/datum/objective/crew/technicalassistant)
 	check_completion()
 		if(owner.current && !isdead(owner.current) && in_centcom(owner.current)) //checking basic stuff - they escaped alive and have an ID
 			var/mob/living/carbon/human/H = owner.current
-			if(H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
-			else return 0
+			if(H.wear_id)
+				var/obj/item/card/id/id_card = get_id_card(H.wear_id)
+				if (istype(id_card) && id_card.registered == H.real_name && !(id_card.assignment in list("Technical Assistant","Staff Assistant","Medical Assistant")))
+					return TRUE
 /datum/objective/crew/technicalassistant/spacesuit
 	explanation_text = "Get your grubby hands on a spacesuit."
 	medal_name = "Vacuum Sealed"
@@ -1090,8 +1094,11 @@ ABSTRACT_TYPE(/datum/objective/crew/medicalassistant)
 	check_completion()
 		if(owner.current && !isdead(owner.current) && in_centcom(owner.current)) //checking basic stuff - they escaped alive and have an ID
 			var/mob/living/carbon/human/H = owner.current
-			if(H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
-			else return 0
+			if(H.wear_id)
+				var/obj/item/card/id/id_card = get_id_card(H.wear_id)
+				if (istype(id_card) && id_card.registered == H.real_name && !(id_card.assignment in list("Technical Assistant","Staff Assistant","Medical Assistant")))
+					return TRUE
+
 /datum/objective/crew/medicalassistant/healself
 	explanation_text = "Make sure you are completely unhurt when the escape shuttle leaves."
 	medal_name = "Smooth Operator"

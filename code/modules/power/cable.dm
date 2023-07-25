@@ -8,7 +8,7 @@
 		return 0
 
 	var/datum/powernet/PN
-	if(powernets && powernets.len >= netnum)
+	if(powernets && length(powernets) >= netnum)
 		PN = powernets[netnum]
 
 	elecflash(src)
@@ -121,6 +121,11 @@
 
 /obj/cable/New(var/newloc, var/obj/item/cable_coil/source)
 	..()
+	#ifdef CHECK_MORE_RUNTIMES
+	// manually varedited cables
+	if(current_state <= GAME_STATE_MAP_LOAD && (d1 != 0 || d2 != 1))
+		CRASH("Cable \ref[src] ([src.x], [src.y], [src.z]) has d1 or d2 set to a non-zero value during map load.")
+	#endif
 	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
 	d1 = text2num( icon_state )
 
@@ -138,7 +143,7 @@
 	// but show if in space
 	if(istype(T, /turf/space) && !istype(T,/turf/space/fluid))
 		hide(0)
-	else if(level==1)
+	else if(level==UNDERFLOOR)
 		hide(T.intact)
 
 	//cableimg = image(src.icon, src.loc, src.icon_state)
@@ -170,7 +175,7 @@
 	..()													// then go ahead and delete the cable
 
 /obj/cable/hide(var/i)
-	if(level == 1)// && istype(loc, /turf/simulated))
+	if(level == UNDERFLOOR)// && istype(loc, /turf/simulated))
 		invisibility = i ? INVIS_ALWAYS : INVIS_NONE
 	UpdateIcon()
 
@@ -184,7 +189,7 @@
 /// returns the powernet this cable belongs to
 /obj/cable/proc/get_powernet()
 	var/datum/powernet/PN			// find the powernet
-	if(netnum && powernets && powernets.len >= netnum)
+	if(netnum && powernets && length(powernets) >= netnum)
 		PN = powernets[netnum]
 	if (isnull(PN) && netnum)
 		CRASH("Attempted to get powernet number [netnum] but it was null.")
@@ -322,7 +327,7 @@
 			var/datum/powernet/P2 = cable_d2.get_powernet()
 			src.netnum = cable_d1.netnum
 			P1.cables += src
-			if(P1.cables.len <= P2.cables.len)
+			if(length(P1.cables) <= P2.cables.len)
 				P1.join_to(P2)
 			else
 				P2.join_to(P1)
@@ -348,7 +353,7 @@
 		for (var/obj/machinery/power/M in T.contents)
 			if(M.directwired)
 				continue
-			if(M.netnum == 0 || powernets[M.netnum].cables.len == 0)
+			if(M.netnum == 0 || length(powernets[M.netnum].cables) == 0)
 				if(M.netnum)
 					M.powernet.nodes -= M
 					M.powernet.data_nodes -= M
@@ -365,7 +370,7 @@
 		for (var/obj/machinery/power/M in T1.contents)
 			if(!M.directwired)
 				continue
-			if(M.netnum == 0 || powernets[M.netnum].cables.len == 0)
+			if(M.netnum == 0 || length(powernets[M.netnum].cables) == 0)
 				if(M.netnum)
 					M.powernet.nodes -= M
 					M.powernet.data_nodes -= M
@@ -382,7 +387,7 @@
 		for (var/obj/machinery/power/M in T2.contents)
 			if(!M.directwired || M.netnum == -1) // APCs have -1 and don't connect directly
 				continue
-			if(M.netnum == 0 || powernets[M.netnum].cables.len == 0)
+			if(M.netnum == 0 || length(powernets[M.netnum].cables) == 0)
 				if(M.netnum)
 					M.powernet.nodes -= M
 					M.powernet.data_nodes -= M

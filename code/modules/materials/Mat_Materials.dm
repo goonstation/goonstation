@@ -501,12 +501,13 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "spacelag"
 	name = "spacelag"
 	desc = "*BUFFERING*"
-	color = "#0F0A08"
+	color = "#3F3A38"
 
 	New()
 		..()
 		setProperty("density", 8)
 		setProperty("hard", 1)
+		addTrigger(triggersOnAdd, new /datum/materialProc/spacelag_add())
 
 
 /datum/material/metal/iridiumalloy

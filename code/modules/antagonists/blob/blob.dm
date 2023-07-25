@@ -1,8 +1,9 @@
-/datum/antagonist/intangible/blob
+/datum/antagonist/mob/intangible/blob
 	id = ROLE_BLOB
 	display_name = "blob"
 	antagonist_icon = "blob"
-	intangible_mob_path = /mob/living/intangible/blob_overmind
+	mob_path = /mob/living/intangible/blob_overmind
+	uses_pref_name = FALSE
 
 	/// All mobs absorbed by this blob.
 	var/list/mob/absorbed_victims = list()
@@ -31,6 +32,9 @@
 
 		. = ..()
 
+	relocate()
+		var/mob/M = src.owner.current
+		M.set_loc(pick_landmark(LANDMARK_BLOBSTART))
 
 	assign_objectives()
 		new /datum/objective_set/blob(src.owner, src)

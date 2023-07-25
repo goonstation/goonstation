@@ -1,9 +1,9 @@
-/obj/item/spacecash
-	name = "1 credit"
-	real_name = "credit"
-	desc = "You gotta have money."
+/obj/item/currency
+	name = "1 coin"
+	real_name = "coins"
+	desc = "Coins for the coin god. You shouldn't be seeing this."
 	icon = 'icons/obj/items/items.dmi'
-	icon_state = "cashgreen"
+	icon_state = "coin"
 	uses_multiple_icon_states = 1
 	opacity = 0
 	density = 0
@@ -18,11 +18,11 @@
 	burn_output = 750
 	amount = 1
 	max_stack = 1000000
-	stack_type = /obj/item/spacecash // so all cash types can stack iwth each other
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
 	inventory_counter_enabled = 1
+	var/display_name = "currency"
 	var/default_min_amount = 0
 	var/default_max_amount = 0
 
@@ -30,6 +30,11 @@
 		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
 		src.amount = max(amt,default_amount) //take higher
 		..(loc)
+		src.UpdateStackAppearance()
+
+	proc/set_amt(amt = 1)
+		var/default_amount = rand(default_min_amount, default_max_amount)
+		src.amount = max(amt,default_amount)
 		src.UpdateStackAppearance()
 
 	proc/setup(var/atom/L, var/amt = 1 as num, try_add_to_storage = FALSE)
@@ -42,10 +47,58 @@
 				src.set_loc(L)
 		set_amt(amt)
 
-	proc/set_amt(var/amt = 1 as num)
-		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
-		src.amount = max(amt,default_amount)
+	UpdateName()
+		src.name = "[src.amount == src.max_stack ? "1000000" : src.amount] [name_prefix(null, 1)][src.real_name][s_es(src.amount)][name_suffix(null, 1)]"
+
+	before_stack(atom/movable/O as obj, mob/user as mob)
+		user.visible_message("<span class='notice'>[user] is stacking [display_name]!</span>")
+
+	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
+		boutput(user, "<span class='notice'>You finish stacking [display_name].</span>")
+
+	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
+		boutput(user, "<span class='alert'>You need another stack!</span>")
+
+	attackby(var/obj/item/I, mob/user)
+		if (istype(I, /obj/item/currency) && src.amount < src.max_stack)
+
+			user.visible_message("<span class='notice'>[user] stacks some [display_name].</span>")
+			stack_item(I)
+		else
+			..(I, user)
+
+	attack_hand(mob/user)
+		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
+			var/amt = round(input("How much [display_name] do you want to take from the stack?") as null|num)
+			if (isnum_safe(amt) && src.loc == user && !user.equipped())
+				if (amt > src.amount || amt < 1)
+					boutput(user, "<span class='alert'>You wish!</span>")
+					return
+				var/young_money = split_stack(amt)
+				user.put_in_hand_or_drop(young_money)
+		else
+			..(user)
+
+	onMaterialChanged()
+		. = ..()
+		if(src.amount > 1)
+			src.visible_message("[src] melds together into a single item. What?")
+			src.desc += " It looks all melted together or something."
+			src.change_stack_amount(-(src.amount-1))
+			UpdateStackAppearance()
+
+/obj/item/currency/spacecash
+	name = "1 credit"
+	real_name = "credit"
+	desc = "You gotta have money."
+	icon_state = "cashgreen"
+	stack_type = /obj/item/currency/spacecash // so all cash types can stack with each other
+	display_name = "cash"
+
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		src.amount = max(1, passed_genes?.get_effective_value("potency") * rand(2,4))
 		src.UpdateStackAppearance()
+		return src
 
 	_update_stack_appearance()
 		src.UpdateName()
@@ -64,192 +117,126 @@
 			else // 1mil bby
 				src.icon_state = "cashrbow"
 
-	UpdateName()
-		src.name = "[src.amount == src.max_stack ? "1000000" : src.amount] [name_prefix(null, 1)][src.real_name][s_es(src.amount)][name_suffix(null, 1)]"
+	buttcoin
+		name = "buttcoin"
+		desc = "The crypto-currency of the future (If you don't pay for your own electricity and got in early and don't lose the file and don't want transactions to be faster than half an hour and . . .)"
+		icon_state = "cashblue"
 
-	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span class='notice'>[user] is stacking cash!</span>")
+		New()
+			..()
+			processing_items |= src
 
-	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span class='notice'>You finish stacking cash.</span>")
+		_update_stack_appearance()
+			return
 
-	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span class='alert'>You need another stack!</span>")
+		UpdateName()
+			src.name = "[src.amount] [name_prefix(null, 1)][pick("bit","butt","shitty-bill ","bart", "bat", "bet", "bot")]coin[s_es(src.amount)][name_suffix(null, 1)]"
 
-	attackby(var/obj/item/I, mob/user)
-		if (istype(I, /obj/item/spacecash) && src.amount < src.max_stack)
-			if (istype(I, /obj/item/spacecash/buttcoin))
+		process()
+			src.amount = rand(1, 1000) / rand(10, 1000)
+			if (prob(25))
+				src.amount *= (rand(1,100)/100)
+
+			if (prob(5))
+				src.amount *= 10000
+
+			src.UpdateName()
+
+		attack_hand(mob/user)
+			if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
+				var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
+				if (isnum_safe(amt))
+					if (amt > src.amount || amt < 1)
+						boutput(user, "<span class='alert'>You wish!</span>")
+						return
+
+					boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
+			else
+				..()
+
+		attackby(var/obj/item/I, mob/user)
+			if (istype(I, /obj/item/currency/spacecash/buttcoin) && src.amount < src.max_stack)
 				boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
-				return
+			else
+				..(I, user)
 
-			user.visible_message("<span class='notice'>[user] stacks some cash.</span>")
-			stack_item(I)
-		else
-			..(I, user)
-
-	attack_hand(mob/user)
-		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
-			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
-			if (isnum_safe(amt) && src.loc == user && !user.equipped())
-				if (amt > src.amount || amt < 1)
-					boutput(user, "<span class='alert'>You wish!</span>")
-					return
-				change_stack_amount( 0 - amt )
-				var/obj/item/spacecash/young_money = new /obj/item/spacecash
-				young_money.setup(user.loc, amt)
-				young_money.Attackhand(user)
-		else
-			..(user)
-
-	onMaterialChanged()
-		. = ..()
-		if(src.amount > 1)
-			src.visible_message("[src] melds together into a single credit. What?")
-			src.desc += " It looks all melted together or something."
-			src.change_stack_amount(-(src.amount-1))
-			UpdateStackAppearance()
-
-//	attack_self(mob/user as mob)
-//		user.visible_message("fart")
-
-/obj/item/spacecash/five
-	default_min_amount = 5
-	default_max_amount = 5
-
-/obj/item/spacecash/ten
-	default_min_amount = 10
-	default_max_amount = 10
-
-/obj/item/spacecash/twenty
-	default_min_amount = 20
-	default_max_amount = 20
-
-/obj/item/spacecash/fifty
-	default_min_amount = 50
-	default_max_amount = 50
-
-/obj/item/spacecash/hundred
-	default_min_amount = 100
-	default_max_amount = 100
-
-/obj/item/spacecash/fivehundred
-	default_min_amount = 500
-	default_max_amount = 500
-
-/obj/item/spacecash/thousand
-	default_min_amount = 1000
-	default_max_amount = 1000
-
-/obj/item/spacecash/hundredthousand
-	default_min_amount = 100000
-	default_max_amount = 100000
-
-/obj/item/spacecash/million
-	default_min_amount = 1000000
-	default_max_amount = 1000000
-
-/obj/item/spacecash/random
-	default_min_amount = 1
-	default_max_amount = 1000000
-
-// That's what tourists spawn with.
-/obj/item/spacecash/random/tourist
-	default_min_amount = 500
-	default_max_amount = 1500
-
-// for couches
-/obj/item/spacecash/random/small
-	default_min_amount = 1
-	default_max_amount = 500
-
-/obj/item/spacecash/random/really_small
-	default_min_amount = 1
-	default_max_amount = 50
-
-/obj/item/spacecash/buttcoin
-	name = "buttcoin"
-	desc = "The crypto-currency of the future (If you don't pay for your own electricity and got in early and don't lose the file and don't want transactions to be faster than half an hour and . . .)"
-	icon_state = "cashblue"
-
-	New()
-		..()
-		processing_items |= src
-
-	_update_stack_appearance()
-		return
-
-	UpdateName()
-		src.name = "[src.amount] [name_prefix(null, 1)][pick("bit","butt","shitty-bill ","bart", "bat", "bet", "bot")]coin[s_es(src.amount)][name_suffix(null, 1)]"
-
-	process()
-		src.amount = rand(1, 1000) / rand(10, 1000)
-		if (prob(25))
-			src.amount *= (rand(1,100)/100)
-
-		if (prob(5))
-			src.amount *= 10000
-
-		src.UpdateName()
-
-	attack_hand(mob/user)
-		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
-			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
-			if (isnum_safe(amt))
-				if (amt > src.amount || amt < 1)
-					boutput(user, "<span class='alert'>You wish!</span>")
-					return
-
-				boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
-		else
+		disposing()
+			processing_items.Remove(src)
 			..()
 
-	attackby(var/obj/item/I, mob/user)
-		if (istype(I, /obj/item/spacecash) && src.amount < src.max_stack)
-			boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
-		else
-			..(I, user)
+	five
+		default_min_amount = 5
+		default_max_amount = 5
 
-	disposing()
-		processing_items.Remove(src)
-		..()
+	ten
+		default_min_amount = 10
+		default_max_amount = 10
 
+	twenty
+		default_min_amount = 20
+		default_max_amount = 20
 
+	fifty
+		default_min_amount = 50
+		default_max_amount = 50
 
-/obj/item/spacecash/bag // hufflaw cashbags
-	New(var/atom/loc)
-		..(loc)
-		amount = rand(1,10000)
-		name = "money bag"
-		desc = "Loadsamoney!"
-		icon = 'icons/obj/items/items.dmi'
-		icon_state = "moneybag"
-		item_state = "moneybag"
-		inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	hundred
+		default_min_amount = 100
+		default_max_amount = 100
 
+	fivehundred
+		default_min_amount = 500
+		default_max_amount = 500
 
+	thousand
+		default_min_amount = 1000
+		default_max_amount = 1000
 
-/obj/item/spacebux // Not space cash. Actual spacebux. Wow.
+	hundredthousand
+		default_min_amount = 100000
+		default_max_amount = 100000
+
+	million
+		default_min_amount = 1000000
+		default_max_amount = 1000000
+
+	random
+		default_min_amount = 1
+		default_max_amount = 1000000
+
+// That's what tourists spawn with.
+	tourist
+		default_min_amount = 500
+		default_max_amount = 1500
+
+// for couches
+	small
+		default_min_amount = 1
+		default_max_amount = 500
+
+	really_small
+		default_min_amount = 1
+		default_max_amount = 50
+
+	bag // hufflaw cashbags
+		New(var/atom/loc)
+			..(loc)
+			amount = rand(1,10000)
+			name = "money bag"
+			desc = "Loadsamoney!"
+			icon = 'icons/obj/items/items.dmi'
+			icon_state = "moneybag"
+			item_state = "moneybag"
+			inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+
+/obj/item/currency/spacebux // Not space cash. Actual spacebux. Wow.
 	name = "\improper Spacebux token"
-	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spacebux_gray"
 	desc = "A Spacebux token, neat! You can insert this into an ATM to add it to your account."
-
 	amount = 0
 	var/spent = 0
-
-	opacity = 0
-	density = 0
-	anchored = UNANCHORED
-	force = 1
-	throwforce = 1
-	throw_speed = 1
-	throw_range = 8
-	w_class = W_CLASS_TINY
-	burn_possible = 0
-	amount = 1
-	max_stack = 1000000
-	stack_type = /obj/item/spacebux
-
+	stack_type = /obj/item/currency/spacebux
+	display_name = "spacebux"
 
 	New(var/atom/loc, var/amt = null)
 		..(loc)
@@ -261,11 +248,11 @@
 	get_desc()
 		. += "This one is worth [amount >= 1000000 ? "ONE FUCKING GOD DAMN MILLION" : amount] spacebux."
 
-	proc/setup(var/atom/L, var/amt = 1 as num)
+	setup(atom/L, amt = 1)
 		set_loc(L)
 		set_amt(amt)
 
-	proc/set_amt(var/amt = 1 as num)
+	set_amt(amt = 1)
 		tooltip_rebuild = 1
 		src.amount = amt
 		src.UpdateStackAppearance()
@@ -311,43 +298,20 @@
 			src.name = "\improper [src.amount] [initial(src.name)]"
 			src.desc = initial(src.desc)
 
-	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span class='notice'>[user] is stacking spacebux!</span>")
-
-	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span class='notice'>You finish stacking spacebux.</span>")
-
-	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span class='alert'>You need another stack!</span>")
-
 	attackby(var/obj/item/I, mob/user)
-		if (istype(I, /obj/item/spacebux) && src.spent == 0)
+		if (istype(I, /obj/item/currency/spacebux) && src.spent == 0)
 			user.visible_message("<span class='notice'>[user] stacks some spacebux.</span>")
 			stack_item(I)
 		else
 			..(I, user)
 
 	check_valid_stack(atom/movable/O as obj)
-		if (istype(O, /obj/item/spacebux))
+		if (istype(O, /obj/item/currency/spacebux))
 			// Immediately fail if it's been spent already
-			var/obj/item/spacebux/SB = O
+			var/obj/item/currency/spacebux/SB = O
 			if (src.spent || SB.spent)
 				return 0
 		return ..()
-
-	attack_hand(mob/user)
-		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
-			var/amt = round(input("How much spacebux do you want to split from the token?") as null|num)
-			if (isnum_safe(amt) && src.loc == user && !user.equipped())
-				if (amt > src.amount || amt < 1)
-					boutput(user, "<span class='alert'>You wish!</span>")
-					return
-				change_stack_amount( 0 - amt )
-				var/obj/item/spacebux/new_token = new
-				new_token.setup(user.loc, amt)
-				user.put_in_hand_or_drop(new_token)
-		else
-			..(user)
 
 	ten
 		amount = 10
@@ -365,6 +329,8 @@
 		amount = 1000
 
 //not a good spot for this but idc
+TYPEINFO(/obj/item/stamped_bullion)
+	mat_appearances_to_ignore = list("gold")
 /obj/item/stamped_bullion //*not* a material piece - therefore doesn't stack, needs to be refined, etc. etc. etc.
 	name = "stamped bullion"
 	desc = "Oh wow! This stuff's got to be worth a lot of money!"
@@ -372,60 +338,15 @@
 	icon_state = "stamped_gold"
 	force = 4
 	throwforce = 6
+	mat_changename = FALSE
+	default_material = "gold"
 
-	New()
-		. = ..()
-		src.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)
-
-
-/obj/item/fakecash // im the king of bad ideas
+/obj/item/currency/fakecash // im the king of bad ideas
 	name = "1 discount credit"
 	real_name = "discount credit"
 	desc = "You gotta have mon- Wait why does this say Discount Dan's Genuine Authentic Credit-like Currency?"
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "cashgreen"
-	uses_multiple_icon_states = 1
-	opacity = 0
-	density = 0
-	anchored = UNANCHORED
-	force = 1
-	throwforce = 1
-	throw_speed = 1
-	throw_range = 8
-	w_class = W_CLASS_TINY
-	burn_point = 400
-	burn_possible = 2
-	burn_output = 750
-	amount = 1
-	max_stack = 1000000
-	stack_type = /obj/item/fakecash // so all FAKE cash types can stack iwth each other
-	stamina_damage = 0
-	stamina_cost = 0
-	stamina_crit_chance = 1
-	inventory_counter_enabled = 1
-	var/default_min_amount = 0
-	var/default_max_amount = 0
-
-	New(var/atom/loc, var/amt = 1 as num)
-		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
-		src.amount = max(amt,default_amount) //take higher
-		..(loc)
-		src.UpdateStackAppearance()
-
-	proc/setup(var/atom/L, var/amt = 1 as num, try_add_to_storage = FALSE)
-		if (!try_add_to_storage)
-			set_loc(L)
-		else
-			if (L.storage)
-				L.storage.add_contents(src)
-			else
-				src.set_loc(L)
-		set_amt(amt)
-
-	proc/set_amt(var/amt = 1 as num)
-		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
-		src.amount = max(amt,default_amount)
-		src.UpdateStackAppearance()
+	stack_type = /obj/item/currency/fakecash // so all FAKE cash types can stack with each other
+	display_name = "cash"
 
 	_update_stack_appearance()
 		src.UpdateName()
@@ -444,91 +365,106 @@
 			else // 1mil bby
 				src.icon_state = "cashrbow"
 
-	UpdateName()
-		src.name = "[src.amount == src.max_stack ? "1000000" : src.amount] [name_prefix(null, 1)][src.real_name][s_es(src.amount)][name_suffix(null, 1)]"
+	five
+		name = "5 discount credits" //names are so they show up correctly in vendors and stuff
+		default_min_amount = 5
+		default_max_amount = 5
 
-	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span class='notice'>[user] is stacking cash!</span>")
+	ten
+		name = "10 discount credits"
+		default_min_amount = 10
+		default_max_amount = 10
 
-	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span class='notice'>You finish stacking cash.</span>")
+	twenty
+		name = "20 discount credits"
+		default_min_amount = 20
+		default_max_amount = 20
 
-	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span class='alert'>You need another stack!</span>")
+	fifty
+		name = "50 discount credits"
+		default_min_amount = 50
+		default_max_amount = 50
+
+	hundred
+		name = "100 discount credits"
+		default_min_amount = 100
+		default_max_amount = 100
+
+	fivehundred
+		name = "500 discount credits"
+		default_min_amount = 500
+		default_max_amount = 500
+
+	thousand
+		name = "1000 discount credits"
+		default_min_amount = 1000
+		default_max_amount = 1000
+
+	hundredthousand
+		name = "100000 discount credits"
+		default_min_amount = 100000
+		default_max_amount = 100000
+
+	million
+		name = "1000000 discount credits"
+		default_min_amount = 1000000
+		default_max_amount = 1000000
+
+
+/obj/item/currency/fishing
+	name = "1 research ticket"
+	real_name = "research ticket"
+	icon_state = "fish_common"
+	layer = 4.5
+	desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor."
+	stack_type = /obj/item/currency/fishing // so all fishing tokens stack
+	default_min_amount = 1
+	default_max_amount = 1
+	display_name = "research tickets"
+
+	_update_stack_appearance()
+		src.UpdateName()
+		src.inventory_counter.update_number(src.amount)
+		switch (src.amount)
+			if (-INFINITY to 1)
+				src.icon_state = "fish_common"
+			if (1 to 2)
+				src.icon_state = "fish_uncommon"
+			if (2 to 3)
+				src.icon_state = "fish_rare"
+			if (3 to 4)
+				src.icon_state = "fish_epic"
+			else
+				src.icon_state = "fish_legendary"
 
 	attackby(var/obj/item/I, mob/user)
-		if (istype(I, /obj/item/fakecash) && src.amount < src.max_stack)
-			user.visible_message("<span class='notice'>[user] stacks some cash.</span>")
+		if (istype(I, /obj/item/currency/fishing) && src.amount < src.max_stack)
+
+			user.visible_message("<span class='notice'>[user] stacks some tickets.</span>")
 			stack_item(I)
 		else
 			..(I, user)
 
-	attack_hand(mob/user)
-		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
-			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
-			if (isnum_safe(amt) && src.loc == user && !user.equipped())
-				if (amt > src.amount || amt < 1)
-					boutput(user, "<span class='alert'>You wish!</span>")
-					return
-				change_stack_amount( 0 - amt )
-				var/obj/item/fakecash/young_money = new /obj/item/fakecash
-				young_money.setup(user.loc, amt)
-				young_money.Attackhand(user)
-		else
-			..(user)
+	uncommon
+		name = "uncommon research ticket"
+		icon_state = "fish_uncommon"
+		default_min_amount = 2
+		default_max_amount = 2
 
-	onMaterialChanged()
-		. = ..()
-		if(src.amount > 1)
-			src.visible_message("[src] melds together into a single credit. What?")
-			src.desc += " It looks all melted together or something."
-			src.change_stack_amount(-(src.amount-1))
-			UpdateStackAppearance()
+	rare
+		name = "rare research ticket"
+		icon_state = "fish_rare"
+		default_min_amount = 3
+		default_max_amount = 3
 
-//	attack_self(mob/user as mob)
-//		user.visible_message("fart")
+	epic
+		name = "epic research ticket"
+		icon_state = "fish_epic"
+		default_min_amount = 4
+		default_max_amount = 4
 
-/obj/item/fakecash/five
-	name = "5 discount credits" //names are so they show up correctly in vendors and stuff
-	default_min_amount = 5
-	default_max_amount = 5
-
-/obj/item/fakecash/ten
-	name = "10 discount credits"
-	default_min_amount = 10
-	default_max_amount = 10
-
-/obj/item/fakecash/twenty
-	name = "20 discount credits"
-	default_min_amount = 20
-	default_max_amount = 20
-
-/obj/item/fakecash/fifty
-	name = "50 discount credits"
-	default_min_amount = 50
-	default_max_amount = 50
-
-/obj/item/fakecash/hundred
-	name = "100 discount credits"
-	default_min_amount = 100
-	default_max_amount = 100
-
-/obj/item/fakecash/fivehundred
-	name = "500 discount credits"
-	default_min_amount = 500
-	default_max_amount = 500
-
-/obj/item/fakecash/thousand
-	name = "1000 discount credits"
-	default_min_amount = 1000
-	default_max_amount = 1000
-
-/obj/item/fakecash/hundredthousand
-	name = "100000 discount credits"
-	default_min_amount = 100000
-	default_max_amount = 100000
-
-/obj/item/fakecash/million
-	name = "1000000 discount credits"
-	default_min_amount = 1000000
-	default_max_amount = 1000000
+	legendary
+		name = "legendary research ticket"
+		icon_state = "fish_legendary"
+		default_min_amount = 5
+		default_max_amount = 5

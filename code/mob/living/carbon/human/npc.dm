@@ -1,6 +1,5 @@
 
 #define IS_NPC_HATED_ITEM(x) ( \
-		istype(x, /obj/item/clothing/suit/straight_jacket) || \
 		istype(x, /obj/item/handcuffs) || \
 		istype(x, /obj/item/device/radio/electropack) || \
 		x:block_vision \
@@ -581,6 +580,12 @@
 			throw_equipped |= prob(80)
 		else if(length(I.storage.get_contents()))
 			var/obj/item/taken = pick(I.storage.get_contents())
+			if(taken.anchored) //Item anchored inside storage. AI shouldnt be able to take it out component. "MechComp"
+				return
+			if(istype(I, /obj/item/storage/mechanics)) //Checks if mech cover is closed if so ignore items inside.
+				var/obj/item/storage/mechanics/mechitem = I
+				if(!mechitem.open)
+					return
 			src.u_equip(I)
 			I.set_loc(src.loc)
 			I.dropped(src)

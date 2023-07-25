@@ -69,9 +69,9 @@ client/proc/replace_space()
 		L = concrete_typesof(/datum/reagent)
 
 	var/type = 0
-	if(L.len == 1)
+	if(length(L) == 1)
 		type = L[1]
-	else if(L.len > 1)
+	else if(length(L) > 1)
 		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
 	else
 		usr.show_text("No reagents matching that name", "red")
@@ -112,9 +112,9 @@ client/proc/replace_space_exclusive()
 		L = concrete_typesof(/datum/reagent)
 
 	var/type = 0
-	if(L.len == 1)
+	if(length(L) == 1)
 		type = L[1]
-	else if(L.len > 1)
+	else if(length(L) > 1)
 		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
 	else
 		usr.show_text("No reagents matching that name", "red")
@@ -176,6 +176,7 @@ client/proc/replace_space_exclusive()
 			LAGCHECK(LAG_REALTIME)
 #endif
 
+		remove_all_parallax_layers()
 		message_admins("Finished space replace!")
 		map_currently_underwater = 1
 
@@ -209,11 +210,13 @@ client/proc/dereplace_space()
 					var/turf/orig = locate(F.x, F.y, F.z)
 					orig.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 				LAGCHECK(LAG_REALTIME)
+			restore_parallax_layers_to_default(Z_LEVEL_STATION)
 		else
 			for(var/turf/space/fluid/F in world)
 				var/turf/orig = locate(F.x, F.y, F.z)
 				orig.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 				LAGCHECK(LAG_REALTIME)
+			restore_parallax_layers_to_default()
 
 		message_admins("Finished space dereplace!")
 		map_currently_underwater = 0

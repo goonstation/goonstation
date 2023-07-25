@@ -76,6 +76,7 @@
 		//If there's an existing target we should clean up after ourselves
 		if(src.target == target)
 			return //No sense in doing all this if we're not changing targets
+
 		if(src.target)
 			var/mob/living/M = src.target
 			src.target = null

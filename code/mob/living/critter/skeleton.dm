@@ -25,7 +25,6 @@
 
 	return produce
 
-
 /mob/living/critter/skeleton
 	name = "skeleton"
 	real_name = "skeleton"
@@ -49,12 +48,12 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/aggressive
 	skinresult = /obj/item/material_piece/bone
 	add_abilities = list(/datum/targetable/critter/tackle)
 	max_skins = 3
-	var/list/friends //! People this skeleton won't attack
-	var/wizardSpawn = FALSE
+	no_stamina_stuns = TRUE
+	var/hatcount = 1
 	var/revivalChance = 0 // Chance to revive when killed, out of 100. Wizard spell will set to 100, defaults to 0 because skeletons appear in telesci/other sources
 	var/revivalDecrement = 20 // Decreases revival chance each successful revival. Set to 0 and revivalChance=100 for a permanently reviving skeleton
 
@@ -88,7 +87,7 @@
 		equipment += new /datum/equipmentHolder/ears(src)
 		var/list/hats = list(new /datum/equipmentHolder/head/skeleton(src))
 		equipment += hats[1]
-		for (var/i = 1, i <= 10, i++)
+		for (var/i = 1, i <= hatcount, i++)
 			var/datum/equipmentHolder/head/skeleton/S = hats[i]
 			var/datum/equipmentHolder/head/skeleton/S1 = S.spawn_next()
 			hats += S1
@@ -111,11 +110,8 @@
 		add_hh_flesh_burn(src.health_burn, src.health_brute_vuln)
 
 	valid_target(mob/living/C)
-		if (C in src.friends) return FALSE //TODO replace with the faction system
-		if (iswizard(C) && src.wizardSpawn) return FALSE
+		if (istype(C, /mob/living/critter/skeleton)) return FALSE
 		return ..()
-
-	seek_target(var/range = 6)
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
@@ -137,31 +133,26 @@
 			src.gib()
 		return ..()
 
-
 	proc/CustomiseSkeleton(var/mob/living/carbon/human/target, var/is_monkey)
 		src.name = "[capitalize(target)]'s skeleton"
 		src.desc = "A horrible skeleton, raised from the corpse of [target] by a wizard."
 		src.revivalChance = 100
-		src.wizardSpawn = TRUE
+		src.faction = FACTION_WIZARD
 
 		if (is_monkey)
 			icon = 'icons/mob/monkey.dmi'
+
+/mob/living/critter/skeleton/multihat
+	hatcount = 10
 
 /mob/living/critter/skeleton/wraith
 	desc = "It looks rather crumbly."
 	icon = 'icons/mob/human_decomp.dmi'
 	icon_state = "decomp4"
-	faction = MOB_AI_FACTION_WRAITH
 	health_brute = 15
 	health_burn = 15
 
-	valid_target(mob/living/C)
-		if (islivingobject(C)) return FALSE //don't attack wraith objects TODO replace with faction system
-		if (istype(C, /mob/living/critter/wraith)) return FALSE // don't attack wraith summons ^^
-		if (istype(C, /mob/living/critter/skeleton)) return FALSE // ^^
-		return ..()
-
-	seek_target(var/range = 7)
+	faction = FACTION_WRAITH
 
 	death()
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, get_turf(src)))

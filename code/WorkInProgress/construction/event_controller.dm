@@ -334,7 +334,7 @@
 /datum/construction_event/siege/rockworm
 	name = "Siege?"
 	warning_text = "We are under attack by the Space Rock Worm Federation!"
-	attacker_types = list(/obj/critter/rockworm)
+	attacker_types = list(/mob/living/critter/rockworm)
 	original_size = 20
 	original_bosses = 0
 	is_abstract = 0
@@ -350,8 +350,8 @@
 /datum/construction_event/siege/martian
 	name = "Martian Siege"
 	warning_text = "We are under attack by a martian siege force!"
-	attacker_types = list(/obj/critter/martian/warrior, /obj/critter/martian/soldier)
-	bosses = list(/obj/critter/martian/psychic/weak, /obj/critter/martian/sapper)
+	attacker_types = list(/mob/living/critter/martian/warrior, /mob/living/critter/martian/soldier)
+	bosses = list(/mob/living/critter/martian/initiate, /mob/living/critter/martian/sapper)
 	original_size = 20
 	original_bosses = 2
 	is_abstract = 0
@@ -369,7 +369,7 @@
 /datum/construction_event/siege/animals
 	name = "Animal Siege"
 	warning_text = "A pack of animals have been teleported on board our station!"
-	attacker_types = list(/mob/living/critter/small_animal/wasp, /mob/living/critter/small_animal/mouse, /obj/critter/goose, /obj/critter/goose/swan, /obj/critter/owl, /obj/critter/bat/buff, /mob/living/critter/small_animal/cat, /mob/living/critter/spider/nice, /mob/living/critter/spider/spacerachnid)
+	attacker_types = list(/mob/living/critter/small_animal/wasp, /mob/living/critter/small_animal/mouse, /mob/living/critter/small_animal/bird/goose, /mob/living/critter/small_animal/bird/goose/swan, /mob/living/critter/small_animal/bird/owl, /obj/critter/bat/buff, /mob/living/critter/small_animal/cat, /mob/living/critter/spider/nice, /mob/living/critter/spider/spacerachnid)
 	bosses = list(/mob/living/critter/lion, /mob/living/critter/bear)
 	original_size = 30
 	original_bosses = 5
