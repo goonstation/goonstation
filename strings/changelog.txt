@@ -1,5 +1,78 @@
 
+(t)tue jul 25 23
+(u)Froggit Dogget
+(p)15082
+(e)|
+(+)Adds the censorium alloy. It does nothing.
+(u)Glamurio (Ryou)
+(p)14807
+(e)🆕🐣|C-Feature, A-Respawning
+(+)Tourists now spawn with a lanyard containing their ID.
+(u)Bartimeus973
+(p)15012
+(e)🆕🎨💪🎭|C-Feature, C-Sprites, A-Traits, A-RP
+(*)Added a new trait: Picky eater! Picky eaters can only eat specific, randomly selected foods!
+(t)mon jul 24 23
+(u)Mintyphresh
+(p)15065
+(e)🪲⚖💅⚗🍝|C-Bug, C-Balance, C-QoL, A-Chemistry, A-Catering
+(*)Greatly reduced the ABV of most non-evil drinks. See minor changes for exceptions. Drink up!
+(+)Necroni, Grog, Bo Jack Daniels, Squeeze, Suicider, Murdini, Moonshine, BOOrbon, Bloody Scary, and Ling Island Iced Tea have increased in strength.
+(t)sat jul 22 23
+(u)Skeletonman0 and Garash
+(p)14895
+(e)🆕📄|C-Feature, A-UI
+(+)New UI for the station's advanced computers, go bother cargo for a Home Networking Kit and build your own dream computer today!
+(u)Flourish
+(e)🗺⚖⛔|A-Mapping, C-Balance, C-Removal,
+(+)Removed straightjackets.
+(u)Flappybat
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Sorium throw scaling reduced. A large quantity is now needed to throw more than a few tiles.
+(+)Sorium now throws anything on the same turf in a random direction.
+(t)fri jul 21 23
+(u)Sian
+(p)14642
+(e)🎨📦🍝|C-Sprites, A-Game-Objects, A-Catering
+(*)Added Wall Trophy for fish available as a ticket purchase in Fishing Supplies Vendor.
+(u)Wisemonster
+(p)14903
+(e)💅🤖|C-QoL, A-Silicons
+(+)Silicons can now use the supply request consoles
+(u)Mantwerp and Mcdangus
+(p)14999
+(e)🎨🔊📦|C-Sprites, C-Sound, A-Game-Objects
+(*)Added the electric guitar, which you can get from cargo. Sprites and sounds by Mcdangus.
+(u)Tyrant
+(p)14983
+(e)🗺💅|A-Mapping, C-QoL
+(+)The mulebot's destinations are now scanned automatically when opening the menu and displayed as a list.
+(u)Lord_Earthfire
+(p)14628
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The wifi signal splitter component can now have its checked string changed via mechcomp signals.
+(u)Blackrep
+(p)14811
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Buff: Pipeshot shells are now tiny objects.
+(u)Tyrant
+(p)14945
+(e)🪲|C-Bug
+(+)Lollipops have colours once again.
+(u)Cheffie
+(p)15015
+(e)🪲🎨💅🐁|C-Bug, C-Sprites, C-QoL, A-Critters
+(+)Mobs will now fit under flaps, give slowdown when grabbed and fit in low storage containers (crates, bodybags) when dead. This mostly applies to mob critters which now will not laydown on death.
+(t)thu jul 20 23
+(u)DimWhat
+(p)14974
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added a couple more bespoke lizard sprites.
 (t)wed jul 19 23
+(u)Retrino
+(p)15017
+(e)🗺|A-Mapping
+(+)adds 2 more roundstart borg spawns to nadir
 (u)DimWhat
 (p)15004
 (e)⚖🎩|C-Balance, A-Clothing

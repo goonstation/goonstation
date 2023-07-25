@@ -166,6 +166,16 @@
 	dir = 1
 	},
 /area/station/chapel/sanctuary)
+"adD" = (
+/obj/stool/chair/office/yellow{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
+/turf/simulated/floor/black,
+/area/station/engine/engineering)
 "adR" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/machinery/secscanner{
@@ -5098,14 +5108,6 @@
 /area/station/bridge/hos{
 	name = "Head of Personnel's Quarters"
 	})
-"coi" = (
-/obj/machinery/recharge_station,
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "coD" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/cable{
@@ -7850,9 +7852,6 @@
 	})
 "dCA" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/straight_jacket{
-	pixel_x = -3
-	},
 /obj/item/clothing/mask/muzzle,
 /obj/item/reagent_containers/syringe/haloperidol{
 	pixel_y = -4
@@ -7932,12 +7931,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
-"dEt" = (
-/obj/landmark/spawner{
-	name = "dolly"
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "dEI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -11888,14 +11881,6 @@
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
-"fuf" = (
-/obj/machinery/recharge_station,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "fuo" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -12651,18 +12636,6 @@
 	dir = 1
 	},
 /area/station/quartermaster/refinery)
-"fKU" = (
-/obj/stool/chair/office/yellow{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
-/turf/simulated/floor/black,
-/area/station/engine/engineering)
 "fLp" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -12831,12 +12804,6 @@
 /obj/mapping_helper/access/research,
 /turf/simulated/floor/black,
 /area/pasiphae/survey)
-"fNH" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
-/turf/simulated/floor/black/grime,
-/area/station/storage/warehouse)
 "fNN" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -13419,15 +13386,6 @@
 	icon_state = "wooden"
 	},
 /area/station/crew_quarters/barber_shop)
-"gbI" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
-/turf/simulated/floor/engine,
-/area/station/science/teleporter)
 "gbR" = (
 /obj/cable{
 	icon_state = "6-9"
@@ -15553,6 +15511,15 @@
 /area/station/bridge/customs{
 	name = "Bridge Reception"
 	})
+"gUf" = (
+/obj/machinery/recharge_station,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/landmark/start/job/cyborg,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "gUh" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -16631,6 +16598,15 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
+"hoh" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "black";
+	icon_state = "bedsheet-black"
+	},
+/mob/living/carbon/human/npc/monkey/stirstir,
+/turf/simulated/floor/black/grime,
+/area/station/security/brig/genpop)
 "hot" = (
 /obj/table/reinforced/auto,
 /obj/item/device/reagentscanner{
@@ -16841,9 +16817,6 @@
 /area/flock_trader)
 "huq" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/straight_jacket{
-	pixel_x = -3
-	},
 /obj/item/clothing/mask/muzzle,
 /obj/item/reagent_containers/syringe/haloperidol{
 	pixel_y = -4
@@ -20957,13 +20930,6 @@
 	dir = 1
 	},
 /area/station/storage/emergency2)
-"jcG" = (
-/obj/storage/closet/office,
-/obj/item/camera,
-/turf/simulated/floor/grey/side{
-	dir = 9
-	},
-/area/station/crew_quarters/lounge)
 "jcK" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -21054,6 +21020,19 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"jdP" = (
+/obj/stool/chair/couch{
+	dir = 4;
+	icon_state = "chair_couch-blue";
+	name = "ratty blue couch"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/mob/living/carbon/human/npc/monkey,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
 "jdT" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -23361,6 +23340,10 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/security/equipment)
+"kfe" = (
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "kfi" = (
 /obj/landmark/random_room/size3x5,
 /turf/simulated/floor/plating,
@@ -23476,15 +23459,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
-"khM" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/cafeteria)
 "kio" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -28487,6 +28461,22 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/tools)
+"mem" = (
+/obj/item/storage/toilet,
+/mob/living/carbon/human/npc/monkey/tanhony,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/sign_switch/east{
+	id = "nadirstall_e3"
+	},
+/obj/decoration/toiletholder{
+	dir = 4;
+	pixel_x = -32
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/quarters_east)
 "mer" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -29308,6 +29298,10 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"mwy" = (
+/mob/living/carbon/human/npc/monkey,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
 "mwA" = (
 /obj/machinery/light_switch/north,
 /obj/cable{
@@ -29540,12 +29534,6 @@
 	},
 /turf/simulated/floor/industrial,
 /area/station/mining/staff_room)
-"mCC" = (
-/obj/table/wood/round/auto,
-/obj/item/clothing/suit/cultist/nerd,
-/obj/item/clothing/mask/skull,
-/turf/simulated/floor/carpet/red/fancy/innercorner/west,
-/area/station/crew_quarters/arcade/dungeon)
 "mDc" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -30104,21 +30092,6 @@
 	dir = 4
 	},
 /area/station/quartermaster/cargooffice)
-"mOJ" = (
-/obj/stool/chair/couch{
-	dir = 4;
-	icon_state = "chair_couch-blue";
-	name = "ratty blue couch"
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_north,
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/turf/simulated/floor/grass,
-/area/station/medical/dome)
 "mPl" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/caution/corner/ne,
@@ -30562,24 +30535,6 @@
 /area/station/quartermaster/storage{
 	name = "Cargo Auxiliary Endpoint"
 	})
-"mZZ" = (
-/obj/item/storage/toilet,
-/obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
-	},
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/sign_switch/east{
-	id = "nadirstall_e3"
-	},
-/obj/decoration/toiletholder{
-	dir = 4;
-	pixel_x = -32
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/quarters_east)
 "nal" = (
 /obj/stool/chair/couch{
 	desc = "It's comfortable, but has an aura of unease about it, like somebody's watching you the moment you sit down.";
@@ -33718,6 +33673,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
+"oyy" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/mob/living/carbon/human/npc/monkey/albert,
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
 "oyF" = (
 /obj/disposalpipe/segment/vertical,
 /obj/disposalpipe/segment/mineral{
@@ -35185,6 +35147,20 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"peu" = (
+/obj/table/wood/round/auto,
+/obj/item/clothing/suit/cultist/nerd,
+/obj/item/clothing/mask/skull,
+/obj/item/clothing/head/apprentice,
+/turf/simulated/floor/carpet/red/fancy/innercorner/west,
+/area/station/crew_quarters/arcade/dungeon)
+"peH" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria)
 "peU" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/industrial,
@@ -40376,12 +40352,6 @@
 	dir = 8
 	},
 /area/station/engine/elect)
-"rHP" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/turf/simulated/floor/grass,
-/area/station/medical/dome)
 "rHX" = (
 /obj/machinery/light{
 	light_type = /obj/item/light/tube/yellowish
@@ -45905,6 +45875,15 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
+"tXF" = (
+/obj/machinery/recharge_station,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/landmark/start/job/cyborg,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "tXL" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -49217,6 +49196,14 @@
 /obj/stool/bar,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
+"vAX" = (
+/obj/storage/closet/office,
+/obj/item/camera,
+/obj/item/storage/toolbox/artistic,
+/turf/simulated/floor/grey/side{
+	dir = 9
+	},
+/area/station/crew_quarters/lounge)
 "vBe" = (
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
@@ -49477,6 +49464,10 @@
 	dir = 1
 	},
 /area/station/hallway/primary/southeast)
+"vIv" = (
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
+/turf/simulated/floor/black/grime,
+/area/station/storage/warehouse)
 "vIw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -52376,17 +52367,6 @@
 	},
 /turf/space/fluid/acid/clear,
 /area/space)
-"xbE" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "black";
-	icon_state = "bedsheet-black"
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
-/turf/simulated/floor/black/grime,
-/area/station/security/brig/genpop)
 "xbO" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	dir = 4
@@ -87185,7 +87165,7 @@ dSd
 dSd
 dSd
 ldy
-jcG
+vAX
 qCB
 nUg
 yiS
@@ -91142,7 +91122,7 @@ uti
 lHe
 sap
 wzZ
-khM
+peH
 wNk
 fRc
 uii
@@ -92065,7 +92045,7 @@ wWS
 evz
 sDp
 gFm
-xbE
+hoh
 qvr
 dcw
 gFm
@@ -93833,7 +93813,7 @@ tZQ
 fer
 lEp
 rxT
-dEt
+kfe
 szr
 lcU
 kdA
@@ -98066,7 +98046,7 @@ dXv
 eyb
 bov
 eRS
-gbI
+oyy
 cVH
 uvB
 gNE
@@ -104075,7 +104055,7 @@ lRC
 taC
 aFj
 rlw
-mOJ
+jdP
 aaF
 agx
 aaF
@@ -104685,7 +104665,7 @@ jOe
 soM
 bUC
 bUC
-rHP
+mwy
 vdv
 reL
 dBU
@@ -105056,7 +105036,7 @@ mPn
 pJt
 nes
 oRI
-fNH
+vIv
 oRI
 vsG
 mrq
@@ -106804,7 +106784,7 @@ hkq
 cGX
 wXw
 shf
-fuf
+gUf
 mIG
 uvh
 idz
@@ -107408,7 +107388,7 @@ dLd
 cHW
 eSU
 shf
-coi
+tXF
 mIG
 fka
 puq
@@ -109282,7 +109262,7 @@ njf
 xSn
 kpw
 xSn
-fKU
+adD
 bfl
 dwx
 qbA
@@ -112551,7 +112531,7 @@ wHl
 mcl
 itv
 lmp
-mCC
+peu
 chK
 gUy
 noM
@@ -113480,7 +113460,7 @@ fmc
 bcx
 eIK
 oZp
-mZZ
+mem
 irk
 gfT
 oZp

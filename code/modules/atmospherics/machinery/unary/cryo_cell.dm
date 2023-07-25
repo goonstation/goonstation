@@ -157,6 +157,8 @@
 			return "<B>Reagent Scan : </B>[ reagent_scan_active ? "<A href='?src=\ref[src];reagent_scan_active=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];reagent_scan_active=1'>On</A>"]"
 
 	Topic(href, href_list)
+		if (is_incapacitated(usr) || isdead(usr))
+			return
 		if (( usr.using_dialog_of(src) && ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))) || (isAI(usr)))
 			if(href_list["start"])
 				src.on = !src.on

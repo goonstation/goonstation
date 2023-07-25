@@ -143,7 +143,7 @@
 	// but show if in space
 	if(istype(T, /turf/space) && !istype(T,/turf/space/fluid))
 		hide(0)
-	else if(level==1)
+	else if(level==UNDERFLOOR)
 		hide(T.intact)
 
 	//cableimg = image(src.icon, src.loc, src.icon_state)
@@ -175,7 +175,7 @@
 	..()													// then go ahead and delete the cable
 
 /obj/cable/hide(var/i)
-	if(level == 1)// && istype(loc, /turf/simulated))
+	if(level == UNDERFLOOR)// && istype(loc, /turf/simulated))
 		invisibility = i ? INVIS_ALWAYS : INVIS_NONE
 	UpdateIcon()
 

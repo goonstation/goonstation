@@ -88,7 +88,7 @@ TYPEINFO(/turf/simulated/wall)
 
 // Made this a proc to avoid duplicate code (Convair880).
 /turf/simulated/wall/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
-	if (!user || !istype(W, /obj/item/light_parts/) || istype(W, /obj/item/light_parts/floor))	//hack, no floor lights on walls
+	if (!user || !istype(W, /obj/item/light_parts/) || istype(W, /obj/item/light_parts/floor))//hack, no floor lights on walls
 		return
 
 	// the wall is the target turf, the source is the turf where the user is standing
@@ -117,6 +117,51 @@ TYPEINFO(/turf/simulated/wall)
 
 	finish_attaching(W, user, dir)
 	return
+
+/turf/simulated/wall/proc/attach_item(var/mob/user, var/obj/item/W) //we don't want code duplication
+
+	//reset object position
+	//not doing so breaks it's further position
+	W.pixel_y = 0
+	W.pixel_x = 0
+
+
+	//based on light fixture code
+	var/turf/target = src
+	var/turf/source = get_turf(user)
+
+
+	var/direction = 0
+
+	for (var/d in cardinal)
+		if (get_step(source, d) == target)
+			direction = d
+			break
+
+	if (!direction)
+		boutput(user, "<span class='alert'> Attaching \the [W] seems hard in this position...</span>")
+		return FALSE
+
+	user.u_equip(W)
+	W.set_loc(get_turf(user))
+
+	if (user.dir == EAST)
+		W.pixel_x = 32
+		W.pixel_y = 3
+	else if (user.dir == WEST)
+		W.pixel_x = -32
+		W.pixel_y = 3
+	else if (user.dir == NORTH)
+		W.pixel_y = 35
+		W.pixel_x = 0
+	else
+		W.pixel_y = -21
+		W.pixel_x = 0
+
+	src.add_fingerprint(user)
+	W.anchored = TRUE
+	boutput(user, "You attach \the [W] to [src].")
+	return TRUE
 
 /turf/simulated/wall/proc/finish_attaching(obj/item/W, mob/user, var/light_dir)
 	boutput(user, "You attach the light fixture to [src].")
