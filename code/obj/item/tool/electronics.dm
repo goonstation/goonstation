@@ -144,6 +144,10 @@
 		for(var/atom/movable/AM in stowaway)
 			kickout(source, AM)
 
+/obj/electronics/frame/Entered(atom/movable/AM, atom/OldLoc)
+	. = ..()
+	kickout(src, AM)
+
 /obj/item/electronics/frame/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/electronics/))
 		var/obj/item/electronics/E = W
@@ -943,7 +947,6 @@
 		var/obj/item/electronics/frame/F = new
 		var/turf/target_loc = get_turf(target)
 		F.name = "[target.name] frame"
-		F.RegisterSignal(F, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
 		if(O.deconstruct_flags & DECON_DESTRUCT)
 			F.store_type = O.type
 			qdel(O)
