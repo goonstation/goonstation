@@ -3367,7 +3367,7 @@
 				location = get_turf(my_atom)
 				explosion(my_atom, location, -1,-1,0,1)
 				fireflash(location, 0)
-		return
+			return
 
 	explosion_barium // get in
 		name = "Barium Explosion"
