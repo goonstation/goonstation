@@ -327,6 +327,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 						src.heal(H)
 					else
 						displease_picky_eater(H)
+				else
+					logTheThing(LOG_DEBUG, src, "Empty favorite foods list for [src] despite having the picky_eater trait.")
+					src.heal(H)
+			else
+				src.heal(H)
 		else
 			src.heal(consumer)
 		playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
