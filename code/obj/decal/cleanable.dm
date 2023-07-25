@@ -1725,14 +1725,14 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		..()
 
 /// Input a cardinal direction, it'll throw it somewhere within +-45 degrees of that direction. More or less.
-/obj/decal/cleanable/proc/streak_cleanable(var/list/directions, var/randcolor = 0, var/full_streak)
+/obj/decal/cleanable/proc/streak_cleanable(var/list/directions, var/randcolor = 0, var/full_streak, var/dist_lower=1, var/dist_upper=6)
 	if(src.disposed)
 		return
 	if(isnull(get_turf(src)))
 		CRASH("Attempting to streak cleanable [identify_object(src)] which is in null.")
 
 	var/destination
-	var/dist = rand(1,6)
+	var/dist = rand(dist_lower,dist_upper)
 	if(prob(10))
 		dist = 30 // Occasionally throw the chunk somewhere *interesting*
 	if(length(directions))
@@ -1805,3 +1805,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "sec_tape_1"
 	random_icon_states = list("sec_tape_1", "sec_tape_2")
+
+/obj/decal/cleanable/desk_clutter //RIP desk clutter object you're a decal now
+	name = "desk clutter"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "deskclutter"
+	desc = "What a mess..."
+	plane = PLANE_DEFAULT //needs to go on desks
+	layer = OBJ_LAYER

@@ -163,8 +163,7 @@
 		. = list(
 			"curTransferAmt" = src.transfer_amount,
 			"transferMode" = transfer_mode,
-			"curReagentVol" = src.reagents.total_volume,
-			"reagentColor" = src.reagents.get_average_color().to_rgb(),
+			"reagents" = ui_describe_reagents(src),
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

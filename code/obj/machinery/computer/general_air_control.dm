@@ -494,13 +494,13 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 		src.updateDialog()
 
 	receive_signal(datum/signal/signal)
-		//boutput(world, "[id] actually can recieve a signal!")
+		//boutput(world, "[id] actually can receive a signal!")
 		if(!signal || signal.encryption) return
 
 		var/id_tag = signal.data["tag"]
 		if(!id_tag || mixerid != id_tag) return
 
-		//boutput(world, "[id] recieved a signal from [id_tag]!")
+		//boutput(world, "[id] received a signal from [id_tag]!")
 		mixer_information = signal.data
 
 	proc/return_text()

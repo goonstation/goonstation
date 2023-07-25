@@ -487,13 +487,6 @@ TYPEINFO(/obj)
 	name = "Projection"
 	anchored = 1
 
-/obj/deskclutter
-	name = "desk clutter"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "deskclutter"
-	desc = "What a mess..."
-	anchored = 1
-
 /obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 /obj/proc/alter_health()

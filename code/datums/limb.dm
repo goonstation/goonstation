@@ -46,7 +46,7 @@
 			if (!target.melee_attack_test(user))
 				return
 
-			
+
 			var/datum/attackResults/msgs = user.calculate_melee_attack(target, 2, 9, 0, 0.7, 0) // 0.7x stamina damage. No crits.
 			msgs.damage_type = DAMAGE_BLUNT
 			user.attack_effects(target, user.zone_sel?.selecting)
@@ -393,7 +393,7 @@
 			return
 
 		if (prob(src.miss_prob) || is_incapacitated(target)|| target.restrained())
-			
+
 			var/datum/attackResults/msgs = user.calculate_melee_attack(target, dam_low, dam_high, 0, stam_damage_mult, !isghostcritter(user), can_punch = 0, can_kick = 0)
 			user.attack_effects(target, user.zone_sel?.selecting)
 			msgs.base_attack_message = src.custom_msg ? src.custom_msg : "<b><span class='combat'>[user] bites [target]!</span></b>"
@@ -444,7 +444,7 @@
 
 		if (isobj(target))
 			switch (user.smash_through(target, list("window", "grille", "blob")))
-				if (0)
+				if (FALSE)
 					if (isitem(target))
 						boutput(user, "<span class='alert'>You try to pick [target] up but it wiggles out of your hand. Opposable thumbs would be nice.</span>")
 						return
@@ -452,12 +452,11 @@
 						boutput(user, "<span class='alert'>You're unlikely to be able to use [target]. You manage to scratch its surface though.</span>")
 						return
 
-				if (1)
+				if (TRUE)
 					user.lastattacked = target
 					return
 
-		..()
-		return
+		. = ..()
 
 	help(mob/target, var/mob/living/user)
 		user.show_message("<span class='alert'>Nope. Not going to work. You're more likely to kill them.</span>")
@@ -476,7 +475,7 @@
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with bear limbs at [log_loc(user)].")
-		
+
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 10, 0, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "claw", "lacerate", "mutilate")
@@ -490,7 +489,7 @@
 				C.do_disorient(25, disorient=2 SECONDS)
 		user.lastattacked = target
 
-/datum/limb/bear/zombie
+/datum/limb/zombie
 
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control) //TODO: Make this actually do damage to things instead of just smashing the thing.
 		if (!holder)
@@ -506,7 +505,12 @@
 		if (isobj(target)) //I am just going to do this like this, this is not good but I do not care.
 			var/hit = FALSE
 			if (isitem(target))
-				boutput(user, "<span class='alert'>Your zombie arm is too dumb to be able to handle this item!</span>")
+				boutput(user, "<span class='hint'>You reach out for the [target].</span>")
+				var/datum/action/pickup = \
+					new /datum/action/bar/private/icon/callback(user, target, 1.5 SECONDS, /atom/proc.Attackhand, list(user, params, location, control),
+																null, null, null, (INTERRUPT_ACTION | INTERRUPT_ACT | INTERRUPT_STUNNED))
+				pickup.resumable = FALSE // so we can click something else to cancel the action
+				actions.start(pickup, user)
 				return
 			else if(istype(target, /obj/machinery/door))
 				var/obj/machinery/door/O = target
@@ -545,19 +549,18 @@
 				O.explode()
 				O.visible_message("<span class='alert'><b>[user]</b> violently rips [O] apart!</span>")
 				hit = TRUE
+			if(prob(40) && !ON_COOLDOWN(user, "zombie arm scream", 5 SECONDS))
+				user.emote("scream")
 			if (hit)
 				user.lastattacked = target
 				attack_particle(user, target)
-			if(prob(40) && !ON_COOLDOWN(user, "zombie arm scream", 1 SECOND))
-				user.emote("scream")
-			return
+				return
 
 		if (istype(target, /obj/machinery))
 			boutput(user, "<span class='alert'>You're unlikely to be able to use [target]. You manage to scratch its surface though.</span>")
 			return
 
 		..()
-		return
 
 	disarm(mob/target, var/mob/living/user)
 		logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with zomb limbs (disarm intent) at [log_loc(user)].")
@@ -586,12 +589,10 @@
 			GD.UpdateIcon()
 			user.visible_message("<span class='alert'>[user] grabs hold of [target] aggressively!</span>")
 
-		return
-
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with bear limbs at [log_loc(user)].")
-		
+
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 10, 1, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "scratch", "mutilate")
@@ -662,7 +663,7 @@
 
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with dual saw at [log_loc(user)].")
-		
+
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 10, 0, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("lacerate", "carve", "mangle", "sever", "hack", "slice", "mutilate")
@@ -743,7 +744,7 @@
 		var/quality = src.holder.quality
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
-		
+
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 10, rand(5,9) * quality, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "claw", "lacerate", "mutilate")
@@ -822,7 +823,7 @@
 			return 0
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "melts [constructTarget(target,"combat")] with hot hands at [log_loc(user)].")
-		
+
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 1, 3, 1, 0, 0, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 
@@ -1073,7 +1074,7 @@
 			return
 
 		var/send_flying = 0 // 1: a little bit | 2: across the room
-		
+
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, can_punch = 0, can_kick = 0)
 
 		if (!msgs || !istype(msgs))
@@ -1265,7 +1266,7 @@
 		var/quality = src.holder.quality
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "claws [constructTarget(target,"combat")] with claw arms at [log_loc(user)].")
-		
+
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 10, 10, rand(1,3) * quality, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("maim", "stab", "rip", "claw", "slashe")
@@ -1284,7 +1285,7 @@
 		if (!target.melee_attack_test(user))
 			return
 
-		
+
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, can_punch = 0)
 
 		if (!msgs)
@@ -1341,7 +1342,7 @@
 		var/quality = src.holder.quality
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "kicks [constructTarget(target,"combat")] at [log_loc(user)].")
-		
+
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 1, 4, rand(1,3) * quality, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("kick", "stomp", "boot")
@@ -1418,7 +1419,7 @@
 		var/quality = src.holder.quality
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a critter arm at [log_loc(user)].")
-		
+
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, dam_low, dam_high, rand(dam_low, dam_high) * quality, stam_damage_mult, !isghostcritter(user))
 		user.attack_effects(target, user.zone_sel?.selecting)
 		msgs.base_attack_message = src.custom_msg ? src.custom_msg : "<b><span class='alert'>[user] [pick(src.actions)] [target]!</span></b>"
@@ -1507,7 +1508,7 @@
 		//	var/mob/living/L = target
 		//	L.do_disorient(24, 1 SECOND, 0, 0, 0.5 SECONDS)
 
-		
+
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 1, 5, rand(0,2) * quality, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("cut", "rip", "claw", "slashe")
@@ -1531,7 +1532,7 @@
 		if(check_target_immunity( target ))
 			return FALSE
 		logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
-		
+
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 8, rand(3, 5), can_punch = FALSE, can_kick = FALSE)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("maim", "maul", "mangle", "slap", "lacerate", "mutilate")

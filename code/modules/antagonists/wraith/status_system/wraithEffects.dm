@@ -216,7 +216,7 @@
 									boutput(H, "<h1 class='alert'>Frontier Authority Update</h1>")
 									boutput(H, "<h2 class='alert'>Nuclear Weapon Detected</h2>")
 									boutput(H, "<span class='alert'>A nuclear bomb has been armed in [pick("the Bridge", "the Bar", "the security lobby", "the medical lobby")]. It will explode in 5 minutes. All personnel must report to the plant area to disarm the bomb immediatly.</span>")
-									has_faked_nuke = true
+									has_faked_nuke = TRUE
 							if (2)
 								if(!has_faked_shuttle)
 									sound_effect = 'sound/misc/shuttle_enroute.ogg'
@@ -224,7 +224,7 @@
 									boutput(H, "<h1 class='alert'>The Emergency Shuttle Has Been Called</h1>")
 									boutput(H, "<span>No reason given.</span>")
 									boutput(H, "<span class='alert'>It will arrive in 6 minutes.</span>")
-									has_faked_shuttle = true
+									has_faked_shuttle = TRUE
 					H.playsound_local(H.loc,sound_effect, volume, 1)
 				if (3) //Wall based, blood pouring out of the walls and other spooky stuff
 					var/turf/owner_turf = get_turf(owner)

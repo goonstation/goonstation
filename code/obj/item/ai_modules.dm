@@ -88,9 +88,9 @@ TYPEINFO(/obj/item/aiModule)
 
 	proc/make_glitchy(lawtext_replace, total_replace = TRUE)
 		if(src.glitched) //Don't wanna double glitch the same module
-			return false
+			return FALSE
 		src.lawTextSafe = src.lawText
-		src.glitched = true
+		src.glitched = TRUE
 		if(total_replace)
 			src.lawText = lawtext_replace
 		else
@@ -101,7 +101,7 @@ TYPEINFO(/obj/item/aiModule)
 		if(ispulsingtool(W))
 			boutput(user, "You hold down the reset button...")
 			if(src.glitched)
-				src.glitched = false
+				src.glitched = FALSE
 				src.lawText = src.lawTextSafe
 				tooltip_rebuild = 1
 				boutput(user, "The law module seems to be functioning better now!")

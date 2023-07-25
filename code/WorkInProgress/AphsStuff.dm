@@ -343,7 +343,7 @@
 	info = {"<h3 style="border-bottom: 1px solid black; width: 80%;">Kingsway Systems LTD</h3>
 			<tt>
 			<br>Hello.
-			<br>We have recieved your order and will be sending out a shuttle containing the supplies that were requested by the R&D team right away.
+			<br>We have received your order and will be sending out a shuttle containing the supplies that were requested by the R&D team right away.
 			<br>We hope that your research is going well. Our moles have reported that our competitor's 'Asimov' line of systems will be announced within a few weeks.
 			<br>
 			<br>David Holman
@@ -357,7 +357,7 @@
 	info = {"<h3 style="border-bottom: 1px solid black; width: 80%;">Kingsway Systems LTD</h3>
 			<tt>
 			<br>Hello.
-			<br>Did you recieve the supplies? We've yet to have recieved any confirmation from our shipping company.
+			<br>Did you receive the supplies? We've yet to have received any confirmation from our shipping company.
 			<br>We hope you'll get back to us soon.
 			<br>
 			<br>David Holman

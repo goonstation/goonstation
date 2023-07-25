@@ -22,6 +22,7 @@
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = GRILLE_LAYER
 	event_handler_flags = USE_FLUID_ENTER
+	material_amt = 0.1
 	///can you use wirecutters to dismantle it?
 	var/can_be_snipped = TRUE
 	///can you use a screwdriver to unanchor it?

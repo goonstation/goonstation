@@ -272,7 +272,7 @@ obj/item/ammo/bullets/flechette_mag
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "taskumatti"
 	item_state = "taskumatti"
-	initial_reagents = list("enriched_msg"=10,"energydrink"=10,"royal_jelly"=10,"hard_punch"=10)
+	initial_reagents = list("enriched_msg"=10,"methamphetamine"=10,"royal_jelly"=10,"hard_punch"=10)
 
 /obj/item/decoration/virvase
 	name = "pretty purple hibiscus"

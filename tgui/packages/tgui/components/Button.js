@@ -77,7 +77,7 @@ export const Button = props => {
         className,
       ])}
       tabIndex={!disabled && '0'}
-      onKeyDown={e => {
+      onKeyUp={e => {
         if (props.captureKeys === false) {
           return;
         }

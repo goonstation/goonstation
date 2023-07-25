@@ -5,6 +5,7 @@
 	var/iconmod = null // name of the sprite files in hydro_mutants.dmi
 	var/harvest_override = 0 // If 1, you can harvest it irregardless of the plant's base harvestability
 	var/harvested_proc_override = 0
+	var/harvest_cap = null //if truthy, override the global harvest cap. Set this above the default at your own risk
 	var/special_proc_override = FALSE
 	// If 0, just use the base plant's settings
 	// If 1, use the mutation's special_proc instead
@@ -12,7 +13,8 @@
 	var/attacked_proc_override = 0
 	var/name_prefix = ""	// Prepend to plant name
 	var/name_suffix = ""	// Append to plant name
-	var/dont_rename_crop = false	// If the crop should not be renamed based on the plant's mutation
+	/// If the crop should not be renamed based on the plant's mutation.
+	var/dont_rename_crop = FALSE
 
 	// Ranges various genes have to be in to get the mutation to appear - lower and upper bound
 	var/list/GTrange = list(null,null) // null means there is no limit so an upper bound of 25
@@ -72,6 +74,7 @@
 	name_prefix = "Suspicious "
 	crop = /obj/critter/killertomato
 	iconmod = "TomatoKiller"
+	harvest_cap = 3
 
 // Corn Mutations
 
@@ -250,7 +253,7 @@
 
 /datum/plantmutation/eggplant/literal
 	name = "Free-Range Eggplant"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	name_prefix = "Free range "
 	iconmod = "EggplantEggs"
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/egg
@@ -294,7 +297,7 @@
 /datum/plantmutation/synthmeat/butt
 	name = "Synthbutt"
 	iconmod = "SynthButts"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	crop = /obj/item/clothing/head/butt/synth
 	special_proc_override = TRUE
 	mutation_sfx = 'sound/voice/farts/fart6.ogg'
@@ -315,7 +318,7 @@
 
 /datum/plantmutation/synthmeat/limb
 	name = "Synthlimb"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	iconmod = "SynthLimbs" // im sorry Haine i made a new sprite
 	crop = list(/obj/item/parts/human_parts/arm/left/synth, /obj/item/parts/human_parts/arm/right/synth,
 	            /obj/item/parts/human_parts/leg/left/synth, /obj/item/parts/human_parts/leg/right/synth,
@@ -324,68 +327,69 @@
 
 /datum/plantmutation/synthmeat/heart
 	name = "Synthheart"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	iconmod = "SynthHearts"
 	crop = /obj/item/organ/heart/synth
 
 /datum/plantmutation/synthmeat/eye
 	name = "Syntheye"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	iconmod = "SynthEyes"
 	crop = /obj/item/organ/eye/synth
 
 /datum/plantmutation/synthmeat/brain
 	name = "Synthbrain"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	iconmod = "SynthBrains"
 	crop = /obj/item/organ/brain/synth
 
 /datum/plantmutation/synthmeat/butt/buttbot
 	name = "Synthbuttbot"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	iconmod = "SynthButts"
 	crop = /obj/machinery/bot/buttbot
 	mutation_sfx = 'sound/voice/virtual_gassy.ogg'
+	harvest_cap = 1
 
 /datum/plantmutation/synthmeat/lung
 	name = "Synthlung"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	iconmod = "SynthLungs"
 	crop = list(/obj/item/organ/lung/synth/left, /obj/item/organ/lung/synth/right)
 
 /datum/plantmutation/synthmeat/appendix
 	name = "Synthappendix"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	iconmod = "SynthAppendixes"
 	crop = /obj/item/organ/appendix/synth
 
 /datum/plantmutation/synthmeat/pancreas
 	name = "Synthpancreas"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	iconmod = "SynthPancreata"
 	crop = /obj/item/organ/pancreas/synth
 
 /datum/plantmutation/synthmeat/liver
 	name = "Synthliver"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	iconmod = "SynthLivers"
 	crop = /obj/item/organ/liver/synth
 
 /datum/plantmutation/synthmeat/kidney
 	name = "Synthkidney"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	iconmod = "SynthKidneys"
 	crop = list(/obj/item/organ/kidney/synth/left, /obj/item/organ/kidney/synth/right)
 
 /datum/plantmutation/synthmeat/spleen
 	name = "Synthspleen"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	iconmod = "SynthSpleens"
 	crop = /obj/item/organ/spleen/synth
 
 /datum/plantmutation/synthmeat/stomach
 	name = "Synthstomach"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	iconmod = "SynthStomachs"
 	crop = list(/obj/item/organ/stomach/synth, /obj/item/organ/intestines/synth)
 
@@ -582,7 +586,7 @@
 /datum/plantmutation/lasher/berries
 	name = "Blooming Lasher"
 	name_prefix = "Blooming "
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	iconmod = "LasherBerries"
 	harvest_override = 1
 	crop = /obj/item/reagent_containers/food/snacks/plant/lashberry/
@@ -646,25 +650,25 @@
 
 /datum/plantmutation/rocks/syreline
 	name_prefix = "Syreline "
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	crop = /obj/item/raw_material/syreline
 	chance = 40
 
 /datum/plantmutation/rocks/bohrum
 	name_prefix = "Bohrum "
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	crop = /obj/item/raw_material/bohrum
 	chance = 20
 
 /datum/plantmutation/rocks/mauxite
 	name_prefix = "Mauxite "
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	crop = /obj/item/raw_material/mauxite
 	chance = 10
 
 /datum/plantmutation/rocks/uqill
 	name_prefix = "Uqill "
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	crop = /obj/item/raw_material/uqill
 	chance = 5
 
@@ -672,7 +676,7 @@
 
 /datum/plantmutation/tree/money
 	name = "Money Tree"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	name_prefix = "Money "
 	iconmod = "TreeCash"
 	crop = /obj/item/spacecash
@@ -682,14 +686,14 @@
 
 /datum/plantmutation/tree/paper
 	name = "Paper Tree"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	name_prefix = "Paper "
 	iconmod = "TreePaper"
 	crop = /obj/item/paper
 
 /datum/plantmutation/tree/dog
 	name = "Dogwood Tree"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	iconmod = "TreeDogwood"
 	special_proc_override = TRUE
 	attacked_proc_override = 1
@@ -720,14 +724,14 @@
 
 /datum/plantmutation/tree/rubber
 	name = "Rubber Tree"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	name_prefix = "Rubber "
 	iconmod = "TreeRubber"
 	crop = /obj/item/material_piece/rubber/latex
 
 /datum/plantmutation/tree/sassafras
 	name = "Sassafras Tree"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	name_prefix = "Sassafras "
 	iconmod = "TreeSassafras"
 	assoc_reagents = list("safrole")
@@ -735,7 +739,7 @@
 
 /datum/plantmutation/tree/glowstick
 	name = "Glowstick Tree"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	name_prefix = "Glowstick "
 	iconmod = "TreeGlow"
 	crop = /obj/item/device/light/glowstick
@@ -772,19 +776,19 @@
 /datum/plantmutation/raspberry/blackberry
 	name = "Blackberry"
 	iconmod = "Blackberry"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	crop = /obj/item/reagent_containers/food/snacks/plant/blackberry
 	assoc_reagents = list("juice_blackberry")
 
 /datum/plantmutation/raspberry/blueraspberry
 	name = "Blue Raspberry"
 	iconmod = "BlueRaspberry"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	crop = /obj/item/reagent_containers/food/snacks/plant/blueraspberry
 	assoc_reagents = list("juice_blueraspberry")
 
 /datum/plantmutation/rose/holorose
 	name = "Holo Rose"
 	iconmod = "HoloRose"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	crop = /obj/item/plant/flower/rose/holorose

@@ -1197,10 +1197,11 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	var/sound_load = 'sound/weapons/gunload_click.ogg'
 	var/unusualCell = 0
 	var/rechargable = TRUE
+	var/component_type = /datum/component/power_cell
 
 	New()
 		..()
-		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate, recharge_delay, rechargable)
+		AddComponent(src.component_type, max_charge, charge, recharge_rate, recharge_delay, rechargable)
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		desc = "A power cell that holds a max of [src.max_charge]PU. Can be inserted into any energy gun, even tasers!"
 		UpdateIcon()
@@ -1441,6 +1442,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	desc = "You should not be seeing this!"
 	max_charge = 40
 	recharge_rate = 5
+	component_type = /datum/component/power_cell/flockdrone
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND

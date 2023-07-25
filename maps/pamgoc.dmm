@@ -12382,7 +12382,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
-
+	
 	},
 /obj/cable{
 	d1 = 4;
@@ -13619,7 +13619,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/wood/auto,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_y = 1
 	},
 /obj/machinery/light/lamp/green{
@@ -34700,7 +34700,7 @@
 "boF" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
 	dir = 1;
-
+	
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -49170,7 +49170,7 @@
 	can_rupture = 0
 	},
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/item_box/medical_patches/mini_silver_sulf,
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/yellow/side,
@@ -57975,7 +57975,7 @@
 	name = "W light switch";
 	pixel_x = 24
 	},
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_y = -1
 	},
 /obj/item/stamp/clown{
@@ -57994,7 +57994,7 @@
 /area/station/crew_quarters/clown)
 "chb" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
 	},
@@ -61481,7 +61481,7 @@
 /area/station/crew_quarters/market)
 "ckW" = (
 /obj/table/glass/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/storage/box/stma_kit,
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/lobby)
@@ -62798,7 +62798,7 @@
 /area/ghostdrone_factory)
 "cnf" = (
 /obj/table/wood/auto,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_x = -1
 	},
 /obj/item/paper_bin{
@@ -62828,7 +62828,7 @@
 /area/station/engine/engineering)
 "cng" = (
 /obj/table/wood/auto,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_x = -1
 	},
 /obj/machinery/firealarm{
@@ -63488,7 +63488,7 @@
 "coe" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/green,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "cof" = (
@@ -63501,7 +63501,7 @@
 /obj/machinery/light/lamp/green{
 	switchon = 1
 	},
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "coh" = (
@@ -63795,11 +63795,11 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "coD" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "coE" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/wall{
 	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
 	icon = 'icons/misc/worlds.dmi';
@@ -63808,7 +63808,7 @@
 	},
 /area/station/garden/owlery)
 "coF" = (
-/obj/tree1{
+/obj/tree{
 	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
 	},
 /turf/simulated/wall{
@@ -64225,7 +64225,7 @@
 	},
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 8;
-
+	
 	},
 /turf/simulated/floor/redwhite{
 	dir = 4

@@ -402,7 +402,9 @@
 	var/datum/pathobank/db = new
 	var/predictive_data = ""
 	var/datum/spyGUI/gui = null
-	var/manipulating = false //are we currently irradiating the pathogen?
+	/// Are we currently irradiating the pathogen?
+	var/manipulating = FALSE
+
 	New()
 		..()
 		gui = new("html/pathoComp.html", "pathology", "size=715x685", src)

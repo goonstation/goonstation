@@ -2,7 +2,7 @@
 	==>	Syndicate Weapons Vendor	<==
 	Designed for use on the Syndicate Battlecruiser Cairngorm.
 	Stocked with weapons and gear for nuclear operatives to pick between, instead of using traditional uplinks.
-	Operatives recieve a token on spawn that provides them with one sidearm credit and one loadout credit in the vendor.
+	Operatives receive a token on spawn that provides them with one sidearm credit and one loadout credit in the vendor.
 
 	Index:
 	- Vendor

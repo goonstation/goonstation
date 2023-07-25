@@ -1,5 +1,49 @@
 //See bottom of file for valid materials in /simple recipes.
 
+/datum/matfab_recipe/simple/nuclear
+	name = "Nuclear Component - base"
+	desc = "You shouldn't see this"
+	category = "Nuclear"
+	result = /obj/item/reactor_component
+
+	postProcess(obj/item/reactor_component/I)
+		. = ..()
+		//default properties for all materials - everything is a sponge unless otherwise specified
+		if(!I.material.hasProperty("density"))
+			I.material.setProperty("density", 1)
+		if(!I.material.hasProperty("hard"))
+			I.material.setProperty("hard", 1)
+		if(I.material.mat_id=="ice") //ice is cold
+			I.temperature = T0C-10
+
+/datum/matfab_recipe/simple/nuclear/fuel_rod
+	name = "Nuclear Fuel Rod"
+	desc = "A fuel rod for a nuclear reactor"
+	category = "Nuclear"
+	materials = list("!any"=3)
+	result = /obj/item/reactor_component/fuel_rod
+
+/datum/matfab_recipe/simple/nuclear/control_rod
+	name = "Control Rod"
+	desc = "A control rod for a nuclear reactor"
+	category = "Nuclear"
+	materials = list("!any"=3)
+	result = /obj/item/reactor_component/control_rod
+
+/datum/matfab_recipe/simple/nuclear/heat_exchanger
+	name = "Heat Exchanger"
+	desc = "A heat exchanger component for a nuclear reactor"
+	category = "Nuclear"
+	materials = list("!any"=3)
+	result = /obj/item/reactor_component/heat_exchanger
+
+/datum/matfab_recipe/simple/nuclear/gas_channel
+	name = "Coolant Channel"
+	desc = "A coolant channel component for a nuclear reactor"
+	category = "Nuclear"
+	materials = list("!any"=3)
+	result = /obj/item/reactor_component/gas_channel
+
 /datum/matfab_recipe/spacesuit
 	name = "Space Suit Set"
 	desc = "A complete space suit."

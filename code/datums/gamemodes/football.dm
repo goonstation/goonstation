@@ -66,7 +66,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			last_tick = ticker.round_elapsed_ticks
 			src.update_game_clock()
 			boutput(world, "Game starts in 30 seconds.")
-			while (true)
+			while (TRUE)
 				delta = ticker.round_elapsed_ticks - last_tick
 				last_tick = ticker.round_elapsed_ticks
 				time_next_state -= delta

@@ -7604,7 +7604,7 @@
 /area/abandonedmedicalship)
 "aKP" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedmedicalship)
 "aKQ" = (
@@ -15605,7 +15605,7 @@
 /obj/item/seed/alien,
 /obj/item/seed/alien,
 /obj/item/seed/alien,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -20030,7 +20030,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/reagent_containers/food/drinks/bowl,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,

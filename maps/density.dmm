@@ -567,7 +567,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/kitchen/food_box/donut_box{
 	desc = "It appears to be a Martian brand of donuts.";
 	name = "Robust Donuts"
@@ -2632,7 +2632,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "gd" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "ge" = (

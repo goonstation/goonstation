@@ -8,7 +8,7 @@ var/global/shipAlertState = SHIP_ALERT_GOOD
 var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_quiet.ogg')
 
 TYPEINFO(/obj/machinery/shipalert)
-	mats = 5
+	mats = 0
 
 /obj/machinery/shipalert
 	name = "Ship Alert Button"
@@ -16,6 +16,7 @@ TYPEINFO(/obj/machinery/shipalert)
 	icon_state = "shipalert0"
 	desc = ""
 	anchored = 1
+
 	var/usageState = 0 // 0 = glass cover, hammer. 1 = glass cover, no hammer. 2 = cover smashed
 	var/working = 0 //processing loops
 	var/lastActivated = 0

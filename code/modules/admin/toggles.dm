@@ -374,6 +374,10 @@ client/proc/toggle_ghost_respawns()
 	if (!isliving(usr))
 		return
 	usr.nodamage = !(usr.nodamage)
+	var/list/datum/statusEffect/statuses = usr.getStatusList()
+	for (var/status in statuses)
+		if (statuses[status].effect_quality == STATUS_QUALITY_NEGATIVE)
+			usr.delStatus(status)
 	boutput(usr, "<span class='notice'><b>Your godmode is now [usr.nodamage ? "ON" : "OFF"]</b></span>")
 
 	logTheThing(LOG_ADMIN, usr, "has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]")

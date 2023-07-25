@@ -2913,14 +2913,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			return
 
 /obj/item/reagent_containers/food/snacks/ratatouille
-    name = "ratatouille"
-    desc = "Stewed and caramalized vegetables. Remy not included."
-    icon = 'icons/obj/foodNdrink/food_meals.dmi'
-    icon_state = "ratatouille"
-    needspoon = true
-    heal_amt = 2
-    bites_left = 3
-    food_effects = list("food_refreshed","food_warm")
+	name = "ratatouille"
+	desc = "Stewed and caramalized vegetables. Remy not included."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "ratatouille"
+	needspoon = TRUE
+	heal_amt = 2
+	bites_left = 3
+	food_effects = list("food_refreshed","food_warm")
 
 // Dippable food
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)

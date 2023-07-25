@@ -18,6 +18,7 @@ TYPEINFO_NEW(/obj/table)
 	stops_space_move = TRUE
 	mat_changename = 1
 	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
+	material_amt = 0.2
 	var/parts_type = /obj/item/furniture_parts/table
 	var/auto = 0
 	var/status = null //1=weak|welded, 2=strong|unwelded

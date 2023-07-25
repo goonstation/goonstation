@@ -1,3 +1,5 @@
+#define PLANET_MAPBORDER 1
+
 TYPEINFO(/datum/mapPrefab/planet)
 	stored_as_subtypes = TRUE
 
@@ -68,7 +70,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 
 	tomb // small little tomb
 		maxNum = 1
-		probability = 20
+		probability = 10
 		prefabPath = "assets/maps/prefabs/prefab_tomb.dmm"
 		prefabSizeX = 13
 		prefabSizeY = 10
@@ -82,21 +84,21 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 
 	bear_trap
 		maxNum = 1
-		probability = 25
+		probability = 10
 		prefabPath = "assets/maps/prefabs/prefab_planet_bear_den.dmm"
 		prefabSizeX = 15
 		prefabSizeY = 15
 
 	tomato_den
 		maxNum = 1
-		probability = 25
+		probability = 10
 		prefabPath = "assets/maps/prefabs/prefab_planet_tomato_den.dmm"
 		prefabSizeX = 13
 		prefabSizeY = 10
 
 	corn_n_weed
 		maxNum = 1
-		probability = 25
+		probability = 5
 		prefabPath = "assets/maps/prefabs/prefab_corn_and_weed.dmm"
 		prefabSizeX = 15
 		prefabSizeY = 16
@@ -104,7 +106,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 
 	organic_organs
 		maxNum = 1
-		probability = 25
+		probability = 5
 		prefabPath = "assets/maps/prefabs/prefab_organic_organs.dmm"
 		prefabSizeX = 15
 		prefabSizeY = 15
@@ -126,28 +128,28 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 
 	dead_nt
 		maxNum = 1
-		probability = 25
+		probability = 20
 		prefabPath = "assets/maps/prefabs/prefab_planet_dead_nt.dmm"
 		prefabSizeX = 4
 		prefabSizeY = 3
 
 	dead_syndicate
 		maxNum = 1
-		probability = 25
+		probability = 20
 		prefabPath = "assets/maps/prefabs/prefab_planet_dead_synd.dmm"
 		prefabSizeX = 4
 		prefabSizeY = 4
 
 	rogue_syndicate
 		maxNum = 1
-		probability = 10
+		probability = 5
 		prefabPath = "assets/maps/prefabs/prefab_planet_rogue_synd.dmm"
 		prefabSizeX = 4
 		prefabSizeY = 3
 
 	monkeys
 		maxNum = 1
-		probability = 25
+		probability = 5
 		prefabPath = "assets/maps/prefabs/prefab_planet_monkeys.dmm"
 		prefabSizeX = 5
 		prefabSizeY = 4
@@ -168,7 +170,9 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 
 	angry_birds
 		maxNum = 1
-		probability = 25
+		probability = 5
 		prefabPath = "assets/maps/prefabs/prefab_planet_angry_birds.dmm"
 		prefabSizeX = 8
 		prefabSizeY = 6
+
+#undef PLANET_MAPBORDER

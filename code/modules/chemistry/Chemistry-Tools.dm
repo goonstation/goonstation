@@ -110,6 +110,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 ///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
 ///Note that this is not a built in TGUI proc
 proc/ui_describe_reagents(atom/A)
+	if (!istype(A))
+		return null
 	var/datum/reagents/R = A.reagents
 	var/list/thisContainerData = list(
 		name = A.name,

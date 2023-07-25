@@ -523,3 +523,25 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			coil.setMaterial(coil.conductor, copy = copy_material)
 			coil.color = coil.conductor.color
 		coil.updateName()
+
+/**
+ * Returns the heat transfer coefficient between two materials based on (in order, if present): thermal conductivity, electrical conductivity
+ * Defaults to 0.5 if neither property is present.
+ * The result for each material is multiplied together. This is intended for use as h in hA(T1-T2), where A is the contact area and T1 and T2 are the tempertatures respectively
+*/
+proc/calculateHeatTransferCoefficient(var/datum/material/matA, var/datum/material/matB)
+	//heat transfer coefficient as a product of the thermal coefficient of each material
+	//fun fact I learned while looking into this: the thermal conductivity of materials is strongly related to the electrical conductivity
+	var/hTC1 = 1
+	var/hTC2 = 1
+	if(matA)
+		if(matA.hasProperty("thermal"))
+			hTC1 = max(matA.getProperty("thermal"),0)/10
+		else
+			hTC1 = 0.5 //default value
+	if(matB)
+		if(matB.hasProperty("thermal"))
+			hTC2 = max(matB.getProperty("thermal"),0)/10
+		else
+			hTC2 = 0.5 //default value
+	return hTC1*hTC2

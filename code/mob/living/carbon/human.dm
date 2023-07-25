@@ -3141,7 +3141,7 @@
 	if (usr == src)
 		src.hud.relay_click("invtoggle", src, list()) // ha i copy the dumb thing
 		return
-	if (!src.can_strip(src, 1)) return
+	if (!src.can_strip(src)) return
 	if (LinkBlocked(src.loc,usr.loc)) return
 	if (isAI(usr) || isAI(src)) return
 	if (isghostcritter(usr) && !isdead(src)) return

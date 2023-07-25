@@ -553,7 +553,8 @@
 	name = "Swipe"
 	desc = "Attack with a wide swing."
 	var/swipe_color
-	var/ignition = false	//If true, the swipe will ignite stuff in it's reach.
+	/// If true, the swipe will ignite stuff in it's reach.
+	var/ignition = FALSE
 
 	onAdd()
 		if(master)
@@ -564,7 +565,7 @@
 			var/obj/item/syndicate_destruction_system/sds = master
 			if (istype(sds))
 				swipe_color = "#FFFBCC"
-				ignition = true
+				ignition = TRUE
 		return
 
 			//Sampled these hex colors from each c-saber sprite.
@@ -1987,7 +1988,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 		bullet_act(var/obj/projectile/P)
 			if (!P.goes_through_mobs)
-				var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
+				var/obj/projectile/Q = shoot_reflected_bounce(P, src)
 				P.die()
 
 				src.visible_message("<span class='alert'>[src] reflected [Q.name]!</span>")

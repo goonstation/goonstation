@@ -1665,7 +1665,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				boutput(holder.owner, "You gather your energy and open a portal")
 				var/obj/machinery/wraith/vortex_wraith/V = new /obj/machinery/wraith/vortex_wraith(mob_choice)
 				if(mob_choice != null)
-					V.random_mode = false
+					V.random_mode = FALSE
 				V.set_loc(W.loc)
 				V.master = W
 				V.alpha = 0

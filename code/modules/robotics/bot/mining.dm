@@ -247,12 +247,12 @@
 	proc/checkStillValid()
 		if(bot == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
-			return false
+			return FALSE
 		if(!bot.on || !istype(target, /turf/simulated/wall/auto/asteroid/))
 			bot.target = null
 			interrupt(INTERRUPT_ALWAYS)
-			return false
-		return true
+			return FALSE
+		return TRUE
 
 /datum/action/bar/icon/digbotdig/drill
 	id = "digbot_drill"

@@ -1254,11 +1254,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 		for (var/obj/item/T in ourCooker.contents)
 
 			if (T.type == item1 && !found1)
-				found1 = true
+				found1 = TRUE
 				continue
 
 			if (T.type == item2 && !found2)
-				found2 = true
+				found2 = TRUE
 				continue
 
 			anItem = T
@@ -1907,4 +1907,3 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 			lipstick.name = "[lipstick.color_name] lipstick"
 			lipstick.UpdateIcon()
 		return lipstick
-

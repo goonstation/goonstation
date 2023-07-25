@@ -91,32 +91,14 @@
 	desc = "a sandy mountain"
 	color = "#957a59"
 	stone_color = "#957a59"
-
-	New()
-		..()
-
-	destroy_asteroid(var/dropOre=0)
-		var/new_color = src.color
-		var/image/weather = GetOverlayImage("weather")
-		var/image/ambient = GetOverlayImage("ambient")
-
-		src.RL_SetOpacity(0)
-		src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid/desert)
-		src.UpdateIcon()
-		for (var/turf/simulated/wall/auto/asteroid/A in orange(1,src))
-			A.UpdateIcon()
-		src.color = new_color
-		src.set_opacity(0)
-		src.levelupdate()
-
-		if(weather)
-			src.UpdateOverlays(weather, "weather")
-		if(ambient)
-			src.UpdateOverlays(ambient, "ambient")
-
-		return src
+	oxygen = MOLES_O2STANDARD
+	nitrogen = MOLES_N2STANDARD
+	default_ore = null
+	replace_type = /turf/simulated/floor/plating/airless/asteroid/desert
 
 /turf/simulated/floor/plating/airless/asteroid/desert
+	name = "mountain"
+	desc = "a sandy mountain"
 	color = "#957a59"
 	stone_color = "#957a59"
 	oxygen = MOLES_O2STANDARD

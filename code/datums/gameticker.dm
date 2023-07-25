@@ -591,7 +591,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	boutput(world, score_tracker.escapee_facts())
 	boutput(world, score_tracker.heisenhat_stats())
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] ai law display")
-	boutput(world, "<b>AIs and Cyborgs had the following laws at the end of the game:</b><br>[ticker.ai_law_rack_manager.format_for_logs("<br>",true)]")
+	boutput(world, "<b>AIs and Cyborgs had the following laws at the end of the game:</b><br>[ticker.ai_law_rack_manager.format_for_logs("<br>", TRUE)]")
 
 
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] resetting gauntlet (why? who cares! the game is over!)")

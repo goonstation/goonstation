@@ -639,6 +639,10 @@ proc/generate_space_color()
 			if (delay_space_conversion()) return
 			if(station_repair.station_generator && src.z == Z_LEVEL_STATION)
 				station_repair.repair_turfs(list(src), clear=TRUE)
+				keep_old_material = FALSE
+				new_turf = src
+			else if(PLANET_LOCATIONS.repair_planet(src))
+				keep_old_material = FALSE
 				new_turf = src
 			else
 				new_turf = new /turf/space(src)

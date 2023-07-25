@@ -548,3 +548,9 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 give me your answer do.<BR/>
 I'm half crazy,<BR/>
 all for the love of you.</tt>"}
+
+/obj/item/paper/book/from_file/nuclear_engineering
+	name = "Nuclear Engineering for Idiots"
+	desc = "A guide to designing and operating nuclear reactors. Should idiots be doing that?"
+	icon_state = "nuclearguide"
+	file_path = "strings/books/nuclear_engineering.txt"
