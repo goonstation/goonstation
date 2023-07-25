@@ -1,4 +1,13 @@
 
+(t)tue jul 25 23
+(u)Glamurio (Ryou)
+(p)14807
+(e)🆕🐣|C-Feature, A-Respawning
+(+)Tourists now spawn with a lanyard containing their ID.
+(u)Bartimeus973
+(p)15012
+(e)🆕🎨💪🎭|C-Feature, C-Sprites, A-Traits, A-RP
+(*)Added a new trait: Picky eater! Picky eaters can only eat specific, randomly selected foods!
 (t)mon jul 24 23
 (u)Mintyphresh
 (p)15065
