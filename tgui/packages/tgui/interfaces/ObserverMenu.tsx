@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
-import { Button, Section, Collapsible, BlockQuote, Flex } from '../components';
+import { Button, Input, Section, Collapsible, BlockQuote, Flex } from '../components';
 
 
 type Observable = {
@@ -43,6 +43,23 @@ const ObserverButton = (props, context) => {
 
 export const ObserverMenu = (props, context) => {
   const { act, data } = useBackend<Observables>(context);
+  const [searchQuery, setSearchQuery] = useLocalState<string>(
+    context,
+    'searchQuery',
+    ''
+  );
+  const filteredItems = data.mydata.filter((item) =>
+    item?.name.toLowerCase().includes(searchQuery.toLowerCase())
+    || item?.job?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  // User types into search bar
+  const onSearch = (query: string) => {
+    if (query === searchQuery) {
+      return;
+    }
+    setSearchQuery(query);
+  };
+
   return (
     <Window title="Choose something to observe" width={600} height={600}>
       <Window.Content scrollable>
@@ -50,32 +67,36 @@ export const ObserverMenu = (props, context) => {
           title="Observables"
           buttons={(
             <Flex.Item textAlign="center" basis={1.5} >
-              <Button.Input
-                icon="search"
-                tooltip="Filter by name"
-                onCommit={() => act('ejectseeds')}>
-                Search By Name
-              </Button.Input>
+              <Input
+                width={20}
+                autoFocus
+                autoSelect
+                fluid
+                id="search_bar"
+                onInput={(_, value) => onSearch(value)}
+                placeholder="Search by name or job"
+                value={searchQuery}
+              />
             </Flex.Item>
           )}>
           <Collapsible key="Antags" title="Antagonists" open={!!data.dnrset} color="red" >
             {(!data.dnrset) && <BlockQuote>You must set DNR to view the antagonists</BlockQuote>}
-            {data.mydata.filter((obs) => obs.antag).map((obs) => (
+            {filteredItems.filter((obs) => obs.antag).map((obs) => (
               <ObserverButton obsObject={obs} key={obs.ref} />
             ))}
           </Collapsible>
           <Collapsible key="Players" title="Players" open color="green">
-            {data.mydata.filter((obs) => obs.player).map((obs) => (
+            {filteredItems.filter((obs) => obs.player).map((obs) => (
               <ObserverButton obsObject={obs} key={obs.ref} />
             ))}
           </Collapsible>
           <Collapsible key="NPCs" title="NPCs" open color="blue">
-            {data.mydata.filter((obs) => obs.npc).map((obs) => (
+            {filteredItems.filter((obs) => obs.npc).map((obs) => (
               <ObserverButton obsObject={obs} key={obs.ref} />
             ))}
           </Collapsible>
           <Collapsible key="Objects" title="Objects" open color="brown">
-            {data.mydata.filter((obs) => !obs.npc && !obs.player).map((obs) => (
+            {filteredItems.filter((obs) => !obs.npc && !obs.player).map((obs) => (
               <ObserverButton obsObject={obs} key={obs.ref} />
             ))}
           </Collapsible>
