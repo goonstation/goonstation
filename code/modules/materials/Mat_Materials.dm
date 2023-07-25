@@ -1441,7 +1441,6 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("electrical", 7)
 
 /datum/material/metal/censorium
-
 	mat_id = "censorium"
 	name = "censorium"
 	desc = "A charred rock. Doesn't do much."
