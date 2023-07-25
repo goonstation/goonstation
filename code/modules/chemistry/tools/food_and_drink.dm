@@ -251,15 +251,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (H.traitHolder.hasTrait("picky_eater"))
 					var/datum/trait/picky_eater/eater_trait = H.traitHolder.getTrait("picky_eater")
 					if (length(eater_trait.fav_foods) > 0)
-						if(H.sims)
-							if(!check_favorite_food(H))
+						if (H.sims)
+							if (!check_favorite_food(H))
 								if (H.sims.getValue("Hunger") > SIMS_HUNGER_FAMISHED)
 									M.visible_message("<span class='notice'>[M] looks at [src] with a disgusted expression!</span>",\
 									"<span class='notice'>You won't eat [src], it just seems too disgusting to you! You're not hungry or desperate enough to eat that.</span>")
 									return 0
 								else
 									boutput(H, "<span class='notice'>Famished, starving, you reluctantly take a bite of [src].</span>")
-						else if(!check_favorite_food(H))
+						else if (!check_favorite_food(H))
 							M.visible_message("<span class='notice'>[M] looks at [src] with a disgusted expression!</span>",\
 							"<span class='notice'>You won't eat [src], it just seems too disgusting to you!</span>")
 							return 0
