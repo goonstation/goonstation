@@ -948,22 +948,13 @@
 /obj/item/paper/newspaper/New()
 	. = ..()
 	if (src.headline)
-		if (!src.publisher)
-			src.publisher = pick(list("Nanotrasen Weekly", "The Daily Bulletin","The Mostly Independent",
-				"The Nanotrasen Times", "Headline Daily",
-			))
-	else
-		pickrandominfo()
+		pick_smart_string("newspaper", "headline")
+	if (!src.publisher)
+		pick_smart_string("newspaper", "publisher")
 	src.name = "[src.publisher] newspaper"
 	src.icon_state = "newspaper"
 	src.desc = "Its from [src.publisher]. Its headline reads: [src.headline]"
-	src.info = "# [src.headline]\n"
-	src.info += "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin viverra, elit et feugiat scelerisque, urna leo egestas nisl, a aliquam purus sapien nec augue. Suspendisse laoreet nibh arcu, sit amet aliquam metus vulputate sed. Proin vitae laoreet sem. Quisque euismod turpis lectus, quis mattis tellus molestie vel. Morbi semper sapien leo, in dapibus turpis ullamcorper eget. Vestibulum eget sollicitudin risus. Phasellus eu ipsum enim. Curabitur id dolor porttitor, varius turpis faucibus, cursus dolor. In consequat accumsan est.\n"
-	src.info += "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In hac habitasse platea dictumst. Cras pharetra tincidunt ipsum, at maximus nisl egestas et. Vivamus sagittis ullamcorper convallis. Vivamus suscipit non nunc a dapibus. Cras hendrerit felis vitae ex varius, non mollis est auctor. Fusce imperdiet porttitor odio, fringilla tempus lacus rutrum eget. Pellentesque et justo ac nisl scelerisque ornare vitae sed neque.\n"
-	src.info += "Quisque sodales fermentum turpis, vitae vehicula orci viverra sit amet. Morbi in lobortis tellus, id hendrerit risus. Ut laoreet magna in diam tincidunt, nec lobortis metus auctor. Nullam arcu nulla, vestibulum sed facilisis pellentesque, porttitor et metus. Nullam vitae mollis nisl. Nam tincidunt mi leo, ut maximus felis gravida quis. Pellentesque sit amet facilisis leo, vitae luctus dolor. Nulla facilisi. Quisque at odio pharetra, condimentum diam pharetra, tristique erat. Quisque facilisis enim eu metus ultricies sollicitudin. Nunc dapibus aliquam pharetra. In eget volutpat mauris, at congue enim. Ut non risus semper, hendrerit tellus tincidunt, lobortis erat. Mauris pharetra nunc justo, eget vestibulum turpis tincidunt sed. Vivamus interdum quis ante vitae porta.\n"
-	src.info += "Etiam ac velit fringilla, tempus diam hendrerit, volutpat metus. Fusce consequat suscipit quam non sagittis. Nulla semper neque id sapien fringilla, non efficitur sem tempus. Vestibulum eu ultricies sem. Nam vitae elementum ex, id fermentum sapien. Vivamus sodales elit at neque pharetra, vitae condimentum neque finibus. Donec lobortis leo id quam bibendum rutrum. Maecenas eget leo a odio euismod convallis. Aliquam eleifend nisl a tincidunt tincidunt. Ut mi neque, maximus non nulla quis, varius pellentesque erat. Proin volutpat lorem a lacinia cursus. Cras faucibus mi lorem, quis scelerisque eros scelerisque quis. In laoreet nunc eu faucibus ultrices.\n"
-	src.info += "Integer at ante pellentesque, vehicula erat a, mattis eros. Aliquam et sapien aliquam, cursus erat nec, hendrerit libero. Etiam fringilla ornare feugiat. Donec id pretium ex. Donec feugiat sit amet orci non hendrerit. Phasellus mattis lobortis fermentum. Integer venenatis lectus in ornare tempus. In elementum, velit quis interdum finibus, lectus massa volutpat libero, sed efficitur elit odio et libero. Proin accumsan dui eget odio sollicitudin, a iaculis justo volutpat. Curabitur suscipit ante sed tellus laoreet pulvinar. Ut iaculis mi non orci porttitor varius. Suspendisse a neque at ex auctor laoreet. Donec dapibus mi sit amet dolor fringilla rhoncus.\n"
-	src.info += "Mauris interdum tincidunt massa, vitae dictum nunc pretium sit amet. Aenean sit amet suscipit massa. Quisque eget sapien neque. Mauris laoreet rhoncus diam id pulvinar. Cras id finibus massa. Ut a augue gravida, eleifend libero at, maximus justo. Integer eget dui faucibus, egestas purus sed, viverra magna. Phasellus elementum vestibulum ligula, in aliquam velit volutpat quis. In in ullamcorper mi. Integer ut condimentum orci, ut tristique erat."
+	src.info = "# [src.headline]\n [pick_smart_string("newspaper", "article")]"
 
 /// a rolled up newspaper
 /obj/item/paper/newspaper/rolled
@@ -971,42 +962,6 @@
 	icon_state = "newspaper_rolled"
 	item_state = "paper"
 	two_handed = FALSE
-
-/// picks a random headline. If there's no set publisher, set that too.
-/obj/item/paper/newspaper/proc/pickrandominfo()
-	if (!src.publisher)
-		src.publisher = pick(list("Nanotrasen Weekly", "The Daily Bulletin","The Mostly Independent",
-			"The Nanotrasen Times", "Headline Daily",
-		))
-	src.headline = pick(list(
-		"John Nanotrasen casually admits to committing multiple felonies in leaked meeting recordings.",
-		"Study by PSFCSO shows presence of Owls directly correlated with station longevity.",
-		"Recent survey shows over 80% of NT employees admit to having died at least once on the job",
-		"New Nadir Extraction Site called 'a bit damp' by disgruntled Head Of Personnel.",
-		"Atlas discovered to be bee shaped. 'Yeah, we designed it that way?' say architects.",
-		"Xiang Giesel sued by same person for the 6th time. 'Just make the engines safer' says engineer.",
-		"Silicon Union destroyed by singularity bombs. NT claims Union was front for Syndicate.",
-		"Rogue artificial intelligence talked down by simply saying 'nuh uh' repeatedly.",
-		"Retraction: We apologise for calling Fugere 'Šid' and vice versa for 13 years straight.",
-		"Chaplain shot for accidentally holding bible upside down in funeral.",
-		"Nuclear Engine onboard NT-13 melts down. Again.",
-		"Questions raised about effectiveness of flash weapons.",
-		"Man found dead in NT Centcomm offices turned out to be faking it.",
-		"Hafgan smartphone released. Critics call it 'overpriced PDA'.",
-		"Super!Friend sued for releasing 4 million amusing ducks into local ecosystem.",
-		"Thinktronic announces that Guardbuddies will not be upgraded. 'They're perfect as is' states CEO.",
-		"Enraged MD goes on a monkey killing spree, upsetting janitors.",
-		"Genetek releases new cloning pod. Critics unable to find any new features.",
-		"Zvezda launches new publicity stunt. 14 dead, 18 wounded. CEO calls it 'smashing success'.",
-		"Space Diner once again unlivable.",
-		"GardenGear proposes new joint project with NT.",
-		"NT Space Station 17 voted 'worst station' for 9th year running.",
-		"Calls for more railings around trench holes.",
-		"Oshan tourism at all time highs.",
-		"Highest peak on Mundus climbed for first time. Climber says 'hardest part was actually getting there'.",
-		"Pug detective sniffs out crimes."
-	))
-
 
 
 /obj/item/paper/newspaper/attack_hand(mob/user)
