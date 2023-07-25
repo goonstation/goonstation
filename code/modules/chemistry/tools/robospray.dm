@@ -44,7 +44,7 @@
 	update_icon()
 		if (botreagents[currentreagent] >= 1)
 			if (!src.fluid_image)
-				src.fluid_image = image(src.icon, "Hypoborgover", -1)
+				src.fluid_image = image(src.icon, "hypoover", -1)
 			var/datum/reagent/R = reagents_cache[src.currentreagent]
 			src.fluid_image.color = rgb(R.fluid_r, R.fluid_g, R.fluid_b, 255)
 			src.UpdateOverlays(src.fluid_image, "fluid")
