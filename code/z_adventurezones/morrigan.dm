@@ -110,15 +110,15 @@
 	desc = "A Syndicate-crafted light pod, seems locked."
 	icon_state = "pod_raceRed"
 
-/obj/decal/fakeobjects/pod/black
-	name = "Black Pod"
-	desc = "A black pod, seems locked."
-	icon_state = "pod_black"
-
 /obj/decal/fakeobjects/pod/nanotrasen/racepod
 	name = "Nanotrasen Light Pod"
 	desc = "A Nanotrasen light Pod! It seems locked.. "
 	icon_state = "pod_raceBlue"
+
+/obj/decal/fakeobjects/pod/black
+	name = "Black Pod"
+	desc = "A black pod, seems locked."
+	icon_state = "pod_black"
 
 /obj/decal/fakeobjects/miniputt
 	name = "Miniputt"
@@ -129,15 +129,15 @@
 	desc = "A Syndicate-crafted light miniputt, seems locked."
 	icon_state = "putt_raceRed_alt"
 
-/obj/decal/fakeobjects/miniputt/black
-	name = "Black Miniputt"
-	desc = "A black miniputt, seems locked."
-	icon_state = "putt_black"
-
 /obj/decal/fakeobjects/miniputt/nanotrasen/raceputt
 	name = "Nanotrasen Light MiniPutt"
 	desc = "A Nanotrasen light miniputt! It seems locked.."
 	icon_state = "putt_raceBlue"
+
+/obj/decal/fakeobjects/miniputt/black
+	name = "Black Miniputt"
+	desc = "A black miniputt, seems locked."
+	icon_state = "putt_black"
 
 //NPCS for Morrigan
 
@@ -197,4 +197,3 @@
 		src.setStatusMin("weakened", 10 SECONDS)
 		if (prob(10))
 			src.say(pick( "Don't look for Lara...", "Lara??", "Lara the oven!", "Please don't talk to Lara", "LAAAAARRRAAAAAAAA!!!" ,"L-Lara."))
-
