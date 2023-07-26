@@ -373,13 +373,13 @@
 			if (length(name_sel) > src.info_len_lim)
 				boutput(user, "Aborting, title too long.")
 				return
-			book_name = strip_html(name_sel)
+			src.book_name = strip_html(name_sel)
 			phrase_log.log_phrase("booktitle", name_sel, TRUE, user, TRUE)
 			var/author_sel = input("Who is the author of your book?", "Information Control", book_author)
-			if (length(author_sel) > info_len_lim)
+			if (length(author_sel) > src.info_len_lim)
 				boutput(user, "Aborting, author name too long.")
 				return
-			book_author = strip_html(author_sel)
+			src.book_author = strip_html(author_sel)
 			phrase_log.log_phrase("bookauthor", author_sel, TRUE, user, TRUE)
 			boutput(user, "Information set.")
 			return
@@ -389,6 +389,7 @@
 			if (!info_sel)
 				return
 			src.declare_contents(info_sel, src.book_info_raw, src.book_info)
+			phrase_log.log_phrase("bookcontent", src.book_info, TRUE, user, FALSE)
 			boutput(user, "Book contents set.")
 			return
 
