@@ -954,13 +954,13 @@
 
 /obj/item/paper/newspaper/New()
 	. = ..()
-	if (src.headline)
-		pick_smart_string("newspaper.txt", "headline")
+	if (!src.headline)
+		src.headline = pick_smart_string("newspaper.txt", "headline")
 	if (!src.publisher)
-		pick_smart_string("newspaper.txt", "publisher")
+		src.publisher = pick_smart_string("newspaper.txt", "publisher")
 	src.name = "[src.publisher] newspaper"
 	src.desc = "Its from [src.publisher]. Its headline reads: [src.headline]"
-	src.info = "# [src.headline]\n [pick_smart_string("newspaper", "article")]"
+	src.info = pick_smart_string("newspaper.txt", "article")
 
 /obj/item/paper/newspaper/attack_self(mob/user)
 	src.force_drop(user)

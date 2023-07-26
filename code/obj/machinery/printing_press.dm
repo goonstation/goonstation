@@ -654,16 +654,11 @@
 		if (src.newspaper_publisher)
 			NP.publisher = src.newspaper_publisher
 			NP.name = "[NP.publisher] newspaper"
-			NP.desc += "Its from [NP.publisher]. "
-		else
-			NP.publisher = "error: no publisher"
-			NP.name = "newspaper"
-			NP.desc += "It doesn't appear to have a title or publisher. "
 		if (src.newspaper_headline)
 			NP.headline = src.newspaper_headline
-			NP.desc += "Its headline reads: [NP.headline]"
-		// it can auto generate headlines if left alone.
-
+		// it can auto generate headlines and publisher if left alone.
+		src.desc = "Its from [src.publisher]. Its headline reads: [src.headline]"
+		src.info = pick_smart_string("newspaper.txt", "article")
 		TRANSFER_OR_DROP(src, NP)
 		newspapers_to_print--
 		src.ink_level -= 1
