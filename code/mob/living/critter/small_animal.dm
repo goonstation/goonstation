@@ -3904,7 +3904,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "Leave your body and return to ghost form"
 	icon_state = "mentordisappear"
 	needs_turf = FALSE //always castable
-	var/disappearance_time = 0.5 SECONDS
+	var/const/disappearance_time = 0.5 SECONDS
 
 	cast(mob/target)
 
