@@ -178,7 +178,7 @@ MATERIAL
 				else
 					boutput(user, "<span class='alert'>You can't mix different materials!</span>")
 					return
-			if (S.reinforcement && src.reinforcement && !S.reinforcement?.isSameMaterial(src.reinforcement))
+			if ((isnull(S.reinforcement) ^ isnull(src.reinforcement)) && !S.reinforcement?.isSameMaterial(src.reinforcement))
 				boutput(user, "<span class='alert'>You can't mix different reinforcements!</span>")
 				return
 			var/success = stack_item(W)
