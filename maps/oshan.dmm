@@ -13425,6 +13425,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/grasstodirt{
 	icon_state = "dirt";
 	name = "not grass"
@@ -34588,13 +34589,6 @@
 	dir = 10
 	},
 /area/station/crew_quarters/bar)
-"cgx" = (
-/obj/railing/orange/reinforced,
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/grasstodirt,
-/area/station/ranch)
 "cgy" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -35356,6 +35350,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
 "cjz" = (
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grasstodirt{
 	dir = 8
 	},
@@ -35384,9 +35379,6 @@
 "cjG" = (
 /obj/machinery/light/incandescent/harsh,
 /obj/machinery/plantpot,
-/obj/railing/orange/reinforced{
-	dir = 8
-	},
 /turf/simulated/floor/grasstodirt{
 	icon_state = "dirt";
 	name = "not grass"
@@ -45735,7 +45727,10 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/bar)
 "vRM" = (
-/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/grasstodirt{
 	icon_state = "dirt";
 	name = "not grass"
@@ -83904,7 +83899,7 @@ chc
 cgn
 wji
 vRM
-cgx
+ciN
 cjx
 ciB
 ciC
