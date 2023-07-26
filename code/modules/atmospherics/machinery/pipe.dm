@@ -63,11 +63,12 @@
 
 
 /obj/machinery/atmospherics/pipe/simple
-	icon = 'icons/obj/atmospherics/pipes/regular_pipe.dmi'
-	icon_state = "intact"
-
 	name = "pipe"
 	desc = "A one meter section of regular pipe."
+
+	icon = 'icons/obj/atmospherics/pipes/pipe.dmi'
+	icon_state = "intact"
+	color = "#B4B4B4"
 
 	volume = 70
 
@@ -113,7 +114,7 @@
 	alpha = 255
 
 /obj/machinery/atmospherics/pipe/simple/color_pipe
-	icon = 'icons/obj/atmospherics/pipes/color_pipe.dmi'
+	color = "#FFFFFF"
 
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe
 	name = "air hookup pipe"
@@ -479,7 +480,6 @@
 
 
 /obj/machinery/atmospherics/pipe/simple/insulated
-	icon = 'icons/obj/atmospherics/pipes/color_pipe.dmi'
 	icon_state = "intact"
 	color = "#FF0000"
 	minimum_temperature_difference = 10000
