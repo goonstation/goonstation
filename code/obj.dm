@@ -104,10 +104,10 @@
 			pressure_resistance = max(20, (src.material.getProperty("density") - 5) * ONE_ATMOSPHERE)
 			throwforce = src.material.getProperty("hard")
 			throwforce = max(throwforce, initial(throwforce))
-			quality = src.material.quality
-			if(initial(src.opacity) && src.material.alpha <= MATERIAL_ALPHA_OPACITY)
+			quality = src.material.getQuality()
+			if(initial(src.opacity) && src.material.getAlpha() <= MATERIAL_ALPHA_OPACITY)
 				set_opacity(0)
-			else if(initial(src.opacity) && !src.opacity && src.material.alpha > MATERIAL_ALPHA_OPACITY)
+			else if(initial(src.opacity) && !src.opacity && src.material.getAlpha() > MATERIAL_ALPHA_OPACITY)
 				set_opacity(1)
 
 	disposing()
@@ -356,7 +356,8 @@
 /obj/proc/alter_health()
 	return 1
 
-/obj/proc/hide(h)
+/// Whether or not to hide something based on the value of hide, usually whether or not the turf is intact.
+/obj/proc/hide(hide)
 	return
 
 /obj/proc/replace_with_explosive()

@@ -5077,6 +5077,7 @@
 	layer = 4;
 	pixel_x = 24
 	},
+/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "auH" = (

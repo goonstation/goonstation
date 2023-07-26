@@ -55,27 +55,27 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			src.ui_image = icon2base64(dummy_icon)
 			ui_image_base64_cache[src.type] = src.ui_image
 
-	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/copy = TRUE, var/use_descriptors = FALSE)
+	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = TRUE, var/use_descriptors = FALSE) //mutable is the default here, for obvious reasons
 		. = ..()
 		src.cap_icon = icon(src.icon, src.icon_state_cap)
 		if(appearance) //some mildly cursed code to set material appearance on the end caps
-			if (mat1.mat_id in src.get_typeinfo().mat_appearances_to_ignore)
+			if (mat1.getID() in src.get_typeinfo().mat_appearances_to_ignore)
 				return
-			if (src.mat_changeappearance && mat1.applyColor)
-				var/list/setcolor = mat1.color
-				if(istext(mat1.color))
-					setcolor = rgb2num(mat1.color)
-				if(islist(mat1.color))
-					setcolor = mat1.color
+			if (src.mat_changeappearance && mat1.shouldApplyColor())
+				var/list/setcolor = mat1.getColor()
+				if(istext(mat1.getColor()))
+					setcolor = rgb2num(mat1.getColor())
+				if(islist(mat1.getColor()))
+					setcolor = mat1.getColor()
 
 				if(length(setcolor) == 4)
-					setcolor[4] = mat1.alpha
+					setcolor[4] = mat1.getAlpha()
 				else if(length(setcolor) == 3)
-					setcolor += mat1.alpha
+					setcolor += mat1.getAlpha()
 
-				if (mat1.texture)
+				if (mat1.getTexture())
 					var/icon_mode = null
-					switch(mat1.texture_blend) //fucking byond...
+					switch(mat1.getTextureBlendMode()) //fucking byond...
 						if(BLEND_DEFAULT) icon_mode = ICON_OVERLAY
 						if(BLEND_OVERLAY) icon_mode = ICON_OVERLAY
 						if(BLEND_ADD) icon_mode = ICON_ADD
@@ -83,7 +83,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 						if(BLEND_MULTIPLY) icon_mode = ICON_MULTIPLY
 						if(BLEND_INSET_OVERLAY) icon_mode = ICON_OVERLAY
 
-					src.cap_icon.Blend(getTexturedIcon(src.cap_icon, mat1.texture), icon_mode)
+					src.cap_icon.Blend(getTexturedIcon(src.cap_icon, mat1.getTexture()), icon_mode)
 
 				if(length(setcolor) > 4) //ie, if it's a color matrix
 					src.cap_icon.MapColors(arglist(setcolor))

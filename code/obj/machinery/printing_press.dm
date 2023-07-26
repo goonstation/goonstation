@@ -324,11 +324,13 @@
 				boutput(user, "Aborting, title too long.")
 				return
 			book_name = strip_html(name_sel)
+			phrase_log.log_phrase("booktitle", name_sel, TRUE, user, TRUE)
 			var/author_sel = input("Who is the author of your book?", "Information Control", book_author)
 			if (length(author_sel) > info_len_lim)
 				boutput(user, "Aborting, author name too long.")
 				return
 			book_author = strip_html(author_sel)
+			phrase_log.log_phrase("bookauthor", author_sel, TRUE, user, TRUE)
 			boutput(user, "Information set.")
 			return
 
@@ -362,6 +364,7 @@
 			info_sel = replacetext(info_sel, "\[bq\]", "<BLOCKQUOTE>")
 			info_sel = replacetext(info_sel, "\[/bq\]", "</BLOCKQUOTE>")
 			book_info = info_sel
+			phrase_log.log_phrase("bookcontent", info_sel, TRUE, user, FALSE)
 			boutput(user, "Book contents set.")
 			return
 
