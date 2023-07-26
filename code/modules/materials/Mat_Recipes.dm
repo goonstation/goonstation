@@ -90,11 +90,11 @@
 		var/hasRock = 0
 
 		for(var/datum/material/CM in M.parent_materials)
-			if(CM.mat_id == "char") hasChar = 1
-			if(CM.mat_id == "rock") hasRock = 1
+			if(CM.getID() == "char") hasChar = 1
+			if(CM.getID() == "rock") hasRock = 1
 
-		if(M.mat_id == "char") hasChar = 1
-		if(M.mat_id == "rock") hasRock = 1
+		if(M.getID() == "char") hasChar = 1
+		if(M.getID() == "rock") hasRock = 1
 
 		if(hasChar && hasRock) return 1
 		else return 0
