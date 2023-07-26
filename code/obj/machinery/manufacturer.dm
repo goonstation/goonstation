@@ -2127,7 +2127,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	proc/eject_manudrive(mob/living/user)
 		src.drive_recipes = null
-		user.put_in_hand_or_drop(manudrive)
+		if (GET_DIST(user, src) <= 1)
+			user.put_in_hand_or_drop(manudrive)
+		else
+			manudrive.set_loc(src.loc)
 		src.manudrive = null
 
 	proc/load_item(obj/item/O, mob/living/user)
