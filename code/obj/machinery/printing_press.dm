@@ -657,8 +657,8 @@
 		if (src.newspaper_headline)
 			NP.headline = src.newspaper_headline
 		// it can auto generate headlines and publisher if left alone.
-		src.desc = "Its from [src.publisher]. Its headline reads: [src.headline]"
-		src.info = pick_smart_string("newspaper.txt", "article")
+		NP.desc = "Its from [NP.publisher]. Its headline reads: [NP.headline]"
+		NP.info = pick_smart_string("newspaper.txt", "article")
 		TRANSFER_OR_DROP(src, NP)
 		newspapers_to_print--
 		src.ink_level -= 1
