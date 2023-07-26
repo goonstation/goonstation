@@ -3,19 +3,22 @@
 	layer = PIPE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 
-	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
+	//Temporary gas mixture used when reconstructing a pipeline that broke.
+	var/datum/gas_mixture/air_temporary
+	/// Our pipeline.
 	var/datum/pipeline/parent
-
+	/// Our volume for gas.
 	var/volume = 0
-	var/nodealert = 0
+	/// Some debug thing when a node breaks.
+	var/nodealert = FALSE
 
+/// Returns a list of nodes that we can add to the pipeline. List may be null or contain nulls.
 /obj/machinery/atmospherics/pipe/proc/pipeline_expansion()
 	return null
 
+/// Return TRUE if parent should continue checking other pipes.
+/// Return FALSE or null if parent should stop checking other pipes. Recall: qdel(src) will by default return null.
 /obj/machinery/atmospherics/pipe/proc/check_pressure(pressure)
-	//Return TRUE if parent should continue checking other pipes
-	//Return null if parent should stop checking other pipes. Recall:	qdel(src) will by default return null
-
 	return TRUE
 
 /obj/machinery/atmospherics/pipe/network_disposing(datum/pipe_network/reference)
@@ -74,15 +77,18 @@
 
 	var/obj/machinery/atmospherics/node1
 	var/obj/machinery/atmospherics/node2
-
+	/// The minimum temperature between us and the environment before we start sharing temperature.
 	var/minimum_temperature_difference = 300
+	/// How well we share temperature.
 	var/thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-
+	/// Pressure needed before the pipe gets a chance to burst.
 	var/fatigue_pressure = 150*ONE_ATMOSPHERE
-
-	var/can_rupture = FALSE //currently only need red pipes (insulated) to rupture
-	var/ruptured = 0 //oh no it broke and is leaking everywhere
-	var/destroyed = FALSE // it needs to be replaced!
+	/// Can this pipe rupture?
+	var/can_rupture = FALSE // Currently only used for red pipes (insulated).
+	/// How broken is our pipe.
+	var/ruptured = 0
+	/// Are we destroyed and need replacement?
+	var/destroyed = FALSE
 	var/initial_icon_state = null //what do i change back to when repaired???
 
 	level = UNDERFLOOR
@@ -91,57 +97,14 @@
 /obj/machinery/atmospherics/pipe/simple/New()
 	..()
 	switch(dir)
-		if(SOUTH)
+		if(NORTH, SOUTH)
 			initialize_directions = SOUTH|NORTH
-		if(NORTH)
-			initialize_directions = SOUTH|NORTH
-		if(EAST)
+		if(EAST, WEST)
 			initialize_directions = EAST|WEST
-		if(WEST)
-			initialize_directions = EAST|WEST
-		if(NORTHEAST)
-			initialize_directions = NORTH|EAST
-		if(NORTHWEST)
-			initialize_directions = NORTH|WEST
-		if(SOUTHEAST)
-			initialize_directions = SOUTH|EAST
-		if(SOUTHWEST)
-			initialize_directions = SOUTH|WEST
+		else
+			initialize_directions = dir
+
 	initial_icon_state = icon_state
-
-/obj/machinery/atmospherics/pipe/simple/overfloor
-	level = OVERFLOOR
-	alpha = 255
-
-/obj/machinery/atmospherics/pipe/simple/color_pipe
-	color = "#FFFFFF"
-
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe
-	name = "air hookup pipe"
-	desc = "A one meter section of pipe connected to an air hookup reservoir."
-	color = "#64BCC8"
-
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor
-	level = OVERFLOOR
-	alpha = 255
-
-/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe
-	name = "purge pipe"
-	desc = "A one meter section of pipe connected to a waste vent in space."
-	color = "#57C45D"
-
-/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor
-	level = OVERFLOOR
-	alpha = 255
-
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe
-	name = "riot control gas pipe"
-	desc = "A one meter section of pipe connected to an riot control gas reservoir."
-	color = "#D2C75B"
-
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor
-	level = OVERFLOOR
-	alpha = 255
 
 /obj/machinery/atmospherics/pipe/simple/hide(var/i)
 	if(level == UNDERFLOOR && istype(loc, /turf/simulated))
@@ -162,13 +125,13 @@
 		parent.mingle_with_turf(loc, volume)
 		if(!nodealert)
 			//boutput(world, "Missing node from [src] at [src.x],[src.y],[src.z]")
-			nodealert = 1
+			nodealert = TRUE
 
 	else if(!node2)
 		parent.mingle_with_turf(loc, volume)
 		if(!nodealert)
 			//boutput(world, "Missing node from [src] at [src.x],[src.y],[src.z]")
-			nodealert = 1
+			nodealert = TRUE
 
 	else if(ruptured)
 		leak_gas()
@@ -195,6 +158,7 @@
 	var/pressure = MIXTURE_PRESSURE(gas)
 	if(pressure > fatigue_pressure) check_pressure(pressure)
 
+/// Moves gas from the high pressure mixture to the low pressure mixture, usually pipe to tile.
 /obj/machinery/atmospherics/pipe/simple/proc/leak_gas()
 	var/datum/gas_mixture/gas = return_air()
 	var/datum/gas_mixture/environment = loc.return_air()
@@ -233,6 +197,7 @@
 		if(prob(rupture_prob))
 			rupture(pressure_difference)
 
+/// Ruptures the pipe, with varying levels of leakage.
 /obj/machinery/atmospherics/pipe/simple/proc/rupture(pressure, destroy=FALSE)
 	var/new_rupture
 	if (src.destroyed || destroy)
@@ -272,12 +237,9 @@
 		if(3)
 			if (prob(50))
 				rupture()
-	return
-
 
 /obj/machinery/atmospherics/pipe/simple/attackby(var/obj/item/W, var/mob/user)
 	if(isweldingtool(W))
-
 		if(!ruptured)
 			boutput(user, "<span class='alert'>That isn't damaged!</span>")
 			return
@@ -294,7 +256,6 @@
 		actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, \
 				list(user), "<span class='notice'>[user] repairs the [src.name].</span>", positions[1], positions[2]),user)
 
-
 	else if(destroyed && istype(W, /obj/item/rods))
 		var/duration = 15 SECONDS
 		if (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
@@ -304,6 +265,7 @@
 		list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
 		actions.start(action_bar, user)
 
+/// Returns list of coordinates to start and stop welding animation.
 /obj/machinery/atmospherics/pipe/simple/proc/get_welding_positions()
 	var/start
 	var/stop
@@ -347,12 +309,14 @@
 	else
 		. = list(stop, start)
 
+/// Repairs the pipe back to orginal state.
 /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe()
 	src.ruptured = 0
 	desc = initial(desc)
 	UpdateIcon()
 	ON_COOLDOWN(src, "rupture_protection", 20 SECONDS + rand(10 SECONDS, 220 SECONDS))
 
+/// Rebuilds pipe from completely destroyed state to disconnected state.
 /obj/machinery/atmospherics/pipe/simple/proc/reconstruct_pipe(mob/M, obj/item/rods/R)
 	if(istype(R) && istype(M))
 		R.change_stack_amount(-1)
@@ -397,7 +361,7 @@
 				leak.alpha = clamp(ruptured * 10, 40, 200)
 			UpdateOverlays(leak,"leak")
 		else
-			icon_state = "intact"//[invisibility ? "-f" : "" ]"
+			icon_state = "intact"
 			UpdateOverlays(null,"leak")
 		alpha = invisibility ? 128 : 255
 
@@ -409,7 +373,7 @@
 		else if(dir==12) dir = 4
 
 	else
-		icon_state = "exposed"//[invisibility ? "-f" : "" ]"
+		icon_state = "exposed"
 		alpha = invisibility ? 128 : 255
 
 		if(node1)
@@ -418,21 +382,13 @@
 		else if(node2)
 			dir = get_dir(src, node2)
 
-		// Deletion should be added as part of constructable atmos
-		//else
-		//	qdel(src)
-
 /obj/machinery/atmospherics/pipe/simple/initialize()
 	var/connect_directions
 
 	switch(dir)
-		if(NORTH)
+		if(NORTH, SOUTH)
 			connect_directions = NORTH|SOUTH
-		if(SOUTH)
-			connect_directions = NORTH|SOUTH
-		if(EAST)
-			connect_directions = EAST|WEST
-		if(WEST)
+		if(EAST, WEST)
 			connect_directions = EAST|WEST
 		else
 			connect_directions = dir
@@ -446,7 +402,6 @@
 
 			connect_directions &= ~direction
 			break
-
 
 	for(var/direction in cardinal)
 		if(direction&connect_directions)
@@ -478,6 +433,41 @@
 
 	UpdateIcon()
 
+/obj/machinery/atmospherics/pipe/simple/overfloor
+	level = OVERFLOOR
+	alpha = 255
+
+
+/obj/machinery/atmospherics/pipe/simple/color_pipe
+	color = "#FFFFFF"
+
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe
+	name = "air hookup pipe"
+	desc = "A one meter section of pipe connected to an air hookup reservoir."
+	color = "#64BCC8"
+
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor
+	level = OVERFLOOR
+	alpha = 255
+
+/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe
+	name = "purge pipe"
+	desc = "A one meter section of pipe connected to a waste vent in space."
+	color = "#57C45D"
+
+/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor
+	level = OVERFLOOR
+	alpha = 255
+
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe
+	name = "riot control gas pipe"
+	desc = "A one meter section of pipe connected to an riot control gas reservoir."
+	color = "#D2C75B"
+
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor
+	level = OVERFLOOR
+	alpha = 255
+
 
 /obj/machinery/atmospherics/pipe/simple/insulated
 	icon_state = "intact"
@@ -488,9 +478,16 @@
 	alpha = 255
 	can_rupture = TRUE
 
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor //insulated pipes are by default overfloor
+	level = UNDERFLOOR
+	alpha = 128
+
 /obj/machinery/atmospherics/pipe/simple/insulated/cold
 	color = "#017FFF"
 
+/obj/machinery/atmospherics/pipe/simple/insulated/cold/underfloor
+	level = UNDERFLOOR
+	alpha = 128
 
 /obj/machinery/atmospherics/pipe/simple/junction
 	icon = 'icons/obj/atmospherics/pipes/junction_pipe.dmi'
@@ -685,11 +682,6 @@
 
 		icon_state = "manifold_[connected]_[unconnected]"
 
-		if(!connected)
-			qdel(src)
-
-	return
-
 /obj/machinery/atmospherics/pipe/manifold/initialize()
 	var/connect_directions = (NORTH|SOUTH|EAST|WEST)&(~dir)
 
@@ -703,7 +695,6 @@
 			connect_directions &= ~direction
 			break
 
-
 	for(var/direction in cardinal)
 		if(direction&connect_directions)
 			for(var/obj/machinery/atmospherics/target in get_step(src,direction))
@@ -713,7 +704,6 @@
 
 			connect_directions &= ~direction
 			break
-
 
 	for(var/direction in cardinal)
 		if(direction&connect_directions)
