@@ -89,7 +89,7 @@
 		var/hasChar = 0
 		var/hasRock = 0
 
-		for(var/datum/material/CM in M.parent_materials)
+		for(var/datum/material/CM in M.getParentMaterials())
 			if(CM.getID() == "char") hasChar = 1
 			if(CM.getID() == "rock") hasRock = 1
 
