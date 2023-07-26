@@ -75520,12 +75520,6 @@
 /obj/machinery/light,
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
-"wLP" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/space,
-/area/station/engine/power{
-	name = "Engineering Control Room"
-	})
 "wOW" = (
 /obj/indestructible/shuttle_corner,
 /turf/unsimulated/floor/shuttle{
@@ -116691,7 +116685,7 @@ bGl
 bIi
 bGl
 bLK
-wLP
+bCz
 bAL
 bQw
 bSa
