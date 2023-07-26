@@ -208,11 +208,11 @@ MATERIAL
 				return
 
 			if (src.material && (src.material.getMaterialFlags() & MATERIAL_METAL || src.material.getMaterialFlags() & MATERIAL_CRYSTAL))
-				var/makesheets = min(min(R.amount,src.amount),50)
-				var/sheetsinput = input("Reinforce how many sheets?","Min: 1, Max: [makesheets]",1) as num
+				var/sheetsinput = input("Reinforce how many sheets?","Min: 1, Max: [min(min(R.amount,src.amount),50)]",1) as num
+				var/makesheets = min(min(R.amount,src.amount),50) //recalculate AFTER the popup to avoid interface stacking exploits
+				sheetsinput = min(sheetsinput,makesheets)
 				if (sheetsinput < 1 || !isnum_safe(sheetsinput))
 					return
-				sheetsinput = min(sheetsinput,makesheets)
 
 				if (!in_interact_range(src, user) || !R) //moving, or the rods are getting destroyed during the input()
 					return
