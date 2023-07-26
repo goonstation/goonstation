@@ -8,6 +8,9 @@ datum
 		var/list/required_reagents = new/list()
 		var/list/inhibitors = list()
 		var/instant = 1
+		///If TRUE, a separate instance of the reaction will be created for the duration of the active reaction, otherwise a singleton will be used
+		///Only makes sense for non-instant reactions
+		var/stateful = FALSE
 #ifdef CHEM_REACTION_PRIORITIES
 		/// lower priorities happen last
 		/// higher priorities happen first
@@ -49,6 +52,23 @@ datum
 
 		// the following three recipes should stop most of the nonsense with pyrosium lagging things to shit, hopefully??
 		// if not yell at me to code better - haine
+
+
+		//// EXAMPLE STATEFUL REACTION
+
+		// countium
+		// 	name = "Countium"
+		// 	id = "countium"
+		// 	instant = FALSE
+		// 	stateful = TRUE
+		// 	var/count = 0
+		// 	reaction_speed = 1
+		// 	required_reagents = list("water" = 1, "oxygen" = 1)
+		// 	result_amount = 1
+
+		// 	on_reaction(var/datum/reagents/holder, var/created_volume)
+		// 		src.count++
+		// 		boutput(world, "Countium counts: [src.count]")
 
 		Lumen
 			name = "Lumen"

@@ -459,7 +459,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 					if(!C.does_react(src))
 						continue reaction_loop
 
-					if (!old_reactions.Find(C))
+					if (!(locate(C.type) in old_reactions) && !(C in src.active_reactions))
 						var/turf/T = 0
 						if (my_atom)
 							for(var/mob/living/M in AIviewers(7, get_turf(my_atom)) )	//Fuck you, ghosts
@@ -502,7 +502,10 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 						C.on_reaction(src, created_volume)
 						covered_cache = 0
 						continue
-					active_reactions += C
+					if (C.stateful)
+						active_reactions += new C.type
+					else
+						active_reactions += C
 
 		if (!active_reactions.len)
 			if (processing_reactions)
@@ -519,6 +522,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		for(var/datum/chemical_reaction/C in src.active_reactions)
 			if (C.result_amount <= 0)
 				src.active_reactions -= C
+				if (C.stateful)
+					qdel(C)
 				continue
 			if(C.temperature_change)
 				src.set_reagent_temp(src.total_temperature += C.temperature_change, react = TRUE)
@@ -539,6 +544,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 					speed *= amount / required_amount
 			if (speed <= 0) // don't add anything that modifies the speed before this check
 				src.active_reactions -= C
+				if (C.stateful)
+					qdel(C)
 				continue
 
 			cache_covered_turf()
