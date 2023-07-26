@@ -178,7 +178,7 @@ MATERIAL
 				else
 					boutput(user, "<span class='alert'>You can't mix different materials!</span>")
 					return
-			if (!S.reinforcement.isSameMaterial(src.reinforcement))
+			if (S.reinforcement && src.reinforcement && !S.reinforcement?.isSameMaterial(src.reinforcement))
 				boutput(user, "<span class='alert'>You can't mix different reinforcements!</span>")
 				return
 			var/success = stack_item(W)
@@ -253,8 +253,10 @@ MATERIAL
 			if (src.reinforcement != S.reinforcement)
 				//boutput(world, "check valid stack check 5 failed")
 				return 0
-			var/datum/material/reinforcement_mat = getMaterial(S.reinforcement)
-			if (!reinforcement_mat.isSameMaterial(getMaterial(src.reinforcement)))
+			//reinforcement can be a string or material. gross. someone should change that
+			var/datum/material/reinforcement_mat = istype(S.reinforcement, /datum/material) ? S.reinforcement : getMaterial(S.reinforcement)
+			var/datum/material/reinforcement_mat_src = istype(src.reinforcement, /datum/material) ? src.reinforcement : getMaterial(src.reinforcement)
+			if (!reinforcement_mat?.isSameMaterial(reinforcement_mat_src))
 				//boutput(world, "check valid stack check 6 failed")
 				return 0
 		return 1
