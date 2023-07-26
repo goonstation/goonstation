@@ -929,7 +929,7 @@ TYPEINFO(/obj/table/glass)
 			return
 		src.visible_message("<span class='alert'>\The [src] shatters!</span>")
 		playsound(src, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
-		if (src.material?.mat_id in list("gnesis", "gnesisglass"))
+		if (src.material?.getID() in list("gnesis", "gnesisglass"))
 			gnesis_smash()
 		else
 			for (var/i=0, i<2, i++)
@@ -1041,7 +1041,7 @@ TYPEINFO(/obj/table/glass)
 		if (src.glass_broken == GLASS_BROKEN)
 			if (istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
-				if (!S.material || !(S.material.material_flags & MATERIAL_CRYSTAL))
+				if (!S.material || !(S.material.getMaterialFlags() & MATERIAL_CRYSTAL))
 					boutput(user, "<span class='alert'>You have to use glass or another crystalline material to repair [src]!</span>")
 				else if (S.change_stack_amount(-1))
 					boutput(user, "<span class='notice'>You add glass to [src]!</span>")
