@@ -1,4 +1,9 @@
 
+(t)wed jul 26 23
+(u)Amylizzle
+(p)15115
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Stun cane manufacturing blueprint works now.
 (t)tue jul 25 23
 (u)Sovexe
 (p)14958
