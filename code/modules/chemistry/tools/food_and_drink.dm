@@ -251,15 +251,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (H.traitHolder.hasTrait("picky_eater"))
 					var/datum/trait/picky_eater/eater_trait = H.traitHolder.getTrait("picky_eater")
 					if (length(eater_trait.fav_foods) > 0)
-						if(H.sims)
-							if (H.sims.getValue("Hunger") < SIMS_HUNGER_FAMISHED)
-								if(!check_favorite_food(H))
+						if (H.sims)
+							if (!check_favorite_food(H))
+								if (H.sims.getValue("Hunger") > SIMS_HUNGER_FAMISHED)
 									M.visible_message("<span class='notice'>[M] looks at [src] with a disgusted expression!</span>",\
 									"<span class='notice'>You won't eat [src], it just seems too disgusting to you! You're not hungry or desperate enough to eat that.</span>")
 									return 0
 								else
 									boutput(H, "<span class='notice'>Famished, starving, you reluctantly take a bite of [src].</span>")
-						else if(!check_favorite_food(H))
+						else if (!check_favorite_food(H))
 							M.visible_message("<span class='notice'>[M] looks at [src] with a disgusted expression!</span>",\
 							"<span class='notice'>You won't eat [src], it just seems too disgusting to you!</span>")
 							return 0
@@ -323,17 +323,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			if (H.traitHolder.hasTrait("picky_eater"))
 				var/datum/trait/picky_eater/eater_trait = H.traitHolder.getTrait("picky_eater")
 				if (length(eater_trait.fav_foods) > 0)
-					if (check_favorite_food(H))
-						src.heal(H)
-					else
+					if (!check_favorite_food(H))
 						displease_picky_eater(H)
 				else
 					logTheThing(LOG_DEBUG, src, "Empty favorite foods list for [src] despite having the picky_eater trait.")
-					src.heal(H)
-			else
-				src.heal(H)
-		else
-			src.heal(consumer)
+		src.heal(consumer)
 		playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 		on_bite(consumer, feeder, ethereal_eater)
 		if (src.festivity)
@@ -1924,7 +1918,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		var/obj/O = new /obj/item/raw_material/shard/glass
 		O.set_loc(get_turf(M))
 		if (src.material)
-			O.setMaterial(copyMaterial(src.material))
+			O.setMaterial(src.material)
 		if (src.reagents)
 			src.reagents.reaction(M)
 			qdel(src)

@@ -57,7 +57,7 @@ MATERIAL
 	stamina_cost = 23
 	stamina_crit_chance = 10
 	material_amt = 0.1
-	var/reinforcement = null
+	var/datum/material/reinforcement = null
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	default_material = "steel"
@@ -100,16 +100,16 @@ MATERIAL
 		src.name = initial(name)
 		src.icon_state_base = initial(icon_state_base)
 		if (istype(material))
-			if (src.material.material_flags & MATERIAL_CRYSTAL)
+			if (src.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 				src.icon_state_base += "-g"
 			else
 				src.icon_state_base += "-m"
-			src.name = "[material.name] " + src.name
+			src.name = "[material.getName()] " + src.name
 			if (reinforcement)
 				src.name = "[reinforcement]-reinforced " + src.name
 				src.icon_state_base += "-r"
-			src.color = src.material.color
-			src.alpha = src.material.alpha
+			src.color = src.material.getColor()
+			src.alpha = src.material.getAlpha()
 		inventory_counter?.update_number(amount)
 		UpdateStackAppearance()
 
@@ -156,9 +156,9 @@ MATERIAL
 	attackby(obj/item/W, mob/user as mob)
 		if (istype(W, /obj/item/sheet))
 			var/obj/item/sheet/S = W
-			if (S.material && src.material && !isSameMaterial(S.material, src.material))
+			if (S.material && src.material && !S.material.isSameMaterial(src.material))
 				// build glass tables
-				if (src.material.material_flags & MATERIAL_METAL && S.material.material_flags & MATERIAL_CRYSTAL) // we're a metal and they're a glass
+				if (src.material.getMaterialFlags() & MATERIAL_METAL && S.material.getMaterialFlags() & MATERIAL_CRYSTAL) // we're a metal and they're a glass
 					if (src.amount_check(1,user) && S.amount_check(2,user))
 						var/reinf = S.reinforcement ? 1 : 0
 						var/a_type = reinf ? /obj/item/furniture_parts/table/glass/reinforced : /obj/item/furniture_parts/table/glass
@@ -166,7 +166,7 @@ MATERIAL
 						var/a_name = "[reinf ? "reinforced " : null]glass table parts"
 						actions.start(new /datum/action/bar/icon/build(S, a_type, 2, S.material, 1, 'icons/obj/furniture/table_glass.dmi', a_icon_state, a_name, /proc/sheet_crafting_callback, src, 1), user)
 					return
-				else if (src.material.material_flags & MATERIAL_CRYSTAL && S.material.material_flags & MATERIAL_METAL) // we're a glass and they're a metal
+				else if (src.material.getMaterialFlags() & MATERIAL_CRYSTAL && S.material.getMaterialFlags() & MATERIAL_METAL) // we're a glass and they're a metal
 					if (src.amount_check(2,user) && S.amount_check(1,user))
 						var/reinf = src.reinforcement ? 1 : 0
 						var/a_type = reinf ? /obj/item/furniture_parts/table/glass/reinforced : /obj/item/furniture_parts/table/glass
@@ -178,7 +178,7 @@ MATERIAL
 				else
 					boutput(user, "<span class='alert'>You can't mix different materials!</span>")
 					return
-			if (!isSameMaterial(S.reinforcement, src.reinforcement))
+			if (!S.reinforcement.isSameMaterial(src.reinforcement))
 				boutput(user, "<span class='alert'>You can't mix different reinforcements!</span>")
 				return
 			var/success = stack_item(W)
@@ -203,7 +203,7 @@ MATERIAL
 				boutput(user, "<span class='alert'>These rods won't work for reinforcing.</span>")
 				return
 
-			if (src.material && (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL))
+			if (src.material && (src.material.getMaterialFlags() & MATERIAL_METAL || src.material.getMaterialFlags() & MATERIAL_CRYSTAL))
 				var/makesheets = min(min(R.amount,src.amount),50)
 				var/sheetsinput = input("Reinforce how many sheets?","Min: 1, Max: [makesheets]",1) as num
 				if (sheetsinput < 1 || !isnum_safe(sheetsinput))
@@ -243,7 +243,7 @@ MATERIAL
 		if (S.material.type != src.material.type)
 			//boutput(world, "check valid stack check 2 failed")
 			return 0
-		if (S.material && src.material && !isSameMaterial(S.material, src.material))
+		if (S.material && src.material && !S.material.isSameMaterial(src.material))
 			//boutput(world, "check valid stack check 3 failed")
 			return 0
 		if ((src.reinforcement && !S.reinforcement) || (S.reinforcement && !src.reinforcement))
@@ -253,7 +253,8 @@ MATERIAL
 			if (src.reinforcement != S.reinforcement)
 				//boutput(world, "check valid stack check 5 failed")
 				return 0
-			if (!isSameMaterial(getMaterial(S.reinforcement), getMaterial(src.reinforcement)))
+			var/datum/material/reinforcement_mat = getMaterial(S.reinforcement)
+			if (!reinforcement_mat.isSameMaterial(getMaterial(src.reinforcement)))
 				//boutput(world, "check valid stack check 6 failed")
 				return 0
 		return 1
@@ -279,7 +280,7 @@ MATERIAL
 		.["labeledAvailableAmount"] = "[src.amount] [src.name]\s"
 
 		var/list/availableRecipes = list()
-		if (src?.material?.material_flags & MATERIAL_METAL)
+		if (src?.material?.getMaterialFlags() & MATERIAL_METAL)
 			if (src.reinforcement)
 				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/reinforced_metal))
 					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
@@ -288,15 +289,15 @@ MATERIAL
 			else
 				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/metal))
 					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
-		if (src?.material?.material_flags & MATERIAL_CRYSTAL)
+		if (src?.material?.getMaterialFlags() & MATERIAL_CRYSTAL)
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/glass))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 			if (src.reinforcement)
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(/datum/sheet_crafting_recipe/remetal/glass))
-		if (src?.material?.mat_id == "cardboard")
+		if (src?.material?.getID() == "cardboard")
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/cardboard))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
-		if (src?.material?.material_flags & MATERIAL_WOOD)
+		if (src?.material?.getMaterialFlags() & MATERIAL_WOOD)
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/wood))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 
@@ -541,7 +542,7 @@ MATERIAL
 			return 0
 		if (S.material.type != src.material.type)
 			return 0
-		if (!isSameMaterial(S.material, src.material))
+		if (!S.material.isSameMaterial(src.material))
 			return 0
 		return 1
 
@@ -624,7 +625,7 @@ MATERIAL
 
 		if (istype(W, /obj/item/rods))
 			// stack_item won't succeed if the materials differ but we want a specific error message
-			if (W.material && src.material && !isSameMaterial(W.material, src.material))
+			if (W.material && src.material && !W.material.isSameMaterial(src.material))
 				boutput(user, "<span class='alert'>You can't mix 2 stacks of different metals!</span>")
 				return
 			var/success = stack_item(W)
@@ -689,7 +690,7 @@ MATERIAL
 			var/atom/A = new /obj/grille(user.loc)
 			A.setMaterial(src.material)
 			src.change_stack_amount(-2)
-			logTheThing(LOG_STATION, user, "builds a grille (<b>Material:</b> [A.material?.mat_id || "*UNKNOWN*"]) at [log_loc(user)].")
+			logTheThing(LOG_STATION, user, "builds a grille (<b>Material:</b> [A.material?.getID() || "*UNKNOWN*"]) at [log_loc(user)].")
 			A.add_fingerprint(user)
 
 /obj/head_on_spike
@@ -901,7 +902,7 @@ MATERIAL
 		var/obj/item/tile/S = O
 		if (!S.material || !src.material)
 			return 0
-		if (!isSameMaterial(S.material, src.material))
+		if (!S.material.isSameMaterial(src.material))
 			return 0
 		return 1
 
@@ -971,7 +972,7 @@ MATERIAL
 
 		if (!( istype(W, /obj/item/tile) ))
 			return
-		if (W.material && src.material && !isSameMaterial(W.material, src.material))
+		if (W.material && src.material && !W.material.isSameMaterial(src.material))
 			boutput(user, "<span class='alert'>You can't mix two stacks of different materials!</span>")
 			return
 		var/inMagtractor = istype(W.loc, /obj/item/magtractor)
@@ -1013,7 +1014,7 @@ MATERIAL
 			W.to_plating()
 
 		if(ismob(usr) && !istype(src.material, /datum/material/metal/steel))
-			logTheThing(LOG_STATION, usr, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(S)].")
+			logTheThing(LOG_STATION, usr, "constructs a floor (<b>Material:</b>: [src.material && src.material.getName() ? "[src.material.getName()]" : "*UNKNOWN*"]) at [log_loc(S)].")
 		if(src.material)
 			W.setMaterial(src.material)
 		src.change_stack_amount(-1)
