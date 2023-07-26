@@ -29,7 +29,7 @@
 	disabled = 0
 	var/toggled = 0
 	var/is_on = 0   // used if a toggle ability
-	var/needs_turf = TRUE	//set to false if it can be cast while not on a turf. E.g. inside a locker
+	var/needs_turf = TRUE	//! set to false if it can be cast while not on a turf. E.g. inside a locker
 	preferred_holder_type = /datum/abilityHolder/critter
 
 	New()
