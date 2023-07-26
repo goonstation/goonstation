@@ -56,6 +56,8 @@
 			obs_data["dead"] = isdead(M)
 			obs_data["job"] = M.job
 			obs_data["npc"] = (M.client == null && M.ghost == null) //dead players have no client, but should have a ghost
+			if(obs_data["npc"] && !(M.z == Z_LEVEL_STATION || M.z == Z_LEVEL_DEBRIS || M.z == Z_LEVEL_MINING))
+				continue //don't display azone NPCs outside of station, debris, and mining z levels
 			obs_data["player"] = (M.client != null || M.ghost != null) //okay, I know this is just !npc, but it won't ever get set for objects, so it's needed
 			if(DNRSet)
 				obs_data["antag"] = !isnull(M.mind?.special_role)
