@@ -167,9 +167,6 @@
 		if(netnum && powernets && length(powernets) >= netnum) //NEED FOR CLEAN GC IN EXPLOSIONS
 			powernets[netnum].cables -= src
 
-	insulator.owner = null
-	conductor.owner = null
-
 	STOP_TRACKING
 
 	..()													// then go ahead and delete the cable

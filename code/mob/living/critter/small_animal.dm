@@ -3705,10 +3705,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if (prob(1)) // VERY rarely give a super-fancy material
 				var/list/rare_material_varieties = list("gold", "spacelag", "diamond", "ruby", "garnet", "topaz", "citrine", "peridot", "emerald", "jade", "aquamarine",
 				"sapphire", "iolite", "amethyst", "alexandrite", "uqill", "uqillglass", "telecrystal", "miracle", "starstone", "flesh", "blob", "bone", "beeswax", "carbonfibre")
-				src.setMaterial(getMaterial(pick(rare_material_varieties)), copy = FALSE)
+				src.setMaterial(getMaterial(pick(rare_material_varieties)))
 			else // silly basic "rare" varieties of things that should probably just be fancy paintjobs or plastics, but whoever made these things are idiots and just made them out of the actual stuff.  I guess.
 				var/list/material_varieties = list("steel", "glass", "silver", "quartz", "rosequartz", "plasmaglass", "onyx", "jasper", "malachite", "lapislazuli")
-				src.setMaterial(getMaterial(pick(material_varieties)), copy = FALSE)
+				src.setMaterial(getMaterial(pick(material_varieties)))
 
 	death(var/gibbed)
 		. = ..()
@@ -3903,7 +3903,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	name = "Vanish"
 	desc = "Leave your body and return to ghost form"
 	icon_state = "mentordisappear"
-
+	needs_turf = FALSE //always castable
+	var/const/disappearance_time = 0.5 SECONDS
 
 	cast(mob/target)
 
@@ -3913,21 +3914,29 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		logTheThing(LOG_ADMIN, src, "turned from a mentor mouse to a ghost") // I can remove this but it seems like a good thing to have
 		M.visible_message("<span class='alert'><B>[M] does a funny little jiggle with their body and then vanishes into thin air!</B></span>") // MY ASCENSION BEGINS
 		animate_bouncy(src)
-		SPAWN(0.5 SECONDS)
+		animate(M, alpha=0, time=disappearance_time)
+		SPAWN(disappearance_time)
 			M.ghostize()
 			qdel(M)
+
+	incapacitationCheck()
+		return FALSE
 
 /datum/targetable/critter/mentortoggle
 	name = "Toggle Pick Up Requests"
 	desc = "Enable or disable player pick up requests."
 	icon_state = "mentordisappear"
 	icon_state = "mentortoggle"
+	needs_turf = FALSE //always castable
 
 	cast(mob/target)
 		var/mob/living/critter/small_animal/mouse/weak/mentor/M = holder.owner
 		M.allow_pickup_requests = !M.allow_pickup_requests
 		boutput(M, "<span class='notice'>You have toggled pick up requests [M.allow_pickup_requests ? "on" : "off"]</span>")
 		logTheThing(LOG_ADMIN, src, "Toggled mentor mouse pick up requests [M.allow_pickup_requests ? "on" : "off"]")
+
+	incapacitationCheck()
+		return FALSE
 
 /mob/living/critter/small_animal/mouse/weak/mentor/admin
 	name = "admin mouse"

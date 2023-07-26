@@ -745,7 +745,7 @@ var/datum/action_controller/actions
 		sheet.change_stack_amount(-cost)
 		if (sheet2 && cost2)
 			sheet2.change_stack_amount(-cost2)
-		logTheThing(LOG_STATION, owner, "builds [objname] (<b>Material:</b> [mat && istype(mat) && mat.mat_id ? "[mat.mat_id]" : "*UNKNOWN*"]) at [log_loc(owner)].")
+		logTheThing(LOG_STATION, owner, "builds [objname] (<b>Material:</b> [mat && istype(mat) && mat.getID() ? "[mat.getID()]" : "*UNKNOWN*"]) at [log_loc(owner)].")
 		if(isliving(owner))
 			var/mob/living/M = owner
 			R.add_fingerprint(M)
