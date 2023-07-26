@@ -12367,14 +12367,8 @@
 	dir = 8;
 	autoclose = 0
 	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/bluewhite{
-	dir = 1
-	},
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
 "foj" = (

@@ -196,9 +196,6 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
 /area/station/hangar/main)
 "aaJ" = (
 /obj/grille/catwalk{
