@@ -15986,14 +15986,12 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/mob/living/carbon/human/hobo,
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
 /area/station/hallway/secondary/entry)
 "aQQ" = (
 /obj/disposalpipe/segment/mail/vertical,
-/mob/living/carbon/human/hobo,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -17934,22 +17932,13 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/mob/living/carbon/human/hobo,
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
 /area/station/hallway/secondary/entry)
 "aVV" = (
-/obj/npc/trader/hobo,
 /turf/simulated/floor/carpet{
 	dir = 9;
-	icon_state = "fblue2"
-	},
-/area/station/hallway/secondary/entry)
-"aVW" = (
-/mob/living/carbon/human/hobo/vladimir,
-/turf/simulated/floor/carpet{
-	dir = 1;
 	icon_state = "fblue2"
 	},
 /area/station/hallway/secondary/entry)
@@ -18379,12 +18368,10 @@
 	},
 /area/station/hallway/secondary/entry)
 "aXj" = (
-/mob/living/carbon/human/hobo,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "aXk" = (
 /obj/disposalpipe/segment/mail/vertical,
-/mob/living/carbon/human/hobo,
 /turf/simulated/floor/neutral/corner{
 	dir = 4
 	},
@@ -19107,7 +19094,6 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/mail/bent/south,
-/mob/living/carbon/human/hobo,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "aZc" = (
@@ -19117,7 +19103,6 @@
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 1
 	},
-/mob/living/carbon/human/hobo,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "aZd" = (
@@ -19128,7 +19113,6 @@
 	mail_tag = "arrivals checkpoint";
 	name = "mail junction (arrivals checkpoint)"
 	},
-/mob/living/carbon/human/hobo,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "aZe" = (
@@ -29947,7 +29931,7 @@
 /area/station/routing/depot)
 "bBb" = (
 /obj/disposalpipe/switch_junction/left/north{
-	mail_tag = list("brig","customs  checkpoint","bridge","security");
+	mail_tag = list("brig","customs    checkpoint","bridge","security");
 	name = "mail junction (command sector)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -30805,7 +30789,7 @@
 /area/station/routing/depot)
 "bCY" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("chapel","chapel  checkpoint","crewA","arrivals  checkpoint");
+	mail_tag = list("chapel","chapel    checkpoint","crewA","arrivals    checkpoint");
 	name = "mail junction (arrivals sector)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -33416,7 +33400,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("hydroponics","kitchen","detective","crewB","arcade","cafeteria","medical  booth");
+	mail_tag = list("hydroponics","kitchen","detective","crewB","arcade","cafeteria","medical    booth");
 	name = "mail junction (catering sector)"
 	},
 /turf/simulated/floor/grime,
@@ -35259,7 +35243,7 @@
 /area/station/routing/depot)
 "bMl" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("engineering","podbay","podbay  checkpoint");
+	mail_tag = list("engineering","podbay","podbay    checkpoint");
 	name = "mail junction (engineering sector)"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -36018,7 +36002,7 @@
 /area/station/routing/depot)
 "bNQ" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("medbay  lobby","telescience","testchamber","research","chemistry","medbay","morgue","pathology","genetics","robotics");
+	mail_tag = list("medbay    lobby","telescience","testchamber","research","chemistry","medbay","morgue","pathology","genetics","robotics");
 	name = "mail junction (medsci sector)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -36682,7 +36666,7 @@
 /area/station/routing/depot)
 "bPu" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("janitor","escape  checkpoint","mining","escape  hallway","mechanics","cargo  checkpoint","QM","refinery");
+	mail_tag = list("janitor","escape    checkpoint","mining","escape    hallway","mechanics","cargo    checkpoint","QM","refinery");
 	name = "mail junction (escape and cargo sectors)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -67886,7 +67870,6 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "hmx" = (
-/mob/living/carbon/human/hobo/laraman,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fblue2"
@@ -71008,13 +70991,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/research/outpost)
-"mwf" = (
-/mob/living/carbon/human/hobo,
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fblue2"
-	},
-/area/station/hallway/secondary/entry)
 "mwC" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
@@ -71430,12 +71406,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
-"nep" = (
-/mob/living/carbon/human/hobo,
-/turf/simulated/floor/neutral/side{
-	dir = 8
-	},
-/area/station/hallway/secondary/entry)
 "nfB" = (
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/research/outpost)
@@ -75874,13 +75844,6 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
-"wjU" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
-	},
-/mob/living/carbon/human/hobo,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "wld" = (
@@ -137694,8 +137657,8 @@ aIE
 aOh
 qLH
 aQP
-nep
-nep
+aSh
+aSh
 aQP
 aVU
 aXj
@@ -137995,12 +137958,12 @@ aLB
 rcH
 aOi
 aPv
-wjU
-wjU
-wjU
-wjU
-wjU
-wjU
+aOi
+aOi
+aOi
+aOi
+aOi
+aOi
 aZc
 baz
 bbU
@@ -141321,7 +141284,7 @@ aag
 aaS
 aFr
 aUC
-aVW
+hmx
 aXu
 aZg
 baE
@@ -141925,7 +141888,7 @@ wld
 aSi
 rDA
 aGV
-mwf
+hmx
 aXu
 aZg
 baG
