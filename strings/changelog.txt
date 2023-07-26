@@ -1,5 +1,9 @@
 
 (t)wed jul 26 23
+(u)Tyrant
+(p)15059
+(e)🪲🆕🗺💅📦|C-Bug, C-Feature, A-Mapping, C-QoL, A-Game-Objects
+(+)Rancher closets have been standardised across all maps, and added to Nadir and Clarion accordingly
 (u)Amylizzle
 (p)15115
 (e)🪲📦|C-Bug, A-Game-Objects
