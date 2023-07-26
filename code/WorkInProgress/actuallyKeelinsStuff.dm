@@ -1335,8 +1335,8 @@ Returns:
 		shaft = M
 		SetPrefix()
 		if(shaft)
-			src.color = shaft.color
-			src.alpha = shaft.alpha
+			src.color = shaft.getColor()
+			src.alpha = shaft.getAlpha()
 		return
 
 	proc/setHeadMaterial(var/datum/material/M)
@@ -1344,8 +1344,8 @@ Returns:
 		SetPrefix()
 		setMaterial(M, setname = 0)
 		if(shaft)
-			src.color = shaft.color
-			src.alpha = shaft.alpha
+			src.color = shaft.getColor()
+			src.alpha = shaft.getAlpha()
 		if(src.material && src.material.hasProperty("hard"))
 			src.force = round(src.material.getProperty("hard") * 2)
 			src.throwforce = round(src.material.getProperty("hard") * 3)
@@ -1355,9 +1355,9 @@ Returns:
 		src.remove_prefixes(prefix)
 		prefix = ""
 		if(head)
-			prefix += "[head.name]-tipped[shaft?" ":""]"
+			prefix += "[head.getName()]-tipped[shaft?" ":""]"
 		if (shaft)
-			prefix += "[shaft.name]"
+			prefix += "[shaft.getName()]"
 		src.name_prefix(prefix)
 		src.UpdateName()
 
@@ -1365,15 +1365,15 @@ Returns:
 		overlays.Cut()
 		if(shaft)
 			var/image/imgShaft = image('icons/obj/items/weapons.dmi',icon_state = "spear")
-			imgShaft.color = shaft.color
-			imgShaft.alpha = shaft.alpha
+			imgShaft.color = shaft.getColor()
+			imgShaft.alpha = shaft.getAlpha()
 			imgShaft.appearance_flags = RESET_ALPHA | RESET_COLOR
 			overlays += imgShaft
 			shaftImg = imgShaft
 		if(head)
 			var/image/imgHead = image('icons/obj/items/weapons.dmi',icon_state = "spearhead")
-			imgHead.color = head.color
-			imgHead.alpha = head.alpha
+			imgHead.color = head.getColor()
+			imgHead.alpha = head.getAlpha()
 			imgHead.appearance_flags = RESET_ALPHA | RESET_COLOR
 			overlays += imgHead
 			headImg = imgHead
