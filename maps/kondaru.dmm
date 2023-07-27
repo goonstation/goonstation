@@ -20721,7 +20721,7 @@
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "bCd" = (
-/obj/table/reinforced/chemistry/firstaid,
+/obj/table/reinforced/chemistry/auto/firstaid,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -21722,7 +21722,7 @@
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bFe" = (
-/obj/table/reinforced/chemistry/basicsup,
+/obj/table/reinforced/chemistry/auto/basicsup,
 /obj/machinery/glass_recycler{
 	glass_amt = 5;
 	pixel_y = 4
@@ -21770,7 +21770,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "bFl" = (
-/obj/table/reinforced/chemistry/clericalsup,
+/obj/table/reinforced/chemistry/auto/clericalsup,
 /obj/item/storage/toolbox/mechanical,
 /obj/machinery/light,
 /turf/simulated/floor/purpleblack{
@@ -21778,7 +21778,7 @@
 	},
 /area/station/science/chemistry)
 "bFm" = (
-/obj/table/reinforced/chemistry/auxsup,
+/obj/table/reinforced/chemistry/auto/auxsup,
 /obj/item/paper/book/from_file/pharmacopia{
 	pixel_y = 5
 	},
