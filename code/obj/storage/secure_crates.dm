@@ -77,22 +77,29 @@
 	icon_opened = "secgearcrateopen"
 	icon_closed = "secgearcrate"
 
-	armory
-		name = "secure weapons crate"
-		req_access = list(access_maxsec)
+// Armory secure crates
 
-		grenades
-			name = "special grenades crate"
-			spawn_contents = list(/obj/item/storage/box/QM_grenadekit_security = 2,\
-			/obj/item/storage/box/QM_grenadekit_experimentalweapons,\
-			/obj/item/storage/box/stinger_kit,\
-			/obj/item/storage/box/stun_landmines)
+/obj/storage/secure/crate/gear/armory
+	name = "secure weapons crate"
+	req_access = list(access_maxsec)
 
-	saxitoxin_grenades
-		name = "nerve agent crate (DANGER)"
-		req_access_txt = "52"
-		spawn_contents = list(/obj/item/reagent_containers/syringe/atropine = 3,\
-		/obj/item/chem_grenade/saxitoxin = 3)
+/obj/storage/secure/crate/gear/armory/grenades
+	name = "special grenades crate"
+	spawn_contents = list(/obj/item/storage/box/QM_grenadekit_security = 2,\
+	/obj/item/storage/box/QM_grenadekit_experimentalweapons,\
+	/obj/item/storage/box/stinger_kit,\
+	/obj/item/storage/box/stun_landmines)
+
+// Saxitoxin grenade crates
+
+/obj/storage/secure/crate/gear/saxitoxin_grenades
+	name = "nerve agent crate (DANGER)"
+	req_access_txt = "52"
+	spawn_contents = list(/obj/item/reagent_containers/syringe/atropine = 3,\
+	/obj/item/chem_grenade/saxitoxin = 3)
+
+/obj/storage/secure/crate/gear/saxitoxin_grenades/empty
+	spawn_contents = list()
 
 /obj/storage/secure/crate/bee
 	name = "Secure Bee crate"
