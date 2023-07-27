@@ -1675,6 +1675,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 								return TRUE
 				if ("FAB")
 					return mat.getMaterialFlags() & (MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC)
+				if ("GEM")
+					return istype(mat, /datum/material/crystal/gemstone)
 		else if (pattern == mat.getID()) // specific material id
 			return TRUE
 		return FALSE

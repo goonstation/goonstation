@@ -6216,17 +6216,6 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "avy" = (
-/obj/storage/closet{
-	name = "rancher supply closet"
-	},
-/obj/item/paper/ranch_guide,
-/obj/item/fishing_rod/basic,
-/obj/item/chicken_carrier,
-/obj/item/device/camera_viewer/ranch,
-/obj/item/storage/box/syringes,
-/obj/item/satchel/hydro,
-/obj/item/clothing/mask/chicken,
-/obj/item/storage/box/clothing/rancher,
 /obj/disposalpipe/segment/mail{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -6238,6 +6227,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
+/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
