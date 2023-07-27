@@ -24,6 +24,8 @@
 	var/unopened_item_state = "book"
 
 	New()
+		src.unopened_icon_state = src.icon_state
+		src.unopened_item_state = src.item_state
 		..()
 		src.create_storage(/datum/storage/bible, max_wclass = W_CLASS_SMALL)
 		START_TRACKING
@@ -307,97 +309,68 @@ ABSTRACT_TYPE(/obj/item/bible/custom)
 	name = "Blank Holy Text"
 	desc = "Seems like a holy scripture of some kind, but it seems like you have to come up with the text yourself?"
 	icon_state = "Blank"
-	unopened_icon_state = "Blank"
 	item_state = "BlankBook"
-	unopened_item_state = "BlankBook"
 
 /obj/item/bible/custom/eye
 	name = "The Peer"
 	desc = "A holy scripture of some kind. It seems to be looking into you."
 	icon_state = "Eye"
 	item_state = "EyeBook"
-	unopened_icon_state = "Eye"
-	unopened_item_state = "EyeBook"
 
 /obj/item/bible/custom/eye/dark
 	icon_state = "Eye_Dark"
 	item_state = "EyeBook_Dark"
-	unopened_icon_state = "Eye_Dark"
-	unopened_item_state = "EyeBook_Dark"
 
 /obj/item/bible/custom/green
 	name = "\the Green Texts"
 	icon_state = "Green"
 	item_state = "GreenBook"
-	unopened_icon_state = "Green"
-	unopened_item_state = "GreenBook"
 
 /obj/item/bible/custom/purple
 	name = "\the Purple Texts"
 	icon_state = "Purple"
 	item_state = "PurpleBook"
-	unopened_icon_state = "Purple"
-	unopened_item_state = "PurpleBook"
 
 /obj/item/bible/custom/blue
 	name = "\the Blue Texts"
 	icon_state = "Blue"
 	item_state = "BlueBook"
-	unopened_icon_state = "Blue"
-	unopened_item_state = "BlueBook"
 
 /obj/item/bible/custom/clown
 	name = "\the Clown Compendium"
 	desc = "A holy scripture... about clowns? There's something a bit unsettling about it."
 	icon_state = "Clown"
 	item_state = "ClownBook"
-	unopened_icon_state = "Clown"
-	unopened_item_state = "ClownBook"
 
 /obj/item/bible/custom/clown/cluwne
 	name = "\the Clown Compendium?"
 	icon_state = "Cluwne"
 	item_state = "CluwneBook"
-	unopened_icon_state = "Cluwne"
-	unopened_item_state = "CluwneBook"
 
 /obj/item/bible/custom/burned
 	name = "scorched Holy Texts"
 	desc = "Someone's set this on fire at some point. Should still work though."
 	icon_state = "Burned"
 	item_state = "BurnedBook"
-	unopened_icon_state = "Burned"
-	unopened_item_state = "BurnedBook"
 
 /obj/item/bible/custom/skeleton
 	name = "\the Skeleton Scriptures"
 	desc = "A strange holy text written in sharp spidery handwriting. There's something inhuman about it."
 	icon_state = "Rubi_Skeleton"
 	item_state = "" //todo
-	unopened_icon_state = "Rubi_Skeleton"
-	unopened_item_state = ""//todo
 
 /obj/item/bible/custom/x
 	icon_state = "Paco_X"
 	item_state = "" //todo
-	unopened_icon_state = "Paco_X"
-	unopened_item_state = ""//todo
 
 /obj/item/bible/custom/bluewhite
 	icon_state = "Paco_BlueWhite"
 	item_state = "" //todo
-	unopened_icon_state = "Paco_BlueWhite"
-	unopened_item_state = ""//todo
 
 /obj/item/bible/custom/redwhite
 	icon_state = "Paco_RedWhite"
 	item_state = "" //todo
-	unopened_icon_state = "Paco_RedWhite"
-	unopened_item_state = ""//todo
 
 /obj/item/bible/custom/redwhite/dark
 	icon_state = "Paco_RedDark"
 	item_state = "" //todo
-	unopened_icon_state = "Paco_RedDark"
-	unopened_item_state = ""//todo
-
