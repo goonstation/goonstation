@@ -8520,7 +8520,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/staff)
 "dTB" = (
-/obj/table/reinforced/chemistry/drugs,
+/obj/table/reinforced/chemistry/auto/drugs,
 /obj/item/storage/box/beakerbox{
 	pixel_x = 6;
 	pixel_y = 7
@@ -8923,7 +8923,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/arcade/dungeon)
 "edb" = (
-/obj/table/reinforced/chemistry/firstaid,
+/obj/table/reinforced/chemistry/auto/firstaid,
 /obj/item/reagent_containers/dropper,
 /obj/item/device/radio/intercom/science,
 /obj/item/storage/toolbox/mechanical,
@@ -21449,7 +21449,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northwest)
 "jpE" = (
-/obj/table/reinforced/chemistry/auxsup,
+/obj/table/reinforced/chemistry/auto/auxsup,
 /obj/machinery/glass_recycler{
 	glass_amt = 5;
 	pixel_y = 4
@@ -30483,7 +30483,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "mZj" = (
-/obj/table/reinforced/chemistry/basicsup,
+/obj/table/reinforced/chemistry/auto/basicsup,
 /obj/machinery/light,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
@@ -48490,7 +48490,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
 "vmT" = (
-/obj/table/reinforced/chemistry/clericalsup,
+/obj/table/reinforced/chemistry/auto/clericalsup,
 /obj/item/paper/labdrawertips,
 /turf/simulated/floor/purpleblack{
 	dir = 6
