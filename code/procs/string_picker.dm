@@ -130,7 +130,7 @@ var/global/list/smart_string_pickers = list()
 		return jointext(., "")
 
 proc/pick_smart_string(var/filename, var/key, var/additional_defs=null)
-	if (!(".txt" in filename))
+	if (!findtext(filename, ".txt"))
 		CRASH("Filename isn't a .txt!")
 		return
 	if(!(filename in smart_string_pickers))
