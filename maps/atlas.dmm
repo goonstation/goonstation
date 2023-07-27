@@ -4791,7 +4791,7 @@
 	light_type = /obj/item/light/tube/light_purpleish;
 	pixel_y = 21
 	},
-/obj/table/reinforced/chemistry/chemstorage,
+/obj/table/reinforced/chemistry/auto/chemstorage,
 /obj/item/paper/labdrawertips,
 /turf/simulated/floor/purplewhite{
 	dir = 9
@@ -9000,7 +9000,7 @@
 	pixel_y = 14
 	},
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/table/reinforced/chemistry/allinone,
+/obj/table/reinforced/chemistry/auto/allinone,
 /turf/simulated/floor/purplewhite{
 	dir = 5
 	},
