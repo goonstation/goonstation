@@ -302,7 +302,7 @@
 		new /obj/item/gun/kinetic/faith(src)
 		src.desc += " This is the chaplain's personal copy."
 
-ABSTRACT_TYPE(/obj/item/bible/custom)
+// ABSTRACT_TYPE(/obj/item/bible/custom) this marks the default bible abstract and idk what to do about it
 /obj/item/bible/custom
 
 /obj/item/bible/custom/blank
