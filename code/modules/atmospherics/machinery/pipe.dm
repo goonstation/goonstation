@@ -365,18 +365,11 @@
 			UpdateOverlays(null,"leak")
 		alpha = invisibility ? 128 : 255
 
-		var/node1_direction = get_dir(src, node1)
-		var/node2_direction = get_dir(src, node2)
-
-		dir = node1_direction|node2_direction
-		if(dir==3) dir = 1
-		else if(dir==12) dir = 4
-
 	else
 		icon_state = "exposed"
 		alpha = invisibility ? 128 : 255
 
-		if(node1)
+		if(node1) //TODO: REPLACE WITH SYSTEM SIMILAR TO MANIFOLDS
 			dir = get_dir(src, node1)
 
 		else if(node2)
