@@ -1,28 +1,35 @@
-/*
-* Handles queries to the goonhub universal API
-*/
+
 
 var/global/datum/apiHandler/apiHandler
 
+/**
+ * Handles queries to the goonhub universal API
+ */
 /datum/apiHandler
-	var/enabled = 1 //is the api handler available for use? only set to false if we try a bunch of times and still fail
-	//retry handling
-	var/maxApiRetries = 5 //how many times should a query attempt to run before giving up
-	var/apiRetryDelay = 10 //base delay between query attempts, gets multiplied by attempt number
+	/// Is the api handler available for use? only set to false if we try a bunch of times and still fail
+	var/enabled = TRUE
 
-	var/emergency_shutoff_counter = 0 // how many api errors there have been since a successful one
-	var/lazy_concurrent_counter = 0 // lazy count of how many are up/down
-	var/lazy_waiting_counter = 0 // number of how many are waiting
+	/// how many times should a query attempt to run before giving up
+	var/maxApiRetries = 5
+	/// base delay between query attempts, gets multiplied by attempt number
+	var/apiRetryDelay = 10
+
+	/// how many api errors there have been since a successful one
+	var/emergency_shutoff_counter = 0
+	/// lazy count of how many are up/down
+	var/lazy_concurrent_counter = 0
+	/// number of how many are waiting
+	var/lazy_waiting_counter = 0
 
 	New()
 		..()
 		if (!config.goonhub_api_endpoint)
-			src.enabled = 0
+			src.enabled = FALSE
 			logTheThing(LOG_DEBUG, null, "Goonhub endpoint doesn't exist, disabled api handler")
 			logTheThing(LOG_DIARY, null, "Goonhub endpoint doesn't exist, disabled api handler", "debug")
 
 
-	// Suppress errors on local environments, as it's spammy and local devs probably won't have the config for API connectivity to work
+	/// Suppress errors on local environments, as it's spammy and local devs probably won't have the config for API connectivity to work
 	proc/apiError(message = "", forceErrorException = 0)
 		if (config.server_id != "local" || forceErrorException)
 			throw EXCEPTION(message)
@@ -65,7 +72,6 @@ var/global/datum/apiHandler/apiHandler
 				logTheThing(LOG_DIARY, null, "RE-ENABLING API REQUESTS - Cooldown expired.", "debug")
 				message_admins("API requests have been re-enabled after waiting.")
 				enabled = 1
-		return
 
 
 	/**
