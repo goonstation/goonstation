@@ -37681,7 +37681,7 @@
 	tag = ""
 	},
 /obj/machinery/phone,
-/obj/table/reinforced/chemistry/drugs,
+/obj/table/reinforced/chemistry/auto/drugs,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -38952,7 +38952,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/table/reinforced/chemistry/basicsup,
+/obj/table/reinforced/chemistry/auto/basicsup,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -38965,7 +38965,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/table/reinforced/chemistry/auxsup,
+/obj/table/reinforced/chemistry/auto/auxsup,
 /obj/item/storage/toolbox/emergency{
 	pixel_x = 8;
 	pixel_y = 8
@@ -38985,7 +38985,7 @@
 /obj/decal/poster/wallsign/poster_ptoe{
 	pixel_y = 32
 	},
-/obj/table/reinforced/chemistry/firstaid,
+/obj/table/reinforced/chemistry/auto/firstaid,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -40419,7 +40419,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "cxA" = (
-/obj/table/reinforced/chemistry/clericalsup,
+/obj/table/reinforced/chemistry/auto/clericalsup,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "cxB" = (
