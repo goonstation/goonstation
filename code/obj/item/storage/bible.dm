@@ -1,12 +1,12 @@
 // rest in peace the_very_holy_global_bible_list_amen (??? - 2020)
 
 /obj/item/bible
-	name = "bible"
+	name = "Holy Text"
 	desc = "A holy scripture of some sort or another. Someone seems to have hollowed it out for hiding things in."
-	icon = 'icons/obj/items/storage.dmi'
+	icon = 'icons/obj/items/ChaplainStuff.dmi'
 	icon_state ="bible"
-	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
-	item_state ="bible"
+	inhand_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	item_state ="book"
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -14,6 +14,10 @@
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 	var/mob/affecting = null
 	var/heal_amt = 10
+	/// does this bible have faith in it?
+	var/loaded = FALSE
+	/// is this bible opened within the hand?
+	var/opened = FALSE
 
 	New()
 		..()
@@ -28,6 +32,11 @@
 	disposing()
 		..()
 		STOP_TRACKING
+
+	get_desc()
+		. = ..()
+		if (locate(/obj/item/gun/kinetic/faith) in src.contents)
+			. += " It feels a bit heavier than it should."
 
 	proc/bless(mob/M as mob, var/mob/user)
 		if (isvampire(M) || isvampiricthrall(M) || iswraith(M) || M.bioHolder.HasEffect("revenant"))
@@ -67,7 +76,13 @@
 				JOB_XP(user, "Chaplain", 1)
 
 	attackby(var/obj/item/W, var/mob/user)
-		if (istype(W, /obj/item/bible))
+		if(istype(W,/obj/item/gun/kinetic/faith))
+			if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
+				user.u_equip(W)
+				W.set_loc(src)
+				user.show_text("You hide [W] in \the [src].", "blue")
+				return
+		else if (istype(W, /obj/item/bible))
 			user.show_text("You try to put \the [W] in \the [src]. It doesn't work. You feel dumber.", "red")
 		else
 			..()
@@ -132,6 +147,11 @@
 			user.changeStatus("stunned", 15 SECONDS)
 			user.changeStatus("weakened", 15 SECONDS)
 			return
+		if (src.loaded && user.traitHolder && user.traitHolder.hasTrait("training_chaplain") && user.is_in_hands(src))
+			var/obj/item/gun/kinetic/faith/F = locate() in src.contents
+			if(F)
+				user.put_in_hand_or_drop(F)
+				return
 		return ..()
 
 	custom_suicide = 1
@@ -175,6 +195,7 @@
 		logTheThing(LOG_COMBAT, M, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
 		M.smite_gib()
 
+/// evil trapped bible which forces people to fart
 /obj/item/bible/evil
 	name = "frayed bible"
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
@@ -185,11 +206,12 @@
 			var/mob/living/carbon/human/H = AM
 			H.emote("fart")
 
+/// syndicate item for killing people when they fart
 /obj/item/bible/mini
 	//Grif
 	name = "O.C. Bible"
 	desc = "For when you don't want the good book to take up too much space in your life."
-	icon_state = "minibible"
+	icon_state = "mini"
 	item_state = null
 	w_class = W_CLASS_SMALL
 
@@ -205,6 +227,7 @@
 		smite(user)
 		return TRUE
 
+/// this bible has a special property when fart gibbing people
 /obj/item/bible/hungry
 	name = "hungry bible"
 	desc = "Huh."
@@ -256,30 +279,16 @@
 		return 1
 
 /obj/item/bible/loaded
-
 	New()
 		..()
 		new /obj/item/gun/kinetic/faith(src)
 		desc += " This is the chaplain's personal copy."
 
-	get_desc()
-		. = ..()
-		if (locate(/obj/item/gun/kinetic/faith) in src.contents)
-			. += " It feels a bit heavier than it should."
+ABSTRACT_TYPE(/obj/item/bible/custom)
+/obj/item/bible/custom
 
-	attack_hand(mob/user)
-		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain") && user.is_in_hands(src))
-			var/obj/item/gun/kinetic/faith/F = locate() in src.contents
-			if(F)
-				user.put_in_hand_or_drop(F)
-				return
-		..()
-
-	attackby(var/obj/item/W, var/mob/user)
-		if(istype(W,/obj/item/gun/kinetic/faith))
-			if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
-				user.u_equip(W)
-				W.set_loc(src)
-				user.show_text("You hide [W] in \the [src].", "blue")
-				return
-		..()
+/obj/item/bible/custom/blank
+	name = "Blank Holy Text"
+	desc = ""
+	icon_state = "blank"
+	item_state = "blank"
