@@ -12,6 +12,8 @@
 	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
+	custom_suicide = TRUE
+	suicide_distance = 0
 	var/mob/affecting = null
 	var/heal_amt = 10
 	/// does this bible have faith in it?
@@ -162,8 +164,6 @@
 			. = ..()
 			src.toggle_open()
 
-	src.custom_suicide = TRUE
-	src.suicide_distance = 0
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
