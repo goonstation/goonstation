@@ -614,7 +614,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	mats = list("MET-2"=2, "CON-1"=2, "molitz"=10, "char"=1 )
 
 /obj/item/old_grenade/oxygen
-	name = "red oxygen grenade"
+	name = "blue oxygen grenade"
 	desc = "It is set to detonate in 3 seconds."
 	det_time = 3 SECONDS
 	org_det_time = 3 SECONDS
