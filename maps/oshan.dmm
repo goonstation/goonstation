@@ -8157,7 +8157,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "ays" = (
-/obj/table/reinforced/chemistry/drugs,
+/obj/table/reinforced/chemistry/auto/drugs,
 /obj/item/toy/plush/small/bunny/mask{
 	name = "chemical safety bun";
 	pixel_x = 5;
@@ -10678,7 +10678,7 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aFQ" = (
-/obj/table/reinforced/chemistry/clericalsup,
+/obj/table/reinforced/chemistry/auto/clericalsup,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aFR" = (
@@ -11308,7 +11308,7 @@
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment1)
 "aHA" = (
-/obj/table/reinforced/chemistry/auxsup,
+/obj/table/reinforced/chemistry/auto/auxsup,
 /obj/item/paper/book/from_file/pharmacopia{
 	pixel_y = 5
 	},
@@ -11443,7 +11443,7 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aHV" = (
-/obj/table/reinforced/chemistry/basicsup,
+/obj/table/reinforced/chemistry/auto/basicsup,
 /obj/item/paper/labdrawertips,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
@@ -38592,7 +38592,7 @@
 /turf/simulated/floor/grass,
 /area/space)
 "gsh" = (
-/obj/table/reinforced/chemistry/firstaid,
+/obj/table/reinforced/chemistry/auto/firstaid,
 /obj/machinery/light/incandescent/cool,
 /obj/disposalpipe/segment/mail{
 	dir = 4
