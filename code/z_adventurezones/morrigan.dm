@@ -23,7 +23,7 @@
 /obj/item/card/id/morrigan/ce
 	name = "Misplaced CE Card"
 	icon_state = "id_com"
-	desc = "Name and picture are scratched off. It's in pretty poor shape"
+	desc = "Name and picture are scratched off. It's in pretty poor shape."
 	access = list(access_morrigan_CE, access_morrigan_engineering)
 
 /obj/item/card/id/morrigan/medical
@@ -35,7 +35,7 @@
 /obj/item/card/id/morrigan/mdir
 	name = "Barara J. June (Medical Director)"
 	icon_state = "id_com"
-	desc = "An important ID card belonging to a medical director"
+	desc = "An important ID card belonging to the medical director."
 	access = list(access_morrigan_medical, access_morrigan_mdir, access_morrigan_bridge)
 
 /obj/item/card/id/morrigan/science
@@ -47,7 +47,7 @@
 /obj/item/card/id/morrigan/rd
 	name = "Partially melted Research Director ID"
 	icon_state = "id_pink"
-	desc = "This card looks badly damaged, does it still work ?"
+	desc = "This card looks badly damaged, does it still work?"
 	access = list(access_morrigan_science, access_morrigan_RD)
 
 /obj/item/card/id/morrigan/janitor
@@ -59,7 +59,7 @@
 /obj/item/card/id/morrigan/security
 	name = "Harrier S. Jentlil (Patrol Officer)"
 	icon_state = "id_sec"
-	desc = "Wow, a still intact security ID ! This could come in handy..."
+	desc = "Wow, a still intact security ID! This could come in handy..."
 	access = list(access_morrigan_security)
 
 /obj/item/card/id/morrigan/hos
@@ -71,13 +71,13 @@
 /obj/item/card/id/morrigan/customs
 	name = "William B. Ron"
 	icon_state = "id_com"
-	desc = "Hop ID but it seems to be lacking something..."
+	desc = "A Head ID but it seems to be lacking something..."
 	access = list(access_morrigan_customs, access_morrigan_bridge)
 
 /obj/item/card/id/morrigan/captain
 	name = "Captain's Spare ID"
 	icon_state = "id_syndie"
-	desc = "This is your key to get out of here..."
+	desc = "The Captains spare ID! This should access most doors..."
 
 	New()
 		..()
@@ -86,7 +86,7 @@
 /obj/item/card/id/morrigan/all_access
 	name = "Spare HQ Card"
 	icon_state = "id_syndie"
-	desc = "Someone must've been in a rush and left this behind..."
+	desc = "Someone must've been in a rush and left this behind... could this be your key out?"
 
 	New()
 		..()
@@ -197,3 +197,158 @@
 		src.setStatusMin("weakened", 10 SECONDS)
 		if (prob(10))
 			src.say(pick( "Don't look for Lara...", "Lara??", "Lara the oven!", "Please don't talk to Lara", "LAAAAARRRAAAAAAAA!!!" ,"L-Lara."))
+
+// Areas
+
+/area/morrigan
+	name = "Morrigan Parent"
+	icon_state = "red"
+	requires_power = FALSE
+
+/area/morrigan/routing
+	name = "Syndicate Routing Depot"
+	icon_state = "depot"
+
+/area/morrigan/routing/transport
+	name = "Prisoner Transport"
+
+/area/morrigan/construction
+	name = "Construction Area"
+	icon_state = "construction"
+
+/area/morrigan/holding
+	name = "Holding Cell"
+	icon_state = "brigcell"
+
+/area/morrigan/teleporter
+	name = "Cell Teleporter"
+	icon_state = "teleporter"
+
+/area/morrigan/warden
+	name = "Warden's Office"
+	icon_state = "security"
+
+/area/morrigan/overseer
+	name = "Overseer's Office"
+	icon_state = "red"
+
+/area/morrigan/derelict
+	name = "Derelict Maintenance"
+	icon_state = "green"
+	ambient_light = "#131414"
+
+/area/morrigan/derelict/hobo
+	name = "Hobo Hovel"
+	icon_state = "crewquarters"
+
+/area/morrigan/station/brig
+	name = "Morrigan Brig"
+	icon_state = "brig"
+
+/area/morrigan/station/security
+	name = "Morrigan Security"
+	icon_state = "security"
+
+/area/morrigan/station/armory
+	name = "Morrigan Armory"
+	icon_state = "armory"
+
+/area/morrigan/station/medical
+	name = "Morrigan Medical Centre"
+	icon_state = "medbay"
+
+/area/morrigan/station/science
+	name = "Morrigan Science Centre"
+	icon_state = "science"
+
+/area/morrigan/station/engineering
+	name = "Morrigan Engineering"
+	icon_state = "engineering"
+
+/area/morrigan/station/bar
+	name = "Morrigan Bar"
+	icon_state = "bar"
+
+/area/morrigan/station/kitchen
+	name = "Morrigan Kitchen"
+	icon_state = "kitchen"
+
+/area/morrigan/station/cafe
+	name = "Morrigan Mess Hall"
+	icon_state = "cafeteria"
+
+/area/morrigan/station/botany
+	name = "Morrigan Botany"
+	icon_state = "hydro"
+
+/area/morrigan/station/chapel
+	name = "Morrigan Chapel"
+	icon_state = "chapel"
+
+/area/morrigan/station/crewquarters
+	name = "Morrigan Crew Lounge"
+	icon_state = "crewquarters"
+
+/area/morrigan/station/janitor
+	name = "Morrigan Janitor's Office"
+	icon_state = "janitor"
+
+/area/morrigan/station/clown
+	name = "Morrigan Clunwe Hole"
+	icon_state = "green"
+
+/area/morrigan/station/hallway
+	name = "Morrigan Hall"
+	icon_state = "yellow"
+
+/area/morrigan/station/exit
+	name = "Morrigan Escape Wing"
+	icon_state = "escape"
+
+/area/morrigan/station/maintenance
+	name = "Morrigan Maintenance"
+	icon_state = "imaint"
+
+/area/morrigan/station/disposals
+	name = "Morrigan Disposals"
+	icon_state = "disposals"
+
+/area/morrigan/station/podbay
+	icon_state = "hangar"
+
+/area/morrigan/station/podbay/security
+	name = "Morrigan Security Podbay"
+
+/area/morrigan/station/podbay/medical
+	name = "Morrigan Medical Podbay"
+
+/area/morrigan/station/command
+	icon_state = "purple"
+
+/area/morrigan/station/command/CE
+	name = "Morrigan Chief Quarters"
+
+/area/morrigan/station/command/RD
+	name = "Morrigan Research Director's Office"
+
+/area/morrigan/station/command/MD
+	name = "Morrigan Medical Director's Office"
+
+/area/morrigan/station/command/HOP
+	name = "Morrigan Customs Office"
+
+/area/morrigan/station/command/HOS
+	name = "Morrigan Commanders Quarters"
+
+/area/morrigan/station/command/captain
+	name = "Morrigan Captains Quarters"
+
+/area/morrigan/station/command/eva
+	name = "Morrigan EVA Storage"
+
+/area/morrigan/station/command/bridge
+	name = "Morrigan Bridge"
+
+/area/morrigan/station/command/meeting
+	name = "Morrigan Conference Room"
+
