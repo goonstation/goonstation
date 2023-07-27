@@ -18,6 +18,10 @@
 	var/loaded = FALSE
 	/// is this bible opened within the hand?
 	var/opened = FALSE
+	/// the name of the kind of book, so that we can close it.
+	var/unopened_icon_state = "bible"
+	/// the name of the kind of inhand sprite used, so that we can close it again.
+	var/unopened_item_state = "book"
 
 	New()
 		..()
@@ -147,12 +151,14 @@
 			user.changeStatus("stunned", 15 SECONDS)
 			user.changeStatus("weakened", 15 SECONDS)
 			return
-		if (src.loaded && user.traitHolder && user.traitHolder.hasTrait("training_chaplain") && user.is_in_hands(src))
+		else if (src.loaded && user.traitHolder && user.traitHolder.hasTrait("training_chaplain") && user.is_in_hands(src))
 			var/obj/item/gun/kinetic/faith/F = locate() in src.contents
 			if(F)
 				user.put_in_hand_or_drop(F)
 				return
-		return ..()
+		else
+			. = ..()
+			src.toggle_open()
 
 	custom_suicide = 1
 	suicide_distance = 0
@@ -194,6 +200,15 @@
 		M.visible_message("<span class='alert'>[M] farts on the bible.<br><b>A mysterious force smites [M]!</b></span>")
 		logTheThing(LOG_COMBAT, M, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
 		M.smite_gib()
+	proc/toggle_open()
+		if (src.opened)
+			src.icon_state = src.unopened_icon_state
+			src.item_state = src.unopened_item_state
+			src.opened = FALSE
+		else
+			src.icon_state += "_Open"
+			src.item_state += "_Open"
+			src.opened = TRUE
 
 /// evil trapped bible which forces people to fart
 /obj/item/bible/evil
@@ -289,6 +304,9 @@ ABSTRACT_TYPE(/obj/item/bible/custom)
 
 /obj/item/bible/custom/blank
 	name = "Blank Holy Text"
-	desc = ""
-	icon_state = "blank"
-	item_state = "blank"
+	desc = "Almost a holy scripture of some kind, but it seems like you have to come up with the text yourself? Someone seems to have hollowed it out for hiding things in."
+	icon_state = "Blank"
+	unopened_icon_state = "Blank"
+	item_state = "BlankBook"
+	unopened_item_state = "BlankBook"
+
