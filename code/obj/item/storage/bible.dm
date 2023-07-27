@@ -302,75 +302,72 @@
 		new /obj/item/gun/kinetic/faith(src)
 		src.desc += " This is the chaplain's personal copy."
 
-// ABSTRACT_TYPE(/obj/item/bible/custom) this marks the default bible abstract and idk what to do about it
-/obj/item/bible/custom
-
-/obj/item/bible/custom/blank
+/obj/item/bible/blank
 	name = "Blank Holy Text"
 	desc = "Seems like a holy scripture of some kind, but it seems like you have to come up with the text yourself?"
 	icon_state = "Blank"
 	item_state = "BlankBook"
 
-/obj/item/bible/custom/eye
+/obj/item/bible/eye
 	name = "The Peer"
 	desc = "A holy scripture of some kind. It seems to be looking into you."
 	icon_state = "Eye"
 	item_state = "EyeBook"
 
-/obj/item/bible/custom/eye/dark
+/obj/item/bible/eye/dark
 	icon_state = "Eye_Dark"
 	item_state = "EyeBook_Dark"
 
-/obj/item/bible/custom/green
+/obj/item/bible/green
 	name = "\the Green Texts"
 	icon_state = "Green"
 	item_state = "GreenBook"
 
-/obj/item/bible/custom/purple
+/obj/item/bible/purple
 	name = "\the Purple Texts"
 	icon_state = "Purple"
 	item_state = "PurpleBook"
 
-/obj/item/bible/custom/blue
+/obj/item/bible/blue
 	name = "\the Blue Texts"
 	icon_state = "Blue"
 	item_state = "BlueBook"
 
-/obj/item/bible/custom/clown
+/obj/item/bible/clown
 	name = "\the Clown Compendium"
 	desc = "A holy scripture... about clowns? There's something a bit unsettling about it."
 	icon_state = "Clown"
 	item_state = "ClownBook"
 
-/obj/item/bible/custom/clown/cluwne
+/obj/item/bible/clown/cluwne
 	name = "\the Clown Compendium?"
 	icon_state = "Cluwne"
 	item_state = "CluwneBook"
 
-/obj/item/bible/custom/burned
+/obj/item/bible/burned
 	name = "scorched Holy Texts"
 	desc = "Someone's set this on fire at some point. Should still work though."
 	icon_state = "Burned"
 	item_state = "BurnedBook"
 
-/obj/item/bible/custom/skeleton
+/obj/item/bible/skeleton
 	name = "\the Skeleton Scriptures"
 	desc = "A strange holy text written in sharp spidery handwriting. There's something inhuman about it."
 	icon_state = "Rubi_Skeleton"
 	item_state = "" //todo
 
-/obj/item/bible/custom/x
+/obj/item/bible/x
 	icon_state = "Paco_X"
 	item_state = "" //todo
 
-/obj/item/bible/custom/bluewhite
+/obj/item/bible/bluewhite
 	icon_state = "Paco_BlueWhite"
 	item_state = "" //todo
 
-/obj/item/bible/custom/redwhite
+/obj/item/bible/redwhite
 	icon_state = "Paco_RedWhite"
 	item_state = "" //todo
 
-/obj/item/bible/custom/redwhite/dark
+/obj/item/bible/redwhite/dark
 	icon_state = "Paco_RedDark"
 	item_state = "" //todo
