@@ -121,6 +121,9 @@
 	intact = 0
 	layer = PLATING_LAYER
 
+/turf/unsimulated/floor/plating/jen
+	icon_state = "plating_jen"
+
 /turf/unsimulated/floor/plating/scorched
 
 	New()
@@ -608,6 +611,9 @@ TYPEINFO(/turf/unsimulated/floor/circuit)
 /turf/unsimulated/floor/specialroom/chapel
 	icon_state = "chapel"
 
+/turf/unsimulated/floor/specialroom/clown
+	icon_state = "clownfloor"
+
 /turf/unsimulated/floor/specialroom/freezer
 	name = "freezer floor"
 	icon_state = "freezerfloor"
@@ -980,6 +986,12 @@ TYPEINFO(/turf/unsimulated/floor/grass)
 
 /turf/unsimulated/floor/longtile/black
 	icon_state = "longtile-dark"
+
+/turf/unsimulated/floor/longtile/blue
+	icon_state = "longtile-blue"
+
+/turf/unsimulated/floor/longtile/red
+	icon_state = "longtile-red"
 
 /////////////////////////////////////////
 
