@@ -74375,17 +74375,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/garden)
 "tat" = (
-/obj/storage/closet{
-	name = "rancher's supply closet"
-	},
-/obj/item/paper/ranch_guide,
-/obj/item/storage/box/clothing/rancher,
-/obj/item/fishing_rod,
-/obj/item/chicken_carrier,
-/obj/item/device/camera_viewer/ranch{
-	pixel_y = 5
-	},
-/obj/item/clothing/mask/chicken,
+/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "tck" = (
@@ -75851,6 +75841,10 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
+"wmd" = (
+/obj/storage/secure/closet/civilian/ranch,
+/turf/space,
+/area/space)
 "wmO" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -104146,7 +104140,7 @@ aQx
 ilw
 pJZ
 aXD
-aaa
+wmd
 aaa
 aaa
 aaa

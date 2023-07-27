@@ -2194,7 +2194,7 @@
 "aiG" = (
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	mail_tag = list("station","bridge","captain","cargo","chapel","chief_engineer","detective","electronics","engineering","genetics","hydroponics","kitchen","medbay","robotics","security","shuttlebay","storage","chemlink");
+	mail_tag = list("station","bar","bridge","captain","cargo","chapel","chief_engineer","detective","electronics","engineering","genetics","hydroponics","kitchen","medbay","mining","robotics","security","shuttlebay","storage","chemlink");
 	name = "station mail router"
 	},
 /turf/simulated/floor/green/side,
@@ -30331,8 +30331,7 @@
 "hWv" = (
 /obj/disposalpipe/switch_junction{
 	dir = 1;
-	mail_tag = "engineering";
-	name = "artlab mail router"
+	mail_tag = "engineering"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -31899,8 +31898,8 @@
 /obj/disposalpipe/switch_junction{
 	dir = 8;
 	icon_state = "pipe-sj2";
-	mail_tag = "mining";
-	name = "mining mail router"
+	mail_tag = "electronics";
+	name = "electronics mail router"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -48234,21 +48233,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
 "veb" = (
-/obj/storage/closet{
-	name = "rancher supply closet"
-	},
-/obj/item/paper/ranch_guide,
-/obj/item/fishing_rod/basic,
-/obj/item/chicken_carrier,
-/obj/item/device/camera_viewer/ranch,
-/obj/item/storage/box/syringes,
-/obj/item/satchel/hydro,
-/obj/item/clothing/mask/chicken,
-/obj/item/storage/box/clothing/rancher,
-/obj/item/reagent_containers/glass/wateringcan{
-	pixel_y = 9
-	},
-/obj/item/sponge,
+/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
@@ -49941,8 +49926,8 @@
 /obj/disposalpipe/switch_junction{
 	dir = 8;
 	icon_state = "pipe-sj2";
-	mail_tag = "electronics";
-	name = "electronics mail router"
+	mail_tag = "mining";
+	name = "mining mail router"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1

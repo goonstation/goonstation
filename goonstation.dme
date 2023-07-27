@@ -1312,6 +1312,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\networks\computer3\mainframe2\tapes.dm"
 #include "code\modules\networks\computer3\mainframe2\telesci.dm"
 #include "code\modules\networks\computer3\mainframe2\utilities.dm"
+#include "code\modules\newbee\newbee.dm"
 #include "code\modules\overlays\OverlayManager.dm"
 #include "code\modules\packets\legacy.dm"
 #include "code\modules\packets\radio_controller.dm"

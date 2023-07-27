@@ -178,9 +178,9 @@
 	hide(var/intact) //to make the little pipe section invisible, the icon changes.
 		if(on&&node)
 			if(pump_direction)
-				icon_state = "[intact && istype(loc, /turf/simulated) && level == 1 ? "h" : "" ]out"
+				icon_state = "[intact && istype(loc, /turf/simulated) && level == UNDERFLOOR ? "h" : "" ]out"
 			else
-				icon_state = "[intact && istype(loc, /turf/simulated) && level == 1 ? "h" : "" ]in"
+				icon_state = "[intact && istype(loc, /turf/simulated) && level == UNDERFLOOR ? "h" : "" ]in"
 		else
-			icon_state = "[intact && istype(loc, /turf/simulated) && level == 1 ? "h" : "" ]off"
+			icon_state = "[intact && istype(loc, /turf/simulated) && level == UNDERFLOOR ? "h" : "" ]off"
 			on = FALSE
