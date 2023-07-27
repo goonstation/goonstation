@@ -1006,6 +1006,8 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/megaphone/syndicate
 	cost = 5
 	vr_allowed = FALSE // no
+	not_in_crates = TRUE
+	can_buy = UPLINK_TRAITOR
 	job = list("Captain", "VIP", "Regional Director", "Inspector")
 
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
