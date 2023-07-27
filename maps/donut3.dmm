@@ -8142,7 +8142,7 @@
 /turf/simulated/floor/white,
 /area/station/security/quarters)
 "cpx" = (
-/obj/table/reinforced/chemistry/auxsup,
+/obj/table/reinforced/chemistry/auto/auxsup,
 /obj/item/paper/labdrawertips,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
@@ -46864,7 +46864,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "opG" = (
-/obj/table/reinforced/chemistry/basicsup,
+/obj/table/reinforced/chemistry/auto/basicsup,
 /obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = 5;
 	pixel_y = 5
@@ -59625,7 +59625,7 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "siB" = (
-/obj/table/reinforced/chemistry/auxsup,
+/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "siC" = (
@@ -64301,7 +64301,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/table/reinforced/chemistry/beakers,
+/obj/table/reinforced/chemistry/auto/beakers,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
@@ -65932,7 +65932,7 @@
 	pixel_x = 1;
 	pixel_y = -25
 	},
-/obj/table/reinforced/chemistry/drugs,
+/obj/table/reinforced/chemistry/auto/drugs,
 /obj/machinery/glass_recycler,
 /turf/simulated/floor/purpleblack/corner,
 /area/station/science/chemistry)
@@ -66033,7 +66033,7 @@
 	pixel_x = -1;
 	pixel_y = -32
 	},
-/obj/table/reinforced/chemistry/firstaid,
+/obj/table/reinforced/chemistry/auto/firstaid,
 /obj/disposalpipe/segment/mail{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -69704,7 +69704,7 @@
 	dir = 4;
 	id = "chemistry"
 	},
-/obj/table/reinforced/chemistry/clericalsup,
+/obj/table/reinforced/chemistry/auto/clericalsup,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "vrX" = (
@@ -70619,7 +70619,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/hallway/primary/south)
 "vGS" = (
-/obj/table/reinforced/chemistry/basicsup,
+/obj/table/reinforced/chemistry/auto/basicsup,
 /obj/item/storage/toolbox/emergency{
 	pixel_x = -3;
 	pixel_y = 7
@@ -75104,7 +75104,7 @@
 	dir = 4;
 	id = "chemistry"
 	},
-/obj/table/reinforced/chemistry/clericalsup,
+/obj/table/reinforced/chemistry/auto/clericalsup,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "wVo" = (
