@@ -1,7 +1,7 @@
 // rest in peace the_very_holy_global_bible_list_amen (??? - 2020)
 
 /obj/item/bible
-	name = "Holy Text"
+	name = "Holy Texts"
 	desc = "A holy scripture of some kind. Someone seems to have hollowed it out for hiding things in."
 	icon = 'icons/obj/items/ChaplainStuff.dmi'
 	icon_state ="bible"
@@ -213,7 +213,7 @@
 
 /// evil trapped bible which forces people to fart
 /obj/item/bible/evil
-	name = "frayed Holy Text"
+	name = "frayed Holy Texts"
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 
 	Crossed(atom/movable/AM as mob)
@@ -225,7 +225,7 @@
 /// syndicate item for killing people when they fart
 /obj/item/bible/mini
 	//Grif
-	name = "O.C. Holy Text"
+	name = "O.C. Holy Texts"
 	desc = "For when you don't want the good book to take up too much space in your life."
 	icon_state = "mini"
 	item_state = null
@@ -238,14 +238,14 @@
 		if(..())
 			return TRUE
 
-		user.visible_message("<span class='alert'>[user] farts on the holy text.<br><b>A mysterious force smites [user]!</b></span>")
+		user.visible_message("<span class='alert'>[user] farts on the [src].<br><b>A mysterious force smites [user]!</b></span>")
 		logTheThing(LOG_COMBAT, user, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
 		smite(user)
 		return TRUE
 
 /// this bible has a special property when fart gibbing people
 /obj/item/bible/hungry
-	name = "hungry Holy Text"
+	name = "hungry Holy Texts"
 	desc = "Huh."
 
 	custom_suicide = TRUE
@@ -305,7 +305,7 @@ ABSTRACT_TYPE(/obj/item/bible/custom)
 
 /obj/item/bible/custom/blank
 	name = "Blank Holy Text"
-	desc = "Almost a holy scripture of some kind, but it seems like you have to come up with the text yourself? Someone seems to have hollowed it out for hiding things in."
+	desc = "Seems like a holy scripture of some kind, but it seems like you have to come up with the text yourself?"
 	icon_state = "Blank"
 	unopened_icon_state = "Blank"
 	item_state = "BlankBook"
@@ -313,7 +313,7 @@ ABSTRACT_TYPE(/obj/item/bible/custom)
 
 /obj/item/bible/custom/eye
 	name = "The Peer"
-	desc = "A holy scripture of some kind. It seems to be looking into you. Someone seems to have hollowed it out for hiding things in."
+	desc = "A holy scripture of some kind. It seems to be looking into you."
 	icon_state = "Eye"
 	item_state = "EyeBook"
 	unopened_icon_state = "Eye"
@@ -331,3 +331,73 @@ ABSTRACT_TYPE(/obj/item/bible/custom)
 	item_state = "GreenBook"
 	unopened_icon_state = "Green"
 	unopened_item_state = "GreenBook"
+
+/obj/item/bible/custom/purple
+	name = "\the Purple Texts"
+	icon_state = "Purple"
+	item_state = "PurpleBook"
+	unopened_icon_state = "Purple"
+	unopened_item_state = "PurpleBook"
+
+/obj/item/bible/custom/blue
+	name = "\the Blue Texts"
+	icon_state = "Blue"
+	item_state = "BlueBook"
+	unopened_icon_state = "Blue"
+	unopened_item_state = "BlueBook"
+
+/obj/item/bible/custom/clown
+	name = "\the Clown Compendium"
+	desc = "A holy scripture... about clowns? There's something a bit unsettling about it."
+	icon_state = "Clown"
+	item_state = "ClownBook"
+	unopened_icon_state = "Clown"
+	unopened_item_state = "ClownBook"
+
+/obj/item/bible/custom/clown/cluwne
+	name = "\the Clown Compendium?"
+	icon_state = "Cluwne"
+	item_state = "CluwneBook"
+	unopened_icon_state = "Cluwne"
+	unopened_item_state = "CluwneBook"
+
+/obj/item/bible/custom/burned
+	name = "scorched Holy Texts"
+	desc = "Someone's set this on fire at some point. Should still work though."
+	icon_state = "Burned"
+	item_state = "BurnedBook"
+	unopened_icon_state = "Burned"
+	unopened_item_state = "BurnedBook"
+
+/obj/item/bible/custom/skeleton
+	name = "\the Skeleton Scriptures"
+	desc = "A strange holy text written in sharp spidery handwriting. There's something inhuman about it."
+	icon_state = "Rubi_Skeleton"
+	item_state = "" //todo
+	unopened_icon_state = "Rubi_Skeleton"
+	unopened_item_state = ""//todo
+
+/obj/item/bible/custom/x
+	icon_state = "Paco_X"
+	item_state = "" //todo
+	unopened_icon_state = "Paco_X"
+	unopened_item_state = ""//todo
+
+/obj/item/bible/custom/bluewhite
+	icon_state = "Paco_BlueWhite"
+	item_state = "" //todo
+	unopened_icon_state = "Paco_BlueWhite"
+	unopened_item_state = ""//todo
+
+/obj/item/bible/custom/redwhite
+	icon_state = "Paco_RedWhite"
+	item_state = "" //todo
+	unopened_icon_state = "Paco_RedWhite"
+	unopened_item_state = ""//todo
+
+/obj/item/bible/custom/redwhite/dark
+	icon_state = "Paco_RedDark"
+	item_state = "" //todo
+	unopened_icon_state = "Paco_RedDark"
+	unopened_item_state = ""//todo
+
