@@ -17,6 +17,10 @@ proc/generate_teleareas()
 			var/turf/T = area.contents[1]
 			if (T?.z == Z_LEVEL_STATION)
 				teleareas[area.name] = area
-		if(istype(area, /area/diner) || istype(area, /area/wizard_station))
+		if (istype(area, /area/diner))
+			var/turf/T = area.contents[1]
+			if (!isrestrictedz(T?.z))
+				teleareas[area.name] = area
+		if(istype(area, /area/wizard_station))
 			teleareas[area.name] = area
 	sortList(teleareas, /proc/cmp_text_asc)
