@@ -2,7 +2,7 @@
 
 /obj/item/bible
 	name = "Holy Text"
-	desc = "A holy scripture of some sort or another. Someone seems to have hollowed it out for hiding things in."
+	desc = "A holy scripture of some kind. Someone seems to have hollowed it out for hiding things in."
 	icon = 'icons/obj/items/ChaplainStuff.dmi'
 	icon_state ="bible"
 	inhand_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
@@ -52,8 +52,8 @@
 			JOB_XP(user, "Chaplain", 2)
 		else
 			var/mob/living/H = M
-			if( istype(H) )
-				if( prob(25) )
+			if(istype(H) )
+				if(prob(25))
 					H.delStatus("bloodcurse")
 					H.cure_disease_by_path(/datum/ailment/disease/cluwneing_around/cluwne)
 				if(prob(25))
@@ -92,9 +92,9 @@
 			..()
 
 	attack(mob/M, mob/user)
-		var/chaplain = 0
+		var/chaplain = FALSE
 		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
-			chaplain = 1
+			chaplain = TRUE
 		if (!chaplain)
 			boutput(user, "<span class='alert'>The book sizzles in your hands.</span>")
 			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, 10)
@@ -118,8 +118,8 @@
 			var/is_atheist = M.traitHolder?.hasTrait("atheist")
 			if (ishuman(M) && prob(60) && !(is_atheist && !is_undead))
 				bless(M, user)
-				M.visible_message("<span class='alert'><B>[user] heals [M] with the power of Christ!</B></span>")
-				var/deity = is_atheist ? "a god you don't believe in" : "Christ"
+				M.visible_message("<span class='alert'><B>[user] heals [M] with the power of the gods!</B></span>")
+				var/deity = is_atheist ? "a god you don't believe in" : "the gods"
 				boutput(M, "<span class='alert'>May the power of [deity] compel you to be healed!</span>")
 				var/healed = is_undead ? "damaged undead" : "healed"
 				logTheThing(LOG_COMBAT, user, "biblically [healed] [constructTarget(M,"combat")]")
@@ -160,8 +160,8 @@
 			. = ..()
 			src.toggle_open()
 
-	custom_suicide = 1
-	suicide_distance = 0
+	src.custom_suicide = TRUE
+	src.suicide_distance = 0
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
@@ -179,15 +179,15 @@
 			return FALSE
 
 		if (farty_party)
-			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>The gods seem to approve.</b></span>")
+			user.visible_message("<span class='alert'>[user] farts on the [src].<br><b>The gods seem to approve.</b></span>")
 			return FALSE
 
 		if (user.traitHolder?.hasTrait("atheist"))
-			user.visible_message("<span class='alert'>[user] farts on the bible with particular vindication.<br><b>Against all odds, [user] remains unharmed!</b></span>")
+			user.visible_message("<span class='alert'>[user] farts on the [src] with particular vindication.<br><b>Against all odds, [user] remains unharmed!</b></span>")
 			return FALSE
 		else if (ishuman(user) && user:unkillable)
-			user.visible_message("<span class='alert'>[user] farts on the bible.</span>")
-			user:unkillable = 0
+			user.visible_message("<span class='alert'>[user] farts on the [src].</span>")
+			user:unkillable = FALSE
 			user.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 			heavenly_spawn(user)
 			user?.gib()
@@ -197,9 +197,10 @@
 			return TRUE
 
 	proc/smite(mob/M)
-		M.visible_message("<span class='alert'>[M] farts on the bible.<br><b>A mysterious force smites [M]!</b></span>")
+		M.visible_message("<span class='alert'>[M] farts on the [src].<br><b>A mysterious force smites [M]!</b></span>")
 		logTheThing(LOG_COMBAT, M, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
 		M.smite_gib()
+
 	proc/toggle_open()
 		if (src.opened)
 			src.icon_state = src.unopened_icon_state
@@ -212,7 +213,7 @@
 
 /// evil trapped bible which forces people to fart
 /obj/item/bible/evil
-	name = "frayed bible"
+	name = "frayed Holy Text"
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 
 	Crossed(atom/movable/AM as mob)
@@ -224,7 +225,7 @@
 /// syndicate item for killing people when they fart
 /obj/item/bible/mini
 	//Grif
-	name = "O.C. Bible"
+	name = "O.C. Holy Text"
 	desc = "For when you don't want the good book to take up too much space in your life."
 	icon_state = "mini"
 	item_state = null
@@ -237,47 +238,47 @@
 		if(..())
 			return TRUE
 
-		user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
+		user.visible_message("<span class='alert'>[user] farts on the holy text.<br><b>A mysterious force smites [user]!</b></span>")
 		logTheThing(LOG_COMBAT, user, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
 		smite(user)
 		return TRUE
 
 /// this bible has a special property when fart gibbing people
 /obj/item/bible/hungry
-	name = "hungry bible"
+	name = "hungry Holy Text"
 	desc = "Huh."
 
-	custom_suicide = 1
+	custom_suicide = TRUE
 	suicide_distance = 0
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
-			return 0
+			return FALSE
 		if (!farting_allowed)
-			return 0
+			return FALSE
 		if (farty_party)
-			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>The gods seem to approve.</b></span>")
-			return 0
-		user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
+			user.visible_message("<span class='alert'>[user] farts on the [src].<br><b>The gods seem to approve.</b></span>")
+			return FALSE
+		user.visible_message("<span class='alert'>[user] farts on the [src].<br><b>A mysterious force smites [user]!</b></span>")
 		user.u_equip(src)
 		src.layer = initial(src.layer)
 		src.set_loc(user.loc)
 		var/list/gibz = user.gib(0, 1)
 		SPAWN(3 SECONDS)//this code is awful lol.
-			for( var/i = 1, i <= 500, i++ )
-				for( var/obj/gib in gibz )
+			for(var/i = 1, i <= 500, i++)
+				for( var/obj/gib in gibz)
 					if(!gib.loc) continue
-					step_to( gib, src )
-					if( GET_DIST( gib, src ) == 0 )
-						animate( src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 3 )
-						qdel( gib )
-						if(prob( 50 )) playsound( get_turf( src ), 'sound/voice/burp.ogg', 10, 1 )
+					step_to(gib, src)
+					if( GET_DIST(gib, src) == 0 )
+						animate(src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 3)
+						qdel(gib)
+						if(prob( 50 )) playsound( get_turf( src ), 'sound/voice/burp.ogg', 10, 1)
 				sleep(0.3 SECONDS)
-		return 1
+		return TRUE
 	farty_heresy(var/mob/user)
 		if (farty_party)
-			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>The gods seem to approve.</b></span>")
-			return 0
-		user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
+			user.visible_message("<span class='alert'>[user] farts on the [src].<br><b>The gods seem to approve.</b></span>")
+			return FALSE
+		user.visible_message("<span class='alert'>[user] farts on the [src].<br><b>A mysterious force smites [user]!</b></span>")
 		user.u_equip(src)
 		src.layer = initial(src.layer)
 		src.set_loc(user.loc)
@@ -291,13 +292,13 @@
 						qdel( gib )
 						if(prob( 50 )) playsound( get_turf( src ), 'sound/voice/burp.ogg', 10, 1 )
 				sleep(0.3 SECONDS)
-		return 1
+		return TRUE
 
 /obj/item/bible/loaded
 	New()
 		..()
 		new /obj/item/gun/kinetic/faith(src)
-		desc += " This is the chaplain's personal copy."
+		src.desc += " This is the chaplain's personal copy."
 
 ABSTRACT_TYPE(/obj/item/bible/custom)
 /obj/item/bible/custom
@@ -310,3 +311,23 @@ ABSTRACT_TYPE(/obj/item/bible/custom)
 	item_state = "BlankBook"
 	unopened_item_state = "BlankBook"
 
+/obj/item/bible/custom/eye
+	name = "The Peer"
+	desc = "A holy scripture of some kind. It seems to be looking into you. Someone seems to have hollowed it out for hiding things in."
+	icon_state = "Eye"
+	item_state = "EyeBook"
+	unopened_icon_state = "Eye"
+	unopened_item_state = "EyeBook"
+
+/obj/item/bible/custom/eye/dark
+	icon_state = "Eye_Dark"
+	item_state = "EyeBook_Dark"
+	unopened_icon_state = "Eye_Dark"
+	unopened_item_state = "EyeBook_Dark"
+
+/obj/item/bible/custom/green
+	name = "\the Green Texts"
+	icon_state = "Green"
+	item_state = "GreenBook"
+	unopened_icon_state = "Green"
+	unopened_item_state = "GreenBook"
