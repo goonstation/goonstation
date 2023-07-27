@@ -472,7 +472,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated
 	icon_state = "intact"
 	color = "#FF0000"
-	minimum_temperature_difference = 10000
+	minimum_temperature_difference = 10000 KELVIN
 	thermal_conductivity = 0
 	level = OVERFLOOR
 	alpha = 255
@@ -522,7 +522,7 @@
 	level = OVERFLOOR
 	alpha = 255
 
-	minimum_temperature_difference = 20
+	minimum_temperature_difference = 20 KELVIN
 	thermal_conductivity = WINDOW_HEAT_TRANSFER_COEFFICIENT
 	fatigue_pressure = INFINITY
 
