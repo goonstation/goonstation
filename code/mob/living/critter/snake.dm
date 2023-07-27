@@ -10,7 +10,7 @@
 	can_throw = FALSE
 	can_grab = TRUE
 	can_disarm = FALSE
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	name_the_meat = FALSE
 	max_skins = 1
 	health_brute = 15
