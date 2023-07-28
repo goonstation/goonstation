@@ -544,7 +544,7 @@ Alien/mutant/other fish:
 	icon_state = "blobfish"
 	inhand_color = "#da8fac"
 	value  = FISH_RARITY_RARE
-	fillet_type = /obj/item/material_piece/wad/blob/random
+	slice_product = /obj/item/material_piece/wad/blob/random
 
 //other
 /obj/item/reagent_containers/food/fish/real_goldfish
