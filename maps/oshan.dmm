@@ -36236,16 +36236,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
-"cBU" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/mining/staff_room)
 "cCv" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -44481,6 +44471,17 @@
 /obj/item/device/radio/intercom/science,
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
+"sSf" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = "";
+	pixel_y = -17
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/mining/staff_room)
 "sSO" = (
 /obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/specialroom/medbay,
@@ -85120,7 +85121,7 @@ cjb
 bvx
 bvx
 bvx
-bvx
+sSf
 aSQ
 bwd
 bAN
@@ -85423,7 +85424,7 @@ bvz
 bvx
 bvx
 bvx
-cBU
+buS
 buS
 buS
 buS
