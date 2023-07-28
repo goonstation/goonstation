@@ -24,7 +24,7 @@ ABSTRACT_TYPE(/obj/item/roboupgrade)
 /obj/item/roboupgrade/proc/upgrade_activate(mob/living/silicon/robot/user)
 	if (!user)
 		return 1
-	if(user.hasStatus("module_disabled"))
+	if(user.hasStatus("upgrade_disabled"))
 		boutput(user, "<span class='alert'>Your modules are currently disabled!</span>")
 		return 1
 	if (!src.activated && !src.active)
