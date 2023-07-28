@@ -526,6 +526,11 @@ Alien/mutant/other fish:
 		setProperty("flammable", 8)
 		return ..()
 
+	pickup(mob/user)
+		..()
+		if (prob(50))
+			user.changeStatus("burning", pick(3, 5) SECONDS)
+
 /obj/item/fish/igneous_fish
 	name = "igneous fish"
 	desc = "A fish formed of cooled volcanic magma, neat! Still hot to handle though!"
@@ -544,6 +549,7 @@ Alien/mutant/other fish:
 	icon_state = "blobfish"
 	inhand_color = "#da8fac"
 	value  = FISH_RARITY_RARE
+	fillet_type = /obj/item/material_piece/wad/blob/random
 
 //other
 /obj/item/fish/real_goldfish
