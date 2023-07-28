@@ -1,5 +1,9 @@
 
 (t)fri jul 28 23
+(u)UnfunnyPerson
+(p)15034
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)Shamblers will eat limbs while using devour.
 (u)Kubius
 (p)15127
 (e)🗺⚖|A-Mapping, C-Balance
