@@ -2,7 +2,7 @@
 
 /obj/item/bible
 	name = "Holy Texts"
-	desc = "A holy scripture of some kind. Someone seems to have hollowed it out for hiding things in."
+	desc = "A holy scripture of some kind."
 	icon = 'icons/obj/items/ChaplainStuff.dmi'
 	icon_state ="bible"
 	inhand_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
@@ -358,12 +358,12 @@
 
 /obj/item/bible/x
 	icon_state = "Paco_X"
-	item_state = "" //todo
+	item_state = "Paco_XBook"
 
 /obj/item/bible/bluewhite
 	icon_state = "Paco_BlueWhite"
 	item_state = "" //todo
-
+// note that redwhite open and bluewhite open are identical
 /obj/item/bible/redwhite
 	icon_state = "Paco_RedWhite"
 	item_state = "" //todo
@@ -371,3 +371,9 @@
 /obj/item/bible/redwhite/dark
 	icon_state = "Paco_RedDark"
 	item_state = "" //todo
+
+/obj/item/bible/sulphur
+	name = "Sacred Sulphuric Script"
+	desc = "A holy scripture of some kind?"
+	icon_state = "Sulphur"
+	item_state = "SulphurBook"
