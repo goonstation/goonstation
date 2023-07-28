@@ -465,7 +465,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			if(attached)
 				var/datum/powernet/PN = attached.get_powernet()
 				if(PN)
-					var/drained = min ( drain_rate, PN.avail )
+					var/drained = min ( drain_rate, (PN.avail - PN.newload) )
 					PN.newload += drained
 					power_drained += drained
 
