@@ -280,7 +280,7 @@
 					var/area/area = get_area(src)
 					if (IX.expend_interdict(6,src,TRUE)) //This protects mobs from radstorms/wormholes/magnetic biofields
 						src.changeStatus("spatial_protection", 3 SECONDS)
-					if ((src.loc && isarea(A)) && A.irradiated)
+					if (istype(area) && area.irradiated)
 						IX.resisted = TRUE
 					if (!iscarbon(src)) //Prevents non-carbons from getting the Zephyr stam boost, but still protects other mobs
 						break
