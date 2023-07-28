@@ -111,6 +111,9 @@ Alien/mutant/other fish:
 			..(user, user) // bonk
 		else
 			..()
+		src.slapsound()
+
+	proc/slapsound()
 		playsound(src.loc, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
 
 	attackby(var/obj/item/W, var/mob/user)
@@ -507,6 +510,9 @@ Alien/mutant/other fish:
 	icon_state = "sun_fish"
 	inhand_color = "#ebde2d"
 	value  = FISH_RARITY_LEGENDARY
+	New()
+		. = ..()
+		AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 180, TRUE)
 
 //lava moon
 /obj/item/fish/lava_fish
@@ -550,9 +556,12 @@ Alien/mutant/other fish:
 
 /obj/item/fish/treefish
 	name = "arboreal bass"
-	desc = "TODO"
+	desc = "This leafy fish's rough scales resemble coarse tree bark."
 	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
 	icon_state = "treefish"
 	inhand_color = "#22c912"
 	value  = FISH_RARITY_RARE
 	fillet_type = /obj/item/material_piece/organic/wood
+
+	slapsound()
+		playsound(src.loc, 'sound/impact_sounds/Bush_Hit.ogg', 50, 1, -1)
