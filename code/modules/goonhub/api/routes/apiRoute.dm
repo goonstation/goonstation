@@ -10,6 +10,8 @@
 	var/path = null
 	/// Parameters for the call
 	var/list/parameters = null
+	/// Body of the request, invalid for GET
+	var/datum/apiBody/body = null
 	/// The expected type upon deserialization
 	var/correct_response = "string"
 

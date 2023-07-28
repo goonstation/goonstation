@@ -108,7 +108,7 @@ var/global/datum/apiHandler/apiHandler
 
 		// Actual request
 		var/datum/http_request/request = new()
-		request.prepare(route.method, jointext(req, ""), headers, "")
+		request.prepare(route.method, jointext(req, ""), route.body.toJson(), headers, "")
 		request.begin_async()
 		var/time_started = TIME
 		UNTIL(request.is_complete() || (TIME - time_started) > 10 SECONDS)
