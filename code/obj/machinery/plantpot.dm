@@ -702,7 +702,7 @@ TYPEINFO(/obj/machinery/plantpot)
 				return
 			else
 				//corrects the amount of reagents shown to have been used when pouring into a tray
-                user.visible_message("<span class='notice'>[user] pours [min(W:amount_per_transfer_from_this,W.reagents.total_volume)] units of [W]'s contents into [src].</span>")
+				user.visible_message("<span class='notice'>[user] pours [min(W:amount_per_transfer_from_this,W.reagents.total_volume)] units of [W]'s contents into [src].</span>")
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if(!(user in src.contributors))
