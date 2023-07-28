@@ -876,6 +876,8 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	mats = list("MET-1" = 10, "CON-1" = 10, "CRY-1" = 10)
 }
 
+
+#define CALC_DELAY(C) max(initial(C.move_lag) - src.speedup + src.slowdown, 0.1)
 /// the conveyor control switch
 /obj/machinery/conveyor_switch
 	name = "conveyor switch"
@@ -895,14 +897,20 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	anchored = ANCHORED
 	/// time last used
 	var/last_used = 0
+	///How much this switch is configured to manually slow down by
+	VAR_PROTECTED/slowdown = 0
+	///How much speed boost this switch is getting
+	VAR_PROTECTED/speedup = 0
 
 	New()
 		. = ..()
 		UnsubscribeProcess()
 		START_TRACKING
 		UpdateIcon()
-		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", PROC_REF(trigger))
+		if (!isrestrictedz(src.z))
+			AddComponent(/datum/component/mechanics_holder)
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Flip", PROC_REF(trigger))
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Speed", PROC_REF(set_speed))
 		conveyors = list()
 		SPAWN(0.5 SECONDS)
 			link_conveyors()
@@ -929,6 +937,26 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	proc/trigger(var/inp)
 		attack_hand(usr) //bit of a hack but hey.
 		return
+
+	proc/set_speed(datum/mechanicsMessage/msg)
+		var/speed = text2num_safe(msg.signal)
+		if (!speed)
+			return
+		speed = clamp(speed, 1, 10)
+		src.update_speed(slowdown = (1 - speed/10) * 5)
+
+	proc/update_speed(speedup = null, slowdown = null)
+		for_by_tcl(S, /obj/machinery/conveyor_switch)
+			if(S.id != src.id)
+				continue
+			if (!isnull(speedup))
+				S.speedup = speedup
+			if (!isnull(slowdown))
+				S.slowdown = slowdown
+
+		for (var/obj/machinery/conveyor/C as anything in conveyors)
+			if (C.id == src.id)
+				C.move_lag = CALC_DELAY(C)
 
 	/// update the icon depending on the position
 	update_icon()
@@ -970,8 +998,11 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 			if (C.id == src.id)
 				C.operating = position
 				C.setdir()
+				C.move_lag = CALC_DELAY(C)
+
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"switchTriggered")
 
+#undef CALC_DELAY
 /obj/machinery/conveyor_switch/built/
 	desc = "A conveyor control switch. This one looks like it was built recently."
 
@@ -1070,8 +1101,7 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	proc/update_belts()
 		for_by_tcl(S, /obj/machinery/conveyor_switch)
 			if(S.id == "carousel")
-				for(var/obj/machinery/conveyor/C in S.conveyors)
-					C.move_lag = max(initial(C.move_lag) - speedup, 0.1)
+				S.update_speed(speedup = speedup)
 				break
 
 	update_icon()

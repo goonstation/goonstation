@@ -12,7 +12,7 @@
 	atksilicon = 0
 	firevuln = 1
 	brutevuln = 1
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	pet_text = list("gently baps", "pets", "cuddles")
 	feed_text = "chatters happily!"
 
@@ -76,7 +76,7 @@
 	angertext = "squawks angrily at"
 	death_text = "%src% lets out a final weak squawk and keels over."
 	chase_text = "flails into"
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	flying = 1
 	health_gain_from_food = 2
 	feed_text = "chirps happily!"
@@ -873,7 +873,7 @@
 	brutevuln = 1
 	angertext = "caws angrily at"
 	death_text = "%src% lets out a final weak caw and keels over."
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	flying = 1
 	chases_food = 1
 	health_gain_from_food = 2
@@ -927,7 +927,7 @@
 	angertext = "caws angrily at"
 	death_text = "%src% lets out a final weak caw and keels over."
 	chase_text = "flails into"
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	flying = 1
 	chases_food = 1
 	health_gain_from_food = 2
@@ -1011,8 +1011,6 @@
 		src.last_feather_time = world.time
 		return F
 
-
-
 /obj/critter/meatslinky // ferrets for wire
 	name = "space ferret"
 	desc = "A ferret that came from space. Or maybe went to space. Who knows how it got here?"
@@ -1028,7 +1026,7 @@
 	atksilicon = 0
 	firevuln = 1
 	brutevuln = 1
-	butcherable = 2
+	butcherable = BUTCHER_YOU_MONSTER
 	angertext = "wigs out at"
 	atk_text = "flails itself into"
 	atk_brute_amt = 3
@@ -1166,7 +1164,7 @@
 	atksilicon = 0
 	firevuln = 1
 	brutevuln = 1
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	health_gain_from_food = 2
 	feed_text = "happily begins washing its food!"
 	pet_text = list("pets", "cuddles", "pats", "snuggles")
