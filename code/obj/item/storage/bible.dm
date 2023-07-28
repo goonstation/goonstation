@@ -354,11 +354,17 @@
 	name = "\the Skeleton Scriptures"
 	desc = "A strange holy text written in sharp spidery handwriting. There's something inhuman about it."
 	icon_state = "Rubi_Skeleton"
-	item_state = "" //todo
+	item_state = "Rubi_SkeletonBook"
 
 /obj/item/bible/x
 	icon_state = "Paco_X"
 	item_state = "Paco_XBook"
+
+/obj/item/bible/sulphur
+	name = "Sacred Sulphuric Script"
+	desc = "A holy scripture of some kind?"
+	icon_state = "Sulphur"
+	item_state = "SulphurBook"
 
 /obj/item/bible/bluewhite
 	icon_state = "Paco_BlueWhite"
@@ -371,9 +377,3 @@
 /obj/item/bible/redwhite/dark
 	icon_state = "Paco_RedDark"
 	item_state = "" //todo
-
-/obj/item/bible/sulphur
-	name = "Sacred Sulphuric Script"
-	desc = "A holy scripture of some kind?"
-	icon_state = "Sulphur"
-	item_state = "SulphurBook"
