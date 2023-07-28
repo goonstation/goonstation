@@ -3039,9 +3039,6 @@
 /area/station/storage/warehouse)
 "bsd" = (
 /obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/redblack/corner{
@@ -26943,14 +26940,6 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
-"lxi" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/redblack/corner{
-	dir = 4
-	},
-/area/station/hangar/sec)
 "lxm" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -40057,19 +40046,16 @@
 	},
 /area/station/hallway/secondary/exit)
 "rsp" = (
-/obj/machinery/networked/secdetector{
-	area_access = 1;
-	detector_id = "Inner Secure Bay Alarm";
-	dir = 8;
-	setup_beam_length = 3
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/storage/secure/crate/gear{
+	desc = "A secure crate for transferring contraband, and definitely not people.";
+	name = "Secure Transfer Crate";
+	req_access_txt = "1"
 	},
 /turf/simulated/floor/redblack{
 	dir = 10
@@ -54940,14 +54926,6 @@
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northwest)
-"xZq" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/redblack{
-	dir = 8
-	},
-/area/station/hangar/sec)
 "xZx" = (
 /obj/decal/cleanable/oil{
 	icon_state = "streak1"
@@ -88849,7 +88827,7 @@ vuc
 hWc
 lHq
 poP
-xZq
+poP
 rsp
 fkb
 fJK
@@ -89151,7 +89129,7 @@ phq
 iGw
 ttO
 bsd
-lxi
+qiW
 pmO
 uBF
 qhX
