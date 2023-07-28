@@ -8157,7 +8157,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "ays" = (
-/obj/table/reinforced/chemistry/auto,
+/obj/table/reinforced/chemistry/auto/drugs,
 /obj/item/toy/plush/small/bunny/mask{
 	name = "chemical safety bun";
 	pixel_x = 5;
@@ -8556,7 +8556,6 @@
 /area/station/hallway/primary/north)
 "azw" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/phone{
 	pixel_y = 6
 	},
@@ -10679,9 +10678,7 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aFQ" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/box/patchbox,
-/obj/item/storage/box/syringes,
+/obj/table/reinforced/chemistry/auto/clericalsup,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aFR" = (
@@ -10859,9 +10856,6 @@
 /area/research_outpost/toxins)
 "aGt" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/gloves/latex,
-/obj/item/hand_labeler,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aGu" = (
@@ -11314,11 +11308,10 @@
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment1)
 "aHA" = (
-/obj/item/device/reagentscanner,
-/obj/item/device/reagentscanner,
-/obj/table/reinforced/chemistry/auto,
-/obj/item/clothing/glasses/spectro,
-/obj/item/clothing/glasses/spectro,
+/obj/table/reinforced/chemistry/auto/auxsup,
+/obj/item/paper/book/from_file/pharmacopia{
+	pixel_y = 5
+	},
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aHC" = (
@@ -11450,11 +11443,8 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aHV" = (
-/obj/item/storage/box/beakerbox,
-/obj/item/storage/box/beakerbox,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/table/reinforced/chemistry/auto,
+/obj/table/reinforced/chemistry/auto/basicsup,
+/obj/item/paper/labdrawertips,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aHW" = (
@@ -14894,13 +14884,6 @@
 /area/station/maintenance/east)
 "aSQ" = (
 /obj/machinery/manufacturer/hangar,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
 /obj/machinery/light/incandescent/warm/very,
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)
@@ -15981,9 +15964,9 @@
 /area/evilreaver/genetics)
 "aWI" = (
 /obj/storage/closet/coffin,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/item/seed/cannabis,
 /obj/item/seed/cannabis,
 /turf/simulated/floor/martian,
@@ -22709,7 +22692,6 @@
 	name = "Mining Pod Bay Blast Door Control";
 	pixel_x = -22
 	},
-/obj/storage/closet/welding_supply,
 /turf/simulated/floor/caution/westeast,
 /area/station/mining/staff_room)
 "bvx" = (
@@ -35423,16 +35405,6 @@
 /obj/machinery/conveyor/NS/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
-"cjP" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/central)
-"cjQ" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/central)
 "cjS" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -38493,19 +38465,16 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "giE" = (
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
-	id = "mining_podbay"
-	},
-/obj/forcefield/energyshield/perma/doorlink,
-/obj/decal/tile_edge/floorguide/arrow_n{
-	pixel_x = 8;
-	pixel_y = 8
-	},
 /obj/machinery/r_door_control{
 	id = "mining_podbay";
 	pixel_x = -32
 	},
-/turf/simulated/floor/shuttlebay,
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	name = "Mining"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining,
+/turf/simulated/floor/caution/westeast,
 /area/station/mining/staff_room)
 "giP" = (
 /obj/lattice,
@@ -38602,9 +38571,7 @@
 /turf/simulated/floor/grass,
 /area/space)
 "gsh" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/table/reinforced/chemistry/auto/firstaid,
 /obj/machinery/light/incandescent/cool,
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -38893,9 +38860,9 @@
 /obj/storage/crate/freezer{
 	name = "Freezer"
 	},
-/obj/item/fish/salmon,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
@@ -44504,6 +44471,17 @@
 /obj/item/device/radio/intercom/science,
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
+"sSf" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = "";
+	pixel_y = -17
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/mining/staff_room)
 "sSO" = (
 /obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/specialroom/medbay,
@@ -45279,6 +45257,10 @@
 /obj/mapping_helper/access/tech_storage,
 /turf/simulated/floor,
 /area/station/storage/tech)
+"uPg" = (
+/obj/storage/closet/welding_supply,
+/turf/simulated/floor/shuttlebay,
+/area/station/mining/staff_room)
 "uPl" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/mail,
@@ -84228,7 +84210,7 @@ fJg
 edf
 kjH
 aDr
-cjP
+aDr
 giE
 bvw
 bwe
@@ -84530,9 +84512,9 @@ ckU
 cju
 cju
 cju
-cjQ
-cjb
-bvx
+cju
+buS
+uPg
 bvx
 bvx
 bvx
@@ -85136,10 +85118,10 @@ ckv
 rsA
 ciW
 cjb
-bvz
 bvx
 bvx
 bvx
+sSf
 aSQ
 bwd
 bAN
@@ -85437,12 +85419,12 @@ vCx
 ciW
 ciW
 ciW
+cjb
+bvz
+bvx
+bvx
+bvx
 buS
-buS
-ahh
-ahh
-ahh
-buQ
 buS
 buS
 buS
@@ -85739,12 +85721,12 @@ tNa
 nMJ
 ciW
 kfk
-aCD
-aqn
-aqn
-aqn
-aqn
-chn
+buS
+buS
+ahh
+ahh
+ahh
+buQ
 aqn
 bAO
 bBV
@@ -90211,8 +90193,8 @@ jTS
 akC
 aqW
 aqW
-mnD
 cmq
+mnD
 aqW
 aqW
 auP
