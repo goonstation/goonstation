@@ -21085,27 +21085,17 @@
 	},
 /area/station/crew_quarters/bar)
 "gqO" = (
-/obj/storage/closet{
-	name = "rancher supply closet"
-	},
-/obj/item/paper/ranch_guide,
-/obj/item/fishing_rod/basic,
-/obj/item/chicken_carrier,
 /obj/machinery/light_switch/east{
 	dir = 4;
 	pixel_x = -28;
 	pixel_y = -4
 	},
-/obj/item/device/camera_viewer/ranch,
-/obj/item/storage/box/syringes,
-/obj/item/satchel/hydro,
-/obj/item/clothing/mask/chicken,
-/obj/item/storage/box/clothing/rancher,
 /obj/blind_switch/east{
 	dir = 4;
 	pixel_x = -28;
 	pixel_y = 4
 	},
+/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "gqX" = (
@@ -64362,7 +64352,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/table/reinforced/chemistry/beakers,
+/obj/table/reinforced/chemistry/auto/beakers,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
@@ -65993,7 +65983,7 @@
 	pixel_x = 1;
 	pixel_y = -25
 	},
-/obj/table/reinforced/chemistry/beakers,
+/obj/table/reinforced/chemistry/auto/beakers,
 /obj/machinery/glass_recycler,
 /turf/simulated/floor/purpleblack/corner,
 /area/station/science/chemistry)

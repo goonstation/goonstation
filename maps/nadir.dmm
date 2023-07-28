@@ -24129,8 +24129,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/medical/staff)
 "ksL" = (
-/obj/table/reinforced/auto,
-/obj/item/instrument/fiddle,
+/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "ksM" = (
@@ -24457,6 +24456,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/item/instrument/fiddle,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "kyo" = (

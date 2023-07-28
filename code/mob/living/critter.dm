@@ -62,7 +62,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 	var/pet_text = "pets" // can be a list
 
 	// moved up from critter/small_animal
-	var/butcherable = FALSE
+	var/butcherable = BUTCHER_NOT_ALLOWED
 	var/butcher_time = 1.2 SECONDS
 	/// The mob who is butchering this critter
 	var/mob/butcherer = null
@@ -1560,6 +1560,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 /// Parent for robotic critters. Handles some traits that robots should have- damaged by EMPs, immune to fire and rads
 /mob/living/critter/robotic
 	name = "a fucked up robot"
+	butcherable = BUTCHER_NOT_ALLOWED
 	can_bleed = FALSE
 	metabolizes = FALSE
 	var/emp_vuln = 1
