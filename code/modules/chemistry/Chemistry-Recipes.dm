@@ -2541,14 +2541,52 @@ datum
 			mix_phrase = "The chemicals mix into an odd pink slush."
 
 		silver_sulfadiazine // COGWERKS CHEM REVISION PROJECT: marked for revision. maybe something like Silvadene?
-			name = "Burn Medication"
+			name = "silver sulfadiazine"
 			id = "silver_sulfadiazine"
-			result = "silver_sulfadiazine"
-			required_reagents = list("silver" = 1, "sulfur" = 1, "oxygen" = 1, "chlorine" = 1, "ammonia" = 1) // oil as benzene, sulfur oxygen chlorine as a sulfonyl group
-			// removed oil from the recipe so that this can be made without leaving a chem dispenser like styptic
-			result_amount = 5
+			// result = "silver_sulfadiazine" //added in on_end_reaction()
+			required_reagents = list("chlorine" = 1, "ammonia" = 1) // more required in does_react(), multiple recipes possible...
+			inhibitors = list("water") //an easily removable way to stop the reaction whenever you want
+			stateful = TRUE
+			instant = FALSE
+			reaction_speed = 1
+			result_amount = 1
 			mix_phrase = "A strong and cloying odor begins to bubble from the mixture."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			var/amount_to_mix = 0 //how much it mixes at the end, depends on what you put in it during mixing
+			var/mix_multiplier = 1
+			var/cycles = 1 //how long has the reaction been going on for
+
+			does_react(var/datum/reagents/holder)
+				if(holder.has_reagent("silver_nitrate"))
+					return TRUE
+				if(holder.has_reagent("oxygen") && holder.has_reagent("silver") && holder.has_reagent("sulfur"))
+					return TRUE
+				else
+					return FALSE
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				src.cycles++
+				if(holder.has_reagent("oil")) //bonus multiplier for adding in an unnecessary chem
+					mix_multiplier = 1.5
+					holder.remove_reagent("oil", created_volume/2)
+				else
+					mix_multiplier = 1
+				if(cycles >= 50 && cycles < 70) //after 50 cycles you get double the product, until...
+					mix_multiplier *= 2
+				if(cycles >= 70) //...after 70 it stops producing extra altogether (TO:DO add a visual effect to both stages later)
+					mix_multiplier = 0
+				if(holder.has_reagent("silver_nitrate"))
+					amount_to_mix += (10 * mix_multiplier) //you get a lot of extra for putting in the harder chem
+					holder.remove_reagent("silver_nitrate", created_volume)
+				else
+					amount_to_mix += (5 * mix_multiplier)
+					holder.remove_reagent("oxygen", created_volume)
+					holder.remove_reagent("silver", created_volume)
+					holder.remove_reagent("sulfur", created_volume)
+
+			on_end_reaction(var/datum/reagents/holder)
+				holder.add_reagent("silver_sulfadiazine", amount_to_mix, temp_new = holder.total_temperature, chemical_reaction = TRUE)
+				playsound(get_turf(holder.my_atom), 'sound/effects/bubbles.ogg', 25, 1)
 
 		/*
 		silver_sulfadiazine/silver_sulfadiazine2
