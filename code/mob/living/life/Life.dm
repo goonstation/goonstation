@@ -277,7 +277,7 @@
 			//Interdictor's protections for mobs
 			if (isliving(src) && !isintangible(src))
 				for_by_tcl(IX, /obj/machinery/interdictor)
-					var/area/A = src.loc.loc
+					var/area/area = get_area(src)
 					if (IX.expend_interdict(6,src,TRUE)) //This protects mobs from radstorms/wormholes/magnetic biofields
 						src.changeStatus("spatial_protection", 3 SECONDS)
 					if ((src.loc && isarea(A)) && A.irradiated)
