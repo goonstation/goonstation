@@ -24004,12 +24004,12 @@
 	network = "Armory Perimeter";
 	tag = ""
 	},
-/obj/item/fish/salmon{
+/obj/item/reagent_containers/food/fish/salmon{
 	pixel_x = -3;
 	pixel_y = -2
 	},
-/obj/item/fish/carp,
-/obj/item/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/bass,
 /turf/simulated/floor/specialroom/freezer{
 	nitrogen = 105.86;
 	oxygen = 30.8366

@@ -491,7 +491,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				/obj/item/material_piece = "processed materials",
 				/obj/item/paper = "paper",
 				/obj/item/tile = "floor tiles",
-				/obj/item/fish = "fish")
+				/obj/item/reagent_containers/food/fish = "fish")
 			for(var/drag_type in draggable_types)
 				if(!istype(O, drag_type))
 					continue
