@@ -738,23 +738,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	icon_state = "inquis"
 	item_state = "swat_hel"
 
-/obj/item/clothing/suit/adeptus
-	name = "adeptus mechanicus robe"
-	desc = "A robe of a member of the adeptus mechanicus."
-	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
-	icon_state = "adeptus"
-	item_state = "adeptus"
-	over_hair = TRUE
-	body_parts_covered = TORSO|LEGS|ARMS
-	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS
-	wear_layer = MOB_FULL_SUIT_LAYER
-
-	setupProperties()
-		..()
-		setProperty("chemprot", 10)
-
 //power armor
 
 /obj/item/clothing/head/power // placeholder icons until someone sprites an unpainted helmet

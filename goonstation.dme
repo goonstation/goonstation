@@ -1749,6 +1749,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\clothing\masks.dm"
 #include "code\obj\item\clothing\nonhuman.dm"
 #include "code\obj\item\clothing\plants.dm"
+#include "code\obj\item\clothing\robe.dm"
 #include "code\obj\item\clothing\shoes.dm"
 #include "code\obj\item\clothing\suits.dm"
 #include "code\obj\item\clothing\trash_bags.dm"
