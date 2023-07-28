@@ -773,7 +773,7 @@ proc/get_angle(atom/a, atom/b)
 				text += html_encode(the_mob.name)
 			text += " "
 			if (the_client && !the_client.holder) //only show this stuff for non-admins because admins do a lot of shit while dead and it is unnecessary to show it
-				if (checktraitor(the_mob))
+				if (checkantag(the_mob))
 					text += "\[<font color='red'>T</font>\] "
 				if (isdead(the_mob))
 					text += "\[DEAD\] "
@@ -2567,7 +2567,7 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 	var/msg = "\"[thing]\" ([thing.type])"
 	if (ismob(thing))
 		var/mob/mobthing = thing
-		msg += " {Key: [key_name(mobthing)]}" // IM RUNNING OUT OF BRACKET TYPES
+		msg += " {Key: [mobthing.ckey || "***NULL***"]}" // IM RUNNING OUT OF BRACKET TYPES
 	return msg
 
 /// For runtime logs- returns the above plus ref

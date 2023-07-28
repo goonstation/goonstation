@@ -482,6 +482,36 @@
 		result_amount = 1
 		mix_phrase = "The paper chars, seperating into a silky black powder."
 
+	milk
+		name = "Milk"
+		id = "milk"
+		result = "milk"
+		required_reagents = list("milk_powder" = 1, "water" = 1)
+		result_amount = 1
+		mix_phrase = "The powder dissolves, turning the solution milky."
+
+	powder_milk
+		name = "Milk powder"
+		id = "milk_powder"
+		result = "milk_powder"
+		required_reagents = list("milk" = 1)
+		result_amount = 1
+		min_temperature = T0C + 100
+		mix_phrase = "The water boils away, leaving behind a white condensed powder."
+		on_reaction(datum/reagents/holder, created_volume)
+			. = ..()
+			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+			smoke.set_up(1, 0, get_turf(src))
+			smoke.start()
+
+	super_milk
+		name = "Super Milk"
+		id = "super_milk"
+		result = "super_milk"
+		required_reagents = list("milk" = 1, "milk_powder" = 1)
+		result_amount = 1
+		mix_phrase = "The mixture concentrates."
+
 	bilk
 		name = "Bilk"
 		id = "bilk"
@@ -1175,9 +1205,9 @@
 		name = "Gin Fizz"
 		id = "ginfizz"
 		result = "ginfizz"
-		required_reagents = list("gin" = 1, "juice_lemon" = 1, "water" = 1)
+		required_reagents = list("gin" = 1, "juice_lemon" = 1, "tonic" = 1)
 		result_amount = 3
-		mix_phrase = "The mixed drink starts fizzing on its own. Somehow."
+		mix_phrase = "The mixed drink starts fizzing. Somehow."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 
 	cocktail_gimlet
