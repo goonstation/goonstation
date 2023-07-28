@@ -105,82 +105,129 @@
 			return
 		src.go_out()
 
-	attack_hand(mob/user)
-		src.add_dialog(user)
-		var/temp_text = ""
-		if(air_contents.temperature > T0C)
-			temp_text = "<FONT color=red>[TO_CELSIUS(air_contents.temperature)]</FONT>"
-		else if(air_contents.temperature > 170)
-			temp_text = "<FONT color=black>[TO_CELSIUS(air_contents.temperature)]</FONT>"
-		else
-			temp_text = "<FONT color=blue>[TO_CELSIUS(air_contents.temperature)]</FONT>"
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "CryoCell", name)
+			ui.open()
 
-		var/dat = "<B>Cryo cell control system</B><BR>"
-		dat += "<B>Current cell temperature:</B> [temp_text]&deg;C<BR>"
-		dat += "<B>Eject Occupant:</B> [src.occupant ? "<A href='?src=\ref[src];eject_occupant=1'>Eject</A>" : "Eject"]<BR>"
-		dat += "<B>Cryo status:</B> [src.on ? "<A href='?src=\ref[src];start=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];start=1'>On</A>"]<BR>"
-		dat += "[draw_beaker_text()]<BR>"
-		dat += "--------------------------------<BR>"
-		dat += "[draw_beaker_reagent_scan()]<BR>"
-		dat += "[draw_defib_zap()]"
-		dat += "[scan_health(src.occupant, reagent_scan_active, 1)]"
-		update_medical_record(src.occupant)
-		user.Browse(dat, "window=cryo")
-		onclose(user, "cryo")
+	ui_data(mob/user)
+		. = list()
 
-	proc/draw_defib_zap()
-		if (!src.defib)
-			return ""
-		else
-			if (src.occupant)
-				return "<B>Defibrillate Occupant : <A href='?src=\ref[src];defib=1'>ZAP!!!</A></B> <BR>"
-			else
-				return "<B>Defibrillate Occupant : No occupant!</B> <BR>"
+		.["occupant"] = get_occupant_data(src.occupant)
+		.["cellTemp"] = air_contents.temperature
+		.["status"] = src.on
 
-	proc/draw_beaker_text()
-		var/beaker_text = ""
+		.["showBeakerContents"] = show_beaker_contents
+		.["reagentScanEnabled"] = reagent_scan_enabled
+		.["reagentScanActive"] = reagent_scan_active
+		if (src.beaker)
+			.["containerData"] = get_reagents_data(src.beaker.reagents, src.beaker.name)
 
-		if(src.beaker)
-			beaker_text = "<B>Beaker:</B> <A href='?src=\ref[src];eject=1'>Eject</A><BR>"
-			beaker_text += "<B>Beaker Contents:</B> <A href='?src=\ref[src];show_beaker_contents=1'>[show_beaker_contents ? "Hide" : "Show"]</A> "
-			if (show_beaker_contents)
-				beaker_text += "<BR>[scan_reagents(src.beaker)]"
-		else
-			beaker_text = "<B>Beaker:</B> <FONT color=red>No beaker loaded</FONT>"
+		.["hasDefib"] = src.defib
 
-		return beaker_text
-
-	proc/draw_beaker_reagent_scan()
-		if (!reagent_scan_enabled)
-			return ""
-		else
-			return "<B>Reagent Scan : </B>[ reagent_scan_active ? "<A href='?src=\ref[src];reagent_scan_active=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];reagent_scan_active=1'>On</A>"]"
-
-	Topic(href, href_list)
-		if (is_incapacitated(usr) || isdead(usr))
+	ui_act(action, params)
+		. = ..()
+		if(.)
 			return
-		if (( usr.using_dialog_of(src) && ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))) || (isAI(usr)))
-			if(href_list["start"])
+
+		switch(action)
+			if("start")
 				src.on = !src.on
 				build_icon()
-			if(href_list["eject"])
+			if("eject")
 				beaker:set_loc(src.loc)
 				usr.put_in_hand_or_eject(beaker) // try to eject it into the users hand, if we can
 				beaker = null
-			if(href_list["show_beaker_contents"])
+			if("show_beaker_contents")
 				show_beaker_contents = !show_beaker_contents
-			if (href_list["reagent_scan_active"])
+			if ("reagent_scan_active")
 				reagent_scan_active = !reagent_scan_active
-			if (href_list["defib"])
+			if ("defib")
 				if(!ON_COOLDOWN(src.defib, "defib_cooldown", 10 SECONDS))
 					src.defib.setStatus("defib_charged", 3 SECONDS)
 				src.defib.attack(src.occupant, usr)
-			if (href_list["eject_occupant"])
+			if ("eject_occupant")
 				go_out()
 
-			src.updateUsrDialog()
-			src.add_fingerprint(usr)
+		. = TRUE
+
+	proc/get_occupant_data(var/mob/occupant)
+		if (!occupant)
+			return null
+
+		var/temperature_color
+		if (src.occupant.bodytemperature >= (src.occupant.base_body_temp + 60)) { temperature_color="red"; }
+		else if (src.occupant.bodytemperature >= (src.occupant.base_body_temp + 30)) { temperature_color="yellow"; }
+		else if (src.occupant.bodytemperature <= (src.occupant.base_body_temp - 60)) { temperature_color="purple"; }
+		else if (src.occupant.bodytemperature <= (src.occupant.base_body_temp - 30)) { temperature_color="blue"; }
+		else { temperature_color = "green"; }
+
+		. = list(
+			"occupantStat" = src.occupant.stat,
+			"health" = src.occupant.health / src.occupant.max_health,
+			"oxyDamage" = src.occupant.get_oxygen_deprivation(),
+			"toxDamage" = src.occupant.get_toxin_damage(),
+			"burnDamage" = src.occupant.get_burn_damage(),
+			"bruteDamage" = src.occupant.get_brute_damage(),
+			"bodytemperature" = round(src.occupant.bodytemperature, src.occupant.bodytemperature < 1000 ? 0.01 : 1),
+			"temperature_color" = temperature_color
+		)
+		if (isliving(src.occupant))
+			var/mob/living/L = src.occupant
+			var/bp_col
+			switch (L.blood_pressure["total"])
+				if (-INFINITY to 299) // very low (70/50)
+					bp_col = "red"
+				if (300 to 414) // low (100/65)
+					bp_col = "yellow"
+				if (415 to 584) // normal (120/80)
+					bp_col = "green"
+				if (585 to 665) // high (140/90)
+					bp_col = "yellow"
+				if (666 to INFINITY) // very high (160/100)
+					bp_col = "red"
+			. += list(
+				"blood_data" = "[L.blood_pressure["rendered"]] ([L.blood_pressure["status"]])",
+				"pressure_color" = bp_col
+			)
+
+			if (reagent_scan_active)
+				. += list(
+					"total_blood" = L.blood_pressure["total"],
+					"reagents" = get_reagents_data(L.reagents, null)
+				)
+
+	proc/get_reagents_data(var/datum/reagents/R, var/container_name)
+		. = list(
+			name = container_name,
+			maxVolume = R.maximum_volume,
+			totalVolume = R.total_volume,
+			temperature = R.total_temperature,
+			contents = list(),
+			finalColor = "#000000"
+		)
+
+		var/list/contents = .["contents"]
+		if(istype(R) && R.reagent_list.len>0)
+			.["finalColor"] = R.get_average_rgb()
+			// Reagent data
+			for(var/reagent_id in R.reagent_list)
+				var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
+
+				contents.Add(list(list(
+					name = reagents_cache[reagent_id],
+					id = reagent_id,
+					colorR = current_reagent.fluid_r,
+					colorG = current_reagent.fluid_g,
+					colorB = current_reagent.fluid_b,
+					volume = current_reagent.volume
+				)))
+
+	attack_hand(var/mob/user)
+		if(..())
 			return
+		ui_interact(user)
 
 	attackby(var/obj/item/I, var/mob/user)
 		if(istype(I, /obj/item/reagent_containers/glass))
