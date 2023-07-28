@@ -161,11 +161,6 @@
 	icon_state = "seeds-maneater"
 	auxillary_datum = /datum/plant/maneater
 
-/obj/item/seed/creeper
-	name = "creeper seed"
-	seedcolor = "#CC00FF"
-	auxillary_datum = /datum/plant/weed/creeper
-
 /obj/item/seed/crystal
 	name = "crystal seed"
 	seedcolor = "#DDFFFF"
@@ -198,7 +193,7 @@
 	proc/gen_plant_type()
 		if (src.type == /obj/item/seed/alien)
 			// let's make the base seed randomise itself for fun and also for functionality
-			switch(rand(1,8))
+			switch(rand(1,9))
 				if (1) src.planttype = HY_get_species_from_path(/datum/plant/artifact/pukeplant, src)
 				if (2) src.planttype = HY_get_species_from_path(/datum/plant/artifact/dripper, src)
 				if (3) src.planttype = HY_get_species_from_path(/datum/plant/artifact/rocks, src)
@@ -207,6 +202,7 @@
 				if (6) src.planttype = HY_get_species_from_path(/datum/plant/artifact/plasma, src)
 				if (7) src.planttype = HY_get_species_from_path(/datum/plant/artifact/goldfish, src)
 				if (8) src.planttype = HY_get_species_from_path(/datum/plant/artifact/cat, src)
+				if (9) src.planttype = HY_get_species_from_path(/datum/plant/artifact/creeper, src)
 
 	HY_set_species(var/datum/plant/species)
 		if (species)
@@ -251,3 +247,9 @@
 	gen_plant_type()
 		..()
 		src.planttype = HY_get_species_from_path(/datum/plant/artifact/cat, src)
+
+/obj/item/seed/alien/creeper
+	seedcolor = "#CC00FF"
+	gen_plant_type()
+		..()
+		src.planttype = HY_get_species_from_path(/datum/plant/artifact/creeper, src)

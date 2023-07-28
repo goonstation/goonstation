@@ -13,7 +13,7 @@
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 5
-	var/datum/plant/planttype = /datum/plant/weed/creeper
+	var/datum/plant/planttype = /datum/plant/artifact/creeper
 	var/datum/plantgenes/plantgenes = null
 	var/generation = 0 // For genetics tracking.
 	var/armed = FALSE //! This determinates if the trap is armed or not
@@ -143,7 +143,7 @@
 		//we look at plantpots around is if the creep is able to spread
 			for (var/obj/machinery/plantpot/other_plantpot in range(1,src))
 				var/datum/plant/growing = other_plantpot.current
-				if (!other_plantpot.dead && other_plantpot.current && !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/weed/creeper))
+				if (!other_plantpot.dead && other_plantpot.current && !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/artifact/creeper))
 					other_plantpot.HYPdamageplant("physical", plantpot_damage_amount,1)
 				else if (other_plantpot.dead)
 					other_plantpot.HYPdestroyplant()
@@ -272,7 +272,7 @@
 	if (istype(hit_atom, /obj/machinery/plantpot))
 		var/obj/machinery/plantpot/hit_plantpot = hit_atom
 		var/datum/plant/growing = hit_plantpot.current
-		if (!hit_plantpot.current || !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/weed/creeper))
+		if (!hit_plantpot.current || !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/artifact/creeper))
 			if (prob(self_assemly_chance))
 				src.arm()
 

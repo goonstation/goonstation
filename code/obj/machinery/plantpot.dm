@@ -197,7 +197,7 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 
 	weed
 		New()
-			spawn_plant = pick(/datum/plant/weed/creeper, /datum/plant/weed/lasher, /datum/plant/weed/slurrypod, /datum/plant/artifact/pukeplant)
+			spawn_plant = pick(/datum/plant/artifact/creeper, /datum/plant/weed/lasher, /datum/plant/weed/slurrypod, /datum/plant/artifact/pukeplant)
 			..()
 
 

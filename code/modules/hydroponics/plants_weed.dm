@@ -81,55 +81,6 @@ ABSTRACT_TYPE(/datum/plant/weed)
 			HYPaddCommut(POT.plantgenes, /datum/plant_gene_strain/reagent_adder/lasher)
 			return 0
 
-/datum/plant/weed/creeper
-	name = "Creeper"
-	unique_seed = /obj/item/seed/creeper
-	seedcolor = "#CC00FF"
-	cropsize = 1
-	nothirst = 1
-	starthealth = 30
-	growtime = 30
-	harvtime = 100
-	harvestable = 0
-	endurance = 40
-	isgrass = 1
-	special_proc = 1
-	vending = 2
-	genome = 8
-	force_seed_on_harvest = -1
-	stop_size_scaling = TRUE
-	mutations = list(/datum/plantmutation/creeper/tumbling)
-	//stabilizer is the bad commut for the plant here, toxic the good one
-	commuts = list(/datum/plant_gene_strain/stabilizer, /datum/plant_gene_strain/reagent_adder/toxic)
-
-	HYPspecial_proc(var/obj/machinery/plantpot/POT)
-		..()
-		if (.) return
-		var/damage_to_other_plants = 10 // the amount of damage the plant deals to other plants
-		var/chance_to_damage = 33 // the chance per tick to damage plants or spread per tick.
-		var/health_treshold_for_spreading = 50 // percentage amount of starting health of the plant needed to be able to spread
-
-		var/datum/plant/current_planttype = POT.current
-		var/datum/plantgenes/DNA = POT.plantgenes
-		if (POT.growth > (current_planttype.growtime - DNA?.get_effective_value("growtime")) && POT.health > round(current_planttype.starthealth * health_treshold_for_spreading / 100) && prob(chance_to_damage))
-			for (var/obj/machinery/plantpot/checked_plantpot in range(1,POT))
-				var/datum/plant/growing = checked_plantpot.current
-				if (!checked_plantpot.dead && growing && !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/weed/creeper))
-					checked_plantpot.HYPdamageplant("physical", damage_to_other_plants, 1)
-				else if (checked_plantpot.dead)
-					checked_plantpot.HYPdestroyplant()
-				//Seedless prevents the creeper to replant itself
-				else if (!growing && !HYPCheckCommut(DNA, /datum/plant_gene_strain/seedless))
-					//we create a new seed now
-					var/obj/item/seed/temporary_seed = HYPgenerateseedcopy(DNA, current_planttype, POT.generation)
-					//we now devolve the seed to not make tumbler spread like wildfire
-					var/datum/plantgenes/New_DNA = temporary_seed.plantgenes
-					New_DNA.mutation = null
-					// now we are able to plant the seed
-					checked_plantpot.HYPnewplant(temporary_seed)
-					spawn(0.5 SECONDS)
-						qdel(temporary_seed)
-					break
 
 /datum/plant/weed/radweed
 	name = "Radweed"
