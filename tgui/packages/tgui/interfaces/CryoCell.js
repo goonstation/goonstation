@@ -6,8 +6,7 @@
  */
 
 import { useBackend } from "../backend";
-// import { , Stack } from "../components";
-import { Button, Box, Icon, AnimatedNumber, Section, LabeledList, ProgressBar } from "../components";
+import { Button, Box, Icon, AnimatedNumber, Section, LabeledList, ProgressBar, Dimmer } from "../components";
 import { Window } from '../layouts';
 import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 import { ReagentGraph, ReagentList } from './common/ReagentInfo';
@@ -52,7 +51,7 @@ export const CryoCell = (_props, context) => {
   return (
     <Window
       width={450}
-      height={550}>
+      height={575}>
       <Window.Content scrollable>
         <Section title="Cryo Cell Control System">
           <Box textAlign="center">
@@ -62,7 +61,7 @@ export const CryoCell = (_props, context) => {
               color={getTemperatureColor(cellTemp)}
               mb="1rem">
               <Icon name={getTemperatureIcon(cellTemp)} pr={0.5} />
-              <AnimatedNumber value={cellTemp} /> K
+              <AnimatedNumber value={(cellTemp - 273.15).toPrecision(4)} /> °C
             </Box>
             <Button
               icon="power-off"
@@ -88,7 +87,7 @@ export const CryoCell = (_props, context) => {
                   Defibrillate
                 </Button>
               )}
-              <Button onClick={() => act("eject_occupant")} icon="eject">
+              <Button onClick={() => act("eject_occupant")} icon="eject" disabled={!occupant}>
                 Eject
               </Button>
             </>
@@ -163,22 +162,37 @@ export const CryoCell = (_props, context) => {
               <Button onClick={() => act("show_beaker_contents")} icon={showBeakerContents ? "eye-slash" : "eye"}>
                 {showBeakerContents ? "Hide" : "Show"} Contents
               </Button>
-              <Button onClick={() => act("eject")} icon="eject">
+              <Button onClick={() => act("eject")} icon="eject" disabled={!containerData}>
                 Eject
               </Button>
             </>
           }>
-          {containerData && !!showBeakerContents && (
+          {!!showBeakerContents && (
             <>
-              <ReagentGraph container={containerData} />
-              <ReagentList container={containerData} />
-              <Box
-                fontSize={2}
-                color={getTemperatureColor(containerData.temperature)}
-                textAlign="center">
-                <Icon name={getTemperatureIcon(containerData.temperature)} pr={0.5} />
-                <AnimatedNumber value={containerData.temperature} /> K
-              </Box>
+              {containerData && (
+                <>
+                  <ReagentGraph container={containerData} />
+                  <ReagentList container={containerData} />
+                  <Box
+                    fontSize={2}
+                    color={getTemperatureColor(containerData.temperature)}
+                    textAlign="center">
+                    <Icon name={getTemperatureIcon(containerData.temperature)} pr={0.5} />
+                    <AnimatedNumber value={containerData.temperature} /> K
+                  </Box>
+                </>
+              )}
+              {!containerData && (
+                <Dimmer height="5rem">
+                  <Button
+                    icon="eject"
+                    fontSize={1.5}
+                    onClick={() => act('insert')}
+                    bold>
+                    Insert Beaker
+                  </Button>
+                </Dimmer>
+              )}
             </>)}
         </Section>
       </Window.Content>

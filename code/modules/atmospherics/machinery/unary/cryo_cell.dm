@@ -55,7 +55,7 @@
 		if(!node)
 			return
 		if(!on)
-			src.updateUsrDialog()
+			tgui_process.update_uis(src)
 			return
 
 		if(src.occupant)
@@ -78,7 +78,7 @@
 		if(abs(ARCHIVED(temperature)-air_contents.temperature) > 1)
 			network.update = 1
 
-		src.updateUsrDialog()
+		tgui_process.update_uis(src)
 		return 1
 
 
@@ -110,6 +110,7 @@
 		if(!ui)
 			ui = new(user, src, "CryoCell", name)
 			ui.open()
+		update_medical_record(src.occupant)
 
 	ui_data(mob/user)
 		. = list()
@@ -121,8 +122,7 @@
 		.["showBeakerContents"] = show_beaker_contents
 		.["reagentScanEnabled"] = reagent_scan_enabled
 		.["reagentScanActive"] = reagent_scan_active
-		if (src.beaker)
-			.["containerData"] = get_reagents_data(src.beaker.reagents, src.beaker.name)
+		.["containerData"] = src.beaker ? get_reagents_data(src.beaker.reagents, src.beaker.name) : null
 
 		.["hasDefib"] = src.defib
 
@@ -149,8 +149,19 @@
 				src.defib.attack(src.occupant, usr)
 			if ("eject_occupant")
 				go_out()
-
+			if ("insert")
+				var/obj/item/I = usr.equipped()
+				if(istype(I, /obj/item/reagent_containers/glass))
+					inert_beaker(I, usr)
 		. = TRUE
+
+
+	ui_status(mob/user)
+		if (user == src.occupant)
+			return UI_UPDATE
+		. = ..()
+		if (!src.allowed(user))
+			. = min(., UI_UPDATE)
 
 	proc/get_occupant_data(var/mob/occupant)
 		if (!occupant)
@@ -231,19 +242,7 @@
 
 	attackby(var/obj/item/I, var/mob/user)
 		if(istype(I, /obj/item/reagent_containers/glass))
-			if (I.cant_drop)
-				boutput(user, "<span class='alert'>You can't put that in \the [src] while it's attached to you!")
-				return
-			if(src.beaker)
-				user.show_text("A beaker is already loaded into the machine.", "red")
-				return
-
-			src.beaker = I
-			user.drop_item()
-			I.set_loc(src)
-			user.visible_message("[user] adds a beaker to \the [src]!", "You add a beaker to the [src]!")
-			logTheThing(LOG_CHEMISTRY, user, "adds a beaker [log_reagents(I)] to [src] at [log_loc(src)].") // Rigging cryo is advertised in the 'Tip of the Day' list (Convair880).
-			src.add_fingerprint(user)
+			inert_beaker(I, user)
 		else if(istype(I, /obj/item/grab))
 			var/obj/item/grab/G = I
 			if (try_push_in(G.affecting, user))
@@ -302,7 +301,22 @@
 			else
 				I.attack(src.occupant, user)
 
-		src.updateUsrDialog()
+		tgui_process.update_uis(src)
+
+	proc/inert_beaker(var/obj/item/reagent_containers/glass/I, var/mob/user)
+		if (I.cant_drop)
+			boutput(user, "<span class='alert'>You can't put that in \the [src] while it's attached to you!")
+			return
+		if(src.beaker)
+			user.show_text("A beaker is already loaded into the machine.", "red")
+			return
+
+		src.beaker = I
+		user.drop_item()
+		I.set_loc(src)
+		user.visible_message("[user] adds a beaker to \the [src]!", "You add a beaker to the [src]!")
+		logTheThing(LOG_CHEMISTRY, user, "adds a beaker [log_reagents(I)] to [src] at [log_loc(src)].") // Rigging cryo is advertised in the 'Tip of the Day' list (Convair880).
+		src.add_fingerprint(user)
 
 	proc/shock_icon()
 		var/fake_overlay = new /obj/shock_overlay(src.loc)
@@ -432,6 +446,8 @@
 		animate(pixel_y = -8, time = 3 SECONDS, loop = -1, easing = SINE_EASING)
 		src.occupant.force_laydown_standup()
 		src.UpdateIcon()
+		ui_interact(target)
+		tgui_process.update_uis(src)
 		return TRUE
 
 	/// Proc to exit the cryo cell.
@@ -451,6 +467,7 @@
 		exiter?.force_laydown_standup()
 		src.occupant = null
 		src.UpdateIcon()
+		tgui_process.update_uis(src)
 
 /obj/shock_overlay
 	icon = 'icons/obj/Cryogenic2.dmi'
