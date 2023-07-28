@@ -886,8 +886,6 @@
 					if(length(src.hosted_files) >= 1)
 						src.CheckForPasskey(signal.data["message"], signal.data["sender"])
 
-					src.master.updateSelfDialog()
-
 				if("file_send_req")
 					if(!message_on)
 						return
