@@ -510,6 +510,9 @@ Alien/mutant/other fish:
 	icon_state = "sun_fish"
 	inhand_color = "#ebde2d"
 	value  = FISH_RARITY_LEGENDARY
+	New()
+		. = ..()
+		AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 180, TRUE)
 
 //lava moon
 /obj/item/fish/lava_fish
