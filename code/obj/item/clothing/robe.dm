@@ -35,22 +35,6 @@
 		..()
 		setProperty("chemprot", 10)
 
-/obj/item/clothing/suit/greenrobe
-	name = "green robe"
-	desc = "" //todo
-	icon = 'icons/obj/items/ChaplainStuff.dmi'
-	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
-	icon_state = "GreenRobesObj"
-	wear_state = "GreenRobes"
-	over_hair = TRUE
-	body_parts_covered = TORSO|LEGS|ARMS
-	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS
-	wear_layer = MOB_FULL_SUIT_LAYER
-
-	setupProperties()
-		..()
-		setProperty("chemprot", 10)
-
 /obj/item/clothing/mask/greenmask
 	name = "green mask"
 	desc = "" //todo
