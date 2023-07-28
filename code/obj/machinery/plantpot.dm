@@ -701,9 +701,10 @@ TYPEINFO(/obj/machinery/plantpot)
 				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 				return
 			else
-				user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
+				//corrects the amount of reagents shown to have been used when pouring into a tray
+				var/trans = W.reagents.trans_to(src, W:amount_per_transfer_from_this)
+				user.visible_message("<span class='notice'>[user] pours [trans] units of [W]'s contents into [src].</span>")
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if(!(user in src.contributors))
 					src.contributors += user
 				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
