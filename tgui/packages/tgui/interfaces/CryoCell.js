@@ -65,11 +65,11 @@ export const CryoCell = (_props, context) => {
             </Box>
             <Button
               icon="power-off"
-              color={status ? "red" : "green"}
+              color={status ? "green" : "red"}
               fontSize={1.25}
               textAlign="center"
               onClick={() => act("start")}>
-              {status ? "Deactivate" : "Activate"}
+              {status ? "Activated" : "Deactivated"}
             </Button>
           </Box>
         </Section>
@@ -83,11 +83,11 @@ export const CryoCell = (_props, context) => {
                 </Button>
               )}
               {hasDefib && (
-                <Button onClick={() => act("defib")} icon="bolt">
+                <Button onClick={() => act("defib")} icon="bolt" color="yellow">
                   Defibrillate
                 </Button>
               )}
-              <Button onClick={() => act("eject_occupant")} icon="eject" disabled={!occupant}>
+              <Button onClick={() => act("eject_occupant")} icon="eject" disabled={!occupant} color="green">
                 Eject
               </Button>
             </>
@@ -162,7 +162,7 @@ export const CryoCell = (_props, context) => {
               <Button onClick={() => act("show_beaker_contents")} icon={showBeakerContents ? "eye-slash" : "eye"}>
                 {showBeakerContents ? "Hide" : "Show"} Contents
               </Button>
-              <Button onClick={() => act("eject")} icon="eject" disabled={!containerData}>
+              <Button onClick={() => act("eject")} icon="eject" disabled={!containerData} color="green">
                 Eject
               </Button>
             </>
