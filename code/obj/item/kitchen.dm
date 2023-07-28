@@ -1229,4 +1229,4 @@ TRAYS
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "tongs"
 
-	// used in attackby procs ofgent_coners/food/snacks and /obj/item/kitchen/food_box
+	// used in attackby procs of /obj/item/reagent_containers/food/snacks and /obj/item/kitchen/food_box
