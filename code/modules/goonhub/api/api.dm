@@ -77,19 +77,18 @@ var/global/datum/apiHandler/apiHandler
 	/**
 	 * Constructs a query to send to the goonhub web API
 	 *
-	 * @route (string) requested route e.g. bans/check
-	 * @query (list) query arguments to be passed along to route
+	 * @route (/datum/apiRoute) requested route to call, ex. /datum/apiRoute/players/notes/get
 	 * @forceResponse (boolean) will force the API server to return the requested data from the route rather than hitting hubCallback later on
 	 * @attempt (int) number of times we've attempted this query
 	 * @return (list|boolean) list containing parsed data response from api, 1 if forceResponse is false
 	 *
 	 */
-	proc/queryAPI(route = "", query = list(), forceResponse = 0, attempt = 1, forceErrorException = 0)
+	proc/queryAPI(datum/apiRoute/route = null, forceResponse = 0, attempt = 1, forceErrorException = 0)
 		if (!enabled || !route)
 			src.apiError("API Error: Cancelled query due to [!enabled ? "disabled apiHandler" : "missing route parameter"]", forceErrorException)
 			return
 
-		var/req = "[config.goonhub_api_endpoint]/[route]/?[query ? "[list2params(query)]&" : ""]" //Necessary
+		var/req = list("[config.goonhub_api_endpoint]/[route.path]/?[route.formatParams()]")
 		req += "[forceResponse ? "bypass=1&" : ""]" //Force a response RIGHT NOW y/n
 		req += "data_server=[serverKey]&data_id=[config.server_id]&" //Append server number and ID
 		req += "data_version=[config.goonhub_api_version]&" //Append API version
@@ -102,11 +101,12 @@ var/global/datum/apiHandler/apiHandler
 			sleep(rand(1, 5))
 		lazy_waiting_counter--
 
-
 		// Fetch via HTTP from goonhub
 		lazy_concurrent_counter++
+
+		// Actual request
 		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, req, "", "")
+		request.prepare(route.method, jointext(req, ""), "", "")
 		request.begin_async()
 		var/time_started = TIME
 		UNTIL(request.is_complete() || (TIME - time_started) > 10 SECONDS)
