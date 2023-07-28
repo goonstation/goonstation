@@ -8157,7 +8157,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "ays" = (
-/obj/table/reinforced/chemistry/auto,
+/obj/table/reinforced/chemistry/auto/drugs,
 /obj/item/toy/plush/small/bunny/mask{
 	name = "chemical safety bun";
 	pixel_x = 5;
@@ -8556,7 +8556,6 @@
 /area/station/hallway/primary/north)
 "azw" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/phone{
 	pixel_y = 6
 	},
@@ -10679,9 +10678,7 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aFQ" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/box/patchbox,
-/obj/item/storage/box/syringes,
+/obj/table/reinforced/chemistry/auto/clericalsup,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aFR" = (
@@ -10859,9 +10856,6 @@
 /area/research_outpost/toxins)
 "aGt" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/gloves/latex,
-/obj/item/hand_labeler,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aGu" = (
@@ -11314,11 +11308,10 @@
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment1)
 "aHA" = (
-/obj/item/device/reagentscanner,
-/obj/item/device/reagentscanner,
-/obj/table/reinforced/chemistry/auto,
-/obj/item/clothing/glasses/spectro,
-/obj/item/clothing/glasses/spectro,
+/obj/table/reinforced/chemistry/auto/auxsup,
+/obj/item/paper/book/from_file/pharmacopia{
+	pixel_y = 5
+	},
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aHC" = (
@@ -11450,11 +11443,8 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aHV" = (
-/obj/item/storage/box/beakerbox,
-/obj/item/storage/box/beakerbox,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/table/reinforced/chemistry/auto,
+/obj/table/reinforced/chemistry/auto/basicsup,
+/obj/item/paper/labdrawertips,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aHW" = (
@@ -13425,6 +13415,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/grasstodirt{
 	icon_state = "dirt";
 	name = "not grass"
@@ -34588,13 +34579,6 @@
 	dir = 10
 	},
 /area/station/crew_quarters/bar)
-"cgx" = (
-/obj/railing/orange/reinforced,
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/grasstodirt,
-/area/station/ranch)
 "cgy" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -35356,6 +35340,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
 "cjz" = (
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grasstodirt{
 	dir = 8
 	},
@@ -35384,9 +35369,6 @@
 "cjG" = (
 /obj/machinery/light/incandescent/harsh,
 /obj/machinery/plantpot,
-/obj/railing/orange/reinforced{
-	dir = 8
-	},
 /turf/simulated/floor/grasstodirt{
 	icon_state = "dirt";
 	name = "not grass"
@@ -38610,9 +38592,7 @@
 /turf/simulated/floor/grass,
 /area/space)
 "gsh" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/table/reinforced/chemistry/auto/firstaid,
 /obj/machinery/light/incandescent/cool,
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -45735,7 +45715,10 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/bar)
 "vRM" = (
-/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/grasstodirt{
 	icon_state = "dirt";
 	name = "not grass"
@@ -83904,7 +83887,7 @@ chc
 cgn
 wji
 vRM
-cgx
+ciN
 cjx
 ciB
 ciC
@@ -90216,8 +90199,8 @@ jTS
 akC
 aqW
 aqW
-mnD
 cmq
+mnD
 aqW
 aqW
 auP

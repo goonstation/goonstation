@@ -48233,21 +48233,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
 "veb" = (
-/obj/storage/closet{
-	name = "rancher supply closet"
-	},
-/obj/item/paper/ranch_guide,
-/obj/item/fishing_rod/basic,
-/obj/item/chicken_carrier,
-/obj/item/device/camera_viewer/ranch,
-/obj/item/storage/box/syringes,
-/obj/item/satchel/hydro,
-/obj/item/clothing/mask/chicken,
-/obj/item/storage/box/clothing/rancher,
-/obj/item/reagent_containers/glass/wateringcan{
-	pixel_y = 9
-	},
-/obj/item/sponge,
+/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
