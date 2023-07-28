@@ -42,11 +42,18 @@ datum
 		///should this reaction show up in anything player-facing that lists reactions. For secret repo chems, misc precursors, and for 'non-standard' reactions (stuff like voltagen arc, foam reacting with water, etc)
 		var/hidden = FALSE
 
+		/// Called when something reacts or every tick while it is reacting
 		proc/on_reaction(var/datum/reagents/holder, var/created_volume)
 			return
 
+		/// Special conditions unique to the reaction
 		proc/does_react(var/datum/reagents/holder)
 			return 1
+
+		/// Called when a non-instant reaction ends, not called for instant reactions
+		proc/on_end_reaction(var/datum/reagents/holder)
+			boutput(world, "[src.name] reaction ends.")
+			return
 
 		//I recommend you set the result amount to the total volume of all components.
 

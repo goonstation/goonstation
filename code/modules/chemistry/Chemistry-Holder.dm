@@ -507,6 +507,10 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 					else
 						active_reactions += C
 
+		var/list/removed_reactions = old_reactions - src.active_reactions
+		for (var/datum/chemical_reaction/reaction in removed_reactions)
+			reaction.on_end_reaction(src)
+
 		if (!active_reactions.len)
 			if (processing_reactions)
 				processing_reactions = 0
@@ -522,6 +526,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		for(var/datum/chemical_reaction/C in src.active_reactions)
 			if (C.result_amount <= 0)
 				src.active_reactions -= C
+				C.on_end_reaction(src)
 				if (C.stateful)
 					qdel(C)
 				continue
@@ -544,6 +549,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 					speed *= amount / required_amount
 			if (speed <= 0) // don't add anything that modifies the speed before this check
 				src.active_reactions -= C
+				C.on_end_reaction(src)
 				if (C.stateful)
 					qdel(C)
 				continue
