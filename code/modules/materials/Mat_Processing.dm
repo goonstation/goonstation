@@ -444,10 +444,7 @@ TYPEINFO(/obj/machinery/processor)
 
 	proc/updateResultName()
 		if(first_part && second_part)
-			if(first_part.material.name == "char" && second_part.material.name == "rock")  //remove cock from displaying
-				resultName = "???"
-			else
-				resultName = getInterpolatedName(first_part.material.name, second_part.material.name, 0.5)
+			resultName = findRecipeName(first_part, second_part)
 		else
 			resultName = "???"
 
