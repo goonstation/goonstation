@@ -119,6 +119,9 @@ Alien/mutant/other fish:
 		..(user, user) // bonk
 	else
 		..()
+		src.slapsound()
+
+/obj/item/reagent_containers/food/fish/proc/slapsound()
 	playsound(src.loc, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
 
 
@@ -508,6 +511,9 @@ Alien/mutant/other fish:
 	icon_state = "sun_fish"
 	inhand_color = "#ebde2d"
 	value  = FISH_RARITY_LEGENDARY
+	New()
+		. = ..()
+		AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 180, TRUE)
 
 //lava moon
 /obj/item/reagent_containers/food/fish/lava_fish
@@ -517,6 +523,11 @@ Alien/mutant/other fish:
 	inhand_color = "#eb2d2d"
 	value  = FISH_RARITY_EPIC
 
+
+	pickup(mob/user)
+		..()
+		if (prob(50))
+			user.changeStatus("burning", pick(3, 5) SECONDS)
 
 /obj/item/reagent_containers/food/fish/igneous_fish
 	name = "igneous fish"
@@ -533,6 +544,7 @@ Alien/mutant/other fish:
 	icon_state = "blobfish"
 	inhand_color = "#da8fac"
 	value  = FISH_RARITY_RARE
+	fillet_type = /obj/item/material_piece/wad/blob/random
 
 //other
 /obj/item/reagent_containers/food/fish/real_goldfish
@@ -545,9 +557,12 @@ Alien/mutant/other fish:
 
 /obj/item/reagent_containers/food/fish/treefish
 	name = "arboreal bass"
-	desc = "TODO"
+	desc = "This leafy fish's rough scales resemble coarse tree bark."
 	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
 	icon_state = "treefish"
 	inhand_color = "#22c912"
 	value  = FISH_RARITY_RARE
 	slice_product = /obj/item/material_piece/organic/wood
+
+	slapsound()
+		playsound(src.loc, 'sound/impact_sounds/Bush_Hit.ogg', 50, 1, -1)

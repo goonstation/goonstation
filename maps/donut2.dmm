@@ -986,9 +986,8 @@
 	},
 /area/station/science/chemistry)
 "aea" = (
-/obj/item/storage/box/beakerbox,
-/obj/item/storage/box/beakerbox,
-/obj/table/reinforced/chemistry/auto,
+/obj/table/reinforced/chemistry/auto/firstaid,
+/obj/item/storage/firstaid/regular,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -1126,9 +1125,7 @@
 	},
 /area/station/science/chemistry)
 "aeM" = (
-/obj/item/reagent_containers/syringe,
 /obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "aeQ" = (
@@ -1222,9 +1219,9 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "afg" = (
-/obj/item/storage/box/beakerbox,
-/obj/table/reinforced/chemistry/auto,
 /obj/machinery/light/small/floor,
+/obj/table/reinforced/chemistry/auto/clericalsup,
+/obj/item/paper/labdrawertips,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "afh" = (
@@ -1305,13 +1302,11 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "afD" = (
-/obj/item/storage/firstaid/regular,
-/obj/table/reinforced/chemistry/auto,
+/obj/table/reinforced/chemistry/auto/basicsup,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "afE" = (
-/obj/item/storage/firstaid/toxin,
-/obj/table/reinforced/chemistry/auto,
+/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "afF" = (
@@ -23167,9 +23162,9 @@
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/ai)
 "crS" = (
-/obj/table/reinforced/chemistry/auto,
 /obj/random_item_spawner/med_kit/one,
 /obj/random_item_spawner/med_kit/one_or_zero,
+/obj/table/reinforced/chemistry/auto/drugs,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "crW" = (
@@ -41456,11 +41451,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/ce)
-"qfg" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/box/syringes,
-/turf/simulated/floor/purple,
-/area/station/science/chemistry)
 "qfn" = (
 /obj/machinery/conveyor/WE{
 	id = "zetadisposals";
@@ -45830,7 +45820,6 @@
 /turf/simulated/floor,
 /area/station/maintenance/west)
 "tdi" = (
-/obj/item/hand_labeler,
 /obj/table/reinforced/chemistry/auto,
 /obj/item/crowbar,
 /turf/simulated/floor/purplewhite{
@@ -48233,21 +48222,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
 "veb" = (
-/obj/storage/closet{
-	name = "rancher supply closet"
-	},
-/obj/item/paper/ranch_guide,
-/obj/item/fishing_rod/basic,
-/obj/item/chicken_carrier,
-/obj/item/device/camera_viewer/ranch,
-/obj/item/storage/box/syringes,
-/obj/item/satchel/hydro,
-/obj/item/clothing/mask/chicken,
-/obj/item/storage/box/clothing/rancher,
-/obj/item/reagent_containers/glass/wateringcan{
-	pixel_y = 9
-	},
-/obj/item/sponge,
+/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
@@ -118849,7 +118824,7 @@ adM
 aeb
 xHg
 tKr
-qfg
+aeM
 afE
 agb
 agJ
