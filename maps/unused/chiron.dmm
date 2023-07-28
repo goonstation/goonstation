@@ -99,7 +99,6 @@
 	icon_state = "catwalk";
 	dir = 10
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross";
@@ -136,7 +135,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/engine/vesselpower)
 "aan" = (
@@ -179,7 +177,6 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross";
@@ -195,7 +192,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -370,7 +366,6 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross";
@@ -493,7 +488,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/engine/vesselpower)
 "aaX" = (
@@ -510,7 +504,6 @@
 /obj/grille/catwalk{
 	dir = 6
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 2;
 	icon_state = "catwalk_cross";
@@ -1176,7 +1169,6 @@
 /obj/grille/catwalk{
 	dir = 9
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross";
@@ -1208,7 +1200,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -1255,7 +1246,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -1311,7 +1301,6 @@
 /obj/grille/catwalk{
 	dir = 10
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross";
@@ -1331,7 +1320,6 @@
 /obj/grille/catwalk{
 	dir = 5
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross";
@@ -1345,7 +1333,6 @@
 	d2 = 2
 	},
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/east)
 "act" = (
@@ -1979,7 +1966,6 @@
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -2014,7 +2000,6 @@
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -2175,7 +2160,6 @@
 	icon_state = "camera";
 	name = "autoname - SS13"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	layer = 2
@@ -2314,7 +2298,6 @@
 /obj/grille/catwalk{
 	dir = 9
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross";
@@ -2450,7 +2433,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -2714,7 +2696,6 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	layer = 2
@@ -3525,7 +3506,6 @@
 	d2 = 2
 	},
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/west)
 "agp" = (
@@ -3791,9 +3771,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -3909,7 +3887,6 @@
 	},
 /area/shuttle/research/outpost)
 "agW" = (
-/turf/space,
 /turf/simulated/shuttle/wall/cockpit{
 	dir = 8;
 	icon_state = "shuttlecock"
@@ -4011,7 +3988,6 @@
 	},
 /area/station/medical/cdc)
 "ahf" = (
-/turf/simulated/floor/shuttle,
 /turf/simulated/shuttle/wall/cockpit/window{
 	name = "window"
 	},
@@ -15291,17 +15267,13 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/catering)
 "aEu" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor,
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
 	})
 "aEv" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_krimpus"
-	},
+/mob/living/carbon/human/npc/monkey/krimpus,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "aEw" = (
@@ -15419,9 +15391,7 @@
 /area/station/maintenance/northeast)
 "aEH" = (
 /obj/disposalpipe/segment,
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "aEI" = (
@@ -15778,7 +15748,6 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross";
@@ -16010,7 +15979,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -16031,7 +15999,6 @@
 	icon_state = "camera";
 	name = "autoname - SS13"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -16342,9 +16309,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "aGU" = (
@@ -16460,7 +16425,6 @@
 /obj/grille/catwalk{
 	dir = 5
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross";
@@ -17359,9 +17323,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aJh" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
-	},
+/mob/living/carbon/human/npc/monkey/tanhony,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aJi" = (
@@ -18217,7 +18179,6 @@
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -18251,7 +18212,6 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	layer = 2
@@ -18433,7 +18393,6 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
 	layer = 2
@@ -18731,8 +18690,6 @@
 /area/station/medical/medbay)
 "aMb" = (
 /obj/table/auto,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/reagent_containers/syringe/haloperidol,
@@ -19229,9 +19186,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/research)
 "aNe" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass,
 /area/station/medical/research)
 "aNf" = (
@@ -19502,7 +19457,6 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -19516,7 +19470,6 @@
 	icon_state = "catwalk_cross";
 	dir = 5
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	layer = 2
@@ -19746,7 +19699,6 @@
 	icon_state = "catwalk";
 	dir = 5
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross";
@@ -19806,7 +19758,6 @@
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -19821,7 +19772,6 @@
 	d1 = 4;
 	d2 = 8
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -19837,7 +19787,6 @@
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -19853,7 +19802,6 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
 	layer = 2
@@ -19872,7 +19820,6 @@
 	icon_state = "bulb1";
 	dir = 1
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -19937,7 +19884,6 @@
 	d1 = 4;
 	d2 = 8
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -20065,7 +20011,6 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	layer = 2
@@ -20740,7 +20685,6 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/south)
 "aPR" = (
@@ -21302,7 +21246,6 @@
 	d2 = 2
 	},
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/south)
 "aQT" = (
@@ -21571,7 +21514,6 @@
 /obj/grille/catwalk{
 	dir = 9
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross";
@@ -22545,7 +22487,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -24272,7 +24213,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -24570,7 +24510,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -24592,7 +24531,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -25256,7 +25194,6 @@
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -25284,7 +25221,6 @@
 /obj/grille/catwalk{
 	dir = 5
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross";
@@ -25853,7 +25789,6 @@
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -26016,7 +25951,6 @@
 /obj/grille/catwalk{
 	dir = 6
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 2;
 	icon_state = "catwalk_cross";
@@ -32245,9 +32179,7 @@
 	d1 = 2;
 	d2 = 4
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bmw" = (
@@ -32426,9 +32358,7 @@
 /turf/space,
 /area/space)
 "bmU" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bmV" = (
@@ -32556,13 +32486,6 @@
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "bnm" = (
-/turf/simulated/wall/auto/asteroid{
-	dir = 1;
-	icon_state = "ast1"
-	},
-/area/space)
-"bnn" = (
-/turf/space,
 /turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "ast1"
@@ -32772,13 +32695,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/listeningpost)
-"bnM" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 5;
-	icon_state = "ast1"
-	},
-/area/space)
 "bnN" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -114179,7 +114095,7 @@ aaa
 bnj
 bnj
 bnj
-bnn
+bnm
 bnp
 bns
 bny
@@ -114783,7 +114699,7 @@ aaa
 bnj
 bnj
 bnj
-bnn
+bnm
 bnp
 bnu
 bnA
@@ -116902,7 +116818,7 @@ aaa
 aao
 aaa
 aaa
-bnM
+bnq
 aap
 aap
 aap

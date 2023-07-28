@@ -348,7 +348,7 @@ TYPEINFO(/obj/item/baton/beepsky)
 	cell_type = /obj/item/ammo/power_cell
 
 TYPEINFO(/obj/item/baton/cane)
-	mats = list("MET-3"=10, "CON-2"=10, "gem"=1, "gold"=1)
+	mats = list("MET-3"=10, "CON-2"=10, "GEM-1"=10, "gold"=1)
 
 /obj/item/baton/cane
 	name = "stun cane"

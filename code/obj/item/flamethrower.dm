@@ -665,7 +665,7 @@ A Flamethrower in various states of assembly
 			icon_state = "flamethrower_no_oxy[fuel]"
 			item_state = "flamethrower0"
 			playsound(src, 'sound/effects/valve_creak.ogg', 15, 1)
-			var/remove_sound = "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg"
+			var/remove_sound = "sound/items/pickup_[clamp(round(src.w_class), 1, 3)].ogg"
 			if(A?.pickup_sfx)
 				remove_sound = A.pickup_sfx
 			SPAWN(0.2 SECONDS)
@@ -689,7 +689,7 @@ A Flamethrower in various states of assembly
 				oxy = "_oxy"
 			icon_state = "flamethrower[oxy]_no_fuel"
 			item_state = "flamethrower0"
-			var/remove_sound = "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg"
+			var/remove_sound = "sound/items/pickup_[clamp(round(src.w_class), 1, 3)].ogg"
 			if(A?.pickup_sfx)
 				remove_sound = A.pickup_sfx
 			playsound(src, remove_sound, 30, 1)

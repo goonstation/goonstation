@@ -1,6 +1,15 @@
 /* this file is for AI Holders which are used by multiple different critters to reduce code duplication
 if there is otherwise unique behaviour which you add to another mob consider moving it to here */
 
+/// Empty AIholder for when you only want to add things to the prioritizer (such as retaliation tasks)
+/datum/aiHolder/empty
+	New()
+		..()
+		default_task = get_instance(/datum/aiTask/prioritizer/critter/empty, list(src))
+
+/datum/aiTask/prioritizer/critter/empty/New()
+	..()
+
 /// Wanderer
 /datum/aiHolder/wanderer
 	New()

@@ -454,6 +454,9 @@ TRAYS
 		allowed_food = /obj/item/reagent_containers/food/snacks/ingredient/egg
 		contained_food_name = "egg"
 
+		rancher
+			count = 4
+
 	lollipop
 		name = "lollipop bowl"
 		desc = "A little bowl of lollipops, totally healthy in every way! They're medicinal, after all!"
@@ -746,7 +749,7 @@ TRAYS
 			var/obj/O = new /obj/item/raw_material/shard/glass
 			O.set_loc(T)
 			if(src.material)
-				O.setMaterial(copyMaterial(src.material))
+				O.setMaterial(src.material)
 			O.throw_at(get_offset_target_turf(T, rand(-4,4), rand(-4,4)), 7, 1)
 
 		src.shit_goes_everywhere(depth + 1)
