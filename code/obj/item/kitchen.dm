@@ -771,7 +771,7 @@ TRAYS
 	attack_self(mob/user)
 		. = ..()
 		if(user.traitHolder?.hasTrait("training_chef"))
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			var/holder = src.loc
 			var/str = copytext(html_encode(tgui_input_text(user, "Dish name?", "Set name")), 1, 64)
 
