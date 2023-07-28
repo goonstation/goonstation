@@ -14884,13 +14884,6 @@
 /area/station/maintenance/east)
 "aSQ" = (
 /obj/machinery/manufacturer/hangar,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
 /obj/machinery/light/incandescent/warm/very,
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)
@@ -22699,7 +22692,6 @@
 	name = "Mining Pod Bay Blast Door Control";
 	pixel_x = -22
 	},
-/obj/storage/closet/welding_supply,
 /turf/simulated/floor/caution/westeast,
 /area/station/mining/staff_room)
 "bvx" = (
@@ -35413,16 +35405,6 @@
 /obj/machinery/conveyor/NS/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
-"cjP" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/central)
-"cjQ" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/central)
 "cjS" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -36254,6 +36236,16 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
+"cBU" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/mining/staff_room)
 "cCv" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -38483,19 +38475,16 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "giE" = (
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
-	id = "mining_podbay"
-	},
-/obj/forcefield/energyshield/perma/doorlink,
-/obj/decal/tile_edge/floorguide/arrow_n{
-	pixel_x = 8;
-	pixel_y = 8
-	},
 /obj/machinery/r_door_control{
 	id = "mining_podbay";
 	pixel_x = -32
 	},
-/turf/simulated/floor/shuttlebay,
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	name = "Mining"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining,
+/turf/simulated/floor/caution/westeast,
 /area/station/mining/staff_room)
 "giP" = (
 /obj/lattice,
@@ -45267,6 +45256,10 @@
 /obj/mapping_helper/access/tech_storage,
 /turf/simulated/floor,
 /area/station/storage/tech)
+"uPg" = (
+/obj/storage/closet/welding_supply,
+/turf/simulated/floor/shuttlebay,
+/area/station/mining/staff_room)
 "uPl" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/mail,
@@ -84216,7 +84209,7 @@ fJg
 edf
 kjH
 aDr
-cjP
+aDr
 giE
 bvw
 bwe
@@ -84518,9 +84511,9 @@ ckU
 cju
 cju
 cju
-cjQ
-cjb
-bvx
+cju
+buS
+uPg
 bvx
 bvx
 bvx
@@ -85124,7 +85117,7 @@ ckv
 rsA
 ciW
 cjb
-bvz
+bvx
 bvx
 bvx
 bvx
@@ -85425,12 +85418,12 @@ vCx
 ciW
 ciW
 ciW
-buS
-buS
-ahh
-ahh
-ahh
-buQ
+cjb
+bvz
+bvx
+bvx
+bvx
+cBU
 buS
 buS
 buS
@@ -85727,12 +85720,12 @@ tNa
 nMJ
 ciW
 kfk
-aCD
-aqn
-aqn
-aqn
-aqn
-chn
+buS
+buS
+ahh
+ahh
+ahh
+buQ
 aqn
 bAO
 bBV
