@@ -767,11 +767,9 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 		auto = 1
 
 /obj/table/reinforced/chemistry/auto/beakers //starts with 7 :B:eakers inside it, wow!!
-/obj/table/reinforced/chemistry/auto/beakers //starts with 7 :B:eakers inside it, wow!!
 	name = "beaker storage"
 	drawer_contents = list(/obj/item/reagent_containers/glass/beaker = 7)
 
-/obj/table/reinforced/chemistry/auto/basicsup
 /obj/table/reinforced/chemistry/auto/basicsup
 	name = "basic supply lab counter"
 	desc = "Everything an aspiring chemist needs to start making chemicals!"
