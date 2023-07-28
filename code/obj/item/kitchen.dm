@@ -749,7 +749,7 @@ TRAYS
 			var/obj/O = new /obj/item/raw_material/shard/glass
 			O.set_loc(T)
 			if(src.material)
-				O.setMaterial(copyMaterial(src.material))
+				O.setMaterial(src.material)
 			O.throw_at(get_offset_target_turf(T, rand(-4,4), rand(-4,4)), 7, 1)
 
 		src.shit_goes_everywhere(depth + 1)
@@ -1194,14 +1194,6 @@ TRAYS
 	desc = "a table! with wheels!"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "kitchen_island"
-
-/obj/item/fish/random // used by the Wholetuna Cordata plant
-	New()
-		..()
-		SPAWN(0)
-			var/fish = pick(/obj/item/fish/salmon,/obj/item/fish/carp,/obj/item/fish/bass)
-			new fish(get_turf(src))
-			qdel(src)
 
 /obj/item/tongs
 	name = "tongs"

@@ -6,7 +6,7 @@
 	is_npc = TRUE
 	ai_type = /datum/aiHolder/mimic
 	can_lie = FALSE
-	butcherable = FALSE
+	butcherable = BUTCHER_NOT_ALLOWED
 	health_brute = 20
 	health_burn = 20
 	health_brute_vuln = 0.75
