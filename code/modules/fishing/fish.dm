@@ -500,9 +500,23 @@ Alien/mutant/other fish:
 	icon_state = "code_worm"
 	inhand_color = "#32CD32"
 	value  = FISH_RARITY_EPIC
+
 	New()
 		..()
 		name = "\improper [pick("free", "gamer", "Xtreme", "funny", "ultimate", "REAL")]_[pick("cat", "puppy", "gaming", "fail", "cheat", "hax")] [pick("video", "content", "game", "images", "text", "audiobook", "podcast")].worm"
+		global.processing_items += src
+
+	disposing()
+		global.processing_items -= src
+		. = ..()
+
+	process()
+		if (prob(30))
+			src.hologram_effect(TRUE)
+			SPAWN(2 SECONDS)
+				src.remove_hologram_effect()
+		else if (prob(40))
+			animate_lag(src, magnitude = 10, loopnum = 1, steps = rand(2, 4))
 
 //solarium
 /obj/item/reagent_containers/food/fish/sun_fish
@@ -523,11 +537,17 @@ Alien/mutant/other fish:
 	inhand_color = "#eb2d2d"
 	value  = FISH_RARITY_EPIC
 
+	New()
+		global.processing_items += src
+		return ..()
 
-	pickup(mob/user)
-		..()
-		if (prob(50))
-			user.changeStatus("burning", pick(3, 5) SECONDS)
+	disposing()
+		global.processing_items -= src
+		. = ..()
+
+	process()
+		if (ismob(src.loc) && prob(60))
+			src.loc.changeStatus("burning", pick(3, 5) SECONDS)
 
 /obj/item/reagent_containers/food/fish/igneous_fish
 	name = "igneous fish"
