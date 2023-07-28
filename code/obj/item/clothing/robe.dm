@@ -17,6 +17,139 @@
 		..()
 		setProperty("chemprot", 10)
 
+/obj/item/clothing/suit/greenrobe
+	name = "green robe"
+	desc = "" //todo
+	icon = 'icons/obj/items/ChaplainStuff.dmi'
+	inhand_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon_state = "GreenRobesObj"
+	item_state = ""
+	wear_state = "GreenRobes"
+	over_hair = TRUE
+	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS
+	wear_layer = MOB_FULL_SUIT_LAYER
+
+	setupProperties()
+		..()
+		setProperty("chemprot", 10)
+
+/obj/item/clothing/suit/greenrobe
+	name = "green robe"
+	desc = "" //todo
+	icon = 'icons/obj/items/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon_state = "GreenRobesObj"
+	wear_state = "GreenRobes"
+	over_hair = TRUE
+	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS
+	wear_layer = MOB_FULL_SUIT_LAYER
+
+	setupProperties()
+		..()
+		setProperty("chemprot", 10)
+
+/obj/item/clothing/mask/greenmask
+	name = "green mask"
+	desc = "" //todo
+	icon = 'icons/obj/items/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon_state = "GreenMaskObj"
+	wear_state = ""
+	see_face = FALSE
+
+/obj/item/clothing/under/weirdo
+	name = "weird jumpsuit"
+	desc = "" //todo
+	icon = 'icons/obj/items/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon_state = "WeirdoJumpsuitObj"
+	wear_state = "WeirdoJumpsuit"
+
+/obj/item/clothing/mask/weirdomask
+	name = "weird mask"
+	desc = "" //todo
+	icon = 'icons/obj/items/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon_state = "WeirdoMaskObj"
+	wear_state = ""
+	see_face = FALSE
+
+/obj/item/clothing/suit/burntrobe
+	name = "burnt robe"
+	desc = "" //todo
+	icon = 'icons/obj/items/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon_state = "BurnedRobesObj"
+	wear_state = "BurnedRobes"
+	over_hair = TRUE
+	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS
+	wear_layer = MOB_FULL_SUIT_LAYER
+
+	setupProperties()
+		..()
+		setProperty("chemprot", 10)
+
+/obj/item/clothing/mask/burntmask
+	name = "burnt mask"
+	desc = "" //todo
+	icon = 'icons/obj/items/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon_state = "BurnedMaskObj"
+	wear_state = ""
+	see_face = FALSE
+
+/obj/item/clothing/suit/lightrobe
+	name = "light robe"
+	desc = "" //todo
+	icon = 'icons/obj/items/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon_state = "LightRobesObj"
+	wear_state = "LightRobes"
+	over_hair = TRUE
+	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS
+	wear_layer = MOB_FULL_SUIT_LAYER
+
+	setupProperties()
+		..()
+		setProperty("chemprot", 10)
+
+/obj/item/clothing/head/light
+	name = "light hat"
+	desc = "" //todo
+	icon = 'icons/obj/items/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon_state = "LightHatObj"
+	wear_state = ""
+
+/obj/item/clothing/suit/naturerobe
+	name = "nature robe"
+	desc = "" //todo
+	icon = 'icons/obj/items/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon_state = "NatureRobesObj"
+	wear_state = "NatureRobes"
+	over_hair = TRUE
+	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS
+	wear_layer = MOB_FULL_SUIT_LAYER
+
+	setupProperties()
+		..()
+		setProperty("chemprot", 10)
+
+/obj/item/clothing/head/nature
+	name = "nature hat"
+	desc = "" //todo
+	icon = 'icons/obj/items/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon_state = "NatureHatObj"
+	wear_state = ""
+
 /obj/item/clothing/suit/cultist
 	name = "cultist robe"
 	desc = "The unholy vestments of a cultist."
@@ -25,8 +158,8 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "cultist"
 	item_state = "cultist"
-	see_face = 0
-	magical = 1
+	see_face = FALSE
+	magical = TRUE
 	over_hair = TRUE
 	wear_layer = MOB_FULL_SUIT_LAYER
 	c_flags = COVERSEYES | COVERSMOUTH
