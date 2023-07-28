@@ -93,7 +93,9 @@ var/global/datum/apiHandler/apiHandler
 		req += "data_server=[serverKey]&data_id=[config.server_id]&" //Append server number and ID
 		req += "data_version=[config.goonhub_api_version]&" //Append API version
 		var/safeReq = req //for outputting errors without the auth code
-		req += "auth=[md5(config.goonhub_api_token)]" //Append auth code
+
+		// ZEWAKA TODO: INVESTIGATE IF RUST SERDE DECODE DOES THIS PROPERLY
+		var/headers = list("Accept: application/json", "Content-Type: application/json", "Authorization: [config.goonhub_api_token]")
 
 		lazy_waiting_counter++
 		while (lazy_concurrent_counter > 50)
@@ -106,7 +108,7 @@ var/global/datum/apiHandler/apiHandler
 
 		// Actual request
 		var/datum/http_request/request = new()
-		request.prepare(route.method, jointext(req, ""), "", "")
+		request.prepare(route.method, jointext(req, ""), headers, "")
 		request.begin_async()
 		var/time_started = TIME
 		UNTIL(request.is_complete() || (TIME - time_started) > 10 SECONDS)
