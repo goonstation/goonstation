@@ -566,3 +566,11 @@ Alien/mutant/other fish:
 
 	slapsound()
 		playsound(src.loc, 'sound/impact_sounds/Bush_Hit.ogg', 50, 1, -1)
+
+/obj/item/reagent_containers/food/fish/random // used by the Wholetuna Cordata plant
+	New()
+		..()
+		SPAWN(0)
+			var/fish = pick(/obj/item/reagent_containers/food/fish/salmon,/obj/item/reagent_containers/food/fish/carp,/obj/item/reagent_containers/food/fish/bass)
+			new fish(get_turf(src))
+			qdel(src)
