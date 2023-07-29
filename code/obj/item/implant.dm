@@ -401,7 +401,6 @@ var/global/sec_wipe_alert = FALSE
 
 	death_alert()
 		. = ..()
-		src.send_annoucement()
 		src.on_remove(src.owner)
 		qdel(src)
 
