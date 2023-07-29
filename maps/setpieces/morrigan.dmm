@@ -3388,6 +3388,14 @@
 	name = "pipe"
 	},
 /obj/decal/cleanable/oil,
+/obj/decal/cleanable/blood{
+	icon_state = "footprints1";
+	dir = 8
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "smear1";
+	dir = 4
+	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "dVL" = (
@@ -9243,10 +9251,10 @@
 /turf/unsimulated/floor/black,
 /area/space)
 "kVk" = (
-/mob/living/carbon/human/normal/janitor,
 /obj/random_item_spawner/desk_stuff,
 /obj/decal/cleanable/greenpuke,
 /obj/item/paper/prelude_hobo2,
+/mob/living/carbon/human/hobo/vladimir,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict/hobo)
 "kVI" = (
@@ -9607,6 +9615,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/space)
 "lqg" = (
+/obj/decal/cleanable/blood/splatter/extra,
 /turf/simulated/wall/false_wall/reinforced,
 /area/morrigan/derelict)
 "lro" = (
@@ -9656,6 +9665,7 @@
 /obj/decal/cleanable/dirt/dirt2,
 /obj/item/reagent_containers/pill/methamphetamine,
 /obj/item/clothing/suit/bedsheet/black,
+/mob/living/carbon/human/hobo/laraman,
 /turf/unsimulated/floor,
 /area/morrigan/derelict/hobo)
 "lvg" = (
@@ -13104,10 +13114,14 @@
 /turf/unsimulated/floor/carpet/red/standard/edge/north,
 /area/morrigan/station/chapel)
 "pxk" = (
-/obj/decal/cleanable/oil,
-/mob/living/carbon/human/normal/botanist,
+/obj/decal/floatingtiles{
+	dir = 4
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "tracksL"
+	},
 /turf/unsimulated/floor/plating/random,
-/area/morrigan/derelict/hobo)
+/area/morrigan/derelict)
 "pxA" = (
 /obj/map/light,
 /turf/unsimulated/floor/industrial,
@@ -14964,8 +14978,8 @@
 /area/morrigan/station/maintenance)
 "rLu" = (
 /obj/decal/cleanable/cobweb,
-/mob/living/carbon/human/normal/assistant,
 /obj/stool/chair/material/mauxite,
+/obj/npc/trader/hobo,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict/hobo)
 "rLv" = (
@@ -30841,7 +30855,7 @@ owX
 fQA
 fVS
 wOQ
-coh
+pxk
 dVF
 ecT
 jcU
@@ -31463,7 +31477,7 @@ qSy
 daZ
 sln
 orX
-pxk
+tFE
 nqc
 nqc
 nqc
