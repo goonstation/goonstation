@@ -365,14 +365,14 @@ var/global/sec_wipe_alert = FALSE
 	/// Security member this implant originally belonged to
 	var/mob/living/original_owner
 
-	/// Check if anyone with a sec implant is alive, if sec is dead send the annoucement that sec has been killed
+	/// Check if anyone with a sec implant is alive and not in cryo, if sec is dead send the annoucement that sec has been killed
 	proc/send_annoucement()
 		var/sec_alive = FALSE
 		for_by_tcl(I, /obj/item/implant/health/security/anti_mindhack)
 			var/possible_implantee = I.loc
 			if (istype(possible_implantee, /mob/living))
 				var/mob/living/implantee = possible_implantee
-				if (I.functional && isalive(implantee))
+				if (I.functional && isalive(implantee) && !istype(implantee.loc, /obj/cryotron))
 					sec_alive = TRUE
 
 		if (!sec_alive && !sec_wipe_alert)
