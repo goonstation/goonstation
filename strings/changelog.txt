@@ -1,5 +1,9 @@
 
 (t)sat jul 29 23
+(u)CalliopeSoups
+(p)14664
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Oshan's ranch has been renovated for cooperative rancher action.
 (u)Bartimeus973
 (p)15147
 (e)💅💪🎭|C-QoL, A-Traits, A-RP
