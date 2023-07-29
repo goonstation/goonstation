@@ -141,7 +141,7 @@ const Occupant = (props, context) => {
             </LabeledList.Item>
           </LabeledList>
 
-          <Section title="Key Health Indicators">
+          <Section title="Key Health Indicators" mt="0.5rem">
             <Table>
               <DisplayBloodPressure
                 occupied={occupant.occupied}
