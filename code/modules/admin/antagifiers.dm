@@ -14,7 +14,7 @@
 			boutput(M, "Silly robot.")
 			return
 		/*
-		if (!allowAntagStacking && checktraitor(M))
+		if (!allowAntagStacking && checkantag(M))
 			boutput(M, "Don't be greedy.")
 			return
 		*/

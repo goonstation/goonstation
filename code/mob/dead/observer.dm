@@ -125,7 +125,8 @@
 	wig = new
 	wig.mat_changename = 0
 	var/datum/material/wigmat = getMaterial("ectofibre")
-	wigmat.color = P.AH.customization_first_color
+	wigmat = wigmat.getMutable()
+	wigmat.setColor(P.AH.customization_first_color)
 	wig.setMaterial(wigmat)
 	wig.name = "ectofibre [name]'s hair"
 	wig.icon = 'icons/mob/human_hair.dmi'
@@ -414,7 +415,8 @@
 		O.wig = new
 		O.wig.mat_changename = 0
 		var/datum/material/wigmat = getMaterial("ectofibre")
-		wigmat.color = src.bioHolder.mobAppearance.customization_first_color
+		wigmat = wigmat.getMutable()
+		wigmat.setColor(src.bioHolder.mobAppearance.customization_first_color)
 		O.wig.setMaterial(wigmat)
 		O.wig.name = "[O.name]'s hair"
 		O.wig.icon = 'icons/mob/human_hair.dmi'

@@ -112,4 +112,4 @@ Subtypes:
 	fish_trophy
 		name = "\improper 'Biggest catch' Fish Wall Mount"
 		desc = "This Wall Mount can be hung on a wall and display fish for everyone to see. Show off your catch!"
-		allowed_item = /obj/item/fish/
+		allowed_item = /obj/item/reagent_containers/food/fish

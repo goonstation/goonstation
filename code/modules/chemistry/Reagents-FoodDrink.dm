@@ -3144,6 +3144,35 @@ datum
 				if(method == INGEST)
 					boutput(M, "<span class='notice'>That tasted amazing!</span>")
 
+		fooddrink/fishoil
+			name = "fish oil"
+			id = "fishoil"
+			description = "A clear and slightly viscous oil isolated out of fish."
+			reagent_state = LIQUID
+			fluid_r = 180
+			fluid_g = 200
+			fluid_b = 60
+			transparency = 140
+			hunger_value = 0.8
+			taste = "fishy"
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				//unsaturated fatty acids help correcting your blood pressure :)
+				if (blood_system && isliving(M) && prob(25))
+					var/mob/living/H = M
+					if (H.blood_volume < 500)
+						H.blood_volume += 1  * mult
+					else
+						if (H.blood_volume > 500)
+							H.blood_volume -= 1  * mult
+
+				if(prob(4))
+					M.reagents.add_reagent("cholesterol", rand(1,2) * mult)
+				..()
+
+
+
 		fooddrink/egg
 			name = "egg"
 			id = "egg"
@@ -4157,14 +4186,14 @@ datum
 						T.visible_message("<span class='alert'>The [T] fails to muster up the effort to become delicious!</span>")
 					return
 				else
-					T.setMaterial(getMaterial("pizza"), copy = FALSE)
+					T.setMaterial(getMaterial("pizza"))
 			reaction_obj(var/obj/O, var/volume)
 				if(volume < rand(5,9))
 					if(prob(5))
 						O.visible_message("<span class='alert'>The [O] fails to muster up the effort to become delicious!</span>")
 					return
 				else
-					O.setMaterial(getMaterial("pizza"), copy = FALSE)
+					O.setMaterial(getMaterial("pizza"))
 
 		fooddrink/friedessence
 			name = "The Physical Manifestation Of The Very Concept Of Fried Food"

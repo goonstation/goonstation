@@ -84,8 +84,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
 			for (var/i in 1 to src.slice_amount)
-				var/obj/item/reagent_containers/food/slice = new src.slice_product(T)
-				src.process_sliced_products(slice, amount_to_transfer)
+				var/atom/slice_result = new src.slice_product(T)
+				if(istype(slice_result, /obj/item/reagent_containers/food))
+					var/obj/item/reagent_containers/food/slice = slice_result
+					src.process_sliced_products(slice, amount_to_transfer)
 			qdel (src)
 		else
 			..()
@@ -1918,7 +1920,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		var/obj/O = new /obj/item/raw_material/shard/glass
 		O.set_loc(get_turf(M))
 		if (src.material)
-			O.setMaterial(copyMaterial(src.material))
+			O.setMaterial(src.material)
 		if (src.reagents)
 			src.reagents.reaction(M)
 			qdel(src)
