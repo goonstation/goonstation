@@ -167,45 +167,48 @@
 		if (!occupant)
 			return null
 
-		var/temperature_color
-		if (src.occupant.bodytemperature >= (src.occupant.base_body_temp + 60)) { temperature_color="red"; }
-		else if (src.occupant.bodytemperature >= (src.occupant.base_body_temp + 30)) { temperature_color="yellow"; }
-		else if (src.occupant.bodytemperature <= (src.occupant.base_body_temp - 60)) { temperature_color="purple"; }
-		else if (src.occupant.bodytemperature <= (src.occupant.base_body_temp - 30)) { temperature_color="blue"; }
-		else { temperature_color = "green"; }
-
 		. = list(
+			"occupied" = TRUE,
 			"occupantStat" = src.occupant.stat,
 			"health" = src.occupant.health / src.occupant.max_health,
 			"oxyDamage" = src.occupant.get_oxygen_deprivation(),
 			"toxDamage" = src.occupant.get_toxin_damage(),
 			"burnDamage" = src.occupant.get_burn_damage(),
-			"bruteDamage" = src.occupant.get_brute_damage(),
-			"bodytemperature" = round(src.occupant.bodytemperature, src.occupant.bodytemperature < 1000 ? 0.01 : 1),
-			"temperature_color" = temperature_color
+			"bruteDamage" = src.occupant.get_brute_damage()
 		)
 		if (isliving(src.occupant))
 			var/mob/living/L = src.occupant
-			var/bp_col
-			switch (L.blood_pressure["total"])
-				if (-INFINITY to 299) // very low (70/50)
-					bp_col = "red"
-				if (300 to 414) // low (100/65)
-					bp_col = "yellow"
-				if (415 to 584) // normal (120/80)
-					bp_col = "green"
-				if (585 to 665) // high (140/90)
-					bp_col = "yellow"
-				if (666 to INFINITY) // very high (160/100)
-					bp_col = "red"
+
+			var/death_state = L.stat
+			if (L.bioHolder && L.bioHolder.HasEffect("dead_scan"))
+				death_state = 2
+
+			var/datum/statusEffect/simpledot/radiation/R = L.hasStatus("radiation")
+
+			var/list/brain_damage = call(/obj/machinery/computer/operating/proc/calc_brain_damage_severity)(L)
+
 			. += list(
-				"blood_data" = "[L.blood_pressure["rendered"]] ([L.blood_pressure["status"]])",
-				"pressure_color" = bp_col
+				"patient_status" = death_state,
+				"blood_pressure_rendered" = L.blood_pressure["rendered"],
+				"blood_pressure_status" = L.blood_pressure["status"],
+
+				"body_temp" = L.bodytemperature,
+				"optimal_temp" = L.base_body_temp,
+				"embedded_objects" = call(/obj/machinery/computer/operating/proc/check_embedded_objects)(L),
+
+				"rad_stage" = R?.stage ? R.stage : 0,
+				"rad_dose" = R?.stage ? L.radiation_dose : 0,
+
+				"brain_damage" = list (
+					"value" = L.get_brain_damage(),
+					"desc" = brain_damage[1],
+					"color" = brain_damage[2],
+				),
 			)
 
 			if (reagent_scan_active)
 				. += list(
-					"total_blood" = L.blood_pressure["total"],
+					"blood_volume" = L.blood_pressure["total"],
 					"reagents" = get_reagents_data(L.reagents, null)
 				)
 

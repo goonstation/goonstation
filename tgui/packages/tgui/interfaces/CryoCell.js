@@ -6,11 +6,12 @@
  */
 
 import { useBackend } from "../backend";
-import { Button, Box, Icon, AnimatedNumber, Section, LabeledList, ProgressBar, Dimmer } from "../components";
+import { Button, Box, Icon, AnimatedNumber, Section, LabeledList, ProgressBar, Dimmer, Table } from "../components";
 import { Window } from '../layouts';
 import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 import { ReagentGraph, ReagentList } from './common/ReagentInfo';
 import { HealthStat } from './common/HealthStat';
+import { DisplayBloodPressure, DisplayTempImplantRow, DisplayRads, DisplayBrain, DisplayEmbeddedObjects } from '../interfaces/OperatingComputer/index';
 
 export const CryoCell = (_props, context) => {
   return (
@@ -104,59 +105,66 @@ const Occupant = (props, context) => {
       }>
 
       {!!occupant && (
-        <LabeledList>
-          <LabeledList.Item label="Status">
-            <Icon
-              color={occupantStatus.color}
-              name={occupantStatus.icon} />
-            {" "}{occupantStatus.name}
-          </LabeledList.Item>
-          <LabeledList.Item label="Overall Health">
-            <ProgressBar
-              value={occupant.health}
-              ranges={{
-                good: [0.9, Infinity],
-                average: [0.5, 0.9],
-                bad: [-Infinity, 0.5],
-              }} />
-          </LabeledList.Item>
-          <LabeledList.Item label="Damage Breakdown">
-            <HealthStat inline align="center" type="oxy" width={5}>
-              {damageNum(occupant.oxyDamage)}
-            </HealthStat>
-            /
-            <HealthStat inline align="center" type="toxin" width={5}>
-              {damageNum(occupant.toxDamage)}
-            </HealthStat>
-            /
-            <HealthStat inline align="center" type="burn" width={5}>
-              {damageNum(occupant.burnDamage)}
-            </HealthStat>
-            /
-            <HealthStat inline align="center" type="brute" width={5}>
-              {damageNum(occupant.bruteDamage)}
-            </HealthStat>
-          </LabeledList.Item>
-          {occupant.blood_data && (
-            <LabeledList.Item label="Blood Pressure">
-              <Box color={occupant.pressure_color}>
-                {occupant.blood_data}
-              </Box>
+        <>
+          <LabeledList>
+            <LabeledList.Item label="Status">
+              <Icon
+                color={occupantStatus.color}
+                name={occupantStatus.icon} />
+              {" "}{occupantStatus.name}
             </LabeledList.Item>
-          )}
-          <LabeledList.Item label="Temperature">
-            <Box color={occupant.temperature_color}>
-              {(occupant.bodytemperature - 273.15).toPrecision(4) + "°C / " + ((occupant.bodytemperature - 273.15) * 1.8 + 32).toPrecision(4) + "°F"}
-            </Box>
-          </LabeledList.Item>
-          {occupant.total_blood && (
-            <LabeledList.Item label="Blood Volume">
-              <Box color={occupant.pressure_color}>
-                {occupant.total_blood} units
-              </Box>
+            <LabeledList.Item label="Overall Health">
+              <ProgressBar
+                value={occupant.health}
+                ranges={{
+                  good: [0.9, Infinity],
+                  average: [0.5, 0.9],
+                  bad: [-Infinity, 0.5],
+                }} />
             </LabeledList.Item>
-          )}
-        </LabeledList>
+            <LabeledList.Item label="Damage Breakdown">
+              <HealthStat inline align="center" type="oxy" width={5}>
+                {damageNum(occupant.oxyDamage)}
+              </HealthStat>
+              /
+              <HealthStat inline align="center" type="toxin" width={5}>
+                {damageNum(occupant.toxDamage)}
+              </HealthStat>
+              /
+              <HealthStat inline align="center" type="burn" width={5}>
+                {damageNum(occupant.burnDamage)}
+              </HealthStat>
+              /
+              <HealthStat inline align="center" type="brute" width={5}>
+                {damageNum(occupant.bruteDamage)}
+              </HealthStat>
+            </LabeledList.Item>
+          </LabeledList>
+
+          <Section title="Key Health Indicators">
+            <Table>
+              <DisplayBloodPressure
+                occupied={occupant.occupied}
+                patient_status={occupant.patient_status}
+                blood_pressure_rendered={occupant.blood_pressure_rendered}
+                blood_pressure_status={occupant.blood_pressure_status}
+                blood_volume={occupant.blood_volume}
+              />
+              <DisplayTempImplantRow
+                occupied={occupant.occupied}
+                body_temp={occupant.body_temp}
+                optimal_temp={occupant.optimal_temp}
+                embedded_objects={occupant.embedded_objects}
+              />
+              { !!occupant.occupied && <DisplayRads rad_stage={occupant.rad_stage} rad_dose={occupant.rad_dose} />}
+              <DisplayBrain
+                occupied={occupant.occupied}
+                status={occupant.brain_damage}
+              />
+            </Table>
+            { !!occupant.occupied && <DisplayEmbeddedObjects embedded_objects={occupant.embedded_objects} />}
+          </Section>
+        </>
       )}
       {occupant && occupant.reagents && (
         <>

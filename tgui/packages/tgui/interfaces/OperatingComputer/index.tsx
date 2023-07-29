@@ -174,7 +174,7 @@ const HealthGraph = (props) => {
   );
 };
 
-const DisplayBloodPressure = (props:DisplayBloodPressureProps) => {
+export const DisplayBloodPressure = (props:DisplayBloodPressureProps) => {
   const {
     occupied,
     patient_status,
@@ -199,18 +199,23 @@ const DisplayBloodPressure = (props:DisplayBloodPressureProps) => {
 
   return (
     <Table.Row>
-      <Table.Cell header textAlign="right" width={10}>Blood Pressure:</Table.Cell>
-      <Table.Cell width={10} color={pressure_color}>
+      <Table.Cell header textAlign="right" width={10} nowrap>Blood Pressure:</Table.Cell>
+      <Table.Cell width={10} color={pressure_color} nowrap>
         { !!occupied && patient_status !== 2 && `${blood_pressure_rendered} (${blood_pressure_status})`}
         { !occupied && "--/--"}
       </Table.Cell>
-      <Table.Cell header textAlign="right" width={10}>Blood Volume:</Table.Cell>
-      <Table.Cell width={10} color={pressure_color}>{occupied ? blood_volume.toString() : "--"} units</Table.Cell>
+
+      <Table.Cell header textAlign="right" width={10}>
+        {typeof blood_volume === "number" && (<>Blood Volume:</>)}
+      </Table.Cell>
+      <Table.Cell width={10} color={pressure_color}>
+        {typeof blood_volume === "number" && (<>{occupied ? blood_volume.toString() : "--"} units</>)}
+      </Table.Cell>
     </Table.Row>
   );
 };
 
-const DisplayRads = (props) => {
+export const DisplayRads = (props) => {
   const { rad_stage, rad_dose } = props;
   let color = null;
   let bold = false;
@@ -247,7 +252,7 @@ const DisplayRads = (props) => {
   }
 };
 
-const DisplayBrain = (props:DisplayBrainProps) => {
+export const DisplayBrain = (props:DisplayBrainProps) => {
   const { occupied, status } = props;
   if (occupied && status.desc !== "Okay" && status.desc !== "Missing") {
     return (
@@ -380,7 +385,7 @@ const DisplayTemperature = (props: DisplayTemperatureProps) => {
       <Table.Cell header textAlign="right">
         Temperature:
       </Table.Cell>
-      <Table.Cell color={font_color}>
+      <Table.Cell color={font_color} nowrap>
         {!!occupied && (body_temp - 273.15).toPrecision(4) + "°C / " + ((body_temp - 273.15) * 1.8 + 32).toPrecision(4) + "°F"}
         {!occupied && "--°C / --°F"}
       </Table.Cell>
@@ -536,7 +541,7 @@ const DisplayTitle = (props:OperatingComputerDisplayTitleProps) => {
   );
 };
 
-const DisplayTempImplantRow = (props: DisplayTempImplantRowProps) => {
+export const DisplayTempImplantRow = (props: DisplayTempImplantRowProps) => {
   const {
     occupied,
     body_temp,
@@ -565,7 +570,7 @@ const DisplayImplants = (props) => {
   );
 };
 
-const DisplayEmbeddedObjects = (props) => {
+export const DisplayEmbeddedObjects = (props) => {
   const { embedded_objects } = props;
   return (
     <Box textAlign="center">
