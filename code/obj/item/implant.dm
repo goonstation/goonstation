@@ -368,7 +368,7 @@ var/global/sec_wipe_alert = FALSE
 	/// Check if anyone with a sec implant is alive, if sec is dead send the annoucement that sec has been killed
 	proc/send_annoucement()
 		var/sec_alive = FALSE
-		for (var/obj/item/implant/health/security/anti_mindhack/I in by_type[/obj/item/implant/health/security/anti_mindhack])
+		for_by_tcl(I, /obj/item/implant/health/security/anti_mindhack)
 			var/possible_implantee = I.loc
 			if (istype(possible_implantee, /mob/living))
 				var/mob/living/implantee = possible_implantee
@@ -389,13 +389,18 @@ var/global/sec_wipe_alert = FALSE
 
 	implanted(mob/living/M, mob/I)
 		..()
-		if (!src.original_owner)
+		if (current_state != GAME_STATE_PLAYING) // *scream
+			src.functional = FALSE
+			return
+		if (!src.original_owner && src.functional == TRUE)
 			original_owner = M
-		else if (src.original_owner == src.loc && isalive(src.original_owner)) // allows sec to reinsert their implant
+		else if (src.original_owner == src.loc && isalive(src.original_owner)) // allows sec to reinsert their implant in case of surgery
 			src.functional = TRUE
 
 	on_remove()
 		..()
+		if (src.functional == FALSE)
+			return
 		src.functional = FALSE
 		src.send_annoucement()
 
