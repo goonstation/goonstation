@@ -16,7 +16,7 @@ import { DisplayBloodPressure, DisplayTempImplantRow, DisplayRads, DisplayBrain,
 export const CryoCell = (_props, context) => {
   return (
     <Window
-      width={450}
+      width={485}
       height={575}>
       <Window.Content scrollable>
         <CryoCellControl />

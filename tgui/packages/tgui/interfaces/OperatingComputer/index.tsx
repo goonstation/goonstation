@@ -205,7 +205,7 @@ export const DisplayBloodPressure = (props:DisplayBloodPressureProps) => {
         { !occupied && "--/--"}
       </Table.Cell>
 
-      <Table.Cell header textAlign="right" width={10}>
+      <Table.Cell header textAlign="right" width={10} nowrap>
         {typeof blood_volume === "number" && (<>Blood Volume:</>)}
       </Table.Cell>
       <Table.Cell width={10} color={pressure_color}>
@@ -246,7 +246,7 @@ export const DisplayRads = (props) => {
         <Table.Cell header textAlign="right" color="yellow" width={10}>Radiation:</Table.Cell>
         <Table.Cell width={10} color={color} bold={bold}>Stage {rad_stage}</Table.Cell>
         <Table.Cell header textAlign="right" width={10}>Effective Dose:</Table.Cell>
-        <Table.Cell width={10}>{rad_dose.toPrecision(6)} Sv</Table.Cell>
+        <Table.Cell width={10} nowrap>{rad_dose.toPrecision(6)} Sv</Table.Cell>
       </Table.Row>
     );
   }
@@ -261,7 +261,7 @@ export const DisplayBrain = (props:DisplayBrainProps) => {
           Brain Damage:
         </Table.Cell>
         <Table.Cell width={10} color={status.color}>{status.desc}</Table.Cell>
-        <Table.Cell header textAlign="right" width={10}>Neuron Cohesion:</Table.Cell>
+        <Table.Cell header textAlign="right" width={10} nowrap>Neuron Cohesion:</Table.Cell>
         <Table.Cell>{((120-status.value)/120*100).toFixed(2)}%</Table.Cell>
       </Table.Row>
     );
