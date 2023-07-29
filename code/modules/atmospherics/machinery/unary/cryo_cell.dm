@@ -152,7 +152,7 @@
 			if ("insert")
 				var/obj/item/I = usr.equipped()
 				if(istype(I, /obj/item/reagent_containers/glass))
-					inert_beaker(I, usr)
+					insert_beaker(I, usr)
 		. = TRUE
 
 
@@ -245,7 +245,7 @@
 
 	attackby(var/obj/item/I, var/mob/user)
 		if(istype(I, /obj/item/reagent_containers/glass))
-			inert_beaker(I, user)
+			insert_beaker(I, user)
 		else if(istype(I, /obj/item/grab))
 			var/obj/item/grab/G = I
 			if (try_push_in(G.affecting, user))
@@ -306,7 +306,7 @@
 
 		tgui_process.update_uis(src)
 
-	proc/inert_beaker(var/obj/item/reagent_containers/glass/I, var/mob/user)
+	proc/insert_beaker(var/obj/item/reagent_containers/glass/I, var/mob/user)
 		if (I.cant_drop)
 			boutput(user, "<span class='alert'>You can't put that in \the [src] while it's attached to you!")
 			return
