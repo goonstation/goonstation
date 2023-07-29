@@ -23,7 +23,6 @@
 	/// Used for the toggle_hood component, should be the same as the default icon_state so it can get updated with medal rewards.
 	var/coat_style = null
 
-
 	setupProperties()
 		..()
 		setProperty("coldprot", 5)
@@ -1913,9 +1912,10 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	desc = ""
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	w_class = W_CLASS_TINY
+	c_flags = ONMASK | ONBACK
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "hosmedal"
-	icon_state = "hosmedal"
+	item_state = "hosmedal"
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind?.assigned_role == "Head of Security")

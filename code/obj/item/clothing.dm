@@ -31,6 +31,13 @@
 
 	var/material_piece = /obj/item/material_piece/cloth/cottonfabric
 
+	// Used for ONMASK flag
+	var/use_bloodoverlay = 0
+	var/is_muzzle = 0
+	var/stapled = 0
+	var/allow_staple = 0
+	var/path_prot = 0
+
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0

@@ -11,9 +11,10 @@
 	wear_layer = MOB_HEAD_LAYER2
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
-	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
+	path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 	var/team_num
 	var/blocked_from_petasusaphilic = FALSE //Replacing the global blacklist
+
 	duration_remove = 1.5 SECONDS
 	duration_put = 1.5 SECONDS
 
@@ -942,6 +943,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	name = "bandana"
 	desc = "A bandana. You've seen space action stars wear these things."
 	icon_state = "bandana_base"
+	c_flags = ONMASK
 
 	random_color
 		desc = "A colorful bandana."
@@ -1736,6 +1738,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/goggles)
 	icon_state = "goggles_red"
 	item_state = "goggles_red"
 	w_class = W_CLASS_TINY
+	c_flags = ONMASK
 	throwforce = 0
 
 	red

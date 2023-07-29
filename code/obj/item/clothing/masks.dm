@@ -10,11 +10,11 @@
 	c_flags = COVERSMOUTH
 	compatible_species = list("human", "cow", "werewolf")
 	wear_layer = MOB_HEAD_LAYER1
-	var/is_muzzle = 0
-	var/use_bloodoverlay = 1
-	var/stapled = 0
-	var/allow_staple = 1
-	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
+	is_muzzle = 0
+	use_bloodoverlay = 1
+	stapled = 0
+	allow_staple = 1
+	path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 
 	New()
 		..()

@@ -62,8 +62,10 @@
 #define BLOCK_BLUNT					(1<<16)
 /// can be worn on the back
 #define ONBACK						(1<<17)
-/// can be work on the belt
+/// can be worn on the belt
 #define ONBELT						(1<<18)
+/// can be worn on the face
+#define ONMASK						(1<<19)
 
 
 //Suit blood flags

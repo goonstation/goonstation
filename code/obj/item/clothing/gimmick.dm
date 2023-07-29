@@ -1117,7 +1117,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	wear_layer = MOB_GLASSES_LAYER2
 	icon_state = "scarf"
-	c_flags = ONBACK
+	c_flags = ONBACK | ONMASK
 
 
 	setupProperties()

@@ -2155,6 +2155,8 @@
 					return FALSE
 				else
 					return TRUE
+			if (I.c_flags & ONMASK)
+				return TRUE
 		if (slot_ears)
 			if (!src.organHolder.head)
 				return FALSE

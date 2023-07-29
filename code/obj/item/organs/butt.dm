@@ -20,8 +20,8 @@ TYPEINFO(/obj/item/clothing/head/butt)
 	c_flags = COVERSEYES
 	var/toned = 1
 	var/s_tone = "#FAD7D0"
-	var/stapled = 0
-	var/allow_staple = 1
+	stapled = 0
+	allow_staple = 1
 	var/op_stage = 0
 	rand_pos = 1
 	var/mob/living/carbon/human/donor = null
