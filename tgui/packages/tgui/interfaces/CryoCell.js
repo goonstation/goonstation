@@ -172,6 +172,7 @@ const Occupant = (props, context) => {
           <ReagentList container={occupant.reagents} />
         </>
       )}
+      {!occupant && <em>Unoccupied</em>}
     </Section>
   );
 };
