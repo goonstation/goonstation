@@ -52,7 +52,7 @@ export const ObserverMenu = (props, context) => {
     ''
   );
   const filteredItems = data.mydata.filter((item) =>
-    item?.name.toLowerCase().includes(searchQuery.toLowerCase())
+    item?.name?.toLowerCase().includes(searchQuery.toLowerCase())
     || item?.job?.toLowerCase().includes(searchQuery.toLowerCase())
   );
   // User types into search bar
