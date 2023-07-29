@@ -37,7 +37,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 			if (O.client)
 				eligible[O.real_name] = O
 
-		if (eligible.len < 1)
+		if (length(eligible) < 1)
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return TRUE
 
@@ -278,7 +278,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		for (var/mob/dead/target_observer/hivemind_observer/O in H.hivemind)
 			eligible[O.real_name] = O
 
-		if (eligible.len < 1)
+		if (length(eligible) < 1)
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
 			return 1
 
@@ -331,7 +331,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 			if(O.client)
 				eligible += O
 
-		if (eligible.len < 1)
+		if (length(eligible) < 1)
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
 			return 1
 

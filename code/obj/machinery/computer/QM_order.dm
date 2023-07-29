@@ -23,10 +23,6 @@
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "qmreq1"
 
-/obj/machinery/computer/ordercomp/attack_ai(var/mob/user as mob)
-	boutput(user, "<span class='alert'>AI Interfacing with this computer has been disabled.</span>")
-	return
-
 /obj/machinery/computer/ordercomp/attack_hand(var/mob/user)
 	if(..())
 		return

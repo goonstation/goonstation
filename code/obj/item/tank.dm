@@ -488,6 +488,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 /obj/item/tank/mini_oxygen
 	name = "mini oxygen tank"
 	icon_state = "mini_oxtank"
+	item_state = "em_oxtank"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	health = 5

@@ -8,7 +8,7 @@
 		return 0
 
 	var/datum/powernet/PN
-	if(powernets && powernets.len >= netnum)
+	if(powernets && length(powernets) >= netnum)
 		PN = powernets[netnum]
 
 	elecflash(src)
@@ -143,7 +143,7 @@
 	// but show if in space
 	if(istype(T, /turf/space) && !istype(T,/turf/space/fluid))
 		hide(0)
-	else if(level==1)
+	else if(level==UNDERFLOOR)
 		hide(T.intact)
 
 	//cableimg = image(src.icon, src.loc, src.icon_state)
@@ -167,15 +167,12 @@
 		if(netnum && powernets && length(powernets) >= netnum) //NEED FOR CLEAN GC IN EXPLOSIONS
 			powernets[netnum].cables -= src
 
-	insulator.owner = null
-	conductor.owner = null
-
 	STOP_TRACKING
 
 	..()													// then go ahead and delete the cable
 
 /obj/cable/hide(var/i)
-	if(level == 1)// && istype(loc, /turf/simulated))
+	if(level == UNDERFLOOR)// && istype(loc, /turf/simulated))
 		invisibility = i ? INVIS_ALWAYS : INVIS_NONE
 	UpdateIcon()
 
@@ -189,7 +186,7 @@
 /// returns the powernet this cable belongs to
 /obj/cable/proc/get_powernet()
 	var/datum/powernet/PN			// find the powernet
-	if(netnum && powernets && powernets.len >= netnum)
+	if(netnum && powernets && length(powernets) >= netnum)
 		PN = powernets[netnum]
 	if (isnull(PN) && netnum)
 		CRASH("Attempted to get powernet number [netnum] but it was null.")
@@ -327,7 +324,7 @@
 			var/datum/powernet/P2 = cable_d2.get_powernet()
 			src.netnum = cable_d1.netnum
 			P1.cables += src
-			if(P1.cables.len <= P2.cables.len)
+			if(length(P1.cables) <= P2.cables.len)
 				P1.join_to(P2)
 			else
 				P2.join_to(P1)
@@ -353,7 +350,7 @@
 		for (var/obj/machinery/power/M in T.contents)
 			if(M.directwired)
 				continue
-			if(M.netnum == 0 || powernets[M.netnum].cables.len == 0)
+			if(M.netnum == 0 || length(powernets[M.netnum].cables) == 0)
 				if(M.netnum)
 					M.powernet.nodes -= M
 					M.powernet.data_nodes -= M
@@ -370,7 +367,7 @@
 		for (var/obj/machinery/power/M in T1.contents)
 			if(!M.directwired)
 				continue
-			if(M.netnum == 0 || powernets[M.netnum].cables.len == 0)
+			if(M.netnum == 0 || length(powernets[M.netnum].cables) == 0)
 				if(M.netnum)
 					M.powernet.nodes -= M
 					M.powernet.data_nodes -= M
@@ -387,7 +384,7 @@
 		for (var/obj/machinery/power/M in T2.contents)
 			if(!M.directwired || M.netnum == -1) // APCs have -1 and don't connect directly
 				continue
-			if(M.netnum == 0 || powernets[M.netnum].cables.len == 0)
+			if(M.netnum == 0 || length(powernets[M.netnum].cables) == 0)
 				if(M.netnum)
 					M.powernet.nodes -= M
 					M.powernet.data_nodes -= M
@@ -424,7 +421,7 @@
 	return
 
 /// a cable spawner which can spawn multiple cables to connect to other cables around it.
-/obj/cablespawner
+/obj/cable/auto
 	name = "power cable spawner"
 	icon = 'icons/obj/power_cond.dmi'
 	icon_state = "superstate"
@@ -439,24 +436,24 @@
 	/// cable_surr uses the unique ordinal dirs to save directions as it needs to store up to 8 at once
 	var/cable_surr = 0
 
-/obj/cablespawner/node
+/obj/cable/auto/node
 	name = "node cable spawner"
 	override_centre_connection = TRUE
 	icon_state = "superstate-node"
 
-/obj/cablespawner/reinforced
+/obj/cable/auto/reinforced
 	name = "reinforced power cable spawner"
 	icon = 'icons/obj/power_cond.dmi'
 	icon_state = "superstate-thick"
 	cable_type = /obj/cable/reinforced
 	color = "#075C90"
 
-/obj/cablespawner/reinforced/node
+/obj/cable/auto/reinforced/node
 	name = "node reinforced cable spawner"
 	override_centre_connection = TRUE
 	icon_state = "superstate-thick-node"
 
-/obj/cablespawner/New()
+/obj/cable/auto/New()
 	..()
 	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
 		SPAWN(1 SECONDS)
@@ -464,26 +461,27 @@
 				initialize()
 
 /// makes the cable spawners actually spawn cables and delete themselves
-/obj/cablespawner/initialize()
+/obj/cable/auto/initialize()
 	. = ..()
 	src.check()
 	src.replace()
 
 /// checks around itself for cables, adds up to 8 bits to cable_surr
-/obj/cablespawner/proc/check(var/obj/cable/cable)
-	var/list/selftile = list()
+/obj/cable/auto/proc/check(var/obj/cable/cable)
+	// check to see if the cable should indeed be overriden and made to connect.
+	for (var/obj/temp in range(0, src))
+		if (istype(temp, /obj/machinery/power/terminal) || istype(temp, /obj/machinery/power/smes))
+			src.override_centre_connection = TRUE
 	var/declarer = 0
 	// first we have to make sure we're checking the correct kind of cable
-	for (var/obj/cablespawner/self_loc in range(0, src))
+	for (var/obj/cable/auto/self_loc in range(0, src))
 		if (self_loc.color == src.color)
-			selftile += self_loc
-	if (length(selftile) > 1)
-		CRASH("[length(selftile)] identical cablespawners on coordinate [src.x] x [src.y] y!")
+			CRASH("multiple identical cable spawners at [src.x] x [src.y] y")
 	for (var/dir_to_cs in list(NORTH, EAST, NORTHWEST, NORTHEAST))
-	// checks for cablespawners around itself
+	// checks for cable spawners around itself
 		// declarer is the dir being checked at present
 		declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
-		for (var/obj/cablespawner/spawner in get_step(src, dir_to_cs))
+		for (var/obj/cable/auto/spawner in get_step(src, dir_to_cs))
 			if (spawner.color == src.color)
 				cable_surr |= declarer
 	/*
@@ -514,7 +512,7 @@
 	*/
 	if (cable_surr & EAST)
 	// optimises the outlier case
-		for (var/obj/cablespawner/spawner in get_step(src, EAST))
+		for (var/obj/cable/auto/spawner in get_step(src, EAST))
 			if (src.color == spawner.color)
 				spawner.cable_surr |= WEST
 
@@ -529,8 +527,8 @@
 			if (normal_cable.d1 == turn(dir_to_c, 180) || normal_cable.d2 == turn(dir_to_c, 180))
 				cable_surr |= declarer
 
-/// causes cablespawner to spawn cables (amazing)
-/obj/cablespawner/proc/replace()
+/// causes cable spawner to spawn cables (amazing)
+/obj/cable/auto/proc/replace()
 	var/list/directions = list()
 	if (cable_surr & NORTH)
 		directions += NORTH
@@ -567,7 +565,7 @@
 	qdel(src)
 
 /// places a cable with d1 and d2
-/obj/cablespawner/proc/cable_laying(var/dir1, var/dir2)
+/obj/cable/auto/proc/cable_laying(var/dir1, var/dir2)
 	var/obj/cable/current = new src.cable_type(src.loc)
 	current.icon_state = "[min(dir1, dir2)]-[max(dir1, dir2)]"
 	current.color = src.color

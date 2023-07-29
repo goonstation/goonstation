@@ -203,6 +203,10 @@ TYPEINFO(/obj/item/clothing/head/butt/cyberbutt)
 		else
 			return ..()
 
+	emp_act()
+		. = ..()
+		donor?.emote("fart", FALSE)
+
 // moving this from plants_crop.dm because SERIOUSLY WHY -- cirr
 /obj/item/clothing/head/butt/synth
 	name = "synthetic butt"

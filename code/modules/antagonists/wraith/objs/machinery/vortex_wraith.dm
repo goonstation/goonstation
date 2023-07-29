@@ -21,14 +21,14 @@
 	var/list/obj/critter/default_mobs = list(/mob/living/critter/crunched,	//Useful for random mode or when we dont have a mob_type on spawn
 								/obj/critter/ancient_thing,
 								/mob/living/critter/robotic/repairbot/security,
-								/obj/critter/mechmonstrositycrawler,
+								/mob/living/critter/robotic/crawler,
 								/mob/living/critter/shade,
 								/obj/critter/bat/buff,
 								/mob/living/critter/bear,
 								/mob/living/critter/lion,
 								/mob/living/critter/skeleton/wraith,
 								/mob/living/critter/brullbar,
-								/obj/critter/gunbot/heavy)
+								/mob/living/critter/robotic/gunbot)
 
 	New(var/mob_type_chosen = null)
 		if(mob_type_chosen != null)
@@ -163,11 +163,11 @@
 				return 5
 			if (/mob/living/critter/brullbar)
 				return 15
-			if (/obj/critter/gunbot/heavy)
+			if (/mob/living/critter/robotic/gunbot)
 				return 15
 			if (/obj/critter/ancient_thing)
 				return 7
-			if (/obj/critter/mechmonstrositycrawler)
+			if (/mob/living/critter/robotic/crawler)
 				return 4
 			else	//You never know, lets give an average point cost
 				return 6

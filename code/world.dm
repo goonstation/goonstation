@@ -133,10 +133,10 @@ var/global/mob/twitch_mob = 0
 /proc/buildMaterialCache()
 	material_cache = list()
 	var/materialList = concrete_typesof(/datum/material)
-	for(var/mat in materialList)
-		var/datum/material/M = new mat()
-		material_cache.Add(M.mat_id)
-		material_cache[M.mat_id] = M
+	for(var/datum/material/mat as anything in materialList)
+		if(initial(mat.cached))
+			var/datum/material/M = new mat()
+			material_cache[M.getID()] = M.getImmutable()
 
 #ifdef TRACY_PROFILER_HOOK
 /proc/prof_init()
@@ -539,6 +539,9 @@ var/global/mob/twitch_mob = 0
 	clothingbooth_setup()
 	initialize_biomes()
 
+	Z_LOG_DEBUG("World/Init", "Setting up airlock/APC wires...")
+	airlockWireColorToFlag = RandomAirlockWires()
+	APCWireColorToFlag = RandomAPCWires()
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
 	global.initialise_fishing_spots()
 
@@ -1406,7 +1409,7 @@ var/global/mob/twitch_mob = 0
 								if (M.key) parsedWhois["ckey[count]"] = M.key
 								if (isdead(M)) parsedWhois["dead[count]"] = 1
 								if (role) parsedWhois["role[count]"] = role
-								if (checktraitor(M)) parsedWhois["t[count]"] = 1
+								if (checkantag(M)) parsedWhois["t[count]"] = 1
 					parsedWhois["count"] = count
 					return ircbot.response(parsedWhois)
 				else
@@ -1426,7 +1429,7 @@ var/global/mob/twitch_mob = 0
 							if (M.key) badGuys["ckey[count]"] = M.key
 							if (isdead(M)) badGuys["dead[count]"] = 1
 							if (role) badGuys["role[count]"] = role
-							if (checktraitor(M)) badGuys["t[count]"] = 1
+							if (checkantag(M)) badGuys["t[count]"] = 1
 
 				badGuys["count"] = count
 				return ircbot.response(badGuys)
