@@ -4,6 +4,8 @@
 (p)14889
 (e)⚖🤖|C-Balance, A-Silicons
 (*)EMP's now stun borgs for 5 seconds, disable modules for a max of 5 seconds, and now do far more damage to borgs.
+(u)LeahTheTech
+(+)The cyborg teleport module now has visual and sound effects.
 (t)fri jul 28 23
 (u)Valtsu0
 (p)15048
