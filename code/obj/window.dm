@@ -450,16 +450,6 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		else if (iswrenchingtool(W) && src.state == 0 && !src.anchored)
 			actions.start(new /datum/action/bar/icon/deconstruct_window(src, W), user)
-
-		else if (istype(W, /obj/item/grab))
-			var/obj/item/grab/G = W
-			if (ishuman(G.affecting) && BOUNDS_DIST(G.affecting, src) == 0)
-				src.visible_message("<span class='alert'><B>[user] slams [G.affecting]'s head into [src]!</B></span>")
-				logTheThing(LOG_COMBAT, user, "slams [constructTarget(user,"combat")]'s head into [src]")
-				playsound(src.loc, src.hitsound , 100, 1)
-				G.affecting.TakeDamage("head", 5, 0)
-				src.damage_blunt(G.affecting.throwforce)
-				qdel(W)
 		else
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 75, 1)
