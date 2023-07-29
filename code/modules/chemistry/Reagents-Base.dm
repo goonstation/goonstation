@@ -912,7 +912,7 @@ datum
 						else
 							holder.del_reagent(src.id)
 				else
-					name = "Tonic water"
+					name = "tonic water"
 					description = "Carbonated water with quinine for a bitter flavor. Protects against Space Malaria."
 
 		water/sea

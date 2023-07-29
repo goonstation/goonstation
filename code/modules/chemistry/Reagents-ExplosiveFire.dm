@@ -748,7 +748,7 @@ datum
 
 		combustible/nitrogentriiodide
 			//This is the parent and should not be spawned
-			name = "Nitrogen Triiodide"
+			name = "nitrogen triiodide"
 			id = "nitrotri_parent"
 			description = "A chemical that is stable when in liquid form, but becomes extremely volatile when dry."
 			random_chem_blacklisted = 1

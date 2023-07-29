@@ -1191,7 +1191,7 @@ datum
 				..()
 
 		drug/hellshroom_extract
-			name = "Hellshroom extract"
+			name = "hellshroom extract"
 			id = "hellshroom_extract"
 			description = "TEMP"
 			reagent_state = SOLID

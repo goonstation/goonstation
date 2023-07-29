@@ -718,7 +718,7 @@ datum
 			value = 5
 
 		graphene_compound
-			name = "Graphene Hardening Compound"
+			name = "graphene hardening compound"
 			id = "graphene_compound"
 			description = "A thick industrial compound used to reinforce things."
 			reagent_state = LIQUID
@@ -1565,7 +1565,7 @@ datum
 			transparency = 50
 
 		werewolf_serum_fake3
-			name = "Werewolf Serum Precursor Gamma"
+			name = "werewolf serum precursor gamma"
 			id = "werewolf_part3"
 			description = "A direct precursor to a special, targeted mutagen."
 			reagent_state = LIQUID
@@ -1575,7 +1575,7 @@ datum
 			transparency = 10
 
 		werewolf_serum_fake4
-			name = "Imperfect Werewolf Serum"
+			name = "imperfect werewolf serum"
 			id = "werewolf_part4"
 			description = "A flawed isomer of a special, targeted mutagen.  If only it were perfected..."
 			reagent_state = LIQUID
@@ -2319,7 +2319,7 @@ datum
 						return TRUE
 
 		flubber
-			name = "Liquified space rubber"
+			name = "liquified space rubber"
 			id = "flubber"
 			description = "It seems to be vibrating and bouncing around its container rapidly"
 			fluid_r = 0
@@ -2966,7 +2966,7 @@ datum
 						holder.remove_reagent(id, 10)
 
 		lumen
-			name = "Lumen"
+			name = "lumen"
 			id = "lumen"
 			description = "A viscous liquid that seems to glow rather cheerfully. Perhaps applying this to things might brighten up someone's day."
 			reagent_state = LIQUID
@@ -3835,7 +3835,7 @@ datum
 #undef CONTENT_MULTIPLIER
 
 		mimicillium
-			name = "Mimicillium"
+			name = "mimicillium"
 			id = "badmanjuice"
 			description = "Just looking at this, you get the feeling that a vote for Death Badman is a vote for Death Badman."
 			reagent_state = LIQUID
@@ -4015,7 +4015,7 @@ datum
 						make_cleanable(/obj/decal/cleanable/sakura,T)
 
 		grassgro
-			name = "Grass Gro"
+			name = "grass gro"
 			id = "grassgro"
 			description = "Concentrated liquid Spacegrass. Guaranteed to grow Spacegrass anywhere. "
 			reagent_state = LIQUID
@@ -4065,7 +4065,7 @@ datum
 			blocks_sight_gas = 1
 
 		iron_oxide
-			name = "Iron Oxide"
+			name = "iron oxide"
 			id = "iron_oxide"
 			description = "Iron, artifically rusted under the effects of oxygen, acetic acid, salt and a high temperature enviroment."
 			fluid_r = 112

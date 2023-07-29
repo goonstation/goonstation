@@ -264,15 +264,15 @@ datum
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(exposed_temperature <= T0C + 7)
-					name = "Chilled Beer"
+					name = "chilled beer"
 					description = "A nice chilled beer. Perfect!"
 					taste = list("nicely cool", "hoppy")
 				else if (exposed_temperature > T0C + 30)
-					name = "Warm Beer"
-					description = "Warm Beer. Ughhh, this is disgusting."
+					name = "warm beer"
+					description = "Warm beer. Ughhh, this is disgusting."
 					taste = list("grossly warm", "hoppy")
 				else
-					name = "Beer"
+					name = "beer"
 					description = initial(description)
 					taste = initial(taste)
 
@@ -414,7 +414,7 @@ datum
 			viscosity = 0.4
 
 		fooddrink/alcoholic/beepskybeer
-			name = "Beepskybräu Security Schwarzbier"
+			name = "beepskybräu security schwarzbier"
 			id = "beepskybeer"
 			description = "A dark German beer, typically served with dark bread, cream cheese, and an intense appreciation for the law."
 			reagent_state = LIQUID
@@ -495,7 +495,7 @@ datum
 				..()
 
 		fooddrink/alcoholic/bojack // Bar Contest Winner's Drink
-			name = "Bo Jack Daniel's"
+			name = "bo jack daniel's"
 			id = "bojack"
 			description = "A strong beverage. Drinking this will put hair on your chest. Maybe."
 			reagent_state = LIQUID
@@ -561,7 +561,7 @@ datum
 								M.setStatusMin("paralysis", 3 SECONDS)
 
 		fooddrink/alcoholic/cocktail_screwdriver
-			name = "Screwdriver"
+			name = "screwdriver"
 			id = "screwdriver"
 			description = "A tangy mixture of vodka and orange juice."
 			reagent_state = LIQUID
@@ -573,7 +573,7 @@ datum
 			alch_strength = 0.25 //half vodka by content, half vodka strength
 
 		fooddrink/alcoholic/cocktail_bloodymary
-			name = "Bloody Mary"
+			name = "bloody mary"
 			id = "bloody_mary"
 			description = "Mixed tomato juice and vodka."
 			reagent_state = LIQUID
@@ -585,7 +585,7 @@ datum
 			alch_strength = 0.25
 
 		fooddrink/alcoholic/cocktail_bloodyscary
-			name = "Bloody Scary"
+			name = "bloody scary"
 			id = "bloody_scary"
 			description = "A mix of vodka and the blood of a terrible Other Thing."
 			reagent_state = LIQUID
@@ -597,7 +597,7 @@ datum
 			alch_strength = 2.3
 
 		fooddrink/alcoholic/snakebite
-			name = "Snakebite"
+			name = "snakebite"
 			id = "snakebite"
 			description = "A slightly tart cocktail made from beer and cider that reminds you of autumn."
 			reagent_state = LIQUID
@@ -609,7 +609,7 @@ datum
 			depletion_rate = 0.7
 
 		fooddrink/alcoholic/caipirinha
-			name = "Pineapple Caipirinha"
+			name = "pineapple caipirinha"
 			id = "caipirinha"
 			description = "A sweet vodka and pineapple cocktail that's fit for a day at the beach."
 			reagent_state = LIQUID
@@ -621,7 +621,7 @@ datum
 			depletion_rate = 0.7
 
 		fooddrink/alcoholic/piscosour
-			name = "Pisco Sour"
+			name = "pisco sour"
 			id = "piscosour"
 			description = "A Peruvian drink that mixes brandy, lime juice, egg white, and syrup together."
 			reagent_state = LIQUID
@@ -632,7 +632,7 @@ datum
 			alch_strength = 0.4 //uses white wine since no brandy in game, but piscos are usually 35-50% alch by volume
 
 		fooddrink/alcoholic/diesel
-			name = "Diesel"
+			name = "diesel"
 			id = "diesel"
 			description = "A tart, yet sweet cocktail."
 			reagent_state = LIQUID
@@ -643,7 +643,7 @@ datum
 			alch_strength = 0.25
 
 		fooddrink/alcoholic/cocktail_suicider
-			name = "Suicider"
+			name = "suicider"
 			id = "suicider"
 			description = "An unbelievably strong and potent variety of Cider."
 			reagent_state = LIQUID
@@ -834,7 +834,7 @@ datum
 
 
 		fooddrink/alcoholic/whiskey_sour
-			name = "Whiskey Sour"
+			name = "whiskey sour"
 			id = "whiskey_sour"
 			fluid_r = 170
 			fluid_g = 188
@@ -845,7 +845,7 @@ datum
 			taste = "sour"
 
 		fooddrink/alcoholic/daiquiri
-			name = "Daiquiri"
+			name = "daiquiri"
 			id = "daiquiri"
 			fluid_r = 8
 			fluid_g = 65
@@ -857,7 +857,7 @@ datum
 			thirst_value = 0.25
 
 		fooddrink/alcoholic/martini
-			name = "Martini"
+			name = "martini"
 			id = "martini"
 			fluid_r = 238
 			fluid_g = 238
@@ -869,7 +869,7 @@ datum
 			taste = "dry"
 
 		fooddrink/alcoholic/v_martini
-			name = "Vodka Martini"
+			name = "vodka martini"
 			id = "v_martini"
 			fluid_r = 238
 			fluid_g = 238
@@ -881,7 +881,7 @@ datum
 			taste = list("smooth", "dry")
 
 		fooddrink/alcoholic/appletini
-			name = "Appletini"
+			name = "appletini"
 			id = "appletini"
 			fluid_r = 224
 			fluid_g = 246
@@ -893,7 +893,7 @@ datum
 			reagent_state = LIQUID
 
 		fooddrink/alcoholic/murdini
-			name = "Murdini"
+			name = "murdini"
 			id = "murdini"
 			fluid_r = 255
 			fluid_g = 238
@@ -962,7 +962,7 @@ datum
 							M.bioHolder.RemoveEffect(power_granted)
 
 		fooddrink/alcoholic/Manhattan
-			name = "Manhattan"
+			name = "manhattan"
 			id = "manhattan"
 			fluid_r = 164
 			fluid_g = 84
@@ -973,7 +973,7 @@ datum
 			taste = "like a liquor cabinet"
 
 		fooddrink/alcoholic/libre
-			name = "Space-Cuba Libre"
+			name = "space-cuba libre"
 			id = "libre"
 			fluid_r = 41
 			fluid_g = 24
@@ -985,7 +985,7 @@ datum
 			taste = "festive"
 
 		fooddrink/alcoholic/ginfizz
-			name = "Gin Fizz"
+			name = "gin fizz"
 			id = "ginfizz"
 			fluid_r = 248
 			fluid_g = 255
@@ -997,7 +997,7 @@ datum
 			taste = "fizzy"
 
 		fooddrink/alcoholic/gimlet
-			name = "Gimlet"
+			name = "gimlet"
 			id = "gimlet"
 			fluid_r = 222
 			fluid_g = 255
@@ -1008,7 +1008,7 @@ datum
 			taste = "like a pine forest"
 
 		fooddrink/alcoholic/v_gimlet
-			name = "Vodka Gimlet"
+			name = "vodka gimlet"
 			id = "v_gimlet"
 			fluid_r = 222
 			fluid_g = 255
@@ -1019,7 +1019,7 @@ datum
 			taste = "caustic"
 
 		fooddrink/alcoholic/w_russian
-			name = "White Russian"
+			name = "white russian"
 			id = "w_russian"
 			fluid_r = 244
 			fluid_g = 244
@@ -1030,7 +1030,7 @@ datum
 			reagent_state = LIQUID
 
 		fooddrink/alcoholic/b_russian
-			name = "Black Russian"
+			name = "black russian"
 			id = "b_russian"
 			fluid_r = 99
 			fluid_g = 32
@@ -1040,7 +1040,7 @@ datum
 			reagent_state = LIQUID
 
 		fooddrink/alcoholic/irishcoffee
-			name = "Irish Coffee"
+			name = "irish coffee"
 			id = "irishcoffee"
 			fluid_r = 54
 			fluid_g = 42
@@ -1053,7 +1053,7 @@ datum
 			taste = list("rich", "sugary")
 
 		fooddrink/alcoholic/cosmo
-			name = "Cosmopolitan"
+			name = "cosmopolitan"
 			id = "cosmo"
 			fluid_r = 250
 			fluid_g = 206
@@ -1065,7 +1065,7 @@ datum
 			taste = "fruity"
 
 		fooddrink/alcoholic/beach
-			name = "Bliss on the Beach"
+			name = "bliss on the beach"
 			id = "beach"
 			fluid_r = 227
 			fluid_g = 121
@@ -1077,7 +1077,7 @@ datum
 			taste = "blissfully"
 
 		fooddrink/alcoholic/gtonic
-			name = "Gin and Tonic"
+			name = "gin and tonic"
 			id = "gtonic"
 			fluid_r = 195 //adjusted from 200 to 195 to fix longstanding issue with invisible gin and tonics
 			fluid_g = 195
@@ -1089,7 +1089,7 @@ datum
 			reagent_state = LIQUID
 
 		fooddrink/alcoholic/vtonic
-			name = "Vodka Tonic"
+			name = "vodka tonic"
 			id = "vtonic"
 			fluid_r = 195 //same
 			fluid_g = 195
@@ -1102,7 +1102,7 @@ datum
 			taste = "caustic"
 
 		fooddrink/alcoholic/sonic
-			name = "Gin and Sonic"
+			name = "gin and sonic"
 			id = "sonic"
 			fluid_r = 0
 			fluid_g = 0
@@ -1138,7 +1138,7 @@ datum
 
 
 		fooddrink/alcoholic/gpink
-			name = "Pink Gin and Tonic"
+			name = "pink gin and tonic"
 			id = "gpink"
 			fluid_r = 253
 			fluid_g = 212
@@ -1150,7 +1150,7 @@ datum
 			taste = "medicinal"
 
 		fooddrink/alcoholic/eraser
-			name = "Mind Eraser"
+			name = "mind eraser"
 			id = "eraser"
 			fluid_r = 90
 			fluid_g = 61
@@ -1162,7 +1162,7 @@ datum
 
 		//For laffs (http.//www.youtube.com/watch?v=ySq4O4sZj1w).
 		fooddrink/alcoholic/dbreath
-			name = "Dragon's Breath"
+			name = "dragon's breath"
 			id = "dbreath"
 			fluid_r = 220
 			fluid_g = 0
@@ -1259,7 +1259,7 @@ datum
 				..()
 
 		fooddrink/alcoholic/hunchback
-			name = "Hunchback"
+			name = "hunchback"
 			id = "hunchback"
 			fluid_r = 50
 			fluid_g = 0
@@ -1287,7 +1287,7 @@ datum
 				return
 
 		fooddrink/alcoholic/madmen
-			name = "Old Fashioned"
+			name = "old fashioned"
 			id = "madmen"
 			fluid_r = 240
 			fluid_g = 185
@@ -1297,7 +1297,7 @@ datum
 			reagent_state = LIQUID
 
 		fooddrink/alcoholic/planter
-			name = "Planter's Punch"
+			name = "planter's punch"
 			id = "planter"
 			fluid_r = 255
 			fluid_g = 175
@@ -1308,7 +1308,7 @@ datum
 			taste = list("strong", "fruity")
 
 		fooddrink/alcoholic/maitai
-			name = "Mai Tai"
+			name = "mai tai"
 			id = "maitai"
 			fluid_r = 231
 			fluid_g = 107
@@ -1319,7 +1319,7 @@ datum
 			taste = "fruity"
 
 		fooddrink/alcoholic/lemondrop
-			name = "Lemon Drop"
+			name = "lemon drop"
 			id = "lemondrop"
 			fluid_r = 253
 			fluid_g = 255
@@ -1330,7 +1330,7 @@ datum
 			taste = "sour"
 
 		fooddrink/alcoholic/harlow
-			name = "Jean Harlow"
+			name = "jean harlow"
 			id = "harlow"
 			fluid_r = 233
 			fluid_g = 97
@@ -1341,7 +1341,7 @@ datum
 			taste = "effervescent"
 
 		fooddrink/alcoholic/gchronic
-			name = "Gin and Chronic"
+			name = "gin and chronic"
 			id = "gchronic"
 			fluid_r = 162
 			fluid_g = 255
@@ -1360,7 +1360,7 @@ datum
 				return
 
 		fooddrink/alcoholic/margarita
-			name = "Margarita"
+			name = "margarita"
 			id = "margarita"
 			fluid_r = 183
 			fluid_g = 242
@@ -1371,7 +1371,7 @@ datum
 			taste = "tangy"
 
 		fooddrink/alcoholic/tequini
-			name = "Tequini"
+			name = "tequini"
 			id = "tequini"
 			fluid_r = 251
 			fluid_g = 255
@@ -1381,7 +1381,7 @@ datum
 			reagent_state = LIQUID
 
 		fooddrink/alcoholic/pfire
-			name = "Prairie Fire"
+			name = "prairie fire"
 			id = "pfire"
 			fluid_r = 184
 			fluid_g = 44
@@ -1402,7 +1402,7 @@ datum
 				return
 
 		fooddrink/alcoholic/bull
-			name = "Brave Bull"
+			name = "brave bull"
 			id = "bull"
 			fluid_r = 60
 			fluid_g = 42
@@ -1414,7 +1414,7 @@ datum
 			threshold = THRESHOLD_INIT
 
 		fooddrink/alcoholic/longisland
-			name = "Long Island Iced Tea"
+			name = "long island iced tea"
 			id = "longisland"
 			fluid_r = 174
 			fluid_g = 171
@@ -1425,7 +1425,7 @@ datum
 			taste = "like an afternoon on the porch"
 
 		fooddrink/alcoholic/longbeach
-			name = "Long Beach Iced Tea"
+			name = "long beach iced tea"
 			id = "longbeach"
 			fluid_r = 229
 			fluid_g = 54
@@ -1436,7 +1436,7 @@ datum
 			taste = "like an afternoon on the porch"
 
 		fooddrink/alcoholic/pinacolada
-			name = "Piña Colada"
+			name = "piña colada"
 			id = "pinacolada"
 			fluid_r = 255
 			fluid_g = 255
@@ -1448,7 +1448,7 @@ datum
 			taste = "tropical"
 
 		fooddrink/alcoholic/mimosa
-			name = "Mimosa"
+			name = "mimosa"
 			id = "mimosa"
 			fluid_r = 240
 			fluid_g = 184
@@ -1460,7 +1460,7 @@ datum
 			taste = "like sunshine"
 
 		fooddrink/alcoholic/french75
-			name = "French 75"
+			name = "french 75"
 			id = "french75"
 			fluid_r = 194
 			fluid_g = 147
@@ -1472,7 +1472,7 @@ datum
 			taste = "effervescent"
 
 		fooddrink/alcoholic/sangria
-			name = "Sangria"
+			name = "sangria"
 			id = "sangria"
 			fluid_r = 124
 			fluid_g = 26
@@ -1489,7 +1489,7 @@ datum
 				..()
 
 		fooddrink/alcoholic/tomcollins
-			name = "Tom Collins"
+			name = "tom collins"
 			id = "tomcollins"
 			fluid_r = 232
 			fluid_g = 224
@@ -1500,7 +1500,7 @@ datum
 			taste = "sharp"
 
 		fooddrink/alcoholic/peachschnapps
-			name = "Peach Schnapps"
+			name = "peach schnapps"
 			id = "peachschnapps"
 			fluid_r = 255
 			fluid_g = 140
@@ -1517,7 +1517,7 @@ datum
 				..()
 
 		fooddrink/alcoholic/peachbellini
-			name = "Peach Bellini"
+			name = "peach bellini"
 			id = "peachbellini"
 			fluid_r = 252
 			fluid_g = 176
@@ -1529,7 +1529,7 @@ datum
 			taste = "perfumed"
 
 		fooddrink/alcoholic/rossini
-			name = "Rossini"
+			name = "rossini"
 			id = "rossini"
 			fluid_r = 252
 			fluid_g = 163
@@ -1541,7 +1541,7 @@ datum
 			taste = "perfumed"
 
 		fooddrink/alcoholic/blackbramble
-			name = "Blackberry Bramble"
+			name = "blackberry bramble"
 			id = "blackbramble"
 			fluid_r = 69
 			fluid_g = 42
@@ -1553,7 +1553,7 @@ datum
 			taste = "tart"
 
 		fooddrink/alcoholic/frenchmartini
-			name = "French Martini"
+			name = "french martini"
 			id = "frenchmartini"
 			fluid_r = 229
 			fluid_g = 111
@@ -1565,7 +1565,7 @@ datum
 			taste = "delicate"
 
 		fooddrink/alcoholic/jazzlemon
-			name = "Jazzberry Hard Lemonade"
+			name = "jazzberry hard lemonade"
 			id = "jazzlemon"
 			fluid_r = 67
 			fluid_g = 219
@@ -1577,7 +1577,7 @@ datum
 			taste = "blue"
 
 		fooddrink/alcoholic/moscowmule
-			name = "Moscow Mule"
+			name = "moscow mule"
 			id = "moscowmule"
 			fluid_r = 232
 			fluid_g = 211
@@ -1589,7 +1589,7 @@ datum
 			taste = "astringent"
 
 		fooddrink/alcoholic/tequilasunrise
-			name = "Tequila Sunrise"
+			name = "tequila sunrise"
 			id = "tequilasunrise"
 			fluid_r = 255
 			fluid_g = 124
@@ -1601,7 +1601,7 @@ datum
 			taste = "like sunshine"
 
 		fooddrink/alcoholic/paloma
-			name = "Paloma"
+			name = "paloma"
 			id = "paloma"
 			fluid_r = 255
 			fluid_g = 183
@@ -1612,7 +1612,7 @@ datum
 			taste = "tangy"
 
 		fooddrink/alcoholic/mintjulep
-			name = "Mint Julep"
+			name = "mint julep"
 			id = "mintjulep"
 			fluid_r = 240
 			fluid_g = 208
@@ -1631,7 +1631,7 @@ datum
 				return
 
 		fooddrink/alcoholic/mojito
-			name = "Mojito"
+			name = "mojito"
 			id = "mojito"
 			fluid_r = 198
 			fluid_g = 220
@@ -1642,7 +1642,7 @@ datum
 			taste = "refreshing"
 
 		fooddrink/alcoholic/cremedementhe
-			name = "Créme de Menthe"
+			name = "créme de menthe"
 			id = "cremedementhe"
 			fluid_r = 55
 			fluid_g = 179
@@ -1653,7 +1653,7 @@ datum
 			taste = "sugary"
 
 		fooddrink/alcoholic/grasshopper
-			name = "Grasshopper"
+			name = "grasshopper"
 			id = "grasshopper"
 			fluid_r = 114
 			fluid_g = 235
@@ -1675,7 +1675,7 @@ datum
 					M.bioHolder?.AddEffect("roach",0,bioeffect_length) //length of bioeffect proportionate to length grasshopper was in human
 
 		fooddrink/alcoholic/freeze
-			name = "Freeze"
+			name = "freeze"
 			id = "freeze"
 			fluid_r = 149
 			fluid_g = 249
@@ -1712,7 +1712,7 @@ datum
 				return
 
 		fooddrink/alcoholic/curacao
-			name = "Curacao"
+			name = "curacao"
 			id = "curacao"
 			fluid_r = 25
 			fluid_g = 82
@@ -1736,7 +1736,7 @@ datum
 				return
 
 		fooddrink/alcoholic/bluelagoon
-			name = "Blue Lagoon"
+			name = "blue lagoon"
 			id = "bluelagoon"
 			fluid_r = 122
 			fluid_g = 217
@@ -1748,7 +1748,7 @@ datum
 			taste = "seaworthy"
 
 		fooddrink/alcoholic/bluehawaiian
-			name = "Blue Hawaiian"
+			name = "blue hawaiian"
 			id = "bluehawaiian"
 			fluid_r = 89
 			fluid_g = 208
@@ -1759,7 +1759,7 @@ datum
 			taste = "blue"
 
 		fooddrink/alcoholic/negroni
-			name = "Negroni"
+			name = "negroni"
 			id = "negroni"
 			fluid_r = 167
 			fluid_g = 0
@@ -1769,7 +1769,7 @@ datum
 			reagent_state = LIQUID
 
 		fooddrink/alcoholic/necroni
-			name = "Necroni"
+			name = "necroni"
 			id = "necroni"
 			fluid_r = 152
 			fluid_g = 171
@@ -1780,7 +1780,7 @@ datum
 			taste = "deathly"
 
 		fooddrink/alcoholic/wellerman
-			name = "Wellerman"
+			name = "wellerman"
 			id = "wellerman"
 			fluid_r = 121
 			fluid_g = 87
@@ -1791,7 +1791,7 @@ datum
 			taste = "seaworthy"
 
 		fooddrink/alcoholic/kalimoxto
-			name = "Kalimoxto"
+			name = "kalimoxto"
 			id = "kalimoxto"
 			fluid_r = 164
 			fluid_g = 77
@@ -1802,7 +1802,7 @@ datum
 			reagent_state = LIQUID
 
 		fooddrink/alcoholic/derby
-			name = "Derby"
+			name = "derby"
 			id = "derby"
 			fluid_r = 253
 			fluid_g = 224
@@ -1813,7 +1813,7 @@ datum
 			taste = "bracing"
 
 		fooddrink/alcoholic/horsesneck
-			name = "Horse's Neck"
+			name = "horse's neck"
 			id = "horsesneck"
 			fluid_r = 252
 			fluid_g = 205
@@ -1824,7 +1824,7 @@ datum
 			taste = "bracing"
 
 		fooddrink/alcoholic/rose
-			name = "Rose"
+			name = "rose"
 			id = "rose"
 			fluid_r = 254
 			fluid_g = 28
@@ -1835,7 +1835,7 @@ datum
 			taste = "saccharine"
 
 		fooddrink/alcoholic/gunfire
-			name = "Gunfire"
+			name = "gunfire"
 			id = "gunfire"
 			fluid_r = 247
 			fluid_g = 127
@@ -1847,7 +1847,7 @@ datum
 			taste = "smoky"
 
 		fooddrink/alcoholic/seabreeze
-			name = "Sea Breeze"
+			name = "sea breeze"
 			id = "seabreeze"
 			fluid_r = 253
 			fluid_g = 116
@@ -1859,7 +1859,7 @@ datum
 			taste = "refreshing"
 
 		fooddrink/alcoholic/brassmonkey
-			name = "Brass Monkey"
+			name = "brass monkey"
 			id = "brassmonkey"
 			fluid_r = 253
 			fluid_g = 198
@@ -1870,7 +1870,7 @@ datum
 			taste = "tangy"
 
 		fooddrink/alcoholic/hotbutteredrum
-			name = "Hot Buttered Rum"
+			name = "hot buttered rum"
 			id = "hotbutteredrum"
 			fluid_r = 209
 			fluid_g = 147
@@ -1881,7 +1881,7 @@ datum
 			taste = "like a nap by the fireplace"
 
 		fooddrink/alcoholic/fluffycritter
-			name = "Fluffy Critter"
+			name = "fluffy critter"
 			id = "fluffycritter"
 			fluid_r = 252
 			fluid_g = 240
@@ -1892,7 +1892,7 @@ datum
 			taste = "saccharine"
 
 		fooddrink/alcoholic/michelada
-			name = "Michelada"
+			name = "michelada"
 			id = "michelada"
 			fluid_r = 211
 			fluid_g = 53
@@ -1903,7 +1903,7 @@ datum
 			reagent_state = LIQUID
 
 		fooddrink/alcoholic/espressomartini
-			name = "Espresso Martini"
+			name = "espresso martini"
 			id = "espressomartini"
 			fluid_r = 93
 			fluid_g = 48
@@ -1915,7 +1915,7 @@ datum
 			taste = list("smooth", "chocolatey")
 
 		fooddrink/alcoholic/radler
-			name = "Radler"
+			name = "radler"
 			id = "radler"
 			fluid_r = 254
 			fluid_g = 215
@@ -1927,7 +1927,7 @@ datum
 			taste = list("sweet", "sour")
 
 		fooddrink/alcoholic/threemileislandicedtea
-			name = "Three Mile Island Iced Tea"
+			name = "three mile island iced tea"
 			id = "threemileislandicedtea"
 			fluid_r = 178
 			fluid_g = 254
@@ -1938,7 +1938,7 @@ datum
 			taste = "overwhelming"
 
 		fooddrink/alcoholic/romulale
-			name = "Romulale"
+			name = "romulale"
 			id = "romulale"
 			fluid_r = 20
 			fluid_g = 168
@@ -1959,7 +1959,7 @@ datum
 			taste = "bubbly"
 
 		fooddrink/simplesyrup
-			name = "Simple Syrup"
+			name = "simple syrup"
 			id = "simplesyrup"
 			fluid_r = 230
 			fluid_g = 218
@@ -1969,7 +1969,7 @@ datum
 			taste = "sugary" //doubt anyone's gonna be drinking it on its own but eh
 
 		fooddrink/ectocooler
-			name = "Ecto Cooler"
+			name = "ecto cooler"
 			id = "ectocooler"
 			fluid_r = 105
 			fluid_g =  255
@@ -2164,7 +2164,7 @@ datum
 
 
 		fooddrink/el_diablo
-			name = "El Diablo chili"
+			name = "el diablo chili"
 			id = "el_diablo"
 			description = "Rumored to be the tears of the devil himself."
 			reagent_state = LIQUID
@@ -3224,7 +3224,7 @@ datum
 				..()
 
 		fooddrink/enriched_msg //Hukhukhuk brings you another culinary war crime
-			name = "Enriched MSG"
+			name = "enriched MSG"
 			id = "enriched_msg"
 			description = "This highly illegal substance was only rumored to exist; it is the most flavorful substance known. It is believed that it causes such euphoria that the body begins to heal its own wounds, however no living creature can resist having seconds."
 			reagent_state = SOLID
@@ -3373,7 +3373,7 @@ datum
 						M.change_eye_blurry(rand(5, 20))
 
 		fooddrink/juice_cran
-			name = "Cranberry juice"
+			name = "cranberry juice"
 			id = "juice_cran"
 			fluid_r = 255
 			fluid_g = 0
@@ -3737,7 +3737,7 @@ datum
 						M.take_toxin_damage(rand(1,2) * -1) //I assume this was not supposed to be poison.
 
 		fooddrink/cocktail_triple
-			name = "Triple Triple"
+			name = "triple triple"
 			id = "cocktail_triple"
 			description = "What the fuck is this, somehow the liquid looks unable to settle."
 			reagent_state = LIQUID
@@ -4035,7 +4035,7 @@ datum
 			bioeffect_id = "accent_scots"
 
 		fooddrink/temp_bioeffect/essenceofelvis
-			name = "essence of Elvis"
+			name = "essence of elvis"
 			id = "essenceofelvis"
 			description = "The King is dead, but a part of him lives on in all of us."
 			fluid_r = 255
@@ -4076,7 +4076,7 @@ datum
 				return
 
 		fooddrink/temp_bioeffect/worcestershire_sauce
-			name = "Worcestershire sauce"
+			name = "worcestershire sauce"
 			id = "worcestershire_sauce"
 			description = "Just looking at this substance makes you want to break for Tea."
 			fluid_r = 119
@@ -4196,7 +4196,7 @@ datum
 					O.setMaterial(getMaterial("pizza"))
 
 		fooddrink/friedessence
-			name = "The Physical Manifestation Of The Very Concept Of Fried Food"
+			name = "the physical manifestation of the very concept of fried food"
 			id = "friedessence"
 			description = "Liquified fryer science. This stuff is liquid gold!"
 			reagent_state = LIQUID
@@ -4272,7 +4272,7 @@ datum
 				..()
 
 		fooddrink/alcoholic/rcola
-			name = "Rum and Cola"
+			name = "rum and cola"
 			id = "rcola"
 			fluid_r = 115
 			fluid_g = 38
@@ -4283,7 +4283,7 @@ datum
 			taste = "boozy"
 
 		fooddrink/alcoholic/honky_tonic
-			name = "Honky Tonic"
+			name = "honky tonic"
 			id = "honky_tonic"
 			fluid_r = 255
 			fluid_g = 102
@@ -4395,7 +4395,7 @@ datum
 				return
 
 		fooddrink/alcoholic/lingtea
-			name = "Ling Island Iced Tea"
+			name = "ling island iced tea"
 			id = "lingtea"
 			description = "Preferred by changelings, crew members, and the surprising overlap between them."
 			reagent_state = LIQUID
@@ -4420,7 +4420,7 @@ datum
 					M.reagents.add_reagent("ethanol", (alch_counter + (rand(2,3))))
 
 		fooddrink/alcoholic/hottoddy
-			name = "hot Toddy"
+			name = "hot toddy"
 			id = "hottoddy"
 			fluid_r = 255
 			fluid_g = 220
@@ -4451,7 +4451,7 @@ datum
 			taste = list("sweet", "sour")
 
 		fooddrink/alcoholic/duckfart
-			name = "Duck Fart"
+			name = "duck fart"
 			id = "duckfart"
 			fluid_r = 253
 			fluid_g = 245
@@ -4461,7 +4461,7 @@ datum
 			reagent_state = LIQUID
 
 		fooddrink/alcoholic/philcollins
-			name = "Phil Collins"
+			name = "phil collins"
 			id = "philcollins"
 			fluid_r = 240
 			fluid_g = 248
@@ -4483,7 +4483,7 @@ datum
 			taste = "seasoned"
 
 		fooddrink/alcoholic/beesknees
-			name = "Bee's Knees"
+			name = "bee's knees"
 			id = "beesknees"
 			fluid_r = 255
 			fluid_g = 236
@@ -4494,7 +4494,7 @@ datum
 			taste = "honeyed"
 
 		fooddrink/alcoholic/tealquila
-			name = "Tealquila Sunrise"
+			name = "tealquila sunrise"
 			id = "tealquila"
 			fluid_r = 38
 			fluid_g = 255
@@ -4568,7 +4568,7 @@ datum
 			thirst_value = 0.8
 
 		fooddrink/iced/thaicoffee
-			name = "Thai iced coffee"
+			name = "thai iced coffee"
 			id = "thaiicedcoffee"
 			fluid_r = 218
 			fluid_g = 172
@@ -4592,7 +4592,7 @@ datum
 			thirst_value = 0.8
 
 		fooddrink/mexicanhotchocolate
-			name = "Mexican hot chocolate"
+			name = "mexican hot chocolate"
 			id = "mexicanhotchocolate"
 			fluid_r = 76
 			fluid_g = 29

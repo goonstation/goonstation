@@ -333,7 +333,7 @@ datum
 				return
 
 		/*medical/tricalomel // COGWERKS CHEM REVISION PROJECT. marked for revision. also a chelation agent
-			name = "Tricalomel"
+			name = "tricalomel"
 			id = "tricalomel"
 			description = "Tricalomel can be used to remove most non-natural compounds from an organism. It is slightly toxic however and supervision is required."
 			reagent_state = LIQUID
@@ -453,7 +453,7 @@ datum
 		medical/synaptizine // COGWERKS CHEM REVISION PROJECT. remove this, make epinephrine (epinephrine) do the same thing
 			name = "synaptizine"
 			id = "synaptizine"
-			description = "Synaptizine a mild medical stimulant. Can be used to reduce drowsyness and resist disabling symptoms such as paralysis."
+			description = "Synaptizine, a mild medical stimulant. Can be used to reduce drowsyness and resist disabling symptoms such as paralysis."
 			reagent_state = LIQUID
 			fluid_r = 200
 			fluid_g = 0

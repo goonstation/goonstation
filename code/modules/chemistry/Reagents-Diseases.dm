@@ -102,7 +102,7 @@ datum
 			disease = /datum/ailment/disease/fake_gbs
 
 		disease/green_mucus // Flu
-			name = "green Mucus"
+			name = "green mucus"
 			id = "green mucus"
 			description = "Mucus. That's green."
 			reagent_state = LIQUID
@@ -148,7 +148,7 @@ datum
 			disease = /datum/ailment/disease/plasmatoid
 
 		disease/hootonium // Owlstone juice
-			name = "Hootonium"
+			name = "hootonium"
 			id = "hootonium"
 			description = "A dangerous cocktail of mutagens and Owl DNA."
 			reagent_state = LIQUID
@@ -172,7 +172,7 @@ datum
 			disease = /datum/ailment/disease/robotic_transformation
 
 		disease/goodnanites
-			name = "Directed nanites"
+			name = "directed nanites"
 			id = "goodnanites"
 			description = "Microscopic construction robots that have been reprogrammed to only replace a small part of their host. First discovered by Edgar Palmer and Camryn Stern."
 			reagent_state = LIQUID
@@ -197,7 +197,7 @@ datum
 			disease = /datum/ailment/disease/corrupt_robotic_transformation
 
 		disease/medusa
-			name = "Petrification"
+			name = "petrification"
 			id = "medusa"
 			description = "The patient is slowly turning to stone! Oh shit!"
 			reagent_state = SOLID
@@ -472,7 +472,7 @@ datum
 			disease = /datum/ailment/disease/avian_flu
 
 		disease/mewtini
-			name = "Mewtini"
+			name = "mewtini"
 			id = "mewtini"
 			fluid_r = 255
 			fluid_g = 165
@@ -541,14 +541,14 @@ datum
 				return
 
 		antiviral
-			name = "Viral Serum"
+			name = "viral serum"
 			id = "antiviral"
 			description = "An agent which can be used to create a specialized cure for a viral pathogen."
 			reagent_state = 2
 
 		// To make matters easier, fungi and parasites are both cured by the same biocides
 		biocide
-			name = "Biocide"
+			name = "biocide"
 			id = "biocide"
 			description = "An agent which can be used to create a specialized cure for a fungal or parasitic pathogen."
 			reagent_state = 2
@@ -556,27 +556,27 @@ datum
 		// A mutation inhibitor that should destroy great mutatis cells.
 		// A derivative of mutadone.
 		inhibitor
-			name = "Mutation Inhibitor"
+			name = "mutation inhibitor"
 			id = "inhibitor"
 			description = "An agent which can be used to create a specialized cure for a cellular mutative pathogen"
 			reagent_state = 2
 
 		bacterialmedium
-			name = "Bacterial Medium"
+			name = "bacterial medium"
 			id = "bacterialmedium"
 			description = "A solution useful for the cultivation of bacteria."
 			reagent_state = 2
 			pathogen_nutrition = list("water", "sugar", "sodium", "iron", "nitrogen")
 
 		parasiticmedium
-			name = "Parasitic Medium"
+			name = "parasitic medium"
 			id = "parasiticmedium"
 			description = "A solution useful for the cultivation of parasites."
 			reagent_state = 2
 			pathogen_nutrition = list("water", "sugar", "sodium", "iron", "nitrogen")
 
 		fungalmedium
-			name = "Fungal Medium"
+			name = "fungal medium"
 			id = "fungalmedium"
 			description = "A solution encouraging the growth of fungi."
 			reagent_state = 2

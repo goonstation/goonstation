@@ -1605,7 +1605,7 @@ datum
 				P.HYPmutateplant(1)
 
 		harmful/formaldehyde/werewolf_serum_fake1
-			name = "Werewolf Serum Precursor Alpha"
+			name = "werewolf serum precursor alpha"
 			id = "werewolf_part1"
 			description = "A strange and poisonous lupine compound."
 			reagent_state = LIQUID
@@ -1615,7 +1615,7 @@ datum
 			transparency = 150
 
 		harmful/omega_mutagen/werewolf_serum_fake2
-			name = "Werewolf Serum Precursor Beta"
+			name = "werewolf serum precursor beta"
 			id = "werewolf_part2"
 			description = "A potent and very unstable mutagenic substance."
 			reagent_state = LIQUID
@@ -1635,7 +1635,7 @@ datum
 			transparency = 220
 
 		harmful/wolfsbane
-			name = "Aconitine"
+			name = "aconitine"
 			id = "wolfsbane"
 			description = "Also known as monkshood or wolfsbane, aconitine is a very potent neurotoxin."
 			reagent_state = LIQUID
@@ -1896,7 +1896,7 @@ datum
 				if (prob(16)) P.HYPmutateplant(1)
 
 		harmful/madness_toxin
-			name = "Rajaijah"
+			name = "rajaijah"
 			id = "madness_toxin"
 			description = "A synthetic version of a potent neurotoxin derived from plants capable of driving a person to madness. First discovered in India by a Belgian reporter in 1931."
 			reagent_state = LIQUID
