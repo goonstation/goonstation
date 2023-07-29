@@ -1,5 +1,9 @@
 
 (t)sat jul 29 23
+(u)Bartimeus973
+(p)15147
+(e)💅💪🎭|C-QoL, A-Traits, A-RP
+(+)Picky eaters will now heal substantially more hunger when eating one of their favorite foods.
 (u)Ikea
 (p)14889
 (e)⚖🤖|C-Balance, A-Silicons
