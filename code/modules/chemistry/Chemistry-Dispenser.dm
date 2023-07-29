@@ -436,6 +436,14 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	dispense_sound = 'sound/misc/pourdrink2.ogg'
 
+//Combines alcohol and soda dispenser, plus mint, chocolate, and choc/strawb milk. Wow!
+/obj/machinery/chem_dispenser/alcohol/bar
+	name = "bar dispenser"
+	desc = "You see a small, fading warning label on the side of the machine:<br>WARNING: Contents artificially produced using industrial ethanol. Not recommended for human consumption.</br> Hey, this one's got soda too!"
+	dispensable_reagents = list("beer", "bitters", "bourbon", "champagne", "juice_cherry", "chocolate", "chocolate_milk", \
+								"cider", "coconut_milk", "cola", "juice_cran", "gin", "ginger_ale", "grenadine", "juice_lemon", \
+								"juice_lime", "mint", "juice_orange", "juice_pineapple",  "rum", "strawberry_milk", "sugar", \
+								"tea", "tequila", "juice_tomato", "tonic", "vanilla", "vermouth", "vodka", "water", "wine")
 
 // Dispenses any drink you want. Designed for the afterlife bar
 /obj/machinery/chem_dispenser/alcohol/ultra
@@ -451,13 +459,6 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 							"mimosa","french75","sangria","tomcollins","peachschnapps","moscowmule","tequila","tequilasunrise",\
 							"paloma","mintjulep","mojito","cremedementhe","grasshopper","freeze","curacao","bluelagoon",\
 							"bluehawaiian","negroni","necroni") // ow my hands
-	icon_state = "alc_dispenser"
-	icon_base = "alc_dispenser"
-	glass_path = /obj/item/reagent_containers/food/drinks
-	glass_name = "bottle"
-	dispenser_name = "Alcohol"
-
-	dispense_sound = 'sound/misc/pourdrink2.ogg'
 
 /obj/machinery/chem_dispenser/alcohol/hydro
 	name = "ULTRA DISPENSER"
