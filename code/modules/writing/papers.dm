@@ -1257,17 +1257,18 @@ Only trained personnel should operate station systems. Follow all procedures car
 	I've gotten myself into a damn pickle again, and I FORGOT TO CLONE SCAN. Not that I'm looking forward to death but.. I think this is where<br>
 	my story ends... Damn shitsec, it's just a damn ID ! Spacing me for it IS DEFINITELY NOT how to go about it...<br>
 	I swear if I was security... wait maybe that's it ! If I tell these wardens I know stuff about the captain, they might think I'm defecting!<br>
+	Or maybe it's better to wait for the NT contact... if there are any even here.
 	"}
 
 /obj/item/paper/Morrigan2
 	name = "Hidden note"
 	icon_state = "paper"
 	info ={"
-	I think they're on to us... I'd PDA text you but they might be watching those too. Decided to leave the note in our usual spot.<br>
+	I think they're on to us A... I'd PDA text you but they might be watching those too. Decided to leave the note in our usual spot.<br>
 	We might need to hitch a ride out of here, stuffs gettin' too heated. I was already brigged twice and managed convince them that our sabotage<br>
-	was mere accidents of incompetence. I don't think they're gonna keep buying it. I've already been implanted with a track I think.<br>
+	was mere accidents of incompetence. I don't think they're gonna keep buying it. I've already been implanted with a tracker I think.<br>
 	Unless you wanna end up crammed into their damn robot shells I'd suggest you keep a low profile. Burn this once you read it and meet me<br>
-	by Medical Podbay in 2 hours. Bring a disguise too, and for god sakes WEAR A MASK. <br>
+	by Medical Janitor's room, you know behind the bush in 2 hours. Bring a disguise too, and for god sakes WEAR A MASK. <br>
 	-J
 	"}
 
@@ -1275,7 +1276,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	name = "Angry Diary Note"
 	icon_state = "paper"
 	info ={"
-	Man, why can't we just kill him ?! No one looses the singularity an hour into our shift by 'accident'. There's no way that fool isn't a Trasey.<br>
+	Man, why can't we just kill her ?! No one looses the singularity an hour into our shift by 'accident'. There's no way that fool isn't a Trasey.<br>
 	Why can't we vote on these things?! I hate this supervisor... He always lets OBVIOUS traitors go. I thought our job was to protect the station<br>
 	 that doesn't include releasing these scumbags back out. We don't have enough proof my ass! I'm going to sign up for the Nuclear Operative team<br>
 	  next week, I can't take this anymore.
@@ -1370,7 +1371,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "paper"
 	info ={"
 	This is looking bad Alexander, most of security is already wiped out... I'm getting red alerts everywhere. I think the factory is inoperable.<br>
-	We're going to have to mobilize the crew. Exceptionally, please allow Civ to arm themselves, it's just 6 of them I'm sure we could overwhelm them<br>
+	We're going to have to mobilize the crew. Exceptionally, please allow Civ to arm themselves, it's just 6 of them I'm sure we could overwhelm them.<br>
 	"}
 
 /obj/item/paper/Morrigan13
@@ -1420,4 +1421,73 @@ Only trained personnel should operate station systems. Follow all procedures car
 	 Hubert.
 	"}
 
+/obj/item/paper/Morrigan17
+	name = "Reminder! New ID Cards!"
+	icon_state = "paper"
+	info ={"
+	This is your reminder that we are changing the ID locks on certain doors after our little incident. This is a security measure and is mandatory. <br>
+	Be sure to deposit your old ID by the end of the week for your new one. You will not be provided a new one if you don't give us back the old one. <br>
+	Your old cards will not work anymore. We will be working extra hours to help deal with the temporary situation.<br>
+	-Head of Personnel
+	"}
+
+/obj/item/paper/Morrigan18
+	name = "You're Fired Nick"
+	icon_state = "paper"
+	info ={"
+	You're fucking fired Nick. By the time you read this, I want you out of my department. That acid could've seriously injured me or you co-workers.<br>
+	You've a clear disregard for safety here and I don't want you anywhere near us. Oh and the captain is aware of this too, so good luck getting a new job<br>
+	I don't want to see your face ever again, keep the fucking ID and the mask. I already got a new one.<br>
+	-Research Director.
+	"}
+
+/obj/item/paper/MorriganNT
+	name = "Midly Crumbled Note"
+	icon_state = "paper"
+	info ={"
+	I've swipped the CE's card while they were busy maintaining the singularity. He left it in his console and by the time he came back.. <br>
+	I was already gone with it. We always needed a Head of Staff id with us. Not the most powerful one... <br>
+	but it should probably do. I'll be waiting for you in the northern maints. Come alone please, you're the only one I trust.<br>
+	-A
+	"}
+/obj/item/paper/MorriganNT2
+	name = "Note #432"
+	icon_state = "paper"
+	info ={"
+	Hello CentComm,
+	This is agent Swallow, I've confirmed that there is indeed a way to self destruct this station. I don't know where yet, rumors say it in the bridge. <br>
+	Sounds too risky to infil right now, they appear to be on high alert or something. We would appreciate some feedback, your last orders date from <br>
+	a while ago. Is operation Blue still in action ? We're eagerly awaiting a response from you.<br>
+	-May Nanotrasen never fall.
+	"}
+
+/obj/item/paper/MorriganNT3
+	name = "Slightly Damaged Note"
+	icon_state = "paper"
+	info ={"
+	I don't know man, this seems weird. How come we haven't heard anything from CC. It's been way too long... did they turn their backs on us?<br>
+	We risked our necks out there to uncover the factory operation and now we're not even getting replies ? Our directives haven't been updated since. <br>
+	Something is wrong here. I wanna tell A but he never takes these things well. Guy's an NT freak. We're already on thin ice, I'm planning to bail out of this operation. <br>
+	One of the Medbay Pods is going in for maintenance in a few hours, perfect time to swipe the lock module with our hacked on. You in ? <br>
+	-J
+	"}
+
+/obj/item/paper/MorriganNT4
+	name = "We're so fucked"
+	icon_state = "paper"
+	info = {"
+	They caught S. They caught S... THEY CAUGHT S. We're in deep shit now. Should've listened to J and dipped out of this whole thing. Oh god I'm probably next. <br>
+	It's not worth it, this isn't worth dying for. They're going to turn me into their damn machines. Oh god, oh fuck. They must've caught A too, we haven't seen him in forever.<br>
+	No no no no. No no no... The Pill... the Pill yes, the Pill. I need to retrieve it. I'd sooner die than become a soul-less machine. <br>
+	To my family, you will never read this, but I love you all.
+	"}
+
+/obj/item/paper/MorriganNT5
+	name = "In case you're locked out"
+	icon_state = "paper"
+	info = {"
+	I've bought the Janitor's ID, we'll keep it as a spare. Should get you into some places at least. Just be sure to wear a mask and a helmet or something,<br>
+	I don't think Sec will search you if you stick to maints, also carry a mop. We left it in Engineering, just say the keyword the A and he'll get you it.<br>
+	-J
+	"}
 //Morrigan Azone Papers Above
