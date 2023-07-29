@@ -506,6 +506,9 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		shattered_barrel.set_loc(get_turf(src))
 		src.smash()
 		return TRUE
+
+	get_chemical_effect_position()
+		return 10
 	red
 		icon_state = "barrel-red"
 		base_icon_state = "barrel-red"

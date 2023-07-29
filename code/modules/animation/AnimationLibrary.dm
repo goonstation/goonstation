@@ -613,8 +613,9 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	plane = PLANE_OVERLAY_EFFECTS
 
 /proc/chemistry_particle(var/datum/reagents/holder, var/datum/chemical_reaction/reaction)
-	if(istype(holder,/datum/reagents/fluid_group))
+	if(!holder.my_atom.loc || !istype(holder.my_atom, /obj))
 		return
+	var/obj/holder_object = holder.my_atom
 
 	var/obj/particle/chemical_reaction/chemical_reaction = new /obj/particle/chemical_reaction
 	var/y_offset = 0
@@ -623,28 +624,12 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		chemical_reaction.color = holder.get_average_rgb()
 	else
 		chemical_reaction.color = reaction.reaction_icon_color
-	if(istype(holder.my_atom, /obj/reagent_dispensers/chemicalbarrel))
-		y_offset = 10
-	else if(istype(holder.my_atom, /obj/item/reagent_containers/glass/beaker))
-		var/obj/item/reagent_containers/glass/beaker/beaker = holder.my_atom
-		switch(beaker.icon_style)
-			if("beaker")
-				y_offset = 9
-			if("beakerlarge")
-				y_offset = 9
-			if("eflask")
-				y_offset = 15
-			if("roundflask")
-				y_offset = 16
-			if("flask")
-				y_offset = 18
-	else
-		y_offset = 7 //most objects are relatively centered, so offset it a bit anyways
 
-	chemical_reaction.set_loc(holder.my_atom.loc)
+	y_offset = holder_object.get_chemical_effect_position()
+	chemical_reaction.set_loc(holder_object.loc)
 	chemical_reaction.icon_state = pick(reaction.reaction_icon_state)
-	chemical_reaction.pixel_x = holder.my_atom.pixel_x
-	chemical_reaction.pixel_y = holder.my_atom.pixel_y + y_offset
+	chemical_reaction.pixel_x = holder_object.pixel_x
+	chemical_reaction.pixel_y = holder_object.pixel_y + y_offset
 
 	SPAWN(2 SECONDS)
 		qdel(chemical_reaction)

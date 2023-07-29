@@ -87,6 +87,19 @@
 
 		..(A, user)
 
+	get_chemical_effect_position()
+		switch(icon_style)
+			if("beaker")
+				return 9
+			if("beakerlarge")
+				return 9
+			if("eflask")
+				return 15
+			if("roundflask")
+				return 16
+			if("flask")
+				return 18
+
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
 /* =================================================== */
