@@ -39,6 +39,9 @@ datum
 
 		var/temperature_change = 0 ///added to the temperature on reaction, can be negative to remove heat
 
+		var/list/reaction_icon_state = list("reaction_bubble-1", "reaction_bubble-2")  //which icon in chemical.dmi to use for reaction animations. picked randomly from list each time
+		var/reaction_icon_color = null //default = color of reagent mix in holder
+
 		///should this reaction show up in anything player-facing that lists reactions. For secret repo chems, misc precursors, and for 'non-standard' reactions (stuff like voltagen arc, foam reacting with water, etc)
 		var/hidden = FALSE
 
@@ -2631,6 +2634,8 @@ datum
 			reaction_speed = 3
 			temperature_change = 5 //cancels out the charcoal production reaction, so you don't have to provide constant/a lot of heat if you choose to mix it in an open container
 			mix_phrase = "The solution produces flames and smoke."
+			reaction_icon_state = list("reaction_fire-1", "reaction_fire-2")
+			reaction_icon_color = "#ffffff"
 			//would benefit from a good 'burn-y' mix sound
 
 			does_react(var/datum/reagents/holder)
