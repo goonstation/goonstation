@@ -362,7 +362,7 @@ var/global/sec_wipe_alert = FALSE
 	impcolor = "b"
 	/// Set to FALSE on remove, this is here so that nerds cant remove the implant and put it in a random monkey to avoid triggering the alert.
 	var/functional = TRUE
-	/// Security member this implant orginally belonged to
+	/// Security member this implant originally belonged to
 	var/mob/living/original_owner
 
 	/// Check if anyone with a sec implant is alive, if sec is dead send the annoucement that sec has been killed
