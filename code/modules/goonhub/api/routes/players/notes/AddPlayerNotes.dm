@@ -5,4 +5,4 @@
 	method = RUSTG_HTTP_METHOD_POST
 	path = "/players/notes"
 	body = /datum/apiBody/players/notes/post
-	correct_response = "string"
+	correct_response = /datum/apiModel/Tracked/PlayerRes/PlayerNoteResource
