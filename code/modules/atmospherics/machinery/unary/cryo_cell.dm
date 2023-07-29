@@ -307,6 +307,8 @@
 		tgui_process.update_uis(src)
 
 	proc/insert_beaker(var/obj/item/reagent_containers/glass/I, var/mob/user)
+		if (!can_act(user))
+			return
 		if (I.cant_drop)
 			boutput(user, "<span class='alert'>You can't put that in \the [src] while it's attached to you!")
 			return

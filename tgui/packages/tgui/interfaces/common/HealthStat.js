@@ -34,3 +34,5 @@ export const HealthStat = props => {
     </Box>
   );
 };
+
+export const damageNum = num => !num || num <= 0 ? '0' : num.toFixed(1);

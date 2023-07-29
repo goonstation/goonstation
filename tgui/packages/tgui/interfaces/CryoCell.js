@@ -10,7 +10,8 @@ import { Button, Box, Icon, AnimatedNumber, Section, LabeledList, ProgressBar, D
 import { Window } from '../layouts';
 import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 import { ReagentGraph, ReagentList } from './common/ReagentInfo';
-import { HealthStat } from './common/HealthStat';
+import { HealthStat, damageNum } from './common/HealthStat';
+import { MobStatuses } from './common/MobStatus';
 import { DisplayBloodPressure, DisplayTempImplantRow, DisplayRads, DisplayBrain, DisplayEmbeddedObjects } from '../interfaces/OperatingComputer/index';
 
 export const CryoCell = (_props, context) => {
@@ -53,36 +54,10 @@ const CryoCellControl = (props, context) => {
     </Section>);
 };
 
-const damageNum = num => !num || num <= 0 ? '0' : num.toFixed(1);
-
-const OccupantStatus = {
-  Conscious: 0,
-  Unconscious: 1,
-  Dead: 2,
-};
-
-const occupantStatuses = {
-  [OccupantStatus.Conscious]: {
-    name: 'Conscious',
-    color: 'good',
-    icon: 'check',
-  },
-  [OccupantStatus.Unconscious]: {
-    name: 'Unconscious',
-    color: 'average',
-    icon: 'bed',
-  },
-  [OccupantStatus.Dead]: {
-    name: 'Dead',
-    color: 'bad',
-    icon: 'skull',
-  },
-};
-
 const Occupant = (props, context) => {
   const { act, data } = useBackend(context);
   const { occupant, reagentScanEnabled, reagentScanActive, hasDefib } = data;
-  const occupantStatus = occupant ? occupantStatuses[occupant.occupantStat] : null;
+  const occupantStatus = occupant ? MobStatuses[occupant.occupantStat] : null;
 
   return (
     <Section title="Occupant"
