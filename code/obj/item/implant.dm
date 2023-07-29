@@ -377,7 +377,7 @@ var/global/sec_wipe_alert = FALSE
 
 		if (!sec_alive && !sec_wipe_alert)
 			sec_wipe_alert = TRUE
-			command_alert("After monitoring the vitals of [station_name]'s security team. We have discovered the entire team has been eliminated by an unknown force. It is advised that all crew members stay in pairs, obtain improvised weaponry and prepare for the worst.", "Emergency Security Update", alert_origin = "NT Security Division", sound_to_play = 'sound/misc/airraid_loop_short.ogg')
+			command_alert("After monitoring the vitals of [station_name]'s security team, We have discovered the entire team has been eliminated by an unknown force. It is advised that all crew members stay in pairs, obtain improvised weaponry and prepare for the worst.", "Emergency Security Update", alert_origin = "NT Security Division", sound_to_play = 'sound/misc/airraid_loop_short.ogg')
 
 	New()
 		..()
