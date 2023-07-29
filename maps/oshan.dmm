@@ -39409,6 +39409,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/wood/two,
 /area/station/ranch)
 "khV" = (
