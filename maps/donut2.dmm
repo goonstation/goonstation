@@ -15777,9 +15777,9 @@
 /area/station/security/interrogation)
 "bic" = (
 /obj/machinery/camera{
-	c_tag = "Gas Chamber";
+	c_tag = "autotag";
 	dir = 8;
-	network = "Gas Chamber"
+	network = "autoname - SS13"
 	},
 /obj/item/device/radio/intercom/security{
 	dir = 8
