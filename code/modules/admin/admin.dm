@@ -4102,6 +4102,8 @@ var/global/noir = 0
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 /proc/checkantag(mob/M as mob)
 	set popup_menu = 0
+	if (global.current_state < GAME_STATE_PLAYING) //guh this gets used in pre-round
+		return !!M?.mind?.special_role
 	var/datum/mind/mind = M?.mind
 	return length(mind?.antagonists) > 0
 
