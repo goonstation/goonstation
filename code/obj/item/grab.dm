@@ -587,6 +587,12 @@
 	G.dispose()
 	return 1
 
+/turf/grab_smash(obj/item/grab/G, mob/user)
+	var/mob/affecting = G.affecting //the parent disposes G
+	if(..())
+		var/duration = (G.state > 0) ? 4 SECONDS : 2 SECONDS
+		affecting.do_disorient(20, disorient = duration)
+
 
 /turf/simulated/floor/grab_smash(obj/item/grab/G as obj, mob/user as mob)
 	var/mob/M = G.affecting
