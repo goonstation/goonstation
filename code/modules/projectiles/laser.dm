@@ -33,6 +33,7 @@ radioactive - rips apart cells or some shit
 toxic - poisons
 */
 	damage_type = D_ENERGY // cogwerks - changed from piercing
+	hit_type = DAMAGE_BURN
 	//With what % do we hit mobs laying down
 	hit_ground_chance = 50
 	//Can we pass windows
@@ -179,13 +180,11 @@ toxic - poisons
 		color_green = 0.4
 		color_blue = 1
 
-		on_hit(atom/hit)
-			if (istype(hit, /turf/simulated/wall/auto/asteroid))
-				var/turf/simulated/wall/auto/asteroid/T = hit
-				if (power <= 0)
-					return
-				T.damage_asteroid(0,allow_zero = 1)
+		on_launch(obj/projectile/O)
+			. = ..()
+			O.AddComponent(/datum/component/proj_mining, 0.2, 5)
 
+		on_hit(atom/hit)
 			if (istype(hit,/obj/critter)) //MBC : if there was a cleaner way to do this, I couldn't find it.
 				var/obj/critter/C = hit
 				C.health -= power * 2
@@ -478,18 +477,16 @@ toxic - poisons
 	color_green = 0.6
 	color_blue = 0
 
-	on_hit(atom/hit)
-		if (istype(hit, /turf/simulated/wall/auto/asteroid))
-			var/turf/simulated/wall/auto/asteroid/T = hit
-			if (power <= 0)
-				return
-			T.damage_asteroid(round(power / 5))
+	on_launch(obj/projectile/O)
+		. = ..()
+		O.AddComponent(/datum/component/proj_mining, 0.2, 2)
 
 /datum/projectile/laser/drill
 	name = "drill bit"
 	window_pass = 0
 	icon_state = ""
 	damage_type = D_SLASHING
+	hit_type = DAMAGE_STAB
 	damage = 45
 	cost = 1
 	brightness = 0
@@ -502,17 +499,11 @@ toxic - poisons
 	var/damtype = DAMAGE_STAB
 
 	var/hit_human_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
+	on_launch(obj/projectile/O)
+		. = ..()
+		O.AddComponent(/datum/component/proj_mining, 0.15, 0)
+
 	on_hit(atom/hit)
-		//playsound(hit.loc, 'sound/machines/engine_grump1.ogg', 45, 1)
-		if (istype(hit, /turf/simulated/wall/auto/asteroid))
-			var/turf/simulated/wall/auto/asteroid/T = hit
-			if (power <= 0)
-				return
-			T.damage_asteroid(round(power / 7),1)
-			//if(prob(60)) // raised again
-			//	T.destroy_asteroid(1)
-			//else
-			//	T.weaken_asteroid()
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			playsound(M.loc, hit_human_sound, 50, 1)
@@ -532,6 +523,7 @@ toxic - poisons
 		shot_sound = 'sound/machines/chainsaw.ogg'
 		hit_human_sound = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 		damtype = DAMAGE_CUT
+		hit_type = DAMAGE_CUT
 
 		on_hit(atom/hit) //do extra damage to pod
 			..()

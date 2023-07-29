@@ -433,7 +433,7 @@ var/list/ai_move_scheduled = list()
 
 	tick()
 		..()
-		if(!subtasks || subtasks.len < 1 || !current_subtask)
+		if(!subtasks || length(subtasks) < 1 || !current_subtask)
 			terminated = 1 // we can't operate with no subtasks
 			return
 

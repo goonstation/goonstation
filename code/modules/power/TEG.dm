@@ -868,7 +868,7 @@ datum/pump_ui/circulator_ui
 				add_avail(lastgen WATTS)
 
 				src.history += src.lastgen
-				if (src.history.len > src.history_max)
+				if (length(src.history) > src.history_max)
 					src.history.Cut(1, 2) //drop the oldest entry
 
 				cold_air.temperature += energy_transfer*(1-efficiency)/cold_air_heat_capacity // pass the remaining energy through to the cold side

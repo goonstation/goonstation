@@ -36,7 +36,7 @@
 /area/dmm_suite/clear_area)
 "R" = (
 /obj/machinery/drainage,
-/obj/item/fish/herring{
+/obj/item/reagent_containers/food/fish/herring{
 	pixel_x = -14;
 	pixel_y = 13
 	},

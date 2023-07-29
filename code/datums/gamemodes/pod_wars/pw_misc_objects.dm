@@ -641,7 +641,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user),\
 			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!", null)
 		else
-			boutput(user, "You can't think of anything else to do on this console...")
+			boutput(user, "<span class='alert'>You can't think of anything else to do on this console...</span>")
 
 	proc/is_commander(var/mob/user)
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
@@ -833,7 +833,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 				newThing.setMaterial(src.material)
 			if (user)
 				newThing.add_fingerprint(user)
-				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.getID() ? "[newThing.material.getID()]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return newThing

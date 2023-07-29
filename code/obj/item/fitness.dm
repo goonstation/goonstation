@@ -116,7 +116,7 @@
 			APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "fitness_machine")
 			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
-			var/obj/decal/W = new /obj/decal/
+			var/obj/decal/W = new /obj/decal
 			W.icon = 'icons/obj/stationobjs.dmi'
 			W.icon_state = "fitnessweight-w"
 			W.set_loc(loc)

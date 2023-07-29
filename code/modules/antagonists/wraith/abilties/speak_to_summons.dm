@@ -19,7 +19,7 @@
 
 		var/message = html_encode(input("What would you like to whisper to your minions?", "Whisper", "") as text)
 
-		if (W.summons.len == 0)
+		if (length(W.summons) == 0)
 			boutput(W, "You have no minions to talk to.")
 			return 1
 		for(var/mob/living/critter/C in W.summons)

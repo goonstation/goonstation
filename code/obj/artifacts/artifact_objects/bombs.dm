@@ -269,7 +269,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				// absolutely everything
 				potential_reagents = all_functional_reagent_ids
 
-		if (potential_reagents.len > 0)
+		if (length(potential_reagents) > 0)
 			var/looper = rand(2,5)
 			while (looper > 0)
 				var/reagent = pick(potential_reagents)
@@ -291,7 +291,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			reaction_reagents += X
 
 		var/amountper = 0
-		if (reaction_reagents.len > 0)
+		if (length(reaction_reagents) > 0)
 			amountper = round(O.reagents.maximum_volume / reaction_reagents.len)
 		else
 			amountper = 20
@@ -337,7 +337,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			return
 		var/datum/artifact/bomb/transmute/A = src.artifact
 		O.setMaterial(A.mat)
-		boutput(user, "\The [O] turn\s into [A.mat.name]!")
+		boutput(user, "\The [O] turn\s into [A.mat.getName()]!")
 
 /datum/artifact/bomb/transmute
 	associated_object = /obj/machinery/artifact/bomb/transmute
@@ -449,13 +449,13 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 		mat = getMaterial(material)
 
-		warning_initial = "appears to be turning into [mat.name]."
-		warning_final = "begins transmuting nearby matter into [mat.name]!"
-		log_addendum = "Material: [mat.name]"
+		warning_initial = "appears to be turning into [mat.getName()]."
+		warning_final = "begins transmuting nearby matter into [mat.getName()]!"
+		log_addendum = "Material: [mat.getName()]"
 
-		var/matR = GetRedPart(mat.color)
-		var/matG = GetGreenPart(mat.color)
-		var/matB = GetBluePart(mat.color)
+		var/matR = GetRedPart(mat.getColor())
+		var/matG = GetGreenPart(mat.getColor())
+		var/matB = GetBluePart(mat.getColor())
 		lightColor = list(matR, matG, matB, 255)
 
 		range = rand(3,7)
@@ -469,7 +469,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if (..())
 			return
 		var/base_offset = rand(1000)
-		O.add_filter("rays", 1, rays_filter(size=0, density=20, factor=1, offset=base_offset, threshold=0, color=mat.color))
+		O.add_filter("rays", 1, rays_filter(size=0, density=20, factor=1, offset=base_offset, threshold=0, color=mat.getColor()))
 		animate(O.get_filter("rays"), size=16*range, time=0.5 SECONDS, offset=base_offset+50)
 		animate(size=32*range, time=0.5 SECONDS, offset=base_offset+50, alpha=0)
 		playsound(O.loc, 'sound/weapons/conc_grenade.ogg', 90, 1)
