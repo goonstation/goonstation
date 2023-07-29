@@ -354,13 +354,54 @@ THROWING DARTS
 		..()
 		mailgroups.Remove(MGD_SECURITY)
 
+/// Determines if the station wide sec wipe annoucement was sent
+var/global/sec_wipe_alert = FALSE
 /obj/item/implant/health/security/anti_mindhack
 	name = "mind protection health implant"
 	icon_state = "implant-b"
 	impcolor = "b"
+	/// Set to FALSE on remove, this is here so that nerds cant remove the implant and put it in a random monkey to avoid triggering the alert.
+	var/functional = TRUE
+	/// Security member this implant orginally belonged to
+	var/mob/living/original_owner
+
+	/// Check if anyone with a sec implant is alive, if sec is dead send the annoucement that sec has been killed
+	proc/send_annoucement()
+		var/sec_alive = FALSE
+		for (var/obj/item/implant/health/security/anti_mindhack/I in by_type[/obj/item/implant/health/security/anti_mindhack])
+			var/possible_implantee = I.loc
+			if (istype(possible_implantee, /mob/living))
+				var/mob/living/implantee = possible_implantee
+				if (I.functional && isalive(implantee))
+					sec_alive = TRUE
+
+		if (!sec_alive && !sec_wipe_alert)
+			sec_wipe_alert = TRUE
+			command_alert("After monitoring the vitals of [station_name]'s security team. We have discovered the entire team has been eliminated by an unknown force. It is adivised that all crew members stay in pairs, obtain improvised weaponry and prepare for the worst.", "Emergency Security Update", alert_origin = "NT Security Division", sound_to_play = 'sound/misc/airraid_loop_short.ogg')
+
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
+	implanted(mob/living/M, mob/I)
+		..()
+		if (!src.original_owner)
+			original_owner = M
+		else if (src.original_owner == src.loc && isalive(src.original_owner)) // allows sec to reinsert their implant
+			src.functional = TRUE
+
+	on_remove()
+		..()
+		src.functional = FALSE
+		src.send_annoucement()
 
 	death_alert()
 		. = ..()
+		src.send_annoucement()
 		src.on_remove(src.owner)
 		qdel(src)
 
