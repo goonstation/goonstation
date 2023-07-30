@@ -36,8 +36,6 @@
 	. +=  "<br><span class='notice'>[capitalize(t_his)] pronouns seem to be <b>\"[src.get_pronouns()]\"</b>.</span>"
 	. +=  "<br><span class='notice'>*---------*</span>"
 
-
-
 	var/datum/ailment_data/found = src.find_ailment_by_type(/datum/ailment/disability/memetic_madness)
 	if (!ignore_checks && found)
 		if (!ishuman(usr))
