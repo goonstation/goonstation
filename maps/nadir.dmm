@@ -1388,10 +1388,7 @@
 /area/station/hallway/primary/northeast)
 "aES" = (
 /obj/table/reinforced/auto,
-/obj/machinery/glass_recycler{
-	glass_amt = 5;
-	pixel_y = 4
-	},
+/obj/machinery/glass_recycler/bar,
 /obj/mapping_helper/access/kitchen,
 /obj/mapping_helper/access/bar,
 /obj/forcefield/energyshield/perma/doorlink,
@@ -21579,10 +21576,7 @@
 /area/station/hallway/primary/northwest)
 "jpE" = (
 /obj/table/reinforced/chemistry/auto/auxsup,
-/obj/machinery/glass_recycler{
-	glass_amt = 5;
-	pixel_y = 4
-	},
+/obj/machinery/glass_recycler/chemistry,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "jpG" = (

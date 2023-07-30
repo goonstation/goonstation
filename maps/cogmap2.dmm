@@ -8072,10 +8072,7 @@
 /area/station/crew_quarters/bar)
 "aws" = (
 /obj/table/auto,
-/obj/machinery/glass_recycler{
-	density = 1;
-	pixel_y = 6
-	},
+/obj/machinery/glass_recycler/bar,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "awt" = (
@@ -56143,7 +56140,7 @@
 /area/station/science/chemistry)
 "cQv" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/glass_recycler,
+/obj/machinery/glass_recycler/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
