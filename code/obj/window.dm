@@ -325,6 +325,18 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			the_text += " ...you can't see through it at all. What kind of idiot made this?"
 		return the_text
 
+	get_help_message(dist, mob/user)
+		switch(src.state)
+			if(0)
+				if(!src.anchored)
+					. = "You can use a <b>wrench</b> to disassemble the window, or a <b>screwdriver</b> to fasten the frame to the floor."
+				else
+					. = "You can use a <b>screwdriver</b> to unfasten the frame from the floor, or a <b>crowbar</b> to pry the window into the frame."
+			if(1)
+				. = "You can use a <b>crowbar</b> to pry the window out of the frame, or a <b>screwdriver</b> to fasten the window to the frame."
+			if(2)
+				. = "You can use a <b>screwdriver</b> to unfasten the window from the frame."
+
 	Cross(atom/movable/mover)
 		if(!src.density)
 			return TRUE
