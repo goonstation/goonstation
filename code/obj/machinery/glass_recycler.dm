@@ -50,7 +50,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 	icon_state = "synthesizer"
 	anchored = ANCHORED
 	density = 0
-	var/glass_amt = 4
+	var/glass_amt = 0
 	var/list/product_list = list()
 	flags = NOSPLASH | FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	event_handler_flags = NO_MOUSEDROP_QOL
@@ -238,6 +238,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		product_list += new /datum/glass_product("shot", /obj/item/reagent_containers/food/drinks/drinkingglass/shot, 1)
 		product_list += new /datum/glass_product("drinkbottle", /obj/item/reagent_containers/food/drinks/bottle/soda, 2)
 		product_list += new /datum/glass_product("pitcher", /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher, 2)
+		product_list += new /datum/glass_product("bowl", /obj/item/reagent_containers/food/drinks/bowl, 1) // for making "spicy dip"
 
 /obj/machinery/glass_recycler/bar //the bar should not have to scroll through all this chemmy crap to get to the glasses and pitchers they use
 	name = "chemistry glass recycler"
