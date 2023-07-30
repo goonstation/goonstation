@@ -246,6 +246,8 @@
 					B.set_loc(H)
 					H.brain = B
 			update_bodypart() //TODO probably remove this later. keeping in for safety
+			if(!isnull(src.client))
+				src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 			if (src.syndicate)
 				src.show_antag_popup("syndieborg")
 
