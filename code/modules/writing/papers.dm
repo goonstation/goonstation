@@ -1395,7 +1395,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	<p style="text-align: center;">CAPTAIN KALADA S. HEURON: MIA</p>
 	<p style="text-align: center;">HoS ALEXANDER NASH : MIA</p>
 	<p style="text-align: center;">CE BERTHOLD H. RANTHER : MIA</p>
-	<p style="text-align: center;">RD CRISTEL BELFRON : MIA</p>
+	<p style="text-align: center;">RD MARISSA BELFRON : MIA</p>
 	<p style="text-align: center;">HoP WILLIAM B. RON : MIA</p>
 	<p style="text-align: center;">MDir FREDRICH C. PALIDOME : PRESENT</p>
 	<p style="text-align: center;">STATION POWER : 30%&nbsp;</p>
@@ -1468,7 +1468,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	I don't know man, this seems weird. How come we haven't heard anything from CC. It's been way too long... did they turn their backs on us?<br>
 	We risked our necks out there to uncover the factory operation and now we're not even getting replies ? Our directives haven't been updated since. <br>
 	Something is wrong here. I wanna tell A but he never takes these things well. Guy's an NT freak. We're already on thin ice, I'm planning to bail out of this operation. <br>
-	One of the Medbay Pods is going in for maintenance in a few hours, perfect time to swipe the lock module with our hacked on. You in ? <br>
+	One of the Medbay Pods is going in for maintenance in a few hours, perfect time to swipe the lock module with our hacked one. You in ? <br>
 	-J
 	"}
 
