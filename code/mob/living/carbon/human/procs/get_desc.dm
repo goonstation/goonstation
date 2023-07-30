@@ -29,12 +29,14 @@
 			. = "<br>[src.bioHolder.mobAppearance.flavor_text]"
 		catch
 			//nop
-
-	. +=  "<br><span class='notice'>*---------*</span>"
-
 	// crappy hack because you can't do \his[src] etc
 	var/t_his = his_or_her(src)
 	var/t_him = him_or_her(src)
+
+	. +=  "<br><span class='notice'>[capitalize(t_his)] pronouns seem to be <b>\"[src.get_pronouns()]\"</b>.</span>"
+	. +=  "<br><span class='notice'>*---------*</span>"
+
+
 
 	var/datum/ailment_data/found = src.find_ailment_by_type(/datum/ailment/disability/memetic_madness)
 	if (!ignore_checks && found)
