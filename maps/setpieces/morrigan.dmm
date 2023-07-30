@@ -15489,6 +15489,7 @@
 	},
 /area/morrigan/derelict)
 "rFB" = (
+/turf/simulated/wall/false_wall/reinforced,
 /area/morrigan/holding)
 "rFF" = (
 /obj/decal/fakeobjects/skeleton{
