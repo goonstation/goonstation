@@ -7888,7 +7888,7 @@
 "aEC" = (
 /obj/table/reinforced/bar/auto,
 /obj/random_item_spawner/tableware,
-/obj/machinery/glass_recycler,
+/obj/machinery/glass_recycler/bar,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "aED" = (
@@ -14552,7 +14552,7 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bmQ" = (
-/obj/machinery/glass_recycler,
+/obj/machinery/glass_recycler/chemistry,
 /obj/table/reinforced/chemistry/auto/firstaid,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
