@@ -20721,18 +20721,12 @@
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "bCd" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/box/beakerbox,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/table/reinforced/chemistry/auto/firstaid,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/clothing/glasses/spectro,
-/obj/item/clothing/glasses/spectro,
-/obj/item/clothing/glasses/spectro,
+/obj/item/paper/labdrawertips,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "bCe" = (
@@ -21728,7 +21722,7 @@
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bFe" = (
-/obj/table/reinforced/chemistry/auto,
+/obj/table/reinforced/chemistry/auto/basicsup,
 /obj/machinery/glass_recycler{
 	glass_amt = 5;
 	pixel_y = 4
@@ -21739,7 +21733,6 @@
 /area/station/science/chemistry)
 "bFf" = (
 /obj/storage/secure/closet/research/chemical,
-/obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/light,
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -21777,26 +21770,18 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "bFl" = (
-/obj/table/reinforced/chemistry/auto,
+/obj/table/reinforced/chemistry/auto/clericalsup,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/device/audio_log,
-/obj/item/reagent_containers/dropper,
-/obj/item/storage/box/patchbox,
-/obj/item/storage/box/patchbox,
-/obj/item/storage/box/patchbox,
-/obj/item/reagent_containers/dropper/mechanical,
 /obj/machinery/light,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
 /area/station/science/chemistry)
 "bFm" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/gloves/latex,
-/obj/item/storage/box/syringes,
-/obj/item/reagent_containers/dropper,
-/obj/item/device/reagentscanner,
+/obj/table/reinforced/chemistry/auto/auxsup,
+/obj/item/paper/book/from_file/pharmacopia{
+	pixel_y = 5
+	},
 /turf/simulated/floor/purpleblack/corner{
 	dir = 1
 	},
@@ -28324,12 +28309,12 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "cdE" = (
-/obj/item/fish/bass,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/carp,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/storage/crate/freezer,
 /obj/item/raw_material/ice,
 /obj/item/raw_material/ice,

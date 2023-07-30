@@ -7329,12 +7329,12 @@
 /obj/storage/crate/freezer{
 	name = "Freezer"
 	},
-/obj/item/fish/bass,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/carp,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -14140,7 +14140,7 @@
 /area/station/crew_quarters/fitness)
 "bks" = (
 /obj/machinery/phone,
-/obj/table/reinforced/chemistry/basicsup,
+/obj/table/reinforced/chemistry/auto/basicsup,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bkt" = (
@@ -14345,14 +14345,14 @@
 	name = "mail chute-'Chemistry'"
 	},
 /obj/machinery/chem_heater/chemistry,
-/obj/table/reinforced/chemistry/clericalsup,
+/obj/table/reinforced/chemistry/auto/clericalsup,
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
 /area/station/science/chemistry)
 "blD" = (
 /obj/item/paper/labdrawertips,
-/obj/table/reinforced/chemistry/auxsup,
+/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "blE" = (
@@ -14553,7 +14553,7 @@
 /area/station/science/chemistry)
 "bmQ" = (
 /obj/machinery/glass_recycler,
-/obj/table/reinforced/chemistry/firstaid,
+/obj/table/reinforced/chemistry/auto/firstaid,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bmR" = (
@@ -15028,7 +15028,7 @@
 	},
 /area/station/hallway/primary/east)
 "bpj" = (
-/obj/table/reinforced/chemistry/drugs,
+/obj/table/reinforced/chemistry/auto/drugs,
 /turf/simulated/floor/purpleblack{
 	dir = 10
 	},
