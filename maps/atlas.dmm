@@ -9846,13 +9846,6 @@
 	dir = 4
 	},
 /area/station/ranch)
-"aFu" = (
-/obj/machinery/light{
-	layer = 3
-	},
-/obj/storage/secure/closet/civilian/ranch,
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "aFv" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
@@ -10551,10 +10544,10 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
-/mob/living/critter/small_animal/bat/doctor,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/mob/living/critter/small_animal/bat/doctor,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aHz" = (
@@ -13083,24 +13076,12 @@
 	},
 /area/station/mining/refinery)
 "aQk" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 4
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Arrivals"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/machinery/light/incandescent/purpleish{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/decal/stripe_delivery,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/white,
+/obj/mapping_helper/access/rancher,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor,
 /area/station/science/lab)
 "aQl" = (
 /obj/machinery/door_control{
@@ -13374,14 +13355,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"aRc" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Arrivals"
-	},
-/obj/mapping_helper/access/rancher,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor,
-/area/station/ranch)
 "aRd" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16215,10 +16188,10 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "aZz" = (
-/mob/living/critter/small_animal/dog/george/orwell,
 /obj/machinery/phone/wall{
 	pixel_y = 33
 	},
+/mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
 "aZB" = (
@@ -18284,6 +18257,11 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"nlP" = (
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/station/ranch)
 "nnI" = (
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal,
@@ -18617,6 +18595,13 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"paq" = (
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/obj/storage/secure/closet/civilian/ranch,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "pbm" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -18671,6 +18656,10 @@
 	},
 /turf/simulated/floor/red,
 /area/station/science/lab)
+"pkT" = (
+/obj/submachine/fishing_upload_terminal,
+/turf/simulated/floor,
+/area/station/ranch)
 "plm" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -18931,6 +18920,13 @@
 	icon_state = "fblue2"
 	},
 /area/station/bridge)
+"qHR" = (
+/obj/fishing_pool/portable,
+/obj/machinery/light{
+	layer = 3
+	},
+/turf/simulated/floor,
+/area/station/ranch)
 "qLQ" = (
 /obj/decal/mule/dropoff,
 /turf/simulated/floor,
@@ -19415,6 +19411,13 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"uzo" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/ranch)
 "uzK" = (
 /obj/machinery/computer/ordercomp{
 	dir = 8
@@ -19486,6 +19489,14 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"uPd" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Ranch"
+	},
+/obj/mapping_helper/access/rancher,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/ranch)
 "uSJ" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -19676,7 +19687,7 @@
 /area/station/hallway/primary/north)
 "wlm" = (
 /obj/displaycase{
-	displayed = new/obj/item/captaingun()
+	displayed = new /obj/item/captaingun()
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
@@ -19966,6 +19977,10 @@
 /obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
+"xYT" = (
+/obj/submachine/weapon_vendor/fishing/portable,
+/turf/simulated/floor,
+/area/station/ranch)
 "yaQ" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -65774,10 +65789,10 @@ aFs
 aDi
 aYo
 aPc
-aAC
-aax
-aaa
-aax
+aGk
+uzo
+aGk
+uzo
 aIA
 aJw
 aJw
@@ -66074,12 +66089,12 @@ aPq
 aRn
 awS
 aEL
-aEL
+paq
 aFr
+aGk
+nlP
+pkT
 aAC
-aax
-aaa
-axG
 aIz
 aaa
 aaa
@@ -66373,15 +66388,15 @@ aSa
 azR
 aBo
 aPq
-aRc
+uPd
 aTX
 aId
 aJs
-aFu
-aGk
-aax
-aaa
-aax
+aJs
+uPd
+nlP
+qHR
+aAC
 aIz
 aaC
 aaC
@@ -66680,10 +66695,10 @@ aCR
 aXm
 aQb
 aFt
+aGk
+nlP
+xYT
 aAC
-aax
-aaa
-aax
 aIz
 aaa
 aaa
@@ -66982,10 +66997,10 @@ aAw
 aRD
 aSN
 aPc
-aAC
-aax
-aaa
-aax
+aGk
+uzo
+aGk
+uzo
 aIz
 aaa
 aaa
