@@ -1585,9 +1585,9 @@ var/global/mob/twitch_mob = 0
 
 			if ("rev")
 				var/ircmsg[] = new()
-				var/message_to_send = ORIGIN_REVISION + " by " + ORIGIN_AUTHOR
+				var/message_to_send = copytext(ORIGIN_REVISION, 1, 8) + " by " + ORIGIN_AUTHOR
 				if (UNLINT(VCS_REVISION != ORIGIN_REVISION))
-					message_to_send += " + testmerges"
+					message_to_send += " + testmerges ([copytext(VCS_REVISION, 1, 8)] | [jointext(TESTMERGE_PRS, ", ")])"
 				ircmsg["msg"] = message_to_send
 				return ircbot.response(ircmsg)
 
