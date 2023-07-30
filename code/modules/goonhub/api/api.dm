@@ -115,15 +115,15 @@ var/global/datum/apiHandler/apiHandler
 			// to whoever looks at this next: uhh, do we have to do any cleanup of
 			// these requests or will it just solve itself?
 			trackRecentError()
-			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: Request timed out during <b>[safeReq]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])")
-			logTheThing(LOG_DIARY, null, "API Error: Request timed out during [safeReq] (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])", "debug")
+			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: Request timed out during <b>[req_route]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])")
+			logTheThing(LOG_DIARY, null, "API Error: Request timed out during [req_route] (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])", "debug")
 
 			// This one is over so we can clear it now
 			lazy_concurrent_counter--
 			if (attempt < maxApiRetries)
 				return retryApiQuery(args, attempt = attempt)
 
-			src.apiError("API Error: Request timed out during [safeReq]")
+			src.apiError("API Error: Request timed out during [req_route]")
 			return 1
 
 		// Otherwise the request did finish so we can lower this
@@ -132,13 +132,13 @@ var/global/datum/apiHandler/apiHandler
 
 		if (response.errored || !response.body)
 			trackRecentError()
-			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: No response from server during query [!response.body ? "during" : "to"] <b>[safeReq]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])")
-			logTheThing(LOG_DIARY, null, "API Error: No response from server during query [!response.body ? "during" : "to"] [safeReq] (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])", "debug")
+			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: No response from server during query [!response.body ? "during" : "to"] <b>[req_route]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])")
+			logTheThing(LOG_DIARY, null, "API Error: No response from server during query [!response.body ? "during" : "to"] [req_route] (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])", "debug")
 
 			if (attempt < maxApiRetries)
 				return retryApiQuery(args, attempt = attempt)
 
-			src.apiError("API Error: No response from server during query [!response.body ? "during" : "to"] [safeReq]")
+			src.apiError("API Error: No response from server during query [!response.body ? "during" : "to"] [req_route]")
 
 		// At this point we assume the request was a success, so reset the error counter
 		trackRecentError(TRUE)
@@ -148,13 +148,13 @@ var/global/datum/apiHandler/apiHandler
 			var/list/data = json_decode(response.body)
 
 			if (!data)
-				logTheThing(LOG_DEBUG, null, "<b>API Error</b>: JSON decode error during <b>[safeReq]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])")
-				logTheThing(LOG_DIARY, null, "API Error: JSON decode error during [safeReq] (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])", "debug")
+				logTheThing(LOG_DEBUG, null, "<b>API Error</b>: JSON decode error during <b>[req_route]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])")
+				logTheThing(LOG_DIARY, null, "API Error: JSON decode error during [req_route] (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])", "debug")
 
 				if (attempt < maxApiRetries)
 					return retryApiQuery(args, attempt = attempt)
 
-				src.apiError("API Error: JSON decode error during [safeReq]")
+				src.apiError("API Error: JSON decode error during [req_route]")
 
 			return data
 		return 1
