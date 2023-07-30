@@ -586,7 +586,8 @@
 /area/morrigan/station/civilian/botany)
 "aJx" = (
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /obj/machinery/computer/arcade,
 /turf/unsimulated/floor/plating/random,
@@ -827,7 +828,7 @@
 	dir = 4
 	},
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "aZg" = (
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -979,6 +980,11 @@
 /obj/decal/poster/wallsign/warning3,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/station/exit)
+"bhs" = (
+/obj/decal/cleanable/oil,
+/obj/railing/red/reinforced,
+/turf/unsimulated/floor/plating/random,
+/area/morrigan/derelict)
 "bhu" = (
 /obj/stool/chair/pew/fancy/left{
 	dir = 8
@@ -1247,7 +1253,8 @@
 "byG" = (
 /obj/grille/catwalk/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -1265,7 +1272,8 @@
 	dir = 1;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_y = 19
 	},
 /obj/decal/fakeobjects/Laundry/open,
 /turf/unsimulated/floor/plating/random,
@@ -1285,15 +1293,6 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"bBF" = (
-/obj/railing/red/reinforced{
-	dir = 4
-	},
-/obj/decal/floatingtiles{
-	dir = 1
-	},
-/turf/unsimulated/floor/plating/random,
-/area/morrigan/derelict)
 "bCL" = (
 /turf/unsimulated/floor/plating/damaged2,
 /area/morrigan/holding)
@@ -1386,7 +1385,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /obj/decal/cleanable/blood{
 	icon_state = "smear2"
@@ -1446,16 +1446,6 @@
 /obj/table/auto,
 /obj/machinery/microscope,
 /turf/unsimulated/floor/plating/random,
-/area/morrigan/derelict)
-"bMc" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/decal/fakeobjects/skeleton{
-	desc = "The partially decomposed corpse of some poor chump.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "Carla"
-	},
-/turf/unsimulated/floor/plating/jen,
 /area/morrigan/derelict)
 "bMq" = (
 /obj/item/casing/rifle_loud{
@@ -1644,7 +1634,8 @@
 "bUV" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor2"
@@ -1683,7 +1674,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /obj/decal/cleanable/blood{
 	icon_state = "footprints1"
@@ -1920,7 +1912,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /obj/decal/poster/wallsign/hazard_electrical,
 /turf/unsimulated/floor/plating/random,
@@ -1971,7 +1964,8 @@
 "cnd" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -2011,7 +2005,8 @@
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/rust/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
@@ -2132,6 +2127,10 @@
 	icon_state = "fred1"
 	},
 /area/morrigan/station/civilian/chapel)
+"cuR" = (
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor/twotone/yellow,
+/area/morrigan/derelict)
 "cve" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/item/furniture_parts/table,
@@ -2159,7 +2158,8 @@
 	tag = ""
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 1
+	dir = 1;
+	pixel_y = 19
 	},
 /obj/item/reagent_containers/glass/bottle/mercury,
 /turf/unsimulated/floor/plating/jen,
@@ -2302,7 +2302,7 @@
 /area/morrigan/station/security/main)
 "cDr" = (
 /obj/decal/cleanable/generic,
-/obj/machinery/drainage/big,
+/obj/item/paper/prelude_7,
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/derelict)
 "cDG" = (
@@ -2352,8 +2352,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/station/security/armory)
 "cIq" = (
-/obj/monkeyplant,
-/turf/unsimulated/floor/twotone/green,
+/turf/space,
 /area/morrigan/station/medical/genetics)
 "cIw" = (
 /mob/living/critter/spider/baby,
@@ -2457,6 +2456,13 @@
 "cNM" = (
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/passage)
+"cNZ" = (
+/obj/decal/stripe_caution,
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/morrigan/derelict)
 "cOe" = (
 /obj/machinery/computer/robotics{
 	dir = 8
@@ -2526,7 +2532,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /obj/storage/secure/closet/engineering,
 /turf/unsimulated/floor/plating/random,
@@ -2832,7 +2839,8 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -3027,7 +3035,6 @@
 /area/morrigan/routing/transport)
 "dAi" = (
 /obj/decal/cleanable/paper,
-/obj/decal/poster/wallsign/hazard_caution,
 /obj/decal/tile_edge/stripe/big{
 	dir = 1
 	},
@@ -3160,7 +3167,8 @@
 	name = "clothes dryer"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -3239,7 +3247,8 @@
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/rust/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -3263,7 +3272,8 @@
 /area/morrigan/station/security/main)
 "dNl" = (
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 1
+	dir = 1;
+	pixel_y = 19
 	},
 /obj/item/reagent_containers/pill/cyberpunk,
 /obj/item/bballbasket{
@@ -3448,7 +3458,8 @@
 /area/morrigan/station/security/interrogation)
 "dVx" = (
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /mob/living/critter/zombie,
 /turf/unsimulated/floor/plating/random,
@@ -3461,7 +3472,8 @@
 	icon_state = "footprints1"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -3556,6 +3568,11 @@
 /obj/submachine/slot_machine,
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/station/security/brig)
+"eah" = (
+/obj/decal/cleanable/rust/jen,
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/twotone/yellow,
+/area/morrigan/derelict)
 "eai" = (
 /obj/machinery/chem_master{
 	dir = 8
@@ -3608,6 +3625,10 @@
 /obj/towelbin,
 /turf/unsimulated/floor/sanitary/blue,
 /area/space)
+"ecO" = (
+/obj/decoration/ntcrate/ntcrate2,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/derelict)
 "ecT" = (
 /obj/grille/catwalk/jen,
 /obj/decal/fakeobjects/skeleton{
@@ -3624,7 +3645,8 @@
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -3858,7 +3880,7 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/generic,
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "emS" = (
 /obj/decoration/clock,
@@ -3877,7 +3899,8 @@
 /area/morrigan/station/factory)
 "enC" = (
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /obj/storage/secure/closet,
 /turf/unsimulated/floor/plating/random,
@@ -4445,7 +4468,8 @@
 "eQZ" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /obj/stool/chair/material,
 /mob/living/critter/zombie/security,
@@ -4507,7 +4531,8 @@
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -4633,6 +4658,10 @@
 /obj/item/tank/jetpack,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/podbay/security)
+"fdn" = (
+/obj/decal/cleanable/rust/jen,
+/turf/unsimulated/floor/twotone/yellow,
+/area/morrigan/derelict)
 "fdH" = (
 /obj/storage/crate/bloody,
 /obj/decal/floatingtiles{
@@ -4647,7 +4676,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /obj/item/toy/plush/small/stress_ball,
 /turf/unsimulated/floor/plating/random,
@@ -4664,6 +4694,9 @@
 /obj/item/casing/small,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/passage)
+"fgn" = (
+/turf/cordon,
+/area/morrigan/derelict)
 "fgQ" = (
 /obj/table/wood/round,
 /obj/item/decoration/flower_vase/vase7,
@@ -4754,7 +4787,8 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -4798,6 +4832,10 @@
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/generic,
 /turf/unsimulated/floor/plating/random,
+/area/morrigan/derelict)
+"fqz" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/yellow,
 /area/morrigan/derelict)
 "fqD" = (
 /turf/unsimulated/floor/red/redblackchecker,
@@ -4862,7 +4900,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -4952,7 +4991,8 @@
 /area/morrigan/station/civilian/botany)
 "fyO" = (
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "It is not working.";
@@ -5034,6 +5074,10 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/engineering)
+"fFu" = (
+/obj/railing/red/reinforced,
+/turf/unsimulated/floor/twotone/yellow,
+/area/morrigan/derelict)
 "fFA" = (
 /mob/living/critter/robotic/gunbot/syndicate{
 	dir = 1
@@ -5099,7 +5143,8 @@
 /area/morrigan/derelict)
 "fGP" = (
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -5472,7 +5517,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -5589,6 +5635,10 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
+"giY" = (
+/obj/storage/crate/packing,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/derelict)
 "gjb" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
@@ -5777,7 +5827,8 @@
 "gsM" = (
 /obj/decal/cleanable/oil,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "A pipe.";
@@ -5791,7 +5842,8 @@
 	icon_state = "floattiles2"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /obj/decal/cleanable/cobwebFloor,
 /turf/unsimulated/floor/plating/random,
@@ -5832,6 +5884,13 @@
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/security/main)
+"gwp" = (
+/obj/machinery/conveyor/NE{
+	operating = 1
+	},
+/obj/railing/red/reinforced,
+/turf/unsimulated/floor/plating,
+/area/morrigan/derelict)
 "gxo" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8;
@@ -5876,7 +5935,8 @@
 "gAO" = (
 /obj/grille/catwalk/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /obj/decal/poster/wallsign/hazard_electrical,
 /turf/unsimulated/floor/plating/random,
@@ -5906,6 +5966,10 @@
 /obj/item/reagent_containers/food/snacks/candy/candy_cane,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/science)
+"gBV" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/twotone/yellow,
+/area/morrigan/derelict)
 "gBY" = (
 /obj/disposalpipe/segment,
 /obj/decal/fakeobjects/pipe{
@@ -6656,7 +6720,8 @@
 	icon_state = "floattiles4"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -6701,7 +6766,8 @@
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/rust/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
@@ -6721,7 +6787,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -6741,6 +6808,11 @@
 	dir = 1
 	},
 /area/morrigan/routing/transport)
+"hrs" = (
+/obj/decal/cleanable/rust/jen,
+/obj/railing/red/reinforced,
+/turf/unsimulated/floor/twotone/yellow,
+/area/morrigan/derelict)
 "hrP" = (
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
@@ -6826,7 +6898,8 @@
 	icon_state = "drip1a"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
@@ -6863,14 +6936,6 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict/hobo)
-"hyC" = (
-/obj/railing/red/reinforced{
-	dir = 4
-	},
-/obj/decal/cleanable/paper,
-/obj/grille/steel,
-/turf/unsimulated/floor/plating/random,
-/area/morrigan/derelict)
 "hyH" = (
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/rust/jen,
@@ -6981,6 +7046,14 @@
 /obj/reagent_dispensers/watertank/fountain,
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/station/security/brig)
+"hJE" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/decoration/ntcrate,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/derelict)
 "hJZ" = (
 /obj/disposalpipe/segment/bent/west,
 /obj/machinery/atmospherics/unary/cold_sink/freezer/emergency,
@@ -7243,7 +7316,8 @@
 	},
 /obj/rack,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -7396,7 +7470,8 @@
 	dir = 1;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_y = 19
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 8;
@@ -7489,13 +7564,6 @@
 /obj/stool,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/main)
-"inB" = (
-/obj/railing/red/reinforced{
-	dir = 4
-	},
-/obj/storage/crate/bloody,
-/turf/unsimulated/floor/plating/random,
-/area/morrigan/derelict)
 "inM" = (
 /turf/unsimulated/floor/black,
 /area/morrigan/routing/transport)
@@ -7517,7 +7585,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /obj/storage/secure/closet/fridge/opened,
 /turf/unsimulated/floor/plating/random,
@@ -7586,11 +7655,19 @@
 "ivQ" = (
 /obj/grille/catwalk/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /obj/decal/cleanable/cobwebFloor,
 /obj/item/reagent_containers/pill/crank,
 /turf/unsimulated/floor/plating/random,
+/area/morrigan/derelict)
+"iwa" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/obj/decoration/ntcratesmall,
+/turf/unsimulated/floor/industrial,
 /area/morrigan/derelict)
 "iwD" = (
 /turf/unsimulated/floor/black{
@@ -7603,7 +7680,8 @@
 	tag = ""
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 1
+	dir = 1;
+	pixel_y = 19
 	},
 /mob/living/critter/zombie/wrestler,
 /turf/unsimulated/floor/plating/jen,
@@ -7809,6 +7887,7 @@
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
 "iKQ" = (
+/obj/railing/red/reinforced,
 /turf/unsimulated/floor/stairs{
 	dir = 4;
 	icon_state = "Stairs2_wide"
@@ -7979,6 +8058,9 @@
 	dir = 10
 	},
 /area/morrigan/station/science)
+"iTK" = (
+/turf/unsimulated/floor/yellow,
+/area/morrigan/derelict)
 "iTQ" = (
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/red/redblackchecker,
@@ -8040,7 +8122,7 @@
 	icon_state = "floattiles5"
 	},
 /obj/decal/cleanable/rust/jen,
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "iZz" = (
 /turf/unsimulated/floor/plating/random,
@@ -8098,6 +8180,15 @@
 /obj/mapping_helper/access/morrigan/security,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/main)
+"jcv" = (
+/obj/decal/fakeobjects/skeleton{
+	desc = "The partially decomposed corpse of some poor chump.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body3";
+	name = "Carla"
+	},
+/turf/unsimulated/floor/plating/jen,
+/area/morrigan/derelict)
 "jcS" = (
 /obj/window/crystal/reinforced/north,
 /obj/decal/fakeobjects{
@@ -8130,7 +8221,8 @@
 	},
 /obj/decal/cleanable/rust/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 1
+	dir = 1;
+	pixel_y = 19
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -8178,7 +8270,8 @@
 	name = "old mainframe"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -8205,7 +8298,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -8709,14 +8803,10 @@
 	dir = 1
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /turf/unsimulated/floor,
-/area/morrigan/derelict)
-"jJt" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/machinery/drainage/big,
-/turf/unsimulated/floor/plating/jen,
 /area/morrigan/derelict)
 "jJR" = (
 /obj/decal/fakeobjects{
@@ -8855,6 +8945,13 @@
 	},
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/spy)
+"jQD" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/decal/cleanable/rust/jen,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/derelict)
 "jQN" = (
 /turf/unsimulated/floor/plating/scorched,
 /area/morrigan/holding)
@@ -8908,6 +9005,11 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/medical/reception)
+"jVn" = (
+/obj/decal/cleanable/rust/jen,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor/twotone/yellow,
+/area/morrigan/derelict)
 "jVo" = (
 /obj/machinery/light/incandescent/netural,
 /obj/decoration/decorativeplant/plant4,
@@ -9236,13 +9338,12 @@
 /area/morrigan/routing)
 "kqg" = (
 /obj/stool/bed/brig,
-/obj/item/ammo/bullets/a12{
-	pixel_y = -3;
-	pixel_x = -5
-	},
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
+	},
+/obj/item/ammo/bullets/pipeshot/scrap{
+	pixel_y = -4
 	},
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/holding)
@@ -9456,7 +9557,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -9569,6 +9671,10 @@
 /obj/mapping_helper/access/morrigan/medical,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/cloning)
+"kMi" = (
+/obj/storage/secure/crate,
+/turf/unsimulated/floor,
+/area/morrigan/derelict)
 "kMK" = (
 /obj/machinery/power/solar/east,
 /turf/unsimulated/floor/airless/solar,
@@ -9732,6 +9838,13 @@
 	dir = 1
 	},
 /area/morrigan/station/hallway)
+"kWd" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/storage/crate/packing,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/derelict)
 "kWg" = (
 /turf/unsimulated/floor/black,
 /area/morrigan/station/podbay/security)
@@ -9949,7 +10062,8 @@
 "ljx" = (
 /obj/grille/catwalk/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -10921,8 +11035,11 @@
 /area/morrigan/derelict)
 "mvr" = (
 /obj/decal/cleanable/rust/jen,
-/obj/item/ammo/bullets/pipeshot/scrap,
 /obj/decal/cleanable/cobwebFloor,
+/obj/item/ammo/bullets/a12{
+	pixel_y = -3;
+	pixel_x = -5
+	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "mwo" = (
@@ -11033,7 +11150,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -11080,7 +11198,8 @@
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/rust/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -11117,7 +11236,7 @@
 /obj/railing/red/reinforced,
 /obj/storage/secure/crate/medical,
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor/plating/random,
+/turf/unsimulated/floor,
 /area/morrigan/derelict)
 "mLj" = (
 /obj/decal/cleanable/dirt/jen,
@@ -11233,7 +11352,8 @@
 "mQp" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -11413,6 +11533,13 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
+"mZi" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles6"
+	},
+/turf/unsimulated/floor/plating/random,
+/area/morrigan/derelict)
 "nak" = (
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "drip5"
@@ -11443,7 +11570,8 @@
 "naY" = (
 /obj/grille/catwalk/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /obj/decal/cleanable/cobwebFloor,
 /turf/unsimulated/floor/plating/random,
@@ -11667,6 +11795,10 @@
 "nqc" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/derelict/hobo)
+"nqu" = (
+/obj/decal/poster/wallsign/hazard_caution,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/morrigan/derelict)
 "nqA" = (
 /obj/item/mining_tools/pick,
 /obj/decal/cleanable/molten_item,
@@ -11795,7 +11927,8 @@
 /area/morrigan/station/security/brig)
 "nxD" = (
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/unsimulated/floor,
@@ -12387,17 +12520,6 @@
 /obj/decal/cleanable/dirt/dirt3,
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/factory)
-"obJ" = (
-/obj/decal/floatingtiles{
-	dir = 4;
-	icon_state = "floattiles2"
-	},
-/obj/machinery/shower{
-	dir = 1
-	},
-/obj/item/paper/prelude_7,
-/turf/unsimulated/floor/plating/jen,
-/area/morrigan/derelict)
 "obU" = (
 /obj/grille/catwalk,
 /turf/space,
@@ -12438,6 +12560,13 @@
 	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/armory)
+"ode" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decoration/ntcrate,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/derelict)
 "odl" = (
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal,
@@ -12596,7 +12725,8 @@
 "ojb" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
@@ -12633,7 +12763,8 @@
 "omN" = (
 /obj/grille/catwalk/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
@@ -12651,7 +12782,8 @@
 	dir = 1
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /obj/table/auto,
 /obj/decal/fakeobjects{
@@ -12679,6 +12811,10 @@
 /area/morrigan/derelict)
 "opw" = (
 /obj/item/device/light/zippo,
+/turf/unsimulated/floor/plating/random,
+/area/morrigan/derelict)
+"opF" = (
+/obj/machinery/door/poddoor/pyro,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "oqx" = (
@@ -12871,7 +13007,8 @@
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/machine_debris,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
@@ -12896,7 +13033,8 @@
 	dir = 1;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_y = 19
 	},
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/stairs{
@@ -13046,6 +13184,13 @@
 "oIb" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/station/medical/reception)
+"oIi" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/obj/decal/cleanable/rust/jen,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/derelict)
 "oIo" = (
 /obj/candle_light,
 /turf/unsimulated/floor/plating/random,
@@ -13066,7 +13211,7 @@
 /area/morrigan/station/factory)
 "oIO" = (
 /obj/storage/crate/packing,
-/turf/unsimulated/floor/plating/random,
+/turf/unsimulated/floor,
 /area/morrigan/derelict)
 "oJy" = (
 /turf/unsimulated/floor/black{
@@ -13076,7 +13221,8 @@
 "oKp" = (
 /obj/storage/secure/closet,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /obj/item/clothing/under/virtual,
 /turf/unsimulated/floor/carpet/grime,
@@ -13263,10 +13409,6 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/brig)
 "oXr" = (
-/obj/decal/floatingtiles{
-	dir = 4;
-	icon_state = "floattiles4"
-	},
 /obj/decoration/toiletholder,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/derelict)
@@ -13518,7 +13660,8 @@
 	tag = ""
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -13629,7 +13772,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /obj/decal/fakeobjects{
 	desc = "The goods inside the machine probably expired before you were even born.";
@@ -13721,6 +13865,17 @@
 	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/factory)
+"pAe" = (
+/obj/decal/fakeobjects/firelock_broken{
+	density = 1;
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "door_locked";
+	name = "rusted airlock";
+	opacity = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/morrigan/derelict)
 "pAn" = (
 /obj/table/reinforced/bar,
 /obj/machinery/phone,
@@ -14056,6 +14211,13 @@
 	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/factory)
+"pYx" = (
+/turf/unsimulated/floor/twotone/yellow,
+/area/morrigan/derelict)
+"pYN" = (
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/plating/random,
+/area/morrigan/derelict)
 "pZx" = (
 /turf/simulated/floor/airless/twotone/blue,
 /area/morrigan/station/medical/main)
@@ -14170,18 +14332,6 @@
 /obj/table/reinforced/chemistry/auto,
 /turf/unsimulated/floor/twotone/black,
 /area/morrigan/station/medical/biological)
-"qfQ" = (
-/obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "Rust has rendered this airlock useless.";
-	dir = 4;
-	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "maint_closed";
-	name = "rusted airlock";
-	opacity = 1
-	},
-/turf/unsimulated/floor/plating/random,
-/area/morrigan/derelict)
 "qfS" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -14232,7 +14382,7 @@
 /obj/item/weldingtool,
 /mob/living/critter/zombie,
 /obj/item/reagent_containers/pill/crank,
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "qkb" = (
 /obj/decal/cleanable/dirt/dirt2,
@@ -14524,7 +14674,8 @@
 	open = 1
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -14585,7 +14736,8 @@
 	icon_state = "floattiles2"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -14705,7 +14857,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "A pipe.";
@@ -14930,7 +15083,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -14964,7 +15118,8 @@
 	dir = 1;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_y = 19
 	},
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
@@ -15043,7 +15198,8 @@
 "rbe" = (
 /obj/grille/catwalk/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -15524,7 +15680,8 @@
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/generic,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -15559,7 +15716,8 @@
 /area/morrigan/station/civilian/cafe)
 "rJG" = (
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /obj/table/auto,
 /obj/item/currency/spacecash,
@@ -15644,7 +15802,8 @@
 /area/morrigan/station/command/meeting)
 "rRM" = (
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /obj/decal/cleanable/blood{
 	icon_state = "footprints1";
@@ -15659,7 +15818,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/plating/random,
@@ -15913,8 +16073,12 @@
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
 "sny" = (
-/turf/space,
-/area/space)
+/obj/machinery/conveyor/NS{
+	name = "cargo belt - south";
+	operating = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/morrigan/derelict)
 "sow" = (
 /obj/decal/fakeobjects/safehouse/cloning_console,
 /turf/unsimulated/floor/engine/glow,
@@ -16158,7 +16322,8 @@
 	dir = 1;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_y = 19
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/morrigan/derelict)
@@ -16226,7 +16391,8 @@
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -16428,7 +16594,8 @@
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -17001,6 +17168,12 @@
 /obj/decal/cleanable/leaves,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/morrigan/station/medical/main)
+"tDG" = (
+/obj/machinery/conveyor/WE{
+	operating = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/morrigan/derelict)
 "tEm" = (
 /obj/item/crowbar,
 /turf/unsimulated/floor/stairs{
@@ -17315,7 +17488,8 @@
 	},
 /obj/decal/cleanable/urine,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 1
+	dir = 1;
+	pixel_y = 19
 	},
 /obj/item/reagent_containers/food/snacks/meatball,
 /turf/unsimulated/floor/plating/random,
@@ -17380,6 +17554,13 @@
 	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/interrogation)
+"ufv" = (
+/obj/machinery/conveyor/WE{
+	operating = 1
+	},
+/obj/railing/red/reinforced,
+/turf/unsimulated/floor/plating,
+/area/morrigan/derelict)
 "ugp" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
@@ -17583,7 +17764,8 @@
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
@@ -17627,7 +17809,8 @@
 	dir = 1;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_y = 19
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/morrigan/derelict)
@@ -17911,6 +18094,10 @@
 /obj/decal/fakeobjects/safehouse/mechcomp_cabinet,
 /turf/unsimulated/floor/plating/scorched,
 /area/morrigan/station/factory)
+"uDP" = (
+/obj/decal/cleanable/rust/jen,
+/turf/unsimulated/floor/yellow,
+/area/morrigan/derelict)
 "uDY" = (
 /obj/window/crystal/reinforced/south,
 /obj/decal/poster/wallsign/warning3,
@@ -18227,7 +18414,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /obj/storage/secure/closet/engineering,
 /obj/item/storage/firstaid/regular{
@@ -18336,7 +18524,8 @@
 /area/morrigan/station/hallway)
 "vdT" = (
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
 /mob/living/critter/zombie,
 /turf/unsimulated/floor/plating/random,
@@ -18908,12 +19097,9 @@
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/main)
 "vRX" = (
-/obj/decal/floatingtiles{
-	dir = 4
-	},
 /obj/machinery/recharge_station,
 /obj/decal/stripe_caution,
-/turf/unsimulated/floor/plating/random,
+/turf/unsimulated/floor,
 /area/morrigan/derelict)
 "vSv" = (
 /obj/grille/catwalk/jen,
@@ -18931,7 +19117,8 @@
 	dir = 1;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_y = 19
 	},
 /obj/stool/chair,
 /obj/item/reagent_containers/syringe/antitoxin,
@@ -19074,7 +19261,8 @@
 	dir = 1;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_y = 19
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -19291,7 +19479,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /obj/storage/crate/bin/trash,
 /obj/decal/cleanable/oil/streak,
@@ -19394,11 +19583,7 @@
 	dir = 5;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/obj/decal/floatingtiles{
-	dir = 8;
-	icon_state = "floattiles6"
-	},
-/turf/unsimulated/floor/plating/random,
+/turf/unsimulated/floor,
 /area/morrigan/derelict)
 "wxG" = (
 /obj/window_blinds,
@@ -19412,7 +19597,8 @@
 /obj/storage/closet,
 /obj/item/mop,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
+	dir = 4;
+	pixel_x = 8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -19424,7 +19610,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -19487,7 +19674,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -19661,19 +19849,9 @@
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/generic,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -8
 	},
-/turf/unsimulated/floor/plating/random,
-/area/morrigan/derelict)
-"wOS" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "This blast door looks rusted over.  Junk.";
-	dir = 4;
-	icon = 'icons/obj/doors/blastdoor.dmi';
-	icon_state = "bdoorbroken";
-	name = "rusty blastdoor"
-	},
-/obj/structure/woodwall,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "wPg" = (
@@ -19735,7 +19913,8 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -20400,7 +20579,6 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/cobweb,
 /obj/item/parts/human_parts/arm/mutant/skeleton/right,
-/obj/decal/poster/wallsign/hazard_caution,
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
 "xFl" = (
@@ -20411,7 +20589,7 @@
 "xFn" = (
 /obj/storage/crate/packing,
 /obj/item/clothing/under/rank/pathologist,
-/turf/unsimulated/floor/plating/random,
+/turf/unsimulated/floor,
 /area/morrigan/derelict)
 "xFo" = (
 /obj/machinery/arc_electroplater,
@@ -20499,10 +20677,6 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor/plating,
-/area/morrigan/derelict)
-"xLV" = (
-/obj/storage/secure/crate,
-/turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "xMs" = (
 /obj/window/crystal/reinforced/south,
@@ -20671,6 +20845,10 @@
 /obj/machinery/computer/announcement/syndie,
 /turf/unsimulated/floor/carpet/purple/fancy/edge/north,
 /area/morrigan/station/command/captain)
+"yak" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/derelict)
 "yaq" = (
 /obj/decal/floatingtiles{
 	dir = 1;
@@ -20810,9 +20988,17 @@
 	dir = 4;
 	icon_state = "bulb0";
 	name = "inactive light bulb";
-	tag = ""
+	tag = "";
+	pixel_x = 8
 	},
 /turf/unsimulated/floor,
+/area/morrigan/derelict)
+"ykW" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/unsimulated/floor/industrial,
 /area/morrigan/derelict)
 
 (1,1,1) = {"
@@ -30807,12 +30993,12 @@ vwJ
 vwJ
 "}
 (98,1,1) = {"
-lhK
-lhK
-lhK
-lhK
-lhK
-lhK
+vwJ
+vwJ
+vwJ
+vwJ
+vwJ
+vwJ
 lhK
 lhK
 xKi
@@ -30910,7 +31096,7 @@ vwJ
 vwJ
 "}
 (99,1,1) = {"
-lhK
+vwJ
 lhK
 lhK
 lhK
@@ -31014,9 +31200,9 @@ vwJ
 "}
 (100,1,1) = {"
 vwJ
-ybf
-rpS
-lsR
+lhK
+lhK
+lhK
 lhK
 lhK
 lhK
@@ -31117,10 +31303,10 @@ vwJ
 "}
 (101,1,1) = {"
 vwJ
+fgn
 ybf
-sEc
-xLe
-lhK
+rpS
+lsR
 lhK
 lhK
 lhK
@@ -31219,11 +31405,11 @@ vwJ
 vwJ
 "}
 (102,1,1) = {"
-lhK
-lhK
-vri
+vwJ
+fgn
+ybf
+sEc
 xLe
-lhK
 lhK
 lhK
 lhK
@@ -31322,11 +31508,11 @@ vwJ
 vwJ
 "}
 (103,1,1) = {"
+vwJ
 lhK
 lhK
 vri
-pFb
-lhK
+xLe
 lhK
 lhK
 lhK
@@ -31425,11 +31611,11 @@ vwJ
 vwJ
 "}
 (104,1,1) = {"
+vwJ
 lhK
 lhK
 vri
-xLe
-lhK
+pFb
 lhK
 lhK
 uwW
@@ -31528,11 +31714,11 @@ vwJ
 vwJ
 "}
 (105,1,1) = {"
+vwJ
 lhK
 lhK
 vri
 xLe
-lhK
 lhK
 lhK
 lhK
@@ -31631,11 +31817,11 @@ vwJ
 vwJ
 "}
 (106,1,1) = {"
+vwJ
 lhK
 lhK
 vri
 xLe
-lhK
 lhK
 lhK
 lhK
@@ -31658,7 +31844,7 @@ lhK
 lhK
 niP
 lhK
-uwW
+lhK
 eVV
 bKD
 lhK
@@ -31734,11 +31920,11 @@ vwJ
 vwJ
 "}
 (107,1,1) = {"
+vwJ
 lhK
 lhK
 vri
 xLe
-lhK
 lhK
 vwJ
 vwJ
@@ -31837,11 +32023,11 @@ vwJ
 vwJ
 "}
 (108,1,1) = {"
+vwJ
 lhK
 lhK
 vri
 xLe
-lhK
 lhK
 lhK
 lhK
@@ -31940,11 +32126,11 @@ vwJ
 vwJ
 "}
 (109,1,1) = {"
+vwJ
 lhK
 lhK
 vri
 xLe
-lhK
 lhK
 lhK
 lhK
@@ -32016,7 +32202,7 @@ wiN
 ebr
 mER
 oNr
-lLR
+wiN
 lNT
 cBH
 tdH
@@ -32043,13 +32229,13 @@ vwJ
 vwJ
 "}
 (110,1,1) = {"
+vwJ
 lhK
 lhK
 vri
-pFb
-wOS
+xLe
 nHG
-fVS
+mWM
 wcb
 cqc
 iMW
@@ -32119,7 +32305,7 @@ wiN
 eIi
 uKl
 vGo
-lLR
+wiN
 lNT
 lLR
 lLR
@@ -32146,13 +32332,13 @@ vwJ
 vwJ
 "}
 (111,1,1) = {"
+vwJ
 lhK
 lhK
 vri
-xLe
-wOS
+pFb
 nHG
-eVV
+iMW
 aNg
 vSv
 aDu
@@ -32249,11 +32435,11 @@ vwJ
 vwJ
 "}
 (112,1,1) = {"
+vwJ
 lhK
 lhK
 vri
 xLe
-lhK
 lhK
 lhK
 lhK
@@ -32352,12 +32538,12 @@ vwJ
 vwJ
 "}
 (113,1,1) = {"
+vwJ
 lhK
 lhK
 vri
 xLe
 lhK
-obJ
 wbu
 hiu
 oXr
@@ -32455,14 +32641,14 @@ vwJ
 vwJ
 "}
 (114,1,1) = {"
+vwJ
 lhK
 lhK
 vri
 xLe
 lhK
-bMc
 bQG
-jJt
+yjX
 lhK
 eLB
 vTn
@@ -32472,19 +32658,19 @@ lmk
 kan
 lhK
 ppe
-kan
+hrP
 xqB
 kan
 hVd
-kan
+xJF
 vRX
-lhK
+nqu
 lhK
 wAU
 lhK
 lhK
-qfQ
-qfQ
+lhK
+lhK
 lhK
 hmx
 ncT
@@ -32558,13 +32744,13 @@ vwJ
 vwJ
 "}
 (115,1,1) = {"
+vwJ
 lhK
 lhK
 vri
 xLe
 lhK
-lhK
-yjX
+jcv
 cDr
 uoN
 pXF
@@ -32577,17 +32763,17 @@ lhK
 mvl
 nUj
 aCT
-kan
+mZi
 kan
 knW
-kan
-nwe
+coh
+opF
 xEH
 xaB
 xqB
 lhK
-vwJ
-vwJ
+lhK
+lhK
 lhK
 tZC
 fyh
@@ -32661,11 +32847,11 @@ vwJ
 vwJ
 "}
 (116,1,1) = {"
+vwJ
 lhK
 lhK
 vri
-ncv
-vrS
+xLe
 lhK
 lhK
 fOc
@@ -32681,16 +32867,16 @@ kbg
 aLT
 jmu
 qXO
-qXO
+cNZ
 wxq
 xJF
-lhK
+opF
 qjZ
 vei
-vei
-lhK
-vwJ
-vwJ
+bhs
+iwa
+ykW
+hJE
 lhK
 hmx
 kqQ
@@ -32764,10 +32950,10 @@ vwJ
 vwJ
 "}
 (117,1,1) = {"
+vwJ
 lhK
 lhK
-bbc
-spW
+vri
 ncv
 vrS
 lhK
@@ -32787,13 +32973,13 @@ tAo
 kkI
 aJV
 gRe
-lhK
+nqu
 wAU
 cXv
 iKQ
-lhK
-vwJ
-vwJ
+kWd
+yak
+giY
 uwW
 tZC
 wtf
@@ -32867,10 +33053,10 @@ vwJ
 vwJ
 "}
 (118,1,1) = {"
+vwJ
 lhK
 lhK
-lhK
-wnU
+bbc
 spW
 ncv
 vrS
@@ -32882,21 +33068,21 @@ lhK
 lhK
 lhK
 lhK
-wAU
-inB
-bBF
-hyC
+nqu
+kan
+kan
+aCT
 brB
 brB
 brB
 brB
 lhK
 lhK
-fkb
-fkb
-lhK
-vwJ
-vwJ
+pYx
+hrs
+ode
+yak
+ecO
 lhK
 lhK
 lhK
@@ -32970,7 +33156,7 @@ vwJ
 vwJ
 "}
 (119,1,1) = {"
-lhK
+vwJ
 lhK
 lhK
 lhK
@@ -32994,12 +33180,12 @@ dDI
 flo
 qcr
 ybf
-sny
-sny
-sny
-sny
-sny
-sny
+gwp
+gBV
+fFu
+oIi
+jQD
+lhK
 lhK
 lhK
 lhK
@@ -33097,14 +33283,14 @@ brB
 brB
 brB
 lhK
-sny
-sny
-sny
-sny
-sny
-sny
-sny
-sny
+ufv
+vzq
+kan
+gBV
+gBV
+kan
+fqz
+fqz
 lhK
 uwW
 uCC
@@ -33191,7 +33377,7 @@ lhK
 lhK
 lhK
 lhK
-lhK
+nqu
 gkR
 tIn
 bKx
@@ -33200,14 +33386,14 @@ aNr
 oIO
 oIO
 lhK
-sny
-sny
-sny
-sny
-sny
-sny
-sny
-sny
+ufv
+gBV
+kan
+nXe
+kan
+fqz
+nXe
+uDP
 lhK
 lhK
 maO
@@ -33303,14 +33489,14 @@ roP
 fdH
 xFn
 lhK
-sny
-sny
-sny
-sny
-sny
-sny
-sny
-sny
+ufv
+pYx
+gBV
+pYx
+fdn
+iTK
+vzq
+kan
 lhK
 uwW
 mbY
@@ -33396,24 +33582,24 @@ vwJ
 vwJ
 vwJ
 vwJ
-lhK
-lhK
+vwJ
+pAe
 kan
-oIO
+kan
 jCy
 tsF
 aQz
 kan
 kZC
 lhK
-sny
-sny
-sny
-sny
-sny
-sny
-sny
-sny
+ufv
+gBV
+gBV
+gBV
+fdn
+uDP
+fqz
+iTK
 lhK
 lhK
 lhK
@@ -33499,24 +33685,24 @@ vwJ
 vwJ
 vwJ
 vwJ
-lhK
-lhK
-xLV
+vwJ
+pAe
 kan
+wAy
 mKN
 qnT
 aQz
 kan
 kan
 lhK
-sny
-sny
-sny
-sny
-sny
-sny
-sny
-sny
+ufv
+cuR
+pYN
+eah
+jVn
+lhK
+lhK
+lhK
 lhK
 lhK
 lhK
@@ -33605,13 +33791,14 @@ vwJ
 lhK
 lhK
 jaZ
-wAy
+kMi
 mKN
 bKx
 aZp
 hIb
 yeL
 lhK
+qcr
 sny
 sny
 sny
@@ -33620,8 +33807,7 @@ sny
 sny
 sny
 sny
-sny
-vwJ
+ybf
 vwJ
 vwJ
 vwJ
@@ -33710,21 +33896,21 @@ lhK
 lhK
 lhK
 lhK
-czl
+bKx
 lhK
 lhK
 lhK
 lhK
-sny
-sny
-sny
-sny
-sny
-sny
-sny
-sny
-sny
-vwJ
+tDG
+lhK
+lhK
+lhK
+lhK
+lhK
+lhK
+lhK
+lhK
+lhK
 vwJ
 vwJ
 vwJ
@@ -33813,21 +33999,21 @@ lhK
 lhK
 lhK
 lhK
-vwJ
+czl
 lhK
 lhK
 lhK
 lhK
-sny
-sny
-sny
-sny
-sny
-sny
-sny
-sny
-sny
-vwJ
+czl
+lhK
+lhK
+lhK
+lhK
+lhK
+lhK
+lhK
+lhK
+lhK
 vwJ
 vwJ
 vwJ
@@ -33921,15 +34107,15 @@ vwJ
 vwJ
 vwJ
 vwJ
-sny
-sny
-sny
-sny
-sny
-sny
-sny
-sny
-sny
+vwJ
+vwJ
+vwJ
+vwJ
+vwJ
+vwJ
+vwJ
+vwJ
+vwJ
 vwJ
 vwJ
 vwJ
