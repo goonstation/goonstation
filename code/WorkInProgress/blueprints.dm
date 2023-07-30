@@ -760,13 +760,14 @@
 				return
 
 			if("Information")
-				var/message = "<span class='notice'>Blueprint Marker Tool Usage Information:</span><br><br>"
+				var/message = "<span class='notice'>This tool is used for making, saving and loading room blueprints on the server.</span><br>"
+				message += "<span class='notice'>Blueprints persist between rounds, but are limited to a size of 20 tiles on each axis, making 20x20 the largest blueprint.</span><br><br>"
 				message += "<span class='notice'>(De)Select Rectangle: Mass-selects or deselects tiles in a filled rectangle shape, defined by 2 corners.</span><br>"
 				message += "<span class='notice'>Reset: Resets the tools and clears all marked areas.</span><br>"
 				message += "<span class='notice'>Set Blueprint Name: Sets the active blueprint that print/save/delete functions will access.</span><br>"
 				message += "<span class='notice'>Print Saved Blueprint: Prints the active blueprint for usage in the ABCU builder device.</span><br>"
 				message += "<span class='notice'>Save Blueprint: Saves a blueprint of the marked area to the server. Most structures will be saved, but it can not save all types of objects.</span><br>"
-				message += "<span class='notice'>Your saved blueprints carry over to future rounds, and are accessed solely by its Blueprint Name, so note it down.</span><br>"
+				message += "<span class='notice'>Your saved blueprints are accessed solely by its Blueprint Name, so note it down.</span><br>"
 				message += "<span class='notice'>Delete Blueprint: Permanently deletes the active blueprint from the server.</span><br>"
 				boutput(user, message)
 				return
