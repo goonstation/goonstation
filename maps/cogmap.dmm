@@ -6878,10 +6878,7 @@
 /area/station/crew_quarters/fitness)
 "axq" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/glass_recycler{
-	density = 1;
-	pixel_y = 2
-	},
+/obj/machinery/glass_recycler/bar,
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 5
 	},
@@ -38937,7 +38934,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/glass_recycler,
+/obj/machinery/glass_recycler/chemistry,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/firealarm{
 	pixel_y = 24

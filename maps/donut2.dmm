@@ -980,7 +980,7 @@
 	pixel_y = 10
 	},
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/glass_recycler,
+/obj/machinery/glass_recycler/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -28388,10 +28388,7 @@
 /area/station/science/lobby)
 "gnP" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/glass_recycler{
-	density = 1;
-	pixel_y = 2
-	},
+/obj/machinery/glass_recycler/bar,
 /obj/item/storage/box/glassbox{
 	pixel_x = -2;
 	pixel_y = 11
