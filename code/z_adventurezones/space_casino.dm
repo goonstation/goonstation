@@ -142,8 +142,8 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 
 /obj/decal/fakeobjects/brokengamblebot
 	name = "inactive gambling robot"
-	icon = 'icons/obj/bots/aibots.dmi'
-	icon_state = "robuddy0"
+	icon = 'icons/obj/bots/robuddy/pr-6.dmi'
+	icon_state = "body"
 
 /obj/item/paper/space_casino_note
 	name = "note"

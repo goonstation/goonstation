@@ -146,7 +146,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 /obj/machinery/bot/guardbot/bootleg
 	name = "Super Protector Friend III"
 	desc = "The label on the back reads 'New technology! Blinking light action!'."
-	icon = 'icons/misc/xmas.dmi'
+	icon = 'icons/obj/bots/robuddy/super-protector-friend.dmi'
 
 	speak(var/message)
 		var/fontmode = rand(1,4)
@@ -172,7 +172,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 /obj/machinery/bot/guardbot/xmas
 	name = "Jinglebuddy"
 	desc = "Festive!"
-	icon = 'icons/obj/bots/xmasbuddy.dmi'
+	skin_icon_state = "xmasbuddy"
 	setup_default_tool_path = /obj/item/device/guardbot_tool/xmas
 
 	speak(var/message)

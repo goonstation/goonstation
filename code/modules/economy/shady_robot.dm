@@ -1,7 +1,7 @@
 /obj/npc/station_trader //separate obj because he has a lot of different behaviours eg. no buying, no set area, no defence systems to activate
 	name="Shady Robot"
-	icon = 'icons/misc/evilreaverstation.dmi' //temporary
-	icon_state = "pr1_b"
+	icon = 'icons/obj/bots/robuddy/pr-1.dmi'
+	icon_state = "body"
 	picture = "robot.png"
 	var/hiketolerance = 20 //How much they will tolerate price hike
 	var/list/droplist = null //What the merchant will drop upon their death
@@ -96,6 +96,9 @@
 
 	New()
 		..()
+		src.UpdateOverlays(image(src.icon, "face-happy"), "emotion")
+		src.UpdateOverlays(image(src.icon, "lights-on"), "lights")
+
 		teleport()
 		process()
 
