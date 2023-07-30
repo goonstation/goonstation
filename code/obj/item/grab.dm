@@ -591,7 +591,7 @@
 	var/mob/affecting = G.affecting //the parent disposes G
 	if(..())
 		var/duration = (G.state > 0) ? 4 SECONDS : 2 SECONDS
-		affecting.do_disorient(40, disorient = duration)
+		affecting.do_disorient(40, disorient = duration, stack_stuns = FALSE)
 
 /obj/window/grab_smash(obj/item/grab/G, mob/user)
 	if (!ismob(G.affecting) || BOUNDS_DIST(G.affecting, src) != 0)
@@ -609,7 +609,7 @@
 		playsound(src.loc, src.hitsound , 100, 1)
 
 	var/duration = (G.state > 0) ? 4 SECONDS : 2 SECONDS
-	G.affecting.do_disorient(20, disorient = duration)
+	G.affecting.do_disorient(20, disorient = duration, stack_stuns = FALSE)
 
 	G.dispose()
 	return 1
