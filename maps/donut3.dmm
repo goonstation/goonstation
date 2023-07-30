@@ -6668,7 +6668,7 @@
 /area/station/medical/cdc)
 "bSq" = (
 /obj/table/wood/auto,
-/obj/machinery/glass_recycler,
+/obj/machinery/glass_recycler/bar,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bSQ" = (
@@ -65933,7 +65933,7 @@
 	pixel_y = -25
 	},
 /obj/table/reinforced/chemistry/auto/drugs,
-/obj/machinery/glass_recycler,
+/obj/machinery/glass_recycler/chemistry,
 /turf/simulated/floor/purpleblack/corner,
 /area/station/science/chemistry)
 "ukM" = (

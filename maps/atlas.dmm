@@ -2910,7 +2910,7 @@
 /area/station/hallway/secondary/exit)
 "ajs" = (
 /obj/table/wood/round/auto,
-/obj/machinery/glass_recycler,
+/obj/machinery/glass_recycler/bar,
 /obj/item/clothing/glasses/spectro{
 	pixel_y = 11
 	},

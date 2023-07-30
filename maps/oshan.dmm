@@ -10874,9 +10874,7 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aHy" = (
-/obj/machinery/glass_recycler{
-	name = "Glassware Recycler"
-	},
+/obj/machinery/glass_recycler/chemistry,
 /obj/table/reinforced/chemistry/auto,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
@@ -18917,9 +18915,7 @@
 /area/station/maintenance/northwest)
 "bmw" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/glass_recycler{
-	name = "Glassware Recycler"
-	},
+/obj/machinery/glass_recycler/bar,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet/blue/fancy/narrow/sw,
 /area/station/crew_quarters/bar)
@@ -38020,6 +38016,10 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
+"hGx" = (
+/obj/machinery/glass_recycler/chemistry,
+/turf/space/fluid,
+/area/space)
 "hGJ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -48877,7 +48877,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+hGx
 aqn
 aTs
 aqn
