@@ -32,7 +32,7 @@ TYPEINFO(/area/diner/juicer_trader)
 	icon_state = "thong"
 	protective_temperature = 0
 	var/possible_names = list("sandals", "flip-flops", "thongs", "rubber slippers", "jandals", "slops", "chanclas")
-	var/stapled = FALSE
+	stapled = FALSE
 
 	examine()
 		. = ..()
