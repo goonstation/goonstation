@@ -1,4 +1,9 @@
 
+(t)sun jul 30 23
+(u)Retrino
+(p)15162
+(e)🎨🤖|C-Sprites, A-Silicons
+(*)Added three new borg screenhead faces: Nervous, Annoyed, and Ditzy
 (t)sat jul 29 23
 (u)CalliopeSoups
 (p)14664
