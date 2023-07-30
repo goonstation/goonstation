@@ -3,7 +3,7 @@
 var/global/datum/apiHandler/apiHandler
 
 /**
- * Handles queries to the goonhub universal API
+ * Handles queries to the Goonhub APIv2
  */
 /datum/apiHandler
 	/// Is the api handler available for use? only set to false if we try a bunch of times and still fail
@@ -88,14 +88,13 @@ var/global/datum/apiHandler/apiHandler
 			src.apiError("API Error: Cancelled query due to [!enabled ? "disabled apiHandler" : "missing route parameter"]", forceErrorException)
 			return
 
-		var/req = list("[config.goonhub_api_endpoint]/[route.path]/?[route.formatParams()]")
-		req += "[forceResponse ? "bypass=1&" : ""]" //Force a response RIGHT NOW y/n
-		req += "data_server=[serverKey]&data_id=[config.server_id]&" //Append server number and ID
-		req += "data_version=[config.goonhub_api_version]&" //Append API version
-		var/safeReq = req //for outputting errors without the auth code
+		var/req_route = "[config.goonhub_api_endpoint]/[route.path]/?[route.formatParams()]"
 
-		// ZEWAKA TODO: INVESTIGATE IF RUST SERDE DECODE DOES THIS PROPERLY
-		var/headers = list("Accept: application/json", "Content-Type: application/json", "Authorization: [config.goonhub_api_token]")
+		var/headers = list(
+			"Accept" = "application/json",
+			"Content-Type" = "application/json",
+			"Authorization" = config.goonhub_api_token
+		)
 
 		lazy_waiting_counter++
 		while (lazy_concurrent_counter > 50)
@@ -108,7 +107,7 @@ var/global/datum/apiHandler/apiHandler
 
 		// Actual request
 		var/datum/http_request/request = new()
-		request.prepare(route.method, jointext(req, ""), route.body.toJson(), headers, "")
+		request.prepare(route.method, req_route, route.body.toJson(), headers, "")
 		request.begin_async()
 		var/time_started = TIME
 		UNTIL(request.is_complete() || (TIME - time_started) > 10 SECONDS)
