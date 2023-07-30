@@ -248,6 +248,7 @@
 			update_bodypart() //TODO probably remove this later. keeping in for safety
 			if(!isnull(src.client))
 				src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
+				src.update_name_tag()
 			if (src.syndicate)
 				src.show_antag_popup("syndieborg")
 
