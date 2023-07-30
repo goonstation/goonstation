@@ -495,7 +495,7 @@ datum
 				..()
 
 		fooddrink/alcoholic/bojack // Bar Contest Winner's Drink
-			name = "bo jack daniel's"
+			name = "Bo Jack Daniel's"
 			id = "bojack"
 			description = "A strong beverage. Drinking this will put hair on your chest. Maybe."
 			reagent_state = LIQUID
