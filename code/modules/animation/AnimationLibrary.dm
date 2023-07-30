@@ -609,7 +609,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			M.sprint_particle.loc = null
 
 /obj/particle/chemical_reaction
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/effects/chemistry_effects.dmi'
 	plane = PLANE_OVERLAY_EFFECTS
 
 /proc/chemistry_particle(var/datum/reagents/holder, var/datum/chemical_reaction/reaction)

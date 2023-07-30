@@ -333,6 +333,8 @@ datum
 			mix_phrase = "The solution begins to boil."
 			instant = FALSE
 			result_amount = 1
+			reaction_icon_state = list("reaction_smoke-1", "reaction_smoke-2")
+			reaction_icon_color = "#ffffff"
 
 			on_reaction(datum/reagents/holder)
 				var/amount_to_boil = (holder.total_temperature - T100C)/4 //for every degree above 100°C, boil .25 extra water per reaction but...
@@ -370,6 +372,8 @@ datum
 			mix_phrase = "White gas pours out of the solution."
 			hidden = TRUE
 			result_amount = 1
+			reaction_icon_state = list("reaction_smoke-1", "reaction_smoke-2")
+			reaction_icon_color = "#ffffff"
 
 			does_react(var/datum/reagents/holder)
 				return holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group)
@@ -2022,6 +2026,8 @@ datum
 			instant = 1
 			mix_phrase = "The mixture explodes!"
 			hidden = TRUE
+			reaction_icon_state = list("reaction_explode-1", "reaction_explode-2")
+			reaction_icon_color = "#ffffff"
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				if (holder.last_basic_explosion >= ticker.round_elapsed_ticks - 3)
 					return
@@ -2046,10 +2052,20 @@ datum
 			name = "Barium Explosion"
 			id = "explosion_barium"
 			required_reagents = list("water" = 1, "barium" = 1)
-			instant = 1
-			mix_phrase = "The mixture explodes!"
+			instant = FALSE //delayed explosion, triggers when it's all done reacting.
+			stateful = TRUE
+			mix_phrase = "The mixture starts to bubble."
 			hidden = TRUE
+			reaction_speed = 1
+			result_amount = 1
+			var/total_volume_created = 0
+
 			on_reaction(var/datum/reagents/holder, var/created_volume)
+				if(prob(50))
+					reaction_speed += 1
+				total_volume_created += created_volume
+
+			on_end_reaction(var/datum/reagents/holder)
 				if (holder.last_basic_explosion >= ticker.round_elapsed_ticks - 3)
 					return
 				holder.last_basic_explosion = ticker.round_elapsed_ticks
@@ -2061,7 +2077,7 @@ datum
 					explosion(my_atom, location, -1,-1,0,1)
 					fireflash(location, 0)
 				else
-					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
+					var/amt = max(1, (holder.covered_cache.len * (total_volume_created / holder.covered_cache_volume)))
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 						location = pick(holder.covered_cache)
 						holder.covered_cache -= location
@@ -2575,8 +2591,12 @@ datum
 				else
 					mix_multiplier = 1
 				if(cycles >= 50 && cycles < 70) //after 50 cycles you get double the product, until...
+					reaction_icon_state = list("reaction_sparkle-1", "reaction_sparkle-2")
+					reaction_icon_color = "#f3e993"
 					mix_multiplier *= 2
 				if(cycles >= 70) //...after 70 it stops producing extra altogether (TO:DO add a visual effect to both stages later)
+					reaction_icon_state = list("reaction_puff-1", "reaction_puff-2")
+					reaction_icon_color = "#757575"
 					mix_multiplier = 0
 				if(holder.has_reagent("silver_nitrate"))
 					amount_to_mix += (10 * mix_multiplier) //you get a lot of extra for putting in the harder chem
@@ -2813,6 +2833,8 @@ datum
 			result_amount = 3
 			mix_phrase = "The solution bubbles softly."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			reaction_icon_state = list("reaction_sparkle-1", "reaction_sparkle-2")
+			reaction_icon_color = "#301bee"
 
 		cryostylane
 			name = "Cryostylane"
@@ -2822,6 +2844,8 @@ datum
 			result_amount = 3
 			mix_phrase = "A light layer of frost forms on top of the mixture."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			reaction_icon_state = list("reaction_sparkle-1", "reaction_sparkle-2")
+			reaction_icon_color = "#57d8ff"
 
 		spaceacillin
 			name = "spaceacillin"
@@ -3066,6 +3090,8 @@ datum
 			required_reagents = list("phosphorus" = 1, "plasma" = 1, "acid" = 1, "stabiliser" = 1 )
 			result_amount = 4
 			mix_phrase = "The substance becomes sticky and extremely warm."
+			reaction_icon_state = list("reaction_fire-1", "reaction_fire-2")
+			reaction_icon_color = "#ffffff"
 
 		firedust
 			name = "Phlogiston Dust"
@@ -3074,6 +3100,8 @@ datum
 			required_reagents = list("phlogiston" = 1, "charcoal" = 1, "phosphorus" = 1, "sulfur" = 1)
 			result_amount = 2
 			mix_phrase = "The substance becomes a pile of burning dust."
+			reaction_icon_state = list("reaction_fire-1", "reaction_fire-2")
+			reaction_icon_color = "#ffffff"
 
 		napalmfire //This MUST be above the smoke recipe. Trust me on that one. IT affects the internal order of the recipes.
 			name = "Phlogiston Fire"
@@ -3083,6 +3111,8 @@ datum
 			inhibitors = list("stabiliser")
 			instant = 1
 			mix_phrase = "The substance erupts into wild flames."
+			reaction_icon_state = list("reaction_explosion-1", "reaction_explosion-2")
+			reaction_icon_color = "#ffffff"
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
 				if (holder?.my_atom)
