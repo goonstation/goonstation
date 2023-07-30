@@ -201,9 +201,11 @@
 // Areas
 
 /area/morrigan
-	name = "Morrigan Parent"
+	name = "Morrigan Area Parent"
 	icon_state = "red"
 	requires_power = FALSE
+
+// Areas before the station proper
 
 /area/morrigan/routing
 	name = "Syndicate Routing Depot"
@@ -241,86 +243,113 @@
 	name = "Hobo Hovel"
 	icon_state = "crewquarters"
 
-/area/morrigan/station/brig
-	name = "Morrigan Brig"
-	icon_state = "brig"
+// Station areas
+
+/area/morrigan/station
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
+
+// Security areas
 
 /area/morrigan/station/security
+
+/area/morrigan/station/security/brig
+	name = "Morrigan Brig"
+	icon_state = "brigcell"
+
+/area/morrigan/station/security/main
 	name = "Morrigan Security"
 	icon_state = "security"
 
-/area/morrigan/station/armory
+/area/morrigan/station/security/armory
 	name = "Morrigan Armory"
 	icon_state = "armory"
 
+/area/morrigan/station/security/interrogation
+	name = "Morrigan Interrogation"
+	icon_state = "brig"
+
+// Med/Sci areas
+
 /area/morrigan/station/medical
+	icon_state = "blue"
+
+/area/morrigan/station/medical/main
 	name = "Morrigan Medical Centre"
 	icon_state = "medbay"
+
+/area/morrigan/station/medical/reception
+	name = "Morrigan Medical Reception"
+
+/area/morrigan/station/medical/emergency
+	name = "Morrigan Emergency Response"
+
+/area/morrigan/station/medical/morgue
+	name = "Morrigan Morgue"
+
+/area/morrigan/station/medical/robotics
+	name = "Morrigan Robotics"
+
+/area/morrigan/station/medical/cloning
+	name = "Morrigan Cloning"
+
+/area/morrigan/station/medical/genetics
+	name = "Morrigan Genetics"
+
+/area/morrigan/station/medical/biological
+	name = "Morrigan Bio-Lab"
+	icon_state = "medcdc"
 
 /area/morrigan/station/science
 	name = "Morrigan Science Centre"
 	icon_state = "science"
 
+// Engineering areas
+
 /area/morrigan/station/engineering
 	name = "Morrigan Engineering"
 	icon_state = "engineering"
 
-/area/morrigan/station/bar
+// Civilian areas
+
+/area/morrigan/station/civilian
+
+/area/morrigan/station/civilian/bar
 	name = "Morrigan Bar"
 	icon_state = "bar"
 
-/area/morrigan/station/kitchen
+/area/morrigan/station/civilian/kitchen
 	name = "Morrigan Kitchen"
 	icon_state = "kitchen"
 
-/area/morrigan/station/cafe
+/area/morrigan/station/civilian/cafe
 	name = "Morrigan Mess Hall"
 	icon_state = "cafeteria"
 
-/area/morrigan/station/botany
+/area/morrigan/station/civilian/botany
 	name = "Morrigan Botany"
 	icon_state = "hydro"
 
-/area/morrigan/station/chapel
+/area/morrigan/station/civilian/chapel
 	name = "Morrigan Chapel"
 	icon_state = "chapel"
 
-/area/morrigan/station/crewquarters
+/area/morrigan/station/civilian/crewquarters
 	name = "Morrigan Crew Lounge"
 	icon_state = "crewquarters"
 
-/area/morrigan/station/janitor
+/area/morrigan/station/civilian/janitor
 	name = "Morrigan Janitor's Office"
 	icon_state = "janitor"
 
-/area/morrigan/station/clown
-	name = "Morrigan Clunwe Hole"
+/area/morrigan/station/civilian/clown
+	name = "Morrigan Clown Hole"
 	icon_state = "green"
 
-/area/morrigan/station/hallway
-	name = "Morrigan Hall"
-	icon_state = "yellow"
-
-/area/morrigan/station/exit
-	name = "Morrigan Escape Wing"
-	icon_state = "escape"
-
-/area/morrigan/station/maintenance
-	name = "Morrigan Maintenance"
-	icon_state = "imaint"
-
-/area/morrigan/station/disposals
-	name = "Morrigan Disposals"
-	icon_state = "disposals"
-
-/area/morrigan/station/podbay
-	icon_state = "hangar"
-
-/area/morrigan/station/podbay/security
-	name = "Morrigan Security Podbay"
-
-/area/morrigan/station/podbay/medical
-	name = "Morrigan Medical Podbay"
+// Command areas
 
 /area/morrigan/station/command
 	icon_state = "purple"
@@ -352,3 +381,50 @@
 /area/morrigan/station/command/meeting
 	name = "Morrigan Conference Room"
 
+// Misc areas
+
+/area/morrigan/station/hallway
+	name = "Morrigan Hall"
+	icon_state = "yellow"
+
+/area/morrigan/station/exit
+	name = "Morrigan Escape Wing"
+	icon_state = "escape"
+
+/area/morrigan/station/maintenance
+	name = "Morrigan Maintenance"
+	icon_state = "imaint"
+
+/area/morrigan/station/disposals
+	name = "Morrigan Disposals"
+	icon_state = "disposal"
+
+/area/morrigan/station/spy
+	name = "NanoTrasen Listening Room"
+
+/area/morrigan/station/factory
+	name = "Manufacturing Line"
+	icon_state = "robotics"
+
+/area/morrigan/station/passage
+	name = "Manufacturing Passage"
+
+/area/morrigan/station/space
+	name = "Morrigan Space"
+	icon_state = "red"
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
+
+// Podbays
+
+/area/morrigan/station/podbay
+	icon_state = "hangar"
+
+/area/morrigan/station/podbay/security
+	name = "Morrigan Security Podbay"
+
+/area/morrigan/station/podbay/medical
+	name = "Morrigan Medical Podbay"
