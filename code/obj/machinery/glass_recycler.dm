@@ -241,7 +241,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		product_list += new /datum/glass_product("bowl", /obj/item/reagent_containers/food/drinks/bowl, 1) // for making "spicy dip"
 
 /obj/machinery/glass_recycler/bar //the bar should not have to scroll through all this chemmy crap to get to the glasses and pitchers they use
-	name = "chemistry glass recycler"
+	name = "kitchen glass recycler"
 
 	get_products()
 		product_list += new /datum/glass_product("pitcher", /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher, 2)
