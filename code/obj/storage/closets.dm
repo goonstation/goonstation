@@ -81,7 +81,7 @@
 			var/datum/thrown_thing/thr = global.throwing_controller.throws_of_atom(AM)[1]
 			AM.throw_impact(src, thr)
 			AM.throwing = FALSE
-			AM.changeStatus("weakened", 2 SECONDS)
+			AM.changeStatus("weakened", 1 SECOND)
 			AM.set_loc(src.loc)
 			src.close()
 
