@@ -2103,7 +2103,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	wear_layer = MOB_GLASSES_LAYER2
 	icon_state = "scarfcape_white"
 	item_state = "scarfcape_white"
-	c_flags = ONBACK
+	c_flags = ONBACK | ONMASK
 
 	red
 		name = "Red Adventurous Scarf"

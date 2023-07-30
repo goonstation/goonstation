@@ -5,7 +5,7 @@
 	icon = 'icons/obj/clothing/item_masks.dmi'
 	wear_image_icon = 'icons/mob/clothing/mask.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
-	var/obj/item/voice_changer/vchange = 0
+	vchange = 0
 	body_parts_covered = HEAD
 	c_flags = COVERSMOUTH
 	compatible_species = list("human", "cow", "werewolf")

@@ -33,11 +33,13 @@ ABSTRACT_TYPE(/obj/item/clothing)
 	var/material_piece = /obj/item/material_piece/cloth/cottonfabric
 
 	// Used for ONMASK flag
+	// Think it's better to move them here than to copy-paste them to specific clothing with the flag
 	var/use_bloodoverlay = 0
 	var/is_muzzle = 0
 	var/stapled = 0
 	var/allow_staple = 0
 	var/path_prot = 0
+	var/obj/item/voice_changer/vchange = 0
 
 	stamina_damage = 0
 	stamina_cost = 0
