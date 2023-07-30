@@ -53,6 +53,9 @@
 				continue
 
 			obs_data["real_name"] = M.real_name
+			if(isAIeye(M))
+				obs_data["name"] += "'s eye"
+				obs_data["real_name"] += "'s eye"
 			obs_data["dead"] = isdead(M)
 			obs_data["job"] = M.job
 			obs_data["npc"] = (M.client == null && M.ghost == null) //dead players have no client, but should have a ghost
@@ -62,10 +65,10 @@
 			if(DNRSet)
 				obs_data["antag"] = !isnull(M.mind?.special_role)
 
-		if (observable.name in namecounts) //in assoc lists, x in list checks keys for x
-			namecounts[observable.name]++
-			obs_data["dup_name_count"] = namecounts[observable.name]
+		if (obs_data["name"] in namecounts) //in assoc lists, x in list checks keys for x
+			namecounts[obs_data["name"]]++
+			obs_data["dup_name_count"] = namecounts[obs_data["name"]]
 		else
-			namecounts[observable.name] = 1
+			namecounts[obs_data["name"]] = 1
 		uidata += list(obs_data)
 	return list("mydata"=uidata, "dnrset"=DNRSet)
