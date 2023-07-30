@@ -18,6 +18,44 @@
 	if(!node1)
 		parent.mingle_with_turf(loc, 200)
 
+/obj/machinery/atmospherics/pipe/tank/disposing()
+	node1?.disconnect(src)
+	parent = null
+	..()
+
+/obj/machinery/atmospherics/pipe/tank/pipeline_expansion()
+	return list(node1)
+
+/obj/machinery/atmospherics/pipe/tank/update_icon()
+	if(node1)
+		icon_state = "intact"
+
+		dir = get_dir(src, node1)
+
+	else
+		icon_state = "exposed"
+
+/obj/machinery/atmospherics/pipe/tank/initialize()
+	var/connect_direction = dir
+
+	for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
+		if(target.initialize_directions & get_dir(target,src))
+			node1 = target
+			break
+
+	UpdateIcon()
+
+/obj/machinery/atmospherics/pipe/tank/disconnect(obj/machinery/atmospherics/reference)
+	if(reference == node1)
+		if(istype(node1, /obj/machinery/atmospherics/pipe))
+			if (parent)
+				parent.dispose()
+			parent = null
+		node1 = null
+
+	UpdateIcon()
+
+
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide
 	name = "Pressure Tank (Carbon Dioxide)"
 
@@ -119,39 +157,3 @@
 	air_temporary.oxygen = (180*ONE_ATMOSPHERE*O2STANDARD)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 	air_temporary.nitrogen = (180*ONE_ATMOSPHERE*N2STANDARD)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
-/obj/machinery/atmospherics/pipe/tank/disposing()
-	node1?.disconnect(src)
-	parent = null
-	..()
-
-/obj/machinery/atmospherics/pipe/tank/pipeline_expansion()
-	return list(node1)
-
-/obj/machinery/atmospherics/pipe/tank/update_icon()
-	if(node1)
-		icon_state = "intact"
-
-		dir = get_dir(src, node1)
-
-	else
-		icon_state = "exposed"
-
-/obj/machinery/atmospherics/pipe/tank/initialize()
-	var/connect_direction = dir
-
-	for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
-		if(target.initialize_directions & get_dir(target,src))
-			node1 = target
-			break
-
-	UpdateIcon()
-
-/obj/machinery/atmospherics/pipe/tank/disconnect(obj/machinery/atmospherics/reference)
-	if(reference == node1)
-		if(istype(node1, /obj/machinery/atmospherics/pipe))
-			if (parent)
-				parent.dispose()
-			parent = null
-		node1 = null
-
-	UpdateIcon()
