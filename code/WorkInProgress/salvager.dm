@@ -334,7 +334,7 @@
 	icon_state = "whitesub_body"
 	health = 150
 	maxhealth = 150
-	acid_damage_multiplier = 0
+	acid_damage_multiplier = 0.5
 	init_comms_type = /obj/item/shipcomponent/communications/salvager
 	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
 

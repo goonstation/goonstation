@@ -238,12 +238,17 @@ Only trained personnel should operate station systems. Follow all procedures car
 		<br><strong>SUBJ:</strong> Toxins Research Project #08-A
 		<br>
 		<p>
-		The enclosed samples are to be used in continued plasma research.  Our current understanding is that the gas released from "Molitz Beta" in the presence of
-		sufficient temperatures and plasma cause an unusual phenomenon. The gas, Oxygen Agent B, seems to disrupt the typical equilibrium formed in exothermic oxidation
-		allowing for temperatures we have been unable to fully realize. This only seems to occur when combustion is incomplete and can be observed visually as a gentle swirling of the flame.
+		The enclosed samples are to be used in continued plasma research.  Our current understanding is that the samples enclosed (dubbed molitz beta) in the presence of
+		sufficient temperatures and plasma causes an exotic reaction phenomenon. Utiliyzing a yet understood solid catalyst present in moiltz beta,
+		the sample undergoes an intense endothermic reaction between the surrounding FAAE and the sample's internal gas pockets.
 		</p>
 		<p>
-		Please exercise caution in your testing, the result can best be described as a hellfire.  Ensure adequate safety messures are in place to purge the fire.
+		This pressure build up results in significant offgassing.
+		The exotic component of the resultant gas, Oxygen Agent B, seems to disrupt the typical equilibrium formed in exothermic oxidation
+		allowing the potential for temperatures we have been unable to fully realize.
+		</p>
+		<p>
+		Please exercise caution in your testing, when properly utilized the result can best be described as a hellfire.  Ensure adequate safety messures are in place to purge the fire.
 		</p>
 		<p>All findings and documents related to Project #08-A are to be provided in triplicate to CentComm on physical documents only. <b>DO NOT</b> provide this data digitally
 		as it may become compromised.

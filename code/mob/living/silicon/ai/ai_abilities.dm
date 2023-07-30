@@ -45,6 +45,8 @@
 						return expansion
 
 /datum/targetable/ai/module
+	icon_state = "ai_template"
+
 	castcheck(atom/target)
 		. = ..()
 		if(.)
