@@ -10,7 +10,7 @@ type Observable = {
   dead: boolean;
   job: string;
   npc: boolean;
-  antag: boolean;
+  antag: string;
   player: boolean;
   dup_name_count: number;
   ghost_count: number;
@@ -32,6 +32,7 @@ const ObserverButton = (props, context) => {
   if (obsObject.job !== null) { extra = "Job: "+obsObject.job; }
   if (obsObject.dup_name_count > 0) { displayed_name += " #"+obsObject.dup_name_count; }
   if (obsObject.ghost_count > 0) { icon="ghost"; displayed_name = obsObject.ghost_count+" "+displayed_name; }
+  if (obsObject.antag !== null) { displayed_name += " ["+obsObject.antag+"]"; }
   return (
     <Button
       key={obsObject.ref}
@@ -58,7 +59,9 @@ export const ObserverMenu = (props, context) => {
   );
   const filteredItems = data.mydata.filter((item) =>
     item?.name?.toLowerCase().includes(searchQuery.toLowerCase())
+    || item?.real_name?.toLowerCase().includes(searchQuery.toLowerCase())
     || item?.job?.toLowerCase().includes(searchQuery.toLowerCase())
+    || item?.antag?.toLowerCase().includes(searchQuery.toLowerCase())
   );
   // User types into search bar
   const onSearch = (query: string) => {
@@ -105,7 +108,7 @@ export const ObserverMenu = (props, context) => {
           )}>
           <Collapsible key="Antags" title="Antagonists" open={!!data.dnrset} color="red" >
             {(!data.dnrset) && <BlockQuote>You must set DNR to view the antagonists</BlockQuote>}
-            {filteredItems.filter((obs) => obs.antag && !(obs.dead && deadFilter)).map((obs) => (
+            {filteredItems.filter((obs) => (obs.antag !== null) && !(obs.dead && deadFilter)).map((obs) => (
               <ObserverButton obsObject={obs} key={obs.ref} />
             ))}
           </Collapsible>

@@ -37,7 +37,7 @@
 		obs_data["dead"] = FALSE
 		obs_data["job"] = null
 		obs_data["npc"] = FALSE
-		obs_data["antag"] = FALSE
+		obs_data["antag"] = null
 		obs_data["player"] = FALSE
 		obs_data["dup_name_count"] = 0
 		for(var/mob/dead/target_observer/newobs in observable)
@@ -65,7 +65,7 @@
 			if(DNRSet)
 				for(var/datum/antagonist/antagdatum in M.mind?.antagonists)
 					if(!antagdatum.vr) //if we have one valid antag, that counts
-						obs_data["antag"] = TRUE
+						obs_data["antag"] = antagdatum.display_name
 						break
 
 		if (obs_data["name"] in namecounts) //in assoc lists, x in list checks keys for x
