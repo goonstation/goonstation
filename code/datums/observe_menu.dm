@@ -63,7 +63,10 @@
 				continue //don't display azone NPCs outside of station, debris, and mining z levels
 			obs_data["player"] = (M.client != null || M.ghost != null) //okay, I know this is just !npc, but it won't ever get set for objects, so it's needed
 			if(DNRSet)
-				obs_data["antag"] = !isnull(M.mind?.special_role)
+				for(var/datum/antagonist/antagdatum in M.mind?.antagonists)
+					if(!antagdatum.vr) //if we have one valid antag, that counts
+						obs_data["antag"] = TRUE
+						break
 
 		if (obs_data["name"] in namecounts) //in assoc lists, x in list checks keys for x
 			namecounts[obs_data["name"]]++
