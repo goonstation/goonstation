@@ -1849,7 +1849,7 @@
 
 
 /mob/proc/firegib(var/drop_equipment = TRUE)
-	if (isobserver(src) || isintangible(src))
+	if (isobserver(src))
 		return
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
