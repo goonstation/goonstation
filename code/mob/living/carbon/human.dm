@@ -651,7 +651,7 @@
 			for (var/mob/dead/target_observer/hivemind_observer/obs in C.hivemind)
 				boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
 				obs.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
-			if (C.hivemind.len > 0)
+			if (length(C.hivemind) > 0)
 				boutput(src, "Contact with the hivemind has been lost.")
 			C.hivemind = list()
 			if(C.master != C.temp_controller)
@@ -814,7 +814,7 @@
 		if(src.spell_soulguard == SOULGUARD_RING)	//istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport)
 			reappear_turf = get_turf(src)
 		else
-			reappear_turf = pick(job_start_locations["wizard"])
+			reappear_turf = pick_landmark(LANDMARK_WIZARD)
 
 	////////////////Set up the new body./////////////////
 
@@ -2104,7 +2104,7 @@
 /mob/living/carbon/human/proc/can_equip(obj/item/I, slot)
 	switch (slot)
 		if (slot_l_store, slot_r_store)
-			if (I.w_class <= W_CLASS_SMALL && src.w_uniform)
+			if (I.w_class <= W_CLASS_POCKET_SIZED && src.w_uniform)
 				return TRUE
 		if (slot_l_hand)
 			if (src.limbs.l_arm)
@@ -2921,7 +2921,7 @@
 		var/count = 0
 		for (var/obj/O in src.juggling)
 			count ++
-			if (src.juggling.len > 1 && count == src.juggling.len)
+			if (length(src.juggling) > 1 && count == src.juggling.len)
 				items += " and [O]"
 				continue
 			items += ", [O]"

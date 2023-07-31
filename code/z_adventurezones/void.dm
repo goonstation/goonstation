@@ -391,7 +391,7 @@ TYPEINFO(/turf/simulated/floor/void)
 		return valid_mindswap(chair1?.buckled_guy) && valid_mindswap(chair2?.buckled_guy)
 
 	proc/valid_mindswap(mob/living/L)
-		. = 0
+		. = 1
 		if(!istype(L))
 			return
 

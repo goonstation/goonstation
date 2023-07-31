@@ -534,10 +534,13 @@ TYPEINFO(/obj/stool/wooden)
 /* ================================================ */
 /* -------------------- Chairs -------------------- */
 /* ================================================ */
+TYPEINFO(/obj/stool/chair)
+	mat_appearances_to_ignore = list("steel")
 
 /obj/stool/chair
 	name = "chair"
 	desc = "A four-legged metal chair, rigid and slightly uncomfortable. Helpful when you don't want to use your legs at the moment."
+	HELP_MESSAGE_OVERRIDE("")
 	icon_state = "chair"
 	var/comfort_value = 3
 	var/buckledIn = 0
@@ -556,6 +559,15 @@ TYPEINFO(/obj/stool/wooden)
 
 	moveable
 		anchored = UNANCHORED
+
+	get_help_message(dist, mob/user)
+		. = "You can <b>sit</b> on it by standing on the same tile then click draging yourself to the chair or using the Block hotkey with any intent except <b>Grab</b>. "
+		if (src.climbable)
+			. += "It will be <b>climbed on</b> if you are using the <b>Grab intent</b>. "
+		if (src.foldable)
+			. += "It can be <b>folded</b> up to carry by clicking on it. "
+		if (src.securable)
+			. += "It can be <b>secured to the floor</b> with a screwing tool."
 
 	New()
 		if (src.dir == NORTH)
@@ -903,6 +915,7 @@ TYPEINFO(/obj/item/chair/folded)
 /obj/item/chair/folded
 	name = "chair"
 	desc = "A folded chair. Good for smashing noggin-shaped things."
+	HELP_MESSAGE_OVERRIDE("It can be unfolded back into a chair by <b>using it<b> with the C key.")
 	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "folded_chair"
 	item_state = "folded_chair"
@@ -1518,7 +1531,7 @@ TYPEINFO(/obj/stool/chair/wooden)
 
 		if (netnum)
 			var/datum/powernet/PN
-			if (powernets && powernets.len >= netnum)
+			if (powernets && length(powernets) >= netnum)
 				PN = powernets[netnum]
 				return PN.avail
 

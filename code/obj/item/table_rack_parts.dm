@@ -52,7 +52,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 				newThing.setMaterial(src.material)
 			if (user)
 				newThing.add_fingerprint(user)
-				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.getID() ? "[newThing.material.getID()]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return newThing
@@ -292,6 +292,7 @@ TYPEINFO(/obj/item/furniture_parts/table/glass)
 	desc = "A collection of parts that can be used to make a rack."
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "rack_base_parts"
+	item_state = "rack_parts"
 	stamina_damage = 25
 	stamina_cost = 22
 	stamina_crit_chance = 15
