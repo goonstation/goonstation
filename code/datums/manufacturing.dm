@@ -2915,7 +2915,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/pod/preassembeled_parts
 	name = "Preassembeled Pod Frame Kit"
 	item_paths = list("MET-2","CON-1","CRY-1")
-	item_amounts = list(40, 20, 15)
+	item_amounts = list(45, 25, 19)
 	item_outputs = list(/obj/item/preassembled_frame_box/pod)
 	time = 50 SECONDS
 	create = 1
@@ -2962,7 +2962,7 @@ ABSTRACT_TYPE(/datum/manufacture/sub)
 /datum/manufacture/sub/preassembeled_parts
 	name = "Preassembeled Minisub Frame Kit"
 	item_paths = list("MET-2","CON-1","CRY-1")
-	item_amounts = list(20, 9, 7)
+	item_amounts = list(23, 12, 9)
 	item_outputs = list(/obj/item/preassembled_frame_box/sub)
 	time = 25 SECONDS
 	create = 1
@@ -3009,7 +3009,7 @@ ABSTRACT_TYPE(/datum/manufacture/putt)
 /datum/manufacture/putt/preassembeled_parts
 	name = "Preassembeled MiniPutt Frame Kit"
 	item_paths = list("MET-2","CON-1","CRY-1")
-	item_amounts = list(20, 9, 7)
+	item_amounts = list(23, 12, 9)
 	item_outputs = list(/obj/item/preassembled_frame_box/putt)
 	time = 25 SECONDS
 	create = 1
