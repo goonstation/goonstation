@@ -59363,13 +59363,7 @@
 /obj/railing/orange/reinforced{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 20;
-	dir = 4;
-	icon_state = "catwalk_cross";
-	name = "hot catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "evP" = (
 /obj/stool/chair/comfy/shuttle/pilot{
@@ -59484,13 +59478,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	dir = 4;
-	icon_state = "catwalk_narrow";
-	name = "heated catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "eEO" = (
 /obj/decal/fakeobjects/pipe{
@@ -59712,13 +59700,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	dir = 1;
-	icon_state = "catwalk_cross";
-	name = "toasty catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "eRK" = (
 /obj/syndi_putt_spawner,
@@ -59974,11 +59956,7 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "catwalk";
-	name = "catwalk support"
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "ffI" = (
 /obj/item/caution{
@@ -61112,13 +61090,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	dir = 1;
-	icon_state = "catwalk_cross";
-	name = "toasty catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "gve" = (
 /mob/living/critter/small_animal/crab/lava/deep,
@@ -61490,13 +61462,7 @@
 	dir = 10
 	},
 /obj/map/light/lava,
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	dir = 1;
-	icon_state = "catwalk_cross";
-	name = "toasty catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "gUy" = (
 /obj/lattice{
@@ -62159,13 +62125,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	dir = 4;
-	icon_state = "catwalk_narrow";
-	name = "heated catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "hHZ" = (
 /obj/iomoon_puzzle/ancient_robot_door/meat{
@@ -62658,13 +62618,7 @@
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	dir = 5;
-	icon_state = "catwalk_cross";
-	name = "toasty catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "iov" = (
 /mob/living/critter/small_animal/seal{
@@ -63738,19 +63692,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/wizard_station)
-"jmE" = (
-/obj/grille/catwalk,
-/obj/railing/orange/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	dir = 1;
-	icon_state = "catwalk_narrow";
-	name = "warm catwalk support";
-	temperature = 372.15
-	},
-/area/iomoon)
 "jns" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -64527,21 +64468,6 @@
 	icon_state = "floor"
 	},
 /area/centcom)
-"klZ" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/map/light/lava,
-/obj/railing/orange/reinforced,
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "catwalk";
-	name = "catwalk support"
-	},
-/area/iomoon)
 "kmk" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
@@ -64982,13 +64908,7 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	dir = 1;
-	icon_state = "catwalk_narrow";
-	name = "warm catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "kKt" = (
 /obj/table/wood/auto/desk,
@@ -66272,13 +66192,7 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 20;
-	dir = 10;
-	icon_state = "catwalk";
-	name = "hot catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "mbb" = (
 /obj/admin_plaque{
@@ -66433,13 +66347,7 @@
 	dir = 1
 	},
 /obj/railing/orange/reinforced,
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	dir = 4;
-	icon_state = "catwalk_narrow";
-	name = "heated catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "mlB" = (
 /obj/cable,
@@ -66521,13 +66429,7 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 20;
-	dir = 8;
-	icon_state = "catwalk_cross";
-	name = "hot catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "mpq" = (
 /obj/decal/cleanable/blood/gibs{
@@ -67176,13 +67078,7 @@
 	dir = 1
 	},
 /obj/railing/orange/reinforced,
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	dir = 4;
-	icon_state = "catwalk_narrow";
-	name = "heated catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "ndE" = (
 /obj/lattice{
@@ -69173,12 +69069,7 @@
 	},
 /obj/map/light/lava,
 /obj/railing/orange/reinforced,
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	icon_state = "catwalk_cross";
-	name = "hot catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "pds" = (
 /obj/machinery/door/poddoor{
@@ -69650,13 +69541,7 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 20;
-	dir = 10;
-	icon_state = "catwalk";
-	name = "hot catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "pxd" = (
 /obj/stool/chair{
@@ -70703,12 +70588,7 @@
 	dir = 4
 	},
 /obj/railing/orange/reinforced,
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "catwalk_cross";
-	name = "damn warm catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "qII" = (
 /obj/machinery/light{
@@ -71955,13 +71835,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	dir = 9;
-	icon_state = "catwalk";
-	name = "warm catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "rUx" = (
 /obj/shrub{
@@ -72091,20 +71965,6 @@
 "rZe" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/drone/office)
-"rZh" = (
-/obj/grille/catwalk,
-/obj/map/light/lava,
-/obj/railing/orange/reinforced{
-	dir = 4
-	},
-/obj/railing/orange/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "catwalk";
-	name = "catwalk support"
-	},
-/area/iomoon)
 "sad" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This blast door looks rusted over.  Junk.";
@@ -72770,12 +72630,7 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	icon_state = "catwalk_cross";
-	name = "hot catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "sON" = (
 /obj/cable{
@@ -73175,13 +73030,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 20;
-	dir = 8;
-	icon_state = "catwalk_cross";
-	name = "hot catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "tvS" = (
 /obj/machinery/light/small/iomoon,
@@ -73479,13 +73328,7 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	dir = 1;
-	icon_state = "catwalk_narrow";
-	name = "warm catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "tRx" = (
 /turf/unsimulated/floor/marble/border_wb{
@@ -74791,13 +74634,7 @@
 	dir = 1
 	},
 /obj/railing/orange/reinforced,
-/turf/unsimulated/floor{
-	carbon_dioxide = 20;
-	dir = 8;
-	icon_state = "catwalk_cross";
-	name = "hot catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "vrn" = (
 /obj/table/auto,
@@ -74890,13 +74727,7 @@
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	dir = 9;
-	icon_state = "catwalk";
-	name = "remarkably hot catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "vvb" = (
 /obj/cable{
@@ -75159,13 +74990,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	dir = 9;
-	icon_state = "catwalk";
-	name = "warm catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "vNH" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -75347,21 +75172,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/offices/cogwerks)
-"vWD" = (
-/obj/grille/catwalk{
-	dir = 5
-	},
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
-/obj/railing/orange/reinforced,
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "catwalk_cross";
-	name = "burning catwalk support";
-	temperature = 372.15
-	},
-/area/iomoon)
 "vWK" = (
 /obj/cable{
 	d1 = 1;
@@ -76569,13 +76379,7 @@
 	dir = 4
 	},
 /obj/railing/orange/reinforced,
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	dir = 6;
-	icon_state = "catwalk";
-	name = "warm catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "xgE" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/east,
@@ -76706,13 +76510,7 @@
 	dir = 4
 	},
 /obj/railing/orange/reinforced,
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	dir = 6;
-	icon_state = "catwalk";
-	name = "warm catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "xnn" = (
 /obj/overlay{
@@ -77433,13 +77231,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	dir = 4;
-	icon_state = "catwalk_narrow";
-	name = "heated catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "xUS" = (
 /obj/landmark{
@@ -82155,7 +81947,7 @@ tuw
 tuw
 tuw
 tuw
-jmE
+ffs
 pwz
 bue
 bue
@@ -82163,7 +81955,7 @@ bvg
 bue
 bvg
 bvg
-klZ
+eEM
 byF
 boW
 boW
@@ -82463,8 +82255,8 @@ kKg
 kKg
 moR
 kKg
-rZh
-rZh
+kKg
+kKg
 pdr
 byF
 boW
@@ -82767,7 +82559,7 @@ qIr
 bue
 bwr
 bwr
-klZ
+eEM
 byF
 boW
 boW
@@ -83069,7 +82861,7 @@ bvj
 boW
 boW
 boW
-klZ
+eEM
 byF
 boW
 boW
@@ -83371,7 +83163,7 @@ boW
 bpa
 bvg
 bvg
-klZ
+eEM
 brB
 btH
 boW
@@ -100270,7 +100062,7 @@ boV
 boV
 boW
 bqn
-vWD
+vqP
 cjF
 bpD
 bpD
