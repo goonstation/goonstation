@@ -107,7 +107,7 @@
 /turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon
 	name = "hot catwalk support"
 	carbon_dioxide = 20
-	temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST-1
+	temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 1
 
 	New()
 		..()
