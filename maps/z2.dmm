@@ -67179,13 +67179,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 20;
-	dir = 8;
-	icon_state = "catwalk_cross";
-	name = "hot catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon/caves)
 "nhi" = (
 /obj/decal/fakeobjects/pipe{
@@ -73645,13 +73639,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	dir = 4;
-	icon_state = "catwalk_narrow";
-	name = "heated catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon/caves)
 "ujf" = (
 /obj/shrub{
@@ -77112,12 +77100,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "catwalk_cross";
-	name = "burning catwalk support";
-	temperature = 372.15
-	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon/caves)
 "xQs" = (
 /obj/decal/fakeobjects{
