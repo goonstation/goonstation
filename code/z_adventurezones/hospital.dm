@@ -430,7 +430,7 @@
 	setup_charge_maximum = 800
 	setup_default_tool_path = /obj/item/device/guardbot_tool/flash
 	hat_x_offset = 2
-	hat_y_offset = -3
+	hat_y_offset = -2
 	setup_default_startup_task = /datum/computer/file/guardbot_task/soviet
 
 	beacon_freq = 1440

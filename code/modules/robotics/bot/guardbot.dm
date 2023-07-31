@@ -126,7 +126,7 @@
 	var/obj/item/clothing/head/hat = null
 	var/hat_icon = 'icons/obj/bots/aibots.dmi'
 	var/hat_x_offset = 2
-	var/hat_y_offset = -10
+	var/hat_y_offset = -9
 	use_speech_bubble = 0 // D:
 
 	var/image/costume_icon = null
@@ -4830,7 +4830,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 	icon = 'icons/obj/bots/robuddy/pr-4.dmi'
 
 	hat_x_offset = 2
-	hat_y_offset = -6
+	hat_y_offset = -5
 	setup_no_costumes = 1
 	no_camera = 1
 	setup_charge_maximum = 800
