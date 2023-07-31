@@ -55,6 +55,7 @@
 		. = ..()
 /turf/simulated/floor/airless/plating/catwalk/auto
 	icon = 'icons/turf/catwalk_support.dmi'
+	icon_state = "auto"
 
 	New()
 		. = ..()
