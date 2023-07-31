@@ -19,11 +19,11 @@ ABSTRACT_TYPE(/obj/item/preassembled_frame_box)
 	frame_type = /obj/structure/preassembeled_vehicleframe/puttframe
 
 /obj/item/preassembled_frame_box/sub
-	name = "Minisub Frame Kit"
+	name = "Preasembled Minisub Frame Kit"
 	frame_type = /obj/structure/preassembeled_vehicleframe/subframe
 
 /obj/item/preassembled_frame_box/pod
-	name = "Pod Frame Kit"
+	name = "Preasembled Pod Frame Kit"
 	frame_type = /obj/structure/preassembeled_vehicleframe/podframe
 
 	attack_self(mob/user as mob)
