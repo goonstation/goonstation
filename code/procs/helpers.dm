@@ -773,7 +773,7 @@ proc/get_angle(atom/a, atom/b)
 				text += html_encode(the_mob.name)
 			text += " "
 			if (the_client && !the_client.holder) //only show this stuff for non-admins because admins do a lot of shit while dead and it is unnecessary to show it
-				if (checktraitor(the_mob))
+				if (the_mob.mind?.is_antagonist())
 					text += "\[<font color='red'>T</font>\] "
 				if (isdead(the_mob))
 					text += "\[DEAD\] "
