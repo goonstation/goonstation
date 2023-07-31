@@ -380,7 +380,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 	Entered(atom/movable/O, atom/old_loc)
 		..()
-		if(src.deadly && !(O.anchored == ANCHORED_ALWAYS))
+		if(src.deadly && !(isnull(old_loc) || O.anchored == ANCHORED_ALWAYS))
 			return_if_overlay_or_effect(O)
 
 			if (check_target_immunity(O, TRUE))
@@ -395,8 +395,10 @@ SYNDICATE DRONE FACTORY AREAS
 					M.setStatusMin("burning", 5 SECONDS)
 				return
 
-			if (istype(O, /obj/critter) && O:flying)
-				return
+			if (istype(O, /obj/critter))
+				var/obj/critter/C = O
+				if (C.flying)
+					return
 
 			if (istype(O, /obj/projectile))
 				return
