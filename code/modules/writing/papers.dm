@@ -1146,3 +1146,15 @@ Only trained personnel should operate station systems. Follow all procedures car
 	Flake out this time and you will regret it. <br>
 	You know where to find us larry, bring the money, 100,000 credits.
 	"}
+
+/obj/item/paper/labdrawertips
+	name = "stern lab safety warning"
+	icon_state = "paper"
+	info ={"
+	I've had it with you nincompoops taking shortcuts. For the last
+	time, <b> when you open the drawers under the lab counter,
+	USE AN EMPTY HAND!</b> There's no excuse for you to be
+	melting holes in the floor because you tried to grab a
+	handle with the same hand that holds your beloved
+	napalm-phlogiston-thermite """hell mix."""
+	"}
