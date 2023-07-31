@@ -377,6 +377,7 @@ SYNDICATE DRONE FACTORY AREAS
 	pathable = FALSE
 	can_replace_with_stuff = TRUE
 	var/deadly = TRUE
+	var/no_fly_zone = FALSE
 
 	Entered(atom/movable/O, atom/old_loc)
 		..()
@@ -389,7 +390,7 @@ SYNDICATE DRONE FACTORY AREAS
 			if (isintangible(O))
 				return
 
-			if (HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOATING))
+			if (HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOATING) && !src.no_fly_zone)
 				if (isliving(O))
 					var/mob/living/M = O
 					M.setStatusMin("burning", 5 SECONDS)
