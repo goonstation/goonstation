@@ -2912,6 +2912,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Component"
 
+/datum/manufacture/pod/preassembeled_parts
+	name = "Preassembeled Pod Frame Kit"
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(40, 20, 15)
+	item_outputs = list(/obj/item/preassembled_frame_box/pod)
+	time = 50 SECONDS
+	create = 1
+	category = "Component"
+
 ABSTRACT_TYPE(/datum/manufacture/sub)
 
 /datum/manufacture/sub/parts
@@ -2950,6 +2959,15 @@ ABSTRACT_TYPE(/datum/manufacture/sub)
 	create = 1
 	category = "Component"
 
+/datum/manufacture/sub/preassembeled_parts
+	name = "Preassembeled Minisub Frame Kit"
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(20, 9, 7)
+	item_outputs = list(/obj/item/preassembled_frame_box/sub)
+	time = 25 SECONDS
+	create = 1
+	category = "Component"
+
 ABSTRACT_TYPE(/datum/manufacture/putt)
 
 /datum/manufacture/putt/parts
@@ -2985,6 +3003,15 @@ ABSTRACT_TYPE(/datum/manufacture/putt)
 	item_amounts = list(5,5)
 	item_outputs = list(/obj/item/putt/control)
 	time = 5 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/putt/preassembeled_parts
+	name = "Preassembeled MiniPutt Frame Kit"
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(20, 9, 7)
+	item_outputs = list(/obj/item/preassembled_frame_box/putt)
+	time = 25 SECONDS
 	create = 1
 	category = "Component"
 
