@@ -432,6 +432,9 @@ SYNDICATE DRONE FACTORY AREAS
 			src.visible_message("<span class='alert'><B>[O]</B> falls into the [src] and melts away!</span>")
 			qdel(O)
 
+/turf/unsimulated/floor/lava/nofly
+	no_fly_zone = TRUE
+
 /obj/decal/lightshaft
 	name = "light"
 	desc = "There's light coming through a hole in the ceiling."
