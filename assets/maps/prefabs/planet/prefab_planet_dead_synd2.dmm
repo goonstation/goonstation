@@ -1,0 +1,42 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"r" = (
+/obj/decal/cleanable/blood/gibs,
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"V" = (
+/obj/item/gun/kinetic/pistol/empty,
+/obj/dialogueobj/syndiecorpse2,
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"Z" = (
+/obj/decal/cleanable/blood/gibs/body,
+/turf/variableTurf/clear,
+/area/allowGenerate)
+
+(1,1,1) = {"
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+r
+r
+a
+"}
+(3,1,1) = {"
+a
+V
+r
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+Z
+"}

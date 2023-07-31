@@ -485,6 +485,12 @@
 	dir = 8
 	},
 /area/evilreaver/security)
+"kE" = (
+/obj/item/reagent_containers/food/fish/red_herring,
+/obj/item/reagent_containers/food/snacks/burger,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/spyshack)
 "kK" = (
 /mob/living/critter/martian/soldier,
 /turf/simulated/floor/martian,
@@ -4671,12 +4677,6 @@
 	},
 /turf/simulated/floor/plating/scorched,
 /area/spyshack)
-"Nc" = (
-/obj/item/fish/red_herring,
-/obj/item/reagent_containers/food/snacks/burger,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/spyshack)
 "Nd" = (
 /obj/decal/cleanable/gangtag{
 	icon_state = "gangtag22";
@@ -5109,6 +5109,15 @@
 	},
 /turf/simulated/wall/auto/reinforced/old,
 /area/tech_outpost)
+"QC" = (
+/obj/storage/closet/coffin,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/seed/cannabis,
+/obj/item/seed/cannabis,
+/turf/simulated/floor/martian,
+/area/noGenerate)
 "QE" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -5412,15 +5421,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
-"SJ" = (
-/obj/storage/closet/coffin,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
-/obj/item/seed/cannabis,
-/obj/item/seed/cannabis,
-/turf/simulated/floor/martian,
-/area/noGenerate)
 "SK" = (
 /obj/stool/chair/comfy{
 	dir = 4
@@ -18710,7 +18710,7 @@ XJ
 cc
 OD
 Qe
-SJ
+QC
 UM
 UM
 qg
@@ -44167,7 +44167,7 @@ Xu
 NX
 za
 YK
-Nc
+kE
 SU
 HU
 HU

@@ -1612,12 +1612,12 @@
 /area/station/medical/medbay)
 "afh" = (
 /obj/machinery/light_switch/auto,
-/obj/item/fish/bass,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/carp,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/item/reagent_containers/food/snacks/ingredient/meat{
 	desc = "Ew.";
 	name = "meat of questionable origin"
@@ -2910,7 +2910,7 @@
 /area/station/hallway/secondary/exit)
 "ajs" = (
 /obj/table/wood/round/auto,
-/obj/machinery/glass_recycler,
+/obj/machinery/glass_recycler/bar,
 /obj/item/clothing/glasses/spectro{
 	pixel_y = 11
 	},
@@ -4785,13 +4785,14 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/combustion_chamber)
 "aqh" = (
-/obj/storage/secure/closet/research/chemical,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
 	light_type = /obj/item/light/tube/light_purpleish;
 	pixel_y = 21
 	},
+/obj/table/reinforced/chemistry/auto/chemstorage,
+/obj/item/paper/labdrawertips,
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
@@ -8992,18 +8993,14 @@
 	},
 /area/station/science/chemistry)
 "aDg" = (
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/device/reagentscanner,
-/obj/item/reagent_containers/dropper,
-/obj/item/clothing/glasses/spectro,
 /obj/machinery/firealarm{
 	pixel_y = 25
 	},
-/obj/table/reinforced/chemistry/auto,
 /obj/machinery/glass_recycler/chemistry{
 	pixel_y = 14
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/table/reinforced/chemistry/auto/allinone,
 /turf/simulated/floor/purplewhite{
 	dir = 5
 	},
@@ -9853,15 +9850,7 @@
 /obj/machinery/light{
 	layer = 3
 	},
-/obj/storage/closet{
-	name = "rancher's supply closet"
-	},
-/obj/item/device/camera_viewer/ranch,
-/obj/item/paper/ranch_guide,
-/obj/item/storage/box/clothing/rancher,
-/obj/item/fishing_rod,
-/obj/item/chicken_carrier,
-/obj/item/clothing/mask/chicken,
+/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "aFv" = (
@@ -10517,15 +10506,6 @@
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
 "aHt" = (
-/obj/storage/crate{
-	desc = "null";
-	name = "Chemistry Supplies Crate"
-	},
-/obj/item/reagent_containers/dropper/mechanical,
-/obj/item/storage/box/patchbox,
-/obj/item/paper/book/from_file/pharmacopia,
-/obj/item/storage/box/syringes,
-/obj/item/storage/box/beakerbox,
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /turf/simulated/floor/purplewhite{

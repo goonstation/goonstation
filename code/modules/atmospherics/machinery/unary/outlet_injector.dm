@@ -24,9 +24,9 @@
 	update_icon()
 		if(node)
 			if(on)
-				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]on"
+				icon_state = "[level == UNDERFLOOR && istype(loc, /turf/simulated) ? "h" : "" ]on"
 			else
-				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
+				icon_state = "[level == UNDERFLOOR && istype(loc, /turf/simulated) ? "h" : "" ]off"
 		else
 			icon_state = "exposed"
 			on = 0

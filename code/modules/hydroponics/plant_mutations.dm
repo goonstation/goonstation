@@ -73,6 +73,14 @@
 	proc/HYPpotted_proc_M(var/obj/decorative_pot/POT, var/grow_level)
 		return
 
+	///When the plant mutates to this mutation and you need to adjusted its stats/commuts (either in seed in plantmaster or pot)
+	proc/HYPon_mutation_general(var/datum/plant/parent_plant, var/datum/plantgenes/passed_genes)
+		return
+
+	///When the plant mutates to this mutation and you want something special (like mutates with a burst of flames)
+	proc/HYPon_mutation_pot(var/datum/plant/parent_plant, var/obj/machinery/plantpot/passed_plantpot, var/datum/plantgenes/passed_genes)
+		return
+
 // Tomato Mutations
 
 /datum/plantmutation/tomato/incendiary
@@ -503,9 +511,16 @@
 /datum/plantmutation/hcordata/fish
 	name = "Wholetuna Cordata"
 	iconmod = "Wholetuna"
-	crop = /obj/item/fish/botany
+	crop = list(/obj/item/reagent_containers/food/fish/salmon,
+				/obj/item/reagent_containers/food/fish/carp,
+				/obj/item/reagent_containers/food/fish/bass)
+	assoc_reagents = list("fishoil")
 	dont_rename_crop = TRUE
 	special_proc_override = TRUE
+
+	HYPon_mutation_general(var/datum/plant/parent_plant, var/datum/plantgenes/passed_genes)
+		HYPaddCommut(parent_plant, passed_genes, /datum/plant_gene_strain/inert)
+		return
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
