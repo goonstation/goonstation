@@ -111,8 +111,7 @@
 
 	New()
 		..()
-		var/image/lava = image('icons/turf/floors.dmi', "lava")
-		lava.layer = src.layer - 0.1
+		var/image/lava = image(icon = 'icons/turf/floors.dmi', icon_state = "lava", layer = src.layer - 0.1)
 		src.UpdateOverlays(lava, "lava")
 
 ////////////////////////////////////////////////////////////
