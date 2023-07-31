@@ -816,7 +816,6 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				par.pixel_x += 5
 			if (src.blow_direction == WEST)
 				par.pixel_x -= 5
-			par.color = "#DBDBDB"
 
 			first.Turn(rand(-90, 90))
 			first.Scale(0.1, 0.1)
@@ -1450,7 +1449,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			Sleep(1)
 
 /datum/particleSystem/blow_cig_smoke
-	New(var/atom/location = null, var/blow_dir = null)
+	New(var/atom/location = null, var/blow_dir = null, var/color = "#DBDBDB")
 		var/dir_append = "_n"
 		switch(blow_dir)
 			if (EAST)
@@ -1460,7 +1459,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			if(SOUTH)
 				dir_append = "_s"
 
-		..(location, "blow_cig_smoke[dir_append]", 25, "#DBDBDB")
+		..(location, "blow_cig_smoke[dir_append]", 25, color)
 		SpawnParticle()	//want this particle system to display asap - needs to show up at the same time as its flavor text, not after
 
 
