@@ -247,7 +247,7 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 			src.removeMaterial()
 
 	O = new src.box_type( get_turf(src) )
-	logTheThing(LOG_STATION, usr, "deconstructs [src] in [get_area(usr)] ([log_loc(usr)])")
+	logTheThing(LOG_STATION, user, "deconstructs [src] in [get_area(user)] ([log_loc(user)])")
 	O.fingerprints = src.fingerprints
 	O.fingerprints_full = src.fingerprints_full
 	qdel(src)
