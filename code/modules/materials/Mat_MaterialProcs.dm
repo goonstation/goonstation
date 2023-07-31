@@ -449,7 +449,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			return
 		if(!owner.material.isMutable()) //this is a little hacky, but basically ensure it's mutable and then do the trigger
 			owner.material = owner.material.getMutable()
-			return owner.material.triggerExp(owner)
+			return owner.material.triggerExp(owner, sev)
 		var/turf/target = get_turf(owner)
 		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
 			if(molitz.iterations >= 1)
