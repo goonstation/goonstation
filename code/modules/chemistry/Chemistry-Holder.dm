@@ -504,7 +504,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 						covered_cache = 0
 						continue
 					if (C.stateful)
-						active_reactions += new C.type
+						var/datum/chemical_reaction/old_reaction = locate(C.type) in old_reactions
+						if (old_reaction)
+							active_reactions += old_reaction
+						else
+							active_reactions += new C.type
 					else
 						active_reactions += C
 
