@@ -55,21 +55,33 @@ ABSTRACT_TYPE(/mob/living/critter/human)
 	death(var/gibbed)
 		if (gibbed)
 			return ..()
-		if (src.corpse_spawner && istype(src.corpse_spawner, /obj/mapping_helper/mob_spawn/corpse/human))
+		..()
+		if (src.corpse_spawner)
 			new src.corpse_spawner(src.loc)
+			src.ghostize()
+			qdel(src)
 		else
 			src.gib()
-		..()
 
 	proc/steal_appearance(var/mob/living/carbon/human/H)
 		if (isnull(H))
 			return
 		var/mob/living/carbon/human/target = new H
 		SPAWN(1) // Let it equip / do traces
-			if (target.l_hand)
+			if (target.l_hand) // don't want artifacts of papers / etc.
 				qdel(target.l_hand)
 			if (target.r_hand)
 				qdel(target.r_hand)
 			src.appearance = target
 			src.overlay_refs = target.overlay_refs?.Copy()
+			src.name = initial(src.name)
+			src.real_name = initial(src.real_name)
+			src.desc = initial(src.desc)
 			qdel(target)
+
+/mob/living/critter/human/syndicate
+	name = "Syndicate Operative"
+	real_name = "Syndicate Operative"
+	desc = "A Syndicate Operative, oh dear."
+	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/skeleton
+	human_to_copy = /mob/living/carbon/human/normal/syndicate

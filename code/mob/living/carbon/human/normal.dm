@@ -16,7 +16,7 @@
 /mob/living/carbon/human/normal/syndicate
 	New()
 		..()
-		JobEquipSpawned("Syndicate Operative")
+		JobEquipSpawned("Junior Syndicate Operative")
 
 /mob/living/carbon/human/normal/captain
 	New()
