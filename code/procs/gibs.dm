@@ -84,6 +84,7 @@
 		return
 
 	playsound(location, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
+	make_cleanable(/obj/decal/cleanable/oil, location)
 
 	// RUH ROH
 	elecflash(location,power=2)

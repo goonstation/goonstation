@@ -199,7 +199,7 @@
 
 /obj/item/reagent_containers/glass/bottle/haloperidol
 	name = "haloperidol bottle"
-	desc = "A small bottle of haloperidol, a powerful anti-psychotic."
+	desc = "A small bottle of haloperidol, a powerful sedative and anti-psychotic."
 	amount_per_transfer_from_this = 5
 	initial_reagents = "haloperidol"
 

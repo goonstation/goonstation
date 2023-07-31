@@ -1,9 +1,189 @@
 
+(t)sun jul 30 23
+(u)Retrino
+(p)15162
+(e)🎨🤖|C-Sprites, A-Silicons
+(*)Added three new borg screenhead faces: Nervous, Annoyed, and Ditzy
+(t)sat jul 29 23
+(u)CalliopeSoups
+(p)14664
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Oshan's ranch has been renovated for cooperative rancher action.
+(u)Bartimeus973
+(p)15147
+(e)💅💪🎭|C-QoL, A-Traits, A-RP
+(+)Picky eaters will now heal substantially more hunger when eating one of their favorite foods.
+(u)Ikea
+(p)14889
+(e)⚖🤖|C-Balance, A-Silicons
+(*)EMP's now stun borgs for 5 seconds, disable modules for a max of 5 seconds, and now do far more damage to borgs.
+(u)LeahTheTech
+(+)The cyborg teleport module now has visual and sound effects.
+(t)fri jul 28 23
+(u)Valtsu0
+(p)15048
+(e)🆕🔨🍝|C-Feature, A-Player-Actions, A-Catering
+(+)Chef can now name meals by using a plate in hand
+(u)UnfunnyPerson
+(p)15034
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)Shamblers will eat limbs while using devour.
+(u)Kubius
+(p)15127
+(e)🗺⚖|A-Mapping, C-Balance
+(*)Nadir is now equipped with a Security pod bay.
+(u)Lord_Earthfire
+(p)14857
+(e)🪲🗺🔄⚗🍝🌱|C-Bug, A-Mapping, C-Rework, A-Chemistry, A-Catering, A-Hydroponics
+(*)Fish now contain fish oil and can have chemicals. Keep your blood pressure stable today!
+(+)Fish can now be loaded into the chemical extractor and be injected with syringes
+(+)Fish from the wholetuna cordata plant now can gain botany chems, the plant gains the "inert" gene strain on mutation, though
+(+)Plants spliced with the wholetuna cordata plant now contain fish oil.
+(u)Ikea
+(p)15140
+(e)|
+(+)The paper found in the molitz beta briefcase has been rewritten a little bit
+(t)thu jul 27 23
+(u)Flaborized
+(p)15054
+(e)🎨|C-Sprites
+(+)Resprited light engineering spacesuit
+(u)LeahTheTech
+(+)Conveyor belt switches now accept a mechcomp signal to adjust their speed from 1-10, nice sedate sushi bars are now possible.
+(t)wed jul 26 23
+(u)Tyrant
+(p)15059
+(e)🪲🆕🗺💅📦|C-Bug, C-Feature, A-Mapping, C-QoL, A-Game-Objects
+(+)Rancher closets have been standardised across all maps, and added to Nadir and Clarion accordingly
+(u)Amylizzle
+(p)15115
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Stun cane manufacturing blueprint works now.
+(t)tue jul 25 23
+(u)Sovexe
+(p)14958
+(e)🆕📄|C-Feature, A-UI
+(*)Brand-new players are now known and tagged as Newbees in OOC/LOOC. They have a special green chat color and a bee icon for easy identification. Players are encouraged to welcome Newbees into the community.
+(u)Froggit Dogget
+(p)15082
+(e)|
+(+)Adds the censorium alloy. It does nothing.
+(u)Glamurio (Ryou)
+(p)14807
+(e)🆕🐣|C-Feature, A-Respawning
+(+)Tourists now spawn with a lanyard containing their ID.
+(u)Bartimeus973
+(p)15012
+(e)🆕🎨💪🎭|C-Feature, C-Sprites, A-Traits, A-RP
+(*)Added a new trait: Picky eater! Picky eaters can only eat specific, randomly selected foods!
+(t)mon jul 24 23
+(u)Mintyphresh
+(p)15065
+(e)🪲⚖💅⚗🍝|C-Bug, C-Balance, C-QoL, A-Chemistry, A-Catering
+(*)Greatly reduced the ABV of most non-evil drinks. See minor changes for exceptions. Drink up!
+(+)Necroni, Grog, Bo Jack Daniels, Squeeze, Suicider, Murdini, Moonshine, BOOrbon, Bloody Scary, and Ling Island Iced Tea have increased in strength.
+(t)sat jul 22 23
+(u)Skeletonman0 and Garash
+(p)14895
+(e)🆕📄|C-Feature, A-UI
+(+)New UI for the station's advanced computers, go bother cargo for a Home Networking Kit and build your own dream computer today!
+(u)Flourish
+(e)🗺⚖⛔|A-Mapping, C-Balance, C-Removal,
+(+)Removed straightjackets.
+(u)Flappybat
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Sorium throw scaling reduced. A large quantity is now needed to throw more than a few tiles.
+(+)Sorium now throws anything on the same turf in a random direction.
+(t)fri jul 21 23
+(u)Sian
+(p)14642
+(e)🎨📦🍝|C-Sprites, A-Game-Objects, A-Catering
+(*)Added Wall Trophy for fish available as a ticket purchase in Fishing Supplies Vendor.
+(u)Wisemonster
+(p)14903
+(e)💅🤖|C-QoL, A-Silicons
+(+)Silicons can now use the supply request consoles
+(u)Mantwerp and Mcdangus
+(p)14999
+(e)🎨🔊📦|C-Sprites, C-Sound, A-Game-Objects
+(*)Added the electric guitar, which you can get from cargo. Sprites and sounds by Mcdangus.
+(u)Tyrant
+(p)14983
+(e)🗺💅|A-Mapping, C-QoL
+(+)The mulebot's destinations are now scanned automatically when opening the menu and displayed as a list.
+(u)Lord_Earthfire
+(p)14628
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The wifi signal splitter component can now have its checked string changed via mechcomp signals.
+(u)Blackrep
+(p)14811
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Buff: Pipeshot shells are now tiny objects.
+(u)Tyrant
+(p)14945
+(e)🪲|C-Bug
+(+)Lollipops have colours once again.
+(u)Cheffie
+(p)15015
+(e)🪲🎨💅🐁|C-Bug, C-Sprites, C-QoL, A-Critters
+(+)Mobs will now fit under flaps, give slowdown when grabbed and fit in low storage containers (crates, bodybags) when dead. This mostly applies to mob critters which now will not laydown on death.
+(t)thu jul 20 23
+(u)DimWhat
+(p)14974
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added a couple more bespoke lizard sprites.
+(t)wed jul 19 23
+(u)Retrino
+(p)15017
+(e)🗺|A-Mapping
+(+)adds 2 more roundstart borg spawns to nadir
+(u)DimWhat
+(p)15004
+(e)⚖🎩|C-Balance, A-Clothing
+(+)Light space suit helmets and martian helmets no longer hide your face.
+(u)Tyrant
+(p)14765
+(e)🗺⛔💊|A-Mapping, C-Removal, A-Medical
+(*)Pathology has been removed from Oshan, and has been replaced with a toxins storage room.
+(u)Lord_Earthfire
+(p)14616
+(e)⚖🌱|C-Balance, A-Hydroponics
+(+)Seeds of hydrangea, birds of paradise and gardenia plants now start with the splice disabler gene strain rather than gaining these directly after planting/mutating.
+(+)Superior and inferior quality gene strains now work with negative potency values, e.g. superior quality making negative potency less bad.
+(t)mon jul 17 23
+(u)Bartimeus973
+(p)14988
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Trickster wraith can now spawn a slippery runetrap. Intangible mobs no longer trigger the runetrap.
+(u)Flappybat
+(p)14899
+(e)🗺⚖🤖|A-Mapping, C-Balance, A-Silicons
+(*)AI camera coverage of Clarion maintenance has been significantly reduced.
+(u)Cheffie
+(p)14759
+(e)🗺🔧🔒⚖🔄🐁|A-Mapping, A-Tooling, A-Secret, C-Balance, C-Rework, A-Critters
+(+)Robots in space are now mobs and are resistant to unarmed strikes. Bring something heavy!
+(u)tarmunora
+(+)space lube pre-stun removed, superlube pre-stun reduced.
+(u)Flappybat
+(e)⚖🐁|C-Balance, A-Critters
+(+)Rattlesnake venom injection reduced from 20 to 12.
 (t)sun jul 16 23
+(u)LeahTheTech
+(+)Lube now makes a noise when splashed on the floor.
+(u)Froggit Dogget
+(p)14968
+(e)|
+(+)Added paper to cigarette machines.
+(u)Sord
+(+)Light Engineering space suit recipe now requires extremely tough metal (bohrum)
 (u)Tyrant
 (p)14944
 (e)🗺💅|A-Mapping, C-QoL
 (+)Atlas's catering rooms should be a little easier to get around.
+(u)Flappybat
+(e)⚖|C-Balance
+(+)Trophy belt has been removed from maps, making it exclusive to the Hunter antag.
 (t)sat jul 15 23
 (u)MitchSmith
 (p)14605

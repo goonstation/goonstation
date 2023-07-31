@@ -24,7 +24,7 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 		/obj/item/balloon_animal,
 		/obj/item/cigpacket,
 		/obj/item/clothing/shoes/moon,
-		/obj/item/fish/carp,
+		/obj/item/reagent_containers/food/fish/carp,
 		/obj/item/instrument/bagpipe,
 		/obj/item/clothing/under/gimmick/yay,
 		/obj/item/scrap,

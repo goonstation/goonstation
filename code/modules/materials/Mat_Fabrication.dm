@@ -334,7 +334,7 @@
 		for(var/obj/item/A in src)
 			if(A == W|| !A.amount) continue
 			if(A.material && W.material)
-				if(isSameMaterial(A.material, W.material) && A.check_valid_stack(W))
+				if(A.material.isSameMaterial(W.material) && A.check_valid_stack(W))
 					var/obj/item/I = A
 					I.change_stack_amount(W.amount)
 					if(W == user.equipped())
