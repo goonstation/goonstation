@@ -928,9 +928,7 @@
 			var/turf/target = get_edge_target_turf(ship, ship.dir)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-			if(O.bound_width==32 && O.bound_height==32)
-				O.anchored = UNANCHORED
-			O.throw_at(target, 4, 2)
+			O.throw_at(target, 20, 3, allow_anchored = TRUE, bonus_throwforce = 15)
 			if (istype(O, /obj/machinery/vehicle))
 				A.meteorhit(src)
 				crashhits -= 3

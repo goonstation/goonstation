@@ -5731,7 +5731,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/submachine/seed_manipulator,
+/obj/submachine/weapon_vendor/fishing/portable,
 /turf/simulated/floor/green/side{
 	dir = 9
 	},
@@ -6495,7 +6495,6 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "azB" = (
-/mob/living/critter/small_animal/dog/george,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -6503,6 +6502,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "azF" = (
@@ -7329,12 +7329,12 @@
 /obj/storage/crate/freezer{
 	name = "Freezer"
 	},
-/obj/item/fish/bass,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/carp,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -7888,7 +7888,7 @@
 "aEC" = (
 /obj/table/reinforced/bar/auto,
 /obj/random_item_spawner/tableware,
-/obj/machinery/glass_recycler,
+/obj/machinery/glass_recycler/bar,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "aED" = (
@@ -14139,8 +14139,8 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "bks" = (
-/obj/table/reinforced/chemistry/auto,
 /obj/machinery/phone,
+/obj/table/reinforced/chemistry/auto/basicsup,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bkt" = (
@@ -14337,7 +14337,6 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
-/obj/table/reinforced/chemistry/auto,
 /obj/machinery/disposal/mail/small{
 	dir = 4;
 	mail_tag = "chemistry";
@@ -14346,19 +14345,14 @@
 	name = "mail chute-'Chemistry'"
 	},
 /obj/machinery/chem_heater/chemistry,
+/obj/table/reinforced/chemistry/auto/clericalsup,
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
 /area/station/science/chemistry)
 "blD" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/device/reagentscanner,
-/obj/item/device/reagentscanner,
-/obj/item/clothing/glasses/spectro,
-/obj/item/clothing/glasses/spectro,
-/obj/item/reagent_containers/dropper,
-/obj/item/reagent_containers/dropper,
-/obj/item/reagent_containers/dropper/mechanical,
+/obj/item/paper/labdrawertips,
+/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "blE" = (
@@ -14558,12 +14552,8 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bmQ" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/machinery/glass_recycler,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/gloves/latex,
-/obj/item/hand_labeler,
-/obj/item/hand_labeler,
+/obj/machinery/glass_recycler/chemistry,
+/obj/table/reinforced/chemistry/auto/firstaid,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bmR" = (
@@ -15038,20 +15028,13 @@
 	},
 /area/station/hallway/primary/east)
 "bpj" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/box/patchbox,
-/obj/item/storage/box/syringes,
-/obj/item/reagent_containers/dropper/mechanical,
+/obj/table/reinforced/chemistry/auto/drugs,
 /turf/simulated/floor/purpleblack{
 	dir = 10
 	},
 /area/station/science/chemistry)
 "bpk" = (
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/table/reinforced/chemistry/auto,
-/obj/item/storage/box/beakerbox,
-/obj/item/storage/box/beakerbox,
-/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "bpl" = (
@@ -19405,12 +19388,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/stool/chair/couch{
-	dir = 4;
-	icon_state = "chair_couch-blue";
-	name = "ratty blue couch"
-	},
-/obj/landmark/start/job/botanist,
+/obj/submachine/fishing_upload_terminal/portable,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -19751,12 +19729,12 @@
 /area/station/mining/refinery)
 "coq" = (
 /obj/machinery/drainage,
-/mob/living/carbon/human/npc/monkey,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -23303,9 +23281,9 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "fFj" = (
-/mob/living/carbon/human/npc/monkey/albert,
 /obj/item/device/radio/beacon,
 /obj/landmark/gps_waypoint,
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "fFH" = (
@@ -26450,7 +26428,7 @@
 	},
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new/obj/item/captaingun();
+	displayed = new /obj/item/captaingun();
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -29641,12 +29619,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/stool/chair/couch{
-	dir = 8;
-	icon_state = "chair_couch-blue";
-	name = "ratty blue couch"
-	},
-/obj/landmark/start/job/botanist,
+/obj/fishing_pool,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -31939,6 +31912,7 @@
 	},
 /area/station/bridge/captain)
 "mCI" = (
+/obj/landmark/start/job/botanist,
 /mob/living/carbon/human/npc/monkey/krimpus,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
@@ -35168,10 +35142,10 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "pzN" = (
-/mob/living/silicon/hivebot/eyebot,
 /obj/machinery/light/small/sticky/cool/very{
 	dir = 1
 	},
+/mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "pzQ" = (
@@ -37035,10 +37009,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/mob/living/carbon/human/npc/monkey/stirstir,
 /obj/cable{
 	icon_state = "2-8"
 	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "qVj" = (
@@ -42963,6 +42937,10 @@
 /area/station/crew_quarters/hor{
 	name = "Research Director's Quarters"
 	})
+"vQf" = (
+/obj/landmark/start/job/botanist,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "vRw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -79877,7 +79855,7 @@ asF
 gmX
 atP
 auC
-auC
+vQf
 oLc
 kMS
 qWx

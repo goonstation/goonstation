@@ -1409,7 +1409,7 @@ var/global/mob/twitch_mob = 0
 								if (M.key) parsedWhois["ckey[count]"] = M.key
 								if (isdead(M)) parsedWhois["dead[count]"] = 1
 								if (role) parsedWhois["role[count]"] = role
-								if (checktraitor(M)) parsedWhois["t[count]"] = 1
+								if (checkantag(M)) parsedWhois["t[count]"] = 1
 					parsedWhois["count"] = count
 					return ircbot.response(parsedWhois)
 				else
@@ -1429,7 +1429,7 @@ var/global/mob/twitch_mob = 0
 							if (M.key) badGuys["ckey[count]"] = M.key
 							if (isdead(M)) badGuys["dead[count]"] = 1
 							if (role) badGuys["role[count]"] = role
-							if (checktraitor(M)) badGuys["t[count]"] = 1
+							if (checkantag(M)) badGuys["t[count]"] = 1
 
 				badGuys["count"] = count
 				return ircbot.response(badGuys)
@@ -1585,9 +1585,10 @@ var/global/mob/twitch_mob = 0
 
 			if ("rev")
 				var/ircmsg[] = new()
-				var/message_to_send = ORIGIN_REVISION + " by " + ORIGIN_AUTHOR
-				if (UNLINT(VCS_REVISION != ORIGIN_REVISION))
-					message_to_send += " + testmerges"
+				var/message_to_send = copytext(ORIGIN_REVISION, 1, 8) + " by " + ORIGIN_AUTHOR
+				#ifdef TESTMERGE_PRS
+				message_to_send += " + testmerges ([copytext(VCS_REVISION, 1, 8)] | [jointext(TESTMERGE_PRS, ", ")])"
+				#endif
 				ircmsg["msg"] = message_to_send
 				return ircbot.response(ircmsg)
 

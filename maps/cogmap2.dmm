@@ -5760,12 +5760,12 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "aqm" = (
-/obj/item/fish/bass,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/carp,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/storage/crate/freezer,
 /obj/item/raw_material/ice,
 /obj/item/raw_material/ice,
@@ -8089,10 +8089,7 @@
 /area/station/crew_quarters/bar)
 "aws" = (
 /obj/table/auto,
-/obj/machinery/glass_recycler{
-	density = 1;
-	pixel_y = 6
-	},
+/obj/machinery/glass_recycler/bar,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "awt" = (
@@ -54611,10 +54608,10 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "cMn" = (
-/obj/table/reinforced/chemistry/auto,
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
 	},
+/obj/table/reinforced/chemistry/auto/clericalsup,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "cMo" = (
@@ -55132,9 +55129,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/obj/table/reinforced/chemistry/auto,
 /obj/machinery/phone,
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/table/reinforced/chemistry/auto/firstaid,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "cNH" = (
@@ -55147,7 +55144,6 @@
 /obj/submachine/chem_extractor{
 	dir = 8
 	},
-/obj/item/device/reagentscanner,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "cNJ" = (
@@ -55683,19 +55679,16 @@
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "cOZ" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/box/syringes,
-/obj/item/storage/box/syringes,
-/obj/item/storage/box/beakerbox{
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light,
+/obj/table/reinforced/chemistry/auto/basicsup,
+/obj/item/paper/book/from_file/pharmacopia{
+	pixel_y = 6
+	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "cPa" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/firstaid/toxin,
+/obj/table/reinforced/chemistry/auto/auxsup,
+/obj/item/paper/labdrawertips,
 /turf/simulated/floor/purplewhite/corner{
 	dir = 4
 	},
@@ -56240,7 +56233,7 @@
 /area/station/science/chemistry)
 "cQv" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/glass_recycler,
+/obj/machinery/glass_recycler/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -56981,8 +56974,6 @@
 	pixel_y = -1
 	},
 /obj/table/reinforced/chemistry/auto,
-/obj/item/device/reagentscanner,
-/obj/item/clothing/glasses/spectro,
 /turf/simulated/floor/purplewhite{
 	dir = 10
 	},
@@ -56997,18 +56988,12 @@
 /area/station/science/chemistry)
 "cSl" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/device/reagentscanner,
-/obj/item/clothing/glasses/spectro,
 /turf/simulated/floor/purplewhite{
 	dir = 6
 	},
 /area/station/science/chemistry)
 "cSm" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/paper/book/from_file/pharmacopia,
-/obj/item/reagent_containers/emergency_injector/calomel,
-/obj/item/reagent_containers/emergency_injector/calomel,
-/obj/item/reagent_containers/dropper/mechanical,
 /obj/machinery/door_control{
 	id = "chemistry";
 	name = "Privacy Shutters";
@@ -58105,24 +58090,21 @@
 	name = "Mounted Igniter";
 	pixel_x = -24
 	},
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/box/beakerbox{
-	pixel_y = 4
-	},
+/obj/table/reinforced/chemistry/auto/drugs,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
 /area/station/science/chemistry)
 "cVc" = (
-/obj/table/reinforced/chemistry/auto,
 /obj/machinery/light/lamp/black,
+/obj/table/reinforced/chemistry/auto/basicsup,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
 /area/station/science/chemistry)
 "cVd" = (
-/obj/table/reinforced/chemistry/auto,
 /obj/item/clothing/mask/gas,
+/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},

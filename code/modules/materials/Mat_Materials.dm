@@ -166,6 +166,9 @@ ABSTRACT_TYPE(/datum/material)
 	proc/getParentMaterials()
 		return src.parent_materials.Copy()
 
+	proc/isMutable()
+		return src.mutable
+
 	//setters for protected vars
 	proc/setID(var/id)
 		if(!src.mutable)
