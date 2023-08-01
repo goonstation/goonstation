@@ -1,5 +1,6 @@
 #define TEAM_NANOTRASEN 1
 #define TEAM_SYNDICATE 2
+#define TEAM_NEUTRAL 3
 
 #define FORTUNA "FORTUNA"
 #define RELIANT "RELIANT"
