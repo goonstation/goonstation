@@ -295,6 +295,7 @@
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
 	bartender
+		setup_default_cartridge = /obj/item/disk/data/cartridge/toxins
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
 	botanist
