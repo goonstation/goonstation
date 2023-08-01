@@ -105,7 +105,8 @@ var/global/crew_creds = null
 	var/list/other = list()
 
 	for(var/datum/mind/M in ticker.minds)
-
+		if (QDELETED(M))
+			continue
 		// Antagonist?
 		if(M.special_role)
 			antagonist += bundle_crew_member_data(M, TRUE)

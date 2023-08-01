@@ -5,7 +5,14 @@
 
 	give_equipment()
 		var/mob/current_mob = src.owner.current
-		var/mob/living/critter/wraith/nascent/summon_mob = new/mob/living/critter/wraith/nascent(get_turf(src.master.current), src.master.current)
+		var/mob/living/critter/wraith/nascent/summon_mob = null
+		//Find our spookmarker and spawn the mob on it
+		var/mob/living/intangible/wraith/W = src.master.current
+		if (W.spawn_marker)
+			summon_mob = new/mob/living/critter/wraith/nascent(get_turf(W.spawn_marker), src.master.current)
+		//We couldnt find a spookmarker somehow, spawn on the wraith instead
+		else
+			summon_mob = new/mob/living/critter/wraith/nascent(get_turf(src.master.current), src.master.current)
 		src.owner.transfer_to(summon_mob)
 		qdel(current_mob)
 
