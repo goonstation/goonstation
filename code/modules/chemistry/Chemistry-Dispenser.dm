@@ -436,13 +436,13 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	dispense_sound = 'sound/misc/pourdrink2.ogg'
 
-//Combines alcohol and soda dispenser, plus mint, chocolate, and choc/strawb milk. Wow!
+//Combines alcohol and soda dispenser, plus mint, chocolate, and normal/strawb milk. Wow!
 /obj/machinery/chem_dispenser/alcohol/bar
 	name = "bar dispenser"
-	desc = "You see a small, fading warning label on the side of the machine:<br>WARNING: Contents artificially produced using industrial ethanol. Not recommended for human consumption.</br> Hey, this one's got soda too!"
-	dispensable_reagents = list("beer", "bitters", "bourbon", "champagne", "juice_cherry", "chocolate", "chocolate_milk", \
-								"cider", "coconut_milk", "cola", "juice_cran", "gin", "ginger_ale", "grenadine", "juice_lemon", \
-								"juice_lime", "mint", "juice_orange", "juice_pineapple",  "rum", "strawberry_milk", "sugar", \
+	desc = "You see a small, fading warning label on the side of the machine:<br>WARNING: Contents pending approval for human consumption. User assumes all risks.</br>"
+	dispensable_reagents = list("beer", "bitters", "bourbon", "champagne", "juice_cherry", "chocolate", "cider", \
+								"coconut_milk", "cola", "juice_cran", "gin", "ginger_ale", "grenadine", "juice_lemon", \
+								"juice_lime", "milk", "mint", "juice_orange", "juice_pineapple",  "rum", "strawberry_milk", "sugar", \
 								"tea", "tequila", "juice_tomato", "tonic", "vanilla", "vermouth", "vodka", "water", "wine")
 
 // Dispenses any drink you want. Designed for the afterlife bar
