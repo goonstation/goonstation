@@ -4014,7 +4014,21 @@ ABSTRACT_TYPE(/area/mining)
 	name = "Asylum Wards"
 	icon_state = "brig"
 	requires_power = 0
+	var/list/unobservable_old = list()
 
+	Entered(atom/movable/A, atom/oldloc)
+		. = ..()
+		if(ismob(A))
+			var/mob/M = A
+			unobservable_old[M] = M.unobservable
+			M.unobservable = TRUE
+
+	Exited(atom/movable/A)
+		. = ..()
+		if(ismob(A))
+			var/mob/M = A
+			M.unobservable = unobservable_old[M]
+			unobservable_old -= M
 
 /// Shamecube area, applied on the admin command. Blocks entry.
 /area/shamecube
