@@ -1128,12 +1128,12 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 	/datum/clothingbooth_item/costume/guybrush
 	name = "Wannabe Pirate Costume"
 	path = /obj/item/clothing/under/gimmick/guybrush
+
 /datum/clothingbooth_item/costume/dinosuar
 	name = "Dinosaur Pajamas"
 	path = /obj/item/clothing/suit/gimmick/dinosaur
 	slot = SLOT_WEAR_SUIT
 	cost = PAY_TRADESMAN/2
-
 
 //Western
 
