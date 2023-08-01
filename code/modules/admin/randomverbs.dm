@@ -1978,9 +1978,9 @@
 		if (!M.client || istype(M, /mob/new_player))
 			continue
 		if (what_group != "Everyone")
-			if ((what_group == "Traitors Only") && !checktraitor(M))
+			if ((what_group == "Traitors Only") && !checkantag(M))
 				continue
-			else if ((what_group == "Non-Traitors Only") && checktraitor(M))
+			else if ((what_group == "Non-Traitors Only") && checkantag(M))
 				continue
 		if (choose_from_dead != "Everyone")
 			if ((choose_from_dead == "Living Only") && M.stat)

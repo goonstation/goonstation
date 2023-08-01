@@ -9253,10 +9253,10 @@
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/north)
 "aMM" = (
-/mob/living/critter/small_animal/wasp,
 /obj/spacevine{
 	icon_state = "vine-light2"
 	},
+/mob/living/critter/small_animal/wasp,
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/north)
 "aMN" = (
@@ -9461,13 +9461,13 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aNu" = (
-/mob/living/critter/small_animal/wasp,
 /obj/spacevine{
 	icon_state = "vine-light3"
 	},
 /obj/spacevine{
 	icon_state = "vine-light2"
 	},
+/mob/living/critter/small_animal/wasp,
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/north)
 "aNv" = (
@@ -9658,10 +9658,10 @@
 	},
 /area/crater/biodome/north)
 "aOd" = (
-/mob/living/critter/small_animal/wasp,
 /obj/spacevine{
 	icon_state = "vine-light2"
 	},
+/mob/living/critter/small_animal/wasp,
 /turf/unsimulated/floor/green/side{
 	dir = 1
 	},
@@ -47699,6 +47699,7 @@
 "ddw" = (
 /obj/table/wood/round/auto,
 /obj/item/storage/box/nerd_kit,
+/obj/item/instrument/tambourine,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "fgreen2"
@@ -58702,10 +58703,18 @@
 /area/cavetiny)
 "dSO" = (
 /obj/table/wood/round/auto,
+/obj/map/light/white,
+/obj/item/cigpacket/cigarillo{
+	pixel_x = 8;
+	pixel_y = 5
+	},
 /obj/item/decoration/ashtray{
 	icon_state = "ashtray4"
 	},
-/obj/map/light/white,
+/obj/item/cigpacket/cigarillo{
+	pixel_x = -7;
+	pixel_y = 5
+	},
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dSP" = (
@@ -58750,20 +58759,14 @@
 /area/afterlife/bar)
 "dSV" = (
 /obj/table/wood/round/auto,
-/obj/item/decoration/ashtray,
 /obj/map/light/white,
+/obj/item/instrument/electricguitar{
+	pixel_y = 3
+	},
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dSW" = (
 /obj/table/wood/round/auto,
-/obj/item/cigpacket/cigarillo{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/cigpacket/cigarillo{
-	pixel_x = 4;
-	pixel_y = 1
-	},
 /obj/map/light/white,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
@@ -58962,7 +58965,7 @@
 /obj/item/crowbar,
 /obj/storage/secure/closet/civilian/janitor{
 	locked = 0;
-	spawn_contents = list(/obj/item/clothing/shoes/galoshes,/obj/item/reagent_containers/glass/bottle/cleaner=2,/obj/item/reagent_containers/glass/bottle/acetone/janitors=1,/obj/item/reagent_containers/glass/bottle/ammonia/janitors=1,/obj/item/device/light/flashlight,/obj/item/caution=4)
+	spawn_contents = list(/obj/item/clothing/shoes/galoshes, /obj/item/reagent_containers/glass/bottle/cleaner = 2, /obj/item/reagent_containers/glass/bottle/acetone/janitors = 1, /obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1, /obj/item/device/light/flashlight, /obj/item/caution = 4)
 	},
 /obj/item/mop/old,
 /obj/item/sponge,
@@ -60081,7 +60084,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
 	desc = "Woah, this mug is beautiful.";
-	initial_reagents = list("matchatea"=30,"honey_tea"=20);
+	initial_reagents = list("matchatea" = 30, "honey_tea" = 20);
 	name = "mug with a printed illustration of an elf man on it";
 	pixel_x = -6;
 	pixel_y = -2
@@ -60540,13 +60543,13 @@
 /turf/space,
 /area/syndicate_station_space)
 "fvA" = (
-/mob/living/critter/small_animal/cockroach{
-	name = "unsquashed bug"
-	},
 /obj/fakeobjects{
 	icon = 'icons/misc/critter.dmi';
 	icon_state = "roach-dead";
 	name = "squashed bug"
+	},
+/mob/living/critter/small_animal/cockroach{
+	name = "unsquashed bug"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -61449,11 +61452,19 @@
 	},
 /turf/unsimulated/floor/white/checker,
 /area/wizard_station)
+"guh" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1";
+	tag = "icon-line1"
+	},
+/obj/submachine/fishing_upload_terminal/portable,
+/turf/unsimulated/floor/grass/random,
+/area/afterlife/heaven/hydroponics)
 "gve" = (
-/mob/living/critter/small_animal/crab/lava/deep,
 /obj/decal/fakeobjects/pipe/heat{
 	dir = 4
 	},
+/mob/living/critter/small_animal/crab/lava/deep,
 /turf/unsimulated/iomoon/floor{
 	name = "silicate cave floor";
 	temperature = 313.15
@@ -62056,11 +62067,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
-"hgF" = (
-/mob/living/critter/brullbar,
-/obj/decal/cleanable/blood,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "hgZ" = (
 /obj/grille/catwalk{
 	dir = 10;
@@ -62804,8 +62810,8 @@
 /area/sim/gunsim/lobby)
 "hVH" = (
 /obj/storage/closet/coffin,
-/mob/living/critter/skeleton,
 /obj/decal/cleanable/cobweb2,
+/mob/living/critter/skeleton,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
 "hWH" = (
@@ -63314,12 +63320,12 @@
 /area/centcom)
 "iwP" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/mob/living/carbon/human/john,
 /obj/machinery/computer/transit_shuttle/johnbus{
 	embed = 1;
 	icon_state = "shuttle-embed";
 	pixel_y = -25
 	},
+/mob/living/carbon/human/john,
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "iwU" = (
@@ -65681,8 +65687,8 @@
 /obj/landmark{
 	name = "theonyxkeywashere"
 	},
-/mob/living/critter/shade/crew/lost,
 /obj/item/device/key/onyx,
+/mob/living/critter/shade/crew/lost,
 /turf/unsimulated/floor/void{
 	desc = "You can barely see ...";
 	icon = 'icons/misc/worlds.dmi';
@@ -67800,8 +67806,8 @@
 	},
 /area/iomoon/base)
 "nmd" = (
-/mob/living/critter/small_animal/boogiebot,
 /obj/landmark/battle_royale,
+/mob/living/critter/small_animal/boogiebot,
 /turf/unsimulated/floor{
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_1"
@@ -68565,8 +68571,8 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
 "nTL" = (
-/mob/living/critter/small_animal/boogiebot,
 /obj/map/light/brightwhite,
+/mob/living/critter/small_animal/boogiebot,
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/afterlife/bar)
 "nUo" = (
@@ -68988,10 +68994,10 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crypt/sigma/storage)
 "opp" = (
-/mob/living/critter/small_animal/cockroach,
 /obj/machinery/light/emergency{
 	dir = 4
 	},
+/mob/living/critter/small_animal/cockroach,
 /turf/unsimulated/floor/yellowblack{
 	dir = 8
 	},
@@ -69174,8 +69180,8 @@
 /turf/unsimulated/outdoors/grass,
 /area/void_diner)
 "oBf" = (
-/mob/living/critter/spider/ice/queen,
 /obj/item/device/key/generic/coldsteel,
+/mob/living/critter/spider/ice/queen,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "oDT" = (
@@ -72899,8 +72905,8 @@
 /turf/unsimulated/floor/plating,
 /area/drone/office)
 "sxC" = (
-/mob/living/critter/small_animal/boogiebot,
 /obj/reagent_dispensers/beerkeg,
+/mob/living/critter/small_animal/boogiebot,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fred2";
 	tag = "icon-fred2"
@@ -73313,13 +73319,13 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "sYC" = (
-/mob/living/critter/small_animal/bird/owl,
 /obj/decal/fakeobjects/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 8;
 	icon_state = "tube0";
 	name = "inactive light tube"
 	},
+/mob/living/critter/small_animal/bird/owl,
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "sZf" = (
@@ -73672,7 +73678,7 @@
 "tyn" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/bottle/mead{
-	initial_reagents = list("milk"=30);
+	initial_reagents = list("milk" = 30);
 	name = "mood";
 	pixel_x = -4;
 	pixel_y = 12
@@ -74182,8 +74188,8 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/owllock)
 "ufO" = (
-/mob/living/critter/robotic/gunbot/light,
 /obj/decal/stripe_delivery,
+/mob/living/critter/robotic/gunbot/light,
 /turf/unsimulated/floor,
 /area/crunch)
 "ugt" = (
@@ -74371,8 +74377,8 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/diner_centcom)
 "uta" = (
-/mob/living/critter/zombie/wrestler,
 /obj/machinery/optable,
+/mob/living/critter/zombie/wrestler,
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
 "ute" = (
@@ -74958,11 +74964,11 @@
 	},
 /area/centcom/offices/enakai)
 "vdi" = (
-/mob/living/critter/brullbar,
 /obj/lattice{
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
+/mob/living/critter/brullbar,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "vdu" = (
@@ -75495,15 +75501,15 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mbc)
 "vKc" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 4;
+	name = "stolen pilot's seat"
+	},
 /mob/living/critter/small_animal/frog{
 	anchored = 1;
 	desc = "Wow, did it really steal that pilot's seat?";
 	name = "interdimensional crime frog";
 	pixel_y = -3
-	},
-/obj/stool/chair/comfy/shuttle/pilot{
-	dir = 4;
-	name = "stolen pilot's seat"
 	},
 /turf/unsimulated/floor/void,
 /area/centcom/offices/tterc)
@@ -75769,6 +75775,14 @@
 /obj/decal/cleanable/glitter/harmless,
 /turf/unsimulated/floor/carpet/darkcarpet/border,
 /area/centcom/offices/walpvrgis)
+"vXn" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1";
+	tag = "icon-line1"
+	},
+/obj/fishing_pool/portable,
+/turf/unsimulated/floor/grass/random,
+/area/afterlife/heaven/hydroponics)
 "vXw" = (
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/owlery/office)
@@ -76355,15 +76369,15 @@
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
 "wAT" = (
+/obj/decal/stage_edge{
+	layer = 2.8;
+	mouse_opacity = 0
+	},
 /mob/living/critter/small_animal/cat{
 	icon_state = "cat2";
 	name = "Moo";
 	randomize_look = 0;
 	randomize_name = 0
-	},
-/obj/decal/stage_edge{
-	layer = 2.8;
-	mouse_opacity = 0
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/adventure_gannets.dmi';
@@ -76907,6 +76921,14 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"xcy" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1";
+	tag = "icon-line1"
+	},
+/obj/submachine/weapon_vendor/fishing/portable,
+/turf/unsimulated/floor/grass/random,
+/area/afterlife/heaven/hydroponics)
 "xdm" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/meat_derelict/main)
@@ -102397,7 +102419,7 @@ aIp
 aIp
 aIC
 aJi
-hgF
+qBW
 aIp
 bgr
 bgr
@@ -135119,7 +135141,7 @@ bQI
 bTe
 bQI
 bko
-bUo
+xcy
 lmT
 bUF
 bLr
@@ -135421,7 +135443,7 @@ bQI
 bQI
 bQI
 bko
-bUo
+vXn
 lmT
 dTm
 bLr
@@ -135723,7 +135745,7 @@ bRo
 bRo
 bRo
 bTX
-bUo
+guh
 lmT
 bUK
 bXS

@@ -13,7 +13,7 @@
 	firevuln = 3
 	brutevuln = 1
 	angertext = "starts chasing" // comes between critter name and target name
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	chase_text = "punches out"
 
 	skinresult = /obj/item/material_piece/cloth/leather
