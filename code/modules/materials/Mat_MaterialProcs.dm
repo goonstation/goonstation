@@ -346,6 +346,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/turf/T = get_turf(location)
 		if(!T || T.density || !istype(location))
 			return
+		if(!location.material.isMutable()) //this is a little hacky, but basically ensure it's mutable and then do the trigger
+			location.material = location.material.getMutable()
+			return location.material.triggerTemp(location, 0)
 		if(total_plasma <= 0)
 			if(prob(2) && location)
 				location.visible_message("<span class='alert>[location] dissipates.</span>")
@@ -402,6 +405,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(ON_COOLDOWN(owner, "molitz_gas_generate", 30 SECONDS)) return
 
 		//okay, now we've passed all the conditions for gas generation - do that
+		if(!owner.material.isMutable()) //this is a little hacky, but basically ensure it's mutable and then do the trigger
+			owner.material = owner.material.getMutable()
+			return owner.material.triggerTemp(owner, temp)
 		var/datum/gas_mixture/payload = new /datum/gas_mixture
 
 		if(agent_b && air.toxins > MINIMUM_REACT_QUANTITY)
@@ -441,6 +447,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/datum/material/crystal/molitz/molitz = owner.material
 		if(molitz.unexploded <= 0)
 			return
+		if(!owner.material.isMutable()) //this is a little hacky, but basically ensure it's mutable and then do the trigger
+			owner.material = owner.material.getMutable()
+			return owner.material.triggerExp(owner, sev)
 		var/turf/target = get_turf(owner)
 		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
 			if(molitz.iterations >= 1)
