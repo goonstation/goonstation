@@ -854,13 +854,12 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "Molitz is a common crystalline substance."
 	color = "#FFFFFF"
 	alpha = 180
-	var/unexploded = 1
-	var/iterations = 4
 
 	New()
 		..()
 		setProperty("density", 3)
 		setProperty("hard", 4)
+		setProperty("molitz_bubbles", 4)
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/molitz_temp())
 		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/molitz_exp())
 
@@ -926,6 +925,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("electrical", 5)
 		setProperty("radioactive", 2)
 		setProperty("flammable", 8)
+		setProperty("plasma_offgas", 10)
 
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/plasmastone())
 		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/plasmastone())
