@@ -220,6 +220,10 @@ datum/mind
 
 	/// Returns whether this mind is a non-pseudo antagonist.
 	proc/is_antagonist()
+		// Handles pre-round antagonist assignments utilising `special_role`.
+		if (global.current_state < GAME_STATE_PLAYING)
+			return !!src.special_role
+
 		for (var/datum/antagonist/A as anything in src.antagonists)
 			if (!A.pseudo)
 				return TRUE

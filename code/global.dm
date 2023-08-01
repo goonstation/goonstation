@@ -260,7 +260,7 @@ var/global
 	diary = null
 	diary_name = null
 	hublog = null
-	game_version = "Goonstation 13 (r" + VCS_REVISION + ")"
+	game_version = "Goonstation 13 (r" + ORIGIN_REVISION + ")"
 
 	master_mode = "traitor"
 	next_round_mode = "traitor"

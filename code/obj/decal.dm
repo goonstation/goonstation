@@ -376,7 +376,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/pipe
 	name = "rusted pipe"
 	desc = "Good riddance."
-	icon = 'icons/obj/atmospherics/pipes/regular_pipe.dmi'
+	icon = 'icons/obj/atmospherics/pipes/pipe.dmi'
 	icon_state = "intact"
 	anchored = ANCHORED
 	layer = DECAL_LAYER
