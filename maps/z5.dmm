@@ -4700,7 +4700,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/spyshack)
 "Nc" = (
-/obj/item/fish/red_herring,
+/obj/item/reagent_containers/food/fish/red_herring,
 /obj/item/reagent_containers/food/snacks/burger,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -5446,9 +5446,9 @@
 /area/mining/magnet_control)
 "SJ" = (
 /obj/storage/closet/coffin,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/item/seed/cannabis,
 /obj/item/seed/cannabis,
 /turf/simulated/floor/martian,
