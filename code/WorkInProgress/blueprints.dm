@@ -761,7 +761,7 @@
 
 			if("Information")
 				var/message = "<span class='notice'>This tool is used for making, saving and loading room blueprints on the server.</span><br>"
-				message += "<span class='notice'>Blueprints persist between rounds, but are limited to a size of 20 tiles on each axis, making 20x20 the largest blueprint.</span><br><br>"
+				message += "<span class='notice'>Saved blueprints persist between rounds, but are limited to a size of 20 tiles on each axis, making 20x20 the largest blueprint.</span><br><br>"
 				message += "<span class='notice'>(De)Select Rectangle: Mass-selects or deselects tiles in a filled rectangle shape, defined by 2 corners.</span><br>"
 				message += "<span class='notice'>Reset: Resets the tools and clears all marked areas.</span><br>"
 				message += "<span class='notice'>Set Blueprint Name: Sets the active blueprint that print/save/delete functions will access.</span><br>"
