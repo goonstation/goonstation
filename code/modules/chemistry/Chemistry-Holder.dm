@@ -1131,6 +1131,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		for (var/id in reagent_list)
 			var/datum/reagent/current_reagent = reagent_list[id]
 			current_reagent.physical_shock(force)
+		for (var/datum/chemical_reaction/reaction in active_reactions)
+			reaction.physical_shock(force, src)
 
 	proc/move_trigger(var/mob/M, kindof)
 		var/shock = 0

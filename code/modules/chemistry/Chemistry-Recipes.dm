@@ -58,6 +58,10 @@ datum
 			boutput(world, "[src.name] reaction ends.")
 			return
 
+		/// Called when a holder filled with a current (non-instant) reaction experiences physical shock
+		proc/physical_shock(force, var/datum/reagents/holder)
+			return
+
 		//I recommend you set the result amount to the total volume of all components.
 
 		// the following three recipes should stop most of the nonsense with pyrosium lagging things to shit, hopefully??
@@ -2762,11 +2766,45 @@ datum
 		styptic_powder // COGWERKS CHEM REVISION PROJECT: no idea, probably a magic drug
 			name = "Styptic Powder"
 			id = "styptic_powder"
-			result = "styptic_powder"
-			required_reagents = list("aluminium" = 1, "oxygen" = 1, "hydrogen" = 1, "acid" = 1)
-			//min_temperature = 325
-			result_amount = 4
-			mix_phrase = "The solution yields an astringent powder."
+			//result = "styptic_powder" added in on_reaction()
+			required_reagents = list("aluminium" = 0, "oxygen" = 0, "hydrogen" = 0, "acid" = 0) //reagents removed at the very end of reaction
+			result_amount = 1
+			mix_phrase = "The solution slowly crackles and reacts."
+			instant = FALSE
+			stateful = TRUE
+			var/cycles = 0
+			var/extra_to_make = 0
+			var/was_physically_shocked = FALSE
+			reaction_icon_state = list("reaction_bubble-1", "reaction_bubble-2")
+			reaction_icon_color = "#f3a3c2"
+
+			physical_shock(var/force, var/datum/reagents/holder)
+				if(!was_physically_shocked && force > 3)
+					was_physically_shocked = TRUE
+					playsound(get_turf(holder.my_atom), 'sound/effects/bubbles_short.ogg', 50, 1)
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				src.cycles++
+				reaction_icon_state = list("reaction_bubble-1", "reaction_bubble-2")
+				if(was_physically_shocked)
+					extra_to_make += 5
+					was_physically_shocked = FALSE
+					reaction_icon_state = list("reaction_sparkle-1", "reaction_sparkle-2")
+				if(cycles >= 30) //not a super long time
+					var/amount_to_mix = 0
+					amount_to_mix += clamp(holder.get_reagent_amount("aluminium"), 0, 20)
+					amount_to_mix += clamp(holder.get_reagent_amount("oxygen"), 0, 20)
+					amount_to_mix += clamp(holder.get_reagent_amount("hydrogen"), 0, 20)
+					amount_to_mix += holder.get_reagent_amount("acid")
+					holder.remove_reagent("aluminium", holder.get_reagent_amount("aluminium"))
+					holder.remove_reagent("oxygen", holder.get_reagent_amount("oxygen"))
+					holder.remove_reagent("hydrogen", holder.get_reagent_amount("hydrogen"))
+					holder.remove_reagent("acid", holder.get_reagent_amount("acid"))
+					holder.add_reagent("styptic_powder", (amount_to_mix) + extra_to_make, temp_new = holder.total_temperature, chemical_reaction = TRUE)
+					playsound(get_turf(holder.my_atom), 'sound/effects/bubbles.ogg', 25, 1)
+					var/location = get_turf(holder.my_atom)
+					for(var/mob/M in all_viewers(null, location))
+						boutput(M, "<span class='notice'>The solution yields an astringent powder.</span>")
 
 		ephedrine
 			name = "Ephedrine"
