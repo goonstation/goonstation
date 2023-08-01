@@ -724,11 +724,9 @@
 		switch(input)
 			if("Select Rectangle")
 				selecting = 1
-				//boutput(user, "<span class='notice'>Target 2 corners to select tiles in a filled rectangle shape.</span>")
 
 			if("Deselect Rectangle")
 				selecting = 2
-				//boutput(user, "<span class='notice'>Mark 2 corners to deselect many tiles in a filled rectangle shape.</span>")
 
 			if("Reset")
 				boutput(user, "<span class='notice'>Resetting ...</span>")
