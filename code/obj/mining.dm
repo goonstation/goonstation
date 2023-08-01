@@ -546,7 +546,7 @@
 	proc/build_icon()
 		src.ClearAllOverlays()
 
-		if (damage_overlays.len == 4)
+		if (length(damage_overlays) == 4)
 			switch(src.health)
 				if (70 to 94)
 					src.UpdateOverlays(damage_overlays[1], "magnet_damage")
@@ -846,7 +846,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	))
 /turf/simulated/wall/auto/asteroid
 	icon = 'icons/turf/walls_asteroid.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "asteroid-perspective-map"
+#else
 	icon_state = "asteroid-map"
+#endif
 	mod = "asteroid-"
 	light_mod = "wall-"
 	plane = PLANE_WALL-1
@@ -1327,12 +1331,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				MAT.set_loc(src)
 
 				if(MAT.material)
-					if(MAT.material.quality != 0) //If it's 0 then that's probably the default, so let's use the asteroids quality only if it's higher. That way materials that have a quality by default will not occur at any quality less than the set one. And materials that do not have a quality by default, use the asteroids quality instead.
-						var/newQual = max(MAT.material.quality, src.quality)
-						MAT.material.quality = newQual
+					//If we don't use quality anymore, remove this
+					MAT.material = MAT.material.getMutable()
+					if(MAT.material.getQuality() != 0) //If it's 0 then that's probably the default, so let's use the asteroids quality only if it's higher. That way materials that have a quality by default will not occur at any quality less than the set one. And materials that do not have a quality by default, use the asteroids quality instead.
+						var/newQual = max(MAT.material.getQuality(), src.quality)
+						MAT.material.setQuality(newQual)
 						MAT.quality = newQual
 					else
-						MAT.material.quality = src.quality
+						MAT.material.setQuality(src.quality)
 						MAT.quality = src.quality
 
 				MAT.name = getOreQualityName(MAT.quality) + " [MAT.name]"
@@ -1383,7 +1389,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			var/turf/simulated/wall/auto/asteroid/AST
 			while (distributions > 0)
 				distributions--
-				if (usable_turfs.len < 1)
+				if (length(usable_turfs) < 1)
 					break
 				AST = pick(usable_turfs)
 				AST.event = E
@@ -2078,10 +2084,14 @@ TYPEINFO(/obj/item/cargotele)
 		// And logs for good measure (Convair880).
 		var/obj/storage/S = cargo
 		ENSURE_TYPE(S)
-
+		var/mob_teled = FALSE
 		for (var/mob/M in cargo.contents)
 			if (M)
 				logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
+				mob_teled = TRUE
+
+		if(!mob_teled)
+			logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] to [log_loc(src.target)].")
 
 		cargo.set_loc(get_turf(src.target))
 		target.receive_cargo(cargo)
@@ -2208,7 +2218,7 @@ TYPEINFO(/obj/item/cargotele)
 			if (E.scan_decal)
 				mining_scandecal(L, AST, E.scan_decal)
 	var/found_string = ""
-	if (ores_found.len > 0)
+	if (length(ores_found) > 0)
 		var/list_counter = 1
 		for (var/X in ores_found)
 			found_string += X
@@ -2588,7 +2598,7 @@ TYPEINFO(/obj/item/ore_scoop)
 			if (!satchel)
 				boutput(user, "<span class='alert'>There's no satchel in [src] to dump out.</span>")
 				return
-			if (satchel.contents.len < 1)
+			if (length(satchel.contents) < 1)
 				boutput(user, "<span class='alert'>The satchel in [src] is empty.</span>")
 				return
 			user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")

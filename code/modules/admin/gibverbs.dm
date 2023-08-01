@@ -377,7 +377,7 @@
 	Q.caller = usr
 	Q.tysonspeed = speed
 
-/obj/bantyson/
+/obj/bantyson
 	name = "Mike Tyson"
 	desc = "Oh shit!!!"
 	icon = 'icons/misc/Tyson4real.dmi'
@@ -459,7 +459,7 @@
 		playsound(src.loc, pick('sound/misc/Boxingbell.ogg'), 50, 0)
 		qdel(src)
 
-/obj/gibtyson/
+/obj/gibtyson
 	name = "Mike Tyson"
 	desc = "Oh shit!"
 	icon = 'icons/misc/Tyson4real.dmi'

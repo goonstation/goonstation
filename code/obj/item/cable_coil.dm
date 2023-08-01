@@ -87,9 +87,9 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		if (!conductor)
 			return
 		if (insulator)
-			name = "[insulator.name]-insulated [conductor.name]-[base_name]"
+			name = "[insulator.getName()]-insulated [conductor.getName()]-[base_name]"
 		else
-			name = "uninsulated [conductor.name]-[base_name]"
+			name = "uninsulated [conductor.getName()]-[base_name]"
 
 	proc/use(var/used)
 		if (src.amount < used)

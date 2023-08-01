@@ -210,7 +210,7 @@
 /area/pod_wars/spacejunk/uvb67/central)
 "aX" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -384,9 +384,7 @@
 /area/pod_wars/team1/hangar)
 "bH" = (
 /obj/machinery/light/incandescent/netural,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "bL" = (
@@ -485,7 +483,7 @@
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bridge)
 "ce" = (
@@ -526,7 +524,7 @@
 /turf/simulated/floor/green,
 /area/pod_wars/spacejunk/fstation/mess)
 "cl" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/miningoutpost/crewquarters)
 "cn" = (
@@ -544,7 +542,7 @@
 /area/space)
 "cp" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -570,7 +568,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/uvb67/power)
 "cv" = (
@@ -637,7 +635,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "cG" = (
@@ -940,7 +938,7 @@
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "dO" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/bar)
 "dP" = (
@@ -1074,7 +1072,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "es" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/storage)
 "et" = (
@@ -1103,7 +1101,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	hardened = 1
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
@@ -1278,7 +1276,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/mining)
 "eT" = (
@@ -1296,9 +1294,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "eW" = (
@@ -1350,7 +1346,7 @@
 	},
 /area/pod_wars/team1/manufacturing)
 "fe" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/uvb67/power)
 "fg" = (
@@ -1415,9 +1411,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "fq" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/yellow/side{
 	dir = 4
 	},
@@ -1508,7 +1502,7 @@
 /obj/machinery/door/airlock/pyro/glass/mining{
 	dir = 4
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/yellow,
 /area/pod_wars/team1/mining)
 "fI" = (
@@ -1523,7 +1517,7 @@
 /turf/unsimulated/floor/airless,
 /area/pod_wars/team1/porthall)
 "fK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/manufacturing)
 "fL" = (
@@ -1545,7 +1539,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bar)
 "fP" = (
@@ -1753,7 +1747,7 @@
 /area/pod_wars/team1/manufacturing)
 "gy" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/manufacturing)
 "gz" = (
@@ -1837,7 +1831,7 @@
 /turf/unsimulated/floor/yellow/side,
 /area/pod_wars/team1/mining)
 "gP" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/porthall)
 "gQ" = (
@@ -1914,7 +1908,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering,
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -1924,7 +1918,7 @@
 	dir = 4;
 	hardened = 1
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen{
 	dir = 8
 	},
@@ -2051,9 +2045,7 @@
 	},
 /area/pod_wars/team2/bridge)
 "hE" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/yellow/corner{
 	dir = 8
 	},
@@ -2191,7 +2183,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	hardened = 1
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
@@ -2204,16 +2196,16 @@
 /area/pod_wars/spacejunk/uvb67/central)
 "ig" = (
 /obj/storage/crate,
-/obj/item/spacecash/random/tourist,
-/obj/item/spacecash/random/small,
-/obj/item/spacecash/random/small,
-/obj/item/spacecash/random/really_small,
-/obj/item/spacecash/random/really_small,
-/obj/item/spacecash/random/really_small,
-/obj/item/spacecash/random/really_small,
-/obj/item/spacecash/random/really_small,
-/obj/item/spacecash/random/tourist,
-/obj/item/spacecash/random/tourist,
+/obj/item/currency/spacecash/tourist,
+/obj/item/currency/spacecash/small,
+/obj/item/currency/spacecash/small,
+/obj/item/currency/spacecash/really_small,
+/obj/item/currency/spacecash/really_small,
+/obj/item/currency/spacecash/really_small,
+/obj/item/currency/spacecash/really_small,
+/obj/item/currency/spacecash/really_small,
+/obj/item/currency/spacecash/tourist,
+/obj/item/currency/spacecash/tourist,
 /obj/item/storage/box/record/radio/nostalgic,
 /turf/simulated/floor/blue/side{
 	dir = 5
@@ -2226,7 +2218,7 @@
 /area/pod_wars/spacejunk/reliant)
 "ij" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -2290,7 +2282,7 @@
 /area/pod_wars/spacejunk/uvb67/power)
 "iv" = (
 /obj/item/storage/box/record/clown_collection,
-/obj/item/spacecash/million,
+/obj/item/currency/spacecash/million,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/restaurant)
 "iw" = (
@@ -2343,9 +2335,7 @@
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
 "iH" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -2504,7 +2494,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team1/hangar)
 "jy" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/miningoutpost)
 "jz" = (
@@ -2683,7 +2673,7 @@
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
 "ke" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/space)
 "kf" = (
@@ -2695,9 +2685,7 @@
 	icon_state = "4-8"
 	},
 /obj/stool/bar,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "kj" = (
@@ -2713,7 +2701,7 @@
 	},
 /area/pod_wars/team2/bridge)
 "km" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/hangar)
 "kn" = (
@@ -2833,7 +2821,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/uvb67/crew)
 "kJ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation)
 "kM" = (
@@ -2885,9 +2873,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "kW" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
@@ -3044,9 +3030,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/primary)
 "lD" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team2/hangar)
 "lF" = (
@@ -3341,7 +3325,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/manufacturing)
 "mN" = (
@@ -3463,9 +3447,7 @@
 /area/pod_wars/asteroid/major/maj_7)
 "ne" = (
 /obj/machinery/light/incandescent/netural,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/red/side{
 	dir = 1
 	},
@@ -3569,7 +3551,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/primary)
 "nC" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/mining)
 "nE" = (
@@ -3638,7 +3620,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass/mining,
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/yellow,
 /area/pod_wars/team2/mining)
 "nP" = (
@@ -3785,7 +3767,7 @@
 /area/pod_wars/spacejunk/fstation/secdock)
 "or" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -3809,7 +3791,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -3866,9 +3848,7 @@
 /obj/stool/chair/comfy/blue{
 	dir = 4
 	},
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/blue/side{
 	dir = 4
 	},
@@ -3900,7 +3880,7 @@
 /area/pod_wars/spacejunk/fstation/secdock)
 "oH" = (
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/cloning)
 "oI" = (
@@ -3932,16 +3912,14 @@
 	},
 /area/pod_wars/spacejunk/fstation/mess)
 "oN" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "oS" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -4014,9 +3992,7 @@
 /obj/stool/chair/comfy/blue{
 	dir = 8
 	},
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/blue/side{
 	dir = 8
 	},
@@ -4067,7 +4043,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "pp" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/mining)
 "pr" = (
@@ -4114,7 +4090,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "pB" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4329,7 +4305,7 @@
 /area/pod_wars/spacejunk/restaurant/solars)
 "qa" = (
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/cloning)
 "qb" = (
@@ -4367,7 +4343,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/power)
 "qj" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/powergen)
 "qk" = (
@@ -4405,7 +4381,7 @@
 /area/pod_wars/spacejunk/fstation)
 "qs" = (
 /obj/machinery/door/airlock/pyro/glass/engineering,
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -4684,9 +4660,7 @@
 /area/pod_wars/team1/manufacturing)
 "rp" = (
 /obj/stool/chair/comfy/blue,
-/obj/landmark/start{
-	name = "NanoTrasen Commander"
-	},
+/obj/landmark/start/job/podwars/NT/commander,
 /turf/unsimulated/floor/blue/side,
 /area/pod_wars/team1/bridge)
 "rr" = (
@@ -4741,7 +4715,7 @@
 	},
 /area/pod_wars/team2/mining)
 "rD" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -4766,7 +4740,7 @@
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/powergen)
 "rK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/bridge)
 "rL" = (
@@ -4813,7 +4787,7 @@
 /turf/space,
 /area/pod_wars/spacejunk/dorgun)
 "rV" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -5221,9 +5195,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/landingpads)
 "tE" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team1/hangar)
 "tF" = (
@@ -5417,7 +5389,7 @@
 /turf/space,
 /area/pod_wars/team2/mining)
 "up" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/dorgun)
 "ur" = (
@@ -5638,7 +5610,7 @@
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -5748,7 +5720,7 @@
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -5796,9 +5768,7 @@
 /obj/stool/chair/comfy/red{
 	dir = 1
 	},
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/red/side{
 	dir = 1
 	},
@@ -5816,7 +5786,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass/command,
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
 "vH" = (
@@ -5940,7 +5910,7 @@
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/uvb67/central)
 "wb" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/brightwell)
 "wc" = (
@@ -6092,9 +6062,7 @@
 /area/pod_wars/spacejunk/fstation)
 "wE" = (
 /obj/stool/chair/comfy/red,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/red/side,
 /area/pod_wars/team2/bridge)
 "wF" = (
@@ -6153,7 +6121,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma{
 	dir = 4
 	},
@@ -6536,7 +6504,7 @@
 /turf/simulated/floor/purple/side,
 /area/pod_wars/spacejunk/fstation)
 "yb" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/bar)
 "yf" = (
@@ -6585,7 +6553,7 @@
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/medbay)
 "yn" = (
@@ -6689,7 +6657,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	hardened = 1
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
@@ -6860,7 +6828,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "zt" = (
@@ -6885,7 +6853,7 @@
 /area/pod_wars/spacejunk/fstation)
 "zw" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -7014,7 +6982,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "zX" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/bar)
 "zZ" = (
@@ -7058,7 +7026,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/reliant)
 "Ah" = (
@@ -7467,7 +7435,7 @@
 /area/pod_wars/spacejunk/miningoutpost)
 "BI" = (
 /obj/machinery/door/airlock/pyro/glass/mining,
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/yellow,
 /area/pod_wars/team2/mining)
 "BJ" = (
@@ -7490,7 +7458,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/mess)
 "BL" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/bar)
 "BM" = (
@@ -7602,7 +7570,7 @@
 	},
 /area/pod_wars/team2/central_hallway)
 "Ch" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "Ci" = (
@@ -7670,9 +7638,7 @@
 	icon_state = "1-2"
 	},
 /obj/stool/bar,
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "Cx" = (
@@ -7724,7 +7690,7 @@
 /turf/space,
 /area/space)
 "CM" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/primary)
 "CN" = (
@@ -7769,7 +7735,7 @@
 	dir = 4;
 	hardened = 1
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen{
 	dir = 4
 	},
@@ -7779,9 +7745,7 @@
 /obj/stool/chair/comfy/red{
 	dir = 4
 	},
-/obj/landmark/start{
-	name = "Syndicate Commander"
-	},
+/obj/landmark/start/job/podwars/syndie/commander,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bridge)
 "CZ" = (
@@ -7801,9 +7765,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/simulated/floor/engine,
 /area/pod_wars/team1/powergen)
 "De" = (
@@ -7882,9 +7844,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/simulated/floor/engine,
 /area/pod_wars/team1/powergen)
 "Dx" = (
@@ -7912,9 +7872,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team2/hangar)
 "DB" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
@@ -7995,9 +7953,7 @@
 /area/pod_wars/team2/bridge)
 "DP" = (
 /obj/stool/bar,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "DQ" = (
@@ -8039,7 +7995,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -8081,7 +8037,7 @@
 	},
 /area/pod_wars/team1/manufacturing)
 "Ef" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/starboardhall)
 "Eg" = (
@@ -8412,9 +8368,7 @@
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
 "Fq" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -8503,7 +8457,7 @@
 	},
 /area/pod_wars/team1/bridge)
 "FJ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/mess)
 "FK" = (
@@ -8585,7 +8539,7 @@
 /area/pod_wars/spacejunk/fstation/primary)
 "FZ" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -8734,7 +8688,7 @@
 /turf/space,
 /area/pod_wars/spacejunk/greatwreck)
 "GI" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/reliant)
 "GJ" = (
@@ -8800,7 +8754,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/command)
 "GW" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/maintdock)
 "GX" = (
@@ -8901,7 +8855,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/fstation/observatory)
 "Hs" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/observatory)
 "Hu" = (
@@ -8995,7 +8949,7 @@
 	},
 /area/pod_wars/spacejunk/restaurant)
 "HI" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/mining)
 "HJ" = (
@@ -9084,7 +9038,7 @@
 /area/pod_wars/spacejunk/fstation/bar)
 "HW" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/hangar)
 "HX" = (
@@ -9097,9 +9051,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/fstation/computercore)
 "HY" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "HZ" = (
@@ -9478,9 +9430,7 @@
 	icon_state = "1-8"
 	},
 /obj/stool/bar,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "JA" = (
@@ -9562,7 +9512,7 @@
 /area/pod_wars/spacejunk/fstation)
 "JL" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "JM" = (
@@ -9634,7 +9584,7 @@
 /area/space)
 "JZ" = (
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/medbay)
 "Ka" = (
@@ -9663,7 +9613,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "Kg" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/bridge)
 "Ki" = (
@@ -9689,7 +9639,7 @@
 /area/pod_wars/team1/hangar)
 "Ko" = (
 /obj/machinery/door/airlock/pyro/glass/command,
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
 "Kq" = (
@@ -9718,9 +9668,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/simulated/floor/engine,
 /area/pod_wars/team2/power)
 "Ku" = (
@@ -9965,7 +9913,7 @@
 	},
 /area/pod_wars/spacejunk/uvb67/crew)
 "Lo" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -9978,7 +9926,7 @@
 /turf/simulated/floor/red/side,
 /area/pod_wars/spacejunk/uvb67/crew)
 "Lt" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/computercore)
 "Lu" = (
@@ -10041,9 +9989,7 @@
 /turf/space,
 /area/pod_wars/spacejunk/dorgun)
 "LK" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -10138,9 +10084,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team1/manufacturing)
 "Mc" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/yellow/corner{
 	dir = 1
 	},
@@ -10190,13 +10134,13 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/item/spacecash/random/tourist,
+/obj/item/currency/spacecash/tourist,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
 /area/pod_wars/spacejunk/restaurant)
 "Mr" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/bridge)
 "Ms" = (
@@ -10303,7 +10247,7 @@
 /turf/simulated/floor/yellow/side,
 /area/pod_wars/spacejunk/miningoutpost)
 "MM" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/restaurant)
 "MN" = (
@@ -10476,9 +10420,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "NF" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -10518,9 +10460,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/secdock)
 "NP" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/yellow/corner{
 	dir = 8
 	},
@@ -10787,9 +10727,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team1/hangar)
 "OH" = (
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/mess)
 "OJ" = (
@@ -11036,7 +10974,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -11086,9 +11024,7 @@
 	},
 /area/pod_wars/team1/mining)
 "PR" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -11135,7 +11071,7 @@
 /area/pod_wars/team1/manufacturing)
 "Qf" = (
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen,
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/medbay)
 "Qg" = (
@@ -11280,7 +11216,7 @@
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bridge)
 "QB" = (
@@ -11442,7 +11378,7 @@
 /area/pod_wars/team1/hangar)
 "Rm" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/hangar)
 "Rn" = (
@@ -11682,7 +11618,7 @@
 /turf/simulated/floor/engine,
 /area/pod_wars/team1/powergen)
 "So" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/snackstand)
 "Sp" = (
@@ -11866,7 +11802,7 @@
 	},
 /area/pod_wars/team1/bridge)
 "SX" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/central_hallway)
 "SY" = (
@@ -11926,7 +11862,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/mess)
 "Tc" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/bar)
 "Td" = (
@@ -12125,7 +12061,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	hardened = 1
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
@@ -12161,13 +12097,13 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	hardened = 1
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "Ug" = (
-/obj/wingrille_spawn/auto,
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/maintdock)
 "Uh" = (
@@ -12287,7 +12223,7 @@
 /area/pod_wars/spacejunk/uvb67/power)
 "UB" = (
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/medbay)
 "UC" = (
@@ -12300,7 +12236,7 @@
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -12361,9 +12297,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team1/manufacturing)
 "US" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
 "UT" = (
@@ -12388,7 +12322,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bar)
 "UY" = (
@@ -12597,7 +12531,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/central_hallway)
 "VK" = (
@@ -12618,7 +12552,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team2/hangar)
 "VO" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/command)
 "VP" = (
@@ -12636,7 +12570,7 @@
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/fstation/landingpads)
 "VT" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/hangar)
 "VU" = (
@@ -12654,7 +12588,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/central_hallway)
 "VY" = (
@@ -12685,7 +12619,7 @@
 /turf/space,
 /area/pod_wars/spacejunk/uvb67/central)
 "Wb" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/secdock)
 "Wc" = (
@@ -12716,7 +12650,7 @@
 /turf/simulated/floor,
 /area/pod_wars/team1/starboardhall)
 "Wf" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/uvb67/crew)
 "Wg" = (
@@ -12785,7 +12719,7 @@
 	},
 /area/pod_wars/team2/mining)
 "Wr" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/powergen)
 "Ws" = (
@@ -12901,7 +12835,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "WV" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/nancy)
 "WW" = (
@@ -12914,9 +12848,7 @@
 	},
 /area/space)
 "WX" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/yellow/side,
 /area/pod_wars/team1/mining)
@@ -12996,7 +12928,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "Xn" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/power)
 "Xp" = (
@@ -13015,9 +12947,7 @@
 /area/pod_wars/spacejunk/reliant)
 "Xt" = (
 /obj/stool/bar,
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "Xu" = (
@@ -13252,9 +13182,7 @@
 /turf/space,
 /area/space)
 "Yj" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/yellow/corner{
 	dir = 1
 	},
@@ -13277,9 +13205,7 @@
 	icon_state = "2-4"
 	},
 /obj/stool/bar,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "Yn" = (
@@ -13454,9 +13380,7 @@
 	},
 /area/pod_wars/spacejunk/memorial_stats)
 "YR" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "YS" = (
@@ -13542,11 +13466,11 @@
 /turf/simulated/floor/red/side,
 /area/pod_wars/spacejunk/uvb67/crew)
 "Zh" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/medbay)
 "Zj" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -13581,7 +13505,7 @@
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
 "Zo" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/power)
 "Zr" = (
@@ -13616,7 +13540,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	hardened = 1
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
@@ -13681,7 +13605,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/yellow,
 /area/pod_wars/team1/manufacturing)
 "ZM" = (

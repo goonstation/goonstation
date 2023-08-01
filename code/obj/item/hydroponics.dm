@@ -395,7 +395,7 @@ TYPEINFO(/obj/item/saw/elimbinator)
 TYPEINFO(/obj/item/plantanalyzer)
 	mats = 4
 
-/obj/item/plantanalyzer/
+/obj/item/plantanalyzer
 	name = "plant analyzer"
 	desc = "A device which examines the genes of plant seeds."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
@@ -444,7 +444,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 				S = new /obj/item/seed
 				S.set_loc(src.loc)
 				S.removecolor()
-			S.generic_seed_setup(selected)
+			S.generic_seed_setup(selected, FALSE)
 
 
 
@@ -478,6 +478,8 @@ TYPEINFO(/obj/item/plantanalyzer)
 	rand_pos = 1
 	var/image/plantyboi //! The "plant" overlay of the plant
 	var/image/plantyboi_plantoverlay //! The "plantoverlay" of the plant
+	var/datum/plantgenes/genes //! The genes of the plant when it was plucked
+	var/grow_level = -1 //! The growth level of the plant when it was plucked
 
 	New()
 		..()
@@ -491,6 +493,8 @@ TYPEINFO(/obj/item/plantanalyzer)
 				if(p.growthmode == "weed")
 					user.visible_message("<b>[user]</b> tries to uproot the [p.name], but it's roots hold firmly to the [pot]!","<span class='alert'>The [p.name] is too strong for you traveller...</span>")
 					return
+				src.genes = pot.plantgenes
+				src.grow_level = pot.grow_level
 				if(pot.GetOverlayImage("plant"))
 					plantyboi = pot.GetOverlayImage("plant")
 					plantyboi.pixel_x = 2
@@ -550,7 +554,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 
 /////////////////////////////////////////// Compost bag ////////////////////////////////////////////////
 
-/obj/item/reagent_containers/glass/compostbag/
+/obj/item/reagent_containers/glass/compostbag
 	name = "compost bag"
 	desc = "A big bag of shit."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'

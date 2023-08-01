@@ -13,9 +13,9 @@
 	escape_possible = 0
 
 /datum/game_mode/blob/announce()
-	boutput(world, "<B>The current game mode is - <font color='green'>Blob</font>!</B>")
-	boutput(world, "<B>A dangerous alien organism is rapidly spreading throughout the station!</B>")
-	boutput(world, "You must kill it all while minimizing the damage to the station.")
+	boutput(world, "<b>The current game mode is - <font color='green'>Blob</font>!</b>")
+	boutput(world, "<b>A dangerous alien organism is rapidly spreading throughout the station!</b>")
+	boutput(world, "<b>You must kill it all while minimizing the damage to the station.</b>")
 
 /datum/game_mode/blob/pre_setup()
 	..()
@@ -32,7 +32,7 @@
 
 	var/list/possible_blobs = get_possible_enemies(ROLE_BLOB, num_blobs)
 
-	if (!possible_blobs || !islist(possible_blobs) || !possible_blobs.len || possible_blobs.len < blobs_minimum)
+	if (!possible_blobs || !islist(possible_blobs) || !possible_blobs.len || length(possible_blobs) < blobs_minimum)
 		return 0
 
 	token_players = antag_token_list()
@@ -58,7 +58,7 @@
 	..()
 	emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
 	for (var/datum/mind/blob in traitors)
-		blob.add_antagonist(ROLE_BLOB)
+		blob.add_antagonist(ROLE_BLOB, source = ANTAGONIST_SOURCE_ROUND_START)
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()

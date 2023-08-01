@@ -221,7 +221,7 @@
 
 		if(spawningFlags & SPAWN_HALLU)
 			if (prob(1) && prob(16))
-				new /mob/living/critter/small_animal/hallucigenia/ai_controlled(src)
+				new /mob/living/critter/small_animal/hallucigenia(src)
 			else if (prob(1) && prob(18))
 				new /obj/overlay/tile_effect/cracks/spawner/pikaia(src)
 
@@ -241,7 +241,7 @@
 
 	levelupdate()
 		for(var/obj/O in src)
-			if(O.level == 1)
+			if(O.level == UNDERFLOOR)
 				O.hide(0)
 
 	tilenotify(turf/notifier)
@@ -314,7 +314,15 @@
 	allow_hole = 0
 
 	color = OCEAN_COLOR
-	// fullbright = 1
+	fullbright = 1
+
+	New()
+		. = ..()
+		var/noise_scale = 55
+		var/r1 = text2num(rustg_noise_get_at_coordinates("[global.server_start_time]", "[src.x / noise_scale]", "[src.y / noise_scale]"))
+		var/r2 = text2num(rustg_noise_get_at_coordinates("[global.server_start_time + 123465]", "[src.x / noise_scale]", "[src.y / noise_scale]"))
+		var/col = rgb(255 * (1 - r1 - r2), 255 * r2, 255 * r1)
+		UpdateIcon(140, col)
 
 	edge
 		icon_state = "pit_wall"
@@ -328,7 +336,7 @@
 			. = ..()
 
 	proc/try_build_turf_list()
-		if (!L || L.len == 0)
+		if (!L || length(L) == 0)
 			for(var/turf/T in get_area_turfs(/area/trench_landing))
 				L+=T
 
@@ -382,7 +390,7 @@
 			under.icon_state = "pit"
 
 	try_build_turf_list()
-		if (!L || L.len == 0)
+		if (!L || length(L) == 0)
 			for(var/turf/space/fluid/T in range(8,locate(src.x,src.y,5)))
 				L += T
 				break

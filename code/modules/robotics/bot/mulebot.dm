@@ -97,7 +97,7 @@
 		var/list/orders = list("0","1","2","3","4","5","6","7","8","9")
 		wire_text = list()
 		wire_order = list()
-		while(colours.len > 0)
+		while(length(colours) > 0)
 			var/colour = colours[ rand(1,colours.len) ]
 			wire_text += colour
 			colours -= colour
@@ -226,7 +226,7 @@
 				dat += "<A href='byond://?src=\ref[src];op=stop'>Stop</A><BR>"
 				dat += "<A href='byond://?src=\ref[src];op=go'>Proceed</A><BR>"
 				dat += "<A href='byond://?src=\ref[src];op=home'>Return to Home</A><BR>"
-				dat += "<A href='byond://?src=\ref[src];op=destination'>Set Destination</A><BR>"
+				dat += "<A href='byond://?src=\ref[src];op=setdest'>Set Destination</A><BR>"
 				dat += "<A href='byond://?src=\ref[src];op=setid'>Set Bot ID</A><BR>"
 				dat += "<A href='byond://?src=\ref[src];op=sethome'>Set Home</A><BR>"
 				dat += "<A href='byond://?src=\ref[src];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"

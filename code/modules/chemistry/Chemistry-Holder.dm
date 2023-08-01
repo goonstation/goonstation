@@ -362,7 +362,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			target_reagents.update_total()
 			target_reagents.handle_reactions()
 
-
+		reagents_transferred()
 		return amount
 
 	proc/aggregate_pathogens()
@@ -423,17 +423,10 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				if (!islist(C.required_reagents)) //This shouldn't happen but when practice meets theory...they beat the shit out of one another I guess
 					continue
 
-				if(C.required_temperature != -1)
-					if(C.required_temperature <= 0) //total_temperature needs to be lower than absolute value of this temp
-						if(abs(C.required_temperature) < total_temperature) continue //Not the right temp.
-					else if(C.required_temperature > total_temperature) continue
-					//Min / max temp intervals
-					if(total_temperature < C.min_temperature)
-						continue
-					else if(total_temperature > C.max_temperature) continue
-
-					// TODO: CONSIDER: reactions should probably occur if temp >= req temp not within bound of it
-					// Monkeys: Did this, just put a required_temperature as negative to make the reaction happen below a temp rather than above.
+				//Min / max temp intervals
+				if(total_temperature < C.min_temperature)
+					continue
+				else if(total_temperature > C.max_temperature) continue
 
 				var/total_matching_reagents = 0
 				var/created_volume = src.maximum_volume
@@ -782,7 +775,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/datum/reagent/current_reagent = reagent_list[reagent]
 
 		if(!current_reagent)
-			if (reagents_cache.len <= 0)
+			if (length(reagents_cache) <= 0)
 				build_reagent_cache()
 
 			current_reagent = reagents_cache[reagent]
@@ -832,6 +825,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	proc/remove_reagent(var/reagent, var/amount, var/update_total = 1, var/reagents_change = 1)
 
 		if(!isnum(amount)) return 1
+
+		if (istype(reagent, /datum/reagent))
+			CRASH("Attempt to remove reagent by ref")
 
 		var/datum/reagent/current_reagent = reagent_list[reagent]
 
@@ -894,6 +890,10 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	proc/reagents_changed(var/add = 0)
 		if (my_atom)
 			my_atom.on_reagent_change(add)
+		return
+
+	proc/reagents_transferred()
+		my_atom?.on_reagent_transfer()
 		return
 
 	/// li'l tiny helper thing vOv
@@ -1068,7 +1068,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				var/reag_list = ""
 				for (var/current_id in src.reagent_list)
 					var/datum/reagent/current_reagent = src.reagent_list[current_id]
-					if (src.reagent_list.len > 1 && src.reagent_list[src.reagent_list.len] == current_id)
+					if (length(src.reagent_list) > 1 && src.reagent_list[src.reagent_list.len] == current_id)
 						reag_list += " and [current_reagent.name]"
 						continue
 					reag_list += ", [current_reagent.name]"

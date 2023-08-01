@@ -10,7 +10,7 @@ TYPEINFO(/obj/item/clothing/head/butt)
 	var/organ_holder_name = "butt"
 	var/organ_holder_location = "chest"
 	var/organ_holder_required_op_stage = 4
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/butt.dmi'
 	icon_state = "butt-nc"
 	force = 1
 	w_class = W_CLASS_TINY
@@ -202,6 +202,10 @@ TYPEINFO(/obj/item/clothing/head/butt/cyberbutt)
 			user.u_equip(W)
 		else
 			return ..()
+
+	emp_act()
+		. = ..()
+		donor?.emote("fart", FALSE)
 
 // moving this from plants_crop.dm because SERIOUSLY WHY -- cirr
 /obj/item/clothing/head/butt/synth

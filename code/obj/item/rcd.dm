@@ -166,7 +166,7 @@ TYPEINFO(/obj/item/rcd)
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/rcd_ammo))
 			var/obj/item/rcd_ammo/R = W
-			if (!restricted_materials || (R?.material?.mat_id in restricted_materials))
+			if (!restricted_materials || (R?.material?.getID() in restricted_materials))
 				if (!R.matter)
 					return
 				if (matter == max_matter)
@@ -286,12 +286,13 @@ TYPEINFO(/obj/item/rcd)
 
 			if (RCD_MODE_AIRLOCK)
 				// create_door handles all the other stuff.
-				create_door(A, user)
+				SPAWN(0) //let's not lock the entire attack call and let people attack with zero delay
+					create_door(A, user)
 				return
 
 			if (RCD_MODE_DECONSTRUCT)
 
-				if(restricted_materials && !(A.material?.mat_id in restricted_materials))
+				if(restricted_materials && !(A.material?.getID() in restricted_materials))
 					boutput(user, "Target object is not made of a material this RCD can deconstruct.")
 					return
 				if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced))
@@ -942,7 +943,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 			matter += booklet.pages.len/2
 			boutput(user, "\The [src] recycles [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")
 			qdel(W)
-		else if (W?.material?.mat_id == "wood")
+		else if (W?.material?.getID() == "wood")
 			matter += 20
 			boutput(user, "\The [src] pulps [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")
 			qdel(W)

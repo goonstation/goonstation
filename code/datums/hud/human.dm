@@ -498,10 +498,10 @@
 			if ("ability")
 				if(!master.abilityHolder.hidden)
 					master.abilityHolder.hidden = TRUE
-					boutput(master, "No longer showing abilities.")
+					boutput(master, "<b class='alert'>No longer showing abilities.</b>")
 				else
 					master.abilityHolder.hidden = FALSE
-					boutput(master, "Now showing abilities.")
+					boutput(master, "<b class='success'>Now showing abilities.</b>")
 
 				ability_toggle.icon_state = "[layouts[layout_style]["ability_icon"]][!master.abilityHolder.hidden]"
 				update_ability_hotbar()

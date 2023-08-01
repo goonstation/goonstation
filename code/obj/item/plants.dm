@@ -39,10 +39,10 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 		if (!src.reagents)
 			src.make_reagents()
 
-		if (istype(W, /obj/item/spacecash) || istype(W, /obj/item/paper))
+		if (istype(W, /obj/item/currency/spacecash) || istype(W, /obj/item/paper))
 			boutput(user, "<span class='alert'>You roll up [W] into a cigarette.</span>")
 			var/obj/item/clothing/mask/cigarette/custom/P = new(user.loc)
-			if(istype(W, /obj/item/spacecash))
+			if(istype(W, /obj/item/currency/spacecash))
 				P.icon_state = "cig-[W.icon_state]"
 				P.item_state = "cig-[W.icon_state]"
 				P.litstate = "ciglit-[W.icon_state]"
@@ -100,9 +100,9 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 		..()
 
 	proc/build_name(obj/item/W)
-		return "[istype(W, /obj/item/spacecash) ? "[W.amount]-credit " : ""][pick("joint","doobie","spliff","roach","blunt","roll","fatty","reefer")]"
+		return "[istype(W, /obj/item/currency/spacecash) ? "[W.amount]-credit " : ""][pick("joint","doobie","spliff","roach","blunt","roll","fatty","reefer")]"
 
-/obj/item/plant/herb/cannabis/
+/obj/item/plant/herb/cannabis
 	name = "cannabis leaf"
 	desc = "Leafs for reefin'!"
 	icon_state = "cannabisleaf"
@@ -194,7 +194,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	brew_result = list("nicotine")
 
 	build_name(obj/item/W)
-		return "[istype(W, /obj/item/spacecash) ? "[W.amount]-credit " : ""]rolled cigarette"
+		return "[istype(W, /obj/item/currency/spacecash) ? "[W.amount]-credit " : ""]rolled cigarette"
 
 /obj/item/plant/herb/tobacco/twobacco
 	name = "twobacco leaf"
@@ -234,7 +234,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	desc = "A salty but healthy cereal crop. Just don't eat too much without water."
 	icon_state = "saltedoat"
 
-/obj/item/plant/sugar/
+/obj/item/plant/sugar
 	name = "sugar cane"
 	crop_suffix	= " cane"
 	desc = "Grown lovingly in our space plantations."
@@ -421,11 +421,15 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	Crossed(atom/movable/AM as mob|obj)
 		var/mob/M = AM
 		if(iswerewolf(M))
-			M.changeStatus("weakened", 3 SECONDS)
-			M.force_laydown_standup()
-			M.TakeDamage("All", 0, 5, 0, DAMAGE_BURN)
-			M.visible_message("<span class='alert'>The [M] steps too close to [src] and falls down!</span>")
-			return
+			var/stun_duration
+			if (!GET_COOLDOWN(M, "aconite_stun"))
+				var/datum/statusEffect/stun_effect = M.changeStatus("weakened", 3 SECONDS)
+				M.TakeDamage("All", 0, 5, 0, DAMAGE_BURN)
+				M.visible_message("<span class='alert'>The [M] steps too close to [src] and falls down!</span>")
+				if (stun_effect)
+					stun_duration = stun_effect.duration //makes cooldown last the same as stun because the actual duration of applied effect is lower
+				ON_COOLDOWN(M, "aconite_stun", stun_duration)
+				return
 		..()
 	attack(mob/M, mob/user)
 		//if a wolf attacks with this, which they shouldn't be able to, they'll just drop it

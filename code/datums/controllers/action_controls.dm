@@ -55,15 +55,21 @@ var/datum/action_controller/actions
 					if(OA.interrupt_start != -1)
 						OA.interrupt_time += TIME - OA.interrupt_start
 						OA.interrupt_start = -1
-					OA.onResume(A)
-					OA.onUpdate()
+					OA.canRunCheck()
+					if(OA.state == ACTIONSTATE_DELETE || OA.state == ACTIONSTATE_RUNNING || OA.state == ACTIONSTATE_INFINITE)
+						OA.onResume(A)
+					if(OA.state == ACTIONSTATE_RUNNING || OA.state == ACTIONSTATE_INFINITE)
+						OA.onUpdate()
 					qdel(A)
 					return OA
 			running[owner] += A
 		A.owner = owner
 		A.started = TIME
-		A.onStart()
-		A.onUpdate()
+		A.canRunCheck(in_start = TRUE)
+		if(A.state == ACTIONSTATE_STOPPED || A.state == ACTIONSTATE_RUNNING || A.state == ACTIONSTATE_INFINITE)
+			A.onStart()
+		if(A.state == ACTIONSTATE_RUNNING || A.state == ACTIONSTATE_INFINITE)
+			A.onUpdate()
 		return A // cirr here, I added action ref to the return because I need it for AI stuff, thank you
 
 	proc/interrupt(var/atom/owner, var/flag) //! Is called by all kinds of things to check for action interrupts.
@@ -89,7 +95,9 @@ var/datum/action_controller/actions
 						A?.promise.fulfill(null)
 					continue
 
-				A.onUpdate()
+				A.canRunCheck()
+				if(A.state != ACTIONSTATE_INTERRUPTED)
+					A.onUpdate()
 
 			if(length(running[X]) == 0)
 				running.Remove(X)
@@ -113,10 +121,12 @@ var/datum/action_controller/actions
 		else
 			return interrupt_start - started - interrupt_time
 
-	proc/interrupt(var/flag) //! This is called by the default interrupt actions
+	proc/interrupt(flag, can_resume=TRUE) //! This is called by the default interrupt actions
 		if(interrupt_flags & flag || flag == INTERRUPT_ALWAYS)
 			if(state != ACTIONSTATE_INTERRUPTED)
 				interrupt_start = TIME
+			if(!can_resume || flag == INTERRUPT_ALWAYS)
+				resumable = FALSE
 			state = ACTIONSTATE_INTERRUPTED
 			onInterrupt(flag)
 		return
@@ -125,32 +135,44 @@ var/datum/action_controller/actions
 		return
 
 	proc/onInterrupt(var/flag = 0) //! Called when the action fails / is interrupted.
+		SHOULD_CALL_PARENT(TRUE)
 		state = ACTIONSTATE_DELETE
 		return
 
 	proc/onStart()				   //! Called when the action begins
+		SHOULD_CALL_PARENT(TRUE)
 		state = ACTIONSTATE_RUNNING
 		return
 
 	proc/onRestart()			   //! Called when the action restarts (for example: automenders)
+		SHOULD_CALL_PARENT(TRUE)
 		sleep(1)
 		started = TIME
 		state = ACTIONSTATE_RUNNING
-		loopStart()
-		return
+		canRunCheck()
+		if(state == ACTIONSTATE_RUNNING)
+			loopStart()
 
 	proc/loopStart()				//! Called after restarting. Meant to cotain code from -and be called from- onStart()
+		SHOULD_CALL_PARENT(TRUE)
 		return
 
 	proc/onResume(datum/action/attempted)	 //! Called when the action resumes - likely from almost ending. Arg is the action which would have cancelled this.
+		SHOULD_CALL_PARENT(TRUE)
 		state = ACTIONSTATE_RUNNING
 		return
 
 	proc/onEnd()				   //! Called when the action succesfully ends.
+		SHOULD_CALL_PARENT(TRUE)
 		state = ACTIONSTATE_DELETE
 		return
 
 	proc/onDelete()				   //! Called when the action is complete and about to be deleted. Usable for cleanup and such.
+		SHOULD_CALL_PARENT(TRUE)
+		return
+
+	/// Ran before onStart, onUpdate, onResume and in onRestart. Call interrupt here to stop the action from starting.
+	proc/canRunCheck(in_start = FALSE)
 		return
 
 	proc/updateBar()				//! Updates the animations
@@ -723,7 +745,7 @@ var/datum/action_controller/actions
 		sheet.change_stack_amount(-cost)
 		if (sheet2 && cost2)
 			sheet2.change_stack_amount(-cost2)
-		logTheThing(LOG_STATION, owner, "builds [objname] (<b>Material:</b> [mat && istype(mat) && mat.mat_id ? "[mat.mat_id]" : "*UNKNOWN*"]) at [log_loc(owner)].")
+		logTheThing(LOG_STATION, owner, "builds [objname] (<b>Material:</b> [mat && istype(mat) && mat.getID() ? "[mat.getID()]" : "*UNKNOWN*"]) at [log_loc(owner)].")
 		if(isliving(owner))
 			var/mob/living/M = owner
 			R.add_fingerprint(M)
@@ -957,12 +979,15 @@ var/datum/action_controller/actions
 
 		duration += ExtraDuration
 
-		if(source.reagents && source.reagents.has_reagent("crime"))
+		if (source.reagents && source.reagents.has_reagent("crime"))
 			duration /= 5
+		if (isunconscious(target))
+			duration /= 2
+		else if (isdead(target))
+			duration /= 3
 		..()
 
 	onStart()
-
 		target.add_fingerprint(source) // Added for forensics (Convair880).
 
 		if (source.mob_flags & AT_GUNPOINT)
@@ -984,18 +1009,6 @@ var/datum/action_controller/actions
 				actions.start(new /datum/action/bar/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, /mob/proc/click, list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source) //this is messier
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			if(!target.can_equip(item, slot))
-				boutput(source, "<span class='alert'>[item] can not be put there.</span>")
-				interrupt(INTERRUPT_ALWAYS)
-				return
-			if(!isturf(target.loc))
-				boutput(source, "<span class='alert'>You can't put [item] on [target] when [(he_or_she(target))] is in [target.loc]!</span>")
-				interrupt(INTERRUPT_ALWAYS)
-				return
-			if(item.cant_drop) //Fix for putting item arm objects into others' inventory
-				source.show_text("You can't put \the [item] on [target] when it's attached to you!", "red")
-				interrupt(INTERRUPT_ALWAYS)
-				return
 			logTheThing(LOG_COMBAT, source, "tries to put \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
 			icon = item.icon
 			icon_state = item.icon_state
@@ -1003,14 +1016,6 @@ var/datum/action_controller/actions
 				O.show_message("<span class='alert'><B>[source] tries to put [item] on [target]!</B></span>", 1)
 		else
 			var/obj/item/I = target.get_slot(slot)
-			if(!I)
-				boutput(source, "<span class='alert'>There's nothing in that slot.</span>")
-				interrupt(INTERRUPT_ALWAYS)
-				return
-			if(!isturf(target.loc))
-				boutput(source, "<span class='alert'>You can't remove [I] from [target] when [(he_or_she(target))] is in [target.loc]!</span>")
-				interrupt(INTERRUPT_ALWAYS)
-				return
 			logTheThing(LOG_COMBAT, source, "tries to remove \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 			var/name = "something"
 			if (!hidden)
@@ -1071,18 +1076,45 @@ var/datum/action_controller/actions
 				target.update_inv()
 			else
 				boutput(source, "<span class='alert'>You fail to remove [I] from [target].</span>")
-	onUpdate()
+
+	canRunCheck(in_start)
 		..()
 		if(BOUNDS_DIST(source, target) > 0 || target == null || source == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		var/obj/item/I = target.get_slot(slot)
 
 		if(item)
 			if(item != source.equipped() || target.get_slot(slot))
 				interrupt(INTERRUPT_ALWAYS)
+			if(!target.can_equip(item, slot))
+				if(in_start)
+					boutput(source, "<span class='alert'>[item] can not be put there.</span>")
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			if(!isturf(target.loc))
+				if(in_start)
+					boutput(source, "<span class='alert'>You can't put [item] on [target] when [(he_or_she(target))] is in [target.loc]!</span>")
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			if(item.cant_drop) //Fix for putting item arm objects into others' inventory
+				if(in_start)
+					source.show_text("You can't put \the [item] on [target] when it's attached to you!", "red")
+				interrupt(INTERRUPT_ALWAYS)
+				return
 		else
 			if(!target.get_slot(slot=slot))
 				interrupt(INTERRUPT_ALWAYS)
+			if(!I)
+				if(in_start)
+					boutput(source, "<span class='alert'>There's nothing in that slot.</span>")
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			if(!isturf(target.loc))
+				if(in_start)
+					boutput(source, "<span class='alert'>You can't remove [I] from [target] when [(he_or_she(target))] is in [target.loc]!</span>")
+				interrupt(INTERRUPT_ALWAYS)
+				return
 #undef STAM_COST
 
 /datum/action/bar/icon/internalsOther //This is used when you try to set someones internals
@@ -1267,6 +1299,7 @@ var/datum/action_controller/actions
 			H.update_inv()
 			for(var/mob/O in AIviewers(H))
 				O.show_message("<span class='alert'><B>[owner] manages to remove [target]'s handcuffs!</B></span>", 1)
+			logTheThing(LOG_COMBAT, owner, "removes [constructTarget(target,"combat")]'s handcuffs at [log_loc(owner)].")
 
 /datum/action/bar/private/icon/handcuffRemoval //This is used when you try to resist out of handcuffs.
 	duration = 600
@@ -1306,6 +1339,7 @@ var/datum/action_controller/actions
 			H.handcuffs.drop_handcuffs(H)
 			H.visible_message("<span class='alert'><B>[H] attempts to remove the handcuffs!</B></span>")
 			boutput(H, "<span class='notice'>You successfully remove your handcuffs.</span>")
+			logTheThing(LOG_COMBAT, H, "removes their own handcuffs at [log_loc(H)].")
 
 /datum/action/bar/private/icon/shackles_removal // Resisting out of shackles (Convair880).
 	duration = 450
@@ -1341,6 +1375,7 @@ var/datum/action_controller/actions
 				for(var/mob/O in AIviewers(H))
 					O.show_message("<span class='alert'><B>[H] manages to remove the shackles!</B></span>", 1)
 				H.show_text("You successfully remove the shackles.", "blue")
+				logTheThing(LOG_COMBAT, H, "removes their own shackles at [log_loc(H)].")
 
 
 /datum/action/bar/private/welding
@@ -1595,16 +1630,14 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		target.butcherer = owner
-		for(var/mob/O in AIviewers(owner))
-			O.show_message("<span class='alert'><B>[owner] begins to butcher [target].</B></span>", 1)
+		owner.visible_message("<span class='alert'><B>[owner] begins to butcher [target].</B></span>")
 
 	onEnd()
 		..()
 		target?.butcherer = null
 		if(owner && target)
 			target.butcher(owner)
-			for(var/mob/O in AIviewers(owner))
-				O.show_message("<span class='alert'><B>[owner] butchers [target].[target.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]</B></span>", 1)
+			owner.visible_message("<span class='alert'>[owner] butchers [target].[target.butcherable == BUTCHER_YOU_MONSTER ? " <b>WHAT A MONSTER!</b>" : null]","You butcher [target].</span>")
 
 /datum/action/bar/icon/critter_arm_removal // only supports things with left and right arms
 	duration = 60
@@ -1948,8 +1981,8 @@ var/datum/action_controller/actions
 
 
 /datum/action/bar/private/spy_steal //Used when a spy tries to steal a large object
-	duration = 30
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
+	duration = 3 SECONDS
+	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	id = "spy_steal"
 	var/atom/target
 	var/obj/item/uplink/integrated/pda/spy/uplink
@@ -1970,7 +2003,9 @@ var/datum/action_controller/actions
 		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		playsound(owner.loc, 'sound/machines/click.ogg', 60, 1)
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.playsound_local(owner.loc, 'sound/machines/click.ogg', 60, 1)
 
 	onEnd()
 		..()

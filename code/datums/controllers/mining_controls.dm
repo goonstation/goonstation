@@ -151,7 +151,7 @@ var/list/asteroid_blocked_turfs = list()
 			if (3)
 				category = mining_controls.mining_encounters_rare
 
-		if (category.len < 1)
+		if (length(category) < 1)
 			category = mining_controls.mining_encounters_common
 
 		return pick(category)
