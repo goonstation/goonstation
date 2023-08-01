@@ -1,9 +1,29 @@
 
+(t)tue aug 01 23
+(u)Soapcyst
+(p)15179
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added angler equipment to donut2, atlas, clarion, and the afterlife bar.
+(t)sun jul 30 23
+(u)Retrino
+(p)15162
+(e)🎨🤖|C-Sprites, A-Silicons
+(*)Added three new borg screenhead faces: Nervous, Annoyed, and Ditzy
 (t)sat jul 29 23
+(u)CalliopeSoups
+(p)14664
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Oshan's ranch has been renovated for cooperative rancher action.
+(u)Bartimeus973
+(p)15147
+(e)💅💪🎭|C-QoL, A-Traits, A-RP
+(+)Picky eaters will now heal substantially more hunger when eating one of their favorite foods.
 (u)Ikea
 (p)14889
 (e)⚖🤖|C-Balance, A-Silicons
 (*)EMP's now stun borgs for 5 seconds, disable modules for a max of 5 seconds, and now do far more damage to borgs.
+(u)LeahTheTech
+(+)The cyborg teleport module now has visual and sound effects.
 (t)fri jul 28 23
 (u)Valtsu0
 (p)15048

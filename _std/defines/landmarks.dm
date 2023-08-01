@@ -100,6 +100,8 @@
 #define LANDMARK_LRT "lrt landmark"
 #define LANDMARK_SAMOSTREL_WARP "samostrel"
 #define LANDMARK_EVIL_CHEF_CORPSE "evilchef_corpse"
+#define LANDMARK_PLANETS "artemis planets"
+#define LANDMARK_SHIPS "artemis ships"
 
 // Visual mirror warp modes
 #define LANDMARK_VM_WARP_NONE 0
