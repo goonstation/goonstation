@@ -40,12 +40,9 @@ TYPEINFO(/datum/listen_module/input/ooc)
 				ooc_class = "adminooc"
 		else if (mob_speaker?.client?.is_mentor() && !mob_speaker?.client?.stealth)
 			ooc_class = "mentorooc"
-		else if (src.client.player.is_newbee)
-				ooc_class = "newbeeooc"
-				ooc_icon = "Newbee"
-
-		var/rendered = "<span class=\"ooc [ooc_class]\"><span class=\"prefix\">OOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
-
+		else if (mob_speaker?.client?.player.is_newbee)
+			ooc_class = "newbeeooc"
+			ooc_icon = "Newbee"
 
 		if( mob_speaker?.client?.cloud_available() && mob_speaker?.client?.cloud_get("donor") )
 			message.content = replacetext(message.content, ":shelterfrog:", "<img src='http://stuff.goonhub.com/shelterfrog.png' width=32>")
@@ -127,9 +124,9 @@ TYPEINFO(/datum/listen_module/input/looc)
 				ooc_class = "adminooc"
 		else if (mob_speaker?.client?.is_mentor() && !mob_speaker?.client?.stealth)
 			ooc_class = "mentorooc"
-		else if (src.client.player.is_newbee)
-				ooc_class = "newbeeooc"
-				ooc_icon = "Newbee"
+		else if (mob_speaker?.client?.player.is_newbee)
+			ooc_class = "newbeeooc"
+			ooc_icon = "Newbee"
 
 
 		var/rendered = "<span class=\"looc [ooc_class]\"><span class=\"prefix\">LOOC:</span> <span class=\"name\" data-ctx='\ref[mob_speaker?.mind]'>[display_name]:</span> <span class=\"message\">[message.content]</span></span>"
