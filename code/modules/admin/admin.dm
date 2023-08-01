@@ -4099,6 +4099,7 @@ var/global/noir = 0
 		ircmsg["msg"] = "has removed the server restart delay."
 		ircbot.export_async("admin", ircmsg)
 
+////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 /proc/get_matches_string(var/text, var/list/possibles)
 	var/list/matches = new()
 	for (var/possible in possibles)
