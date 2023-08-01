@@ -1125,7 +1125,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 	slot = SLOT_HEAD
 	cost = PAY_TRADESMAN/2
 
-	/datum/clothingbooth_item/costume/guybrush
+/datum/clothingbooth_item/costume/guybrush
 	name = "Wannabe Pirate Costume"
 	path = /obj/item/clothing/under/gimmick/guybrush
 
