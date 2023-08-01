@@ -9,7 +9,7 @@
 		src.stam_monitor = new /obj/machinery/maptext_monitor/stamina(src)
 
 
-	say(message, ignore_stamina_winded)
+	say(message, flags)
 		if(!shutup)
 			. = ..()
 

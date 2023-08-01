@@ -21,6 +21,7 @@
 #define SAYFLAG_RADIO_SENT 1 << 4 //message has already been transmitted over radio
 #define SAYFLAG_NO_MAPTEXT 1 << 5
 #define SAYFLAG_WHISPER 1 << 6
+#define SAYFLAG_IGNORE_STAMINA 1 << 7
 
 //REMOVE THESE
 #define LOUD_SINGING SAYFLAG_LOUD_SINGING

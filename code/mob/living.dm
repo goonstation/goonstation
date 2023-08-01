@@ -1859,7 +1859,7 @@
 			return
 		if (ishuman(src))
 			var/mob/living/carbon/human/H = src
-			H.say(message, ignore_stamina_winded = 1) // say the thing they were typing and grunt
+			H.say(message, flags=SAYFLAG_IGNORE_STAMINA) // say the thing they were typing and grunt
 		else
 			src.say(message)
 		src.stat = old_stat // back to being dead 😌
