@@ -25,6 +25,7 @@ TYPEINFO(/datum/listen_module/input/ooc)
 			mob_listener = src.parent_tree.parent
 
 		var/ooc_class = ""
+		var/ooc_icon = null
 
 		if (mob_speaker?.client?.stealth || mob_speaker?.client?.alt_key)
 			if (mob_listener?.client?.holder)
@@ -39,6 +40,12 @@ TYPEINFO(/datum/listen_module/input/ooc)
 				ooc_class = "adminooc"
 		else if (mob_speaker?.client?.is_mentor() && !mob_speaker?.client?.stealth)
 			ooc_class = "mentorooc"
+		else if (src.client.player.is_newbee)
+				ooc_class = "newbeeooc"
+				ooc_icon = "Newbee"
+
+		var/rendered = "<span class=\"ooc [ooc_class]\"><span class=\"prefix\">OOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
+
 
 		if( mob_speaker?.client?.cloud_available() && mob_speaker?.client?.cloud_get("donor") )
 			message.content = replacetext(message.content, ":shelterfrog:", "<img src='http://stuff.goonhub.com/shelterfrog.png' width=32>")
@@ -47,6 +54,13 @@ TYPEINFO(/datum/listen_module/input/ooc)
 			message.content = replacetext(message.content, ":shelterbee:", "<img src='http://stuff.goonhub.com/shelterbee.png' width=32>")
 
 		var/rendered = "<span class=\"ooc [ooc_class]\"><span class=\"prefix\">OOC:</span> <span class=\"name\" data-ctx='\ref[mob_speaker?.mind]'>[display_name]:</span> <span class=\"message\">[message.content]</span></span>"
+		if (ooc_icon)
+			rendered = {"
+			<div class='tooltip'>
+				<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[ooc_icon].png")]\">
+				<span class="tooltiptext">[ooc_icon]</span>
+			</div>
+			"} + rendered
 
 		if (mob_listener?.client?.holder)
 			rendered = "<span class='adminHearing' data-ctx='[mob_listener?.client?.chatOutput.getContextFlags()]'>[rendered]</span>"
@@ -98,6 +112,7 @@ TYPEINFO(/datum/listen_module/input/looc)
 			mob_listener = src.parent_tree.parent
 
 		var/ooc_class = ""
+		var/ooc_icon = null
 
 		if (mob_speaker?.client?.stealth || mob_speaker?.client?.alt_key)
 			if (mob_listener?.client?.holder)
@@ -112,10 +127,19 @@ TYPEINFO(/datum/listen_module/input/looc)
 				ooc_class = "adminooc"
 		else if (mob_speaker?.client?.is_mentor() && !mob_speaker?.client?.stealth)
 			ooc_class = "mentorooc"
-
+		else if (src.client.player.is_newbee)
+				ooc_class = "newbeeooc"
+				ooc_icon = "Newbee"
 
 
 		var/rendered = "<span class=\"looc [ooc_class]\"><span class=\"prefix\">LOOC:</span> <span class=\"name\" data-ctx='\ref[mob_speaker?.mind]'>[display_name]:</span> <span class=\"message\">[message.content]</span></span>"
+		if (ooc_icon)
+			rendered = {"
+			<div class='tooltip'>
+				<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[ooc_icon].png")]\">
+				<span class="tooltiptext">[ooc_icon]</span>
+			</div>
+			"} + rendered
 
 		if (mob_listener?.client?.holder)
 			rendered = "<span class='adminHearing' data-ctx='[mob_listener?.client?.chatOutput.getContextFlags()]'>[rendered]</span>"
