@@ -56009,7 +56009,7 @@
 /area/station/maintenance/southeast)
 "cPZ" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("medbay    lobby","telescience","testchamber","research","chemistry","medbay","morgue","pathology","genetics","robotics");
+	mail_tag = list("medbay                lobby","telescience","testchamber","research","chemistry","medbay","morgue","pathology","genetics","robotics");
 	name = "mail junction (medsci sector)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -68776,7 +68776,7 @@
 /area/station/security/checkpoint/customs)
 "iXD" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("engineering","podbay","podbay    checkpoint");
+	mail_tag = list("engineering","podbay","podbay                checkpoint");
 	name = "mail junction (engineering sector)"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -69974,7 +69974,7 @@
 /area/space)
 "kUH" = (
 /obj/disposalpipe/switch_junction/left/north{
-	mail_tag = list("brig","customs    checkpoint","bridge","security");
+	mail_tag = list("brig","customs                checkpoint","bridge","security");
 	name = "mail junction (command sector)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -71873,7 +71873,7 @@
 /area/station/maintenance/central)
 "opV" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("janitor","escape    checkpoint","mining","escape    hallway","mechanics","cargo    checkpoint","QM","refinery");
+	mail_tag = list("janitor","escape                checkpoint","mining","escape                hallway","mechanics","cargo                checkpoint","QM","refinery");
 	name = "mail junction (escape and cargo sectors)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -73105,7 +73105,6 @@
 /area/station/medical/medbay/lobby)
 "qUV" = (
 /obj/table/reinforced/chemistry/auto/auxsup,
-/obj/item/paper/labdrawertips,
 /turf/simulated/floor/purplewhite/corner{
 	dir = 4
 	},
@@ -75796,7 +75795,7 @@
 /area/station/hallway/secondary/entry)
 "wjI" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("chapel","chapel    checkpoint","crewA","arrivals    checkpoint");
+	mail_tag = list("chapel","chapel                checkpoint","crewA","arrivals                checkpoint");
 	name = "mail junction (arrivals sector)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -75871,7 +75870,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("hydroponics","kitchen","detective","crewB","arcade","cafeteria","medical    booth");
+	mail_tag = list("hydroponics","kitchen","detective","crewB","arcade","cafeteria","medical                booth");
 	name = "mail junction (catering sector)"
 	},
 /turf/simulated/floor/grime,

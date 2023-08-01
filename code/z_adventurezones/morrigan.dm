@@ -198,6 +198,52 @@
 		if (prob(10))
 			src.say(pick( "Don't look for Lara...", "Lara??", "Lara the oven!", "Please don't talk to Lara", "LAAAAARRRAAAAAAAA!!!" ,"L-Lara."))
 
+/mob/living/carbon/human/syndicatemorrigan
+	New()
+		..()
+		src.equip_new_if_possible((/obj/item/clothing/head/biker_cap), SLOT_HEAD)
+		src.equip_new_if_possible((/obj/item/clothing/mask/gas/swat), SLOT_WEAR_MASK)
+		src.equip_new_if_possible((/obj/item/clothing/under/rank/head_of_security/fancy_alt), SLOT_W_UNIFORM)
+		src.equip_new_if_possible((/obj/item/clothing/suit/armor/vest), SLOT_WEAR_SUIT)
+		src.equip_if_possible((/obj/item/clothing/gloves/black), SLOT_GLOVES)
+		src.equip_new_if_possible((/obj/item/clothing/shoes/swat), SLOT_SHOES)
+
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+
+		if (prob(0) && !src.stat)
+			src.emote("scream")
+
+	initializeBioholder()
+		. = ..()
+		randomize_look(src, TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, src)
+
+/mob/living/carbon/human/syndicatemorrigandoc
+	New()
+		..()
+		src.equip_new_if_possible((/obj/item/clothing/glasses/nightvision/sechud), SLOT_GLASSES)
+		src.equip_new_if_possible((/obj/item/clothing/mask/surgical), SLOT_WEAR_MASK)
+		src.equip_new_if_possible((/obj/item/clothing/under/scrub), SLOT_W_UNIFORM)
+		src.equip_new_if_possible((/obj/item/clothing/suit/bio_suit/armored/nt), SLOT_WEAR_SUIT)
+		src.equip_if_possible((/obj/item/clothing/gloves/black), SLOT_GLOVES)
+		src.equip_new_if_possible((/obj/item/clothing/shoes/swat), SLOT_SHOES)
+
+
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+
+		if (prob(0) && !src.stat)
+			src.emote("scream")
+
+	initializeBioholder()
+		. = ..()
+		randomize_look(src, TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, src)
+
+
+
+
 // Areas
 
 /area/morrigan
