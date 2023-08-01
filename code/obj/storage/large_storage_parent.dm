@@ -358,10 +358,10 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		. = ..()
 		if(isnull(src.material))
 			return
-		var/found_negative = (src.material.mat_id == "negativematter")
+		var/found_negative = (src.material.getID() == "negativematter")
 		if(!found_negative)
-			for(var/datum/material/parent_mat in src.material.parent_materials)
-				if(parent_mat.mat_id == "negativematter")
+			for(var/datum/material/parent_mat in src.material.getParentMaterials())
+				if(parent_mat.getID() == "negativematter")
 					found_negative = TRUE
 					break
 		if(found_negative)
@@ -491,7 +491,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				/obj/item/material_piece = "processed materials",
 				/obj/item/paper = "paper",
 				/obj/item/tile = "floor tiles",
-				/obj/item/fish = "fish")
+				/obj/item/reagent_containers/food/fish = "fish")
 			for(var/drag_type in draggable_types)
 				if(!istype(O, drag_type))
 					continue
@@ -637,11 +637,14 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				O.set_loc(src)
 
 		for (var/mob/M in get_turf(src))
+			if (isobserver(M) || iswraith(M) || isintangible(M) || islivingobject(M))
+				continue
 			if (M.anchored || M.buckled)
 				continue
-			if (src.is_short && !M.lying && ( M != src.loc ) ) // ignore movement when container is inside the mob (possessed)
-				step_away(M, src, 1)
-				continue
+			if (src.is_short && (M != src.loc) && !isdead(M))
+				if (!M.lying)
+					step_away(M, src, 1)
+					continue
 #ifdef HALLOWEEN
 			if (halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 				var/list/obj/storage/myPals = list()
@@ -656,8 +659,6 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				M.playsound_local(M.loc, "warp", 50, 1)
 				continue
 #endif
-			if (isobserver(M) || iswraith(M) || isintangible(M) || islivingobject(M))
-				continue
 			if (src.crunches_contents)
 				src.crunch(M)
 			M.set_loc(src)

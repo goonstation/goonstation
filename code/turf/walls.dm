@@ -63,7 +63,7 @@ TYPEINFO(/turf/simulated/wall)
 				health *= 1.5
 			else if (src.material.getProperty("density") <= 2)
 				health *= 0.75
-			if(src.material.material_flags & MATERIAL_CRYSTAL)
+			if(src.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 				health /= 2
 		return
 
@@ -88,7 +88,7 @@ TYPEINFO(/turf/simulated/wall)
 
 // Made this a proc to avoid duplicate code (Convair880).
 /turf/simulated/wall/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
-	if (!user || !istype(W, /obj/item/light_parts/) || istype(W, /obj/item/light_parts/floor))	//hack, no floor lights on walls
+	if (!user || !istype(W, /obj/item/light_parts/) || istype(W, /obj/item/light_parts/floor))//hack, no floor lights on walls
 		return
 
 	// the wall is the target turf, the source is the turf where the user is standing
@@ -118,6 +118,51 @@ TYPEINFO(/turf/simulated/wall)
 	finish_attaching(W, user, dir)
 	return
 
+/turf/simulated/wall/proc/attach_item(var/mob/user, var/obj/item/W) //we don't want code duplication
+
+	//reset object position
+	//not doing so breaks it's further position
+	W.pixel_y = 0
+	W.pixel_x = 0
+
+
+	//based on light fixture code
+	var/turf/target = src
+	var/turf/source = get_turf(user)
+
+
+	var/direction = 0
+
+	for (var/d in cardinal)
+		if (get_step(source, d) == target)
+			direction = d
+			break
+
+	if (!direction)
+		boutput(user, "<span class='alert'> Attaching \the [W] seems hard in this position...</span>")
+		return FALSE
+
+	user.u_equip(W)
+	W.set_loc(get_turf(user))
+
+	if (user.dir == EAST)
+		W.pixel_x = 32
+		W.pixel_y = 3
+	else if (user.dir == WEST)
+		W.pixel_x = -32
+		W.pixel_y = 3
+	else if (user.dir == NORTH)
+		W.pixel_y = 35
+		W.pixel_x = 0
+	else
+		W.pixel_y = -21
+		W.pixel_x = 0
+
+	src.add_fingerprint(user)
+	W.anchored = TRUE
+	boutput(user, "You attach \the [W] to [src].")
+	return TRUE
+
 /turf/simulated/wall/proc/finish_attaching(obj/item/W, mob/user, var/light_dir)
 	boutput(user, "You attach the light fixture to [src].")
 	var/obj/item/light_parts/parts = W
@@ -142,23 +187,23 @@ TYPEINFO(/turf/simulated/wall)
 			var/atom/A = new /obj/structure/girder/reinforced(src)
 			var/obj/item/sheet/B = new /obj/item/sheet( src )
 
-			A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = src.material ? TRUE :FALSE)
-			B.setMaterial(src.material ? src.material : defaultMaterial, copy = src.material ? TRUE :FALSE)
+			A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial)
+			B.setMaterial(src.material ? src.material : defaultMaterial)
 			B.set_reinforcement(src.material)
 		else
 			if (prob(50)) // pardon all these nested probabilities, just trying to vary the damage appearance a bit
 				var/atom/A = new /obj/structure/girder/reinforced(src)
-				A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = src.material ? TRUE :FALSE)
+				A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial)
 
 
 				if (prob(50))
 					var/atom/movable/B = new /obj/item/raw_material/scrap_metal
 					B.set_loc(src)
-					B.setMaterial(src.material ? src.material : defaultMaterial, copy = src.material ? TRUE :FALSE)
+					B.setMaterial(src.material ? src.material : defaultMaterial)
 
 			else if( prob(50))
 				var/atom/A = new /obj/structure/girder(src)
-				A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = src.material ? TRUE :FALSE)
+				A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial)
 
 	else
 		if (!devastated)
@@ -166,33 +211,33 @@ TYPEINFO(/turf/simulated/wall)
 			var/atom/B = new /obj/item/sheet( src )
 			var/atom/C = new /obj/item/sheet( src )
 
-			A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = src.material ? TRUE :FALSE)
-			B.setMaterial(src.material ? src.material : defaultMaterial, copy = src.material ? TRUE :FALSE)
-			C.setMaterial(src.material ? src.material : defaultMaterial, copy = src.material ? TRUE :FALSE)
+			A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial)
+			B.setMaterial(src.material ? src.material : defaultMaterial)
+			C.setMaterial(src.material ? src.material : defaultMaterial)
 
 		else
 			if (prob(50))
 				var/atom/A = new /obj/structure/girder/displaced(src)
-				A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = src.material ? TRUE :FALSE)
+				A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial)
 
 
 			else if (prob(50))
 				var/atom/B = new /obj/structure/girder(src)
 
-				B.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = src.material ? TRUE :FALSE)
+				B.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial)
 
 
 				if (prob(50))
 					var/atom/movable/C = new /obj/item/raw_material/scrap_metal
 					C.set_loc(src)
-					C.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = src.material ? TRUE :FALSE)
+					C.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial)
 
 
 	var/atom/D = ReplaceWithFloor()
 	if (src.material && keep_material)
 		D.setMaterial(src.material)
 	else
-		D.setMaterial(getMaterial("steel"), copy = FALSE)
+		D.setMaterial(getMaterial("steel"))
 
 
 /turf/simulated/wall/burn_down()
@@ -316,7 +361,7 @@ TYPEINFO(/turf/simulated/wall)
 				health *= 1.5
 			else if (src.material.getProperty("density") <= 2)
 				health *= 0.75
-			if(src.material.material_flags & MATERIAL_CRYSTAL)
+			if(src.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 				health /= 2
 				desc += " Wait where did the girder go?"
 		return
@@ -362,7 +407,7 @@ TYPEINFO(/turf/simulated/wall)
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					A.setMaterial(getMaterial("steel"), copy = FALSE)
+					A.setMaterial(getMaterial("steel"))
 				boutput(user, "<span class='notice'>You removed the support rods.</span>")
 			else if((isrobot(user) && (user.loc == T)))
 				src.d_state = 6
@@ -370,7 +415,7 @@ TYPEINFO(/turf/simulated/wall)
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					A.setMaterial(getMaterial("steel"), copy = FALSE)
+					A.setMaterial(getMaterial("steel"))
 				boutput(user, "<span class='notice'>You removed the support rods.</span>")
 
 	else if (iswrenchingtool(W))
@@ -394,7 +439,7 @@ TYPEINFO(/turf/simulated/wall)
 			if (src.material)
 				A.setMaterial(src.material)
 			else
-				A.setMaterial(getMaterial("steel"), copy = FALSE)
+				A.setMaterial(getMaterial("steel"))
 
 	else if (isscrewingtool(W))
 		if (src.d_state == 1)
@@ -459,7 +504,7 @@ TYPEINFO(/turf/simulated/wall)
 			if(S.material)
 				src.setMaterial(S.material)
 			else
-				src.setMaterial(getMaterial("steel"), copy = FALSE)
+				src.setMaterial(getMaterial("steel"))
 			boutput(user, "<span class='notice'>You repaired the wall.</span>")
 
 //grabsmash

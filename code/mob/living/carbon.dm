@@ -1,5 +1,5 @@
 
-/mob/living/carbon/
+/mob/living/carbon
 	gender = MALE // WOW RUDE
 	var/last_eating = 0
 
@@ -45,14 +45,13 @@
 							return
 					if (2) //lube
 						src.remove_pulling()
-						src.changeStatus("weakened", 3.5 SECONDS)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						playsound(T, 'sound/misc/slip.ogg', 50, 1, -3)
 						var/atom/target = get_edge_target_turf(src, src.dir)
 						src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
 					if (3) // superlube
 						src.remove_pulling()
-						src.changeStatus("weakened", 6 SECONDS)
+						src.changeStatus("weakened", 3.5 SECONDS)
 						playsound(T, 'sound/misc/slip.ogg', 50, 1, -3)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						var/atom/target = get_edge_target_turf(src, src.dir)

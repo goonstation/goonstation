@@ -10,7 +10,6 @@
 	var/obj/machinery/atmospherics/node
 	var/datum/pipe_network/network
 	var/on = 0
-	level = 0
 	layer = PIPE_LAYER
 
 	New()
@@ -23,7 +22,7 @@
 
 	update_icon()
 		if(node)
-			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
+			icon_state = "[level == UNDERFLOOR && istype(loc, /turf/simulated) ? "h" : "" ]intact"
 			set_dir(get_dir(src, node))
 		else
 			icon_state = "exposed"

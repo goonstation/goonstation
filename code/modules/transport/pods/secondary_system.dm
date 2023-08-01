@@ -103,7 +103,7 @@
 		return
 
 	Clickdrag_PodToObject(var/mob/living/user,var/atom/A)
-		if (contents.len < 1)
+		if (length(contents) < 1)
 			boutput(user, "<span class='alert'>[src] has nothing to unload.</span>")
 			return
 
@@ -116,6 +116,9 @@
 				break
 		if (!inrange)
 			boutput(user, "<span class='alert'>That tile too far away.</span>")
+			return
+
+		if (T.density)
 			return
 
 		for(var/obj/O in T.contents)
@@ -181,7 +184,7 @@
 			return
 		if("Unload")
 			var/crate
-			if (load.len == 1)
+			if (length(load) == 1)
 				crate = load[1]
 			else
 				crate = input(usr, "Choose which cargo to unload..", "Choose cargo")  as null|anything in load
@@ -219,6 +222,9 @@
 			break
 	if (!inrange)
 		boutput(user, "<span class='alert'>That tile too far away.</span>")
+		return
+
+	if (T.density)
 		return
 
 	for(var/obj/O in T.contents)
@@ -922,9 +928,7 @@
 			var/turf/target = get_edge_target_turf(ship, ship.dir)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-			if(O.bound_width==32 && O.bound_height==32)
-				O.anchored = UNANCHORED
-			O.throw_at(target, 4, 2)
+			O.throw_at(target, 20, 3, allow_anchored = TRUE, bonus_throwforce = 15)
 			if (istype(O, /obj/machinery/vehicle))
 				A.meteorhit(src)
 				crashhits -= 3

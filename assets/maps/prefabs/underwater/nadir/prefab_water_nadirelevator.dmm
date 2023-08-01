@@ -60,9 +60,7 @@
 /turf/space/fluid/acid/clear,
 /area/noGenerate)
 "dd" = (
-/obj/landmark{
-	name = "seafall"
-	},
+/obj/landmark/fall/sea/elevator,
 /turf/simulated/floor/plating,
 /area/shuttle/sea_elevator/lower)
 "dh" = (
@@ -996,9 +994,7 @@
 /area/diner/kitchen)
 "Jv" = (
 /obj/submachine/chef_oven,
-/obj/landmark{
-	name = "shitty_bill_respawn"
-	},
+/obj/landmark/bill_spawn,
 /turf/simulated/floor/black/grime,
 /area/diner/kitchen)
 "JO" = (
@@ -1227,9 +1223,7 @@
 /area/diner/kitchen)
 "QH" = (
 /obj/stool/bar,
-/obj/landmark/spawner{
-	name = "shitty_bill"
-	},
+/mob/living/carbon/human/biker,
 /turf/simulated/floor/carpet/red/standard/edge/west,
 /area/diner/dining)
 "Rd" = (
@@ -1551,9 +1545,7 @@
 /obj/stool/chair/wooden{
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "don_glab"
-	},
+/mob/living/carbon/human/don_glab,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "YC" = (
@@ -1645,9 +1637,7 @@
 /obj/stool/chair/wooden{
 	dir = 4
 	},
-/obj/landmark/spawner{
-	name = "father_jack"
-	},
+/mob/living/carbon/human/fatherjack,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "ZZ" = (

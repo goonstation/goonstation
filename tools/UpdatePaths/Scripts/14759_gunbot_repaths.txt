@@ -1,0 +1,2 @@
+/obj/critter/gunbot : /mob/living/critter/robotic/gunbot/light
+/obj/critter/gunbot/heavy : /mob/living/critter/robotic/gunbot{@OLD}

@@ -139,12 +139,12 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			stab_resist 	= material.getProperty("hard") * 10
 			corrode_resist 	= material.getProperty("chemical") * 10
 
-			if (material.alpha > 220)
+			if (material.getAlpha() > 220)
 				set_opacity(1) // useless opaque window)
 			else
 				set_opacity(0)
 
-			if(src.material.special_naming)
+			if(src.material.usesSpecialNaming())
 				name = src.material.specialNaming(src)
 
 		if (istype(reinforcement))
@@ -157,7 +157,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			stab_resist 	+= round(reinforcement.getProperty("hard") * 5)
 			corrode_resist 	+= round(reinforcement.getProperty("chemical") * 5)
 
-			name = "[reinforcement.name]-reinforced " + name
+			name = "[reinforcement.getName()]-reinforced " + name
 
 	proc/set_reinforcement(var/datum/material/M)
 		if (!M)
@@ -853,7 +853,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		if (!src.damage_image)
 			src.damage_image = image('icons/obj/window_damage.dmi')
 			src.damage_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
-			if(src.material?.mat_id == "plasmaglass") //plasmaglass gets hand-picked alpha since it's so common and looks odd with default
+			if(src.material?.getID() == "plasmaglass") //plasmaglass gets hand-picked alpha since it's so common and looks odd with default
 				src.damage_image.alpha = 85
 			else
 				src.damage_image.alpha = 180

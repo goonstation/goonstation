@@ -619,7 +619,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		if(5)
 			if(istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
-				if (S.material && S.material.material_flags & MATERIAL_METAL)
+				if (S.material && S.material.getMaterialFlags() & MATERIAL_METAL)
 					if( S.amount < src.metal_amt)
 						boutput(user, text("<span class='alert'>You need at least [src.metal_amt] metal sheets to make the internal plating.</span>"))
 						return
@@ -708,7 +708,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				if (!S.material)
 					boutput(user, "These sheets won't work. You'll need reinforced glass or crystal.")
 					return
-				if (!(S.material.material_flags & MATERIAL_CRYSTAL) || !S.reinforcement)
+				if (!(S.material.getMaterialFlags() & MATERIAL_CRYSTAL) || !S.reinforcement)
 					boutput(user, "These sheets won't work. You'll need reinforced glass or crystal.")
 					return
 
@@ -1039,7 +1039,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 250
 	maxhealth = 250
 	speed = 0.9
-	init_comms_type = /obj/item/shipcomponent/communications/
+	init_comms_type = /obj/item/shipcomponent/communications
 
 /obj/machinery/vehicle/pod_smooth/nt_robust
 	name = "Pod NTR-"
@@ -1049,7 +1049,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 500
 	maxhealth = 500
 	speed = 0.8
-	init_comms_type = /obj/item/shipcomponent/communications/
+	init_comms_type = /obj/item/shipcomponent/communications
 
 /obj/machinery/vehicle/pod_smooth/sy_light
 	name = "Pod SYL-"
@@ -1347,7 +1347,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 		for(T in checkturfs)
 			if (istype(T, /turf/space))
 				continue
-			if (!T.allows_vehicles)
+			if (!T.allows_vehicles || T.density)
 				canbuild = 0
 				boutput(user, "<span class='alert'>You can't build a pod here! It'd get stuck.</span>")
 				break

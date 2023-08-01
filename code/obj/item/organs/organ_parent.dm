@@ -291,7 +291,7 @@
 
 	emp_act()
 		if (robotic)
-			src.take_damage(20, 20, 0)
+			src.take_damage(20, 20, 20)
 
 	proc/add_ability(var/datum/abilityHolder/aholder, var/abil) // in case things wanna do stuff instead of just straight-up adding/removing the abilities (see: laser eyes)
 		if (!aholder || !abil)
