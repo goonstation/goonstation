@@ -568,7 +568,7 @@
 /area/prefab/torpedo_deposit)
 "WB" = (
 /obj/decal/cleanable/dirt/dirt3,
-/obj/critter/gunbot/heavy,
+/mob/living/critter/robotic/gunbot,
 /turf/simulated/floor/black,
 /area/prefab/torpedo_deposit)
 "WO" = (

@@ -30,11 +30,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/prefab/von_ricken)
-"bE" = (
-/obj/critter/mechmonstrositycrawler,
-/obj/decal/cleanable/dirt/jen,
-/turf/simulated/floor/black,
-/area/prefab/von_ricken)
 "bO" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -218,6 +213,17 @@
 	},
 /turf/simulated/floor/wood,
 /area/prefab/von_ricken)
+"gL" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/obj/decal/mule/dropoff,
+/obj/mapping_helper/access/maint,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
 "gN" = (
 /obj/lattice{
 	dir = 6;
@@ -232,6 +238,10 @@
 "gX" = (
 /turf/simulated/wall/auto/jen,
 /area/prefab/von_ricken)
+"hm" = (
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
 "hI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -241,6 +251,14 @@
 	},
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"ir" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/obj/decal/mule/dropoff,
+/obj/mapping_helper/access/maint,
+/turf/simulated/floor/plating,
 /area/prefab/von_ricken)
 "iC" = (
 /obj/lattice{
@@ -265,6 +283,17 @@
 /area/prefab/von_ricken)
 "jm" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/von_ricken)
+"jG" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/oil/streak,
+/obj/machinery/door/airlock/pyro/medical/alt{
+	name = "Operating Room"
+	},
+/obj/mapping_helper/access/robotics,
+/turf/simulated/floor/black,
 /area/prefab/von_ricken)
 "jI" = (
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
@@ -400,14 +429,6 @@
 /obj/item/roboupgrade/physshield,
 /turf/simulated/floor/black,
 /area/prefab/von_ricken)
-"oX" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4
-	},
-/obj/decal/mule/dropoff,
-/obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating,
-/area/prefab/von_ricken)
 "pd" = (
 /obj/machinery/vehicle/pod_smooth/light{
 	dir = 4
@@ -452,7 +473,7 @@
 /turf/simulated/floor/black,
 /area/prefab/von_ricken)
 "qm" = (
-/obj/critter/gunbot/heavy,
+/mob/living/critter/robotic/gunbot,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -621,7 +642,7 @@
 /turf/simulated/floor/black,
 /area/prefab/von_ricken)
 "wC" = (
-/obj/critter/gunbot/heavy,
+/mob/living/critter/robotic/gunbot,
 /obj/decal/cleanable/oil/streak,
 /turf/simulated/floor/specialroom/medbay,
 /area/prefab/von_ricken)
@@ -659,10 +680,6 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
-"yw" = (
-/obj/mapping_helper/wingrille_spawn/auto/tuff,
-/turf/simulated/floor/plating,
-/area/prefab/von_ricken)
 "yD" = (
 /obj/random_item_spawner/med_kit/one,
 /turf/simulated/floor/black,
@@ -759,19 +776,6 @@
 	pixel_y = -2
 	},
 /turf/simulated/floor/airless/neutral,
-/area/prefab/von_ricken)
-"AO" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4;
-	icon_state = "maint_locked";
-	locked = 1
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/decal/mule/dropoff,
-/obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating,
 /area/prefab/von_ricken)
 "AX" = (
 /obj/table/reinforced/auto,
@@ -888,6 +892,20 @@
 	},
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"EC" = (
+/obj/cable{
+	icon_state = "0-10"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 8;
+	name = "Cyborg Storage"
+	},
+/obj/mapping_helper/access/robotics,
+/turf/simulated/floor/black,
 /area/prefab/von_ricken)
 "Fk" = (
 /obj/stool/chair/blue{
@@ -1014,17 +1032,6 @@
 /obj/decal/poster/wallsign/stencil/right/n,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/von_ricken)
-"Ja" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4
-	},
-/obj/decal/mule/dropoff,
-/obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating,
-/area/prefab/von_ricken)
 "Jh" = (
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/specialroom/medbay,
@@ -1140,6 +1147,19 @@
 "MC" = (
 /turf/simulated/floor/carpet/red/fancy/narrow/se,
 /area/prefab/von_ricken)
+"Ne" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4;
+	icon_state = "maint_locked";
+	locked = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/mule/dropoff,
+/obj/mapping_helper/access/maint,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
 "NE" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/storage/secure/closet/fridge{
@@ -1153,6 +1173,10 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"NT" = (
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
+/turf/simulated/floor/airless/plating,
 /area/prefab/von_ricken)
 "Od" = (
 /obj/item/device/multitool{
@@ -1190,7 +1214,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/prefab/von_ricken)
 "Pl" = (
-/obj/critter/gunbot/heavy,
+/mob/living/critter/robotic/gunbot,
 /turf/simulated/floor/wood,
 /area/prefab/von_ricken)
 "Pt" = (
@@ -1258,6 +1282,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/prefab/von_ricken)
+"Rc" = (
+/mob/living/critter/robotic/crawler,
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
 "Rf" = (
 /obj/rack,
 /obj/item/storage/toolbox/mechanical{
@@ -1306,20 +1335,6 @@
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/specialroom/medbay,
 /area/prefab/von_ricken)
-"RH" = (
-/obj/cable{
-	icon_state = "0-10"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 8;
-	name = "Cyborg Storage"
-	},
-/obj/mapping_helper/access/robotics,
-/turf/simulated/floor/black,
-/area/prefab/von_ricken)
 "RL" = (
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/plating,
@@ -1344,17 +1359,6 @@
 	pixel_y = 11
 	},
 /turf/simulated/floor/wood,
-/area/prefab/von_ricken)
-"Sq" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/decal/cleanable/oil/streak,
-/obj/machinery/door/airlock/pyro/medical/alt{
-	name = "Operating Room"
-	},
-/obj/mapping_helper/access/robotics,
-/turf/simulated/floor/black,
 /area/prefab/von_ricken)
 "SC" = (
 /obj/item/storage/secure/ssafe/vonricken,
@@ -1405,6 +1409,21 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"TH" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 8;
+	name = "Operating Room"
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = 4
+	},
+/obj/mapping_helper/access/robotics,
+/turf/simulated/floor/black,
 /area/prefab/von_ricken)
 "TT" = (
 /obj/decal/cleanable/dirt/jen,
@@ -1459,10 +1478,6 @@
 /area/prefab/von_ricken)
 "VD" = (
 /turf/simulated/floor/black,
-/area/prefab/von_ricken)
-"VE" = (
-/obj/mapping_helper/wingrille_spawn/auto/tuff,
-/turf/simulated/floor/airless/plating,
 /area/prefab/von_ricken)
 "VG" = (
 /obj/cable,
@@ -1578,21 +1593,6 @@
 	},
 /obj/decal/cleanable/oil/streak,
 /turf/simulated/floor/airless/neutral,
-/area/prefab/von_ricken)
-"ZU" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 8;
-	name = "Operating Room"
-	},
-/obj/decal/cleanable/blood/tracks{
-	dir = 8;
-	pixel_y = 4
-	},
-/obj/mapping_helper/access/robotics,
-/turf/simulated/floor/black,
 /area/prefab/von_ricken)
 
 (1,1,1) = {"
@@ -1868,7 +1868,7 @@ xE
 Fk
 VD
 PI
-bE
+Rc
 VD
 LB
 jm
@@ -1955,7 +1955,7 @@ Pz
 ex
 qf
 qf
-Sq
+jG
 qf
 AH
 jm
@@ -2083,7 +2083,7 @@ jm
 jm
 jm
 jm
-ZU
+TH
 jm
 jm
 zm
@@ -2245,16 +2245,16 @@ zm
 zm
 zm
 jm
-VE
-VE
-VE
-VE
+NT
+NT
+NT
+NT
 jm
 zm
 zm
 zm
 jm
-AO
+Ne
 jm
 gX
 gX
@@ -2407,18 +2407,18 @@ lI
 UU
 jm
 jm
-oX
+ir
 jm
 zm
 zm
-VE
-VE
-VE
-VE
-VE
-VE
-VE
-VE
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
 zm
 zm
 gQ
@@ -2452,16 +2452,16 @@ aY
 CP
 jm
 jm
-VE
-VE
+NT
+NT
 CP
 lS
 CP
 CP
 lS
 CP
-VE
-VE
+NT
+NT
 jm
 jm
 YI
@@ -2620,16 +2620,16 @@ dp
 KC
 jm
 jm
-VE
-VE
+NT
+NT
 CP
 lS
 CP
 CP
 lS
 Jh
-VE
-VE
+NT
+NT
 jm
 jm
 YI
@@ -2659,18 +2659,18 @@ XI
 pA
 jm
 jm
-AO
+Ne
 jm
 zm
 zm
-VE
-VE
-VE
-VE
-VE
-VE
-VE
-VE
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
 zm
 zm
 jm
@@ -2792,9 +2792,9 @@ zm
 zm
 zm
 jm
-VE
-yw
-yw
+NT
+hm
+hm
 jm
 jm
 zm
@@ -2842,7 +2842,7 @@ jm
 zm
 zm
 jm
-Ja
+gL
 jm
 gX
 gX
@@ -3003,7 +3003,7 @@ jm
 jm
 jm
 jm
-RH
+EC
 jm
 jm
 jm

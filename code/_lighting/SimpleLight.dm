@@ -25,7 +25,7 @@
 
 	show_simple_light()
 
-	if (simple_light_rgbas.len == 1) //dont loop/average if list only contains 1 thing
+	if (length(simple_light_rgbas) == 1) //dont loop/average if list only contains 1 thing
 		simple_light.color = rgb(rgba[1], rgba[2], rgba[3], rgba[4])
 	else
 		update_simple_light_color()
@@ -42,7 +42,7 @@
 	else
 		simple_light_rgbas.len = 0
 
-	if (simple_light_rgbas.len <= 0)
+	if (length(simple_light_rgbas) <= 0)
 		hide_simple_light()
 	else
 		update_simple_light_color()
@@ -127,7 +127,7 @@
 
 	show_medium_light()
 
-	if (medium_light_rgbas.len == 1) //dont loop/average if list only contains 1 thing
+	if (length(medium_light_rgbas) == 1) //dont loop/average if list only contains 1 thing
 		for(var/obj/overlay/simple_light/medium/medium_light in src.medium_lights)
 			if(medium_light.icon_state == "medium_center")
 				medium_light.color = rgb(rgba[1], rgba[2], rgba[3], min(255, rgba[4]))
@@ -149,7 +149,7 @@
 	else
 		medium_light_rgbas.len = 0
 
-	if (medium_light_rgbas.len <= 0)
+	if (length(medium_light_rgbas) <= 0)
 		hide_medium_light()
 	else
 		update_medium_light_color()
@@ -248,7 +248,7 @@
 
 	show_mdir_light()
 
-	if (mdir_light_rgbas.len == 1) //dont loop/average if list only contains 1 thing
+	if (length(mdir_light_rgbas) == 1) //dont loop/average if list only contains 1 thing
 		for(var/obj/overlay/simple_light/medium/directional/mdir_light in src.mdir_lights)
 			if(mdir_light.dist == mdir_light_dists[mdir_light_dists.len])
 				mdir_light.color = rgb(rgba[1], rgba[2], rgba[3], min(255, rgba[4]))
@@ -270,7 +270,7 @@
 	else
 		mdir_light_rgbas.len = 0
 
-	if (mdir_light_rgbas.len <= 0)
+	if (length(mdir_light_rgbas) <= 0)
 		hide_mdir_light()
 	else
 		update_mdir_light_color()

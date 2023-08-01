@@ -33,9 +33,9 @@ obj/item/rocko
 		if (prob(10))
 			var/new_material = pick(childrentypesof(/datum/material/metal))
 			var/datum/material/dummy = new new_material
-			src.setMaterial(getMaterial(dummy.mat_id), setname = FALSE)
+			src.setMaterial(getMaterial(dummy.getID()), setname = FALSE)
 		else
-			src.setMaterial(getMaterial("rock"), appearance = FALSE, setname = FALSE, copy = FALSE)
+			src.setMaterial(getMaterial("rock"), appearance = FALSE, setname = FALSE)
 
 		UpdateIcon()
 
@@ -147,8 +147,8 @@ obj/item/rocko
 		else
 			. = "A rock with a [src.smile ? "smiley" : "frowny"] face painted on it."
 
-		if (src.material?.mat_id != "rock")
-			. += "<br>Wait, that isn't a rock. It's a [pick("hunk", "chunk")] of [src.material.name]!"
+		if (src.material?.getID() != "rock")
+			. += "<br>Wait, that isn't a rock. It's a [pick("hunk", "chunk")] of [src.material.getName()]!"
 
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W,/obj/item/clothing/head))

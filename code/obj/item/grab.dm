@@ -176,7 +176,7 @@
 		if (!isturf(src.assailant.loc) || !(BOUNDS_DIST(src.assailant, src.affecting) == 0))
 			return
 
-		actions.interrupt(src.affecting, INTERRUPT_ALWAYS)
+		actions.interrupt(src.affecting, INTERRUPT_MOVE)
 
 		var/pxo = 0
 		var/pyo = 0

@@ -162,18 +162,18 @@
 		setProperty("meleeprot_head", 3 + prot)
 
 		// Setup item overlays
-		fabrItemImg.color = helmMat.color
-		visrItemImg.color = visrMat.color
+		fabrItemImg.color = helmMat.getColor()
+		visrItemImg.color = visrMat.getColor()
 		UpdateOverlays(visrItemImg, "item-visor")
 		UpdateOverlays(fabrItemImg, "item-helmet")
 		// Setup worn overlays
-		fabrWornImg.color = helmMat.color
-		visrWornImg.color = visrMat.color
+		fabrWornImg.color = helmMat.getColor()
+		visrWornImg.color = visrMat.getColor()
 		src.wear_image.overlays += fabrWornImg
 		src.wear_image.overlays += visrWornImg
 		// Add back the helmet texture since we overide the material apparance
-		if (helmMat.texture)
-			src.setTexture(helmMat.texture, helmMat.texture_blend, "material")
+		if (helmMat.getTexture())
+			src.setTexture(helmMat.getTexture(), helmMat.getTextureBlendMode(), "material")
 
 // Sealab helmets
 
@@ -293,6 +293,7 @@
 		name = "engineering light space helmet"
 		desc = "A lightweight engineering space helmet. It's lacking any major padding or reinforcement."
 		icon_state = "spacelight-e"
+		see_face = TRUE
 
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
@@ -738,6 +739,13 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 		if (ishuman(the_mob))
 			..()
 
+	/// Ran when the wearer emotes
+	proc/emote_handler(mob/source, var/emote)
+		switch(emote)
+			if ("nod")
+				src.flip_down(source, silent=TRUE)
+				boutput(source, "<span class='hint'>You nod, dropping the welding mask over your face.</span>")
+
 	proc/obscure(mob/user)
 		user.addOverlayComposition(/datum/overlayComposition/weldingmask)
 		user.updateOverlaysClient(user.client)
@@ -746,12 +754,11 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 		user.removeOverlayComposition(/datum/overlayComposition/weldingmask)
 		user.updateOverlaysClient(user.client)
 
-	proc/flip_down(var/mob/living/carbon/human/user)
+	proc/flip_down(var/mob/living/carbon/human/user, var/silent = FALSE)
 		up = FALSE
 		see_face = FALSE
 		icon_state = "welding[decal ? "-[decal]" : null]"
 		item_state = "welding[decal ? "-[decal]" : null]"
-		boutput(user, "You flip the mask down. The mask now provides protection from eye damage.")
 		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
 		src.hides_from_examine |= (C_EARS|C_MASK|C_GLASSES)
 		setProperty("meleeprot_head", 1)
@@ -760,14 +767,15 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 			if (user.head == src)
 				src.obscure(user)
 				user.update_clothing()
+		if (!silent)
+			boutput(user, "<span class='hint'>You flip the mask down. The mask now provides protection from eye damage.</span>")
 
 
-	proc/flip_up(var/mob/living/carbon/human/user)
+	proc/flip_up(var/mob/living/carbon/human/user, var/silent = FALSE)
 		up = TRUE
 		see_face = TRUE
 		icon_state = "welding-up[decal ? "-[decal]" : null]"
 		item_state = "welding-up[decal ? "-[decal]" : null]"
-		boutput(user, "You flip the mask up. The mask now provides higher armor to the head.")
 		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
 		src.hides_from_examine &= ~(C_EARS|C_MASK|C_GLASSES)
 		setProperty("meleeprot_head", 4)
@@ -776,15 +784,19 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 			if (user.head == src)
 				src.reveal(user)
 				user.update_clothing()
+		if (!silent)
+			boutput(user, "<span class='hint'>You flip the mask up. The mask now provides higher armor to the head.</span>")
 
 	equipped(mob/user, slot)
 		. = ..()
 		if (!src.up)
 			src.obscure(user)
+		RegisterSignal(user, COMSIG_MOB_EMOTE, PROC_REF(emote_handler))
 
 	unequipped(mob/user)
 		. = ..()
 		src.reveal(user)
+		UnregisterSignal(user, COMSIG_MOB_EMOTE)
 
 	disposing()
 		. = ..()
