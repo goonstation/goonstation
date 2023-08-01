@@ -205,7 +205,7 @@
 		src.equip_new_if_possible((/obj/item/clothing/mask/gas/swat), SLOT_WEAR_MASK)
 		src.equip_new_if_possible((/obj/item/clothing/under/rank/head_of_security/fancy_alt), SLOT_W_UNIFORM)
 		src.equip_new_if_possible((/obj/item/clothing/suit/armor/vest), SLOT_WEAR_SUIT)
-		src.equip_if_possible((/obj/item/clothing/gloves/black), SLOT_GLOVES)
+		src.equip_new_if_possible((/obj/item/clothing/gloves/black), SLOT_GLOVES)
 		src.equip_new_if_possible((/obj/item/clothing/shoes/swat), SLOT_SHOES)
 
 	Life(datum/controller/process/mobs/parent)

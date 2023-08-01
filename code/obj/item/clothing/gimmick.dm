@@ -1910,3 +1910,56 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	desc = "JC stands for Jesus Christ."
 	icon_state = "jcdenton"
 	item_state = "jcdenton"
+
+// NT Warden Set
+
+/obj/item/clothing/under/gimmick/warden
+	name = "NT Warden Uniform"
+	desc = "A uniform used by NT Wardens, contains a silver pauldron. Only one though."
+	icon_state = "warden"
+	item_state = "warden"
+
+/obj/item/clothing/suit/armor/reward_vest
+	name = "NT Warden Vest"
+	desc = "A special armor vest with a badge and some keys! Way waaay too many keys..."
+	icon_state = "reward_vest"
+	item_state = "reward_vest"
+	bloodoverlayimage = SUITBLOOD_ARMOR
+	hides_from_examine = 0
+	mat_changename = FALSE
+	default_material = "carbonfibre"
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 6)
+		setProperty("rangedprot", 1)
+
+/obj/item/clothing/head/gimmick/wardencap
+	name = "NT Warden Cap"
+	desc = "Every outfit needs a hat, and don't let anyone ever tell you otherwise."
+	icon_state = "wardencap"
+	item_state = "wardencap"
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 10)
+		setProperty("heatprot", 10)
+		setProperty("meleeprot_head", 5)
+
+/obj/item/clothing/shoes/warden
+	name = "NT Warden Boots"
+	desc = "Beepsky would approve of these scumbag crushing boots."
+	icon_state = "warden"
+	item_state = "warden"
+	protective_temperature = 1250
+	step_sound = "step_military"
+	step_priority = STEP_PRIORITY_LOW
+	step_lots = 1
+	kick_bonus = 2
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 10)
+		setProperty("heatprot", 10)
+		setProperty("chemprot", 7)
+		setProperty("meleeprot", 1)

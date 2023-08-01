@@ -497,3 +497,18 @@ TYPEINFO(/obj/item/clothing/suit/armor/NT_alt)
 		setProperty("rangedprot", 0.7)
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 35)
+
+/obj/item/clothing/suit/armor/ntwarden
+	name = "NT Warden's Vest"
+	desc = "A special armor vest with a badge and some keys! Way waaay too many keys..."
+	icon_state = "reward_vest"
+	item_state = "reward_vest"
+	bloodoverlayimage = SUITBLOOD_ARMOR
+	hides_from_examine = 0
+	mat_changename = FALSE
+	default_material = "carbonfibre"
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 6)
+		setProperty("rangedprot", 1)
