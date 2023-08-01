@@ -14,6 +14,7 @@
 		if(isnull(src.spawn_type))
 			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
 		var/mob/living/M = new spawn_type(src.loc)
+		M.unobservable = TRUE //make it not show up in the observer list
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)
 			M.set_loc(container)
@@ -36,6 +37,19 @@
 			M.set_loc(container)
 			container.update_icon()
 		M.death(FALSE)
+
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian
+	name = "Random Martian Corpse Spawn"
+	icon_state = "corpse-critter-rand"
+	var/static/list/spawns = list(
+		/mob/living/critter/martian,
+		/mob/living/critter/martian/warrior,
+		/mob/living/critter/martian/mutant,
+		/mob/living/critter/martian/soldier)
+
+	initialize()
+		src.spawn_type = pick(spawns)
+		..()
 
 /obj/mapping_helper/mob_spawn/corpse/human // Human spawner handles some randomisation / customisation
 	name = "Human Corpse Spawn"

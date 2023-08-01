@@ -291,7 +291,7 @@ TYPEINFO(/obj/player_piano)
 		play_notes(1)
 
 	proc/play_notes(var/is_master) //how notes are handled, using while and spawn to set a very strict interval, solo piano process loop was too variable to work for music
-		if (linked_pianos.len > 0 && is_master)
+		if (length(linked_pianos) > 0 && is_master)
 			for (var/obj/player_piano/p in linked_pianos)
 				SPAWN(0)
 					p.ready_piano(1)

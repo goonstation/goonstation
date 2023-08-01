@@ -315,7 +315,7 @@ chui/window
 	else
 		var/onCloseRef = winget(src, window, "on-close") //This exists to allow chui windows to work with the normal onclose.
 		var/list/split = splittext(onCloseRef, " ")		 //Unfortunately this ends up calling it twice if a window is closed by chui.
-		if(split.len >= 2) 								 //If anyone has a better solution go for it but don't just remove it because it will break things.
+		if(length(split) >= 2) 								 //If anyone has a better solution go for it but don't just remove it because it will break things.
 			var/datum/targetDatum = locate(split[2])
 			if (targetDatum)
 				targetDatum.Topic("close=1", params2list("close=1"), targetDatum)

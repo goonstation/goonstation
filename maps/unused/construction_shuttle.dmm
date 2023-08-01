@@ -634,9 +634,7 @@
 /area/shuttle/arrival/station)
 "bM" = (
 /obj/item/device/radio/beacon,
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "bN" = (

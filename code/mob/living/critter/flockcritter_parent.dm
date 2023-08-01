@@ -15,7 +15,6 @@ TYPEINFO(/mob/living/critter/flock)
 	speechverb_stammer = "buzzes"
 	custom_gib_handler = /proc/flockdronegibs
 	custom_vomit_type = /obj/decal/cleanable/flockdrone_debris/fluid
-	default_material = "gnesis"
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	see_invisible = INVIS_FLOCK
@@ -62,7 +61,6 @@ TYPEINFO(/mob/living/critter/flock)
 /mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
 	..()
 	remove_lifeprocess(/datum/lifeprocess/radiation)
-	src.material.setProperty("reflective", 5)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)

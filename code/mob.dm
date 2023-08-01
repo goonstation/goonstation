@@ -1273,7 +1273,7 @@
 	if (istype(W))
 		actions.interrupt(src, INTERRUPT_ACT)
 		var/obj/item/magtractor/origW
-		if (W.useInnerItem && W.contents.len > 0)
+		if (W.useInnerItem && length(W.contents) > 0)
 			if (istype(W, /obj/item/magtractor))
 				origW = W
 			var/obj/item/held = W.holding
@@ -1674,7 +1674,7 @@
 		src.active_color_matrix = null
 	else
 		var/first_entry = src.color_matrices[1]
-		if (src.color_matrices.len == 1) // Just one matrix?
+		if (length(src.color_matrices) == 1) // Just one matrix?
 			src.active_color_matrix = src.color_matrices[first_entry]
 		else
 			var/list/color_matrix_2_apply = src.color_matrices[first_entry]
@@ -2159,10 +2159,10 @@
 			the_butt = new /obj/item/clothing/head/butt/cyberbutt
 		else if (istype(src, /mob/living/intangible/wraith) || istype(src, /mob/dead))
 			the_butt = new /obj/item/clothing/head/butt
-			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE, copy = FALSE)
+			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE)
 		else if (istype(src, /mob/living/intangible/blob_overmind))
 			the_butt = new /obj/item/clothing/head/butt
-			the_butt.setMaterial(getMaterial("blob"), appearance = TRUE, setname = TRUE, copy = FALSE)
+			the_butt.setMaterial(getMaterial("blob"), appearance = TRUE, setname = TRUE)
 		else
 			the_butt = new /obj/item/clothing/head/butt/synth
 

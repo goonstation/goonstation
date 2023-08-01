@@ -636,14 +636,14 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 /mob/living/silicon/ai/attack_hand(mob/user)
 	var/list/actions = list("Do Nothing")
 
-	if (src.dismantle_stage >= 2 && src.installed_modules.len > 0)
+	if (src.dismantle_stage >= 2 && length(src.installed_modules) > 0)
 		actions += "Remove a module"
 	if (src.dismantle_stage == 3)
 		actions += "Remove CPU Unit"
 	if (src.dismantle_stage < 4 && isdead(src))
 		actions += "Restart AI"
 
-	if (actions.len > 1)
+	if (length(actions) > 1)
 		var/action_taken = tgui_input_list(user, "What do you want to do?", "AI Unit", actions)
 		if (!action_taken)
 			return
@@ -838,7 +838,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	var/list/CL = null
 	if (O && istype(O, /list))
 		CL = O
-		if (CL.len == 1)
+		if (length(CL) == 1)
 			C = CL[1]
 	else if (O && istype(O, /obj/machinery/camera))
 		C = O
@@ -871,7 +871,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			var/list/srcs  = alarm[3]
 			if (origin in srcs)
 				srcs -= origin
-			if (srcs.len == 0)
+			if (length(srcs) == 0)
 				cleared = 1
 				L -= I
 	if (cleared)
@@ -1520,7 +1520,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 					dat += text("-- [] (<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>)", A.name, src, C, Ctmp.c_tag)
 				else
 					dat += text("-- [] (No Camera)", A.name)
-				if (sources.len > 1)
+				if (length(sources) > 1)
 					dat += text("- [] sources", sources.len)
 				dat += "</NOBR><BR><br>"
 		else
@@ -2510,7 +2510,7 @@ proc/get_mobs_trackable_by_AI()
 
 /obj/ai_core_frame/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/sheet))
-		if (W.material.material_flags & MATERIAL_METAL) // metal sheets
+		if (W.material.getMaterialFlags() & MATERIAL_METAL) // metal sheets
 			if (src.build_step < 1)
 				var/obj/item/sheet/M = W
 				if (M.change_stack_amount(-3))
@@ -2528,7 +2528,7 @@ proc/get_mobs_trackable_by_AI()
 				boutput(user, "\The [src] already has plating!")
 				return
 
-		else if (W.material.material_flags & MATERIAL_CRYSTAL) // glass sheets
+		else if (W.material.getMaterialFlags() & MATERIAL_CRYSTAL) // glass sheets
 			if (src.build_step >= 2)
 				if (!src.has_glass)
 					var/obj/item/sheet/G = W

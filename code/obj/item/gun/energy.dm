@@ -678,7 +678,7 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 			else
 				continue
 
-		if (L.len < 2)
+		if (length(L) < 2)
 			user.show_text("Error: no working teleporters detected.", "red")
 			return
 
@@ -1366,7 +1366,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			are_you_the_law(M, message.content)
 			return //AFAIK only humans have fingerprints/"palmprints(in judge dredd)" so just ignore any talk from non-humans arlight? it's not a big deal.
 
-		if(!src.projectiles && !src.projectiles.len > 1)
+		if(!src.projectiles && !length(src.projectiles) > 1)
 			boutput(M, "<span class='notice'>Gun broke. Call 1-800-CODER.</span>")
 			set_current_projectile(new/datum/projectile/energy_bolt/aoe)
 			item_state = "lawg-detain"

@@ -953,7 +953,7 @@
 		framed_award/hos_medal
 			name = "framed medal"
 			desc = "A dusty old war medal."
-			award_type = /obj/item/clothing/suit/hosmedal/
+			award_type = /obj/item/clothing/suit/hosmedal
 			award_name = "medal"
 			owner_job = "Head of Security"
 			icon_glass = "medal1"
@@ -990,7 +990,7 @@
 		framed_award/firstbill
 			name = "framed space currency"
 			desc = "A single bill of space currency."
-			award_type = /obj/item/firstbill/
+			award_type = /obj/item/firstbill
 			award_name = "first bill"
 			owner_job = "Head of Personnel"
 			icon_glass = "hopcredit1"
@@ -1010,7 +1010,7 @@
 		framed_award/rddiploma
 			name = "research directors diploma"
 			desc = "A fancy space diploma."
-			award_type = /obj/item/rddiploma/
+			award_type = /obj/item/rddiploma
 
 			get_desc(dist)
 				if(award_text)
@@ -1032,7 +1032,7 @@
 		framed_award/mdlicense
 			name = "medical directors medical license"
 			desc = "There's just no way this is real."
-			award_type = /obj/item/mdlicense/
+			award_type = /obj/item/mdlicense
 			award_name = "medical license"
 			owner_job = "Medical Director"
 			icon_glass = "mdlicense1"
@@ -1092,7 +1092,7 @@
 
 	proc/clear_banner()
 		if (src.material)
-			src.color = src.material.color
+			src.color = src.material.getColor()
 		else
 			src.color = "#ffffff" // In case the material is null
 		src.overlays = null
