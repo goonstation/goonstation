@@ -511,10 +511,19 @@
 				var/ix
 				for (ix=0, ix < (diffx + 1) * (diffy + 1), ix++) // add 1 to diffs or a whole row/column of tiles are left out by math
 					var/turf/t = locate(currx, curry, selectedz)
+
 					currx++
 					if (currx > endx)
 						currx = startx
 						curry++
+
+					var/perm = 0
+					for(var/p in permittedTileTypes)
+						var/ttype = text2path(p)
+						if(istype(t, ttype))
+							perm = 1
+							break
+					if(!perm) continue
 
 					if (selecting == 3)
 						if (!roomList.Find(t))
