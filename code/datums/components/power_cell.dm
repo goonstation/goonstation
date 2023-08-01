@@ -149,7 +149,7 @@ TYPEINFO(/datum/component/power_cell)
 	if(istype(target, target_type))
 		redirect_object = target
 		RegisterSignal(redirect_object, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), PROC_REF(check_redirect))
-		boutput(user,"You connect [parent] to [target].")
+		boutput(user,"<span class='success'>You connect [parent] to [target].</span>")
 
 /datum/component/power_cell/redirect/proc/update_redirect(atom/movable/target, previous_loc, direction)
 	if(istype(parent, /obj/item/ammo/power_cell/redirect))

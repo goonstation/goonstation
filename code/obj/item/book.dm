@@ -13,7 +13,7 @@ Custom Books
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "book0"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
-	item_state = "paper"
+	item_state = "book"
 	layer = OBJ_LAYER
 	//cogwerks - burn vars
 	burn_point = 400
@@ -338,7 +338,7 @@ Custom Books
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "pinkbook"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
-	item_state = "paper"
+	item_state = "book"
 	layer = OBJ_LAYER
 
 	New()

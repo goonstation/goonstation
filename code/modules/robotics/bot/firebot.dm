@@ -423,7 +423,7 @@
 		..()
 		return
 
-	if(src.contents.len >= 1)
+	if(length(src.contents) >= 1)
 		boutput(user, "<span class='alert'>You need to empty [src] out first!</span>")
 		return
 

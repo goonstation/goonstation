@@ -121,8 +121,8 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 				var/atom/A = new /obj/item/sheet(src)
 				var/atom/B = new /obj/structure/girder/displaced(src)
 				var/datum/material/defaultMaterial = getMaterial("steel")
-				A.setMaterial(src.material ? src.material : defaultMaterial, copy = src.material ? TRUE :FALSE)
-				B.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = src.material ? TRUE :FALSE)
+				A.setMaterial(src.material ? src.material : defaultMaterial)
+				B.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial)
 
 				var/floorname1	= src.floorname
 				var/floorintact1	= src.floorintact
@@ -159,7 +159,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		if (src.operating)
 			return 0
 		src.operating = 1
-		src.name = src.material ? "false [src.material.name] wall" : "false wall"
+		src.name = src.material ? "false [src.material.getName()] wall" : "false wall"
 		animate(src, time = delay, pixel_x = 25, easing = BACK_EASING)
 		SPAWN(delay)
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits
@@ -181,7 +181,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		if (src.operating)
 			return 0
 		src.operating = 1
-		src.name = src.material ? "[src.material.name] wall" : "steel wall"
+		src.name = src.material ? "[src.material.getName()] wall" : "steel wall"
 		animate(src, time = delay, pixel_x = 0, easing = BACK_EASING)
 		src.set_density(1)
 		src.flags |= ALWAYS_SOLID_FLUID

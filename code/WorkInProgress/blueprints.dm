@@ -117,9 +117,9 @@
 					if(istype(O, /obj/item/sheet))
 						var/obj/item/sheet/S = O
 						if (S.material)
-							if (S.material.material_flags & MATERIAL_METAL)
+							if (S.material.getMaterialFlags() & MATERIAL_METAL)
 								metal_cnt += S.amount
-							if (S.material.material_flags & MATERIAL_CRYSTAL)
+							if (S.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 								glass_cnt += S.amount
 
 				boutput(user, "<span class='notice'>Currently loaded :</span>")
@@ -165,9 +165,9 @@
 			if(istype(O, /obj/item/sheet))
 				var/obj/item/sheet/S = O
 				if (S.material)
-					if (S.material.material_flags & MATERIAL_METAL)
+					if (S.material.getMaterialFlags() & MATERIAL_METAL)
 						metal_cnt += S.amount
-					if (S.material.material_flags & MATERIAL_CRYSTAL)
+					if (S.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 						glass_cnt += S.amount
 
 		if(metal_cnt < currentBp.req_metal || glass_cnt < currentBp.req_glass)

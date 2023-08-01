@@ -9,7 +9,7 @@
 #define ENGIVAC_MISC_ITEM_LIMIT 2 //How much non-listed crap a toolbox can have before the engivac rejects it.
 
 obj/item/engivac
-	name = "engineering materiel vacuum"
+	name = "engineering material vacuum"
 	desc = "A tool that sucks up debris and building materials into an inserted toolbox. It is also capable of automatically laying floor tiles on plating."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "engivac"

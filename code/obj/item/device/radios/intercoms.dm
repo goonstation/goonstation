@@ -59,7 +59,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 		attack_self(user)
 
 /obj/item/device/radio/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/fish))
+	if (istype(W, /obj/item/reagent_containers/food/fish))
 		if(src.dir == SOUTH)
 			user.visible_message("<b><span class='hint'>[user] shoves the fish over the intercom, and then mounts the whole thing on a board \
 				which they conveniently had.</span></b>", "<b><span class='hint'>You shove the fish over the intercom, and then mount the whole thing on a board \

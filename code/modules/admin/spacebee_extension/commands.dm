@@ -29,7 +29,7 @@
 		if (M.key) result += M.key
 		if (isdead(M)) result += "DEAD"
 		if (role) result += role
-		if (checktraitor(M)) result += "\[T\]"
+		if (checkantag(M)) result += "\[T\]"
 		system.reply(result.Join(" | "), user)
 
 /datum/spacebee_extension_command/addnote
