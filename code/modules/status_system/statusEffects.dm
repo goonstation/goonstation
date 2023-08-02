@@ -2390,7 +2390,8 @@
 		. = ..()
 		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "critical_condition")
 		H.remove_stam_mod_max("critical_condition")
-		H.changeStatus("recent_trauma", 90 SECONDS)
+		if (!isdead(H))
+			H.changeStatus("recent_trauma", 90 SECONDS)
 
 
 /datum/statusEffect/recenttrauma

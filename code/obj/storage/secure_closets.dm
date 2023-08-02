@@ -161,6 +161,16 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		src.open()
 		playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
 
+	Crossed(atom/movable/AM) //copy pasted from closet because inheritence is a lie
+		. = ..()
+		if (src.open && ismob(AM) && AM.throwing)
+			var/datum/thrown_thing/thr = global.throwing_controller.throws_of_atom(AM)[1]
+			AM.throw_impact(src, thr)
+			AM.throwing = FALSE
+			AM.changeStatus("weakened", 1 SECOND)
+			AM.set_loc(src.loc)
+			src.close()
+
 /obj/storage/secure/closet/personal
 	name = "personal locker"
 	desc = "The first card swiped gains control."

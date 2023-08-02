@@ -7187,6 +7187,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
+"dat" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8;
+	autoclose = 0
+	},
+/obj/mapping_helper/access/medical,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/white,
+/area/station/medical/medbooth)
 "daF" = (
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/mining/magnet)
@@ -12370,22 +12380,6 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/dome)
-"fnZ" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
-	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/obj/mapping_helper/access/medical,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/bluewhite{
-	dir = 1
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbooth)
 "foj" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "West Solar Panels"
@@ -20889,6 +20883,15 @@
 	},
 /turf/space,
 /area/space)
+"iQq" = (
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
 "iQJ" = (
 /obj/machinery/drone_recharger,
 /obj/lattice{
@@ -40166,15 +40169,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
-"rgB" = (
-/obj/item/reagent_containers/food/fish/salmon,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/pool/no_animate,
-/area/station/crew_quarters/pool)
 "rgC" = (
 /obj/grille/catwalk{
 	dir = 5;
@@ -109496,7 +109490,7 @@ fAg
 fAg
 nQE
 fST
-fnZ
+dat
 fAg
 kqR
 kSN
@@ -115523,7 +115517,7 @@ aXF
 mXZ
 osj
 ohJ
-rgB
+iQq
 ohJ
 aZY
 uzh

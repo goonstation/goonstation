@@ -44,6 +44,7 @@ function task-install {
 
 ## Runs webpack
 function task-webpack {
+  $env:BROWSERSLIST_IGNORE_OLD_DATA = $true
   yarn run webpack-cli @Args
 }
 

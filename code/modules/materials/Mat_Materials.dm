@@ -199,7 +199,7 @@ ABSTRACT_TYPE(/datum/material)
 
 	///Returns a mutable version of this material. Will return a copy of this material if it is already mutable.
 	///The reason this is a separate proc and not using in getMaterial() is prevent cargo-culting accidentally reintroducing the
-	//issue this was supposed to fix. Force the coders to explicitly ask for a mutable instance, demand to know why they want it to be mutable in reviews!
+	///issue this was supposed to fix. Force the coders to explicitly ask for a mutable instance, demand to know why they want it to be mutable in reviews!
 	proc/getMutable()
 		return src.copyMaterial() //copy is mutable by default
 
