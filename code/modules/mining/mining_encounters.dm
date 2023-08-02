@@ -52,6 +52,7 @@
 		var/area_restriction = /area/mining/magnet
 		if (target)
 			magnetic_center = target.magnetic_center
+			size = target.get_encounter_size(size,P=40)
 			area_restriction = null
 			size = min(size,min(target.width,target.height))
 
@@ -97,6 +98,7 @@
 		var/area_restriction = /area/mining/magnet
 		if (target)
 			magnetic_center = target.magnetic_center
+			size = target.get_encounter_size(size,P=20)
 			area_restriction = null
 			size = min(size,min(target.width,target.height))
 

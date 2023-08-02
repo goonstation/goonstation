@@ -3042,6 +3042,16 @@ TYPEINFO(/obj/machinery/manufacturer)
 	blueprint = /datum/manufacture/mechanics/gunbot
 	override_name_desc = FALSE
 
+#if ENABLE_ARTEMIS
+/obj/machinery/manufacturer/artemis
+	name = "Scout Vessel Manufacturer"
+	desc = "A manufacturing unit that can produce equipment for scouting vessels."
+	icon_state = "fab-hangar"
+	icon_base = "hangar"
+	accept_blueprints = 0
+	available = list(
+	/datum/manufacture/nav_sat)
+#endif
 /******************** Nadir Resonators *******************/
 
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax
