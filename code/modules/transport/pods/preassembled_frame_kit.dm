@@ -28,10 +28,10 @@ ABSTRACT_TYPE(/obj/item/preassembled_frame_box)
 
 	attack_self(mob/user as mob)
 		// lets assume everything is ok so we can stop checking at the first sign of trouble
-		var/canbuild = 1
+		var/canbuild = TRUE
 
 		// buffers whee
-		var/list/checkturfs = block(get_turf(user),locate(user.x+1,user.y+1,user.z))
+		var/list/checkturfs = block(get_turf(user), locate(user.x + 1, user.y + 1, user.z))
 		var/turf/T
 		var/atom/A
 
@@ -40,14 +40,14 @@ ABSTRACT_TYPE(/obj/item/preassembled_frame_box)
 			if (istype(T, /turf/space))
 				continue
 			if (!T.allows_vehicles || T.density)
-				canbuild = 0
+				canbuild = FALSE
 				boutput(user, "<span class='alert'>You can't build a pod here! It'd get stuck.</span>")
 				break
 			for (A in T)
 				if (A == user)
 					continue
 				if (A.density)
-					canbuild = 0
+					canbuild = FALSE
 					boutput(user, "<span class='alert'>You can't build a pod here! [A] is in the way.</span>")
 					break
 			if (!canbuild)
@@ -56,15 +56,23 @@ ABSTRACT_TYPE(/obj/item/preassembled_frame_box)
 		if (canbuild)
 			..()
 
+#define BUILD_STEP_PLACED 0
+#define BUILD_STEP_WRENCH_1 1
+#define BUILD_STEP_WELD_1 2
+#define BUILD_STEP_SCREW_1 3
+#define BUILD_STEP_ARMOR 4
+#define BUILD_STEP_WRENCH_2 5
+#define BUILD_STEP_WELD_2 6
+
 ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 /obj/structure/preassembeled_vehicleframe
-	var/stage = 0
+	var/stage = BUILD_STEP_PLACED
 	var/obj/item/podarmor/armor_type = null
 	var/box_type = null
 	var/vehicle_name = null
 	var/vehicle_type = null
 	anchored = ANCHORED
-	density = 1
+	density = TRUE
 	help_message = "Use a wrench to secure the parts together."
 	var/step_build_time = 10 SECONDS //per each 7 steps
 
@@ -99,37 +107,37 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 /*-----------------------------*/
 
 /obj/structure/preassembeled_vehicleframe/attackby(obj/item/W, mob/living/user)
-	switch(stage)
-		if(0)
+	switch(src.stage)
+		if(BUILD_STEP_PLACED)
 			if (iswrenchingtool(W))
 				user.visible_message("[user] begins securing the frame...")
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				SETUP_GENERIC_ACTIONBAR(user, src, step_build_time, /obj/structure/preassembeled_vehicleframe/proc/step_wrench_1, list(user), \
+				SETUP_GENERIC_ACTIONBAR(user, src, src.step_build_time, /obj/structure/preassembeled_vehicleframe/proc/step_wrench_1, list(user), \
 			 		W.icon, W.icon_state, "[user] finishes wrenching the frame parts together.", null)
 			else
 				boutput(user, "You need a wrench to secure the parts together.")
 
-		if(1)
+		if(BUILD_STEP_WRENCH_1)
 			if (isweldingtool(W))
 				if(!W:try_weld(user, 1))
 					return
 				user.visible_message("[user] begins welding the joints of the frame...")
-				SETUP_GENERIC_ACTIONBAR(user, src, step_build_time, /obj/structure/preassembeled_vehicleframe/proc/step_weld_1, list(user), \
+				SETUP_GENERIC_ACTIONBAR(user, src, src.step_build_time, /obj/structure/preassembeled_vehicleframe/proc/step_weld_1, list(user), \
 			 		W.icon, W.icon_state, "[user] welds the joints of the frame together.", null)
 			else
 				boutput(user, "You need a welder to weld the joints together.")
 
-		if(2)
+		if(BUILD_STEP_WELD_1)
 			if (isscrewingtool(W))
 				user.visible_message("[user] begins screwing down the frame's circuit boards and it's engine...")
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				SETUP_GENERIC_ACTIONBAR(user, src, step_build_time, /obj/structure/preassembeled_vehicleframe/proc/step_screw_1, list(user), \
+				SETUP_GENERIC_ACTIONBAR(user, src, src.step_build_time, /obj/structure/preassembeled_vehicleframe/proc/step_screw_1, list(user), \
 			 		W.icon, W.icon_state, "[user] finishes screwing the the frame's circuit boards and it's engine.", null)
 			else
 				boutput(user, "You need a screwdriver to screw the circuit boards and the engine together.")
 
 
-		if(3)
+		if(BUILD_STEP_SCREW_1)
 			if(istype(W, /obj/item/podarmor))
 				var/obj/item/podarmor/armor = W
 				if(!armor.vehicle_types["[src.type]"])
@@ -137,64 +145,64 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 					return
 				user.visible_message("[user] begins installing the [W]...")
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				SETUP_GENERIC_ACTIONBAR(user, src, step_build_time, /obj/structure/preassembeled_vehicleframe/proc/step_armor, list(user, armor), \
+				SETUP_GENERIC_ACTIONBAR(user, src, src.step_build_time, /obj/structure/preassembeled_vehicleframe/proc/step_armor, list(user, armor), \
 			 		W.icon, W.icon_state, "[user] loosely attaches the light armor plating.", null)
 			else
 				boutput(user, "You need some pod armor to put on.")
 
-		if(4)
+		if(BUILD_STEP_ARMOR)
 			if (iswrenchingtool(W))
 				user.visible_message("[user] begins securing the pod's thrusters and control system...")
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				SETUP_GENERIC_ACTIONBAR(user, src, step_build_time, /obj/structure/preassembeled_vehicleframe/proc/step_wrench_2, list(user), \
+				SETUP_GENERIC_ACTIONBAR(user, src, src.step_build_time, /obj/structure/preassembeled_vehicleframe/proc/step_wrench_2, list(user), \
 			 		W.icon, W.icon_state, "[user] secures the pod's thrusters and control system.", null)
 			else
 				boutput(user, "You need a wrench to secure the pod's thrusters and control system.")
 
-		if(5)
+		if(BUILD_STEP_WRENCH_2)
 			if (isweldingtool(W))
 				if(!W:try_weld(user, 1))
 					return
 				user.visible_message("[user] begins welding the exterior...")
-				SETUP_GENERIC_ACTIONBAR(user, src, step_build_time, /obj/structure/preassembeled_vehicleframe/proc/step_weld_2, list(user), \
+				SETUP_GENERIC_ACTIONBAR(user, src, src.step_build_time, /obj/structure/preassembeled_vehicleframe/proc/step_weld_2, list(user), \
 			 		W.icon, W.icon_state, "[user] welds the seams of the outer skin to make it air-tight.", null)
 			else
 				boutput(user, "You need a welder to weld the exterior.")
 
-		if(6)
+		if(BUILD_STEP_WELD_2)
 			if (isscrewingtool(W))
 				user.visible_message("[user] begins screwing the pod's maintenance panels shut...")
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				SETUP_GENERIC_ACTIONBAR(user, src, step_build_time, /obj/structure/preassembeled_vehicleframe/proc/step_screw_2, list(user), \
+				SETUP_GENERIC_ACTIONBAR(user, src, src.step_build_time, /obj/structure/preassembeled_vehicleframe/proc/step_screw_2, list(user), \
 			 		W.icon, W.icon_state, "With the cockpit and exterior indicators secured, the control system automatically starts up.", null)
 			else
 				boutput(user, "You need a screwdriver to close the maintenance panels.")
 
 /obj/structure/preassembeled_vehicleframe/proc/step_wrench_1(var/mob/user)
 	src.overlays += image(src.icon, "[pick("frame1", "frame2")]")
-	stage = 1
-	help_message = "Use a welder to weld the joints together."
+	src.stage = BUILD_STEP_WRENCH_1
+	src.help_message = "Use a welder to weld the joints together."
 
 /obj/structure/preassembeled_vehicleframe/proc/step_weld_1(var/mob/user)
 	src.overlays -= image(src.icon, "frame1")
 	src.overlays -= image(src.icon, "frame2")
-	icon_state = "frame"
-	stage = 2
-	help_message = "Use a screwdriver to screw the circuit boards and the engine together."
+	src.icon_state = "frame"
+	src.stage = BUILD_STEP_WELD_1
+	src.help_message = "Use a screwdriver to screw the circuit boards and the engine together."
 
 /obj/structure/preassembeled_vehicleframe/proc/step_screw_1(var/mob/user)
 	src.overlays += image(src.icon, "wires")
 	src.overlays += image(src.icon, "circuits")
-	stage = 3
-	help_message = "Use any kind of pod armor from a manufacturer."
+	src.stage = BUILD_STEP_SCREW_1
+	src.help_message = "Use any kind of pod armor from a manufacturer."
 
 /obj/structure/preassembeled_vehicleframe/proc/step_armor(var/mob/user, var/obj/item/podarmor/armor)
 	user.u_equip(armor)
 	qdel(armor)
 	src.overlays += image(src.icon, armor.overlay_state)
-	stage = 4
-	help_message = "Use a wrench to secure the pod's thrusters and control system."
-	armor_type = armor.type
+	src.stage = BUILD_STEP_ARMOR
+	src.help_message = "Use a wrench to secure the pod's thrusters and control system."
+	src.armor_type = armor.type
 	src.vehicle_type = armor.vehicle_types["[src.type]"]
 	if(istype(armor, /obj/item/podarmor/armor_custom))
 		src.setMaterial(armor.material)
@@ -202,13 +210,13 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 /obj/structure/preassembeled_vehicleframe/proc/step_wrench_2(var/mob/user)
 	src.overlays += image(src.icon, "thrust")
 	src.overlays += image(src.icon, "control")
-	stage = 5
-	help_message = "Use a welder to weld the exterior."
+	src.stage = BUILD_STEP_WRENCH_2
+	src.help_message = "Use a welder to weld the exterior."
 
 /obj/structure/preassembeled_vehicleframe/proc/step_weld_2(var/mob/user)
 	src.overlays += image(src.icon, "covers")
-	stage = 6
-	help_message = "Use a screwdriver to close the maintenance panels."
+	src.stage = BUILD_STEP_WELD_2
+	src.help_message = "Use a screwdriver to close the maintenance panels."
 
 /obj/structure/preassembeled_vehicleframe/proc/step_screw_2(var/mob/user)
 	var/obj/machinery/vehicle/V = new vehicle_type( src.loc )
@@ -231,14 +239,14 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 
 	boutput(usr, "Deconstructing frame...")
 
-	var/timer = (5 * stage + 30) DECI SECONDS
+	var/timer = (5 * src.stage + 30) DECI SECONDS
 
 	SETUP_GENERIC_ACTIONBAR(usr, src, timer, /obj/structure/preassembeled_vehicleframe/proc/deconstruct_done, list(usr), \
 		null, null, "[usr] deconstructed the [src].", null)
 
 /obj/structure/preassembeled_vehicleframe/proc/deconstruct_done(var/mob/user)
 	var/obj/O
-	if (stage >= 4)
+	if (src.stage >= BUILD_STEP_ARMOR)
 		O = new src.armor_type( get_turf(src) )
 		O.fingerprints = src.fingerprints
 		O.fingerprints_full = src.fingerprints_full
@@ -251,3 +259,12 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 	O.fingerprints = src.fingerprints
 	O.fingerprints_full = src.fingerprints_full
 	qdel(src)
+
+
+#undef BUILD_STEP_PLACED
+#undef BUILD_STEP_WRENCH_1
+#undef BUILD_STEP_WELD_1
+#undef BUILD_STEP_SCREW_1
+#undef BUILD_STEP_ARMOR
+#undef BUILD_STEP_WRENCH_2
+#undef BUILD_STEP_WELD_2
