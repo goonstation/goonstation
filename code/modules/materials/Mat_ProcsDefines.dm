@@ -246,62 +246,62 @@ var/global/list/material_cache = buildMaterialCache()
 /// Called when a mob holding this atom is attacked for mat effects
 /atom/proc/material_trigger_on_mob_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/situation_modifier)
 	if (src.material)
-		src.material?.triggerOnAttacked(src, attacker, attacked, weapon)
+		src.material.triggerOnAttacked(src, attacker, attacked, weapon)
 	return
 
 /// Called when an atom is hit by a bullet for mat effects
 /atom/proc/material_trigger_on_bullet(var/atom/attacked, var/obj/projectile/projectile, var/situation_modifier)
 	if (src.material)
-		src.material?.triggerOnBullet(src, attacked, projectile)
+		src.material.triggerOnBullet(src, attacked, projectile)
 	return
 
 /// Called when an atom is hit by a bullet for mat effects
 /atom/proc/material_trigger_on_chems(var/chem, var/amount)
 	if (src.material)
-		src.material?.triggerChem(src, chem, amount)
+		src.material.triggerChem(src, chem, amount)
 	return
 
 /// Called when an atom or someone wearing the material is attacked for mat effects
 /atom/proc/material_trigger_on_blob_attacked(var/blobPower, var/situation_modifier)
 	if (src.material)
-		src.material?.triggerOnBlobHit(src, blobPower)
+		src.material.triggerOnBlobHit(src, blobPower)
 	return
 
 /// Called when an atom is used for an attack a atom for mat effects
 /atom/proc/material_on_attack_use(var/mob/attacker, var/atom/attacked)
 	if (src.material)
-		src.material?.triggerOnAttack(src, attacker, attacked)
+		src.material.triggerOnAttack(src, attacker, attacked)
 	return
 
 /// Called when an atom is caught in an explosion
 /atom/proc/material_trigger_on_explosion(var/severity)
 	if (src.material)
-		src.material?.triggerExp(src, severity)
+		src.material.triggerExp(src, severity)
 	return
 
 /// Called when an atom is affected by a heat change
 /atom/proc/material_trigger_on_temp(var/temperature_applied)
 	if (src.material)
-		src.material?.triggerTemp(src, temperature_applied)
+		src.material.triggerTemp(src, temperature_applied)
 	return
 
 /// Called when the item is attacked with another atom for mat effects.
 /// If someone is smashed against the item or with hands, the mob itself is expected to be passed as attackatom
 /atom/proc/material_trigger_when_attacked(var/atom/attackatom, var/mob/attacker, var/meleeorthrow, var/situation_modifier)
 	if (src.material)
-		src.material?.triggerOnHit(src, attackatom, attacker, meleeorthrow)
+		src.material.triggerOnHit(src, attackatom, attacker, meleeorthrow)
 	return
 
 ///Called when an item is picked up for mat effects
 /obj/item/proc/material_on_pickup(mob/user)
 	if (src.material)
-		src.material?.triggerPickup(user, src)
+		src.material.triggerPickup(user, src)
 	return
 
 ///Called when an item is dropped for mat effects
 /obj/item/proc/material_on_drop(mob/user)
 	if (src.material)
-		src.material?.triggerDrop(user, src)
+		src.material.triggerDrop(user, src)
 	return
 
 

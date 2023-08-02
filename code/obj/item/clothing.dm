@@ -104,7 +104,7 @@ ABSTRACT_TYPE(/obj/item/clothing)
 		if (situation_modifier && istext(situation_modifier))
 			targeted_zone = parse_zone(situation_modifier)
 		if (src.check_for_covered(targeted_zone))
-			src.material?.triggerOnAttacked(src, attacker, attacked, weapon)
+			src.material.triggerOnAttacked(src, attacker, attacked, weapon)
 		return
 	..()
 
