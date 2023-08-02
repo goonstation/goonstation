@@ -1,5 +1,9 @@
 
 (t)tue aug 01 23
+(u)Amylizzle
+(p)15096
+(e)📄|A-UI
+(*)The observer menu has been replaced with an upgrade.
 (u)Soapcyst
 (p)15179
 (e)🗺💅|A-Mapping, C-QoL
