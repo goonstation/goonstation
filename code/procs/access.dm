@@ -368,9 +368,6 @@
 						access_emergency_storage, access_eva, access_heads, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_kitchen, access_robotics, access_cargo, access_research, access_hydro, access_ranch, access_pathology,
 						access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
-		////////////////////////// For Sleeper Implants
-		if("Sleeper Agent")
-			return list(access_syndicate_shuttle)
 		else
 			return list()
 
