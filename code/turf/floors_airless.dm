@@ -29,6 +29,8 @@
 	allows_vehicles = 1
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
+	can_break = FALSE
+	can_burn = FALSE
 
 	attackby(obj/item/C, mob/user, params)
 		if(istype(C, /obj/item/rods))
@@ -81,6 +83,8 @@
 	allows_vehicles = 1
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
+	can_break = FALSE
+	can_burn = FALSE
 
 /turf/unsimulated/floor/airless/plating/catwalk/auto
 	icon = 'icons/turf/catwalk_support.dmi'
@@ -117,67 +121,14 @@
 ////////////////////////////////////////////////////////////
 
 /turf/simulated/floor/airless/scorched
-	burnt = 1
-
 	New()
 		..()
-		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
-		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay, "burn")
+		src.burn_tile()
 
-/turf/simulated/floor/airless/scorched2
-	burnt = 1
-
+/turf/simulated/floor/airless/damaged
 	New()
 		..()
-		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched2")
-		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
-
-/turf/simulated/floor/airless/damaged1
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged1")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/simulated/floor/airless/damaged2
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged2")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/simulated/floor/airless/damaged3
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged3")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/simulated/floor/airless/damaged4
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged4")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/simulated/floor/airless/damaged5
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged5")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		src.break_tile()
 
 /////////////////////////////////////////
 
@@ -189,38 +140,18 @@
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
 
-	jen
-		icon_state = "plating_jen"
+/turf/simulated/floor/airless/plating/jen
+	icon_state = "plating_jen"
 
 /turf/simulated/floor/airless/plating/scorched
-
 	New()
 		..()
-		burn_tile()
+		src.burn_tile()
 
-/turf/simulated/floor/airless/plating/damaged1
-	broken = 1
-
+/turf/simulated/floor/airless/plating/damaged
 	New()
 		..()
-		var/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/simulated/floor/airless/plating/damaged2
-	broken = 1
-
-	New()
-		..()
-		var/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/simulated/floor/airless/plating/damaged3
-	broken = 1
-
-	New()
-		..()
-		var/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
-		UpdateOverlays(damage_overlay,"damage")
+		src.break_tile()
 
 /////////////////////////////////////////
 

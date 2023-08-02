@@ -10,10 +10,10 @@
 	icon_state = "floor"
 	thermal_conductivity = 0.04
 	heat_capacity = 225000
-
+	can_burn = TRUE
+	can_break = TRUE
 
 /turf/unsimulated/floor/attackby(obj/item/C, mob/user, params)
-
 	if (!C || !user)
 		return 0
 
@@ -37,81 +37,26 @@
 		if(ispryingtool(W))
 			src.name = "plating"
 			src.icon_state = "plating"
-			UpdateOverlays(null,"burn")
+			UpdateOverlays(null, "burn")
 			src.UpdateIcon()
 			setIntact(FALSE)
 			levelupdate()
 
-	scorched
-		New()
-			..()
-			var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
-			burn_overlay.alpha = 200
-			UpdateOverlays(burn_overlay,"burn")
-
-
-	scorched2
-		New()
-			..()
-			var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched2")
-			burn_overlay.alpha = 200
-			UpdateOverlays(burn_overlay,"burn")
-
+/turf/unsimulated/floor/pryable/scorched
+	New()
+		..()
+		src.burn_tile()
 
 /turf/unsimulated/floor/scorched
+	New()
+		..()
+		src.burn_tile()
+
+/turf/unsimulated/floor/damaged
 
 	New()
 		..()
-		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
-		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
-
-/turf/unsimulated/floor/scorched2
-	New()
-		..()
-		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched2")
-		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
-
-/turf/unsimulated/floor/damaged1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged1")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/unsimulated/floor/damaged2
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged2")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/unsimulated/floor/damaged3
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged3")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/unsimulated/floor/damaged4
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged4")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/unsimulated/floor/damaged5
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged5")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		src.break_tile()
 
 /////////////////////////////////////////
 
@@ -122,71 +67,48 @@
 	layer = PLATING_LAYER
 
 /turf/unsimulated/floor/plating/scorched
-
 	New()
 		..()
-		var/image/burn_overlay = image('icons/turf/floors.dmi',"panelscorched")
-		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
+		src.burn_tile()
 
-/turf/unsimulated/floor/plating/damaged1
-
+/turf/unsimulated/floor/plating/damaged
 	New()
 		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/unsimulated/floor/plating/damaged2
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/unsimulated/floor/plating/damaged3
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
-		UpdateOverlays(damage_overlay,"damage")
+		src.break_tile()
 
 /turf/unsimulated/floor/plating/random
 	New()
 		..()
 		if (prob(20))
 			if (prob(50))
-				var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg[pick(1,2,3)]")
-				damage_overlay.alpha = 200
-				UpdateOverlays(damage_overlay,"damage")
+				src.break_tile()
 			else
-				var/image/burn_overlay = image('icons/turf/floors.dmi',"panelscorched")
-				burn_overlay.alpha = 200
-				UpdateOverlays(burn_overlay,"burn")
+				src.burn_tile()
+
 		if (prob(2))
-			make_cleanable(/obj/decal/cleanable/dirt,src)
+			make_cleanable(/obj/decal/cleanable/dirt, src)
 		if (prob(2))
-			make_cleanable(/obj/decal/cleanable/dirt/dirt2,src)
+			make_cleanable(/obj/decal/cleanable/dirt/dirt2, src)
 		if (prob(2))
-			make_cleanable(/obj/decal/cleanable/dirt/dirt3,src)
+			make_cleanable(/obj/decal/cleanable/dirt/dirt3, src)
 		if (prob(2))
-			make_cleanable(/obj/decal/cleanable/dirt/dirt4,src)
+			make_cleanable(/obj/decal/cleanable/dirt/dirt4, src)
 		if (prob(2))
-			make_cleanable(/obj/decal/cleanable/dirt/dirt5,src)
+			make_cleanable(/obj/decal/cleanable/dirt/dirt5, src)
 		if ((locate(/obj/window) in src) || (locate(/obj/mapping_helper/wingrille_spawn) in src))
 			return
 		if (prob(2))
-			var/obj/C = pick(/obj/decal/cleanable/paper, /obj/decal/cleanable/fungus, /obj/decal/cleanable/dirt, /obj/decal/cleanable/ash,\
+			var/obj/decal/cleanable = pick(/obj/decal/cleanable/paper, /obj/decal/cleanable/fungus, /obj/decal/cleanable/ash,\
 			/obj/decal/cleanable/molten_item, /obj/decal/cleanable/machine_debris, /obj/decal/cleanable/oil, /obj/decal/cleanable/rust)
-			make_cleanable( C ,src)
+			make_cleanable(cleanable, src)
 		else if ((locate(/obj) in src) && prob(3))
-			var/obj/C = pick(/obj/item/cable_coil/cut/small, /obj/item/brick, /obj/item/cigbutt, /obj/item/scrap, /obj/item/raw_material/scrap_metal,\
+			var/obj/item/common = pick(/obj/item/cable_coil/cut/small, /obj/item/brick, /obj/item/cigbutt, /obj/item/scrap, /obj/item/raw_material/scrap_metal,\
 			/obj/item/currency/spacecash, /obj/item/tile/steel, /obj/item/weldingtool, /obj/item/screwdriver, /obj/item/wrench, /obj/item/wirecutters, /obj/item/crowbar)
-			new C (src)
+			new common (src)
 		else if (prob(1) && prob(2)) // really rare. not "three space things spawn on destiny during first test with just prob(1)" rare.
-			var/obj/C = pick(/obj/item/space_thing, /obj/item/sticker/gold_star, /obj/item/sticker/banana, /obj/item/sticker/heart,\
+			var/obj/item/rare = pick(/obj/item/space_thing, /obj/item/sticker/gold_star, /obj/item/sticker/banana, /obj/item/sticker/heart,\
 			/obj/item/reagent_containers/vending/bag/random, /obj/item/reagent_containers/vending/vial/random, /obj/item/clothing/mask/cigarette/random)
-			new C (src)
-		return
+			new rare (src)
 
 /////////////////////////////////////////
 
@@ -645,8 +567,9 @@ TYPEINFO(/turf/unsimulated/floor/circuit)
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
-
-	allows_vehicles = 1
+	allows_vehicles = TRUE
+	can_burn = FALSE
+	can_break = FALSE
 
 /turf/unsimulated/floor/engine/vacuum
 	name = "vacuum floor"
@@ -660,7 +583,6 @@ TYPEINFO(/turf/unsimulated/floor/circuit)
 
 /turf/unsimulated/floor/engine/glow/blue
 	icon_state = "engine-blue"
-
 
 /turf/unsimulated/floor/engine/caution/south
 	icon_state = "engine_caution_south"
@@ -865,30 +787,12 @@ TYPEINFO(/turf/unsimulated/floor/wood)
 /turf/unsimulated/floor/airless/plating/scorched
 	New()
 		..()
-		var/image/burn_overlay = image('icons/turf/floors.dmi',"panelscorched")
-		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
+		src.burn_tile()
 
-/turf/unsimulated/floor/airless/plating/damaged1
+/turf/unsimulated/floor/airless/plating/damaged
 	New()
 		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/unsimulated/floor/airless/plating/damaged2
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/unsimulated/floor/airless/plating/damaged3
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		src.break_tile()
 
 //////////////
 
@@ -989,6 +893,8 @@ TYPEINFO(/turf/unsimulated/floor/grass)
 	icon_state = "glass_small"
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
+	can_burn = FALSE
+	can_break = FALSE
 
 /turf/unsimulated/floor/glassblock/large
 	icon_state = "glass_large"

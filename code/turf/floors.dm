@@ -14,8 +14,8 @@
 
 	turf_flags = IS_TYPE_SIMULATED | MOB_SLIP | MOB_STEP
 
-	var/broken = 0
-	var/burnt = 0
+	can_burn = TRUE
+	can_break = TRUE
 	var/has_material = TRUE
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
 	var/reinforced = FALSE
@@ -216,86 +216,20 @@
 		if (prob(20))
 			if (prob(50))
 				src.break_tile()
-				src.icon_old = null
 			else
 				src.burn_tile()
-				src.icon_old = null
-
 
 /////////////////////////////////////////
 
 /turf/simulated/floor/scorched
-	burnt = 1
-
 	New()
 		..()
-		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
-		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
+		src.burn_tile()
 
-/turf/simulated/floor/scorched2
-	burnt = 1
-
+/turf/simulated/floor/damaged
 	New()
 		..()
-		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched2")
-		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
-
-/turf/simulated/floor/damaged1
-	step_material = "step_plating"
-	step_priority = STEP_PRIORITY_MED
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged1")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/simulated/floor/damaged2
-	step_material = "step_plating"
-	step_priority = STEP_PRIORITY_MED
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged2")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/simulated/floor/damaged3
-	step_material = "step_plating"
-	step_priority = STEP_PRIORITY_MED
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged3")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/simulated/floor/damaged4
-	step_material = "step_plating"
-	step_priority = STEP_PRIORITY_MED
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged4")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/simulated/floor/damaged5
-	step_material = "step_plating"
-	step_priority = STEP_PRIORITY_MED
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged5")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		src.break_tile()
 
 /////////////////////////////////////////
 
@@ -309,37 +243,14 @@
 	icon_state = "plating_jen"
 
 /turf/simulated/floor/plating/scorched
-
 	New()
 		..()
-		burn_tile()
+		src.burn_tile()
 
-/turf/simulated/floor/plating/damaged1
-	broken = 1
-
+/turf/simulated/floor/plating/damaged
 	New()
 		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/simulated/floor/plating/damaged2
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/simulated/floor/plating/damaged3
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		src.break_tile()
 
 /////////////////////////////////////////
 
@@ -858,6 +769,8 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 	icon_state = "glass_small"
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
+	can_burn = FALSE
+	can_break = FALSE
 	mat_changename = FALSE
 
 	pry_tile(obj/item/C as obj, mob/user as mob, params)
@@ -867,13 +780,6 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 		return
 
 	break_tile_to_plating()
-		return
-
-	break_tile()
-		return
-
-	// unburnable, otherwise floorbots use steel sheets for repair which doesn't make sense
-	burn_tile()
 		return
 
 	attackby(obj/item/C, mob/user, params)
@@ -1011,7 +917,9 @@ DEFINE_FLOORS(minitiles/black,
 	heat_capacity = 325000
 
 	reinforced = TRUE
-	allows_vehicles = 1
+	allows_vehicles = TRUE
+	can_burn = FALSE
+	can_break = FALSE
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
 
@@ -1801,59 +1709,6 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 /turf/simulated/floor/proc/break_tile_to_plating()
 	if(intact) to_plating()
 	break_tile()
-
-/turf/simulated/floor/proc/break_tile(var/force_break)
-	if(!force_break)
-		if(src.reinforced) return
-
-	if(broken) return
-	var/image/damage_overlay
-	if (!icon_old)
-		icon_old = icon_state
-	if(intact)
-		damage_overlay = image('icons/turf/floors.dmi',"damaged[pick(1,2,3,4,5)]")
-		damage_overlay.alpha = 200
-	else
-		damage_overlay = image('icons/turf/floors.dmi',"platingdmg[pick(1,2,3)]")
-		damage_overlay.alpha = 200
-	broken = 1
-	UpdateOverlays(damage_overlay,"damage")
-	src.UpdateIcon()
-
-/turf/simulated/floor/proc/burn_tile()
-	if(broken || burnt || reinforced) return
-	var/image/burn_overlay
-	if (!icon_old)
-		icon_old = icon_state
-	if(intact)
-		burn_overlay = image('icons/turf/floors.dmi',"floorscorched[pick(1,2)]")
-		burn_overlay.alpha = 200
-	else
-		burn_overlay = image('icons/turf/floors.dmi',"panelscorched")
-		burn_overlay.alpha = 200
-	UpdateOverlays(burn_overlay,"burn")
-	src.UpdateIcon()
-	burnt = 1
-
-/turf/simulated/floor/shuttle/burn_tile()
-	return
-
-/turf/simulated/floor/proc/restore_tile()
-	if(intact) return
-	setIntact(TRUE)
-	broken = 0
-	burnt = 0
-	icon = initial(icon)
-	if(icon_old)
-		icon_state = icon_old
-	else
-		icon_state = "floor"
-	UpdateOverlays(null,"burn")
-	UpdateOverlays(null,"damage")
-	src.UpdateIcon()
-	if (name_old)
-		name = name_old
-	levelupdate()
 
 /turf/simulated/floor/var/global/girder_egg = 0
 
