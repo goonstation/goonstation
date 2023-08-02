@@ -580,6 +580,12 @@ var/global/mob/twitch_mob = 0
 	initialize_mail_system()
 	#endif
 
+	#if ENABLE_ARTEMIS && SKIP_PLANETS_SETUP == 0
+	UPDATE_TITLE_STATUS("Building planet level")
+	Z_LOG_DEBUG("World/Init", "Setting up planet level...")
+	makePlanetLevel()
+	#endif
+
 	UPDATE_TITLE_STATUS("Generating terrain")
 	Z_LOG_DEBUG("World/Init", "Setting perlin noise terrain...")
 	for (var/area/map_gen/A in by_type[/area/map_gen])

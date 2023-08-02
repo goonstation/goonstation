@@ -1,5 +1,3 @@
-#define PLANET_MAPBORDER 1
-
 TYPEINFO(/datum/mapPrefab/planet)
 	stored_as_subtypes = TRUE
 
@@ -196,5 +194,3 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		prefabSizeX = 10
 		prefabSizeY = 9
 		required_biomes = list(/datum/biome/mars, /datum/biome/desert)
-
-#undef PLANET_MAPBORDER
