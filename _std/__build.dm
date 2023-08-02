@@ -31,7 +31,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //------------ OPTIONS TO GO FAST ------------//
 
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1		// Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
-//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1	// No other zlevels. Boots way faster. Atlas map by default but can be overriden.
+//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1	// No other zlevels. Boots way faster. will load atlas by default
 
 //////--- DEVELOPER MAPS FOR TESTING THINGS ---
 // these maps are in the blank_maps subfolder in the maps folder.
