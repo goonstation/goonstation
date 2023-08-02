@@ -1,14 +1,14 @@
 #define CHEFBOT_MOVE_SPEED 8
 /obj/machinery/bot/chefbot
 	name = "Dramatic Chef"
-	desc = "(icon, name, concept, and any kind of consistency or sense is currently pending)"
+	desc = "Who let this guy in the kitchen? Does he even know how to cook, or is he just there to criticize?"
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "chefbot-idle"
-	layer = 5.0 //TODO LAYER
+	//layer = 5.0 //TODO LAYER
 	density = 0
 	anchored = UNANCHORED
-	on = 1 // ACTION
-	health = 5
+	on = TRUE
+	health = 25
 	var/raging = 0
 	var/list/calledout = list()
 	no_camera = 1
@@ -19,17 +19,21 @@
 	. = ..()
 	if (raging)
 		return
-	if(prob(60) && src.on == 1)
+	if(prob(src.emagged * 20))
+		drama()
+	if(!GET_COOLDOWN(src, "chefbot_yelling") && src.on)
+		SPAWN (0 SECOND)
+			if (src.emagged)
+				ON_COOLDOWN(src, "chefbot_yelling", pick(10 SECONDS, 20 SECONDS))
+			else
+				ON_COOLDOWN(src, "chefbot_yelling", pick(40 SECONDS, 60 SECONDS))
+			yell()
+	if(!GET_COOLDOWN(src, "chefbot_wander") && src.on)
 		src.navigate_to(get_step_rand(src))
-
-		SPAWN(0)
-			if(prob(src.emagged * 20))
-				drama()
-			if(prob(30 + src.emagged * 30))
-				yell()
+		ON_COOLDOWN(src, "chefbot_wander", pick(2 SECONDS, 5 SECONDS))
 
 /obj/machinery/bot/chefbot/proc/drama()
-	playsound(src,'sound/effects/dramatic.ogg', vol = 100) // F U C K temporary measure
+	playsound(src,'sound/effects/dramatic.ogg', vol = 100)
 
 /obj/machinery/bot/chefbot/speak(var/message)
 	if (message)
@@ -39,117 +43,222 @@
 /obj/machinery/bot/chefbot/proc/why_is_it_bad()
 	return pick("IS FUCKING [pick("RAW", "BLAND", "UNDERCOOKED", "OVERCOOKED", "INEDIBLE", "RANCID", "DISGUSTING")]", "LOOKS LIKE [pick("BABY VOMIT", "A MUSHY PIG'S ASS", "REGURGITATED DONKEY SHIT", "A PILE OF ROTTING FLIES", "REFINED CAT PISS")]")
 
+#define FOOD_QUALITY_HORSESHIT 0
+#define FOOD_QUALITY_SHIT 1
+#define FOOD_QUALITY_GOOD_SHIT 2
 /obj/machinery/bot/chefbot/proc/yell()
-	if (!src.emagged || prob(50))
-		var/obj/item/reagent_containers/food/snacks/shitfood
+	if (!src.emagged)
+		var/obj/item/reagent_containers/food/snacks/food_to_judge
 		var/mob/living/carbon/human/thechef
 		var/mob/dork
 		var/is_thechef_the_chef = 0
+		var/how_shit = FOOD_QUALITY_HORSESHIT //ITS ALL DONKEY PISS UNTIL I SAY OTHERWISE
 		for (var/obj/item/reagent_containers/food/snacks/probablyshitfood in view(7, src))
 			if (probablyshitfood in calledout)
 				continue
-			if (probablyshitfood.quality < 2)
-				shitfood = probablyshitfood
-				break
-		if (shitfood)
-			raging = 1
-			icon_state = "chefbot-mad"
-			for_by_tcl(M, /mob/living/carbon/human)
-				if(!IN_RANGE(M, src, 7))
-					continue
-				if (M.mind)
-					if (M.mind.assigned_role == "Chef")
-						thechef = M
-						is_thechef_the_chef = 1
-						break
-				if (M.wear_id)
-					if (findtext(M.wear_id:assignment, "chef") || findtext(M.wear_id:assignment, "cook"))
-						thechef = M
-						is_thechef_the_chef = 1
-						break
-				if (!thechef)
+			food_to_judge = probablyshitfood
+			calledout += food_to_judge //judgment is FINAL. We only judge once.
+			break
+		if (!food_to_judge)
+			if (prob(30))
+				speak(pick("WHAT ARE YOU ALL STANDING AROUND FOR? BRING ME SOME FOOD!",
+				"ARE YOU GOING TO COOK OR ARE YOU GOING TO STAND THERE ALL DAY?",
+				"THIS KITCHEN IS SLOWER THAN A FUNERAL HOME! GET A MOVE ON!",
+				"IS ANY OF YOU GOING TO MAKE FOOD OR DO YOU JUST WAIT UNTIL WE ALL STARVE TO DEATH?"))
+			return
+		if (food_to_judge.quality > 1 && food_to_judge.quality < 5)
+			how_shit = FOOD_QUALITY_SHIT
+		else if (food_to_judge.quality > 5)
+			how_shit = FOOD_QUALITY_GOOD_SHIT
+		raging = 1
+		icon_state = "chefbot-mad"
+		for_by_tcl(M, /mob/living/carbon/human)
+			if(!IN_RANGE(M, src, 7))
+				continue
+			if (M.mind)
+				if (M.mind.assigned_role == "Chef")
 					thechef = M
-				if (!dork)
-					if (M.client)
-						if (M.client.IsByondMember())
-							dork = M
-			if (thechef)
-				point(shitfood)
-				src.navigate_to(shitfood, CHEFBOT_MOVE_SPEED / (1+src.emagged), 1, 15) // Shit food can't hide!
-				if (prob(50))
-					speak(pick("ALRIGHT, EVERYBODY STOP!" , "THAT'S ENOUGH!"))
-				sleep(1 SECOND)
-				drama()
-				sleep(2 SECONDS)
-				if (is_thechef_the_chef && prob(50) && thechef)
-					point(thechef)
-					speak(pick("COME HERE YOU!", "COME HERE, LET ME TELL YOU SOMETHING!", "STOP WHAT YOU'RE DOING AND COME HERE RIGHT NOW!"))
-				else
-					speak("WHO COOKED THIS SHIT?")
-				sleep(2 SECONDS)
-				if (shitfood) // fix for cannot read null.name (the food sometimes no longer exists after a sleep (because people eat it I assume)) - haine
-					if (dork && prob(10))
-						speak("THIS [shitfood.name] LOOKS LIKE [dork]!")
-					speak("THIS [shitfood.name] [why_is_it_bad()]!")
-				var/is_in_kitchen = 0
-				if (thechef && is_thechef_the_chef)
-					var/area/area = get_area(thechef)
-					if (findtext(area.name, "Kitchen"))
-						is_in_kitchen = 1
-				sleep(2 SECONDS)
-				if (is_in_kitchen && prob(40))
-					speak(pick("SWITCH IT OFF!", "SHUT IT DOWN!", "FUCK OFF OUT OF HERE!", "OUT. GET OUT! GET OUT OF THIS KITCHEN! GET OUT!"))
-				else
-					speak(pick("THAT WAS PATHETIC. THAT WAS ABSOLUTELY PATHETIC!", "COME ON!", "YOU CALL YOURSELF CHEFS?", "YOU'RE AS MUCH OF A CHEF AS I AM A NICE PERSON."))
-				icon_state = "chefbot-idle"
-				raging = 0
-				calledout += shitfood
-				if (shitfood in range(1, src))
-					visible_message("<b>[src]</b> stomps [shitfood], instantly destroying it.")
-					qdel(shitfood)
+					is_thechef_the_chef = 1
+					break
+			if (M.wear_id)
+				if (findtext(M.wear_id:assignment, "chef") || findtext(M.wear_id:assignment, "cook"))
+					thechef = M
+					is_thechef_the_chef = 1
+					break
+			if (!thechef)
+				thechef = M
+			if (!dork)
+				if (M.client)
+					if (M.client.IsByondMember())
+						dork = M
+		if (thechef)
+			point(food_to_judge)
+			src.navigate_to(food_to_judge, CHEFBOT_MOVE_SPEED / (1+src.emagged), 1, 15) // Shit food can't hide!
+			speak(pick("ALRIGHT, EVERYBODY STOP!",
+			"THAT'S ENOUGH!",
+			"WHAT'S THIS?",
+			"HOLD IT EVERYONE!",
+			"WHAT THE FUCK IS THIS?",
+			"STOP, CHEFS!",
+			"ATTENTION EVERYONE!",
+			"EYES ON ME!"))
+			sleep(1 SECOND)
+			drama()
+			sleep(2 SECONDS)
+			if (is_thechef_the_chef && thechef)
+				point(thechef)
+				speak(pick("COME HERE YOU!",
+				"COME HERE, LET ME TELL YOU SOMETHING!",
+				"STOP WHAT YOU'RE DOING AND COME HERE RIGHT NOW!",
+				"WE NEED A CHAT! CHEF TO CHEF!",
+				"GET OVER HERE, CHEF! RIGHT NOW!"))
 			else
-				// Nobody is in range anyway
+				switch (how_shit)
+					if (FOOD_QUALITY_HORSESHIT)
+						speak("WHO COOKED THIS SHIT?",
+						"WHO'S RESPONSIBLE FOR THIS?",
+						"WHO MADE THIS ATROCITY?",
+						"WHAT UNCARING GOD COULD HAVE ALLOWED THIS?!",
+						"ROTTING, STINKING HOT GARBAGE! I WANT NAMES!")
+					else
+						speak("WHO MADE THIS?",
+						"I WANT TO KNOW WHO MADE THIS!",
+						"WHAT AM I LOOKING AT?")
+			sleep(2 SECONDS)
+			if (food_to_judge)
+				switch(how_shit)
+					if (FOOD_QUALITY_HORSESHIT)
+						if (dork && prob(10))
+							speak("THIS [food_to_judge.name] LOOKS LIKE [dork]!")
+						else
+							speak("THIS [food_to_judge.name] [why_is_it_bad()]!")
+					if (FOOD_QUALITY_SHIT)
+						speak(pick("UNIMPRESSIVE! BLAND! FLAVORLESS! CHUCK IT IN THE BIN!",
+						"WHERE'S THE CREATIVITY? IT'S AS BORING AS WATCHING PAINT DRY!",
+						"ARE YOU DEATHLY AFRAID OF SPICE OR SOMETHING? IT'S SO BLAND!",
+						"I'VE SEEN SUCCESS, I'VE SEEN FAILURE, AND THIS IS THE BIGGEST FAILURE OF ALL!",
+						"YOU HAD SO MUCH POTENTIAL! LOOK WHAT YOU DID WITH IT!",
+						"I CRY FOR THE INGREDIENTS THAT HAD TO SUFFER GETTING TURNED INTO THIS SLOP!",
+						"HOW DID NO ONE STOP THIS TRAINWRECK?"))
+					if (FOOD_QUALITY_GOOD_SHIT)
+						speak(pick("FINALLY! SOME GOOD FUCKING FOOD!",
+						"THAT LOOKS FUCKING DELICIOUS!",
+						"YOU WERE BORN TO COOK! THAT'S BRILLIANT!",
+						"THAT WAS YOUR BEST SERVICE! EXTRAORDINARY!",
+						"THIS IS WHAT REAL FOOD LOOKS LIKE! FUCKING DELICIOUS!",
+						"NOW THIS IS WHAT I CALL COOKING! YOU FUCKING HAD IT IN YOU!",
+						"I WANT TO SEE MORE OF THAT!",
+						"TAKE EXAMPLE, YOU DONKEYS, THIS IS WHAT I WOULD SERVE!",
+						"SO YOU CAN COOK AFTER ALL! NOW KEEP GOING AND MAYBE YOU CAN CALL YOURSELF A CHEF!"))
+			if (how_shit == FOOD_QUALITY_GOOD_SHIT)
 				icon_state = "chefbot-idle"
 				raging = 0
 				return
-	else if (src.emagged && prob(70))
+			var/is_in_kitchen = 0
+			if (thechef && is_thechef_the_chef)
+				var/area/area = get_area(thechef)
+				if (findtext(area.name, "Kitchen"))
+					is_in_kitchen = 1
+			sleep(2 SECONDS)
+			if (is_in_kitchen)
+				speak(pick("SWITCH IT OFF!",
+				"SHUT IT DOWN!",
+				"FUCK OFF OUT OF HERE!",
+				"OUT. GET OUT! GET OUT OF THIS KITCHEN! GET OUT!",
+				"LEAVE YOUR APRON AND GET THE FUCK OUT OF HERE!",
+				"YOU LET THIS HAPPEN IN YOUR KITCHEN YOU DONKEY!?",
+				"DONT JUST STAND THERE LIKE A BIG FUCKING MUFFIN! DO SOMETHING!"))
+			else if (how_shit == FOOD_QUALITY_HORSESHIT)
+				speak(pick("THAT WAS PATHETIC. THAT WAS ABSOLUTELY PATHETIC!",
+				"COME ON!",
+				"YOU CALL YOURSELF CHEFS?",
+				"YOU'RE AS MUCH OF A CHEF AS I AM A NICE PERSON.",
+				"MY GRAN COULD COOK BETTER THAN ALL OF YOU! AND SHE'S DEAD!",
+				"THIS IS A MISTAKE, A GODDAMN TRAGEDY!",
+				"NOW FUCK OFF YOU FAT USELESS SACK OF FUCKING YANKEE DOODLE DANDY SHITE! FUCK OFF WILL YA?",
+				"YOU ARE IMPOSSIBLE TO UNDERESTIMATE!",
+				"FUCK OFF! FUCK OFF! FUCK OFF ALL OF YOU!"))
+			icon_state = "chefbot-idle"
+			raging = 0
+			if (how_shit == FOOD_QUALITY_HORSESHIT)
+				if (food_to_judge in range(1, src))
+					food_to_judge.set_loc(src)
+					visible_message("<span class='alert'><b>[src]</b> stomps on [food_to_judge] [pick("with glee", "with the wrath of a thousand overworked line-cooks", "with cold, uncaring efficiency")].</span>")
+				animate_stomp(src)
+				SPAWN(0.5 SECONDS)
+					if (food_to_judge in range(1, src))
+						qdel(food_to_judge)
+			else
+				speak(pick("GET THIS SHIT OUT OF MY SIGHT!",
+				"I CANT FUCKING LOOK AT THIS!",
+				"LOOK WHAT I THINK OF YOUR DISH!",
+				"I WOULDN'T FEED THIS TO MY DOG!",
+				"PISS OFF WITH THIS!",
+				"GET YOUR SHIT TOGETHER!"))
+				if (food_to_judge in range(1, src))
+					src.visible_message("<span class='notice'>[src] flings [food_to_judge] away [pick("without even looking", "with rage", "with a disappointed sigh")].</span>")
+					ThrowRandom(food_to_judge, 4, 1)
+		else
+			// Nobody is in range anyway
+			icon_state = "chefbot-idle"
+			raging = 0
+			return
+	else if (src.emagged)
 		raging = 1
 		icon_state = "chefbot-mad"
 		switch (rand(1,4))
 			if (1)
 				var/mob/living/carbon/human/somefucker = locate() in view(7, src)
 				if (somefucker)
-					speak(pick("WHAT IS THIS?", "OH MY GOD."))
+					speak(pick("WHAT IS THIS?",
+					"OH MY GOD.",
+					"HOLD IT RIGHT THERE!",
+					"STOP, STOP!",
+					"STOP EVERYTHING, LOOK AT THIS!"))
 					drama()
 					sleep(2 SECONDS)
 					point(somefucker)
-					speak("WHO COOKED THIS?")
+					speak("WHO COOKED THIS?",
+					"DID YOU COOK THIS?",
+					"LOOK AT THIS SHIT!",
+					"20 YEARS OF COOKING AND I'VE NEVER SEEN SOMETHING SO SHIT IN MY ENTIRE CAREER!")
 					sleep(2 SECONDS)
 					if (somefucker)
 						if (somefucker.getStatusDuration("burning") > 0)
 							speak("YOU DON'T LEAVE YOUR FUCKING FOOD UNATTENDED ON THE FUCKING STOVE. LOOK AT THIS. IT'S ON FIRE! IT'S GOING TO BE FUCKING BURNT!")
 						else if (somefucker.get_burn_damage() < 50)
-							speak("THIS [pick("HUMAN", "BURGER", "STEAK", "PORK")] IS SO FUCKING RAW IT'S STILL [pick("BEATING ASSISTANTS TO DEATH", "FARTING ON DEAD BODIES", "TRYING TO FEED ME FLOOR PILLS")]!")
+							speak("THIS [pick("HUMAN", "PRIMATE", "STEAK", "BURGER", "PORK", "MEAT")] IS SO FUCKING RAW IT'S STILL [pick("BEATING ASSISTANTS TO DEATH", "FARTING ON DEAD BODIES", "TRYING TO FEED ME FLOOR PILLS")]!")
+							src.navigate_to(somefucker, CHEFBOT_MOVE_SPEED / 2, 1, 15)
+							sleep(3 SECOND)
+							speak("TURN THE HEAT UP! I WANT TO HEAR IT SIZZLE!", "NO UNDERCOOKED MEAT IN MY KITCHEN!", "I HAVE TO DO THIS SHIT MYSELF! PATHETIC!")
+							src.visible_message("<span class='alert'>[src] flares up in anger!</span>")
+							fireflash(src, 1, 1)
 						else
-							speak("THIS [pick("HUMAN", "PRIMATE", "STEAK", "BURGER")] IS FUCKING [pick("OVERCOOKED", "BURNT")]!")
+							speak("THIS [pick("HUMAN", "PRIMATE", "STEAK", "BURGER", "PORK", "MEAT")] IS FUCKING [pick("OVERCOOKED", "BURNT")]!")
 			if (2 to 3)
 				drama()
 				sleep(2 SECONDS)
-				var/msg = pick("WHY DID THE CHICKEN CROSS THE ROAD? BECAUSE YOU DIDN'T FUCKING COOK IT.", "THIS PORK IS SO RAW IT'S STILL SINGING HAKUNA MATATA!", "THIS STEAK IS SO RAW OLD MCDONALD IS STILL TRYING TO MILK IT!", "THIS FISH IS SO RAW IT'S STILL TRYING TO FIND NEMO!")
+				var/msg = pick("WHY DID THE CHICKEN CROSS THE ROAD? BECAUSE YOU DIDN'T FUCKING COOK IT.",
+				"THIS PORK IS SO RAW IT'S STILL SINGING HAKUNA MATATA!",
+				"THIS STEAK IS SO RAW OLD MCDONALD IS STILL TRYING TO MILK IT!",
+				"THIS FISH IS SO RAW IT'S STILL TRYING TO FIND NEMO!")
 				speak(msg)
 			if (4)
 				var/mob/living/silicon/robot/someborg = locate() in view(7, src)
 				if (someborg)
-					speak(pick("WHAT IS THIS?", "OH MY GOD."))
+					speak(pick("WHAT IS THIS?", "OH MY GOD.", "HOLD IT RIGHT THERE!", "STOP, STOP!", "STOP EVERYTHING, LOOK AT THIS!"))
 					drama()
 					sleep(2 SECONDS)
 					point(someborg)
-					speak("WHO COOKED THIS?")
+					speak("WHO COOKED THIS?", "DID YOU COOK THIS?", "LOOK AT THIS SHIT!", "I'VE NEVER SEEN SOMETHING SO SHIT IN MY ENTIRE CAREER!")
 					sleep(2 SECONDS)
 					if (someborg)
 						speak("THIS ROBURGER IS SO FUCKING RAW [pick("IT'S STILL VIOLATING ITS LAWS", "IT HASN'T EVEN STARTED TO GO ROGUE")]!")
 		raging = 0
 		icon_state = "chefbot-idle"
+#undef FOOD_QUALITY_HORSESHIT
+#undef FOOD_QUALITY_SHIT
+#undef FOOD_QUALITY_GOOD_SHIT
 
 /obj/machinery/bot/chefbot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
@@ -187,6 +296,8 @@
 	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	var/turf/Tsec = get_turf(src)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
+	if (src.emagged)
+		fireflash(src, 1, 1)
 	new /obj/item/clothing/head/dramachefhat(Tsec)
 	qdel(src)
 	return
