@@ -20,27 +20,31 @@
 
 	cast()
 		if (..())
-			return 1
+			return TRUE
 
 		var/turf/T = get_turf(holder.owner)
 		if (isturf(T) && istype(T,/turf/simulated/floor))
+			for (var/obj/O in T)
+				if (O.density)
+					boutput(holder.owner, "<span class='notice'>There is something in the way!</span>")
+					return TRUE
 			if(istype(holder.owner, /mob/living/intangible/wraith))
 				var/mob/living/intangible/wraith/W = holder.owner
 				if (!W.density)
 					boutput(holder.owner, "Your connection to the physical plane is too weak. You must be manifested to do this.")
-					return 1
+					return TRUE
 				if (W.linked_portal)
 					if (alert(holder.owner, "You already have a portal. Do you want to destroy the old one?", "Confirmation", "Yes", "No") == "Yes")
 						W.linked_portal.deleteLinkedCritters()
 						qdel(W.linked_portal)
 						W.linked_portal = null
 					else
-						return 1
+						return TRUE
 				var/mob_choice = null
 				if (length(src.mob_types) > 1)
 					mob_choice = tgui_input_list(holder.owner, "What should the portal spawn?", "Target Mob Type", mob_types)
 				if (mob_choice == null)
-					return 1
+					return TRUE
 				switch(mob_choice)
 					if("Crunched")
 						mob_choice = /mob/living/critter/crunched
@@ -75,7 +79,7 @@
 				V.alpha = 0
 				animate(V, alpha=255, time = 1 SECONDS)
 				W.linked_portal = V
-				return 0
+				return FALSE
 		else
 			boutput(holder.owner, "We cannot open a portal here")
-			return 1
+			return TRUE

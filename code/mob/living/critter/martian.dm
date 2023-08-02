@@ -147,10 +147,6 @@
 				return 2
 		return ..()
 
-	death()
-		src.can_lie = FALSE
-		..()
-
 /mob/living/critter/martian/warrior
 	name = "martian warrior"
 	real_name = "martian warrior"

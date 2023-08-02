@@ -10,6 +10,7 @@
 #ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
 #define SKIP_FEA_SETUP 1
 #define SKIP_Z5_SETUP 1
+#define SKIP_PLANETS_SETUP 1
 #define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME 1 //Skip changelogs
 #define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO 1 //Automatically ready up and start the game ASAP. No input required.
 #endif
@@ -17,6 +18,7 @@
 #ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE
 #define SKIP_FEA_SETUP 0 //Skip atmos setup
 #define SKIP_Z5_SETUP 0 //Skip z5 gen
+#define SKIP_PLANETS_SETUP 0
 #endif
 
 // Server side profiler stuff for when you want to profile how laggy the game is
@@ -73,6 +75,7 @@
 // other toggles
 
 #define FOOTBALL_MODE 1
+#define ENABLE_ARTEMIS 0
 //#define RP_MODE
 
 #ifdef Z_LOG_ENABLE
