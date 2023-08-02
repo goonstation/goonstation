@@ -604,6 +604,13 @@ TYPEINFO(/area)
 			O.set_loc(target)
 		. = ..()
 
+// area for unsimmed_test.dmm and simmed_test.dmm
+/area/area_for_testing_things
+	name = "Developer Testing Area"
+	icon_state = "red"
+	requires_power = FALSE
+	ambient_light = rgb(255,255,255)
+
 /area/battle_royale_spawn //People entering VR or exiting VR with stupid exploits are jerks.
 	name = "Battle Royale warp zone"
 	skip_sims = 1

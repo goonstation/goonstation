@@ -11,6 +11,9 @@
 #elif defined(RANDOM_ROOM_RUNTIME_CHECKING)
 #include "blank.dm"
 
+#elif defined(MAP_OVERRIDE_TESTING_UNSIMMED) || defined(MAP_OVERRIDE_TESTING_SIMMED)
+#include "testmaps.dm"
+
 // special modes
 #elif defined(MAP_OVERRIDE_CONSTRUCTION)
 #include "construction.dm"

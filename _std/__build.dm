@@ -33,9 +33,10 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1		// Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1	// No other zlevels. Boots way faster. Atlas map by default but can be overriden.
 
-//////--- DEVELOPER MAPS FOR TESTING THINGS (they work with GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
-//#define MAP_OVERRIDE_TESTING_UNSIMMED				// Only load in the 20x20 testing map.
-//#define MAP_OVERRIDE_TESTING_SIMMED					// above but with atmos sim
+//////--- DEVELOPER MAPS FOR TESTING THINGS ---
+// these maps are in the blank_maps subfolder in the maps folder.
+//#define MAP_OVERRIDE_TESTING_UNSIMMED				// Only load in the 20x20 testing map. no z levels
+//#define MAP_OVERRIDE_TESTING_SIMMED					// above but with atmos sim.
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID	// all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
