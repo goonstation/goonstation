@@ -1223,9 +1223,7 @@
 /area/diner/kitchen)
 "QH" = (
 /obj/stool/bar,
-/obj/landmark/spawner{
-	name = "shitty_bill"
-	},
+/mob/living/carbon/human/biker,
 /turf/simulated/floor/carpet/red/standard/edge/west,
 /area/diner/dining)
 "Rd" = (
@@ -1547,9 +1545,7 @@
 /obj/stool/chair/wooden{
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "don_glab"
-	},
+/mob/living/carbon/human/don_glab,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "YC" = (
@@ -1641,9 +1637,7 @@
 /obj/stool/chair/wooden{
 	dir = 4
 	},
-/obj/landmark/spawner{
-	name = "father_jack"
-	},
+/mob/living/carbon/human/fatherjack,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "ZZ" = (

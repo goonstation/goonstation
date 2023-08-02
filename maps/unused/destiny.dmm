@@ -9,9 +9,7 @@
 /turf/space,
 /area/space)
 "aaf" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
 "aag" = (
@@ -8156,9 +8154,7 @@
 	},
 /area/station/bridge/captain)
 "aKh" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
@@ -8904,9 +8900,7 @@
 /turf/simulated/floor/grey,
 /area/station/mining/refinery)
 "aNg" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /obj/machinery/light/incandescent{
 	dir = 1;
 	nostick = 1;
@@ -12187,9 +12181,7 @@
 	name = "autoname - Entertainment";
 	network = "Zeta"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /obj/machinery/light/incandescent{
 	dir = 1;
 	nostick = 1;
@@ -17718,12 +17710,12 @@
 /obj/storage/crate/freezer{
 	name = "Freezer"
 	},
-/obj/item/fish/bass,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/carp,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -27188,9 +27180,7 @@
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -29241,9 +29231,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_krimpus"
-	},
+/mob/living/carbon/human/npc/monkey/krimpus,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "hZl" = (
@@ -34830,7 +34818,6 @@
 /area/station/medical/medbay/treatment2)
 "kYP" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/under/patient_gown,
 /obj/item/device/analyzer/healthanalyzer,
@@ -35729,9 +35716,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "luB" = (
-/obj/landmark/spawner{
-	name = "dolly"
-	},
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "luN" = (
@@ -36958,9 +36943,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "mdh" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
-	},
+/mob/living/carbon/human/npc/monkey/tanhony,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "mdr" = (
@@ -52279,9 +52262,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "ucW" = (
@@ -56961,9 +56942,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "wqa" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "wqh" = (

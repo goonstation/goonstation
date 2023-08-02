@@ -34,7 +34,7 @@
 	can_disarm = 1
 	var/good_grip = 1
 
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	skinresult = /obj/item/material_piece/cloth/spidersilk
 	max_skins = 4
 
@@ -318,7 +318,7 @@
 	can_throw = 0
 	can_grab = 0
 	can_disarm = 0
-	butcherable = 0
+	butcherable = BUTCHER_NOT_ALLOWED
 	health_brute = 5
 	health_burn = 5
 	babyspider = 1

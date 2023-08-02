@@ -32,8 +32,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	can_disarm = FALSE
 	use_stamina = FALSE
 	use_stunned_icon = FALSE
-	butcherable = FALSE
-	can_bleed = FALSE
 	canbegrabbed = FALSE
 	can_lie = FALSE
 	can_burn = FALSE

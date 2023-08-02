@@ -686,12 +686,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/mining/refinery)
-"ajt" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/turf/simulated/floor/grass,
-/area/station/medical/dome)
 "ajG" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4
@@ -1949,6 +1943,13 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
+"aBD" = (
+/obj/stool/chair/office/green{
+	dir = 8
+	},
+/mob/living/carbon/human/npc/monkey/krimpus,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
 "aCa" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 1
@@ -5528,6 +5529,23 @@
 /obj/disposaloutlet/east,
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
+"byt" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/mob/living/carbon/human/npc/monkey/tanhony,
+/turf/simulated/floor/plating/random,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "byA" = (
 /obj/machinery/light_switch/north,
 /obj/disposalpipe/segment/horizontal,
@@ -7619,6 +7637,14 @@
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/south)
+"ccV" = (
+/mob/living/carbon/human/npc/monkey,
+/obj/decal/tile_edge/line/green{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
 "ccZ" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -11356,16 +11382,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/aviary)
-"dbc" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/obj/decal/tile_edge/line/green{
-	dir = 8;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/grass,
-/area/station/medical/dome)
 "dbh" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -13293,6 +13309,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/southwest)
+"dCO" = (
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
+/obj/disposalpipe/segment/mail/bent/north,
+/turf/simulated/floor,
+/area/station/crew_quarters/market)
 "dCP" = (
 /obj/table/auto,
 /obj/item/paper/book/from_file/medical_surgery_guide{
@@ -15325,6 +15346,13 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/engine/power)
+"eem" = (
+/mob/living/carbon/human/npc/monkey,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/turf/simulated/floor/sandytile,
+/area/station/medical/dome)
 "eev" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/mainpod1_horizontal/vertical,
 /turf/simulated/floor/shuttlebay{
@@ -18656,6 +18684,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/eva)
+"eSO" = (
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "eSX" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor/grey,
@@ -18750,6 +18782,13 @@
 	dir = 1
 	},
 /area/station/science/lobby)
+"eUe" = (
+/mob/living/carbon/human/npc/monkey,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
 "eUf" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/storage/firstaid/fire{
@@ -24137,16 +24176,6 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/cdc)
-"gqY" = (
-/obj/machinery/atmospherics/mixer{
-	dir = 4;
-	frequency = 1225;
-	id_tag = "engine_combust";
-	master_id = "engine_combust_control";
-	name = "Gas Mixer (Combustion Chamber)"
-	},
-/turf/simulated/floor/caution/east,
-/area/station/engine/hotloop)
 "gre" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
@@ -27364,15 +27393,6 @@
 /obj/machinery/phone,
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
-"hfm" = (
-/obj/stool/chair/office/green{
-	dir = 8
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_krimpus"
-	},
-/turf/simulated/floor,
-/area/station/hydroponics/bay)
 "hfn" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/ntbrew{
@@ -30020,6 +30040,16 @@
 /area/station/crew_quarters/quarters{
 	name = "Chapel Reception"
 	})
+"hNh" = (
+/obj/machinery/atmospherics/trinary/mixer{
+	dir = 1;
+	frequency = 1229;
+	id_tag = "toxin_intermix";
+	master_id = "toxin_intermix_control";
+	name = "Toxin Intermix Unit"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/lab)
 "hNp" = (
 /obj/burning_barrel,
 /turf/simulated/floor/plating/scorched,
@@ -30250,13 +30280,6 @@
 /area/station/hydroponics/lobby{
 	name = "Hydroponics Staff Section"
 	})
-"hQq" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
-/obj/disposalpipe/segment/mail/bent/north,
-/turf/simulated/floor,
-/area/station/crew_quarters/market)
 "hQA" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -32841,6 +32864,13 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"iBX" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "iBY" = (
 /obj/lattice,
 /obj/disposalpipe/segment/transport{
@@ -42424,6 +42454,10 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor,
 /area/station/science/teleporter)
+"lbx" = (
+/mob/living/carbon/human/npc/monkey,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
 "lbB" = (
 /obj/structure/girder,
 /turf/simulated/floor/plating,
@@ -46410,6 +46444,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"lXZ" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/mob/living/carbon/human/npc/monkey/stirstir,
+/turf/simulated/floor/grime,
+/area/station/security/brig/genpop)
 "lYd" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -49070,15 +49111,6 @@
 /area/station/hydroponics/lobby{
 	name = "Hydroponics Staff Section"
 	})
-"mHP" = (
-/obj/stool/chair{
-	dir = 8
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/cafeteria)
 "mHY" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
@@ -51990,6 +52022,11 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"nAT" = (
+/obj/decal/cleanable/dirt,
+/mob/living/carbon/human/npc/monkey/horse,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southwest)
 "nAX" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/bowl,
@@ -52165,8 +52202,6 @@
 /area/space)
 "nDo" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/mask/muzzle,
 /turf/simulated/floor/white,
@@ -52797,6 +52832,15 @@
 	},
 /turf/simulated/floor/engine/caution/west,
 /area/ghostdrone_factory)
+"nKc" = (
+/obj/stool/chair/couch{
+	dir = 8;
+	icon_state = "chair_couch-blue";
+	name = "ratty blue couch"
+	},
+/mob/living/carbon/human/npc/monkey/albert,
+/turf/simulated/floor/engine/caution/west,
+/area/station/science/teleporter)
 "nKe" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -55876,12 +55920,6 @@
 /obj/landmark/halloween,
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/west)
-"oxm" = (
-/obj/landmark/spawner{
-	name = "dolly"
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "oxs" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -59223,12 +59261,12 @@
 	name = "Warrens Hall"
 	})
 "pqu" = (
-/obj/item/fish/bass,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/carp,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/storage/crate/freezer,
 /obj/item/raw_material/ice,
 /obj/item/raw_material/ice,
@@ -60993,15 +61031,6 @@
 /obj/mapping_helper/access/hos,
 /turf/simulated/floor/black,
 /area/station/security/hos)
-"pMt" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/turf/simulated/floor/sandytile,
-/area/station/medical/dome)
 "pMu" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/blueblack/corner{
@@ -66852,6 +66881,14 @@
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
+"rny" = (
+/mob/living/carbon/human/npc/monkey,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
 "rnE" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -67220,16 +67257,6 @@
 	icon_state = "2-4"
 	},
 /obj/disposalpipe/segment/bent/east,
-/turf/simulated/floor/grass,
-/area/station/medical/dome)
-"rsy" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "rsK" = (
@@ -68676,15 +68703,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/market)
-"rLH" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
-/turf/simulated/floor/grime,
-/area/station/security/brig/genpop)
 "rLZ" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/engine/caution/corner{
@@ -68859,25 +68877,6 @@
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/security/brig/cell1{
 	name = "Witness Protection"
-	})
-"rNy" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
 	})
 "rND" = (
 /turf/simulated/floor/wood/seven,
@@ -70354,15 +70353,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"sdP" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/turf/simulated/floor/grass,
-/area/station/medical/dome)
 "sdR" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -70390,17 +70380,6 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/bridge/captain)
-"seq" = (
-/obj/stool/chair/couch{
-	dir = 8;
-	icon_state = "chair_couch-blue";
-	name = "ratty blue couch"
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
-/turf/simulated/floor/engine/caution/west,
-/area/station/science/teleporter)
 "seu" = (
 /obj/machinery/light,
 /turf/simulated/floor/circuit,
@@ -75988,16 +75967,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/lounge/research)
-"tuO" = (
-/obj/machinery/atmospherics/mixer{
-	dir = 1;
-	frequency = 1229;
-	id_tag = "toxin_intermix";
-	master_id = "toxin_intermix_control";
-	name = "Toxin Intermix Unit"
-	},
-/turf/simulated/floor/engine,
-/area/station/science/lab)
 "tuV" = (
 /obj/machinery/lrteleporter,
 /turf/simulated/floor/circuit/white,
@@ -86930,13 +86899,6 @@
 /obj/item/bandage,
 /turf/simulated/floor/carpet/red,
 /area/listeningpost)
-"vZz" = (
-/obj/decal/cleanable/dirt,
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/southwest)
 "vZE" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -88583,6 +88545,16 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/proto)
+"wsd" = (
+/obj/machinery/atmospherics/trinary/mixer{
+	dir = 4;
+	frequency = 1225;
+	id_tag = "engine_combust";
+	master_id = "engine_combust_control";
+	name = "Gas Mixer (Combustion Chamber)"
+	},
+/turf/simulated/floor/caution/east,
+/area/station/engine/hotloop)
 "wse" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/bluewhite{
@@ -127213,7 +127185,7 @@ rej
 rMx
 osN
 jjO
-tuO
+hNh
 pAV
 fCr
 tYO
@@ -128240,7 +128212,7 @@ lZk
 cTw
 duB
 ppd
-rNy
+byt
 svz
 xLw
 hHr
@@ -130964,7 +130936,7 @@ ygf
 rqt
 grJ
 ygf
-vZz
+nAT
 grJ
 grJ
 ygf
@@ -137187,7 +137159,7 @@ qUN
 wne
 cqU
 rlZ
-seq
+nKc
 uXw
 xbt
 dAy
@@ -141457,7 +141429,7 @@ hSw
 wPf
 utv
 wOt
-mHP
+iBX
 xhn
 xbF
 uiC
@@ -149351,7 +149323,7 @@ abU
 esN
 iNS
 pSg
-rLH
+lXZ
 bzg
 xOy
 bHu
@@ -150464,7 +150436,7 @@ rhl
 erc
 tpz
 wLz
-pMt
+eem
 wLz
 tmM
 ijS
@@ -151069,7 +151041,7 @@ oJV
 vIl
 wYN
 vFz
-dbc
+ccV
 tmT
 ijS
 ugp
@@ -151974,7 +151946,7 @@ pwc
 rik
 tbo
 top
-sdP
+eUe
 top
 sJS
 wYz
@@ -152385,7 +152357,7 @@ iwO
 hyc
 oMI
 xIm
-hQq
+dCO
 qqY
 etw
 ych
@@ -153181,7 +153153,7 @@ oVh
 lWV
 lKc
 qQR
-rsy
+rny
 vUj
 top
 tEX
@@ -154388,7 +154360,7 @@ gfQ
 iHN
 rik
 rqM
-ajt
+lbx
 oiU
 vUj
 top
@@ -159567,7 +159539,7 @@ qXJ
 vPI
 fzC
 uQL
-hfm
+aBD
 saj
 pzc
 chT
@@ -159804,7 +159776,7 @@ aJu
 aJu
 lXe
 rDN
-gqY
+wsd
 gMl
 lXe
 hne
@@ -166837,7 +166809,7 @@ wwQ
 bXN
 gGD
 wzm
-oxm
+eSO
 wzm
 wzm
 wzm

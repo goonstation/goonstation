@@ -55,6 +55,7 @@ task-install() {
 ## Runs webpack
 task-webpack() {
   cd "${base_dir}"
+  BROWSERSLIST_IGNORE_OLD_DATA=true
   yarn run webpack-cli "${@}"
 }
 

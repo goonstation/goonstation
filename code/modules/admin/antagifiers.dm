@@ -13,11 +13,7 @@
 		if (issilicon(M))
 			boutput(M, "Silly robot.")
 			return
-		/*
-		if (!allowAntagStacking && checktraitor(M))
-			boutput(M, "Don't be greedy.")
-			return
-		*/
+
 		if (M?.mind && !M.mind.special_role)
 			new /datum/objective(attachedObjective, M.mind)
 			makeAntag(M)

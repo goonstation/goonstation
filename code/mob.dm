@@ -1848,16 +1848,16 @@
 	qdel(src)
 
 
-/mob/proc/firegib(var/drop_clothes = TRUE)
-	if (isobserver(src)) return
+/mob/proc/firegib(var/drop_equipment = TRUE)
+	if (isobserver(src))
+		return
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
 #endif
 	logTheThing(LOG_COMBAT, src, "is fire-gibbed at [log_loc(src)].")
 	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
-	src.transforming = 1
-	src.canmove = 0
+	src.transforming = TRUE
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
@@ -1865,23 +1865,23 @@
 		animation = new(src.loc)
 		animation.master = src
 		flick("firegibbed", animation)
-		if (drop_clothes)
+		if (drop_equipment)
 			for (var/obj/item/W in src)
 				if (istype(W, /obj/item/clothing))
 					var/obj/item/clothing/C = W
-					C.stains += "singed"
-					C.UpdateName()
+					C.add_stain("singed")
 			unequip_all()
 
-	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
-		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
-
-	if (!iscarbon(src))
-		robogibs(src.loc)
+	if (drop_equipment)
+		if (isrobot(src) || isrobocritter(src))
+			robogibs(src.loc)
+		else
+			gibs(src.loc)
 
 	if (animation)
 		animation.delaydispose()
+
+	src.ghostize()
 	qdel(src)
 
 /mob/proc/partygib(give_medal)
@@ -2152,10 +2152,10 @@
 			the_butt = new /obj/item/clothing/head/butt/cyberbutt
 		else if (istype(src, /mob/living/intangible/wraith) || istype(src, /mob/dead))
 			the_butt = new /obj/item/clothing/head/butt
-			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE, copy = FALSE)
+			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE)
 		else if (istype(src, /mob/living/intangible/blob_overmind))
 			the_butt = new /obj/item/clothing/head/butt
-			the_butt.setMaterial(getMaterial("blob"), appearance = TRUE, setname = TRUE, copy = FALSE)
+			the_butt.setMaterial(getMaterial("blob"), appearance = TRUE, setname = TRUE)
 		else
 			the_butt = new /obj/item/clothing/head/butt/synth
 
