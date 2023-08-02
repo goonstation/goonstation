@@ -5,7 +5,6 @@
 	antagonist_icon = "traitor"
 
 /datum/antagonist/sleeper_agent/announce()
-	var/mob/living/carbon/human/H = src.owner.current
 	boutput(H, "<h3><span class='alert'>You have awakened as a Syndicate [display_name]!</span></h3>")
 
 /datum/antagonist/sleeper_agent/assign_objectives()
