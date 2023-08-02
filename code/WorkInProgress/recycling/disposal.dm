@@ -1760,8 +1760,10 @@ TYPEINFO(/obj/disposaloutlet)
 	icon_state = "outlet"
 	density = 1
 	anchored = ANCHORED
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
+	var/obj/disposalpipe/trunk/trunk = null // the attached pipe trunk
 	var/range = 10
 
 	var/message = null
@@ -1771,6 +1773,7 @@ TYPEINFO(/obj/disposaloutlet)
 	var/frequency = FREQ_PDA
 	var/flusher_id = null
 	throw_speed = 1
+
 
 	ex_act(var/severity)
 		switch(severity)
@@ -1794,17 +1797,41 @@ TYPEINFO(/obj/disposaloutlet)
 	New()
 		..()
 
-		SPAWN(1 DECI SECOND)
-			target = get_ranged_target_turf(src, dir, range)
+		SPAWN(0.5 SECONDS)
+			if(src)
+				src.target = get_ranged_target_turf(src, dir, range)
+				src.trunk = locate() in src.loc
+				if(src.trunk)
+					src.trunk.linked = src	// link the pipe trunk to self
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 
+	was_built_from_frame(mob/user, newly_built)
+		if (!newly_built)
+			src.target = get_ranged_target_turf(src, dir, range)
+			src.trunk = locate() in src.loc
+			if(src.trunk)
+				src.trunk.linked = src	// link the pipe trunk to self
+		return ..()
+
+	was_deconstructed_to_frame(mob/user)
+		if (src.trunk && src.trunk.linked == src)
+			src.trunk.linked = null
+		src.target = null
+		src.trunk = null
+
+		var/turf/target_turf = get_turf(src)
+		for (var/atom/movable/manipulated_atom in src)
+			manipulated_atom.set_loc(target_turf)
+
+		return ..()
+
 	disposing()
-		var/obj/disposalpipe/trunk/trunk = locate() in src.loc
-		if (trunk && trunk.linked == src)
-			trunk.linked = null
-		trunk = null
+		if (src.trunk && src.trunk.linked == src)
+			src.trunk.linked = null
+		src.target = null
+		src.trunk = null
 		..()
 
 	// expel the contents of the holder object, then delete it
