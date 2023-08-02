@@ -28,7 +28,7 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 	var/lastpct = 0
 	var/thispct = 0
 	var/donecount = 0
-	var/totalcount = length(cam_candidates) / 100
+	var/const/totalcount = length(cam_candidates) / 100
 
 	for(var/turf/T as anything in cam_candidates) //ugh
 		T.aiImage = new
