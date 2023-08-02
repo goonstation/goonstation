@@ -17,6 +17,8 @@ Contents:
 	icon_state = "void_gray"
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
+	can_break = FALSE
+	can_burn = FALSE
 
 	ex_act(severity)
 		return
@@ -39,6 +41,10 @@ Contents:
 			return
 		else ..()
 
+/turf/unsimulated/floor/arctic
+	can_break = FALSE
+	can_burn = FALSE
+
 /turf/unsimulated/floor/arctic/snow
 	name = "odd snow"
 	desc = "Frozen carbon dioxide. Neat."
@@ -48,7 +54,7 @@ Contents:
 	nitrogen = 0
 	oxygen = 0
 	temperature = 100
-	fullbright = 0
+	fullbright = TRUE
 
 	New()
 		..()

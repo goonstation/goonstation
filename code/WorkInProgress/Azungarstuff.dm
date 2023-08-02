@@ -54,6 +54,8 @@
 	pathable = 1
 	can_replace_with_stuff = 0
 	temperature = 10+T0C
+	can_break = FALSE
+	can_burn = FALSE
 
 	Entered(atom/movable/O)
 		..()
@@ -107,6 +109,8 @@
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "lava_edges"
 	temperature = 10+T0C
+	can_break = FALSE
+	can_burn = FALSE
 
 	Entered(var/mob/M)
 		. = ..()

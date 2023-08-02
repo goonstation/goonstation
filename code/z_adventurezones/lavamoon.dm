@@ -10,6 +10,10 @@
 //Puzzle elements
 
 //Turfs
+/turf/unsimulated/iomoon
+	can_break = FALSE
+	can_burn = FALSE
+
 /turf/unsimulated/iomoon/floor
 	name = "silicate crust"
 	icon = 'icons/turf/floors.dmi'
