@@ -80,7 +80,7 @@
 
 				else
 					// Antagonist check.
-					if (checktraitor(H))
+					if (H.mind?.is_antagonist())
 						switch (H.mind.special_role) // Ordered by skull value.
 							if (ROLE_OMNITRAITOR)
 								skull_type = /obj/item/skull/crystal

@@ -90,7 +90,7 @@
 		..()
 		if(istype(src.material))
 			if(initial(src.opacity))
-				src.set_opacity(src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
+				src.set_opacity(src.material.getAlpha() <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
 		return
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
@@ -358,7 +358,7 @@ proc/generate_space_color()
 // override for space turfs, since they should never hide anything
 /turf/space/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1)
+		if(O.level == UNDERFLOOR)
 			O.hide(0)
 
 // override for space turfs, since they should never hide anything
@@ -537,7 +537,7 @@ proc/generate_space_color()
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1)
+		if(O.level == UNDERFLOOR)
 			O.hide(src.intact)
 
 /turf/unsimulated/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
@@ -552,6 +552,7 @@ proc/generate_space_color()
 	var/old_liquid = active_liquid // replacing stuff wasn't clearing liquids properly
 
 	var/oldmat = src.material
+	src.material?.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
 
 	var/datum/gas_mixture/oldair = null //Set if old turf is simulated and has air on it.
 	var/datum/air_group/oldparent = null //Ditto.

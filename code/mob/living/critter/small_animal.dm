@@ -40,6 +40,10 @@
   - lobsters
   - boogiebots
   - figures
+  - mentor / admin mice
+  - crabs
+	- party crabs
+	- lava crabs
 todo: add more small animals!
 */
 ABSTRACT_TYPE(/mob/living/critter/small_animal)
@@ -54,7 +58,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	can_throw = TRUE
 	can_grab = TRUE
 	can_disarm = TRUE
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	name_the_meat = TRUE
 	max_skins = 1
 	health_brute = 20 // moved up from birds since more than just they can use this, really
@@ -829,7 +833,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	desc = "Good dog."
 	icon_state = "george"
 	icon_state_dead = "george-lying"
-	butcherable = 0
+	butcherable = BUTCHER_NOT_ALLOWED
 	health_brute = 100
 	health_burn = 100
 	dogtype = "george"
@@ -2185,7 +2189,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 2
 	speechverb_say = "croaks"
 	speechverb_exclaim = "croaks"
-	butcherable = 0
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
@@ -2246,7 +2249,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 2
 	speechverb_say = "hisses"
 	speechverb_exclaim = "barks"
-	butcherable = 0
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
@@ -2357,7 +2359,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 2
 	speechverb_say = "hisses"
 	speechverb_exclaim = "barks"
-	butcherable = FALSE
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
@@ -2486,7 +2487,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 2
 	speechverb_say = "hisses"
 	speechverb_exclaim = "wheezes"
-	butcherable = FALSE
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
@@ -2601,7 +2601,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_say = "trills"
 	speechverb_exclaim = "barks"
 	death_text = "%src% lets out a final weak coo and keels over."
-	butcherable = FALSE
+	butcherable = BUTCHER_YOU_MONSTER
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
@@ -2716,7 +2716,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_say = "harrumphs"
 	speechverb_exclaim = "roars"
 	death_text = "%src% lets out a final weak grumble and keels over."
-	butcherable = FALSE
+	butcherable = BUTCHER_YOU_MONSTER
 	health_brute = 15
 	health_brute_vuln = 0.5
 	health_burn = 15
@@ -3059,7 +3059,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	fits_under_table = TRUE
 	add_abilities = list(/datum/targetable/critter/pounce)
 
-	butcherable = TRUE
 	skinresult = /obj/item/clothing/head/raccoon
 	max_skins = 1
 
@@ -3701,10 +3700,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if (prob(1)) // VERY rarely give a super-fancy material
 				var/list/rare_material_varieties = list("gold", "spacelag", "diamond", "ruby", "garnet", "topaz", "citrine", "peridot", "emerald", "jade", "aquamarine",
 				"sapphire", "iolite", "amethyst", "alexandrite", "uqill", "uqillglass", "telecrystal", "miracle", "starstone", "flesh", "blob", "bone", "beeswax", "carbonfibre")
-				src.setMaterial(getMaterial(pick(rare_material_varieties)), copy = FALSE)
+				src.setMaterial(getMaterial(pick(rare_material_varieties)))
 			else // silly basic "rare" varieties of things that should probably just be fancy paintjobs or plastics, but whoever made these things are idiots and just made them out of the actual stuff.  I guess.
 				var/list/material_varieties = list("steel", "glass", "silver", "quartz", "rosequartz", "plasmaglass", "onyx", "jasper", "malachite", "lapislazuli")
-				src.setMaterial(getMaterial(pick(material_varieties)), copy = FALSE)
+				src.setMaterial(getMaterial(pick(material_varieties)))
 
 	death(var/gibbed)
 		. = ..()
@@ -3899,7 +3898,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	name = "Vanish"
 	desc = "Leave your body and return to ghost form"
 	icon_state = "mentordisappear"
-
+	needs_turf = FALSE //always castable
+	var/const/disappearance_time = 0.5 SECONDS
 
 	cast(mob/target)
 
@@ -3909,21 +3909,29 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		logTheThing(LOG_ADMIN, src, "turned from a mentor mouse to a ghost") // I can remove this but it seems like a good thing to have
 		M.visible_message("<span class='alert'><B>[M] does a funny little jiggle with their body and then vanishes into thin air!</B></span>") // MY ASCENSION BEGINS
 		animate_bouncy(src)
-		SPAWN(0.5 SECONDS)
+		animate(M, alpha=0, time=disappearance_time)
+		SPAWN(disappearance_time)
 			M.ghostize()
 			qdel(M)
+
+	incapacitationCheck()
+		return FALSE
 
 /datum/targetable/critter/mentortoggle
 	name = "Toggle Pick Up Requests"
 	desc = "Enable or disable player pick up requests."
 	icon_state = "mentordisappear"
 	icon_state = "mentortoggle"
+	needs_turf = FALSE //always castable
 
 	cast(mob/target)
 		var/mob/living/critter/small_animal/mouse/weak/mentor/M = holder.owner
 		M.allow_pickup_requests = !M.allow_pickup_requests
 		boutput(M, "<span class='notice'>You have toggled pick up requests [M.allow_pickup_requests ? "on" : "off"]</span>")
 		logTheThing(LOG_ADMIN, src, "Toggled mentor mouse pick up requests [M.allow_pickup_requests ? "on" : "off"]")
+
+	incapacitationCheck()
+		return FALSE
 
 /mob/living/critter/small_animal/mouse/weak/mentor/admin
 	name = "admin mouse"
@@ -3979,10 +3987,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_say = "snips"
 	speechverb_gasp = "claks"
 	speechverb_exclaim = "snaps"
-	butcherable = TRUE
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently pets", "rubs", "cuddles, coddles")
+	var/can_hat = TRUE
 
 	faction = FACTION_AQUATIC
 
@@ -3995,7 +4003,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		return null
 
 	attackby(obj/item/W, mob/living/user)
-		if (!is_incapacitated(src) && istype(W, /obj/item/clothing/head/cowboy))
+		if (is_incapacitated(src) || !src.is_npc)
+			return ..()
+		if (istype(W, /obj/item/clothing/head/cowboy) && src.can_hat)
 			user.visible_message("<b>[user]</b> gives [src] \the [W]!","You give [src] \the [W].")
 			qdel(W)
 			src.visible_message("[src] starts dancing!")
@@ -4025,6 +4035,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	real_name = "party crab"
 	desc = "This crab is having way more fun than you."
 	icon_state = "crab_party"
+	can_hat = FALSE
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -4057,7 +4068,43 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 45
 	health_burn = 20
 	is_npc = FALSE
+	can_hat = FALSE
 	add_abilities = list(/datum/targetable/critter/frenzy/crabmaul)
+
+/mob/living/critter/small_animal/crab/lava
+	name = "magma crab"
+	desc = "A strange beast resembling a crab boulder.  Not to be confused with a rock lobster."
+	icon_state = "lavacrab"
+	icon_state_dead = "lavacrab-dead"
+	density = TRUE
+	anchored = ANCHORED
+	butcherable = FALSE
+	health_burn_vuln = 0.1
+	health_brute_vuln = 0.5
+	death_text = "%src% flops over dead!"
+	ai_type = /datum/aiHolder/empty
+	can_hat = FALSE
+
+/mob/living/critter/small_animal/crab/lava/New()
+	..()
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, "lava_crab", 100)
+
+/mob/living/critter/small_animal/crab/lava/death(var/gibbed)
+	..()
+	src.anchored = UNANCHORED
+
+/mob/living/critter/small_animal/crab/lava/Login()
+	..()
+	src.anchored = UNANCHORED
+
+/mob/living/critter/small_animal/crab/lava/Logout()
+	..()
+	src.anchored = initial(src.anchored)
+
+/mob/living/critter/small_animal/crab/lava/deep
+	name = "deep magma crab"
+	health_brute = 30
+	health_burn = 30
 
 /* =============================================== */
 /* ------------------- trilobite ----------------- */

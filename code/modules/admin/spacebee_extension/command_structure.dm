@@ -105,14 +105,14 @@ ABSTRACT_TYPE(/datum/spacebee_extension_command/state_based/confirmation/mob_tar
 		system.reply("Ckey not found.", user)
 		return null
 	src.ckey = M.ckey // make sure we can do exact match in do_it(), partial matches could get fucked up by newjoiners etc
-	return "You are about to [src.action_name] [M] ([M.ckey])[isdead(M) ? " DEAD" : ""][checktraitor(M) ? " \[T\]" : ""]."
+	return "You are about to [src.action_name] [M] ([M.ckey])[isdead(M) ? " DEAD" : ""][M.mind?.is_antagonist() ? " \[T\]" : ""]."
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/do_it(user)
 	var/mob/M = allow_disconnected ? ckey_to_mob_maybe_disconnected(ckey) : ckey_to_mob(ckey)
 	if(!M)
 		system.reply("Ckey [ckey] disappeared in the meantime, huh.", user)
 		return
-	var/success_msg = "Done: [src.action_name] [M] ([M.ckey])[isdead(M) ? " DEAD" : ""][checktraitor(M) ? " \[T\]" : ""]."
+	var/success_msg = "Done: [src.action_name] [M] ([M.ckey])[isdead(M) ? " DEAD" : ""][M.mind?.is_antagonist() ? " \[T\]" : ""]."
 	if(src.perform_action(user, M))
 		system.reply(success_msg, user)
 

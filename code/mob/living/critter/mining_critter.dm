@@ -34,7 +34,7 @@
 	speechverb_ask = "chitters"
 	speechverb_gasp = "rattles"
 	speechverb_stammer = "click-clacks"
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	can_throw = TRUE
 	can_grab = TRUE
 	can_disarm = TRUE

@@ -492,7 +492,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if (length(types))
 		C = selfmob.make_critter(pick(types), spawnpoint, ghost_spawned=TRUE)
 	else
-		traitor = checktraitor(selfmob)
+		traitor = selfmob.mind?.is_antagonist()
 		if (traitor)
 			C = selfmob.make_critter(pick(antag_respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
 		else

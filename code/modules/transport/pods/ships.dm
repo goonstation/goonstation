@@ -619,7 +619,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		if(5)
 			if(istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
-				if (S.material && S.material.material_flags & MATERIAL_METAL)
+				if (S.material && S.material.getMaterialFlags() & MATERIAL_METAL)
 					if( S.amount < src.metal_amt)
 						boutput(user, text("<span class='alert'>You need at least [src.metal_amt] metal sheets to make the internal plating.</span>"))
 						return
@@ -708,7 +708,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				if (!S.material)
 					boutput(user, "These sheets won't work. You'll need reinforced glass or crystal.")
 					return
-				if (!(S.material.material_flags & MATERIAL_CRYSTAL) || !S.reinforcement)
+				if (!(S.material.getMaterialFlags() & MATERIAL_CRYSTAL) || !S.reinforcement)
 					boutput(user, "These sheets won't work. You'll need reinforced glass or crystal.")
 					return
 

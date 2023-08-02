@@ -126,6 +126,10 @@
 	name = "Fast Metabolism"
 	desc = "This gene causes a plant to grow faster, but also consume water more rapidly."
 
+/datum/plant_gene_strain/inert
+	name = "Inert"
+	desc = "This gene causes the plants produce to spawn, most of the time, without additional chemicals."
+
 /datum/plant_gene_strain/metabolism_slow
 	name = "Slow Metabolism"
 	desc = "This gene slows the growth of a plant, but reduces water consumption."

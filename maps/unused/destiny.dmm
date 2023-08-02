@@ -17710,12 +17710,12 @@
 /obj/storage/crate/freezer{
 	name = "Freezer"
 	},
-/obj/item/fish/bass,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/carp,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -34818,7 +34818,6 @@
 /area/station/medical/medbay/treatment2)
 "kYP" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/under/patient_gown,
 /obj/item/device/analyzer/healthanalyzer,

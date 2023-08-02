@@ -781,7 +781,6 @@
 /obj/grille/catwalk{
 	dir = 9
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross";
@@ -805,7 +804,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -820,7 +818,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -842,7 +839,6 @@
 /obj/grille/catwalk{
 	dir = 10
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross";
@@ -862,7 +858,6 @@
 /obj/grille/catwalk{
 	dir = 5
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross";
@@ -1033,7 +1028,6 @@
 	d2 = 2
 	},
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/east)
 "acm" = (
@@ -1153,7 +1147,6 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -1168,7 +1161,6 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -1181,7 +1173,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -1199,7 +1190,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -1217,7 +1207,6 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -1237,7 +1226,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_south,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -1256,7 +1244,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	layer = 2
@@ -1393,7 +1380,6 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/east)
 "acX" = (
@@ -1545,7 +1531,6 @@
 	dir = 2
 	},
 /obj/machinery/power/tracker/east,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -1566,7 +1551,6 @@
 	icon_state = "catwalk";
 	dir = 5
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross";
@@ -2279,7 +2263,6 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/turf/simulated/floor/grime,
 /turf/simulated/floor/plating/damaged2,
 /area/station/hallway/secondary/construction)
 "aeP" = (
@@ -2289,7 +2272,6 @@
 	name = "ratty blue couch"
 	},
 /obj/landmark/start/job/assistant,
-/turf/simulated/floor/grime,
 /turf/simulated/floor/plating/damaged2,
 /area/station/hallway/secondary/construction)
 "aeQ" = (
@@ -2304,7 +2286,6 @@
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;
 	layer = 2
@@ -2314,7 +2295,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -2330,7 +2310,6 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross";
@@ -2982,7 +2961,6 @@
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -3131,7 +3109,6 @@
 /area/mining/magnet)
 "agA" = (
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/maintenance/solar/east)
 "agB" = (
@@ -3145,7 +3122,6 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -3529,7 +3505,6 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	layer = 2
@@ -3543,7 +3518,6 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
-/turf/simulated/floor/plating,
 /turf/simulated/floor/plating/damaged2,
 /area/station/hallway/secondary/construction)
 "ahg" = (
@@ -3607,7 +3581,6 @@
 /obj/item/device/infra,
 /obj/item/device/infra,
 /obj/item/clothing/head/helmet/hardhat,
-/turf/simulated/floor/plating,
 /turf/simulated/floor/plating/damaged2,
 /area/station/hallway/secondary/construction)
 "ahr" = (
@@ -3622,7 +3595,6 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
 "aht" = (
@@ -4076,7 +4048,6 @@
 /obj/grille/catwalk{
 	dir = 9
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross";
@@ -4147,7 +4118,6 @@
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;
 	layer = 2
@@ -4158,7 +4128,6 @@
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -4263,7 +4232,6 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
 "aiY" = (
@@ -4586,7 +4554,6 @@
 /area/space)
 "ajD" = (
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/mining/staff_room)
 "ajE" = (
@@ -4965,7 +4932,6 @@
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;
 	layer = 2
@@ -4984,7 +4950,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -5066,7 +5031,6 @@
 	icon_state = "catwalk";
 	dir = 5
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross";
@@ -5086,7 +5050,6 @@
 "akN" = (
 /obj/grille/catwalk,
 /obj/disposalpipe/segment/horizontal,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "akO" = (
@@ -5573,7 +5536,6 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/mining/staff_room)
 "alS" = (
@@ -5782,7 +5744,6 @@
 	name = "Magnet Area Boundary"
 	},
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
 "amm" = (
@@ -5947,7 +5908,6 @@
 "amF" = (
 /obj/grille/catwalk,
 /obj/disposalpipe/segment/mail/horizontal,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "amG" = (
@@ -5958,7 +5918,6 @@
 "amH" = (
 /obj/grille/catwalk,
 /obj/disposalpipe/segment/mail/horizontal,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/mining/staff_room)
 "amI" = (
@@ -6270,7 +6229,6 @@
 	},
 /obj/grille/catwalk,
 /obj/disposalpipe/segment/mail/horizontal,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/mining/staff_room)
 "anv" = (
@@ -6282,7 +6240,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -6297,7 +6254,6 @@
 /obj/grille/catwalk{
 	dir = 6
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 2;
 	icon_state = "catwalk_cross";
@@ -6313,7 +6269,6 @@
 /obj/grille/catwalk{
 	dir = 6
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 2;
 	icon_state = "catwalk_cross";
@@ -6329,7 +6284,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -6832,7 +6786,6 @@
 	icon_state = "catwalk";
 	dir = 5
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross";
@@ -6844,7 +6797,6 @@
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
 	layer = 2
@@ -7407,7 +7359,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -7598,7 +7549,6 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	layer = 2
@@ -7816,7 +7766,6 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/mining/staff_room)
 "aqW" = (
@@ -7848,7 +7797,6 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
 	layer = 2
@@ -7925,7 +7873,6 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -8076,7 +8023,6 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -8363,7 +8309,6 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -9878,16 +9823,6 @@
 /obj/item/reagent_containers/food/snacks/plant/orange,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"avP" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/space,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	intact = 0
-	},
-/area/station/mining/refinery)
 "avQ" = (
 /turf/space,
 /area/shuttle/merchant_shuttle/right_station/cogmap)
@@ -9955,7 +9890,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -9995,7 +9929,6 @@
 /obj/grille/catwalk{
 	dir = 10
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross";
@@ -10046,7 +9979,6 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/north)
 "awi" = (
@@ -10088,7 +10020,6 @@
 	d2 = 2
 	},
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/north)
 "awo" = (
@@ -10143,7 +10074,6 @@
 	dir = 2
 	},
 /obj/machinery/power/tracker/alt,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -10658,7 +10588,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -11417,7 +11346,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -11758,7 +11686,6 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -12643,7 +12570,7 @@
 "aCa" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
 	dir = 2;
-	
+
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -12654,7 +12581,6 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/north)
 "aCc" = (
@@ -13150,7 +13076,6 @@
 /obj/grille/catwalk{
 	dir = 9
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross";
@@ -13594,7 +13519,6 @@
 	icon_state = "catwalk";
 	dir = 5
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross";
@@ -13611,7 +13535,6 @@
 	icon_state = "catwalk";
 	dir = 9
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross";
@@ -14440,7 +14363,7 @@
 "aGa" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -15412,7 +15335,6 @@
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;
 	layer = 2
@@ -15517,12 +15439,12 @@
 /obj/storage/crate/freezer{
 	name = "Freezer"
 	},
-/obj/item/fish/bass,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/carp,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/machinery/atmospherics/pipe/simple/junction{
 	icon_state = "intact";
 	dir = 4
@@ -16166,7 +16088,6 @@
 /area/station/hangar/catering)
 "aJR" = (
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "aJS" = (
@@ -17164,7 +17085,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -18694,7 +18614,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -18751,7 +18670,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 4;
-	
+
 	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
@@ -19135,7 +19054,6 @@
 /obj/grille/catwalk{
 	dir = 10
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross";
@@ -20186,7 +20104,6 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -20353,7 +20270,6 @@
 /area/station/hallway/primary/east)
 "aTE" = (
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/maintenance/disposal)
 "aTF" = (
@@ -20896,7 +20812,6 @@
 	d1 = 4;
 	d2 = 8
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 2;
 	icon_state = "catwalk_cross";
@@ -21380,7 +21295,6 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/maintenance/disposal)
 "aVT" = (
@@ -21774,7 +21688,6 @@
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
 	layer = 2
@@ -22804,7 +22717,6 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -23264,7 +23176,6 @@
 	icon_state = "catwalk";
 	dir = 5
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross";
@@ -23296,7 +23207,6 @@
 	d2 = 2
 	},
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/maintenance/disposal)
 "aZY" = (
@@ -23973,7 +23883,6 @@
 	d2 = 2
 	},
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/maintenance/east)
 "bby" = (
@@ -24189,7 +24098,7 @@
 "bbS" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 4;
-	
+
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -26157,7 +26066,6 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/west)
 "bgc" = (
@@ -27361,7 +27269,6 @@
 	d1 = 2;
 	d2 = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/west)
 "biO" = (
@@ -28105,7 +28012,6 @@
 /obj/grille/catwalk{
 	dir = 9
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross";
@@ -28982,7 +28888,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -29438,7 +29343,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -29873,7 +29777,6 @@
 	icon_state = "catwalk";
 	dir = 5
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross";
@@ -32296,7 +32199,6 @@
 	d2 = 2
 	},
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/west)
 "btN" = (
@@ -37431,7 +37333,6 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/hallway/secondary/construction2)
 "bGc" = (
@@ -37532,7 +37433,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/hallway/secondary/construction2)
 "bGr" = (
@@ -37836,7 +37736,6 @@
 	dir = 2
 	},
 /obj/machinery/power/tracker/north,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -38063,7 +37962,6 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
 	layer = 2
@@ -38382,7 +38280,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -38395,7 +38292,6 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/hallway/secondary/construction2)
 "bIu" = (
@@ -38413,7 +38309,6 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/west)
 "bIv" = (
@@ -38434,7 +38329,6 @@
 /obj/grille/catwalk{
 	dir = 6
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 2;
 	icon_state = "catwalk_cross";
@@ -39338,7 +39232,6 @@
 	icon_state = "bedsheet-black"
 	},
 /turf/simulated/floor/plating/damaged3,
-/turf/simulated/floor/plating/damaged2,
 /area/station/hallway/secondary/construction2)
 "bKu" = (
 /obj/machinery/atmospherics/pipe/simple,
@@ -39436,7 +39329,7 @@
 "bKF" = (
 /obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -39724,7 +39617,6 @@
 	d2 = 2
 	},
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "bLk" = (
@@ -40159,7 +40051,6 @@
 /area/station/science/storage)
 "bLV" = (
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/hallway/secondary/construction2)
 "bLW" = (
@@ -40353,7 +40244,6 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -40414,7 +40304,6 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -40429,7 +40318,6 @@
 	d1 = 4;
 	d2 = 8
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -40646,7 +40534,6 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "bMS" = (
@@ -40844,7 +40731,6 @@
 	icon_state = "1-4"
 	},
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
 	layer = 2
@@ -41274,7 +41160,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/tank{
 	dir = 8;
-	
+
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
@@ -41905,7 +41791,7 @@
 	pixel_y = 1
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -42443,7 +42329,7 @@
 	pixel_y = 21
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/storage/crate/furnacefuel,
 /turf/simulated/floor/plating,
@@ -43233,7 +43119,7 @@
 "bSl" = (
 /obj/machinery/atmospherics/pipe/tank{
 	dir = 8;
-	
+
 	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -44177,7 +44063,7 @@
 /area/research_outpost/hangar)
 "bUk" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/shuttlebay,
 /area/research_outpost/hangar)
@@ -44229,7 +44115,7 @@
 /area/research_outpost)
 "bUp" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -45159,21 +45045,21 @@
 "bWr" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "bWs" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "bWt" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -45328,7 +45214,7 @@
 "bWJ" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 5;
-	
+
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -45338,7 +45224,7 @@
 "bWK" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_corners2";
@@ -45348,7 +45234,7 @@
 "bWL" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4;
-	
+
 	},
 /obj/machinery/light{
 	dir = 4;
@@ -45364,7 +45250,7 @@
 "bWM" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost)
@@ -45460,7 +45346,7 @@
 "bWZ" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1;
-	
+
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost)
@@ -45566,7 +45452,7 @@
 /obj/table/auto,
 /obj/random_item_spawner/tools,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
@@ -45644,7 +45530,7 @@
 "bXw" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1;
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
@@ -47501,7 +47387,6 @@
 	d2 = 8
 	},
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	layer = 2
@@ -48017,7 +47902,6 @@
 	d2 = 2
 	},
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/south)
 "ccP" = (
@@ -48399,7 +48283,6 @@
 /obj/grille/catwalk{
 	dir = 9
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross";
@@ -48423,7 +48306,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -48438,7 +48320,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -48462,7 +48343,6 @@
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -48482,7 +48362,6 @@
 /obj/grille/catwalk{
 	dir = 5
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross";
@@ -48494,7 +48373,6 @@
 	icon_state = "2-4"
 	},
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;
 	layer = 2
@@ -48505,7 +48383,6 @@
 	icon_state = "1-8"
 	},
 /obj/grille/catwalk,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -48521,7 +48398,6 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -48534,7 +48410,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -48553,7 +48428,6 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -48572,7 +48446,6 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -48594,7 +48467,6 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -111504,7 +111376,7 @@ aqw
 aeb
 arp
 afg
-avP
+akR
 asx
 afh
 atk
@@ -111806,7 +111678,7 @@ ajP
 aeb
 arq
 afg
-avP
+akR
 asy
 asO
 atl
@@ -112108,7 +111980,7 @@ aqx
 aeb
 arr
 afg
-avP
+akR
 asy
 asP
 atm
@@ -112410,7 +112282,7 @@ afg
 afg
 afg
 afg
-avP
+akR
 asy
 afh
 atn
@@ -112712,7 +112584,7 @@ afg
 afg
 afg
 afg
-avP
+akR
 asy
 afh
 ato
@@ -113014,7 +112886,7 @@ afg
 afg
 afg
 afg
-avP
+akR
 asy
 asQ
 atn
