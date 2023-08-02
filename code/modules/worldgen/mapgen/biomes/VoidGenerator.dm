@@ -34,7 +34,7 @@
 			return
 
 		var/image/ambient_light = T.GetOverlayImage("ambient")
-		var/floor_path = weighted_pick(list(/turf/unsimulated/floor/plating=5, /turf/unsimulated/floor/plating/random=5, /turf/unsimulated/floor/damaged5=1, /turf/unsimulated/floor/plating/damaged2=3, /turf/unsimulated/floor/plating/damaged3=3))
+		var/floor_path = weighted_pick(list(/turf/unsimulated/floor/plating = 5, /turf/unsimulated/floor/plating/random = 5, /turf/unsimulated/floor/damaged = 1, /turf/unsimulated/floor/plating/damaged = 6))
 		T.ReplaceWith(floor_path, force=TRUE)
 
 		if(prob(1))
