@@ -103,7 +103,8 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "E" = (
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "Z" = (
 /obj/table/clothred,
@@ -121,7 +122,8 @@
 	desc = "An inscription on the back reads 'Awarded to the best maintenance mug collector, 2059.'";
 	pixel_y = 6
 	},
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 
 (1,1,1) = {"

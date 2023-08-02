@@ -61,7 +61,8 @@
 /obj/railing/red/reinforced{
 	dir = 4
 	},
-/turf/unsimulated/floor/scorched2)
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor)
 "A" = (
 /obj/neon_lining{
 	color = "#AA0000";
@@ -77,9 +78,11 @@
 /obj/railing/red/reinforced{
 	dir = 8
 	},
-/turf/unsimulated/floor/scorched2)
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor)
 "G" = (
-/turf/unsimulated/floor/scorched2)
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor)
 "H" = (
 /obj/neon_lining{
 	color = "#AA0033";

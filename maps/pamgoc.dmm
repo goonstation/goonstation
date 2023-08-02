@@ -2497,7 +2497,8 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
 "adQ" = (
 /obj/cable{
@@ -5235,7 +5236,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "ajf" = (
 /obj/cable{
@@ -6307,7 +6309,8 @@
 	icon_state = "1-4"
 	},
 /obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "akU" = (
 /obj/cable{
@@ -8959,7 +8962,8 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aps" = (
 /obj/cable{
@@ -14116,7 +14120,8 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/turf/simulated/floor/airless/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/station/wreckage)
 "ayE" = (
 /obj/decal/cleanable/cobweb,
@@ -14237,7 +14242,8 @@
 "ayR" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/robot_debris,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "ayS" = (
 /obj/decal/cleanable/dirt,
@@ -14271,7 +14277,8 @@
 /obj/item/cable_coil/cut{
 	icon_state = "coil1"
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "ayW" = (
 /obj/decal/cleanable/dirt,
@@ -14315,7 +14322,8 @@
 	},
 /obj/marker/supplymarker,
 /obj/machinery/power/apc/autoname_west,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "azc" = (
 /obj/decal/cleanable/dirt,
@@ -14339,7 +14347,8 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "azf" = (
 /obj/decal/cleanable/dirt,
@@ -14349,7 +14358,8 @@
 /obj/item/raw_material/cerenkite,
 /obj/item/raw_material/cerenkite,
 /obj/item/raw_material/cerenkite,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "azg" = (
 /obj/decal/cleanable/dirt,
@@ -14358,11 +14368,13 @@
 /area/station/security/detectives_office)
 "azh" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "azi" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "azk" = (
 /obj/decal/cleanable/dirt,
@@ -14387,23 +14399,27 @@
 "azp" = (
 /obj/decal/cleanable/machine_debris,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/abandonedship)
 "azq" = (
 /obj/decal/cleanable/machine_debris,
 /obj/item/device/guardbot_tool/tesla,
 /obj/item/device/guardbot_tool/tesla,
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/abandonedship)
 "azr" = (
 /obj/decal/cleanable/machine_debris,
 /obj/item/device/light/glowstick,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "azs" = (
 /obj/decal/cleanable/machine_debris,
 /obj/item/motherboard,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "azt" = (
 /obj/decal/cleanable/machine_debris,
@@ -14501,7 +14517,8 @@
 	icon_state = "bloodydoor";
 	name = "broken airlock"
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "azN" = (
 /obj/decal/fakeobjects/shuttleengine{
@@ -14572,7 +14589,8 @@
 	icon_state = "neutinj";
 	name = "busted machine"
 	},
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "azU" = (
 /obj/decal/fakeobjects{
@@ -14590,7 +14608,8 @@
 	invisibility = 101;
 	name = "glow - REACTOR"
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "azV" = (
 /obj/decal/fakeobjects{
@@ -14611,14 +14630,16 @@
 	icon_state = "engineoff";
 	name = "broken machine"
 	},
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "azX" = (
 /obj/decal/floatingtiles{
 	dir = 1
 	},
 /obj/structure/girder,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "azY" = (
 /obj/decal/floatingtiles{
@@ -14632,21 +14653,24 @@
 	dir = 4;
 	icon_state = "floattiles6"
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "aAa" = (
 /obj/decal/floatingtiles{
 	dir = 8;
 	icon_state = "floattiles4"
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "aAb" = (
 /obj/decal/floatingtiles{
 	dir = 8
 	},
 /obj/structure/girder,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "aAc" = (
 /obj/decal/floatingtiles{
@@ -14659,13 +14683,15 @@
 	name = "broken airlock"
 	},
 /obj/item/mine/radiation/armed,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "aAd" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "aAe" = (
 /obj/decal/floatingtiles{
@@ -14677,7 +14703,8 @@
 	icon_state = "bloodydoor";
 	name = "broken airlock"
 	},
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "aAf" = (
 /obj/decal/floatingtiles{
@@ -14689,7 +14716,8 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles5"
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "aAh" = (
 /obj/decal/garland{
@@ -14707,7 +14735,8 @@
 	invisibility = 101;
 	name = "glow - REACTOR"
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "aAj" = (
 /obj/decal/poster/wallsign/bar{
@@ -15808,7 +15837,8 @@
 	invisibility = 101;
 	name = "glow - WHITE"
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/station/wreckage)
 "aCw" = (
 /obj/disposalpipe/segment,
@@ -19817,7 +19847,8 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "aLP" = (
 /obj/disposalpipe/segment/morgue{
@@ -26634,7 +26665,8 @@
 /area/station/maintenance/northeast)
 "aZV" = (
 /obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/storage/primary)
 "aZW" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -26906,13 +26938,15 @@
 "baP" = (
 /obj/item/cable_coil/cut,
 /obj/structure/girder/displaced,
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless,
 /area/abandonedship)
 "baQ" = (
 /obj/item/cable_coil/cut{
 	icon_state = "coil1"
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "baR" = (
 /obj/item/cable_coil/cut{
@@ -26957,7 +26991,8 @@
 	desc = "Caution! Construction Zone!";
 	name = "caution sign"
 	},
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "baZ" = (
 /obj/item/cigbutt,
@@ -27121,7 +27156,8 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "bbp" = (
 /obj/item/coin,
@@ -27144,7 +27180,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
 "bbs" = (
 /obj/item/crowbar,
@@ -27183,7 +27220,8 @@
 /area/station/chapel/sanctuary)
 "bbw" = (
 /obj/item/device/light/candle/small,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bbx" = (
 /obj/machinery/light{
@@ -27808,14 +27846,16 @@
 /area/station/wreckage)
 "bcS" = (
 /obj/item/raw_material/shard/glass,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/station/wreckage)
 "bcT" = (
 /obj/item/raw_material/shard/glass{
 	icon_state = "small"
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "bcV" = (
 /obj/item/reagent_containers/food/snacks/beefood,
@@ -27871,7 +27911,8 @@
 "bda" = (
 /obj/item/scrap,
 /obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bdb" = (
 /obj/item/sheet/glass{
@@ -27883,7 +27924,8 @@
 "bdc" = (
 /obj/item/sheet/steel,
 /obj/storage/closet/office,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
 "bdd" = (
 /obj/item/sheet/steel/reinforced{
@@ -27987,7 +28029,8 @@
 	pixel_x = -6;
 	pixel_y = -28
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "bdl" = (
 /obj/machinery/light{
@@ -28078,7 +28121,8 @@
 	pixel_x = -6;
 	pixel_y = -5
 	},
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "bdp" = (
 /obj/item/storage/toolbox/mechanical,
@@ -28123,7 +28167,8 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bdt" = (
 /obj/item/tile/steel,
@@ -28134,7 +28179,8 @@
 /obj/decal/xmas_lights{
 	pixel_y = 38
 	},
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bdu" = (
 /obj/item/tile/steel,
@@ -28194,7 +28240,8 @@
 /area/station/crew_quarters/catering)
 "bdE" = (
 /obj/landmark/spawner/artifact,
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/station/wreckage)
 "bdF" = (
 /obj/landmark/spawner/artifact,
@@ -32778,7 +32825,8 @@
 /area/station/storage/warehouse)
 "bpR" = (
 /obj/machinery/bot/floorbot,
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "bpS" = (
 /obj/machinery/bot/guardbot/bad{
@@ -43388,7 +43436,8 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/item/device/t_scanner,
 /obj/machinery/atmospherics/pipe/simple,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "bOG" = (
 /obj/machinery/portable_atmospherics/scrubber,
@@ -47544,7 +47593,8 @@
 /obj/rack,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/clothing/ears/earmuffs,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
 "bVW" = (
 /obj/rack,
@@ -51205,7 +51255,8 @@
 /obj/storage/crate,
 /obj/item/clothing/suit/rad,
 /obj/item/clothing/head/rad_hood,
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless,
 /area/abandonedship)
 "cex" = (
 /obj/storage/crate,
@@ -52105,11 +52156,13 @@
 	autoname_on_spawn = 0;
 	name = "Abandoned APC"
 	},
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/station/wreckage)
 "cfY" = (
 /obj/structure/girder,
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless,
 /area/station/wreckage)
 "cfZ" = (
 /obj/structure/girder,
@@ -52130,7 +52183,8 @@
 /area/station/wreckage)
 "cgd" = (
 /obj/structure/girder/displaced,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "cge" = (
 /obj/structure/girder/displaced,
@@ -52530,7 +52584,8 @@
 	pixel_x = 7;
 	pixel_y = 3
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "cgZ" = (
 /obj/table/auto,
@@ -53067,7 +53122,8 @@
 	pixel_x = -5;
 	pixel_y = 9
 	},
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "chI" = (
 /obj/table/auto,
@@ -58800,19 +58856,20 @@
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
 "cqX" = (
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/abandonedship)
 "cqY" = (
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
-"cqZ" = (
-/turf/simulated/floor/airless/plating/damaged1,
-/area/station/wreckage)
 "cra" = (
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/station/wreckage)
 "crb" = (
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship)
 "crc" = (
 /turf/simulated/floor/airless/solar,
@@ -60157,7 +60214,8 @@
 	},
 /area/ghostdrone_factory)
 "cwx" = (
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "cwy" = (
 /turf/simulated/floor/purple,
@@ -71346,7 +71404,8 @@
 	status = 2
 	},
 /obj/item/paper/book/from_file/the_trial,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "wkm" = (
 /obj/cable{
@@ -128455,7 +128514,7 @@ cCO
 cCO
 cCO
 bcS
-cqZ
+cra
 bgf
 bgf
 bgf

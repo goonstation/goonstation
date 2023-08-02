@@ -152,7 +152,8 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 9
 	},
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "ax" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -202,7 +203,8 @@
 "aD" = (
 /obj/decal/cleanable/robot_debris,
 /obj/machinery/bot/medbot/terrifying,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aE" = (
 /turf/simulated/floor/shuttle{
@@ -222,7 +224,8 @@
 	},
 /obj/decal/cleanable/blood/tracks,
 /obj/item/raw_material/shard/glass,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aH" = (
 /obj/decal/tile_edge/line/grey{
@@ -265,7 +268,8 @@
 "aM" = (
 /obj/decal/cleanable/cobweb2,
 /obj/item/device/transfer_valve/briefcase,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aN" = (
 /turf/simulated/floor/stairs/dark{
@@ -307,7 +311,8 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/clothing/gloves/latex,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aS" = (
 /obj/machinery/bot/cleanbot{
@@ -331,7 +336,8 @@
 	icon_state = "old0";
 	name = "broken computer"
 	},
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aV" = (
 /obj/lattice{
@@ -4194,7 +4200,8 @@
 "lA" = (
 /obj/decal/fakeobjects/skeleton,
 /obj/item/paper/printout/emerg1,
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "lB" = (
 /obj/decal/fakeobjects/shuttleengine{
@@ -4281,7 +4288,8 @@
 "lN" = (
 /obj/machinery/crusher,
 /obj/map/light/white,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "lO" = (
 /obj/decal/fakeobjects/pipe{
@@ -4352,16 +4360,19 @@
 /area/space)
 "lW" = (
 /obj/storage/crate/loot,
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/space)
 "lX" = (
 /obj/storage/crate/loot,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "lY" = (
 /obj/map/light/white,
 /obj/machinery/manufacturer/mining,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "lZ" = (
 /obj/decal/fakeobjects/pipe{
@@ -4477,7 +4488,8 @@
 	drive_range = 5;
 	id = "salvage_in"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "mn" = (
 /obj/machinery/conveyor/WE{
@@ -4488,7 +4500,8 @@
 	id = "salvage_in";
 	name = "GLOMAR Salvager"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "mo" = (
 /obj/machinery/conveyor/WE{
@@ -4497,17 +4510,20 @@
 	},
 /obj/machinery/crusher,
 /obj/map/light/white,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "mp" = (
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "mq" = (
 /obj/submachine/ATM{
 	pixel_x = 32
 	},
 /obj/item/seed/alien,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "mr" = (
 /obj/table/wood/auto,
@@ -4574,7 +4590,8 @@
 /obj/storage/crate{
 	name = "Dented Crate"
 	},
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "my" = (
 /obj/lattice,
@@ -4588,11 +4605,13 @@
 	trader_area = "/area/evilreaver/storage/engineering"
 	},
 /obj/map/light/white,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "mA" = (
 /obj/machinery/door/airlock/classic,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "mB" = (
 /turf/simulated/floor/plating/airless,
@@ -4652,7 +4671,8 @@
 	id = "salvage_out";
 	name = "GLOMAR Salvager"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "mI" = (
 /obj/machinery/conveyor/EW{
@@ -4664,7 +4684,8 @@
 	drive_range = 100;
 	id = "salvage_out"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "mJ" = (
 /obj/machinery/conveyor/EW{
@@ -4672,21 +4693,25 @@
 	operating = 1
 	},
 /obj/machinery/launcher_loader/west,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "mK" = (
 /obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
 	operating = 1
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "mL" = (
 /obj/marker/supplymarker,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "mM" = (
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/space)
 "mO" = (
 /obj/lattice{
@@ -4728,16 +4753,19 @@
 /area/space)
 "mS" = (
 /obj/landmark/spawner/artifact,
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/space)
 "mT" = (
 /obj/landmark/spawner/artifact,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "mU" = (
 /obj/map/light/white,
 /obj/machinery/manufacturer/hangar,
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/space)
 "mV" = (
 /obj/decal/cleanable/cobweb,
@@ -4867,12 +4895,14 @@
 	icon_state = "body8";
 	name = "dead pilot"
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "nh" = (
 /obj/decal/cleanable/dirt,
 /obj/computerframe,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "ni" = (
 /obj/decal/fakeobjects/pipe{
@@ -4899,10 +4929,12 @@
 /area/space)
 "nk" = (
 /obj/decal/cleanable/robot_debris,
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "nl" = (
-/turf/simulated/floor/airless/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "nm" = (
 /obj/decal/fakeobjects/pipe{
@@ -4941,12 +4973,14 @@
 /obj/storage/crate{
 	name = "Dented Crate"
 	},
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "nq" = (
 /obj/lattice,
 /obj/structure/girder/displaced,
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "nr" = (
 /obj/lattice{
@@ -4981,7 +5015,8 @@
 /area/space)
 "nv" = (
 /obj/item/seed/alien,
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "nw" = (
 /obj/item/electronics/capacitor,
@@ -5046,17 +5081,14 @@
 /obj/decal/fakeobjects/pipe,
 /turf/space,
 /area/space)
-"nD" = (
-/obj/item/seed/alien,
-/turf/simulated/floor/airless/damaged2,
-/area/space)
 "nE" = (
 /obj/decal/cleanable/dirt,
 /obj/computerframe,
 /obj/item/storage/secure/ssafe/pilot_cargo3{
 	pixel_y = 32
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "nF" = (
 /obj/decal/poster/wallsign/stencil/left/y{
@@ -5092,7 +5124,8 @@
 	name = "Dented Crate"
 	},
 /obj/item/shipcomponent/sensor/ecto,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "nI" = (
 /obj/decal/floatingtiles{
@@ -5100,12 +5133,14 @@
 	},
 /obj/decal/cleanable/oil,
 /obj/critter/gunbot/drone/buzzdrone,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "nJ" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate/loot,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "nK" = (
 /obj/decal/floatingtiles{
@@ -5120,11 +5155,13 @@
 	icon_state = "datamedb";
 	name = "smashed computer"
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "nL" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "nM" = (
 /obj/decal/floatingtiles{
@@ -5132,7 +5169,8 @@
 	icon_state = "floattiles2"
 	},
 /obj/item/seed/alien,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "nN" = (
 /obj/decal/floatingtiles{
@@ -5141,7 +5179,8 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "nO" = (
 /obj/decal/fakeobjects/firelock_broken{
@@ -5150,7 +5189,8 @@
 	icon_state = "bloodydoor";
 	name = "broken airlock"
 	},
-/turf/simulated/floor/airless/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "nP" = (
 /obj/decal/cleanable/robot_debris,
@@ -5216,7 +5256,8 @@
 	},
 /obj/item/peripheral/card_scanner/register,
 /obj/item/clothing/under/gimmick/jetson,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "nX" = (
 /obj/lattice{
@@ -5241,17 +5282,20 @@
 /obj/decal/cleanable/machine_debris,
 /obj/item/raw_material/shard/glass,
 /obj/item/a_gift/festive,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "oa" = (
 /obj/decal/cleanable/dirt,
 /obj/landmark/spawner/artifact,
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "ob" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate/loot,
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "oc" = (
 /turf/simulated/shuttle/wall,
@@ -5280,7 +5324,8 @@
 /area/space)
 "og" = (
 /obj/decal/cleanable/oil,
-/turf/simulated/floor/airless/damaged4,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "oh" = (
 /obj/lattice{
@@ -5304,10 +5349,8 @@
 	},
 /obj/item/clothing/head/helmet/space/santahat,
 /obj/item/clothing/suit/space/santa,
-/turf/simulated/floor/airless/plating/damaged3,
-/area/space)
-"oj" = (
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "ok" = (
 /obj/lattice{
@@ -5323,7 +5366,8 @@
 "ol" = (
 /obj/decal/cleanable/machine_debris,
 /obj/item/motherboard,
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "om" = (
 /obj/table/reinforced/auto,
@@ -5387,11 +5431,13 @@
 /obj/stocking{
 	pixel_x = -24
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "ow" = (
 /obj/decal/cleanable/machine_debris,
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "ox" = (
 /obj/table/reinforced/auto,
@@ -5441,22 +5487,22 @@
 /obj/storage/crate{
 	name = "Dented Crate"
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "oC" = (
 /obj/item/a_gift/festive,
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "oD" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "oE" = (
-/turf/simulated/floor/airless/plating/damaged3,
-/area/space)
-"oF" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "oG" = (
 /obj/item/raw_material/rock{
@@ -5493,7 +5539,8 @@
 /obj/machinery/sleep_console{
 	dir = 8
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "oN" = (
 /obj/computerframe{
@@ -5503,7 +5550,8 @@
 	name = "smashed computer"
 	},
 /obj/map/light/white,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "oO" = (
 /turf/simulated/shuttle/wall{
@@ -5512,7 +5560,8 @@
 /area/space)
 "oP" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "oQ" = (
 /turf/simulated/shuttle/wall{
@@ -5532,10 +5581,12 @@
 /obj/decal/cleanable/robot_debris{
 	icon_state = "gibdown"
 	},
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "oT" = (
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless,
 /area/space)
 "oU" = (
 /obj/lattice,
@@ -5565,20 +5616,19 @@
 	icon_state = "engineoff";
 	name = "motor"
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "oY" = (
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 1
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "oZ" = (
 /obj/decal/fakeobjects/apc_broken,
 /turf/simulated/shuttle/wall,
-/area/space)
-"pa" = (
-/turf/simulated/floor/airless/damaged2,
 /area/space)
 "pb" = (
 /obj/decal/cleanable/dirt,
@@ -5592,7 +5642,8 @@
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/fire,
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "pc" = (
 /obj/storage/secure/closet/security/equipment,
@@ -5624,7 +5675,8 @@
 /area/space)
 "pg" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "ph" = (
 /obj/lattice,
@@ -5638,11 +5690,8 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
 /obj/storage/crate/loot,
-/turf/simulated/floor/airless/plating/damaged1,
-/area/space)
-"pk" = (
-/obj/machinery/door/unpowered/shuttle,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "pl" = (
 /obj/decal/fakeobjects/pipe{
@@ -5664,13 +5713,15 @@
 	name = "dessicated husk"
 	},
 /obj/map/light/white,
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "pn" = (
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor3"
 	},
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless,
 /area/space)
 "po" = (
 /obj/decal/fakeobjects/pipe{
@@ -5710,13 +5761,15 @@
 /area/space)
 "pr" = (
 /obj/decal/cleanable/machine_debris,
-/turf/simulated/floor/airless/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "ps" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles3"
 	},
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "pt" = (
 /obj/decal/fakeobjects/firelock_broken{
@@ -5726,14 +5779,13 @@
 	icon_state = "door_locked";
 	name = "broken airlock"
 	},
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless,
 /area/space)
 "pu" = (
 /obj/machinery/vending/pathology,
-/turf/simulated/floor/airless/scorched,
-/area/space)
-"pv" = (
-/turf/simulated/floor/airless/damaged4,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless,
 /area/space)
 "pw" = (
 /obj/lattice,
@@ -5753,12 +5805,14 @@
 	icon_state = "engineoff";
 	name = "motor"
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "py" = (
 /obj/item/cable_coil/cut,
 /obj/landmark/spawner/artifact,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "pz" = (
 /obj/decal/fakeobjects/pipe{
@@ -5775,7 +5829,8 @@
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 4
 	},
-/turf/simulated/floor/airless/damaged4,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "pB" = (
 /obj/decal/cleanable/blood/splatter,
@@ -5817,27 +5872,32 @@
 	dir = 4;
 	icon_state = "floattiles4"
 	},
-/turf/simulated/floor/airless/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "pI" = (
 /obj/item/raw_material/shard/glass,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "pJ" = (
 /obj/machinery/bot/medbot/mysterious/emagged,
-/turf/simulated/floor/airless/damaged4,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "pK" = (
 /obj/table/auto,
 /obj/item/reagent_containers/glass/petridish,
 /obj/item/reagent_containers/glass/petridish,
 /obj/item/reagent_containers/glass/petridish,
-/turf/simulated/floor/airless/damaged4,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "pL" = (
 /obj/table/auto,
 /obj/item/synthmodule/assistant,
-/turf/simulated/floor/airless/damaged4,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "pM" = (
 /obj/lattice,
@@ -5855,10 +5915,8 @@
 "pN" = (
 /obj/machinery/door/unpowered/shuttle,
 /obj/decal/cleanable/blood/tracks,
-/turf/simulated/floor/airless/plating/damaged1,
-/area/space)
-"pO" = (
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "pP" = (
 /obj/decal/tile_edge/line/blue{
@@ -5899,7 +5957,8 @@
 	name = "smashed computer"
 	},
 /obj/map/light/white,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "pS" = (
 /obj/decal/cleanable/blood/splatter{
@@ -5910,13 +5969,15 @@
 /obj/item/clothing/glasses/healthgoggles,
 /obj/decal/cleanable/dirt,
 /obj/item/reagent_containers/dropper,
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "pT" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/box/grenade_starter_kit,
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "pU" = (
 /obj/decal/cleanable/dirt,
@@ -5925,7 +5986,8 @@
 	dir = 1
 	},
 /obj/item/cloner_upgrade,
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "pV" = (
 /obj/decal/cleanable/dirt,
@@ -5946,14 +6008,13 @@
 	dir = 8
 	},
 /obj/item/cigpacket/propuffs,
-/turf/simulated/floor/airless/plating/damaged1,
-/area/space)
-"pY" = (
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "pZ" = (
 /obj/item/mousetrap/armed,
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "qa" = (
 /obj/decal/fakeobjects{
@@ -5964,7 +6025,8 @@
 	name = "inactive computer";
 	pixel_x = -5
 	},
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless,
 /area/space)
 "qc" = (
 /obj/machinery/shuttle/engine/heater,
@@ -6000,18 +6062,21 @@
 /area/space)
 "qh" = (
 /obj/structure/girder/displaced,
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless,
 /area/space)
 "qi" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "qj" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor3"
 	},
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "qk" = (
 /obj/decal/cleanable/dirt,
@@ -6035,7 +6100,8 @@
 /area/space)
 "qn" = (
 /obj/computerframe,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "qo" = (
 /obj/stool/bed,
@@ -6060,7 +6126,8 @@
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "qr" = (
 /obj/structure/girder/displaced,
@@ -6086,19 +6153,22 @@
 /area/space)
 "qw" = (
 /obj/decal/cleanable/machine_debris,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "qx" = (
 /obj/decal/floatingtiles{
 	dir = 8
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "qy" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/bot/medbot/terrifying,
-/turf/simulated/floor/airless/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "qz" = (
 /obj/decal/cleanable/machine_debris,
@@ -6139,7 +6209,8 @@
 /area/space)
 "qE" = (
 /obj/mopbucket,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "qF" = (
 /obj/decal/fakeobjects/skeleton{
@@ -6151,7 +6222,8 @@
 /obj/decal/cleanable/dirt,
 /obj/item/clothing/shoes/galoshes,
 /obj/item/mop,
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "qG" = (
 /obj/item/paint_can/rainbow,
@@ -6159,19 +6231,22 @@
 	name = "Dented Crate"
 	},
 /obj/item/paint_can/rainbow/plaid,
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "qH" = (
 /obj/item/storage/toilet{
 	dir = 4
 	},
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "qI" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "qJ" = (
 /obj/decal/fakeobjects{
@@ -6232,7 +6307,8 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
 	},
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless,
 /area/space)
 "qR" = (
 /obj/lattice,
@@ -6321,7 +6397,8 @@
 	icon_state = "bedsheet-yellow"
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/airless/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "qZ" = (
 /turf/simulated/floor/plating/airless/asteroid,
@@ -6355,7 +6432,8 @@
 /area/space)
 "rd" = (
 /obj/machinery/bot/medbot/terrifying,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "re" = (
 /obj/lattice,
@@ -6371,7 +6449,8 @@
 "rf" = (
 /obj/table/reinforced/auto,
 /obj/decal/cleanable/desk_clutter,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "rg" = (
 /obj/decal/cleanable/dirt,
@@ -6381,7 +6460,8 @@
 /obj/item/implantcase/robust,
 /obj/item/implanter,
 /obj/machinery/telejam/active,
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "rh" = (
 /obj/decal/cleanable/dirt,
@@ -6404,11 +6484,13 @@
 	icon_state = "engineoff";
 	name = "motor"
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "rk" = (
 /obj/item/device/light/flashlight,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "rl" = (
 /obj/decal/cleanable/dirt,
@@ -6416,7 +6498,8 @@
 	dir = 8;
 	icon_state = "floattiles3"
 	},
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "rm" = (
 /obj/lattice,
@@ -6439,14 +6522,17 @@
 /obj/decal/floatingtiles{
 	dir = 1
 	},
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "rp" = (
 /obj/storage/crate/loot,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "rq" = (
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "rr" = (
 /obj/decal/fakeobjects/lightbulb_broken,
@@ -6454,7 +6540,8 @@
 /area/space)
 "rs" = (
 /obj/stool/chair,
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless,
 /area/space)
 "rt" = (
 /obj/decal/tile_edge/line/blue{
@@ -10679,11 +10766,8 @@
 	icon_state = "bloodydoor";
 	name = "broken airlock"
 	},
-/turf/simulated/floor/airless/plating/damaged2,
-/area/space)
-"Bq" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "Bs" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -10716,11 +10800,13 @@
 	name = "Prisoner Transfer Ship";
 	req_access_txt = "1"
 	},
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless,
 /area/space)
 "Bx" = (
 /obj/structure/girder/displaced,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "Bz" = (
 /obj/stool/bed,
@@ -10756,7 +10842,8 @@
 /obj/table/auto,
 /obj/item/plate,
 /obj/item/reagent_containers/food/snacks/burger/moldy,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "BE" = (
 /obj/decal/tile_edge/line/black{
@@ -10848,7 +10935,8 @@
 "Lu" = (
 /obj/item/storage/belt/utility,
 /obj/item/clothing/under/misc/tourist,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "NE" = (
 /obj/stool/chair/comfy/shuttle/brown,
@@ -15886,8 +15974,8 @@ aa
 aa
 aa
 Bp
-nD
-Bq
+nv
+oD
 ai
 ny
 aa
@@ -17561,7 +17649,7 @@ aa
 aa
 aa
 oc
-pY
+nl
 lC
 qD
 oc
@@ -17694,7 +17782,7 @@ aa
 aa
 oc
 oY
-oj
+oE
 py
 oc
 qd
@@ -17712,7 +17800,7 @@ aa
 aa
 aa
 aa
-pk
+oP
 pZ
 ma
 qE
@@ -17846,7 +17934,7 @@ aa
 nQ
 oc
 oZ
-pk
+oP
 oc
 oc
 qe
@@ -17854,7 +17942,7 @@ qu
 qM
 oc
 oc
-pk
+oP
 oc
 oc
 oO
@@ -17866,7 +17954,7 @@ aa
 aa
 oc
 jk
-pa
+nl
 qF
 oc
 aa
@@ -17997,7 +18085,7 @@ aa
 aa
 oc
 oL
-pa
+nl
 aw
 aG
 pN
@@ -18151,7 +18239,7 @@ oc
 oM
 nl
 pm
-pa
+nl
 pB
 qg
 qu
@@ -18301,7 +18389,7 @@ aa
 aa
 oc
 oN
-oF
+oD
 pn
 oK
 oc
@@ -18456,8 +18544,8 @@ oc
 pb
 aD
 pA
-pO
-oj
+oE
+oE
 oc
 qO
 rb
@@ -18761,7 +18849,7 @@ aa
 nT
 oc
 pQ
-pk
+oP
 nV
 oV
 oc
@@ -18913,7 +19001,7 @@ aa
 aa
 oc
 pR
-oj
+oE
 qv
 qQ
 rd
@@ -19386,7 +19474,7 @@ oz
 oK
 oT
 ph
-pv
+nl
 pK
 qc
 aa
@@ -20620,7 +20708,7 @@ aa
 aa
 oc
 oY
-oj
+oE
 py
 oc
 qd
@@ -20772,7 +20860,7 @@ aa
 nQ
 oc
 oZ
-pk
+oP
 oc
 oc
 qe
@@ -20780,7 +20868,7 @@ qu
 qM
 oc
 oc
-pk
+oP
 oc
 oc
 oO
@@ -20923,7 +21011,7 @@ aa
 aa
 oc
 oL
-pa
+nl
 aw
 aG
 pN
@@ -21077,7 +21165,7 @@ oc
 oM
 nl
 pm
-pa
+nl
 pB
 qg
 qu
@@ -21227,7 +21315,7 @@ aa
 aa
 oc
 oN
-oF
+oD
 pn
 oK
 oc
@@ -21364,7 +21452,7 @@ aa
 aa
 nR
 nZ
-oj
+oE
 lH
 oE
 oP
@@ -21382,8 +21470,8 @@ oc
 pb
 aD
 pA
-pO
-oj
+oE
+oE
 oc
 qO
 rb
@@ -21518,7 +21606,7 @@ nR
 oa
 ok
 lH
-oF
+oD
 oc
 aa
 aa
@@ -21687,7 +21775,7 @@ aa
 nT
 oc
 pQ
-pk
+oP
 nV
 oV
 oc
@@ -21839,7 +21927,7 @@ aa
 aa
 oc
 pR
-oj
+oE
 qv
 qQ
 rd
@@ -24403,7 +24491,7 @@ he
 pq
 pG
 oR
-pY
+nl
 pr
 qW
 od

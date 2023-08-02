@@ -87,7 +87,8 @@
 	shrunk = 5
 	},
 /obj/machinery/power/terminal/netlink,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area{
 	sound_fx_1 = 'sound/ambience/station/Machinery_Computers1.ogg';
 	sound_environment = 10;

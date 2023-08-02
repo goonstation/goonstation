@@ -10,7 +10,8 @@
 /obj/item/raw_material/gold,
 /obj/item/raw_material/gold,
 /obj/item/raw_material/gold,
-/turf/unsimulated/floor/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
 /area/prefab/vault)
 "e" = (
 /obj/rack,
@@ -35,7 +36,8 @@
 /turf/unsimulated/floor/void,
 /area/prefab/vault)
 "g" = (
-/turf/unsimulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
 /area/prefab/vault)
 "h" = (
 /obj/decal/floatingtiles{
@@ -53,7 +55,8 @@
 	icon_state = "door_locked";
 	locked = 1
 	},
-/turf/simulated/floor/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/vault)
 "k" = (
 /obj/decal/cleanable/writing/infrared{

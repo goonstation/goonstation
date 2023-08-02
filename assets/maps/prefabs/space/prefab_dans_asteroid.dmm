@@ -91,10 +91,12 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "cL" = (
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "cV" = (
 /obj/machinery/vending/snack,
@@ -173,7 +175,8 @@
 	dir = 10;
 	icon_state = "tracks"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "fM" = (
 /obj/rack,
@@ -246,7 +249,8 @@
 /area/prefab/discount_dans_asteroid)
 "gU" = (
 /obj/decal/cleanable/ash,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "gX" = (
 /obj/decal/cleanable/blood/tracks,
@@ -277,7 +281,8 @@
 	pixel_x = -4;
 	pixel_y = 2
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "jo" = (
 /obj/table/auto,
@@ -408,7 +413,8 @@
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
 	},
-/turf/unsimulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/airless/plating,
 /area/prefab/discount_dans_asteroid)
 "nu" = (
 /obj/random_item_spawner/hat/one_or_zero,
@@ -486,7 +492,8 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "qh" = (
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/prefab/discount_dans_asteroid)
 "qG" = (
 /obj/storage/secure/closet/fridge/opened{
@@ -535,11 +542,13 @@
 /area/prefab/discount_dans_asteroid)
 "uM" = (
 /obj/decal/cleanable/machine_debris,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "uY" = (
 /obj/grille/steel,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/prefab/discount_dans_asteroid)
 "vk" = (
 /obj/storage/secure/crate/dan/snacks,
@@ -553,7 +562,8 @@
 /turf/simulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "we" = (
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "wk" = (
 /obj/decal/cleanable/blood/tracks{
@@ -571,7 +581,8 @@
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "wX" = (
 /obj/rack,
@@ -703,7 +714,8 @@
 /area/noGenerate)
 "Cm" = (
 /obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "Cu" = (
 /obj/stool/chair/office/yellow{
@@ -766,7 +778,8 @@
 	icon_state = "vent";
 	name = "grimy vent"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "EZ" = (
 /obj/item/paper/shipping_precautions{
@@ -793,7 +806,8 @@
 /area/prefab/discount_dans_asteroid)
 "Fy" = (
 /obj/decal/cleanable/oil/streak,
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "FP" = (
 /obj/decal/cleanable/dirt/dirt3,
@@ -902,7 +916,8 @@
 /obj/machinery/light/incandescent/broken{
 	dir = 1
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "Lq" = (
 /obj/random_item_spawner/junk/one_or_zero,
@@ -913,7 +928,8 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "Ly" = (
 /obj/decal/tile_edge/stripe/big{
@@ -1312,7 +1328,8 @@
 /area/prefab/discount_dans_asteroid)
 "XA" = (
 /obj/decal/cleanable/molten_item,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "XI" = (
 /obj/decal/floatingtiles{

@@ -1195,7 +1195,8 @@
 /turf/simulated/floor/caution/north,
 /area/shuttle/sea_elevator)
 "Ow" = (
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/diner/bathroom)
 "Oz" = (
 /obj/decal/cleanable/dirt,
@@ -1281,7 +1282,8 @@
 "Sm" = (
 /obj/machinery/light/incandescent/small,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/diner/bathroom)
 "Sp" = (
 /obj/machinery/drainage/big,

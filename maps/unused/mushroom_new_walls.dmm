@@ -3596,7 +3596,8 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "apN" = (
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "apP" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -4177,7 +4178,8 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "ass" = (
 /obj/cable{
@@ -8376,7 +8378,8 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "aKy" = (
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "aKC" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -9797,7 +9800,8 @@
 	dir = 1;
 	status = 2
 	},
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aQD" = (
 /obj/stool/chair,
@@ -9815,7 +9819,8 @@
 /area/station/crew_quarters/courtroom)
 "aQH" = (
 /obj/submachine/slot_machine,
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aQJ" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
@@ -9863,7 +9868,8 @@
 /turf/simulated/floor,
 /area/station/engine/inner)
 "aQV" = (
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "aQW" = (
 /obj/cable{
@@ -10065,7 +10071,8 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aRU" = (
 /obj/cable{
@@ -10086,7 +10093,8 @@
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aRY" = (
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aRZ" = (
 /obj/storage/crate{
@@ -10419,7 +10427,8 @@
 /obj/cable{
 	icon_state = "4-6"
 	},
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aTk" = (
 /obj/cable{
@@ -10501,7 +10510,8 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "aTx" = (
 /obj/cable{
@@ -10635,7 +10645,8 @@
 /area/station/chapel/sanctuary)
 "aUd" = (
 /obj/item/crowbar,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aUf" = (
 /obj/machinery/turret,
@@ -16983,12 +16994,14 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "brK" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate/clown,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "brM" = (
 /obj/reagent_dispensers/watertank,
@@ -17292,7 +17305,8 @@
 	icon_state = "0-10"
 	},
 /obj/machinery/power/apc/autoname_east,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bsM" = (
 /obj/reagent_dispensers/foamtank,
@@ -17304,7 +17318,8 @@
 /area/station/crew_quarters/courtroom)
 "bsP" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bsS" = (
 /obj/machinery/conveyor/NS{
@@ -17462,7 +17477,8 @@
 /obj/item/storage/goodybag,
 /obj/item/peripheral/videocard,
 /obj/item/storage/pill_bottle/cyberpunk,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "btw" = (
 /obj/decal/cleanable/dirt,
@@ -20032,7 +20048,8 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/produce,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "epO" = (
 /obj/cable{
@@ -21710,7 +21727,8 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "gpl" = (
 /obj/cable{
@@ -28517,7 +28535,8 @@
 /obj/item/instrument/bikehorn/airhorn{
 	name = "strange air horn"
 	},
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "ouC" = (
 /obj/machinery/light,
@@ -29463,13 +29482,6 @@
 	dir = 1
 	},
 /area/station/engine/elect)
-"prL" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/plating/damaged2,
-/area/station/maintenance/west)
 "psc" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -77525,7 +77537,7 @@ bkY
 boy
 bps
 vwX
-prL
+asr
 baT
 baT
 bET

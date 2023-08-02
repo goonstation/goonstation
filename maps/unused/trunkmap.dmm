@@ -13,10 +13,12 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aah" = (
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "aaj" = (
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aak" = (
 /obj/cable{
@@ -44,9 +46,6 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area/space)
-"aan" = (
-/turf/simulated/floor/airless/damaged1,
 /area/space)
 "aao" = (
 /obj/machinery/power/solar{
@@ -108,14 +107,12 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"aas" = (
-/turf/simulated/floor/airless/damaged4,
-/area/space)
 "aat" = (
 /turf/simulated/floor,
 /area/space)
 "aau" = (
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "aav" = (
 /obj/machinery/power/solar{
@@ -165,9 +162,6 @@
 "aaC" = (
 /turf/space,
 /area/shuttle/merchant_shuttle/right_station/destiny)
-"aaD" = (
-/turf/simulated/floor/airless/plating/damaged3,
-/area/space)
 "aaE" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -896,7 +890,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "acx" = (
 /obj/decal/cleanable/blood/tracks,
@@ -27670,7 +27665,8 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/station/security/prison)
 "dJs" = (
 /obj/table/auto,
@@ -31053,7 +31049,8 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/security/prison)
 "nAR" = (
 /obj/machinery/portable_atmospherics/pump,
@@ -34530,7 +34527,8 @@
 	dir = 8
 	},
 /obj/item/wrench,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/security/prison)
 "xiq" = (
 /obj/landmark/kudzu,
@@ -119465,9 +119463,9 @@ aab
 aad
 aad
 bmE
-aas
 aau
-aaD
+aau
+aaj
 aaV
 aaa
 aaa
@@ -120068,7 +120066,7 @@ aaa
 aab
 aaj
 aaj
-aan
+aau
 aat
 aat
 aat
@@ -120372,7 +120370,7 @@ aaa
 bmE
 bmE
 aat
-aas
+aau
 aat
 aaK
 aaw

@@ -43,14 +43,16 @@
 /area/dmm_suite/clear_area)
 "A" = (
 /obj/cable/black,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "C" = (
 /turf/simulated/floor/shuttlebay,
 /area/dmm_suite/clear_area)
 "E" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "M" = (
 /obj/beacon_deployer/sketchy,

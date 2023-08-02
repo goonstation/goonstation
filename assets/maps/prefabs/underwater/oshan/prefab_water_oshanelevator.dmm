@@ -67,7 +67,8 @@
 /turf/simulated/floor,
 /area/shuttle/sea_elevator)
 "o" = (
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/shuttle/sea_elevator)
 "p" = (
 /obj/securearea{
@@ -75,7 +76,8 @@
 	name = "GLACIAL CAVERNS ACCESS";
 	pixel_y = -32
 	},
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/shuttle/sea_elevator)
 "q" = (
 /turf/unsimulated/wall/setpieces/leadwall{
@@ -154,7 +156,8 @@
 /obj/item/device/light/glowstick,
 /obj/item/device/light/glowstick,
 /obj/item/device/light/glowstick,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/shuttle/sea_elevator)
 "Z" = (
 /obj/rack,

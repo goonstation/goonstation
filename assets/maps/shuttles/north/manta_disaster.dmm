@@ -26,7 +26,8 @@
 	},
 /area/shuttle/escape/centcom)
 "bu" = (
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "bI" = (
 /turf/unsimulated/floor/stairs/dark,
@@ -47,7 +48,8 @@
 "ch" = (
 /obj/machinery/light/small/floor,
 /obj/decal/cleanable/blood/splatter,
-/turf/unsimulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "ci" = (
 /obj/machinery/shuttle/engine/heater{
@@ -244,7 +246,8 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor2"
 	},
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "kL" = (
 /obj/decal/poster/wallsign/hazard_rad{
@@ -265,7 +268,8 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "lA" = (
 /obj/decal/fakeobjects/skeleton{
@@ -303,11 +307,13 @@
 	icon_state = "gibbl2"
 	},
 /obj/decal/cleanable/dirt/dirt3,
-/turf/unsimulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "mL" = (
 /obj/decal/cleanable/dirt/dirt3,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "ng" = (
 /obj/stool/chair/comfy/shuttle{
@@ -383,12 +389,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
-"qC" = (
-/obj/decal/cleanable/blood/splatter{
-	icon_state = "floor4"
-	},
-/turf/unsimulated/floor/plating/damaged1,
-/area/shuttle/escape/centcom)
 "rc" = (
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor2"
@@ -410,7 +410,8 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "sp" = (
 /obj/rack,
@@ -424,7 +425,8 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "tB" = (
 /obj/decal/fakeobjects/pipe{
@@ -512,7 +514,8 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor2"
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "yG" = (
 /obj/stool/chair/comfy/shuttle/brown{
@@ -521,7 +524,8 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "yT" = (
 /turf/unsimulated/floor{
@@ -582,7 +586,8 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/turf/unsimulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "AF" = (
 /obj/decal/fakeobjects{
@@ -613,7 +618,8 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor2"
 	},
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "BX" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -730,7 +736,8 @@
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body7"
 	},
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "HP" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -770,7 +777,8 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
 	},
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "KI" = (
 /turf/unsimulated/floor/arrival{
@@ -778,7 +786,8 @@
 	},
 /area/centcom)
 "Lj" = (
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "LK" = (
 /turf/unsimulated/floor/arrival/corner{
@@ -795,7 +804,8 @@
 	dir = 1
 	},
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "MK" = (
 /obj/decal/tile_edge/line/black{
@@ -893,7 +903,8 @@
 	icon_state = "floor4"
 	},
 /obj/decal/cleanable/dirt/dirt3,
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Ro" = (
 /obj/decal/fakeobjects/pipe{
@@ -953,7 +964,8 @@
 	icon_state = "floor4"
 	},
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "RS" = (
 /obj/decal/fakeobjects/pipe{
@@ -973,7 +985,8 @@
 /area/centcom)
 "Sp" = (
 /obj/machinery/light/small/floor,
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Tn" = (
 /obj/decal/tile_edge/line/black{
@@ -996,7 +1009,8 @@
 	dir = 1
 	},
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "TL" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -1035,7 +1049,8 @@
 	icon_state = "floor2"
 	},
 /obj/decal/cleanable/dirt/dirt3,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "UP" = (
 /obj/decal/tile_edge/line/orange{
@@ -1057,9 +1072,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
-"VH" = (
-/turf/unsimulated/floor/plating/damaged3,
-/area/shuttle/escape/centcom)
 "VI" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -1157,7 +1169,8 @@
 	dir = 1
 	},
 /obj/decal/cleanable/blood/splatter,
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "YC" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -1210,7 +1223,8 @@
 	icon_state = "floor4"
 	},
 /obj/decal/cleanable/blood/splatter,
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 
 (1,1,1) = {"
@@ -1500,7 +1514,7 @@ Af
 Kd
 Ay
 Qc
-VH
+Lj
 Yi
 Qc
 Ox
@@ -1557,7 +1571,7 @@ jk
 Qc
 eB
 Hy
-qC
+KF
 WM
 lq
 AD
@@ -1592,7 +1606,7 @@ eI
 eI
 eI
 BE
-VH
+Lj
 rc
 RG
 Lj
@@ -1646,7 +1660,7 @@ Qc
 Zq
 kE
 Zq
-qC
+KF
 eI
 eI
 eI

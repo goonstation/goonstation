@@ -240,7 +240,8 @@
 /turf/unsimulated/dirt,
 /area/racing_track)
 "aJ" = (
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/racing_track)
 "aK" = (
 /obj/racing_powerup_spawner,
@@ -305,9 +306,6 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor,
 /area/racing_track)
-"aU" = (
-/turf/unsimulated/floor/damaged2,
-/area/racing_track)
 "aV" = (
 /turf/unsimulated/floor{
 	icon = 'floors.dmi';
@@ -322,16 +320,14 @@
 	},
 /turf/unsimulated/dirt,
 /area/racing_track)
-"aX" = (
-/turf/unsimulated/floor/damaged1,
-/area/racing_track)
 "aY" = (
 /obj/racing_boosterstrip{
 	tag = "icon-boosterstrip (EAST)";
 	icon_state = "boosterstrip";
 	dir = 4
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/racing_track)
 "aZ" = (
 /turf/unsimulated/floor/white/side,
@@ -450,7 +446,8 @@
 	icon_state = "boosterstrip";
 	dir = 8
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/racing_track)
 "bp" = (
 /turf/unsimulated/floor/white/side{
@@ -556,7 +553,8 @@
 	},
 /area/racing_track)
 "bC" = (
-/turf/unsimulated/floor/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
 /area/racing_track)
 "bD" = (
 /turf/unsimulated/floor/white/side{
@@ -6077,7 +6075,7 @@ ar
 ar
 ar
 ad
-aU
+bC
 aV
 aR
 aV
@@ -6090,7 +6088,7 @@ aQ
 ar
 aQ
 aJ
-aU
+bC
 aV
 aV
 aV
@@ -6381,8 +6379,8 @@ ar
 ar
 ar
 ad
-aU
-aX
+bC
+bC
 aV
 aR
 aR
@@ -6393,9 +6391,9 @@ ar
 ar
 ar
 ar
-aU
-aU
-aX
+bC
+bC
+bC
 aR
 aR
 ad
@@ -6533,11 +6531,11 @@ ar
 ar
 ar
 ad
-aU
+bC
 aJ
-aU
-aX
-aX
+bC
+bC
+bC
 ar
 ar
 ar
@@ -6546,10 +6544,10 @@ ar
 ar
 aJ
 aJ
-aU
+bC
 aJ
-aU
-aX
+bC
+bC
 ad
 ae
 ae
@@ -7011,7 +7009,7 @@ ar
 aJ
 ar
 ar
-aU
+bC
 ad
 ae
 ar
@@ -9738,10 +9736,10 @@ ad
 ad
 ad
 ad
-aX
+bC
 aJ
-aX
-aX
+bC
+bC
 ad
 ar
 ar
@@ -9891,7 +9889,7 @@ as
 as
 ad
 aS
-aX
+bC
 aR
 aZ
 ad

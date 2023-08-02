@@ -27,7 +27,8 @@
 	pixel_x = -6;
 	pixel_y = 5
 	},
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "bt" = (
 /obj/decal/fakeobjects/pipe{
@@ -45,7 +46,8 @@
 /area/shuttle/escape/centcom)
 "bM" = (
 /obj/machinery/computer/announcement,
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "bP" = (
 /obj/decal/fakeobjects/pipe{
@@ -58,9 +60,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
-"bT" = (
-/turf/unsimulated/floor/plating/damaged3,
-/area/shuttle/escape/centcom)
 "bU" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10;
@@ -89,7 +88,8 @@
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "dw" = (
 /turf/simulated/wall/auto/shuttle{
@@ -178,13 +178,15 @@
 /area/centcom)
 "gf" = (
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "gw" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/decal/cleanable/machine_debris,
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "hv" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -198,10 +200,6 @@
 	dir = 8
 	},
 /area/centcom/outside)
-"hN" = (
-/obj/stool/chair/comfy/shuttle/brown,
-/turf/unsimulated/floor/plating/damaged1,
-/area/shuttle/escape/centcom)
 "hX" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/decal/fakeobjects/skeleton{
@@ -211,7 +209,8 @@
 	name = "decomposed corpse"
 	},
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "hY" = (
 /obj/machinery/door/airlock/pyro/glass/command{
@@ -224,13 +223,15 @@
 	icon_state = "gib7"
 	},
 /obj/decal/cleanable/oil,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "il" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "ir" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -242,7 +243,8 @@
 "iG" = (
 /obj/machinery/light/small/floor,
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "iQ" = (
 /obj/stool/chair/comfy/shuttle/brown,
@@ -268,7 +270,8 @@
 "jw" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "jY" = (
 /obj/decal/tile_edge/line/orange{
@@ -318,7 +321,8 @@
 "lv" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "lJ" = (
 /obj/indestructible/shuttle_corner{
@@ -403,7 +407,8 @@
 "oc" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "og" = (
 /turf/unsimulated/wall/auto/lead/blue,
@@ -439,7 +444,8 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "pm" = (
 /obj/stool/chair/comfy/shuttle/red{
@@ -612,7 +618,8 @@
 	icon_state = "body8";
 	name = "decomposed corpse"
 	},
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "wJ" = (
 /obj/machinery/light{
@@ -620,7 +627,8 @@
 	pixel_y = 21
 	},
 /obj/stool/chair/comfy/shuttle/brown,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "wT" = (
 /obj/machinery/light/small/floor,
@@ -662,7 +670,8 @@
 	icon_state = "gib7"
 	},
 /mob/living/critter/crunched,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "xT" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -771,7 +780,8 @@
 /area/centcom/outside)
 "Bw" = (
 /obj/machinery/light/small/floor,
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "BC" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -812,7 +822,8 @@
 	icon_state = "gibbl2"
 	},
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "DB" = (
 /obj/decal/fakeobjects/pipe{
@@ -827,10 +838,12 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Ek" = (
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Es" = (
 /obj/decal/fakeobjects{
@@ -852,7 +865,8 @@
 /obj/decal/cleanable/machine_debris{
 	icon_state = "gib7"
 	},
-/turf/unsimulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Ew" = (
 /obj/decal/tile_edge/line/black{
@@ -935,7 +949,8 @@
 	name = "decomposed corpse";
 	pixel_y = 4
 	},
-/turf/unsimulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Gj" = (
 /obj/machinery/light/small/floor,
@@ -1062,10 +1077,6 @@
 	dir = 9
 	},
 /area/centcom)
-"Jp" = (
-/obj/stool/chair/comfy/shuttle/brown,
-/turf/unsimulated/floor/plating/damaged2,
-/area/shuttle/escape/centcom)
 "JE" = (
 /obj/decal/tile_edge/line/orange{
 	dir = 5;
@@ -1169,7 +1180,8 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
 	},
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "MC" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -1219,7 +1231,8 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "OU" = (
 /obj/decal/fakeobjects/pipe{
@@ -1236,7 +1249,8 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "OY" = (
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Pm" = (
 /obj/decal/fakeobjects/pipe{
@@ -1405,11 +1419,13 @@
 /area/centcom/outside)
 "Uz" = (
 /obj/decal/cleanable/machine_debris,
-/turf/unsimulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "UM" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "VJ" = (
 /obj/decal/poster/wallsign/danger_highvolt{
@@ -1439,7 +1455,8 @@
 "Wc" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Wl" = (
 /obj/indestructible/shuttle_corner{
@@ -1486,7 +1503,8 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Yv" = (
 /obj/decal/cleanable/vomit,
@@ -1507,10 +1525,6 @@
 /area/shuttle/escape/centcom)
 "Zb" = (
 /turf/unsimulated/floor/void,
-/area/shuttle/escape/centcom)
-"Zd" = (
-/obj/machinery/light/small/floor,
-/turf/unsimulated/floor/plating/damaged1,
 /area/shuttle/escape/centcom)
 "Zr" = (
 /obj/stool/chair/comfy/shuttle/brown,
@@ -1760,7 +1774,7 @@ Zb
 Zb
 Zb
 Wc
-Jp
+UM
 ZL
 Gy
 wq
@@ -1816,7 +1830,7 @@ sa
 Gy
 Zb
 Zb
-hN
+UM
 Ek
 oy
 FD
@@ -1981,9 +1995,9 @@ Zb
 Zb
 Mf
 ZL
-Zd
+Bw
 os
-bT
+OY
 kc
 ZL
 UM
@@ -2009,7 +2023,7 @@ Zb
 oc
 dw
 au
-Jp
+UM
 OY
 xR
 EE

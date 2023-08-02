@@ -184,7 +184,8 @@
 	},
 /area/prefab/dreamplaza)
 "eK" = (
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/prefab/dreamplaza)
 "fo" = (
 /obj/table/auto,
@@ -1203,9 +1204,6 @@
 	dir = 8
 	},
 /area/prefab/dreamplaza)
-"LK" = (
-/turf/simulated/floor/plating/damaged1,
-/area/prefab/dreamplaza)
 "Mi" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/terrazzo/black,
@@ -1814,7 +1812,7 @@ UK
 (7,1,1) = {"
 UK
 RB
-LK
+eK
 GO
 GO
 wn
@@ -1861,7 +1859,7 @@ bB
 Rn
 pM
 FI
-LK
+eK
 zf
 pg
 UK
@@ -2123,7 +2121,7 @@ UK
 VC
 pq
 wY
-LK
+eK
 bB
 Zn
 pq
@@ -2253,7 +2251,7 @@ kK
 SE
 Sw
 FI
-LK
+eK
 pq
 UK
 UK

@@ -137,11 +137,13 @@
 	on = 1
 	},
 /obj/item/pen/fancy,
-/turf/simulated/floor/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/space)
 "aaE" = (
 /obj/machinery/light/small/floor/warm,
-/turf/simulated/floor/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/space)
 "aaH" = (
 /obj/reagent_dispensers/fueltank,
@@ -6666,7 +6668,8 @@
 /area/station/storage/tools)
 "auL" = (
 /obj/item/wirecutters,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "auM" = (
 /obj/disposalpipe/segment/mail,
@@ -9140,7 +9143,8 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/turf/simulated/floor/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/ghostdrone_factory)
 "aCr" = (
 /obj/reagent_dispensers/fueltank,
@@ -9160,9 +9164,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/damaged2{
-	dir = 4
-	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/station/storage/tools)
 "aCu" = (
 /obj/disposalpipe/segment/morgue,
@@ -10010,9 +10013,8 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/turf/simulated/floor/damaged2{
-	dir = 4
-	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/station/storage/tools)
 "aEW" = (
 /obj/machinery/disposal/mail/small/autoname{
@@ -13782,7 +13784,8 @@
 "aRt" = (
 /obj/storage/crate/wooden,
 /obj/item/clothing/under/misc/bandshirt,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "aRu" = (
 /obj/machinery/navbeacon/tour/oshan/tour20,
@@ -14904,11 +14907,13 @@
 "aVg" = (
 /obj/npc/trader/martian,
 /obj/map/light/dimred,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/space)
 "aVh" = (
 /obj/item/cable_coil/cut,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/space)
 "aVi" = (
 /obj/machinery/atmospherics/pipe/tank/oxygen{
@@ -14988,7 +14993,8 @@
 	icon_state = "compressor";
 	name = "old busted turbine thingy"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/space)
 "aVw" = (
 /obj/decal/floatingtiles{
@@ -15218,7 +15224,8 @@
 "aWp" = (
 /obj/decal/cleanable/cobweb2,
 /obj/landmark/spawner/loot,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "aWq" = (
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -15241,14 +15248,16 @@
 /turf/simulated/floor/martian,
 /area/space)
 "aWw" = (
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/space)
 "aWx" = (
 /obj/decal/cleanable/oil,
 /obj/item/clothing/suit/space/old,
 /obj/item/clothing/head/helmet/space/old,
 /obj/storage/crate,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/space)
 "aWy" = (
 /obj/decal/aliencomputer{
@@ -15259,7 +15268,8 @@
 /area/space)
 "aWA" = (
 /obj/item/tile/steel,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/space)
 "aWB" = (
 /obj/decal/fakeobjects/lighttube_broken{
@@ -15270,35 +15280,34 @@
 /area/evilreaver/genetics)
 "aWC" = (
 /obj/item/tile/steel,
-/turf/simulated/floor/plating/damaged3,
-/area/evilreaver/genetics)
-"aWK" = (
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "aWL" = (
 /obj/decal/cleanable/blood,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "aWM" = (
 /obj/decal/fakeobjects/lighttube_broken{
 	dir = 4
 	},
 /obj/decal/cleanable/molten_item,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "aWN" = (
 /obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "aWO" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 5
 	},
-/turf/simulated/floor/plating/damaged1,
-/area/evilreaver/genetics)
-"aWP" = (
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "aWS" = (
 /obj/decal/aliencomputer{
@@ -15320,11 +15329,13 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "aXa" = (
 /obj/decal/cleanable/blood/tracks,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "aXc" = (
 /obj/decal/cleanable/blood/tracks{
@@ -15390,7 +15401,8 @@
 /area/space)
 "aXj" = (
 /obj/item/sheet/glass/reinforced,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/space)
 "aXl" = (
 /turf/simulated/floor/white,
@@ -15414,7 +15426,8 @@
 	layer = 4;
 	name = "skeleton"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "aXq" = (
 /obj/item/old_grenade/spawner/banana,
@@ -15428,7 +15441,8 @@
 /obj/decal/fakeobjects/teleport_pad,
 /obj/map/light/dimred,
 /obj/marker/supplymarker,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/space)
 "aXs" = (
 /obj/item/beach_ball,
@@ -15441,7 +15455,8 @@
 	},
 /obj/decal/fakeobjects/robot,
 /obj/decal/cleanable/oil,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/space)
 "aXu" = (
 /obj/decal/cleanable/blood/tracks{
@@ -15513,7 +15528,8 @@
 	name = "smashed computer"
 	},
 /obj/map/light/screen,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/tools)
 "aXS" = (
 /obj/decal/cleanable/machine_debris,
@@ -15524,7 +15540,8 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
 "aXW" = (
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/tools)
 "aXY" = (
 /obj/crevice{
@@ -15558,14 +15575,17 @@
 	pixel_x = -28
 	},
 /obj/decal/fakeobjects/oldcanister/plasma,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "aYe" = (
 /obj/item/clothing/under/misc/atmospheric_technician,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "aYf" = (
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "aYh" = (
 /obj/lattice,
@@ -15585,7 +15605,8 @@
 "aYl" = (
 /obj/item/rods/steel,
 /obj/decal/fakeobjects/lighttube_broken,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/tools)
 "aYm" = (
 /turf/simulated/floor/martian,
@@ -15599,7 +15620,8 @@
 "aYt" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe,
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "aYu" = (
 /obj/decal/fakeobjects/oldcanister,
@@ -15611,28 +15633,33 @@
 /obj/item/cable_coil/cut{
 	icon_state = "coil1"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/tools)
 "aYw" = (
 /obj/item/storage/toolbox/mechanical,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/tools)
 "aYA" = (
 /obj/item/clothing/suit/space/old,
 /obj/item/clothing/head/helmet/space/old,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/tools)
 "aYD" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid3"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "aYE" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid1"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "aYI" = (
 /obj/machinery/door/unpowered/martian,
@@ -15667,13 +15694,15 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "aYW" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibdown1"
 	},
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "aYZ" = (
 /obj/decal/cleanable/dirt,
@@ -15685,18 +15714,21 @@
 	name = "smashed computer"
 	},
 /obj/map/light/screen,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "aZa" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "aZd" = (
 /obj/landmark/spawner/loot,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/tools)
 "aZf" = (
 /obj/machinery/door/unpowered/martian,
@@ -15708,7 +15740,8 @@
 	name = "#1900494 (Security Officer)";
 	registered = "#1900494"
 	},
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "aZj" = (
 /obj/lattice,
@@ -15716,7 +15749,8 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid3"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "aZl" = (
 /obj/storage/closet/coffin,
@@ -15728,7 +15762,8 @@
 	pixel_y = 30
 	},
 /obj/decal/fakeobjects/pipe,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/chapel)
 "aZn" = (
 /turf/simulated/floor/martian,
@@ -15743,14 +15778,16 @@
 /area/evilreaver/chapel)
 "aZs" = (
 /obj/structure/girder/reinforced,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "aZu" = (
 /obj/storage/closet/coffin,
 /turf/simulated/floor/carpet/grime,
 /area/evilreaver/chapel)
 "aZx" = (
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/chapel)
 "aZC" = (
 /obj/storage/closet/coffin,
@@ -15762,7 +15799,8 @@
 /obj/item/cable_coil/cut{
 	icon_state = "coil1"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/chapel)
 "aZG" = (
 /obj/decal/fakeobjects{
@@ -15786,7 +15824,8 @@
 	},
 /obj/table/auto,
 /obj/item/reagent_containers/glass/bottle/holywater,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/chapel)
 "aZL" = (
 /obj/table/auto,
@@ -15794,11 +15833,13 @@
 	name = "paper- 'A Crash Course in Legal SOP"
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/security)
 "aZR" = (
 /obj/item/raw_material/shard/glass,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/chapel)
 "aZS" = (
 /turf/simulated/floor/carpet/grime,
@@ -15810,7 +15851,8 @@
 	},
 /area/evilreaver/security)
 "aZV" = (
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/security)
 "aZX" = (
 /obj/lattice,
@@ -15825,14 +15867,16 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
 "baf" = (
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/chapel)
 "bah" = (
 /obj/decal/cleanable/paper,
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
 "bai" = (
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/security)
 "baj" = (
 /obj/decal/fakeobjects{
@@ -15876,7 +15920,8 @@
 	emagged = 2;
 	name = "Mr. Beepsky"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/bar)
 "bax" = (
 /obj/item/photo/beepsky1{
@@ -17334,7 +17379,8 @@
 /obj/decal/fakeobjects/oven{
 	name = "broken oven"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/bar)
 "bgt" = (
 /obj/reagent_dispensers/watertank/big,
@@ -17477,7 +17523,8 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibup1"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/bridge)
 "bhh" = (
 /obj/disposalpipe/segment/morgue,
@@ -17639,11 +17686,13 @@
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "bia" = (
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/bar)
 "bib" = (
 /obj/decal/cleanable/oil,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/bar)
 "bid" = (
 /obj/item/cable_coil/reinforced,
@@ -17848,7 +17897,8 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid2"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/bridge)
 "biO" = (
 /obj/cable{
@@ -18015,7 +18065,8 @@
 "bjq" = (
 /obj/table/auto,
 /obj/item/storage/box/donkpocket_kit,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/bar)
 "bjr" = (
 /obj/cable{
@@ -18333,12 +18384,14 @@
 /obj/item/tile/steel,
 /obj/item/cigbutt,
 /obj/item/device/light/zippo,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/bar)
 "bkB" = (
 /obj/decal/cleanable/molten_item,
 /obj/decal/cleanable/generic,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/security)
 "bkC" = (
 /obj/decal/fakeobjects{
@@ -18354,7 +18407,8 @@
 "bkD" = (
 /obj/item/paper/sop,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/bridge)
 "bkE" = (
 /obj/computerframe{
@@ -18366,7 +18420,8 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/map/light/screen,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/bridge)
 "bkF" = (
 /obj/cable{
@@ -18666,7 +18721,8 @@
 	name = "smashed computer"
 	},
 /obj/map/light/screen,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/security)
 "blL" = (
 /obj/machinery/atmospherics/pipe/manifold{
@@ -18729,7 +18785,8 @@
 /obj/item/cable_coil/cut{
 	icon_state = "coil1"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/security)
 "blV" = (
 /obj/cable{
@@ -20471,15 +20528,15 @@
 "bro" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
-/turf/simulated/floor/damaged2{
-	dir = 4
-	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/station/hangar/main)
 "brp" = (
 /obj/table/auto,
 /obj/item/shipcomponent/secondary_system/gps,
 /obj/machinery/light_switch/auto,
-/turf/simulated/floor/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/station/hangar/main)
 "brq" = (
 /obj/cable{
@@ -21688,9 +21745,8 @@
 /turf/simulated/floor,
 /area/station/hangar/main)
 "bvi" = (
-/turf/simulated/floor/damaged2{
-	dir = 4
-	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/station/hangar/main)
 "bvj" = (
 /obj/machinery/power/apc/autoname_east,
@@ -24026,7 +24082,8 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
 "bCx" = (
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "bCy" = (
 /obj/machinery/power/apc/autoname_west,
@@ -24323,7 +24380,8 @@
 /obj/item/plank,
 /obj/item/plank,
 /obj/storage/crate/bloody,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "bDy" = (
 /turf/simulated/floor/black,
@@ -24449,7 +24507,8 @@
 /area/station/crew_quarters/info)
 "bDR" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "bDT" = (
 /obj/disposalpipe/segment,
@@ -24465,7 +24524,8 @@
 /area/station/crew_quarters/market)
 "bDV" = (
 /obj/item/horseshoe,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "bDW" = (
 /obj/machinery/door_control{
@@ -24732,7 +24792,8 @@
 /area/iss)
 "bEC" = (
 /obj/machinery/light/small/floor/cool,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "bED" = (
 /obj/table/reinforced/auto,
@@ -26457,7 +26518,8 @@
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
-/turf/simulated/floor/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "bKj" = (
 /turf/simulated/floor,
@@ -26984,9 +27046,8 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "bLL" = (
-/turf/simulated/floor/damaged2{
-	dir = 4
-	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "bLM" = (
 /obj/decal/cleanable/generic,
@@ -27565,9 +27626,6 @@
 /obj/item/reagent_containers/food/snacks/snack_cake,
 /turf/simulated/floor/grass,
 /area/space)
-"bNJ" = (
-/turf/simulated/floor/airless/plating/damaged2,
-/area/space)
 "bNK" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/plating/random,
@@ -27691,7 +27749,8 @@
 /turf/simulated/floor/grime,
 /area/station/quartermaster/office)
 "bOe" = (
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "bOf" = (
 /obj/storage/secure/crate/bee/loaded,
@@ -27753,7 +27812,8 @@
 	},
 /area/station/quartermaster/refinery)
 "bOo" = (
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/space)
 "bOq" = (
 /obj/disposalpipe/segment/morgue,
@@ -27763,7 +27823,8 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/orange,
 /obj/item/clothing/glasses/vr/arcade,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/station/security/brig)
 "bOs" = (
 /obj/disposalpipe/segment/mail,
@@ -27862,7 +27923,8 @@
 /area/station/medical/medbay/psychiatrist)
 "bOI" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/space)
 "bOJ" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
@@ -27874,7 +27936,8 @@
 /area/station/storage/emergency2)
 "bOL" = (
 /obj/rack,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/space)
 "bON" = (
 /obj/machinery/portable_atmospherics/scrubber,
@@ -28142,12 +28205,14 @@
 /area/space)
 "bPy" = (
 /obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/space)
 "bPz" = (
 /obj/item/clothing/suit/space/santa,
 /obj/item/clothing/head/helmet/space/santahat,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/space)
 "bPB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -28361,7 +28426,8 @@
 /obj/item/reagent_containers/food/snacks/ice_cream_cone,
 /obj/item/reagent_containers/food/snacks/ice_cream_cone,
 /obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/space)
 "bQf" = (
 /obj/machinery/door/unpowered/wood/pyro{
@@ -28624,7 +28690,8 @@
 "bQP" = (
 /obj/table/wood,
 /obj/item/reagent_containers/food/snacks/steak_h,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/space)
 "bQQ" = (
 /obj/stool/chair/red{
@@ -29042,7 +29109,8 @@
 /area/space)
 "bRW" = (
 /obj/stool,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/space)
 "bRX" = (
 /obj/item/paper,
@@ -29153,7 +29221,8 @@
 /obj/table/wood,
 /obj/item/device/igniter,
 /obj/item/cigpacket/menthol,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/space)
 "bSq" = (
 /obj/decal/cleanable/dirt,
@@ -29174,7 +29243,8 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "bSs" = (
 /obj/machinery/vending/cola/blue,
@@ -29436,9 +29506,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/damaged2{
-	dir = 4
-	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/station/storage/warehouse)
 "bTm" = (
 /obj/storage/crate,
@@ -29470,7 +29539,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "bTp" = (
 /obj/machinery/light/small/floor/netural,
@@ -29746,7 +29816,8 @@
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "bUe" = (
-/turf/simulated/floor/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/skeleton_trader)
 "bUf" = (
 /turf/space/fluid,
@@ -29894,7 +29965,8 @@
 /area/skeleton_trader)
 "bUA" = (
 /obj/item/clothing/suit/cardboard_box,
-/turf/simulated/floor/damaged4,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/station/storage/warehouse)
 "bUB" = (
 /obj/item/reagent_containers/food/drinks/fueltank,
@@ -30428,9 +30500,8 @@
 "bWt" = (
 /obj/item/clothing/mask/cigarette,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/damaged4{
-	dir = 1
-	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/station/storage/warehouse)
 "bWu" = (
 /turf/simulated/wall/false_wall,
@@ -30845,7 +30916,8 @@
 "bXF" = (
 /obj/item/crowbar,
 /obj/item/screwdriver,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "bXG" = (
 /obj/table/reinforced/auto,
@@ -31277,9 +31349,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
-"bZm" = (
-/turf/simulated/floor/damaged4,
-/area/ghostdrone_factory)
 "bZn" = (
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
@@ -31370,10 +31439,12 @@
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
 "bZB" = (
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/ghostdrone_factory)
 "bZC" = (
-/turf/simulated/floor/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/ghostdrone_factory)
 "bZD" = (
 /obj/table/auto,
@@ -31647,7 +31718,8 @@
 /area/diner/hallway)
 "caB" = (
 /obj/machinery/door/airlock/pyro,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/diner/hangar)
 "caC" = (
 /obj/machinery/door/airlock/pyro,
@@ -31668,7 +31740,8 @@
 /obj/decal/cleanable/cobweb2,
 /obj/decal/fakeobjects/teleport_pad,
 /obj/marker/supplymarker,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/diner/bathroom)
 "caG" = (
 /obj/stool/chair/wooden{
@@ -31719,7 +31792,8 @@
 /area/diner/bathroom)
 "caS" = (
 /obj/item/storage/pill_bottle/cyberpunk,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/diner/bathroom)
 "caT" = (
 /turf/simulated/floor/grime,
@@ -31752,7 +31826,8 @@
 /turf/simulated/floor/grime,
 /area/diner/hallway)
 "caZ" = (
-/turf/simulated/floor/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/diner/hallway)
 "cbb" = (
 /turf/simulated/wall/false_wall/reinforced,
@@ -31830,7 +31905,8 @@
 /turf/simulated/floor/grime,
 /area/diner/hallway)
 "cbp" = (
-/turf/simulated/floor/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/diner/bathroom)
 "cbr" = (
 /obj/machinery/door/airlock/pyro{
@@ -31843,9 +31919,6 @@
 /obj/decal/fakeobjects/teleport_pad,
 /obj/marker/supplymarker,
 /turf/simulated/floor/grime,
-/area/diner/hallway)
-"cbt" = (
-/turf/simulated/floor/scorched2,
 /area/diner/hallway)
 "cbu" = (
 /obj/submachine/ATM{
@@ -31947,7 +32020,8 @@
 /area/diner/backroom)
 "cbM" = (
 /obj/submachine/ice_cream_dispenser,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/diner/kitchen)
 "cbN" = (
 /turf/simulated/floor/grime,
@@ -31976,10 +32050,12 @@
 "cbT" = (
 /obj/submachine/foodprocessor,
 /obj/decal/cleanable/cobweb2,
-/turf/simulated/floor/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/diner/kitchen)
 "cbU" = (
-/turf/simulated/floor/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/diner/hallway)
 "cbV" = (
 /obj/machinery/teleport/portal_ring,
@@ -32016,9 +32092,6 @@
 "ccc" = (
 /obj/decal/cleanable/molten_item,
 /turf/simulated/floor/grime,
-/area/diner/kitchen)
-"ccd" = (
-/turf/simulated/floor/scorched2,
 /area/diner/kitchen)
 "cce" = (
 /obj/machinery/teleport/portal_generator,
@@ -32071,7 +32144,8 @@
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "ccl" = (
-/turf/simulated/floor/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/diner/kitchen)
 "ccm" = (
 /obj/table/reinforced/auto,
@@ -32158,7 +32232,8 @@
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "ccz" = (
-/turf/simulated/floor/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/diner/kitchen)
 "ccA" = (
 /turf/simulated/floor/plating,
@@ -33358,7 +33433,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/quartermaster/refinery)
 "cgt" = (
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "cgu" = (
 /obj/landmark/map{
@@ -33525,9 +33601,8 @@
 /obj/storage/crate/wooden,
 /obj/machinery/shieldgenerator/meteorshield,
 /obj/item/clothing/suit/hi_vis,
-/turf/simulated/floor/damaged2{
-	dir = 4
-	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/station/storage/warehouse)
 "cgX" = (
 /obj/plasticflaps,
@@ -34855,7 +34930,8 @@
 	dir = 4;
 	name = "rusty airlock"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/chapel)
 "cFH" = (
 /obj/indestructible/shuttle_corner{
@@ -35399,7 +35475,8 @@
 	icon_state = "door1";
 	name = "rusted hatch"
 	},
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/space)
 "dxt" = (
 /obj/machinery/door/airlock/pyro/alt,
@@ -36039,7 +36116,8 @@
 /obj/item/cigpacket,
 /obj/item/cigpacket,
 /obj/storage/crate/loot,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/bar)
 "epE" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
@@ -36116,7 +36194,8 @@
 	icon_state = "gibup1"
 	},
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "evu" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -36174,7 +36253,8 @@
 /area/station/science/artifact)
 "eDl" = (
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "eFs" = (
 /obj/machinery/dispenser,
@@ -36790,7 +36870,8 @@
 	dir = 4;
 	name = "rusty airlock"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/space)
 "fzx" = (
 /obj/stool/chair/comfy{
@@ -36842,7 +36923,8 @@
 /area/research_outpost/toxins)
 "fEg" = (
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/bridge)
 "fEl" = (
 /obj/machinery/door/airlock/pyro/command/alt{
@@ -38216,7 +38298,8 @@
 /obj/rack,
 /obj/item/clothing/under/misc/tourist,
 /obj/item/storage/belt/utility,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "icS" = (
 /obj/cable{
@@ -38241,7 +38324,8 @@
 /obj/machinery/door/airlock/pyro/classic{
 	name = "rusty airlock"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "ieK" = (
 /obj/landmark/spawner/artifact,
@@ -38378,7 +38462,8 @@
 /area/station/security/brig)
 "iqs" = (
 /obj/lattice,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "iqv" = (
 /obj/disposalpipe/segment/mail{
@@ -38793,7 +38878,8 @@
 /area/station/maintenance/inner/central)
 "jcD" = (
 /mob/living/critter/martian/soldier,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/tools)
 "jcM" = (
 /obj/storage/closet/welding_supply,
@@ -38976,7 +39062,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/quartermaster/office)
 "jro" = (
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "jsw" = (
 /obj/cable{
@@ -39133,7 +39220,8 @@
 "jFY" = (
 /obj/decal/cleanable/machine_debris,
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "jGP" = (
 /obj/decal/tile_edge/line/purple{
@@ -39183,7 +39271,8 @@
 /area/station/storage/eeva)
 "jKy" = (
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/security)
 "jKF" = (
 /obj/stool/bed,
@@ -39441,7 +39530,8 @@
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/blood/splatter,
 /obj/landmark/spawner/loot,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "koj" = (
 /obj/decal/aliencomputer,
@@ -39751,7 +39841,8 @@
 "kVv" = (
 /obj/item/cigbutt,
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/bar)
 "kXD" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
@@ -40161,7 +40252,8 @@
 /obj/item/currency/spacecash/thousand,
 /obj/item/currency/spacecash/thousand,
 /obj/item/clothing/suit/cardboard_box/captain,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/bridge)
 "lEv" = (
 /obj/stool/bed,
@@ -40214,12 +40306,14 @@
 /area/station/security/detectives_office)
 "lHB" = (
 /obj/landmark/spawner/artifact,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/tools)
 "lIc" = (
 /obj/decal/cleanable/dirt,
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/security)
 "lIm" = (
 /obj/cable{
@@ -40602,12 +40696,14 @@
 /area/research_outpost/toxins)
 "mxa" = (
 /mob/living/critter/martian/soldier,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/security)
 "myf" = (
 /obj/lattice,
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "myj" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
@@ -40719,7 +40815,8 @@
 /area/station/hallway/secondary/exit)
 "mGj" = (
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "mHe" = (
 /obj/disposalpipe/segment,
@@ -41140,7 +41237,8 @@
 	dir = 4
 	},
 /obj/landmark/spawner/artifact,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/bridge)
 "ngC" = (
 /obj/item/storage/wall/emergency{
@@ -41633,7 +41731,8 @@
 /obj/decal/cleanable/cobweb2,
 /obj/item/scrap,
 /obj/landmark/spawner/artifact,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/space)
 "odD" = (
 /obj/item/reagent_containers/pill/hairgrownium{
@@ -42147,7 +42246,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "oXE" = (
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/skeleton_trader)
 "oXV" = (
 /turf/simulated/floor/redwhite{
@@ -42159,7 +42259,8 @@
 	icon_state = "4-8"
 	},
 /obj/landmark/pest,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "oYL" = (
 /obj/decal/cleanable/fungus,
@@ -42656,7 +42757,8 @@
 /area/iss)
 "pOZ" = (
 /obj/decal/cleanable/robot_debris,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "pPb" = (
 /obj/machinery/r_door_control{
@@ -42967,7 +43069,8 @@
 "qrS" = (
 /obj/item/cigbutt,
 /obj/landmark/spawner/artifact,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/security)
 "qrW" = (
 /obj/machinery/light/incandescent/warm/very,
@@ -43214,7 +43317,8 @@
 /obj/machinery/door/airlock/pyro/classic{
 	name = "rusty airlock"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/martian_trader)
 "qLn" = (
 /obj/cable{
@@ -44087,7 +44191,8 @@
 /obj/lattice,
 /obj/decal/fakeobjects/pipe,
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "sFX" = (
 /obj/disposalpipe/segment/mail{
@@ -44414,7 +44519,8 @@
 /mob/living/critter/small_animal/mouse{
 	name = "Sgt. Pepper"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/bar)
 "thq" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -45004,7 +45110,8 @@
 	icon_state = "gibleg"
 	},
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "uDe" = (
 /obj/cable{
@@ -45152,7 +45259,8 @@
 /area/research_outpost/toxins)
 "uQQ" = (
 /obj/landmark/spawner/loot,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/space)
 "uRK" = (
 /obj/disposalpipe/segment{
@@ -45332,7 +45440,8 @@
 "vnf" = (
 /obj/decal/fakeobjects/pipe,
 /mob/living/critter/martian/mutant,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/chapel)
 "voC" = (
 /obj/machinery/atmospherics/portables_connector{
@@ -46152,7 +46261,8 @@
 /obj/decal/fakeobjects/pipe,
 /obj/item/raw_material/shard/glass,
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/atmospherics)
 "wGG" = (
 /obj/stool/chair/office/purple{
@@ -46538,9 +46648,8 @@
 "xmq" = (
 /obj/stool/chair/comfy,
 /obj/landmark/start/job/quartermaster,
-/turf/simulated/floor/damaged4{
-	dir = 4
-	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/station/storage/warehouse)
 "xmS" = (
 /obj/machinery/light/incandescent/greenish,
@@ -67540,7 +67649,7 @@ bYN
 bYN
 bYW
 bYN
-bZm
+bZB
 bYU
 bYU
 bYU
@@ -109363,7 +109472,7 @@ aqn
 aqn
 aqn
 aUZ
-bNJ
+bCx
 bOo
 bSe
 bPD
@@ -123767,7 +123876,7 @@ aPB
 aPB
 cbD
 cbR
-ccd
+ccl
 ccn
 cbN
 cbD
@@ -124971,7 +125080,7 @@ caO
 caO
 caO
 cbo
-cbt
+cbU
 caO
 caO
 caO
@@ -127751,7 +127860,7 @@ aUp
 dJs
 aVJ
 aWB
-aWK
+jro
 aWZ
 jro
 oYL
@@ -128354,7 +128463,7 @@ aqn
 aUp
 pkU
 dJs
-aWK
+jro
 aWO
 aXc
 aXu
@@ -128656,8 +128765,8 @@ aqn
 aUp
 dJs
 dJs
-aWK
-aWP
+jro
+jro
 aXe
 aXu
 aXD
@@ -129260,7 +129369,7 @@ aqn
 aUp
 dJs
 knF
-aWK
+jro
 iqs
 aXm
 aXv
@@ -129563,7 +129672,7 @@ aUu
 dJs
 aWp
 aWM
-aWP
+jro
 aXn
 aXw
 xvG

@@ -89,7 +89,8 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "L" = (
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "Q" = (
 /obj/table/wood/auto,
@@ -99,9 +100,6 @@
 	pixel_x = 1
 	},
 /turf/simulated/floor/plating,
-/area/dmm_suite/clear_area)
-"R" = (
-/turf/simulated/floor/plating/damaged1,
 /area/dmm_suite/clear_area)
 "W" = (
 /obj/table/wood/auto,
@@ -127,7 +125,7 @@ l
 x
 "}
 (2,1,1) = {"
-R
+L
 v
 J
 a

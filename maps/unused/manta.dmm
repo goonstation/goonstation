@@ -989,7 +989,8 @@
 /obj/decal/cleanable/cobweb2,
 /obj/decal/fakeobjects/teleport_pad,
 /obj/marker/supplymarker,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/diner/bathroom)
 "adf" = (
 /turf/simulated/floor/grime,
@@ -1020,7 +1021,8 @@
 /obj/decoration/toiletholder{
 	dir = 1
 	},
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/diner/bathroom)
 "adm" = (
 /obj/machinery/light/incandescent/small{
@@ -1111,7 +1113,8 @@
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "adE" = (
-/turf/simulated/floor/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/diner/bathroom)
 "adF" = (
 /mob/living/critter/small_animal/cockroach,
@@ -1248,12 +1251,14 @@
 /area/diner/kitchen)
 "aee" = (
 /obj/machinery/chem_dispenser/soda,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/diner/kitchen)
 "aef" = (
 /obj/machinery/chem_dispenser/alcohol,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/diner/kitchen)
 "aeg" = (
 /obj/machinery/vending/alcohol,
@@ -1359,16 +1364,19 @@
 /area/diner/kitchen)
 "aeC" = (
 /obj/machinery/vending/kitchen,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/diner/kitchen)
 "aeD" = (
 /obj/submachine/chef_oven,
 /obj/landmark/bill_spawn,
-/turf/simulated/floor/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/diner/kitchen)
 "aeE" = (
 /obj/machinery/deep_fryer,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/diner/kitchen)
 "aeF" = (
 /obj/decal/cleanable/dirt/dirt5,
@@ -1470,7 +1478,8 @@
 /obj/storage/secure/closet/fridge/kitchen{
 	locked = 0
 	},
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/diner/kitchen)
 "aeV" = (
 /obj/machinery/light/incandescent/warm,
@@ -7732,7 +7741,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/station/engine/inner)
 "awS" = (
 /obj/disposalpipe/segment{
@@ -8487,7 +8497,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/station/engine/inner)
 "ayO" = (
 /obj/item/storage/wall/fire{
@@ -8506,7 +8517,8 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/station/engine/inner)
 "ayQ" = (
 /obj/stool/bed,
@@ -9086,7 +9098,8 @@
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "aAt" = (
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/station/engine/power)
 "aAv" = (
 /obj/disposalpipe/segment{
@@ -10578,7 +10591,8 @@
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
 "aEE" = (
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/station/engine/gas)
 "aEF" = (
 /obj/machinery/portable_atmospherics/scrubber,
@@ -42211,7 +42225,8 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/station/engine/inner)
 "xTC" = (
 /obj/disposalpipe/segment/mail{

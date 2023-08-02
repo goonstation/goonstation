@@ -9,12 +9,14 @@
 /area/space)
 "c" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "d" = (
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -22,7 +24,8 @@
 /obj/machinery/drainage,
 /obj/item/clothing/suit/space/engineer/april_fools,
 /obj/item/clothing/head/helmet/space/engineer/april_fools,
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -31,7 +34,8 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -41,7 +45,8 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -50,7 +55,8 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -60,52 +66,60 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "j" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "k" = (
 /obj/landmark/spawner/artifact,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "l" = (
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "m" = (
 /obj/machinery/crusher,
 /obj/disposalpipe/segment,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "n" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "o" = (
 /obj/item/secbot_assembly,
 /obj/disposalpipe/segment,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "p" = (
 /obj/item/bananapeel,
 /obj/disposalpipe/segment,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -114,7 +128,8 @@
 	name = "salvage belt - east";
 	operating = 1
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -124,14 +139,16 @@
 	operating = 1
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "s" = (
 /obj/landmark/spawner/artifact,
 /obj/disposalpipe/segment,
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -141,7 +158,8 @@
 	operating = 1
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -154,13 +172,15 @@
 	operating = 1
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "v" = (
 /obj/machinery/crusher,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -169,25 +189,29 @@
 	control_freq = 0
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "x" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "y" = (
 /obj/item/cell/charged,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "z" = (
 /obj/machinery/neosmelter,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -195,20 +219,23 @@
 /obj/disposalpipe/segment,
 /obj/item/clothing/suit/space/industrial,
 /obj/item/sea_ladder,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "B" = (
 /obj/item/cell/charged,
 /obj/disposalpipe/segment,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "C" = (
 /obj/table,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -219,33 +246,38 @@
 	trader_area = "/area/evilreaver/storage/engineering"
 	},
 /obj/map/light/white,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "E" = (
 /obj/machinery/manufacturer/mechanic,
 /obj/disposalpipe/segment,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "F" = (
 /obj/machinery/manufacturer/general,
 /obj/disposalpipe/segment,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "G" = (
 /obj/machinery/processor,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "H" = (
 /obj/marker/supplymarker,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -254,7 +286,8 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -263,7 +296,8 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -273,7 +307,8 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -286,7 +321,8 @@
 /obj/item/device/gps{
 	identifier = "W8ST"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})

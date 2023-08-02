@@ -18,7 +18,8 @@
 	},
 /area/centcom/outside)
 "al" = (
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "ao" = (
 /obj/decal/tile_edge/line/black{
@@ -115,7 +116,8 @@
 	dir = 1
 	},
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "cS" = (
 /obj/decal/tile_edge/line/black{
@@ -180,7 +182,8 @@
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 1
 	},
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "ec" = (
 /turf/unsimulated/floor/arrival{
@@ -283,7 +286,8 @@
 	icon_state = "floor4"
 	},
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "hi" = (
 /obj/decal/fakeobjects/pipe{
@@ -387,7 +391,8 @@
 	pixel_x = -6;
 	pixel_y = 5
 	},
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "ki" = (
 /obj/rack,
@@ -460,7 +465,8 @@
 /area/centcom)
 "mx" = (
 /obj/machinery/light/small/floor,
-/turf/unsimulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "mE" = (
 /obj/decal/tile_edge/line/black{
@@ -483,10 +489,6 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"mS" = (
-/obj/decal/cleanable/paper,
-/turf/unsimulated/floor/plating/damaged1,
-/area/shuttle/escape/centcom)
 "nn" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor{
@@ -499,7 +501,8 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "nN" = (
 /turf/unsimulated/floor/arrival{
@@ -516,7 +519,8 @@
 /area/centcom)
 "oe" = (
 /obj/decal/cleanable/paper,
-/turf/unsimulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "or" = (
 /turf/simulated/wall/auto/shuttle{
@@ -570,14 +574,6 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom)
-"pQ" = (
-/obj/stool/chair/comfy/shuttle,
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/unsimulated/floor/plating/damaged3,
 /area/shuttle/escape/centcom)
 "pR" = (
 /obj/decal/fakeobjects{
@@ -660,12 +656,6 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"sk" = (
-/obj/stool/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/unsimulated/floor/plating/damaged3,
-/area/shuttle/escape/centcom)
 "sS" = (
 /obj/decal/tile_edge/line/orange{
 	dir = 8;
@@ -705,9 +695,6 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "8"
 	},
-/area/shuttle/escape/centcom)
-"ub" = (
-/turf/unsimulated/floor/plating/damaged3,
 /area/shuttle/escape/centcom)
 "uu" = (
 /obj/item/raw_material/shard/glass,
@@ -789,7 +776,8 @@
 "AQ" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Bg" = (
 /obj/stool/bench/blue/auto,
@@ -797,7 +785,8 @@
 /turf/unsimulated/floor/arrival,
 /area/centcom)
 "Bn" = (
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Bw" = (
 /obj/decal/fakeobjects/pipe{
@@ -847,7 +836,8 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
 	},
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "EE" = (
 /obj/shrub,
@@ -1043,7 +1033,8 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 1
 	},
-/turf/unsimulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "MR" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -1117,7 +1108,8 @@
 /area/centcom/outside)
 "OZ" = (
 /obj/machinery/light,
-/turf/unsimulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Pb" = (
 /turf/unsimulated/floor/shuttlebay,
@@ -1297,7 +1289,8 @@
 /area/centcom)
 "Tf" = (
 /obj/decal/fakeobjects/skeleton,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Tl" = (
 /obj/stool/chair/comfy/shuttle/red{
@@ -1381,14 +1374,16 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Xd" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 1
 	},
 /obj/decal/fakeobjects/skeleton,
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Xe" = (
 /obj/decal/poster/wallsign/hazard_caution,
@@ -1401,7 +1396,8 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 1
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "YM" = (
 /obj/decal/fakeobjects/tallsmes,
@@ -1435,9 +1431,6 @@
 	},
 /obj/decal/fakeobjects/skeleton,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom)
-"ZQ" = (
-/turf/unsimulated/floor/plating/damaged2,
 /area/shuttle/escape/centcom)
 
 (1,1,1) = {"
@@ -1708,7 +1701,7 @@ SH
 SH
 SH
 yE
-mS
+oe
 iQ
 SH
 SH
@@ -1726,7 +1719,7 @@ RL
 Qp
 As
 kB
-sk
+Wv
 AQ
 tU
 Ah
@@ -1754,8 +1747,8 @@ pW
 Qp
 TB
 nH
-ub
-ZQ
+al
+al
 gh
 sU
 mx
@@ -1837,11 +1830,11 @@ Gq
 pW
 Qp
 TB
-pQ
+nH
 UQ
 ha
 hI
-ZQ
+al
 yE
 Bn
 Ru
@@ -1902,7 +1895,7 @@ cM
 Xj
 yE
 Gp
-ZQ
+al
 LQ
 al
 aq
@@ -1927,7 +1920,7 @@ HE
 Tr
 DA
 Ru
-ZQ
+al
 MK
 Ah
 Bn

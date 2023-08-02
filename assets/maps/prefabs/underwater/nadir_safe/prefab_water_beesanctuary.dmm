@@ -371,7 +371,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 8
 	},
-/turf/unsimulated/floor/damaged5,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "ql" = (
 /obj/window/crystal/east,
@@ -418,7 +419,8 @@
 	icon_state = "cameraemp";
 	name = "security camera"
 	},
-/turf/unsimulated/floor/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "ry" = (
 /obj/machinery/light/small/purpleish{
@@ -551,7 +553,8 @@
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "wg" = (
-/turf/unsimulated/floor/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "xD" = (
 /obj/critter/domestic_bee/zombee,
@@ -610,7 +613,8 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/turf/unsimulated/floor/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "Bh" = (
 /obj/decal/floatingtiles{
@@ -928,9 +932,6 @@
 /obj/decal/fakeobjects/skeleton,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
-"LC" = (
-/turf/unsimulated/floor/damaged3,
-/area/prefab/bee_sanctuary)
 "LG" = (
 /turf/unsimulated/floor/void,
 /area/prefab/bee_sanctuary)
@@ -1128,7 +1129,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 8
 	},
-/turf/unsimulated/floor/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "RF" = (
 /obj/machinery/drainage,
@@ -1274,7 +1276,8 @@
 	dir = 4;
 	tag = "icon-chair (EAST)"
 	},
-/turf/unsimulated/floor/damaged5,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "VH" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
@@ -2023,7 +2026,7 @@ Os
 Os
 Zz
 OH
-LC
+wg
 VH
 WI
 wg

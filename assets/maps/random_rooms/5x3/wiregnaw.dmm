@@ -26,7 +26,8 @@
 /area/dmm_suite/clear_area)
 "r" = (
 /mob/living/critter/small_animal/mouse,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "E" = (
 /obj/cable/black{
@@ -71,7 +72,8 @@
 /obj/cable/black{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 
 (1,1,1) = {"

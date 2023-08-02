@@ -7633,7 +7633,8 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/abandonedship{
 	name = "Crashed Limo"
 	})
@@ -15314,7 +15315,8 @@
 /area/station/hallway/secondary/entry)
 "gCF" = (
 /obj/item/raw_material/scrap_metal,
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/abandonedship{
 	name = "Crashed Limo"
 	})
@@ -23308,7 +23310,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "jPz" = (
-/turf/simulated/floor/airless/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/abandonedship{
 	name = "Crashed Limo"
 	})
@@ -29632,7 +29635,8 @@
 /obj/decal/tile_edge/stripe,
 /obj/decal/cleanable/paper,
 /obj/disposalpipe/segment,
-/turf/simulated/floor/airless/damaged4,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/station/storage/warehouse)
 "mEv" = (
 /obj/grille/catwalk{
@@ -37129,7 +37133,8 @@
 /area/station/science/lab)
 "pWo" = (
 /obj/item/raw_material/shard/glass,
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/abandonedship{
 	name = "Crashed Limo"
 	})
@@ -47509,7 +47514,8 @@
 "uoo" = (
 /obj/decal/cleanable/machine_debris,
 /obj/item/motherboard,
-/turf/simulated/floor/airless/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/abandonedship{
 	name = "Crashed Limo"
 	})
@@ -49120,7 +49126,8 @@
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
-/turf/simulated/floor/airless/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/abandonedship{
 	name = "Crashed Limo"
 	})
@@ -51323,7 +51330,8 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/simulated/floor/airless/damaged4,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/abandonedship{
 	name = "Crashed Limo"
 	})
@@ -55610,7 +55618,8 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/item/furniture_parts/table/reinforced/roulette,
-/turf/simulated/floor/airless/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/abandonedship{
 	name = "Crashed Limo"
 	})

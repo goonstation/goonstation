@@ -6105,7 +6105,8 @@
 /area/maintenance/maintcentral)
 "oG" = (
 /obj/grille/steel,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/maintenance/maintcentral)
 "oH" = (
 /obj/grille/steel,
@@ -7276,10 +7277,6 @@
 	},
 /turf/simulated/floor,
 /area/security/main)
-"rz" = (
-/obj/grille/steel,
-/turf/simulated/floor/plating/damaged1,
-/area/maintenance/maintcentral)
 "rA" = (
 /obj/machinery/atmospherics/pipe/simple{
 	icon_state = "intact";
@@ -8644,7 +8641,8 @@
 /turf/simulated/floor/plating,
 /area/atmos)
 "uS" = (
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/atmos)
 "uT" = (
 /obj/machinery/camera{
@@ -9112,11 +9110,13 @@
 "we" = (
 /obj/grille/steel,
 /obj/item/hand_tele,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/maintenance/maintcentral)
 "wf" = (
 /obj/grille/steel,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/maintenance/maintcentral)
 "wg" = (
 /obj/grille/steel,
@@ -31432,7 +31432,7 @@ pn
 pn
 qw
 qw
-rz
+wf
 qw
 st
 qw
@@ -31441,7 +31441,7 @@ qw
 qw
 qw
 oE
-rz
+wf
 qw
 qw
 qw

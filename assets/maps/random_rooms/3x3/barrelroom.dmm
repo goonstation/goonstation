@@ -2,7 +2,8 @@
 "a" = (
 /obj/decal/cleanable/dirt,
 /obj/landmark/spawner/artifact,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "k" = (
 /obj/stool/chair/couch{
@@ -11,7 +12,8 @@
 	name = "ratty blue couch"
 	},
 /obj/item/card_group/plain,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "q" = (
 /obj/stool/chair/comfy/blue{
@@ -20,7 +22,8 @@
 	name = "grody blue chair"
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "r" = (
 /obj/storage/crate,
@@ -30,7 +33,8 @@
 /obj/item/clothing/head/cowboy,
 /obj/item/clothing/shoes/cowboy,
 /obj/item/clothing/under/misc/tourist/max_payne,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "u" = (
 /obj/decal/cleanable/blood/splatter{
@@ -41,7 +45,8 @@
 	desc = "Some jerk idiot has been stamping on sauce packets back here.";
 	name = "broken sauce packets"
 	},
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "C" = (
 /obj/decal/cleanable/dirt,
@@ -56,7 +61,8 @@
 	layer = 4;
 	pixel_y = 32
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "G" = (
 /obj/item/cigbutt,
@@ -69,7 +75,8 @@
 	desc = "Who did this?";
 	name = "stomped-upon condiments"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "L" = (
 /obj/decal/cleanable/dirt,
@@ -83,7 +90,8 @@
 "S" = (
 /obj/burning_barrel,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 
 (1,1,1) = {"

@@ -7,7 +7,8 @@
 /turf/space,
 /area/space)
 "ac" = (
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "ad" = (
 /turf/simulated/shuttle/wall{
@@ -87,7 +88,8 @@
 	icon_state = "1-2"
 	},
 /obj/item/cigpacket/propuffs,
-/turf/simulated/floor/airless/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "ao" = (
 /obj/decal/fakeobjects/cargopad,
@@ -103,7 +105,8 @@
 "aq" = (
 /obj/item/raw_material/shard,
 /obj/item/reagent_containers/dropper/mechanical,
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "ar" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -126,7 +129,8 @@
 	},
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
-/turf/simulated/floor/airless/damaged4,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "at" = (
 /obj/cable{
@@ -136,13 +140,15 @@
 	icon_state = "1-4"
 	},
 /obj/item/clothing/suit/space/emerg,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "au" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "av" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -176,7 +182,8 @@
 	icon_state = "4-8"
 	},
 /obj/item/raw_material/shard,
-/turf/simulated/floor/airless/damaged4,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "az" = (
 /turf/simulated/shuttle/wall{
@@ -207,7 +214,8 @@
 	icon_state = "engineoff";
 	name = "broken machine"
 	},
-/turf/simulated/floor/airless/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "aD" = (
 /turf/simulated/shuttle/wall{

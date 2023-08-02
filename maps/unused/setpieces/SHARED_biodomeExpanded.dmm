@@ -559,7 +559,8 @@
 	dir = 2;
 	
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater)
 "aGI" = (
 /obj/machinery/power/rtg,
@@ -1117,7 +1118,8 @@
 	icon_state = "meatspike_h";
 	name = "a meat spike"
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crypt/sigma/storage)
 "bpV" = (
 /turf/unsimulated/floor/carpet{
@@ -1247,7 +1249,8 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
 "bwe" = (
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/entry)
 "bwP" = (
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -1323,7 +1326,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater)
 "bAZ" = (
 /obj/stool/bench/wooden/auto,
@@ -1526,7 +1530,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/south)
 "bOz" = (
 /obj/railing/orange,
@@ -1879,7 +1884,8 @@
 	icon_state = "intact";
 	name = "defunct vent"
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crypt/sigma/storage)
 "chS" = (
 /obj/table/wood/auto/desk,
@@ -2026,7 +2032,8 @@
 	dir = 9;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater)
 "cux" = (
 /obj/decal/cleanable/blood/tracks,
@@ -2480,7 +2487,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/south)
 "cYK" = (
 /obj/grille/catwalk{
@@ -2826,7 +2834,8 @@
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner"
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater)
 "dup" = (
 /obj/table/wood/auto,
@@ -2927,7 +2936,8 @@
 /obj/machinery/light{
 	on = 1
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater)
 "dBh" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -3439,7 +3449,8 @@
 /obj/landmark{
 	name = "bioelefall"
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/biodome_elevator/lower)
 "efA" = (
 /obj/table/reinforced/bar/auto,
@@ -3496,7 +3507,8 @@
 	icon_state = "0-8"
 	},
 /obj/item/mousetrap/armed,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/maint)
 "eiZ" = (
 /obj/decal/fakeobjects{
@@ -4532,7 +4544,8 @@
 /obj/decal/fakeobjects/pipe/heat,
 /obj/decal/cleanable/cobweb,
 /obj/machinery/vending/standard,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crypt/sigma/storage)
 "fpr" = (
 /obj/stool/bed,
@@ -4626,7 +4639,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/north)
 "fus" = (
 /obj/decal/cleanable/cobweb,
@@ -4861,7 +4875,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater)
 "fFv" = (
 /obj/decal/woodclutter{
@@ -5114,11 +5129,13 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/north)
 "fUB" = (
 /obj/rack,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crypt/sigma/storage)
 "fUP" = (
 /obj/decal/tile_edge/line/white{
@@ -5147,7 +5164,8 @@
 /obj/machinery/power/furnace,
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/maint)
 "fVw" = (
 /obj/decal/cleanable/cobweb2,
@@ -5216,7 +5234,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/north)
 "gaB" = (
 /obj/decal/mushrooms/type6,
@@ -5323,7 +5342,8 @@
 "giK" = (
 /obj/decal/cleanable/dirt,
 /mob/living/critter/zombie/security,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crypt/sigma/storage)
 "giL" = (
 /obj/machinery/door/unpowered/wood/stall,
@@ -5360,7 +5380,8 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/maint)
 "glx" = (
 /obj/table/wood/auto/desk,
@@ -6134,7 +6155,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/north)
 "hin" = (
 /obj/decal/fakeobjects/pipe/heat{
@@ -6217,7 +6239,8 @@
 "hmA" = (
 /obj/decal/fakeobjects/cargopad,
 /obj/storage/crate/haunted,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crypt/sigma/storage)
 "hmX" = (
 /obj/machinery/chem_dispenser/alcohol,
@@ -6261,7 +6284,8 @@
 /obj/item/c_tube,
 /obj/item/sponge,
 /obj/mopbucket,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crypt/sigma/storage)
 "hnX" = (
 /turf/unsimulated/floor/specialroom/bar,
@@ -6673,7 +6697,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/north)
 "hNO" = (
 /obj/item/gun/kinetic/pistol,
@@ -6956,7 +6981,8 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater)
 "ila" = (
 /obj/random_item_spawner/junk/four,
@@ -7895,11 +7921,13 @@
 /area/swampzone/interiors/bonktek/funktek)
 "jsL" = (
 /obj/grille/steel,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/research)
 "jtx" = (
 /obj/decal/cleanable/oil,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crypt/sigma/storage)
 "jtF" = (
 /obj/table/wood/auto,
@@ -8705,7 +8733,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater)
 "kpP" = (
 /obj/storage/secure/closet/engineering/mining,
@@ -8746,7 +8775,8 @@
 /area/swampzone/heights)
 "krn" = (
 /obj/machinery/gibber,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crypt/sigma/storage)
 "krH" = (
 /obj/decal/fakeobjects/pipe/heat,
@@ -8825,7 +8855,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater)
 "kvT" = (
 /obj/storage/closet/coffin,
@@ -9552,7 +9583,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/south)
 "ljA" = (
 /turf/unsimulated/floor/stairs{
@@ -9593,7 +9625,8 @@
 	name = "Hazardous Gas Storage";
 	secondsElectrified = -1
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater)
 "lnw" = (
 /obj/machinery/light/flamp,
@@ -9919,7 +9952,8 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "lKq" = (
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crypt/sigma/storage)
 "lKT" = (
 /obj/decal/fakeobjects/azarakrocks/rock4,
@@ -9962,7 +9996,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/north)
 "lMI" = (
 /obj/cable{
@@ -10218,7 +10253,8 @@
 	name = "Botanical Research Biodome";
 	secondsElectrified = -1
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/entry)
 "mbK" = (
 /obj/decal/fakeobjects{
@@ -10455,7 +10491,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater)
 "mrz" = (
 /obj/table/wood/round/champagne,
@@ -12015,7 +12052,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/north)
 "ofe" = (
 /obj/decal/stalagtite,
@@ -12116,7 +12154,8 @@
 	icon_state = "1-4"
 	},
 /obj/item/device/t_scanner,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/maint)
 "ome" = (
 /obj/submachine/chef_sink/chem_sink{
@@ -12376,7 +12415,8 @@
 	pixel_y = 24;
 	start_charge = 12
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater)
 "oBo" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray,
@@ -12510,7 +12550,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/north)
 "oLP" = (
 /obj/decal/cliff{
@@ -12536,7 +12577,8 @@
 /area/swampzone/deeps)
 "oOc" = (
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crypt/sigma/storage)
 "oOI" = (
 /turf/unsimulated/floor/neutral/side,
@@ -13060,7 +13102,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater)
 "pwj" = (
 /obj/table/wood/auto,
@@ -13701,7 +13744,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/south)
 "qpd" = (
 /turf/unsimulated/floor/auto/grass/leafy,
@@ -13764,7 +13808,8 @@
 /obj/decal/fakeobjects/pipe/heat,
 /obj/decal/cleanable/dirt,
 /obj/storage/secure/closet/civilian/janitor,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crypt/sigma/storage)
 "qsE" = (
 /turf/unsimulated/wall/auto/lead/blue,
@@ -13800,7 +13845,8 @@
 /area/syndicate_station)
 "qxk" = (
 /obj/decal/fakeobjects/pipe/heat,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crypt/sigma/storage)
 "qys" = (
 /obj/decal/fakeobjects/mule_xl{
@@ -14390,7 +14436,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater)
 "rfu" = (
 /obj/machinery/door/unpowered/wood/pyro{
@@ -15224,7 +15271,8 @@
 /area/swampzone/interiors/outbuildings)
 "sjt" = (
 /obj/grille/steel,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/crew)
 "skF" = (
 /obj/tree/carcosa/one,
@@ -15549,7 +15597,8 @@
 /obj/machinery/door/airlock{
 	name = "Supply Closet"
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crypt/sigma/storage)
 "sEW" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray,
@@ -15844,7 +15893,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater)
 "sWx" = (
 /obj/grille/catwalk{
@@ -15916,7 +15966,8 @@
 	},
 /obj/machinery/power/furnace,
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/maint)
 "sYK" = (
 /obj/item/mine/blast/armed,
@@ -16026,7 +16077,8 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/maint)
 "teC" = (
 /obj/table/auto,
@@ -16380,7 +16432,8 @@
 /obj/decal/cleanable/dirt,
 /obj/item/plank,
 /obj/item/plank,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/maint)
 "tBE" = (
 /turf/unsimulated/floor/stairs/wood2/wide{
@@ -17077,7 +17130,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/north)
 "uso" = (
 /obj/map/light/graveyard,
@@ -17225,7 +17279,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/south)
 "uEg" = (
 /obj/chainlink_fence{
@@ -17757,7 +17812,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/south)
 "vcN" = (
 /obj/railing/orange/reinforced,
@@ -17782,7 +17838,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/south)
 "vdE" = (
 /turf/space,
@@ -17983,7 +18040,8 @@
 	pixel_y = 15;
 	tag = "icon-tube1 (NORTH)"
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater)
 "vpS" = (
 /turf/unsimulated/floor/cave,
@@ -18034,7 +18092,8 @@
 /area/crater/biodome/research)
 "vsV" = (
 /obj/item/mousetrap/armed,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crypt/sigma/storage)
 "vtd" = (
 /obj/creepy_sound_trigger,
@@ -18125,7 +18184,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/north)
 "vBf" = (
 /obj/submachine/chef_sink,
@@ -18169,7 +18229,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/south)
 "vCU" = (
 /obj/map/light/graveyard,
@@ -18369,7 +18430,8 @@
 /obj/item/raw_material/char,
 /obj/item/raw_material/char,
 /obj/item/raw_material/char,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/maint)
 "vNI" = (
 /obj/decal/fakeobjects{
@@ -18854,7 +18916,8 @@
 	},
 /area/swampzone/ground)
 "wou" = (
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater)
 "wpd" = (
 /turf/unsimulated/floor/stairs/wood2/wide{
@@ -19787,7 +19850,8 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crater/biodome/south)
 "xsR" = (
 /turf/unsimulated/floor/carpet/purple/fancy,
@@ -20408,7 +20472,8 @@
 	desc = "How long has this been down here?"
 	},
 /obj/decal/cleanable/cobweb2,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
 /area/crypt/sigma/storage)
 "ygI" = (
 /obj/table/reinforced/auto,

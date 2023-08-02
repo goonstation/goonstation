@@ -7,12 +7,14 @@
 /area/space)
 "ac" = (
 /obj/item/kitchen/utensil/knife/pizza_cutter,
-/turf/simulated/floor/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "ad" = (
 /obj/decal/cleanable/greenpuke,
 /obj/marker/supplymarker,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "ae" = (
 /obj/item/material_piece/mauxite,
@@ -22,7 +24,8 @@
 "af" = (
 /obj/decal/cleanable/cobweb2,
 /obj/item/storage/toilet,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "ag" = (
 /obj/npc/trader/robot{
@@ -42,7 +45,8 @@
 /area/prefab/sea_sketch)
 "ai" = (
 /obj/item/reagent_containers/glass/bucket,
-/turf/simulated/floor/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "aj" = (
 /obj/decal/cleanable/fungus,
@@ -57,7 +61,8 @@
 	pixel_y = 0
 	},
 /obj/item/storage/pill_bottle/cyberpunk,
-/turf/simulated/floor/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "al" = (
 /obj/decal/cleanable/dirt,
@@ -67,12 +72,14 @@
 "am" = (
 /obj/decal/cleanable/dirt,
 /obj/item/storage/pill_bottle/cyberpunk,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "an" = (
 /obj/item/storage/pill_bottle/cyberpunk,
 /obj/item/sponge,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "ap" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -86,11 +93,13 @@
 /area/prefab/sea_sketch)
 "as" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "at" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "au" = (
 /obj/stool/chair/couch/blue{
@@ -106,11 +115,9 @@
 	},
 /turf/simulated/floor/grime,
 /area/prefab/sea_sketch)
-"aw" = (
-/turf/simulated/floor/scorched,
-/area/prefab/sea_sketch)
 "ax" = (
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "ay" = (
 /obj/item/implant/tracking,
@@ -118,7 +125,8 @@
 /obj/decal/cleanable/blood{
 	icon_state = "drip5"
 	},
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "az" = (
 /obj/table/wood/round/auto,
@@ -132,7 +140,8 @@
 /area/prefab/sea_sketch)
 "aA" = (
 /obj/machinery/light/small/floor/warm/very,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "aB" = (
 /obj/decal/cleanable/gangtag,
@@ -145,30 +154,33 @@
 /obj/item/tvdinner,
 /obj/item/reagent_containers/food/snacks/tvdinner,
 /obj/item/kitchen/utensil/spoon,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "aD" = (
 /obj/machinery/door/airlock/pyro/classic,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "aE" = (
-/turf/simulated/floor/damaged2,
-/area/prefab/sea_sketch)
-"aF" = (
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "aG" = (
 /obj/item/furniture_parts/comfy_chair,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/prefab/sea_sketch)
 "aH" = (
 /obj/item/plant/herb/cannabis/spawnable,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "aI" = (
 /obj/machinery/plantpot,
 /obj/item/reagent_containers/glass/bottle/powerplant,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/prefab/sea_sketch)
 "aJ" = (
 /obj/machinery/light/small/floor/warm,
@@ -184,7 +196,8 @@
 /area/prefab/sea_sketch)
 "aM" = (
 /obj/decal/cleanable/fungus,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "aO" = (
 /obj/table/wood/round/auto,
@@ -195,7 +208,8 @@
 /obj/table/wood/round/auto,
 /obj/item/device/light/candle/small,
 /obj/item/matchbook,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "aQ" = (
 /turf/simulated/floor/plating/random,
@@ -226,17 +240,20 @@
 /area/prefab/sea_sketch)
 "aW" = (
 /obj/table/wood/auto,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "aY" = (
 /obj/stool/chair/comfy{
 	icon_state = "chair_comfy";
 	dir = 8
 	},
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "aZ" = (
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/prefab/sea_sketch)
 "ba" = (
 /obj/stool/chair/comfy{
@@ -246,7 +263,8 @@
 /area/prefab/sea_sketch)
 "bb" = (
 /obj/table/wood/auto,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "bc" = (
 /obj/decal/cleanable/gangtag{
@@ -290,7 +308,8 @@
 /area/prefab/sea_sketch)
 "bi" = (
 /obj/artifact_spawner,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/prefab/sea_sketch)
 "bj" = (
 /obj/table/wood/auto,
@@ -299,7 +318,8 @@
 /area/prefab/sea_sketch)
 "bk" = (
 /obj/item/gun/implanter,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/prefab/sea_sketch)
 "bl" = (
 /obj/item/storage/pill_bottle/catdrugs,
@@ -307,15 +327,18 @@
 /area/prefab/sea_sketch)
 "bm" = (
 /obj/item/seed/cannabis,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "bn" = (
 /obj/item/reagent_containers/glass/wateringcan,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/prefab/sea_sketch)
 "bo" = (
 /obj/item/reagent_containers/patch/LSD,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
 /area/prefab/sea_sketch)
 "bp" = (
 /obj/decal/cleanable/gangtag{
@@ -323,7 +346,8 @@
 	pixel_x = 28
 	},
 /obj/item/seed/cannabis,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/prefab/sea_sketch)
 "bq" = (
 /obj/reagent_dispensers/watertank,
@@ -364,12 +388,14 @@
 "bz" = (
 /obj/item/reagent_containers/syringe,
 /obj/item/reagent_containers/syringe,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/prefab/sea_sketch)
 "bA" = (
 /obj/artifact_spawner,
 /obj/item/reagent_containers/glass/bottle/weedkiller,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "bB" = (
 /obj/reagent_dispensers/fueltank,
@@ -385,7 +411,8 @@
 "bD" = (
 /obj/stool/chair/comfy/red,
 /obj/item/reagent_containers/glass/bottle/morphine,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "bF" = (
 /obj/item/reagent_containers/glass/bottle/acid,
@@ -403,15 +430,18 @@
 /area/prefab/sea_sketch)
 "bJ" = (
 /obj/machinery/light/small/floor/warm,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "bK" = (
 /obj/item/implant/robotalk,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/prefab/sea_sketch)
 "bL" = (
 /obj/item/implant/health,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/prefab/sea_sketch)
 "bN" = (
 /obj/decal/cleanable/fungus,
@@ -424,7 +454,8 @@
 "bP" = (
 /obj/table/wood/auto,
 /obj/item/card_group/plain,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/prefab/sea_sketch)
 "bQ" = (
 /obj/machinery/door/airlock/pyro/classic{
@@ -612,7 +643,7 @@ au
 az
 aC
 aq
-aF
+aZ
 aS
 bj
 bb
@@ -659,7 +690,7 @@ vF
 ah
 aq
 as
-aw
+ax
 ax
 ax
 aq

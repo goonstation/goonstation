@@ -306,7 +306,8 @@
 	icon_state = "oldb";
 	name = "broken computer"
 	},
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "aP" = (
 /turf/simulated/wall/auto/supernorn,
@@ -330,7 +331,8 @@
 /obj/decal/cleanable/dirt,
 /obj/item/storage/toilet,
 /obj/item/seed/cannabis,
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "aS" = (
 /obj/lattice{
@@ -389,7 +391,8 @@
 	name = "gross organs"
 	},
 /obj/item/reagent_containers/food/snacks/meatloaf,
-/turf/simulated/floor/airless/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "aZ" = (
 /obj/decal/cleanable/dirt,
@@ -459,7 +462,8 @@
 	icon_state = "showerhead"
 	},
 /obj/machinery/drainage,
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "bh" = (
 /obj/rack,
@@ -470,7 +474,8 @@
 	icon_state = "radio";
 	name = "emergency radio"
 	},
-/turf/simulated/floor/airless/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "bi" = (
 /obj/decal/cleanable/dirt,
@@ -487,7 +492,8 @@
 /area/noGenerate)
 "bk" = (
 /obj/rack,
-/turf/simulated/floor/airless/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "bl" = (
 /obj/decal/cleanable/dirt,
@@ -538,12 +544,14 @@
 "bp" = (
 /obj/item/extinguisher,
 /obj/machinery/light/incandescent/broken,
-/turf/simulated/floor/airless/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "bq" = (
 /obj/item/casing/rifle,
 /obj/decal/woodclutter,
-/turf/simulated/floor/airless/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "br" = (
 /obj/decal/cleanable/dirt,
@@ -576,7 +584,8 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/item/mousetrap/armed,
-/turf/simulated/floor/airless/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "bu" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -589,7 +598,8 @@
 /turf/simulated/floor/airless,
 /area/noGenerate)
 "bw" = (
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "bx" = (
 /obj/decal/fakeobjects{
@@ -632,7 +642,8 @@
 	icon_state = "hvent";
 	name = "air vent"
 	},
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "bC" = (
 /obj/decal/cleanable/dirt,
@@ -698,7 +709,8 @@
 /area/noGenerate)
 "bJ" = (
 /obj/decal/fakeobjects/tapedeck,
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "bL" = (
 /obj/lattice,
@@ -716,7 +728,8 @@
 	},
 /mob/living/critter/small_animal/boogiebot,
 /obj/machinery/light/incandescent/broken,
-/turf/simulated/floor/airless/damaged3,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "bN" = (
 /obj/decal/poster/wallsign/space,
@@ -751,7 +764,8 @@
 	},
 /obj/item/caution,
 /obj/machinery/light/incandescent/broken,
-/turf/simulated/floor/airless/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "bU" = (
 /obj/decal/cleanable/dirt,
@@ -840,7 +854,8 @@
 "cd" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/paper,
-/turf/simulated/floor/airless/damaged1,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "ce" = (
 /obj/decal/cleanable/dirt,

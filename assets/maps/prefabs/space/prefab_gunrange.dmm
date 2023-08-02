@@ -407,9 +407,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/prefab/shooting_range)
-"zM" = (
-/turf/simulated/floor/damaged5,
-/area/prefab/shooting_range)
 "Ar" = (
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
@@ -472,7 +469,8 @@
 /turf/simulated/floor/wood/three,
 /area/prefab/shooting_range)
 "FZ" = (
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/prefab/shooting_range)
 "Hs" = (
 /obj/table/reinforced,
@@ -547,7 +545,8 @@
 	},
 /obj/storage/crate,
 /obj/item/storage/backpack/red,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/prefab/shooting_range)
 "OO" = (
 /obj/forcefield/energyshield/perma{
@@ -986,7 +985,7 @@ VY
 VY
 Xo
 Oz
-zM
+FZ
 KL
 Xo
 jn
