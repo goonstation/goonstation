@@ -1558,7 +1558,7 @@ var/obj/manta_speed_lever/mantaLever = null
 							M.open()
 							M.operating = -1
 							used = 1
-			else if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT || ROLE_TRAITOR || ROLE_SPY_THIEF || ROLE_NUKEOP || ROLE_NUKEOP_COMMANDER)) //Probably adjusting to only sleepers during map PR
+			else if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT)) //This is not being used for polaris, check if they are a sleeper.
 				user.visible_message("<span class='notice'>The [src] accepts the biometrics of the user and beeps, granting you access.</span>")
 				for (var/obj/machinery/door/airlock/pyro/reinforced/syndicate/M in by_type[/obj/machinery/door])
 					M.open()
