@@ -111,6 +111,7 @@
 /mob/living/carbon/human/preview
 	name = "character preview"
 	real_name = "character preview"
+	unobservable = TRUE
 
 /**
  * # Character Preview

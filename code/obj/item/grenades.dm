@@ -442,10 +442,10 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 				PJ.spread_projectile_type = src.custom_projectile_type
 				PJ.pellet_shot_volume = 75 / PJ.pellets_to_fire //anti-ear destruction
 			PJ.pellets_to_fire = src.pellets_to_fire
-			var/targetx = src.y - rand(-5,5)
-			var/targety = src.y - rand(-5,5)
-			var/turf/newtarget = locate(targetx, targety, src.z)
-			shoot_projectile_ST(src, PJ, newtarget)
+			var/targetx = T.y - rand(-5,5)
+			var/targety = T.y - rand(-5,5)
+			var/turf/newtarget = locate(targetx, targety, T.z)
+			shoot_projectile_ST(T, PJ, newtarget)
 			SPAWN(0.5 SECONDS)
 				qdel(O)
 				qdel(src)
@@ -563,10 +563,10 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			burst_circle.spread_projectile_type = src.custom_projectile_type
 			burst_circle.pellet_shot_volume = 75 / burst_circle.pellets_to_fire
 		burst_circle.pellets_to_fire = src.pellets_to_fire
-		var/targetx = src.y - rand(-5,5)
-		var/targety = src.y - rand(-5,5)
-		var/turf/newtarget = locate(targetx, targety, src.z)
-		shoot_projectile_ST(src, burst_circle, newtarget)
+		var/targetx = T.y - rand(-5,5)
+		var/targety = T.y - rand(-5,5)
+		var/turf/newtarget = locate(targetx, targety, T.z)
+		shoot_projectile_ST(T, burst_circle, newtarget)
 		SPAWN(0.5 SECONDS)
 			qdel(src)
 
@@ -829,7 +829,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 ////////////////////////// Gimmick bombs /////////////////////////////////
 
-/obj/item/gimmickbomb/
+/obj/item/gimmickbomb
 	name = "Don't spawn this directly!"
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = ""
@@ -1487,6 +1487,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	icon_state = "Pipe_Frame"
 	burn_possible = 0
 	material_amt = 0.3
+	HELP_MESSAGE_OVERRIDE("") // so there's the verb and stuff, actual message provided below
 	var/state = 1
 	var/strength = 5
 	var/list/item_mods = new/list() //stuff something into one or both of the pipes to change the finished product
@@ -1539,7 +1540,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			desc = "Two small pipes joined together. The pipes are empty."
 
 			if (material)
-				name = "hollow [src.material.name] pipe frame"
+				name = "hollow [src.material.getName()] pipe frame"
 			else
 				name = "hollow pipe frame"
 			src.flags |= NOSPLASH
@@ -1551,12 +1552,12 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			icon_state = "Pipeshot"
 			desc = "Four open pipe shells. They're currently empty."
 
-		if (allowed_items.len && item_mods.len < 3 && src.state == 2)
+		if (allowed_items.len && length(item_mods) < 3 && src.state == 2)
 			var/ok = 0
 			for (var/A in allowed_items)
 				if (istype(W, text2path(A) )) ok = 1
 			if (ok)
-				boutput(user, "<span class='notice'>You stuff [W] into the [item_mods.len == 0 ? "first" : "second"] pipe.</span>")
+				boutput(user, "<span class='notice'>You stuff [W] into the [length(item_mods) == 0 ? "first" : "second"] pipe.</span>")
 				item_mods += W
 				user.u_equip(W)
 				W.set_loc(src)
@@ -1591,7 +1592,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 				desc = "Two small pipes joined together. The pipes are filled."
 
 				if (material)
-					name = "filled [src.material.name] pipe frame"
+					name = "filled [src.material.getName()] pipe frame"
 				else
 					name = "filled pipe frame"
 
@@ -1628,7 +1629,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			icon_state = "Pipe_Wired"
 
 			if (material)
-				name = "[src.material.name] pipe bomb frame"
+				name = "[src.material.getName()] pipe bomb frame"
 			else
 				name = "pipe bomb frame"
 
@@ -1760,9 +1761,9 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 		if (src.strength)
 			if (src.material)
 				var/strength_mult = 1
-				if (findtext(material.mat_id, "erebite"))
+				if (findtext(material.getID(), "erebite"))
 					strength_mult = 2
-				else if (findtext(material.mat_id, "plasmastone"))
+				else if (findtext(material.getID(), "plasmastone"))
 					strength_mult = 1.25
 				src.strength *= strength_mult
 
@@ -1864,7 +1865,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 						payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 						target.air.merge(payload)
 
-			if (throw_objs.len && throw_objs.len > 0)
+			if (throw_objs.len && length(throw_objs) > 0)
 				var/turf/T = get_turf(src.loc)
 				var/count = 20
 				var/obj/spawn_item

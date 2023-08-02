@@ -8,6 +8,9 @@
 #elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
 #include "blank_underwater.dm"
 
+#elif defined(RANDOM_ROOM_RUNTIME_CHECKING)
+#include "blank.dm"
+
 // special modes
 #elif defined(MAP_OVERRIDE_CONSTRUCTION)
 #include "construction.dm"
@@ -98,4 +101,8 @@
 //Entry below is the "default" map
 #else
 #include "standard.dm"
+#endif
+
+#if ENABLE_ARTEMIS && !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
+#include "..\artemis\planets.dmm"
 #endif

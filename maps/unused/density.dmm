@@ -235,9 +235,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aC" = (
-/obj/landmark/start{
-	name = "Security Officer"
-	},
+/obj/landmark/start/job/security_officer,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aD" = (
@@ -385,7 +383,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Cell 1"
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aT" = (
@@ -400,7 +398,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Cell 2"
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aV" = (
@@ -484,9 +482,7 @@
 	dir = 4;
 	icon_state = "office_chair_red"
 	},
-/obj/landmark/start{
-	name = "Security Officer"
-	},
+/obj/landmark/start/job/security_officer,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bg" = (
@@ -621,7 +617,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/access_spawn/hos,
+/obj/mapping_helper/access/hos,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "bs" = (
@@ -670,7 +666,7 @@
 /obj/machinery/door/airlock/pyro/security{
 	req_access = null
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "by" = (
@@ -680,7 +676,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Security Lockers"
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bA" = (
@@ -779,7 +775,7 @@
 	name = "Morgue";
 	req_access = null
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bJ" = (
@@ -1046,8 +1042,8 @@
 	name = "Morgue";
 	req_access = null
 	},
-/obj/access_spawn/security,
-/obj/access_spawn/chapel_office,
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/security/main)
 "cu" = (
@@ -1115,7 +1111,7 @@
 	dir = 4;
 	name = "CMDS - Security Block"
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "cG" = (
@@ -1241,9 +1237,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/landmark/start{
-	name = "Quartermaster"
-	},
+/obj/landmark/start/job/quartermaster,
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -1265,10 +1259,10 @@
 	req_access = null;
 	req_access_txt = "0"
 	},
-/obj/access_spawn/engineering,
-/obj/access_spawn/engineering_mechanic,
-/obj/access_spawn/mining,
-/obj/access_spawn/cargo,
+/obj/mapping_helper/access/engineering,
+/obj/mapping_helper/access/engineering_mechanic,
+/obj/mapping_helper/access/mining,
+/obj/mapping_helper/access/cargo,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "cV" = (
@@ -1339,9 +1333,7 @@
 /area/station/crew_quarters/garden)
 "dd" = (
 /obj/stool,
-/obj/landmark/start{
-	name = "Detective"
-	},
+/obj/landmark/start/job/detective,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "de" = (
@@ -1355,10 +1347,10 @@
 	req_access = null;
 	req_access_txt = "0"
 	},
-/obj/access_spawn/engineering,
-/obj/access_spawn/cargo,
-/obj/access_spawn/engineering_mechanic,
-/obj/access_spawn/mining,
+/obj/mapping_helper/access/engineering,
+/obj/mapping_helper/access/cargo,
+/obj/mapping_helper/access/engineering_mechanic,
+/obj/mapping_helper/access/mining,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "dg" = (
@@ -1482,9 +1474,9 @@
 	req_access = null;
 	req_access_txt = "0"
 	},
-/obj/access_spawn/engineering,
-/obj/access_spawn/engineering_mechanic,
-/obj/access_spawn/mining,
+/obj/mapping_helper/access/engineering,
+/obj/mapping_helper/access/engineering_mechanic,
+/obj/mapping_helper/access/mining,
 /turf/simulated/floor/engine,
 /area/station/engine/elect)
 "dt" = (
@@ -1754,9 +1746,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
 "ea" = (
-/obj/landmark/start{
-	name = "Clown"
-	},
+/obj/landmark/start/job/clown,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "eb" = (
@@ -1792,9 +1782,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "ef" = (
-/obj/landmark/start{
-	name = "Chef"
-	},
+/obj/landmark/start/job/chef,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "eg" = (
@@ -2229,9 +2217,7 @@
 /obj/decal/cleanable/dirt,
 /obj/stool/bed,
 /obj/item/paper/book/from_file/the_trial,
-/obj/landmark/start{
-	name = "Clown"
-	},
+/obj/landmark/start/job/clown,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
 "fc" = (
@@ -2451,9 +2437,7 @@
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "fF" = (
-/obj/landmark/start{
-	name = "Botanist"
-	},
+/obj/landmark/start/job/botanist,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "fG" = (
@@ -2493,9 +2477,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/landmark/start{
-	name = "Engineer"
-	},
+/obj/landmark/start/job/engineer,
 /obj/storage/secure/closet/engineering/engineer,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -2615,9 +2597,7 @@
 	dir = 4;
 	icon_state = "chair_comfy-blue"
 	},
-/obj/landmark/start{
-	name = "Research Director"
-	},
+/obj/landmark/start/job/research_director,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue2"
@@ -2698,7 +2678,7 @@
 	req_access = null;
 	req_access_txt = "0"
 	},
-/obj/access_spawn/engineering,
+/obj/mapping_helper/access/engineering,
 /turf/simulated/floor/plating,
 /area/station/engine/core)
 "gm" = (
@@ -2709,9 +2689,7 @@
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
 "go" = (
-/obj/landmark/start{
-	name = "Janitor"
-	},
+/obj/landmark/start/job/janitor,
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -2803,9 +2781,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark/start{
-	name = "Captain"
-	},
+/obj/landmark/start/job/captain,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue1"
@@ -2816,9 +2792,7 @@
 	dir = 4;
 	icon_state = "chair_comfy-blue"
 	},
-/obj/landmark/start{
-	name = "Medical Director"
-	},
+/obj/landmark/start/job/medical_director,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue2"
@@ -2830,9 +2804,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "gy" = (
-/obj/landmark/start{
-	name = "Bartender"
-	},
+/obj/landmark/start/job/bartender,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "gz" = (
@@ -3092,9 +3064,7 @@
 	dir = 4;
 	icon_state = "chair_comfy-blue"
 	},
-/obj/landmark/start{
-	name = "Chief Engineer"
-	},
+/obj/landmark/start/job/chief_engineer,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue2"
@@ -3165,9 +3135,7 @@
 	can_rupture = 0;
 	dir = 1
 	},
-/obj/landmark/start{
-	name = "Miner"
-	},
+/obj/landmark/start/job/miner,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "hg" = (
@@ -3200,9 +3168,7 @@
 	can_rupture = 0;
 	dir = 9
 	},
-/obj/landmark/start{
-	name = "Mechanic"
-	},
+/obj/landmark/start/job/engineer,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "hk" = (
@@ -3213,7 +3179,7 @@
 /obj/machinery/door/airlock/pyro{
 	name = "Janitor's Supply Closet"
 	},
-/obj/access_spawn/janitor,
+/obj/mapping_helper/access/janitor,
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
 "hl" = (
@@ -3307,7 +3273,7 @@
 	name = "Customs";
 	req_access = null
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -3350,7 +3316,7 @@
 	name = "Gas Storage";
 	req_access = null
 	},
-/obj/access_spawn/tox_storage,
+/obj/mapping_helper/access/tox_storage,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "hC" = (
@@ -3423,15 +3389,15 @@
 	name = "Bridge";
 	req_access = null
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "hI" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Outdoor Bar"
 	},
-/obj/access_spawn/bar,
-/obj/access_spawn/kitchen,
+/obj/mapping_helper/access/bar,
+/obj/mapping_helper/access/kitchen,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "hJ" = (
@@ -3647,9 +3613,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark/start{
-	name = "Head of Personnel"
-	},
+/obj/landmark/start/job/head_of_personnel,
 /obj/stool/chair/comfy/blue{
 	dir = 8;
 	icon_state = "chair_comfy-blue"
@@ -3748,9 +3712,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
 "ip" = (
@@ -3830,9 +3792,7 @@
 	icon_state = "manifold";
 	level = 2
 	},
-/obj/landmark/start{
-	name = "Scientist"
-	},
+/obj/landmark/start/job/scientist,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "iv" = (
@@ -4446,7 +4406,7 @@
 	name = "CMDS - Research Block";
 	req_access = null
 	},
-/obj/access_spawn/research,
+/obj/mapping_helper/access/research,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "jF" = (
@@ -4462,7 +4422,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/maintenance,
-/obj/access_spawn/maint,
+/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "jH" = (
@@ -4617,7 +4577,7 @@
 	name = "Toxins Lab";
 	req_access = null
 	},
-/obj/access_spawn/tox,
+/obj/mapping_helper/access/tox,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "jU" = (
@@ -4630,7 +4590,7 @@
 	name = "AI Chamber";
 	req_access = null
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/turret_protected/ai)
@@ -4653,9 +4613,7 @@
 /obj/item/storage/toilet{
 	dir = 4
 	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/machinery/light{
 	dir = 8;
 	icon_state = "tube1";
@@ -4674,9 +4632,7 @@
 	},
 /area/station/chapel/sanctuary)
 "jZ" = (
-/obj/landmark/start{
-	name = "Chaplain"
-	},
+/obj/landmark/start/job/chaplain,
 /obj/storage/closet/wardrobe/black/chaplain,
 /obj/machinery/light,
 /turf/simulated/floor/carpet{
@@ -4690,7 +4646,7 @@
 	name = "CMDS - Medical Sector";
 	req_access = null
 	},
-/obj/access_spawn/medical,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "kb" = (
@@ -4901,7 +4857,7 @@
 	name = "Research Sector";
 	req_access = null
 	},
-/obj/access_spawn/research,
+/obj/mapping_helper/access/research,
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "ku" = (
@@ -4989,7 +4945,7 @@
 	name = "Telescience";
 	req_access = null
 	},
-/obj/access_spawn/research,
+/obj/mapping_helper/access/research,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "kI" = (
@@ -5000,7 +4956,7 @@
 	name = "Chemistry";
 	req_access = null
 	},
-/obj/access_spawn/chemistry,
+/obj/mapping_helper/access/chemistry,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "kK" = (
@@ -5016,7 +4972,7 @@
 	name = "Artifact Research";
 	req_access = null
 	},
-/obj/access_spawn/research,
+/obj/mapping_helper/access/research,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "kM" = (
@@ -5051,9 +5007,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "kR" = (
-/obj/landmark/start{
-	name = "Geneticist"
-	},
+/obj/landmark/start/job/geneticist,
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "kT" = (
@@ -5286,7 +5240,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "ln" = (
@@ -5315,9 +5269,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "lq" = (
-/obj/landmark/start{
-	name = "Roboticist"
-	},
+/obj/landmark/start/job/roboticist,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -5327,9 +5279,7 @@
 /area/station/medical/research)
 "lr" = (
 /obj/machinery/recharge_station,
-/obj/landmark/start{
-	name = "Cyborg"
-	},
+/obj/landmark/start/job/cyborg,
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "ls" = (
@@ -5358,9 +5308,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark/start{
-	name = "Scientist"
-	},
+/obj/landmark/start/job/scientist,
 /obj/stool/chair/office{
 	dir = 8;
 	icon_state = "office_chair"
@@ -5381,9 +5329,7 @@
 	dir = 8;
 	icon_state = "office_chair"
 	},
-/obj/landmark/start{
-	name = "Scientist"
-	},
+/obj/landmark/start/job/scientist,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "lw" = (
@@ -5570,9 +5516,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark/start{
-	name = "Scientist"
-	},
+/obj/landmark/start/job/scientist,
 /obj/stool/chair/office{
 	dir = 8;
 	icon_state = "office_chair"
@@ -5582,7 +5526,7 @@
 "lK" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/impact_pad,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -5614,8 +5558,8 @@
 	name = "Medical Research";
 	req_access = null
 	},
-/obj/access_spawn/robotics,
-/obj/access_spawn/medlab,
+/obj/mapping_helper/access/robotics,
+/obj/mapping_helper/access/medlab,
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "lN" = (
@@ -5851,9 +5795,7 @@
 	icon_state = "manifold";
 	level = 2
 	},
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
+/obj/landmark/start/job/medical_doctor,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "mq" = (
@@ -5923,7 +5865,7 @@
 	name = "Operating Theater";
 	req_access = null
 	},
-/obj/access_spawn/medical,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "mx" = (
@@ -6018,7 +5960,7 @@
 	name = "Cryogenics";
 	req_access = null
 	},
-/obj/access_spawn/medical,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "mK" = (
@@ -6042,9 +5984,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "mL" = (
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
+/obj/landmark/start/job/medical_doctor,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -6130,7 +6070,7 @@
 	name = "Operating Theater";
 	req_access = null
 	},
-/obj/access_spawn/medical,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "mT" = (
@@ -6154,7 +6094,7 @@
 	name = "Pathology";
 	req_access = null
 	},
-/obj/access_spawn/medical,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "mV" = (
@@ -6215,8 +6155,6 @@
 /area/station/medical/medbay/surgery)
 "nd" = (
 /obj/table/auto,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/reagent_containers/syringe/haloperidol,
@@ -6325,7 +6263,7 @@
 	name = "Medbay";
 	req_access = null
 	},
-/obj/access_spawn/medical,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
 "np" = (
@@ -6497,9 +6435,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/station/crew_quarters/lounge)
 "nJ" = (
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -6548,12 +6484,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/landmark{
-	name = "AI-Sat"
-	},
-/obj/landmark/start{
-	name = "AI"
-	},
+/obj/landmark/start/job/AI,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -6618,22 +6549,6 @@
 /obj/item/sheet/steel/fullstack,
 /turf/simulated/floor/red,
 /area/station/storage/warehouse)
-"nW" = (
-/obj/grille/catwalk,
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/turf/simulated/floor/airless/plating/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/mining/magnet)
 "nX" = (
 /obj/item/rcd_ammo/big,
 /turf/simulated/floor/red,
@@ -6854,11 +6769,7 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
-	intact = 0
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	intact = 0
+	
 	},
 /area/mining/magnet)
 "ou" = (
@@ -6893,10 +6804,6 @@
 	dir = 6;
 	layer = 2
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 6;
-	layer = 2
-	},
 /area/mining/magnet)
 "ov" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -6907,19 +6814,12 @@
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
-/obj/machinery/magnet_chassis{
-	bound_width = 64;
-	dir = 1;
-	icon_state = "chassis";
-	pixel_x = 16
-	},
 /obj/machinery/mining_magnet{
 	bound_width = 64;
 	dir = 1;
 	icon_state = "magnet";
 	pixel_x = 16
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
 	layer = 2
@@ -6933,7 +6833,6 @@
 /obj/grille/catwalk{
 	dir = 6
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 2;
 	icon_state = "catwalk_cross";
@@ -6949,7 +6848,6 @@
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -6968,7 +6866,6 @@
 	dir = 4;
 	icon_state = "mmagnet"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -51992,7 +51889,7 @@ fp
 fp
 fp
 fp
-nW
+fp
 ou
 en
 ad

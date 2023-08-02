@@ -23,7 +23,7 @@
 
 // areas
 
-/area/radiostation/
+/area/radiostation
 	name = "Radio Station"
 	icon_state = "purple"
 
@@ -346,7 +346,7 @@
 		var/obj/O = new /obj/item/raw_material/shard/glass
 		O.set_loc(get_turf(M))
 		if (src.material)
-			O.setMaterial(copyMaterial(src.material))
+			O.setMaterial(src.material)
 		qdel(src)
 	else
 		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")

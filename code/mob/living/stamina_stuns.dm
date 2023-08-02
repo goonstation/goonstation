@@ -1,4 +1,4 @@
-/mob/
+/mob
 	var/list/stun_resist_mods = list()
 
 
@@ -168,7 +168,8 @@
 	return
 
 /mob/living/stamina_stun(stunmult = 1)
-	if(!src.use_stamina) return
+	if(!src.use_stamina || src.no_stamina_stuns)
+		return
 	if(src.stamina <= 0)
 		var/chance = STAMINA_SCALING_KNOCKOUT_BASE
 		chance += (src.stamina / STAMINA_NEG_CAP) * STAMINA_SCALING_KNOCKOUT_SCALER
@@ -195,6 +196,8 @@
 
 /mob/proc/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY, stack_stuns = 1)
 	.= 1
+	if (src.no_stamina_stuns)
+		return FALSE
 	if (stunned)
 		if(stack_stuns)
 			src.changeStatus("stunned", stunned)

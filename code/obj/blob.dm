@@ -169,8 +169,8 @@
 			overmind.blobs -= src
 		if (O)
 			overmind = O
-			setMaterial(copyMaterial(O.my_material))
-			color = material.color
+			setMaterial(O.my_material)
+			color = material.getColor()
 			original_color = color
 			O.blobs |= src
 			onAttach(O)
@@ -361,7 +361,7 @@
 	proc/create_chunk(var/turf/T)
 		var/obj/item/material_piece/wad/blob/BC = new
 		BC.set_loc(T)
-		BC.setMaterial(copyMaterial(material))
+		BC.setMaterial(src.material)
 		BC.name = "chunk of blob"
 
 	proc/take_damage(var/amount,var/damage_mult = 1,var/damtype = "brute",var/mob/user)
@@ -508,7 +508,7 @@
 		if (!istype(T) || !T.can_blob_spread_here(null, null, isadmin(overmind) || overmind.admin_override))
 			return
 
-		var/blob_type = /obj/blob/
+		var/blob_type = /obj/blob
 		if (ispath(src.spread_type))
 			blob_type = src.spread_type
 
@@ -1066,7 +1066,7 @@
 	if (!src)
 		return null
 
-	if (src.contents.len < 1)
+	if (length(src.contents) < 1)
 		return null
 
 	for (var/obj/O in src.contents)

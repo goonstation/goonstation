@@ -1,5 +1,5 @@
 // Commodities
-/datum/commodity/
+/datum/commodity
 	var/comname = "commodity" // Name of the item on the market
 	var/comtype = null // Type Path of the item on the market
 	var/price = 0 // Current selling price for this commodity
@@ -67,7 +67,7 @@
 
 /datum/commodity/fish
 	comname = "Fish"
-	comtype = /obj/item/fish
+	comtype = /obj/item/reagent_containers/food/fish
 	onmarket = 1
 	price = 50
 	baseprice = 50
@@ -372,7 +372,7 @@
 
 /datum/commodity/boogiebot
 	comname = "Boogiebot"
-	comtype = /obj/critter/boogiebot
+	comtype = /mob/living/critter/small_animal/boogiebot
 	desc = "The latest in boogie technology!"
 	onmarket = 0
 	price = 5000
@@ -2229,7 +2229,7 @@
 	upperfluc = 100
 	lowerfluc = -20
 
-/datum/commodity/sticker/
+/datum/commodity/sticker
 	onmarket = 0
 
 /datum/commodity/sticker/googly_eyes
@@ -2383,7 +2383,7 @@
 	lowerfluc = -200
 
 // FLOCKTRADER COMMODITIES AND PRICES
-/datum/commodity/flock/
+/datum/commodity/flock
 	desc = "Goods that the Flocktrader sells or wants."
 	onmarket = 0
 

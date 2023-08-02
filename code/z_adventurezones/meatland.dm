@@ -157,7 +157,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	anchored = ANCHORED
 	seekrange = 1
 	attack_range = 1
-	butcherable = 0
+	butcherable = BUTCHER_NOT_ALLOWED
 	density = 1
 	aggressive = 1
 	atkcarbon = 1
@@ -364,7 +364,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		if (!exploded_sentence || !length(exploded_sentence))
 			return 1
 
-		if (exploded_sentence.len > 1)
+		if (length(exploded_sentence) > 1)
 			if (prob(50))
 				exploded_sentence.Cut( rand(1, round(exploded_sentence.len / 2)))
 				exploded_sentence.len = max(5, exploded_sentence.len - rand(1,4))
@@ -432,27 +432,6 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		return
 
 #undef MEATHEAD_MAX_CUSTOM_UTTERANCES
-
-/obj/critter/zombie/meatmonaut
-	name = "Lost Cosmonaut"
-	desc = "Soviet presence near NT stations is rarely overt. For good reasons, as this fellow probably learned too late.  Seriously, where is his face? Grody."
-	icon = 'icons/misc/meatland.dmi'
-	icon_state = "sovmeat"
-	health = 26
-	brutevuln = 0.6
-	atcritter = 0
-	eats_brains = 0
-	generic = 0
-
-	ChaseAttack(mob/M)
-		if(!attacking)
-			src.CritterAttack(M)
-		return
-
-	CritterAttack(mob/M)
-		if (prob(20))
-			playsound(src.loc, 'sound/misc/meatmonaut1.ogg', 50, 0)
-		return ..()
 
 /obj/item/disk/data/fixed_disk/meatland
 
@@ -1084,7 +1063,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			if (signal?.data["authcode"] && !(signal.data["authcode"] in src.knownKeys))
 				knownKeys += signal.data["authcode"]
 
-				if (knownKeys.len >= 2 && !inPasswordRequestMode)
+				if (length(knownKeys) >= 2 && !inPasswordRequestMode)
 					inPasswordRequestMode = 1
 					src.print_text("&#x041F;&#x410;&#x0420;&#x41E;&#x41B;&#x42C;?")
 
@@ -1093,7 +1072,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			if (signal?.data["authcode"] && (signal.data["authcode"] in src.knownKeys))
 				knownKeys -= signal.data["authcode"]
 
-				if (knownKeys.len < 2)
+				if (length(knownKeys) < 2)
 					inPasswordRequestMode = 0
 
 /obj/item/peripheral/cheget

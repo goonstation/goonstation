@@ -202,6 +202,10 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 
 /mob/living/carbon/human/fatherjack
 	real_name = "Father Jack"
+#ifdef IN_MAP_EDITOR
+	icon = 'icons/mob/map_mob.dmi'
+	icon_state = "father_jack"
+#endif
 	gender = MALE
 	is_npc = TRUE
 
@@ -342,6 +346,10 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 /mob/living/carbon/human/biker
 	real_name = "Shitty Bill"
+#ifdef IN_MAP_EDITOR
+	icon = 'icons/mob/map_mob.dmi'
+	icon_state = "shitty_bill"
+#endif
 	gender = MALE
 	is_npc = TRUE
 	var/talk_prob = 5
@@ -542,7 +550,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			if(length(dead_mobs) && prob(60)) //SpyGuy for undefined var/len (what the heck)
 				var/mob/M = pick(dead_mobs)
 				say("[BILL_PICK("deadguy")] [M.name]...")
-			else if (alive_mobs.len > 0)
+			else if (length(alive_mobs) > 0)
 				if (murray && !greeted_murray)
 					greeted_murray = 1
 					say("[BILL_PICK("greetings")] Murray! How's it [BILL_PICK("verbs")]?")
@@ -804,6 +812,10 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 /mob/living/carbon/human/don_glab
 	real_name = "Donald \"Don\" Glabs"
+#ifdef IN_MAP_EDITOR
+	icon = 'icons/mob/map_mob.dmi'
+	icon_state = "don_glabs"
+#endif
 	gender = MALE
 	is_npc = TRUE
 
@@ -963,6 +975,10 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 // This is Big Yank, one of John Bill's old buds. Yank owes John a favor. He's a Juicer.
 /mob/living/carbon/human/big_yank
+#ifdef IN_MAP_EDITOR
+	icon = 'icons/mob/map_mob.dmi'
+	icon_state = "big_yank"
+#endif
 	gender = MALE
 	is_npc = TRUE
 	uses_mobai = 1
