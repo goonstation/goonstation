@@ -53162,14 +53162,6 @@
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/bubs)
-"dAM" = (
-/obj/admin_plaque{
-	name = "Sord's Office"
-	},
-/turf/unsimulated/wall/auto/lead/blue,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "dAN" = (
 /obj/item/swords/sord,
 /obj/item/ammo/bullets/abg{
@@ -53270,16 +53262,6 @@
 	on = 1
 	},
 /obj/decal/fakeobjects/skeleton,
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/centcom/offices/sord)
-"dBh" = (
-/obj/table/reinforced/industrial/auto,
-/obj/machinery/computer3/generic/personal,
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
 	explosion_protection = 1;
@@ -53500,61 +53482,6 @@
 	},
 /obj/death_button/hotdog{
 	pixel_x = 24
-	},
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/centcom/offices/sord)
-"dBt" = (
-/obj/machinery/light{
-	on = 1
-	},
-/obj/storage/crate/bin,
-/obj/item/paper{
-	icon_state = "paper";
-	info = "You think you can hide from us in your shitty little office on earth? Think again";
-	name = "fuck you, licorice";
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/obj/item/paper{
-	info = "It's a good diversion, keeping them from the truth. They can never learn the truth. The admin team didn't just hire someone who was*the writing ends abrubtly*";
-	name = "sOrD iS bAnNeD fRoM tHe BlOcKlAnD fOrUmS";
-	pixel_x = 6;
-	pixel_y = -5
-	},
-/obj/item/paper{
-	info = "As far as we can tell, the person named 'Sord' doesn't exist on any known database. Or, there's so many people named Sord that it's impossible to tell which is which. Is it a purposeful attempt to remain hidden? We'll never know. All we know is anyone who digs into it ends up disappearing.";
-	name = "who really IS sord?";
-	pixel_x = -5;
-	pixel_y = 5
-	},
-/obj/item/paper{
-	info = "Is this Papa John's?";
-	name = "To: Syndicate Battlecruiser Cai...Car...Cormgan?";
-	pixel_x = 6;
-	pixel_y = 12
-	},
-/obj/item/paper{
-	info = "Todo: 1. Make the Lodbrok less phallic. 2. Make the NT ship MORE phallic. 3. More phallic shaped asteroids.";
-	name = "pod-wars";
-	pixel_x = -5;
-	pixel_y = -7
-	},
-/obj/item/paper{
-	info = "Holy SHIT you ASSHOLE, Sord. Where did you get all that blood? Why would you fill your office with blood in the first place? Every time some idiot came to your office to file a complaint half the office block would flood. Why would you think that's a good idea? My mop is permanently stained red thanks to you, asshole.";
-	name = "letter from the janitor";
-	pixel_x = -8;
-	pixel_y = -3
-	},
-/obj/item/paper{
-	info = "thanks sord, best admin";
-	name = "letter to sov";
-	pixel_x = 4;
-	pixel_y = -3
 	},
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
@@ -58965,7 +58892,7 @@
 /obj/item/crowbar,
 /obj/storage/secure/closet/civilian/janitor{
 	locked = 0;
-	spawn_contents = list(/obj/item/clothing/shoes/galoshes, /obj/item/reagent_containers/glass/bottle/cleaner = 2, /obj/item/reagent_containers/glass/bottle/acetone/janitors = 1, /obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1, /obj/item/device/light/flashlight, /obj/item/caution = 4)
+	spawn_contents = list(/obj/item/clothing/shoes/galoshes,/obj/item/reagent_containers/glass/bottle/cleaner=2,/obj/item/reagent_containers/glass/bottle/acetone/janitors=1,/obj/item/reagent_containers/glass/bottle/ammonia/janitors=1,/obj/item/device/light/flashlight,/obj/item/caution=4)
 	},
 /obj/item/mop/old,
 /obj/item/sponge,
@@ -60084,7 +60011,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
 	desc = "Woah, this mug is beautiful.";
-	initial_reagents = list("matchatea" = 30, "honey_tea" = 20);
+	initial_reagents = list("matchatea"=30,"honey_tea"=20);
 	name = "mug with a printed illustration of an elf man on it";
 	pixel_x = -6;
 	pixel_y = -2
@@ -60882,6 +60809,17 @@
 	dir = 1
 	},
 /area/crypt/graveyard/swamp)
+"fSE" = (
+/obj/admin_plaque{
+	name = "Sord's Office";
+	pixel_x = 32
+	},
+/turf/unsimulated/floor/grey/side{
+	dir = 4
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "fSK" = (
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/owlery/owllock)
@@ -69135,6 +69073,62 @@
 	dir = 4
 	},
 /area/owlery/gangzone)
+"oyH" = (
+/obj/machinery/light{
+	on = 1
+	},
+/obj/storage/crate/bin,
+/obj/item/scrapweapons/weapons/spear/plasmaglass,
+/obj/item/paper{
+	icon_state = "paper";
+	info = "You think you can hide from us in your shitty little office on earth? Think again";
+	name = "fuck you, licorice";
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/paper{
+	info = "It's a good diversion, keeping them from the truth. They can never learn the truth. The admin team didn't just hire someone who was*the writing ends abrubtly*";
+	name = "sOrD iS bAnNeD fRoM tHe BlOcKlAnD fOrUmS";
+	pixel_x = 6;
+	pixel_y = -5
+	},
+/obj/item/paper{
+	info = "As far as we can tell, the person named 'Sord' doesn't exist on any known database. Or, there's so many people named Sord that it's impossible to tell which is which. Is it a purposeful attempt to remain hidden? We'll never know. All we know is anyone who digs into it ends up disappearing.";
+	name = "who really IS sord?";
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/paper{
+	info = "Is this Papa John's?";
+	name = "To: Syndicate Battlecruiser Cai...Car...Cormgan?";
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/obj/item/paper{
+	info = "Todo: 1. Make the Lodbrok less phallic. 2. Make the NT ship MORE phallic. 3. More phallic shaped asteroids.";
+	name = "pod-wars";
+	pixel_x = -5;
+	pixel_y = -7
+	},
+/obj/item/paper{
+	info = "Holy SHIT you ASSHOLE, Sord. Where did you get all that blood? Why would you fill your office with blood in the first place? Every time some idiot came to your office to file a complaint half the office block would flood. Why would you think that's a good idea? My mop is permanently stained red thanks to you, asshole.";
+	name = "letter from the janitor";
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/obj/item/paper{
+	info = "thanks sord, best admin";
+	name = "letter to sov";
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
 "ozc" = (
 /obj/cable{
 	d2 = 8;
@@ -73678,7 +73672,7 @@
 "tyn" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/bottle/mead{
-	initial_reagents = list("milk" = 30);
+	initial_reagents = list("milk"=30);
 	name = "mood";
 	pixel_x = -4;
 	pixel_y = 12
@@ -75901,6 +75895,17 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"wfe" = (
+/obj/item/gun/energy/dazzler,
+/obj/table/reinforced/industrial/auto,
+/obj/machinery/computer3/generic/personal,
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
 "wfm" = (
 /obj/shrub/dead,
 /turf/unsimulated/floor/black/side,
@@ -155550,8 +155555,8 @@ wel
 oaN
 wel
 wel
-dAM
-dBi
+wel
+oaN
 wel
 wel
 sJH
@@ -155852,9 +155857,9 @@ dvW
 dvW
 dvW
 wel
-dAN
-dBo
-dBt
+dvW
+dvW
+dvW
 wel
 dEH
 dEQ
@@ -156154,9 +156159,9 @@ dvW
 dvW
 dvW
 wel
-dBf
-dBo
-dBo
+dvW
+dvW
+dvW
 wel
 dEI
 dER
@@ -156456,9 +156461,9 @@ lRO
 dvW
 dvW
 wel
-dBg
-dBp
-dBo
+lRO
+dvW
+dvW
 wel
 dRD
 dEQ
@@ -156758,9 +156763,9 @@ dvW
 dvW
 dvW
 wel
-dBh
-dBq
-dBu
+dvW
+dvW
+dvW
 wel
 dEK
 dES
@@ -159178,7 +159183,7 @@ nYa
 rER
 dxn
 rER
-rER
+fSE
 rER
 xkM
 wel
@@ -159481,7 +159486,7 @@ iBW
 wel
 wel
 wel
-oaN
+dBi
 wel
 wel
 aES
@@ -159782,9 +159787,9 @@ dBk
 mAM
 dBn
 wel
-dvW
-dvW
-dvW
+dAN
+dBo
+oyH
 wel
 aES
 aES
@@ -160084,9 +160089,9 @@ dBl
 mAM
 dCl
 wel
-dvW
-dvW
-dvW
+dBf
+dBo
+dBo
 wel
 aES
 aES
@@ -160386,9 +160391,9 @@ dBm
 mAM
 pmV
 wel
-lRO
-dvW
-dvW
+dBg
+dBp
+dBo
 wel
 aES
 aES
@@ -160688,9 +160693,9 @@ siD
 dBS
 dCm
 wel
-dvW
-dvW
-dvW
+wfe
+dBq
+dBu
 wel
 aES
 aES
