@@ -689,7 +689,7 @@ a.latejoin-card:hover {
 					var/livingtraitor = 0
 
 					for(var/datum/mind/brain in ticker.minds)
-						if(brain.current && checkantag(brain.current)) // if a traitor
+						if(brain.current && brain.is_antagonist())
 							if (issilicon(brain.current) || isdead(brain.current) || brain.current.client == null) // if a silicon mob, dead or logged out, skip
 								continue
 
