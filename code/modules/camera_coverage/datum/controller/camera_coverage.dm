@@ -76,8 +76,6 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 			src.turf_update_queue |= turfs_to_update
 			return
 		T.aiImage?.loc = length(T.camera_coverage_emitters) ? null : T
-	if(!length(src.turf_update_queue))
-		src.turf_update_queue = null
 
 /**
  * Updates the camera coverage of a single emitter and returns the list of turfs that are requried to receive an update
@@ -140,8 +138,5 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 			src.emitter_update_queue |= emitter
 			continue
 		turfs_to_update |= src.update_emitter_internal(emitter)
-
-	if(!length(src.emitter_update_queue))
-		src.emitter_update_queue = null
 
 	src.update_turfs(turfs_to_update)
