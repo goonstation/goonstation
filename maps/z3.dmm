@@ -17663,7 +17663,8 @@
 	},
 /area/space)
 "dEe" = (
-/obj/storage/secure/crate/weapon/confiscated_items,
+/obj/decal/fakeobjects/cargopad,
+/obj/storage/secure/crate/morrigan,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/helldrone)
 "dHq" = (
@@ -25385,7 +25386,8 @@
 /turf/simulated/floor/orangeblack,
 /area/buddyfactory)
 "xKR" = (
-/obj/storage/secure/crate,
+/obj/storage/secure/crate/morrigan,
+/obj/decal/fakeobjects/cargopad,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/helldrone)
 "xOE" = (

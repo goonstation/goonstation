@@ -310,6 +310,12 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 	icon = 'icons/turf/walls_tempus-green.dmi'
 	icon_state = "0"
 
+/turf/simulated/wall/false_wall/darkshuttle
+	name = "Dark Shuttle Wall"
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall3"
+	can_be_auto = 0
+
 /obj/shifting_wall
 	name = "r wall"
 	desc = ""

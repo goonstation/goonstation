@@ -823,3 +823,143 @@
 	I don't think Sec will search you if you stick to maints, also carry a mop. We left it in Engineering, just say the keyword the A and he'll get you it.<br>
 	-J
 	"}
+
+// Lockers with restricted access
+
+/obj/storage/secure/closet/morrigan
+	_max_health = LOCKER_HEALTH_STRONG
+	_health = LOCKER_HEALTH_STRONG
+	icon_state = "command"
+	icon_closed = "command"
+	icon_opened = "secure_blue-open"
+	bolted = TRUE
+
+/obj/storage/secure/closet/morrigan/hos
+	name = "Head of Security's locker"
+	reinforced = TRUE
+	req_access = list(access_morrigan_HOS, access_morrigan_exit)
+	spawn_contents = list()
+
+/obj/storage/secure/closet/morrigan/ce
+	name = "Chief Engineer's Locker"
+	reinforced = TRUE
+	req_access = list(access_morrigan_CE ,access_morrigan_captain, access_morrigan_exit)
+	spawn_contents = list()
+
+/obj/storage/secure/closet/morrigan/rd
+	name = "Research Director's Locker"
+	reinforced = TRUE
+	req_access = list(access_morrigan_RD, access_morrigan_captain, access_morrigan_exit)
+	spawn_contents = list()
+
+/obj/storage/secure/closet/morrigan/mdir
+	name = "Medical Director's Locker"
+	reinforced = TRUE
+	req_access = list(access_morrigan_mdir, access_morrigan_captain, access_morrigan_exit)
+	spawn_contents = list()
+
+/obj/storage/secure/closet/morrigan/captain
+	name = "Captain's Locker"
+	reinforced = TRUE
+	req_access = list(access_morrigan_captain, access_morrigan_exit)
+	spawn_contents = list()
+
+/obj/storage/secure/closet/morrigan/hop
+	name = "Head of Personnel's Locker"
+	reinforced = TRUE
+	req_access = list(access_morrigan_bridge, access_morrigan_captain, access_morrigan_exit)
+	spawn_contents = list()
+
+/obj/storage/secure/closet/morrigan/security
+	name = "Security Locker"
+	reinforced = TRUE
+	req_access = list(access_morrigan_security, access_morrigan_HOS, access_morrigan_captain, access_morrigan_exit)
+	icon_state = "sec"
+	icon_closed = "sec"
+	icon_opened = "secure_red-open"
+	spawn_contents = list()
+
+/obj/storage/secure/closet/morrigan/brig
+	name = "Contraband Locker"
+	reinforced = TRUE
+	req_access = list(access_morrigan_security, access_morrigan_HOS, access_morrigan_captain, access_morrigan_exit)
+	icon_state = "safe_locker"
+	icon_closed = "safe_locker"
+	icon_opened = "safe_locker-open"
+	icon_greenlight = "safe-greenlight"
+	icon_redlight = "safe-redlight"
+	open_sound = 'sound/misc/safe_open.ogg'
+	close_sound = 'sound/misc/safe_close.ogg'
+	spawn_contents = list()
+
+/obj/storage/secure/closet/morrigan/engineer
+	name = "Engineering Locker"
+	reinforced = TRUE
+	req_access = list(access_morrigan_engineering, access_morrigan_CE, access_morrigan_captain, access_morrigan_exit)
+	icon_state = "eng"
+	icon_closed = "eng"
+	icon_opened = "secure_yellow-open"
+	spawn_contents = list()
+
+/obj/storage/secure/closet/morrigan/sci
+	name = "Scientist Locker"
+	reinforced = TRUE
+	req_access = list(access_morrigan_science, access_morrigan_RD, access_morrigan_captain, access_morrigan_exit)
+	icon_state = "science"
+	icon_closed = "science"
+	icon_opened = "secure_white-open"
+	spawn_contents = list()
+
+/obj/storage/secure/closet/morrigan/botany
+	name = "Botanist Locker"
+	reinforced = TRUE
+	req_access = list(access_morrigan_botany, access_morrigan_captain, access_morrigan_exit)
+	icon_state = "secure_green"
+	icon_closed = "secure_green"
+	icon_opened = "secure_green-open"
+	spawn_contents = list()
+
+/obj/storage/secure/closet/morrigan/medical
+	name = "Engineering Locker"
+	reinforced = TRUE
+	req_access = list(access_morrigan_medical, access_morrigan_mdir, access_morrigan_captain, access_morrigan_exit)
+	icon_state = "medical"
+	icon_closed = "medical"
+	icon_opened = "secure_white-open"
+	spawn_contents = list()
+
+/obj/storage/secure/closet/morrigan/patho
+	name = "Pathology Locker"
+	reinforced = TRUE
+	req_access = list(access_morrigan_medical, access_morrigan_mdir, access_morrigan_captain, access_morrigan_exit)
+	icon_state = "secure_oj"
+	icon_closed = "secure_oj"
+	icon_opened = "secure_oj-open"
+	spawn_contents = list()
+
+// Secure Crates
+
+/obj/storage/secure/crate/morrigan
+	desc = "A secure crate."
+	name = "Secure crate"
+	icon_state = "securecrate"
+	icon_opened = "securecrateopen"
+	icon_closed = "securecrate"
+	icon_redlight = "securecrater"
+	icon_greenlight = "securecrateg"
+	icon_sparks = "securecratesparks"
+	icon_welded = "welded-crate"
+	density = 1
+	always_display_locks = 1
+	throwforce = 50
+	can_flip_bust = 1
+
+/obj/storage/secure/crate/morrigan/gear
+	desc = "A secure gear crate."
+	name = "Gear crate"
+	icon_state = "secgearcrate"
+	density = 1
+	icon_opened = "secgearcrateopen"
+	icon_closed = "secgearcrate"
+	req_access = list(access_morrigan_security, access_morrigan_HOS, access_morrigan_captain, access_morrigan_exit)
+	spawn_contents = list()
