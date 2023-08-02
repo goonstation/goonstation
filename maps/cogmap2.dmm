@@ -66833,6 +66833,14 @@
 	dir = 6
 	},
 /area/research_outpost)
+"feu" = (
+/obj/securearea,
+/obj/machinery/handscanner{
+	pixel_x = -10;
+	pixel_y = 7
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost)
 "fht" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -69468,6 +69476,13 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/caution/westeast,
 /area/station/garden/owlery)
+"jRm" = (
+/obj/machinery/handscanner{
+	pixel_x = -9;
+	pixel_y = -6
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/power)
 "jRr" = (
 /obj/stool/chair,
 /turf/simulated/floor/carpet{
@@ -69618,6 +69633,12 @@
 	icon_state = "red2"
 	},
 /area/station/quartermaster/office)
+"kdF" = (
+/obj/machinery/handscanner{
+	pixel_y = -7
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/power)
 "kid" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10
@@ -156203,7 +156224,7 @@ aab
 aab
 dnq
 dnw
-dnq
+feu
 dnA
 dnS
 doa
@@ -156503,7 +156524,7 @@ aab
 dmJ
 dmJ
 dmJ
-dmJ
+kdF
 dnx
 dnA
 dnA
@@ -157107,7 +157128,7 @@ dmE
 dmK
 dmW
 dng
-dmJ
+jRm
 dny
 dnE
 dnM

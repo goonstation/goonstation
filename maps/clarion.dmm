@@ -21373,6 +21373,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/handscanner{
+	pixel_y = 25
+	},
 /turf/simulated/floor/red,
 /area/listeningpost)
 "dNY" = (
@@ -29634,6 +29637,12 @@
 	dir = 1
 	},
 /area/station/hydroponics/bay)
+"kNi" = (
+/obj/machinery/handscanner{
+	pixel_y = -26
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "kNr" = (
 /obj/landmark/gps_waypoint,
 /turf/unsimulated/floor/orangeblack/side{
@@ -35311,6 +35320,14 @@
 /obj/submachine/chef_sink,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"pGa" = (
+/obj/machinery/handscanner{
+	pixel_y = 25
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "pGx" = (
 /obj/machinery/traymachine/locking/tanning,
 /obj/machinery/computer/tanning{
@@ -102589,7 +102606,7 @@ aab
 bCl
 bFQ
 bFQ
-bFQ
+kNi
 bKK
 bLb
 bLj
@@ -103102,7 +103119,7 @@ bJY
 bJY
 bJY
 bJY
-bKH
+pGa
 bKK
 bKK
 bLd

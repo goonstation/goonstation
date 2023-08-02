@@ -5391,7 +5391,6 @@
 /obj/machinery/door/airlock/pyro/medical{
 	name = "Medical Bay"
 	},
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -6457,6 +6456,13 @@
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"cVx" = (
+/obj/machinery/handscanner{
+	pixel_x = -8;
+	pixel_y = 29
+	},
+/turf/space/fluid/acid,
+/area/space)
 "cVH" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -9953,6 +9959,10 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/light/incandescent/warm,
+/obj/machinery/handscanner{
+	pixel_x = 16;
+	pixel_y = -22
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -10618,7 +10628,6 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	name = "Power Systems"
 	},
-/obj/mapping_helper/access/syndie_shuttle,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -16735,7 +16744,6 @@
 /area/station/bridge/captain)
 "hpO" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate,
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "hqD" = (
@@ -34234,6 +34242,10 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/machinery/handscanner{
+	pixel_x = -23;
+	pixel_y = 29
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "oHj" = (
@@ -42553,7 +42565,6 @@
 /obj/machinery/door/airlock/pyro{
 	name = "Personnel"
 	},
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "sxE" = (
@@ -42974,7 +42985,6 @@
 /obj/machinery/door/airlock/pyro{
 	name = "Restroom"
 	},
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/blackwhite{
 	dir = 1
 	},
@@ -87172,7 +87182,7 @@ vkb
 qQg
 fhm
 gYn
-bzS
+cVx
 bzS
 bzS
 bzS

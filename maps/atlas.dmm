@@ -12641,6 +12641,10 @@
 /obj/machinery/light{
 	layer = 3
 	},
+/obj/machinery/handscanner{
+	pixel_y = -24;
+	pixel_x = -12
+	},
 /turf/simulated/floor/redblack,
 /area/listeningpost)
 "aOQ" = (
@@ -16667,6 +16671,12 @@
 	dir = 1
 	},
 /area/station/bridge/customs)
+"cCh" = (
+/obj/machinery/handscanner{
+	pixel_y = 39
+	},
+/turf/space,
+/area/space)
 "cOr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17668,6 +17678,12 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
+"jON" = (
+/obj/machinery/handscanner{
+	pixel_y = -33
+	},
+/turf/space,
+/area/space)
 "jQl" = (
 /obj/cable{
 	d1 = 1;
@@ -19510,6 +19526,13 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
+"vah" = (
+/obj/machinery/handscanner{
+	pixel_y = 26;
+	pixel_x = 32
+	},
+/turf/simulated/floor/red,
+/area/listeningpost)
 "vhR" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -95781,7 +95804,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+jON
 agK
 aMX
 aNf
@@ -96087,7 +96110,7 @@ aaa
 aMR
 aMY
 aMR
-aMY
+vah
 aUH
 aNe
 aNX
@@ -96401,7 +96424,7 @@ aOP
 aNe
 aMX
 aXU
-aaa
+cCh
 aaa
 aaa
 aaa

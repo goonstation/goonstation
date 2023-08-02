@@ -14044,6 +14044,9 @@
 /turf/simulated/floor/stairs/wide/middle,
 /area/listeningpost)
 "aSn" = (
+/obj/machinery/handscanner{
+	pixel_y = 25
+	},
 /turf/simulated/floor/stairs/wide/other,
 /area/listeningpost)
 "aSo" = (
@@ -34666,6 +34669,12 @@
 	dir = 4
 	},
 /area/station/hydroponics/bay)
+"cpU" = (
+/obj/machinery/handscanner{
+	pixel_y = 25
+	},
+/turf/space/fluid,
+/area/space)
 "cqk" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -42175,6 +42184,12 @@
 	},
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
+"pbB" = (
+/obj/machinery/handscanner{
+	pixel_y = -23
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "pbD" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
@@ -54673,7 +54688,7 @@ aOU
 aOW
 aOU
 aOU
-aOU
+pbB
 aPm
 aah
 aQM
@@ -55584,7 +55599,7 @@ aPm
 aPm
 aPm
 aPm
-aqn
+cpU
 aqn
 aqn
 aqn

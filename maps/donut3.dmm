@@ -34774,6 +34774,12 @@
 	dir = 1
 	},
 /area/station/engine/engineering)
+"kEk" = (
+/obj/machinery/handscanner{
+	pixel_y = -24
+	},
+/turf/simulated/floor/airless/plating/jen,
+/area/space)
 "kEn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39752,7 +39758,6 @@
 "mcd" = (
 /obj/machinery/door/airlock/pyro,
 /obj/decal/mule/dropoff,
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/sanitary,
 /area/listeningpost)
 "mcE" = (
@@ -47195,6 +47200,12 @@
 /obj/machinery/photocopier,
 /turf/simulated/floor/wood/six,
 /area/station/library)
+"ouZ" = (
+/obj/machinery/handscanner{
+	pixel_x = -22
+	},
+/turf/simulated/floor/red,
+/area/listeningpost)
 "ovm" = (
 /turf/simulated/floor/escape{
 	dir = 8
@@ -59633,6 +59644,9 @@
 	dir = 4;
 	status = 2
 	},
+/obj/machinery/handscanner{
+	pixel_x = -22
+	},
 /turf/simulated/floor/plating/jen,
 /area/listeningpost)
 "siO" = (
@@ -60233,7 +60247,6 @@
 	name = "Listening Post"
 	},
 /obj/decal/mule/dropoff,
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "ssO" = (
@@ -74468,7 +74481,6 @@
 	icon_state = "4-8"
 	},
 /obj/decal/mule/dropoff,
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "wLK" = (
@@ -159626,7 +159638,7 @@ fJu
 csA
 csA
 fJu
-xzQ
+kEk
 iOW
 iOW
 iOW
@@ -159932,7 +159944,7 @@ xzQ
 nKd
 siC
 kzv
-utC
+ouZ
 utC
 utC
 tFB

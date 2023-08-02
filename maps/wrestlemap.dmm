@@ -4753,6 +4753,15 @@
 	dir = 5
 	},
 /area/research_outpost/protest)
+"bZC" = (
+/obj/machinery/light/emergency{
+	dir = 4
+	},
+/obj/machinery/handscanner{
+	pixel_y = -23
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "bZT" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
@@ -17510,6 +17519,12 @@
 	},
 /turf/simulated/floor/caution,
 /area/station/engine/engineering)
+"hxJ" = (
+/obj/machinery/handscanner{
+	pixel_x = -20
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "hxN" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -41625,6 +41640,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/handscanner{
+	pixel_y = -23
+	},
 /turf/simulated/floor/redblack,
 /area/listeningpost)
 "rLx" = (
@@ -62067,7 +62085,7 @@ xxT
 tEt
 tpS
 rQD
-tEt
+bZC
 trk
 jGe
 jGe
@@ -62968,7 +62986,7 @@ gGo
 jgF
 xxT
 lTU
-nnW
+hxJ
 xxT
 pVt
 rdH

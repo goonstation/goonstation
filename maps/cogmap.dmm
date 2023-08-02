@@ -40785,6 +40785,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/handscanner{
+	pixel_y = 24
+	},
 /turf/simulated/floor/red,
 /area/listeningpost)
 "czJ" = (
@@ -46529,6 +46532,14 @@
 	dir = 4
 	},
 /area/station/medical/medbay)
+"gEX" = (
+/obj/machinery/handscanner{
+	pixel_y = 24
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "gFk" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -53918,6 +53929,13 @@
 	dir = 0
 	},
 /area/station/crew_quarters/info)
+"nET" = (
+/obj/machinery/handscanner{
+	pixel_x = 19;
+	pixel_y = 7
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "nFb" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -144721,7 +144739,7 @@ aap
 czz
 czz
 czN
-czV
+nET
 sAI
 cAj
 cAr
@@ -145323,7 +145341,7 @@ sAI
 sAI
 sAI
 sAI
-czH
+gEX
 sAI
 czW
 sAI
