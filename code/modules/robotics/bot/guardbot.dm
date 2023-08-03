@@ -103,9 +103,13 @@
 	var/idle = 0 //Sleeping on the job??
 	locked = 1 //Behavior Controls and Tool lock
 
+	/// The skin icon state that this robuddy should use.
 	var/skin_icon_state
+	/// The current emotion of this robuddy, corresponding to an icon state.
 	var/emotion = "neutral"
+	/// If set, the icon file that this robuddy's face icons should use.
 	var/face_icon_override = null
+	/// The current state of this robuddy's lights, corresponding to an icon state.
 	var/lights_icon_state = "on"
 
 	//var/current_movepath = 0 //If we need to switch movement halfway
