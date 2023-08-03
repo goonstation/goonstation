@@ -1,4 +1,9 @@
 
+(t)thu aug 03 23
+(u)Caio029
+(p)15178
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Pronouns will now be shown on the examine text of humans.
 (t)wed aug 02 23
 (u)LeahTheTech
 (p)15169
