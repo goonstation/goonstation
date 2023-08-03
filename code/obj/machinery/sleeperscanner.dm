@@ -2,6 +2,7 @@
 	name = "Hand Scanner"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "handscanner"
+	desc = "A device embedded into the wall, it has a image of a handprint on it."
 
 /obj/machinery/sleeperscanner/attackby(obj/item/W, mob/user as mob)
 	if(istype(W, /obj/item/device/detective_scanner))
