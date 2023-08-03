@@ -104,7 +104,7 @@
 			"EYES ON ME!"))
 			sleep(1 SECOND)
 			drama()
-			sleep(2 SECONDS)
+			sleep(3 SECONDS)
 			if (is_thechef_the_chef && thechef)
 				point(thechef)
 				speak(pick("COME HERE YOU!",
@@ -130,7 +130,7 @@
 						"WHAT'S THIS??",
 						"WHAT THE FUCK IS THIS?",
 						"TAKE A GOOD LOOK AT THAT!")
-			sleep(2 SECONDS)
+			sleep(3 SECONDS)
 			if (food_to_judge)
 				switch(how_shit)
 					if (FOOD_QUALITY_HORSESHIT)
@@ -171,7 +171,7 @@
 				var/area/area = get_area(thechef)
 				if (findtext(area.name, "Kitchen"))
 					is_in_kitchen = 1
-			sleep(2 SECONDS)
+			sleep(3 SECONDS)
 			if (is_in_kitchen)
 				speak(pick("SWITCH IT OFF!",
 				"SHUT IT DOWN!",
@@ -182,8 +182,8 @@
 				"DONT JUST STAND THERE LIKE A BIG FUCKING MUFFIN! DO SOMETHING!",
 				"ARE YOU GONNA GET YOUR SHIT TOGETHER, OR ARE YOU JUST GOING TO LET THIS KITCHEN GET FURTHER IN THE SHIT?",
 				"THIS SHIT NEEDS TO GET CLOSED DOWN, NOW!",
-				"CALL SECURITY HERE! THIS ENTIRE PLACE IS A HAZARD! A FUCKING CRIME SCENE!",
-				"COOKING IS DEAD AND YOU FUCKING KILLED IT IN THIS KITCHEN!"))
+				"CALL SECURITY! THIS ENTIRE PLACE IS A HAZARD! A FUCKING CRIME SCENE!",
+				"COOKING IS DEAD AND IT WAS KILLED IN THIS KITCHEN!"))
 			else if (how_shit == FOOD_QUALITY_HORSESHIT)
 				speak(pick("THAT WAS PATHETIC. THAT WAS ABSOLUTELY PATHETIC!",
 				"COME ON!",
@@ -229,7 +229,7 @@
 	else if (src.emagged)
 		raging = 1
 		icon_state = "chefbot-mad"
-		switch (rand(1,4))
+		switch (rand(1,3))
 			if (1)
 				var/mob/living/carbon/human/somefucker = locate() in view(7, src)
 				if (somefucker)
@@ -239,44 +239,72 @@
 					"STOP, STOP!",
 					"STOP EVERYTHING, LOOK AT THIS!"))
 					drama()
-					sleep(2 SECONDS)
+					sleep(3 SECONDS)
 					point(somefucker)
 					speak("WHO COOKED THIS?",
 					"DID YOU COOK THIS?",
 					"LOOK AT THIS SHIT!",
 					"20 YEARS OF COOKING AND I'VE NEVER SEEN SOMETHING SO SHIT IN MY ENTIRE CAREER!")
-					sleep(2 SECONDS)
+					sleep(3 SECONDS)
 					if (somefucker)
 						if (somefucker.getStatusDuration("burning") > 0)
 							speak("YOU DON'T LEAVE YOUR FUCKING FOOD UNATTENDED ON THE FUCKING STOVE. LOOK AT THIS. IT'S ON FIRE! IT'S GOING TO BE FUCKING BURNT!")
 						else if (somefucker.get_burn_damage() < 50)
 							speak("THIS [pick("HUMAN", "PRIMATE", "STEAK", "BURGER", "PORK", "MEAT")] IS SO FUCKING RAW IT'S STILL [pick("BEATING ASSISTANTS TO DEATH", "FARTING ON DEAD BODIES", "TRYING TO FEED ME FLOOR PILLS")]!")
 							src.navigate_to(somefucker, CHEFBOT_MOVE_SPEED / 2, 1, 15)
-							sleep(3 SECOND)
-							speak("TURN THE HEAT UP! I WANT TO HEAR IT SIZZLE!", "NO UNDERCOOKED MEAT IN MY KITCHEN!", "I HAVE TO DO THIS SHIT MYSELF! PATHETIC!")
+							sleep(4 SECOND)
+							speak("TURN THE HEAT UP! I WANT TO HEAR IT SIZZLE!", "NO UNDERCOOKED MEAT IN MY KITCHEN!", "I HAVE TO DO THIS SHIT MYSELF! PATHETIC!", "DO I HAVE TO DO EVERYTHING HERE?")
 							src.visible_message("<span class='alert'>[src] flares up in anger!</span>")
 							fireflash(src, 1, 1)
 						else
 							speak("THIS [pick("HUMAN", "PRIMATE", "STEAK", "BURGER", "PORK", "MEAT")] IS FUCKING [pick("OVERCOOKED", "BURNT")]!")
-			if (2 to 3)
+				else
+					var/mob/living/silicon/robot/someborg = locate() in view(7, src)
+					if (someborg)
+						speak(pick("WHAT IS THIS?", "OH MY GOD.", "HOLD IT RIGHT THERE!", "STOP, STOP!", "STOP EVERYTHING, LOOK AT THIS!"))
+						drama()
+						sleep(3 SECONDS)
+						point(someborg)
+						speak("WHO COOKED THIS?", "DID YOU COOK THIS?", "LOOK AT THIS SHIT!", "I'VE NEVER SEEN SOMETHING SO SHIT IN MY ENTIRE CAREER!")
+						sleep(3 SECONDS)
+						if (someborg)
+							speak("THIS ROBURGER IS SO FUCKING RAW [pick("IT'S STILL VIOLATING ITS LAWS", "IT HASN'T EVEN STARTED TO GO ROGUE")]!")
+			if (2)
 				drama()
-				sleep(2 SECONDS)
+				sleep(3 SECONDS)
 				var/msg = pick("WHY DID THE CHICKEN CROSS THE ROAD? BECAUSE YOU DIDN'T FUCKING COOK IT.",
 				"THIS PORK IS SO RAW IT'S STILL SINGING HAKUNA MATATA!",
 				"THIS STEAK IS SO RAW OLD MCDONALD IS STILL TRYING TO MILK IT!",
 				"THIS FISH IS SO RAW IT'S STILL TRYING TO FIND NEMO!")
 				speak(msg)
-			if (4)
-				var/mob/living/silicon/robot/someborg = locate() in view(7, src)
-				if (someborg)
-					speak(pick("WHAT IS THIS?", "OH MY GOD.", "HOLD IT RIGHT THERE!", "STOP, STOP!", "STOP EVERYTHING, LOOK AT THIS!"))
+			if (3)
+				var/obj/item/stuff_to_fling = null
+				for (var/obj/item/stuff in range(4, src))
+					if (istype(stuff, /obj/item/kitchen/utensil))
+						stuff_to_fling = stuff
+						break
+					if (istype(stuff, /obj/item/plate))
+						stuff_to_fling = stuff
+						break
+				if (stuff_to_fling)
+					speak(pick("I'M DONE! I'M SO DONE!",
+					"THIS PLACE IS A GODDAMN DISGRACE.",
+					"IT'S A MESS! A PIG PEN! A FUCKING LANDFILL!",
+					"I'VE NEVER SEEN A RESTAURANT SO POORLY RUN!",
+					"STOP! STOP RIGHT NOW! THIS PLACE IS FINISHED!"))
 					drama()
-					sleep(2 SECONDS)
-					point(someborg)
-					speak("WHO COOKED THIS?", "DID YOU COOK THIS?", "LOOK AT THIS SHIT!", "I'VE NEVER SEEN SOMETHING SO SHIT IN MY ENTIRE CAREER!")
-					sleep(2 SECONDS)
-					if (someborg)
-						speak("THIS ROBURGER IS SO FUCKING RAW [pick("IT'S STILL VIOLATING ITS LAWS", "IT HASN'T EVEN STARTED TO GO ROGUE")]!")
+					sleep (3 SECONDS)
+					if (stuff_to_fling)
+						src.navigate_to(stuff_to_fling, CHEFBOT_MOVE_SPEED / 2, 1, 15)
+						speak(pick("I CAN'T JUST STAND THERE AND WATCH THIS ALL GO TO SHIT!",
+						"WE'RE UP TO HERE IN THE SHIT AND YOU'RE NOT DOING ANYTHING ABOUT IT!",
+						"LOOK AT THIS MESS! LOOK AT IT!",
+						"HAVE YOU NEVER DRESSED A TABLE BEFORE?!",
+						"DIRTY DISHES! DIRTY UTENSILS! WERE YOU RAISED IN A BARN YOU DONKEY?"))
+						sleep (3 SECONDS)
+						if (stuff_to_fling && stuff_to_fling in range(1, src))
+							ThrowRandom(stuff_to_fling, 4, 1)
+							src.visible_message("<span class='alert'>[src] smacks at [stuff_to_fling], sending it flying.</span>")
 		raging = 0
 		icon_state = "chefbot-idle"
 #undef FOOD_QUALITY_HORSESHIT
