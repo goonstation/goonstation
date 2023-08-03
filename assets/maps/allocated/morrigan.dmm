@@ -4696,11 +4696,11 @@
 "fav" = (
 /obj/decal/poster/wallsign/stencil/left/m{
 	pixel_x = 12;
-	color = FF0000
+	color = "#FF0000"
 	},
 /obj/decal/poster/wallsign/stencil/right/o{
 	pixel_x = 28;
-	color = FF0000
+	color = "#FF0000"
 	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/hallway)
@@ -7069,6 +7069,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
+/obj/machinery/conveyor_switch,
 /turf/unsimulated/floor/redwhite{
 	dir = 1
 	},
@@ -8407,11 +8408,11 @@
 "iTp" = (
 /obj/decal/poster/wallsign/stencil/left/a{
 	pixel_x = 8;
-	color = FF0000
+	color = "#FF0000"
 	},
 /obj/decal/poster/wallsign/stencil/right/n{
 	pixel_x = 23;
-	color = FF0000
+	color = "#FF0000"
 	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/hallway)
@@ -21266,11 +21267,11 @@
 "xjU" = (
 /obj/decal/poster/wallsign/stencil/left/i{
 	pixel_x = 7;
-	color = FF0000
+	color = "#FF0000"
 	},
 /obj/decal/poster/wallsign/stencil/right/g{
 	pixel_x = 22;
-	color = FF0000
+	color = "#FF0000"
 	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/hallway)
@@ -21550,11 +21551,11 @@
 "xzj" = (
 /obj/decal/poster/wallsign/stencil/left/r{
 	pixel_x = 11;
-	color = FF0000
+	color = "#FF0000"
 	},
 /obj/decal/poster/wallsign/stencil/right/r{
 	pixel_x = 27;
-	color = FF0000
+	color = "#FF0000"
 	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/hallway)
@@ -21800,6 +21801,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
+/obj/machinery/conveyor_switch,
 /turf/unsimulated/floor/redwhite,
 /area/morrigan/routing/transport)
 "xMA" = (

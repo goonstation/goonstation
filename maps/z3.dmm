@@ -21608,19 +21608,6 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/buddyfactory)
-"ocW" = (
-/obj/machinery/door_control{
-	desc = "What does this even do?";
-	id = "mars_vault_entrance";
-	layer = 3;
-	name = "button";
-	pixel_x = 22
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "odf" = (
 /obj/lattice{
 	dir = 4;
@@ -41249,7 +41236,7 @@ aaa
 aaa
 aaa
 bgu
-ocW
+aZn
 apw
 bgt
 pFq
