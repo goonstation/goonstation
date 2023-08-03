@@ -63998,7 +63998,7 @@
 /area/research_outpost)
 "feu" = (
 /obj/securearea,
-/obj/machinery/handscanner{
+/obj/machinery/sleeperscanner{
 	pixel_x = -10;
 	pixel_y = 7
 	},
@@ -67174,7 +67174,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/garden/owlery)
 "jRm" = (
-/obj/machinery/handscanner{
+/obj/machinery/sleeperscanner{
 	pixel_x = -9;
 	pixel_y = -6
 	},
@@ -67407,7 +67407,7 @@
 	},
 /area/station/quartermaster/office)
 "kdF" = (
-/obj/machinery/handscanner{
+/obj/machinery/sleeperscanner{
 	pixel_y = -7
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
