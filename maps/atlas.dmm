@@ -12634,7 +12634,7 @@
 /obj/machinery/light{
 	layer = 3
 	},
-/obj/machinery/handscanner{
+/obj/machinery/sleeperscanner{
 	pixel_y = -24;
 	pixel_x = -12
 	},
@@ -16645,7 +16645,7 @@
 	},
 /area/station/bridge/customs)
 "cCh" = (
-/obj/machinery/handscanner{
+/obj/machinery/sleeperscanner{
 	pixel_y = 39
 	},
 /turf/space,
@@ -17652,7 +17652,7 @@
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "jON" = (
-/obj/machinery/handscanner{
+/obj/machinery/sleeperscanner{
 	pixel_y = -33
 	},
 /turf/space,
@@ -19538,7 +19538,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
 "vah" = (
-/obj/machinery/handscanner{
+/obj/machinery/sleeperscanner{
 	pixel_y = 26;
 	pixel_x = 32
 	},
