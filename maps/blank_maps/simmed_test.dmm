@@ -5,6 +5,12 @@
 "O" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/area_for_testing_things)
+"P" = (
+/obj/landmark/start/job/assistant,
+/obj/landmark/observer,
+/obj/landmark/start/latejoin,
+/turf/simulated/floor/plating,
+/area/area_for_testing_things)
 
 (1,1,1) = {"
 O
@@ -107,7 +113,7 @@ a
 a
 a
 a
-a
+P
 O
 "}
 (3,1,1) = {"
