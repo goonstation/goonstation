@@ -35,8 +35,8 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //////--- DEVELOPER MAPS FOR TESTING THINGS ---
 // these maps are in the blank_maps subfolder in the maps folder.
-//#define MAP_OVERRIDE_TESTING_UNSIMMED				// Only load in the 20x20 testing map. no z levels
-//#define MAP_OVERRIDE_TESTING_SIMMED					// above but with atmos sim.
+//#define MAP_OVERRIDE_TESTING_UNSIMMED					// Only load in the 20x20 testing map. no z levels
+//#define MAP_OVERRIDE_TESTING_SIMMED						// above but with atmos sim.
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID	// all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
@@ -183,6 +183,10 @@ o+`        `-` ``..-:yooos-..----------..`
 #define I_AM_HACKERMAN
 #define CHECK_MORE_RUNTIMES
 #define QUICK_MOB_DELETION
+#endif
+
+#if defined(MAP_OVERRIDE_TESTING_UNSIMMED) || defined(MAP_OVERRIDE_TESTING_SIMMED)
+#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1
 #endif
 
 //----- Testmerge & Revision Information -----//
