@@ -17,12 +17,9 @@
 /obj/machinery/sleeperscanner/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
-	if (ishuman(user))
-		if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT))
-			user.visible_message("<span class='notice'>The [src] accepts the biometrics of the user and beeps, granting you access.</span>")
-			for (var/obj/machinery/door/airlock/pyro/reinforced/syndicate/M in by_type[/obj/machinery/door])
-				M.open()
-		else
-			boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
+	if (ishuman(user) && user.mind?.get_antagonist(ROLE_SLEEPER_AGENT))
+		user.visible_message("<span class='notice'>The [src] accepts the biometrics of the user and beeps, granting you access.</span>")
+		for (var/obj/machinery/door/airlock/pyro/reinforced/syndicate/M in by_type[/obj/machinery/door])
+			M.open()
 	else
 		boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
