@@ -963,3 +963,52 @@
 	icon_closed = "secgearcrate"
 	req_access = list(access_morrigan_security, access_morrigan_HOS, access_morrigan_captain, access_morrigan_exit)
 	spawn_contents = list()
+
+
+//hobo dialogue man !!!!!
+
+/obj/npc/trader/hobo
+	icon = 'icons/obj/trader.dmi'
+	icon_state = "hoboman"
+	picture = "generic.png"
+	name = "Hobo Bloke"
+	trader_area = "/area/morrigan/hobo"
+	angrynope = "Piss off mate."
+	whotext = "Don't care who you are, get me the good shit and get paid!"
+
+	New()
+		..()
+		/////////////////////////////////////////////////////////
+		//// sell list //////////////////////////////////////////
+		/////////////////////////////////////////////////////////
+		src.goods_sell += new /datum/commodity/tools/welder(src)
+		/////////////////////////////////////////////////////////
+		//// buy list ///////////////////////////////////////////
+		/////////////////////////////////////////////////////////
+		src.goods_buy += new /datum/commodity/drugs/cyberpunk(src)
+		/////////////////////////////////////////////////////////
+
+		greeting= {"I haven't seen my wife in 30 years, only the drugs bring her back."}
+
+		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
+
+		sell_dialogue = "Remember, only the good shit or I'll shank the fuck out of you!"
+
+		buy_dialogue = "I KNOW you need these.. hehe."
+
+		successful_purchase_dialogue = list("You bloody fool.",
+			"Proper scammed.",
+			"I fuckin nicked it.")
+
+		failed_sale_dialogue = list("Nah mate not that.",
+			"Fuck no mate.")
+
+		successful_sale_dialogue = list("MARTHA HERE I COME!",
+			"Sweet sweet high...")
+
+		failed_purchase_dialogue = list("This is no charity, get the cash or bugger off.",
+			"You're making me sound rich.")
+
+		pickupdialogue = "Here's your shit. You know it wasn't worth that much yeah?"
+
+		pickupdialoguefailure = "Bloody delusional you are, you haven't picked fuck all!"
