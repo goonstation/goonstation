@@ -39,21 +39,21 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 // ~make procs 4 everything~
 /proc/surgeryCheck(var/mob/living/carbon/human/patient as mob, var/mob/surgeon as mob)
+	. = 1
 	if (!patient) // did we not get passed a patient?
 		return 0 // surgery is not okay
 	if (!ishuman(patient)) // is the patient not a human?
 		return 0 // surgery is not okay
-
+	if(patient == surgeon) //self-surgery hurts a lot more
+		. = 3.5
 	if (locate(/obj/machinery/optable, patient.loc)) // is the patient on an optable and lying?
-		if(patient.lying)
-			return 1 // surgery is okay
-		else if (patient == surgeon)
-			return 3.5 // surgery is okay but hurts more
+		if(patient.lying || patient == surgeon)
+			return . // surgery is okay
 
 	else if ((locate(/obj/stool/bed, patient.loc) || locate(/obj/table, patient.loc)) && (patient.getStatusDuration("paralysis") || patient.stat)) // is the patient on a table and paralyzed or dead?
-		return 1 // surgery is okay
+		return . // surgery is okay
 	else if (patient.reagents && (patient.reagents.get_reagent_amount("ethanol") > 40 || patient.reagents.get_reagent_amount("morphine") > 5) && (patient == surgeon || (locate(/obj/stool/bed, patient.loc) && patient.lying))) // is the patient really drunk and also the surgeon?
-		return 1 // surgery is okay
+		return . // surgery is okay
 
 	else // if all else fails?
 		return 0 // surgery is not okay
