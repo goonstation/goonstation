@@ -30929,6 +30929,9 @@
 	name = "VACUUM AREA";
 	pixel_y = -32
 	},
+/obj/machinery/sleeperscanner{
+	pixel_y = 25
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "cmv" = (
@@ -33306,6 +33309,14 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
+"dgW" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = -25
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "dha" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -39495,6 +39506,12 @@
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/interrogation)
+"hRP" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 25
+	},
+/turf/space,
+/area/space)
 "hRQ" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -139761,7 +139778,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+hRP
 aaa
 aaa
 aaa
@@ -141573,7 +141590,7 @@ ckU
 clL
 clT
 cme
-cme
+dgW
 cmw
 cmF
 cmJ

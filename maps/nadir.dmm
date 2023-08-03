@@ -4555,6 +4555,15 @@
 	icon_state = "3"
 	},
 /area/shuttle/arrival/station)
+"can" = (
+/obj/stool/chair/red{
+	dir = 4
+	},
+/obj/machinery/sleeperscanner{
+	pixel_x = -25
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "car" = (
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/northeast)
@@ -5391,7 +5400,6 @@
 /obj/machinery/door/airlock/pyro/medical{
 	name = "Medical Bay"
 	},
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -10618,7 +10626,6 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	name = "Power Systems"
 	},
-/obj/mapping_helper/access/syndie_shuttle,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -16735,7 +16742,6 @@
 /area/station/bridge/captain)
 "hpO" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate,
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "hqD" = (
@@ -39101,6 +39107,12 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"qUW" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = 25
+	},
+/turf/space/fluid/acid,
+/area/space)
 "qUY" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -41092,6 +41104,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/sleeperscanner{
+	pixel_y = 25
+	},
 /turf/simulated/floor/redblack,
 /area/listeningpost)
 "rSs" = (
@@ -42553,7 +42568,6 @@
 /obj/machinery/door/airlock/pyro{
 	name = "Personnel"
 	},
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "sxE" = (
@@ -42974,7 +42988,6 @@
 /obj/machinery/door/airlock/pyro{
 	name = "Restroom"
 	},
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/blackwhite{
 	dir = 1
 	},
@@ -86564,7 +86577,7 @@ riW
 xzc
 iOs
 oKQ
-nAH
+can
 oGR
 qxC
 oKQ
@@ -87172,7 +87185,7 @@ vkb
 qQg
 fhm
 gYn
-bzS
+qUW
 bzS
 bzS
 bzS

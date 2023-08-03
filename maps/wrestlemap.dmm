@@ -16008,6 +16008,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
+"gSa" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = 25
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "gSu" = (
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -35605,6 +35611,12 @@
 /area/station/crew_quarters/showers{
 	name = "Locker Room"
 	})
+"plW" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = -25
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "plZ" = (
 /obj/disposalpipe/trunk/mail/east,
 /obj/cable{
@@ -41618,6 +41630,9 @@
 "rLk" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/sleeperscanner{
+	pixel_x = 25
 	},
 /turf/simulated/floor/redblack,
 /area/listeningpost)
@@ -61756,7 +61771,7 @@ xxT
 lym
 myL
 xxT
-tpS
+gSa
 tpS
 tpS
 tpS
@@ -62962,7 +62977,7 @@ gGo
 jgF
 xxT
 lTU
-nnW
+plW
 xxT
 pVt
 rdH

@@ -5962,6 +5962,9 @@
 "bHz" = (
 /obj/stool/chair/red,
 /obj/machinery/bot/medbot/no_camera,
+/obj/machinery/sleeperscanner{
+	pixel_y = 25
+	},
 /turf/simulated/floor/grey/side,
 /area/listeningpost)
 "bHA" = (
@@ -14703,6 +14706,12 @@
 	dir = 8
 	},
 /area/spacehabitat/pool)
+"etz" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 25
+	},
+/turf/simulated/floor/airless/plating/jen,
+/area/space)
 "etG" = (
 /obj/disposalpipe/switch_junction/right/north{
 	mail_tag = "QM"
@@ -39752,7 +39761,6 @@
 "mcd" = (
 /obj/machinery/door/airlock/pyro,
 /obj/decal/mule/dropoff,
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/sanitary,
 /area/listeningpost)
 "mcE" = (
@@ -59633,6 +59641,9 @@
 	dir = 4;
 	status = 2
 	},
+/obj/machinery/sleeperscanner{
+	pixel_x = -25
+	},
 /turf/simulated/floor/plating/jen,
 /area/listeningpost)
 "siO" = (
@@ -60233,7 +60244,6 @@
 	name = "Listening Post"
 	},
 /obj/decal/mule/dropoff,
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "ssO" = (
@@ -74468,7 +74478,6 @@
 	icon_state = "4-8"
 	},
 /obj/decal/mule/dropoff,
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "wLK" = (
@@ -160229,7 +160238,7 @@ csA
 csA
 csA
 csA
-xzQ
+etz
 eML
 iOW
 iOW

@@ -12205,6 +12205,9 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/machinery/sleeperscanner{
+	pixel_y = 25
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -12633,6 +12636,9 @@
 /obj/item/tank/oxygen,
 /obj/machinery/light{
 	layer = 3
+	},
+/obj/machinery/sleeperscanner{
+	pixel_y = -25
 	},
 /turf/simulated/floor/redblack,
 /area/listeningpost)
@@ -19055,6 +19061,16 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"rAn" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/sleeperscanner{
+	pixel_y = 25
+	},
+/turf/space,
+/area/space)
 "rCf" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -19091,6 +19107,16 @@
 	icon_state = "fblue2"
 	},
 /area/station/bridge/captain)
+"rSS" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/sleeperscanner{
+	pixel_y = -25
+	},
+/turf/space,
+/area/space)
 "sck" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -19687,7 +19713,7 @@
 /area/station/hallway/primary/north)
 "wlm" = (
 /obj/displaycase{
-	displayed = new /obj/item/captaingun()
+	displayed = new/obj/item/captaingun()
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
@@ -95496,7 +95522,7 @@ aaa
 aaa
 aaa
 aaa
-anB
+rSS
 aNe
 aNn
 aNx
@@ -95508,7 +95534,7 @@ aNK
 aOL
 aNn
 aNe
-ayf
+rAn
 aaa
 aaa
 aaa

@@ -11,7 +11,7 @@
 		for (var/obj/machinery/door/airlock/pyro/reinforced/syndicate/M in by_type[/obj/machinery/door])
 			M.open
 	else
-		boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")	if (used == 0)
+		boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
 
 /obj/machinery/sleeperscanner/attack_hand(mob/user)
 	src.add_fingerprint(user)
@@ -22,7 +22,7 @@
 			user.visible_message("<span class='notice'>The [src] accepts the biometrics of the user and beeps, granting you access.</span>")
 			for (var/obj/machinery/door/airlock/pyro/reinforced/syndicate/M in by_type[/obj/machinery/door])
 				M.open
-			else
-				boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
+		else
+			boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
 	else
 		boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")

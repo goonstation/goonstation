@@ -14044,6 +14044,9 @@
 /turf/simulated/floor/stairs/wide/middle,
 /area/listeningpost)
 "aSn" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 25
+	},
 /turf/simulated/floor/stairs/wide/other,
 /area/listeningpost)
 "aSo" = (
@@ -34971,6 +34974,12 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"cJx" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = -25
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "cKm" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/engine,
@@ -43983,6 +43992,12 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
+"sta" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = 25
+	},
+/turf/space/fluid,
+/area/space)
 "svo" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
@@ -54673,7 +54688,7 @@ aOU
 aOW
 aOU
 aOU
-aOU
+cJx
 aPm
 aah
 aQM
@@ -55584,7 +55599,7 @@ aPm
 aPm
 aPm
 aPm
-aqn
+sta
 aqn
 aqn
 aqn

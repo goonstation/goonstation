@@ -30178,6 +30178,12 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
+"lvK" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = -25
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "lvS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -32113,7 +32119,7 @@
 	},
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new /obj/item/captaingun();
+	displayed = new/obj/item/captaingun();
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -36126,6 +36132,14 @@
 /area/station/hallway/secondary/entry{
 	name = "Entry Hallway"
 	})
+"qnG" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = 25
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "qor" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -38234,6 +38248,14 @@
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters P03"
 	})
+"rVb" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 25
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "rVy" = (
 /obj/grille/catwalk{
 	dir = 10
@@ -102497,7 +102519,7 @@ aab
 bCl
 bFQ
 bFQ
-bFQ
+lvK
 bKK
 bLb
 bLj
@@ -103010,7 +103032,7 @@ bJY
 bJY
 bJY
 bJY
-bKH
+qnG
 bKK
 bKK
 bLd
@@ -103783,7 +103805,7 @@ lXD
 iiM
 mAw
 bKP
-bKX
+rVb
 mIt
 bLn
 bKX

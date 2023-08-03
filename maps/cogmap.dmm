@@ -26493,6 +26493,14 @@
 "bEU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/south)
+"bEX" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 25
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "bFo" = (
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -42206,6 +42214,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/storage/primary)
+"cXC" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = 25
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "cYa" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -45132,6 +45148,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"frx" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 25
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "frQ" = (
 /obj/stool/bed,
 /obj/cable{
@@ -144721,7 +144743,7 @@ aap
 czz
 czz
 czN
-czV
+frx
 sAI
 cAj
 cAr
@@ -145323,7 +145345,7 @@ sAI
 sAI
 sAI
 sAI
-czH
+cXC
 sAI
 czW
 sAI
@@ -146231,7 +146253,7 @@ czt
 czB
 czJ
 czP
-czP
+bEX
 cAd
 cAm
 cAv

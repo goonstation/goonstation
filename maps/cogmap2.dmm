@@ -65119,6 +65119,12 @@
 	dir = 4
 	},
 /area/station/catwalk/south)
+"hel" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = -25
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "heQ" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -66421,6 +66427,14 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/checkpoint/customs)
+"iVA" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = 25
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "iYc" = (
 /obj/machinery/door/airlock/pyro/engineering,
 /obj/cable{
@@ -74961,6 +74975,14 @@
 	dir = 5
 	},
 /area/station/catwalk/south)
+"vTB" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 25
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "vUy" = (
 /obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
@@ -155429,7 +155451,7 @@ aab
 aaF
 aan
 aan
-aan
+hel
 dnA
 dnR
 dnZ
@@ -156032,7 +156054,7 @@ dmJ
 dmJ
 dmJ
 dmJ
-dnx
+iVA
 dnA
 dnA
 dnT
@@ -156940,7 +156962,7 @@ dnh
 dnr
 dnz
 dnF
-dnN
+vTB
 dnW
 dod
 dnN
