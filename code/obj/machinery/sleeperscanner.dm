@@ -9,7 +9,7 @@
 	if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT))
 		user.visible_message("<span class='notice'>The [src] accepts the biometrics of the user and beeps, granting you access.</span>")
 		for (var/obj/machinery/door/airlock/pyro/reinforced/syndicate/M in by_type[/obj/machinery/door])
-			M.open
+			M.open()
 	else
 		boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
 
@@ -21,7 +21,7 @@
 		if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT))
 			user.visible_message("<span class='notice'>The [src] accepts the biometrics of the user and beeps, granting you access.</span>")
 			for (var/obj/machinery/door/airlock/pyro/reinforced/syndicate/M in by_type[/obj/machinery/door])
-				M.open
+				M.open()
 		else
 			boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
 	else
