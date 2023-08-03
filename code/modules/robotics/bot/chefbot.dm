@@ -69,7 +69,7 @@
 			return
 		if (food_to_judge.quality > 1 && food_to_judge.quality < 5)
 			how_shit = FOOD_QUALITY_SHIT
-		else if (food_to_judge.quality > 5)
+		else if (food_to_judge.quality >= 5)
 			how_shit = FOOD_QUALITY_GOOD_SHIT
 		raging = 1
 		icon_state = "chefbot-mad"
@@ -364,6 +364,7 @@
 
 /obj/machinery/bot/chefbot/explode()
 	if(src.exploding) return
+	src.calledout = null
 	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
