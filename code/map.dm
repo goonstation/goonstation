@@ -17,7 +17,10 @@ var/global/list/mapNames = list(
 	"Event" =				list("id" = "EVENT",		"settings" = "destiny/clarion",	"playerPickable" = FALSE),
 	"1 pamgoC" =			list("id" = "PAMGOC",		"settings" = "pamgoc",			"playerPickable" = FALSE),
 	"Wrestlemap" =			list("id" = "WRESTLEMAP",	"settings" = "wrestlemap",		"playerPickable" = FALSE),
-
+	"blank" =				list("id" = "BLANK",		"settings" = "", 				"playerPickable" = FALSE),
+	"blank_underwater" =	list("id" = "BLANK_UNDERWATER", "settings" = "", 			"playerPickable" = FALSE),
+	"simmed_test" =			list("id" = "SIMMED_TEST",	"Settings" = "",				"playerPickable" = FALSE),
+	"unsimmed_test" =		list("id" = "UNSIMMED_TEST",	"Settings" = "",			"playerPickable" = FALSE),
 #ifdef RP_MODE
 	"Cogmap 1" =			list("id" = "COGMAP",		"settings" = "cogmap",			"playerPickable" = TRUE,	"MinPlayersAllowed" = 14),
 #else
@@ -43,11 +46,9 @@ var/global/list/mapNames = list(
 	//"Chiron" =			list("id" = "CHIRON",		"settings" = "chiron",			"playerPickable" = FALSE),
 	//"Density" = 			list("id" = "DENSITY",		"settings" = "density",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
 	"Ozymandias" =			list("id" = "OZYMANDIAS",	"settings" = "ozymandias",		"playerPickable" = FALSE,	"MinPlayersAllowed" = 40),
-	"Bellerophon Fleet" =	list("id" = "FLEET",		"settings" = "fleet",			"playerPickable" = FALSE),
+	"Bellerophon Fleet" =	list("id" = "FLEET",		"settings" = "fleet",			"playerPickable" = FALSE)
 	//"Icarus" =			list("id" = "ICARUS",		"settings" = "icarus",			"playerPickable" = FALSE),
 	//"Gehenna" =			list("id" = "GEHENNA",		"settings" = "gehenna",			"playerPickable" = FALSE),
-	"blank" =				list("id" = "BLANK",		"settings" = "", 				"playerPickable" = FALSE),
-	"blank_underwater" =	list("id" = "BLANK_UNDERWATER", "settings" = "", 			"playerPickable" = FALSE)
 )
 
 /obj/landmark/map
