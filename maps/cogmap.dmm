@@ -40785,7 +40785,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/handscanner{
+/obj/machinery/sleeperscanner{
 	pixel_y = 24
 	},
 /turf/simulated/floor/red,
@@ -46533,7 +46533,7 @@
 	},
 /area/station/medical/medbay)
 "gEX" = (
-/obj/machinery/handscanner{
+/obj/machinery/sleeperscanner{
 	pixel_y = 24
 	},
 /turf/simulated/floor/stairs{
@@ -53930,7 +53930,7 @@
 	},
 /area/station/crew_quarters/info)
 "nET" = (
-/obj/machinery/handscanner{
+/obj/machinery/sleeperscanner{
 	pixel_x = 19;
 	pixel_y = 7
 	},
