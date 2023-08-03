@@ -4,7 +4,6 @@
 	desc = "Who let this guy in the kitchen? Does he even know how to cook, or is he just there to criticize?"
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "chefbot-idle"
-	//layer = 5.0 //TODO LAYER
 	density = 0
 	anchored = UNANCHORED
 	on = TRUE
@@ -64,7 +63,9 @@
 				speak(pick("WHAT ARE YOU ALL STANDING AROUND FOR? BRING ME SOME FOOD!",
 				"ARE YOU GOING TO COOK OR ARE YOU GOING TO STAND THERE ALL DAY?",
 				"THIS KITCHEN IS SLOWER THAN A FUNERAL HOME! GET A MOVE ON!",
-				"IS ANY OF YOU GOING TO MAKE FOOD OR DO YOU JUST WAIT UNTIL WE ALL STARVE TO DEATH?"))
+				"IS ANY OF YOU GOING TO MAKE FOOD OR DO YOU JUST WAIT UNTIL WE ALL STARVE TO DEATH?",
+				"GET YOUR HANDS OUT OF YOUR POCKETS AND GET TO WORK! PEOPLE ARE HUNGRY!",
+				"COME ON, IT'S RUSH HOUR! MOVE, MOVE!"))
 			return
 		if (food_to_judge.quality > 1 && food_to_judge.quality < 5)
 			how_shit = FOOD_QUALITY_SHIT
@@ -101,7 +102,9 @@
 			"WHAT THE FUCK IS THIS?",
 			"STOP, CHEFS!",
 			"ATTENTION EVERYONE!",
-			"EYES ON ME!"))
+			"EYES ON ME!",
+			"HOLD UP RIGHT THERE!",
+			"ATTENTION PLEASE!"))
 			sleep(1 SECOND)
 			drama()
 			sleep(3 SECONDS)
@@ -112,7 +115,9 @@
 				"STOP WHAT YOU'RE DOING AND COME HERE RIGHT NOW!",
 				"WE NEED A CHAT! CHEF TO CHEF!",
 				"GET OVER HERE, CHEF! RIGHT NOW!",
-				"DROP EVERYTHING RIGHT NOW, YOU NEED TO TAKE A GOOD LOOK AT THIS!"))
+				"DROP EVERYTHING RIGHT NOW, YOU NEED TO TAKE A GOOD LOOK AT THIS!",
+				"CHEF MEETING, RIGHT NOW!",
+				"ARE YOU THE HEAD CHEF? GET OVER HERE!"))
 			else
 				switch (how_shit)
 					if (FOOD_QUALITY_HORSESHIT)
@@ -120,16 +125,19 @@
 						"WHO'S RESPONSIBLE FOR THIS?",
 						"WHO MADE THIS ATROCITY?",
 						"WHAT UNCARING GOD COULD HAVE ALLOWED THIS?!",
-						"ROTTING, STINKING HOT GARBAGE! I WANT NAMES!",
+						"ROTTING, STINKING HOT GARBAGE! WHO DID THIS!? I WANT NAMES!",
 						"HOW DARE YOU LEAVE THIS THING OUT FOR PEOPLE TO SEE?! SHAMEFUL!",
-						"CAN ANYONE TELL ME WHAT I'M EVEN LOOKING AT HERE?")
+						"CAN ANYONE EVEN TELL ME WHAT I'M EVEN LOOKING AT HERE?",
+						"WHAT IN THE GODDAMN SHIT IS THIS?!",
+						"WHO MADE THIS? THE FUCKING CLOWN?")
 					else
 						speak("WHO MADE THIS?",
 						"I WANT TO KNOW WHO MADE THIS!",
 						"WHAT AM I LOOKING AT?",
 						"WHAT'S THIS??",
 						"WHAT THE FUCK IS THIS?",
-						"TAKE A GOOD LOOK AT THAT!")
+						"TAKE A GOOD LOOK AT THAT!",
+						"DO YOU KNOW WHAT THIS IS?")
 			sleep(3 SECONDS)
 			if (food_to_judge)
 				switch(how_shit)
@@ -149,7 +157,9 @@
 						"WHY DID ANYONE ALLOW THIS TO HAPPEN?",
 						"I CAN'T EVEN BEGIN TO TELL YOU WHY THIS IS SHIT! I MEAN FUCKING LOOK AT IT!",
 						"DID YOU EVEN TRY WITH THIS?",
-						"YOU CALL THIS A DISH? THIS!?"))
+						"YOU CALL THIS A DISH? THIS!?",
+						"EVEN THE [pick("CLOWN", "CAPTAIN")] WOULDN'T WANT TO EAT THIS!",
+						"I'M IMPRESSED! IMPRESSED AT HOW SHIT THIS IS!"))
 					if (FOOD_QUALITY_GOOD_SHIT)
 						speak(pick("FINALLY! SOME GOOD FUCKING FOOD!",
 						"THAT LOOKS FUCKING DELICIOUS!",
@@ -158,10 +168,12 @@
 						"THIS IS WHAT REAL FOOD LOOKS LIKE! FUCKING DELICIOUS!",
 						"NOW THIS IS WHAT I CALL COOKING! YOU FUCKING HAD IT IN YOU!",
 						"I WANT TO SEE MORE OF THAT!",
-						"TAKE EXAMPLE, YOU DONKEYS, THIS IS WHAT I WOULD SERVE!",
+						"TAKE EXAMPLE, YOU DONKEYS! THIS IS WHAT I WOULD SERVE!",
 						"SO YOU CAN COOK AFTER ALL! NOW KEEP GOING AND MAYBE YOU CAN CALL YOURSELF A CHEF!",
 						"YOU GOT ONE DISH RIGHT, DONT GET A BIG HEAD!",
-						"I WANT MORE OF THIS! THAT'S WHAT I'M TALKING ABOUT!"))
+						"I WANT MORE OF THIS! THAT'S WHAT I'M TALKING ABOUT!",
+						"PERFECTION! BRILLIANT! THAT'S WORTHY OF BEING SERVED!",
+						"I'M A HARSH TEACHER SO THAT YOU LEARN. AND IT PAID OFF. THIS LOOKS AMAZING."))
 			if (how_shit == FOOD_QUALITY_GOOD_SHIT)
 				icon_state = "chefbot-idle"
 				raging = 0
@@ -182,8 +194,10 @@
 				"DONT JUST STAND THERE LIKE A BIG FUCKING MUFFIN! DO SOMETHING!",
 				"ARE YOU GONNA GET YOUR SHIT TOGETHER, OR ARE YOU JUST GOING TO LET THIS KITCHEN GET FURTHER IN THE SHIT?",
 				"THIS SHIT NEEDS TO GET CLOSED DOWN, NOW!",
-				"CALL SECURITY! THIS ENTIRE PLACE IS A HAZARD! A FUCKING CRIME SCENE!",
-				"COOKING IS DEAD AND IT WAS KILLED IN THIS KITCHEN!"))
+				"CALL SECURITY! THIS ENTIRE PLACE IS A HAZARD! A FUCKING CRIME SCENE! CLOSE IT DOWN!",
+				"COOKING IS DEAD AND IT WAS KILLED IN THIS KITCHEN!",
+				"THIS IS A SAD, PATHETIC EXCUSE OF A KITCHEN! GET OUT OF HERE, ALL OF YOU!",
+				"EVEN I CAN'T SALVAGE THIS GODFORSAKEN PLACE! BURN THE PLACE DOWN TO THE GROUND!"))
 			else if (how_shit == FOOD_QUALITY_HORSESHIT)
 				speak(pick("THAT WAS PATHETIC. THAT WAS ABSOLUTELY PATHETIC!",
 				"COME ON!",
@@ -196,12 +210,19 @@
 				"FUCK OFF! FUCK OFF! FUCK OFF ALL OF YOU!",
 				"WHY DO I EVEN BOTHER WITH THIS SHIT? NONE OF YOU HAVE AN OUNCE OF TALENT!",
 				"GET ON WITH IT! DONT FUCKING STAND THERE! GET BACK TO THE KITCHEN!",
-				"DON'T EVER LET THIS HAPPEN AGAIN! OR IM TOSSING YOU IN THE DEEP FRYER!"))
+				"DON'T EVER LET THIS HAPPEN AGAIN! YOU HEAR ME?! NEVER!",
+				"I'M GOING TO GROUND THIS FILTH INTO PASTE!",
+				"SEND THIS SHIT DOWN TO HELL WHERE IT BELONGS!",
+				"I'M GOING TO MAKE A CHEF OUT OF YOU! I DON'T CARE IF I HAVE TO STOMP ON A MILLION DISHES FOR YOU TO GET THERE!",
+				"DO YOU NEVER FUCKING LEARN?",
+				"WHERE DID YOU LEARN TO COOK? [pick("PRISON", "THE CIRCUS?")]?",
+				"NOT EVEN DISCOUNT DAN WOULD SELL THIS SHIT!",
+				"WHO TAUGHT YOU HOW TO COOK? [pick("THE CLOWN", "SHITTY BILL", "DISCOUNT DAN")]?"))
 			icon_state = "chefbot-idle"
 			raging = 0
 			if (how_shit == FOOD_QUALITY_HORSESHIT)
 				if (food_to_judge in range(1, src))
-					food_to_judge.set_loc(src)
+					food_to_judge.set_loc(src.loc)
 					visible_message("<span class='alert'><b>[src]</b> stomps on [food_to_judge] [pick("with glee", "with the wrath of a thousand overworked line-cooks", "with cold, uncaring efficiency")].</span>")
 				animate_stomp(src)
 				SPAWN(0.5 SECONDS)
@@ -217,9 +238,11 @@
 				"GET THIS OFF THE STREETS!",
 				"CHUCK IT IN THE BIN! IN THE GODDAMN BIN!",
 				"FUCKING TRY AGAIN!",
-				"NOT GOOD ENOUGH!"))
+				"NOT GOOD ENOUGH!",
+				"DO IT AGAIN, AND DO IT RIGHT THIS TIME!",
+				"IS THAT YOUR FUCKING BEST? IT'S RANCID!"))
 				if (food_to_judge in range(1, src))
-					src.visible_message("<span class='notice'>[src] flings [food_to_judge] away [pick("without even looking", "with rage", "with a disappointed sigh")].</span>")
+					src.visible_message("<span class='notice'>[src] flings [food_to_judge] away [pick("without even looking", "with rage", "with a disappointed sigh", "at impossible speeds")].</span>")
 					ThrowRandom(food_to_judge, 4, 1)
 		else
 			// Nobody is in range anyway
