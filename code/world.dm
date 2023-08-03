@@ -607,9 +607,10 @@ var/global/mob/twitch_mob = 0
 	Z_LOG_DEBUG("World/Init", "Initializing worldgen...")
 	initialize_worldgen()
 
-	UPDATE_TITLE_STATUS("Reticulating splines")
-	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
-	map_settings.init()
+	if (map_settings)
+		UPDATE_TITLE_STATUS("Reticulating splines")
+		Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
+		map_settings.init()
 
 	#if !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(CI_RUNTIME_CHECKING)
 	Z_LOG_DEBUG("World/Init", "Initializing region allocator...")

@@ -81,7 +81,8 @@ datum/shuttle_controller
 			for_by_tcl(S, /obj/machinery/computer/airbr)
 				if (S.emergency && !(S in src.airbridges))
 					src.airbridges += S
-			map_turf = map_settings.shuttle_map_turf
+			if (map_settings)
+				map_turf = map_settings.shuttle_map_turf
 
 		process()
 			if (!online)
