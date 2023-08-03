@@ -139,6 +139,9 @@
 			. = ..()
 
 	mouse_drop(obj/over_object, src_location, over_location)
+		if (usr.stat || usr.getStatusDuration("weakened") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
+			boutput(usr, "<span class='alert'>That's too far!</span>")
+			return
 		if (src.occupant)
 			eject_occupant(usr, over_object)
 			return
@@ -147,9 +150,6 @@
 			return
 		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS))
 			return ..()
-		if (usr.stat || usr.getStatusDuration("weakened") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
-			boutput(usr, "<span class='alert'>That's too far!</span>")
-			return
 		src.transfer_all_reagents(over_object, usr)
 
 	get_desc(dist, mob/user)
@@ -209,7 +209,7 @@
 		if (!src.occupant)
 			boutput("<span class='alert'>There's no one inside!</span>")
 			return
-		src.occupant.set_loc(user.loc)
+		src.occupant.set_loc(get_turf(src))
 
 	proc/turn_tap(mob/user)
 		src.add_fingerprint(user)
