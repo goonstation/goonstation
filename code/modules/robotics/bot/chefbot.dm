@@ -302,7 +302,7 @@
 						"HAVE YOU NEVER DRESSED A TABLE BEFORE?!",
 						"DIRTY DISHES! DIRTY UTENSILS! WERE YOU RAISED IN A BARN YOU DONKEY?"))
 						sleep (3 SECONDS)
-						if (stuff_to_fling && stuff_to_fling in range(1, src))
+						if ((stuff_to_fling) && (stuff_to_fling in range(1, src)))
 							ThrowRandom(stuff_to_fling, 4, 1)
 							src.visible_message("<span class='alert'>[src] smacks at [stuff_to_fling], sending it flying.</span>")
 		raging = 0
