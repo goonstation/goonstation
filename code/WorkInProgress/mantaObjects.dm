@@ -1558,7 +1558,6 @@ var/obj/manta_speed_lever/mantaLever = null
 							M.open()
 							M.operating = -1
 							used = 1
-
 			else
 				boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
 	else
