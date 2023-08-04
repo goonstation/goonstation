@@ -7,9 +7,9 @@
 /obj/machinery/sleeperscanner/attackby(obj/item/W, mob/user as mob)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT))
+	if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT) && user.mind?.get_antagonist(ROLE_SLEEPER_AGENT))
 		user.visible_message("<span class='notice'>The [src] accepts the biometrics of the user and beeps, granting you access.</span>")
-		for (var/obj/machinery/door/airlock/pyro/reinforced/syndicate/M in by_type[/obj/machinery/door])
+		for (var/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post/M in by_type[/obj/machinery/door])
 			M.open()
 	else
 		boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
@@ -19,7 +19,7 @@
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
 	if (ishuman(user) && user.mind?.get_antagonist(ROLE_SLEEPER_AGENT))
 		user.visible_message("<span class='notice'>The [src] accepts the biometrics of the user and beeps, granting you access.</span>")
-		for (var/obj/machinery/door/airlock/pyro/reinforced/syndicate/M in by_type[/obj/machinery/door])
+		for (var/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post/M in by_type[/obj/machinery/door])
 			M.open()
 	else
 		boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")

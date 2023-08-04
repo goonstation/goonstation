@@ -30911,11 +30911,11 @@
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/listeningpost)
 "cmt" = (
-/obj/machinery/door/airlock/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Listening Post"
-	},
 /obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
+	name = "Listening Post";
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/listeningpost)
 "cmu" = (

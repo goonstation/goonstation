@@ -16663,7 +16663,10 @@
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/sec_foyer)
 "eZz" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/access/maint,
 /obj/decal/mule/dropoff,
 /obj/disposalpipe/segment{
@@ -18535,7 +18538,10 @@
 /area/station/bridge/customs)
 "fEk" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "fEp" = (
@@ -30221,7 +30227,10 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "jjJ" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "jjO" = (
@@ -32752,7 +32761,10 @@
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/podbay)
 "jVR" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/access/research,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/mule/dropoff,
@@ -33120,7 +33132,10 @@
 	},
 /area/station/security/quarters)
 "kbY" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/access/maint,
 /obj/decal/mule/dropoff,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -33244,7 +33259,10 @@
 	name = "Genetic Research"
 	})
 "kff" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/access/maint,
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/plating/jen,
@@ -33851,7 +33869,10 @@
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "kpd" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/inner/north)
 "kpf" = (
@@ -34480,11 +34501,11 @@
 	},
 /area/station/crew_quarters/hor)
 "kzv" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	name = "Listening Post"
-	},
 /obj/decal/mule/dropoff,
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
+	name = "Listening Post"
+	},
 /turf/simulated/floor/plating/jen,
 /area/listeningpost)
 "kzE" = (
@@ -34756,7 +34777,10 @@
 	},
 /area/station/hallway/primary/south)
 "kDF" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/access/research,
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/plating,
@@ -44960,9 +44984,6 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "nKd" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	name = "Listening Post"
-	},
 /obj/decal/mule/dropoff,
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -44970,6 +44991,9 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
+	name = "Listening Post"
+	},
 /turf/simulated/floor/plating/jen,
 /area/listeningpost)
 "nKv" = (
@@ -45578,7 +45602,10 @@
 /area/station/engine/elect)
 "nTs" = (
 /obj/decal/mule/dropoff,
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/sanitary/blue,
@@ -46327,7 +46354,10 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "ohP" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/mule/dropoff,
 /obj/mapping_helper/access/heads,
@@ -47946,7 +47976,10 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "oHo" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/access/maint,
 /obj/decal/mule/dropoff,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -49156,7 +49189,10 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "pas" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/access/maint,
@@ -49833,7 +49869,10 @@
 /area/station/crew_quarters/kitchen)
 "pkQ" = (
 /obj/decal/mule/dropoff,
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/access,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/tile_edge/line/white{
@@ -55453,7 +55492,10 @@
 /turf/simulated/floor/orangeblack,
 /area/station/hallway/secondary/exit)
 "qTv" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -57330,7 +57372,10 @@
 /turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "rxf" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/access/maint,
@@ -60240,10 +60285,11 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "ssN" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	name = "Listening Post"
-	},
 /obj/decal/mule/dropoff,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "ssO" = (
@@ -74470,14 +74516,14 @@
 	},
 /area/station/science/lobby)
 "wLC" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	dir = 4;
-	name = "Listening Post"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/decal/mule/dropoff,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "wLK" = (
@@ -79454,7 +79500,10 @@
 /turf/simulated/floor/plating/jen,
 /area/station/science/gen_storage)
 "yfa" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},

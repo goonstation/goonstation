@@ -26159,14 +26159,13 @@
 	},
 /area/station/catwalk/south)
 "leD" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Listening Post"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
+	name = "Listening Post"
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "leO" = (
@@ -45161,10 +45160,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "tkj" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	dir = 4;
-	name = "Listening Post"
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
+	name = "Listening Post";
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
