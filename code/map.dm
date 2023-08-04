@@ -40,7 +40,6 @@ var/global/list/mapNames = list(
 	"Crash" = 				list("id" = "CRASH",		"settings" = "horizon/crash",	"playerPickable" = FALSE),
 	"Mushroom" =			list("id" = "MUSHROOM",		"settings" = "mushroom",		"playerPickable" = FALSE),
 	"Trunkmap" =			list("id" = "TRUNKMAP",		"settings" = "trunkmap",		"playerPickable" = FALSE),
-	//"Chiron" =			list("id" = "CHIRON",		"settings" = "chiron",			"playerPickable" = FALSE),
 	//"Density" = 			list("id" = "DENSITY",		"settings" = "density",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
 	"Ozymandias" =			list("id" = "OZYMANDIAS",	"settings" = "ozymandias",		"playerPickable" = FALSE,	"MinPlayersAllowed" = 40),
 	"Bellerophon Fleet" =	list("id" = "FLEET",		"settings" = "fleet",			"playerPickable" = FALSE),
