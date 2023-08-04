@@ -1679,10 +1679,6 @@
 	},
 /turf/simulated/floor,
 /area/devzone)
-"xi" = (
-/obj/machinery/disposal_pipedispenser/mobile,
-/turf/simulated/floor,
-/area/devzone)
 "xl" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9
@@ -4889,7 +4885,7 @@ Yx
 Yx
 zn
 sE
-xi
+Yx
 ZY
 Bf
 mM
