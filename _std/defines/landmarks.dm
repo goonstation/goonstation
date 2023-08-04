@@ -95,6 +95,10 @@
 // misc adventure zone stuff
 #define LANDMARK_SUMMON "summon"
 
+//morrigan
+#define LANDMARK_MORRIGAN_START "morrigan_start" //where you end up when you go through the Balor teleporter
+#define LANDMARK_MORRIGAN_CRATE "morrigan_crate" //where your stuff ends up
+
 /// allowed turfs for telesci
 #define LANDMARK_TELESCI "telesci"
 #define LANDMARK_LRT "lrt landmark"

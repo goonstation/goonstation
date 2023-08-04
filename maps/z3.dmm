@@ -12183,19 +12183,6 @@
 /turf/space,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/helldrone)
-"aXM" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 1;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/helldrone)
 "aXN" = (
 /obj/decal/fakeobjects/lighttube_broken{
 	dir = 1
@@ -14015,7 +14002,10 @@
 	name = "power conduit"
 	},
 /obj/table/auto,
-/obj/random_item_spawner/desk_stuff/g_clip_bin_fpen,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/paper/balor_IT,
 /turf/unsimulated/floor/black,
 /area/helldrone)
 "bdO" = (
@@ -16870,12 +16860,13 @@
 /turf/unsimulated/floor/plating,
 /area/helldrone)
 "bFD" = (
-/obj/machinery/networked/telepad,
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "bot2"
 	},
 /obj/machinery/light/small,
-/obj/map/light/dimred,
+/obj/machinery/networked/telepad/morrigan,
+/obj/machinery/power/data_terminal,
+/obj/cable,
 /turf/unsimulated/floor/engine/glow,
 /area/helldrone)
 "bFR" = (
@@ -17680,6 +17671,9 @@
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/unsimulated/floor/black,
 /area/helldrone)
 "dLg" = (
@@ -17797,6 +17791,12 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
+"eca" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "edv" = (
 /turf/simulated/floor/grime,
 /area/diner/motel/chemstorage)
@@ -17914,6 +17914,12 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/shuttlebay,
 /area/bee_trader)
+"evO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/red/redblackchecker,
+/area/helldrone)
 "exM" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating/damaged2,
@@ -17992,6 +17998,15 @@
 /obj/map/light/screen,
 /turf/unsimulated/floor/engine/glow,
 /area/helldrone/core)
+"eSa" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/unsimulated/floor/red/redblackchecker,
+/area/helldrone)
 "eSU" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -18262,6 +18277,12 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/diner/jucer_trader)
+"fCq" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/helldrone)
 "fFQ" = (
 /obj/table/auto,
 /obj/machinery/light/incandescent/warm{
@@ -18776,6 +18797,12 @@
 /turf/space,
 /turf/simulated/floor,
 /area/h7/lab)
+"gSh" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/helldrone/core)
 "gVs" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/item/paper/businesscard/biteylou{
@@ -19861,12 +19888,12 @@
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
 "jvm" = (
-/obj/machinery/networked/telepad,
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "bot2"
 	},
 /obj/machinery/light/small,
-/obj/map/light/cyan,
+/obj/machinery/networked/telepad/morrigan,
+/obj/landmark/morrigan_crate,
 /turf/unsimulated/floor/engine/glow/blue,
 /area/helldrone)
 "jvw" = (
@@ -20265,6 +20292,12 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/damaged2,
 /area/diner/hallway)
+"kCV" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/engine/caution,
+/area/helldrone/core)
 "kDA" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 2;
@@ -20898,6 +20931,9 @@
 	},
 /obj/machinery/door/window/brigdoor/genpop/northleft,
 /obj/map/light/dimred,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/unsimulated/floor/engine/glow,
 /area/helldrone)
 "mea" = (
@@ -21241,20 +21277,10 @@
 	},
 /area/diner/jucer_trader)
 "nfg" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 1;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/helldrone)
 "nfI" = (
 /obj/decal/cleanable/blood/splatter{
@@ -21986,8 +22012,12 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/computer3/terminal/console_lower{
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta/console_lower{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/unsimulated/floor/black,
 /area/helldrone)
@@ -22694,6 +22724,12 @@
 	},
 /turf/simulated/floor/scorched2,
 /area/diner/hangar)
+"qQy" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "qRa" = (
 /obj/decal/poster/wallsign/pool,
 /turf/simulated/wall/auto/reinforced/old,
@@ -24053,6 +24089,12 @@
 	},
 /turf/unsimulated/floor/black,
 /area/helldrone)
+"ugo" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "uhA" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
@@ -24630,6 +24672,7 @@
 /area/diner/hallway/docking)
 "vBz" = (
 /obj/storage/closet/dresser,
+/obj/item/card/id/morrigan/balor_it,
 /turf/unsimulated/floor/black,
 /area/helldrone)
 "vBW" = (
@@ -24812,6 +24855,14 @@
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/airless/caution/northsouth,
 /area/space)
+"waQ" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "wca" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -25469,6 +25520,12 @@
 /obj/item/paper/businesscard,
 /turf/simulated/floor/green/checker,
 /area/diner/arcade)
+"xZn" = (
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/machinery/networked/mainframe/balor,
+/turf/unsimulated/floor/engine/caution,
+/area/helldrone/core)
 "xZo" = (
 /obj/shrub{
 	dir = 1
@@ -37930,14 +37987,14 @@ bgu
 bgu
 bgu
 bgu
-wOn
-wEm
-bgu
-wOn
-bed
-bed
-fwG
-fwG
+eca
+evO
+fCq
+qQy
+gSh
+gSh
+kCV
+xZn
 tJT
 bdn
 bed
@@ -38232,7 +38289,7 @@ dEe
 bbq
 bQY
 bgu
-wOn
+ugo
 wEm
 bgu
 aZn
@@ -38534,7 +38591,7 @@ xKR
 wOn
 wOn
 dfH
-wOn
+ugo
 wEm
 bgu
 wOn
@@ -38836,7 +38893,7 @@ xoI
 wOn
 wOn
 bgu
-wOn
+ugo
 wEm
 bgu
 wOn
@@ -39138,7 +39195,7 @@ bcL
 aYm
 dtf
 bgu
-wOn
+ugo
 wEm
 bgu
 wOn
@@ -39440,7 +39497,7 @@ bgu
 bgu
 bgu
 bgu
-wOn
+ugo
 egC
 bgu
 aZn
@@ -39741,8 +39798,8 @@ jgr
 tHG
 bgu
 wOn
-wOn
-wOn
+eca
+waQ
 wEm
 bgu
 wOn
@@ -40043,7 +40100,7 @@ lkB
 bfY
 gEt
 wOn
-wOn
+ugo
 wEm
 wEm
 bgu
@@ -40647,7 +40704,7 @@ aZp
 bgu
 pfn
 bdM
-wEm
+eSa
 mdZ
 bFD
 aXL
@@ -40951,7 +41008,7 @@ afK
 apw
 sWa
 nfg
-aXM
+bgu
 bgu
 aVV
 kdO

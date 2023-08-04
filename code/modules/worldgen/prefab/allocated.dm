@@ -44,3 +44,8 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabPath = "assets/maps/allocated/football.dmm"
 	prefabSizeX = 294
 	prefabSizeY = 46
+
+/datum/mapPrefab/allocated/morrigan
+	prefabPath = "maps/setpieces/morrigan.dmm"
+	prefabSizeX = 128
+	prefabSizeY = 101

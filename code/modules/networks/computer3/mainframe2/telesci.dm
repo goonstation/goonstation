@@ -174,6 +174,8 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		if(!sigcommand || !signal.data["sender"])
 			return
 
+		. = TRUE //we've passed initial checks, the signal is okay
+
 		switch(sigcommand)
 			if("term_connect") //Terminal interface stuff.
 				if(target == src.host_id)
