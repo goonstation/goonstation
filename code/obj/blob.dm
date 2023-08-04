@@ -433,8 +433,7 @@
 			qdel(src)
 		else
 			src.UpdateIcon()
-			if (healthbar) //ZeWaka: Fix for null.onUpdate
-				healthbar.onUpdate()
+			healthbar?.onUpdate()
 		return
 
 	proc/updatePoisonOverlay()

@@ -206,8 +206,7 @@
 			proj_data.on_hit(A, angle_to_dir(src.angle), src)
 
 		//Trigger material on attack.
-		if(proj_data?.material) //ZeWaka: Fix for null.material
-			proj_data.material.triggerOnAttack(src, src.shooter, A)
+		proj_data?.material?.triggerOnAttack(src, src.shooter, A)
 
 		if (istype(A,/turf))
 			// if we hit a turf apparently the bullet is magical and hits every single object in the tile, nice shooting tex
