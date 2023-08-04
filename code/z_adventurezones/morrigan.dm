@@ -1213,9 +1213,3 @@ proc/load_morrigan()
 		pickupdialogue = "Here's your shit. You know it wasn't worth that much yeah?"
 
 		pickupdialoguefailure = "Bloody delusional you are, you haven't picked fuck all!"
-
-//allocation loading
-
-/var/datum/mapPrefab/allocated/prefab = get_singleton(/datum/mapPrefab/allocated/morrigan)
-/var/datum/allocated_region/region = prefab.load()
-
