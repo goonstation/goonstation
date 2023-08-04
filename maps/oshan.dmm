@@ -38901,6 +38901,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/rancher,
 /turf/simulated/floor,
 /area/station/ranch)
 "jlM" = (
@@ -43293,6 +43294,7 @@
 	name = "Ranch"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/rancher,
 /turf/simulated/floor/shuttlebay,
 /area/station/ranch)
 "qSL" = (
@@ -43993,6 +43995,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/rancher,
 /turf/simulated/floor,
 /area/station/ranch)
 "svs" = (
@@ -44291,10 +44294,6 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
-"sXk" = (
-/obj/machinery/plantpot,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "sYB" = (
 /turf/simulated/floor/yellow/side,
 /area/station/storage/eeva)
@@ -84386,7 +84385,7 @@ chc
 cjF
 ciZ
 ciB
-sXk
+ciQ
 pml
 uOJ
 tEE
