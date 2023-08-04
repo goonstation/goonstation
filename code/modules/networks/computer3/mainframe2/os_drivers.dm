@@ -992,10 +992,10 @@
 		if (!data["command"])
 			return ESIG_GENERIC
 
-		if (lowertext(data["command"]) == "transmit_prisoner")
+		if (lowertext(data["command"]) == "transmit")
 			sleep(data["delay"] SECONDS)
 			var/sessionid = "[world.timeofday%100][rand(0,9)]" //sessions are a lie, fite me
-			message_device("command=transmit_prisoner&session=[sessionid]")
+			message_device("command=transmit&session=[sessionid]")
 			return ESIG_SUCCESS
 
 /datum/computer/file/mainframe_program/srv/telecontrol_prisoner
