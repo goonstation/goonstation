@@ -165,7 +165,7 @@ TYPEINFO(/obj/storage/closet/flock)
 			playsound(T, 'sound/impact_sounds/Glass_Shatter_3.ogg', 25, 1)
 			var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard
 			S.set_loc(T)
-			S.setMaterial(getMaterial("gnesisglass"), copy = FALSE)
+			S.setMaterial(getMaterial("gnesisglass"))
 			src.dump_contents()
 			make_cleanable( /obj/decal/cleanable/flockdrone_debris, T)
 			qdel(src)

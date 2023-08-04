@@ -52,6 +52,7 @@
 		var/area_restriction = /area/mining/magnet
 		if (target)
 			magnetic_center = target.magnetic_center
+			size = target.get_encounter_size(size,P=40)
 			area_restriction = null
 			size = min(size,min(target.width,target.height))
 
@@ -97,6 +98,7 @@
 		var/area_restriction = /area/mining/magnet
 		if (target)
 			magnetic_center = target.magnetic_center
+			size = target.get_encounter_size(size,P=20)
 			area_restriction = null
 			size = min(size,min(target.width,target.height))
 
@@ -925,11 +927,11 @@
 
 	switch(RarityClassRoll(100,0,list(90,50)))
 		if(1)
-			scrap_material = copyMaterial(getMaterial(pick("steel","mauxite")))
+			scrap_material = getMaterial(pick("steel","mauxite"))
 		if(2)
-			scrap_material = copyMaterial(getMaterial(pick("cobryl","bohrum")))
+			scrap_material = getMaterial(pick("cobryl","bohrum"))
 		if(3)
-			scrap_material = copyMaterial(getMaterial(pick("gold","syreline")))
+			scrap_material = getMaterial(pick("gold","syreline"))
 
 	var/list/turfs_near_center = list()
 	for(var/turf/T in range(size - 1,center))

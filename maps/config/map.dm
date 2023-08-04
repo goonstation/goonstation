@@ -74,9 +74,6 @@
 #elif defined(MAP_OVERRIDE_TRUNKMAP)
 #include "trunkmap.dm"
 
-#elif defined(MAP_OVERRIDE_CHIRON)
-#include "chiron.dm"
-
 #elif defined(MAP_OVERRIDE_DENSITY)
 #include "density.dm"
 
@@ -98,4 +95,8 @@
 //Entry below is the "default" map
 #else
 #include "standard.dm"
+#endif
+
+#if ENABLE_ARTEMIS && !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
+#include "..\artemis\planets.dmm"
 #endif

@@ -69,6 +69,10 @@
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
 		var/list/datum/mind/candidates = dead_player_list(TRUE, src.ghost_confirmation_delay, text_messages, allow_dead_antags = TRUE, require_client = TRUE, do_popup = src.ask_permission)
 
+		if (!length(candidates))
+			message_admins("No ghosts responded to spawn event: [src.get_mob_name()]")
+			return
+
 		for (var/i in 1 to src.amount_to_spawn)
 			if (!length(candidates))
 				break
@@ -86,6 +90,9 @@
 				human.is_npc = FALSE
 				human.ai_set_active(FALSE)
 				human.abilityHolder.removeAbility(/datum/targetable/ai_toggle)
+
+			message_admins("[key_name(mind.current)] respawned as \a [src.get_mob_name()]")
+			logTheThing(LOG_ADMIN, mind.current, "respawned as \a [src.get_mob_name()] from a custom spawn event triggered by [key_name(usr)].")
 
 			mind.transfer_to(new_mob)
 

@@ -3226,9 +3226,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "age" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -9881,10 +9879,6 @@
 "ats" = (
 /turf/simulated/floor/airless/plating/scorched,
 /area/station/engine/proto_gangway)
-"att" = (
-/turf/simulated/floor/airless/plating/scorched,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/station/engine/proto_gangway)
 "atu" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -10214,10 +10208,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/east)
-"auh" = (
-/turf/simulated/floor/airless/plating/damaged1,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/station/engine/proto_gangway)
 "aui" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -11752,7 +11742,6 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "axg" = (
-/turf/simulated/floor/plating/airless,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/station/engine/proto)
 "axh" = (
@@ -12309,9 +12298,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "ayu" = (
@@ -12693,9 +12680,7 @@
 	},
 /area/station/medical/research)
 "azj" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "azk" = (
@@ -12727,7 +12712,6 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "azm" = (
-/turf/simulated/floor/airless/plating/damaged3,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/station/engine/proto_gangway)
 "azn" = (
@@ -12986,9 +12970,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "azK" = (
@@ -13004,10 +12986,6 @@
 /obj/window/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/space)
-"azL" = (
-/turf/simulated/floor/airless/plating/scorched,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/station/engine/proto)
 "azM" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -13510,10 +13488,6 @@
 	},
 /turf/simulated/floor/blackwhite/side,
 /area/station/medical/research)
-"aAP" = (
-/turf/simulated/floor/airless/plating/damaged1,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/station/engine/proto)
 "aAQ" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -15950,8 +15924,6 @@
 	dir = 5;
 	icon_state = "tabledir"
 	},
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/mask/muzzle,
 /obj/item/device/radio/intercom{
@@ -22056,7 +22028,6 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 "aPZ" = (
 /turf/simulated/wall,
@@ -22643,7 +22614,6 @@
 "aRb" = (
 /obj/cable,
 /obj/item/cable_coil/cut,
-/turf/simulated/floor/plating/airless,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 "aRc" = (
@@ -22937,7 +22907,6 @@
 /area/space)
 "aRH" = (
 /obj/item/cable_coil/cut,
-/turf/space,
 /turf/simulated/floor/plating/damaged2,
 /area/space)
 "aRI" = (
@@ -23431,9 +23400,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor{
 	tag = "icon-carpet2 (WEST)";
 	icon_state = "carpet2";
@@ -25717,9 +25684,7 @@
 /turf/simulated/floor/engine,
 /area/space)
 "aWL" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor/engine,
 /area/space)
 "aWM" = (
@@ -28207,12 +28172,12 @@
 /obj/storage/crate/freezer{
 	name = "Fishy Freezer"
 	},
-/obj/item/fish/bass,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/carp,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/machinery/light,
 /obj/item/device/radio/intercom{
 	broadcasting = 0
@@ -35243,7 +35208,6 @@
 /obj/item/device/radio{
 	pixel_y = 15
 	},
-/turf/simulated/floor/plating/damaged3,
 /turf/simulated/floor/plating/damaged2,
 /area/station/chapel/sanctuary)
 "bok" = (
@@ -35395,7 +35359,6 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/simulated/floor/airless/plating/scorched,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/station/engine/proto_gangway)
 "box" = (
@@ -35440,7 +35403,6 @@
 	d1 = 4;
 	d2 = 8
 	},
-/turf/simulated/floor/plating/airless,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/station/engine/proto)
 "boD" = (
@@ -35896,7 +35858,6 @@
 /turf/simulated/floor/caution/east,
 /area/space)
 "bpr" = (
-/turf/simulated/floor,
 /turf/simulated/floor/plating/damaged2,
 /area/space)
 "bps" = (
@@ -36753,10 +36714,6 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area/space)
-"caB" = (
-/turf/space,
-/turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 "caF" = (
 /obj/item/raw_material/shard/glass{
@@ -47150,7 +47107,7 @@ aww
 aww
 aww
 axg
-azL
+axg
 ayA
 aww
 cqb
@@ -47377,7 +47334,7 @@ axd
 axI
 ayw
 axJ
-azL
+axg
 axJ
 aww
 aww
@@ -47832,8 +47789,8 @@ axK
 boC
 axg
 axK
-azL
-aAP
+axg
+axg
 axI
 aww
 cqb
@@ -48285,7 +48242,7 @@ axg
 axe
 axK
 axe
-aAP
+axg
 axI
 axI
 axI
@@ -48957,9 +48914,9 @@ cqb
 asN
 ats
 ats
-auh
-auh
-auh
+azm
+azm
+azm
 avq
 avq
 ats
@@ -49182,9 +49139,9 @@ cqb
 cqb
 cqb
 asN
-att
-auh
-auh
+azm
+azm
+azm
 asN
 avq
 ats
@@ -79293,7 +79250,7 @@ cqb
 cqb
 cqb
 bZO
-caB
+aqp
 bZO
 cae
 aqo

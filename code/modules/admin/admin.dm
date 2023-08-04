@@ -4100,31 +4100,6 @@ var/global/noir = 0
 		ircbot.export_async("admin", ircmsg)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
-/proc/checktraitor(mob/M as mob)
-	set popup_menu = 0
-	if(!M || !M.mind || !ticker || !ticker.mode)
-		return 0
-
-	if (istraitor(M))
-		return 1
-
-	if (istype(ticker.mode, /datum/game_mode/revolution))
-		if(M.mind in (ticker.mode:head_revolutionaries + ticker.mode:revolutionaries))
-			return 1
-	else if (istype(ticker.mode, /datum/game_mode/nuclear))
-		if(M.mind in ticker.mode:syndicates)
-			return 1
-	else if (istype(ticker.mode, /datum/game_mode/spy))
-		if(M.mind in (ticker.mode:leaders + ticker.mode:spies))
-			return 1
-
-	if(M.mind in ticker.mode:traitors)
-		return 1
-	if(M.mind in ticker.mode:Agimmicks)
-		return 1
-
-	return 0
-
 /proc/get_matches_string(var/text, var/list/possibles)
 	var/list/matches = new()
 	for (var/possible in possibles)
