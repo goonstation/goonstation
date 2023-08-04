@@ -3398,12 +3398,6 @@
 /obj/decal/cleanable/fungus,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/holding)
-"dNz" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/rust/jen,
-/obj/decal/poster/wallsign/hazard_bio,
-/turf/unsimulated/floor,
-/area/morrigan/derelict)
 "dOf" = (
 /obj/decal/fakeobjects/console_lever,
 /turf/unsimulated/floor/black,
@@ -9810,13 +9804,6 @@
 /obj/mapping_helper/access/morrigan/medical,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/medical/reception)
-"ktz" = (
-/obj/decal/poster/wallsign/poster_nt{
-	icon_state = "wall_poster_syndicate";
-	name = "Syndicate Poster"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/routing/transport)
 "ktC" = (
 /obj/storage/cart/trash,
 /turf/unsimulated/floor/purple,
@@ -10381,6 +10368,10 @@
 	icon_state = "floattiles2"
 	},
 /turf/unsimulated/floor/plating/random,
+/area/morrigan/derelict)
+"laS" = (
+/obj/decal/poster/wallsign/hazard_bio,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/derelict)
 "lbq" = (
 /obj/decal/fakeobjects{
@@ -13688,12 +13679,6 @@
 	},
 /turf/unsimulated/floor/darkblue,
 /area/morrigan/station/command/eva)
-"oEW" = (
-/obj/decal/cleanable/rust/jen,
-/obj/decal/cleanable/rust/jen,
-/obj/decal/poster/wallsign/hazard_bio,
-/turf/unsimulated/floor,
-/area/morrigan/derelict)
 "oFp" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/sw,
 /area/morrigan/station/command/captain)
@@ -14378,7 +14363,8 @@
 "pti" = (
 /obj/decal/poster/wallsign/poster_nt{
 	icon_state = "wall_poster_syndicate";
-	name = "Syndicate Poster"
+	name = "Syndicate poster";
+	desc = "A bad sign of what's to come..."
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/warden)
@@ -15535,7 +15521,9 @@
 /area/morrigan/station/engineering)
 "qLj" = (
 /obj/decal/poster/wallsign/poster_nt{
-	icon_state = "wall_poster_syndicate"
+	icon_state = "wall_poster_syndicate";
+	name = "Syndicate poster";
+	desc = "A bad sign of what's to come..."
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/routing/transport)
@@ -18141,18 +18129,6 @@
 /obj/item/scalpel/vr,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/cloning)
-"tQH" = (
-/obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "door_locked";
-	name = "rusted airlock";
-	opacity = 1;
-	dir = 4
-	},
-/turf/unsimulated/floor/plating/jen,
-/area/morrigan/construction)
 "tSm" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 9
@@ -20588,7 +20564,8 @@
 "wCY" = (
 /obj/decal/poster/wallsign/poster_nt{
 	icon_state = "wall_poster_syndicate";
-	name = "Syndicate Poster"
+	name = "Syndicate poster";
+	desc = "A bad sign of what's to come..."
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/engineering)
@@ -30817,7 +30794,7 @@ vwJ
 vwJ
 vwJ
 vwJ
-ktz
+qLj
 scb
 inM
 czk
@@ -32150,7 +32127,7 @@ qfS
 vzq
 tjG
 kan
-lhK
+laS
 lhK
 lhK
 vwJ
@@ -32355,7 +32332,7 @@ dwK
 gFc
 vNy
 nXe
-dNz
+ebz
 qOC
 azR
 vwJ
@@ -32458,7 +32435,7 @@ lhK
 qHZ
 uUL
 yiX
-oEW
+mdb
 jrB
 azR
 vwJ
@@ -32665,7 +32642,7 @@ lLR
 lLR
 lLR
 lLR
-lhK
+laS
 lhK
 lhK
 vwJ
@@ -33268,8 +33245,8 @@ vwJ
 vwJ
 lLR
 lLR
-tQH
-tQH
+yer
+yer
 lLR
 lLR
 uWs
