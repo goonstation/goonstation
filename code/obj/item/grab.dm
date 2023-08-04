@@ -587,6 +587,32 @@
 	G.dispose()
 	return 1
 
+/turf/grab_smash(obj/item/grab/G, mob/user)
+	var/mob/affecting = G.affecting //the parent disposes G
+	if(..())
+		var/duration = (G.state > 0) ? 4 SECONDS : 2 SECONDS
+		affecting.do_disorient(40, disorient = duration, stack_stuns = FALSE)
+
+/obj/window/grab_smash(obj/item/grab/G, mob/user)
+	if (!ismob(G.affecting) || BOUNDS_DIST(G.affecting, src) != 0)
+		return
+	G.affecting.TakeDamage("head", 5, 0)
+	src.damage_blunt(10)
+	if (QDELETED(src))
+		src.visible_message("<span class='alert'><B>[user] smashes [G.affecting]'s head straight through [src]!</B></span>")
+		logTheThing(LOG_COMBAT, user, "smashes [constructTarget(user,"combat")]'s head through [src]")
+		take_bleeding_damage(G.affecting, user, 15, DAMAGE_CUT, TRUE)
+		playsound(src.loc, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 50, 1)
+	else
+		src.visible_message("<span class='alert'><B>[user] slams [G.affecting]'s head into [src]!</B></span>")
+		logTheThing(LOG_COMBAT, user, "slams [constructTarget(user,"combat")]'s head into [src]")
+		playsound(src.loc, src.hitsound , 100, 1)
+
+	var/duration = (G.state > 0) ? 4 SECONDS : 2 SECONDS
+	G.affecting.do_disorient(20, disorient = duration, stack_stuns = FALSE)
+
+	G.dispose()
+	return 1
 
 /turf/simulated/floor/grab_smash(obj/item/grab/G as obj, mob/user as mob)
 	var/mob/M = G.affecting

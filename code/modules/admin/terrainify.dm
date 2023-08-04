@@ -642,8 +642,14 @@ ABSTRACT_TYPE(/datum/terrainify)
 		var/list/turf/space = list()
 		for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 			space += S
-		var/datum/map_generator/generator = new/datum/map_generator/storehouse_generator
-		generator.generate_terrain(space)
+		var/datum/map_generator/storehouse_generator/generator = new/datum/map_generator/storehouse_generator
+		generator.generate_map()
+
+		var/list/turfs_to_clear = shippingmarket.get_path_to_market()
+		turfs_to_clear += station_repair.get_mass_driver_turfs()
+		generator.clear_walls(turfs_to_clear)
+
+		generator.generate_terrain(space, reuse_seed=TRUE)
 
 		logTheThing(LOG_ADMIN, ui.user, "added some storehouses to space.")
 		logTheThing(LOG_DIARY, ui.user, "added some storehouses to space.", "admin")

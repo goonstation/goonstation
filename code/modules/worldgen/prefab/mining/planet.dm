@@ -1,5 +1,3 @@
-#define PLANET_MAPBORDER 1
-
 TYPEINFO(/datum/mapPrefab/planet)
 	stored_as_subtypes = TRUE
 
@@ -170,7 +168,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 
 	birds
 		maxNum = 2
-		probability = 25
+		probability = 5
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_birds.dmm"
 		prefabSizeX = 5
 		prefabSizeY = 3
@@ -182,4 +180,17 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		prefabSizeX = 8
 		prefabSizeY = 6
 
-#undef PLANET_MAPBORDER
+	martian_cave
+		maxNum = 1
+		probability = 5
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_martian_cave.dmm"
+		prefabSizeX = 10
+		prefabSizeY = 9
+
+	martian_cave2
+		maxNum = 1
+		probability = 5
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_martian_cave2.dmm"
+		prefabSizeX = 10
+		prefabSizeY = 9
+		required_biomes = list(/datum/biome/mars, /datum/biome/desert)

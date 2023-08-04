@@ -38,6 +38,9 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 			var/obj/structure/flora = weighted_pick(flora_types)
 			new flora(gen_turf)
 
+	var/area/A = get_area(gen_turf)
+	A.store_biome(gen_turf, src.type)
+
 /datum/biome/mudlands
 	turf_type = /turf/unsimulated/floor/auto/dirt
 	flora_types = list(/obj/stone/random = 100, /obj/decal/fakeobjects/smallrocks = 100)

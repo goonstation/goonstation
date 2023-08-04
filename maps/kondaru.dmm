@@ -188,18 +188,6 @@
 	},
 /turf/space,
 /area/space)
-"aaH" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/machinery/light/small,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/hangar/main)
 "aaJ" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -16617,16 +16605,6 @@
 /obj/item/storage/box/cocktail_doodads,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
-"bkE" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/table/reinforced/auto,
-/obj/machinery/glass_recycler/bar,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/cafeteria)
 "bkI" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/specialroom/bar,
@@ -20717,15 +20695,6 @@
 	},
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
-"bCd" = (
-/obj/table/reinforced/chemistry/auto/firstaid,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_north,
-/obj/item/paper/labdrawertips,
-/turf/simulated/floor/purpleblack,
-/area/station/science/chemistry)
 "bCe" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
@@ -21718,20 +21687,6 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
-"bFe" = (
-/obj/table/reinforced/chemistry/auto/basicsup,
-/obj/machinery/glass_recycler/chemistry,
-/turf/simulated/floor/purpleblack/corner{
-	dir = 8
-	},
-/area/station/science/chemistry)
-"bFf" = (
-/obj/storage/secure/closet/research/chemical,
-/obj/machinery/light,
-/turf/simulated/floor/purpleblack{
-	dir = 1
-	},
-/area/station/science/chemistry)
 "bFg" = (
 /obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/purpleblack{
@@ -21762,23 +21717,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/station/science/chemistry)
-"bFl" = (
-/obj/table/reinforced/chemistry/auto/clericalsup,
-/obj/item/storage/toolbox/mechanical,
-/obj/machinery/light,
-/turf/simulated/floor/purpleblack{
-	dir = 1
-	},
-/area/station/science/chemistry)
-"bFm" = (
-/obj/table/reinforced/chemistry/auto/auxsup,
-/obj/item/paper/book/from_file/pharmacopia{
-	pixel_y = 5
-	},
-/turf/simulated/floor/purpleblack/corner{
-	dir = 1
-	},
 /area/station/science/chemistry)
 "bFn" = (
 /obj/disposalpipe/segment/mail/vertical,
@@ -22256,6 +22194,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/light_switch/north,
+/mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/bridge/hos)
 "bHk" = (
@@ -28302,23 +28241,6 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"cdE" = (
-/obj/item/reagent_containers/food/fish/bass,
-/obj/item/reagent_containers/food/fish/bass,
-/obj/item/reagent_containers/food/fish/carp,
-/obj/item/reagent_containers/food/fish/carp,
-/obj/item/reagent_containers/food/fish/salmon,
-/obj/item/reagent_containers/food/fish/salmon,
-/obj/storage/crate/freezer,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 9
-	},
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/catering)
 "cdF" = (
 /obj/stool/chair{
 	dir = 1
@@ -34789,15 +34711,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
-"eew" = (
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/disposalpipe/segment/horizontal,
-/obj/storage/secure/closet/civilian/ranch,
-/turf/simulated/floor/wood/seven,
-/area/station/ranch)
 "eeR" = (
 /obj/storage/crate,
 /turf/simulated/floor/plating,
@@ -34855,6 +34768,15 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/customs)
+"ehG" = (
+/obj/table/reinforced/chemistry/auto/firstaid,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/item/paper/labdrawertips,
+/turf/simulated/floor/purpleblack,
+/area/station/science/chemistry)
 "ejs" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37021,6 +36943,15 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
+"fSK" = (
+/obj/table/reinforced/chemistry/auto/auxsup,
+/obj/item/paper/book/from_file/pharmacopia{
+	pixel_y = 5
+	},
+/turf/simulated/floor/purpleblack/corner{
+	dir = 1
+	},
+/area/station/science/chemistry)
 "fTO" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment/vertical,
@@ -39614,6 +39545,23 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"hSJ" = (
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/storage/crate/freezer,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/catering)
 "hSM" = (
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/door/airlock/pyro{
@@ -45083,6 +45031,15 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/radio/news_office)
+"mnf" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/hangar/main)
 "mns" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -46485,6 +46442,13 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/station/quartermaster/office)
+"nBe" = (
+/obj/storage/secure/closet/research/chemical,
+/obj/machinery/light,
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/station/science/chemistry)
 "nBP" = (
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -46534,6 +46498,15 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/space)
+"nDL" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/storage/secure/closet/civilian/ranch,
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
 "nDM" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -53817,6 +53790,13 @@
 	dir = 9
 	},
 /area/station/maintenance/inner/east)
+"tuO" = (
+/obj/table/reinforced/chemistry/auto/basicsup,
+/obj/machinery/glass_recycler/chemistry,
+/turf/simulated/floor/purpleblack/corner{
+	dir = 8
+	},
+/area/station/science/chemistry)
 "tuS" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -55312,6 +55292,16 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"uED" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/table/reinforced/auto,
+/obj/machinery/glass_recycler/bar,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/cafeteria)
 "uEM" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/machinery/light/small{
@@ -55839,6 +55829,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
+"var" = (
+/obj/table/reinforced/chemistry/auto/clericalsup,
+/obj/item/storage/toolbox/mechanical,
+/obj/machinery/light,
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/station/science/chemistry)
 "vaG" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -96498,7 +96496,7 @@ uIw
 dpn
 bDe
 bEf
-bFe
+tuO
 bAW
 bAU
 qeU
@@ -96800,7 +96798,7 @@ bAW
 iys
 bDf
 bEg
-bFf
+nBe
 bAW
 bHr
 bIW
@@ -97401,7 +97399,7 @@ bvz
 geT
 bvz
 bAW
-bCd
+ehG
 bDh
 bEk
 bFh
@@ -98612,7 +98610,7 @@ bAW
 pzN
 bDl
 bPF
-bFl
+var
 cFJ
 bHv
 bJb
@@ -98914,7 +98912,7 @@ bAW
 bCi
 ioV
 bSD
-bFm
+fSK
 cdd
 bHv
 bJa
@@ -100348,7 +100346,7 @@ aay
 edo
 adi
 edo
-aaH
+mnf
 aeK
 afH
 afI
@@ -111591,7 +111589,7 @@ buI
 buI
 gjq
 cVE
-eew
+nDL
 ihJ
 dfb
 tah
@@ -116404,7 +116402,7 @@ xXJ
 aXS
 iaN
 bVU
-cdE
+hSJ
 cnS
 nbR
 bev
@@ -118828,7 +118826,7 @@ bow
 qYM
 qYM
 aZR
-bkE
+uED
 blP
 oRT
 cJN
