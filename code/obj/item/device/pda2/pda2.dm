@@ -295,6 +295,7 @@
 
 	bartender
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
+		setup_default_cartridge = /obj/item/device/pda2/cartridges/bartender
 
 	botanist
 		icon_state = "pda-hydro"
