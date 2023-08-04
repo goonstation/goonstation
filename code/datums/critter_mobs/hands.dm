@@ -21,6 +21,9 @@
 	var/cooldown_overlay = 0
 	var/mob/holder = null
 
+	/// Object for inhand sets the inhands of that item, for limbs with weapons etc
+	var/object_for_inhand = null
+
 	var/obj/item/parts/limbholder				// technically a dummy, do not set.
 
 	New()
