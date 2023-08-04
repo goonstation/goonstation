@@ -223,10 +223,10 @@
 				if (food_to_judge in range(1, src))
 					food_to_judge.set_loc(src.loc)
 					visible_message("<span class='alert'><b>[src]</b> stomps on [food_to_judge] [pick("with glee", "with the wrath of a thousand overworked line-cooks", "with cold, uncaring efficiency")].</span>")
-				animate_stomp(src)
-				SPAWN(0.5 SECONDS)
-					if (food_to_judge in range(1, src))
-						qdel(food_to_judge)
+					animate_stomp(src)
+					SPAWN(0.5 SECONDS)
+						if (food_to_judge in range(1, src))
+							qdel(food_to_judge)
 			else
 				speak(pick("GET THIS SHIT OUT OF MY SIGHT!",
 				"I CANT FUCKING LOOK AT THIS!",
