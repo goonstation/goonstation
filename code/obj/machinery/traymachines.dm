@@ -543,10 +543,8 @@ ABSTRACT_TYPE(/obj/machine_tray)
 									var/datum/effects/system/bad_smoke_spread/smoke_effect = new /datum/effects/system/bad_smoke_spread/(T)
 									smoke_effect.set_up(15, 0, T, null, "#000000")
 									smoke_effect.start()
-								src.locked = FALSE
-								power_usage = initial(power_usage)
-								playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-								update()
+								end_tanning()
+
 								return
 				if (emagged && isdead(M))
 					M.remove()
@@ -554,12 +552,14 @@ ABSTRACT_TYPE(/obj/machine_tray)
 
 		SPAWN(src.settime)
 			if (src)
-				src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
-				src.locked = FALSE
-				power_usage = initial(power_usage)
-				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-				update() //clear the active sprite
+				end_tanning()
 
+	proc/end_tanning()
+		src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
+		src.locked = FALSE
+		power_usage = initial(power_usage)
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		update()
 
 //-----------------------------------------------------
 /*~ Tanning Bed Tray ~*/
