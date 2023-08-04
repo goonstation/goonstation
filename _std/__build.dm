@@ -127,6 +127,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_CLARION			// Used to be Destiny's Alt. By Dionsu and a69andahalf.
 //#define MAP_OVERRIDE_OSHAN				// Oshan by committee
 //#define MAP_OVERRIDE_NADIR				// Nadir Extraction Site by Kubius
+//#define MAP_OVERRIDE_DEVTEST			// Developer Testing map by cringe
 
 //-------Discontinued or gimmick maps:
 //#define MAP_OVERRIDE_MANTA				// manta map
