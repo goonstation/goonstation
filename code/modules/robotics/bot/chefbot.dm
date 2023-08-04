@@ -9,7 +9,6 @@
 	on = TRUE
 	health = 25
 	var/raging = 0
-	var/list/calledout = list()
 	no_camera = 1
 	/// Doesn't feel right to have this guy *constantly* flipping its lid like a methed up graytider
 	dynamic_processing = 0
@@ -53,10 +52,10 @@
 		var/is_thechef_the_chef = 0
 		var/how_shit = FOOD_QUALITY_HORSESHIT //ITS ALL DONKEY PISS UNTIL I SAY OTHERWISE
 		for (var/obj/item/reagent_containers/food/snacks/probablyshitfood in view(7, src))
-			if (probablyshitfood in calledout)
+			if (probablyshitfood.is_judged)
 				continue
 			food_to_judge = probablyshitfood
-			calledout += food_to_judge //judgment is FINAL. We only judge once.
+			probablyshitfood.is_judged = TRUE //judgment is FINAL. We only judge once.
 			break
 		if (!food_to_judge)
 			if (prob(30))
@@ -364,7 +363,6 @@
 
 /obj/machinery/bot/chefbot/explode()
 	if(src.exploding) return
-	src.calledout = null
 	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)

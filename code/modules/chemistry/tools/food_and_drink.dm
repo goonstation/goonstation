@@ -131,6 +131,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	var/dropped_item = null
 
+	///Has a chefbot judged this food already?
+	var/is_judged = FALSE
+
 	// Used in Special Order events
 	var/meal_time_flags = 0
 
