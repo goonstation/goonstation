@@ -7,7 +7,6 @@ proc/load_morrigan()
 
 ///A modified telepad
 /obj/machinery/networked/telepad/morrigan
-	var/key = "<insert poetic passkey here>"
 	device_tag = "PNET_S_TELEPAD_PRISONER"
 //yes this is a lot of parsing boilerplate, blame years of machinery/networked being awful
 /obj/machinery/networked/telepad/morrigan/receive_signal(datum/signal/signal)
@@ -35,16 +34,18 @@ proc/load_morrigan()
 					if (ON_COOLDOWN(src, "transmit", 10 SECONDS))
 						message_host("command=nack") //TODO: handle this maybe
 						return
-					// var/datum/computer/file/text/key_file = signal.data_file
-					// if (!istype(key_file) || key_file.asText() != src.key)
-					// 	message_host("command=nack")
-					// 	return
 					var/turf/target_turf = get_turf(landmarks[LANDMARK_MORRIGAN_START][1])
 					var/turf/crate_turf = get_turf(landmarks[LANDMARK_MORRIGAN_CRATE][1])
 					for (var/mob/living/M in get_turf(src))
 						var/obj/storage/crate/crate = new(crate_turf)
 						M.unequip_all(unequip_to = crate)
+
 						do_teleport(M, target_turf, use_teleblocks = FALSE)
+
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							H.equip_new_if_possible(/obj/item/clothing/shoes/orange, SLOT_SHOES)
+							H.equip_new_if_possible(/obj/item/clothing/under/misc, SLOT_W_UNIFORM)
 
 					showswirl_out(src.loc)
 					leaveresidual(src.loc)
