@@ -34,7 +34,7 @@
 	speechverb_ask = "chitters"
 	speechverb_gasp = "rattles"
 	speechverb_stammer = "click-clacks"
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	can_throw = TRUE
 	can_grab = TRUE
 	can_disarm = TRUE
@@ -123,7 +123,6 @@
 		return ..()
 
 	death()
-		src.can_lie = FALSE
 		src.reagents.add_reagent("atropine", 50, null)
 		src.reagents.add_reagent("haloperidol", 50, null)
 		return ..()
@@ -249,10 +248,6 @@
 		HH.name = "mouth"
 		HH.limb_name = "teeth"
 		HH.can_hold_items = FALSE
-
-	death()
-		src.can_lie = FALSE
-		..()
 
 	proc/aftereat()
 		var/datum/targetable/critter/vomit_ore/vomit = src.abilityHolder.getAbility(/datum/targetable/critter/vomit_ore)

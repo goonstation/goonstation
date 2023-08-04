@@ -31,7 +31,7 @@
 		switch (command)
 			if ("index")
 				var/group = null
-				if (initlist.len > 1)
+				if (length(initlist) > 1)
 					group = initlist[2]
 				var/list/mail_subjects = list_mail_subjects(user_name, group)
 				var/message = "mail_index"
@@ -42,14 +42,14 @@
 			if ("get")
 				var/index = 0
 				var/group = null
-				if (initlist.len > 1)
+				if (length(initlist) > 1)
 					index = max( round(text2num_safe(initlist[2])), 1)
 
-					if (initlist.len > 2)
+					if (length(initlist) > 2)
 						group = initlist[3]
 
 					var/list/mailList = list_mail_for(user_name, group)
-					if (!istype(mailList) || mailList.len < index)
+					if (!istype(mailList) || length(mailList) < index)
 						mainframe_prog_exit
 						return
 
@@ -59,7 +59,7 @@
 						message_user("mail_entry",null,targetMail)
 
 			if ("send")
-				if (initlist.len > 1)
+				if (length(initlist) > 1)
 					var/sentMailPath = initlist[2]
 					if (!dd_hasprefix(sentMailPath, "/"))
 						sentMailPath = "/[sentMailPath]"
@@ -76,14 +76,14 @@
 			if ("delete")
 				var/index = 0
 				var/group = null
-				if (initlist.len > 1)
+				if (length(initlist) > 1)
 					index = max( round(text2num_safe(initlist[2])), 1)
 
-					if (initlist.len > 2)
+					if (length(initlist) > 2)
 						group = initlist[3]
 
 					var/list/mailList = list_mail_for(user_name, group)
-					if (!istype(mailList) || mailList.len < index)
+					if (!istype(mailList) || length(mailList) < index)
 						mainframe_prog_exit
 						return
 
@@ -101,7 +101,7 @@
 
 	proc
 		format_outgoing_mail(var/datum/computer/file/record/mail)
-			if (!istype(mail) || !mail.fields || (mail.fields.len < 6))
+			if (!istype(mail) || !mail.fields || (length(mail.fields) < 6))
 				return null
 
 			var/datum/computer/file/record/newMail = mail.copy_file()
@@ -222,7 +222,7 @@
 				if (!check_read_permission(emailRec, useracc))
 					continue
 
-				if (!emailRec.fields || emailRec.fields.len < 6)
+				if (!emailRec.fields || length(emailRec.fields) < 6)
 					continue
 
 				if (lowertext(emailRec.fields[2]) == "*all")

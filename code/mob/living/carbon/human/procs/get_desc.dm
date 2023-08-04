@@ -15,7 +15,7 @@
 	. = list()
 	. += ..()
 	if (isalive(usr))
-		. += "<br><span class='notice'>You look closely at <B>[src.name]</B>.</span>"
+		. += "<br><span class='notice'>You look closely at <B>[src.name] ([src.get_pronouns()])</B>.</span>"
 		sleep(GET_DIST(usr.client.eye, src) + 1)
 		if (!usr.client.eye)
 			return // heh heh
@@ -29,13 +29,11 @@
 			. = "<br>[src.bioHolder.mobAppearance.flavor_text]"
 		catch
 			//nop
-
-	. +=  "<br><span class='notice'>*---------*</span>"
-
 	// crappy hack because you can't do \his[src] etc
 	var/t_his = his_or_her(src)
 	var/t_him = him_or_her(src)
 
+	. +=  "<br><span class='notice'>*---------*</span>"
 	var/datum/ailment_data/found = src.find_ailment_by_type(/datum/ailment/disability/memetic_madness)
 	if (!ignore_checks && found)
 		if (!ishuman(usr))
@@ -394,7 +392,7 @@
 		var/count = 0
 		for (var/obj/O in src.juggling)
 			count ++
-			if (src.juggling.len > 1 && count == src.juggling.len)
+			if (length(src.juggling) > 1 && count == src.juggling.len)
 				items += " and [O]"
 				continue
 			items += ", [O]"

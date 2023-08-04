@@ -125,7 +125,7 @@
 	blockGaps = 2
 	stability_loss = 5
 	ability_path = /datum/targetable/geneticsAbility/mattereater
-	var/target_path = /obj/item/
+	var/target_path = /obj/item
 
 /datum/targetable/geneticsAbility/mattereater
 	name = "Matter Eater"
@@ -1246,9 +1246,9 @@
 
 		var/obj/the_object = target
 
-		var/base_path = /obj/item/
+		var/base_path = /obj/item
 		if (linked_power.power > 1)
-			base_path = /obj/
+			base_path = /obj
 
 		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
 
@@ -1283,7 +1283,7 @@
 				the_object.setMaterial(getMaterial(linked.transmute_material))
 			else
 				owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to gold!</span>")
-				the_object.setMaterial(getMaterial("gold"), copy = FALSE)
+				the_object.setMaterial(getMaterial("gold"))
 		linked_power.using = 0
 
 	cast_misfire()
@@ -1292,9 +1292,9 @@
 		if(linked_power.using)
 			return 1
 
-		var/base_path = /obj/item/
+		var/base_path = /obj/item
 		if (linked_power.power > 1)
-			base_path = /obj/
+			base_path = /obj
 
 		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
 		if (!items.len)
@@ -1319,7 +1319,7 @@
 			owner.visible_message("[owner] touches [the_object].")
 		else
 			owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to flesh!</span>")
-			the_object.setMaterial(getMaterial("flesh"), copy = FALSE)
+			the_object.setMaterial(getMaterial("flesh"))
 		linked_power.using = 0
 		return
 

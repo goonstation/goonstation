@@ -45,7 +45,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 	proc/create(var/mob/creator)
 		var/obj/storage/S
-		if (!ispath(containertype) && contains.len > 1)
+		if (!ispath(containertype) && length(contains) > 1)
 			containertype = text2path(containertype)
 			if (!ispath(containertype))
 				containertype = /obj/storage/crate // this did not need to be a string
@@ -1916,6 +1916,15 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/crate/wooden
 
 //Western
+/datum/supply_packs/electricguitar
+	name = "Electric Guitar Kit"
+	desc = "1x Electric Guitar"
+	category = "Civilian Department"
+	cost = 2000
+	containername = "Electric Guitar Kit"
+	contains = list(/obj/item/instrument/electricguitar)
+	containertype = /obj/storage/crate/wooden
+
 
 /datum/supply_packs/west_coats
 	name = "Dusty Old Coats"

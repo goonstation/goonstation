@@ -280,6 +280,19 @@ obj/decal/fakeobjects/cargopad
 	anchored = UNANCHORED
 	density = 1
 
+/obj/decal/fakeobjects/robot/security
+	name = "robot"
+	real_name = "robot"
+	desc = "A Security Robot, something seems a bit off."
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "mars_sec_bot"
+
+	hugo
+		name = "HUGO"
+
+	henk
+		name = "HENK"
+
 /obj/decal/fakeobjects/apc_broken
 	name = "broken APC"
 	desc = "A smashed local power unit."
@@ -363,7 +376,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/pipe
 	name = "rusted pipe"
 	desc = "Good riddance."
-	icon = 'icons/obj/atmospherics/pipes/regular_pipe.dmi'
+	icon = 'icons/obj/atmospherics/pipes/pipe.dmi'
 	icon_state = "intact"
 	anchored = ANCHORED
 	layer = DECAL_LAYER

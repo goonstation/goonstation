@@ -82,7 +82,7 @@
 			for (var/obj/critter/C in view(5, src))
 				if (C.alive)
 					targets += C
-		if (targets.len > 0)
+		if (length(targets) > 0)
 			if (!isPopping())
 				if (isDown())
 					popUp()
@@ -325,16 +325,16 @@ TYPEINFO(/obj/item/material_shaper)
 	proc/determine_material(var/obj/item/material_piece/D, mob/user as mob)
 		var/datum/material/DM = D.material
 		var/which = null
-		if ((DM.material_flags & MATERIAL_METAL) && (DM.material_flags & MATERIAL_CRYSTAL))
+		if ((DM.getMaterialFlags() & MATERIAL_METAL) && (DM.getMaterialFlags() & MATERIAL_CRYSTAL))
 			var/be_metal = 0
 			var/be_glass = 0
 			if (!metal)
 				be_metal = 1
-			else if (isSameMaterial(metal, DM))
+			else if (metal.isSameMaterial(DM))
 				be_metal = 1
 			if (!glass)
 				be_glass = 1
-			else if (isSameMaterial(glass, DM))
+			else if (glass.isSameMaterial(DM))
 				be_glass = 1
 			if (be_metal && be_glass)
 				which = input("Use [D] as?", "Pick", null) in list("metal", "glass")
@@ -346,19 +346,19 @@ TYPEINFO(/obj/item/material_shaper)
 				playsound(src.loc, sound_grump, 40, 1)
 				boutput(user, "<span class='alert'>[D] incompatible with current metal or glass.</span>")
 				return null
-		else if (DM.material_flags & MATERIAL_METAL)
+		else if (DM.getMaterialFlags() & MATERIAL_METAL)
 			if (!metal)
 				which = "metal"
-			else if (isSameMaterial(metal, DM))
+			else if (metal.isSameMaterial(DM))
 				which = "metal"
 			else
 				playsound(src.loc, sound_grump, 40, 1)
 				boutput(user, "<span class='alert'>[D] incompatible with current metal.</span>")
 				return null
-		else if (DM.material_flags & MATERIAL_CRYSTAL)
+		else if (DM.getMaterialFlags() & MATERIAL_CRYSTAL)
 			if (!glass)
 				which = "glass"
-			else if (isSameMaterial(glass, DM))
+			else if (glass.isSameMaterial(DM))
 				which = "glass"
 			else
 				playsound(src.loc, sound_grump, 40, 1)
@@ -395,12 +395,12 @@ TYPEINFO(/obj/item/material_shaper)
 	examine()
 		. = ..()
 		if (metal)
-			. += "<span class='notice'>Metal: [metal_count] units of [metal.name].</span>"
+			. += "<span class='notice'>Metal: [metal_count] units of [metal.getName()].</span>"
 		else
 			. += "<span class='alert'>Metal: 0 units.</span>"
 
 		if (glass)
-			. += "<span class='notice'>Glass: [glass_count] units of [glass.name].</span>"
+			. += "<span class='notice'>Glass: [glass_count] units of [glass.getName()].</span>"
 		else
 			. += "<span class='alert'>Glass: 0 units</span>"
 
@@ -483,7 +483,7 @@ TYPEINFO(/obj/item/material_shaper)
 				var/datum/material/MT = M.material
 				if (!MT)
 					continue
-				if (isSameMaterial(MT, DM))
+				if (MT.isSameMaterial(DM))
 					playsound(src.loc, sound_process, 40, 1)
 					if (which == "metal")
 						metal_count += 10
@@ -575,7 +575,7 @@ TYPEINFO(/obj/item/room_planner)
 		// selectedtype gets used as our iconstate for floors or the key to the lists for walls
 		if (mode == "floors")
 			selectedtype = null
-			states += icon_states('icons/turf/construction_floors.dmi')
+			states += (icon_states('icons/turf/construction_floors.dmi') - list("engine", "catwalk", "catwalk_narrow", "catwalk_cross"))
 			selectedicon = 'icons/turf/construction_floors.dmi'
 			var/newtype = tgui_input_list(message="What kind?", title="Marking", items=states)
 			if(newtype)
