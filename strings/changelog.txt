@@ -1,4 +1,9 @@
 
+(t)fri aug 04 23
+(u)DimWhat
+(p)15171
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added a bunch more clothing sprites for monkeys, ook!
 (t)thu aug 03 23
 (u)Wisemonster
 (p)14825
