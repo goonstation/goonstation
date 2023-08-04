@@ -36936,20 +36936,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
-"pSi" = (
-/obj/stool/chair/office/green{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/mob/living/critter/small_animal/dog/george/orwell,
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 6
-	},
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
 "pSv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -48040,6 +48026,20 @@
 	dir = 8
 	},
 /area/station/medical/head)
+"uOY" = (
+/obj/stool/chair/office/green{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/mob/living/critter/small_animal/dog/george/orwell,
+/turf/simulated/floor/carpet/green/fancy/edge{
+	dir = 6
+	},
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "uPi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -96055,7 +96055,7 @@ wQJ
 wwl
 rzJ
 cQE
-pSi
+uOY
 tks
 gow
 gow

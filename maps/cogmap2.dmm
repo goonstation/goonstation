@@ -27681,18 +27681,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blueblack,
 /area/station/hallway/primary/west)
-"byy" = (
-/obj/shrub{
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
-/obj/item/dice/d100,
-/obj/item/reagent_containers/food/drinks/bottle/ntbrew,
-/obj/machinery/light_switch/west,
-/mob/living/critter/small_animal/dog/george/orwell,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
 "byz" = (
 /obj/vehicle/segway,
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
@@ -63152,6 +63140,18 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
+"dKc" = (
+/obj/shrub{
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/obj/item/dice/d100,
+/obj/item/reagent_containers/food/drinks/bottle/ntbrew,
+/obj/machinery/light_switch/west,
+/mob/living/critter/small_animal/dog/george/orwell,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/heads)
 "dNM" = (
 /obj/table/auto,
 /obj/item/disk/data/cartridge/captain,
@@ -142345,7 +142345,7 @@ brf
 bsS
 buJ
 bwy
-byy
+dKc
 bAc
 bBJ
 bDF
