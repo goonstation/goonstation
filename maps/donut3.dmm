@@ -9810,6 +9810,7 @@
 	tag = ""
 	},
 /obj/machinery/light_switch/east,
+/mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/carpet/red/fancy/narrow/north,
 /area/station/crew_quarters/heads)
 "cPO" = (
