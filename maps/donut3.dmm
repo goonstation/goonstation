@@ -60288,8 +60288,7 @@
 "ssN" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post";
-	dir = 4
+	name = "Listening Post"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
