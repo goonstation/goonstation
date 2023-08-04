@@ -1,5 +1,9 @@
 
 (t)thu aug 03 23
+(u)Garash
+(p)14766
+(e)🆕🔄📄|C-Feature, C-Rework, A-UI
+(+)New snappier UI for the Identification Computers, go commit ID fraud today!
 (u)Bartimeus973
 (p)14757
 (e)🆕🎨💅💊|C-Feature, C-Sprites, C-QoL, A-Medical
