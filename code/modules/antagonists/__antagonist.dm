@@ -7,6 +7,10 @@ ABSTRACT_TYPE(/datum/antagonist)
 	/// The icon state that should be used for the antagonist overlay for this antagonist type. Icons may be found in `icons/mob/antag_overlays.dmi`.
 	var/image/antagonist_icon = "generic"
 
+	/// Used to show a status effect that tells you that you are an antagonist
+	var/datum/statusEffect/antagonist/antag_status_effect = null
+	var/antag_status_icon_state = "antagonist-generic"
+
 	/// If TRUE, this antagonist has an associated browser window (ideally with the same ID as itself) that will be displayed in do_popup() by default.
 	var/has_info_popup = TRUE
 	/// If FALSE, this antagonist will not be displayed at the end of the round.
@@ -97,6 +101,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 		if (!src.pseudo)
 			src.remove_from_image_groups()
+			src.remove_antagonist_status_effect()
 
 			if (!src.silent)
 				src.announce_removal(source)
@@ -138,6 +143,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 		src.add_to_image_groups()
 
+		src.add_antagonist_status_effect()
+
 		if (src.faction)
 			src.owner.current?.faction |= src.faction
 
@@ -170,6 +177,19 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 		if (antagonists_see_each_other)
 			antagonist_image_group.remove_mind(src.owner)
+
+	proc/add_antagonist_status_effect()
+		if (!src.antag_status_icon_state)
+			return
+
+		src.antag_status_effect = src.owner.current.setStatus("antagonist", null)
+		src.antag_status_effect.icon_state = src.antag_status_icon_state
+
+	proc/remove_antagonist_status_effect()
+		if (!src.antag_status_icon_state)
+			return
+		src.antag_status_effect = src.owner.current.delStatus(src.antag_status_effect)
+
 
 	/// Equip the antagonist with abilities, custom equipment, and so on.
 	proc/give_equipment()

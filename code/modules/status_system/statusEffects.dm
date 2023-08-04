@@ -2424,3 +2424,20 @@
 	name = "De-revving"
 	desc = "An implant is attempting to convert you from the revolution! Remove the implant!"
 	icon_state = "mindhack"
+
+
+/datum/statusEffect/antagonist
+	id = "antagonist"
+	name = "Antagonist"
+	desc = "Time For Crime"
+	icon_state = "antagonist-"
+	duration = null
+	unique = FALSE
+
+	getTooltip()
+		. = "You are an antagonist of some sort! Click to see your notes with your objectives."
+
+	clicked(list/params)
+		if (ismob(owner))
+			var/mob/M = owner
+			M.mind.show_memory(M)
