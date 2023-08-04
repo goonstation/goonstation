@@ -27690,6 +27690,7 @@
 /obj/item/dice/d100,
 /obj/item/reagent_containers/food/drinks/bottle/ntbrew,
 /obj/machinery/light_switch/west,
+/mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "byz" = (
