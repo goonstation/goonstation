@@ -132,11 +132,17 @@
 	proc/grow_up()
 		if (!src.babyspider || !ispath(src.adultpath))
 			return 0
+		var/has_implant = FALSE
+		//antag critter spiders have a maintenance implant. Transfer it when they grow up
+		for (var/obj/item/implant/access/infinite/assistant/I in src.contents)
+			has_implant = TRUE
 		src.unequip_all()
 		src.visible_message("<span class='alert'><b>[src] grows up!</b></span>",\
 		"<span class='notice'><b>You grow up!</b></span>")
 		SPAWN(0)
-			src.make_critter(src.adultpath)
+			var/mob/new_mob = src.make_critter(src.adultpath)
+			if (has_implant)
+				new /obj/item/implant/access/infinite/assistant(new_mob)
 
 	valid_target(mob/living/C)
 		if (C.bioHolder.HasEffect("husk")) return FALSE
