@@ -5111,14 +5111,6 @@
 "asl" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
-"aso" = (
-/obj/machinery/chem_dispenser/chef,
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge2";
-	dir = 1
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "asp" = (
 /obj/storage/secure/closet/civilian/kitchen,
 /obj/machinery/light,
@@ -18187,36 +18179,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
-"bbc" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/stool/bed,
-/obj/item/sticker/ribbon/first_place{
-	pixel_x = -1
-	},
-/obj/item/sticker/ribbon/second_place{
-	pixel_x = -6
-	},
-/obj/item/sticker/ribbon/third_place{
-	pixel_x = -10
-	},
-/obj/item/sticker/ribbon/participant{
-	pixel_x = -14
-	},
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "green";
-	icon_state = "bedsheet-green"
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
 "bbd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint)
@@ -26493,14 +26455,6 @@
 "bEU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/south)
-"bEX" = (
-/obj/machinery/sleeperscanner{
-	pixel_x = 25
-	},
-/turf/simulated/floor/grey/side{
-	dir = 8
-	},
-/area/listeningpost)
 "bFo" = (
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -40775,14 +40729,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
-"czG" = (
-/obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
-	name = "Listening Post";
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/listeningpost)
 "czH" = (
 /turf/simulated/floor/stairs{
 	dir = 8
@@ -42213,14 +42159,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/storage/primary)
-"cXC" = (
-/obj/machinery/sleeperscanner{
-	pixel_y = 25
-	},
-/turf/simulated/floor/stairs{
-	dir = 8
-	},
-/area/listeningpost)
 "cYa" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -45147,12 +45085,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"frx" = (
-/obj/machinery/sleeperscanner{
-	pixel_x = 25
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "frQ" = (
 /obj/stool/bed,
 /obj/cable{
@@ -49841,6 +49773,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
+"jOq" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 25
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "jOu" = (
 /obj/storage/cart/hotdog{
 	req_access_txt = "28"
@@ -51253,6 +51193,12 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
+"liH" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 25
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "ljb" = (
 /obj/machinery/drone_recharger,
 /obj/random_item_spawner/junk/few,
@@ -55761,6 +55707,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
+"puI" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
+	name = "Listening Post";
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/listeningpost)
 "puR" = (
 /obj/item/cigbutt,
 /obj/decal/cleanable/dirt,
@@ -60227,6 +60181,14 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/ranch)
+"trk" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = 25
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "tse" = (
 /obj/storage/crate/bin{
 	desc = "Theoretically, items that are lost by a person are placed here so that the person may come and find them. This never happens.";
@@ -60848,6 +60810,14 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/science/lab)
+"tVg" = (
+/obj/machinery/chem_dispenser/chef,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge2"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "tVZ" = (
 /obj/machinery/door/window/eastleft,
 /obj/item/storage/toilet{
@@ -65594,6 +65564,37 @@
 /obj/decal/poster/wallsign/security,
 /turf/simulated/floor/plating,
 /area/station/security/secwing)
+"yit" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/obj/stool/bed,
+/obj/item/sticker/ribbon/first_place{
+	pixel_x = -1
+	},
+/obj/item/sticker/ribbon/second_place{
+	pixel_x = -6
+	},
+/obj/item/sticker/ribbon/third_place{
+	pixel_x = -10
+	},
+/obj/item/sticker/ribbon/participant{
+	pixel_x = -14
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "green";
+	icon_state = "bedsheet-green"
+	},
+/mob/living/critter/small_animal/dog/george/orwell,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/heads)
 "yiu" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -94474,7 +94475,7 @@ aQR
 aYc
 aKd
 aZT
-bbc
+yit
 bbU
 bdb
 bea
@@ -115887,7 +115888,7 @@ ihb
 wWS
 alg
 alg
-aso
+tVg
 atC
 iVh
 auR
@@ -144742,7 +144743,7 @@ aap
 czz
 czz
 czN
-frx
+liH
 sAI
 cAj
 cAr
@@ -145042,7 +145043,7 @@ cBQ
 cBQ
 cBQ
 rFM
-czG
+puI
 rFM
 sAI
 sAI
@@ -145344,7 +145345,7 @@ sAI
 sAI
 sAI
 sAI
-cXC
+trk
 sAI
 czW
 sAI
@@ -145646,7 +145647,7 @@ sAI
 czk
 czr
 sAI
-czG
+puI
 sAI
 czX
 cAb
@@ -146252,7 +146253,7 @@ czt
 czB
 czJ
 czP
-bEX
+jOq
 cAd
 cAm
 cAv

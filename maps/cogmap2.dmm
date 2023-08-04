@@ -27681,17 +27681,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blueblack,
 /area/station/hallway/primary/west)
-"byy" = (
-/obj/shrub{
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
-/obj/item/dice/d100,
-/obj/item/reagent_containers/food/drinks/bottle/ntbrew,
-/obj/machinery/light_switch/west,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
 "byz" = (
 /obj/vehicle/segway,
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
@@ -62437,14 +62426,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
-"dnw" = (
-/obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
-	name = "Listening Post";
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/listeningpost)
 "dnx" = (
 /turf/simulated/floor/stairs{
 	dir = 8
@@ -63996,6 +63977,18 @@
 	dir = 6
 	},
 /area/research_outpost)
+"fdP" = (
+/obj/shrub{
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/obj/item/dice/d100,
+/obj/item/reagent_containers/food/drinks/bottle/ntbrew,
+/obj/machinery/light_switch/west,
+/mob/living/critter/small_animal/dog/george/orwell,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/heads)
 "fht" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -65119,12 +65112,6 @@
 	dir = 4
 	},
 /area/station/catwalk/south)
-"hel" = (
-/obj/machinery/sleeperscanner{
-	pixel_y = -25
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "heQ" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -66427,14 +66414,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/checkpoint/customs)
-"iVA" = (
-/obj/machinery/sleeperscanner{
-	pixel_y = 25
-	},
-/turf/simulated/floor/stairs{
-	dir = 8
-	},
-/area/listeningpost)
 "iYc" = (
 /obj/machinery/door/airlock/pyro/engineering,
 /obj/cable{
@@ -67544,6 +67523,12 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/brig)
+"krO" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = -25
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "ksI" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -68238,6 +68223,14 @@
 /obj/machinery/light/traffic_light/trader_left/delay3,
 /turf/space,
 /area/space)
+"lrF" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = 25
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "lsh" = (
 /obj/cable/brown{
 	icon_state = "4-8"
@@ -69605,6 +69598,14 @@
 	},
 /turf/simulated/floor/airless/plating/damaged3,
 /area/station/mining/magnet)
+"nru" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
+	name = "Listening Post";
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/listeningpost)
 "nuC" = (
 /obj/table/auto,
 /obj/decal/cleanable/dirt,
@@ -70302,6 +70303,14 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/medical/medbay)
+"oBz" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 25
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "oCV" = (
 /obj/machinery/status_display,
 /turf/simulated/wall/auto/supernorn,
@@ -74975,14 +74984,6 @@
 	dir = 5
 	},
 /area/station/catwalk/south)
-"vTB" = (
-/obj/machinery/sleeperscanner{
-	pixel_x = 25
-	},
-/turf/simulated/floor/grey/side{
-	dir = 8
-	},
-/area/listeningpost)
 "vUy" = (
 /obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
@@ -142344,7 +142345,7 @@ brf
 bsS
 buJ
 bwy
-byy
+fdP
 bAc
 bBJ
 bDF
@@ -155451,7 +155452,7 @@ aab
 aaF
 aan
 aan
-hel
+krO
 dnA
 dnR
 dnZ
@@ -155752,7 +155753,7 @@ aab
 aab
 aab
 dnq
-dnw
+nru
 dnq
 dnA
 dnS
@@ -156054,7 +156055,7 @@ dmJ
 dmJ
 dmJ
 dmJ
-iVA
+lrF
 dnA
 dnA
 dnT
@@ -156356,7 +156357,7 @@ dmJ
 dmV
 dnf
 dmJ
-dnw
+nru
 dnA
 dnL
 dnU
@@ -156962,7 +156963,7 @@ dnh
 dnr
 dnz
 dnF
-vTB
+oBz
 dnW
 dod
 dnN

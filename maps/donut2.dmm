@@ -409,15 +409,6 @@
 	icon_state = "ast1"
 	},
 /area/space)
-"abg" = (
-/obj/machinery/sleeperscanner{
-	pixel_x = 25
-	},
-/turf/simulated/floor/plating/airless{
-	dir = 10;
-	icon_state = "ast1"
-	},
-/area/space)
 "abh" = (
 /obj/storage/closet/syndicate/personal,
 /obj/decal/stripe_caution,
@@ -8901,13 +8892,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"aHM" = (
-/obj/disposalpipe/junction{
-	icon_state = "pipe-j2";
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
 "aHN" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -15015,13 +14999,6 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
-"bee" = (
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fgreen2"
-	},
-/area/station/crew_quarters/heads)
 "bef" = (
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -19196,19 +19173,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
-"bwU" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/disposalpipe/switch_junction{
-	mail_tag = "chief_engineer";
-	name = "chief engineer mail router";
-	dir = 8
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/hallway/primary/south)
 "bwV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -22620,6 +22584,15 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"bMU" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 25
+	},
+/turf/simulated/floor/plating/airless{
+	dir = 10;
+	icon_state = "ast1"
+	},
+/area/space)
 "bNh" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass{
@@ -25403,14 +25376,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
-"dXB" = (
-/obj/machinery/sleeperscanner{
-	pixel_x = 25
-	},
-/turf/simulated/floor/grey/side{
-	dir = 8
-	},
-/area/listeningpost)
 "dXO" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -26024,15 +25989,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"erz" = (
-/obj/decal/poster/wallsign/poster_human{
-	pixel_y = 30;
-	pixel_x = 5
-	},
-/turf/simulated/floor/escape{
-	dir = 1
-	},
-/area/station/hallway/secondary/exit)
 "erC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -30014,6 +29970,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"hzy" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 25
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "hzE" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -30380,14 +30344,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
-"hSA" = (
-/obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
-	name = "Listening Post";
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/listeningpost)
 "hTz" = (
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor,
@@ -33070,6 +33026,28 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
+"jVn" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/telepad,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/telepad,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/mob/living/carbon/human/npc/monkey/albert,
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
 "jVz" = (
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
@@ -35038,14 +35016,6 @@
 "lqj" = (
 /turf/simulated/wall/false_wall,
 /area/station/maintenance/southwest)
-"lqU" = (
-/obj/machinery/sleeperscanner{
-	pixel_y = 25
-	},
-/turf/simulated/floor/stairs{
-	dir = 8
-	},
-/area/listeningpost)
 "lrb" = (
 /obj/item/parts/human_parts/arm/left,
 /obj/decal/cleanable/blood/splatter{
@@ -38196,23 +38166,6 @@
 /obj/vehicle/segway,
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/crew_quarters/courtroom)
-"nIw" = (
-/obj/table/auto,
-/obj/item/storage/firstaid/regular{
-	pixel_y = 6;
-	pixel_x = 6
-	},
-/obj/item/device/gps{
-	pixel_y = 4
-	},
-/obj/item/device/gps{
-	pixel_y = 2
-	},
-/obj/item/device/gps,
-/obj/disposalpipe/segment/mail,
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/orangeblack/side/white,
-/area/station/science/teleporter)
 "nIG" = (
 /obj/window_blinds/cog2,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -38806,6 +38759,15 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/maintenance/west)
+"ocq" = (
+/obj/decal/poster/wallsign/poster_human{
+	pixel_x = 5;
+	pixel_y = 30
+	},
+/turf/simulated/floor/escape{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "ocW" = (
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -40407,19 +40369,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
-"ple" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/telepad,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable,
-/mob/living/carbon/human/npc/monkey/albert,
-/turf/simulated/floor/engine,
-/area/station/science/teleporter)
 "pli" = (
 /obj/item/raw_material/cobryl,
 /obj/item/raw_material/pharosium,
@@ -40545,6 +40494,18 @@
 /obj/machinery/drone_recharger/factory,
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
+"psE" = (
+/obj/machinery/light_switch/west{
+	pixel_y = 6
+	},
+/obj/displaycase{
+	displayed = new/obj/item/captaingun()
+	},
+/obj/blind_switch/area/west{
+	pixel_y = -6
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "psJ" = (
 /obj/machinery/shower{
 	dir = 8;
@@ -41258,6 +41219,13 @@
 	},
 /turf/space,
 /area/space)
+"pSJ" = (
+/obj/disposalpipe/junction{
+	dir = 4;
+	icon_state = "pipe-j2"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "pSU" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -43502,6 +43470,23 @@
 /obj/decal/poster/wallsign/stencil/right/h,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
+"rAA" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/device/gps{
+	pixel_y = 4
+	},
+/obj/item/device/gps{
+	pixel_y = 2
+	},
+/obj/item/device/gps,
+/obj/disposalpipe/segment/mail,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/orangeblack/side/white,
+/area/station/science/teleporter)
 "rAC" = (
 /obj/table/glass/auto,
 /obj/item/paper_bin,
@@ -46131,6 +46116,14 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/stockex)
+"tou" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
+	name = "Listening Post";
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/listeningpost)
 "toQ" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -46542,6 +46535,14 @@
 	dir = 4
 	},
 /area/station/medical/medbay/surgery)
+"tGe" = (
+/obj/machinery/light/incandescent,
+/mob/living/critter/small_animal/dog/george/orwell,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fgreen2"
+	},
+/area/station/crew_quarters/heads)
 "tGm" = (
 /obj/storage/crate{
 	name = "Silent Crate"
@@ -49316,6 +49317,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters)
+"vSL" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/switch_junction{
+	dir = 8;
+	mail_tag = "chief_engineer";
+	name = "chief engineer mail router"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/hallway/primary/south)
 "vSU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -50433,18 +50447,6 @@
 "wQE" = (
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
-"wQL" = (
-/obj/machinery/light_switch/west{
-	pixel_y = 6
-	},
-/obj/displaycase{
-	displayed = new/obj/item/captaingun()
-	},
-/obj/blind_switch/area/west{
-	pixel_y = -6
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "wRk" = (
 /obj/cable{
 	icon_state = "6-10"
@@ -50466,6 +50468,14 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
+"wRD" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = 25
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "wST" = (
 /obj/landmark/gps_waypoint,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -70169,7 +70179,7 @@ aas
 aaK
 aaK
 aaY
-abg
+bMU
 vrb
 abs
 abA
@@ -70469,7 +70479,7 @@ aac
 aao
 aaB
 uCU
-hSA
+tou
 uCU
 vrb
 vrb
@@ -70771,7 +70781,7 @@ vrb
 vrb
 vrb
 vrb
-lqU
+wRD
 vrb
 abh
 vrb
@@ -71073,7 +71083,7 @@ vrb
 aau
 aaC
 vrb
-hSA
+tou
 vrb
 abi
 abm
@@ -71679,7 +71689,7 @@ aaE
 aaM
 aaU
 aba
-dXB
+hzy
 abo
 abv
 abE
@@ -74184,7 +74194,7 @@ ani
 aaa
 dRI
 nqI
-aHM
+pSJ
 fqV
 pBG
 ipa
@@ -74485,7 +74495,7 @@ ani
 aaa
 aaa
 dRI
-erz
+ocq
 qrB
 fqV
 hSd
@@ -80005,7 +80015,7 @@ bsI
 ftD
 btE
 hKs
-bwU
+vSL
 uRE
 bhm
 bgH
@@ -95061,7 +95071,7 @@ aNv
 aNv
 aRK
 aRK
-wQL
+psE
 aTg
 aTP
 aRK
@@ -95080,7 +95090,7 @@ uKp
 bcz
 kaZ
 bdr
-bee
+tGe
 beu
 beA
 beM
@@ -117951,7 +117961,7 @@ euD
 wJp
 ajt
 acz
-ple
+jVn
 aci
 aca
 mgf
@@ -120067,7 +120077,7 @@ ffi
 uFY
 aem
 aem
-nIw
+rAA
 nTh
 bCq
 aaa

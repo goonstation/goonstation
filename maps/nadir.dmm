@@ -4555,15 +4555,6 @@
 	icon_state = "3"
 	},
 /area/shuttle/arrival/station)
-"can" = (
-/obj/stool/chair/red{
-	dir = 4
-	},
-/obj/machinery/sleeperscanner{
-	pixel_x = -25
-	},
-/turf/simulated/floor/black,
-/area/listeningpost)
 "car" = (
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/northeast)
@@ -5396,14 +5387,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
-"cuN" = (
-/obj/machinery/door/airlock/pyro/medical{
-	name = "Medical Bay"
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/listeningpost)
 "cuZ" = (
 /obj/machinery/conveyor/EW{
 	id = "garbage";
@@ -10622,15 +10605,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/white,
 /area/station/medical/staff)
-"ePN" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	name = "Power Systems"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/engine,
-/area/listeningpost/power)
 "ePP" = (
 /obj/machinery/light{
 	dir = 4;
@@ -11248,6 +11222,15 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/arrival/station)
+"feN" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	name = "Power Systems"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/listeningpost/power)
 "feY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -14177,6 +14160,14 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery)
+"grX" = (
+/obj/machinery/door/airlock/pyro/medical{
+	name = "Medical Bay"
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/listeningpost)
 "gso" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 8;
@@ -16740,10 +16731,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/bridge/captain)
-"hpO" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "hqD" = (
 /obj/machinery/computer/power_monitor{
 	dir = 4
@@ -19103,6 +19090,13 @@
 	dir = 6
 	},
 /area/station/engine/core/nuclear)
+"ijv" = (
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
+	name = "Listening Post"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "ijx" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 4;
@@ -27844,6 +27838,15 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"lPw" = (
+/obj/stool/chair/red{
+	dir = 4
+	},
+/obj/machinery/sleeperscanner{
+	pixel_x = -25
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "lPy" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -36936,19 +36939,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
-"pSi" = (
-/obj/stool/chair/office/green{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 6
-	},
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
 "pSv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -39107,12 +39097,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
-"qUW" = (
-/obj/machinery/sleeperscanner{
-	pixel_y = 25
-	},
-/turf/space/fluid/acid,
-/area/space)
 "qUY" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -39256,6 +39240,15 @@
 /obj/storage/crate/robotparts,
 /turf/simulated/floor/industrial,
 /area/station/storage/warehouse)
+"qZq" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/sleeperscanner{
+	pixel_y = 25
+	},
+/turf/simulated/floor/redblack,
+/area/listeningpost)
 "qZy" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -41100,15 +41093,6 @@
 /area/station/quartermaster/cargobay{
 	name = "Cargo Primary Endpoint"
 	})
-"rSo" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/machinery/sleeperscanner{
-	pixel_y = 25
-	},
-/turf/simulated/floor/redblack,
-/area/listeningpost)
 "rSs" = (
 /obj/storage/closet/biohazard,
 /turf/simulated/floor/blackwhite{
@@ -41825,6 +41809,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
+"sif" = (
+/obj/machinery/door/airlock/pyro{
+	name = "Restroom"
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 1
+	},
+/area/listeningpost)
 "sin" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/glasses/healthgoggles{
@@ -42564,12 +42556,6 @@
 /obj/cable,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/west)
-"sxu" = (
-/obj/machinery/door/airlock/pyro{
-	name = "Personnel"
-	},
-/turf/simulated/floor/black,
-/area/listeningpost)
 "sxE" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -42984,14 +42970,6 @@
 	},
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
-"sGF" = (
-/obj/machinery/door/airlock/pyro{
-	name = "Restroom"
-	},
-/turf/simulated/floor/blackwhite{
-	dir = 1
-	},
-/area/listeningpost)
 "sGJ" = (
 /obj/decal/cleanable/rust,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -45836,6 +45814,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northwest)
+"tOq" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate,
+/turf/simulated/floor/black,
+/area/listeningpost)
 "tON" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -46501,6 +46483,12 @@
 /obj/item/reagent_containers/food/drinks/bowl,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
+"ueO" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = 25
+	},
+/turf/space/fluid/acid,
+/area/space)
 "ufa" = (
 /obj/machinery/computer/riotgear{
 	dir = 8;
@@ -49185,6 +49173,20 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
+"vuz" = (
+/obj/stool/chair/office/green{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/mob/living/critter/small_animal/dog/george/orwell,
+/turf/simulated/floor/carpet/green/fancy/edge{
+	dir = 6
+	},
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "vuA" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -51330,6 +51332,12 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
+"wsl" = (
+/obj/machinery/door/airlock/pyro{
+	name = "Personnel"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "wsM" = (
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/white,
@@ -54108,13 +54116,6 @@
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
 	})
-"xHG" = (
-/obj/forcefield/energyshield/perma/doorlink,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
-	name = "Listening Post"
-	},
-/turf/simulated/floor/black,
-/area/listeningpost)
 "xHM" = (
 /obj/item/rods/steel/fullstack{
 	pixel_x = -9
@@ -83853,11 +83854,11 @@ ouF
 sSA
 haV
 ggw
-ePN
+feN
 dZk
 twP
 djp
-sGF
+sif
 edW
 wHV
 kdn
@@ -85363,11 +85364,11 @@ gfh
 aBB
 iOs
 xhV
-hpO
+tOq
 tSO
 xzc
 iOs
-cuN
+grX
 arl
 arl
 arl
@@ -86576,7 +86577,7 @@ riW
 xzc
 iOs
 oKQ
-can
+lPw
 oGR
 qxC
 oKQ
@@ -86873,15 +86874,15 @@ nAH
 xhV
 xhV
 xhV
-sxu
+wsl
 tSO
 xzc
 iOs
-xHG
+ijv
 xhV
 rfe
 xhV
-xHG
+ijv
 rJg
 rJg
 bzS
@@ -87176,7 +87177,7 @@ srd
 ckU
 nzH
 pki
-rSo
+qZq
 pwa
 eBv
 pki
@@ -87184,7 +87185,7 @@ vkb
 qQg
 fhm
 gYn
-qUW
+ueO
 bzS
 bzS
 bzS
@@ -96054,7 +96055,7 @@ wQJ
 wwl
 rzJ
 cQE
-pSi
+vuz
 tks
 gow
 gow

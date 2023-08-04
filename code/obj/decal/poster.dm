@@ -875,6 +875,7 @@
 			var/icon_glass = "rddiploma1"
 			var/icon_award = "rddiploma"
 			var/icon_empty = "frame"
+			var/glass_type = /obj/item/sheet/glass
 			icon_state = "rddiploma"
 			pixel_y = -6
 
@@ -907,7 +908,7 @@
 						src.usage_state = 1
 						src.icon_state = icon_glass
 						user.visible_message("[user] takes off the glass frame.", "You take off the glass frame.")
-						var/obj/item/sheet/glass/G = new /obj/item/sheet/glass()
+						var/obj/item/sheet/glass/G = new glass_type()
 						G.amount = 1
 						src.add_fingerprint(user)
 						user.put_in_hand_or_drop(G)
@@ -939,6 +940,7 @@
 				if (src.usage_state == 1)
 					if (istype(W, /obj/item/sheet/glass))
 						if (W.amount >= 1)
+							src.glass_type = W.type
 							playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 							user.u_equip(W)
 							qdel(W)

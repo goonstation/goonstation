@@ -75,7 +75,7 @@ dmm_suite
 		var/regex/grid = regex(@{"\(([0-9]*),([0-9]*),([0-9]*)\) = \{"\n((?:\l*\n)*)"\}"}, "g")
 		var/list/coordShifts = list()
 		var/maxZFound = 1
-		while(grid.Find(gridText))
+		while(findtext(gridText, grid))
 			gridLevels.Add(copytext(grid.group[4], 1, -1)) // Strip last \n
 			coordShifts.Add(list(list(grid.group[1], grid.group[2], grid.group[3])))
 			maxZFound = max(maxZFound, text2num(grid.group[3]))
@@ -148,11 +148,10 @@ dmm_suite
 
 //-- Supplemental Methods ------------------------------------------------------
 
-	var
-		quote = "\""
-		regex/comma_delim = new(@"[\s\r\n]*,[\r\n][\s\r\n]*")
-		regex/semicolon_delim = new(@"[\s\r\n]*;[\s\r\n]*")
-		regex/key_value_regex = new(@"^[\s\r\n]*([^=]*?)[\s\r\n]*=[\s\r\n]*(.*?)[\s\r\n]*$")
+	var/quote = "\""
+	var/regex/comma_delim = new(@"[\s\r\n]*,[\r\n][\s\r\n]*")
+	var/regex/semicolon_delim = new(@"[\s\r\n]*;[\s\r\n]*")
+	var/regex/key_value_regex = new(@"^[\s\r\n]*([^=]*?)[\s\r\n]*=[\s\r\n]*(.*?)[\s\r\n]*$")
 
 	proc
 		parse_grid(models as text, xcrd, ycrd, zcrd)
@@ -165,7 +164,7 @@ dmm_suite
 			var/stringIndex = 1
 			var/found
 			do
-				found = noStrings.Find(models, noStrings.next)
+				found = findtext(models, noStrings, noStrings.next)
 				if(found)
 					var indexText = {""[stringIndex]""}
 					stringIndex++
