@@ -302,7 +302,7 @@ proc/load_morrigan()
 
 	initializeBioholder()
 		. = ..()
-		randomize_look(src, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, src)
+		randomize_look(src, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, src)
 		bioHolder.mobAppearance.gender = "male"
 		bioHolder.age = rand(50, 90)
 		bioHolder.mobAppearance.customization_first_color = pick("#292929", "#504e00" , "#1a1016")
@@ -356,13 +356,66 @@ proc/load_morrigan()
 		. = ..()
 		randomize_look(src, TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, src)
 
+/mob/living/carbon/human/syndicatemorrigan/rowdy
+
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+
+		if (prob(10) && !src.stat)
+			src.say(pick( "Got us a few visitors!", "Looking forward to lunch time...", "Ha, you're in our turf now.", "Unit 78 requesting orders.",
+			"Hey! Who took my gum?"))
+
+/mob/living/carbon/human/syndicatemorrigan/cautious
+
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+
+		if (prob(10) && !src.stat)
+			src.say(pick( "Have you double checked them for contraband?", "We should place them in handcuffs.", "Hey, quit slacking off!", "Unit 25C confirming prisoners.",
+			"Rumor has it, there's trouble stiring on Morrigan."))
+
+/mob/living/carbon/human/syndicatemorrigan/eager
+
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+
+		if (prob(10) && !src.stat)
+			src.say(pick( "Unit 90A reporting for duty!", "I got this!", "Logging them in now!", "Aw yeah, we got ourself another one !",
+			"I'm up for promotion! Think I'll get it ?"))
+
+/mob/living/carbon/human/syndicatemorrigan/veteran
+
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+
+		if (prob(10) && !src.stat)
+			src.say(pick( "Same old, same old.", "I'm due for a nap, get me a coffee.", "Any of you got a lighter?", "I'm not paid enough to care.",
+			"Just create a new record."))
+/mob/living/carbon/human/syndicatemorrigan/sleepy
+
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+
+		if (src.stat)
+			return
+
+		src.setStatusMin("unconscious", 10 SECONDS)
+
+		if (prob(2) && !src.stat)
+			src.emote("snore")
+
 /mob/living/carbon/human/syndicatemorrigandoc
 	New()
 		..()
 		src.equip_new_if_possible((/obj/item/clothing/glasses/nightvision/sechud), SLOT_GLASSES)
 		src.equip_new_if_possible((/obj/item/clothing/mask/surgical), SLOT_WEAR_MASK)
 		src.equip_new_if_possible((/obj/item/clothing/under/scrub), SLOT_W_UNIFORM)
-		src.equip_new_if_possible((/obj/item/clothing/suit/bio_suit/armored/nt), SLOT_WEAR_SUIT)
+		src.equip_new_if_possible((/obj/item/clothing/suit/space/syndicate/specialist/medic), SLOT_WEAR_SUIT)
 		src.equip_if_possible((/obj/item/clothing/gloves/black), SLOT_GLOVES)
 		src.equip_new_if_possible((/obj/item/clothing/shoes/swat), SLOT_SHOES)
 
@@ -1122,7 +1175,7 @@ proc/load_morrigan()
 	name = "Hobo Bloke"
 	trader_area = "/area/morrigan/hobo"
 	angrynope = "Piss off mate."
-	whotext = "Don't care who you are, get me the good shit and get paid!"
+	whotext = "Don't matter I am, get me the good shit and get paid!"
 
 	New()
 		..()
@@ -1160,3 +1213,9 @@ proc/load_morrigan()
 		pickupdialogue = "Here's your shit. You know it wasn't worth that much yeah?"
 
 		pickupdialoguefailure = "Bloody delusional you are, you haven't picked fuck all!"
+
+//allocation loading
+
+/var/datum/mapPrefab/allocated/prefab = get_singleton(/datum/mapPrefab/allocated/morrigan)
+/var/datum/allocated_region/region = prefab.load()
+
