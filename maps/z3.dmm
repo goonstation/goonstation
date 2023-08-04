@@ -14005,7 +14005,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/item/paper/balor_IT,
+/obj/item/paper/balor_IT{
+	pixel_x = -5;
+	layer = 3.1
+	},
+/obj/random_item_spawner/desk_stuff,
 /turf/unsimulated/floor/black,
 /area/helldrone)
 "bdO" = (
@@ -17457,9 +17461,6 @@
 /turf/simulated/floor/grime,
 /area/diner/arcade)
 "dfH" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 6
-	},
 /obj/machinery/door/airlock/pyro/security,
 /turf/unsimulated/floor/black,
 /area/helldrone)
@@ -17665,9 +17666,6 @@
 /turf/simulated/floor/plating/damaged2,
 /area/diner/hangar)
 "dHX" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 10
-	},
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4
 	},
@@ -19049,6 +19047,14 @@
 "htU" = (
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedmedicalship)
+"huq" = (
+/obj/machinery/light/small{
+	brightness = 2;
+	dir = 8
+	},
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "huF" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
@@ -20929,7 +20935,10 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/door/window/brigdoor/genpop/northleft,
+/obj/machinery/door/window/brigdoor/genpop/northleft{
+	name = "Outbound teleporter";
+	id = "balor_tele_out"
+	},
 /obj/map/light/dimred,
 /obj/cable{
 	icon_state = "1-2"
@@ -21635,15 +21644,13 @@
 /turf/simulated/floor/caution/westeast,
 /area/buddyfactory)
 "ocW" = (
-/obj/machinery/door_control{
-	desc = "What does this even do?";
-	id = "mars_vault_entrance";
-	layer = 3;
-	name = "button";
-	pixel_x = 22
-	},
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/machinery/door_control{
+	pixel_x = 22;
+	name = "button";
+	id = "balor_tele_in"
 	},
 /turf/unsimulated/floor/black,
 /area/helldrone)
@@ -22002,13 +22009,6 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/obj/machinery/door_control{
-	desc = "What does this even do?";
-	id = "mars_vault_entrance";
-	layer = 3;
-	name = "button";
-	pixel_x = -23
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -22018,6 +22018,11 @@
 	},
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/door_control{
+	pixel_x = -22;
+	name = "button";
+	id = "balor_tele_out"
 	},
 /turf/unsimulated/floor/black,
 /area/helldrone)
@@ -22268,7 +22273,10 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/door/window/brigdoor/genpop/northright,
+/obj/machinery/door/window/brigdoor/genpop/northright{
+	name = "Inbound teleporter";
+	id = "balor_tele_in"
+	},
 /obj/map/light/cyan,
 /turf/unsimulated/floor/engine/glow/blue,
 /area/helldrone)
@@ -23234,11 +23242,12 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "sao" = (
-/obj/decal/fakeobjects/pipe{
+/obj/map/light/dimred,
+/obj/stool/chair/office/syndie{
 	dir = 4
 	},
-/turf/unsimulated/floor/red/redblackchecker,
-/area/helldrone)
+/turf/unsimulated/floor/engine/glow,
+/area/helldrone/core)
 "sbh" = (
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/carpet/green/standard/edge/east,
@@ -23440,6 +23449,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/shuttle/mining/diner)
+"sFy" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer3/generic/personal/personel_alt,
+/obj/item/clothing/mask/cigarette/dryjoint{
+	pixel_x = 10;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "sFI" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
@@ -24555,6 +24573,9 @@
 "vke" = (
 /obj/map/light/dimred,
 /obj/map/light/dimred,
+/obj/stool/chair/office/syndie{
+	dir = 8
+	},
 /turf/unsimulated/floor/engine/glow,
 /area/helldrone/core)
 "vkh" = (
@@ -37082,7 +37103,7 @@ bgu
 beb
 wOn
 wEm
-sao
+wEm
 bgu
 aZn
 bgu
@@ -39202,7 +39223,7 @@ wOn
 bed
 xtK
 rQe
-rQe
+sao
 rQe
 rQe
 iFp
@@ -40708,7 +40729,7 @@ eSa
 mdZ
 bFD
 aXL
-bbq
+huq
 wOn
 vBz
 bgu
@@ -41014,7 +41035,7 @@ aVV
 kdO
 jVk
 bgu
-jVk
+sFy
 uhK
 aVV
 jGV
@@ -41924,7 +41945,7 @@ bgu
 kjj
 ufh
 bgu
-wOn
+apw
 wOn
 bgu
 bgu
@@ -42226,7 +42247,7 @@ eCa
 wOn
 wFJ
 kGG
-wOn
+apw
 aQi
 bgu
 bgu
