@@ -36937,6 +36937,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 6
 	},

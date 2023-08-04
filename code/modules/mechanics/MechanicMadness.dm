@@ -682,8 +682,7 @@
 					trunk.linked = src
 					air_contents = new /datum/gas_mixture
 			else if (src.level == OVERFLOOR) //loose
-				if (trunk) //ZeWaka: Fix for null.linked
-					trunk.linked = null
+				trunk?.linked = null
 				if(air_contents)
 					qdel(air_contents)
 				air_contents = null

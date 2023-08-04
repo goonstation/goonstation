@@ -74,9 +74,6 @@
 #elif defined(MAP_OVERRIDE_TRUNKMAP)
 #include "trunkmap.dm"
 
-#elif defined(MAP_OVERRIDE_CHIRON)
-#include "chiron.dm"
-
 #elif defined(MAP_OVERRIDE_DENSITY)
 #include "density.dm"
 
