@@ -260,7 +260,6 @@
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
-	var/id = 1
 	req_access_txt = "2"
 	autoclose = FALSE //brig doors close only when the cell timer starts
 

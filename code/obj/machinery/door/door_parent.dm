@@ -47,6 +47,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	/// Set before calling open() for handling COMSIG_DOOR_OPENED. Can be null. This gets immediately set to null after the signal calls.
 	var/atom/movable/bumper = null
 
+	///Used for door control buttons
+	var/id = 1
+
 /obj/machinery/door/Bumped(atom/AM)
 	if (src.operating) return
 	if (src.isblocked()) return
@@ -703,7 +706,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	opacity = 1
 	#endif
 	density = 1
-	var/id = null
 
 /obj/machinery/door/unpowered/martian/open()
 	if(src.locked) return
