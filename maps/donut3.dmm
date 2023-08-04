@@ -5962,6 +5962,9 @@
 "bHz" = (
 /obj/stool/chair/red,
 /obj/machinery/bot/medbot/no_camera,
+/obj/machinery/sleeperscanner{
+	pixel_y = 24
+	},
 /turf/simulated/floor/grey/side,
 /area/listeningpost)
 "bHA" = (
@@ -16655,7 +16658,10 @@
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/sec_foyer)
 "eZz" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/access/maint,
 /obj/decal/mule/dropoff,
 /obj/disposalpipe/segment{
@@ -18527,7 +18533,10 @@
 /area/station/bridge/customs)
 "fEk" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "fEp" = (
@@ -30213,7 +30222,10 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "jjJ" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "jjO" = (
@@ -32744,7 +32756,10 @@
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/podbay)
 "jVR" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/access/research,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/mule/dropoff,
@@ -33112,7 +33127,10 @@
 	},
 /area/station/security/quarters)
 "kbY" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/access/maint,
 /obj/decal/mule/dropoff,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -33236,7 +33254,10 @@
 	name = "Genetic Research"
 	})
 "kff" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/access/maint,
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/plating/jen,
@@ -33843,7 +33864,10 @@
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "kpd" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/inner/north)
 "kpf" = (
@@ -34748,7 +34772,10 @@
 	},
 /area/station/hallway/primary/south)
 "kDF" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/access/research,
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/plating,
@@ -39753,7 +39780,6 @@
 "mcd" = (
 /obj/machinery/door/airlock/pyro,
 /obj/decal/mule/dropoff,
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/sanitary,
 /area/listeningpost)
 "mcE" = (
@@ -42919,6 +42945,12 @@
 "nea" = (
 /turf/simulated/floor/carpet/blue/standard,
 /area/station/medical/medbay/cloner)
+"nes" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 20
+	},
+/turf/simulated/floor/airless/plating/jen,
+/area/space)
 "neE" = (
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /obj/machinery/vending/standard,
@@ -45571,7 +45603,10 @@
 /area/station/engine/elect)
 "nTs" = (
 /obj/decal/mule/dropoff,
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/sanitary/blue,
@@ -46320,7 +46355,10 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "ohP" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/mule/dropoff,
 /obj/mapping_helper/access/heads,
@@ -47939,7 +47977,10 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "oHo" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/access/maint,
 /obj/decal/mule/dropoff,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -49149,7 +49190,10 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "pas" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/access/maint,
@@ -49826,7 +49870,10 @@
 /area/station/crew_quarters/kitchen)
 "pkQ" = (
 /obj/decal/mule/dropoff,
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/access,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/tile_edge/line/white{
@@ -55446,7 +55493,10 @@
 /turf/simulated/floor/orangeblack,
 /area/station/hallway/secondary/exit)
 "qTv" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -57323,7 +57373,10 @@
 /turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "rxf" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/access/maint,
@@ -59634,6 +59687,9 @@
 	dir = 4;
 	status = 2
 	},
+/obj/machinery/sleeperscanner{
+	pixel_x = -31
+	},
 /turf/simulated/floor/plating/jen,
 /area/listeningpost)
 "siO" = (
@@ -60230,11 +60286,11 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "ssN" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	name = "Listening Post"
-	},
 /obj/decal/mule/dropoff,
-/obj/mapping_helper/access/syndie_shuttle,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "ssO" = (
@@ -74461,15 +74517,14 @@
 	},
 /area/station/science/lobby)
 "wLC" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	dir = 4;
-	name = "Listening Post"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/decal/mule/dropoff,
-/obj/mapping_helper/access/syndie_shuttle,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "wLK" = (
@@ -79446,7 +79501,10 @@
 /turf/simulated/floor/plating/jen,
 /area/station/science/gen_storage)
 "yfa" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -160230,7 +160288,7 @@ csA
 csA
 csA
 csA
-xzQ
+nes
 eML
 iOW
 iOW

@@ -352,6 +352,9 @@
 	},
 /area/space)
 "abg" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 20
+	},
 /turf/simulated/floor/plating/airless{
 	dir = 10;
 	icon_state = "ast1"
@@ -30139,12 +30142,11 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
 "hSA" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
 	dir = 4;
 	name = "Listening Post"
 	},
-/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/listeningpost)
 "hSU" = (
@@ -32248,6 +32250,14 @@
 	dir = 5
 	},
 /area/station/science/teleporter)
+"jwW" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 20
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "jxd" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -37484,7 +37494,7 @@
 	pixel_y = 6
 	},
 /obj/displaycase{
-	displayed = new /obj/item/captaingun()
+	displayed = new/obj/item/captaingun()
 	},
 /obj/blind_switch/area/west{
 	pixel_y = -6
@@ -46700,6 +46710,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/ce)
+"tPb" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = 24
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "tPe" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -70763,7 +70781,7 @@ vrb
 vrb
 vrb
 vrb
-aaS
+tPb
 vrb
 abh
 vrb
@@ -71671,7 +71689,7 @@ aaE
 aaM
 aaU
 aba
-aba
+jwW
 abo
 abv
 abE

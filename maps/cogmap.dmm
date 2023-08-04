@@ -3477,6 +3477,12 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"amp" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 20
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "amq" = (
 /obj/securearea{
 	pixel_y = -4
@@ -40769,12 +40775,11 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "czG" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
 	dir = 4;
 	name = "Listening Post"
 	},
-/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/listeningpost)
 "czH" = (
@@ -42336,6 +42341,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
+"dfz" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = 24
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "dfG" = (
 /obj/landmark/start/job/cyborg,
 /turf/simulated/floor/black,
@@ -50973,6 +50986,14 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/staff)
+"kSl" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 20
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "kTI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -144722,7 +144743,7 @@ aap
 czz
 czz
 czN
-czV
+amp
 sAI
 cAj
 cAr
@@ -145324,7 +145345,7 @@ sAI
 sAI
 sAI
 sAI
-czH
+dfz
 sAI
 czW
 sAI
@@ -146232,7 +146253,7 @@ czt
 czB
 czJ
 czP
-czP
+kSl
 cAd
 cAm
 cAv

@@ -18092,11 +18092,11 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "bKG" = (
-/obj/machinery/door/airlock/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
+	dir = 4;
 	name = "Listening Post"
 	},
-/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/listeningpost)
 "bKH" = (
@@ -32113,7 +32113,7 @@
 	},
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new /obj/item/captaingun();
+	displayed = new/obj/item/captaingun();
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -40620,6 +40620,14 @@
 	dir = 1
 	},
 /area/station/quartermaster/office)
+"tZf" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 22
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "tZF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -43272,6 +43280,12 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"wgZ" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = -25
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "wie" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -44713,6 +44727,14 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/bridge)
+"xAg" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = 24
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "xAx" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -102497,7 +102519,7 @@ aab
 bCl
 bFQ
 bFQ
-bFQ
+wgZ
 bKK
 bLb
 bLj
@@ -103010,7 +103032,7 @@ bJY
 bJY
 bJY
 bJY
-bKH
+xAg
 bKK
 bKK
 bLd
@@ -103783,7 +103805,7 @@ lXD
 iiM
 mAw
 bKP
-bKX
+tZf
 mIt
 bLn
 bKX

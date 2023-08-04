@@ -62439,11 +62439,11 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "dnw" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
 	dir = 4;
 	name = "Listening Post"
 	},
-/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/listeningpost)
 "dnx" = (
@@ -72119,6 +72119,12 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
+"ruM" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = -25
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "rvg" = (
 /obj/table/reinforced/auto,
 /obj/mapping_helper/firedoor_spawn,
@@ -75092,6 +75098,14 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
+"wkW" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = 22
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "wld" = (
 /obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /obj/decal/stripe_delivery,
@@ -75246,6 +75260,14 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/mining/magnet)
+"wFI" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = 24
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "wGP" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
@@ -155430,7 +155452,7 @@ aab
 aaF
 aan
 aan
-aan
+ruM
 dnA
 dnR
 dnZ
@@ -156033,7 +156055,7 @@ dmJ
 dmJ
 dmJ
 dmJ
-dnx
+wFI
 dnA
 dnA
 dnT
@@ -156941,7 +156963,7 @@ dnh
 dnr
 dnz
 dnF
-dnN
+wkW
 dnW
 dod
 dnN

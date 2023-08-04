@@ -890,6 +890,15 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/chapel/sanctuary)
+"ark" = (
+/obj/machinery/light/emergency{
+	dir = 4
+	},
+/obj/machinery/sleeperscanner{
+	pixel_y = 24
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "arw" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
@@ -16540,6 +16549,12 @@
 /obj/item/pen/fancy,
 /turf/simulated/floor/wood,
 /area/station/chapel/sanctuary)
+"hcD" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = -20
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "hcE" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
@@ -26153,14 +26168,13 @@
 	},
 /area/station/catwalk/south)
 "leD" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Listening Post"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
+	name = "Listening Post"
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "leO" = (
@@ -37554,6 +37568,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/sleeperscanner{
+	pixel_x = 20
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -45146,8 +45163,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "tkj" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
 	dir = 4;
 	name = "Listening Post"
 	},
@@ -62058,7 +62074,7 @@ xxT
 lyx
 mWu
 xxT
-tEt
+ark
 tpS
 rQD
 tEt
@@ -62962,7 +62978,7 @@ gGo
 jgF
 xxT
 lTU
-nnW
+hcD
 xxT
 pVt
 rdH

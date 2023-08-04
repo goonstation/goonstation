@@ -12061,7 +12061,9 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aMR" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
+	name = "Listening Post"
+	},
 /turf/simulated/floor/red,
 /area/listeningpost)
 "aMS" = (
@@ -12204,6 +12206,9 @@
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/machinery/sleeperscanner{
+	pixel_y = 24
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -12633,6 +12638,9 @@
 /obj/item/tank/oxygen,
 /obj/machinery/light{
 	layer = 3
+	},
+/obj/machinery/sleeperscanner{
+	pixel_y = -35
 	},
 /turf/simulated/floor/redblack,
 /area/listeningpost)
@@ -17565,6 +17573,12 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
+"jik" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = 37
+	},
+/turf/space,
+/area/space)
 "jiT" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -19300,6 +19314,12 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
+"tDV" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = -35
+	},
+/turf/space,
+/area/space)
 "tEj" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -19687,7 +19707,7 @@
 /area/station/hallway/primary/north)
 "wlm" = (
 /obj/displaycase{
-	displayed = new /obj/item/captaingun()
+	displayed = new/obj/item/captaingun()
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
@@ -95796,7 +95816,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+tDV
 agK
 aMX
 aNf
@@ -95812,7 +95832,7 @@ aOO
 aNf
 aMX
 aYB
-aaa
+jik
 aaa
 aaa
 aaa

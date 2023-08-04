@@ -1924,6 +1924,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\machinery\shower.dm"
 #include "code\obj\machinery\singularity.dm"
 #include "code\obj\machinery\sleeper.dm"
+#include "code\obj\machinery\sleeperscanner.dm"
 #include "code\obj\machinery\spaceheater.dm"
 #include "code\obj\machinery\status_display.dm"
 #include "code\obj\machinery\traymachines.dm"

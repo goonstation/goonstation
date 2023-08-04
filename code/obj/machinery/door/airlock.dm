@@ -514,6 +514,8 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/reinforced)
 	req_access_txt = "52"
 	cyborgBumpAccess = FALSE
 
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post
+
 /obj/machinery/door/airlock/pyro/reinforced/arrivals
 	icon_state = "arrivals_closed"
 	icon_base = "arrivals"

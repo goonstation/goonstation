@@ -30909,14 +30909,17 @@
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "cms" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = 24
+	},
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/listeningpost)
 "cmt" = (
-/obj/machinery/door/airlock/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Listening Post"
-	},
 /obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Listening Post";
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/listeningpost)
 "cmu" = (
@@ -30929,6 +30932,10 @@
 	layer = 2.5;
 	name = "VACUUM AREA";
 	pixel_y = -32
+	},
+/obj/machinery/sleeperscanner{
+	pixel_y = -26;
+	pixel_x = 18
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -52920,6 +52927,14 @@
 "sNP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/dome)
+"sOs" = (
+/obj/machinery/sleeperscanner{
+	pixel_x = -20
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "sOE" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/storage{
@@ -141574,7 +141589,7 @@ ckU
 clL
 clT
 cme
-cme
+sOs
 cmw
 cmF
 cmJ

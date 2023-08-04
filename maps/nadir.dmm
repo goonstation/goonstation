@@ -5391,7 +5391,6 @@
 /obj/machinery/door/airlock/pyro/medical{
 	name = "Medical Bay"
 	},
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -10618,7 +10617,6 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	name = "Power Systems"
 	},
-/obj/mapping_helper/access/syndie_shuttle,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -16735,7 +16733,6 @@
 /area/station/bridge/captain)
 "hpO" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate,
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "hqD" = (
@@ -41093,6 +41090,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/sleeperscanner{
+	pixel_y = 24
+	},
 /turf/simulated/floor/redblack,
 /area/listeningpost)
 "rSs" = (
@@ -42554,7 +42554,6 @@
 /obj/machinery/door/airlock/pyro{
 	name = "Personnel"
 	},
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "sxE" = (
@@ -42975,7 +42974,6 @@
 /obj/machinery/door/airlock/pyro{
 	name = "Restroom"
 	},
-/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/blackwhite{
 	dir = 1
 	},
@@ -43399,6 +43397,12 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"sPM" = (
+/obj/machinery/sleeperscanner{
+	pixel_y = 24
+	},
+/turf/space/fluid/acid,
+/area/space)
 "sPN" = (
 /obj/surgery_tray,
 /obj/item/clothing/gloves/latex,
@@ -48747,6 +48751,9 @@
 /obj/item/nanoloom_cartridge{
 	pixel_x = -7;
 	pixel_y = -4
+	},
+/obj/machinery/sleeperscanner{
+	pixel_x = 20
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -54097,11 +54104,10 @@
 	name = "Nuclear Control Room"
 	})
 "xHG" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Exploratory Capsule"
-	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
+	name = "Listening Post"
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "xHM" = (
@@ -87173,7 +87179,7 @@ vkb
 qQg
 fhm
 gYn
-bzS
+sPM
 bzS
 bzS
 bzS
