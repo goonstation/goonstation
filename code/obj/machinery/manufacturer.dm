@@ -251,7 +251,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/damage = 0
 		damage = round(((P.power/3)*P.proj_data.ks_ratio), 1.0)
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		if (!damage)
 			return
