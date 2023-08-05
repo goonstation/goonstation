@@ -284,6 +284,9 @@
 						IX.resisted = TRUE
 					if (!iscarbon(src)) //Prevents non-carbons from getting the Zephyr stam boost, but still protects other mobs
 						break
+					if (IX.expend_interdict(1,src,TRUE,ITDR_DEVERA)) // Devera-class interdictor: prevents hygiene loss for mobs in range, which can accumulate to linger briefly
+						src.changeStatus("devera_field", 3 SECONDS * life_mult)
+						break
 					if (IX.expend_interdict(4,src,TRUE,ITDR_ZEPHYR)) // Zephyr-class interdictor: carbon mobs in range gain a buff to stamina recovery, which can accumulate to linger briefly
 						src.changeStatus("zephyr_field", 3 SECONDS * life_mult)
 						break
