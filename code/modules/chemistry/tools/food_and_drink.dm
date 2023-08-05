@@ -327,6 +327,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (length(eater_trait.fav_foods) > 0)
 					if (!check_favorite_food(H))
 						displease_picky_eater(H)
+					else
+						H.sims?.affectMotive("Hunger", 20)
 				else
 					logTheThing(LOG_DEBUG, src, "Empty favorite foods list for [src] despite having the picky_eater trait.")
 		src.heal(consumer)

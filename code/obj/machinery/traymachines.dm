@@ -536,18 +536,40 @@ ABSTRACT_TYPE(/obj/machine_tray)
 							if (H.limbs)
 								H.limbs.reset_stone()
 							H.update_colorful_parts()
+						if (isvampire(H))
+							H.TakeDamage("All", 0, 15, 0, DAMAGE_BURN)
+							if (prob(15) && isalive(H))
+								H.emote("scream")
+							if (i % (2 SECONDS))
+								boutput(H, "<span class='alert'>[pick("Your skin is melting!", "This false sun burns just like a real one!", "The light! <b>IT BURNS</b>!")]</span>")
+								playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+							if (isdead(H))
+								make_cleanable(/obj/decal/cleanable/ash, src)
+								H.unequip_all()
+								H.remove()
+								src.visible_message("<span class='alert'>A puff of smoke erupts from the machine as it grinds to a halt! It smells like a graveyard caught fire!</span>")
+								var/turf/T = get_turf(src)
+								if (istype(T))
+									var/datum/effects/system/bad_smoke_spread/smoke_effect = new /datum/effects/system/bad_smoke_spread/(T)
+									smoke_effect.set_up(15, 0, T, null, "#000000")
+									smoke_effect.start()
+								end_tanning()
+
+								return
 				if (emagged && isdead(M))
 					M.remove()
 					make_cleanable( /obj/decal/cleanable/ash,src)
 
 		SPAWN(src.settime)
 			if (src)
-				src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
-				src.locked = FALSE
-				power_usage = initial(power_usage)
-				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-				update() //clear the active sprite
+				end_tanning()
 
+	proc/end_tanning()
+		src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
+		src.locked = FALSE
+		power_usage = initial(power_usage)
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		update()
 
 //-----------------------------------------------------
 /*~ Tanning Bed Tray ~*/

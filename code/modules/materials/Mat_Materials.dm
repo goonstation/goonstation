@@ -166,6 +166,9 @@ ABSTRACT_TYPE(/datum/material)
 	proc/getParentMaterials()
 		return src.parent_materials.Copy()
 
+	proc/isMutable()
+		return src.mutable
+
 	//setters for protected vars
 	proc/setID(var/id)
 		if(!src.mutable)
@@ -196,7 +199,7 @@ ABSTRACT_TYPE(/datum/material)
 
 	///Returns a mutable version of this material. Will return a copy of this material if it is already mutable.
 	///The reason this is a separate proc and not using in getMaterial() is prevent cargo-culting accidentally reintroducing the
-	//issue this was supposed to fix. Force the coders to explicitly ask for a mutable instance, demand to know why they want it to be mutable in reviews!
+	///issue this was supposed to fix. Force the coders to explicitly ask for a mutable instance, demand to know why they want it to be mutable in reviews!
 	proc/getMutable()
 		return src.copyMaterial() //copy is mutable by default
 
@@ -381,17 +384,17 @@ ABSTRACT_TYPE(/datum/material)
 			X.execute(owner, entering)
 		return
 
-	proc/triggerOnAttacked(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
+	proc/triggerOnAttacked(var/atom/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
 		for(var/datum/materialProc/X in triggersOnAttacked)
 			X.execute(owner, attacker, attacked, weapon)
 		return
 
-	proc/triggerOnBullet(var/obj/item/owner, var/atom/attacked, var/obj/projectile/projectile)
+	proc/triggerOnBullet(var/atom/owner, var/atom/attacked, var/obj/projectile/projectile)
 		for(var/datum/materialProc/X in triggersOnBullet)
 			X.execute(owner, attacked, projectile)
 		return
 
-	proc/triggerOnAttack(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
+	proc/triggerOnAttack(var/atom/owner, var/mob/attacker, var/atom/attacked)
 		for(var/datum/materialProc/X in triggersOnAttack)
 			X.execute(owner, attacker, attacked)
 		return
@@ -446,9 +449,9 @@ ABSTRACT_TYPE(/datum/material)
 			X.execute(owner, blobPower)
 		return
 
-	proc/triggerOnHit(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
+	proc/triggerOnHit(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/meleeorthrow)
 		for(var/datum/materialProc/X in triggersOnHit)
-			X.execute(owner, attackobj, attacker, meleeorthrow)
+			X.execute(owner, attackatom, attacker, meleeorthrow)
 		return
 
 //Material definitions

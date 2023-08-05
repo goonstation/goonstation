@@ -62,4 +62,5 @@
 		user.show_text("You can't teleport from inside a container.", "red")
 		return
 
+	showswirl_out(user, TRUE)
 	do_teleport(user, L[desc], 0)

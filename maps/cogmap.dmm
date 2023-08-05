@@ -5114,8 +5114,8 @@
 "aso" = (
 /obj/machinery/chem_dispenser/chef,
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge2";
-	dir = 1
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge2"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -6878,10 +6878,7 @@
 /area/station/crew_quarters/fitness)
 "axq" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/glass_recycler{
-	density = 1;
-	pixel_y = 2
-	},
+/obj/machinery/glass_recycler/bar,
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 5
 	},
@@ -18218,6 +18215,7 @@
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
+/mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "bbd" = (
@@ -38937,7 +38935,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/glass_recycler,
+/obj/machinery/glass_recycler/chemistry,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/firealarm{
 	pixel_y = 24

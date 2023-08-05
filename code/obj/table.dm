@@ -141,8 +141,7 @@ TYPEINFO_NEW(/obj/table)
 			victim.force_laydown_standup()
 		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src]!</b></span>")
 		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-		if (src.material)
-			src.material.triggerOnAttacked(src, user, victim, src)
+		src.material_trigger_when_attacked(victim, user, 1)
 
 
 	/// Slam a dude on the table (gently, with great care)
@@ -313,8 +312,7 @@ TYPEINFO_NEW(/obj/table)
 						H.limbs.r_arm.sever()
 
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-				if (src.material)
-					src.material.triggerOnAttacked(src, user, user, src)
+				src.material_trigger_when_attacked(user, user, 1)
 				for (var/mob/N in AIviewers(user, null))
 					if (N.client)
 						shake_camera(N, 4, 8, 0.5)
@@ -790,7 +788,8 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 				/obj/item/reagent_containers/glass/beaker/large,
 				/obj/item/clothing/glasses/spectro = 2,
 				/obj/item/device/reagentscanner = 2,
-				/obj/item/reagent_containers/dropper/mechanical)
+				/obj/item/reagent_containers/dropper/mechanical,
+				/obj/item/clothing/gloves/latex = 4)
 
 
 /obj/table/reinforced/chemistry/auto/clericalsup
@@ -1116,8 +1115,7 @@ TYPEINFO(/obj/table/glass)
 		victim.changeStatus("weakened", 4 SECONDS)
 		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src]!</b></span>")
 		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-		if (src.material)
-			src.material.triggerOnAttacked(src, user, victim, src)
+		src.material_trigger_when_attacked(victim, user, 1)
 		if ((prob(src.reinforced ? 60 : 80)) || (user.bioHolder.HasEffect("clumsy") && (!src.reinforced || prob(90))))
 			src.smash()
 			random_brute_damage(victim, rand(20,40),1)
