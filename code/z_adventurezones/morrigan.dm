@@ -1,7 +1,7 @@
 var/datum/allocated_region/morrigan_region = null
 proc/load_morrigan()
 	var/datum/mapPrefab/allocated/prefab = get_singleton(/datum/mapPrefab/allocated/morrigan)
-	var/datum/allocated_region/morrigan_region = prefab.load()
+	morrigan_region = prefab.load()
 
 // Morrigan Azone Objects
 
