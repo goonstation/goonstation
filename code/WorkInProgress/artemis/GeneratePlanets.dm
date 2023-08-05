@@ -243,6 +243,40 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 	planet_area.name = name
 	region.clean_up(main_area=planet_area)
 
+	//Parallax it?
+	if(istype(generator, /datum/map_generator/snow_generator) )
+		var/angle = rand(110,250)
+		var/scroll_speed = rand(50, 100)
+		var/color_alpha = rand(30,60)/100
+		var/color_matrix = list(
+								1, 0, 0, color_alpha,
+								0, 1, 0, color_alpha,
+								0, 0, 1, color_alpha,
+								0, 0, 0, 1,
+								0, 0, 0, -1)
+		planet_area.area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/foreground/snow=list(color=color_matrix, scroll_speed=scroll_speed, scroll_angle=angle),
+		/atom/movable/screen/parallax_layer/foreground/snow/sparse=list(color=color_matrix, scroll_speed=scroll_speed+25, scroll_angle=angle),
+		)
+	else if(istype(generator, /datum/map_generator/desert_generator) )
+		var/angle = rand(110,250)
+		var/scroll_speed = rand(75, 175)
+		var/color_alpha = rand(40,80)/100
+		var/color_matrix = list(
+								1, 0, 0, color_alpha,
+								0, 1, 0, color_alpha,
+								0, 0, 1, color_alpha,
+								0, 0, 0, 1,
+								0, 0, 0, -1)
+		planet_area.area_parallax_layers = list(
+			/atom/movable/screen/parallax_layer/foreground/dust=list(color=color_matrix, scroll_speed=scroll_speed, scroll_angle=angle),
+			/atom/movable/screen/parallax_layer/foreground/dust/sparse=list(color=color_matrix, scroll_speed=scroll_speed*1.5, scroll_angle=angle)
+		)
+
+	if(planet_area.area_parallax_layers)
+		for(var/turf/cordon/CT in planet_area)
+			CT.update_parallax_occlusion_overlay()
+
 	//Populate with Biome!
 	var/turfs = block(locate(region.bottom_left.x+1, region.bottom_left.y+1, region.bottom_left.z), locate(region.bottom_left.x+region.width-2, region.bottom_left.y+region.height-2, region.bottom_left.z) )
 	generator.generate_terrain(turfs, reuse_seed=TRUE, flags=mapgen_flags)
