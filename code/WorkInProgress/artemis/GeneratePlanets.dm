@@ -273,9 +273,11 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 			/atom/movable/screen/parallax_layer/foreground/dust/sparse=list(color=color_matrix, scroll_speed=scroll_speed*1.5, scroll_angle=angle)
 		)
 
+	// Occlude overlays on edges
 	if(planet_area.area_parallax_layers)
 		for(var/turf/cordon/CT in planet_area)
-			CT.update_parallax_occlusion_overlay()
+			new/obj/foreground_parallax_occlusion(CT)
+
 
 	//Populate with Biome!
 	var/turfs = block(locate(region.bottom_left.x+1, region.bottom_left.y+1, region.bottom_left.z), locate(region.bottom_left.x+region.width-2, region.bottom_left.y+region.height-2, region.bottom_left.z) )
@@ -371,7 +373,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 				break
 
 			T = pick(turfs)
-			if(T.density)
+			if(!checkTurfPassable(T))
 				maxTries--
 				continue
 
