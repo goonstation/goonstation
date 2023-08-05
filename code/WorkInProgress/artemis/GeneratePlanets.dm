@@ -244,7 +244,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 	region.clean_up(main_area=planet_area)
 
 	//Parallax it?
-	if(istype(generator, /datum/map_generator/snow_generator) )
+	if(istype(generator, /datum/map_generator/snow_generator) && prob(15) )
 		var/angle = rand(110,250)
 		var/scroll_speed = rand(50, 100)
 		var/color_alpha = rand(30,60)/100
@@ -258,7 +258,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 		/atom/movable/screen/parallax_layer/foreground/snow=list(color=color_matrix, scroll_speed=scroll_speed, scroll_angle=angle),
 		/atom/movable/screen/parallax_layer/foreground/snow/sparse=list(color=color_matrix, scroll_speed=scroll_speed+25, scroll_angle=angle),
 		)
-	else if(istype(generator, /datum/map_generator/desert_generator) )
+	else if(istype(generator, /datum/map_generator/desert_generator)&& prob(15) )
 		var/angle = rand(110,250)
 		var/scroll_speed = rand(75, 175)
 		var/color_alpha = rand(40,80)/100
