@@ -1,5 +1,9 @@
 
 (t)sat aug 05 23
+(u)Lord_Earthfire
+(p)15057
+(e)🪲🔎🧱|C-Bug, C-Code-Quality, A-Materials
+(+)Material effects on-attacks are now happening more consistent, e.g. erebite hats weared on you will explode if you get bonked on the head.
 (u)Mr. Moriarty & Erinexx
 (p)15188
 (e)🗺🎨📦|A-Mapping, C-Sprites, A-Game-Objects
