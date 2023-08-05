@@ -992,13 +992,13 @@
 		boutput(src, "<span class='alert'>DNR status set!</span>")
 #endif
 
-/mob/proc/unequip_all(var/delete_stuff=0)
+/mob/proc/unequip_all(var/delete_stuff=0, unequip_to = null)
 	var/list/obj/item/to_unequip = src.get_unequippable()
 	if(length(to_unequip))
 		for (var/obj/item/W in to_unequip)
 			src.remove_item(W)
 			if (W)
-				W.set_loc(src.loc)
+				W.set_loc(unequip_to || src.loc)
 				W.dropped(src)
 				W.layer = initial(W.layer)
 			if(delete_stuff)
@@ -1019,8 +1019,8 @@
 		else
 			return I
 
-/mob/dead/unequip_all(var/delete_stuff=0)
-	new/obj/item/reagent_containers/food/snacks/ectoplasm(src.loc)
+/mob/dead/unequip_all(var/delete_stuff=0, unequip_to=null)
+	new/obj/item/reagent_containers/food/snacks/ectoplasm(unequip_to || src.loc)
 
 /mob/proc/get_unequippable()
 	return

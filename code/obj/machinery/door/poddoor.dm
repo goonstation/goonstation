@@ -10,8 +10,6 @@
 	health = 1800
 	health_max = 1800
 
-	var/id = 1
-
 /obj/machinery/door/poddoor/New()
 	. = ..()
 	START_TRACKING

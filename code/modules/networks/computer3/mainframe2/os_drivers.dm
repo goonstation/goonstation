@@ -981,6 +981,82 @@
 		mainframe_prog_exit
 		return
 
+/datum/computer/file/mainframe_program/driver/telepad_prisoner
+	name = "s_telepad_prisoner"
+	setup_processes = 1
+
+	var/list/sessions = list()
+
+	receive_progsignal(var/sendid, var/list/data, var/datum/computer/file/file)
+		if (..())
+			return ESIG_GENERIC
+
+		if (!data["command"])
+			return ESIG_GENERIC
+
+		if (lowertext(data["command"]) == "transmit")
+			sleep(data["delay"] SECONDS)
+			var/sessionid = "[world.timeofday%100][rand(0,9)]" //sessions are a lie, fite me
+			message_device("command=transmit&session=[sessionid]")
+			sessions[sessionid] = ESIG_USR1
+			sleep(0.6 SECONDS)
+			. = sessions[sessionid]
+			sessions -= sessionid
+			return .
+
+
+	terminal_input(var/data, var/datum/computer/file/file)
+		if (..() || !initialized)
+			return
+
+		var/list/datalist = params2list(data)
+
+		switch(lowertext(datalist["command"]))
+			if ("ack")
+				sessions[datalist["session"]] = ESIG_SUCCESS
+			if ("nack")
+				sessions[datalist["session"]] = ESIG_USR2
+
+/datum/computer/file/mainframe_program/srv/telecontrol_prisoner
+	name = "pris_transfer"
+	size = 1
+
+	initialize(var/initparams)
+		if (..())
+			mainframe_prog_exit
+			return
+
+		var/driver_id = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dtag"="s_telepad_prisoner"))
+		if (!(driver_id & ESIG_DATABIT))
+			message_user("Error: Could not detect driver.")
+			mainframe_prog_exit
+			return
+		driver_id &= ~ESIG_DATABIT
+
+		var/list/initlist = splittext(initparams, " ")
+		if (!initparams || !length(initlist) || initlist[1] != "transmit" || length(initlist) > 2)
+			message_user("Invalid commmand format.|nValid Commands:|n (Transmit) to initiate transfer, with optional argument of a delay in seconds.","multiline")
+			mainframe_prog_exit
+			return
+		var/delay = 0
+		if (length(initlist) > 1)
+			delay = text2num_safe(initlist[2])
+			if (delay < 0 || delay > 10)
+				message_user("Invalid delay value provided.|nValues must be in range 0-10.", "multiline")
+		if (!delay)
+			message_user("Transmitting...")
+		else
+			message_user("Transmitting in [delay] seconds...")
+		var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"=initlist[1], "delay"=delay))
+		switch(success)
+			if (ESIG_SUCCESS)
+				message_user("Transmission attempt successful.")
+			if (ESIG_USR2)
+				message_user("Transmission failed, cooldown period active.")
+			else
+				message_user("An unknown error occurred.")
+		mainframe_prog_exit
+
 //Nuclear detonator driver.
 /datum/computer/file/mainframe_program/driver/nuke
 	name = "nuccharge"

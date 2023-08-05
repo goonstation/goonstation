@@ -615,6 +615,7 @@ var/global/mob/twitch_mob = 0
 	Z_LOG_DEBUG("World/Init", "Initializing region allocator...")
 	if(length(global.region_allocator.free_nodes) == 0)
 		global.region_allocator.add_z_level()
+	load_morrigan()
 	#endif
 
 	UPDATE_TITLE_STATUS("Ready")

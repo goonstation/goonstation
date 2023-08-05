@@ -8199,6 +8199,7 @@
 	name = "cargo belt - east";
 	operating = 1
 	},
+/obj/landmark/morrigan_start,
 /turf/unsimulated/floor/caution/west,
 /area/morrigan/routing/transport)
 "iLy" = (

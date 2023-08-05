@@ -710,6 +710,7 @@
 /datum/computer/file/mainframe_program/utility/su
 	name = "su"
 	size = 1
+	var/required_access = access_dwaine_superuser
 
 	initialize(var/initparams)
 		if (..() || (read_user_field("group") == 0))
@@ -731,7 +732,7 @@
 			return ESIG_GENERIC
 
 		var/list/accessList = splittext(usdat.fields["access"] + ";", ";")
-		if ("[access_dwaine_superuser]" in accessList)
+		if ("[src.required_access]" in accessList)
 			if(signal_program(1, list("command"=DWAINE_COMMAND_UGROUP, "group"=0)) == ESIG_SUCCESS)
 				message_user("You are now authorized.")
 				usr.unlock_medal("I'm in", 1)
@@ -746,6 +747,9 @@
 	input_text(var/text) //We're only going to see this if they are at a login prompt and type something else. Assumedly that is because they want to exit (Or had a typo)
 		mainframe_prog_exit
 		return
+
+/datum/computer/file/mainframe_program/utility/su/syndicate
+	required_access = access_syndicate_it
 
 //Mount eligible device drivers
 /datum/computer/file/mainframe_program/utility/mount

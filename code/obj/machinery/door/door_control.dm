@@ -420,25 +420,25 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 
 	logTheThing(LOG_STATION, user || usr, "toggled the [src.name] at [log_loc(src)].")
 
-	for (var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
-		if (M.id == src.id)
-			if (M.density)
-				M.open()
+	for (var/obj/machinery/door/door as anything in by_type[/obj/machinery/door])
+		if (door.id != src.id)
+			continue
+		if (istype(door, /obj/machinery/door/poddoor))
+			if (door.density)
+				door.open()
 				if (src.timer)
 					SPAWN(src.timer)
-						M.close()
+						door.close()
 			else
-				M.close()
+				door.close()
 				if (src.timer)
 					SPAWN(src.timer)
-						M.open()
-
-	for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
-		if (M.id == src.id)
-			if (M.density)
-				M.open()
+						door.open()
+		else
+			if (door.density)
+				door.open()
 			else
-				M.close()
+				door.close()
 
 	for (var/obj/machinery/conveyor/M as anything in machine_registry[MACHINES_CONVEYORS]) // Workaround for the stacked conveyor belt issue (Convair880).
 		if (M.id == src.id)
