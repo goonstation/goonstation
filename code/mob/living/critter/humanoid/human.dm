@@ -73,6 +73,8 @@ ABSTRACT_TYPE(/mob/living/critter/human/syndicate)
 	name = "Syndicate Operative"
 	real_name = "Syndicate Operative"
 	desc = "A Syndicate Operative, oh dear."
+	health_brute = 25
+	health_burn = 25
 	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/skeleton
 	human_to_copy = /mob/living/carbon/human/normal/syndicate
 
