@@ -675,14 +675,14 @@ TRAYS
 
 		. = TRUE // If we got this far it's a valid plate content
 
+		src.place_on(food, user, click_params) // this handles pixel positioning
+		food.set_loc(src)
+
 		if (istype(food, /obj/item/plate/))
 			src.plate_stacked = TRUE
 		else
 			src.food_inside += food
 			src.space_left -= food.w_class
-
-		src.place_on(food, user, click_params) // this handles pixel positioning
-		food.set_loc(src)
 		src.vis_contents += food
 		food.appearance_flags |= RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 		food.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
@@ -694,6 +694,8 @@ TRAYS
 
 	/// Removes a piece of food from the plate.
 	proc/remove_contents(obj/item/food)
+		if (!(food in src.contents))
+			return
 		MOVE_OUT_TO_TURF_SAFE(food, src)
 		src.vis_contents -= food
 		food.appearance_flags = initial(food.appearance_flags)
