@@ -1,5 +1,9 @@
 
 (t)sat aug 05 23
+(u)Mr. Moriarty & Erinexx
+(p)15188
+(e)🗺🎨📦|A-Mapping, C-Sprites, A-Game-Objects
+(+)Resprited robuddies.
 (u)Bartimeus973
 (p)15208
 (e)🆕🔨📦|C-Feature, A-Player-Actions, A-Game-Objects
