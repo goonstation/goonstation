@@ -35050,10 +35050,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
-/obj/machinery/door/airlock/pyro/medical/alt{
-	name = "Morgue";
-	req_access_txt = "29"
-	},
+/obj/machinery/door/airlock/pyro/medical/alt,
 /turf/simulated/floor/white,
 /area/station/medical/robotics)
 "cTx" = (
@@ -43460,8 +43457,7 @@
 "rkz" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
 	dir = 8;
-	name = "Morgue";
-	req_access_txt = "29"
+	name = "Morgue"
 	},
 /obj/mapping_helper/access/morgue,
 /obj/mapping_helper/firedoor_spawn,
