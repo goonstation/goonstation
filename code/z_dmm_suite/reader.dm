@@ -37,22 +37,30 @@ dmm_suite
 		var startData = findtext(dmm_text, "\"")
 		var linesText = copytext(dmm_text, startData + 1, startGridPos)
 		var /list/modelLines = splittext(linesText, regex(@{"\n\""}))
+
+		var/static/magic_var // Really cursed, but we use it to silence a compiler warning thrown by it not understanding findtext() and regex
+
 		for(var/modelLine in modelLines) // "aa" = (/path{key = value; key = value},/path,/path)\n
 			var endQuote = findtext(modelLine, quote, 2, 0)
 			if(endQuote <= 1)
 				continue
+
 			var modelKey = copytext(modelLine, 1, endQuote)
+
 			if(isnull(key_len))
 				key_len = length(modelKey)
+
 			var modelsStart = findtextEx(modelLine, "/") // Skip key and first three characters: "aa" = (
 			var modelContents = copytext(modelLine, modelsStart, length(modelLine)) // Skip last character: )
 			grid_models[modelKey] = modelContents
 			sleep(-1)
+
 		// Retrieve Comments, Determine map position (if not specified)
 		var commentModel = modelLines[1] // The comment key will always be first.
 		var bracketPos = findtextEx(commentModel, "}")
 		commentModel = copytext(commentModel, findtextEx(commentModel, "=")+3, bracketPos) // Skip opening bracket
 		var commentPathText = "[/obj/dmm_suite/comment]"
+
 		if(copytext(commentModel, 1, length(commentPathText)+1) == commentPathText)
 			var attributesText = copytext(commentModel, length(commentPathText)+2, -1) // Skip closing bracket
 			var /list/paddedAttributes = splittext(attributesText, semicolon_delim) // "Key = Value"
@@ -60,33 +68,39 @@ dmm_suite
 				var equalPos = findtextEx(paddedAttribute, "=")
 				var attributeKey = copytext(paddedAttribute, 1, equalPos-1)
 				var attributeValue = copytext(paddedAttribute, equalPos+3, -1) // Skip quotes
+
 				switch(attributeKey)
 					if("coordinates")
 						var /list/coords = splittext(attributeValue, comma_delim)
 						if(!coordX) coordX = text2num(coords[1])
 						if(!coordY)	coordY = text2num(coords[2])
 						if(!coordZ) coordZ = text2num(coords[3])
+
 		if(!coordX) coordX = 1
 		if(!coordY) coordY = 1
 		if(!coordZ) coordZ = world.maxz+1
+
 		// Store quoted portions of text in text_strings, and replaces them with an index to that list.
 		var gridText = copytext(dmm_text, startGridPos)
 		var /list/gridLevels = list()
 		var /regex/grid = regex(@{"\(([0-9]*),([0-9]*),([0-9]*)\) = \{"\n((?:\l*\n)*)"\}"}, "g")
 		var /list/coordShifts = list()
 		var/maxZFound = 1
-		while(grid.Find(gridText))
+		while(findtext(gridText, grid))
 			gridLevels.Add(copytext(grid.group[4], 1, -1)) // Strip last \n
 			coordShifts.Add(list(list(grid.group[1], grid.group[2], grid.group[3])))
 			maxZFound = max(maxZFound, text2num(grid.group[3]))
+
 		// Create all Atoms at map location, from model key
 		if ((coordZ+maxZFound-1) > world.maxz)
 			world.setMaxZ(coordZ+maxZFound-1)
+
 		for(var/posZ = 1 to gridLevels.len)
 			var zGrid = gridLevels[posZ]
 			// Reverse Y coordinate
 			var /list/yReversed = text2list(zGrid, "\n")
 			var /list/yLines = list()
+
 			for(var/posY = yReversed.len to 1 step -1)
 				yLines.Add(yReversed[posY])
 			//
@@ -94,8 +108,10 @@ dmm_suite
 			if(world.maxy < yMax)
 				world.maxy = yMax
 				logTheThing(LOG_DEBUG, null, "[tag] caused map resize (Y) during prefab placement")
+
 			var exampleLine = pick(yLines)
 			var xMax = length(exampleLine)/key_len+(coordX-1)
+
 			if(world.maxx < xMax)
 				world.maxx = xMax
 				logTheThing(LOG_DEBUG, null, "[tag] caused map resize (X) during prefab placement")
@@ -118,20 +134,22 @@ dmm_suite
 						for(var/posX = 1 to length(yLine)/key_len)
 							var/turf/T = locate(posX + igridCoordX - 1, posY+igridCoordY - 1, igridCoordZ)
 							for(var/x in T)
-								if(istype(x, /obj) && flags & DMM_OVERWRITE_OBJS && !istype(x, /obj/overlay))
+								if(isobj(x) && flags & DMM_OVERWRITE_OBJS && !istype(x, /obj/overlay))
 									qdel(x)
-								else if(istype(x, /mob) && flags & DMM_OVERWRITE_MOBS)
+								else if(ismob(x) && flags & DMM_OVERWRITE_MOBS)
 									qdel(x)
 								LAGCHECK(LAG_MED)
 
 			for(var/posY = 1 to yLines.len)
 				var yLine = yLines[posY]
+
 				for(var/posX = 1 to length(yLine)/key_len)
 					var keyPos = ((posX-1)*key_len)+1
 					var modelKey = copytext(yLine, keyPos, keyPos+key_len)
 					parse_grid(
 						grid_models[modelKey], posX + gridCoordX - 1, posY + gridCoordY - 1, gridCoordZ
 					)
+
 				sleep(-1)
 			sleep(-1)
 		//
@@ -164,15 +182,19 @@ dmm_suite
 			var/regex/noStrings = regex(@{"(["])(?:(?=(\\?))\2(.|\n))*?\1"})
 			var/stringIndex = 1
 			var/found
+
+			var/static/magic_var // Really cursed, but we use it to silence a compiler warning thrown by it not understanding findtext() and regex
+
 			do
-				found = noStrings.Find(models, noStrings.next)
+				found = findtext(models, noStrings, noStrings.next)
 				if(found)
 					var indexText = {""[stringIndex]""}
 					stringIndex++
 					var match = copytext(noStrings.match, 2, -1) // Strip quotes
-					models = noStrings.Replace(models, indexText, found)
+					models = replacetext(models, noStrings, indexText, found)
 					originalStrings[indexText] = (match)
 			while(found)
+
 			// Identify each object's data, instantiate it, & reconstitues its fields.
 			var /list/turfStackTypes = list()
 			var /list/turfStackAttributes = list()
@@ -186,8 +208,9 @@ dmm_suite
 						var attributesText = copytext(atomModel, bracketPos+1, -1)
 						var /list/paddedAttributes = splittext(attributesText, semicolon_delim) // "Key = Value"
 						for(var/paddedAttribute in paddedAttributes)
-							key_value_regex.Find(paddedAttribute)
+							magic_var = findtext(paddedAttribute, key_value_regex)
 							attributes[key_value_regex.group[1]] = key_value_regex.group[2]
+
 					// load areas first
 					if(!areaDone)
 						if(ispath(atomPath, /area))
@@ -198,6 +221,7 @@ dmm_suite
 						turfStackTypes.Insert(1, atomPath)
 						turfStackAttributes.Insert(1, null)
 						turfStackAttributes[1] = attributes
+
 			// Layer all turf appearances into final turf
 			if(!turfStackTypes.len) return
 			var /turf/topTurf = loadModel(turfStackTypes[1], turfStackAttributes[1], originalStrings, xcrd, ycrd, zcrd)
@@ -205,6 +229,7 @@ dmm_suite
 				var /mutable_appearance/underlay = new(turfStackTypes[turfIndex])
 				loadModel(underlay, turfStackAttributes[turfIndex], originalStrings, xcrd, ycrd, zcrd)
 				topTurf.underlays.Add(underlay)
+
 				#ifdef RUNTIME_CHECKING
 				if(!istype(topTurf, /turf/simulated/floor/airless/plating/catwalk))
 					CRASH("Duplicate turf at [xcrd],[ycrd],[zcrd] | [debug_id]")
@@ -215,13 +240,17 @@ dmm_suite
 			if(ispath(atomPath, /turf/dmm_suite/clear_turf) || ispath(atomPath, /area/dmm_suite/clear_area))
 				return
 			if((flags & DMM_LOAD_SPACE) && ispath(atomPath, /turf/space)) return //Dont load space
+
 			// Parse all attributes and create preloader
 			var /list/attributesMirror = list()
 			var /turf/location = locate(xcrd, ycrd, zcrd)
+
 			for(var/attributeName in attributes)
 				attributesMirror[attributeName] = loadAttribute(attributes[attributeName], strings)
+
 			var /dmm_suite/preloader/preloader = new(location, attributesMirror)
-			// Begin Instanciation
+
+			// Begin Instantiation
 			// Handle Areas (not created every time)
 			var /atom/instance
 			if(ispath(atomPath, /area))
@@ -233,6 +262,7 @@ dmm_suite
 				else
 					new atomPath(locate(xcrd, ycrd, zcrd))
 				location.dmm_preloader = null
+
 			// Handle Underlay Turfs
 			else if(istype(atomPath, /mutable_appearance))
 				instance = atomPath // Skip to preloader manual loading.
@@ -266,21 +296,25 @@ dmm_suite
 			var num = text2num(value)
 			if(isnum(num))
 				return num
+
 			//Check for file
 			else if(copytext(value,1,2) == "'")
 				return get_cached_file(copytext(value,2,length(value)))
 				// return file(copytext(value,2,length(value)))
+
 			else if(startswith(value, "list("))
 				value = copytext(value, 6, -1)
 				var/list/list_values = splittext(value, ",")
 				// todo associations
 				// also todo , in strings
 				. = list()
+
 				for(var/list_value in list_values)
 					var/key_str = list_value
 					var/val_str = null
 					if(findtext(key_str, "="))
-						key_value_regex.Find(key_str)
+						var/static/magic_var // Really cursed, but we use it to silence a compiler warning thrown by it not understanding findtext() and regex
+						magic_var = findtext(key_str, key_value_regex)
 						key_str = key_value_regex.group[1]
 						val_str = key_value_regex.group[2]
 						var/val = isnull(val_str) ? null : loadAttribute(trim(val_str), strings)
