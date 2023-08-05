@@ -1574,7 +1574,7 @@
 		gloves = null
 		//Todo: get critter gloves if they have a slot. also clean this up in general...
 
-	gloves.material_on_attack_use(M, src)
+	gloves?.material_on_attack_use(M, src)
 	for (var/atom/A in src)
 		A.material_trigger_on_mob_attacked(M, src, gloves, location)
 
