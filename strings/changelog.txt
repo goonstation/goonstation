@@ -1,4 +1,26 @@
 
+(t)fri aug 04 23
+(u)DimWhat
+(p)15171
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added a bunch more clothing sprites for monkeys, ook!
+(t)thu aug 03 23
+(u)Wisemonster
+(p)14825
+(e)🆕🗺🐁|C-Feature, A-Mapping, A-Critters
+(+)The HoP has decided to take his loyal dog Orwell to more stations!
+(u)Garash
+(p)14766
+(e)🆕🔄📄|C-Feature, C-Rework, A-UI
+(+)New snappier UI for the Identification Computers, go commit ID fraud today!
+(u)Bartimeus973
+(p)14757
+(e)🆕🎨💅💊|C-Feature, C-Sprites, C-QoL, A-Medical
+(+)Surgery slipups are a lot more noticeable.
+(u)Caio029
+(p)15178
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Pronouns will now be shown on the examine text of humans.
 (t)wed aug 02 23
 (u)LeahTheTech
 (p)15169

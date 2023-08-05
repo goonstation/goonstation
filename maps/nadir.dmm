@@ -22548,6 +22548,20 @@
 	},
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
+"jLv" = (
+/obj/stool/chair/office/green{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/mob/living/critter/small_animal/dog/george/orwell,
+/turf/simulated/floor/carpet/green/fancy/edge{
+	dir = 6
+	},
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "jLV" = (
 /obj/machinery/conveyor/SN{
 	id = "garbage";
@@ -24135,11 +24149,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/northeast)
-"kqX" = (
-/obj/decal/cleanable/machine_debris,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/plating,
-/area/pasiphae/sys)
 "kqZ" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -28450,10 +28459,6 @@
 "mbF" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
-"mbG" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/plating,
-/area/pasiphae/sys)
 "mbO" = (
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -29747,6 +29752,11 @@
 	dir = 1
 	},
 /area/station/crew_quarters/pool)
+"mEf" = (
+/obj/decal/cleanable/machine_debris,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
+/area/pasiphae/sys)
 "mEo" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 2
@@ -36932,19 +36942,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
-"pSi" = (
-/obj/stool/chair/office/green{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 6
-	},
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
 "pSv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -48074,6 +48071,10 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
+"uQi" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
+/area/pasiphae/sys)
 "uQI" = (
 /obj/machinery/door/airlock/pyro/glass/toxins{
 	aiControlDisabled = 1;
@@ -96044,7 +96045,7 @@ wQJ
 wwl
 rzJ
 cQE
-pSi
+jLv
 tks
 gow
 gow
@@ -121757,7 +121758,7 @@ jyP
 wlJ
 iQi
 rvk
-kqX
+mEf
 ifu
 oeA
 oeA
@@ -122058,7 +122059,7 @@ ofp
 hkX
 cat
 mWZ
-mbG
+uQi
 ouA
 ifu
 oeA

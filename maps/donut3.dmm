@@ -7307,6 +7307,25 @@
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
+"ccv" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/machinery/light/incandescent/cool{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/machinery/light_switch/east,
+/mob/living/critter/small_animal/dog/george/orwell,
+/turf/simulated/floor/carpet/red/fancy/narrow/north,
+/area/station/crew_quarters/heads)
 "ccC" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -9794,24 +9813,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/construction)
-"cPJ" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/machinery/light/incandescent/cool{
-	dir = 1
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/obj/machinery/light_switch/east,
-/turf/simulated/floor/carpet/red/fancy/narrow/north,
-/area/station/crew_quarters/heads)
 "cPO" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/grime,
@@ -11791,14 +11792,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"dwU" = (
-/obj/decal/floatingtiles{
-	dir = 8;
-	icon_state = "floattiles4"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "dxe" = (
 /obj/railing/orange{
 	dir = 8
@@ -11879,13 +11872,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/ranch)
-"dyQ" = (
-/obj/decal/floatingtiles{
-	icon_state = "floattiles6"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "dyV" = (
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = -1
@@ -14083,6 +14069,14 @@
 	name = "reinforced plating"
 	},
 /area/station/medical/medbay/pharmacy)
+"eiG" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles4"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "eiH" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/black/grime,
@@ -26194,14 +26188,6 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
-"hVZ" = (
-/obj/decal/floatingtiles{
-	dir = 4
-	},
-/obj/decal/cleanable/machine_debris,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "hWf" = (
 /obj/railing/orange{
 	dir = 1
@@ -31814,13 +31800,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/lobby)
-"jGL" = (
-/obj/decal/floatingtiles{
-	icon_state = "floattiles5"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "jGO" = (
 /obj/decal/tile_edge/line/white{
 	color = "#ffccff";
@@ -32917,6 +32896,14 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/cloner)
+"jYk" = (
+/obj/decal/floatingtiles{
+	dir = 4
+	},
+/obj/decal/cleanable/machine_debris,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "jYm" = (
 /obj/lattice{
 	dir = 10;
@@ -51785,6 +51772,13 @@
 	dir = 9
 	},
 /area/station/hangar/main)
+"pPL" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles6"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "pPS" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/cleanable/dirt/jen,
@@ -54371,6 +54365,13 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
+"qDa" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles5"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "qDd" = (
 /obj/railing/orange{
 	dir = 4
@@ -114238,7 +114239,7 @@ iLV
 hWZ
 hWZ
 nMc
-cPJ
+ccv
 mnB
 rWM
 rnp
@@ -158415,8 +158416,8 @@ csA
 csA
 fJu
 rdj
-jGL
-dwU
+qDa
+eiG
 kuM
 fJu
 fJu
@@ -158717,8 +158718,8 @@ rdj
 rdj
 rdj
 rdj
-dyQ
-hVZ
+pPL
+jYk
 fJu
 fJu
 fJu

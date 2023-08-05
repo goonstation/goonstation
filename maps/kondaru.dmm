@@ -15,10 +15,6 @@
 	},
 /turf/space,
 /area/space)
-"aae" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "aaf" = (
 /obj/lattice,
 /turf/space,
@@ -47,14 +43,6 @@
 "aal" = (
 /turf/simulated/floor/airless,
 /area/space)
-"aam" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/item/cigpacket/propuffs,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/space)
 "aan" = (
 /obj/decal/fakeobjects/cargopad,
 /obj/item/a_gift,
@@ -66,52 +54,12 @@
 /obj/machinery/microscope,
 /turf/simulated/floor/airless,
 /area/space)
-"aap" = (
-/obj/item/raw_material/shard,
-/obj/item/reagent_containers/dropper/mechanical,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/space)
 "aaq" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
 	icon_state = "airlock_locked";
 	locked = 1
 	},
-/turf/simulated/floor/airless,
-/area/space)
-"aar" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "A vent. Cool air is gently flowing through it.";
-	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "hvent";
-	name = "air vent"
-	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of a human. There seem to be a few bits missing."
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/space)
-"aas" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/item/clothing/suit/space/emerg,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/airless/plating,
-/area/space)
-"aat" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/turfs/floor/damager,
 /turf/simulated/floor/airless,
 /area/space)
 "aau" = (
@@ -141,24 +89,12 @@
 /obj/item/clothing/gloves/latex,
 /turf/simulated/floor/airless,
 /area/space)
-"aax" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/item/raw_material/shard,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/space)
 "aay" = (
 /obj/lattice{
 	dir = 6;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/space)
-"aaz" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
 /area/space)
 "aaA" = (
 /obj/cable{
@@ -174,16 +110,6 @@
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/decal/stripe_caution,
-/turf/simulated/floor/airless,
-/area/space)
-"aaC" = (
-/obj/decal/fakeobjects{
-	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "broken machine"
-	},
-/obj/mapping_helper/turfs/floor/damager,
 /turf/simulated/floor/airless,
 /area/space)
 "aaD" = (
@@ -22193,18 +22119,6 @@
 	dir = 4
 	},
 /area/station/crew_quarters/courtroom)
-"bHi" = (
-/obj/stool/chair/comfy/green{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/machinery/light_switch/north,
-/turf/simulated/floor/carpet/green/fancy/edge/north,
-/area/station/bridge/hos)
 "bHk" = (
 /obj/storage/secure/closet/command/hop,
 /obj/machinery/camera{
@@ -32149,6 +32063,13 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/secwing)
+"cse" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "csM" = (
 /obj/machinery/light_switch/east,
 /obj/cable{
@@ -32674,6 +32595,12 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/bridge)
+"cLl" = (
+/obj/item/raw_material/shard,
+/obj/item/reagent_containers/dropper/mechanical,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "cLu" = (
 /obj/railing/orange/reinforced{
 	dir = 4
@@ -33142,12 +33069,6 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/station/garden/owlery)
-"dae" = (
-/obj/decal/cleanable/dirt,
-/obj/item/raw_material/shard/glass,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/quarters_south)
 "daf" = (
 /turf/simulated/floor/caution/corner/sw,
 /area/station/quartermaster/cargobay)
@@ -34557,6 +34478,11 @@
 	dir = 5
 	},
 /area/station/medical/medbay/psychiatrist)
+"dYx" = (
+/obj/machinery/computer/security/wooden_tv,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
+/area/station/security/beepsky)
 "dYz" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -34741,6 +34667,10 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"ega" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "egj" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -35533,6 +35463,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"eJh" = (
+/obj/structure/woodwall,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
+/area/station/garden/aviary)
 "eJp" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -36092,6 +36027,14 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/caution/south,
 /area/station/engine/gas)
+"fhq" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/raw_material/shard,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "fhx" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -37525,6 +37468,29 @@
 	},
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
+"glF" = (
+/obj/storage/crate{
+	desc = "A private crate that isn't yours.";
+	name = "Beepsky's stuff"
+	},
+/obj/item/diary,
+/obj/item/clothing/shoes/black{
+	desc = "You have no idea how a robot with wheels for locomotion could possibly require these.";
+	name = "Beepsky's Shoes"
+	},
+/obj/item/storage/photo_album/beepsky,
+/obj/item/clothing/suit/det_suit/beepsky,
+/obj/item/clothing/head/NTberet{
+	desc = "It's a momento, I guess. An old keepsake. And maybe a reminder of the things we've left behind.";
+	name = "Old Beret"
+	},
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
+/area/station/security/beepsky)
 "glP" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -40939,10 +40905,6 @@
 	dir = 8
 	},
 /area/station/security/brig/solitary)
-"iVD" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor,
-/area/station/crew_quarters/quarters_south)
 "iWG" = (
 /obj/table/wood/round/auto,
 /obj/item/device/light/candle{
@@ -41232,6 +41194,16 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"jkV" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/item/storage/secure/ssafe/loot{
+	pixel_x = -28
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
+/area/station/crew_quarters/quarters_south)
 "jld" = (
 /obj/machinery/light{
 	dir = 1;
@@ -41793,29 +41765,6 @@
 	dir = 4
 	},
 /area/station/maintenance/southeast)
-"jFS" = (
-/obj/storage/crate{
-	desc = "A private crate that isn't yours.";
-	name = "Beepsky's stuff"
-	},
-/obj/item/diary,
-/obj/item/clothing/shoes/black{
-	desc = "You have no idea how a robot with wheels for locomotion could possibly require these.";
-	name = "Beepsky's Shoes"
-	},
-/obj/item/storage/photo_album/beepsky,
-/obj/item/clothing/suit/det_suit/beepsky,
-/obj/item/clothing/head/NTberet{
-	desc = "It's a momento, I guess. An old keepsake. And maybe a reminder of the things we've left behind.";
-	name = "Old Beret"
-	},
-/obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/plating,
-/area/station/security/beepsky)
 "jGn" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 1
@@ -42965,6 +42914,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"kEo" = (
+/obj/decal/fakeobjects/skeleton{
+	desc = "It's all covered in a sticky mess, and there are chunks of uniform fused to the bone.";
+	name = "sticky skeleton"
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/quarters_south)
 "kFb" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -43621,6 +43578,10 @@
 	},
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/market)
+"lgX" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "lhD" = (
 /obj/machinery/light{
 	dir = 1;
@@ -44819,11 +44780,6 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
-"mdB" = (
-/obj/machinery/computer/security/wooden_tv,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/plating,
-/area/station/security/beepsky)
 "mdC" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Courtroom"
@@ -45280,6 +45236,14 @@
 /obj/machinery/light,
 /turf/simulated/floor/grey,
 /area/station/bridge)
+"mxN" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/cigpacket/propuffs,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "mya" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -45427,16 +45391,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
-/area/station/crew_quarters/quarters_south)
-"mFh" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/obj/item/storage/secure/ssafe/loot{
-	pixel_x = -28
-	},
-/obj/mapping_helper/turfs/floor/damager,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
 "mFy" = (
@@ -46106,6 +46060,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"niy" = (
+/obj/decal/cleanable/ash,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
+/area/station/crew_quarters/quarters_south)
 "niK" = (
 /obj/plasticflaps{
 	layer = 3
@@ -48056,6 +48015,19 @@
 /obj/mapping_helper/access/medical,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbooth)
+"oPJ" = (
+/obj/stool/chair/comfy/green{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/light_switch/north,
+/mob/living/critter/small_animal/dog/george/orwell,
+/turf/simulated/floor/carpet/green/fancy/edge/north,
+/area/station/bridge/hos)
 "oQa" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -49821,6 +49793,16 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"qjE" = (
+/obj/decal/fakeobjects{
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "broken machine"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "qjF" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -52129,6 +52111,17 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
+"sdJ" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/item/clothing/suit/space/emerg,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "set" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/wood,
@@ -53901,6 +53894,12 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/mining/magnet)
+"tBf" = (
+/obj/decal/cleanable/dirt,
+/obj/item/raw_material/shard/glass,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/quarters_south)
 "tBq" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -54905,14 +54904,6 @@
 /obj/decal/poster/wallsign/escape_right,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
-"uqp" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "It's all covered in a sticky mess, and there are chunks of uniform fused to the bone.";
-	name = "sticky skeleton"
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/quarters_south)
 "uqR" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment/vertical,
@@ -55352,6 +55343,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"uFu" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
+/area/station/crew_quarters/quarters_south)
 "uGb" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
@@ -57278,11 +57273,6 @@
 /obj/landmark/start/job/botanist,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"wnA" = (
-/obj/decal/cleanable/ash,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor,
-/area/station/crew_quarters/quarters_south)
 "wnB" = (
 /obj/table/auto,
 /obj/machinery/networked/storage/scanner{
@@ -58237,11 +58227,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"wXg" = (
-/obj/structure/woodwall,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/plating,
-/area/station/garden/aviary)
 "wXQ" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -59393,6 +59378,22 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"xMF" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "air vent"
+	},
+/obj/decal/fakeobjects/skeleton{
+	desc = "The remains of a human. There seem to be a few bits missing."
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "xNv" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -121290,7 +121291,7 @@ xPt
 qsS
 bfO
 fYL
-mdB
+dYx
 fYL
 hxr
 inI
@@ -121579,7 +121580,7 @@ bxm
 bvY
 bEP
 vTk
-bHi
+oPJ
 bIF
 nXl
 bLt
@@ -121894,7 +121895,7 @@ xPt
 tTC
 bfO
 fYL
-jFS
+glF
 fYL
 uEv
 cbZ
@@ -126836,7 +126837,7 @@ aaa
 aaa
 aaa
 aaf
-aae
+ega
 aai
 aaa
 aaa
@@ -127440,8 +127441,8 @@ aaa
 aaa
 aag
 aal
-aar
-aaz
+xMF
+lgX
 aaD
 aaa
 aaa
@@ -127741,8 +127742,8 @@ aaa
 aaa
 aaa
 aah
-aam
-aas
+mxN
+sdJ
 aaA
 aai
 aaa
@@ -127906,7 +127907,7 @@ iJR
 cfu
 aZa
 iTE
-mFh
+jkV
 bre
 bsw
 bsw
@@ -128044,7 +128045,7 @@ aaa
 aaa
 aai
 aan
-aat
+cse
 aaB
 aai
 aaa
@@ -128207,8 +128208,8 @@ aZa
 qJi
 cfw
 aZa
-wnA
-dae
+niy
+tBf
 bre
 xEU
 rXN
@@ -128509,9 +128510,9 @@ aZa
 fFj
 cgR
 aZa
-iVD
-uqp
-wXg
+uFu
+kEo
+eJh
 bsw
 bsw
 hAX
@@ -128649,7 +128650,7 @@ aaa
 aai
 aao
 aav
-aaC
+qjE
 aaj
 aac
 aaa
@@ -128944,12 +128945,12 @@ aaa
 aaa
 aaa
 aaa
-aae
+ega
 aaa
 aaa
 aaa
 aaj
-aap
+cLl
 aaw
 aac
 aac
@@ -129252,7 +129253,7 @@ aaa
 aac
 aac
 aac
-aax
+fhq
 aac
 aac
 aac
