@@ -630,12 +630,16 @@ TRAYS
 						// This will fail for non-edibles so we can just blindfire the proc at everything
 						src.add_contents(food_maybe)
 
-	proc/check_height()
+	proc/check_height(obj/item/plate/other) //we go down and then we go up because plates are bidirectional like that
 		. = 1
 		var/obj/item/plate/curr = src
 		while(istype(curr.loc, /obj/item/plate))
 			curr = curr.loc
 			.++
+		curr = (locate(/obj/item/plate) in other)
+		while (curr)
+			.++
+			curr = (locate(/obj/item/plate) in curr)
 
 	/// Attempts to add an item to the plate, if there's space. Returns TRUE if food is successfully added.
 	proc/add_contents(obj/item/food, mob/user, click_params)
@@ -652,7 +656,7 @@ TRAYS
 			if (src.plate_stacked)
 				boutput(user, "<span class='alert'>You can't stack anything on [src], it already has a plate stacked on it!</span>")
 				return
-			if (src.check_height() >= 7)
+			if (src.check_height(food) >= 7)
 				boutput(user, "<span class='alert'>You can't stack anything on [src], it's already stacked too high!</span>")
 				return
 

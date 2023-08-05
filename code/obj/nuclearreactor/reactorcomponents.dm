@@ -130,8 +130,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 
 			if(RC.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
-			RC.material.triggerTemp(RC,RC.temperature)
-			src.material.triggerTemp(src,src.temperature)
+			RC.material_trigger_on_temp(RC.temperature)
+			src.material_trigger_on_temp(src.temperature)
 		//heat transfer with reactor vessel
 		var/obj/machinery/atmospherics/binary/nuclear_reactor/holder = src.loc
 		if(istype(holder))
@@ -143,8 +143,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			if(holder.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
 
-			holder.material.triggerTemp(holder,holder.temperature)
-			src.material.triggerTemp(src,src.temperature)
+			holder.material_trigger_on_temp(holder.temperature)
+			src.material_trigger_on_temp(src.temperature)
 		if((src.temperature > src.melting_point) && (src.melt_health > 0))
 			src.melt_health -= rand(10,50)
 		if(src.melt_health <= 0)
