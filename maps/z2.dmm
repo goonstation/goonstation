@@ -58111,7 +58111,7 @@
 	icon_state = "tile1"
 	},
 /obj/machinery/glass_recycler{
-	glass_amt = 666
+	glass_amt = 50
 	},
 /turf/unsimulated/floor/carpet{
 	dir = 1;
