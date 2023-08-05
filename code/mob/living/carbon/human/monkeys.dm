@@ -216,6 +216,27 @@
 				src.chest_item = idk
 				src.chest_item_sewn = 1
 
+/mob/living/carbon/human/npc/monkey/mstirstir
+	name = "Madame Stirstir"
+	real_name = "Madame Stirstir"
+#ifdef IN_MAP_EDITOR
+	icon_state = "stirstir"
+#endif
+	gender = "female"
+	ai_offhand_pickup_chance = 4 // a filthy thief but he's trying to play nice for now
+	ai_poke_thing_chance = 5 // maybe finds tools... breaks out of prison...but SYNDICATE
+	New()
+		..()
+		SPAWN(1 SECOND)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/head/beret/prisoner, slot_head)
+			if(prob(80)) // couldnt figure out how to hide it in the debris field, so i just chucked it in a monkey
+				var/obj/item/disk/data/cartridge/ringtone_numbers/idk = new
+				idk.set_loc(src)
+				src.chest_item = idk
+				src.chest_item_sewn = 1
+
+
 /mob/living/carbon/human/npc/monkey // :getin:
 	name = "monkey"
 	real_name = "monkey"

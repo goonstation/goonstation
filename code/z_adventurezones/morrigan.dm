@@ -354,7 +354,7 @@ proc/load_morrigan()
 
 	initializeBioholder()
 		. = ..()
-		randomize_look(src, TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, src)
+		randomize_look(src, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, src)
 
 /mob/living/carbon/human/syndicatemorrigan/rowdy
 
@@ -429,7 +429,7 @@ proc/load_morrigan()
 
 	initializeBioholder()
 		. = ..()
-		randomize_look(src, TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, src)
+		randomize_look(src, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, src)
 
 
 
