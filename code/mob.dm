@@ -1546,7 +1546,7 @@
 	var/stun = 0
 	stun = round((P.power*(1.0-P.proj_data.ks_ratio)), 1.0)
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 
 	switch(P.proj_data.damage_type)
 		if (D_KINETIC)
@@ -1586,7 +1586,7 @@
 
 	stun *= 0.2 //mbc magic number stun multiplier wow
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 
 	switch(P.proj_data.damage_type)
 		if (D_ENERGY)

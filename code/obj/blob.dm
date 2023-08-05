@@ -188,17 +188,21 @@
 		particleMaster.SpawnSystem(new /datum/particleSystem/blobattack(T,overmind.color))
 		if (T?.density)
 			T.blob_act(overmind.attack_power * 20)
-			T.material?.triggerOnBlobHit(T, overmind.attack_power * 20)
+			T.material_trigger_on_blob_attacked(overmind.attack_power * 20)
 
 		else
 			for (var/mob/M in T.contents)
 				M.blob_act(overmind.attack_power * 20)
 				if(isliving(M))
 					var/mob/living/L = M
+					for (var/obj/equipped_stuff in L.equipped())
+						equipped_stuff.material_trigger_on_blob_attacked(overmind.attack_power * 20)
+					for (var/obj/contained_stuff in L.contents)
+						contained_stuff.material_trigger_on_blob_attacked(overmind.attack_power * 20)
 					L.was_harmed(src)
 			for (var/obj/O in T.contents)
 				O.blob_act(overmind.attack_power * 20)
-				O.material?.triggerOnBlobHit(O, overmind.attack_power * 20)
+				O.material_trigger_on_blob_attacked(overmind.attack_power * 20)
 
 
 	proc/attack_random()
@@ -251,7 +255,7 @@
 		return
 
 	bullet_act(var/obj/projectile/P)
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 		var/damage = round((P.power*P.proj_data.ks_ratio), 1.0)
 		var/damage_mult = 1
 		var/damtype = "brute"
@@ -283,8 +287,7 @@
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		var/temp_difference = abs(temperature - src.ideal_temp)
 		var/tolerance = temp_tolerance
-		if (material)
-			material.triggerTemp(src, temperature)
+		src.material_trigger_on_temp(temperature)
 
 		if (src.has_upgrade(/datum/blob_upgrade/fire_resist))
 			tolerance *= 3
@@ -348,8 +351,7 @@
 				if (prob(chunk_chance))
 					create_chunk(get_turf(user))
 
-		if (material)
-			material.triggerOnAttacked(src, user, src, W)
+		src.material_trigger_when_attacked(W, user, 1)
 
 		src.take_damage(damage,damage_mult,damtype,user)
 

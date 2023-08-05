@@ -941,8 +941,7 @@
 		if (P.proj_data.damage < 1)
 			return
 
-		if (src.material)
-			src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		var/obj/item/parts/robot_parts/PART = null
 		if (ismob(P.shooter))
@@ -1041,10 +1040,13 @@
 	temperature_expose(null, temp, volume)
 		var/Fshield = FALSE
 
-		src.material?.triggerTemp(src, temp)
+		src.material_trigger_on_temp(temp)
 
 		for(var/atom/A in src.contents)
-			A.material?.triggerTemp(A, temp)
+			A.material_trigger_on_temp(temp)
+		for (var/atom/equipped_stuff in src.equipped())
+			//that should mostly not have an effect, exept maybe when an engiborg picks up a stack of erebite rods?
+			equipped_stuff.material_trigger_on_temp(temp)
 
 		for (var/obj/item/roboupgrade/R in src.contents)
 			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated)

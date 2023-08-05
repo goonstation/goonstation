@@ -919,7 +919,7 @@ ABSTRACT_TYPE(/datum/projectile)
  * So I made my own proc, but left the old one in place just in case -- Sovexe
  * var/reflect_on_nondense_hits - flag for handling hitting objects that let bullets pass through like secbots, rather than duplicating projectiles
  */
-/proc/shoot_reflected_bounce(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3, var/mode = PROJ_RAPID_HEADON_BOUNCE, var/reflect_on_nondense_hits = FALSE)
+/proc/shoot_reflected_bounce(var/obj/projectile/P, var/atom/reflector, var/max_reflects = 3, var/mode = PROJ_RAPID_HEADON_BOUNCE, var/reflect_on_nondense_hits = FALSE)
 	if (!P || !reflector)
 		return
 
