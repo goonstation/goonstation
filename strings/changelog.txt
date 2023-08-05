@@ -1,4 +1,9 @@
 
+(t)sat aug 05 23
+(u)Bartimeus973
+(p)15208
+(e)🆕🔨📦|C-Feature, A-Player-Actions, A-Game-Objects
+(*)Vampires should now avoid using tanning beds.
 (t)fri aug 04 23
 (u)Wisemonster
 (p)14881
