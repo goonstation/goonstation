@@ -209,6 +209,7 @@ mob/new_player
 							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an emagged cyborg.")
 							S.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
 						SPAWN(1 DECI SECOND)
+							S.bioHolder?.mobAppearance?.pronouns = S.client.preferences.AH.pronouns
 							S.choose_name()
 							qdel(src)
 					else

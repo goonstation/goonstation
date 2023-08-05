@@ -384,17 +384,17 @@ ABSTRACT_TYPE(/datum/material)
 			X.execute(owner, entering)
 		return
 
-	proc/triggerOnAttacked(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
+	proc/triggerOnAttacked(var/atom/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
 		for(var/datum/materialProc/X in triggersOnAttacked)
 			X.execute(owner, attacker, attacked, weapon)
 		return
 
-	proc/triggerOnBullet(var/obj/item/owner, var/atom/attacked, var/obj/projectile/projectile)
+	proc/triggerOnBullet(var/atom/owner, var/atom/attacked, var/obj/projectile/projectile)
 		for(var/datum/materialProc/X in triggersOnBullet)
 			X.execute(owner, attacked, projectile)
 		return
 
-	proc/triggerOnAttack(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
+	proc/triggerOnAttack(var/atom/owner, var/mob/attacker, var/atom/attacked)
 		for(var/datum/materialProc/X in triggersOnAttack)
 			X.execute(owner, attacker, attacked)
 		return
@@ -449,9 +449,9 @@ ABSTRACT_TYPE(/datum/material)
 			X.execute(owner, blobPower)
 		return
 
-	proc/triggerOnHit(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
+	proc/triggerOnHit(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/meleeorthrow)
 		for(var/datum/materialProc/X in triggersOnHit)
-			X.execute(owner, attackobj, attacker, meleeorthrow)
+			X.execute(owner, attackatom, attacker, meleeorthrow)
 		return
 
 //Material definitions
