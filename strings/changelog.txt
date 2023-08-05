@@ -1,5 +1,9 @@
 
 (t)sat aug 05 23
+(u)Kubius
+(p)13348
+(e)🪲⚖🔄💡|C-Bug, C-Balance, C-Rework, A-Station-Systems
+(*)APC power delivery has received a substantial overhaul; the power grid will now prioritize supporting heavy loads, and recharging will scale itself to the amount of spare power available.
 (u)Lord_Earthfire
 (p)15057
 (e)🪲🔎🧱|C-Bug, C-Code-Quality, A-Materials
