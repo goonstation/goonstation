@@ -116,7 +116,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	/// So, it should typically be something like head_offset +/- a few pixels
 	var/eye_offset = 0
 
-	var/list/limb_list = list()
 	var/r_limb_arm_type_mutantrace = null // Should we get custom arms? Dispose() replaces them with normal human arms.
 	var/l_limb_arm_type_mutantrace = null
 	var/r_limb_leg_type_mutantrace = null
@@ -263,7 +262,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		AppearanceSetter(M, "set")
 		LimbSetter(M, "set")
 		organ_mutator(M, "set")
-		src.limb_list.Add(l_limb_arm_type_mutantrace, r_limb_arm_type_mutantrace, l_limb_leg_type_mutantrace, r_limb_leg_type_mutantrace)
 		src.mob = M
 		var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 		for(var/obj/item/clothing/W in restricted)
@@ -320,7 +318,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				MutateMutant(H, "reset")
 				organ_mutator(H, "reset")
 				LimbSetter(H, "reset")
-				qdel(src.limb_list)
 
 				H.set_face_icon_dirty()
 				H.set_body_icon_dirty()
