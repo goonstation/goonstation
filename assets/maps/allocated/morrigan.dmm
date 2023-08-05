@@ -4642,7 +4642,6 @@
 "eWw" = (
 /obj/machinery/conveyor/WE,
 /obj/machinery/crusher,
-/obj/disposalpipe/auto,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/disposals)
 "eWL" = (
@@ -8253,7 +8252,7 @@
 /area/morrigan/station/medical/main)
 "iNT" = (
 /obj/grille/catwalk,
-/obj/disposalpipe/auto,
+/obj/disposalpipe/auto/regular,
 /turf/space,
 /area/morrigan/station/space)
 "iNW" = (
@@ -11050,10 +11049,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
-"lSo" = (
-/obj/disposalpipe/auto,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/disposals)
 "lSG" = (
 /obj/machinery/light/emergency{
 	dir = 1
@@ -13741,8 +13736,8 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/station/factory)
 "oHB" = (
-/obj/disposalpipe/auto,
-/turf/unsimulated/wall/auto/reinforced/supernorn,
+/obj/disposalpipe/auto/regular,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/disposals)
 "oHF" = (
 /obj/item/raw_material/shard/glass,
@@ -16500,7 +16495,7 @@
 "rQX" = (
 /obj/machinery/conveyor/NS,
 /obj/disposaloutlet,
-/obj/disposalpipe/auto,
+/obj/disposalpipe/auto/regular,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/disposals)
 "rSs" = (
@@ -20326,7 +20321,7 @@
 	},
 /area/morrigan/station/hallway)
 "wmK" = (
-/obj/disposalpipe/auto,
+/obj/disposalpipe/auto/regular,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
 "wmV" = (
@@ -20399,10 +20394,6 @@
 /obj/machinery/macrofab,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"wrb" = (
-/obj/disposalpipe/auto,
-/turf/space,
-/area/morrigan/station/space)
 "wrl" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -20584,7 +20575,7 @@
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/medical/emergency)
 "wCU" = (
-/obj/disposalpipe/auto,
+/obj/disposalpipe/auto/regular,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/maintenance)
 "wCY" = (
@@ -20970,7 +20961,7 @@
 /area/morrigan/station/command/captain)
 "wYY" = (
 /obj/lattice,
-/obj/disposalpipe/auto,
+/obj/disposalpipe/auto/regular,
 /turf/space,
 /area/morrigan/station/space)
 "wZd" = (
@@ -22030,7 +22021,7 @@
 /area/morrigan/station/command/bridge)
 "ydd" = (
 /obj/decal/cleanable/rust/jen,
-/obj/disposalpipe/auto,
+/obj/disposalpipe/auto/regular,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
 "ydD" = (
@@ -22101,7 +22092,7 @@
 /area/morrigan/station/factory)
 "yhh" = (
 /obj/machinery/floorflusher/industrial,
-/obj/disposalpipe/auto,
+/obj/disposalpipe/auto/regular,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/disposals)
 "yhP" = (
@@ -27758,7 +27749,7 @@ obU
 uRB
 xPi
 ydd
-lSo
+oHB
 rQX
 cdl
 vwF
@@ -29095,7 +29086,7 @@ dKY
 dKY
 dKY
 dKY
-wrb
+dKY
 wYY
 iNT
 wCU
