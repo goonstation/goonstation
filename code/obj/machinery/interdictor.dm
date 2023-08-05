@@ -275,7 +275,7 @@
 			var/amount_to_add = min(round(intcap.maxcharge - intcap.charge, 10), src.chargerate)
 			if(amount_to_add)
 				var/added = intcap.give(amount_to_add)
-				if(!src.canInterdict)
+				if(!src.canInterdict && !ON_COOLDOWN(src, "interdictor_noise", 20 SECONDS))
 					playsound(src.loc, src.sound_interdict_run, 5, 0, 0, 0.8)
 				use_power(added / CELLRATE)
 		if(intcap.charge >= (intcap.maxcharge * 0.7) && !src.canInterdict)
@@ -290,7 +290,7 @@
 	if(src.cumulative_cost)
 		if(src.cumulative_cost >= 50) //if the cost was very minor, don't even make a sound
 			var/sound_strength = clamp(cumulative_cost/10,5,25)
-			if(src.canInterdict)
+			if(src.canInterdict && !ON_COOLDOWN(src, "interdictor_noise", 20 SECONDS))
 				playsound(src.loc, src.sound_interdict_run, sound_strength, 0)
 		src.cumulative_cost = 0
 	if(src.radstorm_paid)
