@@ -373,18 +373,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/devzone)
-"eK" = (
-/obj/forcefield/energyshield/perma{
-	dir = 4
-	},
-/obj/railing/red{
-	dir = 8
-	},
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/devzone)
 "eL" = (
 /turf/simulated/floor/grass/leafy,
 /area/devzone)
@@ -1107,6 +1095,11 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
 	},
+/obj/machinery/sparker{
+	dir = 2;
+	id = "burn_2";
+	pixel_y = 20
+	},
 /turf/simulated/floor/engine/vacuum,
 /area/devzone)
 "oe" = (
@@ -1573,6 +1566,11 @@
 "uO" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "burn";
+	pixel_x = -24;
+	pixel_y = -8
 	},
 /turf/simulated/floor/blue,
 /area/devzone)
@@ -3270,6 +3268,11 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
 	},
+/obj/machinery/sparker{
+	dir = 2;
+	id = "burn";
+	pixel_y = 20
+	},
 /turf/simulated/floor/engine/vacuum,
 /area/devzone)
 "Rp" = (
@@ -3290,6 +3293,17 @@
 "Rs" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor,
+/area/devzone)
+"Rw" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "burn_2";
+	pixel_x = -25;
+	pixel_y = 10
+	},
+/turf/simulated/floor/blue,
 /area/devzone)
 "RA" = (
 /obj/landmark/start/job/security_officer,
@@ -5500,7 +5514,7 @@ ZD
 Yx
 iu
 xK
-eK
+yc
 Pm
 co
 LJ
@@ -5544,7 +5558,7 @@ Yx
 ic
 nI
 aS
-uO
+Rw
 OO
 uO
 aS
