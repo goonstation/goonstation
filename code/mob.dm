@@ -585,13 +585,11 @@
 					tmob_effect.deactivate(10)
 					tmob_effect.update_charge(-1)
 					//spatial interdictor: mitigate biomagnetic discharges
-					//consumes 100 units of charge (50,000 joules) to interdict a repulsion, permitting safe discharge of the fields
-					for_by_tcl(IX, /obj/machinery/interdictor)
-						if (IX.expend_interdict(100,src))
-							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
-							var/atom/source = get_turf(tmob)
-							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
-							return
+					if (tmob.hasStatus("spatial_protection"))
+						src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
+						var/atom/source = get_turf(tmob)
+						playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
+						return
 					// like repels - bump them away from each other
 					src.now_pushing = 0
 					var/atom/source = get_turf(tmob)
@@ -632,14 +630,12 @@
 					tmob_effect.deactivate(10)
 					tmob_effect.update_charge(-tmob_effect.charge)
 					//spatial interdictor: mitigate biomagnetic discharges
-					//consumes 150 units of charge (75,000 joules) to interdict an attraction, permitting safe discharge of the fields
 
-					for_by_tcl(IX, /obj/machinery/interdictor)
-						if (IX.expend_interdict(150,src))
-							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
-							var/atom/source = get_turf(tmob)
-							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
-							return
+					if (tmob.hasStatus("spatial_protection"))
+						src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
+						var/atom/source = get_turf(tmob)
+						playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
+						return
 					// opposite attracts - fling everything nearby at these dumbasses
 					src.now_pushing = 1
 					tmob.now_pushing = 1
