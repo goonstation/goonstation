@@ -18,7 +18,6 @@ var/global/parallax_enabled = TRUE
 		src.parallax_layers = list()
 		src.outermost_movable = src.owner.mob
 		src.setup_z_level_parallax_layers()
-		src.update_parallax_z()
 
 	/// Updates the position of the parallax layer relative to the client's eye, taking into account the distance moved and the parallax value.
 	proc/update_parallax_layers(turf/previous_turf, turf/current_turf)
@@ -73,10 +72,6 @@ var/global/parallax_enabled = TRUE
 				z_parallax_layers += new parallax_layer_type(null, src.owner)
 
 			src.z_level_parallax_layers["[z_level]"] = z_parallax_layers
-
-		src.previous_turf = get_turf(src.owner.eye)
-		var/area/A = get_area(src.previous_turf)
-		src.add_parallax_layer(A.area_parallax_layers, z_level = A.z)
 
 	/// Updates the parallax layers displayed to a client by an area.
 	proc/update_area_parallax_layers(area/old_area, area/new_area)
@@ -174,6 +169,7 @@ var/global/parallax_enabled = TRUE
 
 		var/datum/component/complexsignal/outermost_movable/C = src.GetComponent(/datum/component/complexsignal/outermost_movable)
 		src.client.parallax_controller.outermost_movable = C.get_outermost_movable()
+		src.update_area_parallax(null, get_area(src.client.parallax_controller.previous_turf), get_area(src))
 		src.update_parallax_z()
 
 /mob/proc/unregister_parallax_signals()

@@ -709,6 +709,11 @@
 "aMz" = (
 /turf/unsimulated/floor/black/side,
 /area/morrigan/routing/transport)
+"aMR" = (
+/obj/decal/cleanable/rust/jen,
+/obj/disposalpipe/auto/regular,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/maintenance)
 "aMZ" = (
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/industrial,
@@ -7044,21 +7049,6 @@
 /obj/random_item_spawner/junk/maybe_few,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
-"hrr" = (
-/obj/window/crystal/reinforced/north,
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 8;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/turf/unsimulated/floor/redwhite{
-	dir = 1
-	},
-/area/morrigan/routing/transport)
 "hrP" = (
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
@@ -8294,15 +8284,6 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"iPk" = (
-/mob/living/critter/robotic/gunbot/syndicate/polaris,
-/obj/machinery/light/incandescent/warm{
-	dir = 1
-	},
-/turf/unsimulated/floor/black/side{
-	dir = 1
-	},
-/area/morrigan/routing/transport)
 "iQA" = (
 /mob/living/carbon/human/syndicatemorrigandoc,
 /turf/unsimulated/floor/sanitary/blue,
@@ -8584,6 +8565,22 @@
 /obj/decal/poster/wallsign/biohazard,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/medical/biological)
+"jeQ" = (
+/mob/living/critter/robotic/gunbot/syndicate/polaris{
+	dir = 1
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/unsimulated/floor/black/side,
+/area/morrigan/routing/transport)
+"jfc" = (
+/mob/living/critter/robotic/gunbot/syndicate/polaris,
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 1
+	},
+/area/morrigan/routing/transport)
 "jfr" = (
 /obj/decal/floatingtiles{
 	dir = 8;
@@ -8996,6 +8993,10 @@
 /obj/item/device/gps,
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/podbay/medical)
+"jzw" = (
+/obj/disposalpipe/auto/regular,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/morrigan/station/maintenance)
 "jzY" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/black/side{
@@ -10342,13 +10343,6 @@
 /obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/engineering)
-"kZs" = (
-/mob/living/critter/robotic/gunbot/syndicate/polaris{
-	dir = 1
-	},
-/obj/machinery/light/incandescent/warm,
-/turf/unsimulated/floor/black/side,
-/area/morrigan/routing/transport)
 "kZC" = (
 /obj/decal/floatingtiles{
 	dir = 4;
@@ -12321,6 +12315,11 @@
 /obj/mapping_helper/access/morrigan/bridge,
 /turf/unsimulated/floor/darkblue,
 /area/morrigan/station/command/bridge)
+"nnz" = (
+/obj/machinery/floorflusher/industrial,
+/obj/disposalpipe/auto/regular,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/disposals)
 "nqc" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/derelict/hobo)
@@ -12940,6 +12939,21 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"nRO" = (
+/obj/window/crystal/reinforced/north,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/redwhite{
+	dir = 1
+	},
+/area/morrigan/routing/transport)
 "nRS" = (
 /obj/decal/cleanable/blood{
 	icon_state = "footprints1";
@@ -13745,6 +13759,10 @@
 /obj/item/card/id/morrigan/all_access,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/factory)
+"oJk" = (
+/obj/disposalpipe/auto/regular,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/morrigan/station/disposals)
 "oJy" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm3"
@@ -14519,6 +14537,11 @@
 /obj/storage/closet/wardrobe/orange,
 /turf/unsimulated/floor/black/side,
 /area/morrigan/routing/transport)
+"pDX" = (
+/obj/grille/catwalk,
+/obj/disposalpipe/auto/regular,
+/turf/space,
+/area/morrigan/station/space)
 "pEm" = (
 /obj/storage/cart,
 /obj/machinery/light/incandescent,
@@ -15401,6 +15424,14 @@
 	dir = 10
 	},
 /area/morrigan/station/science)
+"qGe" = (
+/obj/machinery/conveyor/NS,
+/obj/disposaloutlet,
+/obj/disposalpipe/auto/regular,
+/obj/machinery/conveyor/NS,
+/obj/disposaloutlet,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/disposals)
 "qGs" = (
 /obj/machinery/portable_reclaimer,
 /turf/unsimulated/floor/white/checker2,
@@ -16460,11 +16491,6 @@
 /obj/decal/cleanable/rust/jen,
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
-"rQX" = (
-/obj/machinery/conveyor/NS,
-/obj/disposaloutlet,
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/disposals)
 "rSs" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/donut/custom/robust,
@@ -16706,6 +16732,19 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/twotone/yellow,
 /area/morrigan/derelict)
+"siu" = (
+/obj/window/crystal/reinforced/south,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/redwhite,
+/area/morrigan/routing/transport)
 "siF" = (
 /obj/grille/catwalk/jen,
 /obj/disposalpipe/segment,
@@ -17750,6 +17789,11 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/morrigan/station/civilian/botany)
+"tuh" = (
+/obj/lattice,
+/obj/disposalpipe/auto/regular,
+/turf/space,
+/area/morrigan/station/space)
 "tuo" = (
 /obj/item/mousetrap/armed,
 /turf/unsimulated/floor/plating/random,
@@ -21143,6 +21187,10 @@
 "xif" = (
 /turf/unsimulated/floor/grass,
 /area/morrigan/station/medical/genetics)
+"xiD" = (
+/obj/disposalpipe/auto/regular,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/maintenance)
 "xiF" = (
 /obj/decal/cleanable/oil,
 /obj/machinery/computer/tetris,
@@ -21731,19 +21779,6 @@
 /obj/item/storage/backpack/satchel/empty/green,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"xMs" = (
-/obj/window/crystal/reinforced/south,
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 8;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/turf/unsimulated/floor/redwhite,
-/area/morrigan/routing/transport)
 "xMA" = (
 /obj/storage/secure/closet/fridge,
 /obj/map/light,
@@ -22033,10 +22068,6 @@
 /obj/decoration/junctionbox,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/factory)
-"yhh" = (
-/obj/machinery/floorflusher/industrial,
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/disposals)
 "yhP" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
@@ -27587,7 +27618,7 @@ iVk
 obU
 uRB
 xtg
-xtg
+xiD
 rlW
 rlW
 rlW
@@ -27690,9 +27721,9 @@ iVk
 obU
 uRB
 xPi
-cwk
-rlW
-rQX
+aMR
+oJk
+qGe
 cdl
 vwF
 wWp
@@ -28312,7 +28343,7 @@ xtg
 rlW
 nlP
 sms
-yhh
+nnz
 wWp
 qIE
 aAM
@@ -28415,7 +28446,7 @@ xtg
 rlW
 rlW
 rlW
-rlW
+oJk
 wWp
 qIE
 oir
@@ -28518,7 +28549,7 @@ xtg
 ooE
 xtg
 xtg
-xtg
+xiD
 wWp
 qIE
 oir
@@ -28621,7 +28652,7 @@ vXn
 ooE
 xtg
 xtg
-xtg
+xiD
 wWp
 qIE
 aAM
@@ -28724,7 +28755,7 @@ uRB
 uRB
 uRB
 xtg
-xtg
+xiD
 wWp
 qIE
 oir
@@ -28827,7 +28858,7 @@ obU
 obU
 xzI
 xtg
-xtg
+xiD
 wWp
 qIE
 naP
@@ -28900,13 +28931,13 @@ dKY
 aDg
 vwJ
 qVO
-iPk
+jfc
 mfR
 xbZ
 iKS
 uZu
 sGS
-kZs
+jeQ
 qVO
 vwJ
 vwJ
@@ -28930,7 +28961,7 @@ iVk
 obU
 uRB
 xtg
-xtg
+xiD
 wWp
 qIE
 oir
@@ -29029,11 +29060,11 @@ dKY
 dKY
 dKY
 dKY
-iVk
-obU
-uRB
-xtg
-xtg
+tuh
+pDX
+jzw
+xiD
+xiD
 wWp
 qIE
 pMy
@@ -29314,9 +29345,9 @@ vwJ
 xiQ
 fon
 fon
-xMs
+siu
 nMD
-hrr
+nRO
 fon
 fPy
 qVO
