@@ -842,6 +842,10 @@
 /obj/item/device/multitool,
 /turf/simulated/floor,
 /area/devzone)
+"kP" = (
+/obj/disposalpipe/loafer/horizontal,
+/turf/simulated/floor/plating/jen,
+/area/devzone)
 "kR" = (
 /obj/machinery/vehicle/miniputt/syndiputt,
 /turf/simulated/floor/engine/glow/blue,
@@ -4794,7 +4798,7 @@ ng
 Zx
 Yx
 hL
-Yx
+kP
 Yx
 Yx
 JS
