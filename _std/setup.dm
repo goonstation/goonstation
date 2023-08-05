@@ -75,7 +75,7 @@
 // other toggles
 
 #define FOOTBALL_MODE 1
-#define ENABLE_ARTEMIS 0
+#define ENABLE_ARTEMIS 1
 //#define RP_MODE
 
 #ifdef Z_LOG_ENABLE

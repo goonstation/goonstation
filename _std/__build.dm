@@ -30,16 +30,16 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //------------ OPTIONS TO GO FAST ------------//
 
-//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
+#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the map Atlas, no other zlevels. Boots way faster
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
-//#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
+#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
 //#define NO_COOLDOWNS // disables all /datum/targetable cooldowns
 //#define BONUS_POINTS // gives a bunch of starting points to various abilities/uplinks/weapon vendors
 //#define SHUT_UP_AND_GIVE_ME_MEDAL_STUFF // causes has_medal to always return true - good for testing medal rewards etc.
 
-//#define STOP_DISTRACTING_ME //All of the below
+#define STOP_DISTRACTING_ME //All of the below
 
 //#define I_AM_ABOVE_THE_LAW // Prevents all secbots and guardbuddies from spawning, useful for gun testing
 //#define ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP // Prevents ALL bots from spawning (not cyborgs)
@@ -123,7 +123,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_DONUT2				// Updated Donut2, by committee. Currently managed by Sord.
 //#define MAP_OVERRIDE_DONUT3				// Donut3 by Ryumi
 //#define MAP_OVERRIDE_KONDARU			// Kondaru by Kubius
-//#define MAP_OVERRIDE_ATLAS				// Atlas by Gannets (and Kubius)
+#define MAP_OVERRIDE_ATLAS				// Atlas by Gannets (and Kubius)
 //#define MAP_OVERRIDE_CLARION			// Used to be Destiny's Alt. By Dionsu and a69andahalf.
 //#define MAP_OVERRIDE_OSHAN				// Oshan by committee
 //#define MAP_OVERRIDE_NADIR				// Nadir Extraction Site by Kubius

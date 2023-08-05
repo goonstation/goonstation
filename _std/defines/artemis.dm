@@ -1,7 +1,7 @@
 //Artemus REMOVAL
 
 
-//#define DEBUG_ARTEMIS 1
+#define DEBUG_ARTEMIS 1
 //#define FORCE_ARTEMIS_MODE
 //#define ARTEMIS_LINK_AT_ROUNDSTART
 

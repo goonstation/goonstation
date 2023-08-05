@@ -864,6 +864,10 @@
 /obj/mapping_helper/access/public,
 /turf/simulated/floor/black,
 /area/ship/arjuna)
+"wB" = (
+/obj/machinery/shuttle/engine/propulsion/ion_drive,
+/turf/simulated/floor/black,
+/area/ship/artemis)
 "wI" = (
 /obj/submachine/laundry_machine,
 /obj/machinery/light/incandescent/harsh{
@@ -9527,7 +9531,7 @@ Tt
 Vt
 Tt
 Tt
-Tt
+wB
 po
 Ar
 dl
