@@ -2500,7 +2500,7 @@ proc/get_mobs_trackable_by_AI()
 
 /obj/ai_core_frame/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/sheet))
-		if (W.material.material_flags & MATERIAL_METAL) // metal sheets
+		if (W.material.getMaterialFlags() & MATERIAL_METAL) // metal sheets
 			if (src.build_step < 1)
 				var/obj/item/sheet/M = W
 				if (M.change_stack_amount(-3))
@@ -2518,7 +2518,7 @@ proc/get_mobs_trackable_by_AI()
 				boutput(user, "\The [src] already has plating!")
 				return
 
-		else if (W.material.material_flags & MATERIAL_CRYSTAL) // glass sheets
+		else if (W.material.getMaterialFlags() & MATERIAL_CRYSTAL) // glass sheets
 			if (src.build_step >= 2)
 				if (!src.has_glass)
 					var/obj/item/sheet/G = W

@@ -1,4 +1,124 @@
 
+(t)fri aug 04 23
+(u)DimWhat
+(p)15171
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added a bunch more clothing sprites for monkeys, ook!
+(t)thu aug 03 23
+(u)Wisemonster
+(p)14825
+(e)🆕🗺🐁|C-Feature, A-Mapping, A-Critters
+(+)The HoP has decided to take his loyal dog Orwell to more stations!
+(u)Garash
+(p)14766
+(e)🆕🔄📄|C-Feature, C-Rework, A-UI
+(+)New snappier UI for the Identification Computers, go commit ID fraud today!
+(u)Bartimeus973
+(p)14757
+(e)🆕🎨💅💊|C-Feature, C-Sprites, C-QoL, A-Medical
+(+)Surgery slipups are a lot more noticeable.
+(u)Caio029
+(p)15178
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Pronouns will now be shown on the examine text of humans.
+(t)wed aug 02 23
+(u)LeahTheTech
+(p)15169
+(e)🆕⚖🔨|C-Feature, C-Balance, A-Player-Actions
+(+)Throwing someone into an open locker will now shut it on them, causing a short stun.
+(+)Smashing someone into a wall or window with a grab will now disorient them.
+(t)tue aug 01 23
+(u)Amylizzle
+(p)15096
+(e)📄|A-UI
+(*)The observer menu has been replaced with an upgrade.
+(u)Soapcyst
+(p)15179
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added angler equipment to donut2, atlas, clarion, and the afterlife bar.
+(t)sun jul 30 23
+(u)Retrino
+(p)15162
+(e)🎨🤖|C-Sprites, A-Silicons
+(*)Added three new borg screenhead faces: Nervous, Annoyed, and Ditzy
+(t)sat jul 29 23
+(u)CalliopeSoups
+(p)14664
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Oshan's ranch has been renovated for cooperative rancher action.
+(u)Bartimeus973
+(p)15147
+(e)💅💪🎭|C-QoL, A-Traits, A-RP
+(+)Picky eaters will now heal substantially more hunger when eating one of their favorite foods.
+(u)Ikea
+(p)14889
+(e)⚖🤖|C-Balance, A-Silicons
+(*)EMP's now stun borgs for 5 seconds, disable modules for a max of 5 seconds, and now do far more damage to borgs.
+(u)LeahTheTech
+(+)The cyborg teleport module now has visual and sound effects.
+(t)fri jul 28 23
+(u)Valtsu0
+(p)15048
+(e)🆕🔨🍝|C-Feature, A-Player-Actions, A-Catering
+(+)Chef can now name meals by using a plate in hand
+(u)UnfunnyPerson
+(p)15034
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)Shamblers will eat limbs while using devour.
+(u)Kubius
+(p)15127
+(e)🗺⚖|A-Mapping, C-Balance
+(*)Nadir is now equipped with a Security pod bay.
+(u)Lord_Earthfire
+(p)14857
+(e)🪲🗺🔄⚗🍝🌱|C-Bug, A-Mapping, C-Rework, A-Chemistry, A-Catering, A-Hydroponics
+(*)Fish now contain fish oil and can have chemicals. Keep your blood pressure stable today!
+(+)Fish can now be loaded into the chemical extractor and be injected with syringes
+(+)Fish from the wholetuna cordata plant now can gain botany chems, the plant gains the "inert" gene strain on mutation, though
+(+)Plants spliced with the wholetuna cordata plant now contain fish oil.
+(u)Ikea
+(p)15140
+(e)|
+(+)The paper found in the molitz beta briefcase has been rewritten a little bit
+(t)thu jul 27 23
+(u)Flaborized
+(p)15054
+(e)🎨|C-Sprites
+(+)Resprited light engineering spacesuit
+(u)LeahTheTech
+(+)Conveyor belt switches now accept a mechcomp signal to adjust their speed from 1-10, nice sedate sushi bars are now possible.
+(t)wed jul 26 23
+(u)Tyrant
+(p)15059
+(e)🪲🆕🗺💅📦|C-Bug, C-Feature, A-Mapping, C-QoL, A-Game-Objects
+(+)Rancher closets have been standardised across all maps, and added to Nadir and Clarion accordingly
+(u)Amylizzle
+(p)15115
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Stun cane manufacturing blueprint works now.
+(t)tue jul 25 23
+(u)Sovexe
+(p)14958
+(e)🆕📄|C-Feature, A-UI
+(*)Brand-new players are now known and tagged as Newbees in OOC/LOOC. They have a special green chat color and a bee icon for easy identification. Players are encouraged to welcome Newbees into the community.
+(u)Froggit Dogget
+(p)15082
+(e)|
+(+)Adds the censorium alloy. It does nothing.
+(u)Glamurio (Ryou)
+(p)14807
+(e)🆕🐣|C-Feature, A-Respawning
+(+)Tourists now spawn with a lanyard containing their ID.
+(u)Bartimeus973
+(p)15012
+(e)🆕🎨💪🎭|C-Feature, C-Sprites, A-Traits, A-RP
+(*)Added a new trait: Picky eater! Picky eaters can only eat specific, randomly selected foods!
+(t)mon jul 24 23
+(u)Mintyphresh
+(p)15065
+(e)🪲⚖💅⚗🍝|C-Bug, C-Balance, C-QoL, A-Chemistry, A-Catering
+(*)Greatly reduced the ABV of most non-evil drinks. See minor changes for exceptions. Drink up!
+(+)Necroni, Grog, Bo Jack Daniels, Squeeze, Suicider, Murdini, Moonshine, BOOrbon, Bloody Scary, and Ling Island Iced Tea have increased in strength.
 (t)sat jul 22 23
 (u)Skeletonman0 and Garash
 (p)14895

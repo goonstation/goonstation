@@ -169,8 +169,8 @@
 			overmind.blobs -= src
 		if (O)
 			overmind = O
-			setMaterial(copyMaterial(O.my_material))
-			color = material.color
+			setMaterial(O.my_material)
+			color = material.getColor()
 			original_color = color
 			O.blobs |= src
 			onAttach(O)
@@ -361,7 +361,7 @@
 	proc/create_chunk(var/turf/T)
 		var/obj/item/material_piece/wad/blob/BC = new
 		BC.set_loc(T)
-		BC.setMaterial(copyMaterial(material))
+		BC.setMaterial(src.material)
 		BC.name = "chunk of blob"
 
 	proc/take_damage(var/amount,var/damage_mult = 1,var/damtype = "brute",var/mob/user)
@@ -433,8 +433,7 @@
 			qdel(src)
 		else
 			src.UpdateIcon()
-			if (healthbar) //ZeWaka: Fix for null.onUpdate
-				healthbar.onUpdate()
+			healthbar?.onUpdate()
 		return
 
 	proc/updatePoisonOverlay()

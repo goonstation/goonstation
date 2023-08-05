@@ -577,7 +577,7 @@ TYPEINFO(/obj/item/interdictor_board)
 			if(6)
 				if (istype(I, /obj/item/sheet))
 					var/obj/item/sheet/sheets = I
-					if (sheets.amount < 4 || !(sheets.material.material_flags & MATERIAL_METAL))
+					if (sheets.amount < 4 || !(sheets.material.getMaterialFlags() & MATERIAL_METAL))
 						boutput(user, "<span style=\"color:red\">You don't have enough metal to install the outer covers (4 required).</span>")
 					else
 						actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)

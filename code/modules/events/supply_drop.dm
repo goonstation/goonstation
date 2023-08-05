@@ -202,7 +202,7 @@
 
 	if(doMaterial)
 		var/list/material = pick(material_cache - list("cerenkite","ohshitium","plasmastone","koshmarite"))
-		I.setMaterial(material_cache[material], appearance = 1, setname = 1, copy = FALSE)
+		I.setMaterial(material_cache[material], appearance = 1, setname = 1)
 
 	I.name_prefix(prefix)
 

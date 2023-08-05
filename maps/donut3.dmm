@@ -6668,7 +6668,7 @@
 /area/station/medical/cdc)
 "bSq" = (
 /obj/table/wood/auto,
-/obj/machinery/glass_recycler,
+/obj/machinery/glass_recycler/bar,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bSQ" = (
@@ -8142,27 +8142,8 @@
 /turf/simulated/floor/white,
 /area/station/security/quarters)
 "cpx" = (
-/obj/item/reagent_containers/glass/beaker/large{
-	pixel_x = 8;
-	pixel_y = -1
-	},
-/obj/item/reagent_containers/glass/beaker/large{
-	pixel_x = 3;
-	pixel_y = -1
-	},
-/obj/item/reagent_containers/glass/beaker/large{
-	pixel_x = -4;
-	pixel_y = -1
-	},
-/obj/item/device/reagentscanner{
-	pixel_x = -6;
-	pixel_y = 11
-	},
-/obj/item/device/reagentscanner{
-	pixel_x = 6;
-	pixel_y = 11
-	},
-/obj/table/reinforced/chemistry/auto,
+/obj/table/reinforced/chemistry/auto/auxsup,
+/obj/item/paper/labdrawertips,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "cpD" = (
@@ -9829,6 +9810,7 @@
 	tag = ""
 	},
 /obj/machinery/light_switch/east,
+/mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/carpet/red/fancy/narrow/north,
 /area/station/crew_quarters/heads)
 "cPO" = (
@@ -21085,27 +21067,17 @@
 	},
 /area/station/crew_quarters/bar)
 "gqO" = (
-/obj/storage/closet{
-	name = "rancher supply closet"
-	},
-/obj/item/paper/ranch_guide,
-/obj/item/fishing_rod/basic,
-/obj/item/chicken_carrier,
 /obj/machinery/light_switch/east{
 	dir = 4;
 	pixel_x = -28;
 	pixel_y = -4
 	},
-/obj/item/device/camera_viewer/ranch,
-/obj/item/storage/box/syringes,
-/obj/item/satchel/hydro,
-/obj/item/clothing/mask/chicken,
-/obj/item/storage/box/clothing/rancher,
 /obj/blind_switch/east{
 	dir = 4;
 	pixel_x = -28;
 	pixel_y = 4
 	},
+/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "gqX" = (
@@ -46893,18 +46865,10 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "opG" = (
-/obj/item/reagent_containers/dropper/mechanical{
-	pixel_x = 11;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/dropper/mechanical{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/box/beakerbox{
-	pixel_x = -7;
-	pixel_y = 3
+/obj/table/reinforced/chemistry/auto/basicsup,
+/obj/item/paper/book/from_file/pharmacopia{
+	pixel_x = 5;
+	pixel_y = 5
 	},
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
@@ -59662,31 +59626,7 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "siB" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/box/beakerbox{
-	pixel_x = 6;
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/spectro{
-	pixel_x = -13;
-	pixel_y = 7
-	},
-/obj/item/clothing/glasses/spectro{
-	pixel_x = -11;
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/spectro{
-	pixel_x = -13;
-	pixel_y = -1
-	},
-/obj/item/clothing/glasses/spectro{
-	pixel_x = -11;
-	pixel_y = -5
-	},
-/obj/item/clothing/glasses/spectro{
-	pixel_x = -13;
-	pixel_y = -10
-	},
+/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "siC" = (
@@ -64362,7 +64302,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/table/reinforced/chemistry/beakers,
+/obj/table/reinforced/chemistry/auto/beakers,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
@@ -65993,8 +65933,8 @@
 	pixel_x = 1;
 	pixel_y = -25
 	},
-/obj/table/reinforced/chemistry/beakers,
-/obj/machinery/glass_recycler,
+/obj/table/reinforced/chemistry/auto/drugs,
+/obj/machinery/glass_recycler/chemistry,
 /turf/simulated/floor/purpleblack/corner,
 /area/station/science/chemistry)
 "ukM" = (
@@ -66094,15 +66034,7 @@
 	pixel_x = -1;
 	pixel_y = -32
 	},
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/box/syringes{
-	pixel_x = 3;
-	pixel_y = 7
-	},
-/obj/item/storage/box/syringes{
-	pixel_x = -8;
-	pixel_y = 4
-	},
+/obj/table/reinforced/chemistry/auto/firstaid,
 /obj/disposalpipe/segment/mail{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -69766,17 +69698,14 @@
 /turf/simulated/floor/wood/five,
 /area/station/medical/asylum/main)
 "vrR" = (
-/obj/item/paper/book/from_file/pharmacopia{
-	pixel_x = 5
-	},
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/table/reinforced/chemistry/auto,
 /obj/window_blinds/cog2/left{
 	dir = 4;
 	id = "chemistry"
 	},
+/obj/table/reinforced/chemistry/auto/clericalsup,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "vrX" = (
@@ -70691,18 +70620,11 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/hallway/primary/south)
 "vGS" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/emergency_injector/calomel{
-	pixel_y = -14
-	},
-/obj/item/hand_labeler{
-	pixel_y = -8
-	},
+/obj/table/reinforced/chemistry/auto/basicsup,
 /obj/item/storage/toolbox/emergency{
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/dropper,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "vHi" = (
@@ -75176,7 +75098,6 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/table/reinforced/chemistry/auto,
 /obj/machinery/cashreg{
 	name = "Chemistry credit transfer device"
 	},
@@ -75184,6 +75105,7 @@
 	dir = 4;
 	id = "chemistry"
 	},
+/obj/table/reinforced/chemistry/auto/clericalsup,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "wVo" = (

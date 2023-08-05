@@ -167,6 +167,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/tomatoslice
 	slice_amount = 3
+	initial_reagents = 0 //SPITE
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)

@@ -2304,7 +2304,7 @@
 "aeF" = (
 /obj/rack,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -2652,7 +2652,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -3513,7 +3513,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/janitor/office)
@@ -3557,7 +3557,7 @@
 /area/station/maintenance/northeast)
 "agU" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -4183,7 +4183,7 @@
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/mousetraps,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/grime,
 /area/station/janitor/office)
@@ -5890,7 +5890,7 @@
 /area/station/quartermaster/storage)
 "alp" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -8631,7 +8631,7 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -9879,10 +9879,6 @@
 "ats" = (
 /turf/simulated/floor/airless/plating/scorched,
 /area/station/engine/proto_gangway)
-"att" = (
-/turf/simulated/floor/airless/plating/scorched,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/station/engine/proto_gangway)
 "atu" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -10212,10 +10208,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/east)
-"auh" = (
-/turf/simulated/floor/airless/plating/damaged1,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/station/engine/proto_gangway)
 "aui" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -10787,7 +10779,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/maintenance/east)
@@ -11750,7 +11742,6 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "axg" = (
-/turf/simulated/floor/plating/airless,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/station/engine/proto)
 "axh" = (
@@ -12721,7 +12712,6 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "azm" = (
-/turf/simulated/floor/airless/plating/damaged3,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/station/engine/proto_gangway)
 "azn" = (
@@ -12996,10 +12986,6 @@
 /obj/window/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/space)
-"azL" = (
-/turf/simulated/floor/airless/plating/scorched,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/station/engine/proto)
 "azM" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -13502,10 +13488,6 @@
 	},
 /turf/simulated/floor/blackwhite/side,
 /area/station/medical/research)
-"aAP" = (
-/turf/simulated/floor/airless/plating/damaged1,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/station/engine/proto)
 "aAQ" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -20743,7 +20725,7 @@
 /obj/poolwater,
 /mob/living/critter/small_animal/walrus{
 	name = "Willy the Space Walrus";
-
+	
 	},
 /turf/simulated/floor{
 	icon = 'icons/turf/floors.dmi';
@@ -22046,7 +22028,6 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 "aPZ" = (
 /turf/simulated/wall,
@@ -22633,7 +22614,6 @@
 "aRb" = (
 /obj/cable,
 /obj/item/cable_coil/cut,
-/turf/simulated/floor/plating/airless,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 "aRc" = (
@@ -22927,7 +22907,6 @@
 /area/space)
 "aRH" = (
 /obj/item/cable_coil/cut,
-/turf/space,
 /turf/simulated/floor/plating/damaged2,
 /area/space)
 "aRI" = (
@@ -28193,12 +28172,12 @@
 /obj/storage/crate/freezer{
 	name = "Fishy Freezer"
 	},
-/obj/item/fish/bass,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/carp,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/machinery/light,
 /obj/item/device/radio/intercom{
 	broadcasting = 0
@@ -35229,7 +35208,6 @@
 /obj/item/device/radio{
 	pixel_y = 15
 	},
-/turf/simulated/floor/plating/damaged3,
 /turf/simulated/floor/plating/damaged2,
 /area/station/chapel/sanctuary)
 "bok" = (
@@ -35381,7 +35359,6 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/simulated/floor/airless/plating/scorched,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/station/engine/proto_gangway)
 "box" = (
@@ -35426,7 +35403,6 @@
 	d1 = 4;
 	d2 = 8
 	},
-/turf/simulated/floor/plating/airless,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/station/engine/proto)
 "boD" = (
@@ -35882,7 +35858,6 @@
 /turf/simulated/floor/caution/east,
 /area/space)
 "bpr" = (
-/turf/simulated/floor,
 /turf/simulated/floor/plating/damaged2,
 /area/space)
 "bps" = (
@@ -36739,10 +36714,6 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area/space)
-"caB" = (
-/turf/space,
-/turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 "caF" = (
 /obj/item/raw_material/shard/glass{
@@ -47136,7 +47107,7 @@ aww
 aww
 aww
 axg
-azL
+axg
 ayA
 aww
 cqb
@@ -47363,7 +47334,7 @@ axd
 axI
 ayw
 axJ
-azL
+axg
 axJ
 aww
 aww
@@ -47818,8 +47789,8 @@ axK
 boC
 axg
 axK
-azL
-aAP
+axg
+axg
 axI
 aww
 cqb
@@ -48271,7 +48242,7 @@ axg
 axe
 axK
 axe
-aAP
+axg
 axI
 axI
 axI
@@ -48943,9 +48914,9 @@ cqb
 asN
 ats
 ats
-auh
-auh
-auh
+azm
+azm
+azm
 avq
 avq
 ats
@@ -49168,9 +49139,9 @@ cqb
 cqb
 cqb
 asN
-att
-auh
-auh
+azm
+azm
+azm
 asN
 avq
 ats
@@ -79279,7 +79250,7 @@ cqb
 cqb
 cqb
 bZO
-caB
+aqp
 bZO
 cae
 aqo

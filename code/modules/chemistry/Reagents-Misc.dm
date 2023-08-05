@@ -2178,7 +2178,7 @@ datum
 							holder.add_reagent(id, conversion_rate)
 					else
 						// we ate them all, time to die
-						if(holder?.my_atom?.material?.mat_id in list("gnesis", "gnesisglass")) // gnesis material prevents coag. gnesis from evaporating
+						if(holder?.my_atom?.material?.getID() in list("gnesis", "gnesisglass")) // gnesis material prevents coag. gnesis from evaporating
 							return
 
 						holder.remove_reagent(id, conversion_rate)
@@ -2261,11 +2261,11 @@ datum
 						if(prob(50))
 							var/atom/movable/B = new /obj/item/raw_material/scrap_metal
 							B.set_loc(T)
-							B.setMaterial(getMaterial("gnesis"), copy = FALSE)
+							B.setMaterial(getMaterial("gnesis"))
 						else
 							var/atom/movable/B = new /obj/item/raw_material/shard
 							B.set_loc(T)
-							B.setMaterial(getMaterial("gnesisglass"), copy = FALSE)
+							B.setMaterial(getMaterial("gnesisglass"))
 						return
 				// otherwise we didn't have enough
 				T.visible_message("<span class='notice'>The substance flows out, spread too thinly.</span>")

@@ -32,7 +32,7 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			if(src.material.alpha >= 190)
+			if(src.material.getAlpha() >= 190)
 				desc = "You can't see through these. G.R.E.A.T."
 				block_vision = 1
 			alpha = 255

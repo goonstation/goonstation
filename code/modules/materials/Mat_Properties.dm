@@ -17,10 +17,6 @@ ABSTRACT_TYPE(/datum/material_property)
 	/// Max value for low-prefix. Maximum for the prefix to show up on the object names.
 	var/prefix_low_max = 3
 
-	proc/changeValue(datum/material/M, newValue)
-		if (src in M.properties)
-			M.properties[src] = clamp(newValue, min_value, max_value)
-			onValueChanged(M, M.properties[src])
 
 	proc/onValueChanged(var/datum/material/M, var/new_value)
 		return
@@ -144,9 +140,9 @@ ABSTRACT_TYPE(/datum/material_property)
 
 	onValueChanged(var/datum/material/M, var/new_value)
 		if(new_value >= 7)
-			M.addTrigger(M.triggersOnBullet, new /datum/materialProc/reflective_onbullet())
+			M.addTrigger(TRIGGERS_ON_BULLET, new /datum/materialProc/reflective_onbullet())
 		else
-			M.removeTrigger(M.triggersOnBullet, /datum/materialProc/reflective_onbullet)
+			M.removeTrigger(TRIGGERS_ON_BULLET, /datum/materialProc/reflective_onbullet)
 		return
 
 /datum/material_property/flammability
@@ -215,13 +211,13 @@ ABSTRACT_TYPE(/datum/material_property)
 				return "impossibly radioactive"
 
 	onAdded(var/datum/material/M, var/new_value)
-		M.addTrigger(M.triggersOnAdd, new /datum/materialProc/radioactive_add())
-		M.addTrigger(M.triggersOnRemove, new /datum/materialProc/radioactive_remove())
+		M.addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/radioactive_add())
+		M.addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/radioactive_remove())
 		return
 
 	onRemoved(var/datum/material/M)
-		M.removeTrigger(M.triggersOnAdd, /datum/materialProc/radioactive_add)
-		M.removeTrigger(M.triggersOnRemove, /datum/materialProc/radioactive_remove)
+		M.removeTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radioactive_add)
+		M.removeTrigger(TRIGGERS_ON_REMOVE, /datum/materialProc/radioactive_remove)
 		return
 
 /datum/material_property/neutron_radioactivity
@@ -250,13 +246,13 @@ ABSTRACT_TYPE(/datum/material_property)
 				return "blindingly glowing blue"
 
 	onAdded(var/datum/material/M, var/new_value)
-		M.addTrigger(M.triggersOnAdd, new /datum/materialProc/n_radioactive_add())
-		M.addTrigger(M.triggersOnRemove, new /datum/materialProc/n_radioactive_remove())
+		M.addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/n_radioactive_add())
+		M.addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/n_radioactive_remove())
 		return
 
 	onRemoved(var/datum/material/M)
-		M.removeTrigger(M.triggersOnAdd, /datum/materialProc/n_radioactive_add)
-		M.removeTrigger(M.triggersOnRemove, /datum/materialProc/n_radioactive_remove)
+		M.removeTrigger(TRIGGERS_ON_ADD, /datum/materialProc/n_radioactive_add)
+		M.removeTrigger(TRIGGERS_ON_REMOVE, /datum/materialProc/n_radioactive_remove)
 		return
 
 /// Literally just indicating that it can be refined into good nuclear fuel in the centrifuge

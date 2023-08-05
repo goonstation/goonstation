@@ -101,7 +101,7 @@
 			drawing.setMaterial(src.material)
 			src.material_uses--
 			if(src.material_uses <= 0)
-				boutput(user, "<span class='notice'>[src.material.name] rubs off of [src].</span>")
+				boutput(user, "<span class='notice'>[src.material.getName()] rubs off of [src].</span>")
 				src.removeMaterial()
 			return TRUE
 		return FALSE
@@ -121,7 +121,7 @@
 		var/obj/decal/cleanable/writing/G = make_cleanable(/obj/decal/cleanable/writing, T)
 		G.artist = user.key
 
-		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.getName()])" : null] [log_loc(T)]: [t]")
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
@@ -698,7 +698,7 @@
 		G.artist = user.key
 
 		if(user.client) //I don't give a damn about monkeys writing stuff with crayon!!
-			logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+			logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.getName()])" : null] [log_loc(T)]: [t]")
 
 		var/size = 32
 
@@ -851,7 +851,7 @@
 		var/obj/decal/cleanable/writing/infrared/G = make_cleanable(/obj/decal/cleanable/writing/infrared,T)
 		G.artist = user.key
 
-		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.getName()])" : null] [log_loc(T)]: [t]")
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color

@@ -87,8 +87,7 @@
 			return atmostank.remove_air(amount)
 
 		else
-			if (life_support) //ZeWaka: Fix for null.power_used
-				life_support.power_used = 0
+			life_support?.power_used = 0
 			var/turf/T = get_turf(src)
 			return T.remove_air(amount)
 

@@ -145,7 +145,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	else
 		src.cooktime++
 
-	if (src.fryitem.material?.mat_id == "ice" && !ON_COOLDOWN(src, "ice_explosion", 10 SECONDS))
+	if (src.fryitem.material?.getID() == "ice" && !ON_COOLDOWN(src, "ice_explosion", 10 SECONDS))
 		if (ismob(fed_ice)) // have we asked someone for ice?
 			var/mob/ice_feeder = fed_ice
 			fed_ice = TRUE

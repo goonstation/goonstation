@@ -149,6 +149,12 @@
 	bullet_act()
 		return
 
+	proc/get_encounter_size(size, P)
+		. = size
+		if(!P || prob(P))
+			var/max_r = round(min(width,height)/2)-1
+			. = rand(size, max_r)
+
 	proc/erase_area()
 		var/turf/origin = get_turf(src)
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
@@ -1334,12 +1340,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				MAT.set_loc(src)
 
 				if(MAT.material)
-					if(MAT.material.quality != 0) //If it's 0 then that's probably the default, so let's use the asteroids quality only if it's higher. That way materials that have a quality by default will not occur at any quality less than the set one. And materials that do not have a quality by default, use the asteroids quality instead.
-						var/newQual = max(MAT.material.quality, src.quality)
-						MAT.material.quality = newQual
+					//If we don't use quality anymore, remove this
+					MAT.material = MAT.material.getMutable()
+					if(MAT.material.getQuality() != 0) //If it's 0 then that's probably the default, so let's use the asteroids quality only if it's higher. That way materials that have a quality by default will not occur at any quality less than the set one. And materials that do not have a quality by default, use the asteroids quality instead.
+						var/newQual = max(MAT.material.getQuality(), src.quality)
+						MAT.material.setQuality(newQual)
 						MAT.quality = newQual
 					else
-						MAT.material.quality = src.quality
+						MAT.material.setQuality(src.quality)
 						MAT.quality = src.quality
 
 				MAT.name = getOreQualityName(MAT.quality) + " [MAT.name]"

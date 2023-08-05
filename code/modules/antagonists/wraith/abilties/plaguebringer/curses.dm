@@ -188,6 +188,9 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/mob/living/intangible/wraith/W = holder.owner
+			if(H?.bioHolder.HasEffect("death_curse"))
+				boutput(holder.owner, "That curse is already applied to this being...")
+				return TRUE
 			if (H?.bioHolder.HasEffect("rot_curse") && H?.bioHolder.HasEffect("weak_curse") && H?.bioHolder.HasEffect("blind_curse") && H?.bioHolder.HasEffect("blood_curse"))
 				W.playsound_local(W.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)
 				H.bioHolder.AddEffect("death_curse")

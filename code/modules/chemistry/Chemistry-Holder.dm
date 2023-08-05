@@ -826,6 +826,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		if(!isnum(amount)) return 1
 
+		if (istype(reagent, /datum/reagent))
+			CRASH("Attempt to remove reagent by ref")
+
 		var/datum/reagent/current_reagent = reagent_list[reagent]
 
 		if(current_reagent)

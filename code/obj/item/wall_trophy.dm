@@ -10,7 +10,7 @@ Subtypes:
 //some things are taken from plate code
 
 /obj/item/wall_trophy
-	name = "Wall Trophy"
+	name = "\improper Wall Trophy"
 	desc = "Simple wall trophy that can display items on a wall."
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	icon_state = "wall_trophy"
@@ -49,13 +49,13 @@ Subtypes:
 			boutput(user, "<span class='notice'>You can't attach [W] to another [src]. Duh.</span>")
 			return
 		if (!istype(W, allowed_item))
-			boutput(user, "<span class='notice'>You can't attach [W] to the [src].</span>")
+			boutput(user, "<span class='notice'>You can't attach [W] to \the [src].</span>")
 			return
 		if (item_added)
 			boutput(user,"<span class='notice'>There is already something attached!</span>")
 			return
 		if(W.cant_drop)
-			boutput(user, "<span class='alert'>You can't attach [W] to the [src]! It's attached to you!</span>")
+			boutput(user, "<span class='alert'>You can't attach [W] to \the [src]! It's attached to you!</span>")
 			return
 		. = TRUE
 		src.place_on(W, user, params)
@@ -90,8 +90,9 @@ Subtypes:
 
 	//attaching trophy to the wall
 	afterattack(var/turf/simulated/wall/T, var/mob/user)
-		T.attach_item(user, src)
-		playsound(src, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
+		. = T.attach_item(user, src)
+		if (.)
+			playsound(src, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
 		. = ..()
 
 	//unattaching the trophy from the wall
@@ -100,7 +101,7 @@ Subtypes:
 			if (!can_unanchor) return //checks if item can be unanchored
 			src.anchored = FALSE
 			playsound(src, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
-			boutput(user,"You unattach [src].")
+			boutput(user,"You unattach \the [src].")
 		. = ..()
 
 	Exited(var/obj/item/W)
@@ -109,6 +110,6 @@ Subtypes:
 
 	//fish wall mount
 	fish_trophy
-		name = "'Biggest catch' Fish Wall Mount"
+		name = "\improper 'Biggest catch' Fish Wall Mount"
 		desc = "This Wall Mount can be hung on a wall and display fish for everyone to see. Show off your catch!"
-		allowed_item = /obj/item/fish/
+		allowed_item = /obj/item/reagent_containers/food/fish

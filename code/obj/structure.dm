@@ -306,7 +306,7 @@ obj/structure/ex_act(severity)
 		var/datum/material/defaultMaterial = getMaterial("steel")
 		var/turf/simulated/wall/false_wall/FW = A
 
-		FW.setMaterial(S.material ? S.material : defaultMaterial, copy = src.material ? TRUE :FALSE)
+		FW.setMaterial(S.material ? S.material : defaultMaterial)
 		FW.girdermaterial = src.material ? src.material : defaultMaterial
 		FW.inherit_area()
 

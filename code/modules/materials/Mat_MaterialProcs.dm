@@ -192,7 +192,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			attacked.reagents.add_reagent(reag_id, reag_amt, null, T0C)
 			if(!charges_left)
 				if(owner.material)
-					owner.material.triggersOnAttack.Remove(src)
+					owner.material.removeTrigger(TRIGGERS_ON_ATTACK, src.type)
 		return
 
 /datum/materialProc/generic_reagent_onattack
@@ -243,7 +243,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			added += reag_amt * mult
 			if(added >= max_volume)
 				if(I.material)
-					I.material.triggersOnLife.Remove(src)
+					I.material.removeTrigger(TRIGGERS_ON_LIFE, src.type)
 		return
 
 /datum/materialProc/generic_explosive
@@ -346,6 +346,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/turf/T = get_turf(location)
 		if(!T || T.density || !istype(location))
 			return
+		if(!location.material.isMutable()) //this is a little hacky, but basically ensure it's mutable and then do the trigger
+			location.material = location.material.getMutable()
+			return location.material.triggerTemp(location, 0)
 		if(total_plasma <= 0)
 			if(prob(2) && location)
 				location.visible_message("<span class='alert>[location] dissipates.</span>")
@@ -377,7 +380,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			return material
 		var/datum/material/interpolated/alloy = material
 		if (istype(alloy))
-			return locate(/datum/material/crystal/molitz) in alloy.parent_materials
+			return locate(/datum/material/crystal/molitz) in alloy.getParentMaterials()
 
 	execute(var/atom/owner, var/temp, var/agent_b=FALSE)
 		if(temp < 500) return //less than reaction temp
@@ -402,6 +405,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(ON_COOLDOWN(owner, "molitz_gas_generate", 30 SECONDS)) return
 
 		//okay, now we've passed all the conditions for gas generation - do that
+		if(!owner.material.isMutable()) //this is a little hacky, but basically ensure it's mutable and then do the trigger
+			owner.material = owner.material.getMutable()
+			return owner.material.triggerTemp(owner, temp)
 		var/datum/gas_mixture/payload = new /datum/gas_mixture
 
 		if(agent_b && air.toxins > MINIMUM_REACT_QUANTITY)
@@ -441,6 +447,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/datum/material/crystal/molitz/molitz = owner.material
 		if(molitz.unexploded <= 0)
 			return
+		if(!owner.material.isMutable()) //this is a little hacky, but basically ensure it's mutable and then do the trigger
+			owner.material = owner.material.getMutable()
+			return owner.material.triggerExp(owner, sev)
 		var/turf/target = get_turf(owner)
 		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
 			if(molitz.iterations >= 1)
@@ -601,7 +610,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			return
 
 		SPAWN(1 SECOND)
-			if(location?.material?.mat_id == "miracle")
+			if(location?.material?.getID() == "miracle")
 				location.visible_message("<span class='notice'>[location] bends and twists, changing colors rapidly.</span>")
 				var/chosen = pick(prob(100); "mauxite",prob(100); "pharosium",prob(100); "cobryl",prob(100); "bohrum",prob(80); "cerenkite",prob(50); "syreline",prob(20); "slag",prob(3); "spacelag",prob(5); "soulsteel",prob(100); "molitz",prob(50); "claretine",prob(5); "erebite",prob(10); "quartz",prob(5); "uqill",prob(10); "telecrystal",prob(1); "starstone",prob(5); "blob",prob(8); "koshmarite",prob(20); "chitin",prob(4); "pizza",prob(15); "beewool",prob(6); "ectoplasm")
 				location.setMaterial(getMaterial(chosen), appearance = 1, setname = 1)

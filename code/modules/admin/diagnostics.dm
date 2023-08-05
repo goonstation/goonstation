@@ -1403,11 +1403,11 @@ proc/debug_map_apc_count(delim,zlim)
 			var/list/detailed_materials = list()
 			for(var/atom/movable/AM in theTurf)
 				if(AM.material)
-					materials |= AM.material.name
-					detailed_materials += "[AM.name] - [AM.material.name]"
+					materials |= AM.material.getName()
+					detailed_materials += "[AM.name] - [AM.material.getName()]"
 			if(include_turfs && theTurf.material)
-				materials |= theTurf.material.name
-				detailed_materials += "[theTurf.name] - [theTurf.material.name]"
+				materials |= theTurf.material.getName()
+				detailed_materials += "[theTurf.name] - [theTurf.material.getName()]"
 			if(!length(materials))
 				img.app.alpha = 0
 				return

@@ -2841,7 +2841,6 @@
 	name = "Engineering Announcement Computer";
 	req_access_txt = "19"
 	},
-/turf/space,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/engine/engineering/ce)
 "amX" = (
@@ -8419,12 +8418,12 @@
 /obj/storage/crate/freezer{
 	name = "Fishy Freezer"
 	},
-/obj/item/fish/bass,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/carp,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9;
 	pixel_y = 1
@@ -9687,10 +9686,6 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/brig)
-"aQe" = (
-/turf/space,
-/turf/space,
-/area/space)
 "aQf" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
@@ -15286,7 +15281,6 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "blv" = (
-/turf/space,
 /turf/simulated/wall/auto/asteroid{
 	dir = 9
 	},
@@ -15315,12 +15309,6 @@
 	dir = 9
 	},
 /area/station/hallway/primary/central)
-"blB" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 8
-	},
-/area/space)
 "blC" = (
 /turf/simulated/wall/auto/asteroid{
 	dir = 6
@@ -15336,18 +15324,6 @@
 	icon_state = "wall3"
 	},
 /area/listeningpost)
-"blI" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 4
-	},
-/area/space)
-"blK" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 5
-	},
-/area/space)
 "blL" = (
 /obj/machinery/light_switch{
 	name = "W light switch";
@@ -15383,18 +15359,6 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
-"blR" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 1
-	},
-/area/space)
-"blS" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 10
-	},
-/area/space)
 "blT" = (
 /obj/storage/closet/syndicate/personal,
 /obj/decal/stripe_caution,
@@ -15653,16 +15617,6 @@
 	icon_state = "floor4"
 	},
 /area/listeningpost)
-"bmL" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 6
-	},
-/area/space)
-"bmM" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid,
-/area/space)
 "bmN" = (
 /turf/simulated/floor/yellow/corner{
 	dir = 1
@@ -43571,7 +43525,7 @@ aaa
 aaa
 aaa
 aaa
-blB
+bln
 bkZ
 aaa
 aaa
@@ -43874,9 +43828,9 @@ aaa
 aaa
 bkU
 bla
-blS
+bkZ
 bln
-blS
+bkZ
 aaa
 aaa
 aaa
@@ -44176,9 +44130,9 @@ aaa
 baI
 blv
 blC
-blK
+bkX
 bla
-blS
+bkZ
 bkZ
 aaa
 aaa
@@ -44479,7 +44433,7 @@ blm
 abm
 abm
 abm
-blK
+bkX
 bla
 bkZ
 bkZ
@@ -44781,7 +44735,7 @@ aaB
 abm
 abm
 abm
-blR
+bkU
 bla
 bla
 bkZ
@@ -45385,7 +45339,7 @@ aaB
 abm
 abm
 abm
-blS
+bkZ
 blH
 bmi
 bmp
@@ -45682,7 +45636,7 @@ aaa
 bkU
 bla
 bla
-blS
+bkZ
 bln
 blw
 hmW
@@ -46283,7 +46237,7 @@ aaa
 acT
 acT
 acT
-blR
+bkU
 bla
 blc
 blg
@@ -46887,7 +46841,7 @@ aaa
 acT
 acT
 acT
-blR
+bkU
 bla
 blc
 bli
@@ -47206,8 +47160,8 @@ blE
 blH
 blH
 blH
-blS
-blS
+bkZ
+bkZ
 aaa
 aaa
 aaa
@@ -47509,7 +47463,7 @@ bmA
 bmH
 blH
 bla
-bmM
+bla
 aaa
 aaa
 aaa
@@ -47811,7 +47765,7 @@ bmB
 bmI
 blH
 bla
-bmM
+bla
 aaa
 aaa
 aaa
@@ -48113,7 +48067,7 @@ bmC
 bmJ
 blH
 bla
-bmM
+bla
 aaa
 aaa
 aaa
@@ -48415,7 +48369,7 @@ ugq
 blH
 blH
 bla
-bmM
+bla
 blb
 aaa
 aaa
@@ -48716,8 +48670,8 @@ bmD
 bmD
 bmD
 blH
-bmL
-bmL
+blC
+blC
 aaa
 aaa
 aaa
@@ -48894,21 +48848,21 @@ aaa
 aaa
 aaa
 aaa
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -49005,8 +48959,8 @@ aaa
 aaa
 blb
 aaa
-blK
-blK
+bkX
+bkX
 bla
 bla
 bla
@@ -49018,7 +48972,7 @@ bmD
 bmG
 bmK
 blH
-bmL
+blC
 aaa
 aaa
 aaa
@@ -49196,7 +49150,6 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
 aaa
@@ -49210,7 +49163,6 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
 aaa
@@ -49308,13 +49260,15 @@ aaa
 aaa
 aaa
 aaa
-blK
-blI
-blI
-blI
-blI
-blI
-blK
+aaa
+aaa
+bkX
+ble
+ble
+ble
+ble
+ble
+bkX
 blH
 bmE
 bmD
@@ -49498,7 +49452,6 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
 aaa
@@ -49512,7 +49465,8 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -49616,7 +49570,7 @@ aaa
 aaa
 bla
 bla
-blK
+bkX
 blH
 blH
 blH
@@ -49800,7 +49754,6 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
 aaa
@@ -49814,7 +49767,8 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -50102,7 +50056,6 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
 aaa
@@ -50116,7 +50069,8 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -50404,7 +50358,6 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
 aaa
@@ -50418,7 +50371,8 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -50706,7 +50660,6 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
 aaa
@@ -50720,7 +50673,8 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -51008,7 +50962,6 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
 aaa
@@ -51022,7 +50975,8 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -51310,7 +51264,6 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
 aaa
@@ -51324,7 +51277,8 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -51612,7 +51566,6 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
 aaa
@@ -51626,7 +51579,8 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -51914,7 +51868,6 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
 aaa
@@ -51928,7 +51881,8 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -52216,7 +52170,6 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
 aaa
@@ -52230,7 +52183,8 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -52518,7 +52472,6 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
 aaa
@@ -52532,7 +52485,8 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -52820,7 +52774,6 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
 aaa
@@ -52834,7 +52787,8 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -53122,21 +53076,21 @@ aaa
 aaa
 aaa
 aaa
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -53430,10 +53384,10 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
-aQe
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -53732,10 +53686,10 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
-aQe
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -54029,15 +53983,15 @@ aaa
 aaa
 aaa
 aaa
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -54331,15 +54285,15 @@ aaa
 aaa
 aaa
 aaa
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -57049,18 +57003,18 @@ aaa
 aaa
 aaa
 aaa
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -57351,18 +57305,18 @@ aaa
 aaa
 aaa
 aaa
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
-aQe
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -57664,7 +57618,7 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
 aaa
 aaa
 aaa
@@ -57966,7 +57920,7 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
 aaa
 aaa
 aaa
@@ -58268,7 +58222,7 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
 aaa
 aaa
 aaa
@@ -58570,7 +58524,7 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
 aaa
 aaa
 aaa
@@ -58872,7 +58826,7 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
 aaa
 aaa
 aaa
@@ -59174,7 +59128,7 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
 aaa
 aaa
 aaa
@@ -63023,11 +62977,11 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
 aaa
-aQe
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -64615,7 +64569,7 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
 aaa
 aaa
 aaa
@@ -64913,7 +64867,7 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
 aaa
 aaa
 aaa
@@ -65796,7 +65750,6 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
 aaa
@@ -65824,7 +65777,8 @@ aaa
 aaa
 aaa
 aaa
-aQe
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -66043,11 +65997,11 @@ aaa
 aaa
 aaa
 aaa
-aQe
 aaa
 aaa
 aaa
-aQe
+aaa
+aaa
 aaa
 aaa
 aaa

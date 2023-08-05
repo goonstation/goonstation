@@ -27,8 +27,8 @@
 		src.pixel_x = rand(0 - wiggle, wiggle)
 		src.pixel_y = rand(0 - wiggle, wiggle)
 		setup_material()
-		if(src.material?.name)
-			initial_material_name = src.material.name
+		if(src.material?.getName())
+			initial_material_name = src.material.getName()
 
 	proc/setup_material() // Overwrite for ore specific setup
 		return
@@ -787,7 +787,7 @@
 
 			else if (istype(M, /obj/item/cable_coil))
 				var/obj/item/cable_coil/C = M
-				output_bar_from_item(M, 1 / M.material_amt, C.conductor.mat_id)
+				output_bar_from_item(M, 1 / M.material_amt, C.conductor.getID())
 				qdel(C)
 
 			else
@@ -821,12 +821,12 @@
 		var/output_amount = O.amount
 
 		if (amount_per_bar)
-			var/bonus = leftovers[O.material.mat_id]
+			var/bonus = leftovers[O.material.getID()]
 			var/num_bars = O.amount / amount_per_bar + bonus
 
 			output_amount = round(num_bars)
 			if (output_amount != num_bars)
-				leftovers[O.material.mat_id] = num_bars - output_amount
+				leftovers[O.material.getID()] = num_bars - output_amount
 
 		output_bar(O.material, output_amount, O.quality)
 

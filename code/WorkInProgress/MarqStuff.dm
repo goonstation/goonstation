@@ -316,13 +316,13 @@
 		var/obj/item/arrow/A = O
 
 		if(A.head_material && src.head_material)
-			if(!isSameMaterial(A.head_material, src.head_material))
+			if(!A.head_material.isSameMaterial(src.head_material))
 				return 0
 		else if ((A.head_material && !src.head_material) || (!A.head_material && src.head_material))
 			return 0
 
 		if(A.shaft_material && src.shaft_material)
-			if(!isSameMaterial(A.shaft_material, src.shaft_material))
+			if(!A.shaft_material.isSameMaterial(src.shaft_material))
 				return 0
 		else if ((A.shaft_material && !src.shaft_material) || (!A.shaft_material && src.shaft_material))
 			return 0
@@ -388,11 +388,11 @@
 			name = "[amount] steel-headed arrow[amount > 1 ? "s":""]"
 
 	proc/setHeadMaterial(var/datum/material/M)
-		head_material = copyMaterial(M)
+		head_material = M
 		overlays -= head
 		if (M)
-			head.color = M.color
-			head.alpha = M.alpha
+			head.color = M.getColor()
+			head.alpha = M.getAlpha()
 		else
 			head.color = null
 			head.alpha = 255
@@ -400,12 +400,12 @@
 		setName()
 
 	proc/setShaftMaterial(var/datum/material/M)
-		shaft_material = copyMaterial(M)
-		src.setMaterial(shaft_material,copy = 0, appearance = 0, setname = 0)
+		shaft_material = M
+		src.setMaterial(shaft_material, appearance = 0, setname = 0)
 		overlays -= shaft
 		if (M)
-			shaft.color = M.color
-			shaft.alpha = M.alpha
+			shaft.color = M.getColor()
+			shaft.alpha = M.getAlpha()
 		else
 			shaft.color = null
 			shaft.alpha = 255
@@ -693,7 +693,7 @@
 		current_projectile.name = loaded.name
 		loaded.set_loc(A)
 		current_projectile.implanted = A
-		current_projectile.material = copyMaterial(loaded.head_material)
+		current_projectile.material = loaded.head_material
 		var/default_damage = 20
 		if(loaded.head_material)
 			if(loaded.head_material.hasProperty("hard"))

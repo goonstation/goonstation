@@ -270,12 +270,12 @@ ABSTRACT_TYPE(/obj/item)
 		tooltip_rebuild = 1
 		if (istype(src.material))
 			burn_possible = src.material.getProperty("flammable") > 1 ? TRUE : FALSE
-			if (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL || src.material.material_flags & MATERIAL_RUBBER)
+			if (src.material.getMaterialFlags() & (MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_RUBBER))
 				burn_type = 1
 			else
 				burn_type = 0
 
-		if (src.material.triggersOnLife.len)
+		if (src.material.countTriggers(TRIGGERS_ON_LIFE))
 			src.AddComponent(/datum/component/loctargeting/mat_triggersonlife)
 		else
 			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
@@ -283,7 +283,7 @@ ABSTRACT_TYPE(/obj/item)
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 
 	removeMaterial()
-		if (src.material && length(src.material.triggersOnLife))
+		if (src.material?.countTriggers(TRIGGERS_ON_LIFE))
 			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
 			if (C)
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
@@ -335,9 +335,9 @@ ABSTRACT_TYPE(/obj/item)
 	else
 		..()
 
-/obj/item/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
+/obj/item/setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = FALSE, var/use_descriptors = FALSE)
 	..()
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 
 //set up object properties on the block when blocking with the item. if overriding this proc, add the BLOCK_SETUP macro to new() to register for the signal and to get tooltips working right
 /obj/item/proc/block_prop_setup(var/source, var/obj/item/grab/block/B)
@@ -393,7 +393,7 @@ ABSTRACT_TYPE(/obj/item)
 			return FALSE
 	var/edibility_override = SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED_PRE, user, src) || SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED_PRE, M, user)
 	var/can_matter_eat = by_matter_eater && (M == user) && M.bioHolder.HasEffect("mattereater")
-	var/edible_check = src.edible || (src.material?.edible) || (edibility_override & FORCE_EDIBILITY)
+	var/edible_check = src.edible || (src.material?.getEdible()) || (edibility_override & FORCE_EDIBILITY)
 	if (!edible_check && !can_matter_eat)
 		return FALSE
 
@@ -401,7 +401,7 @@ ABSTRACT_TYPE(/obj/item)
 		M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
 		"<span class='notice'>You take a bite of [src]!</span>")
 
-		if (src.material && (src.material.edible || edibility_override))
+		if (src.material && (src.material.getEdible() || edibility_override))
 			src.material.triggerEat(M, src)
 
 		if (src.reagents && src.reagents.total_volume)
@@ -439,7 +439,7 @@ ABSTRACT_TYPE(/obj/item)
 			"<span class='alert'><b>[user]</b> feeds you [src]!</span>")
 		logTheThing(LOG_COMBAT, user, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
-		if (src.material && (src.material.edible || edibility_override))
+		if (src.material && (src.material.getEdible() || edibility_override))
 			src.material.triggerEat(M, src)
 
 		if (src.reagents && src.reagents.total_volume)
@@ -599,7 +599,7 @@ ABSTRACT_TYPE(/obj/item)
 			return 0
 
 	if(O.material && src.material)
-		if(!isSameMaterial(O.material, src.material))
+		if(!O.material.isSameMaterial(src.material))
 			return 0
 	else if ((O.material && !src.material) || (!O.material && src.material))
 		return 0
@@ -611,7 +611,7 @@ ABSTRACT_TYPE(/obj/item)
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)
-		P.setMaterial(copyMaterial(src.material))
+		P.setMaterial(src.material)
 
 	src.change_stack_amount(-toRemove)
 	P.change_stack_amount(toRemove - P.amount)
