@@ -7055,7 +7055,6 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/machinery/conveyor_switch,
 /turf/unsimulated/floor/redwhite{
 	dir = 1
 	},
@@ -8296,11 +8295,7 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "iPk" = (
-/mob/living/critter/robotic/gunbot/syndicate/polaris{
-	desc = "Painted in red and black.";
-	name = "Syndicate Sentinel Unit";
-	ai_type = null
-	},
+/mob/living/critter/robotic/gunbot/syndicate/polaris,
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
@@ -10349,9 +10344,6 @@
 /area/morrigan/station/engineering)
 "kZs" = (
 /mob/living/critter/robotic/gunbot/syndicate/polaris{
-	desc = "Painted in red and black.";
-	name = "Syndicate Sentinel Unit";
-	ai_type = null;
 	dir = 1
 	},
 /obj/machinery/light/incandescent/warm,
@@ -21750,7 +21742,6 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/machinery/conveyor_switch,
 /turf/unsimulated/floor/redwhite,
 /area/morrigan/routing/transport)
 "xMA" = (

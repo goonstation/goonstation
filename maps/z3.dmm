@@ -16335,6 +16335,7 @@
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4
 	},
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/black,
 /area/helldrone)
 "djW" = (
@@ -16579,6 +16580,13 @@
 	},
 /turf/space,
 /area/salyut)
+"dSc" = (
+/obj/decal/poster/wallsign/poster_nt{
+	icon_state = "wall_poster_syndicate";
+	name = "Syndicate Poster"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/helldrone)
 "dUN" = (
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -16620,6 +16628,7 @@
 	name = "West Engine Compartment";
 	req_access_txt = ""
 	},
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/black,
 /area/helldrone)
 "dXK" = (
@@ -16748,6 +16757,7 @@
 	hardened = 1;
 	dir = 4
 	},
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/twotone/yellow,
 /area/helldrone)
 "ery" = (
@@ -16805,6 +16815,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	name = "Pod Bay"
 	},
+/obj/mapping_helper/airlock/anti_emag,
 /turf/simulated/floor/plating,
 /area/helldrone)
 "eCp" = (
@@ -16870,6 +16881,10 @@
 	icon_state = "red2"
 	},
 /area/diner/dining)
+"eNb" = (
+/obj/decal/poster/wallsign/security_wall,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/helldrone)
 "eNy" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -17250,6 +17265,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/black,
 /area/helldrone)
 "fQg" = (
@@ -17622,6 +17638,7 @@
 /area/helldrone)
 "gEt" = (
 /obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/helldrone)
 "gEF" = (
@@ -17643,6 +17660,7 @@
 	hardened = 1;
 	dir = 4
 	},
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/twotone/yellow,
 /area/helldrone)
 "gJv" = (
@@ -17679,6 +17697,7 @@
 	name = "Drone Computer Core";
 	req_access_txt = ""
 	},
+/obj/mapping_helper/airlock/anti_emag,
 /turf/simulated/floor/orangeblack,
 /area/helldrone)
 "gNH" = (
@@ -18179,6 +18198,10 @@
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
+"hUW" = (
+/obj/decal/poster/wallsign/space,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/helldrone)
 "hYd" = (
 /obj/landmark/spawner/loot,
 /turf/unsimulated/floor/plating/scorched,
@@ -18885,6 +18908,10 @@
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/hangar)
+"jpu" = (
+/obj/decal/poster/wallsign/escape,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/helldrone)
 "jqk" = (
 /obj/decal/fakeobjects/lightbulb_broken,
 /turf/simulated/floor/airless/grime,
@@ -19178,9 +19205,6 @@
 /area/abandonedmedicalship/robot_trader)
 "kdO" = (
 /obj/stool/chair/comfy/red,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /turf/unsimulated/floor/black,
 /area/helldrone)
 "keU" = (
@@ -19401,6 +19425,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	name = "Pod Bay"
 	},
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/black,
 /area/helldrone)
 "kKk" = (
@@ -19657,6 +19682,7 @@
 	name = "Drone Computer Core";
 	req_access_txt = ""
 	},
+/obj/mapping_helper/airlock/anti_emag,
 /turf/simulated/floor/orangeblack,
 /area/helldrone/core)
 "luF" = (
@@ -19907,6 +19933,7 @@
 	hardened = 1;
 	dir = 4
 	},
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/plating,
 /area/helldrone)
 "lNV" = (
@@ -20575,6 +20602,7 @@
 	dir = 4;
 	hardened = 1
 	},
+/obj/mapping_helper/airlock/anti_emag,
 /turf/simulated/floor/black,
 /area/helldrone)
 "nvN" = (
@@ -21824,6 +21852,12 @@
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
+"qzd" = (
+/obj/decal/poster/wallsign/teleport_sign{
+	dir = 4
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/helldrone)
 "qAR" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
@@ -23014,9 +23048,6 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
-	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/helldrone)
 "tkr" = (
@@ -23303,6 +23334,7 @@
 "tLZ" = (
 /obj/storage/closet/dresser,
 /obj/item/card/id/morrigan/balor_it,
+/obj/item/clothing/under/rank/engineer/april_fools,
 /turf/unsimulated/floor/black,
 /area/helldrone)
 "tNm" = (
@@ -23416,9 +23448,6 @@
 "uhK" = (
 /obj/stool/chair/comfy/red{
 	dir = 1
-	},
-/obj/machinery/light/small{
-	dir = 4
 	},
 /turf/unsimulated/floor/black,
 /area/helldrone)
@@ -23601,6 +23630,16 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedship)
+"uCL" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/fakesecscanner{
+	dir = 8;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "uDb" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/black/grime,
@@ -23763,6 +23802,7 @@
 /area/helldrone)
 "uWf" = (
 /obj/machinery/door/airlock/pyro/security,
+/obj/mapping_helper/airlock/anti_emag,
 /turf/simulated/floor/plating,
 /area/helldrone)
 "uXi" = (
@@ -24022,6 +24062,7 @@
 	name = "West Engine Compartment";
 	req_access_txt = ""
 	},
+/obj/mapping_helper/airlock/anti_emag,
 /turf/simulated/floor/plating,
 /area/helldrone)
 "vFH" = (
@@ -24341,6 +24382,7 @@
 	dir = 8;
 	name = "Pod Bay"
 	},
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/black,
 /area/helldrone)
 "wsK" = (
@@ -24614,6 +24656,7 @@
 /area/diner/motel/observatory)
 "xdz" = (
 /obj/machinery/door/airlock/pyro/security,
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/black,
 /area/helldrone)
 "xex" = (
@@ -35283,7 +35326,7 @@ bgu
 bgu
 baF
 wEm
-bgu
+eNb
 wOn
 wOn
 bgu
@@ -35887,7 +35930,7 @@ baF
 wOn
 wOn
 wEm
-bgu
+eNb
 wOn
 wOn
 wOn
@@ -39509,7 +39552,7 @@ lkB
 bfY
 gEt
 wOn
-gBN
+uCL
 wEm
 wEm
 bgu
@@ -39812,7 +39855,7 @@ bgu
 bgu
 bgu
 fNl
-bgu
+qzd
 bgu
 bgu
 bgu
@@ -40418,7 +40461,7 @@ apw
 sWa
 evt
 bgu
-bgu
+dSc
 aVV
 kdO
 jVk
@@ -41332,7 +41375,7 @@ bcg
 bgu
 kjj
 ufh
-bgu
+jpu
 apw
 wOn
 bgu
@@ -41935,7 +41978,7 @@ pQo
 hso
 bgu
 wsE
-bgu
+hUW
 bgu
 bgu
 bgu
