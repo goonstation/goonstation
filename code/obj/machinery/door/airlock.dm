@@ -1585,6 +1585,25 @@ About the new airlock wires panel:
 		return src.Attackhand(user)
 	else if (ispryingtool(C))
 		src.unpowered_open_close()
+	else if ((C.type == /obj/item/armblade) && (user.a_intent == INTENT_HARM) && !src.operating)
+		var/obj/item/armblade/blade = C
+		if (!blade.attached)
+			boutput(user, "<span class='alert'>[blade] is not secure, it needs to be attached!</span>")
+			return
+		if (blade.mode != 1)
+			boutput(user, "<span class='alert'>[blade] blades need to be extended to melt \the [src]!</span>")
+			return
+		if (src.cant_emag)
+			boutput(user, "<span class='alert'>\the [src] is too resistant to melt with [blade]!</span>")
+			return
+		if (!src.density)
+			boutput(user, "<span class='alert'>You don't need to break open \the [src], as it's already open!</span>")
+			return
+		var/positions = src.get_welding_positions(user)
+		user.visible_message("<span class='alert'>[user] begins melting \the [src] open with [blade]!</span>",\
+			"<span class='alert'>You begin melting \the [src] open with your [blade]!</span>")
+		playsound(user.loc, 'sound/items/Welder2.ogg', 40, 1)
+		actions.start(new /datum/action/bar/private/welding(user, src, src.health/45 SECONDS, /obj/machinery/door/airlock/proc/melt_open, null, null, positions[1], positions[2]),user)
 	else
 		..()
 	return
@@ -1600,6 +1619,12 @@ About the new airlock wires panel:
 		logTheThing(LOG_STATION, user, "un-welded [name] at [log_loc(user)].")
 		src.welded = null
 	src.UpdateIcon()
+
+/obj/machinery/door/airlock/proc/melt_open()
+	src.operating = -1
+	playsound(src, 'sound/machines/airlock_break_very_temp.ogg', 40, 1)
+	make_cleanable(/obj/decal/cleanable/molten_item, get_turf(src))
+	open(TRUE)
 
 /obj/machinery/door/airlock/proc/unpowered_open_close()
 	if (!src || !istype(src))
@@ -1651,8 +1676,8 @@ About the new airlock wires panel:
 
 	return
 
-/obj/machinery/door/airlock/open()
-	if (!src.density || src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+/obj/machinery/door/airlock/open(force = FALSE) //force bypasses doors being welded, bolted, etc
+	if (!force && (!src.density || src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR)))
 		return 0
 	src.use_power(OPEN_CLOSE_POWER_USAGE)
 	if (src.linked_forcefield)
