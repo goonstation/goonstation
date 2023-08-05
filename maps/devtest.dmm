@@ -1301,6 +1301,12 @@
 	},
 /turf/simulated/floor/airless/engine/glow/blue,
 /area/devzone)
+"rG" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 6
+	},
+/turf/simulated/floor,
+/area/devzone)
 "rS" = (
 /turf/space,
 /area/space)
@@ -2866,13 +2872,6 @@
 	},
 /turf/simulated/floor/engine/glow/blue,
 /area/devzone)
-"Of" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 8;
-	name = "Chamber Two Inlet"
-	},
-/turf/simulated/floor,
-/area/devzone)
 "Om" = (
 /obj/railing/red{
 	dir = 1
@@ -2942,6 +2941,10 @@
 "OP" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/black,
+/area/devzone)
+"Pd" = (
+/obj/machinery/atmospherics/binary/volume_pump,
+/turf/simulated/floor,
 /area/devzone)
 "Pf" = (
 /obj/railing/red{
@@ -4924,9 +4927,9 @@ ZD
 Yx
 Yx
 Yx
-vG
-Yx
-Yx
+rG
+Pd
+xf
 Yx
 vG
 Yx
@@ -5309,15 +5312,15 @@ RL
 bK
 ZD
 Yx
-Of
-Of
+Kx
+Kx
 Yx
-Of
+Kx
 Xu
-Of
+Kx
 Yx
-Of
-Of
+Kx
+Kx
 Yx
 ng
 qm
