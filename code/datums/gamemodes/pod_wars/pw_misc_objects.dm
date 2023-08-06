@@ -184,16 +184,6 @@
 		SubscribeToProcess()
 		last_check = world.time
 
-	start_clone()
-		. = ..()
-		if (.)
-			if (team_num == TEAM_NANOTRASEN)
-				new /obj/item/implant/pod_wars/nanotrasen(src.occupant)
-			else if (team_num == TEAM_SYNDICATE)
-				new /obj/item/implant/pod_wars/syndicate(src.occupant)
-
-		return
-
 	ex_act(severity)
 		return
 
