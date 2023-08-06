@@ -47,7 +47,7 @@
 		switch (lowertext(act))
 			// most commonly used emotes first for minor performance improvements
 			if ("scream")
-				if (src.emote_check(voluntary, 50))
+				if (src.emote_check(voluntary, 5 SECONDS))
 					if(src.bioHolder?.HasEffect("mute"))
 						var/pre_message = "[pick("vibrates for a moment, then stops", "opens [his_or_her(src)] mouth, but no sound comes out",
 						"tries to scream, but can't", "emits an audible silence", "huffs and puffs with all [his_or_her(src)] might, but can't seem to make a sound",
@@ -481,7 +481,7 @@
 
 			if ("give")
 				if (!src.restrained())
-					if (!src.emote_check(voluntary, 50))
+					if (!src.emote_check(voluntary, 5 SECONDS))
 						return
 					var/obj/item/thing = src.equipped()
 					if (!thing)
@@ -597,7 +597,7 @@
 	//april fools end
 
 			if ("birdwell")
-				if ((src.client && src.client.holder) && src.emote_check(voluntary, 50))
+				if ((src.client && src.client.holder) && src.emote_check(voluntary, 5 SECONDS))
 					message = "<B>[src]</B> birdwells."
 					maptext_out = "<I>birdwells</I>"
 					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
@@ -627,7 +627,7 @@
 
 			if ("juggle")
 				if (!src.restrained())
-					if (src.emote_check(voluntary, 25))
+					if (src.emote_check(voluntary, 2.5 SECONDS))
 						m_type = 1
 						if ((src.mind && src.mind.assigned_role == "Clown") || src.can_juggle)
 							var/obj/item/thing = src.equipped()
@@ -649,7 +649,7 @@
 								maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
 			if ("twirl", "spin"/*, "juggle"*/)
 				if (!src.restrained())
-					if (src.emote_check(voluntary, 25))
+					if (src.emote_check(voluntary, 2.5 SECONDS))
 						m_type = 1
 
 						var/obj/item/thing = src.equipped()
@@ -733,7 +733,7 @@
 				if (!istype(gum))
 					return
 				if (!muzzled)
-					if (src.emote_check(voluntary, 25))
+					if (src.emote_check(voluntary, 2.5 SECONDS))
 						message = "<B>[src]</B> blows a bubble."
 						maptext_out = "<I>blows a bubble</I>"
 						//todo: sound
@@ -846,7 +846,7 @@
 					maptext_out = "<I>tries to make a noise</I>"
 				m_type = 2
 
-				if (src.emote_check(voluntary,20))
+				if (src.emote_check(voluntary, 2 SECONDS))
 					if (act == "gasp")
 						if (src.health <= 0)
 							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender]_gasp_[pick(1,5)].ogg"
@@ -1536,7 +1536,7 @@
 				m_type = 1
 
 			if ("deathgasp")
-				if (!voluntary || src.emote_check(voluntary,50))
+				if (!voluntary || src.emote_check(voluntary, 5 SECONDS))
 					if (prob(15) && !ischangeling(src) && !isdead(src))
 						message = "<span class='regular'><B>[src]</B> seizes up and falls limp, peeking out of one eye sneakily.</span>"
 					else
@@ -1554,7 +1554,7 @@
 					m_type = 1
 
 			if ("johnny")
-				if (src.emote_check(voluntary,60))
+				if (src.emote_check(voluntary, 6 SECONDS))
 					var/M
 					if (param) M = adminscrub(param)
 					if (!M)
@@ -1624,9 +1624,9 @@
 				m_type = 2
 
 			if ("dance", "boogie")
-				var/cooldown = 50 // I'm sorry but this is the best I can do with this janky system
+				var/cooldown = 5 SECONDS // I'm sorry but this is the best I can do with this janky system
 				if (istype(src.shoes, /obj/item/clothing/shoes/heels/dancin))
-					cooldown = 15
+					cooldown = 1.5 SECONDS
 				if (src.emote_check(voluntary, cooldown))
 					if (src.restrained()) // check this first for convenience
 						message = "<B>[src]</B> twitches feebly in time to music only [he_or_she(src)] can hear."
@@ -1807,7 +1807,7 @@
 								playsound(src, 'sound/effects/bubbles.ogg', 80, 1)
 
 			if ("flip")
-				if (src.emote_check(voluntary, 50))
+				if (src.emote_check(voluntary, 5 SECONDS))
 					var/list/combatflipped = list()
 					//TODO: space flipping
 					//if ((!src.restrained()) && (!src.lying) && (istype(src.loc, /turf/space)))
@@ -2232,7 +2232,7 @@
 					message = "<B>[src]</B> tries to say something clever, but just can't pull it off looking like that."
 
 			if ("miranda")
-				if (src.emote_check(voluntary, 50))
+				if (src.emote_check(voluntary, 5 SECONDS))
 					if (src.mind && (src.mind.assigned_role in list("Captain", "Head of Personnel", "Head of Security", "Security Officer", "Security Assistant", "Detective", "Vice Officer", "Regional Director", "Inspector")))
 						src.recite_miranda()
 
