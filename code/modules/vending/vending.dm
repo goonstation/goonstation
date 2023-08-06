@@ -941,8 +941,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		return
 	can_fall = 2
 	status |= BROKEN
-	src.flags |= TABLEPASS
-	boutput(world,"[HAS_FLAG(src.flags,TABLEPASS)]")
 	var/turf/vicTurf = get_turf(victim)
 	src.icon_state = "[initial(icon_state)]-fallen"
 	playsound(src.loc, 'sound/machines/vending_crash.ogg', 50, 0)
