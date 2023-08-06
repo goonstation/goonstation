@@ -111,6 +111,7 @@
 /mob/living/carbon/human/preview
 	name = "character preview"
 	real_name = "character preview"
+	unobservable = TRUE
 
 /**
  * # Character Preview
@@ -139,7 +140,6 @@
 		src.flat_icon = null
 		var/mob/living/carbon/human/preview_mob = src.preview_thing
 		preview_mob.dir = direction
-		preview_mob.set_mutantrace(null)
 		preview_mob.bioHolder.mobAppearance.CopyOther(AH)
 		preview_mob.set_mutantrace(MR)
 		preview_mob.organHolder.head.donor = preview_mob

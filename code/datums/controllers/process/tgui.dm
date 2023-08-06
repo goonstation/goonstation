@@ -56,4 +56,4 @@ var/global/datum/controller/process/tgui/tgui_process
 		close_all_uis()
 
 	tickDetail()
-		boutput(usr, "Open TGUIs:[open_uis.len]")
+		boutput(usr, "<span class='admin'>Open TGUIs:[open_uis.len]</span>")

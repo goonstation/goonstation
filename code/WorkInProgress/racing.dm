@@ -190,7 +190,7 @@
 			R.random_powerup()
 			qdel(src)
 
-/obj/powerup/
+/obj/powerup
 	name = "powerup"
 	desc = "Click to use"
 	icon = 'icons/misc/racing.dmi'

@@ -93,7 +93,7 @@
 			for (var/atom/movable/Q in pressing)
 				if (Q.loc != src.loc)
 					pressing -= Q
-			if (pressing.len == 0)
+			if (length(pressing) == 0)
 				unpress()
 
 	proc/press()

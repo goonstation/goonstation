@@ -18,7 +18,6 @@ var/global/parallax_enabled = TRUE
 		src.parallax_layers = list()
 		src.outermost_movable = src.owner.mob
 		src.setup_z_level_parallax_layers()
-		src.update_parallax_z()
 
 	/// Updates the position of the parallax layer relative to the client's eye, taking into account the distance moved and the parallax value.
 	proc/update_parallax_layers(turf/previous_turf, turf/current_turf)
@@ -74,12 +73,8 @@ var/global/parallax_enabled = TRUE
 
 			src.z_level_parallax_layers["[z_level]"] = z_parallax_layers
 
-		src.previous_turf = get_turf(src.owner.eye)
-		var/area/A = get_area(src.previous_turf)
-		src.add_parallax_layer(A.area_parallax_layers, z_level = A.z)
-
 	/// Updates the parallax layers displayed to a client by an area.
-	proc/update_area_parallax_layers(area/new_area, area/old_area)
+	proc/update_area_parallax_layers(area/old_area, area/new_area)
 		if (old_area && new_area && (old_area.area_parallax_layers ~= new_area.area_parallax_layers))
 			return
 
@@ -168,16 +163,19 @@ var/global/parallax_enabled = TRUE
 /mob/proc/register_parallax_signals()
 	if (src.client?.parallax_controller)
 		RegisterSignal(src, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(update_parallax))
+		RegisterSignal(src, XSIG_MOVABLE_AREA_CHANGED, PROC_REF(update_area_parallax))
 		RegisterSignal(src, XSIG_MOVABLE_Z_CHANGED, PROC_REF(update_parallax_z))
 		RegisterSignal(src, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(update_outermost_movable))
 
 		var/datum/component/complexsignal/outermost_movable/C = src.GetComponent(/datum/component/complexsignal/outermost_movable)
 		src.client.parallax_controller.outermost_movable = C.get_outermost_movable()
+		src.update_area_parallax(null, get_area(src.client.parallax_controller.previous_turf), get_area(src))
 		src.update_parallax_z()
 
 /mob/proc/unregister_parallax_signals()
 	if (src.GetComponent(/datum/component/complexsignal/outermost_movable))
 		UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
+		UnregisterSignal(src, XSIG_MOVABLE_AREA_CHANGED)
 		UnregisterSignal(src, XSIG_MOVABLE_Z_CHANGED)
 		UnregisterSignal(src, XSIG_OUTERMOST_MOVABLE_CHANGED)
 
@@ -186,6 +184,9 @@ var/global/parallax_enabled = TRUE
 
 /mob/proc/update_parallax_z()
 	src.client?.parallax_controller?.update_parallax_z()
+
+/mob/proc/update_area_parallax(datum/component/component, area/old_area, area/new_area)
+	src.client?.parallax_controller?.update_area_parallax_layers(old_area, new_area)
 
 /mob/proc/update_outermost_movable(datum/component/component, atom/movable/old_outermost, atom/movable/new_outermost)
 	src.client?.parallax_controller?.outermost_movable = new_outermost

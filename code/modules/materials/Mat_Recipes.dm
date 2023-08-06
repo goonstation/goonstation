@@ -37,12 +37,12 @@
 		var/hasSteel = 0
 		var/hasKosh = 0
 
-		for(var/datum/material/CM in M.parent_materials)
-			if(CM.mat_id == "soulsteel") hasSteel = 1
-			if(CM.mat_id == "koshmarite") hasKosh = 1
+		for(var/datum/material/CM in M.getParentMaterials())
+			if(CM.getID() == "soulsteel") hasSteel = 1
+			if(CM.getID() == "koshmarite") hasKosh = 1
 
-		if(M.mat_id == "soulsteel") hasSteel = 1
-		if(M.mat_id == "koshmarite") hasKosh = 1
+		if(M.getID() == "soulsteel") hasSteel = 1
+		if(M.getID() == "koshmarite") hasKosh = 1
 
 		if(hasSteel && hasKosh) return 1
 		else return 0
@@ -55,12 +55,12 @@
 		var/hasSoul = 0
 		var/hasSteel = 0
 
-		for(var/datum/material/CM in M.parent_materials)
-			if(CM.mat_id == "ectoplasm") hasSoul = 1
-			if(CM.mat_id == "steel") hasSteel = 1
+		for(var/datum/material/CM in M.getParentMaterials())
+			if(CM.getID() == "ectoplasm") hasSoul = 1
+			if(CM.getID() == "steel") hasSteel = 1
 
-		if(M.mat_id == "ectoplasm") hasSoul = 1
-		if(M.mat_id == "steel") hasSteel = 1
+		if(M.getID() == "ectoplasm") hasSoul = 1
+		if(M.getID() == "steel") hasSteel = 1
 
 		if(hasSoul && hasSteel) return 1
 		else return 0
@@ -73,11 +73,30 @@
 		var/one = 0
 		var/two = 0
 
-		for(var/datum/material/CM in M.parent_materials)
-			if(CM.mat_id == "mauxite") one = 1
-			if(CM.mat_id == "char") two = 1
+		for(var/datum/material/CM in M.getParentMaterials())
+			if(CM.getID() == "mauxite") one = 1
+			if(CM.getID() == "char") two = 1
 
 		if(one && two) return 1
+		else return 0
+
+/datum/material_recipe/censorium
+	name = "censorium"
+	result_id = "censorium"
+	result_item = /obj/item/material_piece/metal/censorium
+
+	validate(var/datum/material/M)
+		var/hasChar = 0
+		var/hasRock = 0
+
+		for(var/datum/material/CM in M.getParentMaterials())
+			if(CM.getID() == "char") hasChar = 1
+			if(CM.getID() == "rock") hasRock = 1
+
+		if(M.getID() == "char") hasChar = 1
+		if(M.getID() == "rock") hasRock = 1
+
+		if(hasChar && hasRock) return 1
 		else return 0
 
 /datum/material_recipe/copper // this doesn't REALLY make sense how steel recipe does but I don't care. Need a way to make copper for coroisum
@@ -88,9 +107,9 @@
 		var/one = 0
 		var/two = 0
 
-		for(var/datum/material/CM in M.parent_materials)
-			if(CM.mat_id == "pharosium") one = 1
-			if(CM.mat_id == "char") two = 1
+		for(var/datum/material/CM in M.getParentMaterials())
+			if(CM.getID() == "pharosium") one = 1
+			if(CM.getID() == "char") two = 1
 
 		if(one && two) return 1
 		else return 0
@@ -103,9 +122,9 @@
 		var/one = 0
 		var/two = 0
 
-		for(var/datum/material/CM in M.parent_materials)
-			if(CM.mat_id == "gold") one = 1
-			if(CM.mat_id == "cobryl") two = 1
+		for(var/datum/material/CM in M.getParentMaterials())
+			if(CM.getID() == "gold") one = 1
+			if(CM.getID() == "cobryl") two = 1
 
 		if(one && two) return 1
 		else return 0
@@ -118,9 +137,9 @@
 		var/one = 0
 		var/two = 0
 
-		for(var/datum/material/CM in M.parent_materials)
-			if(CM.mat_id == "plasmastone") one = 1
-			if(CM.mat_id == "steel") two = 1
+		for(var/datum/material/CM in M.getParentMaterials())
+			if(CM.getID() == "plasmastone") one = 1
+			if(CM.getID() == "steel") two = 1
 
 		if(one && two) return 1
 		else return 0
@@ -135,9 +154,9 @@
 		var/one = 0
 		var/two = 0
 
-		for(var/datum/material/CM in M.parent_materials)
-			if(CM.mat_id == "plasmastone") one = 1
-			if(CM.mat_id == "glass") two = 1
+		for(var/datum/material/CM in M.getParentMaterials())
+			if(CM.getID() == "plasmastone") one = 1
+			if(CM.getID() == "glass") two = 1
 
 		if(one && two) return 1
 		else return 0
@@ -153,12 +172,12 @@
 		var/hasCarbon = 0
 		var/hasSilk = 0
 
-		for(var/datum/material/CM in M.parent_materials)
-			if(CM.mat_id == "carbonfibre") hasCarbon = 1
-			if(CM.mat_id == "spidersilk") hasSilk = 1
+		for(var/datum/material/CM in M.getParentMaterials())
+			if(CM.getID() == "carbonfibre") hasCarbon = 1
+			if(CM.getID() == "spidersilk") hasSilk = 1
 
-		if(M.mat_id == "carbonfibre") hasCarbon = 1
-		if(M.mat_id == "spidersilk") hasSilk = 1
+		if(M.getID() == "carbonfibre") hasCarbon = 1
+		if(M.getID() == "spidersilk") hasSilk = 1
 
 		if(hasCarbon && hasSilk) return 1
 		else return 0
@@ -171,9 +190,9 @@
 		var/one = 0
 		var/two = 0
 
-		for(var/datum/material/CM in M.parent_materials)
-			if(CM.mat_id == "latex") one = 1
-			if(CM.mat_id == "cotton") two = 1
+		for(var/datum/material/CM in M.getParentMaterials())
+			if(CM.getID() == "latex") one = 1
+			if(CM.getID() == "cotton") two = 1
 
 		if(one && two) return 1
 		else return 0
@@ -188,9 +207,9 @@
 
 		var/regex/R = regex("rubber")
 
-		for(var/datum/material/CM in M.parent_materials)
-			if(CM.mat_id == "coral") one = 1
-			if(R.Find(CM.mat_id)) two = 1
+		for(var/datum/material/CM in M.getParentMaterials())
+			if(CM.getID() == "coral") one = 1
+			if(R.Find(CM.getID())) two = 1
 
 		if(one && two) return 1
 		else return 0

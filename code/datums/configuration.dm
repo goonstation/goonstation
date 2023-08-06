@@ -443,7 +443,7 @@
 			break
 
 	if (!mode_name)
-		boutput(world, "Failed to pick a random game mode.")
+		boutput(world, "<h1 class='alert>Failed to pick a random game mode.</h1>")
 		return null // This essentially will never happen (you'd have to not be able to choose any mode in secret), so it's okay to leave it null, I think
 
 	//boutput(world, "Returning mode [mode_name]")
@@ -503,6 +503,6 @@ var/list/server_authorized = null
 	if(!server_authorized)
 		if(!fexists( "../authorized_keys.txt" )) return 1// oh no!
 		server_authorized = splittext( file2text("../authorized_keys.txt"), ";" )
-	if(server_authorized.len == 0) return 1//TODO: Remove this?
+	if(length(server_authorized) == 0) return 1//TODO: Remove this?
 	if(server_authorized.Find( ckey )) return 1
 	return 0

@@ -10,7 +10,7 @@
 /datum/biome/mars/martian_area
 	turf_type = /turf/unsimulated/floor/setpieces/martian/station_duststorm
 
-	fauna_types = list(/obj/critter/martian=50, /obj/critter/martian/soldier=10, /obj/critter/martian/psychic=1, /obj/critter/martian/psychic/weak=5, /obj/critter/martian/warrior=10)
+	fauna_types = list(/mob/living/critter/martian=50, /mob/living/critter/martian/soldier=10, /mob/living/critter/martian/mutant=1, /mob/living/critter/martian/initiate=5, /mob/living/critter/martian/warrior=10)
 	fauna_density = 1
 
 /datum/biome/mars/martian_rock

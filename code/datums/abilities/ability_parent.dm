@@ -496,10 +496,10 @@
 
 		if (spell.target_selection_check == 1)
 			var/list/mob/targets = spell.target_reference_lookup()
-			if (targets.len <= 0)
+			if (length(targets) <= 0)
 				boutput(owner.holder.owner, "<span class='alert'>There's nobody in range.</span>")
 				use_targeted = 2 // Abort parent proc.
-			else if (targets.len == 1) // Only one guy nearby, but we need the mob reference for handleCast() then.
+			else if (length(targets) == 1) // Only one guy nearby, but we need the mob reference for handleCast() then.
 				use_targeted = 0
 				SPAWN(0)
 					spell.handleCast(targets[1])

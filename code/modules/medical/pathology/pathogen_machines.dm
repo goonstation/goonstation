@@ -34,7 +34,7 @@
 					else
 						var/datum/reagent/blood/B = src.source.reagents.reagent_list["blood"]
 						if (B.volume && length(B.pathogens))
-							if (B.pathogens.len > 1)
+							if (length(B.pathogens) > 1)
 								output_text += "The centrifuge is calibrated to isolate a sample of [src.isolated ? src.isolated.name : "all pathogens"].<br><br>"
 								output_text += "The blood in the [src.source] contains multiple pathogens. Calibrate to isolate a sample of:<br>"
 								output_text += "<a href='?src=\ref[src];all=1'>All</a><BR>"
@@ -144,7 +144,7 @@
 					user.client.screen -= O
 				user.u_equip(O)
 				boutput(user, "You insert the blood slide into the machine.")
-				if (src.source.blood && src.source.blood.pathogens.len == 1)
+				if (src.source.blood && length(src.source.blood.pathogens) == 1)
 					var/uid = src.source.blood.pathogens[1]
 					src.isolated = src.source.blood.pathogens[uid]
 				else
@@ -579,7 +579,7 @@
 			var/id = text2num_safe(href_list["analysisappend"])
 			if(id != null && id >= 0)
 				id++ //JS sent a zero-based ID
-				if (id > 0 && src.manip.analysis_list.len >= id) //We want the index to be in bounds now.
+				if (id > 0 && length(src.manip.analysis_list) >= id) //We want the index to be in bounds now.
 					var/element = src.manip.analysis_list[id]
 					src.manip.analysis_list.Cut(id, id+1)
 					if (!src.manip.analysis)
@@ -1087,14 +1087,14 @@
 		if (!O.reagents.has_reagent("pathogen"))
 			user.show_message("<span class='alert'>The vial does not contain a viable pathogen sample, and is rejected by the machine.</span>")
 			return
-		if (O.reagents.reagent_list.len > 1)
+		if (length(O.reagents.reagent_list) > 1)
 			user.show_message("<span class='alert'>The machine rejects the sample, as it contains foreign chemical samples.</span>")
 			return
 		var/datum/reagent/blood/pathogen/P = O.reagents.reagent_list["pathogen"]
-		if (P.pathogens.len > 1)
+		if (length(P.pathogens) > 1)
 			user.show_message("<span class='alert'>The vial contains multiple pathogen samples, and is rejected by the machine.</span>")
 			return
-		if (P.pathogens.len == 0)
+		if (length(P.pathogens) == 0)
 			user.show_message("<span class='alert'>The vial does not contain a viable pathogen sample, and is rejected by the machine.</span>")
 			return
 		if (P.volume < 2)
@@ -1372,7 +1372,7 @@
 				var/obj/item/reagent_containers/glass/vial/V = vials[sel_vial]
 				if (V.reagents.has_reagent("pathogen"))
 					var/datum/reagent/blood/pathogen/R = V.reagents.reagent_list["pathogen"]
-					if (R.pathogens.len > 1)
+					if (length(R.pathogens) > 1)
 						output_text += "#[sel_vial] [V.name] (<font color='red'>ERROR:</font> contains multiple pathogen samples)<br><br>"
 					else if (!R.pathogens.len)
 						output_text += "#[sel_vial] [V.name] (empty)<br><br>"
@@ -1413,7 +1413,7 @@
 					var/obj/item/reagent_containers/glass/vial/V = vials[i]
 					if ("pathogen" in V.reagents.reagent_list)
 						var/datum/reagent/blood/pathogen/R = V.reagents.reagent_list["pathogen"]
-						if (R.pathogens.len > 1)
+						if (length(R.pathogens) > 1)
 							output_text += "#[i] <a href='?src=\ref[src];vial=[i]'>[V.name]</a> <a href='?src=\ref[src];eject=[i]'>\[eject\]</a> (multiple samples)<br>"
 						else if (!R.pathogens.len)
 							output_text += "#[i] <a href='?src=\ref[src];vial=[i]'>[V.name]</a> <a href='?src=\ref[src];eject=[i]'>\[eject\]</a> (empty)<br>"

@@ -618,7 +618,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	icon_state = "windoor_closed"
 	icon_base = "windoor"
 	panel_icon_state = "windoor_panel_open"
-	welded_icon_state = "fdoor_weld"
+	welded_icon_state = "glassdoor_welded"
 	sound_airlock = 'sound/machines/windowdoor.ogg'
 	has_crush = FALSE
 	health = 500

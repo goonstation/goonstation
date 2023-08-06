@@ -451,6 +451,8 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 		..()
 		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
 
+TYPEINFO(/obj/item/clothing/suit/armor/NT_alt)
+	mat_appearances_to_ignore = list("carbonfibre")
 /obj/item/clothing/suit/armor/NT_alt
 	name = "old armored vest"
 	desc = "A grungy surplus armored vest. Smelly and not very clean."
@@ -458,6 +460,8 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	item_state = "nt2armor"
 	body_parts_covered = TORSO
 	hides_from_examine = 0
+	default_material = "carbonfibre"
+
 	setupProperties()
 		..()
 		setProperty("meleeprot", 6)

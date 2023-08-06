@@ -393,6 +393,43 @@
 
 
 
+/* -------------------- Electric Guitar -------------------- */
+
+/obj/item/instrument/electricguitar
+	name = "electric guitar"
+	desc = "Somehow works without an amp. Comes in a variety of colors."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "elecguitar1"
+	item_state = "elecguitar1"
+	two_handed = 1
+	force = 10
+	note_range = list("e2", "c6")
+	instrument_sound_directory = "sound/musical_instruments/elecguitar/notes/"
+	note_time = 0.18 SECONDS
+	sounds_instrument = null
+	randomized_pitch = 0
+	use_new_interface = TRUE
+	//Start at E1
+	key_offset = 5
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROD)
+
+	New()
+		src.icon_state = "elecguitar[rand(1,8)]"
+		src.item_state = src.icon_state
+		..()
+
+
+
+	attack(mob/M, mob/user)
+		if(ismob(M))
+			playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
+		..()
+
+
+
 /* -------------------- Bike Horn -------------------- */
 
 /obj/item/instrument/bikehorn

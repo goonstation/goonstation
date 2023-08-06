@@ -81,11 +81,11 @@
 	hide(var/intact) //to make the little pipe section invisible, the icon changes.
 		if(on&&node)
 			if(scrubbing)
-				icon_state = "[intact && istype(loc, /turf/simulated) && level == 1 ? "h" : "" ]on"
+				icon_state = "[intact && istype(loc, /turf/simulated) && level == UNDERFLOOR ? "h" : "" ]on"
 			else
-				icon_state = "[intact && istype(loc, /turf/simulated) && level == 1 ? "h" : "" ]in"
+				icon_state = "[intact && istype(loc, /turf/simulated) && level == UNDERFLOOR ? "h" : "" ]in"
 		else
-			icon_state = "[intact && istype(loc, /turf/simulated) && level == 1 ? "h" : "" ]off"
+			icon_state = "[intact && istype(loc, /turf/simulated) && level == UNDERFLOOR ? "h" : "" ]off"
 			on = FALSE
 
 	receive_signal(datum/signal/signal)
