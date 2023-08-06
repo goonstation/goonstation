@@ -218,6 +218,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	icon_state = "black"
 	item_state = "r_hands"
 	material_prints = "circuit shards"
+	print_scramble_difficulty = 40
 	setupProperties()
 		..()
 		setProperty("conductivity", 1)
@@ -446,6 +447,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	cant_self_remove = 1
 	cant_other_remove = 1
 	material_prints = "greasy polymer fibers"
+	print_scramble_difficulty = 40
 
 	setupProperties()
 		..()

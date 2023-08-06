@@ -38,6 +38,7 @@
 	icon_state = "kote"
 	item_state = "kote"
 	material_prints = "navy blue, synthetic leather fibers"
+	print_scramble_difficulty = 40
 	crit_override = 1
 	bonus_crit_chance = 0
 	stamina_dmg_mult = 0.35

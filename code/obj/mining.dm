@@ -1654,6 +1654,7 @@ obj/item/clothing/gloves/concussive
 	icon_state = "cgaunts"
 	item_state = "bgloves"
 	material_prints = "industrial-grade mineral fibers"
+	print_scramble_difficulty = 70
 	var/obj/item/mining_tool/tool = null
 
 	setupProperties()

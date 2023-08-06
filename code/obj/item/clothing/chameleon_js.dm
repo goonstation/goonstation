@@ -1187,7 +1187,6 @@
 	var/current_choice = new/datum/chameleon_gloves_pattern
 	material_prints = "black leather fibers"
 	hide_prints = TRUE
-	scramble_prints = FALSE
 
 	New()
 		..()
@@ -1261,6 +1260,7 @@
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
 			src.material_prints = T.print_type
+			src.print_scramble_difficulty = T.print_difficulty
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_gloves_pattern
@@ -1273,7 +1273,7 @@
 	var/sprite_hand = 'icons/mob/inhand/hand_feethand.dmi'
 	var/print_type = "black leather fibers"
 	var/hide_prints = TRUE
-	var/scramble_prints = FALSE
+	var/print_difficulty = 0
 
 	insulated
 		desc = "Tough rubber work gloves styled in a high-visibility yellow color. They are electrically insulated, and provide full protection against most shocks."
@@ -1282,22 +1282,24 @@
 		item_state = "ygloves"
 		print_type = "insulative fibers"
 		hide_prints = TRUE
-		scramble_prints = FALSE
+		print_difficulty = 90
 
 	fingerless
 		desc = "These gloves lack fingers. Good for a space biker look, but not so good for concealing your fingerprints."
 		name = "fingerless gloves"
 		icon_state = "fgloves"
 		item_state = "finger-"
+		print_type = "black leather fibers"
 		hide_prints = FALSE
-		scramble_prints = FALSE
+		print_difficulty = 0
 
 	latex
 		name = "latex gloves"
 		icon_state = "latex"
 		item_state = "lgloves"
+		print_type = "latex fibers"
 		desc = "Thin, disposal medical gloves used to help prevent the spread of germs."
-		scramble_prints = TRUE
+		print_difficulty = 60
 
 	boxing
 		name = "boxing gloves"
@@ -1306,7 +1308,7 @@
 		item_state = "bogloves"
 		print_type = "red leather fibers"
 		hide_prints = TRUE
-		scramble_prints = FALSE
+		print_difficulty = 60
 
 	long
 		desc = "These long gloves protect your sleeves and skin from whatever dirty job you may be doing."
@@ -1315,7 +1317,7 @@
 		item_state = "long_gloves"
 		print_type = "synthetic silicone rubber fibers"
 		hide_prints = TRUE
-		scramble_prints = FALSE
+		print_difficulty = 90
 
 	gauntlets
 		name = "concussion gauntlets"
@@ -1324,7 +1326,7 @@
 		item_state = "bgloves"
 		print_type = "industrial-grade mineral fibers"
 		hide_prints = TRUE
-		scramble_prints = FALSE
+		print_difficulty = 90
 
 /obj/item/storage/belt/chameleon
 	name = "utility belt"

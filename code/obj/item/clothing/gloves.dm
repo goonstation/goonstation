@@ -20,7 +20,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	var/activeweapon = 0 // Used for gloves that can be toggled to turn into a weapon (example, bladed gloves)
 
 	var/hide_prints = 1 // Seems more efficient to do this with one global proc and a couple of vars (Convair880).
-	var/scramble_prints = 0
+	var/print_scramble_difficulty = 0 // How hard do we scramble prints? 0 for no scramble, 100 for illegible prints
 	var/material_prints = null
 
 	var/can_be_charged = 0 // Currently, there are provisions for icon state "yellow" only. You have to update this file and mob_procs.dm if you're wanna use other glove sprites (Convair880).
@@ -151,20 +151,28 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 		else
 
-			if (src.scramble_prints)
-				data += corruptText(prints, 20)
-
-			else // Seems a bit redundant to return both (Convair880).
-
-				if (src.material_prints)
-					data += src.material_prints
-				else
-					data += "unknown fiber material"
+			data += corruptPrints(prints, src.print_scramble_difficulty)
+			if (src.material_prints)
+				data += " ([src.material_prints])"
+			else
+				data += " unknown fiber material"
 
 		if (get_glove_ID)
 			data += " (Glove ID: [src.glove_ID])" // Space is required for formatting (Convair880).
 
 		return data
+
+	//Mostly copied from corrupt text except we write those characters in red and we use less eye searing characters
+	proc/corruptPrints(var/t, var/p)
+		if(!t)
+			return ""
+		var/tmp = ""
+		for(var/i = 1, i <= length(t), i++)
+			if(prob(p))
+				tmp += "<span class='alert'>[pick("{", "|", "}", "~", "€", "ƒ", "†", "‡", "‰", "¡", "¢", "£", "¤", "¥", "¦", "§", "«", "¬", "°", "±", "²", "³", "¶", "¿", "ø", "ÿ", "þ")]</span>"
+			else
+				tmp += copytext(t, i, i+1)
+		return tmp
 
 	proc/special_attack(var/mob/target, var/mob/living/user)
 		boutput(user, "Your gloves do nothing special")
@@ -207,6 +215,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	item_state = "long_gloves"
 	protective_temperature = 550
 	material_prints = "synthetic silicone rubber fibers"
+	print_scramble_difficulty = 85
 	setupProperties()
 		..()
 		setProperty("conductivity", 0.6)
@@ -231,6 +240,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	item_state = "bgloves"
 	protective_temperature = 1500
 	material_prints = "black leather fibers"
+	print_scramble_difficulty = 60
 
 	setupProperties()
 		..()
@@ -242,6 +252,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		cant_self_remove = 1
 		cant_other_remove = 1
 		material_prints = "black insulative fibers"
+		print_scramble_difficulty = 85
 
 		setupProperties()
 			..()
@@ -272,7 +283,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	item_state = "lgloves"
 	desc = "Thin, disposable medical gloves used to help prevent the spread of germs."
 	protective_temperature = 310
-	scramble_prints = 1
+	material_prints = "latex fibers"
+	print_scramble_difficulty = 40
 	setupProperties()
 		..()
 		setProperty("conductivity", 0.7)
@@ -298,7 +310,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "latex"
 	item_state = "lgloves"
 	desc = "Custom made gloves."
-	scramble_prints = 1
+	print_scramble_difficulty = 40
 
 	insulating
 		onMaterialChanged()
@@ -350,6 +362,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	item_state = "swat_syndie"
 	protective_temperature = 1100
 	material_prints = "high-quality synthetic fibers"
+	print_scramble_difficulty = 95
 
 	New()
 		..()
@@ -386,6 +399,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "stun"
 	item_state = "stun"
 	material_prints = "insulative fibers, electrically charged"
+	print_scramble_difficulty = 85
 	stunready = 1
 	can_be_charged = 1
 	uses = 10
@@ -404,6 +418,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "yellow"
 	item_state = "ygloves"
 	material_prints = "insulative fibers"
+	print_scramble_difficulty = 85
 	can_be_charged = 1
 	max_uses = 4
 
@@ -433,6 +448,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "boxinggloves"
 	item_state = "bogloves"
 	material_prints = "red leather fibers"
+	print_scramble_difficulty = 40
 	crit_override = 1
 	bonus_crit_chance = 0
 	stamina_dmg_mult = 0.35
@@ -488,6 +504,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "transparent"
 	item_state = "transparent"
 	material_prints = "transparent high-quality synthetic fibers"
+	print_scramble_difficulty = 95
 	var/deployed = FALSE
 
 	nodescripition = TRUE
@@ -578,6 +595,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "yellow"
 	item_state = "ygloves"
 	material_prints = "insulative fibers and nanomachines"
+	print_scramble_difficulty = 95
 	can_be_charged = 1 // Quite pointless, but could be useful as a last resort away from powered wires? Hell, it's a traitor item and can get the buff (Convair880).
 	max_uses = 10
 	flags = HAS_EQUIP_CLICK
@@ -817,6 +835,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "princess"
 	item_state = "princess"
 	material_prints = "silk fibres and glitter"
+	print_scramble_difficulty = 40
 
 	setupProperties()
 		..()
