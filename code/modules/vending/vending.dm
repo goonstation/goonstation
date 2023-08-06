@@ -134,8 +134,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	var/datum/data/vending_product/currently_vending = null // zuh
 
 	power_usage = 50
-	_max_health = 400
-	_health = 400
 
 	New()
 		START_TRACKING
@@ -291,15 +289,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	return
 
 /obj/machinery/vending/bullet_act(var/obj/projectile/P)
-	changeHealth(-1*P.power)
+	if((src.can_fall == 1) && prob(P.power))
+		src.fall()
 	..()
-
-/obj/machinery/vending/changeHealth(var/change = 0)
-	..()
-	if (_health < _max_health*0.25)
-		if(!(src.status & BROKEN))
-			src.visible_message("<b><font color=red>[src.name][src.name]</b> breaks apart!</font>")
-			src.malfunction()
 
 /obj/machinery/vending/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
@@ -426,7 +418,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		..()
 		if (W.force >= 5 && prob(4 + (W.force - 5)))
 			src.fall(user)
-		changeHealth(-1*W.force)
 
 /obj/machinery/vending/hitby(atom/movable/M, datum/thrown_thing/thr)
 	if (iscarbon(M) && M.throwing)
@@ -435,13 +426,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			return
 		src.fall(M)
 		return
-	changeHealth(-1*M.throwforce)
-	..()
-
-/obj/machinery/vending/onDestroy()
-	src.visible_message("<b><font color=red>[src.name][src.name]</b> breaks apart entirely!</font>")
-	src.malfunction() // Drop product if we haven't already
-	src.gib(src.loc)
 	..()
 
 /obj/machinery/vending/attack_ai(mob/user as mob)
@@ -961,6 +945,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		return
 	can_fall = 2
 	status |= BROKEN
+	src.flags |= TABLEPASS
+	boutput(world,"[HAS_FLAG(src.flags,TABLEPASS)]")
 	var/turf/vicTurf = get_turf(victim)
 	src.icon_state = "[initial(icon_state)]-fallen"
 	playsound(src.loc, 'sound/machines/vending_crash.ogg', 50, 0)
@@ -1169,6 +1155,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	src.status &= ~BROKEN
 	src.power_change()
 
+/obj/machinery/vending/Cross(atom/movable/mover)
+	if (src.can_fall == 2)
+		return TRUE
+	. = ..()
+
+
 /datum/action/bar/icon/right_vendor //This is used when you try to remove someone elses handcuffs.
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -1212,6 +1204,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 #undef WIRE_SCANID
 #undef WIRE_SHOCK
 #undef WIRE_SHOOTINV
+#undef HAS_FALLEN
 
 /obj/machinery/vending/coffee
 	name = "coffee machine"
