@@ -1273,7 +1273,7 @@
 	var/sprite_hand = 'icons/mob/inhand/hand_feethand.dmi'
 	var/print_type = "black leather fibers"
 	var/hide_prints = TRUE
-	var/print_difficulty = 0
+	var/print_difficulty = 60
 
 	insulated
 		desc = "Tough rubber work gloves styled in a high-visibility yellow color. They are electrically insulated, and provide full protection against most shocks."
