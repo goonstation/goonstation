@@ -201,6 +201,8 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
 	capacity = 500
 
+	var/health = 100
+
 	var/has_tank = 1
 
 	var/cup_max = 12
@@ -285,6 +287,8 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 						user.show_text("You secure [src] to [T].", "blue")
 						src.anchored = ANCHORED
 						return
+
+		//take_damage(W?.force)
 		..()
 
 	attack_hand(mob/user)

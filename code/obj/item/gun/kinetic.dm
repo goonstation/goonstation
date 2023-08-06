@@ -1015,6 +1015,17 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/revolver_357)
 		..()
 
+/obj/item/gun/kinetic/revolver/bigshot
+	name = "Bullet Hell Revolver"
+	desc = "NOW'S YOUR CHANCE TO BE A BIG SHOT"
+	ammo_cats = list(AMMO_REVOLVER_SYNDICATE, AMMO_REVOLVER_DETECTIVE)
+	max_ammo_capacity = INFINITY
+	fire_animation = FALSE
+
+	shoot(var/target, var/start, var/mob/user, var/POX, var/POY)
+		..(target,start,user,POX,POY)
+
+
 //0.38
 /obj/item/gun/kinetic/detectiverevolver
 	name = "\improper Detective Special revolver"

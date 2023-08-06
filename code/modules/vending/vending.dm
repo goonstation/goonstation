@@ -134,11 +134,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	var/datum/data/vending_product/currently_vending = null // zuh
 
 	power_usage = 50
+	_max_health = 400
+	_health = 400
 
 	New()
 		START_TRACKING
 		src.create_products()
-
 		#ifdef UPSCALED_MAP
 		for (var/datum/data/vending_product/product in src.product_list)
 			product.product_amount *= 4
@@ -275,6 +276,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	return
 
 /obj/machinery/vending/blob_act(var/power)
+	changeHealth(-1*power)
 	if (prob(power * 1.25))
 		SPAWN(0)
 			if (prob(power / 3) && can_fall == 2)
@@ -286,8 +288,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			else
 				src.fall()
 		return
-
 	return
+
+/obj/machinery/vending/bullet_act(var/obj/projectile/P)
+	changeHealth(-1*P.power)
+	..()
+
+/obj/machinery/vending/changeHealth(var/change = 0)
+	..()
+	if (_health < _max_health*0.25)
+		if(!(src.status & BROKEN))
+			src.visible_message("<b><font color=red>[src.name][src.name]</b> breaks apart!</font>")
+			src.malfunction()
 
 /obj/machinery/vending/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
@@ -409,6 +421,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		..()
 		if (W.force >= 5 && prob(4 + (W.force - 5)))
 			src.fall(user)
+		changeHealth(-1*W.force)
 
 /obj/machinery/vending/hitby(atom/movable/M, datum/thrown_thing/thr)
 	if (iscarbon(M) && M.throwing)
@@ -417,7 +430,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			return
 		src.fall(M)
 		return
+	changeHealth(-1*M.throwforce)
+	..()
 
+/obj/machinery/vending/onDestroy()
+	src.visible_message("<b><font color=red>[src.name][src.name]</b> breaks apart entirely!</font>")
+	src.malfunction() // Drop product if we haven't already
+	src.gib(src.loc)
 	..()
 
 /obj/machinery/vending/attack_ai(mob/user as mob)
