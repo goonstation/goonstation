@@ -2384,11 +2384,11 @@
 	if(src.reagents && src.reagents.get_reagent_amount("fartonium") > 6.9)
 		gas.farts = 6.9
 	else if(src.reagents && src.reagents.get_reagent_amount("egg") > 6.9)
-		gas.farts = 2.69
+		gas.farts = 3.69
 	else if(src.reagents && src.reagents.get_reagent_amount("refried_beans") > 6.9)
-		gas.farts = 1.69
+		gas.farts = 2.69
 	else
-		gas.farts = 0.69
+		gas.farts = 1.69
 	gas.temperature = T20C
 	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 	if (T)
