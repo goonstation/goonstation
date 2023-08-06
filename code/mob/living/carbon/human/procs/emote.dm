@@ -1,4 +1,6 @@
 // emote
+#define PLASMAFART 1
+#define OXYFART 2
 
 /mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null) //mbc : if voluntary is 2, it's a hotkeyed emote and that means that we can skip the findtext check. I am sorry, cleanup later
 	set waitfor = FALSE
@@ -208,10 +210,10 @@
 								if (34) message = "<B>[src]</B> fart in [he_or_she(src)] own mouth. A shameful [src]."
 								if (35)
 									message = "<B>[src]</B> farts out pure plasma! <span class='alert'><B>FUCK!</B></span>"
-									oxyplasmafart = 1
+									oxyplasmafart = PLASMAFART
 								if (36)
 									message = "<B>[src]</B> farts out pure oxygen. What the fuck did [he_or_she(src)] eat?"
-									oxyplasmafart = 2
+									oxyplasmafart = OXYFART
 								if (37) message = "<B>[src]</B> breaks wind noisily!"
 								if (38) message = "<B>[src]</B> releases gas with the power of the gods! The very station trembles!!"
 								if (39) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
@@ -2377,18 +2379,18 @@
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/gas = new /datum/gas_mixture
-	if(oxyplasmafart == 1)
-		gas.toxins += 1
-	if(oxyplasmafart == 2)
-		gas.oxygen += 1
+	if(oxyplasmafart == PLASMAFART)
+		gas.toxins += 5
+	if(oxyplasmafart == OXYFART)
+		gas.oxygen += 5
 	if(src.reagents && src.reagents.get_reagent_amount("fartonium") > 6.9)
-		gas.farts = 6.9
+		gas.farts = 42.0
 	else if(src.reagents && src.reagents.get_reagent_amount("egg") > 6.9)
-		gas.farts = 3.69
+		gas.farts = 13.37
 	else if(src.reagents && src.reagents.get_reagent_amount("refried_beans") > 6.9)
-		gas.farts = 2.69
+		gas.farts = 9.001
 	else
-		gas.farts = 1.69
+		gas.farts = 4.20
 	gas.temperature = T20C
 	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 	if (T)
@@ -2519,3 +2521,6 @@
 			for(var/obj/O in view(range, get_turf(src)))
 				targets += O
 	return targets
+
+#undef PLASMAFART
+#undef OXYFART
