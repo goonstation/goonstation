@@ -138,6 +138,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	New()
 		START_TRACKING
 		src.create_products()
+
 		#ifdef UPSCALED_MAP
 		for (var/datum/data/vending_product/product in src.product_list)
 			product.product_amount *= 4
@@ -274,7 +275,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	return
 
 /obj/machinery/vending/blob_act(var/power)
-	changeHealth(-1*power)
 	if (prob(power * 1.25))
 		SPAWN(0)
 			if (prob(power / 3) && can_fall == 2)
@@ -286,6 +286,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			else
 				src.fall()
 		return
+
 	return
 
 /obj/machinery/vending/bullet_act(var/obj/projectile/P)
@@ -326,11 +327,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	else
 		boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 		src.scan = null
-
-/obj/machinery/vending/allowed(mob/M)
-	if (!src.ai_control_enabled)
-		return 1 // You hacked it, good job
-	. = ..()
 
 /obj/machinery/vending/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/electronics/scanner) || istype(W,/obj/item/deconstructor)) // So people don't end up making the vending machines fall on them when they try to scan/deconstruct it
