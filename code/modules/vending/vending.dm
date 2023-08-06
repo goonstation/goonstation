@@ -1156,7 +1156,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	src.power_change()
 
 /obj/machinery/vending/Cross(atom/movable/mover)
-	if (src.can_fall == 2)
+	if (src.can_fall == 2 && mover.flags & TABLEPASS)
 		return TRUE
 	. = ..()
 
