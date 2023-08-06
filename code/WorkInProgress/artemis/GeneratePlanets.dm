@@ -273,6 +273,12 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 			/atom/movable/screen/parallax_layer/foreground/dust/sparse=list(color=color_matrix, scroll_speed=scroll_speed*1.5, scroll_angle=angle)
 		)
 
+	else if(istype(generator, /datum/map_generator/forest_generator))
+		planet_area.area_parallax_layers = list(
+			/atom/movable/screen/parallax_layer/foreground/forest_canopy=list(),
+			/atom/movable/screen/parallax_layer/foreground/forest_canopy/sparse=list()
+			)
+
 	// Occlude overlays on edges
 	if(planet_area.area_parallax_layers)
 		for(var/turf/cordon/CT in planet_area)

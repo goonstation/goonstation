@@ -116,6 +116,29 @@
 	parallax_value = 0.5
 	scroll_speed = 500
 
+// Effects
+
+// Forest Canopy
+/atom/movable/screen/parallax_layer/foreground/forest_canopy
+	parallax_icon_state = "forest_1"
+	color = list(
+		1, 0, 0, 0.4,
+		0, 1, 0, 0.4,
+		0, 0, 1, 0.4,
+		0, 0, 0, 1,
+		0, 0, 0, -1)
+	static_colour = TRUE
+	//parallax_value = 0.8
+	parallax_value = 0
+
+
+	sparse
+		parallax_icon_state = "forest_2"
+		color = null
+		//blend_mode = BLEND_ADD
+		//parallax_value = 0.9
+		parallax_value = 0.009
+
 
 // Adventure Zones
 

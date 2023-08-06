@@ -85,6 +85,26 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 	flora_types = list(/obj/tree/elm_random = 50, /obj/shrub/random = 100, /obj/stone/random = 100, /obj/decal/fakeobjects/smallrocks = 100)
 	flora_density = 15
 
+/datum/biome/forest
+	turf_type = /turf/unsimulated/floor/grasslush/thin
+	flora_types = list(/obj/tree{layer = EFFECTS_LAYER_UNDER_1} = 75, /obj/tree/elm_random=5, /obj/shrub/random = 50)
+	flora_density = 20
+
+/datum/biome/forest/dense
+	turf_type = /turf/unsimulated/floor/grasslush/thinner
+	flora_types = list(/obj/tree{layer = EFFECTS_LAYER_UNDER_1} = 75, /obj/tree/elm_random=5, /obj/shrub/random = 5, /obj/machinery/plantpot/bareplant/tree = 5)
+	flora_density = 35
+
+/datum/biome/forest/thin
+	turf_type = /turf/unsimulated/floor/grasslush
+	flora_types = list(/obj/tree{layer = EFFECTS_LAYER_UNDER_1} = 5, /obj/tree/elm_random=5, /obj/shrub/random = 150, /obj/machinery/plantpot/bareplant/tree = 5, /obj/machinery/plantpot/bareplant/flower = 50)
+	flora_density = 10
+
+/datum/biome/forest/clearing
+	turf_type = /turf/unsimulated/floor/grasslush
+	flora_types = list(/obj/shrub/random = 150, /obj/machinery/plantpot/bareplant/flower = 50)
+	flora_density = 15
+
 /datum/biome/jungle
 	turf_type = /turf/unsimulated/floor/auto/grass/leafy
 	flora_types = list(/obj/tree/elm_random = 75, /obj/shrub/random = 150, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10, /obj/machinery/plantpot/bareplant/swamp_flora = 1)

@@ -1480,6 +1480,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\worldgen\worldgen_parent.dm"
 #include "code\modules\worldgen\mapgen\_MapGenerator.dm"
 #include "code\modules\worldgen\mapgen\DesertGenerator.dm"
+#include "code\modules\worldgen\mapgen\ForestGenerator.dm"
 #include "code\modules\worldgen\mapgen\IceMoonGenerator.dm"
 #include "code\modules\worldgen\mapgen\JungleGenerator.dm"
 #include "code\modules\worldgen\mapgen\MarsGenerator.dm"
