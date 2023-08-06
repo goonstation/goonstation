@@ -335,6 +335,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 		src.scan = null
 
+/obj/machinery/vending/allowed(mob/M)
+	if (!src.ai_control_enabled)
+		return 1 // You hacked it, good job
+	. = ..()
+
 /obj/machinery/vending/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/electronics/scanner) || istype(W,/obj/item/deconstructor)) // So people don't end up making the vending machines fall on them when they try to scan/deconstruct it
 		return
