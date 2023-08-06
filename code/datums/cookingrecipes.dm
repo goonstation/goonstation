@@ -1144,6 +1144,20 @@ datum/cookingrecipe/flockbrainburger
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/fries
 
+/datum/cookingrecipe/chilifries
+	item1 = /obj/item/reagent_containers/food/snacks/fries
+	item2 = /obj/item/reagent_containers/food/snacks/plant/chili
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	cookbonus = 3
+	output = /obj/item/reagent_containers/food/snacks/chilifries
+
+/datum/cookingrecipe/chilifries_alt //Secondary recipe for chili cheese fries
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/chips
+	item2 = /obj/item/reagent_containers/food/snacks/plant/chili
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	cookbonus = 7
+	output = /obj/item/reagent_containers/food/snacks/chilifries
+
 /datum/cookingrecipe/bakedpotato
 	item1 = /obj/item/reagent_containers/food/snacks/plant/potato
 	cookbonus = 16
