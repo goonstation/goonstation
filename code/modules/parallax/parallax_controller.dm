@@ -92,8 +92,13 @@ var/global/parallax_enabled = TRUE
 		else if (ispath(parallax_layer_type_or_types))
 			parallax_layer_types = list(parallax_layer_type_or_types)
 
+		if(isnull(src.z_level_parallax_layers["[z_level]"]))
+			src.z_level_parallax_layers["[z_level]"] = list()
+
 		var/list/parallax_layer_list = src.z_level_parallax_layers["[z_level]"]
 		for (var/parallax_layer_type in parallax_layer_types)
+			if(parallax_layer_types[parallax_layer_type])
+				layer_params = parallax_layer_types[parallax_layer_type]
 			var/atom/movable/screen/parallax_layer/parallax_layer = new parallax_layer_type(null, src.owner, layer_params)
 			parallax_layer_list += parallax_layer
 
