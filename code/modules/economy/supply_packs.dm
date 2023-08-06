@@ -1915,6 +1915,15 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/item/instrument/banjo)
 	containertype = /obj/storage/crate/wooden
 
+/datum/supply_packs/news
+	name = "Old Newspaper Set"
+	desc = "A bunch of old newspapers that we wanted to get rid of. Please take them off our hands."
+	cost = 200
+	containername = "Newspaper Crate"
+	contains = list(/obj/item/paper/newspaper/rolled)
+	amount = 8
+	containertype = /obj/storage/crate/packing
+
 //Western
 /datum/supply_packs/electricguitar
 	name = "Electric Guitar Kit"
