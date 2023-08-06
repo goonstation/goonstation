@@ -24,7 +24,6 @@ var/list/default_z_level_parallax_settings = list(
 		/atom/movable/screen/parallax_layer/asteroids_far,
 		/atom/movable/screen/parallax_layer/asteroids_near,
 		),
-	"[Z_LEVEL_SECRET]" = list(),
 	)
 
 /// A list of each z-level define and it's current associated parallax layer types.
