@@ -1318,3 +1318,9 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 	cost = 1
 	desc = "Just a standard-issue flash. Won't remove implants like the Revolutionary Flash."
 
+/datum/syndicate_buylist/generic/head_rev/rev_goggles
+	name = "Revolutionary Goggles"
+	item = /obj/item/clothing/glasses/meson/revolution
+	cost = 3
+	desc = "A pair of goggles that shows how difficult it would be to convert a person. Examine someone to trigger the effect."
+

@@ -121,6 +121,19 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 
 /obj/item/clothing/glasses/meson/abilities = list(/obj/ability_button/meson_toggle)
 
+/// mesons that also give the ability to see flash prot
+/obj/item/clothing/glasses/meson/revolution
+	desc = "Goggles that allow you to see the structure of the station through walls. This pair seems to be modified."
+
+	equipped(var/mob/living/user)
+		..()
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_EXAMINE_FLASHRESIST, src)
+
+
+	unequipped(mob/user)
+		..()
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_EXAMINE_FLASHRESIST, src)
+
 /obj/item/clothing/glasses/regular
 	name = "prescription glasses"
 	icon_state = "glasses"
