@@ -43,7 +43,9 @@
 /turf/unsimulated/floor/twotone/black,
 /area/morrigan/station/medical/biological)
 "act" = (
-/obj/decoration/bustedmantapc/bustedmantapc3,
+/obj/decoration/bustedmantapc/bustedmantapc2{
+	dir = 4
+	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "acU" = (
@@ -2542,6 +2544,15 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
+"cRg" = (
+/obj/decal/cleanable/blood/tracks{
+	icon_state = "drip5"
+	},
+/obj/decoration/ntcratesmall{
+	icon_state = "syndiecrate"
+	},
+/turf/unsimulated/floor/engine,
+/area/morrigan/station/passage)
 "cRu" = (
 /obj/decal/floatingtiles{
 	dir = 1
@@ -5170,6 +5181,12 @@
 /obj/decal/poster/wallsign/stencil/right/r,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/medical/emergency)
+"fER" = (
+/obj/decoration/ntcratesmall{
+	icon_state = "syndiecrate"
+	},
+/turf/unsimulated/floor/plating/damaged1,
+/area/morrigan/derelict)
 "fEV" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -5490,6 +5507,12 @@
 	dir = 8
 	},
 /area/morrigan/station/command/HOP)
+"fRs" = (
+/obj/decoration/ntcratesmall{
+	icon_state = "syndiecrate"
+	},
+/turf/unsimulated/floor/engine/glow,
+/area/morrigan/station/factory)
 "fRF" = (
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -8924,6 +8947,9 @@
 /area/morrigan/routing)
 "jxH" = (
 /obj/decal/fakeobjects/cargopad,
+/obj/decoration/ntcratesmall{
+	icon_state = "syndiecrate"
+	},
 /turf/unsimulated/floor/twotone/yellow,
 /area/morrigan/station/engineering)
 "jym" = (
@@ -10198,6 +10224,7 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "kSh" = (
+/obj/storage/secure/crate,
 /turf/unsimulated/floor/redblack{
 	dir = 10
 	},
@@ -11216,6 +11243,13 @@
 /obj/decal/fakeobjects/firealarm_broken,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/factory)
+"mdJ" = (
+/obj/decal/stripe_delivery,
+/obj/decoration/bustedmantapc/bustedmantapc2{
+	dir = 8
+	},
+/turf/unsimulated/floor/engine/glow,
+/area/morrigan/station/factory)
 "mdM" = (
 /obj/machinery/computer3/generic/med_data,
 /obj/machinery/light/incandescent,
@@ -11952,6 +11986,12 @@
 	icon_state = "cairngorm16"
 	},
 /area/morrigan/station/hallway)
+"mUN" = (
+/obj/decoration/bustedmantapc/bustedmantapc2{
+	dir = 4
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan/station/factory)
 "mUX" = (
 /obj/decal/cleanable/dirt/jen,
 /mob/living/critter/small_animal/mouse/mad,
@@ -13309,6 +13349,7 @@
 	pixel_x = -9;
 	dir = 6
 	},
+/obj/machinery/power/smes,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "ofj" = (
@@ -14193,6 +14234,12 @@
 /obj/decal/poster/wallsign/research_sign,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/science)
+"pjx" = (
+/obj/decoration/ntcratesmall{
+	icon_state = "syndiecrate"
+	},
+/turf/unsimulated/floor/engine,
+/area/morrigan/station/factory)
 "pkj" = (
 /obj/item/cargotele{
 	pixel_x = -5;
@@ -15000,6 +15047,15 @@
 	},
 /turf/unsimulated/floor/twotone/blue,
 /area/morrigan/station/civilian/crewquarters)
+"qgu" = (
+/obj/decal/cleanable/rust/jen,
+/mob/living/critter/robotic/gunbot/syndicate/polaris{
+	desc = "Painted in red and black.";
+	name = "Syndicate Sentinel Unit";
+	ai_type = null
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan/station/factory)
 "qgY" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/donut/custom/frosted,
@@ -16046,10 +16102,6 @@
 /obj/machinery/computer3/generic/personal,
 /turf/unsimulated/floor/carpet/red/standard,
 /area/morrigan/station/security/main)
-"rns" = (
-/obj/critter/gunbot,
-/turf/unsimulated/floor/plating/random,
-/area/morrigan/station/factory)
 "roR" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
@@ -16220,7 +16272,7 @@
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/derelict)
 "ryF" = (
-/obj/decoration/bustedmantapc,
+/obj/decoration/syndiepc/syndiepc16,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/factory)
 "ryO" = (
@@ -16712,6 +16764,10 @@
 "seq" = (
 /turf/unsimulated/floor/carpet/red/standard,
 /area/morrigan/station/civilian/chapel)
+"sev" = (
+/obj/decoration/bustedmantapc/bustedmantapc3,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/factory)
 "seB" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/machinery/light/incandescent/netural,
@@ -18459,10 +18515,6 @@
 /obj/machinery/door/poddoor/blast/single,
 /turf/space,
 /area/morrigan/derelict)
-"ugp" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/factory)
 "ugE" = (
 /obj/drink_rack/mug,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -19078,7 +19130,15 @@
 /turf/unsimulated/floor/black/grime,
 /area/morrigan/station/factory)
 "uKb" = (
-/obj/machinery/computer3/generic/engine/manta_computer,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "This computer seems like it is on some kind attract screen.  They keyboard does nothing!";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "reactor_stats";
+	name = "broken computer";
+	dir = 4
+	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/station/factory)
 "uKl" = (
@@ -21586,14 +21646,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/hallway)
-"xzx" = (
-/obj/item/casing/rifle_loud{
-	dir = 4;
-	pixel_y = -15
-	},
-/obj/machinery/power/smes,
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/station/factory)
 "xzG" = (
 /obj/machinery/conveyor/NS,
 /obj/machinery/conveyor/NS{
@@ -27916,7 +27968,7 @@ gac
 gac
 gac
 oPZ
-udo
+pjx
 ase
 krF
 knG
@@ -27925,8 +27977,8 @@ mQE
 vqj
 axq
 gac
-xSH
-xSH
+sev
+mUN
 uKb
 gac
 gac
@@ -28028,9 +28080,9 @@ cFF
 pzY
 gac
 ryF
-rns
+iZz
 gtg
-exa
+qgu
 gac
 gac
 obU
@@ -28434,8 +28486,8 @@ pal
 iII
 msK
 nas
-nas
 qVh
+mdJ
 qxf
 nas
 ygO
@@ -28543,8 +28595,8 @@ ykr
 gkm
 bXL
 dhG
-xzx
-ugp
+asq
+cWg
 ykr
 gac
 gac
@@ -28747,7 +28799,7 @@ cWg
 wFq
 ykr
 kSt
-ykr
+fRs
 gac
 bxu
 bue
@@ -28846,7 +28898,7 @@ hLP
 yiq
 xSH
 aLt
-xSH
+sev
 act
 nas
 fby
@@ -30502,7 +30554,7 @@ gSh
 asq
 fby
 qyq
-ykr
+fRs
 gac
 gac
 vwJ
@@ -30694,7 +30746,7 @@ owV
 cNM
 cNM
 bMq
-qvq
+cRg
 dVG
 cTb
 aYb
@@ -34876,7 +34928,7 @@ gAf
 qnT
 aQz
 tfo
-tfo
+fER
 lhK
 wBg
 lxC
