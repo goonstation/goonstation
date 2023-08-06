@@ -221,7 +221,7 @@
 
 		if(spawningFlags & SPAWN_HALLU)
 			if (prob(1) && prob(16))
-				new /mob/living/critter/small_animal/hallucigenia/ai_controlled(src)
+				new /mob/living/critter/small_animal/hallucigenia(src)
 			else if (prob(1) && prob(18))
 				new /obj/overlay/tile_effect/cracks/spawner/pikaia(src)
 
@@ -241,7 +241,7 @@
 
 	levelupdate()
 		for(var/obj/O in src)
-			if(O.level == 1)
+			if(O.level == UNDERFLOOR)
 				O.hide(0)
 
 	tilenotify(turf/notifier)
@@ -336,7 +336,7 @@
 			. = ..()
 
 	proc/try_build_turf_list()
-		if (!L || L.len == 0)
+		if (!L || length(L) == 0)
 			for(var/turf/T in get_area_turfs(/area/trench_landing))
 				L+=T
 
@@ -390,7 +390,7 @@
 			under.icon_state = "pit"
 
 	try_build_turf_list()
-		if (!L || L.len == 0)
+		if (!L || length(L) == 0)
 			for(var/turf/space/fluid/T in range(8,locate(src.x,src.y,5)))
 				L += T
 				break

@@ -6553,9 +6553,7 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
 "oP" = (
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
 "oQ" = (
@@ -6681,9 +6679,7 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
 "pf" = (
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /obj/item/broken_rcd,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
@@ -6735,9 +6731,7 @@
 /obj/machinery/networked/test_apparatus/gas_sensor{
 	setup_tag = "BOTTOM"
 	},
-/obj/landmark{
-	name = "bubsbeejob"
-	},
+/obj/landmark/bubs_job,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)

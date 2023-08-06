@@ -461,7 +461,7 @@
 		var/decay_ratio_adjustment = src.material.getProperty("chemical") * 0.00023
 		src.decay_ratio = min(src.decay_ratio + decay_ratio_adjustment,1)
 		src.anode_viability = max(0,src.material.getProperty("electrical") * 17)
-		if(src.material.material_flags & MATERIAL_ENERGY && src.anode_viability)
+		if(src.material.getMaterialFlags() & MATERIAL_ENERGY && src.anode_viability)
 			src.anode_viability = round(src.anode_viability * 1.3)
 		var/cathode_density_factor = 180 - (abs(5-src.material.getProperty("density")) * 45)
 		var/cathode_hardness_factor = 100 - (abs(5-src.material.getProperty("hard")) * 12)

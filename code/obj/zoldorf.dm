@@ -234,11 +234,14 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		if(user in src.openwindows) //making sure the zoldorf cant keep the zoldorf menu open and buy things from within the booth
 			src.openwindows.Remove(user)
 
+		var/datum/mind/mind = user.mind
+		if (mind)
+			mind.wipe_antagonists()
+			user = mind.current
 		var/mob/zoldorf/Z = user.make_zoldorf(src) //the rest is building the mob, cleaning up overlays and variables, and passing control to the new zoldorf!
 		Z.set_loc(src)
 		Z.homebooth = src
 		Z.autofree = 1
-		remove_antag(Z,null,0,0)
 		src.souldorfs.Add(Z)
 		src.occupied = 1
 		the_zoldorf.Add(Z)

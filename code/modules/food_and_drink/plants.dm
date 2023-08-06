@@ -1,6 +1,6 @@
 
-ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
-/obj/item/reagent_containers/food/snacks/plant/
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
+/obj/item/reagent_containers/food/snacks/plant
 	name = "fruit or vegetable"
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
 	var/datum/plant/planttype = null
@@ -146,7 +146,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 				if (wielded_sword.midair_fruit_slice)
 					return TRUE
 
-/obj/item/reagent_containers/food/snacks/plant/bamboo/
+/obj/item/reagent_containers/food/snacks/plant/bamboo
 	name = "bamboo shoot"
 	crop_suffix = " shoot"
 	desc = "The tender and crunchy edible portion of a bamboo plant."
@@ -154,7 +154,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#B7B675"
 	bites_left = 1
 
-/obj/item/reagent_containers/food/snacks/plant/tomato/
+/obj/item/reagent_containers/food/snacks/plant/tomato
 	name = "tomato"
 	desc = "You say tomato, I toolbox you."
 	icon_state = "tomato"
@@ -167,6 +167,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/tomatoslice
 	slice_amount = 3
+	initial_reagents = 0 //SPITE
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
@@ -317,7 +318,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	force = 0
 	food_color = "#BBF33D"
 
-/obj/item/reagent_containers/food/snacks/plant/orange/
+/obj/item/reagent_containers/food/snacks/plant/orange
 	name = "orange"
 	desc = "Bitter."
 	icon_state = "orange"
@@ -390,7 +391,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 3
 	heal_amt = 2
 
-/obj/item/reagent_containers/food/snacks/plant/grape/
+/obj/item/reagent_containers/food/snacks/plant/grape
 	name = "grapes"
 	desc = "Not the green ones."
 	icon_state = "grapes"
@@ -411,7 +412,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#AAFFAA"
 	brew_result = "white_wine"
 
-/obj/item/reagent_containers/food/snacks/plant/grapefruit/
+/obj/item/reagent_containers/food/snacks/plant/grapefruit
 	name = "grapefruit"
 	desc = "A delicious grape fruit."
 	icon_state = "grapefruit"
@@ -451,7 +452,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
-/obj/item/reagent_containers/food/snacks/plant/melon/
+/obj/item/reagent_containers/food/snacks/plant/melon
 	name = "melon"
 	desc = "You should cut it into slices first!"
 	icon_state = "melon"
@@ -466,7 +467,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	slice_amount = 6
 
 
-/obj/item/reagent_containers/food/snacks/plant/melonslice/
+/obj/item/reagent_containers/food/snacks/plant/melonslice
 	name = "melon slice"
 	desc = "That's better!"
 	icon_state = "melon-slice"
@@ -488,7 +489,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	edible = 0
 	initial_volume = 60
 	sliceable = TRUE
-	slice_product = /obj/item/reagent_containers/food/snacks/plant/melonslice/george/
+	slice_product = /obj/item/reagent_containers/food/snacks/plant/melonslice/george
 	slice_amount = 6
 
 	make_reagents()
@@ -622,7 +623,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 					sleep(0.1 SECONDS)
 					qdel(src)
 
-/obj/item/reagent_containers/food/snacks/plant/chili/
+/obj/item/reagent_containers/food/snacks/plant/chili
 	name = "chili pepper"
 	crop_suffix = " pepper"
 	desc = "Caution: May or may not be red hot."
@@ -687,7 +688,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		M.bodytemperature += (DNA?.get_effective_value("potency") * 5)
 
 
-/obj/item/reagent_containers/food/snacks/plant/lettuce/
+/obj/item/reagent_containers/food/snacks/plant/lettuce
 	name = "lettuce leaf"
 	crop_suffix = " leaf"
 	desc = "The go-to staple green vegetable in every good space diet, unlike Spinach."
@@ -698,7 +699,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	heal_amt = 1
 	food_color = "#008000"
 
-/obj/item/reagent_containers/food/snacks/plant/cucumber/
+/obj/item/reagent_containers/food/snacks/plant/cucumber
 	name = "cucumber"
 	desc = "A widely-cultivated gourd, often served on sandwiches or pickled.  Not actually known for saving any kingdoms."
 	icon_state = "cucumber"
@@ -709,7 +710,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#008000"
 	food_effects = list("food_cold", "food_refreshed")
 
-/obj/item/reagent_containers/food/snacks/plant/strawberry/
+/obj/item/reagent_containers/food/snacks/plant/strawberry
 	name = "strawberry"
 	desc = "A freshly picked strawberry."
 	icon_state = "strawberry"
@@ -720,7 +721,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
-/obj/item/reagent_containers/food/snacks/plant/blueberry/
+/obj/item/reagent_containers/food/snacks/plant/blueberry
 	name = "blueberry"
 	desc = "A freshly picked blueberry."
 	icon_state = "blueberry"
@@ -730,7 +731,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#0000FF"
 	food_effects = list("food_cold", "food_refreshed")
 
-/obj/item/reagent_containers/food/snacks/plant/blackberry/
+/obj/item/reagent_containers/food/snacks/plant/blackberry
 	name = "blackberry"
 	desc = "A freshly picked blackberry."
 	icon_state = "blackberry"
@@ -740,7 +741,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#1d222f"
 	food_effects = list("food_cold", "food_refreshed")
 
-/obj/item/reagent_containers/food/snacks/plant/raspberry/
+/obj/item/reagent_containers/food/snacks/plant/raspberry
 	name = "raspberry"
 	desc = "A freshly picked raspberry."
 	icon_state = "raspberry"
@@ -760,7 +761,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#65d8e6"
 	food_effects = list("food_cold", "food_refreshed")
 
-/obj/item/reagent_containers/food/snacks/plant/pear/
+/obj/item/reagent_containers/food/snacks/plant/pear
 	name = "pear"
 	desc = "Whether or not you like the taste, its freshness is appearant."
 	icon_state = "pear"
@@ -787,7 +788,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		reagents.add_reagent("too much",25)
 
 
-/obj/item/reagent_containers/food/snacks/plant/peach/
+/obj/item/reagent_containers/food/snacks/plant/peach
 	name = "peach"
 	desc = "Feelin' peachy now, but after you eat it it's the pits."
 	icon_state = "peach"
@@ -803,7 +804,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			"Millions of peaches, peaches for me. Millions of peaches, peaches for free.",
 			"If I had my little way, I'd each peaches every day.", "Nature's candy in my hand, or a can, or a pie")
 
-/obj/item/reagent_containers/food/snacks/plant/apple/
+/obj/item/reagent_containers/food/snacks/plant/apple
 	name = "apple"
 	desc = "Implied by folklore to repel medical staff."
 	icon_state = "apple"
@@ -1065,7 +1066,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		..()
 		reagents.add_reagent("juice_lime",5)
 
-/obj/item/reagent_containers/food/snacks/plant/lemon/
+/obj/item/reagent_containers/food/snacks/plant/lemon
 	name = "lemon"
 	desc = "Suprisingly not a commentary on the station's workmanship."
 	icon_state = "lemon"
@@ -1095,7 +1096,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		..()
 		reagents.add_reagent("juice_lemon",5)
 
-/obj/item/reagent_containers/food/snacks/plant/slurryfruit/
+/obj/item/reagent_containers/food/snacks/plant/slurryfruit
 	name = "slurrypod"
 	crop_suffix = "pod"
 	desc = "An extremely poisonous, bitter fruit.  The slurrypod fruit is regarded as a delicacy in some outer colony worlds."
@@ -1144,7 +1145,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		else ..()
 	*/
 
-/obj/item/reagent_containers/food/snacks/plant/potato/
+/obj/item/reagent_containers/food/snacks/plant/potato
 	name = "potato"
 	desc = "It needs peeling first."
 	icon_state = "potato"
@@ -1255,7 +1256,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		..()
 		reagents.add_reagent("nicotine", 4.58) //EGGPLANT FACT: They contain about 1.1% the nicotine of a cigarette per 100g.
 
-/obj/item/reagent_containers/food/snacks/plant/coconut/
+/obj/item/reagent_containers/food/snacks/plant/coconut
 	name = "coconut"
 	desc = "You should break it open first!"
 	icon_state = "coconut"
@@ -1342,7 +1343,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			if(L.throwing)
 				src.RegisterSignal(L, COMSIG_MOVABLE_THROW_END, PROC_REF(someone_landed_on_us))
 
-/obj/item/reagent_containers/food/snacks/plant/coconutmeat/
+/obj/item/reagent_containers/food/snacks/plant/coconutmeat
 	name = "coconut meat"
 	desc = "Tropical meat!"
 	icon_state = "coconut-meat"
@@ -1445,7 +1446,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	validforhat = 1
 	food_color = "#e0a80c"
 
-/obj/item/reagent_containers/food/snacks/plant/lashberry/
+/obj/item/reagent_containers/food/snacks/plant/lashberry
 	name = "lashberry"
 	desc = "Not nearly as violent as the plant it came from."
 	crop_suffix = " berry"

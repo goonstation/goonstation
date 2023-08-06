@@ -369,6 +369,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_disco_lights,
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_terrainify_station,
+		/client/proc/cmd_caviewer,
 		/client/proc/cmd_custom_spawn_event,
 		/client/proc/cmd_special_shuttle,
 		/client/proc/toggle_radio_maptext,
@@ -612,7 +613,7 @@ var/list/special_pa_observing_verbs = list(
 	if (src.holder)
 		src.holder.owner = src
 		for(var/i = 1; i < 9; i++)
-			if (src.holder.level + 2 >= i && admin_verbs.len >= i && !isnull(admin_verbs[i]))
+			if (src.holder.level + 2 >= i && length(admin_verbs) >= i && !isnull(admin_verbs[i]))
 				src.verbs += admin_verbs[i]
 
 		// certain ranks get special treatment while observing
@@ -1139,17 +1140,18 @@ var/list/fun_images = list()
 
 	// You now get to chose (mostly) if you want to send the target to the arrival shuttle (Convair880).
 	var/send_to_arrival_shuttle = 0
-	if (iswraith(M))
-		if (M.mind && M.mind.special_role == ROLE_WRAITH)
-			remove_antag(M, src, 0, 1) // Can't complete specialist objectives as a human. Also, the proc takes care of the rest.
-			return
-		send_to_arrival_shuttle = 1
-	else if (isintangible(M))
-		if (M.mind && M.mind.special_role == ROLE_BLOB || M.mind.special_role == ROLE_FLOCKMIND || M.mind.special_role == ROLE_FLOCKTRACE)
-			remove_antag(M, src, FALSE, TRUE) // Ditto.
-			return
-		send_to_arrival_shuttle = 1
-	else if (isAI(M))
+	var/datum/mind/mind = M.mind
+	if (mind)
+		if (mind.remove_antagonist(ROLE_WRAITH))
+			send_to_arrival_shuttle = TRUE
+		if (mind.remove_antagonist(ROLE_BLOB))
+			send_to_arrival_shuttle = TRUE
+		if (mind.remove_antagonist(ROLE_FLOCKMIND))
+			send_to_arrival_shuttle = TRUE
+		if (mind.remove_antagonist(ROLE_FLOCKTRACE))
+			send_to_arrival_shuttle = TRUE
+	M = mind.current
+	if (isAI(M))
 		send_to_arrival_shuttle = 1
 	else
 		switch (input(src, "Send mob to arrival shuttle?", "Auto-teleport", "No") in list("Yes", "No", "Cancel"))
@@ -1268,7 +1270,7 @@ var/list/fun_images = list()
 		//Make every space tile bright pink (for further processing via local image manipulation)
 		for (var/turf/space/S in world)
 			LAGCHECK(LAG_LOW)
-			if (S.contents.len == 0 && S.overlays.len <= 1)//== 0) //Doesnt pinkify tiles with crap on top of them (transparant overlays fuck with the image processing later)
+			if (length(S.contents) == 0 && length(S.overlays) <= 1)//== 0) //Doesnt pinkify tiles with crap on top of them (transparant overlays fuck with the image processing later)
 				S.icon = 'icons/effects/ULIcons.dmi'
 				S.icon_state = "etc"
 				S.color = transparentColor

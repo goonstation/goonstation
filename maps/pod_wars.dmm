@@ -210,10 +210,8 @@
 /area/pod_wars/spacejunk/uvb67/central)
 "aX" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/access_spawn/syndie_shuttle,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor,
 /area/pod_wars/team2/mining)
 "aY" = (
 /obj/stool/chair{
@@ -366,9 +364,14 @@
 	},
 /area/pod_wars/spacejunk/miningoutpost)
 "bE" = (
-/obj/storage/crate,
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/black,
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/communications_dish,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/space,
 /area/pod_wars/spacejunk/reliant)
 "bF" = (
 /turf/simulated/floor/black,
@@ -378,15 +381,11 @@
 	icon_state = "4-8"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "bH" = (
 /obj/machinery/light/incandescent/netural,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "bL" = (
@@ -485,7 +484,7 @@
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bridge)
 "ce" = (
@@ -526,7 +525,7 @@
 /turf/simulated/floor/green,
 /area/pod_wars/spacejunk/fstation/mess)
 "cl" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/miningoutpost/crewquarters)
 "cn" = (
@@ -544,10 +543,8 @@
 /area/space)
 "cp" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/heads,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/obj/mapping_helper/access/heads,
+/turf/unsimulated/floor,
 /area/pod_wars/team1/porthall)
 "cq" = (
 /obj/grille/catwalk{
@@ -570,7 +567,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/uvb67/power)
 "cv" = (
@@ -598,9 +595,7 @@
 /obj/item/reagent_containers/glass/bottle/cleaner,
 /obj/item/reagent_containers/glass/bottle/cleaner,
 /obj/item/spraybottle/cleaner/tsunami,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "cx" = (
 /obj/machinery/optable,
@@ -637,7 +632,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "cG" = (
@@ -657,9 +652,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/mining)
 "cJ" = (
 /obj/cable{
@@ -708,9 +701,7 @@
 	dir = 8
 	},
 /obj/decal/tile_edge/stripe/corner/extra_big,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "cU" = (
 /obj/cable{
@@ -800,9 +791,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/mining)
 "do" = (
 /obj/cable{
@@ -861,9 +850,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "dD" = (
 /obj/machinery/neosmelter,
@@ -940,7 +927,7 @@
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "dO" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/bar)
 "dP" = (
@@ -1050,9 +1037,7 @@
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
 /obj/machinery/recharger,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/storage)
 "eq" = (
 /obj/table/auto,
@@ -1074,7 +1059,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "es" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/storage)
 "et" = (
@@ -1084,9 +1069,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "ev" = (
 /obj/disposalpipe/segment,
@@ -1103,7 +1086,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	hardened = 1
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
@@ -1270,15 +1253,13 @@
 /turf/simulated/floor/airless/plating,
 /area/space)
 "eR" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/mining)
 "eS" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/mining)
 "eT" = (
@@ -1296,9 +1277,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "eW" = (
@@ -1345,12 +1324,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "fe" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/uvb67/power)
 "fg" = (
@@ -1363,8 +1340,8 @@
 "fj" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	pixel_x = -10;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/unsimulated/floor/blue/side{
 	dir = 9
@@ -1377,9 +1354,7 @@
 	},
 /obj/machinery/power/apc/autoname_west,
 /obj/reagent_dispensers/fueltank,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/storage)
 "fn" = (
 /obj/table/auto,
@@ -1397,9 +1372,7 @@
 	pixel_x = -9;
 	pixel_y = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/powergen)
 "fo" = (
 /obj/cable{
@@ -1415,9 +1388,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "fq" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/yellow/side{
 	dir = 4
 	},
@@ -1508,7 +1479,7 @@
 /obj/machinery/door/airlock/pyro/glass/mining{
 	dir = 4
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/yellow,
 /area/pod_wars/team1/mining)
 "fI" = (
@@ -1523,7 +1494,7 @@
 /turf/unsimulated/floor/airless,
 /area/pod_wars/team1/porthall)
 "fK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/manufacturing)
 "fL" = (
@@ -1545,7 +1516,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bar)
 "fP" = (
@@ -1584,9 +1555,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "fV" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -1658,17 +1627,13 @@
 "gg" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/reagent_dispensers/fueltank,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "gh" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "gi" = (
 /obj/lattice,
@@ -1721,9 +1686,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/mining)
 "gw" = (
 /obj/storage/secure/closet/fridge,
@@ -1753,7 +1716,7 @@
 /area/pod_wars/team1/manufacturing)
 "gy" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/manufacturing)
 "gz" = (
@@ -1837,7 +1800,7 @@
 /turf/unsimulated/floor/yellow/side,
 /area/pod_wars/team1/mining)
 "gP" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/porthall)
 "gQ" = (
@@ -1848,9 +1811,7 @@
 /obj/mopbucket,
 /obj/machinery/light/incandescent/netural,
 /obj/item/reagent_containers/glass/bucket,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/porthall)
 "gU" = (
 /turf/simulated/floor/blue/side{
@@ -1914,17 +1875,32 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering,
-/obj/access_spawn/syndie_shuttle,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor,
 /area/pod_wars/team2/storage)
+"hg" = (
+/obj/storage/closet,
+/obj/item/mop,
+/obj/item/mop,
+/obj/item/mop,
+/obj/item/mop,
+/obj/item/sponge,
+/obj/item/sponge,
+/obj/item/sponge,
+/obj/item/sponge,
+/obj/item/spraybottle/cleaner,
+/obj/item/spraybottle/cleaner,
+/obj/item/reagent_containers/glass/bottle/cleaner,
+/obj/item/reagent_containers/glass/bottle/cleaner,
+/obj/item/spraybottle/cleaner/tsunami,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
 "hh" = (
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4;
 	hardened = 1
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen{
 	dir = 8
 	},
@@ -2051,9 +2027,7 @@
 	},
 /area/pod_wars/team2/bridge)
 "hE" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/yellow/corner{
 	dir = 8
 	},
@@ -2131,15 +2105,11 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/porthall)
 "hR" = (
 /obj/machinery/light/incandescent/netural,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/bridge)
 "hS" = (
 /obj/machinery/light/incandescent{
@@ -2191,7 +2161,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	hardened = 1
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
@@ -2226,10 +2196,8 @@
 /area/pod_wars/spacejunk/reliant)
 "ij" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/syndie_shuttle,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor,
 /area/pod_wars/team2/bar)
 "ik" = (
 /obj/disposalpipe/segment{
@@ -2277,15 +2245,13 @@
 "ir" = (
 /obj/machinery/light/incandescent/netural,
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/storage)
 "is" = (
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "it" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/vending/air_vendor/pod_wars,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/uvb67/power)
 "iv" = (
@@ -2300,9 +2266,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "ix" = (
 /obj/machinery/power/apc/autoname_north,
@@ -2330,6 +2294,10 @@
 /obj/item/organ/eye,
 /turf/simulated/wall/auto/asteroid/pod_wars,
 /area/pod_wars/asteroid/minor/nospawn)
+"iC" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/pod_wars/spacejunk/reliant)
 "iD" = (
 /obj/stool/chair/office/red{
 	dir = 1
@@ -2343,22 +2311,16 @@
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
 "iH" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "iI" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "iK" = (
 /turf/simulated/floor/green/side{
@@ -2372,6 +2334,9 @@
 /obj/machinery/light/incandescent/netural,
 /obj/storage/crate,
 /obj/random_item_spawner/med_kit/maybe_few,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "iN" = (
@@ -2381,8 +2346,13 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "iP" = (
-/obj/shrub/captainshrub,
-/turf/simulated/floor/black,
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/space,
 /area/pod_wars/spacejunk/reliant)
 "iR" = (
 /obj/cable{
@@ -2456,9 +2426,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/storage)
 "jq" = (
 /turf/unsimulated/floor/blue/side{
@@ -2504,7 +2472,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team1/hangar)
 "jy" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/miningoutpost)
 "jz" = (
@@ -2614,9 +2582,7 @@
 "jT" = (
 /obj/machinery/light/incandescent/netural,
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/powergen)
 "jU" = (
 /obj/machinery/r_door_control/podbay/t1d2/new_walls/west,
@@ -2633,9 +2599,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "jY" = (
 /obj/machinery/vehicle/pod_wars_dingy/nanotrasen/mining{
@@ -2654,9 +2618,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "kb" = (
 /obj/rack,
@@ -2683,7 +2645,7 @@
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
 "ke" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/space)
 "kf" = (
@@ -2695,9 +2657,7 @@
 	icon_state = "4-8"
 	},
 /obj/stool/bar,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "kj" = (
@@ -2706,6 +2666,12 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/pod_wars/spacejunk/fstation/computercore)
+"kk" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
 "kl" = (
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/red/side{
@@ -2713,7 +2679,7 @@
 	},
 /area/pod_wars/team2/bridge)
 "km" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/hangar)
 "kn" = (
@@ -2727,6 +2693,13 @@
 	dir = 6
 	},
 /area/pod_wars/team1/mining)
+"kq" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/pod_wars/spacejunk/reliant)
 "kr" = (
 /obj/storage/crate,
 /obj/random_item_spawner/tools/maybe_few,
@@ -2833,14 +2806,12 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/uvb67/crew)
 "kJ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation)
 "kM" = (
 /obj/reagent_dispensers/fueltank,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/powergen)
 "kN" = (
 /obj/machinery/light/incandescent/netural,
@@ -2878,22 +2849,22 @@
 /turf/simulated/floor/purple,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "kV" = (
-/obj/control_point_computer{
-	dir = 4;
-	name = "Reliant Control Console"
+/obj/item/device/radio/intercom{
+	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show.";
+	device_color = "#E52780";
+	icon = 'icons/obj/radiostation.dmi';
+	icon_state = "mixtable-1";
+	name = "broadcast radio"
 	},
+/obj/table/wood/auto,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "kW" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "kX" = (
 /obj/submachine/chem_extractor{
@@ -2904,9 +2875,7 @@
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "kZ" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "la" = (
 /obj/machinery/nanofab/refining,
@@ -2983,9 +2952,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/secdock)
 "ln" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/powergen)
 "lo" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -3018,8 +2985,11 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/nancy)
 "ly" = (
-/obj/submachine/tape_deck,
-/obj/machinery/light/incandescent/netural,
+/obj/submachine/mixing_desk,
+/obj/table/wood/auto,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "lA" = (
@@ -3044,9 +3014,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/primary)
 "lD" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team2/hangar)
 "lF" = (
@@ -3092,8 +3060,8 @@
 	},
 /area/pod_wars/team1/bridge)
 "lM" = (
-/obj/rack,
-/obj/random_item_spawner/hat/one,
+/obj/submachine/record_player,
+/obj/table/wood/auto,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "lN" = (
@@ -3226,6 +3194,15 @@
 "mp" = (
 /turf/simulated/floor/circuit/off,
 /area/pod_wars/spacejunk/memorial_stats)
+"mq" = (
+/obj/submachine/chef_sink{
+	density = 0;
+	dir = 8;
+	name = "utility sink";
+	pixel_y = 3
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
 "ms" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
@@ -3316,9 +3293,7 @@
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "mF" = (
 /obj/machinery/light/incandescent/netural,
@@ -3341,7 +3316,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/manufacturing)
 "mN" = (
@@ -3349,16 +3324,12 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/mining)
 "mO" = (
 /obj/machinery/light/incandescent/netural,
 /obj/storage/closet/welding_supply,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "mP" = (
 /obj/machinery/power/tracker/diner,
@@ -3405,9 +3376,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "mW" = (
 /obj/storage/crate,
@@ -3463,9 +3432,7 @@
 /area/pod_wars/asteroid/major/maj_7)
 "ne" = (
 /obj/machinery/light/incandescent/netural,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/red/side{
 	dir = 1
 	},
@@ -3569,7 +3536,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/primary)
 "nC" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/mining)
 "nE" = (
@@ -3638,7 +3605,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass/mining,
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/yellow,
 /area/pod_wars/team2/mining)
 "nP" = (
@@ -3651,9 +3618,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/mining)
 "nR" = (
 /obj/storage/crate,
@@ -3689,9 +3654,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 6
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "nY" = (
 /obj/cable{
@@ -3746,7 +3709,8 @@
 /turf/simulated/floor/yellow/side,
 /area/pod_wars/spacejunk/fstation)
 "og" = (
-/obj/table/reinforced/auto,
+/obj/submachine/tape_deck,
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "oi" = (
@@ -3785,10 +3749,8 @@
 /area/pod_wars/spacejunk/fstation/secdock)
 "or" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/access_spawn/syndie_shuttle,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "os" = (
 /obj/indestructible/shuttle_corner{
@@ -3809,10 +3771,8 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "oy" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -3866,9 +3826,7 @@
 /obj/stool/chair/comfy/blue{
 	dir = 4
 	},
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/blue/side{
 	dir = 4
 	},
@@ -3900,7 +3858,7 @@
 /area/pod_wars/spacejunk/fstation/secdock)
 "oH" = (
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/cloning)
 "oI" = (
@@ -3932,19 +3890,15 @@
 	},
 /area/pod_wars/spacejunk/fstation/mess)
 "oN" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "oS" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/access_spawn/heads,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/obj/mapping_helper/access/heads,
+/turf/unsimulated/floor,
 /area/pod_wars/team1/bridge)
 "oU" = (
 /obj/potted_plant/potted_plant5,
@@ -4014,9 +3968,7 @@
 /obj/stool/chair/comfy/blue{
 	dir = 8
 	},
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/blue/side{
 	dir = 8
 	},
@@ -4060,14 +4012,16 @@
 	},
 /area/pod_wars/spacejunk/restaurant/solars)
 "po" = (
-/obj/table/reinforced/auto,
+/obj/stool/chair/office/red{
+	dir = 1
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "pp" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/mining)
 "pr" = (
@@ -4087,9 +4041,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "pv" = (
 /turf/unsimulated/floor/blue/side{
@@ -4098,9 +4050,7 @@
 /area/pod_wars/team1/bridge)
 "px" = (
 /obj/machinery/drainage,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/porthall)
 "pz" = (
 /turf/unsimulated/floor/yellow/corner{
@@ -4114,7 +4064,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "pB" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4184,13 +4134,7 @@
 	},
 /area/pod_wars/spacejunk/nancy/landingpad)
 "pI" = (
-/obj/machinery/computer/power_monitor/console_upper{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
+/obj/mic_stand,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "pL" = (
@@ -4301,9 +4245,7 @@
 /obj/item/reagent_containers/glass/bottle/cleaner,
 /obj/item/reagent_containers/glass/bottle/cleaner,
 /obj/item/spraybottle/cleaner/tsunami,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/porthall)
 "pZ" = (
 /obj/cable{
@@ -4329,7 +4271,7 @@
 /area/pod_wars/spacejunk/restaurant/solars)
 "qa" = (
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/cloning)
 "qb" = (
@@ -4367,7 +4309,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/power)
 "qj" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/powergen)
 "qk" = (
@@ -4405,10 +4347,8 @@
 /area/pod_wars/spacejunk/fstation)
 "qs" = (
 /obj/machinery/door/airlock/pyro/glass/engineering,
-/obj/access_spawn/heads,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/obj/mapping_helper/access/heads,
+/turf/unsimulated/floor,
 /area/pod_wars/team1/powergen)
 "qt" = (
 /obj/cable{
@@ -4453,9 +4393,7 @@
 /obj/machinery/light/incandescent/netural,
 /obj/machinery/power/apc/autoname_east,
 /obj/storage/closet/welding_supply,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "qD" = (
 /obj/storage/closet,
@@ -4472,9 +4410,7 @@
 /obj/item/reagent_containers/glass/bottle/cleaner,
 /obj/item/reagent_containers/glass/bottle/cleaner,
 /obj/item/spraybottle/cleaner/tsunami,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/spacejunk/uvb67/crew)
 "qE" = (
 /obj/grille/catwalk{
@@ -4533,15 +4469,9 @@
 /turf/simulated/wall/auto/asteroid/pod_wars,
 /area/pod_wars/asteroid/major/maj_14)
 "qK" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It seems to be locked";
-	dir = 4;
-	icon = 'icons/obj/computerpanel.dmi';
-	icon_state = "engine1";
-	name = "Engineering Console"
-	},
+/obj/table/wood/auto,
+/obj/machinery/light/incandescent/netural,
+/obj/item/storage/box/record/radio/host,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "qM" = (
@@ -4659,8 +4589,24 @@
 /turf/unsimulated/floor/airless,
 /area/pod_wars/team1/starboardhall)
 "rl" = (
-/obj/submachine/record_player,
-/obj/table/wood/auto,
+/obj/storage/crate/bin,
+/obj/item/radio_tape/advertisement/grones{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/radio_tape/audio_book/heisenbee,
+/obj/item/radio_tape/advertisement/danitos_burritos{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/item/radio_tape/advertisement/quik_noodles{
+	pixel_x = 2;
+	pixel_y = -6
+	},
+/obj/item/radio_tape/advertisement/captain_psa{
+	pixel_x = -8;
+	pixel_y = 6
+	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "rm" = (
@@ -4678,15 +4624,11 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 6
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "rp" = (
 /obj/stool/chair/comfy/blue,
-/obj/landmark/start{
-	name = "NanoTrasen Commander"
-	},
+/obj/landmark/start/job/podwars/NT/commander,
 /turf/unsimulated/floor/blue/side,
 /area/pod_wars/team1/bridge)
 "rr" = (
@@ -4704,9 +4646,7 @@
 /turf/space,
 /area/pod_wars/spacejunk/dorgun)
 "rt" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/power)
 "rw" = (
 /obj/machinery/vending/medical_public,
@@ -4741,7 +4681,7 @@
 	},
 /area/pod_wars/team2/mining)
 "rD" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -4766,7 +4706,7 @@
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/powergen)
 "rK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/bridge)
 "rL" = (
@@ -4780,9 +4720,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "rN" = (
 /obj/table/auto,
@@ -4813,15 +4751,15 @@
 /turf/space,
 /area/pod_wars/spacejunk/dorgun)
 "rV" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/powergen)
 "rW" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/vending/air_vendor/pod_wars,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "rX" = (
@@ -4859,9 +4797,7 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/corner/extra_big,
 /obj/reagent_dispensers/fueltank,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "se" = (
 /obj/cable{
@@ -4908,9 +4844,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "sp" = (
 /obj/decal/fakeobjects{
@@ -5062,9 +4996,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "sW" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/t2condoor_horizontal,
@@ -5100,9 +5032,8 @@
 	},
 /area/pod_wars/spacejunk/fstation/secdock)
 "td" = (
-/obj/stool/chair/comfy/shuttle/pilot{
-	dir = 8
-	},
+/obj/table/wood/auto,
+/obj/item/storage/box/record/radio/host,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "te" = (
@@ -5110,6 +5041,13 @@
 	dir = 4
 	},
 /area/pod_wars/team2/bridge)
+"tf" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/computer/pod_wars_minimap_controller/neutral,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
 "th" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -5221,9 +5159,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/landingpads)
 "tE" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team1/hangar)
 "tF" = (
@@ -5274,9 +5210,7 @@
 	dir = 8;
 	pixel_x = 10
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/porthall)
 "tR" = (
 /obj/cable{
@@ -5316,12 +5250,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/uvb67/power)
 "tY" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/glass/command{
-	req_access = null
-	},
+/obj/stool/chair/comfy/yellow,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "ua" = (
@@ -5417,7 +5346,7 @@
 /turf/space,
 /area/pod_wars/team2/mining)
 "up" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/dorgun)
 "ur" = (
@@ -5511,9 +5440,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "uB" = (
 /obj/cable{
@@ -5627,9 +5554,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "va" = (
 /obj/cable{
@@ -5638,7 +5563,7 @@
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -5748,7 +5673,7 @@
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -5788,17 +5713,15 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation)
 "vD" = (
-/obj/table/wood/auto,
-/obj/item/storage/box/record/radio/host,
+/obj/stool/chair/comfy/yellow,
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "vE" = (
 /obj/stool/chair/comfy/red{
 	dir = 1
 	},
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/red/side{
 	dir = 1
 	},
@@ -5816,7 +5739,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass/command,
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
 "vH" = (
@@ -5824,9 +5747,7 @@
 	icon_state = "hazard_delivery"
 	},
 /obj/machinery/manufacturer/mining/pod_wars/nanotrasen,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/mining)
 "vJ" = (
 /obj/grille/catwalk{
@@ -5857,6 +5778,11 @@
 	dir = 1
 	},
 /area/pod_wars/team2/central_hallway)
+"vM" = (
+/obj/storage/crate,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
 "vN" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -5940,7 +5866,7 @@
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/uvb67/central)
 "wb" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/brightwell)
 "wc" = (
@@ -5973,9 +5899,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/bridge)
 "wi" = (
 /obj/machinery/light/incandescent/netural,
@@ -5988,12 +5912,8 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team1/bar)
 "wk" = (
-/obj/stool/chair/comfy/shuttle/pilot{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
+/obj/table/reinforced/auto,
+/obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "wl" = (
@@ -6024,7 +5944,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/drainage,
+/obj/machinery/door/airlock/pyro/glass/command{
+	req_access = null
+	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "wp" = (
@@ -6092,9 +6014,7 @@
 /area/pod_wars/spacejunk/fstation)
 "wE" = (
 /obj/stool/chair/comfy/red,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/red/side,
 /area/pod_wars/team2/bridge)
 "wF" = (
@@ -6102,9 +6022,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "wG" = (
 /obj/grille/catwalk{
@@ -6153,20 +6071,16 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/mining)
 "wP" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/corner/extra_big,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "wQ" = (
 /obj/machinery/portable_reclaimer,
@@ -6186,9 +6100,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "wU" = (
 /obj/machinery/light/incandescent/netural,
@@ -6209,9 +6121,12 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/uvb67/power)
 "wZ" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/red,
-/obj/machinery/light/incandescent/netural,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "xa" = (
@@ -6386,10 +6301,9 @@
 	},
 /area/pod_wars/spacejunk/fstation/mess)
 "xz" = (
-/obj/submachine/mixing_desk,
-/obj/table/wood/auto,
+/obj/machinery/light/incandescent/netural,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
@@ -6436,9 +6350,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "xG" = (
 /obj/machinery/power/terminal,
@@ -6536,7 +6448,7 @@
 /turf/simulated/floor/purple/side,
 /area/pod_wars/spacejunk/fstation)
 "yb" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/bar)
 "yf" = (
@@ -6563,9 +6475,7 @@
 /obj/item/device/gps{
 	pixel_x = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "yj" = (
 /obj/decal/tile_edge{
@@ -6585,13 +6495,11 @@
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/medbay)
 "yn" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/storage)
 "yo" = (
 /obj/stool/chair/couch{
@@ -6689,7 +6597,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	hardened = 1
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
@@ -6723,15 +6631,26 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "yP" = (
-/obj/stool/chair/comfy/shuttle/red{
-	dir = 8
+/obj/minimap/map_computer/pod_wars/both_teams{
+	pixel_x = 16;
+	pixel_y = 16
 	},
 /turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"yQ" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/warp_beacon/pod_wars{
+	control_point = "RELIANT";
+	name = "NSV Reliant"
+	},
+/obj/cable,
+/turf/space,
 /area/pod_wars/spacejunk/reliant)
 "yR" = (
 /obj/cable{
@@ -6860,7 +6779,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "zt" = (
@@ -6868,9 +6787,7 @@
 	dir = 8;
 	pixel_x = 10
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/bar)
 "zu" = (
 /obj/machinery/conveyor/NS{
@@ -6885,19 +6802,15 @@
 /area/pod_wars/spacejunk/fstation)
 "zw" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/access_spawn/syndie_shuttle,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor,
 /area/pod_wars/team2/power)
 "zx" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "zz" = (
 /obj/machinery/light/incandescent/netural,
@@ -7014,7 +6927,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "zX" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/bar)
 "zZ" = (
@@ -7050,15 +6963,13 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "Ag" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/reliant)
 "Ah" = (
@@ -7077,9 +6988,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "Ao" = (
 /obj/lattice{
@@ -7121,7 +7030,7 @@
 /area/pod_wars/team2/cloning)
 "Av" = (
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/vending/air_vendor/pod_wars,
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
@@ -7298,15 +7207,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/porthall)
 "Bg" = (
 /obj/machinery/light/small/floor/netural,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/mining)
 "Bh" = (
 /obj/machinery/r_door_control/podbay/t1d4/new_walls/east,
@@ -7372,20 +7277,10 @@
 	},
 /area/pod_wars/spacejunk/miningoutpost)
 "Bq" = (
-/obj/storage/closet,
-/obj/item/mop,
-/obj/item/mop,
-/obj/item/mop,
-/obj/item/mop,
-/obj/item/sponge,
-/obj/item/sponge,
-/obj/item/sponge,
-/obj/item/sponge,
-/obj/item/spraybottle/cleaner,
-/obj/item/spraybottle/cleaner,
-/obj/item/reagent_containers/glass/bottle/cleaner,
-/obj/item/reagent_containers/glass/bottle/cleaner,
-/obj/item/spraybottle/cleaner/tsunami,
+/obj/stool/chair/comfy/yellow{
+	dir = 1
+	},
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "Br" = (
@@ -7453,11 +7348,10 @@
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "BG" = (
-/obj/stool/chair/office/red{
-	dir = 1
-	},
+/obj/table/reinforced/auto,
+/obj/random_item_spawner/junk/one_or_zero,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
@@ -7467,7 +7361,7 @@
 /area/pod_wars/spacejunk/miningoutpost)
 "BI" = (
 /obj/machinery/door/airlock/pyro/glass/mining,
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/yellow,
 /area/pod_wars/team2/mining)
 "BJ" = (
@@ -7490,7 +7384,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/mess)
 "BL" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/bar)
 "BM" = (
@@ -7502,16 +7396,14 @@
 	dir = 1
 	},
 /obj/reagent_dispensers/fueltank,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "BO" = (
 /obj/landmark/start/latejoin,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	pixel_x = 10;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/unsimulated/floor/blue/side{
 	dir = 5
@@ -7602,7 +7494,7 @@
 	},
 /area/pod_wars/team2/central_hallway)
 "Ch" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "Ci" = (
@@ -7670,9 +7562,7 @@
 	icon_state = "1-2"
 	},
 /obj/stool/bar,
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "Cx" = (
@@ -7724,7 +7614,7 @@
 /turf/space,
 /area/space)
 "CM" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/primary)
 "CN" = (
@@ -7754,9 +7644,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "CT" = (
 /obj/machinery/vending/snack,
@@ -7769,7 +7657,7 @@
 	dir = 4;
 	hardened = 1
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen{
 	dir = 4
 	},
@@ -7779,9 +7667,7 @@
 /obj/stool/chair/comfy/red{
 	dir = 4
 	},
-/obj/landmark/start{
-	name = "Syndicate Commander"
-	},
+/obj/landmark/start/job/podwars/syndie/commander,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bridge)
 "CZ" = (
@@ -7801,9 +7687,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/simulated/floor/engine,
 /area/pod_wars/team1/powergen)
 "De" = (
@@ -7823,9 +7707,7 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent/netural,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/mining)
 "Dh" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -7837,9 +7719,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "Dj" = (
 /obj/machinery/r_door_control/podbay/t2d1/new_walls/west,
@@ -7882,9 +7762,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/simulated/floor/engine,
 /area/pod_wars/team1/powergen)
 "Dx" = (
@@ -7912,15 +7790,11 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team2/hangar)
 "DB" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "DD" = (
 /turf/simulated/floor/circuit/off,
@@ -7995,9 +7869,7 @@
 /area/pod_wars/team2/bridge)
 "DP" = (
 /obj/stool/bar,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "DQ" = (
@@ -8039,10 +7911,8 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor,
 /area/pod_wars/team2/power)
 "DZ" = (
 /obj/table/auto,
@@ -8081,13 +7951,13 @@
 	},
 /area/pod_wars/team1/manufacturing)
 "Ef" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/starboardhall)
 "Eg" = (
 /obj/indestructible/shuttle_corner{
-	icon_state = "wall_trans";
-	dir = 1
+	dir = 1;
+	icon_state = "wall_trans"
 	},
 /turf/space,
 /area/pod_wars/spacejunk/brightwell)
@@ -8113,9 +7983,7 @@
 /obj/item/device/gps{
 	pixel_x = -4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "Ej" = (
 /obj/machinery/chem_dispenser/alcohol,
@@ -8125,9 +7993,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "El" = (
 /obj/grille/catwalk{
@@ -8245,11 +8111,6 @@
 "EL" = (
 /turf/space,
 /area/pod_wars/asteroid/major/maj_14)
-"EN" = (
-/obj/mopbucket,
-/obj/item/reagent_containers/glass/bucket,
-/turf/simulated/floor/black,
-/area/pod_wars/spacejunk/reliant)
 "EO" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -8266,7 +8127,6 @@
 /area/space)
 "EQ" = (
 /obj/machinery/r_door_control/podbay/t2d4/new_walls/north{
-	pixel_w = 0;
 	pixel_x = 10
 	},
 /obj/machinery/r_door_control/podbay/t2d3/new_walls/north{
@@ -8412,15 +8272,11 @@
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
 "Fq" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "Fr" = (
 /obj/cable{
@@ -8503,7 +8359,7 @@
 	},
 /area/pod_wars/team1/bridge)
 "FJ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/mess)
 "FK" = (
@@ -8512,13 +8368,14 @@
 /turf/simulated/floor/yellow,
 /area/pod_wars/spacejunk/miningoutpost)
 "FL" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
+/obj/machinery/computer/power_monitor/console_upper{
+	dir = 4
 	},
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-4"
 	},
-/turf/space,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "FM" = (
 /obj/machinery/light/incandescent/netural,
@@ -8556,9 +8413,7 @@
 	icon_state = "hazard_delivery"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "FV" = (
 /turf/unsimulated/floor/yellow/side{
@@ -8585,11 +8440,9 @@
 /area/pod_wars/spacejunk/fstation/primary)
 "FZ" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/forcefield/energyshield/perma,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/mining)
 "Gb" = (
 /obj/grille/catwalk{
@@ -8734,7 +8587,7 @@
 /turf/space,
 /area/pod_wars/spacejunk/greatwreck)
 "GI" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/reliant)
 "GJ" = (
@@ -8800,7 +8653,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/command)
 "GW" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/maintdock)
 "GX" = (
@@ -8847,9 +8700,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/mining)
 "Hi" = (
 /obj/grille/catwalk{
@@ -8901,7 +8752,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/fstation/observatory)
 "Hs" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/observatory)
 "Hu" = (
@@ -8995,7 +8846,7 @@
 	},
 /area/pod_wars/spacejunk/restaurant)
 "HI" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/mining)
 "HJ" = (
@@ -9074,9 +8925,7 @@
 /turf/simulated/floor/engine,
 /area/pod_wars/team2/power)
 "HT" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/bridge)
 "HU" = (
 /obj/stool/bar,
@@ -9084,7 +8933,7 @@
 /area/pod_wars/spacejunk/fstation/bar)
 "HW" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/hangar)
 "HX" = (
@@ -9097,9 +8946,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/fstation/computercore)
 "HY" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "HZ" = (
@@ -9303,9 +9150,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 6
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "IT" = (
 /obj/stool/chair/comfy/blue{
@@ -9319,9 +9164,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "IV" = (
 /obj/machinery/disposal/small/east,
@@ -9478,9 +9321,7 @@
 	icon_state = "1-8"
 	},
 /obj/stool/bar,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "JA" = (
@@ -9521,14 +9362,13 @@
 	},
 /area/pod_wars/spacejunk/fstation/power)
 "JF" = (
-/obj/lattice{
-	icon_state = "lattice-dir-b"
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 8
 	},
-/obj/machinery/communications_dish,
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "4-8"
 	},
-/turf/space,
+/turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "JG" = (
 /obj/machinery/door/airlock/pyro/alt,
@@ -9562,7 +9402,7 @@
 /area/pod_wars/spacejunk/fstation)
 "JL" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "JM" = (
@@ -9634,7 +9474,7 @@
 /area/space)
 "JZ" = (
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/medbay)
 "Ka" = (
@@ -9649,10 +9489,14 @@
 	pixel_x = -9;
 	pixel_y = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/storage)
+"Kb" = (
+/obj/stool/chair/comfy/yellow{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
 "Kd" = (
 /obj/machinery/light/incandescent/netural,
 /obj/disposalpipe/segment{
@@ -9663,20 +9507,17 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "Kg" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/bridge)
 "Ki" = (
-/obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir-b"
+/obj/cable{
+	icon_state = "1-2"
 	},
-/obj/warp_beacon/pod_wars{
-	control_point = "RELIANT";
-	name = "NSV Reliant"
+/obj/cable{
+	icon_state = "2-8"
 	},
-/obj/cable,
-/turf/space,
+/turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "Kk" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -9689,7 +9530,7 @@
 /area/pod_wars/team1/hangar)
 "Ko" = (
 /obj/machinery/door/airlock/pyro/glass/command,
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
 "Kq" = (
@@ -9718,9 +9559,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/simulated/floor/engine,
 /area/pod_wars/team2/power)
 "Ku" = (
@@ -9779,11 +9618,10 @@
 /turf/unsimulated/floor/wood/seven,
 /area/pod_wars/spacejunk/fstation/bar)
 "KD" = (
-/obj/submachine/chef_sink{
-	density = 0;
-	dir = 8;
-	name = "utility sink";
-	pixel_y = 3
+/obj/machinery/computer/announcement/console_lower{
+	dir = 4;
+	name = "NSV Reliant Announcement Computer";
+	req_access = null
 	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
@@ -9907,9 +9745,7 @@
 	icon_state = "4-8"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "Ld" = (
 /obj/cable{
@@ -9948,8 +9784,8 @@
 /area/pod_wars/team2/bar)
 "Ll" = (
 /obj/indestructible/shuttle_corner{
-	icon_state = "wall_trans";
-	dir = 8
+	dir = 8;
+	icon_state = "wall_trans"
 	},
 /turf/space,
 /area/pod_wars/spacejunk/brightwell)
@@ -9965,7 +9801,7 @@
 	},
 /area/pod_wars/spacejunk/uvb67/crew)
 "Lo" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -9978,7 +9814,7 @@
 /turf/simulated/floor/red/side,
 /area/pod_wars/spacejunk/uvb67/crew)
 "Lt" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/computercore)
 "Lu" = (
@@ -10041,12 +9877,8 @@
 /turf/space,
 /area/pod_wars/spacejunk/dorgun)
 "LK" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/obj/landmark/start/job/podwars/syndie,
+/turf/unsimulated/floor,
 /area/pod_wars/team2/mining)
 "LL" = (
 /obj/machinery/power/smes/magical,
@@ -10138,9 +9970,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team1/manufacturing)
 "Mc" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/yellow/corner{
 	dir = 1
 	},
@@ -10196,7 +10026,7 @@
 	},
 /area/pod_wars/spacejunk/restaurant)
 "Mr" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/bridge)
 "Ms" = (
@@ -10231,25 +10061,21 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "MA" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/vending/air_vendor/pod_wars,
 /turf/unsimulated/floor/yellow/side{
 	dir = 4
 	},
 /area/pod_wars/team1/mining)
 "MB" = (
 /obj/machinery/drainage,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/bar)
 "MD" = (
 /turf/simulated/wall/auto/reinforced,
@@ -10276,16 +10102,8 @@
 	},
 /area/pod_wars/spacejunk/snackstand)
 "MK" = (
-/obj/table/reinforced/auto,
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/item/kitchen/food_box/lollipop,
-/obj/cable{
-	icon_state = "1-2"
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
@@ -10303,7 +10121,7 @@
 /turf/simulated/floor/yellow/side,
 /area/pod_wars/spacejunk/miningoutpost)
 "MM" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/restaurant)
 "MN" = (
@@ -10355,9 +10173,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "MW" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "MX" = (
 /obj/stool/chair{
@@ -10368,9 +10184,7 @@
 /area/pod_wars/spacejunk/fstation/observatory)
 "Na" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "Nd" = (
 /obj/stool/bench/red,
@@ -10476,13 +10290,9 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "NF" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "NG" = (
 /obj/machinery/deep_fryer,
@@ -10518,9 +10328,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/secdock)
 "NP" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/yellow/corner{
 	dir = 8
 	},
@@ -10673,9 +10481,14 @@
 /turf/simulated/floor/blueblack,
 /area/pod_wars/spacejunk/memorial_stats)
 "On" = (
-/obj/table/wood/auto,
-/obj/machinery/light/incandescent/netural,
-/obj/item/storage/box/record/radio/host,
+/obj/table/reinforced/auto,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/shrub/dead{
+	pixel_y = 12
+	},
+/obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "Oo" = (
@@ -10721,9 +10534,7 @@
 /obj/item/device/gps{
 	pixel_x = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "Ou" = (
 /obj/machinery/computer/solar_control/west{
@@ -10750,18 +10561,14 @@
 /obj/table/auto,
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/storage)
 "Oz" = (
 /obj/table/auto,
 /obj/item/sheet/steel/fullstack,
 /obj/item/sheet/steel/fullstack,
 /obj/item/storage/box/cablesbox,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/storage)
 "OB" = (
 /turf/unsimulated/floor/red/side{
@@ -10787,9 +10594,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team1/hangar)
 "OH" = (
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/mess)
 "OJ" = (
@@ -10811,9 +10616,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "OP" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -10967,6 +10770,11 @@
 "Pz" = (
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
+"PA" = (
+/obj/mopbucket,
+/obj/item/reagent_containers/glass/bucket,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
 "PB" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -11001,9 +10809,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "PF" = (
 /obj/lattice,
@@ -11036,10 +10842,8 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/access_spawn/heads,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/obj/mapping_helper/access/heads,
+/turf/unsimulated/floor,
 /area/pod_wars/team1/mining)
 "PJ" = (
 /obj/machinery/light/incandescent/netural,
@@ -11086,12 +10890,8 @@
 	},
 /area/pod_wars/team1/mining)
 "PR" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/obj/landmark/start/job/podwars/NT,
+/turf/unsimulated/floor,
 /area/pod_wars/team1/mining)
 "PS" = (
 /obj/item_dispenser/barricade,
@@ -11135,7 +10935,7 @@
 /area/pod_wars/team1/manufacturing)
 "Qf" = (
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen,
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/medbay)
 "Qg" = (
@@ -11231,24 +11031,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/miningoutpost/crewquarters)
 "Qu" = (
-/obj/storage/crate/bin,
-/obj/item/radio_tape/advertisement/grones{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/item/radio_tape/audio_book/heisenbee,
-/obj/item/radio_tape/advertisement/danitos_burritos{
-	pixel_x = -5;
-	pixel_y = -3
-	},
-/obj/item/radio_tape/advertisement/quik_noodles{
-	pixel_x = 2;
-	pixel_y = -6
-	},
-/obj/item/radio_tape/advertisement/captain_psa{
-	pixel_x = -8;
-	pixel_y = 6
-	},
+/obj/table/reinforced/auto,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "Qv" = (
@@ -11280,7 +11063,7 @@
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bridge)
 "QB" = (
@@ -11328,14 +11111,10 @@
 /turf/unsimulated/floor/red/side,
 /area/pod_wars/team2/central_hallway)
 "QM" = (
-/obj/item/device/radio/intercom{
-	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show.";
-	device_color = "#E52780";
-	icon = 'icons/obj/radiostation.dmi';
-	icon_state = "mixtable-1";
-	name = "broadcast radio"
+/obj/table/reinforced/auto,
+/obj/cable{
+	icon_state = "1-2"
 	},
-/obj/table/wood/auto,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "QO" = (
@@ -11361,7 +11140,9 @@
 	},
 /area/pod_wars/spacejunk/fstation/secdock)
 "QU" = (
-/obj/mic_stand,
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "QV" = (
@@ -11382,9 +11163,7 @@
 /obj/machinery/light/incandescent/netural,
 /obj/machinery/power/apc/autoname_east,
 /obj/storage/closet/welding_supply,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "QZ" = (
 /obj/stool/bench/green,
@@ -11402,10 +11181,15 @@
 	},
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/manufacturing)
+"Rd" = (
+/obj/rack,
+/obj/random_item_spawner/hat/one,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
 "Re" = (
 /obj/indestructible/shuttle_corner{
-	icon_state = "wall_trans";
-	dir = 5
+	dir = 5;
+	icon_state = "wall_trans"
 	},
 /turf/space,
 /area/pod_wars/spacejunk/brightwell)
@@ -11442,7 +11226,7 @@
 /area/pod_wars/team1/hangar)
 "Rm" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/hangar)
 "Rn" = (
@@ -11509,6 +11293,10 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/reliant)
+"RB" = (
+/obj/shrub/captainshrub,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
 "RC" = (
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/wood/seven,
@@ -11530,9 +11318,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "RK" = (
 /obj/machinery/manufacturer/medical/pod_wars,
@@ -11560,7 +11346,7 @@
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
 "RO" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/vending/air_vendor/pod_wars,
 /turf/unsimulated/floor/yellow/side{
 	dir = 5
 	},
@@ -11612,11 +11398,17 @@
 /obj/machinery/chem_dispenser/medical,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
+"Sa" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
 "Sb" = (
-/obj/machinery/computer/announcement/console_lower{
+/obj/control_point_computer{
 	dir = 4;
-	name = "NSV Reliant Announcement Computer";
-	req_access = null
+	name = "Reliant Control Console"
 	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
@@ -11624,9 +11416,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "Sf" = (
 /obj/machinery/vending/coffee,
@@ -11644,9 +11434,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "Sk" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "Sl" = (
 /obj/storage/closet,
@@ -11682,7 +11470,7 @@
 /turf/simulated/floor/engine,
 /area/pod_wars/team1/powergen)
 "So" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/snackstand)
 "Sp" = (
@@ -11691,9 +11479,7 @@
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/storage/box/cablesbox,
 /obj/machinery/recharger,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/powergen)
 "Sq" = (
 /obj/cable{
@@ -11783,9 +11569,7 @@
 /obj/machinery/light/incandescent/netural,
 /obj/mopbucket,
 /obj/item/reagent_containers/glass/bucket/red,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/bar)
 "SI" = (
 /obj/storage/crate,
@@ -11812,9 +11596,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "SP" = (
 /obj/machinery/vending/cola/blue,
@@ -11866,7 +11648,7 @@
 	},
 /area/pod_wars/team1/bridge)
 "SX" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/central_hallway)
 "SY" = (
@@ -11910,9 +11692,7 @@
 /obj/item/sheet/steel/fullstack,
 /obj/item/sheet/steel/fullstack,
 /obj/item/storage/box/cablesbox,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/powergen)
 "Tb" = (
 /obj/cable{
@@ -11926,7 +11706,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/mess)
 "Tc" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/bar)
 "Td" = (
@@ -11987,9 +11767,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "Tt" = (
 /obj/submachine/foodprocessor,
@@ -12018,11 +11796,16 @@
 /turf/simulated/floor/engine,
 /area/pod_wars/team1/powergen)
 "Tz" = (
+/obj/table/reinforced/auto,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "1-4"
 	},
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "2-4"
+	},
+/obj/item/kitchen/food_box/lollipop,
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
@@ -12045,9 +11828,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "TF" = (
 /obj/machinery/recharger/wall{
@@ -12125,7 +11906,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	hardened = 1
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
@@ -12161,13 +11942,13 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	hardened = 1
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "Ug" = (
-/obj/wingrille_spawn/auto,
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/maintdock)
 "Uh" = (
@@ -12254,14 +12035,10 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "Ux" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/mining)
 "Uy" = (
 /obj/lattice{
@@ -12287,7 +12064,7 @@
 /area/pod_wars/spacejunk/uvb67/power)
 "UB" = (
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/medbay)
 "UC" = (
@@ -12300,7 +12077,7 @@
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -12344,9 +12121,7 @@
 /area/pod_wars/spacejunk/uvb67/central)
 "UO" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "UP" = (
 /obj/cable{
@@ -12361,9 +12136,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team1/manufacturing)
 "US" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
 "UT" = (
@@ -12388,7 +12161,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bar)
 "UY" = (
@@ -12435,9 +12208,7 @@
 "Vf" = (
 /obj/machinery/light/incandescent/netural,
 /obj/storage/closet/welding_supply,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "Vg" = (
 /obj/lattice,
@@ -12488,9 +12259,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "Vs" = (
 /obj/machinery/light/incandescent/netural,
@@ -12558,9 +12327,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "VE" = (
 /obj/machinery/chem_dispenser/medical,
@@ -12597,7 +12364,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/central_hallway)
 "VK" = (
@@ -12618,7 +12385,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team2/hangar)
 "VO" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/command)
 "VP" = (
@@ -12636,7 +12403,7 @@
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/fstation/landingpads)
 "VT" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/hangar)
 "VU" = (
@@ -12654,7 +12421,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/central_hallway)
 "VY" = (
@@ -12685,7 +12452,7 @@
 /turf/space,
 /area/pod_wars/spacejunk/uvb67/central)
 "Wb" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/secdock)
 "Wc" = (
@@ -12716,7 +12483,7 @@
 /turf/simulated/floor,
 /area/pod_wars/team1/starboardhall)
 "Wf" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/uvb67/crew)
 "Wg" = (
@@ -12785,7 +12552,7 @@
 	},
 /area/pod_wars/team2/mining)
 "Wr" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/powergen)
 "Ws" = (
@@ -12837,8 +12604,8 @@
 "WH" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	pixel_x = 10;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/unsimulated/floor/blue/side{
 	dir = 5
@@ -12872,9 +12639,7 @@
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/storage/box/cablesbox,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/storage)
 "WP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -12901,7 +12666,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "WV" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/nancy)
 "WW" = (
@@ -12914,9 +12679,7 @@
 	},
 /area/space)
 "WX" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/yellow/side,
 /area/pod_wars/team1/mining)
@@ -12951,14 +12714,11 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/fstation/observatory)
 "Xf" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It seems to be locked";
-	dir = 4;
-	icon = 'icons/obj/computerpanel.dmi';
-	icon_state = "securitycomputer2";
-	name = "Weapons Console"
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
@@ -12996,28 +12756,27 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "Xn" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/power)
 "Xp" = (
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/nancy/warehouse)
 "Xs" = (
-/obj/table/reinforced/auto,
-/obj/cable{
-	icon_state = "1-2"
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It seems to be locked";
+	dir = 4;
+	icon = 'icons/obj/computerpanel.dmi';
+	icon_state = "engine1";
+	name = "Engineering Console"
 	},
-/obj/shrub/dead{
-	pixel_y = 12
-	},
-/obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "Xt" = (
 /obj/stool/bar,
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "Xu" = (
@@ -13098,9 +12857,7 @@
 /obj/item/reagent_containers/glass/bottle/cleaner,
 /obj/item/spraybottle/cleaner/tsunami,
 /obj/item/spraybottle/cleaner/tsunami,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/bar)
 "XG" = (
 /turf/simulated/floor/airless/plating,
@@ -13252,9 +13009,7 @@
 /turf/space,
 /area/space)
 "Yj" = (
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/yellow/corner{
 	dir = 1
 	},
@@ -13277,9 +13032,7 @@
 	icon_state = "2-4"
 	},
 /obj/stool/bar,
-/obj/landmark/start{
-	name = "Syndicate Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/syndie,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "Yn" = (
@@ -13392,9 +13145,7 @@
 /obj/item/device/gps{
 	pixel_x = -4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "YH" = (
 /obj/grille/catwalk{
@@ -13444,9 +13195,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "YP" = (
 /turf/simulated/floor/blueblack{
@@ -13454,9 +13203,7 @@
 	},
 /area/pod_wars/spacejunk/memorial_stats)
 "YR" = (
-/obj/landmark/start{
-	name = "NanoTrasen Pod Pilot"
-	},
+/obj/landmark/start/job/podwars/NT,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "YS" = (
@@ -13465,9 +13212,7 @@
 	dir = 5
 	},
 /obj/table/wood/round/champagne,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "YT" = (
 /obj/deployable_turret/pod_wars/sy/activated/west,
@@ -13475,9 +13220,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "YU" = (
 /obj/machinery/light/incandescent/netural,
@@ -13534,19 +13277,17 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "Zg" = (
 /turf/simulated/floor/red/side,
 /area/pod_wars/spacejunk/uvb67/crew)
 "Zh" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/medbay)
 "Zj" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -13560,9 +13301,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/central_hallway)
 "Zl" = (
 /obj/table/reinforced/bar/auto,
@@ -13572,16 +13311,14 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/mining)
 "Zn" = (
 /obj/machinery/door/airlock/pyro/glass/med,
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
 "Zo" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/power)
 "Zr" = (
@@ -13616,7 +13353,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	hardened = 1
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
@@ -13640,9 +13377,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team2/mining)
 "ZD" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -13673,15 +13408,13 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "ZL" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/yellow,
 /area/pod_wars/team1/manufacturing)
 "ZM" = (
@@ -13733,11 +13466,14 @@
 /turf/simulated/floor/purple/side,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "ZW" = (
-/obj/stool/chair/comfy/shuttle/red{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "4-8"
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It seems to be locked";
+	dir = 4;
+	icon = 'icons/obj/computerpanel.dmi';
+	icon_state = "securitycomputer2";
+	name = "Weapons Console"
 	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
@@ -124936,14 +124672,14 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
+vR
+Tr
+Tr
+Tr
+Tr
+Tr
+Tr
+pg
 JW
 JW
 JW
@@ -125437,16 +125173,16 @@ JW
 JW
 JW
 JW
+vR
+Va
 JW
 JW
 JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
+Jn
+pg
 JW
 JW
 JW
@@ -125939,6 +125675,7 @@ JW
 JW
 JW
 JW
+ge
 JW
 JW
 JW
@@ -125947,8 +125684,7 @@ JW
 JW
 JW
 JW
-JW
-JW
+ge
 JW
 JW
 JW
@@ -126441,16 +126177,16 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
+fV
+iC
+iC
+iC
+iC
+iC
+iC
+iC
+iC
+fV
 JW
 JW
 JW
@@ -126941,20 +126677,20 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
+fV
+fV
+fV
+VQ
+FL
+KD
+bC
+Sb
+Xs
+ZW
+VQ
+fV
+fV
+fV
 JW
 JW
 JW
@@ -127440,26 +127176,26 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
+fV
+fV
+fV
+fV
+rl
+GI
+bC
+JF
+MK
+bC
+bC
+MK
+MK
+bC
+GI
+RB
+fV
+fV
+fV
+fV
 JW
 JW
 JW
@@ -127942,26 +127678,26 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
-JW
-JW
-vR
-Tr
-Tr
-Tr
-Tr
-Tr
-Tr
-pg
-JW
-JW
-JW
-JW
-JW
-JW
+iC
+kV
+og
+pI
+bC
+GI
+bC
+FB
+bC
+bC
+bC
+bC
+bC
+bC
+GI
+bC
+ls
+vM
+Rd
+iC
 JW
 JW
 JW
@@ -128439,36 +128175,36 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-vR
-Va
-JW
-JW
-JW
-JW
-JW
-JW
-Jn
-pg
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
+bE
+iP
+iP
+iP
+iP
+kq
+ly
+po
+pL
+pL
+wo
+pL
+Ki
+On
+QM
+Tz
+On
+pL
+pL
+wo
+pL
+pL
+pL
+Sa
+kq
+iP
+iP
+iP
+iP
+yQ
 JW
 JW
 JW
@@ -128946,26 +128682,26 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
-JW
-ge
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-JW
-ge
-JW
-JW
-JW
-JW
-JW
+iC
+lM
+bC
+bC
+bC
+GI
+bC
+bC
+Qu
+QU
+Xf
+Qu
+bC
+bC
+GI
+bC
+bC
+PA
+mq
+iC
 JW
 JW
 JW
@@ -129448,26 +129184,26 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
-JW
 fV
-GI
-GI
-GI
-GI
-GI
-GI
-GI
-GI
 fV
-JW
-JW
-JW
-JW
-JW
+fV
+qK
+td
+GI
+bC
+bC
+wk
+bC
+FB
+wk
+bC
+bC
+GI
+hg
+kk
+fV
+fV
+fV
 JW
 JW
 JW
@@ -129952,22 +129688,22 @@ JW
 JW
 JW
 JW
-JW
 fV
 fV
 fV
-VQ
-pI
-Sb
-bC
-kV
-qK
-Xf
-VQ
+GI
+oY
+pL
+pL
+pL
+Yw
+pL
+pL
+QI
+GI
 fV
 fV
 fV
-JW
 JW
 JW
 JW
@@ -130452,26 +130188,26 @@ JW
 JW
 JW
 JW
+JW
+JW
+JW
+JW
 fV
-fV
-fV
-fV
-Qu
-GI
+VQ
+FB
 bC
-ZW
+bC
+bC
+bC
+bC
 yP
-bC
-bC
-yP
-yP
-bC
-GI
-iP
+FB
+VQ
 fV
-fV
-fV
-fV
+JW
+JW
+JW
+JW
 JW
 JW
 JW
@@ -130954,26 +130690,26 @@ JW
 JW
 JW
 JW
-GI
-QM
-ly
-QU
-bC
-GI
-bC
-FB
-bC
+JW
+JW
+JW
+JW
+fV
+tY
+BG
 bC
 bC
 bC
 bC
 bC
-GI
 bC
-ls
-bE
-lM
-GI
+BG
+Kb
+fV
+JW
+JW
+JW
+JW
 JW
 JW
 JW
@@ -131451,36 +131187,36 @@ JW
 JW
 JW
 JW
-JF
-FL
-FL
-FL
-FL
-rD
-xz
+JW
+JW
+JW
+JW
+JW
+JW
+JW
+JW
+JW
+fV
+tY
 BG
-pL
-pL
-tY
-pL
-Tz
-Xs
-po
-MK
-Xs
-pL
-pL
-tY
-pL
-pL
-pL
-wo
-rD
-FL
-FL
-FL
-FL
-Ki
+bC
+bC
+bC
+bC
+bC
+bC
+tf
+Kb
+fV
+JW
+JW
+JW
+JW
+JW
+JW
+JW
+JW
+JW
 JW
 JW
 JW
@@ -131958,26 +131694,26 @@ JW
 JW
 JW
 JW
-GI
-rl
+JW
+JW
+JW
+JW
+fV
+vD
+BG
 bC
 bC
 bC
-GI
 bC
 bC
-og
-td
-wk
-og
 bC
-bC
-GI
-bC
-bC
-EN
-KD
-GI
+FB
+Bq
+fV
+JW
+JW
+JW
+JW
 JW
 JW
 JW
@@ -132460,26 +132196,26 @@ JW
 JW
 JW
 JW
+JW
+JW
+JW
+JW
 fV
-fV
-fV
-On
-vD
-GI
+tY
+BG
 bC
 bC
-og
-bC
-FB
-og
 bC
 bC
-GI
-Bq
-wZ
+bC
+bC
+BG
+Kb
 fV
-fV
-fV
+JW
+JW
+JW
+JW
 JW
 JW
 JW
@@ -132964,22 +132700,22 @@ JW
 JW
 JW
 JW
+JW
+JW
 fV
-fV
-fV
-GI
+bC
+FB
+bC
+bC
 bC
 bC
 bC
 bC
 FB
 bC
-bC
-bC
-GI
 fV
-fV
-fV
+JW
+JW
 JW
 JW
 JW
@@ -133471,13 +133207,13 @@ JW
 fV
 fV
 iM
-bC
-bC
-bC
-FB
-bC
-bC
-VQ
+pL
+pL
+pL
+wZ
+pL
+pL
+xz
 fV
 fV
 JW
@@ -136479,7 +136215,7 @@ JW
 JW
 Qv
 Gv
-GI
+iC
 bC
 VQ
 GI
@@ -136492,7 +136228,7 @@ pL
 rD
 pL
 ND
-rD
+kq
 wU
 Qv
 JW
@@ -139491,8 +139227,8 @@ JW
 JW
 JW
 fV
-GI
-GI
+iC
+iC
 fV
 Dt
 iS
@@ -139503,8 +139239,8 @@ bC
 bC
 yk
 fV
-GI
-GI
+iC
+iC
 fV
 JW
 JW
@@ -139991,10 +139727,10 @@ JW
 JW
 JW
 fV
-GI
+iC
 fV
 fY
-GI
+iC
 bC
 bC
 bC
@@ -140005,10 +139741,10 @@ bC
 bC
 bC
 bC
-GI
+iC
 hK
 fV
-GI
+iC
 fV
 JW
 JW
@@ -140998,7 +140734,7 @@ fV
 bC
 bC
 bC
-GI
+iC
 FB
 dk
 ii
@@ -141009,7 +140745,7 @@ kr
 rW
 zR
 FB
-GI
+iC
 bC
 bC
 bC
@@ -141500,18 +141236,18 @@ fV
 Is
 iW
 Ed
-GI
+iC
 FB
 fV
-GI
-GI
-GI
-GI
-GI
-GI
+iC
+iC
+iC
+iC
+iC
+iC
 fV
 FB
-GI
+iC
 pb
 pb
 pb
@@ -141999,9 +141735,9 @@ JW
 JW
 fV
 fV
-GI
-GI
-GI
+iC
+iC
+iC
 fV
 LL
 fV
@@ -142014,9 +141750,9 @@ hL
 fV
 LL
 fV
-GI
-GI
-GI
+iC
+iC
+iC
 fV
 fV
 JW

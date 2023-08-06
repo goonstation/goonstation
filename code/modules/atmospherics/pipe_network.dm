@@ -126,7 +126,7 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 		APPLY_TO_GASES(_RECONCILE_AIR)
 		#undef _RECONCILE_AIR
 
-	if(src.air_transient.volume < 0)
+	if(src.air_transient.volume <= 0)
 		return FALSE
 
 	if(total_heat_capacity > 0)

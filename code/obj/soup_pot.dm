@@ -38,7 +38,7 @@
 		src.initial_volume = S.initial_volume
 		src.initial_reagents = S.initial_reagents
 
-		if(S.food_effects.len <= 4)
+		if(length(S.food_effects) <= 4)
 			src.food_effects = S.food_effects
 		else
 			var/list/temp = S.food_effects

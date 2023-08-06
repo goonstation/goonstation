@@ -502,9 +502,9 @@
 							for (var/mob/living/carbon/human/M in view(1, src))
 								if (M != src && can_act(M, TRUE))
 									possible_recipients += M
-							if (possible_recipients.len > 1)
+							if (length(possible_recipients) > 1)
 								H = input(src, "Who would you like to hand your [thing] to?", "Choice") as null|anything in possible_recipients
-							else if (possible_recipients.len == 1)
+							else if (length(possible_recipients) == 1)
 								H = possible_recipients[1]
 
 #ifdef TWITCH_BOT_ALLOWED
@@ -815,7 +815,7 @@
 					maptext_out = "<I>struggles to move</I>"
 				m_type = 1
 
-			if ("cough","hiccup","sigh","mumble","grumble","groan","moan","sneeze","wheeze","sniff","snore","whimper","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle","wheeze","sputter","scoff",)
+			if ("cough","hiccup","sigh","mumble","grumble","groan","moan","sneeze","wheeze","sniff","snore","whimper","noncontagiousyawn","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle","wheeze","sputter","scoff",)
 				// basic audible single-word emotes
 				if (!muzzled)
 					if (lowertext(act) == "sigh" && prob(1)) act = "singh" //1% chance to change sigh to singh. a bad joke for drsingh fans.
@@ -829,12 +829,15 @@
 						var/obj/HK = new /obj/item/cloth/handkerchief/random(get_turf(src))
 						var/turf/T = get_edge_target_turf(src, pick(alldirs))
 						HK.throw_at(T, 5, 1)
+					else if (act == "noncontagiousyawn")
+						message = "<B>[src]</B> yawns."
+						maptext_out = "<I>yawns</I>"
 					else if (act == "yawn")
 						message = "<B>[src]</B> [act]s."
 						maptext_out = "<I>[act]s</I>"
 						for (var/mob/living/carbon/C in view(5,get_turf(src)))
 							if (prob(5) && !ON_COOLDOWN(C, "contagious_yawn", 5 SECONDS))
-								C.emote("yawn")
+								C.emote("noncontagiousyawn")
 					else
 						message = "<B>[src]</B> [act]s."
 						maptext_out = "<I>[act]s</I>"
@@ -1777,8 +1780,8 @@
 
 							LAGCHECK(LAG_MED)
 							var/crabMax = 5
-							for (var/obj/critter/crab/party/responseCrab in range(7, src))
-								if (!responseCrab.alive)
+							for (var/mob/living/critter/small_animal/crab/party/responseCrab in range(7, src))
+								if (is_incapacitated(responseCrab))
 									continue
 								if (crabMax-- < 0)
 									break

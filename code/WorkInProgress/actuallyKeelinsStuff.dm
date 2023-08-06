@@ -478,7 +478,7 @@ Returns:
 	var/turf/TLast = pick(L)
 	L.Remove(TLast)
 
-	while(L.len >= 1)
+	while(length(L) >= 1)
 		var/turf/TA = pick(L)
 		L.Remove(TA)
 		TLast.vis_contents += TLast
@@ -491,7 +491,7 @@ Returns:
 		if(T.z == 1)
 			L.Add(T)
 
-	while(L.len >= 1)
+	while(length(L) >= 1)
 		var/turf/TA = pick(L)
 		L.Remove(TA)
 		var/turf/TB = pick(L)
@@ -663,7 +663,7 @@ Returns:
 			if(A?.z == 1) //Basically, if the area has a turf on z1 ... Doesn't work as described in byond documentation. So we have to do it the slow way ...
 				areas.Add(A)
 
-	while(areas.len >= 2)
+	while(length(areas) >= 2)
 		var/area/one = pick(areas)
 		areas.Remove(one)
 		var/area/two = pick(areas)
@@ -739,7 +739,7 @@ Returns:
 			for(var/T in ignoreTypes)
 				if(istype(O, T)) continue oneOuter
 
-			if(twoTurfsExpend.len > 0)
+			if(length(twoTurfsExpend) > 0)
 				var/turf/T = pick(twoTurfsExpend)
 				twoTurfsExpend.Remove(T)
 				O.set_loc(T)
@@ -762,7 +762,7 @@ Returns:
 			for(var/T in ignoreTypes)
 				if(istype(O, T)) continue twoOuter
 
-			if(oneTurfsExpend.len > 0)
+			if(length(oneTurfsExpend) > 0)
 				var/turf/T = pick(oneTurfsExpend)
 				oneTurfsExpend.Remove(T)
 				O.set_loc(T)
@@ -1335,8 +1335,8 @@ Returns:
 		shaft = M
 		SetPrefix()
 		if(shaft)
-			src.color = shaft.color
-			src.alpha = shaft.alpha
+			src.color = shaft.getColor()
+			src.alpha = shaft.getAlpha()
 		return
 
 	proc/setHeadMaterial(var/datum/material/M)
@@ -1344,8 +1344,8 @@ Returns:
 		SetPrefix()
 		setMaterial(M, setname = 0)
 		if(shaft)
-			src.color = shaft.color
-			src.alpha = shaft.alpha
+			src.color = shaft.getColor()
+			src.alpha = shaft.getAlpha()
 		if(src.material && src.material.hasProperty("hard"))
 			src.force = round(src.material.getProperty("hard") * 2)
 			src.throwforce = round(src.material.getProperty("hard") * 3)
@@ -1355,9 +1355,9 @@ Returns:
 		src.remove_prefixes(prefix)
 		prefix = ""
 		if(head)
-			prefix += "[head.name]-tipped[shaft?" ":""]"
+			prefix += "[head.getName()]-tipped[shaft?" ":""]"
 		if (shaft)
-			prefix += "[shaft.name]"
+			prefix += "[shaft.getName()]"
 		src.name_prefix(prefix)
 		src.UpdateName()
 
@@ -1365,15 +1365,15 @@ Returns:
 		overlays.Cut()
 		if(shaft)
 			var/image/imgShaft = image('icons/obj/items/weapons.dmi',icon_state = "spear")
-			imgShaft.color = shaft.color
-			imgShaft.alpha = shaft.alpha
+			imgShaft.color = shaft.getColor()
+			imgShaft.alpha = shaft.getAlpha()
 			imgShaft.appearance_flags = RESET_ALPHA | RESET_COLOR
 			overlays += imgShaft
 			shaftImg = imgShaft
 		if(head)
 			var/image/imgHead = image('icons/obj/items/weapons.dmi',icon_state = "spearhead")
-			imgHead.color = head.color
-			imgHead.alpha = head.alpha
+			imgHead.color = head.getColor()
+			imgHead.alpha = head.getAlpha()
 			imgHead.appearance_flags = RESET_ALPHA | RESET_COLOR
 			overlays += imgHead
 			headImg = imgHead
@@ -2425,7 +2425,7 @@ Returns:
 			if(!isturf(T)) continue
 			newareaturfs += T
 
-		if(newareaturfs.len < oldareaturfs.len) //Out of bounds. Fucking byond.
+		if(length(newareaturfs) < oldareaturfs.len) //Out of bounds. Fucking byond.
 			moving = 0
 			return
 
@@ -2575,12 +2575,12 @@ Returns:
 			eligible.Add(H)
 
 	var/mob/living/carbon/human/picked1
-	if(eligible.len > 0)
+	if(length(eligible) > 0)
 		picked1 = pick(eligible)
 		eligible -= picked1
 
 	var/mob/living/carbon/human/picked2
-	if(eligible.len > 0)
+	if(length(eligible) > 0)
 		picked2 = pick(eligible)
 
 	picked1?.zombify()
@@ -2880,11 +2880,11 @@ var/list/lag_list = new/list()
 
 /proc/add_and_average(var/value)
 	lag_list.Insert(1,value)
-	if(lag_list.len > lag_average_size) lag_list.Cut(lag_average_size+1,0)
+	if(length(lag_list) > lag_average_size) lag_list.Cut(lag_average_size+1,0)
 	var/tempnum = 0
 	for(var/a in lag_list)
 		tempnum += a
-	if(lag_list.len >= lag_average_size) average_tenth = (tempnum / lag_list.len)
+	if(length(lag_list) >= lag_average_size) average_tenth = (tempnum / lag_list.len)
 
 	switch( ((average_tenth * world.cpu) / 100) )
 		if(0 to 0.1)

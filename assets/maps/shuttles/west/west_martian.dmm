@@ -21,7 +21,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
 "cu" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"

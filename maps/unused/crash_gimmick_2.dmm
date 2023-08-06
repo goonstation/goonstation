@@ -31,9 +31,7 @@
 /area/space)
 "aP" = (
 /obj/item/device/radio/beacon,
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "bi" = (
@@ -623,7 +621,7 @@
 	},
 /area/space)
 "yX" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "zB" = (
@@ -1311,7 +1309,7 @@
 	},
 /area/built_zone)
 "UQ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -1338,12 +1336,6 @@
 	anchored = 1
 	},
 /obj/item/kitchen/utensil/knife,
-/turf/simulated/floor/shuttle,
-/area/shuttle/arrival/station)
-"Xi" = (
-/obj/landmark{
-	name = "JoinLate"
-	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "Xp" = (
@@ -1385,9 +1377,7 @@
 	},
 /area/space)
 "Yy" = (
-/obj/landmark/start{
-	name = "AI"
-	},
+/obj/landmark/start/job/AI,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "YD" = (
@@ -46190,7 +46180,7 @@ xY
 xY
 xY
 tK
-Xi
+xY
 tK
 SL
 mb

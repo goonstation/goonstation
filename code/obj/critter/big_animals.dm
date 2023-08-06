@@ -13,7 +13,7 @@
 	firevuln = 3
 	brutevuln = 1
 	angertext = "starts chasing" // comes between critter name and target name
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	chase_text = "punches out"
 
 	skinresult = /obj/item/material_piece/cloth/leather
@@ -83,7 +83,7 @@
 			return null
 		var/list/part_list = list("l_arm", "r_arm", "l_leg", "r_leg")
 
-		while(part_list.len > 0)
+		while(length(part_list) > 0)
 			var/current_part = pick(part_list)
 			part_list -= current_part
 			var/obj/item/parts/bodypart = H.limbs.get_limb(current_part)

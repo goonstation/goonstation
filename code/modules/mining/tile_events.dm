@@ -25,7 +25,7 @@
 	set_up(var/datum/ore/parent)
 		if (..() || !parent)
 			return 1
-		if (parent.gems.len < 1)
+		if (length(parent.gems) < 1)
 			return 1
 		gem_type = pick(parent.gems)
 

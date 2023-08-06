@@ -70,7 +70,12 @@
 					var/datum/component/glue_ready/maybe_glue_ready_comp = M.GetComponent(/datum/component/glue_ready)
 					if(maybe_glue_ready_comp)
 						qdel(maybe_glue_ready_comp)
-					M.throw_at(get_edge_cheap(source, get_dir(source, M)),  20 + round(created_volume * 2), 1 + round(created_volume / 10))
+					var/atom/target
+					if (get_turf(source) == get_turf(M))
+						target = get_edge_target_turf(source, pick(alldirs))
+					else
+						target = get_edge_cheap(source, get_dir(source, M))
+					M.throw_at(target, 2 + round(created_volume / 5), 1 + round(created_volume / 10))
 					LAGCHECK(LAG_MED)
 
 	if (holder)
@@ -135,7 +140,7 @@
 				//boutput(world,"[react_amount]")
 
 		var/divisor = howmany
-		if (covered.len > 4)
+		if (length(covered) > 4)
 			divisor *= 1.2
 		source.fluid_react(holder, react_amount/divisor, airborne = 1)
 

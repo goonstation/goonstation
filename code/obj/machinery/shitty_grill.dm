@@ -319,7 +319,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 		if (ismob(grillitem))
 			shittysteak.bites_left = 5
 		else
-			shittysteak.bites_left = src.grillitem.w_class
+			shittysteak.bites_left = round(src.grillitem.w_class)
 		shittysteak.reagents = src.grillitem.reagents
 		shittysteak.reagents.my_atom = shittysteak
 

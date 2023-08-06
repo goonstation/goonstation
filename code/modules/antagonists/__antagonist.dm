@@ -51,6 +51,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 		src.pseudo = do_pseudo
 		src.vr = do_vr
 		if (!do_pseudo && !do_vr) // there is a special place in code hell for mind.special_role
+			LAZYLISTADD(antagonists["[src.id]"], src)
+
 			new_owner.special_role = id
 			if (source == ANTAGONIST_SOURCE_ADMIN)
 				ticker.mode.Agimmicks |= new_owner
@@ -72,8 +74,12 @@ ABSTRACT_TYPE(/datum/antagonist)
 		RegisterSignal(src.owner, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(mind_detach))
 		src.owner.antagonists.Add(src)
 
-	Del()
+	disposing()
 		if (owner && !src.pseudo)
+			LAZYLISTREMOVE(antagonists["[src.id]"], src)
+			if (isnull(antagonists["[src.id]"]))
+				antagonists -= "[src.id]"
+
 			owner.former_antagonist_roles.Add(owner.special_role)
 			owner.special_role = null // this isn't ideal, since the system should support multiple antagonists. once special_role is worked around, this won't be an issue
 			if (src.assigned_by == ANTAGONIST_SOURCE_ADMIN)

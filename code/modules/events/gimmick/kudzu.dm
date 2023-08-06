@@ -83,7 +83,7 @@
 				if (isnull(ecoords))
 					return
 				var/list/coords = splittext(ecoords, ",")
-				if (coords.len < 3)
+				if (length(coords) < 3)
 					return
 				startturf = locate(text2num(coords[1]), text2num(coords[2]), text2num(coords[3]))
 

@@ -63,33 +63,29 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	icon_state = "fillet-pink"
 	food_color = "#F4B4BC"
 	real_name = "fish"
-	var/filletslice_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice
-
-	attackby(var/obj/item/W, var/mob/user)
-		if(!iscuttingtool(W)) return
-		for (var/amount = 0, amount < 3, amount++)
-			new filletslice_type(get_turf(src))
-		boutput(user, "<span class='notice'>You cut \the [src] into slices using [W].</span>")
-		qdel(src)
+	sliceable = TRUE
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice
+	slice_amount = 3
+	slice_suffix = "slice"
 
 	salmon
 		name = "salmon fillet"
 		icon_state = "fillet-orange"
 		food_color = "#F29866"
 		real_name = "salmon"
-		filletslice_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/salmon
+		slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/salmon
 	white
 		name = "white fish fillet"
 		icon_state = "fillet-white"
 		food_color = "#FFECB7"
 		real_name = "white fish"
-		filletslice_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/white
+		slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/white
 	small
 		name = "small fish fillet"
 		icon_state = "fillet-small"
 		food_color = "#FFECB7"
 		real_name = "small fish"
-		filletslice_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/small
+		slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/small
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice
 	name = "slice of fish fillet"
@@ -112,6 +108,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 		icon_state = "filletslice-small"
 		food_color = "#FFECB7"
 		real_name = "small fish"
+
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/shrimp
+	name = "raw shrimp meat"
+	desc = "Meat of a freshly caught shrimp."
+	icon_state = "shrimp_meat"
+	food_color = "#f0ac98"
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat
 	name = "synthmeat"

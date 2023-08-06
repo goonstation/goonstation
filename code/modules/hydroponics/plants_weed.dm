@@ -78,7 +78,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 			boutput(user, "<span class='alert'>The lasher flails at you violently! You might need to weaken it first...</span>")
 			return 1
 		else
-			HYPaddCommut(POT.current, POT.plantgenes, /datum/plant_gene_strain/reagent_adder/lasher)
+			HYPaddCommut(POT.plantgenes, /datum/plant_gene_strain/reagent_adder/lasher)
 			return 0
 
 /datum/plant/weed/creeper

@@ -62,5 +62,6 @@
 				screenObj?.overlays -= obscurer
 
 	proc/can_special_attack()
-		if (!holder || !limb) return 0
-		.= (holder.a_intent == INTENT_DISARM && limb.disarm_special) || (holder.a_intent == INTENT_HARM && limb.harm_special)
+		if (!holder || !limb)
+			return FALSE
+		return (holder.a_intent == INTENT_DISARM && limb.disarm_special) || (holder.a_intent == INTENT_HARM && limb.harm_special)

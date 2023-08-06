@@ -68,7 +68,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			var/delta = 0
 			last_tick = ticker.round_elapsed_ticks
 			src.update_game_clock()
-			boutput(world, "Game starts in 30 seconds.")
+			boutput(world, "<h3 class='alert'>Game starts in 30 seconds.</span>")
 			while (TRUE)
 				delta = ticker.round_elapsed_ticks - last_tick
 				last_tick = ticker.round_elapsed_ticks
@@ -95,13 +95,13 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 						time_left -= delta
 						src.update_game_clock()
 						if (src.time_next_state < 0)
-							boutput(world, "Respawning dead players. Next wave in fifteen seconds...")
+							boutput(world, "<h3 class='alert'>Respawning dead players. Next wave in fifteen seconds...</h3>")
 							// people in the lockers go into the game, dead people go to the lockers
 							src.put_me_in_coach()
 							src.reset_players()
 							src.time_next_state = 15 SECONDS
 						if (!the_football || the_football.qdeled)
-							boutput(world, "how the hell did you clowns lose the goddamn football?????? what the fuck. respawning it at midfield!")
+							boutput(world, "<h1 class='alert'>How the hell did you clowns lose the goddamn football?????? what the fuck. respawning it at midfield!</h1>")
 							the_football = new /obj/item/football/the_big_one()
 							the_football.set_loc(pick(football_spawns["football"]))
 						src.wave_timer.update_timer(time_next_state / 10)
@@ -115,7 +115,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 							src.clean_field()
 							src.time_next_state = 15 SECONDS
 							src.game_state = FOOTBALL_PREGAME
-							boutput(world, "Next possession in 15 seconds...")
+							boutput(world, "<h3 class='alert'>Next possession in 15 seconds...</h3>")
 					if (FOOTBALL_POSTGAME)
 						// we just dont do anything
 						return
@@ -221,7 +221,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			footballer.full_heal()
 
 		if (!ishuman(footballer))
-			boutput(M, "something went wrong. dunno what. sorry. football machine broke")
+			boutput(M, "<span class='alert'>Something went wrong. dunno what. sorry. football machine broke.</span>")
 			return
 
 		if (is_new)
@@ -269,7 +269,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 		//footballer.Equip_Bank_Purchase(footballer.mind.purchased_bank_item)
 		footballer.set_clothing_icon_dirty()
 		footballer.set_loc(pick(football_spawns[team]))
-		boutput(footballer, "You're on the [team] team! The football is to your [team == "red" ? "LEFT" : "RIGHT"]. Carry it all the way to the [team == "red" ? "LEFT" : "RIGHT"] endzone to score!")
+		boutput(footballer, "<h3 class='alert'>You're on the [team] team! The football is to your [team == "red" ? "LEFT" : "RIGHT"]. Carry it all the way to the [team == "red" ? "LEFT" : "RIGHT"] endzone to score!</h3>")
 
 
 

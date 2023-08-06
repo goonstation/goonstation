@@ -164,7 +164,7 @@
 		if (!C)
 			return
 		if (!src.map_html || !src.map)
-			boutput(C, "oh no, map doesnt exist!")
+			boutput(C, "<b class='alert'>oh no, map doesnt exist!</b>")
 			return
 		C << browse_rsc(src.map, "trenchmap.png")
 		C << browse(src.map_html, "window=trench_map;size=650x700;title=Trench Map")
@@ -937,7 +937,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 		if(istype(I, /obj/item/cell))
 			if(open)
 				if(cell)
-					boutput(user, "There is already a power cell inside.")
+					boutput(user, "<span class='alert'>There is already a power cell inside.</span>")
 					return
 				else
 					// insert cell
@@ -950,7 +950,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 
 						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else
-				boutput(user, "The hatch must be open to insert a power cell.")
+				boutput(user, "<span class='alert'>The hatch must be open to insert a power cell.</span>")
 				return
 		else if (ispryingtool(I))
 			open = !open

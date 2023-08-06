@@ -104,7 +104,7 @@
 			ON_COOLDOWN(M, "ww feast", 2.5 SECONDS) // Enough time between attacks for them to happen 9 times
 			times_attacked += 1
 
-		if (HH.decomp_stage <= DECOMP_STAGE_DECAYED && !(isnpcmonkey(HH)) && (times_attacked >= 7)) // Can't farm npc monkeys.
+		if (HH.decomp_stage <= DECOMP_STAGE_DECAYED && !(isnpc(HH)) && (times_attacked >= 7)) // Can't farm npc monkeys.
 			src.do_we_get_points = TRUE
 
 	onEnd()

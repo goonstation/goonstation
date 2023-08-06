@@ -690,6 +690,12 @@
 	icon_state = "serpico"
 	item_state = "serpico"
 
+/obj/item/clothing/under/misc/rarestroom
+	name = "'I found the rarest room and all I got was this lousy t-shirt.' t-shirt"
+	desc = "You did it, but for what?"
+	icon_state = "rarest"
+	item_state = "rarest"
+
 /obj/item/clothing/under/misc/souschef
 	name = "sous-chef's uniform"
 	desc = "The uniform of an assistant to the Chef. Maybe as translator."

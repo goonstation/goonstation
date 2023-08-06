@@ -106,6 +106,9 @@ o+`        `-` ``..-:yooos-..----------..`
 // Toggle this to turn .dispose() into qdel( ). Useful for trying to find lingering references locally.
 //#define DISPOSE_IS_QDEL
 
+// Toggle this to enable perspective wall icons in .dmm-compatible map editors. By default, icons in the editor will be flat.
+//#define USE_PERSPECTIVE_EDITOR_WALLS
+
 //------------- MAP OVERRIDES -------------//
 //-------Special Events:
 //#define MAP_OVERRIDE_CONSTRUCTION	// Construction mode
@@ -132,7 +135,6 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_CRASH				// Stupid Crash Gimmick Map
 //#define MAP_OVERRIDE_MUSHROOM			// Updated Mushroom
 //#define MAP_OVERRIDE_TRUNKMAP			// Updated Ovary
-//#define MAP_OVERRIDE_CHIRON				// Chiron by Kubius
 //#define MAP_OVERRIDE_DENSITY			// Density, the smallest map
 //#define MAP_OVERRIDE_OZYMANDIAS		// Ozymandias, the largest map (sort of)
 //#define MAP_OVERRIDE_FLEET				// Multiple stations stuck together

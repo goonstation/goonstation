@@ -1,0 +1,90 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/nicegrass/random,
+/area/space)
+"j" = (
+/obj/machinery/light/small/floor/greenish,
+/turf/simulated/nicegrass/random,
+/area/space)
+"k" = (
+/obj/machinery/light/small/floor/greenish,
+/obj/decal/cleanable/writing{
+	words = "SLUG ZONE!!!";
+	pixel_y = 30
+	},
+/turf/simulated/nicegrass/random,
+/area/space)
+"r" = (
+/obj/machinery/light/small/floor/greenish,
+/obj/decal/cleanable/writing{
+	words = "SLUG ZONE!!!";
+	pixel_y = -30
+	},
+/turf/simulated/nicegrass/random,
+/area/space)
+"A" = (
+/mob/living/critter/small_animal/slug{
+	pixel_y = 15;
+	dir = 8
+	},
+/turf/simulated/nicegrass/random,
+/area/space)
+"J" = (
+/mob/living/critter/small_animal/slug/snail{
+	pixel_x = 15
+	},
+/turf/simulated/nicegrass/random,
+/area/space)
+"Q" = (
+/obj/item/clothing/head/party/random{
+	pixel_y = 9;
+	pixel_x = -3
+	},
+/turf/simulated/nicegrass/random,
+/area/space)
+"R" = (
+/obj/item/clothing/head/party/random,
+/obj/decal/cleanable/writing{
+	words = "SLUG ZONE!!!";
+	pixel_x = 30
+	},
+/turf/simulated/nicegrass/random,
+/area/space)
+"X" = (
+/obj/shrub{
+	dir = 4
+	},
+/turf/simulated/nicegrass/random,
+/area/space)
+"Y" = (
+/mob/living/critter/small_animal/slug{
+	pixel_x = 10
+	},
+/obj/decal/cleanable/writing{
+	words = "SLUG ZONE!!!";
+	pixel_x = -30
+	},
+/turf/simulated/nicegrass/random,
+/area/space)
+
+(1,1,1) = {"
+j
+Y
+a
+J
+r
+"}
+(2,1,1) = {"
+a
+a
+X
+Q
+a
+"}
+(3,1,1) = {"
+k
+R
+a
+A
+r
+"}

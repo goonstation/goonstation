@@ -116,7 +116,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	/// So, it should typically be something like head_offset +/- a few pixels
 	var/eye_offset = 0
 
-	var/list/limb_list = list()
 	var/r_limb_arm_type_mutantrace = null // Should we get custom arms? Dispose() replaces them with normal human arms.
 	var/l_limb_arm_type_mutantrace = null
 	var/r_limb_leg_type_mutantrace = null
@@ -263,7 +262,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		AppearanceSetter(M, "set")
 		LimbSetter(M, "set")
 		organ_mutator(M, "set")
-		src.limb_list.Add(l_limb_arm_type_mutantrace, r_limb_arm_type_mutantrace, l_limb_leg_type_mutantrace, r_limb_leg_type_mutantrace)
 		src.mob = M
 		var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 		for(var/obj/item/clothing/W in restricted)
@@ -320,7 +318,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				MutateMutant(H, "reset")
 				organ_mutator(H, "reset")
 				LimbSetter(H, "reset")
-				qdel(src.limb_list)
 
 				H.set_face_icon_dirty()
 				H.set_body_icon_dirty()
@@ -641,7 +638,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	mutant_appearance_flags = HUMAN_APPEARANCE_FLAGS
 	dna_mutagen_banned = FALSE
 	race_mutation = /datum/bioEffect/mutantrace/human
-	
+
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"
 	icon = 'icons/mob/blob_ambassador.dmi'
@@ -1008,14 +1005,12 @@ ABSTRACT_TYPE(/datum/mutantrace)
 /datum/mutantrace/zombie/can_infect
 
 	add_ability(var/mob/living/carbon/human/H)
-		var/datum/abilityHolder/critter/C = H.add_ability_holder(/datum/abilityHolder/critter) //lol
-		C.transferOwnership(H)
-		C.addAbility(/datum/targetable/critter/zombify)
+		H.abilityHolder.addAbility(/datum/targetable/zombie/infect)
 
 	disposing()
 		if (ishuman(src.mob))
 			var/mob/living/carbon/human/H = src.mob
-			H.abilityHolder.removeAbility(/datum/targetable/critter/zombify)
+			H.abilityHolder.removeAbility(/datum/targetable/zombie/infect)
 		..()
 
 /datum/mutantrace/vampiric_thrall
@@ -1294,6 +1289,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 /datum/mutantrace/abomination/admin/weak //This also does not get any of the OnLife effects
 	ruff_tuff_and_ultrabuff = 0
 
+/// Probability someone gets bit when patting a werewolf
+#define SNAP_PROB 50
 /datum/mutantrace/werewolf
 	name = "werewolf"
 	icon = 'icons/mob/werewolf.dmi'
@@ -1339,12 +1336,13 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.max_health += 50
 			health_update_queue |= src.mob
 			src.original_name = src.mob.real_name
-			src.mob.real_name = "werewolf"
+			src.mob.real_name = "Werewolf"
 			src.mob.UpdateName()
 
 			src.mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
-			src.mob.bioHolder.AddEffect("accent_scoob_nerf", null, null, 0, 1)
 			src.mob.bioHolder.AddEffect("regenerator_wolf", null, null, 0, 1)
+
+			RegisterSignal(src.mob, COMSIG_ATTACKHAND, PROC_REF(snap_at_maybe))
 
 	disposing()
 		if (ishuman(src.mob))
@@ -1360,8 +1358,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.max_health -= 50
 			health_update_queue |= src.mob
 			src.mob.bioHolder.RemoveEffect("protanopia")
-			src.mob.bioHolder.RemoveEffect("accent_scoob_nerf")
 			src.mob.bioHolder.RemoveEffect("regenerator_wolf")
+
+			UnregisterSignal(src.mob, COMSIG_ATTACKHAND)
 
 			if (!isnull(src.original_name))
 				src.mob.real_name = src.original_name
@@ -1413,6 +1412,18 @@ ABSTRACT_TYPE(/datum/mutantrace)
 					SPAWN(1 SECOND)
 						src.mob?.emote_allowed = 1
 		return message
+
+	/// Has a chance to snap at mobs that try to pet them.
+	/// We don't really have a 'bite' proc and the damage/bleed procs are all kinds of fucked up so I'm just reusing the arms
+	proc/snap_at_maybe(mob/source, mob/target)
+		if (prob(SNAP_PROB) && target.a_intent == INTENT_HELP)
+			playsound(src.mob, 'sound/voice/animal/werewolf_attack1.ogg', 60, TRUE)
+			src.mob.visible_message("<span class='alert'>[src.mob] snaps at [target]!</span>", "<span class='alert'>You snap at [target]!</span>")
+			src.mob.set_a_intent(INTENT_HARM)
+			src.mob.hand_attack(target)
+
+#undef SNAP_PROB
+
 
 /datum/mutantrace/hunter
 	name = "hunter"

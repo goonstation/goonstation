@@ -246,7 +246,7 @@
 			available_parts -= organs_4
 		if(!H.limbs)
 			available_parts -= limbs
-		if(available_parts.len <= 0)
+		if(length(available_parts) <= 0)
 			return // something went horribly wrong, abort
 
 		var/list/missing_parts = list()
@@ -264,11 +264,11 @@
 				missing_parts += part_loc
 			else if(is_augmented_part(bodypart, part_loc))
 				candidates_to_remove += part_loc
-		if(missing_parts.len > 0)
+		if(length(missing_parts) > 0)
 			// we have body parts of the target missing, pick one of them
 			return pick(missing_parts)
 		available_parts -= candidates_to_remove
-		if(available_parts.len > 0)
+		if(length(available_parts) > 0)
 			return pick(available_parts)
 		// else, return null (no unupgraded parts left)
 

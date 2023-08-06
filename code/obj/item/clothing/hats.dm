@@ -796,6 +796,12 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 				src.color = P.font_color
 				src.desc = "A colorful paper hat"
 
+/obj/item/clothing/head/tinfoil_hat
+	name = "tinfoil hat"
+	desc = "Protects the wearer from mindcontrol and, apparently, weak martian psychic blasts which do not involve the liquification of brains."
+	icon_state = "tinfoil"
+	item_state = "tinfoil"
+
 /obj/item/clothing/head/towel_hat
 	name = "towel hat"
 	desc = "A white towel folded all into a fancy hat. NOT a turban!" // @;)

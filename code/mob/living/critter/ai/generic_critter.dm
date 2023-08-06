@@ -103,6 +103,69 @@
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
 
+/// This makes the critter maintain a distance and fire on the target from holder.owner.seek_target() if the target gets close we back away.
+/datum/aiTask/sequence/goalbased/critter/range_attack
+	name = "attacking at range"
+	weight = 10 // attack behaviour gets a high priority
+	ai_turbo = TRUE //attack behaviour gets a speed boost for robustness
+	distance_from_target = 4
+	max_dist = 7
+
+/datum/aiTask/sequence/goalbased/critter/range_attack/New(parentHolder, transTask) //goalbased aitasks have an inherent movement component
+	..(parentHolder, transTask)
+	add_task(holder.get_instance(/datum/aiTask/succeedable/critter/range_attack, list(holder)))
+
+/datum/aiTask/sequence/goalbased/critter/range_attack/precondition()
+	var/mob/living/critter/C = holder.owner
+	return C.can_critter_attack()
+
+/datum/aiTask/sequence/goalbased/critter/range_attack/on_reset()
+	..()
+	var/mob/living/critter/C = holder.owner
+	if(C)
+		C.set_a_intent(INTENT_HARM)
+
+/datum/aiTask/sequence/goalbased/critter/range_attack/get_targets()
+	var/mob/living/critter/C = holder.owner
+	return C.seek_target(src.max_dist)
+
+/////////////// The aiTask/succeedable handles the behaviour to do when we're in range of the target
+
+/datum/aiTask/succeedable/critter/range_attack
+	name = "ranged attack subtask"
+	var/has_started = FALSE
+	/// Maximum range to engage the target from
+	var/max_range = 6
+	/// Minimum range from the target before trying to flee
+	var/min_range = 3
+
+/datum/aiTask/succeedable/critter/range_attack/failed()
+	var/mob/living/critter/C = holder.owner
+	var/mob/T = holder.target
+	if(!has_started && !C.can_critter_attack()) //if we haven't started and can't attack, task fail.
+		return TRUE
+	if(!C || !T || BOUNDS_DIST(C, T) > src.max_range) //the tasks fails and is re-evaluated if the target is not in range
+		return TRUE
+
+/datum/aiTask/succeedable/critter/range_attack/succeeded()
+	var/mob/living/critter/C = holder.owner
+	return has_started && C.can_critter_attack() //if we've started an attack, and can attack again, then hooray, we have completed this task
+
+/datum/aiTask/succeedable/critter/range_attack/on_tick()
+	if(!has_started)
+		var/mob/living/critter/C = holder.owner
+		var/mob/T = holder.target
+		if(C && T && BOUNDS_DIST(C, T) > src.min_range)
+			holder.owner.set_dir(get_dir(C, T))
+			C.critter_attack(T)
+			has_started = TRUE
+		else
+			C.ai.move_away(T, src.min_range)
+
+/datum/aiTask/succeedable/critter/range_attack/on_reset()
+	has_started = FALSE
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------//
 
 /// This one makes the critter move towards a corpse returned from holder.owner.seek_scavenge_target()
 /datum/aiTask/sequence/goalbased/critter/scavenge
@@ -262,7 +325,7 @@
 	if(C && T && BOUNDS_DIST(C, T) == 0)
 		C.set_dir(get_dir(C, T))
 		if(C.can_critter_attack()) //if we can't attack, just do nothing until we can
-			C.critter_attack(holder.target)
+			C.critter_retaliate(holder.target)
 			src.has_started = TRUE
 	else if(C && T)
 		//we're not in punching range, let's fix that by moving back to the move subtask

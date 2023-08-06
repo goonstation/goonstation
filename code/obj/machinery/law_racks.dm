@@ -210,7 +210,7 @@
 		changeHealth(-power*0.15,"blob")
 
 	ex_act(severity)
-		src.material?.triggerExp(src, severity)
+		src.material_trigger_on_explosion(severity)
 		switch(severity)
 			if(1)
 				changeHealth(rand(-90,-70),"explosion severity [severity]")
@@ -232,8 +232,7 @@
 				src.visible_message("<span class='alert'>[src] is hit by the [P] but it deflects harmlessly.</span>")
 			return
 
-		if (src.material)
-			src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		switch (P.proj_data.damage_type)
 			if (D_KINETIC)
@@ -592,7 +591,8 @@
 						current_abilities |= ability.type
 					var/list/abilities_to_remove = current_abilities - ai_abilities
 					for(ability_type in abilities_to_remove)
-						aiAH.removeAbility(ability_type)
+						if (ispath(ability_type, /datum/targetable/ai/module))
+							aiAH.removeAbility(ability_type)
 					var/list/abilities_to_add = ai_abilities - current_abilities
 					for(ability_type in abilities_to_add)
 						aiAH.addAbility(ability_type)
@@ -743,6 +743,9 @@
 		if(istype(src.law_circuits[slot],/obj/item/aiModule/hologram_expansion))
 			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slot]
 			src.holo_expansions -= holo.expansion
+		else if(istype(src.law_circuits[slot],/obj/item/aiModule/ability_expansion))
+			var/obj/item/aiModule/ability_expansion/expansion = src.law_circuits[slot]
+			src.ai_abilities -= expansion.ai_abilities
 		src.law_circuits[slot]=null
 		src.welded[slot] = FALSE
 		src.screwed[slot] = FALSE
