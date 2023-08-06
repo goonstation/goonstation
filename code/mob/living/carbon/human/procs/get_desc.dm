@@ -378,6 +378,14 @@
 		if (DECOMP_STAGE_SKELETONIZED)
 			. += "<br><span class='alert'>[src]'s remains are completely skeletonized.</span>"
 
+	if (usr.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY) && src.mind && !src.mind.get_antagonist(ROLE_REVOLUTIONARY) && !src.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+		if (!src.can_be_converted_to_the_revolution())
+			. += "<br><span class='alert'>[src.name] is unable to be converted into a revolutionary.</span>"
+		else if (src.eyes_protected_from_light())
+			. += "<br><span class='alert'>[src.name] has eye protection. They cannot be converted to the revolution by using a flash.</span>"
+		else
+			. += "<br><span class='alert'>[src.name] is ready for conversion. Use a flash to turn [src.name] into a revolutionary.</span>"
+
 	if(usr.traitHolder && (usr.traitHolder.hasTrait("observant") || istype(usr, /mob/dead/observer)))
 		if(src.traitHolder && length(src.traitHolder.traits))
 			. += "<br><span class='notice'>[src] has the following traits:</span>"
