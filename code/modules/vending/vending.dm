@@ -1154,7 +1154,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		return TRUE
 	. = ..()
 
-
 /datum/action/bar/icon/right_vendor //This is used when you try to remove someone elses handcuffs.
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -1198,7 +1197,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 #undef WIRE_SCANID
 #undef WIRE_SHOCK
 #undef WIRE_SHOOTINV
-#undef HAS_FALLEN
 
 /obj/machinery/vending/coffee
 	name = "coffee machine"
