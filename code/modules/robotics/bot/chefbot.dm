@@ -45,7 +45,7 @@
 #define FOOD_QUALITY_SHIT 1
 #define FOOD_QUALITY_GOOD_SHIT 2
 /obj/machinery/bot/chefbot/proc/yell()
-	if (!src.emagged)
+	if (!src.emagged || prob(50))
 		var/obj/item/reagent_containers/food/snacks/food_to_judge
 		var/mob/living/carbon/human/thechef
 		var/mob/dork
@@ -66,9 +66,9 @@
 				"GET YOUR HANDS OUT OF YOUR POCKETS AND GET TO WORK! PEOPLE ARE HUNGRY!",
 				"COME ON, IT'S RUSH HOUR! MOVE, MOVE!"))
 			return
-		if (food_to_judge.quality > 1 && food_to_judge.quality < 5)
+		if (food_to_judge.quality > 1 && food_to_judge.quality < 5 && !src.emagged)
 			how_shit = FOOD_QUALITY_SHIT
-		else if (food_to_judge.quality >= 5)
+		else if (food_to_judge.quality >= 5 && !src.emagged)
 			how_shit = FOOD_QUALITY_GOOD_SHIT
 		raging = 1
 		icon_state = "chefbot-mad"
@@ -357,6 +357,7 @@
 		src.health -= W.force * 0.5
 		if (src.health <= 0)
 			src.explode()
+		..()
 
 /obj/machinery/bot/chefbot/gib()
 	return src.explode()
