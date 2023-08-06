@@ -31,7 +31,8 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	"Snoozing" = "ai_zzz",\
 	"Loading Bar" = "ai_loading",\
 	"Exclamation" = "ai_exclamation",\
-	"Question" = "ai_question") // this should be in typeinfo
+	"Question" = "ai_question",\
+	"Devious" = "ai_devious")
 /mob/living/silicon/ai
 	name = "AI"
 	voice_name = "synthesized voice"
