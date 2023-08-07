@@ -1322,5 +1322,5 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 	name = "Revolutionary Goggles"
 	item = /obj/item/clothing/glasses/meson/revolution
 	cost = 3
-	desc = "A pair of goggles that shows how difficult it would be to convert a person. Examine someone to trigger the effect."
+	desc = "A pair of goggles that show how difficult it would be to convert a person. Examine someone to trigger the effect."
 

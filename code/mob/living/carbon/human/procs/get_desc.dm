@@ -378,19 +378,18 @@
 		if (DECOMP_STAGE_SKELETONIZED)
 			. += "<br><span class='alert'>[src]'s remains are completely skeletonized.</span>"
 
-	if (GET_ATOM_PROPERTY(usr, PROP_MOB_EXAMINE_FLASHRESIST) && src != usr)
-		if (usr.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY) && src.mind && !src.mind.get_antagonist(ROLE_REVOLUTIONARY) && !src.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY)) // headrevs get extra info
-			if (!src.can_be_converted_to_the_revolution())
-				. += "<br><span class='alert'>[src.name] is unable to be converted into a revolutionary.</span>"
+	if (GET_ATOM_PROPERTY(usr, PROP_MOB_EXAMINE_FLASHRESIST)) //&& src != usr)
+		if (usr.mind.get_antagonist(ROLE_TRAITOR) && src.mind && !src.mind.get_antagonist(ROLE_REVOLUTIONARY) && !src.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY)) // headrevs get extra info
+			if (!src.can_be_converted_to_the_revolution(TRUE))
+				. += "<br><span class='alert'>[src.name] can not be converted into a revolutionary by any means.</span>"
+			else if (locate(/obj/item/implant/counterrev) in src.implant)
+				. += "<br><span class='alert'>[src.name] has a loyalty implant, It must be removed before conversion can occur.</span>"
 			else if (src.eyes_protected_from_light())
 				. += "<br><span class='alert'>[src.name] has eye protection. They cannot be converted to the revolution by using a flash.</span>"
 			else
 				. += "<br><span class='alert'>[src.name] is ready for conversion. Use a flash to turn [src.name] into a revolutionary.</span>"
 		else
-			if (src.eyes_protected_from_light())
-				. += "<br><span class='alert'>[src.name] has a form of eye protection.</span>"
-			else
-				. += "<br><span class='alert'>[src.name] does not have a form of eye protection.</span>"
+			. += "<br><span class='alert'>[src.name] [src.eyes_protected_from_light() ? "is" : "is not"] protected from flashes.</span>"
 
 	if(usr.traitHolder && (usr.traitHolder.hasTrait("observant") || istype(usr, /mob/dead/observer)))
 		if(src.traitHolder && length(src.traitHolder.traits))
