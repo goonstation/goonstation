@@ -118,29 +118,43 @@
 
 // Effects
 
-// Forest Canopy
-/atom/movable/screen/parallax_layer/foreground/forest_canopy
-	parallax_icon_state = "forest_1"
+// Clouds
+/atom/movable/screen/parallax_layer/foreground/clouds
+	parallax_icon_state = "clouds_3"
 	color = list(
-		1, 0, 0, 0,
-		0, 1, 0, 0,
-		0, 0, 1, 0,
+		0, 0, 0, -0.4,
+		0, 0, 0, -0.4,
+		0, 0, 0, -0.4,
 		0, 0, 0, 1,
-		0, 0, 0, -0.7)
+		0, 0, 0, 0)
 
 	static_colour = TRUE
 	parallax_value = 0.9
 
+	scroll_speed = 10
+	scroll_angle = 150
+
+	dense
+		color = list(
+			0, 0, 0, -0.4,
+			0, 0, 0, -0.4,
+			0, 0, 0, -0.4,
+			0, 0, 0, 1,
+			0, 0, 0, -0.5)
+		parallax_icon_state = "clouds_1"
+		parallax_value = 0.8
+		scroll_speed = 2
+
 	sparse
 		color = list(
-			1, 0, 0, 0,
-			0, 1, 0, 0,
-			0, 0, 1, 0,
-			0, 0, 0, 1,
-			0, 0, 0, -0.8)
-		parallax_icon_state = "forest_2"
-		blend_mode = BLEND_ADD
+			0, 0, 0, -0.4,
+			0, 0, 0, -0.4,
+			0, 0, 0, -0.4,
+			0, 0, 0, 0,
+			0, 0, 0, -0.4)
+		parallax_icon_state = "clouds_2"
 		parallax_value = 0.7
+		scroll_speed = 20
 
 
 // Adventure Zones

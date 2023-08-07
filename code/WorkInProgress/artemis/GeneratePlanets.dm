@@ -275,8 +275,9 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 	else if(istype(generator, /datum/map_generator/forest_generator))
 		planet_area.area_parallax_layers = list(
-			/atom/movable/screen/parallax_layer/foreground/forest_canopy=list(),
-			/atom/movable/screen/parallax_layer/foreground/forest_canopy/sparse=list()
+			/atom/movable/screen/parallax_layer/foreground/clouds=list(),
+			/atom/movable/screen/parallax_layer/foreground/clouds/dense=list(),
+			/atom/movable/screen/parallax_layer/foreground/clouds/sparse=list()
 			)
 
 	// Occlude overlays on edges
