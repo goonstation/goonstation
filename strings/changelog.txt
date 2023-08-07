@@ -1,4 +1,49 @@
 
+(t)sun aug 06 23
+(u)Mintyphresh
+(p)15240
+(e)🔄🐣|C-Rework, A-Respawning
+(+)Latejoining players with the Stowaway, Pilot, or Heavy Sleeper trait will no longer be announced.
+(u)Sovexe
+(p)15267
+(e)|
+(+)Minimaps can now track targets inside of things, such as pods
+(t)sun aug 6 23
+(u)LeahTheTech
+(+)Aconite is now slightly more effective against werewolves.
+(t)sat aug 05 23
+(u)Sovexe
+(p)15210
+(e)🆕🗺|C-Feature, A-Mapping
+(*)The Pod Wars NSV Reliant now has a neutral map that shows the position of pilots on both teams.
+(u)Kubius
+(p)13348
+(e)🪲⚖🔄💡|C-Bug, C-Balance, C-Rework, A-Station-Systems
+(*)APC power delivery has received a substantial overhaul; the power grid will now prioritize supporting heavy loads, and recharging will scale itself to the amount of spare power available.
+(u)Lord_Earthfire
+(p)15057
+(e)🪲🔎🧱|C-Bug, C-Code-Quality, A-Materials
+(+)Material effects on-attacks are now happening more consistent, e.g. erebite hats weared on you will explode if you get bonked on the head.
+(u)Mr. Moriarty & Erinexx
+(p)15188
+(e)🗺🎨📦|A-Mapping, C-Sprites, A-Game-Objects
+(+)Resprited robuddies.
+(u)Bartimeus973
+(p)15208
+(e)🆕🔨📦|C-Feature, A-Player-Actions, A-Game-Objects
+(*)Vampires should now avoid using tanning beds.
+(t)fri aug 04 23
+(u)Wisemonster
+(p)14881
+(e)⚖⏰|C-Balance, A-Status-Effects
+(*)Interdictors will now drain 6u of power per player in their influence
+(*)Removed power drain on interdictors from negating worm holes and magnetic biofields
+(+)Changed the interdictor protection to be tied to a status effect
+(+)Added a particle effect for the interdictor status effect
+(u)DimWhat
+(p)15171
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added a bunch more clothing sprites for monkeys, ook!
 (t)thu aug 03 23
 (u)Wisemonster
 (p)14825

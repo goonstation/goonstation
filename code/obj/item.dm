@@ -383,6 +383,38 @@ ABSTRACT_TYPE(/obj/item)
 		return 1
 	..()
 
+/obj/item/material_trigger_on_mob_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/situation_modifier)
+	var/hitchance = 10
+	// if the item is in you, you get a chance, depending on the size, that it gets hit
+	switch(src.w_class)
+		if (-INFINITY to W_CLASS_TINY)
+			hitchance = 10
+		if (W_CLASS_SMALL)
+			hitchance = 20
+		if (W_CLASS_NORMAL)
+			hitchance = 30
+		if (W_CLASS_BULKY)
+			hitchance = 60
+		if (W_CLASS_HUGE to INFINITY)
+			hitchance = 100
+	// It won't trigger when you are carrying it in your hand and it isnt targeted, with the exception that it will always trigger if you are blocking or having a person in a grab with the item
+	if (attacked.l_hand == src  || attacked.r_hand == src)
+		if ((src.c_flags && src.c_flags & HAS_GRAB_EQUIP))
+			hitchance = 100
+		else
+			// if the arm you are holding the item is target, the chance gets doubled
+			if (situation_modifier && istext(situation_modifier))
+				var/targeted_zone = parse_zone(situation_modifier)
+				if(targeted_zone == "both arms" || (attacked.l_hand == src && targeted_zone =="left arm") || (attacked.r_hand == src && targeted_zone == "right arm"))
+					hitchance *= 2
+				else
+					hitchance = 0
+			else
+				hitchance = 0
+	if(!prob(hitchance))
+		return
+	..()
+
 
 //disgusting proc. merge with foods later. PLEASE
 /obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/by_matter_eater=FALSE)
@@ -517,8 +549,6 @@ ABSTRACT_TYPE(/obj/item)
 					firesource = I
 					break
 			src.combust(firesource)
-	if (src.material)
-		src.material.triggerTemp(src, temperature)
 	..() // call your fucking parents
 
 /// Gets the effective contraband level of an item. Use this instead of accessing .contraband directly
@@ -830,8 +860,7 @@ ABSTRACT_TYPE(/obj/item)
 
 /obj/item/attackby(obj/item/W, mob/user, params)
 	if (W.firesource)
-		if(src.material)
-			src.material.triggerTemp(src ,1500)
+		src.material_trigger_on_temp(1500)
 		if (src.burn_possible && src.burn_point <= 1500)
 			src.combust(W)
 		else
@@ -851,7 +880,7 @@ ABSTRACT_TYPE(/obj/item)
 	SHOULD_NOT_SLEEP(TRUE)
 	if (src.burning)
 		if (src.material && !(src.item_function_flags & COLD_BURN))
-			src.material.triggerTemp(src, src.burn_output + rand(1,200))
+			src.material_trigger_on_temp(src.burn_output + rand(1,200))
 		var/turf/T = get_turf(src.loc)
 		if (T && !(src.item_function_flags & COLD_BURN)) // runtime error fix
 			T.hotspot_expose((src.burn_output + rand(1,200)),5)
@@ -984,8 +1013,7 @@ ABSTRACT_TYPE(/obj/item)
 /obj/item/ex_act(severity)
 	switch(severity)
 		if (2)
-			if (src.material)
-				src.material.triggerTemp(src ,7500)
+			src.material_trigger_on_temp(7500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 7500)
 				src.combust()
 			if (src.artifact)
@@ -993,8 +1021,7 @@ ABSTRACT_TYPE(/obj/item)
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
 		if (3)
-			if (src.material)
-				src.material.triggerTemp(src, 3500)
+			src.material_trigger_on_temp(3500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 3500)
 				src.combust()
 			if (src.artifact)
@@ -1214,11 +1241,11 @@ ABSTRACT_TYPE(/obj/item)
 			var/momentum = getProperty("momemtum")
 			force += 5
 */
-	if (src.material)
-		src.material.triggerOnAttack(src, user, M)
+	src.material_on_attack_use(user, M)
 	for (var/atom/A in M)
-		if (A.material)
-			A.material.triggerOnAttacked(A, user, M, src)
+		A.material_trigger_on_mob_attacked(user, M, src, hit_area)
+	for (var/atom/equipped_stuff in M.equipped())
+		equipped_stuff.material_trigger_on_mob_attacked(user, M, src, hit_area)
 
 	user.violate_hippocratic_oath()
 
@@ -1595,7 +1622,7 @@ ABSTRACT_TYPE(/obj/item)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	#endif
 
-	if(src.material) src.material.triggerDrop(user, src)
+	src.material_on_drop(user)
 	if (islist(src.ability_buttons))
 		for(var/obj/ability_button/B in ability_buttons)
 			B.OnDrop()
@@ -1614,7 +1641,7 @@ ABSTRACT_TYPE(/obj/item)
 	#ifdef COMSIG_MOB_PICKUP
 	SEND_SIGNAL(user, COMSIG_MOB_PICKUP, src)
 	#endif
-	src.material?.triggerPickup(user, src)
+	src.material_on_pickup(user)
 	set_mob(user)
 	show_buttons()
 	if (src.inventory_counter)

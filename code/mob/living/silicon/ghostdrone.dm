@@ -1104,7 +1104,7 @@
 		if (damage < 1)
 			return
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		if (!dmgtype) //brute only
 			src.TakeDamage("All", damage)
@@ -1168,11 +1168,10 @@
 			src.TakeDamage(null, round(src.max_health / 2, 1.0))
 
 	temperature_expose(null, temp, volume)
-		src.material?.triggerTemp(src, temp)
+		src.material_trigger_on_temp(temp)
 
 		for(var/atom/A in src.contents)
-			if(A.material)
-				A.material.triggerTemp(A, temp)
+			A.material_trigger_on_temp(temp)
 
 	new_static_image()
 		return

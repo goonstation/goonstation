@@ -35055,10 +35055,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
-/obj/machinery/door/airlock/pyro/medical/alt{
-	name = "Morgue";
-	req_access_txt = "29"
-	},
+/obj/machinery/door/airlock/pyro/medical/alt,
 /turf/simulated/floor/white,
 /area/station/medical/robotics)
 "cTx" = (
@@ -38906,6 +38903,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/rancher,
 /turf/simulated/floor,
 /area/station/ranch)
 "jlM" = (
@@ -43298,6 +43296,7 @@
 	name = "Ranch"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/rancher,
 /turf/simulated/floor/shuttlebay,
 /area/station/ranch)
 "qSL" = (
@@ -43463,8 +43462,7 @@
 "rkz" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
 	dir = 8;
-	name = "Morgue";
-	req_access_txt = "29"
+	name = "Morgue"
 	},
 /obj/mapping_helper/access/morgue,
 /obj/mapping_helper/firedoor_spawn,
@@ -43998,6 +43996,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/rancher,
 /turf/simulated/floor,
 /area/station/ranch)
 "svs" = (
@@ -44302,10 +44301,6 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
-"sXk" = (
-/obj/machinery/plantpot,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "sYB" = (
 /turf/simulated/floor/yellow/side,
 /area/station/storage/eeva)
@@ -84397,7 +84392,7 @@ chc
 cjF
 ciZ
 ciB
-sXk
+ciQ
 pml
 uOJ
 tEE
