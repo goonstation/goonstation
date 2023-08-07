@@ -553,6 +553,10 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/bluegreen,
 /area/ship/arjuna)
+"nf" = (
+/obj/machinery/ion_drive/drive,
+/turf/simulated/floor/black,
+/area/ship/artemis)
 "nz" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/blue/checker,
@@ -865,7 +869,7 @@
 /turf/simulated/floor/black,
 /area/ship/arjuna)
 "wB" = (
-/obj/machinery/shuttle/engine/propulsion/ion_drive,
+/obj/machinery/ion_drive/interface,
 /turf/simulated/floor/black,
 /area/ship/artemis)
 "wI" = (
@@ -1170,6 +1174,10 @@
 	dir = 1;
 	icon_state = "fblue2"
 	},
+/area/ship/artemis)
+"EN" = (
+/obj/machinery/atmospherics/binary/ion_drive/plas_tank,
+/turf/simulated/floor/black,
 /area/ship/artemis)
 "ES" = (
 /obj/machinery/computer/cloning{
@@ -9229,7 +9237,7 @@ Tt
 Vt
 Tt
 Tt
-Tt
+EN
 po
 Ar
 dl
@@ -9833,7 +9841,7 @@ Tt
 Vt
 Tt
 Tt
-Tt
+nf
 po
 Ar
 dl
