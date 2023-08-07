@@ -2077,7 +2077,7 @@ obj/item/whetstone
 	attack(mob/M, mob/user)
 		if (!isdead(M))
 			if (src.two_handed)
-				M.setStatus("slowed", 4 SECONDS)
+				M.changeStatus("slowed", 5 SECONDS)
 			else
-				M.setStatus("slowed", 2 SECONDS)
+				M.changeStatus("slowed", 2 SECONDS)
 		. = ..()
