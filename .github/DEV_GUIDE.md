@@ -198,6 +198,10 @@ This compiles the code to a dmb file. Then you can run Dream Daemon, select the 
 
 Be sure to always test not only if your changes work, but also if you didn't actually break something else that might be related- Dream Maker is a very old and occasionally fickle language, and sometimes it happens that things will just refuse to work.
 
+:::info
+It's also recommended that you set up some build settings before you press <kbd>F5</kbd>. Within the `_std` folder, there exists the file `__build.dm`, which can provide many helpful options for your testing, such as picking certain maps and disabling certain features to make the game boot faster. Be careful to save the uncommented lines you want in your vsc workspace but **NOT** actually commit these changes to the branch. More information about building a server is provided in the appendix.
+:::
+
 If you ever hit a brick wall, you can always ask the #imcoder channel in the [Discord](https://discord.gg/zd8t6pY). There's no such thing as a stupid question, and while, depending on activity, you might not always get an answer, it never hurts to ask.
 
 :::info
