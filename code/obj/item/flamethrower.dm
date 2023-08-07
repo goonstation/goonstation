@@ -712,6 +712,7 @@ A Flamethrower in various states of assembly
 					src.spread_angle = 15
 					src.shoot_delay = 2 DECI SECONDS
 					src.chem_divisor = 2
+					src.current_projectile.shot_number = 2
 				if("burst") // close range burst
 					src.mode = FLAMER_MODE_BURST
 					src.spread_angle = 33
