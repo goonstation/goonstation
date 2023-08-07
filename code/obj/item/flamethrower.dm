@@ -164,8 +164,8 @@ A Flamethrower in various states of assembly
 				P_special_data["speed_mult"] = 0.6
 				P_special_data["chem_pct_app_tile"] = 0.15
 			if(FLAMER_MODE_BURST)
-				P_special_data["speed_mult"] = 0.5
-				P_special_data["chem_pct_app_tile"] = 0.25
+				P_special_data["speed_mult"] = 0.6
+				P_special_data["chem_pct_app_tile"] = 0.20
 			if(FLAMER_MODE_SINGLE)
 				P_special_data["speed_mult"] = 1
 				P_special_data["chem_pct_app_tile"] = 0.1
@@ -189,6 +189,10 @@ A Flamethrower in various states of assembly
 	var/obj/item/rods/rod = null
 	var/obj/item/device/igniter/igniter = null
 	inventory_counter_enabled = 1
+
+	setupProperties()
+		. = ..()
+		setProperty("movespeed", 0.5)
 
 /obj/item/tank/jetpack/backtank
 	name = "fuelpack"
@@ -710,10 +714,11 @@ A Flamethrower in various states of assembly
 					src.chem_divisor = 5 //5 shots per second
 				if("burst") // close range burst
 					src.mode = FLAMER_MODE_BURST
-					src.spread_angle = 30
+					src.spread_angle = 33
 					src.current_projectile.shot_number = 4
 					src.chem_divisor = 4 //4 shots per burst
 					src.shoot_delay = 1 SECOND
+					src.current_projectile.fullauto_valid = 0
 				if("semi_auto") // single line (default)
 					src.mode = FLAMER_MODE_SINGLE
 					src.current_projectile.fullauto_valid = 0
