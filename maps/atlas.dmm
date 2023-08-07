@@ -13076,12 +13076,22 @@
 	},
 /area/station/mining/refinery)
 "aQk" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Arrivals"
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
 	},
-/obj/mapping_helper/access/rancher,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "aQl" = (
 /obj/machinery/door_control{
@@ -19687,7 +19697,7 @@
 /area/station/hallway/primary/north)
 "wlm" = (
 /obj/displaycase{
-	displayed = new /obj/item/captaingun()
+	displayed = new/obj/item/captaingun()
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
