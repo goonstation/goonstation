@@ -2039,7 +2039,7 @@ obj/item/whetstone
 	throwforce = 20
 	stamina_cost = 25
 	stamina_damage = 45
-	click_delay = 15
+	click_delay = 10
 
 	contraband = 5
 	is_syndicate = TRUE
@@ -2055,7 +2055,7 @@ obj/item/whetstone
 			force = 30
 			stamina_cost = 30
 			stamina_damage = 50
-			click_delay = 25
+			click_delay = 20
 		else
 			force = initial(src.force)
 			stamina_cost = initial(src.stamina_cost)
@@ -2075,7 +2075,7 @@ obj/item/whetstone
 		..()
 
 	attack(mob/M, mob/user)
-		if (isalive(M))
+		if (!isdead(M))
 			if (src.two_handed)
 				M.setStatus("slowed", 4 SECONDS)
 			else
