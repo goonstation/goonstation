@@ -379,7 +379,7 @@
 			. += "<br><span class='alert'>[src]'s remains are completely skeletonized.</span>"
 
 	if (GET_ATOM_PROPERTY(usr, PROP_MOB_EXAMINE_FLASHRESIST) && src != usr)
-		if (usr.mind.get_antagonist(ROLE_TRAITOR) && src.mind && !src.mind.get_antagonist(ROLE_REVOLUTIONARY) && !src.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY)) // headrevs get extra info
+		if (usr.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY) && src.mind && !src.mind.get_antagonist(ROLE_REVOLUTIONARY) && !src.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY)) // headrevs get extra info
 			if (!src.can_be_converted_to_the_revolution(TRUE))
 				. += "<br><span class='alert'>[src.name] can not be converted into a revolutionary by any means.</span>"
 			else if (locate(/obj/item/implant/counterrev) in src.implant)
