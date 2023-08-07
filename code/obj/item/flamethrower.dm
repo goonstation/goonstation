@@ -180,6 +180,7 @@ A Flamethrower in various states of assembly
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	desc = "You are a firestarter!"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	c_flags = EQUIPPED_WHILE_HELD | NOT_EQUIPPED_WHEN_WORN
 	force = 3
 	throwforce = 10
 	throw_speed = 1
