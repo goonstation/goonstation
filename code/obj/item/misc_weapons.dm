@@ -2058,7 +2058,6 @@ obj/item/whetstone
 			click_delay = 25
 		else
 			force = initial(src.force)
-			throwforce = initial(src.throwforce)
 			stamina_cost = initial(src.stamina_cost)
 			stamina_damage = initial(src.stamina_damage)
 			click_delay = initial(src.click_delay)
