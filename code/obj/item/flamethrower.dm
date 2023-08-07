@@ -710,9 +710,10 @@ A Flamethrower in various states of assembly
 				if("auto") // mid-range automatic
 					src.mode = FLAMER_MODE_AUTO
 					src.spread_angle = 15
-					src.shoot_delay = 3 DECI SECONDS
+					src.shoot_delay = 4 DECI SECONDS
 					src.chem_divisor = 2
 					src.current_projectile.shot_number = 2
+					src.current_projectile.shot_delay = 2 DECI SECONDS
 				if("burst") // close range burst
 					src.mode = FLAMER_MODE_BURST
 					src.spread_angle = 33
