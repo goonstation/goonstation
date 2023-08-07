@@ -1,5 +1,9 @@
 
 (t)sun aug 06 23
+(u)Mintyphresh
+(p)15240
+(e)🔄🐣|C-Rework, A-Respawning
+(+)Latejoining players with the Stowaway, Pilot, or Heavy Sleeper trait will no longer be announced.
 (u)Sovexe
 (p)15267
 (e)|
