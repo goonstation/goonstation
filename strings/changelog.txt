@@ -8,7 +8,6 @@
 (p)15267
 (e)|
 (+)Minimaps can now track targets inside of things, such as pods
-(t)sun aug 6 23
 (u)LeahTheTech
 (+)Aconite is now slightly more effective against werewolves.
 (t)sat aug 05 23
