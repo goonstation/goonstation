@@ -29,7 +29,7 @@ proc/load_morrigan()
 
 			session = data["session"]
 
-			switch(data["command"])
+			switch(lowertext(data["command"]))
 				if ("transmit")
 					if (ON_COOLDOWN(src, "transmit", 10 SECONDS))
 						message_host("command=nack") //TODO: handle this maybe
