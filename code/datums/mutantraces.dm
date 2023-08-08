@@ -2329,6 +2329,53 @@ TYPEINFO(/datum/mutantrace/pug)
 					. = "<B>[src.mob]</B> BWAHCAWCKs!"
 					playsound(src.mob, 'sound/voice/screams/chicken_bawk.ogg', 50, 0, 0, src.mob.get_age_pitch())
 
+/datum/mutantrace/cyberman
+	name = "cyberman"
+	genetics_removable = FALSE
+	mutant_folder = 'icons/mob/human.dmi' // vOv
+	mutant_organs = list(\
+		"left_eye"=/obj/item/organ/eye/cyber,\
+		"right_eye"=/obj/item/organ/eye/cyber,\
+		"heart"=/obj/item/organ/heart/cyber,\
+		"appendix"=/obj/item/organ/appendix/cyber,\
+		"intestines"=/obj/item/organ/intestines/cyber,\
+		"left_kidney"=/obj/item/organ/kidney/cyber/left,\
+		"right_kidney"=/obj/item/organ/kidney/cyber/right,\
+		"liver"=/obj/item/organ/liver/cyber,\
+		"left_lung"=/obj/item/organ/lung/cyber/left,\
+		"right_lung"=/obj/item/organ/lung/cyber/right,\
+		"pancreas"=/obj/item/organ/pancreas/cyber,\
+		"spleen"=/obj/item/organ/spleen/cyber,\
+		"stomach"=/obj/item/organ/stomach/cyber,\
+		"butt"=/obj/item/clothing/head/butt/cyberbutt)
+	special_hair_1_icon = 'icons/mob/human_hair.dmi'
+	special_hair_1_state = "bald"
+	special_hair_1_color = null
+	special_hair_2_icon = 'icons/mob/human_hair.dmi'
+	special_hair_2_state = "bald"
+	special_hair_2_color = null
+	special_hair_3_icon = 'icons/mob/human_hair.dmi'
+	special_hair_3_state = "bald"
+	special_hair_3_color = null
+	override_hair = 1
+	override_beard = 1
+	override_detail = 1
+	override_skintone = 1
+	mutant_appearance_flags = (HAS_HUMAN_EYES | BUILT_FROM_PIECES | TORSO_HAS_SKINTONE | HAS_SPECIAL_HAIR)
+
+	on_attach(var/mob/living/carbon/human/H)
+		..()
+		if(ishuman(H))
+			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
+			AH.s_tone = "#BFC9CA"
+			H.organHolder.brain.icon_state = "ai_brain"
+			H.organHolder.brain.item_state = "ai_brain"
+			H.organHolder.brain.name = "cybernetic brain"
+			H.organHolder.brain.desc = "A strangely metallic human brain, it's not the standard issue for NT cyborgs or AIs."
+			H.blood_id = "oil"
+			SPAWN(1 SECOND)
+				H.update_colorful_parts()
+
 #undef OVERRIDE_ARM_L
 #undef OVERRIDE_ARM_R
 #undef OVERRIDE_LEG_R
