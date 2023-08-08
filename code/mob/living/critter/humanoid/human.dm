@@ -1,13 +1,10 @@
 /**
  * A file for human mob critters
  *
- * It might seem odd, but when you just want a humanoid mob it makes sense to keep it simple
- * with normal humans you have more processing and more things to worry about like oxygen, disarms and inventory
- * and using real weapons you need to worry about ammo and such as well. The critter AI is also currently
- * better for the most part compared to human AI and only has full compatibility with mob critters.
- *
  * The idea is to use a temporary mob equip them and copy the appearance for the critter
- * while keeping inhands for their limbs where possible.
+ * Inhands are handled on the handholder just set object_for_inhand as an object path.
+ *
+ * Subtypes should always set a human to copy but don't need to set a corpse spawner.
  *
  */
 ABSTRACT_TYPE(/mob/living/critter/human)
