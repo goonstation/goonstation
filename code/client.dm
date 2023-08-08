@@ -148,7 +148,6 @@
 		ircbot.event("logout", src.key)
 	*/
 	logTheThing(LOG_ADMIN, src, " has disconnected.")
-
 	src.images?.Cut() //Probably not needed but eh.
 
 	if (src.mob)

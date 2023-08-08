@@ -15,7 +15,7 @@ var/datum/preMapLoad/preMapLoad = new
 #define DEBUG
 // END_PREFERENCES
 
-// Compatibility Check
+// Compatibility C/heck
 #include "_std\compatibility.dme"
 // Compatibility START
 #ifdef BYOND_VERSION_OK
@@ -1954,6 +1954,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\machinery\computer\security\riot.dm"
 #include "code\obj\machinery\computer\security\sec_camera_move.dm"
 #include "code\obj\machinery\computer\security\security_cameras_chui.dm"
+#include "code\obj\machinery\computer\syndicate\podbay.dm"
 #include "code\obj\machinery\computer\tetris\tetris.dm"
 #include "code\obj\machinery\door\airlock.dm"
 #include "code\obj\machinery\door\door_control.dm"
