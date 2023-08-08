@@ -409,6 +409,28 @@ proc/load_morrigan()
 		if (prob(2) && !src.stat)
 			src.emote("snore")
 
+/mob/living/carbon/human/syndicatemorriganeng
+	New()
+		..()
+		src.equip_new_if_possible((/obj/item/clothing/head/helmet/hardhat), SLOT_HEAD)
+		src.equip_new_if_possible((/obj/item/clothing/glasses/meson), SLOT_GLASSES)
+		src.equip_new_if_possible((/obj/item/clothing/under/misc/casualjeansyel), SLOT_W_UNIFORM)
+		src.equip_new_if_possible((/obj/item/clothing/suit/hi_vis), SLOT_WEAR_SUIT)
+		src.equip_new_if_possible((/obj/item/clothing/gloves/yellow), SLOT_GLOVES)
+		src.equip_new_if_possible((/obj/item/clothing/shoes/magnetic), SLOT_SHOES)
+
+
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+
+		if (prob(0) && !src.stat)
+			src.emote("scream")
+
+	initializeBioholder()
+		. = ..()
+		randomize_look(src, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, src)
+
 /mob/living/carbon/human/syndicatemorrigandoc
 	New()
 		..()
