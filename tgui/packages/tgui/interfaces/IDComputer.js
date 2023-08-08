@@ -52,7 +52,7 @@ const DeptBox = (props, context) => {
       {accesses && accesses.map(access => {
         return (
           <Button
-            onClick={() => act("access", { access: access.id, allowed: !access.allowed })}
+            onClick={() => act("access", { access: access.id, allowed: !target_accesses.includes(access.id) })}
             key={access.id}
             selected={target_accesses.includes(access.id)}
           >{access.name}
