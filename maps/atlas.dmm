@@ -13076,22 +13076,12 @@
 	},
 /area/station/mining/refinery)
 "aQk" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 4
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Arrivals"
 	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor/white,
+/obj/mapping_helper/access/rancher,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor,
 /area/station/science/lab)
 "aQl" = (
 /obj/machinery/door_control{

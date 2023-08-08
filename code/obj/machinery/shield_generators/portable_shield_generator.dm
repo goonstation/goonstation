@@ -629,6 +629,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			playsound(src.loc, src.sound_shieldhit, 50, 1)
 			return
 
+
+
 //sealab arrivalss
 /obj/machinery/door/var/obj/forcefield/energyshield/linked_forcefield = 0
 
