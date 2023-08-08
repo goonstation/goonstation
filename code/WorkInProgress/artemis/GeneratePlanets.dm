@@ -272,13 +272,17 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 			/atom/movable/screen/parallax_layer/foreground/dust=list(color=color_matrix, scroll_speed=scroll_speed, scroll_angle=angle),
 			/atom/movable/screen/parallax_layer/foreground/dust/sparse=list(color=color_matrix, scroll_speed=scroll_speed*1.5, scroll_angle=angle)
 		)
-
 	else if(istype(generator, /datum/map_generator/forest_generator))
+		var/angle = rand(90,270)
 		planet_area.area_parallax_layers = list(
-			/atom/movable/screen/parallax_layer/foreground/clouds=list(),
-			/atom/movable/screen/parallax_layer/foreground/clouds/dense=list(),
-			/atom/movable/screen/parallax_layer/foreground/clouds/sparse=list()
+			/atom/movable/screen/parallax_layer/foreground/clouds=list(scroll_angle=angle)
 			)
+		if(prob(20))
+			planet_area.area_parallax_layers[/atom/movable/screen/parallax_layer/foreground/clouds/dense] = list(scroll_angle=angle+rand(5,5))
+		if(prob(20))
+			planet_area.area_parallax_layers[/atom/movable/screen/parallax_layer/foreground/clouds/sparse] = list(scroll_angle=angle+rand(5,5))
+		if(prob(20))
+			planet_area.area_parallax_layers[/atom/movable/screen/parallax_layer/foreground/snow] = list(scroll_speed=rand(1,5), scroll_angle=240)
 
 	// Occlude overlays on edges
 	if(planet_area.area_parallax_layers)

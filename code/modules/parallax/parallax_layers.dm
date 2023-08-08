@@ -131,7 +131,7 @@
 	static_colour = TRUE
 	parallax_value = 0.9
 
-	scroll_speed = 10
+	scroll_speed = 5
 	scroll_angle = 150
 
 	dense
@@ -143,7 +143,7 @@
 			0, 0, 0, -0.5)
 		parallax_icon_state = "clouds_1"
 		parallax_value = 0.8
-		scroll_speed = 2
+		scroll_speed = 1
 
 	sparse
 		color = list(
@@ -154,7 +154,7 @@
 			0, 0, 0, -0.4)
 		parallax_icon_state = "clouds_2"
 		parallax_value = 0.7
-		scroll_speed = 20
+		scroll_speed = 10
 
 
 // Adventure Zones
