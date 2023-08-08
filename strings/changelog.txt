@@ -1,4 +1,10 @@
 
+(t)tue aug 08 23
+(u)Paaiii
+(p)15274
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(*)Added 9 new AI status screens, as well as inverted versions of existing AI status screens
+(+)Cleaned up existing AI status screens to give them more depth and also so they follow the same colour palette
 (t)mon aug 07 23
 (u)tarmunora
 (*)Assembled flamethrowers have a movement speed penalty.
