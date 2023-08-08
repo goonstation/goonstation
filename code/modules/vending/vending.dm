@@ -3047,6 +3047,14 @@ TYPEINFO(/obj/machinery/vending/janitor)
 
 ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 
+/obj/machinery/vending/air_vendor/pod_wars
+	air_cost = 0
+	can_fall = FALSE
+	can_hack = FALSE
+
+	ex_act(severity)
+		. = ..()
+
 /obj/machinery/vending/jobclothing/security
 	name = "Security Apparel"
 	desc = "A vending machine that vends Security clothing."

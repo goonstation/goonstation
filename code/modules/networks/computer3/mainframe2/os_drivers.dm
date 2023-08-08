@@ -1034,7 +1034,8 @@
 		driver_id &= ~ESIG_DATABIT
 
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || !length(initlist) || initlist[1] != "transmit" || length(initlist) > 2)
+		var/command = lowertext(initlist[1])
+		if (!initparams || !length(initlist) || command != "transmit" || length(initlist) > 2)
 			message_user("Invalid commmand format.|nValid Commands:|n (Transmit) to initiate transfer, with optional argument of a delay in seconds.","multiline")
 			mainframe_prog_exit
 			return
@@ -1047,7 +1048,7 @@
 			message_user("Transmitting...")
 		else
 			message_user("Transmitting in [delay] seconds...")
-		var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"=initlist[1], "delay"=delay))
+		var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"=command, "delay"=delay))
 		switch(success)
 			if (ESIG_SUCCESS)
 				message_user("Transmission attempt successful.")

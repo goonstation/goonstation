@@ -1,5 +1,11 @@
-
+(t)sun aug 6 23
+(u)LeahTheTech
+(+)Aconite is now slightly more effective against werewolves.
 (t)sat aug 05 23
+(u)Sovexe
+(p)15210
+(e)🆕🗺|C-Feature, A-Mapping
+(*)The Pod Wars NSV Reliant now has a neutral map that shows the position of pilots on both teams.
 (u)Kubius
 (p)13348
 (e)🪲⚖🔄💡|C-Bug, C-Balance, C-Rework, A-Station-Systems

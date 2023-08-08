@@ -2024,3 +2024,60 @@ obj/item/whetstone
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
+
+//Hammer for Morrigan
+
+//still WIP
+/obj/item/tactical_hammer
+
+	name = "tactical survival hammer"
+	desc = "A tactical hammer used by the syndicate operatives for destroying obstacles and self-defense. Sure will hurt if you hit someone with it!"
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "tactical_hammer"
+
+	force = 25
+	throwforce = 20
+	stamina_cost = 25
+	stamina_damage = 45
+	click_delay = 10
+
+	contraband = 5
+	is_syndicate = TRUE
+	hit_type = DAMAGE_BLUNT
+	w_class = W_CLASS_NORMAL
+	two_handed = FALSE
+	c_flags = ONBELT
+	tool_flags = TOOL_CHOPPING
+	flags = FPRINT | TABLEPASS | USEDELAY | NOSHIELD
+
+	proc/set_properties()
+		if (two_handed)
+			force = 30
+			stamina_cost = 30
+			stamina_damage = 50
+			click_delay = 20
+		else
+			force = initial(src.force)
+			stamina_cost = initial(src.stamina_cost)
+			stamina_damage = initial(src.stamina_damage)
+			click_delay = initial(src.click_delay)
+
+	attack_self(mob/user as mob)
+		if(ishuman(user))
+			if(two_handed)
+				setTwoHanded(FALSE)
+				set_properties()
+			else
+				if(!setTwoHanded(TRUE))
+					boutput(user, "<span class='alert'>Can't switch to 2-handed while your other hand is full.</span>")
+				else
+					set_properties()
+		..()
+
+	attack(mob/M, mob/user)
+		if (!isdead(M))
+			if (src.two_handed)
+				M.changeStatus("slowed", 5 SECONDS)
+			else
+				M.changeStatus("slowed", 2 SECONDS)
+		. = ..()
