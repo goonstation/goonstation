@@ -37,9 +37,7 @@
 /turf/simulated/floor/plating,
 /area/shuttle/sea_elevator)
 "i" = (
-/obj/landmark{
-	name = "seafall"
-	},
+/obj/landmark/fall/sea/elevator,
 /turf/simulated/floor/plating,
 /area/shuttle/sea_elevator/lower)
 "j" = (
@@ -64,9 +62,7 @@
 /turf/simulated/floor,
 /area/shuttle/sea_elevator)
 "n" = (
-/obj/landmark{
-	name = "seafall"
-	},
+/obj/landmark/fall/sea/elevator,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/shuttle/sea_elevator)

@@ -428,7 +428,7 @@
 	icon_state = "shrub";
 	dir = 6
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},

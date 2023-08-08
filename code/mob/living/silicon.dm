@@ -2,17 +2,17 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 /mob/living/silicon
 	mob_flags = USR_DIALOG_UPDATES_RANGE
 	gender = NEUTER
-	var/syndicate = 0 // Do we get Syndicate laws?
-	var/syndicate_possible = 0 //  Can we become a Syndie robot?
-	var/emagged = 0 // Are we emagged, removing all laws?
-	var/emaggable = 0 // Can we be emagged?
-	robot_talk_understand = 1
-	see_infrared = 1
+	var/syndicate = FALSE // Do we get Syndicate laws?
+	var/syndicate_possible = FALSE //  Can we become a Syndie robot?
+	var/emagged = FALSE // Are we emagged, removing all laws?
+	var/emaggable = FALSE // Can we be emagged?
+	robot_talk_understand = TRUE
+	see_infrared = TRUE
 	var/list/req_access = list()
 
-	var/killswitch = 0
+	var/killswitch = FALSE
 	var/killswitch_at = 0
-	var/weapon_lock = 0
+	var/weapon_lock = FALSE
 	var/weaponlock_time = 120
 	var/obj/item/card/id/botcard //An ID card that the robot "holds" invisibly
 
@@ -26,10 +26,10 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 	var/static/regex/monospace_say_regex = new(@"`([^`]+)`", "g")
 
-	can_bleed = 0
+	can_bleed = FALSE
 	blood_id = "oil"
-	use_stamina = 0
-	can_lie = 0
+	use_stamina = FALSE
+	can_lie = FALSE
 	canbegrabbed = FALSE // silicons can't be grabbed, they're too bulky or something
 	grabresistmessage = "but can't get a good grip!"
 

@@ -1049,7 +1049,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/summer)
 //Masquerade
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/masquerade)
-/datum/clothingbooth_item/masquerade/
+/datum/clothingbooth_item/masquerade
 	name = "masquerade"
 	category = "Masquerade"
 

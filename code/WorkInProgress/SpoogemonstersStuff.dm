@@ -262,7 +262,7 @@
 	proc/panel()
 		set background = 1
 
-		if(beakerSpecs.len == 0)
+		if(length(beakerSpecs) == 0)
 			beakerSpecs.len++
 			beakerSpecs[beakerSpecs.len] = new /datum/beakerSpec()
 

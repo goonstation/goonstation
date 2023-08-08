@@ -239,7 +239,7 @@ proc/make_cleanable(var/type,var/loc)
 					new_overlay.color = add_color
 					src.last_color = add_color
 
-				if (src.overlays.len >= 4) //stop adding more overlays you're lagging client FPS!!!!
+				if (length(src.overlays) >= 4) //stop adding more overlays you're lagging client FPS!!!!
 					src.UpdateOverlays(new_overlay, "cleanablefinal")
 				else
 					src.UpdateOverlays(new_overlay, "cleanble[length(src.overlays)]")

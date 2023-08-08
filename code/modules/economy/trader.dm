@@ -695,14 +695,14 @@
 		var/list/selltypes = typesof(pick(commercetypes))
 		var/list/buytypes = typesof(pick(commercetypes))
 
-		while(selltypes.len > 0 && src.goods_sell.len < items_for_sale)
+		while(length(selltypes) > 0 && length(src.goods_sell) < items_for_sale)
 			var/pickedselltype = pick(selltypes)
 			var/datum/commodity/sellitem = new pickedselltype(src)
 			selltypes -= pickedselltype
 			if(sellitem.comtype != null)
 				src.goods_sell += sellitem
 
-		while(buytypes.len > 0 && src.goods_buy.len < items_wanted)
+		while(length(buytypes) > 0 && length(src.goods_buy) < items_wanted)
 			var/pickedbuytype = pick(buytypes)
 			var/datum/commodity/buyitem = new pickedbuytype(src)
 			buytypes -= pickedbuytype
@@ -715,11 +715,11 @@
 		for(var/turf/T in get_area_turfs( get_area(src) ))
 			for(var/obj/decal/fakeobjects/teleport_pad/D in T)
 				var/N = pick(1,2)
-				var/obj/critter/martian/P = null
+				var/mob/living/critter/martian/P = null
 				if (N == 1)
-					P = new /obj/critter/martian/soldier
+					P = new /mob/living/critter/martian/soldier
 				else
-					P = new /obj/critter/martian/warrior
+					P = new /mob/living/critter/martian/warrior
 				P.set_loc(D.loc)
 				showswirl(P.loc)
 
@@ -786,14 +786,14 @@
 			boutput(M, "<B>[src.name]</B> yells, \"mortigi c^iujn!\"")
 		for(var/turf/T in get_area_turfs( get_area(src) ))
 			for(var/obj/decal/fakeobjects/teleport_pad/D in T)
-				var/obj/critter/martian/soldier/P = new /obj/critter/martian/soldier
+				var/mob/living/critter/martian/soldier/P = new /mob/living/critter/martian/soldier
 				P.set_loc(D.loc)
 				showswirl(P.loc)
 
 ////////Robot
 /obj/npc/trader/robot
-	icon = 'icons/misc/evilreaverstation.dmi' // changed from the ancient robot sprite to pr1
-	icon_state = "pr1_b"
+	icon = 'icons/obj/bots/robuddy/pr-1.dmi'
+	icon_state = "body"
 	picture = "robot.png"
 	trader_area = "/area/turret_protected/robot_trade_outpost"
 	var/productset = 0 // 0 is robots and salvage, 1 is podparts and drugs, 2 is produce. 3 is syndicate junk, 4 is medical stuff
@@ -802,6 +802,9 @@
 
 	New()
 		..()
+		src.UpdateOverlays(image(src.icon, "face-happy"), "emotion")
+		src.UpdateOverlays(image(src.icon, "lights-on"), "lights")
+
 		switch(productset)
 			if(1) // drugs and pod stuff
 				src.goods_sell += new /datum/commodity/podparts/engine(src)

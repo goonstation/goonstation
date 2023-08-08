@@ -1,4 +1,4 @@
-/datum/job/
+/datum/job
 	var/name = null
 	var/list/alias_names = null
 	var/initial_name = null
@@ -89,7 +89,7 @@
 								R.fields["imp"] = "\ref[I]"
 
 			var/give_access_implant = ismobcritter(M)
-			if(!spawn_id && (access.len > 0 || access.len == 1 && access[1] != access_fuck_all))
+			if(!spawn_id && (length(access) > 0 || length(access) == 1 && access[1] != access_fuck_all))
 				give_access_implant = 1
 			if (give_access_implant)
 				var/obj/item/implant/access/I = new /obj/item/implant/access(M)
@@ -1316,10 +1316,16 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		if (!M)
 			return
-		if(prob(25))
-			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian)
+		if(prob(33))
+			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob,/datum/mutantrace/cow)
 			M.set_mutantrace(morph)
-
+		var/obj/item/clothing/lanyard/L = new /obj/item/clothing/lanyard(M.loc)
+		M.equip_if_possible(L, M.slot_wear_id, FALSE)
+		M.spawnId(src)
+		var/obj/item/card/id = locate() in M
+		if (!id)
+			return
+		L.storage.add_contents(id, M, FALSE)
 
 /datum/job/special/space_cowboy
 	name = "Space Cowboy"
@@ -2326,7 +2332,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_ears = list()
 	slot_mask = list(/obj/item/clothing/mask/gas/swat/syndicate)
-	slot_card = null		///obj/item/card/id/
+	slot_card = null		///obj/item/card/id
 	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 	slot_poc2 = list(/obj/item/storage/pouch/bullet_9mm)
 	slot_lhan = list()
@@ -2370,7 +2376,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_ears = list(/obj/item/device/radio/headset/syndicate) //needs their own secret channel
 	slot_mask = list(/obj/item/clothing/mask/gas/swat/syndicate)
-	slot_card = /obj/item/card/id/
+	slot_card = /obj/item/card/id
 	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 	slot_poc2 = list(/obj/item/storage/pouch/assault_rifle)
 	slot_lhan = list()
@@ -2845,8 +2851,15 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		if (!M)
 			return
 		if(prob(33))
-			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian)
+			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob,/datum/mutantrace/cow)
 			M.set_mutantrace(morph)
+		var/obj/item/clothing/lanyard/L = new /obj/item/clothing/lanyard(M.loc)
+		M.equip_if_possible(L, M.slot_wear_id, FALSE)
+		M.spawnId(src)
+		var/obj/item/card/id = locate() in M
+		if (!id)
+			return
+		L.storage.add_contents(id, M, FALSE)
 
 /datum/job/daily/saturday
 	name = "Musician"

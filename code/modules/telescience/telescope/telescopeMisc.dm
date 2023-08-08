@@ -18,6 +18,11 @@ var/list/special_places = list() //list of location names, which are coincidenta
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", PROC_REF(mechcompsend))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"receive", PROC_REF(mechcompreceive))
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
@@ -158,7 +163,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 		return
 
 	proc/tick()
-		if(events_active.len < 3)
+		if(length(events_active) < 3)
 
 			var/can_spawn = 0 //If there's only events with less than 100% rarity left, we don't spawn anything.
 			//This is to stop the system from spawning only rare events when there's few left.

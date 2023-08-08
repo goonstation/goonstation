@@ -124,9 +124,9 @@
 
 
 			tool_selector_bg.len = 0
-			if (tool_selector_tools.len > 0)
+			if (length(tool_selector_tools) > 0)
 				tool_selector_bg += create_screen("", "", 'icons/mob/hud_robot.dmi', "tools-top", "CENTER+2:16, SOUTH+[tool_selector_tools.len]", HUD_LAYER+1)
-			if (tool_selector_tools.len > 1)
+			if (length(tool_selector_tools) > 1)
 				tool_selector_bg += create_screen("", "", 'icons/mob/hud_robot.dmi', "tools-mid", "CENTER+2:16, SOUTH+1 to CENTER+2:16, SOUTH+[tool_selector_tools.len-1]", HUD_LAYER+1)
 
 			if (!show_tool_selector)

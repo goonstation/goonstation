@@ -59,7 +59,7 @@
 			else
 				boutput(user, "<span class='alert'>You need to add at least one beaker before locking the assembly.</span>")
 		else if (istype(W,/obj/item/reagent_containers/glass) && stage == 1)
-			if (beakers.len == 2)
+			if (length(beakers) == 2)
 				boutput(user, "<span class='alert'>The grenade can not hold more containers.</span>")
 				return
 			var/obj/item/reagent_containers/glass/G = W

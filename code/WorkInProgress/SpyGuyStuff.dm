@@ -659,7 +659,7 @@ proc/Create_Tommyname()
 				move_and_delete_object(A)
 		sleep(DEFAULT_ANIMATION_TIME)
 
-	while(created_atoms.len > 0)
+	while(length(created_atoms) > 0)
 		var/atom/A = created_atoms[created_atoms.len]
 		created_atoms.len--
 		if(istype(A, /turf))

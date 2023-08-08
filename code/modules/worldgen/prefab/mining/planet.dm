@@ -1,5 +1,3 @@
-#define PLANET_MAPBORDER 1
-
 TYPEINFO(/datum/mapPrefab/planet)
 	stored_as_subtypes = TRUE
 
@@ -75,8 +73,15 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 
 	tomato_den
 		maxNum = 1
-		probability = 10
+		probability = 5
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_tomato_den.dmm"
+		prefabSizeX = 13
+		prefabSizeY = 10
+
+	art_research
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_art_analysis.dmm"
 		prefabSizeX = 13
 		prefabSizeY = 10
 
@@ -95,7 +100,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		prefabSizeX = 15
 		prefabSizeY = 15
 		required_biomes = list(/datum/biome/mudlands)
-/* These two completely fill every planet so im commenting them out
+
 	artifact
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_artifact_small.dmm"
 		prefabSizeX = 3
@@ -105,7 +110,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_lost_cargo.dmm"
 		prefabSizeX = 3
 		prefabSizeY = 3
-*/
+
 	dead_nt
 		maxNum = 1
 		probability = 20
@@ -113,12 +118,32 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		prefabSizeX = 4
 		prefabSizeY = 3
 
+	dead_crew
+		maxNum = 4
+		probability = 20
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_dead_crew.dmm"
+		prefabSizeX = 4
+		prefabSizeY = 3
+
 	dead_syndicate
 		maxNum = 1
-		probability = 20
+		probability = 15
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_dead_synd.dmm"
 		prefabSizeX = 4
 		prefabSizeY = 4
+
+	dead_syndicate2
+		maxNum = 1
+		probability = 15
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_dead_synd2.dmm"
+		prefabSizeX = 4
+		prefabSizeY = 4
+
+	dead_martian
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_dead_martian.dmm"
+		prefabSizeX = 3
+		prefabSizeY = 3
+		required_biomes = list(/datum/biome/mars, /datum/biome/desert)
 
 	rogue_syndicate
 		maxNum = 1
@@ -143,7 +168,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 
 	birds
 		maxNum = 2
-		probability = 25
+		probability = 5
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_birds.dmm"
 		prefabSizeX = 5
 		prefabSizeY = 3
@@ -155,4 +180,17 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		prefabSizeX = 8
 		prefabSizeY = 6
 
-#undef PLANET_MAPBORDER
+	martian_cave
+		maxNum = 1
+		probability = 5
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_martian_cave.dmm"
+		prefabSizeX = 10
+		prefabSizeY = 9
+
+	martian_cave2
+		maxNum = 1
+		probability = 5
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_martian_cave2.dmm"
+		prefabSizeX = 10
+		prefabSizeY = 9
+		required_biomes = list(/datum/biome/mars, /datum/biome/desert)

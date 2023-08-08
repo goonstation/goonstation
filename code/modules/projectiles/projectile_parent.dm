@@ -206,8 +206,7 @@
 			proj_data.on_hit(A, angle_to_dir(src.angle), src)
 
 		//Trigger material on attack.
-		if(proj_data?.material) //ZeWaka: Fix for null.material
-			proj_data.material.triggerOnAttack(src, src.shooter, A)
+		proj_data?.material?.triggerOnAttack(src, src.shooter, A)
 
 		if (istype(A,/turf))
 			// if we hit a turf apparently the bullet is magical and hits every single object in the tile, nice shooting tex
@@ -920,7 +919,7 @@ ABSTRACT_TYPE(/datum/projectile)
  * So I made my own proc, but left the old one in place just in case -- Sovexe
  * var/reflect_on_nondense_hits - flag for handling hitting objects that let bullets pass through like secbots, rather than duplicating projectiles
  */
-/proc/shoot_reflected_bounce(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3, var/mode = PROJ_RAPID_HEADON_BOUNCE, var/reflect_on_nondense_hits = FALSE)
+/proc/shoot_reflected_bounce(var/obj/projectile/P, var/atom/reflector, var/max_reflects = 3, var/mode = PROJ_RAPID_HEADON_BOUNCE, var/reflect_on_nondense_hits = FALSE)
 	if (!P || !reflector)
 		return
 

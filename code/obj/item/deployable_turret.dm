@@ -455,7 +455,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		..()
 
 	is_friend(var/mob/living/C)
-		return istype(C.get_id(), /obj/item/card/id/syndicate) || istype(C, /mob/living/critter/robotic/gunbot/syndicate) //dumb lazy
+		return istype(C.get_id(), /obj/item/card/id/syndicate) || (C.faction && C.faction == FACTION_SYNDICATE) //dumb lazy
 
 /obj/deployable_turret/syndicate/active
 	anchored = ANCHORED

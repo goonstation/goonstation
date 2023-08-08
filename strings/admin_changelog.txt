@@ -1,3 +1,9 @@
+(t)mon aug 7 23
+(u)LeahTheTech
+(*)Added better logging to detect hotwires, large power networks being connected to high power ones will now log to station log.
+(t)tue jul 11 23
+(u)Azrun
+(*)Bulk law changes now support paths (Now you can add hologram and ability modules)
 (t)tue jun 27 23
 (u)tarmunora
 (*)Admin PMs will display admin keys as ckey (as altkey) if alt key is set
