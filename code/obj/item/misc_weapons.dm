@@ -2033,13 +2033,14 @@ obj/item/whetstone
 	name = "tactical survival hammer"
 	desc = "A tactical hammer used by the syndicate operatives for destroying obstacles and self-defense. Sure will hurt if you hit someone with it!"
 	icon = 'icons/obj/items/weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "tactical_hammer"
 
 	force = 25
 	throwforce = 20
 	stamina_cost = 25
-	stamina_damage = 45
-	click_delay = 10
+	stamina_damage = 35
+	click_delay = 15
 
 	contraband = 5
 	is_syndicate = TRUE
@@ -2054,7 +2055,7 @@ obj/item/whetstone
 		if (two_handed)
 			force = 30
 			stamina_cost = 30
-			stamina_damage = 50
+			stamina_damage = 45
 			click_delay = 20
 		else
 			force = initial(src.force)
