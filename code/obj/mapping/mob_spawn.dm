@@ -217,6 +217,10 @@
 	spawn_type = /mob/living/carbon/human/normal
 	decomp_stage = DECOMP_STAGE_SKELETONIZED
 
+/obj/mapping_helper/mob_spawn/corpse/human/syndicate/old
+	spawn_type = /mob/living/carbon/human/normal/syndicate_old
+	break_headset = TRUE
+
 /obj/mapping_helper/mob_spawn/corpse/human/owlery_security
 	spawn_type = /mob/living/carbon/human/normal/securityofficer
 	decomp_stage = DECOMP_STAGE_BLOATED

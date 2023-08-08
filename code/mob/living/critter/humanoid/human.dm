@@ -45,7 +45,9 @@ ABSTRACT_TYPE(/mob/living/critter/human)
 			return ..()
 		..()
 		if (src.corpse_spawner)
-			new src.corpse_spawner(get_turf(src))
+			var/obj/mapping_helper/mob_spawn/corpse/human/body = new src.corpse_spawner(get_turf(src))
+			body.decomp_stage = DECOMP_STAGE_NO_ROT
+			body.max_organs_removed = 0
 			src.ghostize()
 			qdel(src)
 		else
@@ -75,8 +77,8 @@ ABSTRACT_TYPE(/mob/living/critter/human/syndicate)
 	desc = "A Syndicate Operative, oh dear."
 	health_brute = 25
 	health_burn = 25
-	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/skeleton
-	human_to_copy = /mob/living/carbon/human/normal/syndicate
+	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/syndicate/old
+	human_to_copy = /mob/living/carbon/human/normal/syndicate_old
 
 	faction = FACTION_SYNDICATE
 
