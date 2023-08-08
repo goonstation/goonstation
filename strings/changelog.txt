@@ -1,5 +1,9 @@
 
 (t)tue aug 08 23
+(u)Kubius
+(p)15264
+(e)⚖|C-Balance
+(+)Telescience portal activation energy has been slightly reduced.
 (u)Amylizzle
 (p)15298
 (e)🆕📦|C-Feature, A-Game-Objects
