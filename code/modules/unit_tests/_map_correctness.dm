@@ -177,7 +177,6 @@ proc/check_mass_drivers()
 			else if((end.x == 1 || end.x == world.maxx || end.y == 1 || end.y == world.maxy))
 				continue
 
-			var/turfs = block(end, get_edge_target_turf(end, M.dir))
 			var/distance = 0
 			var/turf/new_end = end
 			while(TRUE)
@@ -185,7 +184,6 @@ proc/check_mass_drivers()
 				if(!istype(new_end, /turf/space) || (new_end.x == 1 || new_end.x == world.maxx || new_end.y == 1 || new_end.y == world.maxy) )
 					distance = GET_DIST(M, new_end)
 					break
-
 
 			log_lines += "([M.x], [M.y]) only reaches [end] ([end.x],[end.y]) consider range of [distance] to reach [new_end] ([new_end?.x],[new_end?.y]) "
 	if(length(log_lines))
