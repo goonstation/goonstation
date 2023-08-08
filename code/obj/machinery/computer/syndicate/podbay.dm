@@ -1,4 +1,4 @@
-// Riot computer but reflavored for the caringorm
+// Riot computer but reflavored for the Cairngorm
 
 /obj/machinery/computer/battlecruiser_podbay
 	name = "Podbay Authorization"
@@ -14,7 +14,7 @@
 	light_g = 0.3
 	light_b = 0.3
 
-	/// Whether or not the podbay on the caringorm is authorized.
+	/// Whether or not the podbay on the Cairngorm is authorized.
 	var/authed = FALSE
 	/// How long until we take matters into our own hands.
 	var/auth_delay = 10 MINUTES
@@ -38,7 +38,7 @@
 		if(src.authed)
 			return
 
-		logTheThing(LOG_STATION, usr, "authorized caringorm podbay access")
+		logTheThing(LOG_STATION, usr, "authorized Cairngorm podbay access")
 		authed = 1
 		src.ClearSpecificOverlays("screen_image")
 		src.icon_state = "drawbr-alert"
@@ -54,7 +54,7 @@
 			var/operative_mobs = list()
 			for (var/datum/antagonist/operative in operative_datums)
 				operative_mobs += operative.owner.current
-			boutput(operative_mobs,"<b>The podbay has been authorized. You may now leave the caringorm using your pods!</b>",forceScroll=TRUE)
+			boutput(operative_mobs,"<b>The podbay has been authorized. You may now leave the Cairngorm using your pods!</b>",forceScroll=TRUE)
 			playsound_global(operative_mobs, 'sound/vox/pods.ogg', 50, vary=FALSE)
 			sleep(1 SECONDS)
 			playsound_global(operative_mobs, 'sound/vox/authorized.ogg', 50, vary=FALSE)
