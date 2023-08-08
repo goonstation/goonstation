@@ -2373,6 +2373,7 @@ TYPEINFO(/datum/mutantrace/pug)
 			H.organHolder.brain.name = "cybernetic brain"
 			H.organHolder.brain.desc = "A strangely metallic human brain, it's not the standard issue for NT cyborgs or AIs."
 			H.blood_id = "oil"
+			var/obj/item/implant/I = new /obj/item/implant/robotalk(H)
 			SPAWN(1 SECOND)
 				H.update_colorful_parts()
 
