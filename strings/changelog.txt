@@ -1,5 +1,9 @@
 
 (t)tue aug 08 23
+(u)Amylizzle
+(p)15298
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Gas generator artifacts can now emit fallout gas.
 (u)Paaiii
 (p)15274
 (e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
