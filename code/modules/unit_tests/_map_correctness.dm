@@ -174,6 +174,8 @@ proc/check_mass_drivers()
 
 			if(!istype(end, /turf/space))
 				continue
+			else if(istype(end, /turf/space/fluid/warp_z5))
+				continue
 			else if((end.x == 1 || end.x == world.maxx || end.y == 1 || end.y == world.maxy))
 				continue
 

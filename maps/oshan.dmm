@@ -41691,7 +41691,7 @@
 /obj/mapping_helper/access/research,
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 101;
+	drive_range = 102;
 	id = "research"
 	},
 /turf/simulated/floor/plating/random,
