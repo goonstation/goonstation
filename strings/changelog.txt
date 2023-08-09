@@ -1,5 +1,9 @@
 
 (t)wed aug 09 23
+(u)Tyrant
+(p)15310
+(e)🪲🗺|C-Bug, A-Mapping
+(+)The CE's office on Donut 2 is no longer open to the public.
 (u)Glamurio (Ryou)
 (p)14800
 (e)💅🍝|C-QoL, A-Catering
