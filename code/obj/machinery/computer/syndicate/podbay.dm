@@ -1,5 +1,8 @@
 // Riot computer but reflavored for the Cairngorm
 
+/// All the barriers on cairngorm battlecruiser (the podbay)
+var/global/list/cairngorm_barriers = list()
+
 /obj/machinery/computer/battlecruiser_podbay
 	name = "podbay authorization"
 	icon_state = "drawbr"
@@ -45,9 +48,9 @@
 		src.icon_state = "drawbr-alert"
 		src.UpdateIcon()
 
-		for (var/obj/forcefield/battlecruiser/S in battlecruiser_area)
-			qdel(S)
-			LAGCHECK(LAG_REALTIME)
+		for (var/barrier in global.cairngorm_barriers)
+			qdel(barrier)
+		global.cairngorm_barriers = null
 
 		SPAWN(0.5 SECONDS)
 			// WAKE UP!!!!!
@@ -122,3 +125,7 @@
 	density = 1
 	luminosity = 3
 	color = "#FF6666"
+
+	New()
+		global.cairngorm_barriers.Add(src)
+		..()
