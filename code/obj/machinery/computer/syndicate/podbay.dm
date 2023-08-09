@@ -25,7 +25,6 @@ var/global/list/cairngorm_barriers = list()
 
 	New()
 		..()
-		START_TRACKING
 
 	initialize()
 		battlecruiser_area = get_area_by_type(/area/syndicate_station/battlecruiser)
@@ -34,16 +33,16 @@ var/global/list/cairngorm_barriers = list()
 		..()
 
 	disposing()
-		src.authorized = null
-		STOP_TRACKING
+		boutput(world,"[src.authorized]")
 		..()
+		boutput(world,"[src.authorized]")
 
 	proc/authorize()
 		if(src.authed)
 			return
 
 		logTheThing(LOG_STATION, usr, "authorized Cairngorm podbay access")
-		authed = 1
+		src.authed = TRUE
 		src.ClearSpecificOverlays("screen_image")
 		src.icon_state = "drawbr-alert"
 		src.UpdateIcon()
@@ -53,10 +52,8 @@ var/global/list/cairngorm_barriers = list()
 		global.cairngorm_barriers = null
 
 		SPAWN(0.5 SECONDS)
-			// WAKE UP!!!!!
-			var/operative_datums = get_all_antagonists(ROLE_NUKEOP) + get_all_antagonists(ROLE_NUKEOP_COMMANDER)
 			var/operative_mobs = list()
-			for (var/datum/antagonist/operative in operative_datums)
+			for (var/datum/antagonist/operative as anything in (get_all_antagonists(ROLE_NUKEOP) + get_all_antagonists(ROLE_NUKEOP_COMMANDER)))
 				operative_mobs += operative.owner.current
 			boutput(operative_mobs,"<b>The podbay has been authorized. You may now leave the Cairngorm using your pods!</b>",forceScroll=TRUE)
 			playsound_global(operative_mobs, 'sound/vox/pods.ogg', 50, vary=FALSE)
@@ -94,7 +91,7 @@ var/global/list/cairngorm_barriers = list()
 	if (!user)
 		return
 	if (authed)
-		boutput(user,"The podbay has already be authorized. This can't be undone!")
+		boutput(user,"The podbay has already be authorized.")
 		return
 
 	src.add_fingerprint(user)
@@ -120,10 +117,6 @@ var/global/list/cairngorm_barriers = list()
 	desc = "An impenetrable forcefield designed to make you wait. It is controlled by an authorization computer."
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "shieldw"
-	anchored = ANCHORED
-	opacity = FALSE
-	density = 1
-	luminosity = 3
 	color = "#FF6666"
 
 	New()
