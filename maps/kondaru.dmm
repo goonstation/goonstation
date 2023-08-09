@@ -8344,7 +8344,7 @@
 "aDk" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 50;
+	drive_range = 114;
 	id = "trashgun"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -8535,7 +8535,7 @@
 "aDN" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 50;
+	drive_range = 115;
 	id = "trashgun"
 	},
 /turf/simulated/floor/black/grime,
@@ -24834,6 +24834,7 @@
 "bPt" = (
 /obj/machinery/mass_driver{
 	dir = 1;
+	drive_range = 17;
 	id = "kd_scinorth"
 	},
 /turf/simulated/floor/airless/plating,
@@ -29482,6 +29483,7 @@
 "chU" = (
 /obj/machinery/mass_driver{
 	dir = 1;
+	drive_range = 18;
 	id = "sw_router_north"
 	},
 /turf/simulated/floor/airless/plating,
@@ -35963,6 +35965,14 @@
 	dir = 9
 	},
 /area/station/engine/monitoring)
+"eYN" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 16;
+	id = "kd_scinorth"
+	},
+/turf/simulated/floor/airless/plating,
+/area/station/maintenance/southwest)
 "eZq" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/medicine,
@@ -36043,6 +36053,7 @@
 "fcO" = (
 /obj/machinery/mass_driver{
 	dir = 1;
+	drive_range = 10;
 	id = "kondaru_qmfetch"
 	},
 /obj/decal/stripe_delivery,
@@ -59268,6 +59279,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"xIu" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 17;
+	id = "sw_router_north"
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
 "xII" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -90220,7 +90239,7 @@ aaa
 rUW
 jdn
 jjy
-bPt
+eYN
 bPt
 vRn
 bTI
@@ -90848,7 +90867,7 @@ aaa
 aaa
 aaa
 aaa
-chU
+xIu
 chU
 cij
 ciq
