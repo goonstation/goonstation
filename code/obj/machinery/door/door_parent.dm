@@ -818,6 +818,7 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 /obj/machinery/door/unpowered/wood/verb/simple_lock(mob/user)
 	set name = "Lock Door"
 	set category = "Local"
+	set src = oview(1)
 
 	if (isdead(user) || isintangible(user))
 		return
