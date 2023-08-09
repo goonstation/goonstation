@@ -2250,7 +2250,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
 "ahj" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "ahk" = (

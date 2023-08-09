@@ -18120,7 +18120,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "bjN" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/noticeboard/persistent{
 	name = "Bar persistent notice board";
 	persistent_id = "bar"
@@ -31957,7 +31957,7 @@
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "cbP" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "cbQ" = (
