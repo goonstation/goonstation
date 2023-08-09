@@ -44,7 +44,7 @@ var/global/list/cairngorm_barriers = list()
 		src.icon_state = "drawbr-alert"
 		src.UpdateIcon()
 
-		for (var/forcefield/battlecruiser/barrier in by_type[/obj/forcefield/battlecruiser])
+		for (var/obj/forcefield/battlecruiser/barrier in by_type[/obj/forcefield/battlecruiser])
 			qdel(barrier)
 
 		SPAWN(0.5 SECONDS)
