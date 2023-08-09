@@ -98,6 +98,8 @@
 //morrigan
 #define LANDMARK_MORRIGAN_START "morrigan_start" //where you end up when you go through the Balor teleporter
 #define LANDMARK_MORRIGAN_CRATE "morrigan_crate" //where your stuff ends up
+#define LANDMARK_MORRIGAN_TRANSPORT "morrigan_transport" // To the conveyor area at the prelude
+#define LANDMARK_MORRIGAN_PRISONER "morrigan_prisoner" // To the main station brig area
 
 /// allowed turfs for telesci
 #define LANDMARK_TELESCI "telesci"

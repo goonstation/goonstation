@@ -3,11 +3,12 @@ proc/load_morrigan()
 	var/datum/mapPrefab/allocated/prefab = get_singleton(/datum/mapPrefab/allocated/morrigan)
 	morrigan_region = prefab.load()
 
-// Morrigan Azone Objects
+// Morrigan Azone Content
 
 ///A modified telepad
 /obj/machinery/networked/telepad/morrigan
 	device_tag = "PNET_S_TELEPAD_PRISONER"
+
 //yes this is a lot of parsing boilerplate, blame years of machinery/networked being awful
 /obj/machinery/networked/telepad/morrigan/receive_signal(datum/signal/signal)
 	if (!..())
@@ -46,6 +47,9 @@ proc/load_morrigan()
 							var/mob/living/carbon/human/H = M
 							H.equip_new_if_possible(/obj/item/clothing/shoes/orange, SLOT_SHOES)
 							H.equip_new_if_possible(/obj/item/clothing/under/misc, SLOT_W_UNIFORM)
+
+						var/obj/port_a_prisoner/prison = new /obj/port_a_prisoner(get_turf(M))
+						prison.force_in(M)
 
 					showswirl_out(src.loc)
 					leaveresidual(src.loc)
@@ -128,6 +132,20 @@ proc/load_morrigan()
 		newfolder.name = "etc"
 		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
 		src.root.add_file( newfolder )
+
+// Landmarks
+
+/obj/landmark/morrigan_start
+	name = LANDMARK_MORRIGAN_START
+
+/obj/landmark/morrigan_crate
+	name = LANDMARK_MORRIGAN_CRATE
+
+/obj/landmark/morrigan_transport
+	name = LANDMARK_MORRIGAN_TRANSPORT
+
+/obj/landmark/morrigan_prisoner
+	name = LANDMARK_MORRIGAN_PRISONER
 
 // ID Cards
 /obj/item/card/id/morrigan
@@ -449,7 +467,6 @@ proc/load_morrigan()
 		src.equip_if_possible((/obj/item/clothing/gloves/black), SLOT_GLOVES)
 		src.equip_new_if_possible((/obj/item/clothing/shoes/swat), SLOT_SHOES)
 
-
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
@@ -460,9 +477,6 @@ proc/load_morrigan()
 	initializeBioholder()
 		. = ..()
 		randomize_look(src, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, src)
-
-
-
 
 // Areas
 
@@ -1216,6 +1230,7 @@ proc/load_morrigan()
 
 	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
+
 /*
 /obj/npc/trader/hobo
 	icon = 'icons/obj/trader.dmi'
@@ -1264,79 +1279,78 @@ proc/load_morrigan()
 		pickupdialoguefailure = "Bloody delusional you are, you haven't picked fuck all!"
 */
 
-
 /datum/dialogueMaster/hobo
 	dialogueName = "Hobo"
 	start = /datum/dialogueNode/hobo_start
 	maxDistance = 1
 
 //start of the dialogue
-/datum/dialogueNode
-	hobo_start
-		linkText = "..." //Because we use the first node as a "go back" link as well.
-		links = list(/datum/dialogueNode/hobo_reward,/datum/dialogueNode/hobo_item)
+/datum/dialogueNode/hobo_start
+	linkText = "..." //Because we use the first node as a "go back" link as well.
+	links = list(/datum/dialogueNode/hobo_reward,/datum/dialogueNode/hobo_give_pill)
 
-		getNodeText(var/client/C)
-			var/rep = C.reputations.get_reputation_level("hobo")
-			if(rep < 2)
-				return "I haven't seen my wife in 30 years, only the drugs bring her back."
-			if(rep < 6)
-				return "Good to see you!"
-			else
-				return "Hope you're having an excellent day!"
+	getNodeText(var/client/C)
+		var/rep = C.reputations.get_reputation_level("hobo")
+		if(rep < 2)
+			return "I haven't seen my wife in 30 years, only the drugs bring her back."
+		if(rep < 6)
+			return "Good to see you!"
+		else
+			return "Hope you're having an excellent day!"
 
-	//checking if npc has anything for you
-	hobo_reward
-		linkText = "Have anything for me?"
-		links = list(/datum/dialogueNode/hobo_reward_a)
+//checking if npc has anything for you
+/datum/dialogueNode/hobo_reward
+	linkText = "Have anything for me?"
+	links = list(/datum/dialogueNode/hobo_reward_welder)
 
-		getNodeText(var/client/C)
-			var/rep = C.reputations.get_reputation_level("hobo")
-			if (rep < 5)
-				return "Fuck no mate."
-			if (master.getFlag(C, "weldingtool") == "taken")
-				return "You already took shit from me, pal."
-			else
-				return "Here's shit for you, pal. Sure will be useful."
+	getNodeText(var/client/C)
+		var/rep = C.reputations.get_reputation_level("hobo")
+		if (rep < 5)
+			return "Fuck no mate."
+		if (master.getFlag(C, "weldingtool") == "taken")
+			return "You already took shit from me, pal."
+		else
+			return "Here's shit for you, pal. Sure will be useful."
 
 	//if npc has rewards it will offer a welder
-	hobo_reward_a
-		linkText = "I will take it."
-		links = list()
-		nodeText = "Sure thing, here you go."
+/datum/dialogueNode/hobo_reward_welder
+	linkText = "I will take it."
+	links = list()
+	nodeText = "Sure thing, here you go."
 
-		canShow(var/client/C)
-			var/rep = C.reputations.get_reputation_level("hobo")
-			if(rep < 5 )
-				return FALSE
-			else
-				return TRUE
+	canShow(var/client/C)
+		var/rep = C.reputations.get_reputation_level("hobo")
+		if(rep < 5 )
+			return FALSE
+		else
+			return TRUE
 
-		onActivate(var/client/C)
-			master.setFlag(C, "weldingtool", "taken")
-			C.mob.put_in_hand_or_drop(new/obj/item/weldingtool, C.mob.hand)
-			return
+	onActivate(var/client/C)
+		master.setFlag(C, "weldingtool", "taken")
+		C.mob.put_in_hand_or_drop(new/obj/item/weldingtool, C.mob.hand)
+		return
 
 	//giving pills to the npc
-	hobo_item
-		linkText = "I actually have something interesting.."
-		links = list()
+/datum/dialogueNode/hobo_give_pill
+	linkText = "I actually have something interesting.."
+	links = list()
 
-		getNodeText(var/client/C)
-			return "Oooo? You have some pills, mate?"
+	getNodeText(var/client/C)
+		return "Oooo? You have some pills, mate?"
 
-		canShow(var/client/C)
-			if(istype(C.mob.equipped(), /obj/item/reagent_containers/pill/cyberpunk))
-				return TRUE
-			else
-				return FALSE
+	canShow(var/client/C)
+		if (istype(C.mob.equipped(), /obj/item/reagent_containers/pill/cyberpunk))
+			return TRUE
+		else
+			return FALSE
 
-		onActivate(var/client/C)
-			(istype(C.mob.equipped(), /obj/item/reagent_containers/pill/cyberpunk))
-			qdel(C.mob.equipped())
+	onActivate(var/client/C)
+		var/obj/item/I = C.mob.equipped()
+		if (istype(I, /obj/item/reagent_containers/pill/cyberpunk))
+			C.mob.u_equip(I)
+			qdel(I)
 			C.reputations.set_reputation(id = "hobo", amt = 1000)
 			return
-
 
 // Critter area
 
@@ -1360,3 +1374,51 @@ proc/load_morrigan()
 
 	get_ranged_protection()
 		return 2
+
+	setup_equipment_slots()
+		return
+
+// Teleporter objects
+
+/obj/morrigan_teleporter
+	name = "teleport pad"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "pad0"
+	var/landmark // What landmark do we point to
+
+	Crossed(atom/movable/AM)
+		. = ..()
+
+		if (istype(AM, /obj/port_a_prisoner))
+			var/target_turf =  get_turf(landmarks[landmark][1])
+			do_teleport(AM, target_turf, use_teleblocks = FALSE)
+			showswirl_out(src.loc)
+			leaveresidual(src.loc)
+			showswirl(target_turf)
+			leaveresidual(target_turf)
+
+
+/obj/morrigan_teleporter/transport
+	landmark = LANDMARK_MORRIGAN_TRANSPORT
+
+/obj/morrigan_teleporter/prisoner
+	landmark = LANDMARK_MORRIGAN_PRISONER
+
+// Port a prisoner
+
+/obj/port_a_prisoner
+	name = "Port-A-Prisoner"
+	desc = "A portable cage created with stolen technology"
+	icon = 'icons/obj/cloning.dmi'
+	icon_state = "port_a_brig_synd"
+	var/mob/occupant = null
+
+/obj/port_a_prisoner/proc/force_in(var/mob/living/M)
+	boutput(M, "<span class='alert'> You suddenly find yourself locked up...</span>")
+	src.occupant = M
+	M.set_loc(src)
+
+/obj/port_a_prisoner/proc/eject_and_del()
+	src.occupant?.set_loc(get_turf(src))
+	src.occupant = null
+	qdel(src)
