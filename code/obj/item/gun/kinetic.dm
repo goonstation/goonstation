@@ -1531,7 +1531,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/striker
 	name = "\improper Striker-7"
-	desc = "A terrifying looking drum shotgun, renowned for being incredibly fiddly to reload."
+	desc = "A terrifying looking drum shotgun, legally declared as a 'destructive device'."
 	icon = 'icons/obj/large/48x32.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "striker12"
@@ -1544,17 +1544,22 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	max_ammo_capacity = 7
 	max_move_amount = 1
 	reload_cooldown = 8 DECI SECONDS
-	auto_eject = TRUE
+	auto_eject = FALSE
 	can_dual_wield = FALSE
 	two_handed = TRUE
 	has_empty_state = FALSE
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/a12/bird/seven
+
 	var/is_loading = FALSE //are we reloading?
 
 	shoot(var/atom/target, var/atom/start, var/mob/user, var/POX, var/POY, var/is_dual_wield)
 		if (src.is_loading)
 			return
+		if (casings_to_eject > 0) //bully gun nerds 2day (striker doesnt auto-	eject your first shell)
+			auto_eject = TRUE
+		else
+			auto_eject = FALSE
 		..()
 
 

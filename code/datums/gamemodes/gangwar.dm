@@ -1575,7 +1575,7 @@ proc/broadcast_to_all_gangs(var/message)
 		if (istype(O, /mob/living/carbon/human))
 			update_icon()
 			var/mob/living/carbon/human/H = O
-			var/obj/item/implant/imp= new/obj/item/implant/projectile/body_visible/janktanktwo(H)
+			new/obj/item/implant/projectile/body_visible/janktanktwo(H)
 			qdel(src)
 
 /obj/item/tool/quickhack
