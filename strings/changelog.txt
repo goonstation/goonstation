@@ -1,4 +1,9 @@
 
+(t)wed aug 09 23
+(u)Glamurio (Ryou)
+(p)14800
+(e)💅🍝|C-QoL, A-Catering
+(+)Standardized all coffee recipes to work with either regular coffee, or its freshly brewed variant.
 (t)tue aug 08 23
 (u)Amylizzle
 (p)15205
