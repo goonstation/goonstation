@@ -181,7 +181,7 @@ proc/check_mass_drivers()
 			var/turf/new_end = end
 			while(TRUE)
 				new_end = get_step(new_end, M.dir)
-				if(!istype(new_end, /turf/space) || (new_end.x == 1 || new_end.x == world.maxx || new_end.y == 1 || new_end.y == world.maxy) )
+				if(!istype(new_end, /turf/space) || istype(new_end, /turf/space/fluid/warp_z5) || (new_end.x == 1 || new_end.x == world.maxx || new_end.y == 1 || new_end.y == world.maxy) )
 					distance = GET_DIST(M, new_end)
 					break
 
