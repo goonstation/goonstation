@@ -25959,7 +25959,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "ifP" = (

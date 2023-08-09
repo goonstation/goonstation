@@ -4761,7 +4761,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "aoF" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "aoG" = (

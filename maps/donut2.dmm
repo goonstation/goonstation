@@ -47654,7 +47654,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "uFY" = (

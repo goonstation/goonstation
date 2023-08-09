@@ -4259,7 +4259,7 @@
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "biO" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bji" = (
