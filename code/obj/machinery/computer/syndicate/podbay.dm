@@ -103,7 +103,7 @@
 		return
 	if (choice == "Yes")
 		if (user in src.authorized)
-			boutput(user, "You have already authorized! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
+			boutput(user, "You have already authorized! [src.auth_need - length(src.authorized)] authorizations from others are still needed.")
 			return
 		src.authorized += user
 		if (length(src.authorized) < auth_need)
