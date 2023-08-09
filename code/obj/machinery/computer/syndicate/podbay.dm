@@ -63,7 +63,7 @@
 	proc/print_auth_needed(var/mob/author)
 		if (author)
 			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[author.real_name]'s request accepted. [src.auth_need - src.authorized.len] authorizations needed until Podbay is opened.\"</span></span>", 2)
+				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[author.real_name]'s request accepted. [src.auth_need - length(src.authorized)] authorizations needed until Podbay is opened.\"</span></span>", 2)
 		else
 			for (var/mob/O in hearers(src, null))
 				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[src.auth_need - src.authorized.len] authorizations needed until Podbay is opened.\"</span></span>", 2)
