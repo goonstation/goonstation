@@ -50,6 +50,12 @@ ABSTRACT_TYPE(/mob/living/critter/human)
 		else
 			src.gib()
 
+	disposing()
+		..()
+		src.appearance = null
+		src.overlay_refs.len = 0
+		src.overlay_refs = null
+
 	proc/steal_appearance(var/mob/living/carbon/human/H)
 		if (isnull(H))
 			return
