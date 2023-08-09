@@ -37484,7 +37484,7 @@
 	pixel_y = 6
 	},
 /obj/displaycase{
-	displayed = new /obj/item/captaingun()
+	displayed = new/obj/item/captaingun()
 	},
 /obj/blind_switch/area/west{
 	pixel_y = -6
@@ -38022,6 +38022,8 @@
 	dir = 4;
 	icon_state = "pipe-s"
 	},
+/obj/mapping_helper/access/engineering_chief,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/ce)
 "nEX" = (
