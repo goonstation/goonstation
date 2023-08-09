@@ -489,6 +489,11 @@
 /obj/stone,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/morrigan/station/medical/main)
+"ayL" = (
+/obj/machinery/chem_dispenser/chemical,
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/engine,
+/area/morrigan/station/science)
 "azE" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -1295,11 +1300,6 @@
 /obj/machinery/phone/wall,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/security/interrogation)
-"bqN" = (
-/obj/machinery/conveyor/WE,
-/obj/machinery/light/incandescent/warm,
-/turf/unsimulated/floor/plating,
-/area/morrigan/routing)
 "brk" = (
 /obj/machinery/mass_driver{
 	desc = "A device that launches objects, like ANCIENT BOMBS, for example, on it at great velocity when activated.";
@@ -1489,6 +1489,10 @@
 /obj/item/paper/Morrigan11,
 /turf/unsimulated/floor/darkblue,
 /area/morrigan/station/command/bridge)
+"bGq" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/engine,
+/area/morrigan/station/science)
 "bGH" = (
 /obj/stool/chair/red{
 	dir = 4
@@ -1575,8 +1579,8 @@
 /area/morrigan/routing/transport)
 "bKx" = (
 /obj/machinery/conveyor/WE,
-/obj/machinery/conveyor/WE{
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor/plating,
@@ -2239,9 +2243,8 @@
 	},
 /area/morrigan/station/civilian/chapel)
 "cva" = (
-/obj/machinery/conveyor/EW{
-	name = "cargo belt - west";
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 8
 	},
 /obj/machinery/light/incandescent/warm,
 /turf/unsimulated/floor/plating,
@@ -2338,6 +2341,7 @@
 /area/morrigan/derelict)
 "cAu" = (
 /obj/item/implant/projectile/bullet_357,
+/mob/living/critter/robotic/gunbot/syndicate/morrigan,
 /turf/unsimulated/floor/black/grime,
 /area/morrigan/station/security/armory)
 "cAE" = (
@@ -3285,21 +3289,6 @@
 	},
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/medical/main)
-"dDI" = (
-/obj/machinery/conveyor/NS,
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8;
-	tag = "icon-xtra_bigstripe-edge (WEST)"
-	},
-/turf/unsimulated/floor/plating,
-/area/morrigan/derelict)
 "dEa" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/item/paper/Morrigan4,
@@ -3630,10 +3619,7 @@
 	},
 /area/morrigan/station/hallway)
 "dUQ" = (
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
+/obj/machinery/conveyor/area_activated,
 /obj/railing/yellow{
 	dir = 8
 	},
@@ -4150,8 +4136,8 @@
 	icon_state = "camerax";
 	name = "security camera"
 	},
-/obj/machinery/conveyor/WE{
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 4
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing/transport)
@@ -4944,11 +4930,7 @@
 /area/morrigan/station/maintenance)
 "flo" = (
 /obj/machinery/conveyor/NS,
-/obj/machinery/power/stomper,
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
+/obj/machinery/conveyor/area_activated,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -5299,8 +5281,8 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/station/science)
 "fFX" = (
-/obj/machinery/conveyor/WE{
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 4
 	},
 /obj/machinery/light/incandescent/warm,
 /turf/unsimulated/floor/plating,
@@ -6100,6 +6082,9 @@
 	pixel_y = 4;
 	pixel_x = 2
 	},
+/obj/machinery/light/emergencyflashing{
+	dir = 8
+	},
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/armory)
 "gpL" = (
@@ -6220,6 +6205,15 @@
 /obj/submachine/chef_sink,
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/civilian/kitchen)
+"gve" = (
+/obj/machinery/conveyor/WE,
+/obj/machinery/conveyor/area_activated{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/power/stomper,
+/turf/unsimulated/floor/plating,
+/area/morrigan/derelict)
 "gvV" = (
 /obj/storage/closet/emergency,
 /turf/unsimulated/floor/industrial,
@@ -6305,10 +6299,6 @@
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/main)
-"gBy" = (
-/obj/machinery/conveyor/WE,
-/turf/unsimulated/floor/plating,
-/area/morrigan/routing)
 "gBK" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/candy/candy_corn,
@@ -8349,10 +8339,10 @@
 /area/morrigan/station/maintenance)
 "iKS" = (
 /obj/machinery/networked/telepad,
-/obj/machinery/conveyor/WE{
-	operating = 1
-	},
 /obj/landmark/morrigan_start,
+/obj/machinery/conveyor/area_activated{
+	dir = 4
+	},
 /turf/unsimulated/floor/caution/west,
 /area/morrigan/routing/transport)
 "iLy" = (
@@ -8381,6 +8371,9 @@
 /obj/item/clothing/head/helmet/EOD{
 	pixel_x = 7;
 	pixel_y = 9
+	},
+/obj/machinery/light/emergencyflashing{
+	dir = 4
 	},
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/armory)
@@ -8518,8 +8511,8 @@
 /turf/unsimulated/floor/purple,
 /area/morrigan/station/civilian/janitor)
 "iSm" = (
-/obj/machinery/conveyor/WE{
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 4
 	},
 /obj/decal/fakeobjects/firelock_broken{
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -8712,9 +8705,11 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "jbA" = (
-/obj/table/reinforced/auto,
-/obj/item/ammo/bullets/tranq_darts,
 /obj/machinery/light/incandescent/netural,
+/obj/decal/fakeobjects/weapon_racks/plasmagun1,
+/obj/machinery/light/emergencyflashing{
+	dir = 4
+	},
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/armory)
 "jbI" = (
@@ -9011,9 +9006,8 @@
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/factory)
 "jrr" = (
-/obj/machinery/conveyor/SN{
-	name = "cargo belt - north";
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 1
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing/transport)
@@ -9340,8 +9334,8 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "jHY" = (
-/obj/machinery/conveyor/WE{
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 4
 	},
 /turf/unsimulated/floor/caution/east,
 /area/morrigan/routing/transport)
@@ -9668,8 +9662,8 @@
 	icon_state = "camerax";
 	name = "security camera"
 	},
-/obj/machinery/conveyor/WE{
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 4
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing/transport)
@@ -9942,7 +9936,6 @@
 /turf/unsimulated/floor/plating,
 /area/morrigan/routing)
 "kqB" = (
-/mob/living/critter/robotic/sawfly/ai_controlled,
 /turf/unsimulated/floor/engine/caution/north,
 /area/morrigan/station/factory)
 "kqQ" = (
@@ -9950,8 +9943,8 @@
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
 "krh" = (
-/obj/machinery/conveyor/WE{
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 4
 	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/routing)
@@ -10868,6 +10861,13 @@
 /obj/machinery/light/worn{
 	dir = 1
 	},
+/obj/decoration/junctionbox/junctionbox3{
+	pixel_y = 33
+	},
+/obj/decal/poster/wallsign/neonsparkle{
+	pixel_x = 34;
+	pixel_y = 6
+	},
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
 "lsR" = (
@@ -11649,6 +11649,10 @@
 	dir = 9
 	},
 /area/morrigan/construction)
+"mnn" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/purple,
+/area/morrigan/station/science)
 "mns" = (
 /obj/machinery/door/airlock/pyro/glass/botany{
 	dir = 8;
@@ -11837,10 +11841,7 @@
 "mvb" = (
 /obj/machinery/conveyor/NS,
 /obj/plasticflaps,
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
+/obj/machinery/conveyor/area_activated,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -11914,6 +11915,13 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict/hobo)
+"mBi" = (
+/obj/stool/chair/office{
+	dir = 1
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/purpleblack,
+/area/morrigan/station/science)
 "mBI" = (
 /obj/item/paper/Morrigan15,
 /turf/unsimulated/floor/wizard/carpet/edge{
@@ -12093,9 +12101,8 @@
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOP)
 "mMa" = (
-/obj/machinery/conveyor/EW{
-	name = "cargo belt - west";
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 8
 	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/routing)
@@ -12803,10 +12810,7 @@
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "nvY" = (
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
+/obj/machinery/conveyor/area_activated,
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict)
 "nwe" = (
@@ -13177,8 +13181,8 @@
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
 "nMD" = (
-/obj/machinery/conveyor/WE{
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 4
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing/transport)
@@ -13458,9 +13462,8 @@
 /turf/unsimulated/floor/grey,
 /area/morrigan/station/hallway)
 "nZb" = (
-/obj/machinery/conveyor/EW{
-	name = "cargo belt - west";
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 8
 	},
 /obj/railing/yellow,
 /turf/unsimulated/floor/plating,
@@ -13479,10 +13482,7 @@
 /area/morrigan/station/medical/biological)
 "nZT" = (
 /obj/machinery/conveyor/NS,
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
+/obj/machinery/conveyor/area_activated,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -13519,6 +13519,7 @@
 /obj/machinery/networked/teleconsole{
 	dir = 8
 	},
+/obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/science)
 "ocO" = (
@@ -13642,10 +13643,7 @@
 /obj/railing/red/reinforced{
 	dir = 4
 	},
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
+/obj/machinery/conveyor/area_activated,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -13832,10 +13830,7 @@
 	name = "cargo belt - south";
 	operating = 1
 	},
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
+/obj/machinery/conveyor/area_activated,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -13860,6 +13855,10 @@
 /turf/unsimulated/floor/purpleblack{
 	dir = 4
 	},
+/area/morrigan/station/science)
+"ovu" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/black,
 /area/morrigan/station/science)
 "ovQ" = (
 /obj/machinery/hydro_mister,
@@ -14042,14 +14041,6 @@
 "oFz" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/security/armory)
-"oFO" = (
-/obj/decal/stripe_caution,
-/obj/critter/gunbot/heavy,
-/obj/decal/tile_edge/stripe{
-	dir = 4
-	},
-/turf/unsimulated/floor/red/redblackchecker,
-/area/morrigan/station/security/main)
 "oFT" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/orange,
@@ -14503,6 +14494,9 @@
 /area/morrigan/derelict)
 "pho" = (
 /obj/storage/secure/crate/weapon,
+/obj/machinery/light/emergencyflashing{
+	dir = 8
+	},
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/armory)
 "phH" = (
@@ -14517,6 +14511,10 @@
 /obj/window/bulletproof/south,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/security/main)
+"piU" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/engine,
+/area/morrigan/station/science)
 "pje" = (
 /obj/decal/poster/wallsign/research_sign,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -14545,7 +14543,6 @@
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "u_guilty"
 	},
-/mob/living/critter/robotic/sawfly/ai_controlled,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "plw" = (
@@ -14693,10 +14690,7 @@
 /obj/railing/red/reinforced{
 	dir = 4
 	},
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
+/obj/machinery/conveyor/area_activated,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -14907,8 +14901,8 @@
 /area/morrigan/derelict)
 "pFb" = (
 /obj/machinery/conveyor/WE,
-/obj/machinery/conveyor/WE{
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -15139,6 +15133,7 @@
 /area/morrigan/station/podbay/medical)
 "pWa" = (
 /obj/table/reinforced/chemistry/auto/chemstorage,
+/obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/purpleblack{
 	dir = 1
 	},
@@ -15447,8 +15442,8 @@
 /obj/plasticflaps{
 	dir = 8
 	},
-/obj/machinery/conveyor/WE{
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor/plating,
@@ -15568,10 +15563,6 @@
 	},
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/factory)
-"quu" = (
-/mob/living/critter/robotic/sawfly/ai_controlled,
-/turf/unsimulated/floor/engine/glow,
-/area/morrigan/station/factory)
 "quH" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/shrub/dead,
@@ -15676,10 +15667,7 @@
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/holding)
 "qyl" = (
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
+/obj/machinery/conveyor/area_activated,
 /obj/decal/fakeobjects/firelock_broken{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -16190,11 +16178,6 @@
 /obj/decal/cleanable/robot_debris,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
-"rau" = (
-/obj/decal/fakeobjects/core,
-/obj/decal/cleanable/rust,
-/turf/unsimulated/floor/engine/glow,
-/area/morrigan/station/factory)
 "raZ" = (
 /obj/stool/chair/couch/yellow{
 	dir = 9
@@ -16221,11 +16204,6 @@
 /obj/decoration/clock,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/medical/emergency)
-"rcx" = (
-/obj/item/casing/small,
-/mob/living/critter/robotic/sawfly/ai_controlled,
-/turf/unsimulated/floor/engine/glow,
-/area/morrigan/station/factory)
 "rcE" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/burger/moldy,
@@ -16325,9 +16303,8 @@
 /turf/unsimulated/floor/grass,
 /area/morrigan/station/medical/genetics)
 "riW" = (
-/obj/machinery/conveyor/EW{
-	name = "cargo belt - west";
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 8
 	},
 /obj/railing/yellow,
 /obj/machinery/light/incandescent/warm{
@@ -16428,10 +16405,7 @@
 /area/morrigan/routing/transport)
 "rpS" = (
 /obj/machinery/conveyor/NS,
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
+/obj/machinery/conveyor/area_activated,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
 	tag = "icon-xtra_bigstripe-edge (WEST)"
@@ -18055,6 +18029,7 @@
 /turf/unsimulated/floor/longtile/blue,
 /area/morrigan/station/command/meeting)
 "tll" = (
+/obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/purpleblack{
 	dir = 9
 	},
@@ -18121,6 +18096,12 @@
 /obj/storage/closet/dresser,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOP)
+"tmK" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/purpleblack{
+	dir = 10
+	},
+/area/morrigan/station/science)
 "tnp" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/construction)
@@ -18446,8 +18427,8 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/morrigan/station/medical/main)
 "tDT" = (
-/obj/machinery/conveyor/WE{
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 4
 	},
 /obj/railing/red/reinforced,
 /turf/unsimulated/floor/plating,
@@ -18984,6 +18965,7 @@
 /obj/storage/secure/closet/morrigan/sci,
 /obj/item/clothing/mask/waltwhite,
 /obj/item/clothing/suit/armor/vest/light,
+/obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/purpleblack{
 	dir = 5
 	},
@@ -19198,10 +19180,7 @@
 /obj/railing/red/reinforced{
 	dir = 4
 	},
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
+/obj/machinery/conveyor/area_activated,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -19832,6 +19811,10 @@
 /obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/unsimulated/floor/black,
 /area/morrigan/routing/transport)
+"uZM" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/wood/six,
+/area/morrigan/station/command/RD)
 "vbl" = (
 /obj/storage/secure/closet/morrigan/medical,
 /obj/random_item_spawner/med_kit/four,
@@ -20062,8 +20045,8 @@
 "vri" = (
 /obj/machinery/conveyor/WE,
 /obj/railing/red/reinforced,
-/obj/machinery/conveyor/WE{
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -20496,7 +20479,6 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/holding)
 "vQS" = (
-/mob/living/critter/robotic/sawfly/ai_controlled,
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
@@ -20817,8 +20799,8 @@
 	},
 /area/morrigan/station/hallway)
 "wmV" = (
-/obj/machinery/conveyor/WE{
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 4
 	},
 /obj/machinery/light/incandescent/warm{
 	dir = 1
@@ -21039,16 +21021,11 @@
 /area/morrigan/station/podbay/security)
 "wBa" = (
 /obj/rack,
-/obj/item/gun/energy/plasma_gun{
-	pixel_y = 7;
-	pixel_x = 2;
-	anchored = 1
-	},
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/armory)
 "wBg" = (
-/obj/machinery/conveyor/WE{
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 4
 	},
 /obj/railing/red/reinforced,
 /obj/decal/fakeobjects/firelock_broken{
@@ -21591,10 +21568,7 @@
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "xeS" = (
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
+/obj/machinery/conveyor/area_activated,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing)
 "xfA" = (
@@ -21963,7 +21937,7 @@
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/spy)
 "xvT" = (
-/obj/decoration/bustedmantapc,
+/obj/decoration/syndiepc/syndiepc9,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "xwh" = (
@@ -22044,10 +22018,7 @@
 	name = "cargo belt - south";
 	operating = 1
 	},
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
+/obj/machinery/conveyor/area_activated,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -22098,10 +22069,7 @@
 	icon_state = "bdoorbroken";
 	name = "rusty blastdoor"
 	},
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
+/obj/machinery/conveyor/area_activated,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -22230,8 +22198,8 @@
 /area/space)
 "xLe" = (
 /obj/machinery/conveyor/WE,
-/obj/machinery/conveyor/WE{
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -22436,10 +22404,7 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/crewquarters)
 "xXE" = (
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
+/obj/machinery/conveyor/area_activated,
 /turf/unsimulated/floor/plating,
 /area/morrigan/routing)
 "xXV" = (
@@ -23026,7 +22991,7 @@ vwJ
 vwJ
 pXd
 tMf
-bqN
+fFX
 qBH
 pWM
 aVt
@@ -23129,7 +23094,7 @@ vwJ
 vwJ
 pXd
 tMf
-gBy
+krh
 qBH
 hYz
 lxG
@@ -23232,7 +23197,7 @@ bmB
 pXd
 pXd
 xer
-gBy
+krh
 qBH
 gRU
 exN
@@ -23335,7 +23300,7 @@ jxs
 jxs
 jxs
 tMf
-gBy
+krh
 qBH
 gfs
 qBH
@@ -23853,7 +23818,7 @@ vwJ
 vwJ
 vwJ
 pXd
-gBy
+krh
 pXd
 pXd
 nZb
@@ -23956,7 +23921,7 @@ vwJ
 vwJ
 vwJ
 pXd
-gBy
+krh
 pXd
 tMf
 nZb
@@ -24059,7 +24024,7 @@ vwJ
 vwJ
 pXd
 pXd
-gBy
+krh
 pXd
 tMf
 nZb
@@ -26775,9 +26740,9 @@ lyR
 bvF
 lyR
 par
-xjh
+piU
 gsr
-xjh
+piU
 jym
 udV
 joQ
@@ -26787,7 +26752,7 @@ xar
 inP
 tAH
 tAH
-tAH
+bGq
 xAS
 tAH
 apC
@@ -26883,9 +26848,9 @@ xjh
 xjh
 jym
 kzS
+mnn
 joQ
-joQ
-joQ
+mnn
 uvL
 par
 hqC
@@ -26894,7 +26859,7 @@ szV
 xAS
 tAH
 tAH
-hZQ
+ayL
 par
 sYC
 oHK
@@ -27086,7 +27051,7 @@ xqK
 par
 pij
 pdf
-pdf
+ovu
 fFG
 jym
 tVX
@@ -27096,7 +27061,7 @@ iTJ
 par
 igv
 das
-hPH
+tmK
 par
 par
 qmq
@@ -27306,7 +27271,7 @@ pdf
 pdf
 kHa
 sST
-hZQ
+ayL
 par
 sYC
 bvF
@@ -27401,7 +27366,7 @@ tll
 qQi
 rvW
 gBK
-cFK
+mBi
 par
 wum
 aBj
@@ -27600,7 +27565,7 @@ oir
 qIE
 cBm
 gLw
-uKC
+uZM
 sEg
 vOn
 kvO
@@ -29498,7 +29463,7 @@ oup
 uSM
 dKY
 tvV
-rcx
+nSz
 ykr
 pFw
 iWP
@@ -29909,7 +29874,7 @@ wNb
 joF
 xeA
 mXR
-rau
+gRN
 ent
 iXD
 hEm
@@ -30630,7 +30595,7 @@ ppp
 nTU
 idU
 oCV
-quu
+ykr
 dXF
 vJS
 ykr
@@ -30913,7 +30878,7 @@ rKN
 pRA
 jWj
 hAo
-oFO
+jXB
 gIW
 jXB
 bNh
@@ -33085,7 +33050,7 @@ uyG
 kbM
 sLo
 uwW
-wpu
+lhK
 lsL
 rIC
 xaB
@@ -33189,7 +33154,7 @@ mJC
 cNC
 tpZ
 lhK
-xRb
+lhK
 iij
 hNQ
 rFz
@@ -34803,10 +34768,10 @@ psL
 psL
 otc
 psL
-dDI
+flo
 psL
 mvb
-dDI
+flo
 flo
 qcr
 ybf
@@ -35010,7 +34975,7 @@ lhK
 gPv
 gkR
 tIn
-bKx
+gve
 qrh
 aNr
 pNU

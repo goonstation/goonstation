@@ -276,6 +276,14 @@ proc/load_morrigan()
 	desc = "A black miniputt, seems locked."
 	icon_state = "putt_black"
 
+/obj/decal/fakeobjects/weapon_racks
+	name = "Weapon Rack"
+	icon = 'icons/obj/weapon_rack.dmi'
+
+/obj/decal/fakeobjects/weapon_racks/plasmagun1
+	name = "Plasma Rifle Rack"
+	icon_state = "plasmarifle_rack1"
+
 //NPCS for Morrigan
 
 /mob/living/carbon/human/hobo
@@ -1235,3 +1243,26 @@ proc/load_morrigan()
 		pickupdialogue = "Here's your shit. You know it wasn't worth that much yeah?"
 
 		pickupdialoguefailure = "Bloody delusional you are, you haven't picked fuck all!"
+
+// Critter area
+
+/mob/living/critter/robotic/gunbot/syndicate/morrigan
+	name = "Syndicate Sentinel Unit"
+	real_name = "Syndicate Sentinel Unit"
+	desc = "One of Hafgan's latest models... best avoid it."
+	health_brute = 20
+	health_burn = 20
+	is_npc = TRUE
+	speak_lines = TRUE
+
+	seek_target(range)
+		. = ..()
+
+		if (length(.) && prob(10) && src.speak_lines)
+			src.say(pick("POTENTIAL INTRUDER. MOVING TO ELIMINATE.","YOU DO NOT BELONG HERE.","ALERT - ALL SYNDICATE PERSONNEL ARE TO MOVE TO A SAFE ZONE.","WARNING: THREAT RECOGNIZED AS NANOTRASEN.","Help!! Please I don- RESETTING.","YOU CANNOT ESCAPE. SURRENDER. NOW.","NANOTRASEN WILL LEAVE YOU BEHIND.","THIS IS NOT EVEN MY FINAL FORM."))
+
+	get_melee_protection(zone, damage_type)
+		return 4
+
+	get_ranged_protection()
+		return 2
