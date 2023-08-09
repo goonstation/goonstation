@@ -1,9 +1,9 @@
 // Riot computer but reflavored for the Cairngorm
 
 /obj/machinery/computer/battlecruiser_podbay
-	name = "Podbay Authorization"
+	name = "podbay authorization"
 	icon_state = "drawbr"
-	density = 0
+	density = FALSE
 	glow_in_dark_screen = TRUE
 	/// How many authentications are needed to release the shielding on the podbay. Set the first time someone clicks this.
 	var/auth_need = null
@@ -31,6 +31,7 @@
 		..()
 
 	disposing()
+		src.authorized = null
 		STOP_TRACKING
 		..()
 
