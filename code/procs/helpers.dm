@@ -773,7 +773,7 @@ proc/get_angle(atom/a, atom/b)
 				text += html_encode(the_mob.name)
 			text += " "
 			if (the_client && !the_client.holder) //only show this stuff for non-admins because admins do a lot of shit while dead and it is unnecessary to show it
-				if (checktraitor(the_mob))
+				if (the_mob.mind?.is_antagonist())
 					text += "\[<font color='red'>T</font>\] "
 				if (isdead(the_mob))
 					text += "\[DEAD\] "
@@ -1167,7 +1167,7 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 	var/list/name_temp = splittext(playerName, " ")
 	if (!name_temp.len)
 		playerName = "Unknown"
-	else if (name_temp.len == 1)
+	else if (length(name_temp) == 1)
 		playerName = name_temp[1]
 	else //Ex: John Smith becomes JSmith
 		playerName = copytext( ( copytext(name_temp[1],1, 2) + name_temp[name_temp.len] ), 1, 16)
@@ -1441,7 +1441,7 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 		return 0
 	if (!isnum(mod))
 		return 0
-	if (category_boundaries.len <= 0)
+	if (length(category_boundaries) <= 0)
 		return 0
 
 	var/picker = rand(1,scalemax)
@@ -1774,11 +1774,11 @@ proc/countJob(rank)
 		var/text_chat_toolate = "You have waited too long to respond to the offer."
 
 		if (text_messages.len)
-			if (text_messages.len >= 1) text_alert = text_messages[1]
-			if (text_messages.len >= 2) text_chat_alert = text_messages[2]
-			if (text_messages.len >= 3) text_chat_added = text_messages[3]
-			if (text_messages.len >= 4) text_chat_failed = text_messages[4]
-			if (text_messages.len >= 5) text_chat_toolate = text_messages[5]
+			if (length(text_messages) >= 1) text_alert = text_messages[1]
+			if (length(text_messages) >= 2) text_chat_alert = text_messages[2]
+			if (length(text_messages) >= 3) text_chat_added = text_messages[3]
+			if (length(text_messages) >= 4) text_chat_failed = text_messages[4]
+			if (length(text_messages) >= 5) text_chat_toolate = text_messages[5]
 
 		text_alert = strip_html(text_alert, MAX_MESSAGE_LEN, 1)
 		text_chat_alert = "<span class='notice'><h3>[strip_html(text_chat_alert, MAX_MESSAGE_LEN)]</h3></span>"
@@ -1925,31 +1925,28 @@ proc/countJob(rank)
 
 	return 1
 
-/proc/check_target_immunity(var/atom/target, var/ignore_everything_but_nodamage = 0, var/atom/source = 0)
-	var/is_immune = 0
+/proc/check_target_immunity(var/atom/target, var/ignore_everything_but_nodamage = FALSE, var/atom/source = 0)
+	var/is_immune = FALSE
 
-	var/area/a = get_area( target )
-	if( a?.sanctuary )
-		return 1
+	var/area/a = get_area(target)
+	if(a?.sanctuary)
+		return TRUE
 
 	if (isliving(target))
 		var/mob/living/L = target
 
 		if (!isdead(L))
-			if (ignore_everything_but_nodamage == 1)
+			if (ignore_everything_but_nodamage)
 				if (L.nodamage)
-					is_immune = 1
+					is_immune = TRUE
 			else
 				if (L.nodamage || L.spellshield)
-					is_immune = 1
+					is_immune = TRUE
 
 		if (source && istype(source,/obj/projectile) && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.stance == "dodge") //matrix dodge flip
-				is_immune = 1
-
-	//if (is_immune == 1)
-	//	DEBUG_MESSAGE("[L] is immune to damage, aborting.")
+				is_immune = TRUE
 
 	return is_immune
 
@@ -2567,7 +2564,7 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 	var/msg = "\"[thing]\" ([thing.type])"
 	if (ismob(thing))
 		var/mob/mobthing = thing
-		msg += " {Key: [key_name(mobthing)]}" // IM RUNNING OUT OF BRACKET TYPES
+		msg += " {Key: [mobthing.ckey || "***NULL***"]}" // IM RUNNING OUT OF BRACKET TYPES
 	return msg
 
 /// For runtime logs- returns the above plus ref

@@ -231,7 +231,7 @@ TYPEINFO(/obj/item/camera_film/large)
 	else
 		if(signed || written)
 			. += "<br>"
-		if(signed.len > 0)
+		if(length(signed) > 0)
 			for(var/x in signed)
 				. += "It is signed: [x]"
 				. += "<br>"

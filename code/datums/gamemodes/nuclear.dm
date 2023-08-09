@@ -51,7 +51,7 @@
 
 	possible_syndicates = get_possible_enemies(ROLE_NUKEOP, num_synds)
 
-	if (!islist(possible_syndicates) || possible_syndicates.len < 1)
+	if (!islist(possible_syndicates) || length(possible_syndicates) < 1)
 		boutput(world, "<span class='alert'><b>ERROR: couldn't assign any players as Syndicate operatives, aborting nuke round pre-setup.</b></span>")
 		return 0
 

@@ -17,7 +17,7 @@
 	var/balloon_color = "white"
 	var/last_reag_total = 0
 	var/tied = FALSE
-	//how many breaths should this balloon fill with at a canister
+	/// how many breaths should this balloon fill with at a canister
 	var/breaths = 5
 	var/datum/gas_mixture/air = new
 
@@ -67,12 +67,12 @@
 			return
 		if (!user && usr)
 			user = usr
-		else if (!user && !user && ismob(src.loc))
+		else if (!user && ismob(src.loc))
 			user = src.loc
 		if (!ohshit)
 			ohshit = (src.reagents.total_volume /  (src.reagents.maximum_volume - 10)) * 33
 		if (prob(ohshit))
-			smash()
+			src.smash(user)
 			if (user)
 				user.visible_message("<span class='alert'>[src] bursts in [user]'s hands!</span>", \
 				"<span class='alert'>[src] bursts in your hands! <b>[curse]!</b></span>")
@@ -82,12 +82,7 @@
 				if (T)
 					T.visible_message("<span class='alert'>[src] bursts!</span>")
 			return
-/*		if (src.reagents.total_volume > 30)
-			if (prob(50))
-				user.visible_message("<span class='alert'>[src] is overfilled and bursts! <b>[curse]</b></span>")
-				smash()
-				return
-*/
+
 	is_open_container()
 		return !src.tied
 
@@ -134,13 +129,12 @@
 					user.visible_message("<b>[user]</b> fumbles with [src]!", \
 					"<span class='alert'>You fumble with [src]!</span>")
 					src.burst_chance(user, 100)
-//					user.update_inhands()
 				else
 					if (user.losebreath)
 						boutput(user, "<span class='alert'>You need to catch your breath first!</span>")
 						return
 					var/list/animal_types = list("bee", "dog", "spider", "pie", "owl", "rockworm", "martian", "fermid", "fish")
-					if (!animal_types || animal_types.len <= 0)
+					if (!animal_types || length(animal_types) <= 0)
 						user.show_text("You can't think of anything to make with [src].", "red")
 						return
 					var/animal = input(user, "What do you want to make?") as null|anything in animal_types
@@ -178,8 +172,6 @@
 						if ("bee")
 							A.color = "#FFDD00"
 					H.losebreath ++
-					//SPAWN(4 SECONDS)
-						//H.losebreath --
 					qdel(src)
 
 			if ("Inhale")
@@ -228,15 +220,12 @@
 	ex_act(severity)
 		src.smash()
 
-	proc/smash(var/turf/T)
-		if (src.reagents && src.reagents.total_volume < 10)
-			return
-		if (!T)
-			T = src.loc
+	proc/smash(var/atom/A)
+		if (!A)
+			A = src.loc
+		var/turf/T = get_turf(A)
 		if (src.reagents)
 			src.reagents.reaction(T)
-		if (ismob(T))
-			T = get_turf(T)
 		if (T)
 			T.visible_message("<span class='alert'>[src] bursts!</span>")
 		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
@@ -265,13 +254,14 @@
 	w_class = W_CLASS_SMALL
 
 /obj/item/balloon_animal/random
-	New()
-		..()
-		var/animal = pick("bee", "dog", "spider", "pie", "owl", "rockworm", "martian", "fermid", "fish")
-		src.name = "[animal]-shaped balloon"
-		src.desc = "A little [animal], made out of a balloon! How spiffy!"
-		src.icon_state = "animal-[animal]"
-		src.color = random_saturated_hex_color()
+
+/obj/item/balloon_animal/random/New()
+	..()
+	var/animal = pick("bee", "dog", "spider", "pie", "owl", "rockworm", "martian", "fermid", "fish")
+	src.name = "[animal]-shaped balloon"
+	src.desc = "A little [animal], made out of a balloon! How spiffy!"
+	src.icon_state = "animal-[animal]"
+	src.color = random_saturated_hex_color()
 
 /obj/item/reagent_containers/balloon/naturally_grown
 	desc = "Water balloon fights are a classic way to have fun in the summer. I don't know that chlorine trifluoride balloon fights hold the same appeal for most people. These balloons appear to have been grown naturally."

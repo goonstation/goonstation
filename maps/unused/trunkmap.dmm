@@ -370,9 +370,7 @@
 /area/station/medical/cdc)
 "abf" = (
 /obj/window/reinforced/west,
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/medical/cdc)
 "abg" = (
@@ -1690,9 +1688,7 @@
 /turf/simulated/floor/plating,
 /area/russian)
 "aeA" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/medical/research)
 "aeB" = (
@@ -2190,7 +2186,6 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "afT" = (
-/turf/space,
 /turf/simulated/wall/auto/asteroid{
 	dir = 9
 	},
@@ -3978,9 +3973,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/medical/cdc)
 "alT" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/medical/cdc)
 "alU" = (
@@ -4118,9 +4111,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/medical/cdc)
 "amD" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -10097,9 +10088,7 @@
 /turf/simulated/floor,
 /area/station/atmos/highcap_storage)
 "aGE" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_krimpus"
-	},
+/mob/living/carbon/human/npc/monkey/krimpus,
 /turf/simulated/floor,
 /area/station/atmos/highcap_storage)
 "aGF" = (
@@ -11905,8 +11894,6 @@
 /area/station/medical/medbay)
 "aNn" = (
 /obj/table/auto,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/clothing/glasses/blindfold,
@@ -13283,9 +13270,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aRJ" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor{
 	icon_state = "carpet2"
 	},
@@ -17853,9 +17838,7 @@
 /area/station/crew_quarters/bar)
 "bhz" = (
 /obj/table/auto,
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "bhA" = (
@@ -23353,9 +23336,7 @@
 /area/station/maintenance/south)
 "bve" = (
 /obj/table/reinforced/auto,
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor{
 	icon_state = "carpetS"
 	},
@@ -23616,12 +23597,6 @@
 	dir = 4
 	},
 /area/listeningpost)
-"bvQ" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 1
-	},
-/area/space)
 "bvR" = (
 /turf/simulated/wall/auto/asteroid{
 	dir = 5
@@ -24242,12 +24217,6 @@
 	icon_state = "floor4"
 	},
 /area/listeningpost)
-"bxm" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 5
-	},
-/area/space)
 "bxn" = (
 /turf/simulated/floor/black/side{
 	dir = 4
@@ -24530,18 +24499,6 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/storage)
-"bxZ" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 8
-	},
-/area/space)
-"byf" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 4
-	},
-/area/space)
 "byg" = (
 /obj/grille/steel,
 /obj/window/reinforced/north,
@@ -24686,10 +24643,6 @@
 	dir = 4
 	},
 /area/station/science/lobby)
-"byO" = (
-/turf/space,
-/turf/space,
-/area/space)
 "byP" = (
 /obj/cable{
 	d1 = 4;
@@ -25015,22 +24968,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/central)
-"bAr" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 10
-	},
-/area/space)
-"bAs" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 6
-	},
-/area/space)
-"bAt" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid,
-/area/space)
 "bAu" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -26255,9 +26192,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/science/lobby)
 "bEc" = (
@@ -26832,9 +26767,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/science/lobby)
 "bFj" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/science/lobby)
 "bFk" = (
@@ -28029,9 +27962,7 @@
 	c_tag = "Jury Box";
 	dir = 4
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/science/chemistry)
 "eNv" = (
@@ -29540,9 +29471,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "jsS" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/science/chemistry)
 "jtg" = (
@@ -32069,9 +31998,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/science/chemistry)
 "qzw" = (
@@ -32159,9 +32086,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/science/lobby)
 "qNq" = (
@@ -32607,9 +32532,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/observatory)
 "rPJ" = (
@@ -34037,9 +33960,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "vwB" = (
@@ -39472,7 +39393,7 @@ aaa
 aaa
 aaa
 aaa
-bxZ
+afI
 bwd
 aaa
 aaa
@@ -39775,9 +39696,9 @@ aaa
 aaa
 bvM
 btR
-bAr
+bwd
 afI
-bAr
+bwd
 aaa
 aaa
 aaa
@@ -40077,9 +39998,9 @@ aaa
 afy
 afT
 afZ
-bxm
+bvR
 btR
-bAr
+bwd
 bwd
 aaa
 aaa
@@ -40380,7 +40301,7 @@ afH
 afU
 afU
 afU
-bxm
+bvR
 btR
 bwd
 bwd
@@ -40682,7 +40603,7 @@ aab
 afU
 afU
 afU
-bvQ
+bvM
 btR
 btR
 bwd
@@ -41286,7 +41207,7 @@ aab
 afU
 afU
 agj
-bAr
+bwd
 afz
 agE
 bvw
@@ -41583,7 +41504,7 @@ aaa
 bvM
 btR
 btR
-bAr
+bwd
 afI
 afV
 age
@@ -42184,7 +42105,7 @@ aaa
 afr
 afr
 afr
-bvQ
+bvM
 btR
 afz
 afB
@@ -42788,7 +42709,7 @@ aaa
 afr
 afr
 afr
-bvQ
+bvM
 btR
 afz
 afD
@@ -43107,8 +43028,8 @@ agf
 afz
 afz
 afz
-bAr
-bAr
+bwd
+bwd
 aaa
 aaa
 aaa
@@ -43410,7 +43331,7 @@ bwN
 bxg
 afz
 btR
-bAt
+btR
 aaa
 aaa
 aaa
@@ -43712,7 +43633,7 @@ bwO
 bxh
 afz
 btR
-bAt
+btR
 aaa
 aaa
 aaa
@@ -44014,7 +43935,7 @@ bwT
 bxi
 afz
 btR
-bAt
+btR
 aaa
 aaa
 aaa
@@ -44316,7 +44237,7 @@ bxe
 afz
 afz
 btR
-bAt
+btR
 aaz
 aaa
 aaa
@@ -44617,8 +44538,8 @@ bwQ
 bwQ
 bwQ
 afz
-bAs
-bAs
+afZ
+afZ
 aaa
 aaa
 aaa
@@ -44906,8 +44827,8 @@ aaa
 aaa
 aaz
 aaa
-bxm
-bxm
+bvR
+bvR
 btR
 btR
 btR
@@ -44919,7 +44840,7 @@ bwR
 bxf
 bxj
 afz
-bAs
+afZ
 aaa
 aaa
 aaa
@@ -45209,13 +45130,13 @@ aaa
 aaa
 aaa
 aaa
-bxm
-byf
-byf
-byf
-byf
-byf
-bxm
+bvR
+bwC
+bwC
+bwC
+bwC
+bwC
+bvR
 afz
 bwS
 bwQ
@@ -45517,7 +45438,7 @@ aaa
 aaa
 btR
 btR
-bxm
+bvR
 afz
 afz
 afz
@@ -85071,12 +84992,12 @@ aaa
 aaa
 aaa
 aaa
-byO
 aaa
 aaa
 aaa
 aaa
-byO
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -85370,7 +85291,7 @@ aaa
 aaa
 aaa
 aaa
-byO
+aaa
 aaa
 aaa
 aaa
@@ -86276,7 +86197,7 @@ aaa
 aaa
 aaa
 aaa
-byO
+aaa
 aaa
 aaa
 aaa
@@ -86581,12 +86502,12 @@ aaa
 aaa
 aaa
 aaa
-byO
 aaa
 aaa
 aaa
 aaa
-byO
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -96663,7 +96584,7 @@ aaa
 aaa
 aaa
 aaa
-byO
+aaa
 aaa
 aaa
 aaa
@@ -97271,7 +97192,7 @@ aaa
 aaa
 aaa
 aaa
-byO
+aaa
 aaa
 aaa
 aaa
@@ -97570,8 +97491,6 @@ aaa
 aaa
 aaa
 aaa
-byO
-byO
 aaa
 aaa
 aaa
@@ -97581,7 +97500,9 @@ aaa
 aaa
 aaa
 aaa
-byO
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -99104,7 +99025,7 @@ aaa
 aaa
 aaa
 aaa
-byO
+aaa
 aaa
 aaa
 aaa

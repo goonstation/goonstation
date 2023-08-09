@@ -136,7 +136,7 @@ var/datum/event_controller/random_events
 		next_spawn_event = ticker.round_elapsed_ticks + rand(time_between_spawn_events_lower, time_between_spawn_events_upper)
 
 	proc/do_random_event(var/list/event_bank, var/source = null)
-		if (!event_bank || event_bank.len < 1)
+		if (!event_bank || length(event_bank) < 1)
 			logTheThing(LOG_DEBUG, null, "<b>Random Events:</b> do_random_event proc was passed a bad event bank")
 			return
 		if (!ticker?.mode?.do_random_events)
@@ -148,7 +148,7 @@ var/datum/event_controller/random_events
 			if (RE.is_event_available( ignore_time_lock = (source=="spawn_antag") ))
 				eligible += RE
 				weights += RE.weight
-		if (eligible.len > 0)
+		if (length(eligible) > 0)
 			var/datum/random_event/this = weightedprob(eligible, weights)
 			this.event_effect(source)
 		else

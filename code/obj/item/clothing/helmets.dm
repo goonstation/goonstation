@@ -162,18 +162,18 @@
 		setProperty("meleeprot_head", 3 + prot)
 
 		// Setup item overlays
-		fabrItemImg.color = helmMat.color
-		visrItemImg.color = visrMat.color
+		fabrItemImg.color = helmMat.getColor()
+		visrItemImg.color = visrMat.getColor()
 		UpdateOverlays(visrItemImg, "item-visor")
 		UpdateOverlays(fabrItemImg, "item-helmet")
 		// Setup worn overlays
-		fabrWornImg.color = helmMat.color
-		visrWornImg.color = visrMat.color
+		fabrWornImg.color = helmMat.getColor()
+		visrWornImg.color = visrMat.getColor()
 		src.wear_image.overlays += fabrWornImg
 		src.wear_image.overlays += visrWornImg
 		// Add back the helmet texture since we overide the material apparance
-		if (helmMat.texture)
-			src.setTexture(helmMat.texture, helmMat.texture_blend, "material")
+		if (helmMat.getTexture())
+			src.setTexture(helmMat.getTexture(), helmMat.getTextureBlendMode(), "material")
 
 // Sealab helmets
 
@@ -293,6 +293,7 @@
 		name = "engineering light space helmet"
 		desc = "A lightweight engineering space helmet. It's lacking any major padding or reinforcement."
 		icon_state = "spacelight-e"
+		see_face = TRUE
 
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"

@@ -60,7 +60,7 @@
 				if (!target_is_valid(M,O))
 					continue
 				valid_targets += M
-			if (valid_targets.len > 0)
+			if (length(valid_targets) > 0)
 				current_target = pick(valid_targets)
 				T.visible_message("<b>[O]</b> turns to face [current_target]!")
 				cycles_without_target = 0

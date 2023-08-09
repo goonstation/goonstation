@@ -184,16 +184,6 @@
 		SubscribeToProcess()
 		last_check = world.time
 
-	start_clone()
-		. = ..()
-		if (.)
-			if (team_num == TEAM_NANOTRASEN)
-				new /obj/item/implant/pod_wars/nanotrasen(src.occupant)
-			else if (team_num == TEAM_SYNDICATE)
-				new /obj/item/implant/pod_wars/syndicate(src.occupant)
-
-		return
-
 	ex_act(severity)
 		return
 
@@ -833,7 +823,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 				newThing.setMaterial(src.material)
 			if (user)
 				newThing.add_fingerprint(user)
-				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.getID() ? "[newThing.material.getID()]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return newThing

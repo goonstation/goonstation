@@ -1,37 +1,81 @@
 var/global/list/available_ai_shells = list()
 var/atom/movable/minimap_ui_handler/ai_minimap_ui
-var/global/list/ai_emotions = list("Happy" = "ai_happy", \
-	"Very Happy" = "ai_veryhappy",\
-	"Neutral" = "ai_neutral",\
-	"Unsure" = "ai_unsure",\
-	"Confused" = "ai_confused",\
-	"Surprised" = "ai_surprised",\
-	"Sad" = "ai_sad",\
-	"Mad" = "ai_mad",\
-	/*"BSOD" = "ai_bsod", RESERVED FOR BEING DEAD*/\
-	"Text" = "ai_text",\
-	"Text (Inverted)" = "ai_text-inverted",\
+var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
+	"Annoyed (Inverted)" = "ai_annoyed-lod", \
+	"Baffled" = "ai_baffled-dol",\
+	"Baffled (Inverted)" = "ai_baffled-lod",\
 	"Blank" = "ai_blank",\
-	"Unimpressed" = "ai_unimpressed",\
-	"Baffled" = "ai_baffled",\
-	"Cheeky" = "ai_cheeky",\
-	"Silly" = "ai_silly",\
-	"Annoyed" = "ai_annoyed",\
-	"Pensive" = "ai_pensive",\
-	"Content" = "ai_content",\
-	"Tired" = "ai_tired",\
-	"Smug" = "ai_smug",\
-	"Wink" = "ai_wink",\
-	"Heart" = "ai_heart",\
-	"Triangle" = "ai_triangle",\
-	"Spooky" = "ai_spooky",\
-	"Suspicious" = "ai_eyesemoji",\
-	"Glitch" = "ai_glitch",\
-	"Eye" = "ai_eye",\
-	"Snoozing" = "ai_zzz",\
-	"Loading Bar" = "ai_loading",\
-	"Exclamation" = "ai_exclamation",\
-	"Question" = "ai_question") // this should be in typeinfo
+	"Cheeky" = "ai_cheeky-dol",\
+	"Cheeky (Inverted)" = "ai_cheeky-lod",\
+	"Colourbars" = "ai_colourbars",\
+	"Confused" = "ai_confused-dol",\
+	"Confused (Inverted)" = "ai_confused-lod",\
+	"Content" = "ai_content-dol",\
+	"Content (Inverted)" = "ai_content-lod",\
+	"Crecent" = "ai_crecent-dol",\
+	"Crecent (Inverted)" = "ai_crecent-lod",\
+	"Cursor" = "ai_cursor-dol",\
+	"Cursor (Inverted)" = "ai_cursor-lod",\
+	"Exclamation" = "ai_exclamation-dol",\
+	"Exclamation (Inverted)" = "ai_exclamation-lod",\
+	"Eye" = "ai_eye-dol",\
+	"Eye (Inverted)" = "ai_eye-lod",\
+	"Fidgety" = "ai_fidget-dol",\
+	"Fidgety (Inverted)" = "ai_fidget-lod",\
+	"Glitch" = "ai_glitch-dol",\
+	"Glitch (Inverted)" = "ai_glitch-lod",\
+	"Happy" = "ai_happy-dol", \
+	"Happy (Inverted)" = "ai_happy-lod", \
+	"Heart" = "ai_heart-dol",\
+	"Heart (Inverted)" = "ai_heart-lod",\
+	"Line" = "ai_line-dol",\
+	"Line (Inverted)" = "ai_line-lod",\
+	"Loading Bar" = "ai_loading-dol",\
+	"Loading Bar (Inverted)" = "ai_loading-lod",\
+	"Mad" = "ai_mad-dol",\
+	"Mad (Inverted)" = "ai_mad-lod",\
+	"Musical" = "ai_music-dol",\
+	"Musical (Inverted)" = "ai_music-lod",\
+	"Nanotrasen" = "ai_nanotrasen-dol",\
+	"Nanotrasen (Inverted)" = "ai_nanotrasen-lod",\
+	"Nervous" = "ai_nervous-dol",\
+	"Nervous (Inverted)" = "ai_nervous-lod",\
+	"Neutral" = "ai_neutral-dol",\
+	"Neutral (Inverted)" = "ai_neutral-lod",\
+	"Pensive" = "ai_pensive-dol",\
+	"Pensive (Inverted)" = "ai_pensive-lod",\
+	"Question" = "ai_question-dol",\
+	"Question (Inverted)" = "ai_question-lod",\
+	"Sad" = "ai_sad-dol",\
+	"Sad (Inverted)" = "ai_sad-lod",\
+	"Silly" = "ai_silly-dol",\
+	"Silly (Inverted)" = "ai_silly-lod",\
+	"Smug" = "ai_smug-dol",\
+	"Smug (Inverted)" = "ai_smug-lod",\
+	"Snoozing" = "ai_zzz-dol",\
+	"Snoozing (Inverted)" = "ai_zzz-lod",\
+	"Spooky" = "ai_spooky-dol",\
+	"Spooky (Inverted)" = "ai_spooky-lod",\
+	"Square" = "ai_square-dol",\
+	"Square (Inverted)" = "ai_square-lod",\
+	"Surprised" = "ai_surprised-dol",\
+	"Surprised (Inverted)" = "ai_surprised-lod",\
+	"Suspicious" = "ai_eyesemoji-dol",\
+	"Suspicious (Inverted)" = "ai_eyesemoji-lod",\
+	"Text" = "ai_text-dol",\
+	"Text (Inverted)" = "ai_text-lod",\
+	"Tired" = "ai_tired-dol",\
+	"Tired (Inverted)" = "ai_tired-lod",\
+	"Triangle" = "ai_triangle-dol",\
+	"Triangle (Inverted)" = "ai_triangle-lod",\
+	"Unimpressed" = "ai_unimpressed-dol",\
+	"Unimpressed (Inverted)" = "ai_unimpressed-lod",\
+	"Unsure" = "ai_unsure-dol",\
+	"Unsure (Inverted)" = "ai_unsure-lod",\
+	"Very Happy" = "ai_veryhappy-dol",\
+	"Very Happy (Inverted)" = "ai_veryhappy-lod",\
+	"Wink" = "ai_wink-dol",\
+	"Wink (Inverted)" = "ai_wink-lod") // this should be in typeinfo
 /mob/living/silicon/ai
 	name = "AI"
 	voice_name = "synthesized voice"
@@ -85,7 +129,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	var/status_message = null
 	var/mob/living/silicon/deployed_shell = null
 
-	var/faceEmotion = "ai_happy"
+	var/faceEmotion = "ai_happy-dol"
 	var/faceColor = "#66B2F2"
 	var/list/custom_emotions = null
 
@@ -626,14 +670,14 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 /mob/living/silicon/ai/attack_hand(mob/user)
 	var/list/actions = list("Do Nothing")
 
-	if (src.dismantle_stage >= 2 && src.installed_modules.len > 0)
+	if (src.dismantle_stage >= 2 && length(src.installed_modules) > 0)
 		actions += "Remove a module"
 	if (src.dismantle_stage == 3)
 		actions += "Remove CPU Unit"
 	if (src.dismantle_stage < 4 && isdead(src))
 		actions += "Restart AI"
 
-	if (actions.len > 1)
+	if (length(actions) > 1)
 		var/action_taken = tgui_input_list(user, "What do you want to do?", "AI Unit", actions)
 		if (!action_taken)
 			return
@@ -828,7 +872,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	var/list/CL = null
 	if (O && istype(O, /list))
 		CL = O
-		if (CL.len == 1)
+		if (length(CL) == 1)
 			C = CL[1]
 	else if (O && istype(O, /obj/machinery/camera))
 		C = O
@@ -861,7 +905,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			var/list/srcs  = alarm[3]
 			if (origin in srcs)
 				srcs -= origin
-			if (srcs.len == 0)
+			if (length(srcs) == 0)
 				cleared = 1
 				L -= I
 	if (cleared)
@@ -1510,7 +1554,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 					dat += text("-- [] (<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>)", A.name, src, C, Ctmp.c_tag)
 				else
 					dat += text("-- [] (No Camera)", A.name)
-				if (sources.len > 1)
+				if (length(sources) > 1)
 					dat += text("- [] sources", sources.len)
 				dat += "</NOBR><BR><br>"
 		else
@@ -2500,7 +2544,7 @@ proc/get_mobs_trackable_by_AI()
 
 /obj/ai_core_frame/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/sheet))
-		if (W.material.material_flags & MATERIAL_METAL) // metal sheets
+		if (W.material.getMaterialFlags() & MATERIAL_METAL) // metal sheets
 			if (src.build_step < 1)
 				var/obj/item/sheet/M = W
 				if (M.change_stack_amount(-3))
@@ -2518,7 +2562,7 @@ proc/get_mobs_trackable_by_AI()
 				boutput(user, "\The [src] already has plating!")
 				return
 
-		else if (W.material.material_flags & MATERIAL_CRYSTAL) // glass sheets
+		else if (W.material.getMaterialFlags() & MATERIAL_CRYSTAL) // glass sheets
 			if (src.build_step >= 2)
 				if (!src.has_glass)
 					var/obj/item/sheet/G = W

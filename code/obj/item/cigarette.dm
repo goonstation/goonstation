@@ -388,7 +388,7 @@
 	desc = "A cigarette which seems to have been laced with something."
 
 	New()
-		if (all_functional_reagent_ids.len > 0)
+		if (length(all_functional_reagent_ids) > 0)
 			var/list/chem_choices = all_functional_reagent_ids
 			src.flavor = pick(chem_choices)
 		else

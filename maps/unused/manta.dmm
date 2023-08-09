@@ -1221,15 +1221,6 @@
 /obj/item/reagent_containers/food/snacks/breakfast,
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
-"adY" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/landmark/spawner{
-	name = "shitty_bill"
-	},
-/turf/simulated/floor/specialroom/bar,
-/area/diner/dining)
 "adZ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/kitchen)
@@ -1350,13 +1341,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/diner/kitchen)
-"aez" = (
-/obj/stool/chair/wooden,
-/obj/landmark/spawner{
-	name = "don_glab"
-	},
-/turf/simulated/floor/specialroom/bar,
-/area/diner/dining)
 "aeA" = (
 /obj/overlay{
 	density = 1;
@@ -1397,13 +1381,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/diner/kitchen)
-"aeH" = (
-/obj/stool/bar,
-/obj/landmark/spawner{
-	name = "father_jack"
-	},
-/turf/simulated/floor/specialroom/bar,
-/area/diner/dining)
 "aeI" = (
 /obj/table/wood/round/auto,
 /obj/item/plate{
@@ -3034,9 +3011,9 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "akE" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall3_trans"
 	},
 /turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
@@ -3045,9 +3022,9 @@
 /turf/simulated/floor/plating/random,
 /area/listeningpost/syndicateassaultvessel)
 "akG" = (
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "diagonalWall3"
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
 	},
 /turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
@@ -3477,9 +3454,9 @@
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "alP" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall3_trans"
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
@@ -3495,9 +3472,9 @@
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "alR" = (
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "diagonalWall3"
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
@@ -3511,9 +3488,8 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "alU" = (
-/turf/simulated/shuttle/wall{
-	dir = 10;
-	icon_state = "diagonalWall3"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
 	},
 /turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
@@ -3683,9 +3659,9 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "amq" = (
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "wall3"
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
 	},
 /turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
@@ -17343,12 +17319,12 @@
 /obj/storage/crate/freezer{
 	name = "Freezer"
 	},
-/obj/item/fish/bass,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/carp,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -17466,17 +17442,6 @@
 /turf/simulated/floor/blue,
 /area/station/medical/research)
 "aXY" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/research)
-"aXZ" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -17726,15 +17691,6 @@
 "aYK" = (
 /turf/simulated/floor/blue,
 /area/station/medical/research)
-"aYL" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/green,
-/area/station/medical/research)
 "aYM" = (
 /obj/table/glass/reinforced/auto,
 /obj/bedsheetbin,
@@ -17978,23 +17934,6 @@
 /area/station/medical/research)
 "aZq" = (
 /turf/simulated/floor/green,
-/area/station/medical/research)
-"aZs" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/research)
-"aZt" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/obj/shrub,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
 /area/station/medical/research)
 "aZu" = (
 /obj/machinery/door/airlock/pyro/medical,
@@ -21900,8 +21839,6 @@
 /area/station/medical/medbay/lobby)
 "bju" = (
 /obj/storage/crate/packing,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/device/radio/electropack,
 /obj/item/device/radio/electropack,
 /obj/item/clothing/mask/muzzle,
@@ -33081,6 +33018,13 @@
 /obj/mapping_helper/access/mining,
 /turf/unsimulated/floor/orange,
 /area/station/mining/staff_room)
+"cdC" = (
+/mob/living/carbon/human/npc/monkey,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/green,
+/area/station/medical/research)
 "cea" = (
 /obj/decal/tile_edge/check{
 	dir = 4;
@@ -33420,6 +33364,13 @@
 	dir = 8
 	},
 /area/station/crewquarters/garbagegarbs)
+"cOY" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/mob/living/carbon/human/biker,
+/turf/simulated/floor/specialroom/bar,
+/area/diner/dining)
 "cPg" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
@@ -33645,6 +33596,13 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/random,
+/area/listeningpost/syndicateassaultvessel)
+"dxS" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon_state = "wall3_trans"
+	},
+/turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
 "dyv" = (
 /obj/disposalpipe/segment/mail{
@@ -34203,6 +34161,15 @@
 	},
 /turf/simulated/floor/grime,
 /area/skeleton_trader)
+"eJK" = (
+/mob/living/carbon/human/npc/monkey,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/research)
 "eLx" = (
 /obj/vehicle/forklift,
 /obj/machinery/light/incandescent/netural{
@@ -34291,6 +34258,10 @@
 	},
 /turf/space/fluid/manta,
 /area/diner/hangar)
+"ePk" = (
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "eQD" = (
 /obj/machinery/computer3/generic/communications{
 	dir = 8
@@ -34349,6 +34320,11 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/storage)
+"eSh" = (
+/obj/stool/bar,
+/mob/living/carbon/human/fatherjack,
+/turf/simulated/floor/specialroom/bar,
+/area/diner/dining)
 "eWT" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
@@ -34627,6 +34603,11 @@
 	dir = 8
 	},
 /area/station/crewquarters/cryotron)
+"ftb" = (
+/obj/stool/chair/wooden,
+/mob/living/carbon/human/don_glab,
+/turf/simulated/floor/specialroom/bar,
+/area/diner/dining)
 "ftD" = (
 /obj/landmark/start/job/cyborg,
 /turf/simulated/floor,
@@ -35471,12 +35452,6 @@
 /obj/machinery/manufacturer/uniform,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
-"hkU" = (
-/obj/landmark/spawner{
-	name = "dolly"
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "hlB" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -36390,6 +36365,13 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/communications/bedroom)
+"jqy" = (
+/mob/living/carbon/human/npc/monkey,
+/obj/shrub,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/research)
 "jqA" = (
 /obj/rack,
 /obj/item/tank/air,
@@ -36877,6 +36859,9 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/breakroom)
+"kQi" = (
+/turf/unsimulated/wall/auto/adventure/fake_window,
+/area/listeningpost/syndicateassaultvessel)
 "kRd" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -37002,6 +36987,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
+"lnH" = (
+/mob/living/carbon/human/npc/monkey,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/research)
 "lpB" = (
 /obj/stool/bench/auto,
 /obj/machinery/light/incandescent/netural{
@@ -38967,12 +38958,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
-"pFX" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
-/turf/simulated/floor,
-/area/station/security/brig/genpop)
 "pGE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39228,11 +39213,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/starboardtorpedoes)
-"qAx" = (
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
-/area/listeningpost/syndicateassaultvessel)
 "qBh" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 8;
@@ -39851,6 +39831,13 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"rUa" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon_state = "wall3_trans"
+	},
+/turf/space/fluid/manta,
+/area/listeningpost/syndicateassaultvessel)
 "rVY" = (
 /obj/grille/catwalk{
 	dir = 5;
@@ -40352,6 +40339,10 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
+"txc" = (
+/mob/living/carbon/human/npc/monkey/stirstir,
+/turf/simulated/floor,
+/area/station/security/brig/genpop)
 "tAG" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -77893,7 +77884,7 @@ bBM
 bBM
 hDa
 xlK
-hkU
+ePk
 bBM
 rdQ
 xpG
@@ -84612,7 +84603,7 @@ aaa
 aaa
 aaa
 aaa
-akE
+dxS
 akH
 akV
 akV
@@ -85211,8 +85202,8 @@ aaa
 akE
 akH
 akH
-qAx
-qAx
+kQi
+kQi
 akH
 akH
 aln
@@ -85812,7 +85803,7 @@ aaa
 aaa
 akW
 akZ
-qAx
+kQi
 akN
 alc
 alD
@@ -86114,7 +86105,7 @@ aaa
 akU
 akX
 atw
-qAx
+kQi
 akP
 alD
 alD
@@ -86416,7 +86407,7 @@ aaa
 aaa
 akY
 ala
-qAx
+kQi
 akN
 ald
 alD
@@ -87023,8 +87014,8 @@ aaa
 akG
 akH
 akH
-qAx
-qAx
+kQi
+kQi
 akH
 akH
 als
@@ -87632,7 +87623,7 @@ aaa
 aaa
 aaa
 aaa
-akG
+rUa
 akH
 akV
 akV
@@ -89331,7 +89322,7 @@ aSk
 aRi
 aRz
 aRP
-pFX
+txc
 aSZ
 aTF
 aUo
@@ -92060,7 +92051,7 @@ aBw
 aWR
 aUs
 aXT
-aYL
+cdC
 aZp
 bam
 bbn
@@ -93571,7 +93562,7 @@ aWR
 aXy
 aXY
 aYP
-aZs
+lnH
 baq
 gTH
 bbq
@@ -94173,7 +94164,7 @@ aVY
 aUB
 aWR
 aXA
-aXZ
+eJK
 aYR
 aYQ
 bar
@@ -94779,7 +94770,7 @@ aWR
 aLP
 aYb
 aYT
-aZt
+jqy
 baq
 jwm
 bcp
@@ -117063,7 +117054,7 @@ ada
 ada
 aer
 aer
-aeH
+eSh
 aer
 adq
 adq
@@ -118270,7 +118261,7 @@ nRg
 adX
 aei
 ada
-aez
+ftb
 aeI
 aeY
 adq
@@ -118569,7 +118560,7 @@ adz
 adG
 acJ
 ada
-adY
+cOY
 aej
 ada
 ada

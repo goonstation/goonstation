@@ -520,10 +520,6 @@
 		src.active_hand = 2
 		return ..() // Stab them
 
-	death(var/gibbed)
-		src.can_lie = FALSE
-		..()
-
 	proc/HALT()
 		if(!ON_COOLDOWN(src, "say_HALT!", src.halt_cooldown))
 			src.say("HALT!")

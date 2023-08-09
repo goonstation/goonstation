@@ -4,7 +4,7 @@
 	desc = "Oh god."
 	density = 1
 	icon_state = "brullbar"
-	icon_state_dead = "brullbar"
+	icon_state_dead = "brullbar-dead"
 	custom_gib_handler = /proc/gibs
 	hand_count = 2
 	can_throw = TRUE
@@ -33,7 +33,7 @@
 
 	faction = FACTION_ICEMOON
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!isdead(src))
 			return ..()
 		if (issawingtool(W))
@@ -202,7 +202,7 @@
 
 	update_dead_icon()
 		var/datum/handHolder/HH = hands[1]
-		. = "brullbar"
+		. = "brullbar-dead"
 		if (!HH.limb)
 			. += "-l"
 		HH = hands[2]
@@ -220,7 +220,7 @@
 	real_name = "brullbar king"
 	desc = "You should run."
 	icon_state = "brullbarking"
-	icon_state_dead = "brullbarking"
+	icon_state_dead = "brullbarking-dead"
 	skinresult = /obj/item/material_piece/cloth/kingbrullbarhide
 	max_skins = 5
 	health_brute = 250

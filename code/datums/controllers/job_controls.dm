@@ -135,11 +135,11 @@ var/datum/job_controller/job_controls
 			dat += "<A href='?src=\ref[src];EditRhand=1'>Starting Right Hand Item:</A> [english_list(src.job_creator.slot_rhan)]<br>"
 			dat += "<A href='?src=\ref[src];EditImpl=1'>Starting Implant:</A> [src.job_creator.receives_implant]<br>"
 			for(var/i in 1 to 7)
-				dat += "<A href='?src=\ref[src];EditBpItem=[i]'>Starting Backpack Item [i]:</A> [src.job_creator.items_in_backpack.len >= i ? src.job_creator.items_in_backpack[i] : null]<br>"
+				dat += "<A href='?src=\ref[src];EditBpItem=[i]'>Starting Backpack Item [i]:</A> [length(src.job_creator.items_in_backpack) >= i ? src.job_creator.items_in_backpack[i] : null]<br>"
 			for(var/i in 1 to 7)
-				dat += "<A href='?src=\ref[src];EditBeltItem=[i]'>Starting Belt Item [i]:</A> [src.job_creator.items_in_belt.len >= i ? src.job_creator.items_in_belt[i] : null]<br>"
+				dat += "<A href='?src=\ref[src];EditBeltItem=[i]'>Starting Belt Item [i]:</A> [length(src.job_creator.items_in_belt) >= i ? src.job_creator.items_in_belt[i] : null]<br>"
 			dat += "<A href='?src=\ref[src];GetAccess=1'>Set Access Permissions </A>"
-			if (src.job_creator.access.len > 1)
+			if (length(src.job_creator.access) > 1)
 				dat += " "
 				dat += "<A href='?src=\ref[src];AddAccess=1'>(Add More):</A>"
 			dat += ":<BR>"
@@ -149,7 +149,7 @@ var/datum/job_controller/job_controls
 			dat += "<A href='?src=\ref[src];BioEffects=1'>Bio Effects:</A> [src.job_creator.bio_effects]<br>"
 		else if (ispath(src.job_creator.mob_type, /mob/living/critter))
 			dat += "<A href='?src=\ref[src];GetAccess=1'>Set Implanted Access Permissions</A>"
-			if (src.job_creator.access.len > 1)
+			if (length(src.job_creator.access) > 1)
 				dat += " "
 				dat += "<A href='?src=\ref[src];AddAccess=1'>(Add More):</A>"
 				dat += ":<BR>"
@@ -252,9 +252,9 @@ var/datum/job_controller/job_controls
 				L = typesof(/mob)
 
 			var/picker = null
-			if (L.len == 1)
+			if (length(L) == 1)
 				picker = L[1]
-			else if (L.len > 1)
+			else if (length(L) > 1)
 				picker = input(usr,"Select mob:","Job Creator",null) as null|anything in L
 			else
 				usr.show_text("No mob matching that name", "red")
@@ -278,9 +278,9 @@ var/datum/job_controller/job_controls
 						L = typesof(/datum/mutantrace)
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select mutantrace:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No mutantrace matching that name", "red")
@@ -306,9 +306,9 @@ var/datum/job_controller/job_controls
 						L = typesof(/obj/item/clothing/head)
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select headgear:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No headgear matching that name", "red")
@@ -333,9 +333,9 @@ var/datum/job_controller/job_controls
 						L = typesof(/obj/item/clothing/mask)
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select mask:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No mask matching that name", "red")
@@ -360,9 +360,9 @@ var/datum/job_controller/job_controls
 						L = typesof(/obj/item/device/radio/headset)
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select headset:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No headset matching that name", "red")
@@ -387,9 +387,9 @@ var/datum/job_controller/job_controls
 						L = typesof(/obj/item/clothing/glasses)
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select glasses:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No glasses matching that name", "red")
@@ -414,9 +414,9 @@ var/datum/job_controller/job_controls
 						L = typesof(/obj/item/clothing/suit)
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select exosuit:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No exosuit matching that name", "red")
@@ -441,9 +441,9 @@ var/datum/job_controller/job_controls
 						L = typesof(/obj/item/clothing/under)
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select jumpsuit:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No jumpsuit matching that name", "red")
@@ -470,9 +470,9 @@ var/datum/job_controller/job_controls
 						L = (typesof(/obj/item/card) - list(/obj/item/card/emag, /obj/item/card/emag/fake, /obj/item/card/id/gauntlet))
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select ID card:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No ID card matching that name", "red")
@@ -497,9 +497,9 @@ var/datum/job_controller/job_controls
 						L = typesof(/obj/item/clothing/gloves)
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select gloves:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No gloves matching that name", "red")
@@ -524,9 +524,9 @@ var/datum/job_controller/job_controls
 						L = typesof(/obj/item/clothing/shoes)
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select shoes:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No shoes matching that name", "red")
@@ -551,9 +551,9 @@ var/datum/job_controller/job_controls
 						L = typesof(/obj/item/)
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select backslot item:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No backslot item matching that name", "red")
@@ -589,9 +589,9 @@ var/datum/job_controller/job_controls
 						L = typesof(/obj/item/)
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select beltslot item:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No beltslot item matching that name", "red")
@@ -625,9 +625,9 @@ var/datum/job_controller/job_controls
 						L = typesof(/obj/item/)
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select item:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No item matching that name", "red")
@@ -661,9 +661,9 @@ var/datum/job_controller/job_controls
 						L = typesof(/obj/item/)
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select item:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No item matching that name", "red")
@@ -697,9 +697,9 @@ var/datum/job_controller/job_controls
 						L = typesof(/obj/item/)
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select item:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No item matching that name", "red")
@@ -724,9 +724,9 @@ var/datum/job_controller/job_controls
 						L = typesof(/obj/item/)
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select item:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No item matching that name", "red")
@@ -751,9 +751,9 @@ var/datum/job_controller/job_controls
 						L = typesof(/obj/item/implant)
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select implant:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No implant matching that name", "red")
@@ -768,7 +768,7 @@ var/datum/job_controller/job_controls
 			var/slot_num = text2num(href_list["EditBpItem"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					if(src.job_creator.items_in_backpack.len >= slot_num)
+					if(length(src.job_creator.items_in_backpack) >= slot_num)
 						src.job_creator.items_in_backpack[slot_num] = null
 
 				if("Reselect")
@@ -781,15 +781,15 @@ var/datum/job_controller/job_controls
 						L = typesof(/obj/item/)
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select item:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No item matching that name", "red")
 						return
 
-					while(src.job_creator.items_in_backpack.len < slot_num)
+					while(length(src.job_creator.items_in_backpack) < slot_num)
 						src.job_creator.items_in_backpack += null
 					src.job_creator.items_in_backpack[slot_num] = picker
 
@@ -800,7 +800,7 @@ var/datum/job_controller/job_controls
 			var/slot_num = text2num(href_list["EditBeltItem"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					if(src.job_creator.items_in_belt.len >= slot_num)
+					if(length(src.job_creator.items_in_belt) >= slot_num)
 						src.job_creator.items_in_belt[slot_num] = null
 
 				if("Reselect")
@@ -813,15 +813,15 @@ var/datum/job_controller/job_controls
 						L = typesof(/obj/item/)
 
 					var/picker = null
-					if (L.len == 1)
+					if (length(L) == 1)
 						picker = L[1]
-					else if (L.len > 1)
+					else if (length(L) > 1)
 						picker = input(usr,"Select item:","Job Creator",null) as null|anything in L
 					else
 						usr.show_text("No item matching that name", "red")
 						return
 
-					while(src.job_creator.items_in_belt.len < slot_num)
+					while(length(src.job_creator.items_in_belt) < slot_num)
 						src.job_creator.items_in_belt += null
 					src.job_creator.items_in_belt[slot_num] = picker
 

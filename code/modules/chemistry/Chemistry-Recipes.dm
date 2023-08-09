@@ -482,6 +482,36 @@
 		result_amount = 1
 		mix_phrase = "The paper chars, seperating into a silky black powder."
 
+	milk
+		name = "Milk"
+		id = "milk"
+		result = "milk"
+		required_reagents = list("milk_powder" = 1, "water" = 1)
+		result_amount = 1
+		mix_phrase = "The powder dissolves, turning the solution milky."
+
+	powder_milk
+		name = "Milk powder"
+		id = "milk_powder"
+		result = "milk_powder"
+		required_reagents = list("milk" = 1)
+		result_amount = 1
+		min_temperature = T0C + 100
+		mix_phrase = "The water boils away, leaving behind a white condensed powder."
+		on_reaction(datum/reagents/holder, created_volume)
+			. = ..()
+			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+			smoke.set_up(1, 0, get_turf(src))
+			smoke.start()
+
+	super_milk
+		name = "Super Milk"
+		id = "super_milk"
+		result = "super_milk"
+		required_reagents = list("milk" = 1, "milk_powder" = 1)
+		result_amount = 1
+		mix_phrase = "The mixture concentrates."
+
 	bilk
 		name = "Bilk"
 		id = "bilk"
@@ -1175,9 +1205,9 @@
 		name = "Gin Fizz"
 		id = "ginfizz"
 		result = "ginfizz"
-		required_reagents = list("gin" = 1, "juice_lemon" = 1, "water" = 1)
+		required_reagents = list("gin" = 1, "juice_lemon" = 1, "tonic" = 1)
 		result_amount = 3
-		mix_phrase = "The mixed drink starts fizzing on its own. Somehow."
+		mix_phrase = "The mixed drink starts fizzing. Somehow."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 
 	cocktail_gimlet
@@ -2167,7 +2197,7 @@
 				boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
 			if(holder?.my_atom?.is_open_container())
 				// A slightly less stupid way of smoking contents. Maybe.
-				var/datum/reagents/smokeContents = new/datum/reagents/
+				var/datum/reagents/smokeContents = new/datum/reagents
 				smokeContents.add_reagent("saxitoxin", created_volume / 6)
 				smoke_reaction(smokeContents, 2, location)
 				return
@@ -3241,7 +3271,7 @@
 						boutput(M, "<span class='notice'>With nowhere to go, the bubbles settle.</span>")
 					return
 			var/turf/location = 0
-			if (holder.my_atom && holder.covered_cache.len <= 1)
+			if (holder.my_atom && length(holder.covered_cache) <= 1)
 				location = get_turf(holder.my_atom)
 				for(var/mob/M in AIviewers(5, location))
 					boutput(M, "<span class='alert'>The solution violently bubbles!</span>")
@@ -3283,7 +3313,7 @@
 						boutput(M, "<span class='notice'>With nowhere to go, the metal settles.</span>")
 					return
 
-			if (holder.my_atom && holder.covered_cache.len <= 1)
+			if (holder.my_atom && length(holder.covered_cache) <= 1)
 				location = get_turf(holder.my_atom)
 				for(var/mob/M in AIviewers(5, location))
 					boutput(M, "<span class='alert'>The solution spews out a metalic foam!</span>")

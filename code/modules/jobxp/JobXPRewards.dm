@@ -114,7 +114,7 @@ mob/verb/checkrewards()
 	desc = "A bucket! And it's red! Wow."
 	required_levels = list("Janitor"=5)
 	claimable = 1
-	var/path_to_spawn = /obj/item/reagent_containers/glass/bucket/red/
+	var/path_to_spawn = /obj/item/reagent_containers/glass/bucket/red
 
 	activate(var/client/C)
 		var/obj/item/reagent_containers/glass/bucket/bucket = locate(/obj/item/reagent_containers/glass/bucket) in C.mob.contents
@@ -624,7 +624,7 @@ mob/verb/checkrewards()
     desc = "Your iconic toque blanche but tall!"
     required_levels = list("Chef"=2)
     claimable = 1
-    var/path_to_spawn = /obj/item/clothing/head/chefhattall/
+    var/path_to_spawn = /obj/item/clothing/head/chefhattall
 
     activate(var/client/C)
         var/obj/item/clothing/head/chefhat/chefhat = locate(/obj/item/clothing/head/chefhat) in C.mob.contents

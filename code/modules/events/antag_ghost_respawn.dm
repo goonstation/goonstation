@@ -378,11 +378,11 @@
 						else
 							M3.set_loc(ASLoc)
 					if (2)
-						if (!job_start_locations["wizard"])
+						if (!landmarks[LANDMARK_WIZARD])
 							boutput(M3, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 							M3.set_loc(ASLoc)
 						else
-							M3.set_loc(pick(job_start_locations["wizard"]))
+							M3.set_loc(pick_landmark(LANDMARK_WIZARD))
 					if (3)
 						M3.set_loc(ASLoc)
 			//nah

@@ -32,7 +32,7 @@
 		return 12.5 + 2.5 * clamp(GET_DIST(A, P.orig_turf) - 4, 0, 7)
 
 
-/datum/projectile/wavegun/transverse //expensive taser shots that go through /everything/
+/datum/projectile/wavegun/transverse //expensive taser shots that go through /everything
 	shot_number = 1
 	stun = 10 //half the power of a taser at range 1-3, delivers a nasty punch at the 4-tile sweetspot
 	max_range = 5 //super short. about 4 tile max range

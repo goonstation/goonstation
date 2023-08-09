@@ -45,7 +45,7 @@
 	desc = "Very fuzzy, likes to roll over."
 	death_text = "%src% rolls over!"
 	icon_state = "catbrix"
-	butcherable = FALSE
+	butcherable = BUTCHER_NOT_ALLOWED
 	health = 30
 	randomize_name = 0
 	randomize_look = 0

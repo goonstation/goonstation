@@ -1,5 +1,6 @@
 #define TEAM_NANOTRASEN 1
 #define TEAM_SYNDICATE 2
+#define TEAM_NEUTRAL 3
 
 #define FORTUNA "FORTUNA"
 #define RELIANT "RELIANT"
@@ -961,7 +962,7 @@ proc/setup_pw_crate_lists()
 	SPAWN(3.5 SECONDS)
 		qdel(O)
 
-/obj/decoration/memorial/
+/obj/decoration/memorial
 	name = "Generic Memorial"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"

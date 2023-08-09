@@ -15,11 +15,11 @@
 // playsound($1, '$2'
 // Greek Adventurezone Thingy
 
-/turf/unsimulated/greek/
+/turf/unsimulated/greek
 	name = "Greek Adventurezone Sprites"
 	icon = 'icons/turf/adventure_gannets.dmi'
 
-/turf/unsimulated/wall/greek/
+/turf/unsimulated/wall/greek
 	name = "Greek Adventurezone Sprites"
 	icon = 'icons/turf/adventure_gannets.dmi'
 

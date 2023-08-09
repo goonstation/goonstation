@@ -142,7 +142,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 
 // ---------------------------------------------- OBJECTS -------------------------------------
 
-/obj/indestructible/
+/obj/indestructible
 	anchored = ANCHORED_ALWAYS
 
 	attackby()

@@ -93,7 +93,7 @@
 		else
 			w_class = W_CLASS_TINY
 
-		src.setMaterial(getMaterial("pizza"), appearance = 0, setname = 0, copy = FALSE)
+		src.setMaterial(getMaterial("pizza"), appearance = 0, setname = 0)
 		if (prob(1))
 			SPAWN( rand(300, 900) )
 				src.visible_message("<b>[src]</b> <i>says, \"I'm pizza.\"</i>")
@@ -1145,7 +1145,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_cateyes")
 	meal_time_flags = MEAL_TIME_SNACK
 
-/obj/item/reagent_containers/food/snacks/spaghetti/
+/obj/item/reagent_containers/food/snacks/spaghetti
 	name = "spaghetti noodles"
 	desc = "Just noodles on their own."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
@@ -1376,6 +1376,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Goes great with Robust Coffee."
 	icon = 'icons/obj/foodNdrink/donuts.dmi'
 	icon_state = "base"
+	item_state = "donut1"
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	heal_amt = 1
@@ -1457,18 +1458,21 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		frosted
 			name = "frosted donut"
 			icon_state = "donut2"
+			item_state = "donut2"
 			heal_amt = 2
 
 		cinnamon
 			name = "cinnamon sugar donut"
 			desc = "One of Delectable Dan's seasonal bestsellers."
 			icon_state = "donut3"
+			item_state = "donut3"
 			heal_amt = 3
 
 		robust
 			name = "robust donut"
 			desc = "It's like an energy bar, but in donut form! Contains some chemicals known for partial stun time reduction and boosted stamina regeneration."
 			icon_state = "donut4"
+			item_state = "donut4"
 			bites_left = 4
 			initial_volume = 36
 			initial_reagents = list("sugar"=12,"synaptizine"=12,"epinephrine"=12)
@@ -1477,6 +1481,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			name = "robusted donut"
 			desc = "A donut for those harsh moments. Contains a mix of chemicals for cardiac emergency recovery and any minor trauma that accompanies it."
 			icon_state = "donut5"
+			item_state = "donut5"
 			bites_left = 4
 			initial_volume = 40
 			initial_reagents = list("salbutamol"=12,"epinephrine"=12,"saline"=16)
@@ -1485,6 +1490,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			New()
 				if(rand(1,3) == 1)
 					src.icon_state = "donut2"
+					src.item_state = "donut2"
 					src.name = "frosted donut"
 					src.heal_amt = 2
 				..()
@@ -1591,7 +1597,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	New()
 		..()
 		flick("ectoplasm-a", src)
-		src.setMaterial(getMaterial("ectoplasm"), appearance = 0, setname = 0, copy = FALSE)
+		src.setMaterial(getMaterial("ectoplasm"), appearance = 0, setname = 0)
 
 	heal(mob/M)
 		..()
