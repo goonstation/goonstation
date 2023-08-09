@@ -56263,12 +56263,6 @@
 	tag = ""
 	},
 /obj/grille/catwalk,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	tag = ""
-	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
@@ -63947,7 +63941,9 @@
 /obj/machinery/conveyor/WE{
 	id = "mining"
 	},
-/obj/plasticflaps,
+/obj/plasticflaps{
+	dir = 4
+	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
