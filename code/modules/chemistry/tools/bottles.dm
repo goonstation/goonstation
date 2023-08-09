@@ -399,6 +399,23 @@
 	amount_per_transfer_from_this = 5
 	initial_reagents = "formaldehyde"
 
+/* ========================================================= */
+/* -------------------- Bartender Juice -------------------- */
+/* ========================================================= */
+/obj/item/reagent_containers/glass/bottle/juice
+	name = "juice bottle"
+	desc = "A small bottle for juice. There's a warning sticker about preservatives that's completely covering the label."
+	bottle_style = "2"
+	initial_volume = 35
+	amount_per_transfer_from_this = 5
+	initial_reagents = null
+	New()
+		src.initial_reagents = list(pick("juice_apple", "juice_blackberry", "juice_blueberry", "juice_blueraspberry", "capsaicin", "juice_grapefruit", "juice_peach", "juice_strawberry") = 30)
+		if (prob(50))
+			src.initial_reagents["formaldehyde"] = 5
+		else
+			src.initial_reagents["water"] = 5
+		..()
 /* ============================================== */
 /* -------------------- Misc -------------------- */
 /* ============================================== */

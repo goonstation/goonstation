@@ -90,6 +90,12 @@
 	/obj/item/reagent_containers/food/snacks/plant/lime,\
 	/obj/item/kitchen/utensil/knife)
 
+/obj/item/storage/box/juice
+	name = "juice box"
+	icon_state = "beer"
+	desc = "A box of assorted juices for more niche cocktails."
+	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/juice = 7)
+
 /obj/item/storage/box/ic_cones
 	name = "ice cream cone box"
 	icon_state = "ic_cones"

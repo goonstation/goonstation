@@ -55,6 +55,11 @@
 	initial_volume = 100
 	initial_reagents = list("wine"=60)
 
+/obj/item/reagent_containers/food/drinks/bottle/wine/white
+	name = "white wine"
+	desc = "Wine made from those nasty green grapes."
+	initial_reagents = list("white_wine"=60)
+
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine
 	name = "fortified wine"
 	desc = "Some sort of bottom-shelf booze. Wasn't this brand banned awhile ago?"
