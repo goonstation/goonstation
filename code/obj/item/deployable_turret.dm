@@ -537,6 +537,15 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		..(src.loc, src.dir)
 		src.toggle_activated()
 
+	north
+		dir=NORTH
+	south
+		dir=SOUTH
+	east
+		dir=EAST
+	west
+		dir=WEST
+
 /////////////////////////////
 //   Turret Ability Stuff  //
 /////////////////////////////
