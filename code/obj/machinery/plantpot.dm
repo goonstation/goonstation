@@ -214,6 +214,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	icon_state = "tray"
 	anchored = UNANCHORED
 	density = 1
+	event_handler_flags = null
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
 	flags = NOSPLASH|ACCEPTS_MOUSEDROP_REAGENTS
 	processing_tier = PROCESSING_SIXTEENTH
@@ -353,6 +354,13 @@ TYPEINFO(/obj/machinery/plantpot)
 			src.do_update_water_icon = 0
 
 		return current_water_level
+
+	HasProximity(atom/movable/AM as mob|obj)
+		if(!src.current || src.dead)
+			remove_use_proximity()         // If there's no plant here, there doesn't need to be a check
+			return
+		src.current?.ProximityProc(src, AM)
+		return
 
 	on_reagent_change()
 		..()
@@ -1412,6 +1420,9 @@ TYPEINFO(/obj/machinery/plantpot)
 			src.health += (growing.cropsize + SDNA?.get_effective_value("cropsize")) - 30
 			// If we have a total crop yield above the maximum harvest size, we add it to the
 			// plant's starting health.
+
+		if(growing.proximity_proc) // Activate proximity proc for any tray where a plant that uses it is planted
+			setup_use_proximity()
 
 		src.health += SEED.planttype.endurance + SDNA?.get_effective_value("endurance")
 		// Add the plant's total endurance score to the health.
