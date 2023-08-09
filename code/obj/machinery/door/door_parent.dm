@@ -815,23 +815,23 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 	playsound(src, 'sound/machines/door_close.ogg', 50, 1)
 	. = ..()
 
-/obj/machinery/door/unpowered/wood/verb/simple_lock(mob/user)
+/obj/machinery/door/unpowered/wood/verb/simple_lock()
 	set name = "Lock Door"
 	set category = "Local"
 	set src in oview(1)
 
-	if (isdead(user) || isintangible(user))
+	if (isdead(usr) || isintangible(usr))
 		return
 	if (!src.density || src.operating)
-		boutput(user, "<span class='alert'>You COULD flip the lock on [src] while it's open, but it wouldn't actually accomplish anything!</span>")
+		boutput(usr, "<span class='alert'>You COULD flip the lock on [src] while it's open, but it wouldn't actually accomplish anything!</span>")
 		return
 	if (src.lock_dir)
-		var/checkdir = get_dir(src, user)
+		var/checkdir = get_dir(src, usr)
 		if (!(checkdir & src.lock_dir))
-			boutput(user, "<span class='alert'>[src]'s lock isn't on this side!</span>")
+			boutput(usr, "<span class='alert'>[src]'s lock isn't on this side!</span>")
 			return
 	src.toggle_locked()
-	src.visible_message("<span class='notice'><B>[user] [!src.locked ? "un" : null]locks [src].</B></span>")
+	src.visible_message("<span class='notice'><B>[usr] [!src.locked ? "un" : null]locks [src].</B></span>")
 	return
 
 /datum/action/bar/icon/door_lockpick
