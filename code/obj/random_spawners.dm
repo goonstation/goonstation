@@ -1906,13 +1906,14 @@
 
 	New()
 		// Get a list of all flowers
-		items2spawn = concrete_typesof(/obj/item/clothing/head/flower) \
-		+ concrete_typesof(/obj/item/plant/flower) \
-		+ list(/obj/item/plant/herb/poppy, // Add some herbs that are basically flowers
-		/obj/item/plant/herb/catnip, // there's a weird linter bug where leaving a comment cannot be followed up by a "+"
-		/obj/item/plant/herb/hcordata) \ // that's why I'm commenting here, you're welcome
+		items2spawn = concrete_typesof(/obj/item/clothing/head/flower)
+		items2spawn += concrete_typesof(/obj/item/plant/flower)
+
+		// Add some herbs that are basically flowers
+		items2spawn += list(/obj/item/plant/herb/poppy, /obj/item/plant/herb/catnip, /obj/item/plant/herb/hcordata)
+
 		// Exclude the non-natural ones
-		- list(/obj/item/plant/flower/rose/holorose)
+		items2spawn -= list(/obj/item/plant/flower/rose/holorose)
 		..()
 
 	one
