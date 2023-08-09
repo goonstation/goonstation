@@ -6,12 +6,11 @@ var/global/list/cairngorm_barriers = list()
 /obj/machinery/computer/battlecruiser_podbay
 	name = "podbay authorization"
 	icon_state = "drawbr"
-	density = FALSE
-	glow_in_dark_screen = TRUE
-	/// How many authentications are needed to release the shielding on the podbay. Set the first time someone clicks this.
-	var/auth_need = null
-	var/list/authorized
 	desc = "Controls access to the podbay. Use this when your team is ready to go."
+	density = FALSE
+	/// How many authentications are needed to release the shielding on the podbay. Set the first time someone clicks this.
+	var/auth_need
+	var/list/authorized
 
 	light_r = 1
 	light_g = 0.3
@@ -21,21 +20,19 @@ var/global/list/cairngorm_barriers = list()
 	var/authed = FALSE
 	/// How long until we take matters into our own hands.
 	var/auth_delay = 10 MINUTES
-	var/area/battlecruiser_area
 
 	New()
 		..()
 
 	initialize()
-		battlecruiser_area = get_area_by_type(/area/syndicate_station/battlecruiser)
 		SPAWN(auth_delay)
 			authorize() // If they haven't done it before auth_delay, do it for em
 		..()
 
 	disposing()
-		boutput(world,"[src.authorized]")
+		src.authorized.len = 0
+		src.authorized = null
 		..()
-		boutput(world,"[src.authorized]")
 
 	proc/authorize()
 		if(src.authed)
@@ -47,9 +44,8 @@ var/global/list/cairngorm_barriers = list()
 		src.icon_state = "drawbr-alert"
 		src.UpdateIcon()
 
-		for (var/barrier in global.cairngorm_barriers)
+		for (var/forcefield/battlecruiser/barrier in by_type[/obj/forcefield/battlecruiser])
 			qdel(barrier)
-		global.cairngorm_barriers = null
 
 		SPAWN(0.5 SECONDS)
 			var/operative_mobs = list()
@@ -71,7 +67,7 @@ var/global/list/cairngorm_barriers = list()
 
 /obj/machinery/computer/battlecruiser_podbay/attack_hand(mob/user)
 	if (ishuman(user))
-		return src.Attackby(user)
+		return src.Attackby(null,user)
 	..()
 
 /// Changes auth_need to how many operatives should be used to auth. If 1 or 0, auths automatically
@@ -91,7 +87,7 @@ var/global/list/cairngorm_barriers = list()
 	if (!user)
 		return
 	if (authed)
-		boutput(user,"The podbay has already be authorized.")
+		boutput(user,"The podbay has already been authorized.")
 		return
 
 	src.add_fingerprint(user)
@@ -120,5 +116,9 @@ var/global/list/cairngorm_barriers = list()
 	color = "#FF6666"
 
 	New()
-		global.cairngorm_barriers.Add(src)
+		START_TRACKING
+		..()
+
+	disposing()
+		STOP_TRACKING
 		..()
