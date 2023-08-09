@@ -22,10 +22,10 @@ ABSTRACT_TYPE(/mob/living/critter/human)
 	ai_retaliate_patience = 3
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	ai_type = /datum/aiHolder/wanderer
-	/// What do we spawn when we die should be a human corpse spawner leave null for gibs
-	var/corpse_spawner = null
-	/// Path of a human to copy appearance from
-	var/human_to_copy = null
+	/// What do we spawn when we die should be a type of /obj/mapping_helper/mob_spawn/corpse/human. leave null for gibs.
+	var/corpse_spawner = null //Ex. var/corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/random
+	/// Path of a human to copy appearance from should be a type of /mob/living/carbon/human.
+	var/human_to_copy = null //Ex. var/human_to_copy = /mob/living/carbon/human/normal/assistant
 
 	New()
 		..()
