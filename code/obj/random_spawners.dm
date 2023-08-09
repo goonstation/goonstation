@@ -1933,20 +1933,22 @@
 	proc/setup_spawns()
 		// Get a list of all fruits
 		// This includes all the /wedge sub-types
-		items2spawn = concrete_typesof(/obj/item/reagent_containers/food/snacks/plant) \
+		items2spawn = concrete_typesof(/obj/item/reagent_containers/food/snacks/plant)
+
 		// Exclude veggies
-		- veggie_list \
+		items2spawn -= veggie_list
+
 		// Exclude toxic / dangerous / fruits or subtypes
-		- list(/obj/item/reagent_containers/food/snacks/plant/pear/sickly,
-		/obj/item/reagent_containers/food/snacks/plant/pumpkin/summon,
-		/obj/item/reagent_containers/food/snacks/plant/pumpkinlatte,
-		/obj/item/reagent_containers/food/snacks/plant/slurryfruit,
-		/obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega,
-		/obj/item/reagent_containers/food/snacks/plant/purplegoop,
-		/obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop,
-		/obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili,
-		/obj/item/reagent_containers/food/snacks/plant/melon/bowling,
-		/obj/item/reagent_containers/food/snacks/plant/apple/stick
+		items2spawn -= list(/obj/item/reagent_containers/food/snacks/plant/pear/sickly,
+			/obj/item/reagent_containers/food/snacks/plant/pumpkin/summon,
+			/obj/item/reagent_containers/food/snacks/plant/pumpkinlatte,
+			/obj/item/reagent_containers/food/snacks/plant/slurryfruit,
+			/obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega,
+			/obj/item/reagent_containers/food/snacks/plant/purplegoop,
+			/obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop,
+			/obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili,
+			/obj/item/reagent_containers/food/snacks/plant/melon/bowling,
+			/obj/item/reagent_containers/food/snacks/plant/apple/stick
 		)
 
 	one
