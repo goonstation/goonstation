@@ -39,7 +39,6 @@
 		..()
 		remove_lifeprocess(/datum/lifeprocess/radiation)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
-		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		START_TRACKING
 		hud = new(src)
 		src.attach_hud(hud)

@@ -14407,7 +14407,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "gwG" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -45768,7 +45768,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
 "tNr" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
@@ -46453,7 +46453,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
 "udR" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/blueblack{
 	dir = 8
