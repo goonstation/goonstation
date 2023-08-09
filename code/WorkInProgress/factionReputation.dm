@@ -54,6 +54,12 @@
 		id = "syndi"
 		default_rep = -4500
 
+	hobo
+		name = "hobo"
+		desc = "TODO"
+		id = "hobo"
+		default_rep = 0
+
 /datum/reputations
 	var/list/rep_changes_recent = list()
 	var/list/rep_changes_all = list()

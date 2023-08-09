@@ -1190,6 +1190,25 @@ proc/load_morrigan()
 
 //hobo dialogue man !!!!!
 
+/obj/dialogueobj/hobo
+	icon = 'icons/obj/trader.dmi'
+	icon_state = "hoboman"
+	density = TRUE
+	anchored = ANCHORED_ALWAYS
+	var/datum/dialogueMaster/dialogue = null
+
+	New()
+		dialogue = new/datum/dialogueMaster/hobo(src)
+		..()
+
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
+		dialogue.showDialogue(user)
+		return
+
+	attackby(obj/item/W, mob/user)
+		return attack_hand(user)
+/*
 /obj/npc/trader/hobo
 	icon = 'icons/obj/trader.dmi'
 	icon_state = "hoboman"
@@ -1235,3 +1254,78 @@ proc/load_morrigan()
 		pickupdialogue = "Here's your shit. You know it wasn't worth that much yeah?"
 
 		pickupdialoguefailure = "Bloody delusional you are, you haven't picked fuck all!"
+*/
+
+
+/datum/dialogueMaster/hobo
+	dialogueName = "Hobo"
+	start = /datum/dialogueNode/hobo_start
+	maxDistance = 1
+
+//start of the dialogue
+/datum/dialogueNode
+	hobo_start
+		linkText = "..." //Because we use the first node as a "go back" link as well.
+		links = list(/datum/dialogueNode/hobo_reward,/datum/dialogueNode/hobo_item)
+
+		getNodeText(var/client/C)
+			var/rep = C.reputations.get_reputation_level("hobo")
+			if(rep < 2)
+				return "I haven't seen my wife in 30 years, only the drugs bring her back."
+			if(rep < 6)
+				return "Good to see you!"
+			else
+				return "Hope you're having an excellent day!"
+
+	//checking if npc has anything for you
+	hobo_reward
+		linkText = "Have anything for me?"
+		links = list(/datum/dialogueNode/hobo_reward_a)
+
+		getNodeText(var/client/C)
+			var/rep = C.reputations.get_reputation_level("hobo")
+			if (rep < 5)
+				return "Fuck no mate."
+			if (master.getFlag(C, "weldingtool") == "taken")
+				return "You already took shit from me, pal."
+			else
+				return "Here's shit for you, pal. Sure will be useful."
+
+	//if npc has rewards it will offer a welder
+	hobo_reward_a
+		linkText = "I will take it."
+		links = list()
+		nodeText = "Sure thing, here you go."
+
+		canShow(var/client/C)
+			var/rep = C.reputations.get_reputation_level("hobo")
+			if(rep < 5 )
+				return FALSE
+			else
+				return TRUE
+
+		onActivate(var/client/C)
+			master.setFlag(C, "weldingtool", "taken")
+			C.mob.put_in_hand_or_drop(new/obj/item/weldingtool, C.mob.hand)
+			return
+
+	//giving pills to the npc
+	hobo_item
+		linkText = "I actually have something interesting.."
+		links = list()
+
+		getNodeText(var/client/C)
+			return "Oooo? You have some pills, mate?"
+
+		canShow(var/client/C)
+			if(istype(C.mob.equipped(), /obj/item/reagent_containers/pill/cyberpunk))
+				return TRUE
+			else
+				return FALSE
+
+		onActivate(var/client/C)
+			(istype(C.mob.equipped(), /obj/item/reagent_containers/pill/cyberpunk))
+			qdel(C.mob.equipped())
+			C.reputations.set_reputation(id = "hobo", amt = 1000)
+			return
+
