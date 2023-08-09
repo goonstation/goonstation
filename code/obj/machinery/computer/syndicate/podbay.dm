@@ -118,7 +118,7 @@
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "shieldw"
 	anchored = ANCHORED
-	opacity = 0
+	opacity = FALSE
 	density = 1
 	luminosity = 3
 	color = "#FF6666"
