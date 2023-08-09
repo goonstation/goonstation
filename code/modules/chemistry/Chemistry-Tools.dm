@@ -386,6 +386,18 @@ proc/ui_describe_reagents(atom/A)
 			user.u_equip(I)
 			qdel(I)
 
+		if (istype(I, /obj/item/reagent_containers/synthflesh_pustule))
+			if (src.reagents.total_volume >= src.reagents.maximum_volume)
+				boutput(user, "<span class='alert'>[src] is full.</span>")
+				return
+
+			boutput(user, "<span class='notice'>You squeeze the [I] into the [src]. Gross.</span>")
+			playsound(src.loc, pick('sound/effects/splort.ogg'), 100, 1)
+
+			I.reagents.trans_to(src, I.reagents.total_volume)
+			user.u_equip(I)
+			qdel(I)
+
 		else if (istype(I, /obj/item/paper))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[src] is full.</span>")
@@ -760,3 +772,67 @@ proc/ui_describe_reagents(atom/A)
 
 			else
 				current_container.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+
+/obj/item/reagent_containers/synthflesh_pustule
+	name = "synthetic pustule"
+	desc = "A disgusting beating mass of synthetic meat. Could probably be plopped into a beaker..."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "pustule-medium"
+	w_class = W_CLASS_NORMAL
+	initial_volume = 200
+	incompatible_with_chem_dispensers = TRUE
+	can_recycle = FALSE
+	var/amount_of_blood_to_use = 15 //how much blood to remove per process tick, medium pustule is very fast
+	var/synthflesh_efficiency = 1 //how much synthflesh you get per unit of blood in
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+
+	New()
+		START_TRACKING
+		processing_items.Add(src)
+		..()
+
+	disposing()
+		STOP_TRACKING
+		..()
+
+	process()
+		var/blood_present = src.reagents.get_reagent_amount("blood")
+		if(blood_present >= 0)
+			if(blood_present < amount_of_blood_to_use)
+				src.reagents.remove_reagent("blood", blood_present)
+				src.reagents.add_reagent("synthflesh", blood_present * synthflesh_efficiency) //add the synthflesh after so you don't have issues with full pustules
+			else
+				src.reagents.remove_reagent("blood", amount_of_blood_to_use)
+				src.reagents.add_reagent("synthflesh", amount_of_blood_to_use * synthflesh_efficiency)
+		..()
+
+	on_reagent_change(add)
+		..()
+		check_whitelist(src, list("blood", "synthflesh"), ,"change this later ty future flaborized")
+
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+		var/turf/T = get_turf(A)
+		if(src.reagents.get_reagent_amount("blood") >= 10)
+			src.reagents.remove_reagent("blood", 10) //blood decals give you 10 blood in a beaker. so you remain blood neutral here
+			make_cleanable(/obj/decal/cleanable/blood,T)
+
+	small
+		desc = "An icky, tiny, beating blop of synthetic meat. Could probably be plipped into a beaker..."
+		icon_state = "pustule-small"
+		w_class = W_CLASS_TINY
+		initial_volume = 10
+		initial_reagents = list("synthflesh"=10) //these things won't be efficient at all for making synthflesh anyways so they come pre-loaded.
+
+		throw_impact(atom/A, datum/thrown_thing/thr)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
+			src.reagents.reaction(A,TOUCH) //you can use small ones to throw synthflesh at people, gross but fun maybe
+			qdel(src)
+
+	large
+		desc = "A vile, large, beating globule of synthetic meat. Could probably be kerplopped into a beaker... or better, a barrel."
+		icon_state = "pustule-large"
+		w_class = W_CLASS_BULKY
+		initial_volume = 800
+		amount_of_blood_to_use = 5 //slow but...
+		synthflesh_efficiency = 2 //...lots of synthflesh per unit of blood

@@ -469,6 +469,18 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 
 			src.desc = "For storing medical chemicals and less savory things."
 
+		if (istype(W, /obj/item/reagent_containers/synthflesh_pustule))
+			if (src.reagents.total_volume >= src.reagents.maximum_volume)
+				boutput(user, "<span class='alert'>[src] is full.</span>")
+				return
+
+			boutput(user, "<span class='notice'>You squeeze the [W] into the [src]. Gross.</span>")
+			playsound(src.loc, pick('sound/effects/splort.ogg'), 100, 1)
+
+			W.reagents.trans_to(src, W.reagents.total_volume)
+			user.u_equip(W)
+			qdel(W)
+
 		if (istool(W, TOOL_WRENCHING))
 			if(src.flags & OPENCONTAINER)
 				user.visible_message("<b>[user]</b> wrenches the [src]'s lid closed!")

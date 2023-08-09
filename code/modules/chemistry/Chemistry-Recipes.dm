@@ -410,11 +410,48 @@ datum
 		synthflesh
 			name = "Synthetic Flesh"
 			id = "synthflesh"
-			result = "synthflesh"
-			required_reagents = list("blood" = 1, "carbon" = 1, "styptic_powder" = 1)
-			result_amount = 3
-			mix_phrase = "The mixture knits together into a fibrous, bloody mass."
-			mix_sound = 'sound/impact_sounds/Slimy_Hit_4.ogg'
+			//result = "synthflesh"
+			required_reagents = list("blood" = 0, "styptic_powder" = 0) //removed in on_reaction
+			result_amount = 1
+			instant = FALSE
+			mix_phrase = "The mixture begins to undulate."
+			stateful = TRUE
+			var/count = 0
+
+			does_react(var/datum/reagents/holder)
+				if(holder.get_reagent_amount("blood") >= 10 && holder.get_reagent_amount("styptic_powder") >= 20)
+					return TRUE
+				else
+					return FALSE
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+
+				if(count < 15) //the delayed count is to give people time to pour in all the reagents they want to use
+					count += 1
+				else
+					if(holder.get_reagent_amount("styptic_powder") < 40 || holder.get_reagent_amount("carbon") > 10) //you can use carbon to force the reaction to make a bunch of tiny pustules if you want
+						var/obj/item/reagent_containers/synthflesh_pustule/small/pustule = new /obj/item/reagent_containers/synthflesh_pustule/small
+						pustule.set_loc(get_turf(holder.my_atom))
+						holder.remove_reagent("carbon", 10)
+						holder.remove_reagent("styptic_powder", 20)
+						holder.remove_reagent("blood", 10)
+
+					else if(holder.get_reagent_amount("styptic_powder") < 80)
+						var/obj/item/reagent_containers/synthflesh_pustule/pustule = new /obj/item/reagent_containers/synthflesh_pustule/
+						pustule.set_loc(get_turf(holder.my_atom))
+						var/extra_blood_in_pustule = holder.get_reagent_amount("styptic_powder") + holder.get_reagent_amount("blood") - 40 //add excess blood/styptic to the pustule as blood
+						pustule.reagents.add_reagent("blood", extra_blood_in_pustule)
+						holder.remove_reagent("styptic_powder", holder.get_reagent_amount("styptic_powder"))
+						holder.remove_reagent("blood", holder.get_reagent_amount("blood"))
+
+					else
+						var/obj/item/reagent_containers/synthflesh_pustule/large/pustule = new /obj/item/reagent_containers/synthflesh_pustule/large
+						pustule.set_loc(get_turf(holder.my_atom))
+						var/extra_blood_in_pustule = holder.get_reagent_amount("styptic_powder") + holder.get_reagent_amount("blood") - 80
+						pustule.reagents.add_reagent("blood", extra_blood_in_pustule)
+						holder.remove_reagent("styptic_powder", holder.get_reagent_amount("styptic_powder"))
+						holder.remove_reagent("blood", holder.get_reagent_amount("blood"))
+					playsound(get_turf(holder.my_atom), 'sound/impact_sounds/Slimy_Hit_4.ogg', 25, 1)
 
 		meat_slurry
 			name = "Meat Slurry"
@@ -2204,7 +2241,10 @@ datum
 			instant = FALSE
 			reaction_speed = 2 //very very slow by default, but much faster with heat
 			result_amount = 1
-			mix_phrase = "The mixture begins to dissolve quickly."
+			mix_phrase = "The mixture begins vibrate and dissolve quickly."
+
+			on_reaction(var/datum/reagents/holder)
+				holder.physical_shock(rand(2, 6))
 
 		hemodissolve // denaturing hemolymph
 			name = "Copper"
