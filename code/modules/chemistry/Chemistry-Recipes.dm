@@ -673,7 +673,7 @@
 		result_amount = 2
 		mix_phrase = "The coffee and lemonade mix together. Damn fine."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	laurapalmer/fresh
 		id = "laurapalmer_fresh"
@@ -1831,7 +1831,7 @@
 		result_amount = 3
 		mix_phrase = "You hear a faint quack from the solution along with a pungent stench."
 		mix_sound = 'sound/voice/farts/fart3.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	duck_fart/fresh
 		id = "duckfart_fresh"
