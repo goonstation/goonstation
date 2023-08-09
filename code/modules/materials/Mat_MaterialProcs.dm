@@ -351,8 +351,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/plasmastone
-	var/total_plasma = 200
-
 	execute(var/atom/location) //exp and temp both have the location as first argument so i can use this for both.
 		var/turf/T = get_turf(location)
 		if(!T || T.density || !istype(location))
@@ -360,24 +358,29 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(!location.material.isMutable()) //this is a little hacky, but basically ensure it's mutable and then do the trigger
 			location.material = location.material.getMutable()
 			return location.material.triggerTemp(location, 0)
+		var/total_plasma = location.material.getProperty("plasma_offgas")
 		if(total_plasma <= 0)
 			if(prob(2) && location)
 				location.visible_message("<span class='alert>[location] dissipates.</span>")
 				qdel(location)
 			return
+		if(ON_COOLDOWN(location, "plasmastone_plasma_generate", 5 SECONDS)) return
+		var/list/turf/simulated/floor/valid_turfs = list()
 		for (var/turf/simulated/floor/target in range(1,location))
-			if(ON_COOLDOWN(target, "plasmastone_plasma_generate", 10 SECONDS)) continue
-			if(!target.gas_impermeable && target.air)
-				if(target.parent?.group_processing)
-					target.parent.suspend_group_processing()
+			if(target.gas_cross(target) && target.air)
+				valid_turfs += target
+		if(length(valid_turfs))
+			var/turf/simulated/floor/target = pick(valid_turfs)
+			if(target.parent?.group_processing)
+				target.parent.suspend_group_processing()
 
-				var/datum/gas_mixture/payload = new /datum/gas_mixture
-				payload.toxins = 25 * location.material_amt
-				total_plasma -= payload.toxins / location.material_amt
-				payload.temperature = T20C
-				payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
-				target.air.merge(payload)
-		return
+			var/datum/gas_mixture/payload = new /datum/gas_mixture
+			payload.toxins = 25 * location.material_amt
+			total_plasma -= 1
+			payload.temperature = T20C
+			payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
+			target.air.merge(payload)
+			location.material.setProperty("plasma_offgas", total_plasma)
 
 /datum/materialProc/plasmastone_on_hit
 	execute(var/atom/owner)
@@ -399,8 +402,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/datum/material/crystal/molitz/molitz = src.find_molitz(owner.material)
 		if (!istype(molitz))
 			CRASH("Molitz_temp material proc applied to non-molitz thing") //somehow applied to non-molitz
-
-		if(molitz.iterations <= 0) return
+		var/iterations = owner.material.getProperty("molitz_bubbles")
+		if(iterations <= 0) return
 
 		var/datum/gas_mixture/air
 		if(hasvar(owner, "air_contents"))
@@ -441,7 +444,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
 
 
-		molitz.iterations -= 1
+		molitz.setProperty("molitz_bubbles", iterations-1)
 
 
 /datum/materialProc/molitz_temp/agent_b
@@ -456,23 +459,22 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(!istype(owner.material, /datum/material/crystal/molitz))
 			return
 		var/datum/material/crystal/molitz/molitz = owner.material
-		if(molitz.unexploded <= 0)
-			return
+		var/iterations = molitz.getProperty("molitz_bubbles")
+		if(iterations <= 0) return
 		if(!owner.material.isMutable()) //this is a little hacky, but basically ensure it's mutable and then do the trigger
 			owner.material = owner.material.getMutable()
 			return owner.material.triggerExp(owner, sev)
 		var/turf/target = get_turf(owner)
 		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
-			if(molitz.iterations >= 1)
+			if(iterations >= 1)
 				playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
-			if(molitz.iterations == 0)
+			if(iterations == 0)
 				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, 1, 5)
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
 			payload.oxygen = 50
 			payload.temperature = T20C
 			target.assume_air(payload)
-			molitz.iterations = 2
-			molitz.unexploded = 0
+			molitz.setProperty("molitz_bubbles", iterations-2)
 
 
 /datum/materialProc/miracle_add

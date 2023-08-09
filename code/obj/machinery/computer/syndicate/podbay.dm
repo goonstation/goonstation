@@ -113,7 +113,7 @@
 			authorize()
 
 /obj/forcefield/battlecruiser
-	name = "Podbay Barrier"
+	name = "podbay barrier"
 	desc = "An impenetrable forcefield designed to make you wait. It is controlled by an authorization computer."
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "shieldw"

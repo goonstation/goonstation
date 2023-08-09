@@ -343,6 +343,6 @@ obj/item/cable_coil/proc/plop_a_cable(turf/overthere, mob/user, dir1, dir2)
 	NC.d2 = dir2
 	NC.add_fingerprint()
 	NC.update_icon()
-	NC.update_network()
+	NC.update_network(user)
 	NC.log_wirelaying(user)
 	src.use(1)
