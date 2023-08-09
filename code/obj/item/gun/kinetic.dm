@@ -898,6 +898,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 0
 	fire_animation = FALSE
 	default_magazine = /obj/item/ammo/bullets/veritate
+	ammobag_magazines = list(/obj/item/ammo/bullets/veritate)
+	ammobag_restock_cost = 2
 
 	New()
 		ammo = new default_magazine
