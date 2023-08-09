@@ -12,14 +12,6 @@
 "aad" = (
 /turf/simulated/floor/plating/airless,
 /area/space)
-"aah" = (
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/space)
-"aaj" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "aak" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -109,10 +101,6 @@
 /area/space)
 "aat" = (
 /turf/simulated/floor,
-/area/space)
-"aau" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
 /area/space)
 "aav" = (
 /obj/machinery/power/solar{
@@ -884,15 +872,6 @@
 /obj/item/chem_grenade/flashbang,
 /turf/simulated/floor,
 /area/russian)
-"acw" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "acx" = (
 /obj/decal/cleanable/blood/tracks,
 /turf/simulated/floor/white,
@@ -15783,10 +15762,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
-"baG" = (
-/obj/machinery/vending/alcohol,
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/bar)
 "baH" = (
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bar)
@@ -27643,31 +27618,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
-"dIQ" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4;
-	layer = 3;
-	level = 2
-	},
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1;
-	tag = "icon-rwindow (NORTH)"
-	},
-/obj/window/reinforced{
-	dir = 8;
-	tag = "icon-rwindow (WEST)"
-	},
-/obj/window/reinforced{
-	dir = 4;
-	tag = "icon-rwindow (EAST)"
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor,
-/area/station/security/prison)
 "dJs" = (
 /obj/table/auto,
 /obj/machinery/embedded_controller/radio/access_controller{
@@ -27993,6 +27943,10 @@
 	},
 /turf/simulated/floor/caution/south,
 /area/station/hallway/primary/south)
+"eRB" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "eSJ" = (
 /obj/machinery/door/airlock/external{
 	aiControlDisabled = 1;
@@ -28697,6 +28651,26 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/quarters)
+"gQZ" = (
+/obj/grille/steel,
+/obj/window/reinforced{
+	dir = 1;
+	tag = "icon-rwindow (NORTH)"
+	},
+/obj/window/reinforced{
+	dir = 4;
+	tag = "icon-rwindow (EAST)"
+	},
+/obj/window/reinforced{
+	dir = 8;
+	tag = "icon-rwindow (WEST)"
+	},
+/obj/window/reinforced{
+	dir = 2
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/station/security/prison)
 "gRD" = (
 /obj/machinery/light{
 	dir = 1
@@ -28784,6 +28758,10 @@
 /obj/item/assembly/time_ignite,
 /turf/simulated/floor/purple/side,
 /area/station/science/chemistry)
+"hrc" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/bar)
 "hrh" = (
 /obj/table/auto,
 /obj/cable{
@@ -29300,6 +29278,14 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
+/area/station/security/prison)
+"iQg" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/obj/item/wrench,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
 /area/station/security/prison)
 "iSv" = (
 /obj/machinery/camera{
@@ -31032,26 +31018,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
-"nwh" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1;
-	tag = "icon-rwindow (NORTH)"
-	},
-/obj/window/reinforced{
-	dir = 4;
-	tag = "icon-rwindow (EAST)"
-	},
-/obj/window/reinforced{
-	dir = 8;
-	tag = "icon-rwindow (WEST)"
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/station/security/prison)
 "nAR" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/machinery/light{
@@ -31101,6 +31067,15 @@
 	},
 /turf/simulated/floor,
 /area/station/atmos/highcap_storage)
+"nIu" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "nLq" = (
 /obj/machinery/power/tracker,
 /obj/cable{
@@ -31729,6 +31704,10 @@
 /obj/window/reinforced/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"pQw" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "pQL" = (
 /obj/cable{
 	d1 = 1;
@@ -32749,6 +32728,10 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"soD" = (
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/space)
 "spG" = (
 /obj/grille/steel,
 /obj/window/reinforced/north,
@@ -33927,6 +33910,31 @@
 "vpW" = (
 /turf/simulated/shuttle/wall,
 /area/space)
+"vqq" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4;
+	layer = 3;
+	level = 2
+	},
+/obj/grille/steel,
+/obj/window/reinforced{
+	dir = 1;
+	tag = "icon-rwindow (NORTH)"
+	},
+/obj/window/reinforced{
+	dir = 8;
+	tag = "icon-rwindow (WEST)"
+	},
+/obj/window/reinforced{
+	dir = 4;
+	tag = "icon-rwindow (EAST)"
+	},
+/obj/window/reinforced{
+	dir = 2
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
+/area/station/security/prison)
 "vrV" = (
 /obj/machinery/light{
 	dir = 4;
@@ -34522,14 +34530,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
-"xgS" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 8
-	},
-/obj/item/wrench,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/station/security/prison)
 "xiq" = (
 /obj/landmark/kudzu,
 /turf/simulated/floor/white,
@@ -82737,7 +82737,7 @@ aiJ
 aTW
 aVH
 aXP
-baG
+hrc
 aVH
 bdP
 bdP
@@ -115181,7 +115181,7 @@ aaa
 aaa
 aaa
 aaa
-nwh
+gQZ
 mkx
 wFV
 qtK
@@ -117306,7 +117306,7 @@ qay
 qtK
 hwf
 jsL
-dIQ
+vqq
 vey
 aab
 aaa
@@ -117910,7 +117910,7 @@ qtK
 qtK
 hwf
 tQY
-xgS
+iQg
 vey
 aaa
 aaa
@@ -118855,7 +118855,7 @@ aaa
 aaa
 aaa
 aab
-aah
+soD
 aad
 aaa
 aab
@@ -119157,7 +119157,7 @@ aaa
 aaa
 aaa
 aaa
-aaj
+eRB
 aad
 aaa
 bmE
@@ -119463,9 +119463,9 @@ aab
 aad
 aad
 bmE
-aau
-aau
-aaj
+pQw
+pQw
+eRB
 aaV
 aaa
 aaa
@@ -119765,7 +119765,7 @@ aaa
 bmE
 bmE
 bmE
-aaj
+eRB
 aax
 aat
 aaI
@@ -120064,9 +120064,9 @@ aaa
 aaa
 aaa
 aab
-aaj
-aaj
-aau
+eRB
+eRB
+pQw
 aat
 aat
 aat
@@ -120075,7 +120075,7 @@ aad
 aat
 aad
 aad
-acw
+nIu
 acW
 ady
 ady
@@ -120370,7 +120370,7 @@ aaa
 bmE
 bmE
 aat
-aau
+pQw
 aat
 aaK
 aaw
@@ -120667,13 +120667,13 @@ aaa
 aaa
 aaa
 aaa
-aah
+soD
 aab
-aah
+soD
 bmE
-aau
+pQw
 aat
-aah
+soD
 aaV
 aaa
 aaa
@@ -121598,7 +121598,7 @@ ady
 ady
 ajW
 akC
-aaj
+eRB
 aab
 aaa
 aaa

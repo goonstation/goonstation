@@ -1800,16 +1800,6 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
-"aMn" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/access/engineering,
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/airless/plating,
-/area/russian/radiation)
 "aMK" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -1934,6 +1924,13 @@
 	icon_state = "norn-3"
 	},
 /area/russian/radiation)
+"aNl" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "aNP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -14090,10 +14087,6 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
-"bRs" = (
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "bRt" = (
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "norn-R-38"
@@ -17659,29 +17652,6 @@
 	icon = 'icons/turf/floors.dmi';
 	icon_old = "fblue3";
 	icon_state = "platingdmg3";
-	intact = 0;
-	layer = 1.8;
-	name = "plating";
-	name_old = "carpet"
-	},
-/area/russian/radiation)
-"chz" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/vending/alcohol,
-/turf/simulated/floor/carpet/blue/fancy/innercorner/north{
-	broken = 1;
-	color = "#8c8c8c";
-	desc = " It is made of steel.";
-	icon = 'icons/turf/floors.dmi';
-	icon_old = "fblue3";
-	icon_state = "platingdmg2";
 	intact = 0;
 	layer = 1.8;
 	name = "plating";
@@ -36301,13 +36271,6 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
-"dwl" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/access/engineering,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/airless/plating,
-/area/russian/radiation)
 "dxC" = (
 /obj/item/device/radio/beacon,
 /obj/disposalpipe/segment/cargo{
@@ -37234,18 +37197,6 @@
 	density = 1;
 	glass_amt = 10;
 	pixel_y = 8
-	},
-/turf/space,
-/area/space)
-"dDY" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/vending/alcohol{
-	name = "??? hEaghra's Vaguely-Irish-Swill-Dispenser";
-	slogan_list = list("Please drink responsibly.","No Refunds.","Please enjoy your stay at the Kuiper Inn!","No admittance under the age of 13.")
 	},
 /turf/space,
 /area/space)
@@ -40777,6 +40728,10 @@
 	name = "steel shuttle bay plating"
 	},
 /area/russian/radiation)
+"fxn" = (
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "fxG" = (
 /obj/table/wood/round/auto,
 /obj/item/paper_bin,
@@ -41646,6 +41601,10 @@
 	icon_old = "fblue2";
 	icon_state = "damaged1"
 	},
+/area/russian/radiation)
+"fUi" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
 /area/russian/radiation)
 "fUj" = (
 /obj/decal/tile_edge/line/blue{
@@ -45044,6 +45003,29 @@
 /obj/disposalpipe/segment/mineral,
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "norn-R-12"
+	},
+/area/russian/radiation)
+"hpW" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/vending/alcohol/with_ammo,
+/turf/simulated/floor/carpet/blue/fancy/innercorner/north{
+	broken = 1;
+	color = "#8c8c8c";
+	desc = " It is made of steel.";
+	icon = 'icons/turf/floors.dmi';
+	icon_old = "fblue3";
+	icon_state = "platingdmg2";
+	intact = 0;
+	layer = 1.8;
+	name = "plating";
+	name_old = "carpet"
 	},
 /area/russian/radiation)
 "hqG" = (
@@ -52596,14 +52578,6 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
-"kTu" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
-	},
-/obj/disposalpipe/segment,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "kUJ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -52616,13 +52590,6 @@
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
-/area/space)
-"kUY" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/airless/plating,
 /area/space)
 "kVu" = (
 /obj/lattice,
@@ -56417,21 +56384,6 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
-"mDJ" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/vending/alcohol,
-/obj/disposalpipe/segment/food{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/grime{
-	burnt = 1;
-	desc = " It is made of temp.";
-	icon_old = "grimy";
-	icon_state = "floorscorched2"
-	},
-/area/russian/radiation)
 "mEf" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -59080,6 +59032,16 @@
 	name = "plating"
 	},
 /area/russian/radiation)
+"nPD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/access/engineering,
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
+/area/russian/radiation)
 "nQA" = (
 /obj/lattice{
 	dir = 1;
@@ -59740,6 +59702,14 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
+"oen" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/obj/disposalpipe/segment,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "oeq" = (
 /obj/disposalpipe/trunk/morgue,
 /obj/machinery/disposal/morgue,
@@ -68766,6 +68736,18 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
+"smM" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/vending/alcohol/with_ammo{
+	name = "??? hEaghra's Vaguely-Irish-Swill-Dispenser";
+	slogan_list = list("Please drink responsibly.","No Refunds.","Please enjoy your stay at the Kuiper Inn!","No admittance under the age of 13.")
+	},
+/turf/space,
+/area/space)
 "snp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -74283,10 +74265,6 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
-"vqF" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor,
-/area/russian/radiation)
 "vqK" = (
 /obj/decal/cleanable/oil,
 /obj/item/caution,
@@ -75558,6 +75536,21 @@
 	},
 /turf/space,
 /area/space)
+"weP" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/vending/alcohol/with_ammo,
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/grime{
+	burnt = 1;
+	desc = " It is made of temp.";
+	icon_old = "grimy";
+	icon_state = "floorscorched2"
+	},
+/area/russian/radiation)
 "wfx" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -77296,6 +77289,13 @@
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
+/area/russian/radiation)
+"wYP" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/access/engineering,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
 /area/russian/radiation)
 "wZj" = (
 /obj/stool/chair/wooden{
@@ -106088,7 +106088,7 @@ dGb
 xHj
 uNp
 vcz
-vqF
+fUi
 vFA
 waG
 xHj
@@ -132194,7 +132194,7 @@ bLZ
 xqy
 bVE
 cca
-chz
+hpW
 cnl
 csO
 cxQ
@@ -138368,7 +138368,7 @@ kAo
 tzb
 lkh
 lQo
-mDJ
+weP
 npu
 nYJ
 oCS
@@ -163431,7 +163431,7 @@ aSv
 aSv
 jmD
 aSv
-kTu
+oen
 aSv
 mpB
 aSv
@@ -163439,7 +163439,7 @@ nLd
 aSv
 mpB
 aSv
-kTu
+oen
 aSv
 qLb
 dFL
@@ -163741,7 +163741,7 @@ xwv
 xoE
 mpX
 ykS
-kUY
+aNl
 dGb
 qLN
 dGb
@@ -164035,7 +164035,7 @@ hMc
 hMc
 jmQ
 dGb
-kUY
+aNl
 xHj
 mqn
 mZz
@@ -164640,13 +164640,13 @@ cTB
 jnB
 cPX
 kVw
-aMn
+nPD
 mrf
 mZF
 nMD
 nLN
 oXB
-dwl
+wYP
 pZq
 bLU
 qLP
@@ -165652,7 +165652,7 @@ dFA
 dGb
 dGb
 dFq
-dDY
+smM
 dDr
 dGb
 dCr
@@ -166014,7 +166014,7 @@ dGb
 dGb
 whF
 dGb
-bRs
+fxn
 dFz
 dFz
 dFz

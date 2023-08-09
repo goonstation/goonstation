@@ -4258,10 +4258,6 @@
 	},
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
-"biO" = (
-/obj/machinery/vending/alcohol,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "bji" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7307,25 +7303,6 @@
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
-"ccv" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/machinery/light/incandescent/cool{
-	dir = 1
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/obj/machinery/light_switch/east,
-/mob/living/critter/small_animal/dog/george/orwell,
-/turf/simulated/floor/carpet/red/fancy/narrow/north,
-/area/station/crew_quarters/heads)
 "ccC" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -9813,6 +9790,25 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/construction)
+"cPJ" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/machinery/light/incandescent/cool{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/machinery/light_switch/east,
+/mob/living/critter/small_animal/dog/george/orwell,
+/turf/simulated/floor/carpet/red/fancy/narrow/north,
+/area/station/crew_quarters/heads)
 "cPO" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/grime,
@@ -14069,14 +14065,6 @@
 	name = "reinforced plating"
 	},
 /area/station/medical/medbay/pharmacy)
-"eiG" = (
-/obj/decal/floatingtiles{
-	dir = 8;
-	icon_state = "floattiles4"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "eiH" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/black/grime,
@@ -32896,14 +32884,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/cloner)
-"jYk" = (
-/obj/decal/floatingtiles{
-	dir = 4
-	},
-/obj/decal/cleanable/machine_debris,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "jYm" = (
 /obj/lattice{
 	dir = 10;
@@ -34261,6 +34241,13 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black/grime,
 /area/station/medical/robotics)
+"kwY" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles6"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "kxi" = (
 /turf/simulated/floor/carpet/green/fancy,
 /area/station/chapel/sanctuary{
@@ -37290,6 +37277,13 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
+"ltN" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles5"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "ltT" = (
 /obj/shrub{
 	dir = 1;
@@ -41166,6 +41160,14 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
+"mBx" = (
+/obj/decal/floatingtiles{
+	dir = 4
+	},
+/obj/decal/cleanable/machine_debris,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "mBB" = (
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -51772,13 +51774,6 @@
 	dir = 9
 	},
 /area/station/hangar/main)
-"pPL" = (
-/obj/decal/floatingtiles{
-	icon_state = "floattiles6"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "pPS" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/cleanable/dirt/jen,
@@ -54365,13 +54360,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
-"qDa" = (
-/obj/decal/floatingtiles{
-	icon_state = "floattiles5"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "qDd" = (
 /obj/railing/orange{
 	dir = 4
@@ -67562,6 +67550,10 @@
 	dir = 5
 	},
 /area/station/hallway/primary/west)
+"uJJ" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "uJP" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/blood,
@@ -79056,6 +79048,14 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/medical/medbay)
+"xYN" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles4"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "xYT" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -114239,7 +114239,7 @@ iLV
 hWZ
 hWZ
 nMc
-ccv
+cPJ
 mnB
 rWM
 rnp
@@ -121137,7 +121137,7 @@ gug
 hcs
 rPw
 wrL
-biO
+uJJ
 fkF
 njs
 oFx
@@ -158416,8 +158416,8 @@ csA
 csA
 fJu
 rdj
-qDa
-eiG
+ltN
+xYN
 kuM
 fJu
 fJu
@@ -158718,8 +158718,8 @@ rdj
 rdj
 rdj
 rdj
-pPL
-jYk
+kwY
+mBx
 fJu
 fJu
 fJu

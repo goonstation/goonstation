@@ -1789,6 +1789,17 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/observatory)
+"aLM" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/obj/item/furniture_parts/table/reinforced/roulette,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "aLO" = (
 /obj/table/auto,
 /obj/item/storage/box/beakerbox,
@@ -7629,15 +7640,6 @@
 /obj/stool/bar,
 /turf/simulated/floor/carpet/green/fancy/innercorner/se,
 /area/station/crew_quarters/bar)
-"diX" = (
-/obj/stool/chair/comfy/shuttle{
-	dir = 4
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/abandonedship{
-	name = "Crashed Limo"
-	})
 "dkh" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	icon_state = "on";
@@ -8160,6 +8162,15 @@
 /obj/machinery/light/small/cool,
 /turf/simulated/floor/grey,
 /area/station/storage/warehouse)
+"dvh" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/obj/machinery/light/small/warm{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/the_cage{
+	name = "The Cage Bar"
+	})
 "dvn" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -15313,13 +15324,6 @@
 /obj/machinery/light,
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/secondary/entry)
-"gCF" = (
-/obj/item/raw_material/scrap_metal,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/abandonedship{
-	name = "Crashed Limo"
-	})
 "gCH" = (
 /obj/rack,
 /obj/item/storage/belt/medical,
@@ -20593,6 +20597,13 @@
 /area/station/security/secwing{
 	name = "Security Lobby"
 	})
+"iMV" = (
+/obj/item/raw_material/shard/glass,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "iMW" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	dir = 4;
@@ -21725,6 +21736,15 @@
 /area/station/crew_quarters/market{
 	name = "Seating Area"
 	})
+"jhe" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "jhj" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -22313,6 +22333,12 @@
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
+"jtp" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "jtQ" = (
 /obj/cable{
 	d1 = 4;
@@ -23309,12 +23335,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"jPz" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/abandonedship{
-	name = "Crashed Limo"
-	})
 "jQl" = (
 /obj/decal/cleanable/gangtag,
 /turf/simulated/wall/auto/supernorn,
@@ -24643,15 +24663,6 @@
 /obj/item/device/light/glowstick,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/warehouse)
-"kvb" = (
-/obj/machinery/vending/alcohol,
-/obj/machinery/light/small/warm{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/the_cage{
-	name = "The Cage Bar"
-	})
 "kvx" = (
 /obj/decal/boxingropeenter,
 /turf/simulated/floor/stairs/wide/middle{
@@ -29631,13 +29642,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
-"mEo" = (
-/obj/decal/tile_edge/stripe,
-/obj/decal/cleanable/paper,
-/obj/disposalpipe/segment,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/station/storage/warehouse)
 "mEv" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -31347,6 +31351,13 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"nqw" = (
+/obj/decal/tile_edge/stripe,
+/obj/decal/cleanable/paper,
+/obj/disposalpipe/segment,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/station/storage/warehouse)
 "nqz" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor/red/side,
@@ -34895,6 +34906,14 @@
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/hangar/escape)
+"oUn" = (
+/obj/decal/cleanable/machine_debris,
+/obj/item/motherboard,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "oUp" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/light/small/floor,
@@ -37131,13 +37150,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"pWo" = (
-/obj/item/raw_material/shard/glass,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/abandonedship{
-	name = "Crashed Limo"
-	})
 "pWs" = (
 /obj/cable{
 	d1 = 1;
@@ -39632,6 +39644,13 @@
 /obj/stool/chair/comfy/barber_chair,
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/barber_shop)
+"qTu" = (
+/obj/item/raw_material/scrap_metal,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "qTB" = (
 /obj/decal/tile_edge/line/grey{
 	dir = 8;
@@ -44371,6 +44390,15 @@
 "sUu" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/research)
+"sUw" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "sUT" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -44460,6 +44488,16 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/crew_quarters/barber_shop)
+"sWP" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "sWS" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
@@ -47511,14 +47549,6 @@
 "uog" = (
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/chapel/sanctuary)
-"uoo" = (
-/obj/decal/cleanable/machine_debris,
-/obj/item/motherboard,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/abandonedship{
-	name = "Crashed Limo"
-	})
 "uot" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/baroffice)
@@ -49121,16 +49151,6 @@
 	dir = 4
 	},
 /area/station/quartermaster/office)
-"uUQ" = (
-/obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/abandonedship{
-	name = "Crashed Limo"
-	})
 "uUX" = (
 /obj/landmark/gps_waypoint,
 /obj/disposalpipe/segment/horizontal,
@@ -49245,16 +49265,6 @@
 /obj/machinery/networked/telepad,
 /turf/simulated/floor/shuttlebay,
 /area/station/science/teleporter)
-"uYI" = (
-/obj/machinery/vending/alcohol,
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/item/device/radio/intercom/catering{
-	pixel_y = 29
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "uYR" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -51326,15 +51336,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/red,
 /area/station/security/processing)
-"vPZ" = (
-/obj/stool/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/abandonedship{
-	name = "Crashed Limo"
-	})
 "vQl" = (
 /obj/cable{
 	d1 = 4;
@@ -54451,6 +54452,16 @@
 /obj/decal/cleanable/robot_debris,
 /turf/simulated/floor/airless/caution,
 /area/ghostdrone_factory)
+"xgX" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/item/device/radio/intercom/catering{
+	pixel_y = 29
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "xgY" = (
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment/mail/vertical,
@@ -55611,17 +55622,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central{
 	name = "Maintenance Shack"
-	})
-"xEb" = (
-/obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir-b"
-	},
-/obj/item/furniture_parts/table/reinforced/roulette,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/abandonedship{
-	name = "Crashed Limo"
 	})
 "xEc" = (
 /obj/machinery/bot/floorbot,
@@ -96204,7 +96204,7 @@ sem
 nnZ
 woO
 mXr
-kvb
+dvh
 hBC
 poi
 lcJ
@@ -100487,7 +100487,7 @@ puX
 seG
 nYu
 pcr
-mEo
+nqw
 jRA
 kgN
 aIE
@@ -101036,7 +101036,7 @@ omJ
 hGG
 vnX
 uot
-uYI
+xgX
 ovt
 wHn
 iql
@@ -135973,18 +135973,18 @@ vnX
 vnX
 vnX
 dJu
-xEb
-diX
+aLM
+sUw
 dJu
 ldK
 vRO
-diX
+sUw
 rKZ
 gcl
 pTQ
 dVa
 dVa
-pWo
+iMV
 cVC
 nrV
 pvD
@@ -136276,18 +136276,18 @@ vnX
 cpN
 cHj
 ukg
-gCF
+qTu
 cpB
 xhr
 pfE
 vpb
 lAk
 twE
-jPz
+jtp
 cfH
 oWH
 nsG
-uUQ
+sWP
 xrH
 aeC
 imG
@@ -136888,9 +136888,9 @@ gOc
 gOc
 qKv
 nYM
-vPZ
+jhe
 iED
-uoo
+oUn
 cfI
 dVa
 dyr

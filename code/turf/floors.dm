@@ -1966,7 +1966,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			K.Attackby(C, user, params)
 
 	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0)) // this seemed like the neatest way to make attack_hand still trigger when needed
-		src?.material?.triggerOnHit(src, C, user, 1)
+		src.material_trigger_when_attacked(C, user, 1)
 	else
 		return attack_hand(user)
 

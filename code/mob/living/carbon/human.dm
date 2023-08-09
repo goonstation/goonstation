@@ -2507,8 +2507,7 @@
 					O.show_message(text("<span class='alert'><B>[] rips apart the handcuffs with pure brute strength!</B></span>", src), 1)
 				boutput(src, "<span class='notice'>You rip apart your handcuffs.</span>")
 
-				if (src.handcuffs:material) //This is a bit hacky.
-					src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
+				src.handcuffs.material_trigger_when_attacked(src, src, 1)
 				src.handcuffs.destroy_handcuffs(src)
 				return
 			if (iswerewolf(src))
@@ -2518,8 +2517,7 @@
 				else
 					src.visible_message("<span class='alert'><B>[src] rips apart the handcuffs with pure brute strength!</b></span>")
 					boutput(src, "<span class='notice'>You rip apart your handcuffs.</span>")
-					if (src.handcuffs:material) //This is a bit hacky.
-						src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
+					src.handcuffs.material_trigger_when_attacked(src, src, 1)
 					src.handcuffs.destroy_handcuffs(src)
 					return
 		if (src.is_hulk())
@@ -2527,16 +2525,14 @@
 				O.show_message(text("<span class='alert'><B>[] rips apart the handcuffs with pure brute strength!</B></span>", src), 1)
 			boutput(src, "<span class='notice'>You rip apart your handcuffs.</span>")
 
-			if (src.handcuffs:material) //This is a bit hacky.
-				src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
+			src.handcuffs.material_trigger_when_attacked(src, src, 1)
 			src.handcuffs.destroy_handcuffs(src)
 		else if ( src.limbs && (istype(src.limbs.l_arm, /obj/item/parts/robot_parts) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm/left/light)) && (istype(src.limbs.r_arm, /obj/item/parts/robot_parts) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm/right/light))) //Gotta be two standard borg arms
 			for (var/mob/O in AIviewers(src))
 				O.show_message(text("<span class='alert'><B>[] rips apart the handcuffs with machine-like strength!</B></span>", src), 1)
 			boutput(src, "<span class='notice'>You rip apart your handcuffs.</span>")
 
-			if (src.handcuffs:material) //This is a bit hacky.
-				src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
+			src.handcuffs.material_trigger_when_attacked(src, src, 1)
 			src.handcuffs.destroy_handcuffs(src)
 		else
 			src.last_resist = world.time + 100
@@ -2548,8 +2544,7 @@
 			if (!src.canmove)
 				calcTime *= 1.5
 			boutput(src, "<span class='alert'>You attempt to remove your handcuffs. (This will take around [round(calcTime / 10)] seconds and you need to stand still)</span>")
-			if (src.handcuffs:material) //This is a bit hacky.
-				src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
+			src.handcuffs.material_trigger_when_attacked(src, src, 1)
 			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(calcTime), src)
 	return 0
 

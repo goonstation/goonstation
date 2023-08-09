@@ -290,8 +290,7 @@
 			amount -= power_credit
 			power_credit = 0
 		var/datum/powernet/net = get_direct_powernet()
-		if (net)
-			// todo: disallow exceeding network power capacity
+		if (net.newload + amount <= net.avail) //a fail to wire-power will fall back to area power usage
 			net.newload += amount
 			return
 

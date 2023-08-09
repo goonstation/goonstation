@@ -8962,6 +8962,16 @@
 	icon_state = "floorgrime-w"
 	},
 /area/listeningpost)
+"eeg" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "eej" = (
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -9223,6 +9233,12 @@
 	},
 /turf/simulated/floor/caution/west,
 /area/pasiphae/hangar)
+"ekX" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/listeningpost)
 "elm" = (
 /obj/storage/secure/closet/immersion/engineering,
 /obj/item/clothing/suit/space/diving/engineering{
@@ -14406,12 +14422,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"gwG" = (
-/obj/machinery/vending/alcohol,
-/turf/simulated/floor/redblack{
-	dir = 8
-	},
-/area/listeningpost)
 "gwW" = (
 /obj/fireworksbox,
 /turf/simulated/floor/industrial,
@@ -17856,6 +17866,10 @@
 /obj/machinery/recharge_station,
 /turf/simulated/floor/black/side,
 /area/station/storage/tools)
+"hLE" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
+/area/pasiphae/sys)
 "hLN" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2{
 	dir = 10
@@ -22548,20 +22562,6 @@
 	},
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
-"jLv" = (
-/obj/stool/chair/office/green{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/mob/living/critter/small_animal/dog/george/orwell,
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 6
-	},
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
 "jLV" = (
 /obj/machinery/conveyor/SN{
 	id = "garbage";
@@ -25633,6 +25633,11 @@
 	dir = 1
 	},
 /area/station/quartermaster/refinery)
+"kWI" = (
+/obj/decal/cleanable/machine_debris,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
+/area/pasiphae/sys)
 "kWV" = (
 /obj/machinery/plantpot,
 /obj/machinery/light{
@@ -29752,11 +29757,6 @@
 	dir = 1
 	},
 /area/station/crew_quarters/pool)
-"mEf" = (
-/obj/decal/cleanable/machine_debris,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/plating,
-/area/pasiphae/sys)
 "mEo" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 2
@@ -36942,6 +36942,20 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
+"pSi" = (
+/obj/stool/chair/office/green{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/mob/living/critter/small_animal/dog/george/orwell,
+/turf/simulated/floor/carpet/green/fancy/edge{
+	dir = 6
+	},
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "pSv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -45765,16 +45779,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
-"tNr" = (
-/obj/machinery/vending/alcohol,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "tNt" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 1
@@ -46450,13 +46454,6 @@
 /obj/stool/bench/red/auto,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
-"udR" = (
-/obj/machinery/vending/alcohol,
-/obj/decal/cleanable/dirt/jen,
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
-/area/pasiphae/bridge)
 "uel" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
@@ -48071,10 +48068,6 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
-"uQi" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/plating,
-/area/pasiphae/sys)
 "uQI" = (
 /obj/machinery/door/airlock/pyro/glass/toxins{
 	aiControlDisabled = 1;
@@ -48881,6 +48874,13 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"vom" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/pasiphae/bridge)
 "vpe" = (
 /obj/surgery_tray,
 /obj/item/circular_saw{
@@ -86561,7 +86561,7 @@ enc
 pqv
 mbO
 cij
-gwG
+ekX
 pki
 riW
 xzc
@@ -89067,7 +89067,7 @@ wwp
 gVW
 fZM
 fir
-tNr
+eeg
 gVW
 stY
 nha
@@ -96045,7 +96045,7 @@ wQJ
 wwl
 rzJ
 cQE
-jLv
+pSi
 tks
 gow
 gow
@@ -121758,7 +121758,7 @@ jyP
 wlJ
 iQi
 rvk
-mEf
+kWI
 ifu
 oeA
 oeA
@@ -122059,7 +122059,7 @@ ofp
 hkX
 cat
 mWZ
-uQi
+hLE
 ouA
 ifu
 oeA
@@ -122957,7 +122957,7 @@ bzS
 bzS
 bzS
 gtT
-udR
+vom
 mHz
 eOx
 xXh
