@@ -71,7 +71,7 @@
 
 /obj/machinery/computer/battlecruiser_podbay/attack_hand(mob/user)
 	if (ishuman(user))
-		return src.Attackby(user:fingerprints, user)
+		return src.Attackby(user)
 	..()
 
 /// Changes auth_need to how many operatives should be used to auth. If 1 or 0, auths automatically
