@@ -15,16 +15,14 @@
 
 	/// Whether or not the podbay on the Cairngorm is authorized.
 	var/authed = FALSE
-	/// How long until we take matters into our own hands.
-	var/auth_delay = 10 MINUTES
 
 	initialize()
-		SPAWN(auth_delay)
-			authorize() // If they haven't done it before auth_delay, do it for em
+		SPAWN(10 MINUTES)
+			authorize() // If they haven't done it before the ten minute mark-ish, do it for em
 		..()
 
 	proc/authorize()
-		if(src.authed)
+		if (src.authed)
 			return
 		logTheThing(LOG_STATION, usr, "authorized Cairngorm podbay access")
 		src.authed = TRUE
@@ -44,15 +42,6 @@
 			sleep(1 SECONDS)
 			playsound_global(operative_mobs, 'sound/vox/authorized.ogg', 50, vary=FALSE)
 
-	proc/print_auth_needed(var/mob/author)
-		if (author)
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[author.real_name]'s request accepted. [src.auth_need - length(src.authorized)] authorizations needed until Podbay is opened.\"</span></span>", 2)
-		else
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[src.auth_need - length(src.authorized)] authorizations needed until Podbay is opened.\"</span></span>", 2)
-
-
 /obj/machinery/computer/battlecruiser_podbay/attack_hand(mob/user)
 	if (ishuman(user))
 		return src.Attackby(null,user)
@@ -68,23 +57,24 @@
 
 // This should happen no matter WHAT and I don't think people holding an RPG trying to auth podbay should shoot
 /obj/machinery/computer/battlecruiser_podbay/attackby(var/obj/item/W, var/mob/user)
-	if(!auth_need)
-		determine_auth()
-		if (authed)
-			src.authorized += user
-			return
 	if (!user)
 		return
 	if (authed)
 		boutput(user,"The podbay has already been authorized.")
 		return
+	if (!auth_need)
+		determine_auth()
+		if (authed)
+			boutput(user,"Low number of agents detected. Podbay authorization granted.")
+			src.authorized += user
+			return
 
 	src.add_fingerprint(user)
 	if (!src.authorized)
 		src.authorized = list()
 
 	var/choice = tgui_alert(user, "Would you like to authorize access to the podbay? [src.auth_need - length(src.authorized)] authorization\s are still needed.\nWARNING: This CANNOT be undone!", "Podbay Auth", list("Yes", "No"))
-	if(BOUNDS_DIST(user, src) > 0 || src.authed)
+	if (BOUNDS_DIST(user, src) > 0 || src.authed)
 		return
 	if (choice == "Yes")
 		if (user in src.authorized)
@@ -93,7 +83,8 @@
 		src.authorized += user
 		if (length(src.authorized) < auth_need)
 			logTheThing(LOG_STATION, user?.real_name, "added an approval for podbay access. [length(src.authorized)] total approvals.")
-			print_auth_needed(user)
+			for (var/mob/O in hearers(src, null))
+				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[user.real_name]'s request accepted. [src.auth_need - length(src.authorized)] authorizations needed until Podbay is opened.\"</span></span>", 2)
 		else
 			authorize()
 
