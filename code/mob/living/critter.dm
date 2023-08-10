@@ -669,7 +669,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			active_hand = 1
 			hand = active_hand
 		hud.update_hands()
-		if(old != src.equipped())
+		src.update_inhands()
+		if (old != src.equipped())
 			if(old)
 				SEND_SIGNAL(old, COMSIG_ITEM_SWAP_AWAY, src)
 			if(src.equipped())
@@ -1033,8 +1034,15 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 	update_inhands()
 		var/handcount = 0
-		for (var/datum/handHolder/HH in hands)
+		for (var/datum/handHolder/HH as anything in src.hands)
 			handcount++
+			if (HH.object_for_inhand)
+				var/obj/item/I = new HH.object_for_inhand
+				var/image/inhand = image(icon = I.inhand_image_icon, icon_state = "[I.item_state][HH.suffix]",
+										layer = HH.render_layer, pixel_x = HH.offset_x, pixel_y = HH.offset_y)
+				qdel(I)
+				src.UpdateOverlays(inhand, "inhands_[handcount]")
+				continue // If we have inhands we probably can't hold things
 			var/obj/item/I = HH.item
 			if (HH.show_inhands)
 				if (!I)
