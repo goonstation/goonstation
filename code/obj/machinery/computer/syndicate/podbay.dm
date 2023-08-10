@@ -18,21 +18,14 @@
 	/// How long until we take matters into our own hands.
 	var/auth_delay = 10 MINUTES
 
-	New()
-		..()
-
 	initialize()
 		SPAWN(auth_delay)
 			authorize() // If they haven't done it before auth_delay, do it for em
 		..()
 
-	disposing()
-		..()
-
 	proc/authorize()
 		if(src.authed)
 			return
-
 		logTheThing(LOG_STATION, usr, "authorized Cairngorm podbay access")
 		src.authed = TRUE
 		src.ClearSpecificOverlays("screen_image")
