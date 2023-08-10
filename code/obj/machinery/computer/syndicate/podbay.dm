@@ -73,7 +73,7 @@
 			return
 		src.authorized += user
 
-		if (length(src.authorized) < auth_need)
+		if (length(src.authorized) < src.auth_need)
 			logTheThing(LOG_STATION, user?.real_name, "added an approval for podbay access. [length(src.authorized)] total approval[s_es(auths_required)].")
 			auths_required -= 1
 			for (var/mob/M in hearers(src, null))
