@@ -1289,34 +1289,34 @@ proc/load_morrigan()
 	linkText = "..." //Because we use the first node as a "go back" link as well.
 	links = list(/datum/dialogueNode/hobo_reward,/datum/dialogueNode/hobo_give_pill)
 
-		getNodeText(var/client/C)
-			var/rep = C.reputations.get_reputation_level("hobo")
-			if(rep < 2)
-				return "I haven't seen my wife in 30 years, only the drugs bring her back."
-			if(rep < 6)
-				return "Fuck off already. You're bloody alright though."
-			else
-				return "I need me drugs..."
+	getNodeText(var/client/C)
+		var/rep = C.reputations.get_reputation_level("hobo")
+		if(rep < 2)
+			return "I haven't seen my wife in 30 years, only the drugs bring her back."
+		if(rep < 6)
+			return "Fuck off already. You're bloody alright though."
+		else
+			return "I need me drugs..."
 
-	//checking if npc has anything for you
-	hobo_reward
-		linkText = "What cha got for me?"
-		links = list(/datum/dialogueNode/hobo_reward_a)
+//checking if npc has anything for you
+/datum/dialogueNode/hobo_reward
+	linkText = "What cha got for me?"
+	links = list(/datum/dialogueNode/hobo_reward_welder)
 
-		getNodeText(var/client/C)
-			var/rep = C.reputations.get_reputation_level("hobo")
-			if (rep < 5)
-				return "Fuck no mate."
-			if (master.getFlag(C, "weldingtool") == "taken")
-				return "You already took shit from me, pal."
-			else
-				return "Here's your fucking tool, pal. Sure will be useful."
+	getNodeText(var/client/C)
+		var/rep = C.reputations.get_reputation_level("hobo")
+		if (rep < 5)
+			return "Fuck no mate."
+		if (master.getFlag(C, "weldingtool") == "taken")
+			return "You already took shit from me, pal."
+		else
+			return "Here's your fucking tool, pal. Sure will be useful."
 
-	//if npc has rewards it will offer a welder
-	hobo_reward_a
-		linkText = "I'll take that off you."
-		links = list()
-		nodeText = "Bloody scammed yeah."
+//if npc has rewards it will offer a welder
+/datum/dialogueNode/hobo_reward_welder
+	linkText = "I'll take that off you."
+	links = list()
+	nodeText = "Bloody scammed yeah."
 
 	canShow(var/client/C)
 		var/rep = C.reputations.get_reputation_level("hobo")
@@ -1330,13 +1330,13 @@ proc/load_morrigan()
 		C.mob.put_in_hand_or_drop(new/obj/item/weldingtool, C.mob.hand)
 		return
 
-	//giving pills to the npc
+//giving pills to the npc
 /datum/dialogueNode/hobo_give_pill
 	linkText = "I actually have something interesting.."
 	links = list()
 
-		getNodeText(var/client/C)
-			return "Hands off the pills!"
+	getNodeText(var/client/C)
+		return "Hands off the pills!"
 
 	canShow(var/client/C)
 		if (istype(C.mob.equipped(), /obj/item/reagent_containers/pill/cyberpunk))
@@ -1381,9 +1381,10 @@ proc/load_morrigan()
 // Teleporter objects
 
 /obj/morrigan_teleporter
-	name = "teleport pad"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "pad0"
+	name = "short-range teleporter"
+	desc = "A precise teleporter that only works across short distances."
+	icon = 'icons/misc/32x64.dmi'
+	icon_state = "lrport"
 	var/landmark // What landmark do we point to
 
 	Crossed(atom/movable/AM)
@@ -1397,12 +1398,17 @@ proc/load_morrigan()
 			showswirl(target_turf)
 			leaveresidual(target_turf)
 
-
 /obj/morrigan_teleporter/transport
 	landmark = LANDMARK_MORRIGAN_TRANSPORT
 
 /obj/morrigan_teleporter/prisoner
 	landmark = LANDMARK_MORRIGAN_PRISONER
+
+/obj/fakeobjects/morrigan_teleporter
+	name = "short-range teleporter"
+	desc = "A precise teleporter that only works across short distances."`
+	icon = 'icons/misc/32x64.dmi'
+	icon_state = "lrport"
 
 // Port a prisoner
 

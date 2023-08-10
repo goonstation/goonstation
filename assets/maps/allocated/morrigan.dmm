@@ -2825,6 +2825,11 @@
 	},
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/civilian/kitchen)
+"dha" = (
+/obj/machinery/conveyor/WE,
+/obj/machinery/light/small/sticky/warm,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/routing/transport)
 "dhg" = (
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/medical/main)
@@ -8625,6 +8630,7 @@
 /area/morrigan/construction)
 "jkH" = (
 /obj/machinery/launcher_loader/north,
+/obj/landmark/morrigan_transport,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing/transport)
 "jlg" = (
@@ -10530,6 +10536,12 @@
 	},
 /turf/unsimulated/floor/longtile/black,
 /area/morrigan/station/command/meeting)
+"lps" = (
+/obj/machinery/light/small/sticky/warm{
+	dir = 1
+	},
+/turf/unsimulated/floor/industrial,
+/area/morrigan/routing/transport)
 "lqg" = (
 /obj/decal/cleanable/blood/splatter/extra,
 /turf/simulated/wall/false_wall/reinforced,
@@ -12535,6 +12547,7 @@
 /area/morrigan/derelict)
 "nxp" = (
 /obj/machinery/networked/telepad,
+/obj/landmark/morrigan_prisoner,
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/station/security/brig)
 "nya" = (
@@ -12893,6 +12906,12 @@
 /obj/mapping_helper/access/morrigan/janitor,
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/civilian/kitchen)
+"nMm" = (
+/obj/machinery/conveyor/WS{
+	operating = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/morrigan/routing)
 "nMt" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/light/small{
@@ -14238,7 +14257,7 @@
 /area/morrigan/station/security/brig)
 "poW" = (
 /obj/decal/stripe_caution,
-/obj/decal/fakeobjects/teleport_pad,
+/obj/morrigan_teleporter/transport,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing)
 "poZ" = (
@@ -16339,7 +16358,6 @@
 "rLu" = (
 /obj/decal/cleanable/cobweb,
 /obj/stool/chair/material/mauxite,
-/obj/npc/trader/hobo,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict/hobo)
 "rLv" = (
@@ -18172,6 +18190,12 @@
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/factory)
+"tZP" = (
+/obj/machinery/light/small/sticky/warm{
+	dir = 8
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan/routing/transport)
 "uaB" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/fakeobjects/pipe{
@@ -20706,6 +20730,12 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing/transport)
+"wTV" = (
+/obj/machinery/light/small/sticky/warm{
+	dir = 4
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan/routing/transport)
 "wUX" = (
 /obj/machinery/light/small/sticky/warm{
 	dir = 1
@@ -21577,7 +21607,7 @@
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/MD)
 "xRX" = (
-/obj/machinery/networked/telepad,
+/obj/morrigan_teleporter/prisoner,
 /turf/unsimulated/floor/caution/misc{
 	dir = 6
 	},
@@ -22676,7 +22706,7 @@ bmB
 pXd
 pXd
 tMf
-bcc
+nMm
 xXE
 syi
 xXE
@@ -28043,7 +28073,7 @@ inM
 qVO
 qVO
 qVO
-kYk
+lps
 kYk
 kYk
 qVO
@@ -28249,7 +28279,7 @@ inM
 qVO
 fTd
 qVO
-kYk
+lps
 kYk
 kYk
 qVO
@@ -28350,7 +28380,7 @@ qVO
 inM
 inM
 tHM
-fTd
+dha
 qVO
 qVO
 nyF
@@ -28455,9 +28485,9 @@ inM
 tHM
 fTd
 tHM
+wTV
 inM
-inM
-inM
+tZP
 uMY
 vwJ
 "}
