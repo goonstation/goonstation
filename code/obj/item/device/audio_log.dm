@@ -38,7 +38,7 @@ TYPEINFO(/obj/item/audio_tape)
 				else
 					return null
 
-			return "[speakers.len < log_line ? "Unknown" : speakers[log_line]]|[messages[log_line]]"
+			return "[length(speakers) < log_line ? "Unknown" : speakers[log_line]]|[messages[log_line]]"
 
 		next(continuous)
 			if (log_line >= messages.len)

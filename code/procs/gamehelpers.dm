@@ -740,7 +740,7 @@ proc/get_ouija_word_list(atom/movable/source = null, words_min = 5, words_max = 
 				// any actual antag
 				var/list/player_pool = list()
 				for (var/mob/M in mobs)
-					if (!M.client || istype(M, /mob/new_player) || !checktraitor(M))
+					if (!M.client || istype(M, /mob/new_player) || !checkantag(M))
 						continue
 					player_pool += M
 				if (length(player_pool))

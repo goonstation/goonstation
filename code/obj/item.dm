@@ -1,4 +1,5 @@
 /// Base item. These are objects you can hold, generally.
+ABSTRACT_TYPE(/obj/item)
 /obj/item
 	/*_____*/
 	/*Basic*/
@@ -269,12 +270,12 @@
 		tooltip_rebuild = 1
 		if (istype(src.material))
 			burn_possible = src.material.getProperty("flammable") > 1 ? TRUE : FALSE
-			if (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL || src.material.material_flags & MATERIAL_RUBBER)
+			if (src.material.getMaterialFlags() & (MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_RUBBER))
 				burn_type = 1
 			else
 				burn_type = 0
 
-		if (src.material.triggersOnLife.len)
+		if (src.material.countTriggers(TRIGGERS_ON_LIFE))
 			src.AddComponent(/datum/component/loctargeting/mat_triggersonlife)
 		else
 			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
@@ -282,7 +283,7 @@
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 
 	removeMaterial()
-		if (src.material && length(src.material.triggersOnLife))
+		if (src.material?.countTriggers(TRIGGERS_ON_LIFE))
 			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
 			if (C)
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
@@ -334,9 +335,9 @@
 	else
 		..()
 
-/obj/item/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
+/obj/item/setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = FALSE, var/use_descriptors = FALSE)
 	..()
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 
 //set up object properties on the block when blocking with the item. if overriding this proc, add the BLOCK_SETUP macro to new() to register for the signal and to get tooltips working right
 /obj/item/proc/block_prop_setup(var/source, var/obj/item/grab/block/B)
@@ -392,7 +393,7 @@
 			return FALSE
 	var/edibility_override = SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED_PRE, user, src) || SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED_PRE, M, user)
 	var/can_matter_eat = by_matter_eater && (M == user) && M.bioHolder.HasEffect("mattereater")
-	var/edible_check = src.edible || (src.material?.edible) || (edibility_override & FORCE_EDIBILITY)
+	var/edible_check = src.edible || (src.material?.getEdible()) || (edibility_override & FORCE_EDIBILITY)
 	if (!edible_check && !can_matter_eat)
 		return FALSE
 
@@ -400,7 +401,7 @@
 		M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
 		"<span class='notice'>You take a bite of [src]!</span>")
 
-		if (src.material && (src.material.edible || edibility_override))
+		if (src.material && (src.material.getEdible() || edibility_override))
 			src.material.triggerEat(M, src)
 
 		if (src.reagents && src.reagents.total_volume)
@@ -438,7 +439,7 @@
 			"<span class='alert'><b>[user]</b> feeds you [src]!</span>")
 		logTheThing(LOG_COMBAT, user, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
-		if (src.material && (src.material.edible || edibility_override))
+		if (src.material && (src.material.getEdible() || edibility_override))
 			src.material.triggerEat(M, src)
 
 		if (src.reagents && src.reagents.total_volume)
@@ -558,7 +559,7 @@
 	var/imdrone
 	if((imrobot = isrobot(other.loc)) || (imdrone = isghostdrone(other.loc)) || istype(other.loc, /obj/item/magtractor))
 		if (imrobot)
-			max_stack = 500
+			max_stack = 300
 		else if (imdrone)
 			max_stack = 1000
 		if (other != src && check_valid_stack(src))
@@ -598,7 +599,7 @@
 			return 0
 
 	if(O.material && src.material)
-		if(!isSameMaterial(O.material, src.material))
+		if(!O.material.isSameMaterial(src.material))
 			return 0
 	else if ((O.material && !src.material) || (!O.material && src.material))
 		return 0
@@ -610,7 +611,7 @@
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)
-		P.setMaterial(copyMaterial(src.material))
+		P.setMaterial(src.material)
 
 	src.change_stack_amount(-toRemove)
 	P.change_stack_amount(toRemove - P.amount)
@@ -969,6 +970,7 @@
 	. = src.afterattack(target, user, reach, params)
 
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
+	set waitfor = 0
 	PROTECTED_PROC(TRUE)
 	src.storage?.storage_item_after_attack(target, user, reach)
 	return
@@ -1082,6 +1084,7 @@
 	switch(src.w_class)
 		if (-INFINITY to W_CLASS_TINY) t = "tiny"
 		if (W_CLASS_SMALL) t = "small"
+		if (W_CLASS_POCKET_SIZED) t = "pocket-sized"
 		if (W_CLASS_NORMAL) t = "normal-sized"
 		if (W_CLASS_BULKY) t = "bulky"
 		if (W_CLASS_HUGE to INFINITY) t = "huge"
@@ -1154,7 +1157,7 @@
 		if (pickup_sfx)
 			playsound(oldloc_sfx, pickup_sfx, 56, vary=0.2)
 		else
-			playsound(oldloc_sfx, "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg", 56, vary=0.2)
+			playsound(oldloc_sfx, "sound/items/pickup_[clamp(round(src.w_class), 1, 3)].ogg", 56, vary=0.2)
 
 	return 1
 

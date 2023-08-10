@@ -211,7 +211,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			if(src.active)
 				src.turn_off()
 			else
-				src.turn_on()
+				src.turn_on(user)
 
 	proc/turn_on(mob/user)
 		if (src.active)
@@ -224,7 +224,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 		else	//turn on power if connected to a power grid with power in it
 			if(line_powered() && connected)
 				src.shield_on()
-				src.visible_message("<b>[user.name]</b> powers up the [src.name].")
+				if (user)
+					src.visible_message("<b>[user.name]</b> powers up the [src.name].")
 			else
 				boutput(user, "The [src.name]'s battery light flickers briefly.")
 		build_icon()

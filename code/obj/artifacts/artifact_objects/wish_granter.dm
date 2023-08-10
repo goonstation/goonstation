@@ -82,7 +82,7 @@
 					for(var/turf/T in range(user,1))
 						if (T.density)
 							continue
-						var/obj/item/spacecash/million/S = new /obj/item/spacecash/million
+						var/obj/item/currency/spacecash/million/S = new /obj/item/currency/spacecash/million
 						S.setup(T)
 
 				if("I wish for great power!")

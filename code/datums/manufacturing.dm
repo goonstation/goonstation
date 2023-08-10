@@ -4,7 +4,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	else
 		var/datum/material/nice_mat = getMaterial(mat)
 		if (istype(nice_mat))
-			return capitalize(nice_mat.name)
+			return capitalize(nice_mat.getName())
 		return capitalize(mat) //if all else fails (probably a category instead of a material)
 
 ABSTRACT_TYPE(/datum/manufacture)
@@ -54,10 +54,10 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 	proc/modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		// use this if you want the outputted item to be customised in any way by the manufacturer
-		if (M.malfunction && M.text_bad_output_adjective.len > 0 && prob(66))
+		if (M.malfunction && length(M.text_bad_output_adjective) > 0 && prob(66))
 			A.name = "[pick(M.text_bad_output_adjective)] [A.name]"
 			//A.quality -= rand(25,50)
-		if (src.apply_material && materials.len > 0)
+		if (src.apply_material && length(materials) > 0)
 			A.setMaterial(M.get_our_material(materials[materials[1]]))
 		return 1
 
@@ -75,7 +75,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 		if (istype(A,/obj/item/electronics/frame/))
 			var/obj/item/electronics/frame/F = A
 			if (ispath(src.frame_path))
-				if(src.apply_material && materials.len > 0)
+				if(src.apply_material && length(materials) > 0)
 					F.removeMaterial()
 					var/atom/thing = new frame_path(F)
 					thing.setMaterial(M.get_our_material(materials[materials[1]]))
@@ -159,7 +159,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Security Robot"
 	item_paths = list("POW-1","MET-2","CON-1")
 	item_amounts = list(10,10,10)
-	frame_path = /obj/critter/gunbot/heavy
+	frame_path = /mob/living/critter/robotic/gunbot
 	time = 15 SECONDS
 	create = 1
 
@@ -836,9 +836,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A,var/list/materials)
 		..()
 		var/obj/item/cable_coil/coil = A
-		coil.setInsulator(getMaterial(materials["INS-1"]))
-		coil.setConductor(getMaterial(materials["CON-1"]))
+		coil.setInsulator(getMaterial(materials[item_paths[1]]))
+		coil.setConductor(getMaterial(materials[item_paths[2]]))
 		return 1
+
+/datum/manufacture/cable/reinforced
+	name = "Reinforced Cable Coil"
+	item_paths = list("INS-2", "pharosium")
+	item_outputs = list(/obj/item/cable_coil/reinforced)
+	time = 10 SECONDS
 
 /datum/manufacture/RCD
 	name = "Rapid Construction Device"
@@ -2144,7 +2150,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/lightengspacesuit
 	name = "Light Engineering Space Suit Set"
-	item_paths = list("FAB-1","MET-1","CRY-1", "ORG|RUB")
+	item_paths = list("FAB-1","MET-3","CRY-1", "ORG|RUB")
 	item_amounts = list(10,5,2,5)
 	item_outputs = list(/obj/item/clothing/suit/space/light/engineer,/obj/item/clothing/head/helmet/space/light/engineer)
 	time = 15 SECONDS

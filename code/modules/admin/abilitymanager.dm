@@ -35,8 +35,7 @@
 		"target_name" = target_mob,
 		"abilities" = ability_props
 		)
-
-/datum/abilitymanager/ui_act(action, params)
+/datum/abilitymanager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
@@ -45,13 +44,13 @@
 	switch(action)
 		if ("addAbility")
 			if (!target_mob.abilityHolder)
-				tgui_alert(usr,"No ability holder detected. Create a holder first!")
+				tgui_alert(ui.user,"No ability holder detected. Create a holder first!")
 				return
-			var/input = tgui_input_text(usr, "Enter a /datum/targetable path or partial name.", "Add an ability", null, allowEmpty = TRUE)
+			var/input = tgui_input_text(ui.user, "Enter a /datum/targetable path or partial name.", "Add an ability", null, allowEmpty = TRUE)
 			input = get_one_match(input, "/datum/targetable", cmp_proc=/proc/cmp_text_asc)
 			target_mob.abilityHolder.addAbility(input)
 			target_mob.abilityHolder.updateButtons()
-			logTheThing(LOG_ADMIN, usr, "Added ability [input] to [constructName(target_mob)]")
+			logTheThing(LOG_ADMIN, ui.user, "Added ability [input] to [constructName(target_mob)]")
 			. = TRUE
 		if ("updatePointCost")
 			var/new_pointCost = round(text2num(params["value"]))
@@ -65,10 +64,10 @@
 			T.cooldown = isnull(new_cooldown) ? 0 : max(new_cooldown, 0)
 			. = TRUE
 		if ("manageAbility")
-			usr.client.debug_variables(T)
+			ui.user.client.debug_variables(T)
 			. = TRUE
 		if ("renameAbility")
-			var/new_name = tgui_input_text(usr, "Enter a new name", "Rename Ability", T.name)
+			var/new_name = tgui_input_text(ui.user, "Enter a new name", "Rename Ability", T.name)
 			if (!new_name) return
 			T.name = new_name
 			T.object.name = new_name
@@ -76,5 +75,5 @@
 		if ("deleteAbility")
 			target_mob.abilityHolder.removeAbilityInstance(T)
 			target_mob.abilityHolder.updateButtons()
-			logTheThing(LOG_ADMIN, usr, "Removed ability [T.type] from [constructName(target_mob)]")
+			logTheThing(LOG_ADMIN, ui.user, "Removed ability [T.type] from [constructName(target_mob)]")
 			. = TRUE

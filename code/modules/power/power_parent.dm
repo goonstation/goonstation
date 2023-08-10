@@ -15,20 +15,32 @@
 	..()
 	if (current_state > GAME_STATE_PREGAME)
 		SPAWN(0.1 SECONDS) // aaaaaaaaaaaaaaaa
-			src.netnum = 0
-			if(makingpowernets)
-				return // TODO queue instead
-			for(var/obj/cable/C in src.get_connections())
-				if(src.netnum == 0 && C.netnum != 0)
-					src.netnum = C.netnum
-				else if(C.netnum != 0 && C.netnum != src.netnum) // could be a join instead but this won't happen often so screw it
-					makepowernets()
-					return
-			if(src.netnum)
-				src.powernet = powernets[src.netnum]
-				src.powernet.nodes += src
-				if(src.use_datanet)
-					src.powernet.data_nodes += src
+			recheck_powernet()
+
+/obj/machinery/power/set_loc(atom/target)
+	. = ..()
+	recheck_powernet()
+
+/obj/machinery/power/Move(atom/target)
+	. = ..()
+	recheck_powernet()
+
+/obj/machinery/power/proc/recheck_powernet()
+	src.netnum = 0
+	src.powernet = null
+	if(makingpowernets)
+		return // TODO queue instead
+	for(var/obj/cable/C in src.get_connections())
+		if(src.netnum == 0 && C.netnum != 0)
+			src.netnum = C.netnum
+		else if(C.netnum != 0 && C.netnum != src.netnum) // could be a join instead but this won't happen often so screw it
+			makepowernets()
+			return
+	if(src.netnum)
+		src.powernet = powernets[src.netnum]
+		src.powernet.nodes += src
+		if(src.use_datanet)
+			src.powernet.data_nodes += src
 
 /obj/machinery/power/disposing()
 	if(src.powernet)

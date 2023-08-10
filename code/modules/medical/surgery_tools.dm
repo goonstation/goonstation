@@ -45,7 +45,6 @@ CONTAINS:
 	New()
 		..()
 		src.create_reagents(5)
-		AddComponent(/datum/component/transfer_on_attack)
 		setProperty("piercing", 80)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
@@ -116,7 +115,6 @@ CONTAINS:
 		..()
 		src.setItemSpecial(/datum/item_special/double)
 		src.create_reagents(5)
-		AddComponent(/datum/component/transfer_on_attack)
 		BLOCK_SETUP(BLOCK_LARGE)
 
 	attack(mob/living/carbon/M, mob/user)
@@ -183,7 +181,6 @@ CONTAINS:
 	New()
 		..()
 		src.create_reagents(5)
-		AddComponent(/datum/component/transfer_on_attack)
 		setProperty("piercing", 80)
 
 

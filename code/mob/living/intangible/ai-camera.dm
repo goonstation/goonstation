@@ -21,7 +21,7 @@
 	stat = 0
 	mob_flags = SEE_THRU_CAMERAS | USR_DIALOG_UPDATES_RANGE
 
-	can_lie = 0 //can't lie down, you're a floating ghostly eyeball
+	can_lie = FALSE //can't lie down, you're a floating ghostly eyeball
 	can_bleed = FALSE
 	metabolizes = FALSE
 	blood_id = null

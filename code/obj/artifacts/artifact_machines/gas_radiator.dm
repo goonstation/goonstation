@@ -110,11 +110,9 @@
 				if("farts")
 					gas.farts = src.gas_amount_current
 				if("agent b")
-					var/datum/gas/oxygen_agent_b/trace = gas.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
-					trace.moles = src.gas_amount_current
+					gas.oxygen_agent_b = src.gas_amount_current
 				if("sleeping agent")
-					var/datum/gas/sleeping_agent/trace = gas.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
-					trace.moles = src.gas_amount_current
+					gas.nitrous_oxide = src.gas_amount_current
 			gas.temperature = src.gas_temp
 			if (L)
 				L.assume_air(gas)

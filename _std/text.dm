@@ -155,3 +155,10 @@ proc/newline_html_encode(text)
 /// Returns a string with all HTML special characters decoded and <br> replaced with newlines
 proc/newline_html_decode(text)
 	return html_decode(replacetext(text, "<br>", "\n"))
+
+proc/pluralize(word)
+	. = word
+	if(endswith(., "s") || endswith(., "ch") || endswith(., "sh") || endswith(., "z") || endswith(., "x"))
+		. += "es"
+	else
+		. += "s"

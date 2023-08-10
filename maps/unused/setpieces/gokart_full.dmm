@@ -1753,7 +1753,7 @@
 	name = "Thunderdome Lounge"
 	})
 "en" = (
-/obj/critter/boogiebot,
+/mob/living/critter/small_animal/boogiebot,
 /turf/unsimulated/floor{
 	icon_state = "carpetS"
 	},
@@ -2356,7 +2356,7 @@
 /area/sim/area2)
 "ft" = (
 /obj/table/woodentable,
-/obj/item/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
 /turf/unsimulated/floor{
 	icon_state = "carpetS"
 	},
@@ -2508,7 +2508,7 @@
 	icon_state = "tabledir";
 	dir = 9
 	},
-/obj/item/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
 /turf/unsimulated/floor{
 	icon = 'racing.dmi';
 	icon_state = "track_1"
@@ -2519,9 +2519,9 @@
 	dir = 5;
 	icon_state = "tabledir"
 	},
-/obj/item/spacecash/twenty,
-/obj/item/spacecash/twenty,
-/obj/item/spacecash/twenty,
+/obj/item/currency/spacecash/twenty,
+/obj/item/currency/spacecash/twenty,
+/obj/item/currency/spacecash/twenty,
 /turf/unsimulated/floor{
 	icon = 'racing.dmi';
 	icon_state = "track_1"
@@ -2560,7 +2560,7 @@
 	icon_state = "tabledir";
 	dir = 6
 	},
-/obj/item/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
 /turf/unsimulated/floor{
 	icon = 'racing.dmi';
 	icon_state = "track_1"

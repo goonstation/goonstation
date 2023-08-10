@@ -15,7 +15,7 @@ proc/check_map_correctness()
 	check_unsimulated_station_turfs()
 	check_duplicate_area_names()
 	check_missing_material()
-	#ifndef PREFAB_CHECKING
+	#if !(defined(PREFAB_CHECKING) || defined(RANDOM_ROOM_CHECKING))
 	check_xmas_tree()
 	#endif
 	check_turf_underlays()

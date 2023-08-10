@@ -316,7 +316,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		return state
 
 
-ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
+ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/survival_rifle_barrel
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
@@ -2423,19 +2423,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 		..()
 
 	attack_self(mob/user)
-		if (src.broke_open)
-			src.broke_open = FALSE
-		else
-			src.broke_open = TRUE
-			src.casings_to_eject = src.shells_to_eject
-
-			if (src.casings_to_eject > 0) //this code exists because without it the gun ejects double the amount of shells
-				src.ejectcasings()
-				src.shells_to_eject = 0
-
-		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
-
-		update_icon()
+		src.toggle_action(user)
 		..()
 
 	attackby(obj/item/I, mob/user)
@@ -2453,3 +2441,23 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	alter_projectile(obj/projectile/P)
 		. = ..()
 		P.proj_data.shot_sound = 'sound/weapons/sawnoff.ogg'
+
+	on_spin_emote(mob/living/carbon/human/user)
+		if(src.broke_open) // Only allow spinning to close the gun, doesn't make as much sense spinning it open.
+			src.toggle_action(user)
+			user.visible_message("<span class='alert'><b>[user]</b> snaps shut [src] with a [pick("spin", "twirl")]!</span>")
+		..()
+
+	proc/toggle_action(mob/user)
+		if (!src.broke_open)
+			src.casings_to_eject = src.shells_to_eject
+
+			if (src.casings_to_eject > 0) //this code exists because without it the gun ejects double the amount of shells
+				src.ejectcasings()
+				src.shells_to_eject = 0
+		src.broke_open = !src.broke_open
+
+		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
+
+		UpdateIcon()
+

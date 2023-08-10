@@ -244,9 +244,9 @@
 			/obj/storage/crate/trench_loot/weapons4,
 			)
 	var/static/list/enemies = list(
-			/mob/living/critter/small_animal/trilobite/ai_controlled,
-			/mob/living/critter/small_animal/hallucigenia/ai_controlled,
-			/mob/living/critter/small_animal/pikaia/ai_controlled
+			/mob/living/critter/small_animal/trilobite,
+			/mob/living/critter/small_animal/hallucigenia,
+			/mob/living/critter/small_animal/pikaia
 	)
 
 	generate(var/obj/magnet_target_marker/target)
@@ -694,7 +694,7 @@
 	if (!size || !isnum(size) || size < 1 || size > 15)
 		size = rand(4,15)
 	var/list/turfcheck = Turfspawn_CheckForFreeSpace(src,size)
-	if (turfcheck.len < 1)
+	if (length(turfcheck) < 1)
 		return
 
 	var/list/generated_turfs
@@ -771,7 +771,7 @@
 	return acceptable_turfs
 
 /proc/Turfspawn_Asteroid_CheckForModifiableTurfs(var/list/turfs)
-	if (!turfs || turfs.len < 1)
+	if (!turfs || length(turfs) < 1)
 		return list()
 	var/list/acceptable_turfs = list()
 
@@ -925,11 +925,11 @@
 
 	switch(RarityClassRoll(100,0,list(90,50)))
 		if(1)
-			scrap_material = copyMaterial(getMaterial(pick("steel","mauxite")))
+			scrap_material = getMaterial(pick("steel","mauxite"))
 		if(2)
-			scrap_material = copyMaterial(getMaterial(pick("cobryl","bohrum")))
+			scrap_material = getMaterial(pick("cobryl","bohrum"))
 		if(3)
-			scrap_material = copyMaterial(getMaterial(pick("gold","syreline")))
+			scrap_material = getMaterial(pick("gold","syreline"))
 
 	var/list/turfs_near_center = list()
 	for(var/turf/T in range(size - 1,center))
@@ -965,7 +965,7 @@
 // Modifiers
 
 /proc/Turfspawn_Asteroid_SeedSpecificOre(var/list/turfs,var/ore_name = "mauxite",var/veins = 0,fullbright=TRUE)
-	if (!turfs || turfs.len < 1)
+	if (!turfs || length(turfs) < 1)
 		return list()
 
 	if (!isnum(veins) && veins <= 1)
@@ -973,14 +973,14 @@
 
 	while (veins > 0)
 		veins--
-		if (turfs.len < 1)
+		if (length(turfs) < 1)
 			break
 
 		var/datum/ore/O = mining_controls.get_ore_from_string(ore_name)
 		var/ore_tiles = rand(O.tiles_per_rock_min,O.tiles_per_rock_max)
 
 		while (ore_tiles > 0)
-			if (turfs.len < 1)
+			if (length(turfs) < 1)
 				break
 			ore_tiles--
 			var/turf/simulated/wall/auto/asteroid/AST = pick(turfs)
@@ -999,7 +999,7 @@
 			O.onGenerate(AST)
 			AST.mining_health = O.mining_health
 			AST.mining_max_health = O.mining_health
-			if (prob(O.event_chance) && O.events.len > 0)
+			if (prob(O.event_chance) && length(O.events) > 0)
 				var/new_event = pick(O.events)
 				var/datum/ore/event/E = new new_event
 				E.set_up(O)
@@ -1009,7 +1009,7 @@
 	return turfs
 
 /proc/Turfspawn_Asteroid_SeedOre(var/list/turfs,var/veins,var/rarity_mod = 0,fullbright=TRUE)
-	if (!turfs || turfs.len < 1)
+	if (!turfs || length(turfs) < 1)
 		return list()
 
 	if (!isnum(veins) && veins <= 1)
@@ -1019,7 +1019,7 @@
 
 	while (veins > 0)
 		veins--
-		if (turfs.len < 1)
+		if (length(turfs) < 1)
 			break
 		var/rarity_roller = RarityClassRoll(100,rarity_mod,list(90,50))
 		var/list/ores_to_pick = list()
@@ -1035,7 +1035,7 @@
 		var/ore_tiles = rand(O.tiles_per_rock_min,O.tiles_per_rock_max)
 
 		while (ore_tiles > 0)
-			if (turfs.len < 1)
+			if (length(turfs) < 1)
 				break
 			ore_tiles--
 			var/turf/simulated/wall/auto/asteroid/AST = pick(turfs)
@@ -1055,7 +1055,7 @@
 			O.onGenerate(AST)
 			AST.mining_health = O.mining_health
 			AST.mining_max_health = O.mining_health
-			if (prob(O.event_chance) && O.events.len > 0)
+			if (prob(O.event_chance) && length(O.events) > 0)
 				var/new_event = pick(O.events)
 				var/datum/ore/event/E = new new_event
 				E.set_up(O)
@@ -1065,7 +1065,7 @@
 	return turfs
 
 /proc/Turfspawn_Asteroid_SeedEvents(var/list/turfs,var/amount)
-	if (!turfs || turfs.len < 1)
+	if (!turfs || length(turfs) < 1)
 		return list()
 	if (!isnum(amount) || amount <= 0)
 		amount = rand(1,6)
@@ -1075,7 +1075,7 @@
 
 	while (amount > 0)
 		amount--
-		if (turfs.len < 1)
+		if (length(turfs) < 1)
 			break
 		E = weighted_pick(mining_controls.weighted_events)
 		AST = pick(turfs)

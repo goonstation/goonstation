@@ -17,7 +17,7 @@
 
 	setup_loot_table()
 		..()
-		loot_table[/obj/item/spacecash/buttcoin] = 500
+		loot_table[/obj/item/currency/spacecash/buttcoin] = 500
 
 	setup_healths()
 		add_hh_robot(500, 1)

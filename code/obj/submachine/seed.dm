@@ -249,7 +249,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 							else S = new /obj/item/seed(src,0)
 							var/datum/plantgenes/SDNA = S.plantgenes
 							if (!stored.unique_seed && !stored.hybrid)
-								S.generic_seed_setup(stored)
+								S.generic_seed_setup(stored, TRUE)
 							HYPpassplantgenes(DNA,SDNA)
 
 							S.name = stored.name
@@ -443,6 +443,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 						DNA.mutation = new dominantDNA.mutation.type(DNA)
 
 					P.commuts = P1.commuts | P2.commuts // We merge these and share them
+					P.innate_commuts = P1.innate_commuts | P2.innate_commuts
 					DNA.commuts = P1DNA.commuts | P2DNA.commuts
 					if(submissiveDNA.mutation)
 						P.assoc_reagents = P1.assoc_reagents | P2.assoc_reagents | submissiveDNA.mutation.assoc_reagents // URS EDIT -- BOTANY UNLEASHED?
@@ -469,6 +470,14 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 
 					P.endurance = SpliceMK2(P1DNA.d_endurance,P2DNA.d_endurance,P1.vars["endurance"],P2.vars["endurance"])
 					DNA.endurance = SpliceMK2(P1DNA.d_endurance,P2DNA.d_endurance,P1DNA.vars["endurance"],P2DNA.vars["endurance"])
+
+					// now after our seed is created, we run through each commut the plant currently got and look if they somehow fumble around with our seed
+					if (length(DNA.commuts) > 0)
+						//since HYPadd/removeCommut create new lists, we take the initial list and only iterate through the commuts that existed at the time of the splice
+						var/list/commuts_to_iterate = DNA.commuts
+						for (var/datum/plant_gene_strain/checked_strain in commuts_to_iterate)
+							checked_strain.on_passing(DNA)
+							checked_strain.changes_after_splicing(DNA)
 
 					boutput(usr, "<span class='notice'>Splice successful.</span>")
 					playsound(src, 'sound/machines/ping.ogg', 50, 1)
@@ -690,7 +699,7 @@ TYPEINFO(/obj/submachine/chem_extractor)
 	var/obj/item/reagent_containers/glass/storage_tank_1 = null
 	var/obj/item/reagent_containers/glass/storage_tank_2 = null
 	var/list/ingredients = list()
-	var/list/allowed = list(/obj/item/reagent_containers/food/snacks/,/obj/item/plant/,/obj/item/clothing/head/flower/,/obj/item/seashell)
+	var/list/allowed = list(/obj/item/reagent_containers/food/fish/, /obj/item/reagent_containers/food/snacks/,/obj/item/plant/,/obj/item/clothing/head/flower/,/obj/item/seashell)
 
 	New()
 		..()
@@ -1000,7 +1009,7 @@ TYPEINFO(/obj/submachine/seed_vendor)
 				S = new /obj/item/seed
 				S.set_loc(src.loc)
 				S.removecolor()
-			S.generic_seed_setup(I)
+			S.generic_seed_setup(I, FALSE)
 			vend--
 			src.seedcount++
 

@@ -63,7 +63,7 @@
 			master.path = thePath
 			if(adjacent && master.path && length(master.path)) //Make sure to check it isn't null!!
 				master.path.len-- //Only go UP to the target, not the same tile.
-			if(!master.path || !master.path.len || !the_target || (ismob(the_target) && master.path.len >= 21))
+			if(!master.path || !master.path.len || !the_target || (ismob(the_target) && length(master.path) >= 21))
 				master.task?.task_input("path_error")
 
 				master.moving = 0
@@ -1230,7 +1230,7 @@
 			var/list/mob/nearby_dorks = list()
 			for (var/mob/living/D in oview(7, src))
 				nearby_dorks.Add(D)
-			if(nearby_dorks.len > 0)
+			if(length(nearby_dorks) > 0)
 				var/griffed = pick(nearby_dorks)
 				shoot_projectile_ST_pixel(src, thing2shoot, griffed)
 				return griffed
@@ -1713,7 +1713,7 @@
 				return
 
 			src.tasks += newtask
-			if (src.tasks.len == 1)
+			if (length(src.tasks) == 1)
 				src.task = newtask
 			return
 
@@ -1984,6 +1984,7 @@
 			task.arrest_target.handcuffs = new /obj/item/handcuffs/guardbot(task.arrest_target)
 			task.arrest_target.setStatus("handcuffed", duration = INFINITE_STATUS)
 			boutput(task.arrest_target, "<span class='alert'>[master] gently handcuffs you!  It's like the cuffs are hugging your wrists.</span>")
+			logTheThing(LOG_COMBAT, master, "handcuffs [constructTarget(task.arrest_target,"combat")] at [log_loc(master)].")
 			task.arrest_target:set_clothing_icon_dirty()
 
 		if (length(task.arrested_messages))
@@ -2449,7 +2450,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						src.next_target()
 					else
 						var/auto_eject = 0
-						if(!dock_return && master.tasks.len >= 2)
+						if(!dock_return && length(master.tasks) >= 2)
 							auto_eject = 1
 						dock.connect_robot(master,auto_eject)
 						//master.snooze() //Connect autosnoozes the bot.

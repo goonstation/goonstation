@@ -31,18 +31,18 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 	var/last_hibernation_wake_tick = 0
 	var/is_hibernating = FALSE
 
-	var/can_burn = 1
-	var/can_throw = 0
-	var/can_choke = 0
-	var/in_throw_mode = 0
+	var/can_burn = TRUE
+	var/can_throw = FALSE
+	var/can_choke = FALSE
+	var/in_throw_mode = FALSE
 	var/health_brute = null
 	var/health_burn = null
 	var/health_brute_vuln = null
 	var/health_burn_vuln = null
 
-	var/can_help = 0
-	var/can_grab = 0
-	var/can_disarm = 0
+	var/can_help = FALSE
+	var/can_grab = FALSE
+	var/can_disarm = FALSE
 
 	var/reagent_capacity = 50
 	max_health = 0
@@ -56,40 +56,42 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 	var/list/healthlist = list()
 
 	var/list/implants = list()
-	var/can_implant = 1
+	var/can_implant = TRUE
 
 	var/death_text = null // can use %src%
 	var/pet_text = "pets" // can be a list
 
 	// moved up from critter/small_animal
-	var/butcherable = 0
+	var/butcherable = BUTCHER_NOT_ALLOWED
 	var/butcher_time = 1.2 SECONDS
 	/// The mob who is butchering this critter
 	var/mob/butcherer = null
 	var/meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
-	var/name_the_meat = 0
+	var/name_the_meat = FALSE
 	var/skinresult = /obj/item/material_piece/cloth/leather //YEP
-	var/max_skins = 0
+	var/max_skins = FALSE
 
 	// for critters with removable arms(brullbar, bear)
 	var/left_arm = null
 	var/right_arm = null
 
-	var/fits_under_table = 0
-	var/table_hide = 0
+	var/fits_under_table = FALSE
+	var/table_hide = FALSE
 
 	var/old_canmove
-	var/dormant = 0
+	var/dormant = FALSE
 
 	var/custom_brain_type = null
 
-	var/ghost_spawned = 0 //Am i inhabited by a ghost player who used the respawn critter option?
+	var/ghost_spawned = FALSE //Am i inhabited by a ghost player who used the respawn critter option?
 	var/original_name = null
 
 	var/yeet_chance = 1 //yeet
 
 	var/last_life_process = 0
-	var/use_stunned_icon = 1
+	var/use_stunned_icon = TRUE
+
+	var/list/friends = list()
 
 	var/pull_w_class = W_CLASS_SMALL
 
@@ -353,7 +355,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			return 0
 		if (!active_hand)
 			return 0
-		if (hands.len >= active_hand)
+		if (length(hands) >= active_hand)
 			return 1
 		return 0
 
@@ -642,6 +644,20 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			return 1
 		return 0
 
+	proc/get_ranged_hands(var/mob/user)
+		var/list/ranged_hands = null
+		for (var/datum/handHolder/HH as anything in hands)
+			if (HH.can_range_attack)
+				ranged_hands.Add(HH)
+		return ranged_hands
+
+	proc/get_melee_hands(var/mob/user)
+		var/list/melee_hands = null
+		for (var/datum/handHolder/HH as anything in hands)
+			if (HH.can_attack)
+				melee_hands.Add(HH)
+		return melee_hands
+
 	swap_hand()
 		if (!handcheck())
 			return
@@ -659,14 +675,14 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			if(src.equipped())
 				SEND_SIGNAL(src.equipped(), COMSIG_ITEM_SWAP_TO, src)
 
-	hand_range_attack(atom/target, params)
-		.= 0
-		var/datum/handHolder/ch = get_active_hand()
-		if (ch && (ch.can_range_attack || ch.can_special_attack()) && ch.limb)
-			ch.limb.attack_range(target, src, params)
-			ch.set_cooldown_overlay()
-			.= 1
+	hand_range_attack(atom/target, params) // Returns true for successful attack false if on cooldown or HH is incorrect
+		var/datum/handHolder/HH = get_active_hand()
+		if (HH && (HH.can_range_attack || HH.can_special_attack()) && HH.limb)
+			HH.limb.attack_range(target, src, params)
+			HH.set_cooldown_overlay()
 			src.lastattacked = src
+			return TRUE
+		return FALSE
 
 	weapon_attack(atom/target, obj/item/W, reach, params)
 		if (isobj(target))
@@ -691,14 +707,17 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		var/datum/handHolder/HH = get_active_hand()
 		if (!L || !HH)
 			return
-		if (!HH.can_attack && (HH.can_range_attack || HH.can_special_attack()))
-			hand_range_attack(target, params)
-		else if (HH.can_attack)
+		if ((HH.can_range_attack || HH.can_special_attack()))
+			if (GET_DIST(src, target) > 1)
+				hand_range_attack(target, params)
+				return
+		if (HH.can_attack)
 			if (ismob(target))
 				if (a_intent != INTENT_HELP)
 					if (mob_flags & AT_GUNPOINT)
 						for(var/obj/item/grab/gunpoint/G in grabbed_by)
 							G.shoot()
+
 				switch (a_intent)
 					if (INTENT_HELP)
 						if (can_help)
@@ -712,6 +731,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 					if (INTENT_GRAB)
 						if (HH.can_hold_items && can_grab)
 							L.grab(target, src)
+				HH.set_cooldown_overlay()
+				src.lastattacked = target
+
 			else
 				L.attack_hand(target, src)
 				HH.set_cooldown_overlay()
@@ -1239,7 +1261,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		..()
 		icon_state = icon_state_alive ? icon_state_alive : initial(icon_state)
 		density = initial(density)
-		src.can_lie = initial(src.can_lie)
 		src.can_implant = initial(src.can_implant)
 		blood_volume = initial(blood_volume)
 
@@ -1323,6 +1344,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		if (isintangible(C)) return FALSE
 		if (isdead(C)) return FALSE
 		if (istype(C, src.type)) return FALSE
+		if (C in src.friends) return FALSE
 		return !src.faction || !(C.faction & src.faction) //if we don't have a faction we hate everyone
 
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavenged. Return a list of potential targets, one will be picked based on distance.
@@ -1344,12 +1366,23 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			if (src.critter_ability_attack(target))
 				src.ai_attack_count = 0 //ability used successfully, reset the count
 				return
-		//default to a basic attack
-		if (src.critter_basic_attack(target))
-			src.ai_attack_count += 1
+		//Check if we can range attack, if not default to a basic attack
+		var/datum/handHolder/hand = src.get_active_hand()
+		if (hand && hand.can_range_attack)
+			if (src.critter_range_attack(target))
+				src.ai_attack_count += 1
+		else
+			if (src.critter_basic_attack(target))
+				src.ai_attack_count += 1
 
 	/// How the critter should attack normally
 	proc/critter_basic_attack(var/mob/target)
+		src.set_a_intent(INTENT_HARM)
+		src.hand_attack(target)
+		return TRUE
+
+	/// How the critter should attack from range (Only applicable for ranged limbs)
+	proc/critter_range_attack(var/mob/target)
 		src.set_a_intent(INTENT_HARM)
 		src.hand_attack(target)
 		return TRUE
@@ -1363,6 +1396,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		src.set_a_intent(INTENT_HARM)
 		src.hand_attack(target)
 		return TRUE
+
+	/// Used for generic critter mobAI - override if you need special retailation behaviour
+	proc/critter_retaliate(var/mob/target)
+		src.critter_attack(target)
 
 	/// Used for generic critter mobAI - returns TRUE when the mob is able to attack. For handling cooldowns, or other attack blocking conditions.
 	proc/can_critter_attack()
@@ -1523,6 +1560,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 /// Parent for robotic critters. Handles some traits that robots should have- damaged by EMPs, immune to fire and rads
 /mob/living/critter/robotic
 	name = "a fucked up robot"
+	butcherable = BUTCHER_NOT_ALLOWED
 	can_bleed = FALSE
 	metabolizes = FALSE
 	var/emp_vuln = 1

@@ -256,7 +256,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 
 /obj/item/parts/robot_parts/head/standard
 	name = "standard cyborg head"
-	max_health = 175
+	max_health = 160
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
@@ -390,7 +390,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	appearanceString = "screen"
 	icon_state = "head-screen"
 	max_health = 90
-	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky","skull","eye")
+	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky","nervous","ditzy","annoyed","skull","eye")
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 /obj/item/parts/robot_parts/chest
@@ -596,7 +596,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	name = "sturdy cyborg left arm"
 	appearanceString = "sturdy"
 	icon_state = "l_arm-sturdy"
-	max_health = 100
+	max_health = 115
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
@@ -670,7 +670,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	name = "sturdy cyborg right arm"
 	appearanceString = "sturdy"
 	icon_state = "r_arm-sturdy"
-	max_health = 100
+	max_health = 115
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
@@ -823,7 +823,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	appearanceString = "treads"
 	icon_state = "l_leg-treads"
 	handlistPart = "legL-treads" // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
-	max_health = 100
+	max_health = 115
 	powerdrain = 2.5
 	step_image_state = "tracksL"
 	movement_modifier = /datum/movement_modifier/robottread_left
@@ -858,7 +858,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	appearanceString = "treads"
 	icon_state = "r_leg-treads"
 	handlistPart = "legR-treads"  // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
-	max_health = 100
+	max_health = 115
 	powerdrain = 2.5
 	step_image_state = "tracksR"
 	movement_modifier = /datum/movement_modifier/robottread_right
@@ -1196,7 +1196,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 					ticker.mode:revolutionaries += borg.mind
 				if (src.emagged)
 					borg.emagged = 1
-					borg.mind.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = null)
+					borg.mind.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
 					SPAWN(0)
 						borg.update_appearance()
 				else if (src.syndicate)

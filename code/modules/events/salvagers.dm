@@ -147,7 +147,7 @@
 
 			if (istype(L))
 				L.mind?.wipe_antagonists()
-				L.mind?.add_antagonist(ROLE_SALVAGER, do_equip = TRUE, do_relocate = TRUE)
+				L.mind?.add_antagonist(ROLE_SALVAGER, do_equip = TRUE, do_relocate = TRUE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 			else
 				failed = TRUE
 

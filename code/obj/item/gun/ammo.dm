@@ -305,26 +305,26 @@
 	icon_empty = "custom-0"
 
 	onMaterialChanged()
-		ammo_type.material = copyMaterial(src.material)
+		ammo_type.material = src.material
 
 		if(src.material)
 			ammo_type.power = round(material.getProperty("density") * 2 + material.getProperty("hard"))
 			ammo_type.generate_inverse_stats()
 			ammo_type.dissipation_delay = round(material.getProperty("density") / 2)
 
-			if((src.material.material_flags & MATERIAL_CRYSTAL))
+			if((src.material.getMaterialFlags() & MATERIAL_CRYSTAL))
 				ammo_type.damage_type = D_PIERCING
-			if((src.material.material_flags & MATERIAL_METAL))
+			if((src.material.getMaterialFlags() & MATERIAL_METAL))
 				ammo_type.damage_type = D_KINETIC
-			if((src.material.material_flags & MATERIAL_ORGANIC))
+			if((src.material.getMaterialFlags() & MATERIAL_ORGANIC))
 				ammo_type.damage_type = D_TOXIC
-			if((src.material.material_flags & MATERIAL_ENERGY))
+			if((src.material.getMaterialFlags() & MATERIAL_ENERGY))
 				ammo_type.damage_type = D_ENERGY
-			if((src.material.material_flags & MATERIAL_METAL) && (src.material.material_flags & MATERIAL_CRYSTAL))
+			if((src.material.getMaterialFlags() & MATERIAL_METAL) && (src.material.getMaterialFlags() & MATERIAL_CRYSTAL))
 				ammo_type.damage_type = D_SLASHING
-			if((src.material.material_flags & MATERIAL_ENERGY) && (src.material.material_flags & MATERIAL_ORGANIC))
+			if((src.material.getMaterialFlags() & MATERIAL_ENERGY) && (src.material.getMaterialFlags() & MATERIAL_ORGANIC))
 				ammo_type.damage_type = D_BURNING
-			if((src.material.material_flags & MATERIAL_ENERGY) && (src.material.material_flags & MATERIAL_METAL))
+			if((src.material.getMaterialFlags() & MATERIAL_ENERGY) && (src.material.getMaterialFlags() & MATERIAL_METAL))
 				ammo_type.damage_type = D_RADIOACTIVE
 
 		return ..()
@@ -752,7 +752,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_cat = AMMO_SHOTGUN_HIGH
 	delete_on_reload = TRUE
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
-	w_class = W_CLASS_NORMAL
 
 /obj/item/ammo/bullets/pipeshot/plasglass // plasmaglass handmade shells
 	sname = "plasmaglass load"
@@ -1412,7 +1411,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	proc/set_custom_mats(datum/material/coreMat, datum/material/genMat = null)
 		src.setMaterial(coreMat)
 		if(genMat)
-			src.name = "[genMat.name]-doped [src.name]"
+			src.name = "[genMat.getName()]-doped [src.name]"
 
 			var/conductivity = (2 * coreMat.getProperty("electrical") + genMat.getProperty("electrical")) / 3 //if self-charging, use a weighted average of the conductivities
 			max_charge = round((conductivity ** 2) * 4, 25)

@@ -55,7 +55,7 @@
 	multipart = 1
 
 	checkifdone()
-		if (src.contents.len >= 8)
+		if (length(src.contents) >= 8)
 			src.product = 1
 			src.desc += "<BR><span class='notice'>It looks like this assembly can be secured with a screwdriver.</span>"
 

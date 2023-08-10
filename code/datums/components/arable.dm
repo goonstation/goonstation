@@ -58,7 +58,7 @@ TYPEINFO(/datum/component/arable)
 				SEED = new SP.selected.unique_seed
 			else
 				SEED = new /obj/item/seed
-			SEED.generic_seed_setup(SP.selected)
+			SEED.generic_seed_setup(SP.selected, FALSE)
 
 		src.P = new /obj/machinery/plantpot/bareplant(A, SEED)
 		RegisterSignal(src.P, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove_plantpot))

@@ -17,7 +17,7 @@
 			src.visible_message("<span class='alert'>The <B>[src]</B> makes an odd sound, and releases a puff of green steam.</span>")
 
 		if(on == 1)
-			if(reagents.reagent_list.len < 1 || reagents.total_volume < 1)
+			if(length(reagents.reagent_list) < 1 || reagents.total_volume < 1)
 				on = 0
 				icon_state = "fogmachine0"
 
@@ -41,7 +41,7 @@
 		if(!istype(C, /obj/item/reagent_containers))
 			return
 		if(istype(C, /obj/item/reagent_containers/glass))
-			if(C.reagents.reagent_list.len < 1)
+			if(length(C.reagents.reagent_list) < 1)
 				boutput(user, "[C] is empty.")
 				return
 			else

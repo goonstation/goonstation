@@ -394,7 +394,7 @@
 		var/count = 0
 		for (var/obj/O in src.juggling)
 			count ++
-			if (src.juggling.len > 1 && count == src.juggling.len)
+			if (length(src.juggling) > 1 && count == src.juggling.len)
 				items += " and [O]"
 				continue
 			items += ", [O]"

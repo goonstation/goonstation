@@ -26,11 +26,15 @@ var/global/logLength = 0
 	var/forceNonDiaryLoggingToo = FALSE
 	var/area/A
 
+	if(istype(source, /mob/living/carbon/human/preview) && type == LOG_COMBAT)
+		return //we don't give a flying fuck about the preview mobs maving mutations - but maybe we care about debug etc.?
+
 	if (source)
 		A = get_area(source)
 		source = constructName(source, type)
 	else
 		if (type != LOG_DIARY) source = "<span class='blank'>(blank)</span>"
+
 
 	if (disable_log_lists) // lag reduction hack - ONLY print logs to the web versions
 		if (type == LOG_DIARY)
@@ -166,7 +170,7 @@ var/global/logLength = 0
 	var/mob/mobRef
 	if (ismob(ref))
 		mobRef = ref
-		traitor = checktraitor(mobRef)
+		traitor = checkantag(mobRef)
 		if (mobRef.name)
 			if (ishuman(mobRef))
 				var/mob/living/carbon/human/humanRef = mobRef
@@ -205,7 +209,7 @@ var/global/logLength = 0
 		online = 1
 		if (clientRef.mob)
 			mobRef = clientRef.mob
-			traitor = checktraitor(mobRef)
+			traitor = checkantag(mobRef)
 			if (mobRef.name)
 				if (ishuman(clientRef.mob))
 					var/mob/living/carbon/human/humanRef = clientRef.mob

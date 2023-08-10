@@ -106,7 +106,7 @@ var/global/datum/phrase_log/phrase_log = new
 		)
 		sussy_words = regex(jointext(sussy_word_list, "|"), "i")
 		var/list/ic_sussy_word_list = list(
-			@"\bl(:?ol)+",
+			@"\bl(:?ol)+\b",
 			@"\blmao+",
 			@"\bwt[hf]+\b",
 			@"\bsmh\b",
@@ -247,7 +247,7 @@ var/global/datum/phrase_log/phrase_log = new
 		return .
 
 	proc/random_station_name_replacement_proc(old_name)
-		if(!length(data_core.general))
+		if(!length(data_core.general.records))
 			return old_name
 		var/datum/db_record/record = pick(data_core.general.records)
 		return record["name"]

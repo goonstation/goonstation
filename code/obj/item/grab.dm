@@ -71,7 +71,7 @@
 					affecting.layer = initial(affecting.layer)
 				affecting.pixel_x = initial(affecting.pixel_x)
 				affecting.pixel_y = initial(affecting.pixel_y)
-				affecting.set_density(1)
+				affecting.set_density(initial(affecting.density))
 
 
 			if (state == GRAB_PIN)
@@ -176,7 +176,7 @@
 		if (!isturf(src.assailant.loc) || !(BOUNDS_DIST(src.assailant, src.affecting) == 0))
 			return
 
-		actions.interrupt(src.affecting, INTERRUPT_ALWAYS)
+		actions.interrupt(src.affecting, INTERRUPT_MOVE)
 
 		var/pxo = 0
 		var/pyo = 0
@@ -923,11 +923,15 @@
 							damage += H.limbs.r_leg.limb_hit_bonus
 						else if (H.limbs.l_leg)
 							damage += H.limbs.l_leg.limb_hit_bonus
-
-					dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
-					playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
-					for (var/mob/O in AIviewers(user))
-						O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
+					if(issilicon(dive_attack_hit))
+						playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
+						for (var/mob/O in AIviewers(user))
+							O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!")
+					else
+						dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
+						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
+						for (var/mob/O in AIviewers(user))
+							O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
 					logTheThing(LOG_COMBAT, user, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
 
 

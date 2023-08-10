@@ -18,7 +18,7 @@ Fibre wire
 /obj/item/soulskull
 	name = "ominous skull"
 	desc = "This skull gives you the heebie-jeebies."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/skull.dmi'
 	icon_state = "skull_ominous"
 	var/being_mean = 0
 
@@ -659,7 +659,7 @@ proc/Create_Tommyname()
 				move_and_delete_object(A)
 		sleep(DEFAULT_ANIMATION_TIME)
 
-	while(created_atoms.len > 0)
+	while(length(created_atoms) > 0)
 		var/atom/A = created_atoms[created_atoms.len]
 		created_atoms.len--
 		if(istype(A, /turf))

@@ -192,7 +192,7 @@
 	},
 /area/shuttle/escape/centcom)
 "nf" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
@@ -349,14 +349,14 @@
 /turf/unsimulated/floor/marble/border_bw,
 /area/shuttle/escape/centcom)
 "DK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "DU" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom)
 "Eh" = (
@@ -625,7 +625,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/escape/centcom)
 "RD" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},

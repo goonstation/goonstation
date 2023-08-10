@@ -32,4 +32,4 @@
 #define iskudzuman(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/kudzu))
 #define isnukeopgunbot(x) (istype(x, /mob/living/critter/robotic/gunbot/syndicate) && x:mind && x:mind:get_antagonist(ROLE_NUKEOP_GUNBOT))
 #define issawfly(x) (istype(x, /mob/living/critter/robotic/sawfly))
-#define iszombie(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/zombie))
+#define iszombie(x) (istype(x, /mob/living/critter/zombie) || istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/zombie))

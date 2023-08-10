@@ -796,6 +796,12 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 				src.color = P.font_color
 				src.desc = "A colorful paper hat"
 
+/obj/item/clothing/head/tinfoil_hat
+	name = "tinfoil hat"
+	desc = "Protects the wearer from mindcontrol and, apparently, weak martian psychic blasts which do not involve the liquification of brains."
+	icon_state = "tinfoil"
+	item_state = "tinfoil"
+
 /obj/item/clothing/head/towel_hat
 	name = "towel hat"
 	desc = "A white towel folded all into a fancy hat. NOT a turban!" // @;)
@@ -1963,15 +1969,56 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 	item_state = "fishfearme"
 	icon_state = "fishfearme"
 	var/favourite_word = "fish"
+	var/emag_multiplier = 0
 
 	proc/who()
+		if(prob(50 * emag_multiplier))
+			if (prob(20))
+				return pick("clowns", "captains", "staff assistants", "frogs", "bees", "traitors", "NanoTrasen", "Syndicate", "scientists", "anglers", "security officers")
+			var/tries = 50
+			var/atom_value = -INFINITY
+			do
+				var/atom/A = pick(world.contents)
+				var/A_value
+				if (istype(A, /turf/space))
+					A_value = -1
+				else if(istype(A, /area) || istype(A, /turf))
+					A_value = 0
+				else if(istype(A, /atom/movable/overlay) || istype(A, /atom/movable/screen) || istype(A, /obj/effect) || istype(A, /obj/effects) || istype(A, /obj/overlay))
+					continue
+				else
+					if (isobj(A) && !isitem(A))
+						A_value = 1
+					else
+						A_value = 3
+					var/turf/T = get_turf(A)
+					if (isnull(T))
+						A_value -= 2
+					else if (T.z == Z_LEVEL_STATION)
+						A_value += 1
+				var/atom_name = trim(stripTextMacros(A.name))
+				if (length(atom_name) <= 2)
+					continue
+				if (findtext(atom_name, " "))
+					A_value -= 0.5
+				if (A_value > atom_value)
+					. = atom_name
+					atom_value = A_value
+			while (atom_value < 4 && tries-- > 0)
+			return pluralize(.)
 		. = pick("fish", "me", "god", "women", "men", "enbies", "people")
 
 	proc/do_what()
+		if(prob(5 * emag_multiplier))
+			return pick("robust", "eat", "desire")
 		. = pick("fear", "want", "love")
 
 	New()
 		..()
+		src.color = hsv_transform_color_matrix(randfloat(0, 360), 1, 1)
+		generate_name()
+
+	proc/generate_name()
 		var/list/who = list(who(), who(), who(), who())
 		if (prob(66))
 			var/have_fish = FALSE
@@ -1983,8 +2030,24 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 		who[1] = capitalize(who[1])
 		name = "\improper '[who[1]] [do_what()] [who[2]], [who[3]] [do_what()] [who[4]]' hat"
 		real_name = name
-		src.color = hsv_transform_color_matrix(randfloat(0, 360), 1, 1)
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		emag_multiplier = 1
+		generate_name()
+		boutput(user, "<span class='notice'>The hat's text changes to read: [name].</span>")
+
+	demag(mob/user)
+		. = ..()
+		emag_multiplier = 0
+		generate_name()
+		boutput(user, "<span class='notice'>The hat's text changes to read: [name].</span>")
+
+/obj/item/clothing/head/fish_fear_me/emagged
+	emag_multiplier = 1
+
+/obj/item/clothing/head/fish_fear_me/emagged/very
+	emag_multiplier = 3
 
 /obj/item/clothing/head/fish_fear_me/admin
 	name = "admin fear me hat"

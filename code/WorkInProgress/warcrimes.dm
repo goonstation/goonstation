@@ -153,6 +153,10 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 // bus driver
 /mob/living/carbon/human/john
 	real_name = "John Bill"
+#ifdef IN_MAP_EDITOR
+	icon = 'icons/mob/map_mob.dmi'
+	icon_state = "john_bill"
+#endif
 	interesting = "Found in a coffee can at age fifteen. Went to jail for fraud. Recently returned to the can."
 	gender = MALE
 	is_npc = TRUE
@@ -259,7 +263,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 		snacks = list()
 		for(var/obj/item/reagent_containers/food/snacks/S in src)
 			snacks += S
-		if(snacks.len > 0)
+		if(length(snacks) > 0)
 			var/obj/item/reagent_containers/food/snacks/snacc = pick(snacks)
 			if(istype(snacc, /obj/item/reagent_containers/food/snacks/bite))
 				if(prob(75))
@@ -307,7 +311,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 					say(pick(john_area.john_talk))
 					john_area.john_talk = null
 
-			else if (grills.len > 0)
+			else if (length(grills) > 0)
 				var/obj/machinery/shitty_grill/G = pick(grills)
 				if (G.grillitem)
 					switch(G.cooktime)
@@ -332,7 +336,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 			else if(prob(40) && length(dead_mobs))
 				var/mob/M = pick(dead_mobs)
 				say("[JOHN_PICK("deadguy")] [M.name]...")
-			else if (alive_mobs.len > 0)
+			else if (length(alive_mobs) > 0)
 				if (murray && !greeted_murray)
 					greeted_murray = 1
 					say("[JOHN_PICK("greetings")] Murray! How's it [JOHN_PICK("verbs")]?")
@@ -509,18 +513,18 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 
 
 
-obj/decal/fakeobjects/thrust
+/obj/decal/fakeobjects/thrust
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shieldsparkles"
 	name = "ionized exhaust"
 	desc = "Thankfully harmless, to registered employees anyway."
 
-obj/decal/fakeobjects/thrust/flames
+/obj/decal/fakeobjects/thrust/flames
 	icon_state = "engineshit"
-obj/decal/fakeobjects/thrust/flames2
+/obj/decal/fakeobjects/thrust/flames2
 	icon_state = "engineshit2"
 
-obj/item/paper/tug/invoice
+/obj/item/paper/tug/invoice
 	name = "Big Yank's Space Tugs, Limited."
 	desc = "Looks like a bill of sale."
 	info = {"<b>Client:</b> Bill, John
@@ -531,7 +535,7 @@ obj/item/paper/tug/invoice
 			<br><b>Total Charge:</b> 17,440 paid in full with value-added meat.
 			<br>Big Yank's Cheap Tug"}
 
-obj/item/paper/tug/warehouse
+/obj/item/paper/tug/warehouse
 	name = "Big Yank's Space Tugs, Limited."
 	desc = "Looks like a bill of sale. It is blank"
 	info = {"<b>Client:</b>

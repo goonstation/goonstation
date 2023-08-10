@@ -14,7 +14,7 @@
 			boutput(M, "Silly robot.")
 			return
 		/*
-		if (!allowAntagStacking && checktraitor(M))
+		if (!allowAntagStacking && checkantag(M))
 			boutput(M, "Don't be greedy.")
 			return
 		*/
@@ -27,9 +27,7 @@
 
 	proc/makeAntag(mob/M as mob)
 		M.show_text("<h2><font color=red><B>You have defected and become a traitor!</B></font></h2>", "red")
-		M.mind.special_role = ROLE_TRAITOR
-		M.verbs += /client/proc/gearspawn_traitor
-		M.show_antag_popup("traitorradio")
+		M.mind.add_antagonist(ROLE_TRAITOR)
 
 /obj/traitorifier/wizard
 	name = "Eldritch Altar"
@@ -80,7 +78,7 @@
 	name = "Ferocious Alien Skull"
 	desc = "Fancy a game?"
 	attachedObjective = "Blood, blood, blood!"
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/skull.dmi'
 	icon_state = "skullP"
 	color = "#FF0000"
 

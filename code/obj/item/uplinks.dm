@@ -1388,7 +1388,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	eqtype = "Offensive"
 	desc = "This spell allows you to launch a spray of colorful and wildly innaccurate projectiles outwards in a cone aimed roughly at a nearby target."
 	assoc_spell = /datum/targetable/spell/prismatic_spray
-	cost = 2
+	cost = 1
 
 /*
 /datum/SWFuplinkspell/shockinggrasp

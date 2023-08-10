@@ -5,7 +5,7 @@
 
 //Electronics parts
 
-/obj/item/electronics/
+/obj/item/electronics
 	name = "electronic thing"
 	icon = 'icons/obj/electronics.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -136,6 +136,17 @@
 			deconstructed_thing = null
 		store_type = null
 		..()
+
+/obj/item/electronics/frame/proc/kickout(source, mob/stowaway)
+	if(istype(stowaway))
+		stowaway.set_loc(get_turf(source))
+	else
+		for(var/atom/movable/AM in stowaway)
+			kickout(source, AM)
+
+/obj/item/electronics/frame/Entered(atom/movable/AM, atom/OldLoc)
+	. = ..()
+	kickout(src, AM)
 
 /obj/item/electronics/frame/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/electronics/))
@@ -292,6 +303,7 @@
 	src.stored?.transfer_stored_item(src, T, user = user)
 	if (deconstructed_thing)
 		O = deconstructed_thing
+		UnregisterSignal(O, COMSIG_ATOM_ENTERED)
 		deconstructed_thing = null
 		O.set_loc(T)
 		O.set_dir(src.dir)
@@ -952,8 +964,9 @@
 		F.w_class = W_CLASS_BULKY
 
 		elecflash(src,power=2)
-
-		O.was_deconstructed_to_frame(user)
+		if(!QDELETED(O))
+			O.was_deconstructed_to_frame(user)
+			F.RegisterSignal(O, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
 
 	MouseDrop_T(atom/target, mob/user)
 		if (!isobj(target))
@@ -990,7 +1003,7 @@
 			boutput(user, "<span class='alert'>You cannot bring yourself to deconstruct [target] in this area.</span>")
 			return
 
-		if (O.decon_contexts && O.decon_contexts.len <= 0) //ready!!!
+		if (O.decon_contexts && length(O.decon_contexts) <= 0) //ready!!!
 			boutput(user, "Deconstructing [O], please remain still...")
 			playsound(user.loc, 'sound/effects/pop.ogg', 50, 1)
 			actions.start(new/datum/action/bar/icon/deconstruct_obj(target,src,(decon_complexity * 2.5 SECONDS)), user)

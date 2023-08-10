@@ -107,10 +107,15 @@
 	src.handler.vis_contents |= src.background
 	src.viewer?.screen |= src.background
 
+///subtype of human for character previews so we can filter them out from some logging
+/mob/living/carbon/human/preview
+	name = "character preview"
+	real_name = "character preview"
+
 /**
  * # Character Preview
  *
- * This is intended only for use with humans. `preview_thing` will be a generic human.
+ * This is intended only for use with humans. `preview_thing` will be a subtype of generic human.
  *
  * This parent type is for use in single-client windows.
  * See [/datum/movable_preview/character/window] for a detatched window and and [/datum/movable_preview/character/multiclient] for a multi-client variant.
@@ -119,7 +124,7 @@
 	custom_setup = TRUE
 
 	custom_setup(client/viewer, window_id, control_id)
-		var/mob/living/carbon/human/H = new(global.get_centcom_mob_cloner_spawn_loc())
+		var/mob/living/carbon/human/preview/H = new(global.get_centcom_mob_cloner_spawn_loc())
 		mobs -= H
 		src.preview_thing = H
 		qdel(H.name_tag)

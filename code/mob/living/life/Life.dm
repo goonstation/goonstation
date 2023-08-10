@@ -192,6 +192,7 @@
 	..()
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/disability)
 
 /mob/living/silicon/hivebot/restore_life_processes()
 	..()
@@ -212,12 +213,17 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/robot_oil)
 	add_lifeprocess(/datum/lifeprocess/robot_locks)
+	add_lifeprocess(/datum/lifeprocess/disability)
 
 
 /mob/living/silicon/drone/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+
+/mob/living/intangible/aieye/restore_life_processes()
+	. = ..()
+	add_lifeprocess(/datum/lifeprocess/disability) // for misstep
 
 /mob/living/Life(datum/controller/process/mobs/parent)
 	if (..())
@@ -316,8 +322,8 @@
 		return 1
 
 	var/mult = (max(tick_spacing, TIME - last_human_life_tick) / tick_spacing)
-	
-	src.mutantrace.onLife(mult)
+
+	src.mutantrace?.onLife(mult)
 
 	if (farty_party)
 		src.emote("fart")

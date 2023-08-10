@@ -140,8 +140,11 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 			L.update_burning(clamp(exposed_temperature / 60, 0, 20))
 
 	MouseDrop_T(mob/living/target, mob/user)
+		climb_into(target, user)
+
+	proc/climb_into(mob/living/target, mob/user)
 		if (occupant || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
-			return
+			return FALSE
 
 		var/msg
 		if(target == user && !user.stat)	// if drop self, then climbed in
@@ -151,9 +154,10 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 			msg = "[user.name] helps [target.name] onto \the [src]!"
 			user.visible_message(msg, self_message="<span class='notice'>You help [target.name] onto \the [src]!</span>")
 		else
-			return
+			return FALSE
 
 		insert_occupant(target)
+		return TRUE
 
 	proc/insert_occupant(mob/target)
 		target.set_loc(src)
@@ -169,9 +173,14 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 		if(usr != occupant)
 			..()
 			return
-		if(!(usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat))
+		if(can_act(usr))
 			eject_occupant()
-		return
+
+	Bumped(AM)
+		if(isliving(AM) && get_dir(src, AM) == SOUTH)
+			if(climb_into(AM, AM))
+				return
+		. = ..()
 
 	proc/eject_occupant()
 		if(src.occupant?.loc == src)
@@ -204,7 +213,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 		if(src.watts_gen && src.powernet)
 			indicator.alpha = 255
 		else
-			indicator.alpha = 200
+			indicator.alpha = 100
 
 		if(!src.lastgen || !src.watts_gen)
 			was_running = 0 // clear running

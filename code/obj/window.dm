@@ -139,12 +139,12 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			stab_resist 	= material.getProperty("hard") * 10
 			corrode_resist 	= material.getProperty("chemical") * 10
 
-			if (material.alpha > 220)
+			if (material.getAlpha() > 220)
 				set_opacity(1) // useless opaque window)
 			else
 				set_opacity(0)
 
-			if(src.material.special_naming)
+			if(src.material.usesSpecialNaming())
 				name = src.material.specialNaming(src)
 
 		if (istype(reinforcement))
@@ -157,7 +157,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			stab_resist 	+= round(reinforcement.getProperty("hard") * 5)
 			corrode_resist 	+= round(reinforcement.getProperty("chemical") * 5)
 
-			name = "[reinforcement.name]-reinforced " + name
+			name = "[reinforcement.getName()]-reinforced " + name
 
 	proc/set_reinforcement(var/datum/material/M)
 		if (!M)
@@ -853,7 +853,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		if (!src.damage_image)
 			src.damage_image = image('icons/obj/window_damage.dmi')
 			src.damage_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
-			if(src.material?.mat_id == "plasmaglass") //plasmaglass gets hand-picked alpha since it's so common and looks odd with default
+			if(src.material?.getID() == "plasmaglass") //plasmaglass gets hand-picked alpha since it's so common and looks odd with default
 				src.damage_image.alpha = 85
 			else
 				src.damage_image.alpha = 180
@@ -973,137 +973,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	icon_state = "mapwin_r"
 	default_material = "uqillglass"
 	default_reinforcement = "bohrum"
+
 	the_tuff_stuff
 		explosion_resistance = 5
-
-/obj/wingrille_spawn
-	name = "window grille spawner"
-	icon = 'icons/obj/window.dmi'
-	icon_state = "wingrille"
-	density = 1
-	anchored = ANCHORED
-	invisibility = INVIS_ALWAYS
-	//layer = 99
-	pressure_resistance = 4*ONE_ATMOSPHERE
-	var/win_path = "/obj/window"
-	var/grille_path = "/obj/grille/steel"
-	var/full_win = 0 // adds a full window as well
-	var/no_dirs = 0 //ignore directional
-
-	New()
-		..()
-		if(current_state >= GAME_STATE_WORLD_INIT)
-			SPAWN(0)
-				initialize()
-
-	initialize()
-		. = ..()
-		src.set_up()
-		qdel(src)
-
-	proc/set_up()
-		if (!locate(text2path(src.grille_path)) in get_turf(src))
-			var/obj/grille/new_grille = text2path(src.grille_path)
-			new new_grille(src.loc)
-
-		if (!no_dirs)
-			for (var/dir in cardinal)
-				var/turf/T = get_step(src, dir)
-				if ((!locate(/obj/wingrille_spawn) in T) && (!locate(/obj/grille) in T))
-					var/obj/window/new_win = text2path("[src.win_path]/[dir2text(dir)]")
-					if(new_win)
-						new new_win(src.loc)
-					else
-						CRASH("Invalid path: [src.win_path]/[dir2text(dir)]")
-		if (src.full_win)
-			if(!no_dirs || !locate(text2path(src.win_path)) in get_turf(src))
-				// if we have directional windows, there's already a window (or windows) from directional windows
-				// only check if there's no window if we're expecting there to be no window so spawn a full window
-				var/obj/window/new_win = text2path(src.win_path)
-				new new_win(src.loc)
-
-	full
-		icon_state = "wingrille_f"
-		full_win = 1
-
-	reinforced
-		name = "reinforced window grille spawner"
-		icon_state = "r-wingrille"
-		win_path = "/obj/window/reinforced"
-
-		full
-			icon_state = "r-wingrille_f"
-			full_win = 1
-
-	crystal
-		name = "crystal window grille spawner"
-		icon_state = "p-wingrille"
-		win_path = "/obj/window/crystal"
-
-		full
-			icon_state = "p-wingrille_f"
-			full_win = 1
-
-	reinforced_crystal
-		name = "reinforced crystal window grille spawner"
-		icon_state = "pr-wingrille"
-		win_path = "/obj/window/crystal/reinforced"
-
-		full
-			icon_state = "pr-wingrille_f"
-			full_win = 1
-
-	bulletproof
-		name = "bulletproof window grille spawner"
-		icon_state = "br-wingrille"
-		win_path = "/obj/window/bulletproof"
-
-		full
-			name = "bulletproof window grille spawner"
-			icon_state = "br-wingrille"
-			icon_state = "b-wingrille_f"
-			full_win = 1
-
-	hardened
-		name = "hardened window grille spawner"
-		icon_state = "br-wingrille"
-		win_path = "/obj/window/hardened"
-
-		full
-			name = "hardened window grille spawner"
-			icon_state = "br-wingrille"
-			icon_state = "b-wingrille_f"
-			full_win = 1
-
-	auto
-		name = "autowindow grille spawner"
-		win_path = "/obj/window/auto"
-		full_win = 1
-		no_dirs = 1
-		icon_state = "wingrille_new"
-		color = "#A3DCFF"
-
-		reinforced
-			name = "reinforced autowindow grille spawner"
-			win_path = "/obj/window/auto/reinforced"
-			icon_state = "r-wingrille_new"
-			color = "#72c8fd"
-
-		crystal
-			name = "crystal autowindow grille spawner"
-			win_path = "/obj/window/auto/crystal"
-			icon_state = "wingrille_new"
-			color = "#9e53cf"
-
-			reinforced
-				name = "reinforced crystal autowindow grille spawner"
-				win_path = "/obj/window/auto/crystal/reinforced"
-				icon_state = "r-wingrille_new"
-				color = "#8713d4"
-
-		tuff
-			name = "tuff stuff reinforced autowindow grille spawner"
-			win_path = "/obj/window/auto/reinforced/the_tuff_stuff"
 
 //Cubicle walls! Also for the crunch. - from halloween.dm
 /obj/window/cubicle

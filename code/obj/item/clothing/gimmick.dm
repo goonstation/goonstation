@@ -887,7 +887,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 /obj/item/clothing/mask/skull
 	name = "skull mask"
 	desc = "A spooky skull mask. You're getting the heebie-jeebies just looking at it!"
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/skull.dmi'
 	icon_state = "skull"
 	item_state = "death"
 	see_face = 0

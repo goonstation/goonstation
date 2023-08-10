@@ -33,15 +33,17 @@
 			else
 
 	proc/replace_with_catwalk(var/obj/item/rods/rods)
-		var/turf/simulated/floor/airless/plating/catwalk/auto/T = get_turf(src.loc)
-		T.ReplaceWith(/turf/simulated/floor/airless/plating/catwalk/auto, keep_old_material = 0, handle_dir = 1)
-		if(istype(T)) // ReplaceWith can fail if unsim turf etc
-			T.MakeCatwalk(rods)
-			qdel(src)
+		var/turf/T = get_turf(src.loc)
+		if (istype(T, /turf/unsimulated))
+			return
+		if (istype_exact(T, /turf/space))
+			T.ReplaceWith(/turf/simulated/floor/airless/plating/catwalk/auto, FALSE, TRUE, FALSE, FALSE)
+		T.MakeCatwalk(rods)
+		qdel(src)
 
 	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/rods))
-			var/actionbar_duration = 2 SECOND
+			var/actionbar_duration = 2 SECONDS
 
 			if (ishuman(user))
 				if (user.traitHolder.hasTrait("training_engineer"))

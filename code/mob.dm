@@ -232,6 +232,8 @@
 	var/mob/observing = null
 	/// A list of emotes that trigger a special action for this mob
 	var/list/trigger_emotes = null
+	/// If TRUE then this mob won't be fully stunned by stamina stuns
+	var/no_stamina_stuns = FALSE
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
@@ -930,7 +932,7 @@
 		boutput(src, "<span class='alert'>Sorry, this server does not have medals enabled.</span>")
 		return
 
-	boutput(src, "Retrieving your medal information...")
+	boutput(src, "<span class='hint'>Retrieving your medal information...</span>")
 
 	SPAWN(0)
 		var/list/output = list()
@@ -1264,7 +1266,7 @@
 	if (istype(W))
 		actions.interrupt(src, INTERRUPT_ACT)
 		var/obj/item/magtractor/origW
-		if (W.useInnerItem && W.contents.len > 0)
+		if (W.useInnerItem && length(W.contents) > 0)
 			if (istype(W, /obj/item/magtractor))
 				origW = W
 			var/obj/item/held = W.holding
@@ -1446,10 +1448,11 @@
 	set name = "Recite Miranda Rights"
 	if (isnull(src.mind))
 		return
-	if (isnull(src.mind.miranda))
-		src.say_verb("You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you.")
+	var/miranda = src.mind.get_miranda()
+	if (isnull(miranda))
+		src.say_verb(DEFAULT_MIRANDA)
 		return
-	src.say_verb(src.mind.miranda)
+	src.say_verb(miranda)
 
 /mob/proc/add_miranda()
 	set name = "Set Miranda Rights"
@@ -1458,12 +1461,7 @@
 	if (src.mind.last_memory_time + 10 <= world.time) // leaving it using this var cause vOv
 		src.mind.last_memory_time = world.time // why not?
 
-		if (isnull(src.mind.miranda))
-			src.mind.set_miranda("You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you.")
-
-		src.mind.show_miranda(src)
-
-		var/new_rights = input(usr, "Change what you will say with the Say Miranda Rights verb.", "Set Miranda Rights", src.mind.miranda) as null|text
+		var/new_rights = input(usr, "Change what you will say with the Say Miranda Rights verb.", "Set Miranda Rights", src.mind.get_miranda() || DEFAULT_MIRANDA) as null|text
 		if (!new_rights || new_rights == src.mind.miranda)
 			src.show_text("Miranda rights not changed.", "red")
 			return
@@ -1669,7 +1667,7 @@
 		src.active_color_matrix = null
 	else
 		var/first_entry = src.color_matrices[1]
-		if (src.color_matrices.len == 1) // Just one matrix?
+		if (length(src.color_matrices) == 1) // Just one matrix?
 			src.active_color_matrix = src.color_matrices[first_entry]
 		else
 			var/list/color_matrix_2_apply = src.color_matrices[first_entry]
@@ -1958,8 +1956,8 @@
 		if (transfer_mind_to_owl)
 			src.make_critter(/mob/living/critter/small_animal/bird/owl, src.loc)
 		else
-			var/obj/critter/owl/O = new /obj/critter/owl(src.loc)
-			O.name = pick("Hooty Mc[src.real_name]", "Professor [src.real_name]", "Screechin' [src.real_name]")
+			var/mob/living/critter/small_animal/bird/owl/owl = new /mob/living/critter/small_animal/bird/owl(src.loc)
+			owl.name = pick("Hooty Mc [src.real_name]", "Professor [src.real_name]", "Screechin' [src.real_name]")
 
 	if (!transfer_mind_to_owl && (src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
@@ -2154,10 +2152,10 @@
 			the_butt = new /obj/item/clothing/head/butt/cyberbutt
 		else if (istype(src, /mob/living/intangible/wraith) || istype(src, /mob/dead))
 			the_butt = new /obj/item/clothing/head/butt
-			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE, copy = FALSE)
+			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE)
 		else if (istype(src, /mob/living/intangible/blob_overmind))
 			the_butt = new /obj/item/clothing/head/butt
-			the_butt.setMaterial(getMaterial("blob"), appearance = TRUE, setname = TRUE, copy = FALSE)
+			the_butt.setMaterial(getMaterial("blob"), appearance = TRUE, setname = TRUE)
 		else
 			the_butt = new /obj/item/clothing/head/butt/synth
 
@@ -3117,7 +3115,7 @@
 	if(target)
 		var/success = src.help_examine(target)
 		if(!success)
-			boutput(src, "Sadly \the [target] has no help message attached.")
+			boutput(src, "<span class='alert'>Sadly \the [target] has no help message attached.</span>")
 	else
 		boutput(src, {"<span class='helpmsg'>
 			You can use this command by right clicking an object and selecting Help (not all objects support this).<br>
@@ -3137,7 +3135,7 @@
 
 	var/success = usr.help_examine(src)
 	if(!success)
-		boutput(usr, "Sadly \the [src] has no help message attached.")
+		boutput(usr, "<span class='alert'>Sadly \the [src] has no help message attached.</span>")
 
 /// Same as help_verb but this one except visible, added dynamically when requested by signals
 /atom/proc/help_verb_dynamic()
@@ -3150,7 +3148,7 @@
 
 	var/success = usr.help_examine(src)
 	if(!success)
-		boutput(usr, "Sadly \the [src] has no help message attached.")
+		boutput(usr, "<span class='alert'>Sadly \the [src] has no help message attached.</span>")
 
 /mob/living/verb/interact_verb(atom/A as mob|obj|turf in oview(1, usr))
 	set name = "Pick Up / Left Click"

@@ -647,21 +647,6 @@
 	item_state = "DANlabcoat"
 	coat_style = "DANlabcoat"
 
-/obj/item/clothing/suit/straight_jacket
-	name = "straight jacket"
-	desc = "A suit that totally restrains an individual."
-	icon_state = "straight_jacket"
-	item_state = "straight_jacket"
-	body_parts_covered = TORSO|LEGS|ARMS
-	restrain_wearer = TRUE
-	hides_from_examine = C_UNIFORM
-
-	setupProperties()
-		..()
-		setProperty("coldprot", 20)
-		setProperty("heatprot", 20)
-		setProperty("movespeed", 15)
-
 /obj/item/clothing/suit/wcoat
 	name = "waistcoat"
 	desc = "Style over abdominal protection."
@@ -2021,6 +2006,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "billow_cape"
 	item_state = "billow_cape"
 	body_parts_covered = TORSO|ARMS
+	c_flags = ONBACK
 
 /obj/item/clothing/suit/space/replica
 	name = "replica space suit"
@@ -2081,6 +2067,33 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 				src.icon_state = "torncape_[style]"
 				src.item_state = "torncape_[style]"
 				src.name = "[style] torn cloak"
+
+/obj/item/clothing/suit/torncloak/black/alpha
+	var/dm_filter/filter
+	var/obj/effect/effect
+
+	New()
+		. = ..()
+		// concept stolen from dwarf because pali smart
+		src.effect = new()
+		src.effect.render_target = ref(src)
+		src.effect.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR
+		src.effect.vis_flags = VIS_INHERIT_DIR
+		src.effect.icon = icon(src.wear_image_icon, src.icon_state)
+
+		src.filter = alpha_mask_filter(render_source=src.effect.render_target, flags=MASK_INVERSE)
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (slot == SLOT_BACK || slot == SLOT_WEAR_SUIT)
+			user.add_filter("clothing_[ref(src)]", 99, src.filter)
+			user.vis_contents += src.effect
+
+	unequipped(mob/user)
+		. = ..()
+		user.remove_filter("clothing_[ref(src)]")
+		user.vis_contents -= src.effect
+
 
 /obj/item/clothing/suit/scarfcape
 	name = "Adventurous Scarf"

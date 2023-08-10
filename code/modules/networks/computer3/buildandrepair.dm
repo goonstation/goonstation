@@ -118,7 +118,7 @@ TYPEINFO(/obj/item/motherboard)
 				src.icon_state = "1"
 
 			if (istype(P, /obj/item/peripheral))
-				if(src.peripherals.len < src.max_peripherals)
+				if(length(src.peripherals) < src.max_peripherals)
 					user.drop_item()
 					src.peripherals.Add(P)
 					P.set_loc(src)
@@ -165,7 +165,7 @@ TYPEINFO(/obj/item/motherboard)
 
 			if (istype(P, /obj/item/sheet))
 				var/obj/item/sheet/S = P
-				if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
+				if (S.material && S.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 					if (S.amount >= src.glass_needed)
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						actions.start(action_bar, user)

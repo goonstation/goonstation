@@ -103,9 +103,9 @@
 			cards -= cardname
 			if(cardname != "Head of Personnel")
 				usedcards += cardname
-			if(cards.len == 11)
+			if(length(cards) == 11)
 				src.icon_state = "deck2"
-			if(cards.len == 5)
+			if(length(cards) == 5)
 				src.icon_state = "deck3"
 			var/obj/item/zoldorfcard/card = new /obj/item/zoldorfcard
 			user.put_in_hand_or_drop(card)
@@ -117,7 +117,7 @@
 				else
 					cardnumber += bufferlist[1]
 					qdel(bufferlist[2])
-			if(cards.len == 0)
+			if(length(cards) == 0)
 				src.inuse = 0
 				for(var/atom/movable/AM in contents)
 					AM.set_loc(get_turf(src))
@@ -241,7 +241,7 @@
 				redraw = 1
 				reference = src
 			if("Quartermaster")
-				var/obj/item/spacecash/money = new /obj/item/spacecash(get_turf(src),25000)
+				var/obj/item/currency/spacecash/money = new /obj/item/currency/spacecash(get_turf(src),25000)
 				user.put_in_hand_or_drop(money)
 			if("Cluwne")
 				user.contract_disease(/datum/ailment/disease/cluwneing_around,null,null,1)
@@ -432,7 +432,7 @@
 					if(istype(T, /turf/space) || T.density)
 						continue
 					randomturfs.Add(T)
-				if(randomturfs.len > 0)
+				if(length(randomturfs) > 0)
 					boutput(user, "<span class='alert'>You are suddenly zapped away elsewhere!</span>")
 					user.set_loc(pick(randomturfs))
 					elecflash(user)

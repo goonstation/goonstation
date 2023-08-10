@@ -1004,6 +1004,44 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "You never were good at managing yourself slipping."
 	points = 1
 
+/datum/trait/picky_eater
+	name = "Picky eater"
+	icon_state = "foodstuff"
+	id = "picky_eater"
+	desc = "Your refined palate only tolerates a handful of foods."
+	points = 0
+	var/list/fav_foods = list()
+	var/explanation_text = null
+
+	onAdd(var/mob/owner)
+		if (length(fav_foods) <= 0 && ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			var/choices[5]
+			var/list/names[5]
+			var/i = 0
+			var/max_rolls = 30
+			var/current_rolls = 0
+			while (i < 5)
+				i++
+				choices[i] = pick(allowed_favorite_ingredients)
+				var/choiceType = choices[i]
+				var/obj/item/reagent_containers/food/snacks/instance =  new choiceType
+				if(instance.custom_food)
+					fav_foods += choiceType
+					names[i] = instance.name
+				else
+					i--
+				current_rolls++
+				if (current_rolls > max_rolls)
+					stack_trace("Failed to generate a foodlist for picky eater [H]. Aborting.")
+					return
+			explanation_text = "<b>Your favorite foods are : </b>"
+			for (var/ingredient in names)
+				if (ingredient != names[5])
+					explanation_text += "[ingredient], "
+				else
+					explanation_text += "and [ingredient]<br/>"
+
 //Infernal Contract Traits
 /datum/trait/hair
 	name = "Wickedly Good Hair"

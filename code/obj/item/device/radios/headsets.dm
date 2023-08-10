@@ -89,6 +89,7 @@
 		"r" = R_FREQ_RESEARCH,
 		"m" = R_FREQ_MEDICAL,
 		"c" = R_FREQ_CIVILIAN,
+		"a" = R_FREQ_INTERCOM_AI,
 		)
 	secure_classes = list(
 		"h" = RADIOCL_COMMAND,
@@ -97,6 +98,7 @@
 		"r" = RADIOCL_RESEARCH,
 		"m" = RADIOCL_MEDICAL,
 		"c" = RADIOCL_CIVILIAN,
+		"a" = RADIOCL_INTERCOM_AI,
 		)
 	icon_override = "ai"
 	icon_tooltip = "Artificial Intelligence"

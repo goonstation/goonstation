@@ -260,7 +260,7 @@
 			boutput(M, {"
 				<div style='border: 2px solid red; font-size: 110%;'>
 					<div style="color: black; background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
-						Admin PM from [key_name(user, 0, 0)]
+						Admin PM from [key_name(user, 0, 0, ckey_and_alt_key = TRUE)]
 					</div>
 					<div style="padding: 0.2em 0.5em;">
 					[t]
@@ -277,10 +277,10 @@
 			// Sender is not admin
 			if (M.client && M.client.holder)
 				// But recipient is
-				boutput(M, "<span class='ahelp' class=\"bigPM\">Reply PM from-<b>[key_name(user, 0, 0)][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
+				boutput(M, "<span class='ahelp' class=\"bigPM\">Reply PM from-<b>[key_name(user, 0, 0, ckey_and_alt_key = TRUE)][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
 				M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
 			else
-				boutput(M, "<span class='alert' class=\"bigPM\">Reply PM from-<b>[key_name(user, 0, 0)]</b>: [t]</span>")
+				boutput(M, "<span class='alert' class=\"bigPM\">Reply PM from-<b>[key_name(user, 0, 0, ckey_and_alt_key = TRUE)]</b>: [t]</span>")
 				M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
 			boutput(user, "<span class='ahelp' class=\"bigPM\">Reply PM to-<b>[key_name(M, 0, 0)]</b>: [t]</span>")
 
@@ -303,4 +303,4 @@
 				if (K.client.player_mode && !K.client.player_mode_ahelp)
 					continue
 				else
-					boutput(K, "<span class='ahelp'><b>PM: [key_name(user,0,0)][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
+					boutput(K, "<span class='ahelp'><b>PM: [key_name(user,0,0, ckey_and_alt_key = TRUE)][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")

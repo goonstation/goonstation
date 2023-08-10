@@ -148,7 +148,7 @@
 
 			charge -= adj_output
 
-			if(blocking_objects.len > 0)
+			if(length(blocking_objects) > 0)
 				melt_blocking_objects()
 			power_sold(adj_output)
 

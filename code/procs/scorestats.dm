@@ -283,8 +283,8 @@ var/datum/score_tracker/score_tracker
 
 	proc/get_cash_in_thing(var/atom/A)
 		. = 0
-		if (istype(A, /obj/item/spacecash))
-			var/obj/item/spacecash/SC = A
+		if (istype(A, /obj/item/currency/spacecash))
+			var/obj/item/currency/spacecash/SC = A
 			. += SC.amount
 		else if (istype(A, /obj/item/card/id))
 			var/obj/item/card/id/ID = A

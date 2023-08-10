@@ -165,6 +165,9 @@
 	can_bleed = 1
 	blood_id = "blood"
 	blood_volume = 500
+	dna_to_absorb = 10
+
+	void_mindswappable = TRUE
 
 	var/datum/humanInventory/inventory = null
 
@@ -648,7 +651,7 @@
 			for (var/mob/dead/target_observer/hivemind_observer/obs in C.hivemind)
 				boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
 				obs.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
-			if (C.hivemind.len > 0)
+			if (length(C.hivemind) > 0)
 				boutput(src, "Contact with the hivemind has been lost.")
 			C.hivemind = list()
 			if(C.master != C.temp_controller)
@@ -811,7 +814,7 @@
 		if(src.spell_soulguard == SOULGUARD_RING)	//istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport)
 			reappear_turf = get_turf(src)
 		else
-			reappear_turf = pick(job_start_locations["wizard"])
+			reappear_turf = pick_landmark(LANDMARK_WIZARD)
 
 	////////////////Set up the new body./////////////////
 
@@ -2101,7 +2104,7 @@
 /mob/living/carbon/human/proc/can_equip(obj/item/I, slot)
 	switch (slot)
 		if (slot_l_store, slot_r_store)
-			if (I.w_class <= W_CLASS_SMALL && src.w_uniform)
+			if (I.w_class <= W_CLASS_POCKET_SIZED && src.w_uniform)
 				return TRUE
 		if (slot_l_hand)
 			if (src.limbs.l_arm)
@@ -2510,10 +2513,8 @@
 				return
 			if (iswerewolf(src))
 				if (src.handcuffs.werewolf_cant_rip())
-					boutput(src, "<span class='alert'>You can't seem to rip apart these silver handcuffs. They burn!</span>")
-					src.TakeDamage("l_arm", 0, 2, 0, DAMAGE_BURN)
-					src.TakeDamage("r_arm", 0, 2, 0, DAMAGE_BURN)
-					return
+					boutput(src, "<span class='alert'><b>[src.handcuffs] burn you! They'll take a longer time to remove...</b></span>")
+					// no return, proceed as normal
 				else
 					src.visible_message("<span class='alert'><B>[src] rips apart the handcuffs with pure brute strength!</b></span>")
 					boutput(src, "<span class='notice'>You rip apart your handcuffs.</span>")
@@ -2920,7 +2921,7 @@
 		var/count = 0
 		for (var/obj/O in src.juggling)
 			count ++
-			if (src.juggling.len > 1 && count == src.juggling.len)
+			if (length(src.juggling) > 1 && count == src.juggling.len)
 				items += " and [O]"
 				continue
 			items += ", [O]"

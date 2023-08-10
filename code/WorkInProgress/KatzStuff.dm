@@ -103,7 +103,7 @@ TYPEINFO(/datum/component/mimic_item)
 	can_throw = FALSE
 	can_grab = TRUE
 	can_disarm = FALSE
-	butcherable = FALSE
+	butcherable = BUTCHER_NOT_ALLOWED
 	name_the_meat = FALSE
 	max_skins = 0
 	health_brute = 100

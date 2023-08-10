@@ -390,7 +390,7 @@
 		src.icon_state = "crushed-[iconsplit[2]]"
 
 /obj/item/reagent_containers/food/drinks/cola/random
-	name = "space cola"
+	name = "off-brand space cola"
 	desc = "You don't recognise this cola brand at all."
 	icon = 'icons/obj/foodNdrink/can.dmi'
 	heal_amt = 1

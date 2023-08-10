@@ -123,7 +123,8 @@ proc/ui_describe_reagents(atom/A)
 		maxVolume = R.maximum_volume,
 		totalVolume = R.total_volume,
 		contents = list(),
-		finalColor = "#000000"
+		finalColor = "#000000",
+		temperature = R.total_temperature
 	)
 
 	var/list/contents = thisContainerData["contents"]
@@ -394,7 +395,7 @@ proc/ui_describe_reagents(atom/A)
 				if(istype(I, /obj/item/ammo/bullets))
 					var/obj/item/ammo/A = I
 					I = A.ammo_type
-				if (I.material && I.material.mat_id == "silver")
+				if (I.material && I.material.getID() == "silver")
 					boutput(user, "<span class='notice'>[I] is already coated, more silver won't do any good.</span>")
 				else
 					boutput(user, "<span class='notice'>[src] doesn't have enough silver in it to coat [I].</span>")

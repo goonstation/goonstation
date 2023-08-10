@@ -491,7 +491,7 @@
 							src.mail_temp = list()
 
 						var/toAdd = copytext( strip_html(text), 1, MAX_MESSAGE_LEN)
-						if (!ckeyEx(toAdd) || src.mail_temp.len >= 99)
+						if (!ckeyEx(toAdd) || length(src.mail_temp) >= 99)
 							return
 
 						src.mail_temp += toAdd

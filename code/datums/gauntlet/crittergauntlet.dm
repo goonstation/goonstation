@@ -1053,31 +1053,31 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Martian"
 		point_cost = 1
 		count = 6
-		types = list(/obj/critter/martian)
+		types = list(/mob/living/critter/martian)
 
 	soldier
 		name = "Martian Soldier"
 		point_cost = 3
 		count = 4
-		types = list(/obj/critter/martian/soldier)
+		types = list(/mob/living/critter/martian/soldier)
 
 	warrior
 		name = "Martian Warrior"
 		point_cost = 3
 		count = 2
-		types = list(/obj/critter/martian/warrior)
+		types = list(/mob/living/critter/martian/warrior)
 
 	mutant
 		name = "Martian Mutant"
 		point_cost = 5
 		count = 0.05
-		types = list(/obj/critter/martian/psychic)
+		types = list(/mob/living/critter/martian/mutant)
 
 	martian_assorted
 		name = "Martian Assortment"
 		point_cost = 6
 		count = 12
-		types = list(/obj/critter/martian/soldier, /obj/critter/martian/soldier, /obj/critter/martian/soldier, /obj/critter/martian/warrior)
+		types = list(/mob/living/critter/martian/soldier, /mob/living/critter/martian/soldier, /mob/living/critter/martian/soldier, /mob/living/critter/martian/warrior)
 
 	bear
 		name = "Bear"
@@ -1131,7 +1131,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Zombie"
 		point_cost = 4
 		count = 2
-		types = list(/obj/critter/zombie)
+		types = list(/mob/living/critter/zombie)
 
 	micromen
 		name = "Micro Man"
@@ -1221,7 +1221,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Floating Eyes"
 		point_cost = 0.01
 		count = 10
-		types = list(/obj/critter/floateye)
+		types = list(/mob/living/critter/small_animal/floateye)
 
 /proc/queryGauntletMatches(data)
 	if (islist(data) && data["data_hub_callback"])

@@ -353,8 +353,10 @@ datum
 				if (recipe.hidden && !allow_secret)
 					. += "<br>&emsp;<b>\[RECIPE REDACTED\]</br>"
 				else
-					if (recipe.required_temperature != -1)
-						. += "<br>&emsp;Required temperature: [T0C + recipe.required_temperature]°C"
+					if (recipe.max_temperature != INFINITY)
+						. += "<br>&emsp;Maximum reaction temperature: [T0C + recipe.max_temperature]°C"
+					if (recipe.min_temperature != -INFINITY)
+						. += "<br>&emsp;Minimum reaction temperature: [T0C + recipe.min_temperature]°C"
 					for (var/id in recipe.required_reagents)
 						. += "<br>&emsp;[reagents_cache[id]] - [recipe.required_reagents[id]] unit[recipe.required_reagents[id] > 1 ? "s" : ""]" // English name - Required amount
 				. += "<br><br>"

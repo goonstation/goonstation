@@ -65,7 +65,7 @@
 	var/obj/item/I = O
 	if (istype(I,/obj/item/satchel))
 		var/obj/item/satchel/S = I
-		if (S.contents.len < 1)
+		if (length(S.contents) < 1)
 			boutput(user, "<span class='alert'>There's nothing in [S]!</span>")
 		else
 			user.visible_message("<span class='notice'>[user] dumps out [S]'s contents onto [src]!</span>")

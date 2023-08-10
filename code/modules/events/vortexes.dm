@@ -3,10 +3,9 @@
 	customization_available = 1
 	weight = 60
 	var/derelictchoice = null
-#ifdef RP_MODE
-	required_elapsed_round_time = 60 MINUTES
-#else
 	required_elapsed_round_time = 45 MINUTES
+#ifdef RP_MODE
+	disabled = 1
 #endif
 
 	admin_call(var/source)

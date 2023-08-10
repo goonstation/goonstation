@@ -118,15 +118,9 @@ obj/structure/ex_act(severity)
 			return
 
 		if (src.icon_state != "reinforced" && S.reinforcement)
-			if (S.material.material_flags & MATERIAL_METAL)
-				actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_REINFORCE, null, user), user)
-			else
-				boutput(user, "You cannot reinforce [src] with [S]!")
+			actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_REINFORCE, null, user), user)
 		else
-			if (S.material.material_flags & MATERIAL_METAL)
-				actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_PLATE, null, user), user)
-			else
-				boutput(user, "You cannot plate [src] with [S]!")
+			actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_PLATE, null, user), user)
 	else
 		..()
 
@@ -312,7 +306,7 @@ obj/structure/ex_act(severity)
 		var/datum/material/defaultMaterial = getMaterial("steel")
 		var/turf/simulated/wall/false_wall/FW = A
 
-		FW.setMaterial(S.material ? S.material : defaultMaterial, copy = src.material ? TRUE :FALSE)
+		FW.setMaterial(S.material ? S.material : defaultMaterial)
 		FW.girdermaterial = src.material ? src.material : defaultMaterial
 		FW.inherit_area()
 

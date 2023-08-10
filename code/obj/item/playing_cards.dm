@@ -1219,7 +1219,7 @@ proc/riffle_shuffle(list/deck)
 
 	// Markovian model of the shuffle
 	var/currentStack = rand() > 0.5
-	while(D1.len > 0 && D2.len > 0)
+	while(length(D1) > 0 && length(D2) > 0)
 		var/item
 
 		if(currentStack)
