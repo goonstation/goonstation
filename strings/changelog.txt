@@ -1,5 +1,27 @@
 
+(t)wed aug 09 23
+(u)Tyrant
+(p)15310
+(e)🪲🗺|C-Bug, A-Mapping
+(+)The CE's office on Donut 2 is no longer open to the public.
+(u)Glamurio (Ryou)
+(p)14800
+(e)💅🍝|C-QoL, A-Catering
+(+)Standardized all coffee recipes to work with either regular coffee, or its freshly brewed variant.
 (t)tue aug 08 23
+(u)Amylizzle
+(p)15205
+(e)🔎🧱|C-Code-Quality, A-Materials
+(+)Plasmastone now releases its plasma somewhat slower. You can see how much plasma is left using a material analyzer.
+(+)You must now use the material analyzer to see how much gas is left in Molitz and Molitz Beta.
+(u)Kubius
+(p)15264
+(e)⚖|C-Balance
+(+)Telescience portal activation energy has been slightly reduced.
+(u)Amylizzle
+(p)15298
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Gas generator artifacts can now emit fallout gas.
 (u)Paaiii
 (p)15274
 (e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing

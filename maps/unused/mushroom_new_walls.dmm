@@ -25331,7 +25331,7 @@
 /area/station/crew_quarters/arcade)
 "kDt" = (
 /obj/machinery/camera,
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/baroffice)
 "kDT" = (
