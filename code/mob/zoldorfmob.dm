@@ -11,7 +11,6 @@
 	blinded = 0
 	anchored = ANCHORED
 	alpha = 180
-	stat = STAT_DEAD
 	var/autofree = 0
 	var/firstfortune = 1
 	var/free = 0
