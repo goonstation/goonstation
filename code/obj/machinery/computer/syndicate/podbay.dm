@@ -49,16 +49,16 @@
 		boutput(user,"The podbay has already been authorized.")
 		return
 	if (!src.auth_need)
-		// Works to setup auth_need here
+		// Works to setup auth_need here but ideally this and the SPAWN delay for autoauth get done on some universal post_setup
 		src.auth_need = round(0.5 * length(get_all_antagonists(ROLE_NUKEOP) + get_all_antagonists(ROLE_NUKEOP_COMMANDER)))
 		if (src.auth_need < 2)
 			authorize()
 			boutput(user,"Low number of agents detected. Podbay authorization granted.")
 			src.authorized += user
 			return
-	src.add_fingerprint(user)
 	if (!src.authorized)
 		src.authorized = list()
+	src.add_fingerprint(user)
 	var/auths_required = src.auth_need - length(src.authorized)
 	var/choice = tgui_alert(user, "Would you like to authorize access to the podbay? [auths_required] authorization[s_es(auths_required)] are still needed.\nWARNING: This CANNOT be undone!", "Podbay Auth", list("Yes", "No"))
 	if (BOUNDS_DIST(user, src) > 0 || src.authed)
