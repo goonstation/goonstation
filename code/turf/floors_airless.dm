@@ -85,6 +85,7 @@
 
 /turf/unsimulated/floor/airless/plating/catwalk/auto
 	icon = 'icons/turf/catwalk_support.dmi'
+	icon_state = "auto"
 
 	New()
 		. = ..()
@@ -107,6 +108,7 @@
 
 /turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon
 	name = "hot catwalk support"
+	icon_state = "auto_lava"
 	carbon_dioxide = 20
 	temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 1
 
