@@ -1,8 +1,5 @@
 // Riot computer but reflavored for the Cairngorm
 
-/// All the barriers on cairngorm battlecruiser (the podbay)
-var/global/list/cairngorm_barriers = list()
-
 /obj/machinery/computer/battlecruiser_podbay
 	name = "podbay authorization"
 	icon_state = "drawbr"
