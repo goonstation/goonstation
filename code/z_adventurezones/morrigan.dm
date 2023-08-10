@@ -1406,7 +1406,7 @@ proc/load_morrigan()
 
 /obj/fakeobjects/morrigan_teleporter
 	name = "short-range teleporter"
-	desc = "A precise teleporter that only works across short distances."`
+	desc = "A precise teleporter that only works across short distances."
 	icon = 'icons/misc/32x64.dmi'
 	icon_state = "lrport"
 
