@@ -83,6 +83,37 @@
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
 
+/turf/unsimulated/floor/airless/plating/catwalk/auto
+	icon = 'icons/turf/catwalk_support.dmi'
+
+	New()
+		. = ..()
+		UpdateIcon()
+		src.UpdateNeighbors()
+
+	update_icon()
+		. = ..()
+		var/connectdir = 0
+		for (var/dir in cardinal)
+			var/turf/T = get_step(src, dir)
+			if (istype(T, src))
+				connectdir |= dir
+
+		src.icon_state = "[connectdir]"
+
+	proc/UpdateNeighbors()
+		for (var/turf/simulated/floor/airless/plating/catwalk/auto/T in orange(1, src))
+			T.UpdateIcon()
+
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon
+	name = "hot catwalk support"
+	carbon_dioxide = 20
+	temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 1
+
+	New()
+		..()
+		var/image/lava = image(icon = 'icons/turf/floors.dmi', icon_state = "lava", layer = src.layer - 0.1)
+		src.UpdateOverlays(lava, "lava")
 
 ////////////////////////////////////////////////////////////
 
@@ -93,7 +124,7 @@
 		..()
 		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
 		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
+		UpdateOverlays(burn_overlay, "burn")
 
 /turf/simulated/floor/airless/scorched2
 	burnt = 1

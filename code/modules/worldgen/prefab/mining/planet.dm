@@ -1,5 +1,3 @@
-#define PLANET_MAPBORDER 1
-
 TYPEINFO(/datum/mapPrefab/planet)
 	stored_as_subtypes = TRUE
 
@@ -170,7 +168,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 
 	birds
 		maxNum = 2
-		probability = 25
+		probability = 5
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_birds.dmm"
 		prefabSizeX = 5
 		prefabSizeY = 3
@@ -182,4 +180,108 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		prefabSizeX = 8
 		prefabSizeY = 6
 
-#undef PLANET_MAPBORDER
+	martian_cave
+		maxNum = 1
+		probability = 5
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_martian_cave.dmm"
+		prefabSizeX = 10
+		prefabSizeY = 9
+
+	martian_cave2
+		maxNum = 1
+		probability = 5
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_martian_cave2.dmm"
+		prefabSizeX = 10
+		prefabSizeY = 9
+		required_biomes = list(/datum/biome/mars, /datum/biome/desert)
+
+	illegal_still
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_illegal_still.dmm"
+		prefabSizeX = 23
+		prefabSizeY = 18
+
+	random_ship1
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_random_ship1.dmm"
+		prefabSizeX = 6
+		prefabSizeY = 6
+
+	random_crap1
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_random_crap1.dmm"
+		prefabSizeX = 6
+		prefabSizeY = 3
+
+	random_crap2
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_random_crap2.dmm"
+		prefabSizeX = 11
+		prefabSizeY = 7
+
+	gold_cache_defended
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_gold_cache_defended.dmm"
+		prefabSizeX = 9
+		prefabSizeY = 9
+
+	random_turret_south
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_random_turret_south.dmm"
+		prefabSizeX = 7
+		prefabSizeY = 6
+
+	reliant_wreck
+		maxNum = 1
+		probability = 5
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_reliant_wreck.dmm"
+		prefabSizeX = 33
+		prefabSizeY = 26
+
+	shack_trap
+		maxNum = 1
+		probability = 5
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_shack_trap.dmm"
+		prefabSizeX = 7
+		prefabSizeY = 10
+
+	shack_junk
+		maxNum = 1
+		probability = 5
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_shack_junk.dmm"
+		prefabSizeX = 7
+		prefabSizeY = 10
+
+	shack_gold
+		maxNum = 1
+		probability = 5
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_shack_gold.dmm"
+		prefabSizeX = 7
+		prefabSizeY = 10
+
+	shack_gold_trap
+		maxNum = 1
+		probability = 5
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_shack_gold_trap.dmm"
+		prefabSizeX = 7
+		prefabSizeY = 10
+
+	supply_outpost_defended
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_supply_outpost_defended.dmm"
+		prefabSizeX = 16
+		prefabSizeY = 15
+
+	old_shack
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_old_shack.dmm"
+		prefabSizeX = 10
+		prefabSizeY = 11
