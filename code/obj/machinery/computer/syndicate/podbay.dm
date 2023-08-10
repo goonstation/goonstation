@@ -30,8 +30,6 @@ var/global/list/cairngorm_barriers = list()
 		..()
 
 	disposing()
-		src.authorized.len = 0
-		src.authorized = null
 		..()
 
 	proc/authorize()
@@ -44,8 +42,8 @@ var/global/list/cairngorm_barriers = list()
 		src.icon_state = "drawbr-alert"
 		src.UpdateIcon()
 
-		for (var/obj/forcefield/battlecruiser/barrier in by_type[/obj/forcefield/battlecruiser])
-			qdel(barrier)
+		for_by_tcl(forcefield, /obj/forcefield/battlecruiser)
+			qdel(forcefield)
 
 		SPAWN(0.5 SECONDS)
 			var/operative_mobs = list()
@@ -83,6 +81,7 @@ var/global/list/cairngorm_barriers = list()
 	if(!auth_need)
 		determine_auth()
 		if (authed)
+			src.authorized += user
 			return
 	if (!user)
 		return
