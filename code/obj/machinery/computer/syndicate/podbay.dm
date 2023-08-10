@@ -19,7 +19,7 @@
 
 	initialize()
 		SPAWN(10 MINUTES)
-			authorize() // If they haven't done it before the ten minute mark-ish, do it for em
+			src.authorize() // If they haven't done it before the ten minute mark-ish, do it for em
 		..()
 
 /obj/machinery/computer/battlecruiser_podbay/proc/authorize()
