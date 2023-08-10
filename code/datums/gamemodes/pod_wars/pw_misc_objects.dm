@@ -265,6 +265,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	angle_arc_size = 180
 	quick_deploy_fuel = 2
 	associated_deployer = /obj/item/turret_deployer/pod_wars
+	can_toggle_activation = FALSE
 	var/destroyed = 0
 	var/reconstruction_time = 5 MINUTES
 
