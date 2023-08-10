@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/obj/item/artemis_engine_component)
 		icon = 'icons/obj/items/device.dmi'
 		icon_state = "signaller"
 
-/obj/item/artemis_engine_component/setup_material()
+/obj/item/artemis_engine_component/proc/setup_material()
 
 /obj/item/artemis_engine_component/New(material_name = "steel")
 		..()
