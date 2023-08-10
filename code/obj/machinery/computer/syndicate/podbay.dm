@@ -41,9 +41,8 @@
 			boutput(operative_mobs,"<b>The podbay has been authorized. You may now leave the Cairngorm using your pods!</b>",forceScroll=TRUE)
 
 /obj/machinery/computer/battlecruiser_podbay/attack_hand(mob/user)
-	if (ishuman(user))
-		return src.Attackby(null,user)
-	..()
+	return src.Attackby(null,user)
+
 
 /// Changes auth_need to how many operatives should be used to auth. If 1 or 0, auths automatically
 /obj/machinery/computer/battlecruiser_podbay/proc/determine_auth()
