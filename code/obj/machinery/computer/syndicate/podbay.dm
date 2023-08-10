@@ -38,13 +38,6 @@
 			operative_mobs += operative.owner.current
 		boutput(operative_mobs,"<b>The podbay has been authorized. You may now leave the Cairngorm using your pods!</b>",forceScroll=TRUE)
 
-/// Changes auth_need to how many operatives should be used to auth. If 1 or 0, auths automatically
-/obj/machinery/computer/battlecruiser_podbay/proc/determine_auth()
-	var/operative_count = length(get_all_antagonists(ROLE_NUKEOP) + get_all_antagonists(ROLE_NUKEOP_COMMANDER))
-	src.auth_need = round(operative_count * 0.5)
-	if (src.auth_need < 2)
-		authorize()
-
 /obj/machinery/computer/battlecruiser_podbay/attack_hand(mob/user)
 	return src.Attackby(null,user)
 
@@ -56,8 +49,9 @@
 		boutput(user,"The podbay has already been authorized.")
 		return
 	if (!auth_need)
-		determine_auth()
-		if (authed)
+		src.auth_need = round(0.5 * length(get_all_antagonists(ROLE_NUKEOP) + get_all_antagonists(ROLE_NUKEOP_COMMANDER)))
+		if (src.auth_need < 2)
+			authorize()
 			boutput(user,"Low number of agents detected. Podbay authorization granted.")
 			src.authorized += user
 			return
