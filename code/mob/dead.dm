@@ -1,5 +1,5 @@
 /mob/dead
-	stat = 2
+	stat = STAT_DEAD
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	pass_unstable = FALSE
 	///Our corpse, if one exists
