@@ -406,18 +406,18 @@
 	name = "parent juice bottle"
 	desc = "Call 1-800-IMCODER! Should not be seeing this."
 	bottle_style = "2"
-	initial_volume = 30
+	initial_volume = 15
 	amount_per_transfer_from_this = 5
-	var/juicelist = list("juice_apple", "juice_blackberry", "juice_blueberry", "juice_blueraspberry", "capsaicin", "juice_grapefruit", "juice_peach", "juice_strawberry", "honey")
+	var/juicelist = list("capsaicin", "honey", "juice_apple", "juice_blackberry", "juice_blueberry", "juice_blueraspberry", "juice_carrot", "juice_grapefruit", "juice_peach", "juice_pumpkin", "juice_strawberry", "juice_watermelon")
 	New()
 		if (prob(2))
-			src.initial_reagents = list(pick(juicelist) = 25)
-			src.initial_reagents["formaldehyde"] = 5
+			src.initial_reagents = list(pick(juicelist) = 12)
+			src.initial_reagents["formaldehyde"] = 3
 		else
-			src.initial_reagents = list(pick(juicelist) = 30)
+			src.initial_reagents = list(pick(juicelist) = 15)
 		..()
 		src.name = "bottle of [src.reagents.get_master_reagent_name()]"
-		src.desc = "A bottle filled with [src.reagents.get_master_reagent_name()]. There's a warning sticker about preservatives on the side."
+		src.desc = "An eensy-weensy bottle filled with [src.reagents.get_master_reagent_name()]. There's a warning sticker about preservatives on the side."
 /* ============================================== */
 /* -------------------- Misc -------------------- */
 /* ============================================== */
