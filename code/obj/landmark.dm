@@ -588,9 +588,3 @@ var/global/list/job_start_locations = list()
 		var/obj/overlay/tile_effect/lighting/L = locate() in vistarget.vis_contents
 		if(L)
 			vistarget.vis_contents -= L
-
-/obj/landmark/morrigan_start
-	name = LANDMARK_MORRIGAN_START
-
-/obj/landmark/morrigan_crate
-	name = LANDMARK_MORRIGAN_CRATE
