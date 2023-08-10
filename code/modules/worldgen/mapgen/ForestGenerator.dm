@@ -1,42 +1,41 @@
 //the random offset applied to square coordinates, causes intermingling at biome borders
 #define BIOME_RANDOM_SQUARE_DRIFT 2
 
-/datum/map_generator/snow_generator
+/datum/map_generator/forest_generator
 	///2D list of all biomes based on heat and humidity combos.
 	var/list/possible_biomes = list(
 	BIOME_LOW_HEAT = list(
-		BIOME_LOW_HUMIDITY = /datum/biome/mudlands,
-		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/snow/rocky,
-		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/snow/rough,
-		BIOME_HIGH_HUMIDITY = /datum/biome/water/ice/rough
+		BIOME_LOW_HUMIDITY = /datum/biome/forest/clearing,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/forest/thin,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/forest/thin,
+		BIOME_HIGH_HUMIDITY = /datum/biome/forest
 		),
-
 	BIOME_LOWMEDIUM_HEAT = list(
-		BIOME_LOW_HUMIDITY = /datum/biome/snow/rocky,
-		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/snow,
-		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/snow/rough,
-		BIOME_HIGH_HUMIDITY = /datum/biome/snow/rough
+		BIOME_LOW_HUMIDITY = /datum/biome/forest/clearing,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/forest/thin,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/forest,
+		BIOME_HIGH_HUMIDITY = /datum/biome/forest/dense
 		),
 	BIOME_HIGHMEDIUM_HEAT = list(
-		BIOME_LOW_HUMIDITY = /datum/biome/snow,
-		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/snow/rough,
-		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/snow/forest,
-		BIOME_HIGH_HUMIDITY = /datum/biome/snow/forest/thick
+		BIOME_LOW_HUMIDITY = /datum/biome/forest/clearing,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/forest/thin,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/forest,
+		BIOME_HIGH_HUMIDITY = /datum/biome/forest/dense
 		),
 	BIOME_HIGH_HEAT = list(
-		BIOME_LOW_HUMIDITY = /datum/biome/plains,
-		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/snow,
-		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/snow/forest,
-		BIOME_HIGH_HUMIDITY = /datum/biome/water/clear
+		BIOME_LOW_HUMIDITY = /datum/biome/forest,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/forest,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/forest/dense,
+		BIOME_HIGH_HUMIDITY = /datum/biome/forest/dense
 		)
 	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
-	var/perlin_zoom = 85
+	var/perlin_zoom = 65
 	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mountain
 	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/mountain
 
 ///Seeds the rust-g perlin noise with a random number.
-/datum/map_generator/snow_generator/generate_terrain(list/turfs, reuse_seed, flags)
+/datum/map_generator/forest_generator/generate_terrain(list/turfs, reuse_seed, flags)
 	. = ..()
 	var/height_seed = seeds[1]
 	var/humidity_seed = seeds[2]
@@ -58,18 +57,18 @@
 			var/humidity_level  //Type of humidity zone we're in LOW-MEDIUM-HIGH
 
 			switch(heat)
-				if(0 to 0.35)
+				if(0 to 0.25)
 					heat_level = BIOME_LOW_HEAT
-				if(0.35 to 0.65)
+				if(0.25 to 0.5)
 					heat_level = BIOME_LOWMEDIUM_HEAT
-				if(0.65 to 0.9)
+				if(0.5 to 0.75)
 					heat_level = BIOME_HIGHMEDIUM_HEAT
-				if(0.9 to 1)
+				if(0.75 to 1)
 					heat_level = BIOME_HIGH_HEAT
 			switch(humidity)
-				if(0 to 0.2)
+				if(0 to 0.25)
 					humidity_level = BIOME_LOW_HUMIDITY
-				if(0.2 to 0.5)
+				if(0.25 to 0.5)
 					humidity_level = BIOME_LOWMEDIUM_HUMIDITY
 				if(0.5 to 0.75)
 					humidity_level = BIOME_HIGHMEDIUM_HUMIDITY
@@ -81,19 +80,9 @@
 		selected_biome = biomes[selected_biome]
 		selected_biome.generate_turf(gen_turf, flags)
 
-		gen_turf.temperature = 235 // -38C and lowest breathable temperature with standard atmos
-
 		if (current_state >= GAME_STATE_PLAYING)
 			LAGCHECK(LAG_LOW)
 		else
 			LAGCHECK(LAG_HIGH)
-
-
-/turf/simulated/wall/auto/asteroid/mountain/snow
-	replace_type = /turf/simulated/floor/plating/airless/asteroid/desert
-
-/turf/simulated/floor/plating/airless/asteroid/mountain/snow
-	temperature = 235
-
 
 #undef BIOME_RANDOM_SQUARE_DRIFT
