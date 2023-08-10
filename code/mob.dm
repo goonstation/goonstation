@@ -2437,7 +2437,7 @@
 	if (src.hasStatus("handcuffed"))
 		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp
-	if (src.stat)
+	if (isdead(src))
 		setalive(src)
 
 /mob/proc/infected(var/datum/pathogen/P)
