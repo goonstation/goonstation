@@ -17456,7 +17456,7 @@
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
 "Jr" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -20125,7 +20125,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/medical/robotics)
 "OG" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
