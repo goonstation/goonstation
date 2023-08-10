@@ -226,6 +226,8 @@ As a Security Officer, you are expected to practice a modicum of due process in 
 		<li>If a search is warranted, when in the brig, tell them you're going to search them before doing so. Empty their pockets and remove their backpack. Look through everything. Be sure to open containers inside containers, such as boxes inside backpacks. Be sure to replace all items in the containers when you're done. <b><i>Don't strip them in the hallways!</i></b></li>
 		<li>Confiscate any contraband and/or stolen items, as well as any tools that were used in previous crimes, these need to be placed in a proper evidence locker, or crate and should not be left on the brig floor, or used for personal use, if stolen, return the items to their rightful owners.</li>
         <li>If you need to brig them, put them in a cell and remove the handcuffs once inside. Remember to set the timer!</li>
+        <li> Aditionnaly, if the suspect is likely to attempt a break out, or has dangerous but not contraband items that you think they want to use against you, place tools or weapons in the automatic locker in the cell, so the perpetrator may take them back once the sentence is over.
+    </li>
 		<li>Update their security record if needed.</li>
         </ul>
 <b>N.B.: It is <FONT COLOR="#ff0000"><i>highly illegal</i></FONT> for NanoTrasen security to make use of Syndicate devices. Do not use traitor gear as a non-traitor, even to apprehend traitors!</b>
