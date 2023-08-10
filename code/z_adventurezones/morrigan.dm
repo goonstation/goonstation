@@ -1281,13 +1281,13 @@ proc/load_morrigan()
 			if(rep < 2)
 				return "I haven't seen my wife in 30 years, only the drugs bring her back."
 			if(rep < 6)
-				return "Good to see you!"
+				return "Fuck off already. You're bloody alright though."
 			else
-				return "Hope you're having an excellent day!"
+				return "I need me drugs..."
 
 	//checking if npc has anything for you
 	hobo_reward
-		linkText = "Have anything for me?"
+		linkText = "What cha got for me?"
 		links = list(/datum/dialogueNode/hobo_reward_a)
 
 		getNodeText(var/client/C)
@@ -1297,13 +1297,13 @@ proc/load_morrigan()
 			if (master.getFlag(C, "weldingtool") == "taken")
 				return "You already took shit from me, pal."
 			else
-				return "Here's shit for you, pal. Sure will be useful."
+				return "Here's your fucking tool, pal. Sure will be useful."
 
 	//if npc has rewards it will offer a welder
 	hobo_reward_a
-		linkText = "I will take it."
+		linkText = "I'll take that off you."
 		links = list()
-		nodeText = "Sure thing, here you go."
+		nodeText = "Bloody scammed yeah."
 
 		canShow(var/client/C)
 			var/rep = C.reputations.get_reputation_level("hobo")
@@ -1323,7 +1323,7 @@ proc/load_morrigan()
 		links = list()
 
 		getNodeText(var/client/C)
-			return "Oooo? You have some pills, mate?"
+			return "Hands off the pills!"
 
 		canShow(var/client/C)
 			if(istype(C.mob.equipped(), /obj/item/reagent_containers/pill/cyberpunk))
