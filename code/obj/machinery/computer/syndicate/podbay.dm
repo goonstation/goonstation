@@ -38,9 +38,6 @@
 			for (var/datum/antagonist/operative as anything in (get_all_antagonists(ROLE_NUKEOP) + get_all_antagonists(ROLE_NUKEOP_COMMANDER)))
 				operative_mobs += operative.owner.current
 			boutput(operative_mobs,"<b>The podbay has been authorized. You may now leave the Cairngorm using your pods!</b>",forceScroll=TRUE)
-			playsound_global(operative_mobs, 'sound/vox/pods.ogg', 50, vary=FALSE)
-			sleep(1 SECONDS)
-			playsound_global(operative_mobs, 'sound/vox/authorized.ogg', 50, vary=FALSE)
 
 /obj/machinery/computer/battlecruiser_podbay/attack_hand(mob/user)
 	if (ishuman(user))
