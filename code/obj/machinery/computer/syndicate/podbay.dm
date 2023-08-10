@@ -45,10 +45,11 @@
 /obj/machinery/computer/battlecruiser_podbay/attackby(var/obj/item/W, var/mob/user)
 	if (!user)
 		return
-	if (authed)
+	if (src.authed)
 		boutput(user,"The podbay has already been authorized.")
 		return
-	if (!auth_need)
+	if (!src.auth_need)
+		// Works to setup auth_need here
 		src.auth_need = round(0.5 * length(get_all_antagonists(ROLE_NUKEOP) + get_all_antagonists(ROLE_NUKEOP_COMMANDER)))
 		if (src.auth_need < 2)
 			authorize()
