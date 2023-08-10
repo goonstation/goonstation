@@ -1494,7 +1494,7 @@
 		if (M == user)
 			src.board_pod(M)
 			return
-		else if (M.stat != STAT_DEAD)
+		else if (!isdead(M))
 			boutput(user, "<span class='alert'>You can't shove someone else into a pod unless they are dead!</span>")
 			return
 
