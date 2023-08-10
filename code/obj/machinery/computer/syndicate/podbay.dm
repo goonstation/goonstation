@@ -30,8 +30,10 @@
 	src.ClearSpecificOverlays("screen_image")
 	src.icon_state = "drawbr-alert"
 	src.UpdateIcon()
+
 	for_by_tcl(forcefield, /obj/forcefield/battlecruiser)
 		qdel(forcefield)
+
 	SPAWN(0.5 SECONDS)
 		var/list/operative_mobs = list()
 		for (var/datum/antagonist/operative as anything in (get_all_antagonists(ROLE_NUKEOP) + get_all_antagonists(ROLE_NUKEOP_COMMANDER)))
@@ -48,6 +50,9 @@
 	if (src.authed)
 		boutput(user,"The podbay has already been authorized.")
 		return
+	if (!src.authorized)
+		src.authorized = list()
+		
 	if (!src.auth_need)
 		// Works to setup auth_need here but ideally this and the SPAWN delay for autoauth get done on some universal post_setup
 		src.auth_need = round(0.5 * length(get_all_antagonists(ROLE_NUKEOP) + get_all_antagonists(ROLE_NUKEOP_COMMANDER)))
@@ -56,8 +61,7 @@
 			boutput(user,"Low number of agents detected. Podbay authorization granted.")
 			src.authorized += user
 			return
-	if (!src.authorized)
-		src.authorized = list()
+
 	src.add_fingerprint(user)
 	var/auths_required = src.auth_need - length(src.authorized)
 	var/choice = tgui_alert(user, "Would you like to authorize access to the podbay? [auths_required] authorization[s_es(auths_required)] are still needed.\nWARNING: This CANNOT be undone!", "Podbay Auth", list("Yes", "No"))
@@ -68,6 +72,7 @@
 			boutput(user, "You have already authorized! [auths_required] authorization[s_es(auths_required)] from others are still needed.")
 			return
 		src.authorized += user
+
 		if (length(src.authorized) < auth_need)
 			logTheThing(LOG_STATION, user?.real_name, "added an approval for podbay access. [length(src.authorized)] total approval[s_es(auths_required)].")
 			auths_required -= 1
