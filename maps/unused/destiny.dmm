@@ -40573,7 +40573,7 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/exit)
 "nTB" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "nTI" = (

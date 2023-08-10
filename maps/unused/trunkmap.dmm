@@ -15789,7 +15789,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "baG" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bar)
 "baH" = (

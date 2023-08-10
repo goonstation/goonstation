@@ -16,7 +16,26 @@
 /mob/living/carbon/human/normal/syndicate
 	New()
 		..()
-		JobEquipSpawned("Syndicate Operative")
+		JobEquipSpawned("Junior Syndicate Operative")
+
+/mob/living/carbon/human/normal/syndicate_old
+	New()
+		..()
+		src.equip_if_possible(new /obj/item/storage/backpack/syndie, SLOT_BACK)
+		src.equip_if_possible(new /obj/item/clothing/under/misc/syndicate, SLOT_W_UNIFORM)
+		src.equip_if_possible(new /obj/item/clothing/shoes/swat, SLOT_SHOES)
+		src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses/tanning, SLOT_GLASSES)
+		src.equip_if_possible(new /obj/item/clothing/mask/gas/swat, SLOT_WEAR_MASK)
+		src.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended, SLOT_L_STORE)
+		src.equip_if_possible(new /obj/item/device/radio/headset/syndicate, SLOT_EARS)
+		var/obj/item/card/id/ID = new/obj/item/card/id(src)
+		ID.name = "Syndicate Identification Card"
+		ID.assignment = "Syndicate Agent"
+		ID.registered = "[src.real_name]"
+		ID.icon = 'icons/obj/items/card.dmi'
+		ID.icon_state = "id_syndie"
+		ID.desc = "A Syndicate Agent Identification card."
+		src.equip_if_possible(ID, slot_wear_id)
 
 /mob/living/carbon/human/normal/captain
 	New()

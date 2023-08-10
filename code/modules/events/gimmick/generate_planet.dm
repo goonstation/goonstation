@@ -97,7 +97,7 @@
 					break
 
 				var/turf/T = pick(turfs)
-				if(T.density)
+				if(checkTurfPassable(T))
 					maxTries--
 					continue
 

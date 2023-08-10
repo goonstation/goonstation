@@ -2454,7 +2454,7 @@ var/list/fun_images = list()
 	else
 		var/kick_existing = tgui_alert(src, "Do you want to kick all players who are not whitelisted?", "Kick non-whitelisted players?", list("Yes", "No")) == "Yes"
 		config.whitelistEnabled = TRUE
-		config.roundsLeftWithoutWhitelist = 0
+		config.roundsLeftWithoutWhitelist = -1
 		if(kick_existing)
 			for(var/client/C in clients)
 				if(C.holder || (C in global.whitelistCkeys))
