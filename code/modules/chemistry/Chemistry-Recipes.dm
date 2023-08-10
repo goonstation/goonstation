@@ -675,10 +675,9 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
-	laurapalmer/laurapalmer2
-		id = "laurapalmer2"
+	laurapalmer/fresh
+		id = "laurapalmer_fresh"
 		required_reagents = list("lemonade" = 1, "coffee_fresh" = 1)
-		result_amount = 2
 
 	eggnog
 		name = "Eggnog"
@@ -769,10 +768,14 @@
 		name = "cafe gele"
 		id = "cafe_gele"
 		result = "cafe_gele"
-		required_reagents = list("coffee_fresh" = 6, "vanilla" = 1, "sugar" = 1)
+		required_reagents = list("coffee" = 6, "vanilla" = 1, "sugar" = 1)
 		result_amount = 8
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
+
+	cafe_gele/fresh
+		id = "cafe_gele_fresh"
+		required_reagents = list("coffee_fresh" = 6, "vanilla" = 1, "sugar" = 1)
 
 	sodawater
 		name = "soda water"
@@ -1205,9 +1208,9 @@
 		name = "Gin Fizz"
 		id = "ginfizz"
 		result = "ginfizz"
-		required_reagents = list("gin" = 1, "juice_lemon" = 1, "water" = 1)
+		required_reagents = list("gin" = 1, "juice_lemon" = 1, "tonic" = 1)
 		result_amount = 3
-		mix_phrase = "The mixed drink starts fizzing on its own. Somehow."
+		mix_phrase = "The mixed drink starts fizzing. Somehow."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 
 	cocktail_gimlet
@@ -1278,6 +1281,10 @@
 		mix_phrase = "The drink turns a deep brown as the coffee settles in."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 
+	cocktail_b_russian/fresh
+		id = "b_russian_fresh"
+		required_reagents = list("vodka" = 1, "coffee_fresh" = 1)
+
 	cocktail_b_russian/espresso
 		id = "b_russian_espresso"
 		required_reagents = list("vodka" = 1, "espresso" = 1)
@@ -1290,6 +1297,10 @@
 		result_amount = 3
 		mix_phrase = "The drink abides."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
+
+	cocktail_w_russian/fresh
+		id = "w_russian_fresh"
+		required_reagents = list("vodka" = 1, "coffee_fresh" = 1)
 
 	cocktail_w_russian/w_russian2
 		id = "w_russian2"
@@ -1304,6 +1315,10 @@
 		result_amount = 4
 		mix_phrase = "The drink turns a rich brown and smells like a hangover."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
+
+	cocktail_irishcoffee/fresh
+		id = "irishcoffee_fresh"
+		required_reagents = list("coffee_fresh" = 1, "bourbon" = 1, "milk" = 1, "sugar" = 1)
 
 	cocktail_dbreath
 		name = "Dragon's Breath"
@@ -1359,6 +1374,10 @@
 		result_amount = 2
 		mix_phrase = "The coffee, tonic, and vodka separate into dangerously drinkable layers."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
+
+	cocktail_eraser/fresh
+		id = "eraser_fresh"
+		required_reagents = list("vtonic" = 1, "coffee_fresh" = 1)
 
 	cocktail_madmen
 		name = "Old Fashioned"
@@ -1455,10 +1474,9 @@
 		mix_phrase = "The coffee and tequila mix together. Liqueur? Who needs it?"
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 
-	cocktail_bull/bull2
-		id = "bull2"
+	cocktail_bull/fresh
+		id = "bull_fresh"
 		required_reagents = list("tequila" = 1, "coffee_fresh" = 1)
-		result_amount = 2
 
 	cocktail_longisland_rcola
 		name = "Long Island Iced Tea"
@@ -1815,6 +1833,10 @@
 		mix_sound = 'sound/voice/farts/fart3.ogg'
 		drinkrecipe = TRUE
 
+	duck_fart/fresh
+		id = "duckfart_fresh"
+		required_reagents = list("bourbon" = 1, "coffee_fresh" =1 , "milk" = 1)
+
 	pink_lemonade
 		name = "Pink lemonade"
 		id = "pinklemonade"
@@ -1907,10 +1929,9 @@
 		mix_phrase = "Everything mixes together nicely, releasing a sweet smell."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 
-	iced/thaiicedcoffee/thaiicedcoffee2
-		id = "thaiicedcoffee2"
+	iced/thaiicedcoffee/fresh
+		id = "thaiicedcoffee_fresh"
 		required_reagents = list("coffee_fresh" = 3, "sugar" = 1, "milk" = 1, "ice" = 1)
-		result_amount = 6
 
 	pepperminthotchocolate
 		name = "Peppermint Hot Chocolate"
@@ -1969,7 +1990,6 @@
 				return
 			holder.last_basic_explosion = ticker.round_elapsed_ticks
 			var/atom/my_atom = holder.my_atom
-
 			var/turf/location = 0
 			if (my_atom)
 				location = get_turf(my_atom)
@@ -3755,6 +3775,10 @@
 		result_amount = 5
 		mix_phrase = "The solution emits a tutti frutti stench."
 		hidden = TRUE
+
+	energydrink/fresh
+		id = "energydrink_fresh"
+		required_reagents = list("voltagen" = 1, "coffee_fresh" = 1, "cola" = 3)
 
 	voltagen_arc
 		name = "Voltagen Arc"

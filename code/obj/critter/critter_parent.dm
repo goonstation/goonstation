@@ -81,7 +81,7 @@
 	var/sleeping_icon_state = null
 	var/mob/living/wrangler = null
 
-	var/butcherable = 0
+	var/butcherable = BUTCHER_NOT_ALLOWED
 	var/meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 	var/name_the_meat = 1
 
@@ -231,7 +231,7 @@
 					user.visible_message("<span class='alert'>[user] skins [src].</span>","You skin [src].")
 
 			if (src.butcherable && (istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/knife/butcher)))
-				user.visible_message("<span class='alert'>[user] butchers [src].[src.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]","You butcher [src].</span>")
+				user.visible_message("<span class='alert'>[user] butchers [src].[src.butcherable == BUTCHER_YOU_MONSTER ? " <b>WHAT A MONSTER!</b>" : null]","You butcher [src].</span>")
 
 				var/i = rand(2,4)
 				var/transfer = src.reagents.total_volume / i
@@ -428,7 +428,7 @@
 			sleeping = 0
 			on_wake()
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		switch(P.proj_data.damage_type)
 			if(D_KINETIC,D_PIERCING,D_SLASHING)

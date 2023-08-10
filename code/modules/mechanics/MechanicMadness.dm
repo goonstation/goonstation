@@ -311,7 +311,7 @@
 		if (!istype(src.stored?.linked_item,/obj/item/storage/mechanics/housing_handheld))
 			qdel(src) //if outside the gun, delet
 			return
-		if(level == 1)
+		if(level == UNDERFLOOR)
 			src.icon_state=icon_down
 			SPAWN(1 SECOND)
 				src.UpdateIcon()
@@ -401,7 +401,7 @@
 
 
 	process()
-		if(level == 2 || under_floor)
+		if(level == OVERFLOOR || under_floor)
 			cutParticles()
 			return
 		var/pointer_container[1] //A list of size 1, to store the address of the list we want
@@ -415,7 +415,7 @@
 		return
 
 	attack_hand(mob/user)
-		if(level == 1) return
+		if(level == UNDERFLOOR) return
 		if(issilicon(user) || isAI(user)) return
 		else return ..(user)
 
@@ -438,14 +438,14 @@
 			return 1
 		else if(iswrenchingtool(W))
 			switch(level)
-				if(1) //Level 1 = wrenched into place
+				if(UNDERFLOOR) //Level 1 = wrenched into place
 					boutput(user, "You detach the [src] from the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivate it.")
 					logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
-					level = 2
+					level = OVERFLOOR
 					anchored = UNANCHORED
 					clear_owner()
 					loosen()
-				if(2) //Level 2 = loose
+				if(OVERFLOOR) //Level 2 = loose
 					if(!isturf(src.loc) && !(IN_CABINET)) // allow items to be deployed inside housings, but not in other stuff like toolboxes
 						boutput(user, "<span class='alert'>[src] needs to be on the ground  [src.cabinet_banned ? "" : "or in a component housing"] for that to work.</span>")
 						return 0
@@ -457,7 +457,7 @@
 						return
 					if(src.one_per_tile)
 						for(var/obj/item/mechanics/Z in src.loc)
-							if (Z.type == src.type && Z.level == 1)
+							if (Z.type == src.type && Z.level == UNDERFLOOR)
 								boutput(user,"<span class='alert'>No matter how hard you try, you are not able to think of a way to fit more than one [src] on a single tile.</span>")
 								return
 					if(anchored)
@@ -465,7 +465,7 @@
 						return
 					boutput(user, "You attach the [src] to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
 					logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
-					level = 1
+					level = UNDERFLOOR
 					anchored = ANCHORED
 					set_owner(user)
 					secure()
@@ -482,11 +482,11 @@
 		return ..()
 
 	pick_up_by(var/mob/M)
-		if(level != 1) return ..()
+		if(level == OVERFLOOR) return ..()
 		//If it's anchored, it can't be picked up!
 
 	pickup()
-		if(level == 1) return
+		if(level == UNDERFLOOR) return
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		return ..()
 
@@ -495,7 +495,7 @@
 		return ..()
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
-		if(level == 2 || (istype(over_object, /obj/item/mechanics) && over_object.level == 2))
+		if(level == OVERFLOOR || (istype(over_object, /obj/item/mechanics) && over_object.level == OVERFLOOR))
 			boutput(usr, "<span class='alert'>Both components need to be secured into place before they can be connected.</span>")
 			return
 
@@ -523,7 +523,7 @@
 		playsound(maptext_loc, 'sound/machines/reprog.ogg', 45, 2, pitch = 1.4)
 
 	hide(var/intact)
-		under_floor = (intact && level==1)
+		under_floor = (intact && level==UNDERFLOOR)
 		UpdateIcon()
 		return
 
@@ -554,7 +554,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Eject Money",PROC_REF(checkEjectMoney))
 
 	proc/emoney(var/datum/mechanicsMessage/input)
-		if(level == 2 || !input) return
+		if(level == OVERFLOOR || !input) return
 		if(input.signal == code)
 			ejectmoney()
 		return
@@ -676,14 +676,13 @@
 
 	attackby(obj/item/W, mob/user)
 		if(..(W, user))
-			if(src.level == 1) //wrenched down
+			if(src.level == UNDERFLOOR) //wrenched down
 				trunk = locate() in src.loc
 				if(trunk)
 					trunk.linked = src
 					air_contents = new /datum/gas_mixture
-			else if (src.level == 2) //loose
-				if (trunk) //ZeWaka: Fix for null.linked
-					trunk.linked = null
+			else if (src.level == OVERFLOOR) //loose
+				trunk?.linked = null
 				if(air_contents)
 					qdel(air_contents)
 				air_contents = null
@@ -693,7 +692,7 @@
 
 	proc/flushp(var/datum/mechanicsMessage/input)
 		var/count = 0
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		if(input?.signal && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time) && trunk && !trunk.disposed)
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.anchored || isAI(M)) continue
@@ -752,7 +751,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Paper Name",PROC_REF(setPaperName))
 
 	proc/print(var/datum/mechanicsMessage/input)
-		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
+		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		if(input)
 			LIGHT_UP_HOUSING
 			flick("comp_tprint1",src)
@@ -776,7 +775,7 @@
 		return 1
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && GET_DIST(src, target) == 1)
+		if(level == OVERFLOOR && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -803,7 +802,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Thermal Paper Mode",PROC_REF(toggleThermal))
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && GET_DIST(src, target) == 1)
+		if(level == OVERFLOOR && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -887,7 +886,7 @@
 			return 0
 		range = clamp(rng, 1, 5)
 		boutput(user, "<span class='notice'>Range set to [range]!</span>")
-		if(level == 1)
+		if(level == UNDERFLOOR)
 			rebeam()
 		return 1
 
@@ -905,7 +904,7 @@
 
 	rotate()
 		..()
-		if(level == 1)
+		if(level == UNDERFLOOR)
 			rebeam()
 
 	disposing()
@@ -917,7 +916,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && GET_DIST(src, target) == 1)
+		if(level == OVERFLOOR && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -952,7 +951,7 @@
 		return 1
 
 	attack_hand(mob/user)
-		if(level != 2 && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
+		if(level == UNDERFLOOR && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			if(ishuman(user) && user.bioHolder)
 				LIGHT_UP_HOUSING
 				flick("comp_hscan1",src)
@@ -965,7 +964,7 @@
 		else return ..(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && GET_DIST(src, target) == 1)
+		if(level == OVERFLOOR && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -985,7 +984,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", PROC_REF(activateproc))
 
 	proc/drivecurrent()
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		var/count = 0
 		for(var/atom/movable/M in src.loc)
@@ -997,7 +996,7 @@
 			if(APPROX_TICK_USE > 100) return //fuck it, failsafe
 
 	proc/activateproc(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		if(input)
 			if(active) return
 			particleMaster.SpawnSystem(new /datum/particleSystem/gravaccel(src.loc, src.dir))
@@ -1013,7 +1012,7 @@
 		return
 
 	proc/throwstuff(atom/movable/AM as mob|obj)
-		if(level == 2 || AM.anchored || AM == src) return
+		if(level == OVERFLOOR || AM.anchored || AM == src) return
 		if(AM.throwing) return
 		var/atom/target = get_edge_target_turf(AM, src.dir)
 		var/datum/thrown_thing/thr = AM.throw_at(target, 50, 1)
@@ -1022,7 +1021,7 @@
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		if(active)
 			throwstuff(AM)
 		return
@@ -1047,7 +1046,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Power",PROC_REF(setPower))
 
 	proc/eleczap(var/datum/mechanicsMessage/input)
-		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
+		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		var/area/AR = get_area(src)
 		if(!AR.powered(EQUIP) || AR.area_apc?.cell?.percent() < 35) return
 		AR.use_power(0.5 KILO WATTS, EQUIP)
@@ -1108,7 +1107,7 @@
 		return 1
 
 	proc/delayproc(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		if(input)
 			if(active) return
 			LIGHT_UP_HOUSING
@@ -1159,7 +1158,7 @@
 		return 0
 
 	proc/fire1(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		if(inp1) return
 		LIGHT_UP_HOUSING
 		inp1 = 1
@@ -1176,7 +1175,7 @@
 		return
 
 	proc/fire2(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		if(inp2) return
 		LIGHT_UP_HOUSING
 		inp2 = 1
@@ -1229,7 +1228,7 @@
 		return 0
 
 	proc/fire(var/datum/mechanicsMessage/input)
-		if(level != 2 && input.signal == triggerSignal)
+		if(level == UNDERFLOOR && input.signal == triggerSignal)
 			LIGHT_UP_HOUSING
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG,input)
 		return
@@ -1250,7 +1249,13 @@
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"split", PROC_REF(split))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set trigger", PROC_REF(set_trigger_by_signal))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger Field",PROC_REF(setTrigger))
+
+	proc/set_trigger_by_signal(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		src.triggerSignal = input.signal
+		src.tooltip_rebuild = 1
 
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
@@ -1265,7 +1270,7 @@
 		return 0
 
 	proc/split(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		var/list/converted = params2list(input.signal)
 		if(length(converted))
@@ -1317,7 +1322,7 @@
 		return 0
 
 	proc/setPatternSignal(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		expressionpatt = input.signal
 		tooltip_rebuild = 1
@@ -1335,7 +1340,7 @@
 		return 0
 
 	proc/setReplacementSignal(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		expressionrepl = input.signal
 		tooltip_rebuild = 1
@@ -1353,13 +1358,13 @@
 		return 0
 
 	proc/setFlagsSignal(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		expressionflag = input.signal
 		tooltip_rebuild = 1
 
 	proc/checkstr(var/datum/mechanicsMessage/input)
-		if(level == 2 || !length(expressionpatt)) return
+		if(level == OVERFLOOR || !length(expressionpatt)) return
 		LIGHT_UP_HOUSING
 		var/regex/R = new(expressionpatt,expressionflag)
 
@@ -1431,12 +1436,12 @@
 		return 1
 
 	proc/setregex(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		expressionpatt = input.signal
 		expressionTT = ("[expressionpatt]/[expressionflag]")
 		tooltip_rebuild = 1
 	proc/checkstr(var/datum/mechanicsMessage/input)
-		if(level == 2 || !length(expressionTT)) return
+		if(level == OVERFLOOR || !length(expressionTT)) return
 		LIGHT_UP_HOUSING
 		var/regex/R = new(expressionpatt, expressionflag)
 
@@ -1501,7 +1506,7 @@
 		return 1
 
 	proc/checkstr(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
 		if(findtext(input.signal, triggerSignal))
@@ -1513,7 +1518,7 @@
 		return
 
 	proc/settrigger(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		triggerSignal = input.signal
 		tooltip_rebuild = 1
 	update_icon()
@@ -1570,7 +1575,7 @@
 		return 1
 
 	proc/dispatch(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		var/sent = SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		if(sent) animate_flash_color_fill(src,"#00FF00",2, 2)
@@ -1643,7 +1648,7 @@
 		return 1
 
 	proc/setStartingStringSignal(var/datum/mechanicsMessage/input)
-		if (level == 2) return
+		if (level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		setStartingString(input.signal)
 
@@ -1661,7 +1666,7 @@
 		return 1
 
 	proc/setEndingStringSignal(var/datum/mechanicsMessage/input)
-		if (level == 2) return
+		if (level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		setEndingString(input.signal)
 
@@ -1671,14 +1676,14 @@
 		tooltip_rebuild = 1
 
 	proc/addstr(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		buffer = "[buffer][input.signal]"
 		tooltip_rebuild = 1
 		return
 
 	proc/addstrsend(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		buffer = "[buffer][input.signal]"
 		tooltip_rebuild = 1
@@ -1686,7 +1691,7 @@
 		return
 
 	proc/sendstr(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		var/finished = "[bstr][buffer][astr]"
 		finished = strip_html_tags(sanitize(finished))
@@ -1697,7 +1702,7 @@
 		return
 
 	proc/clrbff(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		buffer = ""
 		tooltip_rebuild = 1
@@ -1730,7 +1735,7 @@
 		return 1
 
 	proc/relay(var/datum/mechanicsMessage/input)
-		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
+		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
 		flick("[under_floor ? "u":""]comp_relay1", src)
 		var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
@@ -1764,28 +1769,28 @@
 		..()
 
 	proc/sendfile(var/datum/mechanicsMessage/input)
-		if (level == 2 || !src.stored_file) return
+		if (level == OVERFLOOR || !src.stored_file) return
 		LIGHT_UP_HOUSING
 		input.data_file = src.stored_file.copy_file()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG,input)
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
 	proc/addandsendfile(var/datum/mechanicsMessage/input)
-		if (level == 2 || !src.stored_file) return
+		if (level == OVERFLOOR || !src.stored_file) return
 		LIGHT_UP_HOUSING
 		input.data_file = src.stored_file.copy_file()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
 	proc/storefile(var/datum/mechanicsMessage/input)
-		if (level == 2 || !input.data_file) return
+		if (level == OVERFLOOR || !input.data_file) return
 		LIGHT_UP_HOUSING
 		src.stored_file = input.data_file.copy_file()
 		tooltip_rebuild = 1
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
 	proc/deletefile(var/datum/mechanicsMessage/input)
-		if (level == 2 || !src.stored_file) return
+		if (level == OVERFLOOR || !src.stored_file) return
 		LIGHT_UP_HOUSING
 		src.stored_file = null
 		tooltip_rebuild = 1
@@ -1853,7 +1858,7 @@
 		return 1
 
 	proc/setfreq(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		var/newfreq = text2num_safe(input.signal)
 		if(!newfreq) return
@@ -1861,7 +1866,7 @@
 		return
 
 	proc/send(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		var/list/converted = params2list(input.signal)
 		if(!length(converted) || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
@@ -1889,7 +1894,7 @@
 		return
 
 	receive_signal(datum/signal/signal)
-		if(!signal || level == 2)
+		if(!signal || level == OVERFLOOR)
 			return
 
 		if((only_directed && signal.data["address_1"] == src.net_id) || !only_directed || (signal.data["address_1"] == "ping"))
@@ -2067,7 +2072,7 @@
 		return 1
 
 	proc/selitem(var/datum/mechanicsMessage/input)
-		if(level == 2 || !input) return
+		if(level == OVERFLOOR || !input) return
 		LIGHT_UP_HOUSING
 		var/found_index = signals.Find(input.signal)
 		if(found_index)
@@ -2079,14 +2084,14 @@
 		return 1
 
 	proc/selitemplus(var/datum/mechanicsMessage/input)
-		if(level == 2 || !input) return
+		if(level == OVERFLOOR || !input) return
 		LIGHT_UP_HOUSING
 		if(selitem(input))
 			sendCurrent(input)
 		return
 
 	proc/remitem(var/datum/mechanicsMessage/input)
-		if(level == 2 || !input) return
+		if(level == OVERFLOOR || !input) return
 		LIGHT_UP_HOUSING
 		if(input.signal in signals)
 			signals.Remove(input.signal)
@@ -2103,7 +2108,7 @@
 		return
 
 	proc/remallitem(var/datum/mechanicsMessage/input)
-		if(level == 2 || !input) return
+		if(level == OVERFLOOR || !input) return
 		LIGHT_UP_HOUSING
 		signals.Cut()
 		current_index = 1
@@ -2113,7 +2118,7 @@
 		return
 
 	proc/additem(var/datum/mechanicsMessage/input)
-		if(level == 2 || !input) return
+		if(level == OVERFLOOR || !input) return
 		LIGHT_UP_HOUSING
 		if(allowDuplicates)
 			signals.Add(input.signal)
@@ -2133,7 +2138,7 @@
 				componentSay("Duplicate entry - rejected: [input.signal]")
 
 	proc/sendRand(var/datum/mechanicsMessage/input)
-		if(level == 2 || !input) return
+		if(level == OVERFLOOR || !input) return
 		LIGHT_UP_HOUSING
 		var/orig = random
 		random = 1
@@ -2142,7 +2147,7 @@
 		return
 
 	proc/sendCurrent(var/datum/mechanicsMessage/input)
-		if(level == 2 || !input) return 0
+		if(level == OVERFLOOR || !input) return 0
 		LIGHT_UP_HOUSING
 		if(random && length(signals))
 			input.signal = pick(signals)
@@ -2156,7 +2161,7 @@
 		return
 
 	proc/next(var/datum/mechanicsMessage/input)
-		if(level == 2 || !length(signals)) return 0
+		if(level == OVERFLOOR || !length(signals)) return 0
 		LIGHT_UP_HOUSING
 		if(++current_index > length(signals))
 			current_index = 1
@@ -2166,19 +2171,19 @@
 		return 1
 
 	proc/nextplus(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		if(next(input))
 			sendCurrent(input)
 		return
 
 	proc/plusnext(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		sendCurrent(input)
 		next(input)
 		return
 
 	proc/previous(var/datum/mechanicsMessage/input)
-		if(level == 2 || !length(signals)) return 0
+		if(level == OVERFLOOR || !length(signals)) return 0
 		LIGHT_UP_HOUSING
 		if(--current_index < 1)
 			current_index = length(signals)
@@ -2188,7 +2193,7 @@
 		return 1
 
 	proc/previousplus(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		if(previous(input))
 			sendCurrent(input)
 		return
@@ -2247,46 +2252,46 @@
 		return 0
 
 	proc/activate(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		on = 1
 		tooltip_rebuild = 1
 		return
 
 	proc/activateplus(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		activate()
 		send(input)
 		return
 
 	proc/deactivate(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		on = 0
 		tooltip_rebuild = 1
 		return
 
 	proc/deactivateplus(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		deactivate()
 		send(input)
 		return
 
 	proc/toggle(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		on = !on
 		tooltip_rebuild = 1
 		return
 
 	proc/toggleplus(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		toggle()
 		send(input)
 		return
 
 	proc/send(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		input.signal = (on ? signal_on : signal_off)
 		SPAWN(0)
@@ -2349,7 +2354,7 @@
 		return 1
 
 	proc/setidmsg(var/datum/mechanicsMessage/input)
-		if(level == 1 && input.signal)
+		if(level == UNDERFLOOR && input.signal)
 			LIGHT_UP_HOUSING
 			teleID = input.signal
 			tooltip_rebuild = 1
@@ -2357,7 +2362,7 @@
 		return
 
 	proc/activate(var/datum/mechanicsMessage/input)
-		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
+		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
 		flick("[under_floor ? "u":""]comp_tele1", src)
 		particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc))).Run()
@@ -2365,7 +2370,7 @@
 		var/list/destinations = new/list()
 
 		for_by_tcl(T, /obj/item/mechanics/telecomp)
-			if(T == src || T.level == 2 || !isturf(T.loc)  || isrestrictedz(T.z)|| T.send_only) continue
+			if(T == src || T.level == OVERFLOOR || !isturf(T.loc)  || isrestrictedz(T.z)|| T.send_only) continue
 
 #ifdef UNDERWATER_MAP
 			if (!(T.z == 5 && src.z == 1) && !(T.z == 1 && src.z == 5)) //underwater : allow TP to/from trench
@@ -2394,7 +2399,7 @@
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_tele"
-		if(src.level == 1)
+		if(src.level == UNDERFLOOR)
 			src.UpdateOverlays(telelight, "telelight")
 		else
 			src.UpdateOverlays(null, "telelight")
@@ -2455,7 +2460,7 @@
 		return ..()
 
 	proc/setrgb(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		if(length(input.signal) == 7 && copytext(input.signal, 1, 2) == "#")
 			if(active)
@@ -2465,7 +2470,7 @@
 			SPAWN(0) light.set_color(GetRedPart(selcolor) / 255, GetGreenPart(selcolor) / 255, GetBluePart(selcolor) / 255)
 
 	proc/turnon(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		active = 1
 		light.enable()
@@ -2473,7 +2478,7 @@
 		return
 
 	proc/turnoff(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		active = 0
 		light.disable()
@@ -2481,7 +2486,7 @@
 		return
 
 	proc/toggle(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		if(active)
 			turnoff(input)
@@ -2509,7 +2514,7 @@
 		return 1
 
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		var/message = msg[2]
 		if(lang_id in list("english", ""))
@@ -2558,7 +2563,7 @@
 		return 0
 
 	proc/setfreq(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		var/newfreq = text2num_safe(input.signal)
 		if (!newfreq) return
@@ -2572,7 +2577,7 @@
 		get_radio_connection_by_id(src, "main").update_frequency(frequency)
 		tooltip_rebuild = 1
 	proc/hear_radio(atom/movable/AM, msg, lang_id)
-		if (level == 2) return
+		if (level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		var/message = msg[2]
 		if (lang_id in list("english", ""))
@@ -2613,7 +2618,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input", PROC_REF(fire))
 
 	proc/fire(var/datum/mechanicsMessage/input)
-		if(level == 2 || !input) return
+		if(level == OVERFLOOR || !input) return
 		if(ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
 		componentSay("[input.signal]")
@@ -2635,7 +2640,7 @@
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
-		if (level == 2 || isobserver(AM) || isintangible(AM))
+		if (level == OVERFLOOR || isobserver(AM) || isintangible(AM))
 			return
 		if (limiter && (ticker.round_elapsed_ticks < limiter))
 			return
@@ -2669,7 +2674,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		return attack_hand(user)
 
 	attack_hand(mob/user)
-		if(level == 1)
+		if(level == UNDERFLOOR)
 			press(user)
 			return 1
 		return ..(user)
@@ -2690,7 +2695,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			src.attack_hand(usr)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && GET_DIST(src, target) == 1)
+		if(level == OVERFLOOR && GET_DIST(src, target) == 1)
 			if(isturf(target))
 				user.drop_item()
 				if(isturf(target) && target.density)
@@ -2711,7 +2716,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		. = ..()
 		if(isnull(src.material))
 			return
-		spooky = (src.material.mat_id == "soulsteel")
+		spooky = (src.material.getID() == "soulsteel")
 
 /obj/item/mechanics/trigger/buttonPanel
 	name = "Button Panel"
@@ -2795,7 +2800,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 
 	attack_hand(mob/user)
-		if (level == 1)
+		if (level == UNDERFLOOR)
 			if (length(src.active_buttons))
 				var/selected_button = input(user, "Press a button", "Button Panel") in src.active_buttons + "*CANCEL*"
 				if (!selected_button || selected_button == "*CANCEL*" || !in_interact_range(src, user)) return
@@ -2809,7 +2814,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		else return ..(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && in_interact_range(src, target))
+		if(level == OVERFLOOR && in_interact_range(src, target))
 			if(isturf(target))
 				user.drop_item()
 				src.set_loc(target)
@@ -2882,7 +2887,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		return get_edge_target_turf(src, src.dir)
 
 	proc/fire(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		if(ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
 		if(input && Gun)
@@ -2921,7 +2926,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 	process()
 		..()
-		if(level == 2)
+		if(level == OVERFLOOR)
 			if(charging)
 				charging = 0
 				tooltip_rebuild = 1
@@ -2955,7 +2960,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		return
 
 	proc/recharge(var/datum/mechanicsMessage/input)
-		if(charging || !Gun || level == 2) return
+		if(charging || !Gun || level == OVERFLOOR) return
 		if(!istype(Gun, /obj/item/gun/energy)) return
 		charging = 1
 		tooltip_rebuild = 1
@@ -3041,7 +3046,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		return 0
 
 	proc/fire(var/datum/mechanicsMessage/input)
-		if (level == 2 || GET_COOLDOWN(src, SEND_COOLDOWN_ID) || !instrument) return
+		if (level == OVERFLOOR || GET_COOLDOWN(src, SEND_COOLDOWN_ID) || !instrument) return
 		LIGHT_UP_HOUSING
 		var/signum = text2num_safe(input.signal)
 		var/index = round(signum)
@@ -3128,7 +3133,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		return 1
 
 	proc/setA(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		if (!isnull(text2num_safe(input.signal)))
 			A = text2num_safe(input.signal)
@@ -3136,7 +3141,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			if (autoEval)
 				src.evaluate()
 	proc/setB(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		if (!isnull(text2num_safe(input.signal)))
 			B = text2num_safe(input.signal)
@@ -3240,27 +3245,27 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 
 	proc/setStartingValue(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		if (!isnull(text2num_safe(input.signal)))
 			startingValue = text2num_safe(input.signal)
 			tooltip_rebuild = 1
 	proc/setChange(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		if (!isnull(text2num_safe(input.signal)))
 			change = text2num_safe(input.signal)
 			tooltip_rebuild = 1
 	proc/resetCounter(var/datum/mechanicsMessage/input)
 		// reset does not send the value
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		currentValue = startingValue
 		tooltip_rebuild = 1
 		. = currentValue
 	proc/setCurrentValue(var/datum/mechanicsMessage/input)
 		// setCurrentValue sends the signal with the current value
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		if (!isnull(text2num_safe(input.signal)))
 			currentValue = text2num_safe(input.signal)
@@ -3269,7 +3274,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
 	proc/doImmediateChange(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		if (!isnull(text2num_safe(input.signal)))
 			LIGHT_UP_HOUSING
 			currentValue += text2num_safe(input.signal)
@@ -3306,26 +3311,26 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Time Units",PROC_REF(setTimeUnits))
 
 	proc/sendTime()
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		. = round((TIME - round_start_time) / src.divisor)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
 	proc/startStopwatch()
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		startTime = round(TIME)
 		. = 0
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
 	proc/sendStopwatchTime()
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		. = round((TIME - src.startTime) / src.divisor)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
 	proc/sendStopwatchTimeAndReset()
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		. = round((TIME - src.startTime) / src.divisor)
 		src.startTime = round(TIME)
@@ -3400,7 +3405,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 	// no relation to the flock : )
 	proc/startRepeatingTheSignal()
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 
 		// Do not start if we have already started
 		if (isActive) return
@@ -3532,7 +3537,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		boutput(user, "[length(mapLines) ? mapLines.Join("<br>") : ""]")
 
 	proc/addItems(var/datum/mechanicsMessage/input)
-		if (level == 2 || !input) return
+		if (level == OVERFLOOR || !input) return
 		LIGHT_UP_HOUSING
 		var/list/inputList = params2list(input.signal)
 		var/added = 0
@@ -3561,7 +3566,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			tooltip_rebuild = 1
 
 	proc/removeItem(var/datum/mechanicsMessage/input)
-		if (level == 2 || !input) return
+		if (level == OVERFLOOR || !input) return
 		LIGHT_UP_HOUSING
 		if (isnull(map[input.signal])) return
 		map.Remove(input.signal)
@@ -3569,7 +3574,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		tooltip_rebuild = 1
 
 	proc/sendValue(var/datum/mechanicsMessage/input)
-		if (level == 2 || !input) return
+		if (level == OVERFLOOR || !input) return
 		LIGHT_UP_HOUSING
 		if (isnull(map[input.signal])) return
 		input.signal = map[input.signal]
@@ -3577,7 +3582,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
 	proc/sendMapAsSignal(var/datum/mechanicsMessage/input)
-		if (level == 2 || !input) return
+		if (level == OVERFLOOR || !input) return
 		LIGHT_UP_HOUSING
 		input.signal = list2params(src.map)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
@@ -3657,7 +3662,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	get_desc()
 		. = ..()
 		. += "<br><span class='notice'>Letter Index: [src.letter_index]"
-		if (src.level == 2 || src.display_letter != null)
+		if (src.level == OVERFLOOR || src.display_letter != null)
 			. += " | Currently Displaying: '[src.display_letter]'"
 		. += "</span>"
 
@@ -3720,13 +3725,13 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 
 	proc/setColor(var/datum/mechanicsMessage/input)
-		if(level == 2 || !input) return
+		if(level == OVERFLOOR || !input) return
 		var/signal = input.signal
 		src.actualSetColor(signal)
 
 
 	proc/fire(var/datum/mechanicsMessage/input)
-		if(level == 2 || !input) return
+		if(level == OVERFLOOR || !input) return
 		var/signal = input.signal
 		if (length(signal) < abs(src.letter_index))
 			src.display(" ") // If the string is shorter than we expect, fill excess screens with spaces
@@ -3796,7 +3801,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set color", PROC_REF(setColor))
 
 	proc/setColor(var/datum/mechanicsMessage/input)
-		if(level == 2 || !input) return
+		if(level == OVERFLOOR || !input) return
 		var/signal = input.signal
 		src.actualSetColor(signal)
 	proc/setColorManually(obj/item/W as obj, mob/user as mob)
@@ -3808,7 +3813,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		tooltip_rebuild = TRUE
 		. = TRUE
 	proc/actualSetColor(var/color_input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
 		if(length(color_input) == 7 && copytext(color_input, 1, 2) == "#")
 			display_color = color_input
@@ -3816,7 +3821,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			src.display()
 
 	proc/setText(var/datum/mechanicsMessage/input)
-		if(level == 2 || !input) return
+		if(level == OVERFLOOR || !input) return
 		var/signal = input.signal
 		if (length(signal) > MAX_MESSAGE_LEN)
 			return
@@ -4060,7 +4065,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		logTheThing(LOG_STATION, null, "[src] reset to color: [log_loc(src)]: canvas{\ref[src], -1, -1, [new_color]}")
 
 	proc/drawPixel(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == OVERFLOOR) return
 		var/list/params = params2list(input.signal)
 		var/dot_x = text2num(params["x"])
 		var/dot_y = text2num(params["y"])

@@ -121,13 +121,14 @@
 
 	var/last_sleep = 0 //used for sleep_bubble
 
-	can_lie = 1
+	can_lie = TRUE
 
 	var/const/singing_prefix = "%"
 
 	var/void_mindswappable = FALSE //are we compatible with the void mindswapper?
 
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
+	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	src.create_mob_silhouette()
 	..()
 	init_preferences?.copy_to(src, usr, ignore_randomizer, skip_post_new_stuff=TRUE)
@@ -154,6 +155,7 @@
 	vision.flash(duration)
 
 /mob/living/disposing()
+	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	ai_target = null
 	ai_target_old.len = 0
 	move_laying = null
@@ -1572,11 +1574,9 @@
 		gloves = null
 		//Todo: get critter gloves if they have a slot. also clean this up in general...
 
-	if (gloves?.material)
-		gloves.material.triggerOnAttack(gloves, M, src)
+	gloves?.material_on_attack_use(M, src)
 	for (var/atom/A in src)
-		if (A.material)
-			A.material.triggerOnAttacked(A, M, src, gloves)
+		A.material_trigger_on_mob_attacked(M, src, gloves, location)
 
 	M.viral_transmission(src,"Contact",1)
 
@@ -1760,8 +1760,8 @@
 						// else, ignore p_class*/
 						else if(ismob(A))
 							var/mob/M = A
-							//if they're lying, pull em slower, unless you have anext_move gang and they are in your gang.
-							if(M.lying)
+							//if they're lying or dead, pull em slower, unless you have anext_move gang and they are in your gang.
+							if(M.lying || isdead(M))
 								var/datum/gang/gang = src.get_gang()
 								if (gang && (gang == M.get_gang()))
 									. *= 1		//do nothing
@@ -1784,7 +1784,7 @@
 
 			if (G.state == GRAB_PASSIVE)
 				if (GET_DIST(src,M) > 0 && GET_DIST(move_target,M) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
-					if(ismob(M) && M.lying)
+					if(ismob(M) && (M.lying || isdead(M)))
 						. *= lerp(1, max(M.p_class, 1), pushpull_multiplier)
 			else
 				. *= lerp(1, max(M.p_class, 1), pushpull_multiplier)
@@ -1908,10 +1908,11 @@
 		P.die()
 		return 0
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 	for (var/atom/A in src)
-		if (A.material)
-			if(src.material) src.material.triggerOnBullet(A, src, P)
+		A.material_trigger_on_bullet(src, P)
+	for (var/atom/equipped_stuff in src.equipped())
+		equipped_stuff.material_trigger_on_bullet(src, P)
 
 	if (!P.proj_data)
 		return 0

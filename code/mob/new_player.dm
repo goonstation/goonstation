@@ -209,6 +209,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an emagged cyborg.")
 							S.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
 						SPAWN(1 DECI SECOND)
+							S.bioHolder?.mobAppearance?.pronouns = S.client.preferences.AH.pronouns
 							S.choose_name()
 							qdel(src)
 					else
@@ -375,6 +376,13 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 
 			// Apply any roundstart mutators to late join if applicable
 			roundstart_events(character)
+
+			//picky eater trait handling
+			if (ishuman(character) && character.traitHolder?.hasTrait("picky_eater"))
+				var/datum/trait/picky_eater/eater_trait = character.traitHolder.getTrait("picky_eater")
+				if (length(eater_trait.fav_foods) > 0)
+					boutput(character, eater_trait.explanation_text)
+					character.mind.store_memory(eater_trait.explanation_text)
 
 			SPAWN(0)
 				qdel(src)
@@ -682,7 +690,7 @@ a.latejoin-card:hover {
 					var/livingtraitor = 0
 
 					for(var/datum/mind/brain in ticker.minds)
-						if(brain.current && checktraitor(brain.current)) // if a traitor
+						if(brain.current && brain.is_antagonist())
 							if (issilicon(brain.current) || isdead(brain.current) || brain.current.client == null) // if a silicon mob, dead or logged out, skip
 								continue
 

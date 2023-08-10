@@ -26,17 +26,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/prefab/sea_monkey_hideout)
-"ah" = (
-/obj/stool/chair{
-	desc = "";
-	foldable = 0;
-	icon_state = "chair_pool"
-	},
-/obj/landmark/spawner{
-	name = "seamonkeyspawn_rich"
-	},
-/turf/simulated/floor/grass,
-/area/prefab/sea_monkey_hideout)
 "ai" = (
 /obj/decal/poster/wallsign/hazard_danger,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -86,10 +75,6 @@
 	icon_state = "floor6"
 	},
 /obj/item/ammo/bullets/a38/stun,
-/turf/simulated/floor/black,
-/area/prefab/sea_monkey_hideout)
-"as" = (
-/mob/living/critter/robotic/gunbot/light,
 /turf/simulated/floor/black,
 /area/prefab/sea_monkey_hideout)
 "at" = (
@@ -432,12 +417,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/prefab/sea_monkey_hideout)
-"bB" = (
-/obj/landmark/spawner{
-	name = "seamonkeyspawn_lab"
-	},
-/turf/simulated/floor/black/grime,
-/area/prefab/sea_monkey_hideout)
 "bC" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/white,
@@ -573,12 +552,6 @@
 /area/prefab/sea_monkey_hideout)
 "bT" = (
 /obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/carpet,
-/area/prefab/sea_monkey_hideout)
-"bU" = (
-/obj/landmark/spawner{
-	name = "seamonkeyspawn_gang"
-	},
 /turf/simulated/floor/carpet,
 /area/prefab/sea_monkey_hideout)
 "bV" = (
@@ -822,12 +795,6 @@
 /obj/stool,
 /turf/simulated/floor/plating/random,
 /area/prefab/sea_monkey_hideout)
-"cG" = (
-/obj/landmark/spawner{
-	name = "seamonkeyspawn_gang"
-	},
-/turf/simulated/floor/plating/random,
-/area/prefab/sea_monkey_hideout)
 "cH" = (
 /obj/item/clothing/head/helmet/hardhat,
 /turf/simulated/floor/plating/random,
@@ -987,15 +954,6 @@
 	tag = "icon-pool (EAST)"
 	},
 /turf/simulated/floor/grass,
-/area/prefab/sea_monkey_hideout)
-"dg" = (
-/obj/landmark/spawner{
-	name = "seamonkeyspawn_gang_gun"
-	},
-/turf/simulated/floor/stairs{
-	dir = 4;
-	icon_state = "stairs_middle"
-	},
 /area/prefab/sea_monkey_hideout)
 "dh" = (
 /obj/pool/perspective{
@@ -1216,6 +1174,38 @@
 /obj/disposalpipe/trunk/north,
 /turf/simulated/floor,
 /area/prefab/sea_monkey_hideout)
+"gK" = (
+/mob/living/critter/robotic/gunbot/light,
+/turf/simulated/floor/black,
+/area/prefab/sea_monkey_hideout)
+"rV" = (
+/obj/stool/chair{
+	desc = "";
+	foldable = 0;
+	icon_state = "chair_pool"
+	},
+/mob/living/carbon/human/npc/monkey/sea/rich,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"DU" = (
+/mob/living/carbon/human/npc/monkey/sea/gang,
+/turf/simulated/floor/carpet,
+/area/prefab/sea_monkey_hideout)
+"IV" = (
+/mob/living/carbon/human/npc/monkey/sea/gang_gun,
+/turf/simulated/floor/stairs{
+	dir = 4;
+	icon_state = "stairs_middle"
+	},
+/area/prefab/sea_monkey_hideout)
+"LW" = (
+/mob/living/carbon/human/npc/monkey/sea/lab,
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"WJ" = (
+/mob/living/carbon/human/npc/monkey/sea/gang,
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
 
 (1,1,1) = {"
 ab
@@ -1383,7 +1373,7 @@ ab
 aw
 ac
 ae
-ah
+rV
 am
 aF
 aY
@@ -1410,7 +1400,7 @@ ab
 aw
 ac
 ae
-ah
+rV
 af
 aG
 aZ
@@ -1585,7 +1575,7 @@ cp
 cD
 cD
 cD
-dg
+IV
 cD
 cD
 cD
@@ -1681,13 +1671,13 @@ ab
 ab
 aa
 aa
-as
+gK
 aN
 bf
 aa
 bv
 bt
-bU
+DU
 aa
 aa
 aa
@@ -1771,7 +1761,7 @@ bJ
 bV
 cf
 cu
-cG
+WJ
 bV
 aa
 aa
@@ -1928,7 +1918,7 @@ aA
 aJ
 bj
 aa
-bB
+LW
 at
 bZ
 aa

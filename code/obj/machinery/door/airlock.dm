@@ -618,7 +618,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	icon_state = "windoor_closed"
 	icon_base = "windoor"
 	panel_icon_state = "windoor_panel_open"
-	welded_icon_state = "fdoor_weld"
+	welded_icon_state = "glassdoor_welded"
 	sound_airlock = 'sound/machines/windowdoor.ogg'
 	has_crush = FALSE
 	health = 500
@@ -1089,6 +1089,11 @@ About the new airlock wires panel:
 	var/wireIndex = airlockWireColorToIndex[wireColor]
 	wires &= ~wireFlag
 	switch(wireIndex)
+		if(AIRLOCK_WIRE_IDSCAN)
+			//Cutting this also flashes the red light on the door (if the door has power).
+			if ((src.arePowerSystemsOn()) && (!(src.status & NOPOWER)))
+				play_deny()
+
 		if(AIRLOCK_WIRE_MAIN_POWER1, AIRLOCK_WIRE_MAIN_POWER2)
 			//Cutting either one disables the main door power, but unless backup power is also cut, the backup power re-powers the door in 10 seconds. While unpowered, the door may be crowbarred open, but bolts-raising will not work. Cutting these wires may electocute the user.
 			src.loseMainPower()

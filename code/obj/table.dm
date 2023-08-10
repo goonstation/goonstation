@@ -141,8 +141,7 @@ TYPEINFO_NEW(/obj/table)
 			victim.force_laydown_standup()
 		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src]!</b></span>")
 		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-		if (src.material)
-			src.material.triggerOnAttacked(src, user, victim, src)
+		src.material_trigger_when_attacked(victim, user, 1)
 
 
 	/// Slam a dude on the table (gently, with great care)
@@ -313,8 +312,7 @@ TYPEINFO_NEW(/obj/table)
 						H.limbs.r_arm.sever()
 
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-				if (src.material)
-					src.material.triggerOnAttacked(src, user, user, src)
+				src.material_trigger_when_attacked(user, user, 1)
 				for (var/mob/N in AIviewers(user, null))
 					if (N.client)
 						shake_camera(N, 4, 8, 0.5)
@@ -766,10 +764,91 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	auto
 		auto = 1
 
-/obj/table/reinforced/chemistry/beakers //starts with 7 :B:eakers inside it, wow!!
+/obj/table/reinforced/chemistry/auto/beakers //starts with 7 :B:eakers inside it, wow!!
 	name = "beaker storage"
-	has_drawer = TRUE
 	drawer_contents = list(/obj/item/reagent_containers/glass/beaker = 7)
+
+/obj/table/reinforced/chemistry/auto/basicsup
+	name = "basic supply lab counter"
+	desc = "Everything an aspiring chemist needs to start making chemicals!"
+	drawer_contents = list(/obj/item/paper/book/from_file/pharmacopia,
+				/obj/item/storage/box/beakerbox = 2,
+				/obj/item/reagent_containers/glass/beaker/large = 2,
+				/obj/item/clothing/glasses/spectro,
+				/obj/item/device/reagentscanner = 2,
+				/obj/item/reagent_containers/dropper/mechanical = 2,
+				/obj/item/reagent_containers/dropper = 2)
+
+/obj/table/reinforced/chemistry/auto/auxsup
+	name = "auxiliary supply lab counter"
+	desc = "Extra supplies for the discerning chemist."
+	drawer_contents = list(/obj/item/storage/box/beakerbox,
+				/obj/item/storage/box/patchbox,
+				/obj/item/storage/box/syringes,
+				/obj/item/reagent_containers/glass/beaker/large,
+				/obj/item/clothing/glasses/spectro = 2,
+				/obj/item/device/reagentscanner = 2,
+				/obj/item/reagent_containers/dropper/mechanical,
+				/obj/item/clothing/gloves/latex = 4)
+
+
+/obj/table/reinforced/chemistry/auto/clericalsup
+	name = "clerical supply lab counter"
+	desc = "It's only science if you write it down! Or blow yourself up."
+	drawer_contents = list(/obj/item/paper_bin = 2,
+				/obj/item/hand_labeler,
+				/obj/item/clipboard = 2,
+				/obj/item/pen,
+				/obj/item/stamp,
+				/obj/item/device/audio_log,
+				/obj/item/audio_tape = 2)
+
+
+/obj/table/reinforced/chemistry/auto/firstaid
+	name = "toxin care lab counter"
+	desc = "These drawers have been labeled EMERGENCY TOXIN CARE, which means they're probably already close to empty."
+	drawer_contents = list(/obj/item/storage/firstaid/toxin,
+				/obj/item/reagent_containers/emergency_injector/calomel)
+
+/obj/table/reinforced/chemistry/auto/chemstorage
+	name = "chemical storage lab counter"
+	desc = "A set of basic precursor chemicals to expedite order fulfillment, increase efficiency, and synergize your workflow. Whatever the fuck that means."
+	drawer_contents = list(/obj/item/reagent_containers/glass/bottle/oil,
+				/obj/item/reagent_containers/glass/bottle/phenol,
+				/obj/item/reagent_containers/glass/bottle/acid,
+				/obj/item/reagent_containers/glass/bottle/acetone,
+				/obj/item/reagent_containers/glass/bottle/diethylamine,
+				/obj/item/reagent_containers/glass/bottle/ammonia)
+
+/obj/table/reinforced/chemistry/auto/drugs
+	name = "seedy-looking lab counter"
+	desc = ""
+	drawer_contents = list(/obj/item/plant/herb/cannabis/spawnable = 2,
+				/obj/item/device/light/zippo,
+				/obj/item/reagent_containers/syringe/krokodil,
+				/obj/item/reagent_containers/syringe/morphine,
+				/obj/item/storage/pill_bottle/cyberpunk)
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind?.assigned_role == "Research Director")
+			. = "<br>A stash of drugs provided in an attempt to placate your underlings. Stocking this drawer was your greatest mistake."
+		else
+			. = "<br>A stash of drugs, and maybe the only positive contribution the RD ever made to the station. Too bad they cheaped out on the selection."
+
+/obj/table/reinforced/chemistry/auto/allinone
+	name = "jam-packed lab counter"
+	desc = "The drawers on these barely close, and rattle loudly when moved. Guess they tried to put too much crap in it."
+	drawer_contents = list(/obj/item/paper/book/from_file/pharmacopia,
+				/obj/item/storage/box/beakerbox = 2,
+				/obj/item/storage/box/syringes,
+				/obj/item/paper_bin,
+				/obj/item/hand_labeler,
+				/obj/item/reagent_containers/dropper/mechanical,
+				/obj/item/reagent_containers/dropper,
+				/obj/item/storage/firstaid/toxin,
+				/obj/item/clothing/glasses/spectro,
+				/obj/item/device/reagentscanner)
+
 
 TYPEINFO(/obj/table/reinforced/industrial)
 TYPEINFO_NEW(/obj/table/reinforced/industrial)
@@ -841,7 +920,7 @@ TYPEINFO(/obj/table/glass)
 			return
 		src.visible_message("<span class='alert'>\The [src] shatters!</span>")
 		playsound(src, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
-		if (src.material?.mat_id in list("gnesis", "gnesisglass"))
+		if (src.material?.getID() in list("gnesis", "gnesisglass"))
 			gnesis_smash()
 		else
 			for (var/i=0, i<2, i++)
@@ -953,7 +1032,7 @@ TYPEINFO(/obj/table/glass)
 		if (src.glass_broken == GLASS_BROKEN)
 			if (istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
-				if (!S.material || !(S.material.material_flags & MATERIAL_CRYSTAL))
+				if (!S.material || !(S.material.getMaterialFlags() & MATERIAL_CRYSTAL))
 					boutput(user, "<span class='alert'>You have to use glass or another crystalline material to repair [src]!</span>")
 				else if (S.change_stack_amount(-1))
 					boutput(user, "<span class='notice'>You add glass to [src]!</span>")
@@ -1036,8 +1115,7 @@ TYPEINFO(/obj/table/glass)
 		victim.changeStatus("weakened", 4 SECONDS)
 		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src]!</b></span>")
 		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-		if (src.material)
-			src.material.triggerOnAttacked(src, user, victim, src)
+		src.material_trigger_when_attacked(victim, user, 1)
 		if ((prob(src.reinforced ? 60 : 80)) || (user.bioHolder.HasEffect("clumsy") && (!src.reinforced || prob(90))))
 			src.smash()
 			random_brute_damage(victim, rand(20,40),1)

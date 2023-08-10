@@ -258,7 +258,7 @@
 
 		processCaseRadiation(tmpRads)
 
-		src.material.triggerTemp(src,src.temperature)
+		src.material_trigger_on_temp(src.temperature)
 
 		total_thermal_e += src.thermal_mass * src.temperature
 		total_gas_volume += src.reactor_vessel_gas_volume
@@ -615,7 +615,7 @@
 			SPAWN(4 SECONDS)
 				playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, 1)
 				var/obj/item/reactor_component/fuel_rod/meat_rod = new /obj/item/reactor_component/fuel_rod("flesh")
-				meat_rod.material.name = user.name
+				meat_rod.material.setName(user.name)
 				if(user.bioHolder && user.bioHolder.HasEffect("radioactive"))
 					meat_rod.material.setProperty("radioactive", 3)
 				meat_rod.setMaterial(meat_rod.material)
@@ -635,7 +635,7 @@
 
 	/// Transmuting nuclear engine into jeans sometimes causes a client crash
 	setMaterial(datum/material/mat1, appearance, setname, copy, use_descriptors)
-		if(mat1.mat_id == "jean")
+		if(mat1.getID() == "jean")
 			return
 		. = ..()
 

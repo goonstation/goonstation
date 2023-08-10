@@ -152,7 +152,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		src.addAbility(/datum/targetable/ghost_observer/reenter_corpse)
 		src.addAbility(/datum/targetable/ghost_observer/toggle_lighting)
 		src.addAbility(/datum/targetable/ghost_observer/toggle_ghosts)
-		src.addAbility(/datum/targetable/ghost_observer/observe_object)
 		// src.addAbility(/datum/targetable/ghost_observer/afterlife_Bar)
 		// src.addAbility(/datum/targetable/ghost_observer/respawn_animal)	//moved to respawn_options menu
 		src.addAbility(/datum/targetable/ghost_observer/respawn_options)
@@ -180,7 +179,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		src.removeAbility(/datum/targetable/ghost_observer/reenter_corpse)
 		src.removeAbility(/datum/targetable/ghost_observer/toggle_lighting)
 		src.removeAbility(/datum/targetable/ghost_observer/toggle_ghosts)
-		src.removeAbility(/datum/targetable/ghost_observer/observe_object)
 		// src.removeAbility(/datum/targetable/ghost_observer/afterlife_Bar)
 		// src.removeAbility(/datum/targetable/ghost_observer/respawn_animal)
 		src.removeAbility(/datum/targetable/ghost_observer/respawn_options)
@@ -232,8 +230,8 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 /datum/targetable/ghost_observer/observe
 	name = "Observe"
-	desc = "Observe a specific person."
-	icon_state = "observe-person"
+	desc = "Observe a specific person, NPC, or object."
+	icon_state = "observeobject"
 	targeted = 0
 	cooldown = 0
 
@@ -281,20 +279,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (holder && istype(holder.owner, /mob/dead/observer))
 			var/mob/dead/observer/ghost = holder.owner
 			ghost.toggle_ghosts()
-
-
-/datum/targetable/ghost_observer/observe_object
-	name = "Observe Object"
-	desc = "Observe one of selected objects in the world."
-	icon_state = "observeobject"
-	targeted = 0
-	cooldown = 0
-
-	cast(atom/target)
-		if (holder && istype(holder.owner, /mob/dead/observer))
-			var/mob/dead/observer/ghost = holder.owner
-			ghost.observe_object()
-
 
 /datum/targetable/ghost_observer/toggle_HUD
 	name = "Hide HUD"

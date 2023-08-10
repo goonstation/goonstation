@@ -1560,10 +1560,7 @@
 /turf/space/asteroid,
 /area/space)
 "aHt" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal";
-	icon_state = "chimp-start"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aHu" = (
@@ -7181,6 +7178,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
+"dat" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8;
+	autoclose = 0
+	},
+/obj/mapping_helper/access/medical,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/white,
+/area/station/medical/medbooth)
 "daF" = (
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/mining/magnet)
@@ -12364,22 +12371,6 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/dome)
-"fnZ" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
-	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/obj/mapping_helper/access/medical,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/bluewhite{
-	dir = 1
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbooth)
 "foj" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "West Solar Panels"
@@ -14165,10 +14156,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles";
-	icon_state = "chimp-start"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
@@ -14756,10 +14744,7 @@
 	},
 /area/station/quartermaster/office)
 "gmL" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_krimpus";
-	icon_state = "chimp-start"
-	},
+/mob/living/carbon/human/npc/monkey/krimpus,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "gne" = (
@@ -15820,10 +15805,7 @@
 	name = "Research Computer Lab"
 	})
 "gNs" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal";
-	icon_state = "chimp-start"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -20886,6 +20868,15 @@
 	},
 /turf/space,
 /area/space)
+"iQq" = (
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
 "iQJ" = (
 /obj/machinery/drone_recharger,
 /obj/lattice{
@@ -23933,10 +23924,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen";
-	icon_state = "chimp-start"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
@@ -24653,7 +24641,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/storage/warehouse)
 "kvb" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/machinery/light/small/warm{
 	dir = 1
 	},
@@ -25202,10 +25190,7 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles";
-	icon_state = "chimp-start"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
@@ -26376,10 +26361,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal";
-	icon_state = "chimp-start"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/stool/chair/boxingrope_corner{
 	dir = 10
 	},
@@ -27335,10 +27317,7 @@
 	name = "Security Lobby"
 	})
 "lEF" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal";
-	icon_state = "chimp-start"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/dome)
 "lEL" = (
@@ -28735,15 +28714,12 @@
 /area/station/engine/inner)
 "miu" = (
 /obj/table/auto,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/reagent_containers/syringe/haloperidol{
 	pixel_x = 6
 	},
 /obj/item/reagent_containers/syringe/haloperidol{
 	pixel_x = 6
 	},
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/reagent_containers/syringe/haloperidol{
 	pixel_x = 6
 	},
@@ -34197,10 +34173,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "oCG" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir";
-	icon_state = "chimp-start"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/security/brig{
 	name = "The Cage Arena"
@@ -40181,15 +40154,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
-"rgB" = (
-/obj/item/fish/salmon,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/pool/no_animate,
-/area/station/crew_quarters/pool)
 "rgC" = (
 /obj/grille/catwalk{
 	dir = 5;
@@ -42991,10 +42955,7 @@
 	dir = 8;
 	pixel_x = 6
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert";
-	icon_state = "chimp-start"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor/wood/two,
 /area/station/science/lobby)
 "snp" = (
@@ -49278,7 +49239,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/science/teleporter)
 "uYI" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
@@ -52370,10 +52331,7 @@
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/observatory)
 "wmR" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse";
-	icon_state = "chimp-start"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/observatory)
 "wmV" = (
@@ -55698,9 +55656,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/west)
 "xFb" = (
-/obj/landmark/spawner{
-	name = "dolly"
-	},
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/random,
 /area/station/ranch)
 "xFg" = (
@@ -109516,7 +109472,7 @@ fAg
 fAg
 nQE
 fST
-fnZ
+dat
 fAg
 kqR
 kSN
@@ -115543,7 +115499,7 @@ aXF
 mXZ
 osj
 ohJ
-rgB
+iQq
 ohJ
 aZY
 uzh

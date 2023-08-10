@@ -4,7 +4,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	else
 		var/datum/material/nice_mat = getMaterial(mat)
 		if (istype(nice_mat))
-			return capitalize(nice_mat.name)
+			return capitalize(nice_mat.getName())
 		return capitalize(mat) //if all else fails (probably a category instead of a material)
 
 ABSTRACT_TYPE(/datum/manufacture)
@@ -1280,6 +1280,19 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Resource"
 
+#if ENABLE_ARTEMIS
+/******************** Artemis **************************/
+
+/datum/manufacture/nav_sat
+	name = "Navigation Satellite"
+	item_paths = list("MET-2")
+	item_amounts = list(1) // Azrun ADJUST POST TESTING, NEED BALANCE PASS
+	item_outputs = list(/obj/nav_sat)
+	time = 45 SECONDS
+	create = 1
+	category = "Component"
+
+#endif
 /datum/manufacture/stress_ball
 	name = "Stress Ball"
 	item_paths = list("FAB-1")

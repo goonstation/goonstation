@@ -34,7 +34,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	can_grab = 0
 	can_disarm = 1
 
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	max_skins = 1
 
 	faction = FACTION_WRAITH

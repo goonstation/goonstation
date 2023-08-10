@@ -17,7 +17,7 @@
 /obj/machinery/power/terminal/New(var/new_loc)
 	..()
 	var/turf/T = new_loc
-	if(istype(T) && level==1) hide(T.intact)
+	if(istype(T) && level==UNDERFLOOR) hide(T.intact)
 
 /obj/machinery/power/terminal/disposing()
 	if (src.powernet && src.powernet.data_nodes)
@@ -102,7 +102,7 @@ TYPEINFO(/obj/machinery/power/data_terminal)
 
 		var/turf/T = new_loc
 
-		if(level==1 && istype(T)) hide(T.intact)
+		if(level==UNDERFLOOR && istype(T)) hide(T.intact)
 
 	disposing()
 		master = null

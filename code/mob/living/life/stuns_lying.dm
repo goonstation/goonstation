@@ -12,18 +12,18 @@
 		var/must_lie = !cant_lie && (statusList["resting"] || istype(owner?.buckled, /obj/stool/bed))
 
 		if (!owner.can_lie)
-			cant_lie = 1
-			must_lie = 0
+			cant_lie = TRUE
+			must_lie = FALSE
 
 		if(cant_lie && statusList["resting"])
 			owner.delStatus("resting")
 			statusList -= "resting"
 
 		if (!isdead(owner)) //Alive.
-			var/changeling_fakedeath = 0
+			var/changeling_fakedeath = FALSE
 			var/datum/abilityHolder/changeling/C = owner.get_ability_holder(/datum/abilityHolder/changeling)
 			if (C?.in_fakedeath)
-				changeling_fakedeath = 1
+				changeling_fakedeath = TRUE
 
 			if (statusList["paralysis"] || statusList["stunned"] || statusList["weakened"] || statusList["pinned"] || changeling_fakedeath || must_lie) //Stunned etc.
 				var/setStat = owner.stat
@@ -32,16 +32,16 @@
 					setStat = STAT_ALIVE
 				if (statusList["weakened"] || statusList["pinned"] && !owner.fakedead)
 					if (!cant_lie)
-						owner.lying = 1
+						owner.lying = TRUE
 					setStat = STAT_ALIVE
 				if (statusList["paralysis"])
 					if (!cant_lie)
-						owner.lying = 1
+						owner.lying = TRUE
 					setStat = STAT_UNCONSCIOUS
 				if (isalive(owner) && setStat == STAT_UNCONSCIOUS && owner.mind)
 					owner.lastgasp() // calling lastgasp() here because we just got knocked out
 				if (must_lie)
-					owner.lying = 1
+					owner.lying = TRUE
 
 				owner.stat = setStat
 				owner.empty_hands()
@@ -59,12 +59,15 @@
 					setalive(owner)
 
 			else	//Not stunned.
-				owner.lying = must_lie ? 1 : 0
+				owner.lying = must_lie ? TRUE : FALSE
 				setalive(owner)
 
 		else //Dead.
-			owner.lying = cant_lie ? 0 : 1
-			owner.blinded = 1
+			if (cant_lie || ismobcritter(owner))
+				owner.lying = FALSE
+			else
+				owner.lying = TRUE
+			owner.blinded = TRUE
 			setdead(owner)
 
 		if (owner.lying != lying_old)

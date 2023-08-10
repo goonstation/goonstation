@@ -1540,7 +1540,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			desc = "Two small pipes joined together. The pipes are empty."
 
 			if (material)
-				name = "hollow [src.material.name] pipe frame"
+				name = "hollow [src.material.getName()] pipe frame"
 			else
 				name = "hollow pipe frame"
 			src.flags |= NOSPLASH
@@ -1592,7 +1592,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 				desc = "Two small pipes joined together. The pipes are filled."
 
 				if (material)
-					name = "filled [src.material.name] pipe frame"
+					name = "filled [src.material.getName()] pipe frame"
 				else
 					name = "filled pipe frame"
 
@@ -1629,7 +1629,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			icon_state = "Pipe_Wired"
 
 			if (material)
-				name = "[src.material.name] pipe bomb frame"
+				name = "[src.material.getName()] pipe bomb frame"
 			else
 				name = "pipe bomb frame"
 
@@ -1761,9 +1761,9 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 		if (src.strength)
 			if (src.material)
 				var/strength_mult = 1
-				if (findtext(material.mat_id, "erebite"))
+				if (findtext(material.getID(), "erebite"))
 					strength_mult = 2
-				else if (findtext(material.mat_id, "plasmastone"))
+				else if (findtext(material.getID(), "plasmastone"))
 					strength_mult = 1.25
 				src.strength *= strength_mult
 
@@ -1936,9 +1936,8 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 
 /obj/proc/on_blowthefuckup(strength)
 	new /obj/effects/explosion/tiny_baby (src.loc)
-	if (src.material)
-		src.material.triggerTemp(src, T0C + strength * 100)
-		src.material.triggerExp(src, 1)
+	src.material_trigger_on_temp(T0C + strength * 100)
+	src.material_trigger_on_explosion(1)
 
 /obj/item/pipebomb/bomb/on_blowthefuckup(strength)
 	..()

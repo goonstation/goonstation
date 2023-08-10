@@ -191,6 +191,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 			else
 				return
 
+		src.material_trigger_when_attacked(W, user, 1)
 		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 
 /turf/simulated/wall/auto/reinforced/the_tuff_stuff
@@ -1301,7 +1302,7 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 				if (the_wall.material)
 					A.setMaterial(the_wall.material)
 				else
-					A.setMaterial(getMaterial("steel"), copy = FALSE)
+					A.setMaterial(getMaterial("steel"))
 				self_message = "You remove the reinforcing rods."
 				message = "[owner] removes \the [the_wall]'s reinforcing rods."
 				the_wall.d_state = 2
@@ -1325,7 +1326,7 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 				if (the_wall.material)
 					A.setMaterial(the_wall.material)
 				else
-					A.setMaterial(getMaterial("steel"), copy = FALSE)
+					A.setMaterial(getMaterial("steel"))
 			if (WALL_PRYSHEATH)
 				self_message = "You remove the outer sheath."
 				message = "[owner] removes \the [the_wall]'s outer sheath."

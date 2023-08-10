@@ -1,4 +1,240 @@
 
+(t)wed aug 09 23
+(u)Tyrant
+(p)15310
+(e)🪲🗺|C-Bug, A-Mapping
+(+)The CE's office on Donut 2 is no longer open to the public.
+(u)Glamurio (Ryou)
+(p)14800
+(e)💅🍝|C-QoL, A-Catering
+(+)Standardized all coffee recipes to work with either regular coffee, or its freshly brewed variant.
+(t)tue aug 08 23
+(u)Amylizzle
+(p)15205
+(e)🔎🧱|C-Code-Quality, A-Materials
+(+)Plasmastone now releases its plasma somewhat slower. You can see how much plasma is left using a material analyzer.
+(+)You must now use the material analyzer to see how much gas is left in Molitz and Molitz Beta.
+(u)Kubius
+(p)15264
+(e)⚖|C-Balance
+(+)Telescience portal activation energy has been slightly reduced.
+(u)Amylizzle
+(p)15298
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Gas generator artifacts can now emit fallout gas.
+(u)Paaiii
+(p)15274
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(*)Added 9 new AI status screens, as well as inverted versions of existing AI status screens
+(+)Cleaned up existing AI status screens to give them more depth and also so they follow the same colour palette
+(t)mon aug 07 23
+(u)tarmunora
+(*)Assembled flamethrowers have a movement speed penalty.
+(+)Assembled flamethrowers fullauto mode adjustments (adjust fuel use to be comprable with other modes).
+(t)sun aug 06 23
+(u)Mintyphresh
+(p)15240
+(e)🔄🐣|C-Rework, A-Respawning
+(+)Latejoining players with the Stowaway, Pilot, or Heavy Sleeper trait will no longer be announced.
+(u)Sovexe
+(p)15267
+(e)|
+(+)Minimaps can now track targets inside of things, such as pods
+(u)LeahTheTech
+(+)Aconite is now slightly more effective against werewolves.
+(t)sat aug 05 23
+(u)Sovexe
+(p)15210
+(e)🆕🗺|C-Feature, A-Mapping
+(*)The Pod Wars NSV Reliant now has a neutral map that shows the position of pilots on both teams.
+(u)Kubius
+(p)13348
+(e)🪲⚖🔄💡|C-Bug, C-Balance, C-Rework, A-Station-Systems
+(*)APC power delivery has received a substantial overhaul; the power grid will now prioritize supporting heavy loads, and recharging will scale itself to the amount of spare power available.
+(u)Lord_Earthfire
+(p)15057
+(e)🪲🔎🧱|C-Bug, C-Code-Quality, A-Materials
+(+)Material effects on-attacks are now happening more consistent, e.g. erebite hats weared on you will explode if you get bonked on the head.
+(u)Mr. Moriarty & Erinexx
+(p)15188
+(e)🗺🎨📦|A-Mapping, C-Sprites, A-Game-Objects
+(+)Resprited robuddies.
+(u)Bartimeus973
+(p)15208
+(e)🆕🔨📦|C-Feature, A-Player-Actions, A-Game-Objects
+(*)Vampires should now avoid using tanning beds.
+(t)fri aug 04 23
+(u)Wisemonster
+(p)14881
+(e)⚖⏰|C-Balance, A-Status-Effects
+(*)Interdictors will now drain 6u of power per player in their influence
+(*)Removed power drain on interdictors from negating worm holes and magnetic biofields
+(+)Changed the interdictor protection to be tied to a status effect
+(+)Added a particle effect for the interdictor status effect
+(u)DimWhat
+(p)15171
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added a bunch more clothing sprites for monkeys, ook!
+(t)thu aug 03 23
+(u)Wisemonster
+(p)14825
+(e)🆕🗺🐁|C-Feature, A-Mapping, A-Critters
+(+)The HoP has decided to take his loyal dog Orwell to more stations!
+(u)Garash
+(p)14766
+(e)🆕🔄📄|C-Feature, C-Rework, A-UI
+(+)New snappier UI for the Identification Computers, go commit ID fraud today!
+(u)Bartimeus973
+(p)14757
+(e)🆕🎨💅💊|C-Feature, C-Sprites, C-QoL, A-Medical
+(+)Surgery slipups are a lot more noticeable.
+(u)Caio029
+(p)15178
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Pronouns will now be shown on the examine text of humans.
+(t)wed aug 02 23
+(u)LeahTheTech
+(p)15169
+(e)🆕⚖🔨|C-Feature, C-Balance, A-Player-Actions
+(+)Throwing someone into an open locker will now shut it on them, causing a short stun.
+(+)Smashing someone into a wall or window with a grab will now disorient them.
+(t)tue aug 01 23
+(u)Amylizzle
+(p)15096
+(e)📄|A-UI
+(*)The observer menu has been replaced with an upgrade.
+(u)Soapcyst
+(p)15179
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added angler equipment to donut2, atlas, clarion, and the afterlife bar.
+(t)sun jul 30 23
+(u)Retrino
+(p)15162
+(e)🎨🤖|C-Sprites, A-Silicons
+(*)Added three new borg screenhead faces: Nervous, Annoyed, and Ditzy
+(t)sat jul 29 23
+(u)CalliopeSoups
+(p)14664
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Oshan's ranch has been renovated for cooperative rancher action.
+(u)Bartimeus973
+(p)15147
+(e)💅💪🎭|C-QoL, A-Traits, A-RP
+(+)Picky eaters will now heal substantially more hunger when eating one of their favorite foods.
+(u)Ikea
+(p)14889
+(e)⚖🤖|C-Balance, A-Silicons
+(*)EMP's now stun borgs for 5 seconds, disable modules for a max of 5 seconds, and now do far more damage to borgs.
+(u)LeahTheTech
+(+)The cyborg teleport module now has visual and sound effects.
+(t)fri jul 28 23
+(u)Valtsu0
+(p)15048
+(e)🆕🔨🍝|C-Feature, A-Player-Actions, A-Catering
+(+)Chef can now name meals by using a plate in hand
+(u)UnfunnyPerson
+(p)15034
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)Shamblers will eat limbs while using devour.
+(u)Kubius
+(p)15127
+(e)🗺⚖|A-Mapping, C-Balance
+(*)Nadir is now equipped with a Security pod bay.
+(u)Lord_Earthfire
+(p)14857
+(e)🪲🗺🔄⚗🍝🌱|C-Bug, A-Mapping, C-Rework, A-Chemistry, A-Catering, A-Hydroponics
+(*)Fish now contain fish oil and can have chemicals. Keep your blood pressure stable today!
+(+)Fish can now be loaded into the chemical extractor and be injected with syringes
+(+)Fish from the wholetuna cordata plant now can gain botany chems, the plant gains the "inert" gene strain on mutation, though
+(+)Plants spliced with the wholetuna cordata plant now contain fish oil.
+(u)Ikea
+(p)15140
+(e)|
+(+)The paper found in the molitz beta briefcase has been rewritten a little bit
+(t)thu jul 27 23
+(u)Flaborized
+(p)15054
+(e)🎨|C-Sprites
+(+)Resprited light engineering spacesuit
+(u)LeahTheTech
+(+)Conveyor belt switches now accept a mechcomp signal to adjust their speed from 1-10, nice sedate sushi bars are now possible.
+(t)wed jul 26 23
+(u)Tyrant
+(p)15059
+(e)🪲🆕🗺💅📦|C-Bug, C-Feature, A-Mapping, C-QoL, A-Game-Objects
+(+)Rancher closets have been standardised across all maps, and added to Nadir and Clarion accordingly
+(u)Amylizzle
+(p)15115
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Stun cane manufacturing blueprint works now.
+(t)tue jul 25 23
+(u)Sovexe
+(p)14958
+(e)🆕📄|C-Feature, A-UI
+(*)Brand-new players are now known and tagged as Newbees in OOC/LOOC. They have a special green chat color and a bee icon for easy identification. Players are encouraged to welcome Newbees into the community.
+(u)Froggit Dogget
+(p)15082
+(e)|
+(+)Adds the censorium alloy. It does nothing.
+(u)Glamurio (Ryou)
+(p)14807
+(e)🆕🐣|C-Feature, A-Respawning
+(+)Tourists now spawn with a lanyard containing their ID.
+(u)Bartimeus973
+(p)15012
+(e)🆕🎨💪🎭|C-Feature, C-Sprites, A-Traits, A-RP
+(*)Added a new trait: Picky eater! Picky eaters can only eat specific, randomly selected foods!
+(t)mon jul 24 23
+(u)Mintyphresh
+(p)15065
+(e)🪲⚖💅⚗🍝|C-Bug, C-Balance, C-QoL, A-Chemistry, A-Catering
+(*)Greatly reduced the ABV of most non-evil drinks. See minor changes for exceptions. Drink up!
+(+)Necroni, Grog, Bo Jack Daniels, Squeeze, Suicider, Murdini, Moonshine, BOOrbon, Bloody Scary, and Ling Island Iced Tea have increased in strength.
+(t)sat jul 22 23
+(u)Skeletonman0 and Garash
+(p)14895
+(e)🆕📄|C-Feature, A-UI
+(+)New UI for the station's advanced computers, go bother cargo for a Home Networking Kit and build your own dream computer today!
+(u)Flourish
+(e)🗺⚖⛔|A-Mapping, C-Balance, C-Removal,
+(+)Removed straightjackets.
+(u)Flappybat
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Sorium throw scaling reduced. A large quantity is now needed to throw more than a few tiles.
+(+)Sorium now throws anything on the same turf in a random direction.
+(t)fri jul 21 23
+(u)Sian
+(p)14642
+(e)🎨📦🍝|C-Sprites, A-Game-Objects, A-Catering
+(*)Added Wall Trophy for fish available as a ticket purchase in Fishing Supplies Vendor.
+(u)Wisemonster
+(p)14903
+(e)💅🤖|C-QoL, A-Silicons
+(+)Silicons can now use the supply request consoles
+(u)Mantwerp and Mcdangus
+(p)14999
+(e)🎨🔊📦|C-Sprites, C-Sound, A-Game-Objects
+(*)Added the electric guitar, which you can get from cargo. Sprites and sounds by Mcdangus.
+(u)Tyrant
+(p)14983
+(e)🗺💅|A-Mapping, C-QoL
+(+)The mulebot's destinations are now scanned automatically when opening the menu and displayed as a list.
+(u)Lord_Earthfire
+(p)14628
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The wifi signal splitter component can now have its checked string changed via mechcomp signals.
+(u)Blackrep
+(p)14811
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Buff: Pipeshot shells are now tiny objects.
+(u)Tyrant
+(p)14945
+(e)🪲|C-Bug
+(+)Lollipops have colours once again.
+(u)Cheffie
+(p)15015
+(e)🪲🎨💅🐁|C-Bug, C-Sprites, C-QoL, A-Critters
+(+)Mobs will now fit under flaps, give slowdown when grabbed and fit in low storage containers (crates, bodybags) when dead. This mostly applies to mob critters which now will not laydown on death.
 (t)thu jul 20 23
 (u)DimWhat
 (p)14974

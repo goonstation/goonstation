@@ -193,6 +193,13 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	//Create objectives for the non-traitor/nogoodnik crew.
 	generate_crew_objectives()
 #endif
+	//picky eater trait handling
+	for (var/mob/living/carbon/human/H in mobs)
+		if (H.client && H.traitHolder?.hasTrait("picky_eater"))
+			var/datum/trait/picky_eater/eater_trait = H.traitHolder.getTrait("picky_eater")
+			if (length(eater_trait.fav_foods) > 0)
+				boutput(H, eater_trait.explanation_text)
+				H.mind.store_memory(eater_trait.explanation_text)
 
 	//Equip characters
 	equip_characters()
@@ -243,6 +250,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		//Tell the participation recorder that we're done FAFFING ABOUT
 		participationRecorder.releaseHold()
+
+#ifdef BAD_MONKEY_NO_BANANA
+	for_by_tcl(monke, /mob/living/carbon/human/npc/monkey)
+		qdel(monke)
+#endif
 
 #ifdef MAP_OVERRIDE_NADIR
 	SPAWN(30 MINUTES) // special catalytic engine warning

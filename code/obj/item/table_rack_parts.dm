@@ -52,7 +52,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 				newThing.setMaterial(src.material)
 			if (user)
 				newThing.add_fingerprint(user)
-				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.getID() ? "[newThing.material.getID()]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return newThing

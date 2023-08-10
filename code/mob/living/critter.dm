@@ -31,18 +31,18 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 	var/last_hibernation_wake_tick = 0
 	var/is_hibernating = FALSE
 
-	var/can_burn = 1
-	var/can_throw = 0
-	var/can_choke = 0
-	var/in_throw_mode = 0
+	var/can_burn = TRUE
+	var/can_throw = FALSE
+	var/can_choke = FALSE
+	var/in_throw_mode = FALSE
 	var/health_brute = null
 	var/health_burn = null
 	var/health_brute_vuln = null
 	var/health_burn_vuln = null
 
-	var/can_help = 0
-	var/can_grab = 0
-	var/can_disarm = 0
+	var/can_help = FALSE
+	var/can_grab = FALSE
+	var/can_disarm = FALSE
 
 	var/reagent_capacity = 50
 	max_health = 0
@@ -56,40 +56,40 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 	var/list/healthlist = list()
 
 	var/list/implants = list()
-	var/can_implant = 1
+	var/can_implant = TRUE
 
 	var/death_text = null // can use %src%
 	var/pet_text = "pets" // can be a list
 
 	// moved up from critter/small_animal
-	var/butcherable = 0
+	var/butcherable = BUTCHER_NOT_ALLOWED
 	var/butcher_time = 1.2 SECONDS
 	/// The mob who is butchering this critter
 	var/mob/butcherer = null
 	var/meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
-	var/name_the_meat = 0
+	var/name_the_meat = FALSE
 	var/skinresult = /obj/item/material_piece/cloth/leather //YEP
-	var/max_skins = 0
+	var/max_skins = FALSE
 
 	// for critters with removable arms(brullbar, bear)
 	var/left_arm = null
 	var/right_arm = null
 
-	var/fits_under_table = 0
-	var/table_hide = 0
+	var/fits_under_table = FALSE
+	var/table_hide = FALSE
 
 	var/old_canmove
-	var/dormant = 0
+	var/dormant = FALSE
 
 	var/custom_brain_type = null
 
-	var/ghost_spawned = 0 //Am i inhabited by a ghost player who used the respawn critter option?
+	var/ghost_spawned = FALSE //Am i inhabited by a ghost player who used the respawn critter option?
 	var/original_name = null
 
 	var/yeet_chance = 1 //yeet
 
 	var/last_life_process = 0
-	var/use_stunned_icon = 1
+	var/use_stunned_icon = TRUE
 
 	var/list/friends = list()
 
@@ -1261,7 +1261,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		..()
 		icon_state = icon_state_alive ? icon_state_alive : initial(icon_state)
 		density = initial(density)
-		src.can_lie = initial(src.can_lie)
 		src.can_implant = initial(src.can_implant)
 		blood_volume = initial(blood_volume)
 
@@ -1367,9 +1366,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			if (src.critter_ability_attack(target))
 				src.ai_attack_count = 0 //ability used successfully, reset the count
 				return
-		//default to a basic attack
+		//Check if we can range attack, if not default to a basic attack
 		var/datum/handHolder/hand = src.get_active_hand()
-		if (hand.can_range_attack)
+		if (hand && hand.can_range_attack)
 			if (src.critter_range_attack(target))
 				src.ai_attack_count += 1
 		else
@@ -1561,6 +1560,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 /// Parent for robotic critters. Handles some traits that robots should have- damaged by EMPs, immune to fire and rads
 /mob/living/critter/robotic
 	name = "a fucked up robot"
+	butcherable = BUTCHER_NOT_ALLOWED
 	can_bleed = FALSE
 	metabolizes = FALSE
 	var/emp_vuln = 1

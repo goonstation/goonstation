@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 /obj/item/turret_deployer
 	name = "fucked up turret deployer that you shouldn't see"
 	desc = "this isn't going to spawn anything and will also probably yell errors at you"
-	icon = 'icons/obj/syndieturret.dmi'
+	icon = 'icons/obj/deployableturret.dmi'
 	force = 3
 	throwforce = 10
 	throw_speed = 1
@@ -85,6 +85,15 @@ TYPEINFO(/obj/item/turret_deployer/riot)
 	is_syndicate = 1
 	associated_turret = /obj/deployable_turret/riot
 
+/obj/item/turret_deployer/outpost
+	name = "Perimeter Turret Deployer"
+	desc = "A standard issue perimeter security turret deployer used on the frontier. Use it in your hand to deploy."
+	turret_health = 125
+	icon_state = "op_deployer"
+	w_class = W_CLASS_BULKY
+	icon_tag = "op"
+	associated_turret = /obj/deployable_turret/outpost
+
 /////////////////////////////
 //       Turret Code       //
 /////////////////////////////
@@ -93,7 +102,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 	name = "fucked up abstract turret that should never exist"
 	desc = "why did you do this"
-	icon = 'icons/obj/syndieturret.dmi'
+	icon = 'icons/obj/deployableturret.dmi'
 	anchored = UNANCHORED
 	density = 1
 	var/health = 250
@@ -118,6 +127,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	var/spread = 0
 	var/associated_deployer = null //what kind of turret deployer should this deconstruct to?
 	var/deconstructable = TRUE
+	var/can_toggle_activation = TRUE // whether you can enable or disable the turret with a screwdriver, used for map setpiece turrets
 
 	New(var/loc, var/direction)
 		..()
@@ -238,19 +248,25 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 		else if (isscrewingtool(W))
 
-			if(!src.anchored)
-				user.show_message("<span class='notice'>The turret is too unstable to fire! Secure it to the ground with a welding tool first!</span>")
+			if(src.can_toggle_activation == TRUE)
+
+				if(!src.anchored)
+					user.show_message("<span class='notice'>The turret is too unstable to fire! Secure it to the ground with a welding tool first!</span>")
+					return
+
+				if (!src.deconstructable)
+					user.show_message("<span class='alert'>You can't power the turret off! The controls are too secure!</span>")
+					return
+
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+
+				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, PROC_REF(toggle_activated), null, W.icon, W.icon_state, \
+			 	 "[user] powers the turret [src.active ? "off" : "on"].", \
+			 	 INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+
+			else
+				user.show_message("<span class='alert'>The activation switch is protected! You can't toggle the power!</span>")
 				return
-
-			if (!src.deconstructable)
-				user.show_message("<span class='alert'>You can't power the turret off! The controls are too secure!</span>")
-				return
-
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-
-			SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, PROC_REF(toggle_activated), null, W.icon, W.icon_state, \
-			  "[user] powers the turret [src.active ? "off" : "on"].", \
-			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else
 			src.health = src.health - W.force
@@ -498,6 +514,37 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	New(loc)
 		..(src.loc, src.dir)
 		src.toggle_activated()
+
+/obj/deployable_turret/outpost // for a planetary outpost, it gon' shootcha!
+	name = "Perimeter Turret"
+	desc = "The red light seems to be pointed right at you. Uh oh..."
+	health = 125
+	max_health = 125
+	range = 7
+	projectile_type = /datum/projectile/bullet/revolver_38/lb
+	burst_size = 2
+	fire_rate = 1
+	angle_arc_size = 90
+	icon_tag = "op"
+	quick_deploy_fuel = 0
+	associated_deployer = /obj/item/turret_deployer/outpost
+
+/obj/deployable_turret/outpost/active
+	can_toggle_activation = FALSE // for map placement so people don't cheese them by rushing them with a screwdriver
+	anchored = ANCHORED
+
+	New(loc)
+		..(src.loc, src.dir)
+		src.toggle_activated()
+
+	north
+		dir=NORTH
+	south
+		dir=SOUTH
+	east
+		dir=EAST
+	west
+		dir=WEST
 
 /////////////////////////////
 //   Turret Ability Stuff  //
