@@ -596,6 +596,15 @@
 	},
 /turf/simulated/floor/black,
 /area/ship/artemis)
+"oW" = (
+/obj/machinery/atmospherics/pipe/simple/overfloor{
+	dir = 9
+	},
+/turf/unsimulated/wall/auto/lead/blue{
+	desc = "Seems pretty sturdy.";
+	name = "shield wall"
+	},
+/area/ship/artemis)
 "oZ" = (
 /obj/table/wood/auto,
 /obj/item/clothing/gloves/concussive,
@@ -640,6 +649,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/ship/arjuna)
+"pF" = (
+/obj/storage/secure/closet/engineering/engineer,
+/turf/simulated/floor/black,
+/area/ship/artemis)
 "pH" = (
 /obj/landmark/destination_landmark{
 	destination_name = "asteroid1"
@@ -690,6 +703,12 @@
 	dir = 4
 	},
 /turf/simulated/floor/blue/checker,
+/area/ship/artemis)
+"rU" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
+/turf/simulated/floor/black,
 /area/ship/artemis)
 "rV" = (
 /turf/simulated/floor/carpet{
@@ -770,6 +789,12 @@
 	},
 /turf/simulated/floor/black,
 /area/ship/artemis)
+"uf" = (
+/obj/machinery/atmospherics/pipe/vent{
+	dir = 4
+	},
+/turf/simulated/floor/airless/engine/vacuum,
+/area/ship/space_canvas)
 "uk" = (
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -962,6 +987,10 @@
 	icon_state = "red2"
 	},
 /area/ship/artemis)
+"Am" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/simulated/floor/black,
+/area/ship/artemis)
 "Ar" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
@@ -989,6 +1018,12 @@
 	},
 /turf/simulated/floor/bluegreen,
 /area/ship/arjuna)
+"Bk" = (
+/obj/machinery/atmospherics/pipe/simple/overfloor{
+	dir = 10
+	},
+/turf/simulated/floor/black,
+/area/ship/artemis)
 "Bl" = (
 /obj/magnet_target_marker/asteroid{
 	height = 13;
@@ -1745,6 +1780,12 @@
 	icon_state = "fblue4"
 	},
 /area/ship/arjuna)
+"Ua" = (
+/obj/machinery/atmospherics/pipe/simple/overfloor{
+	dir = 6
+	},
+/turf/simulated/floor/black,
+/area/ship/artemis)
 "Uc" = (
 /obj/magnet_target_marker/asteroid{
 	height = 13;
@@ -1796,6 +1837,15 @@
 "Vt" = (
 /obj/machinery/door/airlock/gannets/engineering/alt,
 /obj/mapping_helper/access/maint,
+/turf/simulated/floor/black,
+/area/ship/artemis)
+"VH" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
 /turf/simulated/floor/black,
 /area/ship/artemis)
 "VL" = (
@@ -1929,6 +1979,13 @@
 /obj/item/clothing/suit/rad,
 /turf/simulated/floor/engine,
 /area/ship/arjuna)
+"YP" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/simulated/floor/black,
+/area/ship/artemis)
 "YR" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -1953,6 +2010,21 @@
 	dir = 10;
 	icon_state = "red2"
 	},
+/area/ship/artemis)
+"ZD" = (
+/obj/machinery/atmospherics/pipe/simple/overfloor{
+	dir = 4
+	},
+/turf/unsimulated/wall/auto/lead/blue{
+	desc = "Seems pretty sturdy.";
+	name = "shield wall"
+	},
+/area/ship/artemis)
+"ZF" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/turf/simulated/floor/black,
 /area/ship/artemis)
 
 (1,1,1) = {"
@@ -8030,7 +8102,7 @@ Si
 HL
 Sz
 Sz
-Sz
+uf
 Sz
 Sz
 Sz
@@ -8332,7 +8404,7 @@ Dk
 po
 yi
 po
-po
+ZD
 Sz
 Sz
 Sz
@@ -8632,9 +8704,9 @@ Dm
 po
 po
 po
-Tt
-BY
-po
+Ua
+VH
+ZD
 ao
 dl
 Sz
@@ -8934,9 +9006,9 @@ Tt
 Tt
 po
 Tt
-Tt
-Tt
-po
+rU
+ZF
+ZD
 Ar
 dl
 Sz
@@ -9236,9 +9308,9 @@ Tt
 Tt
 Vt
 Tt
-Tt
+Bk
 EN
-po
+oW
 Ar
 dl
 Sz
@@ -10139,11 +10211,11 @@ Tt
 Tt
 Fc
 Tt
-Tt
+pF
 po
 Tt
-Tt
-Tt
+Am
+Am
 po
 Ar
 dl
@@ -10444,8 +10516,8 @@ GY
 po
 po
 po
-Tt
-Fc
+Am
+YP
 po
 to
 dl
