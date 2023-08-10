@@ -7,6 +7,7 @@
 	density = FALSE
 	/// How many authentications are needed to release the shielding on the podbay. Set the first time someone clicks this.
 	var/auth_need
+	/// A list of the mobs who authorized.
 	var/list/authorized
 
 	light_r = 1
@@ -24,7 +25,7 @@
 	proc/authorize()
 		if (src.authed)
 			return
-		logTheThing(LOG_STATION, usr, "authorized Cairngorm podbay access")
+		logTheThing(LOG_STATION, "Cairngorm podbay access was authorized.")
 		src.authed = TRUE
 		src.ClearSpecificOverlays("screen_image")
 		src.icon_state = "drawbr-alert"
