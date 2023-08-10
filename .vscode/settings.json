@@ -45,5 +45,8 @@
 	"tgstationTestExplorer.project.DMEName": "goonstation.dme",
 	"tgstationTestExplorer.project.defines": [
 		"#define UNIT_TESTS"
+	],
+	"githubPullRequests.ignoredPullRequestBranches": [
+		"master"
 	]
 }
