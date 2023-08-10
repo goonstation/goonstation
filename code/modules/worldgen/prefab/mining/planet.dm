@@ -59,9 +59,21 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		for(var/turf/T in turfs)
 			//if( T.loc.type in areas_to_revert)
 			if(istype(T.loc, /area/noGenerate))
-				new child_path(T)
+				var/area/map_gen/planet/planet_area = prev_area
+				if(istype(planet_area) && planet_area.no_prefab_ref)
+					planet_area.no_prefab_ref.contents += T
+				else
+					new child_path(T)
 			else if(istype(T.loc, /area/allowGenerate))
-				new prev_area.type(T)
+				prev_area.contents += T
+				//new prev_area.type(T)
+			else if(length(prev_area.area_parallax_layers))
+				var/area/our_area = T.loc
+				if(!length(our_area.area_parallax_layers))
+					our_area.area_parallax_layers = prev_area.area_parallax_layers
+					our_area.occlude_foreground_parallax_layers = TRUE
+				if (our_area.occlude_foreground_parallax_layers)
+					T.update_parallax_occlusion_overlay()
 
 	bear_trap
 		maxNum = 1
