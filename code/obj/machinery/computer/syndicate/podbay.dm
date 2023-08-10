@@ -22,35 +22,31 @@
 			authorize() // If they haven't done it before the ten minute mark-ish, do it for em
 		..()
 
-	proc/authorize()
-		if (src.authed)
-			return
-		logTheThing(LOG_STATION, "Cairngorm podbay access was authorized.")
-		src.authed = TRUE
-		src.ClearSpecificOverlays("screen_image")
-		src.icon_state = "drawbr-alert"
-		src.UpdateIcon()
-
-		for_by_tcl(forcefield, /obj/forcefield/battlecruiser)
-			qdel(forcefield)
-
-		SPAWN(0.5 SECONDS)
-			var/list/operative_mobs = list()
-			for (var/datum/antagonist/operative as anything in (get_all_antagonists(ROLE_NUKEOP) + get_all_antagonists(ROLE_NUKEOP_COMMANDER)))
-				operative_mobs += operative.owner.current
-			boutput(operative_mobs,"<b>The podbay has been authorized. You may now leave the Cairngorm using your pods!</b>",forceScroll=TRUE)
-
-/obj/machinery/computer/battlecruiser_podbay/attack_hand(mob/user)
-	return src.Attackby(null,user)
-
+/obj/machinery/computer/battlecruiser_podbay/proc/authorize()
+	if (src.authed)
+		return
+	logTheThing(LOG_STATION, "Cairngorm podbay access was authorized.")
+	src.authed = TRUE
+	src.ClearSpecificOverlays("screen_image")
+	src.icon_state = "drawbr-alert"
+	src.UpdateIcon()
+	for_by_tcl(forcefield, /obj/forcefield/battlecruiser)
+		qdel(forcefield)
+	SPAWN(0.5 SECONDS)
+		var/list/operative_mobs = list()
+		for (var/datum/antagonist/operative as anything in (get_all_antagonists(ROLE_NUKEOP) + get_all_antagonists(ROLE_NUKEOP_COMMANDER)))
+			operative_mobs += operative.owner.current
+		boutput(operative_mobs,"<b>The podbay has been authorized. You may now leave the Cairngorm using your pods!</b>",forceScroll=TRUE)
 
 /// Changes auth_need to how many operatives should be used to auth. If 1 or 0, auths automatically
 /obj/machinery/computer/battlecruiser_podbay/proc/determine_auth()
 	var/operative_count = length(get_all_antagonists(ROLE_NUKEOP) + get_all_antagonists(ROLE_NUKEOP_COMMANDER))
-	var/required = round(operative_count * 0.5)
-	if (required < 2)
+	src.auth_need = round(operative_count * 0.5)
+	if (src.auth_need < 2)
 		authorize()
-	src.auth_need = required
+
+/obj/machinery/computer/battlecruiser_podbay/attack_hand(mob/user)
+	return src.Attackby(null,user)
 
 // This should happen no matter WHAT and I don't think people holding an RPG trying to auth podbay should shoot
 /obj/machinery/computer/battlecruiser_podbay/attackby(var/obj/item/W, var/mob/user)
@@ -65,11 +61,9 @@
 			boutput(user,"Low number of agents detected. Podbay authorization granted.")
 			src.authorized += user
 			return
-
 	src.add_fingerprint(user)
 	if (!src.authorized)
 		src.authorized = list()
-
 	var/auths_required = src.auth_need - length(src.authorized)
 	var/choice = tgui_alert(user, "Would you like to authorize access to the podbay? [auths_required] authorization[s_es(auths_required)] are still needed.\nWARNING: This CANNOT be undone!", "Podbay Auth", list("Yes", "No"))
 	if (BOUNDS_DIST(user, src) > 0 || src.authed)
