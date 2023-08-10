@@ -529,6 +529,7 @@ proc/get_upscaled_icon(icon, icon_state, dx, dy)
 	spinning_icon_state = "catball"
 	item_state = "catball"
 	desc = "<img src='https://pali.link/catball.gif'><br>"
+	contraband = 0 // catball is legal smh my head
 
 
 ADMIN_INTERACT_PROCS(/obj/portal/to_space, proc/give_counter)

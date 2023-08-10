@@ -1808,6 +1808,11 @@
 
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
+
+					var/stop_here = SEND_SIGNAL(src, COMSIG_MOB_FLIP, voluntary)
+					if (stop_here)
+						goto showmessage
+
 					var/list/combatflipped = list()
 					//TODO: space flipping
 					//if ((!src.restrained()) && (!src.lying) && (istype(src.loc, /turf/space)))
