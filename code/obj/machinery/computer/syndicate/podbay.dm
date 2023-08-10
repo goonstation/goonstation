@@ -83,7 +83,7 @@
 			for (var/mob/M in hearers(src, null))
 				M.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[user.real_name]'s request accepted. [auths_required] authorization[s_es(auths_required)] needed until Podbay is opened.\"</span></span>", 2)
 		else
-			authorize()
+			src.authorize()
 
 /obj/forcefield/battlecruiser
 	name = "podbay barrier"
