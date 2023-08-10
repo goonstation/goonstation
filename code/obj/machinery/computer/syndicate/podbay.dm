@@ -25,7 +25,7 @@
 /obj/machinery/computer/battlecruiser_podbay/proc/authorize()
 	if (src.authed)
 		return
-	logTheThing(LOG_STATION, "Cairngorm podbay access was authorized.")
+	logTheThing(LOG_STATION, src, "Cairngorm podbay access was authorized.")
 	src.authed = TRUE
 	src.ClearSpecificOverlays("screen_image")
 	src.icon_state = "drawbr-alert"
