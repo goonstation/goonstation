@@ -403,17 +403,21 @@
 /* -------------------- Bartender Juice -------------------- */
 /* ========================================================= */
 /obj/item/reagent_containers/glass/bottle/juice
-	name = "juice bottle"
-	desc = "A small bottle for juice. There's a warning sticker about preservatives that's completely covering the label."
+	name = "parent juice bottle"
+	desc = "Call 1-800-IMCODER! Should not be seeing this."
 	bottle_style = "2"
-	initial_volume = 35
+	initial_volume = 30
 	amount_per_transfer_from_this = 5
-	initial_reagents = null
+	var/juicelist = list("juice_apple", "juice_blackberry", "juice_blueberry", "juice_blueraspberry", "capsaicin", "juice_grapefruit", "juice_peach", "juice_strawberry", "honey")
 	New()
-		src.initial_reagents = list(pick("juice_apple", "juice_blackberry", "juice_blueberry", "juice_blueraspberry", "capsaicin", "juice_grapefruit", "juice_peach", "juice_strawberry", "honey") = 30)
-		if (prob(1))
+		if (prob(2))
+			src.initial_reagents = list(pick(juicelist) = 25)
 			src.initial_reagents["formaldehyde"] = 5
+		else
+			src.initial_reagents = list(pick(juicelist) = 30)
 		..()
+		src.name = "bottle of [src.reagents.get_master_reagent_name()]"
+		src.desc = "A bottle filled with [src.reagents.get_master_reagent_name()]. There's a warning sticker about preservatives on the side."
 /* ============================================== */
 /* -------------------- Misc -------------------- */
 /* ============================================== */
