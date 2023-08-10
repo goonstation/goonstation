@@ -2826,8 +2826,10 @@
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/civilian/kitchen)
 "dha" = (
-/obj/machinery/conveyor/WE,
 /obj/machinery/light/small/sticky/warm,
+/obj/machinery/conveyor/area_activated{
+	dir = 4
+	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing/transport)
 "dhg" = (
@@ -4375,12 +4377,6 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"eKG" = (
-/obj/machinery/conveyor/SE{
-	operating = 1
-	},
-/turf/unsimulated/floor/industrial,
-/area/morrigan/routing/transport)
 "eLe" = (
 /obj/machinery/conveyor/WN{
 	operating = 1
@@ -5466,10 +5462,6 @@
 /obj/machinery/light/incandescent/warm/very,
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/holding)
-"fTd" = (
-/obj/machinery/conveyor/WE,
-/turf/unsimulated/floor/industrial,
-/area/morrigan/routing/transport)
 "fTe" = (
 /obj/fitness/weightlifter,
 /turf/unsimulated/floor/orangeblack,
@@ -8084,13 +8076,6 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"iKS" = (
-/obj/machinery/networked/telepad,
-/obj/machinery/conveyor/area_activated{
-	dir = 4
-	},
-/turf/unsimulated/floor/industrial,
-/area/morrigan/routing/transport)
 "iLy" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/unsimulated/floor/plating/damaged1,
@@ -8631,6 +8616,7 @@
 "jkH" = (
 /obj/machinery/launcher_loader/north,
 /obj/landmark/morrigan_transport,
+/obj/machinery/networked/telepad,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing/transport)
 "jlg" = (
@@ -9663,10 +9649,6 @@
 "kqB" = (
 /turf/unsimulated/floor/engine/caution/north,
 /area/morrigan/station/factory)
-"kqL" = (
-/obj/machinery/conveyor/SN,
-/turf/unsimulated/floor/industrial,
-/area/morrigan/routing/transport)
 "kqQ" = (
 /obj/decal/cleanable/rust/jen,
 /turf/unsimulated/floor,
@@ -10769,10 +10751,6 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"lCW" = (
-/obj/machinery/conveyor/SE,
-/turf/unsimulated/floor/industrial,
-/area/morrigan/routing/transport)
 "lDz" = (
 /obj/map/light,
 /obj/shrub/dead{
@@ -20724,12 +20702,6 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/podbay/medical)
-"wRP" = (
-/obj/machinery/conveyor/WN{
-	operating = 1
-	},
-/turf/unsimulated/floor/industrial,
-/area/morrigan/routing/transport)
 "wTV" = (
 /obj/machinery/light/small/sticky/warm{
 	dir = 4
@@ -28174,9 +28146,9 @@ fVW
 inM
 inM
 qVO
-lCW
-kqL
-kqL
+nMD
+jrr
+jrr
 jkH
 kYk
 qVO
@@ -28277,7 +28249,7 @@ qVO
 inM
 inM
 qVO
-fTd
+nMD
 qVO
 lps
 kYk
@@ -28483,7 +28455,7 @@ qVO
 inM
 inM
 tHM
-fTd
+nMD
 tHM
 wTV
 inM
@@ -28586,7 +28558,7 @@ qVO
 qVO
 vqH
 qVO
-fTd
+nMD
 qVO
 dyG
 nyF
@@ -28689,7 +28661,7 @@ qVO
 mqm
 inM
 xbZ
-iKS
+nMD
 uZu
 sGS
 jeQ
@@ -32290,11 +32262,11 @@ lhK
 vwJ
 vwJ
 qVO
-eKG
+nMD
 jrr
 jrr
 jrr
-wRP
+jrr
 qVO
 vQk
 eQt
@@ -32908,7 +32880,7 @@ vwJ
 qVO
 jNa
 jrr
-wRP
+jrr
 qVO
 xMA
 wZL
