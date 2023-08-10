@@ -96,7 +96,7 @@
 #else
 #include "standard.dm"
 #endif
-
-#if ENABLE_ARTEMIS && !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
+//todo CHANGE THIS BACK BEFORE COMMIT OK?
+#if ENABLE_ARTEMIS && //!defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 #include "..\artemis\planets.dmm"
 #endif

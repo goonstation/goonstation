@@ -29,20 +29,22 @@ ABSTRACT_TYPE(/obj/item/artemis_engine_component)
 	desc = "engine casing"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "powersink0"
-	/// The integrity of the artemis engine casing
+
 	var/integrity = 0
+	///full integrity for tgui purposes
 	var/full_integrity
-	/// Amount by which the integrity decreases
 	var/degredation_rate = 0
 
 /obj/item/artemis_engine_component/casing/setup_material()
 		var/chem_resist = src.material.getProperty("chemical")
 		src.integrity = (src.material.getProperty("density") / 2) * 100
 		src.full_integrity = integrity
+
 		if(chem_resist<1)
 				src.degredation_rate = null
 		else
 				src.degredation_rate = max(1 - log(11 , chem_resist) , 0.01)
+
 /obj/item/artemis_engine_component/coil
 	name = "engine coil"
 	desc = "engine coil"
@@ -50,6 +52,7 @@ ABSTRACT_TYPE(/obj/item/artemis_engine_component)
 	icon_state = "scanner"
 	var/field_strength = 0
 	// var/malfunction_prob
+
 /obj/item/artemis_engine_component/coil/setup_material()
 		field_strength = src.material.getProperty("electrical") / 10
 #endif

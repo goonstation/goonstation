@@ -103,7 +103,7 @@
 		var/target_pressure=ONE_ATMOSPHERE
 		var/obj/machinery/atmospherics/binary/ion_drive/plas_tank/artemis_tank = null
 		var/obj/machinery/ion_drive/drive/artemis_drive = null
-
+/// setup the ion drive interface, look for the tank to the east and the drive to the west
 /obj/machinery/ion_drive/interface/New()
 		..()
 		SPAWN(0.5 SECONDS)
@@ -166,6 +166,7 @@
 
 /// Transfer fuel from fuel tank to the drives fuel buffer
 /obj/machinery/ion_drive/interface/proc/transfer_fuel(datum/gas_mixture/source,datum/gas_mixture/destination)
+
 		if(!src.on)
 				return FALSE
 
@@ -173,11 +174,12 @@
 		if(destination_pressure>=src.target_pressure)
 				return TRUE
 
-		if(src.artemis_tank.stored_fuel.toxins && src.artemis_tank.stored_fuel.temperature>0)
+		var/pressure_delta = src.target_pressure-destination_pressure
+		var/transfer_moles
 
-				var/pressure_delta = src.target_pressure-destination_pressure
-				var/transfer_moles = pressure_delta * destination.volume / (source.temperature * R_IDEAL_GAS_EQUATION)
-
+		if(src.artemis_tank.stored_fuel.temperature>0)
+				transfer_moles = pressure_delta * destination.volume / (source.temperature * R_IDEAL_GAS_EQUATION)
+		if(transfer_moles>0)
 				var/datum/gas_mixture/removed = source.remove(transfer_moles)
 				destination.merge(removed)
 
