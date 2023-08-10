@@ -383,7 +383,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 	var/mob/M = A
 	if(istype(M) && M.buckled == src)
 		M.glide_size = (32 / move_lag) * world.tick_lag
-		walk(M, dir, move_lag, (32 / move_lag) * world.tick_lag)
+		walk(M, movedir, move_lag, (32 / move_lag) * world.tick_lag)
 		M.glide_size = (32 / move_lag) * world.tick_lag
 
 		if (src.move_lag <= 1)
