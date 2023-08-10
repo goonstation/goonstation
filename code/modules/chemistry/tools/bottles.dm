@@ -413,8 +413,6 @@
 		src.initial_reagents = list(pick("juice_apple", "juice_blackberry", "juice_blueberry", "juice_blueraspberry", "capsaicin", "juice_grapefruit", "juice_peach", "juice_strawberry", "honey") = 30)
 		if (prob(1))
 			src.initial_reagents["formaldehyde"] = 5
-		else
-			src.initial_reagents["water"] = 5
 		..()
 /* ============================================== */
 /* -------------------- Misc -------------------- */
