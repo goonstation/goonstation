@@ -1489,19 +1489,19 @@
 		boutput(user, "<span class='alert'>[src] is locked!</span>")
 		return
 
-	if(isliving(O) && O:stat != 2)
-		if (O == user)
-			src.board_pod(O)
-		else
-			boutput(user, "<span class='alert'>You can't shove someone else into a pod.</span>")
-
-		return
+	if(isliving(O))
+		var/mob/living/M = O
+		if (M == user)
+			src.board_pod(M)
+			return
+		else if (!isdead(M))
+			boutput(user, "<span class='alert'>You can't shove someone else into a pod unless they are dead!</span>")
+			return
 
 	var/obj/item/shipcomponent/secondary_system/SS = src.sec_system
 	if (!SS)
 		return
 	SS.Clickdrag_ObjectToPod(user,O)
-	return
 
 /obj/machinery/vehicle/mouse_drop(over_object, src_location, over_location)
 	if (!usr.client || !isliving(usr) || isintangible(usr))

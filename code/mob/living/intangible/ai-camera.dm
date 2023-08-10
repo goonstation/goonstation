@@ -18,7 +18,7 @@
 	density = 0
 	layer = 101
 	see_in_dark = SEE_DARK_FULL
-	stat = 0
+	stat = STAT_ALIVE
 	mob_flags = SEE_THRU_CAMERAS | USR_DIALOG_UPDATES_RANGE
 
 	can_lie = FALSE //can't lie down, you're a floating ghostly eyeball
