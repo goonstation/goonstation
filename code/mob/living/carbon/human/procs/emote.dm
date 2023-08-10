@@ -1333,7 +1333,7 @@
 								boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
 								return
 					if (M)
-						if (!is_incapacitated(M) && !M.restrained())
+						if (!can_act(M))
 							if (tgui_alert(M, "[src] offers you a handshake. Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
 								if (M in view(1,null))
 									message = "<B>[src]</B> shakes hands with [M]."
@@ -1410,7 +1410,7 @@
 
 			if ("highfive")
 				m_type = 1
-				if (!is_incapacitated(src) && !src.restrained())
+				if (!can_act(src))
 					if (src.emote_check(voluntary))
 						var/mob/M = null
 						if (param)
@@ -1431,7 +1431,7 @@
 									return
 
 						if (M)
-							if (!is_incapacitated(M) && !M.restrained())
+							if (!!can_act(M))
 								if (tgui_alert(M, "[src] offers you a highfive! Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
 									if (M in view(1,null))
 										message = "<B>[src]</B> and [M] highfive!"
