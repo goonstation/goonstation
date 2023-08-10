@@ -34,7 +34,7 @@
 			qdel(forcefield)
 
 		SPAWN(0.5 SECONDS)
-			var/operative_mobs = list()
+			var/list/operative_mobs = list()
 			for (var/datum/antagonist/operative as anything in (get_all_antagonists(ROLE_NUKEOP) + get_all_antagonists(ROLE_NUKEOP_COMMANDER)))
 				operative_mobs += operative.owner.current
 			boutput(operative_mobs,"<b>The podbay has been authorized. You may now leave the Cairngorm using your pods!</b>",forceScroll=TRUE)
@@ -73,18 +73,20 @@
 	if (!src.authorized)
 		src.authorized = list()
 
-	var/choice = tgui_alert(user, "Would you like to authorize access to the podbay? [src.auth_need - length(src.authorized)] authorization\s are still needed.\nWARNING: This CANNOT be undone!", "Podbay Auth", list("Yes", "No"))
+	var/auths_required = src.auth_need - length(src.authorized)
+	var/choice = tgui_alert(user, "Would you like to authorize access to the podbay? [auths_required] authorization[s_es(auths_required)] are still needed.\nWARNING: This CANNOT be undone!", "Podbay Auth", list("Yes", "No"))
 	if (BOUNDS_DIST(user, src) > 0 || src.authed)
 		return
 	if (choice == "Yes")
 		if (user in src.authorized)
-			boutput(user, "You have already authorized! [src.auth_need - length(src.authorized)] authorizations from others are still needed.")
+			boutput(user, "You have already authorized! [auths_required] authorization[s_es(auths_required)] from others are still needed.")
 			return
 		src.authorized += user
 		if (length(src.authorized) < auth_need)
-			logTheThing(LOG_STATION, user?.real_name, "added an approval for podbay access. [length(src.authorized)] total approvals.")
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[user.real_name]'s request accepted. [src.auth_need - length(src.authorized)] authorizations needed until Podbay is opened.\"</span></span>", 2)
+			logTheThing(LOG_STATION, user?.real_name, "added an approval for podbay access. [length(src.authorized)] total approval[s_es(auths_required)].")
+			auths_required -= 1
+			for (var/mob/M in hearers(src, null))
+				M.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[user.real_name]'s request accepted. [auths_required] authorization[s_es(auths_required)] needed until Podbay is opened.\"</span></span>", 2)
 		else
 			authorize()
 
