@@ -4100,13 +4100,6 @@ var/global/noir = 0
 		ircbot.export_async("admin", ircmsg)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
-/proc/checkantag(mob/M as mob)
-	set popup_menu = 0
-	if (global.current_state < GAME_STATE_PLAYING) //guh this gets used in pre-round
-		return !!M?.mind?.special_role
-	var/datum/mind/mind = M?.mind
-	return length(mind?.antagonists) > 0
-
 /proc/get_matches_string(var/text, var/list/possibles)
 	var/list/matches = new()
 	for (var/possible in possibles)

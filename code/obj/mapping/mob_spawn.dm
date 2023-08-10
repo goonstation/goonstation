@@ -14,6 +14,7 @@
 		if(isnull(src.spawn_type))
 			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
 		var/mob/living/M = new spawn_type(src.loc)
+		M.unobservable = TRUE //make it not show up in the observer list
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)
 			M.set_loc(container)

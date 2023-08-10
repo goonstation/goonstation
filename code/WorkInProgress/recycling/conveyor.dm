@@ -1079,11 +1079,12 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 			if(PN)
 				var/power_to_use = 0
 
-				power_to_use = min ( maxdrain, PN.avail )
+				var/free_power = PN.newload - PN.avail
+				power_to_use = min ( maxdrain, free_power )
 				speedup = (power_to_use/maxdrain) * speedup_max
 
-				if (PN.avail > maxdrain)
-					power_to_use = min ( maxdrain+bonusdrain, PN.avail )
+				if (free_power > maxdrain)
+					power_to_use = min ( maxdrain+bonusdrain, free_power )
 					speedup += (power_to_use / bonusdrain ) * speedup_bonus
 
 				PN.newload += power_to_use
@@ -1107,3 +1108,61 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	update_icon()
 		var/ico = clamp(((speedup / speedup_max) * icon_levels), 0, 6)
 		icon_state = "[icon_base][round(ico)]"
+
+//turns on when area is active
+/obj/machinery/conveyor/area_activated
+	var/area/activation_area = null
+
+	New()
+		. = ..()
+		activation_area = get_area(src)
+		// this assumes that the conveyor's area never changes
+		// if we expect the area of the conveyor to change (because the conveyor got deconstructed / moved or the turf beneat it got replaced with space etc.)
+		// we should have signals for area changes in the future
+		// however, currently these are only used in an adventure zone where such changes are unlikely
+		RegisterSignal(activation_area, COMSIG_AREA_ACTIVATED, PROC_REF(turn_on))
+		RegisterSignal(activation_area, COMSIG_AREA_DEACTIVATED, PROC_REF(turn_off))
+
+	set_loc(atom/target)
+		. = ..()
+		var/area/A = get_area(target)
+		if (activation_area == A || isnull(A)) return
+		UnregisterSignal(activation_area, list(COMSIG_AREA_ACTIVATED, COMSIG_AREA_DEACTIVATED))
+		activation_area = A
+		RegisterSignal(activation_area, COMSIG_AREA_ACTIVATED, PROC_REF(turn_on))
+		RegisterSignal(activation_area, COMSIG_AREA_DEACTIVATED, PROC_REF(turn_off))
+		if (activation_area.active)
+			turn_on()
+
+	proc/turn_on()
+		// (status & (BROKEN | NOPOWER)) checks might be needed here in the future who knows
+		src.operating = TRUE
+		src.setdir()
+		src.update()
+
+	proc/turn_off()
+		src.operating = FALSE
+		src.setdir()
+		src.update()
+
+	disposing()
+		UnregisterSignal(activation_area, list(COMSIG_AREA_ACTIVATED, COMSIG_AREA_ACTIVATED))
+		..()
+
+//only runs when area is active and operating
+/obj/machinery/conveyor/area_activity_dependant
+	var/area/activation_area = null
+
+	New()
+		. = ..()
+		activation_area = get_area(src)
+
+	process()
+		if (!src.activation_area.active)
+			return
+		. = ..()
+
+	move_thing()
+		if (!src.activation_area.active)
+			return
+		. = ..()

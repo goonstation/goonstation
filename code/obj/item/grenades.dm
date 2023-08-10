@@ -1936,9 +1936,8 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 
 /obj/proc/on_blowthefuckup(strength)
 	new /obj/effects/explosion/tiny_baby (src.loc)
-	if (src.material)
-		src.material.triggerTemp(src, T0C + strength * 100)
-		src.material.triggerExp(src, 1)
+	src.material_trigger_on_temp(T0C + strength * 100)
+	src.material_trigger_on_explosion(1)
 
 /obj/item/pipebomb/bomb/on_blowthefuckup(strength)
 	..()

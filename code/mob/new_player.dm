@@ -209,6 +209,7 @@ mob/new_player
 							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an emagged cyborg.")
 							S.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
 						SPAWN(1 DECI SECOND)
+							S.bioHolder?.mobAppearance?.pronouns = S.client.preferences.AH.pronouns
 							S.choose_name()
 							qdel(src)
 					else
@@ -689,7 +690,7 @@ a.latejoin-card:hover {
 					var/livingtraitor = 0
 
 					for(var/datum/mind/brain in ticker.minds)
-						if(brain.current && checkantag(brain.current)) // if a traitor
+						if(brain.current && brain.is_antagonist())
 							if (issilicon(brain.current) || isdead(brain.current) || brain.current.client == null) // if a silicon mob, dead or logged out, skip
 								continue
 
