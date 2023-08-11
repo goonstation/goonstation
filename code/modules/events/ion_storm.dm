@@ -190,7 +190,8 @@
 
 			// Fuck up some categories
 			for (var/datum/ion_category/category as anything in categories)
-				category.fuck_up()
+				if(prob(category.prob_of_happening))
+					category.fuck_up()
 				sleep(message_delay * stage_delay)
 
 	proc/build_categories()
@@ -202,6 +203,7 @@
 ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category
 	var/amount
+	var/prob_of_happening = 80
 	var/interdict_cost = 100 //how much energy an interdictor needs to invest to keep this from malfunctioning
 	var/list/atom/targets = list()
 
