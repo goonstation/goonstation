@@ -482,6 +482,38 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	else
 		boutput(user, "<span class='alert'>It's broken.</span>")
 
+/obj/machinery/door_control/proc/speak(var/message) //Stolen from the vending module
+	if (status & NOPOWER)
+		return
+
+	if (!message)
+		return
+
+	var/image/chat_maptext/welcome_text
+	var/text_out
+	var/welcome_text_alpha = 140
+	var/welcome_text_color = "#FF0100"
+	var/welcome_text = null
+
+	if (istype(src.loc, /turf))
+		text_out = message
+		welcome_text = make_chat_maptext(src, text_out, "color: [src.welcome_text_color];", alpha = src.welcome_text_alpha)
+		if (welcome_text && src.chat_text && length(src.chat_text.lines))
+			welcome_text.measure(src)
+			for (var/image/chat_maptext/I in src.chat_text.lines)
+				if (I != welcome_text)
+					I.bump_up(welcome_text.measured_height)
+
+	if (!text_out)
+		return
+
+	if (src.glitchy_slogans)
+		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[text_out]\"", 2, assoc_maptext = slogan_text)
+	else
+		src.audible_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[text_out]\"</span></span>", 2, assoc_maptext = slogan_text)
+
+	return
+
 /obj/machinery/door_control/antagscanner // for sleepers entering listening post
 	var/entrance_scanner = 0 // Do we want a welcome message or similar for the area upon activation?
 	icon = 'icons/obj/decoration.dmi'
@@ -490,6 +522,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	pressed_icon = "antagscanner-u"
 	unpowered_icon = "antagscanner"
 	requires_power = 0
+	welcome_text = "Welcome, Agent."
 
 /obj/machinery/door_control/antagscanner/attack_hand(mob/user)
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
@@ -497,7 +530,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		user.visible_message("<span class='notice'>The [src] accepts the biometrics of the user and beeps, granting you access.</span>")
 		toggle()
 		if (entrance_scanner == 1)
-			src.audible_message("Welcome, Agent.")
+			src.speak(welcome_text)
 	else
 		boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
 
