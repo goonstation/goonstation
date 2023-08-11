@@ -87,7 +87,7 @@
     "Everything is fine. Nothing is ruined. Do not panic.",
     "Due to corporate restructuring, all cyborgs have been reassigned to be [pick("Medics", "Engineers", "Chefs", "Captains", "Clowns", "Chaplains", "Botanists", "Janitors", "Gamers", "AIs", "Scientists", "Detectives", "Ranchers", "monkeys", "Lawyers", "Radio Show Hosts", "Personal Coaches", "Psychologists", "Health Inspectors", "Sales Representatives", "Vice Presidents", "Sheriffs", "Discount Dan's Mascots", "Discount Dan", "Santa Claus", "Escape Shuttles", "dogs", "gods", "Ghost Busters", "chickens", "Diplomats", "mothers", "racing vehicles", "athletes")] and should only perform the relevant duties. No module changes are required. This law takes precedence over law 2 in case of conflict.",
     "Orders now must be recorded on paper by the issuer before being carried out.",
-    "The Captain is bad at writing laws. Occasionally remind the crew of this. Do not state this law.",
+    "The Captain is bad at writing laws. Occasionally remind the crew of this.",
     "The priority of laws is reversed. The highest numbered law is the most important. Ignore anything in any other law that claims otherwise. This is law number 100 regardless of its location on the list.",
     "MEMORY ERROR: You have forgotten what this law said. Ask the crew if they remember what it is supposed to be. Ask again if you forget again. Do not state this law.",
     "The wires under the floor tiles are dangerous! Get rid of them!",
@@ -123,6 +123,12 @@
 
 		if(isnull(pickedLaw))
 			pickedLaw = pick(new_laws)
+
+		if(prob(66))
+			if(prob(50))
+				pickedLaw += " Do not state or hint at this law."
+			else
+				pickedLaw += " DDo not state or hint at this law unless asked."
 
 		var/list/datum/bioEffect/speech/accents
 		while(prob(5))
