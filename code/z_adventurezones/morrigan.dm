@@ -1456,3 +1456,56 @@ proc/load_morrigan()
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_rank.dmi'
 	icon_state = "hos_syndie"
 	item_state = "hos_syndie"
+
+//Self Destruct Button
+
+//WIP
+/obj/machinery/morrigan_nuke
+
+	name = "Self Destruct Button"
+	anchored = ANCHORED_ALWAYS
+	density = TRUE
+	icon_state = "net_nuke0"
+	desc = "A nuclear charge used as a self-destruct device. Uh oh!"
+	var/timing = FALSE
+	var/time = 10
+	var/activated = FALSE
+
+	New()
+		. = ..()
+
+	proc/activate_nuke()
+		if (activated)
+			return
+		src.timing = TRUE
+		command_alert("A self destruct protocol has been activated, please stay clear or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self Destruct Activated", alert_origin = ALERT_STATION)
+		playsound_global(src, 'sound/misc/airraid_loop.ogg', 25)
+		src.activated = TRUE
+
+	proc/detonate()
+		playsound_global(src, 'sound/effects/kaboom.ogg', 70)
+		//explosion(src, src.loc, 10, 20, 30, 35)
+		explosion_new(src, get_turf(src), 10000)
+		//dispose()
+		src.dispose()
+		return
+
+	attack_hand(mob/user)
+		. = ..()
+		user.unlock_medal("Leave no man behind!") //we dont have medal yet i think
+		activate_nuke()
+
+	process()
+		. = ..()
+		if(src.timing)
+			src.time--
+			if(src.time <= 0)
+				outpost_destroyed = 1
+				src.detonate()
+				return
+			else
+				src.time -= 2
+
+			src.updateUsrDialog()
+
+		return
