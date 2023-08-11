@@ -1042,13 +1042,6 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/factory)
-"bcc" = (
-/obj/machinery/conveyor/WS{
-	id = "qm_in";
-	operating = 1
-	},
-/turf/unsimulated/floor/plating,
-/area/morrigan/routing)
 "bcI" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -1739,8 +1732,8 @@
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
 "bUa" = (
-/obj/machinery/conveyor/NE{
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 4
 	},
 /obj/railing/yellow{
 	dir = 8
@@ -1906,10 +1899,6 @@
 "cbi" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/oil,
-/turf/unsimulated/floor/plating/random,
-/area/morrigan/derelict)
-"ccW" = (
-/obj/machinery/conveyor/WN,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "cdl" = (
@@ -3497,7 +3486,7 @@
 /obj/railing/yellow{
 	dir = 8
 	},
-/obj/machinery/conveyor/NS,
+/obj/machinery/conveyor/area_activated,
 /turf/unsimulated/floor/plating,
 /area/morrigan/routing)
 "dVg" = (
@@ -4383,12 +4372,6 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"eLe" = (
-/obj/machinery/conveyor/WN{
-	operating = 1
-	},
-/turf/unsimulated/floor/plating,
-/area/morrigan/routing)
 "eLB" = (
 /obj/machinery/door/unpowered/wood/stall{
 	autoclose = 0;
@@ -4511,6 +4494,22 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/passage)
+"eTQ" = (
+/obj/machinery/conveyor/WS,
+/obj/machinery/conveyor/area_activated{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/unsimulated/floor/plating,
+/area/morrigan/derelict)
 "eUh" = (
 /obj/machinery/emitter,
 /turf/unsimulated/floor/black,
@@ -5835,7 +5834,6 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/emergency)
 "glG" = (
-/obj/item/clothing/under/rank/head_of_security/fancy,
 /obj/item/clothing/shoes/swat,
 /obj/item/clothing/mask/gas/swat,
 /obj/item/storage/backpack/satchel/studdedblack,
@@ -5847,14 +5845,14 @@
 	desc = "Reused content ??";
 	name = "Syndicate HoS Beret"
 	},
-/obj/item/clothing/suit/det_suit/beepsky,
-/obj/item/storage/belt/security/shoulder_holster/inspector,
 /obj/mapping_helper/access/morrigan/hos,
 /obj/storage/secure/closet/morrigan/hos,
 /obj/item/ammo/bullets/a38,
 /obj/item/gun/kinetic/single_action/colt_saa/detective{
 	name = "Peacekeeper"
 	},
+/obj/item/clothing/under/suit/syndiehos,
+/obj/item/clothing/suit/space/syndiehos,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOS)
 "glP" = (
@@ -9054,7 +9052,9 @@
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
 "jHD" = (
-/obj/machinery/conveyor/SN,
+/obj/machinery/conveyor/area_activated{
+	dir = 1
+	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "jHZ" = (
@@ -11154,10 +11154,6 @@
 /obj/item/storage/firstaid/regular,
 /turf/unsimulated/floor/sanitary/blue,
 /area/space)
-"mbN" = (
-/obj/machinery/conveyor/NS,
-/turf/unsimulated/floor/plating,
-/area/morrigan/routing)
 "mbY" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles5"
@@ -11737,7 +11733,9 @@
 /area/morrigan/station/hallway)
 "mKI" = (
 /obj/railing/yellow,
-/obj/machinery/conveyor/NW,
+/obj/machinery/conveyor/area_activated{
+	dir = 8
+	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/routing)
 "mKW" = (
@@ -12466,9 +12464,8 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/exit)
 "nux" = (
-/obj/machinery/conveyor/SN{
-	name = "cargo belt - north";
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/routing)
@@ -12890,12 +12887,6 @@
 /obj/mapping_helper/access/morrigan/janitor,
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/civilian/kitchen)
-"nMm" = (
-/obj/machinery/conveyor/WS{
-	operating = 1
-	},
-/turf/unsimulated/floor/plating,
-/area/morrigan/routing)
 "nMt" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/light/small{
@@ -13586,10 +13577,6 @@
 	},
 /turf/unsimulated/floor/twotone/yellow,
 /area/morrigan/station/engineering)
-"oyo" = (
-/obj/machinery/conveyor/SE,
-/turf/unsimulated/floor/plating,
-/area/morrigan/routing)
 "oys" = (
 /obj/decal/cleanable/generic,
 /obj/decal/fakeobjects/lightbulb_broken{
@@ -13797,7 +13784,7 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/holding)
 "oNB" = (
-/obj/machinery/conveyor/NS,
+/obj/machinery/conveyor/area_activated,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "oNH" = (
@@ -13860,10 +13847,6 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"oRM" = (
-/obj/machinery/conveyor/WS,
-/turf/unsimulated/floor/plating,
-/area/morrigan/routing)
 "oSx" = (
 /obj/storage/secure/closet/morrigan/hop,
 /obj/item/clothing/shoes/swat,
@@ -15519,7 +15502,9 @@
 /turf/unsimulated/floor/green,
 /area/morrigan/station/civilian/botany)
 "qNY" = (
-/obj/machinery/conveyor/WE,
+/obj/machinery/conveyor/area_activated{
+	dir = 4
+	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "qOf" = (
@@ -16236,7 +16221,7 @@
 /turf/unsimulated/floor/terrazzo/black,
 /area/space)
 "rFf" = (
-/obj/machinery/conveyor/NS,
+/obj/machinery/conveyor/area_activated,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing)
 "rFj" = (
@@ -16979,8 +16964,8 @@
 /obj/railing/red/reinforced{
 	dir = 8
 	},
-/obj/machinery/conveyor/NE{
-	operating = 1
+/obj/machinery/conveyor/area_activated{
+	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -22679,7 +22664,7 @@ bmB
 pXd
 pXd
 tMf
-nMm
+xXE
 xXE
 syi
 xXE
@@ -22687,7 +22672,7 @@ xXE
 xXE
 mKI
 tMf
-oRM
+xXE
 aYK
 tbk
 gJf
@@ -22883,14 +22868,14 @@ pXd
 jxs
 cLa
 rFf
-mbN
-mbN
-mbN
-mbN
+xXE
+xXE
+xXE
+xXE
 syi
-mbN
-mbN
-mbN
+xXE
+xXE
+xXE
 tbk
 dUQ
 bUa
@@ -22991,7 +22976,7 @@ pXd
 pXd
 pXd
 pXd
-oyo
+krh
 nux
 nux
 myv
@@ -23202,9 +23187,9 @@ pXd
 tMf
 nZb
 tMf
-bcc
-mbN
-mbN
+xXE
+xXE
+xXE
 rFf
 poW
 jxs
@@ -23403,7 +23388,7 @@ vwJ
 vwJ
 bje
 jqM
-eLe
+nux
 pXd
 aMZ
 mMa
@@ -32591,7 +32576,7 @@ lhK
 vri
 wLb
 jHD
-ccW
+qNY
 lhK
 ddX
 lhK
@@ -33825,7 +33810,7 @@ vwJ
 lhK
 lhK
 vri
-ncv
+eTQ
 vrS
 lhK
 lhK
