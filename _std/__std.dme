@@ -103,6 +103,7 @@
 #include "defines\vehicles.dm"
 #include "defines\wages.dm"
 #include "defines\watermap.dm"
+#include "defines\weapons.dm"
 #include "defines\worldgen.dm"
 #include "macros\actions.dm"
 #include "macros\antag_popups.dm"

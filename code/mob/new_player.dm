@@ -1,6 +1,6 @@
 
 var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
-mob/new_player
+/mob/new_player
 	anchored = ANCHORED
 
 	var/ready = 0
@@ -12,11 +12,11 @@ mob/new_player
 	var/antag_fallthrough = FALSE
 
 #ifdef TWITCH_BOT_ALLOWED
-	var/twitch_bill_spawn = 0
+	var/twitch_bill_spawn = FALSE
 #endif
 
-	density = 0
-	stat = 2
+	density = FALSE
+	stat = STAT_DEAD
 	canmove = 0
 
 	anchored = ANCHORED	//  don't get pushed around
@@ -35,7 +35,7 @@ mob/new_player
 		. = ..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_ALWAYS)
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
-		ready = 1
+		ready = TRUE
 	#endif
 
 	// How could this even happen? Regardless, no log entries for unaffected mobs (Convair880).
@@ -217,6 +217,7 @@ mob/new_player
 							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an emagged cyborg.")
 							S.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
 						SPAWN(1 DECI SECOND)
+							S.bioHolder?.mobAppearance?.pronouns = S.client.preferences.AH.pronouns
 							S.choose_name()
 							qdel(src)
 					else
@@ -697,7 +698,7 @@ a.latejoin-card:hover {
 					var/livingtraitor = 0
 
 					for(var/datum/mind/brain in ticker.minds)
-						if(brain.current && checkantag(brain.current)) // if a traitor
+						if(brain.current && brain.is_antagonist())
 							if (issilicon(brain.current) || isdead(brain.current) || brain.current.client == null) // if a silicon mob, dead or logged out, skip
 								continue
 

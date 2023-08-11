@@ -24,6 +24,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 
 	var/datum/statusEffect/ownerStatus = null
 	var/image/overImg = null
+	var/mob/living/owner_mob = null
 
 	New()
 		overImg = image('icons/ui/statussystem.dmi')
@@ -40,6 +41,22 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		ownerStatus = S
 		src.name = S.name
 		overImg.icon_state = S.icon_state
+#ifdef SHOW_ME_STATUSES
+		src.owner_mob = C
+		src.owner_mob.vis_contents |= src
+		src.pixel_x = (length(src.owner_mob.statusEffects) - 1) * 16
+		src.appearance_flags |= RESET_TRANSFORM
+#endif
+
+	disposing()
+#ifdef SHOW_ME_STATUSES
+		src.owner_mob.vis_contents -= src
+		for (var/atom/movable/screen/statusEffect/effect_obj in src.owner_mob?.vis_contents)
+			if (effect_obj.pixel_x > src.pixel_x)
+				effect_obj.pixel_x -= 16
+		src.owner_mob = null
+#endif
+		. = ..()
 
 	clicked(list/params)
 		if (ownerStatus)

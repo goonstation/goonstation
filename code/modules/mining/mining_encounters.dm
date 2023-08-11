@@ -228,7 +228,7 @@
 		while (amount > 0)
 			amount--
 			the_gem = pick(gems)
-			if (floors.len) //ZeWaka: Fix for pick() from empty list
+			if (length(floors))
 				var/obj/item/G = new the_gem
 				G.set_loc(pick(floors))
 

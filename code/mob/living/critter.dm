@@ -669,7 +669,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			active_hand = 1
 			hand = active_hand
 		hud.update_hands()
-		if(old != src.equipped())
+		src.update_inhands()
+		if (old != src.equipped())
 			if(old)
 				SEND_SIGNAL(old, COMSIG_ITEM_SWAP_AWAY, src)
 			if(src.equipped())
@@ -1010,19 +1011,19 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 	updatehealth()
 		if (src.nodamage)
-			if (health != max_health)
+			if (src.health != src.max_health)
 				full_heal()
-			src.health = max_health
+			src.health = src.max_health
 			setalive(src)
-			icon_state = icon_state_alive ? icon_state_alive : initial(icon_state)
+			src.icon_state = src.icon_state_alive ? src.icon_state_alive : initial(src.icon_state)
 		else
-			health = max_health
-			for (var/T in healthlist)
-				var/datum/healthHolder/HH = healthlist[T]
+			src.health = src.max_health
+			for (var/T in src.healthlist)
+				var/datum/healthHolder/HH = src.healthlist[T]
 				if (HH.count_in_total)
-					health -= (HH.maximum_value - HH.value)
-		hud.update_health()
-		if (health <= 0 && stat < 2)
+					src.health -= (HH.maximum_value - HH.value)
+		src.hud.update_health()
+		if (src.health <= 0 && !isdead(src))
 			death()
 
 	proc/specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -1033,8 +1034,15 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 	update_inhands()
 		var/handcount = 0
-		for (var/datum/handHolder/HH in hands)
+		for (var/datum/handHolder/HH as anything in src.hands)
 			handcount++
+			if (HH.object_for_inhand)
+				var/obj/item/I = new HH.object_for_inhand
+				var/image/inhand = image(icon = I.inhand_image_icon, icon_state = "[I.item_state][HH.suffix]",
+										layer = HH.render_layer, pixel_x = HH.offset_x, pixel_y = HH.offset_y)
+				qdel(I)
+				src.UpdateOverlays(inhand, "inhands_[handcount]")
+				continue // If we have inhands we probably can't hold things
 			var/obj/item/I = HH.item
 			if (HH.show_inhands)
 				if (!I)

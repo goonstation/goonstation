@@ -76,6 +76,11 @@
 #define DECOMP_STAGE_HIGHLY_DECAYED 3
 #define DECOMP_STAGE_SKELETONIZED 4
 
+// Stat defines
+#define STAT_ALIVE 0
+#define STAT_UNCONSCIOUS 1
+#define STAT_DEAD 2
+
 // Butchering defines
 #define BUTCHER_NOT_ALLOWED 0
 #define BUTCHER_ALLOWED 1
