@@ -1335,7 +1335,7 @@
 								boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
 								return
 					if (M)
-						if (!M.restrained() && M.stat != 1 && !isunconscious(M) && !isdead(M))
+						if (!can_act(M))
 							if (tgui_alert(M, "[src] offers you a handshake. Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
 								if (M in view(1,null))
 									message = "<B>[src]</B> shakes hands with [M]."
@@ -1412,7 +1412,7 @@
 
 			if ("highfive")
 				m_type = 1
-				if (!src.restrained() && src.stat != 1 && !isunconscious(src) && !isdead(src))
+				if (!can_act(src))
 					if (src.emote_check(voluntary))
 						var/mob/M = null
 						if (param)
@@ -1433,7 +1433,7 @@
 									return
 
 						if (M)
-							if (!M.restrained() && M.stat != 1 && !isunconscious(M) && !isdead(M))
+							if (!!can_act(M))
 								if (tgui_alert(M, "[src] offers you a highfive! Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
 									if (M in view(1,null))
 										message = "<B>[src]</B> and [M] highfive!"
@@ -1810,6 +1810,9 @@
 
 			if ("flip")
 				if (src.emote_check(voluntary, 5 SECONDS))
+					var/stop_here = SEND_SIGNAL(src, COMSIG_MOB_FLIP, voluntary)
+					if (stop_here)
+						goto showmessage
 					var/list/combatflipped = list()
 					//TODO: space flipping
 					//if ((!src.restrained()) && (!src.lying) && (istype(src.loc, /turf/space)))

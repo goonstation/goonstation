@@ -16,7 +16,7 @@ ABSTRACT_TYPE(/obj/mapping_helper)
 	New()
 		..()
 		if (current_state >= GAME_STATE_WORLD_INIT)
-			SPAWN(5 DECI SECONDS)
+			SPAWN(0)
 				src.initialize()
 
 	initialize()

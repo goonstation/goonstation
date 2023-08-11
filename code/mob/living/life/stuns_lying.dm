@@ -29,16 +29,16 @@
 				var/setStat = owner.stat
 				var/oldStat = owner.stat
 				if (statusList["stunned"])
-					setStat = 0
+					setStat = STAT_ALIVE
 				if (statusList["weakened"] || statusList["pinned"] && !owner.fakedead)
 					if (!cant_lie)
 						owner.lying = TRUE
-					setStat = 0
+					setStat = STAT_ALIVE
 				if (statusList["paralysis"])
 					if (!cant_lie)
 						owner.lying = TRUE
-					setStat = 1
-				if (isalive(owner) && setStat == 1 && owner.mind)
+					setStat = STAT_UNCONSCIOUS
+				if (isalive(owner) && setStat == STAT_UNCONSCIOUS && owner.mind)
 					owner.lastgasp() // calling lastgasp() here because we just got knocked out
 				if (must_lie)
 					owner.lying = TRUE
@@ -54,7 +54,7 @@
 						owner.lose_breath(-0.3)
 						owner.HealDamage("All", 0.2, 0.2, 0.2)
 
-				else if ((oldStat == 1) && (!statusList["paralysis"] && !statusList["stunned"] && !statusList["weakened"] && !changeling_fakedeath))
+				else if ((oldStat == STAT_UNCONSCIOUS) && (!statusList["paralysis"] && !statusList["stunned"] && !statusList["weakened"] && !changeling_fakedeath))
 					owner << sound('sound/misc/molly_revived.ogg', volume=50)
 					setalive(owner)
 

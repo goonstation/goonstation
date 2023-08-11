@@ -657,7 +657,7 @@
 
 	OnLife(var/mult)
 		var/mob/living/L = owner
-		if (!istype(L) || (L.stat == 2))
+		if (!istype(L) || (isdead(L)))
 			return
 		if (probmult(prob_sting))
 			if (ishuman(L))

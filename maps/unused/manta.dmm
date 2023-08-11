@@ -1256,7 +1256,7 @@
 /turf/simulated/floor/scorched2,
 /area/diner/kitchen)
 "aeg" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "aeh" = (
@@ -20712,7 +20712,7 @@
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
 "bgw" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
