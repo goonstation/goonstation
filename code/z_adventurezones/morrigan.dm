@@ -2,6 +2,10 @@ var/datum/allocated_region/morrigan_region = null
 proc/load_morrigan()
 	var/datum/mapPrefab/allocated/prefab = get_singleton(/datum/mapPrefab/allocated/morrigan)
 	morrigan_region = prefab.load()
+	// big stupid hack because conveyors only init if loaded earlier
+	for (var/obj/machinery/conveyor/conveyor as anything in machine_registry[MACHINES_CONVEYORS])
+		if (morrigan_region.turf_in_region(get_turf(conveyor)))
+			conveyor.initialize()
 
 // Morrigan Azone Content
 
@@ -1320,7 +1324,7 @@ proc/load_morrigan()
 
 	canShow(var/client/C)
 		var/rep = C.reputations.get_reputation_level("hobo")
-		if(rep < 5 )
+		if(master.getFlag(C, "weldingtool") == "taken" || rep < 5 )
 			return FALSE
 		else
 			return TRUE
