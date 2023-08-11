@@ -1034,11 +1034,11 @@
 		driver_id &= ~ESIG_DATABIT
 
 		var/list/initlist = splittext(initparams, " ")
-		var/command = lowertext(initlist[1])
-		if (!initparams || !length(initlist) || command != "transmit" || length(initlist) > 2)
+		if (!initparams || !length(initlist) || lowertext(initlist[1]) != "transmit" || length(initlist) > 2)
 			message_user("Invalid commmand format.|nValid Commands:|n (Transmit) to initiate transfer, with optional argument of a delay in seconds.","multiline")
 			mainframe_prog_exit
 			return
+		var/command = lowertext(initlist[1])
 		var/delay = 0
 		if (length(initlist) > 1)
 			delay = text2num_safe(initlist[2])
