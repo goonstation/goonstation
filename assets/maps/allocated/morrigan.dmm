@@ -16358,6 +16358,7 @@
 "rLu" = (
 /obj/decal/cleanable/cobweb,
 /obj/stool/chair/material/mauxite,
+/obj/dialogueobj/hobo,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict/hobo)
 "rLv" = (

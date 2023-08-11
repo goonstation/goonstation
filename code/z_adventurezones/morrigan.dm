@@ -1428,3 +1428,27 @@ proc/load_morrigan()
 	src.occupant?.set_loc(get_turf(src))
 	src.occupant = null
 	qdel(src)
+
+//Suit stuff
+
+/obj/item/clothing/suit/space
+	name = "Head of Security's coat"
+	desc = "A slightly armored jacket favored by Syndicate security personnel.!"
+	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
+	icon_state = "syndiecommander_suit"
+	item_state = "syndiecommander_suit"
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 3)
+		setProperty("rangedprot", 0.7)
+		setProperty("coldprot", 35)
+
+/obj/item/clothing/under/suit
+	name = "Head of Security's Decorated Suit"
+	desc = "A little too familiar..."
+	icon = 'icons/obj/clothing/clothing/uniforms/item_js_rank.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_rank.dmi'
+	icon_state = "hos_syndie"
+	item_state = "hos_syndie"

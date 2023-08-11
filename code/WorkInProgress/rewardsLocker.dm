@@ -1443,6 +1443,73 @@ datum/achievementReward/ai_dwaine
 			boutput( usr, "<span class='alert'>Hmm.. I can't set the scream sound of that!</span>" )
 			return 0
 
+/datum/achievementReward/ntsecurity
+	title = "(Skin set) NT Security Detail"
+	desc = "Will change the skin of an armor vest, hats, shoes, and a jumpsuit."
+	required_medal = "Cell Shock"
+	once_per_round = TRUE
+
+	rewardActivate(var/mob/activator)
+		if (ishuman(activator))
+			var/mob/living/carbon/human/H = activator
+			var/succ = FALSE
+			if (H.wear_suit)
+				var/obj/item/clothing/suit/armor/M = H.wear_suit
+				if (istype(M))
+					var/prev = M.name
+					M.icon_state = "reward_vest"
+					M.item_state = "reward_vest"
+					M.name = "NTSD Armor"
+					M.real_name = "NTSD Armor"
+					M.desc = "A fancy armor vest with badge and keys! (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.w_uniform)
+				var/obj/item/clothing/M = H.w_uniform
+				if (istype(M, /obj/item/clothing/under))
+					var/prev = M.name
+					M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+					M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
+					M.icon_state = "warden"
+					M.item_state = "warden"
+					M.name = "NTSD Jumpsuit"
+					M.real_name = "NTSD Jumpsuit"
+					M.desc = "A uniform for the NTSD Units. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.head)
+				var/obj/item/clothing/M = H.head
+				if (istype(M, /obj/item/clothing/head))
+					var/prev = M.name
+					M.icon_state = "wardencap"
+					M.item_state = "wardencap"
+					M.name = "NTSD's Cap"
+					M.desc = "A fancy hat for the NTSD set. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+
+			if (H.shoes)
+				var/obj/item/clothing/M = H.shoes
+				if (istype(M, /obj/item/clothing/shoes))
+					var/prev = M.name
+					M.icon_state = "warden"
+					M.item_state = "warden"
+					M.name = "NTSD's boots"
+					M.real_name = "NTSD's boots"
+					M.desc = "This pair of boots has fits with the NTSD Set. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (!succ)
+				boutput(activator, "<span class='alert'>Unable to redeem.</span>")
+			return succ
+
+		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
+		return
+
 /// Keeps track of once-per-round rewards
 /datum/player/var/list/claimed_rewards = list()
 
