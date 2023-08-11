@@ -613,6 +613,16 @@
 "aBV" = (
 /turf/unsimulated/floor/redblack,
 /area/morrigan/construction)
+"aCn" = (
+/obj/storage/closet/biohazard,
+/obj/item/clothing/suit/space/light/engineer{
+	icon_state = "syndie_specialist-infiltrator";
+	item_state = "syndie_specialist-infiltrator";
+	desc = "Someone forgot this here!";
+	name = "Syndicate Special Space Suit"
+	},
+/turf/unsimulated/floor/sanitary/white,
+/area/morrigan/station/medical/biological)
 "aCo" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/unsimulated/floor/plating/damaged1,
@@ -1511,7 +1521,7 @@
 	},
 /area/morrigan/station/command/HOP)
 "bGR" = (
-/obj/item/parts/robot_parts/chest/standard,
+/obj/item/parts/robot_parts/chest,
 /obj/decal/cleanable/blood{
 	icon_state = "footprints1"
 	},
@@ -5779,7 +5789,7 @@
 /area/morrigan/station/civilian/janitor)
 "gij" = (
 /obj/decal/fakeobjects/safehouse/conduit,
-/obj/machinery/macrofab/emergency_pod,
+/obj/machinery/macrofab,
 /obj/machinery/conveyor/NS,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
@@ -5815,9 +5825,7 @@
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "giW" = (
-/obj/machinery/door/poddoor/buff{
-	id = "morrigan_brig"
-	},
+/obj/machinery/door/poddoor/buff,
 /turf/unsimulated/floor/black,
 /area/morrigan/warden)
 "gjb" = (
@@ -9469,6 +9477,10 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"khV" = (
+/turf/unsimulated/wall/auto/adventure/fake_window/glass,
+/turf/unsimulated/floor/plating,
+/area/morrigan/station/security/main)
 "kic" = (
 /obj/table/auto,
 /obj/item/storage/goodybag{
@@ -10386,10 +10398,6 @@
 /obj/random_item_spawner/desk_stuff,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
-"lia" = (
-/mob/living/critter/robotic/gunbot,
-/turf/unsimulated/floor/black,
-/area/morrigan/station/civilian/janitor)
 "lik" = (
 /turf/unsimulated/floor/blueblack/corner{
 	dir = 8
@@ -10433,6 +10441,10 @@
 /obj/decal/cleanable/leaves,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/morrigan/station/medical/main)
+"lkB" = (
+/turf/unsimulated/wall/auto/adventure/fake_window/crystal,
+/turf/unsimulated/floor/plating,
+/area/morrigan/station/security/main)
 "lkR" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/fakeobjects/lightbulb_broken{
@@ -14149,6 +14161,10 @@
 	},
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
+"pmY" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/sanitary/white,
+/area/morrigan/station/medical/biological)
 "pnx" = (
 /obj/table/wood/auto,
 /obj/item/gun_parts,
@@ -14352,9 +14368,9 @@
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOP)
 "pAX" = (
-/obj/machinery/door_control{
-	pixel_y = 7;
-	id = "morrigan_brig"
+/obj/machinery/activation_button{
+	pixel_y = 10;
+	dir = 1
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/warden)
@@ -14449,7 +14465,7 @@
 "pEz" = (
 /obj/table/wood/auto,
 /obj/item/raw_material/scrap_metal,
-/obj/item/circuitboard/tetris,
+/obj/item/circuitboard,
 /obj/item/screwdriver/grey,
 /obj/machinery/light/incandescent/warm,
 /turf/unsimulated/floor/plating/jen,
@@ -15243,7 +15259,7 @@
 /turf/unsimulated/floor/engine/caution/east,
 /area/morrigan/station/factory)
 "qzY" = (
-/obj/item/parts/robot_parts/arm/left/light,
+/obj/item/parts/robot_parts/arm/left,
 /obj/decal/cleanable/machine_debris,
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/engine/glow,
@@ -15262,7 +15278,7 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "qBA" = (
-/obj/machinery/chem_dispenser/chemical,
+/obj/machinery/chem_dispenser,
 /turf/unsimulated/floor/twotone/black,
 /area/morrigan/station/medical/biological)
 "qBH" = (
@@ -18165,7 +18181,7 @@
 /area/morrigan/station/medical/biological)
 "uco" = (
 /obj/decal/fakeobjects/safehouse/conduit,
-/obj/machinery/macrofab/emergency_pod,
+/obj/machinery/macrofab,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "ucY" = (
@@ -18325,7 +18341,6 @@
 	},
 /area/morrigan/station/civilian/chapel)
 "ulV" = (
-/obj/window/crystal/south,
 /obj/decal/cleanable/dirt/dirt3,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
@@ -23155,11 +23170,11 @@ seq
 eHw
 brA
 fAm
-lia
 peF
 peF
 peF
-lia
+peF
+peF
 mWI
 brA
 obU
@@ -25559,7 +25574,7 @@ nbi
 nbi
 nbi
 odW
-eGe
+aCn
 mSK
 gjN
 odW
@@ -25664,7 +25679,7 @@ fyC
 jeE
 mSK
 mSK
-mSK
+pmY
 odW
 obU
 iVk
@@ -29637,7 +29652,7 @@ hAo
 gIW
 iCr
 gIW
-hAo
+khV
 wtw
 pSS
 oTo
@@ -29740,7 +29755,7 @@ pXa
 gIW
 pRA
 gIW
-hAo
+khV
 aZL
 xCg
 muJ
@@ -29843,7 +29858,7 @@ jbI
 gIW
 pRA
 gIW
-hAo
+khV
 bOJ
 bnh
 bnh
@@ -29942,7 +29957,7 @@ aOR
 mSo
 pRA
 nEW
-hAo
+khV
 jXB
 xOM
 jXB
@@ -30044,10 +30059,10 @@ kcV
 aOR
 aOR
 csT
-hAo
+lkB
 aOR
 itH
-hAo
+khV
 itH
 jyQ
 taa
