@@ -493,6 +493,7 @@
 /datum/plantmutation/stinging_nettle/smooth
 	name = "Dead Nettle"
 	name_prefix = "Smooth "
+	iconmod = "NettleSmooth"
 	crop = /obj/item/plant/herb/nettle/smooth
 	chance = 20
 

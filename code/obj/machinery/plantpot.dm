@@ -357,7 +357,6 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	HasProximity(atom/movable/AM as mob|obj)
 		if(!src.current || src.dead)
-			remove_use_proximity()         // If there's no plant here, there doesn't need to be a check
 			return
 		src.current?.ProximityProc(src, AM)
 		return
@@ -1482,6 +1481,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.health_warning = 0
 		src.harvest_warning = 0
 		UpdateIcon()
+		remove_use_proximity()// If there's no plant here, there doesn't need to be a check
 		update_name()
 
 	proc/HYPdestroyplant()
@@ -1501,6 +1501,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 		src.generation = 0
 		UpdateIcon()
+		remove_use_proximity()
 		update_name()
 		post_alert(list("event" = "cleared"))
 
