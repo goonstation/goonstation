@@ -14405,7 +14405,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "gwG" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -26289,7 +26289,7 @@
 	},
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 50;
+	drive_range = 65;
 	id = "trashgun"
 	},
 /turf/space/fluid/acid/clear,
@@ -28064,8 +28064,8 @@
 	pixel_y = 13
 	},
 /obj/item/device/nanoloom{
-	pixel_y = 1;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 1
 	},
 /obj/item/nanoloom_cartridge{
 	pixel_x = -7;
@@ -31710,12 +31710,12 @@
 "nAt" = (
 /obj/table/reinforced/auto,
 /obj/item/kitchen/food_box/sugar_box{
-	pixel_y = 16;
-	pixel_x = -1
+	pixel_x = -1;
+	pixel_y = 16
 	},
 /obj/item/reagent_containers/food/drinks/creamer{
-	pixel_y = 5;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 5
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
@@ -45772,7 +45772,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
 "tNr" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
@@ -45940,8 +45940,8 @@
 	pixel_y = 7
 	},
 /obj/item/kitchen/food_box/sugar_box{
-	pixel_y = 12;
-	pixel_x = 1
+	pixel_x = 1;
+	pixel_y = 12
 	},
 /turf/simulated/floor/blueblack{
 	dir = 1
@@ -46457,7 +46457,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
 "udR" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/blueblack{
 	dir = 8
@@ -46688,8 +46688,8 @@
 "ujg" = (
 /obj/table/reinforced/auto,
 /obj/item/crowbar{
-	pixel_y = 5;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 5
 	},
 /obj/item/device/multitool{
 	pixel_x = -17;
@@ -50320,9 +50320,9 @@
 /obj/item/storage/wall{
 	icon_state = "miniorange";
 	name = "Donk-Closet";
+	pixel_x = -4;
 	pixel_y = 32;
-	spawn_contents = list(/obj/item/storage/box/donkpocket_kit);
-	pixel_x = -4
+	spawn_contents = list(/obj/item/storage/box/donkpocket_kit)
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -50900,12 +50900,12 @@
 "wgR" = (
 /obj/table/reinforced/auto,
 /obj/item/device/gps{
-	pixel_y = 4;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 4
 	},
 /obj/item/device/gps{
-	pixel_y = 4;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /turf/simulated/floor/redblack{
 	dir = 5

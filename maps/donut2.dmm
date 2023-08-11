@@ -738,6 +738,7 @@
 "acp" = (
 /obj/machinery/mass_driver{
 	dir = 8;
+	drive_range = 135;
 	id = "outpostla2"
 	},
 /turf/simulated/floor/engine/vacuum{
@@ -759,7 +760,7 @@
 /area/space)
 "acw" = (
 /obj/machinery/mass_driver{
-	dir = 2;
+	drive_range = 43;
 	id = "outpostla3"
 	},
 /turf/simulated/floor/engine/vacuum{
@@ -5377,6 +5378,7 @@
 "awc" = (
 /obj/machinery/mass_driver{
 	dir = 4;
+	drive_range = 70;
 	id = "drone_launcher"
 	},
 /turf/simulated/floor/plating/random,
@@ -5384,6 +5386,7 @@
 "awd" = (
 /obj/machinery/mass_driver{
 	dir = 4;
+	drive_range = 70;
 	id = "drone_launcher"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -7092,6 +7095,7 @@
 "aCe" = (
 /obj/machinery/mass_driver{
 	dir = 1;
+	drive_range = 26;
 	id = "outpost_mail_in"
 	},
 /turf/simulated/floor/engine/vacuum{
@@ -7804,6 +7808,7 @@
 "aEt" = (
 /obj/machinery/mass_driver{
 	dir = 8;
+	drive_range = 82;
 	id = "outpost_mail_out"
 	},
 /turf/simulated/floor/engine/vacuum{
@@ -26821,6 +26826,7 @@
 "fed" = (
 /obj/machinery/mass_driver{
 	dir = 1;
+	drive_range = 10;
 	id = "outpostla"
 	},
 /turf/simulated/floor/plating,
@@ -38032,6 +38038,8 @@
 	dir = 4;
 	icon_state = "pipe-s"
 	},
+/obj/mapping_helper/access/engineering_chief,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/ce)
 "nEX" = (
@@ -43556,6 +43564,7 @@
 "rEV" = (
 /obj/machinery/mass_driver{
 	dir = 1;
+	drive_range = 9;
 	id = "outpostla"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -47672,7 +47681,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "uFY" = (

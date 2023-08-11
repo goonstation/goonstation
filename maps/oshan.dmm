@@ -9623,11 +9623,11 @@
 /obj/window_blinds/cog2/middle,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "test_chamber";
 	name = "Test Chamber Blast Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
@@ -18125,7 +18125,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "bjN" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/noticeboard/persistent{
 	name = "Bar persistent notice board";
 	persistent_id = "bar"
@@ -31962,7 +31962,7 @@
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "cbP" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "cbQ" = (
@@ -38701,8 +38701,8 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1";
-	name = "Detective's Office"
+	name = "Detective's Office";
+	req_access_txt = "1"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/forensics,
@@ -44186,11 +44186,11 @@
 /obj/window_blinds/cog2/right,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "test_chamber";
 	name = "Test Chamber Blast Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
@@ -44338,8 +44338,8 @@
 /area/station/medical/robotics)
 "tcD" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1";
-	name = "Detective's Office"
+	name = "Detective's Office";
+	req_access_txt = "1"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/forensics,
@@ -44371,9 +44371,9 @@
 	icon_state = "2-8"
 	},
 /obj/item/reagent_containers/food/snacks/popcorn{
+	bites_left = 100;
 	desc = "Those chickens are up to something...";
-	name = "suspicious popcorn";
-	bites_left = 100
+	name = "suspicious popcorn"
 	},
 /obj/landmark/start/job/detective,
 /turf/simulated/floor/carpet/grime,
@@ -44896,11 +44896,11 @@
 /obj/window_blinds/cog2/left,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "test_chamber";
 	name = "Test Chamber Blast Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
@@ -46601,8 +46601,8 @@
 	dir = 9;
 	name = "autoname - SS13";
 	pixel_x = 10;
-	tag = "";
-	pixel_y = -17
+	pixel_y = -17;
+	tag = ""
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)

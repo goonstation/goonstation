@@ -76,7 +76,7 @@
 "aat" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 23;
+	drive_range = 71;
 	id = "north_ext"
 	},
 /turf/simulated/floor/plating/airless,
@@ -119,7 +119,7 @@
 "aaD" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 25;
+	drive_range = 69;
 	id = "north_ext"
 	},
 /turf/simulated/floor/plating/airless,
@@ -182,7 +182,7 @@
 /area/space)
 "aaO" = (
 /obj/machinery/mass_driver{
-	drive_range = 25;
+	drive_range = 67;
 	id = "north_ext"
 	},
 /turf/simulated/floor/plating/airless,
@@ -3199,7 +3199,7 @@
 "all" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 23;
+	drive_range = 14;
 	id = "cateringdock_out"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -3470,7 +3470,7 @@
 "amo" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 23;
+	drive_range = 15;
 	id = "cateringdock_out"
 	},
 /turf/simulated/floor/plating,
@@ -11776,7 +11776,7 @@
 "aJZ" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 100;
+	drive_range = 104;
 	id = "chapelgun"
 	},
 /turf/simulated/floor/plating,
@@ -11784,7 +11784,7 @@
 "aKa" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 100;
+	drive_range = 103;
 	id = "chapelgun"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -21294,7 +21294,7 @@
 "bkl" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 25;
+	drive_range = 68;
 	id = "north_ext"
 	},
 /turf/simulated/floor/plating/airless,
@@ -22296,7 +22296,7 @@
 "bnA" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 23;
+	drive_range = 27;
 	id = "outer_in"
 	},
 /turf/simulated/floor/plating/airless,
@@ -22897,7 +22897,7 @@
 /area/station/ai_monitored/storage/eva)
 "bpk" = (
 /obj/machinery/mass_driver{
-	drive_range = 100;
+	drive_range = 70;
 	id = "south_ext"
 	},
 /turf/simulated/floor/plating/airless,
@@ -24939,6 +24939,7 @@
 "byi" = (
 /obj/machinery/mass_driver{
 	dir = 4;
+	drive_range = 58;
 	id = "drone_launcher"
 	},
 /turf/simulated/floor/plating/random,
@@ -24946,6 +24947,7 @@
 "byj" = (
 /obj/machinery/mass_driver{
 	dir = 4;
+	drive_range = 57;
 	id = "drone_launcher"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -33187,7 +33189,7 @@
 "cbD" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 5;
+	drive_range = 41;
 	id = "magnet"
 	},
 /turf/simulated/floor/plating/airless,
@@ -40575,6 +40577,7 @@
 "cyI" = (
 /obj/machinery/mass_driver{
 	dir = 1;
+	drive_range = 17;
 	id = "chemdock_in"
 	},
 /turf/simulated/floor/plating/airless,
@@ -40586,7 +40589,7 @@
 "cyV" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 50;
+	drive_range = 33;
 	id = "south_ext"
 	},
 /turf/simulated/floor/plating/airless,
@@ -40594,7 +40597,7 @@
 "cyW" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 25;
+	drive_range = 218;
 	id = "south_ext"
 	},
 /turf/simulated/floor/plating/airless,
@@ -40602,7 +40605,7 @@
 "cyX" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 25;
+	drive_range = 108;
 	id = "south_ext"
 	},
 /turf/simulated/floor/plating/airless,
@@ -42920,6 +42923,14 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
+"dCU" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 28;
+	id = "north_ext"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "dDl" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -44233,6 +44244,14 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
+"eGu" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 40;
+	id = "magnet"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "eGB" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -44670,6 +44689,14 @@
 /obj/landmark/start/job/security_assistant,
 /turf/simulated/floor/red/side,
 /area/station/security/main)
+"eWX" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 68;
+	id = "north_ext"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "eXq" = (
 /obj/machinery/vehicle/pod_smooth/light,
 /obj/machinery/light{
@@ -46609,6 +46636,14 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/routing/eva)
+"gGO" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 29;
+	id = "north_ext"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "gIi" = (
 /obj/machinery/door/airlock/pyro/medical{
 	name = "Test Chamber Access";
@@ -47385,6 +47420,14 @@
 /obj/landmark/pest,
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
+"hwF" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 28;
+	id = "north_ext"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "hwO" = (
 /obj/machinery/light,
 /turf/simulated/floor/yellow/side{
@@ -48986,7 +49029,7 @@
 	name = "W light switch";
 	pixel_x = -24
 	},
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
@@ -50398,6 +50441,14 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"kkz" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 107;
+	id = "south_ext"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "kms" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/window/eastright{
@@ -50536,6 +50587,13 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/staff)
+"krk" = (
+/obj/machinery/mass_driver{
+	drive_range = 68;
+	id = "north_ext"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "krl" = (
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -52208,6 +52266,14 @@
 	id = "qmin"
 	},
 /turf/space,
+/area/space)
+"mhv" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 32;
+	id = "south_ext"
+	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "mhN" = (
 /obj/machinery/conveyor/WE{
@@ -54463,6 +54529,14 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
+"ofF" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 29;
+	id = "north_ext"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "ogb" = (
 /obj/machinery/door/window/northleft{
 	req_access_txt = null
@@ -54629,6 +54703,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/engine)
+"ola" = (
+/obj/machinery/mass_driver{
+	drive_range = 71;
+	id = "south_ext"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "olI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -55939,6 +56020,14 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"pzJ" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 219;
+	id = "south_ext"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "pzO" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -56284,12 +56373,6 @@
 	tag = ""
 	},
 /obj/grille/catwalk,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	tag = ""
-	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
@@ -62278,6 +62361,14 @@
 	dir = 10
 	},
 /area/mining/magnet)
+"vdw" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 28;
+	id = "outer_in"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "vdx" = (
 /obj/landmark/start/latejoin,
 /obj/stool/chair/comfy/shuttle,
@@ -62597,6 +62688,14 @@
 /obj/machinery/genetics_scanner,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
+"vre" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 67;
+	id = "north_ext"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "vrm" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -63770,6 +63869,14 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/science/teleporter)
+"wuJ" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 16;
+	id = "chemdock_in"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "wuM" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -63968,7 +64075,9 @@
 /obj/machinery/conveyor/WE{
 	id = "mining"
 	},
-/obj/plasticflaps,
+/obj/plasticflaps{
+	dir = 4
+	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -64981,6 +65090,14 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
+"xBi" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 72;
+	id = "north_ext"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "xBy" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9
@@ -99395,7 +99512,7 @@ adC
 adC
 adC
 adC
-cyI
+wuJ
 cyI
 ojv
 aax
@@ -100003,7 +100120,7 @@ adC
 adC
 xaG
 aay
-cyX
+kkz
 aah
 adC
 adC
@@ -100154,7 +100271,7 @@ adC
 aag
 aaq
 aay
-aaD
+eWX
 aaG
 adC
 adC
@@ -120990,7 +121107,7 @@ adC
 adC
 adC
 aag
-aat
+xBi
 aax
 hPO
 aaG
@@ -122804,7 +122921,7 @@ adC
 aag
 xaG
 aax
-aaD
+gGO
 aaG
 adC
 adC
@@ -123106,7 +123223,7 @@ adC
 aag
 xaG
 aay
-aaD
+hwF
 aaG
 adC
 adC
@@ -131560,7 +131677,7 @@ adC
 adC
 adC
 aag
-aat
+dCU
 aay
 hPO
 aaG
@@ -131635,7 +131752,7 @@ adC
 aag
 hPO
 aax
-bnA
+vdw
 aaG
 adC
 adC
@@ -131862,7 +131979,7 @@ adC
 adC
 adC
 aag
-aat
+ofF
 aax
 hPO
 aap
@@ -132013,7 +132130,7 @@ aar
 aar
 aaw
 aap
-cyW
+pzJ
 aax
 aap
 aaG
@@ -132168,7 +132285,7 @@ aau
 aax
 avp
 aaA
-aaO
+krk
 aaO
 adC
 adC
@@ -132241,7 +132358,7 @@ hPO
 fxp
 bnB
 aaA
-bpk
+ola
 bpk
 adC
 adC
@@ -132838,7 +132955,7 @@ aah
 adC
 adC
 adC
-bkl
+vre
 bkl
 blw
 bmh
@@ -132884,7 +133001,7 @@ adC
 adC
 adC
 adC
-cbD
+eGu
 cbD
 blw
 bAK
@@ -132918,7 +133035,7 @@ adC
 adC
 aag
 aap
-cyV
+mhv
 cyV
 blw
 fxp
