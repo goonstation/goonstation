@@ -34,15 +34,19 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1	// No other zlevels. Boots way faster. will load atlas by default
 
 //////--- DEVELOPER MAPS FOR TESTING THINGS ---
-// these maps are in the blank_maps subfolder in the maps folder.
+// these maps are in the blank_maps subfolder in the maps folder. Other maps are lower down
+//#define MAP_OVERRIDE_DEVTEST			            // Developer Testing map by cringe
 //#define MAP_OVERRIDE_TESTING_UNSIMMED					// Only load in the 20x20 testing map. no z levels
-//#define MAP_OVERRIDE_TESTING_SIMMED						// above but with atmos sim.
+//#define MAP_OVERRIDE_TESTING_SIMMED						// 20x20 testing map but with simmed turfs
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID	// all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
 //#define NO_COOLDOWNS										// disables all /datum/targetable cooldowns
 //#define BONUS_POINTS										// gives a bunch of starting points to various abilities/uplinks/weapon vendors
 //#define SHUT_UP_AND_GIVE_ME_MEDAL_STUFF	// causes has_medal to always return true - good for testing medal rewards etc.
+//#define SHOW_ME_STATUSES // incredibly hacky visible status effects
+
+//#define Z_LOG_ENABLE 1		// Enable additional world.log logging
 
 //#define STOP_DISTRACTING_ME //All of the below
 
@@ -60,8 +64,6 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define I_AM_HACKERMAN																// Lets you varedit things you normally couldn't (admin holders, server config)
 //#define CHECK_MORE_RUNTIMES														// Enables checking for some additional errors which might be too costly on live server
 //#define QUICK_MOB_DELETION														// Enables deleting mobs with build mode right click on obj place mode
-
-//#define Z_LOG_ENABLE 1		// Enable additional world.log logging
 
 //------------- PROFILING OPTIONS -------------//
 
@@ -140,7 +142,6 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_CRASH				// Stupid Crash Gimmick Map
 //#define MAP_OVERRIDE_MUSHROOM			// Updated Mushroom
 //#define MAP_OVERRIDE_TRUNKMAP			// Updated Ovary
-//#define MAP_OVERRIDE_CHIRON				// Chiron by Kubius
 //#define MAP_OVERRIDE_DENSITY			// Density, the smallest map
 //#define MAP_OVERRIDE_OZYMANDIAS		// Ozymandias, the largest map (sort of)
 //#define MAP_OVERRIDE_FLEET				// Multiple stations stuck together
