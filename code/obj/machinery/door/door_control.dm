@@ -506,9 +506,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 
 	if (!text_out)
 		return
-
-	if (src.glitchy_slogans)
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[text_out]\"", 2, assoc_maptext = slogan_text)
 	else
 		src.audible_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[text_out]\"</span></span>", 2, assoc_maptext = slogan_text)
 
