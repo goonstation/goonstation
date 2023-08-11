@@ -118,6 +118,10 @@ const Occupant = (props, context) => {
 
           <Section title="Key Health Indicators" mt="0.5rem">
             <KeyHealthIndicators mobData={occupant} />
+            {!!occupant.hasRoboticOrgans && (
+              <Box textAlign="center">
+                <Box bold fontSize={1.2} color="purple">Unknown augmented organs detected.</Box>
+              </Box>)}
           </Section>
         </>
       )}

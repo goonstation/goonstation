@@ -115,7 +115,7 @@
 	ui_data(mob/user)
 		. = list()
 
-		.["occupant"] = get_occupant_data(src.occupant)
+		.["occupant"] = get_occupant_data()
 		.["cellTemp"] = air_contents.temperature
 		.["status"] = src.on
 
@@ -163,8 +163,8 @@
 		if (!src.allowed(user))
 			. = min(., UI_UPDATE)
 
-	proc/get_occupant_data(var/mob/occupant)
-		if (!occupant)
+	proc/get_occupant_data()
+		if (!src.occupant)
 			return null
 
 		. = list(
@@ -178,6 +178,7 @@
 		)
 		if (isliving(src.occupant))
 			var/mob/living/L = src.occupant
+			var/mob/living/carbon/human/H = L
 
 			var/death_state = L.stat
 			if (L.bioHolder && L.bioHolder.HasEffect("dead_scan"))
@@ -211,6 +212,9 @@
 					"blood_volume" = L.blood_pressure["total"],
 					"reagents" = get_reagents_data(L.reagents, null)
 				)
+
+			if (istype(H))
+				. += list("hasRoboticOrgans" = H.robotic_organs > 0)
 
 	proc/get_reagents_data(var/datum/reagents/R, var/container_name)
 		. = list(
