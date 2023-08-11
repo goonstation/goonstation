@@ -6,13 +6,13 @@
  */
 
 import { useBackend } from "../backend";
-import { Button, Box, Icon, AnimatedNumber, Section, LabeledList, ProgressBar, Dimmer, Table } from "../components";
+import { Button, Box, Icon, AnimatedNumber, Section, LabeledList, ProgressBar, Dimmer } from "../components";
 import { Window } from '../layouts';
 import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 import { ReagentGraph, ReagentList } from './common/ReagentInfo';
 import { HealthStat, damageNum } from './common/HealthStat';
 import { MobStatuses } from './common/MobStatus';
-import { DisplayBloodPressure, DisplayTempImplantRow, DisplayRads, DisplayBrain, DisplayEmbeddedObjects } from '../interfaces/OperatingComputer/index';
+import { KeyHealthIndicators } from './common/KeyHealthIndicators/index';
 
 export const CryoCell = (_props, context) => {
   return (
@@ -117,27 +117,7 @@ const Occupant = (props, context) => {
           </LabeledList>
 
           <Section title="Key Health Indicators" mt="0.5rem">
-            <Table>
-              <DisplayBloodPressure
-                occupied={occupant.occupied}
-                patient_status={occupant.patient_status}
-                blood_pressure_rendered={occupant.blood_pressure_rendered}
-                blood_pressure_status={occupant.blood_pressure_status}
-                blood_volume={occupant.blood_volume}
-              />
-              <DisplayTempImplantRow
-                occupied={occupant.occupied}
-                body_temp={occupant.body_temp}
-                optimal_temp={occupant.optimal_temp}
-                embedded_objects={occupant.embedded_objects}
-              />
-              { !!occupant.occupied && <DisplayRads rad_stage={occupant.rad_stage} rad_dose={occupant.rad_dose} />}
-              <DisplayBrain
-                occupied={occupant.occupied}
-                status={occupant.brain_damage}
-              />
-            </Table>
-            { !!occupant.occupied && <DisplayEmbeddedObjects embedded_objects={occupant.embedded_objects} />}
+            <KeyHealthIndicators mobData={occupant} />
           </Section>
         </>
       )}
