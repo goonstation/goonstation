@@ -27199,7 +27199,6 @@
 /area/station/crew_quarters/market)
 "bZR" = (
 /obj/machinery/computer/barcode/qm{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM");
 	dir = 8
 	},
 /obj/machinery/alarm{
@@ -44237,9 +44236,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/cafeteria)
 "lBy" = (
-/obj/machinery/computer/barcode/qm{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM")
-	},
+/obj/machinery/computer/barcode/qm,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"

@@ -329,6 +329,15 @@
 
 	var/list/destinations = list("Airbridge", "Cafeteria", "EVA", "Engine", "Disposals", "QM", "Catering", "MedSci", "Security") //These have to match the ones on the cargo routers for the routers to work.
 
+	proc/initialize_destinations(var/mapname = global.map_setting)
+		switch (mapname)
+			//only these two maps need custom lists of destinations
+			if ("COGMAP2")
+				destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","Trader","QM")
+			if ("KONDARU")
+				destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM")
+
+
 	proc/print(var/destination, var/amount)
 		if (printing)
 			return
@@ -416,10 +425,11 @@
 	name = "QM Barcode Computer"
 	desc = "Used to print barcode stickers for the cargo routing system, and to mark crates for sale to traders."
 	icon_state = "qm_barcode_comp"
+	circuit_type = /obj/item/circuitboard/barcode_qm
 
 	New()
 		..()
-
+		initialize_destinations()
 	ui_static_data(mob/user)
 		. = ..()
 		var/list/traders = new()
