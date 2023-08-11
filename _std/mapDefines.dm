@@ -70,11 +70,7 @@
 
 #elif defined(MAP_OVERRIDE_OZYMANDIAS)
 
-#elif defined(MAP_OVERRIDE_FLEET)
-
-#elif defined(MAP_OVERRIDE_ICARUS)
-
-#elif defined(MAP_OVERRIDE_GEHENNA)*/
+#elif defined(MAP_OVERRIDE_FLEET))*/
 
 #else // the "default" map
 //#define UNDERWATER_MAP 1

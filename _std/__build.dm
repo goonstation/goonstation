@@ -149,8 +149,6 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_DENSITY			// Density, the smallest map
 //#define MAP_OVERRIDE_OZYMANDIAS		// Ozymandias, the largest map (sort of)
 //#define MAP_OVERRIDE_FLEET				// Multiple stations stuck together
-//#define MAP_OVERRIDE_ICARUS
-//#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
 
 
 //------------ Unit Test Framework ------------//
