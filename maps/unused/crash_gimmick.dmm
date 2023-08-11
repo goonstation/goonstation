@@ -9417,7 +9417,7 @@
 /obj/machinery/optable{
 	name = "Autopsy Table"
 	},
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /turf/simulated/floor/specialroom/freezer/blue{
 	broken = 1;
 	burnt = 1;
@@ -17678,7 +17678,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/north{
 	broken = 1;
 	color = "#8c8c8c";
@@ -37249,7 +37249,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/vending/alcohol{
+/obj/machinery/vending/alcohol/with_ammo{
 	name = "??? hEaghra's Vaguely-Irish-Swill-Dispenser";
 	slogan_list = list("Please drink responsibly.","No Refunds.","Please enjoy your stay at the Kuiper Inn!","No admittance under the age of 13.")
 	},
@@ -54525,11 +54525,11 @@
 /area/russian/radiation)
 "lKW" = (
 /obj/storage/crate/freezer,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
-/obj/item/fish/carp,
-/obj/item/fish/bass,
-/obj/item/fish/bass,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat,
@@ -56431,7 +56431,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},

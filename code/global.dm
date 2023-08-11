@@ -260,7 +260,7 @@ var/global
 	diary = null
 	diary_name = null
 	hublog = null
-	game_version = "Goonstation 13 (r" + VCS_REVISION + ")"
+	game_version = "Goonstation 13 (r" + ORIGIN_REVISION + ")"
 
 	master_mode = "traitor"
 	next_round_mode = "traitor"
@@ -564,36 +564,6 @@ var/global
 			C.images -= globalImages[key]
 		globalImages[key] = null
 		globalImages.Remove(key)
-	return
-
-/proc/addAIImage(var/image/I, var/key, var/low_priority=FALSE)
-	if(I && length(key))
-		if(low_priority)
-			aiImagesLowPriority[key] = I
-		else
-			aiImages[key] = I
-		for_by_tcl(M, /mob/living/silicon/ai)
-			if (M.client)
-				M << I
-		return I
-	return null
-
-/proc/getAIImage(var/key)
-	if(length(key) && aiImages[key]) return aiImages[key]
-	else if(length(key) && aiImagesLowPriority[key]) return aiImagesLowPriority[key]
-	else return null
-
-/proc/removeAIImage(var/key)
-	if(length(key) && aiImages[key])
-		for(var/client/C in clients)
-			C.images -= aiImages[key]
-		aiImages[key] = null
-		aiImages.Remove(key)
-	if(length(key) && aiImagesLowPriority[key])
-		for(var/client/C in clients)
-			C.images -= aiImagesLowPriority[key]
-		aiImagesLowPriority[key] = null
-		aiImagesLowPriority.Remove(key)
 	return
 
 /// Generates item icons for manufacturers and other things, used in UI dialogs. Sends to client if needed.

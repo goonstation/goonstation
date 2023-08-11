@@ -1,3 +1,6 @@
+(t)mon aug 7 23
+(u)LeahTheTech
+(*)Added better logging to detect hotwires, large power networks being connected to high power ones will now log to station log.
 (t)tue jul 11 23
 (u)Azrun
 (*)Bulk law changes now support paths (Now you can add hologram and ability modules)

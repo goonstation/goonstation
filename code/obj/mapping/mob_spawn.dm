@@ -14,6 +14,7 @@
 		if(isnull(src.spawn_type))
 			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
 		var/mob/living/M = new spawn_type(src.loc)
+		M.unobservable = TRUE //make it not show up in the observer list
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)
 			M.set_loc(container)
@@ -216,6 +217,10 @@
 /obj/mapping_helper/mob_spawn/corpse/human/skeleton
 	spawn_type = /mob/living/carbon/human/normal
 	decomp_stage = DECOMP_STAGE_SKELETONIZED
+
+/obj/mapping_helper/mob_spawn/corpse/human/syndicate/old
+	spawn_type = /mob/living/carbon/human/normal/syndicate_old
+	break_headset = TRUE
 
 /obj/mapping_helper/mob_spawn/corpse/human/owlery_security
 	spawn_type = /mob/living/carbon/human/normal/securityofficer

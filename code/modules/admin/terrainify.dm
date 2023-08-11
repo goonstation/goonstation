@@ -611,6 +611,40 @@ ABSTRACT_TYPE(/datum/terrainify)
 			logTheThing(LOG_DIARY, ui.user, "turned space into a snowscape.", "admin")
 			message_admins("[key_name(ui.user)] turned space into a snowscape.")
 
+/datum/terrainify/forestify
+	name = "Forest Station"
+	desc = "Turns space into a lush and wooden place"
+	additional_options = list("Mining"=list("None","Normal","Rich"))
+	additional_toggles = list("Ambient Light Obj")
+
+	convert_station_level(params, datum/tgui/ui)
+		if(..())
+			var/const/ambient_light = "#222"
+			station_repair.station_generator = new/datum/map_generator/forest_generator
+
+			if(params["Ambient Light Obj"])
+				station_repair.ambient_obj = new /obj/ambient
+				station_repair.ambient_obj.color = ambient_light
+			else
+				station_repair.ambient_light = new /image/ambient
+				station_repair.ambient_light.color = ambient_light
+
+			var/list/space = list()
+			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+				space += S
+			convert_turfs(space)
+			for (var/turf/S as anything in space)
+				if(params["Ambient Light Obj"])
+					S.vis_contents |= station_repair.ambient_obj
+				else
+					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+
+			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
+			handle_mining(params, space)
+
+			logTheThing(LOG_ADMIN, ui.user, "turned space into a forest.")
+			logTheThing(LOG_DIARY, ui.user, "turned space into a forest.", "admin")
+			message_admins("[key_name(ui.user)] turned space into a forest.")
 
 /datum/terrainify/plasma
 	name = "Plasma Station"
@@ -642,8 +676,14 @@ ABSTRACT_TYPE(/datum/terrainify)
 		var/list/turf/space = list()
 		for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 			space += S
-		var/datum/map_generator/generator = new/datum/map_generator/storehouse_generator
-		generator.generate_terrain(space)
+		var/datum/map_generator/storehouse_generator/generator = new/datum/map_generator/storehouse_generator
+		generator.generate_map()
+
+		var/list/turfs_to_clear = shippingmarket.get_path_to_market()
+		turfs_to_clear += station_repair.get_mass_driver_turfs()
+		generator.clear_walls(turfs_to_clear)
+
+		generator.generate_terrain(space, reuse_seed=TRUE)
 
 		logTheThing(LOG_ADMIN, ui.user, "added some storehouses to space.")
 		logTheThing(LOG_DIARY, ui.user, "added some storehouses to space.", "admin")

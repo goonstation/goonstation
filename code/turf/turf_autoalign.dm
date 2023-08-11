@@ -191,6 +191,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 			else
 				return
 
+		src.material_trigger_when_attacked(W, user, 1)
 		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 
 /turf/simulated/wall/auto/reinforced/the_tuff_stuff
