@@ -40621,8 +40621,10 @@
 	},
 /area/station/quartermaster/office)
 "tZf" = (
-/obj/machinery/sleeperscanner{
-	pixel_x = 22
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32
 	},
 /turf/simulated/floor/grey/side{
 	dir = 8
@@ -43281,8 +43283,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "wgZ" = (
-/obj/machinery/sleeperscanner{
-	pixel_y = -25
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33;
+	entrance_scanner = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -44728,8 +44733,10 @@
 /turf/simulated/floor,
 /area/station/bridge)
 "xAg" = (
-/obj/machinery/sleeperscanner{
-	pixel_y = 24
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25
 	},
 /turf/simulated/floor/stairs{
 	dir = 8

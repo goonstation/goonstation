@@ -41090,8 +41090,10 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/sleeperscanner{
-	pixel_y = 24
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25
 	},
 /turf/simulated/floor/redblack,
 /area/listeningpost)
@@ -43398,8 +43400,11 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "sPM" = (
-/obj/machinery/sleeperscanner{
-	pixel_y = 24
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25;
+	entrance_scanner = 1
 	},
 /turf/space/fluid/acid,
 /area/space)
@@ -48752,8 +48757,10 @@
 	pixel_x = -7;
 	pixel_y = -4
 	},
-/obj/machinery/sleeperscanner{
-	pixel_x = 20
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 25
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)

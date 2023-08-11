@@ -30825,7 +30825,9 @@
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "cmd" = (
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "cme" = (
@@ -30909,8 +30911,11 @@
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "cms" = (
-/obj/machinery/sleeperscanner{
-	pixel_y = 24
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33;
+	entrance_scanner = 1
 	},
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/listeningpost)
@@ -30933,9 +30938,10 @@
 	name = "VACUUM AREA";
 	pixel_y = -32
 	},
-/obj/machinery/sleeperscanner{
-	pixel_y = -26;
-	pixel_x = 18
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -31063,7 +31069,9 @@
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/listeningpost)
 "cmN" = (
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock{
+	dir = 4
+	},
 /turf/simulated/floor/sanitary,
 /area/listeningpost)
 "cmO" = (
@@ -52928,8 +52936,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/dome)
 "sOs" = (
-/obj/machinery/sleeperscanner{
-	pixel_x = -20
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = -32
 	},
 /turf/simulated/floor/grey/side{
 	dir = 8

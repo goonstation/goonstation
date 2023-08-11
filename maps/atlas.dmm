@@ -12207,8 +12207,10 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/sleeperscanner{
-	pixel_y = 24
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -12639,8 +12641,10 @@
 /obj/machinery/light{
 	layer = 3
 	},
-/obj/machinery/sleeperscanner{
-	pixel_y = -35
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33
 	},
 /turf/simulated/floor/redblack,
 /area/listeningpost)
@@ -17574,8 +17578,11 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
 "jik" = (
-/obj/machinery/sleeperscanner{
-	pixel_y = 37
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 35;
+	entrance_scanner = 1
 	},
 /turf/space,
 /area/space)
@@ -19267,6 +19274,9 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"tmd" = (
+/turf/space,
+/area/listeningpost/power)
 "tmg" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -19315,8 +19325,11 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "tDV" = (
-/obj/machinery/sleeperscanner{
-	pixel_y = -35
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33;
+	entrance_scanner = 1
 	},
 /turf/space,
 /area/space)
@@ -99440,7 +99453,7 @@ aaa
 aaa
 aaa
 aaa
-aMP
+tmd
 aMU
 aMU
 aMU

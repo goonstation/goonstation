@@ -13417,10 +13417,6 @@
 /obj/stool/chair{
 	dir = 1
 	},
-/obj/machinery/sleeperscanner{
-	pixel_y = -26;
-	pixel_x = 18
-	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "aQs" = (
@@ -14047,8 +14043,10 @@
 /turf/simulated/floor/stairs/wide/middle,
 /area/listeningpost)
 "aSn" = (
-/obj/machinery/sleeperscanner{
-	pixel_x = 20
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32
 	},
 /turf/simulated/floor/stairs/wide/other,
 /area/listeningpost)
@@ -42329,6 +42327,14 @@
 /obj/landmark/start/job/clown,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
+"pqs" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "pqC" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
@@ -44161,8 +44167,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/security/main)
 "sJH" = (
-/obj/machinery/sleeperscanner{
-	pixel_y = 24
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25;
+	entrance_scanner = 1
 	},
 /turf/space/fluid,
 /area/space)
@@ -54679,7 +54688,7 @@ aOU
 aOW
 aOU
 aOU
-aOU
+pqs
 aPm
 aah
 aQM

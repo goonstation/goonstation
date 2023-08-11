@@ -3478,8 +3478,11 @@
 	name = "Catering Hangar"
 	})
 "amp" = (
-/obj/machinery/sleeperscanner{
-	pixel_x = 20
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32;
+	entrance_scanner = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -42342,8 +42345,10 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
 "dfz" = (
-/obj/machinery/sleeperscanner{
-	pixel_y = 24
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25
 	},
 /turf/simulated/floor/stairs{
 	dir = 8
@@ -50986,14 +50991,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/staff)
-"kSl" = (
-/obj/machinery/sleeperscanner{
-	pixel_x = 20
-	},
-/turf/simulated/floor/grey/side{
-	dir = 8
-	},
-/area/listeningpost)
 "kTI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -52037,6 +52034,9 @@
 /obj/disposalpipe/segment/morgue,
 /turf/space,
 /area/space)
+"lXo" = (
+/turf/space,
+/area/listeningpost)
 "lXN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -62004,6 +62004,16 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
+"uRn" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "uRv" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/light/emergency{
@@ -146252,8 +146262,8 @@ czm
 czt
 czB
 czJ
+uRn
 czP
-kSl
 cAd
 cAm
 cAv
@@ -147455,7 +147465,7 @@ adC
 adC
 adC
 cBQ
-sAI
+lXo
 sAI
 sAI
 sAI

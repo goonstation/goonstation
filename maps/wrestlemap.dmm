@@ -894,8 +894,11 @@
 /obj/machinery/light/emergency{
 	dir = 4
 	},
-/obj/machinery/sleeperscanner{
-	pixel_y = 24
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25;
+	entrance_scanner = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -16550,8 +16553,10 @@
 /turf/simulated/floor/wood,
 /area/station/chapel/sanctuary)
 "hcD" = (
-/obj/machinery/sleeperscanner{
-	pixel_x = -20
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = -32
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -37568,8 +37573,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/sleeperscanner{
-	pixel_x = 20
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32
 	},
 /turf/simulated/floor/redblack{
 	dir = 1

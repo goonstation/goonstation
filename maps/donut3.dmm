@@ -5962,8 +5962,10 @@
 "bHz" = (
 /obj/stool/chair/red,
 /obj/machinery/bot/medbot/no_camera,
-/obj/machinery/sleeperscanner{
-	pixel_y = 24
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 35
 	},
 /turf/simulated/floor/grey/side,
 /area/listeningpost)
@@ -42946,8 +42948,11 @@
 /turf/simulated/floor/carpet/blue/standard,
 /area/station/medical/medbay/cloner)
 "nes" = (
-/obj/machinery/sleeperscanner{
-	pixel_x = 20
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32;
+	entrance_scanner = 1
 	},
 /turf/simulated/floor/airless/plating/jen,
 /area/space)
@@ -59687,8 +59692,10 @@
 	dir = 4;
 	status = 2
 	},
-/obj/machinery/sleeperscanner{
-	pixel_x = -31
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = -32
 	},
 /turf/simulated/floor/plating/jen,
 /area/listeningpost)

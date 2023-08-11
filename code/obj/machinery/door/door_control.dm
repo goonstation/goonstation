@@ -8,6 +8,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	var/timer = 0
 	var/cooldown = 0 SECONDS
 	var/inuse = FALSE
+	var/unpressed_icon = "doorctrl0"
+	var/pressed_icon = "doorctrl1"
+	var/unpowered_icon = "doorctrl-p"
 	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
@@ -412,7 +415,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		return
 
 	src.use_power(5)
-	icon_state = "doorctrl1"
+	icon_state = pressed_icon
 	playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 
 	if (!src.id)
@@ -461,14 +464,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 
 	SPAWN(1.5 SECONDS)
 		if(!(src.status & NOPOWER))
-			icon_state = "doorctrl0"
+			icon_state = unpressed_icon
 
 /obj/machinery/door_control/power_change()
 	..()
 	if(src.status & NOPOWER)
-		icon_state = "doorctrl-p"
+		icon_state = unpowered_icon
 	else
-		icon_state = "doorctrl0"
+		icon_state = unpressed_icon
 
 /obj/machinery/door_control/oneshot/attack_hand(mob/user)
 	..()
@@ -478,6 +481,26 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 50, 1)
 	else
 		boutput(user, "<span class='alert'>It's broken.</span>")
+
+/obj/machinery/door_control/antagscanner // for sleepers entering listening post
+	var/entrance_scanner = 0 // Do we want a welcome message or similar for the area upon activation?
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "antagscanner"
+	unpressed_icon = "antagscanner"
+	pressed_icon = "antagscanner-u"
+	unpowered_icon = "antagscanner"
+	requires_power = 0
+
+/obj/machinery/door_control/antagscanner/attack_hand(mob/user)
+	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
+	if (ishuman(user) && user.mind?.get_antagonist(ROLE_SLEEPER_AGENT))
+		user.visible_message("<span class='notice'>The [src] accepts the biometrics of the user and beeps, granting you access.</span>")
+		toggle()
+		if (entrance_scanner == 1)
+			src.audible_message(<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Welcome, Agent."\</span></span>)
+			make_chat_maptext(src, "Welcome, Agent." "color: [FF0100];", alpha = 140)
+	else
+		boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
 
 ////////////////////////////////////////////////////////
 //////////// Machine activation buttons	///////////////
@@ -560,7 +583,6 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 					M.openup()
 
 		sleep(2 SECONDS)
-
 
 ///////////Uses a radio signal to control the door
 //////////////////////////////////////////////////////////////////////////

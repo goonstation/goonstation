@@ -139,7 +139,9 @@
 /turf/simulated/floor/circuit,
 /area/listeningpost)
 "aaw" = (
-/obj/machinery/light/incandescent,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor/caution/west,
 /area/listeningpost)
 "aax" = (
@@ -284,7 +286,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/light/incandescent,
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -352,8 +356,11 @@
 	},
 /area/space)
 "abg" = (
-/obj/machinery/sleeperscanner{
-	pixel_x = 20
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32;
+	entrance_scanner = 1
 	},
 /turf/simulated/floor/plating/airless{
 	dir = 10;
@@ -451,17 +458,21 @@
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "abu" = (
-/obj/machinery/light/incandescent,
 /obj/machinery/recharger,
 /obj/table/wood/auto{
 	dir = 5
+	},
+/obj/machinery/light/incandescent{
+	dir = 8
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
 /area/listeningpost)
 "abv" = (
-/obj/machinery/light/incandescent,
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -25106,6 +25117,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"dWt" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/listeningpost)
 "dWy" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -31035,6 +31054,16 @@
 	dir = 8
 	},
 /area/station/science/lobby)
+"iCe" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "iCI" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -32250,14 +32279,6 @@
 	dir = 5
 	},
 /area/station/science/teleporter)
-"jwW" = (
-/obj/machinery/sleeperscanner{
-	pixel_x = 20
-	},
-/turf/simulated/floor/grey/side{
-	dir = 8
-	},
-/area/listeningpost)
 "jxd" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -46711,8 +46732,10 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/ce)
 "tPb" = (
-/obj/machinery/sleeperscanner{
-	pixel_y = 24
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25
 	},
 /turf/simulated/floor/stairs{
 	dir = 8
@@ -71688,8 +71711,8 @@ aaw
 aaE
 aaM
 aaU
+iCe
 aba
-jwW
 abo
 abv
 abE
@@ -73808,7 +73831,7 @@ aac
 aac
 aac
 vrb
-abW
+dWt
 abS
 abW
 vrb
