@@ -6953,7 +6953,7 @@
 "aBH" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 20;
+	drive_range = 139;
 	id = "disposals_vent"
 	},
 /turf/simulated/floor/caution/northsouth{
@@ -15867,7 +15867,7 @@
 /obj/machinery/mass_driver{
 	desc = "A device that launches objects, like ANCIENT BOMBS, for example, on it at great velocity when activated.";
 	dir = 4;
-	drive_range = 100;
+	drive_range = 135;
 	id = "artlabgun"
 	},
 /turf/simulated/floor/engine/caution/northsouth,
@@ -18482,6 +18482,7 @@
 "bMa" = (
 /obj/machinery/mass_driver{
 	dir = 4;
+	drive_range = 50;
 	id = "drone_launcher"
 	},
 /turf/simulated/floor/plating/random,
@@ -18489,6 +18490,7 @@
 "bMb" = (
 /obj/machinery/mass_driver{
 	dir = 4;
+	drive_range = 50;
 	id = "drone_launcher"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -20092,8 +20094,8 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/junction{
-	icon_state = "pipe-j2";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -21169,8 +21171,8 @@
 /area/station/medical/medbay)
 "dXf" = (
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Robotics Lab";
-	dir = 4
+	dir = 4;
+	name = "Robotics Lab"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/robotics,
@@ -21523,8 +21525,8 @@
 "ejL" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /obj/item/paper_bin{
 	pixel_x = 6;
@@ -25959,7 +25961,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "ifP" = (
@@ -27671,6 +27673,16 @@
 /obj/machinery/cashreg,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
+"jsd" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 138;
+	id = "disposals_vent"
+	},
+/turf/simulated/floor/caution/northsouth{
+	dir = 1
+	},
+/area/station/maintenance/disposal)
 "jsG" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -31295,8 +31307,8 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/junction{
-	icon_state = "pipe-j2";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
@@ -34926,12 +34938,12 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/blast/single{
+	dir = 6;
 	doordir = "noblasts";
 	icon_state = "bdoornoblasts1";
 	id = "mining2qm_sec_door";
 	layer = 4;
-	name = "QM Security Door";
-	dir = 6
+	name = "QM Security Door"
 	},
 /turf/simulated/floor/caution/misc{
 	dir = 4
@@ -37949,8 +37961,8 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple{
-	level = 2;
-	dir = 6
+	dir = 6;
+	level = 2
 	},
 /turf/simulated/floor/redwhite{
 	dir = 8
@@ -45636,8 +45648,8 @@
 "yis" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /obj/item/clipboard{
 	pixel_x = -7
@@ -87229,7 +87241,7 @@ aaa
 sqY
 plf
 avz
-aBH
+jsd
 aSm
 asm
 aES
