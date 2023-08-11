@@ -5037,7 +5037,7 @@
 "fyH" = (
 /obj/table/wood/auto,
 /obj/item/raw_material/scrap_metal,
-/obj/item/circuitboard,
+/obj/item/circuitboard/tetris,
 /obj/item/screwdriver/grey,
 /obj/machinery/light/incandescent/warm,
 /turf/unsimulated/floor/plating/jen,
@@ -5812,7 +5812,7 @@
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/medical/biological)
 "gkm" = (
-/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/left/light,
 /obj/decal/cleanable/machine_debris,
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/engine/glow,
@@ -7006,7 +7006,7 @@
 /area/morrigan/station/command/HOS)
 "hsN" = (
 /obj/decal/fakeobjects/safehouse/conduit,
-/obj/machinery/macrofab,
+/obj/machinery/macrofab/emergency_pod,
 /obj/machinery/conveyor/NS,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
@@ -13119,7 +13119,7 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "nYo" = (
-/obj/item/parts/robot_parts/chest,
+/obj/item/parts/robot_parts/chest/standard,
 /obj/decal/cleanable/blood{
 	icon_state = "footprints1"
 	},
@@ -14276,7 +14276,9 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/station/hallway)
 "pqz" = (
-/obj/machinery/door/poddoor/buff,
+/obj/machinery/door/poddoor/buff{
+	id = "morrigan_brig"
+	},
 /turf/unsimulated/floor/black,
 /area/morrigan/warden)
 "pqX" = (
@@ -19008,9 +19010,9 @@
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/science)
 "uTl" = (
-/obj/machinery/activation_button{
-	pixel_y = 10;
-	dir = 1
+/obj/machinery/door_control{
+	pixel_y = 7;
+	id = "morrigan_brig"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/warden)
@@ -19460,7 +19462,7 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "vuu" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/unsimulated/floor/twotone/black,
 /area/morrigan/station/medical/biological)
 "vux" = (
@@ -20234,7 +20236,7 @@
 /area/morrigan/station/security/main)
 "wra" = (
 /obj/decal/fakeobjects/safehouse/conduit,
-/obj/machinery/macrofab,
+/obj/machinery/macrofab/emergency_pod,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "wrl" = (
