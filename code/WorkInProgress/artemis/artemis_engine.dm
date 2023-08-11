@@ -1,7 +1,7 @@
 #if ENABLE_ARTEMIS
 
 /////////////////////TANK/////////////////////
-/obj/machinery/atmospherics/binary/ion_drive/plas_tank
+/obj/machinery/atmospherics/binary/ion_drive/plasma_tank
 		name = "plasma tank"
 		desc = "the engines plasma tank"
 		icon = 'icons/misc/artemis/artemis_engine.dmi'
@@ -14,7 +14,7 @@
 		var/volume=1000
 
 
-/obj/machinery/atmospherics/binary/ion_drive/plas_tank/New()
+/obj/machinery/atmospherics/binary/ion_drive/plasma_tank/New()
 		..()
 		src.stored_fuel= new /datum/gas_mixture
 		src.stored_fuel.volume = src.volume
@@ -23,7 +23,7 @@
 
 
 /// Checks for gas in node1 and there is room left in the tank. If yes process it by storing the plasma and ejecting the rest
-/obj/machinery/atmospherics/binary/ion_drive/plas_tank/process()
+/obj/machinery/atmospherics/binary/ion_drive/plasma_tank/process()
 		..()
 
 		if(!src.on)
@@ -101,14 +101,14 @@
 		var/throttle
 		var/on = FALSE
 		var/target_pressure=ONE_ATMOSPHERE
-		var/obj/machinery/atmospherics/binary/ion_drive/plas_tank/artemis_tank = null
+		var/obj/machinery/atmospherics/binary/ion_drive/plasma_tank/artemis_tank = null
 		var/obj/machinery/ion_drive/drive/artemis_drive = null
 /// setup the ion drive interface, look for the tank to the east and the drive to the west
 /obj/machinery/ion_drive/interface/New()
 		..()
 		SPAWN(0.5 SECONDS)
 				var/turf/T = get_step(src,WEST)
-				src.artemis_tank = locate(/obj/machinery/atmospherics/binary/ion_drive/plas_tank) in T
+				src.artemis_tank = locate(/obj/machinery/atmospherics/binary/ion_drive/plasma_tank) in T
 				T = get_step(src,EAST)
 
 				src.artemis_drive = locate(/obj/machinery/ion_drive/drive) in T

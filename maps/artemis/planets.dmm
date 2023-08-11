@@ -1211,7 +1211,7 @@
 	},
 /area/ship/artemis)
 "EN" = (
-/obj/machinery/atmospherics/binary/ion_drive/plas_tank,
+/obj/machinery/atmospherics/binary/ion_drive/plasma_tank,
 /turf/simulated/floor/black,
 /area/ship/artemis)
 "ES" = (
