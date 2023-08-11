@@ -1324,7 +1324,7 @@ proc/load_morrigan()
 
 	canShow(var/client/C)
 		var/rep = C.reputations.get_reputation_level("hobo")
-		if(rep < 5 )
+		if(master.getFlag(C, "weldingtool") == "taken" || rep < 5 )
 			return FALSE
 		else
 			return TRUE
