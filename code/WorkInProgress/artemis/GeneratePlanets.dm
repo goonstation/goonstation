@@ -174,9 +174,14 @@ DEFINE_PLANET(indigo, "Indigo")
 	var/list/datum/loadedProperties/prefabs = list()
 	var/allow_prefab = TRUE
 	var/generated = FALSE
+	var/area/map_gen/planet/no_prefab/no_prefab_ref
+	var/area/map_gen/planet/no_foreground/occlude_ref
 
 	no_prefab
 		allow_prefab = FALSE
+
+	no_foreground
+		occlude_foreground_parallax_layers = TRUE
 
 /datum/planetData
 	var/name
@@ -239,8 +244,13 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 	//Generate and cleanup region
 	var/datum/allocated_region/region = global.region_allocator.allocate(width, height)
-	var/area/planet_area = new /area/map_gen/planet
+	var/area/map_gen/planet/planet_area = new/area/map_gen/planet
+	planet_area.no_prefab_ref = new/area/map_gen/planet/no_prefab
+	planet_area.occlude_ref = new/area/map_gen/planet/no_foreground
+
 	planet_area.name = name
+	planet_area.no_prefab_ref.name = name
+	planet_area.occlude_ref.name = name
 	region.clean_up(main_area=planet_area)
 
 	//Parallax it?
@@ -258,7 +268,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 		/atom/movable/screen/parallax_layer/foreground/snow=list(color=color_matrix, scroll_speed=scroll_speed, scroll_angle=angle),
 		/atom/movable/screen/parallax_layer/foreground/snow/sparse=list(color=color_matrix, scroll_speed=scroll_speed+25, scroll_angle=angle),
 		)
-	else if(istype(generator, /datum/map_generator/desert_generator)&& prob(15) )
+	else if(istype(generator, /datum/map_generator/desert_generator) && prob(15) )
 		var/angle = rand(110,250)
 		var/scroll_speed = rand(75, 175)
 		var/color_alpha = rand(40,80)/100
@@ -272,12 +282,23 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 			/atom/movable/screen/parallax_layer/foreground/dust=list(color=color_matrix, scroll_speed=scroll_speed, scroll_angle=angle),
 			/atom/movable/screen/parallax_layer/foreground/dust/sparse=list(color=color_matrix, scroll_speed=scroll_speed*1.5, scroll_angle=angle)
 		)
+	else if(istype(generator, /datum/map_generator/forest_generator) && prob(95))
+		var/angle = rand(90,270)
+		planet_area.area_parallax_layers = list(
+			/atom/movable/screen/parallax_layer/foreground/clouds=list(scroll_angle=angle)
+			)
+		if(prob(20))
+			planet_area.area_parallax_layers[/atom/movable/screen/parallax_layer/foreground/clouds/dense] = list(scroll_angle=angle+rand(5,5))
+		if(prob(20))
+			planet_area.area_parallax_layers[/atom/movable/screen/parallax_layer/foreground/clouds/sparse] = list(scroll_angle=angle+rand(5,5))
+		if(prob(20))
+			planet_area.area_parallax_layers[/atom/movable/screen/parallax_layer/foreground/snow] = list(scroll_speed=rand(1,5), scroll_angle=240)
 
 	// Occlude overlays on edges
 	if(planet_area.area_parallax_layers)
+		planet_area.no_prefab_ref.area_parallax_layers = planet_area.area_parallax_layers
 		for(var/turf/cordon/CT in planet_area)
 			new/obj/foreground_parallax_occlusion(CT)
-
 
 	//Populate with Biome!
 	var/turfs = block(locate(region.bottom_left.x+1, region.bottom_left.y+1, region.bottom_left.z), locate(region.bottom_left.x+region.width-2, region.bottom_left.y+region.height-2, region.bottom_left.z) )

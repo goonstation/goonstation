@@ -581,7 +581,6 @@
 /mob/living/carbon/human/death(gibbed)
 	if (ticker?.mode)
 		ticker.mode?.on_human_death(src)
-		ticker.mode?.check_win()
 	if(src.mind && src.mind.damned) // Ha you arent getting out of hell that easy.
 		src.hell_respawn()
 		return
@@ -767,6 +766,8 @@
 			for(var/turf/T in view(2, src.loc))
 				if(locate(/obj/neon_lining) in T.contents)
 					src.unlock_medal("Party Hard", 1)
+
+	ticker?.mode?.check_win()
 
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel
@@ -1637,7 +1638,7 @@
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
 			continue
-		if (M.stat > 1 && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
+		if (isdead(M) && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
 			M.show_message(rendered, 2)
 
 	show_speech_bubble(speech_bubble)

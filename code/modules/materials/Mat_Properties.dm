@@ -279,3 +279,45 @@ ABSTRACT_TYPE(/datum/material_property)
 				return "densely packed with plutonium"
 			if(8 to INFINITY)
 				return "mostly plutonium"
+
+/datum/material_property/molitz_bubbles
+	name = "Gas Pockets"
+	id = "molitz_bubbles"
+
+	min_value = 0
+	prefix_high_min = 0.1
+	prefix_low_max = 9
+	default_value = 0
+
+	getAdjective(var/datum/material/M)
+		switch(M.getProperty(id))
+			if(3 to INFINITY)
+				return "Filled with bubbles"
+			if(1 to 3)
+				return "Lots of small bubbles"
+			else
+				return "Barely any bubbles"
+
+/datum/material_property/plasma_offgas
+	name = "Active Plasma"
+	id = "plasma_offgas"
+
+	min_value = 0
+	prefix_high_min = 0.1
+	prefix_low_max = 9
+	default_value = 0
+
+	getAdjective(var/datum/material/M)
+		switch(M.getProperty(id))
+			if(0 to 1)
+				return "entirely depleted plasma"
+			if(1 to 2)
+				return "mostly depleted plasma"
+			if(2 to 4)
+				return "some active plasma"
+			if(4 to 6)
+				return "about half active plasma"
+			if(6 to 8)
+				return "lots of active plasma"
+			if(8 to INFINITY)
+				return "filled with active plasma"

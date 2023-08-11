@@ -2192,33 +2192,6 @@
 "aha" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crewquarters/cryotron)
-"ahb" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	drive_range = 100;
-	id = "chapelgun"
-	},
-/turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
-"ahc" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	drive_range = 100;
-	id = "chapelgun"
-	},
-/obj/machinery/door/poddoor/pyro{
-	dir = 4;
-	id = "chapelgun";
-	name = "Chapel Mass Driver"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
 "ahd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2249,10 +2222,6 @@
 "ahi" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
-"ahj" = (
-/obj/machinery/vending/alcohol,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "ahk" = (
 /obj/machinery/door/airlock/pyro/glass/security,
 /obj/mapping_helper/firedoor_spawn,
@@ -3670,15 +3639,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"alR" = (
-/obj/disposalpipe/segment,
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon6,
-/obj/item/device/radio/intercom/AI{
-	dir = 8;
-	broadcasting = 0
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/south)
 "alS" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor,
@@ -10017,33 +9977,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
-"aFU" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	drive_range = 20;
-	id = "trash"
-	},
-/turf/simulated/floor/plating,
-/area/station/janitor/office)
-"aFV" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	drive_range = 20;
-	id = "trash"
-	},
-/obj/machinery/door/poddoor/pyro{
-	dir = 4;
-	id = "trash";
-	name = "Cargo Door"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/janitor/office)
 "aFW" = (
 /obj/reagent_dispensers/fueltank,
 /obj/machinery/light{
@@ -12199,23 +12132,6 @@
 /obj/item/tank/jetpack,
 /turf/simulated/floor/red,
 /area/listeningpost)
-"aNp" = (
-/obj/storage/closet,
-/obj/item/tank/oxygen,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = 25
-	},
-/turf/simulated/floor/redblack{
-	dir = 1
-	},
-/area/listeningpost)
 "aNq" = (
 /obj/storage/closet,
 /obj/item/clothing/under/misc/syndicate,
@@ -12634,19 +12550,6 @@
 "aOO" = (
 /obj/rack,
 /turf/simulated/floor/red,
-/area/listeningpost)
-"aOP" = (
-/obj/storage/closet,
-/obj/item/tank/oxygen,
-/obj/machinery/light{
-	layer = 3
-	},
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = -33
-	},
-/turf/simulated/floor/redblack,
 /area/listeningpost)
 "aOQ" = (
 /obj/storage/closet,
@@ -13087,14 +12990,6 @@
 	dir = 4
 	},
 /area/station/mining/refinery)
-"aQk" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Arrivals"
-	},
-/obj/mapping_helper/access/rancher,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor,
-/area/station/science/lab)
 "aQl" = (
 /obj/machinery/door_control{
 	id = "medbay_hall";
@@ -16579,6 +16474,9 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
+"cmO" = (
+/turf/space,
+/area/listeningpost/power)
 "cns" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16623,6 +16521,25 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
+"cxr" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 104;
+	id = "trash"
+	},
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "trash";
+	name = "Cargo Door"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/janitor/office)
 "cxW" = (
 /obj/machinery/light{
 	dir = 4;
@@ -16871,6 +16788,24 @@
 "ept" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/blue,
+/area/station/science/lab)
+"ezH" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "eBf" = (
 /obj/cable{
@@ -17557,6 +17492,15 @@
 	dir = 8
 	},
 /area/station/engine/core)
+"iYN" = (
+/obj/disposalpipe/segment,
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon6,
+/obj/item/device/radio/intercom/AI{
+	broadcasting = 0;
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "iZt" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -17577,15 +17521,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
-"jik" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = 35;
-	entrance_scanner = 1
-	},
-/turf/space,
-/area/space)
 "jiT" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17766,6 +17701,19 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"kkU" = (
+/obj/storage/closet,
+/obj/item/tank/oxygen,
+/obj/machinery/light{
+	layer = 3
+	},
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33
+	},
+/turf/simulated/floor/redblack,
+/area/listeningpost)
 "kpB" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -18738,6 +18686,15 @@
 /obj/item/gun/implanter,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"pHx" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 35;
+	entrance_scanner = 1
+	},
+/turf/space,
+/area/space)
 "pLJ" = (
 /obj/machinery/manufacturer/hop_and_uniform,
 /obj/cable{
@@ -18764,6 +18721,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"pRJ" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "pSv" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -18878,6 +18839,15 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
+"qog" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33;
+	entrance_scanner = 1
+	},
+/turf/space,
+/area/space)
 "quw" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -18952,6 +18922,14 @@
 /obj/decal/mule/dropoff,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"qMB" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 105;
+	id = "trash"
+	},
+/turf/simulated/floor/plating,
+/area/station/janitor/office)
 "qOn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19274,9 +19252,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"tmd" = (
-/turf/space,
-/area/listeningpost/power)
 "tmg" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -19324,15 +19299,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
-"tDV" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = -33;
-	entrance_scanner = 1
-	},
-/turf/space,
-/area/space)
 "tEj" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -19475,6 +19441,14 @@
 /mob/living/critter/spider/baby/nice,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"uDJ" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 105;
+	id = "chapelgun"
+	},
+/turf/simulated/floor/plating,
+/area/station/chapel/sanctuary)
 "uEL" = (
 /obj/cable/yellow{
 	icon_state = "1-4"
@@ -19537,6 +19511,25 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"uSO" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 104;
+	id = "chapelgun"
+	},
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "chapelgun";
+	name = "Chapel Mass Driver"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/chapel/sanctuary)
 "uUp" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -19547,6 +19540,23 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
+"uXs" = (
+/obj/storage/closet,
+/obj/item/tank/oxygen,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost)
 "uXZ" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -60372,7 +60382,7 @@ alh
 alb
 gFi
 bKM
-alR
+iYN
 axz
 alh
 axz
@@ -61600,7 +61610,7 @@ aHo
 aGG
 aXW
 aIR
-aQk
+ezH
 axK
 aMS
 aQc
@@ -70626,7 +70636,7 @@ adF
 afb
 afQ
 agA
-ahj
+pRJ
 ajF
 aju
 uXZ
@@ -78779,7 +78789,7 @@ aaa
 aaa
 aaa
 ahf
-ahb
+uDJ
 ahf
 aaa
 aaa
@@ -78807,7 +78817,7 @@ aaa
 aaa
 aaa
 aFa
-aFU
+qMB
 aFa
 aaa
 aaa
@@ -79081,7 +79091,7 @@ aaa
 aaa
 aaa
 ahf
-ahc
+uSO
 ahf
 aaa
 aaa
@@ -79109,7 +79119,7 @@ aaa
 aaa
 aaa
 aFa
-aFV
+cxr
 aFa
 aaa
 aaa
@@ -95829,7 +95839,7 @@ aaa
 aaa
 aaa
 aaa
-tDV
+qog
 agK
 aMX
 aNf
@@ -95845,7 +95855,7 @@ aOO
 aNf
 aMX
 aYB
-jik
+pHx
 aaa
 aaa
 aaa
@@ -96437,7 +96447,7 @@ aaa
 aRI
 aMX
 aNe
-aNp
+uXs
 aUH
 aNe
 aNY
@@ -96445,7 +96455,7 @@ aJf
 aOB
 aNe
 aUH
-aOP
+kkU
 aNe
 aMX
 aXU
@@ -99453,7 +99463,7 @@ aaa
 aaa
 aaa
 aaa
-tmd
+cmO
 aMU
 aMU
 aMU

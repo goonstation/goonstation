@@ -7651,6 +7651,15 @@
 	},
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
+"axM" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25;
+	entrance_scanner = 1
+	},
+/turf/space/fluid,
+/area/space)
 "axN" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/purple{
@@ -9619,19 +9628,6 @@
 "aDQ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/lobby)
-"aDR" = (
-/obj/window_blinds/cog2/middle,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "test_chamber";
-	name = "Test Chamber Blast Door";
-	opacity = 0;
-	dir = 4
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/plating/random,
-/area/research_outpost/chamber)
 "aDS" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/neutral/side{
@@ -13413,12 +13409,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
-"aQr" = (
-/obj/stool/chair{
-	dir = 1
-	},
-/turf/simulated/floor/black,
-/area/listeningpost)
 "aQs" = (
 /obj/stool/chair{
 	dir = 1
@@ -14041,14 +14031,6 @@
 /area/station/hangar/engine)
 "aSm" = (
 /turf/simulated/floor/stairs/wide/middle,
-/area/listeningpost)
-"aSn" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_x = 32
-	},
-/turf/simulated/floor/stairs/wide/other,
 /area/listeningpost)
 "aSo" = (
 /obj/disposalpipe/trunk/mail/south,
@@ -18122,14 +18104,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
-"bjN" = (
-/obj/machinery/vending/alcohol,
-/obj/noticeboard/persistent{
-	name = "Bar persistent notice board";
-	persistent_id = "bar"
-	},
-/turf/simulated/floor/carpet/blue/fancy/narrow/nw,
-/area/station/crew_quarters/bar)
 "bjO" = (
 /obj/drink_rack/cup{
 	pixel_y = 32
@@ -21188,6 +21162,19 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"btH" = (
+/obj/window_blinds/cog2/middle,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "test_chamber";
+	name = "Test Chamber Blast Door";
+	opacity = 0
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating/random,
+/area/research_outpost/chamber)
 "btI" = (
 /obj/decal/boxingropeenter{
 	dir = 4
@@ -31959,10 +31946,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
-"cbP" = (
-/obj/machinery/vending/alcohol,
-/turf/simulated/floor/grime,
-/area/diner/kitchen)
 "cbQ" = (
 /obj/machinery/vending/kitchen,
 /turf/simulated/floor/grime,
@@ -35178,6 +35161,14 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
+"dgt" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32
+	},
+/turf/simulated/floor/stairs/wide/other,
+/area/listeningpost)
 "dhg" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
@@ -37026,6 +37017,10 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
 /area/station/science/teleporter)
+"fNw" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/turf/simulated/floor/grime,
+/area/diner/kitchen)
 "fPf" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/pyro/glass,
@@ -38553,6 +38548,19 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/diner/hangar)
+"iIJ" = (
+/obj/window_blinds/cog2/left,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "test_chamber";
+	name = "Test Chamber Blast Door";
+	opacity = 0
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating/random,
+/area/research_outpost/chamber)
 "iJp" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
@@ -38688,24 +38696,6 @@
 /obj/item/pen/crayon/pink,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"iVb" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1";
-	name = "Detective's Office"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/forensics,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "iVD" = (
 /obj/table/reinforced/chemistry/auto/drugs,
 /obj/item/toy/plush/small/bunny/mask{
@@ -38738,6 +38728,17 @@
 /obj/item/currency/spacecash/small,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
+"iWZ" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	pixel_y = -17;
+	tag = ""
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/mining/staff_room)
 "iXw" = (
 /obj/stool/chair/green,
 /turf/simulated/floor/green,
@@ -39606,6 +39607,24 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
+"kCY" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail,
+/obj/machinery/door/airlock/pyro/security/alt{
+	name = "Detective's Office";
+	req_access_txt = "1"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/forensics,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "kDk" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -40055,6 +40074,12 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
+"lxh" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "lxj" = (
 /obj/table/auto,
 /obj/drink_rack/mug{
@@ -41563,6 +41588,14 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"nVO" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "nXQ" = (
 /obj/table/wood/auto/desk{
 	pixel_y = -2
@@ -42327,14 +42360,6 @@
 /obj/landmark/start/job/clown,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
-"pqs" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = -33
-	},
-/turf/simulated/floor/black,
-/area/listeningpost)
 "pqC" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
@@ -44166,15 +44191,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/main)
-"sJH" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = 25;
-	entrance_scanner = 1
-	},
-/turf/space/fluid,
-/area/space)
 "sJY" = (
 /mob/living/carbon/human/npc/monkey,
 /obj/machinery/light/incandescent/warm,
@@ -44191,19 +44207,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/bridge)
-"sMK" = (
-/obj/window_blinds/cog2/right,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "test_chamber";
-	name = "Test Chamber Blast Door";
-	opacity = 0;
-	dir = 4
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/plating/random,
-/area/research_outpost/chamber)
 "sNB" = (
 /obj/mapping_helper/access/cargo,
 /obj/disposalpipe/segment{
@@ -44310,6 +44313,19 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"sWB" = (
+/obj/window_blinds/cog2/right,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "test_chamber";
+	name = "Test Chamber Blast Door";
+	opacity = 0
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating/random,
+/area/research_outpost/chamber)
 "sYB" = (
 /turf/simulated/floor/yellow/side,
 /area/station/storage/eeva)
@@ -44345,15 +44361,6 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/white,
 /area/station/medical/robotics)
-"tcD" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1";
-	name = "Detective's Office"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/forensics,
-/turf/simulated/floor/plating/random,
-/area/station/security/detectives_office)
 "tcZ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
@@ -44367,26 +44374,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
-"teG" = (
-/obj/stool/chair/comfy{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/item/reagent_containers/food/snacks/popcorn{
-	desc = "Those chickens are up to something...";
-	name = "suspicious popcorn";
-	bites_left = 100
-	},
-/obj/landmark/start/job/detective,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "teZ" = (
 /obj/decal/fakeobjects/flock/antenna/broken{
 	dir = 4;
@@ -44685,6 +44672,14 @@
 	},
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
+"tHR" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/obj/noticeboard/persistent{
+	name = "Bar persistent notice board";
+	persistent_id = "bar"
+	},
+/turf/simulated/floor/carpet/blue/fancy/narrow/nw,
+/area/station/crew_quarters/bar)
 "tKE" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
@@ -44901,19 +44896,6 @@
 /obj/landmark/start/job/scientist,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
-"ulP" = (
-/obj/window_blinds/cog2/left,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "test_chamber";
-	name = "Test Chamber Blast Door";
-	opacity = 0;
-	dir = 4
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/plating/random,
-/area/research_outpost/chamber)
 "umj" = (
 /obj/shrub{
 	dir = 6
@@ -45006,6 +44988,15 @@
 "uAB" = (
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/baroffice)
+"uAH" = (
+/obj/machinery/door/airlock/pyro/security/alt{
+	name = "Detective's Office";
+	req_access_txt = "1"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/forensics,
+/turf/simulated/floor/plating/random,
+/area/station/security/detectives_office)
 "uBc" = (
 /obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood/splatter,
@@ -45263,6 +45254,26 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"vdt" = (
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/item/reagent_containers/food/snacks/popcorn{
+	bites_left = 100;
+	desc = "Those chickens are up to something...";
+	name = "suspicious popcorn"
+	},
+/obj/landmark/start/job/detective,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "vdI" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/brig{
@@ -46604,17 +46615,6 @@
 /obj/map/light/dimred,
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/bar)
-"xrv" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = "";
-	pixel_y = -17
-	},
-/turf/simulated/floor/shuttlebay,
-/area/station/mining/staff_room)
 "xse" = (
 /obj/landmark/start/job/AI,
 /obj/cable{
@@ -54688,7 +54688,7 @@ aOU
 aOW
 aOU
 aOU
-pqs
+nVO
 aPm
 aah
 aQM
@@ -55292,9 +55292,9 @@ aOW
 aPk
 aPr
 aPF
-aQr
+lxh
 aPm
-aSn
+dgt
 aQN
 aOg
 wbZ
@@ -55599,7 +55599,7 @@ aPm
 aPm
 aPm
 aPm
-sJH
+axM
 aqn
 aqn
 aqn
@@ -78977,7 +78977,7 @@ aLL
 bhG
 bir
 biC
-bjN
+tHR
 bkP
 blt
 blT
@@ -83194,7 +83194,7 @@ smn
 nPP
 kXP
 fRe
-iVb
+kCY
 iAB
 qeV
 tEB
@@ -83492,7 +83492,7 @@ aDr
 chd
 fKz
 chc
-tcD
+uAH
 vfw
 hjA
 vfw
@@ -83796,7 +83796,7 @@ rNN
 chc
 smn
 eLS
-teG
+vdt
 jNn
 ycT
 siR
@@ -85340,7 +85340,7 @@ cjb
 bvx
 bvx
 bvx
-xrv
+iWZ
 rxZ
 bwd
 bAN
@@ -123177,7 +123177,7 @@ caJ
 caJ
 cbw
 cbD
-cbP
+fNw
 cbN
 clr
 cbN
@@ -131176,7 +131176,7 @@ bZn
 bbE
 bZn
 bcS
-ulP
+iIJ
 nau
 itd
 bZE
@@ -131478,7 +131478,7 @@ bZn
 bbE
 bZn
 bZn
-sMK
+sWB
 tRt
 ctF
 fCv
@@ -132082,7 +132082,7 @@ bZn
 bZn
 bZn
 azm
-ulP
+iIJ
 mVd
 tRt
 tRt
@@ -132384,7 +132384,7 @@ bZn
 bZn
 bZn
 bcS
-aDR
+btH
 kwQ
 qyq
 tRt
@@ -132686,7 +132686,7 @@ cKm
 asN
 bZn
 bca
-sMK
+sWB
 itd
 itd
 dDM

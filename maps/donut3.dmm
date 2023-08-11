@@ -4258,10 +4258,6 @@
 	},
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
-"biO" = (
-/obj/machinery/vending/alcohol,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "bji" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -5959,16 +5955,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
-"bHz" = (
-/obj/stool/chair/red,
-/obj/machinery/bot/medbot/no_camera,
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = 35
-	},
-/turf/simulated/floor/grey/side,
-/area/listeningpost)
 "bHA" = (
 /obj/machinery/sim/vr_bed{
 	dir = 4;
@@ -13836,6 +13822,15 @@
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
+"eef" = (
+/obj/plasticflaps,
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 83;
+	id = "crusher2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "eek" = (
 /obj/stool,
 /obj/disposalpipe/segment{
@@ -21505,6 +21500,29 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
+"gxr" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 63;
+	id = "QM_Sell"
+	},
+/obj/machinery/door/poddoor/pyro{
+	dir = 8;
+	id = "QM_Sell";
+	name = "Qm Sell"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/routing/depot)
 "gxw" = (
 /obj/stool/chair/moveable{
 	dir = 4
@@ -22247,18 +22265,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/cloner)
-"gKv" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	drive_range = 62;
-	id = "QM_Sell"
-	},
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/black/grime,
-/area/station/routing/depot)
 "gKA" = (
 /obj/disposalpipe/segment/mail,
 /obj/stool/chair,
@@ -28757,6 +28763,19 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"iLB" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 66;
+	id = "drone_launcher"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "drone_launcher";
+	name = "Launcher Door"
+	},
+/turf/simulated/floor/plating/random,
+/area/ghostdrone_factory)
 "iLK" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -37764,6 +37783,20 @@
 	},
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/quartersC)
+"lAy" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 82;
+	id = "crusher2"
+	},
+/obj/machinery/door/poddoor/pyro{
+	dir = 8;
+	id = "crusher2";
+	layer = 4;
+	name = "Waste Disposal"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "lAB" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -37877,6 +37910,14 @@
 /area/station/wreckage{
 	name = "Restricted Area"
 	})
+"lCa" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 66;
+	id = "drone_launcher"
+	},
+/turf/simulated/floor/plating/random,
+/area/ghostdrone_factory)
 "lCe" = (
 /obj/stool/chair{
 	dir = 8
@@ -41868,6 +41909,10 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
+"mMd" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "mMw" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/generic/secure_data,
@@ -42210,6 +42255,15 @@
 	},
 /obj/machinery/ai_status_display,
 /turf/space,
+/area/space)
+"mSY" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32;
+	entrance_scanner = 1
+	},
+/turf/simulated/floor/airless/plating/jen,
 /area/space)
 "mTc" = (
 /obj/machinery/plantpot{
@@ -42947,15 +43001,6 @@
 "nea" = (
 /turf/simulated/floor/carpet/blue/standard,
 /area/station/medical/medbay/cloner)
-"nes" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_x = 32;
-	entrance_scanner = 1
-	},
-/turf/simulated/floor/airless/plating/jen,
-/area/space)
 "neE" = (
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /obj/machinery/vending/standard,
@@ -45310,6 +45355,16 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
+"nOf" = (
+/obj/stool/chair/red,
+/obj/machinery/bot/medbot/no_camera,
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 35
+	},
+/turf/simulated/floor/grey/side,
+/area/listeningpost)
 "nOi" = (
 /obj/railing/orange,
 /obj/decal/cleanable/dirt/jen,
@@ -46058,29 +46113,6 @@
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
-"ocs" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	drive_range = 62;
-	id = "QM_Sell"
-	},
-/obj/machinery/door/poddoor/pyro{
-	dir = 8;
-	id = "QM_Sell";
-	name = "Qm Sell"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 8;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4;
-	icon_state = "xtra_bigstripe-edge2"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/routing/depot)
 "oct" = (
 /obj/table/glass/auto,
 /obj/machinery/cell_charger{
@@ -48551,15 +48583,6 @@
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
-"oQB" = (
-/obj/plasticflaps,
-/obj/machinery/mass_driver{
-	dir = 8;
-	drive_range = 75;
-	id = "crusher2"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "oQN" = (
 /obj/decal/tile_edge/check{
 	dir = 9;
@@ -56961,18 +56984,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"rqm" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	id = "drone_launcher"
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 4;
-	id = "drone_launcher";
-	name = "Launcher Door"
-	},
-/turf/simulated/floor/plating/random,
-/area/ghostdrone_factory)
 "rqn" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
@@ -57970,13 +57981,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/quartermaster/office)
-"rGY" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	id = "drone_launcher"
-	},
-/turf/simulated/floor/plating/random,
-/area/ghostdrone_factory)
 "rHc" = (
 /obj/stool/chair{
 	dir = 4
@@ -59687,18 +59691,6 @@
 /obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
-"siC" = (
-/obj/machinery/light/small{
-	dir = 4;
-	status = 2
-	},
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_x = -32
-	},
-/turf/simulated/floor/plating/jen,
-/area/listeningpost)
 "siO" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -61728,6 +61720,18 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
+"sTi" = (
+/obj/machinery/light/small{
+	dir = 4;
+	status = 2
+	},
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = -32
+	},
+/turf/simulated/floor/plating/jen,
+/area/listeningpost)
 "sTo" = (
 /obj/indestructible/shuttle_corner,
 /turf/unsimulated/floor{
@@ -63218,6 +63222,18 @@
 "trw" = (
 /turf/space,
 /area/supply/spawn_point)
+"trB" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 64;
+	id = "QM_Sell"
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/black/grime,
+/area/station/routing/depot)
 "trT" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
@@ -64261,20 +64277,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
-"tHi" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	drive_range = 75;
-	id = "crusher2"
-	},
-/obj/machinery/door/poddoor/pyro{
-	dir = 8;
-	id = "crusher2";
-	layer = 4;
-	name = "Waste Disposal"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "tHl" = (
 /obj/railing/orange{
 	dir = 8
@@ -104981,7 +104983,7 @@ rdj
 rdj
 rdj
 ieL
-tHi
+lAy
 ieL
 rdj
 rdj
@@ -105283,7 +105285,7 @@ ieL
 pFp
 pFp
 ieL
-oQB
+eef
 ieL
 ieL
 ieL
@@ -121197,7 +121199,7 @@ gug
 hcs
 rPw
 wrL
-biO
+mMd
 fkF
 njs
 oFx
@@ -151165,7 +151167,7 @@ bBD
 qFR
 qNg
 aCe
-gKv
+trB
 bBD
 rdj
 rdj
@@ -151467,7 +151469,7 @@ bBD
 wAm
 rfz
 rfz
-ocs
+gxr
 bBD
 rdj
 rdj
@@ -159995,7 +159997,7 @@ csA
 xzQ
 xzQ
 nKd
-siC
+sTi
 kzv
 utC
 utC
@@ -160182,9 +160184,9 @@ rdj
 rdj
 rdj
 jhW
-rqm
+iLB
 jhW
-rqm
+iLB
 jhW
 rdj
 rdj
@@ -160294,7 +160296,7 @@ csA
 csA
 csA
 csA
-nes
+mSY
 eML
 iOW
 iOW
@@ -160484,9 +160486,9 @@ rdj
 rdj
 rdj
 jhW
-rGY
+lCa
 jhW
-rGY
+lCa
 jhW
 rdj
 rdj
@@ -160600,7 +160602,7 @@ iOW
 iOW
 iOW
 iOW
-bHz
+nOf
 utC
 utC
 bVL

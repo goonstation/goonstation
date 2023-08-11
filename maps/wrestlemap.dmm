@@ -457,6 +457,18 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/robotics)
+"afH" = (
+/obj/machinery/light/emergency{
+	dir = 4
+	},
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25;
+	entrance_scanner = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "afK" = (
 /obj/table/reinforced,
 /obj/item/paper_bin,
@@ -890,18 +902,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/chapel/sanctuary)
-"ark" = (
-/obj/machinery/light/emergency{
-	dir = 4
-	},
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = 25;
-	entrance_scanner = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "arw" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
@@ -5228,6 +5228,15 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/solar/east)
+"cim" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/obj/machinery/light/small/warm{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/the_cage{
+	name = "The Cage Bar"
+	})
 "cin" = (
 /obj/cable{
 	d1 = 1;
@@ -11364,6 +11373,19 @@
 	},
 /turf/space,
 /area/station/com_dish/comdish)
+"eQI" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost)
 "eQP" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/shuttle,
@@ -12365,6 +12387,16 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
+"fmM" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/item/device/radio/intercom/catering{
+	pixel_y = 29
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "fnd" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -15502,6 +15534,14 @@
 "gFI" = (
 /turf/simulated/floor/black,
 /area/station/maintenance/inner/the_cage)
+"gGm" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = -32
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "gGo" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
@@ -16552,14 +16592,6 @@
 /obj/item/pen/fancy,
 /turf/simulated/floor/wood,
 /area/station/chapel/sanctuary)
-"hcD" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_x = -32
-	},
-/turf/simulated/floor/black,
-/area/listeningpost)
 "hcE" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
@@ -24660,15 +24692,6 @@
 /obj/item/device/light/glowstick,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/warehouse)
-"kvb" = (
-/obj/machinery/vending/alcohol,
-/obj/machinery/light/small/warm{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/the_cage{
-	name = "The Cage Bar"
-	})
 "kvx" = (
 /obj/decal/boxingropeenter,
 /turf/simulated/floor/stairs/wide/middle{
@@ -37569,19 +37592,6 @@
 	dir = 10
 	},
 /area/station/science/lab)
-"qem" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_x = 32
-	},
-/turf/simulated/floor/redblack{
-	dir = 1
-	},
-/area/listeningpost)
 "qeS" = (
 /obj/machinery/nanofab/mining,
 /obj/decal/tile_edge/stripe{
@@ -49261,16 +49271,6 @@
 /obj/machinery/networked/telepad,
 /turf/simulated/floor/shuttlebay,
 /area/station/science/teleporter)
-"uYI" = (
-/obj/machinery/vending/alcohol,
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/item/device/radio/intercom/catering{
-	pixel_y = 29
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "uYR" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -62081,7 +62081,7 @@ xxT
 lyx
 mWu
 xxT
-ark
+afH
 tpS
 rQD
 tEt
@@ -62985,7 +62985,7 @@ gGo
 jgF
 xxT
 lTU
-hcD
+gGm
 xxT
 pVt
 rdH
@@ -63289,7 +63289,7 @@ xxT
 mlh
 npc
 leD
-qem
+eQI
 rLk
 gsy
 rSN
@@ -96218,7 +96218,7 @@ sem
 nnZ
 woO
 mXr
-kvb
+cim
 hBC
 poi
 lcJ
@@ -101050,7 +101050,7 @@ omJ
 hGG
 vnX
 uot
-uYI
+fmM
 ovt
 wHn
 iql

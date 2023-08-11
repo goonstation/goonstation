@@ -6950,16 +6950,6 @@
 /obj/reagent_dispensers/beerkeg,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
-"aBH" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	drive_range = 20;
-	id = "disposals_vent"
-	},
-/turf/simulated/floor/caution/northsouth{
-	dir = 1
-	},
-/area/station/maintenance/disposal)
 "aBI" = (
 /obj/machinery/door/poddoor/blast/single{
 	doordir = "noblasts";
@@ -15863,15 +15853,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/science)
-"btV" = (
-/obj/machinery/mass_driver{
-	desc = "A device that launches objects, like ANCIENT BOMBS, for example, on it at great velocity when activated.";
-	dir = 4;
-	drive_range = 100;
-	id = "artlabgun"
-	},
-/turf/simulated/floor/engine/caution/northsouth,
-/area/station/hangar/science)
 "btW" = (
 /obj/machinery/door/poddoor/blast/single{
 	doordir = "noblasts";
@@ -17802,6 +17783,16 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/space)
+"bIY" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 138;
+	id = "disposals_vent"
+	},
+/turf/simulated/floor/caution/northsouth{
+	dir = 1
+	},
+/area/station/maintenance/disposal)
 "bIZ" = (
 /obj/lattice{
 	dir = 1;
@@ -18479,25 +18470,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
-"bMa" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "drone_launcher"
-	},
-/turf/simulated/floor/plating/random,
-/area/ghostdrone_factory)
-"bMb" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "drone_launcher"
-	},
-/obj/machinery/door/poddoor/pyro{
-	dir = 4;
-	id = "drone_launcher";
-	name = "Launcher Door"
-	},
-/turf/simulated/floor/plating/random,
-/area/ghostdrone_factory)
 "bMd" = (
 /obj/disposalpipe/trunk{
 	dir = 2;
@@ -18953,6 +18925,16 @@
 	dir = 8
 	},
 /area/station/security/hos)
+"bVy" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "bVW" = (
 /obj/table/wood/round/auto,
 /obj/item/paper_bin{
@@ -20087,16 +20069,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
-"cSo" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/junction{
-	icon_state = "pipe-j2";
-	dir = 4
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "cSA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -20761,6 +20733,23 @@
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"dzW" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/light/small/floor,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/junction{
+	dir = 4;
+	icon_state = "pipe-j2"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "dAV" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	name = "West Pod Bay"
@@ -21089,6 +21078,16 @@
 	},
 /turf/simulated/floor/red,
 /area/listeningpost)
+"dNK" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "dNY" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -21167,20 +21166,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
-"dXf" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Robotics Lab";
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/robotics,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "dXn" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable,
@@ -21520,27 +21505,6 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
-"ejL" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
-	},
-/obj/item/paper_bin{
-	pixel_x = 6;
-	pixel_y = 3
-	},
-/obj/item/pen{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/item/stamp{
-	pixel_x = -7;
-	pixel_y = 4
-	},
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay/pharmacy)
 "ejQ" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -21566,6 +21530,19 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/east)
+"ekL" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 50;
+	id = "drone_launcher"
+	},
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "drone_launcher";
+	name = "Launcher Door"
+	},
+/turf/simulated/floor/plating/random,
+/area/ghostdrone_factory)
 "elh" = (
 /obj/disposalpipe/junction{
 	dir = 8;
@@ -23292,6 +23269,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
+"fRa" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 50;
+	id = "drone_launcher"
+	},
+/turf/simulated/floor/plating/random,
+/area/ghostdrone_factory)
 "fRk" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -24378,6 +24363,27 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
+"gQS" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 1
+	},
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/item/pen{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/stamp{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
 "gRq" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/shoes/flippers,
@@ -25949,19 +25955,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
-"ifI" = (
-/obj/machinery/power/apc{
-	areastring = "Bar";
-	dir = 4;
-	name = "Bar APC";
-	pixel_x = 24
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/vending/alcohol,
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/bar)
 "ifP" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -29059,6 +29052,15 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/quartermaster/storage)
+"kAu" = (
+/obj/machinery/mass_driver{
+	desc = "A device that launches objects, like ANCIENT BOMBS, for example, on it at great velocity when activated.";
+	dir = 4;
+	drive_range = 135;
+	id = "artlabgun"
+	},
+/turf/simulated/floor/engine/caution/northsouth,
+/area/station/hangar/science)
 "kAy" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -30243,6 +30245,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/main)
+"lyh" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 139;
+	id = "disposals_vent"
+	},
+/turf/simulated/floor/caution/northsouth{
+	dir = 1
+	},
+/area/station/maintenance/disposal)
 "lyy" = (
 /obj/machinery/conveyor/NS{
 	id = "disposals";
@@ -31283,23 +31295,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/medbay/lobby)
-"mpy" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/obj/machinery/light/small/floor,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/junction{
-	icon_state = "pipe-j2";
-	dir = 4
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
 "mqj" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -32409,6 +32404,28 @@
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"nmq" = (
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/iv_drip/blood,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/disposal/small{
+	dir = 4
+	},
+/obj/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 6;
+	level = 2
+	},
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/medical/medbay/surgery)
 "noC" = (
 /obj/machinery/light{
 	dir = 1;
@@ -33446,6 +33463,28 @@
 /obj/machinery/light,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
+"ojP" = (
+/obj/cable/brown{
+	icon_state = "4-8"
+	},
+/obj/machinery/conveyor/EW{
+	id = "mining2qm"
+	},
+/obj/plasticflaps{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/blast/single{
+	dir = 6;
+	doordir = "noblasts";
+	icon_state = "bdoornoblasts1";
+	id = "mining2qm_sec_door";
+	layer = 4;
+	name = "QM Security Door"
+	},
+/turf/simulated/floor/caution/misc{
+	dir = 4
+	},
+/area/station/quartermaster/office)
 "okh" = (
 /turf/simulated/floor/black/side,
 /area/station/engine/inner)
@@ -34915,28 +34954,6 @@
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
-"pvr" = (
-/obj/cable/brown{
-	icon_state = "4-8"
-	},
-/obj/machinery/conveyor/EW{
-	id = "mining2qm"
-	},
-/obj/plasticflaps{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/blast/single{
-	doordir = "noblasts";
-	icon_state = "bdoornoblasts1";
-	id = "mining2qm_sec_door";
-	layer = 4;
-	name = "QM Security Door";
-	dir = 6
-	},
-/turf/simulated/floor/caution/misc{
-	dir = 4
-	},
-/area/station/quartermaster/office)
 "pvN" = (
 /obj/disposalpipe/segment/morgue,
 /obj/cable{
@@ -36294,6 +36311,26 @@
 	icon_state = "quiltystair"
 	},
 /area/station/hallway/primary/central)
+"qwj" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 1
+	},
+/obj/item/clipboard{
+	pixel_x = -7
+	},
+/obj/item/clothing/glasses/healthgoggles{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = 15;
+	pixel_y = -2
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
 "qwk" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -37934,28 +37971,6 @@
 	icon_state = "yellowblack"
 	},
 /area/station/hallway/primary/east)
-"rKT" = (
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
-/obj/item/reagent_containers/iv_drip/blood,
-/obj/machinery/power/apc/autoname_west,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/disposal/small{
-	dir = 4
-	},
-/obj/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple{
-	level = 2;
-	dir = 6
-	},
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/medical/medbay/surgery)
 "rLc" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/black{
@@ -38703,6 +38718,20 @@
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
+"spK" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Robotics Lab"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/robotics,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "sqF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -40592,6 +40621,19 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"tYa" = (
+/obj/machinery/power/apc{
+	areastring = "Bar";
+	dir = 4;
+	name = "Bar APC";
+	pixel_x = 24
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/vending/alcohol/with_ammo,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
 "tYm" = (
 /obj/machinery/networked/test_apparatus/heater,
 /obj/machinery/power/data_terminal,
@@ -40620,16 +40662,6 @@
 	dir = 1
 	},
 /area/station/quartermaster/office)
-"tZf" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_x = 32
-	},
-/turf/simulated/floor/grey/side{
-	dir = 8
-	},
-/area/listeningpost)
 "tZF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -43282,15 +43314,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"wgZ" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = -33;
-	entrance_scanner = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "wie" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -44056,6 +44079,16 @@
 	icon_state = "fpurple3"
 	},
 /area/station/science/research_director)
+"wTn" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/junction{
+	dir = 4;
+	icon_state = "pipe-j2"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/lobby)
 "wUf" = (
 /obj/cable/yellow{
 	icon_state = "2-8"
@@ -44732,16 +44765,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/bridge)
-"xAg" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = 25
-	},
-/turf/simulated/floor/stairs{
-	dir = 8
-	},
-/area/listeningpost)
 "xAx" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -45479,6 +45502,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
+"yel" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33;
+	entrance_scanner = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "yeG" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -45662,26 +45694,6 @@
 	icon_state = "fpurple2"
 	},
 /area/station/science/research_director)
-"yis" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
-	},
-/obj/item/clipboard{
-	pixel_x = -7
-	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/obj/item/kitchen/food_box/lollipop{
-	pixel_x = 15;
-	pixel_y = -2
-	},
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay/pharmacy)
 "yiQ" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -59757,9 +59769,9 @@ aaa
 aaa
 aaa
 aGW
-bMa
+fRa
 aGW
-bMa
+fRa
 aGW
 aaa
 aaa
@@ -60014,9 +60026,9 @@ aaa
 aaa
 aaa
 aGW
-bMb
+ekL
 aGW
-bMb
+ekL
 aGW
 aaa
 aaa
@@ -66722,7 +66734,7 @@ udJ
 sYc
 lkd
 mxQ
-rKT
+nmq
 wbK
 aXv
 aGS
@@ -67492,7 +67504,7 @@ kMk
 oqk
 iKu
 iKu
-mpy
+dzW
 aXT
 bve
 aXv
@@ -70306,7 +70318,7 @@ bkJ
 bkJ
 bkJ
 rjV
-dXf
+spK
 qmV
 tll
 nyD
@@ -70823,7 +70835,7 @@ egk
 rAe
 xfd
 sMS
-cSo
+wTn
 dGd
 hyE
 xDs
@@ -71086,7 +71098,7 @@ wIm
 cdV
 nyD
 wKe
-yis
+qwj
 pLQ
 vkf
 fCk
@@ -71343,7 +71355,7 @@ oEQ
 iDw
 uKZ
 ihL
-ejL
+gQS
 aHd
 aHd
 aHd
@@ -81353,7 +81365,7 @@ ukY
 vVC
 aFK
 aGx
-ifI
+tYa
 aIB
 ino
 kvU
@@ -81650,7 +81662,7 @@ bsu
 bXM
 bsu
 tmd
-pvr
+ojP
 rSP
 aJg
 fqq
@@ -87001,7 +87013,7 @@ sqY
 plf
 avz
 avz
-aBH
+lyh
 aSm
 asm
 aES
@@ -87258,7 +87270,7 @@ aaa
 sqY
 plf
 avz
-aBH
+bIY
 aSm
 asm
 aES
@@ -88066,7 +88078,7 @@ bpv
 bqy
 brM
 bsB
-btV
+kAu
 bva
 bwi
 bwi
@@ -102526,7 +102538,7 @@ aab
 bCl
 bFQ
 bFQ
-wgZ
+yel
 bKK
 bLb
 bLj
@@ -103039,7 +103051,7 @@ bJY
 bJY
 bJY
 bJY
-xAg
+dNK
 bKK
 bKK
 bLd
@@ -103812,7 +103824,7 @@ lXD
 iiM
 mAw
 bKP
-tZf
+bVy
 mIt
 bLn
 bKX

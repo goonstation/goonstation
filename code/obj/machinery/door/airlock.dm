@@ -1092,6 +1092,11 @@ About the new airlock wires panel:
 	var/wireIndex = airlockWireColorToIndex[wireColor]
 	wires &= ~wireFlag
 	switch(wireIndex)
+		if(AIRLOCK_WIRE_IDSCAN)
+			//Cutting this also flashes the red light on the door (if the door has power).
+			if ((src.arePowerSystemsOn()) && (!(src.status & NOPOWER)))
+				play_deny()
+
 		if(AIRLOCK_WIRE_MAIN_POWER1, AIRLOCK_WIRE_MAIN_POWER2)
 			//Cutting either one disables the main door power, but unless backup power is also cut, the backup power re-powers the door in 10 seconds. While unpowered, the door may be crowbarred open, but bolts-raising will not work. Cutting these wires may electocute the user.
 			src.loseMainPower()
