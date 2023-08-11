@@ -240,8 +240,8 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.read_only = 1
 
 	bartender
-		name = "\improper drinkmaster 1000"
-		desc = "your friend for making the perfect drink"
+		name = "\improper Drinkmaster 1000"
+		desc = "Your friend for making the perfect drink!"
 		icon_state = "cart-hydro"
 
 		New()
