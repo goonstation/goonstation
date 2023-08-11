@@ -388,6 +388,11 @@
 			src.updateUsrDialog()
 
 	attackby(var/obj/item/I, mob/user)
+		. = ..()
+		if (. == 10)
+		// added an early return on the parent version of this verb to facilitate early return here
+		// and allow repairs
+			return
 		var/obj/item/card/id/id_card = get_id_card(I)
 		if (istype(id_card))
 			boutput(user, "<span class='notice'>You swipe the ID card.</span>")
