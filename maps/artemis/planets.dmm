@@ -596,15 +596,6 @@
 	},
 /turf/simulated/floor/black,
 /area/ship/artemis)
-"oW" = (
-/obj/machinery/atmospherics/pipe/simple/overfloor{
-	dir = 9
-	},
-/turf/unsimulated/wall/auto/lead/blue{
-	desc = "Seems pretty sturdy.";
-	name = "shield wall"
-	},
-/area/ship/artemis)
 "oZ" = (
 /obj/table/wood/auto,
 /obj/item/clothing/gloves/concussive,
@@ -789,12 +780,6 @@
 	},
 /turf/simulated/floor/black,
 /area/ship/artemis)
-"uf" = (
-/obj/machinery/atmospherics/pipe/vent{
-	dir = 4
-	},
-/turf/simulated/floor/airless/engine/vacuum,
-/area/ship/space_canvas)
 "uk" = (
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -1211,7 +1196,7 @@
 	},
 /area/ship/artemis)
 "EN" = (
-/obj/machinery/atmospherics/binary/ion_drive/plasma_tank,
+/obj/machinery/atmospherics/unary/ion_drive/plasma_tank,
 /turf/simulated/floor/black,
 /area/ship/artemis)
 "ES" = (
@@ -2009,15 +1994,6 @@
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "red2"
-	},
-/area/ship/artemis)
-"ZD" = (
-/obj/machinery/atmospherics/pipe/simple/overfloor{
-	dir = 4
-	},
-/turf/unsimulated/wall/auto/lead/blue{
-	desc = "Seems pretty sturdy.";
-	name = "shield wall"
 	},
 /area/ship/artemis)
 "ZF" = (
@@ -8102,7 +8078,7 @@ Si
 HL
 Sz
 Sz
-uf
+Sz
 Sz
 Sz
 Sz
@@ -8404,7 +8380,7 @@ Dk
 po
 yi
 po
-ZD
+po
 Sz
 Sz
 Sz
@@ -8706,7 +8682,7 @@ po
 po
 Ua
 VH
-ZD
+po
 ao
 dl
 Sz
@@ -9008,7 +8984,7 @@ po
 Tt
 rU
 ZF
-ZD
+po
 Ar
 dl
 Sz
@@ -9310,7 +9286,7 @@ Vt
 Tt
 Bk
 EN
-oW
+po
 Ar
 dl
 Sz

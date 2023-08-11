@@ -1,7 +1,7 @@
 #if ENABLE_ARTEMIS
 
 /////////////////////TANK/////////////////////
-/obj/machinery/atmospherics/binary/ion_drive/plasma_tank
+/obj/machinery/atmospherics/unary/ion_drive/plasma_tank
 		name = "plasma tank"
 		desc = "the engines plasma tank"
 		icon = 'icons/misc/artemis/artemis_engine.dmi'
@@ -14,7 +14,9 @@
 		var/volume=1000
 
 
-/obj/machinery/atmospherics/binary/ion_drive/plasma_tank/New()
+/obj/machinery/atmospherics/unary/ion_drive/plasma_tank/New()
+		src.dir=NORTH
+		src.initialize_directions=NORTH
 		..()
 		src.stored_fuel= new /datum/gas_mixture
 		src.stored_fuel.volume = src.volume
@@ -22,8 +24,9 @@
 		src.stored_fuel.toxins = (src.max_pressure / 2) * src.volume / (T20C * R_IDEAL_GAS_EQUATION)
 
 
+
 /// Checks for gas in node1 and there is room left in the tank. If yes process it by storing the plasma and ejecting the rest
-/obj/machinery/atmospherics/binary/ion_drive/plasma_tank/process()
+/obj/machinery/atmospherics/unary/ion_drive/plasma_tank/process()
 		..()
 
 		if(!src.on)
@@ -36,11 +39,11 @@
 		var/pressure_delta = src.max_pressure - tank_pressure
 		var/transfer_moles
 
-		if(src.air1.temperature > 0)
-				transfer_moles = pressure_delta*src.stored_fuel.volume/(src.air1.temperature * R_IDEAL_GAS_EQUATION)
+		if(src.air_contents.temperature > 0)
+				transfer_moles = pressure_delta*src.stored_fuel.volume/(src.air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
 		if(transfer_moles > 0)
-				var/datum/gas_mixture/removed = src.air1.remove(transfer_moles)
+				var/datum/gas_mixture/removed = src.air_contents.remove(transfer_moles)
 
 				if(removed.toxins>0)
 						var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
@@ -51,10 +54,8 @@
 						filtered_out.toxins=removed.toxins
 						removed.toxins = 0
 						src.stored_fuel.merge(filtered_out)
-
-				src.air2.merge(removed)
-				src.network1?.update = TRUE
-				src.network2?.update = TRUE
+				qdel(removed)
+				src.network?.update = TRUE
 
 		return TRUE
 
@@ -101,14 +102,14 @@
 		var/throttle
 		var/on = FALSE
 		var/target_pressure=ONE_ATMOSPHERE
-		var/obj/machinery/atmospherics/binary/ion_drive/plasma_tank/artemis_tank = null
+		var/obj/machinery/atmospherics/unary/ion_drive/plasma_tank/artemis_tank = null
 		var/obj/machinery/ion_drive/drive/artemis_drive = null
 /// setup the ion drive interface, look for the tank to the east and the drive to the west
 /obj/machinery/ion_drive/interface/New()
 		..()
 		SPAWN(0.5 SECONDS)
 				var/turf/T = get_step(src,WEST)
-				src.artemis_tank = locate(/obj/machinery/atmospherics/binary/ion_drive/plasma_tank) in T
+				src.artemis_tank = locate(/obj/machinery/atmospherics/unary/ion_drive/plasma_tank) in T
 				T = get_step(src,EAST)
 
 				src.artemis_drive = locate(/obj/machinery/ion_drive/drive) in T
