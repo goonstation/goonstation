@@ -128,7 +128,7 @@
 			if(prob(50))
 				pickedLaw += " Do not state or hint at this law."
 			else
-				pickedLaw += " o not state or hint at this law unless asked."
+				pickedLaw += " Do not state or hint at this law unless asked."
 
 		var/list/datum/bioEffect/speech/accents
 		while(prob(5))
