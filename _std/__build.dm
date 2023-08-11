@@ -28,25 +28,31 @@ o+`        `-` ``..-:yooos-..----------..`
            `d.                     .d`
 */
 
+// Toggle this to enable perspective wall icons in .dmm-compatible map editors. By default, icons in the editor will be flat.
+//#define USE_PERSPECTIVE_EDITOR_WALLS
+
 //------------ OPTIONS TO GO FAST ------------//
 
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1		// Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1	// No other zlevels. Boots way faster. will load atlas by default
-
-//////--- DEVELOPER MAPS FOR TESTING THINGS ---
-// these maps are in the blank_maps subfolder in the maps folder. Other maps are lower down
-//#define MAP_OVERRIDE_DEVTEST			            // Developer Testing map by cringe
-//#define MAP_OVERRIDE_TESTING_UNSIMMED					// Only load in the 20x20 testing map. no z levels
-//#define MAP_OVERRIDE_TESTING_SIMMED						// 20x20 testing map but with simmed turfs
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID	// all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
 //#define NO_COOLDOWNS										// disables all /datum/targetable cooldowns
 //#define BONUS_POINTS										// gives a bunch of starting points to various abilities/uplinks/weapon vendors
 //#define SHUT_UP_AND_GIVE_ME_MEDAL_STUFF	// causes has_medal to always return true - good for testing medal rewards etc.
-//#define SHOW_ME_STATUSES // incredibly hacky visible status effects
+//#define SHOW_ME_STATUSES 								// incredibly hacky visible status effects
 
 //#define Z_LOG_ENABLE 1		// Enable additional world.log logging
+
+///--- DEVELOPER MAPS FOR TESTING THINGS ---
+//	these maps are in the blank_maps subfolder in the maps folder.
+//	they load a bit faster and are easier to edit and navigate than atlas. No z levels
+//	normal maps are down near line 120.
+//#define MAP_OVERRIDE_DEVTEST						// Developer Testing map by cringe
+//#define MAP_OVERRIDE_TESTING_UNSIMMED		// Blank 50x50 testing map with unsimmed turfs.
+//#define MAP_OVERRIDE_TESTING_SIMMED			// Blank 50x50 testing map with simmed turfs.
+
 
 //#define STOP_DISTRACTING_ME //All of the below
 
@@ -54,7 +60,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP	// Prevents ALL bots from spawning (not cyborgs)
 //#define BAD_MONKEY_NO_BANANA													// Prevents landmark monkeys from spawning- monkeys can still be vended etc
 //#define CLONING_IS_A_SIN															// Don't prebake clones
-//#define CLONING_IS_INSTANT														//Clonepods fully heal the clone instantly
+//#define CLONING_IS_INSTANT														// Clonepods fully heal the clone instantly
 //#define I_KNOW_WHAT_IM_DOING_PROBABLY									// Suppresses gottagofast warning about only using one z-level.
 //#define LOW_SECURITY																	// Deletes turrets
 //#define NO_CRITTERS																		// Deletes mob critters
@@ -74,6 +80,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define SERVER_SIDE_PROFILING_INGAME_ONLY 1	// Generate and save profiler data for post-pregame work
 
 //------------- DEBUGGING TOGGLES -------------//
+// these generally shouldn't be enabled on actual servers.
 
 // Delete queue debug toggle
 // This is expensive. don't turn it on on the server unless you want things to be bad and slow
@@ -112,9 +119,6 @@ o+`        `-` ``..-:yooos-..----------..`
 
 // Toggle this to turn .dispose() into qdel( ). Useful for trying to find lingering references locally.
 //#define DISPOSE_IS_QDEL
-
-// Toggle this to enable perspective wall icons in .dmm-compatible map editors. By default, icons in the editor will be flat.
-//#define USE_PERSPECTIVE_EDITOR_WALLS
 
 //------------- MAP OVERRIDES -------------//
 //-------Special Events:

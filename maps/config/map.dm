@@ -11,7 +11,13 @@
 #elif defined(RANDOM_ROOM_RUNTIME_CHECKING)
 #include "blank.dm"
 
-#elif defined(MAP_OVERRIDE_TESTING_UNSIMMED) || defined(MAP_OVERRIDE_TESTING_SIMMED)
+#elif defined(MAP_OVERRIDE_DEVTEST)
+#include "testmaps.dm"
+
+#elif defined(MAP_OVERRIDE_TESTING_UNSIMMED)
+#include "testmaps.dm"
+
+#elif defined(MAP_OVERRIDE_TESTING_SIMMED)
 #include "testmaps.dm"
 
 // special modes
@@ -91,9 +97,6 @@
 
 #elif defined(MAP_OVERRIDE_GEHENNA)
 #include "gehenna.dm"
-
-#elif defined(MAP_OVERRIDE_DEVTEST)
-#include "devtest.dm"
 
 #elif defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 #include "gottagofast.dm"
