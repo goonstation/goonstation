@@ -1452,7 +1452,7 @@ proc/load_morrigan()
 /obj/item/clothing/under/suit
 	name = "Head of Security's Decorated Suit"
 	desc = "A little too familiar..."
-	icon = 'icons/obj/clothing/clothing/uniforms/item_js_rank.dmi'
+	icon = 'icons/obj/clothing/uniforms/item_js_rank.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_rank.dmi'
 	icon_state = "hos_syndie"
 	item_state = "hos_syndie"
