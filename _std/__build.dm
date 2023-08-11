@@ -31,7 +31,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //------------ OPTIONS TO GO FAST ------------//
 
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
-//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the map Atlas, no other zlevels. Boots way faster
+//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the tiny map Devtest, no other zlevels. Boots way faster
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
@@ -128,6 +128,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_CLARION			// Used to be Destiny's Alt. By Dionsu and a69andahalf.
 //#define MAP_OVERRIDE_OSHAN				// Oshan by committee
 //#define MAP_OVERRIDE_NADIR				// Nadir Extraction Site by Kubius
+//#define MAP_OVERRIDE_DEVTEST			// Developer Testing map by cringe
 
 //-------Discontinued or gimmick maps:
 //#define MAP_OVERRIDE_MANTA				// manta map
