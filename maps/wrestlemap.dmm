@@ -24641,7 +24641,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/storage/warehouse)
 "kvb" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/machinery/light/small/warm{
 	dir = 1
 	},
@@ -49239,7 +49239,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/science/teleporter)
 "uYI" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},

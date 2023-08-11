@@ -1156,7 +1156,7 @@
 			if (istype(I, /obj/item/organ))
 				var/obj/item/organ/O = I
 				O.on_transplant(src.donor)
-			if (is_full_robotic())
+			if (is_full_robotic() && !istype(src.donor:mutantrace, /datum/mutantrace/cyberman))
 				donor.unlock_medal("Spaceship of Theseus", 1)
 			return 1
 

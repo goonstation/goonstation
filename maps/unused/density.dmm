@@ -1057,7 +1057,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "cw" = (
