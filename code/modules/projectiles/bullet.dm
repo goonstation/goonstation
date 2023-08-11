@@ -1731,3 +1731,26 @@ datum/projectile/bullet/autocannon
 	shot_sound = null
 	projectile_speed = 12
 	implanted = null
+
+/datum/projectile/bullet/wall_buster_shrapnel // for nuclear meltdowns
+	name = "shrapnel"
+	damage = 70
+	damage_type = D_PIERCING
+	armor_ignored = 0.66
+	hit_type = DAMAGE_CUT
+	window_pass = 0
+	icon = 'icons/obj/scrap.dmi'
+	icon_state = "2metal0"
+	casing = null
+	impact_image_state = "bhole-staple"
+	implanted = /obj/item/implant/projectile/shrapnel/radioactive
+
+	on_hit(atom/hit, angle, obj/projectile/O)
+		if(istype(hit,  /turf/simulated/wall))
+			//let's pretend these walls were destroyed in the explosion
+			hit.ex_act(2)
+		else if(istype(hit, /obj/window))
+			//I'm onto you with your stacks of thindows
+			for(var/obj/window/maybe_thindow in hit.loc)
+				maybe_thindow.ex_act(2)
+		. = ..()
