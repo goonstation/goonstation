@@ -78,10 +78,6 @@
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/morrigan/station/factory)
-"aey" = (
-/mob/living/critter/robotic/gunbot,
-/turf/unsimulated/outdoors/grass,
-/area/morrigan/station/civilian/botany)
 "aeZ" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -7432,11 +7428,6 @@
 /obj/machinery/manufacturer/robotics,
 /turf/unsimulated/floor/white/checker2,
 /area/morrigan/station/medical/robotics)
-"hRZ" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/light/incandescent/netural,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/command/captain)
 "hSf" = (
 /turf/unsimulated/outdoors/grass,
 /area/morrigan/station/civilian/botany)
@@ -7824,6 +7815,13 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"iqi" = (
+/obj/machinery/door/poddoor/blast{
+	dir = 4;
+	id = null
+	},
+/turf/space,
+/area/morrigan/station/space)
 "itq" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -8048,10 +8046,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
-"iIb" = (
-/obj/barricade,
-/turf/unsimulated/floor/engine/glow,
-/area/morrigan/station/factory)
 "iIx" = (
 /obj/decal/cleanable/generic,
 /obj/item/furniture_parts/stool,
@@ -8745,10 +8739,6 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"jrg" = (
-/obj/machinery/bot/firebot/emagged/no_selfdestruct,
-/turf/unsimulated/floor/engine,
-/area/morrigan/station/factory)
 "jrr" = (
 /obj/machinery/conveyor/area_activated{
 	dir = 1
@@ -8853,7 +8843,6 @@
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/medical/main)
 "jwH" = (
-/obj/barricade,
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
 	},
@@ -9051,6 +9040,17 @@
 /obj/decal/cleanable/cobwebFloor,
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
+"jGD" = (
+/obj/machinery/door/poddoor/blast{
+	density = 0;
+	dir = 4;
+	icon = 'icons/obj/doors/sovblastdoor.dmi';
+	icon_state = "bdoorright0";
+	id = "samostrel_nuke_outer";
+	opacity = 0
+	},
+/turf/unsimulated/floor/engine,
+/area/morrigan/station/space)
 "jHD" = (
 /obj/machinery/conveyor/area_activated{
 	dir = 1
@@ -9553,7 +9553,10 @@
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/civilian/kitchen)
 "kkV" = (
-/obj/decal/poster/wallsign/hazard_danger,
+/obj/decal/poster/wallsign/hazard_danger{
+	pixel_x = -31;
+	pixel_y = 5
+	},
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/passage)
 "kls" = (
@@ -11706,7 +11709,6 @@
 /turf/unsimulated/floor/caution/corner,
 /area/morrigan/routing/transport)
 "mJv" = (
-/obj/barricade,
 /obj/decal/cleanable/blood{
 	icon_state = "drip2b"
 	},
@@ -12497,14 +12499,6 @@
 	},
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
-"nvI" = (
-/obj/barricade,
-/obj/decoration/bullethole{
-	pixel_y = -9;
-	pixel_x = -6
-	},
-/turf/unsimulated/floor/engine/glow,
-/area/morrigan/station/factory)
 "nvY" = (
 /obj/machinery/conveyor/area_activated,
 /turf/unsimulated/floor/plating,
@@ -12550,7 +12544,6 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "nyg" = (
-/obj/bomb_decoy,
 /obj/decal/cleanable/machine_debris{
 	icon_state = "gib7";
 	name = "smashed fabricator"
@@ -13999,7 +13992,6 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "pal" = (
-/mob/living/critter/robotic/sawfly/ai_controlled,
 /obj/decal/cleanable/blood{
 	icon_state = "footprints1";
 	dir = 8
@@ -15076,6 +15068,9 @@
 /obj/random_item_spawner/shoe/six,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"qrC" = (
+/turf/unsimulated/floor/engine,
+/area/morrigan/station/space)
 "qsj" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style,
@@ -15777,7 +15772,10 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/derelict)
 "rbo" = (
-/obj/decal/poster/wallsign/hazard_danger,
+/obj/decal/poster/wallsign/hazard_danger{
+	pixel_y = -4;
+	pixel_x = -32
+	},
 /obj/decal/cleanable/blood{
 	icon_state = "smear3"
 	},
@@ -15847,6 +15845,18 @@
 /obj/decal/cleanable/rust/jen,
 /turf/unsimulated/floor/carpet/grime,
 /area/morrigan/derelict)
+"rfP" = (
+/obj/lattice,
+/obj/machinery/door/poddoor/blast{
+	density = 0;
+	dir = 4;
+	icon = 'icons/obj/doors/sovblastdoor.dmi';
+	icon_state = "bdoorright0";
+	id = "samostrel_nuke_outer";
+	opacity = 0
+	},
+/turf/space,
+/area/morrigan/station/space)
 "rhv" = (
 /obj/decal/cleanable/rust/jen,
 /obj/item/implant/projectile/bullet_357,
@@ -16225,8 +16235,10 @@
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing)
 "rFj" = (
-/obj/decal/poster/wallsign/hazard_danger,
-/obj/decal/poster/wallsign/hazard_danger,
+/obj/decal/poster/wallsign/hazard_danger{
+	pixel_y = 8;
+	pixel_x = 64
+	},
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/passage)
 "rFz" = (
@@ -16775,7 +16787,10 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "sur" = (
-/obj/decal/poster/wallsign/hazard_danger,
+/obj/decal/poster/wallsign/hazard_danger{
+	pixel_y = -3;
+	pixel_x = 62
+	},
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/passage)
@@ -17512,11 +17527,6 @@
 "tnp" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/construction)
-"tnv" = (
-/mob/living/critter/small_animal/wasp/angry,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/civilian/botany)
 "tos" = (
 /obj/stool,
 /turf/unsimulated/floor/carpet/grime,
@@ -20109,11 +20119,6 @@
 /obj/machinery/vending/snack,
 /turf/unsimulated/floor/black,
 /area/morrigan/warden)
-"wkB" = (
-/mob/living/critter/small_animal/fly,
-/obj/map/light,
-/turf/unsimulated/outdoors/grass,
-/area/morrigan/station/civilian/botany)
 "wkO" = (
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -20398,6 +20403,14 @@
 /obj/machinery/phone/wall,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/command/CE)
+"wEk" = (
+/obj/lattice,
+/obj/machinery/door/poddoor/blast{
+	dir = 4;
+	id = null
+	},
+/turf/space,
+/area/morrigan/station/space)
 "wEq" = (
 /obj/random_item_spawner/tools,
 /turf/unsimulated/floor/industrial,
@@ -20860,10 +20873,6 @@
 /obj/item/device/light/sparkler,
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
-"xeA" = (
-/obj/machinery/space_heater,
-/turf/unsimulated/floor/engine/glow,
-/area/morrigan/station/factory)
 "xfA" = (
 /turf/unsimulated/floor/caution/north,
 /area/morrigan/teleporter)
@@ -21208,7 +21217,6 @@
 /area/morrigan/station/maintenance)
 "xvw" = (
 /obj/stool/chair/office/red,
-/obj/critter/gunbot/heavy,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/armory)
 "xvK" = (
@@ -24485,7 +24493,7 @@ hSf
 hSf
 hSf
 hSf
-aey
+hSf
 hSf
 jIP
 nkU
@@ -24994,13 +25002,13 @@ bvF
 xkV
 dtl
 rDH
-wkB
+bAr
 hSf
 hSf
-tnv
 cdT
 cdT
-tnv
+cdT
+cdT
 hSf
 hSf
 rDH
@@ -25097,7 +25105,7 @@ bvF
 xkV
 dtl
 sbO
-aey
+hSf
 hSf
 bAr
 hSf
@@ -25205,7 +25213,7 @@ rDH
 hSf
 hSf
 hSf
-aey
+hSf
 hSf
 hSf
 hSf
@@ -27258,7 +27266,7 @@ eXK
 uru
 bvF
 uSN
-hRZ
+dsc
 oVm
 mqP
 sYU
@@ -27361,7 +27369,7 @@ eXK
 naK
 bvF
 kaR
-hRZ
+dsc
 xZN
 bLg
 mqP
@@ -28526,8 +28534,8 @@ fby
 iVk
 iVk
 iVk
-dKY
-dKY
+qrC
+qrC
 gac
 elx
 dKY
@@ -28626,12 +28634,12 @@ vdp
 fby
 mpH
 ikZ
-iIb
+ykr
 iVk
 dKY
 dKY
-dKY
-iVk
+qrC
+wEk
 dKY
 dKY
 dKY
@@ -28734,7 +28742,7 @@ iVk
 dKY
 dKY
 dKY
-dKY
+jGD
 dKY
 dKY
 dKY
@@ -28828,7 +28836,7 @@ nRS
 nNp
 iJW
 dPt
-jrg
+udo
 mJv
 tbo
 paC
@@ -28837,7 +28845,7 @@ dKY
 dKY
 dKY
 dKY
-dKY
+iqi
 dKY
 dKY
 dKY
@@ -28933,7 +28941,7 @@ onE
 uBA
 jwH
 nyg
-iIb
+ykr
 bmI
 juU
 dKY
@@ -29035,7 +29043,7 @@ nKs
 ulV
 bHQ
 fPs
-nvI
+gGY
 lLW
 agc
 dKY
@@ -29133,7 +29141,7 @@ rrL
 etq
 wNb
 joF
-xeA
+ykr
 mXR
 gRN
 ent
@@ -29146,7 +29154,7 @@ fby
 dKY
 dKY
 dKY
-dKY
+qrC
 dKY
 dKY
 dKY
@@ -29248,8 +29256,8 @@ ykr
 fby
 qyR
 nuH
-dKY
-dKY
+qrC
+qrC
 dKY
 dKY
 dKY
@@ -29352,7 +29360,7 @@ adR
 udo
 pBD
 gKg
-iVk
+rfP
 dKY
 dKY
 dKY
@@ -29455,7 +29463,7 @@ yhX
 ykr
 lUr
 udo
-dKY
+iqi
 dKY
 dKY
 iVk

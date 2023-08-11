@@ -1441,7 +1441,7 @@ proc/load_morrigan()
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	icon_state = "syndicommander_coat"
-	item_state = "syndiecommander_coat"
+	item_state = "syndicommander_coat"
 
 	setupProperties()
 		..()
