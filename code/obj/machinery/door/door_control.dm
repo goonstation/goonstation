@@ -497,8 +497,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		user.visible_message("<span class='notice'>The [src] accepts the biometrics of the user and beeps, granting you access.</span>")
 		toggle()
 		if (entrance_scanner == 1)
-			src.audible_message(<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Welcome, Agent."\</span></span>)
-			make_chat_maptext(src, "Welcome, Agent." "color: [FF0100];", alpha = 140)
+			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[Welcome, Agent.]\"")
 	else
 		boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
 
