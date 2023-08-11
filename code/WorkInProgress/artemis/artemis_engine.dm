@@ -25,7 +25,7 @@
 
 
 
-/// Checks for gas in node1 and there is room left in the tank. If yes process it by storing the plasma and ejecting the rest
+/// Checks for gas in node1 and there is room left in the tank. If yes process it by storing the plasma and deleting the rest
 /obj/machinery/atmospherics/unary/ion_drive/plasma_tank/process()
 		..()
 
