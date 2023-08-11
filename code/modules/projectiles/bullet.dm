@@ -1746,11 +1746,11 @@ datum/projectile/bullet/autocannon
 	implanted = /obj/item/implant/projectile/shrapnel/radioactive
 
 	on_hit(atom/hit, angle, obj/projectile/O)
-		if(istype(hit,  /turf/simulated/wall))
-			//let's pretend these walls were destroyed in the explosion
-			hit.ex_act(2)
-		else if(istype(hit, /obj/window))
+		if(!ismob(hit))
 			//I'm onto you with your stacks of thindows
-			for(var/obj/window/maybe_thindow in hit.loc)
-				maybe_thindow.ex_act(2)
+			if(!isturf(hit)) //did you know that turf.loc is /area? because I didn't
+				for(var/obj/window/maybe_thindow in hit.loc)
+					maybe_thindow.ex_act(2)
+			//let's pretend these walls/objects were destroyed in the explosion
+			hit.ex_act(2)
 		. = ..()
