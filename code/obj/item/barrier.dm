@@ -161,3 +161,34 @@ TYPEINFO(/obj/item/barrier)
 
 		src.setItemSpecial(/datum/item_special/barrier)
 		BLOCK_SETUP(BLOCK_ALL)
+
+/obj/item/riot_barrier
+	name = "riot barrier"
+	desc = "a two handed barrier designed for riot situations
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "barrier0"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "barrier0"
+	flags = FPRINT | TABLEPASS
+	c_flags = EQUIPPED_WHILE_HELD | ONBELT
+	force = 4
+	throwforce = 6
+	w_class = W_CLASS_SMALL
+	stamina_damage = 50
+	stamina_cost = 30
+	stamina_crit_chance = 0
+	hitsound = 0
+
+	var/use_two_handed = 1
+
+	setupProperties()
+		..()
+		setProperty("meleeprot_all", 12)
+		setProperty("rangedprot", 3)
+		setProperty("movespeed", 0.6)
+		setProperty("disorient_resist", 65)
+		setProperty("disorient_resist_eye", 65)
+		setProperty("disorient_resist_ear", 50)
+
+		src.setItemSpecial(/datum/item_special/barrier)
+		BLOCK_SETUP(BLOCK_ALL)
