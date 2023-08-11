@@ -2,4 +2,4 @@
 #warn Only using one z-level. This will fuck everything up. You're gonna have a bad time.
 #endif
 INCLUDE_MAP("../devtest.dmm")
-#define MAP_MODE "standard"
+#define MAP_MODE "testing"
