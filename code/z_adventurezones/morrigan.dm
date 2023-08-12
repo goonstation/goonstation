@@ -1469,7 +1469,7 @@ proc/load_morrigan()
 	density = TRUE
 	deconstruct_flags = DECON_NONE
 	icon = 'icons/obj/monitors.dmi'
-	icon_state = "shipalert0" //needs it's own sprite probably
+	icon_state = "self_destruct1" 
 	desc = "A big red button labeled to activate station's self destruct when pressed. It has an ID card reader. It is locked behind a bulletproof glass case. "
 	var/timing = FALSE
 	var/time = 80
@@ -1524,7 +1524,7 @@ proc/load_morrigan()
 			return
 		else
 			boutput(user, "<span class='notice'>You swipe the ID card opening the glass case.</span>") //now we can press the button
-			src.icon_state = "shipalert2"
+			src.icon_state = "self_destruct2"
 			src.locked = FALSE
 			return
 
