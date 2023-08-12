@@ -1212,12 +1212,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		if (!B || force_remove)
 			UpdateOverlays(null, "burning")
 			return
-		else if (B.stage == 1)
-			burning_image.icon_state = "fire1-[burning_suffix]"
-		else if (B.stage == 2)
-			burning_image.icon_state = "fire2-[burning_suffix]"
-		else if (B.stage == 3)
-			burning_image.icon_state = "fire3-[burning_suffix]"
+		burning_image.icon_state = "fire[B.getStage()]-[burning_suffix]"
 		UpdateOverlays(burning_image, "burning")
 
 	force_laydown_standup()
