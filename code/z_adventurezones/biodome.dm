@@ -399,6 +399,7 @@ SYNDICATE DRONE FACTORY AREAS
 				var/mob/living/M = O
 				if (M.mind?.damned)
 					melt_away(M)
+					return
 
 			if (check_target_immunity(O, TRUE))
 				return
