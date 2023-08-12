@@ -3298,7 +3298,7 @@
 			var/datum/gas_mixture/environment = T.return_air()
 			var/environment_mole_count = TOTAL_MOLES(environment)
 			var/environment_pressure = (environment_mole_count * R_IDEAL_GAS_EQUATION * environment.temperature) / environment.volume
-			if (environment_pressure >= MAX_PRESSURE_BEFORE_ATMOS_SLOWDOWN)
+			if (environment_pressure < MAX_PRESSURE_BEFORE_ATMOS_SLOWDOWN)
 				. -= atmos_movement
 
 		if (!(src.mutantrace && src.mutantrace.aquatic) && !src.hasStatus("aquabreath"))
