@@ -7941,7 +7941,7 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/main)
 "ixH" = (
-/obj/item/parts/robot_parts/chest,
+/obj/item/parts/robot_parts/chest/standard,
 /obj/decal/cleanable/blood{
 	icon_state = "footprints1"
 	},
@@ -11131,9 +11131,10 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "lZu" = (
-/obj/machinery/activation_button{
+/obj/machinery/door_control{
 	pixel_y = 10;
-	dir = 1
+	dir = 1;
+	id = "morrigan_brig"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/warden)
@@ -12208,7 +12209,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/morrigan/station/factory)
 "ngg" = (
-/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/left/light,
 /obj/decal/cleanable/machine_debris,
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/engine/glow,
@@ -13138,7 +13139,7 @@
 "oar" = (
 /obj/table/wood/auto,
 /obj/item/raw_material/scrap_metal,
-/obj/item/circuitboard,
+/obj/item/circuitboard/tetris,
 /obj/item/screwdriver/grey,
 /obj/machinery/light/incandescent/warm,
 /turf/unsimulated/floor/plating/jen,
@@ -13359,7 +13360,7 @@
 /area/morrigan/station/civilian/crewquarters)
 "omv" = (
 /obj/decal/fakeobjects/safehouse/conduit,
-/obj/machinery/macrofab,
+/obj/machinery/macrofab/emergency_pod,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "onE" = (
@@ -17607,7 +17608,7 @@
 	},
 /area/morrigan/station/command/HOP)
 "tuA" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/unsimulated/floor/twotone/black,
 /area/morrigan/station/medical/biological)
 "tuX" = (
