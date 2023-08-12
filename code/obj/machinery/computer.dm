@@ -39,18 +39,12 @@
 			if (ispulsingtool(W) && !(status & (BROKEN|NOPOWER)))
 				boutput(user, "<span class='notice'>You pulse the [name] to re-scan for equipment.</span>")
 				connection_scan()
-				// return 10 here is an arbitrary value for children of the computer generic
-				// that have special .attackby() who wouldn't be called if we're clicking
-				// them with tools
-				return 10
+				return
 		if (isscrewingtool(W) && src.circuit_type)
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer/proc/unscrew_monitor,\
 			list(W, user), W.icon, W.icon_state, null, null)
-			// return 10 here is an arbitrary value for children of the computer generic
-			// that have special .attackby() who wouldn't be called if we're clicking
-			// them with tools
-			return 10
+			return
 		else
 			src.Attackhand(user)
 
