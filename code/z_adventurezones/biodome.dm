@@ -385,7 +385,7 @@ SYNDICATE DRONE FACTORY AREAS
 			return_if_overlay_or_effect(O)
 
 			if (isliving(O))
-				var/mob/living/M = 0
+				var/mob/living/M = O
 				if (M.mind?.damned)
 					melt_away(M)
 
