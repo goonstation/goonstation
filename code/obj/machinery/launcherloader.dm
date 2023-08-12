@@ -331,9 +331,9 @@
 
 	connection_scan()
 		..()
-		ismap("COGMAP2")
+		if (ismap("COGMAP2"))
 			destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","Trader","QM")
-		ismap("KONDARU")
+		if (ismap("KONDARU"))
 			destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM")
 
 
