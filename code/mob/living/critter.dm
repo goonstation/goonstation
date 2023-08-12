@@ -126,7 +126,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		for (var/datum/equipmentHolder/EE in equipment)
 			EE.after_setup(hud)
 
-		burning_image.icon = 'icons/misc/critter.dmi'
+		burning_image.icon = 'icons/mob/critter/overlays.dmi'
 		burning_image.icon_state = null
 
 		src.old_canmove = src.canmove
@@ -1213,11 +1213,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			UpdateOverlays(null, "burning")
 			return
 		else if (B.stage == 1)
-			burning_image.icon_state = "fire1_[burning_suffix]"
+			burning_image.icon_state = "fire1-[burning_suffix]"
 		else if (B.stage == 2)
-			burning_image.icon_state = "fire2_[burning_suffix]"
+			burning_image.icon_state = "fire2-[burning_suffix]"
 		else if (B.stage == 3)
-			burning_image.icon_state = "fire3_[burning_suffix]"
+			burning_image.icon_state = "fire3-[burning_suffix]"
 		UpdateOverlays(burning_image, "burning")
 
 	force_laydown_standup()
@@ -1231,10 +1231,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 				if (canmove || isdead(src))
 					src.UpdateOverlays(null, "dizzy")
 					return
-				else if(src.is_valid_icon_state("dizzy",src.icon))
-					var/image/dizzyStars = src.SafeGetOverlayImage("dizzy", src.icon, "dizzy", MOB_OVERLAY_BASE+20) // why such a big boost? because the critter could have a bunch of overlays, that's why
-					if (dizzyStars)
-						src.UpdateOverlays(dizzyStars, "dizzy")
+				var/image/dizzyStars = src.SafeGetOverlayImage("dizzy", 'icons/mob/critter/overlays.dmi', "dizzy", MOB_OVERLAY_BASE+20) // why such a big boost? because the critter could have a bunch of overlays, that's why
+				if (dizzyStars)
+					src.UpdateOverlays(dizzyStars, "dizzy")
 
 	proc/get_head_armor_modifier()
 		var/armor_mod = 0
