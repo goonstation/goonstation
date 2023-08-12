@@ -1221,12 +1221,12 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 	proc/update_stunned_icon(var/canmove)
 		if (use_stunned_icon)
-			if(canmove != src.old_canmove)
+			if (canmove != src.old_canmove)
 				src.old_canmove = canmove
 				if (canmove || isdead(src))
 					src.UpdateOverlays(null, "dizzy")
 					return
-				var/image/dizzyStars = src.SafeGetOverlayImage("dizzy", 'icons/mob/critter/overlays.dmi', "dizzy", MOB_OVERLAY_BASE+20) // why such a big boost? because the critter could have a bunch of overlays, that's why
+				var/image/dizzyStars = src.SafeGetOverlayImage("dizzy", 'icons/mob/critter/overlays.dmi', "dizzy", MOB_OVERLAY_BASE + 20) // why such a big boost? because the critter could have a bunch of overlays, that's why
 				if (dizzyStars)
 					src.UpdateOverlays(dizzyStars, "dizzy")
 
