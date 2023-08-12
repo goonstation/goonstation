@@ -560,6 +560,21 @@
 						if (href_list["norefresh"])
 							src.master.add_fingerprint(usr)
 							return
+					if("ack")
+						if(src.message_last + 20 > world.time) //Message sending delay
+							return
+
+						// group gets response message even if caller's PDA is destroyed or prankin'
+						var/message = "ACK: Responding"
+						src.pda_message(href_list["alert_group"], href_list["alert_group"], message, TRUE)
+						src.master.add_fingerprint(usr)
+
+						var/caller_id = href_list["alert_caller"]
+						if(!(caller_id in src.detected_pdas))
+							return
+						var/caller_name = detected_pdas[caller_id]
+						src.pda_message(caller_id, caller_name, message, FALSE)
+						return
 
 					if("rename")
 						var/datum/computer/file/F = locate(href_list["target"])
@@ -877,7 +892,11 @@
 					var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[signal.data["sender"]]'>[messageFrom]</a>"
 					if (groupAddress)
 						if (islist(groupAddress))
-							displayMessage += " to [jointext(groupAddress,", ")]"
+							if (MGA_CRISIS in groupAddress)
+								// first other group only sorry
+								displayMessage += " [uppertext((groupAddress[1]))] PAGE \[<a href='byond://?src=\ref[src];input=ack;alert_group=[groupAddress[1]];alert_responder=[src.master.owner];alert_caller=[signal.data["sender"]]'>ACK</a>\]"
+							else
+								displayMessage += " to [jointext(groupAddress,", ")]"
 						else
 							displayMessage += " to <a href='byond://?src=\ref[src];input=message;[(groupAddress in src.master.alertgroups) ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
 					displayMessage += ":</b></i> [signal.data["message"]]"
