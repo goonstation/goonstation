@@ -1474,6 +1474,7 @@ proc/load_morrigan()
 	var/timing = FALSE
 	var/time = 80
 	var/locked = TRUE
+	var/last_announcement_made = FALSE
 
 	New()
 		. = ..()
@@ -1483,7 +1484,7 @@ proc/load_morrigan()
 		if (src.timing)
 			return
 		src.timing = TRUE
-		command_alert("A self destruct protocol has been activated, please stay clear or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self Destruct Activated", alert_origin = ALERT_STATION)
+		command_alert("Attention all personnel aboard Morrigan, this is an urgent self-destruction alert. Please remain calm and follow the evacuation protocols immediately. Detonation in T-[src.time] seconds", "Self Destruct Activated", alert_origin = ALERT_STATION)
 		playsound_global(src.z, 'sound/misc/airraid_loop.ogg', 25)
 
 	proc/detonate()
@@ -1530,6 +1531,11 @@ proc/load_morrigan()
 			if(src.time <= 0)
 				src.detonate()
 				return
+			if (src.time <= 10)
+				if (!last_announcement_made)
+					command_alert("Self-destruction sequence initiated in [src.time] seconds. Countdown started. Evacuate immediately. Good luck.", "Morrigan Self Destruct", alert_origin = ALERT_STATION)
+					last_announcement_made = TRUE
+				boutput(world, "<span class='alert'><b>[src.time] seconds until nuclear charge detonation.</b></span>")
 			else
 				src.time -= 2
 		return
