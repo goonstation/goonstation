@@ -1138,8 +1138,8 @@ var/global/list/mapNames = list(
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
-	valid_nuke_targets = list("super awesome area" = list(/area/devzone),
-		"another super test area" = list(/area/space))
+	valid_nuke_targets = list("the developer zone" = list(/area/devzone),
+		"the test chamber or space" = list(/area/space))
 
 
 /area/shuttle/merchant_shuttle/left_centcom
