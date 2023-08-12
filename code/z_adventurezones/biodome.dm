@@ -384,6 +384,11 @@ SYNDICATE DRONE FACTORY AREAS
 		if(src.deadly && !(isnull(old_loc) || O.anchored == ANCHORED_ALWAYS))
 			return_if_overlay_or_effect(O)
 
+			if (isliving(O))
+				var/mob/living/M = 0
+				if (M.mind?.damned)
+					melt_away(M)
+
 			if (check_target_immunity(O, TRUE))
 				return
 
