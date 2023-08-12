@@ -486,9 +486,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	if (status & NOPOWER)
 		return
 
-	if (!message)
-		return
-
 	var/image/chat_maptext/welcome_text
 	var/welcome_text_alpha = 140
 	var/welcome_text_color = "#FF0100"
