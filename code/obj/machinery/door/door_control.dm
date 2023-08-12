@@ -522,7 +522,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		user.visible_message("<span class='notice'>The [src] accepts the biometrics of the user and beeps, granting you access.</span>")
 		toggle()
 		if (entrance_scanner == 1)
-			src.speak(welcome_text)
+			src.speak(src.welcome_text)
 	else
 		boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
 
