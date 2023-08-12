@@ -52,7 +52,7 @@ TYPEINFO(/obj/item/cloaking_device)
 		for (var/obj/item/cloaking_device/C in user)
 			if (C.active)
 				number_of_devices += C
-		if (number_of_devices.len > 0)
+		if (length(number_of_devices) > 0)
 			return FALSE
 
 		RegisterSignal(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE, PROC_REF(deactivate))

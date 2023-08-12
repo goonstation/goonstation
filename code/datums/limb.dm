@@ -67,12 +67,10 @@
 			special_next = 0
 		else
 			user.melee_attack_normal(target, 0, 0, DAMAGE_BLUNT)
-		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
 	proc/help(mob/living/target, var/mob/living/user)
 		user.do_help(target)
-		user.lastattacked = target
 
 	proc/disarm(mob/living/target, var/mob/living/user)
 		if (special_next)
@@ -80,7 +78,6 @@
 			special_next = 0
 		else
 			user.disarm(target)
-		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
 	proc/grab(mob/living/target, var/mob/living/user)
@@ -90,7 +87,6 @@
 		if (issilicon(target))
 			return
 		user.grab_other(target)
-		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
 	//calls attack specials if we got em
@@ -100,15 +96,15 @@
 			if(disarm_special)
 				SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 				disarm_special.pixelaction(target,params,user)
-				.= 1
+				return TRUE
 		else if (user.a_intent == "harm")
 			if(harm_special)
 				for (var/obj/item/cloaking_device/I in user)
 					SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 				harm_special.pixelaction(target,params,user)
-				.= 1
+				return TRUE
 		else
-			.= 0
+			return FALSE
 
 	proc/is_on_cooldown()
 		return GET_COOLDOWN(src, "limb_cooldown")
@@ -121,16 +117,11 @@
 /datum/limb/hitscan
 	var/brute = 5
 	var/burn = 0
-	var/cooldown = 30
-	var/next_shot_at = 0
 	var/image/default_obscurer
 
 	attack_range(atom/target, var/mob/user, params)
-		if (next_shot_at > ticker.round_elapsed_ticks)
-			return
 		user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
 		playsound(user.loc, 'sound/weapons/lasermed.ogg', 100, 1)
-		next_shot_at = ticker.round_elapsed_ticks + cooldown
 		if (ismob(target))
 			var/mob/MT = target
 			if (prob(30))
@@ -138,11 +129,8 @@
 			else
 				MT.TakeDamageAccountArmor(user.zone_sel ? user.zone_sel.selecting : "All", brute, burn, 0, burn ? DAMAGE_BURN : DAMAGE_BLUNT)
 		elecflash(target.loc,power = 2)
+		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
 
-	is_on_cooldown()
-		if (ticker.round_elapsed_ticks < next_shot_at)
-			return next_shot_at - ticker.round_elapsed_ticks
-		return 0
 
 /datum/limb/railgun
 	var/cooldown = 50
@@ -217,6 +205,7 @@
 	var/reload_time = 20 SECONDS
 	var/shots = 4
 	var/current_shots = 0
+	var/spread_angle = 8
 	var/reloading_str = "reloading"
 	var/image/default_obscurer
 	var/muzzle_flash = null
@@ -228,14 +217,13 @@
 		src.shoot(target, user, TRUE)
 
 	proc/shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
-		//slightly cursed ref usage because we can't use ON_COOLDOWN with datums
-		if (GET_COOLDOWN(user, "\ref[src] reload") && !current_shots)
+		if (GET_COOLDOWN(src, "[src] reload") && !current_shots)
 			boutput(user, "<span class='alert'>The [holder.name] is [reloading_str]!</span>")
 			return
 		else if (current_shots <= 0)
 			current_shots = shots
 		if (current_shots > 0)
-			if (ON_COOLDOWN(user, "\ref[src] shoot", src.cooldown))
+			if (ON_COOLDOWN(src, "[src] shoot", src.cooldown))
 				return
 			. = TRUE
 			current_shots--
@@ -244,12 +232,10 @@
 			else
 				src.shoot_range(target, user, params)
 		if (current_shots <= 0)
-			ON_COOLDOWN(user, "\ref[src] reload", src.reload_time)
+			ON_COOLDOWN(src, "[src] reload", src.reload_time)
 
 	proc/shoot_range(atom/target, var/mob/user, params)
-		var/pox = text2num(params["icon-x"]) - 16
-		var/poy = text2num(params["icon-y"]) - 16
-		shoot_projectile_ST_pixel(user, proj, target, pox, poy)
+		shoot_projectile_ST_pixel_spread(user, proj, target, spread_angle = src.spread_angle)
 		if (src.muzzle_flash)
 			if (isturf(user.loc))
 				var/turf/origin = user.loc
@@ -286,57 +272,71 @@
 		src.point_blank(target, user)
 
 	/// despite the name, this means reloading
-	is_on_cooldown(var/mob/user)
-		return GET_COOLDOWN(user, "\ref[src] reload")
+	is_on_cooldown()
+		return (GET_COOLDOWN(src, "[src] reload") || GET_COOLDOWN(src, "[src] shoot"))
 
 /datum/limb/gun/kinetic
 	shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
 		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
 			user.inertia_dir = get_dir(target, user)
 			step(user, user.inertia_dir)
+
 	arm38
 		proj = new/datum/projectile/bullet/revolver_38
 		shots = 3
 		current_shots = 3
-		cooldown = 30
-		reload_time = 200
+		cooldown = 3 SECONDS
+		reload_time = 20 SECONDS
 		muzzle_flash = "muzzle_flash"
+
+		fast
+			cooldown = 2 SECONDS
+			reload_time = 8 SECONDS
 
 	abg
 		proj = new/datum/projectile/bullet/abg
 		shots = 6
 		current_shots = 6
-		cooldown = 30
-		reload_time = 300
+		cooldown = 3 SECONDS
+		reload_time = 30 SECONDS
 		muzzle_flash = "muzzle_flash"
+
+	smg
+		proj = new/datum/projectile/bullet/bullet_9mm/smg
+		shots = 2
+		current_shots = 2
+		cooldown = 3 SECONDS
+		reload_time = 10 SECONDS
+		muzzle_flash = "muzzle_flash"
+		spread_angle = 15
 
 	artillery
 		proj = new/datum/projectile/bullet/autocannon
 		shots = 1
 		current_shots = 1
-		cooldown = 50
-		reload_time = 50
+		cooldown = 5 SECONDS
+		reload_time = 5 SECONDS
 
 	glitch
 		proj = new/datum/projectile/bullet/glitch
 		shots = 1
 		current_shots = 1
-		cooldown = 40
-		reload_time = 40
+		cooldown = 4 SECONDS
+		reload_time = 4 SECONDS
 
 	fire_elemental
 		proj = new/datum/projectile/bullet/flare
 		shots = 1
 		current_shots = 1
-		cooldown = 40
-		reload_time = 40
+		cooldown = 4 SECONDS
+		reload_time = 4 SECONDS
 
 	syringe
 		proj = new/datum/projectile/syringefilled
 		shots = 1
 		current_shots = 1
-		cooldown = 40
-		reload_time = 300
+		cooldown = 4 SECONDS
+		reload_time = 30 SECONDS
 
 	spike
 		proj = new/datum/projectile/special/spreader/uniform_burst/spikes
@@ -344,6 +344,7 @@
 		current_shots = 1
 		cooldown = 1 SECOND
 		reload_time = 1 SECOND
+		spread_angle = 0
 
 	rifle
 		proj = new/datum/projectile/bullet/assault_rifle
@@ -357,22 +358,23 @@
 		proj = new/datum/projectile/laser/light
 		shots = 1
 		current_shots = 1
-		cooldown = 30
-		reload_time = 30
+		cooldown = 3 SECONDS
+		reload_time = 3 SECONDS
 
 	cutter
 		proj = new/datum/projectile/laser/drill/cutter
 		shots = 1
 		current_shots = 1
-		cooldown = 30
-		reload_time = 30
+		cooldown = 3 SECONDS
+		reload_time = 3 SECONDS
+		spread_angle = 0
 
 	disruptor
 		proj = new/datum/projectile/disruptor/high
 		shots = 1
 		current_shots = 1
-		cooldown = 40
-		reload_time = 40
+		cooldown = 4 SECONDS
+		reload_time = 4 SECONDS
 
 /datum/limb/mouth
 	var/sound_attack = 'sound/voice/animal/short_hiss.ogg'
@@ -429,7 +431,7 @@
 
 	harm(mob/target, var/mob/user)
 		if (isghostcritter(user) && ishuman(target) && target.health < target.max_health * 0.8)
-			boutput(user, "Your spectral conscience refuses to damage this human any further.")
+			boutput(user, "<span class='alert'>Your spectral conscience refuses to damage this human any further.")
 			return 0
 		..()
 
@@ -1440,7 +1442,7 @@
 		if(check_target_immunity( target ))
 			return 0
 		if (isghostcritter(user) && ishuman(target) && target.health < 75)
-			boutput(user, "Your spectral conscience refuses to damage this human any further.")
+			boutput(user, "<span class='alert'>Your spectral conscience refuses to damage this human any further.</span>")
 			return 0
 		var/quality = src.holder.quality
 		if (no_logs != 1)
@@ -1606,12 +1608,12 @@
 			return
 
 		if (no_logs != 1)
-			logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a sword arm at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a bladed arm at [log_loc(user)].")
 
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 12, rand(0, 2), can_punch = FALSE, can_kick = FALSE)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("stab", "slashe", "cut")
-		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their sword!</span></b>"
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with a blade!</span></b>"
 		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)

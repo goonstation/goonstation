@@ -49,18 +49,13 @@
 		..()
 		owner = M
 		hud = new()
-		if(owner)
-			owner.attach_hud(hud)
-			if (ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				H.hud?.update_ability_hotbar()
+		onAttach()
 
 	disposing()
 		for (var/atom/movable/screen/S in hud.objects)
 			if (hasvar(S, "master") && S:master == src)
 				S:master = null
-		if (owner)
-			owner.detach_hud(hud)
+		onRemove()
 		hud.clear_master()
 		hud.mobs -= src
 
@@ -85,7 +80,15 @@
 
 	/// Called just before we're removed from a mob
 	proc/onRemove()
-		return
+		SHOULD_CALL_PARENT(TRUE)
+		owner?.detach_hud(hud)
+
+	proc/onAttach()
+		SHOULD_CALL_PARENT(TRUE)
+		owner.attach_hud(hud)
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.hud?.update_ability_hotbar()
 
 	proc/updateCounters()
 		// this is probably dogshit but w/e
@@ -209,10 +212,9 @@
 		bonus = 0
 
 	proc/transferOwnership(var/newbody)
-		owner?.detach_hud(hud)
+		onRemove()
 		owner = newbody
-		if(owner)
-			owner.attach_hud(hud)
+		onAttach(newbody)
 
 	proc/StatAbilities()
 		if (!rendered)
@@ -496,10 +498,10 @@
 
 		if (spell.target_selection_check == 1)
 			var/list/mob/targets = spell.target_reference_lookup()
-			if (targets.len <= 0)
+			if (length(targets) <= 0)
 				boutput(owner.holder.owner, "<span class='alert'>There's nobody in range.</span>")
 				use_targeted = 2 // Abort parent proc.
-			else if (targets.len == 1) // Only one guy nearby, but we need the mob reference for handleCast() then.
+			else if (length(targets) == 1) // Only one guy nearby, but we need the mob reference for handleCast() then.
 				use_targeted = 0
 				SPAWN(0)
 					spell.handleCast(targets[1])

@@ -183,7 +183,7 @@
 	text = ""
 	HELP_MESSAGE_OVERRIDE({"You can use a <b>welding tool</b> to detach the pipe to move it around."})
 
-	var/spawner_type = /obj/disposalpipespawner
+	var/spawner_type = /obj/disposalpipe/auto
 	level = 1			//! underfloor only
 	var/dpdir = 0		//! bitmask of pipe directions
 	dir = 0				//! dir will contain dominant direction for junction pipes
@@ -487,7 +487,7 @@
 		C.color = src.color
 		C.name = src.name
 		if (src.material)
-			C.setMaterial(src.material, copy=FALSE)
+			C.setMaterial(src.material)
 		C.update()
 
 		qdel(src)
@@ -1423,7 +1423,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 				AM.set_loc(src.loc)
 				AM.pipe_eject(dir)
 				AM.throw_at(stuff_chucking_target, 3, 1)
-			if (H.contents.len < 1)
+			if (length(H.contents) < 1)
 				H.vent_gas(src.loc)
 				qdel(H)
 				return null
@@ -1497,7 +1497,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 		if(!isliving(usr))
 			return
 
-		if(istype(O, /obj/item/mechanics) && O.level == 2)
+		if(istype(O, /obj/item/mechanics) && O.level == OVERFLOOR)
 			boutput(usr, "<span class='alert'>[O] needs to be secured into place before it can be connected.</span>")
 			return
 
@@ -1760,8 +1760,10 @@ TYPEINFO(/obj/disposaloutlet)
 	icon_state = "outlet"
 	density = 1
 	anchored = ANCHORED
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
+	var/obj/disposalpipe/trunk/trunk = null // the attached pipe trunk
 	var/range = 10
 
 	var/message = null
@@ -1771,6 +1773,7 @@ TYPEINFO(/obj/disposaloutlet)
 	var/frequency = FREQ_PDA
 	var/flusher_id = null
 	throw_speed = 1
+
 
 	ex_act(var/severity)
 		switch(severity)
@@ -1794,17 +1797,41 @@ TYPEINFO(/obj/disposaloutlet)
 	New()
 		..()
 
-		SPAWN(1 DECI SECOND)
-			target = get_ranged_target_turf(src, dir, range)
+		SPAWN(0.5 SECONDS)
+			if(src)
+				src.target = get_ranged_target_turf(src, dir, range)
+				src.trunk = locate() in src.loc
+				if(src.trunk)
+					src.trunk.linked = src	// link the pipe trunk to self
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 
+	was_built_from_frame(mob/user, newly_built)
+		if (!newly_built)
+			src.target = get_ranged_target_turf(src, dir, range)
+			src.trunk = locate() in src.loc
+			if(src.trunk)
+				src.trunk.linked = src	// link the pipe trunk to self
+		return ..()
+
+	was_deconstructed_to_frame(mob/user)
+		if (src.trunk && src.trunk.linked == src)
+			src.trunk.linked = null
+		src.target = null
+		src.trunk = null
+
+		var/turf/target_turf = get_turf(src)
+		for (var/atom/movable/manipulated_atom in src)
+			manipulated_atom.set_loc(target_turf)
+
+		return ..()
+
 	disposing()
-		var/obj/disposalpipe/trunk/trunk = locate() in src.loc
-		if (trunk && trunk.linked == src)
-			trunk.linked = null
-		trunk = null
+		if (src.trunk && src.trunk.linked == src)
+			src.trunk.linked = null
+		src.target = null
+		src.trunk = null
 		..()
 
 	// expel the contents of the holder object, then delete it
@@ -1939,15 +1966,15 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 					pipe.set_dir(new_dir)
 				break
 	pipe.fix_sprite()
-ABSTRACT_TYPE(/obj/disposalpipespawner)
-/obj/disposalpipespawner
+ABSTRACT_TYPE(/obj/disposalpipe/auto)
+/obj/disposalpipe/auto
 	icon = 'icons/obj/disposal.dmi'
 	name = "disposal pipe spawner"
 	icon_state = "pipe-spawner"
 	text = ""
 	var/pipe_type = /obj/disposalpipe/segment/regular
 	var/trunk_type = /obj/disposalpipe/trunk/regular
-	var/dpdir = 0		//! bitmask of pipe directions
+	dpdir = 0		//! bitmask of pipe directions
 	regular
 		pipe_type = /obj/disposalpipe/segment/regular
 		trunk_type = /obj/disposalpipe/trunk/regular
@@ -2004,44 +2031,45 @@ ABSTRACT_TYPE(/obj/disposalpipespawner)
 		pipe_type = /obj/disposalpipe/segment/cargo
 		trunk_type = /obj/disposalpipe/trunk/cargo
 
-ABSTRACT_TYPE(/obj/disposalpipespawner)
+ABSTRACT_TYPE(/obj/disposalpipe/auto)
 
-/obj/disposalpipespawner/New()
+/obj/disposalpipe/auto/New()
 	..()
 	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
 		SPAWN(1 SECONDS)
 			if(!src.disposed)
 				initialize()
 
-/obj/disposalpipespawner/initialize()
+/obj/disposalpipe/auto/initialize()
 	var/list/selftile = list()
-	for (var/obj/disposalpipespawner/dupe in range(0, src))
+	for (var/obj/disposalpipe/auto/dupe in range(0, src))
 		if (istype(dupe, src))
 			selftile += dupe
 	if (length(selftile) > 1)
-		CRASH("Multiple pipespawners on coordinate [src.x] x [src.y] y!")
+		CRASH("Multiple auto pipes on coordinate [src.x] x [src.y] y!")
 	selftile.Cut()
 	var/list/directions = list()
 	for(var/dir_to_pipe in cardinal)
-		for(var/obj/disposalpipespawner/maybe_pipe in get_step(src, dir_to_pipe))
+		for(var/obj/disposalpipe/auto/maybe_pipe in get_step(src, dir_to_pipe))
 		// checks for other pipe spawners of its own type
 			if(istype(maybe_pipe, src) || istype(src, maybe_pipe))
-				dpdir |= dir_to_pipe
+				src.dpdir |= dir_to_pipe
 				directions += dir_to_pipe
 		for(var/obj/disposalpipe/maybe_pipe in get_step(src, dir_to_pipe))
 		// this checks all the different subtypes of pipe
+		// wow this is horrendous why did i make it this way
 			// the ones which spit out at 90 degrees
 			if (istype(maybe_pipe, /obj/disposalpipe/block_sensing_outlet)\
 			|| istype(maybe_pipe, /obj/disposalpipe/type_sensing_outlet))
 				if (turn(maybe_pipe.dir, 90) == dir_to_pipe || turn(maybe_pipe.dir, -90) == dir_to_pipe)
-					dpdir |= dir_to_pipe
+					src.dpdir |= dir_to_pipe
 					directions += dir_to_pipe
 
 			// the three ways (they do not check which 3 ways, it connects in all 4 directions)
 			if (istype(maybe_pipe, /obj/disposalpipe/junction)\
 			|| istype(maybe_pipe, /obj/disposalpipe/mechanics_switch)\
 			|| istype(maybe_pipe, /obj/disposalpipe/switch_junction))
-				dpdir |= dir_to_pipe
+				src.dpdir |= dir_to_pipe
 				directions += dir_to_pipe
 
 			// regular pipes and trunks
@@ -2050,42 +2078,39 @@ ABSTRACT_TYPE(/obj/disposalpipespawner)
 			// these only connect to their own kind btw
 				if (maybe_pipe.dpdir & get_dir(maybe_pipe, src))
 				// makes sure they're pointing at you
-					dpdir |= dir_to_pipe
+					src.dpdir |= dir_to_pipe
 					directions += dir_to_pipe
 
-	if (dpdir == 0)
-		CRASH("Lone Pipespawner doesn't connect to anything!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
+	if (src.dpdir == 0)
+		CRASH("There is a lone auto pipe that doesn't connect to anything!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
 	else if (length(directions) == 1)
-		// lays a trunk pipe
+		// lays a trunk pipe and deletes itself
 		var/obj/disposalpipe/trunk/current = new src.trunk_type(src.loc)
 		current.dir = directions[1]
-		current.dpdir = dpdir
+		current.dpdir = src.dpdir
 		update_icon(current)
+		qdel(src)
 	else if (length(directions) == 2)
-	// lays a normal pipe segment
-		if (dpdir == NORTHWEST || dpdir == NORTHEAST || dpdir == SOUTHWEST || dpdir == SOUTHEAST)
+	// turns into a normal pipe segment
+		if (src.dpdir == NORTHWEST || src.dpdir == NORTHEAST || src.dpdir == SOUTHWEST || src.dpdir == SOUTHEAST)
 		// curved pipe
-			var/obj/disposalpipe/segment/bent/current = new src.pipe_type(src.loc)
-			current.dpdir = dpdir
-			// this is to make it face the right way, for the icon
-			if (dpdir == NORTHEAST)
-				current.dir = NORTH
-			else if (dpdir == NORTHWEST)
-				current.dir = WEST
-			else if (dpdir == SOUTHEAST)
-				current.dir = EAST
-			else if (dpdir == SOUTHWEST)
-				current.dir = SOUTH
-			current.icon_state = "pipe-c"
-			update_icon(current)
+			// this is to make it face the right way, for the icon. due to how the dmi is
+			switch (src.dpdir)
+				if (NORTHEAST)
+					src.dir = NORTH
+				if (NORTHWEST)
+					src.dir = WEST
+				if (SOUTHEAST)
+					src.dir = EAST
+				if (SOUTHWEST)
+					src.dir = SOUTH
+			src.icon_state = "pipe-c"
+			update_icon(src)
 		else
 		// straight pipe
-			var/obj/disposalpipe/segment/current = new src.pipe_type(src.loc)
-			current.dir = directions[1]
-			current.dpdir = dpdir
-			current.icon_state = "pipe-s"
-			update_icon(current)
+			src.dir = directions[1]
+			src.icon_state = "pipe-s"
+			update_icon(src)
 	else
-	// DO NOT MAKE JUNCTIONS, FOOLS
+	// DO NOT MAKE JUNCTIONS, FOOLS.
 		CRASH("Pipe Spawners can't make junctions!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
-	qdel(src)

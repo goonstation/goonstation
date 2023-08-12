@@ -427,18 +427,12 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 	run_on_spawn(var/obj/storage/crate/syndicate_surplus/crate, var/mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
 		crate.spawn_items(owner, uplink)
-/*
-This is basically useless for anyone but miners.
-...and it's still useless because they can just mine the stuff themselves.
--Spy
-/datum/syndicate_buylist/traitor/loot_crate
-	name = "Loot Crate"
-	item = /obj/storage/crate/loot_crate
-	cost = 8
-	desc = "A crate containing 18-24 credits worth of 'Materials'."
-	not_in_crates = 1
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_HEAD_REV
-*/
+
+/datum/syndicate_buylist/traitor/fingerprinter
+	name = "Fingerprinter"
+	item = /obj/item/device/fingerprinter
+	desc = "A tool which allows you to scan and plant fingerprints."
+	cost = 1
 
 //////////////////////////////////////////////// Objective-specific items //////////////////////////////////////////////
 
@@ -1005,6 +999,14 @@ This is basically useless for anyone but miners.
 	desc = "An AI module that upgrades any AI connected to the installed law rack access to the lasers installed in the cameras."
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
+
+/datum/syndicate_buylist/traitor/megaphone
+	name = "Black Market Megaphone"
+	desc = "An illegal megaphone with the limiter taken off, and a loudener added. Not for the subtle."
+	item = /obj/item/megaphone/syndicate
+	cost = 5
+	vr_allowed = FALSE // no
+	job = list("Captain", "VIP", "Regional Director", "Inspector")
 
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 

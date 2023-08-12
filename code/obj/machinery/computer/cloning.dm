@@ -132,7 +132,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		if (!isnull(src.scanner))
 			src.scanner.connected = src
 			P.connected = src
-		if (src.linked_pods.len >= src.max_pods)
+		if (length(src.linked_pods) >= src.max_pods)
 			break
 
 /obj/machinery/computer/cloning/special_deconstruct(var/obj/computerframe/frame as obj)

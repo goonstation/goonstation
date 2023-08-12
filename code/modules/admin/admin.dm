@@ -1117,7 +1117,7 @@ var/global/noir = 0
 		if ("jumptocoords")
 			if(src.level >= LEVEL_SA)
 				var/list/coords = splittext(href_list["target"], ",")
-				if (coords.len < 3) return
+				if (length(coords) < 3) return
 				usr.client.jumptocoord(text2num(coords[1]), text2num(coords[2]), text2num(coords[3]))
 			else
 				tgui_alert(usr,"You need to be at least a Secondary Adminstrator to jump to coords.")
@@ -1402,11 +1402,11 @@ var/global/noir = 0
 							string_version = "\"[pick]\""
 
 					if(successes == length(picklist))
-						message_admins("[key_name(usr)] added the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] to [key_name(M)].")
+						message_admins("[key_name(usr)] added the [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] to [key_name(M)].")
 					else if(successes > 0)
-						message_admins("[key_name(usr)] tried to dd the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] but only [successes] succeeded to [key_name(M)].")
+						message_admins("[key_name(usr)] tried to dd the [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] but only [successes] succeeded to [key_name(M)].")
 					else
-						boutput(usr, "<b><span class='alert'>Failed to add [string_version] bio-effect[picklist.len > 1 ? "s" : ""] to [key_name(M)].</span></b>")
+						boutput(usr, "<b><span class='alert'>Failed to add [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] to [key_name(M)].</span></b>")
 			else
 				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to bioeffect a player.")
 
@@ -1428,7 +1428,7 @@ var/global/noir = 0
 						else
 							string_version = "\"[pick]\""
 
-					message_admins("[key_name(usr)] removed the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] from [M.real_name].")
+					message_admins("[key_name(usr)] removed the [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] from [M.real_name].")
 			else
 				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to bioeffect a player.")
 
@@ -2102,9 +2102,9 @@ var/global/noir = 0
 
 					var/list/offset = splittext(href_list["offset"],",")
 					var/number = clamp(text2num(href_list["object_count"]), 1, 100)
-					var/X = offset.len > 0 ? text2num(offset[1]) : 0
-					var/Y = offset.len > 1 ? text2num(offset[2]) : 0
-					var/Z = offset.len > 2 ? text2num(offset[3]) : 0
+					var/X = length(offset) > 0 ? text2num(offset[1]) : 0
+					var/Y = length(offset) > 1 ? text2num(offset[2]) : 0
+					var/Z = length(offset) > 2 ? text2num(offset[3]) : 0
 					var/direction = text2num(href_list["one_direction"]) // forgive me
 
 					for (var/i = 1 to number)
@@ -2607,9 +2607,9 @@ var/global/noir = 0
 									else
 										string_version = "\"[pick]\""
 
-								message_admins("[key_name(usr)] [adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] [key_name(M)].")
-								logTheThing(LOG_ADMIN, usr, "[adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] [key_name(M)].")
-								logTheThing(LOG_DIARY, usr, "[adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] [key_name(M)].", "admin")
+								message_admins("[key_name(usr)] [adding ? "added" : "removed"] the [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] [adding ? "to" : "from"] [key_name(M)].")
+								logTheThing(LOG_ADMIN, usr, "[adding ? "added" : "removed"] the [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] [adding ? "to" : "from"] [key_name(M)].")
+								logTheThing(LOG_DIARY, usr, "[adding ? "added" : "removed"] the [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] [adding ? "to" : "from"] [key_name(M)].", "admin")
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator to bioeffect players.")
 							return
@@ -2709,9 +2709,9 @@ var/global/noir = 0
 												X.bioHolder.RemoveEffect(pick)
 										sleep(0.1 SECONDS)
 
-								message_admins("[key_name(usr)] [adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] everyone.")
-								logTheThing(LOG_ADMIN, usr, "[adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] everyone.")
-								logTheThing(LOG_DIARY, usr, "[adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] everyone.", "admin")
+								message_admins("[key_name(usr)] [adding ? "added" : "removed"] the [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] [adding ? "to" : "from"] everyone.")
+								logTheThing(LOG_ADMIN, usr, "[adding ? "added" : "removed"] the [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] [adding ? "to" : "from"] everyone.")
+								logTheThing(LOG_DIARY, usr, "[adding ? "added" : "removed"] the [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] [adding ? "to" : "from"] everyone.", "admin")
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator to bioeffect players.")
 							return
@@ -3137,7 +3137,7 @@ var/global/noir = 0
 										people_to_swap += L
 									LAGCHECK(LAG_LOW)
 
-								if(people_to_swap.len > 1) //Jenny Antonsson switches bodies with herself! #wow #whoa
+								if(length(people_to_swap) > 1) //Jenny Antonsson switches bodies with herself! #wow #whoa
 									message_admins("[key_name(usr)] did The Great Switcharoo")
 									logTheThing(LOG_ADMIN, usr, "used The Great Switcharoo secret")
 									logTheThing(LOG_DIARY, usr, "used The Great Switcharoo secret", "admin")
@@ -3150,7 +3150,7 @@ var/global/noir = 0
 											A.mind.swap_with(B)
 										A = B
 										LAGCHECK(LAG_LOW)
-									while(people_to_swap.len > 0)
+									while(length(people_to_swap) > 0)
 
 							else
 								return
@@ -3347,7 +3347,7 @@ var/global/noir = 0
 										dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[member.current]'>Show Objective</A></td></tr>"
 								dat += "</table>"
 
-							if (ticker.mode.traitors.len > 0)
+							if (length(ticker.mode.traitors) > 0)
 								dat += "<br><table cellspacing=5><tr><td><B>Traitors</B></td><td></td><td></td></tr>"
 								for (var/datum/mind/traitor in ticker.mode.traitors)
 									var/mob/M = traitor.current
@@ -3357,7 +3357,7 @@ var/global/noir = 0
 									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>([M?.mind?.special_role])</A></td></tr>"
 								dat += "</table>"
 
-							if(ticker.mode.Agimmicks.len > 0)
+							if(length(ticker.mode.Agimmicks) > 0)
 								dat += "<br><table cellspacing=5><tr><td><B>Misc Foes</B></td><td></td><td></td></tr>"
 								for(var/datum/mind/gimmick in ticker.mode.Agimmicks)
 									var/mob/M = gimmick.current
@@ -4100,31 +4100,6 @@ var/global/noir = 0
 		ircbot.export_async("admin", ircmsg)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
-/proc/checktraitor(mob/M as mob)
-	set popup_menu = 0
-	if(!M || !M.mind || !ticker || !ticker.mode)
-		return 0
-
-	if (istraitor(M))
-		return 1
-
-	if (istype(ticker.mode, /datum/game_mode/revolution))
-		if(M.mind in (ticker.mode:head_revolutionaries + ticker.mode:revolutionaries))
-			return 1
-	else if (istype(ticker.mode, /datum/game_mode/nuclear))
-		if(M.mind in ticker.mode:syndicates)
-			return 1
-	else if (istype(ticker.mode, /datum/game_mode/spy))
-		if(M.mind in (ticker.mode:leaders + ticker.mode:spies))
-			return 1
-
-	if(M.mind in ticker.mode:traitors)
-		return 1
-	if(M.mind in ticker.mode:Agimmicks)
-		return 1
-
-	return 0
-
 /proc/get_matches_string(var/text, var/list/possibles)
 	var/list/matches = new()
 	for (var/possible in possibles)

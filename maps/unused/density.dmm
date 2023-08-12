@@ -235,9 +235,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aC" = (
-/obj/landmark/start{
-	name = "Security Officer"
-	},
+/obj/landmark/start/job/security_officer,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aD" = (
@@ -484,9 +482,7 @@
 	dir = 4;
 	icon_state = "office_chair_red"
 	},
-/obj/landmark/start{
-	name = "Security Officer"
-	},
+/obj/landmark/start/job/security_officer,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bg" = (
@@ -1061,7 +1057,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "cw" = (
@@ -1241,9 +1237,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/landmark/start{
-	name = "Quartermaster"
-	},
+/obj/landmark/start/job/quartermaster,
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -1339,9 +1333,7 @@
 /area/station/crew_quarters/garden)
 "dd" = (
 /obj/stool,
-/obj/landmark/start{
-	name = "Detective"
-	},
+/obj/landmark/start/job/detective,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "de" = (
@@ -1754,9 +1746,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
 "ea" = (
-/obj/landmark/start{
-	name = "Clown"
-	},
+/obj/landmark/start/job/clown,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "eb" = (
@@ -1792,9 +1782,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "ef" = (
-/obj/landmark/start{
-	name = "Chef"
-	},
+/obj/landmark/start/job/chef,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "eg" = (
@@ -2229,9 +2217,7 @@
 /obj/decal/cleanable/dirt,
 /obj/stool/bed,
 /obj/item/paper/book/from_file/the_trial,
-/obj/landmark/start{
-	name = "Clown"
-	},
+/obj/landmark/start/job/clown,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
 "fc" = (
@@ -2451,9 +2437,7 @@
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "fF" = (
-/obj/landmark/start{
-	name = "Botanist"
-	},
+/obj/landmark/start/job/botanist,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "fG" = (
@@ -2493,9 +2477,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/landmark/start{
-	name = "Engineer"
-	},
+/obj/landmark/start/job/engineer,
 /obj/storage/secure/closet/engineering/engineer,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -2615,9 +2597,7 @@
 	dir = 4;
 	icon_state = "chair_comfy-blue"
 	},
-/obj/landmark/start{
-	name = "Research Director"
-	},
+/obj/landmark/start/job/research_director,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue2"
@@ -2709,9 +2689,7 @@
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
 "go" = (
-/obj/landmark/start{
-	name = "Janitor"
-	},
+/obj/landmark/start/job/janitor,
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -2803,9 +2781,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark/start{
-	name = "Captain"
-	},
+/obj/landmark/start/job/captain,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue1"
@@ -2816,9 +2792,7 @@
 	dir = 4;
 	icon_state = "chair_comfy-blue"
 	},
-/obj/landmark/start{
-	name = "Medical Director"
-	},
+/obj/landmark/start/job/medical_director,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue2"
@@ -2830,9 +2804,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "gy" = (
-/obj/landmark/start{
-	name = "Bartender"
-	},
+/obj/landmark/start/job/bartender,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "gz" = (
@@ -3092,9 +3064,7 @@
 	dir = 4;
 	icon_state = "chair_comfy-blue"
 	},
-/obj/landmark/start{
-	name = "Chief Engineer"
-	},
+/obj/landmark/start/job/chief_engineer,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue2"
@@ -3165,9 +3135,7 @@
 	can_rupture = 0;
 	dir = 1
 	},
-/obj/landmark/start{
-	name = "Miner"
-	},
+/obj/landmark/start/job/miner,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "hg" = (
@@ -3200,9 +3168,7 @@
 	can_rupture = 0;
 	dir = 9
 	},
-/obj/landmark/start{
-	name = "Mechanic"
-	},
+/obj/landmark/start/job/engineer,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "hk" = (
@@ -3647,9 +3613,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark/start{
-	name = "Head of Personnel"
-	},
+/obj/landmark/start/job/head_of_personnel,
 /obj/stool/chair/comfy/blue{
 	dir = 8;
 	icon_state = "chair_comfy-blue"
@@ -3748,9 +3712,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
 "ip" = (
@@ -3830,9 +3792,7 @@
 	icon_state = "manifold";
 	level = 2
 	},
-/obj/landmark/start{
-	name = "Scientist"
-	},
+/obj/landmark/start/job/scientist,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "iv" = (
@@ -4653,9 +4613,7 @@
 /obj/item/storage/toilet{
 	dir = 4
 	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/machinery/light{
 	dir = 8;
 	icon_state = "tube1";
@@ -4674,9 +4632,7 @@
 	},
 /area/station/chapel/sanctuary)
 "jZ" = (
-/obj/landmark/start{
-	name = "Chaplain"
-	},
+/obj/landmark/start/job/chaplain,
 /obj/storage/closet/wardrobe/black/chaplain,
 /obj/machinery/light,
 /turf/simulated/floor/carpet{
@@ -5051,9 +5007,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "kR" = (
-/obj/landmark/start{
-	name = "Geneticist"
-	},
+/obj/landmark/start/job/geneticist,
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "kT" = (
@@ -5286,7 +5240,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "ln" = (
@@ -5315,9 +5269,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "lq" = (
-/obj/landmark/start{
-	name = "Roboticist"
-	},
+/obj/landmark/start/job/roboticist,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -5327,9 +5279,7 @@
 /area/station/medical/research)
 "lr" = (
 /obj/machinery/recharge_station,
-/obj/landmark/start{
-	name = "Cyborg"
-	},
+/obj/landmark/start/job/cyborg,
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "ls" = (
@@ -5358,9 +5308,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark/start{
-	name = "Scientist"
-	},
+/obj/landmark/start/job/scientist,
 /obj/stool/chair/office{
 	dir = 8;
 	icon_state = "office_chair"
@@ -5381,9 +5329,7 @@
 	dir = 8;
 	icon_state = "office_chair"
 	},
-/obj/landmark/start{
-	name = "Scientist"
-	},
+/obj/landmark/start/job/scientist,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "lw" = (
@@ -5570,9 +5516,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark/start{
-	name = "Scientist"
-	},
+/obj/landmark/start/job/scientist,
 /obj/stool/chair/office{
 	dir = 8;
 	icon_state = "office_chair"
@@ -5582,7 +5526,7 @@
 "lK" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/impact_pad,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -5851,9 +5795,7 @@
 	icon_state = "manifold";
 	level = 2
 	},
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
+/obj/landmark/start/job/medical_doctor,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "mq" = (
@@ -6042,9 +5984,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "mL" = (
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
+/obj/landmark/start/job/medical_doctor,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -6215,8 +6155,6 @@
 /area/station/medical/medbay/surgery)
 "nd" = (
 /obj/table/auto,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/reagent_containers/syringe/haloperidol,
@@ -6497,9 +6435,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/station/crew_quarters/lounge)
 "nJ" = (
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -6548,12 +6484,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/landmark{
-	name = "AI-Sat"
-	},
-/obj/landmark/start{
-	name = "AI"
-	},
+/obj/landmark/start/job/AI,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -6618,22 +6549,6 @@
 /obj/item/sheet/steel/fullstack,
 /turf/simulated/floor/red,
 /area/station/storage/warehouse)
-"nW" = (
-/obj/grille/catwalk,
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/turf/simulated/floor/airless/plating/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/mining/magnet)
 "nX" = (
 /obj/item/rcd_ammo/big,
 /turf/simulated/floor/red,
@@ -6854,11 +6769,7 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
-	intact = 0
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	intact = 0
+	
 	},
 /area/mining/magnet)
 "ou" = (
@@ -6893,10 +6804,6 @@
 	dir = 6;
 	layer = 2
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 6;
-	layer = 2
-	},
 /area/mining/magnet)
 "ov" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -6907,19 +6814,12 @@
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
-/obj/machinery/magnet_chassis{
-	bound_width = 64;
-	dir = 1;
-	icon_state = "chassis";
-	pixel_x = 16
-	},
 /obj/machinery/mining_magnet{
 	bound_width = 64;
 	dir = 1;
 	icon_state = "magnet";
 	pixel_x = 16
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
 	layer = 2
@@ -6933,7 +6833,6 @@
 /obj/grille/catwalk{
 	dir = 6
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 2;
 	icon_state = "catwalk_cross";
@@ -6949,7 +6848,6 @@
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -6968,7 +6866,6 @@
 	dir = 4;
 	icon_state = "mmagnet"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -51992,7 +51889,7 @@ fp
 fp
 fp
 fp
-nW
+fp
 ou
 en
 ad

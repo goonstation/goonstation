@@ -262,7 +262,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 		if (!C.can_fluid_absorb) continue
 		cleanables += C
 
-	if (!src.active_liquid && (cleanables.len < 3 && !grab_any_amount))
+	if (!src.active_liquid && (length(cleanables) < 3 && !grab_any_amount))
 		return 0	//If the tile has an active liquid already, there is no requirement
 
 	for (var/obj/decal/cleanable/C in cleanables)

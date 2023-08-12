@@ -274,10 +274,17 @@
 					animate(src, transform = matrix(), time = 1)
 				last_no_gravity = src.no_gravity
 
-			// Zephyr-class interdictor: carbon mobs in range gain a buff to stamina recovery, which can accumulate to linger briefly
-			if (iscarbon(src))
+			//Interdictor's protections for mobs
+			if (isliving(src) && !isintangible(src))
 				for_by_tcl(IX, /obj/machinery/interdictor)
-					if (IX.expend_interdict(4,src,TRUE,ITDR_ZEPHYR))
+					var/area/area = get_area(src)
+					if (IX.expend_interdict(6,src,TRUE)) //This protects mobs from radstorms/wormholes/magnetic biofields
+						src.changeStatus("spatial_protection", 3 SECONDS)
+					if (istype(area) && area.irradiated)
+						IX.resisted = TRUE
+					if (!iscarbon(src)) //Prevents non-carbons from getting the Zephyr stam boost, but still protects other mobs
+						break
+					if (IX.expend_interdict(4,src,TRUE,ITDR_ZEPHYR)) // Zephyr-class interdictor: carbon mobs in range gain a buff to stamina recovery, which can accumulate to linger briefly
 						src.changeStatus("zephyr_field", 3 SECONDS * life_mult)
 						break
 
@@ -323,7 +330,7 @@
 
 	var/mult = (max(tick_spacing, TIME - last_human_life_tick) / tick_spacing)
 
-	src.mutantrace.onLife(mult)
+	src.mutantrace?.onLife(mult)
 
 	if (farty_party)
 		src.emote("fart")
@@ -502,8 +509,10 @@
 				location.hotspot_expose(T0C + 300, 400)
 
 			for (var/atom/A in src.contents)
-				if (A.material)
-					A.material.triggerTemp(A, T0C + 900)
+				A.material_trigger_on_temp(T0C + 900)
+
+			for (var/atom/equipped_stuff in src.equipped())
+				equipped_stuff.material_trigger_on_temp(T0C + 900)
 
 			if(src.traitHolder && src.traitHolder.hasTrait("burning"))
 				if(prob(50))

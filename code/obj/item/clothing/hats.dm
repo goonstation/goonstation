@@ -450,7 +450,7 @@ proc/filter_trait_hats(var/type)
 		if (!n_name)
 			return
 		n_name = copytext(html_encode(n_name), 1, 32)
-		if (((src.loc == usr || (src.loc && src.loc.loc == usr)) && usr.stat == 0))
+		if (((src.loc == usr || (src.loc && src.loc.loc == usr)) && isalive(usr)))
 			src.phrase = n_name
 			logTheThing(LOG_SAY, usr, "sets the activation phrase on DetGadget hat: [n_name]")
 		src.add_fingerprint(usr)
@@ -795,6 +795,12 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			if (P.font_color)
 				src.color = P.font_color
 				src.desc = "A colorful paper hat"
+
+/obj/item/clothing/head/tinfoil_hat
+	name = "tinfoil hat"
+	desc = "Protects the wearer from mindcontrol and, apparently, weak martian psychic blasts which do not involve the liquification of brains."
+	icon_state = "tinfoil"
+	item_state = "tinfoil"
 
 /obj/item/clothing/head/towel_hat
 	name = "towel hat"

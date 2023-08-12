@@ -14,9 +14,7 @@
 /area/dmm_suite/clear_area)
 "f" = (
 /obj/submachine/chef_oven,
-/obj/landmark{
-	name = "shitty_bill_respawn"
-	},
+/obj/landmark/bill_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/dmm_suite/clear_area)
 "j" = (

@@ -340,13 +340,13 @@
 
 					switch (commandList[1])
 						if ("print_index")
-							if (commandList.len > 1)
+							if (length(commandList) > 1)
 								known_printers = commandList.Copy(2)
 							else
 								known_printers = list()
 
 						if ("print_status")
-							if (commandList.len > 1)
+							if (length(commandList) > 1)
 								printer_status = commandList[2]
 							else
 								printer_status = "???"

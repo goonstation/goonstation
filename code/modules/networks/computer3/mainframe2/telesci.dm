@@ -557,7 +557,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			do_teleport(O,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 		showswirl(src.loc)
 		showswirl(target)
-		use_power(500000)
+		use_power(400000)
 		if(prob(2))
 			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
 			XSUBTRACT = rand(0,100)
@@ -789,7 +789,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					/mob/living/critter/zombie,
 					/mob/living/critter/bear,
 					/mob/living/carbon/human/npc/syndicate,
-					/obj/critter/martian/soldier,
+					/mob/living/critter/martian/soldier,
 					/mob/living/critter/lion,
 					/obj/critter/yeti,
 					/obj/critter/gunbot/drone,
@@ -1077,7 +1077,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			return
 
 		if (href_list["addbookmark"])
-			if(bookmarks.len >= max_bookmarks)
+			if(length(bookmarks) >= max_bookmarks)
 				boutput(usr, "<span class='alert'>Maximum number of Bookmarks reached.</span>")
 				return
 			var/datum/teleporter_bookmark/bm = new

@@ -5605,9 +5605,6 @@
 /area/crater/cave/lower)
 "gys" = (
 /obj/table/auto,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "gyz" = (
@@ -13418,10 +13415,6 @@
 "pVc" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/space)
-"pVw" = (
-/obj/table/auto,
-/turf/unsimulated/floor/white,
-/area/swampzone/interiors/outbuildings)
 "pVK" = (
 /obj/decal/fakeobjects/smallrocks,
 /turf/space/fluid/cenote,
@@ -14720,7 +14713,7 @@
 "ryy" = (
 /obj/displaycase{
 	desc = "A display case for antique possessions. There is a gold plaque on it which says: Big mouth bill fish";
-	displayed = /obj/item/fish/bass
+	displayed = /obj/item/reagent_containers/food/fish/bass
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/swampzone/interiors/outbuildings)
@@ -18914,7 +18907,7 @@
 "wrL" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/mushrooms/type1,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "wrX" = (
@@ -19388,7 +19381,7 @@
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/eastwest,
 /area/swampzone/interiors/bonktek/funktek)
 "wPR" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "wQa" = (
@@ -50372,7 +50365,7 @@ mDX
 qtL
 uFh
 fyx
-pVw
+gys
 mDX
 roE
 fja

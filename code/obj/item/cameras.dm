@@ -231,7 +231,7 @@ TYPEINFO(/obj/item/camera_film/large)
 	else
 		if(signed || written)
 			. += "<br>"
-		if(signed.len > 0)
+		if(length(signed) > 0)
 			for(var/x in signed)
 				. += "It is signed: [x]"
 				. += "<br>"
@@ -445,17 +445,19 @@ TYPEINFO(/obj/item/camera_film/large)
 	photo.icon = photo_icon
 
 	var/obj/item/photo/P
+	// if we're on the floor drop on the floor. If we're in a person or a bot drop in whatever they're in
+	var/atom/output_loc = isturf(src.loc) ? src.loc : src.loc.loc
 	if(src.takes_voodoo_pics)
-		P = new/obj/item/photo/voodoo(get_turf(src), photo, photo_icon, finished_title, finished_detail)
+		P = new/obj/item/photo/voodoo(output_loc, photo, photo_icon, finished_title, finished_detail)
 		P:cursed_dude = deafnote //kubius: using runtime eval because non-voodoo photos don't have a cursed_dude var
 		if(src.takes_voodoo_pics == 2) //unlimited photo uses
 			P:enchant_power = -1
 	else if(src.steals_souls)
-		P = new/obj/item/photo/haunted(get_turf(src), photo, photo_icon, finished_title, finished_detail)
+		P = new/obj/item/photo/haunted(output_loc, photo, photo_icon, finished_title, finished_detail)
 		var/obj/item/photo/haunted/HP = P
 		for(var/mob/M as anything in stolen_souls)
 			HP.add_soul(M)
 	else
-		P = new/obj/item/photo(get_turf(src), photo, photo_icon, finished_title, finished_detail)
+		P = new/obj/item/photo(output_loc, photo, photo_icon, finished_title, finished_detail)
 
 	return P

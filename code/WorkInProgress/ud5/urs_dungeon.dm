@@ -33,7 +33,7 @@
 		if(length(adventure_elements_by_id[src.triggerable_id]))
 			src.triggerables = adventure_elements_by_id[src.triggerable_id]
 
-		if((src.triggerers.len > 0) && (src.triggerables.len > 0))
+		if((length(src.triggerers) > 0) && (length(src.triggerables) > 0))
 
 			for(var/Z in src.triggerers)
 
@@ -269,7 +269,7 @@
 				if (clear)
 					L += T3
 
-		if(!(L.len > 0))
+		if(!(length(L) > 0))
 			for (var/turf/T3 in get_area_turfs(/area/station,0))
 				if (!T3.density)
 					var/clear = 1

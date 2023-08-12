@@ -775,7 +775,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/datum/reagent/current_reagent = reagent_list[reagent]
 
 		if(!current_reagent)
-			if (reagents_cache.len <= 0)
+			if (length(reagents_cache) <= 0)
 				build_reagent_cache()
 
 			current_reagent = reagents_cache[reagent]
@@ -825,6 +825,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	proc/remove_reagent(var/reagent, var/amount, var/update_total = 1, var/reagents_change = 1)
 
 		if(!isnum(amount)) return 1
+
+		if (istype(reagent, /datum/reagent))
+			CRASH("Attempt to remove reagent by ref")
 
 		var/datum/reagent/current_reagent = reagent_list[reagent]
 
@@ -1065,7 +1068,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				var/reag_list = ""
 				for (var/current_id in src.reagent_list)
 					var/datum/reagent/current_reagent = src.reagent_list[current_id]
-					if (src.reagent_list.len > 1 && src.reagent_list[src.reagent_list.len] == current_id)
+					if (length(src.reagent_list) > 1 && src.reagent_list[src.reagent_list.len] == current_id)
 						reag_list += " and [current_reagent.name]"
 						continue
 					reag_list += ", [current_reagent.name]"

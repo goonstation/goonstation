@@ -8,8 +8,6 @@
 
 /datum/component/complexsignal/outermost_movable/proc/on_loc_change(atom/movable/thing, atom/previous_loc)
 	var/atom/movable/old_outermost = src.get_outermost_movable()
-	var/turf/old_turf = get_turf(previous_loc)
-	var/old_z = isnull(old_turf) ? 0 : old_turf.z
 
 	var/atom/movable/loc_crawl = parent
 	var/break_index = 0
@@ -33,19 +31,31 @@
 		loc_chain += loc_crawl
 		src.RegisterSignal(loc_crawl, COMSIG_MOVABLE_SET_LOC, PROC_REF(on_loc_change))
 		if (src.track_movable_moved)
-			src.RegisterSignal(loc_crawl, COMSIG_MOVABLE_MOVED, PROC_REF(on_loc_change))
+			src.RegisterSignal(loc_crawl, COMSIG_MOVABLE_MOVED, PROC_REF(on_turf_change))
 		loc_crawl = loc_crawl.loc
 
 	var/atom/movable/new_outermost = src.get_outermost_movable()
-	var/turf/new_turf = get_turf(parent)
-	var/new_z = isnull(new_turf) ? 0 : new_turf.z
 
-	if(new_outermost != old_outermost)
+	if(old_outermost != new_outermost)
 		SEND_COMPLEX_SIGNAL(src, XSIG_OUTERMOST_MOVABLE_CHANGED, old_outermost, new_outermost)
-	if (new_turf != old_turf)
+
+	src.on_turf_change(thing, previous_loc)
+
+/datum/component/complexsignal/outermost_movable/proc/on_turf_change(atom/movable/thing, atom/previous_loc)
+	var/turf/old_turf = get_turf(previous_loc)
+	var/turf/new_turf = get_turf(parent)
+	if (old_turf != new_turf)
 		SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_TURF_CHANGED, old_turf, new_turf)
-	if(new_z != old_z)
-		SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_Z_CHANGED, old_z, new_z)
+
+		var/turf/old_area = get_area(previous_loc)
+		var/area/new_area = get_area(parent)
+		if (old_area != new_area)
+			SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_AREA_CHANGED, old_area, new_area)
+
+		var/old_z = isnull(old_turf) ? 0 : old_turf.z
+		var/new_z = isnull(new_turf) ? 0 : new_turf.z
+		if(old_z != new_z)
+			SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_Z_CHANGED, old_z, new_z)
 
 /datum/component/complexsignal/outermost_movable/Initialize()
 	if(!ismovable(parent))
@@ -64,15 +74,15 @@
 
 /datum/component/complexsignal/outermost_movable/_register(datum/listener, sig_type, proctype, override = FALSE, ...)
 	. = ..()
-	if (sig_type == XSIG_MOVABLE_TURF_CHANGED[2])
+	if (!src.track_movable_moved && ((sig_type == XSIG_MOVABLE_TURF_CHANGED[2]) || (sig_type == XSIG_MOVABLE_AREA_CHANGED[2])))
 		var/atom/A = src.get_outermost_movable()
 		if(!(A.event_handler_flags & MOVE_NOCLIP))
-			src.RegisterSignal(A, COMSIG_MOVABLE_MOVED, PROC_REF(on_loc_change))
+			src.RegisterSignal(A, COMSIG_MOVABLE_MOVED, PROC_REF(on_turf_change))
 
-		track_movable_moved = TRUE
+		src.track_movable_moved = TRUE
 
 /datum/component/complexsignal/outermost_movable/_unregister(datum/listener, sig_type)
 	. = ..()
-	if (sig_type == XSIG_MOVABLE_TURF_CHANGED[2])
+	if (((sig_type == XSIG_MOVABLE_TURF_CHANGED[2]) && !(XSIG_MOVABLE_AREA_CHANGED[2] in src.registered_signals)) || ((sig_type == XSIG_MOVABLE_AREA_CHANGED[2]) && !(XSIG_MOVABLE_TURF_CHANGED[2] in src.registered_signals)))
 		src.UnregisterSignal(src.get_outermost_movable(), COMSIG_MOVABLE_MOVED)
-		track_movable_moved = FALSE
+		src.track_movable_moved = FALSE

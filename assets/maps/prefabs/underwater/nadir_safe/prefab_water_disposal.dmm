@@ -72,7 +72,7 @@
 	name = "GLOMAR Salvager"
 	})
 "k" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
@@ -129,7 +129,7 @@
 	name = "GLOMAR Salvager"
 	})
 "s" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/storage/engineering{

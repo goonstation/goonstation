@@ -581,7 +581,6 @@
 /mob/living/carbon/human/death(gibbed)
 	if (ticker?.mode)
 		ticker.mode?.on_human_death(src)
-		ticker.mode?.check_win()
 	if(src.mind && src.mind.damned) // Ha you arent getting out of hell that easy.
 		src.hell_respawn()
 		return
@@ -651,7 +650,7 @@
 			for (var/mob/dead/target_observer/hivemind_observer/obs in C.hivemind)
 				boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
 				obs.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
-			if (C.hivemind.len > 0)
+			if (length(C.hivemind) > 0)
 				boutput(src, "Contact with the hivemind has been lost.")
 			C.hivemind = list()
 			if(C.master != C.temp_controller)
@@ -768,6 +767,8 @@
 				if(locate(/obj/neon_lining) in T.contents)
 					src.unlock_medal("Party Hard", 1)
 
+	ticker?.mode?.check_win()
+
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel
 	for (var/client/C)
@@ -814,7 +815,7 @@
 		if(src.spell_soulguard == SOULGUARD_RING)	//istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport)
 			reappear_turf = get_turf(src)
 		else
-			reappear_turf = pick(job_start_locations["wizard"])
+			reappear_turf = pick_landmark(LANDMARK_WIZARD)
 
 	////////////////Set up the new body./////////////////
 
@@ -1639,7 +1640,7 @@
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
 			continue
-		if (M.stat > 1 && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
+		if (isdead(M) && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
 			M.show_message(rendered, 2)
 
 	show_speech_bubble(speech_bubble)
@@ -2106,7 +2107,7 @@
 /mob/living/carbon/human/proc/can_equip(obj/item/I, slot)
 	switch (slot)
 		if (slot_l_store, slot_r_store)
-			if (I.w_class <= W_CLASS_SMALL && src.w_uniform)
+			if (I.w_class <= W_CLASS_POCKET_SIZED && src.w_uniform)
 				return TRUE
 		if (slot_l_hand)
 			if (src.limbs.l_arm && !src.hasStatus("numb_l_arm"))
@@ -2509,8 +2510,7 @@
 					O.show_message(text("<span class='alert'><B>[] rips apart the handcuffs with pure brute strength!</B></span>", src), 1)
 				boutput(src, "<span class='notice'>You rip apart your handcuffs.</span>")
 
-				if (src.handcuffs:material) //This is a bit hacky.
-					src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
+				src.handcuffs.material_trigger_when_attacked(src, src, 1)
 				src.handcuffs.destroy_handcuffs(src)
 				return
 			if (iswerewolf(src))
@@ -2520,8 +2520,7 @@
 				else
 					src.visible_message("<span class='alert'><B>[src] rips apart the handcuffs with pure brute strength!</b></span>")
 					boutput(src, "<span class='notice'>You rip apart your handcuffs.</span>")
-					if (src.handcuffs:material) //This is a bit hacky.
-						src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
+					src.handcuffs.material_trigger_when_attacked(src, src, 1)
 					src.handcuffs.destroy_handcuffs(src)
 					return
 		if (src.is_hulk())
@@ -2529,16 +2528,14 @@
 				O.show_message(text("<span class='alert'><B>[] rips apart the handcuffs with pure brute strength!</B></span>", src), 1)
 			boutput(src, "<span class='notice'>You rip apart your handcuffs.</span>")
 
-			if (src.handcuffs:material) //This is a bit hacky.
-				src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
+			src.handcuffs.material_trigger_when_attacked(src, src, 1)
 			src.handcuffs.destroy_handcuffs(src)
 		else if ( src.limbs && (istype(src.limbs.l_arm, /obj/item/parts/robot_parts) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm/left/light)) && (istype(src.limbs.r_arm, /obj/item/parts/robot_parts) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm/right/light))) //Gotta be two standard borg arms
 			for (var/mob/O in AIviewers(src))
 				O.show_message(text("<span class='alert'><B>[] rips apart the handcuffs with machine-like strength!</B></span>", src), 1)
 			boutput(src, "<span class='notice'>You rip apart your handcuffs.</span>")
 
-			if (src.handcuffs:material) //This is a bit hacky.
-				src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
+			src.handcuffs.material_trigger_when_attacked(src, src, 1)
 			src.handcuffs.destroy_handcuffs(src)
 		else
 			src.last_resist = world.time + 100
@@ -2550,8 +2547,7 @@
 			if (!src.canmove)
 				calcTime *= 1.5
 			boutput(src, "<span class='alert'>You attempt to remove your handcuffs. (This will take around [round(calcTime / 10)] seconds and you need to stand still)</span>")
-			if (src.handcuffs:material) //This is a bit hacky.
-				src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
+			src.handcuffs.material_trigger_when_attacked(src, src, 1)
 			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(calcTime), src)
 	return 0
 
@@ -2923,7 +2919,7 @@
 		var/count = 0
 		for (var/obj/O in src.juggling)
 			count ++
-			if (src.juggling.len > 1 && count == src.juggling.len)
+			if (length(src.juggling) > 1 && count == src.juggling.len)
 				items += " and [O]"
 				continue
 			items += ", [O]"

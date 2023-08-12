@@ -829,7 +829,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 ////////////////////////// Gimmick bombs /////////////////////////////////
 
-/obj/item/gimmickbomb/
+/obj/item/gimmickbomb
 	name = "Don't spawn this directly!"
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = ""
@@ -1540,7 +1540,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			desc = "Two small pipes joined together. The pipes are empty."
 
 			if (material)
-				name = "hollow [src.material.name] pipe frame"
+				name = "hollow [src.material.getName()] pipe frame"
 			else
 				name = "hollow pipe frame"
 			src.flags |= NOSPLASH
@@ -1552,12 +1552,12 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			icon_state = "Pipeshot"
 			desc = "Four open pipe shells. They're currently empty."
 
-		if (allowed_items.len && item_mods.len < 3 && src.state == 2)
+		if (allowed_items.len && length(item_mods) < 3 && src.state == 2)
 			var/ok = 0
 			for (var/A in allowed_items)
 				if (istype(W, text2path(A) )) ok = 1
 			if (ok)
-				boutput(user, "<span class='notice'>You stuff [W] into the [item_mods.len == 0 ? "first" : "second"] pipe.</span>")
+				boutput(user, "<span class='notice'>You stuff [W] into the [length(item_mods) == 0 ? "first" : "second"] pipe.</span>")
 				item_mods += W
 				user.u_equip(W)
 				W.set_loc(src)
@@ -1592,7 +1592,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 				desc = "Two small pipes joined together. The pipes are filled."
 
 				if (material)
-					name = "filled [src.material.name] pipe frame"
+					name = "filled [src.material.getName()] pipe frame"
 				else
 					name = "filled pipe frame"
 
@@ -1629,7 +1629,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			icon_state = "Pipe_Wired"
 
 			if (material)
-				name = "[src.material.name] pipe bomb frame"
+				name = "[src.material.getName()] pipe bomb frame"
 			else
 				name = "pipe bomb frame"
 
@@ -1761,9 +1761,9 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 		if (src.strength)
 			if (src.material)
 				var/strength_mult = 1
-				if (findtext(material.mat_id, "erebite"))
+				if (findtext(material.getID(), "erebite"))
 					strength_mult = 2
-				else if (findtext(material.mat_id, "plasmastone"))
+				else if (findtext(material.getID(), "plasmastone"))
 					strength_mult = 1.25
 				src.strength *= strength_mult
 
@@ -1865,7 +1865,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 						payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 						target.air.merge(payload)
 
-			if (throw_objs.len && throw_objs.len > 0)
+			if (throw_objs.len && length(throw_objs) > 0)
 				var/turf/T = get_turf(src.loc)
 				var/count = 20
 				var/obj/spawn_item
@@ -1936,9 +1936,8 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 
 /obj/proc/on_blowthefuckup(strength)
 	new /obj/effects/explosion/tiny_baby (src.loc)
-	if (src.material)
-		src.material.triggerTemp(src, T0C + strength * 100)
-		src.material.triggerExp(src, 1)
+	src.material_trigger_on_temp(T0C + strength * 100)
+	src.material_trigger_on_explosion(1)
 
 /obj/item/pipebomb/bomb/on_blowthefuckup(strength)
 	..()

@@ -100,7 +100,7 @@ TYPEINFO(/obj/item/device/t_scanner)
 						continue
 				else if(isobj(A))
 					var/obj/O = A
-					if(O.level != 1 && !istype(O, /obj/disposalpipe)) // disposal pipes handled below
+					if(O.level == OVERFLOOR && !istype(O, /obj/disposalpipe)) // disposal pipes handled below
 						continue
 				var/image/img = image(A.icon, icon_state=A.icon_state, dir=A.dir)
 				img.plane = PLANE_SCREEN_OVERLAYS
@@ -381,7 +381,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 
 		update_medical_record(M)
 
-		if (M.stat > 1)
+		if (isdead(M))
 			user.unlock_medal("He's dead, Jim", 1)
 		return
 
@@ -472,7 +472,7 @@ TYPEINFO(/obj/item/device/reagentscanner)
 		tooltip_rebuild = 1
 
 		if (!isnull(A.reagents))
-			if (A.reagents.reagent_list.len > 0)
+			if (length(A.reagents.reagent_list) > 0)
 				set_icon_state("reagentscan-results")
 			else
 				set_icon_state("reagentscan-no")

@@ -200,8 +200,6 @@ TYPEINFO(/area)
 				if (sound_loop)
 					M.client.playAmbience(src, AMBIENCE_LOOPING, sound_loop_vol)
 
-				M.client.parallax_controller?.update_area_parallax_layers(src, lastarea)
-
 				if (!played_fx_1 && prob(AMBIENCE_ENTER_PROB))
 					src.pickAmbience()
 					M.client.playAmbience(src, AMBIENCE_FX_1, 18)
@@ -214,7 +212,7 @@ TYPEINFO(/area)
 			var/list/enteringMobs = get_all_mobs_in(A)
 
 			//If any mobs are entering, within a thing or otherwise
-			if (enteringMobs.len > 0)
+			if (length(enteringMobs) > 0)
 				for (var/mob/enteringM in enteringMobs) //each dumb mob
 					if( !(isliving(enteringM) || iswraith(enteringM)) ) continue
 					//Wake up a bunch of lazy darn critters
@@ -262,7 +260,7 @@ TYPEINFO(/area)
 			//Deal with this too
 			var/list/exitingMobs = get_all_mobs_in(A)
 
-			if (exitingMobs.len > 0)
+			if (length(exitingMobs) > 0)
 				for (var/mob/exitingM in exitingMobs)
 					if (exitingM.ckey && exitingM.client && exitingM.mind)
 						var/area/the_area = get_area(exitingM)
@@ -275,7 +273,7 @@ TYPEINFO(/area)
 						if (src.name != "Space" || src.name != "Ocean")
 							if (exitingM.mind in src.population)
 								src.population -= exitingM.mind
-							if (src.active && src.population.len == 0) //Only if this area is now empty
+							if (src.active && length(src.population) == 0) //Only if this area is now empty
 								src.active = 0
 								SEND_SIGNAL(src, COMSIG_AREA_DEACTIVATED)
 
@@ -475,6 +473,9 @@ TYPEINFO(/area)
 		dispose()
 		..()
 
+	proc/store_biome(turf/T, datum/biome/B)
+		return
+
 /area/space // the base area you SHOULD be using for space/ocean/etc.
 
 // zewaka - adventure/technical/admin areas below //
@@ -620,7 +621,7 @@ TYPEINFO(/area)
 			var/list/found_areas = get_area_turfs(current_battle_spawn,1)
 			if (length(found_areas) == 0)
 				jerk.set_loc(pick(get_area_turfs(/area/station/maintenance/,1)))
-				boutput(jerk, "You somehow land in maintenance! Weird!")
+				boutput(jerk, "<h3 class='alert'>You somehow land in maintenance! Weird!</h3>")
 			else
 				jerk.set_loc(pick(found_areas))
 			jerk.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
@@ -1811,7 +1812,7 @@ ABSTRACT_TYPE(/area/station/communications)
 ABSTRACT_TYPE(/area/station/maintenance)
 TYPEINFO(/area/station/maintenance)
 	valid_bounty_area = FALSE
-/area/station/maintenance/
+/area/station/maintenance
 	name = "Maintenance"
 	icon_state = "maintcentral"
 	sound_environment = 12
@@ -2075,7 +2076,7 @@ ABSTRACT_TYPE(/area/station/maintenance/outer)
 ABSTRACT_TYPE(/area/station/hallway)
 TYPEINFO(/area/station/hallway)
 	valid_bounty_area = FALSE
-/area/station/hallway/
+/area/station/hallway
 	name = "Hallway"
 	icon_state = "hallC"
 	sound_environment = 10
@@ -3950,7 +3951,7 @@ ABSTRACT_TYPE(/area/mining)
 	name = "Mining Outpost Refinery"
 	icon_state = "yellow"
 
-/area/mining/hangar/
+/area/mining/hangar
 	name = "Mining Dock"
 	icon_state = "storage"
 	sound_environment = 10
@@ -4016,7 +4017,21 @@ ABSTRACT_TYPE(/area/mining)
 	name = "Asylum Wards"
 	icon_state = "brig"
 	requires_power = 0
+	var/list/unobservable_old = list()
 
+	Entered(atom/movable/A, atom/oldloc)
+		. = ..()
+		if(ismob(A))
+			var/mob/M = A
+			unobservable_old[M] = M.unobservable
+			M.unobservable = TRUE
+
+	Exited(atom/movable/A)
+		. = ..()
+		if(ismob(A))
+			var/mob/M = A
+			M.unobservable = unobservable_old[M]
+			unobservable_old -= M
 
 /// Shamecube area, applied on the admin command. Blocks entry.
 /area/shamecube
@@ -4086,6 +4101,12 @@ ABSTRACT_TYPE(/area/mining)
 	sound_environment = 2
 	teleport_blocked = 1
 	icon_state = "purple"
+
+/area/devzone
+	name = "Super Radical Awesone Dev Area"
+	requires_power = FALSE
+	icon_state = "green"
+	ambient_light = "#FFFFE6"
 
 /* ================================================== */
 
@@ -4330,7 +4351,7 @@ area/station/communications
 		name = "Communications Office Bedroom"
 		icon_state = "communicationsoffice-bedroom"
 
-/area/station2/maintenance/
+/area/station2/maintenance
 	name = "Maintenance"
 	icon_state = "maintcentral"
 	sound_environment = 12
@@ -4417,7 +4438,7 @@ area/station/communications
 	name = "Upper Starboard Maintenance"
 	icon_state = "upper_starboard_maintenance"
 
-/area/station2/hallway/
+/area/station2/hallway
 	name = "Hallway"
 	icon_state = "hallC"
 	sound_environment = 10

@@ -156,7 +156,7 @@
 				// Multiple types of reagents will immediately make the dish dirty.
 				if (R == "pathogen")
 					var/datum/reagent/blood/pathogen/P = src.reagents.reagent_list["pathogen"]
-					if (P.pathogens.len > 1)
+					if (length(P.pathogens) > 1)
 						// Too many pathogens. This culture is dead.
 						set_dirty("The presence of multiple pathogens makes them unable to grow.")
 				else if (R in pathogen_controller.media)
@@ -184,7 +184,7 @@
 					// Foreign chemical, murdering the culture.
 					set_dirty("The pathogen culture is unable to cultivate in the environment due to foreign chemicals.")
 		else
-			if (src.reagents.reagent_list.len == 1 && src.reagents.reagent_list[1] == "pathogen")
+			if (length(src.reagents.reagent_list) == 1 && src.reagents.reagent_list[1] == "pathogen")
 				return
 			for (var/R in src.reagents.reagent_list)
 				var/datum/reagent/RE = src.reagents.reagent_list[R]
