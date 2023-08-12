@@ -495,7 +495,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	var/welcome_text = null
 
 	if (istype(src.loc, /turf))
-		welcome_text = make_chat_maptext(src, text_out, "color: [src.welcome_text_color];", alpha = src.welcome_text_alpha)
+		welcome_text = make_chat_maptext(src, message, "color: [src.welcome_text_color];", alpha = src.welcome_text_alpha)
 		if (welcome_text && src.chat_text && length(src.chat_text.lines))
 			welcome_text.measure(src)
 			for (var/image/chat_maptext/I in src.chat_text.lines)
