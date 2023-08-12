@@ -13618,9 +13618,12 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "oBl" = (
-/obj/machinery/networked/nuclear_charge,
 /obj/decal/tile_edge/stripe{
 	dir = 1
+	},
+/obj/table/syndicate/auto,
+/obj/machinery/morrigan_self_destruct{
+	pixel_y = 2
 	},
 /turf/unsimulated/floor/engine/caution/misc{
 	dir = 6

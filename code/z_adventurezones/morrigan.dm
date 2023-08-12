@@ -1459,53 +1459,77 @@ proc/load_morrigan()
 
 //Self Destruct Button
 
+//This supposed to replace the nuclear charge at the end of Morrigan.
+
 //WIP
-/obj/machinery/morrigan_nuke
+/obj/machinery/morrigan_self_destruct
 
 	name = "Self Destruct Button"
 	anchored = ANCHORED_ALWAYS
 	density = TRUE
-	icon_state = "net_nuke0"
-	desc = "A nuclear charge used as a self-destruct device. Uh oh!"
+	deconstruct_flags = DECON_NONE
+	icon = 'icons/obj/monitors.dmi'
+	icon_state = "shipalert0" //needs it's own sprite probably
+	desc = "A big red button labeled to activate station's self destruct when pressed. It has an ID card reader. It is locked behind a bulletproof glass case. "
 	var/timing = FALSE
-	var/time = 10
-	var/activated = FALSE
+	var/time = 80
+	var/locked = TRUE
 
 	New()
 		. = ..()
 
+	//procs
 	proc/activate_nuke()
-		if (activated)
+		if (src.timing)
 			return
 		src.timing = TRUE
 		command_alert("A self destruct protocol has been activated, please stay clear or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self Destruct Activated", alert_origin = ALERT_STATION)
-		playsound_global(src, 'sound/misc/airraid_loop.ogg', 25)
-		src.activated = TRUE
+		playsound_global(src.z, 'sound/misc/airraid_loop.ogg', 25)
 
 	proc/detonate()
-		playsound_global(src, 'sound/effects/kaboom.ogg', 70)
+		playsound_global(src.z, 'sound/effects/kaboom.ogg', 70)
 		//explosion(src, src.loc, 10, 20, 30, 35)
 		explosion_new(src, get_turf(src), 10000)
 		//dispose()
-		src.dispose()
+		qdel(src)
 		return
 
-	attack_hand(mob/user)
+	//pressing the button
+	attack_hand(var/mob/user)
 		. = ..()
+		if (src.locked)
+			boutput(user, "<span class='alert'>The button seems to be locked behind the glass case. Looks like you can unlock it using an ID card.</span>")
+			return
+		if (src.timing)
+			boutput(user, "<span class='alert'>You press the button over and over again but it's no use! Shit!</span>")
+			return
+		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user.unlock_medal("Leave no man behind!") //we dont have medal yet i think
 		activate_nuke()
 
+	//attack by an item
+	attackby(var/obj/item/I, var/mob/user)
+		. = ..()
+		if (!src.locked)
+			boutput(user, "<span class='notice'>The glass case has already been opened.</span>")
+			return
+		if (!istype(I, /obj/item/card/id/morrigan/all_access))
+			boutput(user, "<span class='alert'>You try to hit the glass case with \the [I] but it doesn't seem to be effective!</span>")
+			return
+		else
+			boutput(user, "<span class='notice'>You swipe the ID card opening the glass case.</span>") //now we can press the button
+			src.icon_state = "shipalert2"
+			src.locked = FALSE
+			return
+
+	//timing process
 	process()
 		. = ..()
 		if(src.timing)
 			src.time--
 			if(src.time <= 0)
-				outpost_destroyed = 1
 				src.detonate()
 				return
 			else
 				src.time -= 2
-
-			src.updateUsrDialog()
-
 		return
