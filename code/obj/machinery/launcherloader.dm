@@ -329,13 +329,13 @@
 
 	var/list/destinations = list("Airbridge", "Cafeteria", "EVA", "Engine", "Disposals", "QM", "Catering", "MedSci", "Security") //These have to match the ones on the cargo routers for the routers to work.
 
-	proc/initialize_destinations(var/mapname = global.map_setting)
-		switch (mapname)
-			//only these two maps need custom lists of destinations
-			if ("COGMAP2")
-				destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","Trader","QM")
-			if ("KONDARU")
-				destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM")
+	connection_scan()
+		..()
+		ismap("COGMAP2")
+			destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","Trader","QM")
+		ismap("KONDARU")
+			destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM")
+
 
 
 	proc/print(var/destination, var/amount)
@@ -397,11 +397,6 @@
 			src.updateUsrDialog()
 
 	attackby(var/obj/item/I, mob/user)
-		. = ..()
-		if (. == 10)
-		// added an early return on the parent version of this verb to facilitate early return here
-		// and allow repairs
-			return
 		var/obj/item/card/id/id_card = get_id_card(I)
 		if (istype(id_card))
 			boutput(user, "<span class='notice'>You swipe the ID card.</span>")
@@ -418,7 +413,7 @@
 			else
 				boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 				src.scan = null
-		else src.Attackhand(user)
+		else ..()
 		return
 
 /obj/machinery/computer/barcode/qm //has trader tags if there is one
@@ -429,7 +424,7 @@
 
 	New()
 		..()
-		initialize_destinations()
+		connection_scan()
 	ui_static_data(mob/user)
 		. = ..()
 		var/list/traders = new()
