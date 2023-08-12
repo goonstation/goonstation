@@ -1435,13 +1435,13 @@ proc/load_morrigan()
 
 //Suit stuff
 
-/obj/item/clothing/suit/space
+/obj/item/clothing/suit/space/syndiehos
 	name = "Head of Security's coat"
 	desc = "A slightly armored jacket favored by Syndicate security personnel.!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
-	icon_state = "syndiecommander_suit"
-	item_state = "syndiecommander_suit"
+	icon_state = "syndicommander_coat"
+	item_state = "syndicommander_coat"
 
 	setupProperties()
 		..()
@@ -1449,7 +1449,7 @@ proc/load_morrigan()
 		setProperty("rangedprot", 0.7)
 		setProperty("coldprot", 35)
 
-/obj/item/clothing/under/suit
+/obj/item/clothing/under/suit/syndiehos
 	name = "Head of Security's Decorated Suit"
 	desc = "A little too familiar..."
 	icon = 'icons/obj/clothing/uniforms/item_js_rank.dmi'

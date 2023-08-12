@@ -1214,6 +1214,10 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 	mod = "R-"
 	opacity = FALSE
 
+	crystal
+		uses_material_appearance = TRUE //I'm not sure why this is false on the parent, but I assume it's intentional??
+		default_material = "plasmaglass"
+
 /datum/action/bar/icon/wall_tool_interact
 	id = "wall_tool_interact"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
