@@ -3300,10 +3300,8 @@
 			var/environment_mole_count = TOTAL_MOLES(environment)
 			if (environment_mole_count < ATMOS_EPSILON)
 				. -= atmos_movement
-			else
-				var/environment_pressure = (environment_mole_count * R_IDEAL_GAS_EQUATION * environment.temperature) / environment.volume
-				if (environment_pressure < MAX_PRESSURE_BEFORE_ATMOS_SLOWDOWN)
-					. -= atmos_movement
+			else if (environment_mole_count * environment.temperature < MAX_MOLE_TEMP_BEFORE_ATMOS_SLOWDOWN)
+				. -= atmos_movement
 
 		if (!(src.mutantrace && src.mutantrace.aquatic) && !src.hasStatus("aquabreath"))
 			if (aquatic_movement > 0)

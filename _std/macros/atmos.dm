@@ -337,3 +337,5 @@ proc/gas_text_color(gas_id)
 
 /// Maximum amount of pressure on a turf, after which atmos_movespeed penalties start applying
 #define MAX_PRESSURE_BEFORE_ATMOS_SLOWDOWN ONE_ATMOSPHERE * 0.5
+/// Maximum amount mole * temp, after which atmos_movespeed penalties start applying, assuming the turf's environment is a cell
+#define MAX_MOLE_TEMP_BEFORE_ATMOS_SLOWDOWN MAX_PRESSURE_BEFORE_ATMOS_SLOWDOWN * CELL_VOLUME / R_IDEAL_GAS_EQUATION
