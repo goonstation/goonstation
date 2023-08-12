@@ -614,7 +614,7 @@ to say if there's demand for that.
 	id = "atmos_movespeed"
 
 	getTooltipDesc(var/obj/propOwner, var/propVal)
-		return "[propVal] movement delay - 0 when worn in depressurized environments."
+		return "[propVal] movement delay - 0 when worn in low pressure environments or space."
 	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EQUIPMENT_MOVESPEED_ATMOS)
 
 
