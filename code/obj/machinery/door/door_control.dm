@@ -490,22 +490,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		return
 
 	var/image/chat_maptext/welcome_text
-	var/text_out
 	var/welcome_text_alpha = 140
 	var/welcome_text_color = "#FF0100"
-	var/welcome_text = null
 
 	if (istype(src.loc, /turf))
-		text_out = message
-		welcome_text = make_chat_maptext(src, text_out, "color: [src.welcome_text_color];", alpha = src.welcome_text_alpha)
+		welcome_text = make_chat_maptext(src, message, "color: [src.welcome_text_color];", alpha = src.welcome_text_alpha)
 		if (welcome_text && src.chat_text && length(src.chat_text.lines))
 			welcome_text.measure(src)
 			for (var/image/chat_maptext/I in src.chat_text.lines)
 				if (I != welcome_text)
 					I.bump_up(welcome_text.measured_height)
-
-	if (!text_out)
-		return
 	else
 		src.audible_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[text_out]\"</span></span>", 2, assoc_maptext = slogan_text)
 
