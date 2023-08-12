@@ -487,18 +487,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		boutput(user, "<span class='alert'>It's broken.</span>")
 
 /obj/machinery/door_control/proc/speak(var/message) //Stolen from the vending module
+	var/image/chat_maptext/welcome_text
 	if (status & NOPOWER)
 		return
-	if (istype(src.loc, /turf))
+	else
 		welcome_text = make_chat_maptext(src, message, "color: [src.welcome_text_color];", alpha = src.welcome_text_alpha)
+		src.audible_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2, assoc_maptext = welcome_text)
 		if (welcome_text && src.chat_text && length(src.chat_text.lines))
 			welcome_text.measure(src)
 			for (var/image/chat_maptext/I in src.chat_text.lines)
 				if (I != welcome_text)
 					I.bump_up(welcome_text.measured_height)
-	else
-		src.audible_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[welcome_text]\"</span></span>", 2, assoc_maptext = welcome_text)
-
 	return
 
 /obj/machinery/door_control/antagscanner // for sleepers entering listening post
