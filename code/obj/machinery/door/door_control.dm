@@ -12,7 +12,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	var/pressed_icon = "doorctrl1"
 	var/unpowered_icon = "doorctrl-p"
 	var/image/chat_maptext/welcome_text
-	var/welcome_text = null
 	var/welcome_text_alpha = 140
 	var/welcome_text_color = "#FF0100"
 	anchored = ANCHORED
