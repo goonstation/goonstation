@@ -2035,12 +2035,23 @@
 
 	onAdd()
 		. = ..()
-		if (ismob(owner))
-			var/mob/M = owner
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
 			if (id == "numb_r_arm")
-				M.drop_from_slot(M.r_hand)
+				H.drop_from_slot(H.r_hand)
+				SPAWN(0)
+					H.hud.update_hands()
 			if (id == "numb_l_arm")
-				M.drop_from_slot(M.l_hand)
+				H.drop_from_slot(H.l_hand)
+				SPAWN(0)
+					H.hud.update_hands()
+
+	onRemove()
+		. = ..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (id == "numb_r_arm" || id == "numb_l_arm")
+				H.hud.update_hands()
 
 	numb_r_arm
 		id = "numb_r_arm"

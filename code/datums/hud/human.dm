@@ -782,12 +782,18 @@
 		if (master.limbs && !master.limbs.l_arm)
 			lhand.icon_state = "handl[master.hand]d"
 		else
-			lhand.icon_state = "handl[master.hand]"
+			if (master.limbs && master.hasStatus("numb_l_arm"))
+				lhand.icon_state = "handl[master.hand]s"
+			else
+				lhand.icon_state = "handl[master.hand]"
 
 		if (master.limbs && !master.limbs.r_arm)
 			rhand.icon_state = "handr[!master.hand]d"
 		else
-			rhand.icon_state = "handr[!master.hand]"
+			if (master.limbs && master.hasStatus("numb_r_arm"))
+				rhand.icon_state = "handr[!master.hand]s"
+			else
+				rhand.icon_state = "handr[!master.hand]"
 
 	proc/update_stats()
 		var/newDesc = ""
