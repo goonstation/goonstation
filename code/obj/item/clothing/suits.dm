@@ -1422,7 +1422,7 @@
 		setProperty("chemprot", 30)
 		setProperty("meleeprot", 1)
 		setProperty("rangedprot", 0)
-		setProperty("space_movespeed", 0.3)
+		setProperty("atmos_movespeed", 0.3)
 		setProperty("radprot", 10)
 
 	engineer

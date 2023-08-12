@@ -542,7 +542,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		return ..()
 
 	//just adjust by whatever the critter var says the movedelay should be
-	special_movedelay_mod(delay,space_movement,aquatic_movement)
+	special_movedelay_mod(delay,space_movement,aquatic_movement,atmos_movement)
 		.= delay
 		if (src.m_intent == "walk")
 			. += src.base_walk_delay - (BASE_SPEED + WALK_DELAY_ADD)

@@ -3269,7 +3269,7 @@
 	if (src.juggling())
 		src.drop_juggle()
 
-/mob/living/carbon/human/special_movedelay_mod(delay,space_movement,aquatic_movement)
+/mob/living/carbon/human/special_movedelay_mod(delay,space_movement,aquatic_movement,atmos_movement)
 	.= delay
 	var/missing_legs = 0
 	var/missing_arms = 0
@@ -3293,6 +3293,13 @@
 	if (T)
 		if (T.turf_flags & CAN_BE_SPACE_SAMPLE)
 			. -= space_movement
+
+		if (atmos_movement > 0)
+			var/datum/gas_mixture/environment = T.return_air()
+			var/environment_mole_count = TOTAL_MOLES(environment)
+			var/environment_pressure = (environment_mole_count * R_IDEAL_GAS_EQUATION * environment.temperature) / environment.volume
+			if (environment_pressure >= MAX_PRESSURE_BEFORE_ATMOS_SLOWDOWN)
+				. -= atmos_movement
 
 		if (!(src.mutantrace && src.mutantrace.aquatic) && !src.hasStatus("aquabreath"))
 			if (aquatic_movement > 0)

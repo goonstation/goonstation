@@ -1766,7 +1766,7 @@
 			return
 		return ..()
 
-	special_movedelay_mod(delay,space_movement,aquatic_movement)
+	special_movedelay_mod(delay,space_movement,aquatic_movement,atmos_movement)
 		. = delay
 		if (!src.part_leg_l)
 			. += ROBOT_MISSING_LEG_MOVEMENT_ADJUST

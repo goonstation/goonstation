@@ -609,5 +609,13 @@ to say if there's demand for that.
 		return "Negates fluid speed penalties.<br>+[propVal] movement delay on dry land."
 	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
 
+/datum/objectProperty/equipment/movement/atmos
+	name = "Speed"
+	id = "atmos_movespeed"
+
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal] movement delay - 0 when worn in depressurized environments."
+	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EQUIPMENT_MOVESPEED_ATMOS)
+
 
 #undef ASSOCIATE_ATOM_PROPERTY

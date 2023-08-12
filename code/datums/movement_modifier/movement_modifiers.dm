@@ -13,6 +13,7 @@
 	var/pushpull_multiplier = 1 // multiplier for pushing/pulling speed
 	var/space_movement = 0
 	var/aquatic_movement = 0
+	var/atmos_movement = 0
 	var/mob_pull_multiplier = 1
 	var/ask_proc = 0
 

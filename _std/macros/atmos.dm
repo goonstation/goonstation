@@ -334,3 +334,6 @@ proc/gas_text_color(gas_id)
 
 #define _LIST_CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, LIST) LIST += "[NAME]: [round(MIXTURE.GAS / total_moles * 100)]%";
 #define LIST_CONCENTRATION_REPORT(MIXTURE, LIST) APPLY_TO_GASES(_LIST_CONCENTRATION_REPORT, MIXTURE, LIST)
+
+/// Maximum amount of pressure on a turf, after which atmos_movespeed penalties start applying
+#define MAX_PRESSURE_BEFORE_ATMOS_SLOWDOWN ONE_ATMOSPHERE * 0.5

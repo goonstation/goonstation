@@ -1703,6 +1703,7 @@
 	var/pushpull_multiplier = 1
 	var/aquatic_movement = 0
 	var/space_movement = 0
+	var/atmos_movement = 0
 	var/mob_pull_multiplier = 1
 
 	var/datum/movement_modifier/modifier
@@ -1724,6 +1725,7 @@
 		pushpull_multiplier *= modifier.pushpull_multiplier
 		aquatic_movement += modifier.aquatic_movement
 		space_movement += modifier.space_movement
+		atmos_movement += modifier.atmos_movement
 		mob_pull_multiplier *= modifier.mob_pull_multiplier
 
 		if (modifier.maximum_slowdown < maximum_slowdown)
@@ -1744,7 +1746,7 @@
 	if (health_deficiency >= 30)
 		. += (health_deficiency / 35)
 
-	.= src.special_movedelay_mod(.,space_movement,aquatic_movement)
+	.= src.special_movedelay_mod(.,space_movement,aquatic_movement,atmos_movement)
 
 	. = min(., maximum_slowdown)
 
@@ -1813,7 +1815,7 @@
 
 //this lets subtypes of living alter their movement delay WITHIN that big proc above - not before or after (which would fuck up the numbers greatly)
 //note : subtypes should not call this parent
-/mob/living/proc/special_movedelay_mod(delay,space_movement,aquatic_movement)
+/mob/living/proc/special_movedelay_mod(delay,space_movement,aquatic_movement,atmos_movement)
 	.= delay
 	if (src.lying)
 		. += 14

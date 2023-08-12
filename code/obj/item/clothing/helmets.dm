@@ -287,7 +287,7 @@
 		setProperty("disorient_resist_ear", 4)
 		setProperty("radprot", 5)
 		setProperty("meleeprot_head", 1)
-		setProperty("space_movespeed", 0.1)
+		setProperty("atmos_movespeed", 0.1)
 
 	engineer
 		name = "engineering light space helmet"

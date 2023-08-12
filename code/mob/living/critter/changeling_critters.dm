@@ -173,7 +173,7 @@
 	proc/enable_sprint()
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT, src.type)
 
-	special_movedelay_mod(delay,space_movement,aquatic_movement)
+	special_movedelay_mod(delay,space_movement,aquatic_movement,atmos_movement)
 		.= delay
 		if (src.lying)
 			. += 14
