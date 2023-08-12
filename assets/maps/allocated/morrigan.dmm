@@ -13566,7 +13566,7 @@
 	},
 /obj/table/syndicate/auto,
 /obj/machinery/morrigan_self_destruct{
-	pixel_y = 2
+	pixel_y = 6
 	},
 /turf/unsimulated/floor/engine/caution/misc{
 	dir = 6
