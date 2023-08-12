@@ -779,36 +779,143 @@ proc/ui_describe_reagents(atom/A)
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "pustule-medium"
 	w_class = W_CLASS_NORMAL
-	initial_volume = 200
+	initial_volume = 100
 	incompatible_with_chem_dispensers = TRUE
 	can_recycle = FALSE
-	var/amount_of_blood_to_use = 15 //how much blood to remove per process tick, medium pustule is very fast
-	var/synthflesh_efficiency = 1 //how much synthflesh you get per unit of blood in
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	var/amount_of_reagent_to_use = 30 //!how much blood to remove per process tick, medium pustule is very fast
+	var/chemical_efficiency = 1 //!how much chemical you get per unit of chemical in
+	var/organ_efficiency = 0.5 //!synthflesh organ multiplier
+	var/makes_noise_when_full = TRUE //here so the tiny ones don't burp on creation lol
+	var/angry = FALSE
+	var/angry_timer = 15
+	var/list/convertible_reagents = list("blood","bloodc","bloody_mary","bloody_scary","hemolymph")
 
 	New()
 		START_TRACKING
 		processing_items.Add(src)
+		original_icon_state = icon_state
+		flick("[icon_state]-plop", src)
 		..()
 
 	disposing()
 		STOP_TRACKING
 		..()
 
+	proc/convert_reagent(reagent_id, volume)
+		var/reagent_to_add
+		switch(reagent_id)
+			if("blood", "hemolypmh")
+				reagent_to_add = "synthflesh"
+			if("bloodc")
+				reagent_to_add = "meat_slurry"
+			if("bloody_mary", "bloody_scary")
+				reagent_to_add = "ethanol"
+		src.reagents.remove_reagent(reagent_id, volume)
+		src.reagents.add_reagent(reagent_to_add, volume * chemical_efficiency)
+
+	proc/become_angry() //become dangerous to pick up
+		if (reagents.total_volume >= reagents.maximum_volume) //can't be angry on a full stomach
+			return
+		icon_state = "[original_icon_state]-irregular"
+		angry = TRUE
+
+	proc/become_unangry()
+		icon_state = original_icon_state
+		angry = FALSE
+		angry_timer = rand(10,20)
+
+	proc/eat_arm(var/mob/living/carbon/human/H, var/which_arm = "left")
+		H.visible_message("<span class = 'alert'>The [src.name] rips off [H.name]'s arm! Shit!</span>")
+		playsound(src.loc, 'sound/items/eatfoodshort.ogg', 100, 1)
+		playsound(src.loc, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 50, 1)
+		animate_shake(src, 2 , 0, 3, 0, 0)
+		reagents.add_reagent("synthflesh", 40 * organ_efficiency)
+		H.emote("scream")
+		become_unangry()
+		if(which_arm == "right")
+			H.limbs.r_arm?.delete()
+		else if(which_arm == "left")
+			H.limbs.l_arm?.delete()
+
 	process()
-		var/blood_present = src.reagents.get_reagent_amount("blood")
-		if(blood_present >= 0)
-			if(blood_present < amount_of_blood_to_use)
-				src.reagents.remove_reagent("blood", blood_present)
-				src.reagents.add_reagent("synthflesh", blood_present * synthflesh_efficiency) //add the synthflesh after so you don't have issues with full pustules
-			else
-				src.reagents.remove_reagent("blood", amount_of_blood_to_use)
-				src.reagents.add_reagent("synthflesh", amount_of_blood_to_use * synthflesh_efficiency)
+		if(angry && istype(src.loc, /mob/living/carbon/human/))
+			var/mob/living/carbon/human/H = src.loc
+			if(H.find_in_hand(src, "left"))
+				H.put_in_hand_or_drop(src)
+				eat_arm(H, "left")
+			if(H.find_in_hand(src, "right"))
+				H.put_in_hand_or_drop(src)
+				eat_arm(H, "right")
+		if(angry_timer > 0 && !angry)
+			angry_timer--
+		else
+			if(prob(10))
+				become_angry()
+		for(var/reagent_id in convertible_reagents)
+			var/reagent_present = src.reagents.get_reagent_amount(reagent_id)
+			if(reagent_present > 0)
+				if(reagent_present < amount_of_reagent_to_use)
+					convert_reagent(reagent_id, reagent_present)
+				else
+					convert_reagent(reagent_id, amount_of_reagent_to_use)
 		..()
 
-	on_reagent_change(add)
+	attackby(var/obj/item/W, mob/user)
+		if(istype(W, /obj/item/organ))
+			var/obj/item/organ/organ = W
+			if(organ.made_from != "flesh")
+				boutput(user, "<span class='alert'>The [src] rejects the non-organic organ!</span>")
+			else if (reagents.total_volume >= reagents.maximum_volume)
+				boutput(user, "<span class='alert'>The [src] is too full!</span>")
+			else
+				user.visible_message("<span class = 'alert'>[user.name] stuffs the [organ.name] into the [src.name].</span>")
+				playsound(src.loc, 'sound/items/eatfoodshort.ogg', 50, 1)
+				animate_shake(src, 2 , 0, 3, 0, 0)
+				qdel(organ)
+				reagents.add_reagent("synthflesh", 40 * organ_efficiency)
+				become_unangry()
+
+		else
+			if (W.force >= 5) //gotta smack it with something a little hefty at least
+				user.lastattacked = src
+				attack_particle(user,src)
+				hit_twitch(src)
+				playsound(src, 'sound/impact_sounds/Generic_Slap_1.ogg', 50,1)
+				user.visible_message("<span class='alert'><b>[user.name] smacks the [src.name] with the [W.name]!</b></span>")
+				if(angry)
+					become_unangry()
+				else
+					angry_timer = rand(5,20)
+
+	reagent_act(id, volume, var/datum/reagents/holder_reagents)
+		if(reagents.total_volume >= reagents.maximum_volume)
+			return
+		if (!convertible_reagents.Find(id))
+			boutput(world, "no [id] found")
+			return
+		holder_reagents.remove_reagent(id, volume)
+		playsound(src.loc, 'sound/items/drink.ogg', 50, 1)
+		animate_shake(src, 2 , 0, 3, 0, 0)
+		reagents.add_reagent(id, volume)
+		become_unangry()
+
+	on_reagent_change(add) //it burps once it's full of reagents it cannot convert aka product
+		if(reagents.total_volume >= reagents.maximum_volume && makes_noise_when_full)
+			for(var/id in convertible_reagents)
+				if (reagents.reagent_list.Find(id))
+					return
+			playsound(src.loc, 'sound/voice/burp.ogg', 50, 1)
 		..()
-		check_whitelist(src, list("blood", "synthflesh"), ,"change this later ty future flaborized")
+
+	attack_hand(var/mob/user)
+		if(angry && ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.hand == 0)
+				eat_arm(H, "right")
+			else
+				eat_arm(H, "left")
+			return
+		..()
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
@@ -823,6 +930,7 @@ proc/ui_describe_reagents(atom/A)
 		w_class = W_CLASS_TINY
 		initial_volume = 10
 		initial_reagents = list("synthflesh"=10) //these things won't be efficient at all for making synthflesh anyways so they come pre-loaded.
+		makes_noise_when_full = FALSE
 
 		throw_impact(atom/A, datum/thrown_thing/thr)
 			playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
@@ -834,5 +942,6 @@ proc/ui_describe_reagents(atom/A)
 		icon_state = "pustule-large"
 		w_class = W_CLASS_BULKY
 		initial_volume = 800
-		amount_of_blood_to_use = 5 //slow but...
-		synthflesh_efficiency = 2 //...lots of synthflesh per unit of blood
+		amount_of_reagent_to_use = 5 //slow but...
+		chemical_efficiency = 2 //...lots of synthflesh per unit of blood
+		organ_efficiency = 2

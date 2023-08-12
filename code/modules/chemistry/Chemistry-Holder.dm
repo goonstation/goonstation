@@ -717,7 +717,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 								.+= current_id
 							if(A)
 								// we want to make sure its still there after the initial reaction
-								A.reagent_act(current_reagent.id,current_reagent.volume*volume_fraction)
+								A.reagent_act(current_reagent.id,current_reagent.volume*volume_fraction,src)
 							if (istype(A, /obj/blob))
 								if (!current_reagent.reaction_blob(A, current_reagent.volume*volume_fraction))
 									.+= current_id
