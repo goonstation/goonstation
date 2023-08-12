@@ -502,9 +502,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 				if (I != welcome_text)
 					I.bump_up(welcome_text.measured_height)
 
-	if (!text_out)
-		return
-	else
 		src.audible_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[text_out]\"</span></span>", 2, assoc_maptext = slogan_text)
 
 	return
