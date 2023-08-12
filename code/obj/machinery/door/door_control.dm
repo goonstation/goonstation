@@ -486,9 +486,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	if (status & NOPOWER)
 		return
 
-	if (!message)
-		return
-
 	var/image/chat_maptext/welcome_text
 	var/welcome_text_alpha = 140
 	var/welcome_text_color = "#FF0100"
@@ -500,6 +497,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 			for (var/image/chat_maptext/I in src.chat_text.lines)
 				if (I != welcome_text)
 					I.bump_up(welcome_text.measured_height)
+
+	if (!text_out)
+		return
 	else
 		src.audible_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[text_out]\"</span></span>", 2, assoc_maptext = slogan_text)
 
@@ -519,9 +519,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
 	if (ishuman(user) && user.mind?.get_antagonist(ROLE_SLEEPER_AGENT))
 		user.visible_message("<span class='notice'>The [src] accepts the biometrics of the user and beeps, granting you access.</span>")
-		toggle()
-		if (entrance_scanner == 1)
-			src.speak(welcome_text)
+		src.toggle()
+		if (src.entrance_scanner)
+			src.speak(src.welcome_text)
 	else
 		boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
 
