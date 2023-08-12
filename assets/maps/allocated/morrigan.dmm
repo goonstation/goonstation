@@ -4743,7 +4743,7 @@
 /area/morrigan/station/security/armory)
 "fcR" = (
 /obj/decal/fakeobjects/safehouse/conduit,
-/obj/machinery/macrofab,
+/obj/machinery/macrofab/emergency_pod,
 /obj/machinery/conveyor/NS,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
