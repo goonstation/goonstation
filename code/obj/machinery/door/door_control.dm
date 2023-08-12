@@ -11,9 +11,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	var/unpressed_icon = "doorctrl0"
 	var/pressed_icon = "doorctrl1"
 	var/unpowered_icon = "doorctrl-p"
+	var/image/chat_maptext/welcome_text
+	var/welcome_text_alpha = 140
+	var/welcome_text_color = "#FF0100"
 	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
+
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/machinery/r_door_control (door_control.dm)
@@ -485,11 +489,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 /obj/machinery/door_control/proc/speak(var/message) //Stolen from the vending module
 	if (status & NOPOWER)
 		return
-
-	var/image/chat_maptext/welcome_text
-	var/welcome_text_alpha = 140
-	var/welcome_text_color = "#FF0100"
-
 	if (istype(src.loc, /turf))
 		welcome_text = make_chat_maptext(src, message, "color: [src.welcome_text_color];", alpha = src.welcome_text_alpha)
 		if (welcome_text && src.chat_text && length(src.chat_text.lines))
