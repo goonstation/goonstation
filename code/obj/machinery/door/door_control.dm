@@ -521,7 +521,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	if (ishuman(user) && user.mind?.get_antagonist(ROLE_SLEEPER_AGENT))
 		user.visible_message("<span class='notice'>The [src] accepts the biometrics of the user and beeps, granting you access.</span>")
 		src.toggle()
-		if (entrance_scanner == 1)
+		if (src.entrance_scanner)
 			src.speak(src.welcome_text)
 	else
 		boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
