@@ -493,6 +493,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	if (istype(src.loc, /turf))
 		welcome_text = make_chat_maptext(src, message, "color: [src.welcome_text_color];", alpha = src.welcome_text_alpha)
 		if (welcome_text && src.chat_text && length(src.chat_text.lines))
+		if (welcome_text && src.chat_text && length(src.chat_text.lines))
 			welcome_text.measure(src)
 			for (var/image/chat_maptext/I in src.chat_text.lines)
 				if (I != welcome_text)
@@ -507,6 +508,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 
 /obj/machinery/door_control/antagscanner // for sleepers entering listening post
 	var/entrance_scanner = 0 // Do we want a welcome message or similar for the area upon activation?
+	name = "Dubious Hand Scanner"
+	id = "Sleeper_Access"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "antagscanner"
 	unpressed_icon = "antagscanner"
