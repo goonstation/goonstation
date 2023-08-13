@@ -1469,7 +1469,7 @@ proc/load_morrigan()
 	density = TRUE
 	deconstruct_flags = DECON_NONE
 	icon = 'icons/obj/monitors.dmi'
-	icon_state = "self_destruct1" 
+	icon_state = "self_destruct1"
 	desc = "A big red button labeled to activate station's self destruct when pressed. It has an ID card reader. It is locked behind a bulletproof glass case. "
 	var/timing = FALSE
 	var/time = 80
@@ -1492,13 +1492,23 @@ proc/load_morrigan()
 		//explosion(src, src.loc, 10, 20, 30, 35)
 		for (var/mob/living/carbon/human/H in mobs) //so people wouldn't just survive station's self destruct
 			if (istype(get_area(H), /area/morrigan/station))
-				SPAWN(2 SECONDS)
+				SPAWN(1 SECONDS)
 					H.emote("scream")
 					H.firegib()
 		explosion_new(src, get_turf(src), 10000)
 		//dispose()
 		qdel(src)
 		return
+
+	proc/cause_panic()
+	//eventually i will find a better way to update lights
+		for(var/obj/machinery/light/light in by_cat[TR_CAT_MORRIGAN_LIGHTS])
+			light.seton(light.on = FALSE)
+			LAGCHECK(LAG_LOW)
+		for(var/obj/machinery/light/emergency/e_light in by_cat[TR_CAT_MORRIGAN_EMERGENCY_LIGHTS])
+			e_light.on = TRUE
+			e_light.update() //you have to update it for it to work
+			LAGCHECK(LAG_LOW)
 
 	//pressing the button
 	attack_hand(var/mob/user)
@@ -1510,8 +1520,9 @@ proc/load_morrigan()
 			boutput(user, "<span class='alert'>You press the button over and over again but it's no use! Shit!</span>")
 			return
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		user.unlock_medal("Leave no man behind!") //we dont have medal yet i think
+		user.unlock_medal("Leave no man behind!", TRUE) //we dont have medal yet i think
 		activate_nuke()
+		cause_panic()
 
 	//attack by an item
 	attackby(var/obj/item/I, var/mob/user)
@@ -1519,7 +1530,7 @@ proc/load_morrigan()
 		if (!src.locked)
 			boutput(user, "<span class='notice'>The glass case has already been opened.</span>")
 			return
-		if (!istype(I, /obj/item/card/id/morrigan/all_access))
+		if (!istype(I, /obj/item/card/id/morrigan/all_access) && src.locked)
 			boutput(user, "<span class='alert'>You try to hit the glass case with \the [I] but it doesn't seem to be effective!</span>")
 			return
 		else

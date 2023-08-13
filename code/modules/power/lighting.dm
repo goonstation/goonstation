@@ -370,14 +370,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	New()
 		..()
-		var/turf/T = get_turf(src)
-		if (T.z == Z_LEVEL_STATION && istype(T.loc, /area/station))
+		var/area/A = get_area(src)
+		if (istype(A, /area/morrigan/station))
+			START_TRACKING_CAT(TR_CAT_MORRIGAN_EMERGENCY_LIGHTS)
+		else if (A.z == Z_LEVEL_STATION && istype(A, /area/station))
 			START_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
 
 	disposing()
 		..()
 		STOP_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
-
+		STOP_TRACKING_CAT(TR_CAT_MORRIGAN_EMERGENCY_LIGHTS)
+	
 	exitsign
 		name = "illuminated exit sign"
 		desc = "This sign points the way to the escape shuttle."
@@ -619,8 +622,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	New()
 		..()
+		var/area/A = get_area(src)
+		if (istype(A, /area/morrigan/station))
+			START_TRACKING_CAT(TR_CAT_MORRIGAN_LIGHTS)
 		autoposition()
 
+	disposing()
+		. = ..()
+		STOP_TRACKING_CAT(TR_CAT_MORRIGAN_LIGHTS)
+	
 	name = "incandescent light fixture"
 	light_type = /obj/item/light/tube/neutral
 
