@@ -1,5 +1,9 @@
 
 (t)sun aug 13 23
+(u)Ikea
+(p)15320
+(e)⚖🤖|C-Balance, A-Silicons
+(+)light borg heads now have 60 hp, meaning they can now actually take two emp shots
 (u)Lord_Earthfire
 (p)15303
 (e)🆕🌱|C-Feature, A-Hydroponics
