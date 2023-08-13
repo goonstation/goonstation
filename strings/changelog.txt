@@ -1,5 +1,9 @@
 
 (t)sat aug 12 23
+(u)deathrobotpunch1
+(p)15202
+(e)💅🍝|C-QoL, A-Catering
+(*)Bartender now has a reagent scanner, medical record scanner and a health scanner built in to their PDA!
 (u)Amylizzle
 (p)15342
 (e)⚖📦|C-Balance, A-Game-Objects
