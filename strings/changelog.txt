@@ -1,4 +1,9 @@
 
+(t)sun aug 13 23
+(u)DimWhat
+(p)15161
+(e)⚖🎩|C-Balance, A-Clothing
+(+)Added a simple black jacket to the clothing booth.
 (t)sat aug 12 23
 (u)deathrobotpunch1
 (p)15202
