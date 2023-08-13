@@ -1,5 +1,9 @@
 
 (t)sun aug 13 23
+(u)Wisemonster
+(p)15251
+(e)🔄⏰📦|C-Rework, A-Status-Effects, A-Game-Objects
+(+)Devera's hygiene protection has been changed into a status effect.
 (u)Tyrant
 (p)15324
 (e)🪲|C-Bug
