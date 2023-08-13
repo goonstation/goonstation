@@ -1,5 +1,9 @@
 
 (t)sun aug 13 23
+(u)Tyrant
+(p)15324
+(e)🪲|C-Bug
+(+)The HoP now has access to the command teleporter by default.
 (u)UnfunnyPerson
 (p)15136
 (e)⛔📦|C-Removal, A-Game-Objects
