@@ -1,5 +1,9 @@
 
 (t)sun aug 13 23
+(u)Ryou (Glamurio) & Zac
+(p)15192
+(e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
+(*)Added cinnamon to the game. Ask your local botanist to grow you some! Careful not too eat too much of it.
 (u)soapcyst
 (p)15203
 (e)🗺💅|A-Mapping, C-QoL
