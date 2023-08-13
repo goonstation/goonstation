@@ -1520,7 +1520,7 @@ proc/load_morrigan()
 			boutput(user, "<span class='alert'>You press the button over and over again but it's no use! Shit!</span>")
 			return
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		user.unlock_medal("Leave no man behind!", TRUE) //we dont have medal yet i think
+		user.unlock_medal("Cell Shock", TRUE)
 		activate_nuke()
 		cause_panic()
 
