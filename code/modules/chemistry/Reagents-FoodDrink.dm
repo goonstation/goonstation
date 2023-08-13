@@ -3714,9 +3714,9 @@ datum
 				if(!M) M = holder.my_atom
 
 				if (prob(80))
-					M.losebreath += (1 * mult)
+					M.losebreath += (2 * mult)
 					volume -= overdose
-					M.restrain_time = TIME + 30
+					M.changeStatus("stunned", 3 SECONDS)
 					particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(M.loc, M.dir, "#C58C66"))
 
 					switch(rand(1, 6))
@@ -3746,10 +3746,9 @@ datum
 								if (7) message_append = " Huh."
 								if (8) message_append = " Why?"
 								if (9) message_append = " Wow!"
-						M.visible_message("<span class='alert'><B>[M]</B> blows smoke right into <B>[target]</B>'s face![message_append]</span>", group = "[M]_blow_smoke_at_[target]")
+						M.visible_message("<span class='alert'><B>[M]</B> blows cinnamon right into <B>[target]</B>'s face![message_append]</span>", group = "[M]_blow_smoke_at_[target]")
 
-						var/mob/living/carbon/human/human_target = target
-						if (human_target && rand(1,5) == 1)
+						if (target)
 							SPAWN(0) target.emote("cough")
 					else
 						var/message
