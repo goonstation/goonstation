@@ -11,6 +11,11 @@
 	},
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/station/security/brig)
+"aaI" = (
+/turf/unsimulated/floor/redblack{
+	dir = 8
+	},
+/area/morrigan/station/maintenance)
 "aaL" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/exit)
@@ -176,20 +181,19 @@
 /obj/item/cable_coil/blue/cut,
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/factory)
+"ajw" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/space)
 "ajW" = (
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/fakeobjects/lightbulb_broken,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"akf" = (
-/obj/decal/stripe_delivery,
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/maintenance)
 "akw" = (
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/plating/damaged1,
@@ -247,9 +251,8 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "amy" = (
-/obj/stool/chair/green,
-/obj/machinery/light/incandescent/netural,
-/turf/unsimulated/floor/black,
+/obj/item/clothing/head/helmet/welding/fire,
+/turf/unsimulated/floor/circuit/red,
 /area/morrigan/station/medical/cloning)
 "amC" = (
 /obj/item/storage/toolbox/emergency,
@@ -306,12 +309,6 @@
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/factory)
-"apf" = (
-/obj/storage/closet/coffin/wood,
-/obj/item/shaker/ketchup,
-/obj/item/clothing/mask/gas/plague,
-/turf/unsimulated/floor/carpet/red/standard/edge/east,
-/area/morrigan/station/civilian/chapel)
 "apC" = (
 /obj/submachine/chem_extractor{
 	dir = 4
@@ -338,10 +335,6 @@
 "ark" = (
 /turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/crewquarters)
-"arz" = (
-/obj/reagent_dispensers/watertank/big,
-/turf/unsimulated/floor/green,
-/area/morrigan/station/civilian/botany)
 "arN" = (
 /obj/decal/cleanable/cobwebFloor,
 /turf/unsimulated/floor/plating/random,
@@ -682,15 +675,6 @@
 /obj/decal/cleanable/generic,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/derelict)
-"aFl" = (
-/obj/table/wood/auto,
-/obj/machinery/phone{
-	pixel_x = 5;
-	pixel_y = -1
-	},
-/obj/item/device/light/candle/haunted,
-/turf/unsimulated/floor/carpet/red/standard/edge/se,
-/area/morrigan/station/civilian/chapel)
 "aFO" = (
 /obj/decal/floatingtiles{
 	dir = 1;
@@ -701,6 +685,17 @@
 "aFP" = (
 /turf/unsimulated/floor/carpet/red/fancy/edge,
 /area/morrigan/station/security/main)
+"aGh" = (
+/obj/decal/cleanable/rust/jen,
+/obj/machinery/light/small{
+	brightness = 2;
+	dir = 8
+	},
+/obj/machinery/door/airlock/pyro/maintenance{
+	hardened = 1
+	},
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/maintenance)
 "aGn" = (
 /obj/surgery_tray,
 /obj/item/storage/firstaid/docbag,
@@ -715,9 +710,11 @@
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/medical/main)
 "aGG" = (
-/obj/item/bananapeel,
 /obj/machinery/light/incandescent,
-/turf/unsimulated/floor/specialroom/clown,
+/obj/decal/fakeobjects/robot/security{
+	name = "Old Unit"
+	},
+/turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/botany)
 "aIo" = (
 /obj/decal/fakeobjects/lightbulb_broken{
@@ -804,6 +801,13 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"aPC" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/door/airlock/pyro/maintenance{
+	hardened = 1
+	},
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/maintenance)
 "aQu" = (
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
@@ -817,14 +821,24 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "aQE" = (
-/obj/machinery/door/window/eastleft,
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "drip5"
+/obj/window/cubicle{
+	dir = 4
 	},
-/turf/unsimulated/floor/carpet{
-	dir = 4;
-	icon_state = "fred1"
+/obj/machinery/computer/airbr{
+	pixel_y = 34;
+	pixel_x = -63
 	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "This computer seems like it is on some kind attract screen.  They keyboard does nothing!";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "mmagnet";
+	name = "Computer";
+	pixel_y = 2;
+	pixel_x = -5
+	},
+/turf/unsimulated/floor/red/checker,
 /area/morrigan/station/civilian/chapel)
 "aRq" = (
 /obj/storage/crate/bin,
@@ -891,12 +905,15 @@
 /obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/white/checker2,
 /area/morrigan/station/medical/robotics)
-"aTD" = (
-/obj/decal/fakeobjects/safehouse/cloner,
-/turf/unsimulated/floor/engine/caution/misc{
-	dir = 6
+"aTY" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
 	},
-/area/morrigan/station/medical/cloning)
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/space)
 "aUj" = (
 /obj/machinery/computer/card/console_upper,
 /obj/item/paper/Morrigan8,
@@ -976,6 +993,11 @@
 	},
 /turf/unsimulated/floor/twotone/blue,
 /area/morrigan/station/civilian/crewquarters)
+"aYz" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/decal/poster/wallsign/hazard_caution,
+/turf/unsimulated/floor/plating,
+/area/morrigan/station/medical/cloning)
 "aYK" = (
 /obj/machinery/conveyor/area_activated,
 /obj/machinery/light/small/sticky/warm{
@@ -1153,11 +1175,10 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "biB" = (
-/obj/machinery/plantpot,
-/obj/machinery/light/emergency{
-	dir = 1
+/obj/decal/fakeobjects/lawrack{
+	icon_state = "airack_syndicate_empty"
 	},
-/turf/unsimulated/floor/green,
+/turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/civilian/botany)
 "bje" = (
 /obj/machinery/door/poddoor/blast/pyro,
@@ -1228,6 +1249,19 @@
 /obj/machinery/computer3/generic/personal,
 /turf/unsimulated/floor/twotone/blue,
 /area/morrigan/station/civilian/crewquarters)
+"bnY" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/tile_edge/stripe/corner,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/medical/cloning)
 "boj" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/storage/pill_bottle/cyberpunk{
@@ -1330,6 +1364,7 @@
 /area/morrigan/derelict)
 "brM" = (
 /obj/map/light/dimred,
+/obj/stool/chair/office/red,
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/medical/robotics)
 "bsf" = (
@@ -1451,7 +1486,7 @@
 /area/morrigan/holding)
 "bAr" = (
 /obj/map/light,
-/turf/unsimulated/outdoors/grass,
+/turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/botany)
 "bAW" = (
 /obj/item/shipcomponent/mainweapon/rockdrills,
@@ -1599,11 +1634,8 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "bLf" = (
-/obj/machinery/printing_press,
-/turf/unsimulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred1"
-	},
+/obj/machinery/floorflusher/industrial,
+/turf/unsimulated/floor/red/checker,
 /area/morrigan/station/civilian/chapel)
 "bLg" = (
 /obj/stool/chair/office/syndie{
@@ -1630,6 +1662,14 @@
 /obj/decal/floatingtiles,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/passage)
+"bMS" = (
+/obj/decal/poster/wallsign/warning3,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/morrigan/station/medical/cloning)
+"bNe" = (
+/obj/lattice,
+/turf/space,
+/area/morrigan/station/maintenance)
 "bNh" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 1;
@@ -1739,6 +1779,35 @@
 /obj/item/reagent_containers/glass/bottle/ammonia/janitors,
 /turf/unsimulated/floor/purple,
 /area/morrigan/station/civilian/janitor)
+"bRB" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
+"bRE" = (
+/obj/item/casing/rifle_loud{
+	dir = 6
+	},
+/obj/item/casing/grenade{
+	pixel_y = -10
+	},
+/obj/item/casing/rifle_loud{
+	dir = 4;
+	pixel_y = -15
+	},
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "bSm" = (
 /obj/machinery/vending/capsule,
 /turf/unsimulated/floor/redblack{
@@ -1793,24 +1862,25 @@
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/holding)
 "bVW" = (
-/obj/decal/fakeobjects/bookcase,
-/turf/unsimulated/floor/carpet/red/standard/edge/nw,
+/obj/submachine/cargopad,
+/obj/decoration/ntcratesmall{
+	icon_state = "syndiecrate"
+	},
+/obj/item/cargotele{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/red/checker,
 /area/morrigan/station/civilian/chapel)
 "bWa" = (
 /obj/decoration/vent,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/civilian/botany)
 "bWC" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
-	pixel_y = -5;
-	pixel_x = -1
+/obj/stool/chair/office/syndie{
+	dir = 8
 	},
-/obj/item/reagent_containers/food/drinks/bottle/beer{
-	pixel_y = 6;
-	pixel_x = -7
-	},
-/turf/unsimulated/floor/carpet/red/standard/edge/west,
+/turf/unsimulated/floor/red/checker,
 /area/morrigan/station/civilian/chapel)
 "bWI" = (
 /turf/unsimulated/floor/yellowblack/corner{
@@ -1938,9 +2008,25 @@
 	dir = 4
 	},
 /area/morrigan/station/science)
+"cdI" = (
+/obj/machinery/light/incandescent/netural,
+/obj/machinery/computer3/terminal{
+	dir = 8
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "cdT" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/unsimulated/floor/plating,
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/botany)
 "cdV" = (
 /obj/table/auto,
@@ -2049,6 +2135,10 @@
 /obj/decal/poster/wallsign/fire,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/derelict)
+"cls" = (
+/obj/stool/chair/office/yellow,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/civilian/botany)
 "clW" = (
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 8;
@@ -2064,10 +2154,6 @@
 /obj/decal/cleanable/water,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"cmQ" = (
-/obj/decal/fakeobjects/bookcase,
-/turf/unsimulated/floor/carpet/red/standard/edge/north,
-/area/morrigan/station/civilian/chapel)
 "cnG" = (
 /obj/decal/cleanable/blood{
 	icon_state = "handblood"
@@ -2075,25 +2161,27 @@
 /obj/machinery/floorflusher/genpop_n,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"cnI" = (
-/obj/submachine/cargopad{
-	name = "Botany Pad"
-	},
-/obj/item/cargotele{
-	pixel_x = -5;
-	pixel_y = 10
-	},
-/turf/unsimulated/floor/green,
-/area/morrigan/station/civilian/botany)
 "coh" = (
 /obj/decal/floatingtiles{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"coA" = (
+/obj/decal/fakeobjects/robot/security{
+	dir = 1;
+	icon_state = "mars_nuke_bot";
+	name = "Syndicate Elite Gunbot"
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan/station/civilian/botany)
 "coF" = (
 /turf/unsimulated/floor/twotone/yellow,
 /area/morrigan/derelict)
+"coS" = (
+/mob/living/critter/robotic/gunbot/syndicate/morrigan,
+/turf/unsimulated/floor/red/checker,
+/area/morrigan/station/civilian/chapel)
 "cpa" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/dirt/dirt2,
@@ -2116,16 +2204,8 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "cpg" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/bible{
-	pixel_x = -8;
-	pixel_y = 8
-	},
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4
-	},
-/obj/item/device/light/candle/haunted,
-/turf/unsimulated/floor/carpet/red/standard,
+/obj/machinery/door/window/opaque/eastleft,
+/turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/chapel)
 "cqc" = (
 /obj/grille/catwalk/jen,
@@ -2176,13 +2256,6 @@
 /obj/item/cable_coil/blue/cut,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"cuy" = (
-/obj/stool,
-/turf/unsimulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred1"
-	},
-/area/morrigan/station/civilian/chapel)
 "cve" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/item/furniture_parts/table,
@@ -2270,6 +2343,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict)
+"cAi" = (
+/obj/decal/poster/wallsign/hazard_caution,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/morrigan/station/medical/cloning)
 "cAu" = (
 /obj/item/implant/projectile/bullet_357,
 /mob/living/critter/robotic/gunbot/syndicate/morrigan,
@@ -2334,9 +2411,6 @@
 /area/morrigan/station/medical/main)
 "cDC" = (
 /obj/decoration/vent,
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "drip5"
-	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/civilian/chapel)
 "cEu" = (
@@ -2359,6 +2433,14 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"cFk" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "Part of a system for securing docked spacecraft.";
+	dir = 9;
+	name = "docking clamp"
+	},
+/turf/space,
+/area/morrigan/station/space)
 "cFF" = (
 /obj/item/casing/small,
 /turf/unsimulated/floor/black,
@@ -2369,6 +2451,12 @@
 	},
 /turf/unsimulated/floor/purpleblack,
 /area/morrigan/station/science)
+"cIN" = (
+/obj/decoration/ntcratesmall{
+	icon_state = "syndiecrate"
+	},
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/maintenance)
 "cJm" = (
 /obj/table/auto,
 /turf/unsimulated/floor/red/redblackchecker,
@@ -2389,6 +2477,18 @@
 /obj/storage/secure/closet,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"cJO" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "This computer seems like it is on some kind attract screen.  They keyboard does nothing!";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "mmagnet";
+	name = "Computer";
+	dir = 4
+	},
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "cKd" = (
 /obj/decal/cleanable/blood{
 	icon_state = "footprints1"
@@ -2507,11 +2607,9 @@
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing/transport)
 "cQu" = (
-/obj/machinery/light/emergency{
-	dir = 8
-	},
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/industrial,
+/obj/decal/tile_edge/floorguide/qm,
+/turf/unsimulated/floor/red/checker,
 /area/morrigan/station/maintenance)
 "cQH" = (
 /obj/decal/cleanable/blood{
@@ -2563,7 +2661,7 @@
 "cSN" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/vending/book,
-/turf/unsimulated/floor/greenblack{
+/turf/unsimulated/floor/blackwhite/side{
 	dir = 1
 	},
 /area/morrigan/station/hallway)
@@ -2634,27 +2732,10 @@
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/holding)
 "cWM" = (
-/obj/table/auto,
-/obj/item/satchel/hydro{
-	pixel_x = 7;
-	pixel_y = 2
-	},
-/obj/item/satchel/hydro{
-	pixel_x = 9;
-	pixel_y = 10
-	},
-/obj/item/device/reagentscanner{
-	pixel_x = -8;
-	pixel_y = 5
-	},
-/obj/item/clothing/glasses/spectro{
-	pixel_x = 5;
-	pixel_y = -3
-	},
 /obj/machinery/light/emergency{
 	dir = 1
 	},
-/turf/unsimulated/floor/green,
+/turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/civilian/botany)
 "cWV" = (
 /obj/decal/cleanable/desk_clutter,
@@ -2682,6 +2763,17 @@
 /obj/machinery/conveyor/WE,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/disposals)
+"cXZ" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "This computer seems like it is on some kind attract screen.  They keyboard does nothing!";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "turret3";
+	name = "Start Target Practice"
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan/station/civilian/botany)
 "cYh" = (
 /obj/machinery/door/airlock/pyro/glass/security/alt{
 	hardened = 1
@@ -2718,7 +2810,7 @@
 "cZu" = (
 /obj/machinery/recharge_station,
 /obj/machinery/light/incandescent/netural,
-/turf/unsimulated/floor/greenblack{
+/turf/unsimulated/floor/yellowblack{
 	dir = 10
 	},
 /area/morrigan/station/hallway)
@@ -2781,8 +2873,8 @@
 	},
 /area/morrigan/station/science)
 "dbR" = (
-/obj/critter/domestic_bee/clownbee,
-/turf/unsimulated/floor/specialroom/clown,
+/obj/decal/fakeobjects/robot,
+/turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/botany)
 "dbZ" = (
 /obj/decoration/toiletholder,
@@ -2817,10 +2909,8 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/routing/transport)
 "dfn" = (
-/obj/decal/cleanable/blood/splatter{
-	icon_state = "floor4"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/obj/storage/crate/packing,
+/turf/unsimulated/floor/red/checker,
 /area/morrigan/station/civilian/chapel)
 "dfZ" = (
 /obj/decal/cleanable/blood{
@@ -2910,6 +3000,23 @@
 	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/biological)
+"dnw" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	dir = 4
+	},
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
+"doa" = (
+/obj/table/auto,
+/obj/machinery/cell_charger{
+	pixel_y = 10
+	},
+/obj/item/cable_coil/blue,
+/obj/item/cable_coil{
+	pixel_y = -5
+	},
+/turf/unsimulated/floor/circuit/red,
+/area/morrigan/station/medical/cloning)
 "dog" = (
 /obj/decal/cleanable/tomatosplat,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -2947,6 +3054,10 @@
 	},
 /turf/unsimulated/floor/darkblue,
 /area/morrigan/station/command/bridge)
+"drj" = (
+/obj/map/light,
+/turf/unsimulated/floor/plating/jen,
+/area/morrigan/station/civilian/botany)
 "dro" = (
 /turf/unsimulated/floor/engine/caution/south,
 /area/morrigan/station/factory)
@@ -2995,16 +3106,6 @@
 	},
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
-"dtl" = (
-/obj/table/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1
-	},
-/obj/mapping_helper/access/morrigan/botany,
-/obj/mapping_helper/airlock/hardener,
-/obj/mapping_helper/airlock/anti_emag,
-/turf/unsimulated/floor/green,
-/area/morrigan/station/civilian/botany)
 "dtF" = (
 /obj/decal/cleanable/blood{
 	icon_state = "smear3";
@@ -3054,11 +3155,6 @@
 /obj/item/clothing/under/color/lightred,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"dvv" = (
-/obj/stool/bed,
-/mob/living/critter/spider/clown,
-/turf/unsimulated/floor/specialroom/clown,
-/area/morrigan/station/civilian/botany)
 "dvX" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 8
@@ -3139,9 +3235,10 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/routing/transport)
 "dyH" = (
-/obj/machinery/plantpot,
-/obj/machinery/light/incandescent/netural,
-/turf/unsimulated/floor/green,
+/obj/window/cubicle{
+	dir = 4
+	},
+/turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/civilian/botany)
 "dAA" = (
 /obj/structure/vehicleframe/puttframe,
@@ -3215,21 +3312,6 @@
 	},
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/medical/main)
-"dEa" = (
-/obj/decal/cleanable/blood/tracks,
-/obj/item/paper/Morrigan4,
-/obj/machinery/light/small{
-	brightness = 2;
-	dir = 8
-	},
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/maintenance)
-"dEo" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 8
-	},
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/maintenance)
 "dEG" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/grey,
@@ -3347,6 +3429,11 @@
 /obj/decal/poster/wallsign/hazard_danger,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/security/armory)
+"dLq" = (
+/obj/machinery/light/incandescent/netural,
+/obj/machinery/door/window/opaque/southright,
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "dLv" = (
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/dirt2,
@@ -3369,6 +3456,16 @@
 /obj/decal/cleanable/fungus,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/holding)
+"dNQ" = (
+/obj/machinery/door/poddoor/blast{
+	density = 0;
+	icon = 'icons/obj/doors/sovblastdoor.dmi';
+	icon_state = "bdoormid0";
+	id = "samostrel_nuke_outer";
+	opacity = 0
+	},
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/civilian/botany)
 "dOf" = (
 /obj/machinery/power/collector_control,
 /turf/unsimulated/floor/engine/caution/south,
@@ -3418,7 +3515,7 @@
 /obj/machinery/light/emergency{
 	dir = 8
 	},
-/turf/simulated/floor/black/side{
+/turf/unsimulated/floor/black/side{
 	dir = 8
 	},
 /area/morrigan/station/hallway)
@@ -3590,23 +3687,8 @@
 /turf/unsimulated/floor/carpet/purple/fancy/innercorner/sw,
 /area/morrigan/station/command/captain)
 "dYu" = (
-/obj/table/wood/auto,
-/obj/item/ghostboard{
-	pixel_y = 8
-	},
-/obj/item/clothing/mask/skull{
-	pixel_x = -5;
-	pixel_y = -2
-	},
-/obj/item/clothing/suit/cultist/nerd{
-	pixel_x = 7
-	},
-/obj/item/dice/magic8ball{
-	pixel_x = 7;
-	pixel_y = 9
-	},
-/obj/item/instrument/trumpet,
-/turf/unsimulated/floor/carpet/red/standard/edge/sw,
+/obj/storage/secure/crate/gear,
+/turf/unsimulated/floor/red/checker,
 /area/morrigan/station/civilian/chapel)
 "eai" = (
 /obj/machinery/chem_master{
@@ -3628,7 +3710,7 @@
 	hardened = 1
 	},
 /obj/mapping_helper/airlock/anti_emag,
-/turf/simulated/floor/black/side{
+/turf/unsimulated/floor/black/side{
 	dir = 8
 	},
 /area/morrigan/station/hallway)
@@ -4100,6 +4182,15 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict)
+"evt" = (
+/obj/decal/tile_edge/floorguide/ai,
+/obj/decal/tile_edge/floorguide/ai{
+	dir = 8
+	},
+/turf/unsimulated/floor/blackwhite/side{
+	dir = 8
+	},
+/area/morrigan/station/hallway)
 "evO" = (
 /obj/table/wood/round,
 /obj/item/plate,
@@ -4300,6 +4391,10 @@
 /obj/item/firework,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
+"eFp" = (
+/obj/item/material_piece/erebite,
+/turf/unsimulated/floor/engine,
+/area/morrigan/station/science)
 "eFr" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decoration/damagedchair,
@@ -4317,9 +4412,14 @@
 /obj/storage/closet/biohazard,
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/medical/biological)
-"eHw" = (
-/turf/unsimulated/floor/carpet/red/standard/edge,
-/area/morrigan/station/civilian/chapel)
+"eGW" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "Part of a system for securing docked spacecraft.";
+	dir = 10;
+	name = "docking clamp"
+	},
+/turf/space,
+/area/morrigan/station/space)
 "eHz" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 4
@@ -4415,6 +4515,12 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"eKq" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/redblack/corner{
+	dir = 1
+	},
+/area/morrigan/station/hallway)
 "eLB" = (
 /obj/machinery/door/unpowered/wood/stall{
 	autoclose = 0;
@@ -4491,7 +4597,6 @@
 /area/morrigan/routing/transport)
 "ePn" = (
 /obj/decoration/damagedchair,
-/obj/critter/gunbot/heavy,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/factory)
 "eQj" = (
@@ -4514,7 +4619,18 @@
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/civilian/kitchen)
 "eRE" = (
-/obj/stool/chair/office/red,
+/obj/stool/chair/office/red{
+	dir = 8
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/cloning)
 "eRI" = (
@@ -4526,6 +4642,11 @@
 "eRO" = (
 /turf/unsimulated/floor/plating/scorched,
 /area/morrigan/station/passage)
+"eSA" = (
+/obj/table/auto,
+/obj/machinery/computer3/generic/personal/personel_alt,
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "eSI" = (
 /obj/submachine/weapon_vendor,
 /turf/unsimulated/floor/black,
@@ -4541,6 +4662,10 @@
 /obj/machinery/emitter,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/engineering)
+"eUt" = (
+/obj/random_item_spawner/desk_stuff,
+/turf/unsimulated/floor/red/checker,
+/area/morrigan/station/maintenance)
 "eUu" = (
 /obj/decal/fakeobjects/lightbulb_broken{
 	desc = "This light is probably broken.  It looks pretty new and ok, though, so it's probably just not wired up.";
@@ -4568,7 +4693,7 @@
 /obj/machinery/light/incandescent,
 /obj/stool/chair/pew/fancy/right,
 /obj/item/paper/book/from_file/the_trial,
-/turf/unsimulated/floor/greenblack{
+/turf/unsimulated/floor/yellowblack{
 	dir = 1
 	},
 /area/morrigan/station/hallway)
@@ -4629,7 +4754,7 @@
 "eYU" = (
 /obj/table/glass/auto,
 /obj/decoration/floralarrangement,
-/turf/unsimulated/floor/greenblack{
+/turf/unsimulated/floor/yellowblack{
 	dir = 1
 	},
 /area/morrigan/station/hallway)
@@ -4743,10 +4868,26 @@
 /area/morrigan/station/security/armory)
 "fcR" = (
 /obj/decal/fakeobjects/safehouse/conduit,
-/obj/machinery/macrofab/emergency_pod,
 /obj/machinery/conveyor/NS,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/machines/podfab.dmi';
+	icon_state = "fab-still";
+	name = "Fabricator"
+	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
+"fcY" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan/station/medical/cloning)
 "fdH" = (
 /obj/storage/crate/bloody,
 /obj/decal/floatingtiles{
@@ -4796,18 +4937,31 @@
 /obj/item/clothing/under/color/darkred,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"fie" = (
+/obj/stool/chair/pew/fancy/center,
+/turf/unsimulated/floor/yellowblack{
+	dir = 1
+	},
+/area/morrigan/station/hallway)
 "fip" = (
 /obj/stool/chair/office/red,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/routing/transport)
 "fiw" = (
-/obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "This airlock seems to be badly damaged.";
-	dir = 4;
-	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "airlock_locked";
-	name = "broken airlock"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/door/poddoor/blast{
+	density = 0;
+	icon = 'icons/obj/doors/sovblastdoor.dmi';
+	icon_state = "bdoormid0";
+	id = "samostrel_nuke_outer";
+	opacity = 0
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
@@ -4901,11 +5055,6 @@
 /obj/item/storage/firstaid/toxin,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"foN" = (
-/obj/machinery/vending/hydroponics,
-/obj/mapping_helper/access/morrigan/botany,
-/turf/unsimulated/floor/green,
-/area/morrigan/station/civilian/botany)
 "fpx" = (
 /obj/machinery/vending/medical_public,
 /turf/unsimulated/floor/twotone/red,
@@ -4916,28 +5065,63 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/warden)
 "fqq" = (
-/obj/stool/chair/pew{
+/obj/machinery/computer/barcode/qm{
 	dir = 8
 	},
-/turf/unsimulated/floor/carpet{
-	dir = 4;
-	icon_state = "fred1"
-	},
+/turf/unsimulated/floor/red/checker,
 /area/morrigan/station/civilian/chapel)
 "fqy" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/generic,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"frr" = (
+/obj/decal/fakeobjects/cargopad,
+/obj/decoration/ntcratesmall{
+	icon_state = "syndiecrate"
+	},
+/turf/unsimulated/floor/circuit/red,
+/area/morrigan/station/medical/cloning)
+"frz" = (
+/turf/unsimulated/floor/stairs/dark{
+	dir = 4
+	},
+/area/morrigan/station/medical/main)
 "frJ" = (
 /obj/decal/fakeobjects/mantacontainer/upwards,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"fsy" = (
-/turf/unsimulated/floor/greenblack/corner{
-	dir = 1
+"fsd" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
-/area/morrigan/station/hallway)
+/obj/machinery/door/poddoor/blast{
+	density = 0;
+	icon = 'icons/obj/doors/sovblastdoor.dmi';
+	icon_state = "bdoormid0";
+	id = "samostrel_nuke_outer";
+	opacity = 0
+	},
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/maintenance)
+"fsf" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/machines/podfab.dmi';
+	icon_state = "fab-still";
+	name = "Fabricator";
+	dir = 8
+	},
+/obj/decal/fakeobjects/robot/security{
+	dir = 8;
+	icon_state = "mars_nuke_bot";
+	name = "Syndicate Elite Gunbot"
+	},
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor/circuit/red,
+/area/morrigan/station/medical/cloning)
 "fsD" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/structure/woodwall,
@@ -4989,17 +5173,8 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "fwn" = (
-/obj/table/auto,
-/obj/item/bee_egg_carton{
-	pixel_x = 2;
-	pixel_y = 4
-	},
-/obj/item/plantanalyzer{
-	pixel_x = -7;
-	pixel_y = 7
-	},
-/obj/machinery/light/incandescent,
-/turf/unsimulated/floor/green,
+/obj/storage/secure/crate,
+/turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/civilian/botany)
 "fwG" = (
 /obj/machinery/door/unpowered/wood/pyro{
@@ -5013,6 +5188,11 @@
 /obj/random_item_spawner/tableware,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
+"fxl" = (
+/turf/unsimulated/floor/black/side{
+	dir = 4
+	},
+/area/morrigan/station/hallway)
 "fxo" = (
 /obj/table/wood/auto,
 /obj/machinery/computer3/luggable/personal,
@@ -5037,12 +5217,6 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"fxM" = (
-/obj/submachine/seed_manipulator{
-	dir = 8
-	},
-/turf/unsimulated/floor/green,
-/area/morrigan/station/civilian/botany)
 "fyh" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -5060,6 +5234,11 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"fyA" = (
+/obj/machinery/light/incandescent,
+/mob/living/critter/robotic/gunbot/syndicate/morrigan,
+/turf/unsimulated/floor/twotone/red,
+/area/morrigan/station/medical/main)
 "fyC" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	dir = 4
@@ -5067,8 +5246,10 @@
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/medical/biological)
 "fyJ" = (
-/obj/fitness/speedbag/captain,
-/turf/unsimulated/floor/specialroom/clown,
+/obj/decal/fakeobjects/robot/security{
+	name = "Old Unit"
+	},
+/turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/botany)
 "fzz" = (
 /obj/decal/fakeobjects/firelock_broken{
@@ -5368,6 +5549,7 @@
 /area/morrigan/station/factory)
 "fOz" = (
 /obj/table/reinforced/chemistry/auto/beakers,
+/obj/item/material_piece/claretine,
 /turf/unsimulated/floor/purpleblack{
 	dir = 4
 	},
@@ -5662,6 +5844,18 @@
 /obj/machinery/drainage,
 /turf/unsimulated/floor/glassblock/transparent_red,
 /area/morrigan/station/medical/main)
+"gaa" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan/station/medical/cloning)
 "gac" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/factory)
@@ -5774,6 +5968,15 @@
 	},
 /turf/unsimulated/floor/purple,
 /area/morrigan/station/civilian/janitor)
+"gic" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/window/cubicle{
+	dir = 4
+	},
+/turf/unsimulated/floor/plating/jen,
+/area/morrigan/station/civilian/botany)
 "giw" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -5828,6 +6031,25 @@
 /obj/mapping_helper/access/morrigan/security,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/brig)
+"gjk" = (
+/obj/item/casing/medium{
+	pixel_y = -3;
+	pixel_x = 11;
+	dir = 5
+	},
+/obj/item/casing/medium{
+	pixel_y = -11;
+	dir = 4
+	},
+/obj/item/casing/rifle_loud{
+	dir = 6
+	},
+/obj/item/casing/rifle_loud{
+	dir = 4;
+	pixel_y = -15
+	},
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "gjN" = (
 /obj/storage/crate/biohazard,
 /obj/item/clothing/under/trash_bag/biohazard,
@@ -6066,13 +6288,9 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/command/HOP)
 "gxo" = (
-/obj/machinery/door/unpowered/wood/pyro{
-	dir = 8;
-	name = "The Snip"
+/turf/unsimulated/floor/stairs/dark{
+	dir = 8
 	},
-/obj/decal/stripe_caution,
-/obj/structure/woodwall,
-/turf/unsimulated/floor/industrial,
 /area/morrigan/station/civilian/chapel)
 "gxG" = (
 /obj/decal/fakeobjects/pipe{
@@ -6084,13 +6302,13 @@
 /area/morrigan/construction)
 "gyF" = (
 /obj/stool/chair/pew/fancy/center,
-/turf/unsimulated/floor/greenblack{
+/turf/unsimulated/floor/blackwhite/side{
 	dir = 1
 	},
 /area/morrigan/station/hallway)
 "gyY" = (
-/mob/living/critter/spider/clownqueen,
-/turf/unsimulated/floor/specialroom/clown,
+/obj/storage/secure/crate,
+/turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/botany)
 "gzs" = (
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -6246,6 +6464,10 @@
 /obj/machinery/chemicompiler_stationary,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"gFd" = (
+/obj/decal/fakeobjects/cargopad,
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "gFE" = (
 /turf/cordon,
 /area/morrigan/derelict)
@@ -6311,6 +6533,10 @@
 	},
 /turf/unsimulated/floor/white/checker2,
 /area/morrigan/station/medical/robotics)
+"gIt" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/yellowblack,
+/area/morrigan/station/hallway)
 "gIE" = (
 /obj/machinery/recharge_station,
 /obj/decal/stripe_caution,
@@ -6329,13 +6555,6 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/plating,
 /area/morrigan/routing)
-"gKd" = (
-/obj/decal/stripe_delivery,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/maintenance)
 "gKg" = (
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "gib2"
@@ -6462,13 +6681,6 @@
 /obj/machinery/light/incandescent/warm,
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/spy)
-"gQV" = (
-/mob/living/critter/brullbar,
-/turf/unsimulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred1"
-	},
-/area/morrigan/station/civilian/chapel)
 "gRe" = (
 /obj/storage/crate/wooden,
 /obj/item/clothing/suit/loosejacket,
@@ -6664,11 +6876,12 @@
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
 "gXQ" = (
-/obj/submachine/seed_manipulator{
-	dir = 8
-	},
 /obj/machinery/light/incandescent/netural,
-/turf/unsimulated/floor/green,
+/obj/range_target,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "bot2"
+	},
+/turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/civilian/botany)
 "gYa" = (
 /obj/rack,
@@ -6758,6 +6971,9 @@
 "haj" = (
 /obj/machinery/light/emergency{
 	dir = 4
+	},
+/obj/machinery/computer/robotics{
+	dir = 8
 	},
 /turf/unsimulated/floor/white/checker2,
 /area/morrigan/station/medical/robotics)
@@ -6859,7 +7075,7 @@
 /obj/machinery/light/emergency{
 	dir = 8
 	},
-/turf/unsimulated/floor/greenblack{
+/turf/unsimulated/floor/blackwhite/side{
 	dir = 8
 	},
 /area/morrigan/station/hallway)
@@ -6869,6 +7085,11 @@
 	},
 /turf/unsimulated/floor/minitiles/black,
 /area/morrigan/station/security/main)
+"hhP" = (
+/turf/unsimulated/floor/redblack{
+	dir = 9
+	},
+/area/morrigan/station/maintenance)
 "hil" = (
 /obj/table/auto,
 /obj/machinery/microwave,
@@ -6901,12 +7122,27 @@
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/medical/main)
 "hko" = (
-/turf/space,
+/obj/item/casing/medium,
+/obj/item/casing/rifle_loud{
+	pixel_x = 9;
+	pixel_y = -15;
+	dir = 6
+	},
+/turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/civilian/botany)
 "hlc" = (
 /obj/decal/tile_edge/stripe,
 /turf/unsimulated/floor/grey,
 /area/morrigan/station/hallway)
+"hlC" = (
+/obj/machinery/light/incandescent/netural,
+/obj/decal/fakeobjects/robot/security{
+	dir = 1;
+	icon_state = "mars_nuke_bot";
+	name = "Syndicate Elite Gunbot"
+	},
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "hmd" = (
 /obj/decal/cleanable/rust/jen,
 /obj/random_item_spawner/snacks,
@@ -6969,16 +7205,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/exit)
-"hpC" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	dir = 8;
-	hardened = 1
-	},
-/obj/mapping_helper/access/morrigan/janitor,
-/obj/mapping_helper/airlock/hardener,
-/obj/mapping_helper/airlock/anti_emag,
-/turf/unsimulated/floor/specialroom/clown,
-/area/morrigan/station/civilian/botany)
 "hpE" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 1
@@ -7056,10 +7282,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/morrigan/routing/transport)
-"huD" = (
-/obj/stool/chair/office/green,
-/turf/unsimulated/outdoors/grass,
-/area/morrigan/station/civilian/botany)
 "huF" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/blood{
@@ -7178,6 +7400,14 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/security/main)
+"hBc" = (
+/obj/decal/tile_edge/stripe/big,
+/obj/decal/tile_edge/floorguide/arrow_s{
+	dir = 4
+	},
+/obj/decal/tile_edge/floorguide/arrow_s,
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "hBB" = (
 /obj/decal/fakeobjects{
 	desc = "The goods inside the machine probably expired before you were even born.";
@@ -7200,6 +7430,11 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
+"hCN" = (
+/turf/unsimulated/floor/yellowblack{
+	dir = 8
+	},
+/area/morrigan/station/maintenance)
 "hDn" = (
 /obj/storage/secure/closet,
 /obj/item/clothing/under/misc/casualjeansyel,
@@ -7358,8 +7593,8 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/derelict)
 "hNN" = (
-/turf/unsimulated/wall/auto/adventure/fake_window/glass,
-/turf/unsimulated/floor/plating,
+/obj/window/auto/reinforced/indestructible/extreme,
+/turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/main)
 "hNO" = (
 /obj/decal/floatingtiles{
@@ -7416,6 +7651,11 @@
 /obj/machinery/camera/television,
 /turf/unsimulated/floor/black,
 /area/morrigan/routing/transport)
+"hPq" = (
+/turf/unsimulated/floor/black/side{
+	dir = 1
+	},
+/area/morrigan/station/hallway)
 "hPH" = (
 /turf/unsimulated/floor/purpleblack{
 	dir = 10
@@ -7447,7 +7687,26 @@
 /turf/unsimulated/floor/white/checker2,
 /area/morrigan/station/medical/robotics)
 "hSf" = (
-/turf/unsimulated/outdoors/grass,
+/obj/table/auto,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's some sort of power plant control doodad of some sort.  Probably.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "pathmanip-p";
+	name = "Processor Encoder";
+	pixel_y = 1
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "This conduit is all burned and melty.";
+	dir = 8;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "broken_powerline";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/botany)
 "hSj" = (
 /obj/structure/girder/displaced,
@@ -7483,11 +7742,10 @@
 /turf/unsimulated/floor/minitiles/black,
 /area/morrigan/station/security/main)
 "hSN" = (
-/obj/storage/closet/emergency,
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/unsimulated/floor/industrial,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/maintenance)
 "hTc" = (
 /obj/table/auto,
@@ -7503,14 +7761,6 @@
 /obj/item/parts/robot_parts/arm/left/light,
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
-"hUb" = (
-/obj/storage/crate/bloody,
-/obj/item/clothing/mask/clown_hat/blue,
-/obj/item/clothing/under/misc/clown/blue,
-/obj/item/clothing/shoes/clown_shoes/blue,
-/obj/item/clothing/gloves/latex,
-/turf/unsimulated/floor/specialroom/clown,
-/area/morrigan/station/civilian/botany)
 "hUm" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6
@@ -7544,10 +7794,6 @@
 /obj/decal/cleanable/ash,
 /turf/unsimulated/floor/black,
 /area/morrigan/holding)
-"hXs" = (
-/obj/storage/closet/coffin/wood,
-/turf/unsimulated/floor/carpet/red/standard/edge/east,
-/area/morrigan/station/civilian/chapel)
 "hXN" = (
 /obj/decal/cleanable/rust/jen,
 /obj/stool/bed/brig,
@@ -7617,6 +7863,10 @@
 /obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOP)
+"ibw" = (
+/mob/living/critter/robotic/gunbot/syndicate/morrigan,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/civilian/chapel)
 "icl" = (
 /obj/disposalpipe/segment,
 /obj/rack,
@@ -7674,10 +7924,6 @@
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/medical/emergency)
-"ifS" = (
-/obj/potted_plant/potted_plant1,
-/turf/unsimulated/floor/carpet/red/standard/edge/west,
-/area/morrigan/station/civilian/chapel)
 "igv" = (
 /obj/machinery/vending/monkey/research,
 /obj/mapping_helper/access/morrigan/science,
@@ -7758,9 +8004,8 @@
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "ilk" = (
-/obj/machinery/hydro_growlamp,
-/obj/machinery/light/incandescent/netural,
-/turf/unsimulated/floor/green,
+/obj/decal/tile_edge/floorguide/qm,
+/turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/civilian/botany)
 "ilx" = (
 /obj/machinery/vending/kitchen{
@@ -7818,6 +8063,15 @@
 /obj/mapping_helper/access/morrigan/science,
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/science)
+"ior" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/blast/pyro{
+	dir = 4
+	},
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/space)
 "ipr" = (
 /obj/grille/catwalk/jen,
 /mob/living/critter/small_animal/cockroach,
@@ -7988,6 +8242,10 @@
 /obj/item/storage/belt/security,
 /turf/unsimulated/floor/shiny,
 /area/morrigan/station/security/main)
+"iBu" = (
+/obj/decal/fakeobjects/cargopad,
+/turf/unsimulated/floor/circuit/red,
+/area/morrigan/station/medical/cloning)
 "iCg" = (
 /obj/stool/barber_chair,
 /turf/unsimulated/floor/black,
@@ -8002,6 +8260,10 @@
 	},
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/main)
+"iDe" = (
+/obj/item/card/id/morrigan/science,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/hallway)
 "iDf" = (
 /obj/item/shipcomponent/mainweapon/disruptor,
 /turf/unsimulated/floor/plating/damaged1,
@@ -8078,6 +8340,14 @@
 /obj/structure/girder,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/factory)
+"iIL" = (
+/obj/machinery/light/emergency{
+	dir = 4
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 4
+	},
+/area/morrigan/station/hallway)
 "iJo" = (
 /obj/decal/poster/wallsign/statistics2,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -8101,6 +8371,15 @@
 /obj/decal/cleanable/dirt/dirt3,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/factory)
+"iLN" = (
+/obj/grille/catwalk,
+/obj/decal/fakeobjects/pipe{
+	desc = "Part of a system for securing docked spacecraft.";
+	dir = 9;
+	name = "docking clamp"
+	},
+/turf/space,
+/area/morrigan/station/space)
 "iLS" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/fakeobjects/lightbulb_broken{
@@ -8155,7 +8434,7 @@
 /area/morrigan/station/medical/main)
 "iNI" = (
 /obj/stool/chair/pew/fancy/left,
-/turf/unsimulated/floor/greenblack{
+/turf/unsimulated/floor/blackwhite/side{
 	dir = 1
 	},
 /area/morrigan/station/hallway)
@@ -8227,6 +8506,9 @@
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/twotone/black,
 /area/morrigan/station/medical/biological)
+"iQo" = (
+/turf/unsimulated/floor/yellowblack,
+/area/morrigan/station/hallway)
 "iQA" = (
 /mob/living/carbon/human/syndicatemorrigandoc,
 /turf/unsimulated/floor/sanitary/blue,
@@ -8256,6 +8538,12 @@
 /obj/decal/poster/wallsign/stencil/right/g,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/maintenance)
+"iSg" = (
+/obj/machinery/light/emergency{
+	dir = 8
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan/station/hallway)
 "iSk" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/mousetrap{
@@ -8365,15 +8653,6 @@
 /obj/mapping_helper/access/morrigan/engineer,
 /turf/unsimulated/floor/twotone/yellow,
 /area/morrigan/station/engineering)
-"iXz" = (
-/obj/table/auto,
-/obj/item/storage/box/beakerbox,
-/obj/item/reagent_containers/glass/wateringcan{
-	pixel_x = 8;
-	pixel_y = 9
-	},
-/turf/unsimulated/floor/green,
-/area/morrigan/station/civilian/botany)
 "iXD" = (
 /obj/decal/cleanable/molten_item,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -8545,10 +8824,6 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"jfv" = (
-/obj/stool/chair/green,
-/turf/unsimulated/floor/black,
-/area/morrigan/station/medical/cloning)
 "jgf" = (
 /obj/machinery/door/airlock/pyro/weapons{
 	dir = 8
@@ -8569,10 +8844,11 @@
 /turf/unsimulated/floor/twotone/yellow,
 /area/morrigan/derelict)
 "jhj" = (
-/obj/submachine/seed_vendor,
 /obj/machinery/light/incandescent/netural,
-/obj/mapping_helper/access/morrigan/botany,
-/turf/unsimulated/floor/green,
+/obj/window/cubicle{
+	dir = 4
+	},
+/turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/civilian/botany)
 "jhx" = (
 /obj/mapping_helper/mob_spawn/corpse/human/random/webbed,
@@ -8661,6 +8937,10 @@
 /obj/machinery/shower,
 /turf/unsimulated/floor/sanitary/blue,
 /area/space)
+"jol" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/red/checker,
+/area/morrigan/station/maintenance)
 "jor" = (
 /obj/storage/closet/welding_supply,
 /turf/unsimulated/floor/twotone/red,
@@ -8766,6 +9046,9 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"jrq" = (
+/turf/unsimulated/floor/shuttle/red,
+/area/morrigan/station/space)
 "jrr" = (
 /obj/machinery/conveyor/area_activated{
 	dir = 1
@@ -8828,10 +9111,9 @@
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/podbay/medical)
 "juv" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/coffeemaker,
-/obj/item/reagent_containers/food/drinks/creamer,
-/turf/unsimulated/floor/carpet/red/standard/edge/south,
+/obj/table/syndicate/auto,
+/obj/item/clipboard/with_pen,
+/turf/unsimulated/floor/red/checker,
 /area/morrigan/station/civilian/chapel)
 "juU" = (
 /obj/decal/cleanable/machine_debris{
@@ -8839,12 +9121,6 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"jvc" = (
-/obj/item/instrument/large/organ{
-	dir = 8
-	},
-/turf/unsimulated/floor/carpet/red/standard/edge/nw,
-/area/morrigan/station/civilian/chapel)
 "jvP" = (
 /obj/decal/poster/wallsign/medbay,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -8853,18 +9129,6 @@
 /obj/stool/chair/comfy/yellow,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/command/CE)
-"jwf" = (
-/obj/item/casing/shotgun/orange{
-	alpha = 200;
-	anchored = 1;
-	desc = "A spent flare cartridge. It's stuck in the ice.";
-	name = "flare casing"
-	},
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "gibdown1"
-	},
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/maintenance)
 "jwq" = (
 /obj/machinery/manufacturer/medical,
 /turf/simulated/floor/airless/twotone/blue,
@@ -8938,7 +9202,7 @@
 /area/morrigan/station/podbay/medical)
 "jzY" = (
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/black/side{
+/turf/unsimulated/floor/black/side{
 	dir = 9
 	},
 /area/morrigan/station/hallway)
@@ -8981,7 +9245,7 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "jCH" = (
-/turf/unsimulated/floor/greenblack/corner{
+/turf/unsimulated/floor/yellowblack/corner{
 	dir = 4
 	},
 /area/morrigan/station/hallway)
@@ -9052,6 +9316,18 @@
 /obj/decal/fakeobjects/safehouse/conduit,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
+"jFY" = (
+/turf/unsimulated/floor/circuit/red,
+/area/morrigan/station/medical/cloning)
+"jGr" = (
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	hardened = 1
+	},
+/obj/mapping_helper/airlock/anti_emag,
+/turf/unsimulated/floor/black/side{
+	dir = 4
+	},
+/area/morrigan/station/hallway)
 "jGs" = (
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/rust/jen,
@@ -9081,9 +9357,43 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
+"jIB" = (
+/obj/storage/secure/crate/weapon,
+/obj/item/gun_parts,
+/obj/item/material_piece/cobryl,
+/turf/unsimulated/floor/circuit/red,
+/area/morrigan/station/medical/cloning)
 "jIP" = (
-/obj/machinery/plantpot,
-/turf/unsimulated/floor/green,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/machines/podfab.dmi';
+	icon_state = "fab-still";
+	name = "Fabricator";
+	dir = 1
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects/robot/security{
+	dir = 1;
+	icon_state = "mars_nuke_bot";
+	name = "Syndicate Elite Gunbot"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "bot2"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/civilian/botany)
 "jJf" = (
 /obj/machinery/recharge_station,
@@ -9248,13 +9558,6 @@
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/specialroom/freezer/white,
 /area/morrigan/station/medical/biological)
-"jSD" = (
-/obj/stool/chair/comfy{
-	dir = 4
-	},
-/obj/item/barrier,
-/turf/unsimulated/floor/carpet/red/standard,
-/area/morrigan/station/civilian/chapel)
 "jSI" = (
 /obj/decal/cleanable/blood{
 	icon_state = "footprints1"
@@ -9348,6 +9651,10 @@
 /obj/grille/catwalk,
 /turf/space,
 /area/morrigan/station/engineering)
+"jWY" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/hallway)
 "jXB" = (
 /obj/decal/stripe_caution,
 /obj/decal/tile_edge/stripe{
@@ -9483,32 +9790,6 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"kic" = (
-/obj/table/auto,
-/obj/item/storage/goodybag{
-	pixel_x = 10;
-	pixel_y = 5
-	},
-/obj/item/storage/pill_bottle/cyberpunk{
-	pixel_x = -7;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/snacks/pie/cream{
-	pixel_x = 2;
-	pixel_y = -3
-	},
-/obj/item/aiModule/hologram_expansion/syndicate{
-	pixel_x = -2;
-	pixel_y = 10
-	},
-/obj/item/instrument/bikehorn/dramatic,
-/obj/item/storage/pill_bottle/cyberpunk{
-	pixel_x = 9
-	},
-/obj/machinery/light/incandescent/netural,
-/obj/machinery/light/incandescent,
-/turf/unsimulated/floor/specialroom/clown,
-/area/morrigan/station/civilian/botany)
 "kig" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/oil,
@@ -9519,13 +9800,6 @@
 /obj/item/paper/MorriganNT5,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/engineering)
-"kjf" = (
-/mob/living/critter/robotic/gunbot/syndicate/polaris{
-	desc = "Painted in red and black.";
-	name = "Syndicate Sentinel Unit"
-	},
-/turf/unsimulated/outdoors/grass,
-/area/morrigan/station/civilian/botany)
 "kjo" = (
 /obj/decal/cleanable/rust/jen,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -9539,12 +9813,6 @@
 /obj/machinery/light/incandescent/warm,
 /turf/unsimulated/floor/caution/corner,
 /area/morrigan/routing/transport)
-"kkD" = (
-/obj/machinery/computer/robot_module_rewriter{
-	dir = 4
-	},
-/turf/unsimulated/floor/white/checker2,
-/area/morrigan/station/medical/robotics)
 "kkI" = (
 /obj/machinery/computer3/terminal/console_lower{
 	dir = 8
@@ -9605,6 +9873,10 @@
 /mob/living/critter/small_animal/mouse/mad,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"knj" = (
+/obj/item/paper/Morrigan17,
+/turf/unsimulated/floor/red/checker,
+/area/morrigan/station/maintenance)
 "kno" = (
 /obj/disposalpipe/segment,
 /obj/stool/chair{
@@ -9802,6 +10074,10 @@
 /obj/machinery/vending/cola/blue,
 /turf/unsimulated/floor/twotone/blue,
 /area/morrigan/station/civilian/crewquarters)
+"kyD" = (
+/obj/decal/cleanable/rust/jen,
+/turf/unsimulated/floor/red/checker,
+/area/morrigan/station/maintenance)
 "kzF" = (
 /obj/decal/stripe_caution,
 /obj/decoration/syndcorpse10,
@@ -10065,7 +10341,7 @@
 /area/morrigan/derelict/hobo)
 "kPF" = (
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/black/side{
+/turf/unsimulated/floor/black/side{
 	dir = 8
 	},
 /area/morrigan/station/hallway)
@@ -10082,6 +10358,25 @@
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/medical/main)
+"kQR" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/machines/podfab.dmi';
+	icon_state = "fab-still";
+	name = "Fabricator";
+	dir = 8
+	},
+/obj/item/parts/robot_parts/robot_frame,
+/obj/decal/stripe_delivery,
+/obj/item/cable_coil/cut{
+	color = "#DD0000";
+	desc = "A mangled scrap of power cable.";
+	icon_state = "coil1";
+	name = "torn up cable"
+	},
+/turf/unsimulated/floor/circuit/red,
+/area/morrigan/station/medical/cloning)
 "kQU" = (
 /obj/decoration/ntcrate/ntcrate2,
 /obj/decal/tile_edge/stripe/big{
@@ -10170,6 +10465,10 @@
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
 /turf/unsimulated/floor/purple,
 /area/morrigan/station/science)
+"kTX" = (
+/obj/decal/tile_edge/floorguide/qm,
+/turf/unsimulated/floor/red/checker,
+/area/morrigan/station/maintenance)
 "kUb" = (
 /obj/stool/chair/pew,
 /turf/unsimulated/floor/black,
@@ -10187,11 +10486,6 @@
 	},
 /turf/unsimulated/floor/blueblack{
 	dir = 4
-	},
-/area/morrigan/station/hallway)
-"kVQ" = (
-/turf/simulated/floor/black/side{
-	dir = 1
 	},
 /area/morrigan/station/hallway)
 "kWx" = (
@@ -10471,10 +10765,27 @@
 	},
 /turf/unsimulated/floor/black,
 /area/morrigan/routing/transport)
-"llb" = (
-/obj/storage/secure/closet/civilian/chaplain,
-/turf/unsimulated/floor/carpet/red/standard/edge/sw,
-/area/morrigan/station/civilian/chapel)
+"llE" = (
+/obj/map/light,
+/obj/range_target,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "bot2"
+	},
+/turf/unsimulated/floor/plating/jen,
+/area/morrigan/station/civilian/botany)
+"llF" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (EAST)"
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan/station/medical/cloning)
 "llK" = (
 /obj/storage/closet/fire,
 /obj/machinery/light/small{
@@ -10504,9 +10815,8 @@
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/security/interrogation)
 "loP" = (
-/obj/storage/secure/closet/civilian/hydro,
-/obj/machinery/light/incandescent/netural,
-/turf/unsimulated/floor/green,
+/obj/storage/crate/robotparts,
+/turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/civilian/botany)
 "loR" = (
 /obj/table/glass/auto,
@@ -10593,13 +10903,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict)
-"ltI" = (
-/obj/decal/cleanable/blood/tracks{
-	dir = 6
-	},
-/obj/random_item_spawner/organs,
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/maintenance)
 "luf" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/item/reagent_containers/pill/methamphetamine,
@@ -10728,8 +11031,9 @@
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "lAT" = (
-/obj/stool/chair/office/red,
-/turf/unsimulated/floor/black,
+/turf/unsimulated/floor/stairs/dark{
+	dir = 1
+	},
 /area/morrigan/station/medical/robotics)
 "lAU" = (
 /obj/stool/chair/office/syndie,
@@ -10993,6 +11297,13 @@
 	},
 /turf/unsimulated/floor/red/checker,
 /area/morrigan/routing/transport)
+"lRq" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 8;
+	hardened = 1
+	},
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/maintenance)
 "lSG" = (
 /obj/machinery/light/emergency{
 	dir = 1
@@ -11214,6 +11525,19 @@
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/medical/main)
+"mex" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/item/screwdriver/grey,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/medical/cloning)
 "meR" = (
 /obj/decoration/clock,
 /obj/machinery/light/incandescent/netural,
@@ -11287,8 +11611,11 @@
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
 "mjm" = (
-/obj/storage/crate/robotics_supplies,
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/door/airlock/pyro/medical/alt2,
+/obj/mapping_helper/airlock/anti_emag,
+/obj/mapping_helper/access/morrigan/medical,
+/obj/mapping_helper/airlock/hardener,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/robotics)
 "mjD" = (
@@ -11304,10 +11631,6 @@
 	dir = 1
 	},
 /area/morrigan/station/command/HOP)
-"mkC" = (
-/obj/storage/secure/closet/civilian/hydro,
-/turf/unsimulated/floor/green,
-/area/morrigan/station/civilian/botany)
 "mlk" = (
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 8;
@@ -11364,16 +11687,6 @@
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/purple,
 /area/morrigan/station/science)
-"mns" = (
-/obj/machinery/door/airlock/pyro/glass/botany{
-	dir = 8;
-	hardened = 1
-	},
-/obj/mapping_helper/access/morrigan/botany,
-/obj/mapping_helper/airlock/hardener,
-/obj/mapping_helper/airlock/anti_emag,
-/turf/unsimulated/floor/green,
-/area/morrigan/station/civilian/botany)
 "mny" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -11663,15 +11976,17 @@
 /obj/mapping_helper/access/morrigan/janitor,
 /turf/unsimulated/floor/twotone/purple,
 /area/morrigan/station/civilian/janitor)
+"mDR" = (
+/turf/unsimulated/floor/plating/jen,
+/area/morrigan/station/civilian/botany)
 "mEo" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/device/camera_viewer,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOS)
 "mEM" = (
-/obj/table/auto,
-/obj/item/decoration/flower_vase/vase7,
-/turf/unsimulated/floor/black,
+/obj/machinery/recharge_station,
+/turf/unsimulated/floor/circuit/red,
 /area/morrigan/station/medical/cloning)
 "mER" = (
 /obj/item/storage/toilet{
@@ -11701,6 +12016,10 @@
 "mGJ" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/civilian/crewquarters)
+"mHt" = (
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/civilian/botany)
 "mHI" = (
 /obj/machinery/computer/security/console_lower,
 /obj/machinery/light/incandescent/cool,
@@ -11747,7 +12066,7 @@
 	hardened = 1
 	},
 /obj/mapping_helper/airlock/anti_emag,
-/turf/simulated/floor/black/side{
+/turf/unsimulated/floor/black/side{
 	dir = 1
 	},
 /area/morrigan/station/hallway)
@@ -11804,11 +12123,6 @@
 "mLk" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/medical/reception)
-"mLD" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/maintenance)
 "mLM" = (
 /mob/living/critter/small_animal/bird/turkey{
 	name = "Ana Amber"
@@ -11910,6 +12224,10 @@
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/morrigan/station/civilian/cafe)
+"mRQ" = (
+/obj/table/auto,
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "mSo" = (
 /obj/machinery/photocopier,
 /turf/unsimulated/floor/black,
@@ -12002,10 +12320,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
-"mVy" = (
-/obj/storage/closet/fire,
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/maintenance)
 "mVV" = (
 /obj/machinery/drainage,
 /obj/machinery/shower{
@@ -12029,6 +12343,15 @@
 /obj/structure/woodwall,
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
+"mXm" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	hardened = 1;
+	dir = 4
+	},
+/obj/mapping_helper/airlock/anti_emag,
+/obj/mapping_helper/airlock/hardener,
+/turf/unsimulated/floor/plating,
+/area/morrigan/station/civilian/botany)
 "mXI" = (
 /turf/unsimulated/floor/stairs/dark/wide{
 	dir = 10
@@ -12050,6 +12373,15 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
+"mYa" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe{
+	desc = "Part of a system for securing docked spacecraft.";
+	dir = 10;
+	name = "docking clamp"
+	},
+/turf/space,
+/area/morrigan/station/space)
 "mYe" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 8
@@ -12334,18 +12666,6 @@
 	},
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/main)
-"nlF" = (
-/obj/machinery/light/emergency{
-	dir = 4
-	},
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
-/turf/unsimulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred1"
-	},
-/area/morrigan/station/civilian/chapel)
 "nlK" = (
 /turf/unsimulated/floor/redblack/corner{
 	dir = 4
@@ -12427,9 +12747,6 @@
 /obj/item/reagent_containers/food/snacks/cereal_box/roach,
 /turf/unsimulated/floor/black,
 /area/morrigan/holding)
-"nra" = (
-/turf/unsimulated/floor/carpet/red/standard/edge/ne,
-/area/morrigan/station/civilian/chapel)
 "nrO" = (
 /turf/unsimulated/floor/longtile/black,
 /area/morrigan/station/command/meeting)
@@ -12564,6 +12881,16 @@
 	},
 /turf/unsimulated/floor/black,
 /area/morrigan/routing/transport)
+"nyL" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/space)
 "nzn" = (
 /obj/map/light/dimred,
 /obj/decal/cleanable/blood{
@@ -12912,8 +13239,12 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/morrigan/station/factory)
 "nNY" = (
-/obj/reagent_dispensers/compostbin,
-/turf/unsimulated/floor/green,
+/obj/decal/fakeobjects/robot/security{
+	dir = 1;
+	icon_state = "mars_nuke_bot";
+	name = "Syndicate Elite Gunbot"
+	},
+/turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/civilian/botany)
 "nOL" = (
 /obj/decoration/vent/vent3,
@@ -13354,13 +13685,24 @@
 	},
 /turf/unsimulated/floor/grass,
 /area/morrigan/station/medical/genetics)
+"omc" = (
+/obj/lattice,
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/morrigan/station/maintenance)
 "omh" = (
 /obj/storage/closet/dresser/random,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/crewquarters)
 "omv" = (
 /obj/decal/fakeobjects/safehouse/conduit,
-/obj/machinery/macrofab/emergency_pod,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/machines/podfab.dmi';
+	icon_state = "fab-still";
+	name = "Fabricator"
+	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "onE" = (
@@ -13515,9 +13857,9 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/station/science)
 "ovQ" = (
-/obj/machinery/hydro_mister,
 /obj/machinery/light/incandescent/netural,
-/turf/unsimulated/floor/green,
+/obj/decal/fakeobjects/cargopad,
+/turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/civilian/botany)
 "ovZ" = (
 /obj/storage/closet/office,
@@ -13747,6 +14089,11 @@
 	dir = 4
 	},
 /area/morrigan/station/command/HOP)
+"oLO" = (
+/turf/unsimulated/floor/yellowblack{
+	dir = 10
+	},
+/area/morrigan/station/maintenance)
 "oLT" = (
 /obj/decal/cleanable/eggsplat,
 /obj/decoration/vent,
@@ -13763,6 +14110,16 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
+"oNl" = (
+/obj/decal/tile_edge/stripe/big,
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/window/cubicle{
+	dir = 4
+	},
+/turf/unsimulated/floor/plating/jen,
+/area/morrigan/station/civilian/botany)
 "oNr" = (
 /obj/item/storage/pill_bottle/cyberpunk,
 /turf/unsimulated/floor/black,
@@ -14024,14 +14381,18 @@
 /obj/item/storage/firstaid/fire,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/factory)
+"pbz" = (
+/obj/machinery/vending/electronics,
+/turf/unsimulated/floor/circuit/red,
+/area/morrigan/station/medical/cloning)
 "pdf" = (
 /turf/unsimulated/floor/black,
 /area/morrigan/station/science)
 "pdY" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
+/obj/decal/tile_edge/floorguide/qm{
+	dir = 8
 	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/turf/unsimulated/floor/red/checker,
 /area/morrigan/station/civilian/chapel)
 "pev" = (
 /obj/decal/cleanable/dirt/jen,
@@ -14119,12 +14480,8 @@
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "pkj" = (
-/obj/item/cargotele{
-	pixel_x = -5;
-	pixel_y = 10
-	},
 /obj/machinery/light/incandescent/netural,
-/turf/unsimulated/floor/black,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/medical/robotics)
 "pkI" = (
 /obj/decal/tile_edge/stripe{
@@ -14166,6 +14523,17 @@
 "plC" = (
 /turf/unsimulated/floor/glassblock/transparent_red,
 /area/morrigan/station/medical/main)
+"pmA" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A clamp for docking shuttles.";
+	dir = 8;
+	icon = 'icons/obj/turrets.dmi';
+	icon_state = "grey_target_prism";
+	name = "docking clamp"
+	},
+/turf/space,
+/area/morrigan/station/space)
 "pmV" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/fakeobjects/pipe{
@@ -14320,10 +14688,8 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "pwq" = (
-/obj/decoration/syndcorpse5,
-/obj/decal/cleanable/blood/gibs,
-/mob/living/critter/brullbar,
-/turf/unsimulated/floor/carpet/red/standard/edge/north,
+/obj/machinery/computer/barcode,
+/turf/unsimulated/floor/red/checker,
 /area/morrigan/station/civilian/chapel)
 "pxk" = (
 /obj/decal/floatingtiles{
@@ -14346,6 +14712,18 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
+"pyf" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan/station/civilian/botany)
 "pyP" = (
 /obj/window/bulletproof/south,
 /obj/table/syndicate/auto,
@@ -14433,7 +14811,7 @@
 /area/morrigan/station/medical/main)
 "pCI" = (
 /obj/machinery/light/incandescent/netural,
-/turf/unsimulated/floor/greenblack,
+/turf/unsimulated/floor/blackwhite/side,
 /area/morrigan/station/hallway)
 "pCL" = (
 /turf/unsimulated/floor/redblack{
@@ -14462,10 +14840,13 @@
 /turf/unsimulated/floor/black/side,
 /area/morrigan/routing/transport)
 "pEm" = (
-/obj/storage/cart,
 /obj/machinery/light/incandescent,
-/obj/item/card/id/morrigan/science,
-/turf/unsimulated/floor/green,
+/obj/decal/fakeobjects/robot/security{
+	dir = 1;
+	icon_state = "mars_nuke_bot";
+	name = "Syndicate Elite Gunbot"
+	},
+/turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/civilian/botany)
 "pEJ" = (
 /obj/decal/fakeobjects/lightbulb_broken{
@@ -14539,10 +14920,6 @@
 /obj/decal/poster/wallsign/construction,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/construction)
-"pIf" = (
-/obj/shrub,
-/turf/unsimulated/floor/green,
-/area/morrigan/station/civilian/botany)
 "pIW" = (
 /obj/machinery/vending/cards,
 /turf/unsimulated/floor/redblack{
@@ -14580,6 +14957,7 @@
 /area/morrigan/construction)
 "pLr" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/decal/poster/wallsign/warning3,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/medical/cloning)
 "pMy" = (
@@ -14620,8 +14998,18 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/podbay/medical)
 "pPo" = (
-/obj/machinery/clone_scanner,
-/turf/unsimulated/floor/black,
+/obj/table/auto,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's some sort of power plant control doodad of some sort.  Probably.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "pathmanip-p";
+	name = "Processor Encoder";
+	pixel_y = 1
+	},
+/obj/item/factionrep/ntboarddebug,
+/turf/unsimulated/floor/circuit/red,
 /area/morrigan/station/medical/cloning)
 "pPL" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
@@ -15243,8 +15631,8 @@
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "qyO" = (
-/obj/table/auto,
-/turf/unsimulated/floor/black,
+/obj/storage/closet/welding_supply,
+/turf/unsimulated/floor/circuit/red,
 /area/morrigan/station/medical/cloning)
 "qyR" = (
 /obj/decal/cleanable/oil,
@@ -15329,6 +15717,11 @@
 	icon_state = "cairngorm17"
 	},
 /area/morrigan/station/hallway)
+"qFG" = (
+/obj/lattice,
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/morrigan/station/space)
 "qFZ" = (
 /obj/table/reinforced/chemistry/auto,
 /turf/unsimulated/floor/purpleblack{
@@ -15340,10 +15733,6 @@
 /obj/disposaloutlet,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/disposals)
-"qGs" = (
-/obj/machinery/portable_reclaimer,
-/turf/unsimulated/floor/white/checker2,
-/area/morrigan/station/medical/robotics)
 "qGA" = (
 /obj/machinery/vending/medical{
 	dir = 1
@@ -15374,6 +15763,10 @@
 /obj/decal/poster/wallsign/medbay_sign,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/civilian/botany)
+"qHS" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/maintenance)
 "qHZ" = (
 /obj/decal/floatingtiles{
 	dir = 8;
@@ -15411,10 +15804,6 @@
 	},
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/overseer)
-"qJn" = (
-/turf/unsimulated/wall/auto/adventure/fake_window/crystal,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/security/main)
 "qJF" = (
 /obj/decal/cleanable/rust/jen,
 /obj/item/c_tube,
@@ -15492,6 +15881,17 @@
 /obj/decal/cleanable/generic,
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
+"qOA" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 5;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan/station/civilian/botany)
 "qOB" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/reagent_containers/dropper{
@@ -15854,7 +16254,7 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
-/turf/simulated/floor/black/side{
+/turf/unsimulated/floor/black/side{
 	dir = 1
 	},
 /area/morrigan/station/hallway)
@@ -16035,6 +16435,20 @@
 /obj/mapping_helper/access/morrigan/medical,
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/medical/emergency)
+"ruU" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/door/poddoor/blast/pyro{
+	dir = 4
+	},
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/space)
 "rvw" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/fakeobjects/lightbulb_broken,
@@ -16062,10 +16476,6 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"rww" = (
-/obj/machinery/manufacturer/uniform,
-/turf/unsimulated/floor/black,
-/area/morrigan/station/medical/cloning)
 "rwU" = (
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -16073,10 +16483,6 @@
 /obj/decal/cleanable/cobwebFloor,
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
-"rxl" = (
-/obj/decoration/tabletopfull,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/civilian/chapel)
 "rxv" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
 	dir = 4
@@ -16094,8 +16500,24 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/station/factory)
 "ryO" = (
-/obj/machinery/light/emergency,
-/turf/unsimulated/floor/green,
+/obj/table/auto,
+/obj/item/ammo/bullets/lmg{
+	name = "Gunbot Ammo Recharge";
+	anchored = 1;
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/ammo/bullets/lmg{
+	name = "Gunbot Ammo Recharge";
+	anchored = 1;
+	pixel_y = 7;
+	pixel_x = -6
+	},
+/obj/item/ammo/bullets/lmg{
+	name = "Gunbot Ammo Recharge";
+	anchored = 1
+	},
+/turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/civilian/botany)
 "rzf" = (
 /obj/decal/poster/wallsign/medbay_text,
@@ -16192,7 +16614,36 @@
 /turf/unsimulated/floor/twotone/purple,
 /area/morrigan/station/civilian/janitor)
 "rDH" = (
-/turf/unsimulated/floor/green,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/machines/podfab.dmi';
+	icon_state = "fab-still";
+	name = "Fabricator";
+	dir = 1
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects/robot/security{
+	dir = 1;
+	icon_state = "mars_nuke_bot";
+	name = "Syndicate Elite Gunbot"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "bot2"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/civilian/botany)
 "rDU" = (
 /obj/decal/cleanable/blood/tracks,
@@ -16219,16 +16670,13 @@
 /turf/simulated/wall/false_wall/reinforced,
 /area/morrigan/holding)
 "rFF" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Uh oh.";
-	icon = 'icons/misc/exploration.dmi';
-	icon_state = "husk_l";
-	name = "unknown"
-	},
-/turf/unsimulated/floor/carpet{
+/obj/machinery/door/airlock/pyro/glass/command{
 	dir = 8;
-	icon_state = "fred1"
+	hardened = 1
 	},
+/obj/mapping_helper/airlock/hardener,
+/obj/mapping_helper/airlock/anti_emag,
+/turf/unsimulated/floor/red/checker,
 /area/morrigan/station/civilian/chapel)
 "rFH" = (
 /obj/machinery/door/airlock/pyro/security{
@@ -16350,6 +16798,10 @@
 /obj/item/clothing/suit/hi_vis,
 /turf/unsimulated/floor/black,
 /area/morrigan/construction)
+"rPa" = (
+/mob/living/critter/robotic/gunbot/syndicate/morrigan,
+/turf/unsimulated/floor/red/checker,
+/area/morrigan/station/maintenance)
 "rPi" = (
 /obj/disposalpipe/segment,
 /obj/decal/cleanable/sec_tape,
@@ -16369,6 +16821,18 @@
 /obj/decal/cleanable/rust/jen,
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
+"rRe" = (
+/obj/lattice,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A clamp for docking shuttles.";
+	dir = 8;
+	icon = 'icons/obj/turrets.dmi';
+	icon_state = "grey_target_prism";
+	name = "docking clamp"
+	},
+/turf/space,
+/area/morrigan/station/space)
 "rSs" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/donut/custom/robust,
@@ -16445,12 +16909,6 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"rWW" = (
-/obj/machinery/light/emergency{
-	dir = 8
-	},
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/maintenance)
 "rXq" = (
 /obj/machinery/door/airlock/pyro/weapons,
 /obj/decal/cleanable/blood/gibs{
@@ -16528,10 +16986,6 @@
 /obj/item/reagent_containers/food/drinks/creamer,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/main)
-"sbO" = (
-/obj/stool/chair/office/green,
-/turf/unsimulated/floor/green,
-/area/morrigan/station/civilian/botany)
 "sbQ" = (
 /obj/item/implant/projectile/bullet_357,
 /obj/machinery/light/emergencyflashing,
@@ -16568,7 +17022,7 @@
 /turf/unsimulated/floor/grey,
 /area/morrigan/station/hallway)
 "seq" = (
-/turf/unsimulated/floor/carpet/red/standard,
+/turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/chapel)
 "sev" = (
 /obj/decoration/bustedmantapc/bustedmantapc3,
@@ -16623,6 +17077,13 @@
 /obj/grille/steel,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"siK" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner"
+	},
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/space)
 "slc" = (
 /obj/item/raw_material/shard/glass,
 /obj/item/electronics/frame,
@@ -16683,10 +17144,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict)
-"sqg" = (
-/obj/decal/poster/wallsign/botany_sign,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/civilian/botany)
 "srP" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 8;
@@ -16765,6 +17222,10 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/derelict/hobo)
+"suR" = (
+/obj/decal/cleanable/rust/jen,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/maintenance)
 "suX" = (
 /obj/reagent_dispensers/chemicalbarrel/yellow{
 	pixel_y = 4;
@@ -17004,6 +17465,10 @@
 	},
 /turf/unsimulated/floor/black/grime,
 /area/morrigan/routing/transport)
+"sGV" = (
+/obj/decal/tile_edge/stripe/big,
+/turf/unsimulated/floor/plating/jen,
+/area/morrigan/station/civilian/botany)
 "sHC" = (
 /obj/storage/secure/closet/morrigan/ce,
 /obj/item/clothing/under/rank/chief_engineer/april_fools,
@@ -17258,8 +17723,15 @@
 /area/morrigan/station/command/captain)
 "sZi" = (
 /obj/decal/fakeobjects/cargopad,
+/obj/item/cargotele{
+	pixel_x = -5;
+	pixel_y = 10
+	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/robotics)
+"sZj" = (
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "taa" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker/security,
@@ -17323,8 +17795,10 @@
 	},
 /area/morrigan/station/command/HOP)
 "tdC" = (
-/obj/reagent_dispensers/heliumtank,
-/turf/unsimulated/floor/specialroom/clown,
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/botany)
 "tdH" = (
 /obj/stool/chair{
@@ -17339,9 +17813,26 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "teU" = (
-/obj/storage/secure/closet/morrigan/medical,
-/obj/random_item_spawner/medicine/one,
-/turf/unsimulated/floor/black,
+/obj/table/auto,
+/obj/item/parts/robot_parts/arm/left{
+	pixel_x = -3
+	},
+/obj/item/parts/robot_parts/head/sturdy{
+	pixel_x = 10
+	},
+/obj/item/gun_parts/bottom_rail/sight{
+	pixel_y = 9;
+	pixel_x = -7
+	},
+/obj/item/cell/cerenkite{
+	pixel_y = 16;
+	pixel_x = -8
+	},
+/obj/item/gun_parts{
+	pixel_y = -10;
+	pixel_x = 8
+	},
+/turf/unsimulated/floor/circuit/red,
 /area/morrigan/station/medical/cloning)
 "tfo" = (
 /turf/unsimulated/floor/plating/damaged1,
@@ -17474,7 +17965,19 @@
 /area/morrigan/station/command/HOP)
 "tlB" = (
 /obj/machinery/light/incandescent/netural,
-/turf/unsimulated/floor/green,
+/obj/machinery/computer3/terminal{
+	dir = 4
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/civilian/botany)
 "tlW" = (
 /obj/decal/cleanable/blood/tracks{
@@ -17505,6 +18008,28 @@
 /obj/stool,
 /turf/unsimulated/floor/carpet/grime,
 /area/morrigan/derelict/hobo)
+"tpr" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit";
+	tag = "icon-conduit (SOUTHEAST)"
+	},
+/obj/decal/tile_edge/stripe/corner,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/medical/cloning)
 "tpw" = (
 /obj/machinery/power/smes/magical,
 /turf/unsimulated/floor/black/side{
@@ -17591,12 +18116,6 @@
 	},
 /turf/unsimulated/floor/twotone/green,
 /area/morrigan/station/medical/genetics)
-"tug" = (
-/obj/machinery/chem_master{
-	dir = 4
-	},
-/turf/unsimulated/outdoors/grass,
-/area/morrigan/station/civilian/botany)
 "tuo" = (
 /obj/item/mousetrap/armed,
 /turf/unsimulated/floor/plating/damaged1,
@@ -17656,6 +18175,15 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"tvo" = (
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 8;
+	hardened = 1
+	},
+/obj/mapping_helper/airlock/hardener,
+/obj/mapping_helper/airlock/anti_emag,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/maintenance)
 "tvB" = (
 /obj/window/bulletproof/south,
 /obj/decal/poster/wallsign/warning3,
@@ -17810,6 +18338,14 @@
 /obj/decal/cleanable/leaves,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/morrigan/station/medical/main)
+"tDB" = (
+/obj/machinery/light/emergency{
+	dir = 8
+	},
+/turf/unsimulated/floor/yellowblack/corner{
+	dir = 4
+	},
+/area/morrigan/station/hallway)
 "tDT" = (
 /obj/machinery/conveyor/area_activated{
 	dir = 4
@@ -17832,12 +18368,19 @@
 /obj/machinery/light/emergency{
 	dir = 8
 	},
+/obj/machinery/computer/robot_module_rewriter{
+	dir = 4
+	},
 /turf/unsimulated/floor/white/checker2,
 /area/morrigan/station/medical/robotics)
 "tFE" = (
 /obj/decal/cleanable/oil,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict/hobo)
+"tFH" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/plating/jen,
+/area/morrigan/station/civilian/botany)
 "tFV" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
@@ -17957,6 +18500,14 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
+"tOV" = (
+/obj/decal/tile_edge/stripe/big,
+/obj/decal/tile_edge/floorguide/arrow_s,
+/obj/decal/tile_edge/floorguide/arrow_s{
+	dir = 4
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan/station/civilian/botany)
 "tPo" = (
 /obj/decal/floatingtiles{
 	dir = 4;
@@ -17964,9 +18515,33 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"tPw" = (
+/obj/table/auto,
+/obj/item/ammo/bullets/lmg{
+	name = "Gunbot Ammo Recharge";
+	anchored = 1;
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/ammo/bullets/lmg{
+	name = "Gunbot Ammo Recharge";
+	anchored = 1;
+	pixel_y = 7;
+	pixel_x = -6
+	},
+/obj/item/ammo/bullets/lmg{
+	name = "Gunbot Ammo Recharge";
+	anchored = 1
+	},
+/turf/unsimulated/floor/circuit/red,
+/area/morrigan/station/medical/cloning)
 "tPM" = (
-/obj/storage/secure/closet/morrigan/medical,
-/obj/item/scalpel/vr,
+/obj/item/parts/robot_parts/leg/left/treads{
+	pixel_y = 6;
+	pixel_x = 12
+	},
+/obj/item/wrench/grey,
+/obj/item/factionrep/ntboarddebug,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/cloning)
 "tQH" = (
@@ -18331,15 +18906,6 @@
 /obj/item/rods/steel,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"ulk" = (
-/obj/machinery/light/emergency{
-	dir = 4
-	},
-/turf/unsimulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred1"
-	},
-/area/morrigan/station/civilian/chapel)
 "umi" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/redblack/corner{
@@ -18382,6 +18948,11 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"uoq" = (
+/obj/decal/stripe_caution,
+/mob/living/critter/robotic/gunbot/syndicate/morrigan,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/civilian/botany)
 "uoF" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
@@ -18417,6 +18988,21 @@
 /obj/decal/cleanable/cobwebFloor,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"uqA" = (
+/obj/item/casing/medium{
+	pixel_y = -5;
+	dir = 9
+	},
+/obj/item/casing/rifle_loud{
+	pixel_x = 9;
+	pixel_y = -15;
+	dir = 6
+	},
+/obj/item/casing/rifle_loud{
+	dir = 6
+	},
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "uqK" = (
 /obj/machinery/chem_heater,
 /turf/unsimulated/floor/twotone/black,
@@ -18453,6 +19039,13 @@
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
+"usd" = (
+/obj/range_target,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "bot2"
+	},
+/turf/unsimulated/floor/plating/jen,
+/area/morrigan/station/civilian/botany)
 "usR" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/floatingtiles/random,
@@ -18476,7 +19069,7 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "utq" = (
-/turf/simulated/floor/black/side{
+/turf/unsimulated/floor/black/side{
 	dir = 8
 	},
 /area/morrigan/station/hallway)
@@ -18742,10 +19335,6 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"uDa" = (
-/obj/reagent_dispensers/still,
-/turf/unsimulated/floor/green,
-/area/morrigan/station/civilian/botany)
 "uDK" = (
 /obj/stool,
 /turf/unsimulated/floor/plating/damaged1,
@@ -18968,9 +19557,31 @@
 /obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOP)
+"uRY" = (
+/obj/item/casing/rifle_loud{
+	pixel_x = 9;
+	pixel_y = -15;
+	dir = 6
+	},
+/obj/item/casing/small,
+/obj/item/casing/rifle_loud{
+	dir = 4;
+	pixel_y = -15
+	},
+/obj/item/casing/rifle_loud{
+	pixel_x = 9
+	},
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "uSd" = (
 /turf/unsimulated/floor/caution/corner/sw,
 /area/morrigan/station/exit)
+"uSe" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/black/side{
+	dir = 4
+	},
+/area/morrigan/station/hallway)
 "uSg" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -18999,6 +19610,10 @@
 /obj/machinery/chem_heater/chemistry,
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/science)
+"uTj" = (
+/obj/decal/fakeobjects/cargopad,
+/turf/unsimulated/floor/red/checker,
+/area/morrigan/station/civilian/chapel)
 "uTv" = (
 /turf/unsimulated/floor/stairs{
 	dir = 8;
@@ -19055,20 +19670,14 @@
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "uVV" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor{
+/obj/window/cubicle{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/drinks/mug{
-	pixel_x = -5;
-	pixel_y = 11
+/obj/table/syndicate/auto,
+/obj/machinery/computer3/luggable/personal{
+	pixel_y = 7
 	},
-/obj/item/device/light/candle,
-/obj/item/shaker/salt{
-	pixel_y = 6;
-	pixel_x = -8
-	},
-/turf/unsimulated/floor/carpet/red/standard/edge/south,
+/turf/unsimulated/floor/red/checker,
 /area/morrigan/station/civilian/chapel)
 "uWk" = (
 /obj/stool/chair/e_chair,
@@ -19165,7 +19774,7 @@
 /turf/unsimulated/floor/caution/corner/sw,
 /area/morrigan/routing/transport)
 "uZB" = (
-/turf/unsimulated/floor/greenblack{
+/turf/unsimulated/floor/blackwhite/side{
 	dir = 8
 	},
 /area/morrigan/station/hallway)
@@ -19298,6 +19907,24 @@
 /obj/item/implant/projectile/bullet_357,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/factory)
+"vky" = (
+/obj/item/casing/rifle_loud{
+	dir = 10;
+	pixel_y = -17
+	},
+/obj/item/casing/rifle_loud{
+	pixel_x = 9
+	},
+/obj/item/casing/small{
+	dir = 8;
+	pixel_y = -7;
+	pixel_x = -11
+	},
+/obj/item/casing/rifle_loud{
+	dir = 6
+	},
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "vkE" = (
 /obj/machinery/nanofab/refining,
 /turf/unsimulated/floor/industrial,
@@ -19469,8 +20096,12 @@
 /turf/unsimulated/floor/red/checker,
 /area/morrigan/routing/transport)
 "vvi" = (
-/mob/living/critter/spider/clown,
-/turf/unsimulated/floor/specialroom/clown,
+/obj/decal/fakeobjects/robot/security{
+	dir = 1;
+	icon_state = "mars_nuke_bot";
+	name = "Defective Model"
+	},
+/turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/botany)
 "vvD" = (
 /obj/decal/floatingtiles{
@@ -19517,16 +20148,10 @@
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "vxp" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "This computer seems like it is on some kind attract screen.  They keyboard does nothing!";
-	icon = 'icons/obj/computer.dmi';
-	icon_state = "dna";
-	name = "Cloning Console";
+/obj/machinery/computer3/generic/dronelab{
 	dir = 4
 	},
-/turf/unsimulated/floor/black,
+/turf/unsimulated/floor/circuit/red,
 /area/morrigan/station/medical/cloning)
 "vyd" = (
 /obj/disposalpipe/junction/right,
@@ -19616,13 +20241,6 @@
 /obj/machinery/door/window/southleft,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"vDd" = (
-/obj/decal/fakeobjects/bookcase,
-/turf/unsimulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred1"
-	},
-/area/morrigan/station/civilian/chapel)
 "vDu" = (
 /obj/grille/steel,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -19700,11 +20318,10 @@
 /turf/unsimulated/floor/caution/corner/se,
 /area/morrigan/station/exit)
 "vIm" = (
-/obj/machinery/vending/fortune,
-/turf/unsimulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred1"
+/obj/machinery/computer3/terminal/console_lower{
+	dir = 8
 	},
+/turf/unsimulated/floor/red/checker,
 /area/morrigan/station/civilian/chapel)
 "vID" = (
 /obj/item/cigbutt,
@@ -19837,10 +20454,7 @@
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/factory)
 "vRj" = (
-/turf/unsimulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred1"
-	},
+/turf/unsimulated/floor/red/checker,
 /area/morrigan/station/civilian/chapel)
 "vRk" = (
 /obj/lattice,
@@ -19883,10 +20497,22 @@
 /turf/unsimulated/floor/black/grime,
 /area/morrigan/station/factory)
 "vVV" = (
-/obj/machinery/clonegrinder,
-/turf/unsimulated/floor/engine/caution/misc{
-	dir = 6
+/obj/table/auto,
+/obj/item/reagent_containers/glass/oilcan{
+	pixel_x = 9;
+	pixel_y = 1
 	},
+/obj/item/cable_coil/cut{
+	color = "#DD0000";
+	desc = "A mangled scrap of power cable.";
+	icon_state = "coil1";
+	name = "torn up cable"
+	},
+/obj/item/device/multitool/grey{
+	pixel_y = 4;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/circuit/red,
 /area/morrigan/station/medical/cloning)
 "vWz" = (
 /obj/machinery/door/airlock/pyro/security{
@@ -19999,16 +20625,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
-"waW" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	dir = 8;
-	hardened = 1
-	},
-/obj/mapping_helper/access/morrigan/botany,
-/obj/mapping_helper/airlock/hardener,
-/obj/mapping_helper/airlock/anti_emag,
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/civilian/botany)
 "wbu" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/item/device/light/flashlight,
@@ -20146,7 +20762,7 @@
 /area/morrigan/derelict)
 "wlD" = (
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/black/side{
+/turf/unsimulated/floor/black/side{
 	dir = 1
 	},
 /area/morrigan/station/hallway)
@@ -20381,6 +20997,11 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict)
+"wCc" = (
+/turf/unsimulated/floor/yellowblack{
+	dir = 8
+	},
+/area/morrigan/station/hallway)
 "wCt" = (
 /obj/table/auto,
 /obj/item/body_bag,
@@ -20407,6 +21028,10 @@
 /obj/random_item_spawner/tools,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
+"wED" = (
+/obj/decal/fakeobjects/mantacontainer/upwards,
+/turf/unsimulated/floor/shuttle/red,
+/area/morrigan/station/space)
 "wEK" = (
 /obj/machinery/computer/announcement/syndie,
 /obj/item/paper/Morrigan7,
@@ -20468,10 +21093,6 @@
 "wHi" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/civilian/cafe)
-"wHw" = (
-/obj/item/saw,
-/turf/unsimulated/floor/green,
-/area/morrigan/station/civilian/botany)
 "wHG" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/fakeobjects{
@@ -20628,6 +21249,21 @@
 	},
 /turf/unsimulated/floor/wizard/carpet,
 /area/morrigan/station/command/HOP)
+"wNZ" = (
+/obj/item/casing/medium{
+	pixel_y = -4;
+	dir = 8
+	},
+/obj/item/casing/medium{
+	pixel_y = -16;
+	dir = 4
+	},
+/obj/item/casing/rifle_loud{
+	dir = 4;
+	pixel_y = -15
+	},
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "wOl" = (
 /turf/unsimulated/floor/twotone/blue,
 /area/morrigan/station/civilian/crewquarters)
@@ -20862,6 +21498,7 @@
 /area/morrigan/derelict)
 "xdT" = (
 /obj/table/reinforced/chemistry/auto,
+/obj/item/material_piece/steel,
 /turf/unsimulated/floor/purpleblack{
 	dir = 6
 	},
@@ -20887,6 +21524,19 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"xfJ" = (
+/obj/table/auto,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's some sort of power plant control doodad of some sort.  Probably.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "pathmanip-p";
+	name = "Processor Encoder";
+	pixel_y = 1
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan/station/civilian/botany)
 "xfZ" = (
 /obj/storage/secure/closet/security,
 /obj/item/extinguisher,
@@ -20990,6 +21640,9 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"xjs" = (
+/turf/unsimulated/floor/red/checker,
+/area/morrigan/station/maintenance)
 "xjt" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/fakeobjects{
@@ -21026,7 +21679,7 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/station/hallway)
 "xkV" = (
-/turf/unsimulated/floor/greenblack,
+/turf/unsimulated/floor/blackwhite/side,
 /area/morrigan/station/hallway)
 "xlF" = (
 /obj/decal/cleanable/dirt/jen,
@@ -21051,12 +21704,6 @@
 /obj/item/reagent_containers/syringe,
 /turf/unsimulated/floor/terrazzo/black,
 /area/space)
-"xlY" = (
-/obj/submachine/chem_extractor{
-	dir = 4
-	},
-/turf/unsimulated/floor/green,
-/area/morrigan/station/civilian/botany)
 "xmY" = (
 /obj/decal/poster/wallsign/construction,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -21113,6 +21760,9 @@
 	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/factory)
+"xoX" = (
+/turf/unsimulated/floor/black,
+/area/morrigan/station/maintenance)
 "xpa" = (
 /obj/machinery/conveyor/WE,
 /obj/plasticflaps{
@@ -21577,6 +22227,17 @@
 /obj/random_item_spawner/med_kit/one,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/MD)
+"xRE" = (
+/obj/item/casing/medium,
+/obj/item/casing/rifle_loud{
+	pixel_x = 9;
+	pixel_y = -15
+	},
+/obj/item/casing/rifle_loud{
+	dir = 6
+	},
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "xRX" = (
 /obj/morrigan_teleporter/prisoner,
 /turf/unsimulated/floor/caution/misc{
@@ -21731,7 +22392,7 @@
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict)
 "ybz" = (
-/turf/unsimulated/floor/greenblack{
+/turf/unsimulated/floor/blackwhite/side{
 	dir = 9
 	},
 /area/morrigan/station/hallway)
@@ -22443,6 +23104,7 @@ dKY
 dKY
 dKY
 dKY
+qFG
 iVk
 iVk
 iVk
@@ -22450,8 +23112,7 @@ iVk
 iVk
 iVk
 iVk
-iVk
-iVk
+qFG
 dKY
 dKY
 dKY
@@ -22640,17 +23301,17 @@ dKY
 dKY
 dKY
 dKY
+eGW
+pmA
+cFk
 dKY
 dKY
 dKY
 dKY
 dKY
-dKY
-dKY
-dKY
-iVk
-iVk
-obU
+mYa
+rRe
+iLN
 lPa
 hpd
 hpd
@@ -22743,21 +23404,21 @@ iVk
 iVk
 iVk
 iVk
-iVk
-dKY
-uRB
-uRB
-dEo
-dEo
-uRB
-uRB
-iVk
-iVk
+qFG
+oKU
+omc
+bNe
+bNe
+bNe
+bNe
+bNe
+qFG
+oKU
 obU
 lPa
-jvc
+vRj
 bWC
-llb
+vRj
 lPa
 obU
 iVk
@@ -22847,19 +23508,19 @@ obU
 obU
 obU
 iVk
-iVk
-obU
-iVk
-obU
-obU
-iVk
-obU
-obU
-obU
+oKU
+ior
+ior
+ior
+ruU
+ior
+ior
+ior
+oKU
 obU
 cDC
 pwq
-jSD
+seq
 juv
 lPa
 obU
@@ -22950,14 +23611,14 @@ jsD
 jsD
 obU
 obU
-obU
-obU
-iVk
-obU
-obU
-iVk
-obU
-obU
+oKU
+jrq
+jrq
+wED
+ajw
+jrq
+jrq
+wED
 lPa
 hpd
 hpd
@@ -23051,23 +23712,23 @@ qQF
 ojd
 tmq
 jsD
+ssP
+ssP
 uRB
-uRB
-uRB
-obU
-iVk
-obU
-obU
-iVk
-obU
-obU
+jrq
+jrq
+jrq
+ajw
+jrq
+jrq
+jrq
 lPa
 bVW
-ifS
-vRj
-cuy
-cuy
-ifS
+dfn
+seq
+seq
+seq
+dYu
 dYu
 brA
 fAm
@@ -23157,21 +23818,21 @@ nuG
 uDM
 xPi
 uRB
-obU
-iVk
-obU
-obU
-iVk
-obU
-obU
+aTY
+aTY
+aTY
+siK
+nyL
+nyL
+nyL
 lPa
-cmQ
+dfn
 seq
-vRj
-vRj
-vRj
+ibw
 seq
-eHw
+seq
+seq
+dYu
 brA
 fAm
 peF
@@ -23260,20 +23921,20 @@ jsD
 xtg
 xPi
 uRB
-obU
-iVk
-obU
-obU
-iVk
-obU
-obU
+jrq
+jrq
+wED
+ajw
+jrq
+jrq
+wED
 lPa
-vDd
 vRj
-fqq
-fqq
-fqq
-gQV
+seq
+seq
+seq
+seq
+seq
 vRj
 brA
 sfF
@@ -23363,20 +24024,20 @@ jsD
 xtg
 rVS
 uRB
-obU
-obU
-obU
-obU
-obU
-obU
-obU
-rxl
+jrq
+jrq
+jrq
+ajw
+jrq
+jrq
+jrq
+lPa
 bLf
 vRj
-fqq
-fqq
-fqq
 vRj
+seq
+fqq
+uTj
 vIm
 brA
 sfF
@@ -23466,21 +24127,21 @@ jsD
 xqR
 cwk
 uRB
-ssP
-ssP
+fsd
+fsd
+fsd
 fiw
-fiw
-ssP
-ssP
-uRB
+fsd
+fsd
+fsd
 lPa
-nra
-apf
-nlF
+lPa
+lPa
+lPa
 rFF
-ulk
-hXs
-aFl
+lPa
+lPa
+lPa
 brA
 mDf
 daE
@@ -23568,22 +24229,22 @@ hSk
 iUV
 gUp
 xtg
-cwk
+rAA
 cQu
-mLD
-gKd
-akf
-rWW
-gvV
-rHa
-lPa
-lPa
-lPa
+xoX
+xoX
+xoX
+xoX
+xoX
+kTX
+coS
+vRj
+vRj
 dfn
 gxo
 pdY
-lPa
-lPa
+vRj
+vRj
 brA
 brA
 brA
@@ -23671,23 +24332,23 @@ ovZ
 jsD
 rJT
 xtg
-xtg
-xvs
-cwk
-cwk
-cwk
-xtg
-lhR
-xPi
-xtg
-xtg
-jwf
-dEa
-ltI
-xtg
-xtg
-cwk
-dHT
+uRB
+knj
+suR
+suR
+suR
+xoX
+xoX
+qHS
+xoX
+xoX
+xoX
+xoX
+xoX
+xoX
+xoX
+kyD
+aGh
 cwk
 xPi
 ram
@@ -23772,25 +24433,25 @@ wNM
 wNM
 dXz
 jsD
-mVy
+xtg
 qDJ
-xtg
-xtg
-xtg
-xtg
-nLR
-xtg
-cwk
-xtg
-xPi
-xtg
-xPi
-xPi
-xPi
-xtg
-lhR
-lhR
-xPi
+uRB
+rPa
+xjs
+xjs
+xjs
+xjs
+kyD
+xjs
+jol
+xoX
+qHS
+jol
+jol
+xjs
+xjs
+eUt
+aPC
 uiV
 xtg
 xtg
@@ -23876,32 +24537,32 @@ oLM
 its
 jsD
 hSN
-xtg
-xtg
-cwk
-xtg
-jPx
-iHX
-xtg
-xtg
-xtg
-xtg
-xtg
-xtg
+lRq
+uRB
+rAA
+tvo
+uRB
+uRB
+uRB
+uRB
+uRB
+xjs
+xjs
+xjs
 nkU
-waW
-nkU
-nkU
+dNQ
+dNQ
+dNQ
 nkU
 nkU
 nkU
 nkU
 nkU
 oQU
-hpC
+nkU
 nkU
 xtg
-xtg
+nLR
 uRB
 obU
 iVk
@@ -23979,32 +24640,32 @@ wtS
 jsD
 jsD
 uRB
-uRB
-uRB
-uRB
-gzs
-uRB
-uRB
-uRB
-uRB
+hhP
+hCN
+aaI
+hCN
+aaI
+hCN
+aaI
+oLO
 hXO
 hXO
 hXO
 hXO
 nkU
-tlB
+hlC
 nNY
-arz
-uDa
-cnI
+sZj
+sZj
 fwn
-nkU
+fwn
+wWu
 tdC
 fyJ
 vvi
 nkU
-xtg
-xtg
+jPx
+iHX
 uRB
 obU
 iVk
@@ -24081,28 +24742,28 @@ lyR
 pBl
 eOW
 sde
-eOW
-pBl
-lyR
-lyR
-lyR
-pBl
-lyR
-lyR
-eOW
+tDB
+eKq
+bvF
+bvF
+bvF
+jWY
+bvF
+bvF
+iSg
 sde
 bvF
 bvF
 xkV
 mlX
-rDH
+nNY
+coA
 wWu
 wWu
 wWu
+sZj
 wWu
-mkC
-nkU
-kic
+tdC
 dbR
 aGG
 nkU
@@ -24195,18 +24856,18 @@ bvF
 bvF
 iGg
 bvF
-bvF
-xkV
+iDe
+iQo
 mlX
 pEm
-pIf
-rDH
-wHw
 nNY
+fwn
+sZj
+sZj
 loP
-nkU
-hUb
-dvv
+wWu
+tdC
+gyY
 gyY
 nkU
 cwk
@@ -24286,18 +24947,18 @@ lyR
 lyR
 pBl
 mmr
-sde
-mmr
-pBl
-lyR
-lyR
-lyR
-pBl
-lyR
-lyR
-mmr
-sde
-bvF
+jGr
+iIL
+uSe
+fxl
+fxl
+fxl
+uSe
+fxl
+fxl
+iIL
+jGr
+mpo
 bvF
 pCI
 nkU
@@ -24306,8 +24967,8 @@ nkU
 nkU
 qNo
 nkU
-nkU
-nkU
+dnw
+dnw
 nkU
 nkU
 nkU
@@ -24400,20 +25061,20 @@ rJF
 wHi
 wHi
 wHi
-mpo
+hPq
 bvF
-xkV
+iQo
 nkU
 jhj
-pIf
-iXz
-rDH
 dyH
-jIP
+dyH
+dyH
+dyH
 ilk
-jIP
-jIP
-jIP
+ilk
+sZj
+cJO
+mRQ
 nkU
 xtg
 xPi
@@ -24507,16 +25168,16 @@ rjh
 bvF
 xkV
 nkU
-foN
-kjf
-hSf
-hSf
-hSf
-hSf
-hSf
-hSf
-hSf
-jIP
+mDR
+mDR
+usd
+mDR
+sGV
+bRE
+uoq
+wWu
+cls
+eSA
 nkU
 nkU
 qnB
@@ -24606,20 +25267,20 @@ mqD
 mqD
 lOv
 gew
-kVQ
+hPq
 bvF
-xkV
-mlX
+iQo
+nkU
 cWM
-huD
-hSf
+usd
+mDR
+drj
+sGV
+vky
+mHt
 bAr
-hSf
-hSf
-hSf
-bAr
-hSf
-rDH
+tOV
+bRB
 rDH
 nkU
 xPi
@@ -24709,19 +25370,19 @@ sYI
 mqD
 mqD
 sLw
-kVQ
+hPq
 bvF
 xkV
 nkU
-foN
-hSf
-hSf
-hSf
+mDR
+mDR
+mDR
+usd
+sGV
+uRY
 cdT
-cdT
-cdT
-cdT
-hSf
+wWu
+wWu
 hSf
 ryO
 nkU
@@ -24814,22 +25475,22 @@ faT
 gew
 wlD
 bvF
-pCI
+gIt
 nkU
-jhj
-bAr
-hSf
-hSf
-cdT
+tFH
+llE
+mDR
+mDR
+sGV
 hko
-hko
-cdT
-hSf
-hSf
+mHt
+wWu
+cXZ
+qOA
 tlB
 nkU
 ybz
-fsy
+bWI
 nlK
 bSm
 fDC
@@ -24915,21 +25576,21 @@ mqD
 mqD
 eky
 rJF
-kVQ
+hPq
 bvF
 xkV
 nkU
-xlY
-tug
-hSf
-hSf
+usd
+mDR
+mDR
+mDR
+sGV
+xRE
 cdT
-hko
-hko
-cdT
-hSf
-hSf
-rDH
+wWu
+wWu
+wWu
+sZj
 nkU
 eUP
 bvF
@@ -25018,21 +25679,21 @@ mqD
 mqD
 awc
 rJF
-kVQ
+hPq
 bvF
-xkV
-dtl
-rDH
-bAr
-hSf
-hSf
-cdT
-cdT
-cdT
-cdT
-hSf
-hSf
-rDH
+iQo
+nkU
+mDR
+drj
+usd
+mDR
+sGV
+gjk
+mHt
+wWu
+wWu
+wWu
+sZj
 nkU
 gyF
 bvF
@@ -25121,23 +25782,23 @@ mqD
 mqD
 gSl
 rJF
-kVQ
+hPq
 bvF
 xkV
-dtl
-sbO
-hSf
-hSf
-bAr
-hSf
-hSf
-hSf
-bAr
-hSf
-hSf
-tlB
 nkU
-gyF
+mDR
+mDR
+mDR
+llE
+sGV
+wNZ
+uoq
+bAr
+wWu
+pyf
+cdI
+nkU
+fie
 bvF
 bvF
 bvF
@@ -25229,15 +25890,15 @@ iGg
 hoz
 nkU
 gXQ
-fxM
-rDH
-hSf
-hSf
-hSf
-hSf
-hSf
-hSf
-hSf
+mDR
+gic
+gic
+oNl
+uqA
+mHt
+wWu
+wWu
+xfJ
 ryO
 nkU
 iNI
@@ -25329,18 +25990,18 @@ wHi
 wHi
 wlD
 bvF
-pCI
+gIt
 nPq
 nkU
 nkU
 biB
-jIP
-dyH
-rDH
+sZj
+dLq
+gFd
 ovQ
-jIP
-jIP
-jIP
+sZj
+hBc
+bRB
 jIP
 nkU
 eYU
@@ -25435,14 +26096,14 @@ fav
 jCH
 hhu
 cZu
-sqg
-mlX
-mlX
-nkU
-mns
 nkU
 mlX
 mlX
+nkU
+dnw
+dnw
+mlX
+mXm
 qHL
 nkU
 nkU
@@ -25540,16 +26201,16 @@ mqL
 jCH
 fQc
 uZB
+wCc
 uZB
-uZB
-uZB
+wCc
 hhu
-uZB
-uZB
-uZB
+wCc
+evt
+wCc
 uZB
 fQc
-fsy
+bWI
 bvF
 bvF
 tgc
@@ -26044,7 +26705,7 @@ tAH
 tAH
 bGq
 xAS
-tAH
+eFp
 apC
 jyA
 par
@@ -26186,9 +26847,9 @@ oZI
 oZI
 bNq
 dDt
-nBg
+fyA
 bNq
-bNq
+frz
 bNq
 nBg
 swj
@@ -26290,9 +26951,9 @@ nBg
 hpF
 kSO
 pLr
-pLr
+aYz
 gSY
-pLr
+aYz
 pLr
 swj
 nQz
@@ -26389,12 +27050,12 @@ hvG
 lMA
 lMA
 aTe
-lMA
-lMA
+hvG
+hvG
 kSO
 mEM
-awE
-awE
+jFY
+jFY
 vxp
 qyO
 swj
@@ -26492,9 +27153,9 @@ alA
 vJD
 tFe
 vJD
-kkD
-hRz
-kSO
+tKY
+hvG
+frr
 amy
 awE
 awE
@@ -26597,12 +27258,12 @@ brM
 tKY
 lAT
 mjm
-pLr
-jfv
+jFY
 awE
 awE
 awE
-awE
+bnY
+iBu
 swj
 tLh
 eNH
@@ -26699,13 +27360,13 @@ uVo
 uVo
 tKY
 tKY
-tKY
-pLr
-rww
+hvG
+doa
 awE
-awE
-awE
-aTD
+gaa
+fcY
+tpr
+iBu
 swj
 pXs
 qvU
@@ -26803,11 +27464,11 @@ uVo
 tKY
 tKY
 pkj
-pLr
+pbz
 tPM
+llF
 awE
-awE
-awE
+mex
 vVV
 swj
 swj
@@ -26903,15 +27564,15 @@ xhR
 nrZ
 uJf
 brM
-lAT
-sZi
 tKY
-kSO
+sZi
+hvG
+jIB
 teU
-awE
-awE
-awE
-kSO
+kQR
+jFY
+fsf
+tPw
 sUo
 obU
 obU
@@ -27007,15 +27668,15 @@ vJD
 alA
 haj
 cOe
-qGs
 hRz
+hvG
 kSO
-kSO
-kSO
+bMS
+cAi
 kMg
-kSO
-kSO
-obU
+cAi
+bMS
+oKU
 obU
 iVk
 iVk
@@ -27116,7 +27777,7 @@ kSO
 eYx
 xtg
 hDE
-xtg
+cIN
 uRB
 obU
 iVk
@@ -30063,10 +30724,10 @@ kcV
 aOR
 aOR
 csT
-qJn
+hNN
 aOR
 itH
-hNN
+gIW
 itH
 jyQ
 taa
