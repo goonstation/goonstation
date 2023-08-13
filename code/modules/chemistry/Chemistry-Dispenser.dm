@@ -436,13 +436,13 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	dispense_sound = 'sound/misc/pourdrink2.ogg'
 
-//Combines alcohol and soda dispenser, plus mint, chocolate, and normal/strawb milk. Wow!
+//Combines alcohol and soda dispenser
 /obj/machinery/chem_dispenser/alcohol/bar
 	name = "bar dispenser"
 	desc = "You see a small, fading warning label on the side of the machine:<br>WARNING: Contents pending approval for human consumption. User assumes all risks.</br>"
-	dispensable_reagents = list("beer", "bitters", "bourbon", "champagne", "juice_cherry", "chocolate", "cider", \
+	dispensable_reagents = list("beer", "bitters", "bourbon", "champagne", "juice_cherry", "cider", \
 								"coconut_milk", "cola", "juice_cran", "gin", "ginger_ale", "grenadine", "juice_lemon", \
-								"juice_lime", "milk", "mint", "juice_orange", "juice_pineapple",  "rum", "strawberry_milk", "sugar", \
+								"juice_lime", "juice_orange", "juice_pineapple",  "rum", "sugar", \
 								"tea", "tequila", "juice_tomato", "tonic", "vanilla", "vermouth", "vodka", "water", "wine")
 
 // Dispenses any drink you want. Designed for the afterlife bar
