@@ -67512,10 +67512,8 @@
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
 "nwN" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
+/obj/stool/pet_bed{
+	desc = "A soft little bed the general size and shape of a space bat.";
 	name = "batbed"
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/bat,
@@ -74015,6 +74013,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
+"uEQ" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1";
+	tag = "icon-line1"
+	},
+/obj/machinery/hydro_mister,
+/turf/unsimulated/floor/grass/random,
+/area/afterlife/heaven/hydroponics)
 "uFv" = (
 /obj/machinery/light{
 	dir = 8;
@@ -133063,7 +133069,7 @@ bQI
 bQI
 bQI
 bko
-bUo
+uEQ
 lmT
 bLw
 bVD

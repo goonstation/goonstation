@@ -239,6 +239,18 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
 			src.read_only = 1
 
+	bartender
+		name = "\improper Drinkmaster 1000"
+		desc = "Your friend for making the perfect drink!"
+		icon_state = "cart-hydro"
+
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/medrecord_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
+			src.read_only = 1
+
 	genetics
 		name = "\improper Deoxyribonucleic Amigo cartridge"
 		desc = "There was, at one point, a time when this cartridge often got use."
