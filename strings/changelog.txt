@@ -1,5 +1,9 @@
 
 (t)sun aug 13 23
+(u)soapcyst
+(p)15203
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added misters to atlas and afterlife bar
 (u)Wisemonster
 (p)15251
 (e)🔄⏰📦|C-Rework, A-Status-Effects, A-Game-Objects
