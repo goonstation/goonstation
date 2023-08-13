@@ -417,7 +417,7 @@
 			src.initial_reagents = list(pick(juicelist) = 15)
 		..()
 		src.name = "bottle of [src.reagents.get_master_reagent_name()]"
-		src.desc = "An eensy-weensy bottle filled with [src.reagents.get_master_reagent_name()]. There's a warning sticker about preservatives on the side."
+		src.desc = "A free sample of [src.reagents.get_master_reagent_name()]! There's a warning sticker about preservatives on the side."
 /* ============================================== */
 /* -------------------- Misc -------------------- */
 /* ============================================== */
