@@ -466,10 +466,6 @@
 	dir = 5
 	},
 /area/morrigan/station/security/main)
-"axk" = (
-/obj/map/light,
-/turf/unsimulated/floor/wood/six,
-/area/morrigan/station/command/HOS)
 "axq" = (
 /mob/living/critter/robotic/gunbot/syndicate/polaris{
 	desc = "Painted in red and black.";
@@ -675,6 +671,10 @@
 /obj/decal/cleanable/generic,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/derelict)
+"aEV" = (
+/obj/window/auto/reinforced/indestructible/glass,
+/turf/unsimulated/floor/plating,
+/area/morrigan/station/medical/main)
 "aFO" = (
 /obj/decal/floatingtiles{
 	dir = 1;
@@ -737,7 +737,6 @@
 /obj/storage/crate/packing,
 /obj/item/clothing/under/gimmick/cloud,
 /obj/item/clothing/under/misc/casualjeanspurp,
-/obj/item/clothing/suit/labcoat/hitman/satansuit,
 /obj/decal/tile_edge/stripe/big{
 	dir = 1
 	},
@@ -1793,7 +1792,7 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
-/turf/unsimulated/floor/yellow/checker,
+/turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/civilian/botany)
 "bRE" = (
 /obj/item/casing/rifle_loud{
@@ -2154,6 +2153,10 @@
 /obj/decal/cleanable/water,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"cnv" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "cnG" = (
 /obj/decal/cleanable/blood{
 	icon_state = "handblood"
@@ -2548,8 +2551,8 @@
 /obj/machinery/launcher_loader/south{
 	layer = 2
 	},
-/obj/decal/fakeobjects/teleport_pad,
 /obj/landmark/morrigan_start,
+/obj/fakeobjects/morrigan_teleporter,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing)
 "cMF" = (
@@ -2603,7 +2606,7 @@
 "cPv" = (
 /obj/machinery/launcher_loader/north,
 /obj/landmark/morrigan_transport,
-/obj/machinery/networked/telepad,
+/obj/fakeobjects/morrigan_teleporter,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing/transport)
 "cQu" = (
@@ -3084,7 +3087,6 @@
 /turf/unsimulated/floor/twotone/yellow,
 /area/morrigan/derelict)
 "dsc" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/captain)
 "dsB" = (
@@ -3429,11 +3431,6 @@
 /obj/decal/poster/wallsign/hazard_danger,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/security/armory)
-"dLq" = (
-/obj/machinery/light/incandescent/netural,
-/obj/machinery/door/window/opaque/southright,
-/turf/unsimulated/floor/yellow/checker,
-/area/morrigan/station/civilian/botany)
 "dLv" = (
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/dirt2,
@@ -4183,7 +4180,6 @@
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict)
 "evt" = (
-/obj/decal/tile_edge/floorguide/ai,
 /obj/decal/tile_edge/floorguide/ai{
 	dir = 8
 	},
@@ -4747,7 +4743,6 @@
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/spy)
 "eYQ" = (
-/obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/hazard_rad,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/engineering)
@@ -5463,7 +5458,7 @@
 /turf/unsimulated/floor/carpet/green/fancy/edge,
 /area/morrigan/station/medical/reception)
 "fKb" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/window/auto/reinforced/indestructible/crystal,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/science)
 "fKo" = (
@@ -5941,7 +5936,6 @@
 /turf/unsimulated/floor/darkblue,
 /area/morrigan/station/command/eva)
 "ggV" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/CE)
 "ghl" = (
@@ -6464,10 +6458,6 @@
 /obj/machinery/chemicompiler_stationary,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"gFd" = (
-/obj/decal/fakeobjects/cargopad,
-/turf/unsimulated/floor/yellow/checker,
-/area/morrigan/station/civilian/botany)
 "gFE" = (
 /turf/cordon,
 /area/morrigan/derelict)
@@ -6708,7 +6698,7 @@
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
 "gRS" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/medical/reception)
 "gRU" = (
@@ -7190,7 +7180,7 @@
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/passage)
 "hpd" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window/auto/reinforced/indestructible/glass,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/civilian/chapel)
 "hpu" = (
@@ -7217,7 +7207,7 @@
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/medical/main)
 "hpH" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/window/auto/reinforced/indestructible/crystal,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/RD)
 "hqC" = (
@@ -7396,10 +7386,6 @@
 /obj/decal/cleanable/cobwebFloor,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"hAo" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/security/main)
 "hBc" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/decal/tile_edge/floorguide/arrow_s{
@@ -7593,8 +7579,8 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/derelict)
 "hNN" = (
-/obj/window/auto/reinforced/indestructible/extreme,
-/turf/unsimulated/floor/red/redblackchecker,
+/obj/window/auto/reinforced/indestructible/crystal,
+/turf/unsimulated/floor/plating,
 /area/morrigan/station/security/main)
 "hNO" = (
 /obj/decal/floatingtiles{
@@ -9393,7 +9379,7 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
-/turf/unsimulated/floor/yellow/checker,
+/turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/civilian/botany)
 "jJf" = (
 /obj/machinery/recharge_station,
@@ -9944,7 +9930,6 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/factory)
 "krR" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/eva)
 "ksR" = (
@@ -10843,7 +10828,7 @@
 /turf/simulated/wall/false_wall/reinforced,
 /area/morrigan/derelict)
 "lql" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window/auto/reinforced/indestructible/glass,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/medical/emergency)
 "lqN" = (
@@ -11538,11 +11523,6 @@
 /obj/item/screwdriver/grey,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/cloning)
-"meR" = (
-/obj/decoration/clock,
-/obj/machinery/light/incandescent/netural,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/command/HOS)
 "meT" = (
 /turf/unsimulated/floor/shuttlebay,
 /area/morrigan/station/podbay/medical)
@@ -11640,7 +11620,7 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "mlX" = (
-/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window/auto/reinforced/indestructible/glass,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/civilian/botany)
 "mmh" = (
@@ -12849,8 +12829,8 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "nxp" = (
-/obj/machinery/networked/telepad,
 /obj/landmark/morrigan_prisoner,
+/obj/fakeobjects/morrigan_teleporter,
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/station/security/brig)
 "nya" = (
@@ -13856,11 +13836,6 @@
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/science)
-"ovQ" = (
-/obj/machinery/light/incandescent/netural,
-/obj/decal/fakeobjects/cargopad,
-/turf/unsimulated/floor/yellow/checker,
-/area/morrigan/station/civilian/botany)
 "ovZ" = (
 /obj/storage/closet/office,
 /turf/unsimulated/floor/wizard/carpet/edge,
@@ -13945,7 +13920,7 @@
 /turf/space,
 /area/morrigan/station/space)
 "oBY" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window/auto/reinforced/indestructible/glass,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/MD)
 "oCO" = (
@@ -15293,11 +15268,6 @@
 /obj/machinery/networked/storage/scanner,
 /turf/unsimulated/floor/twotone/black,
 /area/morrigan/station/medical/biological)
-"qfB" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/security/main)
 "qfS" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -15679,11 +15649,6 @@
 	dir = 4
 	},
 /area/morrigan/station/hallway)
-"qDi" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/engineering)
 "qDn" = (
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -16643,7 +16608,7 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
 	},
-/turf/unsimulated/floor/yellow/checker,
+/turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/civilian/botany)
 "rDU" = (
 /obj/decal/cleanable/blood/tracks,
@@ -17028,6 +16993,10 @@
 /obj/decoration/bustedmantapc/bustedmantapc3,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/factory)
+"seA" = (
+/obj/window/auto/reinforced/indestructible/glass,
+/turf/unsimulated/floor/plating,
+/area/morrigan/station/command/HOP)
 "sfF" = (
 /obj/rack,
 /obj/item/mop/orange,
@@ -17084,6 +17053,10 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/space)
+"siP" = (
+/obj/decoration/clock,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/morrigan/station/command/HOS)
 "slc" = (
 /obj/item/raw_material/shard/glass,
 /obj/item/electronics/frame,
@@ -17182,8 +17155,6 @@
 	},
 /area/morrigan/teleporter)
 "ssP" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/unsimulated/floor/plating,
 /area/morrigan/station/maintenance)
 "ste" = (
 /obj/decal/floatingtiles{
@@ -17704,7 +17675,6 @@
 /area/morrigan/station/command/HOS)
 "sYw" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
-/obj/mapping_helper/access/morrigan/science,
 /obj/mapping_helper/airlock/hardener,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/RD)
@@ -18954,7 +18924,7 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/botany)
 "uoF" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window/auto/reinforced/indestructible/crystal,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/security/interrogation)
 "uoH" = (
@@ -19344,9 +19314,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
 "uDO" = (
@@ -19486,7 +19453,6 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "uNz" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/bridge)
 "uNB" = (
@@ -19718,6 +19684,9 @@
 /obj/random_item_spawner/organs/bloody/one_to_three,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
+"uXx" = (
+/turf/unsimulated/floor/plating,
+/area/morrigan/station/engineering)
 "uXE" = (
 /obj/window/bulletproof/north,
 /obj/table/syndicate/auto,
@@ -19814,11 +19783,6 @@
 /obj/structure/girder/displaced,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"vdx" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/command/HOP)
 "vdO" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/rust/jen,
@@ -20959,7 +20923,7 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "wxG" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/window/auto/reinforced/indestructible/crystal,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/HOS)
 "wzh" = (
@@ -21086,9 +21050,7 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "wGJ" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/auto/regular,
-/turf/unsimulated/floor/plating,
 /area/morrigan/station/maintenance)
 "wHi" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -23293,7 +23255,7 @@ iVk
 iVk
 iVk
 iVk
-dKY
+iVk
 dKY
 dKY
 dKY
@@ -23395,7 +23357,7 @@ obU
 obU
 obU
 obU
-iVk
+obU
 iVk
 iVk
 iVk
@@ -23497,7 +23459,7 @@ nui
 aaL
 aaL
 aaL
-obU
+jsD
 obU
 obU
 obU
@@ -23603,10 +23565,10 @@ hpw
 jsD
 jsD
 jsD
-vdx
+seA
+seA
+seA
 jsD
-jsD
-wtS
 jsD
 jsD
 obU
@@ -23712,8 +23674,8 @@ qQF
 ojd
 tmq
 jsD
-ssP
-ssP
+uRB
+uRB
 uRB
 jrq
 jrq
@@ -24229,7 +24191,7 @@ hSk
 iUV
 gUp
 xtg
-rAA
+uRB
 cQu
 xoX
 xoX
@@ -25494,9 +25456,9 @@ bWI
 nlK
 bSm
 fDC
-uYD
-uYD
-uYD
+aEV
+aEV
+aEV
 fDC
 fDC
 lrE
@@ -25996,10 +25958,10 @@ nkU
 nkU
 biB
 sZj
-dLq
-gFd
-ovQ
+cnv
 sZj
+sZj
+cnv
 hBc
 bRB
 jIP
@@ -26102,7 +26064,7 @@ mlX
 nkU
 dnw
 dnw
-mlX
+nkU
 mXm
 qHL
 nkU
@@ -26219,7 +26181,7 @@ nBm
 nBm
 vAM
 xoA
-ftw
+aEV
 bNq
 oZI
 uYD
@@ -26322,7 +26284,7 @@ nBm
 nBm
 vAM
 jVb
-ftw
+aEV
 bNq
 oZI
 kUb
@@ -28455,11 +28417,11 @@ mwp
 dWk
 tgf
 qIE
-fEV
+uXx
 nXf
 oir
 xpB
-fEV
+uXx
 naK
 bvF
 kaR
@@ -28562,7 +28524,7 @@ eYQ
 cOA
 lqN
 oxu
-fEV
+uXx
 naK
 bvF
 kaR
@@ -28867,7 +28829,7 @@ mwp
 odA
 ewA
 qTT
-fEV
+uXx
 jOX
 qIE
 qIE
@@ -29685,7 +29647,7 @@ haD
 roR
 aAM
 kiD
-qDi
+fEV
 rPF
 iiT
 wWp
@@ -30212,7 +30174,7 @@ ixF
 vzE
 xAr
 cYn
-hAo
+hNN
 cYn
 xAr
 aOR
@@ -30313,7 +30275,7 @@ jOz
 ciP
 pRA
 eQj
-hAo
+hNN
 gIW
 iCr
 gIW
@@ -30633,7 +30595,7 @@ muJ
 bnh
 muJ
 bnh
-meR
+wxG
 hsd
 btQ
 btQ
@@ -30727,7 +30689,7 @@ csT
 hNN
 aOR
 itH
-gIW
+hNN
 itH
 jyQ
 taa
@@ -30736,7 +30698,7 @@ muJ
 bnh
 bnh
 bnh
-wxG
+siP
 sXm
 btQ
 btQ
@@ -30942,8 +30904,8 @@ muJ
 nHg
 iFH
 hxz
-wxG
-axk
+doB
+vbP
 btQ
 vbP
 doB
@@ -31229,9 +31191,9 @@ aOR
 aOR
 aOR
 aOR
-hAo
-hAo
-hAo
+hNN
+hNN
+hNN
 rIu
 pRA
 pRA
@@ -31334,7 +31296,7 @@ gIW
 eqc
 wqd
 sbL
-hAo
+hNN
 gVH
 pRA
 pRA
@@ -31540,7 +31502,7 @@ pRA
 ciP
 qwj
 gIW
-qfB
+hNN
 lvB
 bSs
 pRA

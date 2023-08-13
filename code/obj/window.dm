@@ -919,6 +919,12 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	damage_slashing()
 	damage_blunt()
 
+/obj/window/auto/reinforced/indestructible/crystal
+	default_material = "plasmaglass"
+
+/obj/window/auto/reinforced/indestructible/glass
+	default_material = "glass"
+
 /obj/window/auto/reinforced/indestructible/extreme
 	name = "extremely indestructible window"
 	desc = "An EXTREMELY indestructible window. An absurdly robust one at that."
