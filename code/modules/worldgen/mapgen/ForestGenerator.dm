@@ -85,4 +85,23 @@
 		else
 			LAGCHECK(LAG_HIGH)
 
+/datum/biome/forest/generate_turf(turf/gen_turf, flags)
+	. = ..()
+
+	// Cull Trees
+	if((flags & MAPGEN_IGNORE_FLORA) == 0)
+		var/obj/tree/here_tree = locate() in gen_turf
+		if(here_tree)
+			var/list/things = orange(1,gen_turf)
+			if(gen_turf.z == Z_LEVEL_STATION)
+				var/area/station/nearby_station = locate() in things
+				if(nearby_station)
+					qdel(here_tree)
+					return
+
+			for (var/obj/tree/there_tree in things)
+				if(prob(66))
+					qdel(here_tree)
+					return
+
 #undef BIOME_RANDOM_SQUARE_DRIFT

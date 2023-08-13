@@ -1011,19 +1011,19 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 	updatehealth()
 		if (src.nodamage)
-			if (health != max_health)
+			if (src.health != src.max_health)
 				full_heal()
-			src.health = max_health
+			src.health = src.max_health
 			setalive(src)
-			icon_state = icon_state_alive ? icon_state_alive : initial(icon_state)
+			src.icon_state = src.icon_state_alive ? src.icon_state_alive : initial(src.icon_state)
 		else
-			health = max_health
-			for (var/T in healthlist)
-				var/datum/healthHolder/HH = healthlist[T]
+			src.health = src.max_health
+			for (var/T in src.healthlist)
+				var/datum/healthHolder/HH = src.healthlist[T]
 				if (HH.count_in_total)
-					health -= (HH.maximum_value - HH.value)
-		hud.update_health()
-		if (health <= 0 && stat < 2)
+					src.health -= (HH.maximum_value - HH.value)
+		src.hud.update_health()
+		if (src.health <= 0 && !isdead(src))
 			death()
 
 	proc/specific_emotes(var/act, var/param = null, var/voluntary = 0)

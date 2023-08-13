@@ -475,7 +475,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 /obj/item/uplink/syndicate
 	name = "station bounced radio"
 	icon = 'icons/obj/items/device.dmi'
-	icon_state = "radio"
+	icon_state = "walkietalkie"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL

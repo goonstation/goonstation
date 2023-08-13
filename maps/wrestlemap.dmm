@@ -33640,12 +33640,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_south)
 "oqg" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
+/obj/stool/bee_bed/heisenbee,
 /obj/critter/domestic_bee/heisenbee,
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/light/incandescent/warm{
