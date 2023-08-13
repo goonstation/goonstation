@@ -1,5 +1,9 @@
 
 (t)sun aug 13 23
+(u)UnfunnyPerson
+(p)15136
+(e)⛔📦|C-Removal, A-Game-Objects
+(+)The black market megaphone can no longer be found in surplus crates.
 (u)Ikea
 (p)15320
 (e)⚖🤖|C-Balance, A-Silicons
