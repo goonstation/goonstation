@@ -605,7 +605,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				// This is kinda important (Convair880).
 				if (istype(I, /obj/item/implant/mindhack) && surgeon == patient)
-					continue
+					var/obj/item/implant/mindhack/implant = I
+					if (patient != implant.implant_hacker)
+						continue
 
 				if (!istype(I, /obj/item/implant/artifact))
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts out an implant from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
