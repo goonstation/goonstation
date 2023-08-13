@@ -81,9 +81,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "aiN" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -1499,6 +1497,10 @@
 	dir = 4
 	},
 /area/station/science/teleporter)
+"bFY" = (
+/mob/living/carbon/human/npc/monkey/krimpus,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "bGP" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -2286,6 +2288,11 @@
 "cxK" = (
 /turf/simulated/floor/wood/eight,
 /area/station/ranch)
+"cxL" = (
+/obj/stool/bench/wooden/auto,
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
+/turf/simulated/floor/glassblock/transparent/grey,
+/area/station/hallway/primary/north)
 "cxW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2355,6 +2362,11 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
+"cBD" = (
+/obj/stool/bar,
+/mob/living/carbon/human/npc/monkey/mr_muggles,
+/turf/simulated/floor/glassblock/transparent/purple,
+/area/station/crew_quarters/cafeteria)
 "cCw" = (
 /obj/decal/tile_edge/floorguide/command{
 	dir = 1
@@ -5581,9 +5593,7 @@
 "giu" = (
 /obj/stool,
 /obj/disposalpipe/segment/brig,
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "giI" = (
@@ -7301,6 +7311,13 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/pool)
+"idQ" = (
+/obj/stool/chair/office{
+	dir = 1
+	},
+/mob/living/carbon/human/npc/monkey/tanhony,
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
+/area/station/crew_quarters/market)
 "idV" = (
 /obj/cable{
 	icon_state = "6-8"
@@ -7826,7 +7843,7 @@
 	},
 /obj/disposalpipe/switch_junction/left/east{
 	name = "southwest mail junction";
-	mail_tag = list("arrivals    hallway","crew","podbay")
+	mail_tag = list("arrivals        hallway","crew","podbay")
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -8583,7 +8600,7 @@
 /area/station/maintenance/disposal)
 "jzh" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod    Bay","Research","Security","QM");
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod        Bay","Research","Security","QM");
 	dir = 8
 	},
 /turf/simulated/floor/plating,
@@ -9248,9 +9265,7 @@
 	},
 /area/space)
 "koG" = (
-/obj/landmark/spawner{
-	name = "dolly"
-	},
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "kpc" = (
@@ -12131,6 +12146,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/maintenance/northwest)
+"nuB" = (
+/mob/living/carbon/human/npc/monkey/horse,
+/turf/simulated/floor/glassblock/transparent/indigo,
+/area/station/crew_quarters/pool)
 "nwm" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/solar/east)
@@ -15394,7 +15413,7 @@
 /area/station/medical/robotics)
 "qXK" = (
 /obj/machinery/computer/barcode/qm{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod    Bay","Security","QM")
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod        Bay","Security","QM")
 	},
 /turf/simulated/floor/grey,
 /area/station/quartermaster)
@@ -16365,7 +16384,7 @@
 /area/station/hallway/primary/west)
 "rUw" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod    Bay","Research","Security","QM");
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod        Bay","Research","Security","QM");
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -16803,6 +16822,10 @@
 "soc" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/outer/nw)
+"sop" = (
+/mob/living/carbon/human/npc/monkey/albert,
+/turf/simulated/floor/glassblock/transparent/purple,
+/area/station/science/teleporter)
 "sow" = (
 /obj/machinery/door/airlock/pyro/engineering,
 /obj/cable/black{
@@ -18540,7 +18563,7 @@
 /area/station/medical/medbay)
 "urJ" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod    Bay","Research","Security","QM");
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod        Bay","Research","Security","QM");
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
@@ -18920,9 +18943,7 @@
 /turf/simulated/floor/glassblock/transparent/indigo,
 /area/station/crew_quarters/pool)
 "uRb" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "uRH" = (
@@ -20133,7 +20154,7 @@
 /area/station/teleporter)
 "wjR" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod    Bay","Security","QM")
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod        Bay","Security","QM")
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -20985,9 +21006,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "xfr" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "xfH" = (
@@ -57966,7 +57985,7 @@ jbG
 jbG
 jbG
 jbG
-jbG
+nuB
 cWG
 sIe
 sIe
@@ -64298,7 +64317,7 @@ sWA
 jRN
 wWi
 kRZ
-nLM
+idQ
 cyS
 vZr
 vZr
@@ -67002,7 +67021,7 @@ hxy
 whP
 whP
 fnQ
-fnQ
+cBD
 fnQ
 fnQ
 whP
@@ -68483,7 +68502,7 @@ mVt
 sAX
 oDL
 fPV
-tUU
+cxL
 fQv
 fQv
 tUU
@@ -71802,7 +71821,7 @@ iDI
 jdn
 nKk
 rAh
-gJi
+sop
 fAD
 nKk
 liA
@@ -73937,7 +73956,7 @@ gxd
 tId
 uLy
 rOW
-rOW
+bFY
 rOW
 uLy
 sBP
