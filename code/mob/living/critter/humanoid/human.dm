@@ -13,6 +13,8 @@ ABSTRACT_TYPE(/mob/living/critter/human)
 	desc = "You shouldn't see me!"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "m-none"
+	custom_gib_handler = /proc/gibs
+	burning_suffix = "humanoid"
 	health_brute = 50
 	health_brute_vuln = 1
 	health_burn = 50
@@ -51,10 +53,10 @@ ABSTRACT_TYPE(/mob/living/critter/human)
 			src.gib()
 
 	disposing()
-		..()
 		src.appearance = null
 		src.overlay_refs.len = 0
 		src.overlay_refs = null
+		..()
 
 	proc/steal_appearance(var/mob/living/carbon/human/H)
 		if (isnull(H))
