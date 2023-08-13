@@ -1442,11 +1442,7 @@
 /area/hospital/samostrel)
 "afF" = (
 /obj/machinery/bot/guardbot/soviet,
-/obj/machinery/guardbot_dock{
-	autoeject = 3;
-	desc = "A recharging and command station for soviet robuddy clones.  Could probably also work with regular robuddies.";
-	icon = 'icons/misc/hospital.dmi'
-	},
+/obj/machinery/guardbot_dock/soviet,
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
 "afG" = (
@@ -31575,8 +31571,8 @@
 /obj/decal/fakeobjects{
 	density = 1;
 	desc = "Something about this robot seems very familiar.";
-	icon = 'icons/misc/evilreaverstation.dmi';
-	icon_state = "pr1_0";
+	icon = 'icons/obj/bots/robuddy/pr-1.dmi';
+	icon_state = "body";
 	name = "PR-1 Automated Checkpoint"
 	},
 /turf/unsimulated/floor,
@@ -58111,7 +58107,7 @@
 	icon_state = "tile1"
 	},
 /obj/machinery/glass_recycler{
-	glass_amt = 666
+	glass_amt = 50
 	},
 /turf/unsimulated/floor/carpet{
 	dir = 1;
@@ -67518,10 +67514,8 @@
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
 "nwN" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
+/obj/stool/pet_bed{
+	desc = "A soft little bed the general size and shape of a space bat.";
 	name = "batbed"
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/bat,

@@ -2728,7 +2728,11 @@ TYPEINFO(/obj/machinery/vending/monkey)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 2, cost=PAY_TRADESMAN, hidden=1)
+
+	with_ammo
+		create_products()
+			..()
+			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 2, cost=PAY_TRADESMAN, hidden=1)
 
 TYPEINFO(/obj/machinery/vending/chem)
 	mats = null
@@ -3046,6 +3050,14 @@ TYPEINFO(/obj/machinery/vending/janitor)
 				boutput(usr, "<span class='alert'>There is no tank to fill up!</span>")
 
 ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
+
+/obj/machinery/vending/air_vendor/pod_wars
+	air_cost = 0
+	can_fall = FALSE
+	can_hack = FALSE
+
+	ex_act(severity)
+		. = ..()
 
 /obj/machinery/vending/jobclothing/security
 	name = "Security Apparel"

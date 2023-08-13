@@ -182,7 +182,7 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 
 	flower
 		New()
-			spawn_plant = pick(/datum/plant/flower/rose)
+			spawn_plant = pick(/datum/plant/flower/rose, /datum/plant/flower/gardenia, /datum/plant/flower/hydrangea)
 			..()
 
 	crop

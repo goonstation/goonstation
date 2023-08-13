@@ -6393,12 +6393,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
 "atZ" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
+/obj/stool/bee_bed/heisenbee,
 /obj/critter/domestic_bee/heisenbee,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/wood,
@@ -9623,11 +9618,11 @@
 /obj/window_blinds/cog2/middle,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "test_chamber";
 	name = "Test Chamber Blast Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
@@ -18120,7 +18115,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "bjN" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/noticeboard/persistent{
 	name = "Bar persistent notice board";
 	persistent_id = "bar"
@@ -31957,7 +31952,7 @@
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "cbP" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "cbQ" = (
@@ -35050,10 +35045,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
-/obj/machinery/door/airlock/pyro/medical/alt{
-	name = "Morgue";
-	req_access_txt = "29"
-	},
+/obj/machinery/door/airlock/pyro/medical/alt,
 /turf/simulated/floor/white,
 /area/station/medical/robotics)
 "cTx" = (
@@ -38699,8 +38691,8 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1";
-	name = "Detective's Office"
+	name = "Detective's Office";
+	req_access_txt = "1"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/forensics,
@@ -38901,6 +38893,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/rancher,
 /turf/simulated/floor,
 /area/station/ranch)
 "jlM" = (
@@ -43293,6 +43286,7 @@
 	name = "Ranch"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/rancher,
 /turf/simulated/floor/shuttlebay,
 /area/station/ranch)
 "qSL" = (
@@ -43458,8 +43452,7 @@
 "rkz" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
 	dir = 8;
-	name = "Morgue";
-	req_access_txt = "29"
+	name = "Morgue"
 	},
 /obj/mapping_helper/access/morgue,
 /obj/mapping_helper/firedoor_spawn,
@@ -43993,6 +43986,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/rancher,
 /turf/simulated/floor,
 /area/station/ranch)
 "svs" = (
@@ -44176,11 +44170,11 @@
 /obj/window_blinds/cog2/right,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "test_chamber";
 	name = "Test Chamber Blast Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
@@ -44291,10 +44285,6 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
-"sXk" = (
-/obj/machinery/plantpot,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "sYB" = (
 /turf/simulated/floor/yellow/side,
 /area/station/storage/eeva)
@@ -44332,8 +44322,8 @@
 /area/station/medical/robotics)
 "tcD" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1";
-	name = "Detective's Office"
+	name = "Detective's Office";
+	req_access_txt = "1"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/forensics,
@@ -44365,9 +44355,9 @@
 	icon_state = "2-8"
 	},
 /obj/item/reagent_containers/food/snacks/popcorn{
+	bites_left = 100;
 	desc = "Those chickens are up to something...";
-	name = "suspicious popcorn";
-	bites_left = 100
+	name = "suspicious popcorn"
 	},
 /obj/landmark/start/job/detective,
 /turf/simulated/floor/carpet/grime,
@@ -44890,11 +44880,11 @@
 /obj/window_blinds/cog2/left,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "test_chamber";
 	name = "Test Chamber Blast Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
@@ -46595,8 +46585,8 @@
 	dir = 9;
 	name = "autoname - SS13";
 	pixel_x = 10;
-	tag = "";
-	pixel_y = -17
+	pixel_y = -17;
+	tag = ""
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)
@@ -84386,7 +84376,7 @@ chc
 cjF
 ciZ
 ciB
-sXk
+ciQ
 pml
 uOJ
 tEE

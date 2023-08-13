@@ -79,7 +79,7 @@
 		src.Artifact_blob_act(power)
 
 	bullet_act(var/obj/projectile/P)
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		switch (P.proj_data.damage_type)
 			if(D_KINETIC,D_PIERCING,D_SLASHING)

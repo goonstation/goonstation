@@ -4259,7 +4259,7 @@
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "biO" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bji" = (
@@ -9810,6 +9810,7 @@
 	tag = ""
 	},
 /obj/machinery/light_switch/east,
+/mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/carpet/red/fancy/narrow/north,
 /area/station/crew_quarters/heads)
 "cPO" = (
@@ -22238,7 +22239,7 @@
 "gKv" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 62;
+	drive_range = 64;
 	id = "QM_Sell"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
@@ -24069,12 +24070,7 @@
 	},
 /area/station/security/main)
 "hnE" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
+/obj/stool/bee_bed/heisenbee,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "hnH" = (
@@ -44263,12 +44259,7 @@
 /turf/simulated/floor/sand,
 /area/station/engine/engineering/ce)
 "nxU" = (
-/obj/stool{
-	desc = "Though it was made to suit him, Jones still seems to sleep in every spot that is NOT this little bed.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "cat bed"
-	},
+/obj/stool/pet_bed/jones,
 /mob/living/critter/small_animal/cat/jones{
 	dir = 8
 	},
@@ -46020,7 +46011,7 @@
 "ocs" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 62;
+	drive_range = 63;
 	id = "QM_Sell"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -48508,7 +48499,7 @@
 /obj/plasticflaps,
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 75;
+	drive_range = 83;
 	id = "crusher2"
 	},
 /turf/simulated/floor/plating/jen,
@@ -56908,6 +56899,7 @@
 "rqm" = (
 /obj/machinery/mass_driver{
 	dir = 8;
+	drive_range = 66;
 	id = "drone_launcher"
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -57914,6 +57906,7 @@
 "rGY" = (
 /obj/machinery/mass_driver{
 	dir = 8;
+	drive_range = 66;
 	id = "drone_launcher"
 	},
 /turf/simulated/floor/plating/random,
@@ -64201,7 +64194,7 @@
 "tHi" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 75;
+	drive_range = 82;
 	id = "crusher2"
 	},
 /obj/machinery/door/poddoor/pyro{

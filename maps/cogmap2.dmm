@@ -81,7 +81,7 @@
 "aau" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 70;
+	drive_range = 39;
 	id = "chapel_relayE";
 	name = "cargo driver"
 	},
@@ -140,7 +140,7 @@
 "aaO" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 70;
+	drive_range = 65;
 	id = "chapel_relayW";
 	name = "cargo driver"
 	},
@@ -173,7 +173,7 @@
 "aaU" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 30;
+	drive_range = 38;
 	id = null;
 	name = "cargo driver"
 	},
@@ -223,7 +223,7 @@
 /area/station/turret_protected/ai)
 "abc" = (
 /obj/machinery/mass_driver{
-	drive_range = 5;
+	drive_range = 25;
 	id = "arrivals_in";
 	name = "cargo driver"
 	},
@@ -1773,7 +1773,7 @@
 "afJ" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 4;
+	drive_range = 14;
 	id = "catering_out";
 	name = "cargo driver"
 	},
@@ -2038,6 +2038,7 @@
 "agu" = (
 /obj/machinery/mass_driver{
 	dir = 8;
+	drive_range = 262;
 	id = "drone_launcher"
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -2050,6 +2051,7 @@
 "agv" = (
 /obj/machinery/mass_driver{
 	dir = 8;
+	drive_range = 262;
 	id = "drone_launcher"
 	},
 /turf/simulated/floor/plating/random,
@@ -2100,7 +2102,7 @@
 "agI" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 4;
+	drive_range = 15;
 	id = "catering_out";
 	name = "cargo driver"
 	},
@@ -2249,7 +2251,7 @@
 "ahn" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 3;
+	drive_range = 20;
 	id = "chapel_out";
 	name = "cargo driver"
 	},
@@ -3330,7 +3332,7 @@
 "aky" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 3;
+	drive_range = 20;
 	id = "chapel_out";
 	name = "cargo driver"
 	},
@@ -4761,7 +4763,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "aoF" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "aoG" = (
@@ -5913,7 +5915,7 @@
 "arK" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 2;
+	drive_range = 25;
 	id = "arrivals_out";
 	name = "cargo driver"
 	},
@@ -6370,7 +6372,7 @@
 "asZ" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 2;
+	drive_range = 26;
 	id = "arrivals_out";
 	name = "cargo driver"
 	},
@@ -21255,7 +21257,7 @@
 	},
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 20;
+	drive_range = 87;
 	id = "evagun1"
 	},
 /turf/simulated/floor/shuttlebay{
@@ -21265,7 +21267,7 @@
 "bhm" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 20;
+	drive_range = 87;
 	id = "evagun1"
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -21372,7 +21374,7 @@
 	},
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 20;
+	drive_range = 87;
 	id = "evagun2"
 	},
 /turf/simulated/floor/shuttlebay{
@@ -21389,7 +21391,7 @@
 "bhz" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 20;
+	drive_range = 87;
 	id = "evagun2"
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -22167,7 +22169,7 @@
 	},
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 5;
+	drive_range = 7;
 	id = "owlery_in";
 	name = "cargo driver"
 	},
@@ -22463,7 +22465,7 @@
 "bkO" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 20;
+	drive_range = 87;
 	id = "evagun1"
 	},
 /obj/machinery/activation_button/driver_button{
@@ -22478,7 +22480,7 @@
 "bkP" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 20;
+	drive_range = 87;
 	id = "evagun1"
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -22766,7 +22768,7 @@
 "blJ" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 5;
+	drive_range = 8;
 	id = "owlery_in";
 	name = "cargo driver"
 	},
@@ -23460,7 +23462,7 @@
 "bnN" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 20;
+	drive_range = 87;
 	id = "evagun2"
 	},
 /obj/machinery/activation_button/driver_button{
@@ -23475,7 +23477,7 @@
 "bnO" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 20;
+	drive_range = 87;
 	id = "evagun2"
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -25885,7 +25887,7 @@
 "buc" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 5;
+	drive_range = 4;
 	id = "security_in";
 	name = "cargo driver"
 	},
@@ -27690,6 +27692,7 @@
 /obj/item/dice/d100,
 /obj/item/reagent_containers/food/drinks/bottle/ntbrew,
 /obj/machinery/light_switch/west,
+/mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "byz" = (
@@ -37608,7 +37611,7 @@
 "bVA" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 5;
+	drive_range = 6;
 	id = "engine_in";
 	name = "cargo driver"
 	},
@@ -37628,7 +37631,7 @@
 "bVB" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 5;
+	drive_range = 7;
 	id = "engine_in";
 	name = "cargo driver"
 	},
@@ -42200,12 +42203,7 @@
 	},
 /area/station/crew_quarters/hor)
 "cjq" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
+/obj/stool/bee_bed/heisenbee,
 /obj/critter/domestic_bee/heisenbee,
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -46560,7 +46558,7 @@
 "cvn" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 15;
+	drive_range = 9;
 	id = "disposals_up";
 	name = "cargo driver"
 	},
@@ -47249,7 +47247,7 @@
 "cwX" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 15;
+	drive_range = 10;
 	id = "disposals_up";
 	name = "cargo driver"
 	},
@@ -56308,7 +56306,7 @@
 /area/station/hangar/escape)
 "cVZ" = (
 /obj/machinery/mass_driver{
-	drive_range = 5;
+	drive_range = 13;
 	id = "escape_out";
 	name = "cargo driver"
 	},
@@ -56848,7 +56846,7 @@
 /area/station/hangar/escape)
 "cXn" = (
 /obj/machinery/mass_driver{
-	drive_range = 5;
+	drive_range = 13;
 	id = "escape_out";
 	name = "cargo driver"
 	},
@@ -57337,7 +57335,7 @@
 /area/station/mining/magnet)
 "cYC" = (
 /obj/machinery/mass_driver{
-	drive_range = 5;
+	drive_range = 8;
 	id = "cargo_out";
 	name = "cargo driver"
 	},
@@ -58476,7 +58474,7 @@
 	})
 "dbi" = (
 /obj/machinery/mass_driver{
-	drive_range = 5;
+	drive_range = 7;
 	id = "cargo_out";
 	name = "cargo driver"
 	},
@@ -59836,7 +59834,7 @@
 /area/station/hangar/science)
 "dfy" = (
 /obj/machinery/mass_driver{
-	drive_range = 3;
+	drive_range = 4;
 	id = "medsci_out";
 	name = "cargo driver"
 	},
@@ -60213,7 +60211,7 @@
 "dgJ" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 5;
+	drive_range = 8;
 	id = "cargo_in";
 	name = "cargo driver"
 	},
@@ -60297,7 +60295,7 @@
 "dgX" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 5;
+	drive_range = 13;
 	id = "escape_in";
 	name = "cargo driver"
 	},
@@ -60351,7 +60349,7 @@
 "dhf" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 37;
+	drive_range = 41;
 	id = "cargo_relayE";
 	name = "cargo driver"
 	},
@@ -60360,7 +60358,7 @@
 "dhg" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 27;
+	drive_range = 40;
 	id = "cargo_relayE";
 	name = "cargo driver"
 	},
@@ -60490,7 +60488,7 @@
 "dhC" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 27;
+	drive_range = 40;
 	id = "escape_relay";
 	name = "cargo driver"
 	},
@@ -65929,6 +65927,15 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
+"ioV" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 39;
+	id = null;
+	name = "cargo driver"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "ipl" = (
 /obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
@@ -67575,6 +67582,7 @@
 /area/station/crew_quarters/locker)
 "kwQ" = (
 /obj/machinery/mass_driver{
+	drive_range = 34;
 	id = "to_outpost";
 	name = "cargo driver"
 	},
@@ -69635,6 +69643,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
+"nwM" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 7;
+	id = "cargo_in";
+	name = "cargo driver"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "nwQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -70003,6 +70020,15 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/storage/primary)
+"ogh" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 12;
+	id = "escape_in";
+	name = "cargo driver"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "ogF" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -70646,6 +70672,7 @@
 /area/station/hangar/arrivals)
 "prn" = (
 /obj/machinery/mass_driver{
+	drive_range = 33;
 	name = "cargo driver"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -71170,6 +71197,15 @@
 	dir = 1
 	},
 /area/station/medical/medbay/lobby)
+"qkW" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 41;
+	id = "escape_relay";
+	name = "cargo driver"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "qkZ" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -74518,6 +74554,14 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/mining/magnet)
+"vfT" = (
+/obj/machinery/mass_driver{
+	drive_range = 26;
+	id = "arrivals_in";
+	name = "cargo driver"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "vht" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/light/emergency/exitsign,
@@ -74606,6 +74650,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/arrivals)
+"vqu" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 38;
+	id = "chapel_relayE";
+	name = "cargo driver"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "vrU" = (
 /obj/table/wood/auto,
 /obj/item/plantanalyzer,
@@ -125783,7 +125836,7 @@ aaa
 aaa
 aaa
 aaa
-dgJ
+nwM
 dgJ
 vzP
 dhd
@@ -127147,7 +127200,7 @@ aaa
 aaa
 aaa
 aam
-aau
+vqu
 aaE
 rZr
 aal
@@ -138927,7 +138980,7 @@ aaa
 aam
 kTY
 pVn
-aaU
+ioV
 aan
 aaS
 aah
@@ -139680,7 +139733,7 @@ aaS
 aan
 kTY
 eNc
-dhC
+qkW
 aaI
 aaa
 aaa
@@ -139834,7 +139887,7 @@ aal
 kiN
 kiN
 rSM
-abc
+vfT
 abc
 aaa
 aaa
@@ -139978,7 +140031,7 @@ aaa
 aaa
 aaa
 aaa
-dgX
+ogh
 dgX
 iae
 eNc

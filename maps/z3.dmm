@@ -9455,8 +9455,8 @@
 /obj/decal/fakeobjects{
 	density = 1;
 	desc = "Something about this robot seems very familiar.";
-	icon = 'icons/misc/evilreaverstation.dmi';
-	icon_state = "pr1_0";
+	icon = 'icons/obj/bots/robuddy/pr-1.dmi';
+	icon_state = "body";
 	name = "PR-1 Automated Checkpoint"
 	},
 /obj/machinery/light{
@@ -11350,7 +11350,8 @@
 	icon_state = "medibot0";
 	name = "D.O.C.";
 	productset = 4;
-	trader_area = "/area/abandonedmedicalship/robot_trader"
+	trader_area = "/area/abandonedmedicalship/robot_trader";
+	icon = 'icons/misc/evilreaverstation.dmi'
 	},
 /obj/map/light/white,
 /turf/simulated/floor/white/grime,
@@ -18096,8 +18097,8 @@
 /obj/decal/fakeobjects{
 	density = 1;
 	desc = "Something about this robot seems very exploitative. Also nonfunctional, but exploitative nonetheless.";
-	icon = 'icons/misc/evilreaverstation.dmi';
-	icon_state = "pr1_0";
+	icon = 'icons/obj/bots/robuddy/pr-1.dmi';
+	icon_state = "body";
 	name = "PR-1 Automated Capitalist"
 	},
 /obj/decal/cleanable/cobweb,

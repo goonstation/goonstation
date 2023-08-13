@@ -2238,12 +2238,7 @@
 	})
 "eX" = (
 /obj/machinery/light,
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
+/obj/stool/bee_bed/heisenbee,
 /obj/item/reagent_containers/food/snacks/beefood{
 	pixel_x = 8;
 	pixel_y = 8
@@ -17456,7 +17451,7 @@
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
 "Jr" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -20125,7 +20120,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/medical/robotics)
 "OG" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
