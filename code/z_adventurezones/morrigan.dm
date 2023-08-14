@@ -310,8 +310,40 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	name = "Plasma Rifle Rack"
 	icon_state = "plasmarifle_rack1"
 
-//NPCS for Morrigan
+/obj/decal/fakeobjects/gunbotrep
+	name = "Unfinished drones"
+	icon = 'icons/obj/adventurezones/morrigan/gunbot.dmi'
 
+/obj/decal/fakeobjects/gunbotrep/gunrep1
+	name = "Unfinised Sentinel"
+	desc = "Hafgan's fearsome model, this one seems to be unfinished."
+	icon_state = "gunbot_rep1"
+
+/obj/decal/fakeobjects/gunbotrep/gunrep2
+	name = "Unfinished Sentinel"
+	desc = "Hafgan's fearsome model, this one seems to be unfinished."
+	icon_state = "gunbot_rep2"
+/obj/decal/fakeobjects/gunbotrep/gunrep3
+	name = "Damaged Sentinel"
+	desc = "Seems worse for wear."
+	icon_state = "gunbot_rep3"
+
+/obj/decal/fakeobjects/gunbotrep/gunrep4
+	name = "Unfinished Sentinel"
+	desc = "Hafgan's fearsome model, this one seems to be unfinished."
+	icon_state = "gunbot_rep4"
+
+/obj/decal/fakeobjects/gunbotrep/jacklift
+	name = "Jack-lift"
+	desc = "Used to lift up units that need repairs or require finishing."
+	icon_state = "jacklift"
+/obj/decal/fakeobjects/tpractice
+	name = "Target Practice Dummy"
+	desc = "You can just IMAGINE why it's blue..."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "bopbagsyd"
+
+//NPCS for Morrigan
 /mob/living/carbon/human/hobo
 	New()
 		..()
@@ -1441,11 +1473,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /obj/item/clothing/suit/space/syndiehos
 	name = "Head of Security's coat"
-	desc = "A slightly armored jacket favored by Syndicate security personnel.!"
+	desc = "A slightly armored jacket favored by Syndicate security personnel!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	icon_state = "syndicommander_coat"
-	item_state = "syndicommander_coat"
+	item_state = "thermal"
 
 	setupProperties()
 		..()
@@ -1455,11 +1488,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /obj/item/clothing/under/suit/syndiehos
 	name = "Head of Security's Decorated Suit"
-	desc = "A little too familiar..."
+	desc = "An imposing jumpsuit that radiates with... evil order?"
 	icon = 'icons/obj/clothing/uniforms/item_js_rank.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_rank.dmi'
 	icon_state = "hos_syndie"
-	item_state = "hos_syndie"
+	item_state = "kilt"
 
 //Self Destruct Button
 
@@ -1589,3 +1623,28 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		. = ..()
 		SPAWN(5 SECONDS)
 			open()
+
+//gas mask please i beg
+
+/obj/item/clothing/mask/gas/eyemask
+	name = "Z-4KU mask"
+	desc = "A nifty LED Mask that changes color in hand!"
+	icon_state = "eyemask"
+	item_state = "gas_mask"
+	uses_multiple_icon_states = 1
+	color_r = 1
+	color_g = 0.8
+	color_b = 0.8
+
+	attack_self(mob/user)
+		user.show_text("The LED changes color!")
+		if (src.icon_state == "eyemask")
+			src.icon_state = "eyemask_b"
+		else if (src.icon_state == "eyemask_b")
+			src.icon_state = "eyemask_g"
+		else if (src.icon_state == "eyemask_g")
+			src.icon_state = "eyemask_p"
+		else if (src.icon_state == "eyemask_p")
+			src.icon_state = "eyemask_y"
+		else
+			src.icon_state = "eyemask"

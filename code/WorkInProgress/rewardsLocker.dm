@@ -1458,7 +1458,8 @@ datum/achievementReward/ai_dwaine
 				if (istype(M))
 					var/prev = M.name
 					M.icon_state = "reward_vest"
-					M.item_state = "reward_vest"
+					M.inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
+					M.item_state = "armorvest"
 					M.name = "NTSD Armor"
 					M.real_name = "NTSD Armor"
 					M.desc = "A fancy armor vest with badge and keys! (Base Item: [prev])"
@@ -1469,10 +1470,11 @@ datum/achievementReward/ai_dwaine
 				var/obj/item/clothing/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under))
 					var/prev = M.name
-					M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+					M.icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
 					M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
 					M.icon_state = "warden"
-					M.item_state = "warden"
+					M.item_state = "grey"
 					M.name = "NTSD Jumpsuit"
 					M.real_name = "NTSD Jumpsuit"
 					M.desc = "A uniform for the NTSD Units. (Base Item: [prev])"
@@ -1483,8 +1485,9 @@ datum/achievementReward/ai_dwaine
 				var/obj/item/clothing/M = H.head
 				if (istype(M, /obj/item/clothing/head))
 					var/prev = M.name
+					M.inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 					M.icon_state = "wardencap"
-					M.item_state = "wardencap"
+					M.item_state = "that"
 					M.name = "NTSD's Cap"
 					M.desc = "A fancy hat for the NTSD set. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
@@ -1495,8 +1498,9 @@ datum/achievementReward/ai_dwaine
 				var/obj/item/clothing/M = H.shoes
 				if (istype(M, /obj/item/clothing/shoes))
 					var/prev = M.name
+					M.inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 					M.icon_state = "warden"
-					M.item_state = "warden"
+					M.item_state = "swat"
 					M.name = "NTSD's boots"
 					M.real_name = "NTSD's boots"
 					M.desc = "This pair of boots has fits with the NTSD Set. (Base Item: [prev])"
