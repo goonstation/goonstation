@@ -291,8 +291,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	return
 
 /obj/machinery/vending/bullet_act(var/obj/projectile/P)
-	if((src.can_fall) && prob(P.power))
-		src.fall()
+	if(P.proj_data.damage_type & D_KINETIC)
+		if((src.can_fall) && prob(P.power))
+			src.fall()
 	..()
 
 /obj/machinery/vending/emag_act(var/mob/user, var/obj/item/card/emag/E)
