@@ -8,15 +8,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	var/timer = 0
 	var/cooldown = 0 SECONDS
 	var/inuse = FALSE
-	var/unpressed_icon = "doorctrl0"
-	var/pressed_icon = "doorctrl1"
-	var/unpowered_icon = "doorctrl-p"
-	var/image/chat_maptext/welcome_text
-	var/welcome_text_alpha = 140
-	var/welcome_text_color = "#FF0100"
 	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
+	/// following 3 variables should be adjusted in a subtype with different icons
+	var/unpressed_icon = "doorctrl0"
+	var/pressed_icon = "doorctrl1"
+	var/unpowered_icon = "doorctrl-p"
+	/// for the speak proc, only used for the sleeper agent door as things stand, use for other sentient door controllers etc.
+	var/image/chat_maptext/welcome_text
+	var/welcome_text_alpha = 140
+	var/welcome_text_color = "#FF0100"
 
 
 	// Please keep synchronizied with these lists for easy map changes:
@@ -485,8 +487,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 50, 1)
 	else
 		boutput(user, "<span class='alert'>It's broken.</span>")
-
-/obj/machinery/door_control/proc/speak(var/message) //Stolen from the vending module
+/// Stolen from the vending module
+/// For a flying chat and message addition to the controller
+/obj/machinery/door_control/proc/speak(var/message)
 	var/image/chat_maptext/welcome_text
 	if (status & NOPOWER)
 		return
@@ -499,8 +502,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 				if (I != welcome_text)
 					I.bump_up(welcome_text.measured_height)
 	return
-
-/obj/machinery/door_control/antagscanner // for sleepers entering listening post
+/// for sleepers entering listening post
+/obj/machinery/door_control/antagscanner
 	var/entrance_scanner = 0 // Do we want a welcome message or similar for the area upon activation?
 	name = "Dubious Hand Scanner"
 	id = "Sleeper_Access"
