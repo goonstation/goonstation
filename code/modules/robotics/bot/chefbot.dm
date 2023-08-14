@@ -15,9 +15,7 @@
 
 /obj/machinery/bot/chefbot/process()
 	. = ..()
-	if (raging)
-		return
-	if (!src.on)
+	if (raging || !src.on)
 		return
 	if(prob(src.emagged * 20))
 		drama()
@@ -156,18 +154,11 @@
 			if (1)
 				var/mob/living/carbon/human/somefucker = locate() in view(7, src)
 				if (somefucker)
-					speak(pick("WHAT IS THIS?",
-					"OH MY GOD.",
-					"HOLD IT RIGHT THERE!",
-					"STOP, STOP!",
-					"STOP EVERYTHING, LOOK AT THIS!"))
+					speak(pick_string("chefbot.txt", "found_food"))
 					drama()
 					sleep(3 SECONDS)
 					point(somefucker)
-					speak("WHO COOKED THIS?",
-					"DID YOU COOK THIS?",
-					"LOOK AT THIS SHIT!",
-					"20 YEARS OF COOKING AND I'VE NEVER SEEN SOMETHING SO SHIT IN MY ENTIRE CAREER!")
+					speak(pick_string("chefbot.txt", "emag_insult"))
 					sleep(3 SECONDS)
 					if (somefucker)
 						if (somefucker.getStatusDuration("burning") > 0)
@@ -184,22 +175,18 @@
 				else
 					var/mob/living/silicon/robot/someborg = locate() in view(7, src)
 					if (someborg)
-						speak(pick("WHAT IS THIS?", "OH MY GOD.", "HOLD IT RIGHT THERE!", "STOP, STOP!", "STOP EVERYTHING, LOOK AT THIS!"))
+						speak(pick_string("chefbot.txt", "found_food"))
 						drama()
 						sleep(3 SECONDS)
 						point(someborg)
-						speak("WHO COOKED THIS?", "DID YOU COOK THIS?", "LOOK AT THIS SHIT!", "I'VE NEVER SEEN SOMETHING SO SHIT IN MY ENTIRE CAREER!")
+						speak(pick_string("chefbot.txt", "emag_insult"))
 						sleep(3 SECONDS)
 						if (someborg)
 							speak("THIS ROBURGER IS SO FUCKING RAW [pick("IT'S STILL VIOLATING ITS LAWS", "IT HASN'T EVEN STARTED TO GO ROGUE")]!")
 			if (2)
 				drama()
 				sleep(3 SECONDS)
-				var/msg = pick("WHY DID THE CHICKEN CROSS THE ROAD? BECAUSE YOU DIDN'T FUCKING COOK IT.",
-				"THIS PORK IS SO RAW IT'S STILL SINGING HAKUNA MATATA!",
-				"THIS STEAK IS SO RAW OLD MCDONALD IS STILL TRYING TO MILK IT!",
-				"THIS FISH IS SO RAW IT'S STILL TRYING TO FIND NEMO!")
-				speak(msg)
+				speak(pick_string("chefbot.txt", "bad_joke"))
 			if (3)
 				var/obj/item/stuff_to_fling = null
 				for (var/obj/item/stuff in range(4, src))
@@ -210,20 +197,12 @@
 						stuff_to_fling = stuff
 						break
 				if (stuff_to_fling)
-					speak(pick("I'M DONE! I'M SO DONE!",
-					"THIS PLACE IS A GODDAMN DISGRACE.",
-					"IT'S A MESS! A PIG PEN! A FUCKING LANDFILL!",
-					"I'VE NEVER SEEN A RESTAURANT SO POORLY RUN!",
-					"STOP! STOP RIGHT NOW! THIS PLACE IS FINISHED!"))
+					speak(pick_string("chefbot.txt", "criticize_cleanliness"))
 					drama()
 					sleep (3 SECONDS)
 					if (stuff_to_fling)
 						src.navigate_to(stuff_to_fling, CHEFBOT_MOVE_SPEED / 2, 1, 15)
-						speak(pick("I CAN'T JUST STAND THERE AND WATCH THIS ALL GO TO SHIT!",
-						"WE'RE UP TO HERE IN THE SHIT AND YOU'RE NOT DOING ANYTHING ABOUT IT!",
-						"LOOK AT THIS MESS! LOOK AT IT!",
-						"HAVE YOU NEVER DRESSED A TABLE BEFORE?!",
-						"DIRTY DISHES! DIRTY UTENSILS! WERE YOU RAISED IN A BARN YOU DONKEY?"))
+						speak(pick_string("chefbot.txt", "adjust_cutlery"))
 						sleep (3 SECONDS)
 						if ((stuff_to_fling) && (stuff_to_fling in range(1, src)))
 							ThrowRandom(stuff_to_fling, 4, 1)
