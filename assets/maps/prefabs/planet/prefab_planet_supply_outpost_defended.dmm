@@ -1,0 +1,473 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"c" = (
+/obj/storage/crate,
+/obj/random_item_spawner/circuitboards/two,
+/obj/random_item_spawner/buddytool/one_or_zero,
+/obj/random_item_spawner/junk/some,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"d" = (
+/obj/storage/crate/medical,
+/obj/random_item_spawner/medicine/some,
+/obj/random_item_spawner/med_tool/maybe_few,
+/obj/random_item_spawner/med_kit/one,
+/obj/random_item_spawner/med_kit/one,
+/obj/random_item_spawner/med_kit/one_or_zero,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"e" = (
+/obj/storage/secure/closet/fridge,
+/obj/random_item_spawner/snacks/some,
+/obj/item/reagent_containers/food/drinks/milk,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/cola/random,
+/obj/item/reagent_containers/food/drinks/cola/random,
+/turf/unsimulated/floor/concrete,
+/area/noGenerate)
+"f" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 4
+	},
+/turf/unsimulated/floor/concrete,
+/area/noGenerate)
+"g" = (
+/turf/unsimulated/floor/auto/dirt,
+/area/allowGenerate)
+"l" = (
+/obj/item/bballbasket{
+	dir = 1;
+	pixel_y = 24
+	},
+/turf/unsimulated/floor/auto/dirt,
+/area/noGenerate)
+"m" = (
+/obj/table/auto,
+/obj/machinery/microwave,
+/turf/unsimulated/floor/concrete,
+/area/noGenerate)
+"n" = (
+/turf/unsimulated/floor/auto/dirt,
+/area/noGenerate)
+"q" = (
+/obj/item/basketball,
+/turf/unsimulated/floor/auto/dirt,
+/area/noGenerate)
+"r" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/noGenerate)
+"s" = (
+/obj/table/auto,
+/obj/item/plate,
+/obj/item/plate{
+	pixel_y = 2
+	},
+/obj/item/plate{
+	pixel_y = 4
+	},
+/obj/item/plate{
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/concrete,
+/area/noGenerate)
+"t" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/furniture_parts/some,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"u" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/tableware/two,
+/obj/random_item_spawner/snacks/some,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"v" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/turf/unsimulated/floor/concrete,
+/area/noGenerate)
+"w" = (
+/obj/stool/chair,
+/turf/unsimulated/floor/concrete,
+/area/noGenerate)
+"z" = (
+/obj/vehicle/forklift,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"A" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/random,
+/turf/unsimulated/floor/concrete,
+/area/noGenerate)
+"C" = (
+/obj/shrub/random,
+/turf/unsimulated/floor/auto/dirt,
+/area/noGenerate)
+"D" = (
+/obj/item/storage/toilet{
+	name = "pit toilet";
+	dir = 8
+	},
+/obj/decoration/toiletholder{
+	pixel_y = -8
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/unsimulated/floor/concrete,
+/area/noGenerate)
+"E" = (
+/obj/storage/crate,
+/obj/random_item_spawner/junk/some,
+/obj/random_item_spawner/tools_w_igloves/some,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"F" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/hat/one_or_zero,
+/obj/random_item_spawner/desk_stuff/some,
+/obj/random_item_spawner/shoe/one_or_zero,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"H" = (
+/obj/machinery/light/incandescent/netural,
+/obj/storage/crate/biohazard,
+/obj/item/clothing/suit/bio_suit/armored,
+/obj/item/clothing/head/bio_hood,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"I" = (
+/obj/table/auto,
+/turf/unsimulated/floor/concrete,
+/area/noGenerate)
+"J" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/unsimulated/floor/concrete,
+/area/noGenerate)
+"K" = (
+/obj/decal/poster/wallsign/warning1,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/noGenerate)
+"M" = (
+/turf/unsimulated/floor/concrete,
+/area/noGenerate)
+"O" = (
+/turf/simulated/wall/auto/supernorn,
+/area/noGenerate)
+"P" = (
+/obj/storage/secure/closet/personal/empty,
+/turf/unsimulated/floor/concrete,
+/area/noGenerate)
+"S" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/auto/dirt,
+/area/noGenerate)
+"T" = (
+/obj/table/auto,
+/obj/random_item_spawner/tableware/two,
+/obj/random_item_spawner/snacks/one,
+/turf/unsimulated/floor/concrete,
+/area/noGenerate)
+"V" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/unsimulated/floor/concrete,
+/area/noGenerate)
+"W" = (
+/obj/deployable_turret/outpost/active/south,
+/turf/unsimulated/floor/auto/dirt,
+/area/noGenerate)
+"X" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/concrete,
+/area/noGenerate)
+"Y" = (
+/obj/table/auto,
+/obj/machinery/coffeemaker,
+/obj/drink_rack/mug{
+	pixel_x = 28
+	},
+/turf/unsimulated/floor/concrete,
+/area/noGenerate)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+r
+r
+r
+r
+r
+r
+r
+r
+r
+r
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+r
+r
+P
+P
+A
+O
+n
+C
+H
+d
+r
+r
+a
+a
+"}
+(4,1,1) = {"
+a
+r
+P
+M
+M
+X
+O
+n
+n
+t
+u
+E
+r
+K
+a
+"}
+(5,1,1) = {"
+a
+r
+A
+X
+M
+A
+O
+n
+n
+z
+F
+c
+r
+r
+g
+"}
+(6,1,1) = {"
+a
+r
+O
+O
+v
+O
+O
+n
+n
+n
+n
+n
+n
+n
+g
+"}
+(7,1,1) = {"
+a
+r
+C
+n
+n
+n
+n
+n
+n
+n
+n
+n
+W
+n
+g
+"}
+(8,1,1) = {"
+a
+r
+l
+q
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+g
+"}
+(9,1,1) = {"
+a
+r
+n
+C
+n
+n
+S
+n
+n
+n
+n
+n
+n
+n
+g
+"}
+(10,1,1) = {"
+a
+r
+O
+O
+O
+f
+O
+O
+O
+n
+n
+n
+W
+n
+g
+"}
+(11,1,1) = {"
+a
+r
+s
+X
+M
+M
+X
+V
+O
+n
+S
+n
+n
+n
+g
+"}
+(12,1,1) = {"
+a
+r
+I
+M
+M
+M
+w
+T
+O
+n
+O
+f
+r
+r
+g
+"}
+(13,1,1) = {"
+a
+r
+Y
+M
+M
+M
+w
+T
+O
+n
+O
+D
+r
+K
+a
+"}
+(14,1,1) = {"
+a
+r
+r
+e
+m
+X
+M
+J
+O
+C
+O
+r
+r
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+r
+r
+r
+r
+r
+r
+r
+r
+r
+r
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

@@ -22,10 +22,6 @@
 	unlock_message = "You have gained Call Frost Bats, a protection spell."
 	var/datum/projectile/special/homing/orbiter/spiritbat/P = new
 
-	flip_callback()
-		var/datum/abilityHolder/vampire/H = holder
-		H.launch_bat_orbiters()
-
 	cast(mob/target)
 		if (!holder)
 			return 1

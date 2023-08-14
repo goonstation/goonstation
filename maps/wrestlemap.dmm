@@ -24641,7 +24641,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/storage/warehouse)
 "kvb" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/machinery/light/small/warm{
 	dir = 1
 	},
@@ -33640,12 +33640,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_south)
 "oqg" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
+/obj/stool/bee_bed/heisenbee,
 /obj/critter/domestic_bee/heisenbee,
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/light/incandescent/warm{
@@ -49239,7 +49234,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/science/teleporter)
 "uYI" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},

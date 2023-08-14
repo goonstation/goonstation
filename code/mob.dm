@@ -55,7 +55,7 @@
 	var/memory = ""
 	var/atom/movable/pulling = null
 	var/mob/pulled_by = null
-	var/stat = 0
+	var/stat = STAT_ALIVE
 	var/next_click = 0
 	var/transforming = null
 	var/hand = 0
@@ -408,9 +408,11 @@
 		src.buckled.buckled_guy = null
 
 	mobs.Remove(src)
-	if (ai)
+
+	if (src.ai)
 		qdel(ai)
 		ai = null
+
 	mind = null
 	ckey = null
 	client = null
@@ -2437,7 +2439,7 @@
 	if (src.hasStatus("handcuffed"))
 		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp
-	if (src.stat > 1)
+	if (isdead(src))
 		setalive(src)
 
 /mob/proc/infected(var/datum/pathogen/P)

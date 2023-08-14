@@ -999,7 +999,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 	if(length(item_name_to_throw))
 		for(var/datum/data/vending_product/R in src.product_list)
-			if(lowertext(item_name_to_throw) == lowertext(strip_html(R.product_name_cache[R.product_path], no_fucking_autoparse = TRUE)))
+			if(lowertext(strip_html(item_name_to_throw, no_fucking_autoparse = TRUE)) == lowertext(strip_html(R.product_name_cache[R.product_path], no_fucking_autoparse = TRUE)))
 				if(R.product_amount > 0 && !(R.product_hidden && !src.extended_inventory))
 					throw_item_act(R, target)
 					return R
@@ -2728,7 +2728,11 @@ TYPEINFO(/obj/machinery/vending/monkey)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 2, cost=PAY_TRADESMAN, hidden=1)
+
+	with_ammo
+		create_products()
+			..()
+			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 2, cost=PAY_TRADESMAN, hidden=1)
 
 TYPEINFO(/obj/machinery/vending/chem)
 	mats = null

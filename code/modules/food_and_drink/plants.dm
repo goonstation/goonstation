@@ -1469,6 +1469,20 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	validforhat = 1
 	food_color = "#e0a80c"
 
+/obj/item/reagent_containers/food/snacks/plant/cinnamon
+	name = "cinnamon stick"
+	crop_suffix = " stick"
+	desc = "A spice known for its sweet and aromatic flavor, often used in cooking and baking."
+	icon_state = "cinnamonstick"
+	planttype = /datum/plant/veg/cinnamon
+	edible = 1
+	validforhat = 1
+	food_color = "#C58C66"
+
+	make_reagents()
+		..()
+		reagents.add_reagent("cinnamon", 20)
+
 /obj/item/reagent_containers/food/snacks/plant/lashberry
 	name = "lashberry"
 	desc = "Not nearly as violent as the plant it came from."

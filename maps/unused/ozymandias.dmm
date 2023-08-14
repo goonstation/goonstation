@@ -374,12 +374,7 @@
 /turf/space,
 /area/space)
 "afD" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
+/obj/stool/bee_bed/heisenbee,
 /obj/critter/domestic_bee/heisenbee,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/hor)
@@ -40228,7 +40223,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/quartersA)
 "kvk" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -78476,7 +78471,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/storage/eva)
 "uaG" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12

@@ -260,7 +260,7 @@
 		hud.update_pulling()
 
 	death(gibbed)
-		src.stat = 2
+		setdead(src)
 		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		src.mind?.register_death()

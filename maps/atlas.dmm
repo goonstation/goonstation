@@ -2195,7 +2195,7 @@
 "ahb" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 100;
+	drive_range = 105;
 	id = "chapelgun"
 	},
 /turf/simulated/floor/plating,
@@ -2203,7 +2203,7 @@
 "ahc" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 100;
+	drive_range = 104;
 	id = "chapelgun"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -2250,7 +2250,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
 "ahj" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "ahk" = (
@@ -3674,8 +3674,8 @@
 /obj/disposalpipe/segment,
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon6,
 /obj/item/device/radio/intercom/AI{
-	dir = 8;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -5750,7 +5750,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/teleporter,
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "atz" = (
@@ -5875,6 +5875,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/hydro_mister,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "atM" = (
@@ -10020,7 +10021,7 @@
 "aFU" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 20;
+	drive_range = 105;
 	id = "trash"
 	},
 /turf/simulated/floor/plating,
@@ -10028,7 +10029,7 @@
 "aFV" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 20;
+	drive_range = 104;
 	id = "trash"
 	},
 /obj/machinery/door/poddoor/pyro{

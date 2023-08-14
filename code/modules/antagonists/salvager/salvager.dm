@@ -95,9 +95,9 @@
 
 		do
 			. = rand(R_FREQ_MINIMUM, R_FREQ_MAXIMUM)
+			. = sanitize_frequency(.)
 		while (. in blacklisted)
 
-		. = sanitize_frequency(.)
 		starting_freq = .
 
 	handle_round_end(log_data)
