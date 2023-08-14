@@ -22,7 +22,7 @@ If you are creating a new map for Goonstation, we have the following mapping gui
 
 If these features do not work in the current codebase then your map PR will be **rejected** and ineligible for resubmission for a full calendar month.
 
-- Crates should be able to be ordered from cargo, and arrive where expected **without player intervention**. Sitting in a few-tile conveyor "airlock"  is fine (see Destiny), sitting outside because the door did not open at all is not; missing the conveyor entirely is definitely not fine.
+- Crates should be able to be ordered and sold from cargo, and arrive where expected **without player intervention**. Sitting in a few-tile conveyor "airlock"  is fine, when waiting to come in or out (see Destiny), sitting outside/inside because the door did not open at all is not; missing the conveyor entirely is definitely not fine.
 - **Access levels** (for both doors and machinery, e.g. NanoMeds, AI turrets) should be correct. Missing a small handful is acceptable, but if excess access levels are incorrect (at the coders' discretion) the map will be rejected. Using the new access_spawn objects is required. :door: 
 - Wiring and pipes (disposals, mail, brig, and morgue/crematorium, if present) should be **complete and error-free** for the most part. Obviously, it is okay if you are missing a single wire or something.
     - Note to above: SpyGuy and Haine made a wonderful tool to test disposal networks, it is included in the maps/ folder.
