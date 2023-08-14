@@ -11,11 +11,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
-	/// following 3 variables should be adjusted in a subtype with different icons
+	// following 3 variables should be adjusted in a subtype with different icons
 	var/unpressed_icon = "doorctrl0"
 	var/pressed_icon = "doorctrl1"
 	var/unpowered_icon = "doorctrl-p"
-	/// for the speak proc, only used for the sleeper agent door as things stand, use for other sentient door controllers etc.
+	// for the speak proc, only used for the sleeper agent door as things stand, use for other sentient door controllers etc.
 	var/image/chat_maptext/welcome_text
 	var/welcome_text_alpha = 140
 	var/welcome_text_color = "#FF0100"
@@ -487,10 +487,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 50, 1)
 	else
 		boutput(user, "<span class='alert'>It's broken.</span>")
-/// Stolen from the vending module
-/// For a flying chat and message addition to the controller
+// Stolen from the vending module
+/// For a flying chat and message addition upon controller activation, not called outside of a child as things stand
 /obj/machinery/door_control/proc/speak(var/message)
-	var/image/chat_maptext/welcome_text
 	if (status & NOPOWER)
 		return
 	else
