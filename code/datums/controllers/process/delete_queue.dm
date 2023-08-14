@@ -16,7 +16,7 @@ var/global/harddel_count = 0
 	var/tmp/datum/dynamicQueue/delete_queue = 0
 #endif
 
-#if defined(LOG_HARD_DELETE_REFERENCES) || defined(AUTO_REFERENCE_TRACKING_ON_HARD_DEL) || defined(LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO)
+#if defined(LOG_HARD_DELETE_REFERENCES) || defined(LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO)
 	var/log_hard_deletions = 2
 #else
 
@@ -85,16 +85,9 @@ var/global/harddel_count = 0
 					for(var/x in result)
 						logTheThing(LOG_DEBUG, text=x)
 #endif
-#ifdef AUTO_REFERENCE_TRACKING_ON_HARD_DEL
-				if (log_hard_deletions >= 2)
-					for(var/client/C)
-						if(C.holder && C.holder.level >= LEVEL_CODER)
-							C.view_references(D)
-#endif
 
 			delcount++
 			harddel_count++
-#ifndef AUTO_REFERENCE_TRACKING_ON_HARD_DEL
 			D.qdeled = 0
 
 	#ifndef HARD_DELETIONS_DISABLED
@@ -104,7 +97,6 @@ var/global/harddel_count = 0
 				gimmick_ungcd_mob_stuff(D)
 	#endif
 
-#endif
 		global.delete_queue_2[global.delqueue_pos].len = 0
 		global.delqueue_pos = (global.delqueue_pos % DELQUEUE_SIZE) + 1
 

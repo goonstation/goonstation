@@ -25,7 +25,7 @@ var/global/totally_random_jobs = FALSE
 		if(!player.client || !player.client.preferences) //Well shit.
 			continue
 		var/datum/preferences/P  = player.client.preferences
-		if(checktraitor(player))
+		if(player.mind?.is_antagonist())
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				if (J.cant_spawn_as_rev || ("loyalist" in P.traitPreferences.traits_selected)) //Why would an NT Loyalist be a revolutionary?
 					continue
@@ -186,7 +186,7 @@ var/global/totally_random_jobs = FALSE
 		var/datum/job/JOB = find_job_in_controller_by_string(player.client.preferences.job_favorite)
 		// Do a few checks to make sure they're allowed to have this job
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			if(checktraitor(player) && (JOB.cant_spawn_as_rev || JOB.cant_spawn_as_con))
+			if(player.mind?.is_antagonist() && (JOB.cant_spawn_as_rev || JOB.cant_spawn_as_con))
 				// Fixed AI, security etc spawning as rev heads. The special job picker doesn't care about that var yet,
 				// but I'm not gonna waste too much time tending to a basically abandoned game mode (Convair880).
 				continue

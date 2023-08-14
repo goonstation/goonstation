@@ -13,7 +13,7 @@
 	blood_id = "bloodc"
 	table_hide = 0
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	var/datum/abilityHolder/changeling/hivemind_owner = 0
 	var/icon_prefix = ""
 	/// Part this limb critter is based off of- i.e. a cow making a legworm would be a cow leg. Could also be an eye or butt, hence loose type

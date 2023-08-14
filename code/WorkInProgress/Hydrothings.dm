@@ -1,11 +1,7 @@
 //Content related to Operation Fuckable Owls
-obj/decal/floor/displays/owlsign
-
-
-
+/obj/decal/floor/displays/owlsign
 	icon = 'icons/misc/Owlzone.dmi'
 	icon_state = "owlsign-left"
-
 
 /obj/item/paper/postcard/owlery
 	name = "Owlery post card"
@@ -28,8 +24,7 @@ obj/decal/floor/displays/owlsign
 	attackby()
 		return
 
-
-obj/item/paper/bombininote
+/obj/item/paper/bombininote
 	name = "smelly note"
 	interesting = "There are traces of Escherichia Coli, Salmonella, and synthetic grasslike fibers dusted across the note. The handwriting seems mechanical."
 	desc = "A note which smells faintly of... Owls?"
@@ -37,7 +32,7 @@ obj/item/paper/bombininote
 		<br>
 		<br><b>(This message brought to you by Gaggle Translation services, this message was translated to ENGLISH from OWL.)"}
 
-obj/item/paper/paperwelcome
+/obj/item/paper/paperwelcome
 	name = "paper- 'crumpled paper'"
 	desc = "This paper seems like a script for a speech, it's all crumpled up."
 	interesting = "A faint scent of butterscotch lingers on this paper"
@@ -62,14 +57,14 @@ obj/item/paper/paperwelcome
 			<br>We appreciate your cooperation, and so will the owls!
 			<h5>The rest of the note is torn off.</h5>"}
 
-obj/item/paper/rippednote
+/obj/item/paper/rippednote
 	name = "paper- 'torn Up paper'"
 	desc = "This paper is barely able to be read, it looks like a bird ripped it up or something."
 	info = {"Kyle, I'm leaving this note here for when you find this. <i>What. The. Fuck.</i>
 			<br>Why did you decide this was a good spot for an APC? Come on man.
 			<br>The birds are going to destroy this thing here. Get this fixed you idiot and report to my office once you're done. -Alex"}
 
-obj/item/paper/hootening
+/obj/item/paper/hootening
 	name = "paper- 'Experiment #620'"
 	desc = "An experiment log, part of it is obscured by a coffee stain."
 	info = {"<b>Experiment Log #620.</b>
@@ -88,7 +83,7 @@ obj/item/paper/hootening
 			<br>Hour 5: Halo FAILED suject brokem restraint  , arm is broken. have
 			<br>been forced to seal and abandon  chamber  samples INTACT "}
 
-obj/item/paper/cleanerorder
+/obj/item/paper/cleanerorder
 	name = "paper- 'Mission Statement'"
 	info = {"<b>Mission Statement for NT/SEC/FORN #36322</b>
 			<br>Arrange civilian transport to Designated Facility (DF) 'Frontier Space Owlery' under assigned cover, rank: Substitute Custodian
@@ -115,7 +110,7 @@ obj/item/paper/cleanerorder
 			<li>6 BLAM!-brand Cleaning Grenades
 			<li>1 'Sleepypen' Ketamine Injector (CONDITION: OPERATIONAL SECURITY)"}
 
-obj/item/paper/cargoinvoice
+/obj/item/paper/cargoinvoice
 	name = "paper- 'Daily Order'"
 	desc = "This paper is barely able to be read, it looks like someone spilled coffee on it."
 	info = {"<b>Frontier Space Owlery: Daily Order</b>
@@ -125,7 +120,7 @@ obj/item/paper/cargoinvoice
 			<br><li>5 Crates 144/ct Donk Pockets, Frozen
 			<br><li>1 copy of "A Qualitative Metholodogy of Applied Mutagenics, Vol. 3" by Dr. Amy Habicht."}
 
-obj/item/paper/shuttle_heist
+/obj/item/paper/shuttle_heist
 	name = "DEAR FIRST SHIFT TEAM"
 	desc = "This note looks ANGRY."
 	info = {"<b>WHY: I ASK YOU</b>
@@ -136,16 +131,13 @@ obj/item/paper/shuttle_heist
 			<br>WHY did you let him haul away a bunch of our kitchen crates
 			<br>AND WHY did you let him STEAL ONE OF OUR GODDAMN SHUTTLES"}
 
-
-
-
-obj/item/paper/randomencounter
+/obj/item/paper/randomencounter
 	name = "paper- 'Weird-ass guy'"
 	info = {"Hey its me Jacob, shifts have just about changed but we ran into a crazy dude just now.
 		<br>Guy came running in from the tour route holding a fucking flamethrower!
 		<br>We were able to take him down before he could use the fucking thing. But im not really sure what to do with his stuff. For now we left it inside the confiscated items locker."}
 
-obj/item/paper/getaway
+/obj/item/paper/getaway
 	name = "paper- 'Experiment #621: Success'"
 	info = {"As of writing this experiment #621 has been a success. With the blood samples from Experiment #620, I have finally created a reliable synthesis method for this 'Hootagen' shit.
 			<br>I will be presenting my findings in person to AH and the Professor at Aurora's. I'll have to leave James in charge here.
@@ -153,19 +145,19 @@ obj/item/paper/getaway
 			<br>Had to tell the crew here I busted my arm when I slipped on spilled coffee. Blamed Addle for it and wrote him up, he's a klutz anyways.
 			<br>I'll call in a cleaner to wipe this lab down, can't be too careful nowadays with NT snooping around everywhere."}
 
-obj/item/paper/fuckingidiot
+/obj/item/paper/fuckingidiot
 	name = "paper- 'Memo'"
 	info = {"Hey Alex, James here. Just leaving this note here for when you come back. Kyle and I were fixing a disposals jam and found one of the missing jugs of Owl Nutrients stuck in one of the tubes.
 			<br>Dang janitor must have tossed some full jugs out by accident before he took off. So I tossed it in with the rest of the supplies. Kinda gross, why's this Formula 620 stuff smell like rotting plants?
 			<br>Are you buying from a new producer? I heard it's unhealthy to switch owl feed brands like that."}
 
-obj/item/paper/failedexperiment
+/obj/item/paper/failedexperiment
 	name = "paper- 'Experiment #616 results'"
 	info = {"Experiment #616 has been a failure, the chemical synthesis method again did not yield the "Hootagen" I seek.
 			<br>Strangly though instead of the usual flash, explosion or dangerous gas reaction it seems it preciptated into a drab green substance smelling of decayed vegetation.
 			<br>I am experiencing severely intrusive violent thoughts and a really fucking bad headache I suspect stemmed from this brief exposure. Should be more careful around this fucking owl gunk."}
 
-obj/item/paper/employment
+/obj/item/paper/employment
 	name = "paper- 'New Horizons'"
 	info = {"So since this started happening I have decided to begin keeping a journal incase this all blows up in my face.
 			<br>Recently I was contacted by my old college friend Amy on behalf of her employer. Seems this Professor Hootens guy heard about my incident getting fired from NT14.
@@ -179,7 +171,7 @@ obj/item/paper/employment
 			<br>with the expectation that I'll keep up appearances for the normal tourist nonsense while I'm here.
 			<br>So I have decided, probably against my better judgment to accept their offer. I can only hope these guys don't plan to off me once its all said and done. -Dr. Alex Cornwall, PhD."}
 
-obj/item/paper/hootagenhint
+/obj/item/paper/hootagenhint
 	name = "paper- 'Hootagen Research Notes'"
 	info = {"Do research on things that turn into other things because you need to turn the person into another thing? Like a chameleon but different maybe?
 			<br>
@@ -335,7 +327,7 @@ obj/item/paper/hootagenhint
 	assignment = null
 	title = null
 
-obj/decal/fakeobjects/bustedpod
+/obj/decal/fakeobjects/bustedpod
 	name = "Busted Escape Pod"
 	desc = "A escape pod for escaping. It seems to be busted."
 	icon = 'icons/obj/ship.dmi'
@@ -346,7 +338,7 @@ obj/decal/fakeobjects/bustedpod
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl/madness
 	critter_type = /obj/critter/madnessowl
 
-obj/item/gnomechompski/elf
+/obj/item/gnomechompski/elf
 	name = "Gnelf Cnompski"
 	desc = "Wait this isn't a gnome..."
 	icon = 'icons/obj/junk.dmi'
@@ -373,7 +365,6 @@ obj/item/gnomechompski/elf
 
 	attack_self(mob/user as mob)
 		reload_gun(user)
-
 
 	attack(mob/M, mob/user)
 		fire_gun(user)
@@ -438,7 +429,6 @@ obj/item/gnomechompski/elf
 	associated_reagent = "hootonium" // associated reagent, duh
 
 /datum/ailment/disease/hootonium/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
-
 	if (..())
 		return
 	switch(D.stage)
@@ -558,7 +548,6 @@ obj/item/gnomechompski/elf
 		reagents.add_reagent("madness_toxin", 50)
 		reagents.add_reagent("lexorin", 50)
 		reagents.add_reagent("formaldehyde", 50)
-
 
 /obj/machinery/power/apc/owlery
 	noalerts = 1
@@ -759,7 +748,7 @@ obj/item/gnomechompski/elf
 			src.visible_message("<span class='alert'><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
 			src.set_dir(pick(alldirs))
 
-obj/critter/madnessowl
+/obj/critter/madnessowl
 	name = "space owl"
 	desc = "This owl has bloodshot eyes and seems to be snarling at you. What the fuck."
 	icon = 'icons/misc/Owlzone.dmi'
@@ -777,7 +766,7 @@ obj/critter/madnessowl
 	brutevuln = 1
 	angertext = "hoots angrily at"
 	death_text = "%src% falls into a heap on the floor and releases a gargled hoot."
-	butcherable = 2
+	butcherable = BUTCHER_ALLOWED
 	flying = 1
 	chases_food = 1
 	scavenger = 1
@@ -827,7 +816,6 @@ obj/critter/madnessowl
 			random_brute_damage(src.target, 2,1)
 			SPAWN(rand(1,10))
 				src.attacking = 0
-
 		return
 
 	ChaseAttack(mob/M)
@@ -845,7 +833,7 @@ obj/critter/madnessowl
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 35, 1, -1)
 			sleep(1 SECOND)
 
-obj/critter/madnessowl/gun
+/obj/critter/madnessowl/gun
 	name = "space owl with a gun"
 	icon_state = "madsmallowlgun"
 	dead_state = "madsmallowlgun-dead"
@@ -875,7 +863,7 @@ obj/critter/madnessowl/gun
 				src.attack = 0
 				return
 
-obj/critter/madnessowl/switchblade
+/obj/critter/madnessowl/switchblade
 	name = "space owl with a switchblade"
 	desc = "Oh god it found a knife, how more dangerous can they get?"
 	icon_state = "madsmallowlknife"
@@ -894,9 +882,6 @@ obj/critter/madnessowl/switchblade
 			take_bleeding_damage(target, null, 5, DAMAGE_STAB, 1, get_turf(target))
 			SPAWN(rand(1,10))
 				src.attacking = 0
-
-
-
 		return
 
 	ChaseAttack(mob/M)
@@ -905,7 +890,6 @@ obj/critter/madnessowl/switchblade
 			playsound(src.loc, pick(sounds_rustle), 50, 1, -1)
 		if(ismob(M))
 			src.attacking =1
-
 			if(prob(20))
 				src.visible_message("<span class='combat'><B>[src]</B> swoops down upon [M] and plunges a blade deep into their back!</span>")
 				playsound(src.loc, 'sound/impact_sounds/Blade_Small.ogg', 40, 1, -1)
@@ -960,7 +944,6 @@ obj/critter/madnessowl/switchblade
 		name = "The Hootening"
 		return
 
-
 /// ALTERNATE HOOTENING ATTEMPT
 
 /obj/critter/hootening
@@ -980,13 +963,11 @@ obj/critter/madnessowl/switchblade
 	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	seekrange = 6
 	density = 1
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	can_revive = 0
 	var/boredom_countdown = 0
 	var/flailing = 0
 	var/frenzied = 0
-
-
 
 	CritterDeath()
 		if (src.alive)
@@ -1020,7 +1001,6 @@ obj/critter/madnessowl/switchblade
 			playsound(src.loc, 'sound/voice/animal/hoot.ogg', 75, 1)
 			src.visible_message("<span class='alert'><b>[src] hoots!</b></span>", 1)
 			break
-
 
 	attackby(obj/item/W, mob/living/user) //ARRRRGH WHY
 		user.lastattacked = src
@@ -1070,7 +1050,6 @@ obj/critter/madnessowl/switchblade
 				user.changeStatus("weakened", 0.5 SECONDS)
 				user.changeStatus("stunned", 0.5 SECONDS)
 
-
 		if (src.alive && src.health <= 0) src.CritterDeath()
 
 		//src.boredom_countdown = rand(5,10)
@@ -1109,7 +1088,6 @@ obj/critter/madnessowl/switchblade
 			src.visible_message("<span class='alert'><b>[user]</b> pets [src]!</span>", 1)
 			playsound(src.loc, 'sound/voice/animal/hoot.ogg', 60, 1)
 			src.visible_message("<span class='alert'><b>[src] hoots!</b></span>", 1)
-
 
 	ChaseAttack(mob/M)
 		if(!flailing) src.flail()
@@ -1194,7 +1172,6 @@ obj/critter/madnessowl/switchblade
 		SPAWN(attack_delay)
 			src.attacking = 0
 
-
 	proc/flail()
 		if (flailing)
 			return
@@ -1210,7 +1187,6 @@ obj/critter/madnessowl/switchblade
 			src.pixel_y = 0
 			if(flailing < 0)
 				flailing = 0
-
 
 	// go crazy and make a huge goddamn mess
 	proc/frenzy(mob/M)
@@ -1233,8 +1209,6 @@ obj/critter/madnessowl/switchblade
 				sleep(0.4 SECONDS)
 				src.frenzied--
 			src.frenzied = 0
-
-
 
 //FUCKABLE AREAS!!
 var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlzone/owlsfx1.ogg','sound/ambience/owlzone/owlsfx2.ogg','sound/ambience/owlzone/owlsfx3.ogg','sound/ambience/owlzone/owlsfx4.ogg','sound/ambience/owlzone/owlsfx5.ogg','sound/machines/hiss.ogg')
@@ -1266,7 +1240,6 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 					for(var/mob/M in src)
 						if (M.client)
 							M.client.playAmbience(src, AMBIENCE_FX_2, 50)
-
 
 /area/owlery/Owlopen
 	name = "Owlery Arrivals"
@@ -1332,7 +1305,6 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	name = "Administrator's Office"
 	icon_state = "red"
 	sound_loop = 'sound/ambience/station/JazzLounge1.ogg'
-
 
 //Other fuckable things
 /proc/owl_slam()

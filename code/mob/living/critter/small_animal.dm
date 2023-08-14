@@ -58,7 +58,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	can_throw = TRUE
 	can_grab = TRUE
 	can_disarm = TRUE
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	name_the_meat = TRUE
 	max_skins = 1
 	health_brute = 20 // moved up from birds since more than just they can use this, really
@@ -833,7 +833,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	desc = "Good dog."
 	icon_state = "george"
 	icon_state_dead = "george-lying"
-	butcherable = 0
+	butcherable = BUTCHER_NOT_ALLOWED
 	health_brute = 100
 	health_burn = 100
 	dogtype = "george"
@@ -2189,7 +2189,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 2
 	speechverb_say = "croaks"
 	speechverb_exclaim = "croaks"
-	butcherable = 0
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
@@ -2250,7 +2249,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 2
 	speechverb_say = "hisses"
 	speechverb_exclaim = "barks"
-	butcherable = 0
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
@@ -2361,7 +2359,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 2
 	speechverb_say = "hisses"
 	speechverb_exclaim = "barks"
-	butcherable = FALSE
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
@@ -2490,7 +2487,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 2
 	speechverb_say = "hisses"
 	speechverb_exclaim = "wheezes"
-	butcherable = FALSE
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
@@ -2605,7 +2601,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_say = "trills"
 	speechverb_exclaim = "barks"
 	death_text = "%src% lets out a final weak coo and keels over."
-	butcherable = FALSE
+	butcherable = BUTCHER_YOU_MONSTER
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
@@ -2720,7 +2716,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_say = "harrumphs"
 	speechverb_exclaim = "roars"
 	death_text = "%src% lets out a final weak grumble and keels over."
-	butcherable = FALSE
+	butcherable = BUTCHER_YOU_MONSTER
 	health_brute = 15
 	health_brute_vuln = 0.5
 	health_burn = 15
@@ -3063,7 +3059,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	fits_under_table = TRUE
 	add_abilities = list(/datum/targetable/critter/pounce)
 
-	butcherable = TRUE
 	skinresult = /obj/item/clothing/head/raccoon
 	max_skins = 1
 
@@ -3992,7 +3987,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_say = "snips"
 	speechverb_gasp = "claks"
 	speechverb_exclaim = "snaps"
-	butcherable = TRUE
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently pets", "rubs", "cuddles, coddles")

@@ -557,7 +557,7 @@
 "aGx" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
 	dir = 2;
-
+	
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
@@ -6951,7 +6951,7 @@
 "ikB" = (
 /obj/machinery/atmospherics/pipe/tank/toxins{
 	dir = 2;
-
+	
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -13415,10 +13415,6 @@
 "pVc" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/space)
-"pVw" = (
-/obj/table/auto,
-/turf/unsimulated/floor/white,
-/area/swampzone/interiors/outbuildings)
 "pVK" = (
 /obj/decal/fakeobjects/smallrocks,
 /turf/space/fluid/cenote,
@@ -14717,7 +14713,7 @@
 "ryy" = (
 /obj/displaycase{
 	desc = "A display case for antique possessions. There is a gold plaque on it which says: Big mouth bill fish";
-	displayed = /obj/item/fish/bass
+	displayed = /obj/item/reagent_containers/food/fish/bass
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/swampzone/interiors/outbuildings)
@@ -50369,7 +50365,7 @@ mDX
 qtL
 uFh
 fyx
-pVw
+gys
 mDX
 roE
 fja

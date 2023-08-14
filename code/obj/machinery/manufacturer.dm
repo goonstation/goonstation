@@ -251,7 +251,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/damage = 0
 		damage = round(((P.power/3)*P.proj_data.ks_ratio), 1.0)
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		if (!damage)
 			return
@@ -1675,6 +1675,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 								return TRUE
 				if ("FAB")
 					return mat.getMaterialFlags() & (MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC)
+				if ("GEM")
+					return istype(mat, /datum/material/crystal/gemstone)
 		else if (pattern == mat.getID()) // specific material id
 			return TRUE
 		return FALSE
@@ -3040,6 +3042,16 @@ TYPEINFO(/obj/machinery/manufacturer)
 	blueprint = /datum/manufacture/mechanics/gunbot
 	override_name_desc = FALSE
 
+#if ENABLE_ARTEMIS
+/obj/machinery/manufacturer/artemis
+	name = "Scout Vessel Manufacturer"
+	desc = "A manufacturing unit that can produce equipment for scouting vessels."
+	icon_state = "fab-hangar"
+	icon_base = "hangar"
+	accept_blueprints = 0
+	available = list(
+	/datum/manufacture/nav_sat)
+#endif
 /******************** Nadir Resonators *******************/
 
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax

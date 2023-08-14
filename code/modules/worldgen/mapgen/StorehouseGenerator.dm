@@ -1,6 +1,7 @@
 #define FLOOR 1
 #define WALL 2
 #define DOOR 3
+#define FLOOR_ONLY 4
 
 /datum/map_generator/storehouse_generator
 	var/cell_grid
@@ -113,6 +114,11 @@
 			|| !cell_grid[x+1][y-1])
 				return TRUE
 
+	proc/clear_walls(turfs)
+		for(var/turf/T in turfs)
+			if(cell_grid[T.x][T.y])
+				src.cell_grid[T.x][T.y] = FLOOR_ONLY
+
 /datum/map_generator/storehouse_generator/generate_terrain(list/turfs, reuse_seed, flags)
 	var/cell_value
 
@@ -165,6 +171,9 @@
 						if(91 to 100)
 							new /obj/storage/crate/wooden/(T)
 
+			if(FLOOR_ONLY)
+				T.ReplaceWith(/turf/simulated/floor/industrial)
+
 			if(WALL)
 				T.ReplaceWith(/turf/simulated/wall/auto/supernorn/material/mauxite)
 
@@ -175,8 +184,10 @@
 					door.dir = NORTH
 				else
 					door.dir = WEST
+
 		LAGCHECK(LAG_MED)
 
 #undef FLOOR
 #undef WALL
 #undef DOOR
+#undef FLOOR_ONLY

@@ -1,10 +1,10 @@
 // because fuck remembering what stat means every single time
-#define isalive(x) (ismob(x) && x.stat == 0)
-#define isunconscious(x) (ismob(x) && x.stat == 1)
-#define isdead(x) (ismob(x) && x.stat == 2)
-#define setalive(x) if (ismob(x)) x.stat = 0
-#define setunconscious(x) if (ismob(x)) x.stat = 1
-#define setdead(x) if (ismob(x)) x.stat = 2
+#define isalive(x) (ismob(x) && x.stat == STAT_ALIVE)
+#define isunconscious(x) (ismob(x) && x.stat == STAT_UNCONSCIOUS)
+#define isdead(x) (ismob(x) && x.stat == STAT_DEAD)
+#define setalive(x) if (ismob(x)) x.stat = STAT_ALIVE
+#define setunconscious(x) if (ismob(x)) x.stat = STAT_UNCONSCIOUS
+#define setdead(x) if (ismob(x)) x.stat = STAT_DEAD
 
 // status effect system stuff
 #define ADD_STATUS_LIMIT(target, group, value)\

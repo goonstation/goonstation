@@ -15,6 +15,8 @@ var/list/miningModifiers = list()
 		place()
 
 	proc/place()
+		if(src.z == planetZLevel)
+			return // noop
 		if (map_currently_underwater)
 			src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 		else

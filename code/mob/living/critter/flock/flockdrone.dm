@@ -22,7 +22,7 @@
 
 	var/damaged = 0 // used for state management for description showing, as well as preventing drones from screaming about being hit
 
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 
 	var/health_absorb_rate = 2 // how much item health is removed per tick when absorbing
 	var/resources_per_health = 4 // how much resources we get per item health

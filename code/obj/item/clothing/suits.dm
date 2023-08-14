@@ -1710,17 +1710,22 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		..()
 		setProperty("coldprot", 5)
 
-/obj/item/clothing/suit/labcoat/hitman
-    name = "black jacket"
-    desc = "A stylish black suitjacket."
-    icon_state = "hitmanc"
-    item_state = "hitmanc"
-    coat_style = "hitmanc"
+/obj/item/clothing/suit/hitman
+	name = "black jacket"
+	desc = "A stylish black suitjacket."
+	icon_state = "hitmanc_o"
+	item_state = "hitmanc"
+	coat_style = "hitmanc"
 
-/obj/item/clothing/suit/labcoat/hitman/satansuit
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
+
+/obj/item/clothing/suit/hitman/satansuit
 	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-	icon_state = "inspectorc"
+	icon_state = "inspectorc_o"
 	item_state = "inspectorc"
+	coat_style = "inspectorc"
 
 /obj/item/clothing/suit/witchfinder
 	name = "witchfinder general's coat"

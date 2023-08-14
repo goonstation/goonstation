@@ -383,7 +383,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 	var/mob/M = A
 	if(istype(M) && M.buckled == src)
 		M.glide_size = (32 / move_lag) * world.tick_lag
-		walk(M, dir, move_lag, (32 / move_lag) * world.tick_lag)
+		walk(M, movedir, move_lag, (32 / move_lag) * world.tick_lag)
 		M.glide_size = (32 / move_lag) * world.tick_lag
 
 		if (src.move_lag <= 1)
@@ -876,6 +876,8 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	mats = list("MET-1" = 10, "CON-1" = 10, "CRY-1" = 10)
 }
 
+
+#define CALC_DELAY(C) max(initial(C.move_lag) - src.speedup + src.slowdown, 0.1)
 /// the conveyor control switch
 /obj/machinery/conveyor_switch
 	name = "conveyor switch"
@@ -895,14 +897,20 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	anchored = ANCHORED
 	/// time last used
 	var/last_used = 0
+	///How much this switch is configured to manually slow down by
+	VAR_PROTECTED/slowdown = 0
+	///How much speed boost this switch is getting
+	VAR_PROTECTED/speedup = 0
 
 	New()
 		. = ..()
 		UnsubscribeProcess()
 		START_TRACKING
 		UpdateIcon()
-		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", PROC_REF(trigger))
+		if (!isrestrictedz(src.z))
+			AddComponent(/datum/component/mechanics_holder)
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Flip", PROC_REF(trigger))
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Speed", PROC_REF(set_speed))
 		conveyors = list()
 		SPAWN(0.5 SECONDS)
 			link_conveyors()
@@ -929,6 +937,26 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	proc/trigger(var/inp)
 		attack_hand(usr) //bit of a hack but hey.
 		return
+
+	proc/set_speed(datum/mechanicsMessage/msg)
+		var/speed = text2num_safe(msg.signal)
+		if (!speed)
+			return
+		speed = clamp(speed, 1, 10)
+		src.update_speed(slowdown = (1 - speed/10) * 5)
+
+	proc/update_speed(speedup = null, slowdown = null)
+		for_by_tcl(S, /obj/machinery/conveyor_switch)
+			if(S.id != src.id)
+				continue
+			if (!isnull(speedup))
+				S.speedup = speedup
+			if (!isnull(slowdown))
+				S.slowdown = slowdown
+
+		for (var/obj/machinery/conveyor/C as anything in conveyors)
+			if (C.id == src.id)
+				C.move_lag = CALC_DELAY(C)
 
 	/// update the icon depending on the position
 	update_icon()
@@ -970,8 +998,11 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 			if (C.id == src.id)
 				C.operating = position
 				C.setdir()
+				C.move_lag = CALC_DELAY(C)
+
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"switchTriggered")
 
+#undef CALC_DELAY
 /obj/machinery/conveyor_switch/built/
 	desc = "A conveyor control switch. This one looks like it was built recently."
 
@@ -1048,11 +1079,12 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 			if(PN)
 				var/power_to_use = 0
 
-				power_to_use = min ( maxdrain, PN.avail )
+				var/free_power = PN.newload - PN.avail
+				power_to_use = min ( maxdrain, free_power )
 				speedup = (power_to_use/maxdrain) * speedup_max
 
-				if (PN.avail > maxdrain)
-					power_to_use = min ( maxdrain+bonusdrain, PN.avail )
+				if (free_power > maxdrain)
+					power_to_use = min ( maxdrain+bonusdrain, free_power )
 					speedup += (power_to_use / bonusdrain ) * speedup_bonus
 
 				PN.newload += power_to_use
@@ -1070,10 +1102,67 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	proc/update_belts()
 		for_by_tcl(S, /obj/machinery/conveyor_switch)
 			if(S.id == "carousel")
-				for(var/obj/machinery/conveyor/C in S.conveyors)
-					C.move_lag = max(initial(C.move_lag) - speedup, 0.1)
+				S.update_speed(speedup = speedup)
 				break
 
 	update_icon()
 		var/ico = clamp(((speedup / speedup_max) * icon_levels), 0, 6)
 		icon_state = "[icon_base][round(ico)]"
+
+//turns on when area is active
+/obj/machinery/conveyor/area_activated
+	var/area/activation_area = null
+
+	New()
+		. = ..()
+		activation_area = get_area(src)
+		// this assumes that the conveyor's area never changes
+		// if we expect the area of the conveyor to change (because the conveyor got deconstructed / moved or the turf beneat it got replaced with space etc.)
+		// we should have signals for area changes in the future
+		// however, currently these are only used in an adventure zone where such changes are unlikely
+		RegisterSignal(activation_area, COMSIG_AREA_ACTIVATED, PROC_REF(turn_on))
+		RegisterSignal(activation_area, COMSIG_AREA_DEACTIVATED, PROC_REF(turn_off))
+
+	set_loc(atom/target)
+		. = ..()
+		var/area/A = get_area(target)
+		if (activation_area == A || isnull(A)) return
+		UnregisterSignal(activation_area, list(COMSIG_AREA_ACTIVATED, COMSIG_AREA_DEACTIVATED))
+		activation_area = A
+		RegisterSignal(activation_area, COMSIG_AREA_ACTIVATED, PROC_REF(turn_on))
+		RegisterSignal(activation_area, COMSIG_AREA_DEACTIVATED, PROC_REF(turn_off))
+		if (activation_area.active)
+			turn_on()
+
+	proc/turn_on()
+		// (status & (BROKEN | NOPOWER)) checks might be needed here in the future who knows
+		src.operating = TRUE
+		src.setdir()
+		src.update()
+
+	proc/turn_off()
+		src.operating = FALSE
+		src.setdir()
+		src.update()
+
+	disposing()
+		UnregisterSignal(activation_area, list(COMSIG_AREA_ACTIVATED, COMSIG_AREA_ACTIVATED))
+		..()
+
+//only runs when area is active and operating
+/obj/machinery/conveyor/area_activity_dependant
+	var/area/activation_area = null
+
+	New()
+		. = ..()
+		activation_area = get_area(src)
+
+	process()
+		if (!src.activation_area.active)
+			return
+		. = ..()
+
+	move_thing()
+		if (!src.activation_area.active)
+			return
+		. = ..()

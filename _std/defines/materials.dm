@@ -44,7 +44,8 @@ var/global/list/material_category_names = list(
 	"REF-1" = "Reflective Material",
 	"ORG|RUB" = "Organic or Rubber Material",
 	"RUB" = "Rubber Material",
-	"WOOD" = "Wood"
+	"WOOD" = "Wood",
+	"GEM-1" = "Any Gemstone"
 )
 
 #define TRIGGERS_ON_BULLET "triggersOnBullet"
