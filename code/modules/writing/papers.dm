@@ -1158,3 +1158,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 	handle with the same hand that holds your beloved
 	napalm-phlogiston-thermite """hell mix."""
 	"}
+
+/obj/item/paper/robot_depot_note
+	name = "angry note"
+	icon_state = "paper"
+	info = {"When the hell are we actually going to install this stuff? This temporary wiring solution is starting to look quite permanent."}
