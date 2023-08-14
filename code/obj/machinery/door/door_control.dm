@@ -490,7 +490,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 // Stolen from the vending module
 /// For a flying chat and message addition upon controller activation, not called outside of a child as things stand
 /obj/machinery/door_control/proc/speak(var/message)
-	if (status & NOPOWER)
+	if ((src.status & NOPOWER) || !message)
 		return
 	else
 		welcome_text = make_chat_maptext(src, message, "color: [src.welcome_text_color];", alpha = src.welcome_text_alpha)
