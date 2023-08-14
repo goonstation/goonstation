@@ -207,11 +207,13 @@ datum
 					M = holder.my_atom
 				damage_counter += rand(2, 4) * mult * min(1, volume)
 				..()
-
-			on_mob_life_complete(mob/living/M)
-				if(M)
-					M.take_toxin_damage(damage_counter)
-					logTheThing(LOG_COMBAT, M, "took [damage_counter] TOX damage from amanitin.")
+			on_remove()
+				..()
+				var/mob/living/carbon/human/H = holder.my_atom
+				if (!istype(H)) return
+				H.take_toxin_damage(damage_counter)
+				damage_counter = 0
+				logTheThing(LOG_COMBAT, H, "took [damage_counter] TOX damage from amanitin.")
 
 
 		harmful/chemilin
