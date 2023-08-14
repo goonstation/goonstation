@@ -2075,6 +2075,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_burn", "food_sweaty", "food_tox")
 	meal_time_flags = MEAL_TIME_LUNCH
 
+/obj/item/reagent_containers/food/snacks/shrimp
+	name = "cooked shrimp meat"
+	desc = "A perfectly boiled shrimp meat ready to serve. Fancy!"
+	icon_state = "shrimp_meat_cooked"
+	bites_left = 1
+	heal_amt = 2
+	food_color = "#e14531"
+	food_effects = list("food_warm", "food_brute")
+
 /obj/item/reagent_containers/food/snacks/bakedpotato
 	name = "baked potato"
 	desc = "Would go good with some cheese or steak."
@@ -2501,6 +2510,23 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 					nigiri.icon_state = "nigiri3"
 				if("filletslice-small")
 					nigiri.icon_state = "nigiri4"
+			user.u_equip(W)
+			qdel(W)
+			if(handspawn)
+				user.put_in_hand_or_drop(nigiri)
+			else
+				nigiri.set_loc(spawnloc)
+			qdel(src)
+		else if(istype(W, /obj/item/reagent_containers/food/snacks/shrimp))
+			var/spawnloc = get_turf(src)
+			var/handspawn
+			if(istype(src.loc,/mob))
+				user.u_equip(src)
+				handspawn = TRUE
+			src.set_loc(user)
+			var/obj/item/reagent_containers/food/snacks/nigiri_roll/nigiri = new /obj/item/reagent_containers/food/snacks/nigiri_roll
+			nigiri.icon_state = "nigiri_shrimp"
+			nigiri.desc = "A ball of sticky rice with a cooked shrimp on top."
 			user.u_equip(W)
 			qdel(W)
 			if(handspawn)

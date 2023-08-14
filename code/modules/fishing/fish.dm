@@ -318,6 +318,7 @@ Alien/mutant/other fish:
 	desc = "Shrimple as that."
 	icon_state = "shrimp"
 	inhand_color = "#db82db"
+	fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/shrimp
 	category = FISH_CATEGORY_OCEAN
 	value  = FISH_RARITY_UNCOMMON
 

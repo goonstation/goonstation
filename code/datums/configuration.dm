@@ -443,7 +443,7 @@
 			break
 
 	if (!mode_name)
-		boutput(world, "Failed to pick a random game mode.")
+		boutput(world, "<h1 class='alert>Failed to pick a random game mode.</h1>")
 		return null // This essentially will never happen (you'd have to not be able to choose any mode in secret), so it's okay to leave it null, I think
 
 	//boutput(world, "Returning mode [mode_name]")

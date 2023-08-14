@@ -67,6 +67,7 @@
 				return
 
 			var/PLoc = pick_landmark(LANDMARK_PRISONWARP)
+			var/turf/origin_turf = get_turf(M)
 			if (PLoc)
 				M.changeStatus("paralysis", 8 SECONDS)
 				M.set_loc(PLoc)
@@ -79,7 +80,7 @@
 			M.show_text("<h2><font color=red><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></font></h2>", "red")
 			logTheThing(LOG_ADMIN, usr, "sent [constructTarget(M,"admin")] to the prison zone.")
 			logTheThing(LOG_DIARY, usr, "[constructTarget(M,"diary")] to the prison zone.", "admin")
-			message_admins("<span class='internal'>[key_name(usr)] sent [key_name(M)] to the prison zone.</span>")
+			message_admins("<span class='internal'>[key_name(usr)] sent [key_name(M)] to the prison zone[isturf(origin_turf) ? " from [log_loc(origin_turf)]" : ""].</span>")
 
 	return
 
@@ -336,7 +337,19 @@
 	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
 	for(var/i = 1, i <= 9, i++)
 		if(i <= split.len)
-			ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module", split[i], i, TRUE, TRUE)
+			var/path = text2path(split[i])
+			if(ispath(path, /obj/item/aiModule))
+				var/obj/item/aiModule/module = new path(ticker.ai_law_rack_manager.default_ai_rack)
+				ticker.ai_law_rack_manager.default_ai_rack.SetLaw(module, i, TRUE, TRUE)
+				if(istype(module,/obj/item/aiModule/hologram_expansion))
+					var/obj/item/aiModule/hologram_expansion/holo = module
+					ticker.ai_law_rack_manager.default_ai_rack.holo_expansions |= holo.expansion
+				else if(istype(module,/obj/item/aiModule/ability_expansion))
+					var/obj/item/aiModule/ability_expansion/expansion = module
+					ticker.ai_law_rack_manager.default_ai_rack.ai_abilities |= expansion.ai_abilities
+
+			else
+				ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module", split[i], i, TRUE, TRUE)
 	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 	logTheThing(LOG_ADMIN, usr, "has set the AI laws to [input]")
 	logTheThing(LOG_DIARY, usr, "has set the AI laws to [input]", "admin")
@@ -2376,7 +2389,9 @@ var/global/night_mode_enabled = 0
 		return 0
 	if(isdead(M))
 		M.invisibility = INVIS_NONE
-	var/announce = alert("Announce this cubing to the server?", "Announce", "Yes", "No")
+	var/announce = input(src, "Announce this cubing to the server?") in list("Yes", "No", "Cancel")
+	if (announce == "Cancel")
+		return
 
 	var/turf/targetLoc = src.mob.loc
 	var/area/where = get_area(M)

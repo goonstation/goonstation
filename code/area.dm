@@ -620,7 +620,7 @@ TYPEINFO(/area)
 			var/list/found_areas = get_area_turfs(current_battle_spawn,1)
 			if (length(found_areas) == 0)
 				jerk.set_loc(pick(get_area_turfs(/area/station/maintenance/,1)))
-				boutput(jerk, "You somehow land in maintenance! Weird!")
+				boutput(jerk, "<h3 class='alert'>You somehow land in maintenance! Weird!</h3>")
 			else
 				jerk.set_loc(pick(found_areas))
 			jerk.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)

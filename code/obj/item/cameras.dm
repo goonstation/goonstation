@@ -456,6 +456,6 @@ TYPEINFO(/obj/item/camera_film/large)
 		for(var/mob/M as anything in stolen_souls)
 			HP.add_soul(M)
 	else
-		P = new/obj/item/photo(get_turf(src), photo, photo_icon, finished_title, finished_detail)
+		P = new/obj/item/photo(src.loc, photo, photo_icon, finished_title, finished_detail)
 
 	return P

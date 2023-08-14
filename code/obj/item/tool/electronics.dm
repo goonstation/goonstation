@@ -137,6 +137,10 @@
 		store_type = null
 		..()
 
+/obj/item/electronics/frame/proc/kickout(source, mob/stowaway)
+	if(istype(stowaway))
+		stowaway.set_loc(get_turf(source))
+
 /obj/item/electronics/frame/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/electronics/))
 		var/obj/item/electronics/E = W
@@ -292,6 +296,7 @@
 	src.stored?.transfer_stored_item(src, T, user = user)
 	if (deconstructed_thing)
 		O = deconstructed_thing
+		UnregisterSignal(O, COMSIG_ATOM_ENTERED)
 		deconstructed_thing = null
 		O.set_loc(T)
 		O.set_dir(src.dir)
@@ -954,6 +959,7 @@
 		elecflash(src,power=2)
 
 		O.was_deconstructed_to_frame(user)
+		F.RegisterSignal(O, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
 
 	MouseDrop_T(atom/target, mob/user)
 		if (!isobj(target))

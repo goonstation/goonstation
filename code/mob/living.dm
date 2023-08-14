@@ -718,7 +718,7 @@
 #endif
 
 	if (src.client && src.client.ismuted())
-		boutput(src, "You are currently muted and may not speak.")
+		boutput(src, "<b class='alert'>You are currently muted and may not speak.<b>")
 		return
 
 	if(!src.canspeak)
@@ -1161,15 +1161,21 @@
 
 		var/popup_style = src.speechpopupstyle
 
-		if (src.find_type_in_hand(/obj/item/megaphone))
-			var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
+		var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
+		if (megaphone)
 			popup_style += "font-weight: bold; font-size: [megaphone.maptext_size]px; -dm-text-outline: 1px [megaphone.maptext_outline_color];"
+			popup_style += megaphone.maptext_size >= 12 ? "font-family: 'PxPlus IBM VGA9'" : "font-family: 'Small Fonts'"
 			maptext_color = megaphone.maptext_color
 
 		if(unique_maptext_style)
 			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + unique_maptext_style + singing_italics)
 		else
 			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + popup_style + singing_italics)
+
+		if (megaphone)
+			chat_text.maptext_height *= 4 // have some extra space friend
+			chat_text.maptext_width *= 2
+			chat_text.maptext_x = (chat_text.maptext_x * 2) - 16 // keep centered
 
 		if(maptext_animation_colors)
 			oscillate_colors(chat_text, maptext_animation_colors)
@@ -1545,10 +1551,6 @@
 
 /mob/living/attack_hand(mob/living/M, params, location, control)
 	if (!M || !src) //Apparently M could be a meatcube and this causes HELLA runtimes.
-		return
-
-	if (!ticker)
-		boutput(M, "You cannot interact with other people before the game has started.")
 		return
 
 	M.lastattacked = src

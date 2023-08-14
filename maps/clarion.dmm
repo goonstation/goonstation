@@ -16061,6 +16061,14 @@
 	},
 /turf/simulated/floor,
 /area/station/science/lab)
+"beH" = (
+/obj/disposalpipe/segment,
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/grime,
+/area/station/quartermaster/storage)
 "beK" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light{
@@ -19145,6 +19153,9 @@
 /obj/disposalpipe/segment,
 /obj/machinery/navbeacon/mule/QM1_north/east,
 /obj/decal/stripe_caution,
+/obj/machinery/bot/mulebot{
+	home_destination = "QM #1"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "buN" = (
@@ -19637,7 +19648,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/storage/crate/medical,
+/obj/machinery/manufacturer/general,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bxd" = (
@@ -19645,7 +19656,6 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/manufacturer/general,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bxf" = (
@@ -19674,7 +19684,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/manufacturer/qm,
+/obj/machinery/computer/chem_requester/science{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bxj" = (
@@ -19834,15 +19846,22 @@
 /turf/simulated/floor/grime,
 /area/station/quartermaster/storage)
 "bye" = (
-/obj/storage/cart,
-/turf/simulated/floor,
+/obj/machinery/door/airlock/pyro/glass/mining{
+	dir = 4;
+	name = "Quartermaster's Office"
+	},
+/obj/mapping_helper/access/mining,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/cargo,
+/obj/mapping_helper/access/engineering,
+/turf/simulated/floor/orangeblack,
 /area/station/quartermaster/storage)
 "byg" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "byh" = (
-/obj/storage/crate/robotics_supplies_borg,
+/obj/machinery/manufacturer/mining,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "byj" = (
@@ -19858,16 +19877,19 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/machinery/manufacturer/mining,
+/obj/decal/stripe_delivery,
+/obj/vehicle/tug,
+/obj/tug_cart,
+/obj/tug_cart,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "byl" = (
 /obj/table/reinforced/auto,
-/obj/machinery/recharger,
-/obj/item/cargotele,
 /obj/item/device/radio/intercom/cargo{
 	dir = 4
 	},
+/obj/machinery/recharger,
+/obj/item/cargotele,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -19876,15 +19898,12 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=engine";
-	location = "qm";
-	name = "bot navigation beacon"
-	},
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "byn" = (
-/obj/item/device/radio/beacon,
+/obj/decal/stripe_caution,
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "byo" = (
@@ -19929,13 +19948,13 @@
 	id = "qm_dock_out";
 	name = "Outbound Cargo - Outer Door";
 	pixel_x = -8;
-	pixel_y = -40
+	pixel_y = -22
 	},
 /obj/machinery/door_control{
 	id = "qm_dock";
 	name = "Inbound Cargo - Outer Door";
 	pixel_x = 8;
-	pixel_y = -40
+	pixel_y = -22
 	},
 /obj/table/reinforced/auto,
 /turf/simulated/floor,
@@ -20076,11 +20095,11 @@
 /area/station/quartermaster/storage)
 "bzm" = (
 /obj/disposalpipe/segment/mail,
-/obj/storage/crate,
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/storage/crate/medical,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bzn" = (
@@ -20094,34 +20113,33 @@
 	layer = 4;
 	pixel_x = 24
 	},
-/obj/machinery/manufacturer/hangar,
+/obj/decal/stripe_delivery,
+/obj/vehicle/forklift,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bzr" = (
-/turf/simulated/floor/yellow/side,
+/turf/simulated/floor/yellow/corner,
 /area/station/quartermaster/office)
 "bzs" = (
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/yellow/side,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "bzt" = (
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/yellow/side,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=engine";
+	location = "qm";
+	name = "bot navigation beacon"
+	},
+/obj/item/device/radio/beacon,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "bzu" = (
 /obj/machinery/light,
-/obj/machinery/conveyor_switch{
-	id = "mining2qm"
-	},
-/obj/machinery/door_control{
-	id = "mining2qm_sec_door";
-	name = "QM - Mining Transfer Shutters";
-	pixel_y = -22
-	},
 /turf/simulated/floor/yellow/side,
 /area/station/quartermaster/office)
 "bzv" = (
@@ -20253,13 +20271,11 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/bot/mulebot{
-	home_destination = "QM #1"
-	},
 /obj/machinery/light{
 	dir = 8;
 	pixel_x = -10
 	},
+/obj/machinery/manufacturer/gas,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bAp" = (
@@ -20275,13 +20291,22 @@
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bAr" = (
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+/obj/landmark/start{
+	name = "Quartermaster"
 	},
-/obj/machinery/manufacturer/gas,
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
+/obj/stool/chair/office/yellow{
+	dir = 8
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/quartermaster/office)
+"bAs" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
+/area/station/quartermaster/office)
 "bAx" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -20423,30 +20448,19 @@
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bBH" = (
-/obj/machinery/light/emergency{
-	dir = 1;
-	pixel_y = 21
-	},
 /obj/machinery/manufacturer/robotics,
-/obj/noticeboard/persistent{
-	name = "Cargo persistent notice board";
-	persistent_id = "cargo"
-	},
-/turf/simulated/floor/damaged2,
+/turf/simulated/floor/grime,
 /area/station/quartermaster/storage)
 "bBI" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
+/obj/machinery/conveyor_switch{
+	id = "mining2qm"
 	},
-/obj/tug_cart,
-/obj/vehicle/tug,
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/quartermaster/office)
 "bBJ" = (
-/obj/vehicle/forklift,
-/obj/decal/stripe_delivery,
+/obj/machinery/manufacturer/hangar,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bBK" = (
@@ -20456,14 +20470,17 @@
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bBM" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/storage)
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "bBN" = (
 /obj/cable/brown{
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/quartermaster/office)
 "bBS" = (
 /obj/cable/brown{
 	icon_state = "1-4"
@@ -20574,9 +20591,14 @@
 /turf/simulated/floor/grime,
 /area/station/quartermaster/storage)
 "bCP" = (
-/obj/decal/cleanable/generic,
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/table/reinforced/auto,
+/obj/mapping_helper/access/cargo,
+/turf/simulated/floor/orangeblack,
+/area/station/quartermaster/office)
 "bCQ" = (
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -20585,28 +20607,28 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/stripe_caution,
+/obj/storage/crate,
 /turf/simulated/floor/neutral/corner{
 	dir = 8
 	},
-/area/station/quartermaster/storage)
+/area/station/quartermaster/office)
 "bCS" = (
-/obj/landmark/start{
-	name = "Quartermaster"
-	},
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
-/area/station/quartermaster/storage)
+/area/station/quartermaster/office)
 "bCT" = (
 /obj/cable/brown{
 	icon_state = "2-4"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/storage)
+/area/station/quartermaster/office)
 "bCW" = (
 /obj/cable/brown{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/quartermaster/office)
 "bCX" = (
 /obj/machinery/mass_driver{
 	id = "qm_dock_out"
@@ -20733,20 +20755,23 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/machinery/portable_atmospherics/canister/air,
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
+/obj/storage/secure/closet/engineering/cargo,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/station/quartermaster/office)
 "bEc" = (
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -10
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/quartermaster/office)
 "bEd" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/storage)
+/area/station/quartermaster/office)
 "bEi" = (
 /obj/machinery/light,
 /turf/simulated/floor/orangeblack,
@@ -20782,7 +20807,7 @@
 /area/station/quartermaster/storage)
 "bEP" = (
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/quartermaster/office)
 "bEU" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
@@ -20812,9 +20837,12 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/mining/staff_room)
 "bFt" = (
-/obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/plating,
-/area/station/hangar/qm)
+/obj/cable/brown{
+	icon_state = "4-8"
+	},
+/obj/machinery/light,
+/turf/simulated/floor/yellow/side,
+/area/station/quartermaster/office)
 "bFv" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/mainweapon/mining,
@@ -22262,6 +22290,7 @@
 /obj/table/reinforced/auto,
 /obj/item/wrapping_paper,
 /obj/item/wrapping_paper,
+/obj/item/scissors,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "bMX" = (
@@ -22307,11 +22336,14 @@
 	},
 /area/station/solar/east)
 "bNc" = (
-/obj/machinery/light,
 /obj/table/reinforced/auto,
 /obj/machinery/phone,
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/simulated/floor/yellow/side{
-	dir = 10
+	dir = 8
 	},
 /area/station/quartermaster/office)
 "bNd" = (
@@ -22826,8 +22858,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/matsci_guide,
+/obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
+/turf/simulated/floor/yellow/side,
+/area/station/quartermaster/office)
 "cfB" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -23025,6 +23060,14 @@
 /obj/item/slag_shovel,
 /turf/simulated/floor/orangeblack,
 /area/station/mining/refinery)
+"coq" = (
+/obj/cable/brown{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/quartermaster/office)
 "cpW" = (
 /obj/machinery/conveyor/EW{
 	id = "ghostdrone"
@@ -23137,6 +23180,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
+"cut" = (
+/obj/decal/stripe_caution,
+/turf/simulated/floor/grime,
+/area/station/quartermaster/storage)
 "cuC" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -24747,19 +24794,20 @@
 /turf/simulated/floor/blue,
 /area/station/bridge)
 "eeM" = (
-/obj/machinery/conveyor/NS{
-	id = "mining2qm"
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
 	},
-/obj/plasticflaps,
-/obj/machinery/door/poddoor/blast/single{
-	doordir = "noblasts";
-	icon_state = "bdoornoblasts1";
-	id = "mining2qm_sec_door";
-	layer = 4;
-	name = "QM Security Door"
+/obj/decal/stripe_caution,
+/obj/machinery/manufacturer/qm,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname  - SS13";
+	pixel_x = 10
 	},
-/turf/simulated/floor/caution/misc{
-	dir = 1
+/turf/simulated/floor/yellow/side{
+	dir = 4
 	},
 /area/station/quartermaster/office)
 "eeV" = (
@@ -25735,6 +25783,10 @@
 /obj/window/reinforced/north,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/substation/west)
+"eUW" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/quartermaster/storage)
 "eWn" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light{
@@ -26142,9 +26194,14 @@
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "fqA" = (
-/obj/machinery/portable_reclaimer,
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
+/obj/cable/brown{
+	icon_state = "4-8"
+	},
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
+/turf/simulated/floor/yellow/side,
+/area/station/quartermaster/office)
 "fqE" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -28421,9 +28478,8 @@
 /obj/cable/brown{
 	icon_state = "1-8"
 	},
-/obj/storage/secure/closet/engineering/cargo,
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
+/turf/simulated/floor/yellow/side,
+/area/station/quartermaster/office)
 "hyV" = (
 /obj/machinery/navbeacon/mule/pool_north/south,
 /obj/decal/stripe_caution,
@@ -28735,8 +28791,13 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/cargo,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/quartermaster/office)
 "hOu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -29041,9 +29102,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/computer/chem_requester/science{
-	area_name = "Quartermaster's office"
-	},
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/minerals,
+/obj/item/device/light/glowstick,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "hZS" = (
@@ -29193,6 +29254,15 @@
 	dir = 1
 	},
 /area/station/security/hos)
+"ifY" = (
+/obj/machinery/door/airlock/pyro/glass/mining{
+	dir = 4;
+	name = "Quartermaster's Office"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/cargo,
+/turf/simulated/floor/orangeblack,
+/area/station/quartermaster/office)
 "igh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -30070,9 +30140,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/mechanical,
-/obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "iMu" = (
@@ -30889,6 +30957,28 @@
 /obj/item/paper/book/from_file/the_trial,
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
+"jCI" = (
+/obj/cable/brown{
+	icon_state = "4-8"
+	},
+/obj/machinery/conveyor/EW{
+	id = "mining2qm"
+	},
+/obj/plasticflaps{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/blast/single{
+	doordir = "noblasts";
+	icon_state = "bdoornoblasts1";
+	id = "mining2qm_sec_door";
+	layer = 4;
+	name = "QM Security Door";
+	dir = 6
+	},
+/turf/simulated/floor/caution/misc{
+	dir = 4
+	},
+/area/station/quartermaster/office)
 "jEm" = (
 /obj/machinery/portable_reclaimer,
 /obj/machinery/light,
@@ -31403,9 +31493,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/table/reinforced/auto,
-/obj/item/paper/book/from_file/minerals,
-/obj/item/device/light/glowstick,
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "kea" = (
@@ -31434,10 +31522,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/table/reinforced/auto,
-/obj/item/paper/book/from_file/matsci_guide,
-/obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
 /obj/machinery/light,
+/obj/table/reinforced/auto,
+/obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "kfS" = (
@@ -34557,9 +34644,10 @@
 	},
 /area/station/medical/head)
 "mQC" = (
-/obj/storage/crate,
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/quartermaster/office)
 "mQG" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -35038,12 +35126,11 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "nxE" = (
-/obj/table/reinforced/auto,
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/mapping_helper/access/cargo,
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/office)
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/hangar/qm)
 "nyh" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -36256,6 +36343,10 @@
 	icon_state = "yellowblack"
 	},
 /area/station/hallway/primary/east)
+"oEC" = (
+/obj/storage/cart,
+/turf/simulated/floor/grime,
+/area/station/quartermaster/storage)
 "oEQ" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -36423,16 +36514,19 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "oLE" = (
-/obj/cable{
-	icon_state = "1-2"
+/obj/cable/brown{
+	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/mining{
-	name = "Quartermaster's Office"
+/obj/machinery/conveyor/EW{
+	id = "mining2qm"
 	},
-/obj/mapping_helper/access/cargo,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/office)
+/obj/machinery/door_control{
+	id = "mining2qm_sec_door";
+	name = "QM - Mining Transfer Shutters";
+	pixel_y = -24
+	},
+/turf/simulated/floor/grime,
+/area/station/quartermaster/storage)
 "oMz" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -37404,12 +37498,12 @@
 /turf/simulated/floor/grime,
 /area/station/quartermaster/storage)
 "pHQ" = (
+/obj/item/device/radio/intercom/cargo,
+/obj/reagent_dispensers/fueltank,
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/decal/cleanable/oil,
-/obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "pHX" = (
@@ -37484,6 +37578,7 @@
 /obj/mapping_helper/access/cargo,
 /obj/mapping_helper/access/mining,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "pKU" = (
@@ -38403,8 +38498,8 @@
 	},
 /area/station/medical/head)
 "qAi" = (
-/obj/storage/cart,
 /obj/disposalpipe/segment/mail,
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/grime,
 /area/station/quartermaster/storage)
 "qAx" = (
@@ -38657,8 +38752,14 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/cargo,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/quartermaster/office)
 "qLR" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -38691,12 +38792,9 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
 "qNX" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/storage/crate/robotics_supplies,
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/plating,
+/area/station/hangar/qm)
 "qOi" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -38985,17 +39083,18 @@
 	},
 /area/listeningpost/solars)
 "qZe" = (
-/obj/cable{
+/obj/cable/brown{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/mining{
-	name = "Quartermaster's Office"
+/obj/machinery/door_control{
+	id = "mining2qm_sec_door";
+	name = "QM - Mining Transfer Shutters";
+	pixel_y = -24
 	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/cargo,
-/obj/mapping_helper/access/mining,
-/turf/simulated/floor/orangeblack,
-/area/station/hangar/qm)
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/station/quartermaster/office)
 "qZJ" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	name = "Engine Room"
@@ -39530,6 +39629,14 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"rqA" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/stripe_caution,
+/obj/storage/crate,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "rqH" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
@@ -40048,7 +40155,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/quartermaster/office)
 "rRn" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -40500,7 +40607,9 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/computer/barcode/qm/no_belthell,
+/obj/machinery/computer/barcode/qm/no_belthell{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "sky" = (
@@ -41039,6 +41148,11 @@
 	icon_state = "4-8"
 	},
 /obj/decal/cleanable/dirt,
+/obj/noticeboard/persistent{
+	name = "Cargo persistent notice board";
+	persistent_id = "cargo"
+	},
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "sMg" = (
@@ -41112,16 +41226,12 @@
 	},
 /area/station/engine/substation/east)
 "sOv" = (
-/obj/machinery/door_control{
-	id = "mining2qm_sec_door";
-	name = "QM - Mining Transfer Shutters";
-	pixel_x = 24
+/obj/storage/secure/closet/engineering/cargo,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/yellow/side{
+	dir = 4
 	},
-/obj/machinery/conveyor/NS{
-	id = "mining2qm"
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
+/area/station/quartermaster/office)
 "sOM" = (
 /obj/machinery/door/airlock/pyro/glass/botany{
 	dir = 8;
@@ -43579,7 +43689,7 @@
 /obj/mapping_helper/access/cargo,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/quartermaster/office)
 "uOa" = (
 /obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4;
@@ -44121,9 +44231,10 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "vqa" = (
-/obj/landmark/gps_waypoint,
+/obj/decal/stripe_caution,
+/obj/storage/crate,
 /turf/simulated/floor,
-/area/station/quartermaster/storage)
+/area/station/quartermaster/office)
 "vqd" = (
 /obj/stool/chair/moveable,
 /obj/cable{
@@ -44180,7 +44291,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "vsI" = (
-/obj/storage/crate/freezer,
+/obj/storage/crate/robotics_supplies,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "vtg" = (
@@ -81121,14 +81232,14 @@ btv
 buG
 bvN
 niB
-bye
+bzn
 bzl
 bAl
 vsI
 lju
 yiX
 buG
-buJ
+oEC
 iwk
 bFo
 lbD
@@ -81633,7 +81744,7 @@ brp
 bss
 btx
 buI
-buG
+eUW
 bxa
 byg
 byg
@@ -81893,10 +82004,10 @@ buJ
 bvP
 bxb
 byh
-bzn
+bBJ
 bAo
-fqA
-buJ
+bBG
+bBH
 cXk
 bEI
 bBK
@@ -82148,16 +82259,16 @@ bss
 btz
 buJ
 buG
-qNX
-lju
-mQC
+bvN
+buG
+buG
 bAp
 bBF
 bCM
 woi
 szb
 bCM
-bCM
+beH
 lGa
 bGa
 bGG
@@ -82413,7 +82524,7 @@ buG
 bCN
 rbe
 kwf
-wjE
+bye
 wjE
 bFo
 aGI
@@ -82663,14 +82774,14 @@ btB
 buK
 buG
 bvN
-buJ
-buG
+cut
+bCQ
 bAq
 buG
 bCO
 uzM
 kPC
-bFt
+brK
 bGb
 bGH
 bHe
@@ -82922,11 +83033,11 @@ bvQ
 bxd
 byk
 bzp
-bAr
-bBG
+bBC
+buG
 buJ
-cXk
-qZe
+oLE
+nxE
 brK
 brK
 brK
@@ -83179,13 +83290,13 @@ hUp
 gcW
 bsu
 bsu
+ifY
 bsu
-bBH
 bCP
-yiX
-kPC
+jCI
+nxE
 pHQ
-brK
+qNX
 brK
 brK
 bHE
@@ -83436,11 +83547,11 @@ bvS
 bxf
 byl
 bNc
-bsu
+mQC
 bBI
-bCQ
-yiX
-kPC
+bAr
+qZe
+nxE
 bFv
 bGc
 bGc
@@ -83693,10 +83804,10 @@ bvT
 bxg
 occ
 mdJ
-rbs
-bBJ
-bCQ
-yiX
+bxj
+bxj
+bxj
+bFt
 kPC
 bFw
 bGd
@@ -83950,8 +84061,8 @@ bvT
 bxg
 bxj
 bzs
-oLE
-bBK
+bBM
+rqA
 bCR
 cfd
 ovx
@@ -84207,10 +84318,10 @@ kdN
 bxh
 bym
 bzt
-rbs
+bxj
 vqa
-bCS
-yiX
+vqa
+fqA
 fyI
 bFx
 bGe
@@ -84459,13 +84570,13 @@ rfl
 kFB
 qGb
 btH
-buN
+bAs
 kfL
 hZx
 byn
-bzr
-nxE
-buK
+bxj
+bxj
+bxj
 bCT
 hyR
 fyI
@@ -84719,11 +84830,11 @@ dZV
 buP
 iMb
 skj
-bxj
+bCS
 bzr
 eeM
 sOv
-yiX
+coq
 bEb
 fyI
 bFz
@@ -84979,9 +85090,9 @@ bxj
 bxj
 bzu
 bzy
-bBM
+bzy
 uNS
-bBM
+bzy
 fyI
 nUB
 nUB
@@ -85494,10 +85605,10 @@ byp
 rbs
 wUD
 rRe
-bBM
+bzy
 bEd
 qLo
-bBM
+bzy
 bIF
 aaa
 aaa

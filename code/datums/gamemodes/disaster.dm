@@ -141,9 +141,9 @@
 			var/condition = survivors[survivor]
 			switch(condition)
 				if("shuttle")
-					boutput(world, "&emsp; <B><FONT size = 2>[survivor] escaped on the shuttle!</FONT></B>")
+					boutput(world, "<span>&emsp; <B><FONT size = 2>[survivor] escaped on the shuttle!</FONT></B></span>")
 				if("alive")
-					boutput(world, "&emsp; <FONT size = 1>[survivor] stayed alive. Whereabouts unknown.</FONT>")
+					boutput(world, "<span>&emsp; <FONT size = 1>[survivor] stayed alive. Whereabouts unknown.</FONT></span>")
 
 	else
 		boutput(world, "<span class='notice'><B>No one survived the [disaster_name] event!</B></span>")

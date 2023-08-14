@@ -640,7 +640,9 @@ a.latejoin-card:hover {
 			// the middle of the map is GeNeRaLlY part of the actual station. moreso than 1,1,1 at least
 			var/midx = round(world.maxx / 2)
 			var/midy = round(world.maxy / 2)
-			boutput(world, "No latejoin landmarks placed, dumping [src] to ([midx], [midy], 1)")
+			var/msg = "No latejoin landmarks placed, dumping [src] to ([midx], [midy], 1)"
+			message_admins(msg)
+			stack_trace(msg)
 			src.set_loc(locate(midx,midy,1))
 		else
 			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
