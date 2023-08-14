@@ -9,6 +9,7 @@ proc/load_morrigan()
 
 // Morrigan Azone Content
 
+ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 ///A modified telepad
 /obj/machinery/networked/telepad/morrigan
 	device_tag = "PNET_S_TELEPAD_PRISONER"
@@ -39,28 +40,31 @@ proc/load_morrigan()
 					if (ON_COOLDOWN(src, "transmit", 10 SECONDS))
 						message_host("command=nack") //TODO: handle this maybe
 						return
-					var/turf/target_turf = get_turf(landmarks[LANDMARK_MORRIGAN_START][1])
-					var/turf/crate_turf = get_turf(landmarks[LANDMARK_MORRIGAN_CRATE][1])
-					for (var/mob/living/M in get_turf(src))
-						var/obj/storage/crate/crate = new(crate_turf)
-						M.unequip_all(unequip_to = crate)
-
-						do_teleport(M, target_turf, use_teleblocks = FALSE)
-
-						if (ishuman(M))
-							var/mob/living/carbon/human/H = M
-							H.equip_new_if_possible(/obj/item/clothing/shoes/orange, SLOT_SHOES)
-							H.equip_new_if_possible(/obj/item/clothing/under/misc, SLOT_W_UNIFORM)
-
-						var/obj/port_a_prisoner/prison = new /obj/port_a_prisoner(get_turf(M))
-						prison.force_in(M)
-
-					showswirl_out(src.loc)
-					leaveresidual(src.loc)
-					showswirl(target_turf)
-					leaveresidual(target_turf)
-					use_power(1500)
+					src.transmit()
 					message_host("command=ack")
+
+/obj/machinery/networked/telepad/morrigan/proc/transmit()
+	var/turf/target_turf = get_turf(landmarks[LANDMARK_MORRIGAN_START][1])
+	var/turf/crate_turf = get_turf(landmarks[LANDMARK_MORRIGAN_CRATE][1])
+	for (var/mob/living/M in get_turf(src))
+		var/obj/storage/crate/crate = new(crate_turf)
+		M.unequip_all(unequip_to = crate)
+
+		do_teleport(M, target_turf, use_teleblocks = FALSE)
+
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.equip_new_if_possible(/obj/item/clothing/shoes/orange, SLOT_SHOES)
+			H.equip_new_if_possible(/obj/item/clothing/under/misc, SLOT_W_UNIFORM)
+
+		var/obj/port_a_prisoner/prison = new /obj/port_a_prisoner(get_turf(M))
+		prison.force_in(M)
+
+	showswirl_out(src.loc)
+	leaveresidual(src.loc)
+	showswirl(target_turf)
+	leaveresidual(target_turf)
+	use_power(1500)
 
 ///A mainframe for the Balor entrance area, includes the custom teleport programs and a special syndie SU program
 /obj/machinery/networked/mainframe/balor
