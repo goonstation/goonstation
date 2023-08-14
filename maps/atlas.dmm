@@ -11994,7 +11994,8 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aMR" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
 /turf/simulated/floor/red,

@@ -54112,7 +54112,8 @@
 	})
 "xHG" = (
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
 /turf/simulated/floor/black,

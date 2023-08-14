@@ -21236,7 +21236,10 @@
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "iWT" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -26200,7 +26203,8 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
 /turf/simulated/floor/black,
@@ -45180,9 +45184,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "tkj" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
-	dir = 4;
-	name = "Listening Post"
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post";
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)

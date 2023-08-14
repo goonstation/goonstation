@@ -18084,9 +18084,10 @@
 /area/listeningpost/power)
 "bKG" = (
 /obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
-	dir = 4;
-	name = "Listening Post"
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post";
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/listeningpost)

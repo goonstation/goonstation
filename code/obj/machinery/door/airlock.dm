@@ -514,9 +514,6 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/reinforced)
 	req_access_txt = "52"
 	cyborgBumpAccess = FALSE
 
-/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post
-	id = "Sleeper_Access" //This isn't the ID card one, but the one for the sleeper scanner. The one for card IDs is inherited from the standard syndicate door parent.
-
 /obj/machinery/door/airlock/pyro/reinforced/arrivals
 	icon_state = "arrivals_closed"
 	icon_base = "arrivals"

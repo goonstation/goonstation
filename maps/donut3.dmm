@@ -34517,11 +34517,12 @@
 	},
 /area/station/crew_quarters/hor)
 "kzv" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	name = "Listening Post"
-	},
 /obj/decal/mule/dropoff,
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
 /turf/simulated/floor/plating/jen,
 /area/listeningpost)
 "kzE" = (
@@ -45035,9 +45036,6 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "nKd" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	name = "Listening Post"
-	},
 /obj/decal/mule/dropoff,
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -45045,6 +45043,10 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
 /turf/simulated/floor/plating/jen,
 /area/listeningpost)
 "nKv" = (

@@ -14010,7 +14010,8 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
 "aSj" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
 /turf/simulated/floor/black,
@@ -14062,7 +14063,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "aSs" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate/listening_post{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
 /turf/simulated/floor,
