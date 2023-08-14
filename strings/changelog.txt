@@ -1,5 +1,9 @@
 
 (t)sun aug 13 23
+(u)Bisar
+(p)15341
+(e)🪲📦|C-Bug, A-Game-Objects
+(*)MechComp triggers for Vend by Name should work properly now!
 (u)Ryou (Glamurio) & Zac
 (p)15192
 (e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
