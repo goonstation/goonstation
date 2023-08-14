@@ -1948,6 +1948,95 @@ datum
 			reagent_state = LIQUID
 			taste ="medicinal"
 
+
+		fooddrink/lbacongrease
+			name = "liquid bacon grease"
+			id = "lbacongrease"
+			description = "some bacon grease. cool it down to make bacon lard. tastes good. your heart will not be happy."
+			reagent_state = LIQUID
+			fluid_r = 204
+			fluid_b = 0
+			fluid_g = 170
+			transparency = 100
+			volatility = 1
+			hunger_value = 0.5
+			thirst_value = 0.7
+			taste = "unhealthy"
+			heat_capacity = 5
+			minimum_reaction_temperature = T0C + 200
+
+
+
+			var/max_radius = 5
+			var/min_radius = 0
+			var/volume_radius_modifier = -0.15
+			var/volume_radius_multiplier = 0.09
+			var/explosion_threshold = 100
+			var/min_explosion_radius = 0
+			var/max_explosion_radius = 2
+			var/volume_explosion_radius_multiplier = 0.005
+			var/volume_explosion_radius_modifier = 0
+			var/min_req_fluid = 0.1 //at least 10% of the fluid needs to be grease for it to ignite(I hope)
+			on_mob_life(var/mob/M, var/mult = 2)
+				if(prob(3))
+					M.reagents.add_reagent("cholesterol", rand(1,2) * mult)
+				..()
+
+			var/caused_fireflash = 0
+
+
+			reaction_temperature(exposed_temperature, exposed_volume)
+				if(volume < 1)
+					if (holder)
+						holder.del_reagent(id)
+					return
+
+				if (caused_fireflash)
+					return
+				else
+					var/list/covered = holder.covered_turf()
+					if (length(covered) < 4 || (volume / holder.total_volume) > min_req_fluid)
+						if(length(covered) > 0) //possible fix for bug where caused_fireflash was set to 1 without fireflash going off, allowing fuel to reach any temp without igniting
+							caused_fireflash = 1
+						for(var/turf/turf in covered)
+							var/radius = clamp(((volume/covered.len) * volume_radius_multiplier + volume_radius_modifier), min_radius, max_radius)
+							fireflash_sm(turf, radius, 2200 + radius * 250, radius * 50)
+							if(holder && volume/length(covered) >= explosion_threshold)
+								if(holder.my_atom)
+									holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
+									// Added log entries (Convair880).
+									if(holder.my_atom.fingerprintslast || usr?.last_ckey)
+										message_admins("Bacon grease explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
+									logTheThing(LOG_BOMBING, holder.my_atom.fingerprintslast, "Bacon grease explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
+								else
+									turf.visible_message("<span class='alert'><b>[holder.my_atom] ignites!</b></span>")
+									// Added log entries (Convair880).
+									message_admins("Bacon Grease explosion ([turf], reagent type: [id]) at [log_loc(turf)].")
+									logTheThing(LOG_BOMBING, null, "Bacon Grease explosion ([turf], reagent type: [id]) at [log_loc(turf)].")
+
+								var/boomrange = clamp(round((volume/covered.len) * volume_explosion_radius_multiplier + volume_explosion_radius_modifier), min_explosion_radius, max_explosion_radius)
+								explosion(holder.my_atom, turf, -1,-1,boomrange,1)
+				if (caused_fireflash)
+					holder?.del_reagent(id)
+
+		fooddrink/cbacongrease
+			name = "bacon lard"
+			id = "cbacongrease"
+			description = "some bacon lard. creamy. feels gross when you sink your teeth in."
+			reagent_state = SOLID
+			fluid_r = 250
+			fluid_b = 250
+			fluid_g = 250
+			transparency = 250
+			hunger_value = 2
+			taste = "like you're about to have a heart attack"
+
+			on_mob_life(var/mob/M, var/mult = 3)
+				if(prob(3))
+					M.reagents.add_reagent("cholesterol", rand(1,2) * mult)
+				..()
+
+
 		fooddrink/sodawater
 			name = "soda water"
 			id = "sodawater"

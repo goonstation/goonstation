@@ -151,7 +151,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	name = "bacon"
 	desc = "A strip of salty cured pork. Many disgusting nerds have a bizarre fascination with this meat, going so far as to construct tiny houses out of it."
 	icon_state = "bacon"
-	initial_reagents = list("porktonium"=10)
+	initial_reagents = list("porktonium"=10, "lbacongrease" = 10)
+
+
+
 	blood = 0
 
 	New()

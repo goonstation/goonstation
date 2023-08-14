@@ -598,6 +598,37 @@
 				boutput(M, "<span class='notice'>A faint cheesy smell drifts through the air...</span>")
 			return
 
+
+	baconGrease
+		name = "Bacon Grease"
+		id = "lbacongrease"
+		result = "lbacongrease"
+		required_reagents = list("cbacongrease" = 1)
+		min_temperature = T0C + 35
+		result_amount = 1
+		mix_phrase = "The mass melts into a yellow oil."
+		on_reaction(var/datum/reagents/holder)
+			var/location = get_turf(holder.my_atom)
+			for(var/mob/M in all_viewers(8, location))
+				boutput(M, "<span class='notice'>A fainy bacony smell fills the room...</span>")
+			return
+
+
+
+	baconLard
+		name = "Bacon Lard"
+		id = "cbacongrease"
+		result = "cbacongrease"
+		required_reagents = list("lbacongrease" = 1)
+		max_temperature = T0C + 10
+		min_temperature = T0C + 1
+		result_amount = 1
+		mix_phrase = "The solution condenses into a marbly white solid."
+		on_reaction(var/datum/reagents/holder)
+			var/location = get_turf(holder.my_atom)
+			for(var/mob/M in all_viewers(8, location))
+				boutput(M, "<span class='notice'>A fainy bacony smell fills the room...</span>")
+			return
 	cheese2
 		name = "Cheese"
 		id = "cheese2"
