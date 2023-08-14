@@ -1500,7 +1500,7 @@ proc/load_morrigan()
 		qdel(src)
 		return
 
-	proc/cause_panic()
+	proc/lockdown()
 	//eventually i will find a better way to update lights
 		for(var/obj/machinery/light/light in by_cat[TR_CAT_MORRIGAN_LIGHTS])
 			light.seton(light.on = FALSE)
@@ -1509,6 +1509,8 @@ proc/load_morrigan()
 			e_light.on = TRUE
 			e_light.update() //you have to update it for it to work
 			LAGCHECK(LAG_LOW)
+		for (var/obj/machinery/door/poddoor/buff/morrigan_lockdown/door in by_type[/obj/machinery/door/poddoor/buff/morrigan_lockdown])
+			door.close()
 
 	//pressing the button
 	attack_hand(var/mob/user)
@@ -1522,7 +1524,7 @@ proc/load_morrigan()
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user.unlock_medal("Cell Shock", TRUE)
 		activate_nuke()
-		cause_panic()
+		lockdown()
 
 	//attack by an item
 	attackby(var/obj/item/I, var/mob/user)
@@ -1555,3 +1557,31 @@ proc/load_morrigan()
 			else
 				src.time -= 2
 		return
+
+//lockdown doors for morrigan (at least for now)
+
+/obj/machinery/door/poddoor/buff/morrigan_lockdown
+
+	name = "lockdown door"
+	desc = "door used for lockdowns."
+
+	New()
+		. = ..()
+		START_TRACKING
+		SPAWN(5 SECONDS)
+			open()
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
+//door that doesn't close during lockdown
+/obj/machinery/door/poddoor/buff/morrigan_lockdown_broken
+
+	name = "lockdown door"
+	desc = "door used for lockdowns. This one seems to be malfunctioning."
+
+	New()
+		. = ..()
+		SPAWN(5 SECONDS)
+			open()
