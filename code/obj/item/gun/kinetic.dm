@@ -5,8 +5,17 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "gun"
 	m_amt = 2000
 	var/obj/item/ammo/bullets/ammo = null
-	/// How much ammo can this gun hold? Don't make this null (Convair880).
-	var/max_ammo_capacity = 1
+	/// How much ammo can this gun hold internally? IE, number of barrels/tube length.
+	/// set 0 to be 'open-bolt' IE, no slotting bullets directly into the chamber
+	var/internal_ammo_capacity = 1
+
+	var/obj/item/ammo/magazine/magazine = null
+	/// Can this gun use detachable magazines?
+	var/can_hold_magazine = FALSE
+	/// Can this gun shoot less than a full burst?
+	var/can_shoot_partially = TRUE
+	var/has_magless_state = FALSE
+
 	/// Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
 	var/ammo_cats = null
 	/// Does this gun have a special icon state for having no ammo lefT?
@@ -22,6 +31,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/auto_eject = FALSE
 	/// If we don't automatically ejected them, we need to keep track (Convair880).
 	var/casings_to_eject = 0
+	/// What's the default load used in this gun? If the gun has detachable magazines, consider setting default_magazine.
+	var/default_ammo = null
 	/// What's the default magazine used in this gun? Set this in place of putting the type in New()
 	var/default_magazine = null
 	/// Assoc list of magazine types, standard ammo first, special ammo second
@@ -32,6 +43,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/ammobag_restock_cost = 1
 	/// Does this gun have a special sound it makes when loading instead of the assigned ammo sound?
 	var/sound_load_override = null
+
+	/// not great, but this code lets us handle ammo types changing mid-burst without completely rewiring ammo cost mechanics
+	var/datum/projectile/internal_bullet_type = null
+	var/internal_bullets_to_fire = 0
+
 
 	/// Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
 	add_residue = TRUE
@@ -63,9 +79,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	examine()
 		. = ..()
-		if (src.ammo && (src.ammo.amount_left > 0))
+		if (src.ammo && (src.ammo?.amount_left > 0))
 			var/datum/projectile/ammo_type = src.ammo.ammo_type
-			. += "There are [src.ammo.amount_left][(ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver)) ? " silver " : " "]bullets of [src.ammo.sname] left!"
+			. += "There are [src.ammo?.amount_left][(ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver)) ? " silver " : " "]bullets of [src.ammo.sname] left!"
 		else
 			. += "There are 0 bullets left!"
 		if (current_projectile)
@@ -75,28 +91,123 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	update_icon()
 
-		if (src.ammo)
-			inventory_counter?.update_number(src.ammo.amount_left)
+		if (src.ammo || src.magazine)
+			inventory_counter?.update_number(src.ammo?.amount_left + src.magazine?.ammo_left())
 		else
 			inventory_counter?.update_text("-")
 
+		var/iconString = ""
+		var/empty = 0
+
+		//there is definitely a better way to do this and keep these strings in the right order
+		src.icon_state = replacetext(src.icon_state, "-empty", "")
+		src.icon_state = replacetext(src.icon_state, "-magless", "")
+		if(src.has_magless_state)
+			if (!src.magazine && !findtext(src.icon_state, "-magless"))
+				iconString += "-magless"
+			else
+				src.icon_state = replacetext(src.icon_state, "-magless", "")
+
 		if(src.has_empty_state)
-			if (src.ammo.amount_left < 1 && !findtext(src.icon_state, "-empty")) //sanity check
-				src.icon_state = "[src.icon_state]-empty"
+			if (src.ammo?.amount_left < 1 && !findtext(src.icon_state, "-empty"))
+				iconString += "-empty"
 			else
 				src.icon_state = replacetext(src.icon_state, "-empty", "")
+
+		src.icon_state = "[src.icon_state][iconString]"
 		return 0
 
 	canshoot(mob/user)
-		if(src.ammo && src.current_projectile)
-			if(src.ammo:amount_left >= src.current_projectile:cost)
+		if((src.ammo || src.magazine) && src.current_projectile)
+			var/ammo = get_ammo()
+			if ((can_shoot_partially) && ammo >= src.current_projectile.cost / src.current_projectile.firemode.shot_number)
+				return 1
+			else if (ammo >= src.current_projectile:cost)
 				return 1
 		return 0
 
-	process_ammo(var/mob/user)
-		if(src.ammo && src.current_projectile)
-			if(src.ammo.use(current_projectile.cost))
+	alter_projectile(var/obj/projectile/P)
+		if (internal_bullets_to_fire > 0)
+			P.proj_data = internal_bullet_type
+			internal_bullets_to_fire = internal_bullets_to_fire - 1
+		return
+
+	alter_firemode(var/datum/firemode/F)
+		F.shot_number = 25
+		return
+
+	proc/get_ammo()
+		var/ammo = 0
+		if (src.ammo && src.magazine)
+			ammo = src.ammo.amount_left + src.magazine.ammo_left()
+		else if (src.ammo)
+			ammo = src.ammo.amount_left
+		else
+			ammo = src.magazine?.ammo_left()
+		return ammo
+
+	proc/use_ammo(var/quantity)
+		var/ammoLeft = src.ammo?.amount_left
+		if (!src.ammo)
+			if (!magazine)
+				return 0
+			//it's implied spacemen will have *prepared* their gun when shooting (chambered a round etc)
+			ammo = magazine.pull_ammo(internal_ammo_capacity)
+
+
+		// feed from the magazine first, if feasible
+		if (src.magazine)
+			var/success
+			//if the magazine has the same ammo as the chamber, just pull straight from the mag
+			boutput(world, "is [magazine.get_ammo_type()] == [ammo.ammo_type]")
+			if (magazine.ammo_left() >= quantity && magazine.get_ammo_type() == ammo.ammo_type)
+				boutput(world,"we're using magazine directly")
+				success = magazine.use(quantity)
+				var/ammo_required = min(magazine.ammo_left(), internal_ammo_capacity)
+				if (ammo_required > 0 && magazine.use(ammo_required))
+					src.ammo.amount_left = src.ammo.amount_left + ammo_required
+			else
+				//otherwise, use the ammo in the chamber first
+				success = (ammo.use(ammoLeft) && magazine.use(quantity - ammoLeft))
+				boutput(world,"we're getting a NEW ammo object, hue")
+				set_current_projectile(magazine.get_ammo_type())
+				internal_bullet_type = src.ammo.ammo_type
+				internal_bullets_to_fire = ammoLeft
+				//...then reload the chamber
+				if (src.ammo.amount_left < internal_ammo_capacity && magazine.ammo_left() > 0)
+					src.ammo = magazine.pull_ammo(internal_ammo_capacity) || src.ammo
+			return success
+		else
+			if (ammoLeft >= quantity)
+				return ammo.use(quantity)
+
+
+		return 0
+
+	override_firemode()
+		var/ammoRemaining = get_ammo()
+		if (ammoRemaining >= src.current_projectile.cost)
+			return null
+
+		var/ammo_per_shot = src.current_projectile.cost / src.current_projectile.firemode.shot_number
+
+		var/max_shots = round(ammoRemaining/ammo_per_shot)
+		if (max_shots > 0)
+			var/datum/firemode/firemodeOverride = new src.current_projectile.firemode.type()
+			firemodeOverride.shot_number = max_shots
+			return firemodeOverride
+		return null
+
+	process_ammo(var/mob/user, var/datum/firemode/firemode)
+		if(can_shoot_partially)
+			var/ammo_per_shot = src.current_projectile.cost / src.current_projectile.firemode.shot_number
+			var/ammoCost = firemode.shot_number * ammo_per_shot
+			if(use_ammo(ammoCost))
 				return 1
+		else
+			if(src.ammo && src.current_projectile)
+				if(use_ammo(current_projectile.cost))
+					return 1
 		boutput(user, "<span class='alert'>*click* *click*</span>")
 		if (!src.silenced)
 			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
@@ -107,46 +218,68 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.Attackby(O, user)
 		return ..()
 
-	attackby(obj/item/ammo/bullets/b, mob/user)
-		if(istype(b, /obj/item/ammo/bullets))
+	attackby(obj/item/ammo/item, mob/user)
+		var/result = 0
+		var/amountLeft = 0
+		if(istype(item, /obj/item/ammo/bullets))
+			var/obj/item/ammo/bullets/b = item
 			if(ON_COOLDOWN(src, "reload_spam", 2 DECI SECONDS))
 				return
-			switch (src.ammo.loadammo(b,src))
-				if(0)
-					user.show_text("You can't reload this gun.", "red")
-					return
-				if(AMMO_RELOAD_INCOMPATIBLE)
-					user.show_text("This ammo won't fit!", "red")
-					return
-				if(AMMO_RELOAD_SOURCE_EMPTY)
-					user.show_text("There's no ammo left in [b.name].", "red")
-					return
-				if(AMMO_RELOAD_ALREADY_FULL)
-					user.show_text("[src] is full!", "red")
-					return
-				if(AMMO_RELOAD_PARTIAL)
-					user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>There wasn't enough ammo left in [b.name] to fully reload [src]. It only has [src.ammo.amount_left] rounds remaining.</span>")
-					src.tooltip_rebuild = 1
-					src.logme_temp(user, src, b) // Might be useful (Convair880).
-					return
-				if(AMMO_RELOAD_FULLY)
-					user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You fully reload [src] with ammo from [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
-					src.tooltip_rebuild = 1
-					src.logme_temp(user, src, b)
-					return
-				if(AMMO_RELOAD_TYPE_SWAP)
-					switch (src.ammo.swap(b,src))
-						if(AMMO_SWAP_INCOMPATIBLE)
-							user.show_text("This ammo won't fit!", "red")
-							return
-						if(AMMO_SWAP_SOURCE_EMPTY)
-							user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap out the magazine. Or whatever this specific gun uses.</span>")
-						if(AMMO_SWAP_ALREADY_FULL)
-							user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap [src]'s ammo with [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
-					src.logme_temp(user, src, b)
-					return
+			result = b.loadammo(src, usr)
+			amountLeft = b.amount_left
+		else if (istype(item, /obj/item/ammo/magazine))
+			var/obj/item/ammo/magazine/b = item
+			if(ON_COOLDOWN(src, "reload_spam", 2 DECI SECONDS))
+				return
+			result = b.loadammo(src, usr)
+			amountLeft = b.ammo.amount_left
 		else
 			..()
+			return
+		switch (result)
+			if(0)
+				user.show_text("You can't reload this gun.", "red")
+				return
+			if(AMMO_RELOAD_INCOMPATIBLE)
+				user.show_text("This ammo won't fit!", "red")
+				return
+			if(AMMO_RELOAD_SOURCE_EMPTY)
+				user.show_text("There's no ammo left in [item.name].", "red")
+				return
+			if(AMMO_RELOAD_ALREADY_FULL)
+				user.show_text("[src] is full!", "red")
+				return
+			if(AMMO_RELOAD_PARTIAL)
+				user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>There wasn't enough ammo left in [item.name] to fully reload [src]. It only has [src.ammo?.amount_left] rounds remaining.</span>")
+				src.tooltip_rebuild = 1
+				src.logme_temp(user, src, item) // Might be useful (Convair880).
+				return
+			if(AMMO_RELOAD_FULLY)
+				user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You fully reload [src] with ammo from [item.name]. There are [amountLeft] rounds left in [item.name].</span>")
+				src.tooltip_rebuild = 1
+				src.logme_temp(user, src, item)
+				return
+			if(AMMO_RELOAD_TYPE_SWAP)
+
+				if(istype(item, /obj/item/ammo/bullets))
+					var/obj/item/ammo/bullets/b = item
+					result = b.swap(src.ammo, src, usr)
+					amountLeft = b.amount_left
+				else if (istype(item, /obj/item/ammo/magazine))
+					var/obj/item/ammo/magazine/b = item
+					result = b.swap(src.magazine, src, usr)
+					amountLeft = b.ammo_left()
+
+				switch (result)
+					if(AMMO_SWAP_INCOMPATIBLE)
+						user.show_text("This ammo won't fit!", "red")
+						return
+					if(AMMO_SWAP_SOURCE_EMPTY)
+						user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap out the magazine. Or whatever this specific gun uses.</span>")
+					if(AMMO_SWAP_ALREADY_FULL)
+						user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap [src]'s ammo with [item.name]. There are [amountLeft] rounds left in [item.name].</span>")
+				src.logme_temp(user, src, item)
+				return
 
 	//attack_self(mob/user as mob)
 	//	return
@@ -172,14 +305,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				var/turf/T = get_turf(src)
 				if(T)
 					if (src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
-						var/number_of_casings = max(1, src.current_projectile.shot_number)
+						var/number_of_casings = max(1, min(src.current_projectile.firemode.shot_number, src.ammo?.amount_left+src.magazine?.ammo_left()))
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
 						for (var/i in 1 to number_of_casings)
 							new src.current_projectile.casing(T, src.forensic_ID)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
-				src.casings_to_eject += src.current_projectile.shot_number
+				src.casings_to_eject += min(src.current_projectile.firemode.shot_number, src.ammo?.amount_left+src.magazine?.ammo_left())
 		. = ..()
 
 	shoot(var/target, var/start, var/mob/user, var/POX, var/POY)
@@ -188,14 +321,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				var/turf/T = get_turf(src)
 				if(T)
 					if (src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
-						var/number_of_casings = max(1, src.current_projectile.shot_number)
+						var/number_of_casings = max(1, min(src.current_projectile.firemode.shot_number, src.ammo?.amount_left+src.magazine?.ammo_left()))
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
 						for (var/i in 1 to number_of_casings)
 							new src.current_projectile.casing(T, src.forensic_ID)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
-				src.casings_to_eject += src.current_projectile.shot_number
+				src.casings_to_eject += min(src.current_projectile.firemode.shot_number, src.ammo?.amount_left+src.magazine?.ammo_left())
 
 		if (fire_animation)
 			if(src.ammo?.amount_left >= 1)
@@ -207,45 +340,52 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			step(user, user.inertia_dir)
 
 	proc/eject_magazine(mob/user)
-		if (src.ammo.amount_left <= 0)
-			// The gun may have been fired; eject casings if so.
-			if ((src.casings_to_eject > 0) && src.current_projectile.casing)
-				if (src.sanitycheck(1, 0) == 0)
-					logTheThing(LOG_DEBUG, usr, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
-					src.casings_to_eject = 0
-					return
+		if (src.magazine)
+			user.put_in_hand_or_drop(src.magazine)
+			src.magazine.UpdateIcon()
+			src.magazine = null
+			src.UpdateIcon()
+		else
+			if (src.ammo?.amount_left <= 0)
+				// The gun may have been fired; eject casings if so.
+				if ((src.casings_to_eject > 0) && src.current_projectile.casing)
+					if (src.sanitycheck(1, 0) == 0)
+						logTheThing(LOG_DEBUG, usr, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
+						src.casings_to_eject = 0
+						return
+					else
+						user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
+						src.ejectcasings()
+						return
 				else
-					user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
-					src.ejectcasings()
+					user.show_text("[src] is empty!", "red")
 					return
-			else
-				user.show_text("[src] is empty!", "red")
-				return
 
-		// Make a copy here to avoid item teleportation issues.
-		var/obj/item/ammo/bullets/ammoHand = new src.ammo.type
-		ammoHand.amount_left = src.ammo.amount_left
-		ammoHand.name = src.ammo.name
-		ammoHand.icon = src.ammo.icon
-		ammoHand.icon_state = src.ammo.icon_state
-		ammoHand.ammo_type = src.ammo.ammo_type
-		ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
-		ammoHand.UpdateIcon()
-		user.put_in_hand_or_drop(ammoHand)
-		ammoHand.after_unload(user)
+			src.UpdateIcon()
+			// Make a copy here to avoid item teleportation issues.
+			var/obj/item/ammo/bullets/ammoHand = new src.ammo.type
+			ammoHand.amount_left = src.ammo?.amount_left
+			ammoHand.name = src.ammo.name
+			ammoHand.icon = src.ammo.icon
+			ammoHand.icon_state = src.ammo.icon_state
+			ammoHand.ammo_type = src.ammo.ammo_type
+			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
+			ammoHand.UpdateIcon()
+			user.put_in_hand_or_drop(ammoHand)
+			ammoHand.after_unload(user)
 
-		// The gun may have been fired; eject casings if so.
-		src.ejectcasings()
-		src.casings_to_eject = 0
+			// The gun may have been fired; eject casings if so.
+			src.ejectcasings()
+			src.casings_to_eject = 0
 
-		src.ammo.amount_left = 0
-		src.ammo.refillable = FALSE
-		src.UpdateIcon()
-		src.add_fingerprint(user)
-		ammoHand.add_fingerprint(user)
+			src.ammo?.amount_left = 0
+			src.ammo.refillable = FALSE
+			src.UpdateIcon()
+			src.add_fingerprint(user)
+			ammoHand.add_fingerprint(user)
 
-		user.visible_message("<span class='alert'>[user] unloads [src].</span>", "<span class='alert'>You unload [src].</span>")
-		//DEBUG_MESSAGE("Unloaded [src]'s ammo manually.")
+			user.visible_message("<span class='alert'>[user] unloads [src].</span>", "<span class='alert'>You unload [src].</span>")
+			//DEBUG_MESSAGE("Unloaded [src]'s ammo manually.")
 		return
 
 	proc/ejectcasings()
@@ -260,12 +400,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	// Don't set this too high. Absurdly large reloads and item spawning can cause a lot of lag. (Convair880).
 	proc/sanitycheck(var/casings = 0, var/ammo = 1)
-		if (casings && (src.casings_to_eject > 30 || src.current_projectile.shot_number > 30))
+		if (casings && (src.casings_to_eject > 30 ))
 			logTheThing(LOG_DEBUG, usr, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
 			if (src.casings_to_eject > 0)
 				src.casings_to_eject = 0
 			return 0
-		if (ammo && (src.max_ammo_capacity > 200 || src.ammo.amount_left > 200))
+		if (ammo && (src?.internal_ammo_capacity > 200 || src.ammo?.amount_left > 200))
 			logTheThing(LOG_DEBUG, usr, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the magazine cap, aborting.")
 			return 0
 		return 1
@@ -323,7 +463,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	var/caliber_name = ""
 	var/rifle_icon_state = ""
 	var/ammo_cats = list()
-	var/max_ammo_capacity = 1
+	var/internal_ammo_capacity = 1
 	var/default_magazine = null
 	var/default_projectile = null
 
@@ -336,7 +476,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		caliber_name = ".22 LR"
 		rifle_icon_state = "survival_rifle_22"
 		ammo_cats = list(AMMO_PISTOL_22)
-		max_ammo_capacity = 10
+		internal_ammo_capacity = 10
 		default_magazine = /obj/item/ammo/bullets/bullet_22
 		default_projectile = /datum/projectile/bullet/bullet_22
 
@@ -345,7 +485,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		caliber_name = "9x19mm Parabellum"
 		rifle_icon_state = "survival_rifle_9mm"
 		ammo_cats = list(AMMO_PISTOL_9MM_ALL)
-		max_ammo_capacity = 15
+		internal_ammo_capacity = 15
 		default_magazine = /obj/item/ammo/bullets/bullet_9mm
 		default_projectile = /datum/projectile/bullet/bullet_9mm
 
@@ -353,7 +493,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		caliber_name = "5.56x45mm NATO"
 		rifle_icon_state = "survival_rifle_556"
 		ammo_cats = list(AMMO_AUTO_556)
-		max_ammo_capacity = 20
+		internal_ammo_capacity = 20
 		default_magazine = /obj/item/ammo/bullets/assault_rifle
 		default_projectile = /datum/projectile/bullet/assault_rifle
 
@@ -472,7 +612,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "railgun"
 	force = MELEE_DMG_PISTOL
 	contraband = 0
-	max_ammo_capacity = 200
+	internal_ammo_capacity = 200
 	default_magazine = /obj/item/ammo/bullets/vbullet
 
 	New()
@@ -496,7 +636,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_PISTOL
 	contraband = 6
 	ammo_cats = list(AMMO_PISTOL_ALL, AMMO_REVOLVER_ALL, AMMO_SMG_9MM, AMMO_TRANQ_ALL, AMMO_RIFLE_308, AMMO_AUTO_308, AMMO_AUTO_556, AMMO_CASELESS_G11, AMMO_FLECHETTE, AMMO_STAPLE)
-	max_ammo_capacity = 2
+	internal_ammo_capacity = 2
 	var/failure_chance = 6
 	var/failured = 0
 	default_magazine = /obj/item/ammo/bullets/staples
@@ -592,7 +732,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	proc/set_barrel_stats(var/obj/item/survival_rifle_barrel/barrel)
 		src.icon_state = barrel.rifle_icon_state
 		src.ammo_cats = barrel.ammo_cats
-		src.max_ammo_capacity = barrel.max_ammo_capacity
+		src.internal_ammo_capacity = barrel.internal_ammo_capacity
 		src.default_magazine = barrel.default_magazine
 		set_current_projectile(new barrel.default_projectile)
 		src.projectiles = list(current_projectile)
@@ -609,16 +749,18 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "faith"
 	force = MELEE_DMG_PISTOL
 	ammo_cats = list(AMMO_PISTOL_22)
-	max_ammo_capacity = 4
+	internal_ammo_capacity = 1
 	auto_eject = 1
 	w_class = W_CLASS_SMALL
 	muzzle_flash = null
 	has_empty_state = 1
-	default_magazine = /obj/item/ammo/bullets/bullet_22/faith
+	default_ammo = /obj/item/ammo/bullets/bullet_22
+	default_magazine = /obj/item/ammo/magazine/bullet_22/faith
 	fire_animation = TRUE
+	can_hold_magazine = TRUE
 
 	New()
-		ammo = new default_magazine
+		magazine = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_22)
 		..()
 
@@ -631,7 +773,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_PISTOL
 	contraband = 4
 	ammo_cats = list(AMMO_PISTOL_22)
-	max_ammo_capacity = 10
+	internal_ammo_capacity = 10
 	auto_eject = 1
 	hide_attack = ATTACK_FULLY_HIDDEN
 	muzzle_flash = null
@@ -656,7 +798,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "heavy"
 	force = MELEE_DMG_LARGE
 	ammo_cats = list(AMMO_AUTO_308)
-	max_ammo_capacity = 200 //its a minigun it can have some ammo
+	internal_ammo_capacity = 200 //its a minigun it can have some ammo
 	two_handed = TRUE
 	auto_eject = 0
 	has_empty_state = 1
@@ -692,7 +834,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_AUTO_762)
 	spread_angle = 9
 	shoot_delay = 3 DECI SECONDS
-	max_ammo_capacity = 30
+	internal_ammo_capacity = 30
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
@@ -724,7 +866,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_RIFLE_308)
-	max_ammo_capacity = 4 // It's magazine-fed (Convair880).
+	internal_ammo_capacity = 4 // It's magazine-fed (Convair880).
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
@@ -750,7 +892,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_RIFLE
 	//contraband = 8
 	ammo_cats = list(AMMO_TRANQ_308)
-	max_ammo_capacity = 4 // It's magazine-fed (Convair880).
+	internal_ammo_capacity = 4 // It's magazine-fed (Convair880).
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
@@ -773,7 +915,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
 	ammo_cats = list(AMMO_PISTOL_9MM_ALL)
-	max_ammo_capacity = 18
+	internal_ammo_capacity = 18
 	auto_eject = 1
 	has_empty_state = 1
 	gildable = 1
@@ -869,7 +1011,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_PISTOL
 	contraband = 4
 	ammo_cats = list(AMMO_PISTOL_9MM_SOVIET)
-	max_ammo_capacity = 8
+	internal_ammo_capacity = 8
 	shoot_delay = 2
 	auto_eject = TRUE
 	has_empty_state = TRUE
@@ -892,7 +1034,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
 	ammo_cats = list(AMMO_FLECHETTE)
-	max_ammo_capacity = 21
+	internal_ammo_capacity = 21
 	auto_eject = 1
 	has_empty_state = 1
 	gildable = 0
@@ -925,7 +1067,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it. Odd."
 	force = MELEE_DMG_SMG
 	ammo_cats = list(AMMO_SMG_9MM)
-	max_ammo_capacity = 30
+	internal_ammo_capacity = 30
 	auto_eject = 0
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
@@ -1006,7 +1148,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "revolver"
 	force = MELEE_DMG_REVOLVER
 	ammo_cats = list(AMMO_REVOLVER_SYNDICATE, AMMO_REVOLVER_DETECTIVE) // Just like in RL (Convair880).
-	max_ammo_capacity = 7
+	internal_ammo_capacity = 7
 	default_magazine = /obj/item/ammo/bullets/a357
 	fire_animation = TRUE
 	ammobag_magazines = list(/obj/item/ammo/bullets/a357, /obj/item/ammo/bullets/a357/AP)
@@ -1026,7 +1168,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_REVOLVER
 	ammo_cats = list(AMMO_REVOLVER_DETECTIVE)
-	max_ammo_capacity = 7
+	internal_ammo_capacity = 7
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/a38/stun
 	fire_animation = TRUE
@@ -1047,7 +1189,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	contraband = 1
 	force = 1
 	ammo_cats = list(AMMO_FOAMDART)
-	max_ammo_capacity = 1
+	internal_ammo_capacity = 1
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	var/pulled = FALSE
@@ -1145,7 +1287,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	contraband = 1
 	force = 1
 	ammo_cats = list(AMMO_FOAMDART)
-	max_ammo_capacity = 6
+	internal_ammo_capacity = 6
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 
@@ -1167,7 +1309,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	force = 2
 	ammo_cats = list(AMMO_FOAMDART)
-	max_ammo_capacity = 12
+	internal_ammo_capacity = 12
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 
@@ -1185,7 +1327,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_PISTOL
 	contraband = 2
 	ammo_cats = list(AMMO_DART_ALL)
-	max_ammo_capacity = 1.
+	internal_ammo_capacity = 1.
 	can_dual_wield = 0
 	hide_attack = ATTACK_FULLY_HIDDEN
 	gildable = 1
@@ -1205,7 +1347,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "derringer"
 	force = MELEE_DMG_PISTOL
 	ammo_cats = list(AMMO_PISTOL_41)
-	max_ammo_capacity = 2
+	internal_ammo_capacity = 2
 	w_class = W_CLASS_SMALL
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/derringer
@@ -1243,7 +1385,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_REVOLVER
 	ammo_cats = list(AMMO_REVOLVER_45)
 	spread_angle = 1
-	max_ammo_capacity = 7
+	internal_ammo_capacity = 7
 	default_magazine = /obj/item/ammo/bullets/c_45
 
 	detective
@@ -1273,7 +1415,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	has_uncocked_state = TRUE
 	force = MELEE_DMG_PISTOL
 	ammo_cats = list(AMMO_FLINTLOCK)
-	max_ammo_capacity = 1
+	internal_ammo_capacity = 1
 	default_magazine = /obj/item/ammo/bullets/flintlock/single
 
 	New()
@@ -1302,7 +1444,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_RIFLE
 	contraband = 7
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
-	max_ammo_capacity = 8
+	internal_ammo_capacity = 8
 	auto_eject = 1
 	can_dual_wield = 0
 	default_magazine = /obj/item/ammo/bullets/a12
@@ -1355,7 +1497,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_RIFLE
 	contraband = 5
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
-	max_ammo_capacity = 8
+	internal_ammo_capacity = 8
 	auto_eject = 0
 	can_dual_wield = 0
 	two_handed = 1
@@ -1383,7 +1525,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			boutput(user, "<span class='notice'>You need to rack the slide before you can fire!</span>")
 		..()
 		src.racked_slide = FALSE
-		src.casings_to_eject = src.ammo.amount_left ? 1 : 0
+		src.casings_to_eject = src.ammo?.amount_left ? 1 : 0
 		src.UpdateIcon()
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
@@ -1392,7 +1534,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			return
 		..()
 		src.racked_slide = FALSE
-		src.casings_to_eject = src.ammo.amount_left ? 1 : 0
+		src.casings_to_eject = src.ammo?.amount_left ? 1 : 0
 		src.UpdateIcon()
 
 	attack_self(mob/user as mob)
@@ -1404,7 +1546,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		if(ismob(user))
 			mob_user = user
 		if (!src.racked_slide) //Are we racked?
-			if (src.ammo.amount_left == 0)
+			if (src.ammo?.amount_left == 0)
 				boutput(mob_user, "<span class ='notice'>You are out of shells!</span>")
 				UpdateIcon()
 			else
@@ -1418,7 +1560,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				boutput(mob_user, "<span class='notice'>You rack the slide of the shotgun!</span>")
 				playsound(user.loc, 'sound/weapons/shotgunpump.ogg', 50, 1)
 				src.casings_to_eject = 0
-				if (src.ammo.amount_left < 8) // Do not eject shells if you're racking a full "clip"
+				if (src.ammo?.amount_left < 8) // Do not eject shells if you're racking a full "clip"
 					var/turf/T = get_turf(src)
 					if (T && src.current_projectile.casing) // Eject shells on rack instead of on shoot()
 						new src.current_projectile.casing(T, src.forensic_ID)
@@ -1435,7 +1577,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_RIFLE
 	contraband = 5
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
-	max_ammo_capacity = 5
+	internal_ammo_capacity = 5
 	auto_eject = FALSE
 	can_dual_wield = FALSE
 	two_handed = TRUE
@@ -1458,7 +1600,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_PISTOL
 	contraband = 2
 	ammo_cats = list(AMMO_SHOTGUN_LOW)
-	max_ammo_capacity = 1
+	internal_ammo_capacity = 1
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/flare/single
 
@@ -1476,7 +1618,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "slamgun-ready-world"
 	force = MELEE_DMG_RIFLE
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
-	max_ammo_capacity = 1
+	internal_ammo_capacity = 1
 	auto_eject = 0
 	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH
 	spread_angle = 10 // sorry, no sniping with slamguns
@@ -1500,7 +1642,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			if(user.updateTwoHanded(src, FALSE)) // should never fail, but respect error codes
 				w_class = W_CLASS_NORMAL
 				force = MELEE_DMG_REVOLVER
-				if (src.ammo.amount_left > 0 || src.casings_to_eject > 0)
+				if (src.ammo?.amount_left > 0 || src.casings_to_eject > 0)
 					src.icon_state = "slamgun-open-loaded"
 				else
 					src.icon_state = "slamgun-open"
@@ -1534,7 +1676,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			src.item_state = "slamgun-ready-world"
 		else
 			src.item_state = "slamgun-open-world"
-			if (src.ammo.amount_left > 0 || src.casings_to_eject > 0)
+			if (src.ammo?.amount_left > 0 || src.casings_to_eject > 0)
 				src.icon_state = "slamgun-open-loaded"
 			else
 				src.icon_state = "slamgun-open"
@@ -1552,7 +1694,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		if (istype(b, /obj/item/ammo/bullets) && src.icon_state == "slamgun-ready")
 			boutput(user, "<span class='alert'>You can't shove shells down the barrel! You'll have to open \the [src]!</span>")
 			return
-		if (istype(b, /obj/item/ammo/bullets) && (src.ammo.amount_left > 0 || src.casings_to_eject > 0))
+		if (istype(b, /obj/item/ammo/bullets) && (src.ammo?.amount_left > 0 || src.casings_to_eject > 0))
 			boutput(user, "<span class='alert'>\The [src] already has a shell inside! You'll have to unload \the [src]!</span>")
 			return
 		..()
@@ -1595,7 +1737,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_RIFLE
 	contraband = 6
 	ammo_cats = list(AMMO_COILGUN)
-	max_ammo_capacity = 2
+	internal_ammo_capacity = 2
 	default_magazine = /obj/item/ammo/bullets/rod
 
 	New()
@@ -1612,7 +1754,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_SMG
 	contraband = 7
 	ammo_cats = list(AMMO_GRENADE_ALL)
-	max_ammo_capacity = 1
+	internal_ammo_capacity = 1
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/smoke/single
 	fire_animation = TRUE
@@ -1624,7 +1766,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	attackby(obj/item/b, mob/user)
 		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
-			if(src.ammo.amount_left > 0)
+			if(src.ammo?.amount_left > 0)
 				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
@@ -1663,7 +1805,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_LARGE
 	contraband = 8
 	ammo_cats = list(AMMO_ROCKET_ALL)
-	max_ammo_capacity = 1
+	internal_ammo_capacity = 1
 	can_dual_wield = 0
 	two_handed = 1
 	muzzle_flash = "muzzle_flash_launch"
@@ -1682,7 +1824,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	update_icon()
 		..()
-		if (src.ammo.amount_left < 1)
+		if (src.ammo?.amount_left < 1)
 			src.item_state = "rpg7_empty"
 		else
 			src.item_state = "rpg7"
@@ -1716,7 +1858,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_LARGE
 	contraband = 8
 	ammo_cats = list(AMMO_ROCKET_MRL)
-	max_ammo_capacity = 6
+	internal_ammo_capacity = 6
 	can_dual_wield = 0
 	two_handed = 1
 	muzzle_flash = "muzzle_flash_launch"
@@ -1757,7 +1899,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	throw_range = 4
 	force = MELEE_DMG_LARGE
 	ammo_cats = list(AMMO_ROCKET_ALL)//based on the fact that it's funny to fire an RPG rocket out of this thing
-	max_ammo_capacity = 1
+	internal_ammo_capacity = 1
 	can_dual_wield = 0
 	two_handed = 1
 	muzzle_flash = "muzzle_flash_launch"
@@ -1797,7 +1939,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "gungun"
 	w_class = W_CLASS_NORMAL
 	ammo_cats = list(AMMO_DERRINGER_LITERAL)
-	max_ammo_capacity = 6 //6 guns
+	internal_ammo_capacity = 6 //6 guns
 	force = MELEE_DMG_SMG
 	default_magazine = /obj/item/ammo/bullets/gun
 
@@ -1813,7 +1955,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	desc = "The new double action air projection device from Donk Co!"
 	icon_state = "airzooka"
 	force = MELEE_DMG_PISTOL
-	max_ammo_capacity = 10
+	internal_ammo_capacity = 10
 	ammo_cats = list(AMMO_AIRZOOKA)
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/airzooka
@@ -1833,7 +1975,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	color = "#ff7b00"
 	force = MELEE_DMG_LARGE
 	ammo_cats = list(AMMO_HOWITZER)
-	max_ammo_capacity = 1
+	internal_ammo_capacity = 1
 	auto_eject = 0
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	spread_angle = 0
@@ -1850,8 +1992,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 	afterattack(atom/A, mob/user as mob)
-		if(src.ammo.amount_left < max_ammo_capacity && istype(A, /mob/living/critter/small_animal/cat))
-			src.ammo.amount_left += 1
+		if(src.ammo?.amount_left < internal_ammo_capacity && istype(A, /mob/living/critter/small_animal/cat))
+			src.ammo?.amount_left += 1
 			user.visible_message("<span class='alert'>[user] loads \the [A] into \the [src].</span>", "<span class='alert'>You load \the [A] into \the [src].</span>")
 			src.current_projectile.icon_state = A.icon_state //match the cat sprite that we load
 			qdel(A)
@@ -1878,7 +2020,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_PISTOL
 	contraband = 4
 	ammo_cats = list(AMMO_PISTOL_9MM_ALL)
-	max_ammo_capacity = 15
+	internal_ammo_capacity = 15
 	auto_eject = 1
 	has_empty_state = 1
 	fire_animation = TRUE
@@ -1902,7 +2044,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	name = "\improper Hydra smart pistol"
 	desc = "A pistol capable of locking onto multiple targets and firing on them in rapid sequence. \"Anderson Para-Munitions\" is engraved on the slide."
 	icon_state = "smartgun"
-	max_ammo_capacity = 20
+	internal_ammo_capacity = 20
 	ammo_cats = list(AMMO_PISTOL_22)
 	default_magazine = /obj/item/ammo/bullets/bullet_22/smartgun
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_22/smartgun)
@@ -1927,10 +2069,12 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_SMG
 	contraband = 4
 	ammo_cats = list(AMMO_SMG_9MM)
-	max_ammo_capacity = 30
+	internal_ammo_capacity = 1
 	auto_eject = 1
 	spread_angle = 10
 	has_empty_state = 1
+	can_hold_magazine = TRUE
+	has_magless_state = TRUE
 	default_magazine = /obj/item/ammo/bullets/bullet_9mm/smg
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm/smg)
 	ammobag_restock_cost = 2
@@ -1973,7 +2117,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_PISTOL
 	contraband = 4
 	ammo_cats = list(AMMO_TRANQ_9MM)
-	max_ammo_capacity = 15
+	internal_ammo_capacity = 15
 	auto_eject = 1
 	hide_attack = ATTACK_FULLY_HIDDEN
 	muzzle_flash = null
@@ -1996,7 +2140,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_RIFLE
 	contraband = 7
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
-	max_ammo_capacity = 5
+	internal_ammo_capacity = 5
 	auto_eject = 1
 	two_handed = 1
 	can_dual_wield = 0
@@ -2022,7 +2166,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_AUTO_556)
-	max_ammo_capacity = 20
+	internal_ammo_capacity = 20
 	auto_eject = 1
 	ammobag_magazines = list(/obj/item/ammo/bullets/assault_rifle, /obj/item/ammo/bullets/assault_rifle/armor_piercing)
 	ammobag_restock_cost = 2
@@ -2084,7 +2228,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_RIFLE
 	ammo_cats = list(AMMO_AUTO_308)
-	max_ammo_capacity = 100
+	internal_ammo_capacity = 100
 	auto_eject = 0
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
@@ -2120,7 +2264,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_LARGE
 	ammo_cats = list(AMMO_CANNON_20MM)
-	max_ammo_capacity = 1
+	internal_ammo_capacity = 1
 	auto_eject = 1
 	fire_animation = TRUE
 
@@ -2159,7 +2303,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_LARGE
 	ammo_cats = list(AMMO_HOWITZER)
-	max_ammo_capacity = 1
+	internal_ammo_capacity = 1
 	auto_eject = 1
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
@@ -2200,7 +2344,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_RIFLE
 	contraband = 7
 	ammo_cats = list(AMMO_GRENADE_ALL)
-	max_ammo_capacity = 4 // to fuss with if i want 6 packs of ammo
+	internal_ammo_capacity = 4 // to fuss with if i want 6 packs of ammo
 	two_handed = 1
 	can_dual_wield = 0
 	auto_eject = 0
@@ -2213,18 +2357,18 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
-		ammo.amount_left = max_ammo_capacity
+		ammo.amount_left = internal_ammo_capacity
 		set_current_projectile(new/datum/projectile/bullet/grenade_round/explosive)
 		..()
 
 	attackby(obj/item/b, mob/user)
 		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
-			if((src.ammo.amount_left > 0 && !istype(current_projectile, /datum/projectile/bullet/grenade_shell)) || src.ammo.amount_left >= src.max_ammo_capacity)
+			if((src.ammo?.amount_left > 0 && !istype(current_projectile, /datum/projectile/bullet/grenade_shell)) || src.ammo?.amount_left >= src.internal_ammo_capacity)
 				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
 				var/datum/projectile/bullet/grenade_shell/custom_shell = src.current_projectile
-				if(src.ammo.amount_left > 0 && istype(custom_shell) && custom_shell.get_nade().type != b.type)
+				if(src.ammo?.amount_left > 0 && istype(custom_shell) && custom_shell.get_nade().type != b.type)
 					boutput(user, "<span class='alert'>The [src] has a different kind of grenade in the conversion chamber, and refuses to mix and match!</span>")
 					return
 				else
@@ -2252,7 +2396,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_RIFLE
 	ammo_cats = list(AMMO_RIFLE_308)
-	max_ammo_capacity = 6
+	internal_ammo_capacity = 6
 	auto_eject = 1
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
@@ -2353,7 +2497,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = 10
 	ammo_cats = list(AMMO_CANNON_20MM)
-	max_ammo_capacity = 5
+	internal_ammo_capacity = 5
 	auto_eject = 1
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
@@ -2389,7 +2533,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_REVOLVER //it's one handed, no reason for it to be rifle-levels of melee damage
 	contraband = 4
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
-	max_ammo_capacity = 2
+	internal_ammo_capacity = 2
 	auto_eject = FALSE
 	can_dual_wield = FALSE
 	two_handed = FALSE
@@ -2420,7 +2564,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	shoot(target, start, mob/user)
 		if (src.broke_open)
 			boutput(user, "<span class='alert'>You need to close [src] before you can fire!</span>")
-		if (!src.broke_open && src.ammo.amount_left > 0)
+		if (!src.broke_open && src.ammo?.amount_left > 0)
 			src.shells_to_eject++
 		..()
 

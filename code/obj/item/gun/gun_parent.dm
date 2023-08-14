@@ -66,6 +66,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			forensic_IDs.Add(src.forensic_ID)
 		return ..()
 
+	proc/override_firemode()
+		return
+
 /datum/gunTarget
 	var/params = null
 	var/target = null
@@ -286,6 +289,12 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 #endif
 		return
 
+/obj/item/gun/proc/alter_projectile(var/obj/projectile/P)
+	return
+
+/obj/item/gun/proc/alter_firemode(var/datum/firemode/F)
+	return
+
 /obj/item/gun/proc/shoot_point_blank(atom/target, var/mob/user as mob, var/second_shot = 0, var/skip_charge_up = FALSE)
 	if (!target || !user)
 		return FALSE
@@ -378,7 +387,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		spread += 5 * how_drunk
 	spread = max(spread, spread_angle)
 
-	for (var/i = 0; i < current_projectile.shot_number; i++)
+	var/datum/firemode/FM = current_projectile.default_firemode
+	src.alter_firemode(FM)
+	for (var/i = 0; i < FM.shot_number; i++)
 		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, target, 0, 0, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)))
 		if (!P)
 			return FALSE
@@ -399,16 +410,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				L.lastgasp()
 			L.set_clothing_icon_dirty()
 		src.UpdateIcon()
-		sleep(current_projectile.shot_delay)
+		sleep(FM.shoot_delay)
 
 /obj/item/gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	src.add_fingerprint(user)
 	if(continuous) return
 	if (flag)
 		return
-
-/obj/item/gun/proc/alter_projectile(var/obj/projectile/P)
-	return
 
 /obj/item/gun/proc/shoot(var/target,var/start,var/mob/user,var/POX,var/POY,var/is_dual_wield)
 	if (isghostdrone(user))
@@ -420,7 +428,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			if (!silenced)
 				playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
 		return FALSE
-	if (!process_ammo(user))
+	var/datum/firemode/fireMode = override_firemode()
+	if (!process_ammo(user, fireMode || current_projectile.firemode))
 		return FALSE
 	if (!isturf(target) || !isturf(start))
 		return FALSE
@@ -457,7 +466,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		spread += 5 * how_drunk
 	spread = max(spread, spread_angle)
 
-	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)))
+	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)), firemode_override = fireMode)
 	if (P)
 		P.forensic_ID = src.forensic_ID
 
@@ -495,7 +504,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return list("You have no idea what the hell this thing is!")
 	return ..()
 
-/obj/item/gun/proc/process_ammo(var/mob/user)
+/obj/item/gun/proc/process_ammo(var/mob/user, var/datum/firemode/firemode = null)
 	boutput(user, "<span class='alert'>*click* *click*</span>")
 	if (!src.silenced)
 		playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
