@@ -1,5 +1,29 @@
 
 (t)sun aug 13 23
+(u)Bisar
+(p)15341
+(e)🪲📦|C-Bug, A-Game-Objects
+(*)MechComp triggers for Vend by Name should work properly now!
+(u)Ryou (Glamurio) & Zac
+(p)15192
+(e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
+(*)Added cinnamon to the game. Ask your local botanist to grow you some! Careful not too eat too much of it.
+(u)soapcyst
+(p)15203
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added misters to atlas and afterlife bar
+(u)Wisemonster
+(p)15251
+(e)🔄⏰📦|C-Rework, A-Status-Effects, A-Game-Objects
+(+)Devera's hygiene protection has been changed into a status effect.
+(u)Tyrant
+(p)15324
+(e)🪲|C-Bug
+(+)The HoP now has access to the command teleporter by default.
+(u)UnfunnyPerson
+(p)15136
+(e)⛔📦|C-Removal, A-Game-Objects
+(+)The black market megaphone can no longer be found in surplus crates.
 (u)Ikea
 (p)15320
 (e)⚖🤖|C-Balance, A-Silicons

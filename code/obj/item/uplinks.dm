@@ -553,6 +553,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/active = 0 //Are we currently active??
 	var/menu_message = ""
 
+	disposing()
+		hostpda = null
+		. = ..()
+
 	setup(var/datum/mind/ownermind, var/obj/item/device/master)
 		..()
 		if (master && istype(master))

@@ -74015,6 +74015,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
+"uEQ" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1";
+	tag = "icon-line1"
+	},
+/obj/machinery/hydro_mister,
+/turf/unsimulated/floor/grass/random,
+/area/afterlife/heaven/hydroponics)
 "uFv" = (
 /obj/machinery/light{
 	dir = 8;
@@ -133063,7 +133071,7 @@ bQI
 bQI
 bQI
 bko
-bUo
+uEQ
 lmT
 bLw
 bVD
