@@ -160,9 +160,6 @@ var/global/mob/twitch_mob = 0
 		world.log = file("data/errors.log")
 #endif
 		enable_auxtools_debugger()
-#ifdef REFERENCE_TRACKING
-		enable_reference_tracking()
-#endif
 
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_PREGAME))
 #warn Profiler enabled at start of init

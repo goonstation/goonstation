@@ -34,6 +34,13 @@
 	var/tooltipTheme
 	var/obj/item/item
 
+	disposing()
+		qdel(src.master)
+		src.master = null
+		// TODO: Eject on floor? Probably not for cyborg tools...
+		src.item = null
+		. = ..()
+
 	clicked(list/params)
 		sendclick(params, usr)
 
