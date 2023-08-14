@@ -1416,7 +1416,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	/// Has a chance to snap at mobs that try to pet them.
 	/// We don't really have a 'bite' proc and the damage/bleed procs are all kinds of fucked up so I'm just reusing the arms
 	proc/snap_at_maybe(mob/source, mob/target)
-		if (prob(SNAP_PROB) && target.a_intent == INTENT_HELP)
+		if (prob(SNAP_PROB) && target.a_intent == INTENT_HELP && !iswerewolf(target))
 			playsound(src.mob, 'sound/voice/animal/werewolf_attack1.ogg', 60, TRUE)
 			src.mob.visible_message("<span class='alert'>[src.mob] snaps at [target]!</span>", "<span class='alert'>You snap at [target]!</span>")
 			src.mob.set_a_intent(INTENT_HARM)

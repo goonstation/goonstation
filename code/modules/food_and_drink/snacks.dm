@@ -1460,13 +1460,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			icon_state = "donut2"
 			item_state = "donut2"
 			heal_amt = 2
+			bites_left = 4
+			initial_reagents = list("sugar"=12)
 
 		cinnamon
-			name = "cinnamon sugar donut"
+			name = "cinnamon donut"
 			desc = "One of Delectable Dan's seasonal bestsellers."
 			icon_state = "donut3"
 			item_state = "donut3"
 			heal_amt = 3
+			bites_left = 4
+			initial_reagents = list("cinnamon"=12)
 
 		robust
 			name = "robust donut"

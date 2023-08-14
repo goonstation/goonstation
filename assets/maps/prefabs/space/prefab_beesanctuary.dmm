@@ -87,12 +87,7 @@
 /turf/unsimulated/floor/purpleblack,
 /area/prefab/bee_sanctuary)
 "eu" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "bee bed"
-	},
+/obj/stool/bee_bed,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 10
