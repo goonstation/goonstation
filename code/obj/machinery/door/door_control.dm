@@ -514,7 +514,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 
 /obj/machinery/door_control/antagscanner/attack_hand(mob/user)
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
-	if (ishuman(user) && user.mind?.get_antagonist(ROLE_SLEEPER_AGENT))
+	if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT))
 		user.visible_message("<span class='notice'>The [src] accepts the biometrics of the user and beeps, granting you access.</span>")
 		src.toggle()
 		if (src.entrance_scanner)
