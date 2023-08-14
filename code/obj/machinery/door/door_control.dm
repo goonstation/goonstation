@@ -510,7 +510,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	icon_state = "antagscanner"
 	unpressed_icon = "antagscanner"
 	pressed_icon = "antagscanner-u"
-	unpowered_icon = "antagscanner"
+	unpowered_icon = "antagscanner" // should never happen, this is a failsafe if anything.
 	requires_power = 0
 	welcome_text = "Welcome, Agent."
 
