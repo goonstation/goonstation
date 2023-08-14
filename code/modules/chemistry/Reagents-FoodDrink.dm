@@ -309,7 +309,7 @@ datum
 			fluid_r = 240
 			fluid_g = 240
 			fluid_b = 240
-			alch_strength = 1
+			alch_strength = 0.6
 			description = "An alcoholic beverage typically made from fermented fruits. Contains a lot of alcohol."
 			taste = "fruity"
 			reagent_state = LIQUID
