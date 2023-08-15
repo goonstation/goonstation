@@ -71,6 +71,7 @@
 		if (src.obj_locs[clicked_position] == O)
 			user.click(O, params2list(params))
 
+	/// returns position of the hud clicked
 	proc/get_clicked_position(mob/user, list/params)
 		if (!params)
 			return
