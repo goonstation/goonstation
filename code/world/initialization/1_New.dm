@@ -22,6 +22,8 @@
 	participationRecorder = new()
 	//participationRecorder = new(1) //Enable debug
 
+	antagWeighter = new()
+
 	//This is also used pretty early
 	Z_LOG_DEBUG("World/New", "Setting up powernets...")
 	makepowernets()
