@@ -26,9 +26,9 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 				var/turf/L = locate(T.x+x, T.y+y, T.z)
 
 				var/area/map_gen/planet/P = get_area(L)
-				if(L?.loc && !(istype(P) && P.allow_prefab))
+				if(L?.loc && !istype(P, /area/space) && !(istype(P) && P.allow_prefab))
 					return
-				if(T.density)
+				if(L.density)
 					return
 
 		var/area_type = get_area(T)
@@ -55,6 +55,9 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 	proc/convertSpace(turf/start, prefabSizeX, prefabSizeY, area/prev_area)
 		//var/list/areas_to_revert = list(/area/noGenerate, /area/allowGenerate)
 		var/child_path = "[prev_area.type]/no_prefab"
+		if(istype(prev_area, /area/space))
+			child_path = prev_area.type
+
 		var/list/turf/turfs = block(locate(start.x, start.y, start.z), locate(start.x+prefabSizeX-1, start.y+prefabSizeY-1, start.z))
 		for(var/turf/T in turfs)
 			//if( T.loc.type in areas_to_revert)
