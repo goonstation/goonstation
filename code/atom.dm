@@ -195,6 +195,11 @@ TYPEINFO(/atom)
 				src.delStatus(effect)
 			src.statusEffects = null
 		ClearAllParticles()
+
+		if (!isnull(chat_text))
+			qdel(chat_text)
+			chat_text = null
+
 		atom_properties = null
 		if(!ismob(src)) // I want centcom cloner to look good, sue me
 			ClearAllOverlays()

@@ -279,4 +279,8 @@ var/datum/explosion_controller/explosions
 
 		explosions.queue_damage(nodes, blame)
 
+		// cleanup, we're done
+		src.source = null
+		src.epicenter = null
+
 #undef RSS_SCALE

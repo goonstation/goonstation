@@ -2,6 +2,7 @@
 	id = ROLE_POLTERGEIST
 	display_name = "poltergeist"
 	mob_path = /mob/living/intangible/wraith/poltergeist
+	remove_on_death = TRUE
 
 	give_equipment()
 		var/mob/current_mob = src.owner.current

@@ -408,9 +408,11 @@
 		src.buckled.buckled_guy = null
 
 	mobs.Remove(src)
-	if (ai)
+
+	if (src.ai)
 		qdel(ai)
 		ai = null
+
 	mind = null
 	ckey = null
 	client = null
