@@ -2219,10 +2219,6 @@
 /obj/grille/steel,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"cqp" = (
-/obj/grille/steel,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/medical/biological)
 "cqq" = (
 /obj/tree{
 	dir = 1
@@ -3107,11 +3103,6 @@
 /obj/machinery/light/small/floor/netural,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/crewquarters)
-"dtJ" = (
-/obj/grille/catwalk,
-/obj/disposalpipe/auto/regular,
-/turf/space,
-/area/morrigan/station/space)
 "duh" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It won't budge.";
@@ -4374,11 +4365,6 @@
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/terrazzo/black,
 /area/morrigan/station/medical/morgue)
-"eCn" = (
-/obj/lattice,
-/obj/disposalpipe/auto/regular,
-/turf/space,
-/area/morrigan/station/space)
 "eCp" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/pink,
@@ -6749,10 +6735,6 @@
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/morrigan/station/civilian/cafe)
-"gSw" = (
-/obj/grille/steel,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/medical/genetics)
 "gSA" = (
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/station/security/brig)
@@ -11225,10 +11207,6 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"lKe" = (
-/obj/disposalpipe/auto/regular,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/disposals)
 "lLk" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/fakeobjects{
@@ -12661,10 +12639,6 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"ngh" = (
-/obj/disposalpipe/auto/regular,
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/maintenance)
 "nhg" = (
 /obj/machinery/door/airlock/pyro/glass/security/alt{
 	hardened = 1
@@ -15510,6 +15484,20 @@
 	},
 /turf/unsimulated/floor/darkblue,
 /area/morrigan/station/command/eva)
+"qlM" = (
+/obj/machinery/launcher_loader/south{
+	layer = 2
+	},
+/obj/machinery/door/poddoor/blast{
+	density = 0;
+	dir = 4;
+	icon = 'icons/obj/doors/sovblastdoor.dmi';
+	icon_state = "bdoormid0";
+	id = "samostrel_nuke_outer";
+	opacity = 0
+	},
+/turf/unsimulated/floor/plating,
+/area/morrigan/routing)
 "qmq" = (
 /obj/machinery/door/airlock/pyro/sci_alt{
 	dir = 4
@@ -19557,11 +19545,6 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/longtile/blue,
 /area/morrigan/station/command/meeting)
-"uGG" = (
-/obj/decal/cleanable/rust/jen,
-/obj/disposalpipe/auto/regular,
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/maintenance)
 "uGO" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -21485,6 +21468,9 @@
 /obj/machinery/light/small/sticky/warm{
 	dir = 4
 	},
+/obj/machinery/conveyor/area_activated{
+	dir = 4
+	},
 /turf/unsimulated/floor/black,
 /area/morrigan/routing/transport)
 "wUX" = (
@@ -22635,7 +22621,6 @@
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/construction)
 "yew" = (
-/obj/disposalpipe/auto/regular,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/disposals)
 "yeI" = (
@@ -23798,7 +23783,7 @@ xXE
 xXE
 xXE
 xXE
-syi
+qlM
 xXE
 xXE
 xXE
@@ -26471,9 +26456,9 @@ sgk
 fZO
 stp
 odW
-cqp
-cqp
-cqp
+nZP
+nZP
+nZP
 odW
 rjx
 mSK
@@ -26677,9 +26662,9 @@ gjd
 eAM
 uiJ
 swj
-gSw
-gSw
-gSw
+pLr
+pLr
+pLr
 odW
 eGe
 mSK
@@ -27535,14 +27520,14 @@ dKY
 dKY
 dKY
 dKY
-eCn
-eCn
-dtJ
+iVk
+iVk
+obU
 gOJ
-uGG
-ngh
-ngh
-lKe
+cwk
+xtg
+xtg
+rlW
 yew
 cBm
 qcL
