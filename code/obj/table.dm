@@ -813,7 +813,8 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 /obj/table/reinforced/chemistry/auto/chemstorage
 	name = "chemical storage lab counter"
 	desc = "A set of basic precursor chemicals to expedite order fulfillment, increase efficiency, and synergize your workflow. Whatever the fuck that means."
-	drawer_contents = list(/obj/item/reagent_containers/glass/bottle/oil,
+	drawer_contents = list(/obj/item/reagent_containers/food/drinks/fueltank,
+				/obj/item/reagent_containers/glass/bottle/oil,
 				/obj/item/reagent_containers/glass/bottle/phenol,
 				/obj/item/reagent_containers/glass/bottle/acid,
 				/obj/item/reagent_containers/glass/bottle/acetone,

@@ -42203,12 +42203,7 @@
 	},
 /area/station/crew_quarters/hor)
 "cjq" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
+/obj/stool/bee_bed/heisenbee,
 /obj/critter/domestic_bee/heisenbee,
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -69324,7 +69319,7 @@
 /obj/decal/poster/wallsign/stencil/left/c{
 	pixel_x = -7
 	},
-/turf/space,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/south)
 "mRu" = (
 /obj/mapping_helper/firedoor_spawn,
@@ -75107,7 +75102,7 @@
 	pixel_x = 9
 	},
 /obj/decal/poster/wallsign/stencil/left/g,
-/turf/space,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/south)
 "wex" = (
 /obj/mapping_helper/firedoor_spawn,

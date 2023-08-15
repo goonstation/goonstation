@@ -720,6 +720,10 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			var/obj/item/reagent_containers/glass/bottle/acid/B6 = new(src)
 			B6.pixel_y = -5
 			B6.pixel_x = 4
+
+			var/obj/item/reagent_containers/food/drinks/fueltank/B7 = new(src)
+			B7.pixel_y = 0
+			B7.pixel_x = 0
 			return 1
 
 /* ======================= */
