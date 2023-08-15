@@ -1700,7 +1700,7 @@ datum/cookingrecipe/flockbrainburger
 			custom_crepe.name = "[custom_crepe_food.name] folded in a crepe"
 
 		var/icon/I = new/icon('icons/obj/foodNdrink/food_dessert.dmi', "folded-crepe")
-		//I.Blend(custom_crepe_food.get_food_color(), ICON_ADD)
+
 		custom_crepe.icon = I
 
 		return custom_crepe
