@@ -340,16 +340,12 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "arY" = (
-/obj/window/auto/reinforced/indestructible/extreme,
-/obj/grille/steel,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+/obj/machinery/light/incandescent/netural,
+/obj/window/cubicle{
+	dir = 8
 	},
-/obj/window/auto/reinforced/indestructible/crystal,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/security/main)
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "ase" = (
 /turf/unsimulated/floor/black/grime,
 /area/morrigan/station/factory)
@@ -405,13 +401,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/factory)
-"auH" = (
-/obj/decoration/bullethole{
-	pixel_y = -8;
-	pixel_x = 6
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/civilian/botany)
 "auZ" = (
 /obj/decal/fakeobjects/pipe{
 	density = 1;
@@ -731,13 +720,7 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/botany)
 "aHb" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
+/turf/unsimulated/floor/plating,
 /area/morrigan/station/maintenance)
 "aIo" = (
 /obj/decal/fakeobjects/lightbulb_broken{
@@ -834,26 +817,10 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "aQE" = (
-/obj/window/cubicle{
-	dir = 4
-	},
-/obj/machinery/computer/airbr{
-	pixel_y = 34;
-	pixel_x = -63
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "This computer seems like it is on some kind attract screen.  They keyboard does nothing!";
-	icon = 'icons/obj/computer.dmi';
-	icon_state = "mmagnet";
-	name = "Computer";
-	pixel_y = 2;
-	pixel_x = -5
-	},
-/obj/window/bulletproof/east,
-/turf/unsimulated/floor/red/checker,
-/area/morrigan/station/civilian/chapel)
+/obj/grille/steel,
+/obj/window/auto/reinforced/indestructible/extreme,
+/turf/unsimulated/floor/plating,
+/area/space)
 "aRq" = (
 /obj/storage/crate/bin,
 /obj/item/paper/Morrigan1,
@@ -1007,13 +974,6 @@
 	},
 /turf/unsimulated/floor/twotone/blue,
 /area/morrigan/station/civilian/crewquarters)
-"aYz" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/decal/poster/wallsign/hazard_caution,
-/obj/grille/steel,
-/obj/window/auto/reinforced/indestructible/extreme,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/medical/cloning)
 "aYK" = (
 /obj/machinery/conveyor/area_activated,
 /obj/machinery/light/small/sticky/warm{
@@ -1169,10 +1129,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing)
-"bgT" = (
-/obj/window/auto/reinforced/indestructible/crystal,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/security/main)
 "bhc" = (
 /obj/decal/poster/wallsign/construction,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -1197,6 +1153,9 @@
 "biB" = (
 /obj/decal/fakeobjects/lawrack{
 	icon_state = "airack_syndicate_empty"
+	},
+/obj/window/cubicle{
+	dir = 8
 	},
 /turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/civilian/botany)
@@ -1489,17 +1448,6 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"bxL" = (
-/obj/decoration/bullethole{
-	pixel_y = -10;
-	pixel_x = -10
-	},
-/obj/decoration/bullethole{
-	pixel_y = 4;
-	pixel_x = 2
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/civilian/botany)
 "bxN" = (
 /obj/rack,
 /obj/random_item_spawner/furniture_parts/four,
@@ -1681,11 +1629,6 @@
 "bKB" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/captain)
 "bKD" = (
@@ -1839,22 +1782,6 @@
 /obj/item/reagent_containers/glass/bottle/ammonia/janitors,
 /turf/unsimulated/floor/purple,
 /area/morrigan/station/civilian/janitor)
-"bRB" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 4
-	},
-/turf/unsimulated/floor/yellow/checker,
-/area/morrigan/station/civilian/botany)
 "bRE" = (
 /obj/item/casing/rifle_loud{
 	dir = 6
@@ -2303,12 +2230,6 @@
 "csf" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/window/auto/reinforced/indestructible/glass,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/MD)
 "csT" = (
@@ -2321,27 +2242,6 @@
 /obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/main)
-"ctm" = (
-/obj/item/casing/medium{
-	pixel_y = -5;
-	dir = 9
-	},
-/obj/item/casing/rifle_loud{
-	pixel_x = 9;
-	pixel_y = -15;
-	dir = 6
-	},
-/obj/item/casing/rifle_loud{
-	dir = 6
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5
-	},
-/turf/unsimulated/floor/yellow/checker,
-/area/morrigan/station/civilian/botany)
 "ctH" = (
 /obj/storage/closet,
 /obj/item/mop,
@@ -2614,17 +2514,6 @@
 /mob/living/critter/spider/baby,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"cKD" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 1;
-	hardened = 1
-	},
-/obj/mapping_helper/airlock/hardener,
-/obj/mapping_helper/airlock/anti_emag,
-/obj/mapping_helper/access/morrigan/security,
-/obj/window/auto/reinforced/indestructible/extreme,
-/turf/unsimulated/floor/black,
-/area/morrigan/station/security/brig)
 "cKI" = (
 /obj/item/casing/rifle_loud{
 	dir = 6
@@ -2641,16 +2530,6 @@
 /obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/darkblue,
 /area/morrigan/station/command/eva)
-"cLa" = (
-/obj/decal/stripe_caution,
-/obj/machinery/launcher_loader/south{
-	layer = 2
-	},
-/obj/decal/fakeobjects/teleport_pad,
-/obj/landmark/morrigan_start,
-/obj/fakeobjects/morrigan_teleporter,
-/turf/unsimulated/floor/industrial,
-/area/morrigan/routing)
 "cMF" = (
 /obj/decoration/clock,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -2838,16 +2717,11 @@
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "cXz" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+/obj/window/cubicle{
+	dir = 8
 	},
-/obj/window/auto/reinforced/indestructible/glass,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/command/HOP)
+/turf/unsimulated/floor/yellow/checker,
+/area/morrigan/station/civilian/botany)
 "cXL" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/fakeobjects{
@@ -3150,12 +3024,6 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"dre" = (
-/obj/decal/tile_edge/stripe{
-	dir = 4
-	},
-/turf/unsimulated/floor/darkblue,
-/area/morrigan/station/command/bridge)
 "drj" = (
 /obj/map/light,
 /turf/unsimulated/floor/plating/jen,
@@ -3412,11 +3280,7 @@
 /area/morrigan/station/medical/main)
 "dEj" = (
 /obj/grille/steel,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
+/obj/window/auto/reinforced/indestructible/extreme,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/command/HOS)
 "dEG" = (
@@ -3996,14 +3860,10 @@
 /turf/unsimulated/floor/white/checker2,
 /area/morrigan/station/medical/robotics)
 "ehP" = (
-/obj/machinery/light/incandescent/netural,
-/obj/decal/fakeobjects/tpractice,
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "bot2"
-	},
 /obj/machinery/conveyor/area_activated{
 	dir = 1
 	},
+/obj/decal/tile_edge/stripe/big,
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/civilian/botany)
 "eic" = (
@@ -4113,29 +3973,6 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"eow" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/engineering)
-"eoE" = (
-/obj/decal/fakeobjects/tpractice,
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "bot2"
-	},
-/obj/decoration/bullethole{
-	pixel_y = -8;
-	pixel_x = 6
-	},
-/obj/decoration/bullethole,
-/turf/unsimulated/floor/plating/jen,
-/area/morrigan/station/civilian/botany)
 "eoO" = (
 /obj/table/auto,
 /obj/item/device/radio/intercom/loudspeaker,
@@ -4559,7 +4396,9 @@
 /area/morrigan/station/medical/biological)
 "eGS" = (
 /obj/decal/poster/wallsign/biohazard,
-/turf/unsimulated/floor/specialroom/freezer/white,
+/obj/grille/steel,
+/obj/window/auto/reinforced/indestructible/extreme,
+/turf/unsimulated/floor/plating,
 /area/morrigan/station/medical/biological)
 "eGW" = (
 /obj/decal/fakeobjects/pipe{
@@ -4673,12 +4512,7 @@
 "eLA" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/window/auto/reinforced/indestructible/glass,
+/obj/window/auto/reinforced/indestructible/extreme,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/medical/emergency)
 "eLB" = (
@@ -4915,13 +4749,6 @@
 /obj/machinery/light/incandescent/warm,
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/spy)
-"eYQ" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/decal/poster/wallsign/hazard_rad,
-/obj/grille/steel,
-/obj/window/auto/reinforced/indestructible/extreme,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/engineering)
 "eYU" = (
 /obj/table/glass/auto,
 /obj/decoration/floralarrangement,
@@ -5114,14 +4941,6 @@
 	dir = 1
 	},
 /area/morrigan/station/hallway)
-"fil" = (
-/obj/decal/fakeobjects/tpractice,
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "bot2"
-	},
-/obj/decoration/bullethole,
-/turf/unsimulated/floor/plating/jen,
-/area/morrigan/station/civilian/botany)
 "fip" = (
 /obj/stool/chair/office/red,
 /turf/unsimulated/floor/red/redblackchecker,
@@ -5144,12 +4963,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
-"fjj" = (
-/obj/grille/steel,
-/obj/grille/steel,
-/obj/window/auto/reinforced/indestructible/extreme,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/engineering)
 "fjA" = (
 /mob/living/carbon/human/npc/monkey/angry,
 /turf/unsimulated/floor/grass,
@@ -5290,24 +5103,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
-"fsf" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "A vent. Cool air is gently flowing through it.";
-	icon = 'icons/obj/machines/podfab.dmi';
-	icon_state = "fab-still";
-	name = "Fabricator";
-	dir = 8
-	},
-/obj/decal/fakeobjects/robot/security{
-	dir = 8;
-	icon_state = "mars_nuke_bot";
-	name = "Syndicate Elite Gunbot"
-	},
-/obj/decal/stripe_delivery,
-/obj/decal/fakeobjects/gunbotrep/gunrep3,
-/turf/unsimulated/floor/circuit/red,
-/area/morrigan/station/medical/cloning)
 "fsD" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/structure/woodwall,
@@ -5668,25 +5463,6 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"fKB" = (
-/obj/item/casing/rifle_loud{
-	dir = 6
-	},
-/obj/item/casing/grenade{
-	pixel_y = -10
-	},
-/obj/item/casing/rifle_loud{
-	dir = 4;
-	pixel_y = -15
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9
-	},
-/turf/unsimulated/floor/yellow/checker,
-/area/morrigan/station/civilian/botany)
 "fLD" = (
 /obj/table/auto,
 /obj/item/storage/firstaid/docbag,
@@ -5878,10 +5654,6 @@
 /obj/fitness/weightlifter,
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/holding)
-"fTz" = (
-/obj/window/auto/reinforced/indestructible/glass,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/command/HOP)
 "fUy" = (
 /obj/window/bulletproof/north,
 /obj/decal/fakeobjects{
@@ -6886,13 +6658,10 @@
 "gOJ" = (
 /obj/disposalpipe/auto/regular,
 /obj/grille/steel,
-/obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/disposalpipe/auto/regular,
+/obj/window/auto/reinforced/indestructible/extreme,
+/obj/window/auto/reinforced/indestructible/extreme,
+/turf/unsimulated/floor/plating,
 /area/morrigan/station/maintenance)
 "gPv" = (
 /obj/decal/poster/wallsign/hazard_caution,
@@ -7583,17 +7352,6 @@
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/shiny,
 /area/morrigan/station/security/main)
-"hxV" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/window/auto/reinforced/indestructible/glass,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/medical/main)
 "hye" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
@@ -7629,9 +7387,6 @@
 /obj/decal/cleanable/cobwebFloor,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"hAo" = (
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/security/main)
 "hBc" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/decal/tile_edge/floorguide/arrow_s{
@@ -7823,10 +7578,6 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"hMo" = (
-/obj/storage/crate/packing,
-/turf/unsimulated/floor/black,
-/area/morrigan/station/engineering)
 "hNy" = (
 /obj/storage/secure/closet/morrigan/patho,
 /obj/machinery/light/incandescent,
@@ -7994,16 +7745,6 @@
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen/one,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"hTw" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/command/HOP)
 "hTS" = (
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/plating/jen,
@@ -8288,9 +8029,10 @@
 /turf/unsimulated/floor/wood/seven,
 /area/morrigan/station/civilian/bar)
 "inp" = (
-/obj/decal/poster/wallsign/biohazard,
-/turf/unsimulated/floor/specialroom/freezer/white,
-/area/morrigan/station/medical/biological)
+/obj/grille/steel,
+/obj/window/auto/reinforced/indestructible/extreme,
+/turf/unsimulated/floor/plating,
+/area/morrigan/station/medical/genetics)
 "ins" = (
 /obj/stool,
 /turf/unsimulated/floor/black,
@@ -9640,39 +9382,6 @@
 /obj/item/material_piece/cobryl,
 /turf/unsimulated/floor/circuit/red,
 /area/morrigan/station/medical/cloning)
-"jIP" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "A vent. Cool air is gently flowing through it.";
-	icon = 'icons/obj/machines/podfab.dmi';
-	icon_state = "fab-still";
-	name = "Fabricator";
-	dir = 1
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
-	},
-/obj/decal/fakeobjects/robot/security{
-	dir = 1;
-	icon_state = "mars_nuke_bot";
-	name = "Syndicate Elite Gunbot"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "bot2"
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 4
-	},
-/obj/decal/fakeobjects/gunbotrep/gunrep4,
-/turf/unsimulated/floor/yellow/checker,
-/area/morrigan/station/civilian/botany)
 "jJf" = (
 /obj/machinery/recharge_station,
 /turf/unsimulated/floor/engine/caution/misc{
@@ -10036,13 +9745,6 @@
 /obj/machinery/microwave,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"kcy" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 1
-	},
-/obj/decal/fakeobjects/gunbotrep/gunrep1,
-/turf/unsimulated/floor/black,
-/area/morrigan/station/civilian/botany)
 "kcB" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -10088,16 +9790,6 @@
 "kfP" = (
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/medical/emergency)
-"kfQ" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/engineering)
 "kgv" = (
 /turf/unsimulated/floor/blueblack{
 	dir = 4
@@ -11474,18 +11166,6 @@
 	},
 /turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/civilian/botany)
-"lFu" = (
-/obj/decal/poster/wallsign/hazard_rad,
-/obj/grille/steel,
-/obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/decal/poster/wallsign/hazard_rad,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/engineering)
 "lFX" = (
 /obj/machinery/light/emergency{
 	dir = 1
@@ -11506,18 +11186,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/factory)
-"lGJ" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 4
-	},
-/obj/window/cubicle{
-	dir = 4
-	},
-/obj/machinery/conveyor/area_activated{
-	dir = 1
-	},
-/turf/unsimulated/floor/plating/jen,
-/area/morrigan/station/civilian/botany)
 "lGV" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -11800,11 +11468,6 @@
 "lVr" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/eva)
 "lVM" = (
@@ -11899,11 +11562,6 @@
 "mbj" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/bridge)
 "mbY" = (
@@ -11920,13 +11578,6 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"mcf" = (
-/obj/decoration/bullethole{
-	pixel_y = -10;
-	pixel_x = -10
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/civilian/botany)
 "mcg" = (
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -12304,18 +11955,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict)
-"mvk" = (
-/obj/map/light,
-/obj/decal/fakeobjects/tpractice,
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "bot2"
-	},
-/obj/decoration/bullethole{
-	pixel_y = 4;
-	pixel_x = 2
-	},
-/turf/unsimulated/floor/plating/jen,
-/area/morrigan/station/civilian/botany)
 "mvl" = (
 /obj/item/card/id/morrigan/inspector,
 /obj/item/clipboard{
@@ -12414,12 +12053,6 @@
 "mDc" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/window/auto/reinforced/indestructible/crystal,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/RD)
 "mDd" = (
@@ -13131,13 +12764,6 @@
 /obj/decoration/bookcase,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"nlk" = (
-/obj/decoration/bullethole{
-	pixel_y = -8;
-	pixel_x = 6
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/civilian/botany)
 "nly" = (
 /obj/machinery/vending/snack,
 /obj/machinery/light/incandescent/netural{
@@ -13328,13 +12954,6 @@
 "nuT" = (
 /turf/unsimulated/floor/engine/caution/east,
 /area/morrigan/station/maintenance)
-"nvc" = (
-/obj/decal/tile_edge/stripe/big,
-/obj/machinery/conveyor/area_activated{
-	dir = 4
-	},
-/turf/unsimulated/floor/plating/jen,
-/area/morrigan/station/civilian/botany)
 "nvC" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -13363,12 +12982,6 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"nxp" = (
-/obj/machinery/networked/telepad,
-/obj/landmark/morrigan_prisoner,
-/obj/fakeobjects/morrigan_teleporter,
-/turf/unsimulated/floor/orangeblack,
-/area/morrigan/station/security/brig)
 "nya" = (
 /obj/decal/fakeobjects/lightbulb_broken{
 	desc = "This light is probably broken.  It looks pretty new and ok, though, so it's probably just not wired up.";
@@ -13574,12 +13187,6 @@
 "nGC" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/window/auto/reinforced/indestructible/glass,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/civilian/chapel)
 "nGS" = (
@@ -13991,9 +13598,9 @@
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "nZP" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/decal/poster/wallsign/biohazard,
-/turf/unsimulated/floor/specialroom/freezer/white,
+/obj/grille/steel,
+/obj/window/auto/reinforced/indestructible/extreme,
+/turf/unsimulated/floor/plating,
 /area/morrigan/station/medical/biological)
 "nZT" = (
 /obj/machinery/conveyor/NS,
@@ -14171,10 +13778,6 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"ofJ" = (
-/obj/grille/steel,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/security/main)
 "ofW" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -14255,12 +13858,7 @@
 "onB" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/turf/unsimulated/floor/plating,
 /area/morrigan/station/maintenance)
 "onE" = (
 /obj/decal/cleanable/blood/gibs/core,
@@ -14292,10 +13890,6 @@
 /obj/item/device/light/zippo,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"oqw" = (
-/obj/item/wrench,
-/turf/unsimulated/floor/black,
-/area/morrigan/station/civilian/botany)
 "oqx" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/caution/west,
@@ -14577,21 +14171,11 @@
 /area/morrigan/derelict)
 "oGJ" = (
 /obj/storage/closet/syndicate,
-/obj/item/fireaxe,
 /obj/item/clothing/suit/fire/heavy,
 /obj/item/clothing/head/helmet/firefighter,
+/obj/item/tactical_hammer,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/factory)
-"oHB" = (
-/obj/grille/steel,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/window/auto/reinforced/indestructible/glass,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/medical/emergency)
 "oHF" = (
 /obj/item/raw_material/shard/glass,
 /obj/decal/cleanable/blood{
@@ -14644,17 +14228,6 @@
 /obj/decoration/decorativeplant/plant7,
 /turf/unsimulated/floor/twotone/yellow,
 /area/morrigan/station/engineering)
-"oKP" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 1;
-	hardened = 1
-	},
-/obj/mapping_helper/airlock/hardener,
-/obj/mapping_helper/airlock/anti_emag,
-/obj/mapping_helper/access/morrigan/security,
-/obj/window/auto/reinforced/indestructible/extreme,
-/turf/unsimulated/floor/black,
-/area/morrigan/station/security/brig)
 "oKU" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/space)
@@ -15459,10 +15032,12 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "pGp" = (
+/obj/decal/poster/wallsign/hazard_rad,
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
+/obj/window/auto/reinforced/indestructible/extreme,
 /turf/unsimulated/floor/plating,
-/area/morrigan/station/civilian/cafe)
+/area/morrigan/station/engineering)
 "pHq" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -15515,13 +15090,6 @@
 /obj/decoration/decorativeplant/plant7,
 /turf/unsimulated/floor/red,
 /area/morrigan/construction)
-"pLr" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/decal/poster/wallsign/warning3,
-/obj/grille/steel,
-/obj/window/auto/reinforced/indestructible/extreme,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/medical/cloning)
 "pMy" = (
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/twotone/yellow,
@@ -15838,6 +15406,7 @@
 /obj/mapping_helper/access/morrigan/science,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
+/obj/window/auto/reinforced/indestructible/extreme,
 /turf/unsimulated/floor/purpleblack{
 	dir = 8
 	},
@@ -16035,15 +15604,6 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/black,
 /area/morrigan/holding)
-"qtt" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/decal/tile_edge/stripe{
-	dir = 4
-	},
-/obj/grille/steel,
-/obj/window/auto/reinforced/indestructible/extreme,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/engineering)
 "qty" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 8
@@ -16138,12 +15698,6 @@
 "qxi" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/window/auto/reinforced/indestructible/glass,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/civilian/botany)
 "qxL" = (
@@ -17087,13 +16641,6 @@
 "ryb" = (
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/derelict)
-"ryg" = (
-/obj/decal/fakeobjects/gunbotrep/gunrep2{
-	pixel_y = 6
-	},
-/obj/decal/fakeobjects/gunbotrep/jacklift,
-/turf/unsimulated/floor/black,
-/area/morrigan/station/civilian/botany)
 "ryF" = (
 /obj/decoration/syndiepc/syndiepc16,
 /turf/unsimulated/floor/black,
@@ -17226,36 +16773,9 @@
 /turf/unsimulated/floor/twotone/purple,
 /area/morrigan/station/civilian/janitor)
 "rDH" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "A vent. Cool air is gently flowing through it.";
-	icon = 'icons/obj/machines/podfab.dmi';
-	icon_state = "fab-still";
-	name = "Fabricator";
-	dir = 1
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
-	},
-/obj/decal/fakeobjects/robot/security{
-	dir = 1;
-	icon_state = "mars_nuke_bot";
-	name = "Syndicate Elite Gunbot"
-	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "bot2"
+	dir = 5
 	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 4
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
-/obj/decal/fakeobjects/gunbotrep/gunrep1,
 /turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/civilian/botany)
 "rDI" = (
@@ -17419,14 +16939,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/derelict)
 "rOM" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/window/auto/reinforced/indestructible/crystal,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/security/main)
+)
 "rOZ" = (
 /obj/disposalpipe/segment,
 /obj/rack,
@@ -17664,10 +17177,6 @@
 /obj/decoration/bustedmantapc/bustedmantapc3,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/factory)
-"seA" = (
-/obj/window/auto/reinforced/indestructible/glass,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/command/HOP)
 "sfF" = (
 /obj/rack,
 /obj/item/mop/orange,
@@ -17711,15 +17220,6 @@
 	},
 /turf/unsimulated/floor/redwhite,
 /area/morrigan/routing/transport)
-"siA" = (
-/obj/grille/steel,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/civilian/botany)
 "siF" = (
 /obj/grille/catwalk/jen,
 /obj/disposalpipe/segment,
@@ -17733,17 +17233,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/space)
-"sjm" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/window/auto/reinforced/indestructible/crystal,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/security/main)
 "sjo" = (
 /obj/decal/fakeobjects/tpractice,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -17885,16 +17374,6 @@
 /obj/item/storage/backpack/empty,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"stJ" = (
-/obj/grille/steel,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/window/auto/reinforced/indestructible/crystal,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/security/main)
 "suB" = (
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -17990,30 +17469,6 @@
 /obj/mapping_helper/access/morrigan/medical,
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/medical/emergency)
-"szO" = (
-/obj/table/auto,
-/obj/item/ammo/bullets/lmg{
-	name = "Gunbot Ammo Recharge";
-	anchored = 1;
-	pixel_x = 8;
-	pixel_y = 6
-	},
-/obj/item/ammo/bullets/lmg{
-	name = "Gunbot Ammo Recharge";
-	anchored = 1;
-	pixel_y = 7;
-	pixel_x = -6
-	},
-/obj/item/ammo/bullets/lmg{
-	name = "Gunbot Ammo Recharge";
-	anchored = 1
-	},
-/obj/item/cell/cerenkite{
-	pixel_y = -1;
-	pixel_x = -8
-	},
-/turf/unsimulated/floor/yellow/checker,
-/area/morrigan/station/civilian/botany)
 "szV" = (
 /obj/machinery/drainage,
 /obj/machinery/shower,
@@ -18421,12 +17876,6 @@
 /obj/mapping_helper/access/morrigan/security,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOS)
-"sYw" = (
-/obj/machinery/door/airlock/pyro/glass/sci,
-/obj/mapping_helper/access/morrigan/science,
-/obj/mapping_helper/airlock/hardener,
-/turf/unsimulated/floor/wood/six,
-/area/morrigan/station/command/RD)
 "sYC" = (
 /turf/unsimulated/floor/purpleblack{
 	dir = 1
@@ -19004,13 +18453,6 @@
 /obj/decal/tile_edge/stripe/big,
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
-"tzp" = (
-/obj/machinery/light/incandescent/netural,
-/obj/machinery/conveyor/area_activated{
-	dir = 8
-	},
-/turf/unsimulated/floor/plating/jen,
-/area/morrigan/station/civilian/botany)
 "tzr" = (
 /obj/machinery/vending/cola/red,
 /turf/unsimulated/floor/twotone/yellow,
@@ -19620,19 +19062,6 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"uim" = (
-/obj/decal/tile_edge/stripe/big,
-/obj/decal/tile_edge/stripe/big{
-	dir = 4
-	},
-/obj/window/cubicle{
-	dir = 4
-	},
-/obj/machinery/conveyor/area_activated{
-	dir = 1
-	},
-/turf/unsimulated/floor/plating/jen,
-/area/morrigan/station/civilian/botany)
 "uiJ" = (
 /obj/table/auto,
 /obj/machinery/glass_recycler{
@@ -19714,15 +19143,6 @@
 /mob/living/critter/robotic/gunbot/syndicate/morrigan,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/botany)
-"uoF" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/security/interrogation)
-"uoH" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced/indestructible/extreme,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/security/brig)
 "uoN" = (
 /obj/decal/cleanable/generic,
 /obj/machinery/door/unpowered/wood/stall{
@@ -19786,21 +19206,6 @@
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"usd" = (
-/obj/range_target,
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "bot2"
-	},
-/obj/decoration/bullethole{
-	pixel_y = -9;
-	pixel_x = -6
-	},
-/obj/decoration/bullethole{
-	pixel_y = -8;
-	pixel_x = 6
-	},
-/turf/unsimulated/floor/plating/jen,
-/area/morrigan/station/civilian/botany)
 "usR" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/floatingtiles/random,
@@ -20468,9 +19873,6 @@
 /obj/random_item_spawner/organs/bloody/one_to_three,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"uXx" = (
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/engineering)
 "uXE" = (
 /obj/window/bulletproof/north,
 /obj/table/syndicate/auto,
@@ -20537,12 +19939,8 @@
 /area/morrigan/station/command/RD)
 "vbd" = (
 /obj/grille/steel,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/decoration/clock,
+/obj/window/auto/reinforced/indestructible/extreme,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/command/HOS)
 "vbl" = (
@@ -21824,13 +21222,6 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"wGJ" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/disposalpipe/auto/regular,
-/obj/grille/steel,
-/obj/window/auto/reinforced/indestructible/extreme,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/maintenance)
 "wHi" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/civilian/cafe)
@@ -22065,32 +21456,9 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/podbay/medical)
-"wSq" = (
-/obj/decal/fakeobjects/tpractice,
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "bot2"
-	},
-/obj/decoration/bullethole{
-	pixel_y = -8;
-	pixel_x = 6
-	},
-/obj/decoration/bullethole{
-	pixel_y = 4;
-	pixel_x = 2
-	},
-/obj/machinery/conveyor/area_activated{
-	dir = 8
-	},
-/turf/unsimulated/floor/plating/jen,
-/area/morrigan/station/civilian/botany)
 "wTm" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/CE)
 "wTx" = (
@@ -22484,26 +21852,6 @@
 /obj/item/reagent_containers/syringe,
 /turf/unsimulated/floor/terrazzo/black,
 /area/space)
-"xms" = (
-/obj/decoration/bullethole{
-	pixel_y = -8;
-	pixel_x = 6
-	},
-/obj/decoration/bullethole{
-	pixel_y = -10;
-	pixel_x = -10
-	},
-/obj/decoration/bullethole{
-	pixel_y = -9;
-	pixel_x = -6
-	},
-/obj/decoration/bullethole{
-	pixel_y = -9;
-	pixel_x = -6
-	},
-/obj/decoration/bullethole,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/civilian/botany)
 "xmY" = (
 /obj/decal/poster/wallsign/construction,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -22664,12 +22012,6 @@
 "xtg" = (
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
-"xtm" = (
-/obj/machinery/conveyor/area_activated{
-	dir = 8
-	},
-/turf/unsimulated/floor/plating/jen,
-/area/morrigan/station/civilian/botany)
 "xtH" = (
 /obj/table/syndicate/auto,
 /obj/item/casing/shotgun{
@@ -22783,17 +22125,6 @@
 /obj/decal/poster/wallsign/security,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/security/main)
-"xAI" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/window/auto/reinforced/indestructible/crystal,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/science)
 "xBr" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -22914,19 +22245,6 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/passage)
-"xIG" = (
-/obj/decal/fakeobjects/tpractice,
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "bot2"
-	},
-/obj/decoration/bullethole,
-/obj/decoration/bullethole{
-	pixel_y = -10;
-	pixel_x = -10
-	},
-/obj/machinery/conveyor/area_activated,
-/turf/unsimulated/floor/plating/jen,
-/area/morrigan/station/civilian/botany)
 "xIO" = (
 /obj/machinery/chemicompiler_stationary,
 /turf/unsimulated/floor/engine,
@@ -23212,12 +22530,6 @@
 "xXm" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/medical/reception)
 "xXp" = (
@@ -23297,12 +22609,6 @@
 "ydG" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/window/auto/reinforced/indestructible/crystal,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/security/interrogation)
 "ydM" = (
@@ -23394,12 +22700,7 @@
 /area/morrigan/station/hallway)
 "yhO" = (
 /obj/grille/steel,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/window/auto/reinforced/indestructible/crystal,
+/obj/window/auto/reinforced/indestructible/extreme,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/HOS)
 "yhP" = (
@@ -24532,10 +23833,10 @@ hpw
 jsD
 jsD
 jsD
-vdx
+aQE
 jsD
 jsD
-wtS
+aQE
 jsD
 jsD
 obU
@@ -24985,8 +24286,8 @@ pqX
 pqX
 pqX
 pqX
-oHB
-oHB
+nju
+nju
 pqX
 pqX
 fDC
@@ -25084,7 +24385,7 @@ obU
 obU
 iVk
 obU
-eLA
+nju
 vEi
 nFH
 epv
@@ -25187,7 +24488,7 @@ brA
 obU
 iVk
 obU
-eLA
+nju
 sWH
 rXO
 gbs
@@ -25496,7 +24797,7 @@ uRB
 obU
 iVk
 obU
-eLA
+nju
 sWH
 rXO
 gbs
@@ -26102,7 +25403,7 @@ wNG
 uLz
 wNG
 nRY
-fKB
+bRE
 uoq
 wWu
 cls
@@ -26204,7 +25505,7 @@ mIQ
 xnm
 mDR
 drj
-nvc
+xPm
 jLH
 mHt
 bAr
@@ -26302,18 +25603,18 @@ sLw
 hPq
 bvF
 xkV
-mcf
+gzf
 dOo
 mDR
 mDR
 sjo
-nvc
+xPm
 kqz
 cdT
 wWu
 wWu
 hSf
-szO
+fYv
 nkU
 gzs
 gzs
@@ -26406,11 +25707,11 @@ wlD
 bvF
 gIt
 nkU
-tFH
-mvk
+dOo
+uVZ
 mDR
 mDR
-nvc
+xPm
 jIl
 mHt
 wWu
@@ -26423,9 +25724,9 @@ bWI
 nlK
 bSm
 fDC
-hxV
-hxV
-hxV
+daT
+daT
+daT
 fDC
 fDC
 lrE
@@ -26509,16 +25810,16 @@ hPq
 bvF
 xkV
 dfz
-wSq
+rDI
 mDR
 mDR
 mDR
-nvc
+xPm
 hGu
 cdT
 wWu
 wWu
-oqw
+eLU
 sZj
 nkU
 eUP
@@ -26614,9 +25915,9 @@ iQo
 llg
 dOo
 drj
-eoE
+xBy
 mDR
-nvc
+xPm
 lFm
 mHt
 wWu
@@ -26714,12 +26015,12 @@ qhP
 hPq
 bvF
 xkV
-mcf
+gzf
 dOo
 mDR
 mDR
 gjL
-nvc
+xPm
 xjb
 uoq
 bAr
@@ -26819,11 +26120,11 @@ mcp
 hoz
 nkU
 gXQ
-dxd
-gic
-gic
-oNl
-uqA
+jJS
+jJS
+jJS
+ehP
+rDH
 mHt
 wWu
 wWu
@@ -26924,8 +26225,8 @@ nPq
 nkU
 nkU
 biB
-sZj
-ulU
+cXz
+arY
 sZj
 sZj
 ulU
@@ -27031,7 +26332,7 @@ qxi
 nkU
 dnw
 dnw
-siA
+nkU
 mXm
 qHL
 nkU
@@ -27148,7 +26449,7 @@ nBm
 nBm
 vAM
 xoA
-hxV
+daT
 bNq
 oZI
 daT
@@ -27251,7 +26552,7 @@ nBm
 nBm
 vAM
 jVb
-hxV
+daT
 bNq
 oZI
 kUb
@@ -27414,14 +26715,14 @@ rlW
 rlW
 rlW
 pje
-xAI
+jjw
 qdm
-xAI
+jjw
 par
 par
-xAI
-xAI
-xAI
+jjw
+jjw
+jjw
 par
 par
 gtl
@@ -27509,7 +26810,7 @@ dKY
 dKY
 iVk
 obU
-aHb
+onB
 xPi
 xPi
 rlW
@@ -27612,7 +26913,7 @@ dKY
 dKY
 iVk
 obU
-aHb
+onB
 hgp
 xPi
 rlW
@@ -27888,11 +27189,11 @@ swj
 nQz
 buH
 jBR
-gSw
-gSw
+inp
+inp
 jOc
 jOc
-gSw
+inp
 swj
 obU
 iVk
@@ -27991,7 +27292,7 @@ swj
 ebs
 buH
 nQz
-gSw
+inp
 nSv
 xGV
 xif
@@ -28094,7 +27395,7 @@ swj
 rDo
 buH
 nQz
-gSw
+inp
 xif
 xif
 qTa
@@ -28128,7 +27429,7 @@ dKY
 iVk
 obU
 obU
-aHb
+onB
 xtg
 xtg
 wok
@@ -28197,7 +27498,7 @@ swj
 tLh
 eNH
 jBR
-gSw
+inp
 qDz
 fjA
 riP
@@ -28300,7 +27601,7 @@ swj
 pXs
 qvU
 rdV
-gSw
+inp
 btL
 xGV
 olq
@@ -28334,7 +27635,7 @@ dKY
 dKY
 iVk
 obU
-aHb
+onB
 cwk
 xtg
 xtg
@@ -29278,7 +28579,7 @@ oXQ
 oXQ
 vfe
 wxb
-aAM
+oir
 oir
 qTT
 wWp
@@ -29384,11 +28685,11 @@ iRr
 dWk
 tgf
 qIE
-kfQ
+iRr
 nXf
 oir
 xpB
-kfQ
+iRr
 naK
 bvF
 kaR
@@ -29487,11 +28788,11 @@ iRr
 wXp
 dQV
 qIE
-lFu
+wxb
 cOA
 lqN
 oxu
-kfQ
+iRr
 naK
 bvF
 kaR
@@ -29693,7 +28994,7 @@ iRr
 wXp
 dQV
 qIE
-lFu
+wxb
 tzr
 oir
 qIE
@@ -29796,7 +29097,7 @@ iRr
 odA
 ewA
 qTT
-kfQ
+iRr
 jOX
 qIE
 qIE
@@ -29887,7 +29188,7 @@ xtg
 wWp
 qIE
 oir
-wxb
+pGp
 vfe
 oXQ
 oXQ
@@ -29898,7 +29199,7 @@ vfe
 wxb
 kKt
 oir
-qIE
+wgh
 wWp
 wWp
 wWp
@@ -29990,16 +29291,18 @@ xtg
 wWp
 qIE
 oir
-mwp
-fEV
+iRr
+iRr
 esx
 iRr
 iRr
 iRr
 sMP
+iRr
+iRr
 oir
 oir
-wgh
+qIE
 qIE
 jxH
 wZn
@@ -30011,14 +29314,14 @@ kaR
 nkS
 bHl
 emz
-dre
-emz
+taj
+taj
 dbc
 mbj
+dKY
 iVk
 dKY
 dKY
-iVk
 uRB
 xtg
 xtg
@@ -30050,8 +29353,6 @@ dKY
 dKY
 dKY
 dKY
-dKY
-dKY
 aDg
 vwJ
 qVO
@@ -30065,6 +29366,8 @@ inM
 tZP
 uMY
 vwJ
+rOM
+rOM
 "}
 (65,1,1) = {"
 vwJ
@@ -30100,12 +29403,12 @@ oir
 oir
 oir
 oir
-aAM
+oir
 oir
 qIE
-hMo
-oir
-oir
+duB
+qIE
+qIE
 ixj
 wWp
 lSG
@@ -30612,7 +29915,7 @@ haD
 roR
 aAM
 kiD
-eow
+iRr
 rPF
 iiT
 wWp
@@ -31139,7 +30442,7 @@ ixF
 vzE
 xAr
 cYn
-rOM
+eRw
 cYn
 xAr
 aOR
@@ -31240,11 +30543,11 @@ jOz
 ciP
 pRA
 eQj
-stJ
+eRw
 gIW
 iCr
 gIW
-arY
+eRw
 wtw
 pSS
 oTo
@@ -31347,7 +30650,7 @@ pXa
 gIW
 pRA
 gIW
-arY
+eRw
 aZL
 xCg
 muJ
@@ -31450,7 +30753,7 @@ jbI
 gIW
 pRA
 gIW
-arY
+eRw
 bOJ
 bnh
 bnh
@@ -31549,7 +30852,7 @@ aOR
 mSo
 pRA
 nEW
-arY
+eRw
 jXB
 xOM
 jXB
@@ -31651,10 +30954,10 @@ kcV
 aOR
 aOR
 csT
-arY
+eRw
 aOR
 itH
-bgT
+eRw
 itH
 jyQ
 taa
@@ -32156,9 +31459,9 @@ aOR
 aOR
 aOR
 aOR
-sjm
-sjm
-sjm
+eRw
+eRw
+eRw
 rIu
 pRA
 pRA
@@ -32261,7 +31564,7 @@ gIW
 eqc
 wqd
 sbL
-sjm
+eRw
 gVH
 pRA
 pRA
@@ -32357,7 +31660,7 @@ vwJ
 afe
 gSA
 kMR
-cKD
+gjj
 gIW
 pRA
 pRA
@@ -32467,7 +31770,7 @@ pRA
 ciP
 qwj
 gIW
-sjm
+eRw
 lvB
 bSs
 pRA
