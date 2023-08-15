@@ -258,7 +258,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /proc/morrigan_access()
 	return list(access_morrigan_bridge, access_morrigan_medical, access_morrigan_CE, access_morrigan_captain, access_morrigan_RD, access_morrigan_engineering,
 	access_morrigan_factory, access_morrigan_HOS, access_morrigan_meetingroom, access_morrigan_customs, access_morrigan_exit, access_morrigan_science,
-	access_morrigan_mdir, access_morrigan_security, access_morrigan_janito, access_morrigan_specialist)
+	access_morrigan_mdir, access_morrigan_security, access_morrigan_janitor, access_morrigan_specialist)
 
 //fake objects
 
@@ -1196,15 +1196,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon_state = "science"
 	icon_closed = "science"
 	icon_opened = "secure_white-open"
-	spawn_contents = list()
-
-/obj/storage/secure/closet/morrigan/botany
-	name = "Botanist Locker"
-	reinforced = TRUE
-	req_access = list(access_morrigan_botany, access_morrigan_captain, access_morrigan_exit)
-	icon_state = "secure_green"
-	icon_closed = "secure_green"
-	icon_opened = "secure_green-open"
 	spawn_contents = list()
 
 /obj/storage/secure/closet/morrigan/medical

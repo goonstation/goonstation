@@ -1952,7 +1952,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	icon_state = "warden"
 	item_state = "warden"
 	protective_temperature = 1250
-	step_sound = "step_military"
+	step_sound = "step_warden"
 	step_priority = STEP_PRIORITY_LOW
 	step_lots = 1
 	kick_bonus = 2
