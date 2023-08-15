@@ -1997,6 +1997,7 @@ var/global/list/soundCache = list(
  	"sound/weapons/laser_d.ogg" = 'sound/weapons/laser_d.ogg',\
  	"sound/weapons/laser_e.ogg" = 'sound/weapons/laser_e.ogg',\
  	"sound/weapons/laser_f.ogg" = 'sound/weapons/laser_f.ogg',\
+ 	"sound/weapons/laser_g.ogg" = 'sound/weapons/laser_g.ogg',\
  	"sound/weapons/laser-burst.ogg" = 'sound/weapons/laser-burst.ogg',\
  	"sound/weapons/laserheavy.ogg" = 'sound/weapons/laserheavy.ogg',\
  	"sound/weapons/laserlight.ogg" = 'sound/weapons/laserlight.ogg',\

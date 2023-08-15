@@ -17,7 +17,7 @@
 //name of the projectile setting, used when you change a guns setting
 	sname = "laser"
 //file location for the sound you want it to play
-	shot_sound = 'sound/weapons/Taser.ogg'
+	shot_sound = 'sound/weapons/laser_g.ogg'
 //How many projectiles should be fired, each will cost the full cost
 	shot_number = 1
 	ie_type = "E"
