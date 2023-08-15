@@ -419,6 +419,10 @@
 			qdel(src.alert_ringtones[T])
 			src.alert_ringtones[T] = null
 
+	if (src.pen)
+		src.pen.set_loc(get_turf(src))
+		src.pen = null
+
 	if (src.hd)
 		src.hd.dispose()
 		src.hd = null

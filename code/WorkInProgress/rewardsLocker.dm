@@ -686,6 +686,10 @@
 				var/obj/item/clothing/suit/det_suit/M = H.wear_suit
 				if (istype(M))
 					var/prev = M.name
+					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
+					M.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+					M.item_state = "inspectorc"
 					M.icon_state = findtext(M.icon_state, "_o") ? "inspectorc_o" : "inspectorc"
 					M.coat_style = "inspectorc"
 					M.name = "inspector's short coat"
