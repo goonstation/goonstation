@@ -4,6 +4,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl0"
 	desc = "A remote control switch for a door."
+	/// Match to a door to have it be controlled.
 	var/id = null
 	var/timer = 0
 	var/cooldown = 0 SECONDS
@@ -15,9 +16,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	var/unpressed_icon = "doorctrl0"
 	var/pressed_icon = "doorctrl1"
 	var/unpowered_icon = "doorctrl-p"
-	// for the speak proc, only used for the sleeper agent door as things stand, use for other sentient door controllers etc.
+	/// for the speak proc, relays the message to speak.
 	var/image/chat_maptext/welcome_text
+	///alpha value for speak proc
 	var/welcome_text_alpha = 140
+	///colour value for speak proc
 	var/welcome_text_color = "#FF0100"
 
 
@@ -503,7 +506,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	return
 /// for sleepers entering listening post
 /obj/machinery/door_control/antagscanner
-	var/entrance_scanner = 0 // Do we want a welcome message or similar for the area upon activation?
+	/// For the front door having a flying chat message or not.
+	var/entrance_scanner = 0
 	name = "Dubious Hand Scanner"
 	id = "Sleeper_Access"
 	icon = 'icons/obj/decoration.dmi'
