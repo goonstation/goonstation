@@ -66,6 +66,21 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			forensic_IDs.Add(src.forensic_ID)
 		return ..()
 
+	// equip handling for weapons that fit on your back
+	try_specific_equip(mob/user)
+		. = ..()
+		if (!(src.c_flags & ONBACK))
+			return
+		if (!user.back?.storage)
+			return
+		if (!user.s_active)
+			return
+		if (user.s_active.master != user.back.storage)
+			return
+		if (user.back.storage.check_can_hold(src) == STORAGE_CAN_HOLD)
+			user.back.Attackby(src, user)
+			return TRUE
+
 /datum/gunTarget
 	var/params = null
 	var/target = null
