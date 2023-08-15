@@ -110,6 +110,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 	var/extended_inventory = FALSE //can we access the hidden inventory?
 	var/can_fall = TRUE //Can this machine be knocked over?
+	var/fallen = FALSE // Is it CURRENTLY knocked over?
 	var/can_hack = TRUE //Can this machine have it's panel open?
 
 	var/panel_open = FALSE //Hacking that vending machine. Gonna get a free candy bar.
@@ -277,17 +278,23 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 /obj/machinery/vending/blob_act(var/power)
 	if (prob(power * 1.25))
 		SPAWN(0)
-			if (prob(power / 3) && can_fall == 2)
+			if (prob(power / 3) &&  fallen)
 				for (var/i = 0, i < rand(4,7), i++)
 					src.malfunction()
 				qdel(src)
-			if (prob(50) || can_fall == 2)
+			if (prob(50) || fallen)
 				src.malfunction()
 			else
 				src.fall()
 		return
 
 	return
+
+/obj/machinery/vending/bullet_act(var/obj/projectile/P)
+	if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
+		if((src.can_fall) && prob(P.power))
+			src.fall()
+	..()
 
 /obj/machinery/vending/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
@@ -913,7 +920,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	return
 
 /obj/machinery/vending/power_change()
-	if (can_fall == 2)
+	if (fallen)
 		icon_state = icon_fallen ? icon_fallen : "[initial(icon_state)]-fallen"
 		light.disable()
 		return
@@ -933,9 +940,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				light.disable()
 
 /obj/machinery/vending/proc/fall(mob/living/carbon/victim)
-	if (can_fall != 1)
+	if (!can_fall)
 		return
-	can_fall = 2
+	fallen = TRUE
 	status |= BROKEN
 	var/turf/vicTurf = get_turf(victim)
 	src.icon_state = "[initial(icon_state)]-fallen"
@@ -1139,11 +1146,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	return 0
 
 /obj/machinery/vending/proc/right()
-	src.can_fall = 1
+	src.fallen = FALSE
 	src.layer = initial(src.layer)
 	src.anchored = ANCHORED
 	src.status &= ~BROKEN
 	src.power_change()
+
+/obj/machinery/vending/Cross(atom/movable/mover)
+	if (src.fallen && mover.flags & TABLEPASS)
+		return TRUE
+	. = ..()
 
 /datum/action/bar/icon/right_vendor //This is used when you try to remove someone elses handcuffs.
 	duration = 5 SECONDS
