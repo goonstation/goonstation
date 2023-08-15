@@ -291,8 +291,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	return
 
 /obj/machinery/vending/bullet_act(var/obj/projectile/P)
-	var/type = P.proj_data.damage_type
-	if(type & D_KINETIC || type & D_PIERCING || type & D_SLASHING)
+	if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
 		if((src.can_fall) && prob(P.power))
 			src.fall()
 	..()
