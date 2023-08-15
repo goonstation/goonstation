@@ -2118,6 +2118,28 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_energized", "food_deep_burp")
 	meal_time_flags = MEAL_TIME_BREAKFAST
 
+
+/obj/item/reagent_containers/food/snacks/crepe
+	name = "crepe"
+	desc = "A thin french pancake."
+	icon_state = "crepe"
+	bites_left = 3
+	heal_amt = 1
+	meal_time_flags = MEAL_TIME_BREAKFAST
+	required_utensil = REQUIRED_UTENSIL_FORK
+	food_color = "#f9ff9f"
+	food_effects = list("food_energized")
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/reagent_containers/food))
+			var/icon/I = new/icon('icons/obj/foodNdrink/food_dessert.dmi', "folded-crepe")
+			//I.Blend(custom_crepe_food.get_food_color(), ICON_ADD)
+			src.icon = I
+			src.heal_amt = 5
+			src.name = "[W.name] folded in a crepe"
+			W.reagents.trans_to(src, 50)
+			qdel (W)
+
 /obj/item/reagent_containers/food/snacks/omelette/bee
 	name = "deep-space hell omelette"
 	desc = "<tt>BEE EGGS</tt> make this a delightful breakfast food."

@@ -413,6 +413,12 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	icon_state = "pancake"
 	food_color = "#FFFFFF"
 
+
+/obj/item/reagent_containers/food/snacks/ingredient/crepe_batter
+	name = "crepe batter"
+	desc = "thin batter used for making crepes."
+	icon_state = "crepe"
+	food_color = "#ffffe4"
 /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
 	name = "meatpaste"
 	desc = "A meaty paste"

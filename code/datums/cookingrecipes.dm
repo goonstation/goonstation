@@ -1399,6 +1399,16 @@ datum/cookingrecipe/flockbrainburger
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/pie/fish
 
+
+/datum/cookingrecipe/crepe_batter
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/drinks/milk
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/egg
+	amt2 = 2
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/ingredient/crepe_batter
+
+
 /datum/cookingrecipe/custard
 	item1 = /obj/item/reagent_containers/food/drinks/milk
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/egg
@@ -1656,10 +1666,45 @@ datum/cookingrecipe/flockbrainburger
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/pancake_batter
 
+
+
 /datum/cookingrecipe/pancake
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pancake_batter
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/pancake
+
+
+
+/datum/cookingrecipe/crepe
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/crepe_batter
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/crepe
+
+	specialOutput(var/obj/submachine/ourCooker)
+		if(!ourCooker)
+			return null
+
+		var/obj/item/reagent_containers/food/snacks/custom_crepe_food
+		for (var/obj/item/reagent_containers/food/S in ourCooker.contents)
+			if (S.type == item1)
+				continue
+			custom_crepe_food = S
+			break
+		if(!custom_crepe_food)
+			return null
+		var/obj/item/reagent_containers/food/snacks/custom_crepe = new
+		custom_crepe_food.reagents.trans_to(custom_crepe, 50)
+		if(custom_crepe.real_name)
+			custom_crepe.name = "[custom_crepe_food.real_name] folded in a crepe"
+		else
+			custom_crepe.name = "[custom_crepe_food.name] folded in a crepe"
+
+		var/icon/I = new/icon('icons/obj/foodNdrink/food_dessert.dmi', "folded-crepe")
+		//I.Blend(custom_crepe_food.get_food_color(), ICON_ADD)
+		custom_crepe.icon = I
+
+		return custom_crepe
+
 
 /datum/cookingrecipe/mashedpotatoes
 	item1 = /obj/item/reagent_containers/food/snacks/plant/potato
