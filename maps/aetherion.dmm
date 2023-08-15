@@ -35,6 +35,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/carpet/red/fancy/narrow/northsouth,
 /area/station/crew_quarters/bar)
+"acX" = (
+/obj/decal/poster/wallsign/poster_octocluwne,
+/turf/simulated/wall/auto/supernorn,
+/area/station/garden/zen)
 "adk" = (
 /obj/decal/poster/wallsign/dont_panic,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -107,6 +111,11 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
+"aiV" = (
+/obj/lattice,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/space,
+/area/space)
 "aiY" = (
 /obj/pool/perspective{
 	dir = 6;
@@ -124,6 +133,7 @@
 /area/station/hallway/secondary/exit)
 "ajp" = (
 /obj/grille/catwalk,
+/obj/machinery/conveyor/WE,
 /turf/space,
 /area/station/maintenance/inner/north)
 "akh" = (
@@ -393,6 +403,7 @@
 "atK" = (
 /obj/disposalpipe/segment/bent/west,
 /obj/decal/cleanable/dirt,
+/obj/railing/orange,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "auN" = (
@@ -752,6 +763,10 @@
 "aKy" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/main)
+"aKF" = (
+/obj/decal/poster/wallsign/space,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/southeast)
 "aKS" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
@@ -1150,6 +1165,9 @@
 /area/mining/magnet)
 "bdW" = (
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/poster/wallsign/poster_eyetest{
+	pixel_y = 35
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -1198,6 +1216,8 @@
 /turf/simulated/floor/red/side,
 /area/station/bridge/customs)
 "bha" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/north)
 "bhi" = (
@@ -1217,6 +1237,11 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
+"bhx" = (
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "bib" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/access/maint,
@@ -1281,6 +1306,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown)
+"blN" = (
+/obj/storage/closet/emergency,
+/turf/simulated/floor/orange/side,
+/area/station/engine/inner)
 "bmr" = (
 /obj/machinery/computer/atmosphere/pumpcontrol{
 	dir = 4
@@ -1304,6 +1333,9 @@
 	icon_state = "2-9"
 	},
 /obj/lattice/directional_icons,
+/obj/cable/yellow{
+	icon_state = "1-2"
+	},
 /turf/space,
 /area/station/solar/north)
 "bmC" = (
@@ -1328,6 +1360,14 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/grey/checker,
 /area/station/crew_quarters/cafeteria)
+"boG" = (
+/obj/storage/secure/crate/plasma{
+	desc = "A secure crate designed for transport of hazardous research materials.";
+	name = "Hazard Transport Crate";
+	req_access_txt = "24"
+	},
+/turf/simulated/floor/purple,
+/area/station/hangar/science)
 "boM" = (
 /obj/railing/orange/reinforced{
 	dir = 4
@@ -1365,7 +1405,7 @@
 /obj/cable{
 	icon_state = "6-10"
 	},
-/obj/storage/closet/fire,
+/obj/storage/closet/emergency,
 /obj/grille/catwalk,
 /obj/cable{
 	icon_state = "4-8"
@@ -1430,7 +1470,7 @@
 	primary_controller = 1
 	},
 /turf/space,
-/area/station/engine/inner)
+/area/space)
 "btp" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/purpleblack{
@@ -1612,10 +1652,20 @@
 /obj/machinery/networked/test_apparatus/heater,
 /obj/landmark/spawner/artifact,
 /obj/decal/cleanable/dirt,
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
 /area/station/science/artifact)
+"bBC" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/grille/catwalk,
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "bBL" = (
 /obj/machinery/mass_driver{
 	dir = 4
@@ -1804,6 +1854,9 @@
 "bLc" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/grille/catwalk,
+/obj/railing/orange{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "bLm" = (
@@ -2000,6 +2053,34 @@
 	dir = 4
 	},
 /area/station/science/hall)
+"bSA" = (
+/obj/table/reinforced/auto,
+/obj/item/shipcomponent/sensor/mining{
+	pixel_x = -2
+	},
+/obj/item/shipcomponent/sensor/mining{
+	pixel_x = -2
+	},
+/obj/item/shipcomponent/secondary_system/cargo{
+	pixel_x = 5
+	},
+/obj/item/shipcomponent/secondary_system/cargo{
+	pixel_x = 5
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/station/hangar/mining)
+"bST" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/obj/decal/cleanable/dirt,
+/obj/railing/orange{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "bTQ" = (
 /obj/storage/crate/radio,
 /turf/simulated/floor/purpleblack{
@@ -2018,6 +2099,10 @@
 /obj/stool/chair/comfy/barber_chair,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
+"bUs" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/engine,
+/area/station/hangar/mining)
 "bUR" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -2073,6 +2158,12 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"bYD" = (
+/obj/decal/poster/wallsign/construction,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/space)
 "bYJ" = (
 /obj/decal/poster/wallsign/hazard_caution,
 /obj/grille/catwalk,
@@ -2617,6 +2708,10 @@
 /obj/grille/catwalk,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"cuv" = (
+/obj/disposalpipe/segment/cargo,
+/turf/space,
+/area/space)
 "cvs" = (
 /obj/decal/tile_edge/floorguide/evac,
 /obj/decal/tile_edge/floorguide/arrow_n{
@@ -2647,6 +2742,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/storage/closet/welding_supply,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
 	},
@@ -2658,6 +2754,14 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
+"cwy" = (
+/obj/disposalpipe/trunk/cargo,
+/obj/disposaloutlet/east,
+/obj/lattice/directional_icons{
+	dir = 5
+	},
+/turf/space,
+/area/space)
 "cwU" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -2704,6 +2808,9 @@
 "cxW" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/decal/poster/wallsign/poster_borg{
+	pixel_y = 32
 	},
 /turf/simulated/floor/blueblack{
 	dir = 1
@@ -2879,12 +2986,6 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/hangar/science)
-"cGK" = (
-/obj/grille/catwalk,
-/obj/lattice,
-/obj/lattice/auto/turf_attaching,
-/turf/space,
-/area/station/mining)
 "cGV" = (
 /obj/stool{
 	desc = "A soft little bed the general size and shape of a space bee.";
@@ -2912,6 +3013,7 @@
 "cIF" = (
 /obj/vehicle/tug,
 /obj/decal/cleanable/dirt,
+/obj/disposalpipe/segment/cargo,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/north)
 "cIN" = (
@@ -3083,12 +3185,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering/ce)
-"cSg" = (
-/obj/decal/poster/wallsign/space{
-	pixel_y = 32
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
 "cSJ" = (
 /obj/disposalpipe/junction/left/north,
 /turf/simulated/floor/black,
@@ -3215,6 +3311,15 @@
 /obj/stool/chair/wooden,
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/funeral_parlor)
+"cYT" = (
+/obj/grille/catwalk,
+/obj/disposalpipe/segment/cargo,
+/obj/disposalpipe/trunk/cargo{
+	dir = 4
+	},
+/obj/machinery/floorflusher/industrial,
+/turf/space,
+/area/station/maintenance/inner/north)
 "cYY" = (
 /obj/machinery/door/airlock/pyro/glass/botany,
 /obj/cable{
@@ -3422,6 +3527,11 @@
 	dir = 9
 	},
 /area/station/hallway/secondary/entry)
+"dlA" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/tile_edge/stripe,
+/turf/simulated/floor/plating/airless,
+/area/station/maintenance/outer/nw)
 "dlR" = (
 /obj/cable{
 	icon_state = "6-9"
@@ -3526,6 +3636,22 @@
 	dir = 8
 	},
 /area/shuttle/arrival/station)
+"dpH" = (
+/obj/lattice,
+/obj/railing/yellow{
+	dir = 4
+	},
+/turf/space,
+/area/space)
+"dpL" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/obj/grille/catwalk,
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "dqq" = (
 /obj/cable{
 	icon_state = "4-9"
@@ -3546,6 +3672,16 @@
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
 /area/station/science/research_director)
+"dqA" = (
+/obj/cable/yellow{
+	icon_state = "0-9"
+	},
+/obj/decal/poster/wallsign/construction,
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/east)
 "dqJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -3631,6 +3767,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hangar/main)
+"dtZ" = (
+/obj/disposalpipe/segment/vertical,
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "dud" = (
 /obj/lattice/directional_icons{
 	dir = 4
@@ -3849,6 +3991,9 @@
 	id = "speedboost_crusher";
 	name = "Disposals Doors";
 	pixel_y = -24
+	},
+/obj/railing/orange{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -4112,6 +4257,11 @@
 /obj/machinery/launcher_loader/west,
 /turf/simulated/floor,
 /area/station/maintenance/outer/nw)
+"dQn" = (
+/obj/decal/cleanable/dirt,
+/obj/storage/crate,
+/turf/simulated/floor/plating/airless,
+/area/station/mining)
 "dQo" = (
 /obj/disposalpipe/segment/brig{
 	dir = 2;
@@ -4128,6 +4278,9 @@
 /obj/disposalpipe/trunk/south,
 /obj/grille/catwalk,
 /obj/decal/cleanable/dirt,
+/obj/railing/orange{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "dQK" = (
@@ -4249,6 +4402,12 @@
 	dir = 10
 	},
 /area/station/engine/hotloop)
+"dXq" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue,
+/area/station/hangar/main)
 "dXD" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -4264,6 +4423,17 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"dZe" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/decal/cleanable/dirt,
+/obj/railing/orange{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "dZI" = (
 /obj/cable{
 	icon_state = "2-5"
@@ -4284,6 +4454,12 @@
 /obj/landmark/start/job/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"ebg" = (
+/obj/grille/catwalk,
+/obj/decal/cleanable/dirt,
+/obj/railing/orange,
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "ebq" = (
 /obj/cable{
 	icon_state = "4-9"
@@ -4421,6 +4597,11 @@
 	dir = 1
 	},
 /area/station/bridge/customs)
+"egP" = (
+/obj/lattice/directional_icons,
+/obj/railing/orange,
+/turf/space,
+/area/space)
 "egR" = (
 /obj/window_blinds/cog2/right,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -4474,6 +4655,12 @@
 "ejy" = (
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/pool)
+"ejK" = (
+/obj/machinery/vehicle/miniputt/indyputt/armed{
+	dir = 1
+	},
+/turf/simulated/floor/engine/caution/south,
+/area/station/hangar/mining)
 "ejV" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/orange/side{
@@ -4540,6 +4727,14 @@
 /obj/lattice/auto/turf_attaching,
 /turf/space,
 /area/space)
+"elT" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
 "elW" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/carpet/green/standard/narrow/eastwest,
@@ -4586,6 +4781,22 @@
 /obj/stool/chair/comfy/purple,
 /turf/simulated/floor/carpet/purple,
 /area/station/science/research_director)
+"end" = (
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/lattice/directional_icons{
+	dir = 4
+	},
+/obj/cable/yellow{
+	icon_state = "6-8"
+	},
+/obj/cable/yellow{
+	icon_state = "5-8"
+	},
+/turf/space,
+/area/station/solar/east)
 "enl" = (
 /obj/table/reinforced/auto,
 /obj/item/clipboard,
@@ -4622,6 +4833,7 @@
 /area/station/hallway/secondary/entry)
 "eoJ" = (
 /obj/disposalpipe/segment/mail/bent/east,
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "eoN" = (
@@ -4769,6 +4981,10 @@
 /obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
+"ewT" = (
+/obj/decal/poster/wallsign/space,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai_upload)
 "exk" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4868,6 +5084,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/grey,
 /area/station/quartermaster)
 "eAs" = (
@@ -5182,6 +5399,9 @@
 	dir = 10;
 	name = "autoname - SS13"
 	},
+/obj/decal/tile_edge/stripe{
+	dir = 4
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/outer/nw)
 "eOQ" = (
@@ -5329,6 +5549,12 @@
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
+"eTU" = (
+/obj/grille/catwalk,
+/obj/lattice/auto/turf_attaching,
+/obj/decal/poster/wallsign/warning3,
+/turf/space,
+/area/space)
 "eTV" = (
 /obj/stool/chair/office/red{
 	dir = 1
@@ -5388,6 +5614,10 @@
 /obj/lattice/auto/turf_attaching,
 /turf/space,
 /area/space)
+"eWH" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/engine,
+/area/station/mining/refinery)
 "eWV" = (
 /obj/shrub/random,
 /turf/simulated/floor/grass,
@@ -5419,6 +5649,18 @@
 /obj/disposalpipe/segment/mail/vertical,
 /obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
+"eZd" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/obj/decal/cleanable/dirt,
+/obj/railing/orange{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "eZg" = (
@@ -5435,7 +5677,7 @@
 /area/station/maintenance/southeast)
 "eZs" = (
 /obj/cable/yellow{
-	icon_state = "0-4"
+	icon_state = "0-6"
 	},
 /obj/machinery/computer/power_monitor/smes,
 /obj/machinery/power/terminal{
@@ -5447,7 +5689,7 @@
 	dir = 6;
 	name = "autoname - SS13"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "eZC" = (
 /obj/cable{
@@ -5736,6 +5978,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "foK" = (
+/obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/engine/caution/corner,
 /area/station/hangar/mining)
 "fpA" = (
@@ -5793,10 +6036,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/purplewhite,
 /area/station/science/hall)
-"fro" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor,
-/area/station/maintenance/solar/north)
 "frH" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/north,
@@ -5855,6 +6094,11 @@
 "fta" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/showers)
+"ftv" = (
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "ftw" = (
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -5862,6 +6106,9 @@
 /obj/grille/catwalk,
 /obj/railing/orange,
 /obj/lattice/directional_icons,
+/obj/cable/yellow{
+	icon_state = "1-8"
+	},
 /turf/space,
 /area/station/solar/north)
 "fuu" = (
@@ -5873,6 +6120,14 @@
 "fuw" = (
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
+"fuK" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "fvX" = (
 /obj/machinery/launcher_loader/west,
 /turf/simulated/floor/plating/airless,
@@ -5917,6 +6172,11 @@
 "fAD" = (
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
+"fAQ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/decal/poster/wallsign/danger_highvolt,
+/turf/simulated/floor/plating,
+/area/station/engine/substation/west)
 "fAU" = (
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/storage/box/cablesbox,
@@ -6002,6 +6262,14 @@
 /obj/landmark/start/job/clown,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
+"fGL" = (
+/obj/grille/catwalk,
+/obj/disposalpipe/segment/cargo{
+	icon_state = "pipe-c";
+	dir = 8
+	},
+/turf/space,
+/area/station/maintenance/inner/north)
 "fHW" = (
 /obj/machinery/door/airlock/pyro/engineering,
 /obj/cable{
@@ -6025,12 +6293,31 @@
 "fIP" = (
 /obj/grille/catwalk,
 /obj/lattice/directional_icons,
+/obj/cable/yellow{
+	icon_state = "1-2"
+	},
 /turf/space,
 /area/station/solar/north)
 "fJc" = (
 /obj/storage/secure/closet/animal,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
+"fJf" = (
+/obj/grille/catwalk,
+/obj/lattice,
+/obj/railing/yellow{
+	dir = 4
+	},
+/obj/railing/yellow{
+	layer = 4
+	},
+/turf/space,
+/area/space)
+"fJJ" = (
+/obj/decal/cleanable/dirt,
+/obj/disposalpipe/segment/cargo,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/north)
 "fJO" = (
 /obj/machinery/vending/monkey/kitchen,
 /turf/simulated/floor/specialroom/freezer/white,
@@ -6202,7 +6489,10 @@
 	},
 /obj/mapping_helper/access/engineering_power,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor,
+/obj/cable/yellow{
+	icon_state = "4-9"
+	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "fTq" = (
 /obj/cable{
@@ -6283,6 +6573,13 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"fVc" = (
+/obj/decal/cleanable/dirt,
+/obj/railing/orange{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "fVK" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -6354,6 +6651,9 @@
 /obj/cable{
 	icon_state = "0-6"
 	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
 /turf/simulated/floor/orange/side{
 	dir = 1
 	},
@@ -6371,6 +6671,13 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/entry)
+"fZO" = (
+/obj/lattice/directional_icons{
+	dir = 4
+	},
+/obj/decal/poster/wallsign/warning3,
+/turf/space,
+/area/space)
 "gaa" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -6716,6 +7023,12 @@
 	dir = 4
 	},
 /area/station/security/main)
+"gnt" = (
+/obj/decal/cleanable/dirt,
+/obj/grille/catwalk,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "gnW" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
@@ -6756,6 +7069,12 @@
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/main)
+"gpF" = (
+/obj/decal/poster/wallsign/construction,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/station/science/bot_storage)
 "gpP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/solar/east)
@@ -6919,6 +7238,16 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hallway/secondary/exit)
+"gyi" = (
+/obj/grille/catwalk,
+/obj/disposalpipe/segment/cargo{
+	dir = 4
+	},
+/obj/railing/yellow{
+	dir = 4
+	},
+/turf/space,
+/area/station/maintenance/inner/north)
 "gzw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -6941,6 +7270,11 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"gAT" = (
+/obj/decal/cleanable/dirt,
+/obj/submachine/cargopad/engineering,
+/turf/simulated/floor/plating/airless,
+/area/station/maintenance/outer/nw)
 "gBN" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/purplewhite{
@@ -6964,6 +7298,9 @@
 /obj/disposalpipe/junction/right/west,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"gCQ" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/routing/depot)
 "gCY" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -7257,7 +7594,7 @@
 	id = "engine"
 	},
 /turf/space,
-/area/station/engine/inner)
+/area/space)
 "gQF" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
@@ -7327,6 +7664,15 @@
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/grey,
 /area/station/quartermaster)
+"gUn" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/turf/simulated/floor/carpet/blue,
+/area/station/hangar/main)
 "gUt" = (
 /obj/plasticflaps{
 	dir = 4
@@ -7354,6 +7700,9 @@
 	name = "autoname - SS13"
 	},
 /obj/lattice,
+/obj/railing/yellow{
+	dir = 1
+	},
 /turf/space,
 /area/space)
 "gWS" = (
@@ -7443,6 +7792,7 @@
 	},
 /area/station/science/bot_storage)
 "hbd" = (
+/obj/railing/orange,
 /turf/simulated/floor/stairs{
 	dir = 4
 	},
@@ -7526,6 +7876,12 @@
 "hej" = (
 /turf/space,
 /area/supply/sell_point)
+"heG" = (
+/obj/storage/closet/fire,
+/obj/decal/cleanable/dirt,
+/obj/railing/orange,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "heI" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
@@ -7579,6 +7935,13 @@
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
+"hgN" = (
+/obj/shrub{
+	dir = 6
+	},
+/obj/decal/tile_edge/flowers,
+/turf/simulated/floor/grass/random,
+/area/station/garden/zen)
 "hhk" = (
 /obj/machinery/chem_master,
 /turf/simulated/floor/bluewhite,
@@ -7593,13 +7956,11 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
-"hiy" = (
-/obj/grille/catwalk,
-/obj/lattice/directional_icons{
-	dir = 4
-	},
-/turf/space,
-/area/station/solar/west)
+"hiz" = (
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "hiB" = (
 /obj/landmark/magnet_center{
 	height = 13;
@@ -7607,6 +7968,10 @@
 	},
 /turf/space,
 /area/mining/magnet)
+"hiK" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/specialroom/gym,
+/area/station/maintenance/south)
 "hiU" = (
 /obj/grille/catwalk,
 /obj/lattice/directional_icons{
@@ -7747,15 +8112,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"hrs" = (
+/obj/grille/catwalk,
+/obj/lattice/auto/turf_attaching,
+/obj/railing/yellow{
+	dir = 8
+	},
+/turf/space,
+/area/space)
 "hrx" = (
-/obj/decal/poster/wallsign/space{
-	pixel_y = 32
-	},
-/obj/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
+/obj/decal/poster/wallsign/space,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/solar/north)
 "hrH" = (
 /turf/simulated/floor/carpet/green/fancy/innercorner/omni,
@@ -8144,6 +8511,7 @@
 	},
 /obj/grille/catwalk,
 /obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "hIM" = (
@@ -8263,12 +8631,6 @@
 	dir = 1
 	},
 /area/station/hangar/sec)
-"hPF" = (
-/obj/machinery/door/airlock/pyro/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/solar/north)
 "hPI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8281,16 +8643,15 @@
 	},
 /obj/grille/catwalk,
 /obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/engine,
 /area/station/maintenance/northwest)
 "hPP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge)
 "hPU" = (
-/obj/grille/catwalk,
 /obj/decal/cleanable/dirt,
-/obj/lattice/auto/turf_attaching,
-/turf/space,
+/turf/simulated/floor/plating/airless,
 /area/station/mining)
 "hPV" = (
 /obj/plasticflaps{
@@ -8437,6 +8798,10 @@
 	dir = 1
 	},
 /area/station/security/main)
+"hXS" = (
+/obj/decal/poster/wallsign/psa_bucket,
+/turf/simulated/wall/auto/supernorn,
+/area/station/janitor/supply)
 "hXT" = (
 /obj/machinery/conveyor/NW{
 	operating = 1
@@ -8491,13 +8856,6 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
-"iaE" = (
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/routing/depot)
 "iby" = (
 /obj/item/card_group/plain,
 /turf/simulated/floor/carpet/arcade,
@@ -8793,6 +9151,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"irv" = (
+/obj/machinery/vehicle/tank/car/rusty,
+/turf/simulated/floor/plating/airless,
+/area/station/routing)
 "isj" = (
 /obj/table/auto,
 /obj/machinery/power/apc/autoname_north,
@@ -8893,6 +9255,12 @@
 /obj/lattice/directional_icons,
 /turf/space,
 /area/station/solar/north)
+"ivZ" = (
+/obj/machinery/vehicle/miniputt/armed{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/science)
 "iwo" = (
 /obj/cable/blue{
 	icon_state = "0-4"
@@ -9149,6 +9517,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/decal/poster/wallsign/poster_cool{
+	pixel_y = 31
+	},
 /turf/simulated/floor/blueblack{
 	dir = 5
 	},
@@ -9165,7 +9536,7 @@
 	},
 /obj/disposalpipe/switch_junction/left/east{
 	name = "southwest mail junction";
-	mail_tag = list("arrivals                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                hallway","crew","podbay")
+	mail_tag = list("arrivals                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                hallway","crew","podbay")
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -9198,6 +9569,7 @@
 	},
 /obj/grille/catwalk,
 /obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "iHI" = (
@@ -9205,6 +9577,7 @@
 	icon_state = "4-9"
 	},
 /obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "iHM" = (
@@ -9269,6 +9642,9 @@
 /obj/grille/catwalk,
 /obj/railing/orange{
 	dir = 8
+	},
+/obj/railing/orange{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -9353,6 +9729,11 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/maintenance/south)
+"iOl" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment/cargo,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/north)
 "iOn" = (
 /obj/machinery/vending/security_ammo,
 /turf/simulated/floor/black,
@@ -9421,13 +9802,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/carpet/green/fancy/narrow/se,
 /area/station/hallway/secondary/southeast)
-"iSN" = (
-/obj/plasticflaps{
-	dir = 4
-	},
-/obj/machinery/conveyor/WE,
-/turf/simulated/floor/grey,
-/area/station/quartermaster)
 "iTm" = (
 /obj/machinery/computer/atmosphere/pumpcontrol,
 /turf/simulated/floor/orange/side{
@@ -9438,6 +9812,10 @@
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"iTZ" = (
+/obj/decal/poster/wallsign/space,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/hotloop)
 "iUI" = (
 /obj/machinery/mass_driver{
 	dir = 4
@@ -9666,6 +10044,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/hangar/mining)
 "jdx" = (
@@ -9772,6 +10151,7 @@
 "jjg" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/decal/cleanable/dirt,
+/obj/railing/orange,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "jjK" = (
@@ -10130,7 +10510,7 @@
 /area/station/maintenance/disposal)
 "jzh" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Bay","Research","Security","QM");
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Bay","Research","Security","QM");
 	dir = 8
 	},
 /obj/decal/cleanable/dirt,
@@ -10244,6 +10624,12 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"jCI" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/floor/glassblock/transparent/purple,
+/area/station/science/artifact)
 "jCK" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6;
@@ -10266,10 +10652,8 @@
 /obj/stool/chair{
 	dir = 1
 	},
-/obj/grille/catwalk,
 /obj/decal/cleanable/dirt,
-/obj/lattice/auto/turf_attaching,
-/turf/space,
+/turf/simulated/floor/plating/airless,
 /area/station/mining)
 "jED" = (
 /obj/grille/catwalk,
@@ -10740,6 +11124,11 @@
 	icon = 'icons/turf/shuttle.dmi'
 	},
 /area/station/science/bot_storage)
+"kcg" = (
+/obj/decal/cleanable/dirt,
+/obj/railing/orange,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "kcp" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
@@ -10763,6 +11152,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
+/obj/random_item_spawner/tools/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "kem" = (
@@ -11284,6 +11674,10 @@
 /obj/item/clothing/suit/bathrobe,
 /turf/simulated/floor/glassblock/transparent/indigo,
 /area/station/crew_quarters/pool)
+"kDA" = (
+/obj/storage/closet/welding_supply,
+/turf/simulated/floor/purple,
+/area/station/hangar/science)
 "kEm" = (
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/supernorn,
@@ -11373,6 +11767,14 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"kHC" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "kIf" = (
 /obj/window_blinds/cog2/right,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -11387,6 +11789,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/surgery)
 "kJg" = (
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/entry)
 "kJk" = (
@@ -11396,6 +11799,14 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
+"kJo" = (
+/obj/grille/catwalk,
+/obj/lattice/auto/turf_attaching,
+/obj/railing/yellow{
+	dir = 4
+	},
+/turf/space,
+/area/space)
 "kJZ" = (
 /obj/machinery/networked/artifact_console,
 /turf/simulated/floor/purplewhite{
@@ -11458,6 +11869,12 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"kNn" = (
+/obj/machinery/vehicle/pod_smooth/light{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/science)
 "kNq" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/space,
@@ -11492,6 +11909,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/surgery)
+"kPr" = (
+/obj/submachine/cargopad/podbay,
+/turf/simulated/floor/carpet/blue,
+/area/station/hangar/main)
 "kPC" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/cable{
@@ -11501,6 +11922,13 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/purple,
 /area/station/science/hall)
+"kPG" = (
+/obj/decal/cleanable/dirt,
+/obj/railing/orange{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "kQd" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -11720,6 +12148,15 @@
 	dir = 9
 	},
 /area/station/medical/medbay)
+"lcL" = (
+/obj/cable/yellow{
+	icon_state = "0-10"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/east)
 "ldo" = (
 /obj/vehicle/segway,
 /obj/decal/stripe_caution,
@@ -11807,6 +12244,17 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
+"lkg" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail/vertical,
+/obj/decal/cleanable/dirt,
+/obj/railing/orange{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "llg" = (
 /obj/machinery/door/airlock/pyro/reinforced,
 /turf/simulated/floor/engine/vacuum,
@@ -11990,6 +12438,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/grille/catwalk,
+/obj/railing/orange,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "ltI" = (
@@ -12118,6 +12567,10 @@
 	dir = 8
 	},
 /area/station/medical/medbay)
+"lxZ" = (
+/obj/decal/poster/wallsign/danger_highvolt,
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/solar/north)
 "lyd" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
 	pipe_direction = 2
@@ -12194,6 +12647,11 @@
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/glassblock/transparent/grey,
 /area/station/bridge)
+"lDq" = (
+/obj/lattice,
+/obj/decal/poster/wallsign/construction,
+/turf/space,
+/area/space)
 "lEw" = (
 /obj/machinery/light_switch/east,
 /obj/disposalpipe/junction/left/south,
@@ -12270,6 +12728,14 @@
 	dir = 4
 	},
 /area/station/mining/staff_room)
+"lIZ" = (
+/obj/storage/closet/emergency,
+/obj/decal/cleanable/dirt,
+/obj/railing/orange{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "lJi" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -12294,6 +12760,9 @@
 "lKP" = (
 /obj/machinery/disposal/mail/autoname/public/podbay,
 /obj/disposalpipe/trunk/mail/north,
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/blue,
 /area/station/hangar/main)
 "lKS" = (
@@ -12408,6 +12877,12 @@
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless,
 /area/station/routing/depot)
+"lOC" = (
+/obj/grille/catwalk,
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "lQP" = (
 /obj/machinery/deep_fryer,
 /turf/simulated/floor/white,
@@ -12444,6 +12919,21 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/carpet/green/standard/narrow/eastwest,
 /area/station/hallway/secondary/south)
+"lSK" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/stool/chair,
+/obj/disposalpipe/segment/morgue{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/grille/catwalk,
+/obj/railing/orange{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "lSU" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/camera{
@@ -12523,15 +13013,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"lWR" = (
-/obj/lattice/directional_icons{
-	dir = 4
-	},
-/obj/railing/orange{
-	dir = 4
-	},
-/turf/space,
-/area/space)
 "lXP" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
@@ -12650,6 +13131,13 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/engine/core)
+"mbt" = (
+/obj/grille/catwalk,
+/obj/disposalpipe/segment/cargo{
+	dir = 4
+	},
+/turf/space,
+/area/station/maintenance/inner/north)
 "mbD" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -12905,6 +13393,15 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
+"mmF" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/quartermaster)
 "mnp" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 8
@@ -12981,6 +13478,9 @@
 /area/space)
 "mpm" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo,
+/obj/decal/poster/wallsign/poster_human{
+	pixel_y = 31
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -13482,12 +13982,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/ptl)
-"mLF" = (
-/obj/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/solar/north)
 "mLH" = (
 /obj/cable,
 /obj/cable{
@@ -13767,6 +14261,10 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"mVm" = (
+/obj/decal/poster/wallsign/danger_highvolt,
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/solar/east)
 "mVq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -13897,6 +14395,7 @@
 /area/station/science/lab)
 "nag" = (
 /obj/machinery/networked/test_apparatus/pitching_machine,
+/obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -13975,8 +14474,17 @@
 /obj/grille/catwalk,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/ash,
+/obj/railing/orange{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"ncJ" = (
+/obj/railing/yellow{
+	dir = 4
+	},
+/turf/space,
+/area/space)
 "ncO" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -13998,10 +14506,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
 "ndE" = (
-/obj/grille/catwalk,
-/obj/decal/cleanable/dirt,
-/obj/lattice,
-/turf/space,
+/turf/simulated/floor/plating/airless,
 /area/station/mining)
 "nel" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -14142,6 +14647,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"nhD" = (
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/lattice/directional_icons,
+/turf/space,
+/area/station/solar/west)
 "nhE" = (
 /obj/decal/poster/wallsign/stencil/left/t,
 /obj/decal/poster/wallsign/stencil/right/h,
@@ -14182,6 +14695,11 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/storage/warehouse)
+"nkn" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2,
+/turf/simulated/floor/plating,
+/area/station/hydroponics/bay)
 "nkw" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/east)
@@ -14254,13 +14772,19 @@
 	dir = 1
 	},
 /obj/disposalpipe/segment/ejection,
+/obj/railing/orange{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "npz" = (
 /obj/cable{
 	icon_state = "6-8"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_east"
+	},
 /area/station/hangar/science)
 "npJ" = (
 /obj/disposalpipe/segment/bent/east,
@@ -14298,19 +14822,6 @@
 "nrp" = (
 /turf/simulated/floor/orange/side,
 /area/station/maintenance/northwest)
-"nrM" = (
-/obj/machinery/power/solar/west,
-/obj/cable/yellow{
-	icon_state = "0-10"
-	},
-/obj/lattice/directional_icons{
-	dir = 4
-	},
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
-/area/station/solar/west)
 "nrZ" = (
 /obj/machinery/vending/player/chemicals,
 /obj/disposalpipe/trunk/mail/west,
@@ -14328,6 +14839,15 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
+"nsY" = (
+/obj/stool/chair/pool,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/glasses/sunglasses/tanning,
+/obj/decal/poster/wallsign/poster_sol{
+	pixel_y = 28
+	},
+/turf/simulated/floor/glassblock/transparent/indigo,
+/area/station/crew_quarters/pool)
 "nts" = (
 /obj/storage/crate/packing,
 /turf/simulated/floor/grey,
@@ -14348,11 +14868,6 @@
 /mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor/glassblock/transparent/indigo,
 /area/station/crew_quarters/pool)
-"nvl" = (
-/obj/grille/catwalk,
-/obj/lattice,
-/turf/space,
-/area/station/solar/west)
 "nwm" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/solar/east)
@@ -14386,6 +14901,18 @@
 	dir = 4
 	},
 /area/station/engine/inner)
+"nze" = (
+/obj/decal/poster/wallsign/fuck2,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/ai_monitored/armory)
+"nzk" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/dirt,
+/obj/railing/orange,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "nAb" = (
 /obj/grille/catwalk,
 /obj/cable{
@@ -14656,9 +15183,26 @@
 /obj/item/device/multitool,
 /turf/simulated/floor/orange/side,
 /area/station/engine/elect)
+"nOm" = (
+/obj/decal/cleanable/dirt,
+/obj/disposalpipe/segment/cargo{
+	icon_state = "pipe-c";
+	dir = 1
+	},
+/obj/window/reinforced/east,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/north)
 "nPe" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/baroffice)
+"nPC" = (
+/obj/machinery/conveyor/NS,
+/obj/grille/catwalk,
+/obj/disposalpipe/segment/cargo{
+	dir = 4
+	},
+/turf/space,
+/area/space)
 "nQb" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -14756,6 +15300,10 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
+"nWR" = (
+/obj/decal/poster/wallsign/warning3,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hallway/secondary/exit)
 "nXf" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1";
@@ -14792,13 +15340,6 @@
 /obj/item/aiModule/protectStation,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
-"nZn" = (
-/obj/grille/catwalk,
-/obj/decal/cleanable/dirt,
-/obj/lattice,
-/obj/lattice/auto/turf_attaching,
-/turf/space,
-/area/station/mining)
 "nZq" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
@@ -14837,6 +15378,14 @@
 	dir = 10
 	},
 /area/station/science/hall)
+"obO" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/cleanable/dirt,
+/obj/railing/orange{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "occ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -14882,7 +15431,9 @@
 	},
 /area/station/science/lab)
 "ocV" = (
-/obj/machinery/vehicle/pod_smooth/industrial,
+/obj/machinery/vehicle/pod_smooth/industrial{
+	dir = 8
+	},
 /turf/simulated/floor/engine,
 /area/station/hangar/mining)
 "ocZ" = (
@@ -15224,6 +15775,12 @@
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/engine,
 /area/station/engine/coldloop)
+"otM" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/mining)
 "oue" = (
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
@@ -15496,9 +16053,11 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
 "oFD" = (
-/obj/grille/catwalk,
-/obj/lattice/auto/turf_attaching,
-/turf/space,
+/obj/decal/cleanable/dirt,
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
 /area/station/mining)
 "oFE" = (
 /obj/cable{
@@ -15563,6 +16122,11 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/engine,
 /area/station/maintenance/northwest)
+"oIw" = (
+/turf/simulated/floor/plating/airless,
+/area/station/routing/catering{
+	name = "Catering Router"
+	})
 "oIz" = (
 /obj/cable{
 	icon_state = "2-5"
@@ -15591,6 +16155,12 @@
 /obj/landmark/spawner/artifact,
 /turf/space,
 /area/space)
+"oKI" = (
+/obj/grille/catwalk,
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "oLg" = (
 /obj/machinery/mass_driver{
 	dir = 8
@@ -15603,6 +16173,15 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/orange/side,
 /area/station/mining/staff_room)
+"oLu" = (
+/obj/grille/catwalk,
+/obj/lattice/auto/turf_attaching,
+/obj/railing/yellow{
+	dir = 8
+	},
+/obj/decal/poster/wallsign/warning3,
+/turf/space,
+/area/space)
 "oLv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15627,10 +16206,7 @@
 "oMS" = (
 /obj/grille/catwalk,
 /obj/lattice,
-/obj/machinery/mass_driver{
-	dir = 1;
-	id = "qm_dock_out"
-	},
+/obj/machinery/launcher_loader/north,
 /turf/space,
 /area/space)
 "oMU" = (
@@ -15638,6 +16214,10 @@
 	icon_state = "1-10"
 	},
 /obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/railing/orange{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "oMV" = (
@@ -15767,6 +16347,10 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
+"oSh" = (
+/obj/decal/poster/wallsign/space,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/mining/staff_room)
 "oSv" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/black,
@@ -15818,6 +16402,12 @@
 	dir = 8
 	},
 /area/station/medical/medbay/pharmacy)
+"oVj" = (
+/obj/railing/yellow{
+	dir = 8
+	},
+/turf/space,
+/area/space)
 "oVo" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -15827,6 +16417,13 @@
 "oVO" = (
 /turf/simulated/floor/plating/airless,
 /area/station/routing/security)
+"oVU" = (
+/obj/decal/cleanable/dirt,
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/north)
 "oWq" = (
 /turf/simulated/floor/carpet/green/fancy/edge/south,
 /area/station/bridge/hos)
@@ -15961,6 +16558,10 @@
 	},
 /turf/space,
 /area/space)
+"paY" = (
+/obj/decal/poster/wallsign/space,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/lab)
 "pbB" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -15996,8 +16597,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"peB" = (
+/obj/storage/closet/fire,
+/turf/simulated/floor/orange/side,
+/area/station/maintenance/northwest)
 "peP" = (
 /obj/machinery/arc_electroplater,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/engine,
 /area/station/mining/refinery)
 "pff" = (
@@ -16034,6 +16640,15 @@
 "phr" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/disposal)
+"phx" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/grille/catwalk,
+/obj/decal/cleanable/dirt,
+/obj/railing/orange,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "phQ" = (
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/purplewhite{
@@ -16420,6 +17035,7 @@
 /area/station/hallway/secondary/exit)
 "pyh" = (
 /obj/machinery/power/apc/autoname_north,
+/obj/machinery/vehicle/miniputt/nanoputt/security,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
 	},
@@ -16458,6 +17074,18 @@
 	dir = 8
 	},
 /area/station/science/hall)
+"pyV" = (
+/obj/disposalpipe/segment/cargo{
+	dir = 4
+	},
+/obj/railing/yellow{
+	dir = 8
+	},
+/obj/railing/yellow{
+	layer = 4
+	},
+/turf/space,
+/area/space)
 "pzd" = (
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/white,
@@ -16475,19 +17103,6 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
-"pzr" = (
-/obj/machinery/power/solar/west,
-/obj/cable/yellow{
-	icon_state = "0-6"
-	},
-/obj/lattice/directional_icons{
-	dir = 4
-	},
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
-/area/station/solar/west)
 "pzw" = (
 /obj/machinery/vehicle/escape_pod{
 	dir = 8
@@ -16522,6 +17137,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
+"pAe" = (
+/obj/machinery/r_door_control/podbay/mining,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/mining)
 "pAp" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/escape{
@@ -16606,6 +17225,11 @@
 	dir = 8
 	},
 /area/station/engine/hotloop)
+"pDG" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/decal/poster/wallsign/warning3,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/exit)
 "pDT" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -16784,6 +17408,10 @@
 	dir = 4
 	},
 /area/station/maintenance/northeast)
+"pKV" = (
+/obj/decal/tile_edge/flowers,
+/turf/simulated/floor/grass/random,
+/area/station/garden/zen)
 "pKY" = (
 /obj/cable{
 	icon_state = "4-10"
@@ -16798,12 +17426,6 @@
 /obj/storage/cart,
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
-"pLj" = (
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 9
-	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "pLy" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17211,6 +17833,10 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/inner)
+"qiP" = (
+/obj/decal/poster/wallsign/danger_highvolt,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/ptl)
 "qjg" = (
 /obj/cable/brown{
 	icon_state = "1-6"
@@ -17224,6 +17850,13 @@
 /obj/machinery/computer/ordercomp,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"qkp" = (
+/obj/lattice/directional_icons{
+	dir = 1
+	},
+/obj/decal/poster/wallsign/construction,
+/turf/space,
+/area/space)
 "qkz" = (
 /obj/machinery/door/airlock/pyro/sci_alt,
 /obj/mapping_helper/access/artlab,
@@ -17308,6 +17941,7 @@
 /area/station/maintenance/northwest)
 "qos" = (
 /obj/stool/chair/comfy/blue,
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/entry)
 "qoD" = (
@@ -17410,6 +18044,12 @@
 /obj/machinery/manufacturer/hop_and_uniform,
 /turf/simulated/floor/red/side,
 /area/station/bridge/customs)
+"qsV" = (
+/obj/decal/poster/wallsign/construction,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/space)
 "qsX" = (
 /turf/simulated/floor/escape{
 	dir = 4
@@ -17522,6 +18162,12 @@
 /obj/cable,
 /turf/unsimulated/floor/sanitary,
 /area/station/crew_quarters/locker)
+"qxX" = (
+/obj/disposalpipe/segment/cargo{
+	icon_state = "pipe-c"
+	},
+/turf/space,
+/area/space)
 "qyb" = (
 /obj/cable{
 	icon_state = "4-9"
@@ -17556,6 +18202,11 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/medical/head)
+"qzu" = (
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
 "qzR" = (
 /obj/decal/poster/wallsign/cdnp,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -17602,6 +18253,9 @@
 "qBt" = (
 /obj/warp_beacon,
 /obj/lattice,
+/obj/railing/yellow{
+	dir = 4
+	},
 /turf/space,
 /area/space)
 "qBF" = (
@@ -17615,6 +18269,9 @@
 /obj/disposaloutlet/south,
 /obj/grille/catwalk,
 /obj/lattice,
+/obj/disposalpipe/trunk/cargo{
+	dir = 4
+	},
 /turf/space,
 /area/space)
 "qBS" = (
@@ -17670,6 +18327,12 @@
 "qFo" = (
 /turf/simulated/floor,
 /area/station/engine/engineering/ce)
+"qFK" = (
+/obj/disposalpipe/segment/mail/bent/south,
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "qGC" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
 	dir = 1
@@ -17934,6 +18597,15 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
+"qQU" = (
+/obj/cable{
+	icon_state = "5-10"
+	},
+/obj/grille/catwalk,
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "qQZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -18029,7 +18701,7 @@
 	icon_state = "0-10"
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "qTH" = (
 /obj/machinery/power/apc/autoname_east,
@@ -18060,9 +18732,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"qVE" = (
-/turf/space,
-/area/station/engine/inner)
 "qVK" = (
 /obj/cable{
 	icon_state = "5-9"
@@ -18162,7 +18831,7 @@
 /area/station/medical/robotics)
 "qXK" = (
 /obj/machinery/computer/barcode/qm{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Bay","Security","QM")
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Bay","Security","QM")
 	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grey,
@@ -18302,6 +18971,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "rgm" = (
@@ -18345,6 +19015,10 @@
 /obj/railing/orange,
 /turf/space,
 /area/space)
+"rgX" = (
+/obj/decal/poster/wallsign/statistics1,
+/turf/simulated/wall/auto/supernorn,
+/area/station/hangar/main)
 "rhp" = (
 /obj/disposalpipe/switch_junction/left/west{
 	mail_tag = "research";
@@ -18482,6 +19156,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
+"rnS" = (
+/obj/machinery/nanofab/refining,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/engine,
+/area/station/mining/refinery)
 "rnU" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -18681,12 +19360,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/hotloop)
-"rwJ" = (
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 10
-	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "rwK" = (
 /obj/cable{
 	icon_state = "6-9"
@@ -18768,6 +19441,10 @@
 "rzt" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge/captain)
+"rzC" = (
+/obj/decal/tile_edge/stripe/big,
+/turf/simulated/floor/plating/airless,
+/area/station/mining)
 "rAh" = (
 /obj/reagent_dispensers/foamtank,
 /obj/item/extinguisher,
@@ -19035,6 +19712,12 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grey,
 /area/station/quartermaster)
+"rIG" = (
+/obj/decal/cleanable/dirt,
+/obj/grille/catwalk,
+/obj/railing/orange,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "rIP" = (
 /obj/decal/poster/wallsign/barber,
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -19183,6 +19866,9 @@
 "rOM" = (
 /obj/grille/catwalk,
 /obj/railing/orange,
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
 /turf/space,
 /area/station/solar/north)
 "rOW" = (
@@ -19222,6 +19908,9 @@
 	},
 /obj/grille/catwalk,
 /obj/decal/cleanable/dirt,
+/obj/railing/orange{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "rQj" = (
@@ -19307,7 +19996,7 @@
 /area/station/hallway/primary/west)
 "rUw" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Bay","Research","Security","QM");
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Bay","Research","Security","QM");
 	dir = 8
 	},
 /obj/decal/cleanable/dirt,
@@ -19567,6 +20256,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/engine,
 /area/station/mining/refinery)
 "sfm" = (
@@ -19876,6 +20566,19 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/outer/nw)
+"spX" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/random_item_spawner/circuitboards/one_or_zero,
+/turf/simulated/floor/grey/blackgrime/other,
+/area/station/storage/tech)
 "sqJ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/surgery)
@@ -19954,6 +20657,10 @@
 "svL" = (
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/crew_quarters/quarters_south)
+"svV" = (
+/obj/decal/poster/wallsign/poster_nt,
+/turf/simulated/wall/auto/supernorn,
+/area/station/quartermaster)
 "svZ" = (
 /obj/decal/tile_edge/floorguide/medbay{
 	dir = 4
@@ -20135,6 +20842,13 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/chapel)
+"sFU" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/tile_edge/stripe{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/maintenance/outer/nw)
 "sGc" = (
 /obj/landmark/start/job/assistant,
 /turf/unsimulated/floor/sanitary,
@@ -20308,7 +21022,9 @@
 /turf/simulated/floor/grey,
 /area/station/quartermaster)
 "sOD" = (
-/obj/machinery/vehicle/miniputt/indyputt/armed,
+/obj/machinery/vehicle/miniputt/indyputt/armed{
+	dir = 4
+	},
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
 	},
@@ -20372,6 +21088,13 @@
 "sRD" = (
 /obj/cable{
 	icon_state = "2-9"
+	},
+/turf/simulated/floor/purple,
+/area/station/hangar/science)
+"sRI" = (
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 12;
+	pixel_y = -4
 	},
 /turf/simulated/floor/purple,
 /area/station/hangar/science)
@@ -20522,14 +21245,12 @@
 	},
 /area/station/science/teleporter)
 "sYO" = (
-/obj/grille/catwalk,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_west,
 /obj/decal/cleanable/dirt,
-/obj/lattice/auto/turf_attaching,
-/turf/space,
+/turf/simulated/floor/plating/airless,
 /area/station/mining)
 "sZb" = (
 /obj/machinery/computer/chem_request_receiver,
@@ -20600,6 +21321,7 @@
 	dir = 9;
 	name = "autoname - SS13"
 	},
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/entry)
 "tek" = (
@@ -20748,6 +21470,15 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/pool)
+"tlA" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/grille/catwalk,
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "tlC" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/carpet/blue,
@@ -20855,9 +21586,8 @@
 /area/station/crew_quarters/clown)
 "tqS" = (
 /obj/machinery/computer/magnet,
-/obj/grille/catwalk,
-/obj/lattice/auto/turf_attaching,
-/turf/space,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless,
 /area/station/mining)
 "tqT" = (
 /obj/machinery/disposal,
@@ -20948,6 +21678,11 @@
 	},
 /turf/space,
 /area/space)
+"twS" = (
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "twU" = (
 /turf/simulated/floor/carpet/green/fancy/edge/east,
 /area/station/bridge/hos)
@@ -21170,6 +21905,13 @@
 	dir = 1
 	},
 /area/station/chapel)
+"tFH" = (
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/turf/space,
+/area/station/solar/north)
 "tGt" = (
 /obj/surgery_tray,
 /obj/item/scissors/surgical_scissors,
@@ -21244,6 +21986,15 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
+"tJh" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/grille/catwalk,
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "tJU" = (
 /obj/table/auto,
 /obj/item/storage/belt/utility{
@@ -21271,6 +22022,9 @@
 "tKb" = (
 /obj/cable{
 	icon_state = "5-9"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
@@ -21472,6 +22226,17 @@
 /obj/lattice/auto/turf_attaching,
 /turf/space,
 /area/station/solar/west)
+"tWb" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/railing/orange,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "tWO" = (
 /obj/cable/black{
 	icon_state = "4-8"
@@ -21526,6 +22291,9 @@
 /area/station/chapel)
 "tZw" = (
 /obj/machinery/bot/mulebot/QM1,
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
 /turf/simulated/floor/grey,
 /area/station/quartermaster)
 "tZx" = (
@@ -21533,6 +22301,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "tZM" = (
+/obj/storage/closet/fire,
 /turf/simulated/floor/orange/side{
 	dir = 6
 	},
@@ -21558,6 +22327,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "ubd" = (
@@ -21586,7 +22356,7 @@
 "ucM" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "ude" = (
 /obj/window_blinds/cog2/right,
@@ -21880,7 +22650,7 @@
 /area/space)
 "urJ" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Bay","Research","Security","QM");
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Bay","Research","Security","QM");
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
@@ -22315,6 +23085,10 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
+"uMq" = (
+/obj/machinery/vehicle/pod_smooth/gold,
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
 "uMu" = (
 /obj/machinery/power/smes{
 	charge = 1e+006;
@@ -22417,6 +23191,7 @@
 /area/station/security/main)
 "uTc" = (
 /obj/decal/cleanable/dirt,
+/obj/decal/poster/wallsign/danger_highvolt,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/northwest)
 "uUo" = (
@@ -22430,7 +23205,11 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "uUV" = (
-/obj/machinery/vehicle/miniputt/indyputt/armed,
+/obj/item/shipcomponent/mainweapon/rockdrills{
+	pixel_y = 6
+	},
+/obj/item/shipcomponent/mainweapon/rockdrills,
+/obj/table/folding,
 /turf/simulated/floor/engine/caution/west,
 /area/station/hangar/mining)
 "uVl" = (
@@ -22457,6 +23236,10 @@
 /obj/landmark/start/job/quartermaster,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster)
+"uWA" = (
+/obj/random_item_spawner/tools/one_or_zero,
+/turf/simulated/floor/grass/random,
+/area/station/garden/zen)
 "uWO" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
@@ -22616,6 +23399,15 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"vdc" = (
+/obj/cable/yellow{
+	icon_state = "0-9"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/east)
 "veN" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -22696,6 +23488,10 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
+"vgW" = (
+/obj/decal/poster/wallsign/space,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/main)
 "vha" = (
 /obj/window_blinds/cog2/middle,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -22818,6 +23614,15 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"vkQ" = (
+/obj/grille/catwalk,
+/obj/lattice/auto/turf_attaching,
+/obj/machinery/mass_driver{
+	dir = 1;
+	id = "qm_dock_out"
+	},
+/turf/space,
+/area/space)
 "vkX" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/mapping_helper/access/research,
@@ -22844,6 +23649,12 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"vmd" = (
+/obj/grille/catwalk,
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "vml" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -22887,6 +23698,12 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
+"vnP" = (
+/obj/grille/catwalk,
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "voo" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/engine,
@@ -23007,16 +23824,26 @@
 /obj/mapping_helper/access/heads,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"vuR" = (
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_east"
+	},
+/area/station/hangar/science)
 "vuU" = (
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
 /area/station/medical/medbay/pharmacy)
 "vvB" = (
-/obj/plasticflaps{
-	dir = 4
+/obj/machinery/floorflusher/industrial,
+/obj/disposalpipe/trunk/cargo{
+	dir = 8
 	},
-/obj/machinery/conveyor/EW,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4;
+	name = "Loading Chute Cover"
+	},
 /turf/simulated/floor/grey,
 /area/station/quartermaster)
 "vvF" = (
@@ -23116,6 +23943,7 @@
 	dir = 5;
 	name = "autoname - SS13"
 	},
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/entry)
 "vCK" = (
@@ -23180,6 +24008,17 @@
 /obj/storage/crate/adventure,
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
+"vEX" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/belt/utility,
+/obj/machinery/light/small,
+/turf/simulated/floor/purple,
+/area/station/hangar/science)
 "vFb" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
@@ -23233,6 +24072,11 @@
 /obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"vGD" = (
+/obj/lattice,
+/obj/decal/poster/wallsign/warning3,
+/turf/space,
+/area/space)
 "vGJ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -23252,6 +24096,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
+"vHm" = (
+/obj/submachine/cargopad/magnet,
+/turf/simulated/floor/plating/airless,
+/area/station/mining)
 "vHx" = (
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet/red/fancy/narrow/se,
@@ -23414,6 +24262,23 @@
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
 "vQV" = (
+/obj/rack,
+/obj/item/clothing/suit/fire{
+	pixel_x = -3
+	},
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/head/helmet/firefighter{
+	pixel_x = 3
+	},
+/obj/item/tank/air,
+/obj/item/chem_grenade/firefighting{
+	pixel_x = -7;
+	pixel_y = -4
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = -4;
+	pixel_y = -4
+	},
 /turf/simulated/floor/orange/side{
 	dir = 8
 	},
@@ -23447,9 +24312,9 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "vRR" = (
-/obj/machinery/launcher_loader/north,
 /obj/grille/catwalk,
 /obj/lattice,
+/obj/machinery/conveyor/WN,
 /turf/space,
 /area/space)
 "vRX" = (
@@ -23583,6 +24448,7 @@
 /turf/simulated/floor/grey,
 /area/station/quartermaster)
 "waK" = (
+/obj/storage/closet/fire,
 /turf/simulated/floor/orange/side{
 	dir = 10
 	},
@@ -23674,6 +24540,19 @@
 /obj/item/tank/jetpack,
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
+"weh" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/random_item_spawner/circuitboards/four,
+/turf/simulated/floor/grey/blackgrime/other,
+/area/station/storage/tech)
 "weo" = (
 /obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/cable{
@@ -23801,7 +24680,7 @@
 	dir = 1
 	},
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Bay","Security","QM")
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Bay","Security","QM")
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -24050,6 +24929,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"wwV" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/dirt,
+/obj/railing/orange,
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "wxt" = (
 /obj/submachine/foodprocessor,
 /turf/simulated/floor/white,
@@ -24091,6 +24978,11 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/purplewhite,
 /area/station/maintenance/northeast)
+"wyx" = (
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "wzs" = (
 /obj/decal/boxingrope{
 	dir = 4
@@ -24163,6 +25055,11 @@
 	icon_state = "11"
 	},
 /area/space)
+"wEL" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/decal/poster/wallsign/space,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/exit)
 "wEV" = (
 /obj/window_blinds/cog2/left{
 	dir = 8
@@ -24228,6 +25125,7 @@
 /area/station/engine/power)
 "wGu" = (
 /obj/disposalpipe/segment/mail/vertical,
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/entry)
 "wGC" = (
@@ -24335,6 +25233,22 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/maintenance/solar/east)
+"wJf" = (
+/obj/decal/cleanable/dirt,
+/obj/grille/steel,
+/obj/decal/poster/wallsign/construction,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
+"wJq" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/grille/catwalk,
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "wJB" = (
 /turf/simulated/floor/glassblock/transparent/grey,
 /area/station/hallway/secondary/exit)
@@ -24421,6 +25335,16 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"wOo" = (
+/obj/lattice/directional_icons{
+	dir = 4
+	},
+/obj/railing/yellow{
+	dir = 4
+	},
+/obj/decal/poster/wallsign/warning3,
+/turf/space,
+/area/space)
 "wPz" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
@@ -24766,6 +25690,14 @@
 /obj/landmark/start/job/head_of_personnel,
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/bridge/hos)
+"xcO" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/shipcomponent/secondary_system/orescoop,
+/obj/item/shipcomponent/communications/mining,
+/turf/simulated/floor,
+/area/station/hangar/mining)
 "xdV" = (
 /turf/simulated/floor/carpet/purple,
 /area/station/science/research_director)
@@ -24935,13 +25867,6 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"xli" = (
-/obj/grille/catwalk,
-/obj/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/space,
-/area/station/solar/north)
 "xlo" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/mail/vertical,
@@ -25006,6 +25931,7 @@
 	},
 /obj/grille/catwalk,
 /obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "xnE" = (
@@ -25285,6 +26211,10 @@
 	dir = 6;
 	name = "autoname - SS13"
 	},
+/obj/machinery/portable_atmospherics/canister/air/large,
+/obj/decal/poster/wallsign/statistics2{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet/blue,
 /area/station/hangar/main)
 "xzG" = (
@@ -25320,6 +26250,9 @@
 	icon_state = "1-10"
 	},
 /obj/disposalpipe/segment/vertical,
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
 /turf/simulated/floor/orange/side{
 	dir = 1
 	},
@@ -25462,6 +26395,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
+"xEH" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/carpet/blue,
+/area/station/hangar/main)
 "xEN" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/coffeemaker,
@@ -25517,6 +26454,12 @@
 	icon = 'icons/turf/shuttle.dmi'
 	},
 /area/station/science/bot_storage)
+"xGm" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/blue,
+/area/station/hangar/main)
 "xGr" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -25756,6 +26699,7 @@
 	dir = 10;
 	name = "autoname - SS13"
 	},
+/obj/decal/poster/wallsign/construction,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "xRX" = (
@@ -25857,9 +26801,7 @@
 /obj/machinery/mass_driver{
 	id = "chapel_driver"
 	},
-/obj/window/reinforced/north{
-	dir = 4
-	},
+/obj/window/reinforced/east,
 /turf/simulated/floor/plating,
 /area/station/chapel/funeral_parlor)
 "xYh" = (
@@ -25992,6 +26934,12 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/narrow/sw,
 /area/station/security/hos)
+"yfh" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/decal/cleanable/dirt,
+/obj/railing/orange,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "yfz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -26030,6 +26978,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"ygt" = (
+/obj/cable/yellow{
+	icon_state = "0-10"
+	},
+/obj/decal/poster/wallsign/construction,
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/east)
 "ygu" = (
 /obj/machinery/door/airlock/pyro/command,
 /obj/cable{
@@ -26107,14 +27065,6 @@
 	dir = 1
 	},
 /area/station/science/teleporter)
-"yjv" = (
-/obj/decal/poster/wallsign/space{
-	pixel_y = 32
-	},
-/obj/grille/catwalk,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "yjE" = (
 /obj/machinery/chemicompiler_stationary,
 /turf/simulated/floor/blueblack{
@@ -48670,7 +49620,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+wvP
 sIe
 sIe
 sIe
@@ -48972,7 +49922,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+bRy
 sIe
 sIe
 sIe
@@ -49274,7 +50224,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+bRy
 sIe
 sIe
 sIe
@@ -49572,15 +50522,15 @@ sIe
 sIe
 sIe
 sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
+oco
+oco
+oco
+oco
+bRy
+hAy
+hAy
+hAy
+hAy
 sIe
 sIe
 sIe
@@ -49874,15 +50824,15 @@ sIe
 sIe
 sIe
 sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
+kOw
+uBT
+uBT
+oPi
+sah
+icW
+pPC
+pPC
+pbR
 sIe
 sIe
 sIe
@@ -50176,15 +51126,15 @@ sIe
 sIe
 sIe
 sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
+nxI
+nxI
+nxI
+nxI
+bRy
+dEh
+dEh
+dEh
+dEh
 sIe
 sIe
 sIe
@@ -50482,7 +51432,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+bRy
 sIe
 sIe
 sIe
@@ -50780,15 +51730,15 @@ sIe
 sIe
 sIe
 sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
+oco
+oco
+oco
+oco
+bRy
+hAy
+hAy
+hAy
+hAy
 sIe
 sIe
 sIe
@@ -51082,15 +52032,15 @@ sIe
 sIe
 sIe
 sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
+kOw
+aBm
+aBm
+bDl
+kvO
+cxn
+qYl
+qYl
+kOw
 sIe
 sIe
 sIe
@@ -51384,15 +52334,15 @@ sIe
 sIe
 sIe
 sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
+nxI
+nxI
+nxI
+nxI
+bRy
+dEh
+dEh
+dEh
+dEh
 sIe
 sIe
 sIe
@@ -51690,7 +52640,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+bRy
 sIe
 sIe
 sIe
@@ -51988,15 +52938,15 @@ sIe
 sIe
 sIe
 sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
+oco
+oco
+oco
+oco
+bRy
+bNG
+bNG
+bNG
+bNG
 sIe
 sIe
 sIe
@@ -52290,15 +53240,15 @@ sIe
 sIe
 sIe
 sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
+kOw
+aBm
+aBm
+bDl
+kvO
+cxn
+qYl
+qYl
+kOw
 sIe
 sIe
 sIe
@@ -52592,15 +53542,15 @@ sIe
 sIe
 sIe
 sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
+nxI
+nxI
+nxI
+nxI
+bRy
+dEh
+dEh
+dEh
+dEh
 sIe
 sIe
 sIe
@@ -52898,7 +53848,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+bRy
 sIe
 sIe
 sIe
@@ -53200,7 +54150,7 @@ pbG
 avq
 avq
 avq
-wvP
+bRy
 avq
 avq
 avq
@@ -54102,15 +55052,15 @@ ayG
 sIe
 sIe
 sIe
-pzr
-oco
-oco
-oco
+ayG
+sIe
+sIe
+sIe
 bRy
-hAy
-hAy
-hAy
-hAy
+sIe
+sIe
+sIe
+sIe
 sIe
 sIe
 sIe
@@ -54357,7 +55307,7 @@ sIe
 ecL
 ggN
 lsw
-epH
+irv
 iMV
 avq
 avq
@@ -54404,15 +55354,15 @@ iMV
 avq
 avq
 avq
-nvl
-uBT
-uBT
-oPi
-sah
-icW
-pPC
-pPC
-pbR
+iMV
+avq
+avq
+avq
+nhD
+avq
+avq
+avq
+avq
 avq
 avq
 avq
@@ -54446,7 +55396,7 @@ avq
 avq
 avq
 avq
-iMV
+lDq
 avq
 avq
 avq
@@ -54706,15 +55656,15 @@ ayG
 sIe
 sIe
 sIe
-nrM
-nxI
-nxI
-nxI
+ayG
+sIe
+sIe
+sIe
 bRy
-dEh
-dEh
-dEh
-dEh
+sIe
+sIe
+sIe
+sIe
 sIe
 sIe
 sIe
@@ -55310,15 +56260,15 @@ ayG
 sIe
 sIe
 sIe
-pzr
-oco
-oco
-oco
+ayG
+sIe
+sIe
+sIe
 bRy
-hAy
-hAy
-hAy
-hAy
+sIe
+sIe
+sIe
+sIe
 sIe
 sIe
 sIe
@@ -55585,7 +56535,7 @@ cyV
 fgX
 xRe
 eMb
-eMb
+iTZ
 eMb
 jFE
 eMb
@@ -55599,28 +56549,28 @@ fha
 oAg
 atm
 eMb
-kTx
+qiP
 qEH
 mLD
 gxZ
 wqi
-jFY
-jFY
+dlA
+gAT
 spO
 sIe
 ayG
 sIe
 sIe
 sIe
-hiy
-aBm
-aBm
-bDl
-kvO
-cxn
-qYl
-qYl
-kOw
+ayG
+sIe
+sIe
+sIe
+bRy
+sIe
+sIe
+sIe
+sIe
 sIe
 sIe
 sIe
@@ -55907,22 +56857,22 @@ hfn
 oFK
 amb
 jFY
-jFY
+sFU
 spO
 sIe
 ayG
 sIe
 sIe
 sIe
-nrM
-nxI
-nxI
-nxI
+ayG
+sIe
+sIe
+sIe
 bRy
-dEh
-dEh
-dEh
-dEh
+sIe
+sIe
+sIe
+sIe
 sIe
 sIe
 sIe
@@ -56518,15 +57468,15 @@ ayG
 sIe
 sIe
 sIe
-pzr
-oco
-oco
-oco
+ayG
+sIe
+sIe
+sIe
 bRy
-bNG
-bNG
-bNG
-bNG
+sIe
+sIe
+sIe
+sIe
 sIe
 sIe
 sIe
@@ -56820,15 +57770,15 @@ ayG
 sIe
 sIe
 sIe
-hiy
-aBm
-aBm
-bDl
-kvO
-cxn
-qYl
-qYl
-kOw
+ayG
+sIe
+sIe
+sIe
+bRy
+sIe
+sIe
+sIe
+sIe
 sIe
 sIe
 sIe
@@ -57117,20 +58067,20 @@ uKD
 uKD
 uKD
 sHE
-sIe
-ayG
-sIe
-sIe
-sIe
-nrM
-nxI
-nxI
-nxI
-bRy
-dEh
-dEh
-dEh
-dEh
+avq
+iMV
+avq
+avq
+avq
+iMV
+avq
+avq
+avq
+nhD
+avq
+avq
+avq
+pbG
 avq
 avq
 avq
@@ -57680,7 +58630,7 @@ hPZ
 avq
 avq
 avq
-iMV
+lDq
 avq
 avq
 avq
@@ -58024,7 +58974,7 @@ sHE
 sHE
 sHE
 avq
-iMV
+aiV
 avq
 avq
 avq
@@ -58064,9 +59014,9 @@ xxz
 jRe
 ouT
 bHb
-axR
-axR
-axR
+xEH
+gUn
+gUn
 hAL
 tck
 iDU
@@ -58603,7 +59553,7 @@ sIe
 sIe
 sIe
 sIe
-ayG
+fZO
 sIe
 sIe
 hlg
@@ -58675,7 +59625,7 @@ mjZ
 mjZ
 mjZ
 aKy
-aKy
+vgW
 aKy
 udf
 sIe
@@ -58969,15 +59919,15 @@ qRD
 aze
 cHU
 kBC
-bHb
-ofv
+rgX
+dXq
 ofv
 tlC
 ixH
 lwd
 lwd
 lwd
-lwd
+eqa
 xrd
 hiU
 sIe
@@ -59259,7 +60209,7 @@ paA
 dWs
 txi
 jdt
-jdt
+ewT
 qHu
 qpf
 uLU
@@ -59271,9 +60221,9 @@ wxB
 hrH
 vvF
 kBC
-bHb
-ofv
-ofv
+eGi
+kPr
+xGm
 tlC
 lwd
 lwd
@@ -59863,7 +60813,7 @@ tdB
 jdt
 jdt
 jdt
-cSg
+cnW
 cnW
 pzq
 ias
@@ -60182,7 +61132,7 @@ unl
 ofv
 tlC
 lwd
-eqa
+uMq
 lwd
 lwd
 lwd
@@ -60434,7 +61384,7 @@ vwU
 vrc
 qiK
 oib
-wgM
+blN
 hJM
 sIe
 sIe
@@ -60748,11 +61698,11 @@ rld
 neA
 vvM
 wYu
-wYu
+eZd
 jtp
 pCJ
-xkH
-xkH
+lkg
+lkg
 eYz
 rfZ
 xkH
@@ -61048,9 +61998,9 @@ hPZ
 mjk
 mol
 vul
-egq
-bjG
-bjG
+fAQ
+kPG
+bhx
 eVI
 jjg
 udz
@@ -61089,7 +62039,7 @@ ofv
 ofv
 ofv
 ofv
-hGO
+ofv
 qoD
 sIe
 sIe
@@ -61337,11 +62287,11 @@ sVZ
 crh
 ppB
 hoI
-qVE
-qVE
+sIe
+sIe
 gQz
-qVE
-qVE
+sIe
+sIe
 sIe
 sIe
 sIe
@@ -61351,7 +62301,7 @@ mjk
 sIz
 xpZ
 egq
-xUt
+lIZ
 oCq
 mkK
 jjg
@@ -61389,8 +62339,8 @@ bHb
 axR
 axR
 axR
-axR
-axR
+hSo
+hGO
 hSo
 qoD
 sIe
@@ -61639,11 +62589,11 @@ sIe
 xPm
 chX
 sIe
-qVE
-qVE
-qVE
-qVE
-qVE
+sIe
+sIe
+sIe
+sIe
+sIe
 sIe
 sIe
 sIe
@@ -61653,7 +62603,7 @@ vFE
 vFE
 vFE
 vFE
-lMA
+acX
 lMA
 kik
 wDU
@@ -61941,23 +62891,23 @@ sIe
 xPm
 chX
 sIe
-qVE
-qVE
-qVE
-qVE
-qVE
+sIe
+sIe
+sIe
+sIe
+sIe
 sIe
 sIe
 sIe
 kQd
 uZO
-tfj
+uWA
 wCl
 oex
-tfj
+pKV
 tfj
 lmG
-mkK
+dZe
 jix
 iFZ
 qej
@@ -62243,11 +63193,11 @@ sIe
 xPm
 chX
 sIe
-qVE
-qVE
-qVE
-qVE
-qVE
+sIe
+sIe
+sIe
+sIe
+sIe
 qZf
 qZf
 qZf
@@ -62257,7 +63207,7 @@ tfj
 mun
 cDR
 tfj
-tfj
+pKV
 lMA
 mkK
 jix
@@ -62545,11 +63495,11 @@ eJd
 wcv
 aJo
 ijf
-qVE
-qVE
+sIe
+sIe
 btn
-qVE
-qVE
+sIe
+sIe
 qZf
 tEG
 rCS
@@ -62577,7 +63527,7 @@ cxz
 uSq
 cmY
 cJR
-cJR
+nze
 fmS
 tKD
 jaY
@@ -62599,7 +63549,7 @@ epI
 epI
 vWm
 epI
-ebI
+nsY
 oij
 nnb
 nnb
@@ -62842,7 +63792,7 @@ dzG
 mTk
 ayS
 qQz
-qQz
+rnS
 smF
 eMx
 hPI
@@ -62858,7 +63808,7 @@ rCS
 mhO
 tAn
 uZO
-wCl
+hgN
 nMi
 jfx
 oex
@@ -63142,7 +64092,7 @@ ilP
 eJd
 mzk
 mzk
-mzk
+eWH
 drO
 peP
 smF
@@ -63454,7 +64404,7 @@ sTr
 bIQ
 sky
 xGr
-eWA
+peB
 sGD
 lZl
 xLy
@@ -63464,11 +64414,11 @@ uZO
 tfj
 oex
 cWu
-tfj
+pKV
 lMA
 lMA
 mkK
-bjG
+kcg
 nYF
 pEh
 iLs
@@ -64346,7 +65296,7 @@ wpm
 wpm
 wpm
 bCO
-hPU
+ndE
 jEJ
 hPU
 hPU
@@ -64355,7 +65305,7 @@ mHe
 hrp
 bgB
 gFl
-tdn
+elT
 tdn
 mHe
 bzn
@@ -64363,7 +65313,7 @@ vWj
 eWA
 bgB
 mHe
-mHe
+qzu
 aNg
 bib
 tfj
@@ -64373,7 +65323,7 @@ nMi
 tSB
 lMA
 bjG
-pZx
+yfh
 qHc
 sAK
 mGO
@@ -64652,7 +65602,7 @@ hPU
 tqS
 jEB
 hPU
-cTa
+oSh
 hBc
 wZi
 dch
@@ -64977,7 +65927,7 @@ cWu
 vDT
 lMA
 xUt
-oCq
+heG
 kUU
 ldo
 xPu
@@ -65254,8 +66204,8 @@ wpm
 bCO
 hPU
 hPU
-hPU
-hPU
+dQn
+dQn
 ucv
 lrM
 poX
@@ -65556,8 +66506,8 @@ wpm
 bCO
 hPU
 hPU
-hPU
-hPU
+dQn
+dQn
 flW
 hlw
 vnH
@@ -65858,8 +66808,8 @@ wpm
 bCO
 hPU
 hPU
-oFD
-hPU
+dQn
+dQn
 ucv
 bAj
 jkk
@@ -66159,7 +67109,7 @@ wpm
 wpm
 bCO
 hPU
-hPU
+otM
 hPU
 hPU
 ucv
@@ -66216,7 +67166,7 @@ oMw
 eZC
 sWA
 vDE
-rxE
+hXS
 hBf
 lBM
 pff
@@ -66460,8 +67410,8 @@ wpm
 wpm
 wpm
 bCO
-hPU
-hPU
+rzC
+vHm
 oFD
 hPU
 tng
@@ -66762,7 +67712,7 @@ wpm
 wpm
 wpm
 bCO
-oFD
+ndE
 jEJ
 hPU
 hPU
@@ -67064,13 +68014,13 @@ wpm
 wpm
 wpm
 bCO
-nZn
+hPU
 ndE
-nZn
-cGK
+hPU
+hPU
 cTo
 dKG
-lhe
+pAe
 sOD
 uUV
 foK
@@ -67676,9 +68626,9 @@ iMV
 cTo
 rRQ
 vaW
-vaW
-ody
-bZT
+bUs
+ejK
+bSA
 iMe
 fEe
 sRe
@@ -67944,17 +68894,17 @@ sIe
 sIe
 sIe
 sIe
-ayG
+fZO
 sIe
 sIe
 sIe
-ayG
+fZO
 sIe
 sIe
 sIe
 sIe
 sIe
-cNT
+eTU
 cNT
 cNT
 cNT
@@ -67971,16 +68921,16 @@ cNT
 cNT
 cNT
 dKG
-iMV
+vGD
 qBt
-iMV
-iMV
+dpH
+dpH
 cTo
 rRQ
 vaW
 vaW
 ody
-bZT
+xcO
 iMe
 kso
 sRe
@@ -68266,14 +69216,14 @@ sIe
 sIe
 sIe
 sIe
-mqQ
+wOo
 hGE
 hGE
 hGE
 hGE
 hGE
 jED
-dKG
+fJf
 fsR
 nUU
 ylw
@@ -68574,7 +69524,7 @@ sIe
 sIe
 sIe
 sIe
-cNT
+vkQ
 oMS
 vRR
 qBI
@@ -68879,7 +69829,7 @@ gFO
 qrn
 jqz
 elA
-elA
+nPC
 xjL
 lhe
 bPN
@@ -69150,8 +70100,8 @@ sIe
 sIe
 sIe
 sIe
-sIe
-sIe
+gfa
+gCQ
 crH
 qKa
 jIK
@@ -69179,9 +70129,9 @@ sIe
 sIe
 sIe
 quF
-sIe
-sIe
-sIe
+oVj
+oVj
+pyV
 ajp
 iYl
 teB
@@ -69452,9 +70402,9 @@ sIe
 sIe
 sIe
 sIe
-sIe
-sIe
-iQF
+gfa
+gCQ
+lOy
 qKa
 jIK
 iQF
@@ -69464,7 +70414,7 @@ sIe
 sIe
 sIe
 sIe
-cNT
+eTU
 sIe
 sIe
 sIe
@@ -69474,23 +70424,23 @@ sIe
 sIe
 sIe
 sIe
-ayG
+fZO
 sIe
 sIe
 sIe
 sIe
 sIe
-cNT
+eTU
 sIe
 sIe
-sIe
-ajp
-iYl
+qxX
+cYT
+iOl
 cIF
-cFW
-cFW
-cFW
-cFW
+fJJ
+fJJ
+fJJ
+nOm
 cFW
 pBY
 sTJ
@@ -69751,47 +70701,47 @@ sIe
 sIe
 sIe
 sIe
-sIe
-sIe
-sIe
-sIe
-iQF
+vFb
+avq
+avq
+gfa
+gCQ
 gfa
 qKa
 nGP
 gfa
 iQF
 sIe
+ncJ
 sIe
 sIe
 sIe
-sIe
-cNT
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-ayG
+kJo
 sIe
 sIe
 sIe
 sIe
 sIe
-cNT
 sIe
 sIe
 sIe
-ajp
+sIe
+mqQ
+sIe
+sIe
+sIe
+sIe
+sIe
+kJo
+ncJ
+ncJ
+ncJ
+gyi
 iYl
 cFW
 cFW
 jOl
-iSN
+jOl
 vvB
 jOl
 jOl
@@ -70050,14 +71000,14 @@ sIe
 sIe
 sIe
 sIe
+sIe
+sIe
+sIe
+sIe
+pVT
 oyx
 oyx
 mnF
-pVT
-pVT
-pVT
-pVT
-pVT
 pVT
 ttf
 ttf
@@ -70086,9 +71036,9 @@ avq
 avq
 cNT
 avq
+pbG
 avq
-avq
-ajp
+mbt
 rcz
 qWE
 cBu
@@ -70355,11 +71305,11 @@ sIe
 sIe
 sIe
 sIe
-sIe
-sIe
-sIe
-iQF
-lOy
+vFb
+avq
+avq
+gfa
+gCQ
 gfa
 qKa
 tnB
@@ -70370,27 +71320,27 @@ ayG
 sIe
 sIe
 sIe
+eTU
+sIe
+sIe
+sIe
+sIe
+sIe
+sIe
+sIe
+sIe
+sIe
+mqQ
+ncJ
+ncJ
+ncJ
+ncJ
+ncJ
 cNT
 sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-lWR
-ahi
-ahi
-ahi
-ahi
-ahi
-cNT
-sIe
-sIe
-sIe
-ajp
+cwy
+cuv
+fGL
 iYl
 sXr
 cFW
@@ -70400,7 +71350,7 @@ bFP
 bFP
 bFP
 rig
-wfR
+mmF
 wfR
 wfR
 wfR
@@ -70660,9 +71610,9 @@ sIe
 sIe
 sIe
 sIe
-iaE
-iaE
-iaE
+gfa
+gCQ
+iQF
 ttf
 ttf
 qbI
@@ -70689,7 +71639,7 @@ cNT
 cNT
 cNT
 cNT
-pbG
+lmu
 lmu
 lmu
 hBL
@@ -70962,36 +71912,36 @@ sIe
 sIe
 sIe
 sIe
-sIe
-iQF
+gfa
+gCQ
 gfa
 adW
 tnB
 gfa
 iQF
 sIe
-ayG
+crH
 sIe
 sIe
 sIe
-cNT
-sIe
-sIe
-sIe
-sIe
+hrs
 sIe
 sIe
 sIe
 sIe
 sIe
-cNT
+sIe
+sIe
+sIe
+rgP
+oLu
 nml
 gyh
 nml
 jbK
-jbK
+pDG
 bNF
-jbK
+wEL
 fLa
 fLa
 fLa
@@ -71264,28 +72214,28 @@ sIe
 sIe
 sIe
 sIe
-sIe
-sIe
+gfa
+gCQ
 iQF
 iUI
 tnB
 iQF
 vZr
 sIe
-ayG
+fZO
 sIe
 sIe
 sIe
-cNT
-sIe
-sIe
-sIe
-sIe
+eTU
 sIe
 sIe
 sIe
 sIe
 sIe
+sIe
+sIe
+sIe
+rgP
 cNT
 nml
 pzw
@@ -71566,8 +72516,8 @@ sIe
 sIe
 sIe
 sIe
-sIe
-sIe
+gfa
+gCQ
 hPZ
 iUI
 tnB
@@ -73118,7 +74068,7 @@ jOl
 jOl
 jOl
 jOl
-jOl
+svV
 oDL
 fPV
 eNu
@@ -73466,7 +74416,7 @@ gzw
 iWY
 sEh
 kUP
-uvM
+wyx
 smS
 qND
 sIe
@@ -73741,7 +74691,7 @@ rjb
 rjb
 gop
 iwr
-iwr
+bST
 iwr
 iwr
 iwr
@@ -73989,7 +74939,7 @@ avq
 avq
 avq
 iMV
-avq
+egP
 sbM
 dzx
 dzx
@@ -74039,12 +74989,12 @@ tKu
 fta
 fta
 bda
-gxd
+twS
 gxd
 klN
 gxd
 gxd
-gxd
+twS
 gxd
 gxd
 gxd
@@ -74291,7 +75241,7 @@ sIe
 sIe
 sIe
 ayG
-sIe
+rgP
 cNT
 dzx
 dzx
@@ -74326,7 +75276,7 @@ vGX
 srH
 srH
 srH
-srH
+dtZ
 srH
 srH
 srH
@@ -74361,7 +75311,7 @@ gdT
 fdP
 vcC
 hrm
-uvM
+fVc
 eQn
 jLT
 raQ
@@ -74593,7 +75543,7 @@ sIe
 sIe
 sIe
 ayG
-sIe
+rgP
 cNT
 dzx
 dzx
@@ -74644,7 +75594,7 @@ fta
 fta
 gqi
 mpT
-iZP
+kHC
 tId
 xoF
 fsX
@@ -74675,9 +75625,9 @@ pMD
 ilh
 dbs
 paD
-smS
+tWb
 gGr
-uvM
+wJf
 qND
 xEj
 xEj
@@ -74895,7 +75845,7 @@ avq
 avq
 avq
 iMV
-avq
+egP
 sbM
 dzx
 dzx
@@ -74946,8 +75896,8 @@ qHK
 qHK
 fEy
 gxd
-iZP
-sBP
+wwV
+nkn
 oBR
 trk
 gdL
@@ -74977,7 +75927,7 @@ fJO
 ggA
 fCv
 paD
-smS
+tWb
 gGr
 uvM
 qND
@@ -75267,7 +76217,7 @@ qtR
 nDq
 xKD
 gDi
-eHx
+nzk
 gil
 tHV
 raQ
@@ -75530,8 +76480,8 @@ tHm
 lff
 sag
 wDt
-iDI
-jdn
+wJq
+ebg
 nKk
 uZv
 gJi
@@ -75568,7 +76518,7 @@ cxK
 wkF
 oOg
 iyE
-gDi
+obO
 eHx
 eQn
 fqi
@@ -75833,7 +76783,7 @@ vrT
 aoe
 wDt
 iDI
-jdn
+ebg
 nKk
 rAh
 sop
@@ -75848,8 +76798,8 @@ fPV
 shB
 feg
 wVv
-xoT
-xoT
+weh
+spX
 xoT
 kNF
 ruh
@@ -75883,7 +76833,7 @@ oXT
 oXT
 pqV
 eBO
-oXT
+rIG
 gGr
 pCp
 qND
@@ -76135,7 +77085,7 @@ wDt
 izd
 wDt
 iDI
-jdn
+ebg
 nKk
 gaW
 gJi
@@ -76172,7 +77122,7 @@ ftw
 ftw
 oFp
 xKD
-fdP
+qFK
 pTg
 vcC
 qHV
@@ -76457,7 +77407,7 @@ shB
 shB
 shB
 iZP
-gxd
+twS
 tId
 rEW
 rOW
@@ -76485,7 +77435,7 @@ mkt
 gSs
 lHp
 oXT
-oXT
+gnt
 mbD
 cES
 ieE
@@ -76506,7 +77456,7 @@ cTH
 ooX
 ooX
 pxg
-sIe
+nih
 sIe
 sIe
 sIe
@@ -76736,7 +77686,7 @@ uLu
 uLu
 sxA
 axa
-vfk
+bBC
 wwy
 jyY
 oXc
@@ -76808,7 +77758,7 @@ oxF
 ooX
 ooX
 pxg
-sIe
+nih
 sIe
 sIe
 sIe
@@ -77104,13 +78054,13 @@ avq
 avq
 avq
 avq
-pxg
+oIw
 nih
-pxg
+oIw
 dyk
 iPi
 pxg
-sIe
+nih
 sIe
 sIe
 sIe
@@ -77412,7 +78362,7 @@ nih
 rsU
 iPi
 pxg
-sIe
+nih
 sIe
 sIe
 sIe
@@ -77686,11 +78636,11 @@ pcp
 nMW
 hSU
 cur
-aFf
+lSK
 wBn
 wts
 wts
-wts
+hiK
 wBn
 gdT
 xfd
@@ -77710,11 +78660,11 @@ avq
 avq
 avq
 avq
-pxg
+oIw
 rsU
 iPi
 pxg
-sIe
+nih
 sIe
 sIe
 sIe
@@ -77935,9 +78885,9 @@ nml
 nml
 jbK
 jbK
-nml
+nWR
 bNF
-jbK
+wEL
 nml
 nml
 uLu
@@ -77947,7 +78897,7 @@ nJu
 rQc
 oXc
 oXc
-pKz
+dpL
 spL
 sIK
 emY
@@ -77988,7 +78938,7 @@ wdf
 pXq
 mgA
 gCw
-aFf
+lSK
 pjK
 wzs
 wzs
@@ -78247,7 +79197,7 @@ nJu
 wgu
 nJu
 ncs
-oXc
+vnP
 oXc
 pKz
 spL
@@ -78815,7 +79765,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+mvr
 aZF
 vzP
 pPU
@@ -79117,7 +80067,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+mvr
 aZF
 vzP
 pPU
@@ -79152,7 +80102,7 @@ ayF
 hDC
 eBz
 uqH
-jPQ
+phx
 tFc
 kJZ
 ipk
@@ -79419,7 +80369,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+mvr
 aZF
 vzP
 pJd
@@ -79721,7 +80671,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+mvr
 aZF
 tQW
 tQW
@@ -79760,7 +80710,7 @@ vLJ
 olH
 nfe
 vto
-vto
+jCI
 vto
 vto
 jxf
@@ -80023,7 +80973,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+mvr
 aZF
 tQW
 tQW
@@ -80325,7 +81275,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+mvr
 aZF
 lrj
 xvh
@@ -80627,7 +81577,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+mvr
 aZF
 wYH
 xvh
@@ -80659,7 +81609,7 @@ rRm
 nho
 siz
 siz
-siz
+kNn
 tAB
 wjR
 jPQ
@@ -80929,7 +81879,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+mvr
 aZF
 wYH
 xvh
@@ -80964,7 +81914,7 @@ siz
 siz
 tAB
 gla
-jPQ
+tJh
 rRI
 rRI
 lSU
@@ -81261,7 +82211,7 @@ xso
 cNT
 rRm
 jHR
-siz
+ivZ
 siz
 siz
 tAB
@@ -81316,7 +82266,7 @@ pbB
 pbB
 plw
 qZz
-qZz
+aKF
 qZz
 lvR
 lvR
@@ -81563,9 +82513,9 @@ pXJ
 cNT
 rRm
 npz
-siz
-siz
-siz
+vuR
+vuR
+vuR
 tAB
 wXj
 jPQ
@@ -81614,7 +82564,7 @@ mVN
 uds
 kjy
 tSV
-tSV
+lOC
 tSV
 tSV
 dyD
@@ -82166,10 +83116,10 @@ sIe
 pXJ
 sIe
 tAB
-our
+kDA
 plB
 yct
-our
+boG
 hhn
 xWu
 vGJ
@@ -82468,7 +83418,7 @@ sIe
 pXJ
 sIe
 tAB
-our
+sRI
 plB
 plB
 sRD
@@ -82770,7 +83720,7 @@ sIe
 pXJ
 sIe
 tAB
-our
+vEX
 our
 our
 our
@@ -83048,7 +83998,7 @@ hPZ
 avq
 avq
 avq
-iMV
+lDq
 avq
 jAz
 avq
@@ -83121,7 +84071,7 @@ lYu
 klz
 rBQ
 pbB
-mzr
+qQU
 tSV
 fUN
 hox
@@ -83368,7 +84318,7 @@ mLH
 iDb
 mLH
 hbA
-gcW
+gpF
 ujj
 mHf
 pcV
@@ -83378,13 +84328,13 @@ mCX
 uqH
 uqH
 hnY
-fft
+tlA
 fft
 rgF
 fft
 wdh
 fft
-fft
+tlA
 fft
 fft
 xfH
@@ -83684,7 +84634,7 @@ uqH
 uqH
 uqH
 uqH
-uqH
+oKI
 uqH
 iPs
 uqH
@@ -83726,7 +84676,7 @@ lYu
 rBQ
 ssT
 tSV
-nwm
+mVm
 wss
 gpP
 gpP
@@ -83977,8 +84927,8 @@ hGE
 hGE
 nJb
 eGH
-eGH
-eGH
+hrx
+lxZ
 vHG
 uWO
 uWO
@@ -84039,7 +84989,7 @@ bgW
 mpk
 mpk
 jUW
-mpk
+bYD
 mpk
 oAJ
 eEe
@@ -84583,7 +85533,7 @@ pXJ
 sIe
 eGH
 eZs
-fro
+iZh
 uWO
 umW
 fNR
@@ -84604,7 +85554,7 @@ njx
 njx
 wdL
 njx
-bGm
+hiz
 bGm
 ldz
 ctZ
@@ -84617,9 +85567,9 @@ gWb
 efV
 sWq
 myq
-rwJ
+myq
 iHi
-pLj
+myq
 nVD
 wUg
 xhM
@@ -84884,7 +85834,7 @@ sIe
 pXJ
 sIe
 eGH
-mLF
+eGH
 fSs
 uWO
 ewu
@@ -84928,7 +85878,7 @@ xhM
 txM
 mOb
 mOb
-pbB
+ftv
 pbB
 pbB
 pbB
@@ -85185,9 +86135,9 @@ sIe
 sIe
 pXJ
 sIe
-eGH
+sIe
 hrx
-iZh
+oVU
 uWO
 aou
 jAn
@@ -85206,7 +86156,7 @@ ocK
 xqp
 xqp
 hSp
-njx
+vmd
 njx
 fPz
 bGm
@@ -85487,9 +86437,9 @@ sIe
 sIe
 pXJ
 sIe
+sIe
 eGH
 tMn
-hPF
 uWO
 rvr
 isq
@@ -85537,7 +86487,7 @@ tSV
 tSV
 rLU
 iuI
-tSV
+lOC
 nwm
 nwm
 reb
@@ -85790,7 +86740,7 @@ sIe
 pXJ
 sIe
 rgP
-xli
+wTH
 rOM
 uWO
 uWO
@@ -85809,22 +86759,22 @@ lka
 ptf
 hSp
 mOe
-hSp
-yjv
+paY
+njx
 njx
 glj
 bGm
 tJX
 oPK
 oPK
-oPK
+fuK
 oPK
 oPK
 oPK
 jSr
 oPK
 ttz
-oPK
+fuK
 uLT
 uLT
 uLT
@@ -85851,7 +86801,7 @@ qRg
 mpk
 mTX
 jUW
-mpk
+bYD
 mpk
 wEv
 eEe
@@ -86092,7 +87042,7 @@ sIe
 pXJ
 sIe
 rgP
-xli
+wTH
 rOM
 sIe
 uWO
@@ -86128,7 +87078,7 @@ dpi
 bGm
 bGm
 bGm
-bGm
+hiz
 bGm
 hCx
 bmC
@@ -86374,8 +87324,8 @@ iMV
 avq
 iMV
 avq
-avq
-avq
+tFH
+xrA
 fIP
 bmy
 xhm
@@ -88781,7 +89731,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+gkr
 ecL
 vsl
 bqu
@@ -88888,7 +89838,7 @@ epH
 vsl
 bqu
 ecL
-sIe
+gkr
 sIe
 sIe
 sIe
@@ -89083,7 +90033,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+gkr
 ecL
 vsl
 bqu
@@ -89190,7 +90140,7 @@ epH
 vsl
 bqu
 ecL
-sIe
+gkr
 sIe
 sIe
 sIe
@@ -89385,7 +90335,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+gkr
 nio
 vsl
 wWO
@@ -89466,12 +90416,12 @@ sIe
 sIe
 sIe
 oPV
-xXI
+end
 vGg
 sIe
 sIe
 oPV
-xXI
+end
 vGg
 sIe
 sIe
@@ -89492,7 +90442,7 @@ gkr
 vsl
 wWO
 ecL
-sIe
+gkr
 sIe
 sIe
 sIe
@@ -89687,7 +90637,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+gkr
 ecL
 vsl
 xHE
@@ -89767,14 +90717,14 @@ sIe
 sIe
 sIe
 sIe
+ygt
+end
+vdc
 sIe
-xXI
 sIe
-sIe
-sIe
-sIe
-xXI
-sIe
+lcL
+end
+dqA
 sIe
 sIe
 sIe
@@ -89794,7 +90744,7 @@ thP
 qqE
 pXf
 ecL
-sIe
+gkr
 sIe
 sIe
 sIe
@@ -89989,7 +90939,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+gkr
 ecL
 qPH
 nlh
@@ -90069,14 +91019,14 @@ sIe
 sIe
 sIe
 sIe
-sIe
+ygt
 dfT
+vdc
 sIe
 sIe
-sIe
-sIe
+lcL
 dfT
-sIe
+dqA
 sIe
 sIe
 sIe
@@ -90096,7 +91046,7 @@ gNG
 gNG
 hXT
 ecL
-sIe
+gkr
 sIe
 sIe
 sIe
@@ -90291,7 +91241,7 @@ sIe
 sIe
 sIe
 sIe
-sIe
+gkr
 ecL
 ecL
 ecL
@@ -90333,7 +91283,7 @@ avq
 avq
 avq
 avq
-vMF
+qkp
 avq
 avq
 avq
@@ -90398,7 +91348,7 @@ ecL
 ecL
 ecL
 ecL
-sIe
+gkr
 sIe
 sIe
 sIe
@@ -90593,13 +91543,13 @@ sIe
 sIe
 sIe
 sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
+gkr
+gkr
+gkr
+gkr
+gkr
+gkr
+gkr
 sIe
 sIe
 sIe
@@ -90648,16 +91598,16 @@ sIe
 sIe
 sIe
 sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
+pkj
+pkj
+pkj
+pkj
+pkj
+pkj
+pkj
+pkj
+pkj
+pkj
 sIe
 sIe
 sIe
@@ -90694,13 +91644,13 @@ sIe
 sIe
 sIe
 sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
-sIe
+gkr
+gkr
+gkr
+gkr
+gkr
+gkr
+gkr
 sIe
 sIe
 sIe
@@ -91530,11 +92480,11 @@ sIe
 sIe
 sIe
 sIe
-cyV
+qsV
 kSs
 kSs
 kSs
-cyV
+qsV
 sIe
 sIe
 sIe
