@@ -160,20 +160,20 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /obj/item/card/id/morrigan/balor_it
 	name = "Technical Operative Banks spare ID (do not use)"
-	icon_state = "id_syndie"
+	icon_state = "id_synexe"
 	registered = "Operative Banks"
 	assignment = "Technical Operative"
 	access = list(access_maint_tunnels, access_syndicate_it)
 
-/obj/item/card/id/morrigan/botany
-	name = "Moldy Botanist ID"
-	icon_state = "id_civ"
-	desc = "Ew..."
-	access = list(access_morrigan_botany)
+/obj/item/card/id/morrigan/specialist
+	name = "Sarah Lin (R&D Specialist)"
+	icon_state = "id_spe"
+	desc = "I wonder where this leads you.."
+	access = list(access_morrigan_specialist)
 
 /obj/item/card/id/morrigan/inspector
 	name = "Old Inspector's Card"
-	icon_state = "data"
+	icon_state = "data_old"
 	desc = "Looks like and old proto-type ID card!"
 	access = list(access_morrigan_teleporter)
 
@@ -185,7 +185,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /obj/item/card/id/morrigan/ce
 	name = "Misplaced CE Card"
-	icon_state = "id_com"
+	icon_state = "id_comde"
 	desc = "Name and picture are scratched off. It's in pretty poor shape."
 	access = list(access_morrigan_CE, access_morrigan_engineering)
 
@@ -209,7 +209,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /obj/item/card/id/morrigan/rd
 	name = "Partially melted Research Director ID"
-	icon_state = "id_pink"
+	icon_state = "id_comac"
 	desc = "This card looks badly damaged, does it still work?"
 	access = list(access_morrigan_science, access_morrigan_RD)
 
@@ -227,7 +227,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /obj/item/card/id/morrigan/hos
 	name = "Alexander Nash (Elite Head of Security)"
-	icon_state = "id_syndie"
+	icon_state = "id_synexe"
 	desc = "Jackpot!"
 	access = list(access_morrigan_bridge, access_morrigan_security, access_morrigan_HOS)
 
@@ -239,7 +239,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /obj/item/card/id/morrigan/captain
 	name = "Captain's Spare ID"
-	icon_state = "id_syndie"
+	icon_state = "id_scap"
 	desc = "The Captains spare ID! This should access most doors..."
 
 	New()
@@ -247,9 +247,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		access = morrigan_access() - list(access_morrigan_exit)
 
 /obj/item/card/id/morrigan/all_access
-	name = "Spare HQ Card"
-	icon_state = "id_syndie"
-	desc = "Someone must've been in a rush and left this behind... could this be your key out?"
+	name = "Number 3 (Hafgan Executive)"
+	icon_state = "id_haf"
+	desc = "Someone must've been in a rush and left this behind... it's heavily decorated and seems extremely important. Could this be your key out ?"
 
 	New()
 		..()
@@ -258,7 +258,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /proc/morrigan_access()
 	return list(access_morrigan_bridge, access_morrigan_medical, access_morrigan_CE, access_morrigan_captain, access_morrigan_RD, access_morrigan_engineering,
 	access_morrigan_factory, access_morrigan_HOS, access_morrigan_meetingroom, access_morrigan_customs, access_morrigan_exit, access_morrigan_science,
-	access_morrigan_mdir, access_morrigan_security, access_morrigan_janitor)
+	access_morrigan_mdir, access_morrigan_security, access_morrigan_janito, access_morrigan_specialist)
 
 //fake objects
 
@@ -630,8 +630,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 // Engineering areas
 
 /area/morrigan/station/engineering
+
+/area/morrigan/station/engineering/eng
 	name = "Morrigan Engineering"
 	icon_state = "engineering"
+
+/area/morrigan/station/engineering/specialist
+	name = "Morrigan R&D"
+
+/area/morrigan/station/engineering/exports
+	name = "Morrigan Exports"
 
 // Civilian areas
 
@@ -648,11 +656,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /area/morrigan/station/civilian/cafe
 	name = "Morrigan Mess Hall"
 	icon_state = "cafeteria"
-
-/area/morrigan/station/civilian/botany
-	name = "Morrigan Botany"
-	icon_state = "hydro"
-
 /area/morrigan/station/civilian/chapel
 	name = "Morrigan Chapel"
 	icon_state = "chapel"
@@ -1114,9 +1117,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /obj/storage/secure/closet/morrigan
 	_max_health = LOCKER_HEALTH_STRONG
 	_health = LOCKER_HEALTH_STRONG
-	icon_state = "command"
-	icon_closed = "command"
-	icon_opened = "secure_blue-open"
+	icon_state = "scommand"
+	icon_closed = "scommand"
+	icon_opened = "secure_red-open"
 	bolted = TRUE
 
 /obj/storage/secure/closet/morrigan/hos

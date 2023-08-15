@@ -386,8 +386,8 @@
 	req_access = list(access_morrigan_science)
 	color = RESEARCH
 
-/obj/mapping_helper/access/morrigan/botany
-	req_access = list(access_morrigan_botany)
+/obj/mapping_helper/access/morrigan/specialist
+	req_access = list(access_morrigan_specialist)
 	color = MORGUE_BLACK
 
 /obj/mapping_helper/access/morrigan/janitor

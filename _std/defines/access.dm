@@ -121,7 +121,7 @@
 #define access_morrigan_teleporter 90
 #define access_morrigan_security 91
 #define access_morrigan_bridge 92
-#define access_morrigan_botany 93
+#define access_morrigan_specialist 93
 #define access_morrigan_medical 94
 #define access_morrigan_engineering 95
 #define access_morrigan_janitor 96
