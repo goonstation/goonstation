@@ -1198,15 +1198,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon_opened = "secure_white-open"
 	spawn_contents = list()
 
-/obj/storage/secure/closet/morrigan/botany
-	name = "Botanist Locker"
-	reinforced = TRUE
-	req_access = list(access_morrigan_botany, access_morrigan_captain, access_morrigan_exit)
-	icon_state = "secure_green"
-	icon_closed = "secure_green"
-	icon_opened = "secure_green-open"
-	spawn_contents = list()
-
 /obj/storage/secure/closet/morrigan/medical
 	name = "Engineering Locker"
 	reinforced = TRUE
