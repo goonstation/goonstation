@@ -325,16 +325,14 @@
 	// log account information for QM sales
 	var/obj/item/card/id/scan = null
 	var/datum/db_record/account = null
+	var/list/destinations = null
 
 
-	var/list/destinations = list("Airbridge", "Cafeteria", "EVA", "Engine", "Disposals", "QM", "Catering", "MedSci", "Security") //These have to match the ones on the cargo routers for the routers to work.
+
 
 	connection_scan()
 		..()
-		if (ismap("COGMAP2"))
-			destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","Trader","QM")
-		if (ismap("KONDARU"))
-			destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM")
+		destinations = global.map_settings.shipping_destinations
 
 
 
