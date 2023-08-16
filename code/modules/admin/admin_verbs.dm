@@ -886,7 +886,7 @@ var/list/special_pa_observing_verbs = list(
 		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 		return
 	if(!M.client.warned)
-		M.Browse(rules, "window=rules;size=480x320")
+		M << link("http://wiki.ss13.co/Rules")
 		boutput(M, "<span class='alert'><B>You have been warned by an administrator. This is the only warning you will receive.</B></span>")
 		M.client.warned = 1
 		message_admins("<span class='internal'>[src.ckey] warned [M.ckey].</span>")
