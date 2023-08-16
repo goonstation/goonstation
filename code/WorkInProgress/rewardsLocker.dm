@@ -1134,6 +1134,8 @@
 		else
 			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
 
+////////AI CORE FRAMES///////
+
 datum/achievementReward/ai_dwaine
 	title = "(AI Core Skin) DWAINE"
 	desc = "Replaces the casing of your core with an older model!"
@@ -1146,6 +1148,176 @@ datum/achievementReward/ai_dwaine
 				var/mob/living/intangible/aieye/AE = activator
 				A = AE.mainframe
 			A.coreSkin = "dwaine"
+			A.update_appearance()
+			return 1
+		else
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+
+datum/achievementReward/ai_industrial
+	title = "(AI Core Skin) Industrial"
+	desc = "Reenforces your AI core with a shiny reenforced alloy straight from mining-- purely superficially, of course."
+	required_medal = "This object menaces with spikes of..."
+
+	rewardActivate(mob/activator)
+		if (isAI(activator))
+			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/living/intangible/aieye/AE = activator
+				A = AE.mainframe
+			A.coreSkin = "industrial"
+			A.update_appearance()
+			return 1
+		else
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+
+datum/achievementReward/ai_salvage
+	title = "(AI Core Skin) Salvaged"
+	desc = "Superficially smashes up your AI core a bit - for that really RUGGED aethetic."
+	required_medal = "40k" //placeholder until salvagers get a greentext medal - ideally also have the core frame in the magpie use this skin
+
+	rewardActivate(mob/activator)
+		if (isAI(activator))
+			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/living/intangible/aieye/AE = activator
+				A = AE.mainframe
+			A.coreSkin = "salvage"
+			A.update_appearance()
+			return 1
+		else
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+
+datum/achievementReward/ai_crt
+	title = "(AI Core Skin) CRT Television"
+	desc = "Replaces the casing of your core with a CRT television."
+	required_medal = "I Spy"
+
+	rewardActivate(mob/activator)
+		if (isAI(activator))
+			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/living/intangible/aieye/AE = activator
+				A = AE.mainframe
+			A.coreSkin = "crt"
+			A.update_appearance()
+			return 1
+		else
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+
+/datum/achievementReward/ai_ailes
+	title = "(AI Core Skin) Bulky"
+	desc = "Replaces your core with a bulky older model."
+	required_medal = "I'm In"
+
+	rewardActivate(mob/activator)
+		if (isAI(activator))
+			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/living/intangible/aieye/AE = activator
+				A = AE.mainframe
+			A.coreSkin = "ailes"
+			A.update_appearance()
+			return 1
+		else
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+
+/*/datum/achievementReward/ai_kingsway
+	title = "(AI Core Skin) Kingsway"
+	desc = "Replaces your AI core with a fancy new model."
+	required_medal = PLEEEASE someone make a kingsway associated medal something for playing all three obtainable brad tapes in the same round or something
+
+	rewardActivate(mob/activator)
+		if (isAI(activator))
+			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/living/intangible/aieye/AE = activator
+				A = AE.mainframe
+			A.coreSkin = "kingsway"
+			A.update_appearance()
+			return 1
+		else
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")*/
+
+/*/datum/achievementReward/ai_soviet
+	title = "(AI Core Skin) Soviet"
+	desc = "Replaces your AI core with a model originating from the Eastern Bloc."
+	required_medal = "My Bologna Has A First Name"
+
+	rewardActivate(mob/activator)
+		if (isAI(activator))
+			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/living/intangible/aieye/AE = activator
+				A = AE.mainframe
+			A.coreSkin = "soviet"
+			A.update_appearance()
+			return 1
+		else
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")*/
+
+/*/datum/achievementReward/ai_flock
+	title = "(AI Core Skin) Flock"
+	desc = "Attunes your AI core to the signal."
+	required_medal = "To the stars"
+
+	rewardActivate(mob/activator)
+		if (isAI(activator))
+			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/living/intangible/aieye/AE = activator
+				A = AE.mainframe
+			A.coreSkin = "flock"
+			A.update_appearance()
+			return 1
+		else
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")*/
+
+/datum/achievementReward/ai_bee
+	title = "(AI Core Skin) Bee"
+	desc = "Buzz Buzz!"
+	required_medal = "Bombini is Missing!"
+
+	rewardActivate(mob/activator)
+		if (isAI(activator))
+			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/living/intangible/aieye/AE = activator
+				A = AE.mainframe
+			A.coreSkin = "bee"
+			A.update_appearance()
+			return 1
+		else
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+
+/datum/achievementReward/ai_shock
+	title = "(AI Core Skin) Shock"
+	desc = "Fancies your AI core up to look very neon."
+	required_medal = "Virtual Ascension"
+
+	rewardActivate(mob/activator)
+		if (isAI(activator))
+			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/living/intangible/aieye/AE = activator
+				A = AE.mainframe
+			A.coreSkin = "shock"
+			A.update_appearance()
+			return 1
+		else
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+
+/datum/achievementReward/ai_gold
+	title = "(AI Core Skin) Golden"
+	desc = "Gold plates your AI core!"
+	required_medal = "Helios"
+
+	rewardActivate(mob/activator)
+		if (isAI(activator))
+			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/living/intangible/aieye/AE = activator
+				A = AE.mainframe
+			A.coreSkin = "gold"
 			A.update_appearance()
 			return 1
 		else
