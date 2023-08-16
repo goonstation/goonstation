@@ -1731,6 +1731,9 @@
 		if (!module_states[1] && !module_states[2] && !module_states[3])
 			module_active = null
 			return
+		var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
+		if(B)
+			qdel(B)
 		var/active = src.module_states.Find(src.module_active)
 		if (!switchto)
 			switchto = (active % 3) + 1
