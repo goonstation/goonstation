@@ -2103,8 +2103,8 @@
 		result = "graphene"
 		required_reagents = list("fuel" = 2, "iron" = 0.5, "silicon_dioxide" = 0.5)
 		min_temperature = T0C + 150
-		result_amount = 2
-		reaction_speed = 2
+		result_amount = 1
+		reaction_speed = 1
 		instant = 0
 		mix_phrase = "A small particulate forms into a tiny lattice."
 		on_reaction(var/datum/reagents/holder, var/created_volume)
@@ -3501,10 +3501,10 @@
 		name = "contaminated food E.Coli"
 		id = "contaminated food E.Coli"
 		result = "e.coli"
-		required_reagents = list("sewage" = 5, "cholesterol" = 1)
+		required_reagents = list("sewage" = 5, "cholesterol" = 4)
 		result_amount = 1
 		instant = 0 // bacteria needs some time to grow in this medium
-		reaction_speed = 1
+		reaction_speed = 0.25
 		mix_phrase = "An unbearable stench emancipates from the mixture as it slowly coagulates."
 		mix_sound = 'sound/misc/fuse.ogg'
 
