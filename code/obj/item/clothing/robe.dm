@@ -20,9 +20,9 @@
 /obj/item/clothing/suit/greenrobe
 	name = "green robe"
 	desc = "" //todo
-	icon = 'icons/obj/items/ChaplainStuff.dmi'
-	inhand_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
-	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
+	inhand_image_icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
 	icon_state = "GreenRobesObj"
 	item_state = ""
 	wear_state = "GreenRobes"
@@ -38,34 +38,34 @@
 /obj/item/clothing/mask/greenmask
 	name = "green mask"
 	desc = "" //todo
-	icon = 'icons/obj/items/ChaplainStuff.dmi'
-	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/chaplain/ChaplainHats.dmi'
 	icon_state = "GreenMaskObj"
-	wear_state = ""
+	wear_state = "GreenMask"
 	see_face = FALSE
 
 /obj/item/clothing/under/weirdo
 	name = "weird jumpsuit"
 	desc = "" //todo
-	icon = 'icons/obj/items/ChaplainStuff.dmi'
-	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
 	icon_state = "WeirdoJumpsuitObj"
 	wear_state = "WeirdoJumpsuit"
 
 /obj/item/clothing/mask/weirdomask
 	name = "weird mask"
 	desc = "" //todo
-	icon = 'icons/obj/items/ChaplainStuff.dmi'
-	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/chaplain/ChaplainHats.dmi'
 	icon_state = "WeirdoMaskObj"
-	wear_state = ""
+	wear_state = "WeirdoMask"
 	see_face = FALSE
 
 /obj/item/clothing/suit/burntrobe
 	name = "burnt robe"
 	desc = "" //todo
-	icon = 'icons/obj/items/ChaplainStuff.dmi'
-	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
 	icon_state = "BurnedRobesObj"
 	wear_state = "BurnedRobes"
 	over_hair = TRUE
@@ -80,17 +80,17 @@
 /obj/item/clothing/mask/burntmask
 	name = "burnt mask"
 	desc = "" //todo
-	icon = 'icons/obj/items/ChaplainStuff.dmi'
-	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/chaplain/ChaplainHats.dmi'
 	icon_state = "BurnedMaskObj"
-	wear_state = ""
+	wear_state = "BurnedMask"
 	see_face = FALSE
 
 /obj/item/clothing/suit/lightrobe
 	name = "light robe"
 	desc = "" //todo
-	icon = 'icons/obj/items/ChaplainStuff.dmi'
-	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
 	icon_state = "LightRobesObj"
 	wear_state = "LightRobes"
 	over_hair = TRUE
@@ -105,16 +105,16 @@
 /obj/item/clothing/head/light
 	name = "light hat"
 	desc = "" //todo
-	icon = 'icons/obj/items/ChaplainStuff.dmi'
-	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/chaplain/ChaplainHats.dmi'
 	icon_state = "LightHatObj"
-	wear_state = ""
+	wear_state = "LightHat"
 
 /obj/item/clothing/suit/naturerobe
 	name = "nature robe"
 	desc = "" //todo
-	icon = 'icons/obj/items/ChaplainStuff.dmi'
-	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
 	icon_state = "NatureRobesObj"
 	wear_state = "NatureRobes"
 	over_hair = TRUE
@@ -129,10 +129,10 @@
 /obj/item/clothing/head/nature
 	name = "nature hat"
 	desc = "" //todo
-	icon = 'icons/obj/items/ChaplainStuff.dmi'
-	wear_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
+	wear_image_icon = 'icons/obj/items/chaplain/ChaplainHats.dmi'
 	icon_state = "NatureHatObj"
-	wear_state = ""
+	wear_state = "NatureHat"
 
 /obj/item/clothing/suit/cultist
 	name = "cultist robe"

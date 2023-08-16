@@ -3,10 +3,10 @@
 /obj/item/bible
 	name = "Holy Texts"
 	desc = "A holy scripture of some kind."
-	icon = 'icons/obj/items/ChaplainStuff.dmi'
+	icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
 	icon_state ="bible"
-	inhand_image_icon = 'icons/obj/items/ChaplainStuff.dmi'
-	item_state ="book"
+	inhand_image_icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
+	item_state = "book"
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
