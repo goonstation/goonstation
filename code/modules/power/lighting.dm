@@ -377,10 +377,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			START_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
 
 	disposing()
-		..()
 		STOP_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
 		STOP_TRACKING_CAT(TR_CAT_MORRIGAN_EMERGENCY_LIGHTS)
-	
+		..()
+
 	exitsign
 		name = "illuminated exit sign"
 		desc = "This sign points the way to the escape shuttle."
@@ -628,9 +628,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		autoposition()
 
 	disposing()
-		. = ..()
 		STOP_TRACKING_CAT(TR_CAT_MORRIGAN_LIGHTS)
-	
+		..()
+
 	name = "incandescent light fixture"
 	light_type = /obj/item/light/tube/neutral
 
