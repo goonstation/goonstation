@@ -376,7 +376,7 @@ proc/filter_trait_hats(var/type)
 					var/boop = "hand"
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if (H.equip_if_possible(W, H.slot_wear_mask))
+						if (H.equip_if_possible(W, SLOT_WEAR_MASK))
 							boop = "mouth"
 						else
 							H.put_in_hand_or_drop(W) //Put it in their hand

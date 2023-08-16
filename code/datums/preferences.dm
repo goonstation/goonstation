@@ -1080,7 +1080,7 @@ datum/preferences
 			qdel(ourWig)
 
 		if (traitPreferences.traits_selected.Find("bald") && mutantRace)
-			H.equip_if_possible(H.create_wig(), H.slot_head)
+			H.equip_if_possible(H.create_wig(), SLOT_HEAD)
 
 	proc/ShowChoices(mob/user)
 		src.ui_interact(user)

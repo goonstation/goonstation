@@ -385,7 +385,6 @@ var/global
 	list/datum/powernet/powernets = null
 
 	join_motd = null
-	rules = null
 	forceblob = 0
 
 	halloween_mode = 0
