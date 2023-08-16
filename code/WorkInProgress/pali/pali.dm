@@ -615,3 +615,25 @@ ADMIN_INTERACT_PROCS(/obj/portal/to_space, proc/give_counter)
 		if(prob(100 * (1 - 1 / src.fastness_factor)))
 			SPAWN(0.2 SECONDS)
 				src.ai_process()
+
+
+/obj/item/kitchen/utensil/knife/tracker
+	name = "target tracker knife"
+	icon_state = "knife_onedir"
+	desc = "Poor man's pinpointer. Just stab someone to track where they are!"
+	force = 4
+	throwforce = 6
+
+	attack(mob/living/carbon/M, mob/living/carbon/user)
+		. = ..()
+		src.AddComponent(/datum/component/angle_watcher, M, base_transform=matrix())
+
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		. = ..()
+		if(ismob(hit_atom))
+			src.AddComponent(/datum/component/angle_watcher, hit_atom, base_transform=matrix())
+
+	clean_forensic()
+		. = ..()
+		src.GetComponent(/datum/component/angle_watcher)?.RemoveComponent()
+		animate(src, transform=null, time=0.5 SECONDS, flags=ANIMATION_PARALLEL)
