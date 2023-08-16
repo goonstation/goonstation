@@ -260,7 +260,7 @@
 		hud.update_pulling()
 
 	death(gibbed)
-		setdead(src)
+		src.stat = 2
 		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		src.mind?.register_death()
@@ -804,7 +804,9 @@
 
 		if (src.shell && src.mainframe)
 			src.real_name = "SHELL/[src.mainframe]"
+			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 			src.UpdateName()
+			src.update_name_tag()
 
 		update_clothing()
 		update_appearance()
