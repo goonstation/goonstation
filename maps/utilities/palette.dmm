@@ -330,9 +330,7 @@
 	dir = 5;
 	icon_state = "line2"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_horse"
-	},
+/mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor/black,
 /area/space)
 "bk" = (
@@ -873,9 +871,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
-	},
+/mob/living/carbon/human/npc/monkey/tanhony,
 /turf/simulated/floor/black,
 /area/space)
 "dB" = (
@@ -1140,9 +1136,7 @@
 	},
 /area/space)
 "eO" = (
-/obj/landmark/start{
-	name = "Geneticist"
-	},
+/obj/landmark/start/job/geneticist,
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line2"
 	},
@@ -1245,9 +1239,7 @@
 /turf/simulated/floor,
 /area/space)
 "fs" = (
-/obj/landmark/start{
-	name = "Engineer"
-	},
+/obj/landmark/start/job/engineer,
 /obj/decal/tile_edge/line/orange{
 	dir = 4;
 	icon_state = "line1"
@@ -1750,9 +1742,7 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "hn" = (
-/obj/landmark/start{
-	name = "Janitor"
-	},
+/obj/landmark/start/job/janitor,
 /obj/decal/tile_edge/line/white{
 	dir = 4;
 	icon_state = "line1"
@@ -2269,9 +2259,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
-	},
+/mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor/black,
 /area/space)
 "jq" = (
@@ -2986,9 +2974,7 @@
 	},
 /area/space)
 "lR" = (
-/obj/landmark/start{
-	name = "Miner"
-	},
+/obj/landmark/start/job/miner,
 /obj/decal/tile_edge/line/orange{
 	icon_state = "line2"
 	},
@@ -3009,9 +2995,7 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "mb" = (
-/obj/landmark/start{
-	name = "Quartermaster"
-	},
+/obj/landmark/start/job/quartermaster,
 /obj/decal/tile_edge/line/orange{
 	dir = 4;
 	icon_state = "line1"
@@ -3345,32 +3329,11 @@
 /turf/simulated/floor,
 /area/space)
 "nm" = (
-/obj/landmark/start{
-	name = "Captain"
-	},
-/obj/decal/tile_edge/line/purple{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/white{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/orange{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/grey{
-	dir = 5;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
-	},
 /obj/decal/tile_edge/line/red{
-	dir = 10;
-	icon_state = "line1"
+	dir = 1;
+	icon_state = "line2"
 	},
+/obj/landmark/start/job/head_of_security,
 /turf/simulated/floor/black,
 /area/space)
 "nn" = (
@@ -3412,6 +3375,33 @@
 /area/space)
 "nt" = (
 /turf/simulated/floor/carpet/blue/standard/innercorner/nw,
+/area/space)
+"nu" = (
+/obj/landmark/start/job/captain,
+/obj/decal/tile_edge/line/purple{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 5;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/white{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/orange{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/blue{
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 10;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
 /area/space)
 "nv" = (
 /turf/simulated/floor/carpet/green/standard/innercorner/se,
@@ -4083,9 +4073,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_krimpus"
-	},
+/mob/living/carbon/human/npc/monkey/krimpus,
 /turf/simulated/floor/black,
 /area/space)
 "qe" = (
@@ -4285,9 +4273,7 @@
 	},
 /area/space)
 "qZ" = (
-/obj/landmark/start{
-	name = "AI"
-	},
+/obj/landmark/start/job/AI,
 /obj/decal/tile_edge/line/grey{
 	dir = 1;
 	icon_state = "line2"
@@ -4301,9 +4287,7 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "rb" = (
-/obj/landmark/start{
-	name = "Medical Director"
-	},
+/obj/landmark/start/job/medical_director,
 /obj/decal/tile_edge/line/blue{
 	dir = 1;
 	icon_state = "line2"
@@ -4319,9 +4303,7 @@
 	},
 /area/space)
 "re" = (
-/obj/landmark/start{
-	name = "Clown"
-	},
+/obj/landmark/start/job/clown,
 /obj/decal/tile_edge/line/white{
 	dir = 4;
 	icon_state = "line1"
@@ -4383,13 +4365,15 @@
 	},
 /area/space)
 "rv" = (
-/obj/landmark/start{
-	name = "Head of Security"
+/obj/decal/tile_edge/line/red{
+	dir = 4;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/red{
-	dir = 1;
-	icon_state = "line2"
+	dir = 8;
+	icon_state = "line1"
 	},
+/obj/landmark/start/job/security_assistant,
 /turf/simulated/floor/black,
 /area/space)
 "rw" = (
@@ -4648,9 +4632,7 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "sm" = (
-/obj/landmark/start{
-	name = "Chef"
-	},
+/obj/landmark/start/job/chef,
 /obj/decal/tile_edge/line/white{
 	dir = 5;
 	icon_state = "line2"
@@ -4682,9 +4664,7 @@
 /turf/simulated/floor/plating/random,
 /area/space)
 "sq" = (
-/obj/landmark/start{
-	name = "Security Officer"
-	},
+/obj/landmark/start/job/security_officer,
 /obj/decal/tile_edge/line/red{
 	dir = 4;
 	icon_state = "line1"
@@ -5311,9 +5291,7 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "uU" = (
-/obj/landmark/start{
-	name = "Barman"
-	},
+/obj/landmark/start/job/bartender,
 /obj/decal/tile_edge/line/white{
 	dir = 8;
 	icon_state = "line1"
@@ -6027,9 +6005,7 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "xY" = (
-/obj/landmark/start{
-	name = "Cyborg"
-	},
+/obj/landmark/start/job/cyborg,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line2"
 	},
@@ -6805,9 +6781,7 @@
 /turf/simulated/floor/carpet/red,
 /area/space)
 "AU" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
 	icon_state = "line1"
@@ -7957,9 +7931,7 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "FV" = (
-/obj/landmark/start{
-	name = "Detective"
-	},
+/obj/landmark/start/job/detective,
 /obj/decal/tile_edge/line/red{
 	icon_state = "line2"
 	},
@@ -8575,9 +8547,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor/black,
 /area/space)
 "Ix" = (
@@ -8724,9 +8694,6 @@
 	},
 /area/space)
 "Ji" = (
-/obj/landmark{
-	name = "AI-Sat"
-	},
 /obj/decal/tile_edge/line/grey{
 	dir = 4;
 	icon_state = "line1"
@@ -9507,9 +9474,7 @@
 	},
 /area/space)
 "Me" = (
-/obj/landmark/start{
-	name = "Botanist"
-	},
+/obj/landmark/start/job/botanist,
 /obj/decal/tile_edge/line/white{
 	dir = 8;
 	icon_state = "line1"
@@ -9592,9 +9557,7 @@
 /turf/simulated/floor,
 /area/space)
 "Mx" = (
-/obj/landmark{
-	name = "blobstart"
-	},
+/obj/landmark/antagonist/blob,
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line2"
 	},
@@ -9721,9 +9684,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "MX" = (
-/obj/landmark/start{
-	name = "Chief Engineer"
-	},
+/obj/landmark/start/job/chief_engineer,
 /obj/decal/tile_edge/line/orange{
 	dir = 1;
 	icon_state = "line2"
@@ -10094,9 +10055,7 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "Oz" = (
-/obj/landmark/start{
-	name = "Scientist"
-	},
+/obj/landmark/start/job/scientist,
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line2"
 	},
@@ -10434,9 +10393,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "PT" = (
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/decal/tile_edge/line/white{
 	dir = 6;
 	icon_state = "line2"
@@ -10549,9 +10506,7 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/black,
 /area/space)
 "Qk" = (
@@ -10863,9 +10818,7 @@
 	},
 /area/space)
 "Rc" = (
-/obj/landmark/start{
-	name = "Chaplain"
-	},
+/obj/landmark/start/job/chaplain,
 /obj/decal/tile_edge/line/white{
 	dir = 10;
 	icon_state = "line2"
@@ -11104,9 +11057,7 @@
 /turf/simulated/floor,
 /area/space)
 "RL" = (
-/obj/landmark/start{
-	name = "Head of Personnel"
-	},
+/obj/landmark/start/job/head_of_personnel,
 /obj/decal/tile_edge/line/white{
 	dir = 1;
 	icon_state = "line2"
@@ -11208,9 +11159,7 @@
 /turf/simulated/floor/carpet/purple/standard/edge/north,
 /area/space)
 "Sk" = (
-/obj/landmark{
-	name = "bubsbeejob"
-	},
+/obj/landmark/bubs_job,
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
 	icon_state = "line1"
@@ -11327,9 +11276,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
+/mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor/black,
 /area/space)
 "SN" = (
@@ -11679,9 +11626,7 @@
 	},
 /area/space)
 "Ug" = (
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
+/obj/landmark/start/job/medical_doctor,
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
 	icon_state = "line1"
@@ -11820,9 +11765,7 @@
 /turf/simulated/floor/carpet/green/standard/edge/ne,
 /area/space)
 "UO" = (
-/obj/landmark/start{
-	name = "Roboticist"
-	},
+/obj/landmark/start/job/roboticist,
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
 	icon_state = "line1"
@@ -12088,9 +12031,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
-	},
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor/black,
 /area/space)
 "VM" = (
@@ -12466,9 +12407,7 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "WX" = (
-/obj/landmark/start{
-	name = "Research Director"
-	},
+/obj/landmark/start/job/research_director,
 /obj/decal/tile_edge/line/purple{
 	dir = 1;
 	icon_state = "line2"
@@ -12886,10 +12825,7 @@
 	},
 /area/space)
 "YU" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/decal/tile_edge/line/blue{
 	dir = 1;
 	icon_state = "line2"
@@ -13105,9 +13041,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
+/mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor/black,
 /area/space)
 "ZI" = (
@@ -15437,7 +15371,7 @@ fP
 tT
 zV
 QQ
-ut
+nu
 WX
 NG
 Oz
