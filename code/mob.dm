@@ -1498,8 +1498,7 @@
 
 /mob/verb/cmd_rules()
 	set name = "Rules"
-	// src.Browse(rules, "window=rules;size=480x320")
-	src << browse(rules, "window=rules;size=480x320")
+	src << link("http://wiki.ss13.co/Rules")
 
 /mob/verb/succumb()
 	set hidden = 1
