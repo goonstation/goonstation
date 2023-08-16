@@ -940,7 +940,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				light.disable()
 
 /obj/machinery/vending/proc/fall(mob/living/carbon/victim)
-	if (!can_fall)
+	if (!can_fall || fallen)
 		return
 	fallen = TRUE
 	status |= BROKEN
