@@ -732,6 +732,16 @@
 	icon_state = "engine_caution_east"
 	},
 /area/space)
+"acp" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 135;
+	id = "outpostla2"
+	},
+/turf/simulated/floor/engine/vacuum{
+	icon_state = "engine_caution_west"
+	},
+/area/space)
 "acq" = (
 /obj/machinery/launcher_loader/west{
 	id = "outpostla2"
@@ -744,6 +754,15 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
+/area/space)
+"acw" = (
+/obj/machinery/mass_driver{
+	drive_range = 43;
+	id = "outpostla3"
+	},
+/turf/simulated/floor/engine/vacuum{
+	icon_state = "engine_caution_south"
+	},
 /area/space)
 "acx" = (
 /obj/machinery/launcher_loader/north,
@@ -5334,6 +5353,27 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
+"awc" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 70;
+	id = "drone_launcher"
+	},
+/turf/simulated/floor/plating/random,
+/area/ghostdrone_factory)
+"awd" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 70;
+	id = "drone_launcher"
+	},
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "drone_launcher";
+	name = "Launcher Door"
+	},
+/turf/simulated/floor/plating/random,
+/area/ghostdrone_factory)
 "awe" = (
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
@@ -7030,6 +7070,16 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"aCe" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 26;
+	id = "outpost_mail_in"
+	},
+/turf/simulated/floor/engine/vacuum{
+	icon_state = "engine_caution_north"
+	},
+/area/space)
 "aCf" = (
 /obj/machinery/conveyor/NS{
 	id = "zeta_mail_out";
@@ -7733,6 +7783,16 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/office)
+"aEt" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 82;
+	id = "outpost_mail_out"
+	},
+/turf/simulated/floor/engine/vacuum{
+	icon_state = "engine_caution_west"
+	},
+/area/space)
 "aEu" = (
 /obj/machinery/launcher_loader/west{
 	id = "outpost_mail_out"
@@ -14494,26 +14554,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
-"bdk" = (
-/obj/table/auto,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/molten_item,
-/obj/item/peripheral/videocard{
-	pixel_x = -8;
-	pixel_y = 14
-	},
-/obj/item/storage/goodybag{
-	pixel_x = 10;
-	pixel_y = 5
-	},
-/obj/item/storage/pill_bottle/cyberpunk{
-	pixel_x = -7;
-	pixel_y = 3
-	},
-/obj/decal/cleanable/rust/jen,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/clown)
 "bdl" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -18219,16 +18259,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"btw" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	drive_range = 82;
-	id = "outpost_mail_out"
-	},
-/turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_west"
-	},
-/area/space)
 "btx" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
@@ -22502,6 +22532,13 @@
 /obj/towelbin,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/pool)
+"bVu" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
+/area/station/atmos/highcap_storage)
 "bVY" = (
 /obj/rack,
 /obj/item/storage/box/health_upgrade_kit{
@@ -23320,6 +23357,10 @@
 	icon_state = "fred1"
 	},
 /area/station/bridge)
+"cEK" = (
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
+/area/station/maintenance/north)
 "cFC" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -26758,6 +26799,14 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
+"fed" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 10;
+	id = "outpostla"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/artifact)
 "fef" = (
 /obj/vehicle/segway,
 /turf/simulated/floor/red/side{
@@ -27242,23 +27291,6 @@
 	dir = 4
 	},
 /area/station/hydroponics/bay)
-"fvV" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 9;
-	id = "outpostla"
-	},
-/obj/machinery/door/poddoor/pyro{
-	id = "outpostla"
-	},
-/obj/forcefield/energyshield/perma{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 2;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/science/artifact)
 "fvW" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -28200,11 +28232,6 @@
 	dir = 6
 	},
 /area/station/crew_quarters/stockex)
-"gkO" = (
-/obj/machinery/atmospherics/binary/valve,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/station/atmos/highcap_storage)
 "glV" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -28619,14 +28646,6 @@
 	dir = 5
 	},
 /area/station/medical/medbay/treatment)
-"gEA" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	drive_range = 70;
-	id = "drone_launcher"
-	},
-/turf/simulated/floor/plating/random,
-/area/ghostdrone_factory)
 "gEG" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 6
@@ -29789,6 +29808,15 @@
 /obj/disposalpipe/junction/left/west,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters)
+"hCg" = (
+/obj/stool/bee_bed/heisenbee,
+/obj/critter/domestic_bee/heisenbee,
+/obj/disposalpipe/segment/bent/east,
+/obj/item/reagent_containers/food/snacks/b_cupcake,
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/station/crew_quarters/hor)
 "hCH" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -29816,15 +29844,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/inner)
-"hDn" = (
-/obj/machinery/mass_driver{
-	drive_range = 43;
-	id = "outpostla3"
-	},
-/turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_south"
-	},
-/area/space)
 "hDJ" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -31705,6 +31724,17 @@
 /obj/item/clothing/head/bandana/random_color,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
+"jcD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	icon_state = "bulb1"
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
+/area/station/maintenance/north)
 "jeb" = (
 /obj/machinery/conveyor/NS{
 	id = "zetadisposals";
@@ -32112,6 +32142,13 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"jsk" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
+/area/station/maintenance/north)
 "jsy" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -32152,6 +32189,26 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"jvf" = (
+/obj/table/auto,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/molten_item,
+/obj/item/peripheral/videocard{
+	pixel_x = -8;
+	pixel_y = 14
+	},
+/obj/item/storage/goodybag{
+	pixel_x = 10;
+	pixel_y = 5
+	},
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/obj/decal/cleanable/rust/jen,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
 "jvw" = (
 /obj/machinery/status_display{
 	pixel_y = 30
@@ -34639,16 +34696,6 @@
 /obj/landmark/start/job/roboticist,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"lji" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 26;
-	id = "outpost_mail_in"
-	},
-/turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_north"
-	},
-/area/space)
 "ljp" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -35221,20 +35268,6 @@
 	dir = 4
 	},
 /area/station/janitor/supply)
-"lCF" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
-/obj/critter/domestic_bee/heisenbee,
-/obj/disposalpipe/segment/bent/east,
-/obj/item/reagent_containers/food/snacks/b_cupcake,
-/turf/simulated/floor/purple/side{
-	dir = 1
-	},
-/area/station/crew_quarters/hor)
 "lDi" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/pyro/glass,
@@ -37742,14 +37775,6 @@
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
 /area/space)
-"nwu" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 10;
-	id = "outpostla"
-	},
-/turf/simulated/floor/plating,
-/area/station/science/artifact)
 "nwM" = (
 /obj/item/space_thing,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -39435,10 +39460,6 @@
 /obj/decal/tile_edge/floorguide/arrow_w,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"oAd" = (
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor,
-/area/station/maintenance/north)
 "oAg" = (
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/supernorn,
@@ -39838,14 +39859,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/chapel/sanctuary)
-"oPs" = (
-/obj/machinery/light/small,
-/obj/machinery/atmospherics/portables_connector{
-	dir = 1
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/plating,
-/area/station/atmos/highcap_storage)
 "oPU" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -40868,6 +40881,11 @@
 	dir = 5
 	},
 /area/station/crew_quarters/stockex)
+"pEl" = (
+/obj/machinery/atmospherics/binary/valve,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/station/atmos/highcap_storage)
 "pEm" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/grime,
@@ -43527,6 +43545,23 @@
 	dir = 8
 	},
 /area/station/security/processing)
+"rEV" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 9;
+	id = "outpostla"
+	},
+/obj/machinery/door/poddoor/pyro{
+	id = "outpostla"
+	},
+/obj/forcefield/energyshield/perma{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 2;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/science/artifact)
 "rFu" = (
 /obj/cable/brown{
 	icon_state = "1-2"
@@ -43735,19 +43770,6 @@
 	dir = 5
 	},
 /area/station/crew_quarters/stockex)
-"rMU" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	drive_range = 70;
-	id = "drone_launcher"
-	},
-/obj/machinery/door/poddoor/pyro{
-	dir = 4;
-	id = "drone_launcher";
-	name = "Launcher Door"
-	},
-/turf/simulated/floor/plating/random,
-/area/ghostdrone_factory)
 "rNi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -48554,13 +48576,6 @@
 "vrb" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
-"vrd" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor,
-/area/station/maintenance/north)
 "vrj" = (
 /obj/item/raw_material/gold,
 /obj/item/raw_material/rock,
@@ -50758,13 +50773,6 @@
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
 /area/space)
-"xeV" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 1
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/plating,
-/area/station/atmos/highcap_storage)
 "xfc" = (
 /obj/disposalpipe/segment{
 	dir = 1
@@ -51050,6 +51058,14 @@
 	dir = 8
 	},
 /area/station/science/lobby)
+"xoH" = (
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
+/area/station/atmos/highcap_storage)
 "xoL" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -51811,17 +51827,6 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/hallway/primary/east)
-"xSM" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	icon_state = "bulb1"
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor,
-/area/station/maintenance/north)
 "xUj" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -52030,16 +52035,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
 /area/station/science/lobby)
-"ybE" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	drive_range = 135;
-	id = "outpostla2"
-	},
-/turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_west"
-	},
-/area/space)
 "ycM" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
@@ -58197,9 +58192,9 @@ aaa
 aaa
 aaa
 arJ
-gEA
+awc
 arJ
-gEA
+awc
 arJ
 aaa
 aaa
@@ -58499,9 +58494,9 @@ aaa
 aaa
 aaa
 arJ
-rMU
+awd
 arJ
-rMU
+awd
 arJ
 aaa
 aaa
@@ -80258,7 +80253,7 @@ xbF
 swi
 myA
 kXC
-bdk
+jvf
 eAg
 aaa
 adQ
@@ -83344,8 +83339,8 @@ bxH
 bwR
 bCr
 pGy
-gkO
-oPs
+pEl
+xoH
 bEW
 bEQ
 lfr
@@ -83647,7 +83642,7 @@ bBG
 bCr
 eNh
 cAz
-xeV
+bVu
 bDg
 bFt
 bDf
@@ -87182,7 +87177,7 @@ aqt
 auD
 arL
 arB
-xSM
+jcD
 arj
 udj
 asi
@@ -87431,7 +87426,7 @@ aaa
 aaA
 acd
 acn
-hDn
+acw
 aaa
 aaa
 aaa
@@ -87785,7 +87780,7 @@ apr
 asm
 aqV
 xnx
-vrd
+jsk
 asi
 asS
 arF
@@ -88089,7 +88084,7 @@ aqW
 ark
 laf
 asi
-oAd
+cEK
 apk
 apk
 apk
@@ -119512,7 +119507,7 @@ aae
 dby
 aCX
 dby
-btw
+aEt
 dby
 aaa
 aaa
@@ -119811,7 +119806,7 @@ aaa
 aaa
 aaa
 aaa
-lji
+aCe
 aCY
 acd
 aEu
@@ -126704,7 +126699,7 @@ aaa
 aaa
 abZ
 aei
-lCF
+hCg
 hTz
 rOh
 aeX
@@ -128502,7 +128497,7 @@ aaa
 aaa
 aap
 acc
-ybE
+acp
 acc
 acF
 aaa
@@ -128814,8 +128809,8 @@ aaa
 aaa
 aaa
 aaa
-fvV
-nwu
+rEV
+fed
 dXX
 oTZ
 fkY

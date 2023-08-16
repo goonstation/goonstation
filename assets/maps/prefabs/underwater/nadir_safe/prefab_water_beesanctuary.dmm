@@ -45,6 +45,14 @@
 /obj/critter/domestic_bee/sea,
 /turf/unsimulated/grass,
 /area/prefab/bee_sanctuary)
+"cc" = (
+/obj/stool/bee_bed,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/black/grime,
+/area/prefab/bee_sanctuary)
 "do" = (
 /obj/river{
 	dir = 4
@@ -195,6 +203,18 @@
 	},
 /turf/unsimulated/grass,
 /area/prefab/bee_sanctuary)
+"hD" = (
+/obj/machinery/light/small/purpleish{
+	dir = 1;
+	pixel_y = 10
+	},
+/obj/stool/chair{
+	dir = 4;
+	tag = "icon-chair (EAST)"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
+/area/prefab/bee_sanctuary)
 "hK" = (
 /obj/critter/domestic_bee,
 /turf/unsimulated/floor/black/grime,
@@ -224,6 +244,14 @@
 /turf/unsimulated/floor/green/side{
 	dir = 8
 	},
+/area/prefab/bee_sanctuary)
+"ja" = (
+/obj/machinery/light/small/warm/very{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "je" = (
 /obj/machinery/door/airlock/pyro/classic,
@@ -367,13 +395,6 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
-"pQ" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 8
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/unsimulated/floor,
-/area/prefab/bee_sanctuary)
 "ql" = (
 /obj/window/crystal/east,
 /obj/window/crystal/west,
@@ -407,20 +428,6 @@
 	},
 /obj/item/storage/toolbox/mechanical,
 /turf/unsimulated/floor/caution/corner/ne,
-/area/prefab/bee_sanctuary)
-"ru" = (
-/obj/machinery/light/small/purpleish{
-	dir = 8;
-	pixel_x = -10
-	},
-/obj/decal/fakeobjects{
-	dir = 4;
-	icon = 'icons/obj/monitors.dmi';
-	icon_state = "cameraemp";
-	name = "security camera"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "ry" = (
 /obj/machinery/light/small/purpleish{
@@ -552,10 +559,6 @@
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
-"wg" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/unsimulated/floor,
-/area/prefab/bee_sanctuary)
 "xD" = (
 /obj/critter/domestic_bee/zombee,
 /obj/window/crystal/east,
@@ -607,14 +610,6 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/void,
-/area/prefab/bee_sanctuary)
-"AV" = (
-/obj/machinery/light/small/warm/very{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "Bh" = (
 /obj/decal/floatingtiles{
@@ -736,6 +731,13 @@
 	},
 /turf/unsimulated/floor/void,
 /area/prefab/bee_sanctuary)
+"FW" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 8
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
+/area/prefab/bee_sanctuary)
 "Ga" = (
 /obj/machinery/light/small/purpleish{
 	dir = 1;
@@ -830,6 +832,16 @@
 "IV" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/unsimulated/floor/white,
+/area/prefab/bee_sanctuary)
+"Jg" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 8
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 8
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "Jm" = (
 /obj/machinery/light/small{
@@ -938,6 +950,10 @@
 "LL" = (
 /obj/item/reagent_containers/food/snacks/beefood,
 /turf/unsimulated/floor/black/grime,
+/area/prefab/bee_sanctuary)
+"LT" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "LY" = (
 /turf/unsimulated/floor/green/corner{
@@ -1122,16 +1138,6 @@
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
-"Rw" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 8
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 8
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/unsimulated/floor,
-/area/prefab/bee_sanctuary)
 "RF" = (
 /obj/machinery/drainage,
 /obj/machinery/light{
@@ -1254,31 +1260,6 @@
 	dir = 1
 	},
 /area/prefab/bee_sanctuary)
-"Vv" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "bee bed"
-	},
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 10
-	},
-/turf/unsimulated/floor/black/grime,
-/area/prefab/bee_sanctuary)
-"Vw" = (
-/obj/machinery/light/small/purpleish{
-	dir = 1;
-	pixel_y = 10
-	},
-/obj/stool/chair{
-	dir = 4;
-	tag = "icon-chair (EAST)"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/unsimulated/floor,
-/area/prefab/bee_sanctuary)
 "VH" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor,
@@ -1290,6 +1271,20 @@
 /obj/critter/domestic_bee,
 /obj/river,
 /turf/unsimulated/grass,
+/area/prefab/bee_sanctuary)
+"Wz" = (
+/obj/machinery/light/small/purpleish{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/decal/fakeobjects{
+	dir = 4;
+	icon = 'icons/obj/monitors.dmi';
+	icon_state = "cameraemp";
+	name = "security camera"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "WI" = (
 /turf/unsimulated/floor/green/side{
@@ -1664,7 +1659,7 @@ Os
 "}
 (14,1,1) = {"
 Zz
-Vv
+cc
 LL
 sC
 Ys
@@ -1727,7 +1722,7 @@ Os
 "}
 (17,1,1) = {"
 Zz
-Vv
+cc
 LL
 sC
 Ys
@@ -1790,7 +1785,7 @@ Os
 "}
 (20,1,1) = {"
 Zz
-Vv
+cc
 LL
 sC
 Ys
@@ -1878,11 +1873,11 @@ Zz
 Eo
 oH
 Zz
-Vw
+hD
 VU
 VH
 DW
-ru
+Wz
 nG
 th
 ry
@@ -1906,7 +1901,7 @@ AK
 Yi
 Bh
 OH
-Rw
+Jg
 Qn
 bB
 Dr
@@ -1963,7 +1958,7 @@ UT
 vm
 je
 px
-wg
+LT
 VH
 FG
 oX
@@ -2011,7 +2006,7 @@ WI
 gY
 OH
 OH
-pQ
+FW
 Qn
 Zz
 Os
@@ -2026,10 +2021,10 @@ Os
 Os
 Zz
 OH
-wg
+LT
 VH
 WI
-wg
+LT
 OH
 OH
 GY
@@ -2074,7 +2069,7 @@ sV
 bo
 rD
 rD
-AV
+ja
 Hr
 Zz
 Os

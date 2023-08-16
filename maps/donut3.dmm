@@ -589,6 +589,10 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
+"aeS" = (
+/obj/stool/bee_bed/heisenbee,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/hor)
 "aeV" = (
 /obj/loudspeaker,
 /obj/machinery/light/incandescent/netural,
@@ -9443,6 +9447,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/asylum/main)
+"cID" = (
+/obj/stool/pet_bed/jones,
+/mob/living/critter/small_animal/cat/jones{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/captain)
 "cIW" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -9633,13 +9644,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"cNl" = (
-/obj/decal/floatingtiles{
-	icon_state = "floattiles6"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "cNn" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -14516,14 +14520,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
-"epX" = (
-/obj/decal/floatingtiles{
-	dir = 4
-	},
-/obj/decal/cleanable/machine_debris,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "eqi" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -18482,6 +18478,14 @@
 /obj/machinery/vending/monkey,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/medical/asylum/kitchen)
+"fDA" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles4"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "fDF" = (
 /obj/stove{
 	pixel_y = 2
@@ -22238,6 +22242,18 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/cloner)
+"gKv" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 64;
+	id = "QM_Sell"
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/black/grime,
+/area/station/routing/depot)
 "gKA" = (
 /obj/disposalpipe/segment/mail,
 /obj/stool/chair,
@@ -24059,15 +24075,6 @@
 	dir = 4
 	},
 /area/station/security/main)
-"hnE" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/hor)
 "hnH" = (
 /obj/cable{
 	icon_state = "2-6"
@@ -24560,29 +24567,6 @@
 	dir = 6
 	},
 /area/station/solar/east)
-"htZ" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	drive_range = 63;
-	id = "QM_Sell"
-	},
-/obj/machinery/door/poddoor/pyro{
-	dir = 8;
-	id = "QM_Sell";
-	name = "Qm Sell"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 8;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4;
-	icon_state = "xtra_bigstripe-edge2"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/routing/depot)
 "hub" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner{
 	dir = 9
@@ -28691,14 +28675,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/escape)
-"iKA" = (
-/obj/decal/floatingtiles{
-	dir = 8;
-	icon_state = "floattiles4"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "iKD" = (
 /obj/storage/secure/closet/personal,
 /obj/machinery/light/incandescent/netural{
@@ -38513,6 +38489,13 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
+"lKl" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles5"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "lKn" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -44271,18 +44254,6 @@
 	},
 /turf/simulated/floor/sand,
 /area/station/engine/engineering/ce)
-"nxU" = (
-/obj/stool{
-	desc = "Though it was made to suit him, Jones still seems to sleep in every spot that is NOT this little bed.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "cat bed"
-	},
-/mob/living/critter/small_animal/cat/jones{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/station/bridge/captain)
 "nxW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -46026,6 +45997,29 @@
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
+"ocs" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 63;
+	id = "QM_Sell"
+	},
+/obj/machinery/door/poddoor/pyro{
+	dir = 8;
+	id = "QM_Sell";
+	name = "Qm Sell"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/routing/depot)
 "oct" = (
 /obj/table/glass/auto,
 /obj/machinery/cell_charger{
@@ -46342,13 +46336,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
-"oiv" = (
-/obj/decal/floatingtiles{
-	icon_state = "floattiles5"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "oiG" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -48497,6 +48484,15 @@
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
+"oQB" = (
+/obj/plasticflaps,
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 83;
+	id = "crusher2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "oQN" = (
 /obj/decal/tile_edge/check{
 	dir = 9;
@@ -48880,14 +48876,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
-"oVS" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	drive_range = 66;
-	id = "drone_launcher"
-	},
-/turf/simulated/floor/plating/random,
-/area/ghostdrone_factory)
 "oWe" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass,
@@ -51557,19 +51545,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/elect)
-"pMn" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	drive_range = 66;
-	id = "drone_launcher"
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 4;
-	id = "drone_launcher";
-	name = "Launcher Door"
-	},
-/turf/simulated/floor/plating/random,
-/area/ghostdrone_factory)
 "pMo" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -56910,6 +56885,19 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"rqm" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 66;
+	id = "drone_launcher"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "drone_launcher";
+	name = "Launcher Door"
+	},
+/turf/simulated/floor/plating/random,
+/area/ghostdrone_factory)
 "rqn" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
@@ -57904,6 +57892,14 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/quartermaster/office)
+"rGY" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 66;
+	id = "drone_launcher"
+	},
+/turf/simulated/floor/plating/random,
+/area/ghostdrone_factory)
 "rHc" = (
 /obj/stool/chair{
 	dir = 4
@@ -59190,18 +59186,6 @@
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
-"sbz" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	drive_range = 64;
-	id = "QM_Sell"
-	},
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/black/grime,
-/area/station/routing/depot)
 "sbB" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 9;
@@ -60098,6 +60082,14 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"sqC" = (
+/obj/decal/floatingtiles{
+	dir = 4
+	},
+/obj/decal/cleanable/machine_debris,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "srh" = (
 /obj/stool/chair/office/purple{
 	dir = 8
@@ -61167,20 +61159,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/east)
-"sKi" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	drive_range = 82;
-	id = "crusher2"
-	},
-/obj/machinery/door/poddoor/pyro{
-	dir = 8;
-	id = "crusher2";
-	layer = 4;
-	name = "Waste Disposal"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "sKv" = (
 /obj/stool/bench/red,
 /obj/decal/tile_edge/check{
@@ -64210,6 +64188,20 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
+"tHi" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 82;
+	id = "crusher2"
+	},
+/obj/machinery/door/poddoor/pyro{
+	dir = 8;
+	id = "crusher2";
+	layer = 4;
+	name = "Waste Disposal"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "tHl" = (
 /obj/railing/orange{
 	dir = 8
@@ -69649,15 +69641,6 @@
 "vre" = (
 /turf/simulated/wall/auto/reinforced/jen/purple,
 /area/space)
-"vrg" = (
-/obj/plasticflaps,
-/obj/machinery/mass_driver{
-	dir = 8;
-	drive_range = 83;
-	id = "crusher2"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "vrt" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 9;
@@ -70265,6 +70248,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/bot_storage)
+"vAY" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles6"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "vBa" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -104923,7 +104913,7 @@ rdj
 rdj
 rdj
 ieL
-sKi
+tHi
 ieL
 rdj
 rdj
@@ -105225,7 +105215,7 @@ ieL
 pFp
 pFp
 ieL
-vrg
+oQB
 ieL
 ieL
 ieL
@@ -114562,7 +114552,7 @@ usg
 nOG
 cEO
 hGP
-nxU
+cID
 mDt
 nOG
 nOG
@@ -130314,7 +130304,7 @@ hmI
 hmI
 mrK
 giZ
-hnE
+aeS
 eJA
 osC
 jCt
@@ -151107,7 +151097,7 @@ bBD
 qFR
 qNg
 aCe
-sbz
+gKv
 bBD
 rdj
 rdj
@@ -151409,7 +151399,7 @@ bBD
 wAm
 rfz
 rfz
-htZ
+ocs
 bBD
 rdj
 rdj
@@ -158418,8 +158408,8 @@ csA
 csA
 fJu
 rdj
-oiv
-iKA
+lKl
+fDA
 kuM
 fJu
 fJu
@@ -158720,8 +158710,8 @@ rdj
 rdj
 rdj
 rdj
-cNl
-epX
+vAY
+sqC
 fJu
 fJu
 fJu
@@ -160124,9 +160114,9 @@ rdj
 rdj
 rdj
 jhW
-pMn
+rqm
 jhW
-pMn
+rqm
 jhW
 rdj
 rdj
@@ -160426,9 +160416,9 @@ rdj
 rdj
 rdj
 jhW
-oVS
+rGY
 jhW
-oVS
+rGY
 jhW
 rdj
 rdj

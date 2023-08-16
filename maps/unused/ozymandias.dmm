@@ -373,16 +373,6 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
-"afD" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
-/obj/critter/domestic_bee/heisenbee,
-/turf/simulated/floor/grass,
-/area/station/crew_quarters/hor)
 "afF" = (
 /obj/machinery/conveyor/EW{
 	id = "qmin"
@@ -4992,6 +4982,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/coldloop)
+"bro" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/raw_material/shard,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "brq" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right,
@@ -7311,19 +7309,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grey,
 /area/station/medical/staff)
-"bZz" = (
-/obj/decal/cleanable/generic{
-	desc = "Smells vaguely of eggs and mint.";
-	name = "weird flakes"
-	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 10
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "bZC" = (
 /obj/storage/crate,
 /turf/simulated/floor/yellow/checker,
@@ -11299,6 +11284,10 @@
 	},
 /turf/simulated/floor/caution/north,
 /area/station/science/lab)
+"cZx" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "cZy" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 8;
@@ -24200,6 +24189,13 @@
 	dir = 1
 	},
 /area/station/science/artifact)
+"grW" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "grX" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -25104,18 +25100,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/exit)
-"gBT" = (
-/obj/stool/chair/comfy/blue{
-	desc = "It's all ripped and grimy. Gross.";
-	dir = 8;
-	name = "grody blue chair"
-	},
-/obj/landmark/start/job/assistant,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "gBU" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -26212,13 +26196,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/west)
-"gOY" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/space)
 "gPc" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -27708,6 +27685,17 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
+"hie" = (
+/obj/decal/cleanable/cobweb2,
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/landmark/start/job/clown,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown{
+	name = "Honkington's Abode"
+	})
 "hih" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -33451,6 +33439,19 @@
 /obj/machinery/light,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
+"iJt" = (
+/obj/ladder{
+	desc = "It's covered in something greasy. Ew.";
+	icon_state = "ladder_wall";
+	id = "clownhole";
+	layer = 2.5;
+	pixel_y = 32
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor,
+/area/station/crew_quarters/clown{
+	name = "Honkington's Abode"
+	})
 "iJu" = (
 /obj/machinery/computer/cloning{
 	dir = 4
@@ -33858,10 +33859,6 @@
 /area/station/routing/eva{
 	name = "Routing Outpost"
 	})
-"iOr" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "iOt" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -35303,6 +35300,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"jiX" = (
+/obj/item/raw_material/shard,
+/obj/item/reagent_containers/dropper/mechanical,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "jiZ" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -36764,6 +36767,17 @@
 /obj/item/crowbar,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"jCF" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/item/clothing/suit/space/emerg,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "jCN" = (
 /obj/machinery/computer/barcode/ozy{
 	dir = 4
@@ -39209,19 +39223,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"kjg" = (
-/obj/ladder{
-	desc = "It's covered in something greasy. Ew.";
-	icon_state = "ladder_wall";
-	id = "clownhole";
-	layer = 2.5;
-	pixel_y = 32
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor,
-/area/station/crew_quarters/clown{
-	name = "Honkington's Abode"
-	})
 "kjm" = (
 /turf/simulated/floor/sanitary/blue,
 /area/station/crewquarters/cryotron)
@@ -40205,6 +40206,17 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/quartersA)
+"kvk" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/listeningpost)
 "kvq" = (
 /obj/shrub{
 	dir = 4;
@@ -40522,16 +40534,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/north)
-"kBo" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "It's all covered in a sticky mess, and there are chunks of uniform fused to the bone.";
-	name = "sticky skeleton"
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/clown{
-	name = "Honkington's Abode"
-	})
 "kBq" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
@@ -40718,17 +40720,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/east)
-"kEH" = (
-/obj/decal/cleanable/cobweb2,
-/obj/stool/chair{
-	dir = 8
-	},
-/obj/landmark/start/job/clown,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/clown{
-	name = "Honkington's Abode"
-	})
 "kEL" = (
 /obj/storage/closet/fire,
 /obj/machinery/light/small{
@@ -42577,6 +42568,14 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
+"ldC" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/cigpacket/propuffs,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "ldD" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -43318,6 +43317,16 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"lmt" = (
+/obj/decal/fakeobjects/skeleton{
+	desc = "It's all covered in a sticky mess, and there are chunks of uniform fused to the bone.";
+	name = "sticky skeleton"
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown{
+	name = "Honkington's Abode"
+	})
 "lmu" = (
 /obj/random_item_spawner/junk/five,
 /turf/simulated/floor/plating,
@@ -43501,11 +43510,6 @@
 /area/station/bridge/customs{
 	name = "Bridge Reception"
 	})
-"loX" = (
-/obj/structure/girder,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
 "lpb" = (
 /obj/table/auto,
 /obj/item/clothing/glasses/spectro,
@@ -44002,10 +44006,6 @@
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
-"lvq" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
 "lvv" = (
 /obj/storage/closet/wardrobe/black,
 /turf/simulated/floor/black,
@@ -45495,6 +45495,16 @@
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
 /turf/simulated/floor/carpet/purple,
 /area/station/crew_quarters/quartersA)
+"lMY" = (
+/obj/decal/fakeobjects{
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "broken machine"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "lMZ" = (
 /turf/simulated/floor/caution/south,
 /area/station/science/storage)
@@ -46477,6 +46487,18 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/west)
+"lYA" = (
+/obj/stool/chair/comfy/blue{
+	desc = "It's all ripped and grimy. Gross.";
+	dir = 8;
+	name = "grody blue chair"
+	},
+/obj/landmark/start/job/assistant,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "lYT" = (
 /obj/machinery/traymachine/morgue,
 /obj/machinery/light/small{
@@ -47491,15 +47513,6 @@
 /obj/landmark/pest,
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/showers)
-"mnz" = (
-/obj/decal/cleanable/dirt,
-/obj/random_item_spawner/junk/one_or_zero,
-/obj/machinery/atmospherics/pipe/simple,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "mnA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -47536,6 +47549,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/communications/centre)
+"mnW" = (
+/obj/item/raw_material/shard/glass,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown{
+	name = "Honkington's Abode"
+	})
 "moh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -48455,6 +48475,19 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"myF" = (
+/obj/stool/chair/couch{
+	dir = 4;
+	icon_state = "chair_couch-blue";
+	name = "ratty blue couch"
+	},
+/obj/decal/cleanable/dirt,
+/obj/landmark/start/job/assistant,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "myG" = (
 /obj/machinery/light{
 	dir = 1;
@@ -49935,12 +49968,6 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/storage)
-"mUx" = (
-/obj/item/raw_material/shard,
-/obj/item/reagent_containers/dropper/mechanical,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/space)
 "mUB" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/disposalpipe/segment/mail/vertical,
@@ -50085,6 +50112,11 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/station/crew_quarters/quartersA)
+"mWf" = (
+/obj/structure/girder,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "mWh" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8;
@@ -54601,6 +54633,19 @@
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
+"ohl" = (
+/obj/stool/chair/couch{
+	dir = 8;
+	icon_state = "chair_couch-blue";
+	name = "ratty blue couch"
+	},
+/obj/item/card_group/plain,
+/obj/landmark/start/job/assistant,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "oho" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4
@@ -61494,6 +61539,22 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/darkblue/checker,
 /area/station/hallway/primary/west)
+"pSs" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "air vent"
+	},
+/obj/decal/fakeobjects/skeleton{
+	desc = "The remains of a human. There seem to be a few bits missing."
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "pSB" = (
 /turf/simulated/floor/grey,
 /area/station/storage/tools)
@@ -61708,6 +61769,15 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/engine/core)
+"pVh" = (
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/atmospherics/pipe/simple,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "pVk" = (
 /obj/table/auto,
 /obj/item/dice{
@@ -62247,16 +62317,6 @@
 	dir = 8
 	},
 /area/station/engine/engineering)
-"qcn" = (
-/obj/decal/fakeobjects{
-	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "broken machine"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/space)
 "qcw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -63549,19 +63609,6 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"qvA" = (
-/obj/stool/chair/couch{
-	dir = 4;
-	icon_state = "chair_couch-blue";
-	name = "ratty blue couch"
-	},
-/obj/decal/cleanable/dirt,
-/obj/landmark/start/job/assistant,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "qvJ" = (
 /obj/machinery/light,
 /turf/simulated/floor/neutral/side,
@@ -72440,13 +72487,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"sEy" = (
-/obj/burning_barrel,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "sEF" = (
 /obj/machinery/light{
 	dir = 8;
@@ -74774,17 +74814,6 @@
 	dir = 4
 	},
 /area/station/science/lobby)
-"tfk" = (
-/obj/machinery/vending/alcohol/with_ammo,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/grey/side{
-	dir = 4
-	},
-/area/listeningpost)
 "tfq" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -75456,14 +75485,6 @@
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/red/checker,
 /area/station/engine/engineering)
-"toQ" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/item/raw_material/shard,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/space)
 "toR" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -76984,6 +77005,13 @@
 /area/station/security/checkpoint/medical{
 	name = "Med-Sci Security Checkpoint"
 	})
+"tHZ" = (
+/obj/burning_barrel,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "tId" = (
 /obj/machinery/conveyor/EW{
 	id = "garbage";
@@ -77260,14 +77288,6 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
-"tLU" = (
-/obj/machinery/vending/alcohol/with_ammo,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
 "tLY" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 1
@@ -78469,6 +78489,14 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/darkblue,
 /area/station/storage/eva)
+"uaG" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/bar)
 "uaN" = (
 /obj/decal/tile_edge/floorguide/medbay{
 	dir = 4
@@ -79935,17 +79963,6 @@
 	dir = 8
 	},
 /area/station/engine/power)
-"uun" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/item/clothing/suit/space/emerg,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "uux" = (
 /obj/decal/stage_edge/alt,
 /obj/stool/chair/office/blue{
@@ -80123,22 +80140,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
-"uwA" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "A vent. Cool air is gently flowing through it.";
-	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "hvent";
-	name = "air vent"
-	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of a human. There seem to be a few bits missing."
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/space)
 "uwE" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -80410,19 +80411,6 @@
 	},
 /turf/simulated/floor/yellow/checker,
 /area/station/mining/refinery)
-"uzE" = (
-/obj/stool/chair/couch{
-	dir = 8;
-	icon_state = "chair_couch-blue";
-	name = "ratty blue couch"
-	},
-/obj/item/card_group/plain,
-/obj/landmark/start/job/assistant,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "uzS" = (
 /obj/machinery/light/small/harsh,
 /obj/machinery/manufacturer/general,
@@ -82319,14 +82307,6 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/inner/ne)
-"uUE" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/item/cigpacket/propuffs,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/space)
 "uUI" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
@@ -88061,6 +88041,10 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"wnP" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "wnQ" = (
 /turf/simulated/floor/arrival{
 	dir = 8
@@ -89270,6 +89254,11 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
+"wAp" = (
+/obj/stool/bee_bed/heisenbee,
+/obj/critter/domestic_bee/heisenbee,
+/turf/simulated/floor/grass,
+/area/station/crew_quarters/hor)
 "wAr" = (
 /obj/machinery/light{
 	dir = 1;
@@ -93253,6 +93242,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/lab)
+"xwX" = (
+/obj/decal/cleanable/generic{
+	desc = "Smells vaguely of eggs and mint.";
+	name = "weird flakes"
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 10
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "xxb" = (
 /obj/machinery/chem_heater,
 /obj/machinery/light/emergency{
@@ -96008,13 +96010,6 @@
 	dir = 4
 	},
 /area/station/engine/coldloop)
-"yeX" = (
-/obj/item/raw_material/shard/glass,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/clown{
-	name = "Honkington's Abode"
-	})
 "yfb" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/shuttlebay,
@@ -106543,7 +106538,7 @@ eCL
 wam
 qEJ
 phE
-tfk
+kvk
 oKf
 qEJ
 efz
@@ -128216,7 +128211,7 @@ wnW
 tsP
 acs
 acs
-loX
+mWf
 aMB
 fuJ
 acs
@@ -128517,7 +128512,7 @@ xUI
 wAm
 jvm
 acs
-lvq
+cZx
 xUL
 aLM
 gKx
@@ -129121,7 +129116,7 @@ yhx
 wnW
 sLz
 acs
-lvq
+cZx
 grJ
 qhr
 grJ
@@ -129640,7 +129635,7 @@ yel
 ogg
 xhT
 cEJ
-afD
+wAp
 vjC
 ooU
 wOc
@@ -129734,9 +129729,9 @@ xxX
 nKx
 gsv
 fXG
-uzE
-bZz
-mnz
+ohl
+xwX
+pVh
 bHn
 rSL
 mLl
@@ -130036,9 +130031,9 @@ xxX
 mhL
 xEJ
 fXG
-qvA
-sEy
-gBT
+myF
+tHZ
+lYA
 xLw
 xIu
 xLw
@@ -130359,8 +130354,8 @@ dUF
 gno
 gLT
 jfJ
-kjg
-yeX
+iJt
+mnW
 nVB
 aJu
 aJu
@@ -130661,8 +130656,8 @@ mmH
 dUF
 dUF
 jfJ
-kEH
-kBo
+hie
+lmt
 nVB
 aJu
 aJu
@@ -145671,7 +145666,7 @@ xwf
 bfd
 qwW
 xwf
-tLU
+uaG
 vBY
 mMR
 nkN
@@ -176000,7 +175995,7 @@ aJu
 aJu
 aJu
 wCE
-iOr
+wnP
 vSO
 aJu
 aJu
@@ -176604,7 +176599,7 @@ aJu
 aJu
 eGp
 lzz
-uwA
+pSs
 teN
 oAA
 aJu
@@ -176905,8 +176900,8 @@ aJu
 aJu
 aJu
 xov
-uUE
-uun
+ldC
+jCF
 gvm
 vSO
 aJu
@@ -177208,7 +177203,7 @@ aJu
 aJu
 vSO
 krs
-gOY
+grW
 nIH
 vSO
 aJu
@@ -177813,7 +177808,7 @@ aJu
 vSO
 vBJ
 fiz
-qcn
+lMY
 iXg
 epP
 aJu
@@ -178113,7 +178108,7 @@ aJu
 aJu
 aJu
 iXg
-mUx
+jiX
 udB
 epP
 epP
@@ -178416,7 +178411,7 @@ aJu
 epP
 epP
 epP
-toQ
+bro
 epP
 epP
 epP

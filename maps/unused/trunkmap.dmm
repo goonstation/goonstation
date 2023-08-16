@@ -15762,6 +15762,10 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
+"baG" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/bar)
 "baH" = (
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bar)
@@ -20239,16 +20243,6 @@
 "bnY" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/turf/simulated/floor/wood/two,
-/area/station/science/research_director)
-"bnZ" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
-/obj/item/reagent_containers/food/snacks/beefood,
 /turf/simulated/floor/wood/two,
 /area/station/science/research_director)
 "boa" = (
@@ -27382,6 +27376,11 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"dcU" = (
+/obj/stool/bee_bed/heisenbee,
+/obj/item/reagent_containers/food/snacks/beefood,
+/turf/simulated/floor/wood/two,
+/area/station/science/research_director)
 "ddO" = (
 /obj/cable{
 	d1 = 1;
@@ -27943,10 +27942,6 @@
 	},
 /turf/simulated/floor/caution/south,
 /area/station/hallway/primary/south)
-"eRB" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "eSJ" = (
 /obj/machinery/door/airlock/external{
 	aiControlDisabled = 1;
@@ -28061,6 +28056,10 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"ffR" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "ffT" = (
 /obj/machinery/computer/general_air_control/large_tank_control{
 	frequency = 1441;
@@ -28651,26 +28650,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/quarters)
-"gQZ" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1;
-	tag = "icon-rwindow (NORTH)"
-	},
-/obj/window/reinforced{
-	dir = 4;
-	tag = "icon-rwindow (EAST)"
-	},
-/obj/window/reinforced{
-	dir = 8;
-	tag = "icon-rwindow (WEST)"
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/station/security/prison)
 "gRD" = (
 /obj/machinery/light{
 	dir = 1
@@ -28758,10 +28737,6 @@
 /obj/item/assembly/time_ignite,
 /turf/simulated/floor/purple/side,
 /area/station/science/chemistry)
-"hrc" = (
-/obj/machinery/vending/alcohol/with_ammo,
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/bar)
 "hrh" = (
 /obj/table/auto,
 /obj/cable{
@@ -29279,14 +29254,6 @@
 	dir = 8
 	},
 /area/station/security/prison)
-"iQg" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 8
-	},
-/obj/item/wrench,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/station/security/prison)
 "iSv" = (
 /obj/machinery/camera{
 	c_tag = "West Solar Array Controls"
@@ -29542,6 +29509,15 @@
 /obj/machinery/vending/mechanics,
 /turf/simulated/floor/caution/east,
 /area/station/engine/elect)
+"jHt" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "jHY" = (
 /obj/table/auto,
 /obj/machinery/light/lamp,
@@ -30526,6 +30502,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
+"lUX" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/obj/item/wrench,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/station/security/prison)
 "lVv" = (
 /turf/simulated/shuttle/wall{
 	dir = 0;
@@ -30561,6 +30545,10 @@
 	},
 /turf/simulated/floor/industrial,
 /area/station/science/chemistry)
+"lWB" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "lXm" = (
 /obj/grille/steel,
 /obj/cable{
@@ -30779,6 +30767,10 @@
 /obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
+"mBf" = (
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/space)
 "mBg" = (
 /obj/cable{
 	d1 = 1;
@@ -30977,6 +30969,26 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
+"nsW" = (
+/obj/grille/steel,
+/obj/window/reinforced{
+	dir = 1;
+	tag = "icon-rwindow (NORTH)"
+	},
+/obj/window/reinforced{
+	dir = 4;
+	tag = "icon-rwindow (EAST)"
+	},
+/obj/window/reinforced{
+	dir = 8;
+	tag = "icon-rwindow (WEST)"
+	},
+/obj/window/reinforced{
+	dir = 2
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/station/security/prison)
 "nus" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -31067,15 +31079,6 @@
 	},
 /turf/simulated/floor,
 /area/station/atmos/highcap_storage)
-"nIu" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "nLq" = (
 /obj/machinery/power/tracker,
 /obj/cable{
@@ -31587,6 +31590,31 @@
 	dir = 10
 	},
 /area/station/science/chemistry)
+"pzk" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4;
+	layer = 3;
+	level = 2
+	},
+/obj/grille/steel,
+/obj/window/reinforced{
+	dir = 1;
+	tag = "icon-rwindow (NORTH)"
+	},
+/obj/window/reinforced{
+	dir = 8;
+	tag = "icon-rwindow (WEST)"
+	},
+/obj/window/reinforced{
+	dir = 4;
+	tag = "icon-rwindow (EAST)"
+	},
+/obj/window/reinforced{
+	dir = 2
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor,
+/area/station/security/prison)
 "pzM" = (
 /turf/simulated/floor/caution/west,
 /area/station/quartermaster/storage)
@@ -31704,10 +31732,6 @@
 /obj/window/reinforced/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"pQw" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/space)
 "pQL" = (
 /obj/cable{
 	d1 = 1;
@@ -32728,10 +32752,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"soD" = (
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/space)
 "spG" = (
 /obj/grille/steel,
 /obj/window/reinforced/north,
@@ -33910,31 +33930,6 @@
 "vpW" = (
 /turf/simulated/shuttle/wall,
 /area/space)
-"vqq" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4;
-	layer = 3;
-	level = 2
-	},
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1;
-	tag = "icon-rwindow (NORTH)"
-	},
-/obj/window/reinforced{
-	dir = 8;
-	tag = "icon-rwindow (WEST)"
-	},
-/obj/window/reinforced{
-	dir = 4;
-	tag = "icon-rwindow (EAST)"
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor,
-/area/station/security/prison)
 "vrV" = (
 /obj/machinery/light{
 	dir = 4;
@@ -82737,7 +82732,7 @@ aiJ
 aTW
 aVH
 aXP
-hrc
+baG
 aVH
 bdP
 bdP
@@ -96337,7 +96332,7 @@ ben
 bgl
 blq
 bmP
-bnZ
+dcU
 bpn
 bqo
 brs
@@ -115181,7 +115176,7 @@ aaa
 aaa
 aaa
 aaa
-gQZ
+nsW
 mkx
 wFV
 qtK
@@ -117306,7 +117301,7 @@ qay
 qtK
 hwf
 jsL
-vqq
+pzk
 vey
 aab
 aaa
@@ -117910,7 +117905,7 @@ qtK
 qtK
 hwf
 tQY
-iQg
+lUX
 vey
 aaa
 aaa
@@ -118855,7 +118850,7 @@ aaa
 aaa
 aaa
 aab
-soD
+mBf
 aad
 aaa
 aab
@@ -119157,7 +119152,7 @@ aaa
 aaa
 aaa
 aaa
-eRB
+ffR
 aad
 aaa
 bmE
@@ -119463,9 +119458,9 @@ aab
 aad
 aad
 bmE
-pQw
-pQw
-eRB
+lWB
+lWB
+ffR
 aaV
 aaa
 aaa
@@ -119765,7 +119760,7 @@ aaa
 bmE
 bmE
 bmE
-eRB
+ffR
 aax
 aat
 aaI
@@ -120064,9 +120059,9 @@ aaa
 aaa
 aaa
 aab
-eRB
-eRB
-pQw
+ffR
+ffR
+lWB
 aat
 aat
 aat
@@ -120075,7 +120070,7 @@ aad
 aat
 aad
 aad
-nIu
+jHt
 acW
 ady
 ady
@@ -120370,7 +120365,7 @@ aaa
 bmE
 bmE
 aat
-pQw
+lWB
 aat
 aaK
 aaw
@@ -120667,13 +120662,13 @@ aaa
 aaa
 aaa
 aaa
-soD
+mBf
 aab
-soD
+mBf
 bmE
-pQw
+lWB
 aat
-soD
+mBf
 aaV
 aaa
 aaa
@@ -121598,7 +121593,7 @@ ady
 ady
 ajW
 akC
-eRB
+ffR
 aab
 aaa
 aaa

@@ -1789,17 +1789,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/observatory)
-"aLM" = (
-/obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir-b"
-	},
-/obj/item/furniture_parts/table/reinforced/roulette,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/abandonedship{
-	name = "Crashed Limo"
-	})
 "aLO" = (
 /obj/table/auto,
 /obj/item/storage/box/beakerbox,
@@ -2334,6 +2323,17 @@
 "aZY" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/quarters_north)
+"aZZ" = (
+/obj/stool/bee_bed/heisenbee,
+/obj/critter/domestic_bee/heisenbee,
+/obj/machinery/light/incandescent/warm,
+/obj/machinery/light/incandescent/warm{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/science/research_director)
 "bay" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/supernorn,
@@ -8162,15 +8162,6 @@
 /obj/machinery/light/small/cool,
 /turf/simulated/floor/grey,
 /area/station/storage/warehouse)
-"dvh" = (
-/obj/machinery/vending/alcohol/with_ammo,
-/obj/machinery/light/small/warm{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/the_cage{
-	name = "The Cage Bar"
-	})
 "dvn" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -20597,13 +20588,6 @@
 /area/station/security/secwing{
 	name = "Security Lobby"
 	})
-"iMV" = (
-/obj/item/raw_material/shard/glass,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/abandonedship{
-	name = "Crashed Limo"
-	})
 "iMW" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	dir = 4;
@@ -21736,15 +21720,6 @@
 /area/station/crew_quarters/market{
 	name = "Seating Area"
 	})
-"jhe" = (
-/obj/stool/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/abandonedship{
-	name = "Crashed Limo"
-	})
 "jhj" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -22333,12 +22308,6 @@
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
-"jtp" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/abandonedship{
-	name = "Crashed Limo"
-	})
 "jtQ" = (
 /obj/cable{
 	d1 = 4;
@@ -22428,6 +22397,17 @@
 	dir = 8
 	},
 /area/station/science/lobby)
+"jxg" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/obj/item/furniture_parts/table/reinforced/roulette,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "jxi" = (
 /obj/machinery/recharge_station,
 /obj/machinery/camera{
@@ -24663,6 +24643,15 @@
 /obj/item/device/light/glowstick,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/warehouse)
+"kvb" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/obj/machinery/light/small/warm{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/the_cage{
+	name = "The Cage Bar"
+	})
 "kvx" = (
 /obj/decal/boxingropeenter,
 /turf/simulated/floor/stairs/wide/middle{
@@ -24916,6 +24905,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/monitoring)
+"kBf" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "kBr" = (
 /obj/decal/cleanable/robot_debris,
 /turf/simulated/floor/airless/black,
@@ -26360,6 +26355,15 @@
 "ljs" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay)
+"ljy" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "ljA" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
@@ -31351,13 +31355,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"nqw" = (
-/obj/decal/tile_edge/stripe,
-/obj/decal/cleanable/paper,
-/obj/disposalpipe/segment,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/station/storage/warehouse)
 "nqz" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor/red/side,
@@ -33224,6 +33221,13 @@
 /obj/stool/bench/wooden/auto,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
+"oeD" = (
+/obj/item/raw_material/shard/glass,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "oeV" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -33654,22 +33658,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_south)
-"oqg" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
-/obj/critter/domestic_bee/heisenbee,
-/obj/machinery/light/incandescent/warm,
-/obj/machinery/light/incandescent/warm{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/wood/seven,
-/area/station/science/research_director)
 "oqj" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
@@ -34906,14 +34894,6 @@
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/hangar/escape)
-"oUn" = (
-/obj/decal/cleanable/machine_debris,
-/obj/item/motherboard,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/abandonedship{
-	name = "Crashed Limo"
-	})
 "oUp" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/light/small/floor,
@@ -39113,6 +39093,13 @@
 /area/abandonedship{
 	name = "Crashed Limo"
 	})
+"qHD" = (
+/obj/decal/tile_edge/stripe,
+/obj/decal/cleanable/paper,
+/obj/disposalpipe/segment,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/station/storage/warehouse)
 "qHH" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/storage/box/glassbox,
@@ -39644,13 +39631,6 @@
 /obj/stool/chair/comfy/barber_chair,
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/barber_shop)
-"qTu" = (
-/obj/item/raw_material/scrap_metal,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/abandonedship{
-	name = "Crashed Limo"
-	})
 "qTB" = (
 /obj/decal/tile_edge/line/grey{
 	dir = 8;
@@ -42086,6 +42066,14 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/jazz)
+"rVR" = (
+/obj/decal/cleanable/machine_debris,
+/obj/item/motherboard,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "rVX" = (
 /turf/simulated/floor/redblack/corner{
 	dir = 8
@@ -42708,6 +42696,16 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/bridge/hos)
+"shB" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "shE" = (
 /obj/lattice{
 	dir = 4;
@@ -44390,15 +44388,6 @@
 "sUu" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/research)
-"sUw" = (
-/obj/stool/chair/comfy/shuttle{
-	dir = 4
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/abandonedship{
-	name = "Crashed Limo"
-	})
 "sUT" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -44488,16 +44477,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/crew_quarters/barber_shop)
-"sWP" = (
-/obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/abandonedship{
-	name = "Crashed Limo"
-	})
 "sWS" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
@@ -49265,6 +49244,16 @@
 /obj/machinery/networked/telepad,
 /turf/simulated/floor/shuttlebay,
 /area/station/science/teleporter)
+"uYI" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/item/device/radio/intercom/catering{
+	pixel_y = 29
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "uYR" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -53320,6 +53309,15 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
+"wJm" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "wJq" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
@@ -54452,16 +54450,6 @@
 /obj/decal/cleanable/robot_debris,
 /turf/simulated/floor/airless/caution,
 /area/ghostdrone_factory)
-"xgX" = (
-/obj/machinery/vending/alcohol/with_ammo,
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/item/device/radio/intercom/catering{
-	pixel_y = 29
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "xgY" = (
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment/mail/vertical,
@@ -54672,6 +54660,13 @@
 	},
 /turf/unsimulated/floor/stairs/dark,
 /area/station/science/testchamber)
+"xme" = (
+/obj/item/raw_material/scrap_metal,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "xmk" = (
 /obj/table/auto,
 /obj/machinery/light/lamp/black,
@@ -88693,7 +88688,7 @@ ngE
 ngE
 ngE
 dxV
-oqg
+aZZ
 ngE
 orp
 dgz
@@ -96204,7 +96199,7 @@ sem
 nnZ
 woO
 mXr
-dvh
+kvb
 hBC
 poi
 lcJ
@@ -100487,7 +100482,7 @@ puX
 seG
 nYu
 pcr
-nqw
+qHD
 jRA
 kgN
 aIE
@@ -101036,7 +101031,7 @@ omJ
 hGG
 vnX
 uot
-xgX
+uYI
 ovt
 wHn
 iql
@@ -135973,18 +135968,18 @@ vnX
 vnX
 vnX
 dJu
-aLM
-sUw
+jxg
+ljy
 dJu
 ldK
 vRO
-sUw
+ljy
 rKZ
 gcl
 pTQ
 dVa
 dVa
-iMV
+oeD
 cVC
 nrV
 pvD
@@ -136276,18 +136271,18 @@ vnX
 cpN
 cHj
 ukg
-qTu
+xme
 cpB
 xhr
 pfE
 vpb
 lAk
 twE
-jtp
+kBf
 cfH
 oWH
 nsG
-sWP
+shB
 xrH
 aeC
 imG
@@ -136888,9 +136883,9 @@ gOc
 gOc
 qKv
 nYM
-jhe
+wJm
 iED
-oUn
+rVR
 cfI
 dVa
 dyr

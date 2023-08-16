@@ -637,10 +637,10 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/cursed = M
-		cursed.equip_if_possible(new /obj/item/clothing/under/gimmick/cursedclown(cursed), cursed.slot_w_uniform)
-		cursed.equip_if_possible(new /obj/item/clothing/shoes/cursedclown_shoes(cursed), cursed.slot_shoes)
-		cursed.equip_if_possible(new /obj/item/clothing/mask/cursedclown_hat(cursed), cursed.slot_wear_mask)
-		cursed.equip_if_possible(new /obj/item/clothing/gloves/cursedclown_gloves(cursed), cursed.slot_gloves)
+		cursed.equip_if_possible(new /obj/item/clothing/under/gimmick/cursedclown(cursed), SLOT_W_UNIFORM)
+		cursed.equip_if_possible(new /obj/item/clothing/shoes/cursedclown_shoes(cursed), SLOT_SHOES)
+		cursed.equip_if_possible(new /obj/item/clothing/mask/cursedclown_hat(cursed), SLOT_WEAR_MASK)
+		cursed.equip_if_possible(new /obj/item/clothing/gloves/cursedclown_gloves(cursed), SLOT_GLOVES)
 
 		logTheThing(LOG_ADMIN, usr, "clownified [constructTarget(M,"admin")]")
 		logTheThing(LOG_DIARY, usr, "clownified [constructTarget(M,"diary")]", "admin")
@@ -958,9 +958,9 @@
 				qdel(target_mob.head)
 				qdel(target_mob.shoes)
 				qdel(target_mob.r_hand)
-				target_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe, target_mob.slot_wear_suit)
-				target_mob.equip_if_possible(new /obj/item/clothing/head/wizard, target_mob.slot_head)
-				target_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/magic/wizard, target_mob.slot_shoes)
+				target_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe, SLOT_WEAR_SUIT)
+				target_mob.equip_if_possible(new /obj/item/clothing/head/wizard, SLOT_HEAD)
+				target_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/magic/wizard, SLOT_SHOES)
 				target_mob.put_in_hand(new /obj/item/staff(target_mob))
 
 				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -2749,7 +2749,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 						M.u_equip(G)
 						qdel(G)
 					var/obj/item/clothing/glasses/blindfold/B = new()
-					M.force_equip(B, M.slot_glasses)
+					M.force_equip(B, SLOT_GLASSES)
 
 				logTheThing(LOG_ADMIN, src, "has blindfolded every monkey.")
 				logTheThing(LOG_DIARY, src, "has blindfolded every monkey.", "admin")
@@ -2899,7 +2899,7 @@ var/global/force_radio_maptext = FALSE
 			doomguy.u_equip(I)
 			I.set_loc(doomguy.loc)
 
-		doomguy.force_equip(backpack_full_of_ammo, doomguy.slot_back)
+		doomguy.force_equip(backpack_full_of_ammo, SLOT_BACK)
 
 	else
 		backpack_full_of_ammo.set_loc(get_turf(src.mob))

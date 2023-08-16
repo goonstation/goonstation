@@ -823,7 +823,7 @@ ABSTRACT_TYPE(/obj/item)
 					user.u_equip(src)
 					. = user.put_in_hand(src, 0)
 				else if (!user.l_hand)
-					if (!target?.can_equip(src, target.slot_l_hand))
+					if (!target?.can_equip(src, SLOT_L_HAND))
 						user.show_text("You need a free hand to do that!", "blue")
 						.= 0
 					else
@@ -840,7 +840,7 @@ ABSTRACT_TYPE(/obj/item)
 					user.u_equip(src)
 					. = user.put_in_hand(src, 1)
 				else if (!user.r_hand)
-					if (!target?.can_equip(src, target.slot_r_hand))
+					if (!target?.can_equip(src, SLOT_R_HAND))
 						user.show_text("You need a free hand to do that!", "blue")
 						.= 0
 					else
@@ -1083,18 +1083,21 @@ ABSTRACT_TYPE(/obj/item)
 					HH.limb.attack_hand(src,M,1)
 				M.next_click = world.time + src.click_delay
 				return
-	else if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/obj/item/parts/arm = null
-		if (H.limbs) //Wire: fix for null.r_arm and null.l_arm
-			arm = H.hand ? H.limbs.l_arm : H.limbs.r_arm // I'm so sorry I couldent kill all this shitcode at once
-		if (H.equipped())
-			H.drop_item()
+	else if(ishuman(M) || iscritter(M))
+		var/datum/limb/active_limb = null
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			active_limb = H.hand ? H.limbs?.l_arm?.limb_data : H.limbs?.r_arm?.limb_data // I'm so sorry I couldent kill all this shitcode at once
+		if(iscritter(M))
+			var/mob/living/critter/C = M
+			active_limb = C.get_active_hand().limb
+		if (M.equipped())
+			M.drop_item()
 			SPAWN(1 DECI SECOND)
-				if (arm)
-					arm.limb_data.attack_hand(src, H, can_reach(H, src))
-		else if (arm)
-			arm.limb_data.attack_hand(src, H, can_reach(H, src))
+				if (active_limb)
+					active_limb.attack_hand(src, M, can_reach(M, src))
+		else if (active_limb)
+			active_limb.attack_hand(src, M, can_reach(M, src))
 
 	else
 		//the verb is PICK-UP, not 'smack this object with that object'

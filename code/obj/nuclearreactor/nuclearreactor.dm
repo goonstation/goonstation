@@ -383,6 +383,10 @@
 		src.current_gas.temperature = src.temperature
 		var/turf/current_loc = get_turf(src)
 		current_loc.assume_air(current_gas)
+
+		for(var/i = 1 to rand(5,20))
+			shoot_projectile_XY(src, new /datum/projectile/bullet/wall_buster_shrapnel(), rand(-10,10), rand(-10,10))
+
 		explosion_new(src,current_loc,2500,1,0,360,TRUE)
 		SPAWN(15 SECONDS)
 			alarm.repeat = FALSE //haha this is horrendous, this cannot be the way to do this

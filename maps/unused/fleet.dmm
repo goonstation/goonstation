@@ -2174,23 +2174,6 @@
 /area/station/science/research_director{
 	name = "Tenebrae Command Center"
 	})
-"eX" = (
-/obj/machinery/light,
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
-/obj/item/reagent_containers/food/snacks/beefood{
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/obj/critter/domestic_bee/heisenbee,
-/turf/simulated/floor/greenblack,
-/area/station/science/research_director{
-	name = "Tenebrae Command Center"
-	})
 "eY" = (
 /turf/simulated/wall{
 	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
@@ -8164,6 +8147,14 @@
 /obj/item/staple_gun,
 /turf/simulated/floor/caution/south,
 /area/station/medical/robotics)
+"rq" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/cigpacket/propuffs,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "rr" = (
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/caution/south,
@@ -15536,17 +15527,6 @@
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
-"FL" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/item/clothing/suit/space/emerg,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "FM" = (
 /obj/shrub,
 /turf/simulated/floor{
@@ -17403,6 +17383,12 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/orangeblack,
+/area/listeningpost)
+"Jr" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
 /area/listeningpost)
 "Js" = (
 /obj/storage/closet/syndicate/personal,
@@ -20067,6 +20053,17 @@
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/caution/south,
 /area/station/medical/robotics)
+"OG" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/bar)
 "OH" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -20538,12 +20535,6 @@
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
-"Pp" = (
-/obj/machinery/vending/alcohol/with_ammo,
-/turf/simulated/floor/grey/side{
-	dir = 4
-	},
-/area/listeningpost)
 "Ps" = (
 /obj/shrub{
 	dir = 8
@@ -21980,6 +21971,18 @@
 /area/station/maintenance/southwest{
 	name = "Erebus Maintenance Room"
 	})
+"RN" = (
+/obj/machinery/light,
+/obj/stool/bee_bed/heisenbee,
+/obj/item/reagent_containers/food/snacks/beefood{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/critter/domestic_bee/heisenbee,
+/turf/simulated/floor/greenblack,
+/area/station/science/research_director{
+	name = "Tenebrae Command Center"
+	})
 "RO" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -22872,6 +22875,17 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"TY" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/item/clothing/suit/space/emerg,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "TZ" = (
 /obj/cable{
 	d1 = 2;
@@ -22955,22 +22969,6 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
-"Uj" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "A vent. Cool air is gently flowing through it.";
-	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "hvent";
-	name = "air vent"
-	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of a human. There seem to be a few bits missing."
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/space)
 "Uk" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Hardware Chamber"
@@ -23153,6 +23151,12 @@
 /area/station/maintenance/southwest{
 	name = "Erebus Maintenance Room"
 	})
+"UM" = (
+/obj/item/raw_material/shard,
+/obj/item/reagent_containers/dropper/mechanical,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "UN" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -23175,16 +23179,6 @@
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/secwing)
-"UR" = (
-/obj/decal/fakeobjects{
-	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "broken machine"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/space)
 "US" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Primary Secure Zone"
@@ -23947,17 +23941,22 @@
 	},
 /turf/space,
 /area/space)
-"Wz" = (
-/obj/machinery/vending/alcohol/with_ammo,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
+"Wy" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "air vent"
 	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/obj/decal/fakeobjects/skeleton{
+	desc = "The remains of a human. There seem to be a few bits missing."
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "WA" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/engine,
@@ -23970,10 +23969,6 @@
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
-"WD" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "WE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -24444,13 +24439,6 @@
 	dir = 9
 	},
 /area/station/science/teleporter)
-"XO" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/space)
 "XQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -24764,6 +24752,10 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"YH" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/space)
 "YI" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
@@ -24859,6 +24851,16 @@
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
+"YP" = (
+/obj/decal/fakeobjects{
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "broken machine"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "YQ" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
@@ -25080,12 +25082,6 @@
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
-"Zv" = (
-/obj/item/raw_material/shard,
-/obj/item/reagent_containers/dropper/mechanical,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/space)
 "Zw" = (
 /obj/machinery/door/airlock/pyro{
 	id = "chapel_visitation";
@@ -25216,14 +25212,6 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
-"ZK" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/item/cigpacket/propuffs,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless,
-/area/space)
 "ZL" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/darkpurple,
@@ -25263,6 +25251,13 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"ZQ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless,
+/area/space)
 "ZT" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
@@ -57214,7 +57209,7 @@ aa
 aa
 aa
 tG
-Wz
+OG
 uT
 vN
 ui
@@ -57264,7 +57259,7 @@ dk
 dG
 ea
 eL
-eX
+RN
 cN
 aa
 aa
@@ -92080,7 +92075,7 @@ aa
 aa
 aa
 ab
-WD
+YH
 af
 aa
 aa
@@ -92684,7 +92679,7 @@ aa
 aa
 ad
 aj
-Uj
+Wy
 az
 aD
 aa
@@ -92985,8 +92980,8 @@ aa
 aa
 aa
 ae
-ZK
-FL
+rq
+TY
 aA
 af
 aa
@@ -93288,7 +93283,7 @@ aa
 aa
 af
 ao
-XO
+ZQ
 aB
 af
 aa
@@ -93893,7 +93888,7 @@ aa
 af
 ap
 aw
-UR
+YP
 ah
 IN
 aa
@@ -94188,12 +94183,12 @@ aa
 aa
 aa
 aa
-WD
+YH
 aa
 aa
 aa
 ah
-Zv
+UM
 ax
 IN
 IN
@@ -108039,7 +108034,7 @@ IU
 Ja
 Jh
 IQ
-Pp
+Jr
 Jw
 JI
 JO

@@ -266,7 +266,7 @@
 		//if they didn't kidnap em, then give points to other gangs depending on whether they are alive or not.
 		if(!kidnap_success)
 			//if the kidnapping target is null or dead, nobody gets points. (the target will be "gibbed" if successfully "kidnapped" and points awarded there)
-			if (kidnapping_target && kidnapping_target.stat != 2)
+			if (kidnapping_target && !isdead(kidnapping_target))
 				for (var/datum/gang/G in gangs)
 					if (G != top_gang)
 						G.score_event += kidnapping_score / length(gangs)	//This is less than the total points the top_gang would get, so it behooves security to help the non-top gangs keep the target safe.
@@ -921,23 +921,23 @@ proc/broadcast_to_all_gangs(var/message)
 		if(!has_gang_uniform)
 			var/obj/item/clothing/uniform = new src.gang.uniform(user.loc)
 			// Effectively a copy of the `autoequip_slot` macro in `code\datums\hud\human.dm`.
-			if (user.can_equip(uniform, user.slot_w_uniform))
+			if (user.can_equip(uniform, SLOT_W_UNIFORM))
 				var/obj/item/current_uniform = user.w_uniform
 				if (current_uniform)
 					current_uniform.unequipped(user)
 					user.hud.remove_item(current_uniform)
 					user.w_uniform = null
 					user.drop_from_slot(current_uniform, get_turf(current_uniform))
-				user.force_equip(uniform, user.slot_w_uniform)
+				user.force_equip(uniform, SLOT_W_UNIFORM)
 
 		if(!has_gang_headwear)
 			var/obj/item/clothing/headwear = new src.gang.headwear(user.loc)
 			if (istype(headwear, /obj/item/clothing/head))
 				user.drop_from_slot(user.head)
-				user.equip_if_possible(headwear, user.slot_head)
+				user.equip_if_possible(headwear, SLOT_HEAD)
 			else if (istype(headwear, /obj/item/clothing/mask))
 				user.drop_from_slot(user.wear_mask)
-				user.equip_if_possible(headwear, user.slot_wear_mask)
+				user.equip_if_possible(headwear, SLOT_WEAR_MASK)
 
 		if(!has_gang_headset)
 			var/obj/item/device/radio/headset/headset
@@ -946,11 +946,11 @@ proc/broadcast_to_all_gangs(var/message)
 			else
 				headset = new /obj/item/device/radio/headset(user)
 				if (!user.r_store)
-					user.equip_if_possible(headset, user.slot_r_store)
+					user.equip_if_possible(headset, SLOT_R_STORE)
 				else if (!user.l_store)
-					user.equip_if_possible(headset, user.slot_l_store)
+					user.equip_if_possible(headset, SLOT_L_STORE)
 				else if (user.back?.storage && !user.back.storage.is_full())
-					user.equip_if_possible(headset, user.slot_in_backpack)
+					user.equip_if_possible(headset, SLOT_IN_BACKPACK)
 				else
 					user.put_in_hand_or_drop(headset)
 
@@ -1118,7 +1118,7 @@ proc/broadcast_to_all_gangs(var/message)
 				var/datum/game_mode/gang/mode = ticker.mode
 				var/obj/item/grab/G = W
 				if (G.affecting == mode.kidnapping_target)		//Can only shove the target in, nobody else. target must be not dead and must have a kill or pin grab on em.
-					if (G.affecting.stat == 2)
+					if (isdead(G.affecting))
 						boutput(user, "<span class='alert'>[G.affecting] is dead, you can't kidnap a dead person!</span>")
 					else if (G.state < GRAB_AGGRESSIVE)
 						boutput(user, "<span class='alert'>You'll need a stronger grip to successfully kinapp this person!")
