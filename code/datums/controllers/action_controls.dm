@@ -1732,6 +1732,8 @@ var/datum/action_controller/actions
 		mop = Mop
 		target = Target
 		duration = istype(target,/obj/fluid) ? 0 : 10
+		if (istype(mop, /obj/item/mop/orange))
+			icon_state = "mop_orange"
 		..()
 
 	onUpdate()
