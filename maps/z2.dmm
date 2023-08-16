@@ -173,14 +173,11 @@
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
 "abu" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
-	dir = 1;
-	icon = 'icons/misc/hospital.dmi';
-	icon_state = "sovcomp3";
-	name = "broken computer"
+/obj/ai_core_frame{
+	build_step = 2;
+	desc = "Some sort of weird soviet machine, bashed up, yellowed, and trailing wires. Even without a power source, a few of the LEDs are still flickering weakly.";
+	name = "gutted AI core";
+	skinToApply = "soviet"
 	},
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
@@ -67514,8 +67511,10 @@
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
 "nwN" = (
-/obj/stool/pet_bed{
-	desc = "A soft little bed the general size and shape of a space bat.";
+/obj/stool{
+	desc = "A soft little bed the general size and shape of a space bee.";
+	icon = 'icons/misc/critter.dmi';
+	icon_state = "beebed";
 	name = "batbed"
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/bat,
