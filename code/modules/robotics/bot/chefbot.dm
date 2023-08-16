@@ -51,10 +51,9 @@
 		var/is_thechef_the_chef = 0
 		var/how_shit = FOOD_QUALITY_HORSESHIT //ITS ALL DONKEY PISS UNTIL I SAY OTHERWISE
 		for (var/obj/item/reagent_containers/food/snacks/probablyshitfood in view(7, src))
-			if (probablyshitfood.is_judged)
+			if (GET_COOLDOWN(src, "judged_\ref[probablyshitfood]") && (prob(95))) //This food as already been judged. 5 % Chance to yell at people it got stale
 				continue
 			food_to_judge = probablyshitfood
-			probablyshitfood.is_judged = TRUE //judgment is FINAL. We only judge once.
 			break
 		if (!food_to_judge)
 			if(prob(30))
@@ -64,8 +63,7 @@
 			how_shit = FOOD_QUALITY_SHIT
 		else if (food_to_judge.quality >= 5 && !src.emagged)
 			how_shit = FOOD_QUALITY_GOOD_SHIT
-		raging = 1
-		icon_state = "chefbot-mad"
+		src.get_mad()
 		for_by_tcl(M, /mob/living/carbon/human)
 			if(!IN_RANGE(M, src, 7))
 				continue
@@ -96,11 +94,16 @@
 				point(thechef)
 				speak(pick_string("chefbot.txt", "call_chef"))
 			else
+				if (GET_COOLDOWN(src, "judged_\ref[food_to_judge]")) //We already judged this food and it's STILL HERE, GET MAD
+					speak(pick_string("chefbot.txt", "stale_food"))
+					src.calm_down()
+					return
 				switch (how_shit)
 					if (FOOD_QUALITY_HORSESHIT)
 						speak(pick_string("chefbot.txt", "question_shit_food"))
 					else
 						speak(pick_string("chefbot.txt", "question_food"))
+				ON_COOLDOWN(src, "judged_\ref[food_to_judge]", INFINITY) // We judged this food, remember it.
 			sleep(3 SECONDS)
 			if (food_to_judge)
 				switch(how_shit)
@@ -114,8 +117,7 @@
 					if (FOOD_QUALITY_GOOD_SHIT)
 						speak(pick_string("chefbot.txt", "compliment"))
 			if (how_shit == FOOD_QUALITY_GOOD_SHIT)
-				icon_state = "chefbot-idle"
-				raging = 0
+				src.calm_down()
 				return
 			var/is_in_kitchen = 0
 			if (thechef && is_thechef_the_chef)
@@ -127,8 +129,7 @@
 				speak(pick_string("chefbot.txt", "blame_kitchen"))
 			else if (how_shit == FOOD_QUALITY_HORSESHIT)
 				speak(pick_string("chefbot.txt", "insult_cook"))
-			icon_state = "chefbot-idle"
-			raging = 0
+			src.calm_down()
 			if (how_shit == FOOD_QUALITY_HORSESHIT)
 				if (food_to_judge in range(1, src))
 					food_to_judge.set_loc(src.loc)
@@ -144,12 +145,10 @@
 					ThrowRandom(food_to_judge, 4, 1)
 		else
 			// Nobody is in range anyway
-			icon_state = "chefbot-idle"
-			raging = 0
+			src.calm_down()
 			return
 	else if (src.emagged)
-		raging = 1
-		icon_state = "chefbot-mad"
+		src.get_mad()
 		switch (rand(1,3))
 			if (1)
 				var/mob/living/carbon/human/somefucker = locate() in view(7, src)
@@ -207,8 +206,7 @@
 						if ((stuff_to_fling) && (stuff_to_fling in range(1, src)))
 							ThrowRandom(stuff_to_fling, 4, 1)
 							src.visible_message("<span class='alert'>[src] smacks at [stuff_to_fling], sending it flying.</span>")
-		raging = 0
-		icon_state = "chefbot-idle"
+		src.calm_down()
 #undef FOOD_QUALITY_HORSESHIT
 #undef FOOD_QUALITY_SHIT
 #undef FOOD_QUALITY_GOOD_SHIT
@@ -255,3 +253,11 @@
 	new /obj/item/clothing/head/dramachefhat(Tsec)
 	qdel(src)
 	return
+
+/obj/machinery/bot/chefbot/proc/get_mad()
+	src.raging = 1
+	src.icon_state = "chefbot-mad"
+
+/obj/machinery/bot/chefbot/proc/calm_down()
+	src.raging = 0
+	src.icon_state = "chefbot-idle"
