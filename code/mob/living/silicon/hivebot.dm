@@ -2,6 +2,7 @@
 	name = "Robot"
 	voice_name = "synthesized voice"
 	icon = 'icons/mob/hivebot.dmi'
+	voice_type = "cyborg"
 	icon_state = "vegas"
 	health = 60
 	max_health = 60
@@ -797,7 +798,9 @@ Frequency:
 
 	if (src.mainframe)
 		src.real_name = "SHELL/[src.mainframe]"
+		src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 		src.name = src.real_name
+		src.update_name_tag()
 
 	else if(src.real_name == "Cyborg")
 		src.real_name += " "
