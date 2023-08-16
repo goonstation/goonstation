@@ -937,6 +937,7 @@
 	name = "Newspaper"
 	desc = "This is a newspaper. It appears to lack a headline. And text."
 	icon = 'icons/obj/large/64x32.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	icon_state = "newspaper"
 	item_state = "newspaper"
 	sealed = TRUE
