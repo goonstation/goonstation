@@ -12,12 +12,12 @@ TYPEINFO(/datum/component/watcher)
 	src.target = target
 
 /datum/component/watcher/RegisterWithParent()
-	RegisterSignal(src.target, COMSIG_MOVABLE_MOVED, PROC_REF(watch))
-	RegisterSignal(src.parent, COMSIG_MOVABLE_MOVED, PROC_REF(watch))
+	RegisterSignal(src.target, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(watch))
+	RegisterSignal(src.parent, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(watch))
 
 /datum/component/watcher/UnregisterFromParent()
-	UnregisterSignal(src.target, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(src.parent, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(src.target, XSIG_MOVABLE_TURF_CHANGED)
+	UnregisterSignal(src.parent, XSIG_MOVABLE_TURF_CHANGED)
 
 /datum/component/watcher/proc/watch()
 	var/atom/aparent = src.parent //this is safe, we checked on init
