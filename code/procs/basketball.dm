@@ -252,10 +252,10 @@
 
 		if(ishuman(target))
 			var/mob/living/carbon/human/cursed = target
-			cursed.equip_if_possible(new /obj/item/clothing/under/gimmick/cursedclown(cursed), cursed.slot_w_uniform)
-			cursed.equip_if_possible(new /obj/item/clothing/shoes/cursedclown_shoes(cursed), cursed.slot_shoes)
-			cursed.equip_if_possible(new /obj/item/clothing/mask/cursedclown_hat(cursed), cursed.slot_wear_mask)
-			cursed.equip_if_possible(new /obj/item/clothing/gloves/cursedclown_gloves(cursed), cursed.slot_gloves)
+			cursed.equip_if_possible(new /obj/item/clothing/under/gimmick/cursedclown(cursed), SLOT_W_UNIFORM)
+			cursed.equip_if_possible(new /obj/item/clothing/shoes/cursedclown_shoes(cursed), SLOT_SHOES)
+			cursed.equip_if_possible(new /obj/item/clothing/mask/cursedclown_hat(cursed), SLOT_WEAR_MASK)
+			cursed.equip_if_possible(new /obj/item/clothing/gloves/cursedclown_gloves(cursed), SLOT_GLOVES)
 
 			target.real_name = "cluwne"
 

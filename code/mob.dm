@@ -2912,7 +2912,7 @@
 
 	var/mob/living/carbon/human/newbody = new()
 	newbody.set_loc(reappear_turf)
-	newbody.equip_new_if_possible(/obj/item/clothing/under/misc, newbody.slot_w_uniform)
+	newbody.equip_new_if_possible(/obj/item/clothing/under/misc, SLOT_W_UNIFORM)
 
 	newbody.real_name = src.real_name
 
