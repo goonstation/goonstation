@@ -382,6 +382,9 @@
 		else if (!pixelable && W)
 			W.AfterAttack(target, src, reach, params)
 
+/mob/living/proc/get_slot(slot)
+	return
+
 /mob/living/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
 	if (!src.restrained() && !is_incapacitated(src))
 		var/obj/item/W = src.equipped()

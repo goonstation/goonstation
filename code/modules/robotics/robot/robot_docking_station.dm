@@ -906,40 +906,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			var/clothingRef = params["clothingRef"]
 			if(clothingRef)
 				var/obj/item/clothing/cloth = locate(clothingRef) in src.clothes
-				if (istype(cloth, /obj/item/clothing))
-					if (istype(cloth, /obj/item/clothing/under))
-						if (R.clothes["under"] != null)
-							var/obj/old = R.clothes["under"]
-							src.clothes.Add(old)
-							old.set_loc(src)
-						R.clothes["under"] = cloth
-						src.clothes.Remove(cloth)
-						cloth.set_loc(R)
-					else if (istype(cloth, /obj/item/clothing/suit))
-						if (R.clothes["suit"] != null)
-							var/obj/old = R.clothes["suit"]
-							src.clothes.Add(old)
-							old.set_loc(src)
-						R.clothes["suit"] = cloth
-						src.clothes.Remove(cloth)
-						cloth.set_loc(R)
-					else if (istype(cloth, /obj/item/clothing/mask))
-						if (R.clothes["mask"] != null)
-							var/obj/old = R.clothes["mask"]
-							src.clothes.Add(old)
-							old.set_loc(src)
-						R.clothes["mask"] = cloth
-						src.clothes.Remove(cloth)
-						cloth.set_loc(R)
-					else if (istype(cloth, /obj/item/clothing/head))
-						if (R.clothes["head"] != null)
-							var/obj/old = R.clothes["head"]
-							src.clothes.Add(old)
-							old.set_loc(src)
-						R.clothes["head"] = cloth
-						src.clothes.Remove(cloth)
-						cloth.set_loc(R)
-			R.update_appearance()
+				R.put_on_clothes(cloth, src)
 			. = TRUE
 		if("clothing-remove")
 			if (!isrobot(src.occupant))

@@ -641,3 +641,55 @@ var/global/list/module_editors = list()
 	var/chosen = tgui_input_list(usr, "Select a rack to link", "Law racks", racks)
 	if (chosen)
 		src.set_law_rack(racks[chosen])
+
+/mob/living/silicon/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
+	if (can_act(user) && istype(AM, /obj/item/clothing))
+		src.put_on_clothes(AM, user)
+		return
+
+	return ..()
+
+/mob/living/silicon/proc/put_on_clothes(/obj/item/clothing/cloth, atom/movable/AM as mob|obj)
+	if (!isrobot(src))
+		return
+
+	var/obj/machinery/recharge_station/station
+	var/mob/living/source
+	var/mob/living/silicon/robot/R = src
+
+	if (isliving(AM))
+		source = AM
+	else
+		station = AM
+
+	if (istype(cloth, /obj/item/clothing))
+		var/slot
+		if(istype(cloth, /obj/item/clothing/under))
+			slot = "under"
+		else if (istype(cloth, /obj/item/clothing/suit))
+			slot = "suit"
+		else if (istype(cloth, /obj/item/clothing/mask))
+			slot = "mask"
+		else if (istype(cloth, /obj/item/clothing/head))
+			slot = "head"
+
+		if(!slot)
+			return
+
+		if(station)
+			if (R.clothes[slot] != null)
+				var/obj/old = R.clothes[slot]
+				station.clothes.Add(old)
+				old.set_loc(station)
+			R.clothes[slot] = cloth
+			station.clothes.Remove(cloth)
+			cloth.set_loc(R)
+		else if(source)
+			if (R.clothes[slot] != null)
+				var/obj/old = R.clothes[slot]
+				source.put_in_hand_or_drop(old)
+			R.clothes[slot] = cloth
+			source.u_equip(cloth)
+
+	R.update_appearance()
+	. = TRUE

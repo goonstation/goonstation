@@ -639,3 +639,14 @@
 			var/datum/hud/silicon/robot/H = src.hud
 			H.update_status_effects()
 		return
+
+/mob/living/silicon/robot/proc/get_slot(slot)
+	switch(slot) // Robots have no slots, so we remap them
+		if(SLOT_WEAR_MASK)
+			return src.clothes["mask"]
+		if(SLOT_HEAD)
+			return src.clothes["head"]
+		if(SLOT_WEAR_SUIT)
+			return src.clothes["suit"]
+		if(SLOT_W_UNIFORM)
+			return src.clothes["under"]

@@ -950,9 +950,9 @@ var/datum/action_controller/actions
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 
-	var/mob/living/source  //The mob doing the action
-	var/mob/living/carbon/human/target  //The target of the action
-	var/obj/item/item				    //The item if any. If theres no item, we tried to remove something from that slot instead of putting an item there.
+	var/mob/living/source  	//The mob doing the action
+	var/mob/living/target  	//The target of the action
+	var/obj/item/item		//The item if any. If theres no item, we tried to remove something from that slot instead of putting an item there.
 	var/slot						    //The slot number
 	var/hidden
 
@@ -961,7 +961,6 @@ var/datum/action_controller/actions
 		source = Source
 		target = Target
 		item = Item
-		slot = Slot
 		hidden = Hidden
 
 		if(item)
@@ -1035,19 +1034,36 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		SEND_SIGNAL(source, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
+
 		var/obj/item/I = target.get_slot(slot)
 
 		if(item)
-			if(item == source.equipped() && !I)
-				if(target.can_equip(item, slot))
-					logTheThing(LOG_COMBAT, source, "successfully puts \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
-					for(var/mob/O in AIviewers(owner))
-						O.show_message("<span class='alert'><B>[source] puts [item] on [target]!</B></span>", 1)
+			var/success = FALSE
+
+			if(istype(target, /mob/living/carbon/human) && item == source.equipped() && !I)
+				var/mob/living/carbon/human/H = target
+				if(H.can_equip(item, slot))
+					success = TRUE
 					source.u_equip(item)
 					if(QDELETED(item))
 						return
-					target.force_equip(item, slot)
-					target.update_inv()
+					H.force_equip(item, slot)
+					H.update_inv()
+			else if(istype(target, /mob/living/silicon/robot))
+				success = TRUE
+				var/mob/living/silicon/robot/R = target
+				if (R.clothes[slot] != null)
+					var/obj/old = R.clothes[slot]
+					source.put_in_hand_or_drop(old)
+				R.clothes[slot] = item
+				source.u_equip(item)
+
+			if (success)
+				var/mob/living/silicon/robot/R = target
+				logTheThing(LOG_COMBAT, source, "successfully puts \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
+				for(var/mob/O in AIviewers(owner))
+					O.show_message("<span class='alert'><B>[source] puts [item] on [target]!</B></span>", 1)
+
 		else if (I) //Wire: Fix for Cannot execute null.handle other remove().
 			if(I.handle_other_remove(source, target))
 				logTheThing(LOG_COMBAT, source, "successfully removes \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
@@ -1073,7 +1089,10 @@ var/datum/action_controller/actions
 				I.dropped(target)
 				I.layer = initial(I.layer)
 				I.add_fingerprint(source)
-				target.update_inv()
+
+				if(istype(target, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = target
+					H.update_inv()
 			else
 				boutput(source, "<span class='alert'>You fail to remove [I] from [target].</span>")
 
