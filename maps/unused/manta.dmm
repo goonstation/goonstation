@@ -1256,7 +1256,7 @@
 /turf/simulated/floor/scorched2,
 /area/diner/kitchen)
 "aeg" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "aeh" = (
@@ -3011,9 +3011,9 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "akE" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall3_trans"
 	},
 /turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
@@ -3022,9 +3022,9 @@
 /turf/simulated/floor/plating/random,
 /area/listeningpost/syndicateassaultvessel)
 "akG" = (
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "diagonalWall3"
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
 	},
 /turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
@@ -3454,9 +3454,9 @@
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "alP" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall3_trans"
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
@@ -3472,9 +3472,9 @@
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "alR" = (
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "diagonalWall3"
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
@@ -3488,9 +3488,8 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "alU" = (
-/turf/simulated/shuttle/wall{
-	dir = 10;
-	icon_state = "diagonalWall3"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
 	},
 /turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
@@ -3660,9 +3659,9 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "amq" = (
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "wall3"
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
 	},
 /turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
@@ -17320,12 +17319,12 @@
 /obj/storage/crate/freezer{
 	name = "Freezer"
 	},
-/obj/item/fish/bass,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/carp,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -20713,7 +20712,7 @@
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
 "bgw" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -33598,6 +33597,13 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/listeningpost/syndicateassaultvessel)
+"dxS" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon_state = "wall3_trans"
+	},
+/turf/space/fluid/manta,
+/area/listeningpost/syndicateassaultvessel)
 "dyv" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -34929,12 +34935,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/captain)
 "gbH" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
+/obj/stool/bee_bed/heisenbee,
 /obj/critter/domestic_bee/heisenbee,
 /obj/item/storage/briefcase/toxins{
 	pixel_x = -7;
@@ -39825,6 +39826,13 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"rUa" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon_state = "wall3_trans"
+	},
+/turf/space/fluid/manta,
+/area/listeningpost/syndicateassaultvessel)
 "rVY" = (
 /obj/grille/catwalk{
 	dir = 5;
@@ -84590,7 +84598,7 @@ aaa
 aaa
 aaa
 aaa
-akE
+dxS
 akH
 akV
 akV
@@ -87610,7 +87618,7 @@ aaa
 aaa
 aaa
 aaa
-akG
+rUa
 akH
 akV
 akV

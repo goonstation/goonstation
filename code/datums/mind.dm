@@ -218,6 +218,18 @@ datum/mind
 		// stuff for critter respawns
 		src.get_player()?.last_death_time = world.timeofday
 
+	/// Returns whether this mind is a non-pseudo antagonist.
+	proc/is_antagonist()
+		// Handles pre-round antagonist assignments utilising `special_role`.
+		if (global.current_state < GAME_STATE_PLAYING)
+			return !!src.special_role
+
+		for (var/datum/antagonist/A as anything in src.antagonists)
+			if (!A.pseudo)
+				return TRUE
+
+		return FALSE
+
 	/// Gets an existing antagonist datum of the provided ID role_id.
 	proc/get_antagonist(role_id)
 		for (var/datum/antagonist/A as anything in src.antagonists)

@@ -15,7 +15,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	hand_count = 1
 	can_disarm = 1
 	can_help = 1
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 
 	is_npc = 1
 
@@ -574,7 +574,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	health_brute_vuln = 1
 	health_burn = 40
 	health_burn_vuln = 3
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD

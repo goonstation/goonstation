@@ -157,7 +157,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	anchored = ANCHORED
 	seekrange = 1
 	attack_range = 1
-	butcherable = 0
+	butcherable = BUTCHER_NOT_ALLOWED
 	density = 1
 	aggressive = 1
 	atkcarbon = 1

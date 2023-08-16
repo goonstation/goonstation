@@ -1852,36 +1852,22 @@ datum/preferences
 /proc/randomize_hair_color(var/hcolor)
 	if (!hcolor)
 		return
-	var/adj = 0
-	if (copytext(hcolor, 1, 2) == "#")
-		adj = 1
-	//DEBUG_MESSAGE("HAIR initial: [hcolor]")
-	var/hR_adj = num2hex(hex2num(copytext(hcolor, 1 + adj, 3 + adj)) + rand(-25,25), 2)
-	//DEBUG_MESSAGE("HAIR R: [hR_adj]")
-	var/hG_adj = num2hex(hex2num(copytext(hcolor, 3 + adj, 5 + adj)) + rand(-5,5), 2)
-	//DEBUG_MESSAGE("HAIR G: [hG_adj]")
-	var/hB_adj = num2hex(hex2num(copytext(hcolor, 5 + adj, 7 + adj)) + rand(-10,10), 2)
-	//DEBUG_MESSAGE("HAIR B: [hB_adj]")
-	var/return_color = "#" + hR_adj + hG_adj + hB_adj
-	//DEBUG_MESSAGE("HAIR final: [return_color]")
-	return return_color
+	var/list/rgb_list = rgb2num(hcolor)
+	return rgb(
+		rgb_list[1] + rand(-25, 25),
+		rgb_list[2] + rand(-5, 5),
+		rgb_list[3] + rand(-10, 10)
+	)
 
 /proc/randomize_eye_color(var/ecolor)
 	if (!ecolor)
 		return
-	var/adj = 0
-	if (copytext(ecolor, 1, 2) == "#")
-		adj = 1
-	//DEBUG_MESSAGE("EYE initial: [ecolor]")
-	var/eR_adj = num2hex(hex2num(copytext(ecolor, 1 + adj, 3 + adj)) + rand(-10,10), 2)
-	//DEBUG_MESSAGE("EYE R: [eR_adj]")
-	var/eG_adj = num2hex(hex2num(copytext(ecolor, 3 + adj, 5 + adj)) + rand(-10,10), 2)
-	//DEBUG_MESSAGE("EYE G: [eG_adj]")
-	var/eB_adj = num2hex(hex2num(copytext(ecolor, 5 + adj, 7 + adj)) + rand(-10,10), 2)
-	//DEBUG_MESSAGE("EYE B: [eB_adj]")
-	var/return_color = "#" + eR_adj + eG_adj + eB_adj
-	//DEBUG_MESSAGE("EYE final: [return_color]")
-	return return_color
+	var/list/rgb_list = rgb2num(ecolor)
+	return rgb(
+		rgb_list[1] + rand(-10, 10),
+		rgb_list[2] + rand(-10, 10),
+		rgb_list[3] + rand(-10, 10)
+	)
 
 proc/isfem(datum/customization_style/style)
 	return !!(initial(style.gender) & FEMININE)
@@ -1982,7 +1968,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	AH.voicetype = RANDOM_HUMAN_VOICE
 
 	var/list/hair_colors = list("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D",\
-	"#D8C078", "#E3CC88", "#F2DA91", "#F21AE", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
+	"#D8C078", "#E3CC88", "#F2DA91", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
 	var/hair_color1
 	var/hair_color2
 	var/hair_color3

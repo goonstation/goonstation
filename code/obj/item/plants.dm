@@ -412,8 +412,8 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	// module_research_type = /obj/item/plant/herb/cannabis
 	attack_hand(var/mob/user)
 		if (iswerewolf(user))
-			user.changeStatus("weakened", 3 SECONDS)
-			user.TakeDamage("All", 0, 5, 0, DAMAGE_BURN)
+			user.changeStatus("weakened", 4 SECONDS)
+			user.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
 			boutput(user, "<span class='alert'>You try to pick up [src], but it hurts and you fall over!</span>")
 			return
 		else ..()
@@ -421,11 +421,15 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	Crossed(atom/movable/AM as mob|obj)
 		var/mob/M = AM
 		if(iswerewolf(M))
-			M.changeStatus("weakened", 3 SECONDS)
-			M.force_laydown_standup()
-			M.TakeDamage("All", 0, 5, 0, DAMAGE_BURN)
-			M.visible_message("<span class='alert'>The [M] steps too close to [src] and falls down!</span>")
-			return
+			var/stun_duration
+			if (!GET_COOLDOWN(M, "aconite_stun"))
+				var/datum/statusEffect/stun_effect = M.changeStatus("weakened", 4 SECONDS)
+				M.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
+				M.visible_message("<span class='alert'>The [M] steps too close to [src] and falls down!</span>")
+				if (stun_effect)
+					stun_duration = stun_effect.duration //makes cooldown last the same as stun because the actual duration of applied effect is lower
+				ON_COOLDOWN(M, "aconite_stun", stun_duration)
+				return
 		..()
 	attack(mob/M, mob/user)
 		//if a wolf attacks with this, which they shouldn't be able to, they'll just drop it

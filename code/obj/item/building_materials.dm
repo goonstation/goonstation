@@ -61,12 +61,14 @@ MATERIAL
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	default_material = "steel"
+	///the material id string (lowercase) of the starting reinforcement
+	var/default_reinforcement = null
 	uses_material_appearance = TRUE
 
 	New()
 		..()
-		if (src.reinforcement)
-			src.set_reinforcement(getMaterial(src.reinforcement))
+		if (src.default_reinforcement)
+			src.set_reinforcement(getMaterial(src.default_reinforcement))
 		SPAWN(0)
 			update_appearance()
 		create_inventory_counter()
@@ -178,7 +180,9 @@ MATERIAL
 				else
 					boutput(user, "<span class='alert'>You can't mix different materials!</span>")
 					return
-			if (!S.reinforcement.isSameMaterial(src.reinforcement))
+ 			//if they're not both null
+			if (!(isnull(S.reinforcement) && isnull(src.reinforcement)) \
+					&& !S.reinforcement?.isSameMaterial(src.reinforcement)) //and one doesn't match the other
 				boutput(user, "<span class='alert'>You can't mix different reinforcements!</span>")
 				return
 			var/success = stack_item(W)
@@ -204,11 +208,11 @@ MATERIAL
 				return
 
 			if (src.material && (src.material.getMaterialFlags() & MATERIAL_METAL || src.material.getMaterialFlags() & MATERIAL_CRYSTAL))
-				var/makesheets = min(min(R.amount,src.amount),50)
-				var/sheetsinput = input("Reinforce how many sheets?","Min: 1, Max: [makesheets]",1) as num
+				var/sheetsinput = input("Reinforce how many sheets?","Min: 1, Max: [min(min(R.amount,src.amount),50)]",1) as num
+				var/makesheets = min(min(R.amount,src.amount),50) //recalculate AFTER the popup to avoid interface stacking exploits
+				sheetsinput = min(sheetsinput,makesheets)
 				if (sheetsinput < 1 || !isnum_safe(sheetsinput))
 					return
-				sheetsinput = min(sheetsinput,makesheets)
 
 				if (!in_interact_range(src, user) || !R) //moving, or the rods are getting destroyed during the input()
 					return
@@ -250,11 +254,7 @@ MATERIAL
 			//boutput(world, "check valid stack check 4 failed")
 			return 0
 		if (src.reinforcement && S.reinforcement)
-			if (src.reinforcement != S.reinforcement)
-				//boutput(world, "check valid stack check 5 failed")
-				return 0
-			var/datum/material/reinforcement_mat = getMaterial(S.reinforcement)
-			if (!reinforcement_mat.isSameMaterial(getMaterial(src.reinforcement)))
+			if (!S.reinforcement.isSameMaterial(src.reinforcement))
 				//boutput(world, "check valid stack check 6 failed")
 				return 0
 		return 1
@@ -455,7 +455,7 @@ MATERIAL
 
 	reinforced
 		icon_state = "sheet-m-r_5"
-		reinforcement = "steel"
+		default_reinforcement = "steel"
 
 /obj/item/sheet/glass
 	icon_state = "sheet-g_5" //overriden in-game but shows up in map editors
@@ -465,7 +465,7 @@ MATERIAL
 
 	reinforced
 		icon_state = "sheet-g-r_5"
-		reinforcement = "steel"
+		default_reinforcement = "steel"
 
 	crystal
 		default_material = "plasmaglass"
@@ -473,7 +473,7 @@ MATERIAL
 
 		reinforced
 			icon_state = "sheet-g-r_5"
-			reinforcement = "steel"
+			default_reinforcement = "steel"
 
 /obj/item/sheet/wood
 	item_state = "sheet-metal"

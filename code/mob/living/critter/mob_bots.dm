@@ -16,7 +16,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 	hand_count = 1
 	can_burn = FALSE
 	dna_to_absorb = 0
-	butcherable = FALSE
 	metabolizes = FALSE
 	custom_gib_handler = /proc/robogibs
 	stepsound = null

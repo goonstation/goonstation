@@ -37,12 +37,7 @@
 			if (A.irradiated)
 				//spatial interdictor: mitigate effect of radiation
 				//power expenditure is managed centrally by the interdictor
-				var/interdictor_influence = 0
-				for_by_tcl(IX, /obj/machinery/interdictor)
-					if (IX.radstorm_interdict(owner))
-						interdictor_influence = 1
-						break
-				if(!interdictor_influence)
+				if (!owner.hasStatus("spatial_protection"))
 					owner.take_radiation_dose((rand() * 0.3 SIEVERTS * A.irradiated * mult))
 
 		if (owner.bioHolder && ishuman(owner))

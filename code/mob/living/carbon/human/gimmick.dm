@@ -107,7 +107,7 @@
 			abilityHolder.updateButtons()
 
 			src.equip_new_if_possible(/obj/item/clothing/under/misc/lawyer/red/demonic, src.slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/suit/labcoat/hitman/satansuit, slot_wear_suit)
+			src.equip_new_if_possible(/obj/item/clothing/suit/hitman/satansuit, slot_wear_suit)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
 			src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
 			src.equip_new_if_possible(/obj/item/clothing/gloves/ring/wizard/teleport, slot_gloves) //Yes I could make a special satan teleport power, or I can give him a ring. Fuck it right?
