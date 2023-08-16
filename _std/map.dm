@@ -95,3 +95,20 @@ proc/random_space_turf(z=null, max_tries=20)
 		if (istype(T, /turf/space))
 			return T
 	return null
+
+
+
+
+//Let's clarify something. I don't know if it needs clarifying, but here I go anyways.
+
+//The UNDERWATER_MAP define is for things that should only be changed if the map is an underwater one.
+//Things like fluid turfs that would break on a normal map.
+
+//The map_currently_underwater global var is a variable to change how fluids and other objects interact with the current map.
+//This allows you to put ANY map 'underwater'. However, since underwater-specific maps are always underwater I set that here.
+
+#ifdef UNDERWATER_MAP
+var/global/map_currently_underwater = 1
+#else
+var/global/map_currently_underwater = 0
+#endif
