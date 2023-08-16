@@ -1437,6 +1437,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 #endif
 		product_list += new/datum/data/vending_product(/obj/item/device/flash/turbo, rand(1, 6), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, rand(1, 2), hidden=1) // Obtaining a backpack full of lethal ammo required no effort whatsoever, hence why nobody ordered AP speedloaders from the Syndicate (Convair880).
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/donut, rand(2, 4), hidden=1) // emergency snack
 
 /obj/machinery/vending/security_ammo //shitsec time yes
 	name = "AmmoTech"
