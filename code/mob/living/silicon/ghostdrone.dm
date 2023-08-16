@@ -202,7 +202,7 @@
 	full_heal()
 		var/before = src.stat
 		..()
-		if (before == 2 && src.stat < 2) //if we were dead, and now arent
+		if (before == STAT_DEAD && !isdead(src)) //if we were dead, and now arent
 			src.updateSprite()
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)

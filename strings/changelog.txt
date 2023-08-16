@@ -1,4 +1,63 @@
 
+(t)tue aug 15 23
+(u)MeggalBozale
+(p)15273
+(e)⚖|C-Balance
+(+)Vending machines can be tipped over by shooting them, and shooting them when tipped over lets bullets move past.
+(t)mon aug 14 23
+(u)Garash
+(p)15152
+(e)🆕🔄📄|C-Feature, C-Rework, A-UI
+(+)New UI for the Cryo Pods
+(t)sun aug 13 23
+(u)Bisar
+(p)15341
+(e)🪲📦|C-Bug, A-Game-Objects
+(*)MechComp triggers for Vend by Name should work properly now!
+(u)Ryou (Glamurio) & Zac
+(p)15192
+(e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
+(*)Added cinnamon to the game. Ask your local botanist to grow you some! Careful not too eat too much of it.
+(u)soapcyst
+(p)15203
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added misters to atlas and afterlife bar
+(u)Wisemonster
+(p)15251
+(e)🔄⏰📦|C-Rework, A-Status-Effects, A-Game-Objects
+(+)Devera's hygiene protection has been changed into a status effect.
+(u)Tyrant
+(p)15324
+(e)🪲|C-Bug
+(+)The HoP now has access to the command teleporter by default.
+(u)UnfunnyPerson
+(p)15136
+(e)⛔📦|C-Removal, A-Game-Objects
+(+)The black market megaphone can no longer be found in surplus crates.
+(u)Ikea
+(p)15320
+(e)⚖🤖|C-Balance, A-Silicons
+(+)light borg heads now have 60 hp, meaning they can now actually take two emp shots
+(u)Lord_Earthfire
+(p)15303
+(e)🆕🌱|C-Feature, A-Hydroponics
+(+)Banana peels fit in produce satchels now.
+(u)DimWhat
+(p)15161
+(e)⚖🎩|C-Balance, A-Clothing
+(+)Added a simple black jacket to the clothing booth.
+(t)sat aug 12 23
+(u)deathrobotpunch1
+(p)15202
+(e)💅🍝|C-QoL, A-Catering
+(*)Bartender now has a reagent scanner, medical record scanner and a health scanner built in to their PDA!
+(u)Amylizzle
+(p)15342
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The catastrophic nuclear meltdown is now slightly more catastrophic. Enjoy.
+(t)thu aug 10 23
+(u)pali
+(+)Vampire frost bats can now be released using a flip for real, just as the tooltip promises.
 (t)wed aug 09 23
 (u)Tyrant
 (p)15310
