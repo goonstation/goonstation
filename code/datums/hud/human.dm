@@ -314,7 +314,7 @@
 					// ^-- You don't say.
 					// you can write multiline macros with \, please god don't write 400 character macros on one line
 					#define autoequip_slot(slot, var_name)\
-						if (master.can_equip(I, master.slot) && !istype(I.loc, /obj/item/parts) && !(master.var_name && master.var_name.cant_self_remove))\
+						if (master.can_equip(I, slot) && !istype(I.loc, /obj/item/parts) && !(master.var_name && master.var_name.cant_self_remove))\
 						{\
 							master.u_equip(I);\
 							var/obj/item/C = master.var_name;\
@@ -329,7 +329,7 @@
 									master.drop_from_slot(C, get_turf(C))\
 								}\
 							}\
-							master.force_equip(I, master.slot);\
+							master.force_equip(I, slot);\
 							return\
 						}
 					autoequip_slot(SLOT_SHOES, shoes)
@@ -339,7 +339,7 @@
 					autoequip_slot(SLOT_WEAR_SUIT, wear_suit)
 					autoequip_slot(SLOT_GLASSES, glasses)
 					autoequip_slot(SLOT_EARS, ears)
-					autoequip_slot(, wear_mask)
+					autoequip_slot(SLOT_WEAR_MASK, wear_mask)
 					autoequip_slot(SLOT_HEAD, head)
 					autoequip_slot(SLOT_BACK, back)
 
@@ -393,7 +393,7 @@
 					if (I.try_specific_equip(user))
 						return
 
-					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; if(!master.put_in_hand(C)){master.drop_from_slot(C, get_turf(C))} } master.force_equip(I, master.slot); return }
+					#define autoequip_slot(slot, var_name) if (master.can_equip(I, slot) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; if(!master.put_in_hand(C)){master.drop_from_slot(C, get_turf(C))} } master.force_equip(I, slot); return }
 					autoequip_slot(SLOT_SHOES, shoes)
 					autoequip_slot(SLOT_GLOVES, gloves)
 					autoequip_slot(SLOT_WEAR_ID, wear_id)
@@ -571,7 +571,7 @@
 					else
 						master.client << link("https://wiki.ss13.co/Construction")
 
-			#define clicked_slot(slot) var/obj/item/W = master.get_slot(master.slot); if (W) { master.click(W, params); } else { var/obj/item/I = master.equipped(); if (!I || !master.can_equip(I, master.slot) || istype(I.loc, /obj/item/parts/)) { return; } master.u_equip(I); master.force_equip(I, master.slot); }
+			#define clicked_slot(slot) var/obj/item/W = master.get_slot(slot); if (W) { master.click(W, params); } else { var/obj/item/I = master.equipped(); if (!I || !master.can_equip(I, slot) || istype(I.loc, /obj/item/parts/)) { return; } master.u_equip(I); master.force_equip(I, slot); }
 			if("belt")
 				clicked_slot(SLOT_BELT)
 			if("storage1")
@@ -605,8 +605,8 @@
 		var/obj/item/W = null
 		var/obj/item/I
 
-		#define entered_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseEntered(location,control,params); }
-		#define test_slot(slot) if (!W) { I = master.equipped(); if (I && !master.can_equip(I, master.slot)) { I = null; } if (I && sel) { sel.screen_loc = H.screen_loc; } }
+		#define entered_slot(slot) W = master.get_slot(slot); if (W) { W.MouseEntered(location,control,params); }
+		#define test_slot(slot) if (!W) { I = master.equipped(); if (I && !master.can_equip(I, slot)) { I = null; } if (I && sel) { sel.screen_loc = H.screen_loc; } }
 
 		switch(H.id)
 			if("belt")
@@ -643,8 +643,8 @@
 				entered_slot(SLOT_EARS)
 				test_slot(SLOT_EARS)
 			if("mask")
-				entered_slot()
-				test_slot()
+				entered_slot(SLOT_WEAR_MASK)
+				test_slot(SLOT_WEAR_MASK)
 			if("head")
 				entered_slot(SLOT_HEAD)
 				test_slot(SLOT_HEAD)
@@ -685,7 +685,7 @@
 	MouseDrop(atom/movable/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
 		if (!H) return
 		var/obj/item/W = null
-		#define mdrop_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseDrop(over_object, src_location, over_location, over_control, params); }
+		#define mdrop_slot(slot) W = master.get_slot(slot); if (W) { W.MouseDrop(over_object, src_location, over_location, over_control, params); }
 		switch(H.id)
 			if("belt")
 				mdrop_slot(SLOT_BELT)
@@ -710,7 +710,7 @@
 			if("ears")
 				mdrop_slot(SLOT_EARS)
 			if("mask")
-				mdrop_slot()
+				mdrop_slot(SLOT_WEAR_MASK)
 			if("head")
 				mdrop_slot(SLOT_HEAD)
 			if ("lhand")
@@ -722,7 +722,7 @@
 	MouseDrop_T(atom/movable/screen/hud/H, atom/movable/O as obj, mob/user as mob)
 		if (!H) return
 		var/obj/item/W = null
-		#define mdrop_slot(slot) W = master.get_slot(master.slot); if (W) { W._MouseDrop_T(O,user); }
+		#define mdrop_slot(slot) W = master.get_slot(slot); if (W) { W._MouseDrop_T(O,user); }
 		switch(H.id)
 			if("belt")
 				mdrop_slot(SLOT_BELT)
@@ -747,7 +747,7 @@
 			if("ears")
 				mdrop_slot(SLOT_EARS)
 			if("mask")
-				mdrop_slot()
+				mdrop_slot(SLOT_WEAR_MASK)
 			if("head")
 				mdrop_slot(SLOT_HEAD)
 			if ("lhand")

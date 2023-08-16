@@ -234,7 +234,7 @@
 				M.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher, SLOT_WEAR_SUIT)
 				M.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes/noslip, SLOT_SHOES)
 				M.equip_new_if_possible(/obj/item/clothing/under/color/unremovable, SLOT_W_UNIFORM)
-				M.equip_new_if_possible(/obj/item/slasher_machete/possessed, SLOT_r_hand)
+				M.equip_new_if_possible(/obj/item/slasher_machete/possessed, SLOT_R_HAND)
 				M.equip_new_if_possible(/obj/item/clothing/gloves/black/slasher, SLOT_GLOVES)
 				if(!W.hasStatus("incorporeal"))
 					W.incorporealize()

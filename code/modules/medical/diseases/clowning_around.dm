@@ -84,7 +84,7 @@
 
 					var/obj/item/clothing/mask/clown_hat/clownmask = new /obj/item/clothing/mask/clown_hat(affected_mob)
 					//clownmask.cursed = 1
-					affected_mob:equip_if_possible( clownmask, affected_mob:SLOT_WEAR_MASK) //Hope you like your new mask sucka!!!!!
+					affected_mob:equip_if_possible( clownmask, SLOT_WEAR_MASK) //Hope you like your new mask sucka!!!!!
 		if(4)
 #ifdef HALLOWEEN
 			if(probmult(1))

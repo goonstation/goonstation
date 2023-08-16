@@ -937,7 +937,7 @@ proc/broadcast_to_all_gangs(var/message)
 				user.equip_if_possible(headwear, SLOT_HEAD)
 			else if (istype(headwear, /obj/item/clothing/mask))
 				user.drop_from_slot(user.wear_mask)
-				user.equip_if_possible(headwear, SLOT_WEAR_MASK
+				user.equip_if_possible(headwear, SLOT_WEAR_MASK)
 
 		if(!has_gang_headset)
 			var/obj/item/device/radio/headset/headset
