@@ -401,6 +401,83 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		if (prob(10))
 			src.say(pick( "Don't look for Lara...", "Lara??", "Lara the oven!", "Please don't talk to Lara", "LAAAAARRRAAAAAAAA!!!" ,"L-Lara."))
 
+/mob/living/critter/human/hobo
+	name = "Hobo"
+	desc = "They have a crazed look in their eyes"
+	health_brute = 20
+	health_burn = 20
+	ai_type = /datum/aiHolder/aggressive
+	human_to_copy = /mob/living/carbon/human/hobo
+
+/mob/living/critter/human/hobo/dagger
+	hand_count = 2
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.limb = new /datum/limb
+		HH.name = "left hand"
+		HH.suffix = "-L"
+		HH.icon_state = "handl"
+		HH.limb_name = "left arm"
+
+		HH = hands[2]
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.limb = new /datum/limb/sword
+		HH.name = "right hand"
+		HH.suffix = "-R"
+		HH.icon_state = "handr"
+		HH.limb_name = "scrap dagger"
+		HH.can_hold_items = FALSE
+		HH.object_for_inhand = /obj/item/scrapweapons/weapons/dagger
+
+/mob/living/critter/human/hobo/club
+	hand_count = 2
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.limb = new /datum/limb
+		HH.name = "left hand"
+		HH.suffix = "-L"
+		HH.icon_state = "blade"
+		HH.limb_name = "scrap club"
+		HH.can_hold_items = FALSE
+		HH.object_for_inhand = /obj/item/scrapweapons/weapons/club
+
+		HH = hands[2]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.limb = new /datum/limb
+		HH.name = "right hand"
+		HH.suffix = "-R"
+		HH.icon_state = "handr"
+		HH.limb_name = "right arm"
+
+/mob/living/critter/human/hobo/machete
+	hand_count = 2
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.limb = new /datum/limb/sword
+		HH.name = "left hand"
+		HH.suffix = "-L"
+		HH.icon_state = "blade"
+		HH.limb_name = "scrap machete"
+		HH.can_hold_items = FALSE
+		HH.object_for_inhand = /obj/item/scrapweapons/weapons/machete
+
+		HH = hands[2]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.limb = new /datum/limb
+		HH.name = "right hand"
+		HH.suffix = "-R"
+		HH.icon_state = "handr"
+		HH.limb_name = "right arm"
+
 /mob/living/carbon/human/syndicatemorrigan
 	New()
 		..()
@@ -1495,7 +1572,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 //WIP
 /obj/machinery/morrigan_self_destruct
-
 	name = "Self Destruct Button"
 	anchored = ANCHORED_ALWAYS
 	density = TRUE
