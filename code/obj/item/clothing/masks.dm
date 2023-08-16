@@ -439,7 +439,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		if ( reach <= 1 && user.mind && user.mind.assigned_role == "Clown" && istraitor(user) && istype(user,/mob/living/carbon/human) && istype(target,/mob/living/carbon/human) )
 			var/mob/living/carbon/human/U = user
 			var/mob/living/carbon/human/T = target
-			if ( U.a_intent != INTENT_HELP && U.zone_sel.selecting == "head" && T.can_equip(src,T.slot_wear_mask) )
+			if ( U.a_intent != INTENT_HELP && U.zone_sel.selecting == "head" && T.can_equip(src, SLOT_WEAR_MASK) )
 				U.visible_message("<span class='alert'>[src] latches onto [T]'s face!</span>","<span class='alert'>You slap [src] onto [T]'s face!'</span>")
 				logTheThing(LOG_COMBAT, user, "forces [T] to wear [src] (cursed clown mask) at [log_loc(T)].")
 				U.u_equip(src)
@@ -447,7 +447,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 				// If we don't empty out that slot first, it could blip the mask out of existence
 				T.drop_from_slot(T.wear_mask)
 
-				T.equip_if_possible(src,T.slot_wear_mask)
+				T.equip_if_possible(src, SLOT_WEAR_MASK)
 
 
 /obj/item/clothing/mask/medical
