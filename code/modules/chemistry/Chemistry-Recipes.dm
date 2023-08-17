@@ -2300,25 +2300,60 @@ datum
 			name = "Cyanide"
 			id = "cyanide"
 			result = "cyanide"
-			required_reagents = list("oil" = 1, "ammonia" = 1, "oxygen" = 1) // more or less the industrial route to cyanide
+			required_reagents = list("oil" = 1, "ammonia" = 2, "oxygen" = 2) // more or less the industrial route to cyanide
 			min_temperature = T0C + 100
 			result_amount = 1 // let's not make it too easy to mass produce
 			mix_phrase = "The mixture gives off a faint scent of almonds."
+			instant = FALSE
+			reaction_speed = 5
+			stateful = TRUE
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			reaction_icon_color = "#539147" //not realistically what the fumes would look like, but *looks* toxic!
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
+				if(holder?.my_atom?.is_open_container())
+					reaction_icon_state = list("reaction_smoke-1", "reaction_smoke-2")
+					var/datum/reagents/smokeContents = new/datum/reagents/
+					smokeContents.add_reagent("cyanide", 1)
+					smoke_reaction(smokeContents, 2, location, do_sfx = FALSE)
+				else
+					reaction_icon_state = list("reaction_bubble-1", "reaction_bubble-2")
+					holder.add_reagent("cyanide", 1) //you get to keep what would have been in the smoke
 
-				for(var/mob/M in all_viewers(null, location))
-					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
+		cyanide_offgas
+			name = "Cyanide Offgas"
+			id = "cyanide_offgas"
+			required_reagents = list("cyanide" = 0) //removed in on_reaction
+			result_amount = 1
+			mix_phrase = "The mixture slowly gives off fumes."
+			mix_sound = null
+			instant = FALSE
+			stateful = TRUE
+			reaction_icon_color = "#539147"
+			var/count = 0
 
-				var/list/mob/living/carbon/mobs_affected = list()
-				for(var/mob/living/carbon/C in range(location, 1))
-					if(!issmokeimmune(C))
-						mobs_affected += C
-				for(var/mob/living/carbon/C as anything in mobs_affected)
-					C.reagents.add_reagent("cyanide", (0.4 * created_volume) / length(mobs_affected))
-				return
+			does_react(var/datum/reagents/holder)
+				if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
+					return TRUE
+				else
+					return FALSE
+
+			on_reaction(var/datum/reagents/holder, var/created_volume) //assuming this is sodium cyanide so it also interacts with water and sulfuric acid
+				if(count < 6 && !holder.has_reagent("acid"))
+					if(holder.has_reagent("water"))
+						count += 4
+					else
+						count++
+					reaction_icon_state = null
+				else
+					var/location = get_turf(holder.my_atom)
+					reaction_icon_state = list("reaction_smoke-1", "reaction_smoke-2")
+					var/datum/reagents/smokeContents = new/datum/reagents/
+					smokeContents.add_reagent("cyanide", 1)
+					smoke_reaction(smokeContents, 2, location, do_sfx = FALSE)
+					holder.remove_reagent("cyanide", 1)
+					count = 0
 
 		Saxitoxin // replacing Sarin - come back to this with new recipe
 			name = "Saxitoxin"
@@ -2463,7 +2498,7 @@ datum
 					if(smoke_to_create > 0)                                     //...but if under 20C, don't make any
 						var/datum/reagents/smokeContents = new/datum/reagents/
 						smokeContents.add_reagent("acid", smoke_to_create)
-						smoke_reaction(smokeContents, 2, location)
+						smoke_reaction(smokeContents, 2, location, do_sfx = FALSE)
 				else
 					if(holder.total_temperature > T20C)
 						var/extra_product = ceil(clamp((holder.total_temperature - T20C) / 10, 1, 15))
@@ -2473,7 +2508,7 @@ datum
 							if(container.shatter_chemically())
 								var/datum/reagents/smokeContents = new/datum/reagents/
 								smokeContents.add_reagent("acid", 20)
-								smoke_reaction(smokeContents, 2, location)
+								smoke_reaction(smokeContents, 2, location, do_sfx = FALSE)
 							return
 						holder.add_reagent("acid", extra_product, temp_new = holder.total_temperature, chemical_reaction = TRUE)
 						holder.temperature_reagents(holder.total_temperature + extra_heat)
@@ -2533,10 +2568,9 @@ datum
 			name = "Pentetic Acid"
 			id = "penteticacid"
 			result = "penteticacid"
-			required_reagents = list("fuel" = 1, "chlorine" = 1, "ammonia" = 1, "formaldehyde" = 1, "sodium" = 1, "cyanide" = 1)
+			required_reagents = list("photophosphide" = 1, "ammonia" = 3, "formaldehyde" = 1, "cyanide" = 1) //three parts ammonia because it's easy to make in 30u increments
 			// (dichloroethane + ammonia) + formaldehyde (maybe that should be implemented?) + (sodium cyanide) yields EDTA which is almost DPTA
-			//min_temperature = 310
-			result_amount = 6
+			result_amount = 8 //you get a lot for the pretty complicated precursors
 			mix_phrase = "The substance becomes very still, emitting a curious haze."
 
 		acetaldehyde
@@ -2802,6 +2836,59 @@ datum
 			result_amount = 2 // lowered because the recipe is very easy
 			mix_phrase = "The mixture rapidly turns into a dense pink liquid."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		photophosphide //photosensitive explosive : )
+			name = "Photophosphide"
+			id = "photophosphide"
+			result = "photophosphide"
+			required_reagents = list("plasma" = 1, "phosphorus" = 1, "iron" = 1, "diethylamine" = 1)
+			result_amount = 1 //you only need low amounts anyways
+			mix_phrase = "The mixture yields a dull purple powder."
+			mix_sound = 'sound/misc/fuse.ogg'
+
+		photophosphide_light_reaction //check for light, explode if light
+			name = "Photophosphide Light Reaction"
+			id = "photophosphide_light_reaction"
+			required_reagents = list("photophosphide")
+			result_amount = 1
+			mix_phrase = null
+			mix_sound = null
+			reaction_icon_state = null
+			hidden = TRUE
+			instant = FALSE
+			stateful = TRUE
+			var/is_currently_exploding = FALSE //so it doesn't explode multiple times during the slight activation delay
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				if(!is_currently_exploding && holder.my_atom)
+					var/turf/T = get_turf(holder.my_atom)
+					if (isturf(T))
+						var/area/A = get_area(T)
+						if (istype(T, /turf/space) || A && (istype(A, /area/shuttle/) || istype(A, /area/shuttle_transit_space) || A.name == "Space" || A.name == "Ocean" || T.RL_GetBrightness() > 0.3))
+							var/obj/particle/chemical_shine/shine = new /obj/particle/chemical_shine
+							is_currently_exploding = TRUE
+							shine.set_loc(T)
+							playsound(get_turf(holder.my_atom), 'sound/effects/sparks6.ogg', 50, 1) //this could be better with a bespoke sound eventually, didn't want to steal vampire glare sound but similar-ish?
+							SPAWN(6 DECI SECONDS) //you get a slight moment to react/be surprised
+								qdel(shine)
+								holder.del_reagent("photophosphide")
+								explosion(holder.my_atom, T, -1,-1,0,1)
+								fireflash(T, 0)
+
+		photophosphide_decay //decays in low amounts
+			name = "Photophosphide Decay"
+			id = "photophosphide_decay"
+			required_reagents = list("photophosphide" = 1)
+			instant = FALSE
+			result_amount = 1
+			reaction_speed = 3
+			mix_phrase = "The mixture begins to fade away quickly with dim flashes."
+
+			does_react(var/datum/reagents/holder)
+				if(holder.get_reagent_amount("photophosphide") < 10)
+					return TRUE
+				else
+					return FALSE
 
 		styptic_powder // COGWERKS CHEM REVISION PROJECT: no idea, probably a magic drug
 			name = "Styptic Powder"

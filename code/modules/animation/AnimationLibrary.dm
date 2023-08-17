@@ -612,6 +612,11 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	icon = 'icons/effects/chemistry_effects.dmi'
 	plane = PLANE_OVERLAY_EFFECTS
 
+/obj/particle/chemical_shine
+	icon = 'icons/effects/chemistry_effects.dmi'
+	icon_state = "shine"
+	plane = PLANE_OVERLAY_EFFECTS
+
 /proc/chemistry_particle(var/datum/reagents/holder, var/datum/chemical_reaction/reaction)
 	if(!holder.my_atom.loc || !istype(holder.my_atom, /obj))
 		return

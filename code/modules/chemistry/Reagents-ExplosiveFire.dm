@@ -835,3 +835,18 @@ datum
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				bang()
+
+		combustible/photophosphide
+			id = "photophosphide"
+			name = "photophosphide"
+			random_chem_blacklisted = TRUE //probably for the best ??
+			description = "A photosensitive explosive reagent that detonates when exposed to relatively small amounts of light."
+			reagent_state = SOLID
+			fluid_r = 149
+			fluid_g = 119
+			fluid_b = 163
+			transparency = 255
+			taste = "sandy"
+
+			reaction_turf()
+				return
