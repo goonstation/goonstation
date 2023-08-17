@@ -214,7 +214,7 @@
 /area/devzone)
 "dB" = (
 /obj/landmark/map{
-	name = "ATLAS"
+	name = "DEVTEST"
 	},
 /turf/simulated/floor,
 /area/devzone)
@@ -503,8 +503,6 @@
 /area/devzone)
 "hS" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/orangeblack,
@@ -561,7 +559,6 @@
 /area/devzone)
 "if" = (
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/cable{
@@ -691,7 +688,6 @@
 	dir = null
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/cable{
@@ -748,7 +744,6 @@
 /area/devzone)
 "kM" = (
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/cable,
@@ -908,7 +903,6 @@
 "nh" = (
 /obj/machinery/vending/standard,
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/cable{
@@ -1043,6 +1037,11 @@
 "ok" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 4
+	},
+/obj/machinery/activation_button/ignition_switch{
+	pixel_x = -24;
+	pixel_y = -9;
+	id = "combustion_ignition"
 	},
 /turf/simulated/floor,
 /area/devzone)
@@ -1219,8 +1218,6 @@
 "qn" = (
 /obj/landmark/start/job/scientist,
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
@@ -1228,7 +1225,6 @@
 "qs" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/debug_generator{
@@ -1245,8 +1241,6 @@
 "qL" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
@@ -1435,8 +1429,6 @@
 /area/devzone)
 "ur" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
@@ -1473,8 +1465,6 @@
 "uG" = (
 /obj/machinery/bot/firebot,
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
@@ -1815,8 +1805,6 @@
 /area/devzone)
 "zT" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
@@ -1906,6 +1894,7 @@
 	pixel_x = 7;
 	pixel_y = 5
 	},
+/obj/machinery/hydro_mister,
 /turf/simulated/floor/grass/random,
 /area/devzone)
 "AW" = (
@@ -1983,8 +1972,6 @@
 /area/devzone)
 "Cv" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
@@ -2078,16 +2065,12 @@
 /area/devzone)
 "Dz" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "1-2"
 	},
 /obj/cable{
 	icon_state = "1-4"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
@@ -2409,8 +2392,6 @@
 /area/devzone)
 "Ic" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "1-2"
 	},
 /obj/cable{
@@ -2427,8 +2408,6 @@
 /area/devzone)
 "Ip" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "1-2"
 	},
 /obj/cable{
@@ -2603,7 +2582,6 @@
 "KV" = (
 /obj/machinery/networked/telepad,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
@@ -3408,17 +3386,11 @@
 	icon_state = "on";
 	on = 1
 	},
-/turf/simulated/floor/engine/vacuum,
-/area/devzone)
-"VJ" = (
 /obj/machinery/sparker{
 	id = "combustion_ignition";
 	layer = 7;
 	name = "Mounted Igniter";
 	pixel_x = 24
-	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/devzone)
@@ -3481,6 +3453,7 @@
 /area/devzone)
 "Wr" = (
 /obj/machinery/hydro_growlamp,
+/obj/machinery/hydro_mister,
 /turf/simulated/floor/grass/random,
 /area/devzone)
 "Wv" = (
@@ -4143,7 +4116,7 @@ fT
 xO
 Dk
 pg
-VJ
+Nj
 Nj
 vB
 Nj

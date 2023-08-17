@@ -269,8 +269,8 @@ Turfs and decal for the space rift
 		..()
 
 		bioHolder.AddEffect("psy_resist") // Heh
-		src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/under/color/white, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/red, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/under/color/white, SLOT_W_UNIFORM)
 
 	initializeBioholder()
 		bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/tramp

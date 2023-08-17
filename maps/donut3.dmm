@@ -7697,8 +7697,6 @@
 /area/station/medical/dome)
 "ciB" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
@@ -9589,8 +9587,6 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen,
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "4-10"
 	},
 /obj/disposalpipe/segment{
@@ -24070,12 +24066,7 @@
 	},
 /area/station/security/main)
 "hnE" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
+/obj/stool/bee_bed/heisenbee,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "hnH" = (
@@ -26436,8 +26427,6 @@
 	pixel_y = -24
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood,
@@ -28178,8 +28167,6 @@
 /area/space)
 "iDx" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
@@ -30612,8 +30599,6 @@
 /area/station/maintenance/inner/east)
 "jpL" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/cable{
@@ -40116,8 +40101,6 @@
 /obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood,
@@ -41930,8 +41913,6 @@
 "mPv" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
@@ -43698,8 +43679,6 @@
 /area/station/maintenance/outer/west)
 "npd" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/blind_switch/area/west,
@@ -44264,12 +44243,7 @@
 /turf/simulated/floor/sand,
 /area/station/engine/engineering/ce)
 "nxU" = (
-/obj/stool{
-	desc = "Though it was made to suit him, Jones still seems to sleep in every spot that is NOT this little bed.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "cat bed"
-	},
+/obj/stool/pet_bed/jones,
 /mob/living/critter/small_animal/cat/jones{
 	dir = 8
 	},
@@ -54583,8 +54557,6 @@
 	icon_state = "1-10"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "4-10"
 	},
 /obj/grille/catwalk/jen,
@@ -67841,8 +67813,6 @@
 /area/station/crew_quarters/clown)
 "uPz" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/junction/left/south,

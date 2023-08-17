@@ -257,7 +257,8 @@
 			/obj/item/parts/human_parts/arm,
 			/obj/item/parts/human_parts/leg,
 			/obj/item/raw_material/cotton,
-			/obj/item/feather)
+			/obj/item/feather,
+			/obj/item/bananapeel)
 
 		matches(atom/movable/inserted, atom/movable/template)
 			. = ..()

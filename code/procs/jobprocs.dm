@@ -332,83 +332,83 @@ var/global/totally_random_jobs = FALSE
 /proc/equip_job_items(var/datum/job/JOB, var/mob/living/carbon/human/H)
 	// Jumpsuit - Important! Must be equipped early to provide valid slots for other items
 	if (JOB.slot_jump && length(JOB.slot_jump) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_jump), H.slot_w_uniform)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_jump), SLOT_W_UNIFORM)
 	else if (length(JOB.slot_jump))
-		H.equip_new_if_possible(JOB.slot_jump[1], H.slot_w_uniform)
+		H.equip_new_if_possible(JOB.slot_jump[1], SLOT_W_UNIFORM)
 	// Backpack and contents
 	if (JOB.slot_back && length(JOB.slot_back) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_back), H.slot_back)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_back), SLOT_BACK)
 	else if (length(JOB.slot_back))
-		H.equip_new_if_possible(JOB.slot_back[1], H.slot_back)
+		H.equip_new_if_possible(JOB.slot_back[1], SLOT_BACK)
 	if (JOB.slot_back && length(JOB.items_in_backpack))
 		for (var/X in JOB.items_in_backpack)
 			if(ispath(X))
-				H.equip_new_if_possible(X, H.slot_in_backpack)
+				H.equip_new_if_possible(X, SLOT_IN_BACKPACK)
 	// Belt and contents
 	if (JOB.slot_belt && length(JOB.slot_belt) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_belt), H.slot_belt)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_belt), SLOT_BELT)
 	else if (length(JOB.slot_belt))
-		H.equip_new_if_possible(JOB.slot_belt[1], H.slot_belt)
+		H.equip_new_if_possible(JOB.slot_belt[1], SLOT_BELT)
 	if (JOB.slot_belt && length(JOB.items_in_belt) && H.belt?.storage)
 		for (var/X in JOB.items_in_belt)
 			if(ispath(X))
-				H.equip_new_if_possible(X, H.slot_in_belt)
+				H.equip_new_if_possible(X, SLOT_IN_BELT)
 	// Footwear
 	if (JOB.slot_foot && length(JOB.slot_foot) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_foot), H.slot_shoes)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_foot), SLOT_SHOES)
 	else if (length(JOB.slot_foot))
-		H.equip_new_if_possible(JOB.slot_foot[1], H.slot_shoes)
+		H.equip_new_if_possible(JOB.slot_foot[1], SLOT_SHOES)
 	// Suit
 	if (JOB.slot_suit && length(JOB.slot_suit) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_suit), H.slot_wear_suit)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_suit), SLOT_WEAR_SUIT)
 	else if (length(JOB.slot_suit))
-		H.equip_new_if_possible(JOB.slot_suit[1], H.slot_wear_suit)
+		H.equip_new_if_possible(JOB.slot_suit[1], SLOT_WEAR_SUIT)
 	// Ears
 	if (JOB.slot_ears && length(JOB.slot_ears) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_ears), H.slot_ears)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_ears), SLOT_EARS)
 	else if (length(JOB.slot_ears))
 		if (!(H.traitHolder && H.traitHolder.hasTrait("allears") && ispath(JOB.slot_ears[1],/obj/item/device/radio/headset)))
-			H.equip_new_if_possible(JOB.slot_ears[1], H.slot_ears)
+			H.equip_new_if_possible(JOB.slot_ears[1], SLOT_EARS)
 	// Mask
 	if (JOB.slot_mask && length(JOB.slot_mask) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_mask), H.slot_wear_mask)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_mask), SLOT_WEAR_MASK)
 	else if (length(JOB.slot_mask))
-		H.equip_new_if_possible(JOB.slot_mask[1], H.slot_wear_mask)
+		H.equip_new_if_possible(JOB.slot_mask[1], SLOT_WEAR_MASK)
 	// Gloves
 	if (JOB.slot_glov && length(JOB.slot_glov) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_glov), H.slot_gloves)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_glov), SLOT_GLOVES)
 	else if (length(JOB.slot_glov))
-		H.equip_new_if_possible(JOB.slot_glov[1], H.slot_gloves)
+		H.equip_new_if_possible(JOB.slot_glov[1], SLOT_GLOVES)
 	// Eyes
 	if (JOB.slot_eyes && length(JOB.slot_eyes) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_eyes), H.slot_glasses)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_eyes), SLOT_GLASSES)
 	else if (length(JOB.slot_eyes))
-		H.equip_new_if_possible(JOB.slot_eyes[1], H.slot_glasses)
+		H.equip_new_if_possible(JOB.slot_eyes[1], SLOT_GLASSES)
 	// Head
 	if (JOB.slot_head && length(JOB.slot_head) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_head), H.slot_head)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_head), SLOT_HEAD)
 	else if (length(JOB.slot_head))
-		H.equip_new_if_possible(JOB.slot_head[1], H.slot_head)
+		H.equip_new_if_possible(JOB.slot_head[1], SLOT_HEAD)
 	// Left pocket
 	if (JOB.slot_poc1 && length(JOB.slot_poc1) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), H.slot_l_store)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), SLOT_L_STORE)
 	else if (length(JOB.slot_poc1))
-		H.equip_new_if_possible(JOB.slot_poc1[1], H.slot_l_store)
+		H.equip_new_if_possible(JOB.slot_poc1[1], SLOT_L_STORE)
 	// Right pocket
 	if (JOB.slot_poc2 && length(JOB.slot_poc2) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_poc2), H.slot_r_store)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_poc2), SLOT_R_STORE)
 	else if (length(JOB.slot_poc2))
-		H.equip_new_if_possible(JOB.slot_poc2[1], H.slot_r_store)
+		H.equip_new_if_possible(JOB.slot_poc2[1], SLOT_R_STORE)
 	// Left hand
 	if (JOB.slot_lhan && length(JOB.slot_lhan) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), H.slot_l_hand)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), SLOT_L_HAND)
 	else if (length(JOB.slot_lhan))
-		H.equip_new_if_possible(JOB.slot_lhan[1], H.slot_l_hand)
+		H.equip_new_if_possible(JOB.slot_lhan[1], SLOT_L_HAND)
 	// Right hand
 	if (JOB.slot_rhan && length(JOB.slot_rhan) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), H.slot_r_hand)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), SLOT_R_HAND)
 	else if (length(JOB.slot_rhan))
-		H.equip_new_if_possible(JOB.slot_rhan[1], H.slot_r_hand)
+		H.equip_new_if_possible(JOB.slot_rhan[1], SLOT_R_HAND)
 
 	#ifdef APRIL_FOOLS
 	H.back?.setMaterial(getMaterial("jean"))
@@ -592,13 +592,13 @@ var/global/totally_random_jobs = FALSE
 /mob/living/carbon/human/proc/equip_sensory_items()
 	if (src.traitHolder.hasTrait("blind"))
 		src.drop_from_slot(src.glasses)
-		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), src.slot_glasses)
+		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), SLOT_GLASSES)
 	if (src.traitHolder.hasTrait("shortsighted"))
 		src.drop_from_slot(src.glasses)
-		src.equip_if_possible(new /obj/item/clothing/glasses/regular(src), src.slot_glasses)
+		src.equip_if_possible(new /obj/item/clothing/glasses/regular(src), SLOT_GLASSES)
 	if (src.traitHolder.hasTrait("deaf"))
 		src.drop_from_slot(src.ears)
-		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), src.slot_ears)
+		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), SLOT_EARS)
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
 	equip_job_items(JOB, src)
@@ -606,7 +606,7 @@ var/global/totally_random_jobs = FALSE
 		if (src.back?.storage)
 			if(JOB.receives_disk)
 				var/obj/item/disk/data/floppy/read_only/D = new /obj/item/disk/data/floppy/read_only(src)
-				src.equip_if_possible(D, slot_in_backpack)
+				src.equip_if_possible(D, SLOT_IN_BACKPACK)
 				var/datum/computer/file/clone/R = new
 				R.fields["ckey"] = ckey(src.key)
 				R.fields["name"] = src.real_name
@@ -642,27 +642,27 @@ var/global/totally_random_jobs = FALSE
 
 			if(JOB.receives_badge)
 				var/obj/item/clothing/suit/security_badge/B = new /obj/item/clothing/suit/security_badge(src)
-				src.equip_if_possible(B, slot_in_backpack)
+				src.equip_if_possible(B, SLOT_IN_BACKPACK)
 				B.badge_owner_name = src.real_name
 				B.badge_owner_job = src.job
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
 		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
-		src.force_equip(E, slot_in_backpack, TRUE)
+		src.force_equip(E, SLOT_IN_BACKPACK, TRUE)
 		#ifdef UNDERWATER_MAP
 		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
-		src.force_equip(SSW, slot_in_backpack, TRUE)
+		src.force_equip(SSW, SLOT_IN_BACKPACK, TRUE)
 		var/obj/item/clothing/head/helmet/space/engineer/diving/civilian/SHW = new /obj/item/clothing/head/helmet/space/engineer/diving/civilian(src.loc)
-		src.force_equip(SHW, slot_in_backpack, TRUE)
+		src.force_equip(SHW, SLOT_IN_BACKPACK, TRUE)
 		#else
 		var/obj/item/clothing/suit/space/emerg/SSS = new /obj/item/clothing/suit/space/emerg(src.loc)
-		src.force_equip(SSS, slot_in_backpack, TRUE)
+		src.force_equip(SSS, SLOT_IN_BACKPACK, TRUE)
 		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
-		src.force_equip(SHS, slot_in_backpack, TRUE)
+		src.force_equip(SHS, SLOT_IN_BACKPACK, TRUE)
 		#endif
 		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
-		src.force_equip(GPSDEVICE, slot_in_backpack, TRUE)
+		src.force_equip(GPSDEVICE, SLOT_IN_BACKPACK, TRUE)
 
 	if (src.traitHolder?.hasTrait("stowaway") || src.traitHolder?.hasTrait("pilot"))
 		var/obj/item/device/pda2/pda = locate() in src
@@ -706,18 +706,18 @@ var/global/totally_random_jobs = FALSE
 		trinket.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
 		trinket.quality = rand(5,80)
 		var/equipped = 0
-		if (src.back?.storage && src.equip_if_possible(trinket, slot_in_backpack))
+		if (src.back?.storage && src.equip_if_possible(trinket, SLOT_IN_BACKPACK))
 			equipped = 1
-		else if (src.belt?.storage && src.equip_if_possible(trinket, slot_in_belt))
+		else if (src.belt?.storage && src.equip_if_possible(trinket, SLOT_IN_BELT))
 			equipped = 1
 		if (!equipped)
-			if (!src.l_store && src.equip_if_possible(trinket, slot_l_store))
+			if (!src.l_store && src.equip_if_possible(trinket, SLOT_L_STORE))
 				equipped = 1
-			else if (!src.r_store && src.equip_if_possible(trinket, slot_r_store))
+			else if (!src.r_store && src.equip_if_possible(trinket, SLOT_R_STORE))
 				equipped = 1
-			else if (!src.l_hand && src.equip_if_possible(trinket, slot_l_hand))
+			else if (!src.l_hand && src.equip_if_possible(trinket, SLOT_L_HAND))
 				equipped = 1
-			else if (!src.r_hand && src.equip_if_possible(trinket, slot_r_hand))
+			else if (!src.r_hand && src.equip_if_possible(trinket, SLOT_R_HAND))
 				equipped = 1
 
 			if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground
@@ -784,8 +784,8 @@ var/global/totally_random_jobs = FALSE
 		C.access = JOB.access.Copy()
 		C.pronouns = src.get_pronouns()
 
-		if(!src.equip_if_possible(C, slot_wear_id))
-			src.equip_if_possible(C, slot_in_backpack)
+		if(!src.equip_if_possible(C, SLOT_WEAR_ID))
+			src.equip_if_possible(C, SLOT_IN_BACKPACK)
 
 		if(src.pin)
 			C.pin = src.pin
@@ -808,19 +808,19 @@ var/global/totally_random_jobs = FALSE
 		var/obj/item/currency/spacecash/S = new /obj/item/currency/spacecash
 		S.setup(src,wagesystem.jobs[JOB.name] * cashModifier)
 
-		if (isnull(src.get_slot(slot_r_store)))
-			src.equip_if_possible(S, slot_r_store)
-		else if (isnull(src.get_slot(slot_l_store)))
-			src.equip_if_possible(S, slot_l_store)
+		if (isnull(src.get_slot(SLOT_R_STORE)))
+			src.equip_if_possible(S, SLOT_R_STORE)
+		else if (isnull(src.get_slot(SLOT_L_STORE)))
+			src.equip_if_possible(S, SLOT_L_STORE)
 		else
-			src.equip_if_possible(S, slot_in_backpack)
+			src.equip_if_possible(S, SLOT_IN_BACKPACK)
 	else
 		var/shitstore = rand(1,3)
 		switch(shitstore)
 			if(1)
-				src.equip_new_if_possible(/obj/item/pen, slot_r_store)
+				src.equip_new_if_possible(/obj/item/pen, SLOT_R_STORE)
 			if(2)
-				src.equip_new_if_possible(/obj/item/reagent_containers/food/drinks/water, slot_r_store)
+				src.equip_new_if_possible(/obj/item/reagent_containers/food/drinks/water, SLOT_R_STORE)
 
 
 /mob/living/carbon/human/proc/JobEquipSpawned(rank, no_special_spawn)
