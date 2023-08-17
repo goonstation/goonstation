@@ -641,7 +641,7 @@ ABSTRACT_TYPE(/obj/item)
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)
-		P.setMaterial(src.material, mutable = src.material.mutable)
+		P.setMaterial(src.material, mutable = src.material.isMutable())
 
 	src.change_stack_amount(-toRemove)
 	P.change_stack_amount(toRemove - P.amount)
