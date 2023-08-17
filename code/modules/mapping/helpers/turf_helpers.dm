@@ -18,7 +18,8 @@ ABSTRACT_TYPE(/obj/mapping_helper/turfs)
 /** ===== Burner and breaker for floors =====
  * These may look out of place on non tiled flooring
  * use these instead of the scorched/burnt subtypes as they work for most floors
- * exceptions include shuttle floors, reinforced floors, planet auto floors, void tiles, etc
+ * exceptions are floors that have can break/burn set to FALSE
+ * includes shuttle floors, reinforced floors, planet auto floors, void tiles, etc
  * if placed on one of these floors it will be logged
  */
 
