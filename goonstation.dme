@@ -346,6 +346,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\gamemodes\flock.dm"
 #include "code\datums\gamemodes\football.dm"
 #include "code\datums\gamemodes\gangwar.dm"
+#include "code\datums\gamemodes\gangwar_random_gangs.dm"
 #include "code\datums\gamemodes\gm_parent.dm"
 #include "code\datums\gamemodes\mixed.dm"
 #include "code\datums\gamemodes\mixed_rp.dm"
