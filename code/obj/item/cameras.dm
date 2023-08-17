@@ -387,18 +387,17 @@ TYPEINFO(/obj/item/camera_film/large)
 				if (iscarbon(M))
 					var/mob/living/carbon/temp = M
 					if (temp.l_hand || temp.r_hand)
-						var/they_are = M.gender == "male" ? "He's" : M.gender == "female" ? "She's" : "They're" // I wanna just use he_or_she() but it wouldn't really work
 						if (temp.l_hand)
-							holding = "[they_are] holding \a [temp.l_hand]"
+							holding = "[hes_or_shes(M)] holding \a [temp.l_hand]"
 						if (temp.r_hand)
 							if (holding)
 								holding += " and \a [temp.r_hand]."
 							else
-								holding = "[they_are] holding \a [temp.r_hand]."
+								holding = "[hes_or_shes(M)] holding \a [temp.r_hand]."
 						else if (holding)
 							holding += "."
 
-				var/they_look = M.gender == "male" ? "he looks" : M.gender == "female" ? "she looks" : "they look"
+				var/they_look = "[he_or_she(M)] look[M.get_pronouns().pluralize ? null : "s"]"
 				var/health_info = M.health < 75 ? " - [they_look][M.health < 25 ? " really" : null] hurt" : null
 				if (powerflash && M == target && !M.eyes_protected_from_light())
 					if (!health_info)

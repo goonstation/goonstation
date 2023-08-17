@@ -729,7 +729,7 @@ datum
 									var/obj/item/clothing/glasses/eyepatch/E = new /obj/item/clothing/glasses/eyepatch(H)
 									E.name = "Pirate Eyepatch"
 									E.desc = "Arr!"
-									H.equip_if_possible(E,H.slot_glasses)
+									H.equip_if_possible(E,SLOT_GLASSES)
 					H.update_colorful_parts()
 				else
 					random_brute_damage(M, 5)
@@ -3696,6 +3696,68 @@ datum
 					if(probmult(10) && istype(virus.master,/datum/ailment/disease/food_poisoning))
 						M.cure_disease(virus)
 						boutput(M,"<span class= 'notice'>You feel a little less sickly.</span>")
+				..()
+
+		fooddrink/cinnamon
+			name = "cinnamon"
+			id = "cinnamon"
+			description = "With a sweet and aromatic scent, it is commonly used in various culinary applications. Consuming large quantities may be a challenge."
+			reagent_state = SOLID
+			fluid_r = 197
+			fluid_g = 140
+			fluid_b = 102
+			transparency = 255
+			overdose = 20
+			taste = list("sweet", "aromatic")
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+
+				if (prob(80))
+					M.losebreath += (2 * mult)
+					volume -= overdose
+					M.changeStatus("stunned", 3 SECONDS)
+					particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(M.loc, M.dir, "#C58C66"))
+
+					switch(rand(1, 6))
+						if (1) M.emote("cough")
+						if (2) M.emote("wheeze")
+						if (3) M.emote("gasp")
+						if (4) M.emote("sputter")
+						if (5) M.emote("groan")
+						if (6) M.emote("choke")
+
+					var/mob/living/target
+					var/check_loc = get_step(M, M.dir)
+					for (var/mob/living/L in check_loc)
+						target = L
+						break
+
+					if (target)
+						var/message_append = ""
+						if (prob(60))
+							switch(rand(1, 9))
+								if (1) message_append = " Ouch!"
+								if (2) message_append = " Looks painful."
+								if (3) message_append = " Whoa!"
+								if (4) message_append = " What an idiot."
+								if (5) message_append = " That's so stupid."
+								if (6) message_append = " Careless."
+								if (7) message_append = " Huh."
+								if (8) message_append = " Why?"
+								if (9) message_append = " Wow!"
+						M.visible_message("<span class='alert'><B>[M]</B> blows cinnamon right into <B>[target]</B>'s face![message_append]</span>", group = "[M]_blow_smoke_at_[target]")
+
+						if (target)
+							SPAWN(0) target.emote("cough")
+					else
+						var/message
+						switch(rand(1, 4))
+							if (1) message = "<B>[M]</B> puffs out a cinnamon cloud!"
+							if (2) message = "<B>[M]</B> exhales a huge cloud of cinnamon!"
+							if (3) message = "<B>[M]</B> blows out a cinnamon cloud!"
+							if (4) message = "<B>[M]</B> exhales some cinnamon from [his_or_her(M)] mouth!"
+						M.visible_message("<span class='alert'>[message]</span>", group = "blow_smoke")
 				..()
 
 		fooddrink/juice_pickle

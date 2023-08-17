@@ -14790,12 +14790,7 @@
 	d2 = 4;
 	icon_state = "1-6"
 	},
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
+/obj/stool/bee_bed/heisenbee,
 /obj/critter/domestic_bee/heisenbee,
 /turf/simulated/floor/carpet/blue/fancy/edge/west{
 	broken = 1;

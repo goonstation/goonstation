@@ -156,6 +156,8 @@
 	proc/UpdateDirBlocks()
 		src.blocked_dirs = 0
 		for (var/obj/O in src.contents)
+			if(!O.density)
+				continue
 			if (istype(O, /obj/window) && !is_cardinal(O.dir)) // full window
 				src.blocked_dirs = NORTH | SOUTH | EAST | WEST
 				return

@@ -126,7 +126,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		for (var/datum/equipmentHolder/EE in equipment)
 			EE.after_setup(hud)
 
-		burning_image.icon = 'icons/misc/critter.dmi'
+		burning_image.icon = 'icons/mob/critter/overlays.dmi'
 		burning_image.icon_state = null
 
 		src.old_canmove = src.canmove
@@ -1011,19 +1011,19 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 	updatehealth()
 		if (src.nodamage)
-			if (health != max_health)
+			if (src.health != src.max_health)
 				full_heal()
-			src.health = max_health
+			src.health = src.max_health
 			setalive(src)
-			icon_state = icon_state_alive ? icon_state_alive : initial(icon_state)
+			src.icon_state = src.icon_state_alive ? src.icon_state_alive : initial(src.icon_state)
 		else
-			health = max_health
-			for (var/T in healthlist)
-				var/datum/healthHolder/HH = healthlist[T]
+			src.health = src.max_health
+			for (var/T in src.healthlist)
+				var/datum/healthHolder/HH = src.healthlist[T]
 				if (HH.count_in_total)
-					health -= (HH.maximum_value - HH.value)
-		hud.update_health()
-		if (health <= 0 && stat < 2)
+					src.health -= (HH.maximum_value - HH.value)
+		src.hud.update_health()
+		if (src.health <= 0 && !isdead(src))
 			death()
 
 	proc/specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -1212,12 +1212,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		if (!B || force_remove)
 			UpdateOverlays(null, "burning")
 			return
-		else if (B.stage == 1)
-			burning_image.icon_state = "fire1_[burning_suffix]"
-		else if (B.stage == 2)
-			burning_image.icon_state = "fire2_[burning_suffix]"
-		else if (B.stage == 3)
-			burning_image.icon_state = "fire3_[burning_suffix]"
+		burning_image.icon_state = "fire[B.getStage()]-[burning_suffix]"
 		UpdateOverlays(burning_image, "burning")
 
 	force_laydown_standup()
@@ -1226,15 +1221,14 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 	proc/update_stunned_icon(var/canmove)
 		if (use_stunned_icon)
-			if(canmove != src.old_canmove)
+			if (canmove != src.old_canmove)
 				src.old_canmove = canmove
 				if (canmove || isdead(src))
 					src.UpdateOverlays(null, "dizzy")
 					return
-				else if(src.is_valid_icon_state("dizzy",src.icon))
-					var/image/dizzyStars = src.SafeGetOverlayImage("dizzy", src.icon, "dizzy", MOB_OVERLAY_BASE+20) // why such a big boost? because the critter could have a bunch of overlays, that's why
-					if (dizzyStars)
-						src.UpdateOverlays(dizzyStars, "dizzy")
+				var/image/dizzyStars = src.SafeGetOverlayImage("dizzy", 'icons/mob/critter/overlays.dmi', "dizzy", MOB_OVERLAY_BASE + 20) // why such a big boost? because the critter could have a bunch of overlays, that's why
+				if (dizzyStars)
+					src.UpdateOverlays(dizzyStars, "dizzy")
 
 	proc/get_head_armor_modifier()
 		var/armor_mod = 0
