@@ -640,7 +640,7 @@
 			H.update_status_effects()
 		return
 
-/mob/living/silicon/robot/proc/get_slot(slot)
+/mob/living/silicon/robot/get_slot(slot)
 	switch(slot) // Robots have no slots, so we remap them
 		if(SLOT_WEAR_MASK)
 			return src.clothes["mask"]

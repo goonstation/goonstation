@@ -961,6 +961,7 @@ var/datum/action_controller/actions
 		source = Source
 		target = Target
 		item = Item
+		slot = Slot
 		hidden = Hidden
 
 		if(item)
@@ -1003,11 +1004,14 @@ var/datum/action_controller/actions
 		if(item)
 			var/obj/item/existing_item = target.get_slot(slot)
 			if(existing_item) // if they have something there, smack it with held item
-				logTheThing(LOG_COMBAT, source, "uses the inventory menu while holding [log_object(item)] to interact with \
-													[log_object(existing_item)] equipped by [log_object(target)].")
-				actions.start(new /datum/action/bar/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, /mob/proc/click, list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source) //this is messier
-				interrupt(INTERRUPT_ALWAYS)
-				return
+				if(istype(existing_item, /obj/item/clothing)) // redress them in one action
+					duration += 1 SECONDS
+				else
+					logTheThing(LOG_COMBAT, source, "uses the inventory menu while holding [log_object(item)] to interact with \
+														[log_object(existing_item)] equipped by [log_object(target)].")
+					actions.start(new /datum/action/bar/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, /mob/proc/click, list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source) //this is messier
+					interrupt(INTERRUPT_ALWAYS)
+					return
 			logTheThing(LOG_COMBAT, source, "tries to put \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
 			icon = item.icon
 			icon_state = item.icon_state
@@ -1047,19 +1051,16 @@ var/datum/action_controller/actions
 					source.u_equip(item)
 					if(QDELETED(item))
 						return
+					if(I)
+						source.put_in_hand_or_drop(I)
 					H.force_equip(item, slot)
 					H.update_inv()
 			else if(istype(target, /mob/living/silicon/robot))
 				success = TRUE
 				var/mob/living/silicon/robot/R = target
-				if (R.clothes[slot] != null)
-					var/obj/old = R.clothes[slot]
-					source.put_in_hand_or_drop(old)
-				R.clothes[slot] = item
-				source.u_equip(item)
+				R.handle_clothing(item, source)
 
 			if (success)
-				var/mob/living/silicon/robot/R = target
 				logTheThing(LOG_COMBAT, source, "successfully puts \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
 				for(var/mob/O in AIviewers(owner))
 					O.show_message("<span class='alert'><B>[source] puts [item] on [target]!</B></span>", 1)
@@ -1104,13 +1105,15 @@ var/datum/action_controller/actions
 		var/obj/item/I = target.get_slot(slot)
 
 		if(item)
-			if(item != source.equipped() || target.get_slot(slot))
-				interrupt(INTERRUPT_ALWAYS)
-			if(!target.can_equip(item, slot))
-				if(in_start)
-					boutput(source, "<span class='alert'>[item] can not be put there.</span>")
-				interrupt(INTERRUPT_ALWAYS)
-				return
+			if(istype(target, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = target
+				if(item != source.equipped() || target.get_slot(slot))
+					interrupt(INTERRUPT_ALWAYS)
+				if(!H.can_equip(item, slot))
+					if(in_start)
+						boutput(source, "<span class='alert'>[item] can not be put there.</span>")
+					interrupt(INTERRUPT_ALWAYS)
+					return
 			if(!isturf(target.loc))
 				if(in_start)
 					boutput(source, "<span class='alert'>You can't put [item] on [target] when [(he_or_she(target))] is in [target.loc]!</span>")

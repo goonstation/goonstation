@@ -906,7 +906,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			var/clothingRef = params["clothingRef"]
 			if(clothingRef)
 				var/obj/item/clothing/cloth = locate(clothingRef) in src.clothes
-				R.put_on_clothes(cloth, src)
+				R.handle_clothing(cloth, src)
 			. = TRUE
 		if("clothing-remove")
 			if (!isrobot(src.occupant))

@@ -1904,7 +1904,7 @@
 				else
 					return 0
 
-/mob/living/carbon/human/proc/get_slot(slot)
+/mob/living/carbon/human/get_slot(slot)
 	switch(slot)
 		if (slot_back)
 			return src.back

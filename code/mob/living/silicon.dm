@@ -643,13 +643,31 @@ var/global/list/module_editors = list()
 		src.set_law_rack(racks[chosen])
 
 /mob/living/silicon/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
-	if (can_act(user) && istype(AM, /obj/item/clothing))
-		src.put_on_clothes(AM, user)
+	if (can_act(user))
+		var/slot
+		if(istype(AM, /obj/item/clothing/under))
+			slot = SLOT_W_UNIFORM
+		else if (istype(AM, /obj/item/clothing/suit))
+			slot = SLOT_WEAR_SUIT
+		else if (istype(AM, /obj/item/clothing/mask))
+			slot = SLOT_WEAR_MASK
+		else if (istype(AM, /obj/item/clothing/head))
+			slot = SLOT_HEAD
+
+		if(slot)
+			actions.start(new/datum/action/bar/icon/otherItem(
+				user,
+				src,
+				AM,
+				slot,
+				0,
+				0
+			), user)
 		return
 
 	return ..()
 
-/mob/living/silicon/proc/put_on_clothes(/obj/item/clothing/cloth, atom/movable/AM as mob|obj)
+/mob/living/silicon/proc/handle_clothing(var/obj/item/clothing/cloth, atom/movable/AM as mob|obj)
 	if (!isrobot(src))
 		return
 
@@ -659,7 +677,7 @@ var/global/list/module_editors = list()
 
 	if (isliving(AM))
 		source = AM
-	else
+	else if (istype(AM, /obj/machinery/recharge_station))
 		station = AM
 
 	if (istype(cloth, /obj/item/clothing))
@@ -688,8 +706,10 @@ var/global/list/module_editors = list()
 			if (R.clothes[slot] != null)
 				var/obj/old = R.clothes[slot]
 				source.put_in_hand_or_drop(old)
+			if (R != source)
+				source.u_equip(cloth)
 			R.clothes[slot] = cloth
-			source.u_equip(cloth)
+			cloth.set_loc(R)
 
 	R.update_appearance()
 	. = TRUE
