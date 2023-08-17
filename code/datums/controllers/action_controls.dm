@@ -1002,13 +1002,6 @@ var/datum/action_controller/actions
 		source.remove_stamina(STAM_COST)
 
 		if(item)
-			var/obj/item/existing_item = target.get_slot(slot)
-			if(existing_item) // if they have something there, smack it with held item
-				logTheThing(LOG_COMBAT, source, "uses the inventory menu while holding [log_object(item)] to interact with \
-													[log_object(existing_item)] equipped by [log_object(target)].")
-				actions.start(new /datum/action/bar/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, /mob/proc/click, list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source) //this is messier
-				interrupt(INTERRUPT_ALWAYS)
-				return
 			logTheThing(LOG_COMBAT, source, "tries to put \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
 			icon = item.icon
 			icon_state = item.icon_state
@@ -1085,7 +1078,14 @@ var/datum/action_controller/actions
 		var/obj/item/I = target.get_slot(slot)
 
 		if(item)
-			if(item != source.equipped() || target.get_slot(slot))
+			var/obj/item/existing_item = target.get_slot(slot)
+			if(existing_item && in_start) // if they have something there, smack it with held item
+				logTheThing(LOG_COMBAT, source, "uses the inventory menu while holding [log_object(item)] to interact with \
+													[log_object(existing_item)] equipped by [log_object(target)].")
+				actions.start(new /datum/action/bar/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, /mob/proc/click, list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source) //this is messier
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			if(item != source.equipped())
 				interrupt(INTERRUPT_ALWAYS)
 			if(!target.can_equip(item, slot))
 				if(in_start)
