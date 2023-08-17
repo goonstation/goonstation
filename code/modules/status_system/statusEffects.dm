@@ -2492,3 +2492,11 @@
 	onRemove()
 		owner.remove_filter("protection")
 		..()
+
+/datum/statusEffect/devera //Status effect for the devera hygiene protection
+	id = "devera_field"
+	name = "Devera Field"
+	desc = "You are being protected from grime gathering on you."
+	icon_state = "fragrant"
+	maxDuration = 4 SECONDS
+	effect_quality = STATUS_QUALITY_POSITIVE
