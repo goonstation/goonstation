@@ -1527,7 +1527,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 				SPAWN(1 SECONDS)
 					H.emote("scream")
 					H.firegib()
-		explosion_new(src, get_turf(src), 10000)
 		//dispose()
 		qdel(src)
 		return
