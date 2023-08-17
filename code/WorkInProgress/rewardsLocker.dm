@@ -1238,10 +1238,10 @@ datum/achievementReward/ai_crt
 		else
 			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")*/
 
-/*/datum/achievementReward/ai_soviet
+/datum/achievementReward/ai_soviet
 	title = "(AI Core Skin) Soviet"
 	desc = "Replaces your AI core with a model originating from the Eastern Bloc."
-	required_medal = "My Bologna Has A First Name"
+	required_medal = "My Bologna Has A First Name" //placeholder bc there's no directly soviet related medals and meat has some soviet stuff in it ig
 
 	rewardActivate(mob/activator)
 		if (isAI(activator))
@@ -1253,9 +1253,9 @@ datum/achievementReward/ai_crt
 			A.update_appearance()
 			return 1
 		else
-			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")*/
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
 
-/*/datum/achievementReward/ai_flock
+/datum/achievementReward/ai_flock
 	title = "(AI Core Skin) Flock"
 	desc = "Attunes your AI core to the signal."
 	required_medal = "To the stars"
@@ -1270,7 +1270,24 @@ datum/achievementReward/ai_crt
 			A.update_appearance()
 			return 1
 		else
-			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")*/
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+
+/datum/achievementReward/ai_cardboard
+	title = "(AI Core Skin) Cardboard"
+	desc = "Replaces your core with a... Cardboard box. Huh."
+	required_medal = "Tax Haven"
+
+	rewardActivate(mob/activator)
+		if (isAI(activator))
+			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/living/intangible/aieye/AE = activator
+				A = AE.mainframe
+			A.coreSkin = "cardboard"
+			A.update_appearance()
+			return 1
+		else
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
 
 /datum/achievementReward/ai_bee
 	title = "(AI Core Skin) Bee"
