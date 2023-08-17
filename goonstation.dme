@@ -407,7 +407,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\webelements\cssinclude.dm"
 #include "code\datums\webelements\div.dm"
 #include "code\datums\webelements\doctype.dm"
-#include "code\datums\webelements\firebug.dm"
 #include "code\datums\webelements\heading.dm"
 #include "code\datums\webelements\input.dm"
 #include "code\datums\webelements\kText.dm"
