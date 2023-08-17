@@ -300,10 +300,10 @@
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
 	see_face = TRUE
 
-
 /obj/critter/marsrobot
 	name = "Inactive Robot"
 	desc = "It looks like it hasn't been in service for decades."
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi'
 	icon_state = "mars_bot"
 	death_text = "%src% collapses!"
 	density = 1
@@ -649,8 +649,7 @@ TYPEINFO(/obj/vehicle/marsrover)
 /obj/critter/gunbot/heavy
 	name = "security robot"
 	desc = "A 2030's-era security robot. Uh oh."
-	icon = 'icons/misc/critter.dmi'
-	icon_state = "mars_sec_bot"
+	icon_state = "gunbot"
 	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atksilicon = 1
 	var/overheat = 0

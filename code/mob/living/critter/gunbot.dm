@@ -210,7 +210,6 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	name = "Syndicate robot"
 	real_name = "Syndicate robot"
 	desc = "A retrofitted Syndicate gunbot, it seems angry."
-	icon = 'icons/misc/critter.dmi'
 	icon_state = "nukebot"
 	base_icon_state = "nukebot"
 	hand_count = 3
