@@ -77,6 +77,10 @@
 	src.traitors |= chosen_leader
 	for (var/datum/mind/leader in src.traitors)
 		leaders_possible.Remove(leader)
+		leader.add_antagonist(ROLE_GANG_LEADER, silent=TRUE)
+
+	if(src.random_gangs)
+		fill_gangs()
 
 	return 1
 
@@ -96,14 +100,9 @@
 		for(var/j in 1 to people_added_per_gang)
 			var/datum/mind/candidate = candidates[i++]
 			candidate.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = gang.leader, silent=TRUE)
+			traitors |= candidate
 
 /datum/game_mode/gang/post_setup()
-	for (var/datum/mind/leaderMind in src.traitors)
-		leaderMind.add_antagonist(ROLE_GANG_LEADER, silent=TRUE)
-
-	if(src.random_gangs)
-		fill_gangs()
-
 	// we delay announcement to make sure everyone gets information about the other members
 	for(var/datum/mind/antag in src.traitors)
 		for(var/datum/antagonist/subordinate/gang_member/ganger_datum in antag.antagonists)
