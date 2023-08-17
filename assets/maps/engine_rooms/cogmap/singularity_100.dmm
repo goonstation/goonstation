@@ -30,8 +30,6 @@
 /area/station/engine/inner)
 "fc" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
@@ -69,8 +67,6 @@
 	icon_state = "1-2"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
@@ -80,8 +76,6 @@
 	name = "outlet purge valve"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
@@ -123,8 +117,6 @@
 	name = "hot loop inlet valve"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
@@ -164,8 +156,6 @@
 	target_pressure = 1e+031
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
@@ -234,8 +224,6 @@
 	name = "cold loop inlet valve"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
@@ -275,8 +263,6 @@
 "sA" = (
 /obj/storage/closet/radiation,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
@@ -320,8 +306,6 @@
 	dir = 8
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
@@ -347,8 +331,6 @@
 "Bk" = (
 /obj/machinery/light/small/floor,
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/jen,
@@ -391,8 +373,6 @@
 /area/station/engine/inner)
 "Ig" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
@@ -432,8 +412,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
@@ -464,8 +442,6 @@
 	target_pressure = 1e+031
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,

@@ -982,7 +982,6 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/airless/neutral,
@@ -1227,7 +1226,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/black,
@@ -1271,16 +1269,6 @@
 	pixel_y = 3
 	},
 /turf/simulated/floor/specialroom/medbay,
-/area/prefab/von_ricken)
-"QW" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
 /area/prefab/von_ricken)
 "Rc" = (
 /mob/living/critter/robotic/crawler,
@@ -2155,7 +2143,7 @@ zm
 zm
 zm
 jm
-QW
+RO
 VA
 di
 jm
