@@ -20,7 +20,7 @@ ABSTRACT_TYPE(/obj/mapping_helper)
 				src.initialize()
 
 	initialize()
-		if (src.disposed)
+		if (QDELETED(src))
 			return
 		src.setup()
 		qdel(src)
