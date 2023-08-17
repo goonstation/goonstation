@@ -662,3 +662,16 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 			boutput(usr, "<span class='notice'>Knife user can no longer switch targets.</span>")
 
 
+
+/obj/spawner/knife_loop
+	New()
+		..()
+		var/how_many_knives = tgui_input_number(usr, "How many knives to spawn?", "Knife loop", 2, 100, 2)
+		var/list/obj/item/kitchen/utensil/knife/tracker/knives = list()
+		for(var/i = 1 to how_many_knives)
+			var/obj/item/kitchen/utensil/knife/tracker/knife = new(src.loc)
+			if(i > 1)
+				knife.AddComponent(/datum/component/angle_watcher, knives[i - 1], base_transform=matrix())
+			knives += knife
+		knives[1].AddComponent(/datum/component/angle_watcher, knives[how_many_knives], base_transform=matrix())
+		qdel(src)
