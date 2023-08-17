@@ -41,7 +41,7 @@
 // all this does is set the z-level to be ignored by erebite explosion admin log messages
 // if you want to see all erebite explosions set this to 0 or -1 or something
 
-// gameticker
+/// values for the current_state var
 #define GAME_STATE_MAP_LOAD		0
 #define GAME_STATE_WORLD_INIT	1
 #define GAME_STATE_WORLD_NEW	2
