@@ -365,6 +365,12 @@
 			//rebuild powernets etc.
 */
 
+#define SELECT_SKIP 0
+#define SELECT_FIRST_CORNER 1
+#define DESELECT_FIRST_CORNER 2
+#define SELECT_SECOND_CORNER 3
+#define DESELECT_SECOND_CORNER 4
+
 /obj/item/blueprint_marker
 	name = "Blueprint Marker"
 	desc = "A tool used to map rooms for the creation of blueprints."
@@ -377,7 +383,6 @@
 	w_class = W_CLASS_SMALL
 
 	var/prints_left = 5
-	var/maxSize = 20
 
 	var/mob/using = null
 	var/selecting = 0
@@ -451,6 +456,8 @@
 		var/maxx = 0
 		var/maxy = 0
 
+		var/maxSize = 20
+
 		var/permitted = 0
 		for(var/p in permittedTileTypes)
 			var/type = text2path(p)
@@ -483,18 +490,18 @@
 			return
 
 		switch (selecting)
-			if (0)
+			if (SELECT_SKIP)
 
-			if (1,2) // set to 1 or 2 by use-in-hand option list
+			if (SELECT_FIRST_CORNER, DESELECT_FIRST_CORNER) // set to 1 or 2 by use-in-hand option list
 				qdel(corner1img)
 				selectcorner1 = target
-				selecting += 2 // if 3 then select, if 4 then deselect
+				selecting += 2 // if 3 then select second corner, if 4 then deselect second corner
 				corner1img = image('icons/misc/old_or_unused.dmi', selectcorner1, "marker", layer = HUD_LAYER)
 				user << corner1img
 				playsound(src.loc, 'sound/machines/tone_beep.ogg', 15)
 				return
 
-			if (3,4)
+			if (SELECT_SECOND_CORNER, DESELECT_SECOND_CORNER)
 				var/diffx = abs(target.x - selectcorner1.x)
 				var/diffy = abs(target.y - selectcorner1.y)
 				if(diffx >= maxSize || diffy >= maxSize)
@@ -525,7 +532,7 @@
 							break
 					if(!perm) continue
 
-					if (selecting == 3)
+					if (selecting == SELECT_SECOND_CORNER)
 						if (!roomList.Find(t))
 							roomList.Add(t)
 							roomList[t] = image('icons/misc/old_or_unused.dmi', t, "tiletag", layer = HUD_LAYER)
@@ -535,13 +542,13 @@
 						roomList.Remove(t)
 
 
-				selecting = 0
+				selecting = SELECT_SKIP
 				qdel(corner1img)
 				playsound(src.loc, 'sound/machines/tone_beep.ogg', 15)
 				updateOverlays()
 				return
 
-			else selecting = 0
+			else selecting = SELECT_SKIP
 
 		if(roomList.Find(target))
 			if (using?.client)
@@ -721,9 +728,10 @@
 			return
 
 		if (selecting)
-			selecting = 0
+			selecting = SELECT_SKIP
 			qdel(corner1img)
 			boutput(user, "<span class='notice'>Cancelled rectangle select.</span>")
+			playsound(src.loc, 'sound/machines/button.ogg', 25)
 			return
 
 		var/list/options = list("Select Rectangle", "Deselect Rectangle", "Reset", "Set Blueprint Name", "Print Saved Blueprint",
@@ -732,10 +740,10 @@
 
 		switch(input)
 			if("Select Rectangle")
-				selecting = 1
+				selecting = SELECT_FIRST_CORNER
 
 			if("Deselect Rectangle")
-				selecting = 2
+				selecting = DESELECT_FIRST_CORNER
 
 			if("Reset")
 				boutput(user, "<span class='notice'>Resetting ...</span>")
@@ -798,3 +806,9 @@
 		using = user
 		updateOverlays()
 		return
+
+#undef SELECT_SKIP
+#undef SELECT_FIRST_CORNER
+#undef DESELECT_FIRST_CORNER
+#undef SELECT_SECOND_CORNER
+#undef DESELECT_SECOND_CORNER
