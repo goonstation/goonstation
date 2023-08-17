@@ -1275,7 +1275,7 @@ datum/achievementReward/ai_crt
 /datum/achievementReward/ai_cardboard
 	title = "(AI Core Skin) Cardboard"
 	desc = "Replaces your core with a... Cardboard box. Huh."
-	required_medal = "Tax Haven"
+	required_medal = "Tax Haven" //tempted to put it on the "Call 1-800-CODER" medal but that seeeems like a bad idea in practice so QM greentext medal it is
 
 	rewardActivate(mob/activator)
 		if (isAI(activator))
