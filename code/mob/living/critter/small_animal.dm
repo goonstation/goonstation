@@ -3485,6 +3485,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 	hand_count = 1
+	icon = 'icons/mob/critter/robotic/boogie.dmi'
 	icon_state = "boogie"
 	icon_state_dead = "boogie-dead"
 	speechverb_say = "sings"

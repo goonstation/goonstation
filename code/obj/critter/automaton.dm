@@ -6,6 +6,7 @@ var/global/the_automaton = null
 /obj/critter/automaton
 	name = "automaton"
 	desc = "What is this thing? A toy? A machine? What is it doing? Why does it seem to be watching you?"
+	icon = 'icons/mob/critter/robotic/automaton.dmi'
 	icon_state = "automaton"
 	health = 1000 // what kind of jerk would kill it
 	anchored = ANCHORED
@@ -35,11 +36,6 @@ var/global/the_automaton = null
 		SPAWN(1 SECOND)
 			if (!the_automaton)
 				the_automaton = src
-
-	disposing()
-		if (the_automaton == src)
-			the_automaton = null
-		..()
 
 	disposing()
 		if (the_automaton == src)

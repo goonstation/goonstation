@@ -622,7 +622,7 @@
 
 	New()
 		..()
-		icon_state = pick("martian","martianP","martianW","martianSP","mars_bot","welder","petbee","lavacrab","boogie","walrus","owl","goose","swan","gull","parrot","possum","bumblespider","big_spide[pick("","-red","-blue","-green")]")
+		icon_state = pick("martian","martianP","martianW","martianSP","welder","petbee","lavacrab","walrus","owl","goose","swan","gull","parrot","possum","bumblespider","big_spide[pick("","-red","-blue","-green")]") //"mars_bot" "boogie"
 		if (icon_state in list("owl","goose","swan","gull"))
 			icon = 'icons/misc/bird.dmi'
 		else if (icon_state == "parrot")

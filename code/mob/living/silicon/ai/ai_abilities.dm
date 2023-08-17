@@ -341,14 +341,14 @@
 
 		if(issilicon(target))
 			var/mob/living/silicon/S = target
-			var/nanite_overlay = S.SafeGetOverlayImage("nanite_heal",'icons/misc/critter.dmi', "nanites")
+			var/nanite_overlay = SafeGetOverlayImage("nanite_heal",'icons/mob/critter/robotic/nanites.dmi', "nanites")
 			S.UpdateOverlays(nanite_overlay, "nanite_heal")
 			SPAWN(3 SECONDS)
 				S.HealDamage("All", 6, 6)
 				S.UpdateOverlays(null,"nanite_heal")
 		else if(istype_exact(target,/obj/machinery/camera)) // sweet you got eyes on that camera
 			var/obj/machinery/camera/C
-			var/nanite_overlay = C.SafeGetOverlayImage("nanite_heal",'icons/misc/critter.dmi', "nanites")
+			var/nanite_overlay = SafeGetOverlayImage("nanite_heal",'icons/mob/critter/robotic/nanites.dmi', "nanites")
 			C.UpdateOverlays(nanite_overlay, "nanite_heal")
 			C.set_camera_status(TRUE)
 			C.icon_state = "camera"
@@ -380,7 +380,7 @@
 			SPAWN(rand(10 SECONDS, 20 SECONDS))
 				var/repaired = 0
 				for(C in cameras_to_repair)
-					var/nanite_overlay = C.SafeGetOverlayImage("nanite_heal",'icons/misc/critter.dmi', "nanites")
+					var/nanite_overlay = SafeGetOverlayImage("nanite_heal",'icons/mob/critter/robotic/nanites.dmi', "nanites")
 					C.UpdateOverlays(nanite_overlay, "nanite_heal")
 					C.set_camera_status(TRUE)
 					C.icon_state = "camera"

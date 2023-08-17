@@ -61837,7 +61837,7 @@
 /obj/decal/fakeobjects/robot{
 	anchored = 1;
 	desc = "Most of it's electronics appear to be destroyed.";
-	icon = 'icons/misc/critter.dmi';
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
 	icon_state = "mars_bot-dead";
 	name = "Smashed Robot"
 	},
