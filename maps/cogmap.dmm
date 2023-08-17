@@ -60622,9 +60622,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/janitor/office)
-"tHZ" = (
-/turf/space,
-/area/listeningpost)
 "tIB" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -147578,7 +147575,7 @@ adC
 adC
 adC
 cBQ
-tHZ
+sAI
 sAI
 sAI
 sAI

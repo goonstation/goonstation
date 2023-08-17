@@ -16476,9 +16476,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
-"cmO" = (
-/turf/space,
-/area/listeningpost/power)
 "cns" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -99465,7 +99462,7 @@ aaa
 aaa
 aaa
 aaa
-cmO
+aMP
 aMU
 aMU
 aMU
