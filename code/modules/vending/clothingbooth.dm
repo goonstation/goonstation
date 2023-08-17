@@ -54,7 +54,7 @@ var/list/clothingbooth_paths = list()
 	var/datum/movable_preview/character/multiclient/preview
 	var/datum/light/light
 	var/datum/clothingbooth_item/item_to_purchase = null
-	var/mob/living/carbon/human/occupant
+	var/mob/living/occupant
 	var/obj/item/preview_item = null
 	var/money = 0
 	var/open = TRUE
@@ -104,9 +104,9 @@ var/list/clothingbooth_paths = list()
 			..()
 
 	attack_hand(mob/user)
-		if (!ishuman(user))
-			boutput(user,"<span style=\"color:red\">Human clothes don't fit you!</span>")
-			return
+		// if (!ishuman(user))
+		// 	boutput(user,"<span style=\"color:red\">Human clothes don't fit you!</span>")
+		// 	return
 		if (!IN_RANGE(user, src, 1))
 			return
 		if (!can_act(user))
@@ -148,8 +148,6 @@ var/list/clothingbooth_paths = list()
 	ui_interact(mob/user, datum/tgui/ui)
 		if(!user.client)
 			return
-		if(!ishuman(user))
-			return
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "ClothingBooth")
@@ -183,6 +181,11 @@ var/list/clothingbooth_paths = list()
 		if (. || !(usr in src.contents))
 			return
 
+		var/clothes = list()
+		if(isrobot(src.occupant))
+			var/mob/living/silicon/robot/R = src.preview.preview_thing
+			clothes = R.clothes
+
 		switch(action)
 			if("purchase")
 				if(src.item_to_purchase)
@@ -198,27 +201,50 @@ var/list/clothingbooth_paths = list()
 					boutput(usr, "<span class='alert'>No item selected!</span>")
 			if ("rotate-cw")
 				src.preview_direction = turn(src.preview_direction, -90)
-				update_preview()
+				update_preview(clothes)
 				. = TRUE
 			if ("rotate-ccw")
 				src.preview_direction = turn(src.preview_direction, 90)
-				update_preview()
+				update_preview(clothes)
 				. = TRUE
 			if("select")
 				var/datum/clothingbooth_item/selected_item = clothingbooth_paths[params["path"]]
 				if(!istype(selected_item))
 					return
 				var/selected_item_path = text2path(params["path"])
-				var/mob/living/carbon/human/preview_mob = src.preview.preview_thing
-				if(src.preview_item)
-					preview_mob.u_equip(src.preview_item)
-					qdel(src.preview_item)
-					src.preview_item = null
-				src.preview_item = new selected_item_path
-				preview_mob.force_equip(src.preview_item, selected_item.slot)
-				src.item_to_purchase = selected_item
-				update_preview()
+				if(ishuman(src.occupant))
+					var/mob/living/carbon/human/preview_mob = src.preview.preview_thing
+					if(src.preview_item)
+						preview_mob.u_equip(src.preview_item)
+						qdel(src.preview_item)
+						src.preview_item = null
+					src.preview_item = new selected_item_path
+					preview_mob.force_equip(src.preview_item, selected_item.slot)
+					src.item_to_purchase = selected_item
+					update_preview()
+				else if(isrobot(src.occupant))
+					var/mob/living/silicon/robot/preview_mob = src.preview.preview_thing
+					if(src.preview_item)
+						preview_mob.clothes = list()
+						qdel(src.preview_item)
+						src.preview_item = null
+					src.preview_item = new selected_item_path
+					preview_mob.handle_clothing(src.preview_item, preview_mob)
+					src.item_to_purchase = selected_item
+					update_preview(preview_mob.clothes)
 				. = TRUE
+
+	MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
+		if (BOUNDS_DIST(AM, user) > 0 || BOUNDS_DIST(src, user) > 0)
+			return
+		if (!isturf(AM.loc) && !(AM in user))
+			return
+		if (!isliving(user) || isAI(user))
+			return
+
+		if (isitem(AM) && can_act(user))
+			src.Attackby(AM, user)
+			return
 
 	/// open the booth
 	proc/open()
@@ -263,5 +289,12 @@ var/list/clothingbooth_paths = list()
 					AM.set_loc(T)
 
 	/// generates a preview of the current occupant
-	proc/update_preview()
-		src.preview.update_appearance(src.occupant.bioHolder.mobAppearance, src.occupant.mutantrace, src.preview_direction, src.occupant.real_name)
+	proc/update_preview(var/list/obj/clothes = list())
+		if(ishuman(src.occupant))
+			var/mob/living/carbon/human/H = src.occupant
+			src.preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace, src.preview_direction, H.real_name)
+		else if(isrobot(src.occupant))
+			src.preview.custom_setup(src.preview.viewer, src.preview.window_id, src.preview.max_preview_id++, TRUE)
+			src.preview.update_appearance(src.occupant.bioHolder.mobAppearance, null, src.preview_direction, src.occupant.real_name, clothes)
+
+

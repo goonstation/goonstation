@@ -83,7 +83,7 @@
 	. = ..()
 
 /// See: [/datum/movable_preview/var/custom_setup]
-/datum/movable_preview/proc/custom_setup(client/viewer, window_id, control_id)
+/datum/movable_preview/proc/custom_setup(client/viewer, window_id, control_id, is_robot = FALSE)
 	return
 
 /**
@@ -113,6 +113,11 @@
 	real_name = "character preview"
 	unobservable = TRUE
 
+/mob/living/silicon/robot/preview
+	name = "character preview"
+	real_name = "character preview"
+	unobservable = TRUE
+
 /**
  * # Character Preview
  *
@@ -124,31 +129,50 @@
 /datum/movable_preview/character
 	custom_setup = TRUE
 
-	custom_setup(client/viewer, window_id, control_id)
-		var/mob/living/carbon/human/preview/H = new(global.get_centcom_mob_cloner_spawn_loc())
-		mobs -= H
-		src.preview_thing = H
-		qdel(H.name_tag)
-		H.name_tag = null
+	custom_setup(client/viewer, window_id, control_id, is_robot = FALSE)
+		if (!is_robot)
+			var/mob/living/carbon/human/preview/H = new(global.get_centcom_mob_cloner_spawn_loc())
+			mobs -= H
+			src.preview_thing = H
+			qdel(H.name_tag)
+			H.name_tag = null
 
-		if(isturf(H.loc))
-			put_mob_in_centcom_cloner(H)
+			if(isturf(H.loc))
+				put_mob_in_centcom_cloner(H)
+		else
+			var/mob/living/silicon/robot/preview/R = new(global.get_centcom_mob_cloner_spawn_loc())
+			mobs -= R
+			src.preview_thing = R
+			qdel(R.name_tag)
+			R.name_tag = null
+
+			if(isturf(R.loc))
+				put_mob_in_centcom_cloner(R)
 
 	/// Sets the appearance, mutant race, and facing direction of the human mob.
 	/// Assumes the `preview_thing` is a mob
-	proc/update_appearance(datum/appearanceHolder/AH, datum/mutantrace/MR = null, direction = SOUTH, name = "human")
+	proc/update_appearance(datum/appearanceHolder/AH, datum/mutantrace/MR = null, direction = SOUTH, name = "human", list/clothes = null)
 		src.flat_icon = null
-		var/mob/living/carbon/human/preview_mob = src.preview_thing
-		preview_mob.dir = direction
-		preview_mob.bioHolder.mobAppearance.CopyOther(AH)
-		preview_mob.set_mutantrace(MR)
-		preview_mob.organHolder.head.donor = preview_mob
-		preview_mob.organHolder.head.donor_appearance.CopyOther(preview_mob.bioHolder.mobAppearance)
-		preview_mob.update_colorful_parts()
-		preview_mob.set_body_icon_dirty()
-		preview_mob.set_face_icon_dirty()
-		preview_mob.real_name = "clone of " + name
-		preview_mob.name = "clone of " + name
+		var/mob/living/preview_mob = src.preview_thing
+		if(!clothes)
+			var/mob/living/carbon/human/preview_human = preview_mob
+			preview_human.dir = direction
+			preview_human.bioHolder.mobAppearance.CopyOther(AH)
+			preview_human.set_mutantrace(MR)
+			preview_human.organHolder.head.donor = preview_human
+			preview_human.organHolder.head.donor_appearance.CopyOther(preview_human.bioHolder.mobAppearance)
+			preview_human.update_colorful_parts()
+			preview_human.set_body_icon_dirty()
+			preview_human.set_face_icon_dirty()
+			preview_human.real_name = "clone of " + name
+			preview_human.name = "clone of " + name
+		else
+			var/mob/living/silicon/robot/preview_borg = preview_mob
+			preview_borg.dir = direction
+			preview_borg.clothes = clothes
+			preview_borg.real_name = "clone of " + name
+			preview_borg.name = "clone of " + name
+			preview_borg.update_appearance()
 
 	proc/get_icon()
 		if (!src.flat_icon)
