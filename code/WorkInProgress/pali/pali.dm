@@ -679,24 +679,29 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 
 
 
+/obj/item/plate/proc/steal_organs(mob/user)
+	if(isnull(user))
+		user = usr
+	if(!isnull(src.loc))
+		var/list/user_contents = user.contents.Copy()
+		shuffle_list(user_contents)
+		for(var/obj/item/organ/organ in user_contents)
+			src.add_contents(organ)
 
-#define ORGAN_STEALING_PLATE(PATH) \
-	PATH/organ_stealing/New() {\
-		..();\
-		if(!isnull(src.loc)){ \
-			var/list/usr_contents = usr.contents.Copy(); \
-			shuffle_list(usr_contents); \
-			for(var/obj/item/organ/organ in usr_contents) {\
-				src.add_contents(organ);\
-			}\
-		}\
-	}
+/obj/item/plate/organ_stealing/New()
+	..()
+	steal_organs()
 
-ORGAN_STEALING_PLATE(/obj/item/plate)
-ORGAN_STEALING_PLATE(/obj/item/plate/tray)
-ORGAN_STEALING_PLATE(/obj/item/plate/pizza_box)
+/obj/item/plate/tray/organ_stealing/New()
+	..()
+	steal_organs()
 
-#undef ORGAN_STEALING_PLATE
+/obj/item/plate/pizza_box/organ_stealing/New()
+	..()
+	src.open = TRUE
+	steal_organs()
+	src.open = FALSE
+	src.vis_contents = null
 
 /obj/machinery/vending/kitchen/organ_stealing
 	create_products()
