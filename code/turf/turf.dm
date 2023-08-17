@@ -560,8 +560,6 @@ var/global/in_replace_with = 0
 
 	#ifdef CHECK_MORE_RUNTIMES
 	in_replace_with++
-	if(in_replace_with != 1)
-		stack_trace("in_replace_with is did not get decremente properly at the end of ReplaceWith, its value is [in_replace_with]")
 	#endif
 
 	var/turf/simulated/new_turf
