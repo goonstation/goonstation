@@ -6,15 +6,17 @@
 	anchored = ANCHORED
 	current_heat_capacity = 1000
 
+	var/min_temp_possible = 73.15 KELVIN
+	var/max_temp_possible = T20C
+
 /obj/machinery/atmospherics/unary/cold_sink/freezer/update_icon()
 	if(src.node)
-
 		if(src.on)
 			icon_state = "freezer_1"
 		else
-			icon_state = "freezer"
+			icon_state = "freezer_0"
 	else
-		icon_state = "freezer_0"
+		icon_state = "freezer"
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/process()
 	..()
@@ -31,7 +33,7 @@
 			UpdateIcon()
 			. = TRUE
 		if("set_target_temperature")
-			src.current_temperature = clamp(params["value"], 73.15, 293.15)
+			src.current_temperature = clamp(params["value"], src.min_temp_possible, src.max_temp_possible)
 			. = TRUE
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/ui_data(mob/user)
@@ -42,11 +44,11 @@
 	.["air_pressure"] = MIXTURE_PRESSURE(src.air_contents)
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, src.ui)
-	if (!src.ui)
-		src.ui = new(user, src, "Freezer")
-		src.ui.set_autoupdate(TRUE)
-		src.ui.open()
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "Freezer")
+		ui.set_autoupdate(TRUE)
+		ui.open()
 
 
 // Medbay and kitchen freezers start at correct temperature to avoid pointless busywork.
