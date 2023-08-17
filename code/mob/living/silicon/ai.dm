@@ -180,6 +180,7 @@ or don't if it uses a custom topopen overlay
 		"flock" = "The casing is made out of a humming teal material. It pulses and flares to a strange rhythm.",
 		"crt" = "The core appears to be a... CRT television. Huh.",
 		"rustic" = "The core appears to be... a box. Where are the beveled edges?! This core isn't a weird octogonal prism at all, it's just a cube!"
+		"cardboard" = "The core appears to be made out of cardboard. Huh. ...Well, it's probably still just as good at opening doors."
 	)
 
 	var/datum/ai_camera_tracker/tracker = null
