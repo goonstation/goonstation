@@ -636,7 +636,7 @@
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
 			if (H.mind.assigned_role == "Clown")
-				H.equip_if_possible(new /obj/item/clothing/head/graduation_cap(H), H.slot_head)
+				H.equip_if_possible(new /obj/item/clothing/head/graduation_cap(H), SLOT_HEAD)
 				var/obj/item/toy/diploma/D = new /obj/item/toy/diploma(get_turf(H))
 				D.redeemer = H.ckey
 				H.put_in_hand_or_drop(D)
@@ -894,7 +894,7 @@
 				if (istype(M, /obj/item/swords_sheaths/captain))
 					if (M.item_state == "scabbard-cap1" || M.item_state == "red_scabbard-cap1")
 						qdel(M)
-						H.equip_if_possible(new /obj/item/swords_sheaths/captain/blue(H), H.slot_belt)
+						H.equip_if_possible(new /obj/item/swords_sheaths/captain/blue(H), SLOT_BELT)
 						succ = TRUE
 
 			if (H.back)
@@ -1052,7 +1052,7 @@
 				if (istype(M, /obj/item/swords_sheaths/captain))
 					if (M.item_state == "scabbard-cap1" || M.item_state == "blue_scabbard-cap1")
 						qdel(M)
-						H.equip_if_possible(new /obj/item/swords_sheaths/captain/red(H), H.slot_belt)
+						H.equip_if_possible(new /obj/item/swords_sheaths/captain/red(H), SLOT_BELT)
 						succ = TRUE
 
 			if (H.back)
@@ -1133,6 +1133,7 @@
 			return 1
 		else
 			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+
 
 ////////AI CORE FRAMES///////
 
