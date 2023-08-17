@@ -56,8 +56,6 @@
 
 //#define RESTART_WHEN_ALL_DEAD 1
 
-//#define PLAYSOUND_LIMITER
-
 #define LOOC_RANGE 8
 
 // holiday toggles!
