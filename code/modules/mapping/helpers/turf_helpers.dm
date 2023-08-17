@@ -8,8 +8,9 @@ ABSTRACT_TYPE(/obj/mapping_helper/turfs)
 	T = get_turf(src)
 	if (!T)
 		return
-	if (istype(T, /turf/space) && !src.allow_space)
-		return
+	if (!src.allow_space)
+		if (istype(T, /turf/space))
+			return
 
 /obj/mapping_helper/turfs/proc/do_on_turf()
 	return
@@ -29,7 +30,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/turfs/floor)
 /obj/mapping_helper/turfs/floor/setup()
 	..()
 	if (!istype(T, /turf/unsimulated/floor) && !istype(T, /turf/simulated/floor)) // This will throw some false ones for strangely pathed floors that should be floor subtypes
-		logTheThing(LOG_DEBUG, src, "[src] placed on non floor turf [T.type] at [src.x], [src.y], [src.z].")
+		logTheThing(LOG_DEBUG, src, "[src] ([src.type]) placed on non floor turf [T.type] at [src.x], [src.y], [src.z].")
 		return
 	src.do_on_turf()
 
@@ -40,7 +41,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/turfs/floor)
 
 /obj/mapping_helper/turfs/floor/burner/do_on_turf()
 	if (!T.can_burn)
-		logTheThing(LOG_DEBUG, src, "[src] placed on unburnable floor [T.type] at [src.x], [src.y], [src.z].")
+		logTheThing(LOG_DEBUG, src, "[src] ([src.type]) placed on unburnable floor [T.type] at [src.x], [src.y], [src.z].")
 		return
 	T.burn_tile()
 
@@ -51,6 +52,6 @@ ABSTRACT_TYPE(/obj/mapping_helper/turfs/floor)
 
 /obj/mapping_helper/turfs/floor/damager/do_on_turf()
 	if (!T.can_break)
-		logTheThing(LOG_DEBUG, src, "[src] placed on unbreakable floor [T.type] at [src.x], [src.y], [src.z].")
+		logTheThing(LOG_DEBUG, src, "[src] ([src.type]) placed on unbreakable floor [T.type] at [src.x], [src.y], [src.z].")
 		return
 	T.break_tile()
