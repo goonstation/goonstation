@@ -1,4 +1,19 @@
 
+(t)wed aug 16 23
+(u)UnfunnyPerson
+(p)15411
+(e)📦|A-Game-Objects
+(+)Hacked SecTechs will contain 2-4 donuts.
+(t)tue aug 15 23
+(u)MeggalBozale
+(p)15273
+(e)⚖|C-Balance
+(+)Vending machines can be tipped over by shooting them, and shooting them when tipped over lets bullets move past.
+(t)mon aug 14 23
+(u)Garash
+(p)15152
+(e)🆕🔄📄|C-Feature, C-Rework, A-UI
+(+)New UI for the Cryo Pods
 (t)sun aug 13 23
 (u)Bisar
 (p)15341

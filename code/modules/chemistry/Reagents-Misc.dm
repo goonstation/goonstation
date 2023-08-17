@@ -380,7 +380,7 @@ datum
 									O.layer = initial(O.layer)
 
 						var/obj/item/clothing/mask/moustache/moustache = new /obj/item/clothing/mask/moustache(H)
-						H.equip_if_possible(moustache, H.slot_wear_mask)
+						H.equip_if_possible(moustache, SLOT_WEAR_MASK)
 						H.set_clothing_icon_dirty()
 						holder?.remove_reagent(src.id, 3)
 					if (somethingchanged) boutput(H, "<span class='alert'>Hair bursts forth from every follicle on your head!</span>")
@@ -1684,7 +1684,7 @@ datum
 							// add new mask
 							var/obj/item/clothing/mask/owl_mask/owl_mask = new /obj/item/clothing/mask/owl_mask(H)
 							owl_mask.cant_self_remove = 1
-							H.equip_if_possible(owl_mask, H.slot_wear_mask)
+							H.equip_if_possible(owl_mask, SLOT_WEAR_MASK)
 							something_changed = 1
 						// owl suit
 						var/obj/item/clothing/under/curr_uniform = H.w_uniform
@@ -1698,7 +1698,7 @@ datum
 							// add new uniform
 							var/obj/item/clothing/under/gimmick/owl/owl_suit = new /obj/item/clothing/under/gimmick/owl(H)
 							owl_suit.cant_self_remove = 1
-							H.equip_if_possible(owl_suit, H.slot_w_uniform)
+							H.equip_if_possible(owl_suit, SLOT_W_UNIFORM)
 							something_changed = 1
 						if (something_changed)
 							boutput(H, "<span class='alert'>HOOT HOOT HOOT HOOT!</span>")

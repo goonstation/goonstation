@@ -1081,7 +1081,7 @@ var/global/noir = 0
 					SPAWN (1 SECOND)
 						equip_job_items(job, H)
 						if (istype(id))
-							if(!H.equip_if_possible(id, H.slot_wear_id))
+							if(!H.equip_if_possible(id, SLOT_WEAR_ID))
 								H.put_in_hand(id)
 						else if (job.spawn_id)
 							H.spawnId(job)

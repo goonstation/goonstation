@@ -385,7 +385,6 @@ var/global
 	list/datum/powernet/powernets = null
 
 	join_motd = null
-	rules = null
 	forceblob = 0
 
 	halloween_mode = 0
@@ -599,3 +598,7 @@ var/global
 	browse_item_initial_done = 1
 	for (var/client/C in clients)
 		sendItemIcons(C)
+
+#ifdef TWITCH_BOT_ALLOWED
+var/global/mob/twitch_mob = 0
+#endif

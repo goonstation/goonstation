@@ -714,7 +714,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 					moustache.cant_self_remove = 1
 					moustache.cant_other_remove = 1
 
-					M.equip_if_possible(moustache, M.slot_wear_mask)
+					M.equip_if_possible(moustache, SLOT_WEAR_MASK)
 					M.set_clothing_icon_dirty()
 
 			playsound(T, 'sound/effects/Explosion2.ogg', 100, 1)
@@ -937,8 +937,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 					owlmask.cant_self_remove = 1
 
 
-					M.equip_if_possible(owlsuit, M.slot_w_uniform)
-					M.equip_if_possible(owlmask, M.slot_wear_mask)
+					M.equip_if_possible(owlsuit, SLOT_W_UNIFORM)
+					M.equip_if_possible(owlmask, SLOT_WEAR_MASK)
 					M.set_clothing_icon_dirty()
 		..()
 
@@ -963,7 +963,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 					var/obj/item/clothing/suit/gimmick/hotdog/H = new /obj/item/clothing/suit/gimmick/hotdog(M)
 					H.cant_self_remove = 1
 
-					M.equip_if_possible(H, M.slot_wear_suit)
+					M.equip_if_possible(H, SLOT_WEAR_SUIT)
 					M.set_clothing_icon_dirty()
 		..()
 

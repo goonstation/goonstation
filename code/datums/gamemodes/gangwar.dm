@@ -921,23 +921,23 @@ proc/broadcast_to_all_gangs(var/message)
 		if(!has_gang_uniform)
 			var/obj/item/clothing/uniform = new src.gang.uniform(user.loc)
 			// Effectively a copy of the `autoequip_slot` macro in `code\datums\hud\human.dm`.
-			if (user.can_equip(uniform, user.slot_w_uniform))
+			if (user.can_equip(uniform, SLOT_W_UNIFORM))
 				var/obj/item/current_uniform = user.w_uniform
 				if (current_uniform)
 					current_uniform.unequipped(user)
 					user.hud.remove_item(current_uniform)
 					user.w_uniform = null
 					user.drop_from_slot(current_uniform, get_turf(current_uniform))
-				user.force_equip(uniform, user.slot_w_uniform)
+				user.force_equip(uniform, SLOT_W_UNIFORM)
 
 		if(!has_gang_headwear)
 			var/obj/item/clothing/headwear = new src.gang.headwear(user.loc)
 			if (istype(headwear, /obj/item/clothing/head))
 				user.drop_from_slot(user.head)
-				user.equip_if_possible(headwear, user.slot_head)
+				user.equip_if_possible(headwear, SLOT_HEAD)
 			else if (istype(headwear, /obj/item/clothing/mask))
 				user.drop_from_slot(user.wear_mask)
-				user.equip_if_possible(headwear, user.slot_wear_mask)
+				user.equip_if_possible(headwear, SLOT_WEAR_MASK)
 
 		if(!has_gang_headset)
 			var/obj/item/device/radio/headset/headset
@@ -946,11 +946,11 @@ proc/broadcast_to_all_gangs(var/message)
 			else
 				headset = new /obj/item/device/radio/headset(user)
 				if (!user.r_store)
-					user.equip_if_possible(headset, user.slot_r_store)
+					user.equip_if_possible(headset, SLOT_R_STORE)
 				else if (!user.l_store)
-					user.equip_if_possible(headset, user.slot_l_store)
+					user.equip_if_possible(headset, SLOT_L_STORE)
 				else if (user.back?.storage && !user.back.storage.is_full())
-					user.equip_if_possible(headset, user.slot_in_backpack)
+					user.equip_if_possible(headset, SLOT_IN_BACKPACK)
 				else
 					user.put_in_hand_or_drop(headset)
 
