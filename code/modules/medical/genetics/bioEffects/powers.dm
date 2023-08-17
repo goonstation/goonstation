@@ -1896,7 +1896,7 @@
 					src.cloak_decloak(2)
 
 				else
-					if (T.RL_GetBrightness() < 0.2 && can_act(owner) && src.active)
+					if (T.RL_GetBrightness() < 0.2 && can_act(owner) && src.active && !T.SL_lit())
 						src.cloak_decloak(1)
 					else
 						src.cloak_decloak(2)
