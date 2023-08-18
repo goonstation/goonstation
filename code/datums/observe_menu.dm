@@ -20,7 +20,7 @@
 	if(istype(user) && params["targetref"])
 		var/atom/target = locate(params["targetref"])
 		if(is_valid_observable(target))
-			user.insert_observer()
+			user.insert_observer(target)
 			ui.close()
 
 /datum/observe_menu/proc/is_valid_observable(atom/observable, list/atom/all_observables=null)
