@@ -212,7 +212,7 @@
 			src.botcard.assignment = "Cyborg"
 			src.default_radio = new /obj/item/device/radio(src)
 			if (src.shell)
-				src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
+				src.ai_radio = new /obj/item/device/radio/headset/command/aishell(src)
 				src.radio = src.ai_radio
 			else
 				src.radio = src.default_radio
@@ -817,6 +817,7 @@
 		if (src.shell)
 			src.real_name = "AI Cyborg Shell [copytext("\ref[src]", 6, 11)]"
 			src.name = src.real_name
+			src.update_name_tag()
 			return
 
 	blob_act(var/power)
@@ -1315,7 +1316,7 @@
 				I.set_loc(src.part_head)
 				if (!(src in available_ai_shells))
 					if(isnull(src.ai_radio))
-						src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
+						src.ai_radio = new /obj/item/device/radio/headset/command/aishell(src)
 					src.radio = src.ai_radio
 					src.ears = src.radio
 					src.radio.set_loc(src)
@@ -1957,7 +1958,7 @@
 		if(istype(RM.radio))
 			if (src.shell)
 				if(isnull(src.ai_radio))
-					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
+					src.ai_radio = new /obj/item/device/radio/headset/command/aishell(src)
 				src.radio = src.ai_radio
 			else
 				src.radio = RM.radio
@@ -1979,7 +1980,7 @@
 			src.radio.set_loc(RM)
 			if (src.shell)
 				if(isnull(src.ai_radio))
-					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
+					src.ai_radio = new /obj/item/device/radio/headset/command/aishell(src)
 				src.radio = src.ai_radio
 			else
 				src.radio = src.default_radio

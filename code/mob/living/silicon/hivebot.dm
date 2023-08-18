@@ -63,7 +63,7 @@
 		src.real_name = "AI Shell [copytext("\ref[src]", 6, 11)]"
 		src.name = src.real_name
 
-	src.radio = new /obj/item/device/radio/headset/command/ai(src)
+	src.radio = new /obj/item/device/radio/headset/command/aishell(src)
 	src.ears = src.radio
 
 	SPAWN(1 SECOND)
@@ -815,6 +815,7 @@ Frequency:
 
 	src.real_name = "AI Shell [copytext("\ref[src]", 6, 11)]"
 	src.name = src.real_name
+	src.update_name_tag()
 
 	return
 

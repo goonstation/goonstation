@@ -1045,6 +1045,8 @@ or don't if it uses a custom topopen overlay
 		act = copytext(act, 1, t1)
 	var/m_type = 1
 	var/message = null
+	var/maptext_out = 0
+	var/custom = 0
 
 	switch (lowertext(act))
 
@@ -1054,12 +1056,12 @@ or don't if it uses a custom topopen overlay
 
 		if ("list")
 			src.show_text("Basic emotes:")
-			src.show_text("twitch, twitch_s, scream, birdwell, fart, flip, custom, customv, customh")
+			src.show_text("twitch, twitch_s, scream, sigh, laugh, chuckle, giggle, chortle, guffaw, cackle, birdwell, fart, flip, custom, customv, customh")
 			src.show_text("Targetable emotes:")
 			src.show_text("salute, bow, wave, glare, stare, look, leer, nod, point")
 
 		if ("listbasic")
-			src.show_text("twitch, twitch_s, scream, birdwell, fart, flip, custom, customv, customh")
+			src.show_text("twitch, twitch_s, scream, sigh, laugh, chuckle, giggle, chortle, guffaw, cackle, birdwell, fart, flip, custom, customv, customh")
 
 		if ("listtarget")
 			src.show_text("salute, bow, wave, glare, stare, look, leer, nod, point")
@@ -1077,6 +1079,7 @@ or don't if it uses a custom topopen overlay
 					param = null
 
 				act = lowertext(act)
+				maptext_out = "<I>[act]s</I>"
 				if (param)
 					switch(act)
 						if ("bow","wave","nod")
@@ -1089,10 +1092,12 @@ or don't if it uses a custom topopen overlay
 					switch(act)
 						if ("hug")
 							message = "<B>[src]</b> [act]s itself."
+							maptext_out = "<I>[act]s itself</I>"
 						else
 							message = "<B>[src]</b> [act]s."
 			else
 				message = "<B>[src]</B> struggles to move."
+				maptext_out = "<I>struggles to move</I>"
 			m_type = 1
 
 		if ("point")
@@ -1116,23 +1121,28 @@ or don't if it uses a custom topopen overlay
 		if ("panic","freakout")
 			if (!src.restrained())
 				message = "<B>[src]</B> enters a state of hysterical panic!"
+				maptext_out = "<I>enters a state of hysterical panic!</I>"
 			else
 				message = "<B>[src]</B> starts writhing around in manic terror!"
+				maptext_out = "<I>starts writhing around in manic terror!</I>"
 			m_type = 1
 
 		if ("clap")
 			if (!src.restrained())
 				message = "<B>[src]</B> claps."
+				maptext_out = "<I>claps</I>"
 				m_type = 2
 
 		if ("flap")
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps its wings."
+				maptext_out = "<I>flaps its wings</I>"
 				m_type = 2
 
 		if ("aflap")
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps its wings ANGRILY!"
+				maptext_out = "<I>flaps its wings ANGRILY!</I>"
 				m_type = 2
 
 		if ("custom")
@@ -1146,6 +1156,8 @@ or don't if it uses a custom topopen overlay
 				alert("Unable to use this emote, must be either hearable or visible.")
 				return
 			message = "<B>[src]</B> [input]"
+			maptext_out = "<I>[input]</I>"
+			custom = copytext(input, 1, 10)
 
 		if ("customv")
 			if (!param)
@@ -1153,6 +1165,8 @@ or don't if it uses a custom topopen overlay
 				if(!param) return
 			param = html_encode(sanitize(param))
 			message = "<b>[src]</b> [param]"
+			maptext_out = "<I>[param]</I>"
+			custom = copytext(param, 1, 10)
 			m_type = 1
 
 		if ("customh")
@@ -1161,6 +1175,8 @@ or don't if it uses a custom topopen overlay
 				if(!param) return
 			param = html_encode(sanitize(param))
 			message = "<b>[src]</b> [param]"
+			maptext_out = "<I>[param]</I>"
+			custom = copytext(param, 1, 10)
 			m_type = 2
 
 		if ("me")
@@ -1168,19 +1184,30 @@ or don't if it uses a custom topopen overlay
 				return
 			param = html_encode(sanitize(param))
 			message = "<b>[src]</b> [param]"
+			maptext_out = "<I>[param]</I>"
+			custom = copytext(param, 1, 10)
 			m_type = 1
 
 		if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","nod","shrug","think","ponder","contemplate")
 			// basic visible single-word emotes
 			message = "<B>[src]</B> [act]s."
+			maptext_out = "<I>[act]s</I>"
 			m_type = 1
+
+		if ("sigh","laugh","chuckle","giggle","chortle","guffaw","cackle")
+			// basic audible single-word emotes
+			message = "<B>[src]</B> [act]s."
+			maptext_out = "<I>[act]s</I>"
+			m_type = 2
 
 		if ("flipout")
 			message = "<B>[src]</B> flips the fuck out!"
+			maptext_out = "<I>flips the fuck out!</I>"
 			m_type = 1
 
 		if ("rage","fury","angry")
 			message = "<B>[src]</B> becomes utterly furious!"
+			maptext_out = "<I>becomes utterly furious!</I>"
 			m_type = 1
 
 		if ("twitch")
@@ -1329,14 +1356,40 @@ or don't if it uses a custom topopen overlay
 			if (voluntary) src.show_text("Invalid Emote: [act]")
 			return
 
-	if ((message && isalive(src)))
-		logTheThing(LOG_SAY, src, "EMOTE: [message]")
-		if (m_type & 1)
-			for (var/mob/O in viewers(src, null))
-				O.show_message("<span class='emote'>[message]</span>", m_type)
-		else
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='emote'>[message]</span>", m_type)
+	if (!isalive(src))
+		return
+	if (maptext_out)
+		var/image/chat_maptext/chat_text = null
+		SPAWN(0) //blind stab at a life() hang - REMOVE LATER
+			if (speechpopups && src.chat_text)
+				chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
+				if(chat_text)
+					chat_text.measure(src.client)
+					for(var/image/chat_maptext/I in src.chat_text.lines)
+						if(I != chat_text)
+							I.bump_up(chat_text.measured_height)
+			if (message)
+				logTheThing(LOG_SAY, src, "EMOTE: [message]")
+				act = lowertext(act)
+				if (m_type & 1)
+					for (var/mob/O in viewers(src, null))
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+				else if (m_type & 2)
+					for (var/mob/O in hearers(src, null))
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+				else if (!isturf(src.loc))
+					var/atom/A = src.loc
+					for (var/mob/O in A.contents)
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+	else
+		if (message)
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
+			if (m_type & 1)
+				for (var/mob/O in viewers(src, null))
+					O.show_message("<span class='emote'>[message]</span>", m_type)
+			else
+				for (var/mob/O in hearers(src, null))
+					O.show_message("<span class='emote'>[message]</span>", m_type)
 	return
 
 
@@ -1781,6 +1834,19 @@ or don't if it uses a custom topopen overlay
 	//src:cameraFollow = null
 	src.tracker.cease_track()
 	src.current = null
+
+/mob/living/silicon/ai/verb/toggle_lock()
+	set category = "AI Commands"
+	set name = "Toggle Cover Lock"
+
+	if (src.dismantle_stage >= 2)
+		boutput(src, "<span class='alert'>You can't lock your cover when it's open!</span>")
+	else
+		if (src.dismantle_stage == 1)
+			src.dismantle_stage = 0
+		else
+			src.dismantle_stage = 1
+		boutput(src, "<span class='alert'>You [src.dismantle_stage ? "unlock" : "lock"] your cover lock.</span>")
 
 /mob/living/silicon/ai/verb/change_network()
 	set category = "AI Commands"
@@ -2239,7 +2305,7 @@ or don't if it uses a custom topopen overlay
 		else
 			src.UpdateOverlays(null, "moustache")
 
-//////////IF ADDING NEW CORE FRAMES PLEASE DEFINE WHICH OPEN OVERLAY TO USE HERE/////////
+// ------ IF ADDING NEW CORE FRAMES PLEASE DEFINE WHICH OPEN OVERLAY TO USE HERE ------ //
 	if (src.dismantle_stage > 1)
 		if(coreSkin == "default" || coreSkin == "science" || coreSkin == "medical" || coreSkin == "syndicate" || coreSkin == "ntold" || coreSkin == "bee" || coreSkin == "shock")
 			src.UpdateOverlays(get_image("topopen-default"), "top")
@@ -2779,36 +2845,3 @@ proc/get_mobs_trackable_by_AI()
 		if (src.mind)
 			src.mind.assigned_role = "AI"
 
-ABSTRACT_TYPE(/obj/item/ai_plating_kit)
-/obj/item/ai_plating_kit
-	name = "AI Frame Plating Kit (YOU SHOULD NOT SEE THIS, FILE A BUG REPORT IF YOU ARE READING THIS)"
-	desc = "A kit for putting the plating on an AI frame! WARNING: Choking hazard, not intended for children under 3 years."
-	icon = 'icons/mob/ai.dmi'
-	icon_state = "ai-green" // placeholder icon
-	/// The skin to apply to an AI core frame when we install this as plating. Needs to be a valid string from /ai/var/skinsList
-	var/skin = "default"
-
-/obj/item/ai_plating_kit/syndicate
-	name = "Syndicate AI Frame Plating Kit"
-	desc = "A kit for putting the plating on an AI! WARNING: Choking hazard, not intended for children under 3 years. <i>(Syndicate AI system not included)</i>"
-	icon_state = "syndie_kit" // get it???
-	skin = "syndicate"
-	contraband = 1 // crime
-
-/obj/item/ai_plating_kit/clown
-	name = "Clown AI Frame Plating Kit"
-	desc = "A kit for putting the plating on an AI! WARNING: Choking hazard, not intended for children under 3 years. It smells funny."
-	icon_state = "clown_kit"
-	skin = "clown"
-
-/obj/item/ai_plating_kit/mime
-	name = "Mime AI Frame Plating Kit"
-	desc = "A kit for putting the plating on an AI! WARNING: Choking hazard, not intended for children under 3 years."
-	icon_state = "mime_kit"
-	skin = "mime"
-
-/obj/item/ai_plating_kit/flock
-	name = "Flock AI Frame Plating Kit"
-	desc = "A kit for putting the plating on an AI! It seems to be... pulsing."
-	icon_state = "flock_kit"
-	skin = "flock"

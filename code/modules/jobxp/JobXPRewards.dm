@@ -674,13 +674,9 @@ mob/verb/checkrewards()
 
 //////////////AI/////////////////
 
-/datum/jobXpReward/ai/aiframedefault
-	name = "AI Core Frame - Standard"
-	desc = "Resets your AI core to standard."
-	required_levels = list("AI")
-	icon_state = "?"
-	claimable = 1
-	claimPerRound = 1
+ABSTRACT_TYPE(/datum/jobXpReward/ai)
+/datum/jobXpReward/ai
+	var/aiskin = "default"
 
 	activate(var/client/C)
 		if (isAI(C.mob))
@@ -688,11 +684,20 @@ mob/verb/checkrewards()
 			if (isAIeye(C.mob))
 				var/mob/living/intangible/aieye/AE = C.mob
 				A = AE.mainframe
-			A.coreSkin = "default"
+			A.coreSkin = aiskin
 			A.update_appearance()
 			return 1
 		else
 			boutput(C, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+
+/datum/jobXpReward/ai/aiframedefault
+	name = "AI Core Frame - Standard"
+	desc = "Resets your AI core to standard."
+	required_levels = list("AI")
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+	aiskin = "default"
 
 /datum/jobXpReward/ai/aiframent
 	name = "AI Core Frame - NanoTrasen"
@@ -701,18 +706,7 @@ mob/verb/checkrewards()
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
-
-	activate(var/client/C)
-		if (isAI(C.mob))
-			var/mob/living/silicon/ai/A = C.mob
-			if (isAIeye(C.mob))
-				var/mob/living/intangible/aieye/AE = C.mob
-				A = AE.mainframe
-			A.coreSkin = "nt"
-			A.update_appearance()
-			return 1
-		else
-			boutput(C, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+	aiskin = "nt"
 
 /datum/jobXpReward/ai/aiframentold
 	name = "AI Core Frame - NanoTrasen (Dated)"
@@ -721,18 +715,7 @@ mob/verb/checkrewards()
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
-
-	activate(var/client/C)
-		if (isAI(C.mob))
-			var/mob/living/silicon/ai/A = C.mob
-			if (isAIeye(C.mob))
-				var/mob/living/intangible/aieye/AE = C.mob
-				A = AE.mainframe
-			A.coreSkin = "ntold"
-			A.update_appearance()
-			return 1
-		else
-			boutput(C, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+	aiskin = "ntold"
 
 /datum/jobXpReward/ai/aiframegardengear
 	name = "AI Core Frame - Hydroponics"
@@ -741,18 +724,7 @@ mob/verb/checkrewards()
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
-
-	activate(var/client/C)
-		if (isAI(C.mob))
-			var/mob/living/silicon/ai/A = C.mob
-			if (isAIeye(C.mob))
-				var/mob/living/intangible/aieye/AE = C.mob
-				A = AE.mainframe
-			A.coreSkin = "gardengear"
-			A.update_appearance()
-			return 1
-		else
-			boutput(C, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+	aiskin = "gardengear"
 
 /datum/jobXpReward/ai/aiframescience
 	name = "AI Core Frame - Research"
@@ -761,18 +733,7 @@ mob/verb/checkrewards()
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
-
-	activate(var/client/C)
-		if (isAI(C.mob))
-			var/mob/living/silicon/ai/A = C.mob
-			if (isAIeye(C.mob))
-				var/mob/living/intangible/aieye/AE = C.mob
-				A = AE.mainframe
-			A.coreSkin = "science"
-			A.update_appearance()
-			return 1
-		else
-			boutput(C, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+	aiskin = "science"
 
 /datum/jobXpReward/ai/aiframemedical
 	name = "AI Core Frame - Medical"
@@ -781,18 +742,7 @@ mob/verb/checkrewards()
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
-
-	activate(var/client/C)
-		if (isAI(C.mob))
-			var/mob/living/silicon/ai/A = C.mob
-			if (isAIeye(C.mob))
-				var/mob/living/intangible/aieye/AE = C.mob
-				A = AE.mainframe
-			A.coreSkin = "medical"
-			A.update_appearance()
-			return 1
-		else
-			boutput(C, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+	aiskin = "medical"
 
 /datum/jobXpReward/ai/aiframeengineering
 	name = "AI Core Frame - Engineering"
@@ -801,18 +751,7 @@ mob/verb/checkrewards()
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
-
-	activate(var/client/C)
-		if (isAI(C.mob))
-			var/mob/living/silicon/ai/A = C.mob
-			if (isAIeye(C.mob))
-				var/mob/living/intangible/aieye/AE = C.mob
-				A = AE.mainframe
-			A.coreSkin = "engineering"
-			A.update_appearance()
-			return 1
-		else
-			boutput(C, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+	aiskin = "engineering"
 
 /datum/jobXpReward/ai/aiframesecurity
 	name = "AI Core Frame - Security"
@@ -821,18 +760,7 @@ mob/verb/checkrewards()
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
-
-	activate(var/client/C)
-		if (isAI(C.mob))
-			var/mob/living/silicon/ai/A = C.mob
-			if (isAIeye(C.mob))
-				var/mob/living/intangible/aieye/AE = C.mob
-				A = AE.mainframe
-			A.coreSkin = "tactical"
-			A.update_appearance()
-			return 1
-		else
-			boutput(C, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+	aiskin = "tactical"
 
 /datum/jobXpReward/ai/aiframelgun
 	name = "AI Core Frame - Plastic (Pink)"
@@ -841,18 +769,7 @@ mob/verb/checkrewards()
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
-
-	activate(var/client/C)
-		if (isAI(C.mob))
-			var/mob/living/silicon/ai/A = C.mob
-			if (isAIeye(C.mob))
-				var/mob/living/intangible/aieye/AE = C.mob
-				A = AE.mainframe
-			A.coreSkin = "lgun"
-			A.update_appearance()
-			return 1
-		else
-			boutput(C, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+	aiskin = "lgun"
 
 /datum/jobXpReward/ai/aiframetelegun
 	name = "AI Core Frame - Plastic (Blue)"
@@ -861,18 +778,7 @@ mob/verb/checkrewards()
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
-
-	activate(var/client/C)
-		if (isAI(C.mob))
-			var/mob/living/silicon/ai/A = C.mob
-			if (isAIeye(C.mob))
-				var/mob/living/intangible/aieye/AE = C.mob
-				A = AE.mainframe
-			A.coreSkin = "telegun"
-			A.update_appearance()
-			return 1
-		else
-			boutput(C, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+	aiskin = "telegun"
 
 /datum/jobXpReward/ai/aiframerustic
 	name = "AI Core Frame - Rustic"
@@ -881,15 +787,4 @@ mob/verb/checkrewards()
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
-
-	activate(var/client/C)
-		if (isAI(C.mob))
-			var/mob/living/silicon/ai/A = C.mob
-			if (isAIeye(C.mob))
-				var/mob/living/intangible/aieye/AE = C.mob
-				A = AE.mainframe
-			A.coreSkin = "rustic"
-			A.update_appearance()
-			return 1
-		else
-			boutput(C, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+	aiskin = "rustic"
