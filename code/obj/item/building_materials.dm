@@ -514,8 +514,8 @@ MATERIAL
 	item_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = W_CLASS_NORMAL
-	force = 9
-	throwforce = 15
+	force = 4
+	throwforce = 8
 	throw_speed = 5
 	throw_range = 20
 	m_amt = 1875

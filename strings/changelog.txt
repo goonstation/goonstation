@@ -1,3 +1,6 @@
+(t)fri aug 18 23
+(u)Sord
+(+)Scrap clubs and spears now fit in backpacks. All scrapweapons have received minor damage tweaks.
 (t)thu aug 17 23
 (u)LeahTheTech
 (+)Fish rarity now uses the item rarity system for <i>fancy tooltips</i>
