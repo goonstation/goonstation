@@ -52,6 +52,9 @@
 			if (M.unobservable)
 				continue
 
+			if(isnull(M.loc))
+				continue
+
 			obs_data["real_name"] = M.real_name
 			if(isAIeye(M))
 				obs_data["name"] += "'s eye"

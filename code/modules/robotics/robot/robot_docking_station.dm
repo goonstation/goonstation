@@ -32,11 +32,13 @@ TYPEINFO(/obj/machinery/recharge_station)
 	src.create_reagents(500)
 	src.reagents.add_reagent("fuel", 250)
 	src.build_icon()
+	START_TRACKING
 
 /obj/machinery/recharge_station/disposing()
 	if (src.occupant)
 		src.occupant.set_loc(get_turf(src.loc))
 		src.occupant = null
+	STOP_TRACKING
 	..()
 
 /obj/machinery/recharge_station/process(mult)
