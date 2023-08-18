@@ -212,7 +212,7 @@
 			src.botcard.assignment = "Cyborg"
 			src.default_radio = new /obj/item/device/radio(src)
 			if (src.shell)
-				src.ai_radio = new /obj/item/device/radio/headset/command/aishell(src)
+				src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
 				src.radio = src.ai_radio
 			else
 				src.radio = src.default_radio
