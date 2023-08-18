@@ -77,6 +77,7 @@
 	src.traitors |= chosen_leader
 	for (var/datum/mind/leader in src.traitors)
 		leaders_possible.Remove(leader)
+		leader.special_role = ROLE_GANG_LEADER
 		leader.add_antagonist(ROLE_GANG_LEADER, silent=TRUE)
 
 	if(src.random_gangs)
@@ -99,6 +100,7 @@
 	for(var/datum/gang/gang in src.gangs)
 		for(var/j in 1 to people_added_per_gang)
 			var/datum/mind/candidate = candidates[i++]
+			candidate.special_role = ROLE_GANG_MEMBER
 			candidate.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = gang.leader, silent=TRUE)
 			traitors |= candidate
 
