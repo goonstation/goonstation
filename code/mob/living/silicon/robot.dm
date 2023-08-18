@@ -1316,7 +1316,7 @@
 				I.set_loc(src.part_head)
 				if (!(src in available_ai_shells))
 					if(isnull(src.ai_radio))
-						src.ai_radio = new /obj/item/device/radio/headset/command/aishell(src)
+						src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
 					src.radio = src.ai_radio
 					src.ears = src.radio
 					src.radio.set_loc(src)
@@ -1958,7 +1958,7 @@
 		if(istype(RM.radio))
 			if (src.shell)
 				if(isnull(src.ai_radio))
-					src.ai_radio = new /obj/item/device/radio/headset/command/aishell(src)
+					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
 				src.radio = src.ai_radio
 			else
 				src.radio = RM.radio
@@ -1980,7 +1980,7 @@
 			src.radio.set_loc(RM)
 			if (src.shell)
 				if(isnull(src.ai_radio))
-					src.ai_radio = new /obj/item/device/radio/headset/command/aishell(src)
+					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
 				src.radio = src.ai_radio
 			else
 				src.radio = src.default_radio
