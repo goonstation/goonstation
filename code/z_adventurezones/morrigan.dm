@@ -488,13 +488,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		src.equip_new_if_possible((/obj/item/clothing/gloves/black), SLOT_GLOVES)
 		src.equip_new_if_possible((/obj/item/clothing/shoes/swat), SLOT_SHOES)
 
-	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
-
-		if (prob(0) && !src.stat)
-			src.emote("scream")
-
 	initializeBioholder()
 		. = ..()
 		randomize_look(src, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, src)
@@ -1584,10 +1577,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	var/locked = TRUE
 	var/last_announcement_made = FALSE
 
-	New()
-		. = ..()
-
-	//procs
 	proc/activate_nuke()
 		if (src.timing)
 			return
@@ -1597,15 +1586,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 	proc/detonate()
 		playsound_global(src.z, 'sound/effects/kaboom.ogg', 70)
-		//explosion(src, src.loc, 10, 20, 30, 35)
 		for (var/mob/living/carbon/human/H in mobs) //so people wouldn't just survive station's self destruct
 			if (istype(get_area(H), /area/morrigan/station))
 				SPAWN(1 SECONDS)
 					H.emote("scream")
 					H.firegib()
-		//dispose()
 		qdel(src)
-		return
 
 	proc/lockdown()
 	//eventually i will find a better way to update lights
@@ -1621,7 +1607,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 	//pressing the button
 	attack_hand(var/mob/user)
-		. = ..()
+		..()
 		if (src.locked)
 			boutput(user, "<span class='alert'>The button seems to be locked behind the glass case. Looks like you can unlock it using an ID card.</span>")
 			return
@@ -1635,7 +1621,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 	//attack by an item
 	attackby(var/obj/item/I, var/mob/user)
-		. = ..()
+		..()
 		if (!src.locked)
 			boutput(user, "<span class='notice'>The glass case has already been opened.</span>")
 			return
@@ -1650,7 +1636,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 	//timing process
 	process()
-		. = ..()
+		..()
 		if(src.timing)
 			src.time--
 			if(src.time <= 0)
@@ -1668,30 +1654,26 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 //lockdown doors for morrigan (at least for now)
 
 /obj/machinery/door/poddoor/buff/morrigan_lockdown
-
 	name = "lockdown door"
 	desc = "door used for lockdowns."
 
 	New()
-		. = ..()
+		..()
 		START_TRACKING
-		SPAWN(5 SECONDS)
-			open()
+		open()
 
 	disposing()
-		. = ..()
 		STOP_TRACKING
+		..()
 
 //door that doesn't close during lockdown
 /obj/machinery/door/poddoor/buff/morrigan_lockdown_broken
-
 	name = "lockdown door"
 	desc = "door used for lockdowns. This one seems to be malfunctioning."
 
 	New()
-		. = ..()
-		SPAWN(5 SECONDS)
-			open()
+		..()
+		open()
 
 //gas mask please i beg
 
