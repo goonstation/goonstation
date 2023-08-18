@@ -934,7 +934,7 @@
 				target = src.get_target_mob()
 			if(isnull(target))
 				target = locate(rand(-7, 7) + src.x, rand(-7, 7) + src.y, src.z)
-			. = shoot_projectile_ST(src, new spawn_type, target)
+			. = shoot_projectile_ST_pixel_spread(src, new spawn_type, target)
 		else if(ispath(spawn_type, /datum/reagent))
 			var/datum/reagent/dummy = spawn_type
 			var/reagent_id = initial(dummy.id)

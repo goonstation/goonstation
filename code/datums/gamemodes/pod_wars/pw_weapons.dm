@@ -191,7 +191,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 				L.TakeDamage("chest", 0, ((initial(custom_projectile_type.damage)/4)*pellets_to_fire)/L.get_ranged_protection(), 0, DAMAGE_BURN)
 				L.emote("twitch_v")
 			else
-				shoot_projectile_ST(get_turf(src), PJ, get_step(src, NORTH))
+				shoot_projectile_ST_pixel_spread(get_turf(src), PJ, get_step(src, NORTH))
 			SPAWN(0.1 SECONDS)
 				qdel(src)
 		else
