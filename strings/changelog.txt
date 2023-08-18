@@ -1,4 +1,9 @@
+
 (t)fri aug 18 23
+(u)FlameArrow57
+(p)15395
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(+)High damage slashing/cutting weapons will now leave cut wounds.
 (u)Sord
 (+)Scrap clubs and spears now fit in backpacks. All scrapweapons have received minor damage tweaks.
 (t)thu aug 17 23
