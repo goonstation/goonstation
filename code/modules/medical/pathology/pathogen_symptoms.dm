@@ -2084,19 +2084,19 @@ datum/pathogeneffects/malevolent/snaps/jazz
 				var/obj/item/I = H.w_uniform
 				H.u_equip(I)
 				I.set_loc(H.loc)
-			H.equip_if_possible(T, H.slot_w_uniform)
+			H.equip_if_possible(T, SLOT_W_UNIFORM)
 		if (!(H.head && istype(H.head, /obj/item/clothing/head/flatcap)))
 			var/obj/item/clothing/head/flatcap/F = new /obj/item/clothing/head/flatcap(H)
 			if (H.head)
 				var/obj/item/I = H.head
 				H.u_equip(I)
 				I.set_loc(H.loc)
-			H.equip_if_possible(F, H.slot_head)
+			H.equip_if_possible(F, SLOT_HEAD)
 
 		if (!H.find_type_in_hand(/obj/item/instrument/saxophone))
 			var/obj/item/instrument/saxophone/D = new /obj/item/instrument/saxophone(H)
 			if(!(H.put_in_hand(D) == 1))
-				var/drophand = (H.hand == RIGHT_HAND ? H.slot_r_hand : H.slot_l_hand) //basically works like a derringer
+				var/drophand = (H.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND) //basically works like a derringer
 				H.drop_item()
 				D.set_loc(H)
 				H.equip_if_possible(D, drophand)

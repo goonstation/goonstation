@@ -58,8 +58,6 @@
 /area/station/engine/inner)
 "lh" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grey,
@@ -150,7 +148,6 @@
 /area/station/engine/inner)
 "AI" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,

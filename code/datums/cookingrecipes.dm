@@ -1886,6 +1886,21 @@ datum/cookingrecipe/flockbrainburger
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/curry_udon_bowl
 
+/datum/cookingrecipe/mapo_tofu_meat
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat
+	item2 = /obj/item/reagent_containers/food/snacks/plant/chili
+	item3 = /obj/item/reagent_containers/food/snacks/plant/soy
+	item4 = /obj/item/reagent_containers/food/snacks/plant/onion
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/mapo_tofu_meat
+
+/datum/cookingrecipe/mapo_tofu_synth
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat
+	item2 = /obj/item/reagent_containers/food/snacks/plant/chili
+	item3 = /obj/item/reagent_containers/food/snacks/plant/soy
+	item4 = /obj/item/reagent_containers/food/snacks/plant/onion
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/mapo_tofu_synth
 
 /datum/cookingrecipe/cheesewheel
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
