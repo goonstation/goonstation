@@ -12,6 +12,7 @@
 	///can you roll this job if you rolled antag with a non-traitor-allowed favourite job (e.g.: prevent sec mains from forcing only captain antag rounds)
 	var/allow_antag_fallthrough = TRUE
 	var/allow_spy_theft = 1
+	var/can_join_gangs = TRUE
 	var/cant_spawn_as_rev = 0 // For the revoltion game mode. See jobprocs.dm for notes etc (Convair880).
 	var/cant_spawn_as_con = 0 // Prevents this job spawning as a conspirator in the conspiracy gamemode.
 	var/requires_whitelist = 0
@@ -133,6 +134,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	linkcolor = "#00CC00"
 	slot_card = /obj/item/card/id/command
 	map_can_autooverride = 0
+	can_join_gangs = FALSE
 
 	special_setup(mob/M, no_special_spawn)
 		. = ..()
@@ -235,6 +237,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_miranda = 1
 	allow_traitors = 0
 	allow_spy_theft = 0
+	can_join_gangs = FALSE
 	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
@@ -456,6 +459,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	wages = PAY_TRADESMAN
 	allow_traitors = 0
 	allow_spy_theft = 0
+	can_join_gangs = FALSE
 	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	receives_implant = /obj/item/implant/health/security/anti_mindhack
@@ -1116,6 +1120,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 0
 	wages = PAY_TRADESMAN
 	allow_traitors = 0
+	can_join_gangs = FALSE
 	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	receives_badge = 1
@@ -2470,6 +2475,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	wages = PAY_IMPORTANT
 	allow_traitors = 0
 	allow_spy_theft = 0
+	can_join_gangs = FALSE
 	cant_spawn_as_rev = 1
 	receives_badge = 1
 	receives_miranda = 1
@@ -2592,6 +2598,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	requires_supervisor_job = "Head of Security"
 	allow_traitors = 0
 	allow_spy_theft = 0
+	can_join_gangs = FALSE
 	cant_spawn_as_rev = 1
 	receives_badge = 1
 	receives_miranda = 1
