@@ -974,7 +974,7 @@ var/datum/job_controller/job_controls
 				alert(usr, "Could not find a savefile with that ckey!.")
 			src.job_creator()
 
-/proc/find_job_in_controller_by_string(var/string,var/staple_only = 0)
+/proc/find_job_in_controller_by_string(var/string, var/staple_only = 0)
 	RETURN_TYPE(/datum/job)
 	if (!string || !istext(string))
 		logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job with bad string in controller detected")
@@ -986,16 +986,22 @@ var/datum/job_controller/job_controls
 	#endif
 	if (string in excluded_strings)
 		return null
+	var/list/results = list()
 	for (var/datum/job/J in job_controls.staple_jobs)
 		if (J.name == string || (string in J.alias_names))
-			return J
+			results += J
 	if (!staple_only)
 		for (var/datum/job/J in job_controls.special_jobs)
 			if (J.name == string || (string in J.alias_names))
-				return J
+				results += J
 		for (var/datum/job/J in job_controls.hidden_jobs)
 			if (J.name == string || (string in J.alias_names))
-				return J
+				results += J
+	if(length(results) == 1)
+		return results[1]
+	else if(length(results) > 1)
+		stack_trace("Multiple jobs share the name [string]!")
+		return results[1]
 	logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job by string \"[string]\" in controller failed")
 	return null
 
