@@ -5,6 +5,7 @@ var/list/ban_from_fluid = list(
 	"blackpowder",\
 	"thermite",\
 	"luminol",\
+	"photophosphide",\
 )
 //todo : make thermite work
 var/list/ban_stacking_into_fluid = list( //ban these from producing fluid from a 'cleanable'
