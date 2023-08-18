@@ -81,24 +81,6 @@
 
 	return 1
 
-/datum/game_mode/gang/proc/fill_gangs(list/datum/mind/candidates = null, max_member_count = INFINITY)
-	var/num_teams = length(src.gangs)
-	var/num_people_needed = 0
-	for(var/datum/gang/gang in src.gangs)
-		num_people_needed += min(gang.current_max_gang_members, max_member_count) - length(gang.members)
-	if(isnull(candidates))
-		candidates = get_possible_enemies(ROLE_GANG_LEADER, num_people_needed, allow_carbon=TRUE)
-	var/num_people_available = min(num_people_needed, length(candidates))
-	var/people_added_per_gang = round(num_people_available / num_teams)
-	num_people_available = people_added_per_gang * num_teams
-	shuffle_list(candidates)
-	var/i = 1
-	for(var/datum/gang/gang in src.gangs)
-		for(var/j in 1 to people_added_per_gang)
-			var/datum/mind/candidate = candidates[i++]
-			candidate.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = gang.leader, silent=TRUE)
-			traitors |= candidate
-
 /datum/game_mode/gang/post_setup()
 	for(var/datum/mind/antag_mind in src.traitors)
 		if(antag_mind.special_role == ROLE_GANG_LEADER)
@@ -125,6 +107,28 @@
 		send_intercept()
 
 	return 1
+
+/datum/game_mode/gang/proc/fill_gangs(list/datum/mind/candidates = null, max_member_count = INFINITY)
+	var/num_teams = length(src.gangs)
+	var/num_people_needed = 0
+	for(var/datum/gang/gang in src.gangs)
+		num_people_needed += min(gang.current_max_gang_members, max_member_count) - length(gang.members)
+	if(isnull(candidates))
+		candidates = get_possible_enemies(ROLE_GANG_LEADER, num_people_needed, allow_carbon=TRUE, filter_proc=PROC_REF(can_join_gangs))
+	var/num_people_available = min(num_people_needed, length(candidates))
+	var/people_added_per_gang = round(num_people_available / num_teams)
+	num_people_available = people_added_per_gang * num_teams
+	shuffle_list(candidates)
+	var/i = 1
+	for(var/datum/gang/gang in src.gangs)
+		for(var/j in 1 to people_added_per_gang)
+			var/datum/mind/candidate = candidates[i++]
+			candidate.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = gang.leader, silent=TRUE)
+			traitors |= candidate
+
+/datum/game_mode/gang/proc/can_join_gangs(mob/M)
+	var/datum/job/job = find_job_in_controller_by_string(M.mind.assigned_role)
+	. = !job || job.can_join_gangs
 
 /datum/game_mode/gang/proc/force_shuttle()
 	if (!emergency_shuttle.online)

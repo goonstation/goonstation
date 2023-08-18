@@ -192,8 +192,9 @@ ABSTRACT_TYPE(/datum/game_mode)
   * * type - requested antagonist type.
   * * number - requested number of antagonists. If it can't find that many it will try to look again, but ignoring antagonist preferences.
 	* * allow_carbon - if this proc is ran mid-round this allows for /mob/living/carbon to be included in the list of candidates. (normally only new_player)
+	* * filter_proc - a proc that takes a mob and returns TRUE if it should be included in the list of candidates.
   */
-/datum/game_mode/proc/get_possible_enemies(type, number, allow_carbon=FALSE)
+/datum/game_mode/proc/get_possible_enemies(type, number, allow_carbon=FALSE, filter_proc=null)
 	var/list/candidates = list()
 	/// Used to fill in the quota if we can't find enough players with the antag preference on.
 	var/list/unpicked_candidate_minds = list()
@@ -209,6 +210,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 			if(!find_job_in_controller_by_string(C.mob.job)?.allow_traitors)
 				continue
 		else
+			continue
+		if(filter_proc && !call(filter_proc)(C.mob))
 			continue
 		var/datum/mind/mind = C.mob.mind
 		if (jobban_isbanned(C.mob, "Syndicate")) continue //antag banned
