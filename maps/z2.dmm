@@ -64659,7 +64659,8 @@
 	},
 /area/syndicate_station/battlecruiser)
 "nge" = (
-/obj/mapping_helper/turfs/floor/burner/obj/cable{
+/obj/mapping_helper/turfs/floor/burner/,
+obj/cable{
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt,
