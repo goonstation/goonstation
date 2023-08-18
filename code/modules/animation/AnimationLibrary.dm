@@ -618,7 +618,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	plane = PLANE_OVERLAY_EFFECTS
 
 /proc/chemistry_particle(var/datum/reagents/holder, var/datum/chemical_reaction/reaction)
-	if(!holder.my_atom.loc || !istype(holder.my_atom, /obj))
+	if(!istype(holder.my_atom, /obj) || !holder.my_atom.loc)
 		return
 	var/obj/holder_object = holder.my_atom
 
