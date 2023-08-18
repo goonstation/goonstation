@@ -766,14 +766,14 @@ proc/compare_ornament_score(list/a, list/b)
 		desc = "Father Christmas! Santa Claus! Old Nick! ..wait, not that last one. I hope."
 		gender = "male"
 
-		src.equip_new_if_possible(/obj/item/clothing/under/shorts/red, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/clothing/suit/space/santa, slot_wear_suit)
-		src.equip_new_if_possible(/obj/item/clothing/shoes/black, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/glasses/regular, slot_glasses)
-		src.equip_new_if_possible(/obj/item/clothing/head/helmet/space/santahat, slot_head)
-		src.equip_new_if_possible(/obj/item/storage/backpack/red, slot_back)
-		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
-		src.equip_new_if_possible(/obj/item/card/id/captains_spare/santa, slot_wear_id)
+		src.equip_new_if_possible(/obj/item/clothing/under/shorts/red, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/suit/space/santa, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/black, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/regular, SLOT_GLASSES)
+		src.equip_new_if_possible(/obj/item/clothing/head/helmet/space/santahat, SLOT_HEAD)
+		src.equip_new_if_possible(/obj/item/storage/backpack/red, SLOT_BACK)
+		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
+		src.equip_new_if_possible(/obj/item/card/id/captains_spare/santa, SLOT_WEAR_ID)
 
 		var/datum/abilityHolder/HS = src.add_ability_holder(/datum/abilityHolder/santa)
 		HS.addAbility(/datum/targetable/santa/heal)

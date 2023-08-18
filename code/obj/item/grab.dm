@@ -860,8 +860,9 @@
 
 
 		if (assailant)
-			assailant.visible_message("<span class='alert'>[assailant] lowers their defenses!</span>")
-			assailant.delStatus("blocking")
+			if(assailant.hasStatus("blocking"))
+				assailant.visible_message("<span class='alert'>[assailant] lowers their defenses!</span>")
+				assailant.delStatus("blocking")
 			assailant.last_resist = world.time + COMBAT_BLOCK_DELAY
 		..()
 
