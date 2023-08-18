@@ -2709,25 +2709,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 			return
 		return M.AIize()
 
-/datum/job/special/cyborg
-	name = "Cyborg"
-	linkcolor = "#999999"
-	limit = 0
-	wages = 0
-	allow_traitors = 0
-	cant_spawn_as_rev = 1
-	slot_ears = list()
-	slot_card = null
-	slot_back = list()
-	slot_belt = list()
-	items_in_backpack = list()
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		return M.Robotize_MK2()
-
 /datum/job/special/ghostdrone
 	name = "Drone"
 	linkcolor = "#999999"
