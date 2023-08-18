@@ -60,7 +60,6 @@
 			src.client.images += aiImages
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 			src.update_name_tag()
-			src.job = "AI"
 			if (src.mind)
 				src.mind.assigned_role = "AI"
 			animate(src.client, 0.3 SECONDS, color = client_color)

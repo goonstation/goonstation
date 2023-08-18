@@ -677,6 +677,10 @@ mob/verb/checkrewards()
 ABSTRACT_TYPE(/datum/jobXpReward/ai)
 /datum/jobXpReward/ai
 	var/aiskin = "default"
+	required_levels = list("AI")
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
 
 	activate(var/client/C)
 		if (isAI(C.mob))
@@ -693,98 +697,54 @@ ABSTRACT_TYPE(/datum/jobXpReward/ai)
 /datum/jobXpReward/ai/aiframedefault
 	name = "AI Core Frame - Standard"
 	desc = "Resets your AI core to standard."
-	required_levels = list("AI")
-	icon_state = "?"
-	claimable = 1
-	claimPerRound = 1
 	aiskin = "default"
 
 /datum/jobXpReward/ai/aiframent
 	name = "AI Core Frame - NanoTrasen"
 	desc = "Fancies up your core to show some company spirit!"
-	required_levels = list("AI")
-	icon_state = "?"
-	claimable = 1
-	claimPerRound = 1
 	aiskin = "nt"
 
 /datum/jobXpReward/ai/aiframentold
 	name = "AI Core Frame - NanoTrasen (Dated)"
 	desc = "Fancies up your core to show some company spirit! Now with added dust and eggshell white."
-	required_levels = list("AI")
-	icon_state = "?"
-	claimable = 1
-	claimPerRound = 1
 	aiskin = "ntold"
 
 /datum/jobXpReward/ai/aiframegardengear
 	name = "AI Core Frame - Hydroponics"
 	desc = "Paints your core with the colours of the hydroponics department!"
-	required_levels = list("AI")
-	icon_state = "?"
-	claimable = 1
-	claimPerRound = 1
 	aiskin = "gardengear"
 
 /datum/jobXpReward/ai/aiframescience
 	name = "AI Core Frame - Research"
 	desc = "Paints your core with the colours of the research department!"
-	required_levels = list("AI")
-	icon_state = "?"
-	claimable = 1
-	claimPerRound = 1
 	aiskin = "science"
 
 /datum/jobXpReward/ai/aiframemedical
 	name = "AI Core Frame - Medical"
 	desc = "Paints your core with the colours of the medical department!"
-	required_levels = list("AI")
-	icon_state = "?"
-	claimable = 1
-	claimPerRound = 1
 	aiskin = "medical"
 
 /datum/jobXpReward/ai/aiframeengineering
 	name = "AI Core Frame - Engineering"
 	desc = "Paints your core with the colours of the engineering department!"
-	required_levels = list("AI")
-	icon_state = "?"
-	claimable = 1
-	claimPerRound = 1
 	aiskin = "engineering"
 
 /datum/jobXpReward/ai/aiframesecurity
 	name = "AI Core Frame - Security"
 	desc = "Fancies up your AI core to look all tactical."
-	required_levels = list("AI")
-	icon_state = "?"
-	claimable = 1
-	claimPerRound = 1
 	aiskin = "tactical"
 
 /datum/jobXpReward/ai/aiframelgun
 	name = "AI Core Frame - Plastic (Pink)"
 	desc = "Replaces your AI core with a fancy, child-friendly version."
-	required_levels = list("AI")
-	icon_state = "?"
-	claimable = 1
-	claimPerRound = 1
 	aiskin = "lgun"
 
 /datum/jobXpReward/ai/aiframetelegun
 	name = "AI Core Frame - Plastic (Blue)"
 	desc = "Replaces your AI core with a fancy, child-friendly version."
-	required_levels = list("AI")
-	icon_state = "?"
-	claimable = 1
-	claimPerRound = 1
 	aiskin = "telegun"
 
 /datum/jobXpReward/ai/aiframerustic
 	name = "AI Core Frame - Rustic"
 	desc = "Replaces your AI core with a much, much older model."
-	required_levels = list("AI")
-	icon_state = "?"
-	claimable = 1
-	claimPerRound = 1
 	aiskin = "rustic"
