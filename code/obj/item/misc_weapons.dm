@@ -1354,6 +1354,7 @@ TYPEINFO(/obj/item/swords/captain)
 	hit_type = DAMAGE_BLUNT
 	attack_verbs = "bonks"
 	hitsound = null // do this in attack
+	leaves_slash_wound = FALSE
 
 	New()
 		..()
