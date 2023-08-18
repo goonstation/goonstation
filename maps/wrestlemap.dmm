@@ -680,9 +680,6 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
@@ -2420,9 +2417,6 @@
 /obj/cable{
 	icon_state = "5-10"
 	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
 /turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
@@ -3888,17 +3882,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/quartermaster/refinery)
-"bKh" = (
-/obj/decal/boxingropeenter{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/turf/unsimulated/floor/specialroom/gym,
-/area/station/crew_quarters/quarters{
-	name = "The Ring"
-	})
 "bKo" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing{
@@ -10303,10 +10286,11 @@
 /area/station/crew_quarters/catering)
 "exR" = (
 /obj/table/wood/auto,
-/obj/item/plate,
-/obj/item/shaker/salt,
-/obj/item/shaker/pepper,
 /obj/disposalpipe/segment,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/crew_quarters/lounge/luxury_seating)
 "exW" = (
@@ -14682,9 +14666,6 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
 /turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
@@ -18815,9 +18796,9 @@
 /area/station/maintenance/solar/west)
 "ioY" = (
 /obj/table/wood/auto,
-/obj/item/kitchen/utensil/fork,
-/obj/item/kitchen/utensil/knife,
-/obj/item/kitchen/utensil/spoon,
+/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/item/reagent_containers/food/snacks/popcorn,
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/crew_quarters/lounge)
 "ipf" = (
@@ -20313,6 +20294,11 @@
 	},
 /obj/submachine/ATM{
 	pixel_y = 32
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/market{
@@ -22384,10 +22370,12 @@
 /area/station/janitor/office)
 "jLB" = (
 /obj/table/wood/auto,
-/obj/item/shaker/ketchup,
-/obj/item/shaker/mustard,
 /obj/landmark/gps_waypoint,
 /obj/disposalpipe/segment,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/crew_quarters/lounge/luxury_seating)
 "jLH" = (
@@ -22516,6 +22504,10 @@
 "jNK" = (
 /obj/decal/boxingropeenter,
 /obj/disposalpipe/segment/mail,
+/obj/machinery/partyalarm{
+	pixel_y = 32;
+	pixel_x = 32
+	},
 /turf/simulated/floor/stairs/wide{
 	dir = 1
 	},
@@ -23724,7 +23716,6 @@
 	icon_state = "line1"
 	},
 /obj/machinery/coffeemaker,
-/obj/item/reagent_containers/food/drinks/carafe,
 /obj/drink_rack/mug{
 	pixel_x = 28
 	},
@@ -30577,7 +30568,9 @@
 /area/station/crew_quarters/kitchen)
 "ntZ" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/item/reagent_containers/food/snacks/popcorn,
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/crew_quarters/lounge/luxury_seating)
 "nug" = (
@@ -31746,7 +31739,9 @@
 /area/station/chapel/sanctuary)
 "nTv" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/item/reagent_containers/food/snacks/fries,
+/obj/item/reagent_containers/food/snacks/fries,
+/obj/item/reagent_containers/food/snacks/fries,
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/crew_quarters/lounge)
 "nTz" = (
@@ -32244,9 +32239,6 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
 /turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
@@ -32557,17 +32549,6 @@
 /obj/cable,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/captain)
-"oml" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/turf/unsimulated/floor/specialroom/gym,
-/area/station/crew_quarters/quarters{
-	name = "The Ring"
-	})
 "omo" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/atmospherics/unary/outlet_injector{
@@ -32784,9 +32765,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "orF" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
@@ -35460,7 +35438,8 @@
 /area/station/maintenance/east)
 "pFf" = (
 /obj/table/wood/auto,
-/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/fries,
+/obj/item/reagent_containers/food/snacks/fries,
 /obj/item/reagent_containers/food/snacks/fries,
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/crew_quarters/lounge/luxury_seating)
@@ -50397,11 +50376,6 @@
 /obj/machinery/power/collector_control,
 /turf/simulated/floor/orange/side,
 /area/station/engine/inner)
-"vZQ" = (
-/turf/simulated/wall/auto/supernorn,
-/area/station/hallway/primary/north{
-	name = "The Ring Entrance"
-	})
 "wav" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/gin{
@@ -101612,13 +101586,13 @@ sbZ
 sbZ
 eho
 mbV
-mbV
+nBq
 mbV
 mbV
 nBq
 ocC
 ocC
-ocC
+wHf
 vCf
 mbV
 dUw
@@ -103424,13 +103398,13 @@ ocC
 ocC
 mbV
 mbV
-mbV
+nBq
 mbV
 mbV
 gRL
 ocC
 ocC
-ocC
+wHf
 ocC
 mbV
 jiF
@@ -106134,7 +106108,7 @@ jVs
 lVr
 lSO
 pln
-vZQ
+dNw
 bIB
 nTz
 qiG
@@ -106153,7 +106127,7 @@ xbH
 dxR
 hcE
 rYa
-oml
+rYa
 ens
 ken
 fRg
@@ -106455,7 +106429,7 @@ jdY
 qJa
 uZd
 qKN
-bKh
+qKN
 jdY
 vjx
 oJk
