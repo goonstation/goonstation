@@ -1000,10 +1000,9 @@ var/datum/job_controller/job_controls
 	if(length(results) == 1)
 		return results[1]
 	else if(length(results) > 1)
-		stack_trace("Multiple jobs share the name [string]!")
+		stack_trace("Multiple jobs share the name '[string]'!")
 		return results[1]
-	logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job by string \"[string]\" in controller failed")
-	return null
+	CRASH("No job found with name '[string]'!")
 
 /proc/find_job_in_controller_by_path(var/path)
 	if (!path || !ispath(path) || !istype(path,/datum/job/))
