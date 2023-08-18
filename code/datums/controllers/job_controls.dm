@@ -975,6 +975,7 @@ var/datum/job_controller/job_controls
 			src.job_creator()
 
 /proc/find_job_in_controller_by_string(var/string,var/staple_only = 0)
+	RETURN_TYPE(/datum/job)
 	if (!string || !istext(string))
 		logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job with bad string in controller detected")
 		return null
