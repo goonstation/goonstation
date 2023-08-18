@@ -240,7 +240,6 @@ var/global/logLength = 0
 			return(constructName(mindRef.current, type))
 		else
 			name = "[mindRef.displayed_key] (character destroyed)"
-			mindRef
 			if (mindRef.key)
 				key = mindRef.key
 			if (mindRef.ckey)
