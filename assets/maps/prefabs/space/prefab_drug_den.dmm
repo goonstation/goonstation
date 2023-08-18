@@ -92,19 +92,6 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
-"eN" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "airlock_open";
-	name = "broken external airlock"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/unsimulated/floor/plating,
-/area/prefab/drug_den)
 "fy" = (
 /obj/table/reinforced/chemistry/auto{
 	desc = "A black countertop table for storing kitchen-y objects.";
@@ -493,10 +480,6 @@
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/se,
 /area/prefab/drug_den/party)
-"GV" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/unsimulated/floor/plating,
-/area/prefab/drug_den/party)
 "Hq" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -531,6 +514,12 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/jen,
+/area/prefab/drug_den)
+"Ik" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/carpet/arcade/half,
 /area/prefab/drug_den)
 "It" = (
 /obj/table/reinforced/chemistry/auto{
@@ -585,6 +574,10 @@
 	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/drug_den)
+"Kq" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
+/area/prefab/drug_den/party)
 "Kt" = (
 /obj/lattice{
 	dir = 4;
@@ -666,6 +659,19 @@
 /obj/storage/secure/closet/fridge/kitchen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"My" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "airlock_open";
+	name = "broken external airlock"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor/plating,
 /area/prefab/drug_den)
 "MJ" = (
 /obj/lattice{
@@ -774,13 +780,6 @@
 	},
 /obj/machinery/light/incandescent/blueish,
 /obj/decal/cleanable/dirt/jen,
-/turf/simulated/floor/carpet/arcade/half,
-/area/prefab/drug_den)
-"SG" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/drug_den)
 "Tb" = (
@@ -1218,7 +1217,7 @@ hC
 hC
 hC
 KH
-GV
+Kq
 Db
 hC
 hC
@@ -1354,9 +1353,9 @@ hC
 oX
 ud
 qJ
-SG
+Ik
 yg
-eN
+My
 cR
 dK
 Cp

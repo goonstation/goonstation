@@ -35,6 +35,17 @@
 	dir = 1
 	},
 /area/crypt/graveyard/swamp)
+"acV" = (
+/obj/machinery/atmospherics/pipe/tank/toxins{
+	dir = 2;
+
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater)
 "adb" = (
 /obj/decal/stalagmite,
 /obj/decal/cleanable/dirt,
@@ -128,6 +139,19 @@
 	dir = 8
 	},
 /area/crater/biodome/crew)
+"akw" = (
+/obj/grille/catwalk{
+	dir = 5
+	},
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater)
 "akC" = (
 /obj/decoration/decorativeplant/plant4,
 /turf/unsimulated/floor/bluewhite{
@@ -160,6 +184,18 @@
 	},
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
+"ams" = (
+/obj/mapping_helper/turfs/floor/burner,
+/obj/cable,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/item/device/t_scanner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/maint)
 "amv" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -200,6 +236,24 @@
 	},
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/swampzone/interiors/bonktek)
+"aol" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	noalerts = 1;
+	pixel_y = 24;
+	start_charge = 12
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/light/emergency{
+	dir = 1
+	},
+/turf/unsimulated/floor/green/side{
+	dir = 1
+	},
+/area/crater/biodome/south)
 "aon" = (
 /obj/decal/lightshaft,
 /obj/map/light/graveyard,
@@ -353,6 +407,35 @@
 	icon_state = "rootfloor_2"
 	},
 /area/swampzone/interiors/outbuildings)
+"auD" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "gibtorso";
+	name = "meaty bit"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "gibmid2";
+	name = "gross organs"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "gibhead";
+	name = "grody thing"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/turf/unsimulated/floor/sanitary,
+/area/crypt/sigma/morgue)
 "auI" = (
 /turf/unsimulated/wall/cave,
 /area/crater/cave)
@@ -449,6 +532,15 @@
 /obj/map/light/graveyard,
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/crew)
+"aAA" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/noticeboard,
+/turf/unsimulated/floor/neutral/side{
+	dir = 1
+	},
+/area/crater/biodome/crew)
 "aBz" = (
 /obj/machinery/light/small/floor/blueish,
 /turf/unsimulated/floor/setpieces/rootfloor{
@@ -475,22 +567,12 @@
 	name = "swamp floor"
 	},
 /area/swampzone/deeps)
-"aDn" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "E APC";
-	noalerts = 1;
-	pixel_x = 24;
-	start_charge = 13
-	},
+"aCK" = (
 /obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "1-8"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/crater/biodome/entry)
+/turf/unsimulated/wall/auto/lead/blue,
+/area/crater/biodome/maint)
 "aDy" = (
 /turf/unsimulated/floor/specialroom/chapel,
 /area/swampzone/interiors)
@@ -552,22 +634,6 @@
 /area/crater/cave/lower)
 "aGq" = (
 /obj/decal/stalagmite,
-/turf/unsimulated/floor/cave,
-/area/crater/cave)
-"aGx" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
-	dir = 2;
-	
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater)
-"aGI" = (
-/obj/machinery/power/rtg,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aHQ" = (
@@ -911,6 +977,17 @@
 	name = "swamp wall"
 	},
 /area/swampzone/deeps)
+"bap" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/unsimulated/floor/green/side{
+	dir = 1
+	},
+/area/crater/biodome/south)
 "bbk" = (
 /obj/decal/lightshaft{
 	pixel_x = 8;
@@ -965,6 +1042,17 @@
 "bdX" = (
 /turf/unsimulated/floor/industrial,
 /area/swampzone/ground/canyon)
+"bes" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/east,
+/obj/window/crystal/reinforced/north,
+/obj/window/crystal/reinforced/west,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/south)
 "beK" = (
 /obj/table/reinforced/bar/auto,
 /obj/map/light/graveyard,
@@ -1095,32 +1183,6 @@
 	icon_state = "rootfloor_3"
 	},
 /area/swampzone/heights)
-"bpK" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/light,
-/obj/spacevine{
-	density = 1;
-	icon_state = "vine-hvy2";
-	opacity = 1
-	},
-/turf/unsimulated/floor/green/side,
-/area/crater/biodome/north)
-"bpR" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "..How the hell is this even possible?";
-	icon = 'icons/misc/evilreaverstation.dmi';
-	icon_state = "meatspike_h";
-	name = "a meat spike"
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crypt/sigma/storage)
 "bpV" = (
 /turf/unsimulated/floor/carpet{
 	dir = 8;
@@ -1248,10 +1310,6 @@
 	},
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
-"bwe" = (
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/entry)
 "bwP" = (
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
@@ -1322,13 +1380,6 @@
 /obj/storage/crate,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crater/biodome/north)
-"bAW" = (
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater)
 "bAZ" = (
 /obj/stool/bench/wooden/auto,
 /turf/unsimulated/floor/wood,
@@ -1361,6 +1412,11 @@
 	dir = 1
 	},
 /area/crater/biodome/crew)
+"bCH" = (
+/obj/item/mousetrap/armed,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crypt/sigma/storage)
 "bCN" = (
 /obj/lattice{
 	dir = 10;
@@ -1386,6 +1442,22 @@
 "bFp" = (
 /turf/unsimulated/floor,
 /area/crypt/sigma/storage)
+"bFq" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/unsimulated/floor/green/corner,
+/area/crater/biodome/south)
+"bFX" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater)
 "bGI" = (
 /obj/decal/cleanable/cobweb,
 /obj/machinery/computer3/generic/hjam,
@@ -1437,6 +1509,16 @@
 	dir = 8
 	},
 /area/swampzone/interiors/outbuildings)
+"bJt" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/east,
+/obj/window/crystal/reinforced/south,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/north)
 "bJz" = (
 /obj/decal/cleanable/cobweb,
 /turf/unsimulated/floor/wood/five,
@@ -1523,16 +1605,6 @@
 	},
 /turf/unsimulated/floor/wood/five,
 /area/swampzone/interiors)
-"bNZ" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/south,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/south)
 "bOz" = (
 /obj/railing/orange,
 /turf/unsimulated/floor/stairs/wood{
@@ -1875,22 +1947,18 @@
 	name = "strange stairs"
 	},
 /area/crater/cave)
-"chP" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "A vent.  A rather decrepit one, at that.";
-	dir = 1;
-	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact";
-	name = "defunct vent"
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crypt/sigma/storage)
 "chS" = (
 /obj/table/wood/auto/desk,
 /turf/unsimulated/floor/carpet/purple/fancy/edge/nw,
 /area/swampzone/interiors/bonktek/funktek)
+"chW" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/mushrooms/type1,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/cave,
+/area/crater)
 "ciN" = (
 /turf/unsimulated/wall/setpieces/rootwall,
 /area/crypt/graveyard)
@@ -2027,14 +2095,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/swampzone/interiors/bonktek/shootingrange)
-"cut" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater)
 "cux" = (
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/floor/cave,
@@ -2188,6 +2248,24 @@
 	},
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
+"cEW" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	noalerts = 1;
+	pixel_y = 24;
+	start_charge = 12
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/unsimulated/floor/neutral/side{
+	dir = 1
+	},
+/area/crater/biodome/research)
 "cFg" = (
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt{
@@ -2373,6 +2451,16 @@
 	name = "strange surface"
 	},
 /area/crater/cave/lower)
+"cOy" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/east,
+/obj/window/crystal/reinforced/north,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/south)
 "cPC" = (
 /turf/unsimulated/floor/stairs{
 	dir = 1
@@ -2384,16 +2472,6 @@
 	},
 /turf/unsimulated/floor/cave,
 /area/swampzone/deeps)
-"cPV" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/green/side{
-	dir = 4
-	},
-/area/crater/biodome/south)
 "cQd" = (
 /obj/machinery/vending/medical,
 /turf/unsimulated/floor/redwhite{
@@ -2479,17 +2557,6 @@
 	dir = 1
 	},
 /area/crypt/graveyard)
-"cYH" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/south)
 "cYK" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -2803,6 +2870,15 @@
 	dir = 1
 	},
 /area/crypt/graveyard)
+"dtL" = (
+/obj/machinery/door/airlock/external{
+	icon_state = "door_locked";
+	name = "Botanical Research Biodome";
+	secondsElectrified = -1
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/entry)
 "dtS" = (
 /turf/unsimulated/floor/setpieces{
 	desc = "A strange jet black metal floor. There are odd lines carved into it.";
@@ -2823,20 +2899,6 @@
 /obj/item/reagent_containers/food/snacks/snack_cake,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
-"duk" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 1
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "bot2"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner"
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater)
 "dup" = (
 /obj/table/wood/auto,
 /obj/window/cubicle{
@@ -2866,16 +2928,6 @@
 	dir = 8
 	},
 /area/swampzone/interiors)
-"dwu" = (
-/obj/decal/cleanable/dirt,
-/obj/decal/mushrooms/type1,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/cave,
-/area/crater)
 "dxM" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/mining_tools/pick,
@@ -2922,23 +2974,6 @@
 	},
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
-"dBd" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 1
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "bot2"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner"
-	},
-/obj/machinery/light{
-	on = 1
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater)
 "dBh" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -2955,6 +2990,14 @@
 /obj/item/raw_material/cobryl,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
+"dDj" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/neutral/corner{
+	dir = 4
+	},
+/area/crater/biodome/crew)
 "dDu" = (
 /obj/railing/cyan/reinforced{
 	dir = 4
@@ -3003,6 +3046,11 @@
 	dir = 8
 	},
 /area/swampzone/ground)
+"dFC" = (
+/obj/machinery/gibber,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crypt/sigma/storage)
 "dFJ" = (
 /obj/shrub{
 	dir = 1
@@ -3435,6 +3483,20 @@
 /obj/table/glass/reinforced/auto,
 /turf/unsimulated/floor/red,
 /area/syndicate_station)
+"ees" = (
+/obj/mapping_helper/turfs/floor/burner,
+/obj/machinery/light,
+/obj/machinery/power/apc{
+	name = "S APC";
+	noalerts = 1;
+	pixel_y = -24;
+	start_charge = 13
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/maint)
 "eeM" = (
 /obj/reagent_dispensers/watertank/big,
 /obj/decal/stripe_caution,
@@ -3445,13 +3507,6 @@
 /obj/item/skull/noface,
 /turf/unsimulated/floor/circuit/off,
 /area/crater/cave)
-"efc" = (
-/obj/landmark{
-	name = "bioelefall"
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/shuttle/biodome_elevator/lower)
 "efA" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/paper_bin,
@@ -3466,6 +3521,12 @@
 	dir = 4
 	},
 /area/swampzone/interiors/quarry)
+"eht" = (
+/obj/decal/cleanable/dirt,
+/mob/living/critter/zombie/security,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crypt/sigma/storage)
 "ehw" = (
 /obj/spacevine{
 	icon_state = "vine-light3"
@@ -3498,18 +3559,6 @@
 	dir = 9
 	},
 /area/crater/biodome/north)
-"eiO" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/item/mousetrap/armed,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/maint)
 "eiZ" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -3530,6 +3579,16 @@
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt,
 /area/crypt/graveyard)
+"ejB" = (
+/obj/mapping_helper/turfs/floor/burner,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/furnace,
+/obj/decal/cleanable/cobweb,
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/maint)
 "ejL" = (
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /turf/unsimulated/floor/black,
@@ -3758,6 +3817,13 @@
 	dir = 8
 	},
 /area/crater/biodome/north)
+"ezW" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater)
 "eAx" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/north,
 /area/swampzone/interiors/bonktek/lounge)
@@ -4085,6 +4151,13 @@
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/space)
+"eQe" = (
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater)
 "eQl" = (
 /obj/grille/catwalk{
 	icon_state = "catwalk_cross"
@@ -4110,6 +4183,13 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor,
 /area/crater/biodome/crew)
+"eRv" = (
+/obj/machinery/power/rtg,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/unsimulated/floor/cave,
+/area/crater/cave)
 "eRT" = (
 /obj/item/instrument/large/jukebox{
 	pixel_y = 16
@@ -4182,16 +4262,6 @@
 	dir = 6
 	},
 /area/swampzone/interiors/bonktek)
-"eVc" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/neutral/side{
-	dir = 1
-	},
-/area/crater/biodome/maint)
 "eVI" = (
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1"
@@ -4540,13 +4610,6 @@
 	},
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
-"fpe" = (
-/obj/decal/fakeobjects/pipe/heat,
-/obj/decal/cleanable/cobweb,
-/obj/machinery/vending/standard,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crypt/sigma/storage)
 "fpr" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
@@ -4631,17 +4694,6 @@
 /obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/space)
-"fsM" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/north)
 "fus" = (
 /obj/decal/cleanable/cobweb,
 /turf/unsimulated/floor/cave,
@@ -4671,6 +4723,16 @@
 	dir = 6
 	},
 /area/crypt/graveyard)
+"fvr" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/east,
+/obj/window/crystal/reinforced/west,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/south)
 "fvL" = (
 /obj/fluid_pipe/elbow{
 	dir = 8
@@ -4867,17 +4929,6 @@
 /obj/railing/cyan,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground)
-"fFl" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater)
 "fFv" = (
 /obj/decal/woodclutter{
 	pixel_x = 24;
@@ -4906,6 +4957,14 @@
 	},
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
+"fGb" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/neutral/side{
+	dir = 1
+	},
+/area/crater/biodome/crew)
 "fGj" = (
 /obj/railing/reinforced{
 	dir = 4
@@ -5023,6 +5082,21 @@
 "fOn" = (
 /turf/unsimulated/floor/plating,
 /area/swampzone/interiors/quarry)
+"fOt" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Water pumps for the nearby botanical lab.";
+	icon = 'icons/obj/atmospherics/atmos.dmi';
+	icon_state = "siphon:0";
+	name = "Water Pumps"
+	},
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater)
 "fOB" = (
 /obj/stool,
 /turf/unsimulated/floor/carpet/clowncarpet/border{
@@ -5121,22 +5195,6 @@
 /obj/storage/secure/closet/animal,
 /turf/unsimulated/nicegrass/random,
 /area/swampzone/interiors/outbuildings)
-"fTD" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/north)
-"fUB" = (
-/obj/rack,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crypt/sigma/storage)
 "fUP" = (
 /obj/decal/tile_edge/line/white{
 	dir = 1;
@@ -5156,17 +5214,6 @@
 	name = "swamp wall"
 	},
 /area/swampzone/deeps)
-"fVp" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/furnace,
-/obj/decal/cleanable/cobweb,
-/obj/decal/cleanable/dirt,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/maint)
 "fVw" = (
 /obj/decal/cleanable/cobweb2,
 /turf/unsimulated/floor/setpieces/rootfloor{
@@ -5227,16 +5274,6 @@
 	icon_state = "rootfloor_3"
 	},
 /area/swampzone/interiors/outbuildings)
-"fZm" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/north)
 "gaB" = (
 /obj/decal/mushrooms/type6,
 /obj/sneaky_wall_trigger,
@@ -5339,16 +5376,25 @@
 	dir = 10
 	},
 /area/swampzone/interiors)
-"giK" = (
-/obj/decal/cleanable/dirt,
-/mob/living/critter/zombie/security,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crypt/sigma/storage)
 "giL" = (
 /obj/machinery/door/unpowered/wood/stall,
 /turf/unsimulated/floor/sanitary,
 /area/swampzone/interiors/bonktek/maintenance)
+"giX" = (
+/obj/mapping_helper/turfs/floor/burner,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/storage/crate,
+/obj/item/extinguisher,
+/obj/item/reagent_containers/food/snacks/condiment/ironfilings,
+/obj/item/raw_material/char,
+/obj/item/raw_material/char,
+/obj/item/raw_material/char,
+/obj/item/raw_material/char,
+/obj/item/raw_material/char,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/maint)
 "gjj" = (
 /obj/storage/crate/loot,
 /turf/unsimulated/floor/setpieces/rootfloor{
@@ -5361,6 +5407,14 @@
 	dir = 1
 	},
 /area/swampzone/interiors/outbuildings)
+"gke" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/neutral/corner{
+	dir = 1
+	},
+/area/crater/biodome/crew)
 "gkg" = (
 /turf/unsimulated/floor/caution/south{
 	dir = 1
@@ -5370,19 +5424,6 @@
 /obj/machinery/door/unpowered/wood/stall,
 /turf/unsimulated/floor/sanitary,
 /area/swampzone/interiors/bonktek/genetek)
-"gks" = (
-/obj/machinery/power/smes{
-	charge = 1;
-	chargelevel = 3500;
-	output = 2000
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/maint)
 "glx" = (
 /obj/table/wood/auto/desk,
 /obj/item/bang_gun/hunting_rifle{
@@ -5392,6 +5433,13 @@
 	},
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek)
+"glU" = (
+/obj/machinery/door/airlock{
+	name = "Supply Closet"
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crypt/sigma/storage)
 "glY" = (
 /obj/map/light/graveyard,
 /obj/shrub{
@@ -5407,6 +5455,18 @@
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground)
+"gmt" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent.  A rather decrepit one, at that.";
+	dir = 1;
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "intact";
+	name = "defunct vent"
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crypt/sigma/storage)
 "gmv" = (
 /turf/unsimulated/wall/cave{
 	name = "rock"
@@ -5785,17 +5845,6 @@
 "gKm" = (
 /turf/unsimulated/floor/caution/west,
 /area/crater/biodome/entry)
-"gKp" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/noticeboard,
-/turf/unsimulated/floor/neutral/side{
-	dir = 1
-	},
-/area/crater/biodome/crew)
 "gKI" = (
 /obj/neon_lining{
 	dir = 4
@@ -5809,9 +5858,32 @@
 /obj/grille/catwalk,
 /turf/unsimulated/floor/cave,
 /area/swampzone/interiors/quarry)
+"gKQ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light,
+/obj/spacevine{
+	density = 1;
+	icon_state = "vine-hvy2";
+	opacity = 1
+	},
+/turf/unsimulated/floor/green/side,
+/area/crater/biodome/north)
 "gLB" = (
 /turf/unsimulated/grasstodirt,
 /area/swampzone/ground)
+"gMe" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/north,
+/obj/window/crystal/reinforced/south,
+/obj/window/crystal/reinforced/west,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/north)
 "gMw" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -5984,16 +6056,6 @@
 	name = "mossy dirt"
 	},
 /area/catacombs)
-"gZb" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/neutral/corner{
-	dir = 4
-	},
-/area/crater/biodome/research)
 "gZc" = (
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt,
@@ -6001,6 +6063,17 @@
 "gZT" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/sw,
 /area/swampzone/interiors/bonktek/blastotek)
+"hal" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/north,
+/obj/window/crystal/reinforced/south,
+/obj/window/crystal/reinforced/east,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/north)
 "haN" = (
 /obj/window/cubicle{
 	dir = 8
@@ -6023,14 +6096,6 @@
 	name = "Dark Pit"
 	},
 /area/space)
-"hbL" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/green/corner,
-/area/crater/biodome/south)
 "hcE" = (
 /turf/unsimulated/floor/carpet{
 	dir = 1;
@@ -6148,16 +6213,6 @@
 	dir = 1
 	},
 /area/syndicate_station)
-"hii" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/north)
 "hin" = (
 /obj/decal/fakeobjects/pipe/heat{
 	dir = 4
@@ -6236,12 +6291,6 @@
 	},
 /turf/unsimulated/floor/sanitary,
 /area/swampzone/interiors/bonktek)
-"hmA" = (
-/obj/decal/fakeobjects/cargopad,
-/obj/storage/crate/haunted,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crypt/sigma/storage)
 "hmX" = (
 /obj/machinery/chem_dispenser/alcohol,
 /turf/unsimulated/floor/specialroom/chapel{
@@ -6277,16 +6326,6 @@
 "hns" = (
 /turf/space,
 /area/crypt/graveyard)
-"hnC" = (
-/obj/decal/cleanable/dirt,
-/obj/rack,
-/obj/item/storage/box/mousetraps,
-/obj/item/c_tube,
-/obj/item/sponge,
-/obj/mopbucket,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crypt/sigma/storage)
 "hnX" = (
 /turf/unsimulated/floor/specialroom/bar,
 /area/crater/biodome/maint)
@@ -6623,14 +6662,6 @@
 	dir = 8
 	},
 /area/swampzone/ground)
-"hLi" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/unsimulated/wall/auto/lead/blue,
-/area/crater/biodome/maint)
 "hLo" = (
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
@@ -6689,17 +6720,6 @@
 	name = "swamp wall"
 	},
 /area/swampzone/deeps)
-"hMz" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/north)
 "hNO" = (
 /obj/item/gun/kinetic/pistol,
 /obj/table/reinforced/industrial/auto,
@@ -6739,6 +6759,17 @@
 "hQW" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/syndicate_station)
+"hSj" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/emergency{
+	dir = 1
+	},
+/turf/unsimulated/floor/neutral/side{
+	dir = 1
+	},
+/area/crater/biodome/research)
 "hSq" = (
 /turf/unsimulated/floor/airless/marble/black,
 /area/swampzone/interiors/bonktek)
@@ -6804,19 +6835,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/swampzone/interiors/quarry)
-"hYi" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/spacevine{
-	density = 1;
-	icon_state = "vine-hvy2";
-	opacity = 1
-	},
-/turf/unsimulated/floor/green/side,
-/area/crater/biodome/north)
 "hYw" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 8;
@@ -6833,20 +6851,6 @@
 /obj/chainlink_fence,
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
-"hZM" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/spacevine{
-	density = 1;
-	icon_state = "vine-med2"
-	},
-/turf/unsimulated/floor/green/corner{
-	dir = 8
-	},
-/area/crater/biodome/north)
 "iaa" = (
 /obj/decal/cleanable/cobwebFloor,
 /turf/unsimulated/floor/auto/dirt,
@@ -6908,6 +6912,14 @@
 	dir = 9
 	},
 /area/swampzone/interiors/outbuildings)
+"idz" = (
+/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+	dir = 2;
+
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater)
 "idJ" = (
 /obj/grille/steel,
 /turf/unsimulated/floor/cave{
@@ -6973,17 +6985,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek)
-"ikB" = (
-/obj/machinery/atmospherics/pipe/tank/toxins{
-	dir = 2;
-	
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater)
 "ila" = (
 /obj/random_item_spawner/junk/four,
 /obj/decal/cleanable/dirt/dirt3,
@@ -7001,6 +7002,12 @@
 	dir = 4
 	},
 /area/swampzone/interiors/bonktek/funktek)
+"imk" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/unsimulated/floor/cave,
+/area/crater)
 "imw" = (
 /obj/stool/chair{
 	dir = 1
@@ -7236,6 +7243,16 @@
 /obj/structure/woodwall,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
+"iBB" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/north,
+/obj/window/crystal/reinforced/west,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/north)
 "iCn" = (
 /obj/spacevine{
 	density = 1;
@@ -7243,25 +7260,6 @@
 	},
 /obj/tree,
 /turf/unsimulated/floor/auto/grass/leafy,
-/area/crater/biodome/north)
-"iCq" = (
-/obj/machinery/power/apc{
-	name = "S APC";
-	noalerts = 1;
-	pixel_y = -24;
-	start_charge = 13
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/spacevine{
-	density = 1;
-	icon_state = "vine-hvy2";
-	opacity = 1
-	},
-/obj/machinery/light/emergency,
-/turf/unsimulated/floor/green/side,
 /area/crater/biodome/north)
 "iCy" = (
 /obj/decal/fakeobjects/biggerrock,
@@ -7428,6 +7426,17 @@
 /obj/table/reinforced/auto,
 /turf/simulated/floor/circuit/red,
 /area/syndicate_station)
+"iMx" = (
+/obj/grille/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater)
 "iMK" = (
 /obj/chainlink_fence{
 	dir = 5
@@ -7905,6 +7914,18 @@
 	icon_state = "floor"
 	},
 /area/crater/biodome/research)
+"jpW" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/spacevine{
+	density = 1;
+	icon_state = "vine-med2"
+	},
+/turf/unsimulated/floor/green/corner{
+	dir = 8
+	},
+/area/crater/biodome/north)
 "jqw" = (
 /turf/unsimulated/wall/auto/reinforced,
 /area/swampzone/interiors/basements)
@@ -7919,16 +7940,6 @@
 	dir = 8
 	},
 /area/swampzone/interiors/bonktek/funktek)
-"jsL" = (
-/obj/grille/steel,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/research)
-"jtx" = (
-/obj/decal/cleanable/oil,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crypt/sigma/storage)
 "jtF" = (
 /obj/table/wood/auto,
 /obj/machinery/microwave{
@@ -8046,6 +8057,16 @@
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crater/biodome/research)
+"jyt" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/north,
+/obj/window/crystal/reinforced/south,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/south)
 "jyA" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -8084,6 +8105,17 @@
 	},
 /turf/unsimulated/floor/caution/north,
 /area/crater/biodome/research)
+"jAZ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/spacevine{
+	density = 1;
+	icon_state = "vine-hvy2";
+	opacity = 1
+	},
+/turf/unsimulated/floor/green/side,
+/area/crater/biodome/north)
 "jBo" = (
 /obj/fluid_pipe/straight,
 /obj/railing/cyan/reinforced{
@@ -8241,16 +8273,6 @@
 	dir = 1
 	},
 /area/crater/biodome/south)
-"jKc" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/spacevine,
-/mob/living/critter/small_animal/wasp,
-/turf/unsimulated/floor/green/side,
-/area/crater/biodome/north)
 "jKz" = (
 /obj/railing/cyan{
 	dir = 8
@@ -8338,6 +8360,14 @@
 	icon_state = "floor4"
 	},
 /area/someplace)
+"jOK" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater)
 "jPj" = (
 /obj/table/reinforced/auto,
 /obj/item/seed/alien,
@@ -8436,6 +8466,19 @@
 	name = "Dark Pit"
 	},
 /area/space)
+"jVq" = (
+/obj/mapping_helper/turfs/floor/burner,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/decal/cleanable/dirt,
+/obj/item/plank,
+/obj/item/plank,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/maint)
 "jVC" = (
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor/wood/four,
@@ -8569,6 +8612,17 @@
 	},
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
+"keD" = (
+/obj/grille/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater)
 "kfc" = (
 /obj/decal/mushrooms/type6,
 /turf/unsimulated/floor/cave,
@@ -8677,6 +8731,17 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/swampzone/ground)
+"klX" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/spacevine{
+	icon_state = "vine-light3"
+	},
+/turf/unsimulated/floor/green/corner{
+	dir = 4
+	},
+/area/crater/biodome/north)
 "kmO" = (
 /obj/decoration/decorativeplant/plant2,
 /turf/unsimulated/floor/bluewhite,
@@ -8728,14 +8793,6 @@
 	wet = 2
 	},
 /area/swampzone/interiors/bonktek)
-"kpD" = (
-/obj/grille/catwalk,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater)
 "kpP" = (
 /obj/storage/secure/closet/engineering/mining,
 /turf/unsimulated/floor/setpieces/oldfloor,
@@ -8773,11 +8830,6 @@
 	name = "clouds"
 	},
 /area/swampzone/heights)
-"krn" = (
-/obj/machinery/gibber,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crypt/sigma/storage)
 "krH" = (
 /obj/decal/fakeobjects/pipe/heat,
 /obj/railing/cyan{
@@ -8817,6 +8869,16 @@
 	dir = 8
 	},
 /area/swampzone/interiors/bonktek)
+"kum" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/east,
+/obj/window/crystal/reinforced/north,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/north)
 "kuv" = (
 /obj/stool/chair{
 	dir = 8
@@ -8851,13 +8913,6 @@
 "kvw" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/kitchen)
-"kvF" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater)
 "kvT" = (
 /obj/storage/closet/coffin,
 /obj/decal/fakeobjects/skeleton{
@@ -8910,16 +8965,6 @@
 	name = "swamp wall"
 	},
 /area/swampzone/deeps)
-"kyf" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/stairs{
-	dir = 8
-	},
-/area/crater/biodome/research)
 "kyG" = (
 /obj/decal/cleanable/oil,
 /turf/unsimulated/floor/black,
@@ -9098,6 +9143,14 @@
 	dir = 1
 	},
 /area/crypt/sigma/mainhall)
+"kGH" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/neutral/side{
+	dir = 1
+	},
+/area/crater/biodome/maint)
 "kGI" = (
 /obj/decal/tile_edge/line/grey{
 	dir = 8;
@@ -9271,6 +9324,17 @@
 /obj/chainlink_fence,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground)
+"kNK" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/east,
+/obj/window/crystal/reinforced/north,
+/obj/window/crystal/reinforced/south,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/north)
 "kNV" = (
 /obj/landmark{
 	name = "ancientfall"
@@ -9356,6 +9420,14 @@
 	dir = 8
 	},
 /area/crypt/graveyard)
+"kVr" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/crater/biodome/research)
 "kWc" = (
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1"
@@ -9473,6 +9545,14 @@
 /obj/machinery/light/incandescent/small,
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/outbuildings)
+"ldB" = (
+/obj/grille/catwalk,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater)
 "lem" = (
 /obj/decal/cleanable/cobweb2,
 /obj/item/skull,
@@ -9530,6 +9610,21 @@
 	name = "Dark Pit"
 	},
 /area/space)
+"lgM" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	noalerts = 1;
+	pixel_y = 24;
+	start_charge = 12
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/unsimulated/floor/neutral/side{
+	dir = 1
+	},
+/area/crater/biodome/crew)
 "lhj" = (
 /obj/railing/cyan{
 	dir = 1
@@ -9575,17 +9670,6 @@
 /obj/item/reagent_containers/food/drinks/bottle/rum,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
-"ljv" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/east,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/south)
 "ljA" = (
 /turf/unsimulated/floor/stairs{
 	dir = 1
@@ -9619,15 +9703,6 @@
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/space)
-"llB" = (
-/obj/machinery/door/airlock/external{
-	icon_state = "door_locked";
-	name = "Hazardous Gas Storage";
-	secondsElectrified = -1
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater)
 "lnw" = (
 /obj/machinery/light/flamp,
 /turf/unsimulated/floor/auto/grass/leafy,
@@ -9662,6 +9737,17 @@
 /obj/decal/cleanable/cobweb2,
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
+"loh" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/north,
+/obj/window/crystal/reinforced/south,
+/obj/window/crystal/reinforced/east,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/south)
 "lok" = (
 /obj/item/record/random/notaquario/biodome,
 /turf/unsimulated/floor/wood,
@@ -9670,6 +9756,16 @@
 /obj/stool/bench/yellow/auto,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
+"lqU" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/north,
+/obj/window/crystal/reinforced/west,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/south)
 "lrL" = (
 /obj/railing/cyan{
 	dir = 4
@@ -9951,10 +10047,6 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
-"lKq" = (
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crypt/sigma/storage)
 "lKT" = (
 /obj/decal/fakeobjects/azarakrocks/rock4,
 /turf/unsimulated/floor/auto/grass/leafy,
@@ -9989,26 +10081,6 @@
 	},
 /turf/unsimulated/floor/terrazzo/black,
 /area/swampzone/interiors/bonktek/lounge)
-"lMr" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/north,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/north)
-"lMI" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/crater/biodome/research)
 "lMN" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -10056,6 +10128,16 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek)
+"lOu" = (
+/obj/decal/cleanable/dirt,
+/obj/rack,
+/obj/item/storage/box/mousetraps,
+/obj/item/c_tube,
+/obj/item/sponge,
+/obj/mopbucket,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crypt/sigma/storage)
 "lOZ" = (
 /obj/fluid_pipe/straight,
 /turf/unsimulated/floor/industrial,
@@ -10247,15 +10329,6 @@
 	name = "strange stairs"
 	},
 /area/crater/cave/lower)
-"mbx" = (
-/obj/machinery/door/airlock/external{
-	icon_state = "door_locked";
-	name = "Botanical Research Biodome";
-	secondsElectrified = -1
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/entry)
 "mbK" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -10367,25 +10440,15 @@
 "mkS" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/swampzone/heights)
-"mly" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	noalerts = 1;
-	pixel_y = 24;
-	start_charge = 12
+"mlf" = (
+/obj/machinery/door/airlock/external{
+	icon_state = "door_locked";
+	name = "Hazardous Gas Storage";
+	secondsElectrified = -1
 	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/light/emergency{
-	dir = 1
-	},
-/turf/unsimulated/floor/green/side{
-	dir = 1
-	},
-/area/crater/biodome/south)
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater)
 "mlA" = (
 /turf/unsimulated/floor/blue/corner{
 	dir = 1
@@ -10464,6 +10527,13 @@
 /obj/item/raw_material/rock,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
+"mpG" = (
+/obj/decal/fakeobjects/pipe/heat,
+/obj/decal/cleanable/cobweb,
+/obj/machinery/vending/standard,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crypt/sigma/storage)
 "mpP" = (
 /obj/item/mine/blast/armed,
 /turf/unsimulated/floor/cave,
@@ -10479,21 +10549,6 @@
 	},
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
-"mrw" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Water pumps for the nearby botanical lab.";
-	icon = 'icons/obj/atmospherics/atmos.dmi';
-	icon_state = "siphon:0";
-	name = "Water Pumps"
-	},
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater)
 "mrz" = (
 /obj/table/wood/round/champagne,
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/north,
@@ -10767,6 +10822,16 @@
 /obj/machinery/chem_dispenser/chef,
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek/waffletek)
+"mIK" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/north,
+/obj/window/crystal/reinforced/south,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/north)
 "mIO" = (
 /obj/decal/poster/wallsign/stencil/right/o{
 	pixel_y = 42
@@ -10958,19 +11023,6 @@
 /obj/decal/fakeobjects/azarakrocks,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
-"mWE" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/spacevine{
-	icon_state = "vine-light3"
-	},
-/turf/unsimulated/floor/green/corner{
-	dir = 4
-	},
-/area/crater/biodome/north)
 "mWG" = (
 /turf/unsimulated/floor/setpieces{
 	desc = "A strange jet black set of metal stairs.";
@@ -11059,26 +11111,6 @@
 "mZY" = (
 /turf/unsimulated/floor/carpet/purple/fancy/innercorner/nw,
 /area/swampzone/interiors/bonktek/lounge)
-"naj" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/unsimulated/floor/neutral/corner{
-	dir = 1
-	},
-/area/crater/biodome/maint)
 "naW" = (
 /obj/machinery/door/unpowered/wood/pyro,
 /turf/unsimulated/floor/wood/eight{
@@ -11472,6 +11504,14 @@
 	icon_state = "floor4"
 	},
 /area/syndicate_station)
+"nAO" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/stairs{
+	dir = 4
+	},
+/area/crater/biodome/research)
 "nBq" = (
 /obj/grille/catwalk{
 	dir = 10
@@ -11757,21 +11797,6 @@
 /obj/item/razor_blade,
 /turf/unsimulated/floor/wood/four,
 /area/swampzone/interiors/outbuildings)
-"nPD" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/unsimulated/floor/green/side{
-	dir = 1
-	},
-/area/crater/biodome/south)
 "nPE" = (
 /obj/table/wood/auto,
 /obj/item/shovel,
@@ -11855,26 +11880,6 @@
 /obj/decal/fakeobjects/azarakrocks/rock3,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
-"nVT" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	noalerts = 1;
-	pixel_y = 24;
-	start_charge = 12
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/unsimulated/floor/neutral/side{
-	dir = 1
-	},
-/area/crater/biodome/research)
 "nWh" = (
 /obj/fluid_pipe/straight,
 /turf/unsimulated/wall/cave{
@@ -11899,16 +11904,6 @@
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground)
-"nWK" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/green/corner{
-	dir = 1
-	},
-/area/crater/biodome/south)
 "nXf" = (
 /obj/chainlink_fence{
 	dir = 5
@@ -11921,6 +11916,17 @@
 	dir = 4
 	},
 /area/swampzone/interiors/bonktek)
+"nXI" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/north,
+/obj/window/crystal/reinforced/south,
+/obj/window/crystal/reinforced/west,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/south)
 "nXJ" = (
 /obj/stool/bed,
 /obj/item/clothing/under/misc/chaplain/rasta,
@@ -12045,16 +12051,6 @@
 /obj/chainlink_fence,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/swampzone/ground/canyon)
-"odR" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/north)
 "ofe" = (
 /obj/decal/stalagtite,
 /obj/item/raw_material/molitz,
@@ -12141,22 +12137,6 @@
 	},
 /turf/unsimulated/floor/auto/swamp/rain,
 /area/syndicate_station)
-"olV" = (
-/obj/cable,
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/item/device/t_scanner,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/maint)
 "ome" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -12203,6 +12183,14 @@
 	},
 /turf/unsimulated/floor/auto/swamp,
 /area/swampzone/interiors/bonktek)
+"oop" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/neutral/corner{
+	dir = 4
+	},
+/area/crater/biodome/research)
 "oot" = (
 /obj/machinery/light/incandescent/small{
 	dir = 1;
@@ -12401,23 +12389,6 @@
 "oBb" = (
 /turf/unsimulated/floor/sanitary/white,
 /area/swampzone/interiors/outbuildings)
-"oBn" = (
-/obj/table/reinforced,
-/obj/item/wrench,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	noalerts = 1;
-	pixel_y = 24;
-	start_charge = 12
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater)
 "oBo" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray,
 /area/swampzone/interiors/bonktek/electek)
@@ -12454,21 +12425,6 @@
 	icon_state = "cave-light"
 	},
 /area/swampzone/interiors/quarry)
-"oEg" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/light_switch{
-	name = "N light switch";
-	on = 0;
-	pixel_y = 24
-	},
-/turf/unsimulated/floor/neutral/side{
-	dir = 1
-	},
-/area/crater/biodome/research)
 "oEy" = (
 /obj/structure/woodwall{
 	opacity = 0
@@ -12543,16 +12499,6 @@
 "oKk" = (
 /turf/unsimulated/floor/stairs,
 /area/swampzone/ground)
-"oLL" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/north)
 "oLP" = (
 /obj/decal/cliff{
 	dir = 1
@@ -12575,11 +12521,16 @@
 /obj/decal/fakeobjects/lotus,
 /turf/unsimulated/greek/water,
 /area/swampzone/deeps)
-"oOc" = (
-/obj/decal/cleanable/dirt,
+"oOi" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/east,
+/obj/window/crystal/reinforced/west,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
 /obj/mapping_helper/turfs/floor/burner,
 /turf/unsimulated/floor/plating,
-/area/crypt/sigma/storage)
+/area/crater/biodome/north)
 "oOI" = (
 /turf/unsimulated/floor/neutral/side,
 /area/crater/biodome/research)
@@ -12794,6 +12745,11 @@
 "pbq" = (
 /turf/unsimulated/floor/caution/east,
 /area/crypt/sigma)
+"pck" = (
+/obj/decal/cleanable/dirt,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crypt/sigma/storage)
 "pcq" = (
 /turf/unsimulated/floor/caution/corner/nw{
 	dir = 1
@@ -12910,6 +12866,13 @@
 /obj/decal/cleanable/rust,
 /turf/unsimulated/wall/auto/lead/gray,
 /area/swampzone/deeps)
+"pkg" = (
+/obj/landmark{
+	name = "bioelefall"
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/shuttle/biodome_elevator/lower)
 "pks" = (
 /turf/unsimulated/wall/setpieces/rootwall,
 /area/catacombs)
@@ -13092,19 +13055,6 @@
 	name = "swamp wall"
 	},
 /area/swampzone/deeps)
-"pwb" = (
-/obj/grille/catwalk{
-	dir = 5
-	},
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater)
 "pwj" = (
 /obj/table/wood/auto,
 /obj/item/storage/box/record/radio/two{
@@ -13169,6 +13119,12 @@
 /obj/item/raw_material/uqill,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
+"pzl" = (
+/obj/decal/fakeobjects/cargopad,
+/obj/storage/crate/haunted,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crypt/sigma/storage)
 "pAe" = (
 /obj/grille/steel,
 /turf/unsimulated/floor/industrial,
@@ -13200,6 +13156,15 @@
 "pBY" = (
 /turf/unsimulated/floor/industrial,
 /area/swampzone/interiors/bonktek/electek)
+"pCm" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/crater/biodome/maint)
 "pCn" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1;
@@ -13320,6 +13285,19 @@
 	},
 /turf/unsimulated/floor,
 /area/swampzone/interiors/bonktek/maintenance)
+"pNd" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light_switch{
+	name = "N light switch";
+	on = 0;
+	pixel_y = 24
+	},
+/turf/unsimulated/floor/neutral/side{
+	dir = 1
+	},
+/area/crater/biodome/research)
 "pOe" = (
 /obj/river,
 /obj/map/light/graveyard,
@@ -13417,6 +13395,14 @@
 "pSv" = (
 /turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave/lower)
+"pTD" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/green/side{
+	dir = 1
+	},
+/area/crater/biodome/south)
 "pTF" = (
 /obj/storage/crate/bin,
 /obj/machinery/light{
@@ -13681,6 +13667,14 @@
 /obj/decal/cleanable/cobwebFloor,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
+"qkG" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/green/side{
+	dir = 4
+	},
+/area/crater/biodome/south)
 "qll" = (
 /mob/living/carbon/human/npc/monkey,
 /obj/decal/fakeobjects/palmtree,
@@ -13737,16 +13731,6 @@
 	icon_state = "rootfloor_2"
 	},
 /area/space)
-"qoY" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/south)
 "qpd" = (
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/interiors/bonktek)
@@ -13804,13 +13788,6 @@
 "qsf" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/south,
 /area/swampzone/interiors/bonktek/blastotek)
-"qst" = (
-/obj/decal/fakeobjects/pipe/heat,
-/obj/decal/cleanable/dirt,
-/obj/storage/secure/closet/civilian/janitor,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crypt/sigma/storage)
 "qsE" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater)
@@ -13827,6 +13804,24 @@
 /obj/machinery/centrifuge,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
+"qvc" = (
+/obj/machinery/power/apc{
+	name = "S APC";
+	noalerts = 1;
+	pixel_y = -24;
+	start_charge = 13
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/spacevine{
+	density = 1;
+	icon_state = "vine-hvy2";
+	opacity = 1
+	},
+/obj/machinery/light/emergency,
+/turf/unsimulated/floor/green/side,
+/area/crater/biodome/north)
 "qwT" = (
 /turf/unsimulated/floor/green/side{
 	dir = 8
@@ -13843,11 +13838,6 @@
 /obj/stool/bed,
 /turf/unsimulated/floor/carpet/grime,
 /area/syndicate_station)
-"qxk" = (
-/obj/decal/fakeobjects/pipe/heat,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crypt/sigma/storage)
 "qys" = (
 /obj/decal/fakeobjects/mule_xl{
 	pixel_x = 3
@@ -13878,6 +13868,11 @@
 	name = "clouds"
 	},
 /area/swampzone/heights)
+"qBa" = (
+/obj/decal/cleanable/oil,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crypt/sigma/storage)
 "qBc" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/from_file/syndies_guide,
@@ -14081,16 +14076,6 @@
 /obj/decal/lightshaft,
 /turf/unsimulated/floor/cave,
 /area/catacombs)
-"qMq" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/neutral/corner{
-	dir = 4
-	},
-/area/crater/biodome/crew)
 "qML" = (
 /obj/decal/tile_edge/line/grey{
 	dir = 4;
@@ -14318,19 +14303,6 @@
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/space)
-"qWQ" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/unsimulated/wall/auto/lead/blue,
-/area/crater/biodome/maint)
 "qWU" = (
 /obj/sea_plant_manta/seaweed,
 /turf/space/fluid,
@@ -14429,16 +14401,6 @@
 /obj/item/storage/box/clothing/patient_gowns,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
-"rfj" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater)
 "rfu" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4
@@ -14533,6 +14495,18 @@
 	wet = 2
 	},
 /area/swampzone/interiors/bonktek)
+"rkp" = (
+/obj/mapping_helper/turfs/floor/burner,
+/obj/machinery/power/smes{
+	charge = 1;
+	chargelevel = 3500;
+	output = 2000
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/maint)
 "rkz" = (
 /obj/decal/cleanable/dirt,
 /obj/item/raw_material/char,
@@ -14585,6 +14559,14 @@
 	icon_state = "cave-light"
 	},
 /area/swampzone/interiors/quarry)
+"rni" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/stairs{
+	dir = 8
+	},
+/area/crater/biodome/research)
 "rny" = (
 /obj/storage/secure/closet/security/equipment,
 /turf/unsimulated/floor/red/side{
@@ -14669,16 +14651,6 @@
 "rro" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray,
 /area/swampzone/interiors/bonktek/shootingrange)
-"rrW" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/neutral/corner{
-	dir = 1
-	},
-/area/crater/biodome/research)
 "rsc" = (
 /obj/machinery/conveyor/WE,
 /turf/unsimulated/floor,
@@ -14695,6 +14667,11 @@
 	dir = 8
 	},
 /area/crypt/sigma/mainhall)
+"rue" = (
+/obj/decal/fakeobjects/pipe/heat,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crypt/sigma/storage)
 "rux" = (
 /obj/storage/closet/coffin,
 /turf/unsimulated/floor/setpieces/rootfloor,
@@ -14724,6 +14701,19 @@
 /obj/grille/steel,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
+"rvS" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 15;
+	tag = "icon-tube1 (NORTH)"
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater)
 "rvU" = (
 /obj/spacevine,
 /obj/spacevine{
@@ -14832,6 +14822,11 @@
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground)
+"rDQ" = (
+/obj/rack,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crypt/sigma/storage)
 "rGG" = (
 /obj/decal/fakeobjects/azarakrocks/rock3,
 /turf/unsimulated/wall/cave,
@@ -15153,16 +15148,6 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor,
 /area/crater/biodome/maint)
-"sdo" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/green/corner{
-	dir = 1
-	},
-/area/crater/biodome/south)
 "sdN" = (
 /obj/decal/tile_edge/line/white{
 	dir = 1;
@@ -15269,11 +15254,6 @@
 	dir = 8
 	},
 /area/swampzone/interiors/outbuildings)
-"sjt" = (
-/obj/grille/steel,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/crew)
 "skF" = (
 /obj/tree/carcosa/one,
 /turf/unsimulated/floor/auto/dirt,
@@ -15291,14 +15271,6 @@
 	icon_state = "cave-light"
 	},
 /area/swampzone/deeps)
-"smA" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/unsimulated/wall/auto/lead/blue,
-/area/crater/biodome/maint)
 "snk" = (
 /obj/decal/fakeobjects/firelock_broken{
 	dir = 8
@@ -15312,22 +15284,6 @@
 	dir = 10
 	},
 /area/swampzone/interiors/bonktek/security)
-"snJ" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	noalerts = 1;
-	pixel_y = 24;
-	start_charge = 12
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/unsimulated/floor/neutral/side{
-	dir = 1
-	},
-/area/crater/biodome/crew)
 "snU" = (
 /turf/unsimulated/floor/setpieces{
 	desc = "A strange jet black metal floor. There are odd lines carved into it.";
@@ -15430,6 +15386,14 @@
 	dir = 1
 	},
 /area/crater/biodome/north)
+"ssY" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/spacevine,
+/mob/living/critter/small_animal/wasp,
+/turf/unsimulated/floor/green/side,
+/area/crater/biodome/north)
 "stq" = (
 /obj/shrub{
 	dir = 10
@@ -15442,16 +15406,6 @@
 	dir = 4
 	},
 /area/crypt/sigma/mainhall)
-"stv" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/stairs{
-	dir = 4
-	},
-/area/crater/biodome/research)
 "suH" = (
 /turf/unsimulated/floor/carpet{
 	dir = 6;
@@ -15471,14 +15425,6 @@
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground)
-"svd" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/cave,
-/area/crater/cave)
 "svQ" = (
 /obj/river{
 	dir = 5
@@ -15593,13 +15539,6 @@
 /obj/machinery/door/airlock/pyro/security,
 /turf/unsimulated/floor,
 /area/syndicate_station)
-"sEO" = (
-/obj/machinery/door/airlock{
-	name = "Supply Closet"
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crypt/sigma/storage)
 "sEW" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray,
 /area/swampzone/interiors/bonktek)
@@ -15636,6 +15575,17 @@
 "sGo" = (
 /turf/unsimulated/floor/cave,
 /area/swampzone/ground)
+"sGp" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/east,
+/obj/window/crystal/reinforced/south,
+/obj/window/crystal/reinforced/west,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/north)
 "sGP" = (
 /obj/machinery/light,
 /obj/machinery/plantpot,
@@ -15674,6 +15624,14 @@
 /obj/chainlink_fence,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground/canyon)
+"sHK" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/neutral/corner{
+	dir = 1
+	},
+/area/crater/biodome/research)
 "sIj" = (
 /obj/decal/tile_edge/line/black{
 	dir = 10;
@@ -15826,19 +15784,6 @@
 "sTs" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge,
 /area/swampzone/interiors/bonktek/lounge)
-"sUu" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/unsimulated/floor/green/side{
-	dir = 1
-	},
-/area/crater/biodome/south)
 "sUv" = (
 /obj/decal/tile_edge/line/white{
 	dir = 8;
@@ -15885,17 +15830,6 @@
 	dir = 8
 	},
 /area/crypt/graveyard)
-"sVO" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater)
 "sWx" = (
 /obj/grille/catwalk{
 	dir = 6;
@@ -15959,16 +15893,6 @@
 	},
 /turf/unsimulated/floor/carpet/red/fancy/innercorner/nw,
 /area/swampzone/interiors/bonktek/security)
-"sYD" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/furnace,
-/obj/decal/cleanable/dirt,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/maint)
 "sYK" = (
 /obj/item/mine/blast/armed,
 /turf/unsimulated/floor/cave,
@@ -16065,21 +15989,6 @@
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt,
 /area/crypt/graveyard)
-"tep" = (
-/obj/machinery/light,
-/obj/machinery/power/apc{
-	name = "S APC";
-	noalerts = 1;
-	pixel_y = -24;
-	start_charge = 13
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/maint)
 "teC" = (
 /obj/table/auto,
 /obj/item/plate/tray,
@@ -16155,6 +16064,15 @@
 	dir = 1
 	},
 /area/crypt/sigma/lab)
+"tjW" = (
+/obj/decal/fakeobjects/robot{
+	anchored = 1;
+	desc = "How long has this been down here?"
+	},
+/obj/decal/cleanable/cobweb2,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crypt/sigma/storage)
 "tkf" = (
 /obj/stool/chair/couch{
 	dir = 4;
@@ -16190,16 +16108,6 @@
 /obj/machinery/door/unpowered/wood/pyro,
 /turf/unsimulated/floor/wood/seven,
 /area/swampzone/interiors/outbuildings)
-"tnD" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/neutral/side{
-	dir = 1
-	},
-/area/crater/biodome/crew)
 "tnM" = (
 /obj/stone{
 	dir = 9
@@ -16304,6 +16212,15 @@
 	dir = 6
 	},
 /area/syndicate_station)
+"trQ" = (
+/obj/mapping_helper/turfs/floor/burner,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/furnace,
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/maint)
 "tsi" = (
 /turf/unsimulated/floor/wood/five,
 /area/swampzone/interiors)
@@ -16411,6 +16328,14 @@
 	dir = 1
 	},
 /area/swampzone/interiors/bonktek/security)
+"tAZ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/neutral/corner{
+	dir = 4
+	},
+/area/crater/biodome/maint)
 "tBd" = (
 /obj/decal/stalagtite,
 /obj/decal/cleanable/cobweb,
@@ -16418,28 +16343,25 @@
 /mob/living/critter/spider/baby,
 /turf/unsimulated/floor/cave,
 /area/swampzone/interiors/quarry)
-"tBl" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/decal/cleanable/dirt,
-/obj/item/plank,
-/obj/item/plank,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/maint)
 "tBE" = (
 /turf/unsimulated/floor/stairs/wood2/wide{
 	dir = 8
 	},
 /area/swampzone/interiors/bonktek/funktek)
+"tCS" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/unsimulated/floor/neutral/corner{
+	dir = 1
+	},
+/area/crater/biodome/maint)
 "tCZ" = (
 /obj/chainlink_fence{
 	dir = 9
@@ -16480,16 +16402,23 @@
 	dir = 8
 	},
 /area/swampzone/interiors/outbuildings)
-"tEz" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/neutral/corner{
+"tEX" = (
+/obj/machinery/atmospherics/portables_connector{
 	dir = 1
 	},
-/area/crater/biodome/crew)
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "bot2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner"
+	},
+/obj/machinery/light{
+	on = 1
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater)
 "tFc" = (
 /obj/item/runetablet,
 /obj/decal/cleanable/dirt,
@@ -16622,6 +16551,12 @@
 	icon_state = "cave-light"
 	},
 /area/swampzone/interiors/quarry)
+"tLD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/green/corner,
+/area/crater/biodome/south)
 "tLU" = (
 /turf/unsimulated/floor/wood/eight{
 	dir = 8
@@ -17123,16 +17058,6 @@
 /obj/storage/closet/biohazard,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
-"urS" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/south,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/north)
 "uso" = (
 /obj/map/light/graveyard,
 /obj/tree{
@@ -17271,17 +17196,6 @@
 /obj/submachine/tape_deck,
 /turf/simulated/floor/carpet/grime,
 /area/swampzone/ground)
-"uDD" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/south)
 "uEg" = (
 /obj/chainlink_fence{
 	dir = 6
@@ -17479,36 +17393,6 @@
 	icon_state = "fred2"
 	},
 /area/crypt/sigma/mainhall)
-"uLO" = (
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibhead";
-	name = "grody thing"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/turf/unsimulated/floor/sanitary,
-/area/crypt/sigma/morgue)
 "uMY" = (
 /obj/decal/fakeobjects/pipe/heat,
 /obj/railing/cyan{
@@ -17805,42 +17689,12 @@
 "vck" = (
 /turf/unsimulated/floor/stairs/wood/wide,
 /area/swampzone/interiors/bonktek)
-"vcw" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/south)
 "vcN" = (
 /obj/railing/orange/reinforced,
 /turf/unsimulated/floor/stairs/dark{
 	dir = 4
 	},
 /area/swampzone/deeps)
-"vcW" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/green/side{
-	dir = 1
-	},
-/area/crater/biodome/south)
-"vdx" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/south)
 "vdE" = (
 /turf/space,
 /area/swampzone/ground)
@@ -17956,6 +17810,17 @@
 "vkK" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/swampzone/interiors/bonktek/shootingrange)
+"vlh" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor/green/side{
+	dir = 1
+	},
+/area/crater/biodome/south)
 "vlI" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
@@ -18030,19 +17895,6 @@
 	dir = 8
 	},
 /area/swampzone/interiors/bonktek/security)
-"vpR" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 15;
-	tag = "icon-tube1 (NORTH)"
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater)
 "vpS" = (
 /turf/unsimulated/floor/cave,
 /area/crater)
@@ -18090,11 +17942,6 @@
 /obj/machinery/door/window/southright,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
-"vsV" = (
-/obj/item/mousetrap/armed,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crypt/sigma/storage)
 "vtd" = (
 /obj/creepy_sound_trigger,
 /obj/machinery/door/airlock/medical{
@@ -18176,17 +18023,6 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/cave,
 /area/catacombs)
-"vBb" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/east,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/north)
 "vBf" = (
 /obj/submachine/chef_sink,
 /turf/unsimulated/floor/green/side{
@@ -18222,16 +18058,6 @@
 /obj/item/clothing/mask/balaclava,
 /turf/unsimulated/floor/auto/dirt,
 /area/catacombs)
-"vCQ" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/south)
 "vCU" = (
 /obj/map/light/graveyard,
 /obj/structure/woodwall{
@@ -18269,6 +18095,14 @@
 	},
 /turf/unsimulated/floor/redwhite,
 /area/swampzone/interiors/outbuildings)
+"vFs" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/green/corner{
+	dir = 1
+	},
+/area/crater/biodome/south)
 "vFP" = (
 /obj/storage/crate/bin,
 /obj/item/instrument/guitar,
@@ -18296,6 +18130,16 @@
 "vGh" = (
 /turf/unsimulated/greek/water,
 /area/swampzone/ground)
+"vGl" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/south,
+/obj/window/crystal/reinforced/west,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/north)
 "vHo" = (
 /obj/machinery/vending/cigarette,
 /turf/unsimulated/floor/carpet/grime,
@@ -18321,6 +18165,10 @@
 /obj/machinery/vending/pathology,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
+"vIp" = (
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater)
 "vIy" = (
 /obj/railing/cyan{
 	dir = 4
@@ -18416,23 +18264,6 @@
 	name = "clouds"
 	},
 /area/swampzone/heights)
-"vNB" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/storage/crate,
-/obj/item/extinguisher,
-/obj/item/reagent_containers/food/snacks/condiment/ironfilings,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/maint)
 "vNI" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -18462,6 +18293,16 @@
 /obj/item/paper/alchemy/north,
 /turf/unsimulated/floor/auto/dirt,
 /area/catacombs)
+"vOH" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/east,
+/obj/window/crystal/reinforced/south,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/south)
 "vOS" = (
 /obj/map/light/graveyard,
 /turf/unsimulated/floor/black,
@@ -18481,6 +18322,11 @@
 /obj/machinery/door/airlock/pyro/glass,
 /turf/unsimulated/floor/blue,
 /area/swampzone/interiors/outbuildings)
+"vQt" = (
+/obj/grille/steel,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/research)
 "vQE" = (
 /turf/unsimulated/wall/setpieces/rootwall{
 	desc = "This wall is made of damp stone.";
@@ -18494,14 +18340,6 @@
 /obj/decal/mushrooms/type2,
 /turf/unsimulated/floor/cave,
 /area/crater)
-"vRu" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/unsimulated/floor/green/corner,
-/area/crater/biodome/south)
 "vRG" = (
 /turf/unsimulated/floor/stairs/wide/other{
 	dir = 4
@@ -18677,6 +18515,10 @@
 /obj/chainlink_fence,
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground/canyon)
+"wah" = (
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/entry)
 "waj" = (
 /obj/spacevine{
 	density = 1;
@@ -18692,6 +18534,25 @@
 	icon_state = "cave-light"
 	},
 /area/swampzone/interiors/quarry)
+"waB" = (
+/obj/mapping_helper/turfs/floor/burner,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/item/mousetrap/armed,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/maint)
+"waW" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/unsimulated/floor/caution/south{
+	dir = 1
+	},
+/area/crater/biodome/entry)
 "wbs" = (
 /turf/unsimulated/floor/industrial,
 /area/swampzone/heights)
@@ -18721,6 +18582,18 @@
 	dir = 8
 	},
 /area/crypt/sigma)
+"wcv" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "..How the hell is this even possible?";
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "meatspike_h";
+	name = "a meat spike"
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crypt/sigma/storage)
 "wdp" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/swampzone/interiors/bonktek)
@@ -18791,16 +18664,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/swampzone/ground)
-"wiq" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/unsimulated/floor/caution/south{
-	dir = 1
-	},
-/area/crater/biodome/entry)
 "wjQ" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/glass/compostbag,
@@ -18837,19 +18700,6 @@
 /obj/submachine/chef_oven,
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek/waffletek)
-"wlr" = (
-/obj/machinery/door/airlock/glass{
-	locked = 1;
-	name = "Biodome"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/decal/stripe_delivery,
-/turf/unsimulated/floor,
-/area/crater/biodome/south)
 "wlT" = (
 /obj/shrub/dead,
 /turf/unsimulated/floor/setpieces/rootfloor{
@@ -18915,15 +18765,17 @@
 	dir = 8
 	},
 /area/swampzone/ground)
-"wou" = (
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater)
 "wpd" = (
 /turf/unsimulated/floor/stairs/wood2/wide{
 	dir = 6
 	},
 /area/swampzone/interiors/bonktek/genetek)
+"wph" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/crater/biodome/maint)
 "wqg" = (
 /obj/decal/fakeobjects/azarakrocks/rock6,
 /turf/unsimulated/floor/cave,
@@ -19232,6 +19084,21 @@
 	icon_state = "rootfloor_3"
 	},
 /area/swampzone/ground)
+"wFZ" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "E APC";
+	noalerts = 1;
+	pixel_x = 24;
+	start_charge = 13
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/crater/biodome/entry)
 "wGA" = (
 /obj/table/glass/reinforced/auto,
 /turf/unsimulated/floor/carpet/office,
@@ -19326,6 +19193,14 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor,
 /area/crypt/sigma/crew)
+"wJx" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/green/corner{
+	dir = 1
+	},
+/area/crater/biodome/south)
 "wJB" = (
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/swampzone/ground)
@@ -19341,6 +19216,13 @@
 /obj/machinery/door/unpowered/wood/pyro,
 /turf/unsimulated/floor/carpet/grime,
 /area/swampzone/interiors/quarry)
+"wKs" = (
+/obj/decal/fakeobjects/pipe/heat,
+/obj/decal/cleanable/dirt,
+/obj/storage/secure/closet/civilian/janitor,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crypt/sigma/storage)
 "wKK" = (
 /obj/stool/bench/wooden/auto,
 /turf/unsimulated/floor/specialroom/chapel,
@@ -19543,14 +19425,6 @@
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/space)
-"wVN" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/unsimulated/floor/cave,
-/area/crater)
 "wVS" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -19740,6 +19614,20 @@
 	dir = 4
 	},
 /area/space)
+"xkI" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "bot2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner"
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater)
 "xlb" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray{
 	dir = 4
@@ -19762,6 +19650,12 @@
 /obj/table/wood/auto/desk,
 /turf/unsimulated/floor/black/side,
 /area/swampzone/interiors/bonktek)
+"xnS" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/cave,
+/area/crater)
 "xoJ" = (
 /obj/rack/lunar,
 /obj/item/ammo/bullets/a38,
@@ -19843,16 +19737,6 @@
 	},
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
-"xsk" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/north,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crater/biodome/south)
 "xsR" = (
 /turf/unsimulated/floor/carpet/purple/fancy,
 /area/swampzone/interiors/bonktek/funktek)
@@ -19860,6 +19744,16 @@
 /obj/chainlink_fence,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
+"xuI" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/south,
+/obj/window/crystal/reinforced/west,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/south)
 "xvj" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe/heat{
@@ -19890,6 +19784,17 @@
 	dir = 1
 	},
 /area/crater/biodome/north)
+"xwU" = (
+/obj/machinery/door/airlock/glass{
+	locked = 1;
+	name = "Biodome"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
+/area/crater/biodome/south)
 "xxp" = (
 /obj/rack/lunar,
 /obj/item/instrument/saxophone,
@@ -19961,16 +19866,6 @@
 /obj/table/glass/frame/auto,
 /turf/unsimulated/floor/white,
 /area/swampzone/ground)
-"xDA" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/neutral/corner{
-	dir = 4
-	},
-/area/crater/biodome/maint)
 "xDO" = (
 /obj/decal/fakeobjects/lotus,
 /turf/unsimulated/greek/water,
@@ -20020,6 +19915,11 @@
 	name = "Dark Pit"
 	},
 /area/catacombs)
+"xIV" = (
+/obj/grille/steel,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crater/biodome/crew)
 "xJc" = (
 /turf/unsimulated/wall/auto/supernorn/wood,
 /area/swampzone/interiors/outbuildings)
@@ -20188,19 +20088,6 @@
 	},
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
-"xTT" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/light/emergency{
-	dir = 1
-	},
-/turf/unsimulated/floor/neutral/side{
-	dir = 1
-	},
-/area/crater/biodome/research)
 "xUl" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray,
 /area/swampzone/interiors)
@@ -20356,14 +20243,6 @@
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground)
-"yaT" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/cave,
-/area/crater)
 "ybz" = (
 /obj/map/light/void,
 /turf/unsimulated/floor/setpieces{
@@ -20422,6 +20301,26 @@
 /obj/item/instrument/bikehorn,
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek)
+"ydZ" = (
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/crypt/sigma/storage)
+"yel" = (
+/obj/mapping_helper/turfs/floor/burner,
+/obj/table/reinforced,
+/obj/item/wrench,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	noalerts = 1;
+	pixel_y = 24;
+	start_charge = 12
+	},
+/turf/unsimulated/floor/plating,
+/area/crater)
 "yeW" = (
 /obj/table/reinforced/bar/auto,
 /obj/decal/cleanable/desk_clutter{
@@ -20466,15 +20365,6 @@
 	dir = 8
 	},
 /area/swampzone/interiors/outbuildings)
-"ygs" = (
-/obj/decal/fakeobjects/robot{
-	anchored = 1;
-	desc = "How long has this been down here?"
-	},
-/obj/decal/cleanable/cobweb2,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
-/area/crypt/sigma/storage)
 "ygI" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
@@ -44932,7 +44822,7 @@ iej
 iej
 pVY
 pVY
-aGI
+eRv
 pVY
 pVY
 pVY
@@ -45234,7 +45124,7 @@ pVY
 iej
 iej
 iej
-svd
+rwN
 pVY
 pVY
 ixV
@@ -86981,11 +86871,11 @@ vMr
 vMr
 vMr
 vMr
-fpe
-qxk
-qxk
-hmA
-qst
+mpG
+rue
+rue
+pzl
+wKs
 sPT
 feN
 laQ
@@ -87283,11 +87173,11 @@ tFp
 isW
 wNn
 kvw
-ygs
-jtx
-lKq
-oOc
-hnC
+tjW
+qBa
+ydZ
+pck
+lOu
 sPT
 feN
 laQ
@@ -87588,7 +87478,7 @@ kvw
 sPT
 sPT
 sPT
-sEO
+glU
 sPT
 sPT
 feN
@@ -87887,11 +87777,11 @@ ePs
 ePs
 ePs
 isx
-vsV
-lKq
-lKq
-lKq
-giK
+bCH
+ydZ
+ydZ
+ydZ
+eht
 sPT
 feN
 laQ
@@ -88189,11 +88079,11 @@ ePs
 aXe
 bdA
 kvw
-chP
-lKq
+gmt
+ydZ
 bFp
-lKq
-oOc
+ydZ
+pck
 kJq
 feN
 laQ
@@ -88492,10 +88382,10 @@ kvw
 kvw
 kvw
 sPT
-bpR
-lKq
-fUB
-krn
+wcv
+ydZ
+rDQ
+dFC
 sPT
 feN
 laQ
@@ -91782,7 +91672,7 @@ lLz
 lLz
 sVc
 qOE
-uLO
+auD
 qRJ
 tKz
 hKo
@@ -179380,10 +179270,10 @@ auI
 auI
 auI
 oQv
-sjt
-efc
-efc
-sjt
+xIV
+pkg
+pkg
+xIV
 oQv
 auI
 auI
@@ -179682,10 +179572,10 @@ auI
 auI
 auI
 oQv
-sjt
-efc
-efc
-sjt
+xIV
+pkg
+pkg
+xIV
 oQv
 auI
 auI
@@ -181495,7 +181385,7 @@ oQv
 kuK
 kfM
 oQv
-snJ
+lgM
 lGp
 oQv
 erw
@@ -181790,22 +181680,22 @@ atR
 atR
 atR
 atR
-hii
-odR
-fsM
+iBB
+oOi
+sGp
 oQv
 enI
 pWr
 nim
-tnD
+fGb
 lGp
 eRg
 dpq
 tNB
 oQv
-cYH
-qoY
-vCQ
+bes
+fvr
+xuI
 uRQ
 uRQ
 uRQ
@@ -182090,16 +181980,16 @@ sJa
 uRQ
 uRQ
 rCj
-hii
-odR
-urS
+iBB
+oOi
+bJt
 jey
 jey
 oQv
 fNz
 iXJ
 oQv
-tnD
+fGb
 hFq
 oQv
 dpq
@@ -182107,9 +181997,9 @@ dpq
 oQv
 gpn
 gpn
-xsk
-qoY
-vCQ
+cOy
+fvr
+xuI
 knF
 uRQ
 uRQ
@@ -182391,8 +182281,8 @@ sJa
 uRQ
 uRQ
 rCj
-hii
-urS
+iBB
+bJt
 bmG
 rCd
 jey
@@ -182401,7 +182291,7 @@ oQv
 fpr
 nXJ
 oQv
-gKp
+aAA
 lGp
 oQv
 sfm
@@ -182411,8 +182301,8 @@ gpn
 qds
 ubq
 ubq
-xsk
-vCQ
+cOy
+xuI
 knF
 uRQ
 sJa
@@ -182692,8 +182582,8 @@ sJa
 uRQ
 uRQ
 uRQ
-hii
-urS
+iBB
+bJt
 nEU
 nEU
 jey
@@ -182703,7 +182593,7 @@ oQv
 oQv
 oQv
 oQv
-tnD
+fGb
 lGp
 oQv
 oQv
@@ -182714,8 +182604,8 @@ gpn
 gpn
 gpn
 gpn
-xsk
-vCQ
+cOy
+xuI
 uRQ
 uRQ
 aUe
@@ -182994,7 +182884,7 @@ eij
 uRQ
 uRQ
 aUe
-fZm
+mIK
 pIX
 nEU
 fJF
@@ -183005,7 +182895,7 @@ qZQ
 cSW
 akq
 akq
-tEz
+gke
 rbR
 akq
 akq
@@ -183017,7 +182907,7 @@ uJL
 gpn
 qds
 gpn
-vdx
+jyt
 uRQ
 uRQ
 uRQ
@@ -183295,8 +183185,8 @@ vpS
 eij
 uRQ
 uRQ
-hii
-urS
+iBB
+bJt
 cLm
 nEU
 wgu
@@ -183307,7 +183197,7 @@ ljA
 cSW
 guB
 guB
-qMq
+dDj
 trq
 guB
 guB
@@ -183319,8 +183209,8 @@ qJb
 uJL
 gpn
 gpn
-xsk
-vCQ
+cOy
+xuI
 uRQ
 uRQ
 uRQ
@@ -183597,7 +183487,7 @@ sJa
 sJa
 uRQ
 uRQ
-fZm
+mIK
 cNZ
 fQE
 mDW
@@ -183609,7 +183499,7 @@ jbO
 fds
 fds
 fds
-xTT
+hSj
 oOI
 fds
 fds
@@ -183622,7 +183512,7 @@ nos
 uyU
 gpn
 alX
-vdx
+jyt
 uRQ
 uRQ
 uRQ
@@ -183899,7 +183789,7 @@ eij
 uRQ
 uRQ
 rCj
-fTD
+kNK
 uqM
 nEU
 fQE
@@ -183911,7 +183801,7 @@ mJD
 dui
 uUu
 fds
-stv
+nAO
 rvV
 fds
 shL
@@ -183924,7 +183814,7 @@ nos
 aHZ
 gpn
 sKE
-ljv
+loh
 uRQ
 uRQ
 uRQ
@@ -184208,12 +184098,12 @@ mDW
 nwL
 ifJ
 jbO
-jsL
+vQt
 dRo
 iiL
 jxD
 fds
-oEg
+pNd
 oOI
 kSM
 rNG
@@ -184515,7 +184405,7 @@ haN
 nFv
 qiA
 oAF
-rrW
+sHK
 oOI
 fds
 lXv
@@ -184805,7 +184695,7 @@ sJa
 sJa
 uRQ
 fWH
-hMz
+gMe
 eYa
 fQE
 fQE
@@ -184817,7 +184707,7 @@ vsR
 bqm
 jvk
 jvk
-lMI
+kVr
 oOI
 nJl
 jvk
@@ -185107,7 +184997,7 @@ sJa
 nhG
 uRQ
 uRQ
-fZm
+mIK
 qIl
 ndz
 oBv
@@ -185119,7 +185009,7 @@ rRY
 bqm
 viQ
 wmJ
-lMI
+kVr
 oOI
 fds
 xqB
@@ -185409,19 +185299,19 @@ pYc
 uWQ
 lue
 nRP
-fZm
+mIK
 nEU
 bzA
 oBv
 kbr
-iCq
+qvc
 jbO
 fds
 fds
 gxA
 iCC
 dNa
-lMI
+kVr
 eNe
 fds
 fds
@@ -185429,7 +185319,7 @@ fds
 fds
 fds
 fds
-mly
+aol
 lNA
 lNA
 lNA
@@ -185711,19 +185601,19 @@ sJa
 nhG
 uRQ
 uRQ
-fZm
+mIK
 eYa
 oBv
 eJe
 hBs
-hYi
+jAZ
 rvU
 mJD
 jcG
 bqm
 wDS
 jpO
-lMI
+kVr
 oOI
 fds
 heQ
@@ -185731,13 +185621,13 @@ wDz
 opt
 vHs
 fds
-nPD
-hbL
-cPV
-cPV
-cPV
-wlr
-wiq
+bap
+tLD
+qkG
+qkG
+qkG
+xwU
+waW
 nSr
 nSr
 nSr
@@ -186013,19 +185903,19 @@ sJa
 uRQ
 uRQ
 rCj
-vBb
+hal
 wUZ
 eJe
 oBv
 bBO
-hYi
+jAZ
 rpk
 mFi
 vsR
 bqm
 jvk
 jvk
-lMI
+kVr
 oOI
 nJl
 jvk
@@ -186033,13 +185923,13 @@ jvk
 jvk
 vjZ
 iLI
-vcW
+pTD
 nos
 gpn
 gpn
 gpn
 epG
-aDn
+wFZ
 fBA
 gKm
 kRo
@@ -186320,14 +186210,14 @@ hpw
 mDW
 sMX
 pff
-hYi
+jAZ
 jbO
 tNQ
 nvT
 wYr
 wzg
 oZU
-gZb
+oop
 oOI
 fds
 tgA
@@ -186335,7 +186225,7 @@ tgA
 tgA
 sGP
 fds
-vcW
+pTD
 nos
 qds
 gpn
@@ -186622,14 +186512,14 @@ fmm
 fQE
 fJF
 xwG
-bpK
+gKQ
 wAC
-jsL
+vQt
 rlN
 kzW
 haN
 fds
-nVT
+cEW
 oOI
 mXl
 cfp
@@ -186637,7 +186527,7 @@ dqe
 jyl
 eeM
 fds
-sUu
+vlh
 nos
 gpn
 gpn
@@ -186645,7 +186535,7 @@ wjQ
 epG
 xvj
 kRo
-bwe
+wah
 kRo
 dAD
 uRQ
@@ -186919,19 +186809,19 @@ eij
 uRQ
 uRQ
 fWH
-hMz
+gMe
 uqM
 fQE
 mDW
 xwG
-jKc
+ssY
 wAC
 uiF
 ylY
 woi
 pxp
 fds
-kyf
+rni
 xrX
 fds
 cHz
@@ -186939,15 +186829,15 @@ bti
 pIt
 fds
 fds
-vcW
+pTD
 nos
 aHZ
 gpn
 alX
-uDD
+nXI
 pwG
 kRo
-mbx
+dtL
 kRo
 cdA
 uRQ
@@ -187221,19 +187111,19 @@ eij
 uRQ
 xMF
 uRQ
-fZm
+mIK
 hub
 nEU
 fQE
 ssQ
-hZM
+jpW
 qbH
 jbO
 jbO
 fds
 fds
 fds
-xTT
+hSj
 oOI
 fds
 fds
@@ -187241,16 +187131,16 @@ fds
 fds
 fds
 nkL
-sdo
+wJx
 nos
 gce
 gpn
 sKE
-vdx
+jyt
 hin
-wou
-wou
-bAW
+vIp
+vIp
+eQe
 bqg
 uRQ
 uRQ
@@ -187523,36 +187413,36 @@ nhG
 uRQ
 uRQ
 uRQ
-lMr
-oLL
+kum
+vGl
 nEU
 fQE
 ehw
-mWE
+klX
 eNA
 nWB
 tUz
 jIf
 fjr
 fjr
-naj
+tCS
 sKW
 fjr
 fjr
 jIf
 nFb
 frQ
-nWK
-vRu
+vFs
+bFq
 eee
 gpn
 gpn
-vcw
-bNZ
+lqU
+vOH
 hin
-wou
-wou
-bAW
+vIp
+vIp
+eQe
 bqg
 uRQ
 uRQ
@@ -187826,7 +187716,7 @@ lue
 nRP
 uRQ
 uRQ
-fZm
+mIK
 gMz
 nEU
 nEU
@@ -187837,7 +187727,7 @@ cIP
 kOg
 mhU
 mhU
-xDA
+tAZ
 esN
 mhU
 mhU
@@ -187849,12 +187739,12 @@ eee
 gpn
 gpn
 gpn
-vdx
+jyt
 atR
 aqq
-bAW
-bAW
-bAW
+eQe
+eQe
+eQe
 bqg
 uRQ
 uRQ
@@ -188128,8 +188018,8 @@ uRQ
 uRQ
 uRQ
 czI
-lMr
-oLL
+kum
+vGl
 nEU
 fJF
 xSF
@@ -188139,7 +188029,7 @@ fcM
 iXv
 iXv
 iXv
-eVc
+kGH
 pFA
 iXv
 iXv
@@ -188150,12 +188040,12 @@ gpn
 gpn
 gpn
 qds
-vcw
-bNZ
+lqU
+vOH
 uRQ
 lTQ
 mSc
-rfj
+bFX
 qpu
 uRQ
 uRQ
@@ -188431,8 +188321,8 @@ uRQ
 uRQ
 uRQ
 fWH
-lMr
-oLL
+kum
+vGl
 aEU
 alK
 jey
@@ -188441,23 +188331,23 @@ fcM
 jtF
 emv
 iXv
-eVc
+kGH
 esG
 iXv
-fVp
-sYD
+ejB
+trQ
 iXv
 gpn
 gpn
 bnd
 bnd
-vcw
-bNZ
+lqU
+vOH
 cdA
 uRQ
 lTQ
 uAa
-rfj
+bFX
 bqg
 uRQ
 sxz
@@ -188734,32 +188624,32 @@ uRQ
 uRQ
 uRQ
 fWH
-lMr
-odR
-oLL
+kum
+oOi
+vGl
 nEU
 fJF
 fcM
 nTU
 hnX
 iXv
-eVc
+kGH
 pFA
 iXv
-tBl
-vNB
+jVq
+giX
 iXv
 gpn
 qds
-vcw
-qoY
-bNZ
+lqU
+fvr
+vOH
 cdA
 uRQ
 fkQ
 lTQ
 uAa
-rfj
+bFX
 bqg
 uRQ
 uRQ
@@ -189038,22 +188928,22 @@ uRQ
 uRQ
 uRQ
 cNN
-lMr
-odR
-fsM
+kum
+oOi
+sGp
 fcM
 mjC
 hnX
 sdn
-eVc
+kGH
 pFA
 woe
-eiO
-tep
+waB
+ees
 iXv
-cYH
-qoY
-bNZ
+bes
+fvr
+vOH
 uRQ
 lTQ
 uRQ
@@ -189061,7 +188951,7 @@ uRQ
 uRQ
 lTQ
 uAa
-rfj
+bFX
 bqg
 uRQ
 uRQ
@@ -189347,25 +189237,25 @@ iXv
 fje
 hnX
 iXv
-eVc
+kGH
 pFA
 gUF
-gks
-olV
+rkp
+ams
 iXv
 dAD
 uRQ
 xaa
 xaa
-mrw
+fOt
 uMY
 hjA
 xaa
-mrw
+fOt
 gUs
-rfj
+bFX
 krH
-mrw
+fOt
 xaa
 xaa
 sJa
@@ -189648,30 +189538,30 @@ sJa
 iXv
 iXv
 dQN
-smA
-qWQ
-smA
-smA
-smA
-hLi
+wph
+pCm
+wph
+wph
+wph
+aCK
 iXv
 dAD
 uAa
-sVO
-kpD
-kpD
-kpD
-kpD
-kpD
-kpD
-kpD
-pwb
-kpD
-kpD
-kpD
-kpD
-bAW
-wou
+iMx
+ldB
+ldB
+ldB
+ldB
+ldB
+ldB
+ldB
+akw
+ldB
+ldB
+ldB
+ldB
+eQe
+vIp
 sJa
 auI
 auI
@@ -189949,7 +189839,7 @@ sJa
 sJa
 sJa
 xQB
-dwu
+chW
 uQo
 sJa
 sJa
@@ -189959,11 +189849,11 @@ uRQ
 xaa
 xSz
 aeh
-rfj
+bFX
 oJL
 oJL
 oJL
-mrw
+fOt
 oJL
 oJL
 oJL
@@ -190251,7 +190141,7 @@ sJa
 sJa
 sJa
 ceg
-yaT
+xnS
 vpS
 sJa
 pYc
@@ -190259,9 +190149,9 @@ uWQ
 wvW
 hpC
 bKC
-kpD
-kpD
-fFl
+ldB
+ldB
+keD
 uRQ
 aUe
 uRQ
@@ -190553,7 +190443,7 @@ vpS
 sJa
 sJa
 sJa
-yaT
+xnS
 vpS
 sJa
 sJa
@@ -190855,7 +190745,7 @@ vpS
 sJa
 sJa
 vpS
-yaT
+xnS
 qsE
 qsE
 qsE
@@ -191157,14 +191047,14 @@ vpS
 vpS
 vpS
 vpS
-wVN
+imk
 xAy
-ikB
-dBd
+acV
+tEX
 qsE
-vpR
-wou
-wou
+rvS
+vIp
+vIp
 sJa
 sJa
 sJa
@@ -191461,12 +191351,12 @@ vpS
 vpS
 vpS
 qsE
-oBn
-wou
-llB
-kvF
-wou
-wou
+yel
+vIp
+mlf
+ezW
+vIp
+vIp
 vpS
 vpS
 sJa
@@ -191763,12 +191653,12 @@ sJa
 nPi
 vpS
 qsE
-aGx
-duk
+idz
+xkI
 qsE
-cut
-wou
-wou
+jOK
+vIp
+vIp
 vpS
 vpS
 vpS

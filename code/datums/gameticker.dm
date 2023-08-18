@@ -1,5 +1,5 @@
 var/global/datum/controller/gameticker/ticker
-var/global/current_state = GAME_STATE_WORLD_INIT
+var/global/current_state = GAME_STATE_INVALID
 
 /datum/controller/gameticker
 	var/hide_mode = TRUE

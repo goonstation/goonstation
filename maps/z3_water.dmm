@@ -1846,10 +1846,6 @@
 	icon_state = "floor"
 	},
 /area/wrecknsspolaris)
-"fJ" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/unsimulated/floor,
-/area/wrecknsspolaris)
 "fK" = (
 /obj/decal/cleanable/dirt/dirt5,
 /obj/item/parts/human_parts/arm/right/polaris,
@@ -2770,19 +2766,6 @@
 /obj/item/clothing/suit/space/emerg,
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
-"ij" = (
-/obj/item/scissors,
-/obj/item/rubberduck{
-	pixel_x = -7;
-	pixel_y = 8
-	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/unsimulated/floor,
-/area/dank_trench)
 "ik" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/item/reagent_containers/food/snacks/chips,
@@ -2860,21 +2843,6 @@
 "iu" = (
 /obj/decal/cleanable/dirt,
 /obj/item/mop,
-/turf/unsimulated/floor/plating,
-/area/dank_trench)
-"iv" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "1-9"
-	},
-/obj/item/bluntwrap{
-	pixel_x = -4;
-	pixel_y = 6
-	},
-/obj/item/bluntwrap{
-	pixel_y = -3
-	},
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "iw" = (
@@ -3005,6 +2973,19 @@
 /obj/item/clothing/suit/space/suv,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"pd" = (
+/obj/item/scissors,
+/obj/item/rubberduck{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
+/area/dank_trench)
 "pX" = (
 /obj/storage/crate/loot,
 /turf/unsimulated/floor/martian,
@@ -3084,6 +3065,10 @@
 /obj/portalmartian,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"EO" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
+/area/wrecknsspolaris)
 "FF" = (
 /obj/crevice{
 	pixel_x = -28
@@ -3115,6 +3100,19 @@
 /area/evilreaver/security)
 "Ip" = (
 /turf/unsimulated/wall/trench,
+/area/dank_trench)
+"Jw" = (
+/obj/cable{
+	icon_state = "1-9"
+	},
+/obj/item/bluntwrap{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/bluntwrap{
+	pixel_y = -3
+	},
+/turf/unsimulated/floor/plating,
 /area/dank_trench)
 "KR" = (
 /obj/landmark/spawner/artifact,
@@ -5372,7 +5370,7 @@ cr
 fv
 cF
 dX
-fJ
+EO
 cr
 cr
 cr
@@ -6281,7 +6279,7 @@ dV
 dV
 gb
 cy
-fJ
+EO
 cr
 br
 dH
@@ -7192,7 +7190,7 @@ cr
 ff
 cr
 eo
-fJ
+EO
 cr
 cr
 br
@@ -7499,7 +7497,7 @@ cx
 fK
 fM
 fv
-fJ
+EO
 cx
 fO
 fp
@@ -8385,7 +8383,7 @@ br
 co
 br
 br
-fJ
+EO
 dQ
 cy
 dY
@@ -9596,7 +9594,7 @@ by
 cr
 er
 da
-fJ
+EO
 dO
 dM
 da
@@ -9906,7 +9904,7 @@ cG
 cG
 cH
 ds
-fJ
+EO
 dF
 ff
 eq
@@ -15622,7 +15620,7 @@ hm
 hO
 ax
 id
-ij
+pd
 ax
 aa
 Ip
@@ -17134,7 +17132,7 @@ hY
 ax
 ax
 io
-iv
+Jw
 iz
 Ip
 Ip

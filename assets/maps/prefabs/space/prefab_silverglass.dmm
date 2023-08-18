@@ -5,6 +5,17 @@
 "aF" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/silverglass/research)
+"aN" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/neutral/corner{
+	dir = 8
+	},
+/area/prefab/silverglass)
 "bf" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -89,6 +100,15 @@
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/carpet/grime,
 /area/prefab/silverglass)
+"cS" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/prefab/silverglass/eats)
 "cV" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/green/side{
@@ -143,21 +163,11 @@
 "fI" = (
 /turf/simulated/floor/airless/specialroom/cafeteria,
 /area/prefab/silverglass/eats)
-"fR" = (
-/obj/grille/catwalk,
-/obj/cable,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	icon_state = "catwalk_cross"
-	},
-/area/noGenerate)
+"fJ" = (
+/obj/grille/steel,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/prefab/silverglass/research)
 "fU" = (
 /obj/storage/closet/radiation,
 /turf/simulated/floor/airless/darkblue,
@@ -182,14 +192,6 @@
 /obj/item/reagent_containers/food/drinks/bowl,
 /turf/simulated/floor/airless/grey,
 /area/prefab/silverglass/eats)
-"gG" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/neutral/side,
-/area/prefab/silverglass)
 "gM" = (
 /obj/lattice{
 	dir = 5;
@@ -203,17 +205,6 @@
 	},
 /obj/lattice,
 /turf/variableTurf/clear,
-/area/prefab/silverglass/research)
-"gW" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/obj/stool/chair/office{
-	dir = 4
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
 /area/prefab/silverglass/research)
 "hj" = (
 /obj/stool/bed,
@@ -238,6 +229,10 @@
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/neutral/side,
 /area/prefab/silverglass)
+"ht" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/prefab/silverglass/eats)
 "hA" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
@@ -309,17 +304,6 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/airless/engine,
 /area/prefab/silverglass/research)
-"iI" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/neutral/corner,
-/area/prefab/silverglass)
 "iO" = (
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/shuttlebay,
@@ -355,6 +339,20 @@
 	dir = 1
 	},
 /area/prefab/silverglass)
+"kU" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/noGenerate)
 "lb" = (
 /obj/rack,
 /obj/item/clothing/suit/fire/heavy,
@@ -377,6 +375,12 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/prefab/silverglass/eats)
+"mw" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/prefab/silverglass)
 "mK" = (
 /obj/machinery/door/window/eastleft,
 /obj/machinery/drainage,
@@ -392,19 +396,6 @@
 /obj/item/crowbar,
 /turf/simulated/floor/grey,
 /area/prefab/silverglass/bay)
-"nh" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/prefab/silverglass)
-"nj" = (
-/obj/structure/girder,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/prefab/silverglass/research)
 "nP" = (
 /obj/machinery/drainage,
 /obj/machinery/shower{
@@ -459,18 +450,6 @@
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/prefab/silverglass/eats)
-"pw" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/grille/catwalk,
-/obj/machinery/power/tracker/silverglass,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/area/noGenerate)
 "pA" = (
 /obj/machinery/light/small,
 /obj/storage/closet/office,
@@ -490,28 +469,14 @@
 	},
 /turf/variableTurf/clear,
 /area/prefab/silverglass/research)
-"pF" = (
+"pR" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/cable{
-	icon_state = "1-4"
+/turf/simulated/floor/green/side{
+	dir = 8
 	},
-/turf/simulated/floor,
 /area/prefab/silverglass)
-"pG" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/table/reinforced/auto,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/prefab/silverglass/research)
 "qg" = (
 /obj/machinery/door/airlock/pyro/glass/sci{
 	dir = 4
@@ -527,15 +492,6 @@
 	icon_state = "norn-12"
 	},
 /area/prefab/silverglass)
-"qp" = (
-/obj/machinery/door/airlock/pyro/external,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/prefab/silverglass)
 "qx" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -546,25 +502,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/prefab/silverglass/bay)
-"qQ" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
-/area/noGenerate)
 "rd" = (
 /obj/stool/chair/couch{
 	dir = 4;
@@ -582,6 +519,17 @@
 	},
 /turf/simulated/floor/grey,
 /area/prefab/silverglass/bay)
+"rr" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/grille/catwalk,
+/obj/machinery/power/tracker/silverglass,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/noGenerate)
 "rt" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/cable{
@@ -589,22 +537,26 @@
 	},
 /turf/simulated/floor/darkblue/checker,
 /area/prefab/silverglass)
-"su" = (
-/obj/cable,
+"rD" = (
 /obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "4-8"
 	},
 /obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "1-4"
 	},
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	icon_state = "catwalk_cross"
+/turf/simulated/floor,
+/area/prefab/silverglass)
+"sI" = (
+/obj/cable{
+	icon_state = "0-4"
 	},
-/area/noGenerate)
+/obj/machinery/power/data_terminal,
+/obj/stool/chair/office{
+	dir = 4
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/prefab/silverglass/research)
 "td" = (
 /obj/item/electronics/soldering{
 	pixel_y = 6
@@ -623,6 +575,10 @@
 	},
 /turf/simulated/floor/carpet/purple/standard/narrow/east,
 /area/prefab/silverglass)
+"ty" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/prefab/silverglass/research)
 "tF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -648,6 +604,28 @@
 	dir = 10
 	},
 /area/prefab/silverglass)
+"uA" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/noGenerate)
+"uY" = (
+/obj/mapping_helper/turfs/floor/damager,
+/obj/machinery/drainage,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/plating,
+/area/prefab/silverglass/research)
 "vw" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -666,15 +644,15 @@
 /obj/machinery/vending/snack,
 /turf/simulated/floor/neutral/side,
 /area/prefab/silverglass)
-"vR" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+"vS" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/noGenerate)
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
 "wy" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/shaker/pepper{
@@ -694,6 +672,15 @@
 	spawn_contents = list(/obj/item/clothing/under/towel,/obj/item/clothing/under/towel)
 	},
 /turf/simulated/floor/sanitary,
+/area/prefab/silverglass)
+"xy" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/neutral/corner,
 /area/prefab/silverglass)
 "xB" = (
 /obj/machinery/light,
@@ -729,40 +716,47 @@
 "yp" = (
 /turf/simulated/floor/airless/grey,
 /area/prefab/silverglass/eats)
-"yD" = (
-/obj/machinery/power/apc/autoname_north/nopoweralert,
+"yN" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
 /obj/cable{
-	icon_state = "0-4"
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/prefab/silverglass)
+"yP" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
 	},
 /obj/mapping_helper/turfs/floor/damager,
 /turf/simulated/floor/airless/plating,
 /area/prefab/silverglass/research)
-"zb" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/solar/silverglass,
-/turf/simulated/floor/airless/solar,
-/area/noGenerate)
 "zi" = (
 /obj/stool/bench/auto,
 /obj/machinery/light,
 /turf/simulated/floor/neutral/side,
 /area/prefab/silverglass)
-"zJ" = (
+"zj" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "2-4"
 	},
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "2-8"
 	},
-/turf/simulated/floor/neutral/corner{
-	dir = 8
+/obj/table/reinforced/auto,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/prefab/silverglass/research)
+"zM" = (
+/obj/cable{
+	icon_state = "1-2"
 	},
-/area/prefab/silverglass)
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/prefab/silverglass/eats)
 "Bn" = (
 /obj/lattice{
 	dir = 6;
@@ -811,20 +805,17 @@
 /obj/machinery/manufacturer/mechanic,
 /turf/simulated/floor/airless/darkblue,
 /area/prefab/silverglass/research)
-"Ct" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating,
-/area/prefab/silverglass)
 "Cv" = (
 /obj/item/reagent_containers/dropper/mechanical{
 	pixel_x = -5;
 	pixel_y = 6
 	},
 /turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"CI" = (
+/obj/structure/girder,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
 /area/prefab/silverglass/research)
 "CS" = (
 /obj/stool/bed,
@@ -879,20 +870,6 @@
 	dir = 9
 	},
 /area/prefab/silverglass)
-"DR" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/prefab/silverglass/research)
-"Ey" = (
-/obj/machinery/door/airlock/pyro/glass/sci,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/prefab/silverglass/research)
 "EA" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/stool/chair/yellow{
@@ -905,10 +882,6 @@
 /obj/machinery/power/solar/silverglass,
 /turf/simulated/floor/airless/solar,
 /area/noGenerate)
-"Fj" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/prefab/silverglass/research)
 "Fx" = (
 /obj/item/screwdriver{
 	pixel_x = 3
@@ -940,6 +913,13 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
+"Gx" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/noGenerate)
 "Hb" = (
 /obj/machinery/light{
 	dir = 1;
@@ -969,6 +949,12 @@
 /obj/lattice,
 /turf/variableTurf/clear,
 /area/prefab/silverglass/research)
+"Ib" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
 "Ij" = (
 /obj/item/rubberduck{
 	pixel_x = 4;
@@ -976,21 +962,33 @@
 	},
 /turf/variableTurf/clear,
 /area/prefab/silverglass/research)
-"Ik" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4
+"Il" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "0-8"
 	},
-/turf/simulated/floor,
-/area/prefab/silverglass)
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/noGenerate)
 "Iq" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/caution/westeast,
 /area/prefab/silverglass/bay)
+"Is" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
 "IC" = (
 /obj/item/clothing/head/emerg{
 	pixel_x = 7;
@@ -1015,20 +1013,6 @@
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/airless/darkblue,
 /area/prefab/silverglass/research)
-"Jx" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating,
-/area/prefab/silverglass)
 "KR" = (
 /obj/table/reinforced/auto,
 /obj/item/interdictor_rod{
@@ -1039,61 +1023,53 @@
 	},
 /turf/simulated/floor/airless/darkblue,
 /area/prefab/silverglass/research)
+"KX" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/solar/silverglass,
+/turf/simulated/floor/airless/solar,
+/area/noGenerate)
 "Lc" = (
 /turf/simulated/floor/airless/stairs/wide/other{
 	dir = 4
 	},
 /area/prefab/silverglass/research)
+"Lu" = (
+/obj/grille/catwalk,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/noGenerate)
+"LY" = (
+/obj/machinery/light_switch/east,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/prefab/silverglass/eats)
 "Me" = (
 /obj/lattice,
 /turf/variableTurf/clear,
 /area/noGenerate)
-"Mk" = (
+"MK" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/prefab/silverglass)
-"MB" = (
-/obj/grille/steel,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/prefab/silverglass/research)
-"MR" = (
-/obj/cable,
-/obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
-	icon_state = "catwalk_cross"
-	},
-/area/noGenerate)
-"MS" = (
-/obj/cable,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
+	dir = 1;
 	icon_state = "catwalk_cross"
 	},
 /area/noGenerate)
@@ -1137,6 +1113,23 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/prefab/silverglass/bay)
+"NV" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/noGenerate)
 "NW" = (
 /obj/item/reagent_containers/food/drinks/mug,
 /turf/variableTurf/clear,
@@ -1157,16 +1150,15 @@
 /obj/item/clothing/suit/bedsheet/orange,
 /turf/simulated/floor/carpet/purple/standard/narrow/east,
 /area/prefab/silverglass)
-"OC" = (
-/obj/machinery/drainage,
+"OG" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/prefab/silverglass/research)
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/noGenerate)
 "OL" = (
 /obj/lattice{
 	dir = 9;
@@ -1177,11 +1169,30 @@
 "OZ" = (
 /turf/simulated/floor/plating,
 /area/prefab/silverglass)
+"Pd" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
 "Px" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/cashreg,
 /turf/simulated/floor/airless/grey,
 /area/prefab/silverglass/eats)
+"PQ" = (
+/obj/machinery/door/airlock/pyro/glass/sci,
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/prefab/silverglass/research)
+"PV" = (
+/obj/machinery/power/apc/autoname_north/nopoweralert,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/prefab/silverglass/research)
 "Qh" = (
 /obj/table/auto,
 /obj/window/cubicle{
@@ -1203,17 +1214,18 @@
 	dir = 4
 	},
 /area/prefab/silverglass/research)
-"QN" = (
-/obj/machinery/light_switch/east,
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/prefab/silverglass/eats)
 "QU" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/specialroom/cafeteria,
 /area/prefab/silverglass/eats)
+"Rl" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/neutral/side,
+/area/prefab/silverglass)
 "Ry" = (
 /obj/stool/bar,
 /obj/cable{
@@ -1238,24 +1250,21 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/prefab/silverglass)
-"RX" = (
+"RP" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/prefab/silverglass)
-"RY" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+"RR" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
 	},
-/turf/simulated/floor/green/side{
-	dir = 8
-	},
-/area/prefab/silverglass)
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/prefab/silverglass/eats)
 "Sa" = (
 /obj/decal/cleanable/paper,
 /turf/simulated/floor/carpet/grime,
@@ -1312,13 +1321,6 @@
 "TC" = (
 /turf/simulated/floor/grey,
 /area/prefab/silverglass)
-"TE" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/prefab/silverglass/eats)
 "TO" = (
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -1331,6 +1333,12 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/silverglass/bay)
+"Ue" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/specialroom/bar,
+/area/prefab/silverglass/eats)
 "Un" = (
 /turf/simulated/floor/airless/stairs/wide{
 	dir = 4
@@ -1348,15 +1356,6 @@
 "UF" = (
 /turf/simulated/floor/airless/engine,
 /area/prefab/silverglass/research)
-"UH" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/prefab/silverglass/eats)
 "UO" = (
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing{
 	pixel_y = 9
@@ -1400,14 +1399,6 @@
 "VZ" = (
 /turf/simulated/floor/shuttlebay,
 /area/prefab/silverglass/bay)
-"Wr" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/airless/specialroom/bar,
-/area/prefab/silverglass/eats)
 "Ww" = (
 /obj/lattice,
 /turf/variableTurf/clear,
@@ -1429,17 +1420,6 @@
 "Xx" = (
 /turf/simulated/floor,
 /area/prefab/silverglass)
-"XH" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/specialroom/bar,
-/area/prefab/silverglass/eats)
 "XI" = (
 /obj/machinery/light,
 /turf/simulated/floor/darkblue,
@@ -1478,28 +1458,6 @@
 /obj/stool/bench/blue,
 /turf/simulated/floor/sanitary,
 /area/prefab/silverglass)
-"YM" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/prefab/silverglass)
-"YN" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/noGenerate)
 "YP" = (
 /obj/machinery/light{
 	dir = 4;
@@ -1515,25 +1473,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/prefab/silverglass/eats)
-"YY" = (
-/obj/cable,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/noGenerate)
 "Ze" = (
 /obj/item/wrench,
 /turf/simulated/floor/shuttlebay,
@@ -1541,17 +1480,18 @@
 "Zj" = (
 /turf/simulated/floor/neutral/side,
 /area/prefab/silverglass)
-"Zx" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/prefab/silverglass/eats)
-"ZD" = (
-/obj/machinery/door/airlock/pyro{
-	dir = 4
+"Zn" = (
+/obj/cable{
+	icon_state = "1-2"
 	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/simulated/floor/airless/plating,
-/area/prefab/silverglass/eats)
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
 "ZF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1562,6 +1502,13 @@
 "ZG" = (
 /turf/variableTurf/clear,
 /area/noGenerate)
+"ZU" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/simulated/floor/airless/plating,
+/area/prefab/silverglass/eats)
 
 (1,1,1) = {"
 Sf
@@ -1657,7 +1604,7 @@ aF
 aF
 KR
 BP
-DR
+yP
 aF
 aF
 YS
@@ -1678,12 +1625,12 @@ ZG
 (5,1,1) = {"
 ZG
 Xb
-Fj
+ty
 do
 iH
 aF
-gW
-Fj
+sI
+ty
 Cv
 IS
 Cn
@@ -1710,14 +1657,14 @@ UF
 IS
 IS
 IS
-pG
+zj
 IS
 Xb
 Fx
 NI
 HX
-TE
-TE
+zM
+zM
 hA
 Ry
 xB
@@ -1734,7 +1681,7 @@ ZG
 (7,1,1) = {"
 ZG
 Xb
-Fj
+ty
 IS
 UF
 mM
@@ -1744,11 +1691,11 @@ Xb
 Ga
 Xb
 cd
-UH
-Zx
+RR
+ht
 gq
 Tr
-Wr
+Ue
 YS
 jp
 bB
@@ -1765,7 +1712,7 @@ Xb
 IS
 UF
 UF
-nj
+CI
 td
 Xb
 Xb
@@ -1776,7 +1723,7 @@ Ww
 yp
 Px
 Tr
-Wr
+Ue
 YS
 VZ
 VZ
@@ -1790,7 +1737,7 @@ ZG
 (9,1,1) = {"
 ZG
 Xb
-nj
+CI
 IS
 UF
 IS
@@ -1804,7 +1751,7 @@ TR
 Ww
 wy
 Vx
-Wr
+Ue
 ml
 VZ
 VZ
@@ -1818,7 +1765,7 @@ ZG
 (10,1,1) = {"
 ZG
 Xb
-Fj
+ty
 UF
 UF
 Xb
@@ -1829,10 +1776,10 @@ Xb
 Xb
 TR
 TR
-ZD
+ZU
 ml
 mt
-XH
+cS
 ml
 UV
 ok
@@ -1860,7 +1807,7 @@ UO
 Ww
 ml
 DH
-RY
+pR
 cV
 bn
 FK
@@ -1885,10 +1832,10 @@ Xb
 Xb
 TR
 Ww
-Zx
+ht
 pm
 TO
-iI
+xy
 oQ
 ZF
 YP
@@ -1910,13 +1857,13 @@ Xb
 Xb
 Xb
 Xb
-Fj
+ty
 Ww
 VP
 fI
 ml
 TO
-gG
+Rl
 UV
 UV
 UV
@@ -1944,7 +1891,7 @@ WR
 QU
 dh
 jO
-zJ
+aN
 ux
 Jb
 Tk
@@ -1969,10 +1916,10 @@ Gq
 Xb
 TR
 Ww
-QN
+LY
 ml
 TO
-Mk
+mw
 zi
 Jb
 xS
@@ -2000,7 +1947,7 @@ TR
 ml
 ml
 kq
-Mk
+mw
 Xx
 TC
 TC
@@ -2017,7 +1964,7 @@ Xb
 Un
 QL
 Lc
-MB
+fJ
 IS
 Xb
 Xb
@@ -2028,7 +1975,7 @@ Ww
 ml
 gl
 Xx
-Mk
+mw
 vQ
 Jb
 br
@@ -2044,19 +1991,19 @@ ZG
 Xb
 cd
 qg
-MB
+fJ
 IS
 IS
 Xb
 Xb
 IS
 aF
-yD
-Fj
+PV
+ty
 Jb
 rd
 Xx
-Mk
+mw
 hp
 Jb
 bO
@@ -2072,19 +2019,19 @@ ZG
 cs
 fU
 Bv
-Fj
-Fj
+ty
+ty
 Bv
 tQ
 IS
 Bv
-Ey
-OC
+PQ
+uY
 ai
 NE
 Dh
 Xx
-Mk
+mw
 VE
 Jb
 Jb
@@ -2112,7 +2059,7 @@ jo
 rt
 bf
 eA
-pF
+rD
 Zj
 dY
 pB
@@ -2140,7 +2087,7 @@ XI
 Jb
 bH
 CW
-Mk
+mw
 il
 Jb
 Qh
@@ -2168,7 +2115,7 @@ Jb
 Jb
 Jb
 Jb
-Ik
+yN
 Jb
 Jb
 Vk
@@ -2196,7 +2143,7 @@ XJ
 Jb
 vw
 Nd
-RX
+Ib
 FH
 Jb
 Jb
@@ -2221,10 +2168,10 @@ op
 ZG
 Jb
 XL
-qp
-Jx
-nh
-Ct
+Is
+Zn
+RP
+Pd
 OZ
 cB
 ql
@@ -2241,14 +2188,14 @@ ZG
 ZG
 ZG
 ZG
-pw
+rr
 vP
 vP
 vP
 Me
 vP
 Jb
-YM
+vS
 Jb
 io
 EA
@@ -2269,14 +2216,14 @@ Sf
 ZG
 ZG
 ZG
-YN
+OG
 ZG
 ZG
 ZG
 op
 ZG
 lB
-YN
+OG
 Jb
 Jb
 nS
@@ -2297,14 +2244,14 @@ Sf
 ZG
 ZG
 ZG
-YN
+OG
 ZG
 ZG
 ZG
 op
 ZG
 lB
-YN
+OG
 kk
 ZG
 op
@@ -2324,22 +2271,22 @@ Sf
 Sf
 ZG
 ZG
-zb
-YY
+KX
+Il
 EY
 vP
-zb
-MR
+KX
+kU
 EY
 Me
-YN
+OG
 Me
-zb
-MR
+KX
+kU
 EY
 vP
-zb
-MR
+KX
+kU
 EY
 ZG
 ZG
@@ -2352,22 +2299,22 @@ Sf
 Sf
 Sf
 ZG
-zb
-YY
+KX
+Il
 EY
 ZG
-zb
-YY
+KX
+Il
 EY
 Me
-YN
+OG
 Me
-zb
-YY
+KX
+Il
 EY
 ZG
-zb
-YY
+KX
+Il
 EY
 ZG
 Sf
@@ -2380,22 +2327,22 @@ Sf
 Sf
 Sf
 ZG
-zb
-YY
+KX
+Il
 EY
 Bn
-zb
-YY
+KX
+Il
 EY
 Me
-YN
+OG
 Me
-zb
-YY
+KX
+Il
 EY
 Bn
-zb
-YY
+KX
+Il
 EY
 ZG
 Sf
@@ -2409,21 +2356,21 @@ Sf
 Sf
 ZG
 lB
-qQ
-vR
-vR
-vR
-MS
-vR
-vR
-su
-vR
-vR
-MS
-vR
-vR
-vR
-fR
+MK
+Gx
+Gx
+Gx
+NV
+Gx
+Gx
+uA
+Gx
+Gx
+NV
+Gx
+Gx
+Gx
+Lu
 kk
 ZG
 Sf
@@ -2436,22 +2383,22 @@ Sf
 Sf
 Sf
 ZG
-zb
-YY
+KX
+Il
 EY
 BO
-zb
-YY
+KX
+Il
 EY
 BO
 BO
 BO
-zb
-YY
+KX
+Il
 EY
 BO
-zb
-YY
+KX
+Il
 EY
 ZG
 Sf
@@ -2464,22 +2411,22 @@ Sf
 Sf
 Sf
 ZG
-zb
-YY
+KX
+Il
 EY
 ZG
-zb
-YY
+KX
+Il
 EY
 ZG
 ZG
 ZG
-zb
-YY
+KX
+Il
 EY
 ZG
-zb
-YY
+KX
+Il
 EY
 ZG
 Sf
@@ -2492,22 +2439,22 @@ Sf
 Sf
 Sf
 ZG
-zb
-su
+KX
+uA
 EY
 vP
-zb
-su
+KX
+uA
 EY
 ZG
 ZG
 ZG
-zb
-su
+KX
+uA
 EY
 vP
-zb
-su
+KX
+uA
 EY
 ZG
 Sf

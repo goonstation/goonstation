@@ -881,17 +881,6 @@
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor,
 /area/space)
-"cP" = (
-/obj/machinery/door/airlock/pyro,
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/obj/disposalpipe/segment,
-/obj/machinery/door/firedoor/pyro,
-/turf/simulated/floor/sanitary,
-/area/space)
 "cQ" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/firedoor/pyro,
@@ -4713,10 +4702,6 @@
 	icon_state = "mars-reinf"
 	},
 /area/space)
-"nS" = (
-/obj/mapping_helper/turfs/floor/burner,
-/turf/simulated/floor/plating,
-/area/space)
 "nT" = (
 /turf/simulated/floor/engine/caution/westeast,
 /area/space)
@@ -7656,6 +7641,20 @@
 	dir = 6;
 	icon_state = "diagonalWall3"
 	},
+/area/space)
+"EW" = (
+/obj/mapping_helper/turfs/floor/burner,
+/turf/simulated/floor/plating,
+/area/space)
+"Oi" = (
+/obj/machinery/door/airlock/pyro,
+/obj/cable{
+	icon_state = "1-2";
+	
+	},
+/obj/disposalpipe/segment,
+/obj/machinery/door/firedoor/pyro,
+/turf/simulated/floor/sanitary,
 /area/space)
 
 (1,1,1) = {"
@@ -34905,9 +34904,9 @@ nL
 nL
 nL
 oX
-nS
-nS
-nS
+EW
+EW
+EW
 ni
 ac
 ac
@@ -35509,9 +35508,9 @@ nL
 nL
 nL
 oX
-nS
-nS
-nS
+EW
+EW
+EW
 ni
 ac
 ac
@@ -36113,9 +36112,9 @@ sc
 sc
 nL
 oX
-nS
-nS
-nS
+EW
+EW
+EW
 ni
 ac
 ac
@@ -36717,9 +36716,9 @@ sc
 sc
 nL
 oX
-nS
-nS
-nS
+EW
+EW
+EW
 ni
 ac
 ac
@@ -37321,9 +37320,9 @@ nL
 nL
 nL
 oX
-nS
-nS
-nS
+EW
+EW
+EW
 ni
 ac
 ac
@@ -37925,9 +37924,9 @@ nL
 nL
 nL
 oX
-nS
-nS
-nS
+EW
+EW
+EW
 ni
 ac
 ac
@@ -74081,7 +74080,7 @@ cj
 cr
 cA
 cA
-cP
+Oi
 aC
 aC
 aC

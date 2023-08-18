@@ -206,28 +206,6 @@
 	icon_state = "leadcap_white"
 	},
 /area/moon/underground/hemera)
-"aN" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/decal/stripe_caution,
-/turf/unsimulated/floor/orangeblack{
-	dir = 2
-	},
-/area/moon/underground/hemera)
-"aP" = (
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/machinery/power/data_terminal,
-/obj/decal/stripe_caution,
-/turf/unsimulated/floor/orangeblack{
-	dir = 2
-	},
-/area/moon/underground/hemera)
 "aQ" = (
 /turf/unsimulated/floor/orangeblack{
 	dir = 2
@@ -242,29 +220,6 @@
 	},
 /turf/unsimulated/floor/specialroom/freezer,
 /area/moon/underground/hemera)
-"aS" = (
-/obj/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/secdetector{
-	dir = 4
-	},
-/turf/unsimulated/floor/blue,
-/area/moon/underground/hemera)
-"aT" = (
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable,
-/turf/unsimulated/floor/blue,
-/area/moon/underground/hemera)
 "aU" = (
 /obj/window/cubicle{
 	dir = 9
@@ -277,34 +232,6 @@
 /obj/table/auto,
 /turf/unsimulated/floor/carpet/office/other,
 /area/moon/underground/hemera)
-"aW" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/unsimulated/floor/orangeblack/side{
-	dir = 9
-	},
-/area/moon/underground/hemera)
-"aX" = (
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/turf/unsimulated/floor/orangeblack/side{
-	dir = 1
-	},
-/area/moon/underground/hemera)
 "aY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -315,35 +242,6 @@
 	},
 /turf/unsimulated/floor/orangeblack/side{
 	dir = 1
-	},
-/area/moon/underground/hemera)
-"aZ" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
-	},
-/turf/unsimulated/floor/orangeblack/side{
-	dir = 5
-	},
-/area/moon/underground/hemera)
-"ba" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/guardbot_dock{
-	desc = "A recharging and command station for PR-6S Guardbuddies. It looks rather worn.";
-	frequency = 1089;
-	name = "dusty docking station"
-	},
-/obj/decal/stripe_caution,
-/turf/unsimulated/floor/orangeblack{
-	dir = 2
 	},
 /area/moon/underground/hemera)
 "bb" = (
@@ -409,17 +307,6 @@
 "bi" = (
 /obj/cable{
 	icon_state = "1-4"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "floor"
-	},
-/area/moon/underground/hemera)
-"bj" = (
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
@@ -504,33 +391,6 @@
 	icon_state = "floor"
 	},
 /area/moon/underground/hemera)
-"bv" = (
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/cable,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "floor"
-	},
-/area/moon/underground/hemera)
-"bw" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/networked/secdetector,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "floor"
-	},
-/area/moon/underground/hemera)
 "bx" = (
 /obj/machinery/door/window/northleft,
 /turf/unsimulated/floor/grey/side{
@@ -570,84 +430,6 @@
 /turf/unsimulated/floor/yellow/side{
 	dir = 8
 	},
-/area/moon/underground/hemera)
-"bD" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "floor"
-	},
-/area/moon/underground/hemera)
-"bE" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "floor"
-	},
-/area/moon/underground/hemera)
-"bF" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/unsimulated/floor/yellow/side{
-	dir = 4
-	},
-/area/moon/underground/hemera)
-"bG" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/unsimulated/floor/yellow{
-	dir = 2
-	},
-/area/moon/underground/hemera)
-"bH" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/unsimulated/floor/yellow/side{
-	dir = 8
-	},
-/area/moon/underground/hemera)
-"bI" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/obj/cable{
-	tag = "icon-1-4";
-	icon_state = "1-4"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "floor"
-	},
-/area/moon/underground/hemera)
-"bJ" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/unsimulated/floor/grime,
 /area/moon/underground/hemera)
 "bK" = (
 /turf/unsimulated/wall{
@@ -1525,11 +1307,6 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/moon/underground)
-"dS" = (
-/obj/table/auto,
-/obj/mapping_helper/turfs/floor/burner,
-/turf/unsimulated/floor/plating,
 /area/moon/underground)
 "dT" = (
 /obj/table/auto,
@@ -2721,21 +2498,6 @@
 /obj/item/sponge,
 /turf/unsimulated/floor,
 /area/moon/museum)
-"hf" = (
-/obj/cable{
-	icon_state = "2-4";
-	d1 = 2;
-	d2 = 4
-	},
-/obj/decal/fakeobjects/lightbulb_broken{
-	desc = "This light is probably broken.  It looks pretty new and ok, though, so it's probably just not wired up.";
-	dir = 4;
-	icon_state = "bulb0";
-	name = "inactive light bulb";
-	tag = ""
-	},
-/turf/unsimulated/floor,
-/area/moon/museum)
 "hg" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
 	dir = 6
@@ -2880,24 +2642,6 @@
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
-"hw" = (
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 4;
-	name = "grimy pipe";
-	pixel_y = 0
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 4;
-	name = "grimy pipe";
-	pixel_y = -6
-	},
-/turf/unsimulated/floor,
-/area/moon/museum)
 "hx" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -3019,19 +2763,6 @@
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
-"hJ" = (
-/obj/cable{
-	icon_state = "2-4";
-	d1 = 2;
-	d2 = 4
-	},
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/turf/unsimulated/floor,
-/area/moon/museum)
 "hK" = (
 /obj/machinery/vending/cola/red,
 /turf/unsimulated/floor{
@@ -3079,14 +2810,6 @@
 	},
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = ""
-	},
-/turf/unsimulated/floor,
-/area/moon/museum)
-"hR" = (
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -3247,63 +2970,11 @@
 	dir = 5
 	},
 /area/moon/museum)
-"ih" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 10;
-	icon_state = "intact";
-	name = "grimy pipe";
-	pixel_x = 0
-	},
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/turf/unsimulated/floor,
-/area/moon/museum)
 "ii" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
-	},
-/turf/unsimulated/floor,
-/area/moon/museum)
-"ij" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-4";
-	d1 = 2;
-	d2 = 4
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 1;
-	name = "grimy pipe";
-	pixel_x = 6;
-	pixel_y = 0
-	},
-/turf/unsimulated/floor,
-/area/moon/museum)
-"ik" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/unsimulated/floor,
-/area/moon/museum)
-"il" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -3484,19 +3155,6 @@
 	dir = 4
 	},
 /area/moon/museum)
-"iA" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 5;
-	icon_state = "intact";
-	name = "grimy pipe"
-	},
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/turf/unsimulated/floor,
-/area/moon/museum)
 "iB" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It's a pipe manifold.  A grimy one.";
@@ -3504,29 +3162,6 @@
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
 	icon_state = "manifold";
 	name = "grimy pipe";
-	pixel_y = 0
-	},
-/turf/unsimulated/floor,
-/area/moon/museum)
-"iC" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
-	},
-/obj/machinery/light/small/iomoon{
-	dir = 8;
-	icon_state = "bulb1";
-	name = "maintenance light";
-	tag = ""
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 1;
-	name = "grimy pipe";
-	pixel_x = 6;
 	pixel_y = 0
 	},
 /turf/unsimulated/floor,
@@ -3621,41 +3256,6 @@
 	dir = 4
 	},
 /area/moon/museum)
-"iL" = (
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/turf/unsimulated/floor,
-/area/moon/museum)
-"iM" = (
-/obj/grille/steel,
-/obj/cable,
-/obj/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 1;
-	name = "grimy pipe";
-	pixel_x = 6;
-	pixel_y = 0
-	},
-/turf/unsimulated/floor,
-/area/moon/museum)
-"iN" = (
-/obj/grille/steel,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/unsimulated/floor,
-/area/moon/museum)
 "iO" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -3677,76 +3277,6 @@
 	name = "grimy pipe";
 	pixel_x = -6;
 	pixel_y = 0
-	},
-/turf/unsimulated/floor,
-/area/moon/museum/west)
-"iQ" = (
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/turf/unsimulated/floor,
-/area/moon/museum/west)
-"iR" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/unsimulated/floor,
-/area/moon/museum/west)
-"iS" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/obj/machinery/light/small/iomoon{
-	dir = 1;
-	icon_state = "bulb1";
-	name = "maintenance light";
-	tag = ""
-	},
-/turf/unsimulated/floor,
-/area/moon/museum/west)
-"iT" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 1;
-	name = "grimy pipe";
-	pixel_y = 0
-	},
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/unsimulated/floor,
-/area/moon/museum/west)
-"iU" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/unsimulated/floor,
-/area/moon/museum/west)
-"iV" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = ""
-	},
-/turf/unsimulated/floor,
-/area/moon/museum/west)
-"iW" = (
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
@@ -3806,17 +3336,6 @@
 	name = "grimy pipe";
 	pixel_x = 6;
 	pixel_y = 0
-	},
-/turf/unsimulated/floor,
-/area/moon/museum)
-"jf" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "1-2"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -3880,24 +3399,6 @@
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
-	},
-/turf/unsimulated/floor,
-/area/moon/museum/west)
-"jm" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 4;
-	name = "grimy pipe";
-	pixel_y = -6
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 4;
-	name = "grimy pipe";
-	pixel_y = 0
-	},
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
@@ -3991,21 +3492,6 @@
 	dir = 6
 	},
 /area/moon/museum)
-"jw" = (
-/obj/decal/fakeobjects/pipe{
-	desc = "The air from it smells faintly of mildew.";
-	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
-	name = "grimy vent"
-	},
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/turf/unsimulated/floor,
-/area/moon/museum)
 "jx" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -4079,25 +3565,6 @@
 	name = "grimy pipe";
 	pixel_x = -6;
 	pixel_y = 0
-	},
-/obj/machinery/light/small/iomoon{
-	dir = 1;
-	icon_state = "bulb1";
-	name = "maintenance light";
-	tag = ""
-	},
-/turf/unsimulated/floor,
-/area/moon/museum/west)
-"jG" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 4;
-	name = "grimy pipe";
-	pixel_y = 0
-	},
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
 	},
 /obj/machinery/light/small/iomoon{
 	dir = 1;
@@ -4209,87 +3676,10 @@
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
-"jR" = (
-/obj/grille/steel,
-/obj/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/turf/unsimulated/floor,
-/area/moon/museum)
-"jS" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 1;
-	name = "grimy pipe";
-	pixel_y = 0
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 1;
-	name = "grimy pipe";
-	pixel_x = 6;
-	pixel_y = 0
-	},
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/item/body_bag{
-	desc = "A heavy bag, used for sleeping in.  Hence the name.  Wait, does this mean somebody was sleeping in the maintenance tunnels?  Who??";
-	name = "sleeping bag"
-	},
-/turf/unsimulated/floor,
-/area/moon/museum)
 "jT" = (
 /turf/unsimulated/floor/stairs{
 	dir = 1
 	},
-/area/moon/museum/west)
-"jU" = (
-/obj/critter/moonspy,
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/unsimulated/floor,
-/area/moon/museum/west)
-"jV" = (
-/obj/decal/fakeobjects/pipe,
-/obj/decal/fakeobjects/pipe{
-	dir = 1;
-	name = "grimy pipe";
-	pixel_x = 6;
-	pixel_y = 0
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 1;
-	name = "grimy pipe";
-	pixel_x = -6;
-	pixel_y = 0
-	},
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/unsimulated/floor,
-/area/moon/museum/west)
-"jW" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/unsimulated/floor,
 /area/moon/museum/west)
 "jX" = (
 /turf/unsimulated/floor/stairs{
@@ -4308,25 +3698,6 @@
 /area/moon/museum)
 "jZ" = (
 /obj/grille/steel,
-/turf/unsimulated/floor,
-/area/moon/museum)
-"ka" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 1;
-	name = "grimy pipe";
-	pixel_y = 0
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 1;
-	name = "grimy pipe";
-	pixel_x = 6;
-	pixel_y = 0
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /turf/unsimulated/floor,
 /area/moon/museum)
 "kb" = (
@@ -4569,16 +3940,6 @@
 	tag = ""
 	},
 /turf/unsimulated/floor/black,
-/area/moon/museum/west)
-"ky" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/unsimulated/floor/stairs{
-	dir = 1
-	},
 /area/moon/museum/west)
 "kz" = (
 /obj/decal/fakeobjects/pipe{
@@ -6153,39 +5514,6 @@
 "nT" = (
 /turf/simulated/wall,
 /area/space)
-"nU" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/communications_dish,
-/turf/simulated/floor/plating/airless,
-/area/shuttle/escape/station)
-"nV" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/simulated/wall,
-/area/station/crew_quarters/kitchen)
-"nW" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/computer3/generic/communications,
-/obj/item/disk/data/floppy/devkit,
-/turf/simulated/floor{
-	icon_state = "carpetNW"
-	},
-/area/station/crew_quarters/kitchen)
 "nX" = (
 /obj/item/disk/data/floppy/read_only/network_progs,
 /turf/simulated/floor{
@@ -6295,96 +5623,6 @@
 "ol" = (
 /turf/simulated/wall,
 /area/station/crew_quarters/fitness)
-"om" = (
-/obj/cable{
-	icon_state = "2-4";
-	d1 = 2;
-	d2 = 4
-	},
-/obj/item/card/id/captains_spare,
-/obj/cable{
-	tag = "icon-1-2";
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	icon_state = "carpetW"
-	},
-/area/station/crew_quarters/kitchen)
-"on" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/simulated/floor/carpet,
-/area/station/crew_quarters/kitchen)
-"oo" = (
-/obj/cable{
-	tag = "icon-1-4";
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/simulated/floor/carpet,
-/area/station/crew_quarters/kitchen)
-"op" = (
-/obj/cable{
-	tag = "icon-1-4";
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/simulated/floor{
-	icon_state = "carpetE"
-	},
-/area/station/crew_quarters/kitchen)
-"oq" = (
-/obj/machinery/door/firedoor/border_only{
-	icon_state = "door0";
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/obj/machinery/door/airlock/command{
-	name = "Control Room";
-	req_access_txt = "0"
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
-"or" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
-"os" = (
-/obj/cable{
-	tag = "icon-1-2";
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
 "ot" = (
 /obj/cable{
 	tag = "icon-1-2";
@@ -6472,18 +5710,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
-"oG" = (
-/obj/cable{
-	tag = "icon-1-4";
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
 "oH" = (
 /obj/cable{
 	tag = "icon-1-4";
@@ -6496,18 +5722,6 @@
 /obj/cable{
 	tag = "icon-2-4";
 	icon_state = "2-4"
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
-"oI" = (
-/obj/cable{
-	tag = "icon-4-8";
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-4";
-	d1 = 2;
-	d2 = 4
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
@@ -6577,14 +5791,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
-"oT" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/kitchen)
 "oU" = (
 /obj/cable{
 	tag = "icon-1-8";
@@ -6597,31 +5803,6 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "oV" = (
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
-"oW" = (
-/obj/cable{
-	icon_state = "2-4";
-	d1 = 2;
-	d2 = 4
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
-"oX" = (
-/obj/cable{
-	tag = "icon-1-2";
-	icon_state = "1-2"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "oY" = (
@@ -6710,32 +5891,6 @@
 /obj/item/storage/toolbox/electrical,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
-"pk" = (
-/obj/item/card/id/syndicate,
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
-"pl" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/networked/test_apparatus/gas_sensor{
-	setup_tag = "BOTTOM"
-	},
-/obj/landmark/bubs_job,
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
 "pm" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -6823,27 +5978,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
-"px" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/item/device/net_sniffer,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/kitchen)
-"py" = (
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
-	},
-/obj/cable{
-	tag = "icon-1-2";
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
 "pz" = (
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor,
@@ -6924,18 +6058,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
-"pL" = (
-/obj/cable{
-	tag = "icon-2-4";
-	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
 "pM" = (
 /obj/cable{
 	tag = "icon-4-8";
@@ -6947,30 +6069,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
-"pN" = (
-/obj/cable{
-	tag = "icon-4-8";
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
-"pO" = (
-/obj/cable{
-	tag = "icon-4-8";
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-4";
-	d1 = 2;
-	d2 = 4
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/fitness)
 "pP" = (
 /obj/cable{
 	tag = "icon-1-8";
@@ -7014,21 +6112,6 @@
 	icon_state = "carpetE"
 	},
 /area/station/crew_quarters/kitchen)
-"pX" = (
-/obj/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/storage/tape_drive{
-	bank_id = "Boot";
-	locked = 0;
-	read_only = 1;
-	setup_drive_type = /obj/item/disk/data/tape/boot2
-	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
 "pY" = (
 /obj/cable{
 	tag = "icon-1-2";
@@ -7049,14 +6132,6 @@
 /obj/item/screwdriver,
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
-"qa" = (
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/turf/simulated/floor/circuit,
-/area/station/crew_quarters/kitchen)
 "qb" = (
 /obj/cable,
 /obj/machinery/power/apc{
@@ -7067,14 +6142,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/crew_quarters/kitchen)
-"qc" = (
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/turf/simulated/floor/circuit,
-/area/station/crew_quarters/fitness)
 "qd" = (
 /obj/machinery/power/apc{
 	dir = 2;
@@ -7151,14 +6218,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
-"qn" = (
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/turf/simulated/wall,
-/area/station/crew_quarters/kitchen)
 "qo" = (
 /turf/simulated/wall,
 /area/sim/area1)
@@ -7196,75 +6255,6 @@
 /turf/simulated/floor{
 	icon_state = "carpetSE"
 	},
-/area/station/crew_quarters/kitchen)
-"qv" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/cable,
-/obj/machinery/networked/printer{
-	print_id = "Stan"
-	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
-"qw" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/networked/test_apparatus/heater,
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
-"qx" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/networked/test_apparatus/xraymachine,
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
-"qy" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/networked/test_apparatus/impact_pad,
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
-"qz" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/networked/test_apparatus/xraymachine,
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qA" = (
 /obj/machinery/light{
@@ -7326,27 +6316,6 @@
 "qL" = (
 /turf/simulated/floor/plating,
 /area/space)
-"qM" = (
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
-"qN" = (
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
 "qO" = (
 /obj/item/reagent_containers/food/snacks/breadslice/banana,
 /obj/item/reagent_containers/food/snacks/breadslice/banana,
@@ -7356,47 +6325,6 @@
 /obj/stool,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/sim/area1)
-"qQ" = (
-/obj/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/kitchen)
-"qR" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/kitchen)
-"qS" = (
-/obj/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/kitchen)
-"qT" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/terminal/zeta,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/kitchen)
 "qU" = (
 /turf/simulated/floor/plating,
 /area/diner/dining)
@@ -7670,22 +6598,6 @@
 /obj/machinery/plantpot,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/sim/area1)
-"rB" = (
-/obj/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/power/solar,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/kitchen)
-"rC" = (
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/computer/solar_control,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/kitchen)
 "rD" = (
 /obj/disposalpipe/segment{
 	icon_state = "pipe-c";
@@ -7766,6 +6678,1004 @@
 /obj/table/auto,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/sim/area1)
+"sF" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2";
+	
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4";
+	
+	},
+/turf/unsimulated/floor/orangeblack/side{
+	dir = 1
+	},
+/area/moon/underground/hemera)
+"sI" = (
+/obj/cable{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"sM" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4";
+	
+	},
+/obj/item/device/net_sniffer,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/kitchen)
+"sU" = (
+/obj/cable{
+	icon_state = "1-2";
+	
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	name = "grimy pipe";
+	pixel_y = 0
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	name = "grimy pipe";
+	pixel_y = -6
+	},
+/turf/unsimulated/floor,
+/area/moon/museum)
+"ty" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4";
+	
+	},
+/obj/machinery/networked/test_apparatus/heater,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"tz" = (
+/obj/cable{
+	icon_state = "0-4";
+	
+	},
+/obj/machinery/power/solar,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/kitchen)
+"tL" = (
+/obj/cable{
+	icon_state = "2-4";
+	
+	},
+/obj/item/card/id/captains_spare,
+/obj/cable{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "carpetW"
+	},
+/area/station/crew_quarters/kitchen)
+"uy" = (
+/obj/cable{
+	icon_state = "2-8";
+	
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"uE" = (
+/obj/cable{
+	icon_state = "2-4";
+	
+	},
+/obj/cable{
+	icon_state = "1-2";
+	
+	},
+/turf/unsimulated/floor,
+/area/moon/museum)
+"vn" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	name = "grimy pipe";
+	pixel_y = 0
+	},
+/obj/cable{
+	icon_state = "1-2";
+	
+	},
+/obj/machinery/light/small/iomoon{
+	dir = 1;
+	icon_state = "bulb1";
+	name = "maintenance light";
+	tag = ""
+	},
+/turf/unsimulated/floor,
+/area/moon/museum/west)
+"vB" = (
+/obj/critter/moonspy,
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/unsimulated/floor,
+/area/moon/museum/west)
+"vJ" = (
+/obj/cable{
+	icon_state = "1-2";
+	
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"wY" = (
+/obj/cable{
+	icon_state = "1-2";
+	
+	},
+/turf/simulated/floor/circuit,
+/area/station/crew_quarters/kitchen)
+"xo" = (
+/obj/cable{
+	icon_state = "0-4";
+	
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/secdetector{
+	dir = 4
+	},
+/turf/unsimulated/floor/blue,
+/area/moon/underground/hemera)
+"xy" = (
+/obj/cable{
+	icon_state = "2-4";
+	
+	},
+/obj/decal/fakeobjects/lightbulb_broken{
+	desc = "This light is probably broken.  It looks pretty new and ok, though, so it's probably just not wired up.";
+	dir = 4;
+	icon_state = "bulb0";
+	name = "inactive light bulb";
+	tag = ""
+	},
+/turf/unsimulated/floor,
+/area/moon/museum)
+"xB" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/unsimulated/floor/stairs{
+	dir = 1
+	},
+/area/moon/museum/west)
+"xM" = (
+/obj/cable{
+	icon_state = "2-8";
+	
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "floor"
+	},
+/area/moon/underground/hemera)
+"yx" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/unsimulated/floor/orangeblack/side{
+	dir = 9
+	},
+/area/moon/underground/hemera)
+"yX" = (
+/obj/cable{
+	icon_state = "0-4";
+	
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/kitchen)
+"yZ" = (
+/obj/machinery/door/firedoor/border_only{
+	icon_state = "door0";
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/obj/machinery/door/airlock/command{
+	name = "Control Room";
+	req_access_txt = "0"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"zq" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2";
+	
+	},
+/turf/unsimulated/floor,
+/area/moon/museum)
+"zt" = (
+/obj/grille/steel,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4";
+	
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	name = "grimy pipe";
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/turf/unsimulated/floor,
+/area/moon/museum)
+"AT" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "floor"
+	},
+/area/moon/underground/hemera)
+"Be" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/unsimulated/floor,
+/area/moon/museum)
+"BS" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/simulated/wall,
+/area/station/crew_quarters/kitchen)
+"Cr" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/unsimulated/floor/yellow/side{
+	dir = 8
+	},
+/area/moon/underground/hemera)
+"CP" = (
+/obj/table/auto,
+/obj/mapping_helper/turfs/floor/burner,
+/turf/unsimulated/floor/plating,
+/area/moon/underground)
+"DM" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = ""
+	},
+/turf/unsimulated/floor,
+/area/moon/museum/west)
+"DV" = (
+/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	name = "grimy pipe";
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	name = "grimy pipe";
+	pixel_x = -6;
+	pixel_y = 0
+	},
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/unsimulated/floor,
+/area/moon/museum/west)
+"Ek" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2";
+	
+	},
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/orangeblack{
+	dir = 2
+	},
+/area/moon/underground/hemera)
+"Fa" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	name = "grimy pipe";
+	pixel_y = -6
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	name = "grimy pipe";
+	pixel_y = 0
+	},
+/obj/cable{
+	icon_state = "1-2";
+	
+	},
+/turf/unsimulated/floor,
+/area/moon/museum/west)
+"Fi" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4";
+	
+	},
+/obj/machinery/networked/test_apparatus/impact_pad,
+/obj/cable{
+	icon_state = "0-2";
+	
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"Fo" = (
+/obj/cable{
+	icon_state = "1-2";
+	
+	},
+/turf/unsimulated/floor,
+/area/moon/museum/west)
+"FM" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/unsimulated/floor,
+/area/moon/museum/west)
+"FQ" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 10;
+	icon_state = "intact";
+	name = "grimy pipe";
+	pixel_x = 0
+	},
+/obj/cable{
+	icon_state = "1-2";
+	
+	},
+/turf/unsimulated/floor,
+/area/moon/museum)
+"FX" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/unsimulated/floor/yellow/side{
+	dir = 4
+	},
+/area/moon/underground/hemera)
+"Gp" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/guardbot_dock{
+	desc = "A recharging and command station for PR-6S Guardbuddies. It looks rather worn.";
+	frequency = 1089;
+	name = "dusty docking station"
+	},
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/orangeblack{
+	dir = 2
+	},
+/area/moon/underground/hemera)
+"GM" = (
+/obj/cable{
+	icon_state = "2-4";
+	
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"GP" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/unsimulated/floor,
+/area/moon/museum/west)
+"GS" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	name = "grimy pipe";
+	pixel_y = 0
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	name = "grimy pipe";
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/unsimulated/floor,
+/area/moon/museum)
+"Hn" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/kitchen)
+"HU" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8";
+	
+	},
+/obj/machinery/light/small/iomoon{
+	dir = 8;
+	icon_state = "bulb1";
+	name = "maintenance light";
+	tag = ""
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	name = "grimy pipe";
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/turf/unsimulated/floor,
+/area/moon/museum)
+"HW" = (
+/obj/cable{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4";
+	
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/fitness)
+"If" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	name = "grimy pipe";
+	pixel_y = 0
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	name = "grimy pipe";
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/obj/cable{
+	icon_state = "2-8";
+	
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/body_bag{
+	desc = "A heavy bag, used for sleeping in.  Hence the name.  Wait, does this mean somebody was sleeping in the maintenance tunnels?  Who??";
+	name = "sleeping bag"
+	},
+/turf/unsimulated/floor,
+/area/moon/museum)
+"Ig" = (
+/obj/cable{
+	tag = "icon-1-4";
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/simulated/floor/carpet,
+/area/station/crew_quarters/kitchen)
+"IA" = (
+/obj/cable{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4";
+	
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"IL" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor,
+/area/moon/museum)
+"JE" = (
+/obj/grille/steel,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/unsimulated/floor,
+/area/moon/museum)
+"JT" = (
+/obj/cable{
+	icon_state = "0-2";
+	
+	},
+/obj/cable{
+	icon_state = "0-4";
+	
+	},
+/obj/cable,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "floor"
+	},
+/area/moon/underground/hemera)
+"Kx" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	name = "grimy pipe";
+	pixel_y = 0
+	},
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/unsimulated/floor,
+/area/moon/museum/west)
+"Lg" = (
+/obj/cable{
+	icon_state = "1-2";
+	
+	},
+/turf/unsimulated/floor,
+/area/moon/museum)
+"Li" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/networked/secdetector,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "floor"
+	},
+/area/moon/underground/hemera)
+"Lo" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/obj/cable{
+	tag = "icon-1-4";
+	icon_state = "1-4"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "floor"
+	},
+/area/moon/underground/hemera)
+"LK" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "floor"
+	},
+/area/moon/underground/hemera)
+"Mn" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/unsimulated/floor/grime,
+/area/moon/underground/hemera)
+"Nh" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8";
+	
+	},
+/turf/unsimulated/floor/orangeblack/side{
+	dir = 5
+	},
+/area/moon/underground/hemera)
+"Nt" = (
+/obj/cable{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"Nu" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/networked/test_apparatus/gas_sensor{
+	setup_tag = "BOTTOM"
+	},
+/obj/landmark/bubs_job,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"NG" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4";
+	
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	name = "grimy pipe";
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/turf/unsimulated/floor,
+/area/moon/museum)
+"Ob" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"Ok" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/unsimulated/floor,
+/area/moon/museum/west)
+"OC" = (
+/obj/cable{
+	tag = "icon-1-4";
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"Pf" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/unsimulated/floor/yellow{
+	dir = 2
+	},
+/area/moon/underground/hemera)
+"Pm" = (
+/obj/cable{
+	icon_state = "2-8";
+	
+	},
+/obj/cable{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"QB" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/kitchen)
+"QC" = (
+/obj/cable{
+	icon_state = "0-4";
+	
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/storage/tape_drive{
+	bank_id = "Boot";
+	locked = 0;
+	read_only = 1;
+	setup_drive_type = /obj/item/disk/data/tape/boot2
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"QN" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4";
+	
+	},
+/obj/machinery/networked/test_apparatus/xraymachine,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"QU" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/obj/machinery/light/small/iomoon{
+	dir = 1;
+	icon_state = "bulb1";
+	name = "maintenance light";
+	tag = ""
+	},
+/turf/unsimulated/floor,
+/area/moon/museum/west)
+"Ra" = (
+/obj/cable{
+	icon_state = "0-2";
+	
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/turf/unsimulated/floor/blue,
+/area/moon/underground/hemera)
+"Rc" = (
+/obj/cable{
+	icon_state = "0-2";
+	
+	},
+/obj/machinery/power/data_terminal,
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/orangeblack{
+	dir = 2
+	},
+/area/moon/underground/hemera)
+"Rt" = (
+/obj/grille/steel,
+/obj/cable{
+	icon_state = "0-4";
+	
+	},
+/turf/unsimulated/floor,
+/area/moon/museum)
+"Sl" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4";
+	
+	},
+/obj/cable,
+/obj/machinery/networked/printer{
+	print_id = "Stan"
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"SV" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2";
+	
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/computer3/generic/communications,
+/obj/item/disk/data/floppy/devkit,
+/turf/simulated/floor{
+	icon_state = "carpetNW"
+	},
+/area/station/crew_quarters/kitchen)
+"Tg" = (
+/obj/cable{
+	icon_state = "2-8";
+	
+	},
+/turf/unsimulated/floor,
+/area/moon/museum/west)
+"Tv" = (
+/obj/cable{
+	tag = "icon-1-4";
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/simulated/floor{
+	icon_state = "carpetE"
+	},
+/area/station/crew_quarters/kitchen)
+"Tw" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4";
+	
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/kitchen)
+"Ui" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 5;
+	icon_state = "intact";
+	name = "grimy pipe"
+	},
+/obj/cable{
+	icon_state = "1-2";
+	
+	},
+/turf/unsimulated/floor,
+/area/moon/museum)
+"UP" = (
+/obj/cable{
+	icon_state = "0-4";
+	
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/kitchen)
+"UU" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/simulated/floor/carpet,
+/area/station/crew_quarters/kitchen)
+"Ve" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/networked/test_apparatus/xraymachine,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"Vu" = (
+/obj/cable{
+	icon_state = "1-2";
+	
+	},
+/turf/simulated/wall,
+/area/station/crew_quarters/kitchen)
+"VC" = (
+/obj/item/card/id/syndicate,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2";
+	
+	},
+/obj/cable{
+	icon_state = "0-4";
+	
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"VV" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "The air from it smells faintly of mildew.";
+	dir = 8;
+	icon = 'icons/obj/atmospherics/pipes.dmi';
+	icon_state = "vent";
+	name = "grimy vent"
+	},
+/obj/cable{
+	icon_state = "1-2";
+	
+	},
+/turf/unsimulated/floor,
+/area/moon/museum)
+"Wj" = (
+/obj/cable{
+	icon_state = "1-2";
+	
+	},
+/turf/simulated/floor/circuit,
+/area/station/crew_quarters/fitness)
+"Xg" = (
+/obj/cable{
+	tag = "icon-2-4";
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
+"XH" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/unsimulated/floor,
+/area/moon/museum)
+"XI" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4";
+	
+	},
+/obj/machinery/communications_dish,
+/turf/simulated/floor/plating/airless,
+/area/shuttle/escape/station)
+"YM" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/computer/solar_control,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/kitchen)
+"ZU" = (
+/obj/cable{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8";
+	
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
 
 (1,1,1) = {"
 aa
@@ -8495,8 +8405,8 @@ ab
 ab
 ab
 aq
-aN
-aW
+Ek
+yx
 bf
 bf
 bf
@@ -8557,7 +8467,7 @@ iO
 jh
 gX
 hk
-jU
+vB
 gl
 kr
 gM
@@ -8597,8 +8507,8 @@ ab
 ab
 ab
 aq
-aN
-aX
+Ek
+sF
 bg
 ax
 ax
@@ -8659,7 +8569,7 @@ hk
 ji
 jz
 iO
-iT
+Kx
 gw
 fM
 hl
@@ -8699,7 +8609,7 @@ ab
 ab
 ab
 aq
-aP
+Rc
 aY
 ax
 ax
@@ -8761,7 +8671,7 @@ hk
 hk
 jA
 hk
-iU
+GP
 gl
 ks
 kI
@@ -8802,7 +8712,7 @@ ab
 ab
 aq
 aQ
-aZ
+Nh
 bh
 bl
 bl
@@ -8863,7 +8773,7 @@ iP
 jj
 jB
 jF
-jV
+DV
 gl
 kt
 kI
@@ -8904,12 +8814,12 @@ ac
 am
 af
 ak
-ba
-ba
+Gp
+Gp
 aQ
 ah
 ai
-bD
+LK
 ax
 aJ
 bT
@@ -8961,11 +8871,11 @@ fA
 fM
 fM
 gx
-iQ
-iQ
+Fo
+Fo
 gX
-iQ
-jW
+Fo
+FM
 gl
 ku
 kI
@@ -9011,7 +8921,7 @@ am
 bm
 ai
 bu
-bD
+LK
 ax
 aq
 bT
@@ -9067,7 +8977,7 @@ hk
 hk
 hM
 hk
-iU
+GP
 gl
 kv
 kI
@@ -9113,7 +9023,7 @@ bi
 ax
 ax
 ax
-bD
+LK
 ax
 aq
 bT
@@ -9165,11 +9075,11 @@ fD
 fM
 fM
 gk
-iR
+Ok
 hk
 jB
 hk
-iU
+GP
 gw
 fM
 hl
@@ -9211,11 +9121,11 @@ ac
 am
 ap
 ax
-bj
+xM
 bb
 bb
-bv
-bE
+JT
+AT
 bM
 aq
 ab
@@ -9267,11 +9177,11 @@ hL
 hY
 ir
 gl
-iS
+QU
 iq
 gl
 iO
-iT
+Kx
 gl
 kw
 kJ
@@ -9316,8 +9226,8 @@ am
 am
 am
 ak
-bw
-bD
+Li
+LK
 ax
 aq
 ab
@@ -9369,11 +9279,11 @@ hL
 hY
 is
 gl
-iT
+Kx
 jk
 gl
 hk
-iU
+GP
 gl
 kx
 kJ
@@ -9419,7 +9329,7 @@ as
 as
 al
 ak
-bD
+LK
 ax
 aq
 ab
@@ -9471,11 +9381,11 @@ hL
 hY
 it
 gl
-iU
+GP
 jl
 gl
 hk
-iU
+GP
 fD
 fM
 gk
@@ -9521,7 +9431,7 @@ ar
 ar
 ar
 aq
-bD
+LK
 ax
 aJ
 am
@@ -9573,13 +9483,13 @@ fM
 hZ
 fM
 hy
-iV
+DM
 fM
 fB
 jh
-iW
-iQ
-iR
+Tg
+Fo
+Ok
 gl
 fP
 fX
@@ -9623,7 +9533,7 @@ ar
 ar
 bq
 aq
-bD
+LK
 ax
 aq
 bU
@@ -9675,13 +9585,13 @@ hk
 gX
 iu
 iF
-iW
-jm
+Tg
+Fa
 gl
-jG
-iQ
-iR
-ky
+vn
+Fo
+Ok
+xB
 hM
 kW
 fX
@@ -9725,7 +9635,7 @@ ar
 ar
 ar
 aq
-bF
+FX
 bA
 aq
 bV
@@ -9782,8 +9692,8 @@ jn
 gl
 jH
 hk
-iU
-iU
+GP
+GP
 gl
 fP
 fX
@@ -9827,7 +9737,7 @@ at
 at
 at
 aq
-bG
+Pf
 bB
 bP
 bW
@@ -9884,8 +9794,8 @@ jo
 gw
 fM
 gk
-iU
-iU
+GP
+GP
 gl
 kX
 lh
@@ -9929,7 +9839,7 @@ ar
 ar
 ar
 aq
-bH
+Cr
 bL
 aq
 bW
@@ -10031,7 +9941,7 @@ av
 ar
 ar
 aq
-bD
+LK
 ax
 aq
 bW
@@ -10127,13 +10037,13 @@ aw
 az
 aE
 ai
-aS
+xo
 al
 aw
 az
 aE
 ai
-bD
+LK
 ax
 aq
 bX
@@ -10229,13 +10139,13 @@ ax
 ax
 aF
 aI
-aT
+Ra
 bc
 bb
 bb
 bb
 bb
-bI
+Lo
 bp
 aJ
 am
@@ -10337,7 +10247,7 @@ ax
 ax
 ax
 bp
-bJ
+Mn
 bM
 aq
 ab
@@ -10763,7 +10673,7 @@ dq
 dj
 dm
 cb
-dS
+CP
 dM
 dM
 cC
@@ -11916,11 +11826,11 @@ fS
 fS
 fS
 gt
-ih
-iA
-iL
-hR
-jw
+FQ
+Ui
+zq
+Lg
+VV
 jD
 jQ
 gH
@@ -12222,13 +12132,13 @@ fS
 hu
 fS
 hg
-ij
-iC
-iM
+NG
+HU
+zt
 je
 jx
 fI
-jR
+Rt
 jZ
 fF
 hg
@@ -12324,14 +12234,14 @@ gH
 hv
 gH
 gH
-ik
+Be
 gH
-iN
-jf
+JE
+IL
 jy
 fI
-jS
-ka
+If
+GS
 fI
 kE
 kE
@@ -12422,11 +12332,11 @@ fU
 fI
 gH
 gH
-hf
-hw
-hJ
-hR
-il
+xy
+sU
+uE
+Lg
+XH
 gH
 fF
 fS
@@ -14481,7 +14391,7 @@ aa
 aa
 aa
 nL
-nU
+XI
 nL
 nL
 nL
@@ -14583,7 +14493,7 @@ aa
 aa
 aa
 nJ
-nV
+BS
 nJ
 nJ
 nJ
@@ -14685,8 +14595,8 @@ aa
 aa
 nJ
 nJ
-nW
-om
+SV
+tL
 ow
 oN
 pc
@@ -14788,7 +14698,7 @@ aa
 nJ
 nM
 nX
-on
+UU
 ox
 oO
 pd
@@ -14798,11 +14708,11 @@ pS
 qf
 qp
 nJ
-qQ
+yX
 qV
 rp
 rv
-rB
+tz
 nJ
 aa
 "}
@@ -14890,7 +14800,7 @@ aa
 nJ
 nN
 nY
-on
+UU
 nY
 nY
 pe
@@ -14900,11 +14810,11 @@ pT
 nY
 qq
 qK
-qR
+Hn
 qV
 rq
 qV
-qR
+Hn
 nJ
 aa
 "}
@@ -14992,7 +14902,7 @@ aa
 nJ
 nO
 nZ
-on
+UU
 oy
 oP
 oP
@@ -15002,11 +14912,11 @@ pT
 qg
 qr
 nJ
-qS
+UP
 qV
 rr
 qV
-rC
+YM
 nJ
 aa
 "}
@@ -15094,7 +15004,7 @@ aa
 nJ
 nP
 nY
-on
+UU
 oz
 oP
 pf
@@ -15104,7 +15014,7 @@ pU
 nY
 qs
 nJ
-qT
+QB
 qV
 rs
 rw
@@ -15196,7 +15106,7 @@ aa
 nJ
 nQ
 oa
-on
+UU
 oA
 oP
 oP
@@ -15298,7 +15208,7 @@ aa
 nJ
 nR
 ob
-on
+UU
 oB
 nY
 pg
@@ -15400,7 +15310,7 @@ aa
 nJ
 nS
 oc
-oo
+Ig
 oC
 oQ
 oQ
@@ -15502,7 +15412,7 @@ aa
 nJ
 nJ
 od
-op
+Tv
 oD
 oR
 ph
@@ -15604,7 +15514,7 @@ aa
 aa
 nJ
 nJ
-oq
+yZ
 nJ
 oS
 pi
@@ -15706,13 +15616,13 @@ nH
 nK
 nJ
 nJ
-or
+Ob
 nJ
-oT
+Tw
 pj
-px
+sM
 nJ
-pX
+QC
 nJ
 nJ
 qL
@@ -15808,11 +15718,11 @@ aa
 nH
 nJ
 oe
-os
+ZU
 oE
 oU
-pk
-py
+VC
+Pm
 pJ
 pY
 qk
@@ -15913,7 +15823,7 @@ of
 ot
 oF
 oV
-pl
+Nu
 pz
 pK
 pZ
@@ -16013,11 +15923,11 @@ nH
 nJ
 og
 ot
-oG
-oW
+OC
+GM
 pm
 oV
-pL
+Xg
 ot
 qm
 nJ
@@ -16116,7 +16026,7 @@ nJ
 oh
 ot
 oH
-oX
+sI
 pn
 pA
 oJ
@@ -16319,14 +16229,14 @@ nH
 nT
 oj
 ot
-oG
+OC
 oV
 oV
 oV
 pM
-qa
-qn
-qv
+wY
+Vu
+Sl
 oV
 oV
 nJ
@@ -16421,14 +16331,14 @@ nH
 nT
 ok
 ou
-oI
+IA
 oZ
 oZ
 oZ
-pN
+Nt
 ou
 nJ
-qw
+ty
 oV
 qW
 nJ
@@ -16530,7 +16440,7 @@ pa
 pM
 qb
 nJ
-qx
+QN
 oV
 oV
 rg
@@ -16632,8 +16542,8 @@ ol
 oK
 ol
 ol
-qy
-qM
+Fi
+vJ
 qX
 nJ
 oV
@@ -16731,11 +16641,11 @@ oL
 ov
 pq
 ov
-pO
-qc
+HW
+Wj
 ol
-qz
-qN
+Ve
+uy
 qY
 nJ
 oV

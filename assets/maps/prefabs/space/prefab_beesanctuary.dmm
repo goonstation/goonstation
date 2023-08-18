@@ -10,13 +10,6 @@
 /obj/decal/cleanable/dirt/dirt4,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
-"aJ" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 8
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/unsimulated/floor,
-/area/prefab/bee_sanctuary)
 "aT" = (
 /obj/lattice{
 	dir = 10;
@@ -68,23 +61,27 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/prefab/bee_sanctuary)
-"cM" = (
-/obj/machinery/light/small/purpleish{
-	dir = 1;
-	pixel_y = 10
-	},
-/obj/stool/chair{
-	dir = 4;
-	tag = "icon-chair (EAST)"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/unsimulated/floor,
-/area/prefab/bee_sanctuary)
 "dt" = (
 /obj/machinery/door_control{
 	id = "hangar_beesanctuary"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab/bee_sanctuary)
+"dB" = (
+/obj/grille/catwalk,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/noGenerate)
+"dI" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
 "dV" = (
 /obj/decal/fakeobjects/pipe{
@@ -104,6 +101,14 @@
 	name = "security camera"
 	},
 /turf/unsimulated/floor/purpleblack,
+/area/prefab/bee_sanctuary)
+"eu" = (
+/obj/stool/bee_bed,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/black/grime,
 /area/prefab/bee_sanctuary)
 "ev" = (
 /obj/table/reinforced/chemistry/auto,
@@ -130,6 +135,12 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
+"fa" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/prefab/bee_sanctuary)
 "fb" = (
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/green/side{
@@ -203,6 +214,12 @@
 	plane = -110
 	},
 /area/prefab/bee_sanctuary)
+"hf" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor,
+/area/prefab/bee_sanctuary)
 "hg" = (
 /obj/machinery/light{
 	layer = 3;
@@ -220,6 +237,12 @@
 /turf/unsimulated/floor/purpleblack{
 	dir = 1
 	},
+/area/prefab/bee_sanctuary)
+"iH" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/caution/west,
 /area/prefab/bee_sanctuary)
 "iP" = (
 /obj/storage/secure/crate/bee/loaded,
@@ -247,14 +270,6 @@
 	plane = -110
 	},
 /area/prefab/bee_sanctuary)
-"jn" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/shuttlebay,
-/area/prefab/bee_sanctuary)
 "jp" = (
 /obj/stool/chair/office/blue{
 	dir = 1;
@@ -268,15 +283,16 @@
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
-"jw" = (
-/obj/machinery/door/airlock/pyro/external,
+"jB" = (
+/obj/grille/catwalk,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	icon_state = "4-8"
 	},
-/turf/unsimulated/floor/shuttlebay,
-/area/prefab/bee_sanctuary)
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/noGenerate)
 "jC" = (
 /obj/decal/floatingtiles{
 	dir = 1
@@ -316,6 +332,16 @@
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
+"lD" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 8
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 8
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
+/area/prefab/bee_sanctuary)
 "lW" = (
 /obj/stool/chair/office/blue,
 /turf/unsimulated/floor/green/side,
@@ -329,17 +355,21 @@
 	},
 /turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
-"md" = (
-/obj/machinery/light{
-	layer = 3;
-	pixel_y = -10
+"mx" = (
+/obj/grille/catwalk,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/noGenerate)
+"ne" = (
+/obj/machinery/door/airlock/glass{
+	name = "Office door"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-2"
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
 "nk" = (
 /obj/decal/fakeobjects/pipe{
@@ -383,13 +413,20 @@
 /obj/item/raw_material/shard/plasmacrystal,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
-"oo" = (
+"oi" = (
+/obj/grille/catwalk,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-2"
 	},
-/turf/unsimulated/floor/caution/west,
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/noGenerate)
+"ol" = (
+/obj/machinery/light/small/warm/very{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "ow" = (
 /obj/item/clothing/head/bio_hood/beekeeper{
@@ -414,14 +451,6 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/variableTurf/clear,
 /area/noGenerate)
-"oW" = (
-/obj/stool/bee_bed,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 10
-	},
-/turf/unsimulated/floor/black/grime,
-/area/prefab/bee_sanctuary)
 "oX" = (
 /obj/computerframe{
 	anchored = 1;
@@ -438,6 +467,13 @@
 /turf/unsimulated/floor/green/side{
 	dir = 1
 	},
+/area/prefab/bee_sanctuary)
+"oY" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 8
+	},
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "px" = (
 /obj/machinery/door/airlock/pyro/classic,
@@ -461,18 +497,6 @@
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/prefab/bee_sanctuary)
-"pT" = (
-/obj/grille/catwalk,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/airless/plating/catwalk/auto,
-/area/noGenerate)
 "qk" = (
 /turf/unsimulated/floor/airless/solar,
 /area/noGenerate)
@@ -484,24 +508,6 @@
 /turf/unsimulated/floor/green/side{
 	dir = 5
 	},
-/area/prefab/bee_sanctuary)
-"qC" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/prefab/bee_sanctuary)
-"qK" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 8
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 8
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "rb" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
@@ -545,14 +551,6 @@
 	dir = 10
 	},
 /area/prefab/bee_sanctuary)
-"sM" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/white,
-/area/prefab/bee_sanctuary)
 "sV" = (
 /obj/stool/chair/office/blue{
 	dir = 8
@@ -561,6 +559,12 @@
 /area/prefab/bee_sanctuary)
 "th" = (
 /turf/unsimulated/floor/purpleblack,
+/area/prefab/bee_sanctuary)
+"tk" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/prefab/bee_sanctuary)
 "tn" = (
 /obj/machinery/door/airlock/pyro/classic{
@@ -594,14 +598,6 @@
 /obj/table/reinforced/chemistry/auto,
 /turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
-"uV" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/shuttlebay,
-/area/prefab/bee_sanctuary)
 "vm" = (
 /obj/decal/fakeobjects/pipe{
 	density = 1;
@@ -615,20 +611,6 @@
 "vS" = (
 /obj/storage/secure/crate/bee/loaded,
 /turf/unsimulated/floor/white,
-/area/prefab/bee_sanctuary)
-"vY" = (
-/obj/machinery/light/small/purpleish{
-	dir = 8;
-	pixel_x = -10
-	},
-/obj/decal/fakeobjects{
-	dir = 4;
-	icon = 'icons/obj/monitors.dmi';
-	icon_state = "cameraemp";
-	name = "security camera"
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "wg" = (
 /obj/decal/cleanable/dirt/dirt5,
@@ -710,15 +692,6 @@
 	dir = 4
 	},
 /area/prefab/bee_sanctuary)
-"yF" = (
-/obj/grille/catwalk,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/airless/plating/catwalk/auto,
-/area/noGenerate)
 "yT" = (
 /obj/decal/floatingtiles{
 	dir = 4
@@ -778,24 +751,16 @@
 /obj/item/clothing/suit/bio_suit/beekeeper,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
-"Ag" = (
-/obj/grille/catwalk,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+"Aj" = (
+/obj/machinery/light/small/purpleish{
+	dir = 1;
+	pixel_y = 10
 	},
-/obj/cable{
-	icon_state = "1-8"
+/obj/stool/chair{
+	dir = 4;
+	tag = "icon-chair (EAST)"
 	},
-/turf/simulated/floor/airless/plating/catwalk/auto,
-/area/noGenerate)
-"Au" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/mapping_helper/turfs/floor/damager,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "AF" = (
@@ -842,15 +807,6 @@
 /obj/river,
 /turf/unsimulated/grass,
 /area/prefab/bee_sanctuary)
-"BS" = (
-/obj/grille/catwalk,
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/airless/plating/catwalk/auto,
-/area/noGenerate)
 "BV" = (
 /obj/decal/cleanable/dirt/dirt2,
 /turf/unsimulated/floor/green/side{
@@ -868,20 +824,6 @@
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
-"CL" = (
-/obj/grille/catwalk,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/airless/plating/catwalk/auto,
-/area/noGenerate)
 "CO" = (
 /obj/machinery/light{
 	dir = 4;
@@ -983,21 +925,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
-"EE" = (
-/obj/grille/catwalk,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/airless/plating/catwalk/auto,
-/area/noGenerate)
 "EP" = (
 /obj/decal/cleanable/dirt/dirt4,
 /obj/decal/fakeobjects/pipe{
@@ -1028,14 +955,6 @@
 	pixel_y = -10
 	},
 /turf/unsimulated/floor/purpleblack,
-/area/prefab/bee_sanctuary)
-"FW" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/unsimulated/floor/shuttlebay,
 /area/prefab/bee_sanctuary)
 "Ga" = (
 /obj/decal/poster/wallsign/biohazard,
@@ -1208,10 +1127,6 @@
 	},
 /turf/unsimulated/grass,
 /area/prefab/bee_sanctuary)
-"JQ" = (
-/obj/mapping_helper/turfs/floor/damager,
-/turf/unsimulated/floor,
-/area/prefab/bee_sanctuary)
 "JS" = (
 /obj/critter/domestic_bee/sea,
 /turf/unsimulated/grass,
@@ -1258,6 +1173,12 @@
 /obj/machinery/vehicle/miniputt/armed,
 /turf/unsimulated/floor/shuttlebay,
 /area/prefab/bee_sanctuary)
+"KZ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/prefab/bee_sanctuary)
 "Ld" = (
 /turf/unsimulated/grass,
 /area/prefab/bee_sanctuary)
@@ -1287,20 +1208,22 @@
 "LG" = (
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
-"LK" = (
-/obj/machinery/light/small/warm/very{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/mapping_helper/turfs/floor/damager,
-/turf/unsimulated/floor,
-/area/prefab/bee_sanctuary)
 "LM" = (
 /obj/cable{
 	icon_state = "1-8"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/prefab/bee_sanctuary)
+"LW" = (
+/obj/grille/catwalk,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/noGenerate)
 "LY" = (
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor/purpleblack{
@@ -1331,17 +1254,6 @@
 /obj/decal/fakeobjects/robot{
 	anchored = 1;
 	desc = "How long has this been down here?"
-	},
-/turf/unsimulated/floor/white,
-/area/prefab/bee_sanctuary)
-"MP" = (
-/obj/machinery/door/airlock/glass{
-	name = "Office door"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
@@ -1442,13 +1354,15 @@
 	dir = 5
 	},
 /area/prefab/bee_sanctuary)
-"Qd" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+"PW" = (
+/obj/machinery/light{
+	layer = 3;
+	pixel_y = -10
 	},
-/turf/unsimulated/wall/auto/reinforced/supernorn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "Qk" = (
 /obj/decal/floatingtiles{
@@ -1588,6 +1502,19 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/prefab/bee_sanctuary)
+"Tq" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/prefab/bee_sanctuary)
+"Tt" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/prefab/bee_sanctuary)
 "TA" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	autoclose = 1;
@@ -1652,18 +1579,6 @@
 	dir = 4
 	},
 /area/prefab/bee_sanctuary)
-"Vk" = (
-/obj/grille/catwalk,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/airless/plating/catwalk/auto,
-/area/noGenerate)
 "Vn" = (
 /obj/lattice,
 /turf/variableTurf/clear,
@@ -1702,6 +1617,25 @@
 /obj/river,
 /turf/unsimulated/grass,
 /area/prefab/bee_sanctuary)
+"Wp" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab/bee_sanctuary)
+"Wr" = (
+/obj/grille/catwalk,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/noGenerate)
 "Wu" = (
 /turf/unsimulated/floor/stairs,
 /area/prefab/bee_sanctuary)
@@ -1734,11 +1668,39 @@
 	},
 /turf/unsimulated/grass,
 /area/prefab/bee_sanctuary)
+"XG" = (
+/obj/grille/catwalk,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/noGenerate)
+"XM" = (
+/obj/mapping_helper/turfs/floor/damager,
+/turf/unsimulated/floor,
+/area/prefab/bee_sanctuary)
 "XO" = (
 /obj/critter/domestic_bee/zombee,
 /obj/window/crystal/east,
 /obj/window/crystal/west,
 /obj/window/crystal/north,
+/turf/unsimulated/floor,
+/area/prefab/bee_sanctuary)
+"XP" = (
+/obj/machinery/light/small/purpleish{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/decal/fakeobjects{
+	dir = 4;
+	icon = 'icons/obj/monitors.dmi';
+	icon_state = "cameraemp";
+	name = "security camera"
+	},
+/obj/mapping_helper/turfs/floor/damager,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "XU" = (
@@ -2009,10 +1971,10 @@ Yk
 Yk
 Zz
 UG
-pT
+jB
 eF
 eF
-Vk
+dB
 "}
 (9,1,1) = {"
 ZM
@@ -2035,10 +1997,10 @@ Yk
 hg
 Ho
 Zz
-pT
+jB
 eF
 qk
-Vk
+dB
 "}
 (10,1,1) = {"
 ZM
@@ -2058,12 +2020,12 @@ Zz
 Tl
 Yk
 Yk
-FW
-jn
-jw
-EE
-yF
-yF
+fa
+Tq
+Tt
+Wr
+oi
+oi
 yr
 "}
 (11,1,1) = {"
@@ -2084,13 +2046,13 @@ Zz
 DJ
 Yk
 Yk
-uV
+KZ
 pH
 Zz
-CL
+LW
 eF
 eF
-Ag
+XG
 "}
 (12,1,1) = {"
 ZM
@@ -2100,7 +2062,7 @@ Zz
 Zz
 Zz
 HE
-sM
+dI
 Ys
 Mx
 Pe
@@ -2110,13 +2072,13 @@ Zz
 dt
 nW
 nW
-oo
+iH
 Zz
 UG
-CL
+LW
 eF
 eF
-Ag
+XG
 "}
 (13,1,1) = {"
 ZM
@@ -2126,7 +2088,7 @@ Zz
 AK
 Ys
 Vv
-sM
+dI
 Ys
 ME
 Pe
@@ -2136,10 +2098,10 @@ BC
 Wu
 LG
 LG
-md
+PW
 Zz
 UG
-BS
+mx
 eF
 qk
 yW
@@ -2152,7 +2114,7 @@ gW
 Ys
 Ys
 Vv
-sM
+dI
 lY
 CO
 Pe
@@ -2162,7 +2124,7 @@ BC
 Wu
 gO
 LG
-Au
+hf
 Zz
 UG
 fQ
@@ -2178,16 +2140,16 @@ Zz
 AV
 AV
 Zz
-Qd
-qC
-qC
-qC
-MP
-MP
-qC
-qC
-qC
-qC
+tk
+Wp
+Wp
+Wp
+ne
+ne
+Wp
+Wp
+Wp
+Wp
 LM
 Zz
 UG
@@ -2328,7 +2290,7 @@ Os
 "}
 (21,1,1) = {"
 Zz
-oW
+eu
 gm
 rb
 Dr
@@ -2406,7 +2368,7 @@ Os
 "}
 (24,1,1) = {"
 Zz
-oW
+eu
 gm
 rb
 Dr
@@ -2484,7 +2446,7 @@ Os
 "}
 (27,1,1) = {"
 Zz
-oW
+eu
 gm
 rb
 Dr
@@ -2592,11 +2554,11 @@ Zz
 gY
 sH
 Zz
-cM
+Aj
 NC
 RR
 YU
-vY
+XP
 SS
 LC
 Kf
@@ -2625,7 +2587,7 @@ yT
 ER
 jC
 LG
-qK
+lD
 ZY
 xD
 ql
@@ -2697,7 +2659,7 @@ lf
 zv
 DX
 Jv
-JQ
+XM
 RR
 Gm
 jj
@@ -2755,7 +2717,7 @@ VB
 aI
 LG
 LG
-aJ
+oY
 ZY
 Zz
 UG
@@ -2775,10 +2737,10 @@ UG
 UG
 Zz
 LG
-JQ
+XM
 RR
 VB
-JQ
+XM
 LG
 LG
 jq
@@ -2833,7 +2795,7 @@ PP
 yD
 Vd
 Vd
-LK
+ol
 zy
 Zz
 Os
