@@ -493,6 +493,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 // Stolen from the vending module
 /// For a flying chat and message addition upon controller activation, not called outside of a child as things stand
 /obj/machinery/door_control/proc/speak(var/message)
+	ON_COOLDOWN(src, "scanner_speak", 2)
 	if ((src.status & NOPOWER) || !message)
 		return
 	else
@@ -500,9 +501,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		src.audible_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2, assoc_maptext = welcome_text)
 		if (welcome_text && src.chat_text && length(src.chat_text.lines))
 			welcome_text.measure(src)
+			ON_COOLDOWN(src, "scanner_speak", 2)
 			for (var/image/chat_maptext/I in src.chat_text.lines)
 				if (I != welcome_text)
 					I.bump_up(welcome_text.measured_height)
+					ON_COOLDOWN(src, "scanner_speak", 2)
+		ON_COOLDOWN(src, "scanner_speak", 2)
 	return
 /// for sleepers entering listening post
 /obj/machinery/door_control/antagscanner
