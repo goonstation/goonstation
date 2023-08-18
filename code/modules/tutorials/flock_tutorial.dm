@@ -469,7 +469,7 @@
 					src.set_dir(dir)
 					gun.ammo.amount_left = 2
 					var/turf/target = get_step(src, dir)
-					gun.shoot(target, src.loc, src)
+					gun.shoot(target, src.loc, src, called_target = target)
 					sleep(1.5 SECONDS)
 
 /mob/living/carbon/human/bad_immortal

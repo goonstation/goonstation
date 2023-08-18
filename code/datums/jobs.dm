@@ -1303,35 +1303,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Mailman")
 		return
 
-/datum/job/special/tourist
-	name = "Tourist"
-	limit = 0
-	linkcolor = "#FF99FF"
-	slot_back = list()
-	slot_belt = list(/obj/item/storage/fanny)
-	slot_jump = list(/obj/item/clothing/under/misc/tourist)
-	slot_poc1 = list(/obj/item/camera_film)
-	slot_poc2 = list(/obj/item/currency/spacecash/tourist) // Exact amount is randomized.
-	slot_foot = list(/obj/item/clothing/shoes/tourist)
-	slot_lhan = list(/obj/item/camera)
-	slot_rhan = list(/obj/item/storage/photo_album)
-	change_name_on_spawn = 1
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		if(prob(33))
-			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob,/datum/mutantrace/cow)
-			M.set_mutantrace(morph)
-		var/obj/item/clothing/lanyard/L = new /obj/item/clothing/lanyard(M.loc)
-		M.equip_if_possible(L, SLOT_WEAR_ID, FALSE)
-		M.spawnId(src)
-		var/obj/item/card/id = locate() in M
-		if (!id)
-			return
-		L.storage.add_contents(id, M, FALSE)
-
 /datum/job/special/space_cowboy
 	name = "Space Cowboy"
 	linkcolor = "#FF99FF"
@@ -2689,44 +2660,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		if (!M)
 			return
 		M.cubeize(INFINITY)
-
-/datum/job/special/AI
-	name = "AI"
-	linkcolor = "#999999"
-	limit = 0
-	wages = 0
-	allow_traitors = 0
-	cant_spawn_as_rev = 1
-	slot_ears = list()
-	slot_card = null
-	slot_back = list()
-	slot_belt = list()
-	items_in_backpack = list()
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		return M.AIize()
-
-/datum/job/special/cyborg
-	name = "Cyborg"
-	linkcolor = "#999999"
-	limit = 0
-	wages = 0
-	allow_traitors = 0
-	cant_spawn_as_rev = 1
-	slot_ears = list()
-	slot_card = null
-	slot_back = list()
-	slot_belt = list()
-	items_in_backpack = list()
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		return M.Robotize_MK2()
 
 /datum/job/special/ghostdrone
 	name = "Drone"
