@@ -1259,9 +1259,11 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Wrestler"
 	spawn_id = 0
 	change_name_on_spawn = 1
+	slot_card = null
 	slot_ears = list()
 	slot_back = list()
 	slot_belt = list()
+	slot_jump = list(/obj/item/clothing/under/shorts)
 
 /datum/job/special/boxer
 	name = "Boxer"
