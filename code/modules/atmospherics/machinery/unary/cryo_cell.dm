@@ -23,13 +23,13 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	..()
-	light = new /datum/light/point
-	light.attach(src)
-	light.set_brightness(0.6)
-	light.set_height(1.5)
-	light.set_color(0, 0.8, 0.5)
+	src.light = new /datum/light/point
+	src.light.attach(src)
+	src.light.set_brightness(0.6)
+	src.light.set_height(1.5)
+	src.light.set_color(0, 0.8, 0.5)
 	src.build_icon()
-	initialize_directions = src.dir
+	src.initialize_directions = src.dir
 
 /obj/machinery/atmospherics/unary/cryo_cell/disposing()
 	if (src.occupant)
@@ -59,11 +59,11 @@
 					playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 
 	if(src.air_contents)
-		ARCHIVED(temperature) = src.air_contents.temperature
+		src.ARCHIVED(temperature) = src.air_contents.temperature
 		src.heat_gas_contents()
 		src.expel_gas()
 
-	if(abs(ARCHIVED(temperature)-air_contents.temperature) > 1 KELVIN)
+	if(abs(src.ARCHIVED(temperature)-src.air_contents.temperature) > 1 KELVIN)
 		src.network.update = TRUE
 
 	tgui_process.update_uis(src)
@@ -215,7 +215,7 @@
 	)
 
 	var/list/contents = .["contents"]
-	if(istype(R) && R.reagent_list.len>0)
+	if(istype(R) && length(R.reagent_list))
 		.["finalColor"] = R.get_average_rgb()
 		// Reagent data
 		for(var/reagent_id in R.reagent_list)
@@ -333,11 +333,11 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/build_icon()
 	if(src.on)
-		light.enable()
-		icon_state = "celltop"
+		src.light.enable()
+		src.icon_state = "celltop"
 	else
-		light.disable()
-		icon_state = "celltop-p"
+		src.light.disable()
+		src.icon_state = "celltop-p"
 	if(src.node)
 		src.UpdateOverlays(src.SafeGetOverlayImage("bottom", 'icons/obj/Cryogenic2.dmi', "cryo_bottom_[src.on]", 1, pixel_y=-32), "bottom")
 	else
@@ -351,23 +351,23 @@
 /obj/machinery/atmospherics/unary/cryo_cell/proc/process_occupant()
 	if(TOTAL_MOLES(src.air_contents) < 10 MOLES)
 		return
-	if(ishuman(occupant))
-		if(isdead(occupant))
+	if(ishuman(src.occupant))
+		if(isdead(src.occupant))
 			return
-		occupant.bodytemperature += 50*(src.air_contents.temperature - occupant.bodytemperature)*src.current_heat_capacity/(src.current_heat_capacity + HEAT_CAPACITY(src.air_contents))
-		occupant.bodytemperature = max(occupant.bodytemperature, src.air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
-		occupant.changeStatus("burning", -10 SECONDS)
-		var/mob/living/carbon/human/H = 0
+		src.occupant.bodytemperature += 50*(src.air_contents.temperature - src.occupant.bodytemperature)*src.current_heat_capacity/(src.current_heat_capacity + HEAT_CAPACITY(src.air_contents))
+		src.occupant.bodytemperature = max(src.occupant.bodytemperature, src.air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
+		src.occupant.changeStatus("burning", -10 SECONDS)
+		var/mob/living/carbon/human/H = null
 		if (ishuman(occupant))
 			H = occupant
 		if (H && isalive(H)) H.lastgasp()
 		//setunconcious(occupant)
-		if(occupant.bodytemperature < T0C)
+		if(src.occupant.bodytemperature < T0C)
 			if(src.air_contents.oxygen > 2 MOLES)
-				if(occupant.get_oxygen_deprivation())
-					occupant.take_oxygen_deprivation(-10)
+				if(src.occupant.get_oxygen_deprivation())
+					src.occupant.take_oxygen_deprivation(-10)
 			else
-				occupant.take_oxygen_deprivation(-2)
+				src.occupant.take_oxygen_deprivation(-2)
 	else
 		src.go_out()
 		return
@@ -389,9 +389,8 @@
 /obj/machinery/atmospherics/unary/cryo_cell/proc/expel_gas()
 	if(TOTAL_MOLES(src.air_contents) < 1)
 		return
-	var/datum/gas_mixture/expel_gas
 	var/remove_amount = TOTAL_MOLES(src.air_contents)/100
-	expel_gas = air_contents.remove(remove_amount)
+	var/datum/gas_mixture/expel_gas = air_contents.remove(remove_amount)
 	expel_gas.temperature = T20C // Lets expel hot gas and see if that helps people not die as they are removed
 	loc.assume_air(expel_gas)
 
