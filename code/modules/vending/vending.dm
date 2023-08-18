@@ -3360,3 +3360,28 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 				"Ask your doctor if [src.pick_product_name()] is right for you!",
 				"Prescribe [src.pick_product_name()] today!"
 			)
+
+/obj/machinery/vending/chaplain
+	name = "chaplain equipment"
+	desc = "An equipment vendor for those with religious inclination."
+	icon_state = "chaplain"
+	icon_panel = "chaplain-panel"
+	icon_off = "chaplain-off"
+	icon_broken = "chaplain-broken"
+	icon_fallen = "chaplain-fallen"
+	acceptcard = FALSE
+	pay = FALSE
+	slogan_chance = 0
+	req_access = list(access_chapel_office)
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/bible			, 3)
+		product_list += new/datum/data/vending_product(/obj/item/bible/blank	, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/eye		, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/eye/dark	, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/green	, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/blue		, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/bluewhite, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/burned	, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/clown	, 1)

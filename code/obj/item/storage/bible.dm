@@ -4,9 +4,13 @@
 	name = "Holy Texts"
 	desc = "A holy scripture of some kind."
 	icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
-	icon_state ="bible"
+	icon_state = "bible"
+	/// the name of the kind of book, so that we can close it later.
+	var/unopened_icon_state = "bible"
 	inhand_image_icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
 	item_state = "book"
+	/// the name of the kind of inhand sprite used, so that we can close it again.
+	var/unopened_item_state = "book"
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -16,16 +20,17 @@
 	suicide_distance = 0
 	var/mob/affecting = null
 	var/heal_amt = 10
+	/// will it force people to fart when they walk over it?
+	var/evil = FALSE
+	/// does it do the special death animation?
+	var/hungry = FALSE
 	/// does this bible have faith in it?
 	var/loaded = FALSE
 	/// is this bible opened within the hand?
 	var/opened = FALSE
-	/// the name of the kind of book, so that we can close it.
-	var/unopened_icon_state = "bible"
-	/// the name of the kind of inhand sprite used, so that we can close it again.
-	var/unopened_item_state = "book"
 
 	New()
+		// so that i don't have to have duplicate lines in the subtypes
 		src.unopened_icon_state = src.icon_state
 		src.unopened_item_state = src.item_state
 		..()
@@ -169,11 +174,31 @@
 			return 0
 		if (!farting_allowed)
 			return 0
-
-		user.u_equip(src)
-		src.layer = initial(src.layer)
-		src.set_loc(user.loc)
-		return farty_heresy(user)
+		if (src.hungry)
+			if (farty_party)
+				user.visible_message("<span class='alert'>[user] farts on the [src].<br><b>The gods seem to approve.</b></span>")
+				return FALSE
+			user.visible_message("<span class='alert'>[user] farts on the [src].<br><b>A mysterious force smites [user]!</b></span>")
+			user.u_equip(src)
+			src.layer = initial(src.layer)
+			src.set_loc(user.loc)
+			var/list/gibz = user.gib(0, 1)
+			SPAWN(3 SECONDS)//this code is awful lol.
+				for(var/i = 1, i <= 500, i++)
+					for( var/obj/gib in gibz)
+						if(!gib.loc) continue
+						step_to(gib, src)
+						if( GET_DIST(gib, src) == 0 )
+							animate(src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 3)
+							qdel(gib)
+							if(prob( 50 )) playsound( get_turf( src ), 'sound/voice/burp.ogg', 10, 1)
+					sleep(0.3 SECONDS)
+			return TRUE
+		else
+			user.u_equip(src)
+			src.layer = initial(src.layer)
+			src.set_loc(user.loc)
+			return farty_heresy(user)
 
 	///Called when someone farts on a bible. Return TRUE if we killed them, FALSE otherwise.
 	proc/farty_heresy(mob/user)
@@ -194,6 +219,22 @@
 			heavenly_spawn(user)
 			user?.gib()
 			return TRUE
+		else if (src.hungry)
+			user.visible_message("<span class='alert'>[user] farts on the [src].<br><b>A mysterious force smites [user]!</b></span>")
+			user.u_equip(src)
+			src.layer = initial(src.layer)
+			src.set_loc(user.loc)
+			var/list/gibz = user.gib(0, 1)
+			SPAWN(3 SECONDS)//this code is awful lol.
+				for( var/i = 1, i <= 50, i++ )
+					for( var/obj/gib in gibz )
+						step_to( gib, src )
+						if( GET_DIST( gib, src ) == 0 )
+							animate( src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 3 )
+							qdel( gib )
+							if(prob( 50 )) playsound( get_turf( src ), 'sound/voice/burp.ogg', 10, 1 )
+					sleep(0.3 SECONDS)
+			return TRUE
 		else
 			smite(user)
 			return TRUE
@@ -213,16 +254,18 @@
 			src.item_state += "_Open"
 			src.opened = TRUE
 
-/// evil trapped bible which forces people to fart
-/obj/item/bible/evil
-	name = "frayed Holy Texts"
-	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
-
 	Crossed(atom/movable/AM as mob)
 		..()
+		if (!src.evil)
+			return
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			H.emote("fart")
+
+/// evil trapped bible which forces people to fart
+/obj/item/bible/evil
+	name = "frayed Holy Texts"
+	evil = TRUE
 
 /// syndicate item for killing people when they fart
 /obj/item/bible/mini
@@ -249,52 +292,7 @@
 /obj/item/bible/hungry
 	name = "hungry Holy Texts"
 	desc = "Huh."
-
-	custom_suicide = TRUE
-	suicide_distance = 0
-	suicide(var/mob/user as mob)
-		if (!src.user_can_suicide(user))
-			return FALSE
-		if (!farting_allowed)
-			return FALSE
-		if (farty_party)
-			user.visible_message("<span class='alert'>[user] farts on the [src].<br><b>The gods seem to approve.</b></span>")
-			return FALSE
-		user.visible_message("<span class='alert'>[user] farts on the [src].<br><b>A mysterious force smites [user]!</b></span>")
-		user.u_equip(src)
-		src.layer = initial(src.layer)
-		src.set_loc(user.loc)
-		var/list/gibz = user.gib(0, 1)
-		SPAWN(3 SECONDS)//this code is awful lol.
-			for(var/i = 1, i <= 500, i++)
-				for( var/obj/gib in gibz)
-					if(!gib.loc) continue
-					step_to(gib, src)
-					if( GET_DIST(gib, src) == 0 )
-						animate(src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 3)
-						qdel(gib)
-						if(prob( 50 )) playsound( get_turf( src ), 'sound/voice/burp.ogg', 10, 1)
-				sleep(0.3 SECONDS)
-		return TRUE
-	farty_heresy(var/mob/user)
-		if (farty_party)
-			user.visible_message("<span class='alert'>[user] farts on the [src].<br><b>The gods seem to approve.</b></span>")
-			return FALSE
-		user.visible_message("<span class='alert'>[user] farts on the [src].<br><b>A mysterious force smites [user]!</b></span>")
-		user.u_equip(src)
-		src.layer = initial(src.layer)
-		src.set_loc(user.loc)
-		var/list/gibz = user.gib(0, 1)
-		SPAWN(3 SECONDS)//this code is awful lol.
-			for( var/i = 1, i <= 50, i++ )
-				for( var/obj/gib in gibz )
-					step_to( gib, src )
-					if( GET_DIST( gib, src ) == 0 )
-						animate( src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 3 )
-						qdel( gib )
-						if(prob( 50 )) playsound( get_turf( src ), 'sound/voice/burp.ogg', 10, 1 )
-				sleep(0.3 SECONDS)
-		return TRUE
+	hungry = TRUE
 
 /obj/item/bible/loaded
 	New()
