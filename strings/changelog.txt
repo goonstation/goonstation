@@ -1,5 +1,9 @@
 
 (t)fri aug 18 23
+(u)FlameArrow57
+(p)15381
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Improved item equip consistency when equipping an item from your inventory with fast mouse flicks.
 (u)Paaiii
 (p)15417
 (e)🤖|A-Silicons
