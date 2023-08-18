@@ -1,5 +1,9 @@
 
 (t)fri aug 18 23
+(u)Smilg
+(p)15204
+(e)|
+(+)ABCU marker can now rectangle select, and has longer range.
 (u)Lord_Earthfire
 (p)14773
 (e)🆕⚗|C-Feature, A-Chemistry
