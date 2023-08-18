@@ -29,6 +29,9 @@
 	if(!(observable in all_observables))
 		return FALSE
 
+	if(isnull(observable.loc))
+		return FALSE
+
 	if(ismob(observable))
 		var/mob/M = observable
 		// admins aren't observable unless they're in player mode
@@ -36,9 +39,6 @@
 			return FALSE
 		// remove any secret mobs that someone is controlling
 		if (M.unobservable)
-			return FALSE
-
-		if(isnull(M.loc))
 			return FALSE
 
 		var/is_npc = M.client == null && M.ghost == null
