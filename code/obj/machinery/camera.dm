@@ -93,8 +93,9 @@
 						src.pixel_x = -pixel_offset
 					if (NORTH)
 						src.pixel_y = pixel_offset * 2
-				break
-		T = null
+				T = null
+				return
+		CRASH("Auto camera has no wall to connect to!")
 
 
 
