@@ -63,7 +63,12 @@
 		if (src.dir != SOUTH) // i.e. if the dir has been varedited to east/west/north
 			directions = list(src.dir)
 		else
-			directions = cardinal
+			T = get_step(src, SOUTH)
+			if (istype(T,/turf/simulated/wall) || istype(T,/turf/unsimulated/wall) || (locate(/obj/mapping_helper/wingrille_spawn) in T) || (locate(/obj/window) in T))
+				directions = list(SOUTH) // assume that they meant to attach it to the south
+			else
+				directions = list(NORTH, EAST, WEST) // check each direction
+
 		for (var/D in directions)
 			T = get_step(src, D)
 			if (istype(T,/turf/simulated/wall) || istype(T,/turf/unsimulated/wall) || (locate(/obj/mapping_helper/wingrille_spawn) in T) || (locate(/obj/window) in T))
