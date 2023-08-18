@@ -61754,7 +61754,7 @@
 /turf/unsimulated/floor/plating,
 /area/crypt/sigma/storage)
 "kAa" = (
-/obj/mapping_helper/turfs/floor/burner
+/obj/mapping_helper/turfs/floor/burner,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -64659,8 +64659,7 @@
 	},
 /area/syndicate_station/battlecruiser)
 "nge" = (
-/obj/mapping_helper/turfs/floor/burner
-/obj/cable{
+/obj/mapping_helper/turfs/floor/burner/obj/cable{
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt,
