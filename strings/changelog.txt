@@ -1,5 +1,9 @@
 
 (t)fri aug 18 23
+(u)Paaiii
+(p)15417
+(e)🤖|A-Silicons
+(+)Replaces that cardboard box that spawns in the AI core if there's no AI with an empty SICC AI core.
 (u)Smilg
 (p)15204
 (e)|
