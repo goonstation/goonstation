@@ -18,6 +18,10 @@
 	var/ai_only = FALSE
 	///Cant be snipped by wirecutters
 	var/reinforced = FALSE
+	/// automatically offsets and snaps to perspective walls. mainly for regular security cams
+	var/sticky = FALSE
+	/// do auto position cameras use the alternate diagonal sprites?
+	var/alternate_sprites = FALSE
 
 	//This camera is a node pointing to the other bunch of cameras nearby for AI movement purposes
 	var/obj/machinery/camera/c_north = null
@@ -36,6 +40,59 @@
 		network = "ranch"
 		color = "#AAFF99"
 		c_tag = "autotag"
+
+/obj/machinery/camera/auto
+	sticky = TRUE
+#ifdef IN_MAP_EDITOR
+	icon_state = "cameras_default"
+#endif
+
+/obj/machinery/camera/auto/alt
+	sticky = TRUE
+	alternate_sprites = TRUE
+#ifdef IN_MAP_EDITOR
+	icon_state = "cameras_alt"
+#endif
+
+/obj/machinery/camera/proc/autoposition(var/alt)
+	if (!src.sticky)
+		return
+	SPAWN(1 DECI SECOND) // wait for the wingrille spawners to complete loading
+		var/turf/T = null
+		var/list/directions = null
+		var/pixel_offset = 10 // this will get overridden if jen wall
+		if (src.dir != SOUTH) // i.e. if the dir has been varedited to east/west/north
+			directions = list(src.dir)
+		else
+			directions = cardinal
+		for (var/D in directions)
+			T = get_step(src, D)
+			if (istype(T,/turf/simulated/wall) || istype(T,/turf/unsimulated/wall) || (locate(/obj/mapping_helper/wingrille_spawn) in T) || (locate(/obj/window) in T))
+				if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
+					pixel_offset = 12 // jen walls are slightly taller so the offset needs to increase
+				if (!alt) // this uses the alternate sprites which happen to coincide with diagonal dirs
+					src.set_dir(D)
+				else
+					switch (D)
+						if (NORTH)
+							src.set_dir(SOUTHWEST)
+						if (SOUTH)
+							src.set_dir(SOUTHEAST)
+						if (EAST)
+							src.set_dir(NORTHEAST)
+						if (WEST)
+							src.set_dir(NORTHWEST)
+				switch (D) // south ones don't need to be offset ofc
+					if (EAST)
+						src.pixel_x = pixel_offset
+					if (WEST)
+						src.pixel_x = -pixel_offset
+					if (NORTH)
+						src.pixel_y = pixel_offset * 2
+				break
+		T = null
+
+
 
 /obj/machinery/camera/television
 	name = "television camera"
@@ -115,6 +172,9 @@
 							/area/station/turret_protected/AIbasecore1)
 	if (locate(area) in aiareas)
 		src.ai_only = TRUE
+
+	if (src.sticky)
+		autoposition(src.alternate_sprites)
 
 	AddComponent(/datum/component/camera_coverage_emitter)
 
@@ -241,8 +301,6 @@
 	//	return
 	user.current = src
 	user.set_eye(src)
-
-// here there was an antisemitic joke, commented out, that persisted until february 27 2020. Why the fuck it lasted so many years really puts ones morals into question.
 
 /obj/machinery/camera/proc/disconnect_viewers()
 	for(var/mob/O in mobs)
