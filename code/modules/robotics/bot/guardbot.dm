@@ -1198,7 +1198,7 @@
 			if((BOUNDS_DIST(target_turf, my_turf) == 0))
 				budgun.shoot_point_blank(target, src)
 			else
-				budgun.shoot(target_turf, my_turf, src)
+				budgun.shoot(target_turf, my_turf, src, called_target = target)
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up

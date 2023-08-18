@@ -17,7 +17,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	var/initial_proj = /datum/projectile/laser/blaster
 	var/team_num = 0	//1 is NT, 2 is Syndicate
 
-	shoot(var/target,var/start,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user))
 			if (team_num)
 				if (team_num == get_pod_wars_team_num(user))
