@@ -121,6 +121,9 @@ TYPEINFO(/datum/component/pet)
 /obj/machinery/maptext_junk/timer/t180
 	time_left = 180
 
+/obj/machinery/maptext_junk/timer/t300
+	time_left = 300
+
 /obj/machinery/maptext_junk/timer/t360
 	time_left = 360
 

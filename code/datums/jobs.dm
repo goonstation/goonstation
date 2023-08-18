@@ -1250,6 +1250,14 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Technical Assistant")
 		return
 
+/datum/job/special/wrestler
+	name = "Wrestler"
+	spawn_id = 0
+	change_name_on_spawn = 1
+	slot_ears = list()
+	slot_back = list()
+	slot_belt = list()
+
 /datum/job/special/boxer
 	name = "Boxer"
 	wages = PAY_UNTRAINED
