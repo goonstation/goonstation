@@ -2332,6 +2332,7 @@ datum
 			stateful = TRUE
 			reaction_icon_color = "#539147"
 			var/count = 0
+			var/amount_to_smoke = 1
 
 			does_react(var/datum/reagents/holder)
 				if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
@@ -2340,9 +2341,14 @@ datum
 					return FALSE
 
 			on_reaction(var/datum/reagents/holder, var/created_volume) //assuming this is sodium cyanide so it also interacts with water and sulfuric acid
-				if(count < 6 && !holder.has_reagent("acid"))
+				if(holder.has_reagent("acid"))
+					amount_to_smoke = 20
+					count += 6
+				else
+					amount_to_smoke = 1
+				if(count < 6)
 					if(holder.has_reagent("water"))
-						count += 4
+						count += 2
 					else
 						count++
 					reaction_icon_state = null
@@ -2351,8 +2357,8 @@ datum
 					reaction_icon_state = list("reaction_smoke-1", "reaction_smoke-2")
 					var/datum/reagents/smokeContents = new/datum/reagents/
 					smokeContents.add_reagent("cyanide", 1)
-					smoke_reaction(smokeContents, 2, location, do_sfx = FALSE)
-					holder.remove_reagent("cyanide", 1)
+					smoke_reaction(smokeContents, amount_to_smoke, location, do_sfx = FALSE)
+					holder.remove_reagent("cyanide", amount_to_smoke)
 					count = 0
 
 		Saxitoxin // replacing Sarin - come back to this with new recipe
@@ -2864,7 +2870,7 @@ datum
 					var/turf/T = get_turf(holder.my_atom)
 					if (isturf(T))
 						var/area/A = get_area(T)
-						if (istype(T, /turf/space) || A && (istype(A, /area/shuttle/) || istype(A, /area/shuttle_transit_space) || A.name == "Space" || A.name == "Ocean" || T.RL_GetBrightness() > 0.3))
+						if (istype(T, /turf/space) || A && istype(A, /area/shuttle/) || istype(A, /area/shuttle_transit_space) || A.name == "Space" || A.name == "Ocean" || T.RL_GetBrightness() > 0.1 || T.SL_lit())
 							var/obj/particle/chemical_shine/shine = new /obj/particle/chemical_shine
 							is_currently_exploding = TRUE
 							shine.set_loc(T)
@@ -2873,6 +2879,7 @@ datum
 								qdel(shine)
 								holder.del_reagent("photophosphide")
 								explosion(holder.my_atom, T, -1,-1,0,1)
+								playsound(get_turf(holder.my_atom), 'sound/effects/Explosion1.ogg', 50, 1)
 								fireflash(T, 0)
 
 		photophosphide_decay //decays in low amounts
