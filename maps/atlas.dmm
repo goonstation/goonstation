@@ -9875,9 +9875,7 @@
 	light_type = /obj/item/light/tube/blueish;
 	pixel_x = -10
 	},
-/obj/machinery/atmospherics/unary/cryo_cell{
-	pipe_direction = 2
-	},
+/obj/machinery/atmospherics/unary/cryo_cell,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "aFy" = (
@@ -9887,9 +9885,7 @@
 	},
 /area/station/medical/medbay)
 "aFz" = (
-/obj/machinery/atmospherics/unary/cryo_cell{
-	pipe_direction = 2
-	},
+/obj/machinery/atmospherics/unary/cryo_cell,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "aFA" = (

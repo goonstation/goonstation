@@ -57464,9 +57464,7 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "cYQ" = (
-/obj/machinery/atmospherics/unary/cryo_cell{
-	pipe_direction = 8
-	},
+/obj/machinery/atmospherics/unary/cryo_cell,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "cYR" = (
