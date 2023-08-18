@@ -2866,21 +2866,20 @@ datum
 			var/is_currently_exploding = FALSE //so it doesn't explode multiple times during the slight activation delay
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				if(!is_currently_exploding && holder.my_atom)
-					var/turf/T = get_turf(holder.my_atom)
-					if (isturf(T))
-						var/area/A = get_area(T)
-						if (istype(T, /turf/space) || A && istype(A, /area/shuttle/) || istype(A, /area/shuttle_transit_space) || A.name == "Space" || A.name == "Ocean" || T.RL_GetBrightness() > 0.1 || T.SL_lit())
-							var/obj/particle/chemical_shine/shine = new /obj/particle/chemical_shine
-							is_currently_exploding = TRUE
-							shine.set_loc(T)
-							playsound(get_turf(holder.my_atom), 'sound/effects/sparks6.ogg', 50, 1) //this could be better with a bespoke sound eventually, didn't want to steal vampire glare sound but similar-ish?
-							SPAWN(6 DECI SECONDS) //you get a slight moment to react/be surprised
-								qdel(shine)
-								holder.del_reagent("photophosphide")
-								explosion(holder.my_atom, T, -1,-1,0,1)
-								playsound(get_turf(holder.my_atom), 'sound/effects/Explosion1.ogg', 50, 1)
-								fireflash(T, 0)
+				if(src.is_currently_exploding)
+					return
+				var/turf/T = get_turf(holder.my_atom)
+				if (istype(T) && T.is_lit(0.1))
+					var/obj/particle/chemical_shine/shine = new /obj/particle/chemical_shine
+					is_currently_exploding = TRUE
+					shine.set_loc(T)
+					playsound(get_turf(holder.my_atom), 'sound/effects/sparks6.ogg', 50, 1) //this could be better with a bespoke sound eventually, didn't want to steal vampire glare sound but similar-ish?
+					SPAWN(6 DECI SECONDS) //you get a slight moment to react/be surprised
+						qdel(shine)
+						holder.del_reagent("photophosphide")
+						explosion(holder.my_atom, T, -1,-1,0,1)
+						playsound(get_turf(holder.my_atom), 'sound/effects/Explosion1.ogg', 50, 1)
+						fireflash(T, 0)
 
 		photophosphide_decay //decays in low amounts
 			name = "Photophosphide Decay"
