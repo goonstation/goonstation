@@ -79,9 +79,6 @@
 		leaders_possible.Remove(leader)
 		leader.special_role = ROLE_GANG_LEADER
 
-	if(src.random_gangs)
-		fill_gangs()
-
 	return 1
 
 /datum/game_mode/gang/proc/fill_gangs(list/datum/mind/candidates = null, max_member_count = INFINITY)
@@ -107,7 +104,8 @@
 		if(antag_mind.special_role == ROLE_GANG_LEADER)
 			antag_mind.add_antagonist(ROLE_GANG_LEADER, silent=TRUE)
 
-	fill_gangs()
+	if(src.random_gangs)
+		fill_gangs()
 
 	// we delay announcement to make sure everyone gets information about the other members
 	for(var/datum/mind/antag_mind in src.traitors)
