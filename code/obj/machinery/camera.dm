@@ -48,7 +48,6 @@
 #endif
 
 /obj/machinery/camera/auto/alt
-	sticky = TRUE
 	alternate_sprites = TRUE
 #ifdef IN_MAP_EDITOR
 	icon_state = "cameras_alt"
