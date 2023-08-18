@@ -1,4 +1,17 @@
+
 (t)fri aug 18 23
+(u)Smilg
+(p)15204
+(e)|
+(+)ABCU marker can now rectangle select, and has longer range.
+(u)Lord_Earthfire
+(p)14773
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Having at least 25% lube in a foam mixture, water and fluorosurfactant excluded, applies the lube's slippery properties to the foam
+(u)FlameArrow57
+(p)15395
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(+)High damage slashing/cutting weapons will now leave cut wounds.
 (u)Sord
 (+)Scrap clubs and spears now fit in backpacks. All scrapweapons have received minor damage tweaks.
 (t)thu aug 17 23
