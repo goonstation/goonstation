@@ -1,4 +1,6 @@
-
+(t)thu aug 17 23
+(u)LeahTheTech
+(+)Fish rarity now uses the item rarity system for <i>fancy tooltips</i>
 (t)wed aug 16 23
 (u)UnfunnyPerson
 (p)15411

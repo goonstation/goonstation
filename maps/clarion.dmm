@@ -10891,8 +10891,6 @@
 "aTo" = (
 /obj/machinery/drainage,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /mob/living/carbon/human/npc/monkey,
@@ -14243,8 +14241,6 @@
 /area/station/storage/tech)
 "blV" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
@@ -20219,8 +20215,6 @@
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment{
@@ -21177,8 +21171,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/robotics,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
@@ -22069,8 +22061,6 @@
 /area/station/maintenance/central)
 "eKj" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/cable{
@@ -22761,8 +22751,6 @@
 /area/space)
 "fry" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/bluewhite{
@@ -23684,8 +23672,6 @@
 /area/station/science/bot_storage)
 "gfY" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/decal/cleanable/dirt,
@@ -26860,8 +26846,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
@@ -26998,8 +26982,6 @@
 /area/station/turret_protected/Zeta)
 "iPg" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grass{
@@ -28515,8 +28497,6 @@
 /area/station/medical/robotics)
 "keb" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
@@ -29347,8 +29327,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/morgue,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
@@ -31297,8 +31275,6 @@
 	},
 /obj/machinery/light/small/floor,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/junction{
@@ -31330,8 +31306,6 @@
 /area/station/maintenance/west)
 "mrp" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small/floor,
@@ -31510,8 +31484,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
@@ -33571,8 +33543,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small/floor,
@@ -40228,13 +40198,9 @@
 /area/station/medical/robotics)
 "tGu" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment,
@@ -40964,8 +40930,6 @@
 /area/station/hallway/primary/central)
 "uol" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
@@ -42249,8 +42213,6 @@
 /area/station/hallway/primary/central)
 "vmK" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
@@ -42825,8 +42787,6 @@
 /area/station/science/teleporter)
 "vOv" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/landmark/gps_waypoint,
@@ -43591,8 +43551,6 @@
 /area/station/hangar/main)
 "wyJ" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/shrub,
@@ -44021,14 +43979,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"wSN" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "wTc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -44257,8 +44207,6 @@
 "xdm" = (
 /obj/landmark/start/job/roboticist,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
@@ -45274,8 +45222,6 @@
 /area/station/engine/ptl)
 "xVU" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
@@ -45297,8 +45243,6 @@
 /area/station/crewquarters/cryotron)
 "xWr" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
@@ -45679,8 +45623,6 @@
 /area/station/quartermaster/storage)
 "yjp" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/light,
@@ -67708,7 +67650,7 @@ axQ
 axQ
 axQ
 aDX
-wSN
+nrN
 bkJ
 doj
 bkJ
