@@ -112,6 +112,9 @@
 	/// Target for called shots behavior - by default does not affect projectile behaviour
 	var/atom/called_target
 
+	/// Turf of the called_target during projectile initialization
+	var/turf/called_target_turf
+
 	disposing()
 		special_data = null
 		proj_data = null
@@ -795,7 +798,6 @@ ABSTRACT_TYPE(/datum/projectile)
 	P.proj_data = DATA
 	alter_proj?.Invoke(P)
 
-
 	if(P.proj_data == DATA)
 		P.initial_power = P.power //allows us to set projectile power in callback without needing a new projectile datum
 	else
@@ -811,6 +813,7 @@ ABSTRACT_TYPE(/datum/projectile)
 		P.implanted = DATA.implanted
 
 	P.called_target = called_target
+	P.called_target_turf = get_turf(called_target)
 
 	if(remote_sound_source)
 		shooter = remote_sound_source
