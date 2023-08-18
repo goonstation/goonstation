@@ -1703,8 +1703,8 @@
 		src.update_clothing()
 	else if (W == src.head)
 		W.unequipped(src)
-		src.update_hair_layer()
 		src.head = null
+		src.update_hair_layer()
 		src.update_clothing()
 	else if (W == src.ears)
 		W.unequipped(src)

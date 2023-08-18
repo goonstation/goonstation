@@ -1,3 +1,27 @@
+
+(t)fri aug 18 23
+(u)FlameArrow57
+(p)15381
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Improved item equip consistency when equipping an item from your inventory with fast mouse flicks.
+(u)Paaiii
+(p)15417
+(e)🤖|A-Silicons
+(+)Replaces that cardboard box that spawns in the AI core if there's no AI with an empty SICC AI core.
+(u)Smilg
+(p)15204
+(e)|
+(+)ABCU marker can now rectangle select, and has longer range.
+(u)Lord_Earthfire
+(p)14773
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Having at least 25% lube in a foam mixture, water and fluorosurfactant excluded, applies the lube's slippery properties to the foam
+(u)FlameArrow57
+(p)15395
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(+)High damage slashing/cutting weapons will now leave cut wounds.
+(u)Sord
+(+)Scrap clubs and spears now fit in backpacks. All scrapweapons have received minor damage tweaks.
 (t)thu aug 17 23
 (u)LeahTheTech
 (+)Fish rarity now uses the item rarity system for <i>fancy tooltips</i>

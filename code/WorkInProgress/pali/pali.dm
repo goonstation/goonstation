@@ -458,7 +458,7 @@
 
 /proc/populate_station(chance=100)
 	for(var/job_name in job_start_locations)
-		if(job_name == "AI")
+		if(job_name == "AI" || job_name == "JoinLate")
 			continue
 		for(var/turf/T in job_start_locations[job_name])
 			if(prob(chance))
