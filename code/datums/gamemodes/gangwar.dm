@@ -78,7 +78,6 @@
 	for (var/datum/mind/leader in src.traitors)
 		leaders_possible.Remove(leader)
 		leader.special_role = ROLE_GANG_LEADER
-		leader.add_antagonist(ROLE_GANG_LEADER, silent=TRUE)
 
 	if(src.random_gangs)
 		fill_gangs()
@@ -91,7 +90,7 @@
 	for(var/datum/gang/gang in src.gangs)
 		num_people_needed += min(gang.current_max_gang_members, max_member_count) - length(gang.members)
 	if(isnull(candidates))
-		candidates = get_possible_enemies(ROLE_GANG_LEADER, num_people_needed)
+		candidates = get_possible_enemies(ROLE_GANG_LEADER, num_people_needed, allow_carbon=TRUE)
 	var/num_people_available = min(num_people_needed, length(candidates))
 	var/people_added_per_gang = round(num_people_available / num_teams)
 	num_people_available = people_added_per_gang * num_teams
@@ -100,17 +99,20 @@
 	for(var/datum/gang/gang in src.gangs)
 		for(var/j in 1 to people_added_per_gang)
 			var/datum/mind/candidate = candidates[i++]
-			candidate.special_role = ROLE_GANG_MEMBER
 			candidate.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = gang.leader, silent=TRUE)
 			traitors |= candidate
 
 /datum/game_mode/gang/post_setup()
+	for(var/datum/mind/antag_mind in src.traitors)
+		if(antag_mind.special_role == ROLE_GANG_LEADER)
+			antag_mind.add_antagonist(ROLE_GANG_LEADER, silent=TRUE)
+
+	fill_gangs()
+
 	// we delay announcement to make sure everyone gets information about the other members
-	for(var/datum/mind/antag in src.traitors)
-		for(var/datum/antagonist/subordinate/gang_member/ganger_datum in antag.antagonists)
-			ganger_datum.unsilence()
-		for(var/datum/antagonist/gang_leader/ganger_datum in antag.antagonists)
-			ganger_datum.unsilence()
+	for(var/datum/mind/antag_mind in src.traitors)
+		antag_mind.get_antagonist(ROLE_GANG_LEADER)?.unsilence()
+		antag_mind.get_antagonist(ROLE_GANG_MEMBER)?.unsilence()
 
 
 	find_potential_hot_zones()
