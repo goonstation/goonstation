@@ -441,7 +441,6 @@ var/list/admin_verbs = list(
 		///client/proc/dbg_objectprop,
 		// /client/proc/remove_camera_paths_verb,
 		// /client/proc/show_runtime_window,
-		/client/proc/cmd_chat_debug,
 		/client/proc/toggleIrcbotDebug,
 		/datum/admins/proc/toggle_bone_system,
 		/client/proc/cmd_randomize_handwriting,
@@ -1345,20 +1344,6 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	view_client_compid_list(usr, C)
-
-/client/proc/cmd_chat_debug(var/client/C in clients)
-	set name = "Debug Chat"
-	set desc = "Opens a firebug console in the target's chat area"
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-
-	ADMIN_ONLY
-
-	if (src != C)
-		var/trigger = (C.holder ? src.key : (src.stealth || src.fakekey ? src.fakekey : src.key))
-		ehjax.send(C, "browseroutput", list("firebug" = 1, "trigger" = trigger))
-		message_admins("[key_name(src)] has enabled Debug Chat mode on [key_name(C)]")
-	else
-		ehjax.send(C, "browseroutput", list("firebug" = 1))
 
 /client/proc/blobsay(msg as text)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)

@@ -291,8 +291,7 @@
 	if (src.buckled?.anchored && istype(src.buckled))
 		return
 
-	if (src.dir_locked)
-		b = src.dir
+	var/orig_dir = src.dir
 
 	//for item specials
 	if (src.restrain_time > TIME)
@@ -312,6 +311,9 @@
 	if (src.s_active && !(s_active.master?.linked_item in src))
 		src.detach_hud(src.s_active)
 		src.s_active = null
+
+	if(src.dir_locked && src.dir != orig_dir)
+		src.dir = orig_dir
 
 /mob/proc/update_grab_loc()
 	//robust grab : keep em close
