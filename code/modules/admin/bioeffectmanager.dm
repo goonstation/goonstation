@@ -55,7 +55,9 @@
 			BE.cooldown = isnull(new_cooldown) ? 0 : max(new_cooldown, 0)
 			. = TRUE
 		if ("toggleBoosted")
+			var/oldpower = BE.power
 			BE.power = BE.power == 1 ? 2 : 1
+			BE.onPowerChange(oldpower, BE.power)
 			. = TRUE
 		if ("toggleReinforced")
 			BE.curable_by_mutadone = !BE.curable_by_mutadone
