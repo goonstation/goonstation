@@ -61,13 +61,9 @@
 		var/list/directions = null
 		var/pixel_offset = 10 // this will get overridden if jen wall
 		if (src.dir != SOUTH) // i.e. if the dir has been varedited to east/west/north
-			directions = list(src.dir)
+			directions = list(turn(src.dir, 180)) // the east sprite sits on a west wall so some inversion is needed
 		else
-			T = get_step(src, NORTH)
-			if (istype(T,/turf/simulated/wall) || istype(T,/turf/unsimulated/wall) || (locate(/obj/mapping_helper/wingrille_spawn) in T) || (locate(/obj/window) in T))
-				directions = list(NORTH) // assume that they meant to attach it to the south
-			else
-				directions = cardinal // check each direction
+			directions = cardinal // check each direction
 
 		for (var/D in directions)
 			T = get_step(src, D)
@@ -77,7 +73,7 @@
 				if (!alt) // this uses the alternate sprites which happen to coincide with diagonal dirs
 					src.set_dir(turn(D, 180))
 				else
-					switch (D)
+					switch (D) // this is horrid but it works ish
 						if (NORTH)
 							src.set_dir(SOUTHEAST)
 						if (SOUTH)
@@ -91,11 +87,11 @@
 						src.pixel_x = pixel_offset
 					if (WEST)
 						src.pixel_x = -pixel_offset
-					if (SOUTH)
+					if (NORTH)
 						src.pixel_y = pixel_offset * 2
 				T = null
 				return
-		CRASH("Auto camera has no wall to connect to!")
+		//CRASH("Auto camera has no wall to connect to!")
 
 
 
