@@ -16514,6 +16514,7 @@
 "dEe" = (
 /obj/decal/fakeobjects/cargopad,
 /obj/storage/secure/crate/morrigan,
+/obj/landmark/morrigan_crate,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/helldrone)
 "dHq" = (
@@ -21022,7 +21023,6 @@
 	},
 /obj/machinery/light/small,
 /obj/machinery/networked/telepad/morrigan,
-/obj/landmark/morrigan_crate,
 /turf/unsimulated/floor/engine/glow/blue,
 /area/helldrone)
 "oEP" = (
@@ -24658,6 +24658,8 @@
 "xdz" = (
 /obj/machinery/door/airlock/pyro/security,
 /obj/mapping_helper/airlock/anti_emag,
+/obj/mapping_helper/access/morrigan/bridge,
+/obj/mapping_helper/airlock/hardener,
 /turf/unsimulated/floor/black,
 /area/helldrone)
 "xex" = (
