@@ -1302,7 +1302,9 @@
 		var/obj/whitehole/whitehole = target
 		if(!istype(whitehole))
 			CRASH("generate_fish called on whitehole fishing spot with non-whitehole target")
-		. = whitehole.generate_thing(whitehole.source_location)
+		var/atom/fish = whitehole.generate_thing(whitehole.source_location)
+		fish.name += "fish"
+		return fish
 
 	try_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)
 		. = ..()
