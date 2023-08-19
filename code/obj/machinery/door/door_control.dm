@@ -505,9 +505,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 			for (var/image/chat_maptext/I in src.chat_text.lines)
 				if (I != welcome_text)
 					I.bump_up(welcome_text.measured_height)
-					ON_COOLDOWN(src, "scanner_speak", 2)
-		ON_COOLDOWN(src, "scanner_speak", 2)
-	return
 /// for sleepers entering listening post
 /obj/machinery/door_control/antagscanner
 	/// For the front door having a flying chat message or not.
