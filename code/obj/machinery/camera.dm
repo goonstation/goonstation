@@ -42,17 +42,17 @@
 		c_tag = "autotag"
 
 /obj/machinery/camera/auto
+	name = "autoname"
+	c_tag = "autotag"
 	sticky = TRUE
 #ifdef IN_MAP_EDITOR
 	icon_state = "cameras_default"
 #endif
-
 /obj/machinery/camera/auto/alt
 	alternate_sprites = TRUE
 #ifdef IN_MAP_EDITOR
 	icon_state = "cameras_alt"
 #endif
-
 /obj/machinery/camera/proc/autoposition(var/alt)
 	if (!src.sticky)
 		return
