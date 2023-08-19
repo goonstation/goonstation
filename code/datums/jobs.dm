@@ -12,6 +12,7 @@
 	///can you roll this job if you rolled antag with a non-traitor-allowed favourite job (e.g.: prevent sec mains from forcing only captain antag rounds)
 	var/allow_antag_fallthrough = TRUE
 	var/allow_spy_theft = 1
+	var/can_join_gangs = TRUE
 	var/cant_spawn_as_rev = 0 // For the revoltion game mode. See jobprocs.dm for notes etc (Convair880).
 	var/cant_spawn_as_con = 0 // Prevents this job spawning as a conspirator in the conspiracy gamemode.
 	var/requires_whitelist = 0
@@ -133,6 +134,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	linkcolor = "#00CC00"
 	slot_card = /obj/item/card/id/command
 	map_can_autooverride = 0
+	can_join_gangs = FALSE
 
 	special_setup(mob/M, no_special_spawn)
 		. = ..()
@@ -235,6 +237,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_miranda = 1
 	allow_traitors = 0
 	allow_spy_theft = 0
+	can_join_gangs = FALSE
 	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
@@ -456,6 +459,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	wages = PAY_TRADESMAN
 	allow_traitors = 0
 	allow_spy_theft = 0
+	can_join_gangs = FALSE
 	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	receives_implant = /obj/item/implant/health/security/anti_mindhack
@@ -1116,6 +1120,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 0
 	wages = PAY_TRADESMAN
 	allow_traitors = 0
+	can_join_gangs = FALSE
 	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	receives_badge = 1
@@ -1297,35 +1302,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		src.access = get_access("Mailman")
 		return
-
-/datum/job/special/tourist
-	name = "Tourist"
-	limit = 0
-	linkcolor = "#FF99FF"
-	slot_back = list()
-	slot_belt = list(/obj/item/storage/fanny)
-	slot_jump = list(/obj/item/clothing/under/misc/tourist)
-	slot_poc1 = list(/obj/item/camera_film)
-	slot_poc2 = list(/obj/item/currency/spacecash/tourist) // Exact amount is randomized.
-	slot_foot = list(/obj/item/clothing/shoes/tourist)
-	slot_lhan = list(/obj/item/camera)
-	slot_rhan = list(/obj/item/storage/photo_album)
-	change_name_on_spawn = 1
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		if(prob(33))
-			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob,/datum/mutantrace/cow)
-			M.set_mutantrace(morph)
-		var/obj/item/clothing/lanyard/L = new /obj/item/clothing/lanyard(M.loc)
-		M.equip_if_possible(L, SLOT_WEAR_ID, FALSE)
-		M.spawnId(src)
-		var/obj/item/card/id = locate() in M
-		if (!id)
-			return
-		L.storage.add_contents(id, M, FALSE)
 
 /datum/job/special/space_cowboy
 	name = "Space Cowboy"
@@ -2470,6 +2446,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	wages = PAY_IMPORTANT
 	allow_traitors = 0
 	allow_spy_theft = 0
+	can_join_gangs = FALSE
 	cant_spawn_as_rev = 1
 	receives_badge = 1
 	receives_miranda = 1
@@ -2592,6 +2569,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	requires_supervisor_job = "Head of Security"
 	allow_traitors = 0
 	allow_spy_theft = 0
+	can_join_gangs = FALSE
 	cant_spawn_as_rev = 1
 	receives_badge = 1
 	receives_miranda = 1
@@ -2682,44 +2660,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		if (!M)
 			return
 		M.cubeize(INFINITY)
-
-/datum/job/special/AI
-	name = "AI"
-	linkcolor = "#999999"
-	limit = 0
-	wages = 0
-	allow_traitors = 0
-	cant_spawn_as_rev = 1
-	slot_ears = list()
-	slot_card = null
-	slot_back = list()
-	slot_belt = list()
-	items_in_backpack = list()
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		return M.AIize()
-
-/datum/job/special/cyborg
-	name = "Cyborg"
-	linkcolor = "#999999"
-	limit = 0
-	wages = 0
-	allow_traitors = 0
-	cant_spawn_as_rev = 1
-	slot_ears = list()
-	slot_card = null
-	slot_back = list()
-	slot_belt = list()
-	items_in_backpack = list()
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		return M.Robotize_MK2()
 
 /datum/job/special/ghostdrone
 	name = "Drone"

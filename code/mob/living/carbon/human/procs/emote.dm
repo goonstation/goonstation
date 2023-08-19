@@ -348,7 +348,7 @@
 								message = "<B>[src]</B> blows a kiss to [M]."
 								maptext_out = "<I>blows a kiss to [M]</I>"
 								//var/atom/U = get_turf(param)
-								//shoot_projectile_ST(src, new/datum/projectile/special/kiss(), U) //I gave this all of 5 minutes of my time I give up
+								//shoot_projectile_ST_pixel_spread(src, new/datum/projectile/special/kiss(), U) //I gave this all of 5 minutes of my time I give up
 							if ("fingerguns")
 								message = "<B>[src]</B> points finger guns at [M]!"
 								maptext_out = "<I>points finger guns at [M]!</I>"
