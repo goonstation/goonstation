@@ -236,6 +236,9 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 
 			S.volume = ourvolume
 
+			var/orig_freq = S.frequency
+			S.frequency *= GET_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH)
+
 			if (spaced_env && !(flags & SOUND_IGNORE_SPACE))
 				S.environment = SPACED_ENV
 				S.echo = SPACED_ECHO
@@ -252,6 +255,8 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 			S.y = 0
 
 			C << S
+
+			S.frequency = orig_freq
 
 
 /mob/proc/playsound_local(atom/source, soundin, vol, vary, extrarange, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
@@ -316,6 +321,8 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 		if (istype(source_turf))
 			var/dx = source_turf.x - src.x
 			S.pan = clamp(dx/8.0 * 100, -100, 100)
+
+		S.frequency *= GET_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH)
 
 		src << S
 
@@ -400,7 +407,12 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 
 		S.volume = ourvolume
 
+		var/orig_freq = S.frequency
+		S.frequency *= GET_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH)
+
 		C << S
+
+		S.frequency = orig_freq
 
 /mob/living/silicon/ai/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 	..()
