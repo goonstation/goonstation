@@ -1516,6 +1516,26 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	recharge_rate = 5
 	component_type = /datum/component/power_cell/flockdrone
 
+/obj/item/ammo/power_cell/self_charging/railgun_experimental
+	name = "Magnetic Recharge System"
+	desc = "Complicated Recharging power cell for the railgun."
+	max_charge = 1000
+	charge = 1000
+	recharge_rate = 50
+
+/obj/item/ammo/power_cell/self_charging/hafpistol
+	name = "Power Cell - E4"
+	desc = "A standard power cell that slowly recharges, holds about 220 PU."
+	charge = 220
+	max_charge = 220
+	recharge_rate = 5
+
+/obj/item/ammo/power_cell/self_charging/peacebringer
+	name = "Peacebringer Power Cell"
+	charge = 49
+	max_charge = 49
+	recharge_rate = 1.5
+
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED

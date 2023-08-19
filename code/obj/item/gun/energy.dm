@@ -1851,3 +1851,4 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		set_current_projectile(new/datum/projectile/energy_bolt/dazzler)
 		projectiles = list(current_projectile)
 		..()
+///////////////////////////////////////Railgun Morrigan

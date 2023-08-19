@@ -27,7 +27,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/c_interval = 3 //Interval between shots while button is held.
 	var/c_windup = 0 //Time before we start firing while button is held - think minigun.
 	var/c_windup_sound = null //Sound to play during windup. TBI
-
+	var/cantshootsound = 'sound/weapons/Gunclick.ogg'
 	var/c_firing = 0
 	var/c_mouse_down = 0
 	var/datum/gunTarget/c_target = null
@@ -418,7 +418,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if (ismob(user))
 			user.show_text("*click* *click*", "red") // No more attack messages for empty guns (Convair880).
 			if (!silenced)
-				playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+				playsound(user, src.cantshootsound, 60, 1)
 		return FALSE
 	if (!process_ammo(user))
 		return FALSE

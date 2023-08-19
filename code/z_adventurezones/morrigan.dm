@@ -1717,3 +1717,347 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 			src.icon_state = "eyemask_y"
 		else
 			src.icon_state = "eyemask"
+
+
+//WEAPONS-------------------------------------------------------------------------------
+
+//Railgun
+TYPEINFO(/obj/item/gun/energy/railgun_experimental)
+	mats = null
+/obj/item/gun/energy/railgun_experimental
+	name = "Mod.54 Electro Slinger"
+	cell_type = /obj/item/ammo/power_cell/self_charging/railgun_experimental
+	icon = 'icons/obj/adventurezones/morrigan/weapons/gunlarge.dmi'
+	icon_state = "railgun"
+	desc = "An experimental Hafgan weapon that draws a lot of power to fling projectiles are dangerous speeds, it seems to be in working condition."
+	item_state = "hafrailgun"
+	force = 10
+	shoot_delay = 1 SECONDS
+	two_handed = TRUE
+	can_swap_cell = FALSE
+	rechargeable = FALSE
+	uses_charge_overlay = TRUE
+	muzzle_flash = "muzzle_flash_elec"
+	charge_icon_state = "railgun"
+	cantshootsound = 'sound/weapons/railgunwait.ogg'
+
+	New()
+		set_current_projectile(new/datum/projectile/bullet/optio/hitscanrail)
+		projectiles = list(new/datum/projectile/bullet/optio/hitscanrail)
+		..()
+
+	update_icon()
+		..()
+		return
+
+	shoot(var/target,var/start,var/mob/user)
+		if (canshoot(user))
+			flick("railgunfire", src)
+		return ..(target, start, user)
+
+//pistol
+TYPEINFO(/obj/item/gun/energy/hafpistol)
+	mats = null
+/obj/item/gun/energy/hafpistol
+	name = "Mod.21 Deneb"
+	uses_multiple_icon_states = 1
+	cell_type = /obj/item/ammo/power_cell/self_charging/hafpistol
+	icon = 'icons/obj/adventurezones/morrigan/weapons/gun.dmi'
+	icon_state = "laser"
+	desc = "A popular self defense handgun favored by security and adventuring spacefarers alike! Features a lethal and less than lethal mode."
+	item_state = "hafpistol"
+	force = 5
+	can_swap_cell = FALSE
+	rechargeable = FALSE
+	uses_charge_overlay = TRUE
+	muzzle_flash = "muzzle_flash_laser"
+	charge_icon_state = "laser"
+
+	New()
+		set_current_projectile(new/datum/projectile/laser/hafplethal)
+		projectiles = list(current_projectile,new/datum/projectile/laser/hafpless)
+		..()
+
+	update_icon()
+		if (current_projectile.type == /datum/projectile/laser/hafplethal)
+			icon = 'icons/obj/adventurezones/morrigan/weapons/gun.dmi'
+			charge_icon_state = "laser"
+			muzzle_flash = "muzzle_flash_laser"
+			item_state = "hafpistol"
+		else if (current_projectile.type == /datum/projectile/laser/hafpless)
+			icon = 'icons/obj/adventurezones/morrigan/weapons/gun.dmi'
+			charge_icon_state = "laserless"
+			muzzle_flash = "muzzle_flash_bluezap"
+			item_state = "hafpistoless"
+		..()
+	attack_self(var/mob/M)
+		..()
+		UpdateIcon()
+		M.update_inhands()
+
+TYPEINFO(/obj/item/gun/energy/peacebringer)
+	mats = null
+/obj/item/gun/energy/peacebringer
+	name = "PeaceBringer"
+	uses_multiple_icon_states = 1
+	cell_type = /obj/item/ammo/power_cell/self_charging/peacebringer
+	icon = 'icons/obj/adventurezones/morrigan/weapons/gun.dmi'
+	icon_state = "peacebringer"
+	desc = "A scary albeit it, silly, energy revolver custom made for the Morrigan head of security."
+	item_state = "peacebringer"
+	force = 5
+	can_swap_cell = FALSE
+	rechargeable = FALSE
+	uses_charge_overlay = TRUE
+	muzzle_flash = "muzzle_flash_laser"
+	charge_icon_state = "peacebringer"
+
+	New()
+		set_current_projectile(new/datum/projectile/bullet/optio/peacebringer)
+		projectiles = list(current_projectile,new/datum/projectile/laser/peacebringerless)
+		..()
+
+	update_icon()
+		if (current_projectile.type == /datum/projectile/bullet/optio/peacebringer)
+			icon = 'icons/obj/adventurezones/morrigan/weapons/gun.dmi'
+			charge_icon_state = "peacebringer"
+			muzzle_flash = "muzzle_flash_laser"
+			item_state = "peacebringer"
+			playsound('sound/weapons/peacebringerswap.ogg', 100, 0)
+		else if (current_projectile.type == /datum/projectile/laser/peacebringerless)
+			icon = 'icons/obj/adventurezones/morrigan/weapons/gun.dmi'
+			charge_icon_state = "peaceless"
+			muzzle_flash = "muzzle_flash_waveg"
+			item_state = "peacebringerless"
+			playsound('sound/weapons/peacebringerswap2.ogg', 100, 0)
+		..()
+	attack_self(var/mob/M)
+		..()
+		UpdateIcon()
+		M.update_inhands()
+
+TYPEINFO(/obj/item/gun/energy/smgmine)
+	mats = null
+/obj/item/gun/energy/smgmine
+	name = "HMT Lycon"
+	uses_multiple_icon_states = 1
+	cell_type = /obj/item/ammo/power_cell/med_power
+	icon = 'icons/obj/adventurezones/morrigan/weapons/gun.dmi'
+	icon_state = "minesmg"
+	desc = "A tool issued to miners thoughout space, deemed extremely reliable for both punching through rock and punching through hostile fauna."
+	item_state = "smgmine"
+	force = 5
+	can_swap_cell = TRUE
+	rechargeable = TRUE
+	uses_charge_overlay = TRUE
+	muzzle_flash = "muzzle_flash_laser"
+	charge_icon_state = "minesmgfire"
+	spread_angle = 4
+
+	New()
+		set_current_projectile(new/datum/projectile/laser/mining/smgmine)
+		projectiles = list(current_projectile,new/datum/projectile/laser/smgminelethal)
+		..()
+
+	update_icon()
+		if (current_projectile.type == /datum/projectile/laser/mining/smgmine)
+			icon = 'icons/obj/adventurezones/morrigan/weapons/gun.dmi'
+			charge_icon_state = "minesmgfire"
+			muzzle_flash = "muzzle_flash_elec"
+			item_state = "smgmining"
+		else if (current_projectile.type == /datum/projectile/laser/smgminelethal)
+			icon = 'icons/obj/adventurezones/morrigan/weapons/gun.dmi'
+			charge_icon_state = "minesmg"
+			muzzle_flash = "muzzle_flash_wavep"
+			item_state = "smgmine"
+			spread_angle = 10
+		..()
+	attack_self(var/mob/M)
+		..()
+		UpdateIcon()
+		M.update_inhands()
+//projectiles
+/datum/projectile/bullet/optio/hitscanrail
+	name = "hardlight beam"
+	sname = "electro magnetic shot"
+	damage = 61
+	cost = 900
+	max_range = PROJ_INFINITE_RANGE
+	shot_sound = 'sound/weapons/railgunfire.ogg'
+	dissipation_rate = 0
+	projectile_speed = 2400
+	armor_ignored = 0.33
+	window_pass = FALSE
+
+
+	on_hit(atom/hit, angle, obj/projectile/P)
+		. = ..()
+		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
+		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
+
+		var/Sx = P.orig_turf.x*32 + P.orig_turf.pixel_x
+		var/Sy = P.orig_turf.y*32 + P.orig_turf.pixel_y
+
+		var/Hx = hit.x*32 + hit.pixel_x
+		var/Hy = hit.y*32 + hit.pixel_y
+
+		var/dist = sqrt((Hx-Sx)**2 + (Hy-Sy)**2)
+
+		var/Px = Sx + sin(P.angle) * dist
+		var/Py = Sy + cos(P.angle) * dist
+
+		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,0,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0, Sx, Sy, Px, Py)
+		for(var/obj/O in affected)
+			O.color = list(-0.8, 0, 0, 0, -0.8, 0, 0, 0, -0.8, 1.5, 1.5, 1.5)
+			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
+		SPAWN(1 SECOND)
+			for(var/obj/O in affected)
+				O.alpha = initial(O.alpha)
+				qdel(O)
+			qdel(start)
+			qdel(end)
+
+/datum/projectile/laser/hafpless
+	name = "Mod. 21 less lethal"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "hafpistol_less"
+	shot_sound = 'sound/weapons/hafpless.ogg'
+	cost = 35
+	damage = 10
+
+	sname = "less-lethal"
+	damage_type = D_ENERGY
+	hit_ground_chance = 30
+	brightness = 1
+	color_red = 1
+	color_green = 1
+	color_blue = 0
+
+	disruption = 2
+
+	on_hit(atom/hit, angle, obj/projectile/O)
+		. = ..()
+		if(isliving(hit))
+			var/mob/living/L = hit
+			L.do_disorient(stamina_damage = 0, weakened = 0 SECOND, stunned = 0 SECOND, disorient = 2 SECONDS, remove_stamina_below_zero = 0)
+
+/datum/projectile/laser/hafplethal
+	name = "Mod. 21 lethal"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "signifer2_burn"
+	shot_sound = 'sound/weapons/hafplethal.ogg'
+	cost = 35
+	damage = 22
+
+	sname = "lethal"
+	damage_type = D_ENERGY
+	hit_ground_chance = 30
+	color_red = 0.1
+	color_green = 0.1
+	color_blue = 0.8
+
+/datum/projectile/bullet/optio/peacebringer
+	name = "Peacekeeper"
+	icon = 'icons/obj/projectiles.dmi'
+	shot_sound = 'sound/weapons/peacebringer.ogg'
+	cost = 7
+	damage = 30
+	sname = "lethal"
+	damage_type = D_ENERGY
+	hit_type = DAMAGE_BURN
+	hit_ground_chance = 30
+	impact_image_state = "burn1"
+	color_red = 0.8
+	color_green = 0.1
+	color_blue = 0.2
+	projectile_speed = 1500
+	max_range = PROJ_INFINITE_RANGE
+	dissipation_rate = 0
+	armor_ignored = 0.2
+	window_pass = FALSE
+
+
+	on_hit(atom/hit, angle, obj/projectile/P)
+		. = ..()
+		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
+		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
+
+		var/Sx = P.orig_turf.x*32 + P.orig_turf.pixel_x
+		var/Sy = P.orig_turf.y*32 + P.orig_turf.pixel_y
+
+		var/Hx = hit.x*32 + hit.pixel_x
+		var/Hy = hit.y*32 + hit.pixel_y
+
+		var/dist = sqrt((Hx-Sx)**2 + (Hy-Sy)**2)
+
+		var/Px = Sx + sin(P.angle) * dist
+		var/Py = Sy + cos(P.angle) * dist
+
+		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrailRed",1,0,"HalfStartTrailRed","HalfEndTrailRed",OBJ_LAYER, 0, Sx, Sy, Px, Py)
+		for(var/obj/O in affected)
+			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
+		SPAWN(1 SECOND)
+			for(var/obj/O in affected)
+				O.alpha = initial(O.alpha)
+				qdel(O)
+			qdel(start)
+			qdel(end)
+
+/datum/projectile/laser/peacebringerless
+	name = "Peacekeeper"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "relibullet"
+	shot_sound = 'sound/weapons/hafpless.ogg'
+	cost = 7
+	damage = 10
+
+	sname = "less-lethal"
+	damage_type = D_ENERGY
+	hit_ground_chance = 30
+	color_red = 0.1
+	color_green = 1
+	color_blue = 0.3
+
+	disruption = 2
+
+	on_hit(atom/hit, angle, obj/projectile/O)
+		. = ..()
+		if(isliving(hit))
+			var/mob/living/L = hit
+			L.do_disorient(stamina_damage = 0, weakened = 0 SECOND, stunned = 0 SECOND, disorient = 7 SECONDS, remove_stamina_below_zero = 0)
+
+/datum/projectile/laser/mining/smgmine
+	name = "AC Shot"
+	icon_state = "crescentmine"
+	damage = 5
+	cost = 20
+	dissipation_delay = 3
+	dissipation_rate = 8
+	sname = "mining laser"
+	shot_sound = 'sound/weapons/smgmine.ogg'
+	damage_type = D_BURNING
+	brightness = 0.8
+	window_pass = 0
+	color_red = 0.9
+	color_green = 0.6
+	color_blue = 0
+
+	on_launch(obj/projectile/O)
+		. = ..()
+		O.AddComponent(/datum/component/proj_mining, 0.2, 2)
+
+/datum/projectile/laser/smgminelethal
+	name = "Lethal Mode"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "signifer2_burn"
+	shot_sound = 'sound/weapons/hafplethal.ogg'
+	cost = 35
+	damage = 6
+	shot_number = 3
+
+	sname = "lethal"
+	damage_type = D_ENERGY
+	hit_ground_chance = 30
+	color_red = 0.1
+	color_green = 0.1
+	color_blue = 0.8
