@@ -575,7 +575,7 @@
 	id = "fast_sounds"
 	probability = 25
 	msgGain = "You hear everything sped up and higher pitched."
-	msgLose = "You no longer hear everything sped up and lower pitched."
+	msgLose = "You no longer hear everything sped up and higher pitched."
 
 	OnAdd()
 		..()
