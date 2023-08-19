@@ -278,28 +278,6 @@
 /obj/stool/chair/office/red,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/armory)
-"anl" = (
-/obj/item/clothing/shoes/swat,
-/obj/item/storage/backpack/satchel/studdedblack,
-/obj/item/clothing/gloves/fingerless,
-/obj/item/device/pda2/pod_wars/syndicate,
-/obj/item/clothing/head/NTberet{
-	item_state = "space_helmet_syndicate";
-	icon_state = "syndie_commander";
-	desc = "Reused content ??";
-	name = "Syndicate HoS Beret"
-	},
-/obj/mapping_helper/access/morrigan/hos,
-/obj/storage/secure/closet/morrigan/hos,
-/obj/item/ammo/bullets/a38,
-/obj/item/gun/kinetic/single_action/colt_saa/detective{
-	name = "Peacekeeper"
-	},
-/obj/item/clothing/under/suit/syndiehos,
-/obj/item/clothing/suit/space/syndiehos,
-/obj/item/clothing/mask/gas/eyemask,
-/turf/unsimulated/floor/wood/six,
-/area/morrigan/station/command/HOS)
 "aoh" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/warden)
@@ -1051,6 +1029,13 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/factory)
+"bbT" = (
+/obj/decal/tile_edge/stripe{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/longtile/blue,
+/area/morrigan/station/command/meeting)
 "bcI" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -1150,6 +1135,13 @@
 	dir = 4
 	},
 /area/morrigan/station/hallway)
+"bjY" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space/dense,
+/area/morrigan/station/space)
 "blT" = (
 /obj/decoration/clock,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -1220,6 +1212,11 @@
 /obj/decal/tile_edge/stripe/corner,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/robotics)
+"boc" = (
+/obj/stool/chair/office/syndie,
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/longtile/black,
+/area/morrigan/station/command/meeting)
 "boj" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/storage/pill_bottle/cyberpunk{
@@ -1273,6 +1270,13 @@
 	dir = 8
 	},
 /area/morrigan/station/hallway)
+"bpl" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/morrigan/station/space)
 "bpm" = (
 /obj/decal/cleanable/rust/jen,
 /obj/item/casing/shotgun{
@@ -1320,6 +1324,16 @@
 /obj/railing/yellow,
 /turf/unsimulated/floor/plating,
 /area/morrigan/routing)
+"brv" = (
+/obj/table/syndicate/auto,
+/obj/machinery/light/incandescent/netural,
+/obj/machinery/morrigan_self_destruct{
+	pixel_y = 6
+	},
+/turf/simulated/floor/engine/caution/misc{
+	dir = 6
+	},
+/area/morrigan/station/command/meeting)
 "brA" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/civilian/janitor)
@@ -1418,6 +1432,10 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/passage)
+"bxl" = (
+/obj/decoration/syndiepc/syndiepc3,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/command/meeting)
 "bxu" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 5
@@ -1752,6 +1770,10 @@
 /obj/machinery/drainage/big,
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/derelict)
+"bQQ" = (
+/obj/dialogueobj/plantoflosthope,
+/turf/unsimulated/floor/twotone/red,
+/area/morrigan/station/medical/main)
 "bRd" = (
 /obj/item/reagent_containers/balloon,
 /turf/unsimulated/floor/carpet/grime,
@@ -2028,6 +2050,27 @@
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/longtile/blue,
 /area/morrigan/station/command/meeting)
+"ceY" = (
+/obj/machinery/light/incandescent/netural,
+/obj/table/syndicate/auto,
+/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne{
+	pixel_y = 17;
+	pixel_x = -12
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 10;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_y = 15;
+	pixel_x = 3
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan/station/command/meeting)
 "cfw" = (
 /obj/storage/secure/closet/fridge/blood,
 /turf/unsimulated/floor/twotone/red,
@@ -2095,6 +2138,11 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"cie" = (
+/obj/decoration/syndiepc/syndiepc20,
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/command/meeting)
 "ciN" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/vomit,
@@ -2677,6 +2725,14 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"cUH" = (
+/obj/machinery/computer/announcement/console_upper,
+/obj/machinery/computer/security/console_upper,
+/obj/item/card/id/morrigan/security,
+/obj/mapping_helper/access/morrigan/bridge,
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/darkblue,
+/area/morrigan/station/command/bridge)
 "cUN" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles5"
@@ -3300,13 +3356,6 @@
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/command/bridge)
-"dGm" = (
-/obj/stool/chair/office/syndie{
-	dir = 4
-	},
-/obj/decal/stripe_caution,
-/turf/unsimulated/floor/longtile/black,
-/area/morrigan/station/command/meeting)
 "dGD" = (
 /obj/table/glass/auto,
 /obj/item/paper/book/from_file/medical_surgery_guide,
@@ -3430,15 +3479,6 @@
 	},
 /turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/engineering/specialist)
-"dPp" = (
-/obj/table/syndicate/auto,
-/obj/item/pinpointer/disk,
-/obj/item/folder{
-	pixel_y = 9;
-	pixel_x = -13
-	},
-/turf/unsimulated/floor/longtile/black,
-/area/morrigan/station/command/meeting)
 "dPt" = (
 /obj/item/casing/shotgun{
 	pixel_y = -10;
@@ -4516,13 +4556,12 @@
 	dir = 1
 	},
 /area/morrigan/station/hallway)
-"eLd" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir-b"
+"eLw" = (
+/obj/decoration/clock{
+	pixel_y = 30
 	},
-/turf/space,
-/area/morrigan/station/space)
+/turf/unsimulated/floor/longtile/blue,
+/area/morrigan/station/command/meeting)
 "eLA" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
@@ -4610,6 +4649,11 @@
 /obj/decoration/damagedchair,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/factory)
+"ePt" = (
+/obj/decal/poster/wallsign/warning3,
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/morrigan/station/medical/robotics)
 "eQj" = (
 /obj/machinery/computer3/generic/secure_data/console_lower{
 	dir = 4
@@ -5545,10 +5589,6 @@
 	},
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/derelict)
-"fOr" = (
-/obj/machinery/light/incandescent/netural,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/command/meeting)
 "fOw" = (
 /obj/barricade,
 /turf/unsimulated/floor/engine/caution/north,
@@ -5936,15 +5976,6 @@
 "gfs" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/overseer)
-"ggu" = (
-/obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir-b";
-	tag = "icon-lattice-dir-b (NORTHWEST)"
-	},
-/obj/machinery/light/runway_light/delay2,
-/turf/space,
-/area/morrigan/station/space)
 "ggw" = (
 /obj/machinery/light/incandescent/netural,
 /obj/mapping_helper/mob_spawn/corpse/human/random/body_bag,
@@ -6285,6 +6316,10 @@
 	},
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/factory)
+"gtF" = (
+/obj/decoration/syndiepc/syndiepc18,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/command/meeting)
 "guo" = (
 /obj/machinery/vending/kitchen{
 	dir = 1
@@ -6897,16 +6932,13 @@
 	},
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
-"gXQ" = (
-/obj/machinery/light/incandescent/netural,
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "bot2"
+"gXZ" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
 	},
-/obj/machinery/conveyor/area_activated{
-	dir = 1
-	},
-/turf/unsimulated/floor/plating/jen,
-/area/morrigan/station/engineering/specialist)
+/turf/space,
+/area/morrigan/station/space)
 "gYa" = (
 /obj/rack,
 /obj/item/clothing/glasses/thermal{
@@ -7743,6 +7775,15 @@
 /obj/item/paper/prelude_4,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"hSz" = (
+/obj/table/syndicate/auto,
+/obj/item/clothing/under/misc/turds,
+/obj/item/folder{
+	pixel_y = 9;
+	pixel_x = 9
+	},
+/turf/unsimulated/floor/longtile/black,
+/area/morrigan/station/command/meeting)
 "hSJ" = (
 /obj/map/light,
 /obj/decal/tile_edge/stripe{
@@ -7750,6 +7791,10 @@
 	},
 /turf/unsimulated/floor/minitiles/black,
 /area/morrigan/station/security/main)
+"hSN" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/command/meeting)
 "hTc" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen/one,
@@ -7904,11 +7949,6 @@
 "ieL" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/command/captain)
-"ifs" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/maintenance)
 "ift" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -8014,10 +8054,6 @@
 	},
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/civilian/kitchen)
-"ilM" = (
-/obj/reagent_dispensers/watertank/fountain,
-/turf/unsimulated/floor/longtile/blue,
-/area/morrigan/station/command/meeting)
 "imn" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/blood/tracks{
@@ -8043,6 +8079,13 @@
 /obj/stool,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/main)
+"inG" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/morrigan/station/space)
 "inK" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -8094,6 +8137,12 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"isl" = (
+/obj/decal/poster/wallsign/statistics2{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/longtile/blue,
+/area/morrigan/station/command/meeting)
 "itq" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -8615,6 +8664,13 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/main)
+"iUL" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/coffeemaker/command,
+/obj/item/reagent_containers/food/drinks/creamer,
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/darkblue,
+/area/morrigan/station/command/bridge)
 "iUV" = (
 /obj/decoration/vent,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -9382,6 +9438,12 @@
 	dir = 6
 	},
 /area/morrigan/station/medical/robotics)
+"jJB" = (
+/obj/table/syndicate/auto,
+/turf/simulated/floor/engine/caution/misc{
+	dir = 6
+	},
+/area/morrigan/station/command/meeting)
 "jJO" = (
 /obj/storage/secure/crate,
 /obj/item/raw_material/molitz,
@@ -9684,13 +9746,6 @@
 /obj/decoration/decorativeplant/plant4,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/main)
-"kae" = (
-/obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir-b"
-	},
-/turf/space,
-/area/morrigan/station/space)
 "kan" = (
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -9753,11 +9808,6 @@
 "kdB" = (
 /turf/unsimulated/floor/purple,
 /area/morrigan/station/civilian/janitor)
-"ked" = (
-/obj/table/syndicate/auto,
-/obj/machinery/phone,
-/turf/unsimulated/floor/longtile/blue,
-/area/morrigan/station/command/meeting)
 "keh" = (
 /obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/plating/damaged1,
@@ -10189,13 +10239,6 @@
 /obj/mapping_helper/access/morrigan/medical,
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/medical/emergency)
-"kCE" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
-/turf/space/dense,
-/area/morrigan/station/space)
 "kCJ" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -10241,6 +10284,18 @@
 	dir = 4
 	},
 /area/morrigan/station/hallway)
+"kGl" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/decal/fakeobjects/pipe{
+	desc = "Part of a system for securing docked spacecraft.";
+	dir = 10;
+	name = "docking clamp"
+	},
+/turf/space,
+/area/morrigan/station/space)
 "kGr" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8;
@@ -10872,13 +10927,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
-"llQ" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/turf/space/dense,
-/area/morrigan/station/space)
 "lmk" = (
 /obj/decal/cleanable/dirt/dirt2,
 /turf/unsimulated/floor/carpet/grime,
@@ -11068,6 +11116,10 @@
 /obj/machinery/vending/cola/blue,
 /turf/unsimulated/floor/black,
 /area/morrigan/warden)
+"lzk" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/command/meeting)
 "lzm" = (
 /obj/decal/cleanable/cobweb,
 /obj/stool/chair/material/mauxite,
@@ -11489,15 +11541,17 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"lUT" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/morrigan/station/space)
 "lVb" = (
 /obj/machinery/vending/medical_public,
 /turf/unsimulated/floor/purple,
 /area/morrigan/station/science)
-"lVj" = (
-/obj/decal/poster/wallsign/hazard_caution,
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/medical/robotics)
 "lVn" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -11545,6 +11599,11 @@
 /obj/mapping_helper/access/morrigan/exit,
 /turf/unsimulated/floor/caution/south,
 /area/morrigan/routing/transport)
+"lWF" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/maintenance)
 "lXb" = (
 /obj/storage/secure/closet/fridge,
 /obj/map/light,
@@ -11605,6 +11664,10 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"maU" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/morrigan/station/medical/biological)
 "maX" = (
 /obj/table/auto,
 /obj/item/clothing/under/gimmick/macho,
@@ -12222,6 +12285,14 @@
 	},
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/engineering/specialist)
+"mIY" = (
+/obj/table/syndicate/auto,
+/obj/item/broken_egun,
+/obj/item/card/id/morrigan/all_access{
+	pixel_y = 1
+	},
+/turf/unsimulated/floor/longtile/black,
+/area/morrigan/station/command/meeting)
 "mJa" = (
 /obj/decoration/syndiepc/syndiepc16,
 /turf/unsimulated/floor/caution/corner,
@@ -12514,11 +12585,6 @@
 /obj/structure/woodwall,
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
-"mWU" = (
-/obj/decal/poster/wallsign/warning3,
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/medical/robotics)
 "mXm" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	hardened = 1;
@@ -12549,18 +12615,6 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"mYa" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir-b"
-	},
-/obj/decal/fakeobjects/pipe{
-	desc = "Part of a system for securing docked spacecraft.";
-	dir = 10;
-	name = "docking clamp"
-	},
-/turf/space,
-/area/morrigan/station/space)
 "mYe" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 8
@@ -12956,9 +13010,6 @@
 /obj/item/reagent_containers/food/snacks/cereal_box/roach,
 /turf/unsimulated/floor/black,
 /area/morrigan/holding)
-"nrO" = (
-/turf/unsimulated/floor/longtile/black,
-/area/morrigan/station/command/meeting)
 "nrZ" = (
 /obj/machinery/optable{
 	id = "robotics"
@@ -13529,14 +13580,6 @@
 /obj/decal/cleanable/balloon,
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/factory)
-"nRY" = (
-/obj/decal/tile_edge/stripe/big,
-/obj/machinery/conveyor/area_activated,
-/obj/machinery/conveyor/area_activated{
-	dir = 4
-	},
-/turf/unsimulated/floor/plating/jen,
-/area/morrigan/station/engineering/specialist)
 "nSl" = (
 /obj/disposalpipe/junction,
 /obj/item/reagent_containers/food/drinks/bottle/beer,
@@ -13833,10 +13876,6 @@
 /obj/machinery/power/smes,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"ofj" = (
-/obj/dialogueobj/plantoflosthope,
-/turf/unsimulated/floor/twotone/red,
-/area/morrigan/station/medical/main)
 "ofm" = (
 /obj/machinery/conveyor/NS,
 /obj/railing/red/reinforced{
@@ -14502,6 +14541,10 @@
 /obj/item/reagent_containers/food/snacks/plant/orange,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/brig)
+"oXt" = (
+/obj/table/syndicate/auto,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/command/meeting)
 "oXQ" = (
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/engineering/eng)
@@ -14646,12 +14689,6 @@
 /obj/lattice,
 /turf/space,
 /area/morrigan/station/space)
-"pgC" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/coffeemaker/command,
-/obj/item/reagent_containers/food/drinks/creamer,
-/turf/unsimulated/floor/darkblue,
-/area/morrigan/station/command/bridge)
 "phe" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -14812,13 +14849,6 @@
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOP)
-"pql" = (
-/obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/morrigan/station/space)
 "pqx" = (
 /obj/decal/stripe_delivery,
 /obj/decal/tile_edge/stripe{
@@ -14879,6 +14909,13 @@
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/warden)
+"puC" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/morrigan/station/space)
 "puI" = (
 /obj/decoration/syndiepc/syndiepc13,
 /turf/unsimulated/floor/wood/six,
@@ -14988,23 +15025,6 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"pBM" = (
-/obj/table/syndicate/auto,
-/obj/item/clothing/suit/armor/nanotrasen,
-/obj/item/broken_egun,
-/obj/item/card/id/morrigan/all_access{
-	pixel_y = 1
-	},
-/obj/item/clothing/under/misc/syndicate{
-	pixel_y = 2;
-	pixel_x = -11
-	},
-/obj/item/photo/beepsky1{
-	pixel_x = 7;
-	pixel_y = -4
-	},
-/turf/unsimulated/floor/longtile/black,
-/area/morrigan/station/command/meeting)
 "pBS" = (
 /obj/shrub{
 	dir = 8;
@@ -15164,6 +15184,28 @@
 /obj/decoration/decorativeplant/plant7,
 /turf/unsimulated/floor/red,
 /area/morrigan/construction)
+"pKr" = (
+/obj/item/clothing/shoes/swat,
+/obj/item/storage/backpack/satchel/studdedblack,
+/obj/item/clothing/gloves/fingerless,
+/obj/item/device/pda2/pod_wars/syndicate,
+/obj/item/clothing/head/NTberet{
+	item_state = "space_helmet_syndicate";
+	icon_state = "syndie_commander";
+	desc = "Reused content ??";
+	name = "Syndicate HoS Beret"
+	},
+/obj/mapping_helper/access/morrigan/hos,
+/obj/storage/secure/closet/morrigan/hos,
+/obj/item/ammo/bullets/a38,
+/obj/item/gun/kinetic/single_action/colt_saa/detective{
+	name = "Peacekeeper"
+	},
+/obj/item/clothing/under/suit/syndiehos,
+/obj/item/clothing/suit/space/syndiehos,
+/obj/item/clothing/mask/gas/eyemask,
+/turf/unsimulated/floor/wood/six,
+/area/morrigan/station/command/HOS)
 "pLr" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
@@ -15349,6 +15391,13 @@
 	},
 /turf/unsimulated/floor/twotone/green,
 /area/morrigan/station/medical/genetics)
+"pXw" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/morrigan/station/space)
 "pXF" = (
 /obj/decal/cleanable/generic,
 /turf/unsimulated/floor/carpet/grime,
@@ -15383,14 +15432,6 @@
 /obj/machinery/drainage,
 /turf/unsimulated/floor/sanitary/blue,
 /area/morrigan/routing/transport)
-"pZW" = (
-/obj/stool/chair/office/syndie{
-	dir = 4
-	},
-/obj/decal/stripe_caution,
-/obj/item/paper/Morrigan11,
-/turf/unsimulated/floor/longtile/black,
-/area/morrigan/station/command/meeting)
 "qay" = (
 /obj/decal/fakeobjects/lightbulb_broken{
 	desc = "This light is probably broken.  It looks pretty new and ok, though, so it's probably just not wired up.";
@@ -15932,6 +15973,9 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/morrigan/station/space)
+"qFS" = (
+/turf/unsimulated/floor/black,
+/area/morrigan/station/command/meeting)
 "qFZ" = (
 /obj/table/reinforced/chemistry/auto,
 /turf/unsimulated/floor/purpleblack{
@@ -16053,10 +16097,6 @@
 /obj/item/cable_coil/blue/cut,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/factory)
-"qMF" = (
-/obj/decoration/syndiepc/syndiepc18,
-/turf/unsimulated/floor/darkblue,
-/area/morrigan/station/command/meeting)
 "qNn" = (
 /obj/machinery/secscanner{
 	dir = 4;
@@ -16445,6 +16485,10 @@
 /obj/decal/cleanable/rust/jen,
 /turf/unsimulated/floor/carpet/grime,
 /area/morrigan/derelict)
+"rfE" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/morrigan/station/medical/genetics)
 "rhv" = (
 /obj/decal/cleanable/rust/jen,
 /obj/item/implant/projectile/bullet_357,
@@ -16692,10 +16736,6 @@
 /obj/decal/fakeobjects/lightbulb_broken,
 /turf/unsimulated/floor/carpet/grime,
 /area/morrigan/derelict)
-"rvC" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/medical/genetics)
 "rvS" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -16980,11 +17020,6 @@
 /obj/decal/cleanable/oil,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/holding)
-"rLV" = (
-/obj/decoration/clock,
-/obj/machinery/light/incandescent/netural,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/command/meeting)
 "rMh" = (
 /obj/storage/crate/bin{
 	desc = "A large bin, for trash.";
@@ -17051,6 +17086,12 @@
 	},
 /turf/space,
 /area/morrigan/station/space)
+"rSb" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/mug,
+/obj/item/paper/Morrigan6,
+/turf/unsimulated/floor/darkblue,
+/area/morrigan/station/command/bridge)
 "rSs" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/donut/custom/robust,
@@ -17127,6 +17168,14 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
+"rWS" = (
+/obj/stool/chair/office/syndie{
+	dir = 8
+	},
+/obj/decal/stripe_caution,
+/obj/item/paper/Morrigan11,
+/turf/unsimulated/floor/longtile/black,
+/area/morrigan/station/command/meeting)
 "rXq" = (
 /obj/machinery/door/airlock/pyro/weapons,
 /obj/decal/cleanable/blood/gibs{
@@ -17215,6 +17264,15 @@
 	dir = 1
 	},
 /area/morrigan/routing/transport)
+"scC" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (NORTHWEST)"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/morrigan/station/space)
 "scN" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/mask/gas/swat{
@@ -17261,13 +17319,6 @@
 /obj/map/light/dimred,
 /turf/unsimulated/floor/glassblock/transparent_red,
 /area/morrigan/station/medical/main)
-"shc" = (
-/obj/machinery/light/incandescent/netural,
-/obj/decal/tile_edge/stripe{
-	dir = 4
-	},
-/turf/unsimulated/floor/longtile/blue,
-/area/morrigan/station/command/meeting)
 "shz" = (
 /turf/unsimulated/floor/caution/east,
 /area/morrigan/teleporter)
@@ -17467,6 +17518,14 @@
 "svk" = (
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict/hobo)
+"svq" = (
+/obj/table/syndicate/auto,
+/obj/item/cigarbox/gold{
+	pixel_y = 9;
+	pixel_x = 4
+	},
+/turf/unsimulated/floor/longtile/black,
+/area/morrigan/station/command/meeting)
 "swj" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/medical/genetics)
@@ -17497,6 +17556,14 @@
 /obj/random_item_spawner/desk_stuff/g_clip_bin_fpen,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOS)
+"sxq" = (
+/obj/table/syndicate/auto,
+/obj/item/photo/beepsky1{
+	pixel_x = 7;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/longtile/black,
+/area/morrigan/station/command/meeting)
 "sxU" = (
 /obj/decal/cleanable/generic,
 /obj/disposalpipe/segment,
@@ -17556,6 +17623,10 @@
 	},
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/science)
+"sAe" = (
+/obj/decal/fakeobjects/cargopad,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/medical/robotics)
 "sAw" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
@@ -17873,13 +17944,6 @@
 /obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/passage)
-"sTB" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/drinks/mug,
-/obj/machinery/light/incandescent/netural,
-/obj/item/paper/Morrigan6,
-/turf/unsimulated/floor/darkblue,
-/area/morrigan/station/command/bridge)
 "sTE" = (
 /obj/storage/secure/closet/fridge,
 /obj/item/storage/box/donkpocket_kit,
@@ -17972,10 +18036,6 @@
 /obj/stool/chair/comfy/purple,
 /turf/unsimulated/floor/carpet/purple/fancy,
 /area/morrigan/station/command/captain)
-"sZi" = (
-/obj/decal/fakeobjects/cargopad,
-/turf/unsimulated/floor/black,
-/area/morrigan/station/medical/robotics)
 "sZj" = (
 /turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/engineering/specialist)
@@ -18004,10 +18064,6 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"tbs" = (
-/obj/decoration/syndiepc/syndiepc3,
-/turf/unsimulated/floor/darkblue,
-/area/morrigan/station/command/meeting)
 "tbP" = (
 /obj/map/light,
 /obj/item/storage/belt/security,
@@ -18111,6 +18167,14 @@
 /obj/decal/cleanable/generic,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"tiG" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (NORTHWEST)"
+	},
+/turf/space,
+/area/morrigan/station/space)
 "tiK" = (
 /obj/decal/woodclutter,
 /turf/unsimulated/floor/orangeblack,
@@ -18489,14 +18553,6 @@
 /obj/item/furniture_parts/stool,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"txu" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir-b"
-	},
-/obj/machinery/light/runway_light/delay2,
-/turf/space,
-/area/morrigan/station/space)
 "txW" = (
 /obj/grille/catwalk/jen,
 /obj/grille/catwalk/jen,
@@ -18995,10 +19051,6 @@
 /obj/item/paper/prelude_5,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"tZG" = (
-/obj/decoration/syndiepc/syndiepc20,
-/turf/unsimulated/floor/darkblue,
-/area/morrigan/station/command/meeting)
 "tZJ" = (
 /obj/decal/cleanable/rust,
 /obj/decal/cleanable/dirt/dirt5,
@@ -19179,6 +19231,19 @@
 /obj/item/rods/steel,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"ulC" = (
+/obj/rack,
+/obj/item/clothing/suit/space/captain/red,
+/obj/item/clothing/head/helmet/space/captain/red{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/obj/item/tank/jetpack/syndicate{
+	pixel_x = -5
+	},
+/obj/item/clothing/mask/gas/eyemask,
+/turf/unsimulated/floor/carpet/purple/fancy/edge/ne,
+/area/morrigan/station/command/captain)
 "ulU" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4
@@ -19641,11 +19706,6 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"uGk" = (
-/obj/stool/chair/office/syndie,
-/obj/decal/stripe_caution,
-/turf/unsimulated/floor/longtile/blue,
-/area/morrigan/station/command/meeting)
 "uGO" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -19730,6 +19790,11 @@
 /obj/machinery/conveyor/area_activated,
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/engineering/specialist)
+"uLI" = (
+/obj/decal/poster/wallsign/hazard_caution,
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/morrigan/station/medical/robotics)
 "uMC" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -19789,13 +19854,6 @@
 	icon_state = "cairngorm5"
 	},
 /area/morrigan/station/hallway)
-"uOG" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/morrigan/station/space)
 "uOS" = (
 /obj/map/light,
 /mob/living/critter/robotic/gunbot,
@@ -19817,6 +19875,12 @@
 	},
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
+"uRs" = (
+/obj/decal/poster/wallsign/statistics1{
+	pixel_y = 28
+	},
+/turf/unsimulated/floor/longtile/blue,
+/area/morrigan/station/command/meeting)
 "uRB" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/maintenance)
@@ -20160,6 +20224,13 @@
 /obj/machinery/nanofab/refining,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
+"vle" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/morrigan/station/space)
 "vlg" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 1;
@@ -20193,10 +20264,6 @@
 /obj/item/device/multitool/grey,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/engineering/eng)
-"vmu" = (
-/obj/decal/poster/wallsign/statistics2,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/command/meeting)
 "voo" = (
 /obj/overlay{
 	density = 1;
@@ -20419,6 +20486,13 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"vzC" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space/dense,
+/area/morrigan/station/space)
 "vzE" = (
 /obj/table/auto,
 /obj/item/storage/box/handcuff_kit{
@@ -20460,13 +20534,6 @@
 /obj/decal/cleanable/cobweb,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"vBX" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir-b"
-	},
-/turf/space,
-/area/morrigan/station/space)
 "vCT" = (
 /obj/machinery/sleeper/compact{
 	dir = 4
@@ -20505,6 +20572,13 @@
 /obj/mapping_helper/access/morrigan/medical,
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/medical/emergency)
+"vEX" = (
+/obj/decal/tile_edge/stripe{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe,
+/turf/unsimulated/floor/longtile/blue,
+/area/morrigan/station/command/meeting)
 "vFw" = (
 /obj/storage/cart,
 /turf/unsimulated/floor/twotone/purple,
@@ -20731,13 +20805,6 @@
 /obj/item/sheet/steel/fullstack,
 /turf/unsimulated/floor/darkblue,
 /area/morrigan/station/command/eva)
-"vVs" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/morrigan/station/space)
 "vVB" = (
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
@@ -20867,6 +20934,14 @@
 /obj/item/device/light/flashlight,
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/derelict)
+"wbC" = (
+/obj/decal/tile_edge/stripe/big,
+/obj/machinery/conveyor/area_activated,
+/obj/machinery/conveyor/area_activated{
+	dir = 4
+	},
+/turf/unsimulated/floor/plating/jen,
+/area/morrigan/station/engineering/specialist)
 "wbV" = (
 /obj/map/light/dimred,
 /obj/machinery/light/emergency{
@@ -21093,27 +21168,10 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"wrV" = (
-/obj/decal/poster/wallsign/statistics1,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/command/meeting)
 "wrY" = (
 /obj/machinery/chem_dispenser/chemical,
 /turf/unsimulated/floor/wood/seven,
 /area/morrigan/station/civilian/bar)
-"wsm" = (
-/obj/rack,
-/obj/item/clothing/suit/space/captain/red,
-/obj/item/clothing/head/helmet/space/captain/red{
-	pixel_y = 4;
-	pixel_x = 5
-	},
-/obj/item/tank/jetpack/syndicate{
-	pixel_x = -5
-	},
-/obj/item/clothing/mask/gas/eyemask,
-/turf/unsimulated/floor/carpet/purple/fancy/edge/ne,
-/area/morrigan/station/command/captain)
 "wsq" = (
 /turf/unsimulated/floor/engine/caution/corner{
 	dir = 4
@@ -21190,10 +21248,6 @@
 "wwo" = (
 /turf/unsimulated/floor/purpleblack/corner,
 /area/morrigan/station/hallway)
-"wwI" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/unsimulated/floor/plating,
-/area/morrigan/station/medical/biological)
 "wxb" = (
 /obj/decal/poster/wallsign/hazard_rad,
 /obj/grille/steel,
@@ -21411,6 +21465,10 @@
 	dir = 1
 	},
 /area/morrigan/station/hallway)
+"wKN" = (
+/obj/decal/tile_edge/stripe,
+/turf/unsimulated/floor/longtile/blue,
+/area/morrigan/station/command/meeting)
 "wKV" = (
 /obj/decal/cleanable/molten_item,
 /turf/unsimulated/floor/black,
@@ -21863,13 +21921,6 @@
 /obj/item_dispenser/latex_gloves,
 /turf/unsimulated/floor/white/checker2,
 /area/morrigan/station/medical/robotics)
-"xhT" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/morrigan/station/space)
 "xif" = (
 /turf/unsimulated/floor/grass,
 /area/morrigan/station/medical/genetics)
@@ -22435,6 +22486,14 @@
 /obj/decal/cleanable/cobwebFloor,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"xKT" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/morrigan/station/space)
 "xLc" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
@@ -22563,18 +22622,6 @@
 "xRY" = (
 /turf/unsimulated/floor/black/grime,
 /area/morrigan/station/security/armory)
-"xSd" = (
-/obj/decal/tile_edge/stripe{
-	dir = 1
-	},
-/obj/table/syndicate/auto,
-/obj/machinery/morrigan_self_destruct{
-	pixel_y = 6
-	},
-/turf/unsimulated/floor/engine/caution/misc{
-	dir = 6
-	},
-/area/morrigan/station/command/meeting)
 "xSg" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/spy)
@@ -22686,6 +22733,13 @@
 /obj/machinery/computer/announcement/syndie,
 /turf/unsimulated/floor/carpet/purple/fancy/edge/north,
 /area/morrigan/station/command/captain)
+"yab" = (
+/obj/table/syndicate/auto,
+/obj/decoration/decorativeplant/plant7{
+	pixel_y = 13
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan/station/command/meeting)
 "yaq" = (
 /obj/decal/floatingtiles{
 	dir = 1;
@@ -22714,13 +22768,6 @@
 	dir = 9
 	},
 /area/morrigan/station/hallway)
-"ybT" = (
-/obj/machinery/computer/announcement/console_upper,
-/obj/machinery/computer/security/console_upper,
-/obj/item/card/id/morrigan/security,
-/obj/mapping_helper/access/morrigan/bridge,
-/turf/unsimulated/floor/darkblue,
-/area/morrigan/station/command/bridge)
 "yde" = (
 /obj/machinery/conveyor/area_activated,
 /turf/unsimulated/floor/industrial,
@@ -22822,14 +22869,16 @@
 	dir = 8
 	},
 /area/morrigan/station/hallway)
-"yhr" = (
-/obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir-b";
-	tag = "icon-lattice-dir-b (NORTHWEST)"
+"yht" = (
+/obj/machinery/light/incandescent/netural,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "bot2"
 	},
-/turf/space,
-/area/morrigan/station/space)
+/obj/machinery/conveyor/area_activated{
+	dir = 1
+	},
+/turf/unsimulated/floor/plating/jen,
+/area/morrigan/station/engineering/specialist)
 "yhO" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/crystal,
@@ -23467,15 +23516,15 @@ dKY
 dKY
 dKY
 dKY
-txu
-vVs
-vVs
-vVs
-vVs
-vVs
-vVs
-vVs
-ggu
+xKT
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
+scC
 dKY
 dKY
 dKY
@@ -23489,8 +23538,8 @@ dKY
 dKY
 dKY
 dKY
-eLd
-yhr
+puC
+tiG
 dKY
 dKY
 dKY
@@ -23570,7 +23619,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 obU
 obU
@@ -23578,7 +23627,7 @@ obU
 oBX
 obU
 obU
-uOG
+vle
 dKY
 dKY
 dKY
@@ -23591,7 +23640,7 @@ dKY
 dKY
 dKY
 dKY
-eLd
+puC
 iVk
 obU
 vgG
@@ -23644,19 +23693,19 @@ dKY
 dKY
 dKY
 dKY
-eLd
-vVs
-vVs
-vVs
-vVs
-vVs
-vVs
-vVs
-vVs
-vVs
-vVs
-vVs
-yhr
+puC
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
+tiG
 dKY
 dKY
 dKY
@@ -23672,7 +23721,7 @@ dKY
 dKY
 dKY
 dKY
-mYa
+kGl
 rRe
 iLN
 lPa
@@ -23681,7 +23730,7 @@ nGC
 nGC
 lPa
 obU
-uOG
+vle
 dKY
 dKY
 dKY
@@ -23694,7 +23743,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 obU
 vgG
@@ -23746,7 +23795,7 @@ dKY
 dKY
 dKY
 dKY
-eLd
+puC
 pfA
 obU
 obU
@@ -23760,21 +23809,21 @@ obU
 obU
 obU
 iVk
-vVs
-vVs
-vVs
-vVs
-vVs
-vVs
-vVs
-ggu
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
+scC
 lPa
-txu
-vVs
-vVs
-vVs
-vVs
-vVs
+xKT
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
 qFG
 lPa
 obU
@@ -23785,19 +23834,19 @@ vRj
 lPa
 obU
 iVk
-vVs
-vVs
-vVs
-vVs
-vVs
-vVs
-vVs
-vVs
-vVs
-yhr
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
+gXZ
+tiG
 dKY
 dKY
-xhT
+lUT
 obU
 vgG
 vgG
@@ -23849,7 +23898,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 obU
 nui
@@ -23870,7 +23919,7 @@ obU
 obU
 obU
 obU
-kae
+bpl
 lPa
 ior
 ior
@@ -23897,10 +23946,10 @@ obU
 obU
 obU
 obU
-uOG
+vle
 dKY
 dKY
-xhT
+lUT
 obU
 vgG
 lGJ
@@ -23952,7 +24001,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 obU
 bJR
@@ -24000,10 +24049,10 @@ brA
 brA
 brA
 obU
-uOG
+vle
 dKY
 dKY
-xhT
+lUT
 obU
 pOZ
 tjw
@@ -24055,7 +24104,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 obU
 nui
@@ -24103,10 +24152,10 @@ qHm
 lOF
 brA
 obU
-uOG
+vle
 dKY
 dKY
-xhT
+lUT
 obU
 tLs
 dRI
@@ -24158,7 +24207,7 @@ dKY
 dKY
 dKY
 dKY
-vBX
+pXw
 iVk
 obU
 klQ
@@ -24206,9 +24255,9 @@ peF
 mWI
 brA
 obU
-uOG
-eLd
-vVs
+vle
+puC
+gXZ
 iVk
 obU
 vgG
@@ -24262,7 +24311,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 aaL
 aaL
@@ -24309,8 +24358,8 @@ peF
 nao
 brA
 obU
-uOG
-xhT
+vle
+lUT
 obU
 obU
 obU
@@ -24365,7 +24414,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 obU
 obU
@@ -24468,10 +24517,10 @@ dKY
 dKY
 dKY
 dKY
-vBX
-pql
-pql
-pql
+pXw
+inG
+inG
+inG
 iVk
 obU
 klQ
@@ -24570,11 +24619,11 @@ dKY
 dKY
 dKY
 dKY
-eLd
-vVs
-vVs
-vVs
-vVs
+puC
+gXZ
+gXZ
+gXZ
+gXZ
 iVk
 obU
 aaL
@@ -24673,7 +24722,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 obU
 obU
@@ -24776,7 +24825,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 fUX
 fUX
@@ -24879,7 +24928,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 fUX
 vUc
@@ -24982,7 +25031,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 fUX
 iLW
@@ -25085,7 +25134,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 fUX
 heF
@@ -25188,7 +25237,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 fUX
 ggK
@@ -25291,7 +25340,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 fUX
 cJy
@@ -25394,7 +25443,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 fUX
 qkY
@@ -25497,7 +25546,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 fUX
 knH
@@ -25535,7 +25584,7 @@ wNG
 wNG
 uLz
 wNG
-nRY
+wbC
 bRE
 uoq
 wWu
@@ -25600,7 +25649,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 fUX
 nni
@@ -25703,7 +25752,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 fUX
 fUX
@@ -25806,7 +25855,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 ldj
@@ -25909,7 +25958,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 agV
@@ -26012,7 +26061,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 uRB
@@ -26115,7 +26164,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 obU
 obU
@@ -26197,7 +26246,7 @@ efx
 gmP
 odW
 raW
-llQ
+bjY
 aDg
 aDg
 aDg
@@ -26218,8 +26267,8 @@ dKY
 dKY
 dKY
 dKY
-vBX
-pql
+pXw
+inG
 iVk
 obU
 uRB
@@ -26252,7 +26301,7 @@ mKg
 mcp
 hoz
 nkU
-gXQ
+yht
 jJS
 jJS
 jJS
@@ -26300,7 +26349,7 @@ dlA
 jSh
 odW
 obU
-uOG
+vle
 dKY
 dKY
 dKY
@@ -26323,7 +26372,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 xtg
@@ -26403,7 +26452,7 @@ suX
 hZG
 odW
 obU
-uOG
+vle
 dKY
 dKY
 dKY
@@ -26426,7 +26475,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 xtg
@@ -26506,7 +26555,7 @@ odW
 oKU
 oKU
 obU
-uOG
+vle
 dKY
 dKY
 dKY
@@ -26529,7 +26578,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 xPi
@@ -26598,9 +26647,9 @@ sgk
 fZO
 stp
 odW
-wwI
-wwI
-wwI
+maU
+maU
+maU
 odW
 rjx
 mSK
@@ -26609,7 +26658,7 @@ odW
 obU
 obU
 obU
-uOG
+vle
 dKY
 dKY
 dKY
@@ -26632,7 +26681,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 bON
@@ -26712,7 +26761,7 @@ odW
 obU
 iVk
 iVk
-kae
+bpl
 dKY
 dKY
 dKY
@@ -26735,7 +26784,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 xtg
@@ -26804,9 +26853,9 @@ gjd
 eAM
 uiJ
 swj
-rvC
-rvC
-rvC
+rfE
+rfE
+rfE
 odW
 eGe
 mSK
@@ -26814,7 +26863,7 @@ jUR
 odW
 obU
 obU
-uOG
+vle
 dKY
 dKY
 dKY
@@ -26838,7 +26887,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 xPi
@@ -26917,7 +26966,7 @@ uOC
 odW
 swj
 obU
-uOG
+vle
 dKY
 dKY
 dKY
@@ -26941,7 +26990,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 mFG
 xPi
@@ -27020,7 +27069,7 @@ nQz
 xyf
 swj
 obU
-uOG
+vle
 dKY
 dKY
 dKY
@@ -27044,7 +27093,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 mFG
 hgp
@@ -27123,7 +27172,7 @@ buH
 ahA
 swj
 obU
-uOG
+vle
 dKY
 dKY
 dKY
@@ -27147,7 +27196,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 xPi
@@ -27226,7 +27275,7 @@ nQz
 ahA
 swj
 obU
-uOG
+vle
 dKY
 kMK
 kMK
@@ -27250,7 +27299,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 xPi
@@ -27306,18 +27355,18 @@ fNh
 ggC
 fDC
 iNw
-ofj
+bQQ
 bNq
 bNq
 bNq
 sYw
 ucY
 hvG
-mWU
-lVj
+ePt
+uLI
 gSY
-lVj
-mWU
+uLI
+ePt
 swj
 nQz
 buH
@@ -27329,7 +27378,7 @@ jOc
 pLr
 swj
 obU
-uOG
+vle
 dKY
 dKY
 dKY
@@ -27353,7 +27402,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 xtg
@@ -27432,7 +27481,7 @@ xif
 rrG
 swj
 obU
-uOG
+vle
 dKY
 dKY
 dKY
@@ -27456,7 +27505,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 uRB
@@ -27535,7 +27584,7 @@ qTa
 fjA
 swj
 obU
-uOG
+vle
 dKY
 dKY
 dKY
@@ -27559,7 +27608,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 obU
 mFG
@@ -27638,7 +27687,7 @@ riP
 xif
 swj
 obU
-uOG
+vle
 dKY
 kMK
 kMK
@@ -27662,7 +27711,7 @@ dKY
 dKY
 dKY
 dKY
-vBX
+pXw
 iVk
 obU
 mFG
@@ -27741,7 +27790,7 @@ olq
 rrG
 swj
 obU
-uOG
+vle
 dKY
 dKY
 dKY
@@ -27766,7 +27815,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 mFG
 cwk
@@ -27844,7 +27893,7 @@ swj
 swj
 swj
 obU
-uOG
+vle
 dKY
 dKY
 dKY
@@ -27869,7 +27918,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 aEt
 llK
@@ -27928,7 +27977,7 @@ nrZ
 uJf
 brM
 tKY
-sZi
+sAe
 hvG
 jIB
 tgR
@@ -27947,7 +27996,7 @@ obU
 obU
 obU
 obU
-uOG
+vle
 dKY
 dKY
 dKY
@@ -27972,7 +28021,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 gvV
@@ -28042,15 +28091,15 @@ bMS
 oKU
 obU
 iVk
-pql
-pql
-pql
-pql
-pql
-pql
-pql
-pql
-kae
+inG
+inG
+inG
+inG
+inG
+inG
+inG
+inG
+bpl
 dKY
 kMK
 kMK
@@ -28075,7 +28124,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 uRB
@@ -28144,7 +28193,7 @@ cIN
 uRB
 obU
 iVk
-kae
+bpl
 dKY
 dKY
 dKY
@@ -28178,7 +28227,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 obU
 obU
@@ -28246,7 +28295,7 @@ cwk
 xtg
 dUc
 obU
-uOG
+vle
 dKY
 kMK
 dKY
@@ -28281,8 +28330,8 @@ dKY
 dKY
 dKY
 dKY
-vBX
-pql
+pXw
+inG
 iVk
 obU
 uRB
@@ -28323,7 +28372,7 @@ nuT
 peL
 xtg
 cwk
-ifs
+lWF
 xtg
 xPi
 xtg
@@ -28349,7 +28398,7 @@ xPi
 xtg
 uRB
 obU
-uOG
+vle
 dKY
 kMK
 dKY
@@ -28386,7 +28435,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 xtg
@@ -28489,7 +28538,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 xtg
@@ -28518,15 +28567,15 @@ naK
 bvF
 kaR
 uBC
-wsm
+ulC
 ofe
 ofe
 ofe
 ezY
 bKB
 iVk
-pql
-pql
+inG
+inG
 iVk
 fOS
 xPi
@@ -28555,7 +28604,7 @@ gac
 gac
 gac
 obU
-uOG
+vle
 dKY
 kMK
 dKY
@@ -28592,7 +28641,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 xPi
@@ -28627,10 +28676,10 @@ cjZ
 ieL
 ieL
 ieL
-uOG
+vle
 dKY
 dKY
-xhT
+lUT
 aEt
 xPi
 xtg
@@ -28658,7 +28707,7 @@ gac
 gac
 obU
 obU
-uOG
+vle
 dKY
 kMK
 dKY
@@ -28695,7 +28744,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 mFG
 xPi
@@ -28730,10 +28779,10 @@ vQh
 bFy
 nnb
 mbj
-uOG
+vle
 dKY
 dKY
-xhT
+lUT
 uRB
 xtg
 xtg
@@ -28761,7 +28810,7 @@ gac
 gac
 obU
 iVk
-kae
+bpl
 dKY
 dKY
 dKY
@@ -28798,7 +28847,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 mFG
 xPi
@@ -28833,10 +28882,10 @@ taj
 lAU
 tce
 mbj
-uOG
+vle
 dKY
 dKY
-xhT
+lUT
 uRB
 xtg
 xPi
@@ -28863,7 +28912,7 @@ oGJ
 gac
 gac
 obU
-uOG
+vle
 dKY
 dKY
 dKY
@@ -28901,7 +28950,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 pKa
 xtg
@@ -28934,12 +28983,12 @@ dFI
 iwY
 taj
 taj
-pgC
+iUL
 mbj
-uOG
+vle
 dKY
 dKY
-xhT
+lUT
 hWe
 xtg
 cwk
@@ -28965,8 +29014,8 @@ exa
 edY
 gac
 gac
-pql
-kae
+inG
+bpl
 dKY
 dKY
 dKY
@@ -29004,7 +29053,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 nqH
 xtg
@@ -29037,12 +29086,12 @@ nfy
 emz
 taj
 taj
-sTB
+rSb
 mbj
-uOG
+vle
 dKY
 dKY
-xhT
+lUT
 uRB
 xtg
 xPi
@@ -29107,7 +29156,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 iRL
 xPi
@@ -29142,10 +29191,10 @@ taj
 taj
 qQY
 mbj
-uOG
+vle
 dKY
 dKY
-xhT
+lUT
 uRB
 cwk
 xPi
@@ -29210,7 +29259,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 rYx
 wgq
@@ -29243,12 +29292,12 @@ iJo
 iwY
 taj
 taj
-ybT
+cUH
 mbj
-uOG
+vle
 dKY
 dKY
-xhT
+lUT
 uRB
 xtg
 xtg
@@ -29313,7 +29362,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 xtg
@@ -29348,10 +29397,10 @@ taj
 lAU
 mYv
 mbj
-uOG
+vle
 dKY
 dKY
-xhT
+lUT
 uRB
 cwk
 qWh
@@ -29416,7 +29465,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 fcl
@@ -29447,14 +29496,14 @@ kaR
 nkS
 bHl
 emz
-taj
-taj
+emz
+emz
 dbc
 mbj
-uOG
-dKY
-dKY
-xhT
+iVk
+gXZ
+tiG
+lUT
 uRB
 xtg
 xtg
@@ -29519,7 +29568,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 cwk
@@ -29554,10 +29603,10 @@ weo
 nkS
 nkS
 nkS
-uOG
-dKY
-dKY
-xhT
+chq
+chq
+vle
+lUT
 uRB
 xtg
 xPi
@@ -29622,7 +29671,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 xtg
@@ -29651,16 +29700,16 @@ naK
 bvF
 kaR
 chq
-ilM
+eLw
+ceX
 tld
 tld
-tld
-ked
+ceX
+wKN
+oXt
 chq
-uOG
-dKY
-dKY
-xhT
+vle
+lUT
 uRB
 xtg
 cwk
@@ -29725,7 +29774,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 xtg
@@ -29753,17 +29802,17 @@ iYk
 naK
 bvF
 kaR
-rLV
-tld
-pZW
-dGm
-nrO
-ceX
 chq
-uOG
-dKY
-dKY
-xhT
+ceX
+rWS
+sxq
+hSz
+hFf
+wKN
+ceY
+chq
+vle
+lUT
 uRB
 cwk
 xtg
@@ -29828,7 +29877,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 uRB
 xtg
@@ -29857,16 +29906,16 @@ uru
 bvF
 uSN
 chq
-uGk
+uRs
+boc
 lpc
-dPp
+svq
 hFf
-ydD
+wKN
+yab
 chq
-uOG
-dKY
-dKY
-xhT
+vle
+lUT
 uRB
 cwk
 jgN
@@ -29931,7 +29980,7 @@ dKY
 dKY
 dKY
 dKY
-xhT
+lUT
 obU
 rAA
 xtg
@@ -29960,16 +30009,16 @@ naK
 bvF
 kaR
 chq
-uGk
-pBM
+isl
+boc
+mIY
 hKA
 hFf
-xSd
-wrV
-uOG
-dKY
-dKY
-xhT
+wKN
+qFS
+chq
+vle
+lUT
 jay
 xtg
 xtg
@@ -30034,7 +30083,7 @@ aDg
 aDg
 aDg
 aDg
-kCE
+vzC
 raW
 aEt
 uRB
@@ -30062,17 +30111,17 @@ wWp
 naK
 bvF
 kaR
-fOr
-ydD
+chq
+bbT
 ggD
 ydD
-shc
-vmu
+ydD
+ydD
+vEX
+lzk
 chq
-uOG
-dKY
-dKY
-xhT
+vle
+lUT
 fOS
 xPi
 xPi
@@ -30166,15 +30215,15 @@ naK
 bvF
 kaR
 chq
-tZG
-tbs
-tbs
-qMF
+hSN
+cie
+bxl
+gtF
+brv
+jJB
+jJB
 chq
 iVk
-iVk
-vVs
-vVs
 iVk
 uRB
 wMi
@@ -30274,9 +30323,9 @@ chq
 chq
 chq
 chq
-uRB
-uRB
-uRB
+chq
+chq
+chq
 uRB
 uRB
 uRB
@@ -30690,7 +30739,7 @@ iAY
 vJk
 wEK
 vwP
-anl
+pKr
 doB
 fga
 xWV
