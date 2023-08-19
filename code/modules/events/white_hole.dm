@@ -67,6 +67,7 @@
 		logTheThing(LOG_ADMIN, usr, "Spawned a white hole anomaly with origin [whitehole.source_location] at [log_loc(T)]")
 
 
+ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 /obj/whitehole
 	name = "white hole"
 	icon = 'icons/effects/160x160.dmi'
@@ -800,6 +801,10 @@
 			playsound(src,'sound/effects/creaking_metal1.ogg',100,0,5,-0.5)
 
 		processing_items |= src
+
+	proc/admin_activate()
+		set name = "Activate"
+		src.time_since_start = grow_duration
 
 	bullet_act(obj/projectile/P)
 		shoot_reflected_to_sender(P, src)
