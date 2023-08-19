@@ -183,9 +183,9 @@
 				var/mob/living/target = pick(stuffnearby)
 				var/datum/callback/C = new(src, PROC_REF(alter_projectile))
 				if(prob(10))
-					shoot_projectile_ST(POT, projectile, get_step(target, pick(ordinal)), alter_proj=C)
+					shoot_projectile_ST_pixel_spread(POT, projectile, get_step(target, pick(ordinal)), alter_proj=C)
 				else
-					shoot_projectile_ST(POT, projectile, target, alter_proj=C)
+					shoot_projectile_ST_pixel_spread(POT, projectile, target, alter_proj=C)
 				POT.growth -= rand(1,5)
 			return
 

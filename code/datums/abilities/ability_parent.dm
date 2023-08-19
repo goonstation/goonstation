@@ -49,7 +49,8 @@
 		..()
 		owner = M
 		hud = new()
-		onAttach()
+		if(owner)
+			onAttach()
 
 	disposing()
 		for (var/atom/movable/screen/S in hud.objects)

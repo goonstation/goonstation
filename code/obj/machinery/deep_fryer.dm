@@ -310,7 +310,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	var/shivers = 1
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if ((H.mind.assigned_role in list("Detective", "Vice Officer", "Part-time Vice Officer")) || (H.job in list("Detective", "Vice Officer", "Part-time Vice Officer")))
+		if ((H.mind.assigned_role in list("Detective", "Vice Officer")) || (H.job in list("Detective", "Vice Officer")))
 			shivers = 20
 	if (prob(0.5 * shivers))
 		fed_ice = M // asked this mob

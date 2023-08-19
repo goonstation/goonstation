@@ -85,7 +85,7 @@
 
 	var/the_slot = null
 	if (leader.back?.storage && !leader.back.storage.is_full())
-		leader.equip_if_possible(new /obj/item/storage/box/spykit(leader), leader.slot_in_backpack)
+		leader.equip_if_possible(new /obj/item/storage/box/spykit(leader), SLOT_IN_BACKPACK)
 		the_slot = "backpack"
 	else
 		var/obj/K2 = new /obj/item/storage/box/spykit(get_turf(leader))

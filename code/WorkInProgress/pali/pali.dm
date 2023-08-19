@@ -87,7 +87,7 @@
 	harm(atom/target, var/mob/living/user)
 		if(istype(target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/M = target
-			var/list/all_slots = list(M.slot_back, M.slot_wear_mask, M.slot_l_hand, M.slot_r_hand, M.slot_belt, M.slot_wear_id, M.slot_ears, M.slot_glasses, M.slot_gloves, M.slot_head, M.slot_shoes, M.slot_wear_suit, M.slot_l_store, M.slot_r_store)
+			var/list/all_slots = list(SLOT_BACK, SLOT_WEAR_MASK, SLOT_L_HAND, SLOT_R_HAND, SLOT_BELT, SLOT_WEAR_ID, SLOT_EARS, SLOT_GLASSES, SLOT_GLOVES, SLOT_HEAD, SLOT_SHOES, SLOT_WEAR_SUIT, SLOT_L_STORE, SLOT_R_STORE)
 			var/list/slots = list()
 			for(var/slot in all_slots)
 				if(M.get_slot(slot))
@@ -458,7 +458,7 @@
 
 /proc/populate_station(chance=100)
 	for(var/job_name in job_start_locations)
-		if(job_name == "AI")
+		if(job_name == "AI" || job_name == "JoinLate")
 			continue
 		for(var/turf/T in job_start_locations[job_name])
 			if(prob(chance))
@@ -615,3 +615,64 @@ ADMIN_INTERACT_PROCS(/obj/portal/to_space, proc/give_counter)
 		if(prob(100 * (1 - 1 / src.fastness_factor)))
 			SPAWN(0.2 SECONDS)
 				src.ai_process()
+
+ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, proc/toggle_can_switch_target)
+/obj/item/kitchen/utensil/knife/tracker
+	name = "target tracker knife"
+	icon_state = "knife_onedir"
+	desc = "Poor man's pinpointer. Just stab someone to track where they are!"
+	force = 4
+	throwforce = 6
+	var/can_switch_target = TRUE
+
+	attack(mob/living/carbon/M, mob/living/carbon/user)
+		. = ..()
+		if(can_switch_target)
+			src.AddComponent(/datum/component/angle_watcher, M, base_transform=matrix())
+
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		. = ..()
+		if(ismob(hit_atom) && can_switch_target)
+			src.AddComponent(/datum/component/angle_watcher, hit_atom, base_transform=matrix())
+
+	clean_forensic()
+		. = ..()
+		if(can_switch_target)
+			src.GetComponent(/datum/component/angle_watcher)?.RemoveComponent()
+			animate(src, transform=null, time=2 SECONDS, flags=ANIMATION_PARALLEL, easing=ELASTIC_EASING)
+
+	proc/set_target()
+		set name = "Set Target"
+		var/mob/target = usr.client.input_data(
+				list(DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, DATA_INPUT_REFPICKER),
+				"Set Knife Tracking Target",
+				"Select a target to track with this knife.")?.output
+		if(target)
+			src.AddComponent(/datum/component/angle_watcher, target, base_transform=matrix())
+		else
+			src.GetComponent(/datum/component/angle_watcher)?.RemoveComponent()
+			animate(src, transform=null, time=2 SECONDS, flags=ANIMATION_PARALLEL, easing=ELASTIC_EASING)
+
+	proc/toggle_can_switch_target()
+		set name = "Toggle Target Switching"
+		can_switch_target = !can_switch_target
+		if(can_switch_target)
+			boutput(usr, "<span class='notice'>Knife user can now stab someone else to track them.</span>")
+		else
+			boutput(usr, "<span class='notice'>Knife user can no longer switch targets.</span>")
+
+
+
+/obj/spawner/knife_loop
+	New()
+		..()
+		var/how_many_knives = tgui_input_number(usr, "How many knives to spawn?", "Knife loop", 2, 100, 2)
+		var/list/obj/item/kitchen/utensil/knife/tracker/knives = list()
+		for(var/i = 1 to how_many_knives)
+			var/obj/item/kitchen/utensil/knife/tracker/knife = new(src.loc)
+			knife.can_switch_target = FALSE
+			if(i > 1)
+				knife.AddComponent(/datum/component/angle_watcher, knives[i - 1], base_transform=matrix())
+			knives += knife
+		knives[1].AddComponent(/datum/component/angle_watcher, knives[how_many_knives], base_transform=matrix())
+		qdel(src)

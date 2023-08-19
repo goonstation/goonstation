@@ -541,44 +541,4 @@
 			{{/for}}
 		"})
 
-		/*
-		row = new
-		row.addClass("row-fluid")
-		beakerTemplate.addChildElement(row)
-		span = new
-		span.addClass("span12")
-		row.addChildElement(span)
-		h = new(4)
-		h.setText("Beaker 3")
-		span.addChildElement(h)
-
-		row = new
-		row.addClass("row-fluid")
-		beakerTemplate.addChildElement(row)
-
-		span = new
-		span.addClass("span3")
-		row.addChildElement(span)
-		var/datum/tag/button/add3 = new
-		add3.setText("Add #3")
-		add3.setId("addButton3")
-		span.addChildElement(add3)
-		var/datum/tag/button/remove3 = new
-		remove3.setText("Remove #3")
-		remove3.setId("removeButton3")
-		span.addChildElement(remove3)
-
-		span = new
-		span.addClass("span9")
-		row.addChildElement(span)
-		var/datum/tag/select/multi/added3 = new
-		added3.setId("addedRegs3")
-		for(var/chem in chems3)
-			var/amt = amounts3[chem]
-			added3.addOption(chem, "[chem]: [amt]")
-		span.addChildElement(added3)*/
-
-		/*var/datum/tag/firebug/fb = new
-		html.addToHead(fb)*/
-
 		usr.Browse(html.toHtml(), "window=cheminterface;size=600x600")
