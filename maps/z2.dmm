@@ -28245,9 +28245,7 @@
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "caR" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/orangeblack,
 /area/owlery/staffhall)
 "caS" = (
@@ -34803,16 +34801,11 @@
 	},
 /area/owlery/staffhall)
 "cxm" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/floor/grime,
 /area/owlery/staffhall)
 "cxn" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/arrival{
 	dir = 4
 	},
@@ -35008,8 +35001,8 @@
 	},
 /area/owlery/staffhall)
 "cxV" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
+/obj/decal/cleanable/blood{
+	icon_state = "handblood_c"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
@@ -35309,18 +35302,11 @@
 /area/owlery/staffhall)
 "cyP" = (
 /obj/item/casing/shotgun/blue,
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "gib2"
-	},
+/obj/decal/cleanable/blood/gibs,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "cyQ" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "cyR" = (
@@ -35331,9 +35317,6 @@
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "cyS" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "gibmid2"
-	},
 /obj/critter/madnessowl{
 	alive = 0;
 	can_revive = 0;
@@ -35341,6 +35324,7 @@
 	desc = "This owl has bloodshot eyes and seems to be snarling at you. Well if it was alive atleast. It looks like it was shot.";
 	icon_state = "madsmallowl-dead"
 	},
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "cyT" = (
@@ -35582,7 +35566,7 @@
 /area/owlery/staffhall)
 "czG" = (
 /obj/decal/cleanable/blood{
-	icon_state = "armorblood"
+	icon_state = "armorblood_c"
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
@@ -35591,7 +35575,7 @@
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/blood{
-	icon_state = "armorblood"
+	icon_state = "armorblood_c"
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/owlery/staffhall)
@@ -36357,7 +36341,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/cleanable/blood{
-	icon_state = "armorblood"
+	icon_state = "armorblood_c"
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
@@ -36552,7 +36536,7 @@
 /area/owlery/Owlopen)
 "cCm" = (
 /obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves"
+	icon_state = "left_bloodygloves_c"
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
@@ -36693,11 +36677,7 @@
 /turf/unsimulated/floor/white,
 /area/owlery/lab)
 "cCG" = (
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /obj/item/reagent_containers/glass/bottle/acetone/janitors,
 /obj/item/reagent_containers/glass/bottle/ammonia/janitors,
 /turf/unsimulated/floor/white,
@@ -37310,12 +37290,10 @@
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "cEn" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "cEo" = (
@@ -37830,10 +37808,8 @@
 /turf/unsimulated/floor/black,
 /area/owlery/office)
 "cFW" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
 /obj/item/scrap,
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/plating,
 /area/owlery/staffhall)
 "cFX" = (
@@ -39036,16 +39012,11 @@
 	dir = 1
 	},
 /area/owlery/office)
-"cJm" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/floor/blackwhite{
-	dir = 1
-	},
-/area/owlery/office)
 "cJn" = (
 /obj/item/storage/wall/random,
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
 /turf/unsimulated/floor/blackwhite{
 	dir = 1
 	},
@@ -39262,12 +39233,6 @@
 	dir = 1
 	},
 /area/owlery/office)
-"cJR" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/floor/white,
-/area/owlery/office)
 "cJS" = (
 /obj/critter/madnessowl{
 	alive = 0;
@@ -39347,11 +39312,7 @@
 	name = "weird meat"
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit"
-	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget,
@@ -39449,7 +39410,7 @@
 "cKu" = (
 /obj/machinery/light,
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
+	dir = 4
 	},
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
@@ -39673,11 +39634,7 @@
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cLk" = (
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit"
-	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cLl" = (
@@ -39742,8 +39699,8 @@
 /turf/unsimulated/floor/wood/two,
 /area/owlery/owleryhall)
 "cLt" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
+/obj/decal/cleanable/blood{
+	icon_state = "handblood_c"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
@@ -39934,12 +39891,10 @@
 	},
 /area/owlery/owleryhall)
 "cLX" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cLY" = (
@@ -40163,7 +40118,7 @@
 /area/owlery/owleryhall)
 "cMA" = (
 /obj/decal/cleanable/blood{
-	icon_state = "left_bloodyhands"
+	icon_state = "left_bloodyhands_c"
 	},
 /turf/unsimulated/floor/red,
 /area/owlery/gangzone)
@@ -40190,18 +40145,14 @@
 /turf/unsimulated/floor/green/checker,
 /area/owlery/owleryhall)
 "cME" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cMF" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cMG" = (
@@ -40307,9 +40258,7 @@
 "cMX" = (
 /obj/decal/cleanable/paper,
 /obj/item/material_piece/wad,
-/obj/decal/cleanable/blood{
-	icon_state = "u_guilty"
-	},
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/black,
 /area/owlery/office)
 "cMY" = (
@@ -40326,7 +40275,7 @@
 /area/owlery/office)
 "cMZ" = (
 /obj/decal/cleanable/blood{
-	icon_state = "handblood"
+	icon_state = "handblood_c"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/gangzone)
@@ -40412,10 +40361,8 @@
 /turf/unsimulated/floor/green/checker,
 /area/owlery/owleryhall)
 "cNs" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
 /obj/decal/cleanable/blood/tracks,
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/greenwhite{
 	dir = 8
 	},
@@ -40961,11 +40908,9 @@
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cOH" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
 /obj/stool/bench/green/auto,
 /obj/machinery/light/emergency,
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/greenwhite,
 /area/owlery/owleryhall)
 "cOI" = (
@@ -40983,9 +40928,7 @@
 /area/owlery/owleryhall)
 "cOK" = (
 /obj/item/extinguisher,
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/grime,
 /area/owlery/owleryhall)
 "cOL" = (
@@ -41057,14 +41000,12 @@
 /area/owlery/owleryhall)
 "cOW" = (
 /obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves"
+	icon_state = "left_bloodygloves_c"
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cOX" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/owleryhall)
 "cOY" = (
@@ -41366,9 +41307,6 @@
 /area/owlery/owleryhall)
 "cPL" = (
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
-/obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
 /obj/decal/cleanable/blood/gibs{
@@ -41381,6 +41319,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/green/checker,
 /area/owlery/owleryhall)
 "cPM" = (
@@ -41549,11 +41488,7 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
 	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
@@ -41597,7 +41532,7 @@
 /obj/decal/cleanable/blood/tracks,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/decal/cleanable/blood{
-	icon_state = "handblood"
+	icon_state = "handblood_c"
 	},
 /turf/unsimulated/floor/greenwhite{
 	dir = 8
@@ -41613,7 +41548,7 @@
 /area/owlery/gangzone)
 "cQo" = (
 /obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves"
+	icon_state = "left_bloodygloves_c"
 	},
 /obj/decal/cleanable/blood{
 	icon_state = "tracksL"
@@ -41876,12 +41811,7 @@
 	desc = "This owl has bloodshot eyes and seems to be snarling at you. Well if it was alive atleast. It looks like it was shot.";
 	icon_state = "madsmallowl-dead"
 	},
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cQS" = (
@@ -41895,14 +41825,15 @@
 	icon_state = "body3";
 	name = "decomposed corpse"
 	},
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "gibdown1"
-	},
 /obj/decal/cleanable/blood/tracks,
 /obj/cable{
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment,
+/obj/decal/cleanable/blood,
+/obj/decal/cleanable/blood/gibs/body{
+	icon_state = "gibdown1"
+	},
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cQU" = (
@@ -42126,12 +42057,6 @@
 /turf/unsimulated/floor/redblack{
 	dir = 6
 	},
-/area/owlery/owleryhall)
-"cRq" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cRr" = (
 /obj/table/wood/auto/desk,
@@ -42768,10 +42693,8 @@
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cTa" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "gib2"
-	},
 /obj/reagent_dispensers/cleanable/ants,
+/obj/decal/cleanable/blood/gibs,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cTb" = (
@@ -43293,7 +43216,7 @@
 /area/owlery/Owlmait2)
 "cUk" = (
 /obj/decal/cleanable/blood{
-	icon_state = "helmetblood"
+	icon_state = "helmetblood_c"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait2)
@@ -43492,9 +43415,7 @@
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/owleryhall)
 "cUK" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/green/checker,
 /area/owlery/owleryhall)
 "cUL" = (
@@ -43573,15 +43494,6 @@
 /obj/item/reagent_containers/food/snacks/yuckburn,
 /turf/unsimulated/floor/plating/scorched,
 /area/owlery/staffhall)
-"cUV" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
-/turf/unsimulated/floor/white,
-/area/owlery/owleryhall)
 "cUW" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It seems to have been damaged somehow.";
@@ -44516,9 +44428,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/syndicate/minerva5/command)
 "cWR" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/greenwhite,
 /area/owlery/owleryhall)
 "cWS" = (
@@ -44576,7 +44486,7 @@
 /area/syndicate/minerva5/command)
 "cWY" = (
 /obj/decal/cleanable/blood{
-	icon_state = "left_bloodyhands"
+	icon_state = "left_bloodyhands_c"
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
@@ -44693,7 +44603,7 @@
 	icon_state = "4-8"
 	},
 /obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves"
+	icon_state = "left_bloodygloves_c"
 	},
 /turf/unsimulated/floor/greenwhite{
 	dir = 1
@@ -44728,7 +44638,7 @@
 	name = "exhibit window"
 	},
 /obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves"
+	icon_state = "left_bloodygloves_c"
 	},
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
@@ -44796,7 +44706,7 @@
 	name = "exhibit window"
 	},
 /obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves"
+	icon_state = "left_bloodygloves_c"
 	},
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
@@ -44822,7 +44732,7 @@
 /area/owlery/Owlmait2)
 "cXE" = (
 /obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves"
+	icon_state = "left_bloodygloves_c"
 	},
 /turf/unsimulated/floor/yellowblack{
 	dir = 6
@@ -44835,7 +44745,7 @@
 	name = "exhibit window"
 	},
 /obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves"
+	icon_state = "left_bloodygloves_c"
 	},
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
@@ -45012,7 +44922,7 @@
 /area/owlery/owllock)
 "cXW" = (
 /obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves"
+	icon_state = "left_bloodygloves_c"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -45317,10 +45227,8 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "gib2"
-	},
 /obj/item/gun/kinetic/riotgun,
+/obj/decal/cleanable/blood/gibs,
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
 "cYD" = (
@@ -45683,12 +45591,12 @@
 /area/owlery/owllock)
 "cZk" = (
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "gibdown1"
-	},
-/obj/decal/cleanable/blood/tracks{
 	icon_state = "drip5"
 	},
 /obj/machinery/light/emergency,
+/obj/decal/cleanable/blood/gibs/body{
+	icon_state = "gibdown1"
+	},
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
 "cZl" = (
@@ -50450,21 +50358,9 @@
 	name = "Freezer - Spare Parts"
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibhead";
-	name = "grody thing"
-	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
 	desc = "Gross.";
 	name = "old kidney"
@@ -69708,6 +69604,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"qyl" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/unsimulated/floor/white,
+/area/owlery/office)
 "qzK" = (
 /obj/machinery/conveyor/NS{
 	id = "ddan"
@@ -84343,7 +84245,7 @@ cPO
 cQl
 cEg
 cDA
-cRq
+cMF
 cQR
 cWY
 cFq
@@ -84648,7 +84550,7 @@ cDA
 cFq
 cFq
 cFq
-cRq
+cMF
 cFq
 cFq
 cXz
@@ -85245,7 +85147,7 @@ cKY
 cFq
 cMa
 cMF
-cUV
+cMF
 cZt
 cDC
 cDC
@@ -88561,7 +88463,7 @@ cGF
 cGF
 vkY
 cJl
-cJR
+cBj
 cKw
 cAD
 cnw
@@ -88863,7 +88765,7 @@ cHN
 cIc
 vkY
 cJl
-cBj
+qyl
 gpj
 vXw
 cnw
@@ -89768,7 +89670,7 @@ cHd
 cHk
 cHM
 cYI
-cJm
+cJl
 cBj
 cKA
 cAD
@@ -99412,7 +99314,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+daq
 aaa
 aaa
 aaa
