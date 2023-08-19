@@ -37,12 +37,6 @@ datum/achievementReward/aicase/ai_dwaine
 	required_medal = "421"
 	aiskin = "dwaine"
 
-/*/datum/achievementReward/aicase/ai_flock
-	title = "(AI Core Skin) Flock"
-	desc = "Attunes your AI core to the signal."
-	required_medal = "To the stars"
-	aiskin = "flock"*/
-
 /datum/achievementReward/aicase/ai_gold
 	title = "(AI Core Skin) Golden"
 	desc = "Gold plates your AI core!"
