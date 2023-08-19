@@ -2827,6 +2827,7 @@ proc/get_mobs_trackable_by_AI()
 		src.brain = new /obj/item/organ/brain/latejoin(src)
 		src.set_color(000000)
 		src.faceEmotion = "ai_blank"
+		src.coreSkin = "cardboard"
 		src.update_appearance()
 		src.job = "AI"
 		if (src.mind)
