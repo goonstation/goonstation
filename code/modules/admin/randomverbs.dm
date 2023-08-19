@@ -566,7 +566,7 @@
 
 /client/proc/cmd_admin_remove_plasma()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
-	set name = "Stabilize Atmos."
+	set name = "Stabilize Atmos"
 	set desc = "Resets the air contents of every turf in view to normal."
 	ADMIN_ONLY
 	SPAWN(0)
@@ -582,6 +582,8 @@
 			T.air.nitrogen = MOLES_N2STANDARD
 			T.air.fuel_burnt = 0
 			T.air.temperature = T20C
+			if(T.parent?.group_processing)
+				T.parent?.suspend_group_processing()
 			LAGCHECK(LAG_LOW)
 
 /client/proc/flip_view()

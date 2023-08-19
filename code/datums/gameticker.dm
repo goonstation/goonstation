@@ -275,7 +275,7 @@ var/global/current_state = GAME_STATE_INVALID
 
 	for(var/turf/T in job_start_locations["AI"])
 		if(isnull(locate(/mob/living/silicon/ai) in T))
-			new /obj/item/clothing/suit/cardboard_box/ai(T)
+			new /mob/living/silicon/ai/latejoin(T)
 	if(!processScheduler.isRunning)
 		processScheduler.start()
 
