@@ -520,6 +520,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	welcome_text = "Welcome, Agent."
 
 /obj/machinery/door_control/antagscanner/attack_hand(mob/user)
+	if (ON_COOLDOWN(src, "scan", 2 SECONDS))
+		return
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
 	if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT))
 		user.visible_message("<span class='notice'>The [src] accepts the biometrics of the user and beeps, granting you access.</span>")
