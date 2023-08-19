@@ -493,7 +493,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 // Stolen from the vending module
 /// For a flying chat and message addition upon controller activation, not called outside of a child as things stand
 /obj/machinery/door_control/proc/speak(var/message)
-	ON_COOLDOWN(src, "scanner_speak", 2)
 	if ((src.status & NOPOWER) || !message)
 		return
 	else
