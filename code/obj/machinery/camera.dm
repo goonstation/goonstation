@@ -75,7 +75,7 @@
 				if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
 					pixel_offset = 12 // jen walls are slightly taller so the offset needs to increase
 				if (!alt) // this uses the alternate sprites which happen to coincide with diagonal dirs
-					src.set_dir(turn(turn(D, 180)))
+					src.set_dir(turn(D, 180))
 				else
 					switch (D)
 						if (NORTH)
