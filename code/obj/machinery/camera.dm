@@ -351,6 +351,8 @@
 	user.current = src
 	user.set_eye(src)
 
+// here there was an antisemitic joke, commented out, that persisted until february 27 2020. Why the fuck it lasted so many years really puts ones morals into question.
+
 /obj/machinery/camera/proc/disconnect_viewers()
 	for(var/mob/O in mobs)
 		/* Not needed with new AI cam system
