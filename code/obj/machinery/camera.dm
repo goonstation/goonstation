@@ -86,12 +86,12 @@
 							src.set_dir(NORTHEAST)
 						if (WEST)
 							src.set_dir(NORTHWEST)
-				switch (D) // south ones don't need to be offset ofc
+				switch (D) // north facing ones don't need to be offset ofc
 					if (EAST)
 						src.pixel_x = pixel_offset
 					if (WEST)
 						src.pixel_x = -pixel_offset
-					if (NORTH)
+					if (SOUTH)
 						src.pixel_y = pixel_offset * 2
 				T = null
 				return
