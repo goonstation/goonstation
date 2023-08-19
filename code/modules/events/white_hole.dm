@@ -804,7 +804,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 
 	proc/admin_activate()
 		set name = "Activate"
-		src.time_since_start = grow_duration
+		start_time = TIME - grow_duration
 
 	bullet_act(obj/projectile/P)
 		shoot_reflected_to_sender(P, src)
