@@ -42,17 +42,65 @@
 		c_tag = "autotag"
 
 /obj/machinery/camera/auto
-	name = "autoname"
-	c_tag = "autotag"
-	sticky = TRUE
 #ifdef IN_MAP_EDITOR
 	icon_state = "cameras_default"
 #endif
+	name = "autoname"
+	c_tag = "autotag"
+	sticky = TRUE
+
+	north
+		icon_state = "camera"
+		sticky = FALSE
+		dir = NORTH
+
+	south
+		icon_state = "camera"
+		sticky = FALSE
+		dir = SOUTH
+		pixel_y = 20
+
+	east
+		icon_state = "camera"
+		sticky = FALSE
+		dir = EAST
+		pixel_x = -10
+
+	west
+		icon_state = "camera"
+		sticky = FALSE
+		dir = WEST
+		pixel_x = 10
+
 /obj/machinery/camera/auto/alt
-	alternate_sprites = TRUE
 #ifdef IN_MAP_EDITOR
 	icon_state = "cameras_alt"
 #endif
+	alternate_sprites = TRUE
+
+	north
+		icon_state = "camera"
+		sticky = FALSE
+		dir = SOUTHWEST
+
+	south
+		icon_state = "camera"
+		sticky = FALSE
+		dir = SOUTHEAST
+		pixel_y = 20
+
+	east
+		icon_state = "camera"
+		sticky = FALSE
+		dir = NORTHEAST
+		pixel_x = -10
+
+	west
+		icon_state = "camera"
+		sticky = FALSE
+		dir = NORTHWEST
+		pixel_x = 10
+
 /obj/machinery/camera/proc/autoposition(var/alt)
 	if (!src.sticky)
 		return
