@@ -87,7 +87,7 @@
 
 	if (istype(source, /obj/fluid))
 		var/obj/fluid/F = source
-		blood_color = F.group.reagents.get_master_color()
+		blood_color = F.group.average_color.to_rgb()
 		var/datum/reagent/blood/blood_reagent = F.group.reagents.reagent_list["blood"]
 		if (!blood_reagent)
 			blood_reagent = F.group.reagents.reagent_list["bloodc"]
@@ -102,7 +102,7 @@
 		if (L.bioHolder)
 			b_uid = L.bioHolder.Uid
 			b_type = L.bioHolder.bloodType
-			if ( L.bioHolder.bloodColor)
+			if (L.bioHolder.bloodColor)
 				blood_color = L.bioHolder.bloodColor
 		else if (L.blood_id)
 			var/datum/reagent/R = reagents_cache[L.blood_id]
