@@ -25618,12 +25618,12 @@
 /area/station/medical/staff)
 "emR" = (
 /obj/machinery/light/incandescent,
-/obj/disposalpipe/segment/brig{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/brig{
+	dir = 4;
+	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/processing)
@@ -31740,6 +31740,13 @@
 /obj/item/clothing/head/bandana/random_color,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
+"jcn" = (
+/obj/disposalpipe/segment/brig{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/red/side,
+/area/station/security/processing)
 "jeb" = (
 /obj/machinery/conveyor/NS{
 	id = "zetadisposals";
@@ -97807,7 +97814,7 @@ vVo
 bgP
 hVA
 tMz
-lus
+jcn
 set
 stt
 bkP
