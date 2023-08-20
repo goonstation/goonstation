@@ -82,6 +82,9 @@
 	var/b_type = "--unidentified substance--"
 	var/blood_color = DEFAULT_BLOOD_COLOR
 
+	if (QDELETED(src))
+		return
+
 	if (istype(source, /obj/fluid))
 		var/obj/fluid/F = source
 		blood_color = F.group.reagents.get_master_color()
@@ -160,7 +163,7 @@
 			var/obj/O = src
 			if (O.tracked_blood)
 				O.tracked_blood = null
-		if (isitem(src) && (src.fingerprints || src.blood_DNA || src.blood_type))
+		if (isitem(src) && (src.fingerprints || src.blood_DNA || src.blood_type || src.forensics_blood_color))
 			src.add_forensic_trace("fprints", src.fingerprints)
 			src.fingerprints = null
 			src.add_forensic_trace("btype", src.blood_type)
@@ -197,7 +200,7 @@
 			var/mob/living/carbon/human/M = src
 			var/list/gear_to_clean = list(M.r_hand, M.l_hand, M.head, M.wear_mask, M.w_uniform, M.wear_suit, M.belt, M.gloves, M.glasses, M.shoes, M.wear_id, M.back)
 			for (var/obj/item/check in gear_to_clean)
-				if (check.fingerprints || check.blood_DNA || check.blood_type)
+				if (check.fingerprints || check.blood_DNA || check.blood_type || check.forensics_blood_color)
 					check.add_forensic_trace("fprints", check.fingerprints)
 					check.fingerprints = null
 					check.add_forensic_trace("btype", check.blood_type)
