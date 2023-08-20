@@ -448,6 +448,7 @@ To remove:
 		} \
 	} while (0)
 
+//WARNING: there is currently no good default handling (i.e.: yielding 1 instead of null) for when the property is not set at all. You need to do it manually.
 #define APPLY_ATOM_PROPERTY_PRODUCT(target, property, do_update, update_macro, source, value) \
 	do { \
 		LAZYLISTINIT(target.atom_properties); \
