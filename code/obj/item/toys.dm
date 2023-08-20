@@ -368,7 +368,7 @@ ADMIN_INTERACT_PROCS(/obj/item/ghostboard, proc/admin_command_speak)
 				if(M.client)
 					boutput(M, "<span class='notice'>You sense a disturbance emanating from \a [src] in \the [AR.name].</span>")
 		for (var/mob/O in observersviewers(7, src))
-			O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
+			O.show_message("<B><span class='notice'>The board spells out a message ... \"[message]\"</span></B>", 1)
 
 	proc/admin_command_speak()
 		set name = "Speak"
