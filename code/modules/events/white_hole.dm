@@ -67,6 +67,7 @@
 		logTheThing(LOG_ADMIN, usr, "Spawned a white hole anomaly with origin [whitehole.source_location] at [log_loc(T)]")
 
 
+ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 /obj/whitehole
 	name = "white hole"
 	icon = 'icons/effects/160x160.dmi'
@@ -801,6 +802,10 @@
 
 		processing_items |= src
 
+	proc/admin_activate()
+		set name = "Activate"
+		start_time = TIME - grow_duration
+
 	bullet_act(obj/projectile/P)
 		shoot_reflected_to_sender(P, src)
 		P.die()
@@ -1302,7 +1307,9 @@
 		var/obj/whitehole/whitehole = target
 		if(!istype(whitehole))
 			CRASH("generate_fish called on whitehole fishing spot with non-whitehole target")
-		. = whitehole.generate_thing(whitehole.source_location)
+		var/atom/fish = whitehole.generate_thing(whitehole.source_location)
+		fish.name += "fish"
+		return fish
 
 	try_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)
 		. = ..()

@@ -444,9 +444,9 @@
 		flockmind.help_my_tutorial_is_being_a_massive_shit()
 
 //for debug, do not enable on live or it will cause runtimes and break everything
-/mob/living/intangible/flock/flockmind/verb/skip_tutorial_step()
-	set name = "SKIP TUTORIAL STEP"
-	src.tutorial.Advance()
+// /mob/living/intangible/flock/flockmind/verb/skip_tutorial_step()
+// 	set name = "SKIP TUTORIAL STEP"
+// 	src.tutorial.Advance()
 
 /obj/machinery/junk_spawner
 	var/stuff = list(/obj/item/extinguisher, /obj/item/crowbar, /obj/item/wrench)

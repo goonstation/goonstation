@@ -213,6 +213,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\components\ghost_observable.dm"
 #include "code\datums\components\glue_ready.dm"
 #include "code\datums\components\glued.dm"
+#include "code\datums\components\health_maptext.dm"
 #include "code\datums\components\legs.dm"
 #include "code\datums\components\light.dm"
 #include "code\datums\components\loc_invisibility.dm"
