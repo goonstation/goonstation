@@ -1105,7 +1105,23 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Barber")
 		return
 
-/datum/job/special/lawyer/judge
+/datum/job/special/attorney
+	name = "Attorney"
+	linkcolor = "#FF0000"
+	wages = PAY_DOCTORATE
+	limit = 4
+	receives_badge = 1
+	slot_jump = list(/obj/item/clothing/under/misc/lawyer)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_lhan = list(/obj/item/storage/briefcase)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+
+	New()
+		..()
+		src.access = get_access("Lawyer")
+		return
+
+/datum/job/special/attorney/judge
 	name = "Judge"
 
 	New()
