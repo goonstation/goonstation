@@ -138,15 +138,15 @@
 		if (istype(I, /obj/item/clothing))
 			var/obj/item/clothing/C = src
 			C.add_stain("blood-stained")
-		else if (istype(src, /turf/simulated))
-			if (istype(source, /mob/living))
-				var/mob/living/L = source
-				bleed(L, amount, 5, rand(1,3), src)
-		else if (ishuman(src)) // this will add the blood to their hands or something?
-			var/mob/living/carbon/human/H = src
-			H.blood_DNA = b_uid
-			H.blood_type = b_type
-			H.forensics_blood_color = blood_color
+	else if (istype(src, /turf/simulated))
+		if (istype(source, /mob/living))
+			var/mob/living/L = source
+			bleed(L, amount, 5, rand(1,3), src)
+	else if (ishuman(src)) // this will add the blood to their hands or something?
+		var/mob/living/carbon/human/H = src
+		H.blood_DNA = b_uid
+		H.blood_type = b_type
+		H.forensics_blood_color = blood_color
 
 // Was clean_blood. Reworked the proc to take care of other forensic evidence as well (Convair880).
 /atom/proc/clean_forensic()
