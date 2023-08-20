@@ -1333,7 +1333,7 @@
 								boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
 								return
 					if (M)
-						if (!can_act(M))
+						if (can_act(M))
 							if (tgui_alert(M, "[src] offers you a handshake. Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
 								if (M in view(1,null))
 									message = "<B>[src]</B> shakes hands with [M]."
@@ -1431,7 +1431,7 @@
 									return
 
 						if (M)
-							if (!!can_act(M))
+							if (can_act(M))
 								if (tgui_alert(M, "[src] offers you a highfive! Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
 									if (M in view(1,null))
 										message = "<B>[src]</B> and [M] highfive!"
