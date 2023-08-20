@@ -644,3 +644,15 @@ TYPEINFO(/obj/item/device/radio_upgrade)
 
 			src.secure_frequencies = list("z" = frequency)
 			src.secure_classes = list("z" = RADIOCL_SYNDICATE)
+	revolution
+		name = "private radio channel upgrade"
+		desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
+		secure_frequencies = null
+		secure_classes = null
+
+		New(turf/newLoc, freq)
+			..()
+			if (!freq)
+				return
+			src.secure_frequencies = list("z" = freq)
+			src.secure_classes = list("z" = RADIOCL_SYNDICATE)

@@ -4,6 +4,10 @@
 	antagonist_icon = "rev_head"
 
 	var/static/list/datum/mind/heads_of_staff
+	/// headrev headset
+	var/obj/item/device/radio/headset/headset = null
+	/// frequency used for headrev headset communication channel
+	var/static/headset_frequency = null
 
 	New()
 		if (!src.heads_of_staff)
@@ -12,6 +16,8 @@
 			for(var/mob/living/carbon/human/player in mobs)
 				if(player.mind?.is_head_of_staff())
 					src.heads_of_staff += player.mind
+		if (!src.headset_frequency)
+			src.headset_frequency = rand(1360, 1420)
 
 		. = ..()
 
@@ -92,6 +98,12 @@
 			boutput(H, "The Syndicate have provided you with a standalone head revolutionary uplink [loc_string]. Simply dial the frequency <b>\"[uplink.lock_code]\"</b> to unlock its hidden features.")
 			logTheThing(LOG_DEBUG, H, "Head revolutionary standalone uplink created: [uplink_source.name]. Location given: [loc_string]. Frequency: [uplink.lock_code]")
 			src.owner.store_memory("<b>Uplink frequency:</b> [uplink.lock_code].")
+
+		src.headset = H.ears
+		src.headset?.install_radio_upgrade(new /obj/item/device/radio_upgrade/revolution(null, src.headset_frequency))
+
+	remove_equipment()
+		src.headset?.remove_radio_upgrade()
 
 	add_to_image_groups()
 		. = ..()
