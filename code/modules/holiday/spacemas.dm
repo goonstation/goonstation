@@ -243,14 +243,14 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			return
 
 		if (ranged)
-			var/obj/projectile/P = shoot_projectile_ST_pixel(master, current_projectile, target)
+			var/obj/projectile/P = shoot_projectile_ST_pixel_spread(master, current_projectile, target)
 			if (!P)
 				return
 
 			user.visible_message("<span class='alert'><b>[master] throws a snowball at [target]!</b></span>")
 
 		else
-			var/obj/projectile/P = initialize_projectile_ST(master, current_projectile, target)
+			var/obj/projectile/P = initialize_projectile_pixel_spread(master, current_projectile, target)
 			if (!P)
 				return
 

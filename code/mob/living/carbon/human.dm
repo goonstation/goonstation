@@ -253,11 +253,6 @@
 	var/obj/item/parts/l_leg = null
 	var/obj/item/parts/r_leg = null
 
-	var/l_arm_bleed = 0
-	var/r_arm_bleed = 0
-	var/l_leg_bleed = 0
-	var/r_leg_bleed = 0
-
 	New(mob/new_holder, var/ling) // to prevent lings from spawning a shitload of limbs in unspeakable locations
 		..()
 		holder = new_holder
@@ -1703,8 +1698,8 @@
 		src.update_clothing()
 	else if (W == src.head)
 		W.unequipped(src)
-		src.update_hair_layer()
 		src.head = null
+		src.update_hair_layer()
 		src.update_clothing()
 	else if (W == src.ears)
 		W.unequipped(src)
