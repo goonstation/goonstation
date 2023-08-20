@@ -253,11 +253,6 @@
 	var/obj/item/parts/l_leg = null
 	var/obj/item/parts/r_leg = null
 
-	var/l_arm_bleed = 0
-	var/r_arm_bleed = 0
-	var/l_leg_bleed = 0
-	var/r_leg_bleed = 0
-
 	New(mob/new_holder, var/ling) // to prevent lings from spawning a shitload of limbs in unspeakable locations
 		..()
 		holder = new_holder
@@ -491,7 +486,7 @@
 
 /mob/living/carbon/human/disposing()
 	for(var/obj/item/I in src)
-		if(I.equipped_in_slot != slot_w_uniform)
+		if(I.equipped_in_slot != SLOT_W_UNIFORM)
 			src.u_equip(I)
 	if(src.w_uniform) // last because pockets etc.
 		src.u_equip(src.w_uniform)
@@ -1243,35 +1238,35 @@
 	//wanted the following to be a switch case but those expect constant expressions
 
 	if (src.w_uniform == I)
-		return slot_w_uniform
+		return SLOT_W_UNIFORM
 	if (src.wear_id == I)
-		return slot_wear_id
+		return SLOT_WEAR_ID
 	if (src.gloves == I)
-		return slot_gloves
+		return SLOT_GLOVES
 	if (src.shoes == I)
-		return slot_shoes
+		return SLOT_SHOES
 	if (src.wear_suit == I)
-		return slot_wear_suit
+		return SLOT_WEAR_SUIT
 	if (src.back == I)
-		return slot_back
+		return SLOT_BACK
 	if (src.glasses == I)
-		return slot_glasses
+		return SLOT_GLASSES
 	if (src.ears == I)
 		return ears
 	if (src.wear_mask == I)
-		return slot_wear_mask
+		return SLOT_WEAR_MASK
 	if (src.head == I)
-		return slot_head
+		return SLOT_HEAD
 	if (src.belt == I)
-		return slot_belt
+		return SLOT_BELT
 	if (src.l_store == I)
-		return slot_l_store
+		return SLOT_L_STORE
 	if (src.r_store == I)
-		return slot_r_store
+		return SLOT_R_STORE
 	if(src.l_hand == I)
-		return slot_l_hand
+		return SLOT_L_HAND
 	if(src.r_hand == I)
-		return slot_r_hand
+		return SLOT_R_HAND
 	return null
 
 /mob/living/carbon/human/is_in_hands(var/obj/O)
@@ -1649,26 +1644,6 @@
 
 	show_speech_bubble(speech_bubble)
 
-/mob/living/carbon/human/var/const
-	slot_back = 1
-	slot_wear_mask = 2
-	slot_l_hand = 4
-	slot_r_hand = 5
-	slot_belt = 6
-	slot_wear_id = 7
-	slot_ears = 8
-	slot_glasses = 9
-	slot_gloves = 10
-	slot_head = 11
-	slot_shoes = 12
-	slot_wear_suit = 13
-	slot_w_uniform = 14
-	slot_l_store = 15
-	slot_r_store = 16
-//	slot_w_radio = 17
-	slot_in_backpack = 18
-	slot_in_belt = 19
-
 /mob/living/carbon/human/u_equip(obj/item/W)
 	if (!W)
 		return
@@ -1729,8 +1704,8 @@
 		src.update_clothing()
 	else if (W == src.head)
 		W.unequipped(src)
-		src.update_hair_layer()
 		src.head = null
+		src.update_hair_layer()
 		src.update_clothing()
 	else if (W == src.ears)
 		W.unequipped(src)
@@ -1912,141 +1887,141 @@
 
 /mob/living/carbon/human/proc/get_slot(slot)
 	switch(slot)
-		if (slot_back)
+		if (SLOT_BACK)
 			return src.back
-		if (slot_wear_mask)
+		if (SLOT_WEAR_MASK)
 			return src.wear_mask
-		if (slot_l_hand)
+		if (SLOT_L_HAND)
 			return src.l_hand
-		if (slot_r_hand)
+		if (SLOT_R_HAND)
 			return src.r_hand
-		if (slot_belt)
+		if (SLOT_BELT)
 			return src.belt
-		if (slot_wear_id)
+		if (SLOT_WEAR_ID)
 			return src.wear_id
-		if (slot_ears)
+		if (SLOT_EARS)
 			return src.ears
-		if (slot_glasses)
+		if (SLOT_GLASSES)
 			return src.glasses
-		if (slot_gloves)
+		if (SLOT_GLOVES)
 			return src.gloves
-		if (slot_head)
+		if (SLOT_HEAD)
 			return src.head
-		if (slot_shoes)
+		if (SLOT_SHOES)
 			return src.shoes
-		if (slot_wear_suit)
+		if (SLOT_WEAR_SUIT)
 			return src.wear_suit
-		if (slot_w_uniform)
+		if (SLOT_W_UNIFORM)
 			return src.w_uniform
-		if (slot_l_store)
+		if (SLOT_L_STORE)
 			return src.l_store
-		if (slot_r_store)
+		if (SLOT_R_STORE)
 			return src.r_store
 
 /mob/living/carbon/human/proc/force_equip(obj/item/I, slot, role_equipped = FALSE)
 	//warning: icky code
 	var/equipped = 0
 	switch(slot)
-		if (slot_back)
+		if (SLOT_BACK)
 			if (!src.back)
 				src.back = I
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["back"])
-				I.equipped(src, slot_back)
+				I.equipped(src, SLOT_BACK)
 				equipped = 1
 				clothing_dirty |= C_BACK
-		if (slot_wear_mask)
+		if (SLOT_WEAR_MASK)
 			if (!src.wear_mask && src.organHolder && src.organHolder.head)
 				src.wear_mask = I
 				hud.add_other_object(I, hud.layouts[hud.layout_style]["mask"])
-				I.equipped(src, slot_wear_mask)
+				I.equipped(src, SLOT_WEAR_MASK)
 				equipped = 1
 				clothing_dirty |= C_MASK
-		if (slot_l_hand)
+		if (SLOT_L_HAND)
 			equipped = src.put_in_hand(I, 1)
 			clothing_dirty |= C_LHAND
-		if (slot_r_hand)
+		if (SLOT_R_HAND)
 			equipped = src.put_in_hand(I, 0)
 			clothing_dirty |= C_RHAND
-		if (slot_belt)
+		if (SLOT_BELT)
 			if (!src.belt)
 				src.belt = I
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["belt"])
-				I.equipped(src, slot_belt)
+				I.equipped(src, SLOT_BELT)
 				equipped = 1
 				clothing_dirty |= C_BELT
-		if (slot_wear_id)
+		if (SLOT_WEAR_ID)
 			if (!src.wear_id)
 				src.wear_id = I
 				hud.add_other_object(I, hud.layouts[hud.layout_style]["id"])
-				I.equipped(src, slot_wear_id)
+				I.equipped(src, SLOT_WEAR_ID)
 				equipped = 1
 				clothing_dirty |= C_ID
-		if (slot_ears)
+		if (SLOT_EARS)
 			if (!src.ears && src.organHolder && src.organHolder.head)
 				src.ears = I
 				hud.add_other_object(I, hud.layouts[hud.layout_style]["ears"])
-				I.equipped(src, slot_ears)
+				I.equipped(src, SLOT_EARS)
 				equipped = 1
 				clothing_dirty |= C_EARS
-		if (slot_glasses)
+		if (SLOT_GLASSES)
 			if (!src.glasses && src.organHolder && src.organHolder.head)
 				src.glasses = I
 				hud.add_other_object(I, hud.layouts[hud.layout_style]["glasses"])
-				I.equipped(src, slot_glasses)
+				I.equipped(src, SLOT_GLASSES)
 				equipped = 1
 				clothing_dirty |= C_GLASSES
-		if (slot_gloves)
+		if (SLOT_GLOVES)
 			if (!src.gloves)
 				src.gloves = I
 				hud.add_other_object(I, hud.layouts[hud.layout_style]["gloves"])
-				I.equipped(src, slot_gloves)
+				I.equipped(src, SLOT_GLOVES)
 				equipped = 1
 				clothing_dirty |= C_GLOVES
-		if (slot_head)
+		if (SLOT_HEAD)
 			if (!src.head && src.organHolder && src.organHolder.head)
 				src.head = I
 				hud.add_other_object(I, hud.layouts[hud.layout_style]["head"])
-				I.equipped(src, slot_head)
+				I.equipped(src, SLOT_HEAD)
 				equipped = 1
 				src.update_hair_layer()
 				clothing_dirty |= C_HEAD
-		if (slot_shoes)
+		if (SLOT_SHOES)
 			if (!src.shoes)
 				src.shoes = I
 				hud.add_other_object(I, hud.layouts[hud.layout_style]["shoes"])
-				I.equipped(src, slot_shoes)
+				I.equipped(src, SLOT_SHOES)
 				equipped = 1
 				clothing_dirty |= C_SHOES
-		if (slot_wear_suit)
+		if (SLOT_WEAR_SUIT)
 			if (!src.wear_suit)
 				src.wear_suit = I
 				hud.add_other_object(I, hud.layouts[hud.layout_style]["suit"])
-				I.equipped(src, slot_wear_suit)
+				I.equipped(src, SLOT_WEAR_SUIT)
 				equipped = 1
 				src.update_hair_layer()
 				clothing_dirty |= C_SUIT
-		if (slot_w_uniform)
+		if (SLOT_W_UNIFORM)
 			if (!src.w_uniform)
 				src.w_uniform = I
 				hud.add_other_object(I, hud.layouts[hud.layout_style]["under"])
-				I.equipped(src, slot_w_uniform)
+				I.equipped(src, SLOT_W_UNIFORM)
 				equipped = 1
 				clothing_dirty |= C_UNIFORM
-		if (slot_l_store)
+		if (SLOT_L_STORE)
 			if (!src.l_store)
 				src.l_store = I
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["storage1"])
 				if (I.storage && !I.storage.opens_if_worn) // from item/proc/equipped()
 					I.storage.hide_hud(src)
 				equipped = 1
-		if (slot_r_store)
+		if (SLOT_R_STORE)
 			if (!src.r_store)
 				src.r_store = I
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["storage2"])
 				if (I.storage && !I.storage.opens_if_worn)
 					I.storage.hide_hud(src)
 				equipped = 1
-		if (slot_in_backpack)
+		if (SLOT_IN_BACKPACK)
 			if (src.back?.storage)
 				if (role_equipped)
 					src.back.storage.add_contents(I, src, FALSE)
@@ -2054,7 +2029,7 @@
 				else
 					src.back.storage.add_contents_safe(I, src)
 					equipped = (I in src.back.storage.get_contents())
-		if (slot_in_belt)
+		if (SLOT_IN_BELT)
 			if (src.belt?.storage)
 				if (role_equipped)
 					src.belt.storage.add_contents(I, src, FALSE)
@@ -2065,11 +2040,11 @@
 				equipped = 1
 
 	if (equipped)
-		if (slot != slot_in_backpack && slot != slot_in_belt)
+		if (slot != SLOT_IN_BACKPACK && slot != SLOT_IN_BELT)
 			I.set_loc(src)
 		if (islist(I.ability_buttons) && length(I.ability_buttons))
 			I.set_mob(src)
-			if (slot != slot_in_backpack && slot != slot_in_belt)
+			if (slot != SLOT_IN_BACKPACK && slot != SLOT_IN_BELT)
 				I.show_buttons()
 		src.update_clothing()
 	return equipped
@@ -2110,10 +2085,10 @@
 
 /mob/living/carbon/human/proc/can_equip(obj/item/I, slot)
 	switch (slot)
-		if (slot_l_store, slot_r_store)
+		if (SLOT_L_STORE, SLOT_R_STORE)
 			if (I.w_class <= W_CLASS_POCKET_SIZED && src.w_uniform)
 				return TRUE
-		if (slot_l_hand)
+		if (SLOT_L_HAND)
 			if (src.limbs.l_arm)
 				if (!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/artifact_parts/arm))
 					return FALSE
@@ -2126,7 +2101,7 @@
 					else
 						return FALSE
 				return TRUE
-		if (slot_r_hand)
+		if (SLOT_R_HAND)
 			if (src.limbs.r_arm)
 				if (!istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/artifact_parts/arm))
 					return FALSE
@@ -2139,20 +2114,20 @@
 					else
 						return FALSE
 				return TRUE
-		if (slot_belt)
+		if (SLOT_BELT)
 			if ((I.c_flags & ONBELT) && src.w_uniform)
 				return TRUE
-		if (slot_wear_id)
+		if (SLOT_WEAR_ID)
 			if (istype(I, /obj/item/card/id) && src.w_uniform)
 				return TRUE
 			if (istype(I, /obj/item/device/pda2) && src.w_uniform) // removed the check for the ID card in here because tbh it was silly that you could only equip it to the ID slot when it had a card  :I
 				return TRUE
 			if (istype(I, /obj/item/clothing/lanyard) && src.w_uniform)
 				return TRUE
-		if (slot_back)
+		if (SLOT_BACK)
 			if (I.c_flags & ONBACK)
 				return TRUE
-		if (slot_wear_mask) // It's not pretty, but the mutantrace check will do for the time being (Convair880).
+		if (SLOT_WEAR_MASK) // It's not pretty, but the mutantrace check will do for the time being (Convair880).
 			if (!src.organHolder.head)
 				return FALSE
 			if (istype(I, /obj/item/clothing/mask))
@@ -2162,22 +2137,22 @@
 					return FALSE
 				else
 					return TRUE
-		if (slot_ears)
+		if (SLOT_EARS)
 			if (!src.organHolder.head)
 				return FALSE
 			if (istype(I, /obj/item/clothing/ears) || istype(I,/obj/item/device/radio/headset))
 				return TRUE
-		if (slot_glasses)
+		if (SLOT_GLASSES)
 			if (!src.organHolder.head)
 				return FALSE
 			if (istype(I, /obj/item/clothing/glasses))
 				return TRUE
-		if (slot_gloves)
+		if (SLOT_GLOVES)
 			if ((!src.limbs.l_arm) && (!src.limbs.r_arm))
 				return FALSE
 			if (istype(I, /obj/item/clothing/gloves))
 				return TRUE
-		if (slot_head)
+		if (SLOT_HEAD)
 			if (!src.organHolder.head)
 				return FALSE
 			if (istype(I, /obj/item/clothing/head))
@@ -2187,7 +2162,7 @@
 					return FALSE
 				else
 					return TRUE
-		if (slot_shoes)
+		if (SLOT_SHOES)
 			if ((!src.limbs.l_leg) && (!src.limbs.r_leg))
 				return FALSE
 			if (istype(I, /obj/item/clothing/shoes))
@@ -2197,7 +2172,7 @@
 					return FALSE
 				else
 					return TRUE
-		if (slot_wear_suit)
+		if (SLOT_WEAR_SUIT)
 			if (istype(I, /obj/item/clothing/suit))
 				var/obj/item/clothing/SU = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in SU.compatible_species)))
@@ -2205,7 +2180,7 @@
 					return FALSE
 				else
 					return TRUE
-		if (slot_w_uniform)
+		if (SLOT_W_UNIFORM)
 			if (istype(I, /obj/item/clothing/under))
 				var/obj/item/clothing/U = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in U.compatible_species)))
@@ -2213,10 +2188,10 @@
 					return FALSE
 				else
 					return TRUE
-		if (slot_in_backpack) // this slot is stupid
+		if (SLOT_IN_BACKPACK) // this slot is stupid
 			if (src.back?.storage?.check_can_hold(I) == STORAGE_CAN_HOLD)
 				return TRUE
-		if (slot_in_belt) // this slot is also stupid
+		if (SLOT_IN_BELT) // this slot is also stupid
 			if (src.belt?.storage?.check_can_hold(I) == STORAGE_CAN_HOLD)
 				return TRUE
 	return FALSE
@@ -2224,7 +2199,7 @@
 /mob/living/carbon/human/proc/equip_new_if_possible(path, slot)
 	var/obj/item/I = new path(src)
 	src.equip_if_possible(I, slot)
-	if(slot != slot_in_backpack && slot != slot_in_belt && src.get_slot(slot) != I)
+	if(slot != SLOT_IN_BACKPACK && slot != SLOT_IN_BELT && src.get_slot(slot) != I)
 		qdel(I)
 		return FALSE
 	return TRUE
@@ -2484,7 +2459,7 @@
 				qdel(NEW)
 				NEW = new /obj/item/clothing/shoes/brown
 			src.u_equip(SH)
-			src.equip_if_possible(NEW, slot_shoes)
+			src.equip_if_possible(NEW, SLOT_SHOES)
 			src.update_clothing()
 			qdel(SH)
 		else if (src.limbs && (istype(src.limbs.l_leg, /obj/item/parts/robot_parts) && !istype(src.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/light)) && (istype(src.limbs.r_leg, /obj/item/parts/robot_parts) && !istype(src.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/light))) // Light cyborg legs don't count.
@@ -2494,7 +2469,7 @@
 				qdel(NEW2)
 				NEW2 = new /obj/item/clothing/shoes/brown
 			src.u_equip(SH)
-			src.equip_if_possible(NEW2, slot_shoes)
+			src.equip_if_possible(NEW2, SLOT_SHOES)
 			src.update_clothing()
 			qdel(SH)
 		else
@@ -2805,21 +2780,21 @@
 	//This looks bad but it really isn't anymore. <3
 
 	var/list/valid_slots = list(
-		slot_back,
-		slot_wear_mask,
-		slot_belt,
-		slot_wear_id,
-		slot_ears,
-		slot_glasses,
-		slot_gloves,
-		slot_head,
-		slot_shoes,
-		slot_wear_suit,
-		slot_w_uniform,
-		slot_l_store,
-		slot_r_store,
-		slot_l_hand,
-		slot_r_hand
+		SLOT_BACK,
+		SLOT_WEAR_MASK,
+		SLOT_BELT,
+		SLOT_WEAR_ID,
+		SLOT_EARS,
+		SLOT_GLASSES,
+		SLOT_GLOVES,
+		SLOT_HEAD,
+		SLOT_SHOES,
+		SLOT_WEAR_SUIT,
+		SLOT_W_UNIFORM,
+		SLOT_L_STORE,
+		SLOT_R_STORE,
+		SLOT_L_HAND,
+		SLOT_R_HAND
 	)
 
 	for(var/slot in valid_slots)

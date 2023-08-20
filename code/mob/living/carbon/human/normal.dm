@@ -35,7 +35,7 @@
 		ID.icon = 'icons/obj/items/card.dmi'
 		ID.icon_state = "id_syndie"
 		ID.desc = "A Syndicate Agent Identification card."
-		src.equip_if_possible(ID, slot_wear_id)
+		src.equip_if_possible(ID, SLOT_WEAR_ID)
 
 /mob/living/carbon/human/normal/captain
 	New()
@@ -175,17 +175,17 @@
 /mob/living/carbon/human/normal/rescue
 	New()
 		..()
-		src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/under/color/red, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/card/id, slot_wear_id)
-		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
-		src.equip_new_if_possible(/obj/item/storage/belt/utility/prepared, slot_belt)
-		src.equip_new_if_possible(/obj/item/storage/backpack/withO2, slot_back)
-		src.equip_new_if_possible(/obj/item/device/light/flashlight, slot_l_store)
-		src.equip_new_if_possible(/obj/item/clothing/suit/armor/vest, slot_wear_suit)
-		src.equip_new_if_possible(/obj/item/clothing/mask/gas, slot_wear_mask)
-		src.equip_new_if_possible(/obj/item/clothing/gloves/black, slot_gloves)
-		src.equip_new_if_possible(/obj/item/clothing/glasses/nightvision, slot_glasses)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/red, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/under/color/red, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/card/id, SLOT_WEAR_ID)
+		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
+		src.equip_new_if_possible(/obj/item/storage/belt/utility/prepared, SLOT_BELT)
+		src.equip_new_if_possible(/obj/item/storage/backpack/withO2, SLOT_BACK)
+		src.equip_new_if_possible(/obj/item/device/light/flashlight, SLOT_L_STORE)
+		src.equip_new_if_possible(/obj/item/clothing/suit/armor/vest, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/mask/gas, SLOT_WEAR_MASK)
+		src.equip_new_if_possible(/obj/item/clothing/gloves/black, SLOT_GLOVES)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/nightvision, SLOT_GLASSES)
 
 		var/obj/item/card/id/C = src.wear_id
 		if(C)
@@ -199,19 +199,19 @@
 /mob/living/carbon/human/normal/ntso_old
 	New()
 		..()
-		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/under/misc/NT, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/card/id, slot_wear_id)
-		src.equip_new_if_possible(/obj/item/device/radio/headset/command/captain, slot_ears)
-		src.equip_new_if_possible(/obj/item/storage/belt/security, slot_belt)
-		src.equip_new_if_possible(/obj/item/storage/backpack/NT, slot_back)
-		src.equip_new_if_possible(/obj/item/clothing/glasses/nightvision, slot_l_store)
-		src.equip_new_if_possible(/obj/item/crowbar, slot_r_store)
-		src.equip_new_if_possible(/obj/item/clothing/suit/armor/NT_alt, slot_wear_suit)
-		src.equip_new_if_possible(/obj/item/clothing/mask/gas/swat, slot_wear_mask)
-		src.equip_new_if_possible(/obj/item/clothing/head/NTberet, slot_head)
-		src.equip_new_if_possible(/obj/item/clothing/gloves/black, slot_gloves)
-		src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses/sechud, slot_glasses)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/under/misc/NT, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/card/id, SLOT_WEAR_ID)
+		src.equip_new_if_possible(/obj/item/device/radio/headset/command/captain, SLOT_EARS)
+		src.equip_new_if_possible(/obj/item/storage/belt/security, SLOT_BELT)
+		src.equip_new_if_possible(/obj/item/storage/backpack/NT, SLOT_BACK)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/nightvision, SLOT_L_STORE)
+		src.equip_new_if_possible(/obj/item/crowbar, SLOT_R_STORE)
+		src.equip_new_if_possible(/obj/item/clothing/suit/armor/NT_alt, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/mask/gas/swat, SLOT_WEAR_MASK)
+		src.equip_new_if_possible(/obj/item/clothing/head/NTberet, SLOT_HEAD)
+		src.equip_new_if_possible(/obj/item/clothing/gloves/black, SLOT_GLOVES)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses/sechud, SLOT_GLASSES)
 
 		var/obj/item/card/id/C = src.wear_id
 		if(C)
