@@ -7,7 +7,7 @@
 #define ABSTRACT_VIOLATION_CRASH
 #endif
 
-#ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
+/*#ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
 #define SKIP_FEA_SETUP 1
 #define SKIP_Z5_SETUP 1
 #define SKIP_PLANETS_SETUP 1
@@ -19,7 +19,7 @@
 #define SKIP_FEA_SETUP 0 //Skip atmos setup
 #define SKIP_Z5_SETUP 0 //Skip z5 gen
 #define SKIP_PLANETS_SETUP 0
-#endif
+#endif*/
 
 // Server side profiler stuff for when you want to profile how laggy the game is
 // FULL_ROUND
