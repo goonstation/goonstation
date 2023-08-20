@@ -1410,7 +1410,7 @@
 
 			if ("highfive")
 				m_type = 1
-				if (!can_act(src))
+				if (can_act(src))
 					if (src.emote_check(voluntary))
 						var/mob/M = null
 						if (param)
