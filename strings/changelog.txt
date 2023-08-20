@@ -1,4 +1,7 @@
 
+(t)sat aug 19 23
+(u)pali
+(*)Three new mutations that affect how you hear sounds!
 (t)fri aug 18 23
 (u)FlameArrow57
 (p)15381
