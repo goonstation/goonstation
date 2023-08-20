@@ -493,16 +493,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 // Stolen from the vending module
 /// For a flying chat and message addition upon controller activation, not called outside of a child as things stand
 /obj/machinery/door_control/proc/speak(var/message)
+	var/image/chat_maptext/speak_text = welcome_text
 	if ((src.status & NOPOWER) || !message)
 		return
 	else
-		welcome_text = make_chat_maptext(src, message, "color: [src.welcome_text_color];", alpha = src.welcome_text_alpha)
-		src.audible_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2, assoc_maptext = welcome_text)
-		if (welcome_text && src.chat_text && length(src.chat_text.lines))
-			welcome_text.measure(src)
+		speak_text = make_chat_maptext(src, message, "color: [src.welcome_text_color];", alpha = src.welcome_text_alpha)
+		src.audible_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2, assoc_maptext = speak_text)
+		if (speak_text && src.chat_text && length(src.chat_text.lines))
+			speak_text.measure(src)
 			for (var/image/chat_maptext/I in src.chat_text.lines)
-				if (I != welcome_text)
-					I.bump_up(welcome_text.measured_height)
+				if (I != speak_text)
+					I.bump_up(speak_text.measured_height)
+
 /// for sleepers entering listening post
 /obj/machinery/door_control/antagscanner
 	/// For the front door having a flying chat message or not.
