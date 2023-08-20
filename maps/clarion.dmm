@@ -6953,7 +6953,7 @@
 "aBH" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 20;
+	drive_range = 139;
 	id = "disposals_vent"
 	},
 /turf/simulated/floor/caution/northsouth{
@@ -10891,8 +10891,6 @@
 "aTo" = (
 /obj/machinery/drainage,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /mob/living/carbon/human/npc/monkey,
@@ -14243,8 +14241,6 @@
 /area/station/storage/tech)
 "blV" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
@@ -15867,7 +15863,7 @@
 /obj/machinery/mass_driver{
 	desc = "A device that launches objects, like ANCIENT BOMBS, for example, on it at great velocity when activated.";
 	dir = 4;
-	drive_range = 100;
+	drive_range = 135;
 	id = "artlabgun"
 	},
 /turf/simulated/floor/engine/caution/northsouth,
@@ -18482,6 +18478,7 @@
 "bMa" = (
 /obj/machinery/mass_driver{
 	dir = 4;
+	drive_range = 50;
 	id = "drone_launcher"
 	},
 /turf/simulated/floor/plating/random,
@@ -18489,6 +18486,7 @@
 "bMb" = (
 /obj/machinery/mass_driver{
 	dir = 4;
+	drive_range = 50;
 	id = "drone_launcher"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -20092,8 +20090,8 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/junction{
-	icon_state = "pipe-j2";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -20217,8 +20215,6 @@
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment{
@@ -21169,14 +21165,12 @@
 /area/station/medical/medbay)
 "dXf" = (
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Robotics Lab";
-	dir = 4
+	dir = 4;
+	name = "Robotics Lab"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/robotics,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
@@ -21523,8 +21517,8 @@
 "ejL" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /obj/item/paper_bin{
 	pixel_x = 6;
@@ -22067,8 +22061,6 @@
 /area/station/maintenance/central)
 "eKj" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/cable{
@@ -22759,8 +22751,6 @@
 /area/space)
 "fry" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/bluewhite{
@@ -22998,12 +22988,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "fFH" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
+/obj/stool/bee_bed/heisenbee,
 /obj/critter/domestic_bee/heisenbee,
 /obj/cable{
 	icon_state = "4-8"
@@ -23687,8 +23672,6 @@
 /area/station/science/bot_storage)
 "gfY" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/decal/cleanable/dirt,
@@ -25959,7 +25942,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "ifP" = (
@@ -26863,8 +26846,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
@@ -27001,8 +26982,6 @@
 /area/station/turret_protected/Zeta)
 "iPg" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grass{
@@ -27671,6 +27650,16 @@
 /obj/machinery/cashreg,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
+"jsd" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 138;
+	id = "disposals_vent"
+	},
+/turf/simulated/floor/caution/northsouth{
+	dir = 1
+	},
+/area/station/maintenance/disposal)
 "jsG" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -28508,8 +28497,6 @@
 /area/station/medical/robotics)
 "keb" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
@@ -29340,8 +29327,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/morgue,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
@@ -31290,13 +31275,11 @@
 	},
 /obj/machinery/light/small/floor,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/junction{
-	icon_state = "pipe-j2";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
@@ -31323,8 +31306,6 @@
 /area/station/maintenance/west)
 "mrp" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small/floor,
@@ -31503,8 +31484,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
@@ -33564,8 +33543,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small/floor,
@@ -34926,12 +34903,12 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/blast/single{
+	dir = 6;
 	doordir = "noblasts";
 	icon_state = "bdoornoblasts1";
 	id = "mining2qm_sec_door";
 	layer = 4;
-	name = "QM Security Door";
-	dir = 6
+	name = "QM Security Door"
 	},
 /turf/simulated/floor/caution/misc{
 	dir = 4
@@ -37949,8 +37926,8 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple{
-	level = 2;
-	dir = 6
+	dir = 6;
+	level = 2
 	},
 /turf/simulated/floor/redwhite{
 	dir = 8
@@ -40221,13 +40198,9 @@
 /area/station/medical/robotics)
 "tGu" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment,
@@ -40957,8 +40930,6 @@
 /area/station/hallway/primary/central)
 "uol" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
@@ -42242,8 +42213,6 @@
 /area/station/hallway/primary/central)
 "vmK" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
@@ -42818,8 +42787,6 @@
 /area/station/science/teleporter)
 "vOv" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/landmark/gps_waypoint,
@@ -43584,8 +43551,6 @@
 /area/station/hangar/main)
 "wyJ" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/shrub,
@@ -44014,14 +43979,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"wSN" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "wTc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -44250,8 +44207,6 @@
 "xdm" = (
 /obj/landmark/start/job/roboticist,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
@@ -45267,8 +45222,6 @@
 /area/station/engine/ptl)
 "xVU" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
@@ -45290,8 +45243,6 @@
 /area/station/crewquarters/cryotron)
 "xWr" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
@@ -45636,8 +45587,8 @@
 "yis" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /obj/item/clipboard{
 	pixel_x = -7
@@ -45672,8 +45623,6 @@
 /area/station/quartermaster/storage)
 "yjp" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/light,
@@ -67701,7 +67650,7 @@ axQ
 axQ
 axQ
 aDX
-wSN
+nrN
 bkJ
 doj
 bkJ
@@ -87229,7 +87178,7 @@ aaa
 sqY
 plf
 avz
-aBH
+jsd
 aSm
 asm
 aES

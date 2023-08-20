@@ -428,7 +428,7 @@
 			sleeping = 0
 			on_wake()
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		switch(P.proj_data.damage_type)
 			if(D_KINETIC,D_PIERCING,D_SLASHING)
@@ -961,7 +961,7 @@
 			return
 		// FUCK YOU WHOEVER IS USING THIS
 		// FUCK YOU
-		shoot_projectile_ST(src,  new/datum/projectile/bullet/revolver_38(), target)
+		shoot_projectile_ST_pixel_spread(src,  new/datum/projectile/bullet/revolver_38(), target)
 		return
 
 

@@ -17,8 +17,6 @@
 			break_index = current_index
 		if(break_index) // chain broken
 			src.UnregisterSignal(AM, COMSIG_MOVABLE_SET_LOC)
-			if (src.track_movable_moved)
-				src.UnregisterSignal(AM, COMSIG_MOVABLE_MOVED)
 		if(!break_index)
 			loc_crawl = loc_crawl.loc
 		current_index++
@@ -30,14 +28,15 @@
 	while(ismovable(loc_crawl))
 		loc_chain += loc_crawl
 		src.RegisterSignal(loc_crawl, COMSIG_MOVABLE_SET_LOC, PROC_REF(on_loc_change))
-		if (src.track_movable_moved)
-			src.RegisterSignal(loc_crawl, COMSIG_MOVABLE_MOVED, PROC_REF(on_turf_change))
 		loc_crawl = loc_crawl.loc
 
 	var/atom/movable/new_outermost = src.get_outermost_movable()
 
 	if(old_outermost != new_outermost)
 		SEND_COMPLEX_SIGNAL(src, XSIG_OUTERMOST_MOVABLE_CHANGED, old_outermost, new_outermost)
+		if (src.track_movable_moved)
+			src.UnregisterSignal(old_outermost, COMSIG_MOVABLE_MOVED)
+			src.RegisterSignal(new_outermost, COMSIG_MOVABLE_MOVED, PROC_REF(on_turf_change))
 
 	src.on_turf_change(thing, previous_loc)
 

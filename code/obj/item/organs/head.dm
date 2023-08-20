@@ -19,6 +19,7 @@
 	made_from = "bone"
 	tooltip_flags = REBUILD_ALWAYS //TODO: handle better??
 	max_damage = INFINITY
+	throw_speed = 1
 
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/skull/skull = null
@@ -77,6 +78,11 @@
 				src.UpdateIcon(/*makeshitup*/ 1)
 			if (!src.chat_text)
 				src.chat_text = new(null, src)
+
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
+			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
+		throw_unlimited = TRUE
+		..()
 
 	disposing()
 		if (src.linked_human)

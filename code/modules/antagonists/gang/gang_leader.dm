@@ -47,11 +47,11 @@
 		else
 			src.headset = new /obj/item/device/radio/headset(H)
 			if (!H.r_store)
-				H.equip_if_possible(src.headset, H.slot_r_store)
+				H.equip_if_possible(src.headset, SLOT_R_STORE)
 			else if (!H.l_store)
-				H.equip_if_possible(src.headset, H.slot_l_store)
+				H.equip_if_possible(src.headset, SLOT_L_STORE)
 			else if (H.back?.storage && !H.back.storage.is_full())
-				H.equip_if_possible(src.headset, H.slot_in_backpack)
+				H.equip_if_possible(src.headset, SLOT_IN_BACKPACK)
 			else
 				H.put_in_hand_or_drop(src.headset)
 
@@ -81,14 +81,27 @@
 
 	announce()
 		. = ..()
+		var/datum/game_mode/gang/gamemode = ticker.mode
 		boutput(src.owner.current, "<span class='alert'>Your headset has been tuned to your gang's frequency. Prefix a message with :z to communicate on this channel.</span>")
-		boutput(src.owner.current, "<span class='alert'>You must recruit people to your gang and compete for wealth and territory!</span>")
+		if(!gamemode.random_gangs)
+			boutput(src.owner.current, "<span class='alert'>You must recruit people to your gang and compete for wealth and territory!</span>")
 		boutput(src.owner.current, "<span class='alert'>You can harm whoever you want, but be careful - the crew can harm gang members too!</span>")
 		boutput(src.owner.current, "<span class='alert'>To set your gang's home turf and spawn your locker, use the Set Gang Base ability in the top left. Make sure to pick somewhere safe, as your locker can be broken into and looted. You can only do this once!</span>")
 		boutput(src.owner.current, "<span class='alert'>Build up a stash of cash, guns and drugs. Use the items on your locker to store them.</span>")
-		boutput(src.owner.current, "<span class='alert'>Use recruitment flyers obtained from the locker to invite new members, up to a limit of [src.gang.current_max_gang_members].</span>")
+		if(!gamemode.random_gangs)
+			boutput(src.owner.current, "<span class='alert'>Use recruitment flyers obtained from the locker to invite new members, up to a limit of [src.gang.current_max_gang_members].</span>")
 		boutput(src.owner.current, "<span class='alert'><b>Turf, cash, guns and drugs all count towards victory, and your survival gives your gang bonus points!</b></span>")
-
+		if(gamemode.random_gangs)
+			var/list/member_strings = list()
+			for(var/datum/mind/member in src.gang.members)
+				if(!member.current || member == src.owner)
+					continue
+				var/job = member.current?.job
+				member_strings += "[member.current.real_name] as [job]"
+			if(length(member_strings))
+				boutput(src.owner.current, "<span class='alert'>Your gang members are:<br>\t[jointext(member_strings, "<br>\t")]</span>")
+			else
+				boutput(src.owner.current, "<span class='alert'>You have no gang members, ouch!</span>")
 
 	handle_round_end(log_data)
 		. = list()

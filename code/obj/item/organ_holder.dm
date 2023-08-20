@@ -1156,7 +1156,7 @@
 			if (istype(I, /obj/item/organ))
 				var/obj/item/organ/O = I
 				O.on_transplant(src.donor)
-			if (is_full_robotic())
+			if (is_full_robotic() && !istype(src.donor:mutantrace, /datum/mutantrace/cyberman))
 				donor.unlock_medal("Spaceship of Theseus", 1)
 			return 1
 
@@ -1485,7 +1485,7 @@
 		var/mult = src.eye_proj == /datum/projectile/laser/eyebeams ? 1 : 0
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner]</b> shoots [mult ? "eye beams" : "an eye beam"]!</span>")
 		var/datum/projectile/PJ = new eye_proj
-		shoot_projectile_ST(holder.owner, PJ, T)
+		shoot_projectile_ST_pixel_spread(holder.owner, PJ, T)
 
 /datum/projectile/laser/eyebeams/left
 	icon_state = "eyebeamL"

@@ -1574,11 +1574,9 @@
 		gloves = null
 		//Todo: get critter gloves if they have a slot. also clean this up in general...
 
-	if (gloves?.material)
-		gloves.material.triggerOnAttack(gloves, M, src)
+	gloves?.material_on_attack_use(M, src)
 	for (var/atom/A in src)
-		if (A.material)
-			A.material.triggerOnAttacked(A, M, src, gloves)
+		A.material_trigger_on_mob_attacked(M, src, gloves, location)
 
 	M.viral_transmission(src,"Contact",1)
 
@@ -1910,10 +1908,11 @@
 		P.die()
 		return 0
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 	for (var/atom/A in src)
-		if (A.material)
-			if(src.material) src.material.triggerOnBullet(A, src, P)
+		A.material_trigger_on_bullet(src, P)
+	for (var/atom/equipped_stuff in src.equipped())
+		equipped_stuff.material_trigger_on_bullet(src, P)
 
 	if (!P.proj_data)
 		return 0

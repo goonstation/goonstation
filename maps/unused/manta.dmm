@@ -1256,7 +1256,7 @@
 /turf/simulated/floor/scorched2,
 /area/diner/kitchen)
 "aeg" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "aeh" = (
@@ -20712,7 +20712,7 @@
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
 "bgw" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -25463,17 +25463,6 @@
 	},
 /turf/simulated/floor/special/escapedown,
 /area/station/hallway/portlowerhallway)
-"bsb" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/hallway/portlowerhallway)
 "bsc" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
@@ -26127,8 +26116,6 @@
 /area/station/ranch)
 "bul" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -26484,8 +26471,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/landmark/gps_waypoint,
@@ -26498,7 +26483,6 @@
 	icon_state = "pipe-c"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
@@ -34935,12 +34919,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/captain)
 "gbH" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
+/obj/stool/bee_bed/heisenbee,
 /obj/critter/domestic_bee/heisenbee,
 /obj/item/storage/briefcase/toxins{
 	pixel_x = -7;
@@ -35372,7 +35351,6 @@
 "gVQ" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/disposalpipe/segment/mail{
@@ -37852,8 +37830,6 @@
 /area/station/medical/medbay/lobby)
 "nrB" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
@@ -41629,8 +41605,6 @@
 /area/station/crew_quarters/quarters)
 "wAK" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
@@ -77877,7 +77851,7 @@ mxl
 boY
 bii
 bqe
-bsb
+brC
 bul
 bvy
 bBM

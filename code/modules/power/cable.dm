@@ -45,7 +45,7 @@
 		NC.iconmod = coil.iconmod
 		NC.add_fingerprint()
 		NC.UpdateIcon()
-		NC.update_network()
+		NC.update_network(user)
 		coil.use(1)
 	else
 		..()
@@ -281,12 +281,13 @@
 /obj/cable/reinforced/ex_act(severity)
 	return //nah
 
-// called when a new cable is created
-// can be 1 of 3 outcomes:
-// 1. Isolated cable (or only connects to isolated machine) -> create new powernet
-// 2. Joins to end or bridges loop of a single network (may also connect isolated machine) -> add to old network
-// 3. Bridges gap between 2 networks -> merge the networks (must rebuild lists also) (currently just calls makepowernets. welp)
-/obj/cable/proc/update_network()
+/// called when a new cable is created
+/// can be 1 of 3 outcomes:
+/// 1. Isolated cable (or only connects to isolated machine) -> create new powernet
+/// 2. Joins to end or bridges loop of a single network (may also connect isolated machine) -> add to old network
+/// 3. Bridges gap between 2 networks -> merge the networks (must rebuild lists also) (currently just calls makepowernets. welp)
+/// user is just for logging hotwires
+/obj/cable/proc/update_network(mob/user = null)
 	if(makingpowernets) // this might cause local issues but prevents a big global race condition that breaks everything
 		return
 	var/turf/T = get_turf(src)
@@ -322,6 +323,8 @@
 		else
 			var/datum/powernet/P1 = cable_d1.get_powernet()
 			var/datum/powernet/P2 = cable_d2.get_powernet()
+			if (user && abs(P1.avail - P2.avail) > 1 MEGA WATT && (length(P1.nodes) > 10 || length(P2.nodes) > 10))
+				logTheThing(LOG_STATION, user, "lays a cable connecting two powernets with a difference of more than 1MW where one of the networks has at least 10 nodes. Location: [log_loc(src)]")
 			src.netnum = cable_d1.netnum
 			P1.cables += src
 			if(length(P1.cables) <= P2.cables.len)
