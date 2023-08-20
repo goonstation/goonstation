@@ -53,7 +53,7 @@
 TYPEINFO(/obj/machinery/vending)
 	mats = 20
 
-ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
+ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command_speak)
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."
@@ -879,6 +879,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 	return
 
+/obj/machinery/vending/proc/admin_command_speak()
+		set name = "Speak"
+		src.speak(tgui_input_text(usr, "Speak message through [src]", "Speak", ""))
+
 /obj/machinery/vending/proc/speak(var/message)
 	if (status & NOPOWER)
 		return
@@ -940,7 +944,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				light.disable()
 
 /obj/machinery/vending/proc/fall(mob/living/carbon/victim)
-	if (!can_fall)
+	if (!can_fall || fallen)
 		return
 	fallen = TRUE
 	status |= BROKEN
@@ -1437,6 +1441,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 #endif
 		product_list += new/datum/data/vending_product(/obj/item/device/flash/turbo, rand(1, 6), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, rand(1, 2), hidden=1) // Obtaining a backpack full of lethal ammo required no effort whatsoever, hence why nobody ordered AP speedloaders from the Syndicate (Convair880).
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/donut, rand(2, 4), hidden=1) // emergency snack
 
 /obj/machinery/vending/security_ammo //shitsec time yes
 	name = "AmmoTech"

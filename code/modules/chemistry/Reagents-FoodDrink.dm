@@ -729,7 +729,7 @@ datum
 									var/obj/item/clothing/glasses/eyepatch/E = new /obj/item/clothing/glasses/eyepatch(H)
 									E.name = "Pirate Eyepatch"
 									E.desc = "Arr!"
-									H.equip_if_possible(E,H.slot_glasses)
+									H.equip_if_possible(E,SLOT_GLASSES)
 					H.update_colorful_parts()
 				else
 					random_brute_damage(M, 5)

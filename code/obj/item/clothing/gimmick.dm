@@ -821,7 +821,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 			newshoes.cant_other_remove = 1
 			newshoes.name = "Dirty sneakers"
 			newshoes.desc = "A pair of dirty white sneakers. Fortunately they don't have any blood stains."
-			H.equip_if_possible(newshoes, H.slot_shoes)
+			H.equip_if_possible(newshoes, SLOT_SHOES)
 
 			boutput(H, "<span class='alert'><b>You suddenly feel whiny and ineffectual.</b></span>")
 			H.real_name = "Mike Dawson"
@@ -1178,7 +1178,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 						user.visible_message("<b>[user]</b> slips [src] onto [H]'s finger.",\
 						"You slip [src] onto [H]'s finger.")
 					user.u_equip(src)
-					H.force_equip(src, H.slot_gloves)
+					H.force_equip(src, SLOT_GLOVES)
 					return
 
 				else if (isobserver(M) || isintangible(M) || iswraith(M))

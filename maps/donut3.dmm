@@ -7697,8 +7697,6 @@
 /area/station/medical/dome)
 "ciB" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
@@ -9589,8 +9587,6 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen,
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "4-10"
 	},
 /obj/disposalpipe/segment{
@@ -26431,8 +26427,6 @@
 	pixel_y = -24
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood,
@@ -28173,8 +28167,6 @@
 /area/space)
 "iDx" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
@@ -30607,8 +30599,6 @@
 /area/station/maintenance/inner/east)
 "jpL" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/cable{
@@ -40111,8 +40101,6 @@
 /obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood,
@@ -41925,8 +41913,6 @@
 "mPv" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
@@ -43693,8 +43679,6 @@
 /area/station/maintenance/outer/west)
 "npd" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/blind_switch/area/west,
@@ -54573,8 +54557,6 @@
 	icon_state = "1-10"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "4-10"
 	},
 /obj/grille/catwalk/jen,
@@ -67831,8 +67813,6 @@
 /area/station/crew_quarters/clown)
 "uPz" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/junction/left/south,
