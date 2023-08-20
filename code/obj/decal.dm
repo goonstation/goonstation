@@ -503,11 +503,11 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/bloodtrace
 	name = "blood trace"
 	desc = "Oh my!!"
-	icon = 'icons/effects/blood.dmi'
-	icon_state = "lum"
+	icon = 'icons/obj/decals/blood/blood.dmi'
+	icon_state = "floor2"
+	color = "#3399FF"
+	alpha = 100
 	invisibility = INVIS_ALWAYS
-	blood_DNA = null
-	blood_type = null
 
 /obj/decal/boxingrope
 	name = "Boxing Ropes"
