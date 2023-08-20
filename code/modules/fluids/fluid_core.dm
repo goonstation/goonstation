@@ -1,24 +1,3 @@
-var/list/ban_from_fluid = list(
-	"paper",\
-	"fungus",\
-	"martian_flesh",\
-	"blackpowder",\
-	"thermite",\
-	"luminol",\
-	"photophosphide",\
-)
-//todo : make thermite work
-var/list/ban_stacking_into_fluid = list( //ban these from producing fluid from a 'cleanable'
-	"water",\
-	"sodium",\
-	"magnesium",\
-	"carbon",\
-	"ash",\
-	"blackpowder",\
-	"leaves",\
-	"poo",\
-)
-
 ///////////////////
 ////Fluid Object///
 ///////////////////

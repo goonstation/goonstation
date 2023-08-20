@@ -51,6 +51,7 @@ datum
 			fluid_b = 0
 			hygiene_value = -0.5
 			transparency = 255
+			fluid_flags = FLUID_STACKING_BANNED
 
 			reaction_turf(var/turf/T, var/volume)
 				if(!istype(T, /turf/space))
@@ -328,6 +329,7 @@ datum
 			fluid_g = 255
 			fluid_b = 255
 			transparency = 255
+			fluid_flags = FLUID_STACKING_BANNED
 
 			reaction_turf(var/turf/T, var/volume)
 				if (volume >= 10)
@@ -696,6 +698,7 @@ datum
 			fluid_b = 200
 			transparency = 255
 			pathogen_nutrition = list("sodium")
+			fluid_flags = FLUID_STACKING_BANNED
 
 		uranium
 			name = "uranium"
@@ -739,6 +742,7 @@ datum
 #else
 			description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 #endif
+			fluid_flags = FLUID_STACKING_BANNED
 
 			on_mob_life(var/mob/living/L, var/mult = 1)
 				..()
