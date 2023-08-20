@@ -47,9 +47,6 @@
 	Z_LOG_DEBUG("World/Init", "Loading mode...")
 	src.load_mode()
 
-	Z_LOG_DEBUG("World/Init", "Loading rules...")
-	src.load_rules()
-
 	mapSwitcher = new()
 
 	Z_LOG_DEBUG("World/Init", "Telemanager setup...")
@@ -285,6 +282,3 @@
 
 /world/proc/load_motd()
 	join_motd = grabResource("html/motd.html")
-
-/world/proc/load_rules()
-	rules = {"<meta http-equiv="refresh" content="0; url=http://wiki.ss13.co/Rules">"}

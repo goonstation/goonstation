@@ -442,7 +442,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if (!isnull(src.destination_tag))
 			H.mail_tag = src.destination_tag
 
-		air_contents.zero()
+		ZERO_GASES(src.air_contents)
 
 		sleep(1 SECOND)
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)

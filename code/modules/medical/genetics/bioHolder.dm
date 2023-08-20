@@ -669,7 +669,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 			return 0
 
 		var/datum/bioEffect/newEffect = bioEffectList[idToAdd]
-		if(!newEffect) return 0
+		if(!newEffect)
+			CRASH("Invalid bioEffect ID [idToAdd]")
 
 		newEffect = new newEffect.type
 

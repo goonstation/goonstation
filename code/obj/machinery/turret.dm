@@ -202,11 +202,11 @@
 
 		if (src.lasers)
 			use_power(200)
-			shoot_projectile_ST(src, lethal, U)
+			shoot_projectile_ST_pixel_spread(src, lethal, U)
 			muzzle_flash_any(src, get_angle(src,target), "muzzle_flash_laser")
 		else
 			use_power(100)
-			shoot_projectile_ST(src, stun, U)
+			shoot_projectile_ST_pixel_spread(src, stun, U)
 			muzzle_flash_any(src, get_angle(src,target), "muzzle_flash_elec")
 
 

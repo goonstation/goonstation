@@ -401,6 +401,10 @@ proc/generate_space_color()
 		src.Entered(AM)
 	if(current_state < GAME_STATE_WORLD_NEW)
 		RL_Init()
+	#ifdef CHECK_MORE_RUNTIMES
+	if(current_state > GAME_STATE_MAP_LOAD && in_replace_with == 0)
+		stack_trace("turf [src] ([src.type]) created directly instead of using ReplaceWith")
+	#endif
 
 /turf/Exit(atom/movable/AM, atom/newloc)
 	SHOULD_CALL_PARENT(TRUE)
@@ -547,8 +551,17 @@ proc/generate_space_color()
 		return ..(what, keep_old_material = keep_old_material, handle_air = handle_air)
 	return
 
+#ifdef CHECK_MORE_RUNTIMES
+var/global/in_replace_with = 0
+#endif
+
 /turf/proc/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
 	SEND_SIGNAL(src, COMSIG_TURF_REPLACED, what)
+
+	#ifdef CHECK_MORE_RUNTIMES
+	in_replace_with++
+	#endif
+
 	var/turf/simulated/new_turf
 	var/old_dir = dir
 	var/old_liquid = active_liquid // replacing stuff wasn't clearing liquids properly
@@ -630,9 +643,18 @@ proc/generate_space_color()
 		if(ispath(new_type, /turf/space) && !ispath(new_type, /turf/space/fluid) && delay_space_conversion()) return
 		new_turf = new new_type(src)
 		if (!isturf(new_turf))
-			if (delay_space_conversion()) return
+			if (delay_space_conversion())
+				#ifdef CHECK_MORE_RUNTIMES
+				in_replace_with--
+				#endif
+				return
 			new_turf = new /turf/space(src)
-		if(!istype(new_turf, new_type)) return new_turf // New() replaced the turf with something else, its ReplaceWith handled everything for us already (otherwise we'd screw up lighting)
+		if(!istype(new_turf, new_type))
+			#ifdef CHECK_MORE_RUNTIMES
+			in_replace_with--
+			#endif
+			return new_turf
+			// New() replaced the turf with something else, its ReplaceWith handled everything for us already (otherwise we'd screw up lighting)
 
 	else switch(what)
 		if ("Ocean")
@@ -660,7 +682,11 @@ proc/generate_space_color()
 		if ("Unsimulated Floor")
 			new_turf = new /turf/unsimulated/floor(src)
 		else
-			if (delay_space_conversion()) return
+			if (delay_space_conversion())
+				#ifdef CHECK_MORE_RUNTIMES
+				in_replace_with--
+				#endif
+				return
 			if(station_repair.station_generator && src.z == Z_LEVEL_STATION)
 				station_repair.repair_turfs(list(src), clear=TRUE)
 				keep_old_material = FALSE
@@ -758,6 +784,9 @@ proc/generate_space_color()
 		// tells the atmos system "hey this tile changed, maybe rebuild the group / borders"
 		new_turf.update_nearby_tiles(1)
 
+	#ifdef CHECK_MORE_RUNTIMES
+	in_replace_with--
+	#endif
 	return new_turf
 
 
