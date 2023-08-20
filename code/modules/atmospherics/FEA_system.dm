@@ -65,7 +65,7 @@ var/global/total_gas_mixtures = 0
 /datum/controller/air_system/proc/setup(datum/controller/process/air_system/controller)
 	parent_controller = controller
 
-	#if SKIP_FEA_SETUP == 1
+	#ifdef SKIP_FEA_SETUP
 	return
 	#else
 
