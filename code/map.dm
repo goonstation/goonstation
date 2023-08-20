@@ -1027,7 +1027,7 @@ var/global/list/mapNames = list(
 	job_limits_from_landmarks = TRUE
 	job_limits_override = list(
 		/datum/job/special/atmospheric_technician = 1,
-		/datum/job/special/barber = 1,
+		/datum/job/special/hairdresser = 1,
 		/datum/job/special/research_assistant = 2,
 		/datum/job/special/medical_assistant = 2
 	)

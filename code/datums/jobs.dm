@@ -1089,6 +1089,22 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Construction Worker")
 		return
 
+/datum/job/special/hairdresser
+	name = "Hairdresser"
+	wages = PAY_UNTRAINED
+	limit = 0
+	slot_jump = list(/obj/item/clothing/under/misc/barber)
+	slot_head = list(/obj/item/clothing/head/boater_hat)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_poc1 = list(/obj/item/scissors)
+	slot_poc2 = list(/obj/item/razor_blade)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+
+	New()
+		..()
+		src.access = get_access("Barber")
+		return
+
 /datum/job/special/lawyer/judge
 	name = "Judge"
 
