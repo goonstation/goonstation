@@ -82,7 +82,7 @@
 	var/b_type = "--unidentified substance--"
 	var/blood_color = DEFAULT_BLOOD_COLOR
 
-	if (QDELETED(src))
+	if (QDELETED(src) || QDELETED(source)) // Be safe
 		return
 
 	if (istype(source, /obj/fluid))
@@ -99,11 +99,10 @@
 		var/mob/living/L = source
 		if (!L.can_bleed)
 			return
-		if (L.bioHolder)
-			b_uid = L.bioHolder.Uid
-			b_type = L.bioHolder.bloodType
-			if (L.bioHolder.bloodColor)
-				blood_color = L.bioHolder.bloodColor
+		b_uid = L.bioHolder?.Uid
+		b_type = L.bioHolder?.bloodType
+		if (L.bioHolder?.bloodColor)
+			blood_color = L.bioHolder.bloodColor
 		else if (L.blood_id)
 			var/datum/reagent/R = reagents_cache[L.blood_id]
 			blood_color = rgb(R.fluid_r, R.fluid_g, R.fluid_b)
