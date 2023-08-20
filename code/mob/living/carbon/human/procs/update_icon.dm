@@ -1285,27 +1285,6 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 	src.UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit", 1, 1)
 
 
-/mob/living/carbon/human/tdummy/UpdateDamage()
-	var/prev = health
-	..()
-	src.updatehealth()
-	if (!isdead(src))
-		var/h_color = "#999999"
-		var/h_pct = round((health / (max_health != 0 ? max_health : 1)) * 100)
-		switch (h_pct)
-			if (50 to INFINITY)
-				h_color	= "rgb([(100 - h_pct) / 50 * 255], 255, [(100 - h_pct) * 0.3])"
-			if (0 to 50)
-				h_color	= "rgb(255, [h_pct / 50 * 255], 0)"
-			if (-100 to 0)
-				h_color	= "#ffffff"
-		src.maptext = "<span style='color: [h_color];' class='pixel c sh'>[h_pct]%</span>"
-		if (prev != health)
-			new /obj/maptext_junk/damage(get_turf(src), change = health - prev)
-	else
-		src.maptext = ""
-
-
 /mob/living/carbon/human/UpdateDamageIcon()
 	if (lastDamageIconUpdate && !(world.time - lastDamageIconUpdate))
 		return

@@ -6696,6 +6696,10 @@
 /obj/decal/poster/wallsign/accident_sign,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/southeast)
+"cZM" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "cZS" = (
 /obj/machinery/light_switch/west,
 /obj/fitness/speedbag/captain,
@@ -6823,6 +6827,14 @@
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
+	})
+"dfh" = (
+/obj/grille/catwalk,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/black/grime,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
 	})
 "dfm" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
@@ -10750,6 +10762,7 @@
 	pixel_y = 3
 	},
 /obj/machinery/light_switch/east,
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/black/side{
 	dir = 8
 	},
@@ -20086,12 +20099,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
+/obj/stool/bee_bed/heisenbee,
 /obj/critter/domestic_bee/heisenbee,
 /turf/simulated/floor/black,
 /area/station/science/research_director)
@@ -23231,6 +23239,12 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"jZd" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/nw{
+	name = "Northwest Breach Hull"
+	})
 "jZn" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
@@ -24154,6 +24168,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargooffice)
+"kra" = (
+/obj/disposalpipe/segment/vertical,
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "krn" = (
 /obj/table/reinforced/auto,
 /obj/item/device/pda_module/tray{
@@ -25837,6 +25856,12 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
+"kZe" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/sw{
+	name = "Southwest Breach Hull"
+	})
 "kZh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -28218,6 +28243,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 5
 	},
@@ -29332,6 +29358,10 @@
 	dir = 4
 	},
 /area/station/storage/emergency)
+"muW" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "mvb" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -85450,7 +85480,7 @@ ugi
 wWe
 aRI
 nQY
-vKn
+muW
 vKn
 lyg
 cNf
@@ -86010,7 +86040,7 @@ fYu
 ldy
 ldy
 xUk
-cPu
+jZd
 cDp
 cPu
 cPu
@@ -93023,7 +93053,7 @@ lAB
 iSy
 lVy
 itz
-aWO
+kZe
 wGw
 wGw
 uqC
@@ -93325,7 +93355,7 @@ ssp
 iSy
 urh
 hhz
-rfZ
+aWO
 lzJ
 wGw
 uqC
@@ -96260,7 +96290,7 @@ myj
 myj
 myj
 jUx
-mbF
+cZM
 iUu
 jhj
 sjN
@@ -105931,7 +105961,7 @@ arY
 rIF
 aOO
 aDu
-aDu
+kra
 gZx
 fTZ
 qGF
@@ -112945,7 +112975,7 @@ ntb
 ntb
 xhh
 kRh
-bSU
+dfh
 nQG
 nQG
 nQG

@@ -124,7 +124,7 @@
 	icon_state = "wingrille_new"
 	color = "#A114FF"
 #else
-	icon_state = "wingrille_f"
+	icon_state = "p-wingrille_f"
 #endif
 
 // Uqill glass, bohrum reinforced window
@@ -135,8 +135,6 @@
 #ifdef PERSPECTIVE_EDITOR_WALL
 	icon_state = "wingrille_new"
 	color = "#66a94e"
-#else
-	icon_state = "r-wingrille_f"
 #endif
 
 // Reinforced windows
@@ -158,6 +156,8 @@
 	win_path = "/obj/window/auto/crystal/reinforced"
 #ifdef PERSPECTIVE_EDITOR_WALL
 	color = "#8713d4"
+#else
+	icon_state = "pr-wingrille_f"
 #endif
 
 //Tuff windows with increased explosion resistance

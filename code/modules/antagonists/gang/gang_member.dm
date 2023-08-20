@@ -35,11 +35,11 @@
 		else
 			src.headset = new /obj/item/device/radio/headset(H)
 			if (!H.r_store)
-				H.equip_if_possible(src.headset, H.slot_r_store)
+				H.equip_if_possible(src.headset, SLOT_R_STORE)
 			else if (!H.l_store)
-				H.equip_if_possible(src.headset, H.slot_l_store)
+				H.equip_if_possible(src.headset, SLOT_L_STORE)
 			else if (H.back?.storage && !H.back.storage.is_full())
-				H.equip_if_possible(src.headset, H.slot_in_backpack)
+				H.equip_if_possible(src.headset, SLOT_IN_BACKPACK)
 			else
 				H.put_in_hand_or_drop(src.headset)
 
@@ -66,7 +66,10 @@
 
 	announce()
 		. = ..()
-		boutput(src.owner.current, "<span class='alert'>You are now a member of [src.gang.gang_name]!</span>")
+		var/gang_name = src.gang.gang_name
+		if(gang_name == initial(src.gang.gang_name))
+			gang_name = "a yet to be named gang"
+		boutput(src.owner.current, "<span class='alert'>You are now a member of [gang_name]!</span>")
 		boutput(src.owner.current, "<span class='alert'>Your headset has been tuned to your gang's frequency. Prefix a message with :z to communicate on this channel.</span>")
 		boutput(src.owner.current, "<span class='alert'>Your boss is denoted by the blue G and your fellow gang members are denoted by the red G! Work together and do some crime!</span>")
 		boutput(src.owner.current, "<span class='alert'>You are free to harm anyone who isn't in your gang, but be careful, they can do the same to you!</span>")
@@ -79,6 +82,20 @@
 			boutput(src.owner.current, "<span class='alert'>Your gang's base is located in [src.gang.base], along with your locker.</span>")
 		else
 			boutput(src.owner.current, "<span class='alert'>Your gang doesn't have a base or locker yet.</span>")
+
+		boutput(src.owner.current, "<span class='alert'>Your gang leader is <b>[src.gang.leader.current.real_name]</b> as <b>[src.gang.leader.current.job]</b>.</span>")
+		var/list/member_strings = list()
+		for(var/datum/mind/member in src.gang.members)
+			if(!member.current)
+				continue
+			if(member == src.gang.leader || member == src.owner)
+				continue
+			var/job = member.current?.job
+			member_strings += "[member.current.real_name] as [job]"
+		if(length(member_strings))
+			boutput(src.owner.current, "<span class='alert'>Other gang members of your gang are:<br>\t[jointext(member_strings, "<br>\t")]</span>")
+		else
+			boutput(src.owner.current, "<span class='alert'>Seems like it's only you and the gang leader.</span>")
 
 	// The gang leader antagonist datum will announce information pertaining to gang members.
 	handle_round_end()

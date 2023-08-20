@@ -636,7 +636,7 @@
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
 			if (H.mind.assigned_role == "Clown")
-				H.equip_if_possible(new /obj/item/clothing/head/graduation_cap(H), H.slot_head)
+				H.equip_if_possible(new /obj/item/clothing/head/graduation_cap(H), SLOT_HEAD)
 				var/obj/item/toy/diploma/D = new /obj/item/toy/diploma(get_turf(H))
 				D.redeemer = H.ckey
 				H.put_in_hand_or_drop(D)
@@ -686,6 +686,10 @@
 				var/obj/item/clothing/suit/det_suit/M = H.wear_suit
 				if (istype(M))
 					var/prev = M.name
+					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
+					M.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+					M.item_state = "inspectorc"
 					M.icon_state = findtext(M.icon_state, "_o") ? "inspectorc_o" : "inspectorc"
 					M.coat_style = "inspectorc"
 					M.name = "inspector's short coat"
@@ -890,7 +894,7 @@
 				if (istype(M, /obj/item/swords_sheaths/captain))
 					if (M.item_state == "scabbard-cap1" || M.item_state == "red_scabbard-cap1")
 						qdel(M)
-						H.equip_if_possible(new /obj/item/swords_sheaths/captain/blue(H), H.slot_belt)
+						H.equip_if_possible(new /obj/item/swords_sheaths/captain/blue(H), SLOT_BELT)
 						succ = TRUE
 
 			if (H.back)
@@ -1048,7 +1052,7 @@
 				if (istype(M, /obj/item/swords_sheaths/captain))
 					if (M.item_state == "scabbard-cap1" || M.item_state == "blue_scabbard-cap1")
 						qdel(M)
-						H.equip_if_possible(new /obj/item/swords_sheaths/captain/red(H), H.slot_belt)
+						H.equip_if_possible(new /obj/item/swords_sheaths/captain/red(H), SLOT_BELT)
 						succ = TRUE
 
 			if (H.back)

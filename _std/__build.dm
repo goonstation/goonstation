@@ -99,10 +99,6 @@ o+`        `-` ``..-:yooos-..----------..`
 // (during that time the server will be frozen).
 //#define LOG_HARD_DELETE_REFERENCES
 //#define LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
-// The same thing but powered by extools. Better, harder, faster, stronger.
-// You'll need an extools version that has the right stuff in it to make this work.
-//#define REFERENCE_TRACKING
-//#define AUTO_REFERENCE_TRACKING_ON_HARD_DEL
 
 // Toggle this to turn .dispose() into qdel( ). Useful for trying to find lingering references locally.
 //#define DISPOSE_IS_QDEL
