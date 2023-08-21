@@ -265,28 +265,24 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/flash_hit
-	var/last_trigger = 0
 	desc = "Every now and then it produces some bright sparks."
 
 	execute(var/atom/owner, var/mob/attacker, var/atom/attacked, var/atom/weapon)
-		if((world.time - last_trigger) >= 600)
-			last_trigger = world.time
-			attacked.visible_message("<span class='alert'>[owner] emits a flash of light!</span>")
-			for (var/mob/living/carbon/M in all_viewers(5, attacked))
-				M.apply_flash(8, 0, 0, 0, 3)
-		return
+		if(ON_COOLDOWN(owner, "mat_flash_hit", 60 SECONDS))
+			return
+		attacked.visible_message("<span class='alert'>[owner] emits a flash of light!</span>")
+		for (var/mob/living/carbon/M in all_viewers(5, attacked))
+			M.apply_flash(8, 0, 0, 0, 3)
 
 /datum/materialProc/smoke_hit
 	desc = "Faint wisps of smoke rise from it."
-	var/last_trigger = 0
 
 	execute(var/atom/owner, var/mob/attacker, var/atom/attacked, var/atom/weapon)
-		if((world.time - last_trigger) >= 200)
-			last_trigger = world.time
-			attacked.visible_message("<span class='alert'>[owner] emits a puff of smoke!</span>")
-			for(var/turf/T in view(1, attacked))
-				harmless_smoke_puff(get_turf(T))
-		return
+		if(ON_COOLDOWN(owner, "mat_flash_hit", 20 SECONDS))
+			return
+		attacked.visible_message("<span class='alert'>[owner] emits a puff of smoke!</span>")
+		for(var/turf/T in view(1, attacked))
+			harmless_smoke_puff(get_turf(T))
 
 /datum/materialProc/gold_add
 	desc = "It's very shiny."
