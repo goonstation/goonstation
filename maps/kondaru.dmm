@@ -2009,10 +2009,7 @@
 	},
 /area/station/hangar/main)
 "agz" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/vent_pump,
 /turf/simulated/floor/caution/north,
 /area/station/hangar/main)
 "agA" = (
@@ -2523,10 +2520,8 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw_se,
 /area/station/chapel/sanctuary)
 "aig" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 4
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/north,
 /area/station/chapel/sanctuary)
@@ -5671,10 +5666,8 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 1
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 1
 	},
 /obj/decal/tile_edge/floorguide/engineering,
 /obj/decal/tile_edge/floorguide/arrow_e{
@@ -5833,10 +5826,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "atq" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -17003,10 +16994,8 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bml" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 8
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
@@ -17702,10 +17691,8 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "boA" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 4
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
@@ -22742,10 +22729,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "bIR" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/vent_pump,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -25102,10 +25086,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 1
 	},
 /obj/cable{
 	icon_state = "2-8"
@@ -26106,10 +26088,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/cafeteria)
 "bUl" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/vent_pump,
 /turf/simulated/floor/red/corner{
 	dir = 4
 	},
@@ -28457,10 +28436,8 @@
 	},
 /area/station/crew_quarters/market)
 "cei" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -29716,11 +29693,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	level = 2;
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/vent_pump,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/indigo_rye)
 "ciY" = (
@@ -40938,10 +40911,8 @@
 /obj/machinery/door_timer/solitary2/new_walls/north{
 	layer = 3.1
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 8
 	},
 /turf/simulated/floor/red/corner{
 	dir = 1
@@ -43542,10 +43513,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "lem" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/vent_pump,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "les" = (
@@ -54982,10 +54950,8 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
 "usi" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -55851,10 +55817,8 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/security/main)
@@ -58440,10 +58404,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/vent_pump,
 /turf/simulated/floor,
 /area/station/security/main)
 "xfa" = (
@@ -59180,10 +59141,8 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "xEO" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
@@ -59295,10 +59254,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
