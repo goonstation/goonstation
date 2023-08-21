@@ -1559,6 +1559,8 @@ proc/HYPget_assoc_reagents(var/datum/plant/passed_plant, var/datum/plantgenes/pa
 	if(passed_plantgenes.commuts)
 		for (var/datum/plant_gene_strain/reagent_adder/adding_gene_strain in passed_plantgenes.commuts)
 			reagent_list |= adding_gene_strain.reagents_to_add
+		for (var/datum/plant_gene_strain/reagent_blacklist/removing_gene_strain in passed_plantgenes.commuts)
+			reagent_list -= removing_gene_strain.reagents_to_remove
 
 	//Now the list is complete and we can just return it, ready to be used
 	return reagent_list
