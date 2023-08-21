@@ -120,6 +120,16 @@ var/global/total_gas_mixtures = 0
 			group.space_borders = possible_space_borders
 			group.length_space_border = possible_space_length
 
+		// Allow groups to determine if group processing is applicable after FEA setup
+		if(current_cycle)
+			group.group_processing = FALSE
+
+		group.members = members
+		air_groups += group
+
+		group.update_group_from_tiles() //Initialize air group variables
+		. = group
+
 		for(var/turf/simulated/test as anything in members)
 			test.parent = group
 			test.processing = FALSE
@@ -134,16 +144,6 @@ var/global/total_gas_mixtures = 0
 				dist = GET_DIST(possible, test)
 				if (!test.dist_to_space || (dist < test.dist_to_space))
 					test.dist_to_space = dist
-
-		// Allow groups to determine if group processing is applicable after FEA setup
-		if(current_cycle)
-			group.group_processing = FALSE
-
-		group.members = members
-		air_groups += group
-
-		group.update_group_from_tiles() //Initialize air group variables
-		return group
 	else
 		base.processing = FALSE //singletons at startup are technically unconnected anyway
 		base.parent = null
