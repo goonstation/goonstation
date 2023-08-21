@@ -1542,6 +1542,10 @@ TYPEINFO(/obj/machinery/plantpot)
 
 // Hydroponics procs not specific to the plantpot start here.
 
+proc/HYPget_assoc_reagents(var/datum/plant/growing, var/datum/plantgenes/DNA,)
+	//This proc returns a list with all reagents (or none) the plant currently is able to produce
+	return
+
 proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/plantgenes/DNA,var/special_condition = null)
 	// This is called during harvest to add reagents from the plant to a new piece of produce.
 	if(!I || !DNA || !I.reagents) return
