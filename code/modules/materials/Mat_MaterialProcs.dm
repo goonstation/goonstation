@@ -577,13 +577,12 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/soulsteel_entered
-	var/lastTrigger = 0
 	execute(var/obj/item/owner, var/atom/movable/entering)
 		if (!isobj(owner)) return
 		if (istype(entering, /mob/dead/observer) && prob(33))
 			var/mob/dead/observer/O = entering
 			if(O.observe_round) return
-			if(world.time - lastTrigger < 1800)
+			if(ON_COOLDOWN(owner, "soulsteel_revive", 3 MINUTES))
 				boutput(entering, "<span class='alert'>[owner] can not be possessed again so soon!</span>")
 				return
 			lastTrigger = world.time
@@ -595,8 +594,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				OB.max_health = 8
 				OB.canspeak = 0
 				OB.show_antag_popup("soulsteel")
-
-		return
 
 /datum/materialProc/reflective_onbullet
 	execute(var/atom/owner, var/atom/attacked, var/obj/projectile/projectile)
