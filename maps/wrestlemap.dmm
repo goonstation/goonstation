@@ -1940,9 +1940,7 @@
 /area/station/chapel/sanctuary)
 "aQi" = (
 /obj/disposalpipe/segment/horizontal,
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on"
-	},
+/obj/machinery/atmospherics/unary/vent_pump,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/central{
 	name = "Ringside Hallway"
@@ -5653,7 +5651,7 @@
 /area/station/medical/morgue)
 "cwz" = (
 /obj/stool/bench/red/auto,
-/obj/machinery/atmospherics/unary/outlet_injector,
+/obj/machinery/atmospherics/unary/vent_pump,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "cwG" = (
@@ -7390,10 +7388,7 @@
 	name = "Crashed Limo"
 	})
 "dkh" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/vent_pump,
 /turf/simulated/floor{
 	icon_state = "L10"
 	},
@@ -10853,7 +10848,7 @@
 /area/station/medical/staff)
 "eKX" = (
 /obj/decal/cleanable/blood,
-/obj/machinery/atmospherics/unary/outlet_injector,
+/obj/machinery/atmospherics/unary/vent_pump,
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/security/brig{
 	name = "The Cage Arena"
@@ -13643,10 +13638,8 @@
 /turf/simulated/floor/grey,
 /area/station/security/interrogation)
 "fWz" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "5-10"
@@ -20242,10 +20235,8 @@
 	},
 /area/station/medical/research)
 "iPL" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 8
 	},
 /obj/disposalpipe/junction/left/south,
 /obj/cable{
@@ -21232,10 +21223,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "jjg" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_south)
@@ -23175,7 +23164,7 @@
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/armory)
 "kbF" = (
-/obj/machinery/atmospherics/unary/outlet_injector,
+/obj/machinery/atmospherics/unary/vent_pump,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "kbL" = (
@@ -25076,10 +25065,8 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/maintenance/west)
 "kWF" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -26525,10 +26512,7 @@
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "lDj" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/vent_pump,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/central{
 	name = "Ringside Hallway"
@@ -30710,10 +30694,8 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
@@ -32591,10 +32573,8 @@
 	})
 "omo" = (
 /obj/disposalpipe/segment/horizontal,
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -41158,7 +41138,7 @@
 /area/station/science/lab)
 "sak" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/atmospherics/unary/outlet_injector,
+/obj/machinery/atmospherics/unary/vent_pump,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "sam" = (
@@ -42334,10 +42314,8 @@
 	mail_tag = "Genetics";
 	name = "Genetics Mail Router"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 4
 	},
 /obj/stool/bench/auto,
 /turf/simulated/floor/green,
@@ -42457,10 +42435,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 1
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -44646,10 +44622,8 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "tBM" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 4
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /obj/cable{
@@ -48331,10 +48305,8 @@
 "viY" = (
 /obj/stool/bench/red/auto,
 /obj/landmark/start/job/security_officer,
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -49856,7 +49828,7 @@
 	},
 /area/station/security/main)
 "vPv" = (
-/obj/machinery/atmospherics/unary/outlet_injector,
+/obj/machinery/atmospherics/unary/vent_pump,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "vPw" = (
@@ -50989,10 +50961,7 @@
 /area/station/turret_protected/ai_upload_foyer)
 "wnF" = (
 /obj/landmark/gps_waypoint,
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/vent_pump,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -52303,10 +52272,8 @@
 	name = "The Cage Arena"
 	})
 "wSN" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 4
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -53094,10 +53061,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "xkp" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -54962,10 +54927,8 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
