@@ -144,12 +144,12 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/generic_fireflash
-	execute(var/atom/location, var/temp)
+	execute(var/atom/owner, var/temp)
 		if(temp < T0C + 200)
 			return
 		if(ON_COOLDOWN(owner, "generic_mat_fireflash", 120 SECONDS))
 			return
-		fireflash(get_turf(location), 1)
+		fireflash(get_turf(owner), 1)
 		return
 
 /datum/materialProc/generic_itchy_onlife
