@@ -19,7 +19,7 @@
 		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
 		return
 
-	var/msg = input("Please enter your help request to admins.\nAdminhelps are also sent to admins via Discord.\n\nFor questions on game mechanics, use Mentorhelp (F3).", "Adminhelp") as null|message
+	var/msg = input("Please enter your help request or rule violation report to admins.\nAdminhelps are also sent to admins via Discord.\nIf someone is breaking a rule tell us who did what and when.\n\nFor questions on game mechanics, use Mentorhelp (F3).", "Adminhelp") as null|message
 
 	msg = copytext(html_encode(msg), 1, MAX_MESSAGE_LEN * 4)
 
