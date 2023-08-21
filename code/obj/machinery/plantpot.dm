@@ -1913,6 +1913,8 @@ TYPEINFO(/obj/machinery/hydro_mister)
 	anchored = UNANCHORED
 	var/active = 0
 	var/mode = 1
+	var/emagged = FALSE
+	var/mist_range = 2
 
 	New()
 		if (prob(1))
@@ -1922,23 +1924,46 @@ TYPEINFO(/obj/machinery/hydro_mister)
 		reagents.add_reagent("water", 1000)
 
 	get_desc()
+		var/complete_description = "<br>It's [!src.active ? "off" : (!src.mode ? "on low" : "on high")]. It's about [round(src.reagents.total_volume / src.reagents.maximum_volume * 100, 1)]% full."
+		if (src.emagged)
+			complete_description += " It is humming with an oddly disturbing sound."
 		var/reag_list = ""
 		for(var/current_id in src.reagents.reagent_list)
 			var/datum/reagent/current_reagent = src.reagents.reagent_list[current_id]
 			reag_list += "[reag_list ? ", " : " "][current_reagent.name]"
-		return "<br>It's [!src.active ? "off" : (!src.mode ? "on low" : "on high")]. It's about [round(src.reagents.total_volume / src.reagents.maximum_volume * 100, 1)]% full. It seems to contain [reag_list]."
+		complete_description += " It seems to contain [reag_list]."
+		return complete_description
 
 	process()
 		..()
 		if(src.active)
-			for (var/obj/machinery/plantpot/P in view(2,src))
-				if(P.reagents.get_reagent_amount("water") >= 195)
+			for (var/obj/potentional_target in view(mist_range,src))
+				if(isnull(potentional_target.reagents) || istype(potentional_target, /obj/machinery/hydro_mister))
+					//we never pour chems in stuff without reagents or other botanical misters
 					continue
-				src.reagents.trans_to(P, 1 + (mode * 4))
+				if(!istype(potentional_target, /obj/machinery/plantpot) && !src.emagged || !is_open_container(potentional_target))
+					//if we are not emagged, we never transfer in non-plantpots
+					//if emagged, we only transfer into open containers
+					continue
+				if(istype(potentional_target, /obj/machinery/plantpot) && potentional_target?.reagents.get_reagent_amount("water") >= 195)
+					//we never transfer in plantpots with too much water in them
+					continue
+				//Now we sorted all cases out and can fill them with our chemicals
+				src.reagents.trans_to(potentional_target, 1 + (mode * 4))
+
 			if(src.reagents.total_volume < 10)
 				src.visible_message("\The [src] sputters and runs out of liquid.")
 				src.active = 0
 				src.mode = 0
+
+	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		if (src.emagged)
+			return 0
+		if (user)
+			user.show_text("The [src] gives out an oddly disturbing sound.", "red")
+		src.emagged = TRUE
+		src.mist_range = 3 // place one in chemistry and make the nerds suffer
+		return 1
 
 	attackby(obj/item/W, mob/user)
 		if(isscrewingtool(W) || iswrenchingtool(W))
