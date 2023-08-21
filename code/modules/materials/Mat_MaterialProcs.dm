@@ -254,14 +254,14 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/generic_explosive
-	execute(var/atom/location, var/temp)
+	execute(var/atom/owner, var/temp)
 		if(temp < T0C + 100)
 			return
 		if(ON_COOLDOWN(owner, "generic_mat_explosive", 10 SECONDS))
 			return
-		var/turf/tloc = get_turf(location)
-		explosion(location, tloc, 1, 2, 3, 4)
-		location.visible_message("<span class='alert'>[location] explodes!</span>")
+		var/turf/tloc = get_turf(owner)
+		explosion(owner, tloc, 1, 2, 3, 4)
+		owner.visible_message("<span class='alert'>[owner] explodes!</span>")
 		return
 
 /datum/materialProc/flash_hit
@@ -506,31 +506,31 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/erebite_temp
-	execute(var/atom/location, var/temp)
+	execute(var/atom/owner, var/temp)
 		if(temp < T0C + 900) return
 		if(ON_COOLDOWN(owner, "erebite_temp", 10 SECONDS))
 			return
 		if((temp < T0C + 1200) && prob(80)) return //some leeway for triggering at lower temps
-		var/turf/tloc = get_turf(location)
-		explosion(location, tloc, 0, 1, 2, 3)
-		location.visible_message("<span class='alert'>[location] explodes!</span>")
+		var/turf/tloc = get_turf(owner)
+		explosion(owner, tloc, 0, 1, 2, 3)
+		owner.visible_message("<span class='alert'>[owner] explodes!</span>")
 		return
 
 /datum/materialProc/erebite_exp
-	execute(var/atom/location, var/sev)
+	execute(var/atom/owner, var/sev)
 		if(ON_COOLDOWN(owner, "erebite_exp", 10 SECONDS))
 			return
-		var/turf/tloc = get_turf(location)
+		var/turf/tloc = get_turf(owner)
 		if(sev > 0 && sev < 4)
-			location.visible_message("<span class='alert'>[location] explodes!</span>")
+			owner.visible_message("<span class='alert'>[owner] explodes!</span>")
 			switch(sev)
 				if(1)
-					explosion(location, tloc, 0, 1, 2, 3)
+					explosion(owner, tloc, 0, 1, 2, 3)
 				if(2)
-					explosion(location, tloc, -1, 0, 1, 2)
+					explosion(owner, tloc, -1, 0, 1, 2)
 				if(3)
-					explosion(location, tloc, -1, -1, 0, 1)
-			qdel(location)
+					explosion(owner, tloc, -1, -1, 0, 1)
+			qdel(owner)
 		return
 
 /datum/materialProc/slippery_attack
