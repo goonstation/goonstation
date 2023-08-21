@@ -190,7 +190,8 @@ datum/job_controller/proc/savefile_fix(client/user)
 		return
 	var/savefile/F = new /savefile(src.savefile_path(user.ckey), -1)
 	for(var/i in 1 to CUSTOMJOB_SAVEFILE_PROFILES_MAX)
-		var/spawn_loc = F["[i]_special_spawn_location"]
+		var/spawn_loc
+		F["[i]_special_spawn_location"] >> spawn_loc
 		if(istype(spawn_loc, /datum))
 			F["[i]_special_spawn_location"] << null
 			var/job_name = null
