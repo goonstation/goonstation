@@ -89,7 +89,7 @@
 					var/selection = tgui_input_list(usr, "Select a word:", text, holo_actions, allowIllegal=TRUE)
 					text = replacetext(text, "...", selection)
 				else
-					holo_nouns = strings("hologram.txt", "nouns")
+					holo_nouns += strings("hologram.txt", "nouns")
 					if(src.holoHolder.text_expansion)
 						for(var/te in src.holoHolder.text_expansion)
 							holo_nouns += strings("hologram.txt", "nouns_[te]")
@@ -297,4 +297,11 @@
 	var/obj/effect/distort/hologram/E = new
 	E.icon_state = "d_fast"
 	src.vis_contents += E
-	src.filters += filter(type="displace", size=E.distort_size, render_source = E.render_target)
+	src.add_filter("hologram", 1, list(type="displace", size=E.distort_size, render_source = E.render_target))
+
+/atom/movable/proc/remove_hologram_effect()
+	src.color = null
+	src.remove_filter("hologram")
+	var/obj/effect/distort/hologram/E = locate() in src.vis_contents
+	src.vis_contents -= E
+	qdel(E)

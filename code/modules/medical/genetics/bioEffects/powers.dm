@@ -1130,7 +1130,7 @@
 
 		owner.visible_message("<span class='alert'><b>[owner.name]</b> shoots eye beams!</span>")
 		var/datum/projectile/laser/eyebeams/PJ = new projectile_path
-		shoot_projectile_ST(owner, PJ, T)
+		shoot_projectile_ST_pixel_spread(owner, PJ, T)
 
 	cast_misfire(atom/target)
 		if (..())
@@ -1283,7 +1283,7 @@
 				the_object.setMaterial(getMaterial(linked.transmute_material))
 			else
 				owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to gold!</span>")
-				the_object.setMaterial(getMaterial("gold"), copy = FALSE)
+				the_object.setMaterial(getMaterial("gold"))
 		linked_power.using = 0
 
 	cast_misfire()
@@ -1319,7 +1319,7 @@
 			owner.visible_message("[owner] touches [the_object].")
 		else
 			owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to flesh!</span>")
-			the_object.setMaterial(getMaterial("flesh"), copy = FALSE)
+			the_object.setMaterial(getMaterial("flesh"))
 		linked_power.using = 0
 		return
 

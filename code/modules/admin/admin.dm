@@ -654,7 +654,7 @@ var/global/noir = 0
 						if(player.cached_jobbans.Find("Engineering Department"))
 							tgui_alert(usr,"This person is banned from Engineering Department. You must lift that ban first.")
 							return
-					if(job in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
+					if(job in list("Security Officer","Security Assistant","Vice Officer","Detective"))
 						if(player.cached_jobbans.Find("Security Department"))
 							tgui_alert(usr,"This person is banned from Security Department. You must lift that ban first.")
 							return
@@ -688,7 +688,7 @@ var/global/noir = 0
 							if(player.cached_jobbans.Find("[Trank2]"))
 								jobban_unban(M,Trank2, usr.ckey)
 					else if(job == "Security Department")
-						for(var/Trank3 in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
+						for(var/Trank3 in list("Security Officer","Security Assistant","Vice Officer","Detective"))
 							if(player.cached_jobbans.Find("[Trank3]"))
 								jobban_unban(M,Trank3, usr.ckey)
 					else if(job == "Heads of Staff")
@@ -714,7 +714,7 @@ var/global/noir = 0
 						if(cache.Find("Engineering Department"))
 							tgui_alert(usr,"This person is banned from Engineering Department. You must lift that ban first.")
 							return
-					if(job in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
+					if(job in list("Security Officer","Security Assistant","Vice Officer","Detective"))
 						if(cache.Find("Security Department"))
 							tgui_alert(usr,"This person is banned from Security Department. You must lift that ban first.")
 							return
@@ -747,7 +747,7 @@ var/global/noir = 0
 							if(cache.Find("[Trank2]"))
 								jobban_unban(M,Trank2, usr.ckey, usr.ckey)
 					else if(job == "Security Department")
-						for(var/Trank3 in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
+						for(var/Trank3 in list("Security Officer","Security Assistant","Vice Officer","Detective"))
 							if(cache.Find("[Trank3]"))
 								jobban_unban(M,Trank3, usr.ckey, usr.ckey)
 					else if(job == "Heads of Staff")
@@ -1081,7 +1081,7 @@ var/global/noir = 0
 					SPAWN (1 SECOND)
 						equip_job_items(job, H)
 						if (istype(id))
-							if(!H.equip_if_possible(id, H.slot_wear_id))
+							if(!H.equip_if_possible(id, SLOT_WEAR_ID))
 								H.put_in_hand(id)
 						else if (job.spawn_id)
 							H.spawnId(job)
@@ -3337,12 +3337,12 @@ var/global/noir = 0
 							for(var/datum/gang/gang in get_all_gangs())
 								var/mob/M = gang.leader.current
 								dat += "<br><table cellspacing=5><tr><td>([format_frequency(gang.gang_frequency)]) <B>[gang.gang_name]:</B></td><td></td><tr>"
-								dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[key_name(M)]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+								dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'><b>[M.real_name] ([M.ckey])</b></a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 								dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
 								dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>Show Objective</A></td></tr>"
 								for(var/datum/mind/member in gang.members)
 									if(member.current)
-										dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[key_name(member.current)]</a>[member.current.client ? "" : " <i>(logged out)</i>"][isdeadplayer(member.current) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+										dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name] ([M.ckey])</a>[member.current.client ? "" : " <i>(logged out)</i>"][isdeadplayer(member.current) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 										dat += "<td><a href='?action=priv_msg&target=[member.ckey]'>PM</A></td>"
 										dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[member.current]'>Show Objective</A></td></tr>"
 								dat += "</table>"
@@ -4100,31 +4100,6 @@ var/global/noir = 0
 		ircbot.export_async("admin", ircmsg)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
-/proc/checktraitor(mob/M as mob)
-	set popup_menu = 0
-	if(!M || !M.mind || !ticker || !ticker.mode)
-		return 0
-
-	if (istraitor(M))
-		return 1
-
-	if (istype(ticker.mode, /datum/game_mode/revolution))
-		if(M.mind in (ticker.mode:head_revolutionaries + ticker.mode:revolutionaries))
-			return 1
-	else if (istype(ticker.mode, /datum/game_mode/nuclear))
-		if(M.mind in ticker.mode:syndicates)
-			return 1
-	else if (istype(ticker.mode, /datum/game_mode/spy))
-		if(M.mind in (ticker.mode:leaders + ticker.mode:spies))
-			return 1
-
-	if(M.mind in ticker.mode:traitors)
-		return 1
-	if(M.mind in ticker.mode:Agimmicks)
-		return 1
-
-	return 0
-
 /proc/get_matches_string(var/text, var/list/possibles)
 	var/list/matches = new()
 	for (var/possible in possibles)

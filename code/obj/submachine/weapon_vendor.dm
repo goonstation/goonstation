@@ -256,6 +256,7 @@
 		materiel_stock += new/datum/materiel/fishing_gear/uniform
 		materiel_stock += new/datum/materiel/fishing_gear/hat
 		materiel_stock += new/datum/materiel/fishing_gear/fish_box
+		materiel_stock += new/datum/materiel/fishing_gear/fish_mount
 		..()
 
 	accepted_token(var/obj/item/currency/fishing/token)
@@ -604,6 +605,12 @@
 	path = /obj/item/clothing/head/fish_fear_me
 	description = "The ultimate angling headwear. Comes with a new, personalised message every time."
 	cost = 15
+
+/datum/materiel/fishing_gear/fish_mount
+	name = "Fish Wall Mount"
+	path = /obj/item/wall_trophy/fish_trophy
+	description = "A Wall Mount to attach fish to and show it off."
+	cost = 10
 
 // Requisition tokens
 /obj/item/requisition_token

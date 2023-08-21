@@ -217,6 +217,7 @@ TYPEINFO(/datum/component/loctargeting/medium_directional_light)
 
 /datum/component/loctargeting/medium_directional_light/UnregisterFromParent()
 	src.update(FALSE)
+	src.light_target = null
 	. = ..()
 
 /datum/component/loctargeting/medium_directional_light/on_added(datum/source, old_loc)

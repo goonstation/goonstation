@@ -97,7 +97,7 @@
 					break
 
 				var/turf/T = pick(turfs)
-				if(T.density)
+				if(checkTurfPassable(T))
 					maxTries--
 					continue
 
@@ -110,17 +110,17 @@
 
 		var/sound_to_play = 'sound/misc/announcement_1.ogg'
 		var/title = pick("Planetary Data Received","URGENT - Exploration Mission","Exploration Mission to [planet_name]")
-		var/list/reports = list("Unusual readings detected on [planet_name].  Investigate and bring back any relevent equipment or technoledgy.", \
+		var/list/reports = list("Unusual readings detected on [planet_name].  Investigate and bring back any relevent equipment or technology.", \
 		"Our company has been granted permission to explore [planet_name], a nearby planet that has shown signs of potential habitability. The goals of the mission are to conduct a thorough survey of the planet's surface and search for signs of past or present life.", \
 		"Urgent request has been made to explore [planet_name], a nearby planet that has shown signs of potential habitability. Due to the pressing nature of this request, please depart immediately. The goals of the mission are to conduct a quick survey of the planet's surface and search for any signs of life.", \
 		"We have received approval to explore [planet_name], a nearby planet of great interest to us.  This is a highly secretive and sensitive mission, and I trust that all employees will maintain strict confidentiality.")
 
 		if(generator == /datum/map_generator/void_generator)
 			title = pick("Anamolous Data Received", "URGENT - Exploration Mission")
-			reports = list("Unusual readings detected on [planet_name].  Investigate and bring back any relevent equipment or technoledgy.")
+			reports = list("Unusual readings detected on [planet_name].  Investigate and bring back any relevent equipment or technology.")
 		else if(generator == /datum/map_generator/asteroids)
 			title = pick("Exploration Mission to [planet_name]", "URGENT - Exploration Mission")
-			reports = list("Unusual readings detected on [planet_name].  Investigate and bring back any relevent equipment or technoledgy.", \
+			reports = list("Unusual readings detected on [planet_name].  Investigate and bring back any relevent equipment or technology.", \
 		"Our company has been granted permission to explore [planet_name], a nearby cluster of asteroids. The goals of the mission are to conduct a thorough survey of the region and search for signs of past or present life.", \
 		"Urgent request has been made to explore [planet_name], a nearby asteroid that has shown signs of valuable minerals. Due to the pressing nature of this request, please depart immediately. The goals of the mission are to conduct a quick survey of the region.", \
 		"We have received approval to explore [planet_name], this group of asteroids if of great interest to us.  This is a highly secretive and sensitive mission, and I trust that all employees will maintain strict confidentiality.")

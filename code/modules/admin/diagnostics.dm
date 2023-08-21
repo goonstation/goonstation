@@ -207,8 +207,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 		ADMIN_ONLY
 		world.SetConfig( "APP/admin", src.key, "role=admin" )
-		input( src, "Enter '.debug profile' in the next command box. Blame BYOND.", "BYONDSucks", ".debug profile" )
-		winset( usr, null, "command=.command" )
+		winset( usr, null, "command=.profile" )
 		if (tgui_alert(usr, "Do you disable automatic profiling for 5 minutes.", "Debug",
 				list("Yes", "No"), timeout = 10 SECOND) == "Yes")
 			lag_detection_process.delay_disable_manual_profiling(5 MINUTES)
@@ -1403,11 +1402,11 @@ proc/debug_map_apc_count(delim,zlim)
 			var/list/detailed_materials = list()
 			for(var/atom/movable/AM in theTurf)
 				if(AM.material)
-					materials |= AM.material.name
-					detailed_materials += "[AM.name] - [AM.material.name]"
+					materials |= AM.material.getName()
+					detailed_materials += "[AM.name] - [AM.material.getName()]"
 			if(include_turfs && theTurf.material)
-				materials |= theTurf.material.name
-				detailed_materials += "[theTurf.name] - [theTurf.material.name]"
+				materials |= theTurf.material.getName()
+				detailed_materials += "[theTurf.name] - [theTurf.material.getName()]"
 			if(!length(materials))
 				img.app.alpha = 0
 				return

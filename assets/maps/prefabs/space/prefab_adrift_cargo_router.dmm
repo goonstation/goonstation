@@ -516,11 +516,11 @@
 	},
 /obj/item/raw_material/ice,
 /obj/item/raw_material/ice,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/herring,
-/obj/item/fish/mahimahi,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/herring,
+/obj/item/reagent_containers/food/fish/mahimahi,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/item/reagent_containers/food/snacks/swedish_fish,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4

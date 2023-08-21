@@ -18,7 +18,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 	firevuln = 0.5
 	brutevuln = 0.8
 	angertext = "buzzes threateningly at"
-	butcherable = 2
+	butcherable = BUTCHER_YOU_MONSTER
 	flying = 1
 	min_quality = -60
 	p_class = 2
@@ -1590,7 +1590,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 	firevuln = 1
 	brutevuln = 1
 	angertext = "squeals at"
-	butcherable = 2
+	butcherable = BUTCHER_YOU_MONSTER
 	generic = 0
 	var/growth_timer = 60
 	var/royal = 0
@@ -2091,7 +2091,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 	firevuln = 0.8
 	brutevuln = 0.8
 	angertext = "bozzes angrily at"
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	sleeping_icon_state = "fakebee-sleep"
 	max_quality = 25
 	flying = 1

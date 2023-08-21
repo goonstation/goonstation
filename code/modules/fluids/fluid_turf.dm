@@ -241,7 +241,7 @@
 
 	levelupdate()
 		for(var/obj/O in src)
-			if(O.level == 1)
+			if(O.level == UNDERFLOOR)
 				O.hide(0)
 
 	tilenotify(turf/notifier)
