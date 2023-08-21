@@ -19960,7 +19960,7 @@
 /obj/landmark/gps_waypoint,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
-	location = "Engineering"
+	location = "Mechanic's Lab"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
@@ -25561,12 +25561,12 @@
 /area/station/medical/staff)
 "emR" = (
 /obj/machinery/light/incandescent,
-/obj/disposalpipe/segment/brig{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/brig{
+	dir = 4;
+	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/processing)
@@ -33475,7 +33475,7 @@
 "ksV" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
-	location = "Mechanics"
+	location = "Engineering Storage"
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -51384,6 +51384,13 @@
 	tag = "icon-catwalk (WEST)"
 	},
 /area/station/quartermaster/magnet)
+"xzb" = (
+/obj/disposalpipe/segment/brig{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/red/side,
+/area/station/security/processing)
 "xzf" = (
 /obj/grille/catwalk{
 	icon_state = "catwalk_cross"
@@ -97849,7 +97856,7 @@ vVo
 bgP
 hVA
 tMz
-lus
+xzb
 set
 stt
 bkP
