@@ -897,7 +897,11 @@ var/datum/job_controller/job_controls
 			src.job_creator()
 
 		if(href_list["CreateJob"])
-			var/datum/job/match_check = find_job_in_controller_by_string(src.job_creator.name)
+			var/datum/job/match_check
+			try
+				match_check = find_job_in_controller_by_string(src.job_creator.name)
+			catch
+				;
 			if (match_check)
 				boutput(usr, "<span class='alert'><b>A job with this name already exists. It cannot be created.</b></span>")
 				return
