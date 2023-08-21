@@ -188,7 +188,7 @@
 			var/turf/T = get_step(src, dir)
 			if (istype(T, /turf/space))
 				var/turf/space/space_turf = T
-				if (space_turf.starlight)
+				if (space_turf.GetOverlayImage("starlight"))
 					return TRUE
 
 		if (src.SL_lit())
