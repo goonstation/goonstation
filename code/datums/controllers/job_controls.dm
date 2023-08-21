@@ -220,6 +220,7 @@ var/datum/job_controller/job_controls
 			src.job_config()
 
 		if(href_list["JobCreator"])
+			savefile_fix(usr.client)
 			src.job_creator()
 
 		// JOB CREATOR COMMANDS
