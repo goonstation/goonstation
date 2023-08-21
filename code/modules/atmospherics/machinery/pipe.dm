@@ -595,6 +595,7 @@
 	level = UNDERFLOOR
 	volume = 105
 	alpha = 128
+	color = "#B4B4B4"
 	var/obj/machinery/atmospherics/node1
 	var/obj/machinery/atmospherics/node2
 	var/obj/machinery/atmospherics/node3
