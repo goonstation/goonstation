@@ -38744,7 +38744,7 @@
 /area/station/engine/inner)
 "qBR" = (
 /obj/table/auto,
-/obj/item/clothing/under/trash_bag,
+/obj/item/trash_bag,
 /obj/item/clothing/gloves/boxing{
 	pixel_y = 9
 	},
@@ -39466,7 +39466,7 @@
 /obj/storage/cart/trash,
 /obj/disposalpipe/junction/left/west,
 /obj/machinery/light/incandescent/warm,
-/obj/item/clothing/under/trash_bag,
+/obj/item/trash_bag,
 /turf/simulated/floor/purpleblack{
 	dir = 6
 	},

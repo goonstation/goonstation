@@ -1757,7 +1757,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\clothing\plants.dm"
 #include "code\obj\item\clothing\shoes.dm"
 #include "code\obj\item\clothing\suits.dm"
-#include "code\obj\item\clothing\trash_bags.dm"
 #include "code\obj\item\clothing\uniforms.dm"
 #include "code\obj\item\clothing\uniforms_autocolor.dm"
 #include "code\obj\item\clothing\under\gimmick\hakama.dm"

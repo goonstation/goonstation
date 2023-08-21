@@ -20171,7 +20171,7 @@
 	},
 /area/swampzone/interiors/bonktek)
 "xVP" = (
-/obj/item/clothing/under/trash_bag,
+/obj/item/trash_bag,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
 "xWd" = (

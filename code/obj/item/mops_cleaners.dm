@@ -4,6 +4,8 @@ SPACE CLEANER
 MOP
 SPONGES??
 WET FLOOR SIGN
+HANDHELD VACUUM
+TRASH BAG
 
 */
 /obj/item/spraybottle
@@ -884,7 +886,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	item_function_flags = USE_SPECIALS_ON_ALL_INTENTS
 	var/obj/item/reagent_containers/glass/bucket/bucket
-	var/obj/item/clothing/under/trash_bag/trashbag
+	var/obj/item/trash_bag/trashbag
 
 	New()
 		..()
@@ -1049,7 +1051,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 		. |= success
 
 	attackby(obj/item/W, mob/user, params, is_special=0)
-		if(istype(W, /obj/item/clothing/under/trash_bag))
+		if(istype(W, /obj/item/trash_bag))
 			if(isnull(src.trashbag))
 				boutput(user, "<span class='notice'>You insert \the [W] into \the [src].")
 				src.trashbag = W
@@ -1192,3 +1194,97 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		animate(alpha=0, time=0.21 SECONDS, easing=SINE_EASING)
 		SPAWN(0.5 SECONDS)
 			qdel(src)
+
+
+/obj/item/trash_bag
+	name = "trash bag"
+	desc = "A flimsy bag for filling with things that are no longer wanted."
+	icon = 'icons/obj/janitor.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	icon_state = "trashbag-f"
+	item_state = "trashbag-f"
+	uses_multiple_icon_states = 1
+	w_class = W_CLASS_TINY
+	rand_pos = 1
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	tooltip_flags = REBUILD_DIST
+	var/base_state = "trashbag"
+
+	New()
+		..()
+		src.create_storage(/datum/storage/no_hud, prevent_holding = list(/obj/item/trash_bag), max_wclass = W_CLASS_NORMAL, slots = 20,
+			params = list("use_inventory_counter" = TRUE, "variable_weight" = TRUE, "max_weight" = 20))
+
+	equipped(mob/user)
+		..()
+		for (var/i = 1 to round(length(src.storage.get_contents()) / 3))
+			src.remove_random_item(user)
+
+	attackby(obj/item/W, mob/user)
+		..()
+		if (issnippingtool(W))
+			var/list/actions = list("Cut into an outfit", "Put it into the bag")
+			var/action = input(user, "What do you want to do with [src]?") as null|anything in actions
+			if (!action)
+				return
+			switch (action)
+				if ("Cut into an outfit")
+					boutput(user, "You begin cutting up [src].")
+					if (!do_after(user, 3 SECONDS))
+						boutput(user, "<span class='alert'>You were interrupted!</span>")
+						return
+					else
+						new /obj/item/bandage(get_turf(src))
+						playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
+						boutput(user, "You cut [src] into bandages.")
+						user.u_equip(src)
+						qdel(src)
+						return
+		if (!(W in src.storage.get_contents()))
+			return
+		var/mob/living/carbon/human/H = src.loc
+		if (istype(H) && H.w_uniform == src)
+			src.remove_random_item(H)
+
+	attack_hand(mob/user)
+		..()
+		var/mob/living/carbon/human/H = src.loc
+		if (istype(H) )
+			src.remove_random_item(H)
+
+	update_icon(mob/user)
+		if (!src.storage || !length(src.storage.get_contents()))
+			src.icon_state = initial(src.icon_state)
+			src.item_state = ""
+
+		else if (length(src.storage.get_contents()))
+			src.icon_state = src.base_state
+			src.item_state = src.base_state
+
+		if (ismob(user))
+			user.update_inhands()
+
+	get_desc(dist)
+		..()
+		if (dist > 2)
+			return
+		if (src.storage.is_full())
+			. += "It's totally full."
+		else
+			. += "There's still some room to hold something."
+
+	proc/remove_random_item(mob/user)
+		if (!length(src.storage.get_contents()))
+			return
+		var/obj/item/I = pick(src.storage.get_contents())
+		src.storage.transfer_stored_item(I, get_turf(src))
+		if (user)
+			user.visible_message("\An [I] falls out of [user]'s [src.name]!", "<span class='alert'>\An [I] falls out of your [src.name]!</span>")
+		else
+			src.loc.visible_message("\An [I] falls out of [src]!")
+
+/obj/item/trash_bag/biohazard
+	name = "hazardous waste bag"
+	desc = "A flimsy bag for filling with things that are no longer wanted and are also covered in blood or puke or other gross biohazards. It's not any sturdier than a normal trash bag, though, so be careful with the needles!"
+	icon_state = "biobag-f"
+	base_state = "biobag"

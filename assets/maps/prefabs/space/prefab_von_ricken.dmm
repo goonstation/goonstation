@@ -1494,7 +1494,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/von_ricken)
 "VQ" = (
-/obj/item/clothing/under/trash_bag{
+/obj/item/trash_bag{
 	pixel_x = -3;
 	pixel_y = 4
 	},
