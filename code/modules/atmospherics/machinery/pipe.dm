@@ -594,12 +594,14 @@
 	desc = "A manifold composed of regular pipes"
 	level = UNDERFLOOR
 	volume = 105
+	alpha = 128
 	var/obj/machinery/atmospherics/node1
 	var/obj/machinery/atmospherics/node2
 	var/obj/machinery/atmospherics/node3
 
 /obj/machinery/atmospherics/pipe/manifold/overfloor
 	level = OVERFLOOR
+	alpha = 255
 
 /obj/machinery/atmospherics/pipe/manifold/New()
 	..()
