@@ -3314,6 +3314,17 @@
 "aTA" = (
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
+"aTL" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/obj/machinery/turret{
+	dir = 9
+	},
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "aTP" = (
 /obj/decal/tile_edge/line/white{
 	color = "#ffccff";
@@ -9364,14 +9375,6 @@
 	dir = 10
 	},
 /area/station/chapel/sanctuary)
-"cGy" = (
-/obj/table/wood/auto,
-/obj/machinery/light/lamp/black{
-	pixel_x = -2;
-	pixel_y = 6
-	},
-/turf/simulated/floor/wood/six,
-/area/station/library/reading2)
 "cGz" = (
 /obj/storage/closet/emergency,
 /obj/machinery/light/incandescent/netural,
@@ -19461,16 +19464,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
-"fRI" = (
-/obj/machinery/light/small/sticky{
-	dir = 1
-	},
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/wood/six,
-/area/station/library/reading2)
 "fRQ" = (
 /obj/lattice{
 	dir = 4;
@@ -21340,7 +21333,6 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/machinery/printing_press,
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "guv" = (
@@ -25000,13 +24992,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
-"hyE" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2/middle{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/library/reading2)
 "hyG" = (
 /obj/table/reinforced/auto,
 /obj/item/decoration/ashtray{
@@ -28436,6 +28421,21 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
+"iFO" = (
+/obj/table/wood/auto,
+/obj/machinery/light/lamp/black{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/paper_bin{
+	pixel_x = -6
+	},
+/obj/item/pen{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/turf/simulated/floor/wood/six,
+/area/station/library/reading2)
 "iFX" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -33075,6 +33075,17 @@
 /obj/machinery/vending/cola/red,
 /turf/simulated/floor/carpet/grime,
 /area/station/hallway/primary/southeast)
+"jZZ" = (
+/obj/machinery/light/small/sticky{
+	dir = 1
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/storage/closet/office,
+/turf/simulated/floor/wood/six,
+/area/station/library/reading2)
 "kag" = (
 /turf/simulated/floor/carpet/purple/standard/edge{
 	dir = 8
@@ -38235,10 +38246,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
-"lGk" = (
-/obj/storage/closet/office,
-/turf/simulated/floor/wood/six,
-/area/station/library/reading2)
 "lGt" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -38290,6 +38297,11 @@
 /obj/reagent_dispensers/watertank/big,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
+"lGO" = (
+/turf/simulated/floor/arrival{
+	dir = 10
+	},
+/area/station/hangar/arrivals)
 "lGU" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -40119,7 +40131,7 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/bathroom{
 	name = "South Bathroom"
 	})
@@ -43705,7 +43717,7 @@
 "noT" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/bathroom{
 	name = "South Bathroom"
 	})
@@ -65054,13 +65066,6 @@
 	dir = 9
 	},
 /area/station/hangar/arrivals)
-"tSU" = (
-/obj/table/glass/auto,
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/arrival{
-	dir = 10
-	},
-/area/station/hangar/arrivals)
 "tSW" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -65209,7 +65214,7 @@
 	},
 /obj/item/cell/charged,
 /turf/simulated/floor/arrival{
-	dir = 8
+	dir = 10
 	},
 /area/station/hangar/arrivals)
 "tVB" = (
@@ -65499,12 +65504,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
-"tZm" = (
-/obj/machinery/status_display{
-	pixel_y = -30
-	},
-/turf/simulated/floor/arrival,
-/area/station/hangar/arrivals)
 "tZn" = (
 /obj/critter/opossum/morty{
 	dir = 4
@@ -65649,6 +65648,10 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
+"ubO" = (
+/obj/machinery/printing_press,
+/turf/simulated/floor/wood/six,
+/area/station/library)
 "ucb" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
@@ -79020,7 +79023,7 @@
 "xXo" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left,
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/bathroom{
 	name = "South Bathroom"
 	})
@@ -103066,16 +103069,16 @@ rdj
 rdj
 rdj
 rdj
-rdj
 xBU
 eQa
 dZL
 hDm
 xBU
 vTM
-hyE
+vca
 vca
 ajo
+jdd
 gOG
 xqk
 jJd
@@ -103368,16 +103371,16 @@ bzg
 rdj
 rdj
 rdj
-rdj
 xBU
 fVE
 mRw
 uCm
 uRy
-cGy
+iFO
 ycX
 fIp
 ajo
+sIK
 gYc
 xqk
 jJd
@@ -103670,7 +103673,6 @@ qol
 rdj
 rdj
 rdj
-rdj
 xBU
 jqj
 lUG
@@ -103680,7 +103682,8 @@ mey
 eWI
 dFo
 ajo
-fNA
+sIK
+aTL
 xqk
 jJd
 aad
@@ -103972,7 +103975,6 @@ sLK
 rdj
 rdj
 rdj
-rdj
 xBU
 wOz
 oVr
@@ -103982,6 +103984,7 @@ kPo
 rIS
 mcV
 ajo
+sIK
 gYc
 xqk
 jJd
@@ -104274,16 +104277,16 @@ rdj
 cPY
 cPY
 cPY
-cPY
 xBU
 dqh
 hmt
 vaE
 uRy
-fRI
+jZZ
 wIe
-lGk
+mcV
 ajo
+sIK
 hEh
 xqk
 jJd
@@ -104576,7 +104579,6 @@ rdj
 cPY
 pRg
 tVt
-tSU
 uRy
 kYP
 qAl
@@ -104586,6 +104588,7 @@ lxB
 ogv
 ajo
 ajo
+jdd
 uJR
 xqk
 jJd
@@ -104877,8 +104880,8 @@ vBJ
 rdj
 cPY
 tEP
-jUI
-czv
+vIm
+lGO
 sGu
 qVE
 mEh
@@ -105482,9 +105485,9 @@ cPY
 dne
 hwA
 jUI
-tZm
+czv
 sGu
-quz
+ubO
 quz
 fJQ
 kGb
