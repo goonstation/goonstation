@@ -87,8 +87,8 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			if(tank_one && tank_two)
 				var/turf/T = get_turf(src)
 				var/butt = istype(tank_one, /obj/item/clothing/head/butt) || istype(tank_two, /obj/item/clothing/head/butt)
-				logTheThing(LOG_BOMBING, user, "made a transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
-				message_admins("[key_name(user)] made a transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
+				logTheThing(LOG_BOMBING, user, "made a tank transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
+				message_admins("[key_name(user)] made a tank transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
 
 			UpdateIcon()
 			attacher = user
