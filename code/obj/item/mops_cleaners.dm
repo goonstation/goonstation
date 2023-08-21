@@ -1220,9 +1220,8 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		for (var/i = 1 to round(length(src.storage.get_contents()) / 3))
 			src.remove_random_item(user)
 
-	attackby(obj/item/W, mob/user)
-		..()
-		if (issnippingtool(W))
+	attackby(obj/item/I, mob/user)
+		if (issnippingtool(I))
 			var/list/actions = list("Cut into an outfit", "Put it into the bag")
 			var/action = input(user, "What do you want to do with [src]?") as null|anything in actions
 			if (!action)
@@ -1234,13 +1233,21 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 						boutput(user, "<span class='alert'>You were interrupted!</span>")
 						return
 					else
-						new /obj/item/bandage(get_turf(src))
+						var/obj/item/clothing/under/shorts/trashsinglet/trash_outfit = new /obj/item/clothing/under/shorts/trashsinglet(get_turf(src))
 						playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
-						boutput(user, "You cut [src] into bandages.")
+
 						user.u_equip(src)
+						if (length(src.storage.get_contents()))
+							for(var/obj/item/contents in src.storage.get_contents())
+								src.storage.transfer_stored_item(contents, get_turf(src))
+							boutput(user, "You cut leg holes into [src] and all the contents fall out!")
+						else
+							boutput(user, "You cut leg holes into [src].")
+						usr.put_in_hand_or_drop(trash_outfit)
 						qdel(src)
 						return
-		if (!(W in src.storage.get_contents()))
+		..()
+		if (!(I in src.storage.get_contents()))
 			return
 		var/mob/living/carbon/human/H = src.loc
 		if (istype(H) && H.w_uniform == src)
