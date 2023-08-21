@@ -1937,19 +1937,19 @@ TYPEINFO(/obj/machinery/hydro_mister)
 	process()
 		..()
 		if(src.active)
-			for (var/obj/potentional_target in view(mist_range,src))
-				if(isnull(potentional_target.reagents) || istype(potentional_target, /obj/machinery/hydro_mister))
+			for (var/obj/potential_target in view(mist_range,src))
+				if(isnull(potential_target.reagents) || istype(potential_target, /obj/machinery/hydro_mister))
 					//we never pour chems in stuff without reagents or other botanical misters
 					continue
-				if(!istype(potentional_target, /obj/machinery/plantpot) && !src.emagged || !is_open_container(potentional_target))
+				if(!istype(potential_target, /obj/machinery/plantpot) && !src.emagged || !is_open_container(potential_target))
 					//if we are not emagged, we never transfer in non-plantpots
 					//if emagged, we only transfer into open containers
 					continue
-				if(istype(potentional_target, /obj/machinery/plantpot) && potentional_target?.reagents.get_reagent_amount("water") >= 195)
+				if(istype(potential_target, /obj/machinery/plantpot) && potential_target?.reagents.get_reagent_amount("water") >= 195)
 					//we never transfer in plantpots with too much water in them
 					continue
 				//Now we sorted all cases out and can fill them with our chemicals
-				src.reagents.trans_to(potentional_target, 1 + (mode * 4))
+				src.reagents.trans_to(potential_target, 1 + (mode * 4))
 
 			if(src.reagents.total_volume < 10)
 				src.visible_message("\The [src] sputters and runs out of liquid.")
