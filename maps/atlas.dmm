@@ -1612,12 +1612,12 @@
 /area/station/medical/medbay)
 "afh" = (
 /obj/machinery/light_switch/auto,
-/obj/item/fish/bass,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/carp,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/item/reagent_containers/food/snacks/ingredient/meat{
 	desc = "Ew.";
 	name = "meat of questionable origin"
@@ -2195,7 +2195,7 @@
 "ahb" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 100;
+	drive_range = 105;
 	id = "chapelgun"
 	},
 /turf/simulated/floor/plating,
@@ -2203,7 +2203,7 @@
 "ahc" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 100;
+	drive_range = 104;
 	id = "chapelgun"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -2250,7 +2250,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
 "ahj" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "ahk" = (
@@ -2910,7 +2910,7 @@
 /area/station/hallway/secondary/exit)
 "ajs" = (
 /obj/table/wood/round/auto,
-/obj/machinery/glass_recycler,
+/obj/machinery/glass_recycler/bar,
 /obj/item/clothing/glasses/spectro{
 	pixel_y = 11
 	},
@@ -3446,7 +3446,6 @@
 "alc" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
@@ -3674,8 +3673,8 @@
 /obj/disposalpipe/segment,
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon6,
 /obj/item/device/radio/intercom/AI{
-	dir = 8;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -4146,7 +4145,6 @@
 "anT" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
@@ -5053,8 +5051,6 @@
 	},
 /obj/machinery/flasher/genpop/new_walls/north,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/red,
@@ -5750,7 +5746,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/teleporter,
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "atz" = (
@@ -5875,6 +5871,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/hydro_mister,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "atM" = (
@@ -9846,13 +9843,6 @@
 	dir = 4
 	},
 /area/station/ranch)
-"aFu" = (
-/obj/machinery/light{
-	layer = 3
-	},
-/obj/storage/secure/closet/civilian/ranch,
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "aFv" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
@@ -10027,7 +10017,7 @@
 "aFU" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 20;
+	drive_range = 105;
 	id = "trash"
 	},
 /turf/simulated/floor/plating,
@@ -10035,7 +10025,7 @@
 "aFV" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 20;
+	drive_range = 104;
 	id = "trash"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -10551,10 +10541,10 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
-/mob/living/critter/small_animal/bat/doctor,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/mob/living/critter/small_animal/bat/doctor,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aHz" = (
@@ -11119,8 +11109,6 @@
 /area/station/science/lab)
 "aJT" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/decal/mule/dropoff,
@@ -13092,14 +13080,10 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/light/incandescent/purpleish{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/decal/stripe_delivery,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "aQl" = (
@@ -13374,14 +13358,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"aRc" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Arrivals"
-	},
-/obj/mapping_helper/access/rancher,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor,
-/area/station/ranch)
 "aRd" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -14701,8 +14677,6 @@
 /area/station/crew_quarters/catering)
 "aUS" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light{
@@ -16215,10 +16189,10 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "aZz" = (
-/mob/living/critter/small_animal/dog/george/orwell,
 /obj/machinery/phone/wall{
 	pixel_y = 33
 	},
+/mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
 "aZB" = (
@@ -16677,8 +16651,6 @@
 /area/station/mining/staff_room)
 "cPz" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/red,
@@ -16800,7 +16772,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
@@ -17376,8 +17347,6 @@
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/orangeblack,
@@ -17670,13 +17639,9 @@
 /area/station/science/chemistry)
 "jQl" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/red,
@@ -17727,7 +17692,6 @@
 	icon_state = "0-4"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
@@ -18284,6 +18248,11 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"nlP" = (
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/station/ranch)
 "nnI" = (
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal,
@@ -18373,8 +18342,6 @@
 /area/station/engine/engineering)
 "nCZ" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light_switch/auto,
@@ -18617,6 +18584,13 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"paq" = (
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/obj/storage/secure/closet/civilian/ranch,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "pbm" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -18671,6 +18645,10 @@
 	},
 /turf/simulated/floor/red,
 /area/station/science/lab)
+"pkT" = (
+/obj/submachine/fishing_upload_terminal,
+/turf/simulated/floor,
+/area/station/ranch)
 "plm" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -18931,6 +18909,13 @@
 	icon_state = "fblue2"
 	},
 /area/station/bridge)
+"qHR" = (
+/obj/fishing_pool/portable,
+/obj/machinery/light{
+	layer = 3
+	},
+/turf/simulated/floor,
+/area/station/ranch)
 "qLQ" = (
 /obj/decal/mule/dropoff,
 /turf/simulated/floor,
@@ -19415,6 +19400,13 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"uzo" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/ranch)
 "uzK" = (
 /obj/machinery/computer/ordercomp{
 	dir = 8
@@ -19486,6 +19478,14 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"uPd" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Ranch"
+	},
+/obj/mapping_helper/access/rancher,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/ranch)
 "uSJ" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -19684,7 +19684,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
@@ -19717,8 +19716,6 @@
 "wAL" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/cable,
@@ -19966,6 +19963,10 @@
 /obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
+"xYT" = (
+/obj/submachine/weapon_vendor/fishing/portable,
+/turf/simulated/floor,
+/area/station/ranch)
 "yaQ" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -19975,7 +19976,6 @@
 "ycw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/cable,
@@ -65774,10 +65774,10 @@ aFs
 aDi
 aYo
 aPc
-aAC
-aax
-aaa
-aax
+aGk
+uzo
+aGk
+uzo
 aIA
 aJw
 aJw
@@ -66074,12 +66074,12 @@ aPq
 aRn
 awS
 aEL
-aEL
+paq
 aFr
+aGk
+nlP
+pkT
 aAC
-aax
-aaa
-axG
 aIz
 aaa
 aaa
@@ -66373,15 +66373,15 @@ aSa
 azR
 aBo
 aPq
-aRc
+uPd
 aTX
 aId
 aJs
-aFu
-aGk
-aax
-aaa
-aax
+aJs
+uPd
+nlP
+qHR
+aAC
 aIz
 aaC
 aaC
@@ -66680,10 +66680,10 @@ aCR
 aXm
 aQb
 aFt
+aGk
+nlP
+xYT
 aAC
-aax
-aaa
-aax
 aIz
 aaa
 aaa
@@ -66982,10 +66982,10 @@ aAw
 aRD
 aSN
 aPc
-aAC
-aax
-aaa
-aax
+aGk
+uzo
+aGk
+uzo
 aIz
 aaa
 aaa

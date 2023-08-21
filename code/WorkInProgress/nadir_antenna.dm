@@ -242,7 +242,7 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 			//if we're not charging a cell yet, figure out what we'd be billing the powernet if we were
 			var/total_load = src.intcap_charging ? powernet.load : powernet.load + src.intcap_draw_rate
 
-			if(powernet.avail - total_load >= src.grid_surplus_threshold) //netexcess exists but... isn't ever actually set up?
+			if(powernet.avail - total_load >= src.grid_surplus_threshold)
 				src.intcap_charging = TRUE
 				if(src.intcap.charge < src.intcap.maxcharge)
 					var/yield_to_cell = src.intcap_draw_rate * CELLRATE
@@ -251,10 +251,10 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 					if(intcap.charge + yield_to_cell > src.intcap.maxcharge)
 						yield_to_cell = src.intcap.maxcharge - src.intcap.charge
 						final_draw = yield_to_cell * 500
-					src.intcap.give(yield_to_cell)
-					powernet.newload += final_draw
-					var/area/arrayarea = get_area(src) //gotta let the grid know!
-					arrayarea.use_power(final_draw,EQUIP)
+					//double check that we have the power we're supposed to, then expend it
+					if(powernet.newload + final_draw <= powernet.avail)
+						src.intcap.give(yield_to_cell)
+						powernet.newload += final_draw
 			else
 				src.intcap_charging = FALSE
 		else

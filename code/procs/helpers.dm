@@ -773,7 +773,7 @@ proc/get_angle(atom/a, atom/b)
 				text += html_encode(the_mob.name)
 			text += " "
 			if (the_client && !the_client.holder) //only show this stuff for non-admins because admins do a lot of shit while dead and it is unnecessary to show it
-				if (checkantag(the_mob))
+				if (the_mob.mind?.is_antagonist())
 					text += "\[<font color='red'>T</font>\] "
 				if (isdead(the_mob))
 					text += "\[DEAD\] "
@@ -1925,31 +1925,28 @@ proc/countJob(rank)
 
 	return 1
 
-/proc/check_target_immunity(var/atom/target, var/ignore_everything_but_nodamage = 0, var/atom/source = 0)
-	var/is_immune = 0
+/proc/check_target_immunity(var/atom/target, var/ignore_everything_but_nodamage = FALSE, var/atom/source = 0)
+	var/is_immune = FALSE
 
-	var/area/a = get_area( target )
-	if( a?.sanctuary )
-		return 1
+	var/area/a = get_area(target)
+	if(a?.sanctuary)
+		return TRUE
 
 	if (isliving(target))
 		var/mob/living/L = target
 
 		if (!isdead(L))
-			if (ignore_everything_but_nodamage == 1)
+			if (ignore_everything_but_nodamage)
 				if (L.nodamage)
-					is_immune = 1
+					is_immune = TRUE
 			else
 				if (L.nodamage || L.spellshield)
-					is_immune = 1
+					is_immune = TRUE
 
 		if (source && istype(source,/obj/projectile) && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.stance == "dodge") //matrix dodge flip
-				is_immune = 1
-
-	//if (is_immune == 1)
-	//	DEBUG_MESSAGE("[L] is immune to damage, aborting.")
+				is_immune = TRUE
 
 	return is_immune
 

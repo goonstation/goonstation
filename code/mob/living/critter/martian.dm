@@ -369,7 +369,7 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 /obj/machinery/martianbomb
 	name = "martian bomb"
 	desc = "You'd best destroy this thing fast."
-	icon = 'icons/misc/critter.dmi'
+	icon = 'icons/obj/martian.dmi'
 	icon_state = "mbomb-off"
 	anchored = ANCHORED
 	density = 1

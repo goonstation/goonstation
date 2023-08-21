@@ -703,7 +703,7 @@
 			var/poy = text2num(params["icon-y"]) - 16
 			var/obj/itemspecialeffect/S = new special_effect_type
 			S.setup(get_step(user, get_dir(user, target)))
-			shoot_projectile_ST_pixel(user, projectile, target, pox, poy)
+			shoot_projectile_ST_pixel_spread(user, projectile, target, pox, poy)
 			afterUse(user)
 
 	disposing()

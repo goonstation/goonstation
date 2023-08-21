@@ -167,6 +167,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/tomatoslice
 	slice_amount = 3
+	initial_reagents = 0 //SPITE
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
@@ -1444,6 +1445,20 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	edible = 0
 	validforhat = 1
 	food_color = "#e0a80c"
+
+/obj/item/reagent_containers/food/snacks/plant/cinnamon
+	name = "cinnamon stick"
+	crop_suffix = " stick"
+	desc = "A spice known for its sweet and aromatic flavor, often used in cooking and baking."
+	icon_state = "cinnamonstick"
+	planttype = /datum/plant/veg/cinnamon
+	edible = 1
+	validforhat = 1
+	food_color = "#C58C66"
+
+	make_reagents()
+		..()
+		reagents.add_reagent("cinnamon", 20)
 
 /obj/item/reagent_containers/food/snacks/plant/lashberry
 	name = "lashberry"
