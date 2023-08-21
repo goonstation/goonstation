@@ -332,12 +332,13 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if (src.blood_color_changed)
 				mob.blood_color = src.blood_color_original
 				mob.bioHolder?.bloodColor = src.blood_color_original
-				src.blood_color_original = null
 				src.blood_color_changed = FALSE
 
 			if (src.blood_id)
 				mob.blood_id = src.blood_id_original
-				src.blood_id_original = null
+
+			src.blood_color_original = null
+			src.blood_id_original = null
 
 			var/list/obj/item/clothing/restricted = list(src.mob.w_uniform, src.mob.shoes, src.mob.wear_suit)
 			for (var/obj/item/clothing/W in restricted)
