@@ -167,8 +167,9 @@ var/datum/job_controller/job_controls
 			if (src.load_another_ckey)
 				dat += "<b> (Showing [src.load_another_ckey]'s jobs)</b>"
 			dat += "<br><small>"
-			for (var/i=1, i <= CUSTOMJOB_SAVEFILE_PROFILES_MAX, i++)
-				dat += " <a href='?src=\ref[src];Load=[i]'>[src.savefile_get_job_name(usr,i) || i]</a>"
+			var/list/job_names = src.savefile_get_job_names(usr)
+			for (var/i in 1 to length(job_names))
+				dat += " <a href='?src=\ref[src];Load=[i]'>[job_names[i] || i]</a>"
 				dat += "&nbsp;"
 				if (!src.load_another_ckey)
 					dat += " <a href='?src=\ref[src];Save=[i]'>(Save here)</a>"
