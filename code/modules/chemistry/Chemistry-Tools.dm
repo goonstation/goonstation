@@ -505,9 +505,16 @@ proc/ui_describe_reagents(atom/A)
 				src.reagents.reaction(get_turf(user), TOUCH)
 				src.reagents.clear_reagents()
 
-	shatter_chemically()
+	shatter_chemically(var/projectiles = FALSE)
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<span class='alert'>The <B>[src.name]</B> shatters!</span>")
+		if(projectiles)
+			var/datum/projectile/special/spreader/uniform_burst/circle/circle = new /datum/projectile/special/spreader/uniform_burst/circle/(get_turf(src))
+			circle.shot_sound = null //no grenade sound ty
+			circle.spread_projectile_type = /datum/projectile/bullet/improvglass
+			circle.pellet_shot_volume = 0
+			circle.pellets_to_fire = 10
+			shoot_projectile_ST(get_turf(src), circle, get_step(src, NORTH))
 		playsound(src.loc, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
 		src.reagents.reaction(get_turf(src), TOUCH, src.reagents.total_volume)
 		var/obj/item/raw_material/shard/glass/shard = new /obj/item/raw_material/shard/glass

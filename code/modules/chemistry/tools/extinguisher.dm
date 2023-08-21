@@ -85,9 +85,16 @@
 	..()
 	//src.afterattack(target, user)
 
-/obj/item/extinguisher/shatter_chemically() //needs sound probably definitely for sure
+/obj/item/extinguisher/shatter_chemically(var/projectiles = FALSE) //needs sound probably definitely for sure
 	for(var/mob/M in AIviewers(src))
 		boutput(M, "<span class='alert'>The <B>[src.name]</B> breaks open!</span>")
+	if(projectiles)
+		var/datum/projectile/special/spreader/uniform_burst/circle/circle = new /datum/projectile/special/spreader/uniform_burst/circle/(get_turf(src))
+		circle.shot_sound = null //no grenade sound ty
+		circle.spread_projectile_type = /datum/projectile/bullet/shrapnel
+		circle.pellet_shot_volume = 0
+		circle.pellets_to_fire = 10
+		shoot_projectile_ST(get_turf(src), circle, get_step(src, NORTH))
 	src.reagents.reaction(get_turf(src), TOUCH, src.reagents.total_volume)
 	icon_state = "fire_extinguisher_shattered"
 	src.desc = "It's shattered beyond all use."
@@ -244,5 +251,5 @@
 		src.banned_reagents += src.melting_reagents
 		src.melting_reagents = list()
 
-	shatter_chemically()
+	shatter_chemically(var/projectiles = FALSE)
 		return

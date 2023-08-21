@@ -209,7 +209,7 @@
 
 	proc/initialize()
 
-	proc/shatter_chemically() //!shatter effect, caused by chemicals inside object, should return TRUE if object actually shatters
+	proc/shatter_chemically(var/projectiles = TRUE) //!shatter effect, caused by chemicals inside object, should return TRUE if object actually shatters
 		return FALSE
 
 	proc/get_chemical_effect_position() //!how many pixels up or down chemistry reaction animations should shift, to fit the item it's reacting in

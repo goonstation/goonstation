@@ -2070,6 +2070,9 @@ datum
 			reaction_icon_state = list("reaction_explode-1", "reaction_explode-2")
 			reaction_icon_color = "#ffffff"
 			on_reaction(var/datum/reagents/holder, var/created_volume)
+				if(istype(holder.my_atom, /obj))
+					var/obj/container = holder.my_atom
+					container.shatter_chemically(projectiles = TRUE)
 				if (holder.last_basic_explosion >= ticker.round_elapsed_ticks - 3)
 					return
 				holder.last_basic_explosion = ticker.round_elapsed_ticks
@@ -2114,6 +2117,9 @@ datum
 
 				var/turf/location = 0
 				if (my_atom)
+					if(istype(holder.my_atom, /obj))
+						var/obj/container = holder.my_atom
+						container.shatter_chemically(projectiles = TRUE)
 					location = get_turf(my_atom)
 					explosion(my_atom, location, -1,-1,0,1)
 					fireflash(location, 0)
@@ -2141,6 +2147,9 @@ datum
 
 				var/turf/location = 0
 				if (my_atom)
+					if(istype(holder.my_atom, /obj))
+						var/obj/container = holder.my_atom
+						container.shatter_chemically(projectiles = TRUE)
 					location = get_turf(my_atom)
 					explosion(my_atom, location, -1,-1,0,1)
 					fireflash(location, 0)
@@ -2875,6 +2884,9 @@ datum
 					shine.set_loc(T)
 					playsound(get_turf(holder.my_atom), 'sound/effects/sparks6.ogg', 50, 1) //this could be better with a bespoke sound eventually, didn't want to steal vampire glare sound but similar-ish?
 					SPAWN(6 DECI SECONDS) //you get a slight moment to react/be surprised
+						if(istype(holder.my_atom, /obj))
+							var/obj/container = holder.my_atom
+							container.shatter_chemically(projectiles = TRUE)
 						qdel(shine)
 						holder.del_reagent("photophosphide")
 						explosion(holder.my_atom, T, -1,-1,0,1)
@@ -3182,6 +3194,9 @@ datum
 
 				var/turf/location = 0
 				if (my_atom)
+					if(istype(holder.my_atom, /obj))
+						var/obj/container = holder.my_atom
+						container.shatter_chemically(projectiles = TRUE)
 					location = get_turf(my_atom)
 					explosion(my_atom, location, 0, 1, 4, 5)
 				else
@@ -3206,6 +3221,9 @@ datum
 
 				var/turf/location = 0
 				if (my_atom)
+					if(istype(holder.my_atom, /obj))
+						var/obj/container = holder.my_atom
+						container.shatter_chemically(projectiles = TRUE)
 					location = get_turf(my_atom)
 					explosion(my_atom, location, -1, 0, 2, 3)
 				else
@@ -3940,6 +3958,9 @@ datum
 
 				var/turf/location = 0
 				if (my_atom)
+					if(istype(holder.my_atom, /obj))
+						var/obj/container = holder.my_atom
+						container.shatter_chemically(projectiles = TRUE)
 					location = get_turf(my_atom)
 					fireflash(holder.my_atom, 1)
 					explosion(my_atom, get_turf(my_atom), -1, -1, 1, 2)
