@@ -14014,13 +14014,6 @@
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
-"aSj" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Listening Post"
-	},
-/turf/simulated/floor/black,
-/area/listeningpost)
 "aSl" = (
 /obj/machinery/light/incandescent/warm,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -14037,9 +14030,6 @@
 /area/station/hangar/engine)
 "aSm" = (
 /turf/simulated/floor/stairs/wide/middle,
-/area/listeningpost)
-"aSn" = (
-/turf/simulated/floor/stairs/wide/other,
 /area/listeningpost)
 "aSo" = (
 /obj/disposalpipe/trunk/mail/south,
@@ -14070,13 +14060,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"aSs" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Listening Post"
-	},
-/turf/simulated/floor,
-/area/listeningpost)
 "aSt" = (
 /obj/disposalpipe/switch_junction/left/east{
 	mail_tag = "security processing";
@@ -35009,6 +34992,20 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
 /area/station/quartermaster/office)
+"cPT" = (
+/obj/machinery/light_switch{
+	name = "N light switch";
+	on = 0;
+	pixel_y = 24
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/ranch)
 "cQU" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
@@ -37060,13 +37057,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/mining/staff_room)
-"fRe" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "fRB" = (
 /obj/table/round/auto,
 /obj/item/seed/cannabis,
@@ -37674,6 +37664,15 @@
 /obj/item/satchel/hydro,
 /turf/simulated/floor/wood/two,
 /area/station/ranch)
+"gQd" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/wood/two,
+/area/station/security/detectives_office)
 "gQt" = (
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/plating/random,
@@ -37849,13 +37848,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
-"hjA" = (
-/obj/landmark/gps_waypoint,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "hjU" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -38676,22 +38668,6 @@
 /obj/item/pen/crayon/pink,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"iVb" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/security/alt{
-	name = "Detective's Office";
-	req_access_txt = "1"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/forensics,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "iVD" = (
 /obj/table/reinforced/chemistry/auto/drugs,
 /obj/item/toy/plush/small/bunny/mask{
@@ -39749,19 +39725,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/engine/elect)
-"kXP" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "kYa" = (
 /obj/machinery/recharge_station,
 /obj/machinery/light/incandescent/netural,
@@ -40122,6 +40085,15 @@
 /mob/living/critter/martian/soldier,
 /turf/simulated/floor/carpet/grime,
 /area/evilreaver/chapel)
+"lCt" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25;
+	entrance_scanner = 1
+	},
+/turf/space/fluid,
+/area/space)
 "lCA" = (
 /obj/item/currency/spacecash/thousand,
 /obj/item/currency/spacecash/thousand,
@@ -40245,6 +40217,19 @@
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/baroffice)
+"lOO" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "lQo" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -40996,6 +40981,13 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/south)
+"mYO" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
+/turf/simulated/floor,
+/area/listeningpost)
 "mZD" = (
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/white,
@@ -41118,6 +41110,22 @@
 /obj/item/pen/crayon/white,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
+"nel" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail,
+/obj/machinery/door/airlock/pyro/security/alt{
+	name = "Detective's Office";
+	req_access_txt = "1"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/forensics,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "nfr" = (
 /obj/decal/fakeobjects/lighttube_broken{
 	dir = 4
@@ -42633,6 +42641,14 @@
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
+"pNy" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32
+	},
+/turf/simulated/floor/stairs/wide/other,
+/area/listeningpost)
 "pNM" = (
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating,
@@ -42802,16 +42818,6 @@
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor,
 /area/station/hangar/sec)
-"qeV" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/wood/two,
-/area/station/security/detectives_office)
 "qff" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
 	dir = 4;
@@ -42973,15 +42979,6 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
-"qtw" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/wood/two,
-/area/station/security/detectives_office)
 "qtH" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	name = "Bridge"
@@ -43085,20 +43082,6 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/chamber)
-"qyL" = (
-/obj/machinery/light_switch{
-	name = "N light switch";
-	on = 0;
-	pixel_y = 24
-	},
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/grasstodirt{
-	dir = 1
-	},
-/area/station/ranch)
 "qAJ" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -43346,18 +43329,6 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
-"raM" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Sea Elevator";
-	noalerts = 1;
-	pixel_x = -24
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor,
-/area/shuttle/sea_elevator_room)
 "rba" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right,
@@ -44195,6 +44166,13 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"sPK" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "sQn" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail,
@@ -44317,16 +44295,7 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
-"tdO" = (
-/obj/machinery/door/airlock/pyro/alt{
-	name = "Chapel Office"
-	},
-/obj/mapping_helper/access/chapel_office,
-/obj/disposalpipe/segment/mail,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/black,
-/area/station/chapel/sanctuary)
-"teG" = (
+"tdz" = (
 /obj/stool/chair/comfy{
 	dir = 4
 	},
@@ -44344,6 +44313,15 @@
 /obj/landmark/start/job/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"tdO" = (
+/obj/machinery/door/airlock/pyro/alt{
+	name = "Chapel Office"
+	},
+/obj/mapping_helper/access/chapel_office,
+/obj/disposalpipe/segment/mail,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/black,
+/area/station/chapel/sanctuary)
 "teZ" = (
 /obj/decal/fakeobjects/flock/antenna/broken{
 	dir = 4;
@@ -44901,6 +44879,13 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/engine/elect)
+"uqU" = (
+/obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "uss" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor/shuttlebay,
@@ -45150,6 +45135,13 @@
 	},
 /turf/space/fluid,
 /area/space)
+"uTT" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "uWa" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/blue,
@@ -45821,6 +45813,14 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor,
 /area/station/crew_quarters/jazz)
+"wfE" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "wgo" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/phone{
@@ -46214,6 +46214,18 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
+"wLY" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Sea Elevator";
+	noalerts = 1;
+	pixel_x = -24
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor,
+/area/shuttle/sea_elevator_room)
 "wNr" = (
 /obj/stool/chair/red{
 	dir = 1
@@ -46968,6 +46980,16 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
+"yfu" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/security/detectives_office)
 "yfx" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/red,
@@ -54645,7 +54667,7 @@ aOU
 aOW
 aOU
 aOU
-aOU
+wfE
 aPm
 aah
 aQM
@@ -54948,10 +54970,10 @@ aPj
 aOU
 aOU
 aOU
-aSj
+uTT
 aSm
 aSp
-aSs
+mYO
 aqn
 aqn
 aqn
@@ -55251,7 +55273,7 @@ aPr
 aPF
 aQr
 aPm
-aSn
+pNy
 aQN
 aOg
 wbZ
@@ -55556,7 +55578,7 @@ aPm
 aPm
 aPm
 aPm
-aqn
+lCt
 aqn
 aqn
 aqn
@@ -82851,7 +82873,7 @@ dyC
 mHf
 smn
 nar
-qtw
+gQd
 bfT
 ciZ
 oiW
@@ -83149,11 +83171,11 @@ bpc
 chc
 smn
 nPP
-kXP
-fRe
-iVb
+lOO
+sPK
+nel
 iAB
-qeV
+yfu
 tEB
 ciZ
 rFH
@@ -83451,7 +83473,7 @@ fKz
 chc
 tcD
 vfw
-hjA
+uqU
 vfw
 dHj
 bfT
@@ -83753,14 +83775,14 @@ rNN
 chc
 smn
 eLS
-teG
+tdz
 jNn
 ycT
 siR
 oLc
 ciZ
 ciZ
-qyL
+cPT
 qjy
 sPs
 cHq
@@ -88297,7 +88319,7 @@ aqn
 aLV
 rkP
 cfR
-raM
+wLY
 xDt
 tVU
 vVQ
