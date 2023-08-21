@@ -1247,11 +1247,6 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 						qdel(src)
 						return
 		..()
-		if (!(I in src.storage.get_contents()))
-			return
-		var/mob/living/carbon/human/H = src.loc
-		if (istype(H) && H.w_uniform == src)
-			src.remove_random_item(H)
 
 	attack_hand(mob/user)
 		..()
