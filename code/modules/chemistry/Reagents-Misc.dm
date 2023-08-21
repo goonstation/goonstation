@@ -1953,16 +1953,16 @@ datum
 				. = ..()
 				if (method == INGEST)
 					if (isliving(M))
-						M:blood_color = "#[num2hex(rand(0, 255),2)][num2hex(rand(0, 255), 2)][num2hex(rand(0, 255), 2)]"
-				return
+						var/mob/living/L = M
+						var/color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+						L.blood_color = color
+						L.bioHolder?.bloodColor = color
 
 			reaction_obj(var/obj/O, var/volume)
 				O.color = rgb(rand(0,255),rand(0,255),rand(0,255))
-				return
 
 			reaction_turf(var/turf/T, var/volume)
 				T.color = rgb(rand(0,255),rand(0,255),rand(0,255))
-				return
 
 		gypsum //gypsum, made with waste sulfur gas and calcium carbonate or calcium oxide (sulfur + oxygen(4) + water + calcium_carbonate)
 			name = "calcium sulfate"
