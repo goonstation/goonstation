@@ -144,13 +144,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/generic_fireflash
-	var/lastTrigger = 0
-
 	execute(var/atom/location, var/temp)
 		if(temp < T0C + 200)
 			return
-		if(world.time - lastTrigger < 1200) return
-		lastTrigger = world.time
+		if(ON_COOLDOWN(owner, "generic_mat_fireflash", 120 SECONDS))
+			return
 		fireflash(get_turf(location), 1)
 		return
 
@@ -256,13 +254,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/generic_explosive
-	var/lastTrigger = 0
-
 	execute(var/atom/location, var/temp)
 		if(temp < T0C + 100)
 			return
-		if(world.time - lastTrigger < 100) return
-		lastTrigger = world.time
+		if(ON_COOLDOWN(owner, "generic_mat_explosive", 10 SECONDS))
+			return
 		var/turf/tloc = get_turf(location)
 		explosion(location, tloc, 1, 2, 3, 4)
 		location.visible_message("<span class='alert'>[location] explodes!</span>")
@@ -514,12 +510,10 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/erebite_temp
-	var/lastTrigger = 0
-
 	execute(var/atom/location, var/temp)
 		if(temp < T0C + 900) return
-		if(world.time - lastTrigger < 100) return
-		lastTrigger = world.time
+		if(ON_COOLDOWN(owner, "erebite_temp", 10 SECONDS))
+			return
 		if((temp < T0C + 1200) && prob(80)) return //some leeway for triggering at lower temps
 		var/turf/tloc = get_turf(location)
 		explosion(location, tloc, 0, 1, 2, 3)
@@ -527,11 +521,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/erebite_exp
-	var/lastTrigger = 0
-
 	execute(var/atom/location, var/sev)
-		if(world.time - lastTrigger < 100) return
-		lastTrigger = world.time
+		if(ON_COOLDOWN(owner, "erebite_exp", 10 SECONDS))
+			return
 		var/turf/tloc = get_turf(location)
 		if(sev > 0 && sev < 4)
 			location.visible_message("<span class='alert'>[location] explodes!</span>")
@@ -585,7 +577,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			if(ON_COOLDOWN(owner, "soulsteel_revive", 3 MINUTES))
 				boutput(entering, "<span class='alert'>[owner] can not be possessed again so soon!</span>")
 				return
-			lastTrigger = world.time
 			var/mob/mobenter = entering
 			logTheThing(LOG_COMBAT, mobenter, "soulsteel-possesses [owner] at [log_loc(owner)].")
 			if(mobenter.client)
