@@ -51,7 +51,7 @@
 		var/is_thechef_the_chef = 0
 		var/how_shit = FOOD_QUALITY_HORSESHIT //ITS ALL DONKEY PISS UNTIL I SAY OTHERWISE
 		for (var/obj/item/reagent_containers/food/snacks/probablyshitfood in view(7, src))
-			if (GET_COOLDOWN(src, "judged_\ref[probablyshitfood]") && (prob(95))) //This food as already been judged. 5 % Chance to yell at people it got stale
+			if (GET_COOLDOWN(src, "judged_\ref[probablyshitfood]") && (prob(95))) //This food has already been judged. 5 % Chance to yell at people it got stale
 				continue
 			food_to_judge = probablyshitfood
 			break
