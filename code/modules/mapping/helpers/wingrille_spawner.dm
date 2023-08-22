@@ -16,7 +16,7 @@
 			for (var/dir in cardinal)
 				var/turf/T = get_step(src, dir)
 				if ((!locate(/obj/mapping_helper/wingrille_spawn) in T) && (!locate(/obj/grille) in T))
-					var/obj/window/new_win = new win_path(src.loc, dir)
+					new win_path(src.loc, dir)
 
 		if (src.full_win)
 			if(!no_dirs || !locate(src.win_path) in get_turf(src))
