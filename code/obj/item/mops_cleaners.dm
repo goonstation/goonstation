@@ -1243,12 +1243,6 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 						return
 		..()
 
-	attack_hand(mob/user)
-		..()
-		var/mob/living/carbon/human/H = src.loc
-		if (istype(H) )
-			src.remove_random_item(H)
-
 	update_icon(mob/user)
 		if (!src.storage || !length(src.storage.get_contents()))
 			src.icon_state = initial(src.icon_state)
