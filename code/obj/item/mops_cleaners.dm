@@ -1209,6 +1209,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	tooltip_flags = REBUILD_DIST
 	var/base_state = "trashbag"
+	var/clothing_type = /obj/item/clothing/under/gimmick/trashsinglet
 
 	New()
 		..()
@@ -1225,16 +1226,12 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 						boutput(user, "<span class='alert'>You were interrupted!</span>")
 						return
 					else
-						var/obj/item/clothing/under/shorts/trashsinglet/trash_outfit = new /obj/item/clothing/under/shorts/trashsinglet(get_turf(src))
+						var/obj/item/clothing/under/gimmick/trashsinglet/trash_outfit = new clothing_type(get_turf(src))
 						playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
-
 						user.u_equip(src)
 						if (length(src.storage.get_contents()))
 							for(var/obj/item/contents as anything in src.storage.get_contents())
-								src.storage.transfer_stored_item(contents, get_turf(src))
-							boutput(user, "You cut leg holes into [src] and all the contents fall out!")
-						else
-							boutput(user, "You cut leg holes into [src].")
+								src.storage.transfer_stored_item(contents, trash_outfit, TRUE)
 						usr.put_in_hand_or_drop(trash_outfit)
 						qdel(src)
 						return
@@ -1266,3 +1263,4 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	desc = "A flimsy bag for filling with things that are no longer wanted and are also covered in blood or puke or other gross biohazards. It's not any sturdier than a normal trash bag, though, so be careful with the needles!"
 	icon_state = "biobag-f"
 	base_state = "biobag"
+	clothing_type = /obj/item/clothing/under/gimmick/trashsinglet/biohazard

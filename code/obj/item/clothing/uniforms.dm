@@ -883,12 +883,6 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 	icon_state = "lucha3"
 	item_state = "lucha3"
 
-/obj/item/clothing/under/shorts/trashsinglet
-	name = "trash bag singlet"
-	desc = "It's time for the trashman to eat garbage and smash opponents!"
-	icon_state = "literaltrash"
-	item_state = "literaltrash"
-
 /obj/item/clothing/under/shorts/random_color
 	New()
 		..()
