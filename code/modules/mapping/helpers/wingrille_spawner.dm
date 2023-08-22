@@ -2,6 +2,7 @@
 	name = "window grille spawner"
 	icon = 'icons/obj/window.dmi'
 	icon_state = "wingrille"
+	gas_impermeable = TRUE
 	var/win_path = "/obj/window"
 	var/grille_path = "/obj/grille/steel"
 	var/full_win = 0 // adds a full window as well
