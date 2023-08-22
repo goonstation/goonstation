@@ -1217,11 +1217,8 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 
 	attackby(obj/item/I, mob/user)
 		if (issnippingtool(I))
-			var/list/actions = list("Cut into an outfit", "Put it into the bag")
-			var/action = input(user, "What do you want to do with [src]?") as null|anything in actions
-			if (!action)
-				return
-			switch (action)
+			var/action = tgui_input_list(usr, "What do you want to do with [src]?", "Trash Bag", list("Cut into an outfit", "Add to contents"))
+			switch(action)
 				if ("Cut into an outfit")
 					boutput(user, "You begin cutting up [src].")
 					if (!do_after(user, 3 SECONDS))
@@ -1263,16 +1260,6 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 			. += "It's totally full."
 		else
 			. += "There's still some room to hold something."
-
-	proc/remove_random_item(mob/user)
-		if (!length(src.storage.get_contents()))
-			return
-		var/obj/item/I = pick(src.storage.get_contents())
-		src.storage.transfer_stored_item(I, get_turf(src))
-		if (user)
-			user.visible_message("\An [I] falls out of [user]'s [src.name]!", "<span class='alert'>\An [I] falls out of your [src.name]!</span>")
-		else
-			src.loc.visible_message("\An [I] falls out of [src]!")
 
 /obj/item/trash_bag/biohazard
 	name = "hazardous waste bag"
