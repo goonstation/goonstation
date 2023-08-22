@@ -249,7 +249,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /obj/item/card/id/morrigan/all_access
 	name = "Number 3 (Hafgan Executive)"
 	icon_state = "id_haf"
-	desc = "Someone must've been in a rush and left this behind... it's heavily decorated and seems extremely important. Could this be your key out ?"
+	desc = "Someone must've been in a rush and left this behind... it's heavily decorated and seems extremely important. Could this be your key out?"
 
 	New()
 		..()
@@ -294,7 +294,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /obj/decal/fakeobjects/miniputt/nanotrasen/raceputt
 	name = "Nanotrasen Light MiniPutt"
-	desc = "A Nanotrasen light miniputt! It seems locked.."
+	desc = "A Nanotrasen light miniputt! It seems locked..."
 	icon_state = "putt_raceBlue"
 
 /obj/decal/fakeobjects/miniputt/black
@@ -337,6 +337,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	name = "Jack-lift"
 	desc = "Used to lift up units that need repairs or require finishing."
 	icon_state = "jacklift"
+
 /obj/decal/fakeobjects/tpractice
 	name = "Target Practice Dummy"
 	desc = "You can just IMAGINE why it's blue..."
@@ -1472,6 +1473,40 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 		if (length(.) && prob(10) && src.speak_lines)
 			src.say(pick("POTENTIAL INTRUDER. MOVING TO ELIMINATE.","YOU DO NOT BELONG HERE.","ALERT - ALL SYNDICATE PERSONNEL ARE TO MOVE TO A SAFE ZONE.","WARNING: THREAT RECOGNIZED AS NANOTRASEN.","Help!! Please I don- RESETTING.","YOU CANNOT ESCAPE. SURRENDER. NOW.","NANOTRASEN WILL LEAVE YOU BEHIND.","THIS IS NOT EVEN MY FINAL FORM."))
+
+	get_melee_protection(zone, damage_type)
+		return 4
+
+	get_ranged_protection()
+		return 2
+
+	setup_equipment_slots()
+		return
+
+/mob/living/critter/robotic/gunbot/mauler
+	name = "Mauler Unit"
+	real_name = "Mauler Unit"
+	desc = "A security robot specially designed for close quarters combat."
+	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
+	icon_state = "clawbot"
+	ai_type = /datum/aiHolder/aggressive
+	eye_light_icon = "clawbot-eye"
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/claw
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.icon_state = "handl"
+		HH.name = "left arm"
+		HH.limb_name = "mauler claws"
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/claw
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.icon_state = "handr"
+		HH.name = "right arm"
+		HH.limb_name = "mauler claws"
 
 	get_melee_protection(zone, damage_type)
 		return 4
