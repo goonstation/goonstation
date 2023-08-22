@@ -37,3 +37,24 @@ article
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mollis aliquam ut porttitor leo a diam sollicitudin tempor. Libero justo laoreet sit amet cursus. Nam at lectus urna duis convallis convallis tellus id interdum. Donec pretium vulputate sapien nec sagittis. Duis tristique sollicitudin nibh sit amet commodo. Ut sem nulla pharetra diam sit amet nisl suscipit adipiscing. Sed odio morbi quis commodo. Nulla aliquet porttitor lacus luctus accumsan tortor posuere ac ut. In egestas erat imperdiet sed euismod nisi porta lorem.@,
 Introduction. Todo: actually write this damn article.@,
 Once upon a time, there was a very nosy person. They opened a newspaper and decided to read the news. That person is you. Mind your own business.
+
+name
+John Nanotrasen@,Shitty Bill@,Beepsky@,Discount Dan@,The King In Yellow
+
+title
+Acting Director@,Captain@,Head of Personnel@,Research Director@,staff assistant@,Medical Director@,Head of Staff@,Director of Operations@,CEO@,CFO@,COO@,Big Boss@,Reigning champion@,representative@,attourney@,journalist@,tourist@,researcher
+
+location
+Frontier@,Watchful Eye Sensor@,Afghanistan@,Albania@,Algeria@,Andorra@,Angola@,Anguilla@,Argentina@,Armenia@,Arstotzka@,Australia@,Austria@,Azerbaijan@,Bahamas@,Bahrain@,Bangladesh@,Barbados@,Belarus@,Belgium@,Belize@,Benin@,Bermuda@,Bhutan@,Bolivia@,Botswana@,Brazil@,Brexit@,Bulgaria@,Burundi@,Cambodia@,Cameroon@,Canada@,Catmandu@,Chad@,Chile@,China@,Cobrastan@,Colombia@,Comoros@,Congo@,Croatia@,Cuba@,Cyprus@,Denmark@,Djibouti@,Dominica@,Ecuador@,Egypt@,England@,Eritrea@,Estonia@,Ethiopia@,Fiji@,Finland@,France@,Gabon@,Gambia@,Georgia@,Germany@,Ghana@,Greece@,Grenada@,Guadeloupe@,Guatemala@,Guinea@,Guyana@,Haiti@,Honduras@,Hungary@,Iceland@,India@,Indonesia@,Iran@,Iraq@,Ireland@,Israel@,Italy@,Jamaica@,Japan@,Jordan@,Kazakhstan@,Kenya@,Kolechia@,Korea@,Kosovo@,Kuwait@,Kyrgyz@,Laos@,Latvia@,Lebanon@,Lesotho@,Liberia@,Libya@,Liechtenstein@,Lithuania@,Luxembourg@,Macedonia@,Madagascar@,Malawi@,Malaysia@,Maldives@,Mali@,Malta@,Martinique@,Mauritania@,Mauritius@,Mayotte@,Mexico@,Moldova@,Monaco@,Mongolia@,Montenegro@,Montserrat@,Morocco@,Mozambique@,Namibia@,Naughty@,Nepal@,Netherlands@,Nicaragua@,Nigeria@,Norway@,Oman@,Pakistan@,Panama@,Paraguay@,Peru@,Philippines@,Poland@,Portugal@,Qatar@,Reunion@,Romania@,Rwanda@,Samoa@,Scotland@,Senegal@,Serbia@,Seychelles@,Singapore@,Slovenia@,Somalia@,Spain@,Sudan@,Suriname@,Swaziland@,Sweden@,Switzerland@,Syria@,Tajikistan@,Tanzania@,Thailand@,Togo@,Tunisia@,Turkey@,Turkmenistan@,UAE@,Uganda@,Ukraine@,Uruguay@,USA@,Uzbekistan@,Venezuela@,Vietnam@,Wales@,Yemen@,Zambia@,Zanzibar@,Zimbabwe@,X-0@,Typhon@,Plasma Star@,Fortitudo@,Antistes@,Quadriga@,Fatuus@,Domus Dei@,Mundus@,Iustitia@,Iudicium@,Rota Fortuna@,Amantes@,Magus@,Regis@,Regina@,Mors@,Flaminica@,Senex@,Estella@,Shidd@,Šid@,Abzu@,Lahamu@,Lahmu@,Anu@,Fugg@,Fugere
+
+betterlocation
+Central Command@,Space Station 13@,Oshan Laboratory@,Nadir Extraction Site@,syndicate headquarters@,Wydyr@,Piedra de Oro@,New Memphis@,Channel@,New Memphis@,New Tharros@,Port Roerich@,Old Lodrok@,Buttes@,Buttes Junction@,the Clarion shuttle@,the Atlas@,the Sun
+
+noun
+wheels@,hog@,hogg@,threads@,treads@,face@,pod@,podd@,burner@,ship@,name@,hair@,karma
+
+event
+blowing up the sun@,letting the syndicate in@,starting a revolution@,leavin unsolicited texts@,leaving without them@,taking off@,stealing their hat@,stealing their cat@,leaving them there@,setting them up@,running late@,getting lost@,getting eaten@,dying in space@,getting caught@,stealing their keys@,turning into a monkey@,eating their beard@,getting into some serious trouble@,getting iced@,getting lost in the Void@,reaping what they sowed@,seeing something they shouldn't have seen@,getting in over their heads@,having a helluva heist@,breaking into the Vault
+
+emotion
+sadness@,happiness@,rage@,joy@,shock@,surprise@,outrage@,devastation@,confusion@,concern

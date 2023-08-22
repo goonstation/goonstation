@@ -961,8 +961,47 @@
 		src.publisher = pick_smart_string("newspaper.txt", "publisher")
 	src.name = "[src.publisher] newspaper"
 	src.desc = "Its from [src.publisher]. Its headline reads: [src.headline]"
-	src.info = pick_smart_string("newspaper.txt", "article")
-
+	if (prob(20))
+		src.info = pick_smart_string("newspaper.txt", "article")
+	else // randomly generate an article oh god
+		var/temporary
+		temporary += "<b>[src.headline]</b><br>"
+		for (var/i in 5)
+			var/name1 = pick_smart_string("newspaper.txt", "name")
+			var/name2 = pick_smart_string("newspaper.txt", "name")
+			if (prob(80)) //80% chance of a random name as opposed to an "important" one.
+				name1 = capitalize(pick_string_autokey(pick("names/first_female.txt", "names/first_male.txt")))
+				name1 += " [capitalize(pick_string_autokey("names/last.txt"))]"
+			if (prob(80))
+				name2 = capitalize(pick_string_autokey(pick("names/first_female.txt", "names/first_male.txt")))
+				name2 += " [capitalize(pick_string_autokey("names/last.txt"))]"
+			var/location1 = pick_smart_string("newspaper.txt", "location")
+			if (prob(30))
+				location1 = pick_smart_string("newspaper.txt", "betterlocation")
+			var/noun1 = pick_smart_string("newspaper.txt", "noun")
+			var/title1 = pick_smart_string("newspaper.txt", "title")
+			var/event1 = pick_smart_string("newspaper.txt", "event")
+			var/emotion1 = pick_smart_string("newspaper.txt", "emotion")
+			switch(rand(1, 9))
+				if (1)
+					temporary += "<br><br>The [title1], [name1], was found in [location1]."
+				if (2)
+					temporary += "<br><br>A [noun1] was found on site in [location1]."
+				if (3)
+					temporary += "<br><br>Employees of NT were shocked when [name1] [verb1]."
+				if (4)
+					temporary += "<br><br>The [noun1] has drawn strong criticism from [name1] and sparked protests in [location1], despite [title1] [name2] approving it."
+				if (5)
+					temporary += "<br><br>[capitalize(title1)] [name1] condemns [name2] for [event1]."
+				if (6)
+					temporary += "<br><br>[name1] declined to comment."
+				if (7)
+					temporary += "<br><br>Residents of [location1] expressed [emotion1] at the news."
+				if (8)
+					temporary += "<br><br>[capitalize(title1)] [name1] tells [src.publisher] that they personally blame [name2]."
+				if (9)
+					temporary += "<br><br>When [name1] [event], there was some mild [emotion] visible from [name2]."
+		src.info = temporary
 /obj/item/paper/newspaper/attack_self(mob/user)
 	src.force_drop(user)
 	src.rollup()
