@@ -508,6 +508,7 @@ obj/decal/fakeobjects/teleport_pad
 	invisibility = INVIS_ALWAYS
 	blood_DNA = null
 	blood_type = null
+	anchored = ANCHORED
 
 /obj/decal/boxingrope
 	name = "Boxing Ropes"
