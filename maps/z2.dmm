@@ -173,14 +173,11 @@
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
 "abu" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
-	dir = 1;
-	icon = 'icons/misc/hospital.dmi';
-	icon_state = "sovcomp3";
-	name = "broken computer"
+/obj/ai_core_frame{
+	name = "gutted AI core";
+	desc = "Some sort of weird soviet machine, bashed up, yellowed, and trailing wires. Even without a power source, a few of the LEDs are still flickering weakly.";
+	skinToApply = "soviet";
+	build_step = 2
 	},
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
