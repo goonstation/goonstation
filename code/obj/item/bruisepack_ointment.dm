@@ -85,7 +85,6 @@
 			qdel(src)
 		src.inventory_counter?.update_number(src.amount)
 
-
 /obj/item/medical/bruise_pack
 	name = "bruise pack"
 	desc = "A pack designed to treat blunt-force trauma."
