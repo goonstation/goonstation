@@ -39171,7 +39171,6 @@
 	},
 /area/owlery/owleryhall)
 "cJK" = (
-/obj/decal/cleanable/blood/dynamic,
 /obj/decal/floor/displays/owlsign{
 	icon_state = "owlsign-right"
 	},
