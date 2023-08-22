@@ -580,7 +580,7 @@
 		src.pay_resources(1)
 		if (src.resources < 1)
 			src.end_floorrunning(TRUE)
-	if (!src.dormant && (src.flock && !src.flock.z_level_check(src)) && src.z != Z_LEVEL_NULL)
+	if (!src.dormant && !src.flock?.z_level_check(src) && src.z != Z_LEVEL_NULL)
 		if (src.flock || !src.client)
 			src.dormantize()
 			return
