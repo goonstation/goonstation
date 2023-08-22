@@ -116,8 +116,12 @@
 			b_type = source.blood_type
 
 	if (istype(source, /obj/decal/cleanable))
-		if (source.color)
-			blood_color = source.color
+		var/obj/decal/cleanable/C = source
+		if (C.color)
+			blood_color = C.color
+		else if (C.sample_reagent) // Gibs have no color but do have reagents
+			var/datum/reagent/R = reagents_cache[C.sample_reagent]
+			blood_color = rgb(R.fluid_r, R.fluid_g, R.fluid_b)
 
 	if (src.blood_DNA)
 		var/list/blood_list = params2list(src.blood_DNA)
@@ -304,10 +308,10 @@
 	if (!B)
 		if (T.active_liquid)
 			return
-		B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks,get_turf(src))
+		B = make_cleanable(/obj/decal/cleanable/blood/dynamic/tracks, get_turf(src))
 		if(isnull(src.tracked_blood))
 			return
-		B.set_sample_reagent_custom(src.tracked_blood["sample_reagent"],0)
+		B.set_sample_reagent_custom(src.tracked_blood["sample_reagent"], 0)
 
 	var/list/states = src.get_step_image_states()
 
