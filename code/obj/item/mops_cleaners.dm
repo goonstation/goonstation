@@ -1215,11 +1215,6 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		src.create_storage(/datum/storage/no_hud, prevent_holding = list(/obj/item/trash_bag), max_wclass = W_CLASS_NORMAL, slots = 20,
 			params = list("use_inventory_counter" = TRUE, "variable_weight" = TRUE, "max_weight" = 20))
 
-	equipped(mob/user)
-		..()
-		for (var/i = 1 to round(length(src.storage.get_contents()) / 3))
-			src.remove_random_item(user)
-
 	attackby(obj/item/I, mob/user)
 		if (issnippingtool(I))
 			var/list/actions = list("Cut into an outfit", "Put it into the bag")
