@@ -6615,7 +6615,7 @@
 /obj/item/clothing/under/shorts/luchador,
 /obj/item/clothing/under/shorts/luchador/green,
 /obj/item/clothing/under/shorts/luchador/red,
-/obj/item/clothing/under/shorts/trashsinglet,
+/obj/item/clothing/under/gimmick/trashsinglet,
 /obj/item/clothing/head/helmet/men,
 /obj/item/clothing/head/helmet/men,
 /obj/item/clothing/suit/armor/douandtare,
@@ -20272,7 +20272,7 @@
 /area/station/crew_quarters/quartersA)
 "bdL" = (
 /obj/storage/closet/dresser/random,
-/obj/item/clothing/under/shorts/trashsinglet,
+/obj/item/clothing/under/gimmick/trashsinglet,
 /obj/item/clothing/under/misc/flame,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
