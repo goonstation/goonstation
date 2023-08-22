@@ -1,3 +1,6 @@
+(t)mon aug 21 23
+(u)LeahTheTech
+(*)Added a new verb "Stabilize All Atmos" to reset all air on the entire station, in case that thing happens where there just isn't any air.
 (t)mon aug 7 23
 (u)LeahTheTech
 (*)Added better logging to detect hotwires, large power networks being connected to high power ones will now log to station log.

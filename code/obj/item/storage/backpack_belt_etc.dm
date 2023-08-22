@@ -124,6 +124,7 @@
 	name = "tactical assault rucksack"
 	desc = "A military backpack made of high density fabric, designed to fit a wide array of tools for comprehensive storage support."
 	icon_state = "tactical_backpack"
+	satchel_compatible = FALSE
 	spawn_contents = list(/obj/item/storage/box/starter)
 	slots = 10
 

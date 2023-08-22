@@ -1,4 +1,13 @@
 
+(t)mon aug 21 23
+(u)Glamurio (Ryou)
+(p)15335
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(+)Added a brig shower to Donut3.
+(u)Cheekybrdy
+(p)15231
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Sleeper agents can now access the listening post through scanners at the entrance.
 (t)sat aug 19 23
 (u)pali
 (*)Three new mutations that affect how you hear sounds!
