@@ -1,5 +1,3 @@
-ABSTRACT_TYPE(/atom/movable/screen/parallax_render_source)
-
 /**
  *	Parallax render sources are screens that hold the appearance data for a specific type of parallax layer; this appearance
  *	is then drawn to client parallax layers using render targets and sources. This permits the appearance of a specific parallax
