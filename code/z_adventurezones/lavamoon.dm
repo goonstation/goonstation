@@ -99,10 +99,7 @@ var/sound/iomoon_alarm_sound = null
 	sound_group = "iomoon"
 	sound_loop = 'sound/ambience/nature/Lavamoon_FireCrackling.ogg'
 	sound_loop_vol = 60
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/foreground/embers,
-		/atom/movable/screen/parallax_layer/foreground/embers/sparse,
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/io_moon
 	var/list/sfx_to_pick_from = null
 
 	/// Value to set irradiated to during the mini-blowout.
@@ -154,7 +151,7 @@ var/sound/iomoon_alarm_sound = null
 /area/iomoon/base/underground
 	name = "Power Plant Tunnels"
 	sound_loop = 'sound/ambience/industrial/LavaPowerPlant_Rumbling2.ogg'
-	area_parallax_layers = list()
+	area_parallax_render_source_group = null
 
 	New()
 		. = ..()
@@ -166,7 +163,7 @@ var/sound/iomoon_alarm_sound = null
 	requires_power = 1
 	force_fullbright = 0
 	luminosity = 0
-	area_parallax_layers = list()
+	area_parallax_render_source_group = null
 	radiation_level = 0.75
 
 	New()
@@ -181,7 +178,7 @@ var/sound/iomoon_alarm_sound = null
 	force_fullbright = 0
 	luminosity = 0
 	teleport_blocked = 1
-	area_parallax_layers = list()
+	area_parallax_render_source_group = null
 	radiation_level = 0.8
 	sound_loop = 'sound/ambience/industrial/AncientPowerPlant_Drone1.ogg'
 
