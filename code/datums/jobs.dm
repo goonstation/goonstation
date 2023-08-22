@@ -1089,8 +1089,24 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Construction Worker")
 		return
 
-/datum/job/special/lawyer
-	name = "Lawyer"
+/datum/job/special/hairdresser
+	name = "Hairdresser"
+	wages = PAY_UNTRAINED
+	limit = 0
+	slot_jump = list(/obj/item/clothing/under/misc/barber)
+	slot_head = list(/obj/item/clothing/head/boater_hat)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_poc1 = list(/obj/item/scissors)
+	slot_poc2 = list(/obj/item/razor_blade)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+
+	New()
+		..()
+		src.access = get_access("Barber")
+		return
+
+/datum/job/special/attorney
+	name = "Attorney"
 	linkcolor = "#FF0000"
 	wages = PAY_DOCTORATE
 	limit = 0
@@ -1098,7 +1114,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_lhan = list(/obj/item/storage/briefcase)
-	slot_rhan = list(/obj/item/paper/book/from_file/space_law)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 
 	New()
@@ -1106,8 +1121,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Lawyer")
 		return
 
-/datum/job/special/lawyer/judge
+/datum/job/special/attorney/judge
 	name = "Judge"
+	limit = 0
 
 	New()
 		..()
@@ -1255,53 +1271,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Technical Assistant")
 		return
 
-/datum/job/special/boxer
-	name = "Boxer"
-	wages = PAY_UNTRAINED
-	limit = 0
-	slot_jump = list(/obj/item/clothing/under/shorts)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_glov = list(/obj/item/clothing/gloves/boxing)
-	alt_names = list("Boxer", "Fighter", "Wrestler")
-	change_name_on_spawn = 1
-
-	New()
-		..()
-		src.access = get_access("Boxer")
-		return
-
-/datum/job/special/barber
-	name = "Barber"
-	wages = PAY_UNTRAINED
-	limit = 0
-	slot_jump = list(/obj/item/clothing/under/misc/barber)
-	slot_head = list(/obj/item/clothing/head/boater_hat)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_poc1 = list(/obj/item/scissors)
-	slot_poc2 = list(/obj/item/razor_blade)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
-
-	New()
-		..()
-		src.access = get_access("Barber")
-		return
-
-/datum/job/special/mailman
-	name = "Mailman"
-	wages = PAY_TRADESMAN
-	limit = 0
-	slot_jump = list(/obj/item/clothing/under/misc/mail/syndicate)
-	slot_head = list(/obj/item/clothing/head/mailcap)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_back = list(/obj/item/storage/backpack/satchel)
-	slot_ears = list(/obj/item/device/radio/headset/mail)
-	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/paper_bin, /obj/item/scissors, /obj/item/stamp)
-	alt_names = list("Head of Deliverying", "Head of Mailmanning")
-
-	New()
-		..()
-		src.access = get_access("Mailman")
-		return
 
 /datum/job/special/space_cowboy
 	name = "Space Cowboy"
@@ -1323,34 +1292,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		src.access = get_access("Space Cowboy")
 		return
-
-/datum/job/special/mime
-	name = "Mime"
-	limit = 1
-	wages = PAY_DUMBCLOWN*2 // lol okay whatever
-	slot_belt = list(/obj/item/device/pda2)
-	slot_head = list(/obj/item/clothing/head/mime_bowler)
-	slot_mask = list(/obj/item/clothing/mask/mime)
-	slot_jump = list(/obj/item/clothing/under/misc/mime/alt)
-	slot_suit = list(/obj/item/clothing/suit/scarf)
-	slot_glov = list(/obj/item/clothing/gloves/latex)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_poc1 = list(/obj/item/pen/crayon/white)
-	slot_poc2 = list(/obj/item/paper)
-	items_in_backpack = list(/obj/item/baguette)
-	change_name_on_spawn = 1
-
-	New()
-		..()
-		src.access = get_access("Mime")
-		return
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		M.bioHolder.AddEffect("mute", magical=1)
-		M.bioHolder.AddEffect("blankman", magical=1)
 
 // randomizd gimmick jobs
 
