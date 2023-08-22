@@ -13,6 +13,7 @@
 	build_time = 6
 	health = 30
 	uses_health_icon = FALSE
+	var/mob_path_to_create = /mob/living/critter/flock/drone
 	var/decal_made = FALSE // for splashing stuff on throw
 
 /obj/flock_structure/egg/New()
@@ -36,7 +37,7 @@
 		animate_shake(src, severity, severity)
 
 /obj/flock_structure/egg/proc/spawn_contents()
-	new /mob/living/critter/flock/drone(get_turf(src), src.flock)
+	new mob_path_to_create(get_turf(src), src.flock)
 
 /obj/flock_structure/egg/throw_impact(atom/A, datum/thrown_thing/thr)
 	var/turf/T = get_turf(A)
@@ -54,13 +55,18 @@
 /obj/flock_structure/egg/bit
 	flock_id = "Secondary Second-Stage Assembler"
 	flock_desc = "Will soon hatch into Flockbits."
+	mob_path_to_create = /mob/living/critter/flock/bit
 
 /obj/flock_structure/egg/bit/spawn_contents()
 	for (var/i in 1 to 3)
-		new /mob/living/critter/flock/bit(get_turf(src), src.flock)
+		new mob_path_to_create(get_turf(src), src.flock)
 
 /obj/flock_structure/egg/tutorial
 
 /obj/flock_structure/egg/tutorial/spawn_contents()
 	var/mob/living/critter/flock/drone/drone = new(get_turf(src), src.flock)
 	drone.set_tutorial_ai(TRUE)
+
+
+/obj/flock_structure/egg/ai_drone
+	mob_path_to_create = /mob/living/critter/flock/drone/non_sleepy
