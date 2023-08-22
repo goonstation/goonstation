@@ -2043,3 +2043,18 @@ TYPEINFO(/obj/item/gun/energy/smgmine)
 	color_red = 0.1
 	color_green = 0.1
 	color_blue = 0.8
+
+//belts
+
+/obj/item/storage/belt/gun/peacebringer
+	name = "HoS belt"
+	desc = "A stylish leather belt for holstering an expensive over the top laser revolver."
+	icon = 'icons/obj/adventurezones/morrigan/belt.dmi'
+	icon_state = "hosbelt"
+	item_state = "hosbelt"
+	slots = 7
+	check_wclass = 1
+	gun_type = /obj/item/gun/energy/peacebringer
+	can_hold = list(/obj/item/gun/energy/)
+	can_hold_exact = list(/obj/item/gun/energy/peacebringer)
+	spawn_contents = list(/obj/item/gun/energy/peacebringer)
