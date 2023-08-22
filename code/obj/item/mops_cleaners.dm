@@ -1205,7 +1205,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	item_state = "trashbag-f"
 	uses_multiple_icon_states = TRUE
 	w_class = W_CLASS_TINY
-	rand_pos = 1
+	rand_pos = TRUE
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	tooltip_flags = REBUILD_DIST
 	var/base_state = "trashbag"
