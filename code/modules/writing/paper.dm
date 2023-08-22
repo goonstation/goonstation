@@ -988,7 +988,7 @@
 				if (2)
 					temporary += "<br><br>A [noun1] was found on site in [location1]."
 				if (3)
-					temporary += "<br><br>Employees of NT were shocked when [name1] [verb1]."
+					temporary += "<br><br>Employees of NT were shocked when [name1] was discovered to have [event1]."
 				if (4)
 					temporary += "<br><br>The [noun1] has drawn strong criticism from [name1] and sparked protests in [location1], despite [title1] [name2] approving it."
 				if (5)
@@ -1000,7 +1000,7 @@
 				if (8)
 					temporary += "<br><br>[capitalize(title1)] [name1] tells [src.publisher] that they personally blame [name2]."
 				if (9)
-					temporary += "<br><br>When [name1] [event], there was some mild [emotion] visible from [name2]."
+					temporary += "<br><br>When [name1] [event1], there was some mild [emotion1] visible from [name2]."
 		src.info = temporary
 /obj/item/paper/newspaper/attack_self(mob/user)
 	src.force_drop(user)
