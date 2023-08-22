@@ -179,9 +179,18 @@
 	proc/is_lit(RL_threshold = 0.3)
 		if (src.fullbright || src.RL_GetBrightness() > RL_threshold)
 			return TRUE
+
 		var/area/area = get_area(src)
 		if (area.luminosity || area.force_fullbright)
 			return TRUE
+
+		for (var/dir in cardinal) //check for neighbouring starlit turfs
+			var/turf/T = get_step(src, dir)
+			if (istype(T, /turf/space))
+				var/turf/space/space_turf = T
+				if (space_turf.GetOverlayImage("starlight"))
+					return TRUE
+
 		if (src.SL_lit())
 			return TRUE
 
