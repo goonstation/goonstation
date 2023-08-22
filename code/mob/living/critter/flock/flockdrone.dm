@@ -34,7 +34,6 @@
 
 	var/glow_color = "#26ffe6a2"
 
-	var/non_sleepy = FALSE //! if TRUE, this drone will never go dormant
 	var/ai_paused = FALSE
 	var/wander_count = 0
 	var/obj/item/ammo/power_cell/self_charging/flockdrone/cell = null
@@ -305,9 +304,6 @@
 		src.dormantize()
 
 /mob/living/critter/flock/drone/dormantize()
-	if(src.non_sleepy)
-		return
-
 	src.icon_state = "drone-dormant"
 	src.remove_simple_light("drone_light")
 	src.UnregisterSignal(src, COMSIG_MOB_GRABBED)
@@ -1360,7 +1356,3 @@
 		boutput(flock_owner, "<span class='notice'>You finish converting [I] into resources.</span>")
 	qdel(I)
 	flock_owner.absorber.item = null
-
-
-/mob/living/critter/flock/drone/non_sleepy
-	non_sleepy = TRUE
