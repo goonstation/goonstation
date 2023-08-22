@@ -10468,10 +10468,8 @@
 	dir = 5;
 	icon_state = "tile1"
 	},
-/obj/machinery/bot/buttbot{
-	desc = "It surprisingly has managed to keep the bathroom pretty clean...Somehow.";
-	name = "Bathroom Supervisor"
-	},
+/obj/machinery/shower,
+/obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
 /area/station/security/brig/north_side)
 "dbt" = (
@@ -26774,6 +26772,10 @@
 /obj/decal/tile_edge/line/black{
 	dir = 6;
 	icon_state = "tile1"
+	},
+/obj/machinery/bot/buttbot{
+	desc = "It surprisingly has managed to keep the bathroom pretty clean...Somehow.";
+	name = "Bathroom Supervisor"
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/security/brig/north_side)
