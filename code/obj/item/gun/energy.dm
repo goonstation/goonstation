@@ -71,6 +71,14 @@ TYPEINFO(/obj/item/gun/energy)
 		src.UpdateIcon()
 		return
 
+	nerd_tool_act(var/mob/user, var/obj/item/used_tool, var/do_effect)
+		//drain the batteries of most handheld tools
+		. = ..()
+		if(do_effect)
+			src.emp_act()
+		. += 50
+
+
 	proc/update_charge_overlay()
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret))

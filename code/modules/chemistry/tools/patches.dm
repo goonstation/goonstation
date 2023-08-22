@@ -190,7 +190,7 @@
 			if (L.bleeding <= 3)
 				repair_bleeding_damage(M, 25, 1)
 
-		else 
+		else
 			repair_bleeding_damage(M, 25, 1)
 		active = 1
 
@@ -529,6 +529,13 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 		src.tampered = 1
 		src.UpdateIcon()
 		return 1
+
+	nerd_tool_act(var/mob/user, var/obj/item/used_tool, var/do_effect)
+		//Let's eject most mechanical containers
+		. = ..()
+		if(do_effect)
+			src.emp_act()
+		. += 50
 
 	emp_act()
 		. = ..()

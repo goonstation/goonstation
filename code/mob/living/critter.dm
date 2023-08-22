@@ -1576,6 +1576,25 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
 
+	nerd_tool_act(var/mob/user, var/obj/item/used_tool, var/do_effect)
+		//like borgs, this tool fries the curcuitry of robotic critters
+		. = ..()
+		if(do_effect)
+			playsound(src, "sparks", 75, 1, -1)
+			src.visible_message("<span class='alert'>The circuitry in [src] overloads and visibly lights up!</span>")
+			var/turf/target_turf = get_turf(src)
+			var/obj/overlay/pulse = new/obj/overlay(target_turf)
+			pulse.icon = 'icons/effects/effects.dmi'
+			pulse.icon_state = "emppulse"
+			pulse.name = "emp pulse"
+			pulse.anchored = ANCHORED
+			SPAWN(2 SECONDS)
+				if (pulse)
+					qdel(pulse)
+			var/damage_dealt = round(rand(15, 30))
+			src.TakeDamage("chest",, damage_dealt * emp_vuln)
+		. += 50
+
 	/// EMP does 10 brute and 10 burn by default, can be adjusted linearly with emp_vuln
 	emp_act()
 		src.emag_act() // heh

@@ -293,6 +293,17 @@
 		if (robotic)
 			src.take_damage(20, 20, 20)
 
+	nerd_tool_act(var/mob/user, var/obj/item/used_tool, var/do_effect)
+		//the N.E.R.D. repurposes the cyberorgans, emagging them
+		if (!src.robotic)
+			return
+		. = ..()
+		if(do_effect)
+			src.emag_act()
+		. += 100
+
+
+
 	proc/add_ability(var/datum/abilityHolder/aholder, var/abil) // in case things wanna do stuff instead of just straight-up adding/removing the abilities (see: laser eyes)
 		if (!aholder || !abil)
 			return

@@ -92,6 +92,14 @@ TYPEINFO(/obj/item/baton)
 		playsound(src, "sparks", 75, 1, -1)
 		return
 
+	nerd_tool_act(var/mob/user, var/obj/item/used_tool, var/do_effect)
+		//drain the batteries of most handheld cells
+		. = ..()
+		if(do_effect)
+			src.emp_act()
+		. += 50
+
+
 	update_icon()
 
 		if (!src || !istype(src))

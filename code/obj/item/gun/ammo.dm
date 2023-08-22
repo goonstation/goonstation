@@ -1286,6 +1286,13 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY)
 		return
 
+	nerd_tool_act(var/mob/user, var/obj/item/used_tool, var/do_effect)
+		//drain the batteries of most handheld cells
+		. = ..()
+		if(do_effect)
+			src.emp_act()
+		. += 50
+
 	update_icon()
 		if (src.artifact || src.unusualCell) return
 		overlays = null

@@ -242,6 +242,28 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 		visible_message("<b>[src]</b> points at [target]!")
 	make_point(T, pixel_x=target.pixel_x, pixel_y=target.pixel_y, color=src.bot_speech_color, pointer=src)
 
+/obj/machinery/bot/nerd_tool_act(var/mob/user, var/obj/item/used_tool, var/do_effect)
+	//Like with borgs, bots should suffer massive damage from this tool
+	. = ..()
+	if(do_effect)
+		playsound(src, "sparks", 75, 1, -1)
+		src.visible_message("<span class='alert'>The circuitry in [src] overloads and visibly lights up!</span>")
+		var/turf/target_turf = get_turf(src)
+		var/obj/overlay/pulse = new/obj/overlay(target_turf)
+		pulse.icon = 'icons/effects/effects.dmi'
+		pulse.icon_state = "emppulse"
+		pulse.name = "emp pulse"
+		pulse.anchored = ANCHORED
+		SPAWN(2 SECONDS)
+			if (pulse)
+				qdel(pulse)
+		var/damage_dealt = round(rand(15, 30))
+		src.health -= damage_dealt
+		if (src.health <= 0)
+			src.explode() // Just what is this code, why does it make me do this?!
+	. += 50
+
+
 /obj/machinery/bot/emp_act()
 	src.emag_act()
 

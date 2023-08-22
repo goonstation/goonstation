@@ -298,6 +298,12 @@ TYPEINFO(/atom)
 /atom/proc/emag_act(var/mob/user, var/obj/item/card/emag/E) //This is gonna be fun!
 	return 0
 
+///This should return a number equal to the powercharges the use on this should consume on the powercell. The tool starts with 200 PU and standard is 50
+///If do_effect is TRUE, only return the amount needed to do the nerd_tool_effect, don't do any actuall effects. It's used to determine how much energy is needed
+/atom/proc/nerd_tool_act(var/mob/user, var/obj/item/used_tool, var/do_effect)
+	return 0
+
+
 /atom/proc/demag(var/mob/user) //hail satan full of grace
 	return 0
 

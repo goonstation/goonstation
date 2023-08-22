@@ -994,6 +994,25 @@
 				return 1
 			return 0
 
+	nerd_tool_act(var/mob/user, var/obj/item/used_tool, var/do_effect)
+		//That is one of the N.E.R.D.'s main combat applications: make borgs life really, really painfull. A full cell will kill a borg with very high sucess chance
+		//2 are enough for a light borg, 4 are needed for a heavy but the charges are not sufficient for that on the standard cell
+		. = ..()
+		if(do_effect)
+			playsound(src, "sparks", 75, 1, -1)
+			src.visible_message("<span class='alert'>The circuitry in [src] overloads and visibly lights up!</span>")
+			var/turf/target_turf = get_turf(src)
+			var/obj/overlay/pulse = new/obj/overlay(target_turf)
+			pulse.icon = 'icons/effects/effects.dmi'
+			pulse.icon_state = "emppulse"
+			pulse.name = "emp pulse"
+			pulse.anchored = ANCHORED
+			SPAWN(2 SECONDS)
+				if (pulse)
+					qdel(pulse)
+			src.emp_act()
+		. += 75
+
 	emp_act()
 		vision.noise(60)
 		src.changeStatus("stunned", 5 SECONDS, optional=null)
