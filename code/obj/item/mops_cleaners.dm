@@ -1233,8 +1233,8 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 
 						user.u_equip(src)
 						if (length(src.storage.get_contents()))
-							for(var/obj/item/I as anything in src.storage.get_contents())
-								src.storage.transfer_stored_item(I, get_turf(src))
+							for(var/obj/item/contents as anything in src.storage.get_contents())
+								src.storage.transfer_stored_item(contents, get_turf(src))
 							boutput(user, "You cut leg holes into [src] and all the contents fall out!")
 						else
 							boutput(user, "You cut leg holes into [src].")
