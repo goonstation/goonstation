@@ -955,18 +955,16 @@
 
 /obj/item/paper/newspaper/New()
 	. = ..()
-	if (!src.headline)
-		src.headline = pick_smart_string("newspaper.txt", "headline")
-	if (!src.publisher)
-		src.publisher = pick_smart_string("newspaper.txt", "publisher")
+	src.headline = pick_smart_string("newspaper.txt", "headline")
+	src.publisher = pick_smart_string("newspaper.txt", "publisher")
 	src.name = "[src.publisher] newspaper"
 	src.desc = "Its from [src.publisher]. Its headline reads: [src.headline]"
+	src.info = "<b>[src.headline]</b><br>"
 	if (prob(20))
-		src.info = pick_smart_string("newspaper.txt", "article")
+		src.info = "<br><br>[pick_smart_string("newspaper.txt", "article")]"
 	else // randomly generate an article oh god
-		var/temporary
-		temporary += "<b>[src.headline]</b><br>"
-		for (var/i in 5)
+		var/temporary = ""
+		for (var/count in 1 to rand(4, 8))
 			var/name1 = pick_smart_string("newspaper.txt", "name")
 			var/name2 = pick_smart_string("newspaper.txt", "name")
 			if (prob(80)) //80% chance of a random name as opposed to an "important" one.
@@ -1001,7 +999,7 @@
 					temporary += "<br><br>[capitalize(title1)] [name1] tells [src.publisher] that they personally blame [name2]."
 				if (9)
 					temporary += "<br><br>When [name1] [event1], there was some mild [emotion1] visible from [name2]."
-		src.info = temporary
+		src.info += temporary
 /obj/item/paper/newspaper/attack_self(mob/user)
 	src.force_drop(user)
 	src.rollup()
