@@ -1,5 +1,5 @@
 var/global/datum/controller/gameticker/ticker
-var/global/current_state = GAME_STATE_WORLD_INIT
+var/global/current_state = GAME_STATE_INVALID
 
 /datum/controller/gameticker
 	var/hide_mode = TRUE
@@ -273,9 +273,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			break
 #endif
 
-	for(var/turf/T in job_start_locations["AI"])
-		if(isnull(locate(/mob/living/silicon/ai) in T))
-			new /obj/item/clothing/suit/cardboard_box/ai(T)
+	if(!countJob("AI")) // There is no roundstart AI, spawn in a Latejoin AI on the spawn landmark.
+		for(var/turf/T in job_start_locations["AI"])
+			new /mob/living/silicon/ai/latejoin(T)
 	if(!processScheduler.isRunning)
 		processScheduler.start()
 

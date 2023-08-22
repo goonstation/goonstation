@@ -289,15 +289,20 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	cast(atom/target)
 		if (holder && istype(holder, /datum/abilityHolder/ghost_observer) && istype(holder.owner, /mob/dead/observer))
+			var/mob/dead/observer/observer = holder.owner
 			var/datum/abilityHolder/ghost_observer/GH = holder
 			if (GH.display_buttons)
 				name = "Show HUD"
 				desc = "Show all HUD buttons."
 				icon_state = "show"
+				if(observer.hud.respawn_timer)
+					observer.hud.remove_object(observer.hud.respawn_timer)
 			else
 				name = "Hide HUD"
 				desc = "Hide all HUD buttons."
 				icon_state = "hide"
+				if(observer.hud.respawn_timer)
+					observer.hud.add_object(observer.hud.respawn_timer)
 
 			GH.toggle()
 			GH.updateButtons(1)

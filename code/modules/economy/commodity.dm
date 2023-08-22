@@ -1244,6 +1244,15 @@
 	upperfluc = 50
 	lowerfluc = -50
 
+/datum/commodity/junk/ai_kit_mime
+	comname = "Mime AI Parts"
+	comtype = /obj/item/ai_plating_kit/mime
+	desc = "The parts required to plate an AI to thematically match with being trapped in a box."
+	price = 800
+	baseprice = 800
+	upperfluc = 50
+	lowerfluc = -50
+
 /////////////////////////////////
 ///////food trader //////////////
 /////////////////////////////////
@@ -2553,6 +2562,14 @@
 	price = 30000
 	upperfluc = 12500
 	lowerfluc = -12500
+
+/datum/commodity/flock/tech/ai_kit_flock
+	comname = "Flock Plating Kit"
+	comtype = /obj/item/ai_plating_kit/flock
+	desc = "A decorative plating kit for a computational core. We cannot guarantee an absense of side effects."
+	price = 2500
+	upperfluc = 500
+	lowerfluc = -500
 
 /////////////////////////////////
 ///////skeleton trader //////////

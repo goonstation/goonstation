@@ -42202,6 +42202,14 @@
 	icon_state = "fpurple2"
 	},
 /area/station/crew_quarters/hor)
+"cjq" = (
+/obj/stool/bee_bed/heisenbee,
+/obj/critter/domestic_bee/heisenbee,
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fpurple2"
+	},
+/area/station/crew_quarters/hor)
 "cjr" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -62262,6 +62270,13 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
+"dmL" = (
+/obj/disposalpipe/switch_junction/right/north{
+	mail_tag = list("chapel","chapel checkpoint","crewA","arrivals checkpoint");
+	name = "mail junction (arrivals sector)"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/routing/depot)
 "dmV" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -62427,14 +62442,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
-"dnw" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	dir = 4;
-	name = "Listening Post"
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/listeningpost)
 "dnx" = (
 /turf/simulated/floor/stairs{
 	dir = 8
@@ -63612,6 +63619,13 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"eEK" = (
+/obj/disposalpipe/switch_junction/right/north{
+	mail_tag = list("janitor","escape checkpoint","mining","escape hallway","mechanics","cargo checkpoint","QM","refinery");
+	name = "mail junction (escape and cargo sectors)"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/routing/depot)
 "eEQ" = (
 /obj/machinery/computer3/generic/secure_data,
 /obj/machinery/power/data_terminal,
@@ -63979,16 +63993,12 @@
 	dir = 6
 	},
 /area/research_outpost)
-"fdw" = (
-/obj/cable{
-	icon_state = "4-8"
+"ffU" = (
+/obj/table/reinforced/chemistry/auto/auxsup,
+/turf/simulated/floor/purplewhite/corner{
+	dir = 4
 	},
-/obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("hydroponics","kitchen","detective","crewB","arcade","cafeteria","medical booth");
-	name = "mail junction (catering sector)"
-	},
-/turf/simulated/floor/grime,
-/area/station/routing/depot)
+/area/station/science/chemistry)
 "fht" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -64348,6 +64358,15 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/checkpoint/customs)
+"fLA" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post";
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/listeningpost)
 "fMs" = (
 /obj/drink_rack/mug{
 	pixel_x = -22;
@@ -64396,6 +64415,13 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/catering)
+"fSM" = (
+/obj/disposalpipe/switch_junction/right/north{
+	mail_tag = list("medbay lobby","telescience","testchamber","research","chemistry","medbay","morgue","pathology","genetics","robotics");
+	name = "mail junction (medsci sector)"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/routing/depot)
 "fSZ" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -66195,6 +66221,13 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/engine/hotloop)
+"iHG" = (
+/obj/disposalpipe/switch_junction/left/north{
+	mail_tag = list("brig","customs checkpoint","bridge","security");
+	name = "mail junction (command sector)"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/routing/depot)
 "iJy" = (
 /obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
@@ -67766,13 +67799,6 @@
 	dir = 6
 	},
 /area/station/catwalk/south)
-"kJk" = (
-/obj/disposalpipe/switch_junction/left/north{
-	mail_tag = list("brig","customs checkpoint","bridge","security");
-	name = "mail junction (command sector)"
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/routing/depot)
 "kKe" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/disposalpipe/segment/mail/bent/north,
@@ -67881,13 +67907,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
-"kRl" = (
-/obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("chapel","chapel checkpoint","crewA","arrivals checkpoint");
-	name = "mail junction (arrivals sector)"
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/routing/depot)
 "kRn" = (
 /obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /turf/simulated/floor,
@@ -69980,13 +69999,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/catwalk/south)
-"ocf" = (
-/obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("medbay lobby","telescience","testchamber","research","chemistry","medbay","morgue","pathology","genetics","robotics");
-	name = "mail junction (medsci sector)"
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/routing/depot)
 "ocj" = (
 /obj/machinery/atmospherics/binary/valve{
 	desc = "Connects to a cooling radiator loop outside of the hull.";
@@ -70363,13 +70375,6 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/arrivals)
-"oGt" = (
-/obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("engineering","podbay","podbay checkpoint");
-	name = "mail junction (engineering sector)"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routing/depot)
 "oGS" = (
 /obj/window_blinds/cog2{
 	dir = 4
@@ -70558,13 +70563,6 @@
 /obj/decal/poster/wallsign/escape_right,
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/bot_storage)
-"pdx" = (
-/obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("janitor","escape checkpoint","mining","escape hallway","mechanics","cargo checkpoint","QM","refinery");
-	name = "mail junction (escape and cargo sectors)"
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/routing/depot)
 "pdD" = (
 /obj/grille/catwalk,
 /obj/cable{
@@ -70631,12 +70629,6 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
-"phZ" = (
-/obj/table/reinforced/chemistry/auto/auxsup,
-/turf/simulated/floor/purplewhite/corner{
-	dir = 4
-	},
-/area/station/science/chemistry)
 "piU" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
@@ -71308,14 +71300,6 @@
 /obj/mapping_helper/access/bar,
 /turf/simulated/floor/plating/damaged3,
 /area/station/hallway/secondary/construction)
-"qtV" = (
-/obj/stool/bee_bed/heisenbee,
-/obj/critter/domestic_bee/heisenbee,
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fpurple2"
-	},
-/area/station/crew_quarters/hor)
 "quY" = (
 /mob/living/critter/small_animal/mouse,
 /obj/disposalpipe/segment/mail/vertical,
@@ -72937,6 +72921,16 @@
 /obj/mapping_helper/access/research,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/research/outpost)
+"sAX" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/switch_junction/right/north{
+	mail_tag = list("hydroponics","kitchen","detective","crewB","arcade","cafeteria","medical booth");
+	name = "mail junction (catering sector)"
+	},
+/turf/simulated/floor/grime,
+/area/station/routing/depot)
 "sCT" = (
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
@@ -73828,6 +73822,16 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/research_outpost/hangar)
+"tPx" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "tQb" = (
 /obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
@@ -74327,6 +74331,16 @@
 /obj/lattice,
 /turf/space,
 /area/space)
+"uFl" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "uGQ" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/external{
@@ -74447,6 +74461,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"uSb" = (
+/obj/disposalpipe/switch_junction/right/north{
+	mail_tag = list("engineering","podbay","podbay checkpoint");
+	name = "mail junction (engineering sector)"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/routing/depot)
 "uSc" = (
 /obj/effects/background_objects/star_blue{
 	pixel_x = -64;
@@ -74670,6 +74691,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/arrivals)
+"vpI" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33;
+	entrance_scanner = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "vqu" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -102542,7 +102572,7 @@ aaa
 aaa
 aaa
 cig
-qtV
+cjq
 ckL
 cmA
 coj
@@ -105583,7 +105613,7 @@ cJb
 cKM
 cMl
 cNE
-phZ
+ffU
 iUW
 rJj
 cTD
@@ -126672,15 +126702,15 @@ erl
 bvJ
 bxO
 bzz
-kJk
-kRl
+iHG
+dmL
 bEV
 bGO
-fdw
+sAX
 bKv
-oGt
-ocf
-pdx
+uSb
+fSM
+eEK
 bQV
 bSx
 bUa
@@ -155481,7 +155511,7 @@ aab
 aaF
 aan
 aan
-aan
+vpI
 dnA
 dnR
 dnZ
@@ -155782,7 +155812,7 @@ aab
 aab
 aab
 dnq
-dnw
+fLA
 dnq
 dnA
 dnS
@@ -156084,7 +156114,7 @@ dmJ
 dmJ
 dmJ
 dmJ
-dnx
+tPx
 dnA
 dnA
 dnT
@@ -156386,7 +156416,7 @@ dmJ
 dmV
 dnf
 dmJ
-dnw
+fLA
 dnA
 dnL
 dnU
@@ -156992,7 +157022,7 @@ dnh
 dnr
 dnz
 dnF
-dnN
+uFl
 dnW
 dod
 dnN

@@ -1191,26 +1191,6 @@
 			var/mob/living/carbon/human/fella = target
 
 			if (src.on)
-				if (user.zone_sel.selecting == "l_arm")
-					if (fella.limbs.l_arm_bleed > 1)
-						fella.TakeDamage("chest",0,10)
-						fella.limbs.l_arm_bleed = max(0,fella.limbs.l_arm_bleed-5)
-						if (fella.limbs.l_arm_bleed == 0)
-							user.visible_message("<span class='alert'>[user] completely cauterises [fella]'s left stump with [src]!</span>")
-						else
-							user.visible_message("<span class='alert'>[user] partially cauterises [fella]'s left stump with [src]!</span>")
-						return
-
-				if (user.zone_sel.selecting == "r_arm")
-					if (fella.limbs.r_arm_bleed > 1)
-						fella.TakeDamage("chest",0,10)
-						fella.limbs.r_arm_bleed = max(0,fella.limbs.r_arm_bleed-5)
-						if (fella.limbs.r_arm_bleed == 0)
-							user.visible_message("<span class='alert'>[user] completely cauterises [fella]'s right stump with [src]!</span>")
-						else
-							user.visible_message("<span class='alert'>[user] partially cauterises [fella]'s right stump with [src]!</span>")
-						return
-
 				if (fella.wear_mask && istype(fella.wear_mask, /obj/item/clothing/mask/cigarette))
 					var/obj/item/clothing/mask/cigarette/smoke = fella.wear_mask // aaaaaaa
 					smoke.light(user, "<span class='alert'><b>[user]</b> lights [fella]'s [smoke] with [src].</span>")
