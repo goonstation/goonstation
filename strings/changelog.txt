@@ -1,5 +1,9 @@
 
 (t)mon aug 21 23
+(u)Glamurio (Ryou)
+(p)15335
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(+)Added a brig shower to Donut3.
 (u)Cheekybrdy
 (p)15231
 (e)🗺🎨|A-Mapping, C-Sprites
