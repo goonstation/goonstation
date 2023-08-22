@@ -105,7 +105,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			user.drop_item()
 			item.set_loc(src)
 			boutput(user, "<span class='notice'>You attach the [item] to the valve controls!</span>")
-			logTheThing(LOG_BOMBING, user, "attaches [item] to a TTV tank transfer valve at [log_loc(T)].")
+			logTheThing(LOG_BOMBING, user, "attaches the [item] to a TTV tank transfer valve.")
 			item.master = src
 
 			/*
