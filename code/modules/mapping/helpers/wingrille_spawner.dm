@@ -73,18 +73,6 @@
 	icon_state = "b-wingrille_f"
 	full_win = TRUE
 
-// Uqill glass, bohrum reinforced window
-/obj/mapping_helper/wingrille_spawn/hardened
-	name = "hardened window grille spawner"
-	icon_state = "br-wingrille"
-	win_path = /obj/window/auto/hardened
-
-/obj/mapping_helper/wingrille_spawn/hardened/full
-	name = "hardened window grille spawner"
-	icon_state = "br-wingrille"
-	icon_state = "b-wingrille_f"
-	full_win = TRUE
-
 // Flock window used by the flock trader
 /obj/mapping_helper/wingrille_spawn/flock
 	icon = 'icons/misc/featherzone.dmi'
