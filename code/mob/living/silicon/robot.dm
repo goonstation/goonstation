@@ -3225,6 +3225,20 @@
 			src.shell = 1
 			..(loc, frame, starter, syndie, frame_emagged)
 
+/mob/living/silicon/robot/spawnable/light
+	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+		if (!src.part_chest)
+			src.part_chest = new/obj/item/parts/robot_parts/chest/light(src)
+			src.part_chest.wires = 1
+			src.part_chest.cell = new/obj/item/cell/cerenkite/charged(src.part_chest)
+			src.cell = src.part_chest.cell
+		if (!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/light(src)
+		if (!src.part_arm_l) src.part_arm_l = new/obj/item/parts/robot_parts/arm/left/light(src)
+		if (!src.part_arm_r) src.part_arm_r = new/obj/item/parts/robot_parts/arm/right/light(src)
+		if (!src.part_leg_l) src.part_leg_l = new/obj/item/parts/robot_parts/leg/left/light(src)
+		if (!src.part_leg_r) src.part_leg_r = new/obj/item/parts/robot_parts/leg/right/light(src)
+		..(loc, frame, starter, syndie, frame_emagged)
+
 /mob/living/silicon/robot/spawnable/standard
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
@@ -3303,6 +3317,20 @@
 		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
 			src.shell = 1
 			..(loc, frame, starter, syndie, frame_emagged)
+
+/mob/living/silicon/robot/spawnable/screenhead
+	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+		if (!src.part_chest)
+			src.part_chest = new/obj/item/parts/robot_parts/chest/standard(src)
+			src.part_chest.wires = 1
+			src.part_chest.cell = new/obj/item/cell/cerenkite/charged(src.part_chest)
+			src.cell = src.part_chest.cell
+		if (!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/screen(src)
+		if (!src.part_arm_l) src.part_arm_l = new/obj/item/parts/robot_parts/arm/left/standard(src)
+		if (!src.part_arm_r) src.part_arm_r = new/obj/item/parts/robot_parts/arm/right/standard(src)
+		if (!src.part_leg_l) src.part_leg_l = new/obj/item/parts/robot_parts/leg/left/treads(src)
+		if (!src.part_leg_r) src.part_leg_r = new/obj/item/parts/robot_parts/leg/right/treads(src)
+		..(loc, frame, starter, syndie, frame_emagged)
 
 /mob/living/silicon/robot/uber
 
