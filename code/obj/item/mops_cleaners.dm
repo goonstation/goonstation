@@ -1203,7 +1203,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "trashbag-f"
 	item_state = "trashbag-f"
-	uses_multiple_icon_states = 1
+	uses_multiple_icon_states = TRUE
 	w_class = W_CLASS_TINY
 	rand_pos = 1
 	flags = FPRINT | TABLEPASS | NOSPLASH
