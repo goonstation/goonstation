@@ -98,8 +98,6 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
 	var/viewalerts = 0
 	var/printalerts = 1
-	var/announcearrival = 1
-	var/arrivalalert = "$NAME has signed up as $JOB."
 	/// a list of strings used as fake laws that may be stated via the State Fake Laws command, to deceive people as a rogue AI
 	var/list/fake_laws = list()
 	var/glitchy_speak = 0
@@ -110,7 +108,6 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/messageLog = ""
 	/// controls whether or not the ai will hear termos message notifications
 	var/termMute = FALSE
-	var/hologramdown = 0 //is the hologram downed?
 	var/canvox = 1
 	var/can_announce = 1
 	var/last_announcement = -INFINITY
