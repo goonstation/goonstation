@@ -144,7 +144,7 @@ TYPEINFO(/area)
 	/// default environment for sounds - see sound datum vars documentation for the presets.
 	var/sound_environment = 1
 
-	/// A list of default parallax layer render source types that this area should instantiate on New().
+	/// The parallax layer render source group that this area should use.
 	var/area_parallax_render_source_group = null
 	/// Whether foreground parallax layers should be occluded from rendering over the contents of this area.
 	var/occlude_foreground_parallax_layers = FALSE
