@@ -3196,7 +3196,12 @@ datum
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/blood) in T)
 						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-						make_cleanable(/obj/decal/cleanable/blood,T)
+						var/obj/decal/cleanable/blood/blood = make_cleanable(/obj/decal/cleanable/blood,T)
+						var/datum/bioHolder/bioHolder = src.data
+						if(bioHolder)
+							blood.blood_type = bioHolder.bloodType
+							blood.blood_DNA = bioHolder.Uid
+						blood.reagents.add_reagent(src.id, volume, src.data)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()

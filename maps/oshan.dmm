@@ -2256,28 +2256,6 @@
 /obj/item/reagent_containers/syringe,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
-"ahn" = (
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "aho" = (
 /obj/disposalpipe/segment/morgue,
 /obj/cable{
@@ -14002,13 +13980,6 @@
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
-"aSj" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Listening Post"
-	},
-/turf/simulated/floor/black,
-/area/listeningpost)
 "aSl" = (
 /obj/machinery/light/incandescent/warm,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -14025,9 +13996,6 @@
 /area/station/hangar/engine)
 "aSm" = (
 /turf/simulated/floor/stairs/wide/middle,
-/area/listeningpost)
-"aSn" = (
-/turf/simulated/floor/stairs/wide/other,
 /area/listeningpost)
 "aSo" = (
 /obj/disposalpipe/trunk/mail/south,
@@ -14058,13 +14026,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"aSs" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Listening Post"
-	},
-/turf/simulated/floor,
-/area/listeningpost)
 "aSt" = (
 /obj/disposalpipe/switch_junction/left/east{
 	mail_tag = "security processing";
@@ -36059,6 +36020,13 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"erl" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "ert" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -39597,6 +39565,15 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor,
 /area/station/crew_quarters/bar)
+"kFm" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25;
+	entrance_scanner = 1
+	},
+/turf/space/fluid,
+/area/space)
 "kFN" = (
 /obj/machinery/disposal/small/east,
 /obj/disposalpipe/trunk/south,
@@ -40547,6 +40524,13 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
 /area/station/hallway/secondary/exit)
+"mvg" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
+/turf/simulated/floor,
+/area/listeningpost)
 "mvk" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left{
@@ -43359,6 +43343,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
+"reL" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32
+	},
+/turf/simulated/floor/stairs/wide/other,
+/area/listeningpost)
 "rfe" = (
 /obj/decal/tile_edge/line/black{
 	dir = 9;
@@ -45208,6 +45200,14 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"vdb" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "vdI" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/brig{
@@ -46300,6 +46300,28 @@
 /obj/mapping_helper/access/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"wUp" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart"
+	},
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "wVw" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -54633,7 +54655,7 @@ aOU
 aOW
 aOU
 aOU
-aOU
+vdb
 aPm
 aah
 aQM
@@ -54936,10 +54958,10 @@ aPj
 aOU
 aOU
 aOU
-aSj
+erl
 aSm
 aSp
-aSs
+mvg
 aqn
 aqn
 aqn
@@ -55239,7 +55261,7 @@ aPr
 aPF
 aQr
 aPm
-aSn
+reL
 aQN
 aOg
 wbZ
@@ -55544,7 +55566,7 @@ aPm
 aPm
 aPm
 aPm
-aqn
+kFm
 aqn
 aqn
 aqn
@@ -93066,7 +93088,7 @@ chD
 acj
 acm
 agN
-ahn
+wUp
 ahI
 ajJ
 eNT

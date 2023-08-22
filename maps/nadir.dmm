@@ -1519,6 +1519,15 @@
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/engine/glow/blue,
 /area/station/communications/centre)
+"aJw" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25;
+	entrance_scanner = 1
+	},
+/turf/space/fluid/acid,
+/area/space)
 "aJH" = (
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge)
@@ -5387,15 +5396,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
-"cuN" = (
-/obj/machinery/door/airlock/pyro/medical{
-	name = "Medical Bay"
-	},
-/obj/mapping_helper/access/syndie_shuttle,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/listeningpost)
 "cuZ" = (
 /obj/machinery/conveyor/EW{
 	id = "garbage";
@@ -5414,6 +5414,10 @@
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"cvr" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate,
+/turf/simulated/floor/black,
+/area/listeningpost)
 "cvy" = (
 /obj/landmark/start/job/security_assistant,
 /obj/stool/chair/red{
@@ -9778,6 +9782,14 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
+"exN" = (
+/obj/machinery/door/airlock/pyro{
+	name = "Restroom"
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 1
+	},
+/area/listeningpost)
 "exP" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/trackimp_kit2,
@@ -10626,16 +10638,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/white,
 /area/station/medical/staff)
-"ePN" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	name = "Power Systems"
-	},
-/obj/mapping_helper/access/syndie_shuttle,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/engine,
-/area/listeningpost/power)
 "ePP" = (
 /obj/machinery/light{
 	dir = 4;
@@ -15230,30 +15232,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/emergency2)
-"gMv" = (
-/obj/storage/crate/freezer,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/reagent_containers/food/snacks/ingredient/meat{
-	desc = "Ew.";
-	name = "meat of questionable origin"
-	},
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/organ/liver,
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/catering)
 "gMN" = (
 /obj/filing_cabinet,
 /obj/machinery/light{
@@ -16080,6 +16058,31 @@
 	dir = 4
 	},
 /area/station/storage/emergency)
+"hcW" = (
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/obj/item/organ/eye,
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart"
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 5
+	},
+/area/station/medical/morgue)
 "hdl" = (
 /obj/machinery/recharger/wall/sticky{
 	dir = 4;
@@ -16734,11 +16737,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/bridge/captain)
-"hpO" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate,
-/obj/mapping_helper/access/syndie_shuttle,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "hqD" = (
 /obj/machinery/computer/power_monitor{
 	dir = 4
@@ -19067,6 +19065,26 @@
 "iiD" = (
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/lobby)
+"iiM" = (
+/obj/rack,
+/obj/item/device/nanoloom{
+	pixel_y = 4
+	},
+/obj/item/nanoloom_cartridge{
+	pixel_x = -2;
+	pixel_y = -4
+	},
+/obj/item/nanoloom_cartridge{
+	pixel_x = -7;
+	pixel_y = -4
+	},
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 25
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "iiQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -27519,6 +27537,15 @@
 	dir = 4
 	},
 /area/station/security/brig)
+"lIM" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	name = "Power Systems"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/listeningpost/power)
 "lIR" = (
 /obj/table/reinforced/auto,
 /obj/item/device/nanoloom{
@@ -29634,6 +29661,12 @@
 /area/station/engine/inner{
 	name = "Transception Array Control"
 	})
+"mAk" = (
+/obj/machinery/door/airlock/pyro{
+	name = "Personnel"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "mAy" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -30467,6 +30500,14 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/southwest)
+"mUp" = (
+/obj/machinery/door/airlock/pyro/medical{
+	name = "Medical Bay"
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/listeningpost)
 "mUt" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -36025,6 +36066,14 @@
 	},
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/staff)
+"puZ" = (
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "pvo" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -41107,12 +41156,6 @@
 /area/station/quartermaster/cargobay{
 	name = "Cargo Primary Endpoint"
 	})
-"rSo" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/redblack,
-/area/listeningpost)
 "rSs" = (
 /obj/storage/closet/biohazard,
 /turf/simulated/floor/blackwhite{
@@ -42568,13 +42611,6 @@
 /obj/cable,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/west)
-"sxu" = (
-/obj/machinery/door/airlock/pyro{
-	name = "Personnel"
-	},
-/obj/mapping_helper/access/syndie_shuttle,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "sxE" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -42989,15 +43025,6 @@
 	},
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
-"sGF" = (
-/obj/machinery/door/airlock/pyro{
-	name = "Restroom"
-	},
-/obj/mapping_helper/access/syndie_shuttle,
-/turf/simulated/floor/blackwhite{
-	dir = 1
-	},
-/area/listeningpost)
 "sGJ" = (
 /obj/decal/cleanable/rust,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -43678,31 +43705,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/southeast)
-"sUR" = (
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/obj/item/organ/eye,
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/blackwhite{
-	dir = 5
-	},
-/area/station/medical/morgue)
 "sVB" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -45918,6 +45920,17 @@
 	},
 /turf/simulated/floor/greenblack/corner,
 /area/station/storage/emergency)
+"tRg" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25
+	},
+/turf/simulated/floor/redblack,
+/area/listeningpost)
 "tRj" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 4
@@ -47542,6 +47555,30 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
+"uBA" = (
+/obj/storage/crate/freezer,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/reagent_containers/food/snacks/ingredient/meat{
+	desc = "Ew.";
+	name = "meat of questionable origin"
+	},
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/organ/liver,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/catering)
 "uBF" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
@@ -48741,21 +48778,6 @@
 /area/station/quartermaster/cargobay{
 	name = "Cargo Primary Endpoint"
 	})
-"vkb" = (
-/obj/rack,
-/obj/item/device/nanoloom{
-	pixel_y = 4
-	},
-/obj/item/nanoloom_cartridge{
-	pixel_x = -2;
-	pixel_y = -4
-	},
-/obj/item/nanoloom_cartridge{
-	pixel_x = -7;
-	pixel_y = -4
-	},
-/turf/simulated/floor/black,
-/area/listeningpost)
 "vkq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -54102,14 +54124,6 @@
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
 	})
-"xHG" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Exploratory Capsule"
-	},
-/obj/forcefield/energyshield/perma/doorlink,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "xHM" = (
 /obj/item/rods/steel/fullstack{
 	pixel_x = -9
@@ -83848,11 +83862,11 @@ ouF
 sSA
 haV
 ggw
-ePN
+lIM
 dZk
 twP
 djp
-sGF
+exN
 edW
 wHV
 kdn
@@ -85358,11 +85372,11 @@ gfh
 aBB
 iOs
 xhV
-hpO
+cvr
 tSO
 xzc
 iOs
-cuN
+mUp
 arl
 arl
 arl
@@ -86868,15 +86882,15 @@ nAH
 xhV
 xhV
 xhV
-sxu
+mAk
 tSO
 xzc
 iOs
-xHG
+puZ
 xhV
 rfe
 xhV
-xHG
+puZ
 rJg
 rJg
 bzS
@@ -87171,15 +87185,15 @@ srd
 ckU
 nzH
 pki
-rSo
+tRg
 pwa
 eBv
 pki
-vkb
+iiM
 qQg
 fhm
 gYn
-bzS
+aJw
 bzS
 bzS
 bzS
@@ -87858,7 +87872,7 @@ oaQ
 obA
 obA
 onm
-gMv
+uBA
 hHa
 gVW
 dns
@@ -103206,7 +103220,7 @@ lRC
 fgA
 aFj
 fBA
-sUR
+hcW
 vYx
 xLa
 pUw

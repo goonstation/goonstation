@@ -238,13 +238,6 @@
 		UpdateOverlays(null, "bloody_gloves_l")
 		UpdateOverlays(null, "bloody_gloves_r")
 
-	// Stun glove overlay
-	if (src.gloves && src.gloves.uses >= 1)
-		src.gloves.wear_image.icon_state = "stunoverlay"
-		UpdateOverlays(src.gloves.wear_image, "stunoverlay")
-	else
-		UpdateOverlays(null, "stunoverlay")
-
 /mob/living/carbon/human/proc/update_shoes()
 	if (src.shoes)
 		wear_sanity_check(src.shoes)

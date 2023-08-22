@@ -35447,46 +35447,6 @@
 	dir = 5
 	},
 /area/station/hallway/secondary/exit)
-"ciD" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/machinery/power/apc/autoname_east,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
-	pixel_x = -2;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
-	pixel_x = 7
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney";
-	pixel_x = 3;
-	pixel_y = -9
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	pixel_x = -2;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
-	pixel_x = 1
-	},
-/obj/item/organ/eye{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart";
-	pixel_x = -1;
-	pixel_y = -3
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "ciH" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -40755,15 +40715,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
-"czG" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	dir = 4;
-	name = "Listening Post"
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/listeningpost)
 "czH" = (
 /turf/simulated/floor/stairs{
 	dir = 8
@@ -50551,6 +50502,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
+"krI" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32;
+	entrance_scanner = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "ksi" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
@@ -54541,6 +54501,15 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"ojy" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post";
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/listeningpost)
 "ojC" = (
 /mob/living/critter/small_animal/bird/owl{
 	health_brute = 200;
@@ -57889,6 +57858,16 @@
 /obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"rhf" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "rii" = (
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
@@ -58122,6 +58101,46 @@
 	dir = 10
 	},
 /area/station/medical/medbay)
+"rzQ" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/machinery/power/apc/autoname_east,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney";
+	pixel_x = 3;
+	pixel_y = -9
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
+	pixel_x = 1
+	},
+/obj/item/organ/eye{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart";
+	pixel_x = -1;
+	pixel_y = -3
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "rBb" = (
 /obj/machinery/vending/cola/red,
 /turf/simulated/floor,
@@ -62778,6 +62797,16 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"vDE" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "vDQ" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -109068,7 +109097,7 @@ eJb
 ahd
 cld
 cjA
-ciD
+rzQ
 lmb
 clj
 clm
@@ -144777,7 +144806,7 @@ aap
 czz
 czz
 czN
-czV
+krI
 sAI
 cAj
 cAr
@@ -145077,7 +145106,7 @@ cBQ
 cBQ
 cBQ
 rFM
-czG
+ojy
 rFM
 sAI
 sAI
@@ -145379,7 +145408,7 @@ sAI
 sAI
 sAI
 sAI
-czH
+vDE
 sAI
 czW
 sAI
@@ -145681,7 +145710,7 @@ sAI
 czk
 czr
 sAI
-czG
+ojy
 sAI
 czX
 cAb
@@ -146286,7 +146315,7 @@ czm
 czt
 czB
 czJ
-czP
+rhf
 czP
 cAd
 cAm
