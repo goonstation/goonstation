@@ -1219,22 +1219,21 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	attackby(obj/item/I, mob/user)
 		if (issnippingtool(I))
 			var/action = tgui_input_list(usr, "What do you want to do with [src]?", "Trash Bag", list("Cut into an outfit", "Add to contents"))
-			switch(action)
-				if ("Cut into an outfit")
-					boutput(user, "You begin cutting up [src].")
-					if (!do_after(user, 3 SECONDS))
-						boutput(user, "<span class='alert'>You were interrupted!</span>")
-						return
-					else
-						var/obj/item/clothing/under/gimmick/trashsinglet/trash_outfit = new clothing_type(get_turf(src))
-						playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
-						user.u_equip(src)
-						if (length(src.storage.get_contents()))
-							for(var/obj/item/contents as anything in src.storage.get_contents())
-								src.storage.transfer_stored_item(contents, trash_outfit, TRUE)
-						usr.put_in_hand_or_drop(trash_outfit)
-						qdel(src)
-						return
+			if (action == "Cut into an outfit")
+				boutput(user, "You begin cutting up [src].")
+				if (!do_after(user, 3 SECONDS))
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					return
+				else
+					var/obj/item/clothing/under/gimmick/trashsinglet/trash_outfit = new clothing_type(get_turf(src))
+					playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
+					user.u_equip(src)
+					if (length(src.storage.get_contents()))
+						for(var/obj/item/contents as anything in src.storage.get_contents())
+							src.storage.transfer_stored_item(contents, trash_outfit, TRUE)
+					usr.put_in_hand_or_drop(trash_outfit)
+					qdel(src)
+					return
 		..()
 
 	update_icon(mob/user)
