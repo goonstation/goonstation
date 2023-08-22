@@ -916,6 +916,17 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			..()
 			implant_overlay = null
 
+	glass_shard
+		name = "shrapnel"
+		icon = 'icons/obj/scrap.dmi'
+		desc = "A shattered piece of glass shrapnel. Ow."
+		icon_state = "glass_shrapnel"
+		leaves_wound = FALSE
+
+		New()
+			..()
+			implant_overlay = null
+
 	body_visible
 		bleed_time = 0
 		leaves_wound = FALSE
