@@ -1483,14 +1483,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	setup_equipment_slots()
 		return
 
-/mob/living/critter/robotic/gunbot/mauler
-	name = "Mauler Unit"
-	real_name = "Mauler Unit"
-	desc = "A security robot specially designed for close quarters combat."
+/mob/living/critter/robotic/gunbot/syndicate/meleebot
+	name = "Syndicate CQC Unit"
+	real_name = "Syndicate CQC Unit"
+	desc = "A security robot specially designed for close quarters combat. Prone to overheating.."
+	health_brute = 20
+	health_burn = 10
 	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
 	icon_state = "clawbot"
 	ai_type = /datum/aiHolder/aggressive
 	eye_light_icon = "clawbot-eye"
+
+	seek_target(range)
+		. = ..()
+
+		if (length(.) && prob(10) && src.speak_lines)
+			src.say(pick("GET. OVER. HERE.", "PREPARE TO BE TORN TO SHREDS.", "NANOTRASEN SCUM DETECTED.", "MOVING TO ENGAGE.", "THESE CLAWS DO NOT CARE ABOUT YOUR FEELINGS.", "SURRENDER OR BE DESTROYED.", "THIS ENDS BADLY FOR YOU.", "YOU DO NOT BELONG HERE."))
 
 	setup_hands()
 		..()
@@ -1516,7 +1524,88 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 	setup_equipment_slots()
 		return
+/mob/living/critter/robotic/gunbot/syndicate/riotbot
+	name = "Syndicate Suppression Unit"
+	real_name = "Syndicate Suppression Unit"
+	desc = "A sturdy version with a shield for increased survivability. Not nearly as lethal as the others though."
+	health_brute = 30
+	health_burn = 30
+	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
+	icon_state = "riotbot"
+	ai_type = /datum/aiHolder/aggressive
+	eye_light_icon = "riotbot-eye"
 
+	seek_target(range)
+		. = ..()
+
+		if (length(.) && prob(10) && src.speak_lines)
+			src.say(pick("HALT SLIMEBUCKET!", "SUPPRESSION IN PROGRESS.", "NANOTRASEN INTRUDER DETECTED.", "APPROACHING.", "HASTA LA VISTA BABY.", "TURN YOURSELF IN. IT IS NOT TOO LATE.", "RUB YOUR STOMACH AND PAT YOUR HEAD-- ERROR", "YOU CANNOT STOP ME."))
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/kinetic/morriganabg
+		HH.name = "ABG Riot Suppression Appendage"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handabg"
+		HH.limb_name = "ABG Riot Suppression Appendage"
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/gun/kinetic/morriganabg
+		HH.name = "ABG Riot Suppression Appendage"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handabg"
+		HH.limb_name = "ABG Riot Suppression Appendage"
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
+
+	get_melee_protection(zone, damage_type)
+		return 4
+
+	get_ranged_protection()
+		return 2
+
+	setup_equipment_slots()
+		return
+
+/mob/living/critter/robotic/gunbot/syndicate/medibot
+	name = "Syndicate Medical Unit"
+	real_name = "Syndicate Medical Unit"
+	desc = "A medical unit, doesn't pose as much of a threat. Looks a little smaller than the other ones."
+	health_brute = 20
+	health_burn = 10
+	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
+	icon_state = "medibot"
+	ai_type = /datum/aiHolder/aggressive
+	eye_light_icon = "medibot-eye"
+
+	seek_target(range)
+		. = ..()
+
+		if (length(.) && prob(10) && src.speak_lines)
+			src.say(pick("YOU ARE NOT ON RECORDS.", "WAIT YOUR TURN.", "NANOTRASEN PATIENT DETECTED. CONFLICT.", "WAIT, I DON'T WANT TO HELP.", "THIS IS CONFUSING.", "YOU ARE NOT COVERED BY OUR HEALTH PLAN.", "I KNEW IT, I SHOULD'VE BEEN A SENTINEL UNIT", "LEAVE. NOW."))
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/kinetic/syringe/morrigan
+		HH.name = "Syringe Gun"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "syringegun"
+		HH.limb_name = "Syringe Gun"
+
+	get_melee_protection(zone, damage_type)
+		return 4
+
+	get_ranged_protection()
+		return 2
+
+	setup_equipment_slots()
+		return
 // Teleporter objects
 
 /obj/morrigan_teleporter
@@ -1594,6 +1683,128 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon_state = "hos_syndie"
 	item_state = "kilt"
 
+/obj/item/clothing/under/rank/morrigan
+	icon = 'icons/obj/adventurezones/morrigan/clothing/underitem.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_rank.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
+
+/obj/item/clothing/under/rank/morrigan/robofab
+	name = "Robotics Engineer Jumpsuit"
+	desc = "A uniform issued to those working on turning the raw parts into useable circuitry."
+	icon_state = "robofab"
+	item_state = "black"
+
+/obj/item/clothing/under/rank/morrigan/quality
+	name = "Quality Control Jumpsuit"
+	desc = "Guaranteed or money back!"
+	icon_state = "quality"
+	item_state = "black"
+
+/obj/item/clothing/under/rank/morrigan/sce
+	name = "Chief Engineer's Uniform"
+	desc = "A simple outfit for the CE."
+	icon_state = "sce"
+	item_state = "grey"
+
+/obj/item/clothing/under/rank/morrigan/executive
+	name = "Hafgan Executive's Suit"
+	desc = "You wouldn't know it was Hafgan's if it weren't for the big H on the coat..."
+	icon_state = "executive"
+	item_state = "suitB"
+
+/obj/item/clothing/under/rank/morrigan/sec
+	name = "Security Jumpsuit"
+	desc = "Needs no explaining.."
+	icon_state = "sec"
+	item_state = "darkred"
+
+/obj/item/clothing/under/rank/morrigan/scap
+	name = "Captain's Suit"
+	desc = "Fancy!"
+	icon_state = "scap"
+	item_state = "red"
+
+/obj/item/clothing/under/rank/morrigan/weaponsmith
+	name = "Weapon Smith's Overalls"
+	desc = "Includes a handy pouch to store tools in."
+	icon_state = "weaponsmith"
+	item_state = "brown"
+
+/obj/item/clothing/under/rank/morrigan/shop
+	name = "Head of Personnel's Suit?"
+	desc = "What is this ??"
+	icon_state = "shop"
+	item_state = "grey"
+
+/obj/item/clothing/under/rank/morrigan/scargo
+	name = "Exports Jumpsuit"
+	desc = "TOO BRIGHT"
+	icon_state = "scargo"
+	item_state = "yellow"
+
+/obj/item/clothing/under/rank/morrigan/srd
+	name = "Research Director's suit"
+	desc = "They mostly research materials here"
+	icon_state = "srd"
+	item_state = "purple"
+
+/obj/item/clothing/suit/morrigan
+	icon = 'icons/obj/adventurezones/morrigan/clothing/overcoat.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
+
+/obj/item/clothing/suit/morrigan/executive
+	name = "Executive's Coat"
+	desc = "See ? A big damn H"
+	icon_state = "executive"
+	item_state = "wcoat"
+
+/obj/item/clothing/suit/morrigan/captain
+	name = "Captain's Coat"
+	desc = "Keeps out the cold! The zipper is bust though."
+	icon_state = "captain"
+	item_state = "wizardred"
+
+/obj/item/clothing/suit/morrigan/srd
+	name = "Research Director's Coat"
+	desc = "What an ugly palette..."
+	icon_state = "srdlabcoat"
+	item_state = "labcoat"
+
+/obj/item/clothing/head/morrigan
+	icon = 'icons/obj/adventurezones/morrigan/clothing/hats.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
+
+/obj/item/clothing/head/morrigan/swarden
+	name = "Warden's Cap"
+	desc = "A cap worn by the Syndicate Corrections Officers."
+	icon_state = "swarden"
+	item_state = "tinfoil"
+
+/obj/item/clothing/head/morrigan/sberet
+	name = "Gray Beret"
+	desc = "Standard issue beret for security aboard Morrigan"
+	icon_state = "sberet"
+	item_state = "tinfoil"
+
+/obj/item/clothing/head/morrigan/hafberet
+	name = "Captain's Beret"
+	desc = "They really like their berets hunh..."
+	icon_state = "hafberet"
+	item_state = "tinfoil"
+
+/obj/item/clothing/head/morrigan/rdberet
+	name = "Research Director's Beret"
+	desc = "A purple beret for the research director"
+	icon_state = "rdberet"
+	item_state = "tinfoil"
+
+/obj/item/clothing/head/morrigan/rndhelmet
+	name = "Protective Headgear"
+	desc = "Complicated headgear you don't understand.."
+	icon_state = "rndhelmet"
+	item_state = "welding-fire"
 //Self Destruct Button
 
 //This supposed to replace the nuclear charge at the end of Morrigan.
@@ -2079,6 +2290,50 @@ TYPEINFO(/obj/item/gun/energy/smgmine)
 	color_green = 0.1
 	color_blue = 0.8
 
+/datum/projectile/bullet/abg/morrigan
+	name = "rubber slug"
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	damage = 10
+	stun = 0
+	dissipation_rate = 3
+	dissipation_delay = 4
+	implanted = null
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	impact_image_state = "bhole"
+	casing = /obj/item/casing/shotgun/blue
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if(proj.power >= 16)
+				var/throw_range = (proj.power > 20) ? 2 : 1
+
+				var/turf/target = get_edge_target_turf(M, dirflag)
+				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
+				M.update_canmove()
+			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
+
+		if(isliving(hit))
+			var/mob/living/L = hit
+			L.do_disorient(stamina_damage = 0, weakened = 0 SECOND, stunned = 0 SECOND, disorient = 7 SECONDS, remove_stamina_below_zero = 0)
+
+/datum/projectile/syringefilled/morrigan
+	name = "syringe"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "syringeproj"
+	dissipation_rate = 1
+	dissipation_delay = 7
+	damage = 10
+	hit_ground_chance = 10
+	shot_sound = 'sound/effects/syringeproj.ogg'
+	venom_id = list("toxin","atropine")
+	inject_amount = 15
+
+	on_hit(atom/hit, angle, var/obj/projectile/O)
+		if (ismob(hit))
+			if (hit.reagents)
+				hit.reagents.add_reagent(venom_id, inject_amount)
 //belts
 
 /obj/item/storage/belt/gun/peacebringer
@@ -2093,3 +2348,20 @@ TYPEINFO(/obj/item/gun/energy/smgmine)
 	can_hold = list(/obj/item/gun/energy/)
 	can_hold_exact = list(/obj/item/gun/energy/peacebringer)
 	spawn_contents = list(/obj/item/gun/energy/peacebringer)
+
+//limb
+
+/datum/limb/gun/kinetic/morriganabg
+	proj = new/datum/projectile/bullet/abg/morrigan
+	shots = 6
+	current_shots = 6
+	cooldown = 3 SECONDS
+	reload_time = 10 SECONDS
+	muzzle_flash = "muzzle_flash"
+
+/datum/limb/gun/kinetic/syringe/morrigan
+	proj = new/datum/projectile/syringefilled/morrigan
+	shots = 4
+	current_shots = 4
+	cooldown = 2 SECONDS
+	reload_time = 10 SECONDS

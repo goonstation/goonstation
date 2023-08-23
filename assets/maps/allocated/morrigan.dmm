@@ -1229,6 +1229,7 @@
 "boc" = (
 /obj/stool/chair/office/syndie,
 /obj/decal/stripe_caution,
+/obj/item/clothing/under/rank/morrigan/executive,
 /turf/unsimulated/floor/longtile/black,
 /area/morrigan/station/command/meeting)
 "boj" = (
@@ -4241,6 +4242,7 @@
 /area/morrigan/station/engineering/eng)
 "exa" = (
 /obj/decal/cleanable/rust/jen,
+/obj/item/clothing/overcoats/morrigan/executive,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/factory)
 "exM" = (
@@ -5275,7 +5277,6 @@
 /obj/item/ammo/bullets/nine_mm_NATO,
 /obj/item/ammo/bullets/nine_mm_NATO,
 /obj/item/storage/belt/security/shoulder_holster/inspector,
-/obj/item/clothing/under/rank/captain/red,
 /obj/item/storage/backpack/satchel/captain/red,
 /obj/item/clothing/shoes/swat,
 /obj/item/clothing/head/NTberet{
@@ -5290,6 +5291,8 @@
 /obj/item/ammo/bullets/bullet_9mm/five_shots,
 /obj/item/gun/kinetic/pistol/empty,
 /obj/mapping_helper/access/morrigan/captain,
+/obj/item/clothing/under/rank/morrigan/scap,
+/obj/item/clothing/overcoats/morrigan/captain,
 /turf/unsimulated/floor/carpet/purple/fancy/edge/nw,
 /area/morrigan/station/command/captain)
 "fzJ" = (
@@ -5639,6 +5642,12 @@
 	dir = 8
 	},
 /area/morrigan/station/command/HOP)
+"fQR" = (
+/obj/stool/chair/office/syndie,
+/obj/decal/stripe_caution,
+/obj/item/clothing/overcoats/morrigan/executive,
+/turf/unsimulated/floor/longtile/black,
+/area/morrigan/station/command/meeting)
 "fRs" = (
 /obj/decoration/ntcratesmall{
 	icon_state = "syndiecrate"
@@ -8215,9 +8224,9 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
-/obj/item/clothing/under/color/darkred,
 /obj/item/clothing/head/helmet/hardhat/security,
 /obj/item/storage/belt/security,
+/obj/item/clothing/under/rank/morrigan/sec,
 /turf/unsimulated/floor/shiny,
 /area/morrigan/station/security/main)
 "iBu" = (
@@ -14347,13 +14356,18 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"oSv" = (
+/obj/decal/cleanable/rust/jen,
+/obj/item/clothing/under/rank/morrigan/executive,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/factory)
 "oSx" = (
 /obj/storage/secure/closet/morrigan/hop,
 /obj/item/clothing/shoes/swat,
 /obj/item/clothing/head/fancy,
-/obj/item/clothing/under/suit/hop/april_fools,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/under/rank/morrigan/shop,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOP)
 "oSP" = (
@@ -14385,8 +14399,8 @@
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/big,
-/obj/item/clothing/under/color/darkred,
 /obj/item/clothing/head/helmet/hardhat/security,
+/obj/item/clothing/under/rank/morrigan/sec,
 /turf/unsimulated/floor/shiny,
 /area/morrigan/station/security/main)
 "oTW" = (
@@ -15419,8 +15433,6 @@
 "qcL" = (
 /obj/storage/secure/closet/morrigan/rd,
 /obj/item/clothing/shoes/swat,
-/obj/item/clothing/under/rank/research_director/april_fools,
-/obj/item/clothing/suit/labcoat/research_director,
 /obj/item/clothing/mask/gas/injector_mask,
 /obj/item/device/reagentscanner,
 /obj/item/clothing/glasses/spectro{
@@ -15437,6 +15449,8 @@
 /obj/decoration/clock{
 	pixel_y = 30
 	},
+/obj/item/clothing/under/rank/morrigan/srd,
+/obj/item/clothing/overcoats/morrigan/srd,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/RD)
 "qcU" = (
@@ -17668,7 +17682,6 @@
 /area/morrigan/routing/transport)
 "sHC" = (
 /obj/storage/secure/closet/morrigan/ce,
-/obj/item/clothing/under/rank/chief_engineer/april_fools,
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/head/goggles/yellow,
@@ -17676,6 +17689,7 @@
 /obj/item/clothing/suit/fire/armored,
 /obj/item/clothing/shoes/swat,
 /obj/mapping_helper/access/morrigan/ce,
+/obj/item/clothing/under/rank/morrigan/sce,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/command/CE)
 "sHJ" = (
@@ -18129,9 +18143,9 @@
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/big,
-/obj/item/clothing/under/color/darkred,
 /obj/item/clothing/head/helmet/hardhat/security,
 /obj/item/storage/belt/security,
+/obj/item/clothing/under/rank/morrigan/sec,
 /turf/unsimulated/floor/shiny,
 /area/morrigan/station/security/main)
 "tlx" = (
@@ -29009,7 +29023,7 @@ ach
 uKU
 rTJ
 oIs
-exa
+oSv
 pbl
 gac
 gac
@@ -29906,7 +29920,7 @@ bvF
 kaR
 chq
 isl
-boc
+fQR
 mIY
 hKA
 hFf
