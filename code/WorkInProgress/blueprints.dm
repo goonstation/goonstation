@@ -16,6 +16,8 @@
 	density = 0
 	layer = TURF_LAYER
 
+#define USE_MATERIALS 0
+
 /obj/machinery/abcu
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "builder"
@@ -170,7 +172,7 @@
 					if (S.material.material_flags & MATERIAL_CRYSTAL)
 						glass_cnt += S.amount
 
-		if(metal_cnt < currentBp.req_metal || glass_cnt < currentBp.req_glass)
+		if(USE_MATERIALS & (metal_cnt < currentBp.req_metal || glass_cnt < currentBp.req_glass))
 			boutput(usr, "<span class='alert'>The machine buzzes in protest. Seems like it doesn't have enough material to work with.</span>")
 			return
 
@@ -209,11 +211,14 @@
 
 				for(var/datum/objectinfo/O in T.objects)
 					if(O.objecttype == null) continue
-					var/atom/A = new O.objecttype(pos)
-					A.set_dir(O.direction)
-					A.layer = O.layer
-					A.pixel_x = O.px
-					A.pixel_y = O.py
+					var/dmm_suite/preloader/abculoadedobj = new(pos, list( // this loads the turfs but not the objects
+                        "layer" = O.layer,
+                        "pixel_x" = O.px,
+                        "pixel_y" = O.py,
+                        "dir" = O.direction,
+                        "icon_state" = O.icon_state,
+                    ))
+					new O.objecttype(pos) // need this part to also spawn the objects
 
 
 			for(var/obj/J in src)
@@ -232,6 +237,7 @@
 	var/layer = 0
 	var/px = 0
 	var/py = 0
+	var/icon_state = ""
 
 /datum/tileinfo
 	var/list/objects = new/list()
@@ -654,6 +660,7 @@
 					save["layer"] << o.layer
 					save["pixelx"] << o.pixel_x
 					save["pixely"] << o.pixel_y
+					save["icon_state"] << o.icon_state
 
 		boutput(usr, "<span class='notice'>Saved blueprint as '[name]'. </span>")
 		return
@@ -693,6 +700,7 @@
 						O.layer = save["layer"]
 						O.px = save["pixelx"]
 						O.py = save["pixely"]
+						O.icon_state = save["icon_state"]
 						bp.req_metal += 0.9
 						bp.req_glass += 1.5
 						tf.objects.Add(O)
@@ -812,3 +820,4 @@
 #undef DESELECT_FIRST_CORNER
 #undef SELECT_SECOND_CORNER
 #undef DESELECT_SECOND_CORNER
+#undef USE_MATERIALS
