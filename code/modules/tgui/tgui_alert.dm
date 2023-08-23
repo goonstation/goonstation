@@ -15,8 +15,9 @@
  * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Set to zero for no timeout.
  * * autofocus - The bool that controls if this alert should grab window focus. - BROKEN DON'T SET TO FALSE (nulls items, ask zewaka)
  * * content_window - The name of the part to be used for the alert's content, to be used in lieu of message
+ * * do_wait - waits for user input then returns it. Set to false for asynchronism
  */
-/proc/tgui_alert(mob/user, message = "", title, list/items = list("Ok"), timeout = 0, autofocus = TRUE, content_window = null)
+/proc/tgui_alert(mob/user, message = "", title, list/items = list("Ok"), timeout = 0, autofocus = TRUE, content_window = null, do_wait = TRUE)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -36,10 +37,11 @@
 		return tgui_input_list(user, message, title, items, timeout, autofocus)
 	var/datum/tgui_modal/alert = new(user, message, title, items, timeout, autofocus, content_window)
 	alert.ui_interact(user)
-	alert.wait()
-	if (alert)
-		. = alert.choice
-		qdel(alert)
+	if (do_wait)
+		alert.wait()
+		if (alert)
+			. = alert.choice
+			qdel(alert)
 
 /**
  * # tgui_modal
