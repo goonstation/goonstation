@@ -358,6 +358,7 @@
 /obj/item/card_group //since "playing_card"s are singular cards, card_groups handling groups of playing_cards in the form of either a deck or hand
 	name = "deck of cards"
 	icon = 'icons/obj/items/playing_card.dmi'
+	icon_state = "plain_deck_4"
 	dir = NORTH
 	w_class = W_CLASS_TINY
 	burn_point = 220
@@ -832,6 +833,7 @@
 	card_style = "tarot"
 	total_cards = 78
 	card_name = "tarot"
+	icon_state = "tarot_deck_4"
 
 	New()
 		..()
@@ -900,6 +902,7 @@
 	card_style = "hanafuda"
 	total_cards = 48
 	card_name = "hanafuda"
+	icon_state = "hanafuda_deck_4"
 
 	New()
 		..()
@@ -991,6 +994,7 @@
 	card_style = "stg"
 	total_cards = 40
 	card_name = "Spacemen the Griffening"
+	icon_state = "stg_deck_4"
 
 	New()
 		..()
@@ -1003,6 +1007,7 @@
 	card_style = "clow"
 	total_cards = 52
 	card_name = "Clow"
+	icon_state = "clow_deck_4"
 
 	New()
 		..()
