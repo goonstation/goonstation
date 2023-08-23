@@ -1274,6 +1274,10 @@
 /obj/item/instrument/bikehorn,
 /obj/item/stamp/clown,
 /obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_x = 4;
+	pixel_y = 10
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Honkington's Abode"
@@ -19360,6 +19364,11 @@
 	dir = 4
 	},
 /area/station/security/main)
+"iqn" = (
+/turf/space,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "iqo" = (
 /obj/machinery/light{
 	dir = 8;
@@ -108166,7 +108175,7 @@ qlx
 pRb
 pRb
 pRb
-vbY
+iqn
 oZL
 bSU
 kcY
