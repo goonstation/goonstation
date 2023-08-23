@@ -1101,6 +1101,8 @@
 	else if(is_npc)
 		class += " flocknpc"
 	else if(isnull(mob_speaking))
+		if (flock?.quiet)
+			return
 		class += " bold italics"
 		name = "\[SYSTEM\]"
 
