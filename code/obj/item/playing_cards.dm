@@ -355,7 +355,9 @@
 				logTheThing(LOG_COMBAT, user, "was partygibbed by [src] at [log_loc(src)].")
 				user.partygib(1)
 
-/obj/item/card_group //since "playing_card"s are singular cards, card_groups handling groups of playing_cards in the form of either a deck or hand
+ABSTRACT_TYPE(/obj/item/card_group)
+/// since "playing_card"s are singular cards, card_groups handling groups of playing_cards in the form of either a deck or hand
+/obj/item/card_group
 	name = "deck of cards"
 	icon = 'icons/obj/items/playing_card.dmi'
 	icon_state = "plain_deck_4"
