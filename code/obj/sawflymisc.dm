@@ -31,6 +31,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	contraband = 2
 	overlays = null
 	armed = FALSE
+	HELP_MESSAGE_OVERRIDE({"Use the sawfly in hand or use the remote to deploy it. Use the remote or click on the sawfly on <span class='help'>help</span> or <span class='grab'>grab</span> intent to deactivate it."})
 
 	//used in dictating behavior when deployed from grenade
 	var/mob/living/critter/robotic/sawfly/heldfly = null
