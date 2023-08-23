@@ -4,9 +4,10 @@
  * @author garash2k
  * @license ISC
  */
+import { InfernoNode } from 'inferno';
 
 export type AlertContentWindow = {
   width: number,
   height: number,
-  content: object
+  content: InfernoNode
 };
