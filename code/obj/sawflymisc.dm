@@ -102,6 +102,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	icon = 'icons/obj/items/device.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
 	icon_state = "sawflycontr"
+	HELP_MESSAGE_OVERRIDE({"Use the remote in hand to activate/deactivate any sawflies within a 5 tile radius."})
 
 	attack_self(mob/user as mob)
 		for (var/mob/living/critter/robotic/sawfly/S in range(get_turf(src), 5)) // folds active sawflies

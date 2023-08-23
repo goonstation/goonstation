@@ -838,7 +838,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	name = "Extra Large Shot Glasses"
 	item = /obj/item/storage/box/glassbox/syndie
 	cost = 2
-	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games!"
+	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games! Those glasses also splash all the liquid inside them to whatever they hit when thrown!"
 	job = list("Bartender")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
