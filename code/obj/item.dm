@@ -60,6 +60,9 @@ ABSTRACT_TYPE(/obj/item)
 
 	var/attack_verbs = "attacks" //! Verb used when you attack someone with this, as in [attacker] [attack_verbs] [victim]. Can be a list or single entry
 
+	/// when attacking, this item can leave a slash wound
+	var/leaves_slash_wound = FALSE
+
 	/*_________*/
 	/*Inventory*/
 	/*‾‾‾‾‾‾‾‾‾*/
@@ -1349,6 +1352,14 @@ ABSTRACT_TYPE(/obj/item)
 		if(power <= 0)
 			fuckup_attack_particle(user)
 			armor_blocked = 1
+
+	if (src.leaves_slash_wound && power > 0 && hit_area == "chest" && ishuman(M))
+		var/num = rand(0, 2)
+		var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = "slash_wound-[num]", layer = MOB_EFFECT_LAYER)
+		var/mob/living/carbon/human/H = M
+		var/datum/reagent/mob_blood = reagents_cache[H.blood_id]
+		I.color = rgb(mob_blood.fluid_r, mob_blood.fluid_g, mob_blood.fluid_b, mob_blood.transparency)
+		M.UpdateOverlays(I, "slash_wound-[num]")
 
 	if (src.can_disarm && !((src.temp_flags & IS_LIMB_ITEM) && user == M))
 		msgs = user.calculate_disarm_attack(M, 0, 0, 0, is_shove = 1, disarming_item = src)

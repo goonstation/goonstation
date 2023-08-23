@@ -122,6 +122,11 @@
 						/datum/targetable/critter/tackle)
 	blood_id = "crime"
 
+	New(loc, nspecies)
+		..()
+		// apparently the fact that blood_id is crime and the goose adds crime to itself means that it bloodgibs nowadays eventually...
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_BLOODGIB_IMMUNE, src)
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
@@ -458,7 +463,7 @@
 
 /proc/populate_station(chance=100)
 	for(var/job_name in job_start_locations)
-		if(job_name == "AI")
+		if(job_name == "AI" || job_name == "JoinLate")
 			continue
 		for(var/turf/T in job_start_locations[job_name])
 			if(prob(chance))

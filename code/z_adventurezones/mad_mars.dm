@@ -735,7 +735,7 @@ TYPEINFO(/obj/vehicle/marsrover)
 		if (!start) //Wire: fix for Cannot read null.y (start was null somehow)
 			return
 
-		shoot_projectile_ST(src, my_bullet, target)
+		shoot_projectile_ST_pixel_spread(src, my_bullet, target)
 
 /obj/machinery/computer/mars_vault
 	name = "Vault Console"

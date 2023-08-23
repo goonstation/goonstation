@@ -203,6 +203,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 	icon_state = "corner"
 	density = 1
 	opacity = 0
+	gas_impermeable = TRUE
 	layer = EFFECTS_LAYER_BASE - 1
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 

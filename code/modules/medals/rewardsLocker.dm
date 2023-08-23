@@ -1134,22 +1134,6 @@
 		else
 			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
 
-datum/achievementReward/ai_dwaine
-	title = "(AI Core Skin) DWAINE"
-	desc = "Replaces the casing of your core with an older model!"
-	required_medal = "421"
-
-	rewardActivate(mob/activator)
-		if (isAI(activator))
-			var/mob/living/silicon/ai/A = activator
-			if (isAIeye(activator))
-				var/mob/living/intangible/aieye/AE = activator
-				A = AE.mainframe
-			A.coreSkin = "dwaine"
-			A.update_appearance()
-			return 1
-		else
-			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
 
 /datum/achievementReward/borg_automoton
 	title = "(Cyborg Skin) Automaton"
