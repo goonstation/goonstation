@@ -564,15 +564,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 
 	// returns whether the inserted item was brewed
 	proc/brew(var/obj/item/W as obj)
-		var/list/brew_result
-
-		if(istype(W,/obj/item/reagent_containers/food))
-			var/obj/item/reagent_containers/food/F = W
-			brew_result = F.brew_result
-
-		else if(istype(W, /obj/item/plant))
-			var/obj/item/plant/P = W
-			brew_result = P.brew_result
+		var/list/brew_result = W.brew_result
 
 		if (!brew_result)
 			return FALSE

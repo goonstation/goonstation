@@ -1551,6 +1551,8 @@ proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/pl
 
 	var/datum/plantmutation/MUT = DNA.mutation
 
+	I.brew_result = MUT?.brew_result || I.brew_result
+
 	var/basecapacity = 8
 	if(istype(I,/obj/item/plant/)) basecapacity = 15
 	else if(istype(I,/obj/item/reagent_containers/food/snacks/mushroom)) basecapacity = 5
