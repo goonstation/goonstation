@@ -37,11 +37,12 @@
 		return tgui_input_list(user, message, title, items, timeout, autofocus)
 	var/datum/tgui_modal/alert = new(user, message, title, items, timeout, autofocus, content_window)
 	alert.ui_interact(user)
-	if (do_wait)
-		alert.wait()
-		if (alert)
-			. = alert.choice
-			qdel(alert)
+	if (!do_wait)
+		return
+	alert.wait()
+	if (alert)
+		. = alert.choice
+		qdel(alert)
 
 /**
  * # tgui_modal
