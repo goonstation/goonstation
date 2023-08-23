@@ -1299,7 +1299,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 	name = "Revolutionary Flashbang"
 	item = /obj/item/chem_grenade/flashbang/revolution
 	cost = 2
-	desc = "This single-use flashbang will convert all crew within range. It doesn't matter who primes the flash - it will convert all the same."
+	desc = "This single-use flashbang will convert all crew within range, but only shatter the loyalty implants of crew who have them. It doesn't matter who primes the flash - but crew will need a few seconds after a flashbang to respond to another."
 
 /datum/syndicate_buylist/generic/head_rev/revsign
 	name = "Revolutionary Sign"
