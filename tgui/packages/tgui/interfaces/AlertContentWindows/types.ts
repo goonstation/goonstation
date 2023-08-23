@@ -9,5 +9,6 @@ import { InfernoNode } from 'inferno';
 export type AlertContentWindow = {
   width: number,
   height: number,
+  title: string,
   content: InfernoNode
 };

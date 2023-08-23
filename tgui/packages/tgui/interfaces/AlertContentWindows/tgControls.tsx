@@ -9,7 +9,8 @@ import { Box, Image } from '../../components';
 
 export const tgControls: AlertContentWindow = {
   width: 470,
-  height: 317,
+  height: 320,
+  title: "Use /tg/ style interface?",
   content: (
     <>
       <Box>

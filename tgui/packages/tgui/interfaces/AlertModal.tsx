@@ -56,7 +56,7 @@ export const AlertModal = (props, context) => {
   };
 
   return (
-    <Window height={windowHeight} title={title} width={windowWidth}>
+    <Window height={windowHeight} title={typedContentWindow ? typedContentWindow.title : title} width={windowWidth}>
       {!!timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(e) => {
