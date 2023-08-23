@@ -464,7 +464,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		else if (iswrenchingtool(W) && src.state == 0 && !src.anchored)
 			actions.start(new /datum/action/bar/icon/deconstruct_window(src, W), user)
-		else if (src.health < src.health_max && istype(W, /obj/item/sheet) && W.material == src.material)
+		else if (src.health < src.health_max && istype(W, /obj/item/sheet) && W.material.isSameMaterial(src.material))
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/window/proc/fix_window, list(W), null, null, "<span class='notice'> [user] repairs \the [src] with \the [W] </span>", null)
 		else
 			attack_particle(user,src)
