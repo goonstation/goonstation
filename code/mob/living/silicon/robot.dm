@@ -71,6 +71,7 @@
 	var/alohamaton_skin = 0 // for the bank purchase
 	var/metalman_skin = 0	//mbc : i'm getting tired of copypasting this, i promise to fix this somehow next time i add a cyborg skin ok
 	var/glitchy_speak = 0
+	var/chosename = 0
 
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
 	var/sound_automaton_scratch = 'sound/misc/automaton_scratch.ogg'
@@ -803,9 +804,10 @@
 				break
 
 		if (src.shell && src.mainframe)
+			if (!src.chosename)
+				src.real_name = "SHELL/[src.mainframe]"
+				src.UpdateName()
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
-			src.real_name = "SHELL/[src.mainframe]"
-			src.UpdateName()
 			src.update_name_tag()
 
 		update_clothing()
@@ -814,7 +816,7 @@
 
 	Logout()
 		..()
-		if (src.shell)
+		if (src.shell && !src.chosename)
 			src.real_name = "AI Cyborg Shell [copytext("\ref[src]", 6, 11)]"
 			src.name = src.real_name
 			src.update_name_tag()

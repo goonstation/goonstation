@@ -619,6 +619,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			if(newname && newname != R.name)
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 			logTheThing(LOG_STATION, user, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
+			R.chosename = 1
 			R.real_name = "[newname]"
 			R.UpdateName()
 			if (R.internal_pda)
