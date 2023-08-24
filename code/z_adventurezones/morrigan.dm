@@ -344,6 +344,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bopbagsyd"
 
+/obj/decal/fakeobjects/factoryparts
+	icon = 'icons/obj/manufacturer.dmi'
+	icon_state = "fab2-off"
 //NPCS for Morrigan
 /mob/living/carbon/human/hobo
 	New()
