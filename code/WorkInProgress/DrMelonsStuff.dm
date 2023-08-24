@@ -243,8 +243,6 @@
 			if (H.shoes)
 				H.shoes.add_blood(dna)
 				H.update_shoes()
-			else
-				H.update_bloody_feet(dna)
 
 	proc/turn_tap(mob/user)
 		src.add_fingerprint(user)
