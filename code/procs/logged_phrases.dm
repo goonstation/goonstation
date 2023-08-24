@@ -199,7 +199,6 @@ var/global/datum/phrase_log/phrase_log = new
 		if(fexists(src.uncool_words_filename))
 			fdel(src.uncool_words_filename)
 		text2file(file2text(new_uncool), src.uncool_words_filename)
-		boutput(usr, "ok")
 
 	proc/save()
 		if(isnull(src.phrases))
