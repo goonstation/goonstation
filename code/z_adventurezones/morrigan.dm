@@ -344,9 +344,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bopbagsyd"
 
-/obj/decal/fakeobjects/factoryparts
-	icon = 'icons/obj/manufacturer.dmi'
-	icon_state = "fab2-off"
 //NPCS for Morrigan
 /mob/living/carbon/human/hobo
 	New()
@@ -1527,6 +1524,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 	setup_equipment_slots()
 		return
+
 /mob/living/critter/robotic/gunbot/syndicate/riotbot
 	name = "Syndicate Suppression Unit"
 	real_name = "Syndicate Suppression Unit"
@@ -1658,6 +1656,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 	setup_equipment_slots()
 		return
+
 // Teleporter objects
 
 /obj/morrigan_teleporter
@@ -1857,6 +1856,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	desc = "Complicated headgear you don't understand.."
 	icon_state = "rndhelmet"
 	item_state = "welding-fire"
+
 //Self Destruct Button
 
 //This supposed to replace the nuclear charge at the end of Morrigan.
@@ -2026,15 +2026,6 @@ TYPEINFO(/obj/item/gun/energy/railgun_experimental)
 		projectiles = list(new/datum/projectile/bullet/optio/hitscanrail)
 		..()
 
-	update_icon()
-		..()
-		return
-
-	shoot(var/target,var/start,var/mob/user)
-		if (canshoot(user))
-			flick("railgunfire", src)
-		return ..(target, start, user)
-
 //pistol
 TYPEINFO(/obj/item/gun/energy/hafpistol)
 	mats = null
@@ -2070,6 +2061,7 @@ TYPEINFO(/obj/item/gun/energy/hafpistol)
 			muzzle_flash = "muzzle_flash_bluezap"
 			item_state = "hafpistoless"
 		..()
+
 	attack_self(var/mob/M)
 		..()
 		UpdateIcon()
@@ -2111,6 +2103,7 @@ TYPEINFO(/obj/item/gun/energy/peacebringer)
 			item_state = "peacebringerless"
 			playsound('sound/weapons/peacebringerswap2.ogg', 100, 0)
 		..()
+
 	attack_self(var/mob/M)
 		..()
 		UpdateIcon()
@@ -2156,6 +2149,7 @@ TYPEINFO(/obj/item/gun/energy/smgmine)
 		..()
 		UpdateIcon()
 		M.update_inhands()
+
 //projectiles
 /datum/projectile/bullet/optio/hitscanrail
 	name = "hardlight beam"
@@ -2304,7 +2298,7 @@ TYPEINFO(/obj/item/gun/energy/smgmine)
 		. = ..()
 		if(isliving(hit))
 			var/mob/living/L = hit
-			L.do_disorient(stamina_damage = 0, weakened = 0 SECOND, stunned = 0 SECOND, disorient = 7 SECONDS, remove_stamina_below_zero = 0)
+			L.do_disorient(stamina_damage = 5, weakened = 0 SECONDS, stunned = 0 SECONDS, disorient = 7 SECONDS, remove_stamina_below_zero = 0)
 
 /datum/projectile/laser/mining/smgmine
 	name = "AC Shot"
@@ -2379,14 +2373,15 @@ TYPEINFO(/obj/item/gun/energy/smgmine)
 	damage = 10
 	hit_ground_chance = 10
 	shot_sound = 'sound/effects/syringeproj.ogg'
-	venom_id = list("sulfonal","atropine")
-	inject_amount = 15
+	venom_id = list("sulfonal", "atropine")
+	inject_amount = 7.5
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		if (ismob(hit))
 			if (hit.reagents)
 				for (var/reagent_id as anything in venom_id)
-					hit.reagents.add_reagent(reagent_id, inject_amount / 2)
+					hit.reagents.add_reagent(reagent_id, inject_amount)
+
 //belts
 
 /obj/item/storage/belt/gun/peacebringer
@@ -2402,7 +2397,7 @@ TYPEINFO(/obj/item/gun/energy/smgmine)
 	can_hold_exact = list(/obj/item/gun/energy/peacebringer)
 	spawn_contents = list(/obj/item/gun/energy/peacebringer)
 
-//limb
+//limbs
 
 /datum/limb/gun/kinetic/morriganabg
 	proj = new/datum/projectile/bullet/abg/morrigan
