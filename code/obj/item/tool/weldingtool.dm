@@ -57,59 +57,35 @@
 			if (H.bleeding || (H.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
 				if (!src.cautery_surgery(H, user, 15, src.welding))
 					return ..()
-			else if (user.zone_sel.selecting != "chest" && user.zone_sel.selecting != "head")
-				if (!H.limbs.vars[user.zone_sel.selecting])
-					switch (user.zone_sel.selecting)
-						if ("l_arm")
-							if (H.limbs.l_arm_bleed) cauterise("l_arm")
-							else
-								boutput(user, "<span class='alert'>[H.name]'s left arm stump is not bleeding!</span>")
-								return
-						if ("r_arm")
-							if (H.limbs.r_arm_bleed) cauterise("r_arm")
-							else
-								boutput(user, "<span class='alert'>[H.name]'s right arm stump is not bleeding!</span>")
-								return
-						if ("l_leg")
-							if (H.limbs.l_leg_bleed) cauterise("l_leg")
-							else
-								boutput(user, "<span class='alert'>[H.name]'s left leg stump is not bleeding!</span>")
-								return
-						if ("r_leg")
-							if (H.limbs.r_leg_bleed) cauterise("r_leg")
-							else
-								boutput(user, "<span class='alert'>[H.name]'s right leg stump is not bleeding!</span>")
-								return
-						else return ..()
-				else
-					if (!(locate(/obj/machinery/optable, M.loc) && M.lying) && !(locate(/obj/table, M.loc) && (M.getStatusDuration("paralysis") || M.stat)) && !(M.reagents && M.reagents.get_reagent_amount("ethanol") > 10 && M == user))
-						return ..()
-					switch (user.zone_sel.selecting)
-						if ("l_arm")
-							if (istype(H.limbs.l_arm, /obj/item/parts/robot_parts) && H.limbs.l_arm.remove_stage > 0)
-								attach_robopart("l_arm")
-							else
-								boutput(user, "<span class='alert'>[H.name]'s left arm doesn't need welding on!</span>")
-								return
-						if ("r_arm")
-							if (istype(H.limbs.r_arm, /obj/item/parts/robot_parts) && H.limbs.r_arm.remove_stage > 0)
-								attach_robopart("r_arm")
-							else
-								boutput(user, "<span class='alert'>[H.name]'s right arm doesn't need welding on!</span>")
-								return
-						if ("l_leg")
-							if (istype(H.limbs.l_leg, /obj/item/parts/robot_parts) && H.limbs.l_leg.remove_stage > 0)
-								attach_robopart("l_leg")
-							else
-								boutput(user, "<span class='alert'>[H.name]'s left leg doesn't need welding on!</span>")
-								return
-						if ("r_leg")
-							if (istype(H.limbs.r_leg, /obj/item/parts/robot_parts) && H.limbs.r_leg.remove_stage > 0)
-								attach_robopart("r_leg")
-							else
-								boutput(user, "<span class='alert'>[H.name]'s right leg doesn't need welding on!</span>")
-								return
-						else return ..()
+			else if (user.zone_sel.selecting != "chest" && user.zone_sel.selecting != "head" && H.limbs.vars[user.zone_sel.selecting])
+				if (!(locate(/obj/machinery/optable, M.loc) && M.lying) && !(locate(/obj/table, M.loc) && (M.getStatusDuration("paralysis") || M.stat)) && !(M.reagents && M.reagents.get_reagent_amount("ethanol") > 10 && M == user))
+					return ..()
+				switch (user.zone_sel.selecting)
+					if ("l_arm")
+						if (istype(H.limbs.l_arm, /obj/item/parts/robot_parts) && H.limbs.l_arm.remove_stage > 0)
+							attach_robopart("l_arm")
+						else
+							boutput(user, "<span class='alert'>[H.name]'s left arm doesn't need welding on!</span>")
+							return
+					if ("r_arm")
+						if (istype(H.limbs.r_arm, /obj/item/parts/robot_parts) && H.limbs.r_arm.remove_stage > 0)
+							attach_robopart("r_arm")
+						else
+							boutput(user, "<span class='alert'>[H.name]'s right arm doesn't need welding on!</span>")
+							return
+					if ("l_leg")
+						if (istype(H.limbs.l_leg, /obj/item/parts/robot_parts) && H.limbs.l_leg.remove_stage > 0)
+							attach_robopart("l_leg")
+						else
+							boutput(user, "<span class='alert'>[H.name]'s left leg doesn't need welding on!</span>")
+							return
+					if ("r_leg")
+						if (istype(H.limbs.r_leg, /obj/item/parts/robot_parts) && H.limbs.r_leg.remove_stage > 0)
+							attach_robopart("r_leg")
+						else
+							boutput(user, "<span class='alert'>[H.name]'s right leg doesn't need welding on!</span>")
+							return
+					else return ..()
 			else return ..()
 		else return ..()
 
@@ -260,41 +236,6 @@
 #undef EYE_DAMAGE_MINOR
 #undef EYE_DAMAGE_NORMAL
 #undef EYE_DAMAGE_EXTRA
-
-	proc/cauterise(mob/living/carbon/human/H as mob, mob/living/carbon/user as mob, var/part)
-		if(!istype(H)) return
-		if(!istype(user)) return
-		if(!part) return
-
-		var/variant = H.bioHolder.HasEffect("lost_[part]")
-		if (!variant) return
-
-
-		if(!src.try_weld(user, 5))
-			return
-
-		H.TakeDamage("chest",0,20)
-		if (prob(50)) H.emote("scream")
-
-		variant = max(1, variant-20)
-		H.bioHolder.RemoveEffect("lost_[part]")
-		H.bioHolder.AddEffect("lost_[part]", variant)
-
-		for (var/mob/O in AIviewers(H, null))
-			if (O == (user || H))
-				continue
-			if (H == user)
-				O.show_message("<span class='alert'>[user.name] cauterises their own stump with [src]!</span>", 1)
-			else
-				O.show_message("<span class='alert'>[H.name] has their stump cauterised by [user.name] with [src].</span>", 1)
-
-		if(H != user)
-			boutput(H, "<span class='alert'>[user.name] cauterises your stump with [src].</span>")
-			boutput(user, "<span class='alert'>You cauterise [H.name]'s stump with [src].</span>")
-		else
-			boutput(user, "<span class='alert'>You cauterise your own stump with [src].</span>")
-
-		return
 
 	proc/attach_robopart(mob/living/carbon/human/H as mob, mob/living/carbon/user as mob, var/part)
 		if (!istype(H)) return

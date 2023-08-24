@@ -106,7 +106,7 @@
 	/// Are we limiting connected players to certain ckeys?
 	var/whitelistEnabled = 0
 	var/baseWhitelistEnabled = 0 //! The config value of whitelistEnabled (actual value might be modified mid-round)
-	var/roundsLeftWithoutWhitelist = 0 //! How many rounds are left without the whitelist being enabled
+	var/roundsLeftWithoutWhitelist = -1 //! How many rounds are left without the whitelist being enabled
 	var/whitelist_path = "config/whitelist.txt"
 
 	//Which server can ghosts join by clicking on an on-screen link
@@ -402,11 +402,11 @@
 
 	if(!already_loaded_once)
 		roundsLeftWithoutWhitelist = world.load_intra_round_value("whitelist_disabled")
-		if(roundsLeftWithoutWhitelist > 0)
+		if(roundsLeftWithoutWhitelist >= 0)
 			roundsLeftWithoutWhitelist--
 			world.save_intra_round_value("whitelist_disabled", roundsLeftWithoutWhitelist)
 
-	if(roundsLeftWithoutWhitelist > 0)
+	if(roundsLeftWithoutWhitelist >= 0)
 		config.whitelistEnabled = FALSE
 
 	already_loaded_once = TRUE

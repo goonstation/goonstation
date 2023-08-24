@@ -371,7 +371,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	desc = "A cyborg head with little reinforcement, to be built in times of scarce resources."
 	appearanceString = "light"
 	icon_state = "head-light"
-	max_health = 50
+	max_health = 60
 	robot_movement_modifier = /datum/movement_modifier/robot_part/head
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
@@ -390,7 +390,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	appearanceString = "screen"
 	icon_state = "head-screen"
 	max_health = 90
-	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky","skull","eye")
+	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky","nervous","ditzy","annoyed","skull","eye")
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 /obj/item/parts/robot_parts/chest

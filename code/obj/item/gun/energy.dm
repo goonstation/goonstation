@@ -338,7 +338,7 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 				src.charge_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
 			if(ret["charge"] >= 37) //this makes it only enter its "final" sprite when it's actually able to fire, if you change the amount of charge regen or max charge the bow has, make this number one charge increment before full charge
 				src.charge_image.icon_state = "[src.icon_state]full"
-				//UpdateIcon()
+				src.UpdateOverlays(src.charge_image, "charge")
 			else
 				var/ratio = min(1, ret["charge"] / ret["max_charge"])
 				ratio = round(ratio, 0.25) * 100
@@ -604,7 +604,7 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 		..()
 		return
 
-	shoot(var/target,var/start,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user)) // No more attack messages for empty guns (Convair880).
 			playsound(user, 'sound/weapons/DSBFG.ogg', 75)
 			sleep(0.9 SECONDS)
@@ -727,7 +727,7 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 		TB.target = our_target
 		return ..(M, user)
 
-	shoot(var/target, var/start, var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (!src.our_target)
 			user.show_text("Error: no target set. Please select a teleporter first.", "red")
 			return
@@ -1081,7 +1081,7 @@ TYPEINFO(/obj/item/gun_parts)
 		projectiles = list(new/datum/projectile/bullet/glitch/gun)
 		..()
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user)) // No more attack messages for empty guns (Convair880).
 			playsound(user, 'sound/weapons/DSBFG.ogg', 75)
 			sleep(0.1 SECONDS)
@@ -1227,7 +1227,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 			return
 		return ..(M, user)
 
-	shoot(var/target, var/start, var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (istype(current_projectile, /datum/projectile/pickpocket/steal) && heldItem)
 			boutput(user, "Cannot steal items while gun is holding something!")
 			return
@@ -1511,7 +1511,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			return 1
 		return 0
 
-	shoot(var/target,var/start,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user))
 			//removing this for now so anyone can shoot it. I PROBABLY will want it back, doing this for some light appeasement to see how it goes.
 			//shock the guy who tries to use this if they aren't the proper owner. (or if the gun is not emagged)
@@ -1713,7 +1713,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		if(++shotcount == 2 && istype(P.proj_data, /datum/projectile/laser/signifer_lethal/))
 			P.proj_data = new/datum/projectile/laser/signifer_lethal/brute
 
-	shoot()
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		shotcount = 0
 		. = ..()
 
@@ -1824,7 +1824,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		..()
 		return
 
-	shoot(var/target,var/start,var/mob/user) //it's experimental for a reason; use at your own risk!
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null) //it's experimental for a reason; use at your own risk!
 		if (canshoot(user))
 			if (GET_COOLDOWN(src, "raygun_cooldown"))
 				return

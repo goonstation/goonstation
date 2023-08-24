@@ -244,22 +244,6 @@
 	ai_lastaction = world.time
 	ai_actiondelay = action_delay
 
-
-/*
-/mob/living/carbon/human/proc/ai_findtarget()
-	var/tempmob
-	for (var/mob/living/carbon/M in view(7,src))
-		if (M.stat > 0 || !M.client || M == src || M.is_npc) continue
-		if (!tempmob) tempmob = M
-		for(var/mob/living/carbon/human/L in oview(7,src))
-			if (L.ai_target == tempmob && prob(50)) continue
-		if (M.health < tempmob:health) tempmob = M
-	if(tempmob)
-		ai_target = tempmob
-		ai_state = AI_ANGERING
-		ai_threatened = world.timeofday
-*/
-
 /mob/living/carbon/human/proc/ai_is_valid_target(mob/M)
 	return TRUE
 
@@ -430,7 +414,7 @@
 						jumpy?.ability.handleCast(target)
 					else
 						var/obj/item/gun/W = src.r_hand
-						W.shoot(get_turf(carbon_target), get_turf(src), src, 0, 0)
+						W.shoot(get_turf(carbon_target), get_turf(src), src, 0, 0, called_target = carbon_target)
 						if(src.bioHolder.HasEffect("coprolalia") && prob(10))
 							switch(pick(1,2))
 								if(1)

@@ -272,7 +272,7 @@ var/datum/signal_holder/global_signal_holder
 				CRASH("Unregistering a complex signal [json_encode(sig)] without its component existing.")
 			comp.unregister(src, sig[2])
 			continue
-		if(!signal_procs[target][sig])
+		if(!signal_procs[target]?[sig])
 			if(!istext(sig))
 				stack_trace("We're unregistering with something that isn't a valid signal \[[sig]\], you fucked up")
 			continue

@@ -1,4 +1,233 @@
 
+(t)wed aug 23 23
+(u)FlameArrow57
+(p)15391
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Pressing the equip hotkey while holding a gun that fits on your back will now attempt to add it to your backpack first if it's open.
+(u)LeahTheTech
+(+)Shower heads can now be controlled by mech-comp.
+(t)tue aug 22 23
+(u)Paaiii
+(p)15416
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Added 21 new AI core casings, achievable through various means. See the PR for more details.
+(+)Updated existing AI core casing sprites.
+(+)Made AIs use the pronoun preferences of the character file in core/eye/shells.
+(t)mon aug 21 23
+(u)Glamurio (Ryou)
+(p)15335
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(+)Added a brig shower to Donut3.
+(u)Cheekybrdy
+(p)15231
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Sleeper agents can now access the listening post through scanners at the entrance.
+(t)sat aug 19 23
+(u)pali
+(*)Three new mutations that affect how you hear sounds!
+(t)fri aug 18 23
+(u)FlameArrow57
+(p)15381
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Improved item equip consistency when equipping an item from your inventory with fast mouse flicks.
+(u)Paaiii
+(p)15417
+(e)🤖|A-Silicons
+(+)Replaces that cardboard box that spawns in the AI core if there's no AI with an empty SICC AI core.
+(u)Smilg
+(p)15204
+(e)|
+(+)ABCU marker can now rectangle select, and has longer range.
+(u)Lord_Earthfire
+(p)14773
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Having at least 25% lube in a foam mixture, water and fluorosurfactant excluded, applies the lube's slippery properties to the foam
+(u)FlameArrow57
+(p)15395
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(+)High damage slashing/cutting weapons will now leave cut wounds.
+(u)Sord
+(+)Scrap clubs and spears now fit in backpacks. All scrapweapons have received minor damage tweaks.
+(t)thu aug 17 23
+(u)LeahTheTech
+(+)Fish rarity now uses the item rarity system for <i>fancy tooltips</i>
+(t)wed aug 16 23
+(u)UnfunnyPerson
+(p)15411
+(e)📦|A-Game-Objects
+(+)Hacked SecTechs will contain 2-4 donuts.
+(t)tue aug 15 23
+(u)MeggalBozale
+(p)15273
+(e)⚖|C-Balance
+(+)Vending machines can be tipped over by shooting them, and shooting them when tipped over lets bullets move past.
+(t)mon aug 14 23
+(u)Garash
+(p)15152
+(e)🆕🔄📄|C-Feature, C-Rework, A-UI
+(+)New UI for the Cryo Pods
+(t)sun aug 13 23
+(u)Bisar
+(p)15341
+(e)🪲📦|C-Bug, A-Game-Objects
+(*)MechComp triggers for Vend by Name should work properly now!
+(u)Ryou (Glamurio) & Zac
+(p)15192
+(e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
+(*)Added cinnamon to the game. Ask your local botanist to grow you some! Careful not too eat too much of it.
+(u)soapcyst
+(p)15203
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added misters to atlas and afterlife bar
+(u)Wisemonster
+(p)15251
+(e)🔄⏰📦|C-Rework, A-Status-Effects, A-Game-Objects
+(+)Devera's hygiene protection has been changed into a status effect.
+(u)Tyrant
+(p)15324
+(e)🪲|C-Bug
+(+)The HoP now has access to the command teleporter by default.
+(u)UnfunnyPerson
+(p)15136
+(e)⛔📦|C-Removal, A-Game-Objects
+(+)The black market megaphone can no longer be found in surplus crates.
+(u)Ikea
+(p)15320
+(e)⚖🤖|C-Balance, A-Silicons
+(+)light borg heads now have 60 hp, meaning they can now actually take two emp shots
+(u)Lord_Earthfire
+(p)15303
+(e)🆕🌱|C-Feature, A-Hydroponics
+(+)Banana peels fit in produce satchels now.
+(u)DimWhat
+(p)15161
+(e)⚖🎩|C-Balance, A-Clothing
+(+)Added a simple black jacket to the clothing booth.
+(t)sat aug 12 23
+(u)deathrobotpunch1
+(p)15202
+(e)💅🍝|C-QoL, A-Catering
+(*)Bartender now has a reagent scanner, medical record scanner and a health scanner built in to their PDA!
+(u)Amylizzle
+(p)15342
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The catastrophic nuclear meltdown is now slightly more catastrophic. Enjoy.
+(t)thu aug 10 23
+(u)pali
+(+)Vampire frost bats can now be released using a flip for real, just as the tooltip promises.
+(t)wed aug 09 23
+(u)Tyrant
+(p)15310
+(e)🪲🗺|C-Bug, A-Mapping
+(+)The CE's office on Donut 2 is no longer open to the public.
+(u)Glamurio (Ryou)
+(p)14800
+(e)💅🍝|C-QoL, A-Catering
+(+)Standardized all coffee recipes to work with either regular coffee, or its freshly brewed variant.
+(t)tue aug 08 23
+(u)Amylizzle
+(p)15205
+(e)🔎🧱|C-Code-Quality, A-Materials
+(+)Plasmastone now releases its plasma somewhat slower. You can see how much plasma is left using a material analyzer.
+(+)You must now use the material analyzer to see how much gas is left in Molitz and Molitz Beta.
+(u)Kubius
+(p)15264
+(e)⚖|C-Balance
+(+)Telescience portal activation energy has been slightly reduced.
+(u)Amylizzle
+(p)15298
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Gas generator artifacts can now emit fallout gas.
+(u)Paaiii
+(p)15274
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(*)Added 9 new AI status screens, as well as inverted versions of existing AI status screens
+(+)Cleaned up existing AI status screens to give them more depth and also so they follow the same colour palette
+(t)mon aug 07 23
+(u)tarmunora
+(*)Assembled flamethrowers have a movement speed penalty.
+(+)Assembled flamethrowers fullauto mode adjustments (adjust fuel use to be comprable with other modes).
+(t)sun aug 06 23
+(u)Mintyphresh
+(p)15240
+(e)🔄🐣|C-Rework, A-Respawning
+(+)Latejoining players with the Stowaway, Pilot, or Heavy Sleeper trait will no longer be announced.
+(u)Sovexe
+(p)15267
+(e)|
+(+)Minimaps can now track targets inside of things, such as pods
+(u)LeahTheTech
+(+)Aconite is now slightly more effective against werewolves.
+(t)sat aug 05 23
+(u)Sovexe
+(p)15210
+(e)🆕🗺|C-Feature, A-Mapping
+(*)The Pod Wars NSV Reliant now has a neutral map that shows the position of pilots on both teams.
+(u)Kubius
+(p)13348
+(e)🪲⚖🔄💡|C-Bug, C-Balance, C-Rework, A-Station-Systems
+(*)APC power delivery has received a substantial overhaul; the power grid will now prioritize supporting heavy loads, and recharging will scale itself to the amount of spare power available.
+(u)Lord_Earthfire
+(p)15057
+(e)🪲🔎🧱|C-Bug, C-Code-Quality, A-Materials
+(+)Material effects on-attacks are now happening more consistent, e.g. erebite hats weared on you will explode if you get bonked on the head.
+(u)Mr. Moriarty & Erinexx
+(p)15188
+(e)🗺🎨📦|A-Mapping, C-Sprites, A-Game-Objects
+(+)Resprited robuddies.
+(u)Bartimeus973
+(p)15208
+(e)🆕🔨📦|C-Feature, A-Player-Actions, A-Game-Objects
+(*)Vampires should now avoid using tanning beds.
+(t)fri aug 04 23
+(u)Wisemonster
+(p)14881
+(e)⚖⏰|C-Balance, A-Status-Effects
+(*)Interdictors will now drain 6u of power per player in their influence
+(*)Removed power drain on interdictors from negating worm holes and magnetic biofields
+(+)Changed the interdictor protection to be tied to a status effect
+(+)Added a particle effect for the interdictor status effect
+(u)DimWhat
+(p)15171
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added a bunch more clothing sprites for monkeys, ook!
+(t)thu aug 03 23
+(u)Wisemonster
+(p)14825
+(e)🆕🗺🐁|C-Feature, A-Mapping, A-Critters
+(+)The HoP has decided to take his loyal dog Orwell to more stations!
+(u)Garash
+(p)14766
+(e)🆕🔄📄|C-Feature, C-Rework, A-UI
+(+)New snappier UI for the Identification Computers, go commit ID fraud today!
+(u)Bartimeus973
+(p)14757
+(e)🆕🎨💅💊|C-Feature, C-Sprites, C-QoL, A-Medical
+(+)Surgery slipups are a lot more noticeable.
+(u)Caio029
+(p)15178
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Pronouns will now be shown on the examine text of humans.
+(t)wed aug 02 23
+(u)LeahTheTech
+(p)15169
+(e)🆕⚖🔨|C-Feature, C-Balance, A-Player-Actions
+(+)Throwing someone into an open locker will now shut it on them, causing a short stun.
+(+)Smashing someone into a wall or window with a grab will now disorient them.
+(t)tue aug 01 23
+(u)Amylizzle
+(p)15096
+(e)📄|A-UI
+(*)The observer menu has been replaced with an upgrade.
+(u)Soapcyst
+(p)15179
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added angler equipment to donut2, atlas, clarion, and the afterlife bar.
+(t)sun jul 30 23
+(u)Retrino
+(p)15162
+(e)🎨🤖|C-Sprites, A-Silicons
+(*)Added three new borg screenhead faces: Nervous, Annoyed, and Ditzy
 (t)sat jul 29 23
 (u)CalliopeSoups
 (p)14664

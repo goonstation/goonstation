@@ -462,7 +462,7 @@
 						src.hatuser.visible_message("<span class='alert'><b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Magic!</b></span>","<span class='alert'><b>The [src.hatstorage] tumbles out of your hat!</b></span>")
 					else
 						src.hatuser.visible_message("<span class='alert'><b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Wait...Where did they get the hat?</b></span>","<span class='alert'><b>The [src.hatstorage] tumbles out of your hat! Wait...Where did you get the hat?</b></span>")
-					h.equip_if_possible(new /obj/item/clothing/head/that(h), h.slot_head)
+					h.equip_if_possible(new /obj/item/clothing/head/that(h), SLOT_HEAD)
 
 				else
 					user.put_in_hand_or_drop(new /obj/item/clothing/head/that)
@@ -483,7 +483,7 @@
 					src.hatuser.visible_message("<span class='alert'><b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Magic!</b></span>","<span class='alert'><b>The [src.hatstorage] tumbles out of your hat!</b></span>")
 				else
 					src.hatuser.visible_message("<span class='alert'><b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Wait...Where did they get the hat?</b></span>","<span class='alert'><b>The [src.hatstorage] tumbles out of your hat! Wait...Where did you get the hat?</b></span>")
-				h.equip_if_possible(new /obj/item/clothing/head/that, h.slot_head)
+				h.equip_if_possible(new /obj/item/clothing/head/that, SLOT_HEAD)
 			else
 				src.hatuser.put_in_hand_or_drop(new /obj/item/clothing/head/that)
 				src.hatuser.visible_message("<span class='alert'><b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Wait...Where did they get the hat?</b></span>","<span class='alert'><b>The [src.hatstorage] tumbles out of your hat! Wait...Where did you get the hat?</b></span>")

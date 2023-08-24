@@ -32,6 +32,7 @@
 			return
 
 		var/obj/spookMarker/marker = new /obj/spookMarker(T)
+		W.spawn_marker = marker
 		var/list/text_messages = list()
 		text_messages.Add("Would you like to respawn as a harbinger's summon? Your name will be added to the list of eligible candidates.")
 		text_messages.Add("You are eligible to be respawned as a harbinger's summon. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
@@ -62,3 +63,4 @@
 			message_admins("[lucky_dude.key] respawned as a harbinger summon for [src.holder.owner].")
 			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
 		qdel(marker)
+		W.spawn_marker = null

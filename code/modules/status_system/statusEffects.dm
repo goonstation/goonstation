@@ -1344,8 +1344,7 @@
 					H.HealDamage("All", 1, 1, 1)
 					if (H.bleeding)
 						repair_bleeding_damage(H, 10, 1)
-				if (prob(10))
-					H.make_jittery(2)
+				H.make_jittery(1)
 
 				if (H.misstep_chance)
 					H.change_misstep_chance(-5)
@@ -2390,7 +2389,8 @@
 		. = ..()
 		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "critical_condition")
 		H.remove_stam_mod_max("critical_condition")
-		H.changeStatus("recent_trauma", 90 SECONDS)
+		if (!isdead(H))
+			H.changeStatus("recent_trauma", 90 SECONDS)
 
 
 /datum/statusEffect/recenttrauma
@@ -2423,3 +2423,27 @@
 	name = "De-revving"
 	desc = "An implant is attempting to convert you from the revolution! Remove the implant!"
 	icon_state = "mindhack"
+
+/datum/statusEffect/interdictor //Status effect for letting people know they are protected from some spatial anomalies
+	id = "spatial_protection"
+	name = "Spatial Protection"
+	desc = "You are being protected from wormholes, radiation storms, and magnetic biofields."
+	icon_state = "blocking" //This gives the general idea that they are being protected, but could use a better icon
+	maxDuration = 4 SECONDS
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+	onAdd(optional=null)
+		owner.add_filter("protection", 1, outline_filter(color="#e6ec21"))
+		..()
+
+	onRemove()
+		owner.remove_filter("protection")
+		..()
+
+/datum/statusEffect/devera //Status effect for the devera hygiene protection
+	id = "devera_field"
+	name = "Devera Field"
+	desc = "You are being protected from grime gathering on you."
+	icon_state = "fragrant"
+	maxDuration = 4 SECONDS
+	effect_quality = STATUS_QUALITY_POSITIVE

@@ -792,8 +792,8 @@
 
 ////////Robot
 /obj/npc/trader/robot
-	icon = 'icons/misc/evilreaverstation.dmi' // changed from the ancient robot sprite to pr1
-	icon_state = "pr1_b"
+	icon = 'icons/obj/bots/robuddy/pr-1.dmi'
+	icon_state = "body"
 	picture = "robot.png"
 	trader_area = "/area/turret_protected/robot_trade_outpost"
 	var/productset = 0 // 0 is robots and salvage, 1 is podparts and drugs, 2 is produce. 3 is syndicate junk, 4 is medical stuff
@@ -802,6 +802,9 @@
 
 	New()
 		..()
+		src.UpdateOverlays(image(src.icon, "face-happy"), "emotion")
+		src.UpdateOverlays(image(src.icon, "lights-on"), "lights")
+
 		switch(productset)
 			if(1) // drugs and pod stuff
 				src.goods_sell += new /datum/commodity/podparts/engine(src)
@@ -1153,6 +1156,7 @@
 		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
 		src.goods_sell += new /datum/commodity/junk/ai_kit_clown(src)
+		src.goods_sell += new /datum/commodity/junk/ai_kit_mime(src)
 		src.goods_sell += new /datum/commodity/foam_dart_grenade(src)
 
 

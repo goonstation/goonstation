@@ -1,5 +1,6 @@
 // AI (i.e. game AI, not the AI player) controlled bots
 
+ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 /obj/machinery/bot
 	icon = 'icons/obj/bots/aibots.dmi'
 	layer = MOB_LAYER
@@ -163,6 +164,10 @@
 
 	proc/explode()
 		return
+
+	proc/admin_command_speak()
+		set name = "Speak"
+		src.speak(tgui_input_text(usr, "Speak message through [src]", "Speak", ""))
 
 	proc/speak(var/message, var/sing, var/just_float, var/just_chat)
 		if (!src.on || !message || src.muted)
