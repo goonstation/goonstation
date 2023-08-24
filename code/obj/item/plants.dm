@@ -10,6 +10,7 @@ ABSTRACT_TYPE(/obj/item/plant)
 	desc = "You shouldn't be able to see this item ingame!"
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	var/brew_result = null // what will it make if it's brewable?
+	var/brew_amount = 20 // how much brew could a brewstill brew if a brewstill still brewed brew?
 	rand_pos = 1
 
 	New()

@@ -364,6 +364,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	bites_left = 1
 	validforhat = 0
 	sliceable = FALSE
+	brew_amount = 5
 
 	make_reagents()
 		..()
@@ -437,6 +438,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	bites_left = 1
 	initial_volume = 6
 	sliceable = FALSE
+	brew_amount = 5
 
 	make_reagents()
 		..()
@@ -636,7 +638,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 2
 	initial_volume = 100
 	food_effects = list("food_refreshed")
-	brew_result = "capsaicin"
 
 	make_reagents()
 		..()
@@ -884,8 +885,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	icon_state = "poison"
 	food_color = "#AC1515"
 	initial_volume = 100
-	brew_result = "capulettium"
-
+	brew_result = list("capulettium", "cider")
+	brew_amount = list(5, 15)
 	make_reagents()
 		..()
 		var/datum/plantgenes/DNA = src.plantgenes
@@ -902,6 +903,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	name = "delicious apple on a stick"
 	desc = "A delicious apple on a stick."
 	icon_state = "poison stick"
+	brew_amount = 10
 
 	make_reagents()
 		..()
@@ -1068,6 +1070,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	slice_amount = 6
 	slice_suffix = "wedge"
 	brew_result = "limeade"
+	brew_amount = 30
 
 
 /obj/item/reagent_containers/food/snacks/plant/lime/wedge
@@ -1079,10 +1082,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	initial_volume = 6
 	validforhat = 0
 	sliceable = FALSE
+	brew_amount = 5
 
 	make_reagents()
 		..()
-		reagents.add_reagent("juice_lime",5)
+		reagents.add_reagent("juice_lime", 5)
 
 /obj/item/reagent_containers/food/snacks/plant/lemon
 	name = "lemon"
@@ -1099,6 +1103,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	slice_amount = 6
 	slice_suffix = "wedge"
 	brew_result = "lemonade"
+	brew_amount = 30
 
 
 /obj/item/reagent_containers/food/snacks/plant/lemon/wedge
@@ -1110,6 +1115,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	initial_volume = 6
 	validforhat = 0
 	sliceable = FALSE
+	brew_amount = 5
 
 	make_reagents()
 		..()

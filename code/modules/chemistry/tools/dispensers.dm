@@ -565,23 +565,35 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	// returns whether the inserted item was brewed
 	proc/brew(var/obj/item/W as obj)
 		var/list/brew_result
+		var/list/brew_amount
 
-		if(istype(W,/obj/item/reagent_containers/food))
+s		if(istype(W, /obj/item/reagent_containers/food))
 			var/obj/item/reagent_containers/food/F = W
 			brew_result = F.brew_result
+			brew_amount = F.brew_amount
+			if(!brew_amount && istype(W, /obj/item/reagent_containers/food/snacks/plant))
+				var/obj/item/reagent_containers/food/snacks/plant/P = W
+				var/datum/plantgenes/DNA = P.plantgenes
+				brew_amount = DNA?.get_effective_value("potency")
 
 		else if(istype(W, /obj/item/plant))
 			var/obj/item/plant/P = W
 			brew_result = P.brew_result
+			brew_amount = P.brew_amount
 
-		if (!brew_result)
+		if (!brew_result || !brew_amount)
 			return FALSE
 
 		if (islist(brew_result))
-			for (var/i in brew_result)
-				src.reagents.add_reagent(i, 10)
+			for(var/i = 1, i <= length(brew_result), i++)
+				var/amount = brew_amount
+				var/result = brew_result[i]
+				if (islist(brew_amount) && length(brew_result) == length(brew_amount))
+					amount = brew_amount[i]
+
+				src.reagents.add_reagent(result, amount)
 		else
-			src.reagents.add_reagent(brew_result, 20)
+			src.reagents.add_reagent(brew_result, brew_amount)
 
 		src.visible_message("<span class='notice'>[src] brews up [W]!</span>")
 		return TRUE
