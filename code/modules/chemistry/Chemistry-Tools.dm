@@ -275,6 +275,9 @@ proc/ui_describe_reagents(atom/A)
 			if (istype(target, /obj/reagent_dispensers/chemicalbarrel))
 				var/obj/reagent_dispensers/chemicalbarrel/target_barrel = target
 				if(target_barrel.funnel_active)
+					if (!src.reagents.total_volume)
+						boutput(user, "<span class='alert'>Your [src.name] is empty!</span>")
+						return
 					if (target.reagents.total_volume >= target.reagents.maximum_volume)
 						boutput(user, "<span class='alert'>[target.name] is already full!</span>")
 						return

@@ -2391,16 +2391,6 @@ datum
 					smoke_reaction(smokeContents, 2, location)
 					return
 
-		salicylic_acid
-			name = "Salicylic Acid"
-			id = "salicylic_acid"
-			result = "salicylic_acid"
-			required_reagents = list("sodium" = 1, "phenol" = 1, "carbon" = 1, "oxygen" = 1, "acid" = 1)
-			//min_temperature = 390
-			result_amount = 5
-			mix_phrase = "The mixture crystallizes."
-			mix_sound = 'sound/misc/drinkfizz.ogg'
-
 		menthol
 			name = "Menthol"
 			id = "menthol"
@@ -2501,7 +2491,6 @@ datum
 			required_reagents = list("sulfur" = 1, "water" = 1, "oxygen" = 1)
 			result_amount = 2
 			mix_phrase = "The mixture gives off a sharp acidic tang."
-			on_reaction(var/datum/reagents/holder, created_volume)
 			instant = FALSE
 			reaction_speed = 3
 			temperature_change = 10
@@ -2832,14 +2821,91 @@ datum
 			result_amount = 2
 			mix_phrase = "The mixture bubbles slowly, making a slightly sweet odor."
 
-		salbutamol // COGWERKS CHEM REVISION PROJECT: possibly dexamesothone, anti-edema medication
-			name = "Salbutamol"
-			id = "salbutamol"
-			result = "salbutamol"
-			required_reagents = list("oil" = 1, "lithium" = 1, "ammonia" = 1, "aluminium" = 1, "bromine" = 1)
-			result_amount = 5
-			mix_phrase = "The solution bubbles freely, creating a head of bluish foam."
+		salbutamol_salicylic_acid // makes either based on input, not both at once though
+			name = "Salbutamol Salicylic Acid"
+			id = "salbutamol_salicylic_acid"
+			required_reagents = list("sodium" = 1, "phenol" = 1, "carbon" = 1, "oxygen" = 1, "acid" = 1)
+			result = null //this changes in on_reaction
+			result_amount = 8
+			instant = FALSE
+			reaction_speed = 1 //this gets faster once you follow a branch of chem to make
+			temperature_change = 0 //this also changes
+			stateful = TRUE
+			mix_phrase = "The solution twirls mixes together idley."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			reaction_icon_state = list("reaction_puff-1", "reaction_puff-2")
+			reaction_icon_color = "#ffffff"
+			var/was_physically_shocked = FALSE
+			var/flash_cooldown = 0 //to prevent messups from spamming flashbang effects
+			var/consecutive_shocks = 0 //for salb: gives you bonus for chains of physical shocks maintained
+			var/highest_heat = 0 //for salicylic acid: gives you bonus as long as you keep gaining heat
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				if(flash_cooldown > 0)
+					flash_cooldown--
+
+				if(result == "salbutamol")
+					reaction_icon_state = list("reaction_bubble-1", "reaction_bubble-2")
+					reaction_icon_color = "#47cbff"
+					if(holder.total_temperature >= T100C)
+						reaction_icon_state = list("reaction_puff-1", "reaction_puff-2")
+						reaction_icon_color = "#474747"
+						for(var/reagent in required_reagents)
+							holder.remove_reagent(reagent, 5)
+						holder.remove_reagent("salbutamol", 5)
+						if(flash_cooldown <= 0)
+							for(var/mob/M in AIviewers(null, get_turf(holder.my_atom)))
+								boutput(M, "<span class='alert'>The reaction pops and fizzles abruptly!</span>")
+							flashpowder_reaction(get_turf(holder.my_atom), 10)
+							flash_cooldown = 5
+					else if(was_physically_shocked) //else if... if you overheat the reaction, no bonus for you!
+						was_physically_shocked = FALSE
+						consecutive_shocks++
+						var/amount_to_add = round(was_physically_shocked/3) //one extra unit per 3 times shocked
+						holder.add_reagent("salbutamol", amount_to_add, temp_new = holder.total_temperature, chemical_reaction = TRUE)
+						playsound(get_turf(holder.my_atom), 'sound/effects/bubbles_short.ogg', 50, 1)
+					if(!was_physically_shocked)
+						consecutive_shocks = 0
+
+				else if(result == "salicylic_acid")
+					reaction_icon_state = list("reaction_sparkle-1", "reaction_sparkle-2")
+					reaction_icon_color = "#eb5c5c"
+					if(was_physically_shocked)
+						reaction_icon_state = list("reaction_puff-1", "reaction_puff-2")
+						reaction_icon_color = "#474747"
+						for(var/reagent in required_reagents)
+							holder.remove_reagent(reagent, 5)
+						holder.remove_reagent("salicylic_acid", 5)
+						if(flash_cooldown <= 0)
+							for(var/mob/M in AIviewers(null, get_turf(holder.my_atom)))
+								boutput(M, "<span class='alert'>The reaction pops and fizzles abruptly!</span>")
+							flashpowder_reaction(get_turf(holder.my_atom), 10)
+							flash_cooldown = 5
+					else if(holder.total_temperature > highest_heat + 3) //you have to get at least three degrees hotter than before
+						playsound(get_turf(holder.my_atom), 'sound/effects/bubbles_short.ogg', 50, 1)
+						highest_heat = holder.total_temperature
+						holder.add_reagent("salicylic_acid", 3, temp_new = holder.total_temperature, chemical_reaction = TRUE)
+
+				else//neither salb or salicylic, so we're at the start of the reaction
+					if(was_physically_shocked)
+						was_physically_shocked = FALSE
+						for(var/mob/M in AIviewers(null, get_turf(holder.my_atom)))
+							boutput(M, "<span class='notice'>The solution begins to release warm cyan bubbles.</span>")
+						playsound(get_turf(holder.my_atom), 'sound/effects/bubbles_short.ogg', 50, 1)
+						result = "salbutamol"
+						temperature_change = 3
+						reaction_speed = 3
+					if(holder.total_temperature > T100C)
+						for(var/mob/M in AIviewers(null, get_turf(holder.my_atom)))
+							boutput(M, "<span class='notice'>The mixture glistens with red sparkles.</span>")
+						playsound(get_turf(holder.my_atom), 'sound/effects/bubbles_short.ogg', 50, 1)
+						result = "salicylic_acid"
+						temperature_change = -3
+						reaction_speed = 3
+
+			physical_shock(var/force, var/datum/reagents/holder)
+				if(force > 3)
+					was_physically_shocked = TRUE
 
 		perfluorodecalin // COGWERKS CHEM REVISION PROJECT:marked for revision
 			name = "Perfluorodecalin"
