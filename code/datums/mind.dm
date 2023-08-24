@@ -81,7 +81,6 @@ datum/mind
 
 			Z_LOG_ERROR("Mind/TransferTo", "Tried to transfer mind [(current ? "of mob " + key_name(current) : src)] to qdel'd mob [new_character].")
 			CRASH("Tried to transfer mind [identify_object(src)] to qdel'd mob [identify_object(new_character)].")
-			return
 
 		if (new_character.client)
 			if (current)
