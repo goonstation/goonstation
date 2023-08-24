@@ -248,7 +248,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 		SPAWN(0.5 SECONDS)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply)
 
-// these seem kind of inverted but it's because an eastward alarm hangs on a west wall and etc
+// these seem kind of inverted but it's because an alarm on a wall to the north faces south and etc
 /obj/machinery/firealarm/north
 	pixel_y = 30
 
