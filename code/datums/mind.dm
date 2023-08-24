@@ -80,7 +80,7 @@ datum/mind
 			src.transfer_to(obs)
 
 			Z_LOG_ERROR("Mind/TransferTo", "Tried to transfer mind [(current ? "of mob " + key_name(current) : src)] to qdel'd mob [new_character].")
-			stack_trace("Tried to transfer mind [identify_object(src)] to qdel'd mob [identify_object(new_character)].")
+			CRASH("Tried to transfer mind [identify_object(src)] to qdel'd mob [identify_object(new_character)].")
 			return
 
 		if (new_character.client)
@@ -88,7 +88,7 @@ datum/mind
 				boutput(current, "<h3 class='alert'>You were about to be transferred into another body, but that body was occupied!</h3>")
 				var/errmsg = "Tried to transfer mind of mob [identify_object(current)] to mob with an existing client [identify_object(new_character)]"
 				message_admins(errmsg)
-				stack_trace(errmsg)
+				CRASH(errmsg)
 			else
 				message_admins("Tried to transfer mind [src] to mob with an existing client [new_character] (\ref[new_character]).")
 			Z_LOG_ERROR("Mind/TransferTo", "Tried to transfer mind [(current ? "of mob " + key_name(current) : src)] to mob with an existing client [new_character] [key_name(new_character)])")
