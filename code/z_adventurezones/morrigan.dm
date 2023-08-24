@@ -1572,6 +1572,48 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	setup_equipment_slots()
 		return
 
+/mob/living/critter/robotic/gunbot/syndicate/engineerbot
+	name = "Syndicate MULTI Unit"
+	real_name = "Syndicate MULTI Unit"
+	desc = "An engnieering unit, you can somehow feel that it's angry at you."
+	health_brute = 20
+	health_burn = 10
+	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
+	icon_state = "engineerbot"
+	ai_type = /datum/aiHolder/aggressive
+	eye_light_icon = "engineerbot-eye"
+
+	seek_target(range)
+		. = ..()
+
+		if (length(.) && prob(10) && src.speak_lines)
+			src.say(pick("SMASH.", "THIS IS NOT WHERE YOU ARE SUPPOSED TO BE.", "NANOTRASEN TRESPASSING.", "YOUR PUNY FISTS CANNOT HURT ME.", "I WILL DECODE YOU.", "WHERE IS YOUR FIRE EXTINGUISHER.", "I HAVE PRESSED BOLTS HARDER THAN YOU.", "SHOULD HAVE NEVER COME HERE."))
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/transposed/morrigan
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "hand_martian"
+		HH.name = "Soldering Iron"
+		HH.limb_name = "soldering iron"
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/transposed/morrigan
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "hand_martian"
+		HH.name = "Soldering Iron"
+		HH.limb_name = "soldering iron"
+
+	get_melee_protection(zone, damage_type)
+		return 4
+
+	get_ranged_protection()
+		return 2
+
+	setup_equipment_slots()
+		return
+
 /mob/living/critter/robotic/gunbot/syndicate/medibot
 	name = "Syndicate Medical Unit"
 	real_name = "Syndicate Medical Unit"
@@ -1597,6 +1639,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "syringegun"
 		HH.limb_name = "Syringe Gun"
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/claw
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.icon_state = "handr"
+		HH.name = "right arm"
+		HH.limb_name = "mauler claws"
 
 	get_melee_protection(zone, damage_type)
 		return 4
@@ -2327,13 +2376,14 @@ TYPEINFO(/obj/item/gun/energy/smgmine)
 	damage = 10
 	hit_ground_chance = 10
 	shot_sound = 'sound/effects/syringeproj.ogg'
-	venom_id = list("toxin","atropine")
+	venom_id = list("sulfonal","atropine")
 	inject_amount = 15
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		if (ismob(hit))
 			if (hit.reagents)
-				hit.reagents.add_reagent(venom_id, inject_amount)
+				for (var/reagent_id as anything in venom_id)
+					hit.reagents.add_reagent(reagent_id, inject_amount / 2)
 //belts
 
 /obj/item/storage/belt/gun/peacebringer
@@ -2365,3 +2415,22 @@ TYPEINFO(/obj/item/gun/energy/smgmine)
 	current_shots = 4
 	cooldown = 2 SECONDS
 	reload_time = 10 SECONDS
+
+/datum/limb/transposed/morrigan
+	help(mob/target, var/mob/living/user)
+		..()
+		harm(target, user, 0)
+
+	harm(mob/target, var/mob/living/user)
+		if(check_target_immunity( target ))
+			return FALSE
+
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 15, 15, 0, can_punch = FALSE, can_kick = FALSE)
+		user.attack_effects(target, user.zone_sel?.selecting)
+		var/action = "grab"
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with [src.holder]!</span></b>"
+		msgs.played_sound = 'sound/impact_sounds/generic_hit_2.ogg'
+		msgs.damage_type = DAMAGE_BURN
+		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
