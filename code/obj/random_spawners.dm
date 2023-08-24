@@ -1799,7 +1799,7 @@
 	/obj/item/gun/kinetic/sawnoff,
 	/obj/item/gun/kinetic/sawnoff,
 	/obj/item/gun/kinetic/single_action/colt_saa,
-	/obj/item/gun/kinetic/single_action_flintlock,
+	/obj/item/gun/kinetic/single_action/flintlock,
 	/obj/item/gun/kinetic/zipgun)
 
 	one
