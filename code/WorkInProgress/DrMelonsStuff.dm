@@ -234,6 +234,8 @@
 			if (H.gloves)
 				H.gloves.add_blood(dna)
 				H.update_gloves()
+			else
+				H.update_bloody_hands()
 			if (H.wear_suit)
 				H.wear_suit.add_blood(dna)
 				H.update_suit()
