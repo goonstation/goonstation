@@ -703,7 +703,7 @@
 		// If we have no brain or an inactive spont core, we're dormant.
 		// If we have a brain but no client, we're in hiberation mode.
 		// Otherwise, fully operational.
-		if (src.part_head.brain && !(istype(src.part_head.brain, /obj/item/organ/brain/latejoin) && !src.part_head.brain:activated))
+		if ((src.part_head.brain || src.part_head.ai_interface) && !(istype(src.part_head.brain, /obj/item/organ/brain/latejoin) && !src.part_head.brain:activated))
 			if (src.client)
 				. += "<span class='success'>[src.name] is fully operational.</span><br>"
 			else

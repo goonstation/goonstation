@@ -1,4 +1,11 @@
 
+(t)wed aug 23 23
+(u)FlameArrow57
+(p)15391
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Pressing the equip hotkey while holding a gun that fits on your back will now attempt to add it to your backpack first if it's open.
+(u)LeahTheTech
+(+)Shower heads can now be controlled by mech-comp.
 (t)tue aug 22 23
 (u)Paaiii
 (p)15416
