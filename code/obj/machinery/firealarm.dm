@@ -253,7 +253,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 	pixel_y = 30
 
 /obj/machinery/firealarm/south
-	dir = SOUTH
+	dir = NORTH
 	pixel_y = -22
 
 
