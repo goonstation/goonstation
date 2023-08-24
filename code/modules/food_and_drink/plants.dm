@@ -885,8 +885,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	icon_state = "poison"
 	food_color = "#AC1515"
 	initial_volume = 100
-	brew_result = list("capulettium", "cider")
-	brew_amount = list(5, 15)
+	brew_result = list("capulettium"=5, "cider"=15)
 	make_reagents()
 		..()
 		var/datum/plantgenes/DNA = src.plantgenes
@@ -898,12 +897,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "An apple on a stick."
 	icon_state = "apple stick"
 	validforhat = 0
+	brew_result = null
 
 /obj/item/reagent_containers/food/snacks/plant/apple/stick/poison
 	name = "delicious apple on a stick"
 	desc = "A delicious apple on a stick."
 	icon_state = "poison stick"
-	brew_amount = 10
+	brew_result = null
 
 	make_reagents()
 		..()

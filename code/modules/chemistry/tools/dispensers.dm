@@ -585,12 +585,11 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			return FALSE
 
 		if (islist(brew_result))
-			for(var/i = 1, i <= length(brew_result), i++)
-				var/amount = brew_amount
-				var/result = brew_result[i]
-				if (islist(brew_amount) && length(brew_result) == length(brew_amount))
-					amount = brew_amount[i]
-
+			for(var/I in brew_result)
+				var/result = I
+				var/amount = brew_result[I]
+				if (!amount)
+					amount = brew_amount
 				src.reagents.add_reagent(result, amount)
 		else
 			src.reagents.add_reagent(brew_result, brew_amount)
