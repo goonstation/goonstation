@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/stairs/wood,
+/turf/simulated/floor/stairs/wood,
 /area/dmm_suite/clear_area)
 "o" = (
 /obj/reagent_dispensers/still{
@@ -13,7 +13,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/cider{
 	pixel_x = -10
 	},
-/turf/unsimulated/floor/wood/five,
+/turf/simulated/floor/wood/five,
 /area/dmm_suite/clear_area)
 "p" = (
 /obj/submachine/chef_sink{
@@ -46,10 +46,10 @@
 	dir = 1;
 	pixel_y = 20
 	},
-/turf/unsimulated/floor/wood/five,
+/turf/simulated/floor/wood/five,
 /area/dmm_suite/clear_area)
 "D" = (
-/turf/unsimulated/floor/wood/five,
+/turf/simulated/floor/wood/five,
 /area/dmm_suite/clear_area)
 "E" = (
 /obj/table/wood/auto,
