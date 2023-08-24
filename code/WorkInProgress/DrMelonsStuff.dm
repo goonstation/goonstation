@@ -111,7 +111,8 @@
 		src.occupant?.set_loc(get_turf(src))
 		for (var/obj/O in src)
 			O.set_loc(get_turf(src))
-		. = ..()
+		src.occupant = null
+		..()
 
 	mob_flip_inside(var/mob/user)
 		if (src.reagents.total_volume)
@@ -139,6 +140,8 @@
 			. = ..()
 
 	mouse_drop(obj/over_object, src_location, over_location)
+		if (isintangible(usr))
+			return
 		if (usr.stat || usr.getStatusDuration("weakened") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
 			boutput(usr, "<span class='alert'>That's too far!</span>")
 			return
@@ -192,17 +195,21 @@
 		src.turn_tap(user)
 
 	proc/enter_bathtub(mob/living/carbon/human/target)
-		target.set_loc(src)
 		src.occupant = target
+		src.occupant.set_loc(src)
+		if (src.reagents?.total_volume)
+			playsound(src.loc, 'sound/misc/splash_2.ogg', 70, 3)
 		src.UpdateOverlays(src.SafeGetOverlayImage("bath_edge", 'icons/obj/stationobjs.dmi', "bath_edge", MOB_LAYER - 0.1), "bath_edge")
 		src.on_reagent_change()
-		target.layer = MOB_LAYER - 0.3
-		src.vis_contents += target
-		if (src.reagents.total_volume)
-			playsound(src.loc, 'sound/misc/splash_2.ogg', 70, 3)
+		src.occupant.layer = MOB_LAYER - 0.3
+		src.vis_contents += src.occupant
+		src.blood_bath(src.occupant)
 
 	proc/eject_occupant(mob/user)
-		if (is_incapacitated(user)) return
+		if (isintangible(user))
+			return
+		if (is_incapacitated(user))
+			return
 		if (issilicon(user) || isAI(user))
 			boutput("<span class='alert'>You can't quite lift [src.occupant] out of the tub!</span>")
 			return
@@ -210,6 +217,34 @@
 			boutput("<span class='alert'>There's no one inside!</span>")
 			return
 		src.occupant.set_loc(get_turf(src))
+		src.occupant = null
+
+	proc/blood_bath(var/mob/living/carbon/human/H)
+		// hacky, but cool effect
+		// Stop spamming expensive calls
+		if (src.reagents.has_reagent("blood", suffocation_volume))
+			var/dna = null
+			var/datum/reagent/blood/sample = reagents.get_reagent("blood")
+			if (sample && istype(sample.data, /datum/bioHolder))
+				var/datum/bioHolder/tocopy = sample.data
+				dna = tocopy.owner
+			if (!dna)
+				dna = H
+			H.add_blood(dna)
+			if (H.gloves)
+				H.gloves.add_blood(dna)
+				H.update_gloves()
+			if (H.wear_suit)
+				H.wear_suit.add_blood(dna)
+				H.update_suit()
+			else if (H.w_uniform)
+				H.w_uniform.add_blood(dna)
+				H.update_uniform()
+			if (H.shoes)
+				H.shoes.add_blood(dna)
+				H.update_shoes()
+			else
+				H.update_bloody_feet(dna)
 
 	proc/turn_tap(mob/user)
 		src.add_fingerprint(user)
@@ -274,39 +309,21 @@
 
 				for(var/current_id in reacted_ids)
 					var/datum/reagent/current_reagent = src.reagents.reagent_list[current_id]
-					if (!current_reagent) continue
+					if (!current_reagent)
+						continue
 					src.reagents.remove_reagent(current_id, current_reagent.volume * volume_fraction)
-
-				// hacky, but cool effect
-				if(reagents.has_reagent("blood", suffocation_volume))
-					var/dna = null
-					var/datum/reagent/blood/sample = reagents.get_reagent("blood")
-					if (sample && istype(sample.data, /datum/bioHolder))
-						var/datum/bioHolder/tocopy = sample.data
-						dna = tocopy.owner
-					if (!dna)
-						dna = src.occupant
-					src.occupant.shoes?.add_blood(dna)
-					src.occupant.gloves?.add_blood(dna)
-					src.occupant.belt?.add_blood(dna)
-					if (src.occupant.wear_suit)
-						src.occupant.wear_suit.add_blood(dna)
-					else if (src.occupant.w_uniform)
-						src.occupant.w_uniform.add_blood(dna)
-					src.occupant.add_blood(dna)
-					src.occupant.update_clothing()
-					src.occupant.update_body()
 
 	Exited(atom/movable/Obj, loc)
 		..()
 		if (Obj == src.occupant)
-			src.visible_message("<span class='notice'>[src.occupant] gets out of the bath.</span>", "<span class='notice'>You get out of the bath.</span>")
+			var/mob/M = Obj
+			src.visible_message("<span class='notice'>[M] gets out of the bath.</span>", "<span class='notice'>You get out of the bath.</span>")
 			if (src.reagents.total_volume)
 				playsound(src.loc, 'sound/misc/splash_1.ogg', 70, 3)
-			var/mob/M = Obj
 			M.set_loc(loc)
-			M.layer = initial(src.occupant.layer)
-			src.vis_contents -= src.occupant
+			M.layer = initial(M.layer)
+			src.blood_bath(M)
+			src.vis_contents -= M
 			src.occupant = null
 			src.UpdateOverlays(null, "fluid_overlay")
 			src.UpdateOverlays(null, "bath_edge")
