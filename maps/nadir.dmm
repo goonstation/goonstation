@@ -9421,7 +9421,7 @@
 /area/station/engine/engineering/ce)
 "eoI" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/firstaid/old,
+/obj/item/storage/firstaid,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "eoL" = (

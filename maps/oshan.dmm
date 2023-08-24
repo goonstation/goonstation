@@ -14795,7 +14795,7 @@
 /area/abandonedmedicalship/robot_trader)
 "aUS" = (
 /obj/table/auto,
-/obj/item/storage/firstaid/old,
+/obj/item/storage/firstaid,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aUT" = (
