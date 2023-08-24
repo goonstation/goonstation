@@ -334,8 +334,8 @@
 			//var/coe2 = (THERMAL_ENERGY(current_gas) + src.temperature*src.thermal_mass)
 			//if(abs(coe2 - coe_check) > 64)
 			//	CRASH("COE VIOLATION REACTOR")
-			if(src.current_gas.temperature < 0 || src.temperature < 0)
-				CRASH("TEMP WENT NEGATIVE")
+			if(src.current_gas.temperature <= 0 || src.temperature <= 0)
+				CRASH("TEMP WENT NONPOSITIVE (hottest=[hottest], coldest=[coldest], max_delta_e=[max_delta_e], deltaT=[deltaT], deltaTr=[deltaTr])")
 
 			. = src.current_gas
 		if(inGas && (THERMAL_ENERGY(inGas) > 0))

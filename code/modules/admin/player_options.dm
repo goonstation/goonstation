@@ -151,6 +151,7 @@
 <div id="mobInfo">
 	Mob: <b>[M.name]</b> [M.mind && M.mind.assigned_role ? "{[M.mind.assigned_role]}": ""] (<tt>[html_key_string]</tt>)
 	[M.client ? "" : "<em>(no client)</em>"]
+	[M.ai ? "<a href='[playeropt_link(M.ai, "viewvars")]'>([M.ai.enabled ? "active" : "inactive"] AI)</a>" : ""]
 	[isdead(M) ? "<span class='antag'>(dead)</span>" : ""]
 	<div style="font-family: Monospace; font-size: 0.7em; float: right;">ping [M.client?.chatOutput?.last_ping || "N/A "]ms</div>
 	<br>Mob Type: <b>[M.type]</b>[number_of_antagonist_roles]

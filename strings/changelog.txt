@@ -1,4 +1,30 @@
 
+(t)wed aug 23 23
+(u)FlameArrow57
+(p)15391
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Pressing the equip hotkey while holding a gun that fits on your back will now attempt to add it to your backpack first if it's open.
+(u)LeahTheTech
+(+)Shower heads can now be controlled by mech-comp.
+(t)tue aug 22 23
+(u)Paaiii
+(p)15416
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Added 21 new AI core casings, achievable through various means. See the PR for more details.
+(+)Updated existing AI core casing sprites.
+(+)Made AIs use the pronoun preferences of the character file in core/eye/shells.
+(t)mon aug 21 23
+(u)Glamurio (Ryou)
+(p)15335
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(+)Added a brig shower to Donut3.
+(u)Cheekybrdy
+(p)15231
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Sleeper agents can now access the listening post through scanners at the entrance.
+(t)sat aug 19 23
+(u)pali
+(*)Three new mutations that affect how you hear sounds!
 (t)fri aug 18 23
 (u)FlameArrow57
 (p)15381

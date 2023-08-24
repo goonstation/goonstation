@@ -1193,8 +1193,10 @@
 	icon_rebuild_flag &= ~BODY
 
 /mob/proc/UpdateDamage()
+	SHOULD_CALL_PARENT(TRUE)
+	var/prev_health = src.health
 	updatehealth()
-	return
+	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_DAMAGE, prev_health)
 
 /mob/proc/set_damage_icon_dirty()
 	icon_rebuild_flag |= DAMAGE

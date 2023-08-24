@@ -126,6 +126,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_intercom_help,
 		/client/proc/cmd_dectalk,
 		/client/proc/cmd_admin_remove_plasma,
+		/client/proc/stabilize_station,
 		/client/proc/toggle_death_confetti,
 		/client/proc/cmd_admin_unhandcuff,
 		/client/proc/admin_toggle_lighting,
@@ -193,6 +194,8 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_rotate_type,
 		/client/proc/cmd_spin_type,
 		/client/proc/cmd_get_type,
+		/client/proc/cmd_addComponentType,
+		/client/proc/cmd_removeComponentType,
 		/client/proc/cmd_lightsout,
 
 		/client/proc/vpn_whitelist_add,
