@@ -567,7 +567,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		var/list/brew_result
 		var/list/brew_amount
 
-s		if(istype(W, /obj/item/reagent_containers/food))
+		if(istype(W, /obj/item/reagent_containers/food))
 			var/obj/item/reagent_containers/food/F = W
 			brew_result = F.brew_result
 			brew_amount = F.brew_amount
