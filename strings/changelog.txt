@@ -1,4 +1,9 @@
+
 (t)fri aug 25 23
+(u)Bartimeus973
+(p)15502
+(e)💅📦|C-QoL, A-Game-Objects
+(+)A lot of traitor items now have explanations on how to use them. Double examine or right click -> Help on them to read it.
 (u)LeahTheTech
 (+)Artifact heater pads now actually heat things placed on them. Also heat triggered artifacts can now activate from air temperature.
 (t)wed aug 23 23
