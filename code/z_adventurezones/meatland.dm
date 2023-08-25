@@ -1479,7 +1479,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		src.w_class = initial(src.w_class)
 		return ..()
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (!istype(target, /turf) || !istype(start, /turf))
 			return
 		if (target == user.loc || target == loc)

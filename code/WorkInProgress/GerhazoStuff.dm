@@ -305,7 +305,7 @@
 		var/current_angle = start_angle
 		var/i
 		for(i = 0; i < num_projectiles; i++)
-			var/obj/projectile/P = initialize_projectile_ST(holder.owner, fired_projectile, target)
+			var/obj/projectile/P = initialize_projectile_pixel_spread(holder.owner, fired_projectile, target)
 			if (P)
 				P.mob_shooter = holder.owner
 				P.rotateDirection(current_angle)

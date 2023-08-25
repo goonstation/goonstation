@@ -223,7 +223,7 @@ proc/Create_Tommyname()
 		projectiles = list(new/datum/projectile/tommy)
 		..()
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		for(var/mob/O in AIviewers(user, null))
 			O.show_message("<span class='alert'><B>[user] fires the [src] at [target]!</B></span>", 1, "<span class='alert'>You hear a loud crackling noise.</span>", 2)
 		sleep(0.1 SECONDS)
@@ -861,6 +861,10 @@ proc/Create_Tommyname()
 
 	// Are we ready to do something mean here?
 	var/wire_readied = 0
+
+	HELP_MESSAGE_OVERRIDE({"Use the garrot wire in hand to hold it with two hands, then place yourself behind your target.
+							Click them with the wire to attempt to grab them.
+							While a target is being strangled, use the wire in hand to inflict more damage and bleed in addition to the suffocation."})
 
 	New()
 		..()

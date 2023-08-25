@@ -4,6 +4,9 @@
 	config_tag = "gang"
 	regular = FALSE
 
+	/// Makes it so gang members are chosen randomly at roundstart instead of being recruited.
+	var/random_gangs = FALSE
+
 	antag_token_support = TRUE
 	var/list/gangs = list()
 
@@ -74,14 +77,23 @@
 	var/list/chosen_leader = antagWeighter.choose(pool = leaders_possible, role = ROLE_GANG_LEADER, amount = num_teams, recordChosen = 1)
 	src.traitors |= chosen_leader
 	for (var/datum/mind/leader in src.traitors)
-		leader.special_role = ROLE_GANG_LEADER
 		leaders_possible.Remove(leader)
+		leader.special_role = ROLE_GANG_LEADER
 
 	return 1
 
 /datum/game_mode/gang/post_setup()
-	for (var/datum/mind/leaderMind in src.traitors)
-		leaderMind.add_antagonist(ROLE_GANG_LEADER)
+	for(var/datum/mind/antag_mind in src.traitors)
+		if(antag_mind.special_role == ROLE_GANG_LEADER)
+			antag_mind.add_antagonist(ROLE_GANG_LEADER, silent=TRUE)
+
+	if(src.random_gangs)
+		fill_gangs()
+
+	// we delay announcement to make sure everyone gets information about the other members
+	for(var/datum/mind/antag_mind in src.traitors)
+		antag_mind.get_antagonist(ROLE_GANG_LEADER)?.unsilence()
+		antag_mind.get_antagonist(ROLE_GANG_MEMBER)?.unsilence()
 
 
 	find_potential_hot_zones()
@@ -96,6 +108,28 @@
 		send_intercept()
 
 	return 1
+
+/datum/game_mode/gang/proc/fill_gangs(list/datum/mind/candidates = null, max_member_count = INFINITY)
+	var/num_teams = length(src.gangs)
+	var/num_people_needed = 0
+	for(var/datum/gang/gang in src.gangs)
+		num_people_needed += min(gang.current_max_gang_members, max_member_count) - length(gang.members)
+	if(isnull(candidates))
+		candidates = get_possible_enemies(ROLE_GANG_LEADER, num_people_needed, allow_carbon=TRUE, filter_proc=PROC_REF(can_join_gangs))
+	var/num_people_available = min(num_people_needed, length(candidates))
+	var/people_added_per_gang = round(num_people_available / num_teams)
+	num_people_available = people_added_per_gang * num_teams
+	shuffle_list(candidates)
+	var/i = 1
+	for(var/datum/gang/gang in src.gangs)
+		for(var/j in 1 to people_added_per_gang)
+			var/datum/mind/candidate = candidates[i++]
+			candidate.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = gang.leader, silent=TRUE)
+			traitors |= candidate
+
+/datum/game_mode/gang/proc/can_join_gangs(mob/M)
+	var/datum/job/job = find_job_in_controller_by_string(M.mind.assigned_role)
+	. = !job || job.can_join_gangs
 
 /datum/game_mode/gang/proc/force_shuttle()
 	if (!emergency_shuttle.online)
@@ -285,6 +319,7 @@ proc/broadcast_to_all_gangs(var/message)
 	for (var/datum/gang/gang in get_all_gangs())
 		gang.announcer_radio.set_secure_frequency("g", gang.gang_frequency)
 		gang.announcer_radio.talk_into(gang.announcer_source, messages, "g", gang.announcer_source.name, "english")
+
 /datum/gang
 	/// The maximum number of gang members per gang.
 	var/static/current_max_gang_members = 5
@@ -346,6 +381,9 @@ proc/broadcast_to_all_gangs(var/message)
 	/// Points gained by this gang from completing events.
 	var/score_event = 0
 
+	var/static/list/first_names = strings("gangwar.txt", "part1")
+	var/static/list/second_names = strings("gangwar.txt", "part2")
+
 	New()
 		. = ..()
 		if (!src.used_tags)
@@ -375,19 +413,20 @@ proc/broadcast_to_all_gangs(var/message)
 			var/datum/game_mode/gang/gamemode = ticker.mode
 			gamemode.gangs += src
 
+	proc/generate_random_name()
+		if (prob(70))
+			. = pick_string("gangwar.txt", "fullchosen")
+		else
+			. = "[pick(first_names)] [pick(second_names)]"
+
 	proc/select_gang_name()
-		if (!src.leader || !src.leader.current.client)
-			return
-
-		var/temporary_name = pick_string("gangwar.txt", "fullchosen")
-		var/first_name
-		var/second_name
-
-		var/list/first_names = strings("gangwar.txt", "part1")
-		var/list/second_names = strings("gangwar.txt", "part2")
+		var/temporary_name = generate_random_name()
 
 		while(src.gang_name == "Gang Name")
-			switch(tgui_alert(src.leader.current, "Name: [temporary_name].", "Approve Your Gang's Name", list("Accept", "Reselect", "Randomise")))
+			var/choice = "Accept"
+			if(src.leader?.current)
+				choice = tgui_alert(src.leader?.current, "Name: [temporary_name].", "Approve Your Gang's Name", list("Accept", "Reselect", "Randomise"))
+			switch(choice)
 				if ("Accept")
 					if (temporary_name in src.used_names)
 						boutput(src.leader.current, "<span class='alert'>Another gang has this name.</span>")
@@ -395,20 +434,17 @@ proc/broadcast_to_all_gangs(var/message)
 
 					src.gang_name = temporary_name
 					src.used_names += temporary_name
-					boutput(src.leader.current, "<h4><span class='alert'>Your gang name is [src.gang_name]!</span></h4>")
+
+					for(var/datum/mind/member in src.members + list(src.leader))
+						boutput(member.current, "<h4><span class='alert'>Your gang name is [src.gang_name]!</span></h4>")
 
 				if ("Reselect")
-					first_name = tgui_input_list(src.leader.current, "Select the first word in your gang's name:", "Gang Name Selection", first_names)
-					second_name = tgui_input_list(src.leader.current, "Select the second word in your gang's name:", "Gang Name Selection", second_names)
+					var/first_name = tgui_input_list(src.leader.current, "Select the first word in your gang's name:", "Gang Name Selection", first_names)
+					var/second_name = tgui_input_list(src.leader.current, "Select the second word in your gang's name:", "Gang Name Selection", second_names)
 					temporary_name = "[first_name] [second_name]"
 
 				if ("Randomise")
-					if (prob(70))
-						temporary_name = pick_string("gangwar.txt", "fullchosen")
-					else
-						first_name = pick(first_names)
-						second_name = pick(second_names)
-						temporary_name = "[first_name] [second_name]"
+					temporary_name = generate_random_name()
 
 	proc/select_gang_uniform()
 		// Jumpsuit Selection.
@@ -962,7 +998,11 @@ proc/broadcast_to_all_gangs(var/message)
 			user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
 
 		if(user.mind.special_role == ROLE_GANG_LEADER)
-			user.put_in_hand_or_drop(new /obj/item/storage/box/gang_flyers(user.loc, src.gang))
+			var/datum/game_mode/gang/gamemode = ticker.mode
+			if(gamemode.random_gangs)
+				boutput(user, "<span class='alert'>Your gang is already formed, you get no recruitment flyers.</span>")
+			else
+				user.put_in_hand_or_drop(new /obj/item/storage/box/gang_flyers(user.loc, src.gang))
 
 		src.gang.gear_cooldown += user
 		SPAWN(300 SECONDS)
@@ -1243,6 +1283,11 @@ proc/broadcast_to_all_gangs(var/message)
 		induct_to_gang(user)
 
 	proc/induct_to_gang(var/mob/living/carbon/human/target)
+		var/datum/game_mode/gang/gamemode = ticker.mode
+		if(gamemode.random_gangs)
+			boutput(target, "<span class='alert'>You can't join a gang, they're already preformed!</span>")
+			return
+
 		if(gang == null)
 			boutput(target, "<span class='alert'>The flyer doesn't specify which gang it's advertising!</span>")
 			return
@@ -1274,7 +1319,8 @@ proc/broadcast_to_all_gangs(var/message)
 			boutput(target, "<span class='alert'>You're already in a gang, you can't switch sides!</span>")
 			return
 
-		if(target.mind.assigned_role in list("Security Officer", "Security Assistant", "Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Consultant", "Nanotrasen Special Operative"))
+		var/datum/job/job = find_job_in_controller_by_string(target.mind.assigned_role)
+		if(job && !job.can_join_gangs)
 			boutput(target, "<span class='alert'>You are too responsible to join a gang!</span>")
 			return
 

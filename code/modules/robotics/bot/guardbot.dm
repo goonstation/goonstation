@@ -1185,11 +1185,11 @@
 				nearby_dorks.Add(D)
 			if(length(nearby_dorks) > 0)
 				var/griffed = pick(nearby_dorks)
-				shoot_projectile_ST_pixel(src, thing2shoot, griffed)
+				shoot_projectile_ST_pixel_spread(src, thing2shoot, griffed)
 				return griffed
 			else
 				var/random_direction = get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5))
-				shoot_projectile_ST_pixel(src, thing2shoot, random_direction)
+				shoot_projectile_ST_pixel_spread(src, thing2shoot, random_direction)
 
 		var/target_turf = get_turf(target)
 		var/my_turf = get_turf(src)
@@ -1198,7 +1198,7 @@
 			if((BOUNDS_DIST(target_turf, my_turf) == 0))
 				budgun.shoot_point_blank(target, src)
 			else
-				budgun.shoot(target_turf, my_turf, src)
+				budgun.shoot(target_turf, my_turf, src, called_target = target)
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up
@@ -2028,7 +2028,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 
 
 			if (ranged)
-				var/obj/projectile/P = shoot_projectile_ST_pixel(master, current_projectile, target)
+				var/obj/projectile/P = shoot_projectile_ST_pixel_spread(master, current_projectile, target)
 				if (!P)
 					return
 
@@ -2036,7 +2036,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 				user.visible_message("<span class='alert'><b>[master] throws a pie at [target]!</b></span>")
 
 			else
-				var/obj/projectile/P = initialize_projectile_ST(master, current_projectile, target)
+				var/obj/projectile/P = initialize_projectile_pixel_spread(master, current_projectile, target)
 				if (!P)
 					return
 
@@ -2069,7 +2069,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 				return
 
 			if (ranged)
-				var/obj/projectile/P = shoot_projectile_ST_pixel(master, current_projectile, target)
+				var/obj/projectile/P = shoot_projectile_ST_pixel_spread(master, current_projectile, target)
 				if (!P)
 					return
 				if (!P.reagents)
@@ -2083,7 +2083,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 				user.visible_message("<span class='alert'><b>[master] fires a syringe at [target]!</b></span>")
 
 			else
-				var/obj/projectile/P = initialize_projectile_ST(master, current_projectile, target)
+				var/obj/projectile/P = initialize_projectile_pixel_spread(master, current_projectile, target)
 				if (!P)
 					return
 				if (!P.reagents)
@@ -2153,14 +2153,14 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 				return
 
 			if (ranged)
-				var/obj/projectile/P = shoot_projectile_ST_pixel(master, current_projectile, target)
+				var/obj/projectile/P = shoot_projectile_ST_pixel_spread(master, current_projectile, target)
 				if (!P)
 					return
 
 				user.visible_message("<span class='alert'><b>[master] fires the taser at [target]!</b></span>")
 
 			else
-				var/obj/projectile/P = initialize_projectile_ST(master, current_projectile, target)
+				var/obj/projectile/P = initialize_projectile_pixel_spread(master, current_projectile, target)
 				if (!P)
 					return
 
@@ -4835,7 +4835,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 	icon = 'icons/obj/bots/robuddy/pr-4.dmi'
 
 	hat_x_offset = 2
-	hat_y_offset = -5
+	hat_y_offset = -4
 	setup_no_costumes = 1
 	no_camera = 1
 	setup_charge_maximum = 800
