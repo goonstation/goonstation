@@ -401,7 +401,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /obj/decal/fakeobjects/midfactory
 	name = "Machine"
-	icons = 'icons/obj/large/32x48.dmi'
+	icon = 'icons/obj/large/32x48.dmi'
 	bound_width = 32
 	bound_height = 48
 
