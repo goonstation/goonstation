@@ -19364,11 +19364,6 @@
 	dir = 4
 	},
 /area/station/security/main)
-"iqn" = (
-/turf/space,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "iqo" = (
 /obj/machinery/light{
 	dir = 8;
@@ -108175,7 +108170,7 @@ qlx
 pRb
 pRb
 pRb
-iqn
+vbY
 oZL
 bSU
 kcY
