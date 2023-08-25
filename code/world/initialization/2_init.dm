@@ -134,6 +134,7 @@
 	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
 	makeMiningLevel()
 	#endif
+	global.load_morrigan()
 
 	if (derelict_mode)
 		Z_LOG_DEBUG("World/Init", "Derelict mode stuff")
