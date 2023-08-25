@@ -1218,7 +1218,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 
 	attackby(obj/item/I, mob/user)
 		if (issnippingtool(I))
-			var/action = tgui_input_list(usr, "What do you want to do with [src]?", "Trash Bag", list("Cut into an outfit", "Add to contents"))
+			var/action = tgui_input_list(user, "What do you want to do with [src]?", "Trash Bag", list("Cut into an outfit", "Add to contents"))
 			if (action == "Cut into an outfit")
 				boutput(user, "You begin cutting up [src].")
 				if (!do_after(user, 3 SECONDS))
