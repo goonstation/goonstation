@@ -1,4 +1,6 @@
-
+(t)fri aug 25 23
+(u)LeahTheTech
+(+)Artifact heater pads now actually heat things placed on them. Also heat triggered artifacts can now activate from air temperature.
 (t)wed aug 23 23
 (u)FlameArrow57
 (p)15391
