@@ -412,6 +412,7 @@ datum
 							repair_bleeding_damage(H, 80, 2)
 						if (ishuman(M))
 							var/mob/living/carbon/human/healed = M
+							healed.heal_slash_wound("all")
 							healed.heal_laser_wound("all")
 
 					var/silent = 0
@@ -431,7 +432,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 
 				if(volume >= 5)

@@ -485,7 +485,7 @@
 			for(var/turf/simulated/floor/T in orange(L, 10))
 				randomturfs.Add(T)
 
-			if (randomturfs.len > 0)
+			if (length(randomturfs) > 0)
 				L.emote("hiccup")
 				var/turf/destination = pick(randomturfs)
 				logTheThing(LOG_COMBAT, L, "was teleported by Spatial Destabilization from [log_loc(L)] to [log_loc(destination)].")
@@ -657,7 +657,7 @@
 
 	OnLife(var/mult)
 		var/mob/living/L = owner
-		if (!istype(L) || (L.stat == 2))
+		if (!istype(L) || (isdead(L)))
 			return
 		if (probmult(prob_sting))
 			if (ishuman(L))
@@ -903,7 +903,7 @@
 					for(var/turf/simulated/floor/T in orange(L, 10))
 						randomturfs.Add(T)
 
-					if (randomturfs.len > 0)
+					if (length(randomturfs) > 0)
 						L.emote("hiccup")
 						L.set_loc(pick(randomturfs))
 				if (3)

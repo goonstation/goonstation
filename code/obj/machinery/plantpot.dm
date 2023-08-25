@@ -122,11 +122,11 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 			else if(P)
 				var/obj/item/seed/S = new /obj/item/seed
 
-				S.generic_seed_setup(P)
+				S.generic_seed_setup(P, FALSE)
 				src.HYPnewplant(S)
 
 				for(var/commutes in spawn_commuts)
-					HYPaddCommut(src.current, src.plantgenes, commutes)
+					HYPaddCommut(src.plantgenes, commutes)
 
 				if(spawn_growth)
 					src.grow_level = spawn_growth
@@ -182,7 +182,7 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 
 	flower
 		New()
-			spawn_plant = pick(/datum/plant/flower/rose)
+			spawn_plant = pick(/datum/plant/flower/rose, /datum/plant/flower/gardenia, /datum/plant/flower/hydrangea)
 			..()
 
 	crop
@@ -683,7 +683,7 @@ TYPEINFO(/obj/machinery/plantpot)
 				SEED = new SP.selected.unique_seed
 			else
 				SEED = new /obj/item/seed
-			SEED.generic_seed_setup(SP.selected)
+			SEED.generic_seed_setup(SP.selected, FALSE)
 			SEED.set_loc(src)
 			if(SEED.planttype)
 				src.HYPnewplant(SEED)
@@ -701,9 +701,10 @@ TYPEINFO(/obj/machinery/plantpot)
 				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 				return
 			else
-				user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
+				//corrects the amount of reagents shown to have been used when pouring into a tray
+				var/trans = W.reagents.trans_to(src, W:amount_per_transfer_from_this)
+				user.visible_message("<span class='notice'>[user] pours [trans] units of [W]'s contents into [src].</span>")
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if(!(user in src.contributors))
 					src.contributors += user
 				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
@@ -1011,7 +1012,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		if(!user) return
 		var/satchelpick = 0
 		if(SA)
-			if(SA.contents.len >= SA.maxitems)
+			if(length(SA.contents) >= SA.maxitems)
 				boutput(user, "<span class='alert'>Your satchel is already full! Free some space up first.</span>")
 				return
 			else
@@ -1261,7 +1262,7 @@ TYPEINFO(/obj/machinery/plantpot)
 					var/datum/plantgenes/HDNA = src.plantgenes
 					var/datum/plantgenes/SDNA = S.plantgenes
 					if(!growing.unique_seed && !growing.hybrid)
-						S.generic_seed_setup(growing)
+						S.generic_seed_setup(growing, TRUE)
 
 					var/seedname = "[growing.name]"
 					if(istype(MUT,/datum/plantmutation/))
@@ -1322,7 +1323,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(SA)
 				// If we're putting stuff in a satchel, this is where we do it.
 				for(var/obj/item/I in src.contents)
-					if(SA.contents.len >= SA.maxitems)
+					if(length(SA.contents) >= SA.maxitems)
 						boutput(user, "<span class='alert'>Your satchel is full! You dump the rest on the floor.</span>")
 						break
 					if(istype(I,/obj/item/seed/))
@@ -1484,16 +1485,8 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.health_warning = 0
 		src.harvest_warning = 0
 		src.contributors = list()
-		var/datum/plantgenes/DNA = src.plantgenes
-
-		DNA.growtime = 0
-		DNA.harvtime = 0
-		DNA.cropsize = 0
-		DNA.harvests = 0
-		DNA.potency = 0
-		DNA.endurance = 0
-		DNA.commuts = null
-		DNA.mutation = null
+		src.plantgenes.mutation?.HYPdestroyplant_proc_M(src)
+		src.plantgenes = new(random_alleles = FALSE)
 
 		src.generation = 0
 		UpdateIcon()
@@ -1553,6 +1546,9 @@ proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/pl
 	// This is called during harvest to add reagents from the plant to a new piece of produce.
 	if(!I || !DNA || !I.reagents) return
 
+	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/inert) && prob(95))
+		return
+
 	var/datum/plantmutation/MUT = DNA.mutation
 
 	var/basecapacity = 8
@@ -1606,6 +1602,9 @@ proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
 	// using the same list as the parent as adding new items is what creates a new list
 	CHILD.commuts = PARENT.commuts
 	if(MUT) CHILD.mutation = new MUT.type(CHILD)
+	if (length(CHILD.commuts))
+		for (var/datum/plant_gene_strain/checked_strain in CHILD.commuts)
+			checked_strain.on_passing(CHILD)
 
 proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,var/datum/plantgenes/DNA)
 	// This is the proc plant analyzers use to pop up their readout for the player.
@@ -1711,11 +1710,13 @@ proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/mach
 			if(prob(chance))
 				if(HYPmutationcheck_full(P,DNA,MUT))
 					DNA.mutation = HY_get_mutation_from_path(MUT.type)
+					MUT.HYPon_mutation_general(P, DNA)
 					if(PP)
 						playsound(PP, MUT.mutation_sfx, 10, 1)
 						PP.UpdateIcon()
 						PP.update_name()
 						animate_wiggle_then_reset(PP, 1, 2)
+						MUT.HYPon_mutation_pot(P, PP, DNA)
 					else if(S)
 						// If it is not in a pot, it is most likely in PlantMaster Mk3
 						playsound(S, MUT.mutation_sfx, 20, 1)
@@ -1734,7 +1735,7 @@ proc/HYPnewcommutcheck(var/datum/plant/P,var/datum/plantgenes/DNA, var/frequency
 	if(!P || !DNA) return
 	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/stabilizer))
 		return
-	if(P.commuts.len > 0)
+	if(length(P.commuts) > 0)
 		var/datum/plant_gene_strain/MUT = null
 		for (var/datum/plant_gene_strain/X in P.commuts)
 			if(HYPCheckCommut(DNA,X.type))
@@ -1750,20 +1751,40 @@ proc/HYPnewcommutcheck(var/datum/plant/P,var/datum/plantgenes/DNA, var/frequency
 			else
 				// new list containing new mutation
 				DNA.commuts = list(MUT)
+			//now, if the gene strain needs to do anything, we do it now
+			MUT.on_addition(DNA)
 
-proc/HYPaddCommut(var/datum/plant/P,var/datum/plantgenes/DNA,var/commut)
+proc/HYPaddCommut(var/datum/plantgenes/DNA, var/commut)
 	// And this one is for forcibly adding specific strains.
-	if(!P || !DNA || !commut) return
+	if(!DNA || !commut) return
 	if(!ispath(commut)) return
 	if(DNA.commuts)
 		for (var/datum/plant_gene_strain/X in DNA.commuts)
 			if(X.type == commut)
 				return
+	var/datum/plant_gene_strain/added_commut = HY_get_strain_from_path(commut)
 	// create a new list here (i.e. do not use +=) so as to not affect related seeds/plants
-	if(DNA.commuts)
-		DNA.commuts = DNA.commuts + HY_get_strain_from_path(commut)
-	else
-		DNA.commuts = list(HY_get_strain_from_path(commut))
+	if(added_commut)
+		if(DNA.commuts)
+			DNA.commuts = DNA.commuts + added_commut
+		else
+			DNA.commuts = list(added_commut)
+		//now, if the gene strain needs to do anything, we do it now
+		added_commut.on_addition(DNA)
+
+
+proc/HYPremoveCommut(var/datum/plantgenes/DNA, var/commut)
+	// And this one is for forcibly removing specific strains.
+	if(!DNA || !commut || !DNA.commuts) return
+	if(!ispath(commut)) return
+	if(!HYPCheckCommut(DNA, commut)) return
+	// create a new list here (i.e. do not use -=) so as to not affect related seeds/plants
+	var/datum/plant_gene_strain/removed_commut = HY_get_strain_from_path(commut)
+	if(removed_commut)
+		DNA.commuts = DNA.commuts - removed_commut
+		removed_commut.on_removal(DNA)
+
+
 
 proc/HYPmutateDNA(var/datum/plantgenes/DNA,var/severity = 1)
 	// This proc jumbles up the variables in a plant's genes. It's fundamental to breeding.

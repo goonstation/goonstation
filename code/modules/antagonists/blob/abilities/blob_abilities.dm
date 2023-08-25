@@ -282,7 +282,7 @@
 		var/hsv = rgb2hsv(r,g,b)
 		owner.organ_color = hsv2rgb( hsv[1], hsv[2], 100 )
 
-		owner.my_material.color = owner.color
+		owner.my_material.setColor(owner.color)
 
 /datum/blob_ability/tutorial
 	name = "Interactive Tutorial"
@@ -764,7 +764,7 @@
 
 		var/obj/item/I = items[1]
 		if (!sel_target)
-			if (items.len > 1)
+			if (length(items) > 1)
 				I = input("Which item?", "Item", null) as null|anything in items
 		else
 			I = sel_target

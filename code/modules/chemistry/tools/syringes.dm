@@ -235,7 +235,7 @@
 	initial_reagents = "insulin"
 
 /obj/item/reagent_containers/syringe/haloperidol
-	name = "syringe (anti-psychotic)"
+	name = "syringe (haloperidol)"
 	desc = "Contains haloperidol - used for sedation and to counter violent psychosis."
 	initial_reagents = "haloperidol"
 

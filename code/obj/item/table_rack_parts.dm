@@ -52,7 +52,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 				newThing.setMaterial(src.material)
 			if (user)
 				newThing.add_fingerprint(user)
-				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.getID() ? "[newThing.material.getID()]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return newThing
@@ -292,6 +292,7 @@ TYPEINFO(/obj/item/furniture_parts/table/glass)
 	desc = "A collection of parts that can be used to make a rack."
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "rack_base_parts"
+	item_state = "rack_parts"
 	stamina_damage = 25
 	stamina_cost = 22
 	stamina_crit_chance = 15
@@ -369,6 +370,14 @@ TYPEINFO(/obj/item/furniture_parts/table/glass)
 	stamina_cost = 15
 	furniture_type = /obj/stool/wooden
 	furniture_name = "wooden stool"
+
+/obj/item/furniture_parts/stool/pet_bed
+	name = "pet bed parts"
+	desc = "A collection of parts that can be used to make a pet bed."
+	icon = 'icons/obj/furniture/chairs.dmi'
+	icon_state = "comf_chair_parts-b"	// @TODO new icon, mprobably
+	furniture_type = /obj/stool/pet_bed
+	furniture_name = "pet bed"
 
 /obj/item/furniture_parts/stool/bee_bed
 	name = "bee bed parts"

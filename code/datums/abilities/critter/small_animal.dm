@@ -210,7 +210,7 @@
 		cooldown = 12 SECONDS
 		attack_verb = "bite"
 		venom1 = "viper_venom"
-		amt1 = 40
+		amt1 = 12
 		amt2 = 0
 
 /datum/targetable/critter/pincer_grab

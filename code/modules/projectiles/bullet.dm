@@ -1739,3 +1739,26 @@ datum/projectile/bullet/autocannon
 	shot_sound = null
 	projectile_speed = 12
 	implanted = null
+
+/datum/projectile/bullet/wall_buster_shrapnel // for nuclear meltdowns
+	name = "shrapnel"
+	damage = 70
+	damage_type = D_PIERCING
+	armor_ignored = 0.66
+	hit_type = DAMAGE_CUT
+	window_pass = 0
+	icon = 'icons/obj/scrap.dmi'
+	icon_state = "2metal0"
+	casing = null
+	impact_image_state = "bhole-staple"
+	implanted = /obj/item/implant/projectile/shrapnel/radioactive
+
+	on_hit(atom/hit, angle, obj/projectile/O)
+		if(!ismob(hit))
+			//I'm onto you with your stacks of thindows
+			if(!isturf(hit)) //did you know that turf.loc is /area? because I didn't
+				for(var/obj/window/maybe_thindow in hit.loc)
+					maybe_thindow.ex_act(2)
+			//let's pretend these walls/objects were destroyed in the explosion
+			hit.ex_act(2)
+		. = ..()

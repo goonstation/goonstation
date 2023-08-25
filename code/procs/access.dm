@@ -47,11 +47,11 @@
 								// string code
 								// TODO: some sensible lookup, possibly using access_name_lookup (but they're VERY wordy)
 					// add to the src.req_access list (assuming non-empty)
-					if (access_group.len > 1)
+					if (length(access_group) > 1)
 						// add the whole access group
 						// odd syntax is because += with a list on the right appends the items of the list, not the list itself, so we wrap in a list so it only unpacks once
 						src.req_access += list(access_group)
-					else if (access_group.len == 1)
+					else if (length(access_group) == 1)
 						// add the single element
 						src.req_access += access_group[1]
 		else
@@ -125,7 +125,7 @@
 	if (!istype(src.req_access, /list))
 		return 1
 	// no requirements (also clean up src.req_access)
-	if (src.req_access.len == 0)
+	if (length(src.req_access) == 0)
 		src.req_access = null
 		return 1
 
@@ -164,7 +164,7 @@
 	if (!istype(src.req_access, /list))
 		return 1
 	// no requirements (also clean up src.req_access)
-	if (src.req_access.len == 0)
+	if (length(src.req_access) == 0)
 		src.req_access = null
 		return 1
 
@@ -207,7 +207,7 @@
 						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_crematorium, access_kitchen, access_robotics, access_cargo, access_supply_console,
 						access_research, access_hydro, access_ranch, access_mail, access_ai_upload, access_pathology, access_researchfoyer,
-						access_telesci)
+						access_telesci, access_teleporter)
 		if("Head of Security")
 #ifdef RP_MODE
 			var/list/hos_access = get_all_accesses()

@@ -258,7 +258,7 @@
 
 		processCaseRadiation(tmpRads)
 
-		src.material.triggerTemp(src,src.temperature)
+		src.material_trigger_on_temp(src.temperature)
 
 		total_thermal_e += src.thermal_mass * src.temperature
 		total_gas_volume += src.reactor_vessel_gas_volume
@@ -334,11 +334,11 @@
 			//var/coe2 = (THERMAL_ENERGY(current_gas) + src.temperature*src.thermal_mass)
 			//if(abs(coe2 - coe_check) > 64)
 			//	CRASH("COE VIOLATION REACTOR")
-			if(src.current_gas.temperature < 0 || src.temperature < 0)
-				CRASH("TEMP WENT NEGATIVE")
+			if(src.current_gas.temperature <= 0 || src.temperature <= 0)
+				CRASH("TEMP WENT NONPOSITIVE (hottest=[hottest], coldest=[coldest], max_delta_e=[max_delta_e], deltaT=[deltaT], deltaTr=[deltaTr])")
 
 			. = src.current_gas
-		if(inGas)
+		if(inGas && (THERMAL_ENERGY(inGas) > 0))
 			src.current_gas = inGas.remove((src.reactor_vessel_gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
 			if(src.current_gas && TOTAL_MOLES(src.current_gas) < 1)
 				if(istype(., /datum/gas_mixture))
@@ -383,6 +383,10 @@
 		src.current_gas.temperature = src.temperature
 		var/turf/current_loc = get_turf(src)
 		current_loc.assume_air(current_gas)
+
+		for(var/i = 1 to rand(5,20))
+			shoot_projectile_XY(src, new /datum/projectile/bullet/wall_buster_shrapnel(), rand(-10,10), rand(-10,10))
+
 		explosion_new(src,current_loc,2500,1,0,360,TRUE)
 		SPAWN(15 SECONDS)
 			alarm.repeat = FALSE //haha this is horrendous, this cannot be the way to do this
@@ -615,7 +619,7 @@
 			SPAWN(4 SECONDS)
 				playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, 1)
 				var/obj/item/reactor_component/fuel_rod/meat_rod = new /obj/item/reactor_component/fuel_rod("flesh")
-				meat_rod.material.name = user.name
+				meat_rod.material.setName(user.name)
 				if(user.bioHolder && user.bioHolder.HasEffect("radioactive"))
 					meat_rod.material.setProperty("radioactive", 3)
 				meat_rod.setMaterial(meat_rod.material)
@@ -634,8 +638,8 @@
 			return FALSE
 
 	/// Transmuting nuclear engine into jeans sometimes causes a client crash
-	setMaterial(datum/material/mat1, appearance, setname, copy, use_descriptors)
-		if(mat1.mat_id == "jean")
+	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = FALSE, var/use_descriptors = FALSE)
+		if(mat1.getID() == "jean")
 			return
 		. = ..()
 
@@ -702,7 +706,10 @@
 	New()
 		for(var/x=2 to REACTOR_GRID_WIDTH-1)
 			for(var/y=2 to REACTOR_GRID_HEIGHT-1)
-				src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("plutonium")
+				if(x==4 && y==4)
+					src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("plutonium")
+				else
+					src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("cerenkite")
 		..()
 
 #undef REACTOR_GRID_WIDTH

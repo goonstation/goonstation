@@ -32,6 +32,9 @@
 
 		. = ..()
 
+	relocate()
+		var/mob/M = src.owner.current
+		M.set_loc(pick_landmark(LANDMARK_BLOBSTART))
 
 	assign_objectives()
 		new /datum/objective_set/blob(src.owner, src)

@@ -51,7 +51,7 @@
 
 	possible_syndicates = get_possible_enemies(ROLE_NUKEOP, num_synds)
 
-	if (!islist(possible_syndicates) || possible_syndicates.len < 1)
+	if (!islist(possible_syndicates) || length(possible_syndicates) < 1)
 		boutput(world, "<span class='alert'><b>ERROR: couldn't assign any players as Syndicate operatives, aborting nuke round pre-setup.</b></span>")
 		return 0
 
@@ -231,7 +231,7 @@
 
 		if(synd_mind == leader_mind)
 			var/mob/living/carbon/human/H = synd_mind.current
-			H.equip_if_possible(new /obj/item/device/audio_log/nuke_briefing(H, concatenated_location_names), H.slot_r_hand)
+			H.equip_if_possible(new /obj/item/device/audio_log/nuke_briefing(H, concatenated_location_names), SLOT_R_HAND)
 
 	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
 	OTHER_START_TRACKING_CAT(the_bomb, TR_CAT_GHOST_OBSERVABLES) // STOP_TRACKING done in bomb/disposing()

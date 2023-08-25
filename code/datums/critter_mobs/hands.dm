@@ -20,7 +20,8 @@
 	var/image/obscurer
 	var/cooldown_overlay = 0
 	var/mob/holder = null
-
+	/// sets the inhands of an item, for limbs with weapons, etc. should be a type of /obj/item.
+	var/object_for_inhand = null // Ex. var/object_for_inhand = /obj/item/dagger
 	var/obj/item/parts/limbholder				// technically a dummy, do not set.
 
 	New()
@@ -62,5 +63,6 @@
 				screenObj?.overlays -= obscurer
 
 	proc/can_special_attack()
-		if (!holder || !limb) return 0
-		.= (holder.a_intent == INTENT_DISARM && limb.disarm_special) || (holder.a_intent == INTENT_HARM && limb.harm_special)
+		if (!holder || !limb)
+			return FALSE
+		return (holder.a_intent == INTENT_DISARM && limb.disarm_special) || (holder.a_intent == INTENT_HARM && limb.harm_special)

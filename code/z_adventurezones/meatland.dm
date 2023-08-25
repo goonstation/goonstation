@@ -157,7 +157,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	anchored = ANCHORED
 	seekrange = 1
 	attack_range = 1
-	butcherable = 0
+	butcherable = BUTCHER_NOT_ALLOWED
 	density = 1
 	aggressive = 1
 	atkcarbon = 1
@@ -364,7 +364,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		if (!exploded_sentence || !length(exploded_sentence))
 			return 1
 
-		if (exploded_sentence.len > 1)
+		if (length(exploded_sentence) > 1)
 			if (prob(50))
 				exploded_sentence.Cut( rand(1, round(exploded_sentence.len / 2)))
 				exploded_sentence.len = max(5, exploded_sentence.len - rand(1,4))
@@ -1063,7 +1063,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			if (signal?.data["authcode"] && !(signal.data["authcode"] in src.knownKeys))
 				knownKeys += signal.data["authcode"]
 
-				if (knownKeys.len >= 2 && !inPasswordRequestMode)
+				if (length(knownKeys) >= 2 && !inPasswordRequestMode)
 					inPasswordRequestMode = 1
 					src.print_text("&#x041F;&#x410;&#x0420;&#x41E;&#x41B;&#x42C;?")
 
@@ -1072,7 +1072,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			if (signal?.data["authcode"] && (signal.data["authcode"] in src.knownKeys))
 				knownKeys -= signal.data["authcode"]
 
-				if (knownKeys.len < 2)
+				if (length(knownKeys) < 2)
 					inPasswordRequestMode = 0
 
 /obj/item/peripheral/cheget
@@ -1479,7 +1479,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		src.w_class = initial(src.w_class)
 		return ..()
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (!istype(target, /turf) || !istype(start, /turf))
 			return
 		if (target == user.loc || target == loc)

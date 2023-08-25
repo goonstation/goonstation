@@ -18,6 +18,11 @@ var/list/special_places = list() //list of location names, which are coincidenta
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", PROC_REF(mechcompsend))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"receive", PROC_REF(mechcompreceive))
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
@@ -158,7 +163,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 		return
 
 	proc/tick()
-		if(events_active.len < 3)
+		if(length(events_active) < 3)
 
 			var/can_spawn = 0 //If there's only events with less than 100% rarity left, we don't spawn anything.
 			//This is to stop the system from spawning only rare events when there's few left.
@@ -253,7 +258,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 		return
 
 	CritterDeath()
-		if(prob(20) && alive)
+		if(prob(33) && alive && !dying)
 			src.visible_message("<span class='alert'><b>[src]</b> begins to reassemble!</span>")
 			var/turf/T = src.loc
 			SPAWN(5 SECONDS)
@@ -261,7 +266,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 				if(src)
 					qdel(src)
 
-		if(prob(1) && alive)
+		if(prob(5) && alive && !dying)
 			new/obj/item/material_piece/iridiumalloy(src.loc)
 
 		..()

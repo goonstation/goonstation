@@ -161,6 +161,16 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		src.open()
 		playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
 
+	Crossed(atom/movable/AM) //copy pasted from closet because inheritence is a lie
+		. = ..()
+		if (src.open && ismob(AM) && AM.throwing)
+			var/datum/thrown_thing/thr = global.throwing_controller.throws_of_atom(AM)[1]
+			AM.throw_impact(src, thr)
+			AM.throwing = FALSE
+			AM.changeStatus("weakened", 1 SECOND)
+			AM.set_loc(src.loc)
+			src.close()
+
 /obj/storage/secure/closet/personal
 	name = "personal locker"
 	desc = "The first card swiped gains control."
@@ -710,6 +720,10 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			var/obj/item/reagent_containers/glass/bottle/acid/B6 = new(src)
 			B6.pixel_y = -5
 			B6.pixel_x = 4
+
+			var/obj/item/reagent_containers/food/drinks/fueltank/B7 = new(src)
+			B7.pixel_y = 0
+			B7.pixel_x = 0
 			return 1
 
 /* ======================= */
@@ -833,6 +847,21 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/reagent_containers/glass/wateringcan,
 	/obj/item/paper/book/from_file/hydroponicsguide,
 	/obj/item/device/appraisal)
+
+/obj/storage/secure/closet/civilian/ranch
+	name = "\improper Rancher supplies locker"
+	req_access = list(access_ranch)
+	spawn_contents = list(/obj/item/paper/ranch_guide,\
+	/obj/item/fishing_rod/basic,\
+	/obj/item/storage/box/clothing/rancher,\
+	/obj/item/device/camera_viewer/ranch,\
+	/obj/item/clothing/mask/chicken,\
+	/obj/item/chicken_carrier,\
+	/obj/item/storage/box/syringes,\
+	/obj/item/satchel/hydro,\
+	/obj/item/reagent_containers/glass/wateringcan,\
+	/obj/item/sponge,\
+	/obj/item/kitchen/food_box/egg_box/rancher)
 
 /obj/storage/secure/closet/civilian/kitchen
 	name = "\improper Catering supplies locker"

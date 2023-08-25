@@ -30,7 +30,7 @@
 			for(var/obj/machinery/mass_driver/D in range(1,src))
 				drivers += D
 			if(drivers.len)
-				if(drivers.len > 1)
+				if(length(drivers) > 1)
 					for(var/obj/machinery/mass_driver/D2 in drivers)
 						if(D2.id == src.id)
 							driver = D2

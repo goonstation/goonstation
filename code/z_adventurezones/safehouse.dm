@@ -73,7 +73,7 @@
 			vertical
 				dir = EAST
 
-/obj/machinery/door_control/podbay/suspiciousdebris/
+/obj/machinery/door_control/podbay/suspiciousdebris
 	name = "suspicious debris"
 	id = "podbay_safehouse"
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
@@ -582,7 +582,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		<br> Head Researcher, VitaNova</span>
 		"}
 
-/datum/computer/file/record/saferoom/
+/datum/computer/file/record/saferoom
 	New()
 		..()
 		src.name = "[copytext("\ref[src]", 4, 12)]GENERIC"

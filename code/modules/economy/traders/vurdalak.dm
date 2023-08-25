@@ -75,14 +75,14 @@
 
 /datum/commodity/trader/vurdalak/meat
 	comname = "Raw Meat"
-	comtype = /obj/item/reagent_containers/food/snacks/ingredient/meat/
+	comtype = /obj/item/reagent_containers/food/snacks/ingredient/meat
 	price_boundary = list(30,150)
 	possible_names = list("Our stocks of raw meat are running low. The condition is of no concern.",
 	"We wish to purchase raw meat of any kind. Spoilage is not an issue.")
 
 /datum/commodity/trader/vurdalak/brains
 	comname = "Brains"
-	comtype = /obj/item/organ/brain/
+	comtype = /obj/item/organ/brain
 	price_boundary = list(1000,3500)
 	possible_names = list("Our stocks of brains are running low. We care not for the condition.",
 	"We require the excised brains of living creatures. If you have such an item, sell it to us.")

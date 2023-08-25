@@ -462,7 +462,7 @@ proc/ui_describe_reagents(atom/A)
 				if(istype(I, /obj/item/ammo/bullets))
 					var/obj/item/ammo/A = I
 					I = A.ammo_type
-				if (I.material && I.material.mat_id == "silver")
+				if (I.material && I.material.getID() == "silver")
 					boutput(user, "<span class='notice'>[I] is already coated, more silver won't do any good.</span>")
 				else
 					boutput(user, "<span class='notice'>[src] doesn't have enough silver in it to coat [I].</span>")
@@ -645,7 +645,7 @@ proc/ui_describe_reagents(atom/A)
 				var/mob/living/carbon/human/H = AM
 				var/obj/item/clothing/head/helmet/bucket/hat/bucket_hat = new src.hat_bucket_type(src.loc)
 				if(isnull(H.head))
-					H.equip_if_possible(bucket_hat, H.slot_head)
+					H.equip_if_possible(bucket_hat, SLOT_HEAD)
 					H.set_clothing_icon_dirty()
 					H.visible_message("<span class='alert'>[src] falls from \the [targetDoor], landing on [H] like a hat[splash? ", and splashing [him_or_her(H)] with its contents" : ""]! [pick("Peak comedy!","Hilarious!","What a tool!")]</span>", \
 										"<span class='alert'>[src] falls from \the [targetDoor], landing on your head like a hat[splash? ", and splashing you with its contents" : ""]!</span>")

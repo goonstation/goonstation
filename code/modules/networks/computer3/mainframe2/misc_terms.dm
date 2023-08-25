@@ -3807,7 +3807,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				return
 
 		if (I.w_class < W_CLASS_BULKY)
-			if (src.contents.len < src.setup_max_objects)
+			if (length(src.contents) < src.setup_max_objects)
 				if(I.cant_drop)
 					return
 				if (mag)
@@ -4485,9 +4485,8 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				src.temperature -= min(5, src.temperature-src.temptarget)
 
 			if (src.temperature != 310)
-				for (var/obj/M in src.loc.contents)
-					if (istype(M.artifact,/datum/artifact/))
-						M.ArtifactStimulus("heat", temperature)
+				for (var/atom/movable/AM in src.loc.contents)
+					AM.temperature_expose(null, src.temperature, CELL_VOLUME)
 
 			if (src.stopattarget && src.temperature == src.temptarget)
 				src.active = 0

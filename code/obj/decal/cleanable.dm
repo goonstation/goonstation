@@ -239,7 +239,7 @@ proc/make_cleanable(var/type,var/loc)
 					new_overlay.color = add_color
 					src.last_color = add_color
 
-				if (src.overlays.len >= 4) //stop adding more overlays you're lagging client FPS!!!!
+				if (length(src.overlays) >= 4) //stop adding more overlays you're lagging client FPS!!!!
 					src.UpdateOverlays(new_overlay, "cleanablefinal")
 				else
 					src.UpdateOverlays(new_overlay, "cleanble[length(src.overlays)]")
@@ -472,11 +472,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 		src.reagents.add_reagent(reagent_id, amount, blood_reagent_data)
 
-		var/turf/simulated/floor/T = src.loc
-		if (istype(T) && do_fluid_react)
-			if (T.cleanable_fluid_react(src))
-				return
-
 		/*if (istext(amount))
 			create_overlay(amount, add_color, direction)
 			amount = 1 // so the rand()s and prob()s down there doesn't freak out
@@ -518,6 +513,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			if (prob(vis_amount*10))
 				I.add_blood(src)
 			if(counter++>25)break
+
+		var/turf/simulated/floor/T = src.loc
+		if (istype(T) && do_fluid_react)
+			if (T.cleanable_fluid_react(src))
+				return
 
 /obj/decal/cleanable/blood/dynamic/tracks
 	//name = "bloody footprints"

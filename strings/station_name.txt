@@ -12,7 +12,7 @@ greek@=Alpha@,Beta@,Gamma@,Delta@,Epsilon@,Zeta@,Eta@,Theta@,Iota@,Kappa@,Lambda
 
 romanNum@=II@,III@,IV@,V@,VI@,VII@,VIII@,IX@,X@,XI@,XII@,XIII@,XIV@,XV@,XVI@,XVII@,XVIII@,XIX@,XX
 
-frontierLocations@=Typhon@,Plasma Star@,Fortitudo@,mAntistes@,Quadriga@,Fatuus@,Domus Dei@,Mundus@,Iustitia@,Iudicium@,Rota Fortuna@,Amantes@,Magus@,Regis@,Regina@,Mors@,Flaminica@,Senex@,Estella@,Shidd@,Abzu@,Fugg@,Frontier@,Channel@,Buttes@,Buttes Junction
+frontierLocations@=Typhon@,Plasma Star@,Fortitudo@,Antistes@,Quadriga@,Fatuus@,Domus Dei@,Mundus@,Iustitia@,Iudicium@,Rota Fortuna@,Amantes@,Magus@,Regis@,Regina@,Mors@,Flaminica@,Senex@,Estella@,Shidd@,Šid@,Abzu@,Fugg@,Fugere@,Frontier@,Channel@,Buttes@,Buttes Junction
 
 militaryLetters@=Alpha@,Bravo@,Charlie@,Delta@,Echo@,Foxtrot@,Golf@,Hotel@,India@,Juliet@,Kilo@,Lima@,Mike@,November@,Oscar@,Papa@,Quebec@,Romeo@,Sierra@,Tango@,Uniform@,Victor@,Whiskey@,X-ray@,Yankee@,Zulu
 

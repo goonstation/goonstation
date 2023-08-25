@@ -121,13 +121,14 @@
 
 	var/last_sleep = 0 //used for sleep_bubble
 
-	can_lie = 1
+	can_lie = TRUE
 
 	var/const/singing_prefix = "%"
 
 	var/void_mindswappable = FALSE //are we compatible with the void mindswapper?
 
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
+	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	src.create_mob_silhouette()
 	..()
 	init_preferences?.copy_to(src, usr, ignore_randomizer, skip_post_new_stuff=TRUE)
@@ -154,6 +155,7 @@
 	vision.flash(duration)
 
 /mob/living/disposing()
+	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	ai_target = null
 	ai_target_old.len = 0
 	move_laying = null
@@ -350,16 +352,15 @@
 	target.Attackhand(src, params, location, control, origParams)
 
 /mob/living/proc/hand_range_attack(atom/target, params, location, control, origParams)
-	.= 0
 	var/datum/limb/L = src.equipped_limb()
-	if (L)
-		.= L.attack_range(target,src,params)
-		if (.)
-			src.lastattacked = src
+	if (L && L.attack_range(target, src, params))
+		src.lastattacked = src
+		return TRUE
+	return FALSE
 
 /mob/living/proc/weapon_attack(atom/target, obj/item/W, reach, params)
 	var/usingInner = 0
-	if (W.useInnerItem && W.contents.len > 0)
+	if (W.useInnerItem && length(W.contents) > 0)
 		var/obj/item/held = W.holding
 		if (!held)
 			held = pick(W.contents)
@@ -718,7 +719,7 @@
 #endif
 
 	if (src.client && src.client.ismuted())
-		boutput(src, "You are currently muted and may not speak.")
+		boutput(src, "<b class='alert'>You are currently muted and may not speak.<b>")
 		return
 
 	if(!src.canspeak)
@@ -1090,7 +1091,7 @@
 				say_location = L
 
 		olocs = obj_loc_chain(say_location)
-		if(olocs.len > 0) // fix runtime list index out of bounds when loc is null (IT CAN HAPPEN, APPARENTLY)
+		if(length(olocs) > 0) // fix runtime list index out of bounds when loc is null (IT CAN HAPPEN, APPARENTLY)
 			for (var/atom/movable/AM in olocs)
 				thickness += AM.soundproofing
 
@@ -1161,15 +1162,21 @@
 
 		var/popup_style = src.speechpopupstyle
 
-		if (src.find_type_in_hand(/obj/item/megaphone))
-			var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
+		var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
+		if (megaphone)
 			popup_style += "font-weight: bold; font-size: [megaphone.maptext_size]px; -dm-text-outline: 1px [megaphone.maptext_outline_color];"
+			popup_style += megaphone.maptext_size >= 12 ? "font-family: 'PxPlus IBM VGA9'" : "font-family: 'Small Fonts'"
 			maptext_color = megaphone.maptext_color
 
 		if(unique_maptext_style)
 			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + unique_maptext_style + singing_italics)
 		else
 			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + popup_style + singing_italics)
+
+		if (megaphone)
+			chat_text.maptext_height *= 4 // have some extra space friend
+			chat_text.maptext_width *= 2
+			chat_text.maptext_x = (chat_text.maptext_x * 2) - 16 // keep centered
 
 		if(maptext_animation_colors)
 			oscillate_colors(chat_text, maptext_animation_colors)
@@ -1547,10 +1554,6 @@
 	if (!M || !src) //Apparently M could be a meatcube and this causes HELLA runtimes.
 		return
 
-	if (!ticker)
-		boutput(M, "You cannot interact with other people before the game has started.")
-		return
-
 	M.lastattacked = src
 
 	attack_particle(M,src)
@@ -1571,11 +1574,9 @@
 		gloves = null
 		//Todo: get critter gloves if they have a slot. also clean this up in general...
 
-	if (gloves?.material)
-		gloves.material.triggerOnAttack(gloves, M, src)
+	gloves?.material_on_attack_use(M, src)
 	for (var/atom/A in src)
-		if (A.material)
-			A.material.triggerOnAttacked(A, M, src, gloves)
+		A.material_trigger_on_mob_attacked(M, src, gloves, location)
 
 	M.viral_transmission(src,"Contact",1)
 
@@ -1759,8 +1760,8 @@
 						// else, ignore p_class*/
 						else if(ismob(A))
 							var/mob/M = A
-							//if they're lying, pull em slower, unless you have anext_move gang and they are in your gang.
-							if(M.lying)
+							//if they're lying or dead, pull em slower, unless you have anext_move gang and they are in your gang.
+							if(M.lying || isdead(M))
 								var/datum/gang/gang = src.get_gang()
 								if (gang && (gang == M.get_gang()))
 									. *= 1		//do nothing
@@ -1783,7 +1784,7 @@
 
 			if (G.state == GRAB_PASSIVE)
 				if (GET_DIST(src,M) > 0 && GET_DIST(move_target,M) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
-					if(ismob(M) && M.lying)
+					if(ismob(M) && (M.lying || isdead(M)))
 						. *= lerp(1, max(M.p_class, 1), pushpull_multiplier)
 			else
 				. *= lerp(1, max(M.p_class, 1), pushpull_multiplier)
@@ -1907,10 +1908,11 @@
 		P.die()
 		return 0
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 	for (var/atom/A in src)
-		if (A.material)
-			if(src.material) src.material.triggerOnBullet(A, src, P)
+		A.material_trigger_on_bullet(src, P)
+	for (var/atom/equipped_stuff in src.equipped())
+		equipped_stuff.material_trigger_on_bullet(src, P)
 
 	if (!P.proj_data)
 		return 0

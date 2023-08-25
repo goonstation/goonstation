@@ -255,13 +255,9 @@
 				else
 					boutput(OAI, "Your connection to the camera has been lost.")
 		*/
-		var/obj/machinery/computer/security/S = O.using_dialog_of_type(/obj/machinery/computer/security)
-		if (S)
-			if (S.current == src)
-				S.remove_dialog(O)
-				S.current = null
-				O.set_eye(null)
-				boutput(O, "The screen bursts into static.")
+		if(O.eye == src)
+			O.set_eye(null)
+			boutput(O, "The screen bursts into static.")
 
 /obj/machinery/camera/proc/break_camera(mob/user)
 	src.set_camera_status(FALSE)
@@ -288,13 +284,7 @@
 		return
 
 	if (issnippingtool(W) && !src.reinforced)
-		if (src.camera_status)
-			src.break_camera(user)
-		else
-			src.repair_camera(user)
-		// now disconnect anyone using the camera
-		src.disconnect_viewers()
-		return
+		SETUP_GENERIC_ACTIONBAR(src, src, 0.5 SECOND, /obj/machinery/camera/proc/snipcamera, null, W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 
 	if (!src.camera_status)
 		return
@@ -354,7 +344,7 @@
 /obj/machinery/camera/motion/proc/lostTarget(var/mob/target)
 	if (target in motionTargets)
 		motionTargets -= target
-	if (motionTargets.len == 0)
+	if (length(motionTargets) == 0)
 		cancelAlarm()
 
 /obj/machinery/camera/motion/proc/cancelAlarm()
@@ -391,7 +381,14 @@
 			for (var/mob/living/silicon/aiPlayer in mobs) // manually cancel, to not disturb internal state
 				aiPlayer.cancelAlarm("Motion", src.loc.loc)
 
-
+/obj/machinery/camera/proc/snipcamera(user)
+	if (src.camera_status)
+		src.break_camera(user)
+	else
+		src.repair_camera(user)
+	// now disconnect anyone using the camera
+	src.disconnect_viewers()
+	return
 
 
 /*------------------------------------

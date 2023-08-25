@@ -36,7 +36,7 @@
 	health_burn = 25
 	health_burn_vuln = 0.5
 	metabolizes = 0 // for now?
-	butcherable = 2
+	butcherable = BUTCHER_YOU_MONSTER
 	flags = TABLEPASS
 	fits_under_table = 1
 	hand_count = 3

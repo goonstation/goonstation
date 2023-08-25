@@ -325,7 +325,7 @@
 	if(C && T && BOUNDS_DIST(C, T) == 0)
 		C.set_dir(get_dir(C, T))
 		if(C.can_critter_attack()) //if we can't attack, just do nothing until we can
-			C.critter_attack(holder.target)
+			C.critter_retaliate(holder.target)
 			src.has_started = TRUE
 	else if(C && T)
 		//we're not in punching range, let's fix that by moving back to the move subtask

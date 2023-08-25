@@ -1,6 +1,4 @@
-
 // station landmarks
-
 #define LANDMARK_PESTSTART "peststart"
 #define LANDMARK_LATEJOIN "JoinLate"
 #define LANDMARK_LATEJOIN_MISSILE "latejoin missile"
@@ -24,7 +22,6 @@
 #define LANDMARK_SHUTTLE_TRANSIT "shuttle-transit"
 
 // nukies
-
 #define LANDMARK_SYNDICATE "Syndicate-Spawn"
 #define LANDMARK_SYNDICATE_BOSS "SR Syndicate-Spawn"
 #define LANDMARK_NUCLEAR_BOMB "Nuclear-Bomb"
@@ -41,10 +38,12 @@
 #define LANDMARK_PIRATE_CAPTAIN "Pirate-Captain-Spawn"
 
 // Salvagers
-
 #define LANDMARK_SALVAGER "Salvager-Spawn"
 #define LANDMARK_SALVAGER_BEACON "Salvager-Beacon"
 #define LANDMARK_SALVAGER_TELEPORTER "Salvager-Tele"
+
+// Wizard
+#define LANDMARK_WIZARD "Wizard_Spawn"
 
 // misc and unused
 #define LANDMARK_CHARACTER_PREVIEW_SPAWN "character preview"
@@ -59,7 +58,6 @@
 #define LANDMARK_ESCAPE_POD_SUCCESS "escape_pod_success" // escape pods go here when they don't fail
 #define LANDMARK_ASS_ARENA_SPAWN "ass_arena_spawn" // Ass Jam respawn arena spawns
 #define LANDMARK_MALF_GEAR_CLOSET "Malf-Gear-Closet"
-#define LANDMARK_AI_SAT "AI-Sat" // AI Satellite for AI MALF
 #define LANDMARK_TELEPORT_SCROLL "Teleport-Scroll" // waldo scrolls
 #define LANDMARK_AI_GUNBOT_SHUTTLE "AIgunbotshuttle" // MALF AI module thing
 #define LANDMARK_BIGBOOM "bigboom" // unfinished Manta event
@@ -67,20 +65,19 @@
 #define LANDMARK_TUTORIAL_FLOCK_CONVERSION "tutorial_flock_conversion"
 #define LANDMARK_CRUISER_ENTRANCE "cruiser_entrance"
 #define LANDMARK_CRUISER_CENTER "cruiser_center"
+
 // loading screen maptext landmarks
 #define LANDMARK_LOBBY_LEFTSIDE "lobby_leftside"
 #define LANDMARK_LOBBY_STATUS "lobby_status"
 #define LANDMARK_LOBBY_TIMER "lobby_timer"
 
-// VR networks
-
+// VR network
 #define LANDMARK_VR_DET_NET "det_net"
 #define LANDMARK_VR_ARCADE "arcadevr"
 #define LANDMARK_VR_BOMBTEST "bombtest" // where the nerds spawn
 #define LANDMARK_VR_BOMB "bombtest-bomb" // Landmark where the ~vr bomb~ spawns. (just a landmark not a network id)
 
 // falling down holes
-
 #define LANDMARK_FALL_DEBUG "pit_debug" // locations to fall if you fucked up the warptarget on a hole_xy
 #define LANDMARK_FALL_ICE "icefall" // locations for people to fall if they enter the deep abyss on the ice moon
 #define LANDMARK_FALL_POLARIS "polarisfall" // locations for people to fall if they enter the deep in the trench
@@ -103,6 +100,8 @@
 #define LANDMARK_LRT "lrt landmark"
 #define LANDMARK_SAMOSTREL_WARP "samostrel"
 #define LANDMARK_EVIL_CHEF_CORPSE "evilchef_corpse"
+#define LANDMARK_PLANETS "artemis planets"
+#define LANDMARK_SHIPS "artemis ships"
 
 // Visual mirror warp modes
 #define LANDMARK_VM_WARP_NONE 0

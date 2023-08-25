@@ -397,7 +397,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 		words += pick(more_words)
 		return words
 
-ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
+ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleportation)
 /datum/targetable/critter/cryptid_plushie/teleportation
 	var/animation_ripples = 4
 	var/animation_waves = 3

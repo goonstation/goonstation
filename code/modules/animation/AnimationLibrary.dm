@@ -1754,6 +1754,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 			M.update_canmove()
 
 /obj/decal/laserbeam
+	anchored = ANCHORED
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
 

@@ -916,6 +916,13 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			..()
 			implant_overlay = null
 
+		radioactive
+			name = "radioactive shrapnel"
+
+			New()
+				..()
+				src.AddComponent(/datum/component/radioactive, 50, FALSE, FALSE, 0)
+
 	glass_shard
 		name = "shrapnel"
 		icon = 'icons/obj/scrap.dmi'

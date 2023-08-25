@@ -135,10 +135,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		updateButtons()
 
 	proc/toggle()
-		if (!islist(src.abilities))
-			boutput(usr, "You have no abilities! What happened?! Call 1-800-CODER!")
-			return
-
 		display_buttons = !display_buttons
 		if (display_buttons)
 			for (var/datum/targetable/ghost_observer/A in src.abilities)
@@ -156,7 +152,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		src.addAbility(/datum/targetable/ghost_observer/reenter_corpse)
 		src.addAbility(/datum/targetable/ghost_observer/toggle_lighting)
 		src.addAbility(/datum/targetable/ghost_observer/toggle_ghosts)
-		src.addAbility(/datum/targetable/ghost_observer/observe_object)
 		// src.addAbility(/datum/targetable/ghost_observer/afterlife_Bar)
 		// src.addAbility(/datum/targetable/ghost_observer/respawn_animal)	//moved to respawn_options menu
 		src.addAbility(/datum/targetable/ghost_observer/respawn_options)
@@ -184,7 +179,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		src.removeAbility(/datum/targetable/ghost_observer/reenter_corpse)
 		src.removeAbility(/datum/targetable/ghost_observer/toggle_lighting)
 		src.removeAbility(/datum/targetable/ghost_observer/toggle_ghosts)
-		src.removeAbility(/datum/targetable/ghost_observer/observe_object)
 		// src.removeAbility(/datum/targetable/ghost_observer/afterlife_Bar)
 		// src.removeAbility(/datum/targetable/ghost_observer/respawn_animal)
 		src.removeAbility(/datum/targetable/ghost_observer/respawn_options)
@@ -234,13 +228,10 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			var/mob/dead/observer/ghost = holder.owner
 			ghost.dead_tele()
 
-		else
-			boutput(usr, "Oop! Something broke! Just type \"teleport\" (without the quotation marks) into the bottom bar.")
-
 /datum/targetable/ghost_observer/observe
 	name = "Observe"
-	desc = "Observe a specific person."
-	icon_state = "observe-person"
+	desc = "Observe a specific person, NPC, or object."
+	icon_state = "observeobject"
 	targeted = 0
 	cooldown = 0
 
@@ -249,9 +240,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (holder && istype(holder.owner, /mob/dead/observer))
 			var/mob/dead/observer/ghost = holder.owner
 			ghost.observe()
-
-		else
-			boutput(usr, "Oop! Something broke! Just type \"Re-enter Corpse\" (without the quotation marks) into the bottom bar.")
 
 /datum/targetable/ghost_observer/reenter_corpse
 	name = "Re-enter Corpse"
@@ -266,9 +254,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			var/mob/dead/observer/ghost = holder.owner
 			ghost.reenter_corpse()
 
-		else
-			boutput(usr, "Oop! Something broke! Just type \"Re-enter Corpse\" (without the quotation marks) into the bottom bar.")
-
 
 
 /datum/targetable/ghost_observer/toggle_lighting
@@ -282,16 +267,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (holder && istype(holder.owner, /mob/dead/observer))
 			var/mob/dead/observer/ghost = holder.owner
 			ghost.toggle_lighting()
-			// var/atom/plane = ghost.client.get_plane(PLANE_LIGHTING)
-			// if (plane)
-			// 	if (plane.alpha)
-			// 		icon_state = "bulb-0"
-			// 	else
-			// 		icon_state = "bulb-1"
-			// holder.updateButtons()
-		else
-			boutput(usr, "Oop! Something broke! Just type \"Toggle Lighting\" (without the quotation marks) into the bottom bar.")
-
 
 /datum/targetable/ghost_observer/toggle_ghosts
 	name = "Toggle Seeing Ghosts"
@@ -304,24 +279,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (holder && istype(holder.owner, /mob/dead/observer))
 			var/mob/dead/observer/ghost = holder.owner
 			ghost.toggle_ghosts()
-		else
-			boutput(usr, "Oop! Something broke! Just type \"Toggle Ghosts\" (without the quotation marks) into the bottom bar.")
-
-
-/datum/targetable/ghost_observer/observe_object
-	name = "Observe Object"
-	desc = "Observe one of selected objects in the world."
-	icon_state = "observeobject"
-	targeted = 0
-	cooldown = 0
-
-	cast(atom/target)
-		if (holder && istype(holder.owner, /mob/dead/observer))
-			var/mob/dead/observer/ghost = holder.owner
-			ghost.observe_object()
-		else
-			boutput(usr, "Oop! Something broke! Just type \"Observe Object\" (without the quotation marks) into the bottom bar.")
-
 
 /datum/targetable/ghost_observer/toggle_HUD
 	name = "Hide HUD"
@@ -332,23 +289,25 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	cast(atom/target)
 		if (holder && istype(holder, /datum/abilityHolder/ghost_observer) && istype(holder.owner, /mob/dead/observer))
+			var/mob/dead/observer/observer = holder.owner
 			var/datum/abilityHolder/ghost_observer/GH = holder
 			if (GH.display_buttons)
 				name = "Show HUD"
 				desc = "Show all HUD buttons."
 				icon_state = "show"
+				if(observer.hud.respawn_timer)
+					observer.hud.remove_object(observer.hud.respawn_timer)
 			else
 				name = "Hide HUD"
 				desc = "Hide all HUD buttons."
 				icon_state = "hide"
+				if(observer.hud.respawn_timer)
+					observer.hud.add_object(observer.hud.respawn_timer)
 
 			GH.toggle()
 			GH.updateButtons(1)
 
-			boutput( usr, "Use the command \"Toggle Ability Buttons\" in the \"Ghost\" commands tab at the top right to re-enable buttons.." )
-
-		else
-			boutput(usr, "Oop! Something broke! Just type \"Toggle Ability Buttons\" (without the quotation marks) into the bottom bar.")
+			boutput(usr, "<b class='alert'>Use the command \"Toggle Ability Buttons\" in the \"Ghost\" commands tab at the top right to re-enable buttons.</b>")
 
 /datum/targetable/ghost_observer/respawn_options
 	name = "Respawn Options"
@@ -378,7 +337,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	cast(atom/target)
 		displaying_buttons = !displaying_buttons
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
-			boutput(holder.owner, "Sorry, respawn options aren't availbale during football mode.")
+			boutput(holder.owner, "<h3 class='alert'>Sorry, respawn options aren't availbale during football mode.</span>")
 			displaying_buttons = 0
 		if (!displaying_buttons)
 			holder.owner.closeContextActions()
@@ -395,9 +354,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			var/mob/dead/observer/ghost = holder.owner
 			ghost.respawn_as_animal()
 
-		else
-			boutput(usr, "Oop! Something broke! Just type \"Respawn-As-Animal\" (without the quotation marks) into the bottom bar.")
-
 /datum/targetable/ghost_observer/ass_day_arena
 	name = "Fight for a new life!"
 	desc = "Go to the Respawn Arena."
@@ -409,10 +365,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (holder && istype(holder.owner, /mob/dead/observer))
 			var/mob/dead/observer/ghost = holder.owner
 			ghost.go_to_respawn_arena()
-
-		else
-			boutput(usr, "Uhhh something broke. Oops. Please go yell at a coder to get this fixed.")
-
 #ifdef HALLOWEEN
 /datum/targetable/ghost_observer/spooktober_hud
 	name = "Spooktober Spookpoints"

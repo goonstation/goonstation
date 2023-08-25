@@ -273,7 +273,7 @@
 		result += "[t][t2]"
 
 
-		if(result.len > 100)
+		if(length(result) > 100)
 			result.Cut(1,2)
 		master.updateSelfDialog()
 
@@ -430,7 +430,7 @@
 
 		else if(href_list["add"])
 
-			if(keyval && (keyval.len >= MAX_PACKET_KEYS))
+			if(keyval && (length(keyval) >= MAX_PACKET_KEYS))
 				return
 
 			var/newkey = copytext(ckeyEx( input("Enter Packet Key", "Packet Sender") as text|null ), 1, 255)

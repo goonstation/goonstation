@@ -338,7 +338,7 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 				src.charge_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
 			if(ret["charge"] >= 37) //this makes it only enter its "final" sprite when it's actually able to fire, if you change the amount of charge regen or max charge the bow has, make this number one charge increment before full charge
 				src.charge_image.icon_state = "[src.icon_state]full"
-				//UpdateIcon()
+				src.UpdateOverlays(src.charge_image, "charge")
 			else
 				var/ratio = min(1, ret["charge"] / ret["max_charge"])
 				ratio = round(ratio, 0.25) * 100
@@ -604,7 +604,7 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 		..()
 		return
 
-	shoot(var/target,var/start,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user)) // No more attack messages for empty guns (Convair880).
 			playsound(user, 'sound/weapons/DSBFG.ogg', 75)
 			sleep(0.9 SECONDS)
@@ -678,7 +678,7 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 			else
 				continue
 
-		if (L.len < 2)
+		if (length(L) < 2)
 			user.show_text("Error: no working teleporters detected.", "red")
 			return
 
@@ -727,7 +727,7 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 		TB.target = our_target
 		return ..(M, user)
 
-	shoot(var/target, var/start, var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (!src.our_target)
 			user.show_text("Error: no target set. Please select a teleporter first.", "red")
 			return
@@ -1081,7 +1081,7 @@ TYPEINFO(/obj/item/gun_parts)
 		projectiles = list(new/datum/projectile/bullet/glitch/gun)
 		..()
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user)) // No more attack messages for empty guns (Convair880).
 			playsound(user, 'sound/weapons/DSBFG.ogg', 75)
 			sleep(0.1 SECONDS)
@@ -1227,7 +1227,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 			return
 		return ..(M, user)
 
-	shoot(var/target, var/start, var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (istype(current_projectile, /datum/projectile/pickpocket/steal) && heldItem)
 			boutput(user, "Cannot steal items while gun is holding something!")
 			return
@@ -1367,7 +1367,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			are_you_the_law(M, msg[1])
 			return //AFAIK only humans have fingerprints/"palmprints(in judge dredd)" so just ignore any talk from non-humans arlight? it's not a big deal.
 
-		if(!src.projectiles && !src.projectiles.len > 1)
+		if(!src.projectiles && !length(src.projectiles) > 1)
 			boutput(M, "<span class='notice'>Gun broke. Call 1-800-CODER.</span>")
 			set_current_projectile(new/datum/projectile/energy_bolt/aoe)
 			item_state = "lawg-detain"
@@ -1511,7 +1511,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			return 1
 		return 0
 
-	shoot(var/target,var/start,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user))
 			//removing this for now so anyone can shoot it. I PROBABLY will want it back, doing this for some light appeasement to see how it goes.
 			//shock the guy who tries to use this if they aren't the proper owner. (or if the gun is not emagged)
@@ -1713,7 +1713,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		if(++shotcount == 2 && istype(P.proj_data, /datum/projectile/laser/signifer_lethal/))
 			P.proj_data = new/datum/projectile/laser/signifer_lethal/brute
 
-	shoot()
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		shotcount = 0
 		. = ..()
 
@@ -1740,6 +1740,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	rechargeable = 0
 	shoot_delay = 8 DECI SECONDS
 	spread_angle = 3
+	can_dual_wield = 0
 	var/extended = FALSE
 
 	New()
@@ -1823,7 +1824,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		..()
 		return
 
-	shoot(var/target,var/start,var/mob/user) //it's experimental for a reason; use at your own risk!
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null) //it's experimental for a reason; use at your own risk!
 		if (canshoot(user))
 			if (GET_COOLDOWN(src, "raygun_cooldown"))
 				return

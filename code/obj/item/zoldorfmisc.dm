@@ -103,9 +103,9 @@
 			cards -= cardname
 			if(cardname != "Head of Personnel")
 				usedcards += cardname
-			if(cards.len == 11)
+			if(length(cards) == 11)
 				src.icon_state = "deck2"
-			if(cards.len == 5)
+			if(length(cards) == 5)
 				src.icon_state = "deck3"
 			var/obj/item/zoldorfcard/card = new /obj/item/zoldorfcard
 			user.put_in_hand_or_drop(card)
@@ -117,7 +117,7 @@
 				else
 					cardnumber += bufferlist[1]
 					qdel(bufferlist[2])
-			if(cards.len == 0)
+			if(length(cards) == 0)
 				src.inuse = 0
 				for(var/atom/movable/AM in contents)
 					AM.set_loc(get_turf(src))
@@ -432,7 +432,7 @@
 					if(istype(T, /turf/space) || T.density)
 						continue
 					randomturfs.Add(T)
-				if(randomturfs.len > 0)
+				if(length(randomturfs) > 0)
 					boutput(user, "<span class='alert'>You are suddenly zapped away elsewhere!</span>")
 					user.set_loc(pick(randomturfs))
 					elecflash(user)
@@ -462,7 +462,7 @@
 						src.hatuser.visible_message("<span class='alert'><b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Magic!</b></span>","<span class='alert'><b>The [src.hatstorage] tumbles out of your hat!</b></span>")
 					else
 						src.hatuser.visible_message("<span class='alert'><b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Wait...Where did they get the hat?</b></span>","<span class='alert'><b>The [src.hatstorage] tumbles out of your hat! Wait...Where did you get the hat?</b></span>")
-					h.equip_if_possible(new /obj/item/clothing/head/that(h), h.slot_head)
+					h.equip_if_possible(new /obj/item/clothing/head/that(h), SLOT_HEAD)
 
 				else
 					user.put_in_hand_or_drop(new /obj/item/clothing/head/that)
@@ -483,7 +483,7 @@
 					src.hatuser.visible_message("<span class='alert'><b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Magic!</b></span>","<span class='alert'><b>The [src.hatstorage] tumbles out of your hat!</b></span>")
 				else
 					src.hatuser.visible_message("<span class='alert'><b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Wait...Where did they get the hat?</b></span>","<span class='alert'><b>The [src.hatstorage] tumbles out of your hat! Wait...Where did you get the hat?</b></span>")
-				h.equip_if_possible(new /obj/item/clothing/head/that, h.slot_head)
+				h.equip_if_possible(new /obj/item/clothing/head/that, SLOT_HEAD)
 			else
 				src.hatuser.put_in_hand_or_drop(new /obj/item/clothing/head/that)
 				src.hatuser.visible_message("<span class='alert'><b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Wait...Where did they get the hat?</b></span>","<span class='alert'><b>The [src.hatstorage] tumbles out of your hat! Wait...Where did you get the hat?</b></span>")

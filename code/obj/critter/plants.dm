@@ -12,7 +12,7 @@
 	atksilicon = 0
 	firevuln = 2
 	brutevuln = 0.5
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	name_the_meat = 0
 	chase_text = "slams into"
 	meat_type = /obj/item/reagent_containers/food/snacks/salad
@@ -100,7 +100,7 @@
 	atksilicon = 1
 	firevuln = 2
 	brutevuln = 2
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	name_the_meat = 0
 	death_text = "%src% messily splatters into a puddle of tomato sauce!"
 	chase_text = "viciously lunges at"

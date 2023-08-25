@@ -113,7 +113,7 @@ var/global/the_automaton = null
 			for (var/mob/M in view(7,src))
 				mobsnearby.Add("[M.name]")
 			var/mob/M1 = null
-			if (mobsnearby.len > 0) // somehow this returned a blank list once wtf
+			if (length(mobsnearby) > 0) // somehow this returned a blank list once wtf
 				M1 = pick(mobsnearby)
 			if (M1 && prob(50)) // do we see anyone
 				if (!src.muted)

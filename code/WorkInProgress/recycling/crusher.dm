@@ -230,7 +230,7 @@ TYPEINFO(/obj/machinery/crusher)
 /obj/machinery/crusher/New()
 	..()
 	var/turf/T = get_turf(src)
-	if (T.contents.len > 100) //if it has to check too much stuff, it might lag?
+	if (length(T.contents) > 100) //if it has to check too much stuff, it might lag?
 		src.visible_message("<span style='color:red'>\The [src] fails to deploy because of how much stuff there is on the ground! Clean it up!</span>")
 		qdel(src)
 		return

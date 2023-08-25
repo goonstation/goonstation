@@ -1,4 +1,4 @@
-ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm)
+ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 /obj/machinery/nuclearbomb
 	name = "nuclear bomb"
@@ -10,6 +10,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm)
 	event_handler_flags = IMMUNE_MANTA_PUSH
 	_health = 150
 	_max_health = 150
+	processing_tier = PROCESSING_FULL
 	var/armed = FALSE
 	var/det_time = 0
 	var/timer_default = 10 MINUTES
@@ -87,6 +88,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm)
 		else
 			src.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">[get_countdown_timer()]</span>"
 		return
+
+	proc/set_time_left()
+		if (!src.armed)
+			var/input = input(usr, "Enter new timer duration (s)", "Set timer", src.timer_default/10) as num | null
+			if (!isnull(input))
+				src.timer_default = input SECONDS
+		else
+			var/current_time_left = (src.det_time - TIME)/10
+			var/input = input(usr, "Modify timer duration (s)", "Set timer", current_time_left) as num | null
+			if (!isnull(input))
+				src.det_time = TIME + input SECONDS
 
 	examine(mob/user)
 		. = ..()
@@ -293,7 +305,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm)
 		var/damage = 0
 		damage = round(((P.power/6)*P.proj_data.ks_ratio), 1.0)
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		if (damage <= 0)
 			return
