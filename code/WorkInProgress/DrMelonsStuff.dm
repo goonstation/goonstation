@@ -199,11 +199,11 @@
 		src.occupant.set_loc(src)
 		if (src.reagents?.total_volume)
 			playsound(src.loc, 'sound/misc/splash_2.ogg', 70, 3)
+			src.blood_bath(src.occupant)
 		src.UpdateOverlays(src.SafeGetOverlayImage("bath_edge", 'icons/obj/stationobjs.dmi', "bath_edge", MOB_LAYER - 0.1), "bath_edge")
 		src.on_reagent_change()
 		src.occupant.layer = MOB_LAYER - 0.3
 		src.vis_contents += src.occupant
-		src.blood_bath(src.occupant)
 
 	proc/eject_occupant(mob/user)
 		if (isintangible(user))
@@ -217,7 +217,6 @@
 			boutput("<span class='alert'>There's no one inside!</span>")
 			return
 		src.occupant.set_loc(get_turf(src))
-		src.occupant = null
 
 	proc/blood_bath(var/mob/living/carbon/human/H)
 		// hacky, but cool effect
@@ -318,11 +317,11 @@
 		if (Obj == src.occupant)
 			var/mob/M = Obj
 			src.visible_message("<span class='notice'>[M] gets out of the bath.</span>", "<span class='notice'>You get out of the bath.</span>")
-			if (src.reagents.total_volume)
+			if (src.reagents?.total_volume)
 				playsound(src.loc, 'sound/misc/splash_1.ogg', 70, 3)
+				src.blood_bath(M)
 			M.set_loc(loc)
 			M.layer = initial(M.layer)
-			src.blood_bath(M)
 			src.vis_contents -= M
 			src.occupant = null
 			src.UpdateOverlays(null, "fluid_overlay")
