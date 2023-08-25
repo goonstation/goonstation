@@ -1724,10 +1724,7 @@
 	},
 /area/station/hallway/primary/west)
 "axd" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post";
-	dir = 4
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/maint,
 /obj/decal/mule/dropoff,
 /obj/disposalpipe/segment{
@@ -10029,10 +10026,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "cUf" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post";
-	dir = 4
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/maint,
 /obj/decal/mule/dropoff,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -10111,10 +10105,7 @@
 	},
 /area/station/crew_quarters/bar)
 "cVF" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post";
-	dir = 4
-	},
+/obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "cVG" = (
@@ -14712,10 +14703,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
 "esL" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post";
-	dir = 4
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/access/maint,
@@ -17930,10 +17918,7 @@
 /area/station/maintenance/outer/west)
 "fug" = (
 /obj/decal/mule/dropoff,
-/obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post";
-	dir = 4
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/sanitary/blue,
@@ -24761,10 +24746,7 @@
 	name = "Genetic Research"
 	})
 "hvZ" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post";
-	dir = 4
-	},
+/obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/inner/north)
 "hwl" = (
@@ -25721,10 +25703,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/hangar/sec)
 "hNb" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post";
-	dir = 4
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/access/maint,
@@ -47544,10 +47523,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "oAx" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post";
-	dir = 4
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/research,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/mule/dropoff,
@@ -47589,10 +47565,7 @@
 /area/station/maintenance/outer/north)
 "oBp" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post";
-	dir = 4
-	},
+/obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "oBq" = (
@@ -48518,10 +48491,7 @@
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "oQd" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post";
-	dir = 4
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/research,
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/plating,
@@ -48826,10 +48796,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "oUy" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post";
-	dir = 4
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/mule/dropoff,
 /obj/mapping_helper/access/heads,
@@ -50490,10 +50457,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "pvH" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post";
-	dir = 4
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -55137,10 +55101,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "qOk" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post";
-	dir = 4
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/maint,
 /obj/decal/mule/dropoff,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -60698,10 +60659,7 @@
 /turf/simulated/floor/stairs/wood2/wide,
 /area/station/crew_quarters/bar)
 "sAf" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post";
-	dir = 4
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -61370,10 +61328,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "sMC" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post";
-	dir = 4
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/maint,
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/plating/jen,
