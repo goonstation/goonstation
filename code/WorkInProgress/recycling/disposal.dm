@@ -1,4 +1,3 @@
-
 #define PIPEC_MAIL "#8dc2f4"
 #define PIPEC_BRIG "#ff6666"
 #define PIPEC_EJECTION "#f2a673"
@@ -183,7 +182,7 @@
 	text = ""
 	HELP_MESSAGE_OVERRIDE({"You can use a <b>welding tool</b> to detach the pipe to move it around."})
 
-	var/spawner_type = /obj/disposalpipe/auto
+	var/spawner_type = /obj/disposalpipe/segment/auto
 	level = 1			//! underfloor only
 	var/dpdir = 0		//! bitmask of pipe directions
 	dir = 0				//! dir will contain dominant direction for junction pipes
@@ -1966,8 +1965,8 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 					pipe.set_dir(new_dir)
 				break
 	pipe.fix_sprite()
-ABSTRACT_TYPE(/obj/disposalpipe/auto)
-/obj/disposalpipe/auto
+ABSTRACT_TYPE(/obj/disposalpipe/segment/auto)
+/obj/disposalpipe/segment/auto
 	icon = 'icons/obj/disposal.dmi'
 	name = "disposal pipe spawner"
 	icon_state = "pipe-spawner"
@@ -2031,18 +2030,18 @@ ABSTRACT_TYPE(/obj/disposalpipe/auto)
 		pipe_type = /obj/disposalpipe/segment/cargo
 		trunk_type = /obj/disposalpipe/trunk/cargo
 
-ABSTRACT_TYPE(/obj/disposalpipe/auto)
+ABSTRACT_TYPE(/obj/disposalpipe/segment/auto)
 
-/obj/disposalpipe/auto/New()
+/obj/disposalpipe/segment/auto/New()
 	..()
 	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
 		SPAWN(1 SECONDS)
 			if(!src.disposed)
 				initialize()
 
-/obj/disposalpipe/auto/initialize()
+/obj/disposalpipe/segment/auto/initialize()
 	var/list/selftile = list()
-	for (var/obj/disposalpipe/auto/dupe in range(0, src))
+	for (var/obj/disposalpipe/segment/auto/dupe in range(0, src))
 		if (istype(dupe, src))
 			selftile += dupe
 	if (length(selftile) > 1)
@@ -2050,7 +2049,7 @@ ABSTRACT_TYPE(/obj/disposalpipe/auto)
 	selftile.Cut()
 	var/list/directions = list()
 	for(var/dir_to_pipe in cardinal)
-		for(var/obj/disposalpipe/auto/maybe_pipe in get_step(src, dir_to_pipe))
+		for(var/obj/disposalpipe/segment/auto/maybe_pipe in get_step(src, dir_to_pipe))
 		// checks for other pipe spawners of its own type
 			if(istype(maybe_pipe, src) || istype(src, maybe_pipe))
 				src.dpdir |= dir_to_pipe

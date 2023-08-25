@@ -1951,7 +1951,7 @@
 /area/space)
 "ie" = (
 /obj/machinery/disposal/transport,
-/obj/disposalpipe/auto/transport,
+/obj/disposalpipe/segment/auto/transport,
 /turf/simulated/floor,
 /area/space)
 "if" = (
@@ -7391,7 +7391,7 @@
 /area/space)
 "Dy" = (
 /obj/machinery/disposal/ore,
-/obj/disposalpipe/auto/mineral,
+/obj/disposalpipe/segment/auto/mineral,
 /turf/simulated/floor/yellow,
 /area/space)
 "DA" = (
@@ -7453,7 +7453,7 @@
 /area/space)
 "DR" = (
 /obj/machinery/disposal/brig,
-/obj/disposalpipe/auto/brig,
+/obj/disposalpipe/segment/auto/brig,
 /turf/simulated/floor/yellow,
 /area/space)
 "DS" = (
@@ -9172,7 +9172,7 @@
 /area/space)
 "La" = (
 /obj/machinery/disposal/morgue,
-/obj/disposalpipe/auto/morgue,
+/obj/disposalpipe/segment/auto/morgue,
 /turf/simulated/floor,
 /area/space)
 "Lb" = (
