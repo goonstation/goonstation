@@ -333,17 +333,131 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	desc = "Hafgan's fearsome model, this one seems to be unfinished."
 	icon_state = "gunbot_rep4"
 
+/obj/decal/fakeobjects/gunbotrep/clawbot
+	name = "Unfinished CQC Unit"
+	icon_state = "clawbot_rep"
+
+/obj/decal/fakeobjects/gunbotrep/gunbotarm
+	name = "Gun Arm"
+	icon_state = "gunbot_arm"
+
+/obj/decal/fakeobjects/gunbotrep/gunbotarm2
+	name = "Gun Arm"
+	icon_state = "gunbot_arm2"
+
+/obj/decal/fakeobjects/gunbotrep/engineerbot
+	name = "Unfinished 	MULTI Unit"
+	icon_state = "engineerbot_rep"
+
+/obj/decal/fakeobjects/gunbotrep/riotbot
+	name = "Unfinished Riot Unit"
+	icon_state = "riotbot"
 /obj/decal/fakeobjects/gunbotrep/jacklift
 	name = "Jack-lift"
 	desc = "Used to lift up units that need repairs or require finishing."
 	icon_state = "jacklift"
 
+/obj/decal/fakeobjects/gunbotrep/clawbotinactive
+	name = "Inactive CQC Unit"
+	icon_state = "clawbotina"
+
+/obj/decal/fakeobjects/gunbotrep/engineerbotinactive
+	name = "Inactive MULTI Unit"
+	icon_state = "engina"
+
+/obj/decal/fakeobjects/gunbotrep/medibotinactive
+	name = "Inactive Medical Unit"
+	icon_state = "medibotina"
+/obj/decal/fakeobjects/gunbotrep/riotbotina
+	name = "Inactive Riot Unit"
+	icon_state = "riotbotina"
 /obj/decal/fakeobjects/tpractice
 	name = "Target Practice Dummy"
 	desc = "You can just IMAGINE why it's blue..."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bopbagsyd"
 
+/obj/decal/fakeobjects/factory
+	name = "Machine"
+	icon = 'icons/obj/adventurezones/morrigan/factory64x64.dmi'
+	bound_width = 64
+	bound_height = 64
+
+/obj/decal/fakeobjects/factory/claw
+	name = "Factory Arm"
+	icon_state = "arm"
+
+/obj/decal/fakeobjects/factory/drill
+	name = "Factory Arm"
+	icon_state = "drill"
+
+/obj/decal/fakeobjects/factory/bolt
+	name = "Factory Arm"
+	icon_state = "bolter"
+
+/obj/decal/fakeobjects/factory/weld
+	name = "Factory Weld"
+	icon_state = "welder"
+
+/obj/decal/fakeobjects/midfactory
+	name = "Machine"
+	icons = 'icons/obj/large/32x48.dmi'
+	bound_width = 32
+	bound_height = 48
+
+/obj/decal/fakeobjects/midfactory/enginething
+	name = "Factory Machine"
+	icon_state = "stomper0"
+
+/obj/decal/fakeobjects/midfactory/enginething2
+	name = "Factory Machine"
+	icon_state = "bigatmos1_1"
+
+/obj/decal/fakeobjects/midfactory/enginething3
+	name = "Factory Machine"
+	icon_state = "bigatmos2"
+
+/obj/decal/fakeobjects/cabinet1
+	name = "Machine Things"
+	icon = 'icons/misc/terra8.dmi'
+	icon_state = "cab1"
+
+/obj/decal/fakeobjects/cabinet2
+	name = "Machine Things"
+	icon = 'icons/misc/terra8.dmi'
+	icon_state = "cab2"
+
+/obj/decal/fakeobjects/cabinet3
+	name = "Machine Things"
+	icon = 'icons/misc/terra8.dmi'
+	icon_state = "cab3"
+
+/obj/decal/fakeobjects/ships
+	name = "Drone Pods"
+	icon = 'icons/obj/adventurezones/morrigan/ships.dmi'
+/obj/decal/fakeobjects/ships/dronerep
+	name = "Unfinished Drone"
+	icon_state = "dronerep"
+
+/obj/decal/fakeobjects/ships/dronerep2
+	name = "Unfinished Drone"
+	icon_state = "dronerep_2"
+
+/obj/decal/fakeobjects/ships/dronesnip
+	name = "Prototype Drone"
+	icon_state = "dronesnip"
+
+/obj/decal/fakeobjects/ships/dronerep3
+	name = "Unfinished Drone"
+	icon_state = "dronerep_3"
+
+/obj/decal/fakeobjects/ships/dronerep4
+	name = "Unfinished Drone"
+	icon_state = "dronerep_4"
+
+/obj/decal/fakeobjects/ships/dronebomb
+	name = "Prototype Drone"
+	icon_state = "dronebomb"
 //NPCS for Morrigan
 /mob/living/carbon/human/hobo
 	New()
@@ -1458,15 +1572,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 			return
 
 // Critter area
+/mob/living/critter/robotic/gunbot/morrigan
 
-/mob/living/critter/robotic/gunbot/syndicate/morrigan
+/mob/living/critter/robotic/gunbot/morrigan/gunbot
 	name = "Syndicate Sentinel Unit"
 	real_name = "Syndicate Sentinel Unit"
-	desc = "One of Hafgan's latest models... best avoid it."
+	desc = "One of Hafgan's classic models... best avoid it."
 	health_brute = 20
 	health_burn = 20
 	is_npc = TRUE
 	speak_lines = TRUE
+	icon_state = "mars_nuke_bot"
+	eye_light_icon = "mars_nuke_bot_eye"
 
 	seek_target(range)
 		. = ..()
@@ -1483,7 +1600,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	setup_equipment_slots()
 		return
 
-/mob/living/critter/robotic/gunbot/syndicate/meleebot
+/mob/living/critter/robotic/gunbot/morrigan/meleebot
 	name = "Syndicate CQC Unit"
 	real_name = "Syndicate CQC Unit"
 	desc = "A security robot specially designed for close quarters combat. Prone to overheating.."
@@ -1525,7 +1642,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	setup_equipment_slots()
 		return
 
-/mob/living/critter/robotic/gunbot/syndicate/riotbot
+/mob/living/critter/robotic/gunbot/morrigan/riotbot
 	name = "Syndicate Suppression Unit"
 	real_name = "Syndicate Suppression Unit"
 	desc = "A sturdy version with a shield for increased survivability. Not nearly as lethal as the others though."
@@ -1533,7 +1650,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	health_burn = 30
 	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
 	icon_state = "riotbot"
-	ai_type = /datum/aiHolder/aggressive
+	ai_type = /datum/aiHolder/ranged
 	eye_light_icon = "riotbot-eye"
 
 	seek_target(range)
@@ -1573,7 +1690,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	setup_equipment_slots()
 		return
 
-/mob/living/critter/robotic/gunbot/syndicate/engineerbot
+/mob/living/critter/robotic/gunbot/morrigan/engineerbot
 	name = "Syndicate MULTI Unit"
 	real_name = "Syndicate MULTI Unit"
 	desc = "An engnieering unit, you can somehow feel that it's angry at you."
@@ -1615,7 +1732,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	setup_equipment_slots()
 		return
 
-/mob/living/critter/robotic/gunbot/syndicate/medibot
+/mob/living/critter/robotic/gunbot/morrigan/medibot
 	name = "Syndicate Medical Unit"
 	real_name = "Syndicate Medical Unit"
 	desc = "A medical unit, doesn't pose as much of a threat. Looks a little smaller than the other ones."
@@ -1623,7 +1740,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	health_burn = 10
 	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
 	icon_state = "medibot"
-	ai_type = /datum/aiHolder/aggressive
+	ai_type = /datum/aiHolder/ranged
 	eye_light_icon = "medibot-eye"
 
 	seek_target(range)
@@ -2373,8 +2490,8 @@ TYPEINFO(/obj/item/gun/energy/smgmine)
 	damage = 10
 	hit_ground_chance = 10
 	shot_sound = 'sound/effects/syringeproj.ogg'
-	venom_id = list("sulfonal", "atropine")
-	inject_amount = 7.5
+	venom_id = list("formaldehyde", "atropine")
+	inject_amount = 3.5
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		if (ismob(hit))
