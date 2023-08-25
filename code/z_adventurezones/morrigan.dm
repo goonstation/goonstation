@@ -401,7 +401,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /obj/decal/fakeobjects/midfactory
 	name = "Machine"
-	icons = 'icons/obj/large/32x48.dmi'
+	icon = 'icons/obj/large/32x48.dmi'
 	bound_width = 32
 	bound_height = 48
 
@@ -909,6 +909,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /area/morrigan/station/spy
 	name = "NanoTrasen Listening Room"
+
+/area/morrigan/station/invest
+	name = "Investor's Area"
 
 /area/morrigan/station/factory
 	name = "Manufacturing Line"

@@ -4690,6 +4690,10 @@
 	dir = 1
 	},
 /area/morrigan/station/hallway)
+"eKT" = (
+/obj/decal/fakeobjects/midfactory/enginething3,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/engineering/eng)
 "eLw" = (
 /obj/decoration/clock{
 	pixel_y = 30
@@ -18002,6 +18006,10 @@
 /obj/random_item_spawner/desk_stuff/g_clip_bin_fpen,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOS)
+"sxi" = (
+/obj/decal/fakeobjects/midfactory/enginething2,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/engineering/eng)
 "sxq" = (
 /obj/table/syndicate/auto,
 /obj/item/photo/beepsky1{
@@ -29246,7 +29254,7 @@ oir
 sMQ
 sMQ
 sMQ
-sMQ
+eKT
 eFF
 eFF
 eFF
@@ -30070,7 +30078,7 @@ oir
 sMQ
 sMQ
 sMQ
-eTV
+sxi
 vzk
 fdr
 iWp
