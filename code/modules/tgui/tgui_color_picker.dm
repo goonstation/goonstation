@@ -1,4 +1,11 @@
 /**
+ * @/modules/tgui_input/color.dm
+ * @copyright 2023
+ * @author itsmeow (https://github.com/itsmeow)
+ * @license MIT
+ */
+
+/**
  * Creates a TGUI color picker window and returns the user's response.
  *
  * This proc should be used to create a color picker that the caller will wait for a response from.
