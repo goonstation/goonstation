@@ -6,8 +6,9 @@
  */
 
 import { useBackend } from "../backend";
-import { Button, Section, VendorCashTable } from "../components";
+import { Button, Section } from "../components";
 import { Window } from '../layouts';
+import { VendorCashTable } from './common/VendorCashTable';
 
 export const AirVendor = (_props, context) => {
   const { act, data } = useBackend(context);

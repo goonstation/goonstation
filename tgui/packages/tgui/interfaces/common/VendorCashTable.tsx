@@ -1,4 +1,4 @@
-import { Table, Button } from './';
+import { Table, Button } from '../../components';
 import { InfernoNode } from 'inferno';
 
 interface VendorCashTableProps {
