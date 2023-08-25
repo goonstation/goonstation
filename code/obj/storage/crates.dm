@@ -512,7 +512,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/storage/pouch/assault_rifle/mixed,
 		/obj/item/storage/grenade_pouch/mixed_standard,
 		/obj/item/breaching_charge = 2,
-		/obj/item/clothing/suit/space/syndicate/specialist,
+		/obj/item/clothing/suit/space/syndicate/specialist/assault,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
 	agent // not avaliable for purchase

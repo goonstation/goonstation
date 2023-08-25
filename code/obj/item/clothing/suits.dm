@@ -1252,6 +1252,11 @@
 			setProperty("rangedprot", 1.5)
 			setProperty("radprot", 50)
 
+		assault
+			New()
+				..()
+				src.create_storage(/datum/storage, can_hold = list(/obj/item/chem_grenade/flashbang, /obj/item/chem_grenede/stinger), slots = 6, opens_if_worn = TRUE)
+
 		medic
 			name = "specialist operative medic uniform"
 			desc = "A syndicate issue combat dress system, pressurized for space travel."
@@ -1284,6 +1289,11 @@
 
 			protective_temperature = 100000
 
+			New()
+				..()
+				src.create_storage(/datum/storage, can_hold = list(/obj/item/chem_grenade/napalm, /obj/item/chem_grenade/incendiary,
+					/obj/item/chem_greande/very_incendiary, /obj/item/firebot_deployer), slots = 6, opens_if_worn = TRUE)
+
 			setupProperties()
 				..()
 				setProperty("heatprot", 100)
@@ -1301,12 +1311,21 @@
 			name = "specialist operative marksman's suit"
 			icon_state = "syndie_specialist-sniper"
 			item_state = "syndie_specialist-sniper"
+
+			New()
+				..()
+				src.create_storage(/datum/storage, can_hold = list(/obj/item/old_grenade/smoke), slots = 6, opens_if_worn = TRUE)
+
 			setupProperties()
 				..()
 				setProperty("radprot", 50)
 
 		grenadier
 			name = "specialist operative bombsuit"
+
+			New()
+				..()
+				src.create_storage(/datum/storage, can_hold = list(/obj/item/old_grenade/stinger), slots = 6, opens_if_worn = TRUE)
 
 			setupProperties()
 				..()
@@ -1541,6 +1560,10 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
 		icon_state = "syndie_specialist-heavy"
 		item_state = "syndie_specialist-heavy"
+
+		New()
+			..()
+			src.create_storage(/datum/storage, can_hold = list(/obj/item/old_grenade/high_explosive), slots = 6, opens_if_worn = TRUE)
 
 TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	mats = list("MET-3"=20, "uqil"=10, "CON-2" = 10, "POW-2" = 10)
