@@ -691,8 +691,6 @@ var/global/totally_random_jobs = FALSE
 			trinket = new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy(src)
 		else
 			trinket = new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee(src)
-	else if (src.traitHolder && src.traitHolder.hasTrait("smoker"))
-		trinket = new/obj/item/device/light/zippo(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("lunchbox"))
 		var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
 		trinket = new random_lunchbox_path(src)
