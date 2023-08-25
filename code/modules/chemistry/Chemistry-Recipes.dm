@@ -33,8 +33,9 @@
 	var/result_amount = 0
 	var/mix_phrase = "The solution begins to bubble."
 	var/mix_sound = 'sound/effects/bubbles.ogg'
-	var/drinkrecipe = 0
-	/// If set to 1, the recipe will consume ALL of its components instead of just proportional part
+	/// Is the result a drink?
+	var/drinkrecipe = FALSE
+	/// If set to 1, the recipe will consume ALL of its components instead of just proportional parts.
 	var/consume_all = 0
 
 	var/temperature_change = 0 ///added to the temperature on reaction, can be negative to remove heat
