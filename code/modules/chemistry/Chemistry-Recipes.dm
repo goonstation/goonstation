@@ -2285,8 +2285,8 @@
 		on_reaction(datum/reagents/holder)
 			if(holder.total_temperature > (T0C + 30)) //requires *some* outside heating to start reacting more quickly
 				var/temperature_over_30C = holder.total_temperature - (T0C + 30)
-				var/amount_of_oil_mixed = (temperature_over_30C * 0.5)/(temperature_over_30C + 40) //more heat = more oil more quickly, but with diminishing returns that never go over 0.5u per reaction
-				var/amount_of_fuel_to_use = amount_of_oil_mixed + clamp(0.1 * (1.1 ** temperature_over_30C), 0, 1) //more heat = exponentially more welding fuel used, clamped to 1u per reaction + however much oil is made
+				var/amount_of_oil_mixed = round((temperature_over_30C * 0.5)/(temperature_over_30C + 40), 0.01) //more heat = more oil more quickly, but with diminishing returns that never go over 0.5u per reaction
+				var/amount_of_fuel_to_use = amount_of_oil_mixed + round(clamp(0.1 * (1.1 ** temperature_over_30C), 0, 1), 0.01) //more heat = exponentially more welding fuel used, clamped to 1u per reaction + however much oil is made
 				holder.add_reagent("oil", amount_of_oil_mixed, temp_new = holder.total_temperature, chemical_reaction = TRUE)
 				holder.remove_reagent("fuel", amount_of_fuel_to_use)
 
@@ -2303,6 +2303,12 @@
 
 		on_reaction(var/datum/reagents/holder)
 			holder.physical_shock(rand(2, 6))
+
+		does_react(var/datum/reagents/holder)
+			if (holder.has_reagent("oxygen") && holder.has_reagent("nitrogen")) //luminol!
+				return FALSE
+			else
+				return TRUE
 
 	hemodissolve // denaturing hemolymph
 		name = "Copper"
@@ -2857,11 +2863,11 @@
 	salbutamol_salicylic_acid // makes either based on input, not both at once though
 		name = "Salbutamol Salicylic Acid"
 		id = "salbutamol_salicylic_acid"
-		required_reagents = list("sodium" = 1, "phenol" = 1, "carbon" = 1, "oxygen" = 1, "acid" = 1)
+		required_reagents = list("sodium" = 1, "phenol" = 1, "carbon" = 1, "oxygen" = 1)
 		result = null //this changes in on_reaction
-		result_amount = 8
+		result_amount = 4
 		instant = FALSE
-		reaction_speed = 1 //this gets faster once you follow a branch of chem to make
+		reaction_speed = 4
 		temperature_change = 0 //this also changes
 		stateful = TRUE
 		mix_phrase = "The solution twirls mixes together idley."
@@ -2927,14 +2933,12 @@
 					playsound(get_turf(holder.my_atom), 'sound/effects/bubbles_short.ogg', 50, 1)
 					result = "salbutamol"
 					temperature_change = 3
-					reaction_speed = 3
 				if(holder.total_temperature > T100C)
 					for(var/mob/M in AIviewers(null, get_turf(holder.my_atom)))
 						boutput(M, "<span class='notice'>The mixture glistens with red sparkles.</span>")
 					playsound(get_turf(holder.my_atom), 'sound/effects/bubbles_short.ogg', 50, 1)
 					result = "salicylic_acid"
 					temperature_change = -3
-					reaction_speed = 3
 
 		physical_shock(var/force, var/datum/reagents/holder)
 			if(force > 3)
