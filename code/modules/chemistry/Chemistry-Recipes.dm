@@ -2129,13 +2129,13 @@
 			holder.last_basic_explosion = ticker.round_elapsed_ticks
 			var/atom/my_atom = holder.my_atom
 			if (my_atom)
-				location = get_turf(my_atom)
+				var/turf/location = get_turf(my_atom)
 				explosion(my_atom, location, -1,-1,0,1)
 				fireflash(location, 0)
 			else
 				var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
-					location = pick(holder.covered_cache)
+					var/turf/location = pick(holder.covered_cache)
 					holder.covered_cache -= location
 					explosion_new(my_atom, location, 2.25/amt)
 					fireflash(location, 0)

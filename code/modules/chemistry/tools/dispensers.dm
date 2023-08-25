@@ -519,7 +519,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			circle.spread_projectile_type = /datum/projectile/bullet/shrapnel
 			circle.pellet_shot_volume = 0
 			circle.pellets_to_fire = 10
-			shoot_projectile_ST(get_turf(src), circle, get_step(src, NORTH))
+			shoot_projectile_ST_pixel_spread(get_turf(src), circle, get_step(src, NORTH))
 		var/obj/shattered_barrel/shattered_barrel = new /obj/shattered_barrel
 		shattered_barrel.icon_state = "[src.base_icon_state]-shattered"
 		shattered_barrel.set_loc(get_turf(src))

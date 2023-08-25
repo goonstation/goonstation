@@ -517,7 +517,7 @@ proc/ui_describe_reagents(atom/A)
 			circle.spread_projectile_type = /datum/projectile/bullet/glass_shard
 			circle.pellet_shot_volume = 0
 			circle.pellets_to_fire = 10
-			shoot_projectile_ST(get_turf(src), circle, get_step(src, NORTH))
+			shoot_projectile_ST_pixel_spread(get_turf(src), circle, get_step(src, NORTH))
 		playsound(src.loc, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
 		src.reagents.reaction(get_turf(src), TOUCH, src.reagents.total_volume)
 		var/obj/item/raw_material/shard/glass/shard = new /obj/item/raw_material/shard/glass

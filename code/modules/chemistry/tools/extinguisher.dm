@@ -94,7 +94,7 @@
 		circle.spread_projectile_type = /datum/projectile/bullet/shrapnel
 		circle.pellet_shot_volume = 0
 		circle.pellets_to_fire = 10
-		shoot_projectile_ST(get_turf(src), circle, get_step(src, NORTH))
+		shoot_projectile_ST_pixel_spread(get_turf(src), circle, get_step(src, NORTH))
 	src.reagents.reaction(get_turf(src), TOUCH, src.reagents.total_volume)
 	icon_state = "fire_extinguisher_shattered"
 	src.desc = "It's shattered beyond all use."
