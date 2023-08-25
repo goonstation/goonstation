@@ -374,6 +374,9 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 		name = "\improper Detomatix cartridge"
 		desc = "Designed with the latest advancements in blast processing."
 		icon_state = "cart-deto"
+		HELP_MESSAGE_OVERRIDE({"Put the cartridge into a pda, then from the main menu navigate to <b>"File Browser"</b>
+								Use the <b>"MISSILE"</b> app to scan for pda targets, then hit the <b>"DETONATE"</b> button to blow up the target PDA.
+								Use the <b>"SELF-DESTRUCT"</b> program to almost instantaneously explode your own PDA."})
 
 		New()
 			..()

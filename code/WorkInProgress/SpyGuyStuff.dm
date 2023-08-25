@@ -862,6 +862,10 @@ proc/Create_Tommyname()
 	// Are we ready to do something mean here?
 	var/wire_readied = 0
 
+	HELP_MESSAGE_OVERRIDE({"Use the garrot wire in hand to hold it with two hands, then place yourself behind your target.
+							Click them with the wire to attempt to grab them.
+							While a target is being strangled, use the wire in hand to inflict more damage and bleed in addition to the suffocation."})
+
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ROPE)
