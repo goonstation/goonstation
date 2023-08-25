@@ -513,6 +513,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\critter\ai\flock\flockbit.dm"
 #include "code\mob\living\critter\ai\flock\flockdrone.dm"
 #include "code\mob\living\critter\ai\flock\flocktasks.dm"
+#include "code\mob\living\critter\ai\humanoid\crazy_geneticist.dm"
 #include "code\mob\living\critter\arena\fire_elemental.dm"
 #include "code\mob\living\critter\drone\ar.dm"
 #include "code\mob\living\critter\drone\cr.dm"
