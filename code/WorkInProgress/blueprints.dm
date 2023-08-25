@@ -211,7 +211,7 @@
 
 				for(var/datum/objectinfo/O in T.objects)
 					if(O.objecttype == null) continue
-					var/dmm_suite/preloader/abculoadedobj = new(pos, list( // this loads the turfs but not the objects
+					var/dmm_suite/preloader/blah = new(pos, list( // this doesn't spawn the objects, only presets their properties
                         "layer" = O.layer,
                         "pixel_x" = O.px,
                         "pixel_y" = O.py,
@@ -248,7 +248,7 @@
 	var/posy = 0
 
 /verb/adminCreateBlueprint()
-	set name = "Create Blueprint"
+	set name = "Blueprint Create"
 	set desc = "Allows creation of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 
@@ -306,7 +306,7 @@
 				bp.name = "Blueprint '[roomname]'"
 
 /verb/adminDeleteBlueprint()
-	set name = "Delete Blueprint"
+	set name = "Blueprint Delete"
 	set desc = "Allows deletion of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 
@@ -333,6 +333,15 @@
 		if(save.dir.Find("[split[2]]"))
 			save.dir.Remove("[split[2]]")
 			boutput(usr, "<span class='alert'>Blueprint [split[2]] deleted..</span>")
+
+/verb/adminDumpBlueprint()
+	set name = "Blueprint Dump"
+	set desc = "Dumps readable HTML blueprint, of any user, to your client folder."
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+
+	var/list/userlist = flist("data/blueprints/")
+	var/input = tgui_input_list(usr, "Select a user by ckey.", "Users", userlist)
+	boutput(usr, "<span class='notice'>[input]</span>") // leaves a trailing slash
 
 /obj/item/blueprint
 	name = "Blueprint"
@@ -449,7 +458,7 @@
 	"/obj/machinery/portable_atmospherics/canister")
 	var/list/permittedTileTypes = list("/turf/simulated")
 
-	var/static/savefile/save = new/savefile("data/blueprints.dat")
+	//var/static/savefile/save = new/savefile("data/blueprints.dat")
 
 	pixelaction(atom/target, params, mob/user)
 		if(GET_DIST(src,target) > 10) return
@@ -588,20 +597,12 @@
 		return
 
 	proc/saveMarked(var/name = "", var/applyWhitelist = 1)
-		save.cd = "/"
-		if(!save.dir.Find("[usr.client.ckey]"))
-			save.dir.Add("[usr.client.ckey]")
-		save.cd = "/[usr.client.ckey]"
-
-		if(save.dir.Find(name))
+		var/savepath = "data/blueprints/[usr.client.ckey]/[name].dat"
+		if (fexists("[savepath]"))
 			if (alert(usr, "A blueprint of this name already exists. Really overwrite?", "Overwrite Blueprint", "Yes", "No") == "No")
 				return
-			save.dir.Remove(name)
-			save.dir.Add(name)
-			save.cd = "/[usr.client.ckey]/" + name
-		else
-			save.dir.Add(name)
-			save.cd = "/[usr.client.ckey]/" + name
+			fdel("[savepath]")
+		var/savefile/save = new/savefile("[savepath]")
 
 		var/minx = 100000000
 		var/miny = 100000000
@@ -619,20 +620,25 @@
 		var/sizex = (maxx - minx) + 1
 		var/sizey = (maxy - miny) + 1
 
+		save.cd = "/"
 		save["sizex"] << sizex
 		save["sizey"] << sizey
 		save["roomname"] << roomname
+		save["author"] << usr.client.ckey
+		save.dir.Add("tiles")
 
 		for(var/atom/curr in roomList)
 			var/posx = (curr.x - minx)
 			var/posy = (curr.y - miny)
 
-			save.cd = "/[usr.client.ckey]/" + name
-			save.dir.Add("[posx],[posy]")
-			save.cd = "/[usr.client.ckey]/[name]/[posx],[posy]"
+			//save.cd = "/tiles"
+			//save.dir.Add("[posx],[posy]")
+			save.cd = "/tiles/[posx],[posy]"
 			save["type"] << curr.type
 			save["dir"] << curr.dir
 			save["state"] << curr.icon_state
+			save["icon"] << "[curr.icon]" // string this or it saves the entire .dmi file
+			//save.dir.Add("objects")
 
 			for(var/obj/o in curr)
 				var/permitted = 0
@@ -650,73 +656,89 @@
 
 				if(permitted || !applyWhitelist)
 					var/id = "\ref[o]"
-					save.cd = "/[usr.client.ckey]/[name]/[posx],[posy]"
+					save.cd = "/tiles/[posx],[posy]/objects"
 					while(save.dir.Find(id))
 						id = id + "I"
-					save.dir.Add("[id]")
-					save.cd = "/[usr.client.ckey]/[name]/[posx],[posy]/[id]"
+					//save.dir.Add("[id]")
+					save.cd = "[id]"
 					save["dir"] << o.dir
 					save["type"] << o.type
 					save["layer"] << o.layer
 					save["pixelx"] << o.pixel_x
 					save["pixely"] << o.pixel_y
 					save["icon_state"] << o.icon_state
+					save["icon"] << "[o.icon]"
 
 		boutput(usr, "<span class='notice'>Saved blueprint as '[name]'. </span>")
 		return
 
 	proc/printSaved(var/name = "")
-		save.cd = "/"
-		if(save.dir.Find("[usr.client.ckey]"))
-			save.cd = "/[usr.client.ckey]/"
-			if(save.dir.Find(name))
-				var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(src))
-				prints_left--
-
-				save.cd = "/[usr.client.ckey]/" + name
-				boutput(usr, "<span class='notice'>Printed Blueprint for '[save["roomname"]]'</span>")
-				var/roomname = save["roomname"]
-				bp.size_x = save["sizex"]
-				bp.size_y = save["sizey"]
-
-				for (var/A in save.dir)
-					if(A == "sizex" || A == "sizey" || A == "roomname") continue
-					save.cd = "/[usr.client.ckey]/[name]/[A]"
-					var/list/coords = splittext(A, ",")
-					var/datum/tileinfo/tf = new/datum/tileinfo()
-					tf.posx = coords[1]
-					tf.posy = coords[2]
-					tf.tiletype = save["type"]
-					tf.state = save["state"]
-					tf.direction = save["dir"]
-					bp.req_metal += 1
-					bp.req_glass += 0.5
-					for (var/B in save.dir)
-						if(B == "type" || B == "state") continue
-						save.cd = "/[usr.client.ckey]/[name]/[A]/[B]"
-						var/datum/objectinfo/O = new/datum/objectinfo()
-						O.objecttype = save["type"]
-						O.direction = save["dir"]
-						O.layer = save["layer"]
-						O.px = save["pixelx"]
-						O.py = save["pixely"]
-						O.icon_state = save["icon_state"]
-						bp.req_metal += 0.9
-						bp.req_glass += 1.5
-						tf.objects.Add(O)
-					bp.roominfo.Add(tf)
-					bp.name = "Blueprint '[roomname]'"
-					bp.req_metal = round(bp.req_metal)
-					bp.req_glass = round(bp.req_glass)
-				return
-			else
-				boutput(usr, "<span class='alert'>Blueprint [name] not found.</span>")
-
-		else
-			boutput(usr, "<span class='alert'>No blueprints found for user.</span>")
+		var/savepath = "data/blueprints/[usr.client.ckey]/[name].dat"
+		var/savefile/save = new/savefile("[savepath]") // if it's not an existing file, this makes an empty new one
+		if (isnull(save["roomname"]) && isnull(save["sizex"])) // double check
+			boutput(usr, "<span class='alert'>Blueprint [name] not found.</span>")
+			fdel("[savepath]") // so we kill it
 			return
-	proc/delSaved(var/name = "")
+
+		var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(src))
+		prints_left--
+
 		save.cd = "/"
+		var/roomname = save["roomname"]
+		bp.size_x = save["sizex"]
+		bp.size_y = save["sizey"]
+
+		save.cd = "/tiles" // cd to tiles
+		for (var/A in save.dir) // and now loop on every listing in tiles
+			//if(A == "sizex" || A == "sizey" || A == "roomname") continue
+			//save.cd = "/[usr.client.ckey]/[name]/[A]"
+			save.cd = "/tiles/[A]"
+			var/list/coords = splittext(A, ",")
+			var/datum/tileinfo/tf = new/datum/tileinfo()
+			tf.posx = coords[1]
+			tf.posy = coords[2]
+			tf.tiletype = save["type"]
+			tf.state = save["state"]
+			tf.direction = save["dir"]
+			bp.req_metal += 1
+			bp.req_glass += 0.5
+			save.cd = "/tiles/[A]/objects"
+			for (var/B in save.dir)
+				//if(B == "type" || B == "state") continue
+				save.cd = "/tiles/[A]/objects/[B]"
+				var/datum/objectinfo/O = new/datum/objectinfo()
+				O.objecttype = save["type"]
+				O.direction = save["dir"]
+				O.layer = save["layer"]
+				O.px = save["pixelx"]
+				O.py = save["pixely"]
+				O.icon_state = save["icon_state"]
+				bp.req_metal += 0.9
+				bp.req_glass += 1.5
+				tf.objects.Add(O)
+			bp.roominfo.Add(tf)
+			bp.name = "Blueprint '[roomname]'"
+			bp.req_metal = round(bp.req_metal)
+			bp.req_glass = round(bp.req_glass)
+
+		boutput(usr, "<span class='notice'>Printed blueprint for '[roomname]'.</span>")
+		return
+
+	proc/delSaved(var/name = "")
+		var/savepath = "data/blueprints/[usr.client.ckey]/[name].dat"
+		if (fexists("[savepath]"))
+			if (strip_html(input(usr,"Really delete this blueprint? Input blueprint name to confirm.","Blueprint Deletion","") as text) != name)
+				boutput(usr, "<span class='alert'>Failed to delete blueprint '[name]': input did not match blueprint name.</span>")
+				return
+			fdel("[savepath]")
+			boutput(usr, "<span class='alert'>Blueprint [name] deleted.</span>")
+			return
+		else
+			boutput(usr, "<span class='alert'>Blueprint [name] not found.</span>")
+			return
+		return
+
+		/* save.cd = "/"
 		if(save.dir.Find("[usr.client.ckey]"))
 			save.cd = "/[usr.client.ckey]/"
 			if(save.dir.Find(name))
@@ -728,7 +750,7 @@
 			else
 				boutput(usr, "<span class='alert'>Blueprint [name] not found.</span>")
 		else
-			boutput(usr, "<span class='alert'>No blueprints found for user.</span>")
+			boutput(usr, "<span class='alert'>No blueprints found for user.</span>") */
 
 
 	attack_self(mob/user as mob)

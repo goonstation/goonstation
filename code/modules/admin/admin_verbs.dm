@@ -466,6 +466,7 @@ var/list/admin_verbs = list(
 		/client/proc/clear_nukeop_uplink_purchases,
 		/client/proc/upload_uncool_words,
 		/client/proc/TestMarketReq,
+		/verb/adminDumpBlueprint,
 
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
