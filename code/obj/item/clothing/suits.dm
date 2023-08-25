@@ -1216,6 +1216,8 @@
 				src.dropped(user)
 				qdel(src)
 		#else
+		New()
+			..()
 			src.create_storage(/datum/storage, can_hold = list(/obj/item/chem_grenade, /obj/item/old_grenade, /obj/item/firebot_deployer), slots = 6, opens_if_worn = TRUE)
 		#endif
 
