@@ -1255,7 +1255,7 @@
 		assault
 			New()
 				..()
-				src.create_storage(/datum/storage, can_hold = list(/obj/item/chem_grenade/flashbang, /obj/item/chem_grenede/stinger), slots = 6, opens_if_worn = TRUE)
+				src.create_storage(/datum/storage, can_hold = list(/obj/item/chem_grenade/flashbang, /obj/item/old_grenade/stinger), slots = 6, opens_if_worn = TRUE)
 
 		medic
 			name = "specialist operative medic uniform"
@@ -1292,7 +1292,7 @@
 			New()
 				..()
 				src.create_storage(/datum/storage, can_hold = list(/obj/item/chem_grenade/napalm, /obj/item/chem_grenade/incendiary,
-					/obj/item/chem_greande/very_incendiary, /obj/item/firebot_deployer), slots = 6, opens_if_worn = TRUE)
+					/obj/item/chem_grenade/very_incendiary, /obj/item/firebot_deployer), slots = 6, opens_if_worn = TRUE)
 
 			setupProperties()
 				..()
