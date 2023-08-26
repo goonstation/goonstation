@@ -464,12 +464,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		else if (iswrenchingtool(W) && src.state == 0 && !src.anchored)
 			actions.start(new /datum/action/bar/icon/deconstruct_window(src, W), user)
-		else if (src.health < src.health_max && isweldingtool(W))
-			var/time = 4 SECONDS
-			if (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
-				time = 2 SECONDS
-			if (W:try_weld(user, 1))
-				SETUP_GENERIC_ACTIONBAR(user, src, time, /obj/window/proc/fix_window, list(W), null, null, "<span class='notice'> [user] repairs \the [src] with \the [W] </span>", null)
+		else if (src.health < src.health_max && istype(W, /obj/item/sheet) && W.material.isSameMaterial(src.material))
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/window/proc/fix_window, list(W), null, null, "<span class='notice'> [user] repairs \the [src] with \the [W] </span>", null)
 		else
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 75, 1)
@@ -574,9 +570,12 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		return 1
 
-	proc/fix_window()
+	proc/fix_window(var/obj/item/sheet/S)
 		health = health_max
 		UpdateIcon(src)
+		if (S)
+			S.change_stack_amount(-1)
+
 
 /datum/action/bar/icon/deconstruct_window
 	duration = 5 SECONDS
