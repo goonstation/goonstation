@@ -1,7 +1,7 @@
 
 (t)sat aug 26 23
 (u)Tarmunora
-(+)Dying as a skeleton makes the body somewhat Incompatible with being cloned, even if the mutation is removed post-mortem
+(*s)Skeletons fall apart into a pile of bones on death.
 (u)Cheffie
 (p)15449
 (e)🪲🗺🎨🔎⚙|C-Bug, A-Mapping, C-Sprites, C-Code-Quality, A-Internal
