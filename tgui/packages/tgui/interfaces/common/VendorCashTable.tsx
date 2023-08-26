@@ -32,6 +32,7 @@ export const VendorCashTable = (props: VendorCashTableProps) => {
             <Button icon="id-card"
               mr="100%"
               content={cardname ? cardname : ""}
+              title={cardname ? cardname : ""}
               onClick={onCardClick}
               ellipsis
               maxWidth="100%"

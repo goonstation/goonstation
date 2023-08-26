@@ -31,16 +31,16 @@ const VendorSection = (_props, context) => {
   const handleFillClick = () => act('o2_fill');
   const handleChangePressure = (pressure) => act('o2_changepressure', { pressure: pressure });
 
-  const canVend = () => (fill_cost > 0 && (bankMoney > fill_cost || cash > fill_cost));
+  const canVend = fill_cost > 0 && (bankMoney > fill_cost || cash > fill_cost);
 
   return (
-    <Section title={"Status"}>
+    <Section title={"Buy Oxygen!"}>
       <LabeledList>
         <LabeledList.Item label="Cost">
           <Button
             content={(<>{fill_cost || 0}⪽</>)}
-            color={canVend() ? "green" : "grey"}
-            disabled={!canVend()}
+            color={canVend ? "green" : "grey"}
+            disabled={!canVend}
             onClick={handleFillClick} />
         </LabeledList.Item>
         <LabeledList.Item label="Pressure">
@@ -53,7 +53,7 @@ const VendorSection = (_props, context) => {
             value={target_pressure}
             minValue={min_pressure}
             maxValue={max_pressure}
-            onChange={(_e, target_pressure) => handleChangePressure(target_pressure)} />
+            onChange={(_e, new_pressure) => handleChangePressure(new_pressure)} />
           <Button
             onClick={() => handleChangePressure(max_pressure)}
             content="Max" />
@@ -77,7 +77,8 @@ const TankSection = (_props, context) => {
       {holding ? (
         <GasTankInfo pressure={holding_pressure} maxPressure={max_pressure} name={holding} />
       ) : (
-        <Box height={5}>
+        <Box>
+          <GasTankInfo pressure={0} maxPressure={1} name={"N/A"} />
           <Dimmer>
             <Button
               icon="eject"
