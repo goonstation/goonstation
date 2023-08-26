@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2023
+ * @author Garash (https://github.com/Garash2k)
+ * @license ISC
+ */
+
 import { Table, Button } from '../../components';
 
 interface VendorCashTableProps {
