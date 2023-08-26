@@ -88,6 +88,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 					user.visible_message("<span class='notice'>[user] washes [his_or_her(user)] hands.</span>")
 					H.blood_DNA = null
 					H.blood_type = null
+					H.forensics_blood_color = null
 					H.set_clothing_icon_dirty()
 		..()
 
@@ -136,6 +137,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 		user.sims.affectMotive("Hygiene", cleanup_rate)
 		user.blood_DNA = null
 		user.blood_type = null
+		user.forensics_blood_color = null
 		user.set_clothing_icon_dirty()
 
 		src.onRestart()
