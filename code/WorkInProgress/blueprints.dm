@@ -177,6 +177,7 @@
 			return
 
 		boutput(usr, "<span class='notice'>The machine starts to buzz and vibrate.</span>")
+		logTheThing(LOG_ADMIN, src, "[usr] started ABCU build at [log_loc(src)], with blueprint [currentBp.name], authored by [currentBp.author]")
 
 		building = 1
 		icon_state = "builder1"
@@ -205,6 +206,7 @@
 				if(T.tiletype != null)
 					var/turf/newTile = get_turf(pos)
 					newTile.ReplaceWith(T.tiletype)
+					//newTile.icon = text2path(T.icon) // not working
 					newTile.icon_state = T.state
 					newTile.set_dir(T.direction)
 					newTile.inherit_area()
@@ -246,6 +248,7 @@
 	var/tiletype = null
 	var/posx = 0
 	var/posy = 0
+	var/icon = ""
 
 /verb/adminCreateBlueprint()
 	set name = "Blueprint Create"
@@ -340,8 +343,19 @@
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 
 	var/list/userlist = flist("data/blueprints/")
-	var/input = tgui_input_list(usr, "Select a user by ckey.", "Users", userlist)
-	boutput(usr, "<span class='notice'>[input]</span>") // leaves a trailing slash
+	var/inputuser = tgui_input_list(usr, "Select a user by ckey.", "Users", userlist)
+	if(!inputuser) return
+	var/list/bplist = flist("data/blueprints/[inputuser]")
+	var/inputbp = tgui_input_list(usr, "Pick a blueprint belonging to this user.", "Blueprints", bplist)
+	if(!inputbp) return
+
+	var/savefile/selectedbp = new/savefile("data/blueprints/[inputuser]/[inputbp]")
+	//var/savetxt = file("data/blueprints/[inputuser]/[inputbp].txt")
+	selectedbp.ExportText("/","data/blueprints/[inputuser]/[inputbp].txt")
+	usr.client.Export("data/blueprints/[inputuser]/[inputbp].txt")
+	fdel("data/blueprints/[inputuser]/[inputbp].txt")
+
+	boutput(usr, "<span class='notice'>Dumped blueprint to BYOND user data folder.</span>") // leaves a trailing slash
 
 /obj/item/blueprint
 	name = "Blueprint"
@@ -356,6 +370,8 @@
 
 	var/size_x = 0
 	var/size_y = 0
+
+	var/author = ""
 
 	var/list/roominfo = new/list()
 /*
@@ -687,6 +703,7 @@
 		var/roomname = save["roomname"]
 		bp.size_x = save["sizex"]
 		bp.size_y = save["sizey"]
+		bp.author = save["author"]
 
 		save.cd = "/tiles" // cd to tiles
 		for (var/A in save.dir) // and now loop on every listing in tiles
@@ -736,22 +753,6 @@
 		else
 			boutput(usr, "<span class='alert'>Blueprint [name] not found.</span>")
 			return
-		return
-
-		/* save.cd = "/"
-		if(save.dir.Find("[usr.client.ckey]"))
-			save.cd = "/[usr.client.ckey]/"
-			if(save.dir.Find(name))
-				if (strip_html(input(usr,"Really delete this blueprint? Input blueprint name to confirm.","Blueprint Deletion","") as text) != name)
-					boutput(usr, "<span class='alert'>Failed to delete blueprint '[name]': input did not match blueprint name.</span>")
-					return
-				save.dir.Remove(name)
-				boutput(usr, "<span class='alert'>Blueprint [name] deleted..</span>")
-			else
-				boutput(usr, "<span class='alert'>Blueprint [name] not found.</span>")
-		else
-			boutput(usr, "<span class='alert'>No blueprints found for user.</span>") */
-
 
 	attack_self(mob/user as mob)
 		if(!user.client)
