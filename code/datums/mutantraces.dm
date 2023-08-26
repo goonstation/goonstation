@@ -1167,47 +1167,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	onDeath(gibbed)
 		. = ..()
-		if(!gibbed) //heheheh
-			var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
-			P.setup(src.mob.loc)
-			var/obj/item/I
-
-			I = src.mob.limbs.l_arm?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.limbs.r_arm?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.limbs.l_leg?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.limbs.r_leg?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.organHolder.drop_organ("head")
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			for(var/i in 1 to rand(2, 5))
-				I = new/obj/item/material_piece/bone(src.mob.loc)
-				I?.pixel_x += rand(-8, 8)
-				I?.pixel_y += rand(-8, 8)
-			src.mob.dump_contents_chance = 100
-			var/list/organlist = list()
-			for(var/idx in src.mob.organHolder.organ_list)
-				organlist += src.mob.organHolder.organ_list[idx]
-			for(var/obj/item/C in src.mob.list_ejectables())
-				if(!(C in organlist))
-					C.set_loc(src.mob.loc)
-					C.pixel_x += rand(-8, 8)
-					C.pixel_y += rand(-8, 8)
-
-			playsound(src.mob, 'sound/effects/skeleton_break.ogg', 66, 1)
-			src.mob.visible_message("<span 'class=alert'>[src.mob] falls apart into a pile of bones!</span>", "<span 'class=alert'>You fall apart into a pile of bones!</span>", "<span 'class=notice'>You hear a clattering noise.</span>")
-			var/mob/dead/observer/newmob = src.mob.ghostize()
-			newmob?.corpse = null
-
-			qdel(src.mob)
-
+		//add puritan on death because people are nerds and deskeletonize people after death to get around the downside of being a skeleton. Lets make that a little harder.
+		src.mob.traitHolder.addTrait("puritan")
 
 /obj/item/joint_wax
 	name = "joint wax"
