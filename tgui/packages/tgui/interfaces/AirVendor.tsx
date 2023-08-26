@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from "../backend";
-import { Box, LabeledList, NumberInput, Button, Section, Dimmer } from "../components";
+import { LabeledList, NumberInput, Button, Section, Dimmer } from "../components";
 import { Window } from '../layouts';
 import { VendorCashTable } from './common/VendorCashTable';
 import { GasTankInfo } from './GasTank';
@@ -74,21 +74,17 @@ const TankSection = (_props, context) => {
     <Section title={"Holding Tank"} buttons={
       <Button onClick={handleTankEject} icon="eject" disabled={!holding}>Eject</Button>
     }>
-      {holding ? (
-        <GasTankInfo pressure={holding_pressure} maxPressure={max_pressure} name={holding} />
-      ) : (
-        <Box>
-          <GasTankInfo pressure={0} maxPressure={1} name={"N/A"} />
-          <Dimmer>
-            <Button
-              icon="eject"
-              fontSize={1.5}
-              onClick={handleTankInsert}
-              bold>
-              Insert Gas Tank
-            </Button>
-          </Dimmer>
-        </Box>
+      <GasTankInfo pressure={holding_pressure || 0} maxPressure={max_pressure || 1} name={holding || "N/A"} />
+      {!holding && (
+        <Dimmer>
+          <Button
+            icon="eject"
+            fontSize={1.5}
+            onClick={handleTankInsert}
+            bold>
+            Insert Gas Tank
+          </Button>
+        </Dimmer>
       )}
     </Section>
   );
