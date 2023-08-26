@@ -1,4 +1,10 @@
 
+(t)sat aug 26 23
+(u)Cheffie
+(p)15449
+(e)🪲🗺🎨🔎⚙|C-Bug, A-Mapping, C-Sprites, C-Code-Quality, A-Internal
+(*)Hemochromia, Colorful Reagent and some Mutantraces now correctly change the colour of created blood decals and overlays when bleeding. paint the halls! reagent pools of blood are uneffected.
+(+)Internal changes to icons may possibly lead to some missing or white gib / blood icons, report these if you see them!
 (t)fri aug 25 23
 (u)Bartimeus973
 (p)15502
