@@ -596,7 +596,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /mob/living/carbon/human/syndicatemorrigan
 	New()
 		..()
-		src.equip_new_if_possible((/obj/item/clothing/head/biker_cap), SLOT_HEAD)
+		src.equip_new_if_possible((/obj/item/clothing/head/morrigan/swarden), SLOT_HEAD)
 		src.equip_new_if_possible((/obj/item/clothing/mask/gas/swat), SLOT_WEAR_MASK)
 		src.equip_new_if_possible((/obj/item/clothing/under/rank/head_of_security/fancy_alt), SLOT_W_UNIFORM)
 		src.equip_new_if_possible((/obj/item/clothing/suit/armor/vest), SLOT_WEAR_SUIT)

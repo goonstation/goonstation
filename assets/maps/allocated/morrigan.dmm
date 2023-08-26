@@ -5482,12 +5482,6 @@
 /obj/item/storage/belt/security/shoulder_holster/inspector,
 /obj/item/storage/backpack/satchel/captain/red,
 /obj/item/clothing/shoes/swat,
-/obj/item/clothing/head/NTberet{
-	icon_state = "hosberet";
-	name = "Syndicate Beret";
-	desc = "You should not be wearing this..";
-	item_state = "hosberet"
-	},
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/ammo/bullets/bullet_9mm/five_shots,
 /obj/item/ammo/bullets/bullet_9mm/five_shots,
@@ -8488,10 +8482,10 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
-/obj/item/clothing/head/helmet/hardhat/security,
 /obj/item/storage/belt/security,
 /obj/item/clothing/under/rank/morrigan/sec,
 /obj/item/clothing/head/morrigan/sberet,
+/obj/item/clothing/shoes/swat,
 /turf/unsimulated/floor/shiny,
 /area/morrigan/station/security/main)
 "iBu" = (
@@ -14847,9 +14841,9 @@
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/big,
-/obj/item/clothing/head/helmet/hardhat/security,
 /obj/item/clothing/under/rank/morrigan/sec,
 /obj/item/clothing/head/morrigan/sberet,
+/obj/item/clothing/shoes/swat,
 /turf/unsimulated/floor/shiny,
 /area/morrigan/station/security/main)
 "oTW" = (
@@ -18718,10 +18712,10 @@
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/big,
-/obj/item/clothing/head/helmet/hardhat/security,
 /obj/item/storage/belt/security,
 /obj/item/clothing/under/rank/morrigan/sec,
 /obj/item/clothing/head/morrigan/sberet,
+/obj/item/clothing/shoes/swat,
 /turf/unsimulated/floor/shiny,
 /area/morrigan/station/security/main)
 "tlx" = (
