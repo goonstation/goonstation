@@ -40,14 +40,14 @@ var/global/list/mapNames = list(
 	"Crash" = 				list("id" = "CRASH",		"settings" = "horizon/crash",	"playerPickable" = FALSE),
 	"Mushroom" =			list("id" = "MUSHROOM",		"settings" = "mushroom",		"playerPickable" = FALSE),
 	"Trunkmap" =			list("id" = "TRUNKMAP",		"settings" = "trunkmap",		"playerPickable" = FALSE),
-	//"Chiron" =			list("id" = "CHIRON",		"settings" = "chiron",			"playerPickable" = FALSE),
 	//"Density" = 			list("id" = "DENSITY",		"settings" = "density",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
 	"Ozymandias" =			list("id" = "OZYMANDIAS",	"settings" = "ozymandias",		"playerPickable" = FALSE,	"MinPlayersAllowed" = 40),
 	"Bellerophon Fleet" =	list("id" = "FLEET",		"settings" = "fleet",			"playerPickable" = FALSE),
 	//"Icarus" =			list("id" = "ICARUS",		"settings" = "icarus",			"playerPickable" = FALSE),
 	//"Gehenna" =			list("id" = "GEHENNA",		"settings" = "gehenna",			"playerPickable" = FALSE),
 	"blank" =				list("id" = "BLANK",		"settings" = "", 				"playerPickable" = FALSE),
-	"blank_underwater" =	list("id" = "BLANK_UNDERWATER", "settings" = "", 			"playerPickable" = FALSE)
+	"blank_underwater" =	list("id" = "BLANK_UNDERWATER", "settings" = "", 			"playerPickable" = FALSE),
+	"DevTest" =	list("id" = "DEVTEST",		"settings" = "devtest",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 69)
 )
 
 /obj/landmark/map
@@ -213,7 +213,7 @@ var/global/list/mapNames = list(
 /datum/map_settings/pod_wars
 	name = "POD_WARS"
 	default_gamemode = "pod_wars"
-	goonhub_map = "https://goonhub.com/maps/pod_wars"
+	goonhub_map = "https://cdn.discordapp.com/attachments/890313890003566632/1137526717964103781/output.png"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 	style = "spess"
@@ -937,7 +937,7 @@ var/global/list/mapNames = list(
 		/datum/job/civilian/bartender = 2,
 		/datum/job/civilian/janitor = 3,
 		/datum/job/civilian/chaplain = 2,
-		/datum/job/special/lawyer = 1,
+		/datum/job/special/attorney = 1,
 		/datum/job/special/atmospheric_technician = 1
 	)
 
@@ -1027,7 +1027,7 @@ var/global/list/mapNames = list(
 	job_limits_from_landmarks = TRUE
 	job_limits_override = list(
 		/datum/job/special/atmospheric_technician = 1,
-		/datum/job/special/barber = 1,
+		/datum/job/special/hairdresser = 1,
 		/datum/job/special/research_assistant = 2,
 		/datum/job/special/medical_assistant = 2
 	)
@@ -1102,6 +1102,45 @@ var/global/list/mapNames = list(
 		"the Dionysus primary zone" = list(/area/station/crew_quarters/cafeteria),
 		"the Maru primary zone" = list(/area/station/engine/engineering),
 		"the Hammer primary zone" = list(/area/station/security/main))
+
+/datum/map_settings/devtest
+	name = "DEVTEST"
+	display_name = "Developer Lounge & Co"
+	style = "dev zone"
+	arrivals_type = MAP_SPAWN_CRYO
+	dir_fore = NORTH
+
+	parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1/west,
+		/atom/movable/screen/parallax_layer/space_2/west,
+		)
+
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+
+	escape_dir = EAST
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+
+	valid_nuke_targets = list("the developer zone" = list(/area/devzone),
+		"the test chamber or space" = list(/area/space))
+
 
 /area/shuttle/merchant_shuttle/left_centcom
 	icon_state = "shuttle_merch_l"

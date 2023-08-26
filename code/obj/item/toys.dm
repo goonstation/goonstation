@@ -298,6 +298,7 @@ TYPEINFO(/obj/item/toy/handheld)
 		src.add_fingerprint(user)
 	return
 
+ADMIN_INTERACT_PROCS(/obj/item/ghostboard, proc/admin_command_speak)
 /obj/item/ghostboard
 	name = "\improper Ouija board"
 	desc = "A wooden board that allows for communication with spirits and such things. Or that's what the company that makes them claims, at least."
@@ -349,14 +350,8 @@ TYPEINFO(/obj/item/toy/handheld)
 			if(!selected)
 				return
 
-			animate_float(src, 1, 5, 1)
-			if(prob(20) && !ON_COOLDOWN(src, "bother chaplains", 1 MINUTE))
-				var/area/AR = get_area(src)
-				for(var/mob/M in by_cat[TR_CAT_CHAPLAINS])
-					if(M.client)
-						boutput(M, "<span class='notice'>You sense a disturbance emanating from \a [src] in \the [AR.name].</span>")
-			for (var/mob/O in observersviewers(7, src))
-				O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
+			src.speak(selected)
+
 			#ifdef HALLOWEEN
 			if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
 				var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
@@ -364,6 +359,20 @@ TYPEINFO(/obj/item/toy/handheld)
 			#endif
 		else
 			return ..(location,control,params)
+
+	proc/speak(message)
+		animate_float(src, 1, 5, 1)
+		if(prob(20) && !ON_COOLDOWN(src, "bother chaplains", 1 MINUTE))
+			var/area/AR = get_area(src)
+			for(var/mob/M in by_cat[TR_CAT_CHAPLAINS])
+				if(M.client)
+					boutput(M, "<span class='notice'>You sense a disturbance emanating from \a [src] in \the [AR.name].</span>")
+		for (var/mob/O in observersviewers(7, src))
+			O.show_message("<B><span class='notice'>The board spells out a message ... \"[message]\"</span></B>", 1)
+
+	proc/admin_command_speak()
+		set name = "Speak"
+		src.speak(tgui_input_text(usr, "Speak message through [src]", "Speak", ""))
 
 /obj/item/ghostboard/emouija
 	name = "Emouija board"

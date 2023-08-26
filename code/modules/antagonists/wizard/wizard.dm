@@ -43,22 +43,22 @@
 
 		// Assign wizard attire.
 		H.unequip_all(TRUE)
-		H.equip_if_possible(new /obj/item/clothing/under/shorts/black(H), H.slot_w_uniform)
-		H.equip_if_possible(new /obj/item/storage/backpack(H), H.slot_back)
-		H.equip_if_possible(new /obj/item/device/radio/headset/wizard(H), H.slot_ears)
-		H.equip_if_possible(new /obj/item/clothing/suit/wizrobe(H), H.slot_wear_suit)
-		H.equip_if_possible(new /obj/item/clothing/head/wizard(H), H.slot_head)
-		H.equip_if_possible(new /obj/item/clothing/shoes/sandal/magic/wizard(H), H.slot_shoes)
-		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), H.slot_l_store)
-		H.equip_if_possible(new /obj/item/paper/Wizardry101(H), H.slot_r_store)
-		H.equip_if_possible(new /obj/item/staff(H), H.slot_r_hand)
+		H.equip_if_possible(new /obj/item/clothing/under/shorts/black(H), SLOT_W_UNIFORM)
+		H.equip_if_possible(new /obj/item/storage/backpack(H), SLOT_BACK)
+		H.equip_if_possible(new /obj/item/device/radio/headset/wizard(H), SLOT_EARS)
+		H.equip_if_possible(new /obj/item/clothing/suit/wizrobe(H), SLOT_WEAR_SUIT)
+		H.equip_if_possible(new /obj/item/clothing/head/wizard(H), SLOT_HEAD)
+		H.equip_if_possible(new /obj/item/clothing/shoes/sandal/magic/wizard(H), SLOT_SHOES)
+		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), SLOT_L_STORE)
+		H.equip_if_possible(new /obj/item/paper/Wizardry101(H), SLOT_R_STORE)
+		H.equip_if_possible(new /obj/item/staff(H), SLOT_R_HAND)
 
 		if (!src.vr)
-			H.equip_if_possible(new /obj/item/teleportation_scroll(H), H.slot_l_hand)
+			H.equip_if_possible(new /obj/item/teleportation_scroll(H), SLOT_L_HAND)
 
 		var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(src.vr)
 		SB.wizard_key = src.owner.key
-		H.equip_if_possible(SB, H.slot_belt)
+		H.equip_if_possible(SB, SLOT_BELT)
 
 		H.equip_sensory_items()
 

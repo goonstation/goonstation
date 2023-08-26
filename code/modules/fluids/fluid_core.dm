@@ -1,6 +1,6 @@
 var/list/ban_from_fluid = list(
 	"paper",\
-	"fungus",\
+	"space_fungus",\
 	"martian_flesh",\
 	"blackpowder",\
 	"thermite",\

@@ -60,6 +60,9 @@ ABSTRACT_TYPE(/obj/item)
 
 	var/attack_verbs = "attacks" //! Verb used when you attack someone with this, as in [attacker] [attack_verbs] [victim]. Can be a list or single entry
 
+	/// when attacking, this item can leave a slash wound
+	var/leaves_slash_wound = FALSE
+
 	/*_________*/
 	/*Inventory*/
 	/*‾‾‾‾‾‾‾‾‾*/
@@ -383,6 +386,38 @@ ABSTRACT_TYPE(/obj/item)
 		return 1
 	..()
 
+/obj/item/material_trigger_on_mob_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/situation_modifier)
+	var/hitchance = 10
+	// if the item is in you, you get a chance, depending on the size, that it gets hit
+	switch(src.w_class)
+		if (-INFINITY to W_CLASS_TINY)
+			hitchance = 10
+		if (W_CLASS_SMALL)
+			hitchance = 20
+		if (W_CLASS_NORMAL)
+			hitchance = 30
+		if (W_CLASS_BULKY)
+			hitchance = 60
+		if (W_CLASS_HUGE to INFINITY)
+			hitchance = 100
+	// It won't trigger when you are carrying it in your hand and it isnt targeted, with the exception that it will always trigger if you are blocking or having a person in a grab with the item
+	if (attacked.l_hand == src  || attacked.r_hand == src)
+		if ((src.c_flags && src.c_flags & HAS_GRAB_EQUIP))
+			hitchance = 100
+		else
+			// if the arm you are holding the item is target, the chance gets doubled
+			if (situation_modifier && istext(situation_modifier))
+				var/targeted_zone = parse_zone(situation_modifier)
+				if(targeted_zone == "both arms" || (attacked.l_hand == src && targeted_zone =="left arm") || (attacked.r_hand == src && targeted_zone == "right arm"))
+					hitchance *= 2
+				else
+					hitchance = 0
+			else
+				hitchance = 0
+	if(!prob(hitchance))
+		return
+	..()
+
 
 //disgusting proc. merge with foods later. PLEASE
 /obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/by_matter_eater=FALSE)
@@ -517,8 +552,6 @@ ABSTRACT_TYPE(/obj/item)
 					firesource = I
 					break
 			src.combust(firesource)
-	if (src.material)
-		src.material.triggerTemp(src, temperature)
 	..() // call your fucking parents
 
 /// Gets the effective contraband level of an item. Use this instead of accessing .contraband directly
@@ -611,7 +644,7 @@ ABSTRACT_TYPE(/obj/item)
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)
-		P.setMaterial(src.material)
+		P.setMaterial(src.material, mutable = src.material.isMutable())
 
 	src.change_stack_amount(-toRemove)
 	P.change_stack_amount(toRemove - P.amount)
@@ -793,7 +826,7 @@ ABSTRACT_TYPE(/obj/item)
 					user.u_equip(src)
 					. = user.put_in_hand(src, 0)
 				else if (!user.l_hand)
-					if (!target?.can_equip(src, target.slot_l_hand))
+					if (!target?.can_equip(src, SLOT_L_HAND))
 						user.show_text("You need a free hand to do that!", "blue")
 						.= 0
 					else
@@ -810,7 +843,7 @@ ABSTRACT_TYPE(/obj/item)
 					user.u_equip(src)
 					. = user.put_in_hand(src, 1)
 				else if (!user.r_hand)
-					if (!target?.can_equip(src, target.slot_r_hand))
+					if (!target?.can_equip(src, SLOT_R_HAND))
 						user.show_text("You need a free hand to do that!", "blue")
 						.= 0
 					else
@@ -830,8 +863,7 @@ ABSTRACT_TYPE(/obj/item)
 
 /obj/item/attackby(obj/item/W, mob/user, params)
 	if (W.firesource)
-		if(src.material)
-			src.material.triggerTemp(src ,1500)
+		src.material_trigger_on_temp(1500)
 		if (src.burn_possible && src.burn_point <= 1500)
 			src.combust(W)
 		else
@@ -851,7 +883,7 @@ ABSTRACT_TYPE(/obj/item)
 	SHOULD_NOT_SLEEP(TRUE)
 	if (src.burning)
 		if (src.material && !(src.item_function_flags & COLD_BURN))
-			src.material.triggerTemp(src, src.burn_output + rand(1,200))
+			src.material_trigger_on_temp(src.burn_output + rand(1,200))
 		var/turf/T = get_turf(src.loc)
 		if (T && !(src.item_function_flags & COLD_BURN)) // runtime error fix
 			T.hotspot_expose((src.burn_output + rand(1,200)),5)
@@ -984,8 +1016,7 @@ ABSTRACT_TYPE(/obj/item)
 /obj/item/ex_act(severity)
 	switch(severity)
 		if (2)
-			if (src.material)
-				src.material.triggerTemp(src ,7500)
+			src.material_trigger_on_temp(7500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 7500)
 				src.combust()
 			if (src.artifact)
@@ -993,8 +1024,7 @@ ABSTRACT_TYPE(/obj/item)
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
 		if (3)
-			if (src.material)
-				src.material.triggerTemp(src, 3500)
+			src.material_trigger_on_temp(3500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 3500)
 				src.combust()
 			if (src.artifact)
@@ -1056,18 +1086,21 @@ ABSTRACT_TYPE(/obj/item)
 					HH.limb.attack_hand(src,M,1)
 				M.next_click = world.time + src.click_delay
 				return
-	else if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/obj/item/parts/arm = null
-		if (H.limbs) //Wire: fix for null.r_arm and null.l_arm
-			arm = H.hand ? H.limbs.l_arm : H.limbs.r_arm // I'm so sorry I couldent kill all this shitcode at once
-		if (H.equipped())
-			H.drop_item()
+	else if(ishuman(M) || iscritter(M))
+		var/datum/limb/active_limb = null
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			active_limb = H.hand ? H.limbs?.l_arm?.limb_data : H.limbs?.r_arm?.limb_data // I'm so sorry I couldent kill all this shitcode at once
+		if(iscritter(M))
+			var/mob/living/critter/C = M
+			active_limb = C.get_active_hand().limb
+		if (M.equipped())
+			M.drop_item()
 			SPAWN(1 DECI SECOND)
-				if (arm)
-					arm.limb_data.attack_hand(src, H, can_reach(H, src))
-		else if (arm)
-			arm.limb_data.attack_hand(src, H, can_reach(H, src))
+				if (active_limb)
+					active_limb.attack_hand(src, M, can_reach(M, src))
+		else if (active_limb)
+			active_limb.attack_hand(src, M, can_reach(M, src))
 
 	else
 		//the verb is PICK-UP, not 'smack this object with that object'
@@ -1214,11 +1247,11 @@ ABSTRACT_TYPE(/obj/item)
 			var/momentum = getProperty("momemtum")
 			force += 5
 */
-	if (src.material)
-		src.material.triggerOnAttack(src, user, M)
+	src.material_on_attack_use(user, M)
 	for (var/atom/A in M)
-		if (A.material)
-			A.material.triggerOnAttacked(A, user, M, src)
+		A.material_trigger_on_mob_attacked(user, M, src, hit_area)
+	for (var/atom/equipped_stuff in M.equipped())
+		equipped_stuff.material_trigger_on_mob_attacked(user, M, src, hit_area)
 
 	user.violate_hippocratic_oath()
 
@@ -1319,6 +1352,14 @@ ABSTRACT_TYPE(/obj/item)
 		if(power <= 0)
 			fuckup_attack_particle(user)
 			armor_blocked = 1
+
+	if (src.leaves_slash_wound && power > 0 && hit_area == "chest" && ishuman(M))
+		var/num = rand(0, 2)
+		var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = "slash_wound-[num]", layer = MOB_EFFECT_LAYER)
+		var/mob/living/carbon/human/H = M
+		var/datum/reagent/mob_blood = reagents_cache[H.blood_id]
+		I.color = rgb(mob_blood.fluid_r, mob_blood.fluid_g, mob_blood.fluid_b, mob_blood.transparency)
+		M.UpdateOverlays(I, "slash_wound-[num]")
 
 	if (src.can_disarm && !((src.temp_flags & IS_LIMB_ITEM) && user == M))
 		msgs = user.calculate_disarm_attack(M, 0, 0, 0, is_shove = 1, disarming_item = src)
@@ -1595,7 +1636,7 @@ ABSTRACT_TYPE(/obj/item)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	#endif
 
-	if(src.material) src.material.triggerDrop(user, src)
+	src.material_on_drop(user)
 	if (islist(src.ability_buttons))
 		for(var/obj/ability_button/B in ability_buttons)
 			B.OnDrop()
@@ -1614,7 +1655,7 @@ ABSTRACT_TYPE(/obj/item)
 	#ifdef COMSIG_MOB_PICKUP
 	SEND_SIGNAL(user, COMSIG_MOB_PICKUP, src)
 	#endif
-	src.material?.triggerPickup(user, src)
+	src.material_on_pickup(user)
 	set_mob(user)
 	show_buttons()
 	if (src.inventory_counter)

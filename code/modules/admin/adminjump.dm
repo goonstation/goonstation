@@ -286,7 +286,7 @@
 		switch(alert("Are you sure?",,"Yes","No"))
 			if("Yes")
 				for(var/mob/living/M in mobs)
-					if(checkantag(M))
+					if(M.mind?.is_antagonist())
 						M.set_loc(get_turf(usr))
 
 				logTheThing(LOG_ADMIN, usr, "brought all traitors to themselves [log_loc(usr)]")
@@ -307,7 +307,7 @@
 		switch(alert("Are you sure?",,"Yes","No"))
 			if("Yes")
 				for(var/mob/living/M in mobs)
-					if(checkantag(M))
+					if(M.mind?.is_antagonist())
 						continue
 					M.set_loc(get_turf(usr))
 

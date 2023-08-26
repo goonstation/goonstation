@@ -124,6 +124,7 @@
 	name = "tactical assault rucksack"
 	desc = "A military backpack made of high density fabric, designed to fit a wide array of tools for comprehensive storage support."
 	icon_state = "tactical_backpack"
+	satchel_compatible = FALSE
 	spawn_contents = list(/obj/item/storage/box/starter)
 	slots = 10
 
@@ -985,6 +986,7 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 	is_syndicate = 1
 	item_function_flags = IMMUNE_TO_ACID
 	var/fake = 0		//So the moves are all fake.
+	HELP_MESSAGE_OVERRIDE({"In addition to granting the wearer wrestler abilities, it also gives them the wrestler passives detailed "} + EXTERNAL_LINK("https://wiki.ss13.co/Wrestler#Passives", "here") + ".")
 
 	equipped(var/mob/user)
 		..()

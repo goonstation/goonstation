@@ -202,7 +202,7 @@
 				animate(cam.get_filter("charge_outline"), size=0.5, time=charge_time)
 				SPAWN(charge_time)
 					logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] fires a camera projectile [src.name], targeting [key_name(target)] [log_loc(target)].")
-					shoot_projectile_ST(cam, P, target)
+					shoot_projectile_ST_pixel_spread(cam, P, target)
 					if(P.cost > 1)
 						if (issilicon(cam))
 							var/mob/living/silicon/S = cam
