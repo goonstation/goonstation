@@ -13,6 +13,7 @@ proc/get_default_flock()
 	if (!default_flock)
 		default_flock = new
 		default_flock.relay_allowed = FALSE
+		default_flock.quiet = TRUE
 		default_flock.achieve(FLOCK_ACHIEVEMENT_CHEAT_COMPUTE)
 	return default_flock
 
@@ -59,7 +60,10 @@ proc/get_default_flock()
 	var/relay_finished = FALSE
 	var/datum/tgui/flockpanel
 	var/ui_tab = "drones"
+	///Can this flock realize the relay?
 	var/relay_allowed = TRUE
+	///Do we broadcast system announcements?
+	var/quiet = FALSE
 
 	var/center_x = 0
 	var/center_y = 0

@@ -300,3 +300,10 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_old_shack.dmm"
 		prefabSizeX = 10
 		prefabSizeY = 11
+
+	shipwreck_survivor1
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_shipwreck_survivor1.dmm"
+		prefabSizeX = 19
+		prefabSizeY = 18

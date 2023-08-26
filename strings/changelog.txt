@@ -1,4 +1,18 @@
 
+(t)fri aug 25 23
+(u)Bartimeus973
+(p)15502
+(e)💅📦|C-QoL, A-Game-Objects
+(+)A lot of traitor items now have explanations on how to use them. Double examine or right click -> Help on them to read it.
+(u)LeahTheTech
+(+)Artifact heater pads now actually heat things placed on them. Also heat triggered artifacts can now activate from air temperature.
+(t)wed aug 23 23
+(u)FlameArrow57
+(p)15391
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Pressing the equip hotkey while holding a gun that fits on your back will now attempt to add it to your backpack first if it's open.
+(u)LeahTheTech
+(+)Shower heads can now be controlled by mech-comp.
 (t)tue aug 22 23
 (u)Paaiii
 (p)15416
