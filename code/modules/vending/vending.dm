@@ -662,12 +662,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 				usr.put_in_hand_or_eject(air_machine.holding)
 				air_machine.holding = null
 				UpdateOverlays(null, "o2_vend_tank_overlay")
+		if("o2_insert")
+			if (istype(I, /obj/item/tank))
+				var/obj/machinery/vending/air_vendor/air_machine = src
+				air_machine.insert_tank(I, usr)
 
 		if("o2_changepressure")
 			var/obj/machinery/vending/air_vendor/air_machine = src
-			var/change = input(usr, "Target Pressure (10.1325-1013.25):", "Enter target pressure", air_machine.target_pressure) as num
-			if(isnum_safe(change))
-				air_machine.target_pressure = clamp(change, 10.1325, 1013.25)
+			if(isnum_safe(params["pressure"]))
+				air_machine.target_pressure = clamp(params["pressure"], 10.1325, 1013.25)
 
 		if("o2_fill")
 			var/obj/machinery/vending/air_vendor/air_machine = src
@@ -3015,22 +3018,25 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		gas_prototype.oxygen = (target_pressure)*gas_prototype.volume/(R_IDEAL_GAS_EQUATION*gas_prototype.temperature)
 
 		holding.air_contents.copy_from(gas_prototype)
+		postvend_effect()
 		tgui_process.update_uis(src)
 
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/tank))
-			if (!src.holding)
-				boutput(user, "You insert the [W] into the the [src].</span>")
-				UpdateOverlays(holding_overlay_image, "o2_vend_tank_overlay")
-				user.drop_item()
-				W.set_loc(src)
-				src.holding = W
-				tgui_process.update_uis(src)
-			else
-				boutput(user, "You try to insert the [W] into the the [src], but there's already a tank there!</span>")
-				return
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/tank))
+			insert_tank(I, user)
 		else
 			..()
+
+	proc/insert_tank(obj/item/tank/tank, mob/user)
+		if (!src.holding)
+			boutput(user, "You insert the [tank] into the the [src].</span>")
+			UpdateOverlays(holding_overlay_image, "o2_vend_tank_overlay")
+			user.drop_item()
+			tank.set_loc(src)
+			src.holding = tank
+			tgui_process.update_uis(src)
+		else
+			boutput(user, "You try to insert the [tank] into the the [src], but there's already a tank there!</span>")
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
