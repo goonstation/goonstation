@@ -1165,6 +1165,11 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		if (src.head_tracker)
 			head_tracker.linked_human = src.mob
 
+	onDeath(gibbed)
+		. = ..()
+		//add puritan on death because people are nerds and deskeletonize people after death to get around the downside of being a skeleton. Lets make that a little harder.
+		src.mob.traitHolder.addTrait("puritan")
+
 /obj/item/joint_wax
 	name = "joint wax"
 	desc = "Does what it says on the jar."
