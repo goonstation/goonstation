@@ -184,6 +184,8 @@
 
 		SPAWN(0)
 
+			var/list/apclist = new/list()
+
 			for(var/datum/tileinfo/T in currentBp.roominfo)
 				var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)
 
@@ -212,7 +214,10 @@
 					newTile.inherit_area()
 
 				for(var/datum/objectinfo/O in T.objects)
-					if(O.objecttype == null) continue
+					if (O.objecttype == null) continue
+					if (ispath(O.objecttype, /obj/machinery/power/apc))
+						apclist[O] = pos
+						continue
 					var/dmm_suite/preloader/blah = new(pos, list( // this doesn't spawn the objects, only presets their properties
                         "layer" = O.layer,
                         "pixel_x" = O.px,
@@ -222,6 +227,13 @@
                     ))
 					new O.objecttype(pos) // need this part to also spawn the objects
 
+			for (var/datum/objectinfo/N in apclist)
+				//var/atom/newapc =
+				new N.objecttype(apclist[N])
+				/* newapc.set_dir(N.direction)
+				newapc.layer = N.layer
+				newapc.pixel_x = N.px
+				newapc.pixel_y = N.py */
 
 			for(var/obj/J in src)
 				qdel(J)
