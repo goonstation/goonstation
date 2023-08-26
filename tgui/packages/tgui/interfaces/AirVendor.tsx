@@ -11,7 +11,7 @@ import { Window } from '../layouts';
 import { VendorCashTable } from './common/VendorCashTable';
 import { GasTankInfo } from './GasTank';
 
-type AirVentorParams = {
+type AirVendorParams = {
   cash: number,
   cardname: string,
   bankMoney: number,
@@ -25,7 +25,7 @@ type AirVentorParams = {
 }
 
 const VendorSection = (_props, context) => {
-  const { act, data } = useBackend<AirVentorParams>(context);
+  const { act, data } = useBackend<AirVendorParams>(context);
   const { cash, bankMoney, fill_cost, target_pressure, min_pressure, max_pressure } = data;
 
   const handleFillClick = () => act('o2_fill');
@@ -64,7 +64,7 @@ const VendorSection = (_props, context) => {
 };
 
 const TankSection = (_props, context) => {
-  const { act, data } = useBackend<AirVentorParams>(context);
+  const { act, data } = useBackend<AirVendorParams>(context);
   const { holding, holding_pressure, max_pressure } = data;
 
   const handleTankEject = () => act('o2_eject');
@@ -94,7 +94,7 @@ const TankSection = (_props, context) => {
 };
 
 export const AirVendor = (_props, context) => {
-  const { act, data } = useBackend<AirVentorParams>(context);
+  const { act, data } = useBackend<AirVendorParams>(context);
   const { cash, cardname, bankMoney } = data;
 
   const handleCardEject = () => act('logout');
