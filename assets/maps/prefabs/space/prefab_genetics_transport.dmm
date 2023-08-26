@@ -53,7 +53,9 @@
 /area/prefab/genetics_transport)
 "cr" = (
 /obj/item/storage/wall/medical,
-/turf/unsimulated/wall/auto/reinforced/supernorn,
+/turf/simulated/wall/auto/shuttle{
+	opacity = 1
+	},
 /area/prefab/genetics_transport)
 "cA" = (
 /obj/item/raw_material/shard/plasmacrystal{
@@ -117,6 +119,13 @@
 "fc" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/variableTurf/floor,
+/area/prefab/genetics_transport)
+"fk" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	opacity = 1
+	},
+/turf/space,
 /area/prefab/genetics_transport)
 "fz" = (
 /obj/decal/fakeobjects/shuttleengine{
@@ -340,6 +349,12 @@
 	},
 /turf/variableTurf/floor,
 /area/prefab/genetics_transport)
+"wy" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12";
+	opacity = 1
+	},
+/area/prefab/genetics_transport)
 "wM" = (
 /obj/grille/steel/broken/corroded,
 /turf/simulated/floor/airless/damaged5,
@@ -455,6 +470,11 @@
 /obj/item/suture,
 /obj/item/storage/wall/medical_wear,
 /turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"ER" = (
+/turf/simulated/wall/auto/shuttle{
+	opacity = 1
+	},
 /area/prefab/genetics_transport)
 "Gq" = (
 /obj/machinery/light/small/floor,
@@ -596,7 +616,16 @@
 /area/prefab/genetics_transport)
 "Pn" = (
 /obj/item/storage/wall/fire,
-/turf/unsimulated/wall/auto/reinforced/supernorn,
+/turf/simulated/wall/auto/shuttle{
+	opacity = 1
+	},
+/area/prefab/genetics_transport)
+"PD" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	opacity = 1
+	},
+/turf/space,
 /area/prefab/genetics_transport)
 "RV" = (
 /obj/table/glass/auto,
@@ -607,6 +636,13 @@
 /obj/decal/cleanable/blood/splatter,
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/grass/random,
+/area/prefab/genetics_transport)
+"SU" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0;
+	opacity = 1
+	},
+/turf/space,
 /area/prefab/genetics_transport)
 "TR" = (
 /obj/item/cigpacket,
@@ -669,7 +705,11 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/prefab/genetics_transport)
 "XJ" = (
-/turf/unsimulated/wall/auto/reinforced/supernorn,
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	opacity = 1
+	},
+/turf/space,
 /area/prefab/genetics_transport)
 "Yj" = (
 /turf/simulated/floor/plating,
@@ -720,19 +760,19 @@ Dl
 Dl
 Dl
 Dl
-XJ
-XJ
+SU
+ER
 zE
 lU
 fz
 XJ
 Dl
 Dl
-XJ
+SU
 zE
 kY
 kY
-XJ
+ER
 XJ
 Dl
 Dl
@@ -744,20 +784,20 @@ Dl
 Dl
 Dl
 Dl
-XJ
+wy
 xy
 xM
 dg
 xM
-XJ
-XJ
-XJ
-XJ
+wy
+ER
+ER
+ER
 Jw
 LX
 KB
 bt
-XJ
+ER
 Dl
 Dl
 Dl
@@ -768,20 +808,20 @@ Dl
 Dl
 Dl
 Dl
-XJ
+wy
 xM
 xM
 xM
 xM
-XJ
+wy
 Uc
 si
-XJ
+ER
 Dd
 Dd
 Dd
 oU
-XJ
+ER
 Dl
 Dl
 Dl
@@ -792,20 +832,20 @@ Dl
 Dl
 Dl
 Dl
-XJ
-XJ
+PD
+ER
 HN
 xM
 SK
-XJ
+wy
 eT
 lF
-XJ
+ER
 HR
 Dd
 kZ
-XJ
-XJ
+ER
+fk
 Dl
 Dl
 Dl
@@ -817,18 +857,18 @@ Dl
 Dl
 Dl
 Dl
-XJ
+ER
 XD
 XD
 ez
-XJ
-XJ
+ER
+ER
 wi
-XJ
+ER
 ZB
 XD
 XD
-XJ
+ER
 Dl
 Dl
 Dl
@@ -841,8 +881,8 @@ Dl
 Dl
 Dl
 Dl
-XJ
-XJ
+PD
+ER
 lr
 DH
 DH
@@ -851,8 +891,8 @@ DH
 jT
 DH
 NU
-XJ
-XJ
+ER
+fk
 Dl
 Dl
 Dl
@@ -866,7 +906,7 @@ Dl
 Dl
 Dl
 Dl
-XJ
+PD
 Pn
 RV
 oP
@@ -874,8 +914,8 @@ dI
 DH
 DH
 Jf
-XJ
-XJ
+ER
+fk
 Dl
 Dl
 Dl
@@ -891,14 +931,14 @@ Dl
 Dl
 Dl
 Dl
-XJ
+ER
 ly
 hK
 Jp
 DH
 DH
 YR
-XJ
+ER
 Dl
 Dl
 Dl
@@ -914,16 +954,16 @@ Dl
 Dl
 Dl
 Dl
-Dl
-XJ
-XJ
+SU
+ER
+ER
 qI
 vB
 vB
 qI
+ER
+ER
 XJ
-XJ
-Dl
 Dl
 Dl
 Dl
@@ -938,7 +978,7 @@ Dl
 Dl
 Dl
 Dl
-XJ
+ER
 ue
 nS
 rx
@@ -947,7 +987,7 @@ TS
 rx
 uj
 xS
-XJ
+ER
 Dl
 Dl
 Dl
@@ -971,7 +1011,7 @@ VX
 yN
 rx
 DL
-XJ
+ER
 ga
 ga
 Dl
@@ -1010,7 +1050,7 @@ Dl
 Dl
 Dl
 Dl
-XJ
+ER
 EQ
 rx
 rM
@@ -1019,7 +1059,7 @@ xw
 Ah
 bk
 rx
-XJ
+ER
 pe
 Xe
 ga
@@ -1034,7 +1074,7 @@ Dl
 Dl
 Dl
 Dl
-XJ
+ER
 IM
 rx
 yN
@@ -1043,7 +1083,7 @@ rx
 Yu
 ns
 dp
-XJ
+ER
 wl
 CB
 Xe
@@ -1058,7 +1098,7 @@ rk
 rk
 Dl
 Dl
-XJ
+ER
 gR
 Cr
 rx
@@ -1067,7 +1107,7 @@ JX
 Wl
 LS
 zu
-XJ
+ER
 kE
 Vs
 Xe
@@ -1082,16 +1122,16 @@ rk
 rk
 Dl
 Dl
-XJ
-XJ
-XJ
+PD
+ER
+ER
 nV
-XJ
-XJ
+ER
+ER
 nV
-XJ
-XJ
-XJ
+ER
+ER
+fk
 Xe
 wl
 Wt
@@ -1107,14 +1147,14 @@ Dl
 Dl
 Dl
 ga
-XJ
+ER
 bC
 GZ
 gO
 bx
 IQ
 ke
-XJ
+ER
 Xe
 Xp
 gM
