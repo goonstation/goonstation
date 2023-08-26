@@ -1527,6 +1527,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\effects.dm"
 #include "code\obj\false_wall.dm"
 #include "code\obj\foamedmetal.dm"
+#include "code\obj\gimmick.dm"
 #include "code\obj\grille.dm"
 #include "code\obj\health_scanner.dm"
 #include "code\obj\item.dm"

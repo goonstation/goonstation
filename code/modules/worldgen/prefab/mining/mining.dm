@@ -260,3 +260,10 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/space)
 		prefabPath = "assets/maps/prefabs/space/prefab_mauxite_hideout.dmm"
 		prefabSizeX = 22
 		prefabSizeY = 20
+
+	genetics_transport // Bartimeus's crashed shuttle with one surviving geneticist
+		maxNum = 1
+		probability = 20
+		prefabPath = "assets/maps/prefabs/space/prefab_genetics_transport.dmm"
+		prefabSizeX = 28
+		prefabSizeY = 22

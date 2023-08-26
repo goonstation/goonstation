@@ -1,26 +1,20 @@
 //General idea: Sit next to the console, grab people who come close, walk to the pod, stuff them in, give them genes, spit them out.
-//Todo, figure out why he stands around when you arent near.
 /datum/aiHolder/critter/human/crazy_geneticist
 	New()
 		..()
 		default_task = get_instance(/datum/aiTask/prioritizer/critter/human/crazy_geneticist, list(src))
-		/*
-		var/datum/aiTask/timed/targeted/human/genetics/G = get_instance(/datum/aiTask/timed/targeted/human/genetics, list(src))
-		default_task = G
-		G.transition_task = G
-*/
+
 /datum/aiTask/prioritizer/critter/human/crazy_geneticist/New()
 	..()
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/find_console, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/grab_patient, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/timed/wait_for_patient, list(holder, src))
 
-
 /datum/aiTask/timed/wait_for_patient
 	name = "waiting for patients"
 	minimum_task_ticks = 5
 	maximum_task_ticks = 10
-	weight = 15
+	weight = 14
 
 /datum/aiTask/timed/wait_for_patient/evaluate()
 	var/mob/living/critter/C = holder.owner
@@ -30,24 +24,20 @@
 		break
 	if (!near_console)
 		return FALSE
-	return TRUE
-
-/datum/aiTask/timed/wait_for_patient/evaluate()
-	var/mob/living/critter/C = holder.owner
 	if(length(C.seek_target(3)))
-		return 0
-	return 100*weight  //Note goalbased evaluate returns a percentage which is multiplied by a weight. Only return a high priority if we're hiding, otherwise 0
+		return FALSE
+	return TRUE
 
 /datum/aiTask/timed/wait_for_patient/on_tick()
 	var/mob/living/critter/C = holder.owner
 	holder.stop_move()
-	if(length(C.seek_target(3))) //ambush max dist
+	if(length(C.seek_target(3)))
 		src.holder.owner.ai.interrupt()
 
-/// If a target is in range and we're hiding, attack them until they're incapacitated
+/// Agressively grab anyone who comes close, then begin moving to the pod
 /datum/aiTask/sequence/goalbased/grab_patient
 	name = "grab a patient"
-	weight = 20
+	weight = 16
 	max_dist = 3
 	ai_turbo = TRUE
 
@@ -61,9 +51,9 @@
 	for (var/obj/fake_genetics_console/console in range(C, 1))
 		near_console = TRUE
 		break
-	if (!near_console || (GET_COOLDOWN(src.holder.owner, "try_grab")))
-		return FALSE
-	return TRUE
+	if (near_console && !ON_COOLDOWN(C, "try_grab", 15 SECONDS))
+		return TRUE
+	return FALSE
 
 /datum/aiTask/sequence/goalbased/grab_patient/precondition()
 	var/mob/living/critter/C = holder.owner
@@ -74,10 +64,8 @@
 	var/target_list = list()
 	for (var/mob/living/M in hearers(5, C))
 		if (C.valid_target(M))
-			if (M.bioHolder && M.bioHolder.effects && M.bioHolder.effects.len <= 6)
+			if (M.bioHolder && M.bioHolder.effects && M.bioHolder.effects.len <= 5)
 				target_list += M
-			else
-				C.say("You have enough genes pal.")
 	return target_list
 
 /datum/aiTask/succeedable/grab_patient
@@ -86,41 +74,38 @@
 	var/has_started = FALSE
 
 /datum/aiTask/succeedable/grab_patient/failed()
-	//failure condition is just that the target escaped
 	if(holder.owner && holder.target)
 		return (GET_DIST(holder.owner, holder.target) > max_dist)
 	else
-		return TRUE //we also fail if owner or target are somehow null
+		return TRUE
 
 /datum/aiTask/succeedable/grab_patient/succeeded()
-	//check for grab
+	//Do we have a grab?
 	var/mob/living/critter/C = holder.owner
 	var/obj/item/grab/G = C.equipped()
-	if (istype(G) && G.state >= GRAB_AGGRESSIVE) //if it hasn't grabbed something, try to
-		C.say(pick("Let's get you some genes.", "It'll be quick, come on.", "You need genes."))
+	if (istype(G) && G.state >= GRAB_AGGRESSIVE) //We are holding someone, add a stuff_scanner task and immediatly cancel AI to do it.
+		C.say(pick("Let's get you some genes.", "It'll be quick, come on.", "You need genes.", "Gene time!"))
 		holder.priority_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/stuff_scanner, list(holder, holder.default_task))
 		src.holder.owner.ai.interrupt()
 		return TRUE
 	return FALSE
 
 /datum/aiTask/succeedable/grab_patient/on_tick()
-	//keep moving towards the target and attempt to grab them
-	//has_started marks that we've hit them once
-	ON_COOLDOWN(src.holder.owner, "try_grab", 15 SECONDS)
 	var/mob/living/critter/C = holder.owner
 	var/mob/M = holder.target
 	if(C && M && BOUNDS_DIST(C, M) == 0)
 		C.set_dir(get_dir(C, M))
-		if(C.can_critter_attack()) //if we can't attack, just do nothing until we can
+		if(C.can_critter_attack())
 			C.set_a_intent(INTENT_GRAB)
 			var/list/params = list()
 			params["left"] = TRUE
 			params["ai"] = TRUE
 			var/obj/item/grab/G = C.equipped()
-			if (!istype(G)) //if it hasn't grabbed something, try to
-				if(!isnull(G)) //if we somehow have something that isn't a grab in our hand
+			if (!istype(G))
+				if(!isnull(G))
 					C.drop_item()
 				C.hand_attack(M, params)
+				attack_particle(C, M)
 			else
 				if (G.affecting == null || G.assailant == null || G.disposed || isdead(G.affecting))
 					C.drop_item()
@@ -129,9 +114,8 @@
 						G.AttackSelf(C)
 			src.has_started = TRUE
 	else if(C && M)
-		//we're not in punching range, let's fix that by moving back to the move subtask
 		var/datum/aiTask/sequence/goalbased/grab_patient/parent_task = holder.current_task
-		parent_task.current_subtask = parent_task.subtasks[1] //index 1 is always the move task in goalbased
+		parent_task.current_subtask = parent_task.subtasks[1]
 		parent_task.subtask_index = 1
 		parent_task.current_subtask.reset()
 
@@ -141,7 +125,7 @@
 	if(C)
 		C.set_a_intent(INTENT_GRAB)
 
-// Go fetch!
+// If we have nothing to do and we aren't at a console, find one.
 /datum/aiTask/sequence/goalbased/find_console
 	name = "find our console"
 	weight = 15
@@ -168,11 +152,13 @@
 	return FALSE
 
 /datum/aiTask/sequence/goalbased/find_console/get_targets()
-	for (var/obj/fake_genetics_console/console in range(holder.owner, src.max_dist))
-		return list(console)
+	for_by_tcl(console, /obj/fake_genetics_console)
+		if (IN_RANGE(console, holder.owner, max_dist))
+			return list(console)
+	//If we couldn't find our console, walk around a bit. Maybe it's around here somewhere
+	holder.priority_tasks += holder.get_instance(/datum/aiTask/timed/wander, list(holder, holder.default_task))
 	return list()
 
-//Fetch subtask, pick up the item
 /datum/aiTask/succeedable/find_console
 	name = "fetch subtask"
 	var/is_complete = FALSE
@@ -180,7 +166,7 @@
 /datum/aiTask/succeedable/find_console/failed()
 	var/mob/living/critter/C = holder.owner
 	var/obj/item/I = holder.target
-	if(!C || !I || BOUNDS_DIST(I, C) > 0 || !istype(I.loc, /turf)) //the tasks fails and is re-evaluated if the target is not in range
+	if(!C || !I || BOUNDS_DIST(I, C) > 0 || !istype(I.loc, /turf))
 		return TRUE
 
 /datum/aiTask/succeedable/find_console/succeeded()
@@ -193,17 +179,14 @@
 		var/obj/item/I = holder.target
 		if(C && I && BOUNDS_DIST(C, I) == 0 && istype(I.loc, /turf))
 			C.set_dir(get_dir(C, I))
-			C.visible_message("<span class='notice'>[C] walks to their console and sits down.</span>")
+			C.visible_message("<span class='notice'>[C] walks to their console and begins typing away.</span>")
 			is_complete = TRUE
 
-//We couldn't find our console. Walk around aimlessly until we find it
 /datum/aiTask/succeedable/find_console/on_reset()
 	is_complete = FALSE
-	//holder.priority_tasks += holder.get_instance(/datum/aiTask/timed/wander, list(holder, holder.default_task))
 
-// Go fetch!
 /datum/aiTask/sequence/goalbased/stuff_scanner
-	name = "find our console"
+	name = "find a gene scanner"
 	max_dist = 10
 
 /datum/aiTask/sequence/goalbased/stuff_scanner/New(parentHolder, transTask)
@@ -211,19 +194,23 @@
 	add_task(holder.get_instance(/datum/aiTask/succeedable/stuff_scanner, list(holder)))
 
 /datum/aiTask/sequence/goalbased/stuff_scanner/get_targets()
-	for (var/obj/fake_gene_scanner/scanner in range(holder.owner, src.max_dist))
-		return list(scanner)
+	for_by_tcl(scanner, /obj/fake_gene_scanner)
+		if (IN_RANGE(scanner, holder.owner, max_dist))
+			return list(scanner)
 	return list()
 
-//Fetch subtask, pick up the item
 /datum/aiTask/succeedable/stuff_scanner
-	name = "fetch subtask"
+	name = "find a gene scanner subtask"
 	var/is_complete = FALSE
 
 /datum/aiTask/succeedable/stuff_scanner/failed()
 	var/mob/living/critter/C = holder.owner
+	if (holder.target == list() || holder.target == null)
+		C.drop_item()
+		C.say("Where the hell is my scanner?")
+		return TRUE
 	var/obj/fake_gene_scanner/I = holder.target
-	if(!C || !I || BOUNDS_DIST(I, C) > 0 || !istype(I.loc, /turf)) //the tasks fails and is re-evaluated if the target is not in range
+	if(!C || !I || BOUNDS_DIST(I, C) > 0 || !istype(I.loc, /turf))
 		return TRUE
 
 /datum/aiTask/succeedable/stuff_scanner/succeeded()
@@ -238,13 +225,11 @@
 			C.set_dir(get_dir(C, I))
 			C.visible_message("<span class='notice'>[C] walks up to [I].</span>")
 			var/obj/item/grab/G = C.equipped()
-			if (istype(G) && G.state >= GRAB_AGGRESSIVE) //if it hasn't grabbed something, try to
-				if (G.affecting && ismob(G.affecting))
-					var/mob/M = G.affecting
-					M.set_loc(I)
-					I.gene_randomly(G.affecting)
+			if (istype(G) && G.state >= GRAB_AGGRESSIVE && G.affecting && ismob(G.affecting))
+				var/mob/M = G.affecting
+				C.visible_message("<span class='alert'>[C] expertly shoves [M] inside [I] and locks it down. [I] whirs to life and begins operating automatically.</span>")
+				I.lock_and_gene(M)
 			is_complete = TRUE
 
-//We couldn't find our console. Walk around aimlessly until we find it
 /datum/aiTask/succeedable/stuff_scanner/on_reset()
 	is_complete = FALSE

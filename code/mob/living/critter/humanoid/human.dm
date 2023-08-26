@@ -135,15 +135,14 @@ ABSTRACT_TYPE(/mob/living/critter/human/syndicate)
 		HH.object_for_inhand = /obj/item/gun/kinetic/assault_rifle
 
 /mob/living/critter/human/crazy_geneticist
-	name = "an old geneticist"
-	real_name = "an old geneticist"
-	desc = "This is an alien pikaia."
+	name = "smelly geneticist"
+	real_name = "smelly geneticist"
+	desc = "You have no idea how long it has time since this nerd took a shower. The stink is indescribable."
 	health_burn = 100
 	health_brute = 100
-	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/syndicate/old
 	human_to_copy = /mob/living/carbon/human/normal/geneticist
 	ai_type = /datum/aiHolder/critter/human/crazy_geneticist
-	ai_retaliate_patience = 5 //Pretty chill, until you piss them off
+	ai_retaliate_patience = 4 //Pretty chill, until you piss them off
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	can_throw = TRUE
 	can_grab = TRUE
@@ -170,22 +169,9 @@ ABSTRACT_TYPE(/mob/living/critter/human/syndicate)
 
 	New()
 		..()
-		for (var/i in 1 to 5)
+		for (var/i in 1 to 7)
 			src.bioHolder.RandomEffect("good") //A geneticist gave themselves the good stuff, it only makes sense
 
-/obj/fake_genetics_console
-	name = "fake console"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "scanner"
-	density = TRUE
-	anchored = TRUE
-
-/obj/fake_gene_scanner
-	name = "weird scanner"
-	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "scanner_0"
-	density = TRUE
-	anchored = TRUE
-
-	proc/gene_randomly()
-		return
+	death()
+		src.visible_message("<span class='alert'>[src]'s body rapidly bloats up and expands as their eons of gene tempering cause their body to rupture!</span>")
+		..()

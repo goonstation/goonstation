@@ -1519,6 +1519,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "hideout"
 	icon_state = "orange"
 
+/area/prefab/genetics_transport
+	name = "Genetics Transport"
+	icon_state = "green"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room

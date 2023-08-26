@@ -1,0 +1,1366 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ba" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
+	dir = 8;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "offbroken";
+	name = "broken computer"
+	},
+/turf/simulated/floor,
+/area/prefab/genetics_transport)
+"bf" = (
+/obj/grille/steel/broken,
+/turf/simulated/floor/airless/damaged5,
+/area/prefab/genetics_transport)
+"bk" = (
+/obj/item/paper/book/from_file/medical_surgery_guide{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"bt" = (
+/obj/fake_genetics_console,
+/obj/item/paper{
+	desc = null;
+	icon_state = "postit-writing";
+	info = "Note to self: Remember to eat once in awhile.";
+	name = "lazily written note";
+	pixel_x = 12;
+	pixel_y = 7
+	},
+/turf/simulated/floor/greenblack{
+	dir = 10
+	},
+/area/prefab/genetics_transport)
+"bx" = (
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
+/turf/simulated/floor,
+/area/prefab/genetics_transport)
+"bB" = (
+/obj/decal/cleanable/dirt/dirt4,
+/obj/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/variableTurf/floor,
+/area/prefab/genetics_transport)
+"bC" = (
+/obj/cabinet/medical,
+/turf/simulated/floor,
+/area/prefab/genetics_transport)
+"cr" = (
+/obj/item/storage/wall/medical,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab/genetics_transport)
+"cA" = (
+/obj/item/raw_material/shard/plasmacrystal{
+	pixel_x = 6;
+	pixel_y = -3;
+	rand_pos = 1
+	},
+/obj/machinery/light/incandescent/broken{
+	dir = 6
+	},
+/turf/simulated/floor/plating,
+/area/prefab/genetics_transport)
+"dg" = (
+/obj/decal/cleanable/blood/gibs,
+/turf/simulated/floor/grass/random,
+/area/prefab/genetics_transport)
+"dp" = (
+/obj/machinery/light/incandescent/broken{
+	dir = 6
+	},
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"dI" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = 4
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"dY" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 8;
+	icon_state = "alt_propulsion"
+	},
+/turf/space,
+/area/prefab/genetics_transport)
+"ez" = (
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"eF" = (
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"eI" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
+/turf/simulated/floor,
+/area/prefab/genetics_transport)
+"eT" = (
+/obj/machinery/light/incandescent/broken{
+	dir = 1
+	},
+/obj/table/wood,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"fc" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/variableTurf/floor,
+/area/prefab/genetics_transport)
+"fz" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-L"
+	},
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-R"
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab/genetics_transport)
+"ga" = (
+/turf/variableTurf/wall,
+/area/prefab/genetics_transport)
+"gM" = (
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
+/obj/decal/cleanable/blood/splatter,
+/turf/variableTurf/floor,
+/area/prefab/genetics_transport)
+"gO" = (
+/obj/item/reagent_containers/glass/bottle{
+	rand_pos = 1;
+	name = "bottle (morphine)"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/genetics_transport)
+"gR" = (
+/obj/table/auto,
+/obj/item/medicaldiagnosis/stethoscope,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"hg" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/simulated/floor,
+/area/prefab/genetics_transport)
+"hK" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 9;
+	pixel_y = 4
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"js" = (
+/obj/machinery/light/small/floor/broken,
+/turf/simulated/floor,
+/area/prefab/genetics_transport)
+"jx" = (
+/obj/decal/cleanable/blood/gibs/core,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"jT" = (
+/obj/item/reagent_containers/food/drinks/mug{
+	rand_pos = 1
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"ke" = (
+/obj/item/reagent_containers/glass/bottle{
+	rand_pos = 1;
+	name = "bottle (morphine)"
+	},
+/turf/simulated/floor,
+/area/prefab/genetics_transport)
+"kE" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/variableTurf/floor,
+/area/prefab/genetics_transport)
+"kY" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-M"
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab/genetics_transport)
+"kZ" = (
+/obj/monkeyplant,
+/turf/simulated/floor/black,
+/area/prefab/genetics_transport)
+"lr" = (
+/obj/machinery/light/incandescent/broken{
+	dir = 1
+	},
+/obj/storage/secure/closet/animal,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"ly" = (
+/obj/table/glass/auto,
+/obj/item/device/radio,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"lF" = (
+/obj/random_item_spawner/junk/one,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"lU" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-L"
+	},
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-M"
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab/genetics_transport)
+"mw" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/airless/damaged5,
+/area/prefab/genetics_transport)
+"ns" = (
+/obj/item/material_piece/cloth/cottonfabric{
+	pixel_x = 4;
+	pixel_y = -8;
+	rand_pos = 1
+	},
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"nS" = (
+/obj/iv_stand,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"nV" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
+	icon_state = "airlock_locked";
+	locked = 1;
+	name = "cockpit"
+	},
+/turf/simulated/floor/stairs/medical{
+	dir = 8
+	},
+/area/prefab/genetics_transport)
+"oP" = (
+/obj/stool/chair/office{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"oU" = (
+/obj/fake_gene_scanner,
+/turf/simulated/floor/greenblack,
+/area/prefab/genetics_transport)
+"pe" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/variableTurf/floor,
+/area/prefab/genetics_transport)
+"qI" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
+	icon_state = "airlock_locked";
+	locked = 1;
+	name = "advanced research"
+	},
+/turf/simulated/floor/stairs/medical{
+	dir = 4
+	},
+/area/prefab/genetics_transport)
+"rk" = (
+/turf/variableTurf/wall,
+/area/noGenerate)
+"rs" = (
+/obj/machinery/door/airlock/pyro/external{
+	requires_power = 0
+	},
+/turf/simulated/floor/airless/damaged5,
+/area/prefab/genetics_transport)
+"rx" = (
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"rM" = (
+/obj/stool/bench/blue/auto,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"si" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/green,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"tB" = (
+/obj/stool/chair/comfy/shuttle,
+/turf/simulated/floor,
+/area/prefab/genetics_transport)
+"ue" = (
+/obj/storage/secure/closet/medical,
+/obj/item/storage/box/body_bag,
+/obj/item/storage/box/syringes,
+/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/iv_drip,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"uj" = (
+/obj/item/clothing/suit/bedsheet/blue,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"uE" = (
+/obj/item/raw_material/rock,
+/obj/decal/cleanable/dirt/dirt5,
+/turf/variableTurf/floor,
+/area/prefab/genetics_transport)
+"vB" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"wi" = (
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"wl" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/variableTurf/floor,
+/area/prefab/genetics_transport)
+"wM" = (
+/obj/grille/steel/broken/corroded,
+/turf/simulated/floor/airless/damaged5,
+/area/prefab/genetics_transport)
+"xw" = (
+/obj/item/raw_material/cotton{
+	pixel_x = 8;
+	pixel_y = -3;
+	rand_pos = 1
+	},
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"xy" = (
+/obj/machinery/vending/monkey/genetics,
+/turf/simulated/floor/grass/random,
+/area/prefab/genetics_transport)
+"xM" = (
+/turf/simulated/floor/grass/random,
+/area/prefab/genetics_transport)
+"xS" = (
+/obj/table/auto,
+/obj/item/reagent_containers/dropper{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/random_item_spawner/med_tool/few,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"yb" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
+	dir = 8;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "offbroken";
+	name = "broken computer"
+	},
+/obj/item/raw_material/shard/plasmacrystal{
+	pixel_x = -3;
+	rand_pos = 1
+	},
+/turf/simulated/floor,
+/area/prefab/genetics_transport)
+"yh" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"yr" = (
+/obj/item/raw_material/scrap_metal{
+	rand_pos = 1
+	},
+/turf/simulated/floor,
+/area/prefab/genetics_transport)
+"yN" = (
+/obj/stool/bed,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"zl" = (
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"zu" = (
+/obj/random_item_spawner/organs/bloody,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"zE" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-L"
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab/genetics_transport)
+"Ah" = (
+/mob/living/critter/fermid,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"BI" = (
+/obj/machinery/light/incandescent/broken{
+	dir = 1
+	},
+/obj/random_item_spawner/junk/one,
+/turf/simulated/floor,
+/area/prefab/genetics_transport)
+"Cr" = (
+/obj/table/auto,
+/obj/item/device/light/flashlight/penlight,
+/obj/random_item_spawner/medicine/one_or_zero,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"CB" = (
+/obj/item/raw_material/rock{
+	icon_state = "rock2"
+	},
+/turf/variableTurf/floor,
+/area/prefab/genetics_transport)
+"Dd" = (
+/turf/simulated/floor/black,
+/area/prefab/genetics_transport)
+"Dl" = (
+/turf/space,
+/area/noGenerate)
+"DH" = (
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"DL" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/docbag,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"EQ" = (
+/obj/table/auto,
+/obj/item/suture,
+/obj/item/storage/wall/medical_wear,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"Gq" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"GR" = (
+/obj/item/reagent_containers/syringe{
+	rand_pos = 1
+	},
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"GZ" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/floor,
+/area/prefab/genetics_transport)
+"Hc" = (
+/obj/item/clothing/glasses/healthgoggles{
+	rand_pos = 1
+	},
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"Hw" = (
+/obj/machinery/door/airlock/pyro/external{
+	requires_power = 0
+	},
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/airless/damaged5,
+/area/prefab/genetics_transport)
+"HN" = (
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/turf/simulated/floor/grass/random,
+/area/prefab/genetics_transport)
+"HR" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/black,
+/area/prefab/genetics_transport)
+"It" = (
+/obj/item/raw_material/rock,
+/turf/variableTurf/floor,
+/area/prefab/genetics_transport)
+"IM" = (
+/obj/table/auto,
+/obj/item/reagent_containers/dropper/mechanical,
+/obj/machinery/light/incandescent/broken{
+	dir = 1
+	},
+/obj/random_item_spawner/medicine/one_or_zero,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"IQ" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/prefab/genetics_transport)
+"Jf" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/table/reinforced/chemistry/auto,
+/obj/item/reagent_containers/food/drinks/mug{
+	rand_pos = 1
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	rand_pos = 1
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"Jp" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 6;
+	pixel_y = 4
+	},
+/obj/item/crowbar,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"Jw" = (
+/obj/item/reagent_containers/food/snacks/burger/moldy,
+/obj/table/round,
+/turf/simulated/floor/greenblack{
+	dir = 8
+	},
+/area/prefab/genetics_transport)
+"JX" = (
+/obj/iv_stand,
+/obj/machinery/light/incandescent/broken{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"Kz" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/blue,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"KB" = (
+/mob/living/critter/human/crazy_geneticist,
+/obj/stool/chair/blue,
+/obj/machinery/light/incandescent/cool{
+	dir = 8
+	},
+/turf/simulated/floor/greenblack{
+	dir = 8
+	},
+/area/prefab/genetics_transport)
+"LF" = (
+/obj/item/scalpel{
+	rand_pos = 1
+	},
+/obj/machinery/light/small/floor/broken,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"LI" = (
+/obj/decal/cleanable/dirt,
+/obj/item/raw_material/shard/glass{
+	rand_pos = 1
+	},
+/turf/simulated/floor,
+/area/prefab/genetics_transport)
+"LS" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"LX" = (
+/turf/simulated/floor/greenblack{
+	dir = 8
+	},
+/area/prefab/genetics_transport)
+"Nu" = (
+/obj/item/furniture_parts/table/reinforced,
+/turf/simulated/floor/plating,
+/area/prefab/genetics_transport)
+"NQ" = (
+/mob/living/critter/fermid,
+/turf/simulated/floor,
+/area/prefab/genetics_transport)
+"NU" = (
+/obj/machinery/light/incandescent/broken{
+	dir = 6
+	},
+/obj/machinery/vending/snack,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"Pn" = (
+/obj/item/storage/wall/fire,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab/genetics_transport)
+"RV" = (
+/obj/table/glass/auto,
+/obj/random_item_spawner/desk_stuff/g_clip_bin_pen/few,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"SK" = (
+/obj/decal/cleanable/blood/splatter,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/grass/random,
+/area/prefab/genetics_transport)
+"TR" = (
+/obj/item/cigpacket,
+/obj/table/reinforced,
+/obj/item/reagent_containers/glass/bottle/morphine{
+	rand_pos = 1
+	},
+/turf/simulated/floor,
+/area/prefab/genetics_transport)
+"TS" = (
+/obj/item/circular_saw,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"Uc" = (
+/obj/decal/cleanable/dirt,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/green,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"UE" = (
+/obj/item/reagent_containers/syringe{
+	rand_pos = 1
+	},
+/turf/simulated/floor/plating,
+/area/prefab/genetics_transport)
+"UG" = (
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"Vs" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/variableTurf/floor,
+/area/prefab/genetics_transport)
+"VX" = (
+/obj/item/storage/firstaid/regular/empty{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"Wl" = (
+/obj/item/surgical_spoon,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"Wt" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/variableTurf/floor,
+/area/prefab/genetics_transport)
+"Xe" = (
+/turf/variableTurf/floor,
+/area/prefab/genetics_transport)
+"Xp" = (
+/mob/living/critter/fermid,
+/turf/variableTurf/floor,
+/area/prefab/genetics_transport)
+"XD" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"XJ" = (
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab/genetics_transport)
+"Yj" = (
+/turf/simulated/floor/plating,
+/area/prefab/genetics_transport)
+"Yu" = (
+/obj/stool/bed,
+/obj/decal/fakeobjects/skeleton,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/genetics_transport)
+"YR" = (
+/obj/machinery/coffeemaker/medbay,
+/obj/table/reinforced/chemistry/auto,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"ZB" = (
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4;
+	requires_power = 0
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+
+(1,1,1) = {"
+Dl
+Dl
+Dl
+Dl
+Dl
+dY
+dY
+dY
+Dl
+Dl
+Dl
+Dl
+dY
+dY
+dY
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+"}
+(2,1,1) = {"
+Dl
+Dl
+Dl
+XJ
+XJ
+zE
+lU
+fz
+XJ
+Dl
+Dl
+XJ
+zE
+kY
+kY
+XJ
+XJ
+Dl
+Dl
+Dl
+Dl
+Dl
+"}
+(3,1,1) = {"
+Dl
+Dl
+Dl
+XJ
+xy
+xM
+dg
+xM
+XJ
+XJ
+XJ
+XJ
+Jw
+LX
+KB
+bt
+XJ
+Dl
+Dl
+Dl
+Dl
+Dl
+"}
+(4,1,1) = {"
+Dl
+Dl
+Dl
+XJ
+xM
+xM
+xM
+xM
+XJ
+Uc
+si
+XJ
+Dd
+Dd
+Dd
+oU
+XJ
+Dl
+Dl
+Dl
+Dl
+Dl
+"}
+(5,1,1) = {"
+Dl
+Dl
+Dl
+XJ
+XJ
+HN
+xM
+SK
+XJ
+eT
+lF
+XJ
+HR
+Dd
+kZ
+XJ
+XJ
+Dl
+Dl
+Dl
+Dl
+Dl
+"}
+(6,1,1) = {"
+Dl
+Dl
+Dl
+Dl
+XJ
+XD
+XD
+ez
+XJ
+XJ
+wi
+XJ
+ZB
+XD
+XD
+XJ
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+"}
+(7,1,1) = {"
+Dl
+Dl
+Dl
+Dl
+XJ
+XJ
+lr
+DH
+DH
+UG
+DH
+jT
+DH
+NU
+XJ
+XJ
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+"}
+(8,1,1) = {"
+Dl
+Dl
+Dl
+Dl
+Dl
+XJ
+Pn
+RV
+oP
+dI
+DH
+DH
+Jf
+XJ
+XJ
+Dl
+Dl
+Dl
+Dl
+Dl
+rk
+Dl
+"}
+(9,1,1) = {"
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+XJ
+ly
+hK
+Jp
+DH
+DH
+YR
+XJ
+Dl
+Dl
+Dl
+Dl
+rk
+rk
+rk
+Dl
+"}
+(10,1,1) = {"
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+XJ
+XJ
+qI
+vB
+vB
+qI
+XJ
+XJ
+Dl
+Dl
+Dl
+Dl
+Dl
+rk
+Dl
+Dl
+"}
+(11,1,1) = {"
+Dl
+Dl
+Dl
+Dl
+Dl
+XJ
+ue
+nS
+rx
+zl
+TS
+rx
+uj
+xS
+XJ
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+"}
+(12,1,1) = {"
+Dl
+Dl
+Dl
+Dl
+Dl
+cr
+Hc
+rx
+Kz
+yh
+VX
+yN
+rx
+DL
+XJ
+ga
+ga
+Dl
+Dl
+Dl
+Dl
+Dl
+"}
+(13,1,1) = {"
+Dl
+Dl
+Dl
+Dl
+Dl
+rs
+rx
+rx
+LF
+zu
+rx
+Gq
+jx
+eF
+Hw
+bB
+ga
+ga
+Dl
+Dl
+Dl
+Dl
+"}
+(14,1,1) = {"
+Dl
+Dl
+Dl
+Dl
+Dl
+XJ
+EQ
+rx
+rM
+rx
+xw
+Ah
+bk
+rx
+XJ
+pe
+Xe
+ga
+ga
+Dl
+Dl
+Dl
+"}
+(15,1,1) = {"
+Dl
+Dl
+Dl
+Dl
+Dl
+XJ
+IM
+rx
+yN
+GR
+rx
+Yu
+ns
+dp
+XJ
+wl
+CB
+Xe
+ga
+Dl
+Dl
+Dl
+"}
+(16,1,1) = {"
+Dl
+rk
+rk
+Dl
+Dl
+XJ
+gR
+Cr
+rx
+rx
+JX
+Wl
+LS
+zu
+XJ
+kE
+Vs
+Xe
+ga
+Dl
+Dl
+Dl
+"}
+(17,1,1) = {"
+rk
+rk
+rk
+Dl
+Dl
+XJ
+XJ
+XJ
+nV
+XJ
+XJ
+nV
+XJ
+XJ
+XJ
+Xe
+wl
+Wt
+ga
+Dl
+Dl
+Dl
+"}
+(18,1,1) = {"
+rk
+Dl
+Dl
+Dl
+Dl
+ga
+XJ
+bC
+GZ
+gO
+bx
+IQ
+ke
+XJ
+Xe
+Xp
+gM
+Xe
+ga
+Dl
+Dl
+Dl
+"}
+(19,1,1) = {"
+Dl
+Dl
+Dl
+Dl
+ga
+ga
+mw
+BI
+LI
+js
+js
+yr
+cA
+mw
+Xe
+Xe
+It
+Xe
+ga
+Dl
+Dl
+Dl
+"}
+(20,1,1) = {"
+Dl
+Dl
+Dl
+ga
+ga
+Xe
+mw
+hg
+NQ
+eI
+tB
+Yj
+UE
+mw
+Xe
+Xe
+Xe
+Wt
+ga
+Dl
+Dl
+Dl
+"}
+(21,1,1) = {"
+Dl
+Dl
+Dl
+ga
+Xe
+Xp
+Xe
+mw
+TR
+ba
+yb
+Nu
+wM
+Xe
+Xe
+Xe
+Xe
+ga
+ga
+Dl
+Dl
+Dl
+"}
+(22,1,1) = {"
+Dl
+Dl
+Dl
+ga
+Xe
+CB
+uE
+Xe
+mw
+mw
+mw
+bf
+Xe
+Xe
+fc
+Xe
+Xe
+ga
+Dl
+Dl
+Dl
+Dl
+"}
+(23,1,1) = {"
+Dl
+Dl
+Dl
+ga
+ga
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+CB
+Xe
+ga
+ga
+Dl
+Dl
+Dl
+Dl
+"}
+(24,1,1) = {"
+Dl
+Dl
+Dl
+ga
+ga
+ga
+Xe
+Xe
+Xe
+Xp
+Xe
+It
+Xe
+Xe
+ga
+ga
+ga
+Dl
+Dl
+Dl
+Dl
+Dl
+"}
+(25,1,1) = {"
+Dl
+Dl
+Dl
+Dl
+ga
+ga
+ga
+ga
+ga
+ga
+ga
+ga
+ga
+ga
+ga
+ga
+ga
+Dl
+Dl
+Dl
+Dl
+Dl
+"}
+(26,1,1) = {"
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+ga
+ga
+ga
+ga
+ga
+ga
+ga
+ga
+ga
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+"}
+(27,1,1) = {"
+Dl
+Dl
+Dl
+Dl
+Dl
+rk
+Dl
+Dl
+Dl
+ga
+ga
+ga
+ga
+ga
+ga
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+"}
+(28,1,1) = {"
+Dl
+Dl
+Dl
+Dl
+Dl
+rk
+rk
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+Dl
+"}
