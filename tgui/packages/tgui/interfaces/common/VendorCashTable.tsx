@@ -1,5 +1,4 @@
 import { Table, Button } from '../../components';
-import { InfernoNode } from 'inferno';
 
 interface VendorCashTableProps {
   cardname: string,
@@ -9,7 +8,7 @@ interface VendorCashTableProps {
   onCashClick: Function,
 }
 
-export const VendorCashTable: InfernoNode = (props: VendorCashTableProps) => {
+export const VendorCashTable = (props: VendorCashTableProps) => {
   const {
     cardname,
     onCardClick,
@@ -19,7 +18,7 @@ export const VendorCashTable: InfernoNode = (props: VendorCashTableProps) => {
   } = props;
 
   return (
-    <Table font-size="9pt" direction="row">
+    <Table font-size="9pt" direction="row" style={{ maxWidth: "100%", "table-layout": "fixed" }} >
       <Table.Row>
         <Table.Cell bold>
           {cardname && (
@@ -27,6 +26,8 @@ export const VendorCashTable: InfernoNode = (props: VendorCashTableProps) => {
               mr="100%"
               content={cardname ? cardname : ""}
               onClick={onCardClick}
+              ellipsis
+              maxWidth="100%"
             />
           )}
           {(cardname && bankMoney >= 0) && ("Money on account: " + bankMoney + "⪽")}

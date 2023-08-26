@@ -11,8 +11,21 @@ import { Window } from '../layouts';
 import { VendorCashTable } from './common/VendorCashTable';
 import { GasTankInfo } from './GasTank';
 
+type AirVentorParams = {
+  cash: number,
+  cardname: string,
+  bankMoney: number,
+
+  holding: string,
+  holding_pressure: number,
+  min_pressure: number,
+  max_pressure: number,
+  fill_cost: number,
+  target_pressure: number,
+}
+
 const VendorSection = (_props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<AirVentorParams>(context);
   const { cash, bankMoney, fill_cost, target_pressure, min_pressure, max_pressure } = data;
 
   const handleFillClick = () => act('o2_fill');
@@ -23,20 +36,20 @@ const VendorSection = (_props, context) => {
   return (
     <Section title={"Status"}>
       <LabeledList>
-        <LabeledList.Item label="Fill">
+        <LabeledList.Item label="Cost">
           <Button
             content={(<>{fill_cost || 0}⪽</>)}
             color={canVend() ? "green" : "grey"}
             disabled={!canVend()}
             onClick={handleFillClick} />
         </LabeledList.Item>
-        <LabeledList.Item label="Desired pressure">
+        <LabeledList.Item label="Pressure">
           <Button
             onClick={() => handleChangePressure(min_pressure)}
             content="Min" />
           <NumberInput
             animated
-            width="7em"
+            width={6}
             value={target_pressure}
             minValue={min_pressure}
             maxValue={max_pressure}
@@ -51,18 +64,18 @@ const VendorSection = (_props, context) => {
 };
 
 const TankSection = (_props, context) => {
-  const { act, data } = useBackend(context);
-  const { holding, holding_pressure } = data;
+  const { act, data } = useBackend<AirVentorParams>(context);
+  const { holding, holding_pressure, max_pressure } = data;
 
   const handleTankEject = () => act('o2_eject');
   const handleTankInsert = () => act('o2_insert');
 
   return (
     <Section title={"Holding Tank"} buttons={
-      <Button onClick={handleTankEject} icon="eject">Eject</Button>
+      <Button onClick={handleTankEject} icon="eject" disabled={!holding}>Eject</Button>
     }>
       {holding ? (
-        <GasTankInfo pressure={holding_pressure} maxPressure={maxRelease} name={holding} />
+        <GasTankInfo pressure={holding_pressure} maxPressure={max_pressure} name={holding} />
       ) : (
         <Box height={5}>
           <Dimmer>
@@ -81,7 +94,7 @@ const TankSection = (_props, context) => {
 };
 
 export const AirVendor = (_props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<AirVentorParams>(context);
   const { cash, cardname, bankMoney } = data;
 
   const handleCardEject = () => act('logout');
@@ -89,7 +102,7 @@ export const AirVendor = (_props, context) => {
 
   return (
     <Window
-      width={310}
+      width={280}
       height={320}>
       <Window.Content>
         <VendorSection />
