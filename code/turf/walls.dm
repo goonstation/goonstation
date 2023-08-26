@@ -345,7 +345,7 @@ TYPEINFO(/turf/simulated/wall)
 	if (!istype(P.proj_data, /datum/projectile/bullet))
 		return
 	var/datum/projectile/bullet/bullet = P.proj_data
-	if (!bullet.richochets)
+	if (!bullet.ricochets)
 		return
 	if (prob(90))
 		return
