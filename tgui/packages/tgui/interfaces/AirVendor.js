@@ -11,12 +11,9 @@ import { Window } from '../layouts';
 import { VendorCashTable } from './common/VendorCashTable';
 import { GasTankInfo } from './GasTank';
 
-const minRelease = 0;
-const maxRelease = 1013.25;
-
 const VendorSection = (_props, context) => {
   const { act, data } = useBackend(context);
-  const { cash, bankMoney, fill_cost, target_pressure } = data;
+  const { cash, bankMoney, fill_cost, target_pressure, min_pressure, max_pressure } = data;
 
   const handleFillClick = () => act('o2_fill');
   const handleChangePressure = (pressure) => act('o2_changepressure', { pressure: pressure });
@@ -35,17 +32,17 @@ const VendorSection = (_props, context) => {
         </LabeledList.Item>
         <LabeledList.Item label="Desired pressure">
           <Button
-            onClick={() => handleChangePressure(minRelease)}
+            onClick={() => handleChangePressure(min_pressure)}
             content="Min" />
           <NumberInput
             animated
             width="7em"
             value={target_pressure}
-            minValue={minRelease}
-            maxValue={maxRelease}
+            minValue={min_pressure}
+            maxValue={max_pressure}
             onChange={(_e, target_pressure) => handleChangePressure(target_pressure)} />
           <Button
-            onClick={() => handleChangePressure(maxRelease)}
+            onClick={() => handleChangePressure(max_pressure)}
             content="Max" />
         </LabeledList.Item>
       </LabeledList>

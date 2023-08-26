@@ -670,7 +670,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		if("o2_changepressure")
 			var/obj/machinery/vending/air_vendor/air_machine = src
 			if(isnum_safe(params["pressure"]))
-				air_machine.target_pressure = clamp(params["pressure"], 10.1325, 1013.25)
+				air_machine.target_pressure = clamp(params["pressure"], air_machine.min_pressure, air_machine.max_pressure)
 
 		if("o2_fill")
 			var/obj/machinery/vending/air_vendor/air_machine = src
@@ -3002,6 +3002,9 @@ TYPEINFO(/obj/machinery/vending/janitor)
 	light_g = 0.4
 	light_b = 1
 
+	var/min_pressure = PORTABLE_ATMOS_MIN_RELEASE_PRESSURE
+	var/max_pressure = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
+
 	New()
 		..()
 		gas_prototype = new /datum/gas_mixture
@@ -3054,6 +3057,8 @@ TYPEINFO(/obj/machinery/vending/janitor)
 
 		.["holding"] = holding
 		.["holding_pressure"] = holding ? MIXTURE_PRESSURE(holding.air_contents) : null
+		.["min_pressure"] = min_pressure
+		.["max_pressure"] = max_pressure
 		.["fill_cost"] = holding ? src.fill_cost() : null
 
 		.["target_pressure"] = src.target_pressure
