@@ -102,12 +102,12 @@
 
 /mob/living/critter/plant/maneater/HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 	var/baseline_injection = 3 // how much chems the maneater should inject upon attacking
-	var/injection_amount_per_yield = 0.1 //how much their injection amount should scale with yield
+	var/injection_amount_per_yield = 0.05 //how much their injection amount should scale with yield
 	var/stamina_per_potency = 3 // how much stamina each point of potency should add. With the inate stun resist, its equal to 3,75 stamina per potency
 	var/stamreg_per_potency = 0.1 // how much stamina regen each point of potency should add
 	var/maxcap_stamreg = 30 // how much stamina regen should be the max. Don't want to have complete immunity to stun batoning
 	var/maxcap_stamina = 5000 //How much stamina the maneater should get at max. This is just to not have too high numbers for no reasons and i don't expect to be hit anytime soon.
-	var/maxcap_injection = 30 //how much the maneater should inject at most.
+	var/maxcap_injection = 10 //how much the maneater should inject at most.
 
 	//first, we scale the health with on_spawn equals TRUE
 	src.update_health_by_endurance(passed_genes?.get_effective_value("endurance"), TRUE)
