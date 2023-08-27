@@ -45,8 +45,8 @@
 	var/armed_force_max = 18 // how much damage the trap does when stepped upon with the maximum endurance
 	var/crashed_force_min = 16 // how much damage the trap does when stepped upon with 0 endurance
 	var/crashed_force_max = 30 // how much damage the trap does when stepped upon with the maximum endurance
-	var/reagent_storage_min = 5 // How much the max amount of chems is the trap should be able to hold	at 0 potency
-	var/reagent_storage_max = 40 // How much the max amount of chems is the trap should be able to hold	at max potency
+	var/reagent_storage_min = 4 // How much the max amount of chems is the trap should be able to hold	at 0 potency
+	var/reagent_storage_max = 30 // How much the max amount of chems is the trap should be able to hold	at max potency
 	var/reagent_generation_multiplier = 1 //! How much percentage of the volume should be filled with assoc_reagents when harvested
 
 	var/datum/plantgenes/creeper_genes = src.plantgenes
@@ -65,14 +65,7 @@
 	//add chemicals until reagent_generation_multiplier percentage of the storage is filled
 	if (src.planttype)
 		//we build a list out of all chems in assoc_reagents and commuts
-		var/list/put_reagents = list()
-		put_reagents = src.planttype.assoc_reagents
-		//theoretically the tumbling creeper got no assoc_reagents, but for the case that will change at some point
-		if(creeper_genes.mutation)
-			put_reagents = put_reagents | creeper_genes.mutation.assoc_reagents
-		if(creeper_genes.commuts)
-			for (var/datum/plant_gene_strain/reagent_adder/R in creeper_genes.commuts)
-				put_reagents |= R.reagents_to_add
+		var/list/put_reagents = HYPget_assoc_reagents(origin_plant, passed_genes)
 		// Now we add each reagent into the tumbling creeper
 		if (length(put_reagents) > 0)
 			var/volume_to_fill = src.reagent_storage * reagent_generation_multiplier
