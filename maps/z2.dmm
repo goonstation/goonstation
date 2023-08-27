@@ -32970,13 +32970,6 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
-"cry" = (
-/obj/decal/floatingtiles{
-	dir = 1
-	},
-/obj/lattice,
-/turf/unsimulated/floor/void,
-/area/crunch/wtc)
 "crz" = (
 /obj/decal/floatingtiles{
 	dir = 4;
@@ -33306,7 +33299,7 @@
 /area/crunch/wtc)
 "csO" = (
 /obj/decal/floatingtiles{
-	dir = 1
+	dir = 4
 	},
 /turf/unsimulated/floor/void,
 /area/crunch/wtc)
@@ -33318,7 +33311,9 @@
 /turf/unsimulated/floor/void,
 /area/crunch/wtc)
 "csQ" = (
-/obj/decal/floatingtiles,
+/obj/decal/floatingtiles{
+	dir = 4
+	},
 /obj/lattice,
 /turf/unsimulated/floor/void,
 /area/crunch/wtc)
@@ -75619,6 +75614,13 @@
 	},
 /turf/unsimulated/floor/red,
 /area/syndicate_station/assault_pod)
+"xob" = (
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles2"
+	},
+/turf/unsimulated/floor/void,
+/area/crunch)
 "xoF" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/glass/water_pipe/filled{
@@ -80259,7 +80261,7 @@ bIY
 bIY
 bIY
 bKw
-cjY
+xob
 clE
 bKw
 bKw
@@ -95031,7 +95033,7 @@ daM
 aaa
 cnx
 cnz
-cry
+csQ
 crA
 crA
 crX
