@@ -579,9 +579,6 @@
 	chemicompilerJs.setSrc(resource("js/chemicompiler.js"))
 	htmlTag.addToBody(chemicompilerJs)
 
-	//var/datum/tag/firebug/fb = new
-	//htmlTag.addToBody(fb)
-
 	html = htmlTag.toHtml()
 
 /datum/chemicompiler_core/testCore

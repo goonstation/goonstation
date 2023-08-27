@@ -1396,7 +1396,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	var/style_step = 1
 
 	heal(var/mob/M)
-		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Nanotrasen Security Consultant", "Security Assistant", "Part-time Vice Officer")))
+		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Nanotrasen Security Consultant", "Security Assistant")))
 			src.heal_amt *= 2
 			..()
 			src.heal_amt /= 2
@@ -1460,13 +1460,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			icon_state = "donut2"
 			item_state = "donut2"
 			heal_amt = 2
+			bites_left = 4
+			initial_reagents = list("sugar"=12)
 
 		cinnamon
-			name = "cinnamon sugar donut"
+			name = "cinnamon donut"
 			desc = "One of Delectable Dan's seasonal bestsellers."
 			icon_state = "donut3"
 			item_state = "donut3"
 			heal_amt = 3
+			bites_left = 4
+			initial_reagents = list("cinnamon"=12)
 
 		robust
 			name = "robust donut"
@@ -2945,6 +2949,30 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_volume = 20
 	initial_reagents = "currypowder"
 	food_effects = list("food_hp_up","food_refreshed","food_warm")
+
+/obj/item/reagent_containers/food/snacks/mapo_tofu_meat
+	name = "bowl of mapo tofu"
+	desc = "A bowl of tender bean curd, onions, and minced meat in a spicy oil suspension."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "mapo_tofu"
+	required_utensil = REQUIRED_UTENSIL_FORK
+	heal_amt = 3
+	bites_left = 5
+	initial_volume = 25
+	initial_reagents = "capsaicin"
+	food_effects = list("food_tox", "food_rad_resist", "food_disease_resist", "food_warm")
+
+/obj/item/reagent_containers/food/snacks/mapo_tofu_synth
+	name = "bowl of snyth mapo tofu"
+	desc = "A bowl of tender bean curd, onions, and minced synthmeat in a spicy oil suspension."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "mapo_tofu_synth"
+	required_utensil = REQUIRED_UTENSIL_FORK
+	heal_amt = 3
+	bites_left = 5
+	initial_volume = 25
+	initial_reagents = "capsaicin"
+	food_effects = list("food_tox", "food_rad_resist", "food_disease_resist", "food_warm")
 
 
 /obj/item/reagent_containers/food/snacks/cheesewheel

@@ -11,11 +11,11 @@
 		src.abilityHolder = new /datum/abilityHolder/slasher(src)
 		src.addAllAbilities()
 
-		src.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes/noslip, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/under/color/unremovable, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher, slot_wear_suit)
-		src.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/unremovable, slot_wear_mask)
-		src.equip_new_if_possible(/obj/item/clothing/gloves/black/slasher, slot_gloves)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes/noslip, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/under/color/unremovable, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/unremovable, SLOT_WEAR_MASK)
+		src.equip_new_if_possible(/obj/item/clothing/gloves/black/slasher, SLOT_GLOVES)
 
 		src.see_invisible = INVIS_GHOST
 		src.bioHolder.AddEffect("breathless", 0, 0, 0, 1)
@@ -230,12 +230,12 @@
 				M.drop_from_slot(M.shoes)
 				M.drop_from_slot(M.head)
 				sleep(2) //just gotta make sure everything drops
-				M.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/unremovable, M.slot_wear_mask)
-				M.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher, M.slot_wear_suit)
-				M.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes/noslip, M.slot_shoes)
-				M.equip_new_if_possible(/obj/item/clothing/under/color/unremovable, M.slot_w_uniform)
-				M.equip_new_if_possible(/obj/item/slasher_machete/possessed, M.slot_r_hand)
-				M.equip_new_if_possible(/obj/item/clothing/gloves/black/slasher, M.slot_gloves)
+				M.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/unremovable, SLOT_WEAR_MASK)
+				M.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher, SLOT_WEAR_SUIT)
+				M.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes/noslip, SLOT_SHOES)
+				M.equip_new_if_possible(/obj/item/clothing/under/color/unremovable, SLOT_W_UNIFORM)
+				M.equip_new_if_possible(/obj/item/slasher_machete/possessed, SLOT_R_HAND)
+				M.equip_new_if_possible(/obj/item/clothing/gloves/black/slasher, SLOT_GLOVES)
 				if(!W.hasStatus("incorporeal"))
 					W.incorporealize()
 				SPAWN(3.5 SECONDS)
@@ -313,11 +313,11 @@
 			for(var/obj/item/clothing/mask/gas/emergency/unremovable/U in M)
 				M.u_equip(U)
 				qdel(U)
-			M.equip_new_if_possible(/obj/item/clothing/under/color, M.slot_w_uniform)
-			M.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/postpossession, M.slot_wear_mask)
-			M.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher/postpossession, M.slot_wear_suit)
-			M.equip_new_if_possible(/obj/item/clothing/gloves/black, M.slot_gloves)
-			M.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes, M.slot_shoes)
+			M.equip_new_if_possible(/obj/item/clothing/under/color, SLOT_W_UNIFORM)
+			M.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/postpossession, SLOT_WEAR_MASK)
+			M.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher/postpossession, SLOT_WEAR_SUIT)
+			M.equip_new_if_possible(/obj/item/clothing/gloves/black, SLOT_GLOVES)
+			M.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes, SLOT_SHOES)
 
 		///heals a bunch of bad things the Slasher can get hit with, but not all
 		regenerate()
@@ -384,7 +384,7 @@
 				src.last_btype = src.blood_type
 				src.last_bdna = src.blood_DNA
 			if(!src.trailing_blood)
-				src.tracked_blood = list("bDNA" = src.last_bdna, "btype" = src.last_btype, "count" = INFINITY)
+				src.tracked_blood = list("bDNA" = src.last_bdna, "btype" = src.last_btype, "count" = INFINITY, "sample_reagent" = src.blood_id)
 				src.track_blood()
 				trailing_blood = TRUE
 				APPLY_ATOM_PROPERTY(src, PROP_MOB_BLOOD_TRACKING_ALWAYS, src)

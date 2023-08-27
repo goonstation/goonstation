@@ -376,7 +376,7 @@ proc/filter_trait_hats(var/type)
 					var/boop = "hand"
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if (H.equip_if_possible(W, H.slot_wear_mask))
+						if (H.equip_if_possible(W, SLOT_WEAR_MASK))
 							boop = "mouth"
 						else
 							H.put_in_hand_or_drop(W) //Put it in their hand
@@ -450,7 +450,7 @@ proc/filter_trait_hats(var/type)
 		if (!n_name)
 			return
 		n_name = copytext(html_encode(n_name), 1, 32)
-		if (((src.loc == usr || (src.loc && src.loc.loc == usr)) && usr.stat == 0))
+		if (((src.loc == usr || (src.loc && src.loc.loc == usr)) && isalive(usr)))
 			src.phrase = n_name
 			logTheThing(LOG_SAY, usr, "sets the activation phrase on DetGadget hat: [n_name]")
 		src.add_fingerprint(usr)

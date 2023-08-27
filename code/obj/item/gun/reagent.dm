@@ -146,7 +146,7 @@ TYPEINFO(/obj/item/gun/reagent/syringe)
 		else
 			. += "<br><span class='notice'>&emsp; Nothing</span>"
 
-	shoot(target, start, mob/user, POX, POY, is_dual_wield)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		var/obj/projectile/P = ..()
 		if (istype(P)) //we actually shot something
 			P.create_reagents()

@@ -490,6 +490,7 @@
 		return
 
 	proc/follow_path()
+		set waitfor = 0
 		if (!mobile)
 			task = "thinking"
 			return
@@ -582,6 +583,7 @@
 			sleep_check = 10
 
 	proc/process()
+		SHOULD_NOT_SLEEP(TRUE)
 		if (is_template || task == "hibernating")
 			return 0
 		if (!src.alive)
@@ -604,6 +606,7 @@
 		return ai_think()
 
 	proc/ai_think()
+		set waitfor = 0
 		switch(task)
 			if ("thinking")
 				src.attack = 0
@@ -961,7 +964,7 @@
 			return
 		// FUCK YOU WHOEVER IS USING THIS
 		// FUCK YOU
-		shoot_projectile_ST(src,  new/datum/projectile/bullet/revolver_38(), target)
+		shoot_projectile_ST_pixel_spread(src,  new/datum/projectile/bullet/revolver_38(), target)
 		return
 
 

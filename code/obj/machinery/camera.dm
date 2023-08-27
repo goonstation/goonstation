@@ -284,13 +284,7 @@
 		return
 
 	if (issnippingtool(W) && !src.reinforced)
-		if (src.camera_status)
-			src.break_camera(user)
-		else
-			src.repair_camera(user)
-		// now disconnect anyone using the camera
-		src.disconnect_viewers()
-		return
+		SETUP_GENERIC_ACTIONBAR(src, src, 0.5 SECOND, /obj/machinery/camera/proc/snipcamera, null, W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 
 	if (!src.camera_status)
 		return
@@ -387,7 +381,14 @@
 			for (var/mob/living/silicon/aiPlayer in mobs) // manually cancel, to not disturb internal state
 				aiPlayer.cancelAlarm("Motion", src.loc.loc)
 
-
+/obj/machinery/camera/proc/snipcamera(user)
+	if (src.camera_status)
+		src.break_camera(user)
+	else
+		src.repair_camera(user)
+	// now disconnect anyone using the camera
+	src.disconnect_viewers()
+	return
 
 
 /*------------------------------------
