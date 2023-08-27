@@ -1,5 +1,9 @@
 
 (t)sat aug 26 23
+(u)Lord_Earthfire
+(p)15475
+(e)🌱|A-Hydroponics
+(+)Rafflesias and nettles work, as expected, with the "inert" plant gene strain now
 (u)Tarmunora
 (*)Skeletons fall apart into a pile of bones on death.
 (+)On death, skeleton heads actually get their brain set properly (if the brain was not already removed)
