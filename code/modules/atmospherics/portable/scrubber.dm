@@ -122,7 +122,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 			elecflash(user)
 	else if(iswrenchingtool(W))
 		if(!connected_port)//checks for whether the scrubber is connected to a port, if it is calls parent.
-			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
+			var/obj/machinery/atmospherics/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/unary/portables_connector/) in loc
 			if(!possible_port)//checks for whether there's something that could be connected to on the scrubber's loc, if there is it calls parent.
 				if(src.anchored)
 					src.anchored = UNANCHORED

@@ -2,7 +2,7 @@
 	name = "atmoalter"
 	var/datum/gas_mixture/air_contents = null
 
-	var/obj/machinery/atmospherics/portables_connector/connected_port
+	var/obj/machinery/atmospherics/unary/portables_connector/connected_port
 	var/obj/item/tank/holding
 
 	var/volume = 0
@@ -34,7 +34,7 @@
 		air_contents.temperature = T20C
 
 		if(init_connected)
-			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
+			var/obj/machinery/atmospherics/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/unary/portables_connector/) in loc
 			if(possible_port)
 				connect(possible_port)
 
@@ -57,7 +57,7 @@
 		. = " It is labeled to have a volume of [src.volume] litres."
 
 	proc
-		connect(obj/machinery/atmospherics/portables_connector/new_port)
+		connect(obj/machinery/atmospherics/unary/portables_connector/new_port)
 			//Make sure not already connected to something else
 			if(connected_port || !new_port || new_port.connected_device)
 				return 0
@@ -71,7 +71,7 @@
 			//Perform the connection
 			connected_port = new_port
 			connected_port.connected_device = src
-			connected_port.on = 1
+			connected_port.being_used = TRUE
 
 			anchored = ANCHORED //Prevent movement
 
@@ -128,7 +128,7 @@
 			tgui_process.update_uis(src)
 			return
 		else
-			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
+			var/obj/machinery/atmospherics/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/unary/portables_connector/) in loc
 			if(possible_port)
 				if(connect(possible_port))
 					logTheThing(LOG_STATION, user, "has connected \the [src] [log_atmos(src)] to the port at [log_loc(src)].")
