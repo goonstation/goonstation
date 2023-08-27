@@ -677,3 +677,16 @@ var/global/list/turf/hotly_processed_turfs = list()
 			w.tilenotify(src)
 
 	return TRUE
+
+/turf/simulated/proc/stabilize()
+	ZERO_GASES(src.air)
+#ifdef ATMOS_ARCHIVING
+	ZERO_ARCHIVED_GASES(src.air)
+	src.air.ARCHIVED(temperature) = null
+#endif
+	src.air.oxygen = MOLES_O2STANDARD
+	src.air.nitrogen = MOLES_N2STANDARD
+	src.air.fuel_burnt = 0
+	src.air.temperature = T20C
+	if(src.parent?.group_processing)
+		src.parent?.suspend_group_processing()
