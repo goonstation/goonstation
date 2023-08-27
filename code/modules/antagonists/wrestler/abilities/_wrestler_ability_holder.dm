@@ -94,3 +94,14 @@
 		SPAWN(rand(200, 900))
 			if (src.holder && src.holder.owner && ismob(src.holder.owner))
 				src.holder.owner.emote("flex")
+
+	/// gets nearest mob target to the user that an ability can be used on
+	proc/get_nearest_target(prone_check)
+		for (var/mob/living/M in viewers(1, src.holder.owner))
+			if (M == src.holder.owner)
+				continue
+			if (isintangible(M))
+				continue
+			if (prone_check && !M.lying)
+				continue
+			return M

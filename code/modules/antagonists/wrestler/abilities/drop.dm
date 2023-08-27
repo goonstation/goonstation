@@ -16,12 +16,17 @@
 
 		var/mob/living/M = holder.owner
 
-		if (!M || !target)
+		if (!M)
 			return 1
 
 		if (M == target)
 			boutput(M, "<span class='alert'>Why would you want to wrestle yourself?</span>")
 			return 1
+
+		if (!ismob(target))
+			target = src.get_nearest_target(TRUE)
+			if (!target)
+				return TRUE
 
 		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
