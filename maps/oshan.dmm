@@ -2256,40 +2256,6 @@
 /obj/item/reagent_containers/syringe,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
-"ahn" = (
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibhead";
-	name = "grody thing"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "aho" = (
 /obj/disposalpipe/segment/morgue,
 /obj/cable{
@@ -4120,10 +4086,6 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
-"anb" = (
-/obj/machinery/atmospherics/unary/cryo_cell,
-/turf/simulated/floor/blue,
-/area/station/medical/medbay)
 "anc" = (
 /obj/machinery/networked/test_apparatus/impact_pad,
 /obj/machinery/power/data_terminal,
@@ -4233,12 +4195,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/bluewhite{
 	dir = 8
-	},
-/area/station/medical/medbay)
-"ans" = (
-/obj/machinery/atmospherics/unary/cryo_cell,
-/turf/simulated/floor/bluewhite{
-	dir = 4
 	},
 /area/station/medical/medbay)
 "ant" = (
@@ -14010,13 +13966,6 @@
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
-"aSj" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Listening Post"
-	},
-/turf/simulated/floor/black,
-/area/listeningpost)
 "aSl" = (
 /obj/machinery/light/incandescent/warm,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -14033,9 +13982,6 @@
 /area/station/hangar/engine)
 "aSm" = (
 /turf/simulated/floor/stairs/wide/middle,
-/area/listeningpost)
-"aSn" = (
-/turf/simulated/floor/stairs/wide/other,
 /area/listeningpost)
 "aSo" = (
 /obj/disposalpipe/trunk/mail/south,
@@ -14066,13 +14012,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"aSs" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Listening Post"
-	},
-/turf/simulated/floor,
-/area/listeningpost)
 "aSt" = (
 /obj/disposalpipe/switch_junction/left/east{
 	mail_tag = "security processing";
@@ -14804,11 +14743,6 @@
 "aUQ" = (
 /obj/decal/fakeobjects/teleport_pad,
 /obj/marker/supplymarker,
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
-"aUS" = (
-/obj/table/auto,
-/obj/item/storage/firstaid/old,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aUT" = (
@@ -22413,23 +22347,6 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "bxy" = (
-/obj/machinery/light/small/floor/cool,
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
-"bxz" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
-	},
-/obj/npc/trader/robot{
-	icon_state = "medibot0";
-	name = "D.O.C.";
-	productset = 4;
-	trader_area = "/area/abandonedmedicalship/robot_trader"
-	},
-/obj/map/light/white,
 /obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
@@ -38180,6 +38097,15 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/surgery)
+"hZY" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25;
+	entrance_scanner = 1
+	},
+/turf/space/fluid,
+/area/space)
 "ibd" = (
 /obj/stool,
 /turf/simulated/floor/specialroom/arcade,
@@ -38668,6 +38594,24 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
+"iUy" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/decal/fakeobjects/lightbulb_broken{
+	dir = 4
+	},
+/obj/npc/trader/robot{
+	icon_state = "medibot0";
+	name = "D.O.C.";
+	productset = 4;
+	trader_area = "/area/abandonedmedicalship/robot_trader";
+	icon = 'icons/misc/evilreaverstation.dmi'
+	},
+/obj/map/light/white,
+/obj/machinery/light/small/floor/cool,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "iUC" = (
 /obj/item/pen/crayon/pink,
 /turf/simulated/floor/plating/random,
@@ -39186,6 +39130,28 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"jKS" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart"
+	},
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "jLH" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/cable{
@@ -39426,6 +39392,14 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
+"knZ" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "koj" = (
 /obj/decal/aliencomputer,
 /obj/map/light/dimred,
@@ -39525,6 +39499,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/lobby)
+"kvO" = (
+/obj/table/auto,
+/obj/item/storage/firstaid,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "kwr" = (
 /obj/lattice{
 	dir = 1;
@@ -43591,6 +43570,10 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"ryW" = (
+/obj/machinery/atmospherics/unary/cryo_cell,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "rAZ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail,
@@ -44686,6 +44669,12 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"tRn" = (
+/obj/machinery/atmospherics/unary/cryo_cell,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/medbay)
 "tRt" = (
 /turf/simulated/floor,
 /area/research_outpost/chamber)
@@ -45378,6 +45367,14 @@
 /obj/item/currency/spacecash/small,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"vvV" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32
+	},
+/turf/simulated/floor/stairs/wide/other,
+/area/listeningpost)
 "vzG" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -45492,6 +45489,13 @@
 "vIJ" = (
 /turf/simulated/floor/caution/south,
 /area/station/hangar/sec)
+"vIP" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
+/turf/simulated/floor,
+/area/listeningpost)
 "vKp" = (
 /obj/machinery/disposal/mail/autoname{
 	mail_tag = "artlab"
@@ -46345,6 +46349,13 @@
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
+"wXX" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "wZh" = (
 /obj/table/wood/auto,
 /obj/disposalpipe/segment/mail{
@@ -54641,7 +54652,7 @@ aOU
 aOW
 aOU
 aOU
-aOU
+knZ
 aPm
 aah
 aQM
@@ -54944,10 +54955,10 @@ aPj
 aOU
 aOU
 aOU
-aSj
+wXX
 aSm
 aSp
-aSs
+vIP
 aqn
 aqn
 aqn
@@ -55247,7 +55258,7 @@ aPr
 aPF
 aQr
 aPm
-aSn
+vvV
 aQN
 aOg
 wbZ
@@ -55552,7 +55563,7 @@ aPm
 aPm
 aPm
 aPm
-aqn
+hZY
 aqn
 aqn
 aqn
@@ -58933,8 +58944,8 @@ aqn
 aUv
 aUB
 aUC
-bxz
-aUS
+iUy
+kvO
 aUX
 aUv
 aqn
@@ -59236,7 +59247,7 @@ aUv
 aUC
 aUC
 aWi
-aUS
+kvO
 aUC
 aUv
 aUm
@@ -93074,7 +93085,7 @@ chD
 acj
 acm
 agN
-ahn
+jKS
 ahI
 ajJ
 eNT
@@ -95798,7 +95809,7 @@ ajP
 akQ
 aly
 amx
-ans
+tRn
 aoe
 gGI
 apW
@@ -96402,7 +96413,7 @@ ajQ
 mNG
 hTz
 ajQ
-anb
+ryW
 apE
 aoU
 aqT

@@ -372,6 +372,7 @@ TYPEINFO(/atom)
 
 /// Changes the icon state and returns TRUE if the icon state changed.
 /atom/proc/set_icon_state(var/new_state)
+	SHOULD_CALL_PARENT(TRUE)
 	. = new_state != src.icon_state
 	src.icon_state = new_state
 	if(. && src.material_applied_appearance && src.material)

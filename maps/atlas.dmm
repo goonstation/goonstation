@@ -9868,25 +9868,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"aFx" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	light_type = /obj/item/light/tube/blueish;
-	pixel_x = -10
-	},
-/obj/machinery/atmospherics/unary/cryo_cell,
-/turf/simulated/floor/blue,
-/area/station/medical/medbay)
 "aFy" = (
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
-/area/station/medical/medbay)
-"aFz" = (
-/obj/machinery/atmospherics/unary/cryo_cell,
-/turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "aFA" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -12051,10 +12037,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"aMR" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate,
-/turf/simulated/floor/red,
-/area/listeningpost)
 "aMS" = (
 /obj/machinery/door_control{
 	id = "chamber_1";
@@ -12187,18 +12169,6 @@
 /obj/item/clothing/head/helmet/space/syndicate,
 /obj/item/tank/jetpack,
 /turf/simulated/floor/red,
-/area/listeningpost)
-"aNp" = (
-/obj/storage/closet,
-/obj/item/tank/oxygen,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/redblack{
-	dir = 1
-	},
 /area/listeningpost)
 "aNq" = (
 /obj/storage/closet,
@@ -12618,14 +12588,6 @@
 "aOO" = (
 /obj/rack,
 /turf/simulated/floor/red,
-/area/listeningpost)
-"aOP" = (
-/obj/storage/closet,
-/obj/item/tank/oxygen,
-/obj/machinery/light{
-	layer = 3
-	},
-/turf/simulated/floor/redblack,
 /area/listeningpost)
 "aOQ" = (
 /obj/storage/closet,
@@ -17226,6 +17188,19 @@
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
+"gXC" = (
+/obj/storage/closet,
+/obj/item/tank/oxygen,
+/obj/machinery/light{
+	layer = 3
+	},
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33
+	},
+/turf/simulated/floor/redblack,
+/area/listeningpost)
 "gZp" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -19057,6 +19032,16 @@
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
+"rKW" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	light_type = /obj/item/light/tube/blueish;
+	pixel_x = -10
+	},
+/obj/machinery/atmospherics/unary/cryo_cell,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "rNn" = (
 /obj/machinery/light{
 	dir = 8;
@@ -19076,6 +19061,23 @@
 	icon_state = "fblue2"
 	},
 /area/station/bridge/captain)
+"rZF" = (
+/obj/storage/closet,
+/obj/item/tank/oxygen,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost)
 "sck" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -19312,6 +19314,13 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/west)
+"tRd" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost)
 "tSg" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	name = "EVA Storage"
@@ -19396,6 +19405,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"uuz" = (
+/obj/machinery/atmospherics/unary/cryo_cell,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "uzo" = (
 /obj/lattice{
 	dir = 4;
@@ -19605,10 +19618,28 @@
 /obj/machinery/computer3/terminal/zeta,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"vSc" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33;
+	entrance_scanner = 1
+	},
+/turf/space,
+/area/space)
 "vUm" = (
 /obj/decal/mule/dropoff,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"vWU" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 35;
+	entrance_scanner = 1
+	},
+/turf/space,
+/area/space)
 "vYh" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -68487,7 +68518,7 @@ aPJ
 guq
 aDQ
 aBx
-aFx
+rKW
 aQK
 ahQ
 aHx
@@ -69091,7 +69122,7 @@ aSS
 awb
 aUb
 ayg
-aFz
+uuz
 aKk
 ayF
 abE
@@ -95777,7 +95808,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+vSc
 agK
 aMX
 aNf
@@ -95793,7 +95824,7 @@ aOO
 aNf
 aMX
 aYB
-aaa
+vWU
 aaa
 aaa
 aaa
@@ -96080,9 +96111,9 @@ aaa
 aaa
 aaa
 aaa
-aMR
+tRd
 aMY
-aMR
+tRd
 aMY
 aUH
 aNe
@@ -96092,9 +96123,9 @@ aNX
 aNe
 aUH
 aMY
-aMR
+tRd
 aMY
-aMR
+tRd
 aaa
 aaa
 aaa
@@ -96385,7 +96416,7 @@ aaa
 aRI
 aMX
 aNe
-aNp
+rZF
 aUH
 aNe
 aNY
@@ -96393,7 +96424,7 @@ aJf
 aOB
 aNe
 aUH
-aOP
+gXC
 aNe
 aMX
 aXU

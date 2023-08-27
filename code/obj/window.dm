@@ -42,8 +42,10 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	the_tuff_stuff
 		explosion_resistance = 3
 
-	New()
-		..()
+	New(loc, dir_override=null)
+		..(loc)
+		if(!isnull(dir_override))
+			src.dir = dir_override
 		src.ini_dir = src.dir
 		update_nearby_tiles(need_rebuild=1,selfnotify=1) // self notify to stop fluid jankness
 		if (default_reinforcement)

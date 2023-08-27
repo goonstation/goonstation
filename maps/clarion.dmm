@@ -2209,6 +2209,21 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/dome)
+"akI" = (
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/item/storage/secure/ssafe{
+	pixel_x = 26
+	},
+/obj/table/wood/auto,
+/obj/displaycase{
+	displayed = new/obj/item/captaingun();
+	pixel_y = 8
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "akK" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -18087,14 +18102,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
-"bKG" = (
-/obj/machinery/door/airlock/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Listening Post"
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/listeningpost)
 "bKH" = (
 /turf/simulated/floor/stairs{
 	dir = 8
@@ -19568,6 +19575,12 @@
 "csQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
+"ctN" = (
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1
+	},
+/turf/simulated/floor/redwhite,
+/area/station/medical/medbay/surgery)
 "cua" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -24338,12 +24351,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
-"gNH" = (
-/obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1
-	},
-/turf/simulated/floor/redwhite,
-/area/station/medical/medbay/surgery)
 "gOV" = (
 /obj/machinery/recharger/wall{
 	dir = 1;
@@ -26732,6 +26739,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
+"iEW" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post";
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/listeningpost)
 "iFM" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -28694,6 +28710,16 @@
 /obj/plasticflaps,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"kmP" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "kmQ" = (
 /obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/yellow/side{
@@ -32081,21 +32107,6 @@
 	icon_state = "fpurple2"
 	},
 /area/station/science/research_director)
-"mTS" = (
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/item/storage/secure/ssafe{
-	pixel_x = 26
-	},
-/obj/table/wood/auto,
-/obj/displaycase{
-	displayed = new /obj/item/captaingun();
-	pixel_y = 8
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "mTV" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -36811,6 +36822,16 @@
 "qSy" = (
 /turf/simulated/floor/caution/north,
 /area/station/security/main)
+"qSz" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "qSN" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -37078,41 +37099,6 @@
 /obj/disposalpipe/junction/right/north,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
-"rda" = (
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibhead";
-	name = "grody thing"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/machinery/light,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "rdA" = (
 /obj/machinery/door/airlock/pyro/glass/security/alt{
 	name = "Interrogation Room"
@@ -38900,6 +38886,15 @@
 /mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor,
 /area/station/medical/robotics)
+"sAh" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33;
+	entrance_scanner = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "sAl" = (
 /obj/stool/chair/wooden{
 	dir = 1
@@ -42979,24 +42974,6 @@
 	name = "solar paneling"
 	},
 /area/station/solar/east)
-"vWf" = (
-/obj/item/device/radio/intercom/medical{
-	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname  - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1
-	},
-/turf/simulated/floor/redwhite{
-	dir = 6
-	},
-/area/station/medical/medbay/surgery)
 "vWg" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -44396,6 +44373,24 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
+"xmd" = (
+/obj/item/device/radio/intercom/medical{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname  - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1
+	},
+/turf/simulated/floor/redwhite{
+	dir = 6
+	},
+/area/station/medical/medbay/surgery)
 "xnf" = (
 /obj/storage/crate/internals,
 /turf/simulated/floor/grime,
@@ -44971,6 +44966,29 @@
 	icon_state = "blue2"
 	},
 /area/station/bridge)
+"xJC" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart"
+	},
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/machinery/light,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "xKj" = (
 /turf/unsimulated/floor/orangeblack/side{
 	dir = 1
@@ -66634,7 +66652,7 @@ slN
 uaD
 cUr
 bsL
-rda
+xJC
 brX
 udJ
 sYc
@@ -67155,7 +67173,7 @@ oBI
 oBI
 pre
 uCQ
-gNH
+ctN
 aXv
 vNf
 vNf
@@ -67669,7 +67687,7 @@ pmh
 thE
 bXJ
 ujN
-vWf
+xmd
 aXv
 uDV
 jOz
@@ -82059,7 +82077,7 @@ aYK
 aWW
 baJ
 bbT
-mTS
+akI
 bep
 klf
 dHk
@@ -102444,7 +102462,7 @@ aab
 bCl
 bFQ
 bFQ
-bFQ
+sAh
 bKK
 bLb
 bLj
@@ -102700,7 +102718,7 @@ aab
 aab
 aab
 bKA
-bKG
+iEW
 bKA
 bKK
 bLc
@@ -102957,7 +102975,7 @@ bJY
 bJY
 bJY
 bJY
-bKH
+qSz
 bKK
 bKK
 bLd
@@ -103214,7 +103232,7 @@ bJY
 bKh
 bKs
 bJY
-bKG
+iEW
 bKK
 bKV
 bLe
@@ -103730,7 +103748,7 @@ lXD
 iiM
 mAw
 bKP
-bKX
+kmP
 mIt
 bLn
 bKX

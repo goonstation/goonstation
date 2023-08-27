@@ -35447,55 +35447,6 @@
 	dir = 5
 	},
 /area/station/hallway/secondary/exit)
-"ciD" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/machinery/power/apc/autoname_east,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs";
-	pixel_x = -2;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit";
-	pixel_x = 7
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney";
-	pixel_x = 3;
-	pixel_y = -9
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	pixel_x = -2;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibhead";
-	name = "grody thing";
-	pixel_x = 1
-	},
-/obj/item/organ/eye{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart";
-	pixel_x = -1;
-	pixel_y = -3
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "ciH" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -40764,15 +40715,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
-"czG" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	dir = 4;
-	name = "Listening Post"
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/listeningpost)
 "czH" = (
 /turf/simulated/floor/stairs{
 	dir = 8
@@ -46066,14 +46008,6 @@
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
-"gfX" = (
-/obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1
-	},
-/turf/simulated/floor/redwhite{
-	dir = 6
-	},
-/area/station/medical/medbay/surgery)
 "ggP" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -47713,6 +47647,14 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/power)
+"hKI" = (
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1
+	},
+/turf/simulated/floor/redwhite{
+	dir = 6
+	},
+/area/station/medical/medbay/surgery)
 "hKK" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/item/device/radio/intercom/AI{
@@ -48187,6 +48129,18 @@
 	dir = 8
 	},
 /area/station/security/main)
+"ieL" = (
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1
+	},
+/turf/simulated/floor/redwhite{
+	dir = 10
+	},
+/area/station/medical/medbay/surgery)
 "ieU" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
@@ -51441,6 +51395,15 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quartersB)
+"lsN" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32;
+	entrance_scanner = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "ltq" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -51496,6 +51459,15 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
+"lvH" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post";
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/listeningpost)
 "lvX" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
@@ -61204,6 +61176,16 @@
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
+"ugK" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "ugY" = (
 /obj/table/auto,
 /obj/item/paper_bin{
@@ -61388,18 +61370,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/neutral/side,
 /area/station/turret_protected/ai_upload_foyer)
-"unF" = (
-/obj/machinery/light{
-	dir = 8;
-	pixel_x = -10
-	},
-/obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1
-	},
-/turf/simulated/floor/redwhite{
-	dir = 10
-	},
-/area/station/medical/medbay/surgery)
 "uoc" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -61844,6 +61814,16 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/checkpoint/cargo)
+"uHV" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "uIM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -62188,6 +62168,46 @@
 	dir = 6
 	},
 /area/station/medical/medbay)
+"uXe" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/machinery/power/apc/autoname_east,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney";
+	pixel_x = 3;
+	pixel_y = -9
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
+	pixel_x = 1
+	},
+/obj/item/organ/eye{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart";
+	pixel_x = -1;
+	pixel_y = -3
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "uYN" = (
 /obj/stool/chair{
 	dir = 4
@@ -103049,7 +103069,7 @@ cwH
 cvC
 cvZ
 cDo
-unF
+ieL
 cxo
 cFh
 dvF
@@ -103653,7 +103673,7 @@ cve
 cvE
 cwP
 cwK
-gfX
+hKI
 hTs
 ddE
 dvF
@@ -109075,7 +109095,7 @@ eJb
 ahd
 cld
 cjA
-ciD
+uXe
 lmb
 clj
 clm
@@ -144784,7 +144804,7 @@ aap
 czz
 czz
 czN
-czV
+lsN
 sAI
 cAj
 cAr
@@ -145084,7 +145104,7 @@ cBQ
 cBQ
 cBQ
 rFM
-czG
+lvH
 rFM
 sAI
 sAI
@@ -145386,7 +145406,7 @@ sAI
 sAI
 sAI
 sAI
-czH
+ugK
 sAI
 czW
 sAI
@@ -145688,7 +145708,7 @@ sAI
 czk
 czr
 sAI
-czG
+lvH
 sAI
 czX
 cAb
@@ -146293,7 +146313,7 @@ czm
 czt
 czB
 czJ
-czP
+uHV
 czP
 cAd
 cAm

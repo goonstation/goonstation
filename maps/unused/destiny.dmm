@@ -17122,18 +17122,6 @@
 /obj/mapping_helper/access/tox,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
-"cxn" = (
-/obj/decal/tile_edge/line/white{
-	dir = 9;
-	icon_state = "line2"
-	},
-/obj/machinery/atmospherics/unary/cryo_cell,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -20
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/medbay/treatment)
 "cxy" = (
 /obj/decal/tile_edge/line/white{
 	dir = 8;
@@ -26581,6 +26569,18 @@
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
+"gFS" = (
+/obj/decal/tile_edge/line/white{
+	dir = 9;
+	icon_state = "line2"
+	},
+/obj/machinery/atmospherics/unary/cryo_cell,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -20
+	},
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/treatment)
 "gGo" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -33222,41 +33222,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
-"kht" = (
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibhead";
-	name = "grody thing"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/obj/item/organ/eye,
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/machinery/light_switch/north,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/medbay/surgery/storage)
 "khO" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
@@ -36238,17 +36203,6 @@
 /area/station/maintenance/inner/west{
 	name = "West Central Maintenance"
 	})
-"lKs" = (
-/obj/decal/tile_edge/line/white{
-	dir = 5;
-	icon_state = "line2"
-	},
-/obj/machinery/atmospherics/unary/cryo_cell,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/medbay/treatment)
 "lKv" = (
 /obj/machinery/nanofab/refining,
 /obj/machinery/alarm{
@@ -54504,6 +54458,29 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"vbT" = (
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/obj/item/organ/eye,
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart"
+	},
+/obj/machinery/light_switch/north,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/medbay/surgery/storage)
 "vcl" = (
 /obj/cable/yellow{
 	dir = 4
@@ -54831,6 +54808,17 @@
 	dir = 1
 	},
 /area/station/science/lobby)
+"vlq" = (
+/obj/decal/tile_edge/line/white{
+	dir = 5;
+	icon_state = "line2"
+	},
+/obj/machinery/atmospherics/unary/cryo_cell,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/treatment)
 "vlz" = (
 /obj/machinery/conveyor_switch{
 	id = "reclamation_fork";
@@ -91545,7 +91533,7 @@ eov
 sLT
 odn
 odn
-kht
+vbT
 aKj
 hEf
 azB
@@ -94863,7 +94851,7 @@ eov
 gcw
 vBV
 ueV
-cxn
+gFS
 wbU
 mas
 vfx
@@ -95769,7 +95757,7 @@ vBV
 emf
 vBV
 ueV
-lKs
+vlq
 aZL
 atE
 oba

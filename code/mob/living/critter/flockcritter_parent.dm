@@ -66,9 +66,7 @@ TYPEINFO(/mob/living/critter/flock)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
 
-	// do not automatically set up a flock if one is not provided
-	// flockless drones act differently
-	src.flock = F
+	src.flock = F || get_default_flock()
 	// wait for like one tick for the unit to set up properly before registering
 	SPAWN(1 DECI SECOND)
 		if(!isnull(src.flock))
