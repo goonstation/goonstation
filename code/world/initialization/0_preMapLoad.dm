@@ -158,7 +158,7 @@
 			globalStatusPrototypes.Add(R)
 
 		Z_LOG_DEBUG("Preload", "  /datum/jobXpReward")
-		for(var/A in childrentypesof(/datum/jobXpReward)) //Caching xp rewards.
+		for(var/A in concrete_typesof(/datum/jobXpReward)) //Caching xp rewards.
 			var/datum/jobXpReward/R = new A()
 			xpRewards.Add(R.name)
 			xpRewards[R.name] = R

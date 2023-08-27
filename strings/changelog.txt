@@ -1,4 +1,38 @@
 
+(t)sat aug 26 23
+(u)Lord_Earthfire
+(p)15475
+(e)🌱|A-Hydroponics
+(+)Rafflesias and nettles work, as expected, with the "inert" plant gene strain now
+(u)Tarmunora
+(*)Skeletons fall apart into a pile of bones on death.
+(+)On death, skeleton heads actually get their brain set properly (if the brain was not already removed)
+(u)Cheffie
+(p)15449
+(e)🪲🗺🎨🔎⚙|C-Bug, A-Mapping, C-Sprites, C-Code-Quality, A-Internal
+(*)Hemochromia, Colorful Reagent and some Mutantraces now correctly change the colour of created blood decals and overlays when bleeding. paint the halls! reagent pools of blood are uneffected.
+(+)Internal changes to icons may possibly lead to some missing or white gib / blood icons, report these if you see them!
+(t)fri aug 25 23
+(u)Bartimeus973
+(p)15502
+(e)💅📦|C-QoL, A-Game-Objects
+(+)A lot of traitor items now have explanations on how to use them. Double examine or right click -> Help on them to read it.
+(u)LeahTheTech
+(+)Artifact heater pads now actually heat things placed on them. Also heat triggered artifacts can now activate from air temperature.
+(t)wed aug 23 23
+(u)FlameArrow57
+(p)15391
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Pressing the equip hotkey while holding a gun that fits on your back will now attempt to add it to your backpack first if it's open.
+(u)LeahTheTech
+(+)Shower heads can now be controlled by mech-comp.
+(t)tue aug 22 23
+(u)Paaiii
+(p)15416
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Added 21 new AI core casings, achievable through various means. See the PR for more details.
+(+)Updated existing AI core casing sprites.
+(+)Made AIs use the pronoun preferences of the character file in core/eye/shells.
 (t)mon aug 21 23
 (u)Glamurio (Ryou)
 (p)15335
