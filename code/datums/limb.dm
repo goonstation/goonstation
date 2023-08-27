@@ -240,7 +240,7 @@
 
 	proc/shoot_pointblank(atom/target, var/mob/user)
 		for (var/i = 0; i < proj.shot_number; i++)
-			var/obj/projectile/P = initialize_projectile_pixel(user, proj, target, 0, 0)
+			var/obj/projectile/P = initialize_projectile_pixel_spread(user, proj, target, 0, 0)
 			if (!P)
 				return FALSE
 			if(BOUNDS_DIST(user, target) == 0)

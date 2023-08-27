@@ -4,14 +4,17 @@
 /atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if (src.reagents)
 		src.reagents.temperature_reagents(exposed_temperature, exposed_volume, 350, 300, 1)
-	if (src.material)
-		src.material.triggerTemp(src, exposed_temperature)
+	src.material_trigger_on_temp(exposed_temperature)
+
+/obj/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	. = ..()
+	if (istype(src.artifact,/datum/artifact))
+		src.ArtifactStimulus("heat", exposed_temperature)
 
 /// We react to the exposed temperature, call [/atom/proc/temperature_expose] on everything within us, and expose things within fluids to electricity if need be.
 /turf/proc/hotspot_expose(exposed_temperature, exposed_volume, source_of_heat, electric = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	if (src.material)
-		src.material.triggerTemp(src, exposed_temperature)
+	src.material_trigger_on_temp(exposed_temperature)
 	if (src.reagents)
 		src.reagents.temperature_reagents(exposed_temperature, exposed_volume, 350, 300, 1)
 	if(!ON_COOLDOWN(src, "hotspot_expose_to_atoms__1", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__2", 1 SECOND) || \

@@ -1221,26 +1221,39 @@ TYPEINFO(/turf/simulated/floor/wood)
 	icon_state = "quiltystair2"
 
 
+TYPEINFO(/turf/simulated/floor/stairs/wood)
+	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/stairs/wood
+	default_material = "wood"
 	icon_state = "wood_stairs"
 
 /turf/simulated/floor/stairs/wood/wide
+	default_material = "wood"
 	icon_state = "wood_stairs2"
 
 
+TYPEINFO(/turf/simulated/floor/stairs/wood2)
+	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/stairs/wood2
+	default_material = "wood"
 	icon_state = "wood2_stairs"
 
 /turf/simulated/floor/stairs/wood2/wide
+	default_material = "wood"
 	icon_state = "wood2_stairs2"
 
 /turf/simulated/floor/stairs/wood2/middle
+	default_material = "wood"
 	icon_state = "wood2_stairs2_middle"
 
+TYPEINFO(/turf/simulated/floor/stairs/wood3)
+	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/stairs/wood3
+	default_material = "wood"
 	icon_state = "wood3_stairs"
 
 /turf/simulated/floor/stairs/wood3/wide
+	default_material = "wood"
 	icon_state = "wood3_stairs2"
 
 
@@ -2111,7 +2124,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			K.Attackby(C, user, params)
 
 	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0)) // this seemed like the neatest way to make attack_hand still trigger when needed
-		src?.material?.triggerOnHit(src, C, user, 1)
+		src.material_trigger_when_attacked(C, user, 1)
 	else
 		return attack_hand(user)
 

@@ -184,16 +184,6 @@
 		SubscribeToProcess()
 		last_check = world.time
 
-	start_clone()
-		. = ..()
-		if (.)
-			if (team_num == TEAM_NANOTRASEN)
-				new /obj/item/implant/pod_wars/nanotrasen(src.occupant)
-			else if (team_num == TEAM_SYNDICATE)
-				new /obj/item/implant/pod_wars/syndicate(src.occupant)
-
-		return
-
 	ex_act(severity)
 		return
 
@@ -275,6 +265,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	angle_arc_size = 180
 	quick_deploy_fuel = 2
 	associated_deployer = /obj/item/turret_deployer/pod_wars
+	can_toggle_activation = FALSE
 	var/destroyed = 0
 	var/reconstruction_time = 5 MINUTES
 

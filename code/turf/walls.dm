@@ -269,8 +269,7 @@ TYPEINFO(/turf/simulated/wall)
 		else
 			if (prob(70))
 				playsound(user.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-				if (src.material)
-					src.material.triggerOnAttacked(src, user, user, src)
+				src.material_trigger_when_attacked(user, user, 1)
 				for (var/mob/N in AIviewers(user, null))
 					if (N.client)
 						shake_camera(N, 4, 8, 0.5)
@@ -333,8 +332,7 @@ TYPEINFO(/turf/simulated/wall)
 		else return
 
 	else
-		if(src.material)
-			src.material.triggerOnHit(src, W, user, 1)
+		src.material_trigger_when_attacked(W, user, 1)
 		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 		//return attack_hand(user)
 
@@ -517,8 +515,7 @@ TYPEINFO(/turf/simulated/wall)
 	if(istype(src, /turf/simulated/wall/r_wall) && src.d_state > 0)
 		src.icon_state = "r_wall-[d_state]"
 
-	if(src.material)
-		src.material.triggerOnHit(src, W, user, 1)
+	src.material_trigger_when_attacked(W, user, 1)
 
 	src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 	//return attack_hand(user)

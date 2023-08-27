@@ -182,7 +182,7 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 
 	flower
 		New()
-			spawn_plant = pick(/datum/plant/flower/rose)
+			spawn_plant = pick(/datum/plant/flower/rose, /datum/plant/flower/gardenia, /datum/plant/flower/hydrangea)
 			..()
 
 	crop
@@ -702,9 +702,10 @@ TYPEINFO(/obj/machinery/plantpot)
 				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 				return
 			else
-				user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
+				//corrects the amount of reagents shown to have been used when pouring into a tray
+				var/trans = W.reagents.trans_to(src, W:amount_per_transfer_from_this)
+				user.visible_message("<span class='notice'>[user] pours [trans] units of [W]'s contents into [src].</span>")
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if(!(user in src.contributors))
 					src.contributors += user
 				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
@@ -1537,11 +1538,42 @@ TYPEINFO(/obj/machinery/plantpot)
 
 // Hydroponics procs not specific to the plantpot start here.
 
+proc/HYPget_assoc_reagents(var/datum/plant/passed_plant, var/datum/plantgenes/passed_plantgenes)
+	//This proc returns a list with all reagents (or none) the plant currently is able to produce.
+	var/reagent_list = list()
+	if (!passed_plant || !passed_plantgenes)
+		return reagent_list
+
+	var/datum/plantmutation/current_mutation = passed_plantgenes.mutation
+	if(HYPCheckCommut(passed_plantgenes,/datum/plant_gene_strain/inert) && prob(95)) // inert just outputs an empty list
+		return reagent_list
+
+	reagent_list = reagent_list | passed_plant.assoc_reagents
+	if(current_mutation)
+		reagent_list = reagent_list | current_mutation.assoc_reagents
+
+	if(passed_plantgenes.commuts)
+		for (var/datum/plant_gene_strain/reagent_adder/adding_gene_strain in passed_plantgenes.commuts)
+			reagent_list |= adding_gene_strain.reagents_to_add
+		for (var/datum/plant_gene_strain/reagent_blacklist/removing_gene_strain in passed_plantgenes.commuts)
+			reagent_list -= removing_gene_strain.reagents_to_remove
+
+	//Now the list is complete and we can just return it, ready to be used
+	return reagent_list
+
 proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/plantgenes/DNA,var/special_condition = null)
 	// This is called during harvest to add reagents from the plant to a new piece of produce.
 	if(!I || !DNA || !I.reagents) return
 
-	var/datum/plantmutation/MUT = DNA.mutation
+	// Build the list of all what reagents need to go into the new item.
+	var/list/putreagents = HYPget_assoc_reagents(growing, DNA)
+	// harvest can be rotten, so here we add a bit of a treat
+	if(special_condition == "rotten")
+		putreagents += "yuck"
+
+	//if we don't got any chems to add to the plant, we can stop right here
+	if(!length(putreagents))
+		return
 
 	var/basecapacity = 8
 	if(istype(I,/obj/item/plant/)) basecapacity = 15
@@ -1560,20 +1592,7 @@ proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/pl
 	// Now we add the plant's potency to their max reagent capacity. If this causes it to fall
 	// below one, we allow them at least that much because otherwise what's the damn point!!!
 
-	var/list/putreagents = list()
-	putreagents = growing.assoc_reagents
-	if(MUT)
-		putreagents = putreagents | MUT.assoc_reagents
-	// Build the list of all what reagents need to go into the new item.
-
-	if(special_condition == "rotten")
-		putreagents += "yuck"
-
-	if(DNA.commuts)
-		for (var/datum/plant_gene_strain/reagent_adder/R in DNA.commuts)
-			putreagents |= R.reagents_to_add
-
-	if(putreagents.len && I.reagents.maximum_volume)
+	if(I.reagents.maximum_volume)
 		var/putamount = round(to_add / putreagents.len)
 		for(var/X in putreagents)
 			I?.reagents?.add_reagent(X,putamount,,, 1) // ?. runtime fix
@@ -1765,11 +1784,13 @@ proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/mach
 			if(prob(chance))
 				if(HYPmutationcheck_full(P,DNA,MUT))
 					DNA.mutation = HY_get_mutation_from_path(MUT.type)
+					MUT.HYPon_mutation_general(P, DNA)
 					if(PP)
 						playsound(PP, MUT.mutation_sfx, 10, 1)
 						PP.UpdateIcon()
 						PP.update_name()
 						animate_wiggle_then_reset(PP, 1, 2)
+						MUT.HYPon_mutation_pot(P, PP, DNA)
 					else if(S)
 						// If it is not in a pot, it is most likely in PlantMaster Mk3
 						playsound(S, MUT.mutation_sfx, 20, 1)

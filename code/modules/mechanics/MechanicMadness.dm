@@ -682,8 +682,7 @@
 					trunk.linked = src
 					air_contents = new /datum/gas_mixture
 			else if (src.level == OVERFLOOR) //loose
-				if (trunk) //ZeWaka: Fix for null.linked
-					trunk.linked = null
+				trunk?.linked = null
 				if(air_contents)
 					qdel(air_contents)
 				air_contents = null
@@ -2880,11 +2879,11 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	proc/getTarget()
 		var/atom/trg = get_turf(src)
 		for(var/mob/living/L in trg)
-			return get_turf(L)
+			return L
 		for(var/i=0, i<7, i++)
 			trg = get_step(trg, src.dir)
 			for(var/mob/living/L in trg)
-				return get_turf(L)
+				return L
 		return get_edge_target_turf(src, src.dir)
 
 	proc/fire(var/datum/mechanicsMessage/input)
@@ -2895,7 +2894,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			if(Gun.canshoot(null))
 				var/atom/target = getTarget()
 				if(target)
-					Gun.shoot(target, get_turf(src), src)
+					Gun.shoot(get_turf(target), get_turf(src), src, called_target = target)
 			else
 				src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"The [Gun.name] has no [istype(Gun, /obj/item/gun/energy) ? "charge" : "ammo"] remaining.\"</span>")
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
