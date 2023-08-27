@@ -195,6 +195,11 @@ TYPEINFO(/atom)
 				src.delStatus(effect)
 			src.statusEffects = null
 		ClearAllParticles()
+
+		if (!isnull(chat_text))
+			qdel(chat_text)
+			chat_text = null
+
 		atom_properties = null
 		if(!ismob(src)) // I want centcom cloner to look good, sue me
 			ClearAllOverlays()
@@ -367,6 +372,7 @@ TYPEINFO(/atom)
 
 /// Changes the icon state and returns TRUE if the icon state changed.
 /atom/proc/set_icon_state(var/new_state)
+	SHOULD_CALL_PARENT(TRUE)
 	. = new_state != src.icon_state
 	src.icon_state = new_state
 	if(. && src.material_applied_appearance && src.material)

@@ -1682,6 +1682,10 @@
 	icon_state = "remote"
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
+	HELP_MESSAGE_OVERRIDE({"Use the remote in hand to change the appearance of all chameleon clothing.
+							Right click on a piece of chameleon clothing and use <b>"Change appearance"</b> to change the appearance of that specific piece.
+							Use a piece of clothing on the corresponding chameleon clothing piece to add that appearance to the list of possible appearances.
+							Use the remote in hand and select the <b>"New Outfit Set"</b> option to create a new set of clothing."})
 
 	var/obj/item/storage/backpack/chameleon/connected_backpack = null
 	var/obj/item/clothing/under/chameleon/connected_jumpsuit = null

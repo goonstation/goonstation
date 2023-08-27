@@ -764,7 +764,7 @@
 			else
 				if(!(firemode & CRUISER_FIREMODE_RIGHT))
 					if((firemode & CRUISER_FIREMODE_ALT && alt_weapon == 0) || !(firemode & CRUISER_FIREMODE_ALT))
-						var/obj/projectile/proj_left = initialize_projectile_ST(origins["left"], turret_left.current_projectile, target)
+						var/obj/projectile/proj_left = initialize_projectile_pixel_spread(origins["left"], turret_left.current_projectile, target)
 						proj_left.launch()
 						proj_left.shooter = src
 
@@ -780,7 +780,7 @@
 			else
 				if(!(firemode & CRUISER_FIREMODE_LEFT))
 					if((firemode & CRUISER_FIREMODE_ALT && alt_weapon == 1) || !(firemode & CRUISER_FIREMODE_ALT))
-						var/obj/projectile/proj_right = initialize_projectile_ST(origins["right"], turret_right.current_projectile, target)
+						var/obj/projectile/proj_right = initialize_projectile_pixel_spread(origins["right"], turret_right.current_projectile, target)
 						proj_right.launch()
 						proj_right.shooter = src
 

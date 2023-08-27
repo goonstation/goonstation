@@ -532,3 +532,59 @@
 	New()
 		..()
 		color_hex = "#680000"
+
+/datum/bioEffect/reversedSounds
+	name = "Antitemporal Inner Ear"
+	desc = "Makes your inner ear travel back in time, causing you to hear sounds in reverse."
+	id = "reversed_sounds"
+	probability = 25
+	msgGain = "You start hearing things backwards."
+	msgLose = "You no longer hear things backwards."
+
+	OnAdd()
+		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, -1)
+
+	OnRemove()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src)
+		..()
+
+/datum/bioEffect/slowSounds
+	name = "Leisurely Inner Ear"
+	desc = "Makes your inner ear chill out a little, meaning you hear things deeper and in slow motion."
+	id = "slow_sounds"
+	probability = 25
+	msgGain = "You hear everything slowed down and deeper."
+	msgLose = "You no longer hear everything slowed down and deeper."
+
+	OnAdd()
+		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, 0.5 / power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, 0.5 / power)
+
+	OnRemove()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src)
+		..()
+
+/datum/bioEffect/fastSounds
+	name = "Hurried Inner Ear"
+	desc = "Your inner ear is full of performance enhancing drugs, it processes sounds really quickly and with higher pitch!"
+	id = "fast_sounds"
+	probability = 25
+	msgGain = "You hear everything sped up and higher pitched."
+	msgLose = "You no longer hear everything sped up and higher pitched."
+
+	OnAdd()
+		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, 2 * power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, 2 * power)
+
+	OnRemove()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src)
+		..()

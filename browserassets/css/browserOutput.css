@@ -11,7 +11,7 @@ html, body {
 }
 body {
 	background: #fff;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Twemoji", "Segoe UI Emoji";
     font-size: 12px;
     line-height: 1.4;
 	overflow-x: hidden;
@@ -32,7 +32,6 @@ img.icon {
 a {color: #0000ff;}
 a:visited {color: #ff00ff;}
 a.popt {text-decoration: none;}
-.emoji {font-family: "Twemoji", "Segoe UI Emoji" !important;}
 img.emoji {
 	height: 1em;
 	width: 1em;

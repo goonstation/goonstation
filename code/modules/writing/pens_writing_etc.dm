@@ -194,7 +194,7 @@
 				src.removeMaterial() // no
 				src.visible_message("<span class='alert'>Dipping [src] causes the material to slough off.</span>")
 
-	setMaterial(datum/material/mat1, appearance, setname, copy, use_descriptors)
+	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = FALSE, var/use_descriptors = FALSE)
 		. = ..()
 		src.reagents?.clear_reagents() // no
 
