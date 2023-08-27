@@ -384,7 +384,7 @@
 				src.last_btype = src.blood_type
 				src.last_bdna = src.blood_DNA
 			if(!src.trailing_blood)
-				src.tracked_blood = list("bDNA" = src.last_bdna, "btype" = src.last_btype, "count" = INFINITY)
+				src.tracked_blood = list("bDNA" = src.last_bdna, "btype" = src.last_btype, "count" = INFINITY, "sample_reagent" = src.blood_id)
 				src.track_blood()
 				trailing_blood = TRUE
 				APPLY_ATOM_PROPERTY(src, PROP_MOB_BLOOD_TRACKING_ALWAYS, src)

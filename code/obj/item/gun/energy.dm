@@ -338,7 +338,7 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 				src.charge_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
 			if(ret["charge"] >= 37) //this makes it only enter its "final" sprite when it's actually able to fire, if you change the amount of charge regen or max charge the bow has, make this number one charge increment before full charge
 				src.charge_image.icon_state = "[src.icon_state]full"
-				//UpdateIcon()
+				src.UpdateOverlays(src.charge_image, "charge")
 			else
 				var/ratio = min(1, ret["charge"] / ret["max_charge"])
 				ratio = round(ratio, 0.25) * 100
@@ -632,6 +632,7 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 	var/obj/machinery/computer/teleporter/our_teleporter = null // For checks before firing (Convair880).
 	uses_charge_overlay = TRUE
 	charge_icon_state = "teleport"
+	HELP_MESSAGE_OVERRIDE({"Use the teleport gun in hand to set it's destination. Destination list is pulled from all the currently activated teleporters."})
 
 	New()
 		set_current_projectile(new /datum/projectile/tele_bolt)
@@ -1168,6 +1169,12 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 	custom_cell_max_capacity = 100
 	var/obj/item/heldItem = null
 	tooltip_flags = REBUILD_DIST
+	HELP_MESSAGE_OVERRIDE({"Use the pickpocket gun in hand to alternate between three fire modes : <b>Steal</b>, <b>Plant</b> and <b>Harass</b>.\n
+							To remove an item from the pickpocket gun, hold the gun in one hand, then use your other hand on it.\n
+							To place an item into the pickpocket gun, hold the gun in one hand, then hit it with an item in your other hand.\n
+							While on <b>Steal</b>, the gun will attempt to steal the item of the target who's body part you are aiming at.\n
+							While on <b>Plant</b>, the gun will attempt to place an item on the target on the body part you are aiming at.\n
+							While on <b>Harass</b>, the gun will perform a debilitating effect on the target depending on the body part you are aiming at."})
 
 	New()
 		set_current_projectile(new/datum/projectile/pickpocket/steal)

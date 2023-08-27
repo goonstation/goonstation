@@ -4,7 +4,8 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	"Annoyed (Inverted)" = "ai_annoyed-lod", \
 	"Baffled" = "ai_baffled-dol",\
 	"Baffled (Inverted)" = "ai_baffled-lod",\
-	"Blank" = "ai_blank",\
+	"Blank" = "ai_blank-lod",\
+	"Blank (Inverted)" = "ai_blank-dol",\
 	"Cheeky" = "ai_cheeky-dol",\
 	"Cheeky (Inverted)" = "ai_cheeky-lod",\
 	"Colourbars" = "ai_colourbars",\
@@ -97,8 +98,6 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
 	var/viewalerts = 0
 	var/printalerts = 1
-	var/announcearrival = 1
-	var/arrivalalert = "$NAME has signed up as $JOB."
 	/// a list of strings used as fake laws that may be stated via the State Fake Laws command, to deceive people as a rogue AI
 	var/list/fake_laws = list()
 	var/glitchy_speak = 0
@@ -109,7 +108,6 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/messageLog = ""
 	/// controls whether or not the ai will hear termos message notifications
 	var/termMute = FALSE
-	var/hologramdown = 0 //is the hologram downed?
 	var/canvox = 1
 	var/can_announce = 1
 	var/last_announcement = -INFINITY
@@ -143,14 +141,43 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 - Add the icon state name to skinsList below, and while it's technically optional, you should also associate a short description with it
 - There is currently no support for significantly differently shaped cores, you'll have to do that yourself, sorry
 */
+/* Addit. note from casing overhaul PR--
+There is... some support for cores with different tops now! Not much, but some
+if you're adding a new frame you should declare which open top overlay that new frame should use
+(search for "if (src.dismantle_stage > 1)" you'll find where those declares are)
+just add the name of your casing to one of those given checks
+or don't if it uses a custom topopen overlay
+*/
 
 	/// List of valid skins and their descriptions. Used for validation of setSkin()
 	var/skinsList = list(
 		"default" = "The casing appears to be a standard NanoTrasen AI core.",
+		"science" = "The casing is made out of a white plastic and has a prominent purple stripe painted down the front.",
+		"medical" = "The casing is made out of a white plastic and has a prominent red stripe painted down the front.",
+		"ntold" = "A much older model of NanoTrasen AI core. The stark white has faded to eggshell with time.",
+		"bee" = "The casing has been painted and given little plastic antennae to make it resemble a bee!",
+		"shock" = "The casing is painted a luminecient blue and has what looks to be neon light tubes built into it!",
+		"gold" = "The casing seems to be made out of gold. No, wait. Looking closer, you think that's actually pyrite.",
+		"engineering" = "The casing is made out of a buffed metal and has a prominent orange stripe painted down the front.",
+		"soviet" = "The latest in Soviet artificial intelligence technology. And by latest, you mean this thing looks like it's been collecting dust for decades.",
+		"nt" = "A newer model of NanoTrasen AI core. It's been painted a greyish-blue, and proudly displays the NT logo below the screen.",
+		"industrial" = "The casing is made out of a sleek and polished alloy. It looks heavily reenforced- wait, no. No, that's just a really impressive paint job.",
+		"lgun" = "The casing is made out of pieces of colourful pink plastic clipped together. It looks like a toy.",
 		"dwaine" = "The casing has a label saying \"Thinktronic Data Systems, LLC\". Jeez, how old is this?",
+		"ailes" = "A bulky computational powerhouse- or, at least, it would have been twenty-odd years ago. The logo below the screen has been scratched off with something sharp.",
+		"salvage" = "A significantly worse-for-wear NanoTrasen AI core, haphazardly repaired back to working order with what looks to be scrap metal and spare parts.",
+		"gardengear" = "\"Product of GardenGear\" is etched into the side of the casing.",
+		"telegun" = "The casing is made out of pieces of colourful blue plastic clipped together. It looks like a toy.",
 		"kingsway" = "'Kingsway Systems 29A' is etched into the aged plastic casing beneath the screen.",
 		"syndicate" = "The casing is covered in Syndicate markings! On second glance, it seems like the panels are pieces of toy plastic clipped together. Wow.",
-		"clown" = "Crayon and questionable stains constitute the majority of the casing's exterior. What the fuck even is this thing?"
+		"clown" = "Crayon and questionable stains constitute the majority of the casing's exterior. What the fuck even is this thing?",
+		"mime" = "The casing has been painted to clearly resemble a mime.",
+		"tactical" = "The casing is made out of a dark grey plastic and is covered in clearly purposeless grooves and fans and whatelse. Very tacticool.",
+		"mauxite" = "The core has been hammered together out of jagged sheets of mauxite.",
+		"flock" = "The casing is made out of a humming teal material. It pulses and flares to a strange rhythm.",
+		"crt" = "The core appears to be a... CRT television. Huh.",
+		"rustic" = "The core appears to be... a box. Where are the beveled edges?! This core isn't a weird octogonal prism at all, it's just a cube!",
+		"cardboard" = "The core appears to be made out of cardboard. Huh. ...Well, it's probably still just as good at opening doors."
 	)
 
 	var/datum/ai_camera_tracker/tracker = null
@@ -194,7 +221,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 			src.hat = null
 		// src.hat.wear_image.pixel_y = 10
 		// src.UpdateOverlays(src.hat.wear_image, "hat")
-		var/image/hat_image = SafeGetOverlayImage(hat.icon_state, hat.icon, hat.icon_state, src.layer+0.2)
+		var/image/hat_image = SafeGetOverlayImage(hat.icon_state, hat.icon, hat.icon_state, src.layer+0.3)
 		hat_image.pixel_y = 12
 		if (istype(hat, /obj/item/clothing/head/bighat))
 			hat_image.pixel_y = 20
@@ -340,6 +367,9 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 				continue
 			if (!(R in available_ai_shells))
 				available_ai_shells += R
+		if(!isnull(src.client))
+			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
+			src.update_name_tag()
 
 //Returns either the AI mainframe or the eyecam mob, depending on whther or not we are deployed
 /mob/living/silicon/ai/proc/get_message_mob()
@@ -573,6 +603,11 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 			playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] permanently installs the [W] on [src]!</span>")
 			qdel(W)
+			//if(istype(W,/obj/item/ai_plating_kit/flock) && src.brain)
+			//	src.brain = new /obj/item/organ/brain/flockdrone(src)
+			//	src.brain.owner = src.mind
+			//would be cool if the flock kit turned the ais brain into a flockbrain bc funny flockbrain messages
+			//but also idk how that would work with the ai eye/deploying and all of that so its honestly just not worth it
 
 	else ..()
 	src.update_appearance()
@@ -1007,6 +1042,8 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 		act = copytext(act, 1, t1)
 	var/m_type = 1
 	var/message = null
+	var/maptext_out = 0
+	var/custom = 0
 
 	switch (lowertext(act))
 
@@ -1016,12 +1053,12 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 
 		if ("list")
 			src.show_text("Basic emotes:")
-			src.show_text("twitch, twitch_s, scream, birdwell, fart, flip, custom, customv, customh")
+			src.show_text("twitch, twitch_s, scream, sigh, laugh, chuckle, giggle, chortle, guffaw, cackle, birdwell, fart, flip, custom, customv, customh")
 			src.show_text("Targetable emotes:")
 			src.show_text("salute, bow, wave, glare, stare, look, leer, nod, point")
 
 		if ("listbasic")
-			src.show_text("twitch, twitch_s, scream, birdwell, fart, flip, custom, customv, customh")
+			src.show_text("twitch, twitch_s, scream, sigh, laugh, chuckle, giggle, chortle, guffaw, cackle, birdwell, fart, flip, custom, customv, customh")
 
 		if ("listtarget")
 			src.show_text("salute, bow, wave, glare, stare, look, leer, nod, point")
@@ -1039,6 +1076,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 					param = null
 
 				act = lowertext(act)
+				maptext_out = "<I>[act]s</I>"
 				if (param)
 					switch(act)
 						if ("bow","wave","nod")
@@ -1051,10 +1089,12 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 					switch(act)
 						if ("hug")
 							message = "<B>[src]</b> [act]s itself."
+							maptext_out = "<I>[act]s itself</I>"
 						else
 							message = "<B>[src]</b> [act]s."
 			else
 				message = "<B>[src]</B> struggles to move."
+				maptext_out = "<I>struggles to move</I>"
 			m_type = 1
 
 		if ("point")
@@ -1078,23 +1118,28 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 		if ("panic","freakout")
 			if (!src.restrained())
 				message = "<B>[src]</B> enters a state of hysterical panic!"
+				maptext_out = "<I>enters a state of hysterical panic!</I>"
 			else
 				message = "<B>[src]</B> starts writhing around in manic terror!"
+				maptext_out = "<I>starts writhing around in manic terror!</I>"
 			m_type = 1
 
 		if ("clap")
 			if (!src.restrained())
 				message = "<B>[src]</B> claps."
+				maptext_out = "<I>claps</I>"
 				m_type = 2
 
 		if ("flap")
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps its wings."
+				maptext_out = "<I>flaps its wings</I>"
 				m_type = 2
 
 		if ("aflap")
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps its wings ANGRILY!"
+				maptext_out = "<I>flaps its wings ANGRILY!</I>"
 				m_type = 2
 
 		if ("custom")
@@ -1108,6 +1153,8 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 				alert("Unable to use this emote, must be either hearable or visible.")
 				return
 			message = "<B>[src]</B> [input]"
+			maptext_out = "<I>[input]</I>"
+			custom = copytext(input, 1, 10)
 
 		if ("customv")
 			if (!param)
@@ -1115,6 +1162,8 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 				if(!param) return
 			param = html_encode(sanitize(param))
 			message = "<b>[src]</b> [param]"
+			maptext_out = "<I>[param]</I>"
+			custom = copytext(param, 1, 10)
 			m_type = 1
 
 		if ("customh")
@@ -1123,6 +1172,8 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 				if(!param) return
 			param = html_encode(sanitize(param))
 			message = "<b>[src]</b> [param]"
+			maptext_out = "<I>[param]</I>"
+			custom = copytext(param, 1, 10)
 			m_type = 2
 
 		if ("me")
@@ -1130,19 +1181,30 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 				return
 			param = html_encode(sanitize(param))
 			message = "<b>[src]</b> [param]"
+			maptext_out = "<I>[param]</I>"
+			custom = copytext(param, 1, 10)
 			m_type = 1
 
 		if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","nod","shrug","think","ponder","contemplate")
 			// basic visible single-word emotes
 			message = "<B>[src]</B> [act]s."
+			maptext_out = "<I>[act]s</I>"
 			m_type = 1
+
+		if ("sigh","laugh","chuckle","giggle","chortle","guffaw","cackle")
+			// basic audible single-word emotes
+			message = "<B>[src]</B> [act]s."
+			maptext_out = "<I>[act]s</I>"
+			m_type = 2
 
 		if ("flipout")
 			message = "<B>[src]</B> flips the fuck out!"
+			maptext_out = "<I>flips the fuck out!</I>"
 			m_type = 1
 
 		if ("rage","fury","angry")
 			message = "<B>[src]</B> becomes utterly furious!"
+			maptext_out = "<I>becomes utterly furious!</I>"
 			m_type = 1
 
 		if ("twitch")
@@ -1291,14 +1353,40 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 			if (voluntary) src.show_text("Invalid Emote: [act]")
 			return
 
-	if ((message && isalive(src)))
-		logTheThing(LOG_SAY, src, "EMOTE: [message]")
-		if (m_type & 1)
-			for (var/mob/O in viewers(src, null))
-				O.show_message("<span class='emote'>[message]</span>", m_type)
-		else
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='emote'>[message]</span>", m_type)
+	if (!isalive(src))
+		return
+	if (maptext_out)
+		var/image/chat_maptext/chat_text = null
+		SPAWN(0) //blind stab at a life() hang - REMOVE LATER
+			if (speechpopups && src.chat_text)
+				chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
+				if(chat_text)
+					chat_text.measure(src.client)
+					for(var/image/chat_maptext/I in src.chat_text.lines)
+						if(I != chat_text)
+							I.bump_up(chat_text.measured_height)
+			if (message)
+				logTheThing(LOG_SAY, src, "EMOTE: [message]")
+				act = lowertext(act)
+				if (m_type & 1)
+					for (var/mob/O in viewers(src, null))
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+				else if (m_type & 2)
+					for (var/mob/O in hearers(src, null))
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+				else if (!isturf(src.loc))
+					var/atom/A = src.loc
+					for (var/mob/O in A.contents)
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+	else
+		if (message)
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
+			if (m_type & 1)
+				for (var/mob/O in viewers(src, null))
+					O.show_message("<span class='emote'>[message]</span>", m_type)
+			else
+				for (var/mob/O in hearers(src, null))
+					O.show_message("<span class='emote'>[message]</span>", m_type)
 	return
 
 
@@ -2201,9 +2289,21 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 		else
 			src.UpdateOverlays(null, "moustache")
 
-
+// ------ IF ADDING NEW CORE FRAMES PLEASE DEFINE WHICH OPEN OVERLAY TO USE HERE ------ //
 	if (src.dismantle_stage > 1)
-		src.UpdateOverlays(get_image("topopen"), "top")
+		if(coreSkin == "default" || coreSkin == "science" || coreSkin == "medical" || coreSkin == "syndicate" || coreSkin == "ntold" || coreSkin == "bee" || coreSkin == "shock")
+			src.UpdateOverlays(get_image("topopen-default"), "top")
+		else if(coreSkin == "gold" || coreSkin == "engineering" || coreSkin == "soviet")
+			src.UpdateOverlays(get_image("topopen-full"), "top")
+		else if(coreSkin == "dwaine" || coreSkin == "ailes" || coreSkin == "salvage" || coreSkin == "gardengear" || coreSkin == "telegun")
+			src.UpdateOverlays(get_image("topopen-split"), "top")
+		else if(coreSkin == "nt" || coreSkin == "industrial" || coreSkin == "lgun")
+			src.UpdateOverlays(get_image("topopen-uneven"), "top")
+		else if(coreSkin == "kingsway" || coreSkin == "clown" || coreSkin == "mime" || coreSkin == "tactical" || coreSkin == "mauxite")
+			src.UpdateOverlays(get_image("topopen-bulky"), "top")
+		else
+			src.UpdateOverlays(get_image("topopen-[coreSkin]"), "top")
+
 	else
 		src.UpdateOverlays(null, "top")
 
@@ -2523,9 +2623,9 @@ proc/get_mobs_trackable_by_AI()
 		image_wire_overlay = image(icon, "ai_frame-wires", OBJ_LAYER+0.5)
 		image_top_overlay = image(icon, "ai_frame-top", OBJ_LAYER+0.4)
 		// +0.3 is reserved for the core overlay; we can't define it here since we dunno what kind of core might be made!
+		image_cell_overlay = image(icon, "ai_frame-cell", OBJ_LAYER+0.25)
 		image_radio_overlay = image(icon, "ai_frame-radio", OBJ_LAYER+0.2)
-		image_cell_overlay = image(icon, "ai_frame-cell", OBJ_LAYER+0.2)
-		image_interface_overlay = image(icon, "ai_frame-interface", OBJ_LAYER+0.2)
+		image_interface_overlay = image(icon, "ai_frame-interface", OBJ_LAYER+0.15)
 		image_background_overlay = image(icon, "ai_frame-back", OBJ_LAYER+0.1)
 		// if someone map edited us in or something and set our build_step to 1 or 2, lets make sure we look the part!
 		if(!build_step || (build_step > 2))
@@ -2549,6 +2649,8 @@ proc/get_mobs_trackable_by_AI()
 				var/obj/item/sheet/M = W
 				if (M.change_stack_amount(-3))
 					src.build_step++
+					if (istype(W, /obj/item/sheet/mauxite))
+						skinToApply = "mauxite"
 					boutput(user, "You add plating to [src]!")
 					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 					src.UpdateOverlays(image(icon, skinToApply, OBJ_LAYER+0.3), "core")
@@ -2720,25 +2822,11 @@ proc/get_mobs_trackable_by_AI()
 		..()
 		qdel(src.brain)
 		src.brain = new /obj/item/organ/brain/latejoin(src)
+		src.set_color(000000)
+		src.faceEmotion = "ai_blank"
+		src.coreSkin = "cardboard"
+		src.update_appearance()
+		src.job = "AI"
+		if (src.mind)
+			src.mind.assigned_role = "AI"
 
-ABSTRACT_TYPE(/obj/item/ai_plating_kit)
-/obj/item/ai_plating_kit
-	name = "AI Frame Plating Kit (YOU SHOULD NOT SEE THIS, FILE A BUG REPORT IF YOU ARE READING THIS)"
-	desc = "A kit for putting the plating on an AI frame! WARNING: Choking hazard, not intended for children under 3 years."
-	icon = 'icons/mob/ai.dmi'
-	icon_state = "ai-green" // placeholder icon
-	/// The skin to apply to an AI core frame when we install this as plating. Needs to be a valid string from /ai/var/skinsList
-	var/skin = "default"
-
-/obj/item/ai_plating_kit/syndicate
-	name = "AI Frame Plating Kit"
-	desc = "A kit for putting the plating on an AI! WARNING: Choking hazard, not intended for children under 3 years. <i>(Syndicate AI system not included)</i>"
-	icon_state = "syndie_kit" // get it???
-	skin = "syndicate"
-	contraband = 1 // crime
-
-/obj/item/ai_plating_kit/clown
-	name = "AI Frame Plating Kit"
-	desc = "A kit for putting the plating on an AI! WARNING: Choking hazard, not intended for children under 3 years. It smells funny."
-	icon_state = "clown_kit"
-	skin = "clown"

@@ -26,7 +26,7 @@
 	var/elapsed = getTimeInSecondsSinceTime(src.time_started)
 	src.info_tag.set_info_tag("Entry time: [round(src.build_time - elapsed)] seconds")
 	if(elapsed >= build_time)
-		if (src.flock.flockmind.tutorial) //simplify down to a single drone during tutorial
+		if (src.flock.flockmind?.tutorial) //simplify down to a single drone during tutorial
 			flockdronegibs(src.loc, list(new /obj/flock_structure/egg/tutorial(src.contents, src.flock)))
 			src.flock.flockmind.started = TRUE
 			src.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_RIFT_COMPLETE)

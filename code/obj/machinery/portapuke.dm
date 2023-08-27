@@ -11,6 +11,7 @@
 	var/current_bucket
 	var/n_occupants = 0
 	var/max_occupants = INFINITY
+	HELP_MESSAGE_OVERRIDE({"Click on someone on <span class='grab'>grab</span> intent, then click on the Port-A-Puke with the grab to place them inside. They will come out automatically once they reach deep critical status or die."})
 
 
 	New()

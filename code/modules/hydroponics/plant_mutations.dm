@@ -519,7 +519,7 @@
 	special_proc_override = TRUE
 
 	HYPon_mutation_general(var/datum/plant/parent_plant, var/datum/plantgenes/passed_genes)
-		HYPaddCommut(parent_plant, passed_genes, /datum/plant_gene_strain/inert)
+		HYPaddCommut(passed_genes, /datum/plant_gene_strain/inert)
 		return
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)

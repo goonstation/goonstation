@@ -507,19 +507,19 @@
 
 	if (src.wear_mask)
 		src.wear_mask.add_blood(whose)
+		src.update_mask()
 	if (src.head)
 		src.head.add_blood(whose)
+		src.update_head()
 	if (src.glasses && prob(33))
 		src.glasses.add_blood(whose)
 	if (prob(15))
 		if (src.wear_suit)
 			src.wear_suit.add_blood(whose)
+			src.update_suit()
 		else if (src.w_uniform)
 			src.w_uniform.add_blood(whose)
-
-	src.update_clothing()
-	src.update_body()
-	return
+			src.update_uniform()
 
 /mob/proc/spread_blood_hands(mob/whose)
 	return
@@ -530,8 +530,10 @@
 
 	if (src.gloves)
 		src.gloves.add_blood(whose)
+		src.update_gloves()
 	else
 		src.add_blood(whose)
+		src.update_bloody_hands()
 	if (src.equipped())
 		var/obj/item/I = src.equipped()
 		if (istype(I))
@@ -539,12 +541,10 @@
 	if (prob(15))
 		if (src.wear_suit)
 			src.wear_suit.add_blood(whose)
+			src.update_suit()
 		else if (src.w_uniform)
 			src.w_uniform.add_blood(whose)
-
-	src.update_clothing()
-	src.update_body()
-	return
+			src.update_uniform()
 
 /mob/proc/is_bleeding()
 	return 0

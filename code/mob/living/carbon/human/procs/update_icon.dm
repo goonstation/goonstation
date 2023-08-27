@@ -8,7 +8,7 @@
 		return
 
 	if (!blood_image)
-		blood_image = image('icons/effects/blood.dmi')
+		blood_image = image('icons/obj/decals/blood/blood.dmi')
 
 	// lol
 	var/head_offset = src.mutantrace.head_offset
@@ -129,7 +129,8 @@
 			UpdateOverlays(null, "material_suit")
 
 		if (src.w_uniform.blood_DNA)
-			blood_image.icon_state =  "uniformblood_c"
+			blood_image.icon_state = "uniformblood_c"
+			blood_image.color = src.w_uniform.forensics_blood_color
 			blood_image.layer = src.w_uniform.wear_layer + 0.1
 			UpdateOverlays(blood_image, "suit_image_blood")
 		else
@@ -216,12 +217,14 @@
 
 			blood_image.layer = MOB_HAND_LAYER2 + 0.1
 			if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays)
+				blood_image.color = src.gloves.forensics_blood_color
 				blood_image.icon_state = "left_bloodygloves_c"
-			UpdateOverlays(blood_image, "bloody_gloves_l")
+				UpdateOverlays(blood_image, "bloody_gloves_l")
 
 			if (src.limbs && src.limbs.r_arm && src.limbs.r_arm.accepts_normal_human_overlays)
+				blood_image.color = src.gloves.forensics_blood_color
 				blood_image.icon_state = "right_bloodygloves_c"
-			UpdateOverlays(blood_image, "bloody_gloves_r")
+				UpdateOverlays(blood_image, "bloody_gloves_r")
 
 			blood_image.pixel_x = 0
 			blood_image.pixel_y = 0
@@ -234,13 +237,6 @@
 		UpdateOverlays(null, "wear_gloves_r")
 		UpdateOverlays(null, "bloody_gloves_l")
 		UpdateOverlays(null, "bloody_gloves_r")
-
-	// Stun glove overlay
-	if (src.gloves && src.gloves.uses >= 1)
-		src.gloves.wear_image.icon_state = "stunoverlay"
-		UpdateOverlays(src.gloves.wear_image, "stunoverlay")
-	else
-		UpdateOverlays(null, "stunoverlay")
 
 /mob/living/carbon/human/proc/update_shoes()
 	if (src.shoes)
@@ -287,12 +283,14 @@
 		if (src.shoes.blood_DNA)
 			blood_image.layer = src.shoes.wear_layer + 0.1
 			if (src.limbs && src.limbs.l_leg && !.)
+				blood_image.color = src.shoes.forensics_blood_color
 				blood_image.icon_state = "left_shoeblood_c"
 				UpdateOverlays(blood_image, "bloody_shoes_l")
 			else
 				UpdateOverlays(null, "bloody_shoes_l")
 
 			if (src.limbs && src.limbs.r_leg && !.)
+				blood_image.color = src.shoes.forensics_blood_color
 				blood_image.icon_state = "right_shoeblood_c"
 				UpdateOverlays(blood_image, "bloody_shoes_r")
 			else
@@ -345,6 +343,7 @@
 					blood_image.layer = MOB_OVERLAY_BASE + 0.1
 				if (MOB_ARMOR_LAYER)
 					blood_image.layer = MOB_ARMOR_LAYER + 0.1
+			blood_image.color = src.wear_suit.forensics_blood_color
 			UpdateOverlays(blood_image, "wear_suit_bloody")
 		else
 			UpdateOverlays(null, "wear_suit_bloody")
@@ -363,7 +362,8 @@
 		UpdateOverlays(null, "wear_suit")
 		UpdateOverlays(null, "wear_suit_bloody")
 		UpdateOverlays(null, "material_armor")
-		if (src.organHolder?.tail)  update_tail_clothing()
+		if (src.organHolder?.tail)
+			update_tail_clothing()
 		src.UpdateOverlays(src.tail_standing, "tail", 1, 1) // i blame pali for giving me this power
 		src.UpdateOverlays(src.tail_standing_oversuit, "tail_oversuit", 1, 1)
 		src.UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit", 1, 1)
@@ -488,6 +488,7 @@
 		if (src.wear_mask.use_bloodoverlay)
 			if (src.wear_mask.blood_DNA)
 				blood_image.icon_state = "maskblood_c"
+				blood_image.color = src.wear_mask.forensics_blood_color
 				blood_image.layer = MOB_HEAD_LAYER1 + 0.1
 				blood_image.pixel_x = 0
 				blood_image.pixel_y = head_offset
@@ -530,6 +531,7 @@
 			UpdateOverlays(null, "material_head")
 		if (src.head.blood_DNA)
 			blood_image.icon_state = "helmetblood_c"
+			blood_image.color = src.head.forensics_blood_color
 			blood_image.layer = MOB_HEAD_LAYER2 + 0.1
 			blood_image.pixel_x = 0
 			blood_image.pixel_y = head_offset
@@ -586,10 +588,12 @@
 
 		blood_image.layer = MOB_HAND_LAYER2 + 0.1
 		if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays)
+			blood_image.color = src.forensics_blood_color
 			blood_image.icon_state = "left_bloodyhands_c"
 			UpdateOverlays(blood_image, "bloody_hands_l")
 
 		if (src.limbs && src.limbs.r_arm && src.limbs.r_arm.accepts_normal_human_overlays)
+			blood_image.color = src.forensics_blood_color
 			blood_image.icon_state = "right_bloodyhands_c"
 			UpdateOverlays(blood_image, "bloody_hands_r")
 
@@ -602,13 +606,14 @@
 
 /mob/living/carbon/human/proc/update_bloody_feet()
 	if (islist(src.tracked_blood) && !src.shoes)
-
 		blood_image.layer = MOB_CLOTHING_LAYER + 0.1 // idk what layer exactly this is supposed to be on TODO figure that out
 		if (src.limbs && src.limbs.l_leg && src.limbs.l_leg.accepts_normal_human_overlays)
+			blood_image.color = src.forensics_blood_color
 			blood_image.icon_state = "left_shoeblood_c"
 			UpdateOverlays(blood_image, "bloody_feet_l")
 
 		if (src.limbs && src.limbs.r_leg && src.limbs.r_leg.accepts_normal_human_overlays)
+			blood_image.color = src.forensics_blood_color
 			blood_image.icon_state = "right_shoeblood_c"
 			UpdateOverlays(blood_image, "bloody_feet_r")
 
