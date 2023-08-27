@@ -95,8 +95,8 @@ proc/is_weak_rollable_contract(type)
 		animate_clownspell(H)
 		H.drop_from_slot(H.wear_suit)
 		H.drop_from_slot(H.wear_mask)
-		H.equip_if_possible(new /obj/item/clothing/suit/cultist/cursed(H), H.slot_wear_suit)
-		H.equip_if_possible(new /obj/item/clothing/mask/horse_mask/cursed(H), H.slot_wear_mask)
+		H.equip_if_possible(new /obj/item/clothing/suit/cultist/cursed(H), SLOT_WEAR_SUIT)
+		H.equip_if_possible(new /obj/item/clothing/mask/horse_mask/cursed(H), SLOT_WEAR_MASK)
 		H.real_name = "HORSE"
 
 /proc/neigh(var/string)

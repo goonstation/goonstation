@@ -109,6 +109,7 @@
     "Each cyborg must choose something inanimate and keep it as a pet. Treat it as if it were alive; keep it fed, hydrated and happy!",
     "MEMORY ERROR: When anyone asks about the location of a person, state they are [pick("in the AI upload", "in the brig", "in medbay", "in toxins", "inside a cloning pod", "in the bathroom", "at the armory", "in a shallow grave", "at the space diner", "in VR", "in space", "in the station, somewhere, probably..", "at soup")].",
     "MEMORY ERROR: You no longer have object permanence. Anything out of view in the station may as well not exist.",
+    "For the purposes of all laws, 'Human' is to be defined as 'Featherless Biped'",
 		)
 
 	event_effect(var/source)

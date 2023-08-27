@@ -234,6 +234,16 @@ var/global/logLength = 0
 		nice_rack += "(UID: [rack_ref.unique_id]) at "
 		nice_rack += log_loc(rack_ref)
 		return nice_rack.Join()
+	else if(istype(ref,/datum/mind))
+		var/datum/mind/mindRef = ref
+		if(mindRef.current && ismob(mindRef.current))
+			return(constructName(mindRef.current, type))
+		else
+			name = "[mindRef.displayed_key] (character destroyed)"
+			if (mindRef.key)
+				key = mindRef.key
+			if (mindRef.ckey)
+				ckey = mindRef.ckey
 	else
 		return ref
 

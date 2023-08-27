@@ -153,6 +153,12 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (do_relocate)
 			src.relocate()
 
+	proc/unsilence(announce=TRUE)
+		src.silent = FALSE
+		if (announce)
+			src.announce()
+			src.do_popup()
+
 	proc/add_to_image_groups()
 		if (!src.antagonist_icon)
 			return

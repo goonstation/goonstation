@@ -33,6 +33,7 @@ TYPEINFO(/obj/item/saw)
 	w_class = W_CLASS_BULKY
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SAWING
+	leaves_slash_wound = TRUE
 	var/sawnoise = 'sound/machines/chainsaw_green.ogg'
 	arm_icon = "chainsaw-D"
 	var/base_arm = "chainsaw"

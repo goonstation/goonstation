@@ -72,7 +72,7 @@
 			uplink = S
 			uplink_source = S
 			S.lock_code_autogenerate = TRUE
-			if (!(H.equip_if_possible(S, H.slot_in_backpack)))
+			if (!(H.equip_if_possible(S, SLOT_IN_BACKPACK)))
 				loc_string = "on the ground beneath you"
 			else
 				loc_string = "in [H.back] on your back"
