@@ -48876,7 +48876,7 @@
 	desc = "Oh, that's not very nice...";
 	name = "Pathology's Hopes and Dreams"
 	},
-/obj/item/reagent_containers/food/snacks/yuckburn{
+/obj/item/reagent_containers/food/snacks/yuck/burn{
 	name = "Bartender's Cooking Attempt #24";
 	pixel_y = -3
 	},

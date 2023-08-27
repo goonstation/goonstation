@@ -698,7 +698,8 @@ table#cooktime a#start {
 			var/derivename = 0
 			var/recipebonus = 0
 			var/recook = 0
-			if (src.heat == "High") cook_amt *= 2
+			if (src.heat == "High")
+				cook_amt *= 2
 
 			// If emagged produce random output.
 			if (emagged)
@@ -708,7 +709,7 @@ table#cooktime a#start {
 					if(istype(I, /obj/item/reagent_containers/food/snacks/yuck))
 						contentsok = 0
 						break
-					if(istype(I, /obj/item/reagent_containers/food/snacks/yuckburn))
+					if(istype(I, /obj/item/reagent_containers/food/snacks/yuck/burn))
 						contentsok = 0
 						break
 					if(istype(I, /obj/item/reagent_containers/food))
@@ -765,7 +766,7 @@ table#cooktime a#start {
 					else if (cook_amt == R.cookbonus - 1) bonus = 1
 					else if (cook_amt <= R.cookbonus - 5) bonus = -1
 					else if (cook_amt >= R.cookbonus + 5)
-						output = /obj/item/reagent_containers/food/snacks/yuckburn
+						output = /obj/item/reagent_containers/food/snacks/yuck/burn
 						bonus = 0
 					break
 
@@ -781,7 +782,7 @@ table#cooktime a#start {
 						else if (cook_amt == F.quality - 1) F.quality = 1
 						else if (cook_amt <= F.quality - 5) F.quality = 0.5
 						else if (cook_amt >= F.quality + 5)
-							output = /obj/item/reagent_containers/food/snacks/yuckburn
+							output = /obj/item/reagent_containers/food/snacks/yuck/burn
 							bonus = 0
 			src.working = 1
 			src.icon_state = "oven_bake"
@@ -799,6 +800,8 @@ table#cooktime a#start {
 						if (src.emagged)
 							F.from_emagged_oven = 1
 						F.set_loc(src.loc)
+						if (istype(F, /obj/item/reagent_containers/food/snacks/yuck))
+							src.food_crime(usr, F)
 				else
 					var/obj/item/reagent_containers/food/snacks/F
 					if (ispath(output))
@@ -806,7 +809,8 @@ table#cooktime a#start {
 					else
 						F = output
 						F.set_loc( get_turf(src) )
-
+					if (istype(F, /obj/item/reagent_containers/food/snacks/yuck))
+						src.food_crime(usr, F)
 					if (bonus == 1)
 						F.quality = 5
 					else
@@ -858,6 +862,9 @@ table#cooktime a#start {
 				I.set_loc(src.loc)
 			src.updateUsrDialog()
 			return
+
+	proc/food_crime(mob/user, obj/item/food)
+		// logTheThing(LOG_STATION, src, "[key_name(user)] commits a horrible food crime, creating [food] with quality [food.quality].")
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
