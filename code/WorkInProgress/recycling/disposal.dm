@@ -612,12 +612,148 @@
 	base_icon_state = icon_state
 	src.update()
 
+/obj/disposalpipe/segment/auto
+	icon = 'icons/obj/disposal.dmi'
+	name = "disposal pipe spawner"
+	icon_state = "pipe-spawner"
+	text = ""
+	var/pipe_type = /obj/disposalpipe/segment/regular
+	var/trunk_type = /obj/disposalpipe/trunk/regular
+	dpdir = 0		//! bitmask of pipe directions
+	regular
+		pipe_type = /obj/disposalpipe/segment/regular
+		trunk_type = /obj/disposalpipe/trunk/regular
+	mail
+		name = "mail pipe spawner"
+		color = PIPEC_MAIL
+		pipe_type = /obj/disposalpipe/segment/mail
+		trunk_type = /obj/disposalpipe/trunk/mail
+	brig
+		name = "brig pipe spawner"
+		color = PIPEC_BRIG
+		pipe_type = /obj/disposalpipe/segment/brig
+		trunk_type = /obj/disposalpipe/trunk/brig
+
+	ejection
+		name = "ejection pipe spawner"
+		color = PIPEC_EJECTION
+		pipe_type = /obj/disposalpipe/segment/ejection
+		trunk_type = /obj/disposalpipe/trunk/ejection
+
+	morgue
+		name = "morgue pipe spawner"
+		color = PIPEC_MORGUE
+		pipe_type = /obj/disposalpipe/segment/morgue
+		trunk_type = /obj/disposalpipe/trunk/morgue
+
+	food
+		name = "food pipe spawner"
+		color = PIPEC_FOOD
+		pipe_type = /obj/disposalpipe/segment/food
+		trunk_type = /obj/disposalpipe/trunk/food
+
+	produce
+		name = "produce pipe spawner"
+		color = PIPEC_PRODUCE
+		pipe_type = /obj/disposalpipe/segment/produce
+		trunk_type = /obj/disposalpipe/trunk/produce
+
+	transport
+		name = "transport pipe spawner"
+		color = PIPEC_TRANSPORT
+		pipe_type = /obj/disposalpipe/segment/transport
+		trunk_type = /obj/disposalpipe/trunk/transport
+
+	mineral
+		name = "mineral pipe spawner"
+		color = PIPEC_MINERAL
+		pipe_type = /obj/disposalpipe/segment/mineral
+		trunk_type = /obj/disposalpipe/trunk/mineral
+
+	cargo
+		name = "cargo pipe spawner"
+		color = PIPEC_CARGO
+		pipe_type = /obj/disposalpipe/segment/cargo
+		trunk_type = /obj/disposalpipe/trunk/cargo
+
+/obj/disposalpipe/segment/auto/New()
+	..()
+	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
+		SPAWN(1 SECONDS)
+			if(!src.disposed)
+				initialize()
+
+/obj/disposalpipe/segment/auto/initialize()
+	var/list/selftile = list()
+	for (var/obj/disposalpipe/segment/auto/dupe in range(0, src))
+		if (istype(dupe, src))
+			selftile += dupe
+	if (length(selftile) > 1)
+		CRASH("Multiple auto pipes on coordinate [src.x] x [src.y] y!")
+	selftile.Cut()
+	var/list/directions = list()
+	for(var/dir_to_pipe in cardinal)
+		for(var/obj/disposalpipe/segment/auto/maybe_pipe in get_step(src, dir_to_pipe))
+		// checks for other pipe spawners of its own type
+			if(istype(maybe_pipe, src) || istype(src, maybe_pipe))
+				src.dpdir |= dir_to_pipe
+				directions += dir_to_pipe
+
+		for(var/obj/disposalpipe/junction/auto/maybe_pipe in get_step(src, dir_to_pipe))
+		// checks for other pipe spawners of the junction kind
+			if(istype(maybe_pipe, src) || istype(src, maybe_pipe))
+				src.dpdir |= dir_to_pipe
+				directions += dir_to_pipe
+
+		for(var/obj/disposalpipe/maybe_pipe in get_step(src, dir_to_pipe))
+		// this checks all the different subtypes of pipe
+		// wow this is horrendous why did i make it this way
+			// the ones which spit out at 90 degrees
+			if (istype(maybe_pipe, /obj/disposalpipe/block_sensing_outlet)\
+			|| istype(maybe_pipe, /obj/disposalpipe/type_sensing_outlet))
+				if (turn(maybe_pipe.dir, 90) == dir_to_pipe || turn(maybe_pipe.dir, -90) == dir_to_pipe)
+					src.dpdir |= dir_to_pipe
+					directions += dir_to_pipe
+
+			// the three ways (they do not check which 3 ways, it connects in all 4 directions)
+			if (istype(maybe_pipe, /obj/disposalpipe/junction)\
+			|| istype(maybe_pipe, /obj/disposalpipe/mechanics_switch)\
+			|| istype(maybe_pipe, /obj/disposalpipe/switch_junction))
+				src.dpdir |= dir_to_pipe
+				directions += dir_to_pipe
+
+			// regular pipes and trunks
+			if(istype(maybe_pipe, src.pipe_type)\
+			|| istype(maybe_pipe, src.trunk_type))
+			// these only connect to their own kind btw
+				if (maybe_pipe.dpdir & get_dir(maybe_pipe, src))
+				// makes sure they're pointing at you
+					src.dpdir |= dir_to_pipe
+					directions += dir_to_pipe
+
+	if (src.dpdir == 0)
+		CRASH("There is a lone auto pipe that doesn't connect to anything!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
+	else if (length(directions) == 1)
+		// lays a trunk pipe and deletes itself
+		var/obj/disposalpipe/trunk/current = new src.trunk_type(src.loc)
+		current.dir = directions[1]
+		current.dpdir = src.dpdir
+		update_icon(current)
+		qdel(src)
+	else if (length(directions) == 2)
+	// turns into a normal pipe segment
+		fix_sprite()
+	else
+	// DO NOT MAKE JUNCTIONS, FOOLS.
+		CRASH("Segment Pipe Spawners can't make junctions!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
+
+
 //a three-way junction with dir being the dominant direction
 /obj/disposalpipe/junction
 	icon_state = "pipe-j1"
+	name = "pipe junction"
 
 	left
-		name = "pipe junction"
 		icon_state = "pipe-j1"
 
 		north
@@ -630,7 +766,6 @@
 			dir = WEST
 
 	right
-		name = "pipe junction"
 		icon_state = "pipe-j2"
 
 		north
@@ -643,7 +778,6 @@
 			dir = WEST
 
 	middle
-		name = "pipe junction"
 		icon_state = "pipe-y"
 
 		north
@@ -703,6 +837,75 @@
 				return setbit
 			else
 				return mask & (~setbit)
+
+/// a spawner for a three way junction
+/obj/disposalpipe/junction/auto
+	dir = SOUTH
+	icon_state = "pipe-j-spawner"
+	dpdir = 0	//! bitmask of pipe directions
+
+/obj/disposalpipe/junction/auto/New()
+	..()
+	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
+		SPAWN(1 SECONDS)
+			if(!src.disposed)
+				initialize()
+
+/obj/disposalpipe/junction/auto/initialize()
+	var/list/selftile = list()
+	for (var/obj/disposalpipe/segment/auto/dupe in range(0, src))
+		if (istype(dupe, src))
+			selftile += dupe
+	if (length(selftile) > 1)
+		CRASH("Multiple auto pipes on coordinate [src.x] x [src.y] y!")
+	selftile.Cut()
+	var/list/directions = list()
+	for(var/dir_to_pipe in cardinal)
+		for(var/obj/disposalpipe/segment/auto/maybe_pipe in get_step(src, dir_to_pipe))
+		// checks for other pipe spawners of the segment kind
+			if(istype(maybe_pipe, src) || istype(src, maybe_pipe))
+				src.dpdir |= dir_to_pipe
+				directions += dir_to_pipe
+
+		for(var/obj/disposalpipe/junction/auto/maybe_pipe in get_step(src, dir_to_pipe))
+		// checks for other pipe spawners of its own type
+			if(istype(maybe_pipe, src) || istype(src, maybe_pipe))
+				src.dpdir |= dir_to_pipe
+				directions += dir_to_pipe
+
+		for(var/obj/disposalpipe/maybe_pipe in get_step(src, dir_to_pipe))
+			// the ones which spit out at 90 degrees
+			if (istype(maybe_pipe, /obj/disposalpipe/block_sensing_outlet)\
+			|| istype(maybe_pipe, /obj/disposalpipe/type_sensing_outlet))
+				if (turn(maybe_pipe.dir, 90) == dir_to_pipe || turn(maybe_pipe.dir, -90) == dir_to_pipe)
+					src.dpdir |= dir_to_pipe
+					directions += dir_to_pipe
+
+			// the three ways (they do not check which 3 ways, it connects in all 4 directions)
+			if (istype(maybe_pipe, /obj/disposalpipe/junction)\
+			|| istype(maybe_pipe, /obj/disposalpipe/mechanics_switch)\
+			|| istype(maybe_pipe, /obj/disposalpipe/switch_junction))
+				src.dpdir |= dir_to_pipe
+				directions += dir_to_pipe
+
+			// regular pipes and trunks
+			if (maybe_pipe.dpdir & get_dir(maybe_pipe, src))
+				// makes sure they're pointing at you
+				src.dpdir |= dir_to_pipe
+				directions += dir_to_pipe
+
+	if (src.dpdir == 0)
+		CRASH("There is a lone auto pipe that doesn't connect to anything!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
+	else if (length(directions) == 4)
+		CRASH("Auto Pipe Junctions cannot connect in four directions!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
+	else if (length(directions) == 2)
+		CRASH("There is an Auto Pipe Junction only connecting in two directions!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
+	else if (length(directions) == 2)
+		CRASH("There is an Auto Pipe Junction only connecting in one direction!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
+	if (!(src.dir in directions))
+		CRASH("Nothing connects to the output of the auto pipe junction!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
+
+	fix_sprite()
 
 //A junction capable of switching output direction
 /obj/disposalpipe/switch_junction
@@ -1965,151 +2168,3 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 					pipe.set_dir(new_dir)
 				break
 	pipe.fix_sprite()
-ABSTRACT_TYPE(/obj/disposalpipe/segment/auto)
-/obj/disposalpipe/segment/auto
-	icon = 'icons/obj/disposal.dmi'
-	name = "disposal pipe spawner"
-	icon_state = "pipe-spawner"
-	text = ""
-	var/pipe_type = /obj/disposalpipe/segment/regular
-	var/trunk_type = /obj/disposalpipe/trunk/regular
-	dpdir = 0		//! bitmask of pipe directions
-	regular
-		pipe_type = /obj/disposalpipe/segment/regular
-		trunk_type = /obj/disposalpipe/trunk/regular
-	mail
-		name = "mail pipe spawner"
-		color = PIPEC_MAIL
-		pipe_type = /obj/disposalpipe/segment/mail
-		trunk_type = /obj/disposalpipe/trunk/mail
-	brig
-		name = "brig pipe spawner"
-		color = PIPEC_BRIG
-		pipe_type = /obj/disposalpipe/segment/brig
-		trunk_type = /obj/disposalpipe/trunk/brig
-
-	ejection
-		name = "ejection pipe spawner"
-		color = PIPEC_EJECTION
-		pipe_type = /obj/disposalpipe/segment/ejection
-		trunk_type = /obj/disposalpipe/trunk/ejection
-
-	morgue
-		name = "morgue pipe spawner"
-		color = PIPEC_MORGUE
-		pipe_type = /obj/disposalpipe/segment/morgue
-		trunk_type = /obj/disposalpipe/trunk/morgue
-
-	food
-		name = "food pipe spawner"
-		color = PIPEC_FOOD
-		pipe_type = /obj/disposalpipe/segment/food
-		trunk_type = /obj/disposalpipe/trunk/food
-
-	produce
-		name = "produce pipe spawner"
-		color = PIPEC_PRODUCE
-		pipe_type = /obj/disposalpipe/segment/produce
-		trunk_type = /obj/disposalpipe/trunk/produce
-
-	transport
-		name = "transport pipe spawner"
-		color = PIPEC_TRANSPORT
-		pipe_type = /obj/disposalpipe/segment/transport
-		trunk_type = /obj/disposalpipe/trunk/transport
-
-	mineral
-		name = "mineral pipe spawner"
-		color = PIPEC_MINERAL
-		pipe_type = /obj/disposalpipe/segment/mineral
-		trunk_type = /obj/disposalpipe/trunk/mineral
-
-	cargo
-		name = "cargo pipe spawner"
-		color = PIPEC_CARGO
-		pipe_type = /obj/disposalpipe/segment/cargo
-		trunk_type = /obj/disposalpipe/trunk/cargo
-
-ABSTRACT_TYPE(/obj/disposalpipe/segment/auto)
-
-/obj/disposalpipe/segment/auto/New()
-	..()
-	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
-		SPAWN(1 SECONDS)
-			if(!src.disposed)
-				initialize()
-
-/obj/disposalpipe/segment/auto/initialize()
-	var/list/selftile = list()
-	for (var/obj/disposalpipe/segment/auto/dupe in range(0, src))
-		if (istype(dupe, src))
-			selftile += dupe
-	if (length(selftile) > 1)
-		CRASH("Multiple auto pipes on coordinate [src.x] x [src.y] y!")
-	selftile.Cut()
-	var/list/directions = list()
-	for(var/dir_to_pipe in cardinal)
-		for(var/obj/disposalpipe/segment/auto/maybe_pipe in get_step(src, dir_to_pipe))
-		// checks for other pipe spawners of its own type
-			if(istype(maybe_pipe, src) || istype(src, maybe_pipe))
-				src.dpdir |= dir_to_pipe
-				directions += dir_to_pipe
-		for(var/obj/disposalpipe/maybe_pipe in get_step(src, dir_to_pipe))
-		// this checks all the different subtypes of pipe
-		// wow this is horrendous why did i make it this way
-			// the ones which spit out at 90 degrees
-			if (istype(maybe_pipe, /obj/disposalpipe/block_sensing_outlet)\
-			|| istype(maybe_pipe, /obj/disposalpipe/type_sensing_outlet))
-				if (turn(maybe_pipe.dir, 90) == dir_to_pipe || turn(maybe_pipe.dir, -90) == dir_to_pipe)
-					src.dpdir |= dir_to_pipe
-					directions += dir_to_pipe
-
-			// the three ways (they do not check which 3 ways, it connects in all 4 directions)
-			if (istype(maybe_pipe, /obj/disposalpipe/junction)\
-			|| istype(maybe_pipe, /obj/disposalpipe/mechanics_switch)\
-			|| istype(maybe_pipe, /obj/disposalpipe/switch_junction))
-				src.dpdir |= dir_to_pipe
-				directions += dir_to_pipe
-
-			// regular pipes and trunks
-			if(istype(maybe_pipe, src.pipe_type)\
-			|| istype(maybe_pipe, src.trunk_type))
-			// these only connect to their own kind btw
-				if (maybe_pipe.dpdir & get_dir(maybe_pipe, src))
-				// makes sure they're pointing at you
-					src.dpdir |= dir_to_pipe
-					directions += dir_to_pipe
-
-	if (src.dpdir == 0)
-		CRASH("There is a lone auto pipe that doesn't connect to anything!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
-	else if (length(directions) == 1)
-		// lays a trunk pipe and deletes itself
-		var/obj/disposalpipe/trunk/current = new src.trunk_type(src.loc)
-		current.dir = directions[1]
-		current.dpdir = src.dpdir
-		update_icon(current)
-		qdel(src)
-	else if (length(directions) == 2)
-	// turns into a normal pipe segment
-		if (src.dpdir == NORTHWEST || src.dpdir == NORTHEAST || src.dpdir == SOUTHWEST || src.dpdir == SOUTHEAST)
-		// curved pipe
-			// this is to make it face the right way, for the icon. due to how the dmi is
-			switch (src.dpdir)
-				if (NORTHEAST)
-					src.dir = NORTH
-				if (NORTHWEST)
-					src.dir = WEST
-				if (SOUTHEAST)
-					src.dir = EAST
-				if (SOUTHWEST)
-					src.dir = SOUTH
-			src.icon_state = "pipe-c"
-			update_icon(src)
-		else
-		// straight pipe
-			src.dir = directions[1]
-			src.icon_state = "pipe-s"
-			update_icon(src)
-	else
-	// DO NOT MAKE JUNCTIONS, FOOLS.
-		CRASH("Pipe Spawners can't make junctions!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
