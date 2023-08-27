@@ -2,10 +2,6 @@
 	name = "Slam (grab)"
 	desc = "Slam a grappled opponent into the floor."
 	icon_state = "Slam"
-	targeted = 0
-	target_anything = 0
-	target_nodamage_check = 0
-	target_selection_check = 0
 	max_range = 0
 	cooldown = 250
 	start_on_cooldown = 1

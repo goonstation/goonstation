@@ -2,10 +2,6 @@
 	name = "Throw"
 	desc = "Spin a grabbed opponent around and throw them."
 	icon_state = "throw"
-	targeted = TRUE
-	target_anything = FALSE
-	target_nodamage_check = FALSE
-	target_selection_check = FALSE
 	max_range = 1
 	cooldown = 300
 	pointCost = 0

@@ -2,10 +2,7 @@
 	name = "Strike"
 	desc = "Hit a neaby opponent with a quick attack."
 	icon_state = "Strike"
-	targeted = 1
-	target_anything = 0
 	target_nodamage_check = 1
-	target_selection_check = 1
 	max_range = 1
 	cooldown = 150
 	start_on_cooldown = 1

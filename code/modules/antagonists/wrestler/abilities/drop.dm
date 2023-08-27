@@ -2,10 +2,7 @@
 	name = "Drop (prone)"
 	desc = "Smash down onto on an opponent."
 	icon_state = "Drop"
-	targeted = 1
-	target_anything = 0
 	target_nodamage_check = 1
-	target_selection_check = 1
 	max_range = 1
 	cooldown = 250
 	start_on_cooldown = 1
