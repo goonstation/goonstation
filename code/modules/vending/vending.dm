@@ -53,7 +53,7 @@
 TYPEINFO(/obj/machinery/vending)
 	mats = 20
 
-ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
+ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command_speak)
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."
@@ -878,6 +878,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		src.throw_item()
 
 	return
+
+/obj/machinery/vending/proc/admin_command_speak()
+		set name = "Speak"
+		src.speak(tgui_input_text(usr, "Speak message through [src]", "Speak", ""))
 
 /obj/machinery/vending/proc/speak(var/message)
 	if (status & NOPOWER)
@@ -3315,6 +3319,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		/obj/item/reagent_containers/ampoule,
 		/obj/item/chem_pill_bottle,
 		/obj/item/storage/box/patchbox,
+		/obj/item/item_box/medical_patches,
 	)
 
 	New()

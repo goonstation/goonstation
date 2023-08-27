@@ -1344,8 +1344,7 @@
 					H.HealDamage("All", 1, 1, 1)
 					if (H.bleeding)
 						repair_bleeding_damage(H, 10, 1)
-				if (prob(10))
-					H.make_jittery(2)
+				H.make_jittery(1)
 
 				if (H.misstep_chance)
 					H.change_misstep_chance(-5)
@@ -1784,11 +1783,11 @@
 
 		if (states[1] || states[2])
 			if (states[1])
-				P.create_overlay(states[1], "#ff8820", direct, 'icons/effects/blood.dmi')
+				P.create_overlay(states[1], "#ff8820", direct, 'icons/obj/decals/blood/blood.dmi')
 			if (states[2])
-				P.create_overlay(states[2], "#ff8820", direct, 'icons/effects/blood.dmi')
+				P.create_overlay(states[2], "#ff8820", direct, 'icons/obj/decals/blood/blood.dmi')
 		else
-			P.create_overlay("smear2", "#ff8820", direct, 'icons/effects/blood.dmi')
+			P.create_overlay("smear2", "#ff8820", direct, 'icons/obj/decals/blood/blood.dmi')
 
 /datum/statusEffect/magnetized
 	id = "magnetized"

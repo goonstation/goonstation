@@ -66,6 +66,21 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			forensic_IDs.Add(src.forensic_ID)
 		return ..()
 
+	// equip handling for weapons that fit on your back
+	try_specific_equip(mob/user)
+		. = ..()
+		if (!(src.c_flags & ONBACK))
+			return
+		if (!user.back?.storage)
+			return
+		if (!user.s_active)
+			return
+		if (user.s_active.master != user.back.storage)
+			return
+		if (user.back.storage.check_can_hold(src) == STORAGE_CAN_HOLD)
+			user.back.Attackby(src, user)
+			return TRUE
+
 /datum/gunTarget
 	var/params = null
 	var/target = null
@@ -167,6 +182,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/poy
 	var/user_turf
 	var/target_turf
+	var/called_target
 
 	New(_gun, _pox, _poy, _uturf, _tturf, _time, _icon, _icon_state)
 		ownerGun = _gun
@@ -181,7 +197,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	onEnd()
 		..()
-		ownerGun.shoot(target_turf, user_turf, owner, pox, poy)
+		ownerGun.shoot(target_turf, user_turf, owner, pox, poy, called_target = called_target)
 
 /datum/action/bar/icon/guncharge_pointblank
 	duration = 150
@@ -236,7 +252,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				if(!ON_COOLDOWN(G, "shoot_delay", G.shoot_delay))
 					SPAWN(0.2 SECONDS)
 						if(!(G in user.equipped_list())) return
-						G.shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield)
+						G.shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield, target)
 
 		else if(ismobcritter(user))
 			var/mob/living/critter/M = user
@@ -251,13 +267,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 					if(!ON_COOLDOWN(gun, "shoot_delay", gun.shoot_delay))
 						sleep(0.2 SECONDS)
 						if(!(gun in user.equipped_list())) return
-						gun.shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield)
+						gun.shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield, target)
 
 	if(!ON_COOLDOWN(src, "shoot_delay", src.shoot_delay))
 		if(charge_up && !can_dual_wield && canshoot(user))
-			actions.start(new/datum/action/bar/icon/guncharge(src, pox, poy, user_turf, target_turf, charge_up, icon, icon_state), user)
+			actions.start(new/datum/action/bar/icon/guncharge(src, pox, poy, user_turf, target_turf, charge_up, icon, icon_state, target), user)
 		else
-			shoot(target_turf, user_turf, user, pox, poy, is_dual_wield)
+			shoot(target_turf, user_turf, user, pox, poy, is_dual_wield, target)
 
 
 	return 1
@@ -314,7 +330,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 					if (BOUNDS_DIST(user, target) == 0)
 						second_gun.shoot_point_blank(target,user,second_shot = 1)
 					else
-						second_gun.shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield)
+						second_gun.shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield, target)
 			else if(!user.hand && istype(user.l_hand, /obj/item/gun) && user.l_hand:can_dual_wield)
 				second_gun = user.l_hand
 				var/target_turf = get_turf(target)
@@ -324,7 +340,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 					if (BOUNDS_DIST(user, target) == 0)
 						second_gun.shoot_point_blank(target,user,second_shot = 1)
 					else
-						second_gun.shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield)
+						second_gun.shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield, target)
 
 
 	if (src.artifact && istype(src.artifact, /datum/artifact))
@@ -410,7 +426,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/alter_projectile(var/obj/projectile/P)
 	return
 
-/obj/item/gun/proc/shoot(var/target,var/start,var/mob/user,var/POX,var/POY,var/is_dual_wield)
+/obj/item/gun/proc/shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
 		return FALSE
@@ -457,7 +473,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		spread += 5 * how_drunk
 	spread = max(spread, spread_angle)
 
-	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)))
+	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)), called_target = called_target)
 	if (P)
 		P.forensic_ID = src.forensic_ID
 
