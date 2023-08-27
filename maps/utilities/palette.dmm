@@ -1713,6 +1713,12 @@
 "hj" = (
 /turf/simulated/floor/carpet/blue/standard/narrow/T_east,
 /area/space)
+"hk" = (
+/obj/disposalpipe/junction/auto{
+	dir = 4
+	},
+/turf/simulated/floor/yellow,
+/area/space)
 "hl" = (
 /obj/cable/yellow{
 	icon_state = "5-10"
@@ -2929,6 +2935,7 @@
 /obj/shrub{
 	dir = 4
 	},
+/obj/disposalpipe/segment/auto/food,
 /turf/simulated/floor,
 /area/space)
 "lJ" = (
@@ -3272,6 +3279,10 @@
 	icon_state = "R6"
 	},
 /area/space)
+"nf" = (
+/obj/disposalpipe/segment/auto/ejection,
+/turf/simulated/floor/yellow,
+/area/space)
 "ng" = (
 /turf/simulated/wall/auto/jen/green{
 	icon_state = "13"
@@ -3484,6 +3495,12 @@
 /turf/simulated/wall/auto/reinforced/jen{
 	icon_state = "R6"
 	},
+/area/space)
+"nK" = (
+/obj/disposalpipe/junction/auto{
+	dir = 8
+	},
+/turf/simulated/floor,
 /area/space)
 "nL" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
@@ -4811,6 +4828,12 @@
 /area/space)
 "sO" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
+/area/space)
+"sP" = (
+/obj/disposalpipe/junction/auto{
+	dir = 1
+	},
+/turf/simulated/floor/yellow,
 /area/space)
 "sV" = (
 /turf/simulated/wall/auto/reinforced/jen/purple{
@@ -9811,6 +9834,7 @@
 /area/space)
 "NA" = (
 /obj/machinery/disposal,
+/obj/disposalpipe/segment/auto/regular,
 /turf/simulated/floor,
 /area/space)
 "NB" = (
@@ -9848,6 +9872,10 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/black,
+/area/space)
+"NJ" = (
+/obj/disposalpipe/junction/auto,
+/turf/simulated/floor,
 /area/space)
 "NL" = (
 /turf/simulated/floor/carpet/blue/fancy/junction/ne_w,
@@ -10468,6 +10496,10 @@
 	icon_state = "0-9"
 	},
 /turf/simulated/floor/plating/random,
+/area/space)
+"Qb" = (
+/obj/disposalpipe/segment/auto/produce,
+/turf/simulated/floor/yellow,
 /area/space)
 "Qd" = (
 /obj/table/round/auto{
@@ -11579,6 +11611,7 @@
 /area/space)
 "TV" = (
 /obj/machinery/disposal/mail/autoname,
+/obj/disposalpipe/segment/auto/mail,
 /turf/simulated/floor,
 /area/space)
 "TX" = (
@@ -14475,7 +14508,7 @@ yp
 FM
 Wy
 ML
-ut
+nf
 qM
 wS
 yO
@@ -14549,7 +14582,7 @@ ut
 iw
 aK
 xo
-ut
+Qb
 iw
 Rw
 Ks
@@ -15291,10 +15324,10 @@ ut
 iw
 ut
 iw
-ut
-iw
-ut
-iw
+sP
+NJ
+hk
+nK
 ut
 nm
 rv
