@@ -352,7 +352,7 @@ TYPEINFO(/turf/simulated/wall)
 
 	var/proj_name = P.name
 	var/obj/projectile/p_copy = SEMI_DEEP_COPY(P)
-	p_copy.proj_data.shot_sound = "sound/weapons/richochet/richochet-[rand(1, 4)].ogg"
+	p_copy.proj_data.shot_sound = "sound/weapons/ricochet/ricochet-[rand(1, 4)].ogg"
 	p_copy.proj_data.power = sqrt(p_copy.proj_data.power)
 	p_copy.proj_data.dissipation_delay *= 0.5
 	p_copy.proj_data.armor_ignored /= 0.25

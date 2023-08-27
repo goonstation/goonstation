@@ -49,7 +49,7 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/impact_sounds/Flesh_Stab_2.ogg'
 
-	/// can it richochet off a wall?
+	/// can it ricochet off a wall?
 	var/ricochets = FALSE
 
 //no caliber
