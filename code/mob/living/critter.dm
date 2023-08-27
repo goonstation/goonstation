@@ -862,11 +862,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		return 0
 
 	death(var/gibbed, var/do_drop_equipment = 1)
-		if (!gibbed)
-			var/area/area = get_area(src)
-			if (area.type == /area/gauntlet)
-				src.gib()
-				return
 		if (src.organHolder)
 			// believe me i hate this as much as you do
 			// There is some sort of behavior on living critters that ejects all of their contents at the moment of death. We want to avoid that - brain should stay inside. HOWEVER I can't find where the ejection happens for the life of me!
