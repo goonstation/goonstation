@@ -500,9 +500,6 @@
 "Dd" = (
 /turf/simulated/floor/black,
 /area/prefab/genetics_transport)
-"Dl" = (
-/turf/space,
-/area/noGenerate)
 "DH" = (
 /turf/simulated/floor/specialroom/medbay,
 /area/prefab/genetics_transport)
@@ -817,28 +814,28 @@
 /area/prefab/genetics_transport)
 
 (1,1,1) = {"
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
+wM
+wM
+wM
 dY
 dY
 dY
 dY
 dY
 dY
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
+wM
+wM
+wM
+wM
+wM
 "}
 (2,1,1) = {"
 wM
@@ -846,16 +843,16 @@ wM
 wM
 wM
 wM
-Dl
-Dl
+wM
+wM
 fz
 PZ
 qo
 lU
 kY
 zE
-Dl
-Dl
+wM
+wM
 wM
 wM
 wM
@@ -1470,7 +1467,7 @@ wM
 wM
 wM
 wM
-rk
+wM
 wM
 wM
 wM
