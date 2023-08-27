@@ -31871,7 +31871,7 @@
 /turf/space,
 /area/space)
 "cnx" = (
-/turf/simulated/wall/void,
+/turf/unsimulated/wall/void,
 /area/crunch/wtc)
 "cny" = (
 /obj/stool/chair/office/syndie{
@@ -33322,12 +33322,6 @@
 /obj/lattice,
 /turf/unsimulated/floor/void,
 /area/crunch/wtc)
-"csS" = (
-/obj/decal/floatingtiles{
-	dir = 4
-	},
-/turf/unsimulated/floor/void,
-/area/crunch/wtc)
 "csU" = (
 /obj/machinery/bot/cambot{
 	desc = "A little camera robot! Smile, criminal!";
@@ -33360,15 +33354,6 @@
 	dir = 10
 	},
 /area/crunch/wtc)
-"csZ" = (
-/obj/decal/floatingtiles{
-	dir = 8
-	},
-/turf/unsimulated/floor/void,
-/area/crunch/wtc)
-"cta" = (
-/turf/simulated/wall/void,
-/area/crunch)
 "ctb" = (
 /turf/unsimulated/floor/void,
 /area/crunch/wtc)
@@ -33378,7 +33363,9 @@
 /area/crunch/wtc)
 "ctd" = (
 /obj/lattice,
-/obj/decal/floatingtiles,
+/obj/decal/floatingtiles{
+	dir = 8
+	},
 /turf/unsimulated/floor/void,
 /area/crunch)
 "cte" = (
@@ -33391,9 +33378,6 @@
 	},
 /obj/lattice,
 /turf/unsimulated/floor/void,
-/area/crunch)
-"ctg" = (
-/turf/unsimulated/floor/neutral,
 /area/crunch)
 "cth" = (
 /obj/lattice,
@@ -61402,6 +61386,13 @@
 	opacity = 0
 	},
 /area/centcom/lobby)
+"iiS" = (
+/obj/decal/floatingtiles{
+	dir = 8
+	},
+/obj/lattice,
+/turf/unsimulated/floor/void,
+/area/crunch/wtc)
 "ijU" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/access/owlmaint,
@@ -72608,6 +72599,12 @@
 	},
 /turf/unsimulated/floor/caution/north,
 /area/iomoon/base/underground)
+"uaT" = (
+/obj/decal/floatingtiles{
+	dir = 4
+	},
+/turf/unsimulated/floor/void,
+/area/crunch)
 "ubB" = (
 /obj/rack,
 /obj/item/tank/jetpack/syndicate,
@@ -79947,7 +79944,7 @@ aDC
 bLn
 bNW
 bLn
-cgh
+bUY
 bKw
 bKw
 bKw
@@ -80248,7 +80245,7 @@ bLn
 ceP
 bLn
 bLn
-cgh
+bUY
 bKw
 bKw
 bWw
@@ -83870,7 +83867,7 @@ aDC
 bJE
 bJE
 bYi
-bLl
+aDC
 bJE
 bJE
 bIY
@@ -84446,7 +84443,7 @@ bKw
 bKw
 bKw
 bKw
-bUY
+cgh
 miu
 bVt
 bKw
@@ -88083,7 +88080,7 @@ bKw
 bKw
 bKw
 aDC
-bYD
+uaT
 bLn
 aDC
 aDC
@@ -90215,12 +90212,12 @@ bIY
 bIY
 bIY
 bIY
-cta
-cta
-cta
+bIY
+bIY
+bIY
 bKw
 ctd
-ctg
+bLn
 cth
 bKw
 gon
@@ -90522,7 +90519,7 @@ bKw
 bKw
 bVj
 cte
-ctg
+bLn
 bKB
 bIY
 bKw
@@ -91118,8 +91115,8 @@ cnB
 cnx
 cnx
 cnx
-cnx
-cnx
+ctb
+ctb
 ctb
 bKw
 bKw
@@ -91421,7 +91418,7 @@ cnB
 cnB
 csB
 csI
-csQ
+iiS
 ctb
 bKw
 bRa
@@ -91724,7 +91721,7 @@ csn
 csC
 nrG
 csK
-csZ
+cnK
 bKw
 bKw
 bKw
@@ -92025,10 +92022,10 @@ cnB
 cnB
 csD
 csK
-csS
-cnx
-cta
-cta
+cnK
+ctb
+bIY
+bIY
 bIY
 bIY
 bIY
@@ -94730,7 +94727,7 @@ daT
 daT
 daM
 aaa
-ctb
+cnx
 cnB
 cnB
 crD
@@ -95032,8 +95029,8 @@ daT
 daT
 daM
 aaa
-ctb
-ctb
+cnx
+cnz
 cry
 crA
 crA
@@ -95334,7 +95331,7 @@ daX
 daX
 daM
 aaa
-cnz
+cnx
 cnC
 crz
 crJ

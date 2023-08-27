@@ -71,11 +71,9 @@
 
 /obj/decal/floatingtiles
 	name = "floating tiles"
-	desc = "These tiles are just floating around in the void."
-	opacity = 0
-	density = 0
+	desc = "These tiles are just floating around, huh."
 	anchored = ANCHORED
-	icon = 'icons/obj/adventurezones/void.dmi'
+	icon = 'icons/obj/decals/floating_tile.dmi'
 	icon_state = "floattiles1"
 
 /obj/decal/implo
