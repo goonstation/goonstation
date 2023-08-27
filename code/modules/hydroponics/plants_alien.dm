@@ -274,7 +274,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	special_proc = 1
 	attacked_proc = 1
 	vending = 0
-	innate_commuts = list(/datum/plant_gene_strain/overpowering_genome, /datum/plant_gene_strain/temporary_splice_stabilizer)
+	innate_commuts = list(/datum/plant_gene_strain/overpowering_genome, /datum/plant_gene_strain/temporary_splice_stabilizer, /datum/plant_gene_strain/reagent_blacklist)
 
 	HYPspecial_proc(var/obj/machinery/plantpot/POT)
 		..()
