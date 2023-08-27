@@ -1212,6 +1212,13 @@ TYPEINFO(/obj/stool/chair/wooden)
 		comfort_value = 7
 		parts_type = /obj/item/furniture_parts/wood_chair/scrap
 
+	industrial
+		name = "industrial chair"
+		desc = "Repurposed scaffolding in the shape of a chair."
+		icon_state = "chair_industrial"
+		comfort_value = 7
+		parts_type = /obj/item/furniture_parts/wood_chair/industrial
+
 /* ============================================== */
 /* -------------------- Pews -------------------- */
 /* ============================================== */

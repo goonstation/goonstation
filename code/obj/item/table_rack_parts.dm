@@ -471,6 +471,13 @@ TYPEINFO(/obj/item/furniture_parts/table/glass)
 	icon_state = "scrapchair_parts"
 	furniture_type = /obj/stool/chair/wooden/scrap
 
+/obj/item/furniture_parts/wood_chair/industrial
+	name = "industrial chair parts"
+	desc = "An collection of rods and scaffolding that can be used to make an industrial chair."
+	icon_state = "ichair_parts"
+	furniture_type = /obj/stool/chair/wooden/industrial
+	furniture_name = "industrial chair"
+
 /obj/item/furniture_parts/wheelchair
 	name = "wheelchair parts"
 	desc = "A collection of parts that can be used to make a wheelchair."
