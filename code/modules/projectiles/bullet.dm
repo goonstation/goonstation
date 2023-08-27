@@ -50,7 +50,7 @@ toxic - poisons
 	hit_mob_sound = 'sound/impact_sounds/Flesh_Stab_2.ogg'
 
 	/// can it richochet off a wall?
-	var/ricochets =FALSE
+	var/ricochets = FALSE
 
 //no caliber
 /datum/projectile/bullet/staple
@@ -85,7 +85,7 @@ toxic - poisons
 	casing = /obj/item/casing/small
 	impact_image_state = "bhole-small"
 	silentshot = 1 // It's supposed to be a stealth weapon, right (Convair880)?
-	ricochets =TRUE
+	ricochets = TRUE
 
 /datum/projectile/bullet/bullet_22/smartgun
 	shot_sound = 'sound/weapons/smartgun.ogg'
@@ -97,7 +97,7 @@ toxic - poisons
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_22HP
-	ricochets =TRUE
+	ricochets = TRUE
 
 /datum/projectile/bullet/custom
 	name = "bullet"
@@ -120,7 +120,7 @@ toxic - poisons
 	impact_image_state = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
-	ricochets =TRUE
+	ricochets = TRUE
 
 	armor_piercing
 		damage_type = D_PIERCING
@@ -152,7 +152,7 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
 	fullauto_valid = 1
-	ricochets =TRUE
+	ricochets = TRUE
 
 /datum/projectile/bullet/minigun/turret
 	damage = 15
@@ -170,7 +170,7 @@ toxic - poisons
 	impact_image_state = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
-	ricochets =TRUE
+	ricochets = TRUE
 
 /datum/projectile/bullet/rifle_3006
 	name = "bullet"
@@ -284,7 +284,7 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
 	var/slow = 1
-	ricochets =TRUE
+	ricochets = TRUE
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if(slow && ishuman(hit))
@@ -319,7 +319,7 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_9mm
 	casing = /obj/item/casing/small
 	impact_image_state = "bhole-small"
-	ricochets =TRUE
+	ricochets = TRUE
 
 	smg
 		damage = 20
@@ -383,7 +383,7 @@ toxic - poisons
 	impact_image_state = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_9mm
 	casing = /obj/item/casing/small
-	ricochets =TRUE
+	ricochets = TRUE
 
 /datum/projectile/bullet/veritate/burst
 	sname = "burst fire"
@@ -401,7 +401,7 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_357
 	impact_image_state = "bhole-small"
 	casing = /obj/item/casing/medium
-	ricochets =TRUE
+	ricochets = TRUE
 
 /datum/projectile/bullet/revolver_357/AP
 	damage = 50
@@ -426,7 +426,7 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_38
 	impact_image_state = "bhole-small"
 	casing = /obj/item/casing/medium
-	ricochets =TRUE
+	ricochets = TRUE
 
 /datum/projectile/bullet/revolver_38/lb
 	shot_sound = 'sound/weapons/lb_execute.ogg'
@@ -447,7 +447,7 @@ toxic - poisons
 	ie_type = "T"
 	hit_type = null
 	impact_image_state = null // stun bullets shouldn't actually enter walls should they?
-	ricochets =FALSE
+	ricochets = FALSE
 
 //0.393
 /datum/projectile/bullet/foamdart
@@ -539,7 +539,7 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_45
 	impact_image_state = "bhole-small"
 	casing = /obj/item/casing/medium
-	ricochets =TRUE
+	ricochets = TRUE
 
 //0.58
 /datum/projectile/bullet/flintlock
@@ -658,7 +658,7 @@ toxic - poisons
 	dissipation_rate = 5
 	dissipation_delay = 8
 	damage_type = D_KINETIC
-	ricochets =TRUE
+	ricochets = TRUE
 
 /datum/projectile/bullet/grenade_fragment
 	name = "grenade fragment"
@@ -670,7 +670,7 @@ toxic - poisons
 	dissipation_rate = 5
 	dissipation_delay = 8
 	damage_type = D_KINETIC
-	ricochets =TRUE
+	ricochets = TRUE
 
 /datum/projectile/bullet/buckshot // buckshot pellets generates by shotguns
 	name = "buckshot"
@@ -690,7 +690,7 @@ toxic - poisons
 	dissipation_delay = 4
 	damage_type = D_SLASHING
 	casing = /obj/item/casing/shotgun/gray
-	ricochets =TRUE
+	ricochets = TRUE
 
 //for makeshift shotgun shells- don't ever use these directly, use the spreader projectiles in special.dm
 
