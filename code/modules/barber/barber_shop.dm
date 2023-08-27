@@ -65,7 +65,7 @@
 		if (prob(75))
 			hair_type = pick(possible_hairstyles)
 			second_id = initial(hair_type.id)
-			second_color = random_saturated_hex_color()
+			second_color = rgb(rand(0,255),rand(0,255),rand(0,255))
 		if (prob(75))
 			hair_type = pick(possible_hairstyles)
 			third_id = initial(hair_type.id)
