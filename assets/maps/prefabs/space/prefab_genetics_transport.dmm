@@ -12,8 +12,11 @@
 /turf/simulated/floor,
 /area/prefab/genetics_transport)
 "bf" = (
-/obj/grille/steel/broken,
-/turf/simulated/floor/airless/damaged5,
+/obj/machinery/light/incandescent/broken{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor/engine,
 /area/prefab/genetics_transport)
 "bk" = (
 /obj/item/paper/book/from_file/medical_surgery_guide{
@@ -110,11 +113,8 @@
 /turf/simulated/floor,
 /area/prefab/genetics_transport)
 "eT" = (
-/obj/machinery/light/incandescent/broken{
-	dir = 1
-	},
-/obj/table/wood,
-/turf/simulated/floor/specialroom/medbay,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/engine,
 /area/prefab/genetics_transport)
 "fc" = (
 /obj/decal/cleanable/dirt/dirt3,
@@ -127,16 +127,16 @@
 	},
 /turf/space,
 /area/prefab/genetics_transport)
+"fu" = (
+/mob/living/carbon/human/npc/monkey,
+/turf/simulated/floor/grass/random,
+/area/prefab/genetics_transport)
 "fz" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-L"
 	},
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 8;
-	icon_state = "alt_heater-R"
-	},
-/turf/unsimulated/wall/auto/reinforced/supernorn,
+/turf/space,
 /area/prefab/genetics_transport)
 "ga" = (
 /turf/variableTurf/wall,
@@ -171,6 +171,13 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/prefab/genetics_transport)
+"hP" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	opacity = 1
+	},
+/turf/variableTurf/floor,
+/area/prefab/genetics_transport)
 "js" = (
 /obj/machinery/light/small/floor/broken,
 /turf/simulated/floor,
@@ -201,9 +208,15 @@
 "kY" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8;
+	icon_state = "alt_heater-R"
+	},
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
 	icon_state = "alt_heater-M"
 	},
-/turf/unsimulated/wall/auto/reinforced/supernorn,
+/turf/simulated/wall/auto/shuttle{
+	opacity = 1
+	},
 /area/prefab/genetics_transport)
 "kZ" = (
 /obj/monkeyplant,
@@ -221,24 +234,32 @@
 /obj/item/device/radio,
 /turf/simulated/floor/specialroom/medbay,
 /area/prefab/genetics_transport)
+"lA" = (
+/obj/machinery/light/incandescent/broken{
+	dir = 6
+	},
+/turf/simulated/floor/engine,
+/area/prefab/genetics_transport)
 "lF" = (
-/obj/random_item_spawner/junk/one,
-/turf/simulated/floor/specialroom/medbay,
+/obj/item/cable_coil/cut/small,
+/turf/simulated/floor/engine,
 /area/prefab/genetics_transport)
 "lU" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8;
-	icon_state = "alt_heater-L"
+	icon_state = "alt_heater-M"
 	},
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8;
-	icon_state = "alt_heater-M"
+	icon_state = "alt_heater-L"
 	},
-/turf/unsimulated/wall/auto/reinforced/supernorn,
+/turf/simulated/wall/auto/shuttle{
+	opacity = 1
+	},
 /area/prefab/genetics_transport)
 "mw" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/airless/damaged5,
+/turf/simulated/floor/plating,
 /area/prefab/genetics_transport)
 "ns" = (
 /obj/item/material_piece/cloth/cottonfabric{
@@ -280,6 +301,19 @@
 	},
 /turf/variableTurf/floor,
 /area/prefab/genetics_transport)
+"qo" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-M"
+	},
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-R"
+	},
+/turf/simulated/wall/auto/shuttle{
+	opacity = 1
+	},
+/area/prefab/genetics_transport)
 "qI" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
@@ -291,6 +325,13 @@
 	dir = 4
 	},
 /area/prefab/genetics_transport)
+"qS" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	opacity = 1
+	},
+/turf/simulated/floor/engine,
+/area/prefab/genetics_transport)
 "rk" = (
 /turf/variableTurf/wall,
 /area/noGenerate)
@@ -300,6 +341,13 @@
 	},
 /turf/simulated/floor/airless/damaged5,
 /area/prefab/genetics_transport)
+"ru" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0;
+	opacity = 1
+	},
+/turf/simulated/floor/engine,
+/area/prefab/genetics_transport)
 "rx" = (
 /turf/simulated/floor/sanitary/white,
 /area/prefab/genetics_transport)
@@ -308,9 +356,8 @@
 /turf/simulated/floor/sanitary/white,
 /area/prefab/genetics_transport)
 "si" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/green,
-/turf/simulated/floor/specialroom/medbay,
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/engine,
 /area/prefab/genetics_transport)
 "tB" = (
 /obj/stool/chair/comfy/shuttle,
@@ -356,9 +403,8 @@
 	},
 /area/prefab/genetics_transport)
 "wM" = (
-/obj/grille/steel/broken/corroded,
-/turf/simulated/floor/airless/damaged5,
-/area/prefab/genetics_transport)
+/turf/variableTurf/clear,
+/area/noGenerate)
 "xw" = (
 /obj/item/raw_material/cotton{
 	pixel_x = 8;
@@ -424,9 +470,9 @@
 "zE" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8;
-	icon_state = "alt_heater-L"
+	icon_state = "alt_heater-R"
 	},
-/turf/unsimulated/wall/auto/reinforced/supernorn,
+/turf/space,
 /area/prefab/genetics_transport)
 "Ah" = (
 /mob/living/critter/fermid,
@@ -459,6 +505,10 @@
 /area/noGenerate)
 "DH" = (
 /turf/simulated/floor/specialroom/medbay,
+/area/prefab/genetics_transport)
+"DJ" = (
+/obj/grille/steel/broken,
+/turf/simulated/floor/plating,
 /area/prefab/genetics_transport)
 "DL" = (
 /obj/table/auto,
@@ -527,6 +577,12 @@
 "IQ" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor,
+/area/prefab/genetics_transport)
+"Ja" = (
+/obj/item/sheet/steel{
+	amount = 5
+	},
+/turf/simulated/floor/engine,
 /area/prefab/genetics_transport)
 "Jf" = (
 /obj/decal/cleanable/dirt/dirt3,
@@ -627,6 +683,23 @@
 	},
 /turf/space,
 /area/prefab/genetics_transport)
+"PZ" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-L"
+	},
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-M"
+	},
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-M"
+	},
+/turf/simulated/wall/auto/shuttle{
+	opacity = 1
+	},
+/area/prefab/genetics_transport)
 "RV" = (
 /obj/table/glass/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen/few,
@@ -657,10 +730,10 @@
 /turf/simulated/floor/sanitary/white,
 /area/prefab/genetics_transport)
 "Uc" = (
-/obj/decal/cleanable/dirt,
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/green,
-/turf/simulated/floor/specialroom/medbay,
+/obj/item/storage/toolbox/mechanical{
+	rand_pos = 1
+	},
+/turf/simulated/floor/engine,
 /area/prefab/genetics_transport)
 "UE" = (
 /obj/item/reagent_containers/syringe{
@@ -672,11 +745,22 @@
 /obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/specialroom/medbay,
 /area/prefab/genetics_transport)
+"Ve" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/item/reagent_containers/food/drinks/fueltank/empty{
+	rand_pos = 1
+	},
+/turf/simulated/floor/engine,
+/area/prefab/genetics_transport)
 "Vs" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 10
 	},
 /turf/variableTurf/floor,
+/area/prefab/genetics_transport)
+"VE" = (
+/obj/grille/steel/broken/corroded,
+/turf/simulated/floor/plating,
 /area/prefab/genetics_transport)
 "VX" = (
 /obj/item/storage/firstaid/regular/empty{
@@ -738,16 +822,16 @@ Dl
 Dl
 Dl
 Dl
-dY
-dY
-dY
-Dl
-Dl
 Dl
 Dl
 dY
 dY
 dY
+dY
+dY
+dY
+Dl
+Dl
 Dl
 Dl
 Dl
@@ -757,106 +841,130 @@ Dl
 Dl
 "}
 (2,1,1) = {"
+wM
+wM
+wM
+wM
+wM
 Dl
 Dl
-Dl
-SU
-ER
-zE
-lU
 fz
-XJ
-Dl
-Dl
-SU
+PZ
+qo
+lU
+kY
 zE
-kY
-kY
-ER
-XJ
 Dl
 Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
+wM
+wM
+wM
 "}
 (3,1,1) = {"
-Dl
-Dl
-Dl
+wM
+wM
+wM
+SU
+ER
+ER
+ER
+ER
+qS
+Ja
+Ve
+ru
+ER
+ER
+ER
+ER
+XJ
+wM
+wM
+wM
+wM
+wM
+"}
+(4,1,1) = {"
+wM
+wM
+wM
 wy
 xy
 xM
 dg
 xM
 wy
-ER
-ER
+Uc
+si
 ER
 Jw
 LX
 KB
 bt
 ER
-Dl
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
+wM
 "}
-(4,1,1) = {"
-Dl
-Dl
-Dl
+(5,1,1) = {"
+wM
+wM
+wM
 wy
 xM
 xM
-xM
+fu
 xM
 wy
-Uc
-si
+eT
+lF
 ER
 Dd
 Dd
 Dd
 oU
 ER
-Dl
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
+wM
 "}
-(5,1,1) = {"
-Dl
-Dl
-Dl
+(6,1,1) = {"
+wM
+wM
+wM
 PD
 ER
 HN
 xM
 SK
 wy
-eT
-lF
+bf
+lA
 ER
 HR
 Dd
 kZ
 ER
 fk
-Dl
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
+wM
 "}
-(6,1,1) = {"
-Dl
-Dl
-Dl
-Dl
+(7,1,1) = {"
+wM
+wM
+wM
+wM
 ER
 XD
 XD
@@ -869,18 +977,18 @@ ZB
 XD
 XD
 ER
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
+wM
+wM
 "}
-(7,1,1) = {"
-Dl
-Dl
-Dl
-Dl
+(8,1,1) = {"
+wM
+wM
+wM
+wM
 PD
 ER
 lr
@@ -893,19 +1001,19 @@ DH
 NU
 ER
 fk
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
+wM
+wM
 "}
-(8,1,1) = {"
-Dl
-Dl
-Dl
-Dl
-Dl
+(9,1,1) = {"
+wM
+wM
+wM
+wM
+wM
 PD
 Pn
 RV
@@ -916,21 +1024,21 @@ DH
 Jf
 ER
 fk
-Dl
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
+wM
 rk
-Dl
+wM
 "}
-(9,1,1) = {"
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
+(10,1,1) = {"
+wM
+wM
+wM
+wM
+wM
+wM
 ER
 ly
 hK
@@ -939,21 +1047,21 @@ DH
 DH
 YR
 ER
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
 rk
 rk
 rk
-Dl
+wM
 "}
-(10,1,1) = {"
-Dl
-Dl
-Dl
-Dl
-Dl
+(11,1,1) = {"
+wM
+wM
+wM
+wM
+wM
 SU
 ER
 ER
@@ -964,20 +1072,20 @@ qI
 ER
 ER
 XJ
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
 rk
-Dl
-Dl
+wM
+wM
 "}
-(11,1,1) = {"
-Dl
-Dl
-Dl
-Dl
-Dl
+(12,1,1) = {"
+wM
+wM
+wM
+wM
+wM
 ER
 ue
 nS
@@ -988,20 +1096,20 @@ rx
 uj
 xS
 ER
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
+wM
+wM
+wM
 "}
-(12,1,1) = {"
-Dl
-Dl
-Dl
-Dl
-Dl
+(13,1,1) = {"
+wM
+wM
+wM
+wM
+wM
 cr
 Hc
 rx
@@ -1014,18 +1122,18 @@ DL
 ER
 ga
 ga
-Dl
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
+wM
 "}
-(13,1,1) = {"
-Dl
-Dl
-Dl
-Dl
-Dl
+(14,1,1) = {"
+wM
+wM
+wM
+wM
+wM
 rs
 rx
 rx
@@ -1039,17 +1147,17 @@ Hw
 bB
 ga
 ga
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
 "}
-(14,1,1) = {"
-Dl
-Dl
-Dl
-Dl
-Dl
+(15,1,1) = {"
+wM
+wM
+wM
+wM
+wM
 ER
 EQ
 rx
@@ -1064,16 +1172,16 @@ pe
 Xe
 ga
 ga
-Dl
-Dl
-Dl
+wM
+wM
+wM
 "}
-(15,1,1) = {"
-Dl
-Dl
-Dl
-Dl
-Dl
+(16,1,1) = {"
+wM
+wM
+wM
+wM
+wM
 ER
 IM
 rx
@@ -1088,16 +1196,16 @@ wl
 CB
 Xe
 ga
-Dl
-Dl
-Dl
+wM
+wM
+wM
 "}
-(16,1,1) = {"
-Dl
+(17,1,1) = {"
+wM
 rk
 rk
-Dl
-Dl
+wM
+wM
 ER
 gR
 Cr
@@ -1112,16 +1220,16 @@ kE
 Vs
 Xe
 ga
-Dl
-Dl
-Dl
+wM
+wM
+wM
 "}
-(17,1,1) = {"
+(18,1,1) = {"
 rk
 rk
 rk
-Dl
-Dl
+wM
+wM
 PD
 ER
 ER
@@ -1131,21 +1239,21 @@ ER
 nV
 ER
 ER
-fk
+hP
 Xe
 wl
 Wt
 ga
-Dl
-Dl
-Dl
+wM
+wM
+wM
 "}
-(18,1,1) = {"
+(19,1,1) = {"
 rk
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
 ga
 ER
 bC
@@ -1160,15 +1268,15 @@ Xp
 gM
 Xe
 ga
-Dl
-Dl
-Dl
+wM
+wM
+wM
 "}
-(19,1,1) = {"
-Dl
-Dl
-Dl
-Dl
+(20,1,1) = {"
+wM
+wM
+wM
+wM
 ga
 ga
 mw
@@ -1184,14 +1292,14 @@ Xe
 It
 Xe
 ga
-Dl
-Dl
-Dl
+wM
+wM
+wM
 "}
-(20,1,1) = {"
-Dl
-Dl
-Dl
+(21,1,1) = {"
+wM
+wM
+wM
 ga
 ga
 Xe
@@ -1208,62 +1316,62 @@ Xe
 Xe
 Wt
 ga
-Dl
-Dl
-Dl
+wM
+wM
+wM
 "}
-(21,1,1) = {"
-Dl
-Dl
-Dl
+(22,1,1) = {"
+wM
+wM
+wM
 ga
 Xe
 Xp
-Xe
+mw
 mw
 TR
 ba
 yb
 Nu
+VE
+mw
+Xe
+Xe
+Xe
+ga
+ga
 wM
-Xe
-Xe
-Xe
-Xe
-ga
-ga
-Dl
-Dl
-Dl
+wM
+wM
 "}
-(22,1,1) = {"
-Dl
-Dl
-Dl
+(23,1,1) = {"
+wM
+wM
+wM
 ga
 Xe
 CB
 uE
-Xe
 mw
 mw
 mw
-bf
-Xe
+mw
+DJ
+DJ
 Xe
 fc
 Xe
 Xe
 ga
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
 "}
-(23,1,1) = {"
-Dl
-Dl
-Dl
+(24,1,1) = {"
+wM
+wM
+wM
 ga
 ga
 Xe
@@ -1279,15 +1387,15 @@ CB
 Xe
 ga
 ga
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
 "}
-(24,1,1) = {"
-Dl
-Dl
-Dl
+(25,1,1) = {"
+wM
+wM
+wM
 ga
 ga
 ga
@@ -1302,44 +1410,17 @@ Xe
 ga
 ga
 ga
-Dl
-Dl
-Dl
-Dl
-Dl
-"}
-(25,1,1) = {"
-Dl
-Dl
-Dl
-Dl
-ga
-ga
-ga
-ga
-ga
-ga
-ga
-ga
-ga
-ga
-ga
-ga
-ga
-Dl
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
+wM
 "}
 (26,1,1) = {"
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
 ga
 ga
 ga
@@ -1349,58 +1430,61 @@ ga
 ga
 ga
 ga
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
+ga
+ga
+ga
+ga
+wM
+wM
+wM
+wM
+wM
 "}
 (27,1,1) = {"
-Dl
-Dl
-Dl
-Dl
-Dl
-rk
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
+wM
+wM
+wM
 ga
 ga
 ga
 ga
 ga
 ga
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
+ga
+ga
+ga
+wM
+wM
+wM
+wM
+wM
+wM
 "}
 (28,1,1) = {"
-Dl
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+wM
+wM
 rk
-rk
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
-Dl
+wM
+wM
+wM
+ga
+ga
+ga
+ga
+ga
+ga
+wM
+wM
+wM
+wM
+wM
+wM
+wM
 "}
