@@ -1,7 +1,7 @@
 /obj/item/plant/tumbling_creeper
 	name = "tumbling creeper"
 	crop_prefix = "tumbling "
-	desc = "A tumbler made of creeper. A highly invasive plant known for destroying many ecological systems. If planted onto the ground with a garden trowel, it serves as a prickly trap. Can absorb chemicals poured onto it."
+	desc = "A tumbler made of creeper. A highly invasive plant known for destroying many ecological systems. If planted onto the ground with a garden trowel, it serves as a prickly trap."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "Tumbling_Creeper-Unplanted"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -19,7 +19,7 @@
 	var/armed = FALSE //! This determinates if the trap is armed or not
 	var/armed_force = 8 //! how much damage the trap does when stepped upon. Will be set when harvested
 	var/crashed_force = 20 //! how much damage the trap does when crashed into. Will be set when harvested
-	var/reagent_storage = 8 //! How much the max amount of chems is the trap should be able to hold
+	var/reagent_storage = 5 //! How much the max amount of chems is the trap should be able to hold
 	var/target_zone = "chest" //! which zone the trap tries to target and calculate the damage resist from
 
 
@@ -39,15 +39,15 @@
 
 /obj/item/plant/tumbling_creeper/HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 
-	var/endurance_for_max = 100 // how much endurance is needed to reach max damage with the trap
-	var/potency_for_max = 200 // how much potency is needed to generate the max injection-multiplier
+	var/endurance_for_max = 150 // how much endurance is needed to reach max damage with the trap
+	var/potency_for_max = 250 // how much potency is needed to generate the max injection-multiplier
 	var/armed_force_min = 8 // how much damage the trap does when stepped upon with 0 endurance
-	var/armed_force_max = 14 // how much damage the trap does when stepped upon with the maximum endurance
-	var/crashed_force_min = 20 // how much damage the trap does when stepped upon with 0 endurance
+	var/armed_force_max = 18 // how much damage the trap does when stepped upon with the maximum endurance
+	var/crashed_force_min = 16 // how much damage the trap does when stepped upon with 0 endurance
 	var/crashed_force_max = 30 // how much damage the trap does when stepped upon with the maximum endurance
-	var/reagent_storage_min = 8 // How much the max amount of chems is the trap should be able to hold	at 0 potency
-	var/reagent_storage_max = 50 // How much the max amount of chems is the trap should be able to hold	at max potency
-	var/reagent_generation_multiplier = 0.5 //! How much percentage of the volume should be filled with assoc_reagents when harvested
+	var/reagent_storage_min = 5 // How much the max amount of chems is the trap should be able to hold	at 0 potency
+	var/reagent_storage_max = 40 // How much the max amount of chems is the trap should be able to hold	at max potency
+	var/reagent_generation_multiplier = 1 //! How much percentage of the volume should be filled with assoc_reagents when harvested
 
 	var/datum/plantgenes/creeper_genes = src.plantgenes
 	src.planttype = HYPgenerateplanttypecopy(src, origin_plant)
@@ -110,7 +110,7 @@
 	if (src.armed)
 		return "You can use <b>wirecutters</b> to uproot the creeper from the ground, disarming it."
 	else
-		return "You can pour chemicals onto it to it poison its victims or use a <b>garden trowel</b> to plant it into the ground, arming it."
+		return "You can use a <b>garden trowel</b> to plant it into the ground, arming it."
 
 /obj/item/plant/tumbling_creeper/process()
 
@@ -211,19 +211,6 @@
 				used_item.icon_state,
 				"[user] finishes cutting out [src]")
 			actions.start(action_bar, user)
-			return
-	if(istype(used_item, /obj/item/reagent_containers/glass/))
-		if(!used_item.reagents.total_volume)
-			boutput(user, "<span class='alert'>There is nothing in [used_item] to pour onto [src]!</span>")
-			return
-		else
-			var/transferable_amount = min(used_item:amount_per_transfer_from_this, used_item.reagents.total_volume, src.reagents.maximum_volume - src.reagents.total_volume)
-			if (transferable_amount <= 0)
-				boutput(user, "<span class='alert'>[src] cannot hold any more chemicals!</span>")
-				return
-			user.visible_message("<span class='notice'> [transferable_amount] units of [used_item]'s content are applied onto [src] by [user].</span>")
-			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-			used_item.reagents.trans_to(src, transferable_amount)
 			return
 	..()
 

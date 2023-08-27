@@ -632,6 +632,10 @@
 	crop = /obj/item/plant/tumbling_creeper
 	chance = 20
 
+	HYPon_mutation_general(var/datum/plant/parent_plant, var/datum/plantgenes/passed_genes)
+		HYPaddCommut(passed_genes, /datum/plant_gene_strain/reagent_blacklist)
+		return
+
 
 // Radweed Mutations
 
