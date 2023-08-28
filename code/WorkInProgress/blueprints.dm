@@ -177,7 +177,7 @@
 			return
 
 		boutput(usr, "<span class='notice'>The machine starts to buzz and vibrate.</span>")
-		logTheThing(LOG_ADMIN, src, "[usr] started ABCU build at [log_loc(src)], with blueprint [currentBp.name], authored by [currentBp.author]")
+		logTheThing(LOG_STATION, src, "[usr] started ABCU build at [log_loc(src)], with blueprint [currentBp.name], authored by [currentBp.author]")
 
 		building = 1
 		icon_state = "builder1"
