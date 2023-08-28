@@ -929,7 +929,6 @@ Frequency:
 	health = 25
 	do_hurt_slowdown = FALSE
 	jetpack = 1 //ZeWaka: I concur with ghostdrone commenter, fuck whoever made this. See spacemove.
-	var/jeton = 0
 
 	New()
 		..()
