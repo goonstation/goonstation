@@ -1,7 +1,7 @@
 
 (t)mon aug 28 23
 (u)Sord
-(+)The Monday job of the day has been replaced with a very heroic "Dungioneer" job.
+(+)The Monday job of the day has been replaced with a very heroic "Dungeoneer" job.
 (u)pali
 (+)Floor closets now mimic the floor a bit better and automatically change their appearance when moved.
 (u)LeahTheTech

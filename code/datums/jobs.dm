@@ -2655,7 +2655,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		return
 
 /datum/job/daily/monday
-	name = "Dungioneer"
+	name = "Dungeoneer"
 	limit = 1
 	wages = PAY_UNTRAINED
 	slot_belt = list(/obj/item/device/pda2)
@@ -2671,7 +2671,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 	New()
 		..()
-		src.access = get_access("Dungioneer")
+		src.access = get_access("Dungeoneer")
 		return
 
 /datum/job/daily/tuesday
