@@ -580,9 +580,6 @@
 /area/morrigan/derelict)
 "aAH" = (
 /obj/table/reinforced/auto,
-/obj/decal/cleanable/blood{
-	icon_state = "u_guilty"
-	},
 /obj/item/ammo/bullets/bullet_9mm,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/armory)
@@ -16472,9 +16469,6 @@
 "qEe" = (
 /obj/decal/cleanable/rust/jen,
 /obj/structure/woodwall,
-/obj/decal/cleanable/blood{
-	icon_state = "u_guilty"
-	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "qEz" = (
