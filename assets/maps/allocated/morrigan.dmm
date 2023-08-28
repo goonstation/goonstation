@@ -441,13 +441,6 @@
 /obj/reagent_dispensers/watertank/fountain,
 /turf/unsimulated/floor/wood/seven,
 /area/morrigan/station/civilian/cafe)
-"awd" = (
-/obj/decal/cleanable/dirt/dirt5,
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/factory)
 "awy" = (
 /obj/decal/fakeobjects/cargopad,
 /turf/unsimulated/floor/industrial,
@@ -1474,7 +1467,7 @@
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOS)
 "bue" = (
-/obj/decal/cleanable/blood/tracks{
+/obj/decal/cleanable/blood/gibs{
 	icon_state = "gib2"
 	},
 /turf/unsimulated/floor/plating/damaged1,
@@ -2321,7 +2314,7 @@
 /area/morrigan/derelict)
 "cnG" = (
 /obj/decal/cleanable/blood{
-	icon_state = "handblood"
+	icon_state = "handblood_c"
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
@@ -2835,12 +2828,6 @@
 /obj/machinery/shipalert,
 /turf/unsimulated/floor/caution/north,
 /area/morrigan/routing/transport)
-"cTb" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/factory)
 "cTe" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt2,
@@ -4106,7 +4093,9 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "ekg" = (
-/obj/item/reagent_containers/food/snacks/yuckburn,
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/holding)
 "eky" = (
@@ -5090,10 +5079,6 @@
 "fby" = (
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/factory)
-"fbA" = (
-/obj/fire_foam,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/factory)
 "fbT" = (
 /obj/table/auto,
 /obj/item/paper_bin{
@@ -5745,7 +5730,7 @@
 	pixel_x = -6
 	},
 /obj/decal/cleanable/blood{
-	icon_state = "handblood"
+	icon_state = "handblood_c"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/factory)
@@ -6241,13 +6226,6 @@
 /obj/machinery/light/incandescent/warm,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/routing/transport)
-"giC" = (
-/obj/decal/cleanable/dirt/dirt2,
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/factory)
 "giN" = (
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
@@ -6660,12 +6638,6 @@
 /obj/grille/steel,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"gCJ" = (
-/obj/decal/cleanable/blood{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict)
 "gCK" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -6826,6 +6798,7 @@
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "gib2"
 	},
+/obj/decal/cleanable/blood/gibs,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "gKS" = (
@@ -8286,11 +8259,11 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "ikl" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "gibmid2"
-	},
 /obj/machinery/light/emergencyflashing{
 	dir = 1
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibmid2"
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
@@ -11028,7 +11001,6 @@
 "lcz" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/item/reagent_containers/food/snacks/yuckburn,
 /turf/unsimulated/floor/carpet/grime,
 /area/morrigan/derelict/hobo)
 "lcH" = (
@@ -14076,10 +14048,6 @@
 	},
 /turf/unsimulated/floor/sanitary/blue,
 /area/morrigan/routing/transport)
-"nTU" = (
-/obj/decal/cleanable/ketchup,
-/turf/unsimulated/floor/engine/glow,
-/area/morrigan/station/factory)
 "nTW" = (
 /mob/living/critter/robotic/gunbot/morrigan/meleebot,
 /turf/unsimulated/floor/red,
@@ -15257,9 +15225,7 @@
 /turf/unsimulated/floor/grey,
 /area/morrigan/station/hallway)
 "pls" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "plA" = (
@@ -15394,12 +15360,12 @@
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/holding)
 "psB" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/obj/item/clothing/under/misc/prisoner,
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
 	pixel_y = 24
+	},
+/obj/item/clothing/under/misc/prisoner,
+/obj/decal/cleanable/blood/tracks{
+	icon_state = "drip5"
 	},
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/holding)
@@ -16817,6 +16783,12 @@
 	},
 /turf/unsimulated/floor/darkblue,
 /area/morrigan/station/command/bridge)
+"qSh" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib2"
+	},
+/turf/unsimulated/floor/engine/glow,
+/area/morrigan/station/factory)
 "qSy" = (
 /obj/storage/closet/mauxite,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
@@ -17825,7 +17797,7 @@
 /area/morrigan/derelict)
 "rZK" = (
 /obj/decal/cleanable/blood{
-	icon_state = "left_bloodyhands"
+	icon_state = "left_bloodyhands_c"
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/holding)
@@ -18443,12 +18415,6 @@
 /obj/map/light/dimred,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/main)
-"sLc" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 4
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/factory)
 "sLo" = (
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/blood{
@@ -18934,7 +18900,7 @@
 /turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/engineering/specialist)
 "tlW" = (
-/obj/decal/cleanable/blood/tracks{
+/obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid2"
 	},
 /turf/unsimulated/floor/engine/glow,
@@ -19732,7 +19698,6 @@
 /area/morrigan/derelict)
 "tZJ" = (
 /obj/decal/cleanable/rust,
-/obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/factory)
 "tZP" = (
@@ -19884,11 +19849,11 @@
 /turf/unsimulated/floor/engine/caution/west,
 /area/morrigan/station/maintenance)
 "uik" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "gibdown1"
-	},
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibdown1"
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
@@ -21867,10 +21832,10 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/holding)
 "wnE" = (
-/obj/decal/cleanable/blood{
-	icon_state = "u_guilty"
-	},
 /obj/machinery/vending/cola/blue,
+/obj/decal/cleanable/blood{
+	icon_state = "floor5"
+	},
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/holding)
 "wnU" = (
@@ -29560,7 +29525,7 @@ knG
 lBQ
 mQE
 vqj
-ase
+gac
 gac
 sev
 mUN
@@ -31094,7 +31059,7 @@ uRB
 gac
 ykr
 apl
-gKg
+qSh
 wNb
 joF
 rcS
@@ -31199,7 +31164,7 @@ wcy
 gOd
 bNm
 cWV
-giC
+nNN
 nNN
 vYN
 ykr
@@ -31300,7 +31265,7 @@ uRB
 gac
 aWV
 azJ
-sLc
+gac
 prt
 cnG
 rWx
@@ -31403,7 +31368,7 @@ uRB
 gac
 aWV
 tSm
-fbA
+gac
 tKc
 ykr
 qms
@@ -31610,7 +31575,7 @@ gac
 vdp
 mpH
 sbQ
-awd
+gac
 kPc
 oHF
 ctS
@@ -31817,7 +31782,7 @@ xvT
 fby
 tlW
 tCu
-nTU
+pls
 idU
 oCV
 ykr
@@ -32333,7 +32298,7 @@ cNM
 bMq
 cRg
 dVG
-cTb
+gac
 aYb
 vgr
 vZg
@@ -34337,7 +34302,7 @@ lhK
 wxq
 lhK
 pNo
-gCJ
+tfo
 eVV
 dWi
 xjE
