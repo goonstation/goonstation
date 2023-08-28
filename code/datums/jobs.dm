@@ -2655,7 +2655,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		return
 
 /datum/job/daily/monday
-	name = "Pantomimis"
+	name = "Pantomimist"
 	limit = 1
 	wages = PAY_DUMBCLOWN*2
 	slot_belt = list(/obj/item/device/pda2)
