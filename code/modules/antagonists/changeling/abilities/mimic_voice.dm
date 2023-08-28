@@ -17,7 +17,7 @@
 		"Research Director" = "rd",
 		"Medical Director" = "md",
 		"Chief Engineer" = "ce",
-		"Nanotrasen Special Operative" = "nt",
+		"Nanotrasen Security Consultant" = "nt",
 		"Security" = "sec",
 		"Detective" = "det",
 		"Scientist" = "sci",

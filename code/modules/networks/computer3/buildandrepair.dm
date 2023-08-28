@@ -15,7 +15,7 @@ TYPEINFO(/obj/item/motherboard)
 
 /obj/computer3frame
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	name = "Computer-frame"
 	icon = 'icons/obj/computer_frame.dmi'
 	icon_state = "0"
@@ -118,7 +118,7 @@ TYPEINFO(/obj/item/motherboard)
 				src.icon_state = "1"
 
 			if (istype(P, /obj/item/peripheral))
-				if(src.peripherals.len < src.max_peripherals)
+				if(length(src.peripherals) < src.max_peripherals)
 					user.drop_item()
 					src.peripherals.Add(P)
 					P.set_loc(src)
@@ -165,7 +165,7 @@ TYPEINFO(/obj/item/motherboard)
 
 			if (istype(P, /obj/item/sheet))
 				var/obj/item/sheet/S = P
-				if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
+				if (S.material && S.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 					if (S.amount >= src.glass_needed)
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						actions.start(action_bar, user)
@@ -211,7 +211,7 @@ TYPEINFO(/obj/item/motherboard)
 		if(0)
 			if(user.equipped(P) && iswrenchingtool(P))
 				boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
-				src.anchored = 1
+				src.anchored = ANCHORED
 				src.state = 1
 			if(user.equipped(P) && isweldingtool(P))
 				boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
@@ -226,7 +226,7 @@ TYPEINFO(/obj/item/motherboard)
 		if(1)
 			if(user.equipped(P) && iswrenchingtool(P))
 				boutput(user, "<span class='notice'>You unfasten the frame.</span>")
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				src.state = 0
 		if(2)
 			if(user.equipped(P) && istype(P, /obj/item/cable_coil))

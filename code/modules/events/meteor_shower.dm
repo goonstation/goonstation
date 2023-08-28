@@ -53,7 +53,7 @@ var/global/meteor_shower_active = 0
 			#endif
 		if(istext(transmute_material_instead))
 			transmute_material_instead = getMaterial(transmute_material_instead)
-		if(transmute_material_instead?.mat_id == "jean")
+		if(transmute_material_instead?.getID() == "jean")
 			shower_name = "jeteor jower"
 
 		if (isnum(direction) && direction == -1)
@@ -121,6 +121,24 @@ var/global/meteor_shower_active = 0
 				command_alert("The [shower_name] has reached the [station_or_ship()]. Brace for impact.", "Meteor Alert", alert_origin = ALERT_WEATHER)
 				playsound_global(world, 'sound/machines/disaster_alert.ogg', 60)
 
+	#ifndef UNDERWATER_MAP
+			var/scroll_angle
+			switch(src.wave_direction)
+				if (NORTH)
+					scroll_angle = 180
+				if (EAST)
+					scroll_angle = 270
+				if (SOUTH)
+					scroll_angle = 0
+				if (WEST)
+					scroll_angle = 90
+
+			if (scroll_angle)
+				var/list/params = list("scroll_angle" = scroll_angle)
+
+				add_global_parallax_layer(/atom/movable/screen/parallax_layer/meteor_shower, layer_params = params)
+	#endif
+
 			var/start_x
 			var/start_y
 			var/targ_x
@@ -180,6 +198,10 @@ var/global/meteor_shower_active = 0
 			for (var/obj/machinery/shield_generator/S as anything in machine_registry[MACHINES_SHIELDGENERATORS])
 				S.UpdateIcon()
 
+	#ifndef UNDERWATER_MAP
+			remove_global_parallax_layer(/atom/movable/screen/parallax_layer/meteor_shower)
+	#endif
+
 	admin_call(var/source)
 		if (..())
 			return
@@ -225,7 +247,7 @@ var/global/meteor_shower_active = 0
 	icon_state = "flaming"
 	desc = "A chunk of space debris. You might want to stop staring at it and run."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/speed = 1
 	var/pix_speed = 8
 	var/hit_object = 0 //If we hit something we skip the next step (we dont move)
@@ -244,6 +266,7 @@ var/global/meteor_shower_active = 0
 	var/list/oredrops = list(/obj/item/raw_material/rock)
 	var/list/oredrops_rare = list(/obj/item/raw_material/rock)
 	var/transmute_material = null
+	var/transmute_range = 4
 	var/meteorhit_chance = 100
 
 	proc/set_transmute(datum/material/mat)
@@ -295,8 +318,11 @@ var/global/meteor_shower_active = 0
 				if (sound_impact)
 					playsound(src.loc, sound_impact, 40, 1)
 			if (--src.hits <= 0)
-				if(istype(A, /obj/forcefield)) src.explodes = 0
-				shatter()
+				if(istype(A, /obj/forcefield))
+					src.explodes = 0
+					shatter()
+				else
+					shatter(TRUE)
 
 		return
 
@@ -304,7 +330,7 @@ var/global/meteor_shower_active = 0
 		if(src.x == world.maxx || src.y == world.maxy || src.x == 1 || src.y == 1)
 			qdel(src)
 		if(src.loc == target)
-			shatter()
+			shatter(TRUE)
 			return
 		. = ..()
 		if(src.loc == last_tile)
@@ -332,7 +358,7 @@ var/global/meteor_shower_active = 0
 		if(src.x == world.maxx || src.y == world.maxy || src.x == 1 || src.y == 1)
 			qdel(src)
 		if(src.loc == target)
-			shatter()
+			shatter(TRUE)
 			return
 		if (src.loc == last_tile)
 			walk_towards(src, target, speed, pix_speed)
@@ -356,12 +382,14 @@ var/global/meteor_shower_active = 0
 			step(M,get_dir(src,M))
 			if (prob(meteorhit_chance))
 				M.meteorhit(src)
-
+		var/dump_ore = TRUE
 		for(var/obj/O in range(1,src))
 			if (O == src) continue
 			if (!O.density) continue
 			hit_object = 1
 			hits--
+			if (istype(O, /obj/forcefield))
+				dump_ore = FALSE
 			if (prob(meteorhit_chance))
 				O.meteorhit(src)
 			if (O && !O.anchored)
@@ -372,8 +400,7 @@ var/global/meteor_shower_active = 0
 			playsound(src.loc, sound_impact, 40, 1)
 
 		if(hits <= 0)
-			dump_ore()
-			shatter()
+			shatter(dump_ore)
 
 	proc/transmute_effect(range)
 		var/range_squared = range**2
@@ -409,18 +436,19 @@ var/global/meteor_shower_active = 0
 			else
 				G.setMaterial(transmute_material)
 
-	proc/shatter()
+	proc/shatter(dump_ore = FALSE, turf_safe = FALSE)
 		if(exploded) return
 		exploded = TRUE
 		if(isnull(src.loc)) return
 		playsound(src.loc, sound_explode, 50, 1)
 		if (explodes)
 			if(transmute_material)
-				transmute_effect(4)
+				transmute_effect(src.transmute_range)
 			else
-				explosion(src, get_turf(src), exp_dev, exp_hvy, exp_lit, exp_fsh)
-		var/atom/source = src
-		qdel(source)
+				explosion(src, get_turf(src), exp_dev, exp_hvy, exp_lit, exp_fsh, turf_safe)
+		if (dump_ore)
+			src.dump_ore()
+		qdel(src)
 
 	proc/dump_ore()
 		playsound(src.loc, sound_explode, 50, 1)
@@ -434,6 +462,7 @@ var/global/meteor_shower_active = 0
 			if(transmute_material)
 				A.setMaterial(transmute_material)
 
+
 /////////////////////////HUGE
 
 /obj/newmeteor/massive
@@ -441,7 +470,7 @@ var/global/meteor_shower_active = 0
 	icon = 'icons/obj/large/meteor96x96.dmi'
 	icon_state = "flaming"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
 	//bound_width = 96
 	//bound_height = 96
@@ -455,32 +484,45 @@ var/global/meteor_shower_active = 0
 	exp_fsh = 3
 	oredrops = list(/obj/item/raw_material/char, /obj/item/raw_material/molitz, /obj/item/raw_material/rock)
 	oredrops_rare = list(/obj/item/raw_material/starstone, /obj/item/raw_material/syreline)
-	var/shatter_types = list(/obj/newmeteor, /obj/newmeteor/small)
+	transmute_range = 10
+	///Do we spawn a solid lump of rock on impact?
+	var/solid_rock = TRUE
 
 	shark
 		name = "robotic shark"
 		icon = 'icons/misc/64x32.dmi'
 		icon_state = "gunshark"
-		shatter_types = list(/obj/newmeteor/shark, /obj/newmeteor/small/shark)
+		solid_rock = FALSE
+		var/shatter_types = list(/obj/newmeteor/shark, /obj/newmeteor/small/shark)
 
-	shatter()
-		if(exploded) return
-		exploded = TRUE
-		if(isnull(src.loc)) return
-		playsound(src.loc, sound_explode, 50, 1)
-		if (explodes)
-			if(transmute_material)
-				transmute_effect(10)
-			else
-				explosion(src, get_turf(src), exp_dev, exp_hvy, exp_lit, exp_fsh)
-		for(var/A in alldirs)
-			if(prob(15))
+		shatter()
+			for(var/A in alldirs)
+				if(prob(15))
+					continue
+				var/type = pick(shatter_types)
+				var/atom/trg = get_step(src, A)
+				var/obj/newmeteor/met = new type(src.loc, trg)
+				met.meteorhit_chance = src.meteorhit_chance
+			..()
+
+	shatter(dump_ore = FALSE, turf_safe = FALSE)
+		if (prob(50)) //chance to do normal ore spawn
+			src.solid_rock = FALSE
+		if (src.solid_rock)
+			..(dump_ore, TRUE)
+		else
+			..()
+
+	dump_ore()
+		if (!src.solid_rock)
+			return ..()
+
+		var/list/turfs = list()
+		for(var/turf/T in range(src,1))
+			if (T.density || prob(40))
 				continue
-			var/type = pick(shatter_types)
-			var/atom/trg = get_step(src, A)
-			var/obj/newmeteor/met = new type(src.loc, trg)
-			met.meteorhit_chance = src.meteorhit_chance
-			if(transmute_material)
-				met.set_transmute(transmute_material)
-		var/atom/source = src
-		qdel(source)
+			var/turf/simulated/wall/auto/asteroid/asteroid = T.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, force = TRUE)
+			if (src.transmute_material)
+				asteroid.setMaterial(src.transmute_material)
+			turfs += asteroid
+		Turfspawn_Asteroid_SeedOre(turfs, rand(1,2), pick(90;1, 10;2, 1;3), FALSE)

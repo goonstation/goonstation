@@ -3,7 +3,7 @@
 	icon = 'icons/misc/critter.dmi'
 	var/status = 0
 	var/mob/current_user = null
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/health = 100 //how much health the npc has
 	var/angry = 0 //Is the npc aggressive
@@ -94,7 +94,7 @@
 		activatesecurity()
 		src.anger()
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 
 	if(P.proj_data)
 		switch(P.proj_data.damage_type)

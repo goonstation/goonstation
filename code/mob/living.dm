@@ -2,7 +2,8 @@
 
 /mob/living
 	event_handler_flags = USE_FLUID_ENTER  | IS_FARTABLE
-	var/spell_soulguard = 0		//0 = none, 1 = normal_soulgruard, 2 = wizard_ring_soulguard
+	/// Tracks status of soalguard respawn on mob. SOULGUARD_INACTIVE, SOULGUARD_SPELL when from wizard ability, SOULGUARD_RING when from wizard ring.
+	var/spell_soulguard = SOULGUARD_INACTIVE
 
 	// this is a read only variable. do not set it directly.
 	// use set_burning or update_burning instead.
@@ -38,12 +39,11 @@
 	var/has_typing_indicator = FALSE
 	var/static/mutable_appearance/speech_bubble = living_speech_bubble
 	var/static/mutable_appearance/sleep_bubble = mutable_appearance('icons/mob/mob.dmi', "sleep")
+	var/image/silhouette
 	var/image/static_image = null
-	var/static_type_override = null
-	var/icon/default_static_icon = null // set to an icon and that's what the static will generate from
 	var/in_point_mode = 0
 	var/butt_op_stage = 0.0 // sigh
-	var/dna_to_absorb = 10
+	var/dna_to_absorb = 1
 
 	var/canspeak = 1
 
@@ -67,6 +67,7 @@
 	var/speechbubble_enabled = 1
 	var/speechpopupstyle = null
 	var/isFlying = 0 // for player controled flying critters
+	var/last_words = null
 
 	var/canbegrabbed = 1
 	var/grabresistmessage = null //Format: target.visible_message("<span class='alert'><B>[src] tries to grab [target], [target.grabresistmessage]</B></span>")
@@ -120,11 +121,15 @@
 
 	var/last_sleep = 0 //used for sleep_bubble
 
-	can_lie = 1
+	can_lie = TRUE
 
 	var/const/singing_prefix = "%"
 
+	var/void_mindswappable = FALSE //are we compatible with the void mindswapper?
+
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
+	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+	src.create_mob_silhouette()
 	..()
 	init_preferences?.copy_to(src, usr, ignore_randomizer, skip_post_new_stuff=TRUE)
 	vision = new()
@@ -137,8 +142,10 @@
 		//stamina bar gets added to the hud in subtypes human and critter... im sorry.
 		//eventual hud merger pls
 
+	if (src.isFlying)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+
 	SPAWN(0)
-		src.get_static_image()
 		sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
 		if(!ishuman(src))
 			init_preferences?.apply_post_new_stuff(src)
@@ -148,6 +155,7 @@
 	vision.flash(duration)
 
 /mob/living/disposing()
+	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	ai_target = null
 	ai_target_old.len = 0
 	move_laying = null
@@ -167,6 +175,10 @@
 	for(var/mob/living/intangible/aieye/E in src.contents)
 		E.cancel_camera()
 
+	if (src.silhouette)
+		get_image_group(CLIENT_IMAGE_GROUP_MOB_OVERLAY).remove_image(src.silhouette)
+		src.silhouette = null
+
 	if (src.static_image)
 		get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).remove_image(src.static_image)
 		src.static_image = null
@@ -178,6 +190,7 @@
 /mob/living/death(gibbed)
 	#define VALID_MOB(M) (!isVRghost(M) && !isghostcritter(M) && !inafterlife(M))
 	src.remove_ailments()
+	src.lastgasp(allow_dead = TRUE)
 	if (src.ai) src.ai.disable()
 	if (src.key) statlog_death(src, gibbed)
 	if (src.client && ticker.round_elapsed_ticks >= 12000 && VALID_MOB(src))
@@ -339,16 +352,15 @@
 	target.Attackhand(src, params, location, control, origParams)
 
 /mob/living/proc/hand_range_attack(atom/target, params, location, control, origParams)
-	.= 0
 	var/datum/limb/L = src.equipped_limb()
-	if (L)
-		.= L.attack_range(target,src,params)
-		if (.)
-			src.lastattacked = src
+	if (L && L.attack_range(target, src, params))
+		src.lastattacked = src
+		return TRUE
+	return FALSE
 
 /mob/living/proc/weapon_attack(atom/target, obj/item/W, reach, params)
 	var/usingInner = 0
-	if (W.useInnerItem && W.contents.len > 0)
+	if (W.useInnerItem && length(W.contents) > 0)
 		var/obj/item/held = W.holding
 		if (!held)
 			held = pick(W.contents)
@@ -505,7 +517,7 @@
 				if (use_delay)
 					src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
-				if (src.invisibility > INVIS_NONE && (isturf(target) || (target != src && isturf(target.loc)))) // dont want to check for a cloaker every click if we're not invisible
+				if (src.invisibility > INVIS_NONE && (isturf(target) || (target != src && isturf(target.loc))) || (ismob(target.loc) && target != src && target.loc != src)) // dont want to check for a cloaker every click if we're not invisible
 					SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 				if (equipped)
@@ -668,6 +680,9 @@
 	. = ..()
 
 /mob/living/say(var/message, ignore_stamina_winded, var/unique_maptext_style, var/maptext_animation_colors)
+	// shittery that breaks text or worse
+	var/static/regex/shittery_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u202e]", "g")
+	message = replacetext(message, shittery_regex, "")
 	message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
@@ -704,7 +719,7 @@
 #endif
 
 	if (src.client && src.client.ismuted())
-		boutput(src, "You are currently muted and may not speak.")
+		boutput(src, "<b class='alert'>You are currently muted and may not speak.<b>")
 		return
 
 	if(!src.canspeak)
@@ -886,11 +901,13 @@
 
 	if(src.client)
 		if(singing)
-			phrase_log.log_phrase("sing", message, user = src)
+			phrase_log.log_phrase("sing", message, user = src, strip_html = TRUE)
 		else if(message_mode)
-			phrase_log.log_phrase("radio", message, user = src)
+			phrase_log.log_phrase("radio", message, user = src, strip_html = TRUE)
 		else
-			phrase_log.log_phrase("say", message, user = src)
+			phrase_log.log_phrase("say", message, user = src, strip_html = TRUE)
+
+	last_words = message
 
 	if (src.stuttering)
 		message = stutter(message)
@@ -1037,7 +1054,7 @@
 
 	var/heardname = src.real_name
 
-	var/is_decapitated_skeleton = ishuman(src) && isskeleton(src) && !src.organHolder.head
+	var/is_decapitated_skeleton = ishuman(src) && isskeleton(src) && !(src.organHolder.head?.head_type == HEAD_SKELETON)
 
 	if (!skip_open_mics_in_range && !is_decapitated_skeleton)
 		src.send_hear_talks(message_range, messages, heardname, lang_id)
@@ -1053,12 +1070,51 @@
 			say_location = S.head_tracker
 	if (isturf(say_location.loc))
 		listening = all_hearers(message_range, say_location)
+		if (ismob(say_location))
+			for(var/mob/M in say_location)
+				listening |= M
+			for (var/obj/item/W in say_location) // let the skeleton skulls in the bag / pockets hear the nerd
+				if (istype(W,/obj/item/organ/head))
+					var/obj/item/organ/head/H = W
+					if (H.linked_human)
+						listening |= H.linked_human
+				else
+					for(var/obj/item/organ/head/H in W)
+						if (H.linked_human)
+							listening |= H.linked_human
+					for(var/mob/M in W) // idk if someone ends up in there they probably want to be able to hear too
+						listening |= M
 	else
-		olocs = obj_loc_chain(src)
-		if(olocs.len > 0) // fix runtime list index out of bounds when loc is null (IT CAN HAPPEN, APPARENTLY)
+		if (ismob(say_location.loc) && is_decapitated_skeleton) // if we're the head of a talking mob we arent linked to
+			var/mob/living/L = say_location.loc
+			if (L.organHolder.head == say_location)
+				say_location = L
+
+		olocs = obj_loc_chain(say_location)
+		if(length(olocs) > 0) // fix runtime list index out of bounds when loc is null (IT CAN HAPPEN, APPARENTLY)
 			for (var/atom/movable/AM in olocs)
 				thickness += AM.soundproofing
-			listening = all_hearers(message_range, olocs[olocs.len])
+
+			// nerd we're inside
+			var/mob/living/inside = locate() in olocs
+			if (inside)
+				for(var/mob/M in inside)
+					listening |= M
+				for (var/obj/item/W in inside) // let the skeleton skulls in the bag / pockets hear the nerd
+					if (istype(W,/obj/item/organ/head))
+						var/obj/item/organ/head/H = W
+						if (H.linked_human)
+							listening |= H.linked_human
+					else
+						for(var/obj/item/organ/head/H in W)
+							if (H.linked_human)
+								listening |= H.linked_human
+					for(var/mob/M in W) // idk if someone ends up in there they probably want to be able to hear too
+						listening |= M
+
+				listening |= inside
+			else
+				listening = all_hearers(message_range, olocs[olocs.len])
 
 
 	listening |= src
@@ -1079,11 +1135,11 @@
 
 	var/image/chat_maptext/chat_text = null
 	if (!message_range && speechpopups && src.chat_text)
-		//new /obj/maptext_junk/speech(src, msg = messages[1], style = src.speechpopupstyle) // sorry, Zamu
-		if(!last_heard_name || src.get_heard_name() != src.last_heard_name)
-			var/num = hex2num(copytext(md5(src.get_heard_name()), 1, 7))
+		var/heard_name = src.get_heard_name(just_name_itself=TRUE)
+		if(!last_heard_name || heard_name != src.last_heard_name)
+			var/num = hex2num(copytext(md5(heard_name), 1, 7))
 			src.last_chat_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
-			src.last_heard_name = src.get_heard_name()
+			src.last_heard_name = heard_name
 
 		var/turf/T = get_turf(say_location)
 		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
@@ -1104,19 +1160,39 @@
 		else
 			maptext_color = src.last_chat_color
 
+		var/popup_style = src.speechpopupstyle
+
+		var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
+		if (megaphone)
+			popup_style += "font-weight: bold; font-size: [megaphone.maptext_size]px; -dm-text-outline: 1px [megaphone.maptext_outline_color];"
+			popup_style += megaphone.maptext_size >= 12 ? "font-family: 'PxPlus IBM VGA9'" : "font-family: 'Small Fonts'"
+			maptext_color = megaphone.maptext_color
+
 		if(unique_maptext_style)
 			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + unique_maptext_style + singing_italics)
 		else
-			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
+			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + popup_style + singing_italics)
+
+		if (megaphone)
+			chat_text.maptext_height *= 4 // have some extra space friend
+			chat_text.maptext_width *= 2
+			chat_text.maptext_x = (chat_text.maptext_x * 2) - 16 // keep centered
 
 		if(maptext_animation_colors)
 			oscillate_colors(chat_text, maptext_animation_colors)
 
 		if(chat_text)
 			chat_text.measure(src.client)
-			for(var/image/chat_maptext/I in src.chat_text.lines)
-				if(I != chat_text)
-					I.bump_up(chat_text.measured_height)
+			var/obj/chat_maptext_holder/holder = src.chat_text
+			if (is_decapitated_skeleton) // for skeleton heads
+				var/mob/living/carbon/human/H = src
+				var/datum/mutantrace/skeleton/S = H.mutantrace
+				if (S.head_tracker)
+					holder = S.head_tracker.chat_text
+			if (holder)
+				for(var/image/chat_maptext/I in holder.lines)
+					if(I != chat_text)
+						I.bump_up(chat_text.measured_height)
 
 	var/rendered = null
 	if (length(heard_a))
@@ -1150,7 +1226,7 @@
 			(istype(M, /mob/zoldorf)) || \
 			(isintangible(M) && (M in hearers)) || \
 			( \
-				(!isturf(say_location.loc) && say_location.loc == M.loc) && \
+				(!isturf(say_location.loc) && (say_location.loc == M.loc || (say_location in M))) && \
 				!(M in heard_a) && \
 				!istype(M, /mob/dead/target_observer) && \
 				M != src \
@@ -1161,17 +1237,19 @@
 			if (src.mind && M.client.chatOutput && (M.mob_flags & MOB_HEARS_ALL || M.client.holder))
 				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.ctxFlag]'>[rendered]</span>"
 
-			if (isobserver(M)) //if a ghooooost (dead) (and online)
+			if (isobserver(M) || iswraith(M)) //if a ghooooost (dead) (and online)
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
 				if (M.client.preferences.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
-					//if (M in range(M.client.view, src))
 					if (GET_DIST(M,say_location) <= viewrange)
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 				else
-					//if (M in range(M.client.view, src)) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
 					if (GET_DIST(M,say_location) <= viewrange) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
 						M.show_message("<span class='bold'>[thisR]</span>", 2, assoc_maptext = chat_text) //awwwww yeeeeeah lookat dat bold
 					else
+						// if we're a critter or on a different z level, and we don't have a client, they probably don't care
+						// we do want to show station monkey speech etc, but not transposed scientists and trench monkeys and whatever
+						if ((!ishuman(src) || (src.z != M.z)) && !src.client)
+							return
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else if(istype(M, /mob/zoldorf))
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
@@ -1192,8 +1270,11 @@
 	for (var/atom/A as anything in all_view(message_range, src))
 		A.hear_talk(src,messages,heardname,lang_id)
 
-/mob/proc/get_heard_name()
-	. = "<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span>"
+/mob/proc/get_heard_name(just_name_itself=FALSE)
+	if(just_name_itself)
+		. = src.name
+	else
+		. = "<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span>"
 
 
 /mob/proc/move_callback_trigger(var/obj/move_laying, var/turf/NewLoc, var/oldloc, direct)
@@ -1234,42 +1315,66 @@
 
 	src.misstep_chance = clamp(misstep_chance + amount, 0, 100)
 
-/mob/living/proc/get_static_image()
-	if (src.disposed)
+/mob/living/update_body()
+	. = ..()
+	SPAWN(1)
+		src.update_mob_silhouette()
+
+/mob/living/update_clothing()
+	. = ..()
+	SPAWN(1)
+		src.update_mob_silhouette()
+
+/mob/living/update_inhands()
+	. = ..()
+	SPAWN(1)
+		src.update_mob_silhouette()
+
+/mob/living/proc/create_mob_silhouette()
+	src.silhouette = new(src, src)
+	src.silhouette.plane = PLANE_MOB_OVERLAY
+
+	get_image_group(CLIENT_IMAGE_GROUP_MOB_OVERLAY).add_image(src.silhouette)
+
+	src.new_static_image()
+	src.update_mob_silhouette()
+
+/mob/living/proc/update_mob_silhouette()
+	if (!src.silhouette)
 		return
-	if (!islist(default_mob_static_icons))
+
+	src.silhouette.icon = src.icon
+	src.silhouette.icon_state = src.icon_state
+	src.silhouette.overlays = src.overlays
+
+	src.update_static_image()
+
+/mob/living/proc/new_static_image()
+	src.static_image = new(null, src)
+
+	src.static_image.appearance_flags = KEEP_TOGETHER
+	src.static_image.plane = PLANE_LIGHTING
+	src.static_image.override = TRUE
+	src.static_image.color = list(
+		-0.5, 0, 0, -0.3,
+		0, -0.5, 0, -0.3,
+		0, 0, -0.5, -0.3,
+		0, 0, 0, 1,
+		0, 0, 0, 0,)
+
+	get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_image(src.static_image)
+
+/mob/living/proc/update_static_image()
+	if (!src.silhouette || !src.static_image)
 		return
-	if (src.static_image)
-		get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).remove_image(src.static_image)
-	var/checkpath = src.static_type_override ? src.static_type_override : src.type
-	if (ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if (istype(H.mutantrace))
-			checkpath = H.mutantrace.type
-	if (ispath(checkpath))
-		var/generate_static = 1
-		if (checkpath in default_mob_static_icons)
-			if (istype(default_mob_static_icons[checkpath], /image))
-				src.static_image = image(default_mob_static_icons[checkpath])
-				src.static_image.override = 1
-				src.static_image.loc = src
-				src.static_image.plane = PLANE_LIGHTING
-				get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_image(src.static_image)
-				generate_static = 0
-		if (generate_static)
-			if (ispath(checkpath, /datum/mutantrace) && ishuman(src))
-				var/mob/living/carbon/human/H = src
-				if (H.mutantrace)
-					src.static_image = getTexturedImage(icon(H.mutantrace.icon, H.mutantrace.icon_state), "static", ICON_OVERLAY)
-			else
-				src.static_image = getTexturedImage(src.default_static_icon ? src.default_static_icon : icon(src.icon, src.icon_state), "static", ICON_OVERLAY)
-			if (src.static_image)
-				default_mob_static_icons[checkpath] = image(src.static_image)
-				src.static_image.override = 1
-				src.static_image.loc = src
-				src.static_image.plane = PLANE_LIGHTING
-				get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_image(src.static_image)
-		return src.static_image
+
+	src.static_image.icon = src.silhouette.icon
+	src.static_image.icon_state = src.silhouette.icon_state
+	src.static_image.overlays = src.silhouette.overlays
+
+	var/image/static_overlay = image('icons/effects/atom_textures_64.dmi', "static")
+	static_overlay.blend_mode = BLEND_INSET_OVERLAY
+	src.static_image.overlays += static_overlay
 
 /proc/check_static_defaults()
 	if (!islist(default_mob_static_icons))
@@ -1279,8 +1384,6 @@
 		var/image/i = default_mob_static_icons[Type]
 		if (i)
 			DEBUG_MESSAGE(bicon(i) + "\ref[i][Type]")
-
-var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.dmi', "body_m")
 
 
 /mob/living/verb/give_item()
@@ -1433,20 +1536,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	return 0
 
-/mob/living/set_loc(var/newloc as turf|mob|obj in world)
-	var/atom/oldloc = src.loc
-	. = ..()
-	if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
-		if(src.chat_text?.vis_locs?.len)
-			var/atom/movable/AM = src.chat_text.vis_locs[1]
-			AM.vis_contents -= src.chat_text
-		if(istype(src.loc, /turf))
-			src.vis_contents += src.chat_text
-		else
-			var/atom/movable/A = src
-			while(!isnull(A) && !istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
-			A?.vis_contents += src.chat_text
-
 /mob/living/proc/empty_hands()
 	. = 0
 
@@ -1455,6 +1544,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		src.lying_old = src.lying
 		src.animate_lying(src.lying)
 		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
+		actions.interrupt(src, INTERRUPT_ACT) // interrupt actions
 
 /mob/living/proc/animate_lying(lying)
 	animate_rest(src, !lying)
@@ -1462,10 +1552,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 /mob/living/attack_hand(mob/living/M, params, location, control)
 	if (!M || !src) //Apparently M could be a meatcube and this causes HELLA runtimes.
-		return
-
-	if (!ticker)
-		boutput(M, "You cannot interact with other people before the game has started.")
 		return
 
 	M.lastattacked = src
@@ -1488,11 +1574,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		gloves = null
 		//Todo: get critter gloves if they have a slot. also clean this up in general...
 
-	if (gloves?.material)
-		gloves.material.triggerOnAttack(gloves, M, src)
+	gloves?.material_on_attack_use(M, src)
 	for (var/atom/A in src)
-		if (A.material)
-			A.material.triggerOnAttacked(A, M, src, gloves)
+		A.material_trigger_on_mob_attacked(M, src, gloves, location)
 
 	M.viral_transmission(src,"Contact",1)
 
@@ -1504,7 +1588,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			L.help(src, M)
 
 		if (INTENT_DISARM)
-			if (M.is_mentally_dominated_by(src))
+			if (src.mind && (M.mind?.get_master() == src.mind))
 				boutput(M, "<span class='alert'>You cannot harm your master!</span>")
 				return
 
@@ -1526,7 +1610,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			message_admin_on_attack(M, "grabs")
 
 		if (INTENT_HARM)
-			if (M.is_mentally_dominated_by(src))
+			if (src.mind && (M.mind?.get_master() == src.mind))
 				boutput(M, "<span class='alert'>You cannot harm your master!</span>")
 				return
 
@@ -1676,8 +1760,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 						// else, ignore p_class*/
 						else if(ismob(A))
 							var/mob/M = A
-							//if they're lying, pull em slower, unless you have anext_move gang and they are in your gang.
-							if(M.lying)
+							//if they're lying or dead, pull em slower, unless you have anext_move gang and they are in your gang.
+							if(M.lying || isdead(M))
 								var/datum/gang/gang = src.get_gang()
 								if (gang && (gang == M.get_gang()))
 									. *= 1		//do nothing
@@ -1700,7 +1784,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 			if (G.state == GRAB_PASSIVE)
 				if (GET_DIST(src,M) > 0 && GET_DIST(move_target,M) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
-					if(ismob(M) && M.lying)
+					if(ismob(M) && (M.lying || isdead(M)))
 						. *= lerp(1, max(M.p_class, 1), pushpull_multiplier)
 			else
 				. *= lerp(1, max(M.p_class, 1), pushpull_multiplier)
@@ -1824,10 +1908,11 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		P.die()
 		return 0
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 	for (var/atom/A in src)
-		if (A.material)
-			if(src.material) src.material.triggerOnBullet(A, src, P)
+		A.material_trigger_on_bullet(src, P)
+	for (var/atom/equipped_stuff in src.equipped())
+		equipped_stuff.material_trigger_on_bullet(src, P)
 
 	if (!P.proj_data)
 		return 0
@@ -2117,3 +2202,58 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 ///Init function for adding life processes. Called on New() and when being revived. The counterpart to reduce_lifeprocess_on_death
 /mob/living/proc/restore_life_processes()
+
+/mob/living/get_desc(dist, mob/user)
+	. = ..()
+	if (isdead(src) && src.last_words && (user?.traitHolder?.hasTrait("training_chaplain") || istype(user, /mob/dead/observer)))
+		. += "<br><span class='deadsay' style='font-size:1.2em;font-weight:bold;'>[capitalize(his_or_her(src))] last words were: \"[src.last_words]\".</span>"
+
+/mob/living/lastgasp(allow_dead=FALSE, grunt=null)
+	set waitfor = FALSE
+	if (!allow_dead && !isalive(src)) return
+	if (ON_COOLDOWN(src, "lastgasp", 0.7 SECONDS)) return
+	if (!src.client)
+		return
+	var/client/client = src.client
+	var/found_text = FALSE
+	var/enteredtext = winget(client, "mainwindow.input", "text") // grab the text from the input bar
+	if (isnull(client)) return
+	if (length(enteredtext) > 5 && copytext(enteredtext, 1, 6) == "say \"") // check if the player is trying to say something
+		winset(client, "mainwindow.input", "text=\"\"") // clear the player's input bar to register death / unconsciousness
+		enteredtext = copytext(enteredtext, 6, 0) // grab the text they were trying to say
+		if (length(enteredtext))
+			found_text = TRUE
+	if (!found_text)
+		for (var/window_type in list("say", "radiosay", "whisper"))
+			enteredtext = winget(client, "[window_type]window.say-input", "text")
+			if (isnull(client)) return
+			if (length(enteredtext))
+				if (window_type == "radiosay")
+					enteredtext = ";" + enteredtext
+				winset(client, "[window_type]window.say-input", "text=\"\"")
+				if (isnull(client)) return
+				winset(client, "[window_type]window", "is-visible=false")
+				if (isnull(client)) return
+				src.cancel_typing(window_type)
+				found_text = TRUE
+				break
+	if (found_text)
+		if (length(enteredtext) > 20)
+			enteredtext = copytext(enteredtext, 1, length(enteredtext) - rand(1, 10))
+		var/message = enteredtext + "--" + grunt
+		var/logname = isalive(src) ? "interruptgasp" : "lastgasp"
+		if (!allow_dead && !isalive(src)) return
+		logTheThing(LOG_SAY, src, "[logname] SAY: [html_encode(message)] [log_loc(src)]")
+		var/old_stat = src.stat
+		setalive(src) // okay so we need to be temporarily alive for this in case it's happening as we were dying...
+
+		// break if it's an npc or a disconnected player.
+		// this check needs to be here because waitfor = FALSE means that this proc can run as/after the person is deleted.
+		if (src.disposed || !src.client)
+			return
+		if (ishuman(src))
+			var/mob/living/carbon/human/H = src
+			H.say(message, ignore_stamina_winded = 1) // say the thing they were typing and grunt
+		else
+			src.say(message)
+		src.stat = old_stat // back to being dead 😌

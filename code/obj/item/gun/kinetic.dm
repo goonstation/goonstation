@@ -119,33 +119,33 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				if(0)
 					user.show_text("You can't reload this gun.", "red")
 					return
-				if(1)
+				if(AMMO_RELOAD_INCOMPATIBLE)
 					user.show_text("This ammo won't fit!", "red")
 					return
-				if(2)
+				if(AMMO_RELOAD_SOURCE_EMPTY)
 					user.show_text("There's no ammo left in [b.name].", "red")
 					return
-				if(3)
+				if(AMMO_RELOAD_ALREADY_FULL)
 					user.show_text("[src] is full!", "red")
 					return
-				if(4)
+				if(AMMO_RELOAD_PARTIAL)
 					user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>There wasn't enough ammo left in [b.name] to fully reload [src]. It only has [src.ammo.amount_left] rounds remaining.</span>")
 					src.tooltip_rebuild = 1
 					src.logme_temp(user, src, b) // Might be useful (Convair880).
 					return
-				if(5)
+				if(AMMO_RELOAD_FULLY)
 					user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You fully reload [src] with ammo from [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
 					src.tooltip_rebuild = 1
 					src.logme_temp(user, src, b)
 					return
-				if(6)
+				if(AMMO_RELOAD_TYPE_SWAP)
 					switch (src.ammo.swap(b,src))
-						if(0)
+						if(AMMO_SWAP_INCOMPATIBLE)
 							user.show_text("This ammo won't fit!", "red")
 							return
-						if(1)
+						if(AMMO_SWAP_SOURCE_EMPTY)
 							user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap out the magazine. Or whatever this specific gun uses.</span>")
-						if(2)
+						if(AMMO_SWAP_ALREADY_FULL)
 							user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap [src]'s ammo with [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
 					src.logme_temp(user, src, b)
 					return
@@ -193,7 +193,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				src.casings_to_eject += src.current_projectile.shot_number
 		. = ..()
 
-	shoot(var/target, var/start, var/mob/user, var/POX, var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (src.canshoot(user) && !isghostdrone(user))
 			if (src.auto_eject)
 				var/turf/T = get_turf(src)
@@ -302,7 +302,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		else
 			return FALSE
 
-	shoot(var/target, var/start, var/mob/user, var/POX, var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		. = ..()
 		hammer_cocked = FALSE
 		src.UpdateIcon()
@@ -327,7 +327,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		return state
 
 
-ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
+ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/survival_rifle_barrel
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
@@ -491,7 +491,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/vbullet)
 		..()
 
-	shoot(var/target,var/start ,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		var/turf/T = get_turf(src)
 
 		if (!istype(T.loc, /area/sim))
@@ -506,21 +506,21 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	icon_state = "zipgun"
 	force = MELEE_DMG_PISTOL
 	contraband = 6
-	ammo_cats = list(AMMO_PISTOL_ALL, AMMO_REVOLVER_ALL, AMMO_SMG_9MM, AMMO_TRANQ_ALL, AMMO_RIFLE_308, AMMO_AUTO_308, AMMO_AUTO_556, AMMO_CASELESS_G11, AMMO_FLECHETTE)
+	ammo_cats = list(AMMO_PISTOL_ALL, AMMO_REVOLVER_ALL, AMMO_SMG_9MM, AMMO_TRANQ_ALL, AMMO_RIFLE_308, AMMO_AUTO_308, AMMO_AUTO_556, AMMO_CASELESS_G11, AMMO_FLECHETTE, AMMO_STAPLE)
 	max_ammo_capacity = 2
 	var/failure_chance = 6
 	var/failured = 0
-	default_magazine = /obj/item/ammo/bullets/bullet_22
+	default_magazine = /obj/item/ammo/bullets/staples
 
 	New()
 
 		ammo = new default_magazine
-		ammo.amount_left = 0 // start empty
-		set_current_projectile(new/datum/projectile/bullet/bullet_22)
+		ammo.amount_left = 1 // start empty
+		set_current_projectile(new/datum/projectile/bullet/staple)
 		..()
 
 
-	shoot(var/target,var/start ,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if(failured)
 			if(canshoot(user))
 				var/turf/T = get_turf(src)
@@ -659,36 +659,37 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 
 
 //0.308
-/obj/item/gun/kinetic/minigun
-	name = "minigun"
-	desc = "The M134 Minigun is a 7.62×51mm NATO, six-barrel rotary machine gun with a high rate of fire."
+/obj/item/gun/kinetic/minigun // it is now STRONK
+	name = "\improper Alpha Hydrae minigun"
+	desc = "The M134 Alpha Hydrae Minigun is a 7.62×51mm NATO, six-barrel rotary machine gun with a high rate of fire."
+	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "minigun"
 	item_state = "heavy"
 	force = MELEE_DMG_LARGE
 	ammo_cats = list(AMMO_AUTO_308)
-	max_ammo_capacity = 100
-	auto_eject = 1
+	max_ammo_capacity = 200 //its a minigun it can have some ammo
+	two_handed = TRUE
+	auto_eject = 0
+	has_empty_state = 1
+	spread_angle = 15 //15 degrees is a lot
+	can_dual_wield = TRUE //if you can figure it out, you can do it
+	fire_animation = TRUE
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = EQUIPPED_WHILE_HELD
 
-	spread_angle = 25
-	can_dual_wield = 0
-
-	slowdown = 5
-	slowdown_time = 15
-
-	two_handed = 1
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/minigun
 
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/minigun)
+		AddComponent(/datum/component/holdertargeting/fullauto, 2.5, 0.4, 0.9) //you only get full auto, why would you burst fire with a minigun?
 		..()
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.4)
+		setProperty("movespeed", 1.5) //the addative slow down does not play nice with the full auto so you get this instead
 
 /obj/item/gun/kinetic/akm
 	name = "\improper AKM Assault Rifle"
@@ -946,6 +947,8 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	gildable = 0
 	fire_animation = FALSE
 	default_magazine = /obj/item/ammo/bullets/veritate
+	ammobag_magazines = list(/obj/item/ammo/bullets/veritate)
+	ammobag_restock_cost = 2
 
 	New()
 		ammo = new default_magazine
@@ -1157,7 +1160,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 		else
 			return ..()
 
-	shoot(var/target,var/start ,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if(!src.canshoot(user))
 			boutput(user, "<span class='notice'>You need to pull back the pully tab thingy first!</span>")
 			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
@@ -1195,7 +1198,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 		else // guess someone spawned one???
 			return TRUE
 
-	shoot(target, start, mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (src.canshoot(user))
 			. = ..() // this checks canshoot twice; could be refactored
 		else
@@ -1210,7 +1213,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	process_ammo(mob/user)
 		if (issilicon(user))
 			var/mob/living/silicon/S = user
-			S.cell?.charge -= src.power_requirement
+			S.cell?.use(src.power_requirement)
 		return TRUE
 
 
@@ -1280,7 +1283,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 //0.41
 /obj/item/gun/kinetic/derringer
 	name = "derringer"
-	desc = "A small and easy-to-hide gun that comes with 2 shots. (Can be hidden in worn clothes and retrieved by using the wink emote)"
+	desc = "A small and easy-to-hide gun that comes with 2 shots."
 	icon_state = "derringer"
 	force = MELEE_DMG_PISTOL
 	ammo_cats = list(AMMO_PISTOL_41)
@@ -1289,6 +1292,15 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/derringer
 	fire_animation = TRUE
+
+	get_help_message(dist, mob/user)
+		var/keybind = "Default CTRL + W"
+		var/datum/keymap/current_keymap = user.client.keymap
+		for (var/key in current_keymap.keys)
+			if (current_keymap.keys[key] == "wink")
+				keybind = current_keymap.unparse_keybind(key)
+				break
+		return "Hit the gun on a piece of clothing to hide it inside. Retrieve it by using the <b>*wink</b> ([keybind]) emote."
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
@@ -1360,7 +1372,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/flintlock)
 		..()
 
-	shoot(var/atom/target, var/atom/start, var/mob/user, var/POX, var/POY, var/is_dual_wield)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		sleep(0.3)
 		if (src.canshoot(user) && !isghostdrone(user))
 			var/obj/effects/flintlock_smoke/E = new /obj/effects/flintlock_smoke(get_turf(src))
@@ -1457,7 +1469,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	canshoot(mob/user)
 		return(..() && src.racked_slide)
 
-	shoot(var/target,var/start ,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if(ammo.amount_left > 0 && !racked_slide)
 			boutput(user, "<span class='notice'>You need to rack the slide before you can fire!</span>")
 		..()
@@ -1770,7 +1782,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"", null)
+				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, PROC_REF(convert_grenade), list(b, user), b.icon, b.icon_state,"", null)
 				return
 		else
 			..()
@@ -1844,7 +1856,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 			return
 
 /obj/item/gun/kinetic/mrl
-	desc = "A  6-barrel multiple rocket launcher armed with guided micro-missiles."
+	desc = "A 6-barrel multiple rocket launcher armed with guided micro-missiles."
 	name = "Fomalhaut MRL"
 	icon = 'icons/obj/large/64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
@@ -2433,7 +2445,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 					boutput(user, "<span class='alert'>The [src] has a different kind of grenade in the conversion chamber, and refuses to mix and match!</span>")
 					return
 				else
-					SETUP_GENERIC_ACTIONBAR(user, src, 0.3 SECONDS, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"", null)
+					SETUP_GENERIC_ACTIONBAR(user, src, 0.3 SECONDS, PROC_REF(convert_grenade), list(b, user), b.icon, b.icon_state,"", null)
 					return
 		else
 			..()
@@ -2622,7 +2634,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 			return TRUE
 		..()
 
-	shoot(target, start, mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (src.broke_open)
 			boutput(user, "<span class='alert'>You need to close [src] before you can fire!</span>")
 		if (!src.broke_open && src.ammo.amount_left > 0)
@@ -2630,19 +2642,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 		..()
 
 	attack_self(mob/user)
-		if (src.broke_open)
-			src.broke_open = FALSE
-		else
-			src.broke_open = TRUE
-			src.casings_to_eject = src.shells_to_eject
-
-			if (src.casings_to_eject > 0) //this code exists because without it the gun ejects double the amount of shells
-				src.ejectcasings()
-				src.shells_to_eject = 0
-
-		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
-
-		update_icon()
+		src.toggle_action(user)
 		..()
 
 	attackby(obj/item/I, mob/user)
@@ -2660,3 +2660,23 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	alter_projectile(obj/projectile/P)
 		. = ..()
 		P.proj_data.shot_sound = 'sound/weapons/sawnoff.ogg'
+
+	on_spin_emote(mob/living/carbon/human/user)
+		if(src.broke_open) // Only allow spinning to close the gun, doesn't make as much sense spinning it open.
+			src.toggle_action(user)
+			user.visible_message("<span class='alert'><b>[user]</b> snaps shut [src] with a [pick("spin", "twirl")]!</span>")
+		..()
+
+	proc/toggle_action(mob/user)
+		if (!src.broke_open)
+			src.casings_to_eject = src.shells_to_eject
+
+			if (src.casings_to_eject > 0) //this code exists because without it the gun ejects double the amount of shells
+				src.ejectcasings()
+				src.shells_to_eject = 0
+		src.broke_open = !src.broke_open
+
+		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
+
+		UpdateIcon()
+

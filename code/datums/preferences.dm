@@ -664,8 +664,7 @@ datum/preferences
 					tgui_alert(usr, "No usable special styles detected for this mutantrace.", "Error")
 					return
 				var/list/style_list = typeinfo.special_styles
-				var/current_index = style_list.Find(AH.special_style) // do they already have a special style in their prefs
-				var/new_style = style_list[current_index + 1 > length(style_list) ? 1 : current_index + 1]
+				var/new_style = tgui_input_list(usr, "Select a style pattern", "Special Style", style_list)
 				if (new_style)
 					AH.special_style = new_style
 					update_preview_icon()
@@ -1062,7 +1061,7 @@ datum/preferences
 			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 
-		var/datum/mutantrace/mutantRace = null
+		var/datum/mutantrace/mutantRace = /datum/mutantrace/human
 		for (var/ID in traitPreferences.traits_selected)
 			var/datum/trait/T = getTraitById(ID)
 			if (T?.mutantRace)
@@ -1081,7 +1080,7 @@ datum/preferences
 			qdel(ourWig)
 
 		if (traitPreferences.traits_selected.Find("bald") && mutantRace)
-			H.equip_if_possible(H.create_wig(), H.slot_head)
+			H.equip_if_possible(H.create_wig(), SLOT_HEAD)
 
 	proc/ShowChoices(mob/user)
 		src.ui_interact(user)
@@ -1587,9 +1586,9 @@ datum/preferences
 			if (src == usr.client.preferences)
 				process_link(usr, href_list)
 			else
-				boutput(usr, "Those aren't your prefs!")
+				boutput(usr, "<h3 class='alert'>Those aren't your prefs!</h3>")
 		else
-			boutput(usr, "Something went wrong with preferences. Call a coder.")
+			boutput(usr, "<h3 class='alert'>Something went wrong with preferences. Call a coder.</span>")
 		..()
 
 	proc/process_link(mob/user, list/link_tags)
@@ -1662,6 +1661,7 @@ datum/preferences
 		if (link_tags["b_changeling"])
 			src.be_changeling = !( src.be_changeling )
 			src.SetChoices(user)
+			return
 
 		if (link_tags["b_wizard"])
 			src.be_wizard = !( src.be_wizard)
@@ -1769,7 +1769,7 @@ datum/preferences
 
 		if (ishuman(character))
 			var/mob/living/carbon/human/H = character
-			if (H.mutantrace && H.mutantrace.voice_override)
+			if (H.mutantrace?.voice_override) //yass TODO: find different way of handling this
 				H.voice_type = H.mutantrace.voice_override
 
 	proc/apply_post_new_stuff(mob/living/character)
@@ -1813,7 +1813,7 @@ datum/preferences
 			if (ismob(M) && M.client)
 				C = M.client
 			else
-				boutput(C,"Something went wrong. Maybe the game isn't done loading yet, give it a minute!")
+				boutput(C, "<h3 class='alert'>Something went wrong. Maybe the game isn't done loading yet, give it a minute!</h3>")
 				return
 		if (C.preferences.use_wasd)
 			winset( C, "menu.wasd_controls", "is-checked=true" )
@@ -1852,36 +1852,22 @@ datum/preferences
 /proc/randomize_hair_color(var/hcolor)
 	if (!hcolor)
 		return
-	var/adj = 0
-	if (copytext(hcolor, 1, 2) == "#")
-		adj = 1
-	//DEBUG_MESSAGE("HAIR initial: [hcolor]")
-	var/hR_adj = num2hex(hex2num(copytext(hcolor, 1 + adj, 3 + adj)) + rand(-25,25), 2)
-	//DEBUG_MESSAGE("HAIR R: [hR_adj]")
-	var/hG_adj = num2hex(hex2num(copytext(hcolor, 3 + adj, 5 + adj)) + rand(-5,5), 2)
-	//DEBUG_MESSAGE("HAIR G: [hG_adj]")
-	var/hB_adj = num2hex(hex2num(copytext(hcolor, 5 + adj, 7 + adj)) + rand(-10,10), 2)
-	//DEBUG_MESSAGE("HAIR B: [hB_adj]")
-	var/return_color = "#" + hR_adj + hG_adj + hB_adj
-	//DEBUG_MESSAGE("HAIR final: [return_color]")
-	return return_color
+	var/list/rgb_list = rgb2num(hcolor)
+	return rgb(
+		rgb_list[1] + rand(-25, 25),
+		rgb_list[2] + rand(-5, 5),
+		rgb_list[3] + rand(-10, 10)
+	)
 
 /proc/randomize_eye_color(var/ecolor)
 	if (!ecolor)
 		return
-	var/adj = 0
-	if (copytext(ecolor, 1, 2) == "#")
-		adj = 1
-	//DEBUG_MESSAGE("EYE initial: [ecolor]")
-	var/eR_adj = num2hex(hex2num(copytext(ecolor, 1 + adj, 3 + adj)) + rand(-10,10), 2)
-	//DEBUG_MESSAGE("EYE R: [eR_adj]")
-	var/eG_adj = num2hex(hex2num(copytext(ecolor, 3 + adj, 5 + adj)) + rand(-10,10), 2)
-	//DEBUG_MESSAGE("EYE G: [eG_adj]")
-	var/eB_adj = num2hex(hex2num(copytext(ecolor, 5 + adj, 7 + adj)) + rand(-10,10), 2)
-	//DEBUG_MESSAGE("EYE B: [eB_adj]")
-	var/return_color = "#" + eR_adj + eG_adj + eB_adj
-	//DEBUG_MESSAGE("EYE final: [return_color]")
-	return return_color
+	var/list/rgb_list = rgb2num(ecolor)
+	return rgb(
+		rgb_list[1] + rand(-10, 10),
+		rgb_list[2] + rand(-10, 10),
+		rgb_list[3] + rand(-10, 10)
+	)
 
 proc/isfem(datum/customization_style/style)
 	return !!(initial(style.gender) & FEMININE)
@@ -1982,7 +1968,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	AH.voicetype = RANDOM_HUMAN_VOICE
 
 	var/list/hair_colors = list("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D",\
-	"#D8C078", "#E3CC88", "#F2DA91", "#F21AE", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
+	"#D8C078", "#E3CC88", "#F2DA91", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
 	var/hair_color1
 	var/hair_color2
 	var/hair_color3
@@ -2018,10 +2004,10 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	var/type_first
 	if (AH.gender == MALE)
 		if (prob(5)) // small chance to have a hairstyle more geared to the other gender
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style,.proc/isfem))
+			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/isfem))
 			AH.customization_first = new type_first
 		else // otherwise just use one standard to the current gender
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style,.proc/ismasc))
+			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/ismasc))
 			AH.customization_first = new type_first
 
 		if (prob(33)) // since we're a guy, a chance for facial hair
@@ -2031,10 +2017,10 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 
 	else // if FEMALE
 		if (prob(8)) // same as above for guys, just reversed and with a slightly higher chance since it's ~more appropriate~ for ladies to have guy haircuts than vice versa  :I
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style,.proc/ismasc))
+			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/ismasc))
 			AH.customization_first = new type_first
 		else // ss13 is coded with gender stereotypes IN ITS VERY CORE
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style,.proc/isfem))
+			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/isfem))
 			AH.customization_first = new type_first
 
 	if (!has_second)

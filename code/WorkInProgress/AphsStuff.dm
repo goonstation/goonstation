@@ -52,7 +52,7 @@
 	desc = ""
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "oldai_mem-0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = EFFECTS_LAYER_UNDER_1
 	pixel_x = -32
@@ -119,7 +119,7 @@
 	desc = "Huh? You've never seen this type of computer before. Not even in any history books."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "oldai_01"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = EFFECTS_LAYER_UNDER_1
 	pixel_x = -32

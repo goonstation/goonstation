@@ -14,7 +14,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	name = "chem dispenser"
 	desc = "A complicated, soda fountain-like machine that allows the user to dispense basic chemicals for use in recipies."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
 	var/icon_base = "dispenser"
@@ -279,31 +279,11 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	ui_data(mob/user)
 		. = list()
-		var/list/beakerContentsTemp = list()
 		.["idCardInserted"] = !isnull(src.user_id)
 		.["idCardName"] = !isnull(src.user_id) ? src.user_id.registered : "None"
-		.["maximumBeakerVolume"] = (!isnull(beaker) ? beaker.reagents.maximum_volume : 0)
-		.["beakerTotalVolume"] = (!isnull(beaker) ? beaker.reagents.total_volume : 0)
 		.["isRecording"] = src.recording_state
 		.["activeRecording"] = src.get_recording_text()
-		if(beaker)
-			var/datum/reagents/R = beaker.reagents
-			var/datum/color/average = R.get_average_color()
-			.["currentBeakerName"] = beaker.name
-			.["finalColor"] = average.to_rgba()
-			if(istype(R) && R.reagent_list.len>0)
-				for(var/reagent in R.reagent_list)
-					var/datum/reagent/current_reagent = R.reagent_list[reagent]
-					beakerContentsTemp.Add(list(list(
-						name = reagents_cache[reagent],
-						id = reagent,
-						colorR = current_reagent.fluid_r,
-						colorG = current_reagent.fluid_g,
-						colorB = current_reagent.fluid_b,
-						state = current_reagent.reagent_state,
-						volume = current_reagent.volume
-					)))
-		.["beakerContents"] = beakerContentsTemp
+		.["container"] = ui_describe_reagents(src.beaker)
 
 	proc/get_recording_text()
 		. = ""
@@ -499,7 +479,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 /obj/machinery/chem_dispenser/soda
 	name = "soda fountain"
 	desc = "A soda fountain that definitely does not have a suspicious similarity to the alcohol and chemical dispensers. No sir."
-	dispensable_reagents = list("cola", "juice_lime", "juice_lemon", "juice_orange", \
+	dispensable_reagents = list("cola", "ginger_ale", "juice_lime", "juice_lemon", "juice_orange", \
 								"juice_cran", "juice_cherry", "juice_pineapple", "juice_tomato", \
 								"coconut_milk", "sugar", "water", "vanilla", "tea", "grenadine")
 	icon_state = "alc_dispenser"

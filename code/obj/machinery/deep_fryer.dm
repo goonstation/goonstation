@@ -6,7 +6,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	desc = "An industrial deep fryer.  A big hit at state fairs!"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "fryer0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	flags = NOSPLASH
 	status = REQ_PHYSICAL_ACCESS
@@ -79,7 +79,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		src.reagents.reaction(G.affecting, TOUCH)
 		return
 
-	if (W.w_class > src.max_wclass || istype(W, /obj/item/storage) || istype(W, /obj/item/storage/secure) || istype(W, /obj/item/plate))
+	if (W.w_class > src.max_wclass || W.storage || istype(W, /obj/item/plate))
 		boutput(user, "<span class='alert'>There is no way that could fit!</span>")
 		return
 
@@ -98,6 +98,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		return src.Attackby(W, user)
 
 /obj/machinery/deep_fryer/onVarChanged(variable, oldval, newval)
+	. = ..()
 	if (variable == "fryitem")
 		if (!oldval && newval)
 			SubscribeToProcess()
@@ -144,7 +145,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	else
 		src.cooktime++
 
-	if (src.fryitem.material?.mat_id == "ice" && !ON_COOLDOWN(src, "ice_explosion", 10 SECONDS))
+	if (src.fryitem.material?.getID() == "ice" && !ON_COOLDOWN(src, "ice_explosion", 10 SECONDS))
 		if (ismob(fed_ice)) // have we asked someone for ice?
 			var/mob/ice_feeder = fed_ice
 			fed_ice = TRUE
@@ -219,7 +220,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 			for (var/mob/M in thing)
 				M.ghostize()
 		qdel(thing)
-		thing = new /obj/item/reagent_containers/food/snacks/yuckburn (src)
+		thing = new /obj/item/reagent_containers/food/snacks/yuck/burn (src)
 		if (!thing.reagents)
 			thing.create_reagents(50)
 
@@ -257,7 +258,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	fryholder.overlays = thing.overlays
 	if (isitem(thing))
 		var/obj/item/item = thing
-		fryholder.bites_left = item.w_class
+		fryholder.bites_left = round(item.w_class)
 		fryholder.w_class = item.w_class
 	else
 		fryholder.bites_left = 5
@@ -309,7 +310,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	var/shivers = 1
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if ((H.mind.assigned_role in list("Detective", "Vice Officer", "Part-time Vice Officer")) || (H.job in list("Detective", "Vice Officer", "Part-time Vice Officer")))
+		if ((H.mind.assigned_role in list("Detective", "Vice Officer")) || (H.job in list("Detective", "Vice Officer")))
 			shivers = 20
 	if (prob(0.5 * shivers))
 		fed_ice = M // asked this mob

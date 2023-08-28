@@ -1,7 +1,7 @@
 // A dummy parent type used for easily making components that target an item's holder rather than the item itself.
 /datum/component/holdertargeting
 	var/list/signals = list()
-	var/proctype // = .proc/pass
+	var/proctype // = PROC_REF(pass)
 	var/mobtype = /mob/living
 	var/mob/current_user
 	var/keep_while_on_mob = FALSE
@@ -13,8 +13,8 @@ TYPEINFO(/datum/component/holdertargeting)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/on_pickup)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_dropped)
+	RegisterSignal(parent, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
 
 /datum/component/holdertargeting/proc/on_pickup(datum/source, mob/user)
 	if(istype(user, mobtype))

@@ -10,7 +10,7 @@ TYPEINFO(/datum/component/send_to_target_mob)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	if(isitem(tracked_item))
-		RegisterSignal(tracked_item, COMSIG_SEND_TO_MOB, .proc/send)
+		RegisterSignal(tracked_item, COMSIG_SEND_TO_MOB, PROC_REF(send))
 
 /datum/component/send_to_target_mob/proc/send(datum/source, var/mob/living/M, teleport_effect = FALSE, )
 	var/obj/item/I = src.parent
@@ -23,10 +23,6 @@ TYPEINFO(/datum/component/send_to_target_mob)
 	if (ismob(I.loc))
 		var/mob/M2 = I.loc
 		M2.u_equip(I)
-	if (istype(I.loc, /obj/item/storage))
-		var/obj/item/storage/S_temp = I.loc
-		var/datum/hud/storage/H_temp = S_temp.hud
-		H_temp.remove_object(I)
 
 	I.set_loc(get_turf(M))
 	if (teleport_effect)

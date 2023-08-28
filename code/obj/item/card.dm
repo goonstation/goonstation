@@ -239,7 +239,7 @@ TYPEINFO(/obj/item/card/emag)
 		boutput(user, "<span class='alert'>The ID-Card explodes.</span>")
 		user.transforming = 1
 		var/obj/overlay/O = new/obj/overlay(get_turf(user))
-		O.anchored = 1
+		O.anchored = ANCHORED
 		O.name = "Explosion"
 		O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		O.pixel_x = -92
@@ -337,6 +337,12 @@ TYPEINFO(/obj/item/card/emag)
 		namecheck[i] = capitalize(namecheck[i])
 	input = jointext(namecheck, " ")
 	return input
+
+/obj/item/card/id/syndicate/get_help_message(dist, mob/user)
+	if (src.name == "agent card") //It's probably unmodified, should be fine to show the help message
+		return {"Use the card in hand to set it's name, appearance, job title and pronouns. Use another ID on the agent card to add the access of the ID to the agent card."}
+	else
+		return null
 
 /obj/item/card/id/syndicate/commander
 	name = "commander card"

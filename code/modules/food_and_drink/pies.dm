@@ -1,4 +1,4 @@
-ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 /obj/item/reagent_containers/food/snacks/pie
 	name = "pie"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
@@ -43,6 +43,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 			qdel (src)
 		else ..()
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 /obj/item/reagent_containers/food/snacks/pieslice
 	name = "slice of pie"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
@@ -53,42 +54,52 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 	heal_amt = 4
 	initial_volume = 5
 	apple
+		name = "slice of apple pie"
 		icon_state = "applepie-slice"
 		initial_reagents = list("juice_apple"=3)
 		desc = "A slice of apple pie. Is there anything more Space-American?"
 	lime
+		name = "slice of lime pie"
 		icon_state = "limepie-slice"
 		initial_reagents = list("juice_lime"=3)
 		desc = "A slice of key lime pie. Tart, sweet, and with a dollop of cream on top."
 	lemon
+		name = "slice of lemon pie"
 		icon_state = "lemonpie-slice"
 		initial_reagents = list("juice_lemon"=3)
 		desc = "A slice of lemon meringue pie. A fine use of fruit curd."
 	strawberry
+		name = "slice of strawberry pie"
 		icon_state = "strawberrypie-slice"
 		initial_reagents = list("juice_strawberry"=3)
 		desc = "A slice of strawberry pie. It smells like summertime memories."
 	pumpkin
+		name = "slice of pumpkin pie"
 		icon_state = "pumpie-slice"
 		initial_reagents = list("juice_pumpkin"=3)
 		desc = "A slice of pumpkin pie. An autumn favourite."
 	chocolate
+		name = "slice of chocolate pie"
 		icon_state = "chocolatepie-slice"
 		initial_reagents = list("sugar"=3, "hugs"=2)
 		desc = "Like a slice of chocolate cake, but a slice of pie, and also very different."
 	raspberry
+		name = "slice of raspberry pie"
 		icon_state = "raspberrypie-slice"
 		initial_reagents = list("juice_raspberry"=3)
 		desc = "A slice of raspberry pie. Those are fresh raspberries, too. Oh man."
 	blackberry
+		name = "slice of blackberry pie"
 		icon_state = "blackberrypie-slice"
 		initial_reagents = list("juice_blackberry"=3)
 		desc = "A slice of balckberry pie. The stains will be oh so worth it."
 	blueberry
+		name = "slice of blueberry pie"
 		icon_state = "blueberrypie-slice"
 		initial_reagents = list("juice_blueberry"=3)
 		desc = "A slice of blueberry pie. Blueberries cook up purple, who knew?"
 	cherry
+		name = "slice of cherry pie"
 		icon_state = "cherrypie-slice"
 		initial_reagents = list("juice_cherry"=3)
 		desc = "A slice of cherry pie. It looks so good, it brings a tear to you eye."
@@ -180,13 +191,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (contents)
-			var/atom/movable/randomContent
-			if (contents.len >= 1)
-				randomContent = pick(contents)
+			var/atom/movable/random_content
+			if (length(contents) >= 1)
+				random_content = pick(contents)
 			else
-				randomContent = src
+				random_content = src
 
-			hit_atom.Attackby(randomContent, thr?.user)
+ 			hit_atom.Attackby(random_content, thr?.user)
+			//for afterattack, we want to filter out mobs since pies hit also the turf the person is standing on. Also, we need to call it on an actual item
+			if (hit_atom && random_content && istype(random_content, /obj/item) && ismob(hit_atom))
+				var/obj/item/randomed_item = random_content
+				randomed_item.AfterAttack(hit_atom, thr?.user)
+
 
 			if (ismob(hit_atom))
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)

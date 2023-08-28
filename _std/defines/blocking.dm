@@ -1,5 +1,5 @@
 //some different generalized block weapon shapes that i can re use instead of copy paste
-//#define BLOCK_SETUP		src.c_flags |= BLOCK_TOOLTIP; RegisterSignal(src, COMSIG_ITEM_BLOCK_BEGIN, .proc/block_prop_setup, TRUE) //makes the magic work
+//#define BLOCK_SETUP		src.c_flags |= BLOCK_TOOLTIP; RegisterSignal(src, COMSIG_ITEM_BLOCK_BEGIN, PROC_REF(block_prop_setup), TRUE) //makes the magic work
 //#define BLOCK_ALL		BLOCK_SETUP; src.c_flags |= (BLOCK_BLUNT | BLOCK_CUT | BLOCK_STAB | BLOCK_BURN)
 //#define BLOCK_LARGE		BLOCK_SETUP; src.c_flags |= (BLOCK_BLUNT | BLOCK_CUT | BLOCK_STAB)
 //#define BLOCK_SWORD		BLOCK_LARGE
@@ -14,7 +14,7 @@
 #define UNARMED_BLOCK_PROTECTION_BONUS 2 //Unarmed blocks don't need to match damage type, but generally block less damage
 
 
-#define BLOCK_SETUP(blocktypes)	RegisterSignal(src, COMSIG_ITEM_BLOCK_BEGIN, .proc/block_prop_setup, TRUE); src.c_flags |= BLOCK_TOOLTIP; ADD_BLOCKS(blocktypes)
+#define BLOCK_SETUP(blocktypes)	RegisterSignal(src, COMSIG_ITEM_BLOCK_BEGIN, PROC_REF(block_prop_setup), TRUE); src.c_flags |= BLOCK_TOOLTIP; ADD_BLOCKS(blocktypes)
 #define BLOCK_ALL		(BLOCK_BLUNT | BLOCK_CUT | BLOCK_STAB | BLOCK_BURN)
 #define BLOCK_LARGE		(BLOCK_BLUNT | BLOCK_CUT | BLOCK_STAB)
 #define BLOCK_SWORD		BLOCK_LARGE

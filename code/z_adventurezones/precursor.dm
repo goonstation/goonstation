@@ -19,6 +19,11 @@
 	skip_sims = 1
 	sims_score = 30
 	sound_group = "ice_moon"
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/foreground/snow,
+		/atom/movable/screen/parallax_layer/foreground/snow/sparse,
+		)
+	occlude_foreground_parallax_layers = TRUE
 
 /area/upper_arctic/pod1
 	name = "Outpost Theta Pod One Upper Level"
@@ -78,9 +83,7 @@
 	sound_environment = 15
 	skip_sims = 1
 	sims_score = 30
-	New()
-		..()
-		overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "snowverlay", layer = EFFECTS_LAYER_BASE)
+	occlude_foreground_parallax_layers = FALSE
 
 /area/upper_arctic/exterior/surface
 	name = "Ice Moon Surface"
@@ -299,7 +302,7 @@
 	desc = "It seems to be missing something."
 	interesting = "Scans detect: COBRYL | IRIDIUM | BOSE-EINSTEIN CONDENSATE | RHYDBERG MATTER"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/id = 1
 	var/target_id = 1
 	var/assembled = 0
@@ -395,7 +398,7 @@
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "bluedoor_1"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 1
 	var/active = 0
 	var/opened = 0
@@ -518,7 +521,7 @@
 	icon = 'icons/obj/artifacts/artifacts.dmi'
 	icon_state = "precursor-2"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 1
 	var/active = 0
 	var/list/pitches = list()
@@ -626,7 +629,7 @@
 	icon = 'icons/obj/artifacts/artifacts.dmi'
 	icon_state = "precursor-6"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 1
 	dir = 4 // facing right or left
 	var/active = 0
@@ -718,7 +721,7 @@
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "controller_on"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 1
 	var/active = 0
 	var/id = 1
@@ -836,7 +839,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	var/active = 0
 	var/id = 1
@@ -896,7 +899,7 @@
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "sphere"
 	event_handler_flags = USE_PROXIMITY
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 	var/id = 1
@@ -985,7 +988,7 @@
 
 /obj/portrait_sneaky
 	name = "crooked portrait"
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "portrait"
 	desc = "A portrait of a man wearing a ridiculous merchant hat. That must be Discount Dan."
@@ -1009,177 +1012,9 @@
 			..()
 			return
 
-/obj/critter/shade
-	name = "darkness"
-	desc = "Oh god."
-	icon_state = "shade"
-	dead_state = "shade" //doesn't have a dead icon, just fades away
-	death_text = null //has special spooky voice lines
-	health = 10
-	brutevuln = 0.5
-	firevuln = 0
-	aggressive = 1
-	generic = 0
-
-
-	attack_hand(var/mob/user)
-		if (user.a_intent == "help")
-			return
-
-		..()
-
-	ChaseAttack(mob/M)
-		return
-
-	CritterAttack(mob/M)
-		if (!ismob(M))
-			return
-
-		src.attacking = 1
-
-		if (M.lying)
-			src.speak( pick("me-�m ina men-an-uras-a?", "e-z� ina gu-sum... e-z� ina g�-ri-ta!", "e-z� n�-gig, e-z� n�-d�m-d�m-ma, e-z� �u...bar ina libir lugar!", "namlugallu-zu-ne-ne inim-dirig, namgallu-zu-ne-ne inim-b�r-ra, izi te-en ina an!", "ri azag, ri azag, ri azag, ri �rim, ri e-z�!", "e-z�, �rim diir-da...nu-me-a.") )
-			// where is the crown of heaven and earth // you are from the writing... you are from the other side // you abominations, created creatures, you let loose the ancient king
-			// mankind's hubris, mankind's breach of treaty extinguished the heavens // banish the taboo, banish the taboo, banish you // you, enemy, without a god
-			src.visible_message("<span class='alert'><B>[src]</B> takes hold of [M]!</span>")
-			boutput(M, "<span class='alert'><b>It burns!</b></span>")
-			M.TakeDamage("chest", 0, rand(5,15))
-		else
-			src.speak( pick("an-z�, bar ina k�, ina k�! ina k�-bar-ra!", "hul-�l. l��r-l�-ene ina im-dugud-ene. n-ene. e-z�.", "ki-lul-la, ki-in-dar, �-a-nir-ra: urudu e-re-s�-ki-in ina �mun, en-nu-�a-ak ina l��r-l�-ene", "l�-k�r-ra! l�-n�-zuh! l�-ru-g�!", "nu-me-en-na-ta, na!") )
-			// where heaven ends, the gate, the gate! the outer door! // the evil ones, the butchers on the lumps of stone. humans. you. // in the place of murder, in the crevice, in the house of mourning: the copper servant formed of thought guards against the butchers //
-			// stranger! thief! recalcitrant one! // you don't exist, human!
-			src.visible_message("<span class='alert'><B>[src]</B> reaches for [M]!</span>")
-			boutput(M, "<span class='alert'><b>It burns!</b></span>")
-			M.TakeDamage("chest", 0, rand(5,15))
-
-		SPAWN(6 SECONDS)
-			src.attacking = 0
-
-	ai_think()
-		if(task == "thinking" || task == "wandering")
-			if (prob(5))
-				src.speak( pick("namlugallu ha-lam ina lugal-�a�-l�-s�...","� da-r�-s� �e�...","�-e-me-en �ri-z�-er igi-bad!","inim...k� ina ki-dul, ina e-�r, ina ki-bad-r�, h�-�m-me-�m...", "�ri-k�r...d�b, �ri...ar, e-z�...", "galam, gamar ganzer, g�bil p�ri! ul, ul! s�kud...") )
-				// mankind destroyed the merciful king // sleep forever, brethren // i am one who lost my footing and opened my eyes // to seek or find the right words, the armor, the secret point, the distant places, that is our wish // to ascend, overwhelming darkness, burning bright! shine! shine! shine brightly!
-		else
-			if (prob(5))
-				src.speak( pick("ina urudu e-re-s�-ki-in kala libir arza ina S�KUD ZAL.", "i.menden ina nam-ab-ba issa, nam-nu-tar  nam-diir, i.menden l�n�-�a...","bar...gub ina b�d-�ul-hi...","�idim ak ina libir i�gal, diir ak ina agrun, ul-��r-ra, z�-m�!", "�ru p�d g�g, ina gidim niin!") )
-				// the copper servant mends the rights of the FLASH OF DAWN // we are the elder shades, ill-fated divinities, we are the temple servants...// step outside the outer wall
-				// architect of the ancient throne, god of the inner sanctuary, jubilation, praise! // watchfire reveals night, the darkened monstrosity
-				//
-				//
-		return ..()
-
-	CritterDeath()
-		..()
-		speak( pick("��r...�a ina ��r-kug z�h-bi!", "�d, �d, �u...bar...", "n�-nam-nu-kal...", "lugal-me taru, lugal-me galam!", "me-li-e-a...") )
-		// sing the sacred song to the bitter end // go out, exit, release // nothing is precious // our king will return, our king will ascend // woe is me
-		SPAWN(1.5 SECONDS)
-			qdel(src)
-
-	seek_target()
-		src.anchored = 0
-		if (src.target)
-			src.task = "chasing"
-			return
-
-		for (var/mob/living/carbon/C in view(src.seekrange,src))
-			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
-			if (C.stat || C.health < 0) continue
-
-			src.target = C
-			src.oldtarget_name = C.name
-			src.task = "chasing"
-			src.speak( pick("siskur, siskur ina na sukkal...","�ra ina g�g, �� ina ur zal...","l�-�rim! l�-�rim!","� �-zi-ga...bal, na, e-z� ha-lam ina � si-ga...") )
-			// sacrifice, sacrifice the human envoy! // praise the night, kill the servant of light // enemy! enemy! // cursed with violence, human, you ruin the quiet house
-			break
-
-	proc/speak(var/message)
-		if (!message)
-			return
-
-		var/fontSize = 1
-		var/fontIncreasing = 1
-		var/fontSizeMax = 3
-		var/fontSizeMin = -3
-		var/messageLen = length(message)
-		var/list/processedMessage = list()
-
-		for (var/i = 1, i <= messageLen, i++)
-			processedMessage += "<font size=[fontSize]>[copytext(message, i, i+1)]</font>"
-			if (fontIncreasing)
-				fontSize = min(fontSize+1, fontSizeMax)
-				if (fontSize >= fontSizeMax)
-					fontIncreasing = 0
-			else
-				fontSize = max(fontSize-1, fontSizeMin)
-				if (fontSize <= fontSizeMin)
-					fontIncreasing = 1
-
-		src.visible_message("<b>the [src.name]</b> whispers, \"[processedMessage.Join("")]\"")
-		playsound(src.loc, pick('sound/voice/creepywhisper_1.ogg', 'sound/voice/creepywhisper_2.ogg', 'sound/voice/creepywhisper_3.ogg'), 50, 1)
-		return
-
-/obj/critter/shade/scientist
-	name = "faded scientist"
-	desc = "Something is terribly wrong with them."
-	icon = 'icons/mob/human.dmi'
-	icon_state = "body_m"
-	dead_state = "body_m" //doesn't have a dead icon
-	alpha = 192
-	color = "#676767"
-	health = 100
-	var/animating = 0
-	var/jumpsuit = "scientist-alt"
-	var/oversuit = null
-	var/overarmor = null
-
-	New()
-		..()
-		if(jumpsuit)
-			overlays += image('icons/mob/clothing/jumpsuits/worn_js_rank.dmi', "[jumpsuit]")
-		if(oversuit)
-			overlays += image('icons/mob/clothing/overcoats/worn_suit.dmi', "[oversuit]")
-		if(overarmor)
-			overlays += image('icons/mob/clothing/overcoats/worn_suit_armor.dmi', "[jumpsuit]")
-
-	process()
-		..()
-		if (!animating && prob(5))
-			animating = 1
-			animate(src, alpha = 64, time = 10, easing = SINE_EASING)
-			animate(alpha = 192, time = 10, easing = SINE_EASING)
-			SPAWN(2.5 SECONDS)
-				animating = 0
-
-	CritterDeath()
-		if (!alive)
-			return
-		..()
-		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, get_turf(src)))
-		qdel(src)
-
-	lost
-		desc = "Huh? What is this guy doing here?"
-		CritterDeath()
-			if (!alive)
-				return
-			new /obj/item/paper/otp(get_turf(src))
-			..()
-
-	am_research
-		jumpsuit = "robotics-alt"
-		oversuit = "labcoat-o"
-
-	guard
-		name = "faded guard"
-		desc = "Their armor still seems surprisingly functional."
-		health = 250
-		jumpsuit = "darkred"
-		overarmor = "heavy"
-
 /obj/effects/ydrone_summon //WIP
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	var/range = 5
 	var/end_float_effect = 0
 	var/horseneigh = 0 //what am I doing with my life
@@ -1351,7 +1186,7 @@
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/active = 0
 
@@ -1371,7 +1206,7 @@
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/active = 0
 
@@ -1394,7 +1229,7 @@
 	desc = "It seems to be part of the satellite. The interface is locked. You see a small circular port below the keypad."
 	icon = 'icons/obj/airtunnel.dmi'
 	icon_state = "airbr0"
-	anchored = 1
+	anchored = ANCHORED
 	pixel_y = 32
 	var/activated = FALSE
 

@@ -36,7 +36,7 @@
 		B.icon_state = "blspell"
 		B.icon = 'icons/obj/wizard.dmi'
 		B.name = "spell"
-		B.anchored = 1
+		B.anchored = ANCHORED
 		B.set_density(0)
 		B.layer = MOB_EFFECT_LAYER
 		target.canmove = 0

@@ -67,6 +67,28 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom)
+"cL" = (
+/mob/living/critter/martian/soldier,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"cO" = (
+/obj/stool/chair/comfy/shuttle/pilot,
+/mob/living/critter/martian/soldier,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"cR" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
 "cX" = (
 /obj/stool/bench/blue/auto,
 /obj/machinery/light{
@@ -206,14 +228,6 @@
 	dir = 1
 	},
 /area/centcom)
-"lJ" = (
-/obj/stool/chair/comfy/shuttle/brown,
-/obj/critter/martian/warrior,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor1"
-	},
-/area/shuttle/escape/centcom)
 "lL" = (
 /obj/machinery/atmospherics/portables_connector,
 /obj/decal/fakeobjects{
@@ -251,9 +265,8 @@
 	icon_state = "floor1"
 	},
 /area/shuttle/escape/centcom)
-"mr" = (
-/obj/stool/chair/comfy/shuttle/pilot,
-/obj/critter/martian/soldier,
+"mm" = (
+/mob/living/critter/martian/warrior,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"
@@ -339,7 +352,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "qO" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -476,13 +489,6 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"xT" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor1"
-	},
-/area/shuttle/escape/centcom)
 "yK" = (
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
@@ -686,7 +692,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "Gm" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -849,6 +855,14 @@
 	icon_state = "floor1"
 	},
 /area/shuttle/escape/centcom)
+"Ls" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/mob/living/critter/martian/warrior,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
 "Lu" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1";
@@ -869,13 +883,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
-"Mq" = (
-/obj/critter/martian/soldier,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor1"
-	},
-/area/shuttle/escape/centcom)
 "MC" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -887,14 +894,6 @@
 	icon_state = "floor"
 	},
 /area/centcom)
-"Nt" = (
-/obj/stool/chair/comfy/shuttle/brown,
-/obj/critter/martian/soldier,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor1"
-	},
-/area/shuttle/escape/centcom)
 "NS" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5;
@@ -1170,8 +1169,9 @@
 	icon_state = "floor1"
 	},
 /area/shuttle/escape/centcom)
-"ZL" = (
-/obj/critter/martian/warrior,
+"Zx" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/mob/living/critter/martian/soldier,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"
@@ -1358,12 +1358,12 @@ sx
 sx
 sx
 sx
-xT
+cR
 Xe
-xT
-xT
+cR
+cR
 Xe
-xT
+cR
 Gv
 QB
 ra
@@ -1411,7 +1411,7 @@ CB
 SL
 fl
 yK
-ZL
+mm
 sx
 wq
 wq
@@ -1437,21 +1437,21 @@ bt
 ce
 Ay
 op
-Mq
+cL
 yK
 yK
 Xe
 yK
 yK
-ZL
+mm
 yK
 wT
 yK
-lJ
+Ls
 wq
 sx
-xT
-xT
+cR
+cR
 Gv
 QB
 NS
@@ -1471,9 +1471,9 @@ EC
 sx
 wq
 wq
-ZL
+mm
 wq
-Nt
+Zx
 yK
 wq
 wq
@@ -1507,9 +1507,9 @@ yK
 yK
 Xe
 yK
-ZL
+mm
 IL
-xT
+cR
 BC
 KE
 og
@@ -1537,7 +1537,7 @@ sx
 yK
 wI
 HA
-xT
+cR
 BC
 xq
 og
@@ -1550,11 +1550,11 @@ XE
 nb
 sx
 yK
-ZL
+mm
 op
 Xe
 yK
-ZL
+mm
 yK
 yK
 yK
@@ -1563,9 +1563,9 @@ wq
 wq
 sx
 yK
-mr
+cO
 bM
-xT
+cR
 BC
 xq
 qO
@@ -1593,7 +1593,7 @@ Xe
 yK
 yK
 IL
-xT
+cR
 BC
 KE
 og
@@ -1614,7 +1614,7 @@ wq
 yK
 wq
 wq
-ZL
+mm
 wq
 wq
 sx
@@ -1640,14 +1640,14 @@ Xe
 yK
 op
 yK
-Mq
+cL
 op
 yK
 wq
 wq
 sx
-xT
-xT
+cR
+cR
 Hf
 km
 ir
@@ -1662,7 +1662,7 @@ ce
 Io
 mh
 ml
-ZL
+mm
 yK
 sx
 wq
@@ -1722,12 +1722,12 @@ sx
 sx
 sx
 sx
-xT
+cR
 Xe
-xT
-xT
+cR
+cR
 Xe
-xT
+cR
 Hf
 km
 AM

@@ -37,7 +37,7 @@
 	icon_state = "residual_electricity"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_ABOVE
 	var/duration = 9 SECONDS
 	var/caster
@@ -61,7 +61,7 @@
 
 /obj/decal/lightning_bolt
 	name = "lightning bolt"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	plane = PLANE_NOSHADOW_ABOVE
@@ -76,7 +76,7 @@
 			qdel(src)
 
 /obj/lightning_target
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	plane = PLANE_NOSHADOW_ABOVE

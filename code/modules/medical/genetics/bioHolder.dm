@@ -153,7 +153,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 								 "fart2" = 'sound/voice/farts/fart2.ogg', \
 								 "fart3" = 'sound/voice/farts/fart3.ogg', \
 								 "fart4" = 'sound/voice/farts/fart4.ogg', \
-								 "fart5" = 'sound/voice/farts/fart5.ogg')
+								 "fart5" = 'sound/voice/farts/fart5.ogg', \
+								 "fart6" = 'sound/voice/farts/fart7.ogg')
 
 	var/list/screamsounds = list("male" = 'sound/voice/screams/male_scream.ogg',\
 								 "female" = 'sound/voice/screams/female_scream.ogg', \
@@ -339,7 +340,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			H.sound_fart = fartsounds[fartsound || "default"] || fartsounds["default"]
 			H.voice_type = voicetype || RANDOM_HUMAN_VOICE
 
-			if (H.mutantrace && H.mutantrace.voice_override)
+			if (H.mutantrace.voice_override)
 				H.voice_type = H.mutantrace.voice_override
 
 			H.update_name_tag()
@@ -353,6 +354,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/mob/owner = null
 	var/ownerName = null
+	var/ownerType = null //mostly meaningless for bioHolders created for mobs; only used for ownerless bioHolders in blood and such
 
 	var/bloodType = "AB+-"
 	var/bloodColor = null
@@ -380,6 +382,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		SPAWN(2 SECONDS) // fuck this shit
 			if(owner)
 				ownerName = owner.real_name
+				ownerType = owner.type
 				bioUids[Uid] = owner?.real_name ? owner.real_name : owner?.name
 
 		BuildEffectPool()
@@ -666,7 +669,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 			return 0
 
 		var/datum/bioEffect/newEffect = bioEffectList[idToAdd]
-		if(!newEffect) return 0
+		if(!newEffect)
+			CRASH("Invalid bioEffect ID [idToAdd]")
 
 		newEffect = new newEffect.type
 

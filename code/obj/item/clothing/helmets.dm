@@ -44,7 +44,7 @@
 
 /obj/item/clothing/head/helmet/space/engineer
 	name = "engineering space helmet"
-	desc = "Comes equipped with a builtin flashlight."
+	desc = "Comes equipped with a built-in flashlight."
 	icon_state = "espace0"
 	uses_multiple_icon_states = 1
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
@@ -162,18 +162,18 @@
 		setProperty("meleeprot_head", 3 + prot)
 
 		// Setup item overlays
-		fabrItemImg.color = helmMat.color
-		visrItemImg.color = visrMat.color
+		fabrItemImg.color = helmMat.getColor()
+		visrItemImg.color = visrMat.getColor()
 		UpdateOverlays(visrItemImg, "item-visor")
 		UpdateOverlays(fabrItemImg, "item-helmet")
 		// Setup worn overlays
-		fabrWornImg.color = helmMat.color
-		visrWornImg.color = visrMat.color
+		fabrWornImg.color = helmMat.getColor()
+		visrWornImg.color = visrMat.getColor()
 		src.wear_image.overlays += fabrWornImg
 		src.wear_image.overlays += visrWornImg
 		// Add back the helmet texture since we overide the material apparance
-		if (helmMat.texture)
-			src.setTexture(helmMat.texture, helmMat.texture_blend, "material")
+		if (helmMat.getTexture())
+			src.setTexture(helmMat.getTexture(), helmMat.getTextureBlendMode(), "material")
 
 // Sealab helmets
 
@@ -293,6 +293,7 @@
 		name = "engineering light space helmet"
 		desc = "A lightweight engineering space helmet. It's lacking any major padding or reinforcement."
 		icon_state = "spacelight-e"
+		see_face = TRUE
 
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
@@ -439,11 +440,13 @@
 				..()
 				if (slot == SLOT_HEAD)
 					APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH_SYNDICATE,src)
+					APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 					get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
 
 			unequipped(var/mob/user)
 				if(src.equipped_in_slot == SLOT_HEAD)
 					REMOVE_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH_SYNDICATE,src)
+					REMOVE_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 					get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
 				..()
 
@@ -591,6 +594,25 @@
 		else
 			..()
 
+	chief_engineer
+		name = "chief engineer's hard hat"
+		icon_state = "hardhat_chief_engineer0"
+		item_state = "hardhat_chief_engineer0"
+		desc = "A dented old helmet with a bright green stripe. An engraving on the inside reads 'CE'."
+
+		flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
+			on = !on
+			src.icon_state = "hardhat_chief_engineer[on]"
+			if (on)
+				light_dir.update(1)
+			else
+				light_dir.update(0)
+			user.update_clothing()
+			if (activated_inhand)
+				var/obj/ability_button/flashlight_engiehelm/flashlight_button = locate(/obj/ability_button/flashlight_engiehelm) in src.ability_buttons
+				flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
+			return
+
 /obj/item/clothing/head/helmet/hardhat/security // Okay it's not actually a HARDHAT but why write extra code?
 	name = "helmet"
 	icon_state = "helmet-sec"
@@ -701,6 +723,12 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	m_amt = 3000
 	g_amt = 1000
 	var/up = FALSE // The helmet's current position
+	var/decal = null
+
+	New()
+		..()
+		src.icon_state = "welding[src.decal ? "-[decal]" : null]"
+		src.item_state = "welding[src.decal ? "-[decal]" : null]"
 
 	setupProperties()
 		..()
@@ -711,6 +739,13 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 		if (ishuman(the_mob))
 			..()
 
+	/// Ran when the wearer emotes
+	proc/emote_handler(mob/source, var/emote)
+		switch(emote)
+			if ("nod")
+				src.flip_down(source, silent=TRUE)
+				boutput(source, "<span class='hint'>You nod, dropping the welding mask over your face.</span>")
+
 	proc/obscure(mob/user)
 		user.addOverlayComposition(/datum/overlayComposition/weldingmask)
 		user.updateOverlaysClient(user.client)
@@ -719,11 +754,11 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 		user.removeOverlayComposition(/datum/overlayComposition/weldingmask)
 		user.updateOverlaysClient(user.client)
 
-	proc/flip_down(var/mob/living/carbon/human/user)
+	proc/flip_down(var/mob/living/carbon/human/user, var/silent = FALSE)
 		up = FALSE
 		see_face = FALSE
-		icon_state = "welding"
-		boutput(user, "You flip the mask down. The mask now provides protection from eye damage.")
+		icon_state = "welding[decal ? "-[decal]" : null]"
+		item_state = "welding[decal ? "-[decal]" : null]"
 		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
 		src.hides_from_examine |= (C_EARS|C_MASK|C_GLASSES)
 		setProperty("meleeprot_head", 1)
@@ -732,13 +767,15 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 			if (user.head == src)
 				src.obscure(user)
 				user.update_clothing()
+		if (!silent)
+			boutput(user, "<span class='hint'>You flip the mask down. The mask now provides protection from eye damage.</span>")
 
 
-	proc/flip_up(var/mob/living/carbon/human/user)
+	proc/flip_up(var/mob/living/carbon/human/user, var/silent = FALSE)
 		up = TRUE
 		see_face = TRUE
-		icon_state = "welding-up"
-		boutput(user, "You flip the mask up. The mask now provides higher armor to the head.")
+		icon_state = "welding-up[decal ? "-[decal]" : null]"
+		item_state = "welding-up[decal ? "-[decal]" : null]"
 		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
 		src.hides_from_examine &= ~(C_EARS|C_MASK|C_GLASSES)
 		setProperty("meleeprot_head", 4)
@@ -747,15 +784,19 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 			if (user.head == src)
 				src.reveal(user)
 				user.update_clothing()
+		if (!silent)
+			boutput(user, "<span class='hint'>You flip the mask up. The mask now provides higher armor to the head.</span>")
 
 	equipped(mob/user, slot)
 		. = ..()
 		if (!src.up)
 			src.obscure(user)
+		RegisterSignal(user, COMSIG_MOB_EMOTE, PROC_REF(emote_handler))
 
 	unequipped(mob/user)
 		. = ..()
 		src.reveal(user)
+		UnregisterSignal(user, COMSIG_MOB_EMOTE)
 
 	disposing()
 		. = ..()
@@ -769,6 +810,12 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 			toggle.execute_ability() //This is a weird way of doing it but we'd have to get the ability button to update the icon anyhow
 		..()
 
+	fire
+		name = "hotrod welding helmet"
+		desc = "A head-mounted face cover designed to make you look slick while avoiding searing eye pain. Can be flipped up for if you don't want to avoid aforementioned searing eye pain."
+		icon_state = "welding-fire"
+		item_state = "welding-fire"
+		decal = "fire"
 
 /obj/item/clothing/head/helmet/welding/abilities = list(/obj/ability_button/mask_toggle)
 

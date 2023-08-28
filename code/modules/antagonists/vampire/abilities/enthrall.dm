@@ -128,6 +128,7 @@
 			H.make_thrall(target)
 		else
 			target.full_heal()
+			target.mind?.add_subordinate_antagonist(ROLE_VAMPTHRALL, master = enthrall.holder)
 
 		if (target in H.thralls)
 			//and add blood!

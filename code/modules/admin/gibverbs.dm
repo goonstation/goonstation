@@ -15,7 +15,7 @@
 		M.transforming = 1
 
 		var/atom/movable/overlay/gibs/O = new/atom/movable/overlay/gibs(get_turf(M))
-		O.anchored = 1
+		O.anchored = ANCHORED
 		O.name = "Explosion"
 		O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		O.pixel_x = -92
@@ -274,6 +274,23 @@
 
 		M.un_damn()
 
+/client/proc/cmd_admin_smitegib(mob/M as mob)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Smite"
+	set popup_menu = 0
+
+	if (!src.holder)
+		boutput(src, "Only administrators may use this command.")
+		return
+
+	if (tgui_alert(src.mob, "Are you sure you want to smite [M]?", "Confirmation", list("Yes", "No")) == "Yes")
+		if(usr.key != M.key && M.client)
+			logTheThing(LOG_ADMIN, usr, "has smited [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has smited [constructTarget(M,"diary")]", "admin")
+			message_admins("[key_name(usr)] has smited [key_name(M)]")
+
+		M.smite_gib()
+
 /client/proc/cmd_admin_gib_self()
 	set name = "Gibself"
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
@@ -281,7 +298,7 @@
 	var/turf/T = get_turf(src.mob)
 	if(T)
 		var/obj/overlay/O = new/obj/overlay(T)
-		O.anchored = 1
+		O.anchored = ANCHORED
 		O.name = "Explosion"
 		O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		O.pixel_x = -92
@@ -360,14 +377,14 @@
 	Q.caller = usr
 	Q.tysonspeed = speed
 
-/obj/bantyson/
+/obj/bantyson
 	name = "Mike Tyson"
 	desc = "Oh shit!!!"
 	icon = 'icons/misc/Tyson4real.dmi'
 	icon_state = "idle"
 	layer = EFFECTS_LAYER_2
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/mob/tysontarget2 = null
 	var/tysonmins2 = null
 	var/mob/caller = null
@@ -442,14 +459,14 @@
 		playsound(src.loc, pick('sound/misc/Boxingbell.ogg'), 50, 0)
 		qdel(src)
 
-/obj/gibtyson/
+/obj/gibtyson
 	name = "Mike Tyson"
 	desc = "Oh shit!"
 	icon = 'icons/misc/Tyson4real.dmi'
 	icon_state = "idle"
 	layer = EFFECTS_LAYER_2
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/mob/tysontarget2 = null
 	var/tysonspeed = 1
 	var/mob/caller = null

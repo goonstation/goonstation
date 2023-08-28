@@ -36,6 +36,6 @@ var/global/list/turf/random_floor_turfs = null
 
 	while (rand_amt > length(random_floor_turfs))
 		var/turf/T = pick(station_z_turfs)
-		if(istype(T,/turf/simulated/floor) && !(locate(/obj/window) in T))
+		if(!IS_ARRIVALS(get_area(T)) && istype(T,/turf/simulated/floor) && !(locate(/obj/window) in T))
 			random_floor_turfs += T
 			LAGCHECK(LAG_LOW)

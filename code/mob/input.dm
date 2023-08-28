@@ -238,14 +238,15 @@
 						if (mob_flags & AT_GUNPOINT) //we do this check here because if we DID take a step, we aren't tight-grabbed and the gunpoint shot will be triggered by Mob/Move(). messy i know, fix later
 							for(var/obj/item/grab/gunpoint/G in grabbed_by)
 								G.shoot()
-
+						var/list/stepped = list()
 						for (var/obj/item/grab/G as anything in src.grabbed_by)
-							if (G.assailant == pushing || G.affecting == pushing) continue
+							if ((G.assailant in stepped) || G.assailant == pushing || G.affecting == pushing) continue
 							if (G.state < GRAB_AGGRESSIVE) continue
 							if (!G.assailant || !isturf(G.assailant.loc) || G.assailant.anchored)
 								return
 							src.set_density(0) //assailant shouldn't be able to bump us here. Density is set to 0 by the grab stuff but *SAFETY!*
 							step(G.assailant, move_dir)
+							stepped |= G.assailant
 							if(G.assailant)
 								delay += G.assailant.p_class
 
@@ -297,7 +298,7 @@
 			next_move = world.time + delay
 			return delay
 		else
-			if (src.restrained())
+			if (src.restrained() || !isalive(src))
 				return
 			for (var/obj/item/grab/G as anything in src.grabbed_by)
 				if (G.state == GRAB_PIN)

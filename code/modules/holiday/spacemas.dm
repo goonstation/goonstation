@@ -15,7 +15,7 @@
 // * Stockings - from halloween.dm - wtf
 
 // define used for removing spacemas objects when it's not xmas
-#if defined(XMAS) || defined(RUNTIME_CHECKING)
+#if defined(XMAS) || defined(CI_RUNTIME_CHECKING)
 #define EPHEMERAL_XMAS EPHEMERAL_SHOWN
 #else
 #define EPHEMERAL_XMAS EPHEMERAL_HIDDEN
@@ -67,7 +67,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 	// Select player.
 	var/list/datum/mind/candidates = dead_player_list(1, confirmation_delay, text_messages)
-	if (!islist(candidates) || candidates.len <= 0)
+	if (!islist(candidates) || length(candidates) <= 0)
 		message_admins("Couldn't set up [which_one == 0 ? "Santa Claus" : "Krampus"] respawn (no eligible candidates found).")
 		xmas_respawn_lock = 0
 		return
@@ -81,7 +81,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	// Respawn player.
 	var/mob/L
 	var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
-	var/WSLoc = job_start_locations["wizard"] ? pick(job_start_locations["wizard"]) : null
+	var/WSLoc = pick_landmark(LANDMARK_WIZARD)
 
 	if (!ASLoc)
 		message_admins("Couldn't set up [which_one == 0 ? "Santa Claus" : "Krampus"] respawn (no late-join landmark found).")
@@ -146,7 +146,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 /obj/machinery/bot/guardbot/bootleg
 	name = "Super Protector Friend III"
 	desc = "The label on the back reads 'New technology! Blinking light action!'."
-	icon = 'icons/misc/xmas.dmi'
+	icon = 'icons/obj/bots/robuddy/super-protector-friend.dmi'
 
 	speak(var/message)
 		var/fontmode = rand(1,4)
@@ -172,7 +172,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 /obj/machinery/bot/guardbot/xmas
 	name = "Jinglebuddy"
 	desc = "Festive!"
-	icon = 'icons/obj/bots/xmasbuddy.dmi'
+	skin_icon_state = "xmasbuddy"
 	setup_default_tool_path = /obj/item/device/guardbot_tool/xmas
 
 	speak(var/message)
@@ -192,7 +192,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 		src.invisibility = INVIS_ALWAYS_ISH
 		var/obj/overlay/Ov = new/obj/overlay(T)
-		Ov.anchored = 1
+		Ov.anchored = ANCHORED
 		Ov.name = "Explosion"
 		Ov.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		Ov.pixel_x = -92
@@ -243,14 +243,14 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			return
 
 		if (ranged)
-			var/obj/projectile/P = shoot_projectile_ST_pixel(master, current_projectile, target)
+			var/obj/projectile/P = shoot_projectile_ST_pixel_spread(master, current_projectile, target)
 			if (!P)
 				return
 
 			user.visible_message("<span class='alert'><b>[master] throws a snowball at [target]!</b></span>")
 
 		else
-			var/obj/projectile/P = initialize_projectile_ST(master, current_projectile, target)
+			var/obj/projectile/P = initialize_projectile_pixel_spread(master, current_projectile, target)
 			if (!P)
 				return
 
@@ -301,151 +301,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		O.set_clothing_icon_dirty()
 		return
 
-/obj/critter/sealpup
-	name = "space seal pup"
-	desc = "A seal pup, in space, aww."
-	icon_state = "seal"
-	density = 0
-	health = 10
-	aggressive = 0
-	defensive = 0
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	atkcarbon = 0
-	atksilicon = 0
-	firevuln = 1
-	brutevuln = 1
-	butcherable = 2
-	is_pet = 1
-
-	New()
-		..()
-		src.name = pick_string_autokey("names/seals.txt")
-
-	CritterDeath()
-		if (!src.alive) return
-		..()
-		src.desc = "The lifeless corpse of [src.name], why would anyone do such a thing?"
-		modify_christmas_cheer(-20)
-		src.name = "dead space seal pup"
-		for (var/obj/critter/sealpup/S in view(7,src))
-			if(S.alive)
-				S.visible_message("<b>[S.name]</b> [pick("groans","yelps")]!", 1)
-				walk_away(S,src,20,1)
-				SPAWN(1 SECOND) walk(S,0)
-		///Killing seals pisses off walruses!! uh oh.
-		for (var/obj/critter/walrus/W in view(7,src))
-			if(W.alive)
-				W.aggressive = 1
-				SPAWN(0.7 SECONDS)
-				W.aggressive = 0
-
-	attack_hand(var/mob/user)
-		if (!src.alive)
-			return
-		if (user.a_intent == "harm")
-			src.health -= rand(1,2) * src.brutevuln
-			for(var/mob/O in viewers(src, null))
-				O.show_message("<span class='combat'><b>[user]</b> punches [src]!</span>", 1)
-			playsound(src.loc, "punch", 50, 1)
-			if (src.alive && src.health <= 0) src.CritterDeath()
-			if (src.defensive)
-				src.target = user
-				src.oldtarget_name = user.name
-				src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [user.name]!</span>")
-				src.task = "chasing"
-			if(!src.defensive)
-				src.visible_message("<b>[src]</b> [pick("groans","yelps")]!", 1)
-				walk_away(src,user,10,1)
-				SPAWN(0.7 SECONDS) walk(src,0)
-		else
-			src.visible_message("<b>[user]</b> [pick("hugs","pets","caresses","boops","squeezes")] [src]!", 1)
-			if(prob(80))
-				src.visible_message("<b>[src]</b> [pick("coos","purrs","mewls","chirps","arfs","arps","urps")].", 1)
-			else
-				src.visible_message("<b>[src]</b> hugs <b>[user]</b> back!", 1)
-				if (user.reagents)
-					user.reagents.add_reagent("hugs", 10)
-				playsound(src.loc, 'sound/voice/babynoise.ogg', 50, 10,10)
-
-	attackby(obj/item/W, mob/living/user)
-		..()
-		if(!alive) return
-		if (istype(W, /obj/item/reagent_containers/food/snacks))
-			if(findtext(W.name,"seal")) // for you, spacemarine9
-				src.visible_message("<b>[src]</b> [pick("groans","yelps")]!", 1)
-				src.visible_message("<b>[src]</b> gets frightened by [W]!", 1)
-				walk_away(src,user,10,1)
-				SPAWN(1 SECOND) walk(src,0)
-				return
-
-			if(prob(5))
-				src.visible_message("<b>[src]</b> gives [W] back to <b>[user]</b> as if they wanted to share!", 1)
-				playsound(src.loc, 'sound/voice/babynoise.ogg', 50, 10,10)
-			user.visible_message("<b>[user]</b> feeds [W] to [src]!","You feed [W] to [src].")
-			src.visible_message("<b>[src]</b> [pick("coos","purrs","mewls","chirps","arfs","arps","urps")].", 1)
-			modify_christmas_cheer(1)
-			src.health += 10
-			qdel(W)
-		else
-			src.visible_message("<b>[src]</b> [pick("groans","yelps")]!", 1)
-			walk_away(src,user,10,1)
-			SPAWN(0.4 SECONDS) walk(src,0)
-			..()
-
-/obj/critter/walrus
-	name = "space walrus"
-	desc = "A walrus, in space."
-	icon_state = "walrus"
-	density = 1
-	health = 30
-	aggressive = 0
-	defensive = 1
-	wanderer = 1
-	atkcarbon = 1
-	atksilicon = 1
-	atcritter = 1
-	firevuln = 0.5
-	brutevuln = 0.5
-	butcherable = 1
-
-
-	seek_target()
-		src.anchored = 0
-		for (var/mob/living/C in view(src.seekrange,src))
-			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
-			if (iscarbon(C) && !src.atkcarbon) continue
-			if (issilicon(C) && !src.atksilicon) continue
-			if (C.health < 0) continue
-			if (C.name == src.attacker) src.attack = 1
-			if (iscarbon(C) && src.atkcarbon) src.attack = 1
-			if (issilicon(C) && src.atksilicon) src.attack = 1
-
-			if (src.attack)
-				src.target = C
-				src.oldtarget_name = C.name
-				src.visible_message("<span class='combat'><b>[src]</b> roars at [C:name]!</span>")
-				playsound(src.loc, 'sound/voice/MEraaargh.ogg', 50, 0)
-				src.task = "chasing"
-				break
-			else
-				continue
-
-
-	CritterAttack(mob/M)
-		src.attacking = 1
-		M.visible_message("<span class='combat'><b>[src]</b> drives its tusks through [src.target]!</span>")
-		random_brute_damage(M, rand(8,16),1)
-		SPAWN(2 SECONDS) src.attacking = 0
-
-
-	ChaseAttack(mob/M)
-		src.visible_message("<span class='combat'><b>[src]</b> lunges upon [M]!</span>")
-		if(iscarbon(M))
-			if(prob(50)) M.changeStatus("stunned", 2 SECONDS)
-		random_brute_damage(M, rand(4,8),1)
-
-
 proc/compare_ornament_score(list/a, list/b)
 	. = b["score"] - a["score"]
 
@@ -456,7 +311,7 @@ proc/compare_ornament_score(list/a, list/b)
 	desc = "O Spacemas tree, O Spacemas tree, Much p- Huh, there's a bunch of crayons and canvases under it, try clicking it?"
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "xmastree_2022"
-	anchored = 1
+	anchored = ANCHORED
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	pixel_x = -64
 	plane = PLANE_ABOVE_LIGHTING
@@ -678,7 +533,7 @@ proc/compare_ornament_score(list/a, list/b)
 		ornament.layer = src.layer + 0.1
 		ornament.plane = src.plane
 		ornament.on_tree = src
-		ornament.anchored = 2
+		ornament.anchored = ANCHORED_ALWAYS
 		ornament.set_loc(null)
 		src.placed_ornaments[slot_number] = ornament
 
@@ -720,7 +575,7 @@ proc/compare_ornament_score(list/a, list/b)
 						empty_index = i
 						break
 				src.place_ornament(ornament, empty_index || rand(1, length(src.placed_ornaments)))
-				logTheThing("station", user, null, "placed an ornament with name '[ornament.name]' on the Spacemas tree.")
+				logTheThing(LOG_STATION, user, "placed an ornament with name '[ornament.name]' on the Spacemas tree.")
 				boutput(user, "<span class='notice'>You hang \the [ornament.name] on the tree.</span>")
 				LAZYLISTADD(src.ckeys_placed_this_round, user.ckey)
 		else
@@ -816,7 +671,7 @@ proc/compare_ornament_score(list/a, list/b)
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "garland"
 	layer = 5
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/tinsel
 	plane = PLANE_DEFAULT
@@ -824,7 +679,7 @@ proc/compare_ornament_score(list/a, list/b)
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "tinsel-silver"
 	layer = 5
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/wreath
 	plane = PLANE_DEFAULT
@@ -832,14 +687,14 @@ proc/compare_ornament_score(list/a, list/b)
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "wreath"
 	layer = 5
-	anchored = 1
+	anchored = ANCHORED
 /obj/decal/mistletoe
 	plane = PLANE_DEFAULT
 	name = "mistletoe"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "mistletoe"
 	layer = 9
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/xmas_lights
 	plane = PLANE_DEFAULT
@@ -847,7 +702,7 @@ proc/compare_ornament_score(list/a, list/b)
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "lights1"
 	layer = 5
-	anchored = 1
+	anchored = ANCHORED
 	var/datum/light/light
 
 	New()
@@ -911,14 +766,14 @@ proc/compare_ornament_score(list/a, list/b)
 		desc = "Father Christmas! Santa Claus! Old Nick! ..wait, not that last one. I hope."
 		gender = "male"
 
-		src.equip_new_if_possible(/obj/item/clothing/under/shorts/red, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/clothing/suit/space/santa, slot_wear_suit)
-		src.equip_new_if_possible(/obj/item/clothing/shoes/black, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/glasses/regular, slot_glasses)
-		src.equip_new_if_possible(/obj/item/clothing/head/helmet/space/santahat, slot_head)
-		src.equip_new_if_possible(/obj/item/storage/backpack/red, slot_back)
-		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
-		src.equip_new_if_possible(/obj/item/card/id/captains_spare/santa, slot_wear_id)
+		src.equip_new_if_possible(/obj/item/clothing/under/shorts/red, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/suit/space/santa, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/black, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/regular, SLOT_GLASSES)
+		src.equip_new_if_possible(/obj/item/clothing/head/helmet/space/santahat, SLOT_HEAD)
+		src.equip_new_if_possible(/obj/item/storage/backpack/red, SLOT_BACK)
+		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
+		src.equip_new_if_possible(/obj/item/card/id/captains_spare/santa, SLOT_WEAR_ID)
 
 		var/datum/abilityHolder/HS = src.add_ability_holder(/datum/abilityHolder/santa)
 		HS.addAbility(/datum/targetable/santa/heal)
@@ -1262,7 +1117,7 @@ proc/compare_ornament_score(list/a, list/b)
 	desc = "The most festive kind of sock!"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "stocking_red"
-	anchored = 1
+	anchored = ANCHORED
 	var/list/giftees = list()
 	var/list/gift_paths = null//list()
 	var/list/questionable_gift_paths = null//list()
@@ -1404,7 +1259,7 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 				if(tgui_alert(usr, "Are you sure you want to remove \the [src] not only from the tree but also from the ornament database?", "Remove ornament", list("Yes", "No")) != "Yes")
 					return
 				get_spacemas_ornaments().Remove(src.name)
-				logTheThing("admin", usr, null, "Removed ornament '[src.name]' from the tree and the ornament database.")
+				logTheThing(LOG_ADMIN, usr, "Removed ornament '[src.name]' from the tree and the ornament database.")
 				qdel(src)
 				boutput(usr, "<span class='alert'>You removed \the [src] from the tree and the ornament database.</span>")
 			return

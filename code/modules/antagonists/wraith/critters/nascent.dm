@@ -16,6 +16,8 @@
 	var/mob/living/intangible/wraith/master = null
 	var/deathsound = "sound/voice/wraith/revleave.ogg"
 
+	faction = FACTION_WRAITH
+
 	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)
 		if(M != null)

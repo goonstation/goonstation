@@ -566,7 +566,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "zj" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -649,7 +649,7 @@
 	dir = 4;
 	hardened = 1
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/circuit/red,
 /area/shuttle/escape/centcom)
 "Da" = (
@@ -661,11 +661,11 @@
 	name = "Secure Transport";
 	hardened = 1
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "DH" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/black,
 /area/shuttle/escape/centcom)
 "DI" = (
@@ -1102,7 +1102,7 @@
 	},
 /area/centcom)
 "XO" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";

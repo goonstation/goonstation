@@ -3,7 +3,7 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	signals = list(COMSIG_MOVABLE_MOVED)
 	mobtype = /mob/living/carbon/human
-	proctype = .proc/crayonwalk
+	proctype = PROC_REF(crayonwalk)
 
 /datum/component/wearertargeting/crayonwalk/proc/crayonwalk(mob/living/carbon/human/H, last_turf, direct)
 	if (!H.lying && istype(src.parent, /obj/item/clothing/shoes/clown_shoes))

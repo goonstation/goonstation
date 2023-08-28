@@ -114,64 +114,10 @@
 	default_min_amount = 10
 	default_max_amount = 10
 
-/obj/item/spacecash/twenty
-	default_min_amount = 20
-	default_max_amount = 20
-
-/obj/item/spacecash/fifty
-	default_min_amount = 50
-	default_max_amount = 50
-
-/obj/item/spacecash/hundred
-	default_min_amount = 100
-	default_max_amount = 100
-
-/obj/item/spacecash/fivehundred
-	default_min_amount = 500
-	default_max_amount = 500
-
-/obj/item/spacecash/thousand
-	default_min_amount = 1000
-	default_max_amount = 1000
-
-/obj/item/spacecash/fivethousand
-	default_min_amount = 5000
-	default_max_amount = 5000
-
-/obj/item/spacecash/tenthousand
-	default_min_amount = 10000
-	default_max_amount = 10000
-
-/obj/item/spacecash/hundredthousand
-	default_min_amount = 100000
-	default_max_amount = 100000
-
-/obj/item/spacecash/million
-	default_min_amount = 1000000
-	default_max_amount = 1000000
-
-/obj/item/spacecash/random
-	default_min_amount = 1
-	default_max_amount = 1000000
-
-// That's what tourists spawn with.
-/obj/item/spacecash/random/tourist
-	default_min_amount = 500
-	default_max_amount = 1500
-
-// for couches
-/obj/item/spacecash/random/small
-	default_min_amount = 1
-	default_max_amount = 500
-
-/obj/item/spacecash/random/really_small
-	default_min_amount = 1
-	default_max_amount = 50
-
-/obj/item/spacecash/buttcoin
-	name = "buttcoin"
-	desc = "The crypto-currency of the future (If you don't pay for your own electricity and got in early and don't lose the file and don't want transactions to be faster than half an hour and . . .)"
-	icon_state = "cashblue"
+	buttcoin
+		name = "buttcoin"
+		desc = "The crypto-currency of the future (If you don't pay for your own electricity and got in early and don't lose the file and don't want transactions to be faster than half an hour and . . .)"
+		icon_state = "cashblue"
 
 	New()
 		..()

@@ -1,7 +1,7 @@
 /obj/railing
 	name = "railing"
 	desc = "Two sets of bars shooting onward with the sole goal of blocking you off. They can't stop you from vaulting over them though!"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "railing"
@@ -401,11 +401,11 @@
 				the_railing.railing_deconstruct()
 			if (RAILING_FASTEN)
 				verbens = "fastens"
-				the_railing.anchored = 1
+				the_railing.anchored = ANCHORED
 				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 			if (RAILING_UNFASTEN)
 				verbens = "unfastens"
-				the_railing.anchored = 0
+				the_railing.anchored = UNANCHORED
 				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 		ownerMob.visible_message("<span class='alert'>[owner] [verbens] [the_railing].</span>")
 		logTheThing(LOG_STATION, ownerMob, "[verbens] [the_railing] at [log_loc(the_railing)].")

@@ -12,7 +12,7 @@
 // Generic testing appartus
 
 /obj/machinery/networked
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/networked.dmi'
 	var/net_id = null
@@ -107,7 +107,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 /obj/machinery/networked/storage
 	name = "Databank"
 	desc = "A networked data storage device."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon_state = "tapedrive0"
 	device_tag = "PNET_DATA_BANK"
@@ -663,7 +663,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 /obj/machinery/networked/storage/bomb_tester
 	name = "Explosive Simulator"
 	desc = "A networked device designed to simulate and analyze explosions.  Takes two tanks."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon_state = "bomb_scanner0"
 	base_icon_state = "bomb_scanner"
@@ -891,7 +891,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 			vrbomb = new
 			vrbomb.set_loc(B)
-			vrbomb.anchored = 1
+			vrbomb.anchored = ANCHORED
 			vrbomb.tester = src
 
 			var/obj/item/device/timer/T = new
@@ -1030,7 +1030,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 
 /obj/machinery/networked/nuclear_charge
 	name = "Nuclear Charge"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 	icon_state = "net_nuke0"
 	desc = "A nuclear charge used as a self-destruct device. Uh oh!"
@@ -1300,7 +1300,12 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 						src.icon_state = "net_nuke0"
 						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
 						//World announcement.
-						boutput(world, "<span class='alert'><B>Alert: Self-Destruct Sequence has been disengaged!</B></span>")
+						if (src.z == Z_LEVEL_STATION)
+							command_alert("The [station_or_ship()]'s detonation has been aborted. Please return to your regular duties.", "Self-Destruct Aborted", alert_origin = ALERT_STATION)
+							playsound_global(world, 'sound/misc/announcement_1.ogg', 25)
+						else
+							command_alert("The nuclear charge at [get_area(src)] has been de-activated.", "Nuclear Charge De-activated", alert_origin = ALERT_STATION)
+							playsound_global(world, 'sound/misc/announcement_1.ogg', 25)
 						post_display_status(-1)
 						return
 
@@ -1357,7 +1362,7 @@ TYPEINFO(/obj/machinery/networked/radio)
 /obj/machinery/networked/radio
 	name = "Network Radio"
 	desc = "A networked radio interface."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon_state = "net_radio"
 	device_tag = "PNET_PR6_RADIO"
@@ -1679,7 +1684,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 /obj/machinery/networked/printer
 	name = "Printer"
 	desc = "A networked printer.  It's designed to print."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	icon_state = "printer0"
@@ -2154,7 +2159,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 /obj/machinery/networked/storage/scanner
 	name = "Scanner"
 	desc = "A networked drum scanner.  It's designed to...scan documents."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon_state = "scanner0"
 	deconstruct_flags = DECON_DESTRUCT
@@ -2741,7 +2746,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 	dir = 2
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	anchored = 1
+	anchored = ANCHORED
 	flags = TABLEPASS
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -2797,7 +2802,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 	//var/obj/beam/ir_beam/next = null
 	var/obj/machinery/networked/secdetector/master = null
 	//var/limit = 24
-	anchored = 1
+	anchored = ANCHORED
 	flags = TABLEPASS
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -3217,7 +3222,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 	//var/obj/beam/h7_beam/next = null
 	var/obj/machinery/networked/h7_emitter/master = null
 	limit = 48
-	anchored = 1
+	anchored = ANCHORED
 	flags = TABLEPASS
 	var/datum/light/light
 
@@ -3802,7 +3807,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				return
 
 		if (I.w_class < W_CLASS_BULKY)
-			if (src.contents.len < src.setup_max_objects)
+			if (length(src.contents) < src.setup_max_objects)
 				if(I.cant_drop)
 					return
 				if (mag)
@@ -4480,9 +4485,8 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				src.temperature -= min(5, src.temperature-src.temptarget)
 
 			if (src.temperature != 310)
-				for (var/obj/M in src.loc.contents)
-					if (istype(M.artifact,/datum/artifact/))
-						M.ArtifactStimulus("heat", temperature)
+				for (var/atom/movable/AM in src.loc.contents)
+					AM.temperature_expose(null, src.temperature, CELL_VOLUME)
 
 			if (src.stopattarget && src.temperature == src.temptarget)
 				src.active = 0
@@ -4764,11 +4768,6 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					APPLY_TO_GASES(_SET_SENSED_GAS)
 					#undef _SET_SENSED_GAS
 
-					var/tgmoles = 0
-					if(length(air_sample.trace_gases))
-						for(var/datum/gas/trace_gas as anything in air_sample.trace_gases)
-							tgmoles += trace_gas.moles
-					sensed.Add(round(100*tgmoles/total_moles, 0.1))
 				else
 					sensed = list("???")
 
@@ -4812,14 +4811,14 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 		..()
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 0", .proc/fire0)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", .proc/fire1)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", .proc/fire2)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", .proc/fire3)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", .proc/fire4)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", .proc/fire5)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", .proc/fire6)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", .proc/fire7)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 0", PROC_REF(fire0))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", PROC_REF(fire1))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", PROC_REF(fire2))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", PROC_REF(fire3))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", PROC_REF(fire4))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", PROC_REF(fire5))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", PROC_REF(fire6))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", PROC_REF(fire7))
 
 	return_html_interface()
 		. = {"<b>INPUT STATUS</b>

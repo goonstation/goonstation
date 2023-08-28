@@ -15,7 +15,7 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 	desc = "A portable combustion generator that burns fuel from a fuel tank, there is a port for a gas tank. A warning reads: DO NOT RUN INDOORS, OR WHILE UNSECURE."
 	icon_state = "chemportgen0"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	flags = FPRINT | FLUID_SUBMERGE | NOSPLASH
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
@@ -387,12 +387,12 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 				else
 					src.visible_message("<span class='notice'>[user] removes the [src]'s bolts from the floor.</span>")
 
-				src.anchored = FALSE
+				src.anchored = UNANCHORED
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				src.updateIntDialog()
 				return
 
-			src.anchored = TRUE
+			src.anchored = ANCHORED
 			src.visible_message("<span class='notice'>[user] secures the [src]'s bolts into the floor.</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			src.send_status()

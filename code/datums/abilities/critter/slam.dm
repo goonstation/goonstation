@@ -40,7 +40,7 @@
 		dummy.mouse_opacity = 0
 		dummy.name = null
 		dummy.set_density(0)
-		dummy.anchored = 1
+		dummy.anchored = ANCHORED
 		dummy.set_opacity(0)
 		dummy.icon = null
 		dummy.overlays += charger
@@ -117,7 +117,7 @@
 			return TRUE
 		var/mob/M = holder.owner
 		var/turf/S = get_turf(M)
-		var/obj/projectile/O = initialize_projectile_ST(S, proj, T)
+		var/obj/projectile/O = initialize_projectile_pixel_spread(S, proj, T)
 		if (!O)
 			return TRUE
 		if (!O.was_setup)
@@ -126,29 +126,5 @@
 		O.launch()
 		return FALSE
 
-/datum/targetable/critter/slam_polymorph
-	name = "Slam"
-	desc = "Charge over a short distance, until you hit a mob or an object. Knocks down mobs."
-	icon_state = "slam_polymorph"
-	cooldown = 10 SECONDS
-	targeted = TRUE
-	target_anything = TRUE
-	var/datum/projectile/slam/proj
-
-	cast(atom/target)
-		proj = new /datum/projectile/slam()
-		if (..())
-			return 1
-		var/turf/T = get_turf(target)
-		if (!T)
-			return 1
-		var/mob/M = holder.owner
-		var/turf/S = get_turf(M)
-		var/obj/projectile/O = initialize_projectile_ST(S, proj, T)
-		if (!O)
-			return 1
-		if (!O.was_setup)
-			O.setup()
-		O.special_data["owner"] = src
-		O.launch()
-		return 0
+	polymorph
+		icon_state = "slam_polymorph"

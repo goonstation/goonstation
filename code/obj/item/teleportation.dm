@@ -179,7 +179,7 @@ TYPEINFO(/obj/item/hand_tele)
 			user.show_text("[src] doesn't have sufficient cell charge to function!", "red")
 			return 0
 
-		if (src.portals.len >= 2)
+		if (length(src.portals) >= 2)
 			user.show_text("The hand teleporter cannot sustain more than 2 portals!", "red")
 			return
 
@@ -238,7 +238,7 @@ TYPEINFO(/obj/item/hand_tele)
 			else
 				continue
 
-		if (L.len < 2) // Shouldn't happen, but you never know.
+		if (length(L) < 2) // Shouldn't happen, but you never know.
 			user.show_text("Error: couldn't find valid coordinates or working teleporters.", "red")
 			return
 

@@ -361,7 +361,7 @@
 								qdel(O)
 						duckets += add
 						break
-					else if (istype(O, /obj/item/spacecash))
+					else if (istype(O, /obj/item/currency/spacecash))
 						duckets += 0.9 * O:amount
 						if (sell)
 							qdel(O)
@@ -384,7 +384,7 @@
 								qdel(O)
 						duckets += add
 						break
-					else if (istype(O, /obj/item/spacecash))
+					else if (istype(O, /obj/item/currency/spacecash))
 						duckets += O:amount
 						if (sell)
 							qdel(O)

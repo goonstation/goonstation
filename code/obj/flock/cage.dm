@@ -12,7 +12,7 @@
 	health = 30
 	health_max = 30
 	alpha = 192
-	anchored = FALSE
+	anchored = UNANCHORED
 	hitTwitch = FALSE
 	passthrough = TRUE
 	var/atom/occupant = null

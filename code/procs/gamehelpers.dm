@@ -85,7 +85,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 		return TRUE
 	if(BOUNDS_DIST(source, user) == 0 || (IN_RANGE(source, user, 1))) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
 		return TRUE
-	else if (source in bible_contents && locate(/obj/item/storage/bible) in range(1, user)) // whoever added the global bibles, fuck you
+	else if (source in bible_contents && locate(/obj/item/bible) in range(1, user)) // whoever added the global bibles, fuck you
 		return TRUE
 	else
 		if (iscarbon(user))
@@ -101,7 +101,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 					//I really shouldnt put this here but i dont have a better idea
 					var/obj/overlay/O = new /obj/overlay ( locate(X,Y,Z) )
 					O.name = "sparkles"
-					O.anchored = 1
+					O.anchored = ANCHORED
 					O.set_density(0)
 					O.layer = FLY_LAYER
 					O.set_dir(pick(cardinal))
@@ -145,7 +145,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 	if(user.client?.holder?.ghost_interaction)
 		return TRUE
 	if (target in bible_contents)
-		target = locate(/obj/item/storage/bible) in range(1, user) // fuck bibles
+		target = locate(/obj/item/bible) in range(1, user) // fuck bibles
 		if (!target)
 			return 0
 	var/turf/UT = get_turf(user)
@@ -324,7 +324,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 			message = say_gurgle(message)
 			messageEffects += "Gurgle"
 
-	if(H.mutantrace && !isdead(H))
+	if(!isdead(H))
 		message = H.mutantrace.say_filter(message)
 		messageEffects += "[H.mutantrace] say_filter()"
 
@@ -606,7 +606,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
 		for (var/atom/movable/AM as anything in S)
 			if (istype(AM, /obj/effects/precipitation)) continue
-			if (istype(AM, /obj/forcefield) || istype(AM, /obj/overlay/tile_effect)) continue
+			if (istype(AM, /obj/overlay/tile_effect)) continue
 			if (!ignore_fluid && istype(AM, /obj/fluid)) continue
 			if (istype(AM, /obj/decal/tile_edge) && istypes(S, turf_to_skip)) continue
 			AM.set_loc(T)
@@ -740,7 +740,7 @@ proc/get_ouija_word_list(atom/movable/source = null, words_min = 5, words_max = 
 				// any actual antag
 				var/list/player_pool = list()
 				for (var/mob/M in mobs)
-					if (!M.client || istype(M, /mob/new_player) || !checktraitor(M))
+					if (!M.client || istype(M, /mob/new_player) || !M.mind?.is_antagonist())
 						continue
 					player_pool += M
 				if (length(player_pool))
@@ -790,3 +790,17 @@ proc/get_ouija_word_list(atom/movable/source = null, words_min = 5, words_max = 
 				return weight_class + 1
 			else
 				return weight_class + 2
+
+/// checks an item for an id card
+/proc/get_id_card(obj/item/I)
+	if (istype(I, /obj/item/card/id))
+		return I
+	if (istype(I, /obj/item/device/pda2))
+		var/obj/item/device/pda2/pda = I
+		return pda.ID_card
+	if (istype(I, /obj/item/clothing/lanyard))
+		var/obj/item/clothing/lanyard/lanyard = I
+		return lanyard.get_stored_id()
+	if (istype(I, /obj/item/magtractor))
+		var/obj/item/magtractor/mag = I
+		return get_id_card(mag.holding)

@@ -47,7 +47,7 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	var/obj/decal/ceshield/overlay
 
 	signals = list(COMSIG_MOB_SHIELD_ACTIVATE)
-	proctype = .proc/activate
+	proctype = PROC_REF(activate)
 
 /datum/component/wearertargeting/energy_shield/Initialize(_valid_slots, _shield_strength = 1, _shield_efficiency = 1, _bleedthrough = TRUE, _power_drain = 0)
 	. = ..()
@@ -58,7 +58,7 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	src.bleedthrough = _bleedthrough
 	src.power_drain = _power_drain
 	overlay = new
-	RegisterSignal(parent, COMSIG_SHIELD_TOGGLE, .proc/toggle)
+	RegisterSignal(parent, COMSIG_SHIELD_TOGGLE, PROC_REF(toggle))
 	if((SLOT_L_HAND in valid_slots) || (SLOT_R_HAND in valid_slots))
 		parent:c_flags |= EQUIPPED_WHILE_HELD
 

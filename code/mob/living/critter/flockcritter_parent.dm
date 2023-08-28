@@ -1,3 +1,5 @@
+TYPEINFO(/mob/living/critter/flock)
+	mat_appearances_to_ignore = list("gnesis")
 /mob/living/critter/flock
 	var/resources = 0
 	name = "concept of a bird machine"
@@ -13,7 +15,6 @@
 	speechverb_stammer = "buzzes"
 	custom_gib_handler = /proc/flockdronegibs
 	custom_vomit_type = /obj/decal/cleanable/flockdrone_debris/fluid
-	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	see_invisible = INVIS_FLOCK
@@ -60,16 +61,12 @@
 /mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
 	..()
 	remove_lifeprocess(/datum/lifeprocess/radiation)
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
-	src.material.setProperty("reflective", 5)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
 
-	// do not automatically set up a flock if one is not provided
-	// flockless drones act differently
-	src.flock = F
+	src.flock = F || get_default_flock()
 	// wait for like one tick for the unit to set up properly before registering
 	SPAWN(1 DECI SECOND)
 		if(!isnull(src.flock))

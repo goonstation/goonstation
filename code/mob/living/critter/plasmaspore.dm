@@ -9,6 +9,8 @@
 	can_throw = 0
 	blood_id = "plasma"
 
+	faction = FACTION_BOTANY
+
 	death(var/gibbed)
 		. = ..()
 		src.visible_message("<b>[src]</b> ruptures and explodes!")

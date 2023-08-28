@@ -7,7 +7,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 	icon = 'icons/misc/32x64.dmi'
 	icon_state = "lrport"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
 	var/busy = 0
 	layer = 2
@@ -16,8 +16,13 @@ var/list/special_places = list() //list of location names, which are coincidenta
 	New()
 		..()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", .proc/mechcompsend)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"receive", .proc/mechcompreceive)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", PROC_REF(mechcompsend))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"receive", PROC_REF(mechcompreceive))
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
@@ -66,7 +71,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 				if(ismob(M))
 					var/mob/O = M
 					O.changeStatus("stunned", 2 SECONDS)
-				SPAWN(6 DECI SECONDS) M.set_loc(target)
+				SPAWN(6 DECI SECONDS) do_teleport(M,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 			SPAWN(1 SECOND) busy = 0
 			return 1
 		return 0
@@ -91,7 +96,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 				if(ismob(M))
 					var/mob/O = M
 					O.changeStatus("stunned", 2 SECONDS)
-				SPAWN(6 DECI SECONDS) M.set_loc(src.loc)
+				SPAWN(6 DECI SECONDS) do_teleport(M,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 			SPAWN(1 SECOND) busy = 0
 			return 1
 		return 0
@@ -158,7 +163,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 		return
 
 	proc/tick()
-		if(events_active.len < 3)
+		if(length(events_active) < 3)
 
 			var/can_spawn = 0 //If there's only events with less than 100% rarity left, we don't spawn anything.
 			//This is to stop the system from spawning only rare events when there's few left.
@@ -253,7 +258,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 		return
 
 	CritterDeath()
-		if(prob(20) && alive)
+		if(prob(33) && alive && !dying)
 			src.visible_message("<span class='alert'><b>[src]</b> begins to reassemble!</span>")
 			var/turf/T = src.loc
 			SPAWN(5 SECONDS)
@@ -261,7 +266,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 				if(src)
 					qdel(src)
 
-		if(prob(1) && alive)
+		if(prob(5) && alive && !dying)
 			new/obj/item/material_piece/iridiumalloy(src.loc)
 
 		..()

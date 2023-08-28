@@ -31,7 +31,7 @@
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "impact_marker"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	pixel_x = -16
 	pixel_y = -16
 	var/gib_mobs = TRUE
@@ -54,7 +54,7 @@
 	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "lootdrop"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_FLOCKVISION
 	var/dropTime = 30
 	var/gib_mobs = TRUE
@@ -90,7 +90,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "explo_smoky"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_FLOCKVISION
 	pixel_x = -32
 	pixel_y = -32
@@ -106,7 +106,7 @@
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "attachecase"
 	var/used = 0
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	opacity = 0
 	var/obj_path
@@ -202,7 +202,7 @@
 
 	if(doMaterial)
 		var/list/material = pick(material_cache - list("cerenkite","ohshitium","plasmastone","koshmarite"))
-		I.setMaterial(material_cache[material], appearance = 1, setname = 1, copy = FALSE)
+		I.setMaterial(material_cache[material], appearance = 1, setname = 1)
 
 	I.name_prefix(prefix)
 

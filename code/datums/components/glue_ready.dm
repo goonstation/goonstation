@@ -19,10 +19,10 @@ TYPEINFO(/datum/component/glue_ready)
 	var/atom/movable/parent = src.parent
 	parent.add_filter("glue_ready_outline", 0, outline_filter(size=1, color="#e6e63c44"))
 	delayed_dry_up(glue_duration)
-	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/glue_thing_to_parent)
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/glue_parent_to_thing_afterattack) // won't do anything if not an item but it doesn't hurt
-	RegisterSignal(parent, COMSIG_ATOM_HITBY_THROWN, .proc/glue_thing_to_parent)
-	RegisterSignal(parent, COMSIG_MOVABLE_HIT_THROWN, .proc/glue_parent_to_thing_hit_thrown)
+	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(glue_thing_to_parent))
+	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(glue_parent_to_thing_afterattack)) // won't do anything if not an item but it doesn't hurt
+	RegisterSignal(parent, COMSIG_ATOM_HITBY_THROWN, PROC_REF(glue_thing_to_parent))
+	RegisterSignal(parent, COMSIG_MOVABLE_HIT_THROWN, PROC_REF(glue_parent_to_thing_hit_thrown))
 
 /datum/component/glue_ready/proc/delayed_dry_up(glue_duration)
 	set waitfor = FALSE
@@ -86,6 +86,10 @@ TYPEINFO(/datum/component/glue_ready)
 		if(user)
 			boutput(user, "<span class='alert'>\The [glued_to]'s radiation dissolves the glue.</span>")
 		qdel(src)
+		return FALSE
+	if(istype(glued_to, /mob/living/critter) && !isitem(thing_glued))
+		if(user)
+			boutput(user, "<span class='alert'>You can only glue items to [glued_to].</span>")
 		return FALSE
 	if(istype(thing_glued, /obj/machinery/portapuke))
 		return FALSE

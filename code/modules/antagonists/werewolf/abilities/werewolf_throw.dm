@@ -64,7 +64,7 @@
 			playsound(M.loc, "swing_hit", 50, 1)
 			var/turf/T = get_edge_target_turf(M, M.dir)
 			if (T && isturf(T))
-				if (HH.stat != 2)
+				if (!isdead(HH))
 					HH.emote("scream")
 				HH.throw_at(T, 10, 4)
 				HH.changeStatus("weakened", 2 SECONDS)

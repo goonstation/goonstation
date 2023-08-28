@@ -55,7 +55,7 @@
 							sleep(1.5 SECONDS)
 							playsound(holder.owner.loc, "explosion", 50)
 							var/obj/overlay/O = new/obj/overlay(get_turf(H))
-							O.anchored = 1
+							O.anchored = ANCHORED
 							O.name = "Explosion"
 							O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 							O.pixel_x = -92
@@ -64,6 +64,6 @@
 							O.icon_state = "explosion"
 							O.fingerprintslast = holder.owner.key
 							SPAWN(3.5 SECONDS) qdel(O)
-							explosion(O, H.loc, 1, 2, 3, 4, 1)
+							explosion(O, H.loc, 1, 2, 3, 4)
 							H.gib()
 					holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_superthrow

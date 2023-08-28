@@ -4,6 +4,9 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/id = null
 	/// Human-readable name for displaying this antagonist for admin menus, round-end summary, etc.
 	var/display_name = null
+	/// The icon state that should be used for the antagonist overlay for this antagonist type. Icons may be found in `icons/mob/antag_overlays.dmi`.
+	var/image/antagonist_icon = "generic"
+
 	/// If TRUE, this antagonist has an associated browser window (ideally with the same ID as itself) that will be displayed in do_popup() by default.
 	var/has_info_popup = TRUE
 	/// If FALSE, this antagonist will not be displayed at the end of the round.
@@ -20,6 +23,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// The mind of the player that that this antagonist is assigned to.
 	var/datum/mind/owner
+	/// Does the owner of this antagonist role use their normal name set in character preferences as opposed to being assigned a random or chosen name?
+	var/uses_pref_name = TRUE
 	/// Whether the addition or removal of this antagonist role is announced to the player.
 	var/silent = FALSE
 	/// How this antagonist was created. Displayed at the end of the round.
@@ -30,6 +35,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/vr = FALSE
 	/// The objectives assigned to the player by this specific antagonist role.
 	var/list/datum/objective/objectives = list()
+	/// The faction given to the player by this antagonist role for AI targeting purposes.
+	var/faction = 0
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
 		. = ..()
@@ -44,6 +51,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 		src.pseudo = do_pseudo
 		src.vr = do_vr
 		if (!do_pseudo && !do_vr) // there is a special place in code hell for mind.special_role
+			LAZYLISTADD(antagonists["[src.id]"], src)
+
 			new_owner.special_role = id
 			if (source == ANTAGONIST_SOURCE_ADMIN)
 				ticker.mode.Agimmicks |= new_owner
@@ -61,10 +70,16 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 		if (QDELETED(src))
 			return FALSE
+		RegisterSignal(src.owner, COMSIG_MIND_ATTACH_TO_MOB, PROC_REF(mind_attach))
+		RegisterSignal(src.owner, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(mind_detach))
 		src.owner.antagonists.Add(src)
 
-	Del()
+	disposing()
 		if (owner && !src.pseudo)
+			LAZYLISTREMOVE(antagonists["[src.id]"], src)
+			if (isnull(antagonists["[src.id]"]))
+				antagonists -= "[src.id]"
+
 			owner.former_antagonist_roles.Add(owner.special_role)
 			owner.special_role = null // this isn't ideal, since the system should support multiple antagonists. once special_role is worked around, this won't be an issue
 			if (src.assigned_by == ANTAGONIST_SOURCE_ADMIN)
@@ -74,15 +89,18 @@ ABSTRACT_TYPE(/datum/antagonist)
 		..()
 
 	/// Calls removal procs to soft-remove this antagonist from its owner. Actual movement or deletion of the datum still needs to happen elsewhere.
-	proc/remove_self(take_gear = TRUE)
+	proc/remove_self(take_gear = TRUE, source)
 		if (take_gear)
 			src.remove_equipment()
 
 		src.remove_objectives()
 
-		if (!src.silent && !src.pseudo)
-			src.announce_removal()
-			src.announce_objectives()
+		if (!src.pseudo)
+			src.remove_from_image_groups()
+
+			if (!src.silent)
+				src.announce_removal(source)
+				src.announce_objectives()
 
 	/// Returns TRUE if this antagonist can be assigned to the given mind, and FALSE otherwise. This is intended to be special logic, overriden by subtypes; mutual exclusivity and other selection logic is not performed here.
 	proc/is_compatible_with(datum/mind/mind)
@@ -118,6 +136,11 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (src.pseudo) // For pseudo antags, objectives and announcements don't happen
 			return
 
+		src.add_to_image_groups()
+
+		if (src.faction)
+			src.owner.current?.faction |= src.faction
+
 		if (!src.silent)
 			src.announce()
 			src.do_popup()
@@ -129,6 +152,30 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 		if (do_relocate)
 			src.relocate()
+
+	proc/unsilence(announce=TRUE)
+		src.silent = FALSE
+		if (announce)
+			src.announce()
+			src.do_popup()
+
+	proc/add_to_image_groups()
+		if (!src.antagonist_icon)
+			return
+
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		var/datum/client_image_group/antagonist_image_group = get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS)
+		antagonist_image_group.add_mind_mob_overlay(src.owner, image)
+
+		if (antagonists_see_each_other)
+			antagonist_image_group.add_mind(src.owner)
+
+	proc/remove_from_image_groups()
+		var/datum/client_image_group/antagonist_image_group = get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS)
+		antagonist_image_group.remove_mind_mob_overlay(src.owner)
+
+		if (antagonists_see_each_other)
+			antagonist_image_group.remove_mind(src.owner)
 
 	/// Equip the antagonist with abilities, custom equipment, and so on.
 	proc/give_equipment()
@@ -169,7 +216,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		boutput(owner.current, "<h3><span class='alert'>You are \a [src.display_name]!</span></h3>")
 
 	/// Display something when this antagonist is removed.
-	proc/announce_removal()
+	proc/announce_removal(source)
 		boutput(owner.current, "<h3><span class='alert'>You are no longer \a [src.display_name]!</span></h3>")
 
 	/// Show a popup window for this antagonist. Defaults to using the same ID as the antagonist itself.
@@ -193,12 +240,13 @@ ABSTRACT_TYPE(/datum/antagonist)
 	 */
 	proc/handle_round_end(log_data = FALSE)
 		. = list()
+		var/assigned_text = assigned_by != ANTAGONIST_SOURCE_OTHER ? assigned_by : ""
 		if (owner.current)
 			// we conjugate assigned_by and display_name manually here,
 			// so that the text macro doesn't treat null assigned_by values as their own text and thus display weirdly
-			. += "<b>[owner.current]</b> (played by <b>[owner.displayed_key]</b>) was \a [assigned_by + display_name]!"
+			. += "<b>[owner.current]</b> (played by <b>[owner.displayed_key]</b>) was \a [assigned_text + display_name]!"
 		else
-			. += "<b>[owner.displayed_key]</b> (character destroyed) was \a [assigned_by + display_name]!"
+			. += "<b>[owner.displayed_key]</b> (character destroyed) was \a [assigned_text + display_name]!"
 		if (length(owner.objectives))
 			var/obj_count = 1
 			for (var/datum/objective/objective as anything in owner.objectives)
@@ -226,7 +274,23 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	proc/on_death()
 		if (src.remove_on_death)
-			src.owner.remove_antagonist(src.id)
+			src.owner.remove_antagonist(src, ANTAGONIST_REMOVAL_SOURCE_DEATH)
+
+	proc/mind_attach(source, mob/new_mob, mob/old_mob)
+		if ((issilicon(new_mob) || isAI(new_mob)) && !(issilicon(old_mob) || isAI(old_mob)))
+			src.borged()
+
+	proc/mind_detach(source, mob/old_mob, mob/new_mob)
+		if ((issilicon(old_mob) || isAI(old_mob)) && !(issilicon(new_mob) || isAI(new_mob)))
+			src.unborged()
+
+	///Called when the player is made into a cyborg or AI
+	proc/borged()
+		return
+
+	///Called when the player is no longer a cybrorg or AI
+	proc/unborged()
+		return
 
 //this is stupid, but it's more reliable than trying to keep signals attached to mobs
 /mob/death()

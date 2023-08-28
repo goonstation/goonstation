@@ -21,10 +21,14 @@ var/list/datum/chem_request/chem_requests = list()
 	name = "Chemical request console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "chemreq"
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/datum/chem_request/request = new
 	var/obj/item/card/id/card = null
 	var/max_volume = 400
 	var/area_name = null
+
+	get_help_message(dist, mob/user)
+		return null
 
 	ui_data(mob/user)
 		. = list()
@@ -103,11 +107,10 @@ var/list/datum/chem_request/chem_requests = list()
 				. = TRUE
 
 	attackby(var/obj/item/I, mob/user)
-		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
-			if (istype(I, /obj/item/device/pda2) && I:ID_card)
-				I = I:ID_card
+		var/obj/item/card/id/id_card = get_id_card(I)
+		if (istype(id_card))
 			boutput(user, "<span class='notice'>You swipe the ID card.</span>")
-			src.card = I
+			src.card = id_card
 			tgui_process.try_update_ui(user, src)
 		else src.Attackhand(user)
 
@@ -123,6 +126,10 @@ var/list/datum/chem_request/chem_requests = list()
 	icon_state = "chemreq"
 	req_access = list(access_chemistry)
 	object_flags = CAN_REPROGRAM_ACCESS
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+
+	get_help_message(dist, mob/user)
+		return null
 
 	proc/get_age(var/datum/chem_request/request)
 		var/delta = ticker.round_elapsed_ticks - request.time

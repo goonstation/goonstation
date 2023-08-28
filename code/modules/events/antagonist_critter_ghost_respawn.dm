@@ -85,7 +85,7 @@
 					)
 				)
 			)
-		),
+		) = 100,
 		list(new /datum/eventSpawnedCritter(
 			name = "fire elementals",
 			critter_types = list(/mob/living/critter/fire_elemental),
@@ -95,10 +95,10 @@
 					)
 				)
 			)
-		),
+		) = 100,
 		list(new /datum/eventSpawnedCritter(
 			name = "gunbots",
-			critter_types = list(/mob/living/critter/robotic/gunbot),
+			critter_types = list(/mob/living/critter/robotic/gunbot/strong),
 			drop_tables = list(
 				new /datum/event_item_drop_table(
 					potential_drop_items = list(/obj/item/property_setter/reinforce, /obj/item/property_setter/thermal, /obj/item/property_setter/speedy),
@@ -106,7 +106,7 @@
 					)
 				)
 			)
-		),
+		) = 100,
 		list(new /datum/eventSpawnedCritter(
 			name = "emagged bots",
 			critter_types = list(/mob/living/critter/robotic/bot/cleanbot/emagged, /mob/living/critter/robotic/bot/firebot/emagged),
@@ -117,7 +117,7 @@
 					)
 				)
 			)
-		),
+		) = 100,
 		list(new /datum/eventSpawnedCritter(
 			name = "jean elementals",
 			critter_types = list(/mob/living/critter/jeans_elemental),
@@ -128,12 +128,12 @@
 					)
 				)
 			)
-		),
+		) = 10,
 		list(new /datum/eventSpawnedCritter(
 			name = "mimics",
 			critter_types = list(/mob/living/critter/mimic/antag_spawn)
 			)
-		), //no loot for mimics
+		) = 100, //no loot for mimics
 	)
 
 	admin_call(var/source)
@@ -172,7 +172,7 @@
 			var/atom/dummy = src.critter_type
 			critter_name = initial(dummy.name) + "s"
 		else
-			select = pick(src.pest_invasion_critter_datums)
+			select = weighted_pick(src.pest_invasion_critter_datums)
 			#ifdef APRIL_FOOLS
 			while(TRUE)
 				var/datum/eventSpawnedCritter/esc = select[1]
@@ -245,7 +245,7 @@
 					new /obj/item/implant/access/infinite/assistant(M.current)
 					if (src.custom_spawn_turf)
 						M.current.set_loc(src.custom_spawn_turf)
-					antagify(M.current, null, 1)
+					M.add_generic_antagonist(ROLE_ANTAGONIST_CRITTER, "[M.current.real_name]", source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 				candidates -= M
 
 			command_alert("Our sensors have detected a hostile nonhuman lifeform in the vicinity of the station.", "Hostile Critter", alert_origin = ALERT_GENERAL)

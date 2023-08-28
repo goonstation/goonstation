@@ -1,4 +1,5 @@
 /// Base item. These are objects you can hold, generally.
+ABSTRACT_TYPE(/obj/item)
 /obj/item
 	/*_____*/
 	/*Basic*/
@@ -18,6 +19,8 @@
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	/// set to a colour to make the inhand image be that colour. if the item is coloured though that takes priority over this variable
 	var/inhand_color = null
+	/// storage datum holding it
+	var/datum/storage/stored = null
 
 	/*_______*/
 	/*Burning*/
@@ -56,6 +59,9 @@
 	var/obj/item/grab/special_grab = null
 
 	var/attack_verbs = "attacks" //! Verb used when you attack someone with this, as in [attacker] [attack_verbs] [victim]. Can be a list or single entry
+
+	/// when attacking, this item can leave a slash wound
+	var/leaves_slash_wound = FALSE
 
 	/*_________*/
 	/*Inventory*/
@@ -118,7 +124,8 @@
 	var/override_attack_hand = 1 //when used as an arm, attack with item rather than using attack_hand
 	var/limb_hit_bonus = 0 // attack bonus for when you have this item as a limb and hit someone with it
 	var/can_hold_items = 0 //when used as an arm, can it hold things?
-
+	/// Chance for this item to be replaced by a mimic disguised as it - note, setting this high here is a *really* bad idea
+	var/mimic_chance = 0
 	var/rand_pos = 0
 	var/obj/item/holding = null
 	var/rarity = ITEM_RARITY_COMMON // Just a little thing to indicate item rarity. RPG fluff.
@@ -205,6 +212,8 @@
 			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]<br>To execute a special, use HARM or DISARM intent and click a far-away tile.</div>"
 		. = jointext(., "")
 
+		. += src.storage?.get_capacity_string()
+
 		lastTooltipContent = .
 
 	MouseEntered(location, control, params)
@@ -245,7 +254,7 @@
 					tooltipParams["flags"] = TOOLTIP_TOP2 //space up one tile, not TOP. need other spacing flag thingy
 
 				//If we're over an item that's stored in a container the user has equipped
-				if (src.z == 0 && istype(src.loc, /obj/item/storage) && src.loc.loc == usr)
+				if (src.z == 0 && src.stored?.linked_item.loc == usr)
 					tooltipParams["flags"] = TOOLTIP_RIGHT
 
 				usr.client.tooltipHolder.showHover(src, tooltipParams)
@@ -264,12 +273,12 @@
 		tooltip_rebuild = 1
 		if (istype(src.material))
 			burn_possible = src.material.getProperty("flammable") > 1 ? TRUE : FALSE
-			if (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL || src.material.material_flags & MATERIAL_RUBBER)
+			if (src.material.getMaterialFlags() & (MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_RUBBER))
 				burn_type = 1
 			else
 				burn_type = 0
 
-		if (src.material.triggersOnLife.len)
+		if (src.material.countTriggers(TRIGGERS_ON_LIFE))
 			src.AddComponent(/datum/component/loctargeting/mat_triggersonlife)
 		else
 			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
@@ -277,7 +286,7 @@
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 
 	removeMaterial()
-		if (src.material && length(src.material.triggersOnLife))
+		if (src.material?.countTriggers(TRIGGERS_ON_LIFE))
 			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
 			if (C)
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
@@ -307,8 +316,20 @@
 	if (isnull(initial(src.health))) // if not overridden
 		src.health = get_initial_item_health(src.type)
 	..()
+	if(prob(src.mimic_chance))
+		SPAWN(10 SECONDS)
+			src.become_mimic()
 
-/obj/item/set_loc(var/newloc as turf|mob|obj in world)
+/obj/item/set_loc(var/newloc as turf|mob|obj in world, storage_check = TRUE)
+	// storage check is meant as a catch-all/safety check for any explicit cases of
+	// if (src.stored)
+	//     src.stored.transfer_stored_item(src, newloc, user = usr)
+	// else
+	//     src.set_loc(newloc)
+	// this should be fine in most cases but if there's any bugs from using usr or unique functionality wanted, this should be manually defined
+	if (storage_check && src.stored)
+		src.stored.transfer_stored_item(src, newloc)
+		return
 	if (src.temp_flags & IS_LIMB_ITEM)
 		if (istype(newloc,/obj/item/parts/human_parts/arm/left/item) || istype(newloc,/obj/item/parts/human_parts/arm/right/item))
 			..()
@@ -317,9 +338,9 @@
 	else
 		..()
 
-/obj/item/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
+/obj/item/setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = FALSE, var/use_descriptors = FALSE)
 	..()
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 
 //set up object properties on the block when blocking with the item. if overriding this proc, add the BLOCK_SETUP macro to new() to register for the signal and to get tooltips working right
 /obj/item/proc/block_prop_setup(var/source, var/obj/item/grab/block/B)
@@ -365,25 +386,57 @@
 		return 1
 	..()
 
+/obj/item/material_trigger_on_mob_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/situation_modifier)
+	var/hitchance = 10
+	// if the item is in you, you get a chance, depending on the size, that it gets hit
+	switch(src.w_class)
+		if (-INFINITY to W_CLASS_TINY)
+			hitchance = 10
+		if (W_CLASS_SMALL)
+			hitchance = 20
+		if (W_CLASS_NORMAL)
+			hitchance = 30
+		if (W_CLASS_BULKY)
+			hitchance = 60
+		if (W_CLASS_HUGE to INFINITY)
+			hitchance = 100
+	// It won't trigger when you are carrying it in your hand and it isnt targeted, with the exception that it will always trigger if you are blocking or having a person in a grab with the item
+	if (attacked.l_hand == src  || attacked.r_hand == src)
+		if ((src.c_flags && src.c_flags & HAS_GRAB_EQUIP))
+			hitchance = 100
+		else
+			// if the arm you are holding the item is target, the chance gets doubled
+			if (situation_modifier && istext(situation_modifier))
+				var/targeted_zone = parse_zone(situation_modifier)
+				if(targeted_zone == "both arms" || (attacked.l_hand == src && targeted_zone =="left arm") || (attacked.r_hand == src && targeted_zone == "right arm"))
+					hitchance *= 2
+				else
+					hitchance = 0
+			else
+				hitchance = 0
+	if(!prob(hitchance))
+		return
+	..()
+
 
 //disgusting proc. merge with foods later. PLEASE
 /obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/by_matter_eater=FALSE)
 	if (!iscarbon(M) && !ismobcritter(M))
-		return 0
+		return FALSE
 	if (M?.bioHolder && !M.bioHolder.HasEffect("mattereater"))
 		if(ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
-			return 0
+			return FALSE
 	var/edibility_override = SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED_PRE, user, src) || SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED_PRE, M, user)
 	var/can_matter_eat = by_matter_eater && (M == user) && M.bioHolder.HasEffect("mattereater")
-	var/edible_check = src.edible || (src.material?.edible) || (edibility_override & FORCE_EDIBILITY)
+	var/edible_check = src.edible || (src.material?.getEdible()) || (edibility_override & FORCE_EDIBILITY)
 	if (!edible_check && !can_matter_eat)
-		return 0
+		return FALSE
 
 	if (M == user)
 		M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
 		"<span class='notice'>You take a bite of [src]!</span>")
 
-		if (src.material && src.material.edible)
+		if (src.material && (src.material.getEdible() || edibility_override))
 			src.material.triggerEat(M, src)
 
 		if (src.reagents && src.reagents.total_volume)
@@ -398,9 +451,12 @@
 				return
 			SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED, user, src) //one to the mob
 			SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED, M, src) //one to the item
+			if (src.amount > 1)
+				src.change_stack_amount(-1)
+				return
 			user.u_equip(src)
 			qdel(src)
-		return 1
+		return TRUE
 
 	else
 		user.tri_message(M, "<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
@@ -409,16 +465,16 @@
 		logTheThing(LOG_COMBAT, user, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (!do_mob(user, M))
-			return 1
+			return TRUE
 		if (BOUNDS_DIST(user, M) > 0)
-			return 1
+			return TRUE
 
 		user.tri_message(M, "<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
 			"<span class='alert'>You feed [M] [src]!</span>",\
 			"<span class='alert'><b>[user]</b> feeds you [src]!</span>")
 		logTheThing(LOG_COMBAT, user, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
-		if (src.material && src.material.edible)
+		if (src.material && (src.material.getEdible() || edibility_override))
 			src.material.triggerEat(M, src)
 
 		if (src.reagents && src.reagents.total_volume)
@@ -433,9 +489,12 @@
 				return
 			SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED, user, src) //one to the mob
 			SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED, M, src) //one to the item
+			if (src.amount > 1)
+				src.change_stack_amount(-1)
+				return
 			user.u_equip(src)
 			qdel(src)
-		return 1
+		return TRUE
 
 /obj/item/proc/take_damage(brute, burn, tox, disallow_limb_loss)
 	// this is a helper for organs and limbs
@@ -493,8 +552,6 @@
 					firesource = I
 					break
 			src.combust(firesource)
-	if (src.material)
-		src.material.triggerTemp(src, temperature)
 	..() // call your fucking parents
 
 /// Gets the effective contraband level of an item. Use this instead of accessing .contraband directly
@@ -535,7 +592,7 @@
 	var/imdrone
 	if((imrobot = isrobot(other.loc)) || (imdrone = isghostdrone(other.loc)) || istype(other.loc, /obj/item/magtractor))
 		if (imrobot)
-			max_stack = 500
+			max_stack = 300
 		else if (imdrone)
 			max_stack = 1000
 		if (other != src && check_valid_stack(src))
@@ -575,7 +632,7 @@
 			return 0
 
 	if(O.material && src.material)
-		if(!isSameMaterial(O.material, src.material))
+		if(!O.material.isSameMaterial(src.material))
 			return 0
 	else if ((O.material && !src.material) || (!O.material && src.material))
 		return 0
@@ -587,7 +644,7 @@
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)
-		P.setMaterial(copyMaterial(src.material))
+		P.setMaterial(src.material, mutable = src.material.isMutable())
 
 	src.change_stack_amount(-toRemove)
 	P.change_stack_amount(toRemove - P.amount)
@@ -620,7 +677,7 @@
 
 		after_stack(O, user, added)
 
-#define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
+#define src_exists_inside_user_or_user_storage (src.loc == user || src.stored?.linked_item.loc == user)
 
 
 /obj/item/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
@@ -638,7 +695,7 @@
 
 	params = params2list(params)
 
-	if (isliving(over_object) && isliving(usr) && !istype(src,/obj/item/storage)) //pickup action
+	if (isliving(over_object) && isliving(usr) && !src.storage) //pickup action
 		if (user == over_object)
 			actions.start(new /datum/action/bar/private/icon/pickup(src), user)
 		//else // use laterr, after we improve the 'give' dialog to work with multicontext
@@ -656,12 +713,12 @@
 						//src.pixel_y = text2num(params["icon-y"]) - 16
 						//animate(src, pixel_x = text2num(params["icon-x"]) - 16, pixel_y = text2num(params["icon-y"]) - 16, time = 30, flags = ANIMATION_END_NOW)
 					return
-			else if (src_exists_inside_user_or_user_storage && !istype(src,/obj/item/storage)) //sorry for the storage check, i dont wanna override their mousedrop and to do it Correcly would be a whole big rewrite
+			else if (src_exists_inside_user_or_user_storage && !src.storage) //sorry for the storage check, i dont wanna override their mousedrop and to do it Correcly would be a whole big rewrite
 				usr.drop_from_slot(src) //drag from inventory to floor == drop
 				step_to(src,over_object)
 				return
 
-		var/is_storage = istype(over_object,/obj/item/storage)
+		var/is_storage = over_object.storage
 		if (is_storage || istype(over_object, /atom/movable/screen/hud))
 			if (on_turf && isturf(over_object.loc) && is_storage)
 				try_equip_to_inventory_object(usr, over_object, params)
@@ -671,7 +728,7 @@
 				try_equip_to_inventory_object(usr, over_object, params)
 
 		else if (isobj(over_object) && !src.check_valid_stack(over_object))
-			if (src.loc == usr || istype(src.loc,/obj/item/storage))
+			if (src.loc == usr || src.stored)
 				if (try_put_hand_mousedrop(usr))
 					if (can_reach(usr, over_object))
 						usr.click(over_object, params, src_location, over_control)
@@ -716,12 +773,11 @@
 	if (istype(S))
 		if (S.master && istype(S.master,/datum/hud/storage))
 			var/datum/hud/storage/hud = S.master
-			over_object = hud.master //If dragged into backpack HUD, change over_object to the backpack
+			over_object = hud.master.linked_item //If dragged into backpack HUD, change over_object to the backpack
 
-	if (istype(over_object,/obj/item/storage) && over_object != src)
-		var/obj/item/storage/storage = over_object
-		if (istype(storage.loc, /turf))
-			if (!(in_interact_range(src,user) && in_interact_range(storage,user)))
+	if (over_object.storage && over_object != src)
+		if (istype(over_object.loc, /turf))
+			if (!(in_interact_range(src,user) && in_interact_range(over_object,user)))
 				return
 
 		src.pick_up_by(user)
@@ -729,7 +785,7 @@
 		if (succ)
 			SPAWN(1 DECI SECOND)
 				if (user.is_in_hands(src))
-					storage.Attackby(src, user)
+					over_object.Attackby(src, user)
 			return
 
 	if (istype(S))
@@ -748,10 +804,12 @@
 
 
 /obj/item/proc/try_put_hand_mousedrop(mob/user)
-	var/oldloc = src.loc
+	var/atom/was_stored = src.stored?.linked_item
 
 	if(src.equipped_in_slot && src.cant_self_remove)
 		return 0
+
+	was_stored?.storage.transfer_stored_item(src, get_turf(src), user = user)
 
 	var/mob/living/carbon/human/target
 	if (ishuman(user))
@@ -768,7 +826,7 @@
 					user.u_equip(src)
 					. = user.put_in_hand(src, 0)
 				else if (!user.l_hand)
-					if (!target?.can_equip(src, target.slot_l_hand))
+					if (!target?.can_equip(src, SLOT_L_HAND))
 						user.show_text("You need a free hand to do that!", "blue")
 						.= 0
 					else
@@ -785,7 +843,7 @@
 					user.u_equip(src)
 					. = user.put_in_hand(src, 1)
 				else if (!user.r_hand)
-					if (!target?.can_equip(src, target.slot_r_hand))
+					if (!target?.can_equip(src, SLOT_R_HAND))
 						user.show_text("You need a free hand to do that!", "blue")
 						.= 0
 					else
@@ -800,16 +858,12 @@
 		user.show_text("This item is anchored to the floor!", "blue")
 		.= 0
 
-	if (. == 1)
-		if (istype(oldloc,/obj/item/storage))
-			var/obj/item/storage/S = oldloc
-			//S.hud.remove_item(src)
-			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
+	if (. == FALSE && was_stored)
+		was_stored.storage.add_contents(src, user, FALSE)
 
 /obj/item/attackby(obj/item/W, mob/user, params)
 	if (W.firesource)
-		if(src.material)
-			src.material.triggerTemp(src ,1500)
+		src.material_trigger_on_temp(1500)
 		if (src.burn_possible && src.burn_point <= 1500)
 			src.combust(W)
 		else
@@ -829,7 +883,7 @@
 	SHOULD_NOT_SLEEP(TRUE)
 	if (src.burning)
 		if (src.material && !(src.item_function_flags & COLD_BURN))
-			src.material.triggerTemp(src, src.burn_output + rand(1,200))
+			src.material_trigger_on_temp(src.burn_output + rand(1,200))
 		var/turf/T = get_turf(src.loc)
 		if (T && !(src.item_function_flags & COLD_BURN)) // runtime error fix
 			T.hotspot_expose((src.burn_output + rand(1,200)),5)
@@ -903,6 +957,8 @@
 			I.remove_from_mob()
 			I.set_item(src)
 
+	src.storage?.storage_item_attack_self(user)
+
 	chokehold?.attack_self(user)
 
 	return
@@ -924,6 +980,8 @@
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onEquipped(src, user, src.properties[prop])
 	user.update_equipped_modifiers()
+	if (src.storage && !src.storage.opens_if_worn) // also used in equipped() code if a wearing to a slot won't call equipped()
+		src.storage.hide_hud(user)
 
 /obj/item/proc/unequipped(var/mob/user)
 	SHOULD_CALL_PARENT(1)
@@ -944,7 +1002,9 @@
 	. = src.afterattack(target, user, reach, params)
 
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
+	set waitfor = 0
 	PROTECTED_PROC(TRUE)
+	src.storage?.storage_item_after_attack(target, user, reach)
 	return
 
 /obj/item/dummy/ex_act()
@@ -956,8 +1016,7 @@
 /obj/item/ex_act(severity)
 	switch(severity)
 		if (2)
-			if (src.material)
-				src.material.triggerTemp(src ,7500)
+			src.material_trigger_on_temp(7500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 7500)
 				src.combust()
 			if (src.artifact)
@@ -965,8 +1024,7 @@
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
 		if (3)
-			if (src.material)
-				src.material.triggerTemp(src, 3500)
+			src.material_trigger_on_temp(3500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 3500)
 				src.combust()
 			if (src.artifact)
@@ -1028,18 +1086,21 @@
 					HH.limb.attack_hand(src,M,1)
 				M.next_click = world.time + src.click_delay
 				return
-	else if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/obj/item/parts/arm = null
-		if (H.limbs) //Wire: fix for null.r_arm and null.l_arm
-			arm = H.hand ? H.limbs.l_arm : H.limbs.r_arm // I'm so sorry I couldent kill all this shitcode at once
-		if (H.equipped())
-			H.drop_item()
+	else if(ishuman(M) || iscritter(M))
+		var/datum/limb/active_limb = null
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			active_limb = H.hand ? H.limbs?.l_arm?.limb_data : H.limbs?.r_arm?.limb_data // I'm so sorry I couldent kill all this shitcode at once
+		if(iscritter(M))
+			var/mob/living/critter/C = M
+			active_limb = C.get_active_hand().limb
+		if (M.equipped())
+			M.drop_item()
 			SPAWN(1 DECI SECOND)
-				if (arm)
-					arm.limb_data.attack_hand(src, H, can_reach(H, src))
-		else if (arm)
-			arm.limb_data.attack_hand(src, H, can_reach(H, src))
+				if (active_limb)
+					active_limb.attack_hand(src, M, can_reach(M, src))
+		else if (active_limb)
+			active_limb.attack_hand(src, M, can_reach(M, src))
 
 	else
 		//the verb is PICK-UP, not 'smack this object with that object'
@@ -1056,6 +1117,7 @@
 	switch(src.w_class)
 		if (-INFINITY to W_CLASS_TINY) t = "tiny"
 		if (W_CLASS_SMALL) t = "small"
+		if (W_CLASS_POCKET_SIZED) t = "pocket-sized"
 		if (W_CLASS_NORMAL) t = "normal-sized"
 		if (W_CLASS_BULKY) t = "bulky"
 		if (W_CLASS_HUGE to INFINITY) t = "huge"
@@ -1071,6 +1133,8 @@
 		checkloc = checkloc:loc
 
 	if(!src.can_pickup(user))
+		// unholdable storage items
+		src.storage?.storage_item_attack_hand(user)
 		return 0
 
 	src.throwing = 0
@@ -1083,6 +1147,10 @@
 		var/in_pocket = 0
 		if(issilicon(user)) //if it's a borg's shit, stop here
 			return 0
+		// storage items in hands or worn
+		if (src.storage && ((src in user.equipped_list()) || src.storage.opens_if_worn))
+			src.storage.storage_item_attack_hand(user)
+			return FALSE
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.l_store == src || H.r_store == src)
@@ -1109,15 +1177,9 @@
 
 	var/atom/oldloc = src.loc
 	var/atom/oldloc_sfx = src.loc
-	src.set_loc(user) // this is to fix some bugs with storage items
-	if (istype(oldloc, /obj/item/storage))
-		var/obj/item/storage/S = oldloc
-		S.hud.remove_item(src) // ugh
+	if (src.stored)
+		src.stored.transfer_stored_item(src, user, user = user)
 		oldloc_sfx = oldloc.loc
-	if (src in bible_contents)
-		bible_contents.Remove(src) // UNF
-		for_by_tcl(bible, /obj/item/storage/bible)
-			bible.hud.remove_item(src)
 	user.put_in_hand_or_drop(src)
 
 	if (src.artifact)
@@ -1128,7 +1190,7 @@
 		if (pickup_sfx)
 			playsound(oldloc_sfx, pickup_sfx, 56, vary=0.2)
 		else
-			playsound(oldloc_sfx, "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg", 56, vary=0.2)
+			playsound(oldloc_sfx, "sound/items/pickup_[clamp(round(src.w_class), 1, 3)].ogg", 56, vary=0.2)
 
 	return 1
 
@@ -1149,7 +1211,7 @@
 		logTheThing(LOG_COMBAT, user, "uses [src] ([type], object name: [initial(name)]) on [constructTarget(M,"combat")]")
 		return
 
-	if (user.mind && user.mind.special_role == ROLE_VAMPTHRALL && isvampire(M) && user.is_mentally_dominated_by(M))
+	if (user.mind && M.mind && (user.mind.get_master(ROLE_VAMPTHRALL) == M.mind))
 		boutput(user, "<span class='alert'>You cannot harm your master!</span>") //This message was previously sent to the attacking item. YEP.
 		return
 
@@ -1185,11 +1247,11 @@
 			var/momentum = getProperty("momemtum")
 			force += 5
 */
-	if (src.material)
-		src.material.triggerOnAttack(src, user, M)
+	src.material_on_attack_use(user, M)
 	for (var/atom/A in M)
-		if (A.material)
-			A.material.triggerOnAttacked(A, user, M, src)
+		A.material_trigger_on_mob_attacked(user, M, src, hit_area)
+	for (var/atom/equipped_stuff in M.equipped())
+		equipped_stuff.material_trigger_on_mob_attacked(user, M, src, hit_area)
 
 	user.violate_hippocratic_oath()
 
@@ -1292,8 +1354,13 @@
 			fuckup_attack_particle(user)
 			armor_blocked = 1
 
-	if (is_special && src.special)
-		src.special.onHit(M, power, user, msgs)
+	if (src.leaves_slash_wound && power > 0 && hit_area == "chest" && ishuman(M))
+		var/num = rand(0, 2)
+		var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = "slash_wound-[num]", layer = MOB_EFFECT_LAYER)
+		var/mob/living/carbon/human/H = M
+		var/datum/reagent/mob_blood = reagents_cache[H.blood_id]
+		I.color = rgb(mob_blood.fluid_r, mob_blood.fluid_g, mob_blood.fluid_b, mob_blood.transparency)
+		M.UpdateOverlays(I, "slash_wound-[num]")
 
 	if (src.can_disarm && !((src.temp_flags & IS_LIMB_ITEM) && user == M))
 		msgs = user.calculate_disarm_attack(M, 0, 0, 0, is_shove = 1, disarming_item = src)
@@ -1351,7 +1418,7 @@
 	return
 
 /obj/item/onVarChanged(variable, oldval, newval)
-	. = 0
+	. = ..()
 	switch(variable)
 		if ("color")
 			if (src.wear_image) src.wear_image.color = newval
@@ -1395,7 +1462,9 @@
 
 	new_arm.holder = attachee
 	attacher.remove_item(src)
-	new_arm.remove_stage = 2
+
+	var/can_secure = ismob(attacher) && (attacher?.find_type_in_hand(/obj/item/suture) || attacher?.find_type_in_hand(/obj/item/staple_gun))
+	new_arm.remove_stage = can_secure ? 0 : 2
 
 	new_arm:set_item(src)
 	src.cant_drop = 1
@@ -1408,12 +1477,7 @@
 		else
 			O.show_message("<span class='alert'>[attachee] has [src] attached to [his_or_her(attachee)] stump by [attacher].</span>", 1)
 
-	if (attachee != attacher)
-		boutput(attachee, "<span class='alert'>[attacher] attaches [src] to your stump. It doesn't look very secure!</span>")
-		boutput(attacher, "<span class='alert'>You attach [src] to [attachee]'s stump. It doesn't look very secure!</span>")
-	else
-		boutput(attacher, "<span class='alert'>You attach [src] to your own stump. It doesn't look very secure!</span>")
-
+	attacher.visible_message("<span class='alert'>[attacher] attaches [src] to [attacher == attachee ? his_or_her(attacher) : "[attachee]'s"] stump. It [can_secure ? "looks very secure" : "doesn't look very secure"]!</span>")
 	attachee.set_body_icon_dirty()
 	attachee.hud.update_hands()
 
@@ -1440,10 +1504,7 @@
 		qdel(src.inventory_counter)
 		src.inventory_counter = null
 
-	if(istype(src.loc, /obj/item/storage))
-		var/obj/item/storage/storage = src.loc
-		src.set_loc(null) // so the storage doesn't add it back >:(
-		storage.hud?.remove_item(src)
+	src.stored?.transfer_stored_item(src, null)
 
 	var/turf/T = loc
 	if (!istype(T))
@@ -1485,6 +1546,12 @@
 	else
 		. = "<B>[user]</B> [pick("spins", "twirls")] [src] around in [his_or_her(user)] hand."
 
+
+//This proc handles any manipulation that happens due to plantstats
+//This proc returns the item in question. This is needed to enable a switcheroo with new, randomed items e.g. glowstick tree
+/obj/item/proc/HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+	return src
+
 /obj/item/proc/HY_set_species()
 	return
 
@@ -1521,6 +1588,13 @@
 			if(src in M.equipped_list())
 				src.inventory_counter.show_count()
 
+/obj/item/proc/remove_inventory_counter()
+	if (!src.inventory_counter)
+		return
+	src.vis_contents -= src.inventory_counter
+	qdel(src.inventory_counter)
+	src.inventory_counter = null
+
 /obj/item/proc/log_firesource(obj/item/O, datum/thrown_thing/thr, mob/user)
 	UnregisterSignal(O, COMSIG_MOVABLE_THROW_END)
 	if (!O?.firesource == FIRESOURCE_OPEN_FLAME) return
@@ -1549,7 +1623,7 @@
 /obj/item/proc/dropped(mob/user)
 	SPAWN(0) //need to spawn to know if we've been dropped or thrown instead
 		if ((firesource == FIRESOURCE_OPEN_FLAME) && throwing)
-			RegisterSignal(src, COMSIG_MOVABLE_THROW_END, .proc/log_firesource)
+			RegisterSignal(src, COMSIG_MOVABLE_THROW_END, PROC_REF(log_firesource))
 		else if (firesource == FIRESOURCE_OPEN_FLAME)
 			log_firesource(src, null, user)
 
@@ -1558,13 +1632,13 @@
 		#ifdef COMSIG_MOB_DROPPED
 		SEND_SIGNAL(user, COMSIG_MOB_DROPPED, src)
 		#endif
-	if (src.c_flags & EQUIPPED_WHILE_HELD && src == user.equipped())
+	if (src.c_flags & EQUIPPED_WHILE_HELD && (src in user.equipped_list()))
 		src.unequipped(user)
 	#ifdef COMSIG_ITEM_DROPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	#endif
 
-	if(src.material) src.material.triggerDrop(user, src)
+	src.material_on_drop(user)
 	if (islist(src.ability_buttons))
 		for(var/obj/ability_button/B in ability_buttons)
 			B.OnDrop()
@@ -1583,7 +1657,7 @@
 	#ifdef COMSIG_MOB_PICKUP
 	SEND_SIGNAL(user, COMSIG_MOB_PICKUP, src)
 	#endif
-	src.material?.triggerPickup(user, src)
+	src.material_on_pickup(user)
 	set_mob(user)
 	show_buttons()
 	if (src.inventory_counter)
@@ -1599,3 +1673,7 @@
 
 /obj/item/proc/can_pickup(mob/user)
 	return !src.anchored
+
+/// attempt unique functionality when item is held in hand and and using the equip hotkey
+/obj/item/proc/try_specific_equip(mob/user)
+	return FALSE

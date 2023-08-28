@@ -20,7 +20,7 @@ TYPEINFO(/obj/machinery/sleep_console)
 	desc = "A device that displays the vital signs of the occupant of the sleeper, and can dispense chemicals."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeperconsole"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL
 	var/timing = 0 // Timer running?
@@ -244,7 +244,7 @@ TYPEINFO(/obj/machinery/sleeper)
 	icon_state = "sleeper"//_0"
 	desc = "An enterable machine that analyzes and stabilizes the vital signs of the occupant."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
 	event_handler_flags = USE_FLUID_ENTER
 	var/mob/occupant = null
@@ -668,7 +668,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 	name = "Port-A-Medbay"
 	desc = "A transportation and stabilization device for critically injured patients."
 	icon = 'icons/obj/porters.dmi'
-	anchored = 0
+	anchored = UNANCHORED
 	p_class = 1.2
 	var/homeloc = null
 	allow_self_service = 0
@@ -765,7 +765,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 	desc = "Has the same air supply and stabilization capabilites as your usual model, but compact this time. Wow!"
 	icon = 'icons/obj/compact_machines.dmi'
 	icon_state = "compact_sleeper"
-	anchored = TRUE
+	anchored = ANCHORED
 
 	New()
 		..()

@@ -9,24 +9,24 @@
 		real_name = "Cyalume Knight"
 		desc = "A knight of modern times."
 
-		src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/clothing/suit/armor/cknight_robe, slot_wear_suit)
-		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
-		src.equip_new_if_possible(/obj/item/clothing/head/helmet/cknight_hood, slot_head)
-		src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
-		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
-		src.equip_new_if_possible(/obj/item/card/id/syndicate, slot_wear_id)
+		src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/suit/armor/cknight_robe, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, SLOT_GLASSES)
+		src.equip_new_if_possible(/obj/item/clothing/head/helmet/cknight_hood, SLOT_HEAD)
+		src.equip_new_if_possible(/obj/item/storage/backpack, SLOT_BACK)
+		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
+		src.equip_new_if_possible(/obj/item/card/id/syndicate, SLOT_WEAR_ID)
 		var/obj/item/clothing/mask/gas/my_mask = new /obj/item/clothing/mask/gas/swat(src)
 		my_mask.vchange = new(src) // apply voice changer on the mask
-		src.equip_if_possible(my_mask, slot_wear_mask)
-		src.equip_new_if_possible(/obj/item/storage/belt/security, slot_belt)
+		src.equip_if_possible(my_mask, SLOT_WEAR_MASK)
+		src.equip_new_if_possible(/obj/item/storage/belt/security, SLOT_BELT)
 
-		src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, slot_r_store)
+		src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, SLOT_R_STORE)
 
 		my_sword = new /obj/item/sword(src)
 		my_sword.bladecolor = "P"
-		src.equip_if_possible(my_sword, slot_l_store)
+		src.equip_if_possible(my_sword, SLOT_L_STORE)
 
 		src.add_ability_holder(/datum/abilityHolder/cyalume_knight)
 		abilityHolder.addAbility(/datum/targetable/cyalume_knight/recall_sword)
@@ -232,12 +232,10 @@
 				HH.visible_message("<span class='alert'>[sword] somehow escapes [HH]'s grasp!</span>", "<span class='alert'>The [sword] somehow escapes your grasp!</span>")
 				HH.u_equip(sword)
 				sword.set_loc(get_turf(HH))
-		if (istype(sword.loc, /obj/item/storage))
-			var/obj/item/storage/S_temp = sword.loc
-			var/datum/hud/storage/H_temp = S_temp.hud
-			H_temp.remove_object(sword)
-			sword.set_loc(get_turf(sword))
-			sword.visible_message("<span class='alert'>[sword] somehow escapes the [S_temp] that it was inside of!</span>")
+		if (sword.stored)
+			var/atom/previous_storage = sword.stored.linked_item
+			sword.stored.transfer_stored_item(sword, get_turf(sword))
+			sword.visible_message("<span class='alert'>[sword] somehow escapes the [previous_storage] that it was inside of!</span>")
 
 		// assuming no super weird things happened, the sword should be on the ground at this point
 		for(var/i=0, i<100, i++)
@@ -307,7 +305,7 @@
 		var/current_angle = start_angle
 		var/i
 		for(i = 0; i < num_projectiles; i++)
-			var/obj/projectile/P = initialize_projectile_ST(holder.owner, fired_projectile, target)
+			var/obj/projectile/P = initialize_projectile_pixel_spread(holder.owner, fired_projectile, target)
 			if (P)
 				P.mob_shooter = holder.owner
 				P.rotateDirection(current_angle)
@@ -1085,19 +1083,19 @@
 				steps = 0
 
 		if (world.time > src.next_move + 0.5 SECONDS)
-			anchored = 0
+			anchored = UNANCHORED
 			momentum = 0
 			src.icon_state = "walk"
 			src.lastdirection = NOT_MOVING
 
 
 		if (src.m_intent == "walk")
-			anchored = 0
+			anchored = UNANCHORED
 			momentum = 0
 			return
 
 		if(src.lastdirection == NOT_MOVING)
-			anchored = 0
+			anchored = UNANCHORED
 			momentum = 0
 			update_current_moving_direction(moved_right, moved_up)
 			return
@@ -1151,7 +1149,7 @@
 		src.base_move_delay = current_movement_delay
 
 		if(momentum > machrun_animation_min_momentum)
-			anchored = 1 // IMMOVABLE OBJECT, REINFORCED BY PIZZA CRUST, POWERED BY PASTA, NOTHING STOPS THE MACH RUN
+			anchored = ANCHORED // IMMOVABLE OBJECT, REINFORCED BY PIZZA CRUST, POWERED BY PASTA, NOTHING STOPS THE MACH RUN
 			src.icon_state = "machrun"
 
 

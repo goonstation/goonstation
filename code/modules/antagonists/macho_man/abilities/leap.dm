@@ -123,7 +123,7 @@
 			if (H)
 				holder.owner.visible_message("<span class='alert'><B>[holder.owner] ultra atomic piledrives [H]!!</B></span>")
 				var/obj/overlay/O = new/obj/overlay(get_turf(holder.owner))
-				O.anchored = 1
+				O.anchored = ANCHORED
 				O.name = "Explosion"
 				O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 				O.pixel_x = -92

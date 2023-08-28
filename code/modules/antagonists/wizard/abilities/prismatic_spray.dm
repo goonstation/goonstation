@@ -34,7 +34,7 @@
 
 	New()
 		..()
-		for (var/X in filtered_concrete_typesof(/datum/projectile, .proc/filter_projectile))
+		for (var/X in filtered_concrete_typesof(/datum/projectile, PROC_REF(filter_projectile)))
 			var/datum/projectile/A = new X
 			A.is_magical = 1
 			proj_types += A
@@ -59,7 +59,7 @@
 							P.mob_shooter = holder.owner
 							sleep(0.1 SECONDS)
 					else
-						var/obj/projectile/P = initialize_projectile_ST(holder.owner, ps_proj, target )
+						var/obj/projectile/P = initialize_projectile_pixel_spread(holder.owner, ps_proj, target )
 						if (P)
 							P.mob_shooter = holder.owner
 							var/angle = (rand(spread * -1000, spread * 1000))/1000
@@ -75,7 +75,7 @@
 							P.mob_shooter = holder.owner
 							sleep(0.1 SECONDS)
 					else
-						var/obj/projectile/P = initialize_projectile_ST(holder.owner, pick(proj_types), target )
+						var/obj/projectile/P = initialize_projectile_pixel_spread(holder.owner, pick(proj_types), target )
 						if (P)
 							P.mob_shooter = holder.owner
 							var/angle = (rand(spread * -1000, spread * 1000))/1000

@@ -3,7 +3,7 @@
 	desc = ""
 	object_flags = NO_GHOSTCRITTER
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	soundproofing = -1
 	var/can_move = 1
 	var/obj/item/device/chameleon/master = null
@@ -83,6 +83,7 @@ TYPEINFO(/obj/item/device/chameleon)
 	var/obj/dummy/chameleon/cham = null //No sense creating / destroying this
 	var/active = 0
 	tooltip_flags = REBUILD_DIST
+	HELP_MESSAGE_OVERRIDE({"Use the chameleon projector on any object to copy it's appearance. Use it in hand to appear as that object indefinitely. The disguise will be removed if you interact with anything else or are hit."})
 
 	is_syndicate = 1
 
@@ -201,6 +202,12 @@ TYPEINFO(/obj/item/device/chameleon)
 	burn_possible = 0
 	var/strength = 12
 
+	get_help_message(dist, mob/user)
+		if (src.name == "chameleon bomb") // We havent been disguised yet, so we can show help messages
+			return "Hit the bomb on any object to disguise it as that object. Use the bomb in hand to arm/disarm it. The bomb will explode when anyone tries to pick up the armed bomb."
+		else
+			return null
+
 	dropped()
 		return
 
@@ -248,8 +255,8 @@ TYPEINFO(/obj/item/device/chameleon)
 			boutput(user, "<span class='notice'>Scanned [target].</span>")
 			src.name = target.name
 			src.real_name = target.name
-			src.desc = target.desc
-			src.real_desc = target.desc
+			src.desc = target.get_desc(0, user) || target.desc
+			src.real_desc = src.desc
 			src.icon = target.icon
 			src.icon_state = target.icon_state
 			src.set_dir(target.dir)

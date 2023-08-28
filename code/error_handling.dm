@@ -26,7 +26,7 @@ var/global/runtime_count = 0
 	)
 
 	//Output formatted runtime to the usual error.log
-#ifndef RUNTIME_CHECKING
+#ifndef CI_RUNTIME_CHECKING
 	if (invalid)
 		world.log << "\[[timestamp]\] Invalid exception in error handler: [E]"
 	else

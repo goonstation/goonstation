@@ -1,5 +1,5 @@
 /image/name_tag_examine
-	plane = PLANE_NOSHADOW_ABOVE
+	plane = PLANE_NOSHADOW_ABOVE_NOWARP
 	maptext_x = -64
 	maptext_y = -6
 	maptext_width = 160
@@ -11,7 +11,7 @@
 		src.maptext = "<span class='pixel c ol' style='font-size: 6px;'>[new_name]</span>"
 
 /image/name_tag_examine_hover
-	plane = PLANE_NOSHADOW_ABOVE
+	plane = PLANE_NOSHADOW_ABOVE_NOWARP
 	maptext_x = -64
 	maptext_y = -6 - 7 // -7 to accomodate extra text
 	maptext_width = 160
@@ -59,7 +59,7 @@
 
 	proc/set_info_tag(new_info)
 		if(new_info != src.cur_info_tag)
-			src.ex_hover_image.set_info_tag(cur_name, cur_info_tag)
+			src.ex_hover_image.set_info_tag(cur_name, new_info)
 			src.cur_info_tag = new_info
 
 	proc/show_images(client/client, ex, ex_hover)

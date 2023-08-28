@@ -282,7 +282,7 @@
 		var/hsv = rgb2hsv(r,g,b)
 		owner.organ_color = hsv2rgb( hsv[1], hsv[2], 100 )
 
-		owner.my_material.color = owner.color
+		owner.my_material.setColor(owner.color)
 
 /datum/blob_ability/tutorial
 	name = "Interactive Tutorial"
@@ -635,7 +635,7 @@
 		if (ismobcritter(target))
 			target.gib()
 			target.visible_message("<span class='alert'><b>The blob tries to absorb [target.name], but something goes horribly right!</b></span>")
-			var/datum/antagonist/intangible/blob/antag_role = blob_o?.mind?.get_antagonist(ROLE_BLOB)
+			var/datum/antagonist/mob/intangible/blob/antag_role = blob_o?.mind?.get_antagonist(ROLE_BLOB)
 			if (antag_role)
 				antag_role.absorbed_victims += target
 			return
@@ -647,7 +647,7 @@
 
 		var/mob/living/carbon/human/H = target
 
-		var/datum/antagonist/intangible/blob/antag_role = blob_o?.mind?.get_antagonist(ROLE_BLOB)
+		var/datum/antagonist/mob/intangible/blob/antag_role = blob_o?.mind?.get_antagonist(ROLE_BLOB)
 		antag_role?.absorbed_victims += H
 
 		if (!isnpcmonkey(H) || prob(50))
@@ -764,7 +764,7 @@
 
 		var/obj/item/I = items[1]
 		if (!sel_target)
-			if (items.len > 1)
+			if (length(items) > 1)
 				I = input("Which item?", "Item", null) as null|anything in items
 		else
 			I = sel_target
@@ -1066,7 +1066,7 @@
 /datum/blob_upgrade/attack
 	name = "Passive: Attack Upgrade"
 	icon_state = "blob-attack-upgrade"
-	desc = "Increases your attack damage and the chance of mob knockdown. Level 3+ of this upgrade will allow you to punch down girders. Can be repeated."
+	desc = "Increases your attack damage and the chance of mob knockdown. Can be repeated."
 	evo_point_cost = 1
 	scaling_cost_add = 1
 	repeatable = -1

@@ -214,7 +214,7 @@ TYPEINFO(/obj/item/pinpointer)
 	icon_state = "semi_pinoff"
 	icon_type = "semi"
 	hudarrow_color = "#adad00"
-	target_criteria = /obj/item/teg_semiconductor
+	target_criteria = /obj/item/teg_semiconductor/prototype
 
 /obj/item/pinpointer/trench
 	name = "pinpointer (sea elevator)"
@@ -552,7 +552,7 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 
 /obj/item/pinpointer/category/bibles
 	name = "bible pinpointer"
-	category = /obj/item/storage/bible
+	category = /obj/item/bible
 	thing_name = "bible"
 
 /obj/item/pinpointer/category/gps

@@ -16,7 +16,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 	hand_count = 1
 	can_burn = FALSE
 	dna_to_absorb = 0
-	butcherable = FALSE
 	metabolizes = FALSE
 	custom_gib_handler = /proc/robogibs
 	stepsound = null
@@ -219,7 +218,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			return
 
 		playsound(get_turf(master), 'sound/impact_sounds/Liquid_Slosh_2.ogg', 25, 1)
-		master.anchored = 1
+		master.anchored = ANCHORED
 		if(istype(master, /mob/living/critter/robotic/bot))
 			var/mob/living/critter/robotic/bot/bot = master
 			master.icon_state = "[bot.icon_state_base]-c"

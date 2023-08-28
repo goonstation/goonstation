@@ -57,7 +57,7 @@
 	icon_state = "spark"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	target = null
 	var/range = 6
 	var/trap_delay = 100

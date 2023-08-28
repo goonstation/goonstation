@@ -372,7 +372,8 @@
 				var/mob/M = mob_owner
 				C.dropped(M)
 				M.u_equip(C)
-			owner.visible_message("<span class='alert'>\The [owner][message]</span>")
+			if (!isnull(src.message))
+				owner.visible_message("<span class='alert'>\The [owner][message]</span>")
 			if (ismob(owner))
 				var/mob/fucko = owner
 				fucko.ghostize()
@@ -683,7 +684,7 @@
 
 	simpledot/stimulant_withdrawl
 		id = "stimulant_withdrawl"
-		name = "Stimulant withdrawl"
+		name = "Stimulant withdrawal"
 		icon_state = "janktank-w"
 		desc = "You feel AWFUL!"
 		tickSpacing = 3 SECONDS
@@ -961,6 +962,11 @@
 				playsound(owner, sound, 17, 1, 0.4, 1.6)
 				violent_twitch(owner)
 			. = ..(timePassed)
+		onAdd()
+			if(istype(owner, /mob/living/silicon/robot))
+				var/mob/living/silicon/robot/robot = owner
+				robot.lastgasp()
+			. = ..()
 
 	drunk
 		id = "drunk"
@@ -1384,16 +1390,15 @@
 					H.HealDamage("All", 1, 1, 1)
 					if (H.bleeding)
 						repair_bleeding_damage(H, 10, 1)
-				if (prob(10))
-					H.make_jittery(2)
+				H.make_jittery(1)
 
 				if (H.misstep_chance)
 					H.change_misstep_chance(-5)
 
 	gang_drug_withdrawl
 		id = "janktank_withdrawl"
-		name = "janktank withdrawl"
-		desc = "You're going through withrawl of Janktank"
+		name = "Janktank withdrawal"
+		desc = "You're going through withdrawal of Janktank"
 		icon_state = "janktank-w"
 		duration = 9 MINUTES
 		maxDuration = 18 MINUTES
@@ -1606,7 +1611,7 @@
 	onUpdate()
 		if (H.blood_volume > 400 && H.blood_volume > 0)
 			H.blood_volume -= units
-		if (prob(5))
+		if (prob(5) && !H.reagents?.has_reagent("promethazine"))
 			var/damage = rand(1,5)
 			var/bleed = rand(3,5)
 			H.visible_message("<span class='alert'>[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span class='alert'>You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
@@ -1762,8 +1767,8 @@
 		if(weighted_average > 4)
 			weighted_average = 0
 		if(probmult(puke_prob))
-			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
-			L.vomit()
+			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			L.vomit(0, null, vomit_message)
 		return ..(timePassed)
 
 	proc/changeState()
@@ -1802,7 +1807,7 @@
 		. = ..()
 		owner.add_filter("paint_color", 1, color_matrix_filter(normalize_color_to_matrix("#ff8820")))
 		if(istype(owner, /mob/living))
-			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/track_paint)
+			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(track_paint))
 
 	onRemove()
 		. = ..()
@@ -1812,6 +1817,8 @@
 
 	proc/track_paint(mob/living/M, oldLoc, direct)
 		var/turf/T = get_turf(M)
+		if(istype_exact(T, /turf/space)) //can't smear paint on space
+			return
 		var/obj/decal/cleanable/paint/P
 		if (T.messy > 0)
 			P = locate(/obj/decal/cleanable/paint) in T
@@ -1822,11 +1829,11 @@
 
 		if (states[1] || states[2])
 			if (states[1])
-				P.create_overlay(states[1], "#ff8820", direct, 'icons/effects/blood.dmi')
+				P.create_overlay(states[1], "#ff8820", direct, 'icons/obj/decals/blood/blood.dmi')
 			if (states[2])
-				P.create_overlay(states[2], "#ff8820", direct, 'icons/effects/blood.dmi')
+				P.create_overlay(states[2], "#ff8820", direct, 'icons/obj/decals/blood/blood.dmi')
 		else
-			P.create_overlay("smear2", "#ff8820", direct, 'icons/effects/blood.dmi')
+			P.create_overlay("smear2", "#ff8820", direct, 'icons/obj/decals/blood/blood.dmi')
 
 /datum/statusEffect/magnetized
 	id = "magnetized"
@@ -2111,7 +2118,7 @@
 
 	onAdd()
 		..()
-		RegisterSignal(owner, COMSIG_MOB_VOMIT, .proc/reduce_duration_on_vomit)
+		RegisterSignal(owner, COMSIG_MOB_VOMIT, PROC_REF(reduce_duration_on_vomit))
 
 	onRemove()
 		..()
@@ -2137,8 +2144,8 @@
 		if(prob(2))
 			L.change_eye_blurry(rand(5,10))
 		if(prob(puke_prob))
-			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
-			L.vomit()
+			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			L.vomit(0, null, vomit_message)
 
 	//firstly: sorry
 	//secondly: second arg is a proportional scale. 1 is standard, 5 is every port-a-puke tick, 10 is mass emesis.
@@ -2308,15 +2315,7 @@
 		. = ..()
 		desc = "You've been mindhacked by [hacker.real_name] and feel an unwavering loyalty towards [him_or_her(hacker)]."
 		var/mob/M = owner
-		if (M.mind && ticker.mode)
-			if (!M.mind.special_role)
-				M.mind.special_role = ROLE_MINDHACK
-			if (!(M.mind in ticker.mode.Agimmicks))
-				ticker.mode.Agimmicks += M.mind
-			M.mind.master = hacker.ckey
-
-		boutput(M, "<h2><span class='alert'>You feel an unwavering loyalty to [hacker.real_name]! You feel you must obey [his_or_her(hacker)] every order! Do not tell anyone about this unless [hacker.real_name] tells you to!</span></h2>")
-		M.show_antag_popup("mindhack")
+		M.mind?.add_subordinate_antagonist(ROLE_MINDHACK, master = hacker.mind)
 
 		if (custom_orders)
 			boutput(M, "<h2><span class='alert'>[hacker.real_name]'s will consumes your mind! <b>\"[custom_orders]\"</b> It <b>must</b> be done!</span></h2>")
@@ -2324,10 +2323,7 @@
 	onRemove()
 		..()
 		var/mob/M = owner
-		if (M.mind?.special_role == ROLE_MINDHACK)
-			remove_mindhack_status(M, "mindhack", "expired")
-		else if (M.mind?.master)
-			remove_mindhack_status(M, "otherhack", "expired")
+		M.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_EXPIRED)
 
 /datum/statusEffect/defib_charged
 	id = "defib_charged"
@@ -2390,6 +2386,30 @@
 #undef LAUNDERED_COLDPROT_AMOUNT
 #undef LAUNDERED_STAIN_TEXT
 
+/datum/statusEffect/quickcharged
+	id = "quick_charged"
+	name = "Quick charged"
+	icon_state = "stam-"
+	maxDuration = 0 MINUTES
+
+	getTooltip()
+		. = "The recharge upgrade has quickly charged you, this now prevents you from using another one again until it's safe for your battery to quick charge again."
+
+/datum/statusEffect/upgradedisabled
+	id = "upgrade_disabled"
+	name = "Upgrades disabled"
+	icon_state = "stam-"
+	maxDuration = 5 SECONDS
+
+	getTooltip()
+		. = "Your upgrades are currently disabled"
+	onAdd()
+		if(istype(owner, /mob/living/silicon/robot))
+			var/mob/living/silicon/robot/robot = owner
+			for (var/obj/item/roboupgrade/R in robot.contents)
+				if (R.activated) R.upgrade_deactivate(robot)
+		. = ..()
+
 /datum/statusEffect/criticalcondition
 	id = "critical_condition"
 	name = "Critical Condition"
@@ -2415,7 +2435,8 @@
 		. = ..()
 		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "critical_condition")
 		H.remove_stam_mod_max("critical_condition")
-		H.changeStatus("recent_trauma", 90 SECONDS)
+		if (!isdead(H))
+			H.changeStatus("recent_trauma", 90 SECONDS)
 
 
 /datum/statusEffect/recenttrauma
@@ -2448,3 +2469,27 @@
 	name = "De-revving"
 	desc = "An implant is attempting to convert you from the revolution! Remove the implant!"
 	icon_state = "mindhack"
+
+/datum/statusEffect/interdictor //Status effect for letting people know they are protected from some spatial anomalies
+	id = "spatial_protection"
+	name = "Spatial Protection"
+	desc = "You are being protected from wormholes, radiation storms, and magnetic biofields."
+	icon_state = "blocking" //This gives the general idea that they are being protected, but could use a better icon
+	maxDuration = 4 SECONDS
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+	onAdd(optional=null)
+		owner.add_filter("protection", 1, outline_filter(color="#e6ec21"))
+		..()
+
+	onRemove()
+		owner.remove_filter("protection")
+		..()
+
+/datum/statusEffect/devera //Status effect for the devera hygiene protection
+	id = "devera_field"
+	name = "Devera Field"
+	desc = "You are being protected from grime gathering on you."
+	icon_state = "fragrant"
+	maxDuration = 4 SECONDS
+	effect_quality = STATUS_QUALITY_POSITIVE

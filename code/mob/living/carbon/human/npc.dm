@@ -1,10 +1,15 @@
 
 #define IS_NPC_HATED_ITEM(x) ( \
-		istype(x, /obj/item/clothing/suit/straight_jacket) || \
 		istype(x, /obj/item/handcuffs) || \
 		istype(x, /obj/item/device/radio/electropack) || \
 		x:block_vision \
 	)
+
+//Put any items that NPCs physically cannot pickup here
+#define IS_NPC_ILLEGAL_ITEM(x) ( \
+		istype(x, /obj/item/body_bag) && x.w_class >= W_CLASS_BULKY \
+	)
+
 #define IS_NPC_CLOTHING(x) ( \
 		( \
 			istype(x, /obj/item/clothing) || \
@@ -138,6 +143,14 @@
 			src.real_name = "Junior Syndicate Agent"
 			JobEquipSpawned("Poorly Equipped Junior Syndicate Operative")
 
+/mob/living/carbon/human/npc/survivor // For prefab wrecks. Give them some life. Maybe expand this npc later idk
+	New()
+		..()
+		SPAWN(0)
+			var/pickedjob = pick("Clown", "Engineer", "Artist", "Hollywood Actor", "Waiter", "Pharmacist", "Coach", "Test Subject", "Technical Assistant") // picked from mostly gimmick jobs to avoid good stuff spawning on them
+			JobEquipSpawned("[pickedjob]")
+
+
 //reverse blade samurai
 
 // npc ai procs
@@ -238,22 +251,6 @@
 
 	ai_lastaction = world.time
 	ai_actiondelay = action_delay
-
-
-/*
-/mob/living/carbon/human/proc/ai_findtarget()
-	var/tempmob
-	for (var/mob/living/carbon/M in view(7,src))
-		if (M.stat > 0 || !M.client || M == src || M.is_npc) continue
-		if (!tempmob) tempmob = M
-		for(var/mob/living/carbon/human/L in oview(7,src))
-			if (L.ai_target == tempmob && prob(50)) continue
-		if (M.health < tempmob:health) tempmob = M
-	if(tempmob)
-		ai_target = tempmob
-		ai_state = AI_ANGERING
-		ai_threatened = world.timeofday
-*/
 
 /mob/living/carbon/human/proc/ai_is_valid_target(mob/M)
 	return TRUE
@@ -425,7 +422,7 @@
 						jumpy?.ability.handleCast(target)
 					else
 						var/obj/item/gun/W = src.r_hand
-						W.shoot(get_turf(carbon_target), get_turf(src), src, 0, 0)
+						W.shoot(get_turf(carbon_target), get_turf(src), src, 0, 0, called_target = carbon_target)
 						if(src.bioHolder.HasEffect("coprolalia") && prob(10))
 							switch(pick(1,2))
 								if(1)
@@ -569,17 +566,23 @@
 		throw_equipped |= prob(80)
 
 	// pull things out of other things!
-	if(istype(src.equipped(), /obj/item/storage))
-		var/obj/item/storage/storage = src.equipped()
-		if(!length(storage.contents) && src.hand) // keep toolboxes in the right hand
+	var/obj/item/I = src.equipped()
+	if(I.storage)
+		if(!length(I.storage.get_contents()) && src.hand) // keep toolboxes in the right hand
 			throw_equipped |= prob(80)
-		else if(length(storage.contents))
-			var/obj/item/taken = pick(storage.contents)
-			src.u_equip(storage)
-			storage.set_loc(src.loc)
-			storage.dropped(src)
-			storage.layer = initial(storage.layer)
-			taken.set_loc(storage.loc)
+		else if(length(I.storage.get_contents()))
+			var/obj/item/taken = pick(I.storage.get_contents())
+			if(taken.anchored) //Item anchored inside storage. AI shouldnt be able to take it out component. "MechComp"
+				return
+			if(istype(I, /obj/item/storage/mechanics)) //Checks if mech cover is closed if so ignore items inside.
+				var/obj/item/storage/mechanics/mechitem = I
+				if(!mechitem.open)
+					return
+			src.u_equip(I)
+			I.set_loc(src.loc)
+			I.dropped(src)
+			I.layer = initial(I.layer)
+			I.storage.transfer_stored_item(taken, get_turf(taken), user = src)
 			src.put_in_hand_or_drop(taken)
 
 	// wear clothes
@@ -722,7 +725,7 @@
 	var/pickup_score = 0
 
 	for (var/obj/item/G in view(1,src))
-		if(G.anchored || G.throwing) continue
+		if(G.anchored || G.throwing || G.w_class >= W_CLASS_GIGANTIC || IS_NPC_ILLEGAL_ITEM(G)) continue
 		var/score = 0
 		if(G.loc == src && !G.equipped_in_slot) // probably organs
 			continue
@@ -742,7 +745,7 @@
 			score += 5
 		if(istype(G, /obj/item/pen/crayon))
 			score += 4
-		if(istype(G, /obj/item/storage) && length(G.contents))
+		if(istype(G, /obj/item/storage) && length(G.storage.get_contents())) // just /obj/item/storage
 			score += 9
 		if(G.loc == src)
 			score += 1
@@ -797,10 +800,8 @@
 			GN:set_loc(src)
 			src.belt = GN
 			GN:layer = HUD_LAYER
-		else if(src.back && istype(src.back,/obj/item/storage/backpack))
-			var/obj/item/storage/backpack/B = src.back
-			if(B.contents.len < 7)
-				B.Attackby(GN,src)
+		else if(src.back?.storage && !src.back.storage.is_full())
+			src.back.Attackby(GN,src)
 
 	var/obj/item/pickup
 
@@ -1000,12 +1001,13 @@
 	if (ai_incapacitated())
 		return
 	for (var/obj/storage/closet/C in view(1,src))
-		if (!C.open)
-			C.open(user=src)
+		if (can_reach(src, C) && prob(5))
+			src.hand_attack(C)
 	for (var/obj/storage/secure/closet/S in view(1,src))
-		if (!S.open && !S.locked)
-			S.open(user=src)
+		if (!S.locked && can_reach(src, S) && prob(5))
+			src.hand_attack(S)
 
 
 #undef IS_NPC_HATED_ITEM
 #undef IS_NPC_CLOTHING
+#undef IS_NPC_ILLEGAL_ITEM

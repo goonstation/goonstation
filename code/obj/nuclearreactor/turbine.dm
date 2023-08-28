@@ -9,7 +9,7 @@
 	desc = "A large turbine used for generating power using hot gas."
 	icon = 'icons/obj/large/96x160.dmi'
 	icon_state = "turbine_main"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	bound_width = 96
 	bound_height = 160
@@ -72,12 +72,13 @@
 		for(var/turf/simulated/floor/F in src.locs)
 			F.explosion_immune = TRUE
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Stator Load", .proc/_set_statorload_mechchomp)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Flow Rate", .proc/_set_flowrate_mechchomp)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Stator Load", PROC_REF(_set_statorload_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Flow Rate", PROC_REF(_set_flowrate_mechchomp))
 		src.history = list()
 
 	disposing()
 		src._light_turf?.remove_medium_light("turbine_light")
+		new /obj/decal/fakeobjects/turbine_destroyed(src.loc)
 		for(var/turf/simulated/floor/F in src.locs) //restore the explosion immune state of the original turf
 			F.explosion_immune = initial(F.explosion_immune)
 		. = ..()
@@ -284,8 +285,8 @@
 			if("loadChange")
 				var/x = params["newVal"]
 				src.stator_load = min(max(x,1),10e30)
-				logTheThing("station", src, null, "[src] stator load configured to [x] by [ui.user]")
+				logTheThing(LOG_STATION, src, "[src] stator load configured to [x] by [ui.user]")
 			if("volChange")
 				var/x = params["newVal"]
 				src.flow_rate = min(max(x,1),10e5)
-				logTheThing("station", src, null, "[src] flow rate configured to [x] by [ui.user]")
+				logTheThing(LOG_STATION, src, "[src] flow rate configured to [x] by [ui.user]")

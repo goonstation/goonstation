@@ -18,7 +18,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/decal/mantaBubbles
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	layer =  EFFECTS_LAYER_4
 	event_handler_flags = IMMUNE_MANTA_PUSH | USE_FLUID_ENTER
 	name = ""
@@ -58,7 +58,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "lever1"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/on = 1
 	var/lastuse = 0
 	var/locked = 1 //Starts off locked.
@@ -119,9 +119,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return attack_hand(user)
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
-		if(istype(W, /obj/item/card/id))
+		if(istype(get_id_card(W), /obj/item/card/id))
 			if (src.allowed(user))
 				user.visible_message("[user] [src.locked ? "unlocks" : "locks"] the access panel.","You [src.locked ? "unlock" : "lock"] the access panel.")
 				src.locked = !src.locked
@@ -187,7 +185,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/stateOff = ""
 	var/stateDamaged = ""
 	var/on = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 	var/health = 100
 	var/maxhealth = 100
@@ -326,7 +324,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	name = "heater"
 	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "heater"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 
 	New()
@@ -374,7 +372,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	desc = "An electrical junction box is an enclosure housing electrical connections, to protect the connections and provide a safety barrier."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "junctionbox"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/open = 0
 	var/iconopen = "junctionbox_open"
 	var/iconclosed = "junctionbox"
@@ -467,7 +465,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			if(attached)
 				var/datum/powernet/PN = attached.get_powernet()
 				if(PN)
-					var/drained = min ( drain_rate, PN.avail )
+					var/drained = min ( drain_rate, (PN.avail - PN.newload) )
 					PN.newload += drained
 					power_drained += drained
 
@@ -501,7 +499,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	name = "Communications Tower"
 	icon_state = "commstower"
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/health = 100
 	var/maxhealth = 100
 	var/broken = 0
@@ -544,7 +542,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon_state = "magbeacon"
 	desc = "A rather delicate magnetic tether array. It allows people to safely explore the ocean around NSS Manta while carrying a magnetic attachment point."
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/health = 100
 	var/maxhealth = 100
 	var/broken = 0
@@ -618,7 +616,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon = 'icons/misc/32x64.dmi'
 	icon_state = "englrt"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/recharging =0
 	var/id = "shuttle" //The main location of the teleporter
 	var/recharge = 20 //A short recharge time between teleports
@@ -702,11 +700,11 @@ var/obj/manta_speed_lever/mantaLever = null
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
-/obj/item/constructioncone
+/obj/item/clothing/head/constructioncone
 	desc = "Caution!"
 	name = "construction cone"
-	icon = 'icons/obj/decoration.dmi'
-	icon_state = "cone"
+	icon = 'icons/obj/construction.dmi'
+	icon_state = "cone_1"
 	force = 1
 	throwforce = 3
 	throw_speed = 1
@@ -716,13 +714,103 @@ var/obj/manta_speed_lever/mantaLever = null
 	stamina_damage = 15
 	stamina_cost = 8
 	stamina_crit_chance = 10
+	max_stack = 5
+	item_state = "cone_1"
+	wear_state = "cone_hat_1"
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 0) // it has a hole on top, after all
+		setProperty("heatprot", 0)
+		setProperty("meleeprot_head", 2)
+
+	before_stack(atom/movable/O as obj, mob/user as mob)
+		user.visible_message("<span class='notice'>[user] begins gathering up [src]\s!</span>")
+
+	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
+		UpdateStackAppearance()
+		boutput(user, "<span class='notice'>You finish gathering up [src]\s.</span>")
+
+	attack_hand(mob/user)
+		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
+
+			if (!in_interact_range(src, user)) //no walking away
+				return
+
+			var/obj/item/clothing/head/constructioncone/new_stack = split_stack(1)
+			if (!istype(new_stack))
+				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
+				return
+			user.put_in_hand_or_drop(new_stack)
+			new_stack.add_fingerprint(user)
+			boutput(user, "<span class='notice'>You take 1 cone from the stack, leaving [src.amount] cones behind.</span>")
+		else
+			..(user)
+
+
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/clothing/head/constructioncone))
+			if (src.loc == user)
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
+					if (H.head == src)
+						boutput(user, "<span class='alert'>You can't stack cones when they are on your head!</span>")
+						return
+			var/success = stack_item(I)
+			if (!success)
+				boutput(user, "<span class='alert'>You can't put any more cones in this stack!</span>")
+			else
+				if(!user.is_in_hands(src))
+					user.put_in_hand(src)
+				if(isrobot(user))
+					boutput(user, "<span class='notice'>You add [success] cones to the stack. It now has [I.amount] cones.</span>")
+				else
+					boutput(user, "<span class='notice'>You add [success] cones to the stack. It now has [src.amount] cones.</span>")
+
+	_update_stack_appearance()
+		src.amount = clamp(src.amount, 1, src.max_stack)
+		icon_state = "cone_[src.amount]"
+		item_state = "cone_[src.amount]"
+		wear_state = "cone_hat_[src.amount]"
+
+	afterattack(var/turf/T, var/mob/user, reach, params)
+		if (!isturf(user.loc))
+			return
+
+		if (BOUNDS_DIST(T, user) > 0)
+			boutput(user, "<span class='notice'>You can't setup [src] that far away.</span>")
+			return
+
+		if (!istype(T, /turf/simulated/floor))
+			return
+
+		var/obj/item/clothing/head/constructioncone/cone = new /obj/item/clothing/head/constructioncone
+		src.change_stack_amount(-1)
+
+		var/pox = cone.pixel_x
+		var/poy = cone.pixel_y
+
+		if (params)
+			if (islist(params) && params["icon-y"] && params["icon-x"])
+				pox = text2num(params["icon-x"]) - 16
+				poy = text2num(params["icon-y"]) - 16
+
+		cone.pixel_x = pox
+		cone.pixel_y = poy
+		cone.set_loc(T)
+		playsound(cone, 'sound/impact_sounds/tube_bonk.ogg', 20, 1, pitch=0.5)
+		..()
+
+	examine()
+		. = ..()
+		. += "There are [src.amount] cones on this stack."
 
 /obj/effect/boommarker
 	name = ""
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "impact_marker"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	mouse_opacity = 0
 	desc = "Uh oh.."
 	pixel_x = -16
@@ -734,7 +822,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	name = "sea plant"
 	icon = 'icons/obj/sealab_objects.dmi'
 	desc = "It's thriving."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = EFFECTS_LAYER_UNDER_1
 	var/database_id = null
@@ -881,7 +969,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		if(isnull(OldLoc)) // hack, remove later pls thx
 			return ..(Obj, OldLoc)
 		if(y <= 3 || y >= world.maxy - 3 || x <= 3 || x >= world.maxx - 3)
-			if (!L || L.len == 0)
+			if (!L || length(L) == 0)
 				for(var/turf/T in get_area_turfs(/area/trench_landing))
 					L+=T
 
@@ -1481,8 +1569,8 @@ var/obj/manta_speed_lever/mantaLever = null
 	configure_mode = 0
 	random_code = 1
 	spawn_contents = list(/obj/item/card/id/polaris,
-	/obj/item/paper/manta_polarisnote,/obj/item/reagent_containers/emergency_injector/random,/obj/item/spacecash/thousand,
-	/obj/item/spacecash/thousand,/obj/item/spacecash/thousand)
+	/obj/item/paper/manta_polarisnote,/obj/item/reagent_containers/emergency_injector/random,/obj/item/currency/spacecash/thousand,
+	/obj/item/currency/spacecash/thousand,/obj/item/currency/spacecash/thousand)
 
 /obj/item/card/id/polaris
 	name = "Sergeant's spare ID"
@@ -1557,7 +1645,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon = 'icons/obj/large/96x32.dmi'
 	icon_state = "vaultdoor_closed"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	opacity = 1
 	bound_width = 96
 	appearance_flags = TILE_BOUND | PIXEL_SCALE

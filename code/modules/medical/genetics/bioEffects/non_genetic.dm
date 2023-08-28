@@ -37,6 +37,14 @@
 	msgLose = "The tingling in your skin fades."
 	can_copy = 0
 
+/datum/bioEffect/hidden/robed
+	name = "Robed"
+	desc = "Subject can cast arcane spells without the use of magical robes or a staff."
+	id = "robed"
+	msgGain = "You feel the constraints of traditional sorcery falling from your mind."
+	msgGain = "You feel once more bound by the laws of magic."
+	can_copy = FALSE
+
 /datum/bioEffect/hidden/husk
 	name = "Husk"
 	desc = "Subject appears to have been drained of all fluids."
@@ -146,10 +154,10 @@
 
 		if (outOfPod)
 			if (probmult(6))
-				owner.visible_message("<span class='alert'>[owner.name] suddenly and violently vomits!</span>")
-				owner.vomit()
+				var/vomit_message = "<span class='alert'>[owner.name] suddenly and violently vomits!</span>"
+				owner.vomit(0, null, vomit_message)
 
-			else if (probmult(2))
+			else if (probmult(2) && !owner.reagents?.has_reagent("promethazine"))
 				owner.visible_message("<span class='alert'>[owner.name] vomits blood!</span>")
 				playsound(owner.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				random_brute_damage(owner, rand(5,8))

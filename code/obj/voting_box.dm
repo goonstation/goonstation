@@ -4,7 +4,7 @@
 	icon_state = "voting_box"
 	density = 1
 	flags = FPRINT
-	anchored = 1
+	anchored = ANCHORED
 	desc = "Some sort of thing to put ballots into. Maybe you can even vote with it!"
 	var/bribeAmount = 0
 	var/bribeJerk = null
@@ -49,7 +49,7 @@
 	attackby(obj/item/S, mob/user)
 		src.add_fingerprint(user)
 
-		if (istype(S, /obj/item/spacecash))
+		if (istype(S, /obj/item/currency/spacecash))
 			if (!mapSwitcher.playersVoting)
 				boutput(user, "<span class='alert'>There's no point in buying a vote when there's no vote going on.</span>")
 				return

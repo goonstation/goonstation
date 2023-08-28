@@ -235,7 +235,7 @@
 	p_class = 2 // if they're anchored you can't move them anyway so this should default to making them easy to move
 	throwforce = 40
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	desc_verb = list("plays", "performs", "composes", "arranges")
 	desc_sound = list("nice", "classic", "classical", "great", "impressive", "terrible", "awkward", "striking", "grand", "majestic")
 	desc_music = list("melody", "aria", "ballad", "chorus", "concerto", "fugue", "tune")
@@ -306,7 +306,7 @@
 /obj/item/instrument/large/jukebox
 	name = "old jukebox"
 	desc = "I wonder who fixed this thing?"
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "jukebox"
 	item_state = "jukebox"
@@ -385,6 +385,43 @@
 			for (var/i in 1 to 12)
 				sounds_instrument += "sound/musical_instruments/guitar/guitar_[i].ogg"
 		..()
+
+	attack(mob/M, mob/user)
+		if(ismob(M))
+			playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
+		..()
+
+
+
+/* -------------------- Electric Guitar -------------------- */
+
+/obj/item/instrument/electricguitar
+	name = "electric guitar"
+	desc = "Somehow works without an amp. Comes in a variety of colors."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "elecguitar1"
+	item_state = "elecguitar1"
+	two_handed = 1
+	force = 10
+	note_range = list("e2", "c6")
+	instrument_sound_directory = "sound/musical_instruments/elecguitar/notes/"
+	note_time = 0.18 SECONDS
+	sounds_instrument = null
+	randomized_pitch = 0
+	use_new_interface = TRUE
+	//Start at E1
+	key_offset = 5
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROD)
+
+	New()
+		src.icon_state = "elecguitar[rand(1,8)]"
+		src.item_state = src.icon_state
+		..()
+
+
 
 	attack(mob/M, mob/user)
 		if(ismob(M))

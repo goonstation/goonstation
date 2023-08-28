@@ -7,7 +7,7 @@
 	icon_state = "chassis"
 	opacity = 0
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/obj/machinery/mining_magnet/linked_magnet = null
 
 	New()
@@ -149,6 +149,12 @@
 	bullet_act()
 		return
 
+	proc/get_encounter_size(size, P)
+		. = size
+		if(!P || prob(P))
+			var/max_r = round(min(width,height)/2)-1
+			. = rand(size, max_r)
+
 	proc/erase_area()
 		var/turf/origin = get_turf(src)
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
@@ -195,7 +201,7 @@
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
 
 			for (var/mob/living/L in T)
-				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
+				if(ismobcritter(L)) // we don't care about critters
 					continue
 				if(!isintangible(L)) //neither blob overmind or AI eye should block this
 					unacceptable = TRUE
@@ -364,7 +370,7 @@
 	icon_state = "magnet"
 	opacity = 0
 	density = 0 // collision is dealt with by the chassis
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/obj/machinery/magnet_chassis/linked_chassis = null
 	var/health = 100
 	var/attract_time = 300
@@ -546,7 +552,7 @@
 	proc/build_icon()
 		src.ClearAllOverlays()
 
-		if (damage_overlays.len == 4)
+		if (length(damage_overlays) == 4)
 			switch(src.health)
 				if (70 to 94)
 					src.UpdateOverlays(damage_overlays[1], "magnet_damage")
@@ -846,12 +852,18 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	))
 /turf/simulated/wall/auto/asteroid
 	icon = 'icons/turf/walls_asteroid.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "asteroid-perspective-map"
+#else
+	icon_state = "asteroid-map"
+#endif
 	mod = "asteroid-"
 	light_mod = "wall-"
 	plane = PLANE_WALL-1
 	layer = ASTEROID_LAYER
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	default_material = "rock"
+	color = "#D1E6FF"
 
 #ifdef UNDERWATER_MAP
 	name = "cavern wall"
@@ -916,12 +928,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	ice
 		name = "comet chunk"
 		desc = "That's some cold stuff right there."
+		color = "#9cc4f5"
 		stone_color = "#9cc4f5"
 		default_ore = /obj/item/raw_material/ice
 
 	geode
 		name = "compacted stone"
 		desc = "This rock looks really hard to dig out."
+		color = "#4c535c"
 		stone_color = "#4c535c"
 		default_ore = null
 		hardness = 10
@@ -934,6 +948,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		default_material = "jean"
 		default_ore = /obj/item/material_piece/cloth/jean
 		replace_type = /turf/simulated/floor/plating/airless/asteroid/jean
+		color = "#88c2ff"
 		stone_color = "#88c2ff"
 
 
@@ -1015,6 +1030,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	algae
 		name = "sea foam"
 		desc = "Rapid depressuziation has flash-frozen sea water and algae into hardened foam."
+		color = "#6090a0"
 		stone_color = "#6090a0"
 		fullbright = 0
 		luminosity = 1
@@ -1182,6 +1198,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		src.ClearAllOverlays() // i know theres probably a better way to handle this
 		if(light)
 			src.UpdateOverlays(light, "ambient")
+		if(src.fullbright)
+			src.UpdateOverlays(new/image/fullbright, "fullbright")
 		src.top_overlays()
 		src.ore_overlays()
 
@@ -1208,6 +1226,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
+
+	Del()
+		for(var/turf/T in orange(src, 1))
+			T.ClearSpecificOverlays("ast_edge_[get_dir(T, src)]")
+		..()
 
 	proc/dig_asteroid(var/mob/living/user, var/obj/item/mining_tool/tool)
 		if (!user || !tool || !istype(src)) return
@@ -1292,6 +1315,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		return
 
 	proc/destroy_asteroid(var/dropOre=1)
+		var/image/weather = GetOverlayImage("weather")
+		var/image/ambient = GetOverlayImage("ambient")
+
 		var/datum/ore/O = src.ore
 		var/datum/ore/event/E = src.event
 		if (src.invincible)
@@ -1311,12 +1337,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				MAT.set_loc(src)
 
 				if(MAT.material)
-					if(MAT.material.quality != 0) //If it's 0 then that's probably the default, so let's use the asteroids quality only if it's higher. That way materials that have a quality by default will not occur at any quality less than the set one. And materials that do not have a quality by default, use the asteroids quality instead.
-						var/newQual = max(MAT.material.quality, src.quality)
-						MAT.material.quality = newQual
+					//If we don't use quality anymore, remove this
+					MAT.material = MAT.material.getMutable()
+					if(MAT.material.getQuality() != 0) //If it's 0 then that's probably the default, so let's use the asteroids quality only if it's higher. That way materials that have a quality by default will not occur at any quality less than the set one. And materials that do not have a quality by default, use the asteroids quality instead.
+						var/newQual = max(MAT.material.getQuality(), src.quality)
+						MAT.material.setQuality(newQual)
 						MAT.quality = newQual
 					else
-						MAT.material.quality = src.quality
+						MAT.material.setQuality(src.quality)
 						MAT.quality = src.quality
 
 				MAT.name = getOreQualityName(MAT.quality) + " [MAT.name]"
@@ -1324,7 +1352,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			icon_old = icon_state
 
 		var/new_color = src.stone_color
-		src.RL_SetOpacity(0)
+		src.set_opacity(0)
 		src.ReplaceWith(src.replace_type, FALSE)
 		src.stone_color = new_color
 		src.set_opacity(0)
@@ -1343,6 +1371,10 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (RL_Started) RL_UPDATE_LIGHT(src) //Then applies the proper lighting.
 #endif
 
+		if(weather)
+			src.UpdateOverlays(weather, "weather")
+		if(ambient)
+			src.UpdateOverlays(ambient, "ambient")
 		return src
 
 	proc/set_event(var/datum/ore/event/E)
@@ -1363,13 +1395,15 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			var/turf/simulated/wall/auto/asteroid/AST
 			while (distributions > 0)
 				distributions--
-				if (usable_turfs.len < 1)
+				if (length(usable_turfs) < 1)
 					break
 				AST = pick(usable_turfs)
 				AST.event = E
 				E.onGenerate(AST)
 				usable_turfs -= AST
 
+TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
+	mat_appearances_to_ignore = list("rock")
 /turf/simulated/floor/plating/airless/asteroid
 	name = "asteroid"
 	icon = 'icons/turf/walls_asteroid.dmi'
@@ -1385,7 +1419,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/stone_color = "#D1E6FF"
 	var/image/coloration_overlay = null
 	var/list/space_overlays = null
-	mat_appearances_to_ignore = list("rock")
 	turf_flags = MOB_SLIP | MOB_STEP | IS_TYPE_SIMULATED | FLUID_MOVE
 
 #ifdef UNDERWATER_MAP
@@ -1442,6 +1475,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			tile.build(src)
 
 	update_icon()
+		var/image/ambient_light = src.GetOverlayImage("ambient")
+		var/image/weather = src.GetOverlayImage("weather")
 
 		src.ClearAllOverlays()
 		src.color = src.stone_color
@@ -1449,6 +1484,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (fullbright)
 			src.UpdateOverlays(new /image/fullbright, "fullbright")
 		#endif
+
+		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
+			overlay_refs.len = 0
+		src.UpdateOverlays(ambient_light, "ambient")
+		src.UpdateOverlays(weather, "weather")
 
 	proc/space_overlays() //For overlays ON THE SPACE TILE
 		for (var/turf/space/A in orange(src,1))
@@ -1460,11 +1500,67 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
 
+	Del()
+		for(var/turf/T in orange(src, 1))
+			T.ClearSpecificOverlays("ast_edge_[get_dir(T, src)]")
+		..()
+
 
 /turf/simulated/floor/plating/airless/asteroid/jean
 	name = "jasteroid"
 	desc = "A free-floating jineral jeposit from space."
 	stone_color = "#88c2ff"
+
+/turf/simulated/floor/plating/airless/asteroid/comet
+	name = "regolith"
+	desc = "It's dusty and cold."
+	stone_color = "#7d93ad"
+	color = "#7d93ad"
+
+	ice
+		name = "comet ice"
+		stone_color = "#a8cdfa"
+		color = "#a8cdfa"
+
+	ice_dense
+		name = "dense ice"
+		desc = "A compressed layer of comet ice."
+		stone_color = "#2070CC"
+		color = "#2070CC"
+
+	ice_char
+		name = "dark regolith"
+		desc = "An inky-black assortment of carbon-rich dust and ice."
+		stone_color = "#111111"
+		color = "#111111"
+
+	glassy
+		name = "blasted regolith"
+		desc = "This stuff has been blasted and fused by stellar radiation and impacts."
+		stone_color = "#111111"
+		color = "#111111"
+
+	copper
+		name = "metallic rock"
+		desc = "Rich in soft metals."
+		stone_color = "#553333"
+		color = "#553333"
+
+	iron
+		name = "ferrous rock"
+		desc = "Dense metallic rock."
+		stone_color = "#333333"
+		color = "#333333"
+
+	plasma
+		name = "plasma ice"
+		desc = "Concentrated plasma trapped in dense ice."
+
+	radioactive
+		name = "radioactive metal"
+		desc = "There's a hazardous amount of radioactive material in this metallic layer."
+		stone_color = "#114444"
+		color = "#114444"
 
 
 // Tool Defines
@@ -1494,7 +1590,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if(cell_type)
 			var/cell = new cell_type
 			AddComponent(/datum/component/cell_holder, cell)
-			RegisterSignal(src, COMSIG_CELL_SWAP, .proc/power_down)
+			RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(power_down))
 		BLOCK_SETUP(BLOCK_ROD)
 
 	// Seems like a basic bit of user feedback to me (Convair880).
@@ -1909,7 +2005,7 @@ TYPEINFO(/obj/item/cargotele)
 
 		var/cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, swappable = FALSE)
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, .proc/maybe_reset_target) //make sure cargo pads can GC
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, PROC_REF(maybe_reset_target)) //make sure cargo pads can GC
 
 	proc/maybe_reset_target(datum/dummy, var/obj/submachine/cargopad/pad)
 		if (target == pad)
@@ -1980,25 +2076,28 @@ TYPEINFO(/obj/item/cargotele)
 
 		boutput(user, "<span class='notice'>Teleporting [cargo] to [src.target]...</span>")
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
-		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, .proc/finish_teleport, list(cargo, user), null, null, null, null)
+		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(finish_teleport), list(cargo, user), null, null, null, null)
 		return TRUE
 
 
 	proc/finish_teleport(var/obj/cargo, var/mob/user)
 		if (ismob(cargo.loc) && cargo.loc == user)
 			user.u_equip(cargo)
-		if (istype(cargo.loc, /obj/item/storage))
-			var/obj/item/storage/S_temp = cargo.loc
-			var/datum/hud/storage/H_temp = S_temp.hud
-			H_temp.remove_object(cargo)
+		if (istype(cargo, /obj/item))
+			var/obj/item/I = cargo
+			I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 
 		// And logs for good measure (Convair880).
 		var/obj/storage/S = cargo
 		ENSURE_TYPE(S)
-
+		var/mob_teled = FALSE
 		for (var/mob/M in cargo.contents)
 			if (M)
 				logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
+				mob_teled = TRUE
+
+		if(!mob_teled)
+			logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] to [log_loc(src.target)].")
 
 		cargo.set_loc(get_turf(src.target))
 		target.receive_cargo(cargo)
@@ -2017,15 +2116,10 @@ TYPEINFO(/obj/item/cargotele)
 
 /obj/item/cargotele/traitor
 	cost = 15
-	var/static/list/possible_targets = list()
-
-	New()
-		..()
-		if (!length(possible_targets))
-			for(var/turf/T in world) //hate to do this but it's only once vOv
-				LAGCHECK(LAG_LOW)
-				if(istype(T,/turf/space) && T.z != 1 && T.z != 6 && !isrestrictedz(T.z)) //do not foot ball, do not collect 200
-					possible_targets += T
+	///The account to credit for sales
+	var/datum/db_record/account = null
+	///The total amount earned from selling/stealing
+	var/total_earned = 0
 
 	attack_self() // Fixed --melon
 		return
@@ -2042,23 +2136,57 @@ TYPEINFO(/obj/item/cargotele)
 			store.weld(TRUE, user)
 
 	finish_teleport(var/obj/cargo, var/mob/user)
-		if (!length(src.possible_targets))
-			CRASH("Tried to syndi-teleport [cargo] but the list of possible turf targets was empty.")
-		src.target = pick(src.possible_targets)
+		src.target = random_space_turf() || random_nonrestrictedz_turf()
 		boutput(user, "<span class='notice'>Teleporting [cargo]...</span>")
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
-
+		var/value = shippingmarket.appraise_value(cargo.contents, sell = FALSE)
 		// Logs for good measure (Convair880).
-		for (var/mob/M in cargo.contents)
-			logTheThing(LOG_STATION, user, "uses a Syndicate cargo transporter to send [cargo.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
-
-		cargo.set_loc(src.target)
+		for (var/atom/A in cargo.contents)
+			if (ismob(A))
+				var/mob/M = A
+				logTheThing(LOG_STATION, user, "uses a Syndicate cargo transporter to send [cargo.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
+				var/datum/job/job = find_job_in_controller_by_string(M.job)
+				value += job?.wages * 5
+			else
+				cargo.contents -= A
+				qdel(A)
+		if (length(cargo.contents)) //if there's a mob left inside chuck it somewhere in space
+			cargo.set_loc(src.target)
+		else
+			qdel(cargo)
+		src.total_earned += value
 		elecflash(src)
 		var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
-		if (ret & CELL_INSUFFICIENT_CHARGE)
-			boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
+		boutput(user, "[bicon(src)] *beep*")
+		if (src.account)
+			account?["current_money"] += value
+			boutput(user, "[bicon(src)] The [src.name] beeps: transfer successful, [value] credits have been deposited into your bank account. You have [src.account["current_money"]] credits total.")
 		else
-			boutput(user, "<span class='notice'>Transfer successful.</span>")
+			boutput(user, "[bicon(src)] The [src.name] beeps: transfer successful, no account registered.")
+		if (ret & CELL_INSUFFICIENT_CHARGE)
+			boutput(user, "<span class='alert'>[src] is now out of charge.</span>")
+
+	attackby(obj/item/item, mob/user)
+		var/owner_name = null
+		if (istype(item, /obj/item/device/pda2))
+			var/obj/item/device/pda2/pda = item
+			owner_name = pda.registered
+		else if (istype(item, /obj/item/clothing/lanyard))
+			var/obj/item/clothing/lanyard/lanyard = item
+			owner_name = lanyard.registered
+		else if (istype(item, /obj/item/card/id))
+			var/obj/item/card/id/card = item
+			owner_name = card.registered
+		if (owner_name)
+			boutput(user, "<span class='notice'>You set [src]'s payout account.</span>")
+			src.account = data_core.bank.find_record("name", owner_name)
+			return
+		..()
+
+	get_desc()
+		. = ..()
+		if (src.total_earned)
+			. += "<br>There is a little counter on the side, it says: Total amount earned: [src.total_earned] credits.<br>"
 
 /obj/item/oreprospector
 	name = "geological scanner"
@@ -2096,7 +2224,7 @@ TYPEINFO(/obj/item/cargotele)
 			if (E.scan_decal)
 				mining_scandecal(L, AST, E.scan_decal)
 	var/found_string = ""
-	if (ores_found.len > 0)
+	if (length(ores_found) > 0)
 		var/list_counter = 1
 		for (var/X in ores_found)
 			found_string += X
@@ -2145,7 +2273,7 @@ TYPEINFO(/obj/item/cargotele)
 	icon_state = "gravgen-off"
 	density = 1
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 	var/active = 0
 	var/obj/item/cell/cell = null
 	var/target = null
@@ -2175,12 +2303,12 @@ TYPEINFO(/obj/item/cargotele)
 				if (!src.active)
 					user.visible_message("[user] powers up [src].", "You power up [src].")
 					src.active = 1
-					src.anchored = 1
+					src.anchored = ANCHORED
 					icon_state = "gravgen-on"
 				else
 					user.visible_message("[user] shuts down [src].", "You shut down [src].")
 					src.active = 0
-					src.anchored = 0
+					src.anchored = UNANCHORED
 					icon_state = "gravgen-off"
 			else
 				user.visible_message("[user] stares at [src] in confusion!", "You're not sure what that did.")
@@ -2201,30 +2329,30 @@ TYPEINFO(/obj/item/cargotele)
 			if (!src.cell)
 				src.visible_message("<span class='alert'>[src] instantly shuts itself down.</span>")
 				src.active = 0
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				icon_state = "gravgen-off"
 				return
 			var/obj/item/cell/PCEL = src.cell
 			if (PCEL.charge <= 0)
 				src.visible_message("<span class='alert'>[src] runs out of power and shuts down.</span>")
 				src.active = 0
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				icon_state = "gravgen-off"
 				return
-			PCEL.charge -= 5
+			PCEL.use(5)
 			if (src.target)
 				for(var/obj/item/raw_material/O in orange(1,src))
 					if (istype(O,/obj/item/raw_material/rock)) continue
-					PCEL.charge -= 2
+					PCEL.use(2)
 					O.set_loc(src.target)
 				for(var/obj/item/scrap/S in orange(1,src))
-					PCEL.charge -= 2
+					PCEL.use(2)
 					S.set_loc(src.target)
 				for(var/obj/decal/cleanable/machine_debris/D in orange(1,src))
-					PCEL.charge -= 2
+					PCEL.use(2)
 					D.set_loc(src.target)
 				for(var/obj/decal/cleanable/robot_debris/R in orange(1,src))
-					PCEL.charge -= 2
+					PCEL.use(2)
 					R.set_loc(src.target)
 			for(var/obj/item/raw_material/O in range(6,src))
 				if (moved >= 10)
@@ -2281,8 +2409,8 @@ TYPEINFO(/obj/item/cargotele)
 
 	New()
 		..()
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_ENABLED, .proc/add_pad)
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, .proc/remove_pad)
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_ENABLED, PROC_REF(add_pad))
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, PROC_REF(remove_pad))
 
 	/// Add a pad to the global pads list. Do nothing if the pad is already in the pads list.
 	proc/add_pad(datum/holder, obj/submachine/cargopad/pad)
@@ -2307,7 +2435,7 @@ TYPEINFO(/obj/submachine/cargopad)
 	desc = "Used to receive objects transported by a cargo transporter."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "cargopad"
-	anchored = TRUE
+	anchored = ANCHORED
 	plane = PLANE_FLOOR
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/active = TRUE
@@ -2418,6 +2546,8 @@ TYPEINFO(/obj/item/ore_scoop)
 	item_state = "buildpipe"
 	w_class = W_CLASS_SMALL
 	var/obj/item/satchel/mining/satchel = null
+	///Does this scoop pick up rock, ice etc.
+	var/collect_junk = FALSE
 
 	prepared
 		New()
@@ -2437,11 +2567,14 @@ TYPEINFO(/obj/item/ore_scoop)
 			if (!issilicon(user))
 				var/obj/item/satchel/mining/S = W
 				user.drop_item()
-				if (satchel)
-					user.put_in_hand_or_drop(satchel)
+				var/obj/item/satchel/mining/old_satchel = src.satchel
+				if (old_satchel)
+					old_satchel.set_loc(get_turf(user))
 				S.set_loc(src)
-				satchel = S
-				icon_state = "scoop-bag"
+				src.satchel = S
+				if (old_satchel)
+					user.put_in_hand_or_drop(old_satchel)
+				src.icon_state = "scoop-bag"
 				user.visible_message("[user] inserts [S] into [src].", "You insert [S] into [src].")
 			else
 				boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
@@ -2450,23 +2583,28 @@ TYPEINFO(/obj/item/ore_scoop)
 			return
 
 	attack_self(var/mob/user as mob)
-		if(!issilicon(user))
-			if (satchel)
-				user.visible_message("[user] unloads [satchel] from [src].", "You unload [satchel] from [src].")
-				user.put_in_hand_or_drop(satchel)
-				satchel = null
-				icon_state = "scoop"
-			else
-				boutput(user, "<span class='alert'>There's no satchel in [src] to unload.</span>")
-		else
+		if(issilicon(user))
 			boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
+			return
+		if (!satchel)
+			src.collect_junk = !src.collect_junk
+			if (src.collect_junk)
+				boutput(user, "<span class='info'>Now collecting junk.</span>")
+			else
+				boutput(user, "<span class='info'>No longer collecting junk.</span>")
+		else
+			user.visible_message("[user] unloads [satchel] from [src].", "You unload [satchel] from [src].")
+			user.put_in_hand_or_drop(satchel)
+			satchel = null
+			icon_state = "scoop"
+
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if(isturf(target))
 			if (!satchel)
 				boutput(user, "<span class='alert'>There's no satchel in [src] to dump out.</span>")
 				return
-			if (satchel.contents.len < 1)
+			if (length(satchel.contents) < 1)
 				boutput(user, "<span class='alert'>The satchel in [src] is empty.</span>")
 				return
 			user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
@@ -2475,9 +2613,32 @@ TYPEINFO(/obj/item/ore_scoop)
 			satchel.UpdateIcon()
 			return
 		if (istype(target, /obj/item/satchel/mining))
-			user.swap_hand() //Needed so you don't drop the scoop instead of the satchel
-			src.attackby(target, user)
-			user.swap_hand()
+			if (!issilicon(user))
+				var/obj/item/satchel/mining/new_satchel = target
+				var/atom/old_location = null //this stores the old location so we know where the clicked item came from
+				var/was_stored = FALSE //For stuff with storage datums, we can move the item to that storage
+				if (new_satchel.stored)
+					old_location = new_satchel.stored.linked_item
+					was_stored = TRUE
+				else
+					old_location = new_satchel.loc
+				if (ismob(old_location) && !was_stored)
+					var/mob/old_user = old_location
+					old_user.drop_item(new_satchel) // not only user since you could click on a satchel carried by someone else... ugh
+				var/obj/item/satchel/mining/old_satchel = src.satchel
+				if (old_satchel)
+					old_satchel.set_loc(get_turf(user))
+				new_satchel.set_loc(src)
+				src.satchel = new_satchel
+				if (old_satchel && old_location)
+					if (was_stored) //if the old satchel was in a storage item, the new item should fit as well
+						old_location.storage.add_contents(old_satchel, user, FALSE)
+					else
+						user.put_in_hand_or_drop(old_satchel)
+				src.icon_state = "scoop-bag"
+				user.visible_message("[user] inserts [new_satchel] into [src].", "You insert [new_satchel] into [src].")
+			else
+				boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
 
 ////// Shit that goes in the asteroid belt, might split it into an exploring.dm later i guess
 
@@ -2493,7 +2654,7 @@ TYPEINFO(/obj/item/ore_scoop)
 	ex_act(severity)
 		if (severity == 1.0)
 			if (prob(8))
-				src.RL_SetOpacity(0)
+				src.set_opacity(0)
 				src.set_density(0)
 				src.icon_state = "ancient-b"
 				return

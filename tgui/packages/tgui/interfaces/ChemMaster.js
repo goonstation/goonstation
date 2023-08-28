@@ -106,6 +106,7 @@ export const ReagentDisplay = (props, context) => {
             </>
           );
         }}
+        renderButtonsDeps={remove_amount}
       />
     </SectionEx>
   );

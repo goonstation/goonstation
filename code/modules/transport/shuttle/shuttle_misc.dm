@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/obj/machinery/shuttle)
 /obj/machinery/shuttle/engine
 	name = "engine"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
 
 /obj/machinery/shuttle/engine/heater
@@ -149,7 +149,7 @@ ABSTRACT_TYPE(/obj/machinery/shuttle/weapon)
 	icon_state = "howitzer-idle"
 	name = "plasma howitzer"
 	desc = "This sure looks dangerous."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = 20
 	dir = 8
@@ -173,7 +173,7 @@ ABSTRACT_TYPE(/obj/machinery/shuttle/weapon)
 	desc = "A huge cannon firing six inch artillery rounds. It looks extremely dangerous."
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "howitzerL"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = 20
 	dir = 8

@@ -5,7 +5,7 @@ var/HasturPresent = 0
 	real_name = "????"
 	desc = "He who must not be named..."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/misc/hastur.dmi'
 	icon_state = "hastur"
 	hand_count = 4
@@ -14,7 +14,7 @@ var/HasturPresent = 0
 	can_disarm = 1
 	can_help = 1
 	see_invisible = INVIS_ADVENTURE
-	stat = 2
+	stat = STAT_DEAD
 	stepsound = 'sound/misc/hastur/tentacle_walk.ogg'
 	speechverb_say = "states"
 	speechverb_exclaim = "declares"
@@ -236,10 +236,10 @@ var/HasturPresent = 0
 		else
 			H.visible_message(pick("<span class='alert'>[H] vanishes from sight!</span>", "<span class='alert'>[H] dissolves into the void!</span>"), pick("<span class='notice'>You are enveloped by the void, hiding your physical manifestation.</span>", "<span class='notice'>You fade into the void!</span>"))
 			H.set_density(0)
-			APPLY_ATOM_PROPERTY(H, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
 			H.alpha = 160
 			H.stepsound = null
-			H.see_invisible = INVIS_GHOST
+			H.see_invisible = INVIS_SPOOKY
 			stage = 1
 
 //TENTACLE LONG RANGE WHIP//
@@ -247,14 +247,14 @@ var/HasturPresent = 0
 /obj/line_obj/tentacle
 	name = "sharp tentacle"
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
 /obj/tentacle_trg_dummy
 	name = ""
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
@@ -294,7 +294,7 @@ var/HasturPresent = 0
 			var/list/affected = DrawLine(user, target_r, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"WholeTentacle",1,1,"HalfStartTentacle","HalfEndTentacle",OBJ_LAYER,1)
 
 			for(var/obj/O in affected)
-				O.anchored = 1 //Proc wont spawn the right object type so lets do that here.
+				O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.
 				O.name = "sharp tentacle"
 				var/turf/src_turf = O.loc
 				for(var/obj/machinery/vehicle/A in src_turf)
@@ -361,7 +361,7 @@ var/HasturPresent = 0
 			var/list/affected = DrawLine(user, target_r, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"WholeTentacle",1,1,"HalfStartTentacle","HalfEndTentacle",OBJ_LAYER,1)
 
 			for(var/obj/O in affected)
-				O.anchored = 1 //Proc wont spawn the right object type so lets do that here.
+				O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.
 				O.name = "coiled tentacle"
 				var/turf/src_turf = O.loc
 				for(var/obj/machinery/vehicle/A in src_turf)

@@ -11,7 +11,7 @@ var/global/list/objects_using_dialogs
 	if (!objects_using_dialogs)
 		objects_using_dialogs = list(src)
 	else
-		if (!clients_operating || clients_operating.len <= 0)
+		if (!clients_operating || length(clients_operating) <= 0)
 			objects_using_dialogs += src
 
 	if (!clients_operating)
@@ -31,7 +31,7 @@ var/global/list/objects_using_dialogs
 	if (!objects_using_dialogs)
 		objects_using_dialogs = list()
 	else
-		if (clients_operating.len <= 0)
+		if (length(clients_operating) <= 0)
 			objects_using_dialogs -= src
 
 /obj/proc/remove_dialogs()

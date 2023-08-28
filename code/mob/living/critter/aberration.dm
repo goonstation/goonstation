@@ -5,11 +5,11 @@
 		terms, a goddamned science ghost."}
 	icon_state = "aberration"
 	density = TRUE
-	anchored = 1
+	anchored = ANCHORED
 
 	hand_count = 1
 
-	ai_type = /datum/aiHolder/aberration
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 
 	speechverb_say = "materializes"

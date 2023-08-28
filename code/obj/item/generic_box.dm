@@ -132,6 +132,8 @@
 		name = "box of sticky notes"
 		desc = "It's like a box that a pile of sticky notes would come in, but it's actually the pile, too. So there's a pile in the box. Or the pile... IS the box? Quantum sticky note pile-box? Whatever, I've been trying to get this to work for a few hours and making a special little sticky note container is the last thing I want to do right now. Fuck."
 		contained_item = /obj/item/sticker/postit
+		max_item_amount = 20
+		item_amount = 20
 
 	crayon // stonepillar's crayon project
 		name = "rapid crayon creation device"
@@ -195,7 +197,7 @@
 				attack_hand()
 				attack()
 
-				research //For the research module
+				science //For the science module
 					name = "box shaped artifact form dispensor"
 					desc = "A box full of forms for classifying alien artifacts"
 					icon_state = "item_box"

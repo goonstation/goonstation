@@ -2,7 +2,7 @@
 	name = "computer"
 	icon = 'icons/obj/computer.dmi'
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	power_usage = 250
 	var/datum/light/light
 	var/light_r = 1
@@ -47,6 +47,13 @@
 		else
 			src.Attackhand(user)
 
+	get_help_message(dist, mob/user)
+		. = "You can use a <b>screwdriver</b> to unscrew the screen"
+		if (src.can_reconnect)
+			. += ",\nor a <b>multitool</b> to re-scan for equipment."
+		else
+			. += "."
+
 	proc/unscrew_monitor(obj/item/W as obj, mob/user as mob)
 		var/obj/computerframe/A = new /obj/computerframe(src.loc)
 		if (src.status & BROKEN)
@@ -66,7 +73,7 @@
 			C.set_loc(src.loc)
 		A.set_dir(src.dir)
 		A.circuit = M
-		A.anchored = 1
+		A.anchored = ANCHORED
 		src.special_deconstruct(A)
 		qdel(src)
 

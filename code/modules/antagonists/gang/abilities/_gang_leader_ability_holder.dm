@@ -201,6 +201,9 @@
 		antag_role.gang.base = area
 		area.gang_base = 1
 
+		for(var/datum/mind/member in antag_role.gang.members)
+			boutput(member.current, "<span class='alert'>Your gang's base has been set up in [area]!</span>")
+
 		for(var/obj/decal/cleanable/gangtag/G in area)
 			if(G.owners == antag_role.gang)
 				continue

@@ -7,6 +7,10 @@
 	var/possession_points = 0
 	/// number of souls required to evolve into a specialized wraith subclass
 	var/absorbs_to_evolve = 3
+#ifdef BONUS_POINTS
+	corpsecount = 9999
+	possession_points = 9999
+#endif
 	onAbilityStat()
 		..()
 		.= list()
@@ -149,7 +153,7 @@
 	icon_state = "acursed"
 	// invisibility = INVIS_ALWAYS
 	invisibility = INVIS_GHOST
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	mouse_opacity = 0

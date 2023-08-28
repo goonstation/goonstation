@@ -310,7 +310,7 @@ TYPEINFO(/obj/item/device/flash)
 			else
 				.= 1
 				if (!(H.mind?.get_antagonist(ROLE_REVOLUTIONARY)))
-					H.mind?.add_antagonist(ROLE_REVOLUTIONARY)
+					H.mind?.add_antagonist(ROLE_REVOLUTIONARY, source = ANTAGONIST_SOURCE_CONVERTED)
 				else
 					user.show_text("[H] is already a member of the revolution.", "red")
 			if (!nostun)
@@ -415,6 +415,8 @@ TYPEINFO(/obj/item/device/flash/turbo)
 	icon_state = "flashbang"
 	spawn_contents = list(/obj/item/device/flash/turbo = 5)
 
+TYPEINFO(/obj/item/device/flash/revolution)
+	mats = 0
 /obj/item/device/flash/revolution
 	name = "revolutionary flash"
 	desc = "A device that emits an extremely bright light when used. Something about this device forces people to revolt, when flashed by a revolution leader."

@@ -12,7 +12,7 @@
 	layer = 5.0 // Todo layer
 	bot_move_delay = BUTTBOT_MOVE_SPEED
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	on = 1
 	health = 5
 	no_camera = 1
@@ -295,7 +295,6 @@
 /obj/machinery/bot/buttbot/proc/robo_expel_fart_gas(var/gross)
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/gas = new /datum/gas_mixture
-	gas.vacuum()
 	if(gross == 1)
 		gas.farts = 0.5
 	else if(gross == 2)
@@ -351,7 +350,7 @@
 						V.throw_at(target, 8, 3, throw_type = THROW_GUNIMPACT)
 				var/go2hell
 				src.transform = oldtransform
-				for (var/obj/item/storage/bible/B in src.loc)
+				for (var/obj/item/bible/B in src.loc)
 					go2hell = 1
 					var/turf/oldloc = get_turf(src)
 					src.visible_message("<span class='alert'>[src] blasts its ass all over the bible.<br><b>A mysterious force <u>is not pleased</u>!</b></span>")
@@ -398,7 +397,7 @@
 				fart_on_other = 1
 				src.fart_memory += A
 				break
-			else if(istype(A,/obj/item/storage/bible))
+			else if(istype(A,/obj/item/bible))
 				src.visible_message("<span class='alert'>[src] farts on the bible.<br><b>A mysterious force smites [src]!</b></span>")
 				fart_on_other = 1
 				src.fart_memory += A

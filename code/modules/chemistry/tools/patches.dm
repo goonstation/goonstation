@@ -438,11 +438,9 @@
 				if (ismob(target.loc))
 					var/mob/U = target.loc
 					U.u_equip(target)
-				else if (istype(target.loc, /obj/item/storage))
-					var/obj/item/storage/U = target.loc
-					U.contents -= target
-					if (U.hud)
-						U.hud.update()
+				else if (istype(target, /obj/item))
+					var/obj/item/I = target
+					I.stored?.transfer_stored_item(I, src, user = user)
 				target.set_loc(src)
 				patches += target
 				update_overlay()

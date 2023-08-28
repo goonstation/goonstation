@@ -7,12 +7,13 @@
 	organ_name = "eye"
 	desc = "Here's lookin' at you! Er, maybe not so much, anymore."
 	organ_holder_location = "head"
+	icon = 'icons/obj/items/organs/eye.dmi'
 	icon_state = "eye"
 	var/change_iris = 1
 	var/color_r = 1 // same as glasses/helmets/masks/etc, used for vision color modifications, see human/handle_regular_hud_updates()
 	var/color_g = 1
 	var/color_b = 1
-	var/show_on_examine = 0 // do we get mentioned when our donor is examined?
+	var/show_on_examine = FALSE // do we get mentioned when our donor is examined?
 
 	New()
 		..()
@@ -119,7 +120,7 @@ TYPEINFO(/obj/item/organ/eye/cyber)
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	made_from = "pharosium"
-	show_on_examine = 1
+	show_on_examine = TRUE
 
 	emp_act()
 		..()

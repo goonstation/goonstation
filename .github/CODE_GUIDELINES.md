@@ -19,6 +19,8 @@
 * Bitflags (`&`) - Write as `bitfield & bitflag`
 * Use `'foo.ogg'` instead of `"foo.ogg"` for resources unless you need to build a string (e.g. `"foo_[rand(2)].ogg"`).
 * Use `FALSE` and `TRUE` instead of `0` and `1` for booleans.
+* Use `x in y` rather than `y.Find(x)` unless you need the index.
+    * Does not apply to regexes, of course.
 
 # Syntax
 

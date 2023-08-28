@@ -120,7 +120,7 @@
 							src.master.add_fingerprint(usr)
 							return
 
-						if(isAI(usr) || src.authenticated == "AIUSR")
+						if(issilicon(usr) || src.authenticated == "AIUSR")
 							src.print_text("<b>Error:</b> Shuttle recall from AIUSR blocked by Central Command.")
 							return
 

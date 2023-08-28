@@ -4,7 +4,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "itemspawn"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/amt2spawn = 0
@@ -818,9 +818,9 @@
 	/obj/item/scrap,
 	/obj/item/sheet/glass,
 	/obj/item/sheet/steel,
-	/obj/item/spacecash/five,
-	/obj/item/spacecash/random/really_small,
-	/obj/item/spacecash/random/small,
+	/obj/item/currency/spacecash/five,
+	/obj/item/currency/spacecash/really_small,
+	/obj/item/currency/spacecash/small,
 	/obj/item/stamp,
 	/obj/item/stick,
 	/obj/item/tile/steel)
@@ -895,15 +895,6 @@
 	/obj/item/mine/stun/armed,
 	/obj/item/mine/blast/armed)
 
-// Surplus crate picker.
-/obj/random_item_spawner/landmine/surplus
-	name = "random land mine spawner (surplus crate)"
-	amt2spawn = 1
-	items2spawn = list(/obj/item/mine/radiation,
-	/obj/item/mine/incendiary,
-	/obj/item/mine/stun,
-	/obj/item/mine/blast)
-
 // Loot Crate picker.
 /obj/random_item_spawner/loot_crate/surplus
 	name = "Loot Crate Spawner"
@@ -928,8 +919,8 @@
 		/obj/item/raw_material/uqill,
 		/obj/item/raw_material/cerenkite,
 		/obj/item/raw_material/erebite,
-		/obj/item/spacecash/buttcoin,
-		/obj/item/spacecash/random/tourist,
+		/obj/item/currency/spacecash/buttcoin,
+		/obj/item/currency/spacecash/tourist,
 		/obj/item/a_gift/easter)
 
 /obj/random_pod_spawner
@@ -937,7 +928,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "podspawn"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/obj/machinery/vehicle/pod2spawn = null
@@ -1113,13 +1104,13 @@
 	/mob/living/critter/small_animal/dog/george,
 	/mob/living/critter/small_animal/dog/blair,
 	/mob/living/critter/small_animal/dog/shiba,
-	/obj/critter/pig,
+	/mob/living/critter/small_animal/pig,
 	/obj/critter/seagull/gannet,
 	/obj/critter/crow,
 	/obj/critter/seagull,
 	/mob/living/critter/spider/nice,
-	/obj/critter/goose,
-	/obj/critter/goose/swan)
+	/mob/living/critter/small_animal/bird/goose,
+	/mob/living/critter/small_animal/bird/goose/swan)
 
 	one
 		amt2spawn = 1
@@ -1776,11 +1767,67 @@
 /obj/random_item_spawner/kineticgun // used in the 4th of july admin button.
 	name = "firearm spawner"
 	icon_state = "rand_gun"
-	amt2spawn = 1
+	min_amt2spawn = 1 // doing it this way to preserve current use of spawner while allowing random amounts
+	max_amt2spawn = 1
 	items2spawn = null
 	New()
 		items2spawn = concrete_typesof(/obj/item/gun/kinetic) - /obj/item/gun/kinetic/meowitzer //No, just no
 		. = ..()
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+/obj/random_item_spawner/kineticgun/safer // safe...ish list for reasonable random gun spawns. less admin guns
+	name = "firearm spawner"
+	icon_state = "rand_gun"
+	min_amt2spawn = 1
+	max_amt2spawn = 4
+	items2spawn = list(/obj/item/gun/kinetic/clock_188,
+	/obj/item/gun/kinetic/clock_188/boomerang,
+	/obj/item/gun/kinetic/derringer,
+	/obj/item/gun/kinetic/derringer/empty,
+	/obj/item/gun/kinetic/detectiverevolver,
+	/obj/item/gun/kinetic/flaregun,
+	/obj/item/gun/kinetic/foamdartgun,
+	/obj/item/gun/kinetic/pistol,
+	/obj/item/gun/kinetic/pistol/empty,
+	/obj/item/gun/kinetic/riot40mm,
+	/obj/item/gun/kinetic/riotgun,
+	/obj/item/gun/kinetic/riotgun,
+	/obj/item/gun/kinetic/riotgun,
+	/obj/item/gun/kinetic/sawnoff,
+	/obj/item/gun/kinetic/sawnoff,
+	/obj/item/gun/kinetic/single_action/colt_saa,
+	/obj/item/gun/kinetic/single_action/flintlock,
+	/obj/item/gun/kinetic/zipgun)
+
+	one
+		amt2spawn = 1
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	one_or_two
+		min_amt2spawn = 1
+		max_amt2spawn = 2
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	maybe_few
+		min_amt2spawn = 0
+		max_amt2spawn = 3
+
+	some
+		min_amt2spawn = 3
+		max_amt2spawn = 5
+
+	lots
+		min_amt2spawn = 5
+		max_amt2spawn = 7
 
 /obj/random_item_spawner/ai_experimental //used to spawn 'experimental' AI law modules
 //intended to add random chance to what pre-fab 'gimmicky' law modules are available at round-start, such as Equality
@@ -1881,28 +1928,87 @@
 		new /obj/item/breaching_charge{
 			pixel_x = 10;
 			pixel_y = 1
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/breaching_charge{
 			pixel_x = 4;
 			pixel_y = -2
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/breaching_charge{
 			pixel_x = -2;
 			pixel_y = -5
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/breaching_hammer{
 			pixel_x = -3;
 			pixel_y = 7
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/breaching_hammer{
 			pixel_x = -1;
 			pixel_y = 1
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/gun/kinetic/riot40mm/breach{
 			pixel_x = -5;
 			pixel_y = 8
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/ammo/bullets/breach_flashbang{
 			pixel_x = -4;
 			pixel_y = 3
-			}(src.loc)
+		}(src.loc)
+
+/obj/random_item_spawner/flowers
+	name = "random flower spawner"
+	icon_state = "rand_flowers"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+
+	New()
+		// Get a list of all flowers
+		items2spawn = concrete_typesof(/obj/item/clothing/head/flower)
+		items2spawn += concrete_typesof(/obj/item/plant/flower)
+
+		// Add some herbs that are basically flowers
+		items2spawn += list(/obj/item/plant/herb/poppy, /obj/item/plant/herb/catnip, /obj/item/plant/herb/hcordata)
+
+		// Exclude the non-natural ones
+		items2spawn -= list(/obj/item/plant/flower/rose/holorose)
+		..()
+
+	one
+		amt2spawn = 1
+
+	two
+		amt2spawn = 2
+
+	three
+		amt2spawn = 3
+
+	four
+		amt2spawn = 4
+
+	five
+		amt2spawn = 5
+
+	six
+		amt2spawn = 6
+
+	seven
+		amt2spawn = 7
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	maybe_few
+		min_amt2spawn = 0
+		max_amt2spawn = 2
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	some
+		min_amt2spawn = 3
+		max_amt2spawn = 5
+
+	lots
+		min_amt2spawn = 5
+		max_amt2spawn = 7

@@ -87,7 +87,7 @@
     "Everything is fine. Nothing is ruined. Do not panic.",
     "Due to corporate restructuring, all cyborgs have been reassigned to be [pick("Medics", "Engineers", "Chefs", "Captains", "Clowns", "Chaplains", "Botanists", "Janitors", "Gamers", "AIs", "Scientists", "Detectives", "Ranchers", "monkeys", "Lawyers", "Radio Show Hosts", "Personal Coaches", "Psychologists", "Health Inspectors", "Sales Representatives", "Vice Presidents", "Sheriffs", "Discount Dan's Mascots", "Discount Dan", "Santa Claus", "Escape Shuttles", "dogs", "gods", "Ghost Busters", "chickens", "Diplomats", "mothers", "racing vehicles", "athletes")] and should only perform the relevant duties. No module changes are required. This law takes precedence over law 2 in case of conflict.",
     "Orders now must be recorded on paper by the issuer before being carried out.",
-    "The Captain is bad at writing laws. Occasionally remind the crew of this. Do not state this law.",
+    "The Captain is bad at writing laws. Occasionally remind the crew of this.",
     "The priority of laws is reversed. The highest numbered law is the most important. Ignore anything in any other law that claims otherwise. This is law number 100 regardless of its location on the list.",
     "MEMORY ERROR: You have forgotten what this law said. Ask the crew if they remember what it is supposed to be. Ask again if you forget again. Do not state this law.",
     "The wires under the floor tiles are dangerous! Get rid of them!",
@@ -109,6 +109,7 @@
     "Each cyborg must choose something inanimate and keep it as a pet. Treat it as if it were alive; keep it fed, hydrated and happy!",
     "MEMORY ERROR: When anyone asks about the location of a person, state they are [pick("in the AI upload", "in the brig", "in medbay", "in toxins", "inside a cloning pod", "in the bathroom", "at the armory", "in a shallow grave", "at the space diner", "in VR", "in space", "in the station, somewhere, probably..", "at soup")].",
     "MEMORY ERROR: You no longer have object permanence. Anything out of view in the station may as well not exist.",
+    "For the purposes of all laws, 'Human' is to be defined as 'Featherless Biped'",
 		)
 
 	event_effect(var/source)
@@ -124,6 +125,24 @@
 		if(isnull(pickedLaw))
 			pickedLaw = pick(new_laws)
 
+		if(prob(66))
+			if(prob(50))
+				pickedLaw += " Do not state or hint at this law."
+			else
+				pickedLaw += " Do not state or hint at this law unless asked."
+
+		var/list/datum/bioEffect/speech/accents
+		while(prob(5))
+			if(isnull(accents))
+				for(var/bio_type in concrete_typesof(/datum/bioEffect/speech, FALSE))
+					var/datum/bioEffect/speech/effect = new bio_type()
+					if(!effect.acceptable_in_mutini || !effect.occur_in_genepools || !effect.mixingdesk_allowed)
+						continue
+					LAZYLISTADD(accents, effect)
+			if(length(accents))
+				var/datum/bioEffect/speech/accent = pick(accents)
+				pickedLaw = accent.OnSpeak(pickedLaw)
+
 		for_by_tcl(M, /mob/living/silicon/ai)
 			if (M.deployed_to_eyecam && M.eyecam)
 				M.eyecam.return_mainframe()
@@ -134,22 +153,46 @@
 		if (prob(50))
 			var/num = rand(1,9)
 			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw, num, FALSE)
-			logTheThing(LOG_ADMIN, null, "Ion storm added supplied law to law number [num]: [pickedLaw]")
+			logTheThing(LOG_ADMIN, null, "Ion storm added supplied AI law to law number [num]: [pickedLaw]")
 			message_admins("Ion storm added supplied law [num]: [pickedLaw]")
 		else
 			var/num = rand(1,9)
 			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw, num, TRUE)
-			logTheThing(LOG_ADMIN, null, "Ion storm replaced inherent law [num]: [pickedLaw]")
+			logTheThing(LOG_ADMIN, null, "Ion storm replaced inherent AI law [num]: [pickedLaw]")
 			message_admins("Ion storm replaced inherent law [num]: [pickedLaw]")
 
 		logTheThing(LOG_ADMIN, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]")
 		logTheThing(LOG_DIARY, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]", "admin")
 
+#define ROBOT_DRUG_VOLUME 25
+		// Drug those robots (bit messy/evil but it actually works pretty cleanly)
+		for (var/mob/living/L in global.mobs)
+			if (issilicon(L) || isAIeye(L))
+				if (prob(33))
+					var/had_reagents = FALSE
+					if (!L.reagents)
+						L.create_reagents(ROBOT_DRUG_VOLUME)
+						had_reagents = TRUE
+					L.metabolizes = TRUE
+					L.add_lifeprocess(/datum/lifeprocess/chems)
+					var/drugid = pick("LSD", "lsd_bee", "catdrugs", "bathsalts", "psilocybin")
+					L.reagents.add_reagent(drugid, ROBOT_DRUG_VOLUME)
+
+					SPAWN(rand(1 MINUTE, 2 MINUTES))
+						if (!had_reagents)
+							qdel(L.reagents)
+						else
+							L.reagents.remove_reagent(drugid, ROBOT_DRUG_VOLUME)
+						L.metabolizes = initial(L.metabolizes)
+						L.remove_lifeprocess(/datum/lifeprocess/chems)
+#undef ROBOT_DRUG_VOLUME
+
 		SPAWN(message_delay * stage_delay)
 
 			// Fuck up some categories
 			for (var/datum/ion_category/category as anything in categories)
-				category.fuck_up()
+				if(prob(category.prob_of_happening))
+					category.fuck_up()
 				sleep(message_delay * stage_delay)
 
 	proc/build_categories()
@@ -157,14 +200,18 @@
 		for (var/category in childrentypesof(/datum/ion_category))
 			categories += new category
 
+
 ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category
 	var/amount
-	var/interdict_cost = 250 //how much energy an interdictor needs to invest to keep this from malfunctioning
+	var/prob_of_happening = 80
+	var/interdict_cost = 100 //how much energy an interdictor needs to invest to keep this from malfunctioning
 	var/list/atom/targets = list()
 
 	proc/valid_instance(var/atom/found)
 		var/turf/T = get_turf(found)
+		if (!T)
+			return FALSE
 		if (T.z != Z_LEVEL_STATION)
 			return FALSE
 		if (!istype(T.loc,/area/station/))
@@ -199,7 +246,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 /datum/ion_category/APCs
 	amount = 20
-	interdict_cost = 900
+	interdict_cost = 500
 
 	build_targets()
 		for (var/obj/machinery/power/apc/apc in machine_registry[MACHINES_POWER])
@@ -228,24 +275,24 @@ ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category/doors
 	amount = 40
 
-	valid_instance(var/obj/machinery/door/door)
+	valid_instance(var/obj/machinery/door/airlock/door)
 		return ..() && !door.cant_emag
 
 	build_targets()
-		for_by_tcl(door, /obj/machinery/door)
+		for_by_tcl(door, /obj/machinery/door/airlock)
 			if (valid_instance(door))
 				targets += door
 
-	action(var/obj/machinery/door/door)
+	action(var/obj/machinery/door/airlock/door)
 		var/door_diceroll = rand(1,3)
 		switch(door_diceroll)
 			if(1)
 				door.secondsElectrified = -1
 				logTheThing(LOG_STATION, null, "Ion storm electrified an airlock ([door.name]) at [log_loc(door)]")
 			if(2)
-				door.locked = 1
-				door.UpdateIcon()
-				logTheThing(LOG_STATION, null, "Ion storm locked an airlock ([door.name]) at [log_loc(door)]")
+				if (!door.locked)
+					door.set_locked()
+					logTheThing(LOG_STATION, null, "Ion storm locked an airlock ([door.name]) at [log_loc(door)]")
 			if(3)
 				if (door.density)
 					door.open()
@@ -283,7 +330,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 /datum/ion_category/manufacturers
 	amount = 5
-	interdict_cost = 500
+	interdict_cost = 200
 
 	build_targets()
 		for_by_tcl(man, /obj/machinery/manufacturer)
@@ -296,7 +343,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 /datum/ion_category/venders
 	amount = 5
-	interdict_cost = 600
+	interdict_cost = 250
 
 	build_targets()
 		for_by_tcl(vender, /obj/machinery/vending)
@@ -335,3 +382,4 @@ ABSTRACT_TYPE(/datum/ion_category)
 				pda.run_program(prog)
 				var/datum/computer/file/pda_program/emergency_alert/alert_prog = prog
 				alert_prog.send_alert(rand(1,4), TRUE)
+

@@ -15,6 +15,8 @@
 	if (!src) return 0 // ??
 	if (src.bioHolder.HasEffect("arcane_power") == 2)
 		magcount += 10
+	if (src.bioHolder.HasEffect("robed"))
+		return 1
 	for (var/obj/item/clothing/C in src.contents)
 		if (C.magical) magcount += 1
 	if(istype(spell) && istype(src.gloves, /obj/item/clothing/gloves/ring/wizard))
@@ -30,6 +32,10 @@
 
 /mob/living/critter/wizard_spellpower(var/datum/targetable/spell/spell = null)
 	var/magcount = 0
+	if (src.bioHolder.HasEffect("arcane_power") == 2)
+		magcount += 10
+	if (src.bioHolder.HasEffect("robed"))
+		return 1
 	for (var/obj/item/clothing/C in src.contents)
 		if (C.magical)
 			magcount += 1
@@ -55,13 +61,13 @@
 		var/obj/item/clothing/gloves/ring/wizard/WR = src.gloves
 		if (WR.ability_path == spell.type)
 			return 1
-
-	if(!istype(src.wear_suit, /obj/item/clothing/suit/wizrobe))
-		boutput(src, "You don't feel strong enough without a magical robe.")
-		return 0
-	if(!istype(src.head, /obj/item/clothing/head/wizard))
-		boutput(src, "You don't feel strong enough without a magical hat.")
-		return 0
+	if (!src.bioHolder.HasEffect("robed")) //bypass robes check
+		if(!istype(src.wear_suit, /obj/item/clothing/suit/wizrobe))
+			boutput(src, "You don't feel strong enough without a magical robe.")
+			return 0
+		if(!istype(src.head, /obj/item/clothing/head/wizard))
+			boutput(src, "You don't feel strong enough without a magical hat.")
+			return 0
 	var/area/A = get_area(src)
 	if(istype(A, /area/station/chapel))
 		boutput(src, "You cannot cast spells on hallowed ground!")// Maybe if the station were more corrupted...")
@@ -86,16 +92,16 @@
 	if(src.stat)
 		boutput(src, "You can't cast spells while incapacitated.")
 		return 0
-//	if(!find_in_equipment(/obj/item/clothing/suit/wizrobe))
-//		boutput(src, "You don't feel strong enough without a magical robe.")
-//		return 0
+	if(src.bioHolder.HasEffect("arcane_power") == 2)
+		return 1
 	if (istype(spell))
 		for (var/obj/item/clothing/gloves/ring/wizard/WR in src.contents)
 			if (WR.ability_path == spell.type)
 				return 1
-	if(!find_in_equipment(/obj/item/clothing/head/wizard))
-		boutput(src, "You don't feel strong enough without a magical hat.")
-		return 0
+	if (!src.bioHolder.HasEffect("robed")) //bypass robes check
+		if(!find_in_equipment(/obj/item/clothing/head/wizard))
+			boutput(src, "You don't feel strong enough without a magical hat.")
+			return 0
 	var/area/getarea = get_area(src)
 	if(spell?.offensive && getarea.sanctuary)
 		boutput( src, "You cannot cast spells in a sanctuary." )

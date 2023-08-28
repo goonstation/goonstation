@@ -3,7 +3,7 @@ obj/machinery/airlock_sensor
 	icon_state = "airlock_sensor_off"
 	name = "Airlock Sensor"
 
-	anchored = 1
+	anchored = ANCHORED
 
 	var/id_tag
 	var/master_tag

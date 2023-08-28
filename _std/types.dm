@@ -4,8 +4,8 @@
 /// nulls a var if its value doesn't match the var's type
 #define ENSURE_TYPE(VAR) if(!istype(VAR)) VAR = null;
 
-#define ABSTRACT_TYPE(type) /datum/_is_abstract ## type
-#define IS_ABSTRACT(type) text2path("/datum/_is_abstract[type]")
+#define ABSTRACT_TYPE(type) /_is_abstract ## type
+#define IS_ABSTRACT(type) text2path("/_is_abstract[type]")
 /*
 usage:
 
@@ -145,14 +145,14 @@ proc/maximal_subtype(var/list/L)
 // by_type and by_cat stuff
 
 // sometimes we want to have all objects of a certain type stored (bibles, staffs of cthulhu, ...)
-// to do that add START_TRACKING to New (or unpooled) and STOP_TRACKING to disposing, then use by_type[/obj/item/storage/bible] to access the list of things
+// to do that add START_TRACKING to New (or unpooled) and STOP_TRACKING to disposing, then use by_type[/obj/item/bible] to access the list of things
 
 #ifdef SPACEMAN_DMM // just don't ask
 	#define START_TRACKING
 	#define STOP_TRACKING
 #elif defined(OPENDREAM) // Yay, actual sanity!
-	#define START_TRACKING if(!by_type[opendream_procpath]) { by_type[opendream_procpath] = list() }; by_type[opendream_procpath][src] = 1
-	#define STOP_TRACKING by_type[opendream_procpath].Remove(src)
+	#define START_TRACKING if(!by_type[__TYPE__]) { by_type[__TYPE__] = list() }; by_type[__TYPE__][src] = 1
+	#define STOP_TRACKING by_type[__TYPE__].Remove(src)
 #else
 	/// we use an assoc list here because removing from one is a lot faster
 	#define START_TRACKING if(!by_type[......]) { by_type[......] = list() }; by_type[.......][src] = 1
@@ -234,6 +234,8 @@ var/list/list/by_cat = list()
 
 /typeinfo/atom
 	parent_type = /typeinfo/datum
+	/// Used to provide a list of subtypes that will be returned by get_random_subtype
+	var/random_subtypes = null
 
 /typeinfo/turf
 	parent_type = /typeinfo/atom
@@ -249,7 +251,7 @@ var/list/list/by_cat = list()
 /typeinfo/mob
 	parent_type = /typeinfo/atom/movable
 
-/typeinfo/var/SpacemanDMM_return_type = /typeinfo/
+/typeinfo/var/SpacemanDMM_return_type = /typeinfo
 
 /**
  * Declares typeinfo for some type.
@@ -467,3 +469,11 @@ proc/istypes(datum/dat, list/types)
 		if(istype(dat, type))
 			return TRUE
 	return FALSE
+
+/// Returns a random subtype when an atom has TYPEINFO with a random_subtypes list
+/proc/get_random_subtype(atom_type, return_instance = FALSE, return_instance_newargs = null)
+	var/typeinfo/atom/info = get_type_typeinfo(atom_type)
+	var/atom/chosen_type = pick(info.random_subtypes)
+	if (!return_instance)
+		return chosen_type
+	return new chosen_type(return_instance_newargs)

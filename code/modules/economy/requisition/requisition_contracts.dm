@@ -147,7 +147,7 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 		if(rollcount >= count) return // Standard skip-if-complete
 		if(!istype(eval_item)) return // If it's not an item, it's not a stackable
 		if(mat_id) // If we're checking for materials, do that here with a tag comparison
-			if(!eval_item.material || eval_item.material.mat_id != src.mat_id)
+			if(!eval_item.material || eval_item.material.getID() != src.mat_id)
 				return
 		if(istype(eval_item,typepath) || (typepath_alt && istype(eval_item,typepath_alt)))
 			rollcount += eval_item.amount
@@ -331,15 +331,22 @@ ABSTRACT_TYPE(/datum/req_contract)
 						src.requis_desc += "[rce.count]x [rceed.cropname] seed<br>"
 			src.payout += rce.feemod * rce.count
 
-	proc/requisify(obj/storage/crate/sell_crate)
-		var/contents_index = list() //registry of everything in crate, including contents of item containers within it
-		var/contents_to_cull = list() //things consumed to fulfill the requisition, extras are sent back
-		var/successes_needed = length(src.rc_entries) //decremented with each successful fulfillment, reach 0 to win
+/**
+ * Called to tally a crate's contents, to evaluate whether they've fulfilled the contract.
+ * If only_evaluate is FALSE, the proc will actually consume relevant contents, and return a post-sale handling code appropriately.
+ * If only_evaluate is TRUE, the proc will simply index relevant contents, and return a textual summary of detected contract fulfillment.
+ */
+	proc/requisify(obj/storage/crate/sell_crate, only_evaluate = FALSE)
+		var/contents_index = list() //Registry of everything in crate, including contents of item containers within it
+		var/contents_to_cull = list() //Things consumed to fulfill the requisition - extras are sent back
+		var/eval_message = "<font color=#FF9900>Contents insufficient for marked requisition" //Used in only_evaluate mode, start of the return text
+		var/successes_needed = length(src.rc_entries) //Decremented with each successful fulfillment, reach 0 to win
 
 		contents_index += sell_crate.contents
 
-		for(var/obj/item/storage/S in sell_crate.contents)
-			contents_index += S.get_all_contents()
+		for(var/atom/A in sell_crate.contents)
+			if (A.storage)
+				contents_index += A.storage.get_all_contents()
 
 		. = REQ_RETURN_NOSALE //by default return no success
 
@@ -361,14 +368,14 @@ ABSTRACT_TYPE(/datum/req_contract)
 							box_satisfies = TRUE
 				qdel(testbench_item)
 
-			if(box_satisfies)
+			if(box_satisfies && !only_evaluate)
 				contents_to_cull += IB
 
 		for(var/atom/A in contents_index)
 			LAGCHECK(LAG_LOW)
 			for(var/datum/rc_entry/shoppin in rc_entries)
-				if(shoppin.rc_eval(A)) //found something that the requisition asked for, let it know
-					if(A.loc != sell_crate && isobj(A.loc)) //if you sent your stuff in an item container, it'll be kept
+				if(shoppin.rc_eval(A) && !only_evaluate) //if we found something that the requisition asked for, prepare it for removal if live
+					if(A.loc != sell_crate && isobj(A.loc)) //if you sent your stuff in an item container, recipient will keep it
 						contents_to_cull |= A.loc
 					else
 						contents_to_cull += A
@@ -376,22 +383,33 @@ ABSTRACT_TYPE(/datum/req_contract)
 		for(var/datum/rc_entry/shopped in rc_entries)
 			if(shopped.rollcount >= shopped.count)
 				successes_needed--
+			else if(only_evaluate)
+				eval_message += " | '[shopped.name]' [shopped.rollcount]/[shopped.count]"
 
-		if(!successes_needed)
-			if(src.req_code == "REQ-THIRDPARTY") //third party sales do not preserve leftover items, returns are only done if there is an item reward
-				for(var/atom/X in contents_index)
-					if(X) qdel(X)
-				return REQ_RETURN_FULLSALE
-			if(src.pinned) shippingmarket.has_pinned_contract = FALSE //tell shipping market pinned contract was fulfilled
-			. = REQ_RETURN_SALE //sale, but may be leftover items. find out by culling
-			for(var/atom/X in contents_to_cull)
-				if(X) qdel(X)
-			if(!length(sell_crate.contents)) //total clean sale, tell shipping manager to del the crate
-				. = REQ_RETURN_FULLSALE
-		else //sale unsuccessful; reset rolling counts of all contract entries in preparation for subsequent fulfillment attempts
-			for(var/datum/rc_entry/shopped in rc_entries)
+		if(only_evaluate) //evaluation mode conclusion: return evaluation text, do nothing else
+			if(!successes_needed) //would successfully sell
+				. = "Contents sufficient for marked requisition."
+			else //wouldn't successfully sell; close out the red
+				eval_message += "</font>"
+				. = eval_message
+			for(var/datum/rc_entry/shopped in rc_entries) //clean up afterwards, either way
 				shopped.rollcount = 0
-		return
+
+		else //live mode conclusion: cull contents, return an appropriate handling code
+			if(!successes_needed)
+				if(src.req_code == "REQ-THIRDPARTY") //third party sales do not preserve leftover items, returns are only done if there is an item reward
+					for(var/atom/X in contents_index)
+						if(X) qdel(X)
+					return REQ_RETURN_FULLSALE
+				if(src.pinned) shippingmarket.has_pinned_contract = FALSE //tell shipping market pinned contract was fulfilled
+				. = REQ_RETURN_SALE //sale, but may be leftover items. find out by culling
+				for(var/atom/X in contents_to_cull)
+					if(X) qdel(X)
+				if(!length(sell_crate.contents)) //total clean sale, tell shipping manager to del the crate
+					. = REQ_RETURN_FULLSALE
+			else //sale unsuccessful; reset rolling counts of all contract entries in preparation for subsequent fulfillment attempts
+				for(var/datum/rc_entry/shopped in rc_entries)
+					shopped.rollcount = 0
 
 #undef RC_ITEM
 #undef RC_REAGENT

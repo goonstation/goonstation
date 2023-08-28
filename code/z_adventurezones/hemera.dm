@@ -381,7 +381,7 @@ Obsidian Crown
 					return
 				var/list/randomturfs = new/list()
 				for(var/turf/T in orange(host, 25))
-					if(T.density)
+					if(!T.can_crossed_by(host))
 						continue
 					randomturfs.Add(T)
 				boutput(host, "<span class='combat'>[that_jerk] is warped away!</span>")

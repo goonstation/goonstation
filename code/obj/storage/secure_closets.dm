@@ -21,7 +21,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		..()
 		src.AddComponent(/datum/component/bullet_holes, 10, src.reinforced ? 25 : 5) // reinforced lockers need 25 power to damage; reflects that
 		if (bolted)
-			anchored = 1
+			anchored = ANCHORED
 		src.attack_particle = new /obj/particle/attack
 		src.attack_particle.icon = 'icons/mob/mob.dmi'
 
@@ -161,6 +161,16 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		src.open()
 		playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
 
+	Crossed(atom/movable/AM) //copy pasted from closet because inheritence is a lie
+		. = ..()
+		if (src.open && ismob(AM) && AM.throwing)
+			var/datum/thrown_thing/thr = global.throwing_controller.throws_of_atom(AM)[1]
+			AM.throw_impact(src, thr)
+			AM.throwing = FALSE
+			AM.changeStatus("weakened", 1 SECOND)
+			AM.set_loc(src.loc)
+			src.close()
+
 /obj/storage/secure/closet/personal
 	name = "personal locker"
 	desc = "The first card swiped gains control."
@@ -197,7 +207,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 /obj/storage/secure/closet/command/captain
 	name = "\improper Captain's locker"
 	req_access = list(access_captain)
-	spawn_contents = list(/obj/item/gun/energy/egun,
+	spawn_contents = list(/obj/item/gun/energy/egun/captain,
 	/obj/item/storage/box/id_kit,
 	/obj/item/storage/box/clothing/captain,
 	/obj/item/clothing/suit/armor/capcoat,
@@ -206,7 +216,15 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/head/helmet/captain,
 	/obj/item/clothing/glasses/sunglasses,
 	/obj/item/stamp/cap,
-	/obj/item/device/radio/headset/command/captain)
+	/obj/item/device/radio/headset/command/captain,
+	/obj/item/megaphone,
+	/obj/item/pet_carrier)
+
+	make_my_stuff()
+		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
+			if (prob(20))
+				new /obj/item/clothing/head/bigcaphat(src)
+			return 1
 
 /obj/storage/secure/closet/command/captain/fake
 	req_access = null
@@ -231,7 +249,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security,
 	/obj/item/clothing/glasses/sunglasses/sechud,
-	/obj/item/gun/energy/egun,
+	/obj/item/gun/energy/egun/head_of_security,
 	/obj/item/device/radio/headset/security,
 	/obj/item/clothing/glasses/thermal,
 	/obj/item/stamp/hos,
@@ -251,7 +269,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/radio/headset/command/hop,
 	/obj/item/device/accessgun,
 	/obj/item/clipboard,
-	/obj/item/clothing/suit/hopjacket)
+	/obj/item/clothing/suit/hopjacket,
+	/obj/item/pet_carrier)
 
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"
@@ -268,7 +287,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/mask/gas,
 	/obj/item/device/flash,
 	/obj/item/stamp/rd,
-	/obj/item/device/radio/headset/command/rd)
+	/obj/item/clothing/suit/labcoat,
+	/obj/item/device/radio/headset/command/rd,
+	/obj/item/pet_carrier)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -293,7 +314,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/reagent_containers/hypospray,
 	/obj/item/device/flash,
 	/obj/item/stamp/md,
-	/obj/item/device/radio/headset/command/md)
+	/obj/item/device/radio/headset/command/md,
+	/obj/item/pet_carrier)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -374,7 +396,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/pinpointer/bloodtracker,
 	/obj/item/device/flash,
 	/obj/item/camera_film,
-	/obj/item/storage/box/luminol_grenade_kit)
+	/obj/item/storage/box/luminol_grenade_kit,
+	/obj/item/clipboard)
 
 /obj/storage/secure/closet/security/armory
 	name = "\improper Special Equipment locker"
@@ -412,7 +435,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	name = "\improper Automatic Locker"
 	req_access = list(access_brig)
 	desc = "Card-locked closet linked to a brig timer. Will unlock automatically when timer reaches zero."
-	anchored = 1
+	anchored = ANCHORED
 	_max_health = LOCKER_HEALTH_STRONG
 	_health = LOCKER_HEALTH_STRONG
 	reinforced = TRUE
@@ -697,6 +720,10 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			var/obj/item/reagent_containers/glass/bottle/acid/B6 = new(src)
 			B6.pixel_y = -5
 			B6.pixel_x = 4
+
+			var/obj/item/reagent_containers/food/drinks/fueltank/B7 = new(src)
+			B7.pixel_y = 0
+			B7.pixel_x = 0
 			return 1
 
 /* ======================= */
@@ -760,6 +787,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/glasses/meson,
 	/obj/item/pen/infrared,
 	/obj/item/lamp_manufacturer/organic,
+	/obj/item/device/light/floodlight/with_cell,
 	/obj/item/pinpointer/category/apcs/station)
 
 /obj/storage/secure/closet/engineering/mining
@@ -820,6 +848,21 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/paper/book/from_file/hydroponicsguide,
 	/obj/item/device/appraisal)
 
+/obj/storage/secure/closet/civilian/ranch
+	name = "\improper Rancher supplies locker"
+	req_access = list(access_ranch)
+	spawn_contents = list(/obj/item/paper/ranch_guide,\
+	/obj/item/fishing_rod/basic,\
+	/obj/item/storage/box/clothing/rancher,\
+	/obj/item/device/camera_viewer/ranch,\
+	/obj/item/clothing/mask/chicken,\
+	/obj/item/chicken_carrier,\
+	/obj/item/storage/box/syringes,\
+	/obj/item/satchel/hydro,\
+	/obj/item/reagent_containers/glass/wateringcan,\
+	/obj/item/sponge,\
+	/obj/item/kitchen/food_box/egg_box/rancher)
+
 /obj/storage/secure/closet/civilian/kitchen
 	name = "\improper Catering supplies locker"
 	req_access = list(access_kitchen)
@@ -852,7 +895,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/head/rabbihat,\
 	/obj/item/clothing/head/formal_turban,\
 	/obj/item/clothing/head/turban,\
-	/obj/item/clothing/shoes/sandal,\
+	/obj/item/clothing/shoes/sandal/magic,\
 	/obj/item/clothing/under/misc/chaplain/nun,\
 	/obj/item/clothing/head/nunhood,\
 	/obj/item/clothing/suit/flockcultist,\

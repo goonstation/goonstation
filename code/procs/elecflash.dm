@@ -64,7 +64,7 @@ var/global/mutable_appearance/elecflash_ma = null
 						playsound(T, sound, 50, 1)
 				else
 					chain_to += T
-		if (chain_to.len < 2)
+		if (length(chain_to) < 2)
 			chain_to += get_step(center_turf,pick(alldirs)) //consider this an extra layer of randomness for when we dont jump to fluid
 
 
@@ -83,7 +83,7 @@ var/global/mutable_appearance/elecflash_ma = null
 		E.appearance = elecflash_ma
 		T.hotspot_expose(1000,100,usr, electric = power)
 		elecs += E
-		if (radius <= 0 && chain_to.len < 8 && center_turf)
+		if (radius <= 0 && length(chain_to) < 8 && center_turf)
 			E.pixel_x = (center_turf.x - E.x) * 32
 			E.pixel_y = (center_turf.y - E.y) * 32
 			animate(E, transform = M, pixel_x = rand(-32,32), pixel_y = rand(-32,32), time = (0.66 SECONDS) + (power * (0.12 SECONDS)), easing = CUBIC_EASING | EASE_OUT)

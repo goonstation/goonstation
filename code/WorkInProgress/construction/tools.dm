@@ -4,7 +4,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "smes"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	New()
 		..()
 		SPAWN(1 SECOND)
@@ -18,7 +18,7 @@
 	desc = "An artificial intelligence unit which requires the brain of a living organism to function as a neural processor."
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	opacity = 0
 
@@ -48,7 +48,7 @@
 			TheAI.set_loc(src)
 			B.set_loc(TheAI)
 			TheAI.brain = B
-			TheAI.anchored = 0
+			TheAI.anchored = UNANCHORED
 			TheAI.dismantle_stage = 3
 			TheAI.update_appearance()
 			qdel(src)
@@ -82,7 +82,7 @@
 			for (var/obj/critter/C in view(5, src))
 				if (C.alive)
 					targets += C
-		if (targets.len > 0)
+		if (length(targets) > 0)
 			if (!isPopping())
 				if (isDown())
 					popUp()
@@ -325,16 +325,16 @@ TYPEINFO(/obj/item/material_shaper)
 	proc/determine_material(var/obj/item/material_piece/D, mob/user as mob)
 		var/datum/material/DM = D.material
 		var/which = null
-		if ((DM.material_flags & MATERIAL_METAL) && (DM.material_flags & MATERIAL_CRYSTAL))
+		if ((DM.getMaterialFlags() & MATERIAL_METAL) && (DM.getMaterialFlags() & MATERIAL_CRYSTAL))
 			var/be_metal = 0
 			var/be_glass = 0
 			if (!metal)
 				be_metal = 1
-			else if (isSameMaterial(metal, DM))
+			else if (metal.isSameMaterial(DM))
 				be_metal = 1
 			if (!glass)
 				be_glass = 1
-			else if (isSameMaterial(glass, DM))
+			else if (glass.isSameMaterial(DM))
 				be_glass = 1
 			if (be_metal && be_glass)
 				which = input("Use [D] as?", "Pick", null) in list("metal", "glass")
@@ -346,19 +346,19 @@ TYPEINFO(/obj/item/material_shaper)
 				playsound(src.loc, sound_grump, 40, 1)
 				boutput(user, "<span class='alert'>[D] incompatible with current metal or glass.</span>")
 				return null
-		else if (DM.material_flags & MATERIAL_METAL)
+		else if (DM.getMaterialFlags() & MATERIAL_METAL)
 			if (!metal)
 				which = "metal"
-			else if (isSameMaterial(metal, DM))
+			else if (metal.isSameMaterial(DM))
 				which = "metal"
 			else
 				playsound(src.loc, sound_grump, 40, 1)
 				boutput(user, "<span class='alert'>[D] incompatible with current metal.</span>")
 				return null
-		else if (DM.material_flags & MATERIAL_CRYSTAL)
+		else if (DM.getMaterialFlags() & MATERIAL_CRYSTAL)
 			if (!glass)
 				which = "glass"
-			else if (isSameMaterial(glass, DM))
+			else if (glass.isSameMaterial(DM))
 				which = "glass"
 			else
 				playsound(src.loc, sound_grump, 40, 1)
@@ -395,12 +395,12 @@ TYPEINFO(/obj/item/material_shaper)
 	examine()
 		. = ..()
 		if (metal)
-			. += "<span class='notice'>Metal: [metal_count] units of [metal.name].</span>"
+			. += "<span class='notice'>Metal: [metal_count] units of [metal.getName()].</span>"
 		else
 			. += "<span class='alert'>Metal: 0 units.</span>"
 
 		if (glass)
-			. += "<span class='notice'>Glass: [glass_count] units of [glass.name].</span>"
+			. += "<span class='notice'>Glass: [glass_count] units of [glass.getName()].</span>"
 		else
 			. += "<span class='alert'>Glass: 0 units</span>"
 
@@ -483,7 +483,7 @@ TYPEINFO(/obj/item/material_shaper)
 				var/datum/material/MT = M.material
 				if (!MT)
 					continue
-				if (isSameMaterial(MT, DM))
+				if (MT.isSameMaterial(DM))
 					playsound(src.loc, sound_process, 40, 1)
 					if (which == "metal")
 						metal_count += 10
@@ -574,20 +574,27 @@ TYPEINFO(/obj/item/room_planner)
 		// selectedicon is the file we selected
 		// selectedtype gets used as our iconstate for floors or the key to the lists for walls
 		if (mode == "floors")
-			states += icon_states('icons/turf/construction_floors.dmi')
-			selectedtype = tgui_input_list(message="What kind?", title="Marking", items=states)
-			if(!selectedtype)
-				selectedtype = states[1]
+			selectedtype = null
+			states += (icon_states('icons/turf/construction_floors.dmi') - list("engine", "catwalk", "catwalk_narrow", "catwalk_cross"))
 			selectedicon = 'icons/turf/construction_floors.dmi'
+			var/newtype = tgui_input_list(message="What kind?", title="Marking", items=states)
+			if(newtype)
+				selectedtype = newtype
+
 		if (mode == "walls")
+			selectedtype = null
+			selectedicon = null
+			selectedmod = null
 			states += wallicons
-			selectedtype = tgui_input_list(message="What kind?", title="Marking", items=states)
-			if(!selectedtype)
-				selectedtype = states[1]
-			selectedicon = wallicons[selectedtype]
-			selectedmod = wallmods[selectedtype]
+			var/newtype = tgui_input_list(message="What kind?", title="Marking", items=states)
+			if(newtype)
+				selectedtype = newtype
+				selectedicon = wallicons[selectedtype]
+				selectedmod = wallmods[selectedtype]
 
-
+		if (isnull(selectedtype))
+			selecting = 0
+			return
 
 		if (mode == "floors" || (mode == "walls" && findtext(selectedtype, "window") != 0))
 			turf_op = 0
@@ -627,7 +634,7 @@ TYPEINFO(/obj/item/room_planner)
 				break
 		if (old)
 			old.Attackby(src, user)
-		else
+		else if (!isnull(selectedtype))
 			var/class = marker_class[mode]
 			old = new class(T, selectedicon, selectedtype, mode)
 
@@ -636,6 +643,9 @@ TYPEINFO(/obj/item/room_planner)
 			// 	old:allows_vehicles = 1
 			old.turf_op = turf_op
 			old:check(selectedmod)
+		else
+			boutput(user, "<span class='alert'>No type selected for current mode!</span>")
+			return 0
 		boutput(user, "<span class='notice'>Done.</span>")
 
 		return 1
@@ -644,7 +654,7 @@ TYPEINFO(/obj/item/room_planner)
 	name = "\improper Plan Marker"
 	icon = 'icons/turf/construction_walls.dmi'
 	icon_state = null
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	invisibility = INVIS_CONSTRUCTION
@@ -673,7 +683,7 @@ TYPEINFO(/obj/item/room_planner)
 	name = "\improper Window Plan Marker"
 	icon = 'icons/obj/grille.dmi'
 	icon_state = "grille-0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	invisibility = INVIS_CONSTRUCTION

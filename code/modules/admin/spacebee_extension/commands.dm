@@ -29,7 +29,7 @@
 		if (M.key) result += M.key
 		if (isdead(M)) result += "DEAD"
 		if (role) result += role
-		if (checktraitor(M)) result += "\[T\]"
+		if (M.mind?.is_antagonist()) result += "\[T\]"
 		system.reply(result.Join(" | "), user)
 
 /datum/spacebee_extension_command/addnote
@@ -396,7 +396,7 @@
 		else
 			var/list/message = list()
 			message += "You can put text arguments in quotes if you want spaces in them!"
-			message += "# means you need to add a server id.\n"
+			message += "\\# means you need to add a server id.\n"
 			for(var/command_name in system.commands)
 				var/datum/spacebee_extension_command/command = system.commands[command_name]
 				message += src.help_for_command(command)

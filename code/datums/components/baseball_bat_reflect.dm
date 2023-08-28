@@ -1,7 +1,7 @@
 /datum/component/holdertargeting/baseball_bat_reflect
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	signals = list(COMSIG_ATOM_HITBY_THROWN)
-	proctype = .proc/reflect
+	proctype = PROC_REF(reflect)
 
 TYPEINFO(/datum/component/holdertargeting/baseball_bat_reflect)
 	initialization_args = list()

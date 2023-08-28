@@ -128,7 +128,7 @@ TYPEINFO(/obj/loudspeaker)
 	name = "loudspeaker"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "loudspeaker"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 

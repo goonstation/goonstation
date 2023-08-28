@@ -7,7 +7,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 	desc = "fix me please"
 	density = 1
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 	layer = FLOOR_EQUIP_LAYER1
 	deconstruct_flags = DECON_DESTRUCT
 	var/obj/item/cell/PCEL = null
@@ -112,11 +112,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 		return
 
 	use_power(var/amount, var/chan=EQUIP)
-		if(PCEL && !connected && active)
-			PCEL.use(src.power_usage)
+		var/line_shielded = FALSE
 		if(connected && active)
 			var/datum/powernet/net = src.connected_wire.get_powernet()
-			net?.newload += src.power_usage
+			if(net.newload + amount <= net.avail)
+				net.newload += amount
+				line_shielded = TRUE
+		if(!line_shielded && PCEL && active)
+			PCEL.use(src.power_usage)
+
 
 	proc/process_wired()
 		//check for linepower
@@ -211,7 +215,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			if(src.active)
 				src.turn_off()
 			else
-				src.turn_on()
+				src.turn_on(user)
 
 	proc/turn_on(mob/user)
 		if (src.active)
@@ -224,7 +228,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 		else	//turn on power if connected to a power grid with power in it
 			if(line_powered() && connected)
 				src.shield_on()
-				src.visible_message("<b>[user.name]</b> powers up the [src.name].")
+				if (user)
+					src.visible_message("<b>[user.name]</b> powers up the [src.name].")
 			else
 				boutput(user, "The [src.name]'s battery light flickers briefly.")
 		build_icon()
@@ -323,7 +328,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 		S.deployer = src
 		src.deployed_shields += S
 
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.active = 1
 		playsound(src.loc, src.sound_on, 50, 1)
 		build_icon()
@@ -336,7 +341,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			qdel(S)
 
 		if(!connected)
-			src.anchored = 0
+			src.anchored = UNANCHORED
 		src.active = 0
 
 		//currently only the e-shield interacts with atmos

@@ -15,7 +15,7 @@
 	color = "#9C2A00"
 	density = 1
 	opacity = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (disposed)

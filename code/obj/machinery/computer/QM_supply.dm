@@ -149,6 +149,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			boutput(user, "<span class='notice'>The intake safety shorts out. Special supplies unlocked.</span>")
 		shippingmarket.launch_distance = 200 // dastardly
 		src.hacked = 1
+		src.req_access = list()
 		return 1
 	return 0
 
@@ -157,6 +158,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		return 0
 	if(user)
 		boutput(user, "<span class='notice'>Treacherous supplies removed.</span>")
+	src.req_access = initial(src.req_access)
 	src.hacked = 0
 	return 1
 

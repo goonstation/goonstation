@@ -4,7 +4,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "celltop-P"
 	density = TRUE
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	layer = EFFECTS_LAYER_BASE//MOB_EFFECT_LAYER
 	flags = NOSPLASH
 	power_usage = 50
@@ -55,7 +55,7 @@
 		if(!node)
 			return
 		if(!on)
-			src.updateUsrDialog()
+			tgui_process.update_uis(src)
 			return
 
 		if(src.occupant)
@@ -78,7 +78,7 @@
 		if(abs(ARCHIVED(temperature)-air_contents.temperature) > 1)
 			network.update = 1
 
-		src.updateUsrDialog()
+		tgui_process.update_uis(src)
 		return 1
 
 
@@ -105,96 +105,151 @@
 			return
 		src.go_out()
 
-	attack_hand(mob/user)
-		src.add_dialog(user)
-		var/temp_text = ""
-		if(air_contents.temperature > T0C)
-			temp_text = "<FONT color=red>[TO_CELSIUS(air_contents.temperature)]</FONT>"
-		else if(air_contents.temperature > 170)
-			temp_text = "<FONT color=black>[TO_CELSIUS(air_contents.temperature)]</FONT>"
-		else
-			temp_text = "<FONT color=blue>[TO_CELSIUS(air_contents.temperature)]</FONT>"
-
-		var/dat = "<B>Cryo cell control system</B><BR>"
-		dat += "<B>Current cell temperature:</B> [temp_text]&deg;C<BR>"
-		dat += "<B>Eject Occupant:</B> [src.occupant ? "<A href='?src=\ref[src];eject_occupant=1'>Eject</A>" : "Eject"]<BR>"
-		dat += "<B>Cryo status:</B> [src.on ? "<A href='?src=\ref[src];start=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];start=1'>On</A>"]<BR>"
-		dat += "[draw_beaker_text()]<BR>"
-		dat += "--------------------------------<BR>"
-		dat += "[draw_beaker_reagent_scan()]<BR>"
-		dat += "[draw_defib_zap()]"
-		dat += "[scan_health(src.occupant, reagent_scan_active, 1)]"
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "CryoCell", name)
+			ui.open()
 		update_medical_record(src.occupant)
-		user.Browse(dat, "window=cryo")
-		onclose(user, "cryo")
 
-	proc/draw_defib_zap()
-		if (!src.defib)
-			return ""
-		else
-			if (src.occupant)
-				return "<B>Defibrillate Occupant : <A href='?src=\ref[src];defib=1'>ZAP!!!</A></B> <BR>"
-			else
-				return "<B>Defibrillate Occupant : No occupant!</B> <BR>"
+	ui_data(mob/user)
+		. = list()
 
-	proc/draw_beaker_text()
-		var/beaker_text = ""
+		.["occupant"] = get_occupant_data()
+		.["cellTemp"] = air_contents.temperature
+		.["status"] = src.on
 
-		if(src.beaker)
-			beaker_text = "<B>Beaker:</B> <A href='?src=\ref[src];eject=1'>Eject</A><BR>"
-			beaker_text += "<B>Beaker Contents:</B> <A href='?src=\ref[src];show_beaker_contents=1'>[show_beaker_contents ? "Hide" : "Show"]</A> "
-			if (show_beaker_contents)
-				beaker_text += "<BR>[scan_reagents(src.beaker)]"
-		else
-			beaker_text = "<B>Beaker:</B> <FONT color=red>No beaker loaded</FONT>"
+		.["showBeakerContents"] = show_beaker_contents
+		.["reagentScanEnabled"] = reagent_scan_enabled
+		.["reagentScanActive"] = reagent_scan_active
+		.["containerData"] = src.beaker ? get_reagents_data(src.beaker.reagents, src.beaker.name) : null
 
-		return beaker_text
+		.["hasDefib"] = src.defib
 
-	proc/draw_beaker_reagent_scan()
-		if (!reagent_scan_enabled)
-			return ""
-		else
-			return "<B>Reagent Scan : </B>[ reagent_scan_active ? "<A href='?src=\ref[src];reagent_scan_active=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];reagent_scan_active=1'>On</A>"]"
+	ui_act(action, params)
+		. = ..()
+		if(.)
+			return
 
-	Topic(href, href_list)
-		if (( usr.using_dialog_of(src) && ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))) || (isAI(usr)))
-			if(href_list["start"])
+		switch(action)
+			if("start")
 				src.on = !src.on
 				build_icon()
-			if(href_list["eject"])
+			if("eject")
 				beaker:set_loc(src.loc)
 				usr.put_in_hand_or_eject(beaker) // try to eject it into the users hand, if we can
 				beaker = null
-			if(href_list["show_beaker_contents"])
+			if("show_beaker_contents")
 				show_beaker_contents = !show_beaker_contents
-			if (href_list["reagent_scan_active"])
+			if ("reagent_scan_active")
 				reagent_scan_active = !reagent_scan_active
-			if (href_list["defib"])
+			if ("defib")
 				if(!ON_COOLDOWN(src.defib, "defib_cooldown", 10 SECONDS))
 					src.defib.setStatus("defib_charged", 3 SECONDS)
 				src.defib.attack(src.occupant, usr)
-			if (href_list["eject_occupant"])
+			if ("eject_occupant")
 				go_out()
+			if ("insert")
+				var/obj/item/I = usr.equipped()
+				if(istype(I, /obj/item/reagent_containers/glass))
+					insert_beaker(I, usr)
+		. = TRUE
 
-			src.updateUsrDialog()
-			src.add_fingerprint(usr)
+
+	ui_status(mob/user)
+		if (user == src.occupant)
+			return UI_UPDATE
+		. = ..()
+		if (!src.allowed(user))
+			. = min(., UI_UPDATE)
+
+	proc/get_occupant_data()
+		if (!src.occupant)
+			return null
+
+		. = list(
+			"occupied" = TRUE,
+			"occupantStat" = src.occupant.stat,
+			"health" = src.occupant.health / src.occupant.max_health,
+			"oxyDamage" = src.occupant.get_oxygen_deprivation(),
+			"toxDamage" = src.occupant.get_toxin_damage(),
+			"burnDamage" = src.occupant.get_burn_damage(),
+			"bruteDamage" = src.occupant.get_brute_damage()
+		)
+		if (isliving(src.occupant))
+			var/mob/living/L = src.occupant
+			var/mob/living/carbon/human/H = L
+
+			var/death_state = L.stat
+			if (L.bioHolder && L.bioHolder.HasEffect("dead_scan"))
+				death_state = 2
+
+			var/datum/statusEffect/simpledot/radiation/R = L.hasStatus("radiation")
+
+			var/list/brain_damage = call(/obj/machinery/computer/operating/proc/calc_brain_damage_severity)(L)
+
+			. += list(
+				"patient_status" = death_state,
+				"blood_pressure_rendered" = L.blood_pressure["rendered"],
+				"blood_pressure_status" = L.blood_pressure["status"],
+
+				"body_temp" = L.bodytemperature,
+				"optimal_temp" = L.base_body_temp,
+				"embedded_objects" = call(/obj/machinery/computer/operating/proc/check_embedded_objects)(L),
+
+				"rad_stage" = R?.stage ? R.stage : 0,
+				"rad_dose" = R?.stage ? L.radiation_dose : 0,
+
+				"brain_damage" = list (
+					"value" = L.get_brain_damage(),
+					"desc" = brain_damage[1],
+					"color" = brain_damage[2],
+				),
+			)
+
+			if (reagent_scan_active)
+				. += list(
+					"blood_volume" = L.blood_pressure["total"],
+					"reagents" = get_reagents_data(L.reagents, null)
+				)
+
+			if (istype(H))
+				. += list("hasRoboticOrgans" = H.robotic_organs > 0)
+
+	proc/get_reagents_data(var/datum/reagents/R, var/container_name)
+		. = list(
+			name = container_name,
+			maxVolume = R.maximum_volume,
+			totalVolume = R.total_volume,
+			temperature = R.total_temperature,
+			contents = list(),
+			finalColor = "#000000"
+		)
+
+		var/list/contents = .["contents"]
+		if(istype(R) && R.reagent_list.len>0)
+			.["finalColor"] = R.get_average_rgb()
+			// Reagent data
+			for(var/reagent_id in R.reagent_list)
+				var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
+
+				contents.Add(list(list(
+					name = reagents_cache[reagent_id],
+					id = reagent_id,
+					colorR = current_reagent.fluid_r,
+					colorG = current_reagent.fluid_g,
+					colorB = current_reagent.fluid_b,
+					volume = current_reagent.volume
+				)))
+
+	attack_hand(var/mob/user)
+		if(..())
 			return
+		ui_interact(user)
 
 	attackby(var/obj/item/I, var/mob/user)
 		if(istype(I, /obj/item/reagent_containers/glass))
-			if (I.cant_drop)
-				boutput(user, "<span class='alert'>You can't put that in \the [src] while it's attached to you!")
-				return
-			if(src.beaker)
-				user.show_text("A beaker is already loaded into the machine.", "red")
-				return
-
-			src.beaker = I
-			user.drop_item()
-			I.set_loc(src)
-			user.visible_message("[user] adds a beaker to \the [src]!", "You add a beaker to the [src]!")
-			logTheThing(LOG_CHEMISTRY, user, "adds a beaker [log_reagents(I)] to [src] at [log_loc(src)].") // Rigging cryo is advertised in the 'Tip of the Day' list (Convair880).
-			src.add_fingerprint(user)
+			insert_beaker(I, user)
 		else if(istype(I, /obj/item/grab))
 			var/obj/item/grab/G = I
 			if (try_push_in(G.affecting, user))
@@ -253,7 +308,24 @@
 			else
 				I.attack(src.occupant, user)
 
-		src.updateUsrDialog()
+		tgui_process.update_uis(src)
+
+	proc/insert_beaker(var/obj/item/reagent_containers/glass/I, var/mob/user)
+		if (!can_act(user))
+			return
+		if (I.cant_drop)
+			boutput(user, "<span class='alert'>You can't put that in \the [src] while it's attached to you!")
+			return
+		if(src.beaker)
+			user.show_text("A beaker is already loaded into the machine.", "red")
+			return
+
+		src.beaker = I
+		user.drop_item()
+		I.set_loc(src)
+		user.visible_message("[user] adds a beaker to \the [src]!", "You add a beaker to the [src]!")
+		logTheThing(LOG_CHEMISTRY, user, "adds a beaker [log_reagents(I)] to [src] at [log_loc(src)].") // Rigging cryo is advertised in the 'Tip of the Day' list (Convair880).
+		src.add_fingerprint(user)
 
 	proc/shock_icon()
 		var/fake_overlay = new /obj/shock_overlay(src.loc)
@@ -383,6 +455,8 @@
 		animate(pixel_y = -8, time = 3 SECONDS, loop = -1, easing = SINE_EASING)
 		src.occupant.force_laydown_standup()
 		src.UpdateIcon()
+		ui_interact(target)
+		tgui_process.update_uis(src)
 		return TRUE
 
 	/// Proc to exit the cryo cell.
@@ -402,6 +476,7 @@
 		exiter?.force_laydown_standup()
 		src.occupant = null
 		src.UpdateIcon()
+		tgui_process.update_uis(src)
 
 /obj/shock_overlay
 	icon = 'icons/obj/Cryogenic2.dmi'

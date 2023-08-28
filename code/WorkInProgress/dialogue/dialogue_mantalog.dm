@@ -3,7 +3,7 @@
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "randompc"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()

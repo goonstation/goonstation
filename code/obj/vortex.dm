@@ -6,7 +6,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
 	desc = "I wonder what this is."
-	anchored = 1
+	anchored = ANCHORED
 
 	New()
 		..()
@@ -31,10 +31,10 @@
 
 				if(4)
 					//spatial interdictor: suppress intense particle discharge
-					//consumes 150 units of charge per flash interdicted
+					//consumes 80 units of charge (40,000 joules) per flash interdicted
 					var/interdicted = FALSE
 					for_by_tcl(IX, /obj/machinery/interdictor)
-						if (IX.expend_interdict(150,src))
+						if (IX.expend_interdict(80,src))
 							interdicted = TRUE
 							break
 					if(!interdicted)
@@ -68,51 +68,61 @@
 	proc/spawn_horror()
 		var/horror_path = null
 		//spatial interdictor: when something would exit a vortex, it doesn't
-		//consumes 500 units of charge per inbound thing interdicted
+		//consumes 400 units of charge (200,000 joules) per inbound thing interdicted
 		var/interdicted = FALSE
 		for_by_tcl(IX, /obj/machinery/interdictor)
-			if (IX.expend_interdict(500,src))
+			if (IX.expend_interdict(400,src))
 				interdicted = TRUE
 				break
 		if(!interdicted)
 			if(derelict_mode)
-				horror_path = pick(/obj/critter/shade,
-				/obj/critter/shade,
-				/obj/critter/shade,
-				/obj/critter/shade,
-				/obj/critter/shade,
-				/obj/critter/crunched,
-				/obj/critter/crunched,
-				/obj/critter/crunched,
+				horror_path = pick(
+				/mob/living/critter/shade,
+				/mob/living/critter/shade,
+				/mob/living/critter/shade,
+				/mob/living/critter/shade,
+				/mob/living/critter/shade,
+				/mob/living/critter/crunched,
+				/mob/living/critter/crunched,
+				/mob/living/critter/crunched,
 				/obj/critter/bloodling,
 				/obj/critter/ancient_thing,
 				/obj/critter/ancient_thing,
-				/obj/critter/ancient_repairbot/grumpy,
-				/obj/critter/ancient_repairbot/grumpy,
-				/obj/critter/ancient_repairbot/security,
-				/obj/critter/ancient_repairbot/security,
-				/obj/critter/gunbot/heavy,
+				/mob/living/critter/robotic/repairbot,
+				/mob/living/critter/robotic/repairbot,
+				/mob/living/critter/robotic/repairbot/security,
+				/mob/living/critter/robotic/repairbot/security,
+				/mob/living/critter/robotic/gunbot,
 				/obj/machinery/bot/medbot/terrifying,
 				/obj/machinery/bot/medbot/terrifying)
 				if(prob(3))
-					horror_path = pick(/obj/critter/gunbot/drone/buzzdrone,/obj/critter/gunbot/drone/buzzdrone, /mob/living/critter/aberration)
+					horror_path = pick(
+					/obj/critter/gunbot/drone/buzzdrone,
+					/obj/critter/gunbot/drone/buzzdrone,
+					/mob/living/critter/aberration)
 				if (was_eaten && prob(15))
-					horror_path = /obj/critter/blobman/meaty_martha
+					horror_path = /mob/living/critter/blobman/meat
 			else
-				horror_path = pick(/obj/critter/killertomato,
+				horror_path = pick(
+				/obj/critter/killertomato,
 				/obj/critter/spore,
 				/mob/living/critter/small_animal/rattlesnake,
-				/obj/critter/martian/warrior,
+				/mob/living/critter/martian/warrior,
 				/obj/machinery/bot/firebot/emagged,
 				/obj/machinery/bot/secbot/emagged,
 				/obj/machinery/bot/medbot/mysterious/emagged,
 				/obj/machinery/bot/cleanbot/emagged,
-				/obj/critter/wasp/angry,
+				/mob/living/critter/small_animal/wasp/angry,
 				/mob/living/critter/small_animal/scorpion,
 				/mob/living/critter/mimic,
-				/obj/critter/fermid,
-				/obj/critter/bear)
+				/mob/living/critter/fermid,
+				/mob/living/critter/bear)
 			var/obj/horror = new horror_path(src.loc)
+			if (ismobcritter(horror))
+				var/mob/living/critter/C = horror
+				C.faction |= FACTION_DERELICT
+				if (derelict_mode) // In disaster rounds we don't want wraith spawns fighting the local wildlife
+					C.faction |= FACTION_WRAITH
 			src.visible_message("<span class='alert'><b>[horror] emerges from the [src]!</b></span>","<span class='alert'>You hear a sharp buzzing noise.</span>")
 		else
 			SPAWN(rand(0.2 SECONDS, 2 SECONDS)) //desynchronize the visual/audible indication of interdiction in case of large batches of simultaneous vortexes

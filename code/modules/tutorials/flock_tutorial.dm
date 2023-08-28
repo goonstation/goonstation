@@ -266,7 +266,7 @@
 		var/msg = "Human resource containers convert into Flock resource fabricators."
 		src.ftutorial.make_maptext(locate(/obj/machinery/vending) in range(10, src.ftutorial.center), msg)
 
-		var/obj/flock_structure/compute/type = /obj/flock_structure/compute/
+		var/obj/flock_structure/compute/type = /obj/flock_structure/compute
 		msg = "Human computers convert into Flock compute nodes. Each provides [initial(type.compute)] compute."
 		src.ftutorial.make_maptext(locate(/obj/machinery/computer) in range(10, src.ftutorial.center), msg)
 
@@ -444,9 +444,9 @@
 		flockmind.help_my_tutorial_is_being_a_massive_shit()
 
 //for debug, do not enable on live or it will cause runtimes and break everything
-/mob/living/intangible/flock/flockmind/verb/skip_tutorial_step()
-	set name = "SKIP TUTORIAL STEP"
-	src.tutorial.Advance()
+// /mob/living/intangible/flock/flockmind/verb/skip_tutorial_step()
+// 	set name = "SKIP TUTORIAL STEP"
+// 	src.tutorial.Advance()
 
 /obj/machinery/junk_spawner
 	var/stuff = list(/obj/item/extinguisher, /obj/item/crowbar, /obj/item/wrench)
@@ -469,7 +469,7 @@
 					src.set_dir(dir)
 					gun.ammo.amount_left = 2
 					var/turf/target = get_step(src, dir)
-					gun.shoot(target, src.loc, src)
+					gun.shoot(target, src.loc, src, called_target = target)
 					sleep(1.5 SECONDS)
 
 /mob/living/carbon/human/bad_immortal

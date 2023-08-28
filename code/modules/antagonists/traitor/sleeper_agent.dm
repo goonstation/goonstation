@@ -2,6 +2,7 @@
 /datum/antagonist/sleeper_agent
 	id = ROLE_SLEEPER_AGENT
 	display_name = "sleeper agent"
+	antagonist_icon = "traitor"
 
 /datum/antagonist/sleeper_agent/announce()
 	boutput(owner.current, "<h3><span class='alert'>You have awakened as a Syndicate [display_name]!</span></h3>")

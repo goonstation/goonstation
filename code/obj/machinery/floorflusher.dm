@@ -6,7 +6,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	//icon = 'icons/obj/disposal.dmi'
 	icon = 'icons/obj/delivery.dmi' // new icon
 	icon_state = "floorflush_c"
-	anchored = 1
+	anchored = ANCHORED
 	power_usage = 100
 	density = 0
 	flags = NOSPLASH
@@ -223,7 +223,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 			return
 
 		// 	check for items in disposal - if there is a mob in there, flush.
-		if(contents.len > 0)
+		if(length(contents) > 0)
 			var/mob/living/M = locate() in contents
 			if(M)
 				flush = 1
@@ -326,7 +326,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
-			AM.set_loc(src.loc)
+			AM.set_loc(get_turf(src))
 			AM.pipe_eject(0)
 			AM?.throw_at(target, 5, 1)
 

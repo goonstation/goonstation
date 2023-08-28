@@ -13,7 +13,7 @@
 	blood_id = "bloodc"
 	table_hide = 0
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	var/datum/abilityHolder/changeling/hivemind_owner = 0
 	var/icon_prefix = ""
 	/// Part this limb critter is based off of- i.e. a cow making a legworm would be a cow leg. Could also be an eye or butt, hence loose type
@@ -160,8 +160,8 @@
 			src.icon_prefix = "robo"
 			src.UpdateIcon()
 
-		RegisterSignal(src, COMSIG_MOB_PICKUP, .proc/stop_sprint)
-		RegisterSignal(src, COMSIG_MOB_DROPPED, .proc/enable_sprint)
+		RegisterSignal(src, COMSIG_MOB_PICKUP, PROC_REF(stop_sprint))
+		RegisterSignal(src, COMSIG_MOB_DROPPED, PROC_REF(enable_sprint))
 
 	disposing()
 		UnregisterSignal(src, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED))
@@ -643,7 +643,7 @@
 		return istype(C) && !isdead(C) && src.loc != C
 
 /mob/living/critter/changeling/headspider/proc/infect_target(mob/M)
-	if(ishuman(M) && isalive(M))
+	if(ishuman(M) && !isdead(M))
 		var/mob/living/carbon/human/H = M
 		random_brute_damage(H, 10)
 		src.visible_message("<font color='#FF0000'><B>\The [src]</B> crawls down [H.name]'s throat!</font>")
@@ -689,3 +689,8 @@
 			boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
 			obs.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 		changeling.hivemind.Cut()
+
+
+/mob/living/critter/changeling/headspider/ai_controlled
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE

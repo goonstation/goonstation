@@ -78,7 +78,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 			boutput(user, "<span class='alert'>The lasher flails at you violently! You might need to weaken it first...</span>")
 			return 1
 		else
-			HYPaddCommut(POT.current, POT.plantgenes, /datum/plant_gene_strain/reagent_adder/lasher)
+			HYPaddCommut(POT.plantgenes, /datum/plant_gene_strain/reagent_adder/lasher)
 			return 0
 
 /datum/plant/weed/creeper
@@ -140,7 +140,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 			B.icon = 'icons/effects/hydroponics.dmi'
 			B.icon_state = "radpulse"
 			B.name = "radioactive pulse"
-			B.anchored = 1
+			B.anchored = ANCHORED
 			B.set_density(0)
 			B.layer = 5 // TODO What layer should this be on?
 			SPAWN(2 SECONDS)

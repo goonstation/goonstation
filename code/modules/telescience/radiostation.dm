@@ -23,7 +23,7 @@
 
 // areas
 
-/area/radiostation/
+/area/radiostation
 	name = "Radio Station"
 	icon_state = "purple"
 
@@ -128,7 +128,7 @@
 	desc = "A large and complicated audio mixing desk. Complete with fancy displays, dials, knobs and automated faders."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "mixtable-2"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	flags = TGUI_INTERACTIVE
 	var/static/list/accents
@@ -239,7 +239,7 @@
 	desc = "An old school vinyl record player sat on a set of drawers. Shame you don't have any records."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "mixtable-3"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/can_play_music = TRUE
 	var/has_record = FALSE
@@ -346,7 +346,7 @@
 		var/obj/O = new /obj/item/raw_material/shard/glass
 		O.set_loc(get_turf(M))
 		if (src.material)
-			O.setMaterial(copyMaterial(src.material))
+			O.setMaterial(src.material)
 		qdel(src)
 	else
 		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
@@ -783,13 +783,13 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /obj/item/storage/box/record/radio/host
 	desc = "A sleeve of exclusive radio station songs."
 
-/obj/item/storage/box/record/radio/host/New()
+/obj/item/storage/box/record/radio/host/make_my_stuff()
 	..()
 	var/list/possibilities = concrete_typesof(/obj/item/record/random, cache=FALSE)
 	possibilities = possibilities.Copy() // so we don't modify the cached version if someone else cached it I guess
-	for (var/i = 1, i < 8, i++)
+	while (!src.storage.is_full() && length(possibilities))
 		var/obj/item/record/R = pick(possibilities)
-		new R(src)
+		src.storage.add_contents(new R(src))
 		possibilities -= R
 
 // Tape deck
@@ -798,7 +798,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	desc = "A large standalone reel-to-reel tape deck."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "tapedeck"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/has_tape = FALSE
 	var/can_play_tapes = TRUE
@@ -1029,7 +1029,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon_state = "gannets_machine1"
 	bound_width = 64
 	bound_height = 32
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/vacuumtape
@@ -1039,7 +1039,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon_state = "gannets_machine2"
 	bound_width = 32
 	bound_height = 64
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/operatorconsole
@@ -1049,21 +1049,21 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon_state = "gannets_machine1"
 	bound_width = 32
 	bound_height = 64
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/broadcastcomputer
 	name = "broadcast server"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "gannets_machine11"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/tapedeck
 	name = "reel to reel tape deck"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "gannets_machine20"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 //Computer, disk and files.

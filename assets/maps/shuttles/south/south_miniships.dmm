@@ -16,7 +16,7 @@
 	dir = 4;
 	hardened = 1
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "bt" = (
@@ -47,7 +47,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "ce" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "co" = (
@@ -138,7 +138,7 @@
 	dir = 4;
 	hardened = 1
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "jP" = (
@@ -242,7 +242,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "qO" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -530,7 +530,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "Gm" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";

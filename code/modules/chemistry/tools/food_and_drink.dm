@@ -84,8 +84,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
 			for (var/i in 1 to src.slice_amount)
-				var/obj/item/reagent_containers/food/slice = new src.slice_product(T)
-				src.process_sliced_products(slice, amount_to_transfer)
+				var/atom/slice_result = new src.slice_product(T)
+				if(istype(slice_result, /obj/item/reagent_containers/food))
+					var/obj/item/reagent_containers/food/slice = slice_result
+					src.process_sliced_products(slice, amount_to_transfer)
 			qdel (src)
 		else
 			..()
@@ -168,8 +170,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			src.Eat(user,user)
 		else if (istype(W, /obj/item/tongs))
-			if (istype(src.loc, /obj/item/storage))
-				boutput(user, "You take [src] out of [src.loc].")
+			if (src.stored)
+				boutput(user, "You take [src] out of [src.stored.linked_item].")
+				src.stored.transfer_stored_item(src, get_turf(src), user = user)
 				user.put_in_hand_or_drop(src)
 			else
 				src.AttackSelf(user)
@@ -185,7 +188,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if (!src.Eat(M, user))
 			return ..()
 
-	Eat(var/mob/M as mob, var/mob/user, var/bypass_utensils = 0)
+	Eat(var/mob/M as mob, var/mob/user, var/bypass_utensils = FALSE)
 		// in this case m is the consumer and user is the one holding it
 		if (!src.edible)
 			return 0
@@ -247,6 +250,21 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but they have no head!</span>",\
 					"<span class='notice'>You try to take a bite of [src], but you have no head to chew with!</span>")
 					return 0
+				if (H.traitHolder.hasTrait("picky_eater"))
+					var/datum/trait/picky_eater/eater_trait = H.traitHolder.getTrait("picky_eater")
+					if (length(eater_trait.fav_foods) > 0)
+						if (H.sims)
+							if (!check_favorite_food(H))
+								if (H.sims.getValue("Hunger") > SIMS_HUNGER_FAMISHED)
+									M.visible_message("<span class='notice'>[M] looks at [src] with a disgusted expression!</span>",\
+									"<span class='notice'>You won't eat [src], it just seems too disgusting to you! You're not hungry or desperate enough to eat that.</span>")
+									return 0
+								else
+									boutput(H, "<span class='notice'>Famished, starving, you reluctantly take a bite of [src].</span>")
+						else if (!check_favorite_food(H))
+							M.visible_message("<span class='notice'>[M] looks at [src] with a disgusted expression!</span>",\
+							"<span class='notice'>You won't eat [src], it just seems too disgusting to you!</span>")
+							return 0
 
 			src.take_a_bite(M, user)
 			return 1
@@ -284,21 +302,38 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	///Called when we successfully take a bite of something (or make someone else take a bite of something)
 	proc/take_a_bite(var/mob/consumer, var/mob/feeder)
+		var/ethereal_eater = FALSE
+		if(istype(consumer, /mob/living/critter))
+			var/mob/living/critter/C = consumer
+			if(C.ghost_spawned)
+				ethereal_eater = TRUE
+
 		if (consumer == feeder)
-			consumer.visible_message("<span class='notice'>[consumer] takes a bite of [src]!</span>",\
-			  "<span class='notice'>You take a bite of [src]!</span>")
-			logTheThing(LOG_CHEMISTRY, consumer, "takes a bite of [src] [log_reagents(src)] at [log_loc(consumer)].")
+			consumer.visible_message("<span class='notice'>[consumer] [ethereal_eater ? "nibbles on" : "takes a bite of"] [src]!</span>",\
+			  "<span class='notice'>You [ethereal_eater ? "nibble on" : "take a bite of"] [src]!</span>")
+			logTheThing(LOG_CHEMISTRY, consumer, "[ethereal_eater ? "nibble on" : "take a bite of"] [src] [log_reagents(src)] at [log_loc(consumer)].")
 		else
 			feeder.tri_message(consumer, "<span class='alert'><b>[feeder]</b> feeds [consumer] [src]!</span>",\
 				"<span class='alert'>You feed [consumer] [src]!</span>",\
 				"<span class='alert'><b>[feeder]</b> feeds you [src]!</span>")
 			logTheThing(LOG_COMBAT, feeder, "feeds [constructTarget(consumer,"combat")] [src] [log_reagents(src)] at [log_loc(feeder)].")
-
-		src.bites_left--
+		if(!ethereal_eater)
+			src.bites_left--
 		consumer.nutrition += src.heal_amt * 10
+		if (ishuman(consumer))
+			var/mob/living/carbon/human/H = consumer
+			if (H.traitHolder.hasTrait("picky_eater"))
+				var/datum/trait/picky_eater/eater_trait = H.traitHolder.getTrait("picky_eater")
+				if (length(eater_trait.fav_foods) > 0)
+					if (!check_favorite_food(H))
+						displease_picky_eater(H)
+					else
+						H.sims?.affectMotive("Hunger", 20)
+				else
+					logTheThing(LOG_DEBUG, src, "Empty favorite foods list for [src] despite having the picky_eater trait.")
 		src.heal(consumer)
 		playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
-		on_bite(consumer, feeder)
+		on_bite(consumer, feeder, ethereal_eater)
 		if (src.festivity)
 			modify_christmas_cheer(src.festivity)
 		if (!src.bites_left)
@@ -322,7 +357,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 						var/datum/plantgenes/DNA = P.plantgenes
 						var/datum/plantgenes/PDNA = S.plantgenes
 						if (!stored.hybrid && !stored.unique_seed)
-							S.generic_seed_setup(stored)
+							S.generic_seed_setup(stored, TRUE)
 						HYPpassplantgenes(DNA,PDNA)
 						if (stored.hybrid)
 							var/plantType = stored.type
@@ -377,19 +412,47 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					boutput(usr,"<span class='notice'><b>[href_list["name"]]:</b></span> [href_list["txt"]]")
 
 
+	///Check wether the current food is in the list of favorite foods for a human
+	proc/check_favorite_food(var/mob/living/carbon/human/H)
+		var/datum/trait/picky_eater/eater_trait = H.traitHolder.getTrait("picky_eater")
+		for (var/food in eater_trait.fav_foods)
+			if (istype(src, food))
+				return TRUE
+		return FALSE
 
+	///What happens when a picky eater is fed something they do not like
+	proc/displease_picky_eater(var/mob/living/carbon/human/H)
+		if (prob(30))
+			boutput(H, pick("<span class='alert'>That tasted <b>HORRIBLE</b>! Your mouth feels numb!</span>", "<span class='alert'>You feel like you're about to puke!</span>"))
+		else
+			if (prob(30))
+				H.setStatus("paralysis", 2.5 SECONDS)
+				boutput(H, pick("<span class='alert'>The sudden assault of displeasing flavors on your tongue dazes you!</span>", "<span class='alert'>This ignoble meal makes you blank out!</span>"))
+			else if (prob(30))
+				boutput(H, pick("<span class='alert'>You can't keep down this <i>food</i>!</span>", "<span class='alert'>You fail to swallow this horrific meal!</span>"))
+				SPAWN(1 SECOND)
+					H.vomit()
+			else
+				boutput(H, pick("<span class='alert'>It takes all your willpower to keep that food down! You feel dizzy!</span>", "<span class='alert'>The sensation of the displeasing chunk sliding down your throat makes you feel lightheaded!</span>"))
+				H.make_dizzy(10)
+				H.change_misstep_chance(25)
 
-
-	proc/on_bite(mob/eater, mob/feeder)
+	proc/on_bite(mob/eater, mob/feeder, ethereal_eater)
 
 		if (isliving(eater))
 			if (src.reagents && src.reagents.total_volume) //only create food chunks for reagents
-				var/obj/item/reagent_containers/food/snacks/bite/B = new /obj/item/reagent_containers/food/snacks/bite
-				B.set_loc(eater)
-				B.reagents.maximum_volume = reagents.total_volume/(src.bites_left+1 || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
-				src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
-				var/mob/living/L = eater
-				L.stomach_process += B
+				if(ethereal_eater)//ghost critters can get a little ingest reaction and a tiny amount of reagent, but won't actually take reagents
+					src.reagents.reaction(eater, INGEST, 3)
+					if(!ON_COOLDOWN(src, "critter_reagent_copy_\ref[eater]", 15 SECONDS))
+						src.reagents.copy_to(eater.reagents, 3/max(src.reagents.total_volume, 3)) //copy up to 3u total, once per food per 15 seconds
+				else
+					var/obj/item/reagent_containers/food/snacks/bite/B = new /obj/item/reagent_containers/food/snacks/bite
+					B.set_loc(eater)
+					B.reagents.maximum_volume = reagents.total_volume/(src.bites_left+1 || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
+					src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
+					var/mob/living/L = eater
+					L.stomach_process += B
+
 
 			if (length(src.food_effects) && isliving(eater) && eater.bioHolder)
 				var/mob/living/L = eater
@@ -427,7 +490,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 						src.set_loc(null)
 						if(ishuman(M))
 							var/mob/living/carbon/human/H = M
-							H.force_equip(I,item_slot) // mobs don't have force_equip
+							H.force_equip(I,item_slot, TRUE) // mobs don't have force_equip
 							return
 			drop.set_loc(get_turf(src.loc))
 /obj/item/reagent_containers/food/snacks/bite
@@ -1316,8 +1379,8 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		src.smash()
 
 
-	Crossed(atom/movable/mover) //Makes barfights cooler
-		if(istype(mover, /obj/projectile))
+	Crossed(obj/projectile/mover) //Makes barfights cooler
+		if(istype(mover) && !istype(mover.proj_data, /datum/projectile/bullet/foamdart))
 			if(prob(30))
 				src.smash()
 		. = ..()
@@ -1598,14 +1661,14 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	proc/fill_it_up()
 		var/flavor = null
 
-		if (islist(src.whitelist) && src.whitelist.len > 0)
-			if (islist(src.blacklist) && src.blacklist.len > 0)
+		if (islist(src.whitelist) && length(src.whitelist) > 0)
+			if (islist(src.blacklist) && length(src.blacklist) > 0)
 				flavor = pick(src.whitelist - src.blacklist)
 			else
 				flavor = pick(src.whitelist)
 
-		else if (islist(all_functional_reagent_ids) && all_functional_reagent_ids.len > 0)
-			if (islist(src.blacklist) && src.blacklist.len > 0)
+		else if (islist(all_functional_reagent_ids) && length(all_functional_reagent_ids) > 0)
+			if (islist(src.blacklist) && length(src.blacklist) > 0)
 				flavor = pick(all_functional_reagent_ids - src.blacklist)
 			else
 				flavor = pick(all_functional_reagent_ids)
@@ -1642,7 +1705,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	                 "tequila", "boorbon", "beepskybeer", "bojack", "screwdriver",
 	                 "bloody_mary", "bloody_scary", "suicider", "grog", "port", "gin",
 	                 "vermouth", "bitters", "whiskey_sour", "daiquiri", "martini",
-	                 "v_martini", "murdini", "mutini", "manhatten", "libre",
+	                 "v_martini", "murdini", "mutini", "manhattan", "libre",
 	                 "ginfizz", "gimlet", "v_gimlet", "w_russian", "b_russian",
 	                 "irishcoffee", "cosmo", "beach", "gtonic", "vtonic", "sonic",
 	                 "gpink", "eraser", "dbreath", "squeeze", "hunchback", "madmen",
@@ -1655,7 +1718,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	                 "juice_cran", "juice_orange", "juice_lemon", "juice_tomato",
 	                 "juice_strawberry", "juice_cherry", "juice_pineapple", "juice_apple",
 	                 "coconut_milk", "juice_pickle", "cocktail_citrus", "lemonade",
-	                 "halfandhalf", "swedium", "caledonium", "essenceofevlis", "pizza",
+	                 "halfandhalf", "swedium", "caledonium", "essenceofelvis", "pizza",
 									 "mint_tea", "tomcollins", "sangria", "peachschnapps", "mintjulep",
 									 "mojito", "cremedementhe", "grasshopper", "freeze", "limeade", "juice_peach")
 
@@ -1859,7 +1922,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		var/obj/O = new /obj/item/raw_material/shard/glass
 		O.set_loc(get_turf(M))
 		if (src.material)
-			O.setMaterial(copyMaterial(src.material))
+			O.setMaterial(src.material)
 		if (src.reagents)
 			src.reagents.reaction(M)
 			qdel(src)
@@ -1886,6 +1949,10 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 /obj/item/reagent_containers/food/drinks/carafe/engineering
 	icon_state = "carafe-eng"
 	item_state = "carafe-eng"
+
+/obj/item/reagent_containers/food/drinks/carafe/command
+	icon_state = "carafe-com"
+	item_state = "carafe-com"
 
 /obj/item/reagent_containers/food/drinks/coconut
 	name = "Coconut"

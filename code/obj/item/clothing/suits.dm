@@ -30,6 +30,15 @@
 		setProperty("heatprot", 5)
 		setProperty("meleeprot", 2)
 
+	equipped(mob/user, slot)
+		. = ..()
+		if (slot == SLOT_BACK)
+			src.wear_layer = max(src.wear_layer, MOB_BACK_SUIT_LAYER) // set to a higher layer, unless they're on an even higher layer
+
+	unequipped(mob/user)
+		. = ..()
+		src.layer = initial(src.wear_layer)
+
 /obj/item/clothing/suit/hoodie
 	name = "hoodie"
 	desc = "Nice and comfy on those cold space evenings."
@@ -369,8 +378,9 @@
 /obj/item/clothing/suit/det_suit
 	name = "coat"
 	desc = "Someone who wears this means business."
-	icon_state = "detective"
+	icon_state = "detective_o"
 	item_state = "det_suit"
+	coat_style = "detective"
 	body_parts_covered = TORSO|LEGS|ARMS
 	bloodoverlayimage = SUITBLOOD_COAT
 
@@ -379,12 +389,17 @@
 		setProperty("meleeprot", 2)
 		setProperty("rangedprot", 0.5)
 
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
+
 /obj/item/clothing/suit/det_suit/beepsky
 	name = "worn jacket"
 	desc = "This tattered jacket has seen better days."
 	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
-	icon_state = "ntarmor"
+	icon_state = "ntarmor_o"
+	coat_style = "ntarmor"
 
 	setupProperties()
 		..()
@@ -396,7 +411,8 @@
 	desc = "A slightly armored jacket favored by security personnel. It looks cozy and warm; you could probably sleep in this if you wanted to!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
-	icon_state = "hoscoat"
+	icon_state = "hoscoat_o"
+	coat_style = "hoscoat"
 
 	setupProperties()
 		..()
@@ -574,10 +590,31 @@
 	item_state = "MDlonglabcoat"
 	coat_style = "MDlonglabcoat"
 
+	setupProperties()
+		. = ..()
+		setProperty("chemprot", 30)
+
 	april_fools
 		icon_state = "MDlonglabcoat-alt"
 		item_state = "MDlonglabcoat-alt"
 		coat_style = "MDlonglabcoat-alt"
+
+/obj/item/clothing/suit/labcoat/research_director
+	name = "research director's labcoat"
+	desc = ""
+	icon_state = "RDlabcoat"
+	item_state = "RDlabcoat"
+	coat_style = "RDlabcoat"
+
+	setupProperties()
+		. = ..()
+		setProperty("chemprot", 30)
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind?.assigned_role == "Research Director")
+			. = "Your most prized lab coat; it took all your life savings to get it designed and tailored just for you."
+		else
+			. = "A bunch of purple glitter and cheap plastic glued together in a sad attempt to make a stylish lab coat."
 
 /obj/item/clothing/suit/labcoat/pathology
 	name = "pathologist's labcoat"
@@ -610,21 +647,6 @@
 	item_state = "DANlabcoat"
 	coat_style = "DANlabcoat"
 
-/obj/item/clothing/suit/straight_jacket
-	name = "straight jacket"
-	desc = "A suit that totally restrains an individual."
-	icon_state = "straight_jacket"
-	item_state = "straight_jacket"
-	body_parts_covered = TORSO|LEGS|ARMS
-	restrain_wearer = TRUE
-	hides_from_examine = C_UNIFORM
-
-	setupProperties()
-		..()
-		setProperty("coldprot", 20)
-		setProperty("heatprot", 20)
-		setProperty("movespeed", 15)
-
 /obj/item/clothing/suit/wcoat
 	name = "waistcoat"
 	desc = "Style over abdominal protection."
@@ -650,12 +672,12 @@
 	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 10
-	c_flags = COVERSEYES | COVERSMOUTH
+	c_flags = COVERSEYES | COVERSMOUTH | ONBACK
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_GLASSES|C_EARS|C_MASK
 	body_parts_covered = TORSO|ARMS
 	see_face = FALSE
 	over_hair = TRUE
-	wear_layer = MOB_OVERLAY_BASE
+	wear_layer = MOB_FULL_SUIT_LAYER
 	var/eyeholes = FALSE //Did we remember to cut eyes in the thing?
 	var/cape = FALSE
 	var/obj/stool/bed/bed = null
@@ -760,13 +782,15 @@
 			src.item_state = src.icon_state
 			see_face = TRUE
 			over_hair = FALSE
+			src.c_flags = ONBACK
 			wear_layer = MOB_BACK_LAYER + 0.2
 		else
 			src.icon_state = "bedsheet[src.bcolor ? "-[bcolor]" : null][src.eyeholes ? "1" : null]"
 			src.item_state = src.icon_state
 			see_face = FALSE
+			src.c_flags = initial(src.c_flags)
 			over_hair = TRUE
-			wear_layer = MOB_OVERLAY_BASE
+			wear_layer = MOB_OVER_TOP_LAYER
 
 	proc/cut_eyeholes()
 		if (src.cape || src.eyeholes)
@@ -1494,6 +1518,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 	name = "\improper Syndicate command armor"
 	desc = "An armored space suit, not for your average expendable chumps. No sir."
 	is_syndicate = TRUE
+	contraband = 3
 	icon_state = "indusred"
 	item_state = "indusred"
 
@@ -1525,11 +1550,12 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	desc = "A heavily modified industrial mining suit, it's been retrofitted for greater protection in firefights."
 	icon_state = "salvager-heavy"
 	item_state = "salvager-heavy"
+	contraband = 3
 	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
 		..()
-		setProperty("meleeprot", 9)
+		setProperty("meleeprot", 6)
 		setProperty("rangedprot", 2)
 		setProperty("space_movespeed", 0)
 		setProperty("exploprot", 30)
@@ -1599,6 +1625,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	see_face = 0
 	magical = 1
 	over_hair = TRUE
+	wear_layer = MOB_FULL_SUIT_LAYER
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
@@ -1619,7 +1646,6 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		desc = "For those who have seen the yellow sign and answered its call.."
 		icon_state = "hasturcultist"
 		item_state = "hasturcultist"
-		wear_layer = MOB_OVERLAY_BASE
 
 	nerd
 		name = "robes of dungeon mastery"
@@ -1638,7 +1664,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "flockcultist"
 	item_state = "flockcultistt"
 	see_face = 0
-	wear_layer = MOB_OVERLAY_BASE
+	wear_layer = MOB_FULL_SUIT_LAYER
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
@@ -1711,47 +1737,65 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	desc = "A padded coat to protect against the cold."
 	icon_state = "wintercoat"
 	item_state = "wintercoat"
+	coat_style = "wintercoat"
 	body_parts_covered = TORSO|LEGS|ARMS
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 35)
 
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
+
 /obj/item/clothing/suit/wintercoat/medical
 	name = "medical winter coat"
 	icon_state = "wintercoat-medical"
 	item_state = "wintercoat-medical"
+	coat_style = "wintercoat-medical"
+
+/obj/item/clothing/suit/wintercoat/robotics
+	name = "robotics winter coat"
+	icon_state = "wintercoat-robotics"
+	item_state = "wintercoat-robotics"
+	coat_style = "wintercoat-robotics"
 
 /obj/item/clothing/suit/wintercoat/genetics
 	name = "genetics winter coat"
 	icon_state = "wintercoat-genetics"
 	item_state = "wintercoat-genetics"
+	coat_style = "wintercoat-genetics"
 
 /obj/item/clothing/suit/wintercoat/research
 	name = "research winter coat"
 	icon_state = "wintercoat-research"
 	item_state = "wintercoat-research"
+	coat_style = "wintercoat-research"
 
 /obj/item/clothing/suit/wintercoat/engineering
 	name = "engineering winter coat"
 	icon_state = "wintercoat-engineering"
 	item_state = "wintercoat-engineering"
+	coat_style = "wintercoat-engineering"
 
 /obj/item/clothing/suit/wintercoat/security
 	name = "security winter coat"
 	icon_state = "wintercoat-security"
 	item_state = "wintercoat-security"
+	coat_style = "wintercoat-security"
 
 /obj/item/clothing/suit/wintercoat/command
 	name = "command winter coat"
 	icon_state = "wintercoat-command"
 	item_state = "wintercoat-command"
+	coat_style = "wintercoat-command"
 
 /obj/item/clothing/suit/wintercoat/detective
 	name = "detective's winter coat"
 	desc = "A comfy coat to protect against the cold. Popular with private investigators."
 	icon_state = "wintercoat-detective"
 	item_state = "wintercoat-detective"
+	coat_style = "wintercoat-detective"
 
 /obj/item/clothing/suit/hi_vis
 	name = "hi-vis vest"
@@ -1767,16 +1811,22 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		..()
 		setProperty("coldprot", 5)
 
-/obj/item/clothing/suit/labcoat/hitman
-    name = "black jacket"
-    desc = "A stylish black suitjacket."
-    icon_state = "hitmanc"
-    item_state = "hitmanc"
-    coat_style = "hitmanc"
+/obj/item/clothing/suit/hitman
+	name = "black jacket"
+	desc = "A stylish black suitjacket."
+	icon_state = "hitmanc_o"
+	item_state = "hitmanc"
+	coat_style = "hitmanc"
 
-/obj/item/clothing/suit/labcoat/hitman/satansuit
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
+
+/obj/item/clothing/suit/hitman/satansuit
 	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-	icon_state = "inspectorc"
+	icon_state = "inspectorc_o"
+	item_state = "inspectorc"
+	coat_style = "inspectorc"
 
 /obj/item/clothing/suit/witchfinder
 	name = "witchfinder general's coat"
@@ -1924,6 +1974,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "star_cloak"
 	item_state = "star_cloak"
 	body_parts_covered = TORSO|ARMS
+	c_flags = ONBACK
 
 /obj/item/clothing/suit/cow_jacket
 	name = "cow jacket"
@@ -1960,6 +2011,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "billow_cape"
 	item_state = "billow_cape"
 	body_parts_covered = TORSO|ARMS
+	c_flags = ONBACK
 
 /obj/item/clothing/suit/space/replica
 	name = "replica space suit"
@@ -1978,6 +2030,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "torncape_red"
 	item_state = "torncape_red"
 	body_parts_covered = TORSO|ARMS
+	c_flags = ONBACK
 
 	red
 		name = "Red Torn Cloak"
@@ -2020,6 +2073,33 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 				src.item_state = "torncape_[style]"
 				src.name = "[style] torn cloak"
 
+/obj/item/clothing/suit/torncloak/black/alpha
+	var/dm_filter/filter
+	var/obj/effect/effect
+
+	New()
+		. = ..()
+		// concept stolen from dwarf because pali smart
+		src.effect = new()
+		src.effect.render_target = ref(src)
+		src.effect.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR
+		src.effect.vis_flags = VIS_INHERIT_DIR
+		src.effect.icon = icon(src.wear_image_icon, src.icon_state)
+
+		src.filter = alpha_mask_filter(render_source=src.effect.render_target, flags=MASK_INVERSE)
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (slot == SLOT_BACK || slot == SLOT_WEAR_SUIT)
+			user.add_filter("clothing_[ref(src)]", 99, src.filter)
+			user.vis_contents += src.effect
+
+	unequipped(mob/user)
+		. = ..()
+		user.remove_filter("clothing_[ref(src)]")
+		user.vis_contents -= src.effect
+
+
 /obj/item/clothing/suit/scarfcape
 	name = "Adventurous Scarf"
 	desc = "The twin scarf tails blow in the wind as you prepare for ADVENTURE."
@@ -2028,6 +2108,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	wear_layer = MOB_GLASSES_LAYER2
 	icon_state = "scarfcape_white"
 	item_state = "scarfcape_white"
+	c_flags = ONBACK
 
 	red
 		name = "Red Adventurous Scarf"
@@ -2083,3 +2164,4 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	wear_layer = MOB_GLASSES_LAYER2
 	icon_state = "fakebeewings"
 	item_state = "fakebeewings"
+	c_flags = ONBACK

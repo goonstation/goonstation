@@ -1,6 +1,7 @@
 /datum/antagonist/emagged_cyborg
 	id = ROLE_EMAGGED_ROBOT
 	display_name = "emagged cyborg"
+	antagonist_icon = "emagged"
 	remove_on_death = TRUE
 	remove_on_clone = TRUE
 

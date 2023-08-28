@@ -1,6 +1,6 @@
 // Not quite a unit test but achieves the same goal. Ran for each map unlike actual unit tests.
 
-#ifdef RUNTIME_CHECKING
+#ifdef CI_RUNTIME_CHECKING
 
 proc/check_map_correctness()
 	check_missing_navbeacons()
@@ -15,10 +15,11 @@ proc/check_map_correctness()
 	check_unsimulated_station_turfs()
 	check_duplicate_area_names()
 	check_missing_material()
-	#ifndef PREFAB_CHECKING
+	#if !(defined(PREFAB_CHECKING) || defined(RANDOM_ROOM_CHECKING))
 	check_xmas_tree()
 	#endif
 	check_turf_underlays()
+	check_mass_drivers()
 
 proc/check_missing_navbeacons()
 	var/list/all_beacons = list()
@@ -67,7 +68,7 @@ proc/check_door_turfs()
 	var/list/log_lines = list()
 	for_by_tcl(door, /obj/machinery/door)
 		var/turf/T = door.loc
-		if(istype(T.loc, /turf/space) || T.density)
+		if(istype(T, /turf/space) && !istype(door, /obj/machinery/door/poddoor) || T.density)
 			log_lines += "[door] [door.type] on [T.x], [T.y], [T.z] in [T.loc]"
 	if(length(log_lines))
 		CRASH("Doors on invalid turfs:\n" + jointext(log_lines, "\n"))
@@ -77,7 +78,7 @@ proc/check_window_turfs()
 	for(var/obj/window/window in world)
 		if (QDELETED(window)) return
 		var/turf/T = window.loc
-		if(istype(T.loc, /turf/space) || T.density)
+		if(istype(T, /turf/space) || T.density)
 			log_lines += "[window] [window.type] on [T.x], [T.y], [T.z] in [T.loc]"
 	if(length(log_lines))
 		CRASH("Windows on invalid turfs:\n" + jointext(log_lines, "\n"))
@@ -164,6 +165,31 @@ proc/check_duplicate_area_names()
 			log_msg += "The following areas have duplicate name \"[dupe || "***EMPTY STRING***"]\": [english_list(names[dupe])]\n"
 
 		CRASH(log_msg)
+
+proc/check_mass_drivers()
+	var/list/log_lines = list()
+	for(var/obj/machinery/mass_driver/M as anything in machine_registry[MACHINES_MASSDRIVERS])
+		if(M.z == Z_LEVEL_STATION)
+			var/atom/end = get_ranged_target_turf(M, M.dir, M.drive_range)
+
+			if(!istype(end, /turf/space))
+				continue
+			else if(istype(end, /turf/space/fluid/warp_z5))
+				continue
+			else if((end.x == 1 || end.x == world.maxx || end.y == 1 || end.y == world.maxy))
+				continue
+
+			var/distance = 0
+			var/turf/new_end = end
+			while(TRUE)
+				new_end = get_step(new_end, M.dir)
+				if(!istype(new_end, /turf/space) || istype(new_end, /turf/space/fluid/warp_z5) || (new_end.x == 1 || new_end.x == world.maxx || new_end.y == 1 || new_end.y == world.maxy) )
+					distance = GET_DIST(M, new_end)
+					break
+
+			log_lines += "([M.x], [M.y]) only reaches [end] ([end.x],[end.y]) consider range of [distance] to reach [new_end] ([new_end?.x],[new_end?.y]) "
+	if(length(log_lines))
+		CRASH("Insufficient Mass Driver Range:\n" + jointext(log_lines, "\n"))
 
 proc/check_missing_material()
 	var/list/missing = list()

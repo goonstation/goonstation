@@ -1,7 +1,7 @@
 // MASTER DATUMS
 
 ABSTRACT_TYPE(/datum/artifact/)
-/datum/artifact/
+/datum/artifact
 	/// the actual /obj type that is the artifact for this datum
 	var/associated_object = null
 	/// a weighted commonness, the higher it is the more often the artifact will appear
@@ -279,9 +279,10 @@ ABSTRACT_TYPE(/datum/artifact/art)
 		. = ..()
 		src.dissipation_rate = 0
 		src.max_range = 13
-		src.power = max(10, src.power)
-		if(prob(90))
-			src.ks_ratio = 1
+		src.power = rand(20,50)
+		if(src.damage_type == D_RADIOACTIVE)
+			src.damage_type = pick(D_KINETIC,D_PIERCING,D_SLASHING,D_ENERGY,D_BURNING,D_RADIOACTIVE,D_TOXIC)
+		src.ks_ratio = 1
 		src.generate_inverse_stats()
 
 	on_pre_hit(atom/hit, angle, obj/projectile/O)

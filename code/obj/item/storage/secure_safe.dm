@@ -5,8 +5,6 @@
 ABSTRACT_TYPE(/obj/item/storage/secure)
 /obj/item/storage/secure
 	name = "storage/secure"
-	var/atom/movable/screen/storage/boxes = null
-	var/atom/movable/screen/close/closer = null
 	var/icon_locking = "secureb"
 	var/icon_sparking = "securespark"
 	var/icon_open = "secure0"
@@ -62,8 +60,8 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 		boutput(user, "You repair the lock on [src].")
 	return TRUE
 
-/obj/item/storage/secure/attackby(obj/item/W, mob/user, obj/item/storage/T)
-	if ((W.w_class > W_CLASS_NORMAL || istype(W, /obj/item/storage/secure)))
+/obj/item/storage/secure/attackby(obj/item/W, mob/user)
+	if (!(src.storage.check_can_hold(W) == STORAGE_CAN_HOLD) || istype(W, /obj/item/storage/secure))
 		return
 	//Waluigi hates this
 	if (src.hackable)
@@ -110,6 +108,10 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 /obj/item/storage/secure/attack_self(mob/user as mob)
 	src.add_dialog(user)
 	add_fingerprint(user)
+	return ui_interact(user)
+
+/obj/item/storage/secure/attack_ai(mob/user)
+	src.add_dialog(user)
 	return ui_interact(user)
 
 /obj/item/storage/secure/ui_interact(mob/user, datum/tgui/ui)
@@ -290,7 +292,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 	flags = FPRINT | TABLEPASS
 	force = 8
 	w_class = W_CLASS_BULKY
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	desc = "A extremely tough secure safe."
 	mechanics_type_override = /obj/item/storage/secure/ssafe
@@ -307,47 +309,47 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 		var/loot = rand(1,9)
 		switch (loot)
 			if (1)
-				new /obj/item/stamped_bullion(src)
+				src.storage.add_contents(new /obj/item/stamped_bullion(src))
 				for (var/i=6, i>0, i--)
-					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
-					S.setup(src)
+					var/obj/item/currency/spacecash/thousand/S = new /obj/item/currency/spacecash/thousand
+					S.setup(src, try_add_to_storage = TRUE)
 			if (2)
 				for (var/i=2, i>0, i--)
-					new /obj/item/stamped_bullion(src)
+					src.storage.add_contents(new /obj/item/stamped_bullion(src))
 				for (var/i=4, i>0, i--)
-					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
-					S.setup(src)
+					var/obj/item/currency/spacecash/thousand/S = new /obj/item/currency/spacecash/thousand
+					S.setup(src, try_add_to_storage = TRUE)
 			if (3)
 				for (var/i=5, i>0, i--)
-					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
-					S.setup(src)
+					var/obj/item/currency/spacecash/thousand/S = new /obj/item/currency/spacecash/thousand
+					S.setup(src, try_add_to_storage = TRUE)
 			if (4)
 				for (var/i=4, i>0, i--)
-					new /obj/item/skull(src)
+					src.storage.add_contents(new /obj/item/skull(src))
 				for (var/i=2, i>0, i--)
-					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
-					S.setup(src)
+					var/obj/item/currency/spacecash/thousand/S = new /obj/item/currency/spacecash/thousand
+					S.setup(src, try_add_to_storage = TRUE)
 			if (5)
 				for (var/i=2, i>0, i--)
-					new /obj/item/skull(src)
+					src.storage.add_contents(new /obj/item/skull(src))
 				for (var/i=2, i>0, i--)
-					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
-					S.setup(src)
+					var/obj/item/currency/spacecash/thousand/S = new /obj/item/currency/spacecash/thousand
+					S.setup(src, try_add_to_storage = TRUE)
 			if (6)
 				for (var/i=2, i>0, i--)
-					new /obj/item/gun/energy/laser_gun(src)
+					src.storage.add_contents(new /obj/item/gun/energy/laser_gun(src))
 				for (var/i=3, i>0, i--)
-					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
-					S.setup(src)
+					var/obj/item/currency/spacecash/thousand/S = new /obj/item/currency/spacecash/thousand
+					S.setup(src, try_add_to_storage = TRUE)
 			if (7)
-				new /obj/item/gun/kinetic/single_action/mts_255(src)
-				new /obj/item/ammo/bullets/pipeshot/scrap/five(src)
+				src.storage.add_contents(new /obj/item/gun/kinetic/single_action/mts_255(src))
+				src.storage.add_contents(new /obj/item/ammo/bullets/pipeshot/scrap/five(src))
 				for (var/i=3, i>0, i--)
-					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
-					S.setup(src)
+					var/obj/item/currency/spacecash/thousand/S = new /obj/item/currency/spacecash/thousand
+					S.setup(src, try_add_to_storage = TRUE)
 			if (8)
 				for (var/i=7, i>0, i--)
-					new /obj/item/raw_material/telecrystal(src)
+					src.storage.add_contents(new /obj/item/raw_material/telecrystal(src))
 			if (9)
 				var/list/treasures = list(/obj/item/stamped_bullion,\
 				/obj/item/raw_material/telecrystal,\
@@ -357,7 +359,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				/obj/item/parts/human_parts/arm/right,\
 				/obj/item/parts/human_parts/leg/left,\
 				/obj/item/parts/human_parts/leg/right,\
-				/obj/item/spacecash/random,\
+				/obj/item/currency/spacecash,\
 				/obj/item/scrap,\
 				/obj/item/storage/pill_bottle/cyberpunk,\
 				/obj/item/reagent_containers/vending/vial/random,\
@@ -375,21 +377,23 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				/obj/item/gun/energy/egun_jr,\
 				/obj/item/gun/energy/laser_gun,\
 				/obj/item/device/key/random,\
+				/obj/item/storage/firstaid/old,\
+				/obj/item/storage/firstaid/crit,\
 				/obj/item/paper/IOU)
 
-				for (var/i=rand(1,7), i>0, i--)
+				for (var/i=rand(1,src.storage.slots), i>0, i--)
 					var/treasure = pick(treasures)
 					if (ispath(treasure))
 						if (ispath(treasures[treasure])) // for things that should spawn with specific other things, ie guns & ammo
 							if (i <= 5) // if there's enough room for two things
-								new treasure(src)
+								src.storage.add_contents(new treasure(src))
 								var/treasure_extra = treasures[treasure]
-								new treasure_extra(src)
+								src.storage.add_contents(new treasure_extra(src))
 								i-- // one less thing since we spawned two
 							else // if there's not enough room
 								i++ // try again
 						else // if there's no matching thing to spawn
-							new treasure(src)
+							src.storage.add_contents(new treasure(src))
 					else // if what we selected wasn't a valid path
 						i++ // try again
 
@@ -418,14 +422,14 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 		var/loot = rand(1,2)
 		switch (loot)
 			if (1)
-				new /obj/item/storage/firstaid/brain(src)
-				new /obj/item/storage/firstaid/toxin(src)
-				new /obj/item/storage/firstaid/old(src)
-				new /obj/item/parts/robot_parts/head/standard(src)
+				src.storage.add_contents(new /obj/item/storage/firstaid/brain(src))
+				src.storage.add_contents(new /obj/item/storage/firstaid/toxin(src))
+				src.storage.add_contents(new /obj/item/storage/firstaid/old(src))
+				src.storage.add_contents(new /obj/item/parts/robot_parts/head/standard(src))
 			if (2)
-				new /obj/item/injector_belt(src)
-				new /obj/item/reagent_containers/glass/bottle/morphine(src)
-				new /obj/item/reagent_containers/syringe(src)
+				src.storage.add_contents(new /obj/item/injector_belt(src))
+				src.storage.add_contents(new /obj/item/reagent_containers/glass/bottle/morphine(src))
+				src.storage.add_contents(new /obj/item/reagent_containers/syringe(src))
 
 /obj/item/storage/secure/ssafe/vonricken
 	configure_mode = FALSE
@@ -466,17 +470,17 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 		var/loot = rand(1,2)
 		switch (loot)
 			if (1)
-				new /obj/item/storage/pill_bottle/cyberpunk(src)
-				new /obj/item/storage/pill_bottle/ipecac(src)
-				new /obj/item/gun/kinetic/clock_188/boomerang(src)
-				new /obj/item/paper/orangeroomsafe(src)
+				src.storage.add_contents(new /obj/item/storage/pill_bottle/cyberpunk(src))
+				src.storage.add_contents(new /obj/item/storage/pill_bottle/ipecac(src))
+				src.storage.add_contents(new /obj/item/gun/kinetic/clock_188/boomerang(src))
+				src.storage.add_contents(new /obj/item/paper/orangeroomsafe(src))
 			if (2)
-				new /obj/item/storage/pill_bottle/bathsalts(src)
-				new /obj/item/reagent_containers/pill/crank(src)
-				new /obj/item/reagent_containers/patch/LSD(src)
-				new /obj/item/paint_can/random(src)
-				var/obj/item/spacecash/random/tourist/S = new /obj/item/spacecash/random/tourist
-				S.setup(src)
+				src.storage.add_contents(new /obj/item/storage/pill_bottle/bathsalts(src))
+				src.storage.add_contents(new /obj/item/reagent_containers/pill/crank(src))
+				src.storage.add_contents(new /obj/item/reagent_containers/patch/LSD(src))
+				src.storage.add_contents(new /obj/item/paint_can/random(src))
+				var/obj/item/currency/spacecash/tourist/S = new /obj/item/currency/spacecash/tourist
+				S.setup(src, try_add_to_storage = TRUE)
 
 /obj/item/paper/orangeroomsafe
 	name = "Bon voyage!"
@@ -508,17 +512,17 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 		var/loot = rand(1,4)
 		switch (loot)
 			if (1)
-				new /obj/item/reagent_containers/food/drinks/moonshine(src)
-				new /obj/item/skull(src)
+				src.storage.add_contents(new /obj/item/reagent_containers/food/drinks/moonshine(src))
+				src.storage.add_contents(new /obj/item/skull(src))
 			if (2)
-				new /obj/item/stamped_bullion(src)
-				var/obj/item/spacecash/random/tourist/S = new /obj/item/spacecash/random/tourist
-				S.setup(src)
+				src.storage.add_contents(new /obj/item/stamped_bullion(src))
+				var/obj/item/currency/spacecash/tourist/S = new /obj/item/currency/spacecash/tourist
+				S.setup(src, try_add_to_storage = TRUE)
 			if (3)
-				new /obj/item/gun/kinetic/single_action/mts_255(src)
-				new /obj/item/ammo/bullets/pipeshot/scrap/five(src)
+				src.storage.add_contents(new /obj/item/gun/kinetic/single_action/mts_255(src))
+				src.storage.add_contents(new /obj/item/ammo/bullets/pipeshot/scrap/five(src))
 			if (4)
-				new /obj/item/paper/freeze(src)
+				src.storage.add_contents(new /obj/item/paper/freeze(src))
 
 /obj/item/paper/freeze
 	name = "paper-'Recipe for Freeze'"
@@ -543,19 +547,19 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 	random_code = TRUE
 	spawn_contents = list(/obj/item/gun/kinetic/revolver,
 	/obj/item/chilly_orb, // a thing to confuse people
-	/obj/item/spacecash/thousand = 3)
+	/obj/item/currency/spacecash/thousand = 3)
 
 /obj/item/storage/secure/ssafe/candy_shop
 	configure_mode = FALSE
 	random_code = TRUE
 	spawn_contents = list(/obj/item/robot_foodsynthesizer,\
-	/obj/item/spacecash/thousand,\
+	/obj/item/currency/spacecash/thousand,\
 	/obj/item/gun/kinetic/derringer/empty)
 
 /obj/item/storage/secure/ssafe/shooting_range //prefab safe
 	configure_mode = FALSE
 	random_code = TRUE
-	spawn_contents = list(/obj/item/spacecash/thousand,\
+	spawn_contents = list(/obj/item/currency/spacecash/thousand,\
 	/obj/item/gun/energy/raygun,\
 	/obj/item/paper/shooting_range_note2)
 
@@ -572,51 +576,56 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 		var/loot = rand(1,5)
 		switch (loot)
 			if (1)
-				new /obj/item/stamped_bullion(src)
-				new /obj/item/stamped_bullion(src)
-				new /obj/item/scrap(src)
+				src.storage.add_contents(new /obj/item/stamped_bullion(src))
+				src.storage.add_contents(new /obj/item/stamped_bullion(src))
+				src.storage.add_contents(new /obj/item/scrap(src))
 			if (2)
-				new /obj/item/stamped_bullion(src)
-				new /obj/item/skull(src)
-				new /obj/item/parts/human_parts/arm/left(src)
-				new /obj/item/parts/human_parts/leg/right(src)
-				var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
-				S.setup(src)
-				S = new /obj/item/spacecash/thousand
-				S.setup(src)
+				src.storage.add_contents(new /obj/item/stamped_bullion(src))
+				src.storage.add_contents(new /obj/item/skull(src))
+				src.storage.add_contents(new /obj/item/parts/human_parts/arm/left(src))
+				src.storage.add_contents(new /obj/item/parts/human_parts/leg/right(src))
+				var/obj/item/currency/spacecash/thousand/S = new /obj/item/currency/spacecash/thousand
+				S.setup(src, try_add_to_storage = TRUE)
+				S = new /obj/item/currency/spacecash/thousand
+				S.setup(src, try_add_to_storage = TRUE)
 
 			if (3)
-				new /obj/item/stamped_bullion(src)
-				new /obj/item/stamped_bullion(src)
-				new /obj/item/football(src)
-				var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
-				S.setup(src)
-				S = new /obj/item/spacecash/thousand
-				S.setup(src)
+				src.storage.add_contents(new /obj/item/stamped_bullion(src))
+				src.storage.add_contents(new /obj/item/stamped_bullion(src))
+				src.storage.add_contents(new /obj/item/football(src))
+				var/obj/item/currency/spacecash/thousand/S = new /obj/item/currency/spacecash/thousand
+				S.setup(src, try_add_to_storage = TRUE)
+				S = new /obj/item/currency/spacecash/thousand
+				S.setup(src, try_add_to_storage = TRUE)
 
 			if (4)
-				new /obj/item/stamped_bullion(src)
-				new /obj/item/stamped_bullion(src)
-				new	/obj/item/instrument/saxophone(src)
-				var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
-				S.setup(src)
-				S = new /obj/item/spacecash/thousand
-				S.setup(src)
+				src.storage.add_contents(new /obj/item/stamped_bullion(src))
+				src.storage.add_contents(new /obj/item/stamped_bullion(src))
+				src.storage.add_contents(new /obj/item/instrument/saxophone(src))
+				var/obj/item/currency/spacecash/thousand/S = new /obj/item/currency/spacecash/thousand
+				S.setup(src, try_add_to_storage = TRUE)
+				S = new /obj/item/currency/spacecash/thousand
+				S.setup(src, try_add_to_storage = TRUE)
 
 			if (5)
-				new /obj/item/stamped_bullion(src)
-				new /obj/item/stamped_bullion(src)
-				new /obj/item/skull(src)
-				new /obj/item/skull(src)
-				new /obj/item/skull(src)
-				var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
-				S.setup(src)
-				S = new /obj/item/spacecash/thousand
-				S.setup(src)
+				src.storage.add_contents(new /obj/item/stamped_bullion(src))
+				src.storage.add_contents(new /obj/item/stamped_bullion(src))
+				src.storage.add_contents(new /obj/item/skull(src))
+				src.storage.add_contents(new /obj/item/skull(src))
+				src.storage.add_contents(new /obj/item/skull(src))
+				var/obj/item/currency/spacecash/thousand/S = new /obj/item/currency/spacecash/thousand
+				S.setup(src, try_add_to_storage = TRUE)
+				S = new /obj/item/currency/spacecash/thousand
+				S.setup(src, try_add_to_storage = TRUE)
 
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+/obj/item/storage/secure/ssafe/larrys
+	configure_mode = FALSE
+	random_code = TRUE
+	spawn_contents = list(/obj/item/paper/IOU, /obj/item/device/key/generic/larrys, /obj/item/currency/spacecash/buttcoin, /obj/item/currency/spacecash/buttcoin)
 
 #undef KEYPAD_ERR
 #undef KEYPAD_SET

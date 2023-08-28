@@ -67,7 +67,7 @@
 	STOP_TRACKING
 	SPAWN(0)
 		if (src.viewer)
-			winset(src.viewer, "[src.window_id].[src.preview_id]", "parent=")
+			winset(src.viewer, "[src.window_id].[src.preview_id]", "parent=none")
 	if (src.handler)
 		if (src.viewer)
 			src.viewer.screen -= src.handler
@@ -107,10 +107,16 @@
 	src.handler.vis_contents |= src.background
 	src.viewer?.screen |= src.background
 
+///subtype of human for character previews so we can filter them out from some logging
+/mob/living/carbon/human/preview
+	name = "character preview"
+	real_name = "character preview"
+	unobservable = TRUE
+
 /**
  * # Character Preview
  *
- * This is intended only for use with humans. `preview_thing` will be a generic human.
+ * This is intended only for use with humans. `preview_thing` will be a subtype of generic human.
  *
  * This parent type is for use in single-client windows.
  * See [/datum/movable_preview/character/window] for a detatched window and and [/datum/movable_preview/character/multiclient] for a multi-client variant.
@@ -119,7 +125,7 @@
 	custom_setup = TRUE
 
 	custom_setup(client/viewer, window_id, control_id)
-		var/mob/living/carbon/human/H = new(global.get_centcom_mob_cloner_spawn_loc())
+		var/mob/living/carbon/human/preview/H = new(global.get_centcom_mob_cloner_spawn_loc())
 		mobs -= H
 		src.preview_thing = H
 		qdel(H.name_tag)
@@ -134,7 +140,6 @@
 		src.flat_icon = null
 		var/mob/living/carbon/human/preview_mob = src.preview_thing
 		preview_mob.dir = direction
-		preview_mob.set_mutantrace(null)
 		preview_mob.bioHolder.mobAppearance.CopyOther(AH)
 		preview_mob.set_mutantrace(MR)
 		preview_mob.organHolder.head.donor = preview_mob
@@ -171,7 +176,7 @@
 		. = ..()
 		SPAWN(0)
 			if (src.viewer)
-				winset(src.viewer, "[src.window_id]", "parent=")
+				winset(src.viewer, "[src.window_id]", "parent=none")
 
 	/// Shows (or hides if the argument is false) the window.
 	proc/show(shown = TRUE)

@@ -110,7 +110,6 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 // -- Human Typing Indicators -- //
 /mob/living/create_typing_indicator()
 	if(!src.has_typing_indicator && isalive(src) && !src.bioHolder?.HasEffect("mute")) //Prevents sticky overlays and typing while in any state besides conscious
-		src.UpdateOverlays(living_typing_bubble, TYPING_OVERLAY_KEY)
 		src.has_typing_indicator = TRUE
 		if(SEND_SIGNAL(src, COMSIG_CREATE_TYPING))
 			return
@@ -125,7 +124,6 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 
 /mob/living/create_emote_typing_indicator()
 	if(!src.has_typing_indicator && isalive(src))
-		src.UpdateOverlays(living_emote_typing_bubble, TYPING_OVERLAY_KEY)
 		src.has_typing_indicator = TRUE
 		if(SEND_SIGNAL(src, COMSIG_CREATE_TYPING))
 			return

@@ -8,7 +8,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 	name = "Experimental Local Generator"
 	desc = "This machine generates power through the combustion of plasma, charging either the local APC or an inserted power cell."
 	icon_state = "ggen0"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	//layer = FLOOR_EQUIP_LAYER1 //why was this set to this
 	flags = FPRINT
@@ -112,7 +112,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 /obj/machinery/power/lgenerator/proc/eject_tank(var/mob/user as mob)
 	if(internalTank)
 		internalTank.set_loc(loc)
-		user.put_in_hand_or_eject(internalTank) // try to eject it into the users hand, if we can
+		user?.put_in_hand_or_eject(internalTank) // try to eject it into the users hand, if we can
 		internalTank = null
 		src.UpdateIcon()
 	return
@@ -149,7 +149,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 		if (!istype(src.loc, /turf/simulated/floor/))
 			src.visible_message("<span class='alert'>[src]'s retention bolts fail, triggering an emergency shutdown!</span>")
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
-			src.anchored = 0 // It might have happened, I guess?
+			src.anchored = UNANCHORED // It might have happened, I guess?
 			src.active = FALSE
 			src.UpdateIcon()
 			return
@@ -272,16 +272,16 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 			if (!src.active)
 				if (!istype(src.loc, /turf/simulated/floor/))
 					ui.user.show_text("You can't secure the generator here.", "red")
-					src.anchored = 0 // It might have happened, I guess?
+					src.anchored = UNANCHORED // It might have happened, I guess?
 					src.UpdateIcon()
 					return
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (src.anchored)
-					src.anchored = 0
+					src.anchored = UNANCHORED
 					src.UpdateIcon()
 					src.our_APC = null //can't link to an APC while unbolted
 				else
-					src.anchored = 1
+					src.anchored = ANCHORED
 					src.UpdateIcon()
 				src.visible_message("<span class='alert'>[ui.user] [src.anchored ? "bolts" : "unbolts"] [src] [src.anchored ? "to" : "from"] the floor.</span>")
 				. = TRUE

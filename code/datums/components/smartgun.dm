@@ -38,8 +38,8 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 					hudSquare.xOffset = x
 					hudSquare.yOffset = y
 					hudSquares["[x],[y]"] = hudSquare
-			RegisterSignal(G, COMSIG_ITEM_SWAP_TO, .proc/init_smart_aim)
-			RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, .proc/end_smart_aim)
+			RegisterSignal(G, COMSIG_ITEM_SWAP_TO, PROC_REF(init_smart_aim))
+			RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, PROC_REF(end_smart_aim))
 			if(ismob(G.loc))
 				on_pickup(null, G.loc)
 
@@ -70,9 +70,9 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 		src.end_smart_aim(source, user)
 
 /datum/component/holdertargeting/smartgun/proc/init_smart_aim(datum/source, mob/user)
-	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEMOVE, .proc/retarget)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/moveRetarget)
-	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN, .proc/shoot_tracked_targets)
+	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEMOVE, PROC_REF(retarget))
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(moveRetarget))
+	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN, PROC_REF(shoot_tracked_targets))
 	if(user.client)
 		aimer = user.client
 		for(var/x in 1 to (istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
@@ -165,13 +165,13 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 			G.suppress_fire_msg = 1
 			for(var/mob/living/M in local_targets)
 				for(var/i in 1 to local_targets[M])
-					G.shoot(get_turf(M), get_turf(user), user)
+					G.shoot(get_turf(M), get_turf(user), user, called_target = M)
 					sleep(1 DECI SECOND)
 
 			G.suppress_fire_msg = initial(G.suppress_fire_msg)
 		else
 			if(!ON_COOLDOWN(G, "shoot_delay", G.shoot_delay))
-				G.shoot(mouse_target, get_turf(user), user)
+				G.shoot(mouse_target, get_turf(user), user, called_target = mouse_target)
 		shooting = 0
 
 	tracked_targets = list()

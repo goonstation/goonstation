@@ -1,0 +1,160 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"n" = (
+/obj/table/podium_wood{
+	pixel_y = 1;
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/food/drinks/bowl{
+	pixel_x = 4;
+	pixel_y = 8;
+	name = "empty fish bowl";
+	desc = "A fishbow- wait, no, that's just a regular bowl! What kind of scam is this?!";
+	layer = 4
+	},
+/obj/item/paper/thermal/portable_printer{
+	pixel_x = 4;
+	pixel_y = 7;
+	shrunk = 2;
+	name = "I.O.U - 1 Fish";
+	info = "we ran out of fish :( sorry. "
+	},
+/obj/map/light/cyan,
+/turf/simulated/floor/marble/border_wb,
+/area/dmm_suite/clear_area)
+"o" = (
+/obj/item/reagent_container/food/fish/clownfish{
+	pixel_y = 31;
+	desc = "This sculpture seems a little funny...";
+	color = "#f546d2";
+	default_material = "pizza";
+	anchored = 1;
+	name = "clown fish model";
+	material_applied_appearance = 1;
+	mat_changeappearance = 0
+	},
+/obj/railing/velvet{
+	pixel_y = 17;
+	density = 0;
+	layer = 4
+	},
+/turf/simulated/floor/marble/border_bw,
+/area/dmm_suite/clear_area)
+"q" = (
+/obj/item/device/radio/intercom/fish{
+	layer = 5;
+	pixel_y = 31;
+	desc = "Seems a bit tacky for an art exhibit..."
+	},
+/obj/railing/velvet{
+	pixel_y = 17;
+	density = 0;
+	layer = 4
+	},
+/turf/simulated/floor/marble/border_bw,
+/area/dmm_suite/clear_area)
+"r" = (
+/turf/simulated/floor/marble,
+/area/dmm_suite/clear_area)
+"w" = (
+/obj/railing/velvet{
+	pixel_y = 17;
+	density = 0;
+	layer = 4
+	},
+/obj/decal/poster/wallsign/dead_exec_portrait{
+	pixel_y = 32;
+	desc = "Woah, that's John Fisherman! The inventor of fish!";
+	name = "fishy portrait"
+	},
+/obj/map/light/cyan{
+	brightness = 5
+	},
+/turf/simulated/floor/marble/border_bw,
+/area/dmm_suite/clear_area)
+"y" = (
+/obj/decoration/regallamp{
+	lit = 1;
+	pixel_y = 0;
+	layer = 5
+	},
+/turf/simulated/floor/marble/border_wb,
+/area/dmm_suite/clear_area)
+"F" = (
+/obj/table/podium_wood{
+	pixel_y = 1;
+	pixel_x = -4
+	},
+/obj/item/reagent_containers/food/snacks/goldfish_cracker{
+	pixel_x = -4;
+	pixel_y = 7;
+	rand_pos = 0;
+	desc = "That's not even an art piece, that's just a goldfish cracker.";
+	default_material = "gold";
+	uses_material_appearance = 1
+	},
+/obj/map/light/cyan,
+/turf/simulated/floor/marble/border_wb,
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/item/reagent_container/food/fish/bass{
+	pixel_y = 35;
+	anchored = 1;
+	name = "decorative largemouth bass";
+	desc = "A very realistic sculpture of a largemouth bass.";
+	material_applied_appearance = 1;
+	uses_material_appearance = 1;
+	default_material = "steel";
+	rand_pos = 1
+	},
+/obj/railing/velvet{
+	pixel_y = 17;
+	density = 0;
+	layer = 4
+	},
+/obj/map/light/cyan{
+	brightness = 5
+	},
+/turf/simulated/floor/marble/border_bw,
+/area/dmm_suite/clear_area)
+"T" = (
+/obj/map/light{
+	brightness = 3;
+	layer = 2
+	},
+/obj/displaycase{
+	displayed = /obj/item/reagent_container/food/fish/goldfish;
+	desc = "A display case. This one has a goldfish in it, labeled 'Carassius Sillius'";
+	pixel_y = 9;
+	layer = 4
+	},
+/obj/effects/lightshaft{
+	pixel_y = -18
+	},
+/turf/simulated/floor/shiny/white,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+S
+r
+F
+"}
+(2,1,1) = {"
+q
+r
+y
+"}
+(3,1,1) = {"
+r
+T
+r
+"}
+(4,1,1) = {"
+o
+r
+y
+"}
+(5,1,1) = {"
+w
+r
+n
+"}

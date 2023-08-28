@@ -46,3 +46,18 @@
 	desc = "A tool used to turn slotted screws and other slotted objects. This one has a nice lemon color."
 	icon_state = "screwdriver-yellow"
 	item_state = "screwdriver-yellow"
+
+/obj/item/screwdriver/grey
+	desc = "A tool used to turn slotted screws and other slotted objects. This one has a drab grey color."
+	icon_state = "screwdriver-grey"
+	item_state = "screwdriver-grey"
+
+/obj/item/screwdriver/orange
+	desc = "A tool used to turn slotted screws and other slotted objects. This one has a nice orange color."
+	icon_state = "screwdriver-orange"
+	item_state = "screwdriver-orange"
+
+/obj/item/screwdriver/green
+	desc = "A tool used to turn slotted screws and other slotted objects. The handle is green for added grip."
+	icon_state = "screwdriver-green"
+	item_state = "screwdriver-green"

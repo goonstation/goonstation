@@ -216,7 +216,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "fragments"
 	sname = "fragments"
 	cost = 1
-	pellets_to_fire = 4
+	pellets_to_fire = 6
 	casing = /obj/item/casing/shotgun/pipe
 	spread_projectile_type = /datum/projectile/bullet/improvplasglass
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
@@ -230,7 +230,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "glass"
 	sname = "glass"
 	cost = 1
-	pellets_to_fire = 6
+	pellets_to_fire = 7
 	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	speed_max = 36
@@ -243,7 +243,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "fragments"
 	sname = "fragments"
 	cost = 1
-	pellets_to_fire = 3
+	pellets_to_fire = 5
 	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	speed_max = 40

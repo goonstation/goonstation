@@ -6,7 +6,7 @@
 	var/const/base_sprite_pixels_from_floor = 5
 	layer = 5
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	on = 0
 	var/digging = 0
 	health = 25
@@ -95,7 +95,7 @@
 			O.show_message("<span class='alert bold'><B>[src] buzzes oddly!</span>", 1)
 		src.target = null
 		src.oldtarget = null
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.emagged = 1
 		if(!src.on)
 			turnOn()
@@ -163,12 +163,12 @@
 	if (src.diglevel > 2) playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 	else playsound(src.loc, 'sound/impact_sounds/Stone_Cut_1.ogg', 100, 1)
 	src.digging = 1
-	src.anchored = 1
+	src.anchored = ANCHORED
 	setEffectOverlays()
 
 /obj/machinery/bot/mining/proc/stopDiggingEffects()
 	src.digging = 0
-	src.anchored = 0
+	src.anchored = UNANCHORED
 	setEffectOverlays()
 
 

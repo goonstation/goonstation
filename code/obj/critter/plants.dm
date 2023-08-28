@@ -12,7 +12,7 @@
 	atksilicon = 0
 	firevuln = 2
 	brutevuln = 0.5
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	name_the_meat = 0
 	chase_text = "slams into"
 	meat_type = /obj/item/reagent_containers/food/snacks/salad
@@ -23,7 +23,7 @@
 		playsound(src.loc, pick('sound/voice/MEilive.ogg'), 45, 0)
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iscarbon(C) && !src.atkcarbon) continue
@@ -100,7 +100,7 @@
 	atksilicon = 1
 	firevuln = 2
 	brutevuln = 2
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	name_the_meat = 0
 	death_text = "%src% messily splatters into a puddle of tomato sauce!"
 	chase_text = "viciously lunges at"
@@ -111,7 +111,7 @@
 	generic = 0
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iscarbon(C) && !src.atkcarbon) continue

@@ -22,7 +22,7 @@
 
 	var/damaged = 0 // used for state management for description showing, as well as preventing drones from screaming about being hit
 
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 
 	var/health_absorb_rate = 2 // how much item health is removed per tick when absorbing
 	var/resources_per_health = 4 // how much resources we get per item health
@@ -54,9 +54,10 @@
 	src.flock_name_tag.set_name(src.real_name)
 	src.vis_contents += src.flock_name_tag
 
-	src.RegisterSignal(src, COMSIG_MOB_GRABBED, .proc/do_antigrab)
-
-	if(!F || src.dormant) // we'be been flagged as dormant in the map editor or something
+	src.RegisterSignal(src, COMSIG_MOB_GRABBED, PROC_REF(do_antigrab))
+	if (!F)
+		src.flock = get_default_flock()
+	if(src.dormant) // we'be been flagged as dormant in the map editor or something
 		src.dormantize()
 	else
 		src.add_simple_light("drone_light", rgb2num(glow_color))
@@ -144,7 +145,7 @@
 		boutput(pilot, "<span class='alert'>This drone is already being controlled.</span>")
 		return
 	//if we are in the tutorial don't let traces take control, and for minds run the tutorial check
-	if (src.flock.flockmind.tutorial && (pilot != src.flock.flockmind || !src.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_DRONE_CONTROL, src)))
+	if (src.flock.flockmind?.tutorial && (pilot != src.flock.flockmind || !src.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_DRONE_CONTROL, src)))
 		return
 	if (src.selected_by)
 		if (src.selected_by != pilot)
@@ -157,7 +158,7 @@
 	src.ai.stop_move()
 	src.is_npc = FALSE
 	src.dormant = FALSE
-	src.anchored = FALSE
+	src.anchored = UNANCHORED
 	pilot.atom_hovered_over = null
 
 	var/datum/mind/mind = pilot.mind
@@ -245,7 +246,7 @@
 				src.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
 				src.updateOverlaysClient(src.client)
 		if (give_alerts && src.flock.z_level_check(src))
-			flock_speak(null, "Control of drone [src.real_name] surrended.", src.flock)
+			flock_speak(null, "Control of drone [src.real_name] surrendered.", src.flock)
 
 		controller = null
 		src.update_health_icon()
@@ -349,13 +350,13 @@
 /mob/living/critter/flock/drone/proc/undormantize()
 	src.dormant = FALSE
 	src.canmove = TRUE
-	src.anchored = FALSE
+	src.anchored = UNANCHORED
 	src.damaged = -1
 	src.check_health() // handles updating the icon to something more appropriate
 	src.visible_message("<span class='notice'><b>[src]</b> begins to glow and hover.</span>")
 	src.set_a_intent(INTENT_HELP)
 	src.add_simple_light("drone_light", rgb2num(glow_color))
-	src.RegisterSignal(src, COMSIG_MOB_GRABBED, .proc/do_antigrab)
+	src.RegisterSignal(src, COMSIG_MOB_GRABBED, PROC_REF(do_antigrab))
 	if(src.client)
 		if(src.flock)
 			controller = new/mob/living/intangible/flock/trace(src, src.flock)
@@ -389,7 +390,7 @@
 	src.flock.total_compute -= FLOCK_DRONE_COMPUTE_HIBERNATE - src.compute
 	src.flock.update_computes()
 	src.ai_paused = FALSE
-	src.anchored = FALSE
+	src.anchored = UNANCHORED
 	src.wander_count = 0
 	src.damaged = -1 //force icon refresh
 	src.check_health() // handles updating the icon to something more appropriate
@@ -454,6 +455,15 @@
 	else
 		return ..()
 
+/mob/living/critter/flock/click(atom/target, list/params)
+	. = ..()
+	if (istype(target, /obj/machinery/door/feather) && !in_interact_range(target, src))
+		var/obj/machinery/door/feather/door = target
+		if (door.density)
+			door.open()
+		else
+			door.close()
+
 /mob/living/critter/flock/drone/DblClick(location, control, params)
 	. = ..()
 	var/mob/living/intangible/flock/F = usr
@@ -495,7 +505,7 @@
 		return // this isn't our drone
 	if (istype(flock_controller, /mob/living/intangible/flock/trace) && flock_controller.flock?.flockmind?.tutorial)
 		return
-	src.flock.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_DRAGMOVE, src)
+	src.flock.flockmind?.tutorial?.PerformSilentAction(FLOCK_ACTION_DRAGMOVE, src)
 	src.rally(over_location)
 
 /mob/living/critter/flock/drone/hotkey(var/name)
@@ -685,7 +695,7 @@
 /mob/living/critter/flock/drone/proc/add_resources(amount)
 	src.resources += amount
 	if (src.flock)
-		src.flock.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_GAIN_RESOURCES, src.resources)
+		src.flock.flockmind?.tutorial?.PerformSilentAction(FLOCK_ACTION_GAIN_RESOURCES, src.resources)
 		src.flock.stats.resources_gained += amount
 	var/datum/abilityHolder/composite/composite = src.abilityHolder
 	var/datum/abilityHolder/critter/flockdrone/aH = composite.getHolder(/datum/abilityHolder/critter/flockdrone)
@@ -848,11 +858,11 @@
 			if(0 to 45)
 				B = new /obj/item/raw_material/scrap_metal
 				B.set_loc(my_turf)
-				B.setMaterial(getMaterial("gnesis"), copy = FALSE)
+				B.setMaterial(getMaterial("gnesis"))
 			if(46 to 90)
 				B = new /obj/item/raw_material/shard
 				B.set_loc(my_turf)
-				B.setMaterial(getMaterial("gnesisglass"), copy = FALSE)
+				B.setMaterial(getMaterial("gnesisglass"))
 			if(91 to 100)
 				B = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock(my_turf)
 
@@ -1035,7 +1045,7 @@
 	if (!istype(user))
 		return
 
-	if (user.flock?.flockmind?.tutorial && !user.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_START_CONVERSION, target))
+	if (user.flock?.flockmind?.tutorial && !user.flock.flockmind?.tutorial.PerformAction(FLOCK_ACTION_START_CONVERSION, target))
 		return
 	if(ismob(target) || iscritter(target)) //gods how I hate /obj/critter
 		if (!isflockmob(target))
@@ -1211,7 +1221,7 @@
 	if (istype(drone))
 		drone.cell = src.cell
 	src.holder.holder.contents |= cell
-	RegisterSignal(src.cell, COMSIG_UPDATE_ICON, .proc/update_overlay)
+	RegisterSignal(src.cell, COMSIG_UPDATE_ICON, PROC_REF(update_overlay))
 
 /datum/limb/gun/flock_stunner/proc/update_overlay()
 	var/mob/living/critter/flock/drone/flockdrone = holder.holder
@@ -1266,7 +1276,7 @@
 	var/ignore_amount = FALSE
 
 /datum/equipmentHolder/flockAbsorption/can_equip(var/obj/item/I)
-	if (istype(I, /obj/item/grab) || istype(I, /obj/item/spacebux))
+	if (istype(I, /obj/item/grab) || istype(I, /obj/item/currency/spacebux))
 		return FALSE
 	return ..()
 
@@ -1276,7 +1286,7 @@
 
 	var/mob/living/critter/flock/drone/F = holder
 	src.instant_absorb = item.amount > 1 && round(F.resources_per_health * item.health) == 0
-	src.ignore_amount = istype(item, /obj/item/spacecash)
+	src.ignore_amount = istype(item, /obj/item/currency/spacecash)
 
 	item.inventory_counter?.show_count()
 
@@ -1319,6 +1329,8 @@
 
 	if(length(I.contents))
 		var/anything_tumbled = FALSE
+		for (var/obj/item/W as anything in I.storage?.get_contents())
+			I.storage.transfer_stored_item(W, get_turf(flock_owner), user = flock_owner)
 		for(var/obj/O in I.contents)
 			if(istype(O, /obj/item))
 				O.set_loc(flock_owner.loc)

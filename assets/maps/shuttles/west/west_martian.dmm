@@ -21,7 +21,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
 "cu" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"
@@ -465,7 +465,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "vp" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -974,7 +974,7 @@
 	},
 /area/shuttle/escape/centcom)
 "Qs" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";

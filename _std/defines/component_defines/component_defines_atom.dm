@@ -13,6 +13,9 @@
 	#define COMSIG_ATOM_HITBY_THROWN "atom_hitby_thrown"
 	/// when an atom is examined (/mob/examiner, /list/lines), append to lines for more description
 	#define COMSIG_ATOM_EXAMINE "atom_examine"
+	/// When an atom is examined for its help message (/mob/examiner, /list/lines), append to lines for more description
+	/// Use [RegisterHelpMessageHandler] instead as it adds the help verb on registration
+	#define COMSIG_ATOM_HELP_MESSAGE "atom_help_message"
 	/// when something happens that should trigger an icon update. Or something.
 	#define COMSIG_UPDATE_ICON "atom_update_icon"
 	/// when something triggers Crossed by entering this atom's turf (/atom/movable)
@@ -71,11 +74,17 @@
 	#define COMSIG_MOVABLE_POST_RADIO_PACKET "mov_post_radio_packet"
 	/// when an atom hits something when being thrown (thrown_atom, hit_target, /datum/thrown_thing)
 	#define COMSIG_MOVABLE_HIT_THROWN "mov_hit_thrown"
+	/// when an AM is teleported by do_teleport
+	#define COMSIG_MOVABLE_TELEPORTED "mov_teleport"
 
 	// ---- complex ----
 
 	/// when the outermost movable in the .loc chain changes (thing, old_outermost_movable, new_outermost_movable)
 	#define XSIG_OUTERMOST_MOVABLE_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_outermost_changed")
+	/// When the outermost movable in the .loc chain moves to a new area. (thing, old_area, new_area)
+	#define XSIG_MOVABLE_AREA_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_area_changed")
+	/// When the outermost movable in the .loc chain moves to a new turf. (thing, old_turf, new_turf)
+	#define XSIG_MOVABLE_TURF_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_turf_changed")
 	/// when the z-level of a movable changes (works in nested contents) (thing, old_z_level, new_z_level)
 	#define XSIG_MOVABLE_Z_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_z-level_changed")
 
@@ -200,6 +209,10 @@
 	#define COMSIG_MOB_EMOTE "mob_emote"
 	/// Sent when a mob is checking for an active energy shield
 	#define COMSIG_MOB_SHIELD_ACTIVATE "mob_shield_activate"
+	/// Sent when a mob flips, return TRUE to skip the rest of the flip emote coded, argument is (voluntary)
+	#define COMSIG_MOB_FLIP "mob_flip"
+	/// Sent when UpdateDamage() is called (prev_health)
+	#define COMSIG_MOB_UPDATE_DAMAGE "mob_update_damage"
 
 	// ---- cloaking device signal ----
 
