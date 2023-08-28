@@ -216,7 +216,7 @@ ABSTRACT_TYPE(/datum/material)
 		var/datum/material/M = new src.type()
 		M.properties = mergeProperties(src.properties, rightBias = 0)
 		for(var/X in src.vars)
-			if(!issaved(M.vars[X])) continue
+			if(!issaved(src.vars[X])) continue
 			if(X in triggerVars)
 				M.vars[X] = getFusedTriggers(src.vars[X], list(), M) //Pass in an empty list to basically copy the first one.
 			else
@@ -466,9 +466,9 @@ ABSTRACT_TYPE(/datum/material)
 	New(var/datum/material/mat1,var/datum/material/mat2,var/bias)
 		..()
 		if(isnull(mat1) || isnull(mat2))
-			CRASH("Tried to create alloy with null materials!")
+			return
 		var/left_bias = 1 - bias
-		src.quality = round(mat1.quality *left_bias+ mat2.quality * bias)
+		src.quality = round(mat1.quality * left_bias + mat2.quality * bias)
 
 		src.prefixes = (mat1.prefixes | mat2.prefixes)
 		src.suffixes = (mat1.suffixes | mat2.suffixes)
