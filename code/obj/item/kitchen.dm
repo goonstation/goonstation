@@ -187,6 +187,16 @@ TRAYS
 		user.TakeDamage("head", 150, 0)
 		return 1
 
+	proc/bloodflick()
+		var/isbloody = FALSE
+		if (src.blood_DNA)
+			isbloody = TRUE
+			src.loc.add_blood
+			make_cleanable(/obj/decal/cleanable/blood,splat)
+			src.clean_forensic
+		return isbloody
+
+
 /obj/item/kitchen/utensil/spoon/plastic
 	name = "plastic spoon"
 	icon_state = "spoon_plastic"
