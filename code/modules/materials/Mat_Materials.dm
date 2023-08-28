@@ -216,7 +216,7 @@ ABSTRACT_TYPE(/datum/material)
 		var/datum/material/M = new src.type()
 		M.properties = mergeProperties(src.properties, rightBias = 0)
 		for(var/X in src.vars)
-			if(!issaved(X)) continue
+			if(!issaved(M.vars[X])) continue
 			if(X in triggerVars)
 				M.vars[X] = getFusedTriggers(src.vars[X], list(), M) //Pass in an empty list to basically copy the first one.
 			else
