@@ -152,18 +152,18 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			if (src.client)
 				fur_color = src.client.preferences.AH.customization_first_color
 				eye_color = src.client.preferences.AH.e_color
-			var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey")
+			var/image/overlay = image(src.icon, "mouse_colorkey")
 			overlay.color = fur_color
 			src.UpdateOverlays(overlay, "hair")
 
-			var/image/overlay_eyes = image('icons/misc/critter.dmi', "mouse_eyes")
+			var/image/overlay_eyes = image(src.icon, "mouse_eyes")
 			overlay_eyes.color = eye_color
 			src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
 		if (src.use_custom_color)
 			src.ClearAllOverlays()
-			var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey-dead")
+			var/image/overlay = image(src.icon, "mouse_colorkey-dead")
 			overlay.color = fur_color
 			src.UpdateOverlays(overlay, "hair")
 		..()
@@ -3795,11 +3795,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return
 		eye_color = src.client?.preferences.AH.e_color
 
-		var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey")
+		var/image/overlay = image(src.icon, "mouse_colorkey")
 		overlay.color = fur_color
 		src.UpdateOverlays(overlay, "hair")
 
-		var/image/overlay_eyes = image('icons/misc/critter.dmi', "mouse_eyes")
+		var/image/overlay_eyes = image(src.icon, "mouse_eyes")
 		overlay_eyes.color = eye_color
 		src.UpdateOverlays(overlay_eyes, "eyes")
 

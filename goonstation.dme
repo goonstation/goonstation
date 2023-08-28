@@ -461,6 +461,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\carbon\human\procs\emote.dm"
 #include "code\mob\living\carbon\human\procs\get_desc.dm"
 #include "code\mob\living\carbon\human\procs\inventory.dm"
+#include "code\mob\living\carbon\human\procs\update_blood.dm"
 #include "code\mob\living\carbon\human\procs\update_icon.dm"
 #include "code\mob\living\critter\aberration.dm"
 #include "code\mob\living\critter\adventure.dm"

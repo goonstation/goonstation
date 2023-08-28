@@ -53,7 +53,9 @@
 		if (!istype(T,/turf/))
 			if(isnull(random_floor_turfs))
 				build_random_floor_turf_list()
-			T = pick(random_floor_turfs)
+			while(isnull(T) || istype(T, /turf/simulated/floor/airless/plating/catwalk) || total_density(T) > 0)
+				T = pick(random_floor_turfs)
+				if(prob(1)) break // prevent infinite loop
 
 		if(isnull(grow_duration))
 			grow_duration = 2 MINUTES + rand(-30 SECONDS, 30 SECONDS)
