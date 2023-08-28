@@ -34,6 +34,13 @@
 	var/tooltipTheme
 	var/obj/item/item
 
+	disposing()
+		qdel(src.master)
+		src.master = null
+		// TODO: Eject on floor? Probably not for cyborg tools...
+		src.item = null
+		. = ..()
+
 	clicked(list/params)
 		sendclick(params, usr)
 
@@ -71,9 +78,9 @@
 		if (master && (!master.click_check || (usr in master.mobs)))
 			master.MouseDrop(src, over_object, src_location, over_location, over_control, params)
 
-	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
+	MouseDrop_T(atom/movable/O as obj, mob/user as mob, src_location, over_location, over_control, src_control, params)
 		if (master && (!master.click_check || (user in master.mobs)))
-			master.MouseDrop_T(src, O, user)
+			master.MouseDrop_T(src, O, user, params)
 
 	disposing()
 		src.master = null
@@ -233,7 +240,7 @@
 	proc/MouseEntered(id,location, control, params)
 	proc/MouseExited(id)
 	proc/MouseDrop(var/atom/movable/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
-	proc/MouseDrop_T(var/atom/movable/screen/hud/H, atom/movable/O as obj, mob/user as mob)
+	proc/MouseDrop_T(var/atom/movable/screen/hud/H, atom/movable/O as obj, mob/user as mob, params)
 
 /*
 	dynamic hud stuff

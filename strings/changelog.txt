@@ -1,5 +1,132 @@
 
+(t)mon aug 28 23
+(u)Sord
+(+)The Monday job of the day has been replaced with a very heroic "Dungeoneer" job.
+(u)pali
+(+)Floor closets now mimic the floor a bit better and automatically change their appearance when moved.
+(u)LeahTheTech
+(+)Added security tape to brobocop cyborg module.
+(*)Cyborg and eyebot pushing behaviour has been changed to remove the awkward rubber banding.
+(*)Eyebots are now slowed by pulling things, no more kidnapping the nuke at the speed of light.
+(t)sun aug 27 23
+(u)UnfunnyPerson
+(p)15493
+(e)🔨📦|A-Player-Actions, A-Game-Objects
+(+)Clicking a damaged window with a sheets of the same material will repair the window
+(u)TealSeer
+(p)15545
+(e)🆕🤖🌱|C-Feature, A-Silicons, A-Hydroponics
+(+)The civilian module for cyborgs now comes with a gardening trowel.
+(u)TealSeer
+(p)15465
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Adds the option to edit a button's label and signal value on button panel components.
+(u)Lord_Earthfire
+(p)15154
+(e)🆕🍝|C-Feature, A-Catering
+(+)Custom pies interact with more items than before. Try baking in some paint cans or stickers into pies today!
+(u)Bartimeus973
+(p)15217
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Dramatic Chefbots have undergone an anger management course and now destroy food a lot less often! However they also learned a lot of new insults.
+(u)pali
+(+)The dark anomaly from the black hole event is now slightly visible in darkness.
+(t)sat aug 26 23
+(u)Lord_Earthfire
+(p)15475
+(e)🌱|A-Hydroponics
+(+)Rafflesias and nettles work, as expected, with the "inert" plant gene strain now
+(u)Tarmunora
+(*)Skeletons fall apart into a pile of bones on death.
+(+)On death, skeleton heads actually get their brain set properly (if the brain was not already removed)
+(u)Cheffie
+(p)15449
+(e)🪲🗺🎨🔎⚙|C-Bug, A-Mapping, C-Sprites, C-Code-Quality, A-Internal
+(*)Hemochromia, Colorful Reagent and some Mutantraces now correctly change the colour of created blood decals and overlays when bleeding. paint the halls! reagent pools of blood are uneffected.
+(+)Internal changes to icons may possibly lead to some missing or white gib / blood icons, report these if you see them!
+(t)fri aug 25 23
+(u)Bartimeus973
+(p)15502
+(e)💅📦|C-QoL, A-Game-Objects
+(+)A lot of traitor items now have explanations on how to use them. Double examine or right click -> Help on them to read it.
+(u)LeahTheTech
+(+)Artifact heater pads now actually heat things placed on them. Also heat triggered artifacts can now activate from air temperature.
+(t)wed aug 23 23
+(u)FlameArrow57
+(p)15391
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Pressing the equip hotkey while holding a gun that fits on your back will now attempt to add it to your backpack first if it's open.
+(u)LeahTheTech
+(+)Shower heads can now be controlled by mech-comp.
+(t)tue aug 22 23
+(u)Paaiii
+(p)15416
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Added 21 new AI core casings, achievable through various means. See the PR for more details.
+(+)Updated existing AI core casing sprites.
+(+)Made AIs use the pronoun preferences of the character file in core/eye/shells.
+(t)mon aug 21 23
+(u)Glamurio (Ryou)
+(p)15335
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(+)Added a brig shower to Donut3.
+(u)Cheekybrdy
+(p)15231
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Sleeper agents can now access the listening post through scanners at the entrance.
+(t)sat aug 19 23
+(u)pali
+(*)Three new mutations that affect how you hear sounds!
+(t)fri aug 18 23
+(u)FlameArrow57
+(p)15381
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Improved item equip consistency when equipping an item from your inventory with fast mouse flicks.
+(u)Paaiii
+(p)15417
+(e)🤖|A-Silicons
+(+)Replaces that cardboard box that spawns in the AI core if there's no AI with an empty SICC AI core.
+(u)Smilg
+(p)15204
+(e)|
+(+)ABCU marker can now rectangle select, and has longer range.
+(u)Lord_Earthfire
+(p)14773
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Having at least 25% lube in a foam mixture, water and fluorosurfactant excluded, applies the lube's slippery properties to the foam
+(u)FlameArrow57
+(p)15395
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(+)High damage slashing/cutting weapons will now leave cut wounds.
+(u)Sord
+(+)Scrap clubs and spears now fit in backpacks. All scrapweapons have received minor damage tweaks.
+(t)thu aug 17 23
+(u)LeahTheTech
+(+)Fish rarity now uses the item rarity system for <i>fancy tooltips</i>
+(t)wed aug 16 23
+(u)UnfunnyPerson
+(p)15411
+(e)📦|A-Game-Objects
+(+)Hacked SecTechs will contain 2-4 donuts.
+(t)tue aug 15 23
+(u)MeggalBozale
+(p)15273
+(e)⚖|C-Balance
+(+)Vending machines can be tipped over by shooting them, and shooting them when tipped over lets bullets move past.
+(t)mon aug 14 23
+(u)Garash
+(p)15152
+(e)🆕🔄📄|C-Feature, C-Rework, A-UI
+(+)New UI for the Cryo Pods
 (t)sun aug 13 23
+(u)Bisar
+(p)15341
+(e)🪲📦|C-Bug, A-Game-Objects
+(*)MechComp triggers for Vend by Name should work properly now!
+(u)Ryou (Glamurio) & Zac
+(p)15192
+(e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
+(*)Added cinnamon to the game. Ask your local botanist to grow you some! Careful not too eat too much of it.
 (u)soapcyst
 (p)15203
 (e)🗺💅|A-Mapping, C-QoL

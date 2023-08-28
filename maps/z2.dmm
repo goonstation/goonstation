@@ -172,18 +172,6 @@
 	},
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
-"abu" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
-	dir = 1;
-	icon = 'icons/misc/hospital.dmi';
-	icon_state = "sovcomp3";
-	name = "broken computer"
-	},
-/turf/unsimulated/floor/caution/south,
-/area/hospital/samostrel)
 "abA" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -2997,8 +2985,6 @@
 	},
 /obj/machinery/light,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/blackwhite{
@@ -4332,8 +4318,6 @@
 	pixel_y = 18
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
@@ -5365,8 +5349,6 @@
 	level = 1.9
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
@@ -5876,6 +5858,17 @@
 	dir = 1
 	},
 /area/moon/museum)
+"ayo" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodygloves_c"
+	},
+/turf/unsimulated/floor/greenwhite{
+	dir = 1
+	},
+/area/owlery/owleryhall)
 "ayu" = (
 /obj/machinery/light/small/iomoon{
 	dir = 8;
@@ -6034,8 +6027,6 @@
 /area/moon/museum/west)
 "ayQ" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/stairs{
@@ -9374,7 +9365,6 @@
 /area/space)
 "aNP" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/communications_dish,
@@ -9600,32 +9590,24 @@
 /area/upper_arctic/pod2)
 "aOy" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/upper_arctic/pod2)
 "aOz" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/upper_arctic/pod2)
 "aOB" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/specialroom/bar,
 /area/upper_arctic/pod2)
 "aOC" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/decal/cleanable/blood/tracks{
@@ -9635,8 +9617,6 @@
 /area/upper_arctic/pod2)
 "aOD" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/decal/cleanable/blood/tracks{
@@ -9688,8 +9668,6 @@
 /area/owlery/staffhall)
 "aOL" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/arctic/plating,
@@ -9788,7 +9766,6 @@
 	start_charge = 13
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/spacevine{
@@ -9801,8 +9778,6 @@
 /area/crater/biodome/north)
 "aPa" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/spacevine{
@@ -9814,8 +9789,6 @@
 /area/crater/biodome/north)
 "aPb" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/light,
@@ -9828,8 +9801,6 @@
 /area/crater/biodome/north)
 "aPc" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/spacevine,
@@ -9838,8 +9809,6 @@
 /area/crater/biodome/north)
 "aPd" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/spacevine{
@@ -9852,8 +9821,6 @@
 /area/crater/biodome/north)
 "aPe" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/spacevine{
@@ -9942,8 +9909,6 @@
 /area/upper_arctic/pod2)
 "aPq" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/carpet/grime,
@@ -9964,8 +9929,6 @@
 "aPu" = (
 /obj/stool,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/specialroom/bar,
@@ -10033,8 +9996,6 @@
 /area/iomoon/base)
 "aPC" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/wall/setpieces/leadwindow{
@@ -10211,7 +10172,6 @@
 /area/upper_arctic/pod2)
 "aQh" = (
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
@@ -10225,18 +10185,12 @@
 /area/upper_arctic/comms)
 "aQi" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/landmark/telesci,
@@ -10244,7 +10198,6 @@
 /area/upper_arctic/comms)
 "aQj" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/computerframe{
@@ -10668,8 +10621,6 @@
 /area/upper_arctic/hall)
 "aRI" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
@@ -10931,8 +10882,6 @@
 /area/upper_arctic/hall)
 "aSL" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt,
@@ -10966,8 +10915,6 @@
 	icon_state = "lattice-dir"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/arctic/cliff,
@@ -11244,8 +11191,6 @@
 	icon_state = "lattice-dir"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/arctic/abyss,
@@ -11382,8 +11327,6 @@
 /area/upper_arctic/hall)
 "aUn" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/plating/scorched,
@@ -11427,7 +11370,6 @@
 	start_charge = 12
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/unsimulated/floor/neutral/side{
@@ -11436,8 +11378,6 @@
 /area/crater/biodome/crew)
 "aUy" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/neutral/side{
@@ -11446,8 +11386,6 @@
 /area/crater/biodome/crew)
 "aUz" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/noticeboard,
@@ -11457,8 +11395,6 @@
 /area/crater/biodome/crew)
 "aUA" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/neutral/corner{
@@ -11467,8 +11403,6 @@
 /area/crater/biodome/crew)
 "aUB" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/neutral/corner{
@@ -11477,8 +11411,6 @@
 /area/crater/biodome/crew)
 "aUC" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/light/emergency{
@@ -11490,8 +11422,6 @@
 /area/crater/biodome/research)
 "aUD" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/stairs{
@@ -11500,8 +11430,6 @@
 /area/crater/biodome/research)
 "aUE" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/light_switch{
@@ -11515,8 +11443,6 @@
 /area/crater/biodome/research)
 "aUF" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/neutral/corner{
@@ -11525,8 +11451,6 @@
 /area/crater/biodome/research)
 "aUG" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor{
@@ -11535,8 +11459,6 @@
 /area/crater/biodome/research)
 "aUH" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/neutral/corner{
@@ -11552,11 +11474,9 @@
 	start_charge = 12
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/unsimulated/floor/neutral/side{
@@ -11565,8 +11485,6 @@
 /area/crater/biodome/research)
 "aUJ" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/stairs{
@@ -11575,18 +11493,12 @@
 /area/crater/biodome/research)
 "aUK" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/neutral/corner{
@@ -11595,8 +11507,6 @@
 /area/crater/biodome/maint)
 "aUL" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/neutral/corner{
@@ -11605,8 +11515,6 @@
 /area/crater/biodome/maint)
 "aUM" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/neutral/side{
@@ -11811,8 +11719,6 @@
 	icon_state = "lattice-dir"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/arctic/cliff{
@@ -11968,7 +11874,6 @@
 	start_charge = 12
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/decal/cleanable/blood/tracks,
@@ -11978,13 +11883,9 @@
 /area/upper_arctic/hall)
 "aVP" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/unsimulated/floor/plating/scorched,
@@ -12001,8 +11902,6 @@
 	icon_state = "lattice-dir"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/arctic/snow,
@@ -12184,8 +12083,6 @@
 /area/upper_arctic/hall)
 "aWD" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small,
@@ -12272,7 +12169,6 @@
 /area/crater/biodome/research)
 "aWS" = (
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/furnace,
@@ -12282,13 +12178,9 @@
 /area/crater/biodome/maint)
 "aWT" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/decal/cleanable/dirt,
@@ -12301,7 +12193,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/item/mousetrap/armed,
@@ -12314,7 +12205,6 @@
 	output = 2000
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/unsimulated/floor/plating/scorched,
@@ -12491,7 +12381,6 @@
 /area/crater/biodome/research)
 "aXC" = (
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/furnace,
@@ -12500,8 +12389,6 @@
 /area/crater/biodome/maint)
 "aXD" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/storage/crate,
@@ -12523,7 +12410,6 @@
 	start_charge = 13
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/unsimulated/floor/plating/scorched,
@@ -12532,13 +12418,9 @@
 /obj/machinery/computer/power_monitor,
 /obj/cable,
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/item/device/t_scanner,
@@ -12689,7 +12571,6 @@
 	output = 2000
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/unsimulated/floor/plating/scorched,
@@ -12697,11 +12578,9 @@
 "aYe" = (
 /obj/machinery/computer/power_monitor,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/item/device/t_scanner,
@@ -12723,8 +12602,6 @@
 /area/upper_arctic/pod1)
 "aYi" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/stool/chair{
@@ -12751,7 +12628,6 @@
 	name = "Containment Field Generator"
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/unsimulated/floor/arctic/plating,
@@ -12962,7 +12838,6 @@
 /obj/decal/cleanable/cobweb,
 /obj/machinery/power/furnace,
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/decal/cleanable/dirt,
@@ -12973,11 +12848,9 @@
 	dir = 1
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/decal/cleanable/dirt,
@@ -12985,8 +12858,6 @@
 /area/upper_arctic/pod1)
 "aYZ" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt,
@@ -13006,8 +12877,6 @@
 /area/upper_arctic/pod1)
 "aZd" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/white,
@@ -13040,7 +12909,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/unsimulated/floor/arctic/plating,
@@ -13161,7 +13029,6 @@
 /area/marsoutpost/duststorm)
 "aZI" = (
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/furnace,
@@ -13170,8 +13037,6 @@
 /area/upper_arctic/pod1)
 "aZJ" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/decal/cleanable/dirt,
@@ -13179,13 +13044,9 @@
 /area/upper_arctic/pod1)
 "aZK" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/item/mousetrap/armed,
@@ -13193,21 +13054,15 @@
 /area/upper_arctic/pod1)
 "aZM" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod1)
 "aZN" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/decal/cleanable/blood/splatter{
@@ -13217,8 +13072,6 @@
 /area/upper_arctic/pod1)
 "aZO" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro{
@@ -13228,16 +13081,12 @@
 /area/upper_arctic/pod1)
 "aZP" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/caution/west,
 /area/upper_arctic/pod1)
 "aZQ" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/unsimulated/floor/caution/east{
@@ -13249,7 +13098,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/unsimulated/floor/arctic/plating,
@@ -13324,8 +13172,6 @@
 /area/crater/biodome/south)
 "baf" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/green/corner{
@@ -13368,8 +13214,6 @@
 /area/upper_arctic/pod1)
 "bam" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/decal/cleanable/oil,
@@ -13377,8 +13221,6 @@
 /area/upper_arctic/pod1)
 "ban" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/item/extinguisher,
@@ -13399,8 +13241,6 @@
 /area/upper_arctic/pod1)
 "bar" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/caution/east{
@@ -13474,7 +13314,6 @@
 	start_charge = 12
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/light/emergency{
@@ -13486,13 +13325,9 @@
 /area/crater/biodome/south)
 "baI" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/green/side{
@@ -13501,8 +13336,6 @@
 /area/crater/biodome/south)
 "baJ" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/green/side{
@@ -13511,8 +13344,6 @@
 /area/crater/biodome/south)
 "baK" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/light{
@@ -13524,8 +13355,6 @@
 /area/crater/biodome/south)
 "baL" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/green/corner{
@@ -13534,8 +13363,6 @@
 /area/crater/biodome/south)
 "baM" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/unsimulated/floor/green/corner,
@@ -13629,7 +13456,6 @@
 	name = "Containment Field Generator"
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/cable,
@@ -13713,8 +13539,6 @@
 /area/crater/biodome/south)
 "bbw" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/green/corner,
@@ -13756,21 +13580,15 @@
 	icon_state = "lattice-dir"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bbG" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/lattice{
@@ -13787,8 +13605,6 @@
 	icon_state = "lattice-dir"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/arctic/abyss,
@@ -13799,8 +13615,6 @@
 	icon_state = "lattice-dir"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/arctic/abyss,
@@ -13811,8 +13625,6 @@
 	icon_state = "lattice-dir"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/arctic/cliff{
@@ -13821,8 +13633,6 @@
 /area/upper_arctic/exterior/surface)
 "bbL" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/table/auto,
@@ -13836,16 +13646,12 @@
 /area/upper_arctic/mining)
 "bbM" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/grime,
 /area/upper_arctic/mining)
 "bbN" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/power/apc{
@@ -13856,7 +13662,6 @@
 	start_charge = 12
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/light/small{
@@ -13892,8 +13697,6 @@
 /area/crater/biodome/south)
 "bbW" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/green/side{
@@ -14414,8 +14217,6 @@
 /area/crater/biodome/entry)
 "bdt" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/caution/south{
@@ -14431,7 +14232,6 @@
 	start_charge = 13
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/unsimulated/floor{
@@ -20105,7 +19905,6 @@
 	name = "strange machine"
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/unsimulated/floor/purple/side{
@@ -20257,8 +20056,6 @@
 /area/iomoon/base)
 "bvV" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/purple/corner{
@@ -20354,8 +20151,6 @@
 /area/iomoon)
 "bwu" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/purple/corner{
@@ -20364,8 +20159,6 @@
 /area/iomoon/base)
 "bwv" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor{
@@ -20374,13 +20167,9 @@
 /area/iomoon/base)
 "bww" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor{
@@ -20764,28 +20553,8 @@
 	dir = 4
 	},
 /area/iomoon/base)
-"byK" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/iomoon/base)
 "byL" = (
 /turf/unsimulated/floor/purple/corner,
-/area/iomoon/base)
-"byO" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
 /area/iomoon/base)
 "byV" = (
 /obj/decal/fakeobjects{
@@ -20873,6 +20642,12 @@
 	icon_state = "floor"
 	},
 /area/iomoon/base)
+"bzn" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/unsimulated/floor/white,
+/area/owlery/office)
 "bzs" = (
 /obj/decal/cleanable/ash,
 /turf/unsimulated/iomoon/floor,
@@ -20966,7 +20741,6 @@
 	name = "strange machine"
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/unsimulated/floor/purple/side,
@@ -20974,11 +20748,9 @@
 "bzQ" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/computer3/terminal/zeta{
@@ -21002,8 +20774,6 @@
 /area/iomoon/base)
 "bzV" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/unsimulated/floor{
@@ -21177,7 +20947,7 @@
 	},
 /area/iomoon/base/underground)
 "bAW" = (
-/obj/item/reagent_containers/food/snacks/yuckburn,
+/obj/item/reagent_containers/food/snacks/yuck/burn,
 /turf/unsimulated/iomoon/floor{
 	name = "silicate cave floor";
 	temperature = 313.15
@@ -21528,8 +21298,6 @@
 /area/iomoon/base/underground)
 "bCf" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/purple/side,
@@ -21681,8 +21449,6 @@
 /area/iomoon)
 "bCP" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/purple/side{
@@ -21691,60 +21457,42 @@
 /area/iomoon/base)
 "bCQ" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/circuit/purple,
 /area/iomoon/base)
 "bCR" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/circuit/purple,
 /area/iomoon/base)
 "bCS" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/circuit/purple,
 /area/iomoon/base)
 "bCT" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/circuit/purple,
 /area/iomoon/base)
 "bCU" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/purple/side{
@@ -21753,8 +21501,6 @@
 /area/iomoon/base)
 "bCV" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/cable{
@@ -21905,8 +21651,6 @@
 /area/iomoon/base)
 "bDy" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/circuit/purple,
@@ -21927,7 +21671,6 @@
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/computer3frame/terminal{
@@ -21941,11 +21684,9 @@
 "bDC" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/computer3frame/terminal{
@@ -21962,8 +21703,6 @@
 	},
 /obj/table/auto,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/decal/fakeobjects/lightbulb_broken,
@@ -21974,11 +21713,9 @@
 "bDE" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/decal/fakeobjects/lightbulb_broken,
@@ -21990,8 +21727,6 @@
 /area/iomoon/base)
 "bDF" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/window/cubicle{
@@ -22008,8 +21743,6 @@
 /area/iomoon/base)
 "bDG" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/table/auto,
@@ -22029,11 +21762,9 @@
 /obj/decal/fakeobjects/lightbulb_broken,
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/table/auto,
@@ -22045,8 +21776,6 @@
 "bDI" = (
 /obj/table/auto,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/decal/fakeobjects/lightbulb_broken,
@@ -22058,7 +21787,6 @@
 "bDJ" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/computer3frame/terminal{
@@ -22079,7 +21807,6 @@
 /area/iomoon)
 "bDQ" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -22186,7 +21913,6 @@
 /area/iomoon)
 "bEy" = (
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/solar/owl_cheat,
@@ -25267,8 +24993,6 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/mushrooms/type1,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/cave,
@@ -25364,8 +25088,6 @@
 /area/crypt/graveyard/swamp)
 "bPw" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/cave,
@@ -25466,8 +25188,6 @@
 /area/crypt/sigma/crew)
 "bPJ" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/unsimulated/floor/cave,
@@ -25694,7 +25414,6 @@
 /obj/table/reinforced,
 /obj/item/wrench,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
@@ -27807,7 +27526,6 @@
 /area/meat_derelict/main)
 "bYB" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/unsimulated/floor/plating,
@@ -27838,6 +27556,18 @@
 	name = "deep brush"
 	},
 /area/crypt/graveyard/swamp)
+"bYI" = (
+/obj/storage/crate/freezer,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	name = "weird meat"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget,
+/turf/unsimulated/floor/white,
+/area/shuttle/john/owlery)
 "bYK" = (
 /turf/unsimulated/floor{
 	icon = 'icons/misc/beach.dmi';
@@ -27864,8 +27594,6 @@
 /area/space)
 "bYR" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/plating,
@@ -27948,37 +27676,27 @@
 /area/meat_derelict/guts)
 "bZe" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "bZf" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "bZg" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "bZh" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -27988,7 +27706,6 @@
 /area/crunch)
 "bZi" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/unsimulated/floor/plating,
@@ -28544,12 +28261,6 @@
 	},
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
-"caR" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/floor/orangeblack,
-/area/owlery/staffhall)
 "caS" = (
 /obj/table/reinforced/auto,
 /obj/item/kitchen/food_box/lollipop,
@@ -30144,11 +29855,9 @@
 /area/meat_derelict/boss)
 "chu" = (
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/solar/owl_cheat,
@@ -30565,29 +30274,21 @@
 /area/cavetiny)
 "ciU" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/auto/reinforced/old,
 /area/crunch)
 "ciV" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor,
 /area/crunch)
 "ciW" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/light_switch{
@@ -31949,7 +31650,6 @@
 	id = "owl"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
@@ -32188,7 +31888,6 @@
 /area/crunch/wtc)
 "cnA" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/solar/owl_cheat,
@@ -34229,7 +33928,6 @@
 	},
 /obj/map/light/dimred,
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
@@ -35048,7 +34746,6 @@
 /area/owlery/staffhall)
 "cxd" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/owlery{
@@ -35116,21 +34813,6 @@
 	dir = 8
 	},
 /area/owlery/staffhall)
-"cxm" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/obj/decal/cleanable/blood/tracks,
-/turf/unsimulated/floor/grime,
-/area/owlery/staffhall)
-"cxn" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/floor/arrival{
-	dir = 4
-	},
-/area/owlery/staffhall)
 "cxo" = (
 /obj/item/scrap,
 /obj/lattice{
@@ -35171,8 +34853,6 @@
 /area/owlery/lab)
 "cxu" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/plating/scorched,
@@ -35322,12 +35002,6 @@
 /turf/unsimulated/floor/bluewhite{
 	dir = 6
 	},
-/area/owlery/staffhall)
-"cxV" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "cxW" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -35516,7 +35190,6 @@
 	name = "smashed computer"
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/map/light/screen,
@@ -35624,39 +35297,10 @@
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
-"cyP" = (
-/obj/item/casing/shotgun/blue,
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "gib2"
-	},
-/turf/unsimulated/floor/white,
-/area/owlery/staffhall)
-"cyQ" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
-/turf/unsimulated/floor/white,
-/area/owlery/staffhall)
 "cyR" = (
 /obj/machinery/door/airlock/gannets/alt{
 	dir = 8;
 	req_access_txt = "12"
-	},
-/turf/unsimulated/floor/white,
-/area/owlery/staffhall)
-"cyS" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "gibmid2"
-	},
-/obj/critter/madnessowl{
-	alive = 0;
-	can_revive = 0;
-	density = 0;
-	desc = "This owl has bloodshot eyes and seems to be snarling at you. Well if it was alive atleast. It looks like it was shot.";
-	icon_state = "madsmallowl-dead"
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
@@ -35748,21 +35392,15 @@
 "czk" = (
 /obj/item/tile/steel,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/staffhall)
 "czl" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/white,
@@ -35850,8 +35488,6 @@
 /area/owlery/staffhall)
 "czz" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/light/emergency,
@@ -35881,8 +35517,6 @@
 /area/owlery/staffhall)
 "czD" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/light/emergency,
@@ -35907,23 +35541,6 @@
 	},
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/staffhall)
-"czG" = (
-/obj/decal/cleanable/blood{
-	icon_state = "armorblood"
-	},
-/turf/unsimulated/floor/white,
-/area/owlery/staffhall)
-"czH" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/decal/cleanable/blood{
-	icon_state = "armorblood"
-	},
-/turf/unsimulated/floor/plating/scorched,
-/area/owlery/staffhall)
 "czI" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
@@ -35931,8 +35548,6 @@
 /area/owlery/staffhall)
 "czJ" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/blackwhite,
@@ -35945,8 +35560,6 @@
 /area/owlery/staffhall)
 "czL" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
@@ -35960,8 +35573,6 @@
 	tag = "icon-chair (EAST)"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
@@ -36085,8 +35696,6 @@
 	dir = 8
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
@@ -36169,8 +35778,6 @@
 /obj/table/round,
 /obj/item/decoration/flower_vase,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
@@ -36180,8 +35787,6 @@
 /area/owlery/staffhall)
 "cAo" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -36220,8 +35825,6 @@
 	dir = 9
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
@@ -36234,8 +35837,6 @@
 	dir = 6
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
@@ -36249,8 +35850,6 @@
 	tag = "icon-chair (EAST)"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/blackwhite,
@@ -36263,8 +35862,6 @@
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/light/emergency,
@@ -36338,8 +35935,6 @@
 	icon_state = "2-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/disposalpipe/segment{
@@ -36466,8 +36061,6 @@
 	dir = 5
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
@@ -36585,8 +36178,6 @@
 /area/owlery/gangzone)
 "cBu" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/redblack{
@@ -36615,8 +36206,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/unsimulated/floor/blackwhite{
@@ -36708,16 +36297,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
-"cBP" = (
-/obj/decal/tile_edge/line/grey{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/decal/cleanable/blood{
-	icon_state = "armorblood"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/owlery/staffhall)
 "cBQ" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -36793,8 +36372,6 @@
 "cBZ" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/decal/woodclutter,
@@ -36810,8 +36387,6 @@
 "cCa" = (
 /obj/critter/madnessowl,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/redblack{
@@ -36821,8 +36396,6 @@
 "cCb" = (
 /obj/item/raw_material/shard,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/black,
@@ -36831,8 +36404,6 @@
 /obj/decal/cleanable/blood/drip/high,
 /obj/item/rods,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/redblack{
@@ -36842,8 +36413,6 @@
 "cCd" = (
 /obj/item/paper/fuckingidiot,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/red,
@@ -36851,8 +36420,6 @@
 "cCe" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/red,
@@ -36919,12 +36486,6 @@
 	dir = 4
 	},
 /area/owlery/Owlopen)
-"cCm" = (
-/obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves"
-	},
-/turf/unsimulated/floor/white,
-/area/owlery/staffhall)
 "cCn" = (
 /obj/stool/chair{
 	dir = 8
@@ -37061,16 +36622,6 @@
 /obj/item/clothing/under/misc/syndicate,
 /turf/unsimulated/floor/white,
 /area/owlery/lab)
-"cCG" = (
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
-/obj/item/reagent_containers/glass/bottle/acetone/janitors,
-/obj/item/reagent_containers/glass/bottle/ammonia/janitors,
-/turf/unsimulated/floor/white,
-/area/owlery/lab)
 "cCI" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/card/id/owlgold{
@@ -37144,8 +36695,6 @@
 /area/owlery/Owlopen)
 "cCW" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/redblack{
@@ -37200,8 +36749,6 @@
 "cDg" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/machinery/light/small/iomoon{
@@ -37235,8 +36782,6 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment,
@@ -37331,8 +36876,6 @@
 "cDu" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
@@ -37355,8 +36898,6 @@
 /area/owlery/Owlopen)
 "cDw" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/black,
@@ -37684,35 +37225,18 @@
 /area/owlery/Owlmait)
 "cEm" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/white,
-/area/owlery/staffhall)
-"cEn" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "cEo" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/blackwhite/corner,
 /area/owlery/staffhall)
 "cEp" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/blackwhite/corner{
@@ -37835,8 +37359,6 @@
 	dir = 8
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/redblack/corner{
@@ -37845,8 +37367,6 @@
 /area/owlery/Owlopen)
 "cEL" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/redblack{
@@ -37855,26 +37375,14 @@
 /area/owlery/Owlopen)
 "cEO" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/greenwhite{
 	dir = 8
 	},
 /area/owlery/owleryhall)
-"cEP" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/white,
-/area/owlery/owleryhall)
 "cEQ" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/greenwhite/corner{
@@ -38022,8 +37530,6 @@
 /area/owlery/owleryhall)
 "cFr" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/decal/cleanable/generic,
@@ -38046,8 +37552,6 @@
 	dir = 8
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/shuttlebay{
@@ -38056,8 +37560,6 @@
 /area/owlery/staffhall)
 "cFv" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/unsimulated/floor/plating/scorched,
@@ -38220,7 +37722,6 @@
 /area/owlery/Owlopen)
 "cFV" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/stool/chair/couch/green{
@@ -38239,13 +37740,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/office)
-"cFW" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/obj/item/scrap,
-/turf/unsimulated/floor/plating,
-/area/owlery/staffhall)
 "cFX" = (
 /turf/unsimulated/floor/greenwhite{
 	dir = 8
@@ -38255,8 +37749,6 @@
 /obj/stool/bench/green/auto,
 /obj/disposalpipe/segment,
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/greenwhite/corner{
@@ -38281,8 +37773,6 @@
 /area/owlery/Owlmait)
 "cGb" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -38324,8 +37814,6 @@
 	icon_state = "drip5"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/plating,
@@ -38455,8 +37943,6 @@
 	dir = 8
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/blackwhite,
@@ -38499,8 +37985,6 @@
 "cGB" = (
 /obj/stool/bench/green/auto,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/greenwhite/corner{
@@ -38593,14 +38077,6 @@
 /obj/item/clothing/under/rank/engineer/april_fools,
 /turf/unsimulated/floor/carpet/grime,
 /area/owlery/staffhall)
-"cGQ" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/owlery/staffhall)
 "cGR" = (
 /obj/disposalpipe/segment,
 /turf/unsimulated/floor/redblack{
@@ -38683,8 +38159,6 @@
 /area/owlery/owleryhall)
 "cHf" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/white,
@@ -38737,8 +38211,6 @@
 "cHl" = (
 /obj/decal/cleanable/paper,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/black,
@@ -38995,8 +38467,6 @@
 /area/owlery/gangzone)
 "cHZ" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/redblack{
@@ -39009,7 +38479,6 @@
 	},
 /obj/map/light/dimred,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
@@ -39132,8 +38601,6 @@
 	icon_state = "2-4"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/white,
@@ -39143,8 +38610,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/reagent_dispensers/watertank/fountain,
@@ -39154,8 +38619,6 @@
 /area/owlery/owleryhall)
 "cIr" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -39171,20 +38634,10 @@
 /area/owlery/office)
 "cIu" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/owlerysign/officeplaque{
 	desc = "Office of James Musujasa, Head Of Personnel."
-	},
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/owlery/office)
-"cIw" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/office)
@@ -39299,7 +38752,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
@@ -39432,8 +38884,6 @@
 /area/owlery/owleryhall)
 "cJe" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment,
@@ -39462,7 +38912,6 @@
 	pixel_y = 16
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/unsimulated/floor/engine,
@@ -39487,20 +38936,6 @@
 	},
 /area/owlery/office)
 "cJl" = (
-/turf/unsimulated/floor/blackwhite{
-	dir = 1
-	},
-/area/owlery/office)
-"cJm" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/floor/blackwhite{
-	dir = 1
-	},
-/area/owlery/office)
-"cJn" = (
-/obj/item/storage/wall/random,
 /turf/unsimulated/floor/blackwhite{
 	dir = 1
 	},
@@ -39654,17 +39089,6 @@
 	tag = "icon-fblue2 (NORTHWEST)"
 	},
 /area/owlery/owleryhall)
-"cJK" = (
-/obj/decal/cleanable/blood/dynamic,
-/obj/decal/floor/displays/owlsign{
-	icon_state = "owlsign-right"
-	},
-/turf/unsimulated/floor/carpet{
-	dir = 10;
-	icon_state = "fblue1";
-	tag = "icon-fblue2 (NORTHWEST)"
-	},
-/area/owlery/owleryhall)
 "cJL" = (
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
@@ -39677,8 +39101,6 @@
 	name = "exhibit window"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/wood/two,
@@ -39718,12 +39140,6 @@
 /turf/unsimulated/floor/blackwhite{
 	dir = 1
 	},
-/area/owlery/office)
-"cJR" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/floor/white,
 /area/owlery/office)
 "cJS" = (
 /obj/critter/madnessowl{
@@ -39798,26 +39214,8 @@
 	dir = 4
 	},
 /area/owlery/gangzone)
-"cKf" = (
-/obj/storage/crate/freezer,
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	name = "weird meat"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget,
-/turf/unsimulated/floor/white,
-/area/shuttle/john/owlery)
 "cKg" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/cable{
@@ -39905,13 +39303,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/office)
-"cKu" = (
-/obj/machinery/light,
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/floor/blackwhite,
-/area/owlery/office)
 "cKw" = (
 /obj/stool/chair{
 	dir = 1
@@ -39998,7 +39389,6 @@
 	name = "Security Records"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
@@ -40132,14 +39522,6 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
-"cLk" = (
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit"
-	},
-/turf/unsimulated/floor/yellow,
-/area/owlery/gangzone)
 "cLl" = (
 /obj/item/wrapping_paper,
 /turf/unsimulated/floor/yellow,
@@ -40200,12 +39582,6 @@
 	network = "Owlery"
 	},
 /turf/unsimulated/floor/wood/two,
-/area/owlery/owleryhall)
-"cLt" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cLu" = (
 /turf/unsimulated/floor/greenwhite,
@@ -40322,16 +39698,12 @@
 /obj/stool/chair/couch,
 /obj/item/reagent_containers/syringe/morphine,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cLO" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/grime,
@@ -40354,8 +39726,6 @@
 /area/owlery/Owlmait)
 "cLS" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/machinery/light/small/iomoon{
@@ -40398,15 +39768,6 @@
 /turf/unsimulated/floor/greenwhite{
 	dir = 8
 	},
-/area/owlery/owleryhall)
-"cLX" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cLY" = (
 /obj/item/casing/small,
@@ -40593,7 +39954,6 @@
 	},
 /obj/map/light/dimred,
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
@@ -40628,12 +39988,6 @@
 	},
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/owleryhall)
-"cMA" = (
-/obj/decal/cleanable/blood{
-	icon_state = "left_bloodyhands"
-	},
-/turf/unsimulated/floor/red,
-/area/owlery/gangzone)
 "cMB" = (
 /obj/item/casing/small,
 /obj/decal/tile_edge/carpet{
@@ -40655,21 +40009,6 @@
 	icon_state = "line1"
 	},
 /turf/unsimulated/floor/green/checker,
-/area/owlery/owleryhall)
-"cME" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/white,
-/area/owlery/owleryhall)
-"cMF" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
-/turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cMG" = (
 /obj/item/casing/small,
@@ -40752,7 +40091,6 @@
 	},
 /obj/map/light/dimred,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
@@ -40772,21 +40110,11 @@
 	},
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/owleryhall)
-"cMX" = (
-/obj/decal/cleanable/paper,
-/obj/item/material_piece/wad,
-/obj/decal/cleanable/blood{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/floor/black,
-/area/owlery/office)
 "cMY" = (
 /obj/stool/chair/comfy/green{
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/blood{
@@ -40794,17 +40122,9 @@
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/office)
-"cMZ" = (
-/obj/decal/cleanable/blood{
-	icon_state = "handblood"
-	},
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/owlery/gangzone)
 "cNa" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/item/reagent_containers/vending/vial/random{
@@ -40882,15 +40202,6 @@
 	dir = 1
 	},
 /turf/unsimulated/floor/green/checker,
-/area/owlery/owleryhall)
-"cNs" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
-/obj/decal/cleanable/blood/tracks,
-/turf/unsimulated/floor/greenwhite{
-	dir = 8
-	},
 /area/owlery/owleryhall)
 "cNt" = (
 /obj/cable{
@@ -41017,8 +40328,6 @@
 /area/owlery/owleryhall)
 "cNM" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/engine,
@@ -41066,12 +40375,9 @@
 /area/owlery/owllock)
 "cNU" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/computer/power_monitor{
@@ -41103,8 +40409,6 @@
 /area/owlery/gangzone)
 "cOa" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/light/emergency{
@@ -41439,14 +40743,6 @@
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
-"cOH" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
-/obj/stool/bench/green/auto,
-/obj/machinery/light/emergency,
-/turf/unsimulated/floor/greenwhite,
-/area/owlery/owleryhall)
 "cOI" = (
 /obj/item/reagent_containers/iv_drip/blood,
 /obj/item/handcuffs,
@@ -41458,13 +40754,6 @@
 /area/owlery/lab)
 "cOJ" = (
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/grime,
-/area/owlery/owleryhall)
-"cOK" = (
-/obj/item/extinguisher,
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
 /turf/unsimulated/floor/grime,
 /area/owlery/owleryhall)
 "cOL" = (
@@ -41526,8 +40815,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/decal/cleanable/dirt,
@@ -41535,18 +40822,6 @@
 /area/owlery/Owlmait)
 "cOV" = (
 /turf/unsimulated/floor/green,
-/area/owlery/owleryhall)
-"cOW" = (
-/obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves"
-	},
-/turf/unsimulated/floor/white,
-/area/owlery/owleryhall)
-"cOX" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/floor/sanitary/white,
 /area/owlery/owleryhall)
 "cOY" = (
 /obj/decal/cleanable/blood,
@@ -41693,8 +40968,6 @@
 /area/owlery/Owlmait)
 "cPs" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/grime,
@@ -41798,8 +41071,6 @@
 /area/owlery/gangzone)
 "cPF" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -41849,29 +41120,8 @@
 	},
 /turf/unsimulated/floor/green/checker,
 /area/owlery/owleryhall)
-"cPL" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
-/obj/decal/cleanable/blood/tracks{
-	dir = 4
-	},
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gibarm"
-	},
-/obj/decal/tile_edge/line/grey{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/green/checker,
-/area/owlery/owleryhall)
 "cPM" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/decal/glow{
@@ -42024,8 +41274,6 @@
 "cQb" = (
 /obj/decal/poster/wallsign/hazard_electrical,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -42033,20 +41281,6 @@
 "cQc" = (
 /turf/unsimulated/floor/grime,
 /area/owlery/owleryhall)
-"cQd" = (
-/obj/decal/cleanable/blood/drip/high,
-/obj/decal/cleanable/blood/splatter{
-	icon_state = "floor4"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
-/turf/unsimulated/floor/redblack{
-	dir = 4
-	},
-/area/owlery/gangzone)
 "cQe" = (
 /obj/decal/cleanable/blood/gibs/body,
 /turf/unsimulated/floor/redblack{
@@ -42082,28 +41316,7 @@
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
-"cQm" = (
-/obj/decal/cleanable/blood/tracks,
-/obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/decal/cleanable/blood{
-	icon_state = "handblood"
-	},
-/turf/unsimulated/floor/greenwhite{
-	dir = 8
-	},
-/area/owlery/owleryhall)
 "cQn" = (
-/obj/decal/cleanable/blood{
-	icon_state = "tracksL"
-	},
-/turf/unsimulated/floor/yellowblack{
-	dir = 8
-	},
-/area/owlery/gangzone)
-"cQo" = (
-/obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves"
-	},
 /obj/decal/cleanable/blood{
 	icon_state = "tracksL"
 	},
@@ -42116,8 +41329,6 @@
 	dir = 9
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
@@ -42359,41 +41570,8 @@
 "cQP" = (
 /turf/unsimulated/floor/black,
 /area/owlery/owleryhall)
-"cQR" = (
-/obj/critter/madnessowl{
-	alive = 0;
-	can_revive = 0;
-	density = 0;
-	desc = "This owl has bloodshot eyes and seems to be snarling at you. Well if it was alive atleast. It looks like it was shot.";
-	icon_state = "madsmallowl-dead"
-	},
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
-/turf/unsimulated/floor/white,
-/area/owlery/owleryhall)
 "cQS" = (
 /obj/item/casing/shotgun/blue,
-/turf/unsimulated/floor/white,
-/area/owlery/owleryhall)
-"cQT" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "decomposed corpse"
-	},
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "gibdown1"
-	},
-/obj/decal/cleanable/blood/tracks,
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/disposalpipe/segment,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cQU" = (
@@ -42607,8 +41785,6 @@
 	icon_state = "1-2"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/redblack{
@@ -42619,12 +41795,6 @@
 /turf/unsimulated/floor/redblack{
 	dir = 6
 	},
-/area/owlery/owleryhall)
-"cRq" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cRr" = (
 /obj/table/wood/auto/desk,
@@ -42685,26 +41855,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/unsimulated/grass,
-/area/owlery/owllock)
-"cRx" = (
-/obj/window{
-	desc = "A window.  For a museum exhibit.";
-	dir = 4;
-	name = "exhibit window"
-	},
-/obj/window{
-	desc = "A window.  For a museum exhibit.";
-	dir = 8;
-	name = "exhibit window"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/stairs/quilty{
-	dir = 1
-	},
 /area/owlery/owllock)
 "cRz" = (
 /obj/shrub,
@@ -43164,8 +42314,6 @@
 /area/owlery/owllock)
 "cSI" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/specialroom/arcade,
@@ -43246,7 +42394,6 @@
 /obj/table/reinforced/auto,
 /obj/machinery/networked/printer,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
@@ -43281,13 +42428,6 @@
 /area/owlery/gangzone)
 "cSZ" = (
 /obj/critter/madnessowl,
-/turf/unsimulated/floor/yellow,
-/area/owlery/gangzone)
-"cTa" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "gib2"
-	},
-/obj/reagent_dispensers/cleanable/ants,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cTb" = (
@@ -43701,8 +42841,6 @@
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/item/cell/charged,
@@ -43809,12 +42947,6 @@
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait2)
-"cUk" = (
-/obj/decal/cleanable/blood{
-	icon_state = "helmetblood"
-	},
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/owlery/Owlmait2)
 "cUl" = (
 /obj/decal/cleanable/oil,
 /turf/unsimulated/floor/stairs/quilty{
@@ -43860,8 +42992,6 @@
 /area/owlery/owllock)
 "cUs" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/decal/fakeobjects/lighttube_broken{
@@ -43929,8 +43059,6 @@
 /area/owlery/owllock)
 "cUC" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/decal/cleanable/blood/tracks{
@@ -44013,18 +43141,10 @@
 	},
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/owleryhall)
-"cUK" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/floor/green/checker,
-/area/owlery/owleryhall)
 "cUL" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/glass/bottle/oil,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/item/storage/box/cablesbox,
@@ -44094,18 +43214,9 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
 "cUU" = (
-/obj/item/reagent_containers/food/snacks/yuckburn,
+/obj/item/reagent_containers/food/snacks/yuck/burn,
 /turf/unsimulated/floor/plating/scorched,
 /area/owlery/staffhall)
-"cUV" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_ketchup"
-	},
-/turf/unsimulated/floor/white,
-/area/owlery/owleryhall)
 "cUW" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It seems to have been damaged somehow.";
@@ -44261,8 +43372,6 @@
 /area/owlery/owleryhall)
 "cVs" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/plating,
@@ -44527,8 +43636,6 @@
 /area/owlery/Owlmait2)
 "cVT" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -45045,12 +44152,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/syndicate/minerva5/command)
-"cWR" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty"
-	},
-/turf/unsimulated/floor/greenwhite,
-/area/owlery/owleryhall)
 "cWS" = (
 /turf/unsimulated/floor/carpet{
 	dir = 10;
@@ -45104,12 +44205,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/syndicate/minerva5/command)
-"cWY" = (
-/obj/decal/cleanable/blood{
-	icon_state = "left_bloodyhands"
-	},
-/turf/unsimulated/floor/white,
-/area/owlery/owleryhall)
 "cXa" = (
 /obj/table/wood/round/auto{
 	desc = "This table is also pretty dang old.";
@@ -45211,26 +44306,11 @@
 /area/syndicate/minerva5/command)
 "cXo" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/greenwhite/corner{
 	dir = 8
-	},
-/area/owlery/owleryhall)
-"cXp" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves"
-	},
-/turf/unsimulated/floor/greenwhite{
-	dir = 1
 	},
 /area/owlery/owleryhall)
 "cXq" = (
@@ -45255,17 +44335,6 @@
 	dir = 8
 	},
 /area/owlery/owleryhall)
-"cXt" = (
-/obj/window{
-	desc = "A window.  For a museum exhibit.";
-	dir = 1;
-	name = "exhibit window"
-	},
-/obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves"
-	},
-/turf/unsimulated/floor/green,
-/area/owlery/owllock)
 "cXu" = (
 /obj/table/reinforced/auto{
 	layer = 2
@@ -45323,17 +44392,6 @@
 	},
 /turf/unsimulated/floor/greenwhite,
 /area/owlery/owleryhall)
-"cXB" = (
-/obj/window{
-	desc = "A window.  For a museum exhibit.";
-	dir = 4;
-	name = "exhibit window"
-	},
-/obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves"
-	},
-/turf/unsimulated/floor/green,
-/area/owlery/owllock)
 "cXC" = (
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "drip5"
@@ -45354,25 +44412,6 @@
 	},
 /turf/unsimulated/grass,
 /area/owlery/Owlmait2)
-"cXE" = (
-/obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves"
-	},
-/turf/unsimulated/floor/yellowblack{
-	dir = 6
-	},
-/area/owlery/gangzone)
-"cXF" = (
-/obj/window{
-	desc = "A window.  For a museum exhibit.";
-	dir = 8;
-	name = "exhibit window"
-	},
-/obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves"
-	},
-/turf/unsimulated/floor/green,
-/area/owlery/owllock)
 "cXG" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/fungus,
@@ -45538,15 +44577,6 @@
 	desc = "A window.  For a museum exhibit.";
 	dir = 8;
 	name = "exhibit window"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/green,
-/area/owlery/owllock)
-"cXW" = (
-/obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -45720,13 +44750,9 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/unsimulated/floor/stairs/dark,
@@ -45834,8 +44860,6 @@
 /area/owlery/Owlmait2)
 "cYA" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/engine,
@@ -45848,21 +44872,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
-"cYC" = (
-/obj/window{
-	desc = "A window.  For a museum exhibit.";
-	dir = 1;
-	name = "exhibit window"
-	},
-/obj/decal/cleanable/blood/tracks{
-	dir = 4
-	},
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "gib2"
-	},
-/obj/item/gun/kinetic/riotgun,
-/turf/unsimulated/floor/green,
-/area/owlery/owllock)
 "cYD" = (
 /obj/machinery/light/small/floor/warm{
 	brightness = 0.6
@@ -45892,7 +44901,6 @@
 /area/owlery/Owlmait2)
 "cYF" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/terminal{
@@ -45908,7 +44916,6 @@
 	},
 /obj/cable,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/unsimulated/floor/engine,
@@ -45937,8 +44944,6 @@
 "cYK" = (
 /obj/decal/poster/wallsign/poster_sol,
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -45958,7 +44963,6 @@
 	pixel_y = 24
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/light/small/iomoon{
@@ -46226,16 +45230,6 @@
 /obj/machinery/light/emergency,
 /turf/unsimulated/floor/plating,
 /area/owlery/owllock)
-"cZk" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "gibdown1"
-	},
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "drip5"
-	},
-/obj/machinery/light/emergency,
-/turf/unsimulated/floor/green,
-/area/owlery/owllock)
 "cZl" = (
 /obj/machinery/light/emergency,
 /turf/unsimulated/grass,
@@ -46500,6 +45494,11 @@
 	},
 /turf/unsimulated/grass,
 /area/owlery/Owlmait2)
+"cZL" = (
+/obj/item/scrap,
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/plating,
+/area/owlery/staffhall)
 "dab" = (
 /obj/lattice{
 	dir = 6;
@@ -46586,7 +45585,6 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/unsimulated/floor/circuit/red,
@@ -46723,13 +45721,9 @@
 	icon_state = "1-4"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/redblack{
@@ -46805,8 +45799,6 @@
 /area/afterlife/bar)
 "dbj" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/redblack,
@@ -46823,8 +45815,6 @@
 /area/iomoon/caves)
 "dbo" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/darkpurple,
@@ -46941,13 +45931,9 @@
 /area/iomoon/caves)
 "dbR" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/machinery/light/small/floor,
@@ -47243,8 +46229,6 @@
 /area/afterlife/bar)
 "dcP" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/darkblue,
@@ -47255,13 +46239,9 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
@@ -47397,7 +46377,6 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/unsimulated/floor/circuit/red,
@@ -47650,8 +46629,6 @@
 	dir = 8
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/unsimulated/floor/red,
@@ -47675,8 +46652,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/red,
@@ -47796,7 +46771,6 @@
 "deB" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/unsimulated/floor/darkblue,
@@ -48398,16 +47372,12 @@
 /area/sim/racing_track)
 "dfz" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dfA" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/black{
@@ -48427,8 +47397,6 @@
 	icon_state = "1-4"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/unsimulated/floor/black{
@@ -48437,8 +47405,6 @@
 /area/syndicate_station/battlecruiser)
 "dfD" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/black{
@@ -48450,8 +47416,6 @@
 	icon_state = "1-2"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/unsimulated/floor/black,
@@ -48836,8 +47800,6 @@
 /area/syndicate_station/battlecruiser)
 "dgG" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/black{
@@ -48846,13 +47808,9 @@
 /area/syndicate_station/battlecruiser)
 "dgH" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/unsimulated/floor/black{
@@ -48861,8 +47819,6 @@
 /area/syndicate_station/battlecruiser)
 "dgI" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/black{
@@ -48874,8 +47830,6 @@
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/black,
@@ -48948,14 +47902,6 @@
 	},
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
-"dgT" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
 "dgU" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -49002,8 +47948,6 @@
 /area/syndicate_station/battlecruiser)
 "dhd" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass{
@@ -49293,8 +48237,6 @@
 /area/syndicate_station/battlecruiser)
 "dhU" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/red,
@@ -49304,16 +48246,12 @@
 	icon_state = "2-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "dhW" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/unsimulated/floor/red,
@@ -51043,36 +49981,6 @@
 /turf/unsimulated/floor/specialroom/freezer{
 	dir = 1
 	},
-/area/crypt/sigma/morgue)
-"dtS" = (
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibhead";
-	name = "grody thing"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/turf/unsimulated/floor/sanitary,
 /area/crypt/sigma/morgue)
 "dtV" = (
 /turf/unsimulated/floor/shuttle{
@@ -56624,7 +55532,6 @@
 "dNd" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/computer3/terminal/network{
@@ -58817,6 +57724,15 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/zewaka)
+"dWe" = (
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodygloves_c"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/green,
+/area/owlery/owllock)
 "dWx" = (
 /obj/decal/fakeobjects/apc_broken,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -58838,8 +57754,6 @@
 /area/iomoon/caves)
 "dXD" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/plating,
@@ -58959,6 +57873,11 @@
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
+"eaF" = (
+/obj/item/casing/shotgun/blue,
+/obj/decal/cleanable/blood/gibs,
+/turf/unsimulated/floor/white,
+/area/owlery/staffhall)
 "ebm" = (
 /obj/item/nature/flower/daisy{
 	anchored = 1;
@@ -58991,8 +57910,6 @@
 	})
 "edm" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/security{
@@ -59009,10 +57926,12 @@
 	icon_state = "shore-44"
 	},
 /area/titlescreen)
+"edQ" = (
+/obj/decal/cleanable/blood/tracks,
+/turf/unsimulated/floor/grime,
+/area/owlery/staffhall)
 "edT" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
@@ -59185,15 +58104,12 @@
 "emI" = (
 /obj/cable,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/unsimulated/wall/generic{
@@ -59223,8 +58139,6 @@
 /area/centcom/offices/angel)
 "eoN" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/plating,
@@ -59436,6 +58350,12 @@
 	},
 /turf/unsimulated/grasstodirt,
 /area/crypt/graveyard/swamp)
+"eCi" = (
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodygloves_c"
+	},
+/turf/unsimulated/floor/white,
+/area/owlery/owleryhall)
 "eCA" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -59556,6 +58476,17 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"eMh" = (
+/obj/window{
+	desc = "A window.  For a museum exhibit.";
+	dir = 1;
+	name = "exhibit window"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodygloves_c"
+	},
+/turf/unsimulated/floor/green,
+/area/owlery/owllock)
 "eMu" = (
 /obj/stool/chair/wooden{
 	dir = 4
@@ -59592,8 +58523,6 @@
 /area/meat_derelict/entry)
 "eNu" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/stool/chair/office/purple{
@@ -59820,8 +58749,6 @@
 	icon_state = "1-2"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/decal/fakeobjects/pipe{
@@ -60056,8 +58983,6 @@
 /area/centcom/gallery)
 "fmt" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/stool/chair/office/purple,
@@ -60203,16 +59128,12 @@
 "fxo" = (
 /obj/lattice,
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/space,
 /area/syndicate_station_space)
 "fyt" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/black/side,
@@ -60283,8 +59204,6 @@
 /area/sim/gunsim/lobby)
 "fCh" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/cable{
@@ -60490,14 +59409,6 @@
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
-"fOb" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/black/side,
-/area/iomoon/base)
 "fOp" = (
 /obj/machinery/plantpot,
 /obj/decal/stripe_delivery,
@@ -60507,6 +59418,10 @@
 /obj/storage/closet/thunderdome/green,
 /turf/unsimulated/floor/plating,
 /area/sim/tdome/tdome1)
+"fPO" = (
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/orangeblack,
+/area/owlery/staffhall)
 "fQk" = (
 /turf/unsimulated/floor/black/corner,
 /area/iomoon/base)
@@ -60721,6 +59636,17 @@
 "gec" = (
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/owlery/staffhall)
+"geo" = (
+/obj/critter/madnessowl{
+	alive = 0;
+	can_revive = 0;
+	density = 0;
+	desc = "This owl has bloodshot eyes and seems to be snarling at you. Well if it was alive atleast. It looks like it was shot.";
+	icon_state = "madsmallowl-dead"
+	},
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/white,
+/area/owlery/owleryhall)
 "geI" = (
 /obj/table/auto,
 /obj/item/remote/syndicate_teleporter,
@@ -60764,8 +59690,6 @@
 	icon_state = "1-2"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/machinery/light/small/iomoon{
@@ -60887,8 +59811,6 @@
 /area/owlery/owllock)
 "gjN" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/item/pen{
@@ -61019,13 +59941,9 @@
 /area/crypt/sigma/morgue)
 "gpM" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/plating,
@@ -61203,8 +60121,6 @@
 /area/syndicate_station_space)
 "gCM" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/unsimulated/floor/logo_xg,
@@ -61411,8 +60327,6 @@
 /area/centcom/offices/katzen)
 "gQE" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/unsimulated/wall/auto/lead/blue,
@@ -61432,6 +60346,12 @@
 /obj/railing/velvet,
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
+"gTa" = (
+/obj/stool/bench/green/auto,
+/obj/machinery/light/emergency,
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/greenwhite,
+/area/owlery/owleryhall)
 "gTb" = (
 /obj/item/cigbutt{
 	pixel_x = 9;
@@ -61777,6 +60697,10 @@
 /obj/machinery/door/unpowered/wood/stall,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/iomoon/base)
+"hqB" = (
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/green/checker,
+/area/owlery/owleryhall)
 "hqN" = (
 /obj/stool/chair/couch/purple{
 	dir = 8
@@ -61878,8 +60802,6 @@
 /area/marsoutpost)
 "huE" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/wall/auto/lead/blue,
@@ -62005,11 +60927,9 @@
 "hBn" = (
 /obj/cable,
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/unsimulated/wall/generic{
@@ -62067,8 +60987,6 @@
 	icon_state = "lattice-dir"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/space,
@@ -62466,15 +61384,12 @@
 /area/crypt/graveyard)
 "iiq" = (
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/unsimulated/wall/generic{
@@ -62982,7 +61897,6 @@
 /obj/grille/steel,
 /obj/cable,
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/decal/fakeobjects/pipe{
@@ -62994,8 +61908,6 @@
 /area/moon/museum)
 "iGD" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/black/corner{
@@ -63212,8 +62124,6 @@
 /area/syndicate_station_space)
 "iSR" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/wall/auto/lead/blue,
@@ -63258,8 +62168,6 @@
 	pixel_x = -6
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/plating,
@@ -63292,6 +62200,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/sim/gunsim/lobby)
+"iXd" = (
+/obj/decal/cleanable/blood{
+	icon_state = "helmetblood_c"
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/owlery/Owlmait2)
 "iXR" = (
 /obj/spacevine{
 	icon_state = "vine-light2"
@@ -63300,8 +62214,6 @@
 /area/crater/biodome/research)
 "iXX" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/glass/command,
@@ -63469,6 +62381,17 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"jeD" = (
+/obj/window{
+	desc = "A window.  For a museum exhibit.";
+	dir = 8;
+	name = "exhibit window"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodygloves_c"
+	},
+/turf/unsimulated/floor/green,
+/area/owlery/owllock)
 "jeL" = (
 /obj/overlay{
 	density = 1;
@@ -63510,6 +62433,15 @@
 /mob/living/critter/small_animal/cockroach/weak,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
+"jgC" = (
+/obj/ai_core_frame{
+	name = "gutted AI core";
+	desc = "Some sort of weird soviet machine, bashed up, yellowed, and trailing wires. Even without a power source, a few of the LEDs are still flickering weakly.";
+	skinToApply = "soviet";
+	build_step = 2
+	},
+/turf/unsimulated/floor/caution/south,
+/area/hospital/samostrel)
 "jgR" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -63812,13 +62744,9 @@
 /area/marsoutpost)
 "jvf" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/unsimulated/floor/plating,
@@ -64028,6 +62956,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/marsoutpost)
+"jMu" = (
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodyhands_c"
+	},
+/turf/unsimulated/floor/white,
+/area/owlery/owleryhall)
 "jMx" = (
 /obj/indestructible/shuttle_corner{
 	icon = 'icons/turf/walls_iomoon.dmi';
@@ -64233,13 +63167,9 @@
 /area/meat_derelict/entry)
 "jXl" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/table/auto,
@@ -64289,7 +63219,6 @@
 /area/marsoutpost)
 "jZf" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/overlay{
@@ -64347,13 +63276,9 @@
 /area/iomoon/base/underground)
 "kdD" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/minimap/map_computer/nukeop,
@@ -64537,6 +63462,12 @@
 /obj/map/light/screen,
 /turf/unsimulated/floor/void,
 /area/void_diner)
+"koa" = (
+/obj/decal/cleanable/blood{
+	icon_state = "armorblood_c"
+	},
+/turf/unsimulated/floor/white,
+/area/owlery/staffhall)
 "koF" = (
 /obj/item/sticker/gold_star{
 	pixel_x = -10;
@@ -64641,6 +63572,16 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"kwd" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/decal/cleanable/blood{
+	icon_state = "handblood_c"
+	},
+/turf/unsimulated/floor/greenwhite{
+	dir = 8
+	},
+/area/owlery/owleryhall)
 "kwD" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 8;
@@ -64923,8 +63864,6 @@
 	name = "grimy pipe"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small/iomoon{
@@ -65455,8 +64394,6 @@
 /area/crater/biodome/crew)
 "loh" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/unsimulated/floor/plating,
@@ -65581,8 +64518,6 @@
 	name = "grimy pipe"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/plating,
@@ -65670,6 +64605,12 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel)
+"lxf" = (
+/obj/decal/cleanable/paper,
+/obj/item/material_piece/wad,
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/black,
+/area/owlery/office)
 "lxN" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -65718,7 +64659,6 @@
 "lAN" = (
 /obj/cable,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/window_blinds/cog2{
@@ -65738,6 +64678,24 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/lounge)
+"lCA" = (
+/obj/decal/fakeobjects/skeleton{
+	desc = "Eugh, the stench is horrible!";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body3";
+	name = "decomposed corpse"
+	},
+/obj/decal/cleanable/blood/tracks,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment,
+/obj/decal/cleanable/blood,
+/obj/decal/cleanable/blood/gibs/body{
+	icon_state = "gibdown1"
+	},
+/turf/unsimulated/floor/white,
+/area/owlery/owleryhall)
 "lCM" = (
 /obj/grille/steel,
 /turf/unsimulated/floor/plating,
@@ -66056,8 +65014,6 @@
 "lUl" = (
 /obj/lattice,
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/space,
@@ -66095,8 +65051,6 @@
 	pixel_x = 6
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/plating,
@@ -66159,6 +65113,15 @@
 	},
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/owlery/owleryhall)
+"lYv" = (
+/obj/item/storage/wall/random,
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/unsimulated/floor/blackwhite{
+	dir = 1
+	},
+/area/owlery/office)
 "lZf" = (
 /turf/unsimulated/floor/carpet{
 	dir = 10;
@@ -66258,6 +65221,16 @@
 	icon_state = "floor3"
 	},
 /area/meat_derelict/soviet)
+"meh" = (
+/obj/decal/cleanable/blood/tracks{
+	icon_state = "drip5"
+	},
+/obj/machinery/light/emergency,
+/obj/decal/cleanable/blood/gibs/body{
+	icon_state = "gibdown1"
+	},
+/turf/unsimulated/floor/green,
+/area/owlery/owllock)
 "mfw" = (
 /obj/machinery/vending/meat/prefab_grill,
 /turf/unsimulated/floor/setpieces/bloodfloor{
@@ -66355,11 +65328,9 @@
 "mlB" = (
 /obj/cable,
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/unsimulated/wall/generic{
@@ -66691,8 +65662,6 @@
 /area/sim/gunsim/lobby)
 "mFz" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
@@ -66816,7 +65785,6 @@
 	name = "strange machine"
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/unsimulated/floor/purple/side{
@@ -66825,8 +65793,6 @@
 /area/iomoon/base)
 "mLK" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/wall/auto/lead/blue,
@@ -67548,8 +66514,6 @@
 	name = "Biodome"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/decal/stripe_delivery,
@@ -67847,6 +66811,13 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
+"nQd" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/white,
+/area/owlery/owleryhall)
 "nQp" = (
 /obj/lattice{
 	dir = 6;
@@ -68062,13 +67033,9 @@
 /area/wizard_station_space)
 "nXc" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/plating,
@@ -68210,8 +67177,6 @@
 	name = "grimy pipe"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/plating,
@@ -68288,7 +67253,6 @@
 "ojn" = (
 /obj/cable,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
@@ -68345,6 +67309,23 @@
 	},
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
+"ome" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibarm"
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/green/checker,
+/area/owlery/owleryhall)
 "omB" = (
 /turf/unsimulated/wall/generic{
 	desc = "They're sealed shut.";
@@ -68433,6 +67414,15 @@
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base/underground)
+"osG" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "armorblood_c"
+	},
+/turf/unsimulated/floor/plating/scorched,
+/area/owlery/staffhall)
 "osO" = (
 /turf/unsimulated/floor/carpet/office/other,
 /area/centcom/offices/adhara)
@@ -68489,6 +67479,12 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
 /area/drone)
+"ovP" = (
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/owlery/staffhall)
 "owu" = (
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
@@ -68526,12 +67522,10 @@
 /area/owlery/gangzone)
 "ozc" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/unsimulated/floor/plating,
@@ -68643,12 +67637,27 @@
 /area/crater/biodome/research)
 "oHu" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/comms)
+"oHF" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/turf/unsimulated/floor/sanitary,
+/area/crypt/sigma/morgue)
 "oHI" = (
 /obj/machinery/vending/medical,
 /obj/machinery/light{
@@ -68746,6 +67755,10 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/crunch)
+"oMc" = (
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/white,
+/area/owlery/staffhall)
 "oNa" = (
 /obj/machinery/conveyor/EW{
 	id = "ddan"
@@ -68811,8 +67824,6 @@
 /area/hospital)
 "oSb" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/table/auto,
@@ -68917,8 +67928,6 @@
 	name = "grimy pipe"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/plating,
@@ -69014,6 +68023,12 @@
 /obj/mapping_helper/access/owlmaint,
 /turf/unsimulated/floor/plating,
 /area/owlery/owllock)
+"oYF" = (
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodyhands_c"
+	},
+/turf/unsimulated/floor/red,
+/area/owlery/gangzone)
 "oYO" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -69658,6 +68673,10 @@
 "pFm" = (
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
+"pGv" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/turf/unsimulated/floor/yellow,
+/area/owlery/gangzone)
 "pGH" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -69691,6 +68710,16 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"pHj" = (
+/obj/decal/cleanable/blood/drip/high,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/turf/unsimulated/floor/redblack{
+	dir = 4
+	},
+/area/owlery/gangzone)
 "pHr" = (
 /obj/decal/poster/wallsign/space{
 	pixel_x = 32
@@ -69918,6 +68947,11 @@
 	},
 /turf/unsimulated/dirt,
 /area/crypt/graveyard/swamp)
+"pSm" = (
+/obj/reagent_dispensers/cleanable/ants,
+/obj/decal/cleanable/blood/gibs,
+/turf/unsimulated/floor/yellow,
+/area/owlery/gangzone)
 "pSW" = (
 /obj/map/light/graveyard,
 /obj/tree{
@@ -69981,7 +69015,6 @@
 "pWp" = (
 /obj/cable,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/unsimulated/wall/generic{
@@ -70267,8 +69300,6 @@
 /area/centcom/offices/adhara)
 "qpG" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/plating,
@@ -70389,8 +69420,6 @@
 /area/iomoon/caves)
 "qwT" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/plating,
@@ -70405,8 +69434,6 @@
 /area/centcom/offices/mrfishstick)
 "qwZ" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -70710,6 +69737,19 @@
 	dir = 1
 	},
 /area/centcom/offices/cogwerks)
+"qNZ" = (
+/obj/window{
+	desc = "A window.  For a museum exhibit.";
+	dir = 1;
+	name = "exhibit window"
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/item/gun/kinetic/riotgun,
+/obj/decal/cleanable/blood/gibs,
+/turf/unsimulated/floor/green,
+/area/owlery/owllock)
 "qOj" = (
 /obj/disposalpipe/trunk{
 	dir = 4
@@ -70855,15 +69895,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/drone)
-"qVI" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/unsimulated/floor/plating,
-/area/owlery/Owlmait)
 "qWF" = (
 /obj/item/raw_material/shard/glass,
 /obj/grille/steel,
@@ -70911,7 +69942,6 @@
 "qYW" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/table/auto,
@@ -71082,6 +70112,12 @@
 	opacity = 0
 	},
 /area/titlescreen)
+"rgH" = (
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodygloves_c"
+	},
+/turf/unsimulated/floor/white,
+/area/owlery/staffhall)
 "rgQ" = (
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_xg6"
@@ -71099,8 +70135,6 @@
 /area/centcom/lounge)
 "rhp" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/table/auto,
@@ -71330,6 +70364,11 @@
 	},
 /turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
+"rsU" = (
+/obj/item/extinguisher,
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/grime,
+/area/owlery/owleryhall)
 "rta" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -71589,8 +70628,6 @@
 	})
 "rCm" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small/iomoon{
@@ -71769,8 +70806,6 @@
 /area/iomoon/base/underground)
 "rLB" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro{
@@ -71794,8 +70829,6 @@
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
 "rMx" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -72011,6 +71044,13 @@
 "rZe" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/drone/office)
+"rZD" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/greenwhite{
+	dir = 8
+	},
+/area/owlery/owleryhall)
 "sad" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This blast door looks rusted over.  Junk.";
@@ -72693,8 +71733,6 @@
 /area/centcom)
 "sON" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/wall/auto/lead/blue,
@@ -72773,6 +71811,14 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"sVn" = (
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodygloves_c"
+	},
+/turf/unsimulated/floor/yellowblack{
+	dir = 6
+	},
+/area/owlery/gangzone)
 "sWb" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/lobby)
@@ -72844,6 +71890,17 @@
 "teq" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/gangzone)
+"teX" = (
+/obj/critter/madnessowl{
+	alive = 0;
+	can_revive = 0;
+	density = 0;
+	desc = "This owl has bloodshot eyes and seems to be snarling at you. Well if it was alive atleast. It looks like it was shot.";
+	icon_state = "madsmallowl-dead"
+	},
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/white,
+/area/owlery/staffhall)
 "tfF" = (
 /obj/decal/fakeobjects/firelock_broken{
 	dir = 1;
@@ -72916,15 +71973,12 @@
 	},
 /obj/cable,
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
@@ -73022,8 +72076,6 @@
 /area/iomoon/base/underground)
 "tsf" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/wall/auto/lead/blue,
@@ -73102,7 +72154,6 @@
 "twK" = (
 /obj/grille/steel,
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/unsimulated/floor/plating,
@@ -73379,6 +72430,13 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/void,
 /area/void_diner)
+"tSS" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/white,
+/area/owlery/owleryhall)
 "tTP" = (
 /obj/storage/closet/coffin,
 /obj/item/alchemy/symbol/salt,
@@ -73412,11 +72470,9 @@
 /area/sim/gunsim/arena)
 "tVC" = (
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/unsimulated/wall/generic{
@@ -73489,8 +72545,6 @@
 /area/crunch/wtc)
 "tZb" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/unsimulated/wall/auto/lead/blue,
@@ -73644,8 +72698,6 @@
 "uhA" = (
 /obj/lattice,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/space,
@@ -73654,8 +72706,6 @@
 /obj/machinery/door/airlock/pyro/engineering,
 /obj/mapping_helper/access/owlmaint,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/grime,
@@ -73678,6 +72728,13 @@
 	dir = 10
 	},
 /area/centcom/gallery)
+"ujh" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/white,
+/area/owlery/staffhall)
 "ukK" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-10"
@@ -73756,6 +72813,10 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
+"uoT" = (
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/sanitary/white,
+/area/owlery/owleryhall)
 "upc" = (
 /obj/decal/poster/wallsign/teleport_sign{
 	dir = 8
@@ -73885,6 +72946,17 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
+"uyJ" = (
+/obj/window{
+	desc = "A window.  For a museum exhibit.";
+	dir = 4;
+	name = "exhibit window"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodygloves_c"
+	},
+/turf/unsimulated/floor/green,
+/area/owlery/owllock)
 "uyN" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
@@ -74125,8 +73197,6 @@
 /area/crunch)
 "uKx" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/plating,
@@ -74248,8 +73318,6 @@
 	pixel_x = 6
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/cable{
@@ -74342,8 +73410,6 @@
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
 "vbr" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/cable{
@@ -74499,17 +73565,18 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
+"vkF" = (
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/greenwhite,
+/area/owlery/owleryhall)
 "vkY" = (
 /obj/window_blinds/cog2{
 	id = "owl"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -74552,8 +73619,6 @@
 /area/titlescreen)
 "vmh" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/unsimulated/wall/auto/lead/blue,
@@ -74563,6 +73628,16 @@
 /obj/random_item_spawner/cola,
 /turf/unsimulated/floor/carpet/red/decal,
 /area/centcom/offices/grifflez)
+"vnn" = (
+/obj/decal/floor/displays/owlsign{
+	icon_state = "owlsign-right"
+	},
+/turf/unsimulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue1";
+	tag = "icon-fblue2 (NORTHWEST)"
+	},
+/area/owlery/owleryhall)
 "vnx" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 8
@@ -74743,8 +73818,6 @@
 /area/centcom/lounge)
 "vvb" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/overlay{
@@ -74777,6 +73850,12 @@
 "vxk" = (
 /turf/unsimulated/floor/plating,
 /area/sim/tdome/tdome1)
+"vxo" = (
+/obj/decal/cleanable/blood{
+	icon_state = "handblood_c"
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/owlery/owleryhall)
 "vxT" = (
 /turf/unsimulated/floor/black/side{
 	dir = 4
@@ -74989,8 +74068,6 @@
 	})
 "vMW" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/black/side,
@@ -75001,6 +74078,13 @@
 	},
 /obj/mapping_helper/access/owlcommand,
 /turf/unsimulated/floor/carpet/grime,
+/area/owlery/office)
+"vNh" = (
+/obj/machinery/light,
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
 "vNB" = (
 /obj/decal/fakeobjects/lighttube_broken,
@@ -75123,6 +74207,17 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/syndicate_station_space)
+"vTn" = (
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodygloves_c"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "tracksL"
+	},
+/turf/unsimulated/floor/yellowblack{
+	dir = 8
+	},
+/area/owlery/gangzone)
 "vTo" = (
 /obj/machinery/door/airlock/pyro/classic{
 	locked = 1
@@ -75188,8 +74283,6 @@
 /area/centcom/offices/cogwerks)
 "vWK" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/decal/fakeobjects/pipe{
@@ -75384,7 +74477,6 @@
 "wgg" = (
 /obj/grille/steel,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/unsimulated/floor/plating,
@@ -75576,8 +74668,6 @@
 /area/centcom/offices/urs)
 "wpw" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/wall/setpieces/leadwindow/gray{
@@ -75644,6 +74734,12 @@
 	},
 /turf/space,
 /area/syndicate_station_space)
+"wtv" = (
+/obj/decal/cleanable/blood{
+	icon_state = "handblood_c"
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/owlery/gangzone)
 "wtT" = (
 /obj/lattice{
 	dir = 1;
@@ -75784,8 +74880,6 @@
 "wyH" = (
 /obj/critter/moonspy,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/plating,
@@ -75901,8 +74995,6 @@
 /area/centcom/offices/enakai)
 "wGp" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/classic{
@@ -76419,8 +75511,6 @@
 /area/retentioncenter)
 "xih" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/classic{
@@ -76754,8 +75844,6 @@
 	name = "grimy vent"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/plating,
@@ -76833,8 +75921,6 @@
 	name = "grimy pipe"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/plating,
@@ -77001,6 +76087,10 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
 /area/upper_arctic/pod1)
+"xKQ" = (
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/white,
+/area/owlery/owleryhall)
 "xLa" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor/orangeblack/side{
@@ -77055,13 +76145,9 @@
 /area/iomoon/base)
 "xPv" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/wall/auto/lead/blue,
@@ -77112,8 +76198,6 @@
 	icon_state = "lattice-dir"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/plating,
@@ -77129,11 +76213,9 @@
 /obj/machinery/communications_dish,
 /obj/lattice,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/space,
@@ -77179,6 +76261,12 @@
 	icon_state = "bloodfloor_3"
 	},
 /area/meat_derelict/guts)
+"xUh" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/glass/bottle/acetone/janitors,
+/obj/item/reagent_containers/glass/bottle/ammonia/janitors,
+/turf/unsimulated/floor/white,
+/area/owlery/lab)
 "xUo" = (
 /obj/machinery/door/airlock/pyro{
 	name = "VIP Suite"
@@ -77212,8 +76300,6 @@
 /area/owlery/gangzone)
 "xWR" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/wall/auto/lead/blue,
@@ -77232,8 +76318,6 @@
 	})
 "xXq" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/orange,
@@ -77429,6 +76513,16 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/katzen)
+"ydE" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "armorblood_c"
+	},
+/turf/unsimulated/floor/wood/two,
+/area/owlery/staffhall)
 "yea" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm11"
@@ -77516,6 +76610,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
+"yjf" = (
+/obj/decal/cleanable/blood{
+	icon_state = "handblood_c"
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/owlery/staffhall)
 "yjx" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It seems to have been damaged somehow.";
@@ -79695,7 +78795,7 @@ bqA
 bDs
 cIf
 cJE
-cKf
+bYI
 cfx
 cic
 aBL
@@ -82719,7 +81819,7 @@ cKS
 cDC
 cMs
 cMT
-cOX
+uoT
 cMT
 cDC
 cDC
@@ -83319,15 +82419,15 @@ cKU
 cIV
 cIX
 cKk
-cOH
-cLt
+gTa
+vxo
 cDC
 cDC
 cMb
 cDC
 cDC
 cOk
-cOK
+rsU
 cQc
 cVi
 cDC
@@ -83624,7 +82724,7 @@ cKl
 cWm
 cUg
 cUF
-cUK
+hqB
 cUC
 cUZ
 cDC
@@ -84223,7 +83323,7 @@ hFQ
 cHI
 cNJ
 cIY
-cJK
+vnn
 cKm
 cWM
 cLv
@@ -84235,7 +83335,7 @@ cNL
 cOd
 cHI
 cFq
-cWR
+vkF
 cDC
 cXP
 cQP
@@ -84510,7 +83610,7 @@ cyL
 aks
 cyL
 cyL
-cBP
+ydE
 cAV
 fGT
 fGT
@@ -84531,10 +83631,10 @@ cFq
 cLw
 lYb
 cMD
-cPL
+ome
 cUM
 cDC
-cLt
+vxo
 cUY
 cWC
 cLu
@@ -84834,8 +83934,8 @@ cKj
 cLW
 cFX
 cPN
-cNs
-cQm
+rZD
+kwd
 cOe
 cIj
 cWE
@@ -85121,7 +84221,7 @@ bxW
 bxW
 cDA
 cEf
-cEP
+cPO
 cFq
 cFq
 cFq
@@ -85133,19 +84233,19 @@ cKr
 cKX
 cKV
 cFq
-cLX
+tSS
 cFq
 cPO
 cQl
 cEg
 cDA
-cRq
-cQR
-cWY
+xKQ
+geo
+jMu
 cFq
-cOW
+eCi
 cQS
-cWR
+vkF
 cXC
 cSc
 owu
@@ -85413,17 +84513,17 @@ aBY
 cxR
 cys
 xTs
-czG
+koa
 bxW
 bxW
 bxW
 bxW
-cCm
+rgH
 bxW
 bxW
 cDA
 cEg
-cEP
+cPO
 cFq
 cFq
 cFq
@@ -85436,7 +84536,7 @@ cLr
 cOt
 cLx
 cLY
-cOW
+eCi
 cPO
 cFq
 cEf
@@ -85444,7 +84544,7 @@ cDA
 cFq
 cFq
 cFq
-cRq
+xKQ
 cFq
 cFq
 cXz
@@ -85738,7 +84838,7 @@ cKq
 cMd
 cNI
 cLZ
-cME
+nQd
 cPQ
 cNt
 cNN
@@ -86016,7 +85116,7 @@ bxW
 cxy
 cxT
 cys
-cyP
+eaF
 bxW
 czx
 czV
@@ -86040,8 +85140,8 @@ cLs
 cKY
 cFq
 cMa
-cMF
-cUV
+xKQ
+xKQ
 cZt
 cDC
 cDC
@@ -86319,7 +85419,7 @@ cHc
 cxU
 cys
 bxW
-cyQ
+oMc
 czy
 czW
 cAk
@@ -86350,9 +85450,9 @@ cDC
 cDC
 cDC
 cPu
-cXp
-cMF
-cOW
+ayo
+xKQ
+eCi
 cLu
 cDC
 cPw
@@ -86620,7 +85720,7 @@ aBY
 aBY
 cxR
 czA
-cyQ
+oMc
 bxW
 cAp
 czX
@@ -86654,7 +85754,7 @@ cEj
 cEj
 cVr
 cQp
-cQT
+lCA
 cXA
 cRL
 cPw
@@ -86939,7 +86039,7 @@ cDC
 cGC
 cHg
 cFq
-cEP
+cPO
 cFq
 cIk
 cKo
@@ -87224,7 +86324,7 @@ cxh
 aBY
 aBY
 lsj
-cyS
+teX
 wSp
 aqh
 aBY
@@ -87241,7 +86341,7 @@ cDC
 cDC
 cMt
 cHg
-cEP
+cPO
 cJg
 cJg
 cJg
@@ -87826,10 +86926,10 @@ cgQ
 aBY
 aBY
 aBY
-cxV
+yjf
 cyv
 cDL
-cFW
+cZL
 czC
 aBY
 cBQ
@@ -88133,13 +87233,13 @@ cFx
 cEk
 cGd
 cGw
-cGQ
+cDc
 cLN
 cLO
 vbr
 eOL
 cVT
-qVI
+eOL
 cNa
 cOT
 cAq
@@ -88467,14 +87567,14 @@ cPw
 cPS
 cQv
 cQZ
-cRx
+cXU
 wGp
 cSg
 cXK
 fUX
 cXU
 cXV
-cXW
+dWe
 cXX
 vTo
 cVs
@@ -88754,7 +87854,7 @@ cGb
 cIs
 cJQ
 cBj
-cKu
+vNh
 cAD
 cnw
 cnw
@@ -88777,7 +87877,7 @@ cPw
 cTA
 cTN
 cSN
-cZk
+meh
 cPw
 cYO
 cVZ
@@ -88915,7 +88015,7 @@ bzM
 bAz
 bBp
 buK
-byO
+bzT
 iEP
 izT
 lJg
@@ -89037,7 +88137,7 @@ aBY
 aBY
 cxd
 czl
-czH
+osG
 cAv
 czZ
 cBS
@@ -89338,7 +88438,7 @@ cyo
 cyo
 aBY
 bUr
-cEn
+ujh
 bxW
 czF
 aBY
@@ -89357,7 +88457,7 @@ cGF
 cGF
 vkY
 cJl
-cJR
+cBj
 cKw
 cAD
 cnw
@@ -89659,7 +88759,7 @@ cHN
 cIc
 vkY
 cJl
-cBj
+bzn
 gpj
 vXw
 cnw
@@ -89681,7 +88781,7 @@ cRD
 cRD
 cRD
 cRF
-cYC
+qNZ
 cSO
 cNx
 cPw
@@ -89959,7 +89059,7 @@ cHj
 cGf
 cGH
 cGH
-cIw
+cYI
 cRs
 cJS
 cKy
@@ -89975,14 +89075,14 @@ cNx
 cNx
 cPA
 cPU
-cXt
+eMh
 cRa
 cRB
 cRP
 cSi
 cSM
 cSM
-cXF
+jeD
 kqs
 cTZ
 azl
@@ -90117,8 +89217,8 @@ buK
 bww
 gjN
 xXq
-fOb
-byK
+jgR
+bAC
 bzP
 buq
 byb
@@ -90563,8 +89663,8 @@ cAD
 cHd
 cHk
 cHM
-cIw
-cJm
+cYI
+cJl
 cBj
 cKA
 cAD
@@ -90865,8 +89965,8 @@ cAD
 cAD
 cAD
 cAD
-cIw
-cJn
+cYI
+lYv
 cBj
 iHP
 vXw
@@ -92071,7 +91171,7 @@ cAB
 cGj
 cAD
 cGM
-cMX
+lxf
 cDO
 cHO
 cJp
@@ -92091,7 +91191,7 @@ cNx
 cPZ
 cQA
 cRf
-cXB
+uyJ
 cRQ
 cSo
 cSo
@@ -92962,7 +92062,7 @@ cxl
 cxX
 tpK
 czh
-cEn
+ujh
 bxW
 cAn
 aBY
@@ -93260,7 +92360,7 @@ caL
 cih
 cnr
 cwQ
-cxm
+edQ
 cxJ
 cxZ
 bUr
@@ -93562,7 +92662,7 @@ bZY
 cyg
 bNa
 cxF
-cxn
+ovP
 cya
 tpK
 czh
@@ -94162,7 +93262,7 @@ cnw
 cnw
 bBm
 gec
-caR
+fPO
 cii
 gec
 cwS
@@ -94780,7 +93880,7 @@ cBy
 aBY
 cAH
 cCA
-cCG
+xUh
 cDR
 cBk
 cEx
@@ -95717,7 +94817,7 @@ cGK
 cGK
 cGK
 cNW
-cUk
+iXd
 cSy
 cSZ
 cTH
@@ -96014,13 +95114,13 @@ cOo
 cOL
 cPj
 cPE
-cQd
+pHj
 cQE
 cRk
 cRH
 uTF
 cOP
-cXE
+sVn
 cMK
 cTI
 cGK
@@ -96909,7 +96009,7 @@ cIG
 cJx
 cKc
 cKM
-cLk
+pGv
 cKc
 cMk
 cMK
@@ -97202,7 +96302,7 @@ cDp
 cDW
 cEA
 cFj
-cMA
+oYF
 cCQ
 cGS
 cHx
@@ -97218,7 +96318,7 @@ cML
 cKc
 cNF
 cQn
-cQo
+vTn
 cOO
 cPm
 opp
@@ -97509,7 +96609,7 @@ cGr
 cQK
 teq
 cHX
-cMZ
+wtv
 cJz
 cKd
 cKc
@@ -97832,7 +96932,7 @@ cRl
 cFN
 uTF
 cSy
-cTa
+pSm
 cMI
 cTI
 cGK
@@ -100208,7 +99308,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+daq
 aaa
 aaa
 aaa
@@ -105663,11 +104763,11 @@ dfS
 dgl
 dgy
 kdD
-dgT
+dig
 dhd
-dgT
-dgT
-dgT
+dig
+dig
+dig
 dhT
 dif
 lzl
@@ -106871,11 +105971,11 @@ dfZ
 dgp
 dgC
 dgJ
-dgT
+dig
 dhd
-dgT
-dgT
-dgT
+dig
+dig
+dig
 dhW
 dih
 lzl
@@ -123373,7 +122473,7 @@ bIx
 bIx
 bHH
 eyM
-dtS
+oHF
 dvn
 gpA
 dTS
@@ -162020,7 +161120,7 @@ aaa
 kmt
 mZE
 abn
-abu
+jgC
 abB
 abB
 abB
