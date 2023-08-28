@@ -856,9 +856,8 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	var/isbloody = FALSE
 	if (src.blood_DNA)
 		isbloody = TRUE
-		src.loc.add_blood
-		make_cleanable(/obj/decal/cleanable/blood,splat)
-		src.clean_forensic
+		make_cleanable(/obj/decal/cleanable/blood, get_turf(src))
+		src.clean_forensic()
 	return isbloody
 
 /////////////////////////////////////////////////// Hunter Spear ////////////////////////////////////////////
