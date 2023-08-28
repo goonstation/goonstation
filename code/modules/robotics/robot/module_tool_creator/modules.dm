@@ -33,6 +33,7 @@
 		/obj/item/device/camera_viewer,
 		/obj/item/hand_labeler,
 		/obj/item/device/ticket_writer,
+		/obj/item/sec_tape/vended,
 	)
 
 // scientist.
