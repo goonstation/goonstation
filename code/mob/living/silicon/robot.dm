@@ -65,7 +65,6 @@
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
 	var/viewalerts = 0
 	var/jetpack = 0
-	var/jeton = 0
 	var/freemodule = 1 // For picking modules when a robot is first created
 	var/automaton_skin = 0 // for the medal reward
 	var/alohamaton_skin = 0 // for the bank purchase
