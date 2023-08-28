@@ -941,7 +941,6 @@ Frequency:
 	health = 25
 
 	jetpack = 1 //ZeWaka: I concur with ghostdrone commenter, fuck whoever made this. See spacemove.
-	var/jeton = 0
 
 	New()
 		..()
