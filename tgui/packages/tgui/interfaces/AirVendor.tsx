@@ -99,7 +99,7 @@ export const AirVendor = (_props, context) => {
 
   return (
     <Window
-      width={280}
+      width={350}
       height={320}>
       <Window.Content>
         <VendorSection />
