@@ -1,5 +1,11 @@
-
+(t)mon aug 28 23
+(u)LeahTheTech
+(+)Added security tape to brobocop cyborg module.
 (t)sun aug 27 23
+(u)TealSeer
+(p)15545
+(e)🆕🤖🌱|C-Feature, A-Silicons, A-Hydroponics
+(+)The civilian module for cyborgs now comes with a gardening trowel.
 (u)TealSeer
 (p)15465
 (e)💅📦|C-QoL, A-Game-Objects
