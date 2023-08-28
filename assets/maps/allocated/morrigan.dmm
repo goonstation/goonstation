@@ -15397,7 +15397,7 @@
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "u_guilty"
 	},
-/obj/item/clothing/under/misc,
+/obj/item/clothing/under/misc/prisoner,
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
 	pixel_y = 24
 	},

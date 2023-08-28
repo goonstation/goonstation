@@ -55,7 +55,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.equip_new_if_possible(/obj/item/clothing/shoes/orange, SLOT_SHOES)
-			H.equip_new_if_possible(/obj/item/clothing/under/misc, SLOT_W_UNIFORM)
+			H.equip_new_if_possible(/obj/item/clothing/under/misc/prisoner, SLOT_W_UNIFORM)
 
 		var/obj/port_a_prisoner/prison = new /obj/port_a_prisoner(get_turf(M))
 		prison.force_in(M)
