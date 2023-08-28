@@ -1,5 +1,7 @@
 
 (t)mon aug 28 23
+(u)pali
+(+)Floor closets now mimic the floor a bit better and automatically change their appearance when moved.
 (u)LeahTheTech
 (+)Added security tape to brobocop cyborg module.
 (t)sun aug 27 23
