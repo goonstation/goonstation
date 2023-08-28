@@ -1068,18 +1068,6 @@
 					src.cell = null
 					src.part_chest?.cell = null
 
-	bump(atom/movable/AM as mob|obj)
-		if ( src.now_pushing)
-			return
-		if (!istype(AM, /atom/movable))
-			return
-		if (!src.now_pushing)
-			src.now_pushing = 1
-			if (!AM.anchored)
-				var/t = get_dir(src, AM)
-				step(AM, t)
-			src.now_pushing = null
-
 	triggerAlarm(var/class, area/A, var/O, var/alarmsource)
 		if (isdead(src))
 			return 1
