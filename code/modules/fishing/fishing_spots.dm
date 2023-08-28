@@ -96,7 +96,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fishing_atom_type = /obj/item/storage/toilet
 	rod_tier_required = 1
 	fish_available = list( /obj/item/reagent_containers/food/snacks/yuck = 20, \
-	/obj/item/reagent_containers/food/snacks/yuckburn = 20, \
+	/obj/item/reagent_containers/food/snacks/yuck/burn = 20, \
 	/obj/item/reagent_containers/food/snacks/shell = 20, \
 	/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
 	/obj/item/raw_material/scrap_metal = 5, \
@@ -148,7 +148,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/cod = 15,\
 	/obj/item/reagent_containers/food/fish/flounder = 5,\
 	/obj/item/reagent_containers/food/fish/carp = 15,\
-	/obj/item/reagent_containers/food/snacks/yuckburn = 20,\
+	/obj/item/reagent_containers/food/snacks/yuck/burn = 20,\
 	/obj/item/reagent_containers/food/snacks/fish_fingers = 10)
 
 	generate_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
@@ -481,7 +481,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/igneous_fish = 10,\
 	/obj/item/material_piece/slag = 20,\
 	/obj/decal/cleanable/ash = 20,\
-	/obj/item/reagent_containers/food/snacks/yuckburn = 20,\
+	/obj/item/reagent_containers/food/snacks/yuck/burn = 20,\
 	/obj/item/raw_material/char =20)
 
 /datum/fishing_spot/cryo
@@ -699,7 +699,7 @@ datum/fishing_spot/golden_toilet
 	fishing_atom_type = /obj/item/storage/toilet/goldentoilet
 	rod_tier_required = 2
 	fish_available = list( /obj/item/reagent_containers/food/snacks/yuck = 20, \
-	/obj/item/reagent_containers/food/snacks/yuckburn = 20, \
+	/obj/item/reagent_containers/food/snacks/yuck/burn = 20, \
 	/obj/item/reagent_containers/food/snacks/shell = 20, \
 	/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
 	/obj/item/raw_material/scrap_metal = 5, \

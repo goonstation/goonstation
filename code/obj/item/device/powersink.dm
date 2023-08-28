@@ -25,6 +25,7 @@ TYPEINFO(/obj/item/device/powersink)
 	var/mode = POWERSINK_OFF		// 0 = off, 1=clamped (off), 2=operating
 	is_syndicate = 1
 	rand_pos = 0
+	HELP_MESSAGE_OVERRIDE({"To anchor the powersink, use a <b>screwdriver</b> on it while it is on exposed wiring. To turn the powersink on/off click it with an empty hand."})
 
 	var/obj/cable/attached		// the attached cable
 	var/datum/light/light
