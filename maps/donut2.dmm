@@ -15395,7 +15395,8 @@
 /obj/item/storage/box/biohazard_bags,
 /obj/item/body_bag,
 /obj/item/body_bag,
-/obj/item/clothing/under/suit/mortician/obj/item/device/reagentscanner{
+/obj/item/clothing/under/suit/mortician,
+/obj/item/device/reagentscanner{
 	pixel_x = -13
 	},
 /obj/machinery/camera{

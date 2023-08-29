@@ -54285,7 +54285,8 @@
 /area/station/medical/morgue)
 "cQP" = (
 /obj/table/auto,
-/obj/item/clothing/under/suit/mortician/obj/item/clothing/mask/surgical,
+/obj/item/clothing/under/suit/mortician,
+/obj/item/clothing/mask/surgical,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/device/detective_scanner,
 /obj/item/stamp,

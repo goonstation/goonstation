@@ -50270,7 +50270,8 @@
 /obj/table/auto,
 /obj/item/storage/box/evidence,
 /obj/item/storage/box/evidence,
-/obj/item/clothing/under/suit/mortician/turf/simulated/floor/sanitary,
+/obj/item/clothing/under/suit/mortician,
+/turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "wbw" = (
 /obj/disposalpipe/segment,
