@@ -1970,11 +1970,11 @@ TYPEINFO(/obj/machinery/hydro_mister)
 				var/particles/sprinkle/sprinkles = new
 				sprinkles.spawning = src.mode ? 3 : 2
 				sprinkles.color = src.reagents.get_average_rgb()
-				P.UpdateParticles(sprinkles, "mister_sprinkles")
+				potential_target.UpdateParticles(sprinkles, "mister_sprinkles")
 				SPAWN(0.6 SECONDS)
 					sprinkles.spawning = FALSE
 					sleep(1 SECOND)
-					P.ClearSpecificParticles("mister_sprinkles")
+					potential_target.ClearSpecificParticles("mister_sprinkles")
 				src.reagents.trans_to(potential_target, 1 + (mode * 4))
 
 
