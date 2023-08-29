@@ -600,23 +600,43 @@
 		update()
 		return
 
-/obj/disposalpipe/segment/fix_sprite()
-	if(turn(dir, 180) & dpdir)
-		icon_state = "pipe-s"
+/obj/disposalpipe/segment/fix_sprite(var/hasdir = TRUE)
+	if (hasdir)
+		if(turn(dir, 180) & src.dpdir)
+			src.icon_state = "pipe-s"
+		else
+			src.icon_state = "pipe-c"
+			for(var/d in cardinal)
+				if((d | turn(d, -90)) == src.dpdir)
+					set_dir(d)
+					break
+		src.base_icon_state = src.icon_state
+		src.update()
 	else
-		icon_state = "pipe-c"
-		for(var/d in list(1, 2, 4, 8))
-			if((d | turn(d, -90)) == dpdir)
-				set_dir(d)
-				break
-	base_icon_state = icon_state
-	src.update()
+		if (src.dpdir in ordinal)
+			// curved pipe
+			switch (src.dpdir)
+				if (NORTHEAST)
+					set_dir(NORTH)
+				if (NORTHWEST)
+					set_dir(WEST)
+				if (SOUTHEAST)
+					set_dir(EAST)
+				if (SOUTHWEST)
+					set_dir(SOUTH)
+			src.icon_state = "pipe-c"
+		else
+		// straight pipe
+			set_dir(directions[1])
+			src.icon_state = "pipe-s"
+		update_icon(src)
+		src.base_icon_state = src.icon_state
+		src.update()
+
 
 /obj/disposalpipe/segment/auto
-	icon = 'icons/obj/disposal.dmi'
 	name = "disposal pipe spawner"
 	icon_state = "pipe-spawner"
-	text = ""
 	var/pipe_type = /obj/disposalpipe/segment/regular
 	var/trunk_type = /obj/disposalpipe/trunk/regular
 	dpdir = 0		//! bitmask of pipe directions
@@ -742,7 +762,9 @@
 		qdel(src)
 	else if (length(directions) == 2)
 	// turns into a normal pipe segment
-		fix_sprite()
+		fix_sprite(FALSE)
+		src.name = "disposal pipe"
+		src.desc = "An underfloor disposal pipe."
 	else
 	// DO NOT MAKE JUNCTIONS, FOOLS.
 		CRASH("Segment Pipe Spawners can't make junctions!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
