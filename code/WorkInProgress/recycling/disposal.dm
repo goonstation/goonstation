@@ -600,6 +600,7 @@
 		update()
 		return
 
+/// fixes the sprite and rotates it. hasidr is true by default, put false if the dir doesn't necessarily match the icon.
 /obj/disposalpipe/segment/fix_sprite(var/hasdir = TRUE)
 	if (hasdir)
 		if(turn(dir, 180) & src.dpdir)
@@ -632,7 +633,6 @@
 				set_dir(NORTH)
 			else
 				set_dir(EAST)
-		update_icon(src)
 		src.base_icon_state = src.icon_state
 		src.update()
 
@@ -716,21 +716,8 @@
 	selftile.Cut()
 	var/list/directions = list()
 	for(var/dir_to_pipe in cardinal)
-		for(var/obj/disposalpipe/segment/auto/maybe_pipe in get_step(src, dir_to_pipe))
-		// checks for other pipe spawners of its own type
-			if(istype(maybe_pipe, src) || istype(src, maybe_pipe))
-				src.dpdir |= dir_to_pipe
-				directions += dir_to_pipe
-
-		for(var/obj/disposalpipe/junction/auto/maybe_pipe in get_step(src, dir_to_pipe))
-		// checks for other pipe spawners of the junction kind
-			if(istype(maybe_pipe, src) || istype(src, maybe_pipe))
-				src.dpdir |= dir_to_pipe
-				directions += dir_to_pipe
-
 		for(var/obj/disposalpipe/maybe_pipe in get_step(src, dir_to_pipe))
 		// this checks all the different subtypes of pipe
-		// wow this is horrendous why did i make it this way
 			// the ones which spit out at 90 degrees
 			if (istype(maybe_pipe, /obj/disposalpipe/block_sensing_outlet)\
 			|| istype(maybe_pipe, /obj/disposalpipe/type_sensing_outlet))
@@ -738,7 +725,7 @@
 					src.dpdir |= dir_to_pipe
 					directions += dir_to_pipe
 
-			// the three ways (they do not check which 3 ways, it connects in all 4 directions)
+			// the trinary (they do not check which 3 ways because hassle)
 			if (istype(maybe_pipe, /obj/disposalpipe/junction)\
 			|| istype(maybe_pipe, /obj/disposalpipe/mechanics_switch)\
 			|| istype(maybe_pipe, /obj/disposalpipe/switch_junction))
@@ -746,15 +733,14 @@
 				directions += dir_to_pipe
 
 			// regular pipes and trunks
-			if(istype(maybe_pipe, src.pipe_type)\
-			|| istype(maybe_pipe, src.trunk_type))
+			if(istype(maybe_pipe, src.pipe_type) || istype(maybe_pipe, src.trunk_type))
 			// these only connect to their own kind btw
 				if (maybe_pipe.dpdir & get_dir(maybe_pipe, src))
 				// makes sure they're pointing at you
 					src.dpdir |= dir_to_pipe
 					directions += dir_to_pipe
 
-	if (src.dpdir == 0)
+	if (!src.dpdir || !length(directions))
 		CRASH("There is a lone auto pipe that doesn't connect to anything!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
 	else if (length(directions) == 1)
 		// lays a trunk pipe and deletes itself
