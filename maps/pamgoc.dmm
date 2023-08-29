@@ -23738,8 +23738,8 @@
 /area/station/security/main)
 "bcw" = (
 /obj/item/device/radio/intercom,
-/obj/item/clothing/under/suit/dress,
-/obj/item/clothing/under/suit/dress{
+/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/under/suit/black/dress{
 	desc = "A black dress. Very formal.";
 	name = "black dress"
 	},

@@ -32953,7 +32953,7 @@
 /area/station/quartermaster/office)
 "jWD" = (
 /obj/storage/closet/dresser/random,
-/obj/item/clothing/under/suit/dress{
+/obj/item/clothing/under/suit/black/dress{
 	desc = "A black dress. Very formal.";
 	name = "black dress"
 	},

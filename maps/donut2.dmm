@@ -6613,8 +6613,8 @@
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
 "aAs" = (
-/obj/item/clothing/under/suit/dress,
-/obj/item/clothing/under/suit/dress{
+/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/under/suit/black/dress{
 	desc = "A black dress. Very formal.";
 	name = "black dress"
 	},
