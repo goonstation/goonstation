@@ -162,7 +162,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	icon_state = "Oweedleaf"
 	brew_result = list("THC"=20, "LSD"=20, "suicider"=20, "space_drugs"=20, "mercury"=20, "lithium"=20, "atropine"=20, "haloperidol"=20,\
 	"methamphetamine"=20, "capsaicin"=20, "psilocybin"=20, "hairgrownium"=20, "ectoplasm"=20, "bathsalts"=20, "itching"=20, "crank"=20,\
-	"krokodil"=20, "catdrugs"=20, "histamine=20")
+	"krokodil"=20, "catdrugs"=20, "histamine"=20)
 
 /obj/item/plant/herb/cannabis/omega/spawnable
 	make_reagents()
