@@ -1503,7 +1503,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				"<span class='notice'>You begin cauterizing [surgeon == patient ? "your" : "[patient]'s"] wounds closed with [src].</span>",\
 				"<span class='notice'>[patient == surgeon ? "You begin" : "<b>[surgeon]</b> begins"] cauterizing your wounds closed with [src].</span>")
 
-			var/dur = max(patient.bleeding * 2 - damage / 5, 0) SECONDS
+			var/dur = max(patient.bleeding * 2 - damage * 0.2, 0) SECONDS
 			if (dur == 0)
 				repair_bleeding_damage(patient, 100, 10)
 			else
