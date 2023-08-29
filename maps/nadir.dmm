@@ -7907,6 +7907,7 @@
 /obj/decal/tile_edge/stripe/corner/big2{
 	dir = 10
 	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
 "dDg" = (
@@ -10126,6 +10127,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "eGi" = (
@@ -10669,6 +10671,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/baroffice)
+"eQy" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/landmark/antagonist/blob,
+/turf/simulated/floor/carpet/green/standard/innercorner/omni,
+/area/station/maintenance/storage{
+	icon_state = "crewquarters";
+	name = "Warrens Hall"
+	})
 "eQG" = (
 /obj/disposalpipe/segment/transport,
 /obj/decal/tile_edge/floorguide/qm,
@@ -14080,6 +14090,13 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
+"gqN" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/antagonist/blob,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "gqO" = (
 /obj/stool/chair/office/blue{
 	dir = 8
@@ -36260,6 +36277,7 @@
 	icon_state = "2-8"
 	},
 /obj/landmark/gps_waypoint,
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
 "pCc" = (
@@ -40508,6 +40526,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "rDs" = (
@@ -54633,6 +54652,10 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
+"xSO" = (
+/obj/landmark/antagonist/blob,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "xSS" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8;
@@ -89679,7 +89702,7 @@ cZD
 egS
 oNg
 vZi
-oEZ
+xSO
 iHN
 wPX
 kyY
@@ -103826,7 +103849,7 @@ lRC
 xAU
 vQZ
 jzF
-fgA
+gqN
 aFj
 rlw
 mGp
@@ -105133,7 +105156,7 @@ pOj
 hQo
 nlQ
 hri
-eUl
+eQy
 wxt
 eRD
 eRD
