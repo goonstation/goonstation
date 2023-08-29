@@ -701,7 +701,10 @@
 			if (istype(maybe_pipe, /obj/disposalpipe/junction)\
 			|| istype(maybe_pipe, /obj/disposalpipe/mechanics_switch)\
 			|| istype(maybe_pipe, /obj/disposalpipe/switch_junction))
-				if (maybe_pipe.dpdir & turn(dir_to_pipe, 180))
+				if (isauto)
+					src.dpdir |= dir_to_pipe
+					directions += dir_to_pipe
+				else if (maybe_pipe.dpdir & turn(dir_to_pipe, 180))
 					src.dpdir |= dir_to_pipe
 					directions += dir_to_pipe
 
@@ -710,9 +713,13 @@
 				// only match disposal pipes of matching colors see
 				if (src.color != maybe_pipe.color)
 					continue
-				if (maybe_pipe.dpdir & turn(dir_to_pipe, 180)) // make sure it's pointing
+				if (isauto)	// we make the assumption that an auto pipe will point at us
 					src.dpdir |= dir_to_pipe
 					directions += dir_to_pipe
+				else if (maybe_pipe.dpdir & turn(dir_to_pipe, 180)) // make sure it's pointing
+					src.dpdir |= dir_to_pipe
+					directions += dir_to_pipe
+
 
 	if (!src.dpdir || !length(directions))
 		CRASH("There is a lone auto pipe that doesn't connect to anything!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
