@@ -58675,7 +58675,7 @@
 /area/station/solar/south)
 "rYO" = (
 /obj/displaycase{
-	displayed = new/obj/item/captaingun
+	displayed = /obj/item/captaingun
 	},
 /obj/window/reinforced{
 	dir = 2

@@ -37462,7 +37462,7 @@
 	pixel_y = 6
 	},
 /obj/displaycase{
-	displayed = new/obj/item/captaingun()
+	displayed = /obj/item/captaingun
 	},
 /obj/blind_switch/area/west{
 	pixel_y = -6

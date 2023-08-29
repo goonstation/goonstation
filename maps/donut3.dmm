@@ -9238,7 +9238,7 @@
 /area/station/crew_quarters/captain)
 "cEO" = (
 /obj/displaycase{
-	displayed = new/obj/item/captaingun
+	displayed = /obj/item/captaingun
 	},
 /obj/machinery/light/incandescent/greenish{
 	dir = 1
