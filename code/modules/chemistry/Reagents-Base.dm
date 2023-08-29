@@ -10,7 +10,6 @@ datum
 			fluid_g = 220
 			fluid_b = 220
 			transparency = 255
-			chemical_composition = list("Al" = 1)
 
 		barium
 			name = "barium"
@@ -21,7 +20,6 @@ datum
 			fluid_g = 220
 			fluid_b = 220
 			transparency = 255
-			chemical_composition = list("Ba" = 1)
 
 		bromine
 			name = "bromine"
@@ -32,7 +30,6 @@ datum
 			fluid_g = 50
 			fluid_b = 50
 			transparency = 50
-			chemical_composition = list("Br" = 1)
 
 		calcium
 			name = "calcium"
@@ -43,7 +40,6 @@ datum
 			fluid_g = 255
 			fluid_b = 255
 			transparency = 255
-			chemical_composition = list("Ca" = 1)
 
 		carbon
 			name = "carbon"
@@ -55,7 +51,6 @@ datum
 			fluid_b = 0
 			hygiene_value = -0.5
 			transparency = 255
-			chemical_composition = list("C" = 1)
 
 			reaction_turf(var/turf/T, var/volume)
 				if(!istype(T, /turf/space))
@@ -76,7 +71,6 @@ datum
 			penetrates_skin = 1
 			depletion_rate = 0.6
 			touch_modifier = 0.33
-			chemical_composition = list("Cl" = 1)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -97,7 +91,6 @@ datum
 			fluid_b = 220
 			transparency = 255
 			penetrates_skin = 0
-			chemical_composition = list("Cr" = 1)
 
 		copper
 			name = "copper"
