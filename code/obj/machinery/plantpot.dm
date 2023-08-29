@@ -1949,7 +1949,18 @@ TYPEINFO(/obj/machinery/hydro_mister)
 			for (var/obj/machinery/plantpot/P in view(2,src))
 				if(P.reagents.get_reagent_amount("water") >= 195)
 					continue
+				if(src.reagents.total_volume < 10)
+					break
+				var/particles/sprinkle/sprinkles = new
+				sprinkles.spawning = src.mode ? 3 : 2
+				sprinkles.color = src.reagents.get_average_rgb()
+				P.UpdateParticles(sprinkles, "mister_sprinkles")
+				SPAWN(0.6 SECONDS)
+					sprinkles.spawning = FALSE
+					sleep(1 SECOND)
+					P.ClearSpecificParticles("mister_sprinkles")
 				src.reagents.trans_to(P, 1 + (mode * 4))
+
 			if(src.reagents.total_volume < 10)
 				src.visible_message("\The [src] sputters and runs out of liquid.")
 				src.active = 0
