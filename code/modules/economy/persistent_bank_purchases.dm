@@ -349,7 +349,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 						succ = 1*/
 
 
-				if (H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/rank/assistant))
+				if (H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/rank))
 					var/obj/origin = text2path("[H.w_uniform.type]/april_fools")
 					if (ispath(origin))
 						H.w_uniform.icon_state = "[H.w_uniform.icon_state]-alt"
