@@ -12,7 +12,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/custom_food = TRUE 						//! Can it be used to make custom food like for pizzas
 	var/festivity = 0 							//! Amount of cheer this food adds/subtracts when eaten
 	var/brew_result = null 						//! What reagent will it make if it's brewable?
-	var/brew_amount = 20 						//! How much units of the brewed reagent?
 	var/unlock_medal_when_eaten = null 			//! Add medal name here in the format of e.g. "That tasted funny".
 	var/from_emagged_oven = 0 					//! Was this food created by an emagged oven? To prevent re-rolling of food in emagged ovens.
 	var/doants = TRUE 							//! Will ants spawn to eat this food if it's on the floor

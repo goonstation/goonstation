@@ -187,7 +187,7 @@
 	var/activated = 0
 	initial_volume = 50
 	initial_reagents = list("msg"=9)
-	brew_result = list("sewage", "ethanol")
+	brew_result = list("sewage"=20, "ethanol"=20)
 	food_effects = list("food_sweaty")
 
 	New()
@@ -331,7 +331,7 @@
 	var/color_prob = 100
 	initial_volume = 50
 	initial_reagents = list("badgrease"=3,"VHFCS"=9)
-	brew_result = list("sewage", "yuck")
+	brew_result = list("sewage"=20, "yuck"=20)
 	food_effects = list("food_sweaty")
 
 
@@ -341,7 +341,7 @@
 		icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 		icon_state = "snackcake2"
 		color_prob = 10
-		brew_result = list("sewage", "mucus")
+		brew_result = list("sewage"=20, "mucus"=20)
 
 	New()
 		..()
