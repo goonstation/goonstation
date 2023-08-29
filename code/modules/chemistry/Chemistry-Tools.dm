@@ -726,6 +726,7 @@ proc/ui_describe_reagents(atom/A)
 	initial_volume = 100
 	accepts_lid = TRUE
 	var/obj/item/current_container = null //! the container currently attached to the condenser
+	var/image/fluid_image = null
 
 	mouse_drop(atom/over_object, src_location, over_location)
 		if(over_object == src)
@@ -744,6 +745,22 @@ proc/ui_describe_reagents(atom/A)
 			remove_container()
 			boutput(user, "<span class='alert'>You remove the connection to the [src.name].</span>")
 		..()
+
+	on_reagent_change()
+		..()
+		src.UpdateIcon()
+
+	update_icon()
+		src.overlays = null
+		if (reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
+			if (!src.fluid_image)
+				src.fluid_image = image(src.icon, "fluid-condenser[fluid_state]", -1)
+			else
+				src.fluid_image.icon_state = "fluid-condenser[fluid_state]"
+			var/datum/color/average = reagents.get_average_color()
+			src.fluid_image.color = average.to_rgba()
+			src.overlays += src.fluid_image
 
 	proc/check_container_range()
 		if(current_container && GET_DIST(current_container, src) > 1)
@@ -771,7 +788,7 @@ proc/ui_describe_reagents(atom/A)
 			// 	OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi',\
 			// 	startpx = src.pixel_x, startpy = src.pixel_y,\
 			// 	endpx = container.pixel_x, endpy = container.pixel_y)
-			var/datum/lineResult/result = drawLine(src, container, "2", "small_triangle", src.pixel_x, src.pixel_y, container.pixel_x, container.pixel_y)
+			var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + get_chemical_effect_position())
 			addGlobalImage(result.lineImage, "\ref[src]")
 			current_container = container
 
