@@ -21545,7 +21545,6 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/dialogueobj/ntrepresentative,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
 	},
@@ -39123,6 +39122,11 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/purple,
+/area/station/crew_quarters/quartersA)
+"jKI" = (
+/obj/dialogueobj/ntrepresentative,
+/obj/stool/chair/comfy/blue,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
 "jKL" = (
 /obj/cable{
@@ -78902,7 +78906,7 @@ rHe
 aiz
 alJ
 amD
-amD
+jKI
 aos
 apm
 aqD
