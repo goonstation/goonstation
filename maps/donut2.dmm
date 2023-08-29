@@ -38185,7 +38185,7 @@
 /area/station/quartermaster/refinery)
 "nKo" = (
 /obj/table/auto,
-/obj/item/clothing/under/rank{
+/obj/item/clothing/under/rank/assistant{
 	pixel_x = -2;
 	pixel_y = -1
 	},
