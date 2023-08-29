@@ -172,7 +172,7 @@
 /area/prefab/blind_pig)
 "aG" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/suit,
+/obj/item/clothing/under/suit/black,
 /obj/item/clothing/under/shirt_pants,
 /turf/simulated/floor/black,
 /area/prefab/blind_pig)

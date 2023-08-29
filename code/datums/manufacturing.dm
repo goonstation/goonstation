@@ -2684,7 +2684,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Fancy Black Suit"
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
-	item_outputs = list(/obj/item/clothing/under/suit)
+	item_outputs = list(/obj/item/clothing/under/suit/black)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"

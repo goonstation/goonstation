@@ -34562,7 +34562,7 @@
 	pixel_x = 12;
 	pixel_y = 9
 	},
-/obj/item/clothing/under/suit{
+/obj/item/clothing/under/suit/black{
 	name = "Mortician Suit";
 	pixel_x = -4;
 	pixel_y = 4

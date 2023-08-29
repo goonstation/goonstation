@@ -873,7 +873,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	New()
 		..()
 		src.equip_new_if_possible(/obj/item/clothing/shoes/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , SLOT_SHOES)
-		src.equip_new_if_possible(/obj/item/clothing/under/suit {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/under/suit/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , SLOT_W_UNIFORM)
 
 		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
 		src.equip_new_if_possible(/obj/item/storage/backpack, SLOT_BACK)

@@ -17789,7 +17789,7 @@
 /obj/item/device/detective_scanner{
 	pixel_x = -6
 	},
-/obj/item/clothing/under/suit{
+/obj/item/clothing/under/suit/black{
 	name = "Mortician Suit";
 	pixel_y = 11
 	},

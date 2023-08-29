@@ -2358,10 +2358,7 @@
 /obj/machinery/light_switch/auto,
 /obj/item/storage/box/biohazard_bags,
 /obj/item/storage/box/body_bag,
-/obj/item/clothing/under/suit{
-	name = "Mortician Suit"
-	},
-/turf/simulated/floor/sanitary,
+/obj/item/clothing/under/suit/mortician/turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "ahI" = (
 /obj/machinery/disposal/small/east,

@@ -32398,7 +32398,7 @@
 /area/dojo)
 "cpx" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/suit,
+/obj/item/clothing/under/suit/black,
 /obj/item/storage/briefcase,
 /obj/item/storage/pill_bottle/antirad,
 /obj/item/cigpacket/menthol,

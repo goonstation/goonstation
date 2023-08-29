@@ -3597,7 +3597,7 @@
 /obj/storage/closet/dresser/random,
 /obj/item/clothing/under/misc/america,
 /obj/item/clothing/under/gimmick/rainbow,
-/obj/item/clothing/under/suit,
+/obj/item/clothing/under/suit/black,
 /turf/simulated/floor,
 /area/station/crew_quarters/bathroom{
 	name = "Locker Room"
@@ -8559,7 +8559,7 @@
 	desc = "A black dress. Very formal.";
 	name = "black dress"
 	},
-/obj/item/clothing/under/suit,
+/obj/item/clothing/under/suit/black,
 /obj/item/clothing/under/shirt_pants,
 /obj/item/clothing/shoes/black,
 /obj/item/clothing/head/fedora,
