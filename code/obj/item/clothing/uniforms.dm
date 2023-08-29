@@ -1141,6 +1141,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/suit)
 	icon_state = "suit-capB"
 	item_state = "suit-capB"
 
+
 /obj/item/clothing/under/suit/captain/dress
 	icon_state = "suitG-dress"
 	item_state = "suitG-dress"
