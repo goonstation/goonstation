@@ -1117,7 +1117,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/suit)
 	icon_state = "suitR"
 	item_state = "suitR"
 
-/obj/item/clothing/under/suit/captaindress
+/obj/item/clothing/under/suit/red/dress
 	icon_state = "suitR-dress"
 	item_state = "suitR-dress"
 
@@ -1127,7 +1127,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/suit)
 	icon_state = "suitP"
 	item_state = "suitP"
 
-/obj/item/clothing/under/suit/captaindress
+/obj/item/clothing/under/suit/purple/dress
 	icon_state = "suitP-dress"
 	item_state = "suitP-dress"
 
@@ -1145,7 +1145,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/suit)
 	icon_state = "suitG-dress"
 	item_state = "suitG-dress"
 
-/obj/item/clothing/under/suit/captaindress/blue
+/obj/item/clothing/under/suit/captain/dress/blue
 	icon_state = "suit-capB-dress"
 	item_state = "suit-capB-dress"
 
