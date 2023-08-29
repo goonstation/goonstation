@@ -553,7 +553,6 @@ proc/broadcast_to_all_gangs(var/message)
 		"red lawyer's suit" = /obj/item/clothing/under/misc/lawyer/red,
 		"lawyer suit" = /obj/item/clothing/under/misc/lawyer,
 		"blue tracksuit" = /obj/item/clothing/under/gimmick/chav,
-		"aged hipster clothes" = /obj/item/clothing/under/gimmick/dawson,
 		"diver jumpsuit" = /obj/item/clothing/under/gimmick/sealab,
 		"spiderman suit" = /obj/item/clothing/under/gimmick/spiderman,
 		"Vault 13 jumpsuit" = /obj/item/clothing/under/gimmick/vault13,

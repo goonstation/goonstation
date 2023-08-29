@@ -4835,7 +4835,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 	icon = 'icons/obj/bots/robuddy/pr-4.dmi'
 
 	hat_x_offset = 2
-	hat_y_offset = -5
+	hat_y_offset = -4
 	setup_no_costumes = 1
 	no_camera = 1
 	setup_charge_maximum = 800

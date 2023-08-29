@@ -23738,11 +23738,8 @@
 /area/station/security/main)
 "bcw" = (
 /obj/item/device/radio/intercom,
-/obj/item/clothing/under/suit/dress,
-/obj/item/clothing/under/suit/dress{
-	desc = "A black dress. Very formal.";
-	name = "black dress"
-	},
+/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/under/suit/black/dress,
 /obj/item/clothing/head/mime_beret,
 /obj/item/clothing/head/mime_bowler,
 /obj/item/clothing/under/misc/mime,
@@ -35613,7 +35610,7 @@
 	pixel_x = -12;
 	pixel_y = 9
 	},
-/obj/item/clothing/under/suit{
+/obj/item/clothing/under/suit/black{
 	name = "Mortician Suit";
 	pixel_x = 4;
 	pixel_y = 4
@@ -39585,17 +39582,11 @@
 	name = "Freezer - Spare Parts"
 	},
 /obj/machinery/power/apc/autoname_west,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs";
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
 	pixel_x = 2;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit";
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
 	pixel_x = -7
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
@@ -39608,10 +39599,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibhead";
-	name = "grody thing";
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
 	pixel_x = -1
 	},
 /obj/item/organ/eye{

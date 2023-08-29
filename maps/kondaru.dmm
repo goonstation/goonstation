@@ -13944,38 +13944,6 @@
 /obj/disposalpipe/trunk/south,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
-"aZm" = (
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibhead";
-	name = "grody thing"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/obj/item/organ/eye,
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/disposalpipe/segment/bent/east,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "aZn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -28563,9 +28531,7 @@
 /obj/item/clothing/mask/surgical,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/device/detective_scanner,
-/obj/item/clothing/under/suit{
-	name = "Mortician Suit"
-	},
+/obj/item/clothing/under/suit/mortician,
 /obj/item/stamp,
 /obj/item/clothing/gloves/latex,
 /obj/item/spraybottle/cleaner,
@@ -30834,10 +30800,6 @@
 "cmc" = (
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
-"cmd" = (
-/obj/machinery/door/airlock,
-/turf/simulated/floor/carpet/grime,
-/area/listeningpost)
 "cme" = (
 /turf/simulated/floor/grey/side{
 	dir = 8
@@ -30918,30 +30880,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
-"cms" = (
-/turf/simulated/floor/plating/airless/asteroid/dark,
-/area/listeningpost)
-"cmt" = (
-/obj/machinery/door/airlock/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Listening Post"
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/listeningpost)
-"cmu" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 2.5;
-	name = "VACUUM AREA";
-	pixel_y = -32
-	},
-/turf/simulated/floor/black,
-/area/listeningpost)
 "cmv" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -31064,10 +31002,6 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
-/area/listeningpost)
-"cmN" = (
-/obj/machinery/door/airlock,
-/turf/simulated/floor/sanitary,
 /area/listeningpost)
 "cmO" = (
 /obj/machinery/drainage,
@@ -31473,38 +31407,6 @@
 "cnR" = (
 /obj/machinery/light/small,
 /obj/item/kitchen/food_box/egg_box,
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/catering)
-"cnS" = (
-/obj/storage/crate/freezer,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/reagent_containers/food/snacks/ingredient/meat{
-	desc = "Ew.";
-	name = "meat of questionable origin"
-	},
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibhead";
-	name = "grody thing"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit"
-	},
-/obj/item/organ/liver,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "cnU" = (
@@ -34529,6 +34431,12 @@
 /obj/item/tank/jetpack/micro,
 /turf/simulated/floor/darkblue,
 /area/station/storage/eva)
+"dXz" = (
+/obj/machinery/door/airlock{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary,
+/area/listeningpost)
 "dXK" = (
 /obj/disposalpipe/segment/bent/west,
 /obj/cable{
@@ -36027,6 +35935,15 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
+"fbM" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33;
+	entrance_scanner = 1
+	},
+/turf/simulated/floor/plating/airless/asteroid/dark,
+/area/listeningpost)
 "fbU" = (
 /obj/stool/bar,
 /obj/cable{
@@ -36080,6 +35997,26 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/ghostdrone_factory)
+"feh" = (
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/obj/item/organ/eye,
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart"
+	},
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "fgr" = (
 /obj/shrub{
 	dir = 10
@@ -36686,6 +36623,24 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/supply/delivery_point)
+"fCN" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 2.5;
+	name = "VACUUM AREA";
+	pixel_y = -32
+	},
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "fCQ" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -41631,6 +41586,15 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grey,
 /area/station/science/bot_storage)
+"jwT" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post";
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/listeningpost)
 "jyD" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4
@@ -45241,6 +45205,16 @@
 	dir = 9
 	},
 /area/station/quartermaster/office)
+"mvu" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = -32
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "mvx" = (
 /obj/landmark/start/job/assistant,
 /obj/stool/chair/pool,
@@ -55039,6 +55013,26 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
+"uuj" = (
+/obj/storage/crate/freezer,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/reagent_containers/food/snacks/ingredient/meat{
+	desc = "Ew.";
+	name = "meat of questionable origin"
+	},
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/organ/liver,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/catering)
 "uun" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor{
@@ -56926,6 +56920,12 @@
 "vTU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/secwing)
+"vUa" = (
+/obj/machinery/door/airlock{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost)
 "vUi" = (
 /obj/disposalpipe/switch_junction/biofilter/right/east,
 /obj/cable{
@@ -94728,7 +94728,7 @@ bcR
 boT
 btV
 oGg
-aZm
+feh
 baC
 bbC
 pKT
@@ -116474,7 +116474,7 @@ aXS
 iaN
 bVU
 hSJ
-cnS
+uuj
 nbR
 bev
 jry
@@ -140136,7 +140136,7 @@ aac
 aac
 aac
 aac
-cms
+fbM
 aac
 aac
 aaa
@@ -140438,7 +140438,7 @@ ckU
 ckU
 ckU
 ckU
-cmt
+jwT
 ckU
 aac
 aac
@@ -140740,7 +140740,7 @@ ckU
 clR
 cmb
 ckU
-cmu
+fCN
 ckU
 ckU
 ckU
@@ -141042,7 +141042,7 @@ ckU
 clS
 cmc
 ckU
-cmt
+jwT
 ckU
 cmH
 cmR
@@ -141342,7 +141342,7 @@ ckU
 clF
 ckU
 ckU
-cmd
+vUa
 ckU
 cmv
 ckU
@@ -141645,7 +141645,7 @@ ckU
 clL
 clT
 cme
-cme
+mvu
 cmw
 cmF
 cmJ
@@ -143158,7 +143158,7 @@ ckU
 cmp
 ckU
 ckU
-cmN
+dXz
 ckU
 cmZ
 ckU

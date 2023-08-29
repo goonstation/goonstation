@@ -159,7 +159,7 @@ proc/Create_Tommyname()
 			O.layer = initial(O.layer)
 
 	src.equip_new_if_possible(/obj/item/clothing/shoes/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , SLOT_SHOES)
-	src.equip_new_if_possible(/obj/item/clothing/under/suit {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , SLOT_W_UNIFORM)
+	src.equip_new_if_possible(/obj/item/clothing/under/suit/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , SLOT_W_UNIFORM)
 	src.equip_new_if_possible(/obj/item/football, SLOT_IN_BACKPACK)
 
 	src.sound_scream = 'sound/voice/tommy_you-are-tearing-me-apart-lisauh.ogg'
@@ -861,6 +861,10 @@ proc/Create_Tommyname()
 
 	// Are we ready to do something mean here?
 	var/wire_readied = 0
+
+	HELP_MESSAGE_OVERRIDE({"Use the garrot wire in hand to hold it with two hands, then place yourself behind your target.
+							Click them with the wire to attempt to grab them.
+							While a target is being strangled, use the wire in hand to inflict more damage and bleed in addition to the suffocation."})
 
 	New()
 		..()
