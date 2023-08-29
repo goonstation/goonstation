@@ -681,12 +681,6 @@
 				initialize()
 
 /obj/disposalpipe/segment/auto/initialize()
-	var/list/selftile = list()
-	for (var/obj/disposalpipe/segment/auto/dupe in range(0, src))
-		if (istype(dupe, src))
-			selftile += dupe
-	if (length(selftile) > 1)
-		CRASH("Multiple auto pipes on coordinate [src.x] x [src.y] y!")
 	var/list/directions = list()
 	for(var/dir_to_pipe in cardinal)
 		for(var/obj/disposalpipe/maybe_pipe in get_step(src, dir_to_pipe))
