@@ -182,6 +182,7 @@
 	text = ""
 	HELP_MESSAGE_OVERRIDE({"You can use a <b>welding tool</b> to detach the pipe to move it around."})
 
+	var/isauto = FALSE	//! whether or not this is an auto pipe, used for pipe detection in auto pipes
 	var/spawner_type = /obj/disposalpipe/segment/auto
 	level = 1			//! underfloor only
 	var/dpdir = 0		//! bitmask of pipe directions
@@ -512,24 +513,6 @@
 			dir = SOUTH
 		west
 			dir = WEST
-	// /regular should be used instead of /segment from now on
-	// don't know if segment/horizontal and such are used, is the issue
-	regular
-		horizontal
-			dir = EAST
-		vertical
-			dir = NORTH
-		bent
-			icon_state = "pipe-c"
-
-			north
-				dir = NORTH
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 	mail
 		name = "mail pipe"
 		desc = "An underfloor mail pipe."
@@ -638,69 +621,60 @@
 
 
 /obj/disposalpipe/segment/auto
+	isauto = TRUE
 	name = "disposal pipe spawner"
 	icon_state = "pipe-spawner"
-	var/pipe_type = /obj/disposalpipe/segment/regular
 	var/trunk_type = /obj/disposalpipe/trunk/regular
 	dpdir = 0		//! bitmask of pipe directions
 	regular
-		pipe_type = /obj/disposalpipe/segment/regular
 		trunk_type = /obj/disposalpipe/trunk/regular
 	mail
 		name = "mail pipe spawner"
 		color = PIPEC_MAIL
-		pipe_type = /obj/disposalpipe/segment/mail
 		trunk_type = /obj/disposalpipe/trunk/mail
 	brig
 		name = "brig pipe spawner"
 		color = PIPEC_BRIG
-		pipe_type = /obj/disposalpipe/segment/brig
 		trunk_type = /obj/disposalpipe/trunk/brig
 
 	ejection
 		name = "ejection pipe spawner"
 		color = PIPEC_EJECTION
-		pipe_type = /obj/disposalpipe/segment/ejection
 		trunk_type = /obj/disposalpipe/trunk/ejection
 
 	morgue
 		name = "morgue pipe spawner"
 		color = PIPEC_MORGUE
-		pipe_type = /obj/disposalpipe/segment/morgue
 		trunk_type = /obj/disposalpipe/trunk/morgue
 
 	food
 		name = "food pipe spawner"
 		color = PIPEC_FOOD
-		pipe_type = /obj/disposalpipe/segment/food
 		trunk_type = /obj/disposalpipe/trunk/food
 
 	produce
 		name = "produce pipe spawner"
 		color = PIPEC_PRODUCE
-		pipe_type = /obj/disposalpipe/segment/produce
 		trunk_type = /obj/disposalpipe/trunk/produce
 
 	transport
 		name = "transport pipe spawner"
 		color = PIPEC_TRANSPORT
-		pipe_type = /obj/disposalpipe/segment/transport
 		trunk_type = /obj/disposalpipe/trunk/transport
 
 	mineral
 		name = "mineral pipe spawner"
 		color = PIPEC_MINERAL
-		pipe_type = /obj/disposalpipe/segment/mineral
 		trunk_type = /obj/disposalpipe/trunk/mineral
 
 	cargo
 		name = "cargo pipe spawner"
 		color = PIPEC_CARGO
-		pipe_type = /obj/disposalpipe/segment/cargo
 		trunk_type = /obj/disposalpipe/trunk/cargo
 
 /obj/disposalpipe/segment/auto/New()
 	..()
+	dpdir = 0 // this is needed to override the parent dpdir setting
 	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
 		SPAWN(1 SECONDS)
 			if(!src.disposed)
@@ -713,30 +687,30 @@
 			selftile += dupe
 	if (length(selftile) > 1)
 		CRASH("Multiple auto pipes on coordinate [src.x] x [src.y] y!")
-	selftile.Cut()
 	var/list/directions = list()
 	for(var/dir_to_pipe in cardinal)
 		for(var/obj/disposalpipe/maybe_pipe in get_step(src, dir_to_pipe))
-		// this checks all the different subtypes of pipe
 			// the ones which spit out at 90 degrees
-			if (istype(maybe_pipe, /obj/disposalpipe/block_sensing_outlet)\
-			|| istype(maybe_pipe, /obj/disposalpipe/type_sensing_outlet))
+			if (istype(maybe_pipe, /obj/disposalpipe/block_sensing_outlet) || istype(maybe_pipe, /obj/disposalpipe/type_sensing_outlet))
 				if (turn(maybe_pipe.dir, 90) == dir_to_pipe || turn(maybe_pipe.dir, -90) == dir_to_pipe)
 					src.dpdir |= dir_to_pipe
 					directions += dir_to_pipe
 
-			// the trinary (they do not check which 3 ways because hassle)
+			// the trinary pipes
+			// we're not checking which direction it doesn't connect to because it's a hassle
 			if (istype(maybe_pipe, /obj/disposalpipe/junction)\
 			|| istype(maybe_pipe, /obj/disposalpipe/mechanics_switch)\
 			|| istype(maybe_pipe, /obj/disposalpipe/switch_junction))
-				src.dpdir |= dir_to_pipe
-				directions += dir_to_pipe
+				if (maybe_pipe.dpdir & turn(dir_to_pipe, 180))
+					src.dpdir |= dir_to_pipe
+					directions += dir_to_pipe
 
 			// regular pipes and trunks
-			if(istype(maybe_pipe, src.pipe_type) || istype(maybe_pipe, src.trunk_type))
-			// these only connect to their own kind btw
-				if (maybe_pipe.dpdir & get_dir(maybe_pipe, src))
-				// makes sure they're pointing at you
+			if(istype(maybe_pipe, src) || istype(maybe_pipe, src.trunk_type))
+				// only match disposal pipes of matching colors see
+				if (src.color != maybe_pipe.color)
+					continue
+				if (maybe_pipe.dpdir & turn(dir_to_pipe, 180)) // make sure it's pointing
 					src.dpdir |= dir_to_pipe
 					directions += dir_to_pipe
 
@@ -851,6 +825,7 @@
 
 /// a spawner for a three way junction
 /obj/disposalpipe/junction/auto
+	isauto = TRUE
 	dir = SOUTH
 	icon_state = "pipe-j-spawner"
 	dpdir = 0	//! bitmask of pipe directions
