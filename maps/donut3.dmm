@@ -39030,10 +39030,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
 "lRI" = (
-/obj/item/clothing/under/suit/black/dress{
-	desc = "A black dress. Very formal.";
-	name = "black dress"
-	},
+/obj/item/clothing/under/suit/black/dress,
 /obj/item/clothing/head/mime_beret,
 /obj/item/clothing/head/mime_bowler,
 /obj/item/clothing/under/misc/mime,

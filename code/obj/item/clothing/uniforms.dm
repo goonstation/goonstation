@@ -1096,6 +1096,8 @@ ABSTRACT_TYPE(/obj/item/clothing/under/suit)
 	item_state = "suitB"
 
 /obj/item/clothing/under/suit/black/dress
+	name = "black dress"
+	desc = "A black dress. Very formal."
 	icon_state = "suitB-dress"
 	item_state = "suitB-dress"
 
@@ -1159,7 +1161,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/suit)
 	icon_state = "suitR"
 	item_state = "suitR"
 
-/obj/item/clothing/under/suit/hopdress
+/obj/item/clothing/under/suit/hop/dress
 	icon_state = "suitT-dress"
 
 /obj/item/clothing/under/suit/hos

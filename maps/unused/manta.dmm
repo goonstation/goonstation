@@ -12230,10 +12230,7 @@
 	},
 /area/station/science/teleporter)
 "aIH" = (
-/obj/item/clothing/under/suit/black/dress{
-	desc = "A black dress. Very formal.";
-	name = "black dress"
-	},
+/obj/item/clothing/under/suit/black/dress,
 /obj/item/clothing/under/suit,
 /obj/item/clothing/under/shirt_pants,
 /obj/item/clothing/shoes/black,

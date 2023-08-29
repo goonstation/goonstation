@@ -8555,10 +8555,7 @@
 	layer = 2.5;
 	pixel_y = -12
 	},
-/obj/item/clothing/under/suit/black/dress{
-	desc = "A black dress. Very formal.";
-	name = "black dress"
-	},
+/obj/item/clothing/under/suit/black/dress,
 /obj/item/clothing/under/suit/black,
 /obj/item/clothing/under/shirt_pants,
 /obj/item/clothing/shoes/black,
