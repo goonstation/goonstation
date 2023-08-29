@@ -3738,7 +3738,7 @@ var/global/noir = 0
 			world << "Undefined action [href_list["action"]]"
 
 	//Wires bad hack part 2
-	sleep(0.5 SECONDS)
+	sleep(0)
 	switch (originWindow)
 		if ("adminplayeropts")
 			if (href_list["targetckey"])
