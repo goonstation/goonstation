@@ -3198,7 +3198,7 @@
 	name = "costume dresser"
 	},
 /obj/item/clothing/under/shirt_pants,
-/obj/item/clothing/under/suit,
+/obj/item/clothing/under/suit/black,
 /obj/item/clothing/head/mime_beret,
 /obj/item/clothing/head/devil,
 /turf/simulated/floor/black,
