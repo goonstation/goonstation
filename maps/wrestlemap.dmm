@@ -10456,8 +10456,8 @@
 "eyD" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/suit/pinstripe,
-/obj/item/clothing/under/suit/dress,
-/obj/item/clothing/under/suit,
+/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/under/suit/black,
 /obj/item/clothing/under/suit/red,
 /obj/item/clothing/shoes/white,
 /obj/cable{
@@ -50270,9 +50270,7 @@
 /obj/table/auto,
 /obj/item/storage/box/evidence,
 /obj/item/storage/box/evidence,
-/obj/item/clothing/under/suit{
-	name = "Mortician Suit"
-	},
+/obj/item/clothing/under/suit/mortician,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "wbw" = (
@@ -54914,7 +54912,7 @@
 /area/station/maintenance/east)
 "xXA" = (
 /obj/table/glass/auto,
-/obj/item/clothing/under/suit,
+/obj/item/clothing/under/suit/black,
 /obj/item/device/radio/headset/command{
 	pixel_x = 4;
 	pixel_y = 4

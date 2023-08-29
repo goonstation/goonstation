@@ -6613,11 +6613,8 @@
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
 "aAs" = (
-/obj/item/clothing/under/suit/dress,
-/obj/item/clothing/under/suit/dress{
-	desc = "A black dress. Very formal.";
-	name = "black dress"
-	},
+/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/under/suit/black/dress,
 /obj/item/clothing/head/mime_beret,
 /obj/item/clothing/head/mime_bowler,
 /obj/item/clothing/under/misc/mime,
@@ -15398,9 +15395,7 @@
 /obj/item/storage/box/biohazard_bags,
 /obj/item/body_bag,
 /obj/item/body_bag,
-/obj/item/clothing/under/suit{
-	name = "Mortician Suit"
-	},
+/obj/item/clothing/under/suit/mortician,
 /obj/item/device/reagentscanner{
 	pixel_x = -13
 	},

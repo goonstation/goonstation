@@ -748,7 +748,7 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/suit, SLOT_W_UNIFORM)
+			src.equip_new_if_possible(/obj/item/clothing/under/suit/black, SLOT_W_UNIFORM)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/black, SLOT_SHOES)
 
 #undef IS_NPC_HATED_ITEM
