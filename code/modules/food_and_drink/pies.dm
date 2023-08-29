@@ -9,12 +9,41 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 	var/slicetype = /obj/item/reagent_containers/food/snacks/pieslice
 	var/splat = 0 // for thrown pies
 	food_effects = list("food_refreshed","food_cold")
+	///In the case of a thrown splattered pie, minimum amount of time we remain visually stuck on someone's face.
+	var/min_stuck_time = 5 SECONDS
+	///In the case of a thrown splattered pie, maximum amount of time we remain visually stuck on someone's face.
+	var/max_stuck_time = 15 SECONDS
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (ismob(hit_atom) && src.splat)
 			var/mob/M = hit_atom
-			src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
+			var/mob/thrower = usr
 			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+			if (thrower.mind?.assigned_role == "Clown")
+				if (ishuman(M) && (prob(50) || M.mind?.assigned_role == "Captain"))
+					var/image/face_pie = image('icons/obj/foodNdrink/food_dessert.dmi', "face_pie")
+					src.visible_message("<span class='notice'>[src] splats right in [M]'s face and remains stuck there!</span>")
+					face_pie.layer = M.layer + 1
+					face_pie.appearance_flags = RESET_COLOR | PIXEL_SCALE
+					var/overlay_key = "face_pie[world.timeofday]"
+					if(ismonkey(M))
+						face_pie.icon_state = "face_pie_monkey"
+					M.UpdateOverlays(face_pie, overlay_key)
+					var/old_invis = src.invisibility
+					src.invisibility = INVIS_ALWAYS
+					src.set_loc(M)
+					M.bioHolder?.AddEffect("bad_eyesight")
+					JOB_XP(thrower, "Clown", 1)
+					SPAWN(rand(src.min_stuck_time, src.max_stuck_time))
+						if (M?.loc && src?.loc)
+							M.bioHolder?.RemoveEffect("bad_eyesight")
+							M.UpdateOverlays(null, overlay_key)
+							src.invisibility = old_invis
+							src.set_loc(M.loc)
+							src.visible_message("<span class='notice'>[src] falls off of [M]'s face.</span>")
+							qdel(face_pie)
+					return
+			src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
 			M.change_eye_blurry(rand(5,10))
 			M.take_eye_damage(rand(0, 2), 1)
 			if (prob(40))
