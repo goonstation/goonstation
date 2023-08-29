@@ -732,8 +732,6 @@ ABSTRACT_TYPE(/obj/item)
 				if (try_put_hand_mousedrop(usr))
 					if (can_reach(usr, over_object))
 						usr.click(over_object, params, src_location, over_control)
-			else
-				actions.start(new /datum/action/bar/private/icon/pickup/then_obj_click(src, over_object, params), usr)
 
 	//Click-drag tk stuff.
 /obj/item/proc/click_drag_tk(atom/over_object, src_location, over_location, over_control, params)
