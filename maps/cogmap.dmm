@@ -27511,8 +27511,8 @@
 	id = "qm_dock";
 	pixel_y = 28
 	},
-/obj/machinery/manufacturer/general,
 /obj/decal/stripe_delivery,
+/obj/machinery/manufacturer/mining,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bJQ" = (
@@ -27880,8 +27880,8 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bKY" = (
-/obj/machinery/manufacturer/mining,
 /obj/decal/stripe_delivery,
+/obj/machinery/manufacturer/general,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bKZ" = (
