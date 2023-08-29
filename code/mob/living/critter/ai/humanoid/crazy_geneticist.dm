@@ -45,26 +45,22 @@
 		..()
 		add_task(holder.get_instance(/datum/aiTask/succeedable/grab_patient, list(holder)))
 
-	evaluate()
+	precondition()
 		var/mob/living/critter/C = holder.owner
 		var/near_console = FALSE
-		if (ON_COOLDOWN(C, "try_grab", 15 SECONDS))
-			return FALSE
 		for (var/obj/fake_genetics_console/console in range(C, 1))
 			near_console = TRUE
 			break
+		if (GET_COOLDOWN(C, "try_grab"))
+			return FALSE
 		if (near_console)
-			return TRUE
+			return C.can_critter_attack()
 		return FALSE
-
-	precondition()
-		var/mob/living/critter/C = holder.owner
-		return C.can_critter_attack()
 
 	get_targets()
 		var/mob/living/critter/C = holder.owner
 		var/target_list = list()
-		for (var/mob/living/M in hearers(5, C))
+		for (var/mob/living/M in hearers(3, C))
 			if (C.valid_target(M))
 				if (M.bioHolder && M.bioHolder.effects && M.bioHolder.effects.len <= 5)
 					target_list += M
@@ -86,8 +82,8 @@
 		var/mob/living/critter/C = holder.owner
 		var/obj/item/grab/G = C.equipped()
 		if (istype(G) && G.state >= GRAB_AGGRESSIVE) //We are holding someone, add a stuff_scanner task and immediatly cancel AI to do it.
-			C.say(pick("Let's get you some genes.", "It'll be quick, come on.", "You need genes.", "Gene time!"))
 			holder.priority_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/stuff_scanner, list(holder, holder.default_task))
+			ON_COOLDOWN(C, "try_grab", 15 SECONDS)
 			src.holder.owner.ai.interrupt()
 			return TRUE
 		return FALSE
@@ -135,15 +131,9 @@
 
 	New(parentHolder, transTask)
 		..()
-		var/mob/living/critter/C = holder.owner
-		var/near_console = FALSE
-		for (var/obj/fake_genetics_console/console in range(C, 1))
-			near_console = TRUE
-			break
-		if (!near_console)
-			add_task(holder.get_instance(/datum/aiTask/succeedable/find_console, list(holder)))
+		add_task(holder.get_instance(/datum/aiTask/succeedable/find_console, list(holder)))
 
-	evaluate()
+	precondition()
 		var/mob/living/critter/C = holder.owner
 		var/near_console = FALSE
 		for (var/obj/fake_genetics_console/console in range(C, 1))
@@ -170,22 +160,23 @@
 		var/obj/item/I = holder.target
 		if(!C || !I || BOUNDS_DIST(I, C) > 0 || !istype(I.loc, /turf))
 			return TRUE
+		return FALSE
 
 	succeeded()
-		return is_complete
+		return src.is_complete
 
 	on_tick()
-		if(!is_complete)
+		if(!src.is_complete && !succeeded() && !failed())
 			holder.stop_move()
 			var/mob/living/critter/C = holder.owner
 			var/obj/item/I = holder.target
 			if(C && I && BOUNDS_DIST(C, I) == 0 && istype(I.loc, /turf))
 				C.set_dir(get_dir(C, I))
 				C.visible_message("<span class='notice'>[C] walks to their console and begins typing away.</span>")
-				is_complete = TRUE
+				src.is_complete = TRUE
 
 	on_reset()
-		is_complete = FALSE
+		src.is_complete = FALSE
 
 /datum/aiTask/sequence/goalbased/stuff_scanner
 	name = "find a gene scanner"
@@ -216,7 +207,10 @@
 			return TRUE
 
 	succeeded()
-		return is_complete
+		if (is_complete)
+			var/mob/living/critter/C = holder.owner
+			C.say(pick("Let's get you some genes.", "It'll be quick, come on.", "You need genes.", "Gene time!"))
+			return TRUE
 
 	on_tick()
 		if(!is_complete)
