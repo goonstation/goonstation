@@ -1100,7 +1100,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/suit)
 	item_state = "suitB-dress"
 
 /obj/item/clothing/under/suit/mortician
-	name = "Mortician's Suit
+	name = "Mortician's Suit"
 	desc = "A drab black suit. Very formal. Fitting for someone who works with bodies."
 	icon_state = "suitB"
 	item_state = "suitB"
