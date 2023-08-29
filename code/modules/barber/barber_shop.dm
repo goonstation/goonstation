@@ -58,18 +58,19 @@
 /obj/item/clothing/head/wig/spawnable/random
 
 	New()
-		var/list/possible_hairstyles = concrete_typesof(/datum/customization_style) - concrete_typesof(/datum/customization_style/biological) - concrete_typesof(/datum/customization_style/hair/gimmick)
-		var/datum/customization_style/hair_type = pick(possible_hairstyles)
+		var/list/possible_hairstyles = null
+		if (prob(50))
+			possible_hairstyles = filtered_concrete_typesof(/datum/customization_style, /proc/ismasc)
+		else
+			possible_hairstyles = filtered_concrete_typesof(/datum/customization_style, /proc/isfem)
+		var/datum/customization_style/hair_type = null
+		var/picked_color = rgb(rand(0,255),rand(0,255),rand(0,255))
+		hair_type = pick(possible_hairstyles)
 		first_id = initial(hair_type.id)
-		first_color = random_saturated_hex_color()
-		if (prob(75))
-			hair_type = pick(possible_hairstyles)
+		first_color = picked_color
+		if (prob(33))
 			second_id = initial(hair_type.id)
-			second_color = rgb(rand(0,255),rand(0,255),rand(0,255))
-		if (prob(75))
-			hair_type = pick(possible_hairstyles)
-			third_id = initial(hair_type.id)
-			third_color = random_saturated_hex_color()
+			second_color = picked_color
 		..()
 
 /obj/item/clothing/head/bald_cap
