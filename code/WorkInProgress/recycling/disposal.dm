@@ -615,6 +615,7 @@
 	else
 		if (src.dpdir in ordinal)
 			// curved pipe
+			src.icon_state = "pipe-c"
 			switch (src.dpdir)
 				if (NORTHEAST)
 					set_dir(NORTH)
@@ -624,11 +625,13 @@
 					set_dir(EAST)
 				if (SOUTHWEST)
 					set_dir(SOUTH)
-			src.icon_state = "pipe-c"
 		else
 		// straight pipe
-			set_dir(directions[1])
 			src.icon_state = "pipe-s"
+			if (src.dpdir & NORTH)
+				set_dir(NORTH)
+			else
+				set_dir(EAST)
 		update_icon(src)
 		src.base_icon_state = src.icon_state
 		src.update()
