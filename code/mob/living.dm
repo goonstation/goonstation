@@ -125,7 +125,8 @@
 
 	var/const/singing_prefix = "%"
 
-	var/void_mindswappable = FALSE //are we compatible with the void mindswapper?
+	var/void_mindswappable = FALSE //! are we compatible with the void mindswapper?
+	var/do_hurt_slowdown = TRUE //! do we slow down when hurt?
 
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
@@ -1733,16 +1734,17 @@
 	if (src.nodamage)
 		return .
 
-	var/health_deficiency = 0
-	if (src.max_health > 0)
-		health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
-	else
-		health_deficiency = (src.max_health-src.health) + health_deficiency_adjustment
+	if (src.do_hurt_slowdown)
+		var/health_deficiency = 0
+		if (src.max_health > 0)
+			health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
+		else
+			health_deficiency = (src.max_health-src.health) + health_deficiency_adjustment
 
-	if (health_deficiency >= 30)
-		. += (health_deficiency / 35)
+		if (health_deficiency >= 30)
+			. += (health_deficiency / 35)
 
-	.= src.special_movedelay_mod(.,space_movement,aquatic_movement)
+		.= src.special_movedelay_mod(.,space_movement,aquatic_movement)
 
 	. = min(., maximum_slowdown)
 

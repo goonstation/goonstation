@@ -143,6 +143,14 @@
 			src.real_name = "Junior Syndicate Agent"
 			JobEquipSpawned("Poorly Equipped Junior Syndicate Operative")
 
+/mob/living/carbon/human/npc/survivor // For prefab wrecks. Give them some life. Maybe expand this npc later idk
+	New()
+		..()
+		SPAWN(0)
+			var/pickedjob = pick("Clown", "Engineer", "Artist", "Hollywood Actor", "Waiter", "Pharmacist", "Coach", "Test Subject", "Technical Assistant") // picked from mostly gimmick jobs to avoid good stuff spawning on them
+			JobEquipSpawned("[pickedjob]")
+
+
 //reverse blade samurai
 
 // npc ai procs
@@ -993,11 +1001,11 @@
 	if (ai_incapacitated())
 		return
 	for (var/obj/storage/closet/C in view(1,src))
-		if (!C.open)
-			C.open(user=src)
+		if (can_reach(src, C) && prob(5))
+			src.hand_attack(C)
 	for (var/obj/storage/secure/closet/S in view(1,src))
-		if (!S.open && !S.locked)
-			S.open(user=src)
+		if (!S.locked && can_reach(src, S) && prob(5))
+			src.hand_attack(S)
 
 
 #undef IS_NPC_HATED_ITEM

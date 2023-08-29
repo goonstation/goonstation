@@ -838,7 +838,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	name = "Extra Large Shot Glasses"
 	item = /obj/item/storage/box/glassbox/syndie
 	cost = 2
-	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games!"
+	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games! Those glasses also splash all the liquid inside them to whatever they hit when thrown!"
 	job = list("Bartender")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -1299,7 +1299,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 	name = "Revolutionary Flashbang"
 	item = /obj/item/chem_grenade/flashbang/revolution
 	cost = 2
-	desc = "This single-use flashbang will convert all crew within range. It doesn't matter who primes the flash - it will convert all the same."
+	desc = "This single-use flashbang will convert all crew within range, but only shatter the loyalty implants of crew who have them. It doesn't matter who primes the flash - but crew will need a few seconds after a flashbang to respond to another."
 
 /datum/syndicate_buylist/generic/head_rev/revsign
 	name = "Revolutionary Sign"
