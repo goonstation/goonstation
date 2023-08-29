@@ -1,5 +1,9 @@
 
 (t)tue aug 29 23
+(u)Lord_Earthfire
+(p)15476
+(e)🌱|A-Hydroponics
+(+)Emagging a botanical mister makes it fill beakers, glasses or other open containers in its vicinity
 (u)Glamurio (Ryou)
 (p)15506
 (e)💅🔄📄|C-QoL, C-Rework, A-UI
