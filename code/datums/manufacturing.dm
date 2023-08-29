@@ -904,7 +904,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Staff Assistant Jumpsuit"
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
-	item_outputs = list(/obj/item/clothing/under/rank)
+	item_outputs = list(/obj/item/clothing/under/rank/assistant)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"

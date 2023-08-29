@@ -254,18 +254,12 @@
 
 // RANKS
 
+ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 /obj/item/clothing/under/rank
-	name = "staff assistant's jumpsuit"
-	desc = "It's a generic grey jumpsuit. That's about what assistants are worth, anyway."
-	icon = 'icons/obj/clothing/uniforms/item_js_rank.dmi'
-	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_rank.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_rank.dmi'
-	icon_state = "assistant"
-	item_state = "assistant"
-
-	april_fools
-		icon_state = "assistant-alt"
-		item_state = "assistant-alt"
+    name = "rank under parent"
+    icon = 'icons/obj/clothing/uniforms/item_js_rank.dmi'
+    wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_rank.dmi'
+    inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_rank.dmi'
 
 // Heads
 
@@ -539,6 +533,16 @@
 
 
 // Civilian
+
+/obj/item/clothing/under/rank/assistant
+	name = "staff assistant's jumpsuit"
+	desc = "It's a generic grey jumpsuit. That's about what assistants are worth, anyway."
+	icon_state = "assistant"
+	item_state = "assistant"
+
+/obj/item/clothing/under/rank/assistant/april_fools
+	icon_state = "assistant-alt"
+	item_state = "assistant-alt"
 
 /obj/item/clothing/under/rank/hydroponics
 	name = "botanist's jumpsuit"
