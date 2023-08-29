@@ -712,6 +712,17 @@
 					src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("cerenkite")
 		..()
 
+/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/glowstick
+	New()
+		var/datum/material/glowstick_mat = getMaterial("glowstick")
+		glowstick_mat = glowstick_mat.getMutable()
+
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
+				glowstick_mat.setColor(rgb(rand(0,255), rand(0,255), rand(0,255)))
+				src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod/glowsticks(glowstick_mat)
+		..()
+
 #undef REACTOR_GRID_WIDTH
 #undef REACTOR_GRID_HEIGHT
 #undef REACTOR_TOO_HOT_TEMP
