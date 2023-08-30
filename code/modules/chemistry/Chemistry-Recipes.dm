@@ -56,7 +56,6 @@
 
 	/// Called when a non-instant reaction ends, not called for instant reactions
 	proc/on_end_reaction(var/datum/reagents/holder)
-		boutput(world, "[src.name] reaction ends.")
 		return
 
 	/// Called when a holder filled with a current (non-instant) reaction experiences physical shock
