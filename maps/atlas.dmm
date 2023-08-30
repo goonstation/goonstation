@@ -2652,6 +2652,7 @@
 /area/station/chapel/sanctuary)
 "aiA" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon16,
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
@@ -4479,6 +4480,7 @@
 	dir = 4;
 	layer = 2.13
 	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "aoZ" = (
@@ -10409,6 +10411,7 @@
 	},
 /area/station/janitor/office)
 "aHj" = (
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/purple/corner,
 /area/station/janitor/office)
 "aHk" = (
@@ -13647,6 +13650,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "aSe" = (
@@ -15098,6 +15102,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "aWx" = (
@@ -18174,6 +18179,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "nlP" = (
@@ -18651,6 +18657,16 @@
 	dir = 1
 	},
 /area/station/bridge/customs)
+"pOs" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/landmark/antagonist/blob,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southeast)
 "pQO" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -19049,6 +19065,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
+"ses" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/antagonist/blob,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southeast)
 "suv" = (
 /obj/machinery/disposal/small{
 	dir = 1;
@@ -54924,7 +54947,7 @@ atq
 aCs
 ayv
 awe
-awe
+ses
 aXe
 aBd
 awz
@@ -60675,7 +60698,7 @@ aDa
 aSw
 aPe
 aGG
-aXW
+pOs
 aIR
 aCZ
 ars

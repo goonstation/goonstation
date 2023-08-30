@@ -120,9 +120,13 @@
 	disposing()
 		for (var/mob/M in src.mobs)
 			M.detach_hud(src)
-		for (var/atom/movable/screen/hud/S in src.objects)
-			if (S.master == src)
-				S.master = null
+		for (var/atom/movable/Obj in src.objects)
+			Obj.plane = initial(Obj.plane)
+			if(istype(Obj, /atom/movable/screen/hud))
+				var/atom/movable/screen/hud/H = Obj
+				if (H.master == src)
+					H.master = null
+		src.objects = null
 		for (var/client/C in src.clients)
 			remove_client(C)
 

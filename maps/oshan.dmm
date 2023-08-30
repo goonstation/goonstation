@@ -2358,9 +2358,7 @@
 /obj/machinery/light_switch/auto,
 /obj/item/storage/box/biohazard_bags,
 /obj/item/storage/box/body_bag,
-/obj/item/clothing/under/suit{
-	name = "Mortician Suit"
-	},
+/obj/item/clothing/under/suit/mortician,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "ahI" = (
@@ -3201,7 +3199,7 @@
 	name = "costume dresser"
 	},
 /obj/item/clothing/under/shirt_pants,
-/obj/item/clothing/under/suit,
+/obj/item/clothing/under/suit/black,
 /obj/item/clothing/head/mime_beret,
 /obj/item/clothing/head/devil,
 /turf/simulated/floor/black,
