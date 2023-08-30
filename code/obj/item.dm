@@ -1533,7 +1533,7 @@ ABSTRACT_TYPE(/obj/item)
 
 	..()
 
-/obj/item/proc/on_spin_emote(var/mob/living/carbon/human/user as mob, var/cleanit = FALSE)
+/obj/item/proc/on_spin_emote(var/mob/living/carbon/human/user as mob)
 	if(src in user.juggling)
 		return ""
 	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
@@ -1542,7 +1542,7 @@ ABSTRACT_TYPE(/obj/item)
 		src.set_loc(user.loc)
 		JOB_XP(user, "Clown", 1)
 	else
-		. = "<B>[user]</B> [pick("spins", "twirls")] [src] around in [his_or_her(user)] hand.[cleanit ? " Some blood splatters onto the ground." : ""]"
+		. = "<B>[user]</B> [pick("spins", "twirls")] [src] around in [his_or_her(user)] hand."
 
 
 //This proc handles any manipulation that happens due to plantstats
