@@ -623,7 +623,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/device/flash = 3,
 			/obj/item/clothing/head/beret/prisoner = 5,
 			/obj/item/clothing/shoes/orange = 5,
-			/obj/item/clothing/under/misc = 5,
+			/obj/item/clothing/under/misc/prisoner = 5,
 			/obj/item/clothing/shoes/swat = 2,
 			/obj/item/clothing/head/red = 4,
 			/obj/item/clothing/head/helmet/siren = 2,

@@ -1,4 +1,15 @@
 
+(t)tue aug 29 23
+(u)LeahTheTech
+(+)Botanical misters now have a particle effect when filling something.
+(u)Lord_Earthfire
+(p)15476
+(e)🌱|A-Hydroponics
+(+)Emagging a botanical mister makes it fill beakers, glasses or other open containers in its vicinity
+(u)Glamurio (Ryou)
+(p)15506
+(e)💅🔄📄|C-QoL, C-Rework, A-UI
+(*)Added TGUI to the character creation color pickers.
 (t)mon aug 28 23
 (u)Sord
 (+)The Monday job of the day has been replaced with a very heroic "Dungeoneer" job.
