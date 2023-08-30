@@ -781,22 +781,14 @@ proc/ui_describe_reagents(atom/A)
 			boutput(user, "<span class='notice'>You hook the [container.name] up to the [src.name].</span>")
 			RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container)) //empty hand on either condenser or its connected container should disconnect
 			RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(check_container_range))
-			// var/list/affected = DrawLine(src, container, /obj/line_obj/elec, /*objects*/\
-			// 	'icons/obj/projectiles.dmi',"WholeLghtn", /*icon*/\
-			// 	1,1, /*I have no fucking clue*/\
-			// 	"HalfStartLghtn","HalfEndLghtn", /*start and end icon states*/\
-			// 	OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi',\
-			// 	startpx = src.pixel_x, startpy = src.pixel_y,\
-			// 	endpx = container.pixel_x, endpy = container.pixel_y)
 			var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + get_chemical_effect_position())
-			addGlobalImage(result.lineImage, "\ref[src]")
+			result.lineImage.pixel_x = -src.pixel_x
+			result.lineImage.pixel_y = -src.pixel_y
+			src.UpdateOverlays(result.lineImage, "tube")
 			current_container = container
 
 	proc/remove_container()
-		var/image/line_image = getGlobalImage("\ref[src]")
-		if (line_image)
-			removeGlobalImage("\ref[src]")
-			line_image.loc = null
+		src.UpdateOverlays(null, "tube")
 		UnregisterSignal(current_container, COMSIG_ATTACKHAND)
 		UnregisterSignal(current_container, COMSIG_MOVABLE_MOVED)
 		current_container = null
