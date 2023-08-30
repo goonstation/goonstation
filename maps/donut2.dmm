@@ -27879,7 +27879,6 @@
 /area/station/crew_quarters/observatory)
 "fTT" = (
 /obj/stool/chair/office/red,
-/obj/landmark/start/job/security_assistant,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "fUe" = (
