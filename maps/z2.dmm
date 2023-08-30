@@ -20947,7 +20947,7 @@
 	},
 /area/iomoon/base/underground)
 "bAW" = (
-/obj/item/reagent_containers/food/snacks/yuckburn,
+/obj/item/reagent_containers/food/snacks/yuck/burn,
 /turf/unsimulated/iomoon/floor{
 	name = "silicate cave floor";
 	temperature = 313.15
@@ -32398,7 +32398,7 @@
 /area/dojo)
 "cpx" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/suit,
+/obj/item/clothing/under/suit/black,
 /obj/item/storage/briefcase,
 /obj/item/storage/pill_bottle/antirad,
 /obj/item/cigpacket/menthol,
@@ -38409,7 +38409,7 @@
 /obj/item/clothing/head/flatcap,
 /obj/item/instrument/fiddle,
 /obj/machinery/light/small,
-/obj/item/clothing/under/suit/dress,
+/obj/item/clothing/under/suit/black/dress,
 /obj/item/clothing/glasses/monocle,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
@@ -43214,7 +43214,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
 "cUU" = (
-/obj/item/reagent_containers/food/snacks/yuckburn,
+/obj/item/reagent_containers/food/snacks/yuck/burn,
 /turf/unsimulated/floor/plating/scorched,
 /area/owlery/staffhall)
 "cUW" = (

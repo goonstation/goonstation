@@ -2209,21 +2209,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/dome)
-"akI" = (
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/item/storage/secure/ssafe{
-	pixel_x = 26
-	},
-/obj/table/wood/auto,
-/obj/displaycase{
-	displayed = new/obj/item/captaingun();
-	pixel_y = 8
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "akK" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -3604,15 +3589,6 @@
 	name = "Locker Room"
 	})
 "apz" = (
-/turf/simulated/floor,
-/area/station/crew_quarters/bathroom{
-	name = "Locker Room"
-	})
-"apA" = (
-/obj/storage/closet/dresser/random,
-/obj/item/clothing/under/misc/america,
-/obj/item/clothing/under/gimmick/rainbow,
-/obj/item/clothing/under/suit,
 /turf/simulated/floor,
 /area/station/crew_quarters/bathroom{
 	name = "Locker Room"
@@ -8563,37 +8539,6 @@
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"aIa" = (
-/obj/ladder{
-	desc = "Is this supposed to be here?";
-	id = "smiling";
-	layer = 2.5;
-	pixel_y = -12
-	},
-/obj/item/clothing/under/suit/dress{
-	desc = "A black dress. Very formal.";
-	name = "black dress"
-	},
-/obj/item/clothing/under/suit,
-/obj/item/clothing/under/shirt_pants,
-/obj/item/clothing/shoes/black,
-/obj/item/clothing/head/fedora,
-/obj/item/clothing/glasses/eyepatch{
-	name = "costume eyepatch"
-	},
-/obj/storage/closet/dresser{
-	anchored = 1;
-	name = "costume dresser"
-	},
-/obj/machinery/light{
-	dir = 8;
-	pixel_x = -10
-	},
-/obj/item/clothing/head/mime_beret,
-/turf/simulated/floor/wood,
-/area/station/chapel/sanctuary{
-	name = "Community Center"
-	})
 "aIh" = (
 /obj/stool/chair/wooden,
 /obj/item/device/radio/intercom{
@@ -19575,12 +19520,6 @@
 "csQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
-"ctN" = (
-/obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1
-	},
-/turf/simulated/floor/redwhite,
-/area/station/medical/medbay/surgery)
 "cua" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -26739,15 +26678,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
-"iEW" = (
-/obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	id = "Sleeper_Access";
-	name = "Listening Post";
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/listeningpost)
 "iFM" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -28710,16 +28640,6 @@
 /obj/plasticflaps,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"kmP" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_x = 32
-	},
-/turf/simulated/floor/grey/side{
-	dir = 8
-	},
-/area/listeningpost)
 "kmQ" = (
 /obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/yellow/side{
@@ -29556,6 +29476,15 @@
 /obj/stool/bench/auto,
 /turf/simulated/floor/purple,
 /area/station/hallway/secondary/central)
+"kVG" = (
+/obj/storage/closet/dresser/random,
+/obj/item/clothing/under/misc/america,
+/obj/item/clothing/under/gimmick/rainbow,
+/obj/item/clothing/under/suit/black,
+/turf/simulated/floor,
+/area/station/crew_quarters/bathroom{
+	name = "Locker Room"
+	})
 "kVJ" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -33289,6 +33218,12 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"ocX" = (
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1
+	},
+/turf/simulated/floor/redwhite,
+/area/station/medical/medbay/surgery)
 "odS" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -34238,6 +34173,15 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/west)
+"oQO" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33;
+	entrance_scanner = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "oRh" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -35939,6 +35883,16 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
+"qhv" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "qhR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -36822,16 +36776,6 @@
 "qSy" = (
 /turf/simulated/floor/caution/north,
 /area/station/security/main)
-"qSz" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = 25
-	},
-/turf/simulated/floor/stairs{
-	dir = 8
-	},
-/area/listeningpost)
 "qSN" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -38310,6 +38254,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/main)
+"scc" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post";
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/listeningpost)
 "scs" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -38886,15 +38839,6 @@
 /mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor,
 /area/station/medical/robotics)
-"sAh" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = -33;
-	entrance_scanner = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "sAl" = (
 /obj/stool/chair/wooden{
 	dir = 1
@@ -39029,6 +38973,24 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
+"sID" = (
+/obj/item/device/radio/intercom/medical{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname  - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1
+	},
+/turf/simulated/floor/redwhite{
+	dir = 6
+	},
+/area/station/medical/medbay/surgery)
 "sIT" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -40788,6 +40750,34 @@
 	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
+"ugU" = (
+/obj/ladder{
+	desc = "Is this supposed to be here?";
+	id = "smiling";
+	layer = 2.5;
+	pixel_y = -12
+	},
+/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/under/suit/black,
+/obj/item/clothing/under/shirt_pants,
+/obj/item/clothing/shoes/black,
+/obj/item/clothing/head/fedora,
+/obj/item/clothing/glasses/eyepatch{
+	name = "costume eyepatch"
+	},
+/obj/storage/closet/dresser{
+	anchored = 1;
+	name = "costume dresser"
+	},
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/item/clothing/head/mime_beret,
+/turf/simulated/floor/wood,
+/area/station/chapel/sanctuary{
+	name = "Community Center"
+	})
 "uhp" = (
 /obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/redblack,
@@ -41993,6 +41983,16 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"uYd" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "uYp" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/space,
@@ -42586,6 +42586,21 @@
 /obj/machinery/manufacturer/gas,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
+"vFq" = (
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/item/storage/secure/ssafe{
+	pixel_x = 26
+	},
+/obj/table/wood/auto,
+/obj/displaycase{
+	displayed = new/obj/item/captaingun();
+	pixel_y = 8
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "vFC" = (
 /obj/machinery/light{
 	dir = 4;
@@ -44160,6 +44175,29 @@
 	icon_state = "floor"
 	},
 /area/station/crewquarters/cryotron)
+"xbA" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart"
+	},
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/machinery/light,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "xbR" = (
 /obj/machinery/light{
 	dir = 4;
@@ -44373,24 +44411,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
-"xmd" = (
-/obj/item/device/radio/intercom/medical{
-	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname  - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1
-	},
-/turf/simulated/floor/redwhite{
-	dir = 6
-	},
-/area/station/medical/medbay/surgery)
 "xnf" = (
 /obj/storage/crate/internals,
 /turf/simulated/floor/grime,
@@ -44966,29 +44986,6 @@
 	icon_state = "blue2"
 	},
 /area/station/bridge)
-"xJC" = (
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/machinery/light,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "xKj" = (
 /turf/unsimulated/floor/orangeblack/side{
 	dir = 1
@@ -66652,7 +66649,7 @@ slN
 uaD
 cUr
 bsL
-xJC
+xbA
 brX
 udJ
 sYc
@@ -67173,7 +67170,7 @@ oBI
 oBI
 pre
 uCQ
-ctN
+ocX
 aXv
 vNf
 vNf
@@ -67687,7 +67684,7 @@ pmh
 thE
 bXJ
 ujN
-xmd
+sID
 aXv
 uDV
 jOz
@@ -72551,7 +72548,7 @@ aCY
 aEj
 aFp
 aGg
-aIa
+ugU
 aIl
 aJu
 xLj
@@ -76897,7 +76894,7 @@ anq
 akS
 aot
 aoW
-apA
+kVG
 kBA
 ajZ
 jHT
@@ -82077,7 +82074,7 @@ aYK
 aWW
 baJ
 bbT
-akI
+vFq
 bep
 klf
 dHk
@@ -102462,7 +102459,7 @@ aab
 bCl
 bFQ
 bFQ
-sAh
+oQO
 bKK
 bLb
 bLj
@@ -102718,7 +102715,7 @@ aab
 aab
 aab
 bKA
-iEW
+scc
 bKA
 bKK
 bLc
@@ -102975,7 +102972,7 @@ bJY
 bJY
 bJY
 bJY
-qSz
+uYd
 bKK
 bKK
 bLd
@@ -103232,7 +103229,7 @@ bJY
 bKh
 bKs
 bJY
-iEW
+scc
 bKK
 bKV
 bLe
@@ -103748,7 +103745,7 @@ lXD
 iiM
 mAw
 bKP
-kmP
+qhv
 mIt
 bLn
 bKX

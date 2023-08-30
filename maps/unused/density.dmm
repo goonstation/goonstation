@@ -5295,10 +5295,6 @@
 /obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"ma" = (
-/obj/machinery/atmospherics/unary/cryo_cell,
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "mb" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -6516,29 +6512,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"qo" = (
-/obj/storage/secure/closet/security/forensics,
-/obj/item/reagent_containers/glass/bottle/formaldehyde,
-/obj/item/reagent_containers/food/drinks/bottle/bojackson,
-/obj/item/clothing/head/fedora{
-	pixel_y = 11
-	},
-/obj/item/device/detective_scanner,
-/obj/item/storage/box/evidence,
-/obj/item/spraybottle/detective,
-/obj/item/camera,
-/obj/item/clothing/under/suit{
-	name = "Mortician Suit"
-	},
-/obj/item/hand_labeler,
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/specialroom/freezer,
-/area/station/security/main)
 "qT" = (
 /obj/machinery/lawrack{
 	dir = 8
@@ -6556,6 +6529,27 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"ss" = (
+/obj/storage/secure/closet/security/forensics,
+/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/obj/item/reagent_containers/food/drinks/bottle/bojackson,
+/obj/item/clothing/head/fedora{
+	pixel_y = 11
+	},
+/obj/item/device/detective_scanner,
+/obj/item/storage/box/evidence,
+/obj/item/spraybottle/detective,
+/obj/item/camera,
+/obj/item/clothing/under/suit/mortician,
+/obj/item/hand_labeler,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/security/main)
 "uG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -6604,6 +6598,10 @@
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"Ka" = (
+/obj/machinery/atmospherics/unary/cryo_cell,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "Ri" = (
 /obj/machinery/recharger/wall/sticky{
 	dir = 1
@@ -54493,7 +54491,7 @@ li
 lu
 lG
 lN
-ma
+Ka
 mo
 mx
 nz
@@ -55097,7 +55095,7 @@ lj
 lw
 lH
 lN
-ma
+Ka
 mq
 mz
 lT
@@ -56277,7 +56275,7 @@ bd
 bj
 bt
 as
-qo
+ss
 bJ
 bS
 bU

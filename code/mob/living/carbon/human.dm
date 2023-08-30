@@ -625,7 +625,8 @@
 		return
 
 	//Zombies just rise again (after a delay)! Oh my!
-	if (src.mutantrace.onDeath(gibbed))
+	var/mutrace_result = src.mutantrace.onDeath(gibbed)
+	if(mutrace_result == MUTRACE_ONDEATH_REVIVED)
 		return
 
 	if (src.bioHolder && src.bioHolder.HasEffect("revenant"))
@@ -788,7 +789,10 @@
 					logTheThing(LOG_DIARY, null, "Rebooting because of no live players", "game")
 					Reboot_server()
 #endif
-	return ..(gibbed)
+	. = ..(gibbed)
+
+	if(mutrace_result == MUTRACE_ONDEATH_DEFER_DELETE)
+		qdel(src)
 
 //Unkillable respawn proc, also used by soulguard now
 // Also for removing antagonist status. New mob required to get rid of old-style, mob-specific antagonist verbs (Convair880).

@@ -17185,6 +17185,23 @@
 /obj/stool/bench/yellow,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"cyA" = (
+/obj/storage/closet/dresser/random,
+/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/under/suit/black,
+/obj/item/clothing/under/shirt_pants,
+/obj/item/clothing/shoes/black,
+/obj/item/clothing/glasses/eyepatch{
+	name = "costume eyepatch"
+	},
+/obj/item/clothing/head/mime_beret,
+/obj/item/clothing/head/mime_bowler,
+/obj/item/clothing/under/misc/mime,
+/obj/item/clothing/under/misc/mime/alt,
+/obj/item/clothing/suit/suspenders,
+/obj/item/clothing/suit/scarf,
+/turf/simulated/floor/black,
+/area/station/crewquarters/garbagegarbs)
 "czf" = (
 /obj/lattice,
 /obj/machinery/atmospherics/pipe/simple/junction,
@@ -26569,18 +26586,6 @@
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
-"gFS" = (
-/obj/decal/tile_edge/line/white{
-	dir = 9;
-	icon_state = "line2"
-	},
-/obj/machinery/atmospherics/unary/cryo_cell,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -20
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/medbay/treatment)
 "gGo" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -31017,6 +31022,17 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"iXC" = (
+/obj/decal/tile_edge/line/white{
+	dir = 5;
+	icon_state = "line2"
+	},
+/obj/machinery/atmospherics/unary/cryo_cell,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/treatment)
 "iXY" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -32949,26 +32965,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
-"jWD" = (
-/obj/storage/closet/dresser/random,
-/obj/item/clothing/under/suit/dress{
-	desc = "A black dress. Very formal.";
-	name = "black dress"
-	},
-/obj/item/clothing/under/suit,
-/obj/item/clothing/under/shirt_pants,
-/obj/item/clothing/shoes/black,
-/obj/item/clothing/glasses/eyepatch{
-	name = "costume eyepatch"
-	},
-/obj/item/clothing/head/mime_beret,
-/obj/item/clothing/head/mime_bowler,
-/obj/item/clothing/under/misc/mime,
-/obj/item/clothing/under/misc/mime/alt,
-/obj/item/clothing/suit/suspenders,
-/obj/item/clothing/suit/scarf,
-/turf/simulated/floor/black,
-/area/station/crewquarters/garbagegarbs)
 "jWF" = (
 /obj/disposalpipe/segment,
 /obj/machinery/firealarm{
@@ -33222,6 +33218,29 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"kht" = (
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/obj/item/organ/eye,
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart"
+	},
+/obj/machinery/light_switch/north,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/medbay/surgery/storage)
 "khO" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
@@ -36819,6 +36838,18 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
+"maz" = (
+/obj/decal/tile_edge/line/white{
+	dir = 9;
+	icon_state = "line2"
+	},
+/obj/machinery/atmospherics/unary/cryo_cell,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -20
+	},
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/treatment)
 "maB" = (
 /obj/lattice{
 	dir = 9;
@@ -37663,6 +37694,30 @@
 /obj/landmark/pest,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"mvE" = (
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
+	},
+/obj/table/reinforced/auto,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/pen/marker/red,
+/obj/item/pen/marker/blue,
+/obj/item/hand_labeler,
+/obj/item/device/detective_scanner,
+/obj/item/clothing/under/suit/mortician,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/disposalpipe/junction{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/medical/morgue)
 "mvF" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 6;
@@ -48556,32 +48611,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/central)
-"sfW" = (
-/obj/decal/tile_edge/line/black{
-	dir = 6;
-	icon_state = "line2"
-	},
-/obj/table/reinforced/auto,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/pen/marker/red,
-/obj/item/pen/marker/blue,
-/obj/item/hand_labeler,
-/obj/item/device/detective_scanner,
-/obj/item/clothing/under/suit{
-	name = "Mortician Suit"
-	},
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/disposalpipe/junction{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/station/medical/morgue)
 "sgg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -54458,29 +54487,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-"vbT" = (
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/obj/item/organ/eye,
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/machinery/light_switch/north,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/medbay/surgery/storage)
 "vcl" = (
 /obj/cable/yellow{
 	dir = 4
@@ -54808,17 +54814,6 @@
 	dir = 1
 	},
 /area/station/science/lobby)
-"vlq" = (
-/obj/decal/tile_edge/line/white{
-	dir = 5;
-	icon_state = "line2"
-	},
-/obj/machinery/atmospherics/unary/cryo_cell,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/medbay/treatment)
 "vlz" = (
 /obj/machinery/conveyor_switch{
 	id = "reclamation_fork";
@@ -91533,7 +91528,7 @@ eov
 sLT
 odn
 odn
-vbT
+kht
 aKj
 hEf
 azB
@@ -94851,7 +94846,7 @@ eov
 gcw
 vBV
 ueV
-gFS
+maz
 wbU
 mas
 vfx
@@ -95167,7 +95162,7 @@ pAe
 gMU
 sfD
 sZK
-sfW
+mvE
 sra
 bep
 ykB
@@ -95757,7 +95752,7 @@ vBV
 emf
 vBV
 ueV
-vlq
+iXC
 aZL
 atE
 oba
@@ -105670,7 +105665,7 @@ cqv
 apT
 kTa
 ame
-jWD
+cyA
 czr
 ame
 qaD

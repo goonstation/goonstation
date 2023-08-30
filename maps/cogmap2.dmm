@@ -9666,36 +9666,6 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"aBx" = (
-/obj/item/clothing/under/suit/dress{
-	desc = "A black dress. Very formal.";
-	name = "black dress"
-	},
-/obj/item/clothing/under/suit,
-/obj/item/clothing/under/shirt_pants,
-/obj/item/clothing/shoes/black,
-/obj/item/clothing/head/fedora,
-/obj/item/clothing/glasses/eyepatch{
-	name = "costume eyepatch"
-	},
-/obj/disposalpipe/segment/morgue,
-/obj/item/clothing/head/mime_beret,
-/obj/item/clothing/head/mime_bowler,
-/obj/item/clothing/under/misc/mime,
-/obj/item/clothing/under/misc/mime/alt,
-/obj/item/clothing/suit/suspenders,
-/obj/item/clothing/suit/scarf,
-/obj/storage/closet/dresser{
-	anchored = 1;
-	name = "costume dresser";
-	pixel_y = 20
-	},
-/obj/ladder/embed{
-	id = "smiling";
-	pixel_y = 32
-	},
-/turf/simulated/floor/specialroom/arcade,
-/area/station/chapel/sanctuary)
 "aBy" = (
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -54286,23 +54256,6 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
-"cQP" = (
-/obj/table/auto,
-/obj/item/clothing/under/suit{
-	name = "Mortician Suit"
-	},
-/obj/item/clothing/mask/surgical,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/device/detective_scanner,
-/obj/item/stamp,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical_shield,
-/obj/item/staple_gun,
-/obj/item/clothing/suit/apron,
-/obj/item/surgical_spoon,
-/obj/item/spraybottle/cleaner,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "cQQ" = (
 /obj/disposalpipe/trunk/mail/south,
 /obj/machinery/disposal/mail/autoname/medbay/morgue,
@@ -57216,15 +57169,6 @@
 "cYk" = (
 /turf/simulated/floor/caution/south,
 /area/station/hangar/qm)
-"cYl" = (
-/obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	id = "Sleeper_Access";
-	name = "Listening Post";
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/listeningpost)
 "cYn" = (
 /obj/machinery/cargo_router{
 	destinations = list("Trader"=4,"Arrivals"=4,"Medsci"=4,"Catering"=4,"Security"=4,"Disposals"=4,"Engine"=4,"Escape"=4,"Export"=4)
@@ -63055,16 +62999,6 @@
 /obj/storage/crate/adventure,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/teleporter)
-"dIu" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_x = 32
-	},
-/turf/simulated/floor/grey/side{
-	dir = 8
-	},
-/area/listeningpost)
 "dJs" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -64000,10 +63934,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"fnH" = (
-/obj/machinery/atmospherics/unary/cryo_cell,
-/turf/simulated/floor/blue,
-/area/station/medical/medbay)
 "fnX" = (
 /obj/grille/catwalk,
 /obj/cable/yellow{
@@ -65586,15 +65516,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/engine/hotloop)
-"hWK" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = -33;
-	entrance_scanner = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "hXM" = (
 /obj/stool/chair/comfy/shuttle/green,
 /obj/machinery/computer/transit_shuttle/research/embedded,
@@ -66183,6 +66104,33 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/north)
+"iMe" = (
+/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/under/suit/black,
+/obj/item/clothing/under/shirt_pants,
+/obj/item/clothing/shoes/black,
+/obj/item/clothing/head/fedora,
+/obj/item/clothing/glasses/eyepatch{
+	name = "costume eyepatch"
+	},
+/obj/disposalpipe/segment/morgue,
+/obj/item/clothing/head/mime_beret,
+/obj/item/clothing/head/mime_bowler,
+/obj/item/clothing/under/misc/mime,
+/obj/item/clothing/under/misc/mime/alt,
+/obj/item/clothing/suit/suspenders,
+/obj/item/clothing/suit/scarf,
+/obj/storage/closet/dresser{
+	anchored = 1;
+	name = "costume dresser";
+	pixel_y = 20
+	},
+/obj/ladder/embed{
+	id = "smiling";
+	pixel_y = 32
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/chapel/sanctuary)
 "iMg" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -66383,6 +66331,30 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/engine/coldloop)
+"iYr" = (
+/obj/storage/crate/freezer,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/machinery/light/small,
+/obj/item/reagent_containers/food/snacks/ingredient/meat{
+	desc = "Ew.";
+	name = "meat of questionable origin"
+	},
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/organ/liver,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/catering)
 "iYD" = (
 /mob/living/critter/small_animal/seal,
 /turf/simulated/floor/white,
@@ -67577,6 +67549,16 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/circuit/off,
 /area/station/hangar/main)
+"kzL" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_x = 32
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "kAe" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable{
@@ -67795,6 +67777,15 @@
 	},
 /turf/space,
 /area/shuttle/research/outpost)
+"kPd" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = -33;
+	entrance_scanner = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "kPf" = (
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -67983,30 +67974,6 @@
 	name = "reinforced plating"
 	},
 /area/station/science/chemistry)
-"kYj" = (
-/obj/storage/crate/freezer,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/machinery/light/small,
-/obj/item/reagent_containers/food/snacks/ingredient/meat{
-	desc = "Ew.";
-	name = "meat of questionable origin"
-	},
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/organ/liver,
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/catering)
 "kYs" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment,
@@ -68618,16 +68585,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/mining/magnet)
-"lVl" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = 25
-	},
-/turf/simulated/floor/stairs{
-	dir = 8
-	},
-/area/listeningpost)
 "lVF" = (
 /obj/machinery/power/pt_laser{
 	dir = 8
@@ -68965,6 +68922,10 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"mvp" = (
+/obj/machinery/atmospherics/unary/cryo_cell,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "mvu" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
@@ -69256,6 +69217,15 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/maintenance/northeast)
+"mNY" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "Sleeper_Access";
+	name = "Listening Post";
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/listeningpost)
 "mOe" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/firealarm{
@@ -73042,6 +73012,31 @@
 /obj/landmark/start/job/cyborg,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"sIT" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart"
+	},
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "sJz" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -74475,6 +74470,21 @@
 	dir = 9
 	},
 /area/station/solar/south)
+"uVr" = (
+/obj/table/auto,
+/obj/item/clothing/under/suit/mortician,
+/obj/item/clothing/mask/surgical,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/item/device/detective_scanner,
+/obj/item/stamp,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical_shield,
+/obj/item/staple_gun,
+/obj/item/clothing/suit/apron,
+/obj/item/surgical_spoon,
+/obj/item/spraybottle/cleaner,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "uVv" = (
 /obj/machinery/light/small/floor,
 /obj/decal/stripe_delivery,
@@ -74786,31 +74796,6 @@
 /obj/mapping_helper/access/kitchen,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
-"vDG" = (
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "vDV" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
@@ -76341,6 +76326,16 @@
 /obj/landmark/pest,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
+"ygE" = (
+/obj/machinery/door_control/antagscanner{
+	name = "Dubious Hand Scanner";
+	id = "Sleeper_Access";
+	pixel_y = 25
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost)
 "yhA" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Outpost Shuttle Dock"
@@ -104885,7 +104880,7 @@ amj
 anw
 aov
 apz
-kYj
+iYr
 alb
 ato
 auK
@@ -107407,7 +107402,7 @@ cTG
 mCf
 vxs
 cXG
-fnH
+mvp
 cZH
 daG
 cHZ
@@ -108313,7 +108308,7 @@ cTG
 dcf
 cPg
 cQC
-fnH
+mvp
 cZK
 daJ
 cHZ
@@ -113743,7 +113738,7 @@ cJy
 cJw
 cJy
 cOh
-cQP
+uVr
 cNU
 cTW
 cVx
@@ -114649,7 +114644,7 @@ cLe
 cMG
 cNW
 cPu
-vDG
+sIT
 cNU
 cTZ
 cVx
@@ -120898,7 +120893,7 @@ avq
 awJ
 ayv
 azW
-aBx
+iMe
 aCO
 aDS
 alM
@@ -155486,7 +155481,7 @@ aab
 aaF
 aan
 aan
-hWK
+kPd
 dnA
 dnR
 dnZ
@@ -155787,7 +155782,7 @@ aab
 aab
 aab
 dnq
-cYl
+mNY
 dnq
 dnA
 dnS
@@ -156089,7 +156084,7 @@ dmJ
 dmJ
 dmJ
 dmJ
-lVl
+ygE
 dnA
 dnA
 dnT
@@ -156391,7 +156386,7 @@ dmJ
 dmV
 dnf
 dmJ
-cYl
+mNY
 dnA
 dnL
 dnU
@@ -156997,7 +156992,7 @@ dnh
 dnr
 dnz
 dnF
-dIu
+kzL
 dnW
 dod
 dnN

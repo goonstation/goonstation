@@ -23736,28 +23736,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/security/main)
-"bcw" = (
-/obj/item/device/radio/intercom,
-/obj/item/clothing/under/suit/dress,
-/obj/item/clothing/under/suit/dress{
-	desc = "A black dress. Very formal.";
-	name = "black dress"
-	},
-/obj/item/clothing/head/mime_beret,
-/obj/item/clothing/head/mime_bowler,
-/obj/item/clothing/under/misc/mime,
-/obj/item/clothing/under/misc/mime/alt,
-/obj/item/clothing/suit/suspenders,
-/obj/item/clothing/suit/scarf,
-/obj/storage/closet/dresser{
-	anchored = 1;
-	name = "costume dresser"
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fred2"
-	},
-/area/station/chapel/sanctuary)
 "bcx" = (
 /obj/item/device/radio/intercom,
 /obj/decal/stripe_caution,
@@ -35604,29 +35582,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/white,
 /area/station/routing/medsci)
-"bHF" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/table/auto,
-/obj/item/clothing/mask/surgical{
-	pixel_x = -12;
-	pixel_y = 9
-	},
-/obj/item/clothing/under/suit{
-	name = "Mortician Suit";
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/clothing/gloves/latex{
-	pixel_x = 4;
-	pixel_y = 2
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "bHG" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -39577,6 +39532,46 @@
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/black,
 /area/station/teleporter)
+"bPK" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/machinery/power/apc/autoname_west,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney";
+	pixel_x = -3;
+	pixel_y = -9
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
+	pixel_x = -1
+	},
+/obj/item/organ/eye{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart";
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "bPL" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/cable{
@@ -57635,18 +57630,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/armory_outside)
-"eLG" = (
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1
-	},
-/turf/simulated/floor/redwhite{
-	dir = 6
-	},
-/area/station/medical/medbay/surgery)
 "eMf" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5
@@ -59288,6 +59271,18 @@
 	dir = 1
 	},
 /area/station/ranch)
+"idW" = (
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1
+	},
+/turf/simulated/floor/redwhite{
+	dir = 6
+	},
+/area/station/medical/medbay/surgery)
 "ifc" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -59792,6 +59787,29 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/eastwest,
 /area/station/medical/staff)
+"iVp" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/table/auto,
+/obj/item/clothing/mask/surgical{
+	pixel_x = -12;
+	pixel_y = 9
+	},
+/obj/item/clothing/under/suit/black{
+	name = "Mortician Suit";
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "iVu" = (
 /obj/disposalpipe/segment{
 	dir = 8
@@ -60082,6 +60100,25 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"jFL" = (
+/obj/item/device/radio/intercom,
+/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/head/mime_beret,
+/obj/item/clothing/head/mime_bowler,
+/obj/item/clothing/under/misc/mime,
+/obj/item/clothing/under/misc/mime/alt,
+/obj/item/clothing/suit/suspenders,
+/obj/item/clothing/suit/scarf,
+/obj/storage/closet/dresser{
+	anchored = 1;
+	name = "costume dresser"
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fred2"
+	},
+/area/station/chapel/sanctuary)
 "jFO" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 8;
@@ -60764,6 +60801,14 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"kSw" = (
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1
+	},
+/turf/simulated/floor/redwhite{
+	dir = 10
+	},
+/area/station/medical/medbay/surgery)
 "kWj" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -61341,14 +61386,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
-"mfX" = (
-/obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1
-	},
-/turf/simulated/floor/redwhite{
-	dir = 10
-	},
-/area/station/medical/medbay/surgery)
 "mgc" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable{
@@ -63882,46 +63919,6 @@
 /obj/mapping_helper/access/heads,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
-"siq" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/machinery/power/apc/autoname_west,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
-	pixel_x = 2;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
-	pixel_x = -7
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney";
-	pixel_x = -3;
-	pixel_y = -9
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	pixel_x = 2;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
-	pixel_x = -1
-	},
-/obj/item/organ/eye{
-	pixel_x = -7;
-	pixel_y = 4
-	},
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart";
-	pixel_x = 1;
-	pixel_y = -3
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "siv" = (
 /obj/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
@@ -98048,7 +98045,7 @@ qsB
 czk
 bMy
 czk
-bcw
+jFL
 brc
 csu
 qIm
@@ -113829,7 +113826,7 @@ bfs
 cvV
 bDR
 cCn
-siq
+bPK
 bcb
 bNL
 chm
@@ -114433,7 +114430,7 @@ cCp
 cCp
 aLe
 cCn
-bHF
+iVp
 ajn
 ajn
 ajn
@@ -119279,7 +119276,7 @@ bCq
 bom
 cwQ
 boH
-mfX
+kSw
 lUI
 oGx
 rxx
@@ -119883,7 +119880,7 @@ geA
 bmf
 bmc
 aPz
-eLG
+idW
 umP
 hAd
 rxx

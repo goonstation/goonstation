@@ -53,7 +53,7 @@ export interface BoxProps {
   pb?: string | BooleanLike;
   pl?: string | BooleanLike;
   pr?: string | BooleanLike;
-  color?: string | BooleanLike;
+  mainColor?: string | BooleanLike;
   textColor?: string | BooleanLike;
   backgroundColor?: string | BooleanLike;
   fillPositionedParent?: boolean;
@@ -248,10 +248,10 @@ export const computeBoxProps = (props: BoxProps) => {
 };
 
 export const computeBoxClassName = (props: BoxProps) => {
-  const color = props.textColor || props.color;
+  const mainColor = props.textColor || props.mainColor;
   const backgroundColor = props.backgroundColor;
   return classes([
-    isColorClass(color) && 'color-' + color,
+    isColorClass(mainColor) && 'color-' + mainColor,
     isColorClass(backgroundColor) && 'color-bg-' + backgroundColor,
   ]);
 };
