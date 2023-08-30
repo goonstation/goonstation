@@ -18,7 +18,7 @@ TYPEINFO(/datum/component/bloodflick)
 	if (!isitem(src.parent))
 		return COMPONENT_INCOMPATIBLE
 	src.weapon = src.parent
-	RegisterSignal(parent, COMSIG_ITEM_TWIRLED, PROC_REF(flick))
+	RegisterSignal(parent, COMSIG_ITEM_TWIRLED, PROC_REF(flickblood))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_POST, PROC_REF(wetten))
 	RegisterSignal(parent, COMSIG_ATOM_CLEANED, PROC_REF(clean))
 	..()
@@ -29,7 +29,7 @@ TYPEINFO(/datum/component/bloodflick)
 	UnregisterSignal(parent, COMSIG_ATOM_CLEANED)
 	..()
 
-/datum/component/bloodflick/proc/flick()
+/datum/component/bloodflick/proc/flickblood()
 	if (!src.weapon.blood_DNA)
 		return
 	// if all the blood is wet, flicking it off cleans it.
