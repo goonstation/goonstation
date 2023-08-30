@@ -168,6 +168,7 @@ TRAYS
 
 	New()
 		..()
+		src.AddComponent(/datum/component/bloodflick)
 		src.setItemSpecial(/datum/item_special/double)
 
 	attack(mob/living/carbon/M, mob/living/carbon/user)
@@ -186,15 +187,6 @@ TRAYS
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
 		return 1
-
-	proc/bloodflick()
-		var/isbloody = FALSE
-		if (src.blood_DNA)
-			isbloody = TRUE
-			make_cleanable(/obj/decal/cleanable/blood, get_turf(src))
-			src.clean_forensic()
-		return isbloody
-
 
 /obj/item/kitchen/utensil/spoon/plastic
 	name = "plastic spoon"

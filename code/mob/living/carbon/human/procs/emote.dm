@@ -660,12 +660,8 @@
 								thing = src.r_hand
 						if (thing)
 							var/isbloody = FALSE
-							if (istype(thing, /obj/item/kitchen/utensil/knife))
-								var/obj/item/kitchen/utensil/knife/kKnife = thing
-								isbloody = kKnife.bloodflick()
-							else if (istype(thing, /obj/item/knife/butcher))
-								var/obj/item/knife/butcher/bKnife = thing
-								isbloody = bKnife.bloodflick()
+							if (thing.GetComponent(/datum/component/bloodflick))
+								thing.flick()
 							message = thing.on_spin_emote(src, isbloody)
 							maptext_out = "<I>twirls [thing]</I>"
 							animate_spin(thing, prob(50) ? "L" : "R", 1, 0)
