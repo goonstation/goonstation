@@ -64,7 +64,7 @@
 					// lazylistassoc when (wici)
 					sublist[defect_type] = initial(defect_type:weight) // we can use initial to get initial values of a type without an instance
 
-	Disposing()
+	disposing()
 		src.owner = null
 		for (var/datum/cloner_defect/defect as anything in src.active_cloner_defects)
 			defect.dispose()
