@@ -34291,7 +34291,7 @@
 /area/station/engine/storage)
 "eSh" = (
 /obj/stool/bar,
-/mob/living/carbon/human/fatherjack,
+/mob/living/carbon/human/fathergrife,
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "eWT" = (
