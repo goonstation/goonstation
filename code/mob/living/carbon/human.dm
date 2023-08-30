@@ -534,6 +534,11 @@
 	if (organHolder)
 		organHolder.dispose()
 		organHolder = null
+
+	if (src.inventory)
+		src.inventory.dispose()
+		src.inventory = null
+
 	..()
 
 	//blah, this might not be effective for ref clearing but ghost observers inside me NEED this list to be populated in base mob/disposing
