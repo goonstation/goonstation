@@ -72,7 +72,7 @@
 			uplink = S
 			uplink_source = S
 			S.lock_code_autogenerate = TRUE
-			if (!(H.equip_if_possible(S, H.slot_in_backpack)))
+			if (!(H.equip_if_possible(S, SLOT_IN_BACKPACK)))
 				loc_string = "on the ground beneath you"
 			else
 				loc_string = "in [H.back] on your back"
@@ -106,11 +106,21 @@
 		. = ..()
 		var/datum/client_image_group/image_group = get_image_group(ROLE_REVOLUTIONARY)
 		image_group.remove_mind_mob_overlay(src.owner)
-		image_group.remove_mind(src.owner)
-
-		get_image_group(CLIENT_IMAGE_GROUP_HEADS_OF_STAFF).remove_mind(src.owner)
+		if (image_group.minds_with_associated_mob_image[src.owner])
+			image_group.remove_mind(src.owner)
+		var/datum/client_image_group/heads_group = get_image_group(CLIENT_IMAGE_GROUP_HEADS_OF_STAFF)
+		if (heads_group.minds_with_associated_mob_image[src.owner])
+			heads_group.remove_mind(src.owner)
 
 	assign_objectives()
 		for(var/datum/mind/head_mind in src.heads_of_staff)
 			var/datum/objective/regular/assassinate/objective = new(null, src.owner, src)
 			objective.find_target_by_role(head_mind.assigned_role)
+
+	borged()
+		SPAWN(0) //the transfer signals are sent in a funny order so we have to do this in order to prevent borgs being left with orphaned images
+			src.remove_from_image_groups()
+
+	unborged()
+		SPAWN(0) //see above
+			src.add_to_image_groups()

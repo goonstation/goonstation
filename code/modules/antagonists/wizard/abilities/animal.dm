@@ -30,7 +30,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 /mob/living/critter/small_animal/bee,
 /mob/living/critter/maneater_polymorph,
 /mob/living/critter/fermid/polymorph,
-/mob/living/critter/small_animal/crab_polymorph)
+/mob/living/critter/small_animal/crab/polymorph)
 
 /datum/targetable/spell/animal
 	name = "Baleful Polymorph" // todo: a decent name - done?
@@ -127,7 +127,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 			C.real_name = "[target.real_name] the [C.real_name]"
 			C.name = C.real_name
 			logTheThing(LOG_COMBAT, M, "casts the Polymorph spell on [constructTarget(target,"combat")] turning them into [constructTarget(C,"combat")] at [log_loc(C)].")
-			C.butcherable = 1 // we would like the brain to be recoverable, please
+			C.butcherable = BUTCHER_ALLOWED // we would like the brain to be recoverable, please
 			if (istype(C, /mob/living/critter/small_animal/bee))
 				var/mob/living/critter/small_animal/bee/B = C
 				B.non_admin_bee_allowed = 1

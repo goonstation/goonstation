@@ -53,7 +53,7 @@
 TYPEINFO(/obj/machinery/vending)
 	mats = 20
 
-ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
+ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command_speak)
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."
@@ -110,6 +110,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 	var/extended_inventory = FALSE //can we access the hidden inventory?
 	var/can_fall = TRUE //Can this machine be knocked over?
+	var/fallen = FALSE // Is it CURRENTLY knocked over?
 	var/can_hack = TRUE //Can this machine have it's panel open?
 
 	var/panel_open = FALSE //Hacking that vending machine. Gonna get a free candy bar.
@@ -277,17 +278,23 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 /obj/machinery/vending/blob_act(var/power)
 	if (prob(power * 1.25))
 		SPAWN(0)
-			if (prob(power / 3) && can_fall == 2)
+			if (prob(power / 3) &&  fallen)
 				for (var/i = 0, i < rand(4,7), i++)
 					src.malfunction()
 				qdel(src)
-			if (prob(50) || can_fall == 2)
+			if (prob(50) || fallen)
 				src.malfunction()
 			else
 				src.fall()
 		return
 
 	return
+
+/obj/machinery/vending/bullet_act(var/obj/projectile/P)
+	if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
+		if((src.can_fall) && prob(P.power))
+			src.fall()
+	..()
 
 /obj/machinery/vending/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
@@ -326,7 +333,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 /obj/machinery/vending/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/electronics/scanner) || istype(W,/obj/item/deconstructor)) // So people don't end up making the vending machines fall on them when they try to scan/deconstruct it
 		return
-	if (istype(W, /obj/item/spacecash))
+	if (istype(W, /obj/item/currency/spacecash))
 		if (src.pay)
 			src.credit += W.amount
 			W.amount = 0
@@ -569,8 +576,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		// return cash
 		if("returncash")
 			if (src.credit > 0)
-				var/obj/item/spacecash/returned = new /obj/item/spacecash
+				var/obj/item/currency/spacecash/returned = new /obj/item/currency/spacecash
 				returned.setup(src.get_output_location(), src.credit)
+				usr.put_in_hand_or_eject(returned) // try to eject it into the users hand, if we can
 				src.credit = 0
 		if("vend")
 			if(params["target"])
@@ -815,7 +823,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if (href_list["return_credits"])
 			SPAWN(src.vend_delay)
 				if (src.credit > 0)
-					var/obj/item/spacecash/returned = new /obj/item/spacecash
+					var/obj/item/currency/spacecash/returned = new /obj/item/currency/spacecash
 					returned.setup(src.get_output_location(), src.credit)
 
 					usr.put_in_hand_or_eject(returned) // try to eject it into the users hand, if we can
@@ -861,7 +869,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		src.seconds_electrified--
 
 	//Pitch to the people!  Really sell it!
-	if (prob(src.slogan_chance) && ((src.last_slogan + src.slogan_delay) <= world.time) && (src.slogan_list.len > 0))
+	if (prob(src.slogan_chance) && ((src.last_slogan + src.slogan_delay) <= world.time) && (length(src.slogan_list) > 0))
 		var/slogan = pick(src.slogan_list)
 		src.speak(slogan)
 		src.last_slogan = world.time
@@ -870,6 +878,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		src.throw_item()
 
 	return
+
+/obj/machinery/vending/proc/admin_command_speak()
+		set name = "Speak"
+		src.speak(tgui_input_text(usr, "Speak message through [src]", "Speak", ""))
 
 /obj/machinery/vending/proc/speak(var/message)
 	if (status & NOPOWER)
@@ -912,7 +924,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	return
 
 /obj/machinery/vending/power_change()
-	if (can_fall == 2)
+	if (fallen)
 		icon_state = icon_fallen ? icon_fallen : "[initial(icon_state)]-fallen"
 		light.disable()
 		return
@@ -932,9 +944,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				light.disable()
 
 /obj/machinery/vending/proc/fall(mob/living/carbon/victim)
-	if (can_fall != 1)
+	if (!can_fall || fallen)
 		return
-	can_fall = 2
+	fallen = TRUE
 	status |= BROKEN
 	var/turf/vicTurf = get_turf(victim)
 	src.icon_state = "[initial(icon_state)]-fallen"
@@ -998,7 +1010,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 	if(length(item_name_to_throw))
 		for(var/datum/data/vending_product/R in src.product_list)
-			if(lowertext(item_name_to_throw) == lowertext(strip_html(R.product_name_cache[R.product_path], no_fucking_autoparse = TRUE)))
+			if(lowertext(strip_html(item_name_to_throw, no_fucking_autoparse = TRUE)) == lowertext(strip_html(R.product_name_cache[R.product_path], no_fucking_autoparse = TRUE)))
 				if(R.product_amount > 0 && !(R.product_hidden && !src.extended_inventory))
 					throw_item_act(R, target)
 					return R
@@ -1122,7 +1134,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		return 0
 
 	var/datum/powernet/PN			// find the powernet
-	if (powernets && powernets.len >= netnum)
+	if (powernets && length(powernets) >= netnum)
 		PN = powernets[netnum]
 
 	elecflash(src)
@@ -1138,11 +1150,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	return 0
 
 /obj/machinery/vending/proc/right()
-	src.can_fall = 1
+	src.fallen = FALSE
 	src.layer = initial(src.layer)
 	src.anchored = ANCHORED
 	src.status &= ~BROKEN
 	src.power_change()
+
+/obj/machinery/vending/Cross(atom/movable/mover)
+	if (src.fallen && mover.flags & TABLEPASS)
+		return TRUE
+	. = ..()
 
 /datum/action/bar/icon/right_vendor //This is used when you try to remove someone elses handcuffs.
 	duration = 5 SECONDS
@@ -1274,6 +1291,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape, 10, cost=PAY_TRADESMAN/2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ecig_refill_cartridge, 20, cost=PAY_TRADESMAN/5)
 		product_list += new/datum/data/vending_product(/obj/item/item_box/medical_patches/nicotine, 5, cost=PAY_TRADESMAN/5)
+		product_list += new/datum/data/vending_product(/obj/item/paper, 20, cost=PAY_TRADESMAN/20)
 
 		product_list += new/datum/data/vending_product(/obj/item/device/igniter, rand(1, 6), hidden=1, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/random, rand(0, 1), hidden=1, cost=420)
@@ -1423,6 +1441,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 #endif
 		product_list += new/datum/data/vending_product(/obj/item/device/flash/turbo, rand(1, 6), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, rand(1, 2), hidden=1) // Obtaining a backpack full of lethal ammo required no effort whatsoever, hence why nobody ordered AP speedloaders from the Syndicate (Convair880).
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/donut, rand(2, 4), hidden=1) // emergency snack
 
 /obj/machinery/vending/security_ammo //shitsec time yes
 	name = "AmmoTech"
@@ -1587,6 +1606,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/disposalconstruct/mechanics_sensor, 10)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/sigbuilder, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/sigcheckcomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/textmanip, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/synthcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/telecomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/zapper, 10)
@@ -2725,7 +2745,11 @@ TYPEINFO(/obj/machinery/vending/monkey)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 2, cost=PAY_TRADESMAN, hidden=1)
+
+	with_ammo
+		create_products()
+			..()
+			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 2, cost=PAY_TRADESMAN, hidden=1)
 
 TYPEINFO(/obj/machinery/vending/chem)
 	mats = null
@@ -2806,9 +2830,9 @@ TYPEINFO(/obj/machinery/vending/chem)
 		product_list += new/datum/data/vending_product(/obj/item/clow_key, 5, cost=PAY_TRADESMAN/2)      //      (please laugh)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/solo, 5, cost=PAY_UNTRAINED/4)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/solo_rules, 5, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/fakecash/fivehundred, 10, cost=PAY_UNTRAINED/4)
-		product_list += new/datum/data/vending_product(/obj/item/fakecash/thousand, 10, cost=PAY_UNTRAINED/2)
-		product_list += new/datum/data/vending_product(/obj/item/fakecash/hundredthousand, 1, cost=PAY_DOCTORATE)
+		product_list += new/datum/data/vending_product(/obj/item/currency/fakecash/fivehundred, 10, cost=PAY_UNTRAINED/4)
+		product_list += new/datum/data/vending_product(/obj/item/currency/fakecash/thousand, 10, cost=PAY_UNTRAINED/2)
+		product_list += new/datum/data/vending_product(/obj/item/currency/fakecash/hundredthousand, 1, cost=PAY_DOCTORATE)
 		product_list += new/datum/data/vending_product(/obj/item/dice/weighted, rand(1,3), cost=PAY_TRADESMAN/2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/dice/d1, rand(0,1), cost=PAY_TRADESMAN/3, hidden=1)
 
@@ -3043,6 +3067,14 @@ TYPEINFO(/obj/machinery/vending/janitor)
 				boutput(usr, "<span class='alert'>There is no tank to fill up!</span>")
 
 ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
+
+/obj/machinery/vending/air_vendor/pod_wars
+	air_cost = 0
+	can_fall = FALSE
+	can_hack = FALSE
+
+	ex_act(severity)
+		. = ..()
 
 /obj/machinery/vending/jobclothing/security
 	name = "Security Apparel"
@@ -3286,6 +3318,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/ampoule,
 		/obj/item/chem_pill_bottle,
+		/obj/item/storage/box/patchbox,
+		/obj/item/item_box/medical_patches,
 	)
 
 	New()

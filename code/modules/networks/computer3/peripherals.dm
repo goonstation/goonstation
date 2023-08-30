@@ -895,7 +895,7 @@ TYPEINFO(/obj/item/peripheral)
 
 		switch(prizeselect)
 			if(1)
-				var/obj/item/spacecash/P = new /obj/item/spacecash
+				var/obj/item/currency/spacecash/P = new /obj/item/currency/spacecash
 				P.setup(prize_location)
 				prize = P
 				prize.name = "space ticket"
@@ -942,11 +942,19 @@ TYPEINFO(/obj/item/peripheral)
 		desc = "A peripheral board for editing ID cards."
 		can_manage_access = 1
 
+		return_badge()
+			// label text, icon, contents
+			. = list("label" = "Card","icon" = "edit","contents" = src.authid)
+
 	register //A card scanner...that manages money??
 		name = "ATM card module"
 		desc = "A peripheral board for managing an ID card's credit balance."
 		func_tag = "ATM_SCANNER"
 		can_manage_money = 1
+
+		return_badge()
+			// label text, icon, contents
+			. = list("label" = "Card","icon" = "credit-card","contents" = src.authid)
 
 		return_status_text()
 			var/status_text = "No card loaded"
@@ -962,8 +970,8 @@ TYPEINFO(/obj/item/peripheral)
 		clownifies_card = 1
 
 		return_badge()
-			var/dat = "<font face='Comic Sans MS'>Card: <a href='?src=\ref[src];card=1'>[src.authid ? "Eject" : "-----"]</a></font>"
-			return dat
+			// label text, icon, contents
+			. = list("label" = "Card","icon" = "id-card","contents" = src.authid,"Clown" = TRUE)
 
 	return_status_text()
 		var/status_text = "No card loaded"
@@ -976,8 +984,8 @@ TYPEINFO(/obj/item/peripheral)
 		return status_text
 
 	return_badge()
-		var/dat = "Card: <a href='?src=\ref[src];card=1'>[src.authid ? "Eject" : "-----"]</a>"
-		return dat
+		// label text, icon, contents
+		. = list("label" = "Card","icon" = "id-card","contents" = src.authid)
 
 	proc/eject_card()
 		if(src.authid)
@@ -1196,8 +1204,8 @@ TYPEINFO(/obj/item/peripheral)
 		return 0
 
 	return_badge()
-		var/dat = "Disk: <a href='?src=\ref[src];disk=1'>[src.disk ? "Eject" : "-----"]</a>"
-		return dat
+		// label text, icon, contents
+		. = list("label" = "Disk","icon" = "rom","contents" = src.disk)
 
 	uninstalled()
 		src.disk?.set_loc(src)
@@ -1275,8 +1283,8 @@ TYPEINFO(/obj/item/peripheral)
 	func_tag = "SHU_ROM"
 
 	return_badge()
-		var/dat = "Cart: <a href='?src=\ref[src];disk=1'>[src.disk ? "Eject" : "-----"]</a>"
-		return dat
+		// label text, icon, contents
+		. = list("label" = "Cart","icon" = "microchip","contents" = src.disk)
 
 	return_status_text()
 		var/status_text = "No cart loaded"
@@ -1298,8 +1306,8 @@ TYPEINFO(/obj/item/peripheral)
 	func_tag = "SHU_TAPE"
 
 	return_badge()
-		var/dat = "Tape: <a href='?src=\ref[src];disk=1'>[src.disk ? "Eject" : "-----"]</a>"
-		return dat
+		// label text, icon, contents
+		. = list("label" = "Tape","icon" = "database","contents" = src.disk)
 
 	return_status_text()
 		var/status_text = "No tape loaded"
@@ -1332,31 +1340,17 @@ TYPEINFO(/obj/item/peripheral)
 		return status_text
 
 	return_badge()
+		// label text, icon, contents
+		var/status_text = "Cell: No cell!"
 		var/obj/machinery/computer3/luggable/checkhost = src.host
-		if(!istype(checkhost))
-			return null
 
-		var/obj/item/cell/cell = checkhost.cell
-		var/readout_color = "#000000"
-		var/readout = "NONE"
-		if(cell)
+		if(checkhost?.cell)
+			var/obj/item/cell/cell = checkhost.cell
 			var/charge_percentage = round((cell.charge/cell.maxcharge)*100)
-			switch(charge_percentage)
-				if(0 to 10)
-					readout_color = "#F80000"
-				if(11 to 25)
-					readout_color = "#FFCC00"
-				if(26 to 50)
-					readout_color = "#CCFF00"
-				if(51 to 75)
-					readout_color = "#33CC00"
-				if(76 to 100)
-					readout_color = "#33FF00"
+			status_text = "Cell: [charge_percentage]%"
 
-			readout = charge_percentage
+			. = list("label" = status_text,"icon" = "id-card","contents" = cell)
 
-		var/dat = {"Cell: <font color=[readout_color]>[readout]%</font>"}
-		return dat
 
 
 /obj/item/peripheral/videocard

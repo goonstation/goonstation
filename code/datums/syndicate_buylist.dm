@@ -260,6 +260,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/storage/belt/wrestling
 	cost = 7
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past. Wearing it unlocks a number of wrestling moves, which can be accessed in a separate command tab."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 /datum/syndicate_buylist/generic/spy_sticker_kit
 	name = "Spy Sticker Kit"
@@ -426,18 +427,12 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 	run_on_spawn(var/obj/storage/crate/syndicate_surplus/crate, var/mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
 		crate.spawn_items(owner, uplink)
-/*
-This is basically useless for anyone but miners.
-...and it's still useless because they can just mine the stuff themselves.
--Spy
-/datum/syndicate_buylist/traitor/loot_crate
-	name = "Loot Crate"
-	item = /obj/storage/crate/loot_crate
-	cost = 8
-	desc = "A crate containing 18-24 credits worth of 'Materials'."
-	not_in_crates = 1
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_HEAD_REV
-*/
+
+/datum/syndicate_buylist/traitor/fingerprinter
+	name = "Fingerprinter"
+	item = /obj/item/device/fingerprinter
+	desc = "A tool which allows you to scan and plant fingerprints."
+	cost = 1
 
 //////////////////////////////////////////////// Objective-specific items //////////////////////////////////////////////
 
@@ -843,7 +838,7 @@ This is basically useless for anyone but miners.
 	name = "Extra Large Shot Glasses"
 	item = /obj/item/storage/box/glassbox/syndie
 	cost = 2
-	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games!"
+	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games! Those glasses also splash all the liquid inside them to whatever they hit when thrown!"
 	job = list("Bartender")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -917,8 +912,10 @@ This is basically useless for anyone but miners.
 	name = "Port-a-Puke"
 	item = /obj/machinery/portapuke
 	cost = 7
+	not_in_crates = 1
 	desc = "An experimental torture chamber that will make any human placed inside puke until they die!"
 	job = list("Janitor")
+	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/monkey_barrel
 	name = "Barrel-O-Monkeys"
@@ -1002,6 +999,15 @@ This is basically useless for anyone but miners.
 	desc = "An AI module that upgrades any AI connected to the installed law rack access to the lasers installed in the cameras."
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
+
+/datum/syndicate_buylist/traitor/megaphone
+	name = "Black Market Megaphone"
+	desc = "An illegal megaphone with the limiter taken off, and a loudener added. Not for the subtle."
+	item = /obj/item/megaphone/syndicate
+	cost = 5
+	vr_allowed = FALSE // no
+	not_in_crates = TRUE
+	job = list("Captain", "VIP", "Regional Director", "Inspector")
 
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
@@ -1293,7 +1299,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 	name = "Revolutionary Flashbang"
 	item = /obj/item/chem_grenade/flashbang/revolution
 	cost = 2
-	desc = "This single-use flashbang will convert all crew within range. It doesn't matter who primes the flash - it will convert all the same."
+	desc = "This single-use flashbang will convert all crew within range, but only shatter the loyalty implants of crew who have them. It doesn't matter who primes the flash - but crew will need a few seconds after a flashbang to respond to another."
 
 /datum/syndicate_buylist/generic/head_rev/revsign
 	name = "Revolutionary Sign"

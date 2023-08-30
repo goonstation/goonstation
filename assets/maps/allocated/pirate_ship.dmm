@@ -61,7 +61,6 @@
 "be" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/decal/stage_edge/alt{
@@ -157,13 +156,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/pirate_ship)
-"do" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/orange,
-/area/pirate_ship)
 "dt" = (
 /obj/storage/crate,
 /obj/item/weldingtool{
@@ -184,13 +176,9 @@
 /area/pirate_ship)
 "dC" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/stool/chair/office/yellow{
@@ -247,7 +235,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/classic,
-/obj/access_spawn/pirate_ship,
+/obj/mapping_helper/access/pirate_ship,
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "fy" = (
@@ -515,13 +503,9 @@
 /area/pirate_ship)
 "mh" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/orange,
@@ -587,8 +571,6 @@
 /area/pirate_ship)
 "nv" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/orange,
@@ -618,12 +600,9 @@
 /area/pirate_ship)
 "nW" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/orange,
@@ -635,8 +614,6 @@
 /area/pirate_ship)
 "oe" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
@@ -677,11 +654,9 @@
 "oO" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/computer3/terminal{
@@ -694,7 +669,7 @@
 "pb" = (
 /obj/machinery/power/terminal,
 /obj/cable,
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/plating/random,
 /area/pirate_ship)
 "ph" = (
@@ -782,9 +757,7 @@
 /turf/simulated/floor/sanitary,
 /area/pirate_ship)
 "rI" = (
-/obj/landmark{
-	name = "Pirate-Spawn"
-	},
+/obj/landmark/antagonist/pirate,
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "sd" = (
@@ -797,12 +770,12 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 8
 	},
-/obj/access_spawn/pirate_ship,
+/obj/mapping_helper/access/pirate_ship,
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "sG" = (
 /obj/table/wood/auto,
-/obj/item/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
 /turf/simulated/floor/grey/checker{
 	dir = 8
 	},
@@ -836,30 +809,22 @@
 /area/pirate_ship)
 "tS" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/stool/chair/office/yellow{
 	dir = 8
 	},
-/obj/landmark{
-	name = "Pirate-First-Mate-Spawn"
-	},
+/obj/landmark/antagonist/pirate/first_mate,
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "tU" = (
 /obj/item/clothing/suit/bedsheet/black,
 /obj/stool/bed,
 /obj/machinery/light/incandescent/warm,
-/obj/landmark{
-	name = "Pirate-Spawn"
-	},
+/obj/landmark/antagonist/pirate,
 /turf/simulated/floor/grey/side{
 	dir = 6
 	},
@@ -1217,9 +1182,7 @@
 /obj/item/clothing/suit/bedsheet/black,
 /obj/stool/bed,
 /obj/machinery/light/incandescent/warm,
-/obj/landmark{
-	name = "Pirate-Spawn"
-	},
+/obj/landmark/antagonist/pirate,
 /turf/simulated/floor/grey/side{
 	dir = 10
 	},
@@ -1246,7 +1209,7 @@
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "zs" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/decal/rudder{
 	pixel_y = -6
 	},
@@ -1410,7 +1373,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/pirate_ship,
+/obj/mapping_helper/access/pirate_ship,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -1418,9 +1381,7 @@
 "DQ" = (
 /obj/item/clothing/suit/bedsheet/black,
 /obj/stool/bed,
-/obj/landmark{
-	name = "Pirate-Spawn"
-	},
+/obj/landmark/antagonist/pirate,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -1668,7 +1629,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/pirate_ship,
+/obj/mapping_helper/access/pirate_ship,
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "JA" = (
@@ -1686,7 +1647,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/pirate_ship,
+/obj/mapping_helper/access/pirate_ship,
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "JI" = (
@@ -1711,9 +1672,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/obj/landmark{
-	name = "Pirate-Spawn"
-	},
+/obj/landmark/antagonist/pirate,
 /turf/simulated/floor/grey/side{
 	dir = 5
 	},
@@ -1732,7 +1691,6 @@
 /area/pirate_ship)
 "Kn" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
@@ -1775,7 +1733,6 @@
 /area/pirate_ship)
 "LU" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
@@ -1798,9 +1755,7 @@
 "MH" = (
 /obj/item/clothing/suit/bedsheet/black,
 /obj/stool/bed,
-/obj/landmark{
-	name = "Pirate-Spawn"
-	},
+/obj/landmark/antagonist/pirate,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -1928,11 +1883,10 @@
 /area/pirate_ship)
 "Ph" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/pirate_ship,
+/obj/mapping_helper/access/pirate_ship,
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "Pt" = (
@@ -1957,13 +1911,11 @@
 /area/pirate_ship)
 "PY" = (
 /obj/stool/chair/comfy/red,
-/obj/landmark{
-	name = "Pirate-Captain-Spawn"
-	},
+/obj/landmark/antagonist/pirate/captain,
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "Qd" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	dir = 4;
 	id = "peregrine_armoury";
@@ -1983,7 +1935,6 @@
 /area/pirate_ship)
 "Re" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
@@ -2078,7 +2029,6 @@
 /area/pirate_ship)
 "Tb" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
@@ -2119,7 +2069,7 @@
 	},
 /area/pirate_ship)
 "TC" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/plating/random,
 /area/pirate_ship)
 "TL" = (
@@ -2159,16 +2109,12 @@
 /area/pirate_ship)
 "Vf" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/stool/chair/office/yellow{
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
@@ -2208,13 +2154,10 @@
 /area/pirate_ship)
 "VJ" = (
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/decoration/bustedmantapc/bustedmantapc2{
@@ -2290,13 +2233,10 @@
 /area/pirate_ship)
 "Yy" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/decal/fakeobjects/console_radar{
@@ -2356,15 +2296,6 @@
 	pixel_x = -6
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/pirate_ship)
-"ZH" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/stairs/dark{
-	dir = 6
-	},
 /area/pirate_ship)
 "ZO" = (
 /obj/decoration/frontwalldamage{
@@ -2680,13 +2611,13 @@ Wl
 zs
 PY
 mh
-ZH
+Mw
 nW
-do
+Io
 Ph
-do
-do
-do
+Io
+Io
+Io
 Io
 Mw
 Io

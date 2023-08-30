@@ -2,7 +2,7 @@
 	//Sort of like a holder mob for brain-triggered assemblies
 	name = "brain thing"
 	real_name = "brain thing"
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/brain.dmi'
 	icon_state = "cool_brain"
 	canmove = 0
 	nodamage = 1
@@ -111,7 +111,7 @@
 	ghostize()
 		var/mob/dead/observer/O = ..()
 		if(O)
-			O.icon = 'icons/obj/surgery.dmi'
+			O.icon = 'icons/obj/items/organs/brain.dmi'
 			O.icon_state = "cool_brain"
 			O.alpha = 155
 

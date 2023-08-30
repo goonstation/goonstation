@@ -167,23 +167,26 @@ datum
 				if(INGEST)
 					var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
 					if (AD)
-						boutput(M, "<span class='notice'><b>You feel slightly better, but for how long?</b></span>")
 						M.make_jittery(-5)
 						AD.last_reagent_dose = world.timeofday
-						AD.stage = 1
+						if (AD.stage != 1)
+							boutput(M, "<span class='notice'><b>You feel slightly better, but for how long?</b></span>")
+							AD.stage = 1
 
-			M.material?.triggerChem(M, src, volume)
+			M.material_trigger_on_chems(src, volume)
 			for(var/atom/A in M)
-				if(A.material) A.material.triggerChem(A, src, volume)
+				A.material_trigger_on_chems(src, volume)
+			for(var/atom/equipped_stuff in M.equipped())
+				equipped_stuff.material_trigger_on_chems(src, volume)
 			return did_not_react
 
 		proc/reaction_obj(var/obj/O, var/volume) //By default we transfer a small part of the reagent to the object
 								//if it can hold reagents. nope!
-			O.material?.triggerChem(O, src, volume)
+			O.material_trigger_on_chems(src, volume)
 			return 1
 
 		proc/reaction_turf(var/turf/T, var/volume)
-			T.material?.triggerChem(T, src, volume)
+			T.material_trigger_on_chems(src, volume)
 			return 1 // returns 1 to spawn fluid. Checked in 'reaction()' proc of Chemistry-Holder.dm
 
 
@@ -353,8 +356,10 @@ datum
 				if (recipe.hidden && !allow_secret)
 					. += "<br>&emsp;<b>\[RECIPE REDACTED\]</br>"
 				else
-					if (recipe.required_temperature != -1)
-						. += "<br>&emsp;Required temperature: [T0C + recipe.required_temperature]°C"
+					if (recipe.max_temperature != INFINITY)
+						. += "<br>&emsp;Maximum reaction temperature: [T0C + recipe.max_temperature]°C"
+					if (recipe.min_temperature != -INFINITY)
+						. += "<br>&emsp;Minimum reaction temperature: [T0C + recipe.min_temperature]°C"
 					for (var/id in recipe.required_reagents)
 						. += "<br>&emsp;[reagents_cache[id]] - [recipe.required_reagents[id]] unit[recipe.required_reagents[id] > 1 ? "s" : ""]" // English name - Required amount
 				. += "<br><br>"

@@ -977,6 +977,10 @@ TYPEINFO(/obj/vehicle/clowncar)
 	soundproofing = 5
 	var/second_icon = "clowncar2" //animated jiggling for the clowncar
 	var/peel_count = 5
+	HELP_MESSAGE_OVERRIDE({"While wearing two or more pieces of clown attire, <b>click drag</b> yourself to the car while next to it to enter it.
+							Driving into someone stuns them. If someone is lying down, <b>click drag</b> them to the car to force them inside.
+							Driving into a wall will force all the occupants out and stun the driver.
+							Click on the car while inside to get out. Click on the car while outside to free all the occupants."})
 
 /obj/vehicle/clowncar/do_special_on_relay(mob/user as mob, dir)
 	for (var/mob/living/L in src)
@@ -2214,11 +2218,11 @@ TYPEINFO(/obj/vehicle/forklift)
 	var/obj/HI
 	if(src.rider)
 		examine_text += "[src.rider] is using it. "
-	if(helditems.len >= 1)
+	if(length(helditems) >= 1)
 		if (istype(helditems[1], /obj/))
 			HI = helditems[1]
 			examine_text += "It is carrying \a [HI.name]"
-		if(helditems.len >= 2)
+		if(length(helditems) >= 2)
 			for(var/i=2,i<=helditems.len-1,i++)
 				if (istype(helditems[i], /obj/))
 					HI = helditems[i]
@@ -2422,14 +2426,14 @@ TYPEINFO(/obj/vehicle/forklift)
 	if(T.throw_unlimited && istype(T, /turf/space))
 		return
 
-	if(helditems.len >= 1)
+	if(length(helditems) >= 1)
 
-		if(helditems.len == 1)
+		if(length(helditems) == 1)
 			var/obj/O = helditems[1]
 			for (var/mob/C in AIviewers(src))
 				C.show_message("<span class='notice'><b>[src] leaves the [O.name] on [src.loc].</b></span>", 1)
 			boutput(usr, "<span class='notice'><b>You leave the [O.name] on [src.loc].</b></span>")
-		if(helditems.len > 1)
+		if(length(helditems) > 1)
 			for (var/mob/C in AIviewers(src))
 				C.show_message("<span class='notice'><b>[src] leaves [helditems.len] crates on [src.loc].</b></span>", 1)
 			boutput(usr, "<span class='notice'><b>You leave [helditems.len] crates on [src.loc].</b></span>")
@@ -2498,7 +2502,7 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 		src.UpdateOverlays(src.image_panel, "panel")
 	else
 		src.UpdateOverlays(null, "panel")
-	if (helditems.len > 0)
+	if (length(helditems) > 0)
 		if (!src.image_crate)
 			src.image_crate = image(src.icon, "forklift_crate")
 		for (var/i=0, i < helditems.len, i++)

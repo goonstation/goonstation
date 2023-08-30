@@ -503,7 +503,7 @@ datum
 			taste = "metallic"
 
 			reaction_obj(var/obj/item/I, var/volume)
-				if (I.material && I.material.mat_id == "silver")
+				if (I.material && I.material.getID() == "silver")
 					return 1
 
 				.= 1
@@ -512,13 +512,13 @@ datum
 					if (istype(I, /obj/item/ammo/bullets/bullet_22HP) || istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || istype(I,/datum/projectile/bullet/revolver_38))
 						var/obj/item/ammo/bullets/bullet_holder = I
 						var/datum/projectile/ammo_type = bullet_holder.ammo_type
-						if (ammo_type && !(ammo_type.material && ammo_type.material.mat_id == "silver"))
+						if (ammo_type && !(ammo_type.material && ammo_type.material.getID() == "silver"))
 							ammo_type.material = getMaterial("silver")
 							holder.remove_reagent(src.id, 20)
 							.= 0
 				if (volume >= 50)
 					if (I.type == /obj/item/handcuffs)
-						I.setMaterial(getMaterial("silver"), copy = FALSE)
+						I.setMaterial(getMaterial("silver"))
 						holder.remove_reagent(src.id, 50)
 						.= 0
 
@@ -765,16 +765,16 @@ datum
 					if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
 						//boil off
 						var/list/covered = holder.covered_turf()
-						if (covered.len < 5)
+						if (length(covered) < 5)
 							for(var/turf/t in covered)
-								if (covered.len > 2 && prob(50)) continue //lol look guys i 'fixed' it!
+								if (length(covered) > 2 && prob(50)) continue //lol look guys i 'fixed' it!
 								var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 								smoke.set_up(1, 0, t)
 								smoke.start()
 								t.visible_message("The water boils off.")
 
-						if (covered.len > 1)
-							if (volume/covered.len < 10)
+						if (length(covered) > 1)
+							if (volume/length(covered) < 10)
 								holder.del_reagent(src.id)
 							else
 								holder.remove_reagent(src.id, max(1, volume * 0.2))
@@ -823,6 +823,7 @@ datum
 				var/reacted = 0
 				var/mob/living/M = target
 				if(istype(M))
+					var/list/covered = holder.covered_turf()
 					if(by_type[/obj/machinery/playerzoldorf] && length(by_type[/obj/machinery/playerzoldorf]))
 						var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]
 						if(M in pz.brandlist)
@@ -835,7 +836,7 @@ datum
 						for(var/mob/O in AIviewers(M, null))
 							O.show_message(text("<span class='alert'><b>[] begins to crisp and burn!</b></span>", M), 1)
 						boutput(M, "<span class='alert'>Holy Water! It burns!</span>")
-						var/burndmg = raw_volume * 1.25 //the sanctification inflicts the pain, not the water that carries it.
+						var/burndmg = raw_volume * 1.25 / length(covered) //the sanctification inflicts the pain, not the water that carries it.
 						burndmg = min(burndmg, 80) //cap burn at 110(80 now >:) so we can't instant-kill vampires. just crit em ok.
 						M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
 						M.change_vampire_blood(-burndmg)
@@ -896,16 +897,16 @@ datum
 					if (holder.my_atom && holder.my_atom.is_open_container())
 						//boil off
 						var/list/covered = holder.covered_turf()
-						if (covered.len < 5)
+						if (length(covered) < 5)
 							for(var/turf/t in covered)
-								if (covered.len > 2 && prob(50)) continue //lol look guys i 'fixed' it!
+								if (length(covered) > 2 && prob(50)) continue //lol look guys i 'fixed' it!
 								var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 								smoke.set_up(1, 0, t)
 								smoke.start()
 								t.visible_message("The water boils off.")
 
-						if (covered.len > 1)
-							if (volume/covered.len < 10)
+						if (length(covered) > 1)
+							if (volume/length(covered) < 10)
 								holder.del_reagent(src.id)
 							else
 								holder.remove_reagent(src.id, max(1, volume * 0.4))

@@ -197,7 +197,7 @@
 /turf/unsimulated/floor/plating/damaged2,
 /area/shuttle/escape/centcom)
 "oI" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},
@@ -363,7 +363,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Hf" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Hr" = (
@@ -374,7 +374,7 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/shuttle/escape/centcom)
 "Hy" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
@@ -556,7 +556,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Xl" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},

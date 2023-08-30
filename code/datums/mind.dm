@@ -69,29 +69,32 @@ datum/mind
 			Z_LOG_DEBUG("Mind/TransferTo", "No new_character given, transfer aborted")
 			return
 
+		if (new_character == src.current)
+			CRASH("Tried to transfer mind of [identify_object(src.current)] to itself.")
+
 		Z_LOG_DEBUG("Mind/TransferTo", "New mob: \ref[new_character] ([new_character])")
 		if (new_character.disposed)
-			if (current)
-				boutput(current, "You were about to be transferred into another body, but that body was pending deletion! This may fuck everything up so if it does dial 1-800-CODER.")
-				message_admins("Tried to transfer mind of mob [current] (\ref[current], [key_name(current)]) to qdel'd mob [new_character] (\ref[new_character]) God damnit. Un-qdeling the mob and praying (this will probably fuck up).")
-				new_character.disposed = 0
-			else
-				message_admins("Tried to transfer mind [src] to qdel'd mob [new_character] (\ref[new_character]).")
+			boutput(current, "<h3 class='alert'>You were about to be transferred into another body, but that body was pending deletion! You're a ghost now instead! Adminhelp if this is a problem.</h3>")
+			message_admins("Tried to transfer mind of mob [identify_object(current)] to qdel'd mob [identify_object(new_character)] God damnit.")
+			var/mob/dead/observer/obs = new(src.current)
+			src.transfer_to(obs)
 
 			Z_LOG_ERROR("Mind/TransferTo", "Tried to transfer mind [(current ? "of mob " + key_name(current) : src)] to qdel'd mob [new_character].")
-			return
-			//CRASH("Trying to transfer to a mob that's in the delete queue!")
+			CRASH("Tried to transfer mind [identify_object(src)] to qdel'd mob [identify_object(new_character)].")
 
 		if (new_character.client)
 			if (current)
-				boutput(current, "You were about to be transferred into another body, but that body was occupied!")
-				message_admins("Tried to transfer mind of mob [current] (\ref[current], [key_name(current)]) to mob with an existing client [new_character] (\ref[new_character])")
+				boutput(current, "<h3 class='alert'>You were about to be transferred into another body, but that body was occupied!</h3>")
+				var/errmsg = "Tried to transfer mind of mob [identify_object(current)] to mob with an existing client [identify_object(new_character)]"
+				message_admins(errmsg)
+				CRASH(errmsg)
 			else
 				message_admins("Tried to transfer mind [src] to mob with an existing client [new_character] (\ref[new_character]).")
 			Z_LOG_ERROR("Mind/TransferTo", "Tried to transfer mind [(current ? "of mob " + key_name(current) : src)] to mob with an existing client [new_character] [key_name(new_character)])")
 			return
-
+		var/mob/old_mob = null
 		if (current)
+			old_mob = current
 			if(current.client)
 				current.removeOverlaysClient(current.client)
 				tgui_process.on_transfer(current, new_character)
@@ -121,7 +124,7 @@ datum/mind
 
 		Z_LOG_DEBUG("Mind/TransferTo", "Complete")
 
-		SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, current)
+		SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, current, old_mob)
 
 
 	proc/swap_with(mob/target)
@@ -198,8 +201,13 @@ datum/mind
 	proc/set_miranda(new_text)
 		miranda = new_text
 
+	proc/get_miranda()
+		if (isproc(src.miranda)) //imfunctionalprogrammer
+			return call(src.miranda)()
+		return src.miranda
+
 	proc/show_miranda(mob/recipient)
-		var/output = "<B>[current.real_name]'s Miranda Rights</B><HR>[miranda]"
+		var/output = "<B>[current.real_name]'s Miranda Rights</B><HR>[src.get_miranda()]"
 
 		recipient.Browse(output,"window=miranda;title=Miranda Rights")
 
@@ -209,8 +217,21 @@ datum/mind
 		// stuff for critter respawns
 		src.get_player()?.last_death_time = world.timeofday
 
+	/// Returns whether this mind is a non-pseudo antagonist.
+	proc/is_antagonist()
+		// Handles pre-round antagonist assignments utilising `special_role`.
+		if (global.current_state < GAME_STATE_PLAYING)
+			return !!src.special_role
+
+		for (var/datum/antagonist/A as anything in src.antagonists)
+			if (!A.pseudo)
+				return TRUE
+
+		return FALSE
+
 	/// Gets an existing antagonist datum of the provided ID role_id.
 	proc/get_antagonist(role_id)
+		RETURN_TYPE(/datum/antagonist)
 		for (var/datum/antagonist/A as anything in src.antagonists)
 			if (A.id == role_id)
 				return A

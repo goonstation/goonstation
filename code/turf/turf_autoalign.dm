@@ -191,6 +191,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 			else
 				return
 
+		src.material_trigger_when_attacked(W, user, 1)
 		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 
 /turf/simulated/wall/auto/reinforced/the_tuff_stuff
@@ -203,20 +204,24 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/jen)
 	. = ..()
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn,
 		/turf/simulated/wall/auto/shuttle, /turf/simulated/wall/auto/shuttle,
-		/obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 		/turf/simulated/wall/auto/reinforced/jen, /obj/plasticflaps
 	))
 /turf/simulated/wall/auto/jen
 	icon = 'icons/turf/walls_jen.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall"
+#else
 	icon_state = "mapwall"
+#endif
 	RL_OverlayIcon = 'icons/effects/lighting_overlays/walls_jen.dmi'
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -272,22 +277,26 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/jen)
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen,
 		/turf/simulated/wall/auto/shuttle, /turf/simulated/wall/auto/shuttle,
-		/obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /obj/plasticflaps
 	))
 	connects_with_overlay_exceptions = typecacheof(list(/turf/simulated/wall/auto/reinforced/jen))
 /turf/simulated/wall/auto/reinforced/jen
 	icon = 'icons/turf/walls_jen.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall_r"
+#else
 	icon_state = "mapwall_r"
+#endif
 	RL_OverlayIcon = 'icons/effects/lighting_overlays/walls_jen.dmi'
-	light_mod = "wall-"
+	light_mod = "wall-jen-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 	the_tuff_stuff
@@ -342,20 +351,24 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/supernorn)
 	. = ..()
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/shuttle,
-		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen, /obj/plasticflaps
 	))
 /turf/simulated/wall/auto/supernorn
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
 	mod = "norn-"
 	light_mod = "wall-"
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall"
+#else
 	icon_state = "mapwall"
+#endif
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 	the_tuff_stuff
@@ -375,18 +388,22 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn)
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
-		/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
+		/obj/window, /obj/mapping_helper/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 		/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
 		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window,
-		/obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/paper, /obj/plasticflaps
+		/obj/mapping_helper/wingrille_spawn, /turf/simulated/wall/auto/reinforced/paper, /obj/plasticflaps
 	))
 /turf/simulated/wall/auto/reinforced/supernorn
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall_r"
+#else
 	icon_state = "mapwall_r"
+#endif
 	mod = "norn-R-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -408,17 +425,21 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/yellow)
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle,
-		/obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/obj/plasticflaps
 	))
 /turf/simulated/wall/auto/reinforced/supernorn/yellow
 	icon = 'icons/turf/walls_manta.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall_r-Y"
+#else
 	icon_state = "mapwall_r-Y"
+#endif
 	mod = "norn-Y-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -432,16 +453,20 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/orange)
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle,
-		/obj/machinery/door, /obj/window, /obj/wingrille_spawn, /obj/plasticflaps
+		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/obj/plasticflaps
 	))
 /turf/simulated/wall/auto/reinforced/supernorn/orange
 	icon = 'icons/turf/walls_manta.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall_r-O"
+#else
 	icon_state = "mapwall_r-O"
+#endif
 	mod = "norn-O-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -450,7 +475,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/orange)
 TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
 	connect_overlay = 0
 /turf/simulated/wall/auto/supernorn/wood
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall$$wood"
+#else
 	icon_state = "mapwall$$wood"
+#endif
 	default_material = "wood"
 
 TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
@@ -478,15 +507,19 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/blackred)
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle,
-		/obj/machinery/door, /obj/window, /obj/wingrille_spawn, /obj/plasticflaps
+		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /obj/plasticflaps
+		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn, /obj/plasticflaps
 	))
 /turf/simulated/wall/auto/reinforced/supernorn/blackred
 	icon = 'icons/turf/walls_manta.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall_r-BR"
+#else
 	icon_state = "mapwall_r-BR"
+#endif
 	mod = "norn-BR-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -498,7 +531,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/paper)
 	. = ..()
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/reinforced/paper, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/auto, /obj/table/reinforced/bar/auto, /obj/window, /obj/wingrille_spawn
+		/turf/simulated/wall/auto, /obj/table/reinforced/bar/auto, /obj/window, /obj/mapping_helper/wingrille_spawn
 	))
 	connects_with_overlay = typecacheof(list(/obj/table/reinforced/bar/auto))
 /turf/simulated/wall/auto/reinforced/paper
@@ -536,7 +569,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/marsoutpost)
 	))
 /turf/simulated/wall/auto/marsoutpost
 	icon = 'icons/turf/walls_marsoutpost.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "interior-0"
+#else
 	icon_state = "interior-map"
+#endif
 	light_mod = "wall-"
 
 	update_neighbors()
@@ -560,7 +597,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/old)
 	. = ..()
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old,
 		/turf/simulated/wall/auto/martian, /turf/unsimulated/wall/auto/adventure/martian,
@@ -568,12 +605,16 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/old)
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/shuttle,
-		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced, /obj/plasticflaps
 	))
 /turf/simulated/wall/auto/old
 	icon = 'icons/turf/walls_derelict.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "old-perspective-map"
+#else
 	icon_state = "old-map"
+#endif
 	mod = "old-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -587,20 +628,24 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/old)
 		/turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
-		/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/old,
+		/obj/window, /obj/mapping_helper/wingrille_spawn, /turf/simulated/wall/auto/old,
 		/turf/simulated/wall/auto/reinforced/old, /turf/simulated/wall/auto/martian,
 		/obj/indestructible/shuttle_corner, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/shuttle,
-		/obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/obj/plasticflaps
 	))
 
 /turf/simulated/wall/auto/reinforced/old
 	icon = 'icons/turf/walls_derelict.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "oldr-perspective-map"
+#else
 	icon_state = "oldr-map"
+#endif
 	mod = "oldr-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -614,13 +659,13 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/hedge)
 		/turf/simulated/wall/auto/hedge, /turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
-		/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
+		/obj/window, /obj/mapping_helper/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 		/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
 		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/shuttle,
-		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen
 	))
 /turf/simulated/wall/auto/hedge // Some fun walls by Walpvrgis
@@ -735,7 +780,11 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn)
 	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window, /obj/plasticflaps))
 /turf/unsimulated/wall/auto/supernorn
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall"
+#else
 	icon_state = "mapwall"
+#endif
 	light_mod = "wall-"
 	mod = "norn-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -752,14 +801,18 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/reinforced/supernorn)
 		/obj/window,
 		/turf/simulated/wall/false_wall/reinforced,
 		/turf/unsimulated/wall/auto/adventure/old,
-		/turf/unsimulated/wall/setpieces/fakewindow,
+		/turf/unsimulated/wall/auto/adventure/fake_window,
 		/turf/unsimulated/wall/auto/adventure/meat,
 		/obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window, /obj/plasticflaps))
 /turf/unsimulated/wall/auto/reinforced/supernorn
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall_r"
+#else
 	icon_state = "mapwall_r"
+#endif
 	light_mod = "wall-"
 	mod = "norn-R-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -920,7 +973,11 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/shuttle)
 /turf/unsimulated/wall/auto/adventure/shuttle // fancy walls part 2: enough for debris field
 	name = "shuttle wall"
 	icon = 'icons/turf/walls_shuttle-debris.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "shuttle-0"
+#else
 	icon_state = "shuttle-map"
+#endif
 	mod = "shuttle-"
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/shuttle/dark)
@@ -928,7 +985,11 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/shuttle/dark)
 	. = ..()
 	connect_overlay = 0
 /turf/unsimulated/wall/auto/adventure/shuttle/dark
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "dshuttle-0"
+#else
 	icon_state = "dshuttle-map"
+#endif
 	mod = "dshuttle-"
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/bee)
@@ -940,7 +1001,11 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/bee)
 	name = "hive wall"
 	desc = "Honeycomb's big, yeah yeah yeah."
 	icon = 'icons/turf/walls_beehive.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "bee-perspective-map"
+#else
 	icon_state = "bee-map"
+#endif
 	mod = "bee-"
 	plane = PLANE_WALL-1 //We don't want depth shadows
 
@@ -1054,7 +1119,11 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/mars/interior)
 	name = "wall"
 	mod = "interior-"
 	icon = 'icons/turf/walls_marsoutpost.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
 	icon_state = "interior-0"
+#else
+	icon_state = "interior-map"
+#endif
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/meat)
@@ -1096,18 +1165,26 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/old)
 	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom,
 	/turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
 	/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner, /turf/unsimulated/wall/auto/adventure/meat,
-	/turf/unsimulated/wall/setpieces/fakewindow, /turf/unsimulated/wall/auto/reinforced/supernorn, /obj/plasticflaps
+	/turf/unsimulated/wall/auto/reinforced/supernorn, /obj/plasticflaps
 	))
 /turf/unsimulated/wall/auto/adventure/old
 	name = "wall"
 	icon = 'icons/turf/walls_derelict.dmi'
 	mod = "old-"
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "old-perspective-map"
+#else
 	icon_state = "old-map"
+#endif
 
 	reinforced
 		name = "reinforced wall"
 		mod = "oldr-"
+#ifdef PERSPECTIVE_EDITOR_WALL
+		icon_state = "oldr-perspective-map"
+#else
 		icon_state = "oldr-map"
+#endif
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/hedge)
@@ -1126,6 +1203,16 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/hedge)
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
+TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
+	connect_diagonal = TRUE
+	connect_overlay = FALSE
+/turf/unsimulated/wall/auto/adventure/fake_window
+	name = "strong window"
+	desc = "Wow this looks like a tough god damn window, damn."
+	icon = 'icons/obj/window_pyro.dmi'
+	icon_state = "R-0"
+	mod = "R-"
+	opacity = FALSE
 
 /datum/action/bar/icon/wall_tool_interact
 	id = "wall_tool_interact"
@@ -1215,7 +1302,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/hedge)
 				if (the_wall.material)
 					A.setMaterial(the_wall.material)
 				else
-					A.setMaterial(getMaterial("steel"), copy = FALSE)
+					A.setMaterial(getMaterial("steel"))
 				self_message = "You remove the reinforcing rods."
 				message = "[owner] removes \the [the_wall]'s reinforcing rods."
 				the_wall.d_state = 2
@@ -1239,7 +1326,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/hedge)
 				if (the_wall.material)
 					A.setMaterial(the_wall.material)
 				else
-					A.setMaterial(getMaterial("steel"), copy = FALSE)
+					A.setMaterial(getMaterial("steel"))
 			if (WALL_PRYSHEATH)
 				self_message = "You remove the outer sheath."
 				message = "[owner] removes \the [the_wall]'s outer sheath."

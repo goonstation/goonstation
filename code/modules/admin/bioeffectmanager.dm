@@ -31,7 +31,7 @@
 		"stability" = target_mob.bioHolder?.genetic_stability
 		)
 
-/datum/bioeffectmanager/ui_act(action, params)
+/datum/bioeffectmanager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
@@ -40,11 +40,10 @@
 	var/datum/bioEffect/BE = target_mob.bioHolder.effects[params["id"]]
 	switch(action)
 		if ("addBioEffect")
-			var/input = tgui_input_text(usr, "Enter a /datum/bioEffect path or partial name.", "Add a Bioeffect", null, allowEmpty = TRUE)
-			input = get_one_match(input, "/datum/bioEffect", cmp_proc=/proc/cmp_text_asc)
-			var/datum/bioEffect/type_to_add = text2path("[input]")
+			var/input = tgui_input_text(ui.user, "Enter a /datum/bioEffect path or partial name.", "Add a Bioeffect", null, allowEmpty = TRUE)
+			var/datum/bioEffect/type_to_add = get_one_match(input, /datum/bioEffect, cmp_proc=/proc/cmp_text_asc)
 			target_mob.bioHolder.AddEffect(initial(type_to_add.id))
-			logTheThing(LOG_ADMIN, usr, "Added bioeffect [initial(type_to_add.id)] to [constructName(target_mob)]")
+			logTheThing(LOG_ADMIN, ui.user, "Added bioeffect [initial(type_to_add.id)] to [constructName(target_mob)]")
 			. = TRUE
 		if ("updateStability")
 			var/new_stability = round(text2num(params["value"]))
@@ -55,7 +54,9 @@
 			BE.cooldown = isnull(new_cooldown) ? 0 : max(new_cooldown, 0)
 			. = TRUE
 		if ("toggleBoosted")
+			var/old_power = BE.power
 			BE.power = BE.power == 1 ? 2 : 1
+			BE.onPowerChange(old_power, BE.power)
 			. = TRUE
 		if ("toggleReinforced")
 			BE.curable_by_mutadone = !BE.curable_by_mutadone
@@ -72,9 +73,9 @@
 			BE.safety = !BE.safety
 			. = TRUE
 		if ("manageBioEffect")
-			usr.client.debug_variables(BE)
+			ui.user.client.debug_variables(BE)
 			. = TRUE
 		if ("deleteBioEffect")
 			target_mob.bioHolder.RemoveEffect(params["id"])
-			logTheThing(LOG_ADMIN, usr, "Removed bioeffect [params["id"]] from [constructName(target_mob)]")
+			logTheThing(LOG_ADMIN, ui.user, "Removed bioeffect [params["id"]] from [constructName(target_mob)]")
 			. = TRUE

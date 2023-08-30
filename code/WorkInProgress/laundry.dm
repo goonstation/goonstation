@@ -86,13 +86,13 @@
 					clothing.delStatus("freshly_laundered") // ...and this is the price we pay for being cheeky
 					clothing.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 					clothing.UpdateName()
-				else if (istype(item, /obj/item/spacecash))
-					var/obj/item/spacecash/cash = item
+				else if (istype(item, /obj/item/currency/spacecash))
+					var/obj/item/currency/spacecash/cash = item
 					var/list/amounts = random_split(cash.amount, min(rand(3,6), cash.amount - 1))
 					for (var/amount in amounts)
 						if (amount >= cash.amount)
 							break
-						var/obj/item/spacecash/newcash = cash.split_stack(amount)
+						var/obj/item/currency/spacecash/newcash = cash.split_stack(amount)
 						newcash.set_loc(src)
 			src.cycle = POST
 			src.cycle_current = 0
@@ -177,14 +177,14 @@
 		else if ((!istype(W, /obj/item/clothing) || !istype(W, /obj/item/grab)) && W.w_class > W_CLASS_HUGE)
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [W] is too big to fit!")
 			return
-		else if (src.contents.len >= src.load_max)
+		else if (length(src.contents) >= src.load_max)
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [src] is too full!")
 			return
 		else if (W.cant_drop || W.cant_self_remove)
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [W] is stuck to [him_or_her(user)]!")
 			return
 		else
-			if (istype(W, /obj/item/clothing) || istype(W, /obj/item/spacecash))
+			if (istype(W, /obj/item/clothing) || istype(W, /obj/item/currency/spacecash))
 				user.u_equip(W)
 				W.set_loc(src)
 				src.visible_message("[user] puts [W] into [src].")

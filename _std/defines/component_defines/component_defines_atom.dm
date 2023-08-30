@@ -81,6 +81,8 @@
 
 	/// when the outermost movable in the .loc chain changes (thing, old_outermost_movable, new_outermost_movable)
 	#define XSIG_OUTERMOST_MOVABLE_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_outermost_changed")
+	/// When the outermost movable in the .loc chain moves to a new area. (thing, old_area, new_area)
+	#define XSIG_MOVABLE_AREA_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_area_changed")
 	/// When the outermost movable in the .loc chain moves to a new turf. (thing, old_turf, new_turf)
 	#define XSIG_MOVABLE_TURF_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_turf_changed")
 	/// when the z-level of a movable changes (works in nested contents) (thing, old_z_level, new_z_level)
@@ -207,6 +209,10 @@
 	#define COMSIG_MOB_EMOTE "mob_emote"
 	/// Sent when a mob is checking for an active energy shield
 	#define COMSIG_MOB_SHIELD_ACTIVATE "mob_shield_activate"
+	/// Sent when a mob flips, return TRUE to skip the rest of the flip emote coded, argument is (voluntary)
+	#define COMSIG_MOB_FLIP "mob_flip"
+	/// Sent when UpdateDamage() is called (prev_health)
+	#define COMSIG_MOB_UPDATE_DAMAGE "mob_update_damage"
 
 	// ---- cloaking device signal ----
 

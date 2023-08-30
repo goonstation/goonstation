@@ -98,7 +98,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	anchored = ANCHORED
 	density = 1
 	event_handler_flags = IMMUNE_SINGULARITY
-	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL
+	deconstruct_flags = DECON_NONE
 
 
 	pixel_x = -16
@@ -117,7 +117,8 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	var/maxradius = INFINITY//the maximum size the singularity can grow to
 	var/restricted_z_allowed = FALSE
 	var/right_spinning //! boolean for the spaghettification animation spin direction
-
+	///Count for rate-limiting the spaghettification effect
+	var/spaget_count = 0
 
 
 #ifdef SINGULARITY_TIME
@@ -279,32 +280,35 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if(QDELETED(A)) // Don't bump that which no longer exists
 		return
 
-	var/spaget_time = 15 SECONDS
-	var/obj/dummy/spaget_overlay = new()
-	spaget_overlay.appearance = A.appearance
-	spaget_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
-	spaget_overlay.pixel_x = A.pixel_x + (A.x - src.x + 0.5)*32
-	spaget_overlay.pixel_y = A.pixel_y + (A.y - src.y + 0.5)*32
-	spaget_overlay.vis_flags = 0
-	spaget_overlay.plane = PLANE_DEFAULT
-	spaget_overlay.mouse_opacity = 0
-	spaget_overlay.transform = A.transform
-	if(prob(0.1)) // easteregg
-		spaget_overlay.icon = 'icons/obj/foodNdrink/food_meals.dmi'
-		spaget_overlay.icon_state = "spag-dish"
-		spaget_overlay.Scale(2, 2)
-	var/angle = get_angle(A, src)
-	var/matrix/flatten = matrix((A.x - src.x)*(cos(angle)), 0, -spaget_overlay.pixel_x, (A.y - src.y)*(sin(angle)), 0, -spaget_overlay.pixel_y)
-	animate(spaget_overlay, spaget_time, FALSE, QUAD_EASING, 0, alpha=0, transform=flatten)
-	var/obj/dummy/spaget_turner = new()
-	spaget_turner.vis_contents += spaget_overlay
-	spaget_turner.mouse_opacity = 0
-	spaget_turner.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_TOGETHER
-	animate_spin(spaget_turner, right_spinning ? "R" : "L", spaget_time / 8 + randfloat(-2, 2), looping=2, parallel=FALSE)
-	src.vis_contents += spaget_turner
-	SPAWN(spaget_time + 1 SECOND)
-		qdel(spaget_overlay)
-		qdel(spaget_turner)
+	if(src.spaget_count < 25)
+		src.spaget_count++
+		var/spaget_time = 15 SECONDS
+		var/obj/dummy/spaget_overlay = new()
+		spaget_overlay.appearance = A.appearance
+		spaget_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
+		spaget_overlay.pixel_x = A.pixel_x + (A.x - src.x + 0.5)*32
+		spaget_overlay.pixel_y = A.pixel_y + (A.y - src.y + 0.5)*32
+		spaget_overlay.vis_flags = 0
+		spaget_overlay.plane = PLANE_DEFAULT
+		spaget_overlay.mouse_opacity = 0
+		spaget_overlay.transform = A.transform
+		if(prob(0.1)) // easteregg
+			spaget_overlay.icon = 'icons/obj/foodNdrink/food_meals.dmi'
+			spaget_overlay.icon_state = "spag-dish"
+			spaget_overlay.Scale(2, 2)
+		var/angle = get_angle(A, src)
+		var/matrix/flatten = matrix((A.x - src.x)*(cos(angle)), 0, -spaget_overlay.pixel_x, (A.y - src.y)*(sin(angle)), 0, -spaget_overlay.pixel_y)
+		animate(spaget_overlay, spaget_time, FALSE, QUAD_EASING, 0, alpha=0, transform=flatten)
+		var/obj/dummy/spaget_turner = new()
+		spaget_turner.vis_contents += spaget_overlay
+		spaget_turner.mouse_opacity = 0
+		spaget_turner.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_TOGETHER
+		animate_spin(spaget_turner, right_spinning ? "R" : "L", spaget_time / 8 + randfloat(-2, 2), looping=2, parallel=FALSE)
+		src.vis_contents += spaget_turner
+		SPAWN(spaget_time + 1 SECOND)
+			src.spaget_count--
+			qdel(spaget_overlay)
+			qdel(spaget_turner)
 
 	if (isliving(A) && !isintangible(A))//if its a mob
 		var/mob/living/L = A
@@ -347,8 +351,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		//if (istype(A, /obj/item/graviton_grenade))
 			//src.warp = 100
 		if (istype(A.material))
-			gain += A.material.getProperty("density") * 2
-			gain += A.material.getProperty("radioactive") * 2
+			gain += A.material.getProperty("density") * 2 * A.material_amt
+			gain += A.material.getProperty("radioactive") * 2 * A.material_amt
 		if (A.reagents)
 			gain += min(A.reagents.total_volume/4, 50)
 		if (istype(A, /obj/decal/cleanable)) //MBC : this check sucks, but its far better than cleanables doing hard-delete at the whims of the singularity. replace ASAP when i figure out cleanablessssss
@@ -412,7 +416,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /////////////////////////////////////////////Controls which "event" is called
 /obj/machinery/the_singularity/proc/event()
 	var/numb = rand(1,3)
-	if(prob(25))
+	if(prob(25 / max(radius, 1)))
 		grow()
 	switch (numb)
 		if (1)//Eats the turfs around it
@@ -450,7 +454,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/proc/BHolerip()
 	var/turf/sing_center = src.get_center()
-	for (var/turf/T in orange(radius*EVENT_GROWTH, sing_center))
+	for (var/turf/T in orange(radius+EVENT_GROWTH+0.5, sing_center))
 		if (prob(70))
 			continue
 

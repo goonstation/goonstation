@@ -393,13 +393,25 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 	else if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
-		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
+		if (length(porter.contents) >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
 		else if (src.anchored) boutput(user, "<span class='alert'>\The [src] is attached!</span>")
 		else
 			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")
 			src.contained = 1
 			src.set_loc(W)
 			elecflash(src)
+	else if (istype(W, /obj/item/reagent_containers/balloon))
+		var/obj/item/reagent_containers/balloon/balloon = W
+		var/amount = balloon.breaths * BREATH_VOLUME - TOTAL_MOLES(balloon.air)
+		if (amount <= 0)
+			boutput(user, "<span class='alert'>[balloon] is already full.</span>")
+			return
+		var/datum/gas_mixture/removed = src.air_contents.remove(amount)
+		balloon.air.merge(removed)
+		balloon.UpdateIcon()
+		playsound(get_turf(src), 'sound/machines/hiss.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user] fills [balloon] from [src].</span>", "<span class='notice'>You fill [balloon] from [src].</span>")
+		return
 	else if(!iswrenchingtool(W) && !istype(W, /obj/item/tank) && !istype(W, /obj/item/device/analyzer/atmospheric) && !istype(W, /obj/item/device/pda2))
 		src.visible_message("<span class='alert'>[user] hits the [src] with a [W]!</span>")
 		user.lastattacked = src
@@ -701,7 +713,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	//	src.det.detonate()
 	//	return
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 
 	if(P.proj_data.damage_type == D_KINETIC)
 		src.health -= damage

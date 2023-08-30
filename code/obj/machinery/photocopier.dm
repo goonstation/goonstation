@@ -259,7 +259,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			P.name = "butt"
 			P.desc = "butt butt butt"
 			P.info = "{<b>butt butt butt butt butt butt<br>butt butt<br>butt</b>}" //6 butts then 2 butts then 1 butt haha
-			P.icon = 'icons/obj/surgery.dmi'
+			P.icon = 'icons/obj/items/organs/butt.dmi'
 			P.icon_state = "butt"
 
 		else

@@ -619,7 +619,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		if(5)
 			if(istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
-				if (S.material && S.material.material_flags & MATERIAL_METAL)
+				if (S.material && S.material.getMaterialFlags() & MATERIAL_METAL)
 					if( S.amount < src.metal_amt)
 						boutput(user, text("<span class='alert'>You need at least [src.metal_amt] metal sheets to make the internal plating.</span>"))
 						return
@@ -708,7 +708,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				if (!S.material)
 					boutput(user, "These sheets won't work. You'll need reinforced glass or crystal.")
 					return
-				if (!(S.material.material_flags & MATERIAL_CRYSTAL) || !S.reinforcement)
+				if (!(S.material.getMaterialFlags() & MATERIAL_CRYSTAL) || !S.reinforcement)
 					boutput(user, "These sheets won't work. You'll need reinforced glass or crystal.")
 					return
 
@@ -852,62 +852,71 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		//fucK ME
 		if (shoot_dir & (shoot_dir-1))
 			if (shoot_dir == SOUTHEAST)
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), SOUTHEAST), PROJ, shoot_dir, src)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), SOUTHEAST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 				var/turf/E = get_step(get_turf(src), EAST)
-				P = shoot_projectile_DIR(get_step(E, EAST), PROJ, shoot_dir, src)
+				P = shoot_projectile_DIR(get_step(E, EAST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 			if (shoot_dir == SOUTHWEST)
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), WEST), PROJ, shoot_dir, src)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), WEST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
-				P = shoot_projectile_DIR(get_step(get_turf(src), SOUTH), PROJ, shoot_dir, src)
+				P = shoot_projectile_DIR(get_step(get_turf(src), SOUTH), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 
 			if (shoot_dir == NORTHEAST)
 				var/turf/NE = get_step(get_turf(src), NORTHEAST)
 
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(NE, NORTH), PROJ, shoot_dir, src)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(NE, NORTH), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
-				P = shoot_projectile_DIR(get_step(NE, EAST), PROJ, shoot_dir, src)
+				P = shoot_projectile_DIR(get_step(NE, EAST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 
 			if (shoot_dir == NORTHWEST)
 				var/turf/N = get_step(get_turf(src), NORTH)
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(N, WEST), PROJ, shoot_dir, src)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(N, WEST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
 					P.mob_shooter = user
-				P = shoot_projectile_DIR(get_step(N, NORTH), PROJ, shoot_dir, src)
+					P.shooter = src
+				P = shoot_projectile_DIR(get_step(N, NORTH), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 		else
 			if (shoot_dir == SOUTH || shoot_dir == WEST)
-				var/obj/projectile/P = shoot_projectile_DIR(src, PROJ, shoot_dir)
+				var/obj/projectile/P = shoot_projectile_DIR(src, PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 					P.pixel_x = H * -5
 					P.pixel_y = V * -5
 			if (shoot_dir == SOUTH || shoot_dir == EAST)
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), EAST), PROJ, shoot_dir, src)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), EAST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
 					P.shooter = src
 					P.mob_shooter = user
 					P.pixel_x = H * 5
 					P.pixel_y = V * -5
 			if (shoot_dir == NORTH || shoot_dir == WEST)
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), NORTH), PROJ, shoot_dir, src)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), NORTH), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
 					P.shooter = src
 					P.mob_shooter = user
 					P.pixel_x = H * -5
 					P.pixel_y = V * 5
 			if (shoot_dir == NORTH || shoot_dir == EAST)
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), NORTHEAST), PROJ, shoot_dir, src)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), NORTHEAST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
 					P.shooter = src
 					P.mob_shooter = user
@@ -1030,7 +1039,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 250
 	maxhealth = 250
 	speed = 0.9
-	init_comms_type = /obj/item/shipcomponent/communications/
+	init_comms_type = /obj/item/shipcomponent/communications
 
 /obj/machinery/vehicle/pod_smooth/nt_robust
 	name = "Pod NTR-"
@@ -1040,7 +1049,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 500
 	maxhealth = 500
 	speed = 0.8
-	init_comms_type = /obj/item/shipcomponent/communications/
+	init_comms_type = /obj/item/shipcomponent/communications
 
 /obj/machinery/vehicle/pod_smooth/sy_light
 	name = "Pod SYL-"
@@ -1338,7 +1347,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 		for(T in checkturfs)
 			if (istype(T, /turf/space))
 				continue
-			if (!T.allows_vehicles)
+			if (!T.allows_vehicles || T.density)
 				canbuild = 0
 				boutput(user, "<span class='alert'>You can't build a pod here! It'd get stuck.</span>")
 				break

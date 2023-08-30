@@ -20,7 +20,7 @@
 			return
 
 	ex_act(severity)
-		src.material?.triggerExp(src, severity)
+		src.material_trigger_on_explosion(severity)
 		switch(severity)
 			if(1)
 				qdel(src)
@@ -33,15 +33,17 @@
 			else
 
 	proc/replace_with_catwalk(var/obj/item/rods/rods)
-		var/turf/simulated/floor/airless/plating/catwalk/auto/T = get_turf(src.loc)
-		T.ReplaceWith(/turf/simulated/floor/airless/plating/catwalk/auto, keep_old_material = 0, handle_dir = 1)
-		if(istype(T)) // ReplaceWith can fail if unsim turf etc
-			T.MakeCatwalk(rods)
-			qdel(src)
+		var/turf/T = get_turf(src.loc)
+		if (istype(T, /turf/unsimulated))
+			return
+		if (istype_exact(T, /turf/space))
+			T.ReplaceWith(/turf/simulated/floor/airless/plating/catwalk/auto, FALSE, TRUE, FALSE, FALSE)
+		T.MakeCatwalk(rods)
+		qdel(src)
 
 	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/rods))
-			var/actionbar_duration = 2 SECOND
+			var/actionbar_duration = 2 SECONDS
 
 			if (ishuman(user))
 				if (user.traitHolder.hasTrait("training_engineer"))
@@ -264,9 +266,6 @@
 /// lattice spawners, for mapping large quantities of lattice at once.
 /// They auto connect in four directions depending on the lattices around them, plus you can set them to connect to certain turfs.
 /obj/lattice/auto
-	name = "lattice spawner"
-	desc = "If you're seeing this, call a coder. These are meant to spawn normal lattices."
-	icon_state = "lattice"
 	dirmask = NORTH | SOUTH | EAST | WEST // so others will connect to us during init
 	/// makes the lattices connect to walls too
 	var/attach_to_wall = FALSE

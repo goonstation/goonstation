@@ -108,7 +108,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		meat_level = 0 // no meat for those built from frames
 
 		for (var/obj/machinery/computer/cloning/C in orange(4, src))
-			if (C.linked_pods.len < C.max_pods)
+			if (length(C.linked_pods) < C.max_pods)
 				C.linked_pods += src
 				if(C.scanner?.pods)
 					C.scanner?.pods += src
@@ -1084,7 +1084,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			boutput(user, "<span class='alert'>The [src.name] is still running, hold your horses!</span>")
 			return
 		if (istype(G, /obj/item/reagent_containers/food/snacks/ingredient/meat) || (istype(G, /obj/item/reagent_containers/food) && (findtext(G.name, "meat")||findtext(G.name,"bacon"))) || (istype(G, /obj/item/parts/human_parts)) || istype(G, /obj/item/clothing/head/butt) || istype(G, /obj/item/organ) || istype(G,/obj/item/raw_material/martian))
-			if (src.meats.len >= src.max_meat)
+			if (length(src.meats) >= src.max_meat)
 				boutput(user, "<span class='alert'>There is already enough meat in there! You should not exceed the maximum safe meat level!</span>")
 				return
 

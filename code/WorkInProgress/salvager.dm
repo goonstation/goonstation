@@ -59,21 +59,28 @@
 			. *= max(W.health/initial(W.health),0.1)
 
 		else if (istype(A, /turf/simulated/floor))
+			var/turf/simulated/floor/floor_turf
 #ifdef UNDERWATER_MAP
 			. = 45 SECONDS
 #else
 			. = 30 SECONDS
 #endif
+			if(floor_turf.broken)
+				. -= 5 SECONDS
+			if(!floor_turf.intact)
+				. -= 5 SECONDS
 		else if (istype(A, /obj/machinery/door/airlock)||istype(A, /obj/machinery/door/unpowered/wood))
 			var/obj/machinery/door/airlock/AL = A
 			if (AL.hardened == 1)
 				boutput(user, "<span class='alert'>\The [AL] is reinforced against deconstruction!</span>")
 				return
-			. = 35 SECONDS
+			. = 30 SECONDS
 		else if (istype(A, /obj/structure/girder))
 			. = 10 SECONDS
 		else if (istype(A, /obj/grille))
 			. = 6 SECONDS
+			var/obj/grille/the_grille = A
+			. *= max(the_grille.health/the_grille.health_max,0.1)
 		else if (istype(A, /obj/window))
 			. = 10 SECONDS
 		else if (istype(A, /obj/lattice))
@@ -89,11 +96,6 @@
 
 			if (istext(decon_complexity))
 				boutput(user, "<span class='alert'>[decon_complexity]</span>")
-				// if(istype(A,/obj/machinery/lawrack))
-				// 	var/obj/machinery/lawrack/LR = A
-				// 	. = (LR._health/2) SECONDS
-				// 	decon_complexity = 0
-				// else
 				return
 
 			if(locate(/mob/living) in O)
@@ -258,9 +260,9 @@
 			W.health -= 5
 			if (istype(W, /turf/simulated/wall/r_wall) || istype(W, /turf/simulated/wall/auto/reinforced))
 				W.health -= 5
-		// else if(istype(target, /obj/machinery/lawrack))
-		// 	var/obj/machinery/lawrack/LR = target
-		// 	LR.changeHealth(-1.5, owner)
+		else if(istype(target, /obj/grille))
+			var/obj/grille/the_grille = target
+			the_grille.health -= 5
 
 		var/obj/item/salvager/S = src.call_proc_on
 		if(istype(S))
@@ -334,7 +336,7 @@
 	icon_state = "whitesub_body"
 	health = 150
 	maxhealth = 150
-	acid_damage_multiplier = 0
+	acid_damage_multiplier = 0.5
 	init_comms_type = /obj/item/shipcomponent/communications/salvager
 	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
 

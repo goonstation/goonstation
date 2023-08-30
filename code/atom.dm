@@ -11,7 +11,8 @@ TYPEINFO(/atom)
 /atom
 	layer = TURF_LAYER
 	plane = PLANE_DEFAULT
-	var/level = 2
+	/// Are we above or below the floor tile?
+	var/level = OVERFLOOR
 	var/flags = FPRINT
 	var/event_handler_flags = 0
 	var/tmp/temp_flags = 0
@@ -89,13 +90,13 @@ TYPEINFO(/atom)
 		// Lets stop having 5 implementations of this that all do it differently
 		if (!src.material && default_material)
 			var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
-			src.setMaterial(mat, src.uses_material_appearance, src.mat_changename, copy = FALSE)
+			src.setMaterial(mat, src.uses_material_appearance, src.mat_changename)
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()
 		var/prefix = ""
 		if (istext(text_to_add) && length(text_to_add) && islist(src.name_prefixes))
-			if (src.name_prefixes.len >= src.num_allowed_prefixes)
+			if (length(src.name_prefixes) >= src.num_allowed_prefixes)
 				src.remove_prefixes(1)
 			if(prepend)
 				src.name_prefixes.Insert(1, strip_html(text_to_add))
@@ -118,7 +119,7 @@ TYPEINFO(/atom)
 		if( !name_suffixes ) name_suffixes = list()
 		var/suffix = ""
 		if (istext(text_to_add) && length(text_to_add) && islist(src.name_suffixes))
-			if (src.name_suffixes.len >= src.num_allowed_suffixes)
+			if (length(src.name_suffixes) >= src.num_allowed_suffixes)
 				src.remove_suffixes(1)
 			src.name_suffixes += strip_html(text_to_add)
 		if (return_suffixes)
@@ -194,6 +195,11 @@ TYPEINFO(/atom)
 				src.delStatus(effect)
 			src.statusEffects = null
 		ClearAllParticles()
+
+		if (!isnull(chat_text))
+			qdel(chat_text)
+			chat_text = null
+
 		atom_properties = null
 		if(!ismob(src)) // I want centcom cloner to look good, sue me
 			ClearAllOverlays()
@@ -366,6 +372,7 @@ TYPEINFO(/atom)
 
 /// Changes the icon state and returns TRUE if the icon state changed.
 /atom/proc/set_icon_state(var/new_state)
+	SHOULD_CALL_PARENT(TRUE)
 	. = new_state != src.icon_state
 	src.icon_state = new_state
 	if(. && src.material_applied_appearance && src.material)
@@ -800,7 +807,7 @@ TYPEINFO(/atom)
 	PROTECTED_PROC(TRUE)
 	if (src.storage?.storage_item_attack_by(W, user))
 		return
-	src.material?.triggerOnHit(src, W, user, 1)
+	src.material_trigger_when_attacked(W, user, 1)
 	if (user && W && !(W.flags & SUPPRESSATTACK))
 		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
 	return
@@ -942,6 +949,9 @@ TYPEINFO(/atom)
 	SEND_SIGNAL(src, COMSIG_ATOM_REAGENT_CHANGE)
 	return
 
+/atom/proc/on_reagent_transfer()
+	return
+
 /atom/proc/Bumped(AM as mob|obj)
 	SHOULD_NOT_SLEEP(TRUE)
 	return
@@ -978,7 +988,7 @@ TYPEINFO(/atom)
 //Return an atom if you want to make the projectile's effects affect that instead.
 
 /atom/proc/bullet_act(var/obj/projectile/P)
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 	return
 
 

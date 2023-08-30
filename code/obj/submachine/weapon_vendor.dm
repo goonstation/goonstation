@@ -96,7 +96,7 @@
 
 	proc/accepted_token(var/token, var/mob/user)
 		src.ui_interact(user)
-		playsound(src.loc, sound_token, 80, 1)
+		playsound(src.loc, sound_token, 80, 0)
 		boutput(user, "<span class='notice'>You insert the requisition token into [src].</span>")
 		if(log_purchase)
 			logTheThing(LOG_STATION, user, "inserted [token] into [src] at [log_loc(get_turf(src))]")
@@ -238,11 +238,10 @@
 
 /obj/submachine/weapon_vendor/fishing
 	name = "Fishing Supplies Vendor"
-	icon = 'icons/obj/vending.dmi'
-	icon_state = "fishing"
 	desc = "An automated quartermaster service for obtaining and upgrading your fishing gear."
+	icon_state = "fishing"
 	credits = list(WEAPON_VENDOR_CATEGORY_FISHING = 0)
-	token_accepted = /obj/item/requisition_token/fishing
+	token_accepted = /obj/item/currency/fishing
 	sound_token = 'sound/effects/insert_ticket.ogg'
 	log_purchase = FALSE
 	layer = 4
@@ -257,19 +256,12 @@
 		materiel_stock += new/datum/materiel/fishing_gear/uniform
 		materiel_stock += new/datum/materiel/fishing_gear/hat
 		materiel_stock += new/datum/materiel/fishing_gear/fish_box
+		materiel_stock += new/datum/materiel/fishing_gear/fish_mount
 		..()
 
-	accepted_token(var/token)
-		if (istype(token, /obj/item/requisition_token/fishing/legendary))
-			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=5
-		else if (istype(token, /obj/item/requisition_token/fishing/epic))
-			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=4
-		else if (istype(token, /obj/item/requisition_token/fishing/rare))
-			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=3
-		else if (istype(token, /obj/item/requisition_token/fishing/uncommon))
-			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=2
-		else
-			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]++
+	accepted_token(var/obj/item/currency/fishing/token)
+		if (istype(token, /obj/item/currency/fishing))
+			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=token.amount
 		..()
 
 /obj/submachine/weapon_vendor/fishing/portable
@@ -582,7 +574,7 @@
 	name = "Basic fishing rod"
 	path = /obj/item/fishing_rod/basic
 	description = "A basic fishing rod."
-	cost = 5
+	cost = 0
 
 /datum/materiel/fishing_gear/upgraded_rod
 	name = "Upgraded fishing rod"
@@ -613,6 +605,12 @@
 	path = /obj/item/clothing/head/fish_fear_me
 	description = "The ultimate angling headwear. Comes with a new, personalised message every time."
 	cost = 15
+
+/datum/materiel/fishing_gear/fish_mount
+	name = "Fish Wall Mount"
+	path = /obj/item/wall_trophy/fish_trophy
+	description = "A Wall Mount to attach fish to and show it off."
+	cost = 10
 
 // Requisition tokens
 /obj/item/requisition_token
@@ -647,35 +645,6 @@
 		name = "doubloon"
 		desc = "A finely stamped gold coin compatible with the Pirate Weapons Vendor."
 		icon_state = "doubloon"
-
-/obj/item/requisition_token/fishing
-	icon_state = "fish_common"
-	layer = 4.5
-
-	common
-		name = "common research ticket"
-		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 1 credit."
-		icon_state = "fish_common"
-
-	uncommon
-		name = "uncommon research ticket"
-		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 2 credits."
-		icon_state = "fish_uncommon"
-
-	rare
-		name = "rare research ticket"
-		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 3 credits."
-		icon_state = "fish_rare"
-
-	epic
-		name = "epic research ticket"
-		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 4 credits."
-		icon_state = "fish_epic"
-
-	legendary
-		name = "legendary research ticket"
-		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 5 credits."
-		icon_state = "fish_legendary"
 
 #undef WEAPON_VENDOR_CATEGORY_SIDEARM
 #undef WEAPON_VENDOR_CATEGORY_LOADOUT

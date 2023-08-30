@@ -3,7 +3,7 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "b" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/caution/north,
 /area/dmm_suite/clear_area)
 "g" = (
@@ -24,7 +24,6 @@
 /obj/computerframe,
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 2;
 	dir = null;
 	icon_state = "0-2"
 	},

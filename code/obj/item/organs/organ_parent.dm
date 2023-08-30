@@ -9,7 +9,7 @@
 	var/organ_holder_name = "organ"
 	var/organ_holder_location = "chest"
 	var/organ_holder_required_op_stage = 0
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/brain.dmi'
 	icon_state = "brain1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "brain"
@@ -291,7 +291,7 @@
 
 	emp_act()
 		if (robotic)
-			src.take_damage(20, 20, 0)
+			src.take_damage(20, 20, 20)
 
 	proc/add_ability(var/datum/abilityHolder/aholder, var/abil) // in case things wanna do stuff instead of just straight-up adding/removing the abilities (see: laser eyes)
 		if (!aholder || !abil)

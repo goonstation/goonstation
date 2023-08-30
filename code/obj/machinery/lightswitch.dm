@@ -64,7 +64,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 	var/turf/T = null
 	for (var/dir in cardinal)
 		T = get_step(src,dir)
-		if (T.density || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
+		if (T.density || (locate(/obj/mapping_helper/wingrille_spawn) in T) || (locate(/obj/window) in T))
 			src.set_dir(dir)
 			if (dir == EAST)
 				src.pixel_x = 24

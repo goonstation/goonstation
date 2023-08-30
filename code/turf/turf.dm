@@ -90,7 +90,7 @@
 		..()
 		if(istype(src.material))
 			if(initial(src.opacity))
-				src.set_opacity(src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
+				src.set_opacity(src.material.getAlpha() <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
 		return
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
@@ -156,6 +156,8 @@
 	proc/UpdateDirBlocks()
 		src.blocked_dirs = 0
 		for (var/obj/O in src.contents)
+			if(!O.density)
+				continue
 			if (istype(O, /obj/window) && !is_cardinal(O.dir)) // full window
 				src.blocked_dirs = NORTH | SOUTH | EAST | WEST
 				return
@@ -165,6 +167,14 @@
 	proc/on_set_opacity(turf/thisTurf, old_opacity)
 		if (length(src.camera_coverage_emitters))
 			camera_coverage_controller?.update_emitters(src.camera_coverage_emitters)
+
+	proc/MakeCatwalk(var/obj/item/rods/rods)
+		if (rods)
+			rods.change_stack_amount(-1)
+
+		var/obj/grille/catwalk/catwalk = new
+		catwalk.setMaterial(rods?.material)
+		catwalk.set_loc(src)
 
 /obj/overlay/tile_effect
 	name = ""
@@ -327,7 +337,7 @@ proc/generate_space_color()
 	)
 #endif
 
-/turf/space/update_icon(starlight_alpha=255)
+/turf/space/update_icon(starlight_alpha=255, starlight_color_override=null)
 	..()
 	if(!isnull(space_color) && !istype(src, /turf/space/fluid))
 		src.color = space_color
@@ -340,7 +350,7 @@ proc/generate_space_color()
 			starlight.plane = PLANE_LIGHTING
 			starlight.blend_mode = BLEND_ADD
 
-		starlight.color = src.color
+		starlight.color = starlight_color_override ? starlight_color_override : src.color
 		if(!isnull(starlight_alpha))
 			starlight.alpha = starlight_alpha
 		UpdateOverlays(starlight, "starlight")
@@ -350,7 +360,7 @@ proc/generate_space_color()
 // override for space turfs, since they should never hide anything
 /turf/space/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1)
+		if(O.level == UNDERFLOOR)
 			O.hide(0)
 
 // override for space turfs, since they should never hide anything
@@ -375,6 +385,7 @@ proc/generate_space_color()
 	density = 1
 	opacity = 1
 	gas_impermeable = 1
+	allows_vehicles = FALSE
 
 	Enter()
 		return 0 // nope
@@ -390,6 +401,10 @@ proc/generate_space_color()
 		src.Entered(AM)
 	if(current_state < GAME_STATE_WORLD_NEW)
 		RL_Init()
+	#ifdef CHECK_MORE_RUNTIMES
+	if(current_state > GAME_STATE_MAP_LOAD && in_replace_with == 0)
+		stack_trace("turf [src] ([src.type]) created directly instead of using ReplaceWith")
+	#endif
 
 /turf/Exit(atom/movable/AM, atom/newloc)
 	SHOULD_CALL_PARENT(TRUE)
@@ -528,7 +543,7 @@ proc/generate_space_color()
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1)
+		if(O.level == UNDERFLOOR)
 			O.hide(src.intact)
 
 /turf/unsimulated/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
@@ -536,13 +551,23 @@ proc/generate_space_color()
 		return ..(what, keep_old_material = keep_old_material, handle_air = handle_air)
 	return
 
+#ifdef CHECK_MORE_RUNTIMES
+var/global/in_replace_with = 0
+#endif
+
 /turf/proc/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
 	SEND_SIGNAL(src, COMSIG_TURF_REPLACED, what)
+
+	#ifdef CHECK_MORE_RUNTIMES
+	in_replace_with++
+	#endif
+
 	var/turf/simulated/new_turf
 	var/old_dir = dir
 	var/old_liquid = active_liquid // replacing stuff wasn't clearing liquids properly
 
 	var/oldmat = src.material
+	src.material?.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
 
 	var/datum/gas_mixture/oldair = null //Set if old turf is simulated and has air on it.
 	var/datum/air_group/oldparent = null //Ditto.
@@ -618,9 +643,18 @@ proc/generate_space_color()
 		if(ispath(new_type, /turf/space) && !ispath(new_type, /turf/space/fluid) && delay_space_conversion()) return
 		new_turf = new new_type(src)
 		if (!isturf(new_turf))
-			if (delay_space_conversion()) return
+			if (delay_space_conversion())
+				#ifdef CHECK_MORE_RUNTIMES
+				in_replace_with--
+				#endif
+				return
 			new_turf = new /turf/space(src)
-		if(!istype(new_turf, new_type)) return new_turf // New() replaced the turf with something else, its ReplaceWith handled everything for us already (otherwise we'd screw up lighting)
+		if(!istype(new_turf, new_type))
+			#ifdef CHECK_MORE_RUNTIMES
+			in_replace_with--
+			#endif
+			return new_turf
+			// New() replaced the turf with something else, its ReplaceWith handled everything for us already (otherwise we'd screw up lighting)
 
 	else switch(what)
 		if ("Ocean")
@@ -648,7 +682,11 @@ proc/generate_space_color()
 		if ("Unsimulated Floor")
 			new_turf = new /turf/unsimulated/floor(src)
 		else
-			if (delay_space_conversion()) return
+			if (delay_space_conversion())
+				#ifdef CHECK_MORE_RUNTIMES
+				in_replace_with--
+				#endif
+				return
 			if(station_repair.station_generator && src.z == Z_LEVEL_STATION)
 				station_repair.repair_turfs(list(src), clear=TRUE)
 				keep_old_material = FALSE
@@ -746,6 +784,9 @@ proc/generate_space_color()
 		// tells the atmos system "hey this tile changed, maybe rebuild the group / borders"
 		new_turf.update_nearby_tiles(1)
 
+	#ifdef CHECK_MORE_RUNTIMES
+	in_replace_with--
+	#endif
 	return new_turf
 
 
@@ -967,13 +1008,6 @@ TYPEINFO(/turf/simulated)
 	fullbright = 0 // cogwerks changed as a lazy fix for newmap- if this causes problems change back to 1
 	stops_space_move = 1
 	text = "<font color=#aaa>."
-
-/turf/unsimulated/floor
-	name = "floor"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "plating"
-	text = "<font color=#aaa>."
-	plane = PLANE_FLOOR
 
 /turf/unsimulated/wall
 	name = "wall"

@@ -703,7 +703,7 @@
 			var/poy = text2num(params["icon-y"]) - 16
 			var/obj/itemspecialeffect/S = new special_effect_type
 			S.setup(get_step(user, get_dir(user, target)))
-			shoot_projectile_ST_pixel(user, projectile, target, pox, poy)
+			shoot_projectile_ST_pixel_spread(user, projectile, target, pox, poy)
 			afterUse(user)
 
 	disposing()
@@ -1094,7 +1094,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			M.bodytemperature += (4 * mult)
 			playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
 
-		logTheThing(LOG_COMBAT, usr, "'s spark special attack hits <b>[hit]</b> at [log_loc(hit)].")
+		logTheThing(LOG_COMBAT, usr, "'s spark special attack hits [constructTarget(hit,"combat")] at [log_loc(hit)].")
 
 /datum/item_special/spark/baton
 	pixelaction(atom/target, params, mob/user, reach)
@@ -1310,7 +1310,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				for(var/A in turf)
 					if(!isTarget(A))
 						continue
-					logTheThing(LOG_COMBAT, user, "'s flame special attack hits <b>[A]</b> at [log_loc(A)].")
+					logTheThing(LOG_COMBAT, user, "'s flame special attack hits [constructTarget(A,"combat")] at [log_loc(A)].")
 					if(ismob(A))
 						var/mob/M = A
 						M.changeStatus("burning", flame_succ ? time : tiny_time)
@@ -1363,7 +1363,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 						boutput(user, "<span class='alert'><b>You try to pulse a spark, but [A] is too dense for it to take!</b></span>")
 						return
 				if (ismob(A))
-					logTheThing(LOG_COMBAT, user, "'s elecflash (multitool pulse) special attack hits <b>[A]</b> at [log_loc(A)].")
+					logTheThing(LOG_COMBAT, user, "'s elecflash (multitool pulse) special attack hits [constructTarget(A,"combat")] at [log_loc(A)].")
 			elecflash(turf,0, power=2, exclude_center = 0)
 			afterUse(user)
 		return
@@ -1454,7 +1454,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				M.TakeDamage("chest", 0, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
 				M.bodytemperature += (4 * mult)
 				playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
-			logTheThing(LOG_COMBAT, usr, "'s spark special attack hits <b>[hit]</b> at [log_loc(hit)].")
+			logTheThing(LOG_COMBAT, usr, "'s spark special attack hits [constructTarget(hit,"combat")] at [log_loc(hit)].")
 
 /datum/item_special/katana_dash
 	cooldown = 9
@@ -1803,7 +1803,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 						logTheThing(LOG_COMBAT, user, "fling throws a floor tile ([F]) [get_dir(user, target)] from [turf].")
 
 						user.lastattacked = user //apply combat click delay
-						tile.throw_at(target, tile.throw_range, tile.throw_speed, params)
+						tile.throw_at(target, tile.throw_range, tile.throw_speed, params, bonus_throwforce = 3)
 
 			if (!hit)
 				playsound(master, 'sound/effects/swoosh.ogg', 50, 0)

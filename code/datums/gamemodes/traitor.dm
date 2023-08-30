@@ -70,7 +70,7 @@
 		possible_traitors.Remove(traitor)
 
 	if(num_wraiths)
-		add_wraith()
+		add_wraith(num_wraiths)
 
 	return 1
 

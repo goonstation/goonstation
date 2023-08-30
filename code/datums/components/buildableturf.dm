@@ -36,7 +36,7 @@ TYPEINFO(/datum/component/buildable_turf)
 		var/obj/item/rcd/RCD = I
 		if ((isrestrictedz(user.z) || isrestrictedz(location.z)) && !RCD.really_actually_bypass_z_restriction)
 			if(!(isgenplanet(user) && isgenplanet(location)))
-				boutput(user, "\The [RCD] won't work here for some reason. Oh well!")
+				boutput(user, "<span class='alert'>\The [RCD] won't work here for some reason. Oh well!</span>")
 				return
 
 		if (BOUNDS_DIST(get_turf(RCD), get_turf(location)) > 0)

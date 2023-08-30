@@ -557,7 +557,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			do_teleport(O,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 		showswirl(src.loc)
 		showswirl(target)
-		use_power(500000)
+		use_power(400000)
 		if(prob(2))
 			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
 			XSUBTRACT = rand(0,100)
@@ -738,7 +738,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				var/summon = pick("pig","mouse","roach","rockworm")
 				switch(summon)
 					if("pig")
-						new /obj/critter/pig(src.loc)
+						new /mob/living/critter/small_animal/pig(src.loc)
 					if("mouse")
 						for(var/i = 1 to rand(3,8))
 							new /mob/living/critter/small_animal/mouse(src.loc)
@@ -786,10 +786,10 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				return
 			if("majorsummon")
 				var/summon = pick(
-					/obj/critter/zombie,
+					/mob/living/critter/zombie,
 					/mob/living/critter/bear,
 					/mob/living/carbon/human/npc/syndicate,
-					/obj/critter/martian/soldier,
+					/mob/living/critter/martian/soldier,
 					/mob/living/critter/lion,
 					/obj/critter/yeti,
 					/obj/critter/gunbot/drone,
@@ -1077,7 +1077,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			return
 
 		if (href_list["addbookmark"])
-			if(bookmarks.len >= max_bookmarks)
+			if(length(bookmarks) >= max_bookmarks)
 				boutput(usr, "<span class='alert'>Maximum number of Bookmarks reached.</span>")
 				return
 			var/datum/teleporter_bookmark/bm = new

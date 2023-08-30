@@ -79,7 +79,7 @@
 			choices += channel_name
 
 		var/choice = 0
-		if (choices.len == 1)
+		if (length(choices) == 1)
 			choice = choices[1]
 		else
 			choice = input("", "Select Radio and Channel", null) as null|anything in choices
@@ -122,7 +122,7 @@
 
 
 			var/choice = 0
-			if (choices.len == 1)
+			if (length(choices) == 1)
 				choice = choices[1]
 			else
 				choice = input("", "Select Radio Channel", null) as null|anything in choices
@@ -468,10 +468,7 @@
 
 	if(src.find_type_in_hand(/obj/item/megaphone))
 		var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
-		if(megaphone.makes_you_quieter)
-			loudness -= 1
-		else
-			loudness += 1
+		loudness += megaphone.loudness_mod
 
 	if (src.speech_void)
 		text = voidSpeak(text)
@@ -544,7 +541,9 @@
 
 	if(class)
 		class = " class='game [class]'"
-	if (loudness > 0)
+	if (loudness > 1)
+		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<strong style='font-size:36px'><b [class? class : ""]>[text]</b></strong>[font_accent ? "</font>" : null][second_quote]"
+	else if (loudness > 0)
 		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<big><strong><b [class? class : ""]>[text]</b></strong></big>[font_accent ? "</font>" : null][second_quote]"
 	else if (loudness < 0)
 		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<small [class? class : ""]>[text]</small>[font_accent ? "</font>" : null][second_quote]"
@@ -634,6 +633,7 @@
 
 		var ooc_class = ""
 		var display_name = src.key
+		var/ooc_icon = ""
 
 		if (src.client.stealth || src.client.alt_key)
 			if (!C.holder)
@@ -648,6 +648,9 @@
 				ooc_class = "adminooc"
 		else if (src.client.is_mentor() && !src.client.stealth)
 			ooc_class = "mentorooc"
+		else if (src.client.player.is_newbee)
+			ooc_class = "newbeeooc"
+			ooc_icon = "Newbee"
 
 		if( src.client.cloud_available() && src.client.cloud_get("donor") )
 			msg = replacetext(msg, ":shelterfrog:", "<img src='http://stuff.goonhub.com/shelterfrog.png' width=32>")
@@ -656,7 +659,13 @@
 			msg = replacetext(msg, ":shelterbee:", "<img src='http://stuff.goonhub.com/shelterbee.png' width=32>")
 
 		var/rendered = "<span class=\"ooc [ooc_class]\"><span class=\"prefix\">OOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
-
+		if (ooc_icon)
+			rendered = {"
+			<div class='tooltip'>
+				<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[ooc_icon].png")]\">
+				<span class="tooltiptext">[ooc_icon]</span>
+			</div>
+			"} + rendered
 		if (C.holder)
 			rendered = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[rendered]</span>"
 
@@ -730,6 +739,8 @@
 			looc_style = "color: #cd6c4c;"
 	else if (src.client.is_mentor() && !src.client.stealth)
 		looc_style = "color: #a24cff;"
+	else if (src.client.player.is_newbee)
+		looc_style = "color: #8BC16E;"
 
 	var/image/chat_maptext/looc_text = null
 	looc_text = make_chat_maptext(src, "\[LOOC: [msg]]", looc_style)
@@ -750,6 +761,7 @@
 
 		var looc_class = ""
 		var display_name = src.key
+		var/looc_icon = ""
 
 		if (src.client.stealth || src.client.alt_key)
 			if (!C.holder)
@@ -764,9 +776,18 @@
 				looc_class = "adminlooc"
 		else if (src.client.is_mentor() && !src.client.stealth)
 			looc_class = "mentorlooc"
+		else if (src.client.player.is_newbee)
+			looc_class = "newbeelooc"
+			looc_icon = "Newbee"
 
 		var/rendered = "<span class=\"looc [looc_class]\"><span class=\"prefix\">LOOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
-
+		if (looc_icon)
+			rendered = {"
+			<div class='tooltip'>
+				<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[looc_icon].png")]\">
+				<span class="tooltiptext">[looc_icon]</span>
+			</div>
+			"} + rendered
 		if (C.holder)
 			rendered = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[rendered]</span>"
 
@@ -1080,6 +1101,8 @@
 	else if(is_npc)
 		class += " flocknpc"
 	else if(isnull(mob_speaking))
+		if (flock?.quiet)
+			return
 		class += " bold italics"
 		name = "\[SYSTEM\]"
 
@@ -1100,7 +1123,7 @@
 	else
 		rendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[name]</span> <span class='message'>[message]</span></span>"
 		flockmindRendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name'>[flock && speaker ? "<a href='?src=\ref[flock.flockmind];origin=\ref[structure_speaking ? structure_speaking.loc : mob_speaking]'>[name]</a>" : "[name]"]</span> <span class='message'>[message]</span></span>"
-		if (flock && !flock.flockmind.tutorial && flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST / 4 && prob(90))
+		if (flock && !flock.flockmind?.tutorial && flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST / 4 && prob(90))
 			siliconrendered = "<span class='game [class]'><span class='bold'>\[?????\] </span><span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[radioGarbleText(name, FLOCK_RADIO_GARBLE_CHANCE)]</span> <span class='message'>[radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)]</span></span>"
 
 	for (var/client/CC)

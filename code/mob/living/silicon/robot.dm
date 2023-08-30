@@ -65,7 +65,6 @@
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
 	var/viewalerts = 0
 	var/jetpack = 0
-	var/jeton = 0
 	var/freemodule = 1 // For picking modules when a robot is first created
 	var/automaton_skin = 0 // for the medal reward
 	var/alohamaton_skin = 0 // for the bank purchase
@@ -246,6 +245,9 @@
 					B.set_loc(H)
 					H.brain = B
 			update_bodypart() //TODO probably remove this later. keeping in for safety
+			if(!isnull(src.client))
+				src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
+				src.update_name_tag()
 			if (src.syndicate)
 				src.show_antag_popup("syndieborg")
 
@@ -257,7 +259,7 @@
 		hud.update_pulling()
 
 	death(gibbed)
-		src.stat = 2
+		setdead(src)
 		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		src.mind?.register_death()
@@ -700,7 +702,7 @@
 		// If we have no brain or an inactive spont core, we're dormant.
 		// If we have a brain but no client, we're in hiberation mode.
 		// Otherwise, fully operational.
-		if (src.part_head.brain && !(istype(src.part_head.brain, /obj/item/organ/brain/latejoin) && !src.part_head.brain:activated))
+		if ((src.part_head.brain || src.part_head.ai_interface) && !(istype(src.part_head.brain, /obj/item/organ/brain/latejoin) && !src.part_head.brain:activated))
 			if (src.client)
 				. += "<span class='success'>[src.name] is fully operational.</span><br>"
 			else
@@ -800,8 +802,10 @@
 				break
 
 		if (src.shell && src.mainframe)
+			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 			src.real_name = "SHELL/[src.mainframe]"
 			src.UpdateName()
+			src.update_name_tag()
 
 		update_clothing()
 		update_appearance()
@@ -812,6 +816,7 @@
 		if (src.shell)
 			src.real_name = "AI Cyborg Shell [copytext("\ref[src]", 6, 11)]"
 			src.name = src.real_name
+			src.update_name_tag()
 			return
 
 	blob_act(var/power)
@@ -941,8 +946,7 @@
 		if (P.proj_data.damage < 1)
 			return
 
-		if (src.material)
-			src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		var/obj/item/parts/robot_parts/PART = null
 		if (ismob(P.shooter))
@@ -994,9 +998,11 @@
 
 	emp_act()
 		vision.noise(60)
+		src.changeStatus("stunned", 5 SECONDS, optional=null)
+		src.changeStatus("upgrade_disabled", 5 SECONDS, optional=null)
 		boutput(src, "<span class='alert'><B>*BZZZT*</B></span>")
 		for (var/obj/item/parts/robot_parts/RP in src.contents)
-			if (RP.ropart_take_damage(0,10) == 1) src.compborg_lose_limb(RP)
+			if (RP.ropart_take_damage(0,55) == 1) src.compborg_lose_limb(RP)
 
 	meteorhit(obj/O as obj)
 		src.visible_message("<font color=red><b>[src]</b> is struck by [O]!</font>")
@@ -1039,10 +1045,13 @@
 	temperature_expose(null, temp, volume)
 		var/Fshield = FALSE
 
-		src.material?.triggerTemp(src, temp)
+		src.material_trigger_on_temp(temp)
 
 		for(var/atom/A in src.contents)
-			A.material?.triggerTemp(A, temp)
+			A.material_trigger_on_temp(temp)
+		for (var/atom/equipped_stuff in src.equipped())
+			//that should mostly not have an effect, exept maybe when an engiborg picks up a stack of erebite rods?
+			equipped_stuff.material_trigger_on_temp(temp)
 
 		for (var/obj/item/roboupgrade/R in src.contents)
 			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated)
@@ -1057,18 +1066,6 @@
 					qdel (src.cell)
 					src.cell = null
 					src.part_chest?.cell = null
-
-	bump(atom/movable/AM as mob|obj)
-		if ( src.now_pushing)
-			return
-		if (!istype(AM, /atom/movable))
-			return
-		if (!src.now_pushing)
-			src.now_pushing = 1
-			if (!AM.anchored)
-				var/t = get_dir(src, AM)
-				step(AM, t)
-			src.now_pushing = null
 
 	triggerAlarm(var/class, area/A, var/O, var/alarmsource)
 		if (isdead(src))
@@ -1085,7 +1082,7 @@
 		var/list/CL = null
 		if (O && istype(O, /list))
 			CL = O
-			if (CL.len == 1)
+			if (length(CL) == 1)
 				C = CL[1]
 		else if (O && istype(O, /obj/machinery/camera))
 			C = O
@@ -1103,7 +1100,7 @@
 				var/list/srcs = alarm[3]
 				if (origin in srcs)
 					srcs -= origin
-				if (srcs.len == 0)
+				if (length(srcs) == 0)
 					cleared = 1
 					L -= I
 		if (cleared)
@@ -1196,7 +1193,7 @@
 			if (wiresexposed)
 				boutput(user, "<span class='alert'>You need to get the wires out of the way first.</span>")
 			else
-				if (src.upgrades.len >= src.max_upgrades)
+				if (length(src.upgrades) >= src.max_upgrades)
 					boutput(user, "<span class='alert'>There's no room - you'll have to remove an upgrade first.</span>")
 					return
 				if (locate(W.type) in src.upgrades)
@@ -1722,6 +1719,9 @@
 		if (!module_states[1] && !module_states[2] && !module_states[3])
 			module_active = null
 			return
+		var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
+		if(B)
+			qdel(B)
 		var/active = src.module_states.Find(src.module_active)
 		if (!switchto)
 			switchto = (active % 3) + 1
@@ -2355,7 +2355,7 @@
 					var/list/sources = alm[3]
 					dat += "<NOBR>"
 					dat += text("-- [A.name]")
-					if (sources.len > 1)
+					if (length(sources) > 1)
 						dat += text("- [sources.len] sources")
 					dat += "</NOBR><BR><br>"
 			else
@@ -2506,9 +2506,6 @@
 
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
-		if (!src.canmove)
-			if (isalive(src))
-				src.lastgasp() // calling lastgasp() here because we just got knocked out
 		if (src.misstep_chance > 0)
 			switch(misstep_chance)
 				if(50 to INFINITY)
@@ -3218,6 +3215,20 @@
 			src.shell = 1
 			..(loc, frame, starter, syndie, frame_emagged)
 
+/mob/living/silicon/robot/spawnable/light
+	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+		if (!src.part_chest)
+			src.part_chest = new/obj/item/parts/robot_parts/chest/light(src)
+			src.part_chest.wires = 1
+			src.part_chest.cell = new/obj/item/cell/cerenkite/charged(src.part_chest)
+			src.cell = src.part_chest.cell
+		if (!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/light(src)
+		if (!src.part_arm_l) src.part_arm_l = new/obj/item/parts/robot_parts/arm/left/light(src)
+		if (!src.part_arm_r) src.part_arm_r = new/obj/item/parts/robot_parts/arm/right/light(src)
+		if (!src.part_leg_l) src.part_leg_l = new/obj/item/parts/robot_parts/leg/left/light(src)
+		if (!src.part_leg_r) src.part_leg_r = new/obj/item/parts/robot_parts/leg/right/light(src)
+		..(loc, frame, starter, syndie, frame_emagged)
+
 /mob/living/silicon/robot/spawnable/standard
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
@@ -3297,6 +3308,20 @@
 			src.shell = 1
 			..(loc, frame, starter, syndie, frame_emagged)
 
+/mob/living/silicon/robot/spawnable/screenhead
+	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+		if (!src.part_chest)
+			src.part_chest = new/obj/item/parts/robot_parts/chest/standard(src)
+			src.part_chest.wires = 1
+			src.part_chest.cell = new/obj/item/cell/cerenkite/charged(src.part_chest)
+			src.cell = src.part_chest.cell
+		if (!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/screen(src)
+		if (!src.part_arm_l) src.part_arm_l = new/obj/item/parts/robot_parts/arm/left/standard(src)
+		if (!src.part_arm_r) src.part_arm_r = new/obj/item/parts/robot_parts/arm/right/standard(src)
+		if (!src.part_leg_l) src.part_leg_l = new/obj/item/parts/robot_parts/leg/left/treads(src)
+		if (!src.part_leg_r) src.part_leg_r = new/obj/item/parts/robot_parts/leg/right/treads(src)
+		..(loc, frame, starter, syndie, frame_emagged)
+
 /mob/living/silicon/robot/uber
 
 	New()
@@ -3345,8 +3370,8 @@
 /mob/living/silicon/robot/buddy
 	name = "Robot"
 	real_name = "Robot"
-	icon = 'icons/obj/bots/aibots.dmi'
-	icon_state = "robuddy1"
+	icon = 'icons/obj/bots/robuddy/pr-6.dmi'
+	icon_state = "body"
 	health = 1000
 	custom = 1
 

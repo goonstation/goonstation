@@ -207,8 +207,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 		ADMIN_ONLY
 		world.SetConfig( "APP/admin", src.key, "role=admin" )
-		input( src, "Enter '.debug profile' in the next command box. Blame BYOND.", "BYONDSucks", ".debug profile" )
-		winset( usr, null, "command=.command" )
+		winset( usr, null, "command=.profile" )
 		if (tgui_alert(usr, "Do you disable automatic profiling for 5 minutes.", "Debug",
 				list("Yes", "No"), timeout = 10 SECOND) == "Yes")
 			lag_detection_process.delay_disable_manual_profiling(5 MINUTES)
@@ -559,9 +558,9 @@ proc/debug_map_apc_count(delim,zlim)
 			for(var/obj/decal/cleanable/writing/arte in theTurf)
 				built += "[arte.icon_state] artpiece by [arte.artist]"
 				artists |= arte.artist
-			if(artists.len >= 2)
+			if(length(artists) >= 2)
 				img.app.color = "#7f0000"
-			else if(artists.len == 1)
+			else if(length(artists) == 1)
 				img.app.color = debug_color_of(artists[1])
 			img.app.desc = built.Join("<br/>")
 
@@ -582,7 +581,7 @@ proc/debug_map_apc_count(delim,zlim)
 				img.app.alpha = 0
 			else if(0 in netnums)
 				img.app.color = "#ff0000"
-			else if(netnums.len >= 2)
+			else if(length(netnums) >= 2)
 				img.app.color = "#ffffff"
 			else
 				img.app.color = debug_color_of(netnums[1])
@@ -1000,7 +999,9 @@ proc/debug_map_apc_count(delim,zlim)
 			var/temp = null
 			if(issimulatedturf(theTurf))
 				var/turf/simulated/sim = theTurf
-				if(sim.air)
+				if (sim.parent?.group_processing)
+					temp = sim.parent.air.temperature
+				else if(sim.air)
 					temp = sim.air.temperature
 			if(isnull(temp))
 				temp = theTurf.temperature
@@ -1401,11 +1402,11 @@ proc/debug_map_apc_count(delim,zlim)
 			var/list/detailed_materials = list()
 			for(var/atom/movable/AM in theTurf)
 				if(AM.material)
-					materials |= AM.material.name
-					detailed_materials += "[AM.name] - [AM.material.name]"
+					materials |= AM.material.getName()
+					detailed_materials += "[AM.name] - [AM.material.getName()]"
 			if(include_turfs && theTurf.material)
-				materials |= theTurf.material.name
-				detailed_materials += "[theTurf.name] - [theTurf.material.name]"
+				materials |= theTurf.material.getName()
+				detailed_materials += "[theTurf.name] - [theTurf.material.getName()]"
 			if(!length(materials))
 				img.app.alpha = 0
 				return

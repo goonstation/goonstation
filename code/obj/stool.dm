@@ -156,15 +156,27 @@
 		if (. && islist(scoot_sounds) && scoot_sounds.len && prob(75))
 			playsound( get_turf(src), pick( scoot_sounds ), 50, 1 )
 
+/obj/stool/pet_bed
+	name = "pet bed"
+	icon_state = "petbed"
+	desc = "A soft bed designed for small animals to snuggle up in."
+	parts_type = /obj/item/furniture_parts/stool/pet_bed
+
+/obj/stool/pet_bed/jones
+	name = "cat bed"
+	desc = "Though it was made to suit him, Jones still seems to sleep in every spot that is NOT this little bed."
+
 /obj/stool/bee_bed
 	// idk. Not a bed proper since humans can't lay in it. Weirdos.
 	// would also be cool to make these work with bees.
 	// it's hip to tuck bees!
 	name = "bee bed"
-	icon = 'icons/misc/critter.dmi'
 	icon_state = "beebed"
 	desc = "A soft little bed the general size and shape of a space bee."
 	parts_type = /obj/item/furniture_parts/stool/bee_bed
+
+/obj/stool/bee_bed/heisenbee
+	name = "heisenbed"
 
 /obj/stool/bee_bed/double // Prefab variant
 	name = "double bee bed"
@@ -189,6 +201,7 @@ TYPEINFO(/obj/stool/wooden)
 /obj/stool/wooden
 	name = "wooden stool"
 	icon_state = "wstool"
+	default_material = "wood"
 	desc = "Like a stool, but just made out of wood."
 	parts_type = /obj/item/furniture_parts/woodenstool
 
@@ -534,10 +547,13 @@ TYPEINFO(/obj/stool/wooden)
 /* ================================================ */
 /* -------------------- Chairs -------------------- */
 /* ================================================ */
+TYPEINFO(/obj/stool/chair)
+	mat_appearances_to_ignore = list("steel")
 
 /obj/stool/chair
 	name = "chair"
 	desc = "A four-legged metal chair, rigid and slightly uncomfortable. Helpful when you don't want to use your legs at the moment."
+	HELP_MESSAGE_OVERRIDE("")
 	icon_state = "chair"
 	var/comfort_value = 3
 	var/buckledIn = 0
@@ -556,6 +572,15 @@ TYPEINFO(/obj/stool/wooden)
 
 	moveable
 		anchored = UNANCHORED
+
+	get_help_message(dist, mob/user)
+		. = "You can <b>sit</b> on it by standing on the same tile then click draging yourself to the chair or using the Block hotkey with any intent except <b>Grab</b>. "
+		if (src.climbable)
+			. += "It will be <b>climbed on</b> if you are using the <b>Grab intent</b>. "
+		if (src.foldable)
+			. += "It can be <b>folded</b> up to carry by clicking on it. "
+		if (src.securable)
+			. += "It can be <b>secured to the floor</b> with a screwing tool."
 
 	New()
 		if (src.dir == NORTH)
@@ -903,6 +928,7 @@ TYPEINFO(/obj/item/chair/folded)
 /obj/item/chair/folded
 	name = "chair"
 	desc = "A folded chair. Good for smashing noggin-shaped things."
+	HELP_MESSAGE_OVERRIDE("It can be unfolded back into a chair by <b>using it<b> with the C key.")
 	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "folded_chair"
 	item_state = "folded_chair"
@@ -1269,9 +1295,9 @@ TYPEINFO(/obj/stool/chair/wooden)
 	/obj/item/reagent_containers/food/snacks/candy/candyheart,
 	/obj/item/bananapeel,
 	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical,
-	/obj/item/spacecash/random/small,
-	/obj/item/spacecash/random/tourist,
-	/obj/item/spacecash/buttcoin)
+	/obj/item/currency/spacecash/small,
+	/obj/item/currency/spacecash/tourist,
+	/obj/item/currency/spacecash/buttcoin)
 
 	New()
 		..()
@@ -1518,7 +1544,7 @@ TYPEINFO(/obj/stool/chair/wooden)
 
 		if (netnum)
 			var/datum/powernet/PN
-			if (powernets && powernets.len >= netnum)
+			if (powernets && length(powernets) >= netnum)
 				PN = powernets[netnum]
 				return PN.avail
 

@@ -29,7 +29,7 @@
 		if (M.key) result += M.key
 		if (isdead(M)) result += "DEAD"
 		if (role) result += role
-		if (checktraitor(M)) result += "\[T\]"
+		if (M.mind?.is_antagonist()) result += "\[T\]"
 		system.reply(result.Join(" | "), user)
 
 /datum/spacebee_extension_command/addnote
@@ -482,7 +482,6 @@
 			target.mind.damned = 0
 			target.mind.transfer_to(newM)
 		target.mind = null
-		newM.Login()
 		newM.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 		qdel(target)
 
