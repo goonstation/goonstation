@@ -625,7 +625,7 @@ var/global/list/module_editors = list()
 	if(!(rack in ticker.ai_law_rack_manager.registered_racks))
 		return
 	src.law_rack_connection = rack
-	logTheThing(LOG_STATION, src, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)][user ? " by [user]" : ""]")
+	logTheThing(LOG_STATION, src, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)][user ? " by [constructName(user)]" : ""]")
 	if (user)
 		var/area/A = get_area(src.law_rack_connection)
 		boutput(user, "You connect [src.name] to the stored law rack at [A.name].")

@@ -2389,6 +2389,7 @@ var/list/fun_images = list()
 
 	global.phrase_log?.upload_uncool_words()
 	global.phrase_log?.load()
+	boutput(src, "Uncool words uploaded successfully")
 
 
 /client/proc/whitelist_add_temp(ckey as text)

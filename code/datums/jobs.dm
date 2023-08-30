@@ -1105,6 +1105,34 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Barber")
 		return
 
+/datum/job/special/mime
+	name = "Mime"
+	limit = 1
+	wages = PAY_DUMBCLOWN*2 // lol okay whatever
+	slot_belt = list(/obj/item/device/pda2)
+	slot_head = list(/obj/item/clothing/head/mime_bowler)
+	slot_mask = list(/obj/item/clothing/mask/mime)
+	slot_jump = list(/obj/item/clothing/under/misc/mime/alt)
+	slot_suit = list(/obj/item/clothing/suit/scarf)
+	slot_glov = list(/obj/item/clothing/gloves/latex)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_poc1 = list(/obj/item/pen/crayon/white)
+	slot_poc2 = list(/obj/item/paper)
+	items_in_backpack = list(/obj/item/baguette)
+	change_name_on_spawn = 1
+
+	New()
+		..()
+		src.access = get_access("Mime")
+		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.bioHolder.AddEffect("mute", magical=1)
+		M.bioHolder.AddEffect("blankman", magical=1)
+
 /datum/job/special/attorney
 	name = "Attorney"
 	linkcolor = "#FF0000"
@@ -2627,7 +2655,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		return
 
 /datum/job/daily/monday
-	name = "Mime"
+	name = "Pantomimist"
 	limit = 1
 	wages = PAY_DUMBCLOWN*2
 	slot_belt = list(/obj/item/device/pda2)

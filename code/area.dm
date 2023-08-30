@@ -1412,6 +1412,10 @@ ABSTRACT_TYPE(/area/prefab)
 	icon_state = "orange"
 	requires_power = FALSE
 
+/area/prefab/crashed_shuttle
+	name = "Crashed Shuttle"
+	icon_state = "purple"
+
 /area/prefab/vault
 	name = "Secure Vault"
 
