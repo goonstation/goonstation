@@ -12,7 +12,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 	///In the case of a thrown splattered pie, minimum amount of time we remain visually stuck on someone's face.
 	var/min_stuck_time = 5 SECONDS
 	///In the case of a thrown splattered pie, maximum amount of time we remain visually stuck on someone's face.
-	var/max_stuck_time = 15 SECONDS
+	var/max_stuck_time = 10 SECONDS
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (ismob(hit_atom) && src.splat)
@@ -35,13 +35,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 					M.bioHolder?.AddEffect("bad_eyesight")
 					JOB_XP(thrower, "Clown", 1)
 					SPAWN(rand(src.min_stuck_time, src.max_stuck_time))
-						if (M?.loc && src?.loc)
-							M.bioHolder?.RemoveEffect("bad_eyesight")
-							M.UpdateOverlays(null, overlay_key)
-							src.invisibility = old_invis
-							src.set_loc(M.loc)
-							src.visible_message("<span class='notice'>[src] falls off of [M]'s face.</span>")
-							qdel(face_pie)
+						if (!M || !M.loc)
+							return
+						M.bioHolder?.RemoveEffect("bad_eyesight")
+						M.UpdateOverlays(null, overlay_key)
+						if (!src || !src.loc)
+							return
+						src.visible_message("<span class='notice'>[src] falls off of [M]'s face.</span>")
+						src.invisibility = old_invis
+						src.set_loc(M.loc)
+						qdel(face_pie)
 					return
 			src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
 			M.change_eye_blurry(rand(5,10))
