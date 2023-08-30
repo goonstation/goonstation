@@ -312,7 +312,7 @@ TYPEINFO(/obj/machinery/chem_master)
 	flags = NOSPLASH
 	power_usage = 50
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
-	var/obj/item/beaker = null
+	var/obj/beaker = null
 	var/list/beaker_cache = null
 	var/mob/roboworking = null
 	var/emagged = FALSE
@@ -379,6 +379,10 @@ TYPEINFO(/obj/machinery/chem_master)
 	proc/eject_beaker(mob/user)
 		if(!src.beaker)
 			return FALSE
+
+		if(istype(src.beaker, /obj/reagent_dispensers/chemicalbarrel))
+			remove_barrel(src.beaker)
+			return
 
 		if(!src.roboworking)
 			var/obj/item/I = src.beaker
@@ -556,6 +560,64 @@ TYPEINFO(/obj/machinery/chem_master)
 			if(src.beaker)
 				name = src.beaker.reagents.get_master_reagent_name()
 		return name
+
+	proc/try_attach_barrel(var/obj/reagent_dispensers/chemicalbarrel/barrel, var/mob/user)
+		if (src.status & (NOPOWER|BROKEN))
+			user.show_text("[src] seems to be out of order.", "red")
+			return
+
+		if (src.beaker == barrel)
+			user.show_text("The [barrel.name] is already connected to the [src.name]!", "red")
+			return
+
+		if(BOUNDS_DIST(src, user) > 0)
+			user.show_text("The [src.name] is too far away to mess with!", "red")
+			return
+
+		if (GET_DIST(barrel, src) > 1)
+			usr.show_text("The [src.name] is too far away from the [barrel.name] to hook up!", "red")
+			return
+
+		if(src.beaker)
+			src.eject_beaker(user)
+
+		src.beaker = barrel
+		boutput(user, "You hook the [src.beaker] up to the [src.name].")
+		RegisterSignal(barrel, COMSIG_MOVABLE_MOVED, PROC_REF(remove_barrel))
+
+		var/tube_x = 5 //where the tube connects to the chemmaster (changes with dir)
+		var/tube_y = -5
+		if(dir == EAST)
+			tube_x = 7
+			tube_y = 6
+		if(dir == WEST)
+			tube_x = -8
+			tube_y = 0
+		var/datum/lineResult/result = drawLine(src, barrel, "chemmaster", "chemmaster_end", src.pixel_x + tube_x, src.pixel_y + tube_y, barrel.pixel_x + 6, barrel.pixel_y + 8)
+		result.lineImage.pixel_x = -src.pixel_x
+		result.lineImage.pixel_y = -src.pixel_y
+		if(src.layer > barrel.layer) //this should ensure it renders above both the barrel and chemmaster
+			result.lineImage.layer = src.layer + 0.1
+		else
+			result.lineImage.layer = barrel.layer + 0.1
+		src.UpdateOverlays(result.lineImage, "tube")
+
+		rebuild_beaker_cache()
+		global.tgui_process.update_uis(src)
+		src.UpdateIcon()
+
+	proc/remove_barrel(var/obj/reagent_dispensers/chemicalbarrel/barrel)
+		UnregisterSignal(src.beaker, COMSIG_MOVABLE_MOVED)
+		src.beaker = null
+		rebuild_beaker_cache()
+		src.UpdateIcon()
+		global.tgui_process.update_uis(src)
+		src.UpdateOverlays(null, "tube")
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if (istype(over_object, /obj/reagent_dispensers/chemicalbarrel))
+			try_attach_barrel(over_object, usr)
+		..()
 
 	ui_data(mob/user)
 		. = list()
@@ -832,7 +894,10 @@ TYPEINFO(/obj/machinery/chem_master)
 
 	update_icon()
 		if(src.beaker)
-			icon_state = "mixer1"
+			if(istype(src.beaker, /obj/reagent_dispensers/chemicalbarrel))
+				icon_state = "mixer_barrel"
+			else
+				icon_state = "mixer1"
 		else
 			icon_state = "mixer0"
 

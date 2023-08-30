@@ -438,6 +438,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			src.lid_image.icon_state = "[base_icon_state]-lid"
 			src.UpdateOverlays(src.lid_image, "lid")
 		else
+			src.lid_image.layer = src.fluid_image.layer + 0.1
 			src.lid_image.icon_state = null
 			src.UpdateOverlays(null, "lid")
 
@@ -491,6 +492,13 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			UpdateIcon()
 		else
 			..()
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if (istype(over_object, /obj/machinery/chem_master))
+			var/obj/machinery/chem_master/chem_master = over_object
+			chem_master.try_attach_barrel(src, usr)
+			return
+		..()
 
 	bullet_act()
 		..()
