@@ -1712,6 +1712,7 @@ obj/item/whetstone
 	New()
 		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		src.AddComponent(/datum/component/bloodflick)
 		src.setItemSpecial(/datum/item_special/swipe)
 		src.update_special_color()
 		AddComponent(/datum/component/itemblock/saberblock, null, PROC_REF(get_reflect_color))
