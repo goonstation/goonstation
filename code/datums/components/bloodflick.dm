@@ -57,6 +57,10 @@ TYPEINFO(/datum/component/bloodflick)
 			return
 		// it could get cleaned while it's drying
 		if (!dummy.blood_DNA)
+			src.hasdry = FALSE
+			src.haswet = FALSE
+			src.iswet = 0
+			// just in case
 			return
 		// if the parent is wet, dry it
 		if (src.haswet)
