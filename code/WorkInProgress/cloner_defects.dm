@@ -154,8 +154,8 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 		src.on_add()
 
 	disposing()
-		src.owner = null
 		LAZYLISTREMOVE(src.owner?.cloner_defects, src)
+		src.owner = null
 		..()
 
 	proc/on_add()
