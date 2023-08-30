@@ -26,17 +26,22 @@
 	density = 1
 	opacity = 0
 	anchored = UNANCHORED
+	processing_tier = PROCESSING_FULL
 
 	var/invalidCount = 0
 
 	var/obj/item/blueprint/currentBp = null
 	var/locked = 0
 	var/building = 0
+	var/Paused = 0
+	var/BuildIndex = 1
+	var/BuildEnd = 0
 
 	var/off_x = 0
 	var/off_y = 0
 
 	var/list/markers = new/list()
+	var/list/apclist = new/list()
 
 	New()
 		..()
@@ -66,11 +71,27 @@
 
 	attack_hand(mob/user)
 		if(building)
-			boutput(user, "<span class='alert'>The machine is currently constructing something. Best not touch it until it's done.</span>")
+			//boutput(user, "<span class='alert'>The machine is currently constructing something. Best not touch it until it's done.</span>")
+			if (!Paused)
+				if (alert(usr, "Pause the construction?", "ABCU", "Yes", "No") == "Yes")
+					Paused = 1
+					UnsubscribeProcess()
+					return
+				return
+			else
+				//var/inputbuilding = input(user,"The build job is currently paused. Choose:","ABCU") in list("Resume Construction", "Cancel Build")
+				switch (input(user,"The build job is currently paused. Choose:","ABCU") in list("Resume Construction", "Cancel Build"))
+					if ("Resume Construction")
+						Paused = 0
+						SubscribeToProcess()
+						return
+					if ("Cancel Build")
+						endBuild()
+						return
 			return
 
 		var/list/options = list(locked ? "Unlock":"Lock", "Begin Building", "Dump Materials", "Check Materials" ,currentBp ? "Eject Blueprint":null)
-		var/input = input(user,"Select option:","Option") in options
+		var/input = input(user,"Select option:","ABCU") in options
 		switch(input)
 			if("Unlock")
 				if(!locked || building) return
@@ -93,7 +114,8 @@
 				if(!currentBp)
 					boutput(user, "<span class='alert'>The machine requires a blueprint before it can build anything.</span>")
 					return
-				build()
+				//build()
+				prepareBuild()
 
 			if("Eject Blueprint")
 				if(building) return
@@ -128,6 +150,87 @@
 				boutput(user, "<span class='notice'>[metal_cnt] of [currentBp ? currentBp.req_metal : "-"] required metal</span>")
 				boutput(user, "<span class='notice'>[glass_cnt] of [currentBp ? currentBp.req_glass : "-"] required glass</span>")
 		return
+
+	process()
+		..()
+
+		if (BuildIndex > BuildEnd)
+			endBuild()
+		else if (building)
+			var/datum/tileinfo/Tile = currentBp.roominfo[BuildIndex] // list index out of bounds
+			var/turf/pos = locate(text2num(Tile.posx) + src.x,text2num(Tile.posy) + src.y, src.z)
+
+			for(var/obj/O in markers)
+				if(O.loc == pos)
+					qdel(O)
+					break
+
+			makeTile(Tile, pos)
+			BuildIndex++
+
+	proc/makeTile(var/datum/tileinfo/Info, var/turf/Pos)
+		set waitfor = 0
+		SPAWN(0)
+			var/obj/overlay/V = new/obj/overlay(Pos)
+			V.icon = 'icons/obj/objects.dmi'
+			V.icon_state = "buildeffect"
+			V.name = "energy"
+			V.anchored = ANCHORED
+			V.set_density(0)
+			V.layer = EFFECTS_LAYER_BASE
+
+			sleep(1.5 SECONDS)
+
+			qdel(V)
+
+			if(Info.tiletype != null)
+				var/turf/newTile = Pos //get_turf(pos)
+				newTile.ReplaceWith(Info.tiletype)
+				//newTile.icon = text2path(T.icon) // not working
+				newTile.icon_state = Info.state
+				newTile.set_dir(Info.direction)
+				newTile.inherit_area()
+
+			for(var/datum/objectinfo/O in Info.objects)
+				if (O.objecttype == null) continue
+				if (ispath(O.objecttype, /obj/machinery/power/apc))
+					apclist[O] = Pos
+					continue
+				var/dmm_suite/preloader/blah = new(Pos, list( // this doesn't spawn the objects, only presets their properties
+					"layer" = O.layer,
+					"pixel_x" = O.px,
+					"pixel_y" = O.py,
+					"dir" = O.direction,
+					"icon_state" = O.icon_state,
+				))
+				new O.objecttype(Pos) // need this part to also spawn the objects
+		return
+
+	proc/prepareBuild()
+		if(invalidCount)
+			boutput(usr, "<span class='alert'>The machine can not build on anything but empty space. Check for red markers.</span>")
+			return
+
+		BuildEnd = currentBp.roominfo.len
+		if (BuildEnd > 0)
+			building = 1
+			Paused = 0
+			BuildIndex = 1
+			icon_state = "builder1"
+			SubscribeToProcess()
+		boutput(usr, "<span class='notice'>Tried to start build of [BuildEnd] tiles</span>")
+
+	proc/endBuild()
+		for (var/datum/objectinfo/N in apclist)
+			new N.objecttype(apclist[N])
+		apclist = new/list
+
+		building = 0
+		UnsubscribeProcess()
+		deactivate()
+
+		icon_state = "builder"
+		makepowernets()
 
 	proc/deactivate()
 		for(var/obj/O in markers)
