@@ -156,15 +156,27 @@
 		if (. && islist(scoot_sounds) && scoot_sounds.len && prob(75))
 			playsound( get_turf(src), pick( scoot_sounds ), 50, 1 )
 
+/obj/stool/pet_bed
+	name = "pet bed"
+	icon_state = "petbed"
+	desc = "A soft bed designed for small animals to snuggle up in."
+	parts_type = /obj/item/furniture_parts/stool/pet_bed
+
+/obj/stool/pet_bed/jones
+	name = "cat bed"
+	desc = "Though it was made to suit him, Jones still seems to sleep in every spot that is NOT this little bed."
+
 /obj/stool/bee_bed
 	// idk. Not a bed proper since humans can't lay in it. Weirdos.
 	// would also be cool to make these work with bees.
 	// it's hip to tuck bees!
 	name = "bee bed"
-	icon = 'icons/misc/critter.dmi'
 	icon_state = "beebed"
 	desc = "A soft little bed the general size and shape of a space bee."
 	parts_type = /obj/item/furniture_parts/stool/bee_bed
+
+/obj/stool/bee_bed/heisenbee
+	name = "heisenbed"
 
 /obj/stool/bee_bed/double // Prefab variant
 	name = "double bee bed"
@@ -189,6 +201,7 @@ TYPEINFO(/obj/stool/wooden)
 /obj/stool/wooden
 	name = "wooden stool"
 	icon_state = "wstool"
+	default_material = "wood"
 	desc = "Like a stool, but just made out of wood."
 	parts_type = /obj/item/furniture_parts/woodenstool
 

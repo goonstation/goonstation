@@ -580,6 +580,8 @@
 
 	src.Bumped(M)
 	random_brute_damage(G.affecting, rand(2,3))
+	src.material_trigger_when_attacked(G.affecting, user, 1)
+	G.affecting.material_on_attack_use(user, src)
 	G.affecting.TakeDamage("chest", rand(4,5))
 	playsound(G.affecting.loc, "punch", 25, 1, -1)
 
@@ -858,8 +860,9 @@
 
 
 		if (assailant)
-			assailant.visible_message("<span class='alert'>[assailant] lowers their defenses!</span>")
-			assailant.delStatus("blocking")
+			if(assailant.hasStatus("blocking"))
+				assailant.visible_message("<span class='alert'>[assailant] lowers their defenses!</span>")
+				assailant.delStatus("blocking")
 			assailant.last_resist = world.time + COMBAT_BLOCK_DELAY
 		..()
 

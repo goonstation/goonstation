@@ -495,6 +495,15 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	custom_suicide = TRUE
 	suicide_in_hand = FALSE
 
+	get_help_message(dist, mob/user)
+		var/keybind = "Default: CTRL + Z"
+		var/datum/keymap/current_keymap = user.client.keymap
+		for (var/key in current_keymap.keys)
+			if (current_keymap.keys[key] == "snap")
+				keybind = current_keymap.unparse_keybind(key)
+				break
+		return {"While wearing the gloves, use the <b>*snap</b> ([keybind]) emote to deploy/retract the blades."}
+
 	suicide(mob/living/carbon/human/user)
 		if (!istype(user) || !src.user_can_suicide(user) || user.gloves != src)
 			return FALSE
@@ -581,6 +590,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	can_be_charged = 1 // Quite pointless, but could be useful as a last resort away from powered wires? Hell, it's a traitor item and can get the buff (Convair880).
 	max_uses = 10
 	flags = HAS_EQUIP_CLICK
+	HELP_MESSAGE_OVERRIDE({"While standing on a powered wire, click on a tile far away while on <span class='disarm'>disarm</span> intent to non-lethally stun, or on <span class='harm'>harm</span> item to shoot out dangerous lightning. The lightning's power is directly linked to the power in the wire."})
 
 	var/spam_flag = 0
 

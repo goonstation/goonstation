@@ -29,6 +29,14 @@
 
 	New(var/loc,var/lifespan = 2.5 MINUTES)
 		..()
+
+		var/image/lighting_overlay = image(src.icon, src.icon_state)
+		lighting_overlay.plane = PLANE_SELFILLUM
+		lighting_overlay.blend_mode = BLEND_ADD
+		lighting_overlay.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR
+		lighting_overlay.color = list(0.2,0.1,0.1,  0.1,0.2,0.1,  0.1,0.1,0.2,  -0.03, -0.03, -0.03)
+		src.UpdateOverlays(lighting_overlay, "lighting_overlay")
+
 		feedings_required = rand(15,40)
 		//spatial interdictor: can't stop the black hole, but it can mitigate it
 		//interdiction consumes a colossal amount of power - requiring a large cell - and the interdictor makes a hell of a ruckus

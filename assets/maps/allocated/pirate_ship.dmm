@@ -61,7 +61,6 @@
 "be" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/decal/stage_edge/alt{
@@ -157,13 +156,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/pirate_ship)
-"do" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/orange,
-/area/pirate_ship)
 "dt" = (
 /obj/storage/crate,
 /obj/item/weldingtool{
@@ -184,13 +176,9 @@
 /area/pirate_ship)
 "dC" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/stool/chair/office/yellow{
@@ -515,13 +503,9 @@
 /area/pirate_ship)
 "mh" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/orange,
@@ -587,8 +571,6 @@
 /area/pirate_ship)
 "nv" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/orange,
@@ -618,12 +600,9 @@
 /area/pirate_ship)
 "nW" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/orange,
@@ -635,8 +614,6 @@
 /area/pirate_ship)
 "oe" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
@@ -677,11 +654,9 @@
 "oO" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/computer3/terminal{
@@ -834,13 +809,9 @@
 /area/pirate_ship)
 "tS" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/stool/chair/office/yellow{
@@ -1720,7 +1691,6 @@
 /area/pirate_ship)
 "Kn" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
@@ -1763,7 +1733,6 @@
 /area/pirate_ship)
 "LU" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
@@ -1914,7 +1883,6 @@
 /area/pirate_ship)
 "Ph" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass,
@@ -1967,7 +1935,6 @@
 /area/pirate_ship)
 "Re" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
@@ -2062,7 +2029,6 @@
 /area/pirate_ship)
 "Tb" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
@@ -2143,16 +2109,12 @@
 /area/pirate_ship)
 "Vf" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/stool/chair/office/yellow{
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
@@ -2192,13 +2154,10 @@
 /area/pirate_ship)
 "VJ" = (
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/decoration/bustedmantapc/bustedmantapc2{
@@ -2274,13 +2233,10 @@
 /area/pirate_ship)
 "Yy" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/decal/fakeobjects/console_radar{
@@ -2340,15 +2296,6 @@
 	pixel_x = -6
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/pirate_ship)
-"ZH" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/stairs/dark{
-	dir = 6
-	},
 /area/pirate_ship)
 "ZO" = (
 /obj/decoration/frontwalldamage{
@@ -2664,13 +2611,13 @@ Wl
 zs
 PY
 mh
-ZH
+Mw
 nW
-do
+Io
 Ph
-do
-do
-do
+Io
+Io
+Io
 Io
 Mw
 Io

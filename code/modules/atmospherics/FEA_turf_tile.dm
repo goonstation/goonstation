@@ -538,10 +538,9 @@ var/global/list/turf/hotly_processed_turfs = list()
 						src.mimic_temperature_solid(neighbor, neighbor.thermal_conductivity)
 
 	//Radiate excess tile heat to space
-	var/turf/space/sample_space = locate(/turf/space)
-	if(sample_space && (temperature > T0C))
-	//Considering 0 degC as te break even point for radiation in and out
-		src.mimic_temperature_solid(sample_space, FLOOR_HEAT_TRANSFER_COEFFICIENT)
+	if(temperature > T0C)
+		//Considering 0 degC as te break even point for radiation in and out
+		src.mimic_temperature_solid(locate(/turf/space), FLOOR_HEAT_TRANSFER_COEFFICIENT)
 
 	//Conduct with air on my tile if I have it
 	if(src.air)
@@ -678,3 +677,16 @@ var/global/list/turf/hotly_processed_turfs = list()
 			w.tilenotify(src)
 
 	return TRUE
+
+/turf/simulated/proc/stabilize()
+	ZERO_GASES(src.air)
+#ifdef ATMOS_ARCHIVING
+	ZERO_ARCHIVED_GASES(src.air)
+	src.air.ARCHIVED(temperature) = null
+#endif
+	src.air.oxygen = MOLES_O2STANDARD
+	src.air.nitrogen = MOLES_N2STANDARD
+	src.air.fuel_burnt = 0
+	src.air.temperature = T20C
+	if(src.parent?.group_processing)
+		src.parent?.suspend_group_processing()

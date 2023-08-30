@@ -55,8 +55,9 @@
 	src.vis_contents += src.flock_name_tag
 
 	src.RegisterSignal(src, COMSIG_MOB_GRABBED, PROC_REF(do_antigrab))
-
-	if(!F || src.dormant) // we'be been flagged as dormant in the map editor or something
+	if (!F)
+		src.flock = get_default_flock()
+	if(src.dormant) // we'be been flagged as dormant in the map editor or something
 		src.dormantize()
 	else
 		src.add_simple_light("drone_light", rgb2num(glow_color))
@@ -144,7 +145,7 @@
 		boutput(pilot, "<span class='alert'>This drone is already being controlled.</span>")
 		return
 	//if we are in the tutorial don't let traces take control, and for minds run the tutorial check
-	if (src.flock.flockmind.tutorial && (pilot != src.flock.flockmind || !src.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_DRONE_CONTROL, src)))
+	if (src.flock.flockmind?.tutorial && (pilot != src.flock.flockmind || !src.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_DRONE_CONTROL, src)))
 		return
 	if (src.selected_by)
 		if (src.selected_by != pilot)
@@ -504,7 +505,7 @@
 		return // this isn't our drone
 	if (istype(flock_controller, /mob/living/intangible/flock/trace) && flock_controller.flock?.flockmind?.tutorial)
 		return
-	src.flock.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_DRAGMOVE, src)
+	src.flock.flockmind?.tutorial?.PerformSilentAction(FLOCK_ACTION_DRAGMOVE, src)
 	src.rally(over_location)
 
 /mob/living/critter/flock/drone/hotkey(var/name)
@@ -694,7 +695,7 @@
 /mob/living/critter/flock/drone/proc/add_resources(amount)
 	src.resources += amount
 	if (src.flock)
-		src.flock.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_GAIN_RESOURCES, src.resources)
+		src.flock.flockmind?.tutorial?.PerformSilentAction(FLOCK_ACTION_GAIN_RESOURCES, src.resources)
 		src.flock.stats.resources_gained += amount
 	var/datum/abilityHolder/composite/composite = src.abilityHolder
 	var/datum/abilityHolder/critter/flockdrone/aH = composite.getHolder(/datum/abilityHolder/critter/flockdrone)
@@ -1044,7 +1045,7 @@
 	if (!istype(user))
 		return
 
-	if (user.flock?.flockmind?.tutorial && !user.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_START_CONVERSION, target))
+	if (user.flock?.flockmind?.tutorial && !user.flock.flockmind?.tutorial.PerformAction(FLOCK_ACTION_START_CONVERSION, target))
 		return
 	if(ismob(target) || iscritter(target)) //gods how I hate /obj/critter
 		if (!isflockmob(target))

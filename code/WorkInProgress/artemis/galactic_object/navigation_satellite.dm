@@ -46,9 +46,11 @@
 /obj/machinery/equipment_chute
 	name = "Equipment Chute"
 	desc = "Loading site for ship equipment."
+	icon = 'icons/obj/large/96x32.dmi'
+	anchored = 1
+	icon_state = "loader"
+	pixel_x = -32
 
-	icon = 'icons/misc/artemis/temps.dmi'
-	icon_state = "chute"
 
 	var/obj/artemis/ship = null
 	var/stars_id = "artemis"
@@ -66,12 +68,24 @@
 			boutput(user, "<span class='alert'>You are too far away to do that.</span>")
 			return
 
+		if(!IN_RANGE(O, src, 1) && !O.anchored )
+			step_towards(O,get_turf(src))
+			return
+
 		if(istype(O, /obj/nav_sat))
+			step_towards(O,src)
 			if(ship)
 				if(ship.buoy_count < initial(ship.buoy_count))
+					sleep(0.5 SECONDS)
+					icon_state = "loader_load"
+					sleep(0.7 SECONDS)
 					src.visible_message("<span class='alert'>The [O] slowly slides down \the [src].</span>")
+					O.set_loc(src)
+					sleep(1.5 SECONDS)
 					ship.buoy_count++
 					qdel(O)
+					icon_state = "loader"
+					flick("loader_open", src)
 				else
 					boutput(user, "<span class='alert'>The ship seems to refuse the [O].</span>")
 			else

@@ -974,18 +974,18 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 	if(src.master && (src.wires & WIRE_SIGNAL))
 		var/turf/T = get_turf(src.master)
 		if (src.master && istype(src.master, /obj/item/device/transfer_valve))
-			logTheThing(LOG_BOMBING, usr, "signalled a radio on a transfer valve at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
-			message_admins("[key_name(usr)] signalled a radio on a transfer valve at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
+			logTheThing(LOG_BOMBING, usr, "signalled a radio on a tank transfer valve at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"] with code [src.code] on freq [src.frequency].")
+			message_admins("[key_name(usr)] signalled a radio on a tank transfer valve at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"] with code [src.code] on freq [src.frequency].")
 			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
 
 		else if (src.master && istype(src.master, /obj/item/assembly/rad_ignite)) //Radio-detonated beaker assemblies
 			var/obj/item/assembly/rad_ignite/RI = src.master
-			logTheThing(LOG_BOMBING, usr, "signalled a radio on a radio-igniter assembly at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"]. Contents: [log_reagents(RI.part3)]")
+			logTheThing(LOG_BOMBING, usr, "signalled a radio on a radio-igniter assembly at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"] with code [src.code] on freq [src.frequency]. Contents: [log_reagents(RI.part3)]")
 			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
 
 		else if(src.master && istype(src.master, /obj/item/assembly/radio_bomb))	//Radio-detonated single-tank bombs
-			logTheThing(LOG_BOMBING, usr, "signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
-			message_admins("[key_name(usr)] signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
+			logTheThing(LOG_BOMBING, usr, "signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"] with code [src.code] on freq [src.frequency].")
+			message_admins("[key_name(usr)] signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"] with code [src.code] on freq [src.frequency].")
 			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
 		SPAWN(0)
 			src.master.receive_signal(signal)

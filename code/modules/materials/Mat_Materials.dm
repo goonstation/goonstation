@@ -216,7 +216,7 @@ ABSTRACT_TYPE(/datum/material)
 		var/datum/material/M = new src.type()
 		M.properties = mergeProperties(src.properties, rightBias = 0)
 		for(var/X in src.vars)
-			if(!issaved(X)) continue
+			if(!issaved(src.vars[X])) continue
 			if(X in triggerVars)
 				M.vars[X] = getFusedTriggers(src.vars[X], list(), M) //Pass in an empty list to basically copy the first one.
 			else
@@ -384,17 +384,17 @@ ABSTRACT_TYPE(/datum/material)
 			X.execute(owner, entering)
 		return
 
-	proc/triggerOnAttacked(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
+	proc/triggerOnAttacked(var/atom/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
 		for(var/datum/materialProc/X in triggersOnAttacked)
 			X.execute(owner, attacker, attacked, weapon)
 		return
 
-	proc/triggerOnBullet(var/obj/item/owner, var/atom/attacked, var/obj/projectile/projectile)
+	proc/triggerOnBullet(var/atom/owner, var/atom/attacked, var/obj/projectile/projectile)
 		for(var/datum/materialProc/X in triggersOnBullet)
 			X.execute(owner, attacked, projectile)
 		return
 
-	proc/triggerOnAttack(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
+	proc/triggerOnAttack(var/atom/owner, var/mob/attacker, var/atom/attacked)
 		for(var/datum/materialProc/X in triggersOnAttack)
 			X.execute(owner, attacker, attacked)
 		return
@@ -449,9 +449,9 @@ ABSTRACT_TYPE(/datum/material)
 			X.execute(owner, blobPower)
 		return
 
-	proc/triggerOnHit(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
+	proc/triggerOnHit(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/meleeorthrow)
 		for(var/datum/materialProc/X in triggersOnHit)
-			X.execute(owner, attackobj, attacker, meleeorthrow)
+			X.execute(owner, attackatom, attacker, meleeorthrow)
 		return
 
 //Material definitions
@@ -466,9 +466,9 @@ ABSTRACT_TYPE(/datum/material)
 	New(var/datum/material/mat1,var/datum/material/mat2,var/bias)
 		..()
 		if(isnull(mat1) || isnull(mat2))
-			CRASH("Tried to create alloy with null materials!")
+			return
 		var/left_bias = 1 - bias
-		src.quality = round(mat1.quality *left_bias+ mat2.quality * bias)
+		src.quality = round(mat1.quality * left_bias + mat2.quality * bias)
 
 		src.prefixes = (mat1.prefixes | mat2.prefixes)
 		src.suffixes = (mat1.suffixes | mat2.suffixes)
@@ -854,13 +854,12 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "Molitz is a common crystalline substance."
 	color = "#FFFFFF"
 	alpha = 180
-	var/unexploded = 1
-	var/iterations = 4
 
 	New()
 		..()
 		setProperty("density", 3)
 		setProperty("hard", 4)
+		setProperty("molitz_bubbles", 4)
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/molitz_temp())
 		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/molitz_exp())
 
@@ -926,6 +925,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("electrical", 5)
 		setProperty("radioactive", 2)
 		setProperty("flammable", 8)
+		setProperty("plasma_offgas", 10)
 
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/plasmastone())
 		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/plasmastone())

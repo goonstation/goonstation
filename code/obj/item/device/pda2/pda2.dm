@@ -295,6 +295,7 @@
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
 	bartender
+		setup_default_cartridge = /obj/item/disk/data/cartridge/bartender
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
 	botanist
@@ -417,6 +418,10 @@
 		if(src.alert_ringtones[T])
 			qdel(src.alert_ringtones[T])
 			src.alert_ringtones[T] = null
+
+	if (src.pen)
+		qdel(src.pen)
+		src.pen = null
 
 	if (src.hd)
 		src.hd.dispose()

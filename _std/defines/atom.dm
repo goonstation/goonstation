@@ -3,9 +3,6 @@
 /// Is this an atom? idk ask mr. molecule man
 #define isatom(A) (isloc(A))
 
-/// Is this an atom that can move!!?
-#define isatommovable(A) (istype(A, /atom/movable))
-
 /// built-in isobj returns true for /atom/movable
 #define isobj(A) (istype(A, /obj))
 
