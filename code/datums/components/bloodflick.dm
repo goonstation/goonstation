@@ -3,13 +3,13 @@ TYPEINFO(/datum/component/bloodflick)
 
 /// a component that makes items flick blood off them and onto the ground when twirled.
 /datum/component/bloodflick
-	/// is the blood on the blade dried? if so, can't be cleaned by flicking.
+	/// is the blood on the parent dried? if so, can't be cleaned by flicking.
 	var/hasdry = FALSE
 	/// Can blood be flicked off?
 	var/haswet = FALSE
-	/// a counter thingy. when it's at zero, the blade should get dry. when it's above that, stay wet.
+	/// a counter. represents how many sets of wet blood are on the parent
 	var/iswet = 0
-	/// how long the blood takes to dry. once it's dry, you can't blood flick to clean it.
+	/// how long the blood takes to dry.
 	var/drytime = 30 SECONDS
 
 /datum/component/bloodflick/Initialize()
@@ -39,10 +39,10 @@ TYPEINFO(/datum/component/bloodflick)
 		src.haswet = FALSE
 		make_cleanable(/obj/decal/cleanable/blood, get_turf(src.parent))
 		playsound(blade.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, 1)
-		SPAWN(1 DECI SECOND) // so that the twirl message appears first. Also i just guessed the time.
+		SPAWN(1 DECI SECOND) // so that the twirl emote message appears first (in theory)
 			boutput("Blood splatters onto the floor!") // i will be accepting suggestions on this line btw, reviewers
 
-/// applies blood to the knife and starts the blood drying countdown
+/// applies wet blood to the knife and starts the blood drying countdown
 /datum/component/bloodflick/proc/wetten()
 	var/obj/item/dummy = src.parent
 	if (!dummy.blood_DNA) // not all attacks leave blood on the blade
@@ -51,6 +51,13 @@ TYPEINFO(/datum/component/bloodflick)
 		src.haswet = TRUE
 		src.iswet += 1
 	SPAWN(drytime)
+		// in case
+		if (!src)
+			return
+		// it could get cleaned while it's drying
+		if (!dummy.blood_DNA)
+			return
+		// if the blade is wet, dry it
 		if (src.haswet)
 			src.hasdry = TRUE
 			src.iswet -= 1
@@ -61,3 +68,4 @@ TYPEINFO(/datum/component/bloodflick)
 /datum/component/bloodflick/proc/clean()
 	src.hasdry = FALSE
 	src.haswet = FALSE
+	src.iswet = 0
