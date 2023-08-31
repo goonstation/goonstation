@@ -18757,6 +18757,10 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
+"cCM" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor,
+/area/station/science/lab)
 "cCX" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -28617,10 +28621,10 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/research,
 /obj/machinery/door/airlock/pyro/maintenance,
+/obj/mapping_helper/access/tox_storage,
 /turf/simulated/floor/purple,
-/area/station/science/lab)
+/area/station/science/storage)
 "ouC" = (
 /obj/machinery/light,
 /obj/cable{
@@ -31610,9 +31614,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/engineering/private)
 "rpK" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
@@ -31672,7 +31674,6 @@
 	dir = 8;
 	name = "Mixing Room"
 	},
-/obj/mapping_helper/access/research,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -31680,6 +31681,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/tox,
 /turf/simulated/floor/white/side{
 	dir = 4
 	},
@@ -31950,7 +31952,7 @@
 	level = 2
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/lab)
+/area/station/science/storage)
 "rFj" = (
 /obj/machinery/light{
 	dir = 4
@@ -34445,7 +34447,7 @@
 	dir = 5
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/lab)
+/area/station/science/storage)
 "uad" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/plating,
@@ -37134,7 +37136,9 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/engine/engineering/private)
 "wSO" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/binary/valve{
+	dir = 1
+	},
 /turf/simulated/floor/purple/corner,
 /area/station/science/lab)
 "wTb" = (
@@ -37978,6 +37982,9 @@
 	},
 /obj/table/reinforced/industrial/auto{
 	icon_state = "3"
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_y = 16
 	},
 /turf/simulated/floor/purple/side{
 	dir = 8
@@ -96500,8 +96507,8 @@ nsj
 sXL
 wKz
 vSI
-vSI
 mmv
+cCM
 vlK
 azy
 vZI
@@ -96802,7 +96809,7 @@ uXc
 sXL
 wMi
 rrI
-vSI
+mmv
 wSO
 rpK
 oDu
@@ -97106,8 +97113,8 @@ wMY
 urt
 vSI
 viS
-sXL
-sXL
+tWD
+tWD
 tWD
 tWD
 tWD
@@ -97408,7 +97415,7 @@ wOC
 xQl
 wPs
 awa
-sXL
+tWD
 loK
 gmw
 mdV
@@ -98012,8 +98019,8 @@ waM
 tHJ
 tHJ
 poL
-sXL
-sXL
+tWD
+tWD
 tKf
 tKf
 oLS
@@ -98315,7 +98322,7 @@ iwQ
 nIQ
 yag
 rUe
-sXL
+tWD
 fsy
 bTF
 tWD
@@ -98617,7 +98624,7 @@ cQt
 nIQ
 lsB
 cDw
-sXL
+tWD
 tKf
 tKf
 mkq
@@ -98919,7 +98926,7 @@ ydz
 nIQ
 rQF
 tlU
-sXL
+tWD
 yfD
 tKf
 qKe
@@ -99220,8 +99227,8 @@ sXL
 yfg
 noy
 yfg
-sXL
-sXL
+tWD
+tWD
 tKf
 tKf
 nKE
@@ -99522,7 +99529,7 @@ sXL
 ptB
 tWn
 wTX
-sXL
+tWD
 qQV
 gmN
 tKf
@@ -100428,8 +100435,8 @@ sXL
 pbt
 pbt
 ttD
-sXL
-sXL
+tWD
+tWD
 tWD
 tWD
 tWD
