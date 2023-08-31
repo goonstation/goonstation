@@ -18757,10 +18757,6 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
-"cCM" = (
-/obj/machinery/atmospherics/binary/valve,
-/turf/simulated/floor,
-/area/station/science/lab)
 "cCX" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -19568,6 +19564,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"dKh" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor,
+/area/station/science/lab)
 "dKD" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/mail{
@@ -36942,7 +36942,7 @@
 /area/station/engine/engineering/ce)
 "wIK" = (
 /obj/machinery/door/airlock/pyro/maintenance,
-/obj/mapping_helper/access/research,
+/obj/mapping_helper/access/tox_storage,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "wJa" = (
@@ -96508,7 +96508,7 @@ sXL
 wKz
 vSI
 mmv
-cCM
+dKh
 vlK
 azy
 vZI
