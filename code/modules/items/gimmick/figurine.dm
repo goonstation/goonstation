@@ -195,7 +195,7 @@ var/list/figure_high_rarity = list(\
 /datum/figure_info/omnitraitor,
 /datum/figure_info/shitty_bill,
 /datum/figure_info/don_glabs,
-/datum/figure_info/father_jack,
+/datum/figure_info/father_grife,
 /datum/figure_info/inspector,
 /datum/figure_info/coach,
 /datum/figure_info/sous_chef,
@@ -486,9 +486,9 @@ var/list/figure_patreon_rarity = concrete_typesof(/datum/figure_info/patreon)
 		name = "\improper Donald \"Don\" Glabs"
 		icon_state = "don"
 
-	father_jack
-		name = "\improper Father Jack"
-		icon_state = "jack"
+	father_grife
+		name = "\improper Father Grife"
+		icon_state = "grife"
 
 #ifdef XMAS
 	santa

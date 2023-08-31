@@ -1637,7 +1637,7 @@
 /obj/stool/chair/wooden{
 	dir = 4
 	},
-/mob/living/carbon/human/fatherjack,
+/mob/living/carbon/human/fathergrife,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "ZZ" = (
