@@ -68756,7 +68756,7 @@
 	density = 1;
 	desc = "Part of a drone chassis.";
 	dir = 8;
-	icon = 'icons/obj/ship.dmi';
+	icon = 'icons/mob/critter/robotic/drone/construction.dmi';
 	icon_state = "drone_construction";
 	name = "drone parts"
 	},
