@@ -1881,6 +1881,19 @@ or don't if it uses a custom topopen overlay
 		src.mind.transfer_to(target_shell)
 		return
 
+/mob/living/silicon/ai/verb/toggle_lock()
+	set category = "AI Commands"
+	set name = "Toggle Cover Lock"
+
+	if (src.dismantle_stage >= 2)
+		boutput(src, "<span class='alert'>You can't lock your cover when it's open!</span>")
+	else
+		if (src.dismantle_stage == 1)
+			src.dismantle_stage = 0
+		else
+			src.dismantle_stage = 1
+		boutput(src, "<span class='alert'>You [src.dismantle_stage ? "unlock" : "lock"] your cover lock.</span>")
+
 /mob/living/silicon/ai/proc/eye_view()
 	if (isdead(src))
 		return
