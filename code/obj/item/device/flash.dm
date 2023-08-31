@@ -298,7 +298,7 @@ TYPEINFO(/obj/item/device/flash)
 			var/nostun = 0
 			if (!H.client || !H.mind)
 				user.show_text("[H] is braindead and cannot be converted.", "red")
-			if (locate(/obj/item/implant/counterrev) in H.implant)
+			else if (locate(/obj/item/implant/counterrev) in H.implant)
 				user.show_text("There seems to be something preventing [H] from revolting.", "red")
 				.= 0.5
 				nostun = 1
