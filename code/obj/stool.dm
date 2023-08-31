@@ -1196,13 +1196,13 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 	anchored = UNANCHORED
 	//deconstructable = 0
 
+	constructed //no "wood wood chair"
+		name = "chair"
+
 	wood
 		name = "wooden chair"
 		icon_state = "chair_wooden" // this sprite is bad I will fix it at some point
 		parts_type = /obj/item/furniture_parts/dining_chair/wood
-
-	constructed //no "wood wood chair"
-		name = "chair"
 
 	regal
 		name = "regal chair"

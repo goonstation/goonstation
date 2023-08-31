@@ -1085,7 +1085,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			icon_state = "table_parts"
 		industrialchair
 			recipe_id = "industrialchair"
-			craftedType = /obj/item/furniture_parts/dining_chair/industrial
+			craftedType = /obj/item/furniture_parts/dining_chair/wood/industrial
 			name = "Industrial Chair Parts"
 			icon = 'icons/obj/furniture/chairs.dmi'
 			icon_state = "ichair_parts"
@@ -1297,7 +1297,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			icon_state = "wstool"
 		chair
 			recipe_id = "wood_chair"
-			craftedType = /obj/stool/chair/dining/wood/constructed
+			craftedType = /obj/stool/chair/dining/constructed
 			name = "Chair"
 			icon = 'icons/obj/furniture/chairs.dmi'
 			icon_state = "chair_wooden"
