@@ -115,6 +115,8 @@
 		act = copytext(act, 1, t1)
 	var/m_type = 1
 	var/message = null
+	var/maptext_out = 0
+	var/custom = 0
 
 	switch(lowertext(act))
 
@@ -130,12 +132,12 @@
 
 		if ("list")
 			src.show_text("Basic emotes:")
-			src.show_text("clap, flap, aflap, twitch, twitch_s, scream, birdwell, fart, flip, custom, customv, customh")
+			src.show_text("clap, flap, aflap, twitch, twitch_s, scream, sigh, laugh, chuckle, giggle, chortle, guffaw, cackle, birdwell, fart, flip, custom, customv, customh")
 			src.show_text("Targetable emotes:")
 			src.show_text("salute, bow, hug, wave, glare, stare, look, leer, nod, point")
 
 		if ("listbasic")
-			src.show_text("clap, flap, aflap, twitch, twitch_s, scream, birdwell, fart, flip, custom, customv, customh")
+			src.show_text("clap, flap, aflap, twitch, twitch_s, scream, sigh, laugh, chuckle, giggle, chortle, guffaw, cackle, birdwell, fart, flip, custom, customv, customh")
 
 		if ("listtarget")
 			src.show_text("salute, bow, hug, wave, glare, stare, look, leer, nod, point")
@@ -153,6 +155,7 @@
 					param = null
 
 				act = lowertext(act)
+				maptext_out = "<I>[act]s</I>"
 				if (param)
 					switch(act)
 						if ("bow","wave","nod")
@@ -165,10 +168,12 @@
 					switch(act)
 						if ("hug")
 							message = "<B>[src]</b> [act]s itself."
+							maptext_out = "<I>[act]s itself</I>"
 						else
 							message = "<B>[src]</b> [act]s."
 			else
 				message = "<B>[src]</B> struggles to move."
+				maptext_out = "<I>struggles to move</I>"
 			m_type = 1
 
 		if ("point")
@@ -193,23 +198,28 @@
 		if ("panic","freakout")
 			if (!src.restrained())
 				message = "<B>[src]</B> enters a state of hysterical panic!"
+				maptext_out = "<I>enters a state of hysterical panic!</I>"
 			else
 				message = "<B>[src]</B> starts writhing around in manic terror!"
+				maptext_out = "<I>starts writhing around in manic terror!</I>"
 			m_type = 1
 
 		if ("clap")
 			if (!src.restrained())
 				message = "<B>[src]</B> claps."
+				maptext_out = "<I>claps</I>"
 				m_type = 2
 
 		if ("flap")
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps its wings."
+				maptext_out = "<I>flaps its wings</I>"
 				m_type = 2
 
 		if ("aflap")
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps its wings ANGRILY!"
+				maptext_out = "<I>flaps its wings ANGRILY!</I>"
 				m_type = 2
 
 		if ("custom")
@@ -223,6 +233,8 @@
 				alert("Unable to use this emote, must be either hearable or visible.")
 				return
 			message = "<B>[src]</B> [input]"
+			maptext_out = "<I>[input]</I>"
+			custom = copytext(input, 1, 10)
 
 		if ("customv")
 			if (!param)
@@ -230,6 +242,8 @@
 				if(!param) return
 			param = html_encode(sanitize(param))
 			message = "<b>[src]</b> [param]"
+			maptext_out = "<I>[param]</I>"
+			custom = copytext(param, 1, 10)
 			m_type = 1
 
 		if ("customh")
@@ -238,6 +252,8 @@
 				if(!param) return
 			param = html_encode(sanitize(param))
 			message = "<b>[src]</b> [param]"
+			maptext_out = "<I>[param]</I>"
+			custom = copytext(param, 1, 10)
 			m_type = 2
 
 		if ("me")
@@ -245,19 +261,30 @@
 				return
 			param = html_encode(sanitize(param))
 			message = "<b>[src]</b> [param]"
+			maptext_out = "<I>[param]</I>"
+			custom = copytext(param, 1, 10)
 			m_type = 1
 
 		if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","nod","shrug","think","ponder","contemplate")
 			// basic visible single-word emotes
 			message = "<B>[src]</B> [act]s."
+			maptext_out = "<I>[act]s</I>"
 			m_type = 1
+
+		if ("sigh","laugh","chuckle","giggle","chortle","guffaw","cackle")
+			// basic audible single-word emotes
+			message = "<B>[src]</B> [act]s."
+			maptext_out = "<I>[act]s</I>"
+			m_type = 2
 
 		if ("flipout")
 			message = "<B>[src]</B> flips the fuck out!"
+			maptext_out = "<I>flips the fuck out!</I>"
 			m_type = 1
 
 		if ("rage","fury","angry")
 			message = "<B>[src]</B> becomes utterly furious!"
+			maptext_out = "<I>becomes utterly furious!</I>"
 			m_type = 1
 
 		if ("twitch")
@@ -393,15 +420,40 @@
 		else
 			if (voluntary) src.show_text("Invalid Emote: [act]")
 			return
-
-	if ((message && isalive(src)))
-		logTheThing(LOG_SAY, src, "EMOTE: [message]")
-		if (m_type & 1)
-			for (var/mob/O in viewers(src, null))
-				O.show_message("<span class='emote'>[message]</span>", m_type)
-		else
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='emote'>[message]</span>", m_type)
+	if (!isalive(src))
+		return
+	if (maptext_out)
+		var/image/chat_maptext/chat_text = null
+		SPAWN(0) //blind stab at a life() hang - REMOVE LATER
+			if (speechpopups && src.chat_text)
+				chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
+				if(chat_text)
+					chat_text.measure(src.client)
+					for(var/image/chat_maptext/I in src.chat_text.lines)
+						if(I != chat_text)
+							I.bump_up(chat_text.measured_height)
+			if (message)
+				logTheThing(LOG_SAY, src, "EMOTE: [message]")
+				act = lowertext(act)
+				if (m_type & 1)
+					for (var/mob/O in viewers(src, null))
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+				else if (m_type & 2)
+					for (var/mob/O in hearers(src, null))
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+				else if (!isturf(src.loc))
+					var/atom/A = src.loc
+					for (var/mob/O in A.contents)
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+	else
+		if (message)
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
+			if (m_type & 1)
+				for (var/mob/O in viewers(src, null))
+					O.show_message("<span class='emote'>[message]</span>", m_type)
+			else
+				for (var/mob/O in hearers(src, null))
+					O.show_message("<span class='emote'>[message]</span>", m_type)
 	return
 
 /mob/living/silicon/hivebot/examine(mob/user)
