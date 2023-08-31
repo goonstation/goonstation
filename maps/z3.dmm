@@ -22576,7 +22576,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/mob/living/carbon/human/fatherjack,
+/mob/living/carbon/human/fathergrife,
 /obj/cable{
 	icon_state = "1-2"
 	},
