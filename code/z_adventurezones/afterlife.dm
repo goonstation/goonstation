@@ -30,6 +30,11 @@ Hell area (send people here if they die in a shameful way)
 	icon_state = "hydro"
 	ambient_light = rgb(10, 13, 16)
 
+/area/afterlife/heaven/ranch
+	name = "Heavenly Pastures"
+	icon_state = "ranch"
+	ambient_light = rgb(10, 13, 16)
+
 /area/afterlife/heaven/hydroponics/inside
 	name = "Heavenly Garden Forestry"
 	icon_state = ""

@@ -3956,6 +3956,13 @@
 	},
 /turf/unsimulated/floor/specialroom/freezer,
 /area/moon/museum)
+"apj" = (
+/obj/railing/green/reinforced,
+/obj/railing/green/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "apk" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -4144,6 +4151,10 @@
 	},
 /turf/unsimulated/floor/specialroom/freezer,
 /area/moon/museum)
+"apR" = (
+/obj/railing/green/reinforced,
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "aqh" = (
 /obj/shrub{
 	dir = 1;
@@ -4474,6 +4485,12 @@
 	icon_state = "floor"
 	},
 /area/moon/museum)
+"arI" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "arP" = (
 /obj/machinery/door/poddoor/blast/lunar{
 	desc = "A security door used to separate compartments.";
@@ -8428,6 +8445,9 @@
 /obj/map/light/cyan,
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
+"aKF" = (
+/turf/unsimulated/wall/solidcolor/white,
+/area/space)
 "aKH" = (
 /obj/stone{
 	dir = 1
@@ -25994,6 +26014,18 @@
 	icon_state = "floor"
 	},
 /area/crypt/sigma)
+"bSw" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 4;
+	mouse_opacity = 0
+	},
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1";
+	tag = "icon-line1"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "bSx" = (
 /obj/submachine/seed_manipulator{
 	dir = 8
@@ -36740,6 +36772,13 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/owlery/Owlmait)
+"cDe" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "cDf" = (
 /obj/submachine/chem_extractor{
 	dir = 4
@@ -42076,8 +42115,8 @@
 "cSe" = (
 /obj/decal/cleanable/dirt,
 /obj/submachine/chef_sink{
-	desc = "A common utility sink.";
-	name = "rusty sink"
+	desc = "A common divine sink. Its suprising its not pouring out holy water.";
+	name = "divine sink"
 	},
 /obj/machinery/light_switch/west,
 /obj/item/storage/wall/random,
@@ -49968,16 +50007,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"dtQ" = (
-/obj/submachine/chef_sink{
-	desc = "A water-filled unit intended for sanitary purposes.";
-	name = "utility sink";
-	pixel_y = 16
-	},
-/turf/unsimulated/floor/specialroom/freezer{
-	dir = 1
-	},
-/area/crypt/sigma/morgue)
 "dtR" = (
 /obj/storage/cart/forensic,
 /turf/unsimulated/floor/specialroom/freezer{
@@ -58275,6 +58304,14 @@
 	dir = 9
 	},
 /area/centcom/offices/aloe)
+"ewf" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/machinery/hydro_growlamp,
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "ewi" = (
 /turf/unsimulated/floor/carpet/clowncarpet/border{
 	dir = 10
@@ -58572,6 +58609,15 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"eQp" = (
+/obj/railing/cyan/reinforced{
+	dir = 4
+	},
+/obj/railing/cyan/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "eQr" = (
 /obj/item/sticker/gold_star{
 	anchored = 1;
@@ -58704,6 +58750,12 @@
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/tdome/tdome1)
+"eWb" = (
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "eWy" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -59191,6 +59243,15 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)
+"fAD" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 8;
+	mouse_opacity = 0
+	},
+/obj/machinery/light/small/floor/netural,
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "fBC" = (
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_xg7"
@@ -59371,6 +59432,17 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/aloe)
+"fMh" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/submachine/chef_sink{
+	desc = "A common divine sink. Its suprising its not pouring out holy water.";
+	name = "divine sink"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "fMq" = (
 /obj/machinery/light,
 /obj/table/wood/round/auto,
@@ -59540,6 +59612,10 @@
 /obj/table/auto,
 /turf/unsimulated/floor/carpet/red/fancy/edge/north,
 /area/iomoon/base)
+"gab" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "gae" = (
 /obj/shrub{
 	dir = 1
@@ -60049,6 +60125,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
+"gxu" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/submachine/seed_manipulator,
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "gxU" = (
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
@@ -60300,6 +60384,14 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/garden)
+"gMl" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/submachine/seed_vendor,
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "gNb" = (
 /turf/unsimulated/wall/generic{
 	icon = 'icons/obj/doors/shuttle.dmi';
@@ -60881,6 +60973,12 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
 /area/crypt/sigma/crew)
+"hxx" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "hxO" = (
 /obj/noticeboard{
 	pixel_y = 28
@@ -61212,6 +61310,13 @@
 	},
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"hRT" = (
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "hRU" = (
 /obj/item/device/light/magic_lantern{
 	pixel_y = 28
@@ -61359,6 +61464,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon)
+"igw" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 4;
+	mouse_opacity = 0
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "ihk" = (
 /obj/table/reinforced/auto,
 /obj/item/currency/spacecash/million,
@@ -61992,6 +62105,14 @@
 	dir = 6
 	},
 /area/centcom/gallery)
+"iLL" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 1;
+	mouse_opacity = 0
+	},
+/turf/unsimulated/floor/grass/random,
+/area/afterlife/heaven/ranch)
 "iMC" = (
 /obj/lattice,
 /obj/submachine/chef_oven,
@@ -62048,6 +62169,15 @@
 /obj/machinery/crusher,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
+"iPV" = (
+/obj/railing/green/reinforced{
+	dir = 1
+	},
+/obj/railing/green/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "iPZ" = (
 /obj/lattice{
 	dir = 1;
@@ -62280,6 +62410,18 @@
 /obj/machinery/emitter,
 /turf/unsimulated/floor/plating,
 /area/solarium)
+"jaP" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 4;
+	mouse_opacity = 0
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "jaS" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -62625,6 +62767,13 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/wizard_station)
+"jmS" = (
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "jns" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -62644,6 +62793,10 @@
 /mob/living/critter/small_animal/cockroach,
 /turf/unsimulated/floor/red,
 /area/owlery/gangzone)
+"jph" = (
+/obj/chicken_nesting_box,
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "jpR" = (
 /obj/rack,
 /obj/item/storage/toolbox/emergency,
@@ -64000,6 +64153,14 @@
 	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
+"kQs" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 1;
+	mouse_opacity = 0
+	},
+/turf/space,
+/area/afterlife/heaven)
 "kQR" = (
 /obj/decal/fakeobjects/skeleton{
 	desc = "The burnt remains of some poor sod.";
@@ -64850,6 +65011,13 @@
 	},
 /turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
+"lKC" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "lLg" = (
 /turf/unsimulated/wall/generic{
 	desc = "It won't budge.";
@@ -64938,6 +65106,10 @@
 /obj/machinery/chem_dispenser/alcohol,
 /turf/unsimulated/outdoors/grass,
 /area/void_diner)
+"lPR" = (
+/obj/machinery/light/small/floor/netural,
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "lQd" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -65258,6 +65430,14 @@
 	name = "Fleshy Floor"
 	},
 /area/meat_derelict/main)
+"mgG" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 8;
+	mouse_opacity = 0
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "mgQ" = (
 /obj/table/wood/auto/desk{
 	icon_state = "1"
@@ -65302,6 +65482,17 @@
 /mob/living/critter/crunched,
 /turf/unsimulated/floor,
 /area/crunch)
+"miZ" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 4;
+	mouse_opacity = 0
+	},
+/obj/railing/purple/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "mje" = (
 /obj/storage/closet/office,
 /obj/item/pen/fancy,
@@ -65633,6 +65824,15 @@
 	dir = 10
 	},
 /area/void_diner)
+"mDs" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 8;
+	mouse_opacity = 0
+	},
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "mEy" = (
 /obj/stool/bench/blue/auto,
 /obj/machinery/light{
@@ -65793,6 +65993,12 @@
 	dir = 1
 	},
 /area/iomoon/base)
+"mLC" = (
+/obj/railing/green/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "mLK" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -65848,6 +66054,14 @@
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
+"mRR" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/machinery/plantpot,
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "mSq" = (
 /obj/lattice{
 	dir = 5;
@@ -65972,6 +66186,12 @@
 	name = "security door"
 	},
 /area/hospital)
+"mZl" = (
+/obj/railing/purple/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "mZx" = (
 /obj/table/regal/auto,
 /obj/decoration/floralarrangement,
@@ -66043,6 +66263,13 @@
 	},
 /turf/space,
 /area/syndicate_station_space)
+"ndv" = (
+/obj/shrub{
+	dir = 10
+	},
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "ndE" = (
 /obj/lattice{
 	dir = 6;
@@ -66091,6 +66318,9 @@
 	},
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
+"nfc" = (
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "nfK" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -66233,6 +66463,13 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"nnn" = (
+/obj/shrub{
+	dir = 6
+	},
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "nnS" = (
 /turf/unsimulated/floor/arrival{
 	dir = 8
@@ -66748,6 +66985,17 @@
 /obj/table/wood/auto/desk,
 /turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim/lobby)
+"nLT" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 1;
+	mouse_opacity = 0
+	},
+/obj/railing/cyan/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "nMz" = (
 /obj/ladder{
 	icon_state = "ladder_wall";
@@ -66820,6 +67068,19 @@
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
+"nQo" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/table/auto,
+/obj/item/reagent_containers/glass/wateringcan,
+/obj/item/sponge,
+/obj/item/kitchen/utensil/knife,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/device/multitool,
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "nQp" = (
 /obj/lattice{
 	dir = 6;
@@ -67067,6 +67328,13 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"nYk" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1";
+	tag = "icon-line1"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "nYx" = (
 /obj/item/paper/xg_tapes{
 	pixel_y = 3
@@ -67092,6 +67360,13 @@
 	dir = 9
 	},
 /area/centcom/gallery)
+"oaA" = (
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "oaN" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 8;
@@ -67462,6 +67737,17 @@
 "ouA" = (
 /turf/unsimulated/floor/plating/damaged2,
 /area/void_diner)
+"ouP" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 8;
+	mouse_opacity = 0
+	},
+/obj/railing/cyan/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "ove" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -67487,6 +67773,12 @@
 	dir = 4
 	},
 /area/owlery/staffhall)
+"ovU" = (
+/obj/railing/purple/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "owu" = (
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
@@ -67717,6 +68009,10 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
+"oJq" = (
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "oJz" = (
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
@@ -68060,6 +68356,17 @@
 /obj/item/paper/postcard/mushroom,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"pbM" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 8;
+	mouse_opacity = 0
+	},
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "pbV" = (
 /turf/unsimulated/wall/generic{
 	desc = "It's sealed shut.";
@@ -68134,6 +68441,14 @@
 "pfT" = (
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/centcom/offices/azrun)
+"pgJ" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1";
+	tag = "icon-line1"
+	},
+/obj/storage/secure/closet/civilian/ranch,
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "phe" = (
 /obj/decal/icefloor,
 /obj/item/currency/spacecash/thousand,
@@ -68399,6 +68714,10 @@
 	dir = 10
 	},
 /area/centcom/gallery)
+"ppd" = (
+/obj/map/light/brightwhite,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/afterlife/heaven/ranch)
 "ppE" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
@@ -68421,6 +68740,18 @@
 	dir = 1
 	},
 /area/centcom/offices/janantilles)
+"pso" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 8;
+	mouse_opacity = 0
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "psB" = (
 /obj/machinery/conveyor/NS{
 	id = "ddan"
@@ -68880,6 +69211,13 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/cocktail,
 /turf/unsimulated/floor/caution/north,
 /area/centcom/offices/azrun)
+"pPj" = (
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "pPI" = (
 /obj/table/reinforced/auto,
 /turf/unsimulated/floor/shuttle{
@@ -69209,6 +69547,9 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/hospital/samostrel)
+"qfR" = (
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "qgj" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
@@ -69251,6 +69592,15 @@
 	icon_state = "floor"
 	},
 /area/centcom/offices/pali)
+"qjI" = (
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "qkC" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
@@ -69356,6 +69706,19 @@
 	dir = 10
 	},
 /area/centcom)
+"qsv" = (
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
+"qsw" = (
+/obj/railing/green/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "qsO" = (
 /obj/item/stamped_bullion,
 /obj/item/stamped_bullion,
@@ -69902,6 +70265,13 @@
 /obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
+"qWM" = (
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven)
 "qWW" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -70240,6 +70610,18 @@
 	dir = 9
 	},
 /area/centcom/offices/walpvrgis)
+"rkZ" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 1;
+	mouse_opacity = 0
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "rly" = (
 /obj/table/auto,
 /obj/window/cubicle,
@@ -70734,6 +71116,13 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
+"rIR" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/storage/secure/closet/civilian/ranch,
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "rIS" = (
 /mob/living/critter/small_animal/mouse,
 /turf/unsimulated/floor/cave,
@@ -71381,6 +71770,15 @@
 	icon_state = "floor5"
 	},
 /area/wizard_station)
+"sqo" = (
+/obj/railing/purple/reinforced{
+	dir = 1
+	},
+/obj/railing/purple/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "sri" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -71604,6 +72002,13 @@
 	},
 /turf/unsimulated/floor/carpet/arcade,
 /area/sim/racing_entry)
+"sHT" = (
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven)
 "sHX" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
@@ -71813,6 +72218,17 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"sUN" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 1;
+	mouse_opacity = 0
+	},
+/obj/railing/purple/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "sVn" = (
 /obj/decal/cleanable/blood{
 	icon_state = "left_bloodygloves_c"
@@ -71892,6 +72308,12 @@
 "teq" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/gangzone)
+"teQ" = (
+/obj/railing/cyan/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "teX" = (
 /obj/critter/madnessowl{
 	alive = 0;
@@ -72319,6 +72741,14 @@
 	dir = 5
 	},
 /area/owlery/owleryhall)
+"tJp" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 1;
+	mouse_opacity = 0
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "tJE" = (
 /obj/lattice{
 	dir = 6;
@@ -72416,6 +72846,14 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/sim/gunsim/maintenance)
+"tQl" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/machinery/vending/hydroponics,
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "tRx" = (
 /turf/unsimulated/floor/marble/border_wb{
 	dir = 10
@@ -72825,14 +73263,6 @@
 	},
 /turf/unsimulated/wall/auto/supernorn/wood,
 /area/wizard_station)
-"urR" = (
-/obj/submachine/chef_sink{
-	desc = "A water-filled unit intended for sanitary purposes.";
-	name = "utility sink";
-	pixel_y = 16
-	},
-/turf/unsimulated/floor/plating,
-/area/iomoon/base)
 "urZ" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -72888,6 +73318,15 @@
 /obj/window/crystal/reinforced/south,
 /turf/unsimulated/floor/lava,
 /area/iomoon/robot_ruins)
+"uwx" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 4;
+	mouse_opacity = 0
+	},
+/obj/machinery/light/small/floor/netural,
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "uwC" = (
 /obj/table/wood/auto/desk,
 /obj/machinery/light/lamp/green{
@@ -73253,6 +73692,13 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"uOk" = (
+/obj/shrub{
+	dir = 1
+	},
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "uOm" = (
 /turf/unsimulated/wall/auto/adventure/cave,
 /area/centcom/offices{
@@ -73350,6 +73796,15 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
+"uSB" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 4;
+	mouse_opacity = 0
+	},
+/obj/railing/green/reinforced,
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "uTj" = (
 /obj/table/nanotrasen/auto,
 /obj/machinery/computer3/generic/personal/meatland{
@@ -73838,6 +74293,13 @@
 	icon_state = "shore-8"
 	},
 /area/titlescreen)
+"vvY" = (
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "vwU" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -74038,6 +74500,14 @@
 	},
 /turf/unsimulated/floor/specialroom/freezer,
 /area/iomoon/base)
+"vLw" = (
+/obj/decal/nothing{
+	dir = 1;
+	mouse_opacity = 0
+	},
+/obj/map/light/brightwhite,
+/turf/space,
+/area/afterlife/heaven)
 "vLC" = (
 /obj/decal/poster/wallsign/stencil/left/e{
 	pixel_x = -4
@@ -74433,6 +74903,18 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"weE" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 1;
+	mouse_opacity = 0
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/heaven/ranch)
 "wfm" = (
 /obj/shrub/dead,
 /turf/unsimulated/floor/black/side,
@@ -74508,6 +74990,14 @@
 /obj/item/ammo/ammobox/shootingrange,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/firing_range)
+"wjl" = (
+/obj/shrub{
+	dir = 8;
+	layer = 3
+	},
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "wjq" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -74886,6 +75376,17 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
+"wzL" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 4;
+	mouse_opacity = 0
+	},
+/obj/railing/green/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "wAT" = (
 /obj/decal/stage_edge{
 	layer = 2.8;
@@ -75189,6 +75690,12 @@
 /obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
+"wNT" = (
+/obj/railing/cyan/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "wNY" = (
 /obj/death_button/create_dummy,
 /turf/unsimulated/wall/auto/lead/white{
@@ -76572,6 +77079,14 @@
 /obj/submachine/ice_cream_dispenser,
 /turf/unsimulated/outdoors/grass,
 /area/void_diner)
+"ygp" = (
+/obj/map/light/brightwhite,
+/obj/decal/nothing{
+	dir = 1;
+	mouse_opacity = 0
+	},
+/turf/simulated/floor/grass/leafy,
+/area/afterlife/heaven/ranch)
 "ygA" = (
 /obj/table/neon/auto,
 /obj/machinery/computer3/generic/personal/personel_alt{
@@ -88305,7 +88820,7 @@ bpD
 bpD
 izT
 izT
-urR
+oJz
 oJz
 oJz
 izT
@@ -121871,7 +122386,7 @@ bHH
 bHH
 bHH
 eyM
-dtQ
+dvn
 dvn
 dvn
 dGF
@@ -131577,8 +132092,23 @@ bWi
 bZw
 bLr
 bLr
-bZS
-bmL
+kQs
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
 aaa
 ciQ
 ciQ
@@ -131594,21 +132124,6 @@ ciR
 ciR
 ciR
 cmZ
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 "}
 (183,1,1) = {"
@@ -131879,8 +132394,23 @@ bWi
 bZw
 bLr
 bLr
-bZS
-bmL
+bXN
+mgG
+mgG
+mgG
+mgG
+mgG
+mDs
+pso
+fAD
+pbM
+ouP
+mgG
+mgG
+mgG
+mgG
+ppd
+aKF
 aaa
 ciR
 cjw
@@ -131896,21 +132426,6 @@ ciR
 cjy
 cmZ
 cnh
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 "}
 (184,1,1) = {"
@@ -132181,8 +132696,23 @@ bWk
 bZw
 bLr
 bLr
-bZS
-bmL
+bLr
+arI
+hRT
+nfc
+nfc
+jph
+oJq
+gxu
+qfR
+rIR
+teQ
+jph
+nfc
+ndv
+nfc
+iLL
+aKF
 aaa
 ciR
 cjx
@@ -132198,21 +132728,6 @@ cjy
 cjy
 dSN
 cni
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 "}
 (185,1,1) = {"
@@ -132483,8 +132998,23 @@ bWi
 bZw
 bLr
 bLr
-bZS
-bmL
+bLr
+arI
+nfc
+nfc
+nfc
+nfc
+oJq
+tQl
+lPR
+hxx
+teQ
+nfc
+nfc
+nfc
+nfc
+ygp
+aKF
 aaa
 ciR
 cjy
@@ -132500,21 +133030,6 @@ ciR
 cXH
 cnb
 cnj
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 "}
 (186,1,1) = {"
@@ -132785,8 +133300,23 @@ bWi
 bZw
 bLr
 bLr
-bZS
-bmL
+bLr
+arI
+nfc
+uOk
+nfc
+gab
+oJq
+gMl
+qfR
+hxx
+teQ
+gab
+nfc
+nfc
+hRT
+ygp
+aKF
 aaa
 ciR
 cjy
@@ -132802,21 +133332,6 @@ ciR
 ciR
 ciR
 cnk
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 "}
 (187,1,1) = {"
@@ -133087,8 +133602,23 @@ bWk
 bZw
 bLr
 bLr
-bZS
-bmL
+bLr
+qjI
+eWb
+eWb
+eWb
+eWb
+jmS
+fMh
+lPR
+hxx
+eQp
+wNT
+wNT
+wNT
+wNT
+nLT
+aKF
 aaa
 ciR
 ciR
@@ -133104,21 +133634,6 @@ cjy
 cmT
 ciR
 ciR
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 "}
 (188,1,1) = {"
@@ -133386,11 +133901,26 @@ bWj
 bWj
 bZk
 bWi
-bZw
-bLr
-bLr
-bZS
-bmL
+qWM
+bVW
+bVW
+bVW
+cDe
+cDe
+cDe
+cDe
+cDe
+cDe
+qsv
+qfR
+oaA
+cDe
+cDe
+cDe
+cDe
+cDe
+rkZ
+aKF
 aaa
 ciR
 ciR
@@ -133406,21 +133936,6 @@ ckC
 cjy
 cjy
 ciR
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 "}
 (189,1,1) = {"
@@ -133688,11 +134203,26 @@ bLr
 bLr
 bYY
 bWi
-bZw
-bLr
-bLr
-bZS
-bmL
+bWi
+bWk
+bWi
+bWk
+qfR
+lPR
+qfR
+lPR
+qfR
+lPR
+qfR
+lPR
+qfR
+lPR
+qfR
+lPR
+qfR
+lPR
+tJp
+aKF
 aaa
 ciR
 cjz
@@ -133708,21 +134238,6 @@ ciR
 ciR
 cjy
 ciR
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 "}
 (190,1,1) = {"
@@ -133990,11 +134505,26 @@ bLr
 bLr
 bYY
 bWk
-bZw
-bLr
-bLr
-bZS
-bmL
+sHT
+bWj
+bWj
+bWj
+lKC
+lKC
+lKC
+lKC
+lKC
+lKC
+pPj
+qfR
+vvY
+lKC
+lKC
+lKC
+lKC
+lKC
+weE
+aKF
 aaa
 ciR
 cjy
@@ -134010,21 +134540,6 @@ ckR
 ciR
 cjy
 ciR
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 "}
 (191,1,1) = {"
@@ -134295,8 +134810,23 @@ bWi
 bZw
 bLr
 bLr
-bZS
-bmL
+bLr
+iPV
+qsw
+qsw
+qsw
+qsw
+apj
+nQo
+lPR
+nYk
+sqo
+ovU
+ovU
+ovU
+ovU
+sUN
+aKF
 aaa
 ciR
 ciR
@@ -134312,21 +134842,6 @@ ciR
 ciR
 cjy
 ciR
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 "}
 (192,1,1) = {"
@@ -134597,8 +135112,23 @@ bWi
 bZw
 bLr
 bLr
-bZS
-bmL
+bLr
+mLC
+nfc
+wjl
+nfc
+gab
+apR
+mRR
+qfR
+nYk
+mZl
+gab
+nfc
+nfc
+hRT
+ygp
+aKF
 aaa
 ciR
 ciR
@@ -134614,21 +135144,6 @@ ciR
 cjy
 cjy
 ciR
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 "}
 (193,1,1) = {"
@@ -134899,8 +135414,23 @@ bWk
 bZw
 bLr
 bLr
-bZS
-bmL
+bLr
+mLC
+nfc
+nfc
+nfc
+nfc
+apR
+ewf
+lPR
+nYk
+mZl
+nfc
+nfc
+nfc
+nfc
+ygp
+aKF
 aaa
 ciR
 ciR
@@ -134916,21 +135446,6 @@ cjy
 cjy
 cjV
 ciR
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 "}
 (194,1,1) = {"
@@ -135201,8 +135716,23 @@ bWi
 bZw
 bLr
 bLr
-bZS
-bmL
+bLr
+mLC
+hRT
+nfc
+nfc
+jph
+apR
+mRR
+qfR
+pgJ
+mZl
+jph
+nfc
+nnn
+nfc
+ygp
+aKF
 aaa
 ciR
 cjy
@@ -135218,21 +135748,6 @@ ciR
 cjy
 ciR
 ciR
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 "}
 (195,1,1) = {"
@@ -135503,8 +136018,23 @@ bWi
 bZw
 bLr
 bLr
-bZS
-bmL
+bXN
+wzL
+igw
+igw
+igw
+igw
+uSB
+jaP
+uwx
+bSw
+miZ
+igw
+igw
+igw
+igw
+ppd
+aKF
 aaa
 ciR
 ciR
@@ -135520,21 +136050,6 @@ cjy
 ckC
 ciR
 ciR
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 "}
 (196,1,1) = {"
@@ -135805,8 +136320,23 @@ bWk
 bZw
 bLr
 bLr
-bZS
-bmL
+vLw
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
+aKF
 aaa
 ciR
 ciR
@@ -135822,21 +136352,6 @@ ciR
 ciR
 ciR
 ciR
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 "}
 (197,1,1) = {"
