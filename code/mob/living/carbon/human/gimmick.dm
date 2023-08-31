@@ -187,24 +187,12 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		. = ..()
 		src.ai = new /datum/aiHolder/wanderer(src)
 
-// how you gonna have father ted and father jack and not father dougal? smh
 
-/mob/living/carbon/human/fatherted
-	New()
-		..()
-		src.equip_new_if_possible(/obj/item/clothing/shoes/red, SLOT_SHOES)
-		src.equip_new_if_possible(/obj/item/clothing/under/rank/chaplain, SLOT_W_UNIFORM)
-
-	initializeBioholder()
-		. = ..()
-		bioHolder.mobAppearance.gender = "male"
-		src.real_name = "Father Ted"
-
-/mob/living/carbon/human/fatherjack
-	real_name = "Father Jack"
+/mob/living/carbon/human/fathergrife
+	real_name = "Father Grife"
 #ifdef IN_MAP_EDITOR
 	icon = 'icons/mob/map_mob.dmi'
-	icon_state = "father_jack"
+	icon_state = "father_grife"
 #endif
 	gender = MALE
 	is_npc = TRUE
@@ -223,8 +211,9 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		if (..(parent))
 			return 1
 
-		if(prob(1) && !src.stat)
-			SPAWN(0) src.say(pick( "DRINK!", "FECK!", "ARSE!", "GIRLS!","That would be an ecumenical matter."))
+		var/area/area = get_area(src)
+		if(prob(1) && !src.stat && area?.active)
+			src.say(pick("GRIFE!", "GAH!", "Can I interest you in worshipping Grife?", "Where's my beer?", "Donations, to the church of Grife?", "You a Grifer?"))
 
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/postcard/owlery))
@@ -248,7 +237,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		//	for (var/mob/living/carbon/human/npc/diner_bartender/BT in all_viewers(7, src))
 			//	BT.protect_from(M, src)
 
-/mob/living/carbon/human/fatherjack/cow
+/mob/living/carbon/human/fathergrife/cow
 	New()
 		..()
 		src.bioHolder.AddEffect("cow")

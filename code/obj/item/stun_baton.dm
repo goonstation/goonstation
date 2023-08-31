@@ -97,6 +97,10 @@ TYPEINFO(/obj/item/baton)
 		if (!src || !istype(src))
 			return
 
+		// when swapping a zero charge cell into the baton
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
+			src.is_active = FALSE
+
 		if (src.is_active)
 			src.set_icon_state("[src.icon_on][src.flipped ? "-f" : ""]") //if flipped is true, attach -f to the icon state. otherwise leave it as normal
 			src.item_state = "[src.item_on][src.flipped ? "-f" : ""]"
