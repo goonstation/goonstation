@@ -72020,10 +72020,6 @@
 /obj/mapping_helper/access/heads,
 /turf/simulated/floor/circuit,
 /area/station/bridge)
-"rnh" = (
-/obj/storage/secure/closet/civilian/ranch,
-/turf/space,
-/area/space)
 "rno" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/external,
@@ -103704,7 +103700,7 @@ aQx
 ilw
 pJZ
 aXD
-rnh
+aaa
 aaa
 aaa
 aaa

@@ -527,7 +527,6 @@ proc/broadcast_to_all_gangs(var/message)
 		"owl suit" = /obj/item/clothing/under/gimmick/owl,
 		"pinstripe suit" = /obj/item/clothing/under/suit/pinstripe,
 		"purple suit" = /obj/item/clothing/under/suit/purple,
-		"assless chaps" = /obj/item/clothing/under/gimmick/chaps,
 		"mailman's jumpsuit" = /obj/item/clothing/under/misc/mail,
 		"comfy sweater" = /obj/item/clothing/under/gimmick/sweater,
 		"party princess uniform" = /obj/item/clothing/under/gimmick/princess,

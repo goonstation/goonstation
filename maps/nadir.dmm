@@ -40519,13 +40519,6 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
 "rCY" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 3;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
@@ -48884,15 +48877,6 @@
 "vmx" = (
 /turf/simulated/floor/yellowblack/corner,
 /area/station/hallway/secondary/east)
-"vmA" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/quarters_east)
 "vmT" = (
 /obj/table/reinforced/chemistry/auto/clericalsup,
 /obj/item/paper/labdrawertips,
@@ -50870,13 +50854,6 @@
 	name = "loofah"
 	},
 /obj/item/reagent_containers/glass/bottle/bubblebath,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "weL" = (
@@ -112353,7 +112330,7 @@ eIK
 oZp
 oZp
 gpK
-vmA
+jXY
 ibV
 ibV
 vgc
