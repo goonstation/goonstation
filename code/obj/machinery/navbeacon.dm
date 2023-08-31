@@ -1216,3 +1216,9 @@ TYPEINFO(/obj/machinery/wirenav)
 		name = "tour beacon - Finish"
 		location = "tour13"
 		codes_txt = "tour;"
+
+/obj/machinery/navbeacon/tour/aetherion
+	tour0
+		name = "tour beacon - 'Arrivals'"
+		location = "tour0"
+		codes_txt = "tour;next_tour=tour1;desc=Hello, and welcome to Aetherion Station, Nanotrasen's finest space based luxury hotel! Follow me, and I'll show you around!"
