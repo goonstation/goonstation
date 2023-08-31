@@ -1179,7 +1179,7 @@
 	},
 /area/station/hydroponics/bay)
 "apm" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /turf/simulated/floor/wood/seven,
 /area/station/garden/aviary)
 "apw" = (
@@ -2703,7 +2703,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "aLu" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /obj/landmark/start/job/assistant,
@@ -3713,7 +3713,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/staff)
 "aYo" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/wood/two,
@@ -9220,7 +9220,7 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/wood/seven,
@@ -9609,7 +9609,7 @@
 /turf/simulated/floor/grey/side,
 /area/station/medical/staff)
 "cFc" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple{
@@ -11258,7 +11258,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "day" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/wood/seven,
@@ -16596,7 +16596,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
 "eug" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/landmark/start/job/assistant,
 /obj/cable{
 	icon_state = "0-8"
@@ -23593,7 +23593,7 @@
 /turf/simulated/floor/black,
 /area/station/storage/eva)
 "glO" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/grey,
@@ -23854,7 +23854,7 @@
 	},
 /area/station/hallway/secondary/east)
 "gpb" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/cable{
@@ -27119,7 +27119,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
 "heJ" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/wood/eight,
@@ -32106,7 +32106,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/detectives_office)
 "iwq" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/cable{
@@ -33175,7 +33175,7 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "iJv" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /obj/landmark/start/job/assistant,
@@ -34514,7 +34514,7 @@
 	name = "Hydroponics Staff Section"
 	})
 "jdc" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/black,
@@ -35398,7 +35398,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "joI" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/cable{
@@ -37060,7 +37060,7 @@
 	},
 /area/station/medical/staff)
 "jLI" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple{
@@ -39974,7 +39974,7 @@
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
 "kxr" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/market)
@@ -46971,7 +46971,7 @@
 	},
 /area/station/hallway/primary/west)
 "mmn" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/wood/seven,
@@ -53364,7 +53364,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "nYe" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/wood/seven,
@@ -59877,7 +59877,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "pGi" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/cable{
 	icon_state = "1-10"
 	},
@@ -65329,7 +65329,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/pharmacy)
 "qZO" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/wood/two,
@@ -69125,7 +69125,7 @@
 	name = "Secure Pressurization"
 	})
 "rXn" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/cable{
@@ -72053,7 +72053,7 @@
 	name = "The Warrens"
 	})
 "sHS" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple,
@@ -78881,7 +78881,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "urV" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/machinery/light{
@@ -80477,7 +80477,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "uKx" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/machinery/light_switch/north,
@@ -81245,7 +81245,7 @@
 	},
 /area/station/security/hos)
 "uSR" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -81660,7 +81660,7 @@
 	name = "Research Router"
 	})
 "uXO" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -86587,7 +86587,7 @@
 	name = "Last Call Lounge"
 	})
 "whm" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/black,
@@ -87756,7 +87756,7 @@
 	name = "Officers' Lounge"
 	})
 "wuG" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -89785,7 +89785,7 @@
 /turf/simulated/floor/purple,
 /area/station/crew_quarters/quarters_west)
 "wTf" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/wood/six,
@@ -95275,7 +95275,7 @@
 /turf/simulated/floor/engine/caution/east,
 /area/station/science/teleporter)
 "yiN" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,

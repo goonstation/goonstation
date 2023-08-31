@@ -1605,7 +1605,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/chapel{
@@ -2718,7 +2718,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aiU" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/machinery/firealarm{
@@ -3062,7 +3062,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "ajV" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/grey,
@@ -5787,14 +5787,14 @@
 /turf/simulated/floor/carpet/red/fancy/innercorner/west,
 /area/station/crew_quarters/arcade/dungeon)
 "ath" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "ati" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/wood/two,
@@ -6032,7 +6032,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/chapel/sanctuary)
 "auk" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/wood/two,
@@ -53000,7 +53000,7 @@
 	name = "Secure Atmospherics"
 	})
 "sOL" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/cable{
@@ -57125,7 +57125,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "wce" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/cable{
@@ -57140,7 +57140,7 @@
 /turf/simulated/floor/red/side,
 /area/station/security/secwing)
 "wcz" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/grass,

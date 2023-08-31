@@ -2990,7 +2990,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment1)
 "bqc" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/landmark/start/job/assistant,
@@ -3133,7 +3133,7 @@
 /turf/simulated/floor,
 /area/station/hangar/main)
 "bta" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/cable{
@@ -24770,7 +24770,7 @@
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/observatory)
 "kNQ" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /obj/landmark/start/job/assistant,
@@ -25249,7 +25249,7 @@
 /turf/space,
 /area/space)
 "kZK" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/black,
@@ -29107,7 +29107,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "mLi" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/blueblack{
@@ -34775,7 +34775,7 @@
 /turf/simulated/floor/white,
 /area/station/bridge)
 "pmr" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/cable{

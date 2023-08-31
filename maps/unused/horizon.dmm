@@ -3406,7 +3406,7 @@
 	name = "Hilarious Storage B"
 	})
 "ajY" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/disposalpipe/junction/left/south,
@@ -6414,7 +6414,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/crew_quarters/quartersB)
 "atw" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	desc = "An antique chair.";
 	dir = 4;
 	name = "old wooden chair"
@@ -6459,7 +6459,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/entry)
 "atF" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/landmark/start/job/assistant,
@@ -6487,7 +6487,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "atH" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/landmark/start/job/assistant,
@@ -6856,7 +6856,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/hallway/secondary/entry)
 "auW" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
@@ -7578,7 +7578,7 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner/ne_sw,
 /area/station/hallway/secondary/entry)
 "awZ" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /obj/landmark/start/job/assistant,
@@ -8525,7 +8525,7 @@
 /turf/simulated/floor/carpet/purple/fancy,
 /area/station/crew_quarters/quartersB)
 "azz" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/landmark/start/job/assistant,
@@ -8555,7 +8555,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "azF" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/landmark/start/job/assistant,
 /obj/disposalpipe/segment/transport{
 	dir = 1;
@@ -9494,7 +9494,7 @@
 /turf/simulated/floor/purple/side,
 /area/station/hallway/secondary/east)
 "aCO" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/landmark/start/job/assistant,
@@ -9518,7 +9518,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/landmark/start/job/assistant,
@@ -14250,7 +14250,7 @@
 /turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "aPH" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/landmark/start/job/assistant,
 /obj/disposalpipe/segment/mineral{
 	dir = 4
@@ -14763,7 +14763,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "aRe" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/landmark/start/job/chaplain,
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
@@ -15221,7 +15221,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering)
 "aSb" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/landmark/start/job/assistant,
@@ -15322,7 +15322,7 @@
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/courtroom)
 "aSq" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/landmark/start/job/assistant,
@@ -16099,7 +16099,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/wood/two,
@@ -16459,7 +16459,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/heads)
 "aVr" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /obj/landmark/start/job/assistant,
@@ -17054,7 +17054,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "aWX" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /obj/landmark/start/job/assistant,
@@ -23507,7 +23507,7 @@
 	name = "Net Cafe"
 	})
 "bov" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/decal/poster/wallsign/teaparty{
@@ -23529,7 +23529,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy,
@@ -26710,7 +26710,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/disposalpipe/segment/produce{
@@ -26734,7 +26734,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/disposalpipe/segment/produce{
@@ -27582,7 +27582,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/fitness)
 "bAr" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/landmark/start/job/assistant,
@@ -27609,7 +27609,7 @@
 /turf/simulated/floor/carpet/red/standard/edge/north,
 /area/station/crew_quarters/fitness)
 "bAt" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/landmark/start/job/assistant,
@@ -28319,7 +28319,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/garden/owlery)
 "bCR" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	desc = "An antique chair.";
 	dir = 4;
 	name = "old wooden chair"
@@ -28366,7 +28366,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
 /area/station/hallway/secondary/west)
 "bCV" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	desc = "An antique chair.";
 	dir = 8;
 	name = "old wooden chair"
@@ -29326,7 +29326,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/garden/owlery)
 "bFC" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	desc = "An antique chair.";
 	dir = 4;
 	name = "old wooden chair"
@@ -29356,7 +29356,7 @@
 /turf/simulated/floor/carpet/purple/fancy,
 /area/station/hallway/secondary/west)
 "bFG" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	desc = "An antique chair.";
 	dir = 8;
 	name = "old wooden chair"
@@ -30307,7 +30307,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bIE" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	desc = "An antique chair.";
 	dir = 4;
 	name = "old wooden chair"
@@ -30338,7 +30338,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge,
 /area/station/hallway/secondary/west)
 "bII" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	desc = "An antique chair.";
 	dir = 8;
 	name = "old wooden chair"
@@ -34784,7 +34784,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_south)
 "bVn" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	desc = "An antique chair.";
 	dir = 4;
 	name = "old wooden chair"
@@ -34802,7 +34802,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/quarters_south)
 "bVp" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	desc = "An antique chair.";
 	dir = 8;
 	name = "old wooden chair"
@@ -37993,7 +37993,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/landmark/start/job/assistant,
@@ -38034,7 +38034,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/landmark/start/job/assistant,
@@ -47314,7 +47314,7 @@
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "dri" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/landmark/start/job/assistant,
 /obj/disposalpipe/segment/transport{
 	dir = 4

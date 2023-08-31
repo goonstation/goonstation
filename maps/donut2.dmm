@@ -23632,7 +23632,7 @@
 	},
 /area/station/hangar/sec)
 "cQq" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/landmark/start/job/assistant,
@@ -27116,7 +27116,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "fqW" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/carpet{
@@ -28824,7 +28824,7 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "gOz" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/carpet{
@@ -32605,7 +32605,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "jLf" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -33394,7 +33394,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/jazz)
 "kqW" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/carpet{
@@ -35127,7 +35127,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
 "lyD" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /obj/landmark/start/job/assistant,
@@ -42102,7 +42102,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
 "qzY" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -42705,7 +42705,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "qRQ" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/landmark/start/job/assistant,

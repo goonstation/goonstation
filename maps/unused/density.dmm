@@ -3722,7 +3722,7 @@
 /turf/simulated/floor/grass,
 /area/station/chapel/sanctuary)
 "iF" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -3732,7 +3732,7 @@
 	},
 /area/station/chapel/sanctuary)
 "iG" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/cable{
 	icon_state = "4-8"
 	},

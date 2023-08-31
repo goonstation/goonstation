@@ -20173,7 +20173,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/machinery/power/apc/autoname_north,
@@ -20884,7 +20884,7 @@
 	name = "Arrival Shuttle Hallway"
 	})
 "iZY" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/disposalpipe/segment/vertical,
@@ -53528,7 +53528,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/crew_quarters/quarters_east)
 "xuD" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/black,

@@ -5284,7 +5284,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aqv" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/carpet{
@@ -5596,7 +5596,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "arh" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/carpet,
@@ -5609,7 +5609,7 @@
 	},
 /area/station/security/detectives_office)
 "arj" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/wood{
@@ -6094,7 +6094,7 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	desc = "An antique chair.";
 	dir = 4;
 	name = "old wooden chair"
@@ -6210,7 +6210,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/northeast)
 "asT" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	desc = "An antique chair.";
 	dir = 8;
 	name = "old wooden chair"
@@ -10531,7 +10531,7 @@
 /area/station/crew_quarters/cafeteria)
 "aDI" = (
 /obj/disposalpipe/segment/mail/vertical,
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -15787,7 +15787,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
 "aRZ" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -15820,7 +15820,7 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/quartersA)
 "aSc" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -16585,7 +16585,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/garden/owlery)
 "aUe" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fgreen2"
@@ -16603,7 +16603,7 @@
 	},
 /area/station/garden/owlery)
 "aUg" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fgreen2"
@@ -17116,7 +17116,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aVB" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/carpet{
@@ -17514,7 +17514,7 @@
 	},
 /area/station/crew_quarters/arcade)
 "aWP" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/machinery/portableowl/attached{
@@ -17549,7 +17549,7 @@
 	},
 /area/station/garden/owlery)
 "aWT" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/machinery/portableowl/attached{
@@ -17635,7 +17635,7 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/quartersA)
 "aXf" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/machinery/light{
@@ -17666,7 +17666,7 @@
 	},
 /area/station/crew_quarters/quartersA)
 "aXh" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/machinery/firealarm{
@@ -18162,7 +18162,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/garden/owlery)
 "aYw" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/carpet{
@@ -18171,7 +18171,7 @@
 	},
 /area/station/garden/owlery)
 "aYx" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /obj/disposalpipe/segment,
@@ -18181,7 +18181,7 @@
 	},
 /area/station/garden/owlery)
 "aYy" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/carpet{
@@ -62667,7 +62667,7 @@
 	},
 /area/station/catwalk/north)
 "dFX" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /mob/living/critter/small_animal/bird/owl,

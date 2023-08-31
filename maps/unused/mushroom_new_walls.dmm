@@ -5721,7 +5721,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "ayP" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/disposalpipe/segment/mail,
@@ -23041,7 +23041,7 @@
 	freq = 1431;
 	location = "bar"
 	},
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/wood/two,
@@ -33315,7 +33315,7 @@
 	codes_txt = "patrol";
 	location = "bar"
 	},
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /obj/disposalpipe/segment/mail{
@@ -34316,7 +34316,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "uby" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/wood/two,
@@ -35444,7 +35444,7 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "vqW" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "vsI" = (
@@ -36979,7 +36979,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
 "wWi" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/disposalpipe/segment/mail{

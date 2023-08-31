@@ -4050,7 +4050,7 @@
 	},
 /area/station/chapel/sanctuary)
 "amP" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/cable{
@@ -4094,7 +4094,7 @@
 	},
 /area/station/chapel/sanctuary)
 "amW" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/chapel{
@@ -4348,7 +4348,7 @@
 	},
 /area/station/chapel/sanctuary)
 "anL" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/chapel{
@@ -4362,7 +4362,7 @@
 	},
 /area/station/chapel/sanctuary)
 "anN" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/chapel{
@@ -4523,7 +4523,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aoz" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/chapel{
@@ -9959,7 +9959,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "aEN" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -9970,7 +9970,7 @@
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "aEP" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -10358,7 +10358,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade/dungeon)
 "aGb" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/cable{
@@ -10518,7 +10518,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "aGC" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade/half,
@@ -10728,7 +10728,7 @@
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "aHg" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/machinery/light/incandescent/warm,
@@ -10755,7 +10755,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade/dungeon)
 "aHj" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/cable{
@@ -17953,7 +17953,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "bji" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -18168,7 +18168,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "bjZ" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/decal/tile_edge/line/black{
@@ -18598,7 +18598,7 @@
 	},
 /area/station/crew_quarters/bar)
 "blz" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "blA" = (
@@ -18733,7 +18733,7 @@
 /turf/simulated/floor/carpet/blue/fancy/narrow/se,
 /area/station/crew_quarters/bar)
 "blX" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -26718,7 +26718,7 @@
 /turf/simulated/floor/grass,
 /area/space)
 "bLd" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/carpet{
@@ -27489,7 +27489,7 @@
 	},
 /area/station/maintenance/disposal)
 "bNB" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/carpet{
@@ -31650,7 +31650,7 @@
 /turf/simulated/floor/damaged2,
 /area/diner/bathroom)
 "caG" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -31711,7 +31711,7 @@
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
 "caV" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -31794,7 +31794,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "cbm" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -34723,7 +34723,7 @@
 /turf/simulated/floor/black,
 /area/diner/dining)
 "cwv" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /mob/living/carbon/human/don_glab,
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
@@ -35675,7 +35675,7 @@
 	name = "Supply Lobby"
 	})
 "dNO" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/cable{
@@ -36743,8 +36743,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/item/furniture_parts/wood_chair,
-/obj/item/furniture_parts/wood_chair,
+/obj/item/furniture_parts/dining_chair/wood,
+/obj/item/furniture_parts/dining_chair/wood,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -37426,7 +37426,7 @@
 	},
 /area/station/bridge)
 "gyf" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/landmark/start/job/chief_engineer,
@@ -37824,7 +37824,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/quartersA)
 "hhj" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/cable{
@@ -37875,7 +37875,7 @@
 /turf/simulated/floor,
 /area/station/hangar/main)
 "hmk" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/cable{
@@ -39879,7 +39879,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "llW" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /mob/living/carbon/human/biker,
@@ -44410,7 +44410,7 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "toi" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/landmark/start/job/head_of_personnel,
@@ -46607,7 +46607,7 @@
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
 "xtr" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /mob/living/carbon/human/fatherjack,
@@ -46643,7 +46643,7 @@
 	},
 /area/station/medical/medbay)
 "xyy" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/landmark/start/job/assistant,

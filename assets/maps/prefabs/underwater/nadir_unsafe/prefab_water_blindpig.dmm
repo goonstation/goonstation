@@ -6,7 +6,7 @@
 /turf/variableTurf/clear,
 /area/space)
 "ac" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	icon_state = "chair_wooden";
 	dir = 4
 	},
@@ -25,7 +25,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
 /area/prefab/blind_pig)
 "ae" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
@@ -54,7 +54,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/blind_pig)
 "aj" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	icon_state = "chair_wooden";
 	dir = 4
 	},
@@ -66,7 +66,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/south,
 /area/prefab/blind_pig)
 "al" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/se,
@@ -106,7 +106,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/blind_pig)
 "at" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	icon_state = "chair_wooden";
 	dir = 4
 	},
@@ -125,7 +125,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/blind_pig)
 "av" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
@@ -161,7 +161,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/prefab/blind_pig)
 "aE" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /obj/machinery/light/incandescent/warm/very,
@@ -197,7 +197,7 @@
 /turf/simulated/floor/carpet/red/fancy/innercorner/se,
 /area/prefab/blind_pig)
 "aL" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /turf/simulated/floor/carpet/red/fancy/innercorner/sw,
 /area/prefab/blind_pig)
 "aM" = (
@@ -279,7 +279,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/blind_pig)
 "ba" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/red/fancy/innercorner/se,
@@ -312,7 +312,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/prefab/blind_pig)
 "bg" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	icon_state = "chair_wooden";
 	dir = 4
 	},
@@ -328,13 +328,13 @@
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/prefab/blind_pig)
 "bi" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/prefab/blind_pig)
 "bj" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/se,
@@ -357,7 +357,7 @@
 /turf/simulated/floor/black,
 /area/prefab/blind_pig)
 "bm" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	icon_state = "chair_wooden";
 	dir = 4
 	},
@@ -374,7 +374,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/blind_pig)
 "bo" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/machinery/light/incandescent/warm/very,
@@ -442,7 +442,7 @@
 /turf/simulated/floor/plating/random,
 /area/prefab/blind_pig)
 "by" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	icon_state = "chair_wooden";
 	dir = 4
 	},
@@ -484,7 +484,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/prefab/blind_pig)
 "bF" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/se,

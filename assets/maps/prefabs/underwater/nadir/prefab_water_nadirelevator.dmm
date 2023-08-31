@@ -243,7 +243,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/shuttle/sea_elevator)
 "hk" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/black/grime,
@@ -978,7 +978,7 @@
 /turf/simulated/floor/black/grime,
 /area/skeleton_trader)
 "IQ" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/black/grime,
@@ -1410,7 +1410,7 @@
 /turf/simulated/floor/engine/caution,
 /area/shuttle/sea_elevator)
 "Vq" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "Vu" = (
@@ -1449,7 +1449,7 @@
 	name = "The Recluse"
 	})
 "WK" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/black/grime,
@@ -1542,7 +1542,7 @@
 	},
 /area/diner/dining)
 "Yn" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /mob/living/carbon/human/don_glab,
@@ -1634,7 +1634,7 @@
 	})
 "ZM" = (
 /obj/decal/cleanable/dirt/dirt2,
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /mob/living/carbon/human/fatherjack,

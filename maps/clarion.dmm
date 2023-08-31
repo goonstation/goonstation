@@ -101,7 +101,7 @@
 	},
 /area/station/garden/aviary)
 "aaD" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fgreen2"
@@ -179,7 +179,7 @@
 	},
 /area/station/garden/aviary)
 "aba" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/carpet{
@@ -188,7 +188,7 @@
 	},
 /area/station/garden/aviary)
 "abc" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/carpet{
@@ -249,7 +249,7 @@
 	},
 /area/station/garden/aviary)
 "abp" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/carpet{
@@ -4656,11 +4656,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "atr" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/funeral_parlor)
 "ats" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -4672,7 +4672,7 @@
 	},
 /area/station/chapel/funeral_parlor)
 "att" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/machinery/light{
 	dir = 1;
 	pixel_x = -1;
@@ -4681,7 +4681,7 @@
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/funeral_parlor)
 "atu" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/machinery/firealarm{
 	layer = 3.5;
 	pixel_y = 28
@@ -5100,13 +5100,13 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
 /area/station/chapel/funeral_parlor)
 "auQ" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
@@ -5407,7 +5407,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "avM" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/grime,
@@ -5580,7 +5580,7 @@
 /turf/simulated/floor/wood,
 /area/station/chapel/funeral_parlor)
 "awo" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/carpet{
@@ -6101,7 +6101,7 @@
 /turf/simulated/floor/redblack,
 /area/station/security/detectives_office)
 "ayv" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/redblack,
@@ -6115,7 +6115,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/redblack{
@@ -6339,7 +6339,7 @@
 	name = "Community Center"
 	})
 "azo" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/wood{
@@ -6677,7 +6677,7 @@
 	},
 /area/station/crew_quarters/bar)
 "aAt" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /obj/disposalpipe/segment/food,
@@ -7076,7 +7076,7 @@
 /obj/decal/tile_edge/stripe{
 	dir = 6
 	},
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -7764,7 +7764,7 @@
 	},
 /area/station/crew_quarters/bar)
 "aEx" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/carpet{
@@ -7780,7 +7780,7 @@
 	},
 /area/station/crew_quarters/bar)
 "aEz" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/carpet{
@@ -7975,7 +7975,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/carpet{
@@ -8469,7 +8469,7 @@
 	},
 /area/station/crew_quarters/bar)
 "aHw" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
@@ -8594,7 +8594,7 @@
 	name = "Community Center"
 	})
 "aIh" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/item/device/radio/intercom{
 	dir = 1;
 	name = "Station Intercom"
@@ -8711,7 +8711,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "aIw" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/disposalpipe/segment,
@@ -8735,7 +8735,7 @@
 	},
 /area/station/crew_quarters/bar)
 "aIy" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/carpet{
@@ -22987,7 +22987,7 @@
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "fDn" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/landmark/start/job/assistant,
@@ -31013,7 +31013,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /obj/landmark/start/job/assistant,
@@ -33583,7 +33583,7 @@
 	},
 /area/station/security/main)
 "oqy" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/landmark/start/job/chaplain,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{
@@ -34007,7 +34007,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -38361,7 +38361,7 @@
 	},
 /area/station/mining/staff_room)
 "sbz" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/landmark/start/job/assistant,
@@ -38965,7 +38965,7 @@
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "sAl" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /obj/landmark/start/job/assistant,
@@ -39536,7 +39536,7 @@
 	},
 /area/station/security/brig)
 "taA" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -45659,7 +45659,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "ykv" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/machinery/status_display{
 	pixel_x = -32
 	},

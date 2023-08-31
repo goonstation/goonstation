@@ -594,7 +594,7 @@
 /turf/space,
 /area/swampzone/interiors/outbuildings)
 "aIW" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/unsimulated/floor/setpieces/rootfloor{
@@ -3290,7 +3290,7 @@
 	},
 /area/crypt/graveyard)
 "dVO" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/unsimulated/floor/setpieces/rootfloor{
@@ -4957,7 +4957,7 @@
 	},
 /area/swampzone/ground)
 "fKS" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /turf/unsimulated/floor/wood/eight{
 	dir = 8
 	},
@@ -7980,7 +7980,7 @@
 /turf/unsimulated/floor/cave,
 /area/swampzone/deeps)
 "jxW" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/unsimulated/floor/cave,
@@ -10510,7 +10510,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "mux" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/seven,
@@ -13428,7 +13428,7 @@
 /turf/unsimulated/floor,
 /area/swampzone/interiors/bonktek/security)
 "pXr" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/unsimulated/floor/setpieces/rootfloor{
@@ -14001,7 +14001,7 @@
 /turf/unsimulated/floor,
 /area/swampzone/interiors/bonktek/maintenance)
 "qNe" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /turf/unsimulated/floor/setpieces/rootfloor{
 	icon_state = "rootfloor_3"
 	},
@@ -14821,7 +14821,7 @@
 /turf/space,
 /area/swampzone)
 "rOW" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/unsimulated/floor/wood/seven,
@@ -14971,7 +14971,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "rYL" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/unsimulated/floor/cave,
@@ -17715,7 +17715,7 @@
 	},
 /area/swampzone/interiors/bonktek)
 "veB" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/decal/tile_edge/line/black{
