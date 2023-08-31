@@ -298,10 +298,14 @@ TYPEINFO(/obj/item/device/flash)
 			var/nostun = 0
 			if (!H.client || !H.mind)
 				user.show_text("[H] is braindead and cannot be converted.", "red")
-			else if (locate(/obj/item/implant/counterrev) in H.implant)
+			if (locate(/obj/item/implant/counterrev) in H.implant)
 				user.show_text("There seems to be something preventing [H] from revolting.", "red")
 				.= 0.5
 				nostun = 1
+				if (istype(src,/obj/item/device/flash/revolution))
+					playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, 1, 0, 0.6)
+					user.show_text("Hold still to override . . . ", "red")
+					actions.start(new/datum/action/bar/icon/rev_flash(src,M), user)
 			else if (!H.can_be_converted_to_the_revolution())
 				user.show_text("[H] seems unwilling to revolt.", "red")
 				nostun = 1
@@ -431,21 +435,3 @@ TYPEINFO(/obj/item/device/flash/revolution)
 
 	attackby(obj/item/W, mob/user)
 		return
-
-	attack(mob/living/M, mob/user)
-		flash_mob(M, user, 0)
-		flash_mob(M, user, 1)
-
-
-	flash_mob(mob/living/M as mob, mob/user as mob, var/convert = 1)
-		if (!convert && M.mind && M.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
-			user.show_text("[src] refuses to flash!", "red")
-			return
-		else
-			playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, 1 , 0, 0.6)
-			var/convert_result = convert(M,user)
-			if (convert_result == 0.5)
-				user.show_text("Hold still to override . . . ", "red")
-				actions.start(new/datum/action/bar/icon/rev_flash(src,M), user)
-			if (convert_result)
-				..()
