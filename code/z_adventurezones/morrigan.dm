@@ -2215,13 +2215,13 @@ TYPEINFO(/obj/item/gun/energy/peacebringer)
 			charge_icon_state = "peacebringer"
 			muzzle_flash = "muzzle_flash_laser"
 			item_state = "peacebringer"
-			playsound('sound/weapons/peacebringerswap.ogg', 100, 0)
+			playsound('sound/weapons/peacebringerswap.ogg', 100, 100)
 		else if (current_projectile.type == /datum/projectile/laser/peacebringerless)
 			icon = 'icons/obj/adventurezones/morrigan/weapons/gun.dmi'
 			charge_icon_state = "peaceless"
 			muzzle_flash = "muzzle_flash_waveg"
 			item_state = "peacebringerless"
-			playsound('sound/weapons/peacebringerswap2.ogg', 100, 0)
+			playsound('sound/weapons/peacebringerswap2.ogg', 100, 100)
 		..()
 
 	attack_self(var/mob/M)
@@ -2269,6 +2269,31 @@ TYPEINFO(/obj/item/gun/energy/smgmine)
 		..()
 		UpdateIcon()
 		M.update_inhands()
+
+//shotgun
+TYPEINFO(/obj/item/gun/energy/lasershotgun)
+	mats = null
+/obj/item/gun/energy/lasershotgun
+	name = "Mod. 77 Nosaxa"
+	uses_multiple_icon_states = 0
+	cell_type = /obj/item/ammo/power_cell/self_charging/lasershotgun
+	icon = 'icons/obj/adventurezones/morrigan/weapons/gun48.dmi'
+	icon_state = "lasershotgun"
+	desc = "A burst shotgun with short range. Sold for heavy crowd control and shock tactics."
+	item_state = "lasershotgun"
+	force = 10
+	two_handed = TRUE
+	can_swap_cell = FALSE
+	rechargeable = FALSE
+	uses_charge_overlay = TRUE
+	muzzle_flash = "muzzle_flash_bluezap"
+	charge_icon_state = "lasershotgun"
+	spread_angle = 2
+
+	New()
+		set_current_projectile(new/datum/projectile/laser/lasershotgun)
+		projectiles = list(new/datum/projectile/laser/lasershotgun)
+		..()
 
 //projectiles
 /datum/projectile/bullet/optio/hitscanrail
@@ -2440,6 +2465,28 @@ TYPEINFO(/obj/item/gun/energy/smgmine)
 		. = ..()
 		O.AddComponent(/datum/component/proj_mining, 0.2, 2)
 
+/datum/projectile/laser/lasershotgun
+	name = "RLP Mode"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "optio"
+	shot_sound = 'sound/weapons/shotgunlaser.ogg'
+	dissipation_delay = 5
+	dissipation_rate = 8
+	cost = 200
+	damage = 25
+	damage_type = D_ENERGY
+	shot_number = 2
+	color_red = 0
+	color_green = 0
+	color_blue = 1
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if(!ismob(hit))
+			shot_volume = 0
+			shoot_reflected_bounce(proj, hit, 2, PROJ_NO_HEADON_BOUNCE)
+			shot_volume = 100
+		if(proj.reflectcount >= 2)
+			elecflash(get_turf(hit),radius=0, power=3, exclude_center = 0)
 /datum/projectile/laser/smgminelethal
 	name = "Lethal Mode"
 	icon = 'icons/obj/projectiles.dmi'

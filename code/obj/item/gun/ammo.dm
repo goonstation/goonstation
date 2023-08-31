@@ -1536,6 +1536,14 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	max_charge = 49
 	recharge_rate = 1.5
 
+/obj/item/ammo/power_cell/self_charging/lasershotgun
+	name = "Mod. 77 Cell"
+	desc = "Low capicity disrupter cell that holds 200 PU, but recharges fast!"
+	charge = 200
+	max_charge = 200
+	recharge_rate = 90
+
+
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED
