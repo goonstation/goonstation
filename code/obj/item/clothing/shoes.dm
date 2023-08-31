@@ -478,7 +478,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	c_flags = NOSLIP
 	compatible_species = list("cow", "human")
 
-/obj/item/clothing/shoes/swat/capboots
+/obj/item/clothing/shoes/swat/captain
 	name = "captain's boots"
 	desc = "A set of formal shoes with a protective layer underneath."
 	icon_state = "capboots"
