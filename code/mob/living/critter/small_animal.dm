@@ -617,7 +617,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 			..()
 
 /mob/living/critter/small_animal/cat/jons
-	name = "jons the catte"
+	name = "\proper jons the catte"
 	desc = "How long has this cat been here?"
 	icon_state = "cat6"
 	icon_state_dead = "cat6-dead"
