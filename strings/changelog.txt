@@ -1,5 +1,16 @@
 
+(t)wed aug 30 23
+(u)Tyrant
+(p)15562
+(e)🗺⚖|A-Mapping, C-Balance
+(*)The NT commander of Oshan has decided to go sit in the crew lounge instead.
 (t)tue aug 29 23
+(u)LeahTheTech
+(+)Botanical misters now have a particle effect when filling something.
+(u)Lord_Earthfire
+(p)15476
+(e)🌱|A-Hydroponics
+(+)Emagging a botanical mister makes it fill beakers, glasses or other open containers in its vicinity
 (u)Glamurio (Ryou)
 (p)15506
 (e)💅🔄📄|C-QoL, C-Rework, A-UI

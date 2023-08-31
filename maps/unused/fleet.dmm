@@ -22500,7 +22500,7 @@
 "Wl" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new/obj/item/captaingun;
+	displayed = /obj/item/captaingun;
 	pixel_y = 6
 	},
 /turf/simulated/floor/black,
