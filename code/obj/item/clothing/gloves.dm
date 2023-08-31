@@ -385,7 +385,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
 	icon_state = "capgloves"
 	item_state = "capgloves"
-	protective_temperature = 1100
 
 	centcomm
 		name = "commander's gloves"
