@@ -2,8 +2,9 @@
 	name = "fire elemental"
 	real_name = "fire elemental"
 	desc = "You can't tell if this person is on fire, or made of it. Or both."
-	density = 1
+	icon = 'icons/mob/critter/humanoid/elemental/fire.dmi'
 	icon_state = "fire_elemental"
+	density = 1
 	custom_gib_handler = /proc/fire_elemental_gibs
 	hand_count = 3
 	can_throw = 1
