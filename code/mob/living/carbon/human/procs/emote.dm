@@ -348,7 +348,7 @@
 								message = "<B>[src]</B> blows a kiss to [M]."
 								maptext_out = "<I>blows a kiss to [M]</I>"
 								//var/atom/U = get_turf(param)
-								//shoot_projectile_ST(src, new/datum/projectile/special/kiss(), U) //I gave this all of 5 minutes of my time I give up
+								//shoot_projectile_ST_pixel_spread(src, new/datum/projectile/special/kiss(), U) //I gave this all of 5 minutes of my time I give up
 							if ("fingerguns")
 								message = "<B>[src]</B> points finger guns at [M]!"
 								maptext_out = "<I>points finger guns at [M]!</I>"
@@ -1333,7 +1333,7 @@
 								boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
 								return
 					if (M)
-						if (!can_act(M))
+						if (can_act(M))
 							if (tgui_alert(M, "[src] offers you a handshake. Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
 								if (M in view(1,null))
 									message = "<B>[src]</B> shakes hands with [M]."
@@ -1410,7 +1410,7 @@
 
 			if ("highfive")
 				m_type = 1
-				if (!can_act(src))
+				if (can_act(src))
 					if (src.emote_check(voluntary))
 						var/mob/M = null
 						if (param)
@@ -1431,7 +1431,7 @@
 									return
 
 						if (M)
-							if (!!can_act(M))
+							if (can_act(M))
 								if (tgui_alert(M, "[src] offers you a highfive! Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
 									if (M in view(1,null))
 										message = "<B>[src]</B> and [M] highfive!"

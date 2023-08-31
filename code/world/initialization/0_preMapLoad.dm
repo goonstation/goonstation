@@ -1,6 +1,7 @@
 //Called BEFORE the map loads. Useful for objects that require certain things be set during init
 /datum/preMapLoad
 	New()
+		global.current_state = GAME_STATE_PRE_MAP_LOAD
 #ifdef TRACY_PROFILER_HOOK
 		prof_init()
 #endif
@@ -157,7 +158,7 @@
 			globalStatusPrototypes.Add(R)
 
 		Z_LOG_DEBUG("Preload", "  /datum/jobXpReward")
-		for(var/A in childrentypesof(/datum/jobXpReward)) //Caching xp rewards.
+		for(var/A in concrete_typesof(/datum/jobXpReward)) //Caching xp rewards.
 			var/datum/jobXpReward/R = new A()
 			xpRewards.Add(R.name)
 			xpRewards[R.name] = R
@@ -204,6 +205,7 @@
 
 		Z_LOG_DEBUG("Preload", "Preload stage complete")
 		..()
+		global.current_state = GAME_STATE_MAP_LOAD
 
 
 

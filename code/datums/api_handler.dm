@@ -138,7 +138,12 @@ var/global/datum/apiHandler/apiHandler
 
 		if (forceResponse)
 			// Parse the response
-			var/list/data = json_decode(response.body)
+			var/list/data
+
+			try
+				data = json_decode(response.body)
+			catch
+				// pass
 
 			if (!data)
 				logTheThing(LOG_DEBUG, null, "<b>API Error</b>: JSON decode error during <b>[safeReq]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])")

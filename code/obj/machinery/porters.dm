@@ -434,16 +434,9 @@ TYPEINFO(/obj/machinery/port_a_brig)
 			actions.start(new /datum/action/bar/portabrig_shove_in(src, user, G.affecting, G), user)
 
 		else if (ispryingtool(W))
-			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Prying door open.</span>")
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-			sleep(15 SECONDS)
-			if ((user.loc == T && user.equipped() == W))
-				src.locked = 0
-				boutput(user, "<span class='notice'>You pried the door open.</span>")
-			else if((isrobot(user) && (user.loc == T)))
-				src.locked = 0
-				boutput(user, "<span class='notice'>You pried the door open.</span>")
+			SETUP_GENERIC_ACTIONBAR(user, src, 15 SECONDS, /obj/machinery/port_a_brig/proc/pry_open, list(user), W.icon, W.icon_state,
+				"<span class='alert'>[user] pries open [src].</span>", INTERRUPT_ACT | INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_ATTACKED | INTERRUPT_STUNNED)
 
 	proc/build_icon()
 		if(src.occupant)
@@ -515,6 +508,9 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		src.brig.build_icon()
 		qdel(G)
 
+/obj/machinery/port_a_brig/proc/pry_open()
+	playsound(src.loc, 'sound/items/Crowbar.ogg', 100, TRUE)
+	src.locked = FALSE
 
 /obj/item/paper/Port_A_Brig
 	name = "paper - 'A-97 Port-A-Brig Manual"

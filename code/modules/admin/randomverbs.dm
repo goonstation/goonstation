@@ -566,23 +566,30 @@
 
 /client/proc/cmd_admin_remove_plasma()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
-	set name = "Stabilize Atmos."
+	set name = "Stabilize Atmos"
 	set desc = "Resets the air contents of every turf in view to normal."
 	ADMIN_ONLY
 	SPAWN(0)
 		for(var/turf/simulated/T in view())
 			if(!T.air)
 				continue
-			ZERO_GASES(T.air)
-#ifdef ATMOS_ARCHIVING
-			ZERO_ARCHIVED_GASES(T.air)
-			T.air.ARCHIVED(temperature) = null
-#endif
-			T.air.oxygen = MOLES_O2STANDARD
-			T.air.nitrogen = MOLES_N2STANDARD
-			T.air.fuel_burnt = 0
-			T.air.temperature = T20C
+			T.stabilize()
 			LAGCHECK(LAG_LOW)
+
+/client/proc/stabilize_station()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	set name = "Stabilize All Atmos"
+	set desc = "Resets the air contents of THE ENTIRE STATION to normal."
+	ADMIN_ONLY
+	if (alert(usr, "This will reset the air of ALL TURFS IN THE ENTIRE STATION, are you sure you want to continue?", "Cause big lag", "Yes", "No") != "Yes")
+		return
+	SPAWN(0)
+		for (var/turf/simulated/T in world)
+			if (inonstationz(T))
+				if(!T.air)
+					continue
+				T.stabilize()
+				LAGCHECK(LAG_LOW)
 
 /client/proc/flip_view()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)

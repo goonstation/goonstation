@@ -1156,6 +1156,7 @@
 		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
 		src.goods_sell += new /datum/commodity/junk/ai_kit_clown(src)
+		src.goods_sell += new /datum/commodity/junk/ai_kit_mime(src)
 		src.goods_sell += new /datum/commodity/foam_dart_grenade(src)
 
 

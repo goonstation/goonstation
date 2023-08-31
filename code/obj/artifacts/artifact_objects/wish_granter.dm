@@ -34,7 +34,7 @@
 
 		var/list/wishes = list("I wish to become rich!","I wish for great power!")
 
-		var/wish = input("Make a wish?","[O]") as null|anything in wishes
+		var/wish = input(user, "Make a wish?","[O]") as null|anything in wishes
 		if (user.key in wish_granted)
 			boutput(user, "<b>[O]</b> resonates, \"<big>FOOLISH MORTAL, YOU TRY TO FOOL ME???</big>\"")
 			return

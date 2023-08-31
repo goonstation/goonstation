@@ -334,8 +334,8 @@
 			//var/coe2 = (THERMAL_ENERGY(current_gas) + src.temperature*src.thermal_mass)
 			//if(abs(coe2 - coe_check) > 64)
 			//	CRASH("COE VIOLATION REACTOR")
-			if(src.current_gas.temperature < 0 || src.temperature < 0)
-				CRASH("TEMP WENT NEGATIVE")
+			if(src.current_gas.temperature <= 0 || src.temperature <= 0)
+				CRASH("TEMP WENT NONPOSITIVE (hottest=[hottest], coldest=[coldest], max_delta_e=[max_delta_e], deltaT=[deltaT], deltaTr=[deltaTr])")
 
 			. = src.current_gas
 		if(inGas && (THERMAL_ENERGY(inGas) > 0))
@@ -638,7 +638,7 @@
 			return FALSE
 
 	/// Transmuting nuclear engine into jeans sometimes causes a client crash
-	setMaterial(datum/material/mat1, appearance, setname, copy, use_descriptors)
+	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = FALSE, var/use_descriptors = FALSE)
 		if(mat1.getID() == "jean")
 			return
 		. = ..()

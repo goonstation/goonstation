@@ -122,6 +122,11 @@
 						/datum/targetable/critter/tackle)
 	blood_id = "crime"
 
+	New(loc, nspecies)
+		..()
+		// apparently the fact that blood_id is crime and the goose adds crime to itself means that it bloodgibs nowadays eventually...
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_BLOODGIB_IMMUNE, src)
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
@@ -290,6 +295,7 @@
 	var/size = 0
 	var/obj/item/implant/access/access
 	var/obj/item/last_item_bump
+	var/can_grab_mobs = TRUE
 
 	New()
 		. = ..()
@@ -348,32 +354,36 @@
 			var/turf/simulated/floor/floor = new_turf
 			floor.pry_tile(src.equipped(), src)
 		var/found = 0
-		for(var/obj/O in new_turf)
-			if(istype(O, /obj/overlay))
+		for(var/atom/movable/AM in new_turf)
+			if(istype(AM, /obj/overlay) || istype(AM, /obj/effect) || istype(AM, /obj/effects))
 				continue
-			if(O.invisibility > INVIS_GHOST)
+			if(AM.invisibility >= INVIS_GHOST)
 				continue
-			var/obj/item/I = O
-			if(size < 60 && (!istype(O, /obj/item) || I.w_class > size / 10 + 1))
+			var/obj/item/I = AM
+			if(size < 60 && (!istype(AM, /obj/item) || I.w_class > size / 10 + 1))
 				continue
-			if(size < 90 && O.anchored)
+			if(size < 90 && AM.anchored)
+				continue
+			if(size < 120 && AM.density)
+				continue
+			if(size < 140 && ismob(AM) || !can_grab_mobs)
 				continue
 			if(istype(I, /obj/item/card/id))
 				var/obj/item/card/id/id = I
 				src.access.access.access |= id.access // access
-			O.set_loc(src)
-			src.vis_contents += O
-			O.pixel_x = 0
-			O.pixel_y = 0
+			AM.set_loc(src)
+			src.vis_contents += AM
+			AM.pixel_x = 0
+			AM.pixel_y = 0
 			var/matrix/tr = new
 			tr.Turn(rand(360))
 			tr.Translate(sqrt(size) * 3 / 2, sqrt(size) * 3)
 			tr.Turn(rand(360))
-			O.transform = tr
+			AM.transform = tr
 			size += 0.3
 			found = 1
 			break
-		if(size > 140 && !found && new_turf.density && !isrestrictedz(new_turf.z) && prob(20))
+		if(size > 180 && !found && new_turf.density && !isrestrictedz(new_turf.z) && prob(20))
 			new_turf.ex_act(prob(1) ? 1 : 2)
 		. = ..()
 
@@ -458,7 +468,7 @@
 
 /proc/populate_station(chance=100)
 	for(var/job_name in job_start_locations)
-		if(job_name == "AI")
+		if(job_name == "AI" || job_name == "JoinLate")
 			continue
 		for(var/turf/T in job_start_locations[job_name])
 			if(prob(chance))
@@ -662,3 +672,17 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 			boutput(usr, "<span class='notice'>Knife user can no longer switch targets.</span>")
 
 
+
+/obj/spawner/knife_loop
+	New()
+		..()
+		var/how_many_knives = tgui_input_number(usr, "How many knives to spawn?", "Knife loop", 2, 100, 2)
+		var/list/obj/item/kitchen/utensil/knife/tracker/knives = list()
+		for(var/i = 1 to how_many_knives)
+			var/obj/item/kitchen/utensil/knife/tracker/knife = new(src.loc)
+			knife.can_switch_target = FALSE
+			if(i > 1)
+				knife.AddComponent(/datum/component/angle_watcher, knives[i - 1], base_transform=matrix())
+			knives += knife
+		knives[1].AddComponent(/datum/component/angle_watcher, knives[how_many_knives], base_transform=matrix())
+		qdel(src)
