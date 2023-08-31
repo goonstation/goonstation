@@ -156,7 +156,7 @@
 				if(thing in holder.vars && holder.vars[thing] == src) // organ holders suck, refactor when they no longer suck
 					holder.vars[thing] = null
 
-
+		donor_original = null
 		donor = null
 
 		if (bones)

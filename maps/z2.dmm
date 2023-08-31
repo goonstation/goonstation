@@ -59760,7 +59760,7 @@
 "gfR" = (
 /obj/lattice,
 /obj/stool/chair,
-/mob/living/carbon/human/fatherjack/cow,
+/mob/living/carbon/human/fathergrife/cow,
 /turf/unsimulated/floor/void,
 /area/void_diner)
 "ggw" = (
