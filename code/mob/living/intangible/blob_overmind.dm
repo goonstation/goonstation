@@ -71,6 +71,8 @@
 	var/spawn_time = 0
 	var/respawned = FALSE
 
+	var/random_event_spawn = FALSE
+
 	var/last_blob_life_tick = 0 //needed for mult to properly work for blob abilities
 
 	var/admin_override = FALSE //for sudo blobs
@@ -209,7 +211,8 @@
 		. = ..()
 
 		//if within grace period, respawn
-		if (!src.respawned && (TIME - src.spawn_time <= 15 MINUTES))
+		var/respawn_time = !src.random_event_spawn ? 15 MINUTES : 7 MINUTES
+		if (!src.respawned && (TIME - src.spawn_time <= respawn_time))
 			src.respawned = TRUE
 			src.reset()
 			boutput(src, "<span class='notice'><b>In a desperate act of self preservation you avoid your untimely death by concentrating what energy you had left! You feel ready to try again!</b></span>")
