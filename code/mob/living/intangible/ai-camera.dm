@@ -460,7 +460,7 @@
 			if (mainframe.dismantle_stage >= 2)
 				boutput(src, "<span class='alert'>You can't lock your cover when it's open!</span>")
 			else
-				if (src.locking)
+				if (mainframe.locking)
 					boutput(src, "<span class='alert'>Your interface is currently locking, please be patient.</span>")
 				else if (mainframe.dismantle_stage == 1)
 					mainframe.locking = 1
