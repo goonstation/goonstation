@@ -39,7 +39,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 							return
 						M.bioHolder?.RemoveEffect("bad_eyesight")
 						M.UpdateOverlays(null, overlay_key)
-						if (!src || !src.loc)
+						if (QDELETED(src))
 							return
 						src.visible_message("<span class='notice'>[src] falls off of [M]'s face.</span>")
 						src.invisibility = old_invis
