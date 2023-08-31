@@ -19564,10 +19564,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"dKh" = (
-/obj/machinery/atmospherics/binary/valve,
-/turf/simulated/floor,
-/area/station/science/lab)
 "dKD" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/mail{
@@ -20920,6 +20916,9 @@
 	pixel_x = 24;
 	pixel_y = -8
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "fqs" = (
@@ -21223,7 +21222,8 @@
 /area/station/medical/medbay/lobby)
 "fHj" = (
 /obj/cable{
-	icon_state = "2-4"
+	icon_state = "2-4";
+	pixel_y = 0
 	},
 /obj/disposalpipe/junction/right/south,
 /turf/simulated/floor/white,
@@ -26383,7 +26383,11 @@
 	dir = 4
 	},
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4";
+	pixel_y = 0
 	},
 /turf/simulated/floor/purple/side{
 	dir = 4
@@ -26411,10 +26415,11 @@
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/light/small/floor,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable,
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "lQv" = (
@@ -27591,6 +27596,9 @@
 	icon_state = "pdoor0";
 	density = 0
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "noz" = (
@@ -27883,6 +27891,12 @@
 	icon_state = "fgreen3"
 	},
 /area/station/bridge)
+"nDF" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "nDW" = (
 /obj/disposalpipe/segment,
 /obj/mapping_helper/firedoor_spawn,
@@ -28604,9 +28618,6 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "orS" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/station/science/lab)
@@ -31615,7 +31626,7 @@
 /area/station/engine/engineering/private)
 "rpK" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/turf/simulated/floor/purple/side{
+/turf/simulated/floor/blue/side{
 	dir = 6
 	},
 /area/station/science/lab)
@@ -32835,6 +32846,11 @@
 /obj/machinery/atmospherics/portables_connector,
 /turf/space,
 /area/station/engine/proto)
+"sCq" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "sCJ" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/access/maint,
@@ -35241,6 +35257,15 @@
 	icon_state = "fgreen3"
 	},
 /area/station/bridge)
+"uQG" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "uRe" = (
 /obj/cable{
 	icon_state = "6-9"
@@ -35434,7 +35459,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 8
@@ -35475,16 +35500,11 @@
 	},
 /area/station/security/detectives_office)
 "vhm" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
+/obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "viS" = (
 /obj/machinery/disposal/small,
@@ -35560,6 +35580,9 @@
 	icon_state = "pdoor0";
 	opacity = 0;
 	density = 0
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/science/lab)
@@ -36285,10 +36308,11 @@
 /obj/disposalpipe/segment,
 /obj/machinery/power/apc/autoname_west,
 /obj/machinery/atmospherics/portables_connector,
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/cable,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -36319,17 +36343,15 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
 /area/station/science/lab)
 "vZs" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor,
 /area/station/science/lab)
 "vZI" = (
@@ -36366,9 +36388,6 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "waM" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/landmark/start/job/scientist,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -36569,10 +36588,11 @@
 /area/station/turret_protected/AIbaseoutside)
 "woX" = (
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "2-4";
+	pixel_y = 0
 	},
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/science/lab)
@@ -37139,7 +37159,7 @@
 /obj/machinery/atmospherics/binary/valve{
 	dir = 1
 	},
-/turf/simulated/floor/purple/corner,
+/turf/simulated/floor/blue/corner,
 /area/station/science/lab)
 "wTb" = (
 /obj/machinery/door/window/westleft{
@@ -38219,6 +38239,9 @@
 	name = "Mixing Room Vent Control";
 	pixel_x = 24;
 	pixel_y = -9
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
@@ -96508,7 +96531,7 @@ sXL
 wKz
 vSI
 mmv
-dKh
+vZs
 vlK
 azy
 vZI
@@ -97711,9 +97734,9 @@ qOu
 rLT
 sXL
 tSB
-vhm
+vSI
 woX
-vZs
+qET
 qET
 qET
 kQP
@@ -98024,7 +98047,7 @@ tWD
 tKf
 tKf
 oLS
-qwY
+sCq
 qwY
 tWD
 aaa
@@ -98315,7 +98338,7 @@ qQh
 rXg
 sXL
 iwQ
-nIQ
+mTM
 yag
 orS
 iwQ
@@ -98617,9 +98640,9 @@ qQj
 rXC
 sXL
 ufh
-nIQ
-lsB
 mTM
+lsB
+nIQ
 cQt
 nIQ
 lsB
@@ -98919,11 +98942,11 @@ nJD
 ivd
 sXL
 gDt
-nIQ
+uQG
 fpL
 lQg
 ydz
-nIQ
+nDF
 rQF
 tlU
 tWD
@@ -99523,11 +99546,11 @@ aaa
 aDR
 sXL
 ptB
-tWn
+vhm
 voT
 sXL
 ptB
-tWn
+vhm
 wTX
 tWD
 qQV
