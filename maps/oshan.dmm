@@ -46600,7 +46600,7 @@
 /obj/stool/chair/wooden{
 	dir = 8
 	},
-/mob/living/carbon/human/fatherjack,
+/mob/living/carbon/human/fathergrife,
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "xuS" = (

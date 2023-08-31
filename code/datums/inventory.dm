@@ -8,6 +8,10 @@
 	..()
 	human = H
 
+/datum/humanInventory/disposing()
+	src.human = null
+	..()
+
 /datum/humanInventory/ui_state(mob/user)
 	return tgui_physical_state
 
