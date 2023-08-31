@@ -35,7 +35,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 					M.bioHolder?.AddEffect("bad_eyesight")
 					JOB_XP(thrower, "Clown", 1)
 					SPAWN(rand(src.min_stuck_time, src.max_stuck_time))
-						if (!M || !M.loc)
+						if (QDELETED(M))
 							return
 						M.bioHolder?.RemoveEffect("bad_eyesight")
 						M.UpdateOverlays(null, overlay_key)
