@@ -34683,15 +34683,6 @@
 /obj/decal/poster/wallsign/space,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
-"pnJ" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname  - SS13";
-	pixel_x = 10
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/mining/refinery)
 "pnP" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -35817,6 +35808,12 @@
 /area/station/engine/gas)
 "qdS" = (
 /obj/machinery/portable_reclaimer,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname  - SS13";
+	pixel_x = 10
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/mining/refinery)
 "qeg" = (
@@ -78561,7 +78558,7 @@ iEV
 ofs
 gJF
 qdS
-pnJ
+hYa
 dhv
 cob
 hmq
