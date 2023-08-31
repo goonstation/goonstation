@@ -461,10 +461,18 @@
 				boutput(src, "<span class='alert'>You can't lock your cover when it's open!</span>")
 			else
 				if (mainframe.dismantle_stage == 1)
-					mainframe.dismantle_stage = 0
+					mainframe.locking = 1
+					boutput(src, "<span class='alert'>Locking cover...</span>")
+					SPAWN(12 SECONDS)
+						if (!mainframe.locking)
+							boutput(src, "<span class='alert'>The lock was interrupted before it could finish!</span>")
+						else
+							mainframe.dismantle_stage = 0
+							mainframe.locking = 0
+							boutput(src, "<span class='alert'>You lock your cover lock.</span>")
 				else
 					mainframe.dismantle_stage = 1
-				boutput(src, "<span class='alert'>You [mainframe.dismantle_stage ? "unlock" : "lock"] your cover lock.</span>")
+					boutput(src, "<span class='alert'>You unlock your cover lock.</span>")
 
 	verb/open_nearest_door()
 		set category = "AI Commands"

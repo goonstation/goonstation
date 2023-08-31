@@ -126,6 +126,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/moustache_mode = 0
 	var/status_message = null
 	var/mob/living/silicon/deployed_shell = null
+	var/locking = 0
 
 	var/faceEmotion = "ai_happy-dol"
 	var/faceColor = "#66B2F2"
@@ -1889,10 +1890,19 @@ or don't if it uses a custom topopen overlay
 		boutput(src, "<span class='alert'>You can't lock your cover when it's open!</span>")
 	else
 		if (src.dismantle_stage == 1)
-			src.dismantle_stage = 0
+			src.locking = 1
+			boutput(src, "<span class='alert'>Locking cover...</span>")
+			SPAWN(12 SECONDS)
+				if (!src.locking)
+					boutput(src, "<span class='alert'>The lock was interrupted before it could finish!</span>")
+				else
+					src.dismantle_stage = 0
+					src.locking = 0
+					boutput(src, "<span class='alert'>You lock your cover lock.</span>")
+
 		else
 			src.dismantle_stage = 1
-		boutput(src, "<span class='alert'>You [src.dismantle_stage ? "unlock" : "lock"] your cover lock.</span>")
+			boutput(src, "<span class='alert'>You unlock your cover lock.</span>")
 
 /mob/living/silicon/ai/proc/eye_view()
 	if (isdead(src))
