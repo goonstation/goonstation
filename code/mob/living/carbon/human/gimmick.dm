@@ -215,7 +215,7 @@ ADMIN_INTERACT_PROCS(/mob/living/carbon/human/fathergrife, proc/chatter)
 			return 1
 
 		var/area/area = get_area(src)
-		if(prob(100) && can_act(src) && area?.active)
+		if(prob(1) && can_act(src) && area?.active)
 			chatter()
 
 	proc/say_helper_job()
