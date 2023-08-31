@@ -48682,16 +48682,16 @@
 /area/wizard_station)
 "djZ" = (
 /obj/rack,
-/obj/item/clothing/shoes/sandal{
+/obj/item/clothing/shoes/sandal/magic/wizard{
 	pixel_y = -5
 	},
-/obj/item/clothing/shoes/sandal{
+/obj/item/clothing/shoes/sandal/magic/wizard{
 	pixel_y = -2
 	},
-/obj/item/clothing/shoes/sandal{
+/obj/item/clothing/shoes/sandal/magic/wizard{
 	pixel_y = 1
 	},
-/obj/item/clothing/shoes/sandal{
+/obj/item/clothing/shoes/sandal/magic/wizard{
 	pixel_y = 4
 	},
 /obj/item/device/light/magic_lantern{
