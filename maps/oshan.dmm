@@ -21543,7 +21543,6 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/dialogueobj/ntrepresentative,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
 	},
@@ -39122,6 +39121,11 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/crew_quarters/quartersA)
+"jKI" = (
+/obj/dialogueobj/ntrepresentative,
+/obj/stool/chair/comfy/blue,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/quartersA)
 "jKL" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -42080,7 +42084,7 @@
 "oVS" = (
 /obj/table/wood/round/auto,
 /obj/displaycase{
-	displayed = new/obj/item/captaingun;
+	displayed = /obj/item/captaingun;
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/purple/standard/narrow/T_south,
@@ -46596,7 +46600,7 @@
 /obj/stool/chair/wooden{
 	dir = 8
 	},
-/mob/living/carbon/human/fatherjack,
+/mob/living/carbon/human/fathergrife,
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "xuS" = (
@@ -78900,7 +78904,7 @@ rHe
 aiz
 alJ
 amD
-amD
+jKI
 aos
 apm
 aqD
