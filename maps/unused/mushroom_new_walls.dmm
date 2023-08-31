@@ -24829,13 +24829,6 @@
 	dir = 5
 	},
 /area/station/turret_protected/AIsat)
-"jXb" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/science/lab)
 "jXg" = (
 /obj/machinery/mass_driver{
 	desc = "A device that launches objects, like ANCIENT SIRENS, for example, on it at great velocity when activated.";
@@ -28832,6 +28825,10 @@
 "oDO" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
+"oEd" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor,
+/area/station/science/lab)
 "oEf" = (
 /obj/rack,
 /obj/item/tank/jetpack,
@@ -30401,6 +30398,11 @@
 /obj/landmark/start/job/bartender,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/baroffice)
+"qiu" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "qiW" = (
 /obj/grille/catwalk{
 	dir = 1
@@ -31694,9 +31696,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/tox,
-/turf/simulated/floor/white/side{
-	dir = 4
-	},
+/turf/simulated/floor/purple,
 /area/station/science/lab)
 "rtO" = (
 /obj/decal/tile_edge/line/white{
@@ -34288,12 +34288,6 @@
 	icon_state = "fblue1"
 	},
 /area/station/bridge)
-"tPB" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/black,
-/area/station/science/lab)
 "tPG" = (
 /obj/machinery/light{
 	dir = 1;
@@ -35488,13 +35482,14 @@
 	},
 /area/station/security/detectives_office)
 "vhm" = (
+/obj/machinery/power/data_terminal,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-8"
 	},
-/obj/cable{
-	icon_state = "2-8"
+/obj/machinery/networked/test_apparatus/gas_sensor{
+	setup_tag = "BOTTOM"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "viS" = (
 /obj/machinery/disposal/small,
@@ -35575,10 +35570,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/science/lab)
-"voL" = (
-/obj/machinery/atmospherics/binary/valve,
-/turf/simulated/floor,
 /area/station/science/lab)
 "voN" = (
 /obj/machinery/light{
@@ -36345,10 +36336,11 @@
 	},
 /area/station/science/lab)
 "vZs" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/obj/decal/cleanable/cobweb2,
-/turf/simulated/floor/plating,
-/area/station/science/storage)
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "vZI" = (
 /obj/machinery/atmospherics/pipe/simple/junction,
 /turf/space,
@@ -38008,6 +38000,15 @@
 /obj/machinery/light,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
+"xNW" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "xOk" = (
 /obj/machinery/light{
 	dir = 4;
@@ -96522,7 +96523,7 @@ sXL
 wKz
 vSI
 mmv
-voL
+oEd
 vlK
 azy
 vZI
@@ -98038,7 +98039,7 @@ tWD
 tKf
 tKf
 oLS
-vZs
+qiu
 qwY
 tWD
 aaa
@@ -98933,11 +98934,11 @@ nJD
 ivd
 sXL
 gDt
-vhm
+xNW
 fpL
 lQg
 ydz
-tPB
+vZs
 rQF
 tlU
 tWD
@@ -99537,11 +99538,11 @@ aaa
 aDR
 sXL
 ptB
-jXb
+vhm
 voT
 sXL
 ptB
-jXb
+vhm
 wTX
 tWD
 qQV
