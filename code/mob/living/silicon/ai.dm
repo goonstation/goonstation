@@ -1894,7 +1894,7 @@ or don't if it uses a custom topopen overlay
 		boutput(src, "<span class='alert'>You can't lock your cover when it's open!</span>")
 	else
 		if (src.locking)
-			boutput(src, "<span class='alert'>Your interface is currently locking, please be patient.</span>")
+			boutput(src, "<span class='alert'>Your cover is currently locking, please be patient.</span>")
 		else if (src.dismantle_stage == 1)
 			src.locking = 1
 			boutput(src, "<span class='alert'>Locking cover...</span>")
