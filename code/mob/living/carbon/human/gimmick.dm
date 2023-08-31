@@ -211,8 +211,9 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		if (..(parent))
 			return 1
 
-		if(prob(1) && !src.stat)
-			SPAWN(0) src.say(pick("GRIFE!", "GAH!", "Can I interest you in worshipping Grife?", "Where's my beer?", "Donations, to the church of Grife?", "You a Grifer?"))
+		var/area/area = get_area(src)
+		if(prob(1) && !src.stat && area?.active)
+			src.say(pick("GRIFE!", "GAH!", "Can I interest you in worshipping Grife?", "Where's my beer?", "Donations, to the church of Grife?", "You a Grifer?"))
 
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/postcard/owlery))
