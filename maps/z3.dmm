@@ -6092,7 +6092,9 @@
 /turf/simulated/floor/black,
 /area/radiostation/engineering)
 "aHw" = (
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "aHx" = (
@@ -6731,7 +6733,8 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "door1";
 	name = "broken door";
-	icon = 'icons/obj/doors/shuttle.dmi'
+	icon = 'icons/obj/doors/shuttle.dmi';
+	dir = 8
 	},
 /area/abandonedmedicalship)
 "aJy" = (
@@ -12554,7 +12557,9 @@
 /area/space)
 "bci" = (
 /obj/creepy_sound_trigger,
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "bcj" = (
@@ -13082,7 +13087,9 @@
 /area/h7/lab)
 "bev" = (
 /obj/creepy_sound_trigger,
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
 /turf/simulated/floor/plating/airless,
 /area/abandonedship)
 "bew" = (
@@ -15373,7 +15380,9 @@
 	},
 /area/space)
 "bnD" = (
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
 /turf/simulated/floor/shuttle{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "delivery"
@@ -15659,6 +15668,12 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
+"bMG" = (
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
 "bOm" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/window{
@@ -18512,7 +18527,8 @@
 /turf/unsimulated/wall/generic{
 	icon = 'icons/obj/doors/shuttle.dmi';
 	icon_state = "door1";
-	name = "broken door"
+	name = "broken door";
+	dir = 8
 	},
 /area/space_hive)
 "kse" = (
@@ -49600,7 +49616,7 @@ aHr
 rzX
 nQg
 aHU
-aMm
+bMG
 xiB
 aaa
 aaa

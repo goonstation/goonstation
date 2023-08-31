@@ -179,7 +179,7 @@
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
 	dir = 1;
 	icon = 'icons/misc/hospital.dmi';
-	icon_state = "sovcomp1";
+	icon_state = "sovcomp3";
 	name = "broken computer"
 	},
 /turf/unsimulated/floor/caution/south,
@@ -1532,7 +1532,8 @@
 "afX" = (
 /obj/decal/fakeobjects/firelock_broken{
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "fdoor0"
+	icon_state = "fdoor0";
+	dir = 8
 	},
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/hospital/samostrel)
@@ -4238,9 +4239,9 @@
 "aqy" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "A pod door.  One that is definitely stuck.";
-	dir = 4;
+	dir = 8;
 	icon = 'icons/obj/doors/sovblastdoor.dmi';
-	icon_state = "bdoorsinglebroken";
+	icon_state = "bdoorsinglebroke";
 	name = "pod bay door"
 	},
 /obj/rail{
@@ -7440,7 +7441,7 @@
 "aFj" = (
 /obj/machinery/door/poddoor/blast/single{
 	desc = "A security blast door.  You know, as opposed to all of those coat closet blast doors and bathroom blast doors.";
-	dir = 4;
+	dir = 1;
 	id = "lunarsec1";
 	name = "Security Interlock"
 	},
@@ -30159,7 +30160,8 @@
 /obj/machinery/door/poddoor/blast/single{
 	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
 	id = "meatstation1";
-	name = "Safety Interlock"
+	name = "Safety Interlock";
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -31220,7 +31222,9 @@
 	},
 /area/meat_derelict/soviet)
 "cly" = (
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -58802,7 +58806,9 @@
 	},
 /area/moon/museum)
 "fbU" = (
-/obj/critter/monster_door,
+/obj/critter/monster_door{
+	dir = 8
+	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
 "fcf" = (
@@ -61318,6 +61324,15 @@
 	dir = 4
 	},
 /area/iomoon/base/underground)
+"ibR" = (
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/hospital/samostrel)
 "icJ" = (
 /obj/burning_barrel,
 /turf/unsimulated/floor/setpieces/rootfloor,
@@ -66549,7 +66564,8 @@
 /turf/unsimulated/wall/generic{
 	icon = 'icons/obj/doors/shuttle.dmi';
 	icon_state = "door1";
-	name = "broken door"
+	name = "broken door";
+	dir = 8
 	},
 /area/meat_derelict/soviet)
 "nAf" = (
@@ -68658,7 +68674,8 @@
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
 	icon = 'icons/obj/doors/shuttle.dmi';
-	name = "rusted hatch"
+	name = "rusted hatch";
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -75778,6 +75795,18 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/leah)
+"xxM" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This shuttle door is really jammed.  What's the point of it then?  WHAT IS THE POINT";
+	icon = 'icons/obj/doors/shuttle.dmi';
+	name = "rusted hatch";
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/hospital/samostrel)
 "xyj" = (
 /obj/decal/icefloor,
 /obj/item/currency/spacecash/thousand,
@@ -76115,7 +76144,7 @@
 "xLv" = (
 /turf/unsimulated/wall/generic{
 	desc = "It's sealed shut.";
-	dir = 1;
+	dir = 8;
 	icon = 'icons/obj/doors/sovblastdoor.dmi';
 	icon_state = "bdoorsingle1";
 	name = "pod bay door"
@@ -76561,6 +76590,18 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"yfI" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
+	dir = 4;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "sovcomp1";
+	name = "broken computer"
+	},
+/turf/unsimulated/floor/caution/east,
+/area/hospital/samostrel)
 "yfQ" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Break Room"
@@ -160226,7 +160267,7 @@ abr
 abr
 abr
 abr
-adZ
+ibR
 abr
 rnA
 adt
@@ -160524,7 +160565,7 @@ abF
 abT
 abr
 acn
-abF
+yfI
 abr
 eQe
 aea
@@ -162038,7 +162079,7 @@ abr
 abr
 abr
 abr
-adZ
+ibR
 abr
 eQe
 aeU
@@ -163560,13 +163601,13 @@ abB
 abB
 abB
 abr
-xkk
+xxM
 abr
 abr
-adZ
+ibR
 abr
 abr
-adZ
+ibR
 abr
 lac
 lph
