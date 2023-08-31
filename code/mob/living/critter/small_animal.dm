@@ -376,7 +376,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	Move(turf/NewLoc, direct)
 		. = ..()
-		if ((locate(/obj/table) in src.loc) && prob(20) && !ON_COOLDOWN(src, "knock_stuff_off_table", 10 SECONDS))
+		if ((locate(/obj/table) in src.loc) && prob(5) && !ON_COOLDOWN(src, "knock_stuff_off_table", 10 SECONDS))
 			knock_stuff_off_table()
 
 	proc/knock_stuff_off_table()
