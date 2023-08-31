@@ -266,9 +266,6 @@
 /// lattice spawners, for mapping large quantities of lattice at once.
 /// They auto connect in four directions depending on the lattices around them, plus you can set them to connect to certain turfs.
 /obj/lattice/auto
-	name = "lattice spawner"
-	desc = "If you're seeing this, call a coder. These are meant to spawn normal lattices."
-	icon_state = "lattice"
 	dirmask = NORTH | SOUTH | EAST | WEST // so others will connect to us during init
 	/// makes the lattices connect to walls too
 	var/attach_to_wall = FALSE

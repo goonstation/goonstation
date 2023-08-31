@@ -112,7 +112,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 /obj/machinery/power/lgenerator/proc/eject_tank(var/mob/user as mob)
 	if(internalTank)
 		internalTank.set_loc(loc)
-		user.put_in_hand_or_eject(internalTank) // try to eject it into the users hand, if we can
+		user?.put_in_hand_or_eject(internalTank) // try to eject it into the users hand, if we can
 		internalTank = null
 		src.UpdateIcon()
 	return

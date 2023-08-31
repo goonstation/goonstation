@@ -60,7 +60,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 /datum/biome/snow
 	turf_type = /turf/unsimulated/floor/auto/snow
-	flora_types = list(/obj/stone/snow/random = 100, /obj/decal/fakeobjects/smallrocks = 100, /obj/shrub/snow/random = 100, /obj/stone/random = 5)
+	flora_types = list(/obj/stone/snow/random = 100, /obj/decal/fakeobjects/smallrocks = 100, /obj/shrub/snow/random{override_default_behaviour=1} = 100, /obj/stone/random = 5)
 	flora_density = 2
 
 /datum/biome/snow/rocky
@@ -69,7 +69,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 	flora_density = 5
 
 /datum/biome/snow/forest
-	flora_types = list(/obj/tree/snow_random = 50, /obj/shrub/snow/random = 100, /obj/stone/snow/random = 10, /obj/decal/fakeobjects/smallrocks = 5)
+	flora_types = list(/obj/tree/snow_random = 50, /obj/shrub/snow/random{override_default_behaviour=1} = 100, /obj/stone/snow/random = 10, /obj/decal/fakeobjects/smallrocks = 5)
 	flora_density = 20
 
 /datum/biome/snow/forest/thick
@@ -82,12 +82,12 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 /datum/biome/plains
 	turf_type = /turf/unsimulated/floor/auto/grass/swamp_grass
-	flora_types = list(/obj/tree/elm_random = 50, /obj/shrub/random = 100, /obj/stone/random = 100, /obj/decal/fakeobjects/smallrocks = 100)
+	flora_types = list(/obj/tree/elm_random = 50, /obj/shrub/random{override_default_behaviour=1} = 100, /obj/stone/random = 100, /obj/decal/fakeobjects/smallrocks = 100)
 	flora_density = 15
 
 /datum/biome/forest
 	turf_type = /turf/unsimulated/floor/grasslush/thin
-	flora_types = list(/obj/tree{layer = EFFECTS_LAYER_UNDER_1} = 75, /obj/tree/elm_random=1, /obj/shrub/random = 50)
+	flora_types = list(/obj/tree{layer = EFFECTS_LAYER_UNDER_1} = 75, /obj/tree/elm_random=1, /obj/shrub/random{override_default_behaviour=1} = 50)
 	flora_density = 20
 
 	fauna_types = list(/mob/living/critter/small_animal/firefly/ai_controlled = 5, /mob/living/critter/small_animal/firefly/pyre/ai_controlled = 1, /mob/living/critter/small_animal/firefly/lightning/ai_controlled = 1, /mob/living/critter/bear=5, /mob/living/critter/small_animal/bird/crow=5)
@@ -95,14 +95,14 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 /datum/biome/forest/dense
 	turf_type = /turf/unsimulated/floor/grasslush/thinner
-	flora_types = list(/obj/tree{layer = EFFECTS_LAYER_UNDER_1} = 75, /obj/tree/elm_random=1, /obj/shrub/random = 5, /obj/machinery/plantpot/bareplant/tree = 5)
+	flora_types = list(/obj/tree{layer = EFFECTS_LAYER_UNDER_1} = 75, /obj/tree/elm_random=1, /obj/shrub/random{override_default_behaviour=1} = 5, /obj/machinery/plantpot/bareplant/tree = 5)
 	flora_density = 35
 
 	fauna_types = list(/mob/living/critter/small_animal/dragonfly/ai_controlled = 20, /mob/living/critter/bear=1, /mob/living/critter/small_animal/frog=5, /mob/living/critter/small_animal/bird/owl=5)
 
 /datum/biome/forest/thin
 	turf_type = /turf/unsimulated/floor/grasslush
-	flora_types = list(/obj/tree{layer = EFFECTS_LAYER_UNDER_1} = 5, /obj/tree/elm_random=5, /obj/shrub/random = 150, /obj/machinery/plantpot/bareplant/tree = 5, /obj/machinery/plantpot/bareplant/flower = 50)
+	flora_types = list(/obj/tree{layer = EFFECTS_LAYER_UNDER_1} = 5, /obj/tree/elm_random=5, /obj/shrub/random{override_default_behaviour=1} = 150, /obj/machinery/plantpot/bareplant/tree = 5, /obj/machinery/plantpot/bareplant/flower = 50)
 	flora_density = 10
 
 	fauna_types = list(/mob/living/critter/small_animal/mouse=5, /mob/living/critter/small_animal/pig=1, /mob/living/critter/small_animal/snake=1, /mob/living/critter/small_animal/bird/crow=1)
@@ -110,14 +110,14 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 /datum/biome/forest/clearing
 	turf_type = /turf/unsimulated/floor/grasslush
-	flora_types = list(/obj/shrub/random = 150, /obj/machinery/plantpot/bareplant/flower = 50)
+	flora_types = list(/obj/shrub/random{override_default_behaviour=1} = 150, /obj/machinery/plantpot/bareplant/flower = 50)
 	flora_density = 5
 
 	fauna_types = list(/mob/living/critter/small_animal/mouse=10, /mob/living/critter/small_animal/snake=1)
 
 /datum/biome/jungle
 	turf_type = /turf/unsimulated/floor/auto/grass/leafy
-	flora_types = list(/obj/tree/elm_random = 75, /obj/shrub/random = 150, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10, /obj/machinery/plantpot/bareplant/swamp_flora = 1)
+	flora_types = list(/obj/tree/elm_random = 75, /obj/shrub/random{override_default_behaviour=1} = 150, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10, /obj/machinery/plantpot/bareplant/swamp_flora = 1)
 	flora_density = 40
 
 	fauna_types = list(/mob/living/critter/small_animal/dragonfly/ai_controlled = 50, /mob/living/critter/small_animal/firefly/ai_controlled = 10, /mob/living/critter/small_animal/firefly/lightning/ai_controlled = 2, /mob/living/critter/small_animal/firefly/pyre/ai_controlled = 1, /mob/living/critter/small_animal/iguana = 3)

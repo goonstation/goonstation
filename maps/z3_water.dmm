@@ -2874,8 +2874,6 @@
 /area/dank_trench)
 "iv" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "1-9"
 	},
 /obj/item/bluntwrap{

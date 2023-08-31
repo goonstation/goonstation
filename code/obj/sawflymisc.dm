@@ -31,6 +31,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	contraband = 2
 	overlays = null
 	armed = FALSE
+	HELP_MESSAGE_OVERRIDE({"Use the sawfly in hand or use the remote to deploy it. Use the remote or click on the sawfly on <span class='help'>help</span> or <span class='grab'>grab</span> intent to deactivate it."})
 
 	//used in dictating behavior when deployed from grenade
 	var/mob/living/critter/robotic/sawfly/heldfly = null
@@ -102,6 +103,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	icon = 'icons/obj/items/device.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
 	icon_state = "sawflycontr"
+	HELP_MESSAGE_OVERRIDE({"Use the remote in hand to activate/deactivate any sawflies within a 5 tile radius."})
 
 	attack_self(mob/user as mob)
 		for (var/mob/living/critter/robotic/sawfly/S in range(get_turf(src), 5)) // folds active sawflies

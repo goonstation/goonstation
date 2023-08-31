@@ -605,7 +605,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				// This is kinda important (Convair880).
 				if (istype(I, /obj/item/implant/mindhack) && surgeon == patient)
-					continue
+					var/obj/item/implant/mindhack/implant = I
+					if (patient != implant.implant_hacker)
+						continue
 
 				if (!istype(I, /obj/item/implant/artifact))
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts out an implant from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
@@ -1501,20 +1503,23 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				"<span class='notice'>You begin cauterizing [surgeon == patient ? "your" : "[patient]'s"] wounds closed with [src].</span>",\
 				"<span class='notice'>[patient == surgeon ? "You begin" : "<b>[surgeon]</b> begins"] cauterizing your wounds closed with [src].</span>")
 
-			if (do_mob(patient, surgeon, max((patient.bleeding * 20) - (damage * 2), 0)))
-				surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> cauterizes [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds closed with [src].</span>",\
-					"<span class='notice'>You cauterize [surgeon == patient ? "your" : "[patient]'s"] wounds closed with [src].</span>",\
-					"<span class='notice'>[patient == surgeon ? "You cauterize" : "<b>[surgeon]</b> cauterizes"] your wounds closed with [src].</span>")
-
+			var/dur = max(patient.bleeding * 2 - damage * 0.2, 0) SECONDS
+			if (dur == 0)
 				repair_bleeding_damage(patient, 100, 10)
-				return 1
-
 			else
-				surgeon.show_text("<b>You were interrupted!</b>", "red")
-				return 1
+				SETUP_GENERIC_ACTIONBAR(patient, src, dur, /obj/item/proc/cauterize_wound, list(surgeon, patient), src.icon, src.icon_state, null,
+					INTERRUPT_ACT | INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_ATTACKED | INTERRUPT_STUNNED)
+			return TRUE
 
 	else
 		return 0
+
+/obj/item/proc/cauterize_wound(mob/surgeon, mob/living/carbon/human/patient)
+	surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> cauterizes [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds closed with [src].</span>",
+		"<span class='notice'>You cauterize [surgeon == patient ? "your" : "[patient]'s"] wounds closed with [src].</span>",
+		"<span class='notice'>[patient == surgeon ? "You cauterize" : "<b>[surgeon]</b> cauterizes"] your wounds closed with [src].</span>")
+
+	repair_bleeding_damage(patient, 100, 10)
 
 /* =========================== */
 /* ---------- SPOON ---------- */

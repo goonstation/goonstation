@@ -19,6 +19,7 @@
 	made_from = "bone"
 	tooltip_flags = REBUILD_ALWAYS //TODO: handle better??
 	max_damage = INFINITY
+	throw_speed = 1
 
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/skull/skull = null
@@ -77,6 +78,11 @@
 				src.UpdateIcon(/*makeshitup*/ 1)
 			if (!src.chat_text)
 				src.chat_text = new(null, src)
+
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
+			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
+		throw_unlimited = TRUE
+		..()
 
 	disposing()
 		if (src.linked_human)
@@ -254,31 +260,32 @@
 			src.donor.update_body()
 
 	proc/update_head_image() // The thing that actually shows up when dropped
-		src.overlays = null
+		var/mutable_appearance/actual_head = new
+
 		src.head_image.pixel_x = 0
 		src.head_image.pixel_y = 0
-		src.overlays += src.head_image
+		actual_head.appearance = src.head_image
 		src.head_image_eyes.pixel_x = 0
 		src.head_image_eyes.pixel_y = 0
-		src.overlays += src.head_image_eyes
+		actual_head.overlays += src.head_image_eyes
 
 		if(src.head_image_nose)
-			src.overlays += src.head_image_nose
+			actual_head.overlays += src.head_image_nose
 
 		if (src.glasses && src.glasses.wear_image_icon)
-			src.overlays += image(src.glasses.wear_image_icon, src.glasses.icon_state, layer = MOB_GLASSES_LAYER)
+			actual_head.overlays += image(src.glasses.wear_image_icon, src.glasses.icon_state, layer = MOB_GLASSES_LAYER)
 
 		if (src.wear_mask && src.wear_mask.wear_image_icon)
-			src.overlays += image(src.wear_mask.wear_image_icon, src.wear_mask.icon_state, layer = MOB_HEAD_LAYER2)
+			actual_head.overlays += image(src.wear_mask.wear_image_icon, src.wear_mask.icon_state, layer = MOB_HEAD_LAYER2)
 
 		if (src.ears && src.ears.wear_image_icon)
-			src.overlays += image(src.ears.wear_image_icon, src.ears.icon_state, layer = MOB_EARS_LAYER)
+			actual_head.overlays += image(src.ears.wear_image_icon, src.ears.icon_state, layer = MOB_EARS_LAYER)
 
 		if (src.head && src.head.wear_image)
-			src.overlays += src.head.wear_image
+			actual_head.overlays += src.head.wear_image
 
 		else if (src.head && src.head.wear_image_icon)
-			src.overlays += image(src.head.wear_image_icon, src.head.icon_state, layer = MOB_HEAD_LAYER2)
+			actual_head.overlays += image(src.head.wear_image_icon, src.head.icon_state, layer = MOB_HEAD_LAYER2)
 
 		if(!(src.head && src.head.seal_hair))
 			if(src.donor_appearance?.mob_appearance_flags & HAS_HUMAN_HAIR || src.donor?.hair_override)
@@ -288,9 +295,9 @@
 				src.head_image_cust_two.pixel_y = 0
 				src.head_image_cust_three.pixel_x = 0
 				src.head_image_cust_three.pixel_y = 0
-				src.overlays += src.head_image_cust_one
-				src.overlays += src.head_image_cust_two
-				src.overlays += src.head_image_cust_three
+				actual_head.overlays += src.head_image_cust_one
+				actual_head.overlays += src.head_image_cust_two
+				actual_head.overlays += src.head_image_cust_three
 			if(src.donor_appearance?.mob_appearance_flags & HAS_SPECIAL_HAIR || src.donor?.special_hair_override)
 				src.head_image_special_one.pixel_x = 0
 				src.head_image_special_one.pixel_y = 0
@@ -298,11 +305,15 @@
 				src.head_image_special_two.pixel_y = 0
 				src.head_image_special_three.pixel_x = 0
 				src.head_image_special_three.pixel_y = 0
-				src.overlays += src.head_image_special_one
-				src.overlays += src.head_image_special_two
-				src.overlays += src.head_image_special_three
+				actual_head.overlays += src.head_image_special_one
+				actual_head.overlays += src.head_image_special_two
+				actual_head.overlays += src.head_image_special_three
 
-		src.pixel_y = rand(-20,-8)
+		actual_head.appearance_flags |= KEEP_TOGETHER
+		actual_head.pixel_y = -10
+		src.UpdateOverlays(actual_head, "actual_head")
+
+		src.pixel_y = rand(-8,8)
 		src.pixel_x = rand(-8,8)
 
 	on_transplant(mob/M)

@@ -31,6 +31,10 @@
 				boutput(src, "<span class='alert'>Too late! You've decided to live on.</span>")
 		return
 
+	if (src.health < 0)
+		succumb()
+		return
+
 	if(src.mind && src.mind.damned)
 		boutput(src,"<span class='alert'>You can't suicide. You're already in hell!</span>")
 		return

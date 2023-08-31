@@ -30,8 +30,16 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //------------ OPTIONS TO GO FAST ------------//
 
-//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
-//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the map Atlas, no other zlevels. Boots way faster
+//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the tiny map Devtest, no other zlevels. Boots way faster
+
+//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // All of the below
+
+//#define SKIP_FEA_SETUP // Skip setting up atmospheric system
+//#define SKIP_Z5_SETUP // Skip generation of mining level
+//#define SKIP_PLANETS_SETUP // Skip planet generation (for Artemis)
+//#define SKIP_CAMERA_COVERAGE // Skip calculating security camera coverage
+//#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME // Skip changelogs
+//#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
@@ -99,10 +107,6 @@ o+`        `-` ``..-:yooos-..----------..`
 // (during that time the server will be frozen).
 //#define LOG_HARD_DELETE_REFERENCES
 //#define LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
-// The same thing but powered by extools. Better, harder, faster, stronger.
-// You'll need an extools version that has the right stuff in it to make this work.
-//#define REFERENCE_TRACKING
-//#define AUTO_REFERENCE_TRACKING_ON_HARD_DEL
 
 // Toggle this to turn .dispose() into qdel( ). Useful for trying to find lingering references locally.
 //#define DISPOSE_IS_QDEL
@@ -128,6 +132,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_CLARION			// Used to be Destiny's Alt. By Dionsu and a69andahalf.
 //#define MAP_OVERRIDE_OSHAN				// Oshan by committee
 //#define MAP_OVERRIDE_NADIR				// Nadir Extraction Site by Kubius
+//#define MAP_OVERRIDE_DEVTEST			// Developer Testing map by cringe
 
 //-------Discontinued or gimmick maps:
 //#define MAP_OVERRIDE_MANTA				// manta map
@@ -178,6 +183,15 @@ o+`        `-` ``..-:yooos-..----------..`
 #define I_AM_HACKERMAN
 #define CHECK_MORE_RUNTIMES
 #define QUICK_MOB_DELETION
+#endif
+
+#ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
+#define SKIP_FEA_SETUP
+#define SKIP_Z5_SETUP
+#define SKIP_PLANETS_SETUP
+#define SKIP_CAMERA_COVERAGE
+#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
+#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
 #endif
 
 //----- Testmerge & Revision Information -----//
