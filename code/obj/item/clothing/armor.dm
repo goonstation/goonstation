@@ -297,32 +297,17 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 		setProperty("meleeprot", 7)
 		setProperty("rangedprot", 1.5)
 
-/obj/item/clothing/suit/armor/capcoat //old alt armour for the captain
-	name = "captain's coat"
-	desc = "A luxorious formal coat made for the station's captain. It seems to be made out of some thermally resistant material."
-	icon_state = "capcoat"
-	item_state = "capcoat"
-	hides_from_examine = 0
+	centcomm
+		name = "commander's armor"
+		desc = "A suit of protective formal armor. It is made specifically for NanoTrasen commanders."
+		icon_state = "centcom"
+		item_state = "centcom"
 
-	setupProperties()
-		..()
-		setProperty("coldprot", 35)
-		setProperty("heatprot", 35)
-		setProperty("meleeprot", 4)
-		setProperty("rangedprot", 0.9)
-
-/obj/item/clothing/suit/armor/hopcoat
-	name = "Head of Personnel's naval coat"
-	desc = "A rather well armored coat tailored in a traditional naval fashion."
-	icon_state = "hopcoat"
-	item_state = "hopcoat"
-	hides_from_examine = 0
-
-	setupProperties()
-		..()
-		setProperty("coldprot", 35)
-		setProperty("meleeprot", 3)
-		setProperty("rangedprot", 0.5)
+	centcommred
+		name = "commander's armor"
+		desc = "A suit of protective formal armor. It is made specifically for NanoTrasen commanders."
+		icon_state = "centcom-red"
+		item_state = "centcom-red"
 
 /obj/item/clothing/suit/armor/centcomm
 	name = "administrator's armor"
@@ -354,6 +339,33 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	red //for the red reward
 		icon_state = "centcoat-red"
 		item_state = "centcoat-red"
+
+/obj/item/clothing/suit/armor/capcoat //old alt armour for the captain
+	name = "captain's coat"
+	desc = "A luxorious formal coat made for the station's captain. It seems to be made out of some thermally resistant material."
+	icon_state = "capcoat"
+	item_state = "capcoat"
+	hides_from_examine = 0
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 35)
+		setProperty("heatprot", 35)
+		setProperty("meleeprot", 4)
+		setProperty("rangedprot", 0.9)
+
+/obj/item/clothing/suit/armor/hopcoat
+	name = "Head of Personnel's naval coat"
+	desc = "A rather well armored coat tailored in a traditional naval fashion."
+	icon_state = "hopcoat"
+	item_state = "hopcoat"
+	hides_from_examine = 0
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 35)
+		setProperty("meleeprot", 3)
+		setProperty("rangedprot", 0.5)
 
 /obj/item/clothing/suit/armor/pirate_captain_coat
 	name = "pirate captain's coat"

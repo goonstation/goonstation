@@ -343,6 +343,31 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 			return
 
+/obj/item/clothing/gloves/capgloves
+	name = "captain's gloves"
+	desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant."
+	icon_state = "capgloves"
+	item_state = "capgloves"
+	protective_temperature = 1100
+
+	setupProperties()
+		..()
+		setProperty("heatprot", 10)
+		setProperty("conductivity", 0.25)
+
+	centcomm
+		name = "commander's gloves"
+		desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant."
+		icon_state = "centcomgloves"
+		item_state = "centcomgloves"
+
+	centcommred
+		name = "commander's gloves"
+		desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant."
+		icon_state = "centcomredgloves"
+		item_state = "centcomredgloves"
+
+
 /obj/item/clothing/gloves/swat
 	desc = "A pair of Syndicate tactical gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
 	name = "\improper SWAT gloves"
