@@ -24829,6 +24829,13 @@
 	dir = 5
 	},
 /area/station/turret_protected/AIsat)
+"jXb" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
 "jXg" = (
 /obj/machinery/mass_driver{
 	desc = "A device that launches objects, like ANCIENT SIRENS, for example, on it at great velocity when activated.";
@@ -27891,12 +27898,6 @@
 	icon_state = "fgreen3"
 	},
 /area/station/bridge)
-"nDF" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/black,
-/area/station/science/lab)
 "nDW" = (
 /obj/disposalpipe/segment,
 /obj/mapping_helper/firedoor_spawn,
@@ -32285,11 +32286,6 @@
 	},
 /area/station/turret_protected/AIsat)
 "rUe" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	layer = 3.5;
-	pixel_y = -24
-	},
 /obj/item/device/prox_sensor{
 	pixel_x = -7;
 	pixel_y = 6
@@ -32846,11 +32842,6 @@
 /obj/machinery/atmospherics/portables_connector,
 /turf/space,
 /area/station/engine/proto)
-"sCq" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/obj/decal/cleanable/cobweb2,
-/turf/simulated/floor/plating,
-/area/station/science/storage)
 "sCJ" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/access/maint,
@@ -34297,6 +34288,12 @@
 	icon_state = "fblue1"
 	},
 /area/station/bridge)
+"tPB" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "tPG" = (
 /obj/machinery/light{
 	dir = 1;
@@ -35257,15 +35254,6 @@
 	icon_state = "fgreen3"
 	},
 /area/station/bridge)
-"uQG" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/black,
-/area/station/science/lab)
 "uRe" = (
 /obj/cable{
 	icon_state = "6-9"
@@ -35500,11 +35488,13 @@
 	},
 /area/station/security/detectives_office)
 "vhm" = (
-/obj/machinery/power/data_terminal,
 /obj/cable{
-	icon_state = "0-8"
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/engine/vacuum,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
 /area/station/science/lab)
 "viS" = (
 /obj/machinery/disposal/small,
@@ -35585,6 +35575,10 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
+/area/station/science/lab)
+"voL" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor,
 /area/station/science/lab)
 "voN" = (
 /obj/machinery/light{
@@ -36351,9 +36345,10 @@
 	},
 /area/station/science/lab)
 "vZs" = (
-/obj/machinery/atmospherics/binary/valve,
-/turf/simulated/floor,
-/area/station/science/lab)
+/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "vZI" = (
 /obj/machinery/atmospherics/pipe/simple/junction,
 /turf/space,
@@ -37026,13 +37021,9 @@
 	},
 /area/station/bridge)
 "wMi" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1445;
-	name = "Station Intercom (Medical)"
-	},
 /obj/machinery/dispenser,
 /obj/machinery/light/small/floor,
+/obj/item/device/radio/intercom/science,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -38235,7 +38226,7 @@
 	id = "Chamber Inlet 2"
 	},
 /obj/machinery/door_control{
-	id = "exhaustvent";
+	id = "exhaustvent1";
 	name = "Mixing Room Vent Control";
 	pixel_x = 24;
 	pixel_y = -9
@@ -96531,7 +96522,7 @@ sXL
 wKz
 vSI
 mmv
-vZs
+voL
 vlK
 azy
 vZI
@@ -98047,7 +98038,7 @@ tWD
 tKf
 tKf
 oLS
-sCq
+vZs
 qwY
 tWD
 aaa
@@ -98942,11 +98933,11 @@ nJD
 ivd
 sXL
 gDt
-uQG
+vhm
 fpL
 lQg
 ydz
-nDF
+tPB
 rQF
 tlU
 tWD
@@ -99546,11 +99537,11 @@ aaa
 aDR
 sXL
 ptB
-vhm
+jXb
 voT
 sXL
 ptB
-vhm
+jXb
 wTX
 tWD
 qQV
