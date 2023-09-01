@@ -126,6 +126,8 @@
 	/// Gets called after the world is finished loading and the game is basically ready to start
 	proc/generate_worldgen()
 
+	proc/burn_down()
+
 	proc/inherit_area() //jerko built a thing
 		if(!loc:expandable) return
 		for(var/dir in (cardinal + 0))
