@@ -56,7 +56,6 @@
 		respawned.key = src.key
 		if (src.mind)
 			src.mind.transfer_to(respawned)
-		respawned.Login()
 		respawned.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 
 		qdel(src)

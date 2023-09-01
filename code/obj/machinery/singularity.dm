@@ -367,6 +367,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					src.grow()
 					sleep(0.5 SECONDS)
 			qdel(A)
+		else if (istype(A, /obj/mechbeam)) //let's not make lazy feeders with trip lasers
+			gain += 0.25
+			qdel(A)
 		else
 			var/obj/O = A
 			gain += 2

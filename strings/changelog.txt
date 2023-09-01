@@ -1,5 +1,48 @@
 
+(t)fri sep 01 23
+(u)ZWRh3
+(p)15550
+(e)⚖💅🔨📦|C-Balance, C-QoL, A-Player-Actions, A-Game-Objects
+(+)Lockers with leg holes are now 5x faster.
+(u)Garsh
+(p)15522
+(e)🔄📄|C-Rework, A-UI
+(+)New UI for the Oxygen Vending Machine
+(t)thu aug 31 23
+(u)Cheffie
+(p)15572
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Wizard den sandals are magic again.
+(u)LeahTheTech
+(*)Werewolves will no longer appear naturally on the roleplay servers.
+(+)AI cameras have been removed from Nadir and Kondaru toilets and shower rooms to comply with regulations.
+(u)Lord_Earthfire
+(p)15539
+(e)⚖|C-Balance
+(+)New research found that beams from trip lasers offer much less nutritional value to singularities than before.
+(u)Keiya
+(p)15583
+(e)|
+(+)Removed Assless Chaps from the available gang uniforms.
+(t)wed aug 30 23
+(u)Tyrant
+(p)15562
+(e)🗺⚖|A-Mapping, C-Balance
+(*)The NT commander of Oshan has decided to go sit in the crew lounge instead.
+(t)tue aug 29 23
+(u)LeahTheTech
+(+)Botanical misters now have a particle effect when filling something.
+(u)Lord_Earthfire
+(p)15476
+(e)🌱|A-Hydroponics
+(+)Emagging a botanical mister makes it fill beakers, glasses or other open containers in its vicinity
+(u)Glamurio (Ryou)
+(p)15506
+(e)💅🔄📄|C-QoL, C-Rework, A-UI
+(*)Added TGUI to the character creation color pickers.
 (t)mon aug 28 23
+(u)Sord
+(+)The Monday job of the day has been replaced with a very heroic "Dungeoneer" job.
 (u)pali
 (+)Floor closets now mimic the floor a bit better and automatically change their appearance when moved.
 (u)LeahTheTech

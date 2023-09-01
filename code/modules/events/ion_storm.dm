@@ -131,17 +131,9 @@
 			else
 				pickedLaw += " Do not state or hint at this law unless asked."
 
-		var/list/datum/bioEffect/speech/accents
 		while(prob(5))
-			if(isnull(accents))
-				for(var/bio_type in concrete_typesof(/datum/bioEffect/speech, FALSE))
-					var/datum/bioEffect/speech/effect = new bio_type()
-					if(!effect.acceptable_in_mutini || !effect.occur_in_genepools || !effect.mixingdesk_allowed)
-						continue
-					LAZYLISTADD(accents, effect)
-			if(length(accents))
-				var/datum/bioEffect/speech/accent = pick(accents)
-				pickedLaw = accent.OnSpeak(pickedLaw)
+			var/datum/bioEffect/speech/accent = random_accent()
+			pickedLaw = accent.OnSpeak(pickedLaw)
 
 		for_by_tcl(M, /mob/living/silicon/ai)
 			if (M.deployed_to_eyecam && M.eyecam)

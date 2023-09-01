@@ -15948,7 +15948,7 @@
 "aTX" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new/obj/item/captaingun
+	displayed = /obj/item/captaingun
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south,
 /area/station/bridge/captain)
