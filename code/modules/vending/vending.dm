@@ -323,6 +323,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		if (enterpin == card.pin)
 			boutput(user, "<span class='notice'>Card authorized.</span>")
 			src.scan = card
+			tgui_process.update_uis(src)
 		else
 			boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 			src.scan = null
@@ -341,6 +342,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 			user.u_equip(W)
 			W.dropped(user)
 			qdel( W )
+			tgui_process.update_uis(src)
 			return
 		else
 			boutput(user, "<span class='alert'>This machine does not accept cash.</span>")
@@ -370,6 +372,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		src.panel_open = !src.panel_open
 		boutput(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
 		src.UpdateOverlays(src.panel_open ? src.panel_image : null, "panel")
+		tgui_process.update_uis(src)
 		return
 	else if (istype(W, /obj/item/device/t_scanner) || (istype(W, /obj/item/device/pda2) && istype(W:module, /obj/item/device/pda_module/tray)))
 		if (src.seconds_electrified != 0)
@@ -511,9 +514,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		.["loading"] = P.loading
 
 /obj/machinery/vending/ui_act(action, params)
+	//. = TRUE means the action was handeled
 	. = ..()
-	if (.) return
+	if (.)
+		return .
 	var/obj/item/I = usr.equipped()
+
+	//Let's assume the switch handles the action, we'll set to FALSE later if it isn't the case
+	. = TRUE
 
 	switch(action)
 		if("cutwire")
@@ -652,7 +660,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 					logTheThing(LOG_STATION, usr, "vended a logged product ([product.product_name]) from [src] at [log_loc(src)].")
 				if(player_list)
 					logTheThing(LOG_STATION, usr, "vended a player product ([product.product_name]) from [src] at [log_loc(src)].")
-	. = TRUE
+		else
+			. = FALSE
 
 /obj/machinery/vending/proc/vend_product(var/datum/data/vending_product/product, mob/user)
 	if ((!product.infinite && product.product_amount <= 0) || !product.product_path)
@@ -2968,6 +2977,9 @@ TYPEINFO(/obj/machinery/vending/janitor)
 	light_g = 0.4
 	light_b = 1
 
+	var/min_pressure = PORTABLE_ATMOS_MIN_RELEASE_PRESSURE
+	var/max_pressure = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
+
 	New()
 		..()
 		gas_prototype = new /datum/gas_mixture
@@ -2984,21 +2996,47 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		gas_prototype.oxygen = (target_pressure)*gas_prototype.volume/(R_IDEAL_GAS_EQUATION*gas_prototype.temperature)
 
 		holding.air_contents.copy_from(gas_prototype)
+		postvend_effect()
+		tgui_process.update_uis(src)
 
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/tank))
-			if (!src.holding)
-				boutput(user, "You insert the [W] into the the [src].</span>")
-				UpdateOverlays(holding_overlay_image, "o2_vend_tank_overlay")
-				user.drop_item()
-				W.set_loc(src)
-				src.holding = W
-				src.updateUsrDialog()
-			else
-				boutput(user, "You try to insert the [W] into the the [src], but there's already a tank there!</span>")
-				return
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/tank))
+			insert_tank(I, user)
 		else
 			..()
+
+	proc/insert_tank(obj/item/tank/tank, mob/user)
+		if (!src.holding)
+			boutput(user, "You insert the [tank] into the the [src].</span>")
+			UpdateOverlays(holding_overlay_image, "o2_vend_tank_overlay")
+			user.drop_item()
+			tank.set_loc(src)
+			src.holding = tank
+			tgui_process.update_uis(src)
+		else
+			boutput(user, "You try to insert the [tank] into the the [src], but there's already a tank there!</span>")
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "AirVendor", name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = list()
+		.["cash"] = src.credit
+
+		var/datum/db_record/account = FindBankAccountByName(src.scan?.registered)
+		.["cardname"] = src.scan
+		.["bankMoney"] = account ? account["current_money"] : null
+
+		.["holding"] = holding
+		.["holding_pressure"] = holding ? MIXTURE_PRESSURE(holding.air_contents) : null
+		.["min_pressure"] = min_pressure
+		.["max_pressure"] = max_pressure
+		.["fill_cost"] = holding ? src.fill_cost() : null
+
+		.["target_pressure"] = src.target_pressure
 
 	attack_hand(mob/user)
 		if (status & (BROKEN|NOPOWER))
@@ -3006,65 +3044,40 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		if (user.stat || user.restrained())
 			return
 
-		src.add_dialog(user)
-		var/list/html = list("")
-		html += "<TT><b>Welcome!</b><br>"
-		html += "<b>Current balance: <a href='byond://?src=\ref[src];return_credits=1'>[src.credit] credits</a></b><br>"
-		if (src.scan)
-			var/datum/db_record/account = null
-			account = FindBankAccountByName(src.scan.registered)
-			html += "<b>Current ID:</b> <a href='?src=\ref[src];logout=1'>[src.scan]</a><br />"
-			html += "<b>Credits on Account: [account["current_money"]] Credits</b> <br>"
-		else
-			html += "<b>Current ID:</b> None<br>"
-		if(src.holding)
-			html += "<font color = 'blue'>Current tank:</font> <a href='?src=\ref[src];eject=1'>[holding]</a><br />"
-			html += "<font color = 'red'>Pressure:</font> [MIXTURE_PRESSURE(holding.air_contents)] kPa<br />"
-		else
-			html += "<font color = 'blue'>Current tank:</font> none<br />"
+		ui_interact(user)
 
-		html += "<font color = 'green'>Desired pressure:</font> <a href='?src=\ref[src];changepressure=1'>[src.target_pressure] kPa</a><br/>"
-		html += (holding) ? "<a href='?src=\ref[src];fill=1'>Fill ([src.fill_cost()] credits)</a>" : "<font color = 'red'>Fill (unavailable)</red>"
+	ui_act(action, params)
+		. = ..()
+		if (.) return
 
-		user.Browse(html.Join(), "window=o2_vending")
-		onclose(user, "vending")
+		var/obj/item/I = usr.equipped()
 
-	Topic(href, href_list)
-		..()
+		switch(action)
+			if("o2_eject")
+				if(src.holding)
+					usr.put_in_hand_or_eject(src.holding)
+					src.holding = null
+					UpdateOverlays(null, "o2_vend_tank_overlay")
+			if("o2_insert")
+				if (istype(I, /obj/item/tank))
+					src.insert_tank(I, usr)
 
-		if(href_list["eject"])
-			if(holding)
-				usr.put_in_hand_or_eject(holding)
-				holding = null
-				UpdateOverlays(null, "o2_vend_tank_overlay")
-				src.updateUsrDialog()
+			if("o2_changepressure")
+				if(isnum_safe(params["pressure"]))
+					src.target_pressure = clamp(params["pressure"], src.min_pressure, src.max_pressure)
 
-		if(href_list["changepressure"])
-			var/change = input(usr,"Target Pressure (10.1325-1013.25):","Enter target pressure",target_pressure) as num
-			if(isnum_safe(change))
-				target_pressure = clamp(change, 10.1325, 1013.25)
-				src.updateUsrDialog()
-
-		if(href_list["fill"])
-			if (holding)
-				var/cost = fill_cost()
-				if(credit >= cost)
-					src.credit -= cost
-					src.fill()
-					boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
-					src.updateUsrDialog()
-					return
-				else if(scan)
-					var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
-					if (account && account["current_money"] >= cost)
-						account["current_money"] -= cost
+			if("o2_fill")
+				if (src.holding)
+					var/cost = src.fill_cost()
+					if(credit >= cost)
+						src.credit -= cost
 						src.fill()
-						boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
-						src.updateUsrDialog()
-						return
-				boutput(usr, "<span class='alert'>Insufficient funds.</span>")
-			else
-				boutput(usr, "<span class='alert'>There is no tank to fill up!</span>")
+					else if(src.scan)
+						var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+						if (account && account["current_money"] >= cost)
+							account["current_money"] -= cost
+							src.fill()
+		. = TRUE
 
 ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 
