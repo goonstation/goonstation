@@ -6,7 +6,7 @@
 (+)Wizard den sandals are magic again.
 (u)LeahTheTech
 (*)Werewolves will no longer appear naturally on the roleplay servers.
-(+)AI cameras have been removed from Nadir toilets and shower rooms to comply with regulations.
+(+)AI cameras have been removed from Nadir and Kondaru toilets and shower rooms to comply with regulations.
 (u)Lord_Earthfire
 (p)15539
 (e)⚖|C-Balance
