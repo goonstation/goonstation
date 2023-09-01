@@ -479,6 +479,8 @@
 				qdel(P)
 		for (var/obj/item/electronics/E in gauntlet)
 			qdel(E)
+		for(var/obj/item/material_piece/M in gauntlet)
+			qdel(M)
 
 		current_level++
 		current_waves.len = 0
