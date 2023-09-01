@@ -2999,6 +2999,10 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		postvend_effect()
 		tgui_process.update_uis(src)
 
+	postvend_effect()
+		playsound(src.loc, 'sound/machines/hiss.ogg', 40, 0, 0.1)
+		return
+
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/tank))
 			insert_tank(I, user)
