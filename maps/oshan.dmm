@@ -22148,7 +22148,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/storage/box/trackimp_kit{
+/obj/item/storage/box/trackimp_kit2{
 	pixel_x = -6
 	},
 /obj/item/storage/box/revimp_kit,
@@ -28492,7 +28492,7 @@
 /obj/item/storage/box/handcuff_kit{
 	pixel_x = -6
 	},
-/obj/item/storage/box/trackimp_kit,
+/obj/item/storage/box/trackimp_kit2,
 /obj/item/storage/box/revimp_kit{
 	pixel_x = 6
 	},
