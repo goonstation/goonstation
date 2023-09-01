@@ -756,7 +756,7 @@ proc/ui_describe_reagents(atom/A)
 		src.UpdateIcon()
 
 	update_icon()
-		src.overlays = null
+		src.UpdateOverlays(null, "fluid_image")
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
 			if (!src.fluid_image)
@@ -765,7 +765,7 @@ proc/ui_describe_reagents(atom/A)
 				src.fluid_image.icon_state = "fluid-condenser[fluid_state]"
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
-			src.overlays += src.fluid_image
+			src.UpdateOverlays(src.fluid_image, "fluid_image")
 
 	proc/check_container_range()
 		if(current_container && GET_DIST(current_container, src) > 1)
