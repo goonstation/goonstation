@@ -1634,7 +1634,7 @@
 	},
 /area/station/security/checkpoint/escape)
 "aLS" = (
-/obj/cable{
+/obj/cable/orange{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/engine/caution/north,
@@ -9814,7 +9814,7 @@
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
 "eyB" = (
-/obj/cable{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt/jen,
@@ -15439,11 +15439,11 @@
 	name = "Northeast Breach Hull"
 	})
 "gQM" = (
-/obj/cable{
+/obj/cable/orange{
 	icon_state = "0-8"
 	},
-/obj/cable,
-/obj/cable{
+/obj/cable/orange,
+/obj/cable/orange{
 	icon_state = "0-2"
 	},
 /obj/decal/cleanable/dirt/jen,
@@ -20791,7 +20791,7 @@
 	},
 /area/station/chapel/sanctuary)
 "iYr" = (
-/obj/cable{
+/obj/cable/orange{
 	icon_state = "2-8"
 	},
 /obj/random_item_spawner/tools/one,
@@ -29232,10 +29232,10 @@
 	},
 /area/station/hallway/secondary/exit)
 "mty" = (
-/obj/cable{
+/obj/cable/orange{
 	icon_state = "0-4"
 	},
-/obj/cable{
+/obj/cable/orange{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/terminal{
@@ -32034,7 +32034,7 @@
 	name = "Honkington's Abode"
 	})
 "nFT" = (
-/obj/cable{
+/obj/cable/orange{
 	icon_state = "0-4"
 	},
 /obj/machinery/computer/power_monitor/smes{
@@ -33679,11 +33679,11 @@
 	name = "Warrens Hall"
 	})
 "ouF" = (
-/obj/cable{
+/obj/cable/orange{
 	icon_state = "0-4"
 	},
-/obj/cable,
-/obj/cable{
+/obj/cable/orange,
+/obj/cable/orange{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/engine/caution/corner{
@@ -34156,6 +34156,13 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
+"oEA" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/grey,
+/area/pasiphae/sys)
 "oEX" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -41729,7 +41736,7 @@
 	active = 1;
 	fuel = 1000
 	},
-/obj/cable{
+/obj/cable/orange{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/random,
@@ -41812,7 +41819,7 @@
 /area/station/turret_protected/Zeta)
 "sgv" = (
 /obj/machinery/power/rtg,
-/obj/cable,
+/obj/cable/orange,
 /turf/simulated/floor/plating,
 /area/pasiphae/sys)
 "sgK" = (
@@ -43652,7 +43659,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/cable,
+/obj/cable/orange,
 /turf/simulated/floor/engine/caution/west,
 /area/listeningpost/power)
 "sSN" = (
@@ -48300,7 +48307,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "uVd" = (
-/obj/cable{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/cable{
@@ -54021,7 +54028,7 @@
 /turf/simulated/floor/black,
 /area/pasiphae/maint)
 "xEP" = (
-/obj/cable{
+/obj/cable/orange{
 	icon_state = "0-2"
 	},
 /obj/machinery/light/small{
@@ -120871,7 +120878,7 @@ jgW
 mGa
 cxw
 iVw
-ibf
+oEA
 woF
 igp
 mty

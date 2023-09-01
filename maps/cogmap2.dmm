@@ -60739,6 +60739,14 @@
 	},
 /turf/simulated/floor/black,
 /area/research_outpost)
+"diM" = (
+/obj/cable/yellow,
+/obj/machinery/power/solar/small_backup4,
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/listeningpost/solars)
 "diN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -60747,9 +60755,6 @@
 /area/research_outpost)
 "diO" = (
 /obj/decal/poster/wallsign/danger_highvolt,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost)
 "diP" = (
@@ -60758,18 +60763,12 @@
 	text = "NF"
 	},
 /obj/machinery/power/furnace,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
+/obj/cable/orange{
+	icon_state = "0-6"
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
 "diQ" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -60785,7 +60784,7 @@
 	output = 10000
 	},
 /obj/cable{
-	icon_state = "0-8"
+	icon_state = "0-10"
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
@@ -60876,7 +60875,7 @@
 	dir = 1
 	},
 /obj/cable/yellow{
-	icon_state = "0-8"
+	icon_state = "0-10"
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -60884,6 +60883,9 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/cable/orange{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
@@ -60952,13 +60954,13 @@
 /obj/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/cable/yellow{
-	icon_state = "1-8"
-	},
 /obj/stool/chair/yellow{
 	dir = 4
 	},
 /obj/machinery/light_switch/south,
+/obj/cable/yellow{
+	icon_state = "5-8"
+	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
 "djr" = (
@@ -62151,10 +62153,10 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "dmH" = (
-/obj/cable{
+/obj/machinery/power/solar/small_backup4,
+/obj/cable/yellow{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/solar/small_backup4,
 /turf/simulated/floor/airless{
 	icon_state = "solarbase";
 	name = "solar paneling"
@@ -62225,30 +62227,30 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "dna" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-4"
 	},
 /obj/machinery/computer/solar_control/small_backup4,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "dnb" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "dnc" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-8"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "dnd" = (
-/obj/cable,
 /obj/machinery/power/solar/small_backup4,
+/obj/cable/yellow,
 /turf/simulated/floor/airless{
 	icon_state = "solarbase";
 	name = "solar paneling"
@@ -62303,7 +62305,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "dnk" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
@@ -62340,7 +62342,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "dnt" = (
-/obj/cable,
+/obj/cable/yellow,
 /obj/machinery/power/terminal{
 	dir = 8
 	},
@@ -62820,6 +62822,9 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/research,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
 "dsV" = (
@@ -62892,7 +62897,7 @@
 /obj/grille/catwalk{
 	dir = 5
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/tracker/small_backup4,
@@ -66553,12 +66558,12 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
+/obj/cable/yellow,
+/obj/cable/yellow{
 	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
@@ -68151,6 +68156,16 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/medical/medbay/pharmacy)
+"lmF" = (
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/solar/small_backup4,
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/listeningpost/solars)
 "lnJ" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
@@ -69376,6 +69391,12 @@
 	name = "very reinforced wall"
 	},
 /area/station/mining/magnet)
+"mWF" = (
+/obj/cable{
+	icon_state = "4-9"
+	},
+/turf/simulated/floor/plating,
+/area/research_outpost)
 "mXZ" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass{
@@ -71085,6 +71106,15 @@
 	fullbright = 1
 	},
 /area/shuttle/research/outpost)
+"qag" = (
+/obj/cable/orange{
+	icon_state = "4-9"
+	},
+/obj/cable{
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/plating,
+/area/research_outpost)
 "qaU" = (
 /turf/space,
 /area/shuttle/escape/station)
@@ -72068,6 +72098,12 @@
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
+"rqK" = (
+/obj/cable{
+	icon_state = "6-8"
+	},
+/turf/simulated/floor/plating,
+/area/research_outpost)
 "rqR" = (
 /obj/stool/chair/comfy/blue{
 	desc = "It's all ripped and grimy. Gross.";
@@ -72196,18 +72232,18 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/inner/central)
 "rxI" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/grille/catwalk{
 	dir = 4
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
@@ -72808,7 +72844,7 @@
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "srK" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "2-4"
 	},
 /obj/grille/catwalk,
@@ -75636,14 +75672,14 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "xgn" = (
-/obj/cable,
-/obj/cable{
+/obj/cable/yellow,
+/obj/cable/yellow{
 	icon_state = "0-2"
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-4"
 	},
 /obj/grille/catwalk{
@@ -89915,7 +89951,7 @@ aab
 dii
 dii
 diz
-diN
+rqK
 dja
 djn
 dii
@@ -90217,8 +90253,8 @@ aab
 dii
 htk
 sfG
-diN
 djb
+mWF
 djd
 djA
 djM
@@ -90822,7 +90858,7 @@ aab
 aab
 dii
 diP
-djb
+diN
 djp
 dii
 aab
@@ -91124,7 +91160,7 @@ qnx
 aab
 dii
 diQ
-djd
+qag
 djq
 dii
 aab
@@ -159997,7 +160033,7 @@ aaa
 aaa
 aaa
 dmH
-xgn
+rxI
 dnd
 aaa
 aaa
@@ -160299,7 +160335,7 @@ aaa
 aaa
 aaa
 dmH
-xgn
+rxI
 dnd
 aaa
 aaa
@@ -160601,7 +160637,7 @@ aaa
 aaa
 aaa
 dmH
-xgn
+rxI
 dnd
 aaa
 aaa
@@ -160902,9 +160938,9 @@ aaa
 aaa
 aaa
 aaa
-dmH
+lmF
 xgn
-dnd
+diM
 aaa
 aaa
 aaa

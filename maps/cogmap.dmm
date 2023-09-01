@@ -40675,7 +40675,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/cable{
+/obj/cable/orange{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
@@ -40696,7 +40696,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "czD" = (
-/obj/cable,
+/obj/cable/orange,
 /obj/machinery/power/furnace{
 	active = 1;
 	fuel = 600

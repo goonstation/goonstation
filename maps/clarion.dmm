@@ -18039,8 +18039,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bKp" = (
-/obj/cable,
 /obj/machinery/power/solar/small_backup4,
+/obj/cable/yellow,
 /turf/simulated/floor/airless{
 	icon_state = "solarbase";
 	name = "solar paneling"
@@ -18078,7 +18078,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "bKD" = (
-/obj/cable,
+/obj/cable/yellow,
 /obj/machinery/power/terminal{
 	dir = 8
 	},
@@ -19967,18 +19967,18 @@
 	},
 /area/station/bridge)
 "cME" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/grille/catwalk{
 	dir = 4
 	},
-/obj/cable{
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
 	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
@@ -24192,7 +24192,7 @@
 /turf/simulated/floor/plating,
 /area/station/chapel/funeral_parlor)
 "gEn" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
@@ -24465,7 +24465,7 @@
 /obj/grille/catwalk{
 	dir = 5
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/tracker/small_backup4,
@@ -28780,10 +28780,10 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/west)
 "krK" = (
-/obj/cable{
+/obj/machinery/power/solar/small_backup4,
+/obj/cable/yellow{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/solar/small_backup4,
 /turf/simulated/floor/airless{
 	icon_state = "solarbase";
 	name = "solar paneling"
@@ -28938,7 +28938,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "kxb" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -30769,12 +30769,12 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
+/obj/cable/yellow,
+/obj/cable/yellow{
 	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
@@ -33526,13 +33526,13 @@
 	name = "Chaplain's Office"
 	})
 "oqF" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "2-4"
 	},
 /obj/machinery/computer/solar_control/small_backup4,
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "oqT" = (
@@ -34280,24 +34280,6 @@
 	dir = 9
 	},
 /area/station/medical/medbay)
-"oTX" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/listeningpost/solars)
 "oUs" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -40183,7 +40165,7 @@
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "tGX" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "2-4"
 	},
 /obj/grille/catwalk,
@@ -43862,7 +43844,7 @@
 	name = "Crew Quarters P01"
 	})
 "wNr" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-8"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -106307,7 +106289,7 @@ aaa
 aaa
 aaa
 krK
-oTX
+cME
 bKp
 aaa
 aaa
@@ -106564,7 +106546,7 @@ aaa
 aaa
 aaa
 krK
-oTX
+cME
 bKp
 aaa
 aaa
@@ -106821,7 +106803,7 @@ aaa
 aaa
 aaa
 krK
-oTX
+cME
 bKp
 aaa
 aaa
@@ -107078,7 +107060,7 @@ aab
 aaa
 aaa
 krK
-oTX
+cME
 bKp
 aaa
 aaa

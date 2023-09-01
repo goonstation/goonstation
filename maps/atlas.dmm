@@ -9504,7 +9504,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/cable{
+/obj/cable/orange{
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/random,
@@ -12600,7 +12600,7 @@
 /area/station/hangar/arrivals)
 "aOX" = (
 /obj/machinery/power/furnace,
-/obj/cable,
+/obj/cable/orange,
 /turf/simulated/floor/plating/random,
 /area/listeningpost/power)
 "aOY" = (
@@ -13888,7 +13888,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aSO" = (
-/obj/cable{
+/obj/cable/orange{
 	icon_state = "2-8"
 	},
 /obj/machinery/light{
@@ -14712,7 +14712,7 @@
 /area/station/crew_quarters/heads)
 "aVn" = (
 /obj/machinery/power/furnace,
-/obj/cable{
+/obj/cable/orange{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/random,
@@ -16245,7 +16245,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/artifact)
 "aZS" = (
-/obj/cable{
+/obj/cable/orange{
 	icon_state = "1-8"
 	},
 /obj/machinery/light{
