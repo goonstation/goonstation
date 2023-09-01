@@ -23,7 +23,10 @@
 			return
 
 		if (ship.engine_check()) // ENGINE CHECK HERE LATER
-
+			#if ENABLE_ENGINE
+			if( keys )
+				src.ship.engines.drive.process_move()
+			#endif
 			if( keys & KEY_THROW )
 				if(!ship.full_throttle)
 					ship.full_throttle = TRUE
@@ -37,11 +40,16 @@
 			else
 				if(ship.full_throttle)
 					ship.full_throttle = FALSE
+					#if ENABLE_ENGINE
+					ship.accel = initial(ship.accel) * ship.engines.drive.getMultiplier()
+					#else
 					ship.accel = initial(ship.accel)
+					#endif
 					src.ship.controls.myhud.throttle_stick.icon_state = "throttle_down"
 					if(ship.back)
 						animate(ship.back, transform=matrix(), loop=0, time=6)
 						ship.back.color = "#fff"
+
 
 			if((keys & KEY_FORWARD) && !(keys & KEY_BACKWARD))
 
@@ -165,7 +173,8 @@
 
 					SPAWN(ship.animation_speed)
 						ship.rotating = 0
-
+		else if(keys)
+			user.show_message("<span class='alert'>The engine isn't on!</span>")
 		return ship.animation_speed
 
 /datum/movement_controller/artemis/manta

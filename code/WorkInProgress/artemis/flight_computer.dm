@@ -20,9 +20,7 @@
 					src.ship = S
 					src.ship.controls = src
 					break
-			var/area/A = get_area(src)
-			for(var/obj/machinery/shuttle/engine/propulsion/P in A)
-				src.ship.engines.add_engine(P)
+
 
 
 	attackby(obj/item/O, mob/user)

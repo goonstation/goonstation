@@ -22,7 +22,7 @@ ABSTRACT_TYPE(/obj/item/artemis_engine_component)
 		var/conversion_rate = 0
 
 /obj/item/artemis_engine_component/plasma_exciter/setup_material()
-		conversion_rate = src.material.getProperty("radioactive") / 10
+		conversion_rate = min(src.material.getProperty("radioactive") / 10, 1)
 
 /obj/item/artemis_engine_component/casing
 	name = "engine casing"
@@ -43,7 +43,7 @@ ABSTRACT_TYPE(/obj/item/artemis_engine_component)
 		if(chem_resist<1)
 				src.degredation_rate = null
 		else
-				src.degredation_rate = max(1 - log(11 , chem_resist) , 0.01)
+				src.degredation_rate = clamp(1 - log(10 , chem_resist) , 0.01,1)
 
 /obj/item/artemis_engine_component/coil
 	name = "engine coil"
@@ -54,5 +54,9 @@ ABSTRACT_TYPE(/obj/item/artemis_engine_component)
 	// var/malfunction_prob
 
 /obj/item/artemis_engine_component/coil/setup_material()
-		field_strength = src.material.getProperty("electrical") / 10
+		var/electrical=src.material.getProperty("electrical");
+		if(electrical<=0)
+				field_strength = null;
+		else
+				field_strength = clamp(log(10 , src.material.getProperty("electrical")),0,1)
 #endif

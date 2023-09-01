@@ -14,19 +14,26 @@
 	//Abstract Engine Health into 1:NW, 2:NE, 3:SW, 4:SE, 5-8:S
 	var/list/engine_health = list(1,1,1,1,1,1,1,1)
 	var/list/engine_list = list()
-
+	var/obj/machinery/ion_drive/interface/drive=null
 	proc/engine_check()
-		. = !src.malfunction && TRUE //check that requipment power is on
-
+		#if ENABLE_ENGINE
+		if(isnull(src.drive))
+			return FALSE
+		return !src.malfunction && src.drive.on //check if drive is on and engines are fine
+		#else
+		. = !src.malfunction && TRUE
+		#endif
+//banks=thruster banks
 	proc/use_power(list/banks, stress)
 		for(var/bank in banks)
 			for(var/obj/machinery/shuttle/engine/propulsion/P in engine_list[bank])
-				P.use_power(500)
+				P.use_power(50)
 
 	proc/add_engine(obj/machinery/shuttle/engine/propulsion/P)
 		if(!src.engine_list[P.id])
 			src.engine_list[P.id] = list()
 		src.engine_list[P.id] |= P
+
 
 /obj/artemis
 	name = "Artemis"
