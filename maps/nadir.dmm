@@ -4147,7 +4147,7 @@
 	name = "North Catalytic Substation"
 	})
 "bQu" = (
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "4-9"
 	},
 /obj/stool/chair/office/yellow{
@@ -5642,7 +5642,7 @@
 /area/station/medical/robotics)
 "cCu" = (
 /obj/machinery/power/catalytic_generator,
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
@@ -6554,10 +6554,10 @@
 	},
 /area/station/security/checkpoint/escape)
 "cXB" = (
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "2-9"
 	},
 /turf/simulated/floor/plating,
@@ -8951,7 +8951,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/hos)
 "edJ" = (
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "2-5"
 	},
 /turf/simulated/floor/plating,
@@ -9094,7 +9094,7 @@
 /obj/machinery/computer/power_monitor/smes{
 	dir = 8
 	},
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "0-8"
 	},
 /obj/machinery/camera{
@@ -9288,7 +9288,7 @@
 /turf/simulated/floor/industrial,
 /area/ghostdrone_factory)
 "emv" = (
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "6-8"
 	},
 /obj/stool/chair/office/yellow{
@@ -12867,10 +12867,10 @@
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "fPG" = (
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "1-8"
 	},
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "1-6"
 	},
 /turf/simulated/floor/plating,
@@ -15122,7 +15122,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "gKQ" = (
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "2-9"
 	},
 /turf/simulated/floor/plating,
@@ -15597,7 +15597,7 @@
 /obj/machinery/computer/power_monitor/smes{
 	dir = 4
 	},
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "0-4"
 	},
 /obj/machinery/camera{
@@ -17461,7 +17461,7 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 1
 	},
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "0-4"
 	},
 /obj/machinery/computer/power_monitor/smes{
@@ -19288,10 +19288,10 @@
 	},
 /area/station/hangar/sec)
 "ipp" = (
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "1-4"
 	},
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "1-10"
 	},
 /turf/simulated/floor/plating,
@@ -20126,7 +20126,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
 "iHP" = (
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "5-8"
 	},
 /obj/stool/chair/office/yellow{
@@ -21259,7 +21259,7 @@
 /turf/simulated/floor/yellowblack,
 /area/pasiphae)
 "jgX" = (
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "4-10"
 	},
 /turf/simulated/floor/plating,
@@ -24692,7 +24692,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/cable/brown,
+/obj/cable/yellow,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -32718,7 +32718,7 @@
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "nUl" = (
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "4-9"
 	},
 /turf/simulated/floor/plating,
@@ -32857,7 +32857,7 @@
 	name = "Extraction Nexus"
 	})
 "nXJ" = (
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "6-8"
 	},
 /turf/simulated/floor/plating,
@@ -34422,7 +34422,7 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 1
 	},
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "0-8"
 	},
 /obj/machinery/computer/power_monitor{
@@ -34498,7 +34498,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
 "oNs" = (
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/terminal{
@@ -34883,7 +34883,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/cable/brown,
+/obj/cable/yellow,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -36519,7 +36519,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
 "pHa" = (
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "1-10"
 	},
 /turf/simulated/floor/plating,
@@ -38411,7 +38411,7 @@
 	},
 /area/station/engine/engineering)
 "qzi" = (
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/terminal{
@@ -42857,7 +42857,7 @@
 	})
 "sDU" = (
 /obj/machinery/power/catalytic_generator,
-/obj/cable/brown,
+/obj/cable/yellow,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
@@ -43316,7 +43316,7 @@
 	},
 /area/station/science/chemistry)
 "sMu" = (
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "5-8"
 	},
 /turf/simulated/floor/plating,
@@ -43732,10 +43732,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "sVC" = (
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "2-5"
 	},
 /turf/simulated/floor/plating,
@@ -48725,7 +48725,7 @@
 	},
 /area/station/engine/core/nuclear)
 "vgn" = (
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "1-6"
 	},
 /turf/simulated/floor/plating,
@@ -51478,7 +51478,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/bridge)
 "www" = (
-/obj/cable/brown{
+/obj/cable/yellow{
 	icon_state = "4-10"
 	},
 /obj/stool/chair/office/yellow{

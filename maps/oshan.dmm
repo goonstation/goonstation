@@ -16561,6 +16561,9 @@
 	chargelevel = 4000;
 	output = 2500
 	},
+/obj/cable{
+	icon_state = "0-10"
+	},
 /turf/simulated/floor/plating,
 /area/research_outpost/maint)
 "bdR" = (
@@ -16585,8 +16588,8 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/cable{
-	icon_state = "0-8"
+/obj/cable/orange{
+	icon_state = "0-9"
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost/maint)
@@ -33192,10 +33195,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "cgb" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/door/airlock/pyro/external,
+/obj/cable/reinforced{
+	icon_state = "0-2-thick"
+	},
+/obj/cable,
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
 "cgc" = (
@@ -35691,6 +35695,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
+"dUe" = (
+/obj/cable/reinforced{
+	icon_state = "2-8-thick"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/inner/central)
 "dWG" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -38906,13 +38916,10 @@
 /area/evilreaver/genetics)
 "jsw" = (
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "5-8"
 	},
 /obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "2-4"
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
@@ -39078,7 +39085,7 @@
 	dir = 8
 	},
 /obj/cable/reinforced{
-	icon_state = "4-8-thick"
+	icon_state = "1-4-thick"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
@@ -41216,6 +41223,9 @@
 /obj/item/furniture_parts/table/reinforced/bar,
 /obj/item/furniture_parts/table/reinforced/bar,
 /obj/item/furniture_parts/table/reinforced/bar,
+/obj/cable/reinforced{
+	icon_state = "1-2-thick"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "nvu" = (
@@ -44568,8 +44578,9 @@
 	icon_state = "2-8"
 	},
 /obj/landmark/start/job/scientist,
-/obj/cable/reinforced{
-	icon_state = "1-2-thick"
+/obj/cable/reinforced,
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/hangar/science)
@@ -45151,7 +45162,10 @@
 "uYU" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-4"
+	},
+/obj/cable/reinforced{
+	icon_state = "0-8-thick"
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost)
@@ -45519,15 +45533,15 @@
 	active = 1;
 	fuel = 600
 	},
-/obj/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
+	},
+/obj/cable/orange{
+	icon_state = "0-6"
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
@@ -46477,6 +46491,9 @@
 	},
 /obj/table/round/auto,
 /obj/item/storage/box/cablesbox,
+/obj/cable/reinforced{
+	icon_state = "1-2-thick"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "xkB" = (
@@ -85894,7 +85911,7 @@ aCD
 aCD
 aCD
 aCD
-aCD
+dUe
 nuC
 xim
 jIx
