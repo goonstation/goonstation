@@ -1880,7 +1880,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\tool\crowbar.dm"
 #include "code\obj\item\tool\electronics.dm"
 #include "code\obj\item\tool\engivac.dm"
-#include "code\obj\item\tool\multitool.dm"
 #include "code\obj\item\tool\omnitool.dm"
 #include "code\obj\item\tool\screwdriver.dm"
 #include "code\obj\item\tool\weldingtool.dm"
