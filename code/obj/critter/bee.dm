@@ -1709,7 +1709,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 
 			if (!src.attacking)
 				src.attacking = 1
-				src.visible_message("<b>[src]</b> [pick("nibbles on", "nips at", "chews on", "gnaws")] [target]!")
+				src.visible_message("<b>[src]</b> [pick("nibbles on", "nips at", "chews on", "gnaws")] [target]!", group="larva_nibble")
 				SPAWN(10 SECONDS)
 					src.attacking = 0
 		else

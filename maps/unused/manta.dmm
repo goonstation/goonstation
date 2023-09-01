@@ -494,7 +494,7 @@
 /area/station/bridge)
 "abw" = (
 /obj/displaycase{
-	displayed = new/obj/item/captaingun;
+	displayed = /obj/item/captaingun;
 	pixel_y = 8
 	},
 /obj/table/wood/auto,
@@ -12230,10 +12230,7 @@
 	},
 /area/station/science/teleporter)
 "aIH" = (
-/obj/item/clothing/under/suit/dress{
-	desc = "A black dress. Very formal.";
-	name = "black dress"
-	},
+/obj/item/clothing/under/suit/black/dress,
 /obj/item/clothing/under/suit,
 /obj/item/clothing/under/shirt_pants,
 /obj/item/clothing/shoes/black,
@@ -34294,7 +34291,7 @@
 /area/station/engine/storage)
 "eSh" = (
 /obj/stool/bar,
-/mob/living/carbon/human/fatherjack,
+/mob/living/carbon/human/fathergrife,
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "eWT" = (

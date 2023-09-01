@@ -952,7 +952,7 @@ Frequency:
 				available_ai_shells += src
 
 	movement_delay()
-		if (!isitem(src.pulling))
+		if (src.pulling && !isitem(src.pulling))
 			return ..()
 		return 1 + movement_delay_modifier
 

@@ -10431,9 +10431,7 @@
 /obj/item/clothing/mask/surgical,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/device/detective_scanner,
-/obj/item/clothing/under/suit{
-	name = "Mortician Suit"
-	},
+/obj/item/clothing/under/suit/mortician,
 /obj/item/stamp,
 /obj/item/clothing/gloves/latex,
 /obj/item/spraybottle/cleaner,
@@ -50993,7 +50991,7 @@
 "nsX" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new/obj/item/captaingun;
+	displayed = /obj/item/captaingun;
 	pixel_y = 6
 	},
 /obj/machinery/light/small{
@@ -77427,9 +77425,7 @@
 /obj/item/clothing/mask/surgical,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/device/detective_scanner,
-/obj/item/clothing/under/suit{
-	name = "Mortician Suit"
-	},
+/obj/item/clothing/under/suit/mortician,
 /obj/item/stamp,
 /obj/item/clothing/gloves/latex,
 /obj/item/spraybottle/cleaner,
