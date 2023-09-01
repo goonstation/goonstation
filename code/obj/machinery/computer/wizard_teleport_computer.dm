@@ -7,6 +7,9 @@
 	light_b = 0.1
 
 /obj/machinery/computer/wizard_teleport_computer/attack_hand(var/mob/user)
+	if(..())
+		return
+
 	if (!iswizard(user))
 		user.show_text("The [src.name] doesn't respond to your inputs.", "red")
 		return
