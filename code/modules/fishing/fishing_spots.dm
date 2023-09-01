@@ -790,3 +790,13 @@ datum/fishing_spot/golden_toilet
 	/obj/item/disk/data/cartridge/clown = 15,\
 	/obj/item/disk/data/cartridge/ringtone_beepy = 5)
 
+//AI-core
+/datum/fishing_spot/ai_core
+	fishing_atom_type = /mob/living/silicon/ai
+	rod_tier_required = 3
+	fish_available = list(/obj/item/reagent_containers/food/fish/code_worm = 40,\
+	/obj/item/reagent_containers/food/fish/goldfish = 10, \
+	/obj/item/cable_coil/reinforced = 20,\
+	/obj/item/cell/shell_cell = 10, \
+	/obj/item/disk/data/cartridge/clown = 15,\
+	/obj/item/disk/data/cartridge/ringtone_beepy = 5)

@@ -4076,6 +4076,18 @@ datum
 			transparency = 20
 			bioeffect_id = "accent_swedish"
 
+		fooddrink/temp_bioeffect/liquid_code
+			name = "liquid code"
+			id = "liquid_code"
+			description = "A tangy substance with numbers shimmering in it."
+			fluid_r = 50
+			fluid_g = 185
+			fluid_b = 120
+			transparency = 65
+			taste = list("spaghetti-like")
+			bioeffect_id = "accent_hacker"
+
+
 		fooddrink/temp_bioeffect/innitium
 			name = "innitium"
 			id = "innitium"
