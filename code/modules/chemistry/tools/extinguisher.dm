@@ -91,7 +91,7 @@
 	if(projectiles)
 		var/datum/projectile/special/spreader/uniform_burst/circle/circle = new /datum/projectile/special/spreader/uniform_burst/circle/(get_turf(src))
 		circle.shot_sound = null //no grenade sound ty
-		circle.spread_projectile_type = /datum/projectile/bullet/shrapnel
+		circle.spread_projectile_type = /datum/projectile/bullet/shrapnel/shrapnel_implant
 		circle.pellet_shot_volume = 0
 		circle.pellets_to_fire = 10
 		shoot_projectile_ST_pixel_spread(get_turf(src), circle, get_step(src, NORTH))

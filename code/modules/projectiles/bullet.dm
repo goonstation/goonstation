@@ -1601,6 +1601,9 @@ datum/projectile/bullet/autocannon
 	casing = null
 	impact_image_state = "bhole-staple"
 
+	shrapnel_implant
+		implanted = /obj/item/implant/projectile/shrapnel
+
 /datum/projectile/bullet/glass_shard // for explosions of glass
 	name = "glass"
 	damage_type = D_PIERCING
