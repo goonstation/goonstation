@@ -242,9 +242,7 @@
 "abd" = (
 /obj/stool/chair/comfy,
 /obj/landmark/start/job/detective,
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "abf" = (
@@ -1244,9 +1242,7 @@
 	},
 /area/station/quartermaster/office)
 "aed" = (
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /obj/storage/cart/mechcart,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
@@ -1275,9 +1271,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "aeh" = (
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /obj/storage/cart/medcart,
 /obj/item/reagent_containers/syringe/haloperidol,
 /turf/simulated/floor/bluewhite{
@@ -2056,9 +2050,7 @@
 /area/station/crew_quarters/kitchen)
 "agy" = (
 /obj/submachine/foodprocessor,
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "agz" = (
@@ -2433,9 +2425,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ai_monitored/armory)
 "ahP" = (
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
@@ -3265,9 +3255,7 @@
 /obj/machinery/chem_dispenser/soda,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /obj/machinery/light_switch/auto,
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -3633,9 +3621,7 @@
 /obj/machinery/atmospherics/portables_connector{
 	dir = 2
 	},
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -4511,9 +4497,7 @@
 /area/station/engine/core)
 "apg" = (
 /obj/machinery/atmospherics/unary/furnace_connector,
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /obj/machinery/power/furnace/thermo,
 /turf/simulated/floor/red,
 /area/station/engine/core)
@@ -4529,9 +4513,7 @@
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/eva)
 "apm" = (
@@ -4567,9 +4549,7 @@
 /area/station/hallway/primary/east)
 "apr" = (
 /obj/machinery/teleport/portal_ring,
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/purple,
 /area/station/teleporter)
 "aps" = (
@@ -6953,9 +6933,7 @@
 	},
 /area/station/engine/elect)
 "awS" = (
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/grasstodirt{
 	dir = 8
@@ -7306,9 +7284,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/blueblack,
 /area/station/bridge/customs)
 "axN" = (
@@ -7464,9 +7440,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
 "ayo" = (
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /obj/submachine/chef_sink{
 	name = "bathroom sink"
 	},
@@ -7919,9 +7893,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/engine,
 /area/station/engine/coldloop)
 "azK" = (
@@ -8498,9 +8470,7 @@
 "aBJ" = (
 /obj/table/auto,
 /obj/bedsheetbin,
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge)
 "aBK" = (
@@ -8965,9 +8935,7 @@
 	},
 /area/station/science/chemistry)
 "aDg" = (
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /obj/machinery/glass_recycler/chemistry{
 	pixel_y = 14
 	},
@@ -10043,9 +10011,7 @@
 	},
 /area/station/science/teleporter)
 "aGa" = (
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
@@ -12704,10 +12670,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/firealarm/west,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -12943,9 +12906,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "aPY" = (
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/stairs/wide{
 	dir = 4
 	},
@@ -14134,9 +14095,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/arrival{
 	dir = 1
 	},
@@ -14999,9 +14958,8 @@
 /area/station/hallway/primary/east)
 "aWf" = (
 /obj/machinery/plantpot,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
+/obj/machinery/firealarm/west{
+	pixel_y = 11
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
@@ -15076,9 +15034,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
 "aWq" = (
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "aWr" = (
@@ -15160,9 +15116,7 @@
 "aWE" = (
 /obj/table/reinforced/auto,
 /obj/item/spraybottle/cleaner,
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "aWF" = (
@@ -16268,9 +16222,7 @@
 /obj/machinery/atmospherics/portables_connector{
 	dir = 2
 	},
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -19780,9 +19732,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
