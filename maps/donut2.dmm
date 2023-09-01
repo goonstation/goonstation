@@ -32886,6 +32886,7 @@
 	pixel_y = 7
 	},
 /obj/item/clothing/mask/cigarette/propuffs,
+/obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
 	},
@@ -44740,6 +44741,11 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"sse" = (
+/obj/machinery/light/incandescent,
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "ssf" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment/horizontal,
@@ -75209,7 +75215,7 @@ aCy
 mmb
 azU
 bgH
-bjs
+sse
 ygD
 bwR
 bjo

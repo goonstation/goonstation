@@ -7170,6 +7170,7 @@
 	dir = 4
 	},
 /obj/decal/stage_edge,
+/obj/machinery/vending/cigarette,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "aCv" = (
@@ -7760,6 +7761,7 @@
 "aEy" = (
 /obj/table/wood/auto,
 /obj/item/card_box/plain,
+/obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fpurple1"
