@@ -52,14 +52,14 @@
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/reagent_containers/glass/beaker/large,
-		/obj/item/extinguisher/large/cyborg,
+		/obj/item/extinguisher/cyborg,
 		/obj/item/device/gps, // Let's them assist with telesci
 	)
 
 // botanist. chef. janitor.
 /datum/robot/module_tool_creator/recursive/module/civilian
 	definitions = list(
-		/obj/item/extinguisher/large/cyborg,
+		/obj/item/extinguisher/cyborg,
 		/obj/item/pen, // TODO: make more versatile version
 		/obj/item/seedplanter,
 		/obj/item/plantanalyzer,
@@ -112,7 +112,7 @@
 		/obj/item/electronics/soldering,
 		/obj/item/room_planner,
 		/obj/item/room_marker,
-		/obj/item/extinguisher/large/cyborg,
+		/obj/item/extinguisher/cyborg,
 		/obj/item/rcd,
 		/obj/item/deconstructor/borg,
 		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
@@ -126,7 +126,7 @@
 /datum/robot/module_tool_creator/recursive/module/engineering
 	definitions = list(
 		/obj/item/atmosporter,
-		/obj/item/extinguisher/large/cyborg,
+		/obj/item/extinguisher/cyborg,
 		/obj/item/weldingtool,
 		/obj/item/device/t_scanner,
 		/obj/item/electronics/scanner,
@@ -182,7 +182,7 @@
 		/obj/item/oreprospector,
 		/obj/item/satchel/mining/large,
 		/obj/item/satchel/mining/large,
-		/obj/item/extinguisher/large/cyborg,
+		/obj/item/extinguisher/cyborg,
 		/obj/item/device/gps,
 		/obj/item/device/appraisal,
 		/obj/item/device/matanalyzer,

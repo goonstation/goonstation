@@ -221,7 +221,7 @@
 	name = "fire extinguisher XL"
 	initial_volume = 300
 
-/obj/item/extinguisher/large/cyborg // because borgs can't replace their extinguishers
+/obj/item/extinguisher/cyborg // because borgs can't replace their extinguishers
 	reinforced = TRUE
 	New()
 		..()
