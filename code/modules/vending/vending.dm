@@ -514,9 +514,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		.["loading"] = P.loading
 
 /obj/machinery/vending/ui_act(action, params)
+	//. = TRUE means the action was handeled
 	. = ..()
-	if (.) return
+	if (.)
+		return .
 	var/obj/item/I = usr.equipped()
+
+	//Let's assume the switch handles the action, we'll set to FALSE later if it isn't the case
+	. = TRUE
 
 	switch(action)
 		if("cutwire")
@@ -655,38 +660,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 					logTheThing(LOG_STATION, usr, "vended a logged product ([product.product_name]) from [src] at [log_loc(src)].")
 				if(player_list)
 					logTheThing(LOG_STATION, usr, "vended a player product ([product.product_name]) from [src] at [log_loc(src)].")
-
-		if("o2_eject")
-			var/obj/machinery/vending/air_vendor/air_machine = src
-			if(air_machine.holding)
-				usr.put_in_hand_or_eject(air_machine.holding)
-				air_machine.holding = null
-				UpdateOverlays(null, "o2_vend_tank_overlay")
-		if("o2_insert")
-			if (istype(I, /obj/item/tank))
-				var/obj/machinery/vending/air_vendor/air_machine = src
-				air_machine.insert_tank(I, usr)
-
-		if("o2_changepressure")
-			var/obj/machinery/vending/air_vendor/air_machine = src
-			if(isnum_safe(params["pressure"]))
-				air_machine.target_pressure = clamp(params["pressure"], air_machine.min_pressure, air_machine.max_pressure)
-
-		if("o2_fill")
-			var/obj/machinery/vending/air_vendor/air_machine = src
-			if (air_machine.holding)
-				var/cost = air_machine.fill_cost()
-				if(credit >= cost)
-					src.credit -= cost
-					air_machine.fill()
-					return
-				else if(src.scan)
-					var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
-					if (account && account["current_money"] >= cost)
-						account["current_money"] -= cost
-						air_machine.fill()
-						return
-	. = TRUE
+		else
+			. = FALSE
 
 /obj/machinery/vending/proc/vend_product(var/datum/data/vending_product/product, mob/user)
 	if ((!product.infinite && product.product_amount <= 0) || !product.product_path)
@@ -3070,6 +3045,39 @@ TYPEINFO(/obj/machinery/vending/janitor)
 			return
 
 		ui_interact(user)
+
+	ui_act(action, params)
+		. = ..()
+		if (.) return
+
+		var/obj/item/I = usr.equipped()
+
+		switch(action)
+			if("o2_eject")
+				if(src.holding)
+					usr.put_in_hand_or_eject(src.holding)
+					src.holding = null
+					UpdateOverlays(null, "o2_vend_tank_overlay")
+			if("o2_insert")
+				if (istype(I, /obj/item/tank))
+					src.insert_tank(I, usr)
+
+			if("o2_changepressure")
+				if(isnum_safe(params["pressure"]))
+					src.target_pressure = clamp(params["pressure"], src.min_pressure, src.max_pressure)
+
+			if("o2_fill")
+				if (src.holding)
+					var/cost = src.fill_cost()
+					if(credit >= cost)
+						src.credit -= cost
+						src.fill()
+					else if(src.scan)
+						var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+						if (account && account["current_money"] >= cost)
+							account["current_money"] -= cost
+							src.fill()
+		. = TRUE
 
 ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 
