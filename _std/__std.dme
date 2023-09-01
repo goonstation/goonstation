@@ -93,6 +93,7 @@
 #include "defines\stamina.dm"
 #include "defines\status_effects.dm"
 #include "defines\storage.dm"
+#include "defines\surgery.dm"
 #include "defines\switch.dm"
 #include "defines\temperatures.dm"
 #include "defines\time.dm"
