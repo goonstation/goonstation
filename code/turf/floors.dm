@@ -16,8 +16,6 @@
 
 	can_burn = TRUE
 	can_break = TRUE
-	broken = FALSE
-	burnt = FALSE
 	var/has_material = TRUE
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
 	var/reinforced = FALSE
