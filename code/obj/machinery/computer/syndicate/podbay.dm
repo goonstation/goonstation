@@ -17,9 +17,15 @@
 	/// Whether or not the podbay on the Cairngorm is authorized.
 	var/authed = FALSE
 
+	New()
+		START_TRACKING
+		..()
+
 	initialize()
-		SPAWN(10 MINUTES)
-			src.authorize() // If they haven't done it before the ten minute mark-ish, do it for em
+		..()
+
+	disposing()
+		STOP_TRACKING
 		..()
 
 /obj/machinery/computer/battlecruiser_podbay/proc/authorize()
@@ -60,7 +66,7 @@
 	if (!src.auth_need)
 		// Works to setup auth_need here but ideally this and the SPAWN delay for autoauth get done on some universal post_setup
 		src.auth_need = round(0.5 * length(get_all_antagonists(ROLE_NUKEOP) + get_all_antagonists(ROLE_NUKEOP_COMMANDER)))
-		if (src.auth_need < 2)
+		if (src.auth_need < 1)
 			authorize()
 			boutput(user,"Low number of agents detected. Podbay authorization granted.")
 			src.authorized += user
