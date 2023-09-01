@@ -4791,7 +4791,7 @@
 "aql" = (
 /obj/machinery/computer/power_monitor/smes,
 /obj/machinery/power/data_terminal,
-/obj/cable/brown,
+/obj/cable/orange,
 /turf/simulated/floor/caution/corner/sw,
 /area/station/engine/coldloop)
 "aqm" = (
@@ -10573,7 +10573,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/engine,
@@ -11180,10 +11180,10 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "aKf" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/caution/corner/nw{
@@ -11327,7 +11327,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -13458,7 +13458,7 @@
 	dir = 8;
 	level = 2
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/engine,
@@ -14334,7 +14334,7 @@
 /area/space)
 "aUe" = (
 /obj/machinery/power/terminal,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/caution/corner/ne{
@@ -16479,7 +16479,7 @@
 	dir = 8;
 	level = 2
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/engine,
@@ -17084,7 +17084,7 @@
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/engine,
@@ -17114,24 +17114,18 @@
 	},
 /area/station/teleporter)
 "gFd" = (
-/obj/machinery/power/generatorTemp,
 /obj/disposalpipe/segment/ejection{
 	dir = 8
 	},
-/obj/item/paper/engine,
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
-/obj/cable/brown{
-	icon_state = "0-4"
-	},
-/obj/cable/brown{
-	icon_state = "0-8"
-	},
-/obj/cable/brown,
-/obj/cable/brown{
+/obj/cable/orange,
+/obj/cable/orange{
 	icon_state = "0-2"
 	},
+/obj/machinery/power/generatorTemp,
+/obj/item/paper/engine,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "gFi" = (
@@ -17151,7 +17145,7 @@
 "gKG" = (
 /obj/machinery/computer/power_monitor/smes,
 /obj/machinery/power/data_terminal,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/caution/corner/nw{
@@ -17227,7 +17221,7 @@
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/caution/west,
@@ -17485,7 +17479,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/machinery/meter,
@@ -17702,7 +17696,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -17754,7 +17748,7 @@
 	dir = 1
 	},
 /obj/machinery/meter,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/caution/corner/sw,
@@ -17800,7 +17794,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/caution/west,
@@ -18124,7 +18118,7 @@
 	dir = 1;
 	level = 2
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
@@ -18223,7 +18217,7 @@
 	can_rupture = 0;
 	dir = 10
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
@@ -18300,7 +18294,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/engine,
@@ -18356,10 +18350,10 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "nVn" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/caution/corner/sw,
@@ -18601,7 +18595,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/caution/west,
@@ -18729,7 +18723,7 @@
 /area/station/engine/core)
 "qdi" = (
 /obj/machinery/atmospherics/portables_connector,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/caution/west,
@@ -18918,7 +18912,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-8"
 	},
 /turf/simulated/floor{
@@ -19095,7 +19089,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/caution/west,
@@ -19483,7 +19477,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/caution/west,
@@ -19516,7 +19510,7 @@
 	},
 /area/station/solar/north)
 "uLD" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/engine,
@@ -19805,7 +19799,7 @@
 	pixel_y = 1;
 	target_pressure = 1e+031
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
@@ -20010,7 +20004,7 @@
 	pixel_y = 1;
 	target_pressure = 1e+031
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
