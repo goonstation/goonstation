@@ -1249,7 +1249,7 @@
 					else
 						// if we're a critter or on a different z level, and we don't have a client, they probably don't care
 						// we do want to show station monkey speech etc, but not transposed scientists and trench monkeys and whatever
-						if ((!ishuman(src) || (src.z != M.z)) && !src.client)
+						if ((!ishuman(src) || (get_z(src) != get_z(M))) && !src.client)
 							return
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else if(istype(M, /mob/zoldorf))
