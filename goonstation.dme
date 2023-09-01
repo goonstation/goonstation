@@ -1963,6 +1963,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\machinery\computer\security.dm"
 #include "code\obj\machinery\computer\shuttle.dm"
 #include "code\obj\machinery\computer\teleporter.dm"
+#include "code\obj\machinery\computer\wizard_teleport_computer.dm"
 #include "code\obj\machinery\computer\workstation.dm"
 #include "code\obj\machinery\computer\security\riot.dm"
 #include "code\obj\machinery\computer\security\sec_camera_move.dm"
