@@ -82,15 +82,9 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 			for(var/turf/simulated/T in maintaining_turfs)
 				if(!T.air && T.density)
 					continue
-				ZERO_GASES(T.air)
-#ifdef ATMOS_ARCHIVING
-				ZERO_ARCHIVED_GASES(T.air)
-				T.air.ARCHIVED(temperature) = null
-#endif
-				T.air.oxygen = MOLES_O2STANDARD
-				T.air.nitrogen = MOLES_N2STANDARD
-				T.air.fuel_burnt = 0
-				T.air.temperature = T20C
+				if(T.parent?.group_processing)
+					T.parent.suspend_group_processing()
+				T.stabilize()
 				LAGCHECK(LAG_LOW)
 
 			working = 0

@@ -26438,7 +26438,7 @@
 /area/station/engine/engineering)
 "fYF" = (
 /obj/displaycase{
-	displayed = new /obj/item/captaingun
+	displayed = /obj/item/captaingun
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)

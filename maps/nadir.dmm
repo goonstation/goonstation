@@ -1274,6 +1274,10 @@
 /obj/item/instrument/bikehorn,
 /obj/item/stamp/clown,
 /obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_x = 4;
+	pixel_y = 10
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Honkington's Abode"
@@ -7903,6 +7907,7 @@
 /obj/decal/tile_edge/stripe/corner/big2{
 	dir = 10
 	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
 "dDg" = (
@@ -8350,17 +8355,6 @@
 /obj/machinery/vending/medical,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay)
-"dNQ" = (
-/obj/stool/chair,
-/obj/npc/trader/robot{
-	icon_state = "medibot0";
-	name = "D.O.C.";
-	productset = 4;
-	trader_area = "/area/abandonedmedicalship/robot_trader";
-	icon = 'icons/misc/evilreaverstation.dmi'
-	},
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
 "dOb" = (
 /obj/machinery/door_control{
 	id = "nadir_bhull_nw";
@@ -9419,11 +9413,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
-"eoI" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/firstaid,
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
 "eoL" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/black,
@@ -10138,6 +10127,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "eGi" = (
@@ -10681,6 +10671,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/baroffice)
+"eQy" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/landmark/antagonist/blob,
+/turf/simulated/floor/carpet/green/standard/innercorner/omni,
+/area/station/maintenance/storage{
+	icon_state = "crewquarters";
+	name = "Warrens Hall"
+	})
 "eQG" = (
 /obj/disposalpipe/segment/transport,
 /obj/decal/tile_edge/floorguide/qm,
@@ -14092,6 +14090,13 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
+"gqN" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/antagonist/blob,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "gqO" = (
 /obj/stool/chair/office/blue{
 	dir = 8
@@ -15219,42 +15224,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/emergency2)
-"gMv" = (
-/obj/storage/crate/freezer,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/reagent_containers/food/snacks/ingredient/meat{
-	desc = "Ew.";
-	name = "meat of questionable origin"
-	},
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibhead";
-	name = "grody thing"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit"
-	},
-/obj/item/organ/liver,
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/catering)
 "gMN" = (
 /obj/filing_cabinet,
 /obj/machinery/light{
@@ -17030,7 +16999,7 @@
 "hwd" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new/obj/item/captaingun;
+	displayed = /obj/item/captaingun;
 	pixel_y = 6
 	},
 /obj/machinery/power/apc/autoname_north,
@@ -17841,7 +17810,7 @@
 /obj/item/device/detective_scanner{
 	pixel_x = -6
 	},
-/obj/item/clothing/under/suit{
+/obj/item/clothing/under/suit/black{
 	name = "Mortician Suit";
 	pixel_y = 11
 	},
@@ -32627,6 +32596,31 @@
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
 	})
+"nSq" = (
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/obj/item/organ/eye,
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart"
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 5
+	},
+/area/station/medical/morgue)
 "nSu" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -36283,6 +36277,7 @@
 	icon_state = "2-8"
 	},
 /obj/landmark/gps_waypoint,
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
 "pCc" = (
@@ -40297,6 +40292,30 @@
 /obj/decal/fakeobjects/flock/antenna,
 /turf/space/fluid/acid/clear,
 /area/space)
+"rzd" = (
+/obj/storage/crate/freezer,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/reagent_containers/food/snacks/ingredient/meat{
+	desc = "Ew.";
+	name = "meat of questionable origin"
+	},
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/organ/liver,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/catering)
 "rzn" = (
 /obj/disposalpipe/segment{
 	name = "factory pipe"
@@ -40500,13 +40519,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
 "rCY" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 3;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "rDs" = (
@@ -43710,43 +43723,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/southeast)
-"sUR" = (
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibhead";
-	name = "grody thing"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/obj/item/organ/eye,
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/blackwhite{
-	dir = 5
-	},
-/area/station/medical/morgue)
 "sVB" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -44735,6 +44711,17 @@
 /area/station/science/lobby{
 	name = "Science Lounge"
 	})
+"tpP" = (
+/obj/stool/chair,
+/obj/npc/trader/robot{
+	icon_state = "medibot0";
+	name = "D.O.C.";
+	productset = 4;
+	trader_area = "/area/abandonedmedicalship/robot_trader";
+	icon = 'icons/misc/evilreaverstation.dmi'
+	},
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "tpW" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/white,
@@ -46092,6 +46079,11 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"tTG" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "tTL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -48885,15 +48877,6 @@
 "vmx" = (
 /turf/simulated/floor/yellowblack/corner,
 /area/station/hallway/secondary/east)
-"vmA" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/quarters_east)
 "vmT" = (
 /obj/table/reinforced/chemistry/auto/clericalsup,
 /obj/item/paper/labdrawertips,
@@ -50871,13 +50854,6 @@
 	name = "loofah"
 	},
 /obj/item/reagent_containers/glass/bottle/bubblebath,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "weL" = (
@@ -54653,6 +54629,10 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
+"xSO" = (
+/obj/landmark/antagonist/blob,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "xSS" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8;
@@ -81612,7 +81592,7 @@ bzS
 bzS
 lmL
 tjr
-dNQ
+tpP
 icZ
 hvz
 tjr
@@ -81914,8 +81894,8 @@ bzS
 bzS
 syI
 bbu
-eoI
-eoI
+tTG
+tTG
 jRV
 tjr
 lmL
@@ -87897,7 +87877,7 @@ oaQ
 obA
 obA
 onm
-gMv
+rzd
 hHa
 gVW
 dns
@@ -89699,7 +89679,7 @@ cZD
 egS
 oNg
 vZi
-oEZ
+xSO
 iHN
 wPX
 kyY
@@ -103245,7 +103225,7 @@ lRC
 fgA
 aFj
 fBA
-sUR
+nSq
 vYx
 xLa
 pUw
@@ -103846,7 +103826,7 @@ lRC
 xAU
 vQZ
 jzF
-fgA
+gqN
 aFj
 rlw
 mGp
@@ -105153,7 +105133,7 @@ pOj
 hQo
 nlQ
 hri
-eUl
+eQy
 wxt
 eRD
 eRD
@@ -112350,7 +112330,7 @@ eIK
 oZp
 oZp
 gpK
-vmA
+jXY
 ibV
 ibV
 vgc
