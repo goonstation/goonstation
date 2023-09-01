@@ -22,7 +22,7 @@ TYPEINFO(/obj/item/device/igniter)
 
 /obj/item/device/igniter/attack(mob/M, mob/user)
 	if (ishuman(M))
-		if (M:bleeding || (M:butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
+		if (M:bleeding || (M:organHolder?.back_op_stage == 4 && user.zone_sel.selecting == "chest"))
 			if (!src.cautery_surgery(M, user, 15))
 				return ..()
 		else return ..()

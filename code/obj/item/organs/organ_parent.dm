@@ -8,7 +8,6 @@
 	desc = "What does this thing even do? Is it something you need?"
 	var/organ_holder_name = "organ"
 	var/organ_holder_location = "chest"
-	var/organ_holder_required_op_stage = 0
 	icon = 'icons/obj/items/organs/brain.dmi'
 	icon_state = "brain1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
@@ -73,6 +72,11 @@
 
 	///if the organ is currently acting as an organ in a body
 	var/in_body = FALSE
+	///List of buttons we'll show when doing organ surgery
+	var/list/datum/contextAction/surgery_contexts = null
+	contextLayout = new /datum/contextLayout/experimentalcircle
+	///Which type of surgery tools do we need to operate on this organ?
+	var/surgery_flags = SURGERY_NONE
 
 	attack(var/mob/living/carbon/M, var/mob/user)
 		if (!ismob(M))
@@ -266,6 +270,8 @@
 					src.remove_ability(aholder, abil)
 		src.donor = null
 		src.in_body = FALSE
+		if (src.surgery_contexts)
+			src.surgery_contexts = null
 
 		return
 
@@ -362,8 +368,14 @@
 		var/mob/living/carbon/human/H = M
 		if (!H.organHolder)
 			return 0
+		//Hearts and lungs require the ribcage to be sawed open
+		if ((istype(src, /obj/item/organ/heart) || istype(src, /obj/item/organ/lung)) && H.organHolder?.chest?.op_stage >= 3)
+			return 1
+		//Other organs dont need the ribcage to be open
+		if (H.organHolder?.chest?.op_stage >= 2)
+			return 1
 
-		return 1
+		return 0
 
 	proc/attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Attempts to attach this organ to the target mob M, if sucessful, displays surgery notifications and updates states in both user and target.
@@ -376,7 +388,7 @@
 		var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 		var/obj/item/organ/organ_location = H.organHolder.get_organ(src.organ_holder_location)
 
-		if (!H.organHolder.get_organ(src.organ_holder_name) && organ_location && organ_location.op_stage == src.organ_holder_required_op_stage)
+		if (!H.organHolder.get_organ(src.organ_holder_name))
 
 			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] [src.organ_holder_location]!</span>",\
 				"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] [src.organ_holder_location]!</span>",\
@@ -417,3 +429,27 @@
 					src.add_ability(A, abil)
 			src.broken = 0
 			return TRUE
+
+	proc/build_organ_buttons()
+		.= 0
+
+		if (surgery_flags)
+			.= 1
+
+			if (src.surgery_contexts != null)
+				return
+
+			src.surgery_contexts = list()
+
+			if (surgery_flags & SURGERY_CUTTING)
+				var/datum/contextAction/organ_surgery/cut/action = new
+				surgery_contexts += action
+			if (surgery_flags & SURGERY_SNIPPING)
+				var/datum/contextAction/organ_surgery/snip/action = new
+				surgery_contexts += action
+			if (surgery_flags & SURGERY_SAWING)
+				var/datum/contextAction/organ_surgery/saw/action = new
+				surgery_contexts += action
+
+			.+= length(surgery_contexts)
+

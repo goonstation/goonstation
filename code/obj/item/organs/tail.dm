@@ -7,7 +7,6 @@
 	organ_name = "tail"
 	organ_holder_name = "tail"
 	organ_holder_location = "chest"	// chest-ish
-	organ_holder_required_op_stage = 11
 	edible = 1
 	organ_image_icon = 'icons/mob/werewolf.dmi' // please keep your on-mob tail icon_states with the rest of your mob's sprites
 	icon = 'icons/obj/items/organs/tail.dmi'
@@ -84,7 +83,7 @@
 				"<span class='alert'>You [fluff] [src] onto the apex of [H == user ? "your" : "[H]'s"] sacrum!</span>",\
 				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][H == user && fluff == "press" ? "es" : "s"] [src] onto the apex of your sacrum!</span>")
 
-		else if (!H.organHolder.tail && H.organHolder.chest.op_stage >= 11.0 && src.can_attach_organ(H, user))
+		else if (!H.organHolder.tail && H.organHolder.back_op_stage == 3.0 && src.can_attach_organ(H, user))
 			attachment_successful = 1
 
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
@@ -98,9 +97,9 @@
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, "tail", 3.0)
 			if (boned)
-				H.organHolder.tail.op_stage = 0
+				H.organHolder.back_op_stage = 0
 			else
-				H.organHolder.tail.op_stage = 11
+				H.organHolder.tail.op_stage = 0
 			src.build_mob_tail_image()
 			H.update_body()
 			H.bioHolder.RemoveEffect(src.failure_ability)

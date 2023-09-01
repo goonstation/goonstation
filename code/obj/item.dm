@@ -695,6 +695,13 @@ ABSTRACT_TYPE(/obj/item)
 
 	params = params2list(params)
 
+	if (ishuman(over_object) && ishuman(usr) && !src.storage)
+		var/mob/living/carbon/human/patient = over_object
+		var/mob/living/carbon/human/surgeon = usr
+		if (surgeryCheck(patient, surgeon))
+			if (insertChestItem(patient, surgeon, src))
+				return
+
 	if (isliving(over_object) && isliving(usr) && !src.storage) //pickup action
 		if (user == over_object)
 			actions.start(new /datum/action/bar/private/icon/pickup(src), user)
@@ -1197,10 +1204,6 @@ ABSTRACT_TYPE(/obj/item)
 /obj/item/proc/attack(mob/M, mob/user, def_zone, is_special = 0)
 	if (!M || !user) // not sure if this is the right thing...
 		return
-
-	if (surgeryCheck(M, user))		// Check for surgery-specific actions
-		if(insertChestItem(M, user))	// Puting item in patient's chest
-			return
 
 	if (src.Eat(M, user)) // All those checks were done in there anyway
 		return

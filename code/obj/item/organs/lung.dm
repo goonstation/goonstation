@@ -7,10 +7,10 @@
 	organ_name = "lung"
 	desc = "Inflating meat airsacks that pass breathed oxygen into a person's blood and expels carbon dioxide back out. Hopefully whoever used to have these doesn't need them anymore."
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 2
 	icon = 'icons/obj/items/organs/lung.dmi'
 	icon_state = "lung_R"
 	failure_disease = /datum/ailment/disease/respiratory_failure
+	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING | SURGERY_SAWING
 	var/temp_tolerance = T0C+66
 
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
@@ -145,51 +145,6 @@
 			if (holder.right_lung == src)
 				holder.right_lung = null
 		..()
-
-	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
-		/* Overrides parent function to handle special case for attaching lungs. */
-		var/mob/living/carbon/human/H = M
-		if (!src.can_attach_organ(H, user))
-			return 0
-
-		if (H.organHolder.chest && H.organHolder.chest.op_stage == 2)
-			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
-			var/target_organ_location = null
-
-			if (user.find_in_hand(src, "right"))
-				target_organ_location = "right"
-			else if (user.find_in_hand(src, "left"))
-				target_organ_location = "left"
-			else if (!user.find_in_hand(src))
-				// Organ is not in the attackers hand. This was likely a drag and drop. If you're just tossing an organ at a body, where it lands will be imprecise
-				target_organ_location = pick("right", "left")
-
-			if (target_organ_location == "right" && !H.organHolder.right_lung)
-				user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right lung socket!</span>",\
-					"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] right lung socket!</span>",\
-					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your right lung socket!</span>")
-
-				if (user.find_in_hand(src))
-					user.u_equip(src)
-				H.organHolder.receive_organ(src, "right_lung", 2)
-				H.update_body()
-			else if (target_organ_location == "left" && !H.organHolder.left_lung)
-				user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] left lung socket!</span>",\
-					"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] left lung socket!</span>",\
-					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your left lung socket!</span>")
-
-				if (user.find_in_hand(src))
-					user.u_equip(src)
-				H.organHolder.receive_organ(src, "left_lung", 2)
-				H.update_body()
-			else
-				user.tri_message(H, "<span class='alert'><b>[user]</b> tries to [fluff] the [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right lung socket!<br>But there's something already there!</span>",\
-					"<span class='alert'>You try to [fluff] the [src] into [user == H ? "your" : "[H]'s"] right lung socket!<br>But there's something already there!</span>",\
-					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [H == user ? "try" : "tries"] to [fluff] the [src] into your right lung socket!<br>But there's something already there!</span>")
-				return 0
-
-			return 1
-		return 0
 
 /obj/item/organ/lung/left
 	name = "left lung"

@@ -8,7 +8,6 @@
 	desc = "Well, shit."
 	organ_holder_name = "head"
 	organ_holder_location = "head"
-	organ_holder_required_op_stage = 0
 	var/scalp_op_stage = 0.0 // Needed to track a scalp gash (brain and skull removal) separately from op_stage (head removal)
 	icon = 'icons/mob/human_head.dmi'
 	icon_state = "invis" // we'll overlay some shit on here
@@ -539,7 +538,6 @@
 			// rebuild, start with a human head
 			src.name = "head"
 			src.desc = "Well, shit."
-			src.organ_holder_required_op_stage = 0
 			src.scalp_op_stage = 0
 			src.head_type = mutant_race
 

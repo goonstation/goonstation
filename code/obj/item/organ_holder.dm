@@ -47,6 +47,13 @@
 		"appendix"="/obj/item/organ/appendix",
 		"butt"="/obj/item/clothing/head/butt",
 		"tail"="/obj/item/organ/tail")
+	///List of buttons used in chest organ surgery
+	var/list/datum/contextAction/contexts = list()
+	var/datum/contextLayout/contextLayout = new /datum/contextLayout/experimentalcircle
+	///List of buttons used in back surgery (tail/butt)
+	var/list/datum/contextAction/back_contexts = list()
+	///How cut up is our back for surgery purposes
+	var/back_op_stage = 0
 
 	New(var/mob/living/L, var/ling)
 		..()
@@ -56,6 +63,48 @@
 			src.donor = L
 		if (src.donor && !ling) // so changers just get the datum and not a metric fuckton of organs
 			src.create_organs()
+
+	proc/build_organ_buttons()
+
+		if (!src.chest)	//Can't do surgery without a chest to operate on
+			return null
+		src.contexts = list()
+
+		for(var/actionType in childrentypesof(/datum/contextAction/organs))
+			var/datum/contextAction/organs/action = new actionType()
+			if (istype(action, /datum/contextAction/organs/parasite))
+				if (length(donor.ailments) <= 0)
+					continue
+				for (var/datum/ailment_data/an_ailment in donor.ailments)
+					if (an_ailment.cure == "Surgery")
+						src.contexts += action
+						break
+			else if (istype(action, /datum/contextAction/organs/chest_item))
+				if (!ishuman(src.donor))
+					continue
+				var/mob/living/carbon/human/H = src.donor
+				if (!H.chest_item)
+					continue
+				src.contexts += action
+			else if (istype(action, /datum/contextAction/organs/implant))
+				for (var/obj/item/implant/I in donor.implant)
+					if (!istype(I, /obj/item/implant/projectile)) //We dont want bullets/shrapnel
+						src.contexts += action
+						break
+			else if (action.requires_open_ribcage && src.chest.op_stage < 3)
+				continue
+			else if (src.organ_list[action.organ_path])
+				src.contexts += action
+		return length(src.contexts)
+
+	proc/build_back_surgery_buttons()
+		src.back_contexts = list()
+
+		for(var/actionType in childrentypesof(/datum/contextAction/back_surgery))
+			var/datum/contextAction/back_surgery/action = new actionType()
+			if (src.organ_list[action.organ_path])
+				src.back_contexts += action
+		return length(src.back_contexts)
 
 	disposing()
 		src.organ_list.len = 0
@@ -142,6 +191,14 @@
 		tail = null
 
 		donor = null
+
+		if (src.contexts)
+			for(var/datum/contextAction/C in src.contexts)
+				C.dispose()
+		if (src.back_contexts)
+			for(var/datum/contextAction/C in src.contexts)
+				C.dispose()
+
 		..()
 
 	proc/handle_organs(var/mult = 1)
@@ -322,7 +379,7 @@
 		if (!src.butt)
 			src.butt = new /obj/item/clothing/head/butt(src.donor, src)
 			organ_list["butt"] = butt
-			src.donor.butt_op_stage = 0
+			src.back_op_stage = 0
 			src.donor.update_body()
 
 		if (!src.left_kidney)
@@ -613,7 +670,6 @@
 				myButt.set_loc(location)
 				myButt.holder = null
 				src.butt = null
-				src.donor.butt_op_stage = 4
 				src.donor.update_body()
 				src.organ_list["butt"] = null
 				return myButt
@@ -1022,7 +1078,7 @@
 				newButt.set_loc(src.donor)
 				newButt.holder = src
 				organ_list["butt"] = newButt
-				src.donor.butt_op_stage = op_stage
+				src.back_op_stage = op_stage
 				success = 1
 
 			if ("left_kidney")

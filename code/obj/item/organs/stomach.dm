@@ -4,9 +4,9 @@
 	desc = "A little meat sack containing acid for the digestion of food. Like most things that come out of living creatures, you can probably eat it."
 	organ_holder_name = "stomach"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 4
 	icon_state = "stomach"
 	fail_damage = 100
+	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING
 
 	//Do something with this when you figure out what the guy who made digestion and handle stomach was doing with stomach_contents and stomach_process - kyle
 	// on_transplant()

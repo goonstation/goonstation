@@ -3,9 +3,9 @@
 	organ_name = "appendix"
 	organ_holder_name = "appendix"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 3
 	icon_state = "appendix"
 	failure_disease = /datum/ailment/disease/appendicitis
+	surgery_flags = SURGERY_SNIPPING
 
 	on_life(var/mult = 1)
 		if (!..())

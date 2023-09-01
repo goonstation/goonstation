@@ -10,10 +10,10 @@
 	desc = "Offal, just offal."
 	organ_holder_name = "heart"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 9
 	icon = 'icons/obj/items/organs/heart.dmi'
 	icon_state = "heart"
 	item_state = "heart"
+	surgery_flags = SURGERY_SNIPPING | SURGERY_SAWING | SURGERY_CUTTING
 	// var/broken = 0		//Might still want this. As like a "dead organ var", maybe not needed at all tho?
 	var/list/diseases = null
 	var/body_image = null // don't have time to completely refactor this, but, what name does the heart icon have in human.dmi?
@@ -105,21 +105,6 @@
 				src.diseases.Add(HD)
 		..()
 		return
-
-	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
-		/* Overrides parent function to handle special case for attaching heads. */
-		var/mob/living/carbon/human/H = M
-		if (!src.can_attach_organ(H, user))
-			return 0
-
-		var/success = ..(H, user)
-
-		if (success)
-			if (!isdead(H))
-				JOB_XP(user, "Medical Doctor", src.health > 0 ? transplant_XP*2 : transplant_XP)
-			return 1
-		else
-			return 0
 
 /obj/item/organ/heart/synth
 	name = "synthheart"

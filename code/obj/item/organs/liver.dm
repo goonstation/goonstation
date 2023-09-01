@@ -4,10 +4,10 @@
 	desc = "Ew, this thing is just the wurst."
 	organ_holder_name = "liver"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 3
 	icon = 'icons/obj/items/organs/liver.dmi'
 	icon_state = "liver"
 	failure_disease = /datum/ailment/disease/liver_failure
+	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING
 
 	on_life(var/mult = 1)
 		if (!..())

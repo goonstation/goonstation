@@ -920,8 +920,8 @@ TYPEINFO(/obj/machinery/defib_mount)
 							target.organHolder.heart.op_stage = 0
 						if (target.organHolder.chest)
 							target.organHolder.chest.op_stage = 0
-						if (target.butt_op_stage)
-							target.butt_op_stage = 0
+						if (target.organHolder.back_op_stage)
+							target.organHolder.back_op_stage = 0
 						target.TakeDamage("chest", 2, 0)
 					else if (zone == "head")
 						if (target.organHolder.head)
@@ -1129,7 +1129,10 @@ TYPEINFO(/obj/machinery/defib_mount)
 			if (user.a_intent == INTENT_HELP)
 				return
 			return ..()
-		if (H.bleeding)
+		if (H.chest_cavity_clamped)
+			boutput(user, "<span class='notice'>[M]'s blood vessels are already clamped.</span>")
+			return
+		if (H.organHolder.chest.op_stage > 0 || H.bleeding)
 			user.tri_message(H, "<span class='alert'><b>[user]</b> begins clamping the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
 				"<span class='alert'>You begin clamping the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
 				"<span class='alert'>[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src].</span>")
@@ -1143,6 +1146,8 @@ TYPEINFO(/obj/machinery/defib_mount)
 				"<span class='notice'>You clamp the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
 				"<span class='notice'>[H == user ? "You clamp" : "<b>[user]</b> clamps"] the bleeders in your incision with [src].</span>")
 
+			if (H.organHolder.chest.op_stage > 0)
+				H.chest_cavity_clamped = TRUE
 			if (H.bleeding)
 				repair_bleeding_damage(H, 50, rand(2,5))
 			return
