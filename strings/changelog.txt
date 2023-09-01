@@ -1,4 +1,14 @@
 
+(t)thu aug 31 23
+(u)Keiya
+(p)15583
+(e)|
+(+)Removed Assless Chaps from the available gang uniforms.
+(t)wed aug 30 23
+(u)Tyrant
+(p)15562
+(e)🗺⚖|A-Mapping, C-Balance
+(*)The NT commander of Oshan has decided to go sit in the crew lounge instead.
 (t)tue aug 29 23
 (u)LeahTheTech
 (+)Botanical misters now have a particle effect when filling something.

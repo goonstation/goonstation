@@ -9243,7 +9243,7 @@
 /area/station/crew_quarters/captain)
 "cEO" = (
 /obj/displaycase{
-	displayed = new/obj/item/captaingun
+	displayed = /obj/item/captaingun
 	},
 /obj/machinery/light/incandescent/greenish{
 	dir = 1
@@ -13569,15 +13569,12 @@
 /area/station/maintenance/solar/east)
 "dZY" = (
 /obj/decal/mule/dropoff,
-/obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post";
-	dir = 4
-	},
 /obj/mapping_helper/access,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
 	},
+/obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/exit)
 "eag" = (

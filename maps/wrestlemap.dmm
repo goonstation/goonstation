@@ -9349,7 +9349,7 @@
 	dir = 2
 	},
 /obj/displaycase{
-	displayed = new/obj/item/captaingun
+	displayed = /obj/item/captaingun
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
