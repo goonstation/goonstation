@@ -146,11 +146,11 @@
 		if (src.broken)
 			return
 		var/image/damage_overlay
-		damage_overlay.alpha = 200
 		if (intact)
 			damage_overlay = image('icons/turf/floors.dmi', "damaged[pick(1,2,3,4,5)]")
 		else
 			damage_overlay = image('icons/turf/floors.dmi', "platingdmg[pick(1,2,3)]")
+		damage_overlay.alpha = 200
 		src.broken = TRUE
 		UpdateOverlays(damage_overlay, "damage")
 
@@ -160,11 +160,11 @@
 		if (src.burnt)
 			return
 		var/image/burn_overlay
-		burn_overlay.alpha = 200
 		if (intact)
 			burn_overlay = image('icons/turf/floors.dmi', "floorscorched[pick(1,2)]")
 		else
 			burn_overlay = image('icons/turf/floors.dmi', "panelscorched")
+		burn_overlay.alpha = 200
 		src.burnt = TRUE
 		UpdateOverlays(burn_overlay, "burn")
 
