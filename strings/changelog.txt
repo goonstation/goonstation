@@ -1,5 +1,9 @@
 
 (t)fri sep 01 23
+(u)ZWRh3
+(p)15550
+(e)⚖💅🔨📦|C-Balance, C-QoL, A-Player-Actions, A-Game-Objects
+(+)Lockers with leg holes are now 5x faster.
 (u)Garsh
 (p)15522
 (e)🔄📄|C-Rework, A-UI
