@@ -1,5 +1,6 @@
 ABSTRACT_TYPE(/obj/mapping_helper/turf)
 /obj/mapping_helper/turf
+	name = "turf helper parent"
 	layer = TURF_LAYER
 	var/allow_space = FALSE
 	var/turf/T
@@ -10,13 +11,14 @@ ABSTRACT_TYPE(/obj/mapping_helper/turf)
 		return
 	if (!src.allow_space)
 		if (istype(T, /turf/space))
+			logTheThing(LOG_DEBUG, src, "[src] ([src.type]) which is disallowed from space placed on space tile [T.type] at [src.x], [src.y], [src.z].")
 			return
 
 /obj/mapping_helper/turf/proc/do_on_turf()
 	return
 
 /obj/mapping_helper/turf/disposing()
-	src.T = null
+	T = null
 	..()
 
 /** ===== Burner and breaker for floors =====
@@ -29,7 +31,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/turf)
 
 ABSTRACT_TYPE(/obj/mapping_helper/turf/floor)
 /obj/mapping_helper/turf/floor
-	name = "Floor Helper Parent"
+	name = "floor helper parent"
 	layer = DECAL_LAYER
 
 /obj/mapping_helper/turf/floor/setup()
@@ -40,7 +42,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/turf/floor)
 	src.do_on_turf()
 
 /obj/mapping_helper/turf/floor/burner
-	name = "Floor burner"
+	name = "floor burner"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floorscorched1"
 
@@ -51,7 +53,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/turf/floor)
 	T.burn_tile()
 
 /obj/mapping_helper/turf/floor/damager
-	name = "Floor damager"
+	name = "floor damager"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "damaged1"
 
