@@ -1904,10 +1904,10 @@
 /area/space)
 "fz" = (
 /obj/table/wood/auto,
-/obj/item/clothing/shoes/sandal,
-/obj/item/clothing/shoes/sandal,
-/obj/item/clothing/shoes/sandal,
-/obj/item/clothing/shoes/sandal,
+/obj/item/clothing/shoes/sandal/magic/wizard,
+/obj/item/clothing/shoes/sandal/magic/wizard,
+/obj/item/clothing/shoes/sandal/magic/wizard,
+/obj/item/clothing/shoes/sandal/magic/wizard,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor5"
 	},
@@ -7126,11 +7126,7 @@
 	name = "weird meat"
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit"
-	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget,

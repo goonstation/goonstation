@@ -53,7 +53,9 @@
 		if (!istype(T,/turf/))
 			if(isnull(random_floor_turfs))
 				build_random_floor_turf_list()
-			T = pick(random_floor_turfs)
+			while(isnull(T) || istype(T, /turf/simulated/floor/airless/plating/catwalk) || total_density(T) > 0)
+				T = pick(random_floor_turfs)
+				if(prob(1)) break // prevent infinite loop
 
 		if(isnull(grow_duration))
 			grow_duration = 2 MINUTES + rand(-30 SECONDS, 30 SECONDS)
@@ -621,7 +623,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/device/flash = 3,
 			/obj/item/clothing/head/beret/prisoner = 5,
 			/obj/item/clothing/shoes/orange = 5,
-			/obj/item/clothing/under/misc = 5,
+			/obj/item/clothing/under/misc/prisoner = 5,
 			/obj/item/clothing/shoes/swat = 2,
 			/obj/item/clothing/head/red = 4,
 			/obj/item/clothing/head/helmet/siren = 2,

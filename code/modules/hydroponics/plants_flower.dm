@@ -56,8 +56,9 @@ ABSTRACT_TYPE(/datum/plant/flower)
 		reagents_temp.my_atom = POT
 
 		if (POT.growth > (P.harvtime - DNA?.get_effective_value("growtime")) && prob(spray_prob))
-			for (var/plantReagent in assoc_reagents)
-				reagents_temp.add_reagent(plantReagent, 3 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * length(assoc_reagents))))))
+			var/list/plant_complete_reagents = HYPget_assoc_reagents(P, DNA)
+			for (var/plantReagent in plant_complete_reagents)
+				reagents_temp.add_reagent(plantReagent, 3 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * length(plant_complete_reagents))))))
 			reagents_temp.smoke_start()
 			qdel(reagents_temp)
 

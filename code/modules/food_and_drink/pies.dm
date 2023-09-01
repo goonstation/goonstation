@@ -191,13 +191,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (contents)
-			var/atom/movable/randomContent
+			var/atom/movable/random_content
 			if (length(contents) >= 1)
-				randomContent = pick(contents)
+				random_content = pick(contents)
 			else
-				randomContent = src
+				random_content = src
 
-			hit_atom.Attackby(randomContent, thr?.user)
+ 			hit_atom.Attackby(random_content, thr?.user)
+			//for afterattack, we want to filter out mobs since pies hit also the turf the person is standing on. Also, we need to call it on an actual item
+			if (hit_atom && random_content && istype(random_content, /obj/item) && ismob(hit_atom))
+				var/obj/item/randomed_item = random_content
+				randomed_item.AfterAttack(hit_atom, thr?.user)
+
 
 			if (ismob(hit_atom))
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
