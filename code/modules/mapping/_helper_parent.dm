@@ -15,13 +15,12 @@ ABSTRACT_TYPE(/obj/mapping_helper)
 
 	New()
 		..()
-		if (current_state >= GAME_STATE_WORLD_INIT)
-			SPAWN(0)
-				src.initialize()
+		if (global.current_state >= GAME_STATE_WORLD_INIT)
+			src.initialize()
 
 	initialize()
 		..()
-		if(src.disposed)
+		if (QDELETED(src))
 			return
 		src.setup()
 		qdel(src)
