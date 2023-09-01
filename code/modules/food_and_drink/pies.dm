@@ -20,14 +20,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 			var/mob/thrower = usr
 			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			if (thrower.mind?.assigned_role == "Clown")
-				if (ishuman(M) && (prob(50) || M.mind?.assigned_role == "Captain"))
+				if (ishuman(M) && (prob(50) || M.mind?.assigned_role == "Captain") && !M.GetOverlayImage("face_pie"))
+					var/mob/living/carbon/human/H = M
 					var/image/face_pie = image('icons/obj/foodNdrink/food_dessert.dmi', "face_pie")
-					src.visible_message("<span class='notice'>[src] splats right in [M]'s face and remains stuck there!</span>")
+					src.visible_message("<span class='notice'>[src] splats right in [H]'s face and remains stuck there!</span>")
 					face_pie.layer = MOB_OVERLAY_BASE
 					face_pie.appearance_flags = RESET_COLOR | PIXEL_SCALE
-					var/overlay_key = "face_pie[world.timeofday]"
-					if(ismonkey(M))
-						face_pie.icon_state = "face_pie_monkey"
+					var/overlay_key = "face_pie"
+					if(H.mutantrace.head_offset)
+						face_pie.pixel_y = H.mutantrace.head_offset
 					M.UpdateOverlays(face_pie, overlay_key)
 					var/old_invis = src.invisibility
 					src.invisibility = INVIS_ALWAYS
