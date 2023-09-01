@@ -3597,7 +3597,7 @@
 /obj/storage/closet/dresser/random,
 /obj/item/clothing/under/misc/america,
 /obj/item/clothing/under/gimmick/rainbow,
-/obj/item/clothing/under/suit,
+/obj/item/clothing/under/suit/black,
 /turf/simulated/floor,
 /area/station/crew_quarters/bathroom{
 	name = "Locker Room"
@@ -8555,11 +8555,8 @@
 	layer = 2.5;
 	pixel_y = -12
 	},
-/obj/item/clothing/under/suit/dress{
-	desc = "A black dress. Very formal.";
-	name = "black dress"
-	},
-/obj/item/clothing/under/suit,
+/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/under/suit/black,
 /obj/item/clothing/under/shirt_pants,
 /obj/item/clothing/shoes/black,
 /obj/item/clothing/head/fedora,
@@ -42582,7 +42579,7 @@
 	},
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new/obj/item/captaingun();
+	displayed = /obj/item/captaingun;
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/arcade,

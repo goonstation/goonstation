@@ -9667,11 +9667,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aBx" = (
-/obj/item/clothing/under/suit/dress{
-	desc = "A black dress. Very formal.";
-	name = "black dress"
-	},
-/obj/item/clothing/under/suit,
+/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/under/suit/black,
 /obj/item/clothing/under/shirt_pants,
 /obj/item/clothing/shoes/black,
 /obj/item/clothing/head/fedora,
@@ -20283,13 +20280,6 @@
 "bdS" = (
 /obj/table/wood/auto,
 /obj/item/device/light/candle/small,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
 /obj/item/reagent_containers/bath_bomb,
 /obj/item/reagent_containers/bath_bomb,
 /turf/simulated/floor/wood{
@@ -38386,7 +38376,7 @@
 "bXI" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new/obj/item/captaingun;
+	displayed = /obj/item/captaingun;
 	pixel_y = 6
 	},
 /obj/cable{
@@ -54288,9 +54278,7 @@
 /area/station/medical/morgue)
 "cQP" = (
 /obj/table/auto,
-/obj/item/clothing/under/suit{
-	name = "Mortician Suit"
-	},
+/obj/item/clothing/under/suit/mortician,
 /obj/item/clothing/mask/surgical,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/device/detective_scanner,
@@ -63870,7 +63858,7 @@
 /area/station/crew_quarters/arcade/dungeon)
 "eZC" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("chapel","chapel  checkpoint","crewA","arrivals  checkpoint");
+	mail_tag = list("chapel","chapel    checkpoint","crewA","arrivals    checkpoint");
 	name = "mail junction (arrivals sector)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -67679,7 +67667,7 @@
 /area/station/science/storage)
 "kDX" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("medbay  lobby","telescience","testchamber","research","chemistry","medbay","morgue","pathology","genetics","robotics");
+	mail_tag = list("medbay    lobby","telescience","testchamber","research","chemistry","medbay","morgue","pathology","genetics","robotics");
 	name = "mail junction (medsci sector)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -70954,7 +70942,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("hydroponics","kitchen","detective","crewB","arcade","cafeteria","medical  booth");
+	mail_tag = list("hydroponics","kitchen","detective","crewB","arcade","cafeteria","medical    booth");
 	name = "mail junction (catering sector)"
 	},
 /turf/simulated/floor/grime,
@@ -72025,10 +72013,6 @@
 /obj/mapping_helper/access/heads,
 /turf/simulated/floor/circuit,
 /area/station/bridge)
-"rnh" = (
-/obj/storage/secure/closet/civilian/ranch,
-/turf/space,
-/area/space)
 "rno" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/external,
@@ -73836,7 +73820,7 @@
 /area/space)
 "tRe" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("janitor","escape  checkpoint","mining","escape  hallway","mechanics","cargo  checkpoint","QM","refinery");
+	mail_tag = list("janitor","escape    checkpoint","mining","escape    hallway","mechanics","cargo    checkpoint","QM","refinery");
 	name = "mail junction (escape and cargo sectors)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -75241,7 +75225,7 @@
 /area/station/crew_quarters/heads)
 "wsR" = (
 /obj/disposalpipe/switch_junction/left/north{
-	mail_tag = list("brig","customs  checkpoint","bridge","security");
+	mail_tag = list("brig","customs    checkpoint","bridge","security");
 	name = "mail junction (command sector)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -75944,7 +75928,7 @@
 /area/station/garden/owlery)
 "xGa" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("engineering","podbay","podbay  checkpoint");
+	mail_tag = list("engineering","podbay","podbay    checkpoint");
 	name = "mail junction (engineering sector)"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -103709,7 +103693,7 @@ aQx
 ilw
 pJZ
 aXD
-rnh
+aaa
 aaa
 aaa
 aaa

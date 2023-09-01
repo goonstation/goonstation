@@ -32398,7 +32398,7 @@
 /area/dojo)
 "cpx" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/suit,
+/obj/item/clothing/under/suit/black,
 /obj/item/storage/briefcase,
 /obj/item/storage/pill_bottle/antirad,
 /obj/item/cigpacket/menthol,
@@ -38409,7 +38409,7 @@
 /obj/item/clothing/head/flatcap,
 /obj/item/instrument/fiddle,
 /obj/machinery/light/small,
-/obj/item/clothing/under/suit/dress,
+/obj/item/clothing/under/suit/black/dress,
 /obj/item/clothing/glasses/monocle,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
@@ -48680,16 +48680,16 @@
 /area/wizard_station)
 "djZ" = (
 /obj/rack,
-/obj/item/clothing/shoes/sandal{
+/obj/item/clothing/shoes/sandal/magic/wizard{
 	pixel_y = -5
 	},
-/obj/item/clothing/shoes/sandal{
+/obj/item/clothing/shoes/sandal/magic/wizard{
 	pixel_y = -2
 	},
-/obj/item/clothing/shoes/sandal{
+/obj/item/clothing/shoes/sandal/magic/wizard{
 	pixel_y = 1
 	},
-/obj/item/clothing/shoes/sandal{
+/obj/item/clothing/shoes/sandal/magic/wizard{
 	pixel_y = 4
 	},
 /obj/item/device/light/magic_lantern{
@@ -59682,7 +59682,7 @@
 "gfR" = (
 /obj/lattice,
 /obj/stool/chair,
-/mob/living/carbon/human/fatherjack/cow,
+/mob/living/carbon/human/fathergrife/cow,
 /turf/unsimulated/floor/void,
 /area/void_diner)
 "ggw" = (
@@ -74486,7 +74486,11 @@
 	dir = 1
 	},
 /obj/table/wood/auto,
-/obj/machinery/computer/pod/old/swf{
+/obj/machinery/door_control/podbay{
+	id = "hangar_wizard";
+	pixel_x = -21
+	},
+/obj/machinery/computer/wizard_teleport_computer{
 	id = "hangar_wizard";
 	pixel_x = -4;
 	pixel_y = 8
@@ -77624,7 +77628,7 @@ oUi
 oUi
 oUi
 lRx
-tGW
+lRx
 lNz
 lNz
 tGW
