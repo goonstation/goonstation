@@ -97,6 +97,7 @@
 
 	/// gets nearest mob target to the user that an ability can be used on
 	proc/get_nearest_target(prone_check)
+		var/list/nearby_mobs = list()
 		for (var/mob/living/M in viewers(1, src.holder.owner))
 			if (M == src.holder.owner)
 				continue
@@ -104,4 +105,6 @@
 				continue
 			if (prone_check && !M.lying)
 				continue
-			return M
+			nearby_mobs += M
+		if (length(nearby_mobs))
+			return pick(nearby_mobs)
