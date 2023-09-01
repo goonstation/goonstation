@@ -151,7 +151,7 @@ var/global/datum/controller/processScheduler/processScheduler
 /datum/controller/processScheduler/proc/addProcess(var/datum/controller/process/process, var/skipSetup = 0)
 	// zamu here, sorry for making this dumb thing
 	if (game_start_countdown)
-		var/procname = copytext("[process.type]", findlasttext("[process.type]", "/", -1) + 1)
+		var/procname = copytext("[process.type]", findlasttext("[process.type]", "/", 0) + 1)
 		game_start_countdown.update_status("Starting [procname]")
 
 	processes.Add(process)
