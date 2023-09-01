@@ -2039,7 +2039,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	proc/lockdown()
 	//eventually i will find a better way to update lights
 		for(var/obj/machinery/light/light in by_cat[TR_CAT_MORRIGAN_LIGHTS])
-			light.seton(light.on = FALSE)
+			light.seton(FALSE)
 			LAGCHECK(LAG_LOW)
 		for(var/obj/machinery/light/emergency/e_light in by_cat[TR_CAT_MORRIGAN_EMERGENCY_LIGHTS])
 			e_light.on = TRUE
