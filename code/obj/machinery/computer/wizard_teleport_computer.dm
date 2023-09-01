@@ -1,6 +1,6 @@
 /obj/machinery/computer/wizard_teleport_computer
-	name = "Magix System IV"
-	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorceror's Edition"
+	name = "Magix System V"
+	desc = "An arcane artifact overflowing with teleportation magic. Running E-Knock 3.1: Sorceror's Edition"
 	icon_state = "wizard"
 	light_r = 0.6
 	light_g = 1
