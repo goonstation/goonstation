@@ -716,7 +716,8 @@ proc/ui_describe_reagents(atom/A)
 	w_class = W_CLASS_TINY
 
 	attackby(obj/item/reagent_containers/container, mob/user)
-		container.try_to_apply_lid(src, user)
+		if (istype(container))
+			container.try_to_apply_lid(src, user)
 
 /obj/item/reagent_containers/glass/condenser
 	name = "chemical condenser"
