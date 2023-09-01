@@ -314,6 +314,8 @@ TYPEINFO(/obj/machinery/chem_master)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/obj/beaker = null
 	var/list/beaker_cache = null
+	///If TRUE, the beaker cache will be rebuilt on ui_data
+	var/rebuild_cache = FALSE
 	var/mob/roboworking = null
 	var/emagged = FALSE
 	var/list/whitelist = list()
@@ -524,7 +526,7 @@ TYPEINFO(/obj/machinery/chem_master)
 		.["patch_icons"] = patch_icons
 
 	proc/rebuild_beaker_cache()
-		if(!src.beaker)
+		if(QDELETED(src.beaker))
 			src.beaker_cache = null
 			return
 
@@ -551,6 +553,9 @@ TYPEINFO(/obj/machinery/chem_master)
 					colorB = current_reagent.fluid_b,
 					volume = current_reagent.volume
 				)))
+
+	proc/invalidate_cache()
+		src.rebuild_cache = TRUE
 
 	proc/manufacture_name(var/param_name)
 		var/name = param_name
@@ -584,6 +589,7 @@ TYPEINFO(/obj/machinery/chem_master)
 		src.beaker = barrel
 		boutput(user, "You hook the [src.beaker] up to the [src.name].")
 		RegisterSignal(barrel, COMSIG_MOVABLE_MOVED, PROC_REF(remove_barrel))
+		RegisterSignal(barrel, COMSIG_ATOM_REAGENT_CHANGE, PROC_REF(invalidate_cache))
 
 		var/tube_x = 5 //where the tube connects to the chemmaster (changes with dir)
 		var/tube_y = -5
@@ -608,6 +614,7 @@ TYPEINFO(/obj/machinery/chem_master)
 
 	proc/remove_barrel(var/obj/reagent_dispensers/chemicalbarrel/barrel)
 		UnregisterSignal(src.beaker, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(src.beaker, COMSIG_ATOM_REAGENT_CHANGE)
 		src.beaker = null
 		rebuild_beaker_cache()
 		src.UpdateIcon()
@@ -622,10 +629,12 @@ TYPEINFO(/obj/machinery/chem_master)
 	ui_data(mob/user)
 		. = list()
 
-		if(src.beaker)
+		if(!QDELETED(src.beaker))
 			.["default_name"] = src.beaker.reagents.get_master_reagent_name()
 		else
 			.["default_name"] = null
+		if (src.rebuild_cache)
+			src.rebuild_beaker_cache()
 		.["container"] = beaker_cache
 
 	ui_act(action, list/params, datum/tgui/ui)
