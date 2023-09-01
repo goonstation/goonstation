@@ -361,6 +361,8 @@ TYPEINFO(/obj/item/furniture_parts/table/glass)
 	furniture_type = /obj/stool
 	furniture_name = "stool"
 
+TYPEINFO(/obj/item/furniture_parts/woodenstool)
+	mat_appearances_to_ignore = list("wood")
 /obj/item/furniture_parts/woodenstool
 	name = "wooden stool parts"
 	desc = "A collection of parts that can be used to make a wooden stool."
@@ -370,6 +372,7 @@ TYPEINFO(/obj/item/furniture_parts/table/glass)
 	stamina_cost = 15
 	furniture_type = /obj/stool/wooden
 	furniture_name = "wooden stool"
+	default_material = "wood"
 
 /obj/item/furniture_parts/stool/pet_bed
 	name = "pet bed parts"

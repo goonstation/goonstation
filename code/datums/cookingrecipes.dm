@@ -1532,7 +1532,7 @@ datum/cookingrecipe/flockbrainburger
 #ifdef XMAS
 
 /datum/cookingrecipe/cake_fruit
-	item1 = /obj/item/reagent_containers/food/snacks/yuckburn
+	item1 = /obj/item/reagent_containers/food/snacks/yuck/burn
 	item2 = /obj/item/reagent_containers/food/snacks/yuck
 	cookbonus = 14
 	output = null
