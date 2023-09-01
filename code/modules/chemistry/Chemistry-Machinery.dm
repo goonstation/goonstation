@@ -389,7 +389,7 @@ TYPEINFO(/obj/machinery/chem_master)
 		if(!src.roboworking)
 			var/obj/item/I = src.beaker
 			TRANSFER_OR_DROP(src, I) // causes Exited proc to be called
-			user.put_in_hand_or_eject(I)
+			user?.put_in_hand_or_eject(I)
 		else // robos dont want exited proc
 			src.beaker = null
 			src.roboworking = null
@@ -587,6 +587,7 @@ TYPEINFO(/obj/machinery/chem_master)
 			src.eject_beaker(user)
 
 		src.beaker = barrel
+		barrel.linked_machine = src
 		boutput(user, "You hook the [src.beaker] up to the [src.name].")
 		RegisterSignal(barrel, COMSIG_MOVABLE_MOVED, PROC_REF(remove_barrel))
 		RegisterSignal(barrel, COMSIG_ATOM_REAGENT_CHANGE, PROC_REF(invalidate_cache))
@@ -613,6 +614,7 @@ TYPEINFO(/obj/machinery/chem_master)
 		src.UpdateIcon()
 
 	proc/remove_barrel(var/obj/reagent_dispensers/chemicalbarrel/barrel)
+		barrel.linked_machine = null
 		UnregisterSignal(src.beaker, COMSIG_MOVABLE_MOVED)
 		UnregisterSignal(src.beaker, COMSIG_ATOM_REAGENT_CHANGE)
 		src.beaker = null

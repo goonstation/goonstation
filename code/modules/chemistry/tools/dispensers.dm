@@ -414,6 +414,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	var/image/fluid_image = null
 	var/image/lid_image = null
 	var/image/spout_image = null
+	var/obj/machinery/chem_master/linked_machine = null
 
 	New()
 		..()
@@ -533,6 +534,10 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		shattered_barrel.set_loc(get_turf(src))
 		src.smash()
 		return TRUE
+
+	disposing()
+		src?.linked_machine.eject_beaker(null)
+		. = ..()
 
 	get_chemical_effect_position()
 		return 10
