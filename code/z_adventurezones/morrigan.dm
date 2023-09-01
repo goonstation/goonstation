@@ -516,6 +516,23 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		if (prob(10))
 			src.say(pick( "Don't look for Lara...", "Lara??", "Lara the oven!", "Please don't talk to Lara", "LAAAAARRRAAAAAAAA!!!" ,"L-Lara."))
 
+/mob/living/carbon/human/morrigansec
+	New()
+		..()
+		src.equip_new_if_possible(pick(/obj/item/clothing/head/morrigan/sberet), SLOT_HEAD)
+		src.equip_new_if_possible((/obj/item/clothing/mask/gas/swat), SLOT_WEAR_MASK)
+		src.equip_new_if_possible((/obj/item/clothing/under/rank/morrigan/sec), SLOT_W_UNIFORM)
+		src.equip_new_if_possible((/obj/item/clothing/suit/armor/vest), SLOT_WEAR_SUIT)
+		src.equip_new_if_possible((/obj/item/clothing/shoes/swat), SLOT_SHOES)
+
+/mob/living/carbon/human/morriganntop
+	New()
+		..()
+		src.equip_new_if_possible((/obj/item/clothing/under/rank/morrigan/robofab), SLOT_W_UNIFORM)
+		src.equip_new_if_possible((/obj/item/storage/backpack/brown), SLOT_BACK)
+		src.equip_new_if_possible((/obj/item/card/id/morrigan/captain), SLOT_IN_BACKPACK)
+		src.equip_new_if_possible((/obj/item/clothing/shoes/swat), SLOT_SHOES)
+
 /mob/living/critter/human/hobo
 	name = "Hobo"
 	desc = "They have a crazed look in their eyes"
@@ -703,6 +720,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		. = ..()
 		randomize_look(src, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, src)
 
+/obj/mapping_helper/mob_spawn/corpse/human/hobo
+	spawn_type = /mob/living/carbon/human/hobo
+
+/obj/mapping_helper/mob_spawn/corpse/human/ntop
+	spawn_type = /mob/living/carbon/human/morriganntop
+
+/obj/mapping_helper/mob_spawn/corpse/human/morrigansec
+	spawn_type = /mob/living/carbon/human/morrigansec
 // Areas
 
 /area/morrigan
