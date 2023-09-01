@@ -805,6 +805,10 @@ proc/ui_describe_reagents(atom/A)
 			else
 				current_container.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
 
+	disposing()
+		src.remove_container()
+		. = ..()
+
 /obj/item/reagent_containers/synthflesh_pustule
 	name = "synthetic pustule"
 	desc = "A disgusting beating mass of synthetic meat. Could probably be plopped into a beaker..."
