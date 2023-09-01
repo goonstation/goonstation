@@ -536,7 +536,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		return TRUE
 
 	disposing()
-		src?.linked_machine.eject_beaker(null)
+		src.linked_machine?.eject_beaker(null)
 		. = ..()
 
 	get_chemical_effect_position()
