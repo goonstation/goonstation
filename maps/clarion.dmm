@@ -8587,6 +8587,11 @@
 	},
 /obj/mapping_helper/access/mining,
 /obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "aIk" = (
@@ -15632,12 +15637,6 @@
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
 /obj/random_item_spawner/tools,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname  - SS13";
-	pixel_y = 21
-	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/storage/toolbox/electrical{
 	pixel_x = 14
@@ -17023,7 +17022,8 @@
 /area/station/quartermaster/storage)
 "bBK" = (
 /turf/simulated/floor/yellow/side{
-	dir = 1
+	dir = 1;
+	broken = 1
 	},
 /area/station/mining/staff_room)
 "bBS" = (
@@ -17384,11 +17384,13 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "bFU" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
+/obj/machinery/dispenser,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname  - SS13";
+	pixel_x = -10
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -19164,7 +19166,9 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "cdp" = (
-/turf/simulated/floor/neutral/corner{
+/obj/machinery/light_switch/north,
+/obj/mapping_helper/turf_helper/destroyer,
+/turf/simulated/floor/yellow/side{
 	dir = 1
 	},
 /area/station/mining/staff_room)
@@ -19583,6 +19587,10 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
+"cvk" = (
+/obj/mapping_helper/turf_helper/destroyer,
+/turf/simulated/floor,
+/area/station/mining/staff_room)
 "cvy" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/black{
@@ -22359,7 +22367,7 @@
 /area/station/engine/elect)
 "faB" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/yellow,
 /area/station/mining/staff_room)
 "faG" = (
 /obj/grille/catwalk{
@@ -24979,7 +24987,8 @@
 /area/station/medical/medbay)
 "hse" = (
 /obj/machinery/light/emergency,
-/obj/machinery/manufacturer/hangar,
+/obj/machinery/portable_reclaimer,
+/obj/decal/stripe_caution,
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
 "huw" = (
@@ -26439,17 +26448,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
-"ixm" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 21;
-	tag = ""
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/mining/staff_room)
 "ixV" = (
 /obj/noticeboard/persistent{
 	name = "Cargo persistent notice board";
@@ -27799,6 +27797,10 @@
 	},
 /turf/space,
 /area/space)
+"jyB" = (
+/obj/mapping_helper/turf_helper/burner,
+/turf/simulated/floor,
+/area/station/mining/staff_room)
 "jzn" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail{
@@ -27910,9 +27912,8 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "jEm" = (
-/obj/machinery/portable_reclaimer,
 /obj/machinery/light,
-/obj/machinery/portable_reclaimer,
+/obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
 "jEp" = (
@@ -29043,6 +29044,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/trunk/mail/west,
+/obj/mapping_helper/turf_helper/burner,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -34735,8 +34737,11 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/substation/west)
 "poO" = (
-/obj/machinery/light_switch/west{
-	dir = 4
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/decal/stripe_caution,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -35161,6 +35166,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/mapping_helper/turf_helper/destroyer,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "pHX" = (
@@ -40566,6 +40572,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/turf_helper/destroyer,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -41882,6 +41889,12 @@
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname  - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/neutral/corner{
 	dir = 8
 	},
@@ -42028,6 +42041,10 @@
 /obj/item/storage/firstaid/regular{
 	pixel_y = -4;
 	pixel_x = -3
+	},
+/obj/item/storage/pill_bottle/antirad{
+	pixel_x = -6;
+	pixel_y = 7
 	},
 /turf/simulated/floor/grime,
 /area/station/mining/staff_room)
@@ -42495,6 +42512,10 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
+"vxq" = (
+/obj/mapping_helper/turf_helper/destroyer,
+/turf/simulated/floor/grime,
+/area/station/mining/staff_room)
 "vxy" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light/emergency{
@@ -42615,7 +42636,7 @@
 	},
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = /obj/item/captaingun;
+	displayed = new/obj/item/captaingun();
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -43302,6 +43323,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
+/obj/mapping_helper/turf_helper/burner,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "wjO" = (
@@ -44266,6 +44288,13 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"xdd" = (
+/obj/mapping_helper/turf_helper/burner,
+/turf/simulated/floor/yellow/side{
+	dir = 1;
+	broken = 1
+	},
+/area/station/mining/staff_room)
 "xdm" = (
 /obj/landmark/start/job/roboticist,
 /obj/cable{
@@ -44463,6 +44492,9 @@
 "xnf" = (
 /obj/storage/secure/closet/engineering/mining,
 /obj/decal/cleanable/dirt,
+/obj/decal/poster/wallsign/poster_mining{
+	pixel_y = 30
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
@@ -78817,8 +78849,8 @@ gtw
 gtw
 eaO
 faB
-gtw
-gtw
+faB
+faB
 gtw
 jqJ
 wJX
@@ -79324,14 +79356,14 @@ bBC
 buG
 uTq
 bFo
-juH
+cdp
 bGF
 bGF
 bFV
 bGF
-bGF
-bGF
-bGF
+cvk
+jyB
+jyB
 nET
 nLG
 lxi
@@ -79581,7 +79613,7 @@ lju
 buG
 yiX
 bFo
-ixm
+juH
 iwk
 tDU
 lbD
@@ -80352,13 +80384,13 @@ bBG
 buJ
 cXk
 bEI
-bBK
+xdd
 bGC
 bGF
-bFV
-bFV
+vxq
+bGF
 dTl
-cdp
+bGF
 hfT
 jEm
 bHT
