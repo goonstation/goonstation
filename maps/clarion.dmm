@@ -19167,7 +19167,6 @@
 /area/station/engine/core/nuclear)
 "cdp" = (
 /obj/machinery/light_switch/north,
-/obj/mapping_helper/turf_helper/destroyer,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -19587,10 +19586,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
-"cvk" = (
-/obj/mapping_helper/turf_helper/destroyer,
-/turf/simulated/floor,
-/area/station/mining/staff_room)
 "cvy" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/black{
@@ -27797,10 +27792,6 @@
 	},
 /turf/space,
 /area/space)
-"jyB" = (
-/obj/mapping_helper/turf_helper/burner,
-/turf/simulated/floor,
-/area/station/mining/staff_room)
 "jzn" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail{
@@ -29044,7 +29035,6 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/trunk/mail/west,
-/obj/mapping_helper/turf_helper/burner,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -35166,7 +35156,6 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/mapping_helper/turf_helper/destroyer,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "pHX" = (
@@ -40572,7 +40561,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/turf_helper/destroyer,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -42512,10 +42500,6 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
-"vxq" = (
-/obj/mapping_helper/turf_helper/destroyer,
-/turf/simulated/floor/grime,
-/area/station/mining/staff_room)
 "vxy" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light/emergency{
@@ -43323,7 +43307,6 @@
 	dir = 5;
 	icon_state = "line1"
 	},
-/obj/mapping_helper/turf_helper/burner,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "wjO" = (
@@ -44288,13 +44271,6 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"xdd" = (
-/obj/mapping_helper/turf_helper/burner,
-/turf/simulated/floor/yellow/side{
-	dir = 1;
-	broken = 1
-	},
-/area/station/mining/staff_room)
 "xdm" = (
 /obj/landmark/start/job/roboticist,
 /obj/cable{
@@ -79361,9 +79337,9 @@ bGF
 bGF
 bFV
 bGF
-cvk
-jyB
-jyB
+bGF
+bGF
+bGF
 nET
 nLG
 lxi
@@ -80384,10 +80360,10 @@ bBG
 buJ
 cXk
 bEI
-xdd
+bBK
 bGC
 bGF
-vxq
+bFV
 bGF
 dTl
 bGF
