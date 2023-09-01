@@ -126,7 +126,7 @@
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "afJ" = (
-/obj/machinery/networked/telepad,
+/obj/testobjformorrigan,
 /turf/unsimulated/floor/caution,
 /area/morrigan/station/exit)
 "agc" = (
@@ -9893,11 +9893,8 @@
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/routing/transport)
 "jNa" = (
-/obj/machinery/floorflusher/industrial{
-	layer = 2;
-	name = "Holding Cell"
-	},
 /obj/disposalpipe/trunk/east,
+/obj/machinery/floorflusher/industrial/morrigan,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing/transport)
 "jNf" = (
@@ -18593,7 +18590,7 @@
 	layer = 2
 	},
 /obj/landmark/morrigan_start,
-/obj/machinery/networked/telepad/morrigan,
+/obj/fakeobjects/morrigan_teleporter,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing)
 "sIV" = (

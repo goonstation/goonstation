@@ -1814,7 +1814,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	Crossed(atom/movable/AM)
 		. = ..()
 
-		if (istype(AM, /obj/port_a_prisoner))
+		if (istype(AM, /obj/port_a_prisoner) || istype(AM, /mob/living))
 			var/target_turf =  get_turf(landmarks[landmark][1])
 			do_teleport(AM, target_turf, use_teleblocks = FALSE)
 			showswirl_out(src.loc)
@@ -1849,9 +1849,31 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	M.set_loc(src)
 
 /obj/port_a_prisoner/proc/eject_and_del()
-	src.occupant?.set_loc(get_turf(src))
+	src.occupant?.set_loc(src.loc)
 	src.occupant = null
 	qdel(src)
+
+/obj/machinery/floorflusher/industrial/morrigan
+	name = "prisoner flusher"
+	desc = "A one-way ticket to your new home!"
+
+	flush()
+		for (var/obj/port_a_prisoner/jail in src)
+			jail.eject_and_del()
+		..()
+
+/obj/testobjformorrigan
+	name = "GTFO teleporter"
+	desc = "A precise teleporter that only works across short distances."
+	icon = 'icons/misc/32x64.dmi'
+	icon_state = "lrport"
+
+	Crossed(atom/movable/AM)
+		..()
+
+		if (istype(AM, /mob/living))
+			var/target_turf = pick(get_area_turfs(/area/helldrone, TRUE))
+			launch_with_missile(AM, target_turf, null, "arrival_missile_synd")
 
 //Suit stuff
 
