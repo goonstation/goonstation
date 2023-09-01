@@ -69,6 +69,8 @@ TYPEINFO(/turf/unsimulated/floor/void)
 	icon_state = "void"
 	desc = "A strange shifting void ..."
 	plane = PLANE_SPACE
+	can_burn = FALSE
+	can_break = FALSE
 
 /turf/unsimulated/floor/void/crunch
 	fullbright = 0
@@ -110,6 +112,8 @@ TYPEINFO(/turf/simulated/floor/void)
 	plane = PLANE_SPACE
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
+	can_burn = FALSE
+	can_break = FALSE
 
 	ex_act()
 		return
