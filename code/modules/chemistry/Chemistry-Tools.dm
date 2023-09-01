@@ -703,6 +703,11 @@ proc/ui_describe_reagents(atom/A)
 	icon_state = "liquid"
 	initial_reagents = list("fluorosurfactant"=20)
 
+/obj/item/storage/box/beaker_lids
+	name = "box of beaker lids"
+	desc = "A box full of beaker lids, for putting lids on your beakers. For when you need something that's open... closed."
+	spawn_contents = list(/obj/item/beaker_lid = 7)
+
 /obj/item/beaker_lid
 	name = "beaker lid"
 	desc = "A one-size fits all beaker lid, capable of an airtight seal on any compatible beaker."

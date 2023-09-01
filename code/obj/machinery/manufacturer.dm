@@ -2542,6 +2542,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/chembarrel,
 		/datum/manufacture/chembarrel/yellow,
 		/datum/manufacture/chembarrel/red,
+		/datum/manufacture/condenser,
+		/datum/manufacture/beaker_lid_box,
 		/datum/manufacture/spectrogoggles,
 		/datum/manufacture/reagentscanner,
 		/datum/manufacture/dropper,
