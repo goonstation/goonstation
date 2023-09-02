@@ -549,21 +549,6 @@
 /area/station/crew_quarters/heads{
 	name = "Head of Personnel's Quarters"
 	})
-"ack" = (
-/obj/table/wood/auto,
-/obj/displaycase{
-	displayed = /obj/item/captaingun;
-	pixel_y = 8
-	},
-/obj/machinery/light/incandescent{
-	nostick = 1
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 28
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "acl" = (
 /obj/machinery/portableowl/attached{
 	name = "A Prettier Owl"
@@ -8526,34 +8511,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/mining/refinery)
-"aLF" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/mask/wrestling,
-/obj/item/clothing/mask/wrestling/black,
-/obj/item/clothing/mask/wrestling/blue,
-/obj/item/clothing/mask/wrestling/green,
-/obj/item/clothing/under/shorts/luchador,
-/obj/item/clothing/under/shorts/luchador/green,
-/obj/item/clothing/under/shorts/luchador/red,
-/obj/item/clothing/under/shorts/blue,
-/obj/item/clothing/under/shorts/red,
-/obj/item/clothing/under/shorts/black,
-/obj/item/clothing/under/shorts/trashsinglet,
-/obj/item/clothing/head/helmet/men,
-/obj/item/clothing/head/helmet/men,
-/obj/item/clothing/suit/armor/douandtare,
-/obj/item/clothing/suit/armor/douandtare,
-/obj/item/clothing/gloves/kote,
-/obj/item/clothing/gloves/kote,
-/obj/item/shinai_bag,
-/obj/item/storage/box/kendo_box/hakama,
-/obj/machinery/light/incandescent/harsh{
-	dir = 4;
-	nostick = 1;
-	pixel_x = 11
-	},
-/turf/simulated/floor/specialroom/gym/alt,
-/area/station/crew_quarters/fitness)
 "aLI" = (
 /obj/stool/chair/moveable{
 	dir = 8
@@ -15948,6 +15905,29 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
+"caI" = (
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/obj/item/organ/eye,
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart"
+	},
+/obj/machinery/light_switch/north,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/medbay/surgery/storage)
 "caP" = (
 /obj/table/auto,
 /obj/decal/tile_edge/line/blue{
@@ -29815,6 +29795,21 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"iso" = (
+/obj/table/wood/auto,
+/obj/displaycase{
+	displayed = /obj/item/captaingun;
+	pixel_y = 8
+	},
+/obj/machinery/light/incandescent{
+	nostick = 1
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 28
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "isz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -32951,23 +32946,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
-"jWD" = (
-/obj/storage/closet/dresser/random,
-/obj/item/clothing/under/suit/black/dress,
-/obj/item/clothing/under/suit/black,
-/obj/item/clothing/under/shirt_pants,
-/obj/item/clothing/shoes/black,
-/obj/item/clothing/glasses/eyepatch{
-	name = "costume eyepatch"
-	},
-/obj/item/clothing/head/mime_beret,
-/obj/item/clothing/head/mime_bowler,
-/obj/item/clothing/under/misc/mime,
-/obj/item/clothing/under/misc/mime/alt,
-/obj/item/clothing/suit/suspenders,
-/obj/item/clothing/suit/scarf,
-/turf/simulated/floor/black,
-/area/station/crewquarters/garbagegarbs)
 "jWF" = (
 /obj/disposalpipe/segment,
 /obj/machinery/firealarm{
@@ -33221,29 +33199,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
-"kht" = (
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/obj/item/organ/eye,
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/machinery/light_switch/north,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/medbay/surgery/storage)
 "khO" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
@@ -40357,6 +40312,30 @@
 	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
+"nNQ" = (
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
+	},
+/obj/table/reinforced/auto,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/pen/marker/red,
+/obj/item/pen/marker/blue,
+/obj/item/hand_labeler,
+/obj/item/device/detective_scanner,
+/obj/item/clothing/under/suit/mortician,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/disposalpipe/junction{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/medical/morgue)
 "nNZ" = (
 /obj/landmark/start/job/assistant,
 /obj/item/clothing/glasses/sunglasses/tanning,
@@ -42006,6 +41985,23 @@
 	},
 /turf/simulated/floor/purpleblack/corner,
 /area/station/science/lobby)
+"oKq" = (
+/obj/storage/closet/dresser/random,
+/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/under/suit/black,
+/obj/item/clothing/under/shirt_pants,
+/obj/item/clothing/shoes/black,
+/obj/item/clothing/glasses/eyepatch{
+	name = "costume eyepatch"
+	},
+/obj/item/clothing/head/mime_beret,
+/obj/item/clothing/head/mime_bowler,
+/obj/item/clothing/under/misc/mime,
+/obj/item/clothing/under/misc/mime/alt,
+/obj/item/clothing/suit/suspenders,
+/obj/item/clothing/suit/scarf,
+/turf/simulated/floor/black,
+/area/station/crewquarters/garbagegarbs)
 "oKR" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -42957,6 +42953,34 @@
 	},
 /turf/simulated/floor,
 /area/station/security/equipment)
+"piV" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/mask/wrestling,
+/obj/item/clothing/mask/wrestling/black,
+/obj/item/clothing/mask/wrestling/blue,
+/obj/item/clothing/mask/wrestling/green,
+/obj/item/clothing/under/shorts/luchador,
+/obj/item/clothing/under/shorts/luchador/green,
+/obj/item/clothing/under/shorts/luchador/red,
+/obj/item/clothing/under/shorts/blue,
+/obj/item/clothing/under/shorts/red,
+/obj/item/clothing/under/shorts/black,
+/obj/item/clothing/under/gimmick/trashsinglet,
+/obj/item/clothing/head/helmet/men,
+/obj/item/clothing/head/helmet/men,
+/obj/item/clothing/suit/armor/douandtare,
+/obj/item/clothing/suit/armor/douandtare,
+/obj/item/clothing/gloves/kote,
+/obj/item/clothing/gloves/kote,
+/obj/item/shinai_bag,
+/obj/item/storage/box/kendo_box/hakama,
+/obj/machinery/light/incandescent/harsh{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 11
+	},
+/turf/simulated/floor/specialroom/gym/alt,
+/area/station/crew_quarters/fitness)
 "pjc" = (
 /obj/decal/tile_edge/line/white{
 	icon_state = "line3"
@@ -48591,30 +48615,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/central)
-"sfW" = (
-/obj/decal/tile_edge/line/black{
-	dir = 6;
-	icon_state = "line2"
-	},
-/obj/table/reinforced/auto,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/pen/marker/red,
-/obj/item/pen/marker/blue,
-/obj/item/hand_labeler,
-/obj/item/device/detective_scanner,
-/obj/item/clothing/under/suit/mortician,
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/disposalpipe/junction{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/station/medical/morgue)
 "sgg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -91532,7 +91532,7 @@ eov
 sLT
 odn
 odn
-kht
+caI
 aKj
 hEf
 azB
@@ -95166,7 +95166,7 @@ pAe
 gMU
 sfD
 sZK
-sfW
+nNQ
 sra
 bep
 ykB
@@ -104521,7 +104521,7 @@ avX
 jrP
 qet
 aJJ
-aLF
+piV
 aNy
 aXo
 aXo
@@ -105669,7 +105669,7 @@ cqv
 apT
 kTa
 ame
-jWD
+oKq
 czr
 ame
 qaD
@@ -105908,7 +105908,7 @@ abV
 hoO
 ahF
 acg
-ack
+iso
 abu
 cUO
 aiS
