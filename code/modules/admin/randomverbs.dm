@@ -1654,7 +1654,7 @@
 		LAGCHECK(LAG_LOW)
 		if (isdead(Cat))
 			Cat.full_heal()
-			Cat.icon_state = initial(Cat.icon_state)
+			Cat.set_icon_state(Cat.icon_state_alive)
 			Cat.visible_message("<span class='alert'>[Cat] seems to rise from the dead!</span>")
 			revived ++
 	logTheThing(LOG_ADMIN, src, "revived [revived] cat[revived == 1 ? "" : "s"].")
