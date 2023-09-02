@@ -296,20 +296,16 @@ TYPEINFO(/obj/item/device/flash)
 
 		if (safety == 0 && user.mind && user.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY) && !isghostcritter(user))
 			var/nostun = 0
-			if (!H.client || !H.mind)
-				user.show_text("[H] is braindead and cannot be converted.", "red")
-			else if (locate(/obj/item/implant/counterrev) in H.implant)
-				user.show_text("There seems to be something preventing [H] from revolting.", "red")
+//			if (!H.client || !H.mind)
+//				user.show_text("[H] is braindead and cannot be converted.", "red")
+			/*else*/if (locate(/obj/item/implant/counterrev) in H.implant)
+				src.on_counterrev(M, user)
 				.= 0.5
 				nostun = 1
-				if (istype(src,/obj/item/device/flash/revolution))
-					playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, 1, 0, 0.6)
-					user.show_text("Hold still to override . . . ", "red")
-					actions.start(new/datum/action/bar/icon/rev_flash(src,M), user)
-			else if (!H.can_be_converted_to_the_revolution())
-				user.show_text("[H] seems unwilling to revolt.", "red")
-				nostun = 1
-			else if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+//			else if (!H.can_be_converted_to_the_revolution())
+//				user.show_text("[H] seems unwilling to revolt.", "red")
+//				nostun = 1
+			/*else*/if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
 				user.show_text("[H] is already a member of the revolution.", "red")
 			else
 				.= 1
@@ -320,6 +316,8 @@ TYPEINFO(/obj/item/device/flash)
 			if (!nostun)
 				M.apply_flash(1, 2, 0, 0, 0, 0, 0, burning, 100, stamina_damage = 210, disorient_time = 40)
 
+obj/item/device/flash/proc/on_counterrev(mob/living/M, mob/user)
+	user.show_text("There seems to be something preventing [M] from revolting.", "red")
 
 /obj/item/device/flash/proc/process_burnout(mob/user as mob)
 	tooltip_rebuild = 1
@@ -435,3 +433,9 @@ TYPEINFO(/obj/item/device/flash/revolution)
 
 	attackby(obj/item/W, mob/user)
 		return
+
+	on_counterrev(mob/living/M, mob/user)
+		. = ..()
+		playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, 1, 0, 0.6)
+		user.show_text("Hold still to override . . . ", "red")
+		actions.start(new/datum/action/bar/icon/rev_flash(src,M), user)
