@@ -7375,6 +7375,7 @@
 "aEy" = (
 /obj/table/wood/auto,
 /obj/item/card_box/plain,
+/obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fpurple1"

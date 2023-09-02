@@ -44958,6 +44958,7 @@
 	layer = 3.1;
 	name = "Bar Shutter"
 	},
+/obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 8
 	},

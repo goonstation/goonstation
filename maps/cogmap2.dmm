@@ -10197,7 +10197,6 @@
 /area/station/crew_quarters/kitchen)
 "aDw" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/decoration/ashtray,
 /obj/disposalpipe/segment/food{
 	icon_state = "pipe-c"
 	},
@@ -10721,6 +10720,7 @@
 "aES" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/card_box/plain,
+/obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},

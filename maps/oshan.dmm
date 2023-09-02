@@ -18237,6 +18237,7 @@
 /area/station/crew_quarters/bar)
 "bmz" = (
 /obj/table/reinforced/bar/auto,
+/obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet/blue/fancy/narrow/se,
 /area/station/crew_quarters/bar)
 "bmA" = (
