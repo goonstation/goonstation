@@ -30047,7 +30047,6 @@
 /obj/cable/orange{
 	icon_state = "1-8"
 	},
-/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "lUZ" = (
@@ -37436,7 +37435,6 @@
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
-/obj/machinery/portable_reclaimer,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
