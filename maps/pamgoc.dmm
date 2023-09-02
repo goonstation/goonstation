@@ -23736,6 +23736,25 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/security/main)
+"bcw" = (
+/obj/item/device/radio/intercom,
+/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/head/mime_beret,
+/obj/item/clothing/head/mime_bowler,
+/obj/item/clothing/under/misc/mime,
+/obj/item/clothing/under/misc/mime/alt,
+/obj/item/clothing/suit/suspenders,
+/obj/item/clothing/suit/scarf,
+/obj/storage/closet/dresser{
+	anchored = 1;
+	name = "costume dresser"
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fred2"
+	},
+/area/station/chapel/sanctuary)
 "bcx" = (
 /obj/item/device/radio/intercom,
 /obj/decal/stripe_caution,
@@ -35582,6 +35601,29 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/white,
 /area/station/routing/medsci)
+"bHF" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/table/auto,
+/obj/item/clothing/mask/surgical{
+	pixel_x = -12;
+	pixel_y = 9
+	},
+/obj/item/clothing/under/suit/black{
+	name = "Mortician Suit";
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "bHG" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -57869,15 +57911,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
-"fdV" = (
-/obj/displaycase{
-	displayed = new/obj/item/captaingun
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "feN" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 8
@@ -58474,6 +58507,14 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
+"gpe" = (
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1
+	},
+/turf/simulated/floor/redwhite{
+	dir = 10
+	},
+/area/station/medical/medbay/surgery)
 "gsh" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -59271,18 +59312,6 @@
 	dir = 1
 	},
 /area/station/ranch)
-"idW" = (
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1
-	},
-/turf/simulated/floor/redwhite{
-	dir = 6
-	},
-/area/station/medical/medbay/surgery)
 "ifc" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -59787,29 +59816,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/eastwest,
 /area/station/medical/staff)
-"iVp" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/table/auto,
-/obj/item/clothing/mask/surgical{
-	pixel_x = -12;
-	pixel_y = 9
-	},
-/obj/item/clothing/under/suit/black{
-	name = "Mortician Suit";
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/clothing/gloves/latex{
-	pixel_x = 4;
-	pixel_y = 2
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "iVu" = (
 /obj/disposalpipe/segment{
 	dir = 8
@@ -60100,25 +60106,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"jFL" = (
-/obj/item/device/radio/intercom,
-/obj/item/clothing/under/suit/black/dress,
-/obj/item/clothing/under/suit/black/dress,
-/obj/item/clothing/head/mime_beret,
-/obj/item/clothing/head/mime_bowler,
-/obj/item/clothing/under/misc/mime,
-/obj/item/clothing/under/misc/mime/alt,
-/obj/item/clothing/suit/suspenders,
-/obj/item/clothing/suit/scarf,
-/obj/storage/closet/dresser{
-	anchored = 1;
-	name = "costume dresser"
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fred2"
-	},
-/area/station/chapel/sanctuary)
 "jFO" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 8;
@@ -60801,14 +60788,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"kSw" = (
-/obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1
-	},
-/turf/simulated/floor/redwhite{
-	dir = 10
-	},
-/area/station/medical/medbay/surgery)
 "kWj" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -60847,6 +60826,15 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
+"lel" = (
+/obj/displaycase{
+	displayed = /obj/item/captaingun
+	},
+/obj/window/reinforced{
+	dir = 2
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "let" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8;
@@ -64927,6 +64915,18 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
+"uza" = (
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1
+	},
+/turf/simulated/floor/redwhite{
+	dir = 6
+	},
+/area/station/medical/medbay/surgery)
 "uzi" = (
 /obj/disposalpipe/trunk{
 	dir = 1
@@ -98045,7 +98045,7 @@ qsB
 czk
 bMy
 czk
-jFL
+bcw
 brc
 csu
 qIm
@@ -114430,7 +114430,7 @@ cCp
 cCp
 aLe
 cCn
-iVp
+bHF
 ajn
 ajn
 ajn
@@ -119276,7 +119276,7 @@ bCq
 bom
 cwQ
 boH
-kSw
+gpe
 lUI
 oGx
 rxx
@@ -119880,7 +119880,7 @@ geA
 bmf
 bmc
 aPz
-idW
+uza
 umP
 hAd
 rxx
@@ -131587,7 +131587,7 @@ cfq
 avU
 css
 ayd
-fdV
+lel
 coJ
 cix
 aUP
