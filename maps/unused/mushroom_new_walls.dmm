@@ -33480,7 +33480,7 @@
 /area/station/security/main)
 "tlw" = (
 /obj/table/auto,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = -8
 	},
 /obj/item/storage/box/revimp_kit{
