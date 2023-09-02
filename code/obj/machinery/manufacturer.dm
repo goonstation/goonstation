@@ -2016,7 +2016,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			<td class='r'>[current_reagent.volume] units</td>
 		</tr>
 				"}
-
+		if (QDELETED(src.beaker))
+			src.beaker = null
 		if (src.beaker)
 			dat += {"
 		<tr><th colspan='2'>Container</th></tr>

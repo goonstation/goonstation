@@ -198,6 +198,7 @@
 	name = "reagent extractor tank"
 	desc = "A large tank used in the reagent extractors. You probably shouldn't be able to see this!"
 	initial_volume = 500
+	shatter_immune = TRUE
 
 /* ================================================= */
 /* -------------------- Flasks -------------------- */

@@ -195,6 +195,8 @@ proc/ui_describe_reagents(atom/A)
 	amount_per_transfer_from_this = 10
 	can_recycle = TRUE //can this be put in a glass recycler?
 	var/splash_all_contents = 1
+	///For internal tanks and other things that definitely should not shatter
+	var/shatter_immune = FALSE
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 
 	// this proc is a mess ow
@@ -509,6 +511,8 @@ proc/ui_describe_reagents(atom/A)
 				src.reagents.clear_reagents()
 
 	shatter_chemically(var/projectiles = FALSE)
+		if (src.shatter_immune)
+			return FALSE
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<span class='alert'>The <B>[src.name]</B> shatters!</span>")
 		if(projectiles)
