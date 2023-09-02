@@ -1468,7 +1468,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		coloration_overlay.blend_mode = 4
 		UpdateIcon()
 		worldgenCandidates += src
-		if(current_state >= GAME_STATE_PREGAME)
+		if(current_state > GAME_STATE_PREGAME)
 			SPAWN(1)
 				space_overlays()
 
