@@ -601,7 +601,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-pdaColor")
-				var/new_color = input(usr, "Choose a color", "PDA", src.PDAcolor) as color | null
+				var/new_color = tgui_color_picker(usr, "Choose a color", "PDA", src.PDAcolor)
 				if (!isnull(new_color))
 					src.PDAcolor = new_color
 					src.profile_modified = TRUE
@@ -613,7 +613,7 @@ datum/preferences
 				if (usr.has_medal("Contributor"))
 					switch(tgui_alert(usr, "Goonstation contributors get to pick any colour for their skin tone!", "Thanks, pal!", list("Paint me like a posh fence!", "Use Standard tone.", "Cancel")))
 						if("Paint me like a posh fence!")
-							new_tone = input(usr, "Please select skin color.", "Character Generation", AH.s_tone)  as null|color
+							new_tone = tgui_color_picker(usr, "Please select skin color.", "Character Generation", AH.s_tone)
 						if("Use Standard tone.")
 							new_tone = get_standard_skintone(usr)
 						else
@@ -671,7 +671,7 @@ datum/preferences
 					src.profile_modified = TRUE
 					return TRUE
 			if ("update-eyeColor")
-				var/new_color = input(usr, "Please select an eye color.", "Character Generation", AH.e_color) as null|color
+				var/new_color = tgui_color_picker(usr, "Please select an eye color.", "Character Generation", AH.e_color)
 				if (new_color)
 					AH.e_color = new_color
 
@@ -695,7 +695,7 @@ datum/preferences
 						current_color = src.AH.customization_third_color
 					if ("underwear")
 						current_color = src.AH.u_color
-				var/new_color = input(usr, "Please select a color.", "Character Generation", current_color) as null|color
+				var/new_color = tgui_color_picker(usr, "Please select a color.", "Character Generation", current_color)
 				if (new_color)
 					switch(params["id"])
 						if ("custom1")
@@ -1080,7 +1080,7 @@ datum/preferences
 			qdel(ourWig)
 
 		if (traitPreferences.traits_selected.Find("bald") && mutantRace)
-			H.equip_if_possible(H.create_wig(), H.slot_head)
+			H.equip_if_possible(H.create_wig(), SLOT_HEAD)
 
 	proc/ShowChoices(mob/user)
 		src.ui_interact(user)

@@ -643,7 +643,7 @@ var/reverse_mode = 0
 /proc/fake_blood(var/mob/target)
 	var/obj/overlay/O = new/obj/overlay(target.loc)
 	O.name = "blood"
-	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
+	var/image/I = image('icons/obj/decals/blood/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
 	target << I
 	SPAWN(30 SECONDS)
 		qdel(O)

@@ -254,6 +254,12 @@
 							qdel(C)
 						else
 							live++
+					for (var/mob/living/critter/C in gauntlet)
+						if (isdead(C))
+							showswirl(get_turf(C))
+							qdel(C)
+						else
+							live++
 					if (!live)
 						finishWave()
 					for (var/mob/living/M in gauntlet)
@@ -295,6 +301,8 @@
 			for (var/obj/artifact/A in gauntlet)
 				qdel(A)
 			for (var/obj/critter/C in gauntlet)
+				qdel(C)
+			for (var/mob/living/critter/C in gauntlet)
 				qdel(C)
 			for (var/obj/machinery/bot/B in gauntlet)
 				qdel(B)
@@ -471,6 +479,8 @@
 				qdel(P)
 		for (var/obj/item/electronics/E in gauntlet)
 			qdel(E)
+		for(var/obj/item/material_piece/M in gauntlet)
+			qdel(M)
 
 		current_level++
 		current_waves.len = 0

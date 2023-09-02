@@ -83,6 +83,7 @@ TYPEINFO(/obj/item/device/chameleon)
 	var/obj/dummy/chameleon/cham = null //No sense creating / destroying this
 	var/active = 0
 	tooltip_flags = REBUILD_DIST
+	HELP_MESSAGE_OVERRIDE({"Use the chameleon projector on any object to copy it's appearance. Use it in hand to appear as that object indefinitely. The disguise will be removed if you interact with anything else or are hit."})
 
 	is_syndicate = 1
 
@@ -200,6 +201,12 @@ TYPEINFO(/obj/item/device/chameleon)
 	icon_state = "cham_bomb"
 	burn_possible = 0
 	var/strength = 12
+
+	get_help_message(dist, mob/user)
+		if (src.name == "chameleon bomb") // We havent been disguised yet, so we can show help messages
+			return "Hit the bomb on any object to disguise it as that object. Use the bomb in hand to arm/disarm it. The bomb will explode when anyone tries to pick up the armed bomb."
+		else
+			return null
 
 	dropped()
 		return

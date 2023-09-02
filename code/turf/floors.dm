@@ -1221,26 +1221,39 @@ TYPEINFO(/turf/simulated/floor/wood)
 	icon_state = "quiltystair2"
 
 
+TYPEINFO(/turf/simulated/floor/stairs/wood)
+	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/stairs/wood
+	default_material = "wood"
 	icon_state = "wood_stairs"
 
 /turf/simulated/floor/stairs/wood/wide
+	default_material = "wood"
 	icon_state = "wood_stairs2"
 
 
+TYPEINFO(/turf/simulated/floor/stairs/wood2)
+	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/stairs/wood2
+	default_material = "wood"
 	icon_state = "wood2_stairs"
 
 /turf/simulated/floor/stairs/wood2/wide
+	default_material = "wood"
 	icon_state = "wood2_stairs2"
 
 /turf/simulated/floor/stairs/wood2/middle
+	default_material = "wood"
 	icon_state = "wood2_stairs2_middle"
 
+TYPEINFO(/turf/simulated/floor/stairs/wood3)
+	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/stairs/wood3
+	default_material = "wood"
 	icon_state = "wood3_stairs"
 
 /turf/simulated/floor/stairs/wood3/wide
+	default_material = "wood"
 	icon_state = "wood3_stairs2"
 
 

@@ -47,9 +47,6 @@
 	Z_LOG_DEBUG("World/Init", "Loading mode...")
 	src.load_mode()
 
-	Z_LOG_DEBUG("World/Init", "Loading rules...")
-	src.load_rules()
-
 	mapSwitcher = new()
 
 	Z_LOG_DEBUG("World/Init", "Telemanager setup...")
@@ -132,7 +129,7 @@
 	//QM Categories by ZeWaka
 	build_qm_categories()
 
-	#if SKIP_Z5_SETUP == 0
+	#ifndef SKIP_Z5_SETUP
 	UPDATE_TITLE_STATUS("Building mining level")
 	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
 	makeMiningLevel()
@@ -164,7 +161,7 @@
 	initialize_mail_system()
 	#endif
 
-	#if ENABLE_ARTEMIS && SKIP_PLANETS_SETUP == 0
+	#if ENABLE_ARTEMIS && !defined(SKIP_PLANETS_SETUP)
 	UPDATE_TITLE_STATUS("Building planet level")
 	Z_LOG_DEBUG("World/Init", "Setting up planet level...")
 	makePlanetLevel()
@@ -285,6 +282,3 @@
 
 /world/proc/load_motd()
 	join_motd = grabResource("html/motd.html")
-
-/world/proc/load_rules()
-	rules = {"<meta http-equiv="refresh" content="0; url=http://wiki.ss13.co/Rules">"}

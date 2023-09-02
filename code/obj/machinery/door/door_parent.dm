@@ -566,12 +566,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 					continue
 				var/mob_layer = L.layer	//Make it look like we're inside the door
 				L.layer = src.layer - 0.01
-				playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 100, 1)
-				L.emote("scream")
+				if(!ON_COOLDOWN(L, "doorcrush", 0.5 SECONDS))
+					playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 100, 1)
+					L.emote("scream")
 
-				L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
+					L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
 
-				L.changeStatus("weakened", 3 SECONDS)
+					L.changeStatus("weakened", 3 SECONDS)
 				L.stuttering += 10
 				did_crush = 1
 				SPAWN(src.operation_time * 1.5 + crush_delay)

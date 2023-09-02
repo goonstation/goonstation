@@ -12,16 +12,11 @@
 	initial_volume = 25
 	initial_reagents = "yuck"
 
-/obj/item/reagent_containers/food/snacks/yuckburn
+/obj/item/reagent_containers/food/snacks/yuck/burn
 	name = "smoldering mess"
 	desc = "This looks more like charcoal than food..."
-	icon = 'icons/obj/foodNdrink/food_yuck.dmi'
 	icon_state = "burnt"
-	bites_left = 1
-	heal_amt = 0
 	food_color = "#33302b"
-	initial_volume = 25
-	initial_reagents = "yuck"
 
 /obj/item/reagent_containers/food/snacks/shell
 	name = "incinerated embodiment of culinary disaster"
@@ -1396,7 +1391,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	var/style_step = 1
 
 	heal(var/mob/M)
-		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Nanotrasen Security Consultant", "Security Assistant", "Part-time Vice Officer")))
+		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Nanotrasen Security Consultant", "Security Assistant")))
 			src.heal_amt *= 2
 			..()
 			src.heal_amt /= 2
