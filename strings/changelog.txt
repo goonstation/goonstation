@@ -1,5 +1,9 @@
 
 (t)sat sep 02 23
+(u)MeggalBozale
+(p)15305
+(e)🆕🗺💅🧛|C-Feature, A-Mapping, C-QoL, A-Gamemodes
+(+)The Caringorm now has an energy shield blocking its podbay - about half their team must agree first before opening it up.
 (u)Amylizzle
 (p)15569
 (e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
