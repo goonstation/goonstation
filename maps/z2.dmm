@@ -43447,7 +43447,9 @@
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
 	},
-/obj/forcefield/energyshield/perma,
+/obj/forcefield/energyshield/perma{
+	color = "#ff6666"
+	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
 "cVL" = (
@@ -46619,16 +46621,19 @@
 /turf/unsimulated/floor/plating/random,
 /area/syndicate_station/firing_range)
 "der" = (
+/obj/forcefield/battlecruiser,
 /turf/unsimulated/floor/stairs/dark/wide{
 	dir = 10
 	},
 /area/syndicate_station/battlecruiser)
 "des" = (
+/obj/forcefield/battlecruiser,
 /turf/unsimulated/floor/stairs/dark{
 	dir = 10
 	},
 /area/syndicate_station/battlecruiser)
 "det" = (
+/obj/forcefield/battlecruiser,
 /turf/unsimulated/floor/stairs/dark/wide{
 	dir = 1
 	},
@@ -46675,13 +46680,14 @@
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "dez" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/decal/stripe_caution,
+/obj/machinery/computer/battlecruiser_podbay{
+	pixel_y = 34
+	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "deA" = (
@@ -47141,14 +47147,6 @@
 "dfp" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/decal/stripe_caution,
-/turf/unsimulated/floor/darkpurple,
-/area/syndicate_station/battlecruiser)
-"dfq" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "dfr" = (
@@ -101750,7 +101748,7 @@ bqV
 bqV
 dgD
 bqW
-bqW
+dgR
 lzl
 lzl
 qPk
@@ -103858,10 +103856,10 @@ lzl
 lzl
 lzl
 dez
+bqV
+bqV
+bqV
 dfp
-bqV
-bqV
-bqV
 lzl
 dgR
 dhc
@@ -104160,10 +104158,10 @@ dat
 dat
 lzl
 lzl
+wgY
+wgY
+wgY
 lzl
-wgY
-wgY
-wgY
 lzl
 lzl
 lzl
@@ -104462,7 +104460,7 @@ daU
 dei
 lzl
 deA
-dfq
+bqV
 bqV
 bqW
 dgx
