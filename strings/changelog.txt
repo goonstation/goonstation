@@ -1,5 +1,9 @@
 
 (t)fri sep 01 23
+(u)DimWhat
+(p)15610
+(e)🎨⚖🎩|C-Sprites, C-Balance, A-Clothing
+(*)Added a new HoS themed helmet to the HoS locker.
 (u)MeggalBozale
 (p)15622
 (e)🗺💅|A-Mapping, C-QoL
