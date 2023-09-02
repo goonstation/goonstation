@@ -1,4 +1,4 @@
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 
 var/global/datum/galaxy/GALAXY = new
 

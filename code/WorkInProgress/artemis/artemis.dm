@@ -1,4 +1,4 @@
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 
 #define ARTEMIS_ANIMATION_SPEED 2 // 2/10ths of a second. used to calculate various displacements
 #define ARTEMIS_MAX_R 951
@@ -146,9 +146,11 @@
 		SPAWN(0)
 			do_process = 1
 			src.fast_process()
+		START_TRACKING
 
 	disposing()
 		UnsubscribeProcess()
+		STOP_TRACKING
 		..()
 
 	proc/SubscribeToProcess()

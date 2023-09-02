@@ -1280,7 +1280,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Resource"
 
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 /******************** Artemis **************************/
 
 /datum/manufacture/nav_sat
