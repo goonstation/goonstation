@@ -3896,6 +3896,7 @@
 	dir = 1;
 	pixel_y = 32
 	},
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "arg" = (
@@ -10668,6 +10669,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -13573,6 +13575,8 @@
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/decal/stripe_caution,
+/obj/machinery/navbeacon/mule/research_north/south,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
@@ -13774,8 +13778,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/machinery/navbeacon/mule/research_north/south,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "bmX" = (
@@ -13901,7 +13904,7 @@
 /obj/disposalpipe/junction{
 	icon_state = "pipe-j2"
 	},
-/obj/decal/stripe_delivery,
+/obj/storage/closet/biohazard,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "bnO" = (
@@ -14183,6 +14186,12 @@
 /area/station/maintenance/central)
 "bpd" = (
 /obj/decal/cleanable/dirt,
+/obj/cable,
+/obj/machinery/power/apc{
+	areastring = "Quartermaster's Storage";
+	name = "QM Warehouse APC";
+	pixel_y = -24
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bpe" = (
@@ -14232,7 +14241,6 @@
 	},
 /area/station/science/chemistry)
 "bpo" = (
-/obj/storage/closet/biohazard,
 /obj/machinery/light{
 	dir = 8;
 	pixel_x = -10
@@ -14641,9 +14649,6 @@
 /area/station/maintenance/central)
 "brq" = (
 /obj/disposalpipe/segment/mail,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "brr" = (
@@ -14944,9 +14949,6 @@
 	icon_state = "pipe-sj2";
 	name = "undeliverable mail router"
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/storage)
 "btv" = (
@@ -14965,9 +14967,6 @@
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical,
 /obj/random_item_spawner/tools,
-/obj/item/storage/wall/emergency{
-	pixel_y = 32
-	},
 /obj/item/hand_labeler,
 /obj/machinery/light/emergency{
 	dir = 1
@@ -15240,13 +15239,6 @@
 "buG" = (
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
-"buH" = (
-/obj/disposalpipe/segment/mail,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
 "buI" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -15454,11 +15446,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/storage)
-"bvP" = (
-/turf/simulated/floor/neutral/corner{
-	dir = 8
-	},
 /area/station/quartermaster/storage)
 "bvQ" = (
 /obj/disposalpipe/segment{
@@ -18459,6 +18446,14 @@
 /obj/table/reinforced/auto,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"cgH" = (
+/obj/machinery/door/airlock/pyro/sci_alt{
+	name = "Research"
+	},
+/obj/mapping_helper/access/research_foyer,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/science/lobby)
 "cha" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -18572,13 +18567,9 @@
 /area/station/engine/engineering/ce/private)
 "clf" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/power/apc/autoname_east{
-	areastring = "Cargo Dock"
-	},
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "1-2"
 	},
-/obj/cable,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "clG" = (
@@ -19099,9 +19090,7 @@
 	name = "autoname  - SS13";
 	tag = ""
 	},
-/turf/simulated/floor/neutral/corner{
-	dir = 8
-	},
+/turf/simulated/floor,
 /area/station/quartermaster/storage)
 "cLn" = (
 /obj/table/reinforced/auto,
@@ -19154,6 +19143,12 @@
 	icon_state = "blue2"
 	},
 /area/station/bridge)
+"cMs" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/hallway/primary/west)
 "cME" = (
 /obj/cable,
 /obj/cable{
@@ -19911,6 +19906,15 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"dtn" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	name = "East Maintenance"
+	},
+/obj/mapping_helper/access/cargo,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "dtW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -20308,11 +20312,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "dMO" = (
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/cable,
 /obj/machinery/portable_reclaimer,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/yellow/side{
@@ -20994,6 +20996,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/mining,
+/obj/mapping_helper/access/engineering,
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "eqk" = (
@@ -23228,16 +23231,16 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	areastring = "Quartermaster's Office";
+	areastring = "East Primary Hallway";
 	dir = 1;
-	name = "Quartermaster's Office APC";
+	name = "East Primary Hallway APC";
 	pixel_y = 24
 	},
 /obj/cable{
-	icon_state = "0-4"
+	icon_state = "0-8"
 	},
 /obj/cable{
-	icon_state = "0-8"
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -24976,9 +24979,6 @@
 /area/station/hallway/secondary/central)
 "hQj" = (
 /obj/disposalpipe/segment/mail,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/door/airlock/pyro/mining{
 	name = "Cargo"
 	},
@@ -25704,7 +25704,6 @@
 /obj/cable/brown{
 	icon_state = "1-8"
 	},
-/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "iqI" = (
@@ -29378,18 +29377,6 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/central)
-"lmu" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	noalerts = 1;
-	pixel_x = -24
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
 "lmJ" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -30568,9 +30555,6 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/cable{
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "miw" = (
@@ -31348,6 +31332,9 @@
 /area/station/security/main)
 "mOb" = (
 /obj/reagent_dispensers/watertank/fountain,
+/obj/item/storage/wall/emergency{
+	pixel_y = 32
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/storage)
 "mOq" = (
@@ -33881,6 +33868,15 @@
 	dir = 4
 	},
 /area/station/mining/staff_room)
+"oVr" = (
+/obj/machinery/power/apc{
+	areastring = "Cargo Dock";
+	name = "Cargo Hangar APC";
+	pixel_y = -24
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "oWb" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -35543,6 +35539,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"qkH" = (
+/obj/machinery/computer/barcode/qm/no_belthell{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/storage)
 "qkW" = (
 /obj/machinery/door/airlock/pyro/glass/med,
 /obj/mapping_helper/firedoor_spawn,
@@ -35929,11 +35931,7 @@
 	on = 1;
 	target_pressure = 1000
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Thermo-Electric Generator APC";
-	pixel_y = 24
-	},
+/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -37115,10 +37113,17 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/neutral/corner{
-	dir = 8
-	},
+/turf/simulated/floor,
 /area/station/quartermaster/office)
+"rsh" = (
+/obj/machinery/power/apc{
+	areastring = "Mining Staff Room";
+	name = "Mining APC";
+	pixel_y = -24
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "rsw" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
@@ -38871,16 +38876,6 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
-"sSd" = (
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/machinery/conveyor/SN{
-	id = "cargo_in"
-	},
-/turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/office)
 "sTT" = (
 /obj/machinery/light{
 	dir = 1;
@@ -39633,10 +39628,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"tAl" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
 "tAE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39891,6 +39882,15 @@
 "tJp" = (
 /turf/simulated/floor/black,
 /area/station/engine/inner)
+"tJv" = (
+/obj/machinery/power/apc{
+	areastring = "Quartermaster's Office";
+	name = "Quartermaster's Office APC";
+	pixel_y = -24
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "tJI" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Showers"
@@ -40402,7 +40402,7 @@
 	name = "Research"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/research,
+/obj/mapping_helper/access/research_foyer,
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "ufP" = (
@@ -41012,19 +41012,6 @@
 	icon_state = "fblue2"
 	},
 /area/station/medical/head)
-"uBD" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc{
-	areastring = "East Primary Hallway";
-	dir = 4;
-	name = "East Primary Hallway APC";
-	pixel_x = 24
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "uCg" = (
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -41506,6 +41493,7 @@
 	pixel_x = -10;
 	pixel_y = 1
 	},
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "uSQ" = (
@@ -41586,6 +41574,16 @@
 /obj/landmark/start/job/botanist,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"uUP" = (
+/obj/machinery/conveyor/SN{
+	id = "cargo_in"
+	},
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/quartermaster/office)
 "uVN" = (
 /turf/simulated/wall/auto/reinforced/supernorn{
 	explosion_resistance = 15;
@@ -41807,7 +41805,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "vjL" = (
 /obj/machinery/power/smes,
@@ -42165,6 +42163,18 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"vyj" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "vys" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -42319,9 +42329,6 @@
 	dir = 1;
 	mail_tag = "mining";
 	name = "mining mail router"
-	},
-/obj/cable{
-	icon_state = "1-8"
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
@@ -72528,7 +72535,7 @@ rbY
 uzQ
 twB
 roK
-aXJ
+cMs
 mFb
 bnB
 boy
@@ -78705,7 +78712,7 @@ brp
 bss
 btt
 buG
-lmu
+buG
 bwW
 moP
 bzk
@@ -78961,7 +78968,7 @@ miq
 brq
 hQj
 btu
-buH
+bEH
 vGN
 bwX
 buG
@@ -79214,8 +79221,8 @@ uFM
 bmE
 bem
 boV
-wzQ
-brp
+euB
+rsh
 bss
 btv
 buG
@@ -79471,7 +79478,7 @@ tEj
 bhB
 bem
 pNt
-wzQ
+euB
 bpd
 bss
 ooi
@@ -79728,8 +79735,8 @@ euG
 bhB
 bem
 boX
-oeE
-brp
+vyj
+oVr
 bss
 btx
 buI
@@ -79738,7 +79745,7 @@ bxa
 byg
 byg
 vjk
-tAl
+byg
 rjO
 nNC
 aGI
@@ -79985,12 +79992,12 @@ bls
 bmF
 bem
 boY
-wzQ
-brp
+euB
+tJv
 bss
 tWN
 buJ
-bvP
+buG
 fsb
 psf
 wWR
@@ -81023,7 +81030,7 @@ tJd
 cvh
 ewc
 bBC
-buG
+qkH
 hCo
 iwK
 rSP
@@ -84359,8 +84366,8 @@ vAH
 aFW
 aqu
 jEJ
+uUP
 dPT
-sSd
 dPT
 klZ
 bUH
@@ -84617,7 +84624,7 @@ asm
 aqu
 aqu
 aqu
-aqu
+dtn
 aqu
 bzA
 aVr
@@ -85125,9 +85132,9 @@ oXP
 dkH
 dXn
 bpo
-aHM
+cgH
 rEp
-uBD
+auN
 auN
 clf
 auN
