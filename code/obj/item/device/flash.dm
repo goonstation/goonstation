@@ -296,16 +296,16 @@ TYPEINFO(/obj/item/device/flash)
 
 		if (safety == 0 && user.mind && user.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY) && !isghostcritter(user))
 			var/nostun = 0
-//			if (!H.client || !H.mind)
-//				user.show_text("[H] is braindead and cannot be converted.", "red")
-			/*else*/if (locate(/obj/item/implant/counterrev) in H.implant)
+			if (!H.client || !H.mind)
+				user.show_text("[H] is braindead and cannot be converted.", "red")
+			else if (locate(/obj/item/implant/counterrev) in H.implant)
 				src.on_counterrev(M, user)
 				.= 0.5
 				nostun = 1
-//			else if (!H.can_be_converted_to_the_revolution())
-//				user.show_text("[H] seems unwilling to revolt.", "red")
-//				nostun = 1
-			/*else*/if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+			else if (!H.can_be_converted_to_the_revolution())
+				user.show_text("[H] seems unwilling to revolt.", "red")
+				nostun = 1
+			else if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
 				user.show_text("[H] is already a member of the revolution.", "red")
 			else
 				.= 1
