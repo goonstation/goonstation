@@ -187,6 +187,7 @@
 	src.attach_hud(hud)
 	src.zone_sel = new(src)
 	src.attach_hud(zone_sel)
+	src.update_equipment_screen_loc()
 
 	if (src.stamina_bar)
 		hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
@@ -534,6 +535,11 @@
 	if (organHolder)
 		organHolder.dispose()
 		organHolder = null
+
+	if (src.inventory)
+		src.inventory.dispose()
+		src.inventory = null
+
 	..()
 
 	//blah, this might not be effective for ref clearing but ghost observers inside me NEED this list to be populated in base mob/disposing
@@ -625,7 +631,8 @@
 		return
 
 	//Zombies just rise again (after a delay)! Oh my!
-	if (src.mutantrace.onDeath(gibbed))
+	var/mutrace_result = src.mutantrace.onDeath(gibbed)
+	if(mutrace_result == MUTRACE_ONDEATH_REVIVED)
 		return
 
 	if (src.bioHolder && src.bioHolder.HasEffect("revenant"))
@@ -788,7 +795,10 @@
 					logTheThing(LOG_DIARY, null, "Rebooting because of no live players", "game")
 					Reboot_server()
 #endif
-	return ..(gibbed)
+	. = ..(gibbed)
+
+	if(mutrace_result == MUTRACE_ONDEATH_DEFER_DELETE)
+		qdel(src)
 
 //Unkillable respawn proc, also used by soulguard now
 // Also for removing antagonist status. New mob required to get rid of old-style, mob-specific antagonist verbs (Convair880).

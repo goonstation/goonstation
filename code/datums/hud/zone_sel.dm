@@ -21,26 +21,25 @@
 		master = M
 		if (sloc)
 			slocation = sloc
-		SPAWN(0)
-			if (istype(I))
-				icon_hud = I
-			else if (isrobot(master))
-				icon_hud = 'icons/mob/hud_robot.dmi'
-			else
-				var/icon/hud_style = hud_style_selection[get_hud_style(master)]
-				if (isicon(hud_style))
-					icon_hud = hud_style
-			if (master?.client?.tg_layout && ishuman(master))
-				slocation = tg_ui_zone_sel
+		if (istype(I))
+			icon_hud = I
+		else if (isrobot(master))
+			icon_hud = 'icons/mob/hud_robot.dmi'
+		else
+			var/icon/hud_style = hud_style_selection[get_hud_style(master)]
+			if (isicon(hud_style))
+				icon_hud = hud_style
+		if (master?.client?.tg_layout && ishuman(master))
+			slocation = tg_ui_zone_sel
 
-			background = create_screen("background", "Zone Selection", src.icon_hud, "zone_sel", src.slocation, HUD_LAYER)
-			head = create_screen("head", "Target Head", src.icon_hud, "sel-head", src.slocation, HUD_LAYER+1)
-			chest = create_screen("chest", "Target Chest", src.icon_hud, "sel-chest", src.slocation, HUD_LAYER+1)
-			l_arm = create_screen("l_arm", "Target Left Arm", src.icon_hud, "sel-l_arm", src.slocation, HUD_LAYER+1)
-			r_arm = create_screen("r_arm", "Target Right Arm", src.icon_hud, "sel-r_arm", src.slocation, HUD_LAYER+1)
-			l_leg = create_screen("l_leg", "Target Left Leg", src.icon_hud, "sel-l_leg", src.slocation, HUD_LAYER+1)
-			r_leg = create_screen("r_leg", "Target Right Leg", src.icon_hud, "sel-r_leg", src.slocation, HUD_LAYER+1)
-			selection = create_screen("selection", "Current Target ([capitalize(zone_sel2name[src.selecting])])", src.icon_hud, src.selecting, src.slocation, HUD_LAYER+2)
+		background = create_screen("background", "Zone Selection", src.icon_hud, "zone_sel", src.slocation, HUD_LAYER)
+		head = create_screen("head", "Target Head", src.icon_hud, "sel-head", src.slocation, HUD_LAYER+1)
+		chest = create_screen("chest", "Target Chest", src.icon_hud, "sel-chest", src.slocation, HUD_LAYER+1)
+		l_arm = create_screen("l_arm", "Target Left Arm", src.icon_hud, "sel-l_arm", src.slocation, HUD_LAYER+1)
+		r_arm = create_screen("r_arm", "Target Right Arm", src.icon_hud, "sel-r_arm", src.slocation, HUD_LAYER+1)
+		l_leg = create_screen("l_leg", "Target Left Leg", src.icon_hud, "sel-l_leg", src.slocation, HUD_LAYER+1)
+		r_leg = create_screen("r_leg", "Target Right Leg", src.icon_hud, "sel-r_leg", src.slocation, HUD_LAYER+1)
+		selection = create_screen("selection", "Current Target ([capitalize(zone_sel2name[src.selecting])])", src.icon_hud, src.selecting, src.slocation, HUD_LAYER+2)
 
 	clear_master()
 		master = null

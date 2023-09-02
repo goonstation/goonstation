@@ -801,14 +801,14 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		if (src.lying)
 			if (src.wear_suit)
 				src.wear_suit.add_blood(F)
-				src.update_suit()
+				src.update_bloody_suit()
 			else if (src.w_uniform)
 				src.w_uniform.add_blood(F)
-				src.update_uniform()
+				src.update_bloody_uniform()
 		else
 			if (src.shoes)
 				src.shoes.add_blood(F)
-				src.update_shoes()
+				src.update_bloody_shoes()
 			else
 				src.add_blood(F)
 

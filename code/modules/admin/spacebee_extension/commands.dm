@@ -482,7 +482,6 @@
 			target.mind.damned = 0
 			target.mind.transfer_to(newM)
 		target.mind = null
-		newM.Login()
 		newM.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 		qdel(target)
 

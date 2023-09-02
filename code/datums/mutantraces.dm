@@ -251,6 +251,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		return
 
 	/// Called when our mob dies.  Returning a true value will short circuit the normal death proc right before deathgasp/headspider/etc
+	/// Rturn values are [MUTRACE_ONDEATH_NOTHING], [MUTRACE_ONDEATH_REVIVED], [MUTRACE_ONDEATH_DEFER_DELETE] etc.
 	proc/onDeath(gibbed)
 		return
 
@@ -1024,7 +1025,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 						if(strain == 2) // spitter ranged zombie
 							make_spitter(src.mob)
 
-		return 1
+		return MUTRACE_ONDEATH_REVIVED
 
 /datum/mutantrace/zombie/can_infect
 
@@ -1212,7 +1213,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			var/mob/dead/observer/newmob = src.mob.ghostize()
 			newmob?.corpse = null
 
-			qdel(src.mob)
+			return MUTRACE_ONDEATH_DEFER_DELETE
 
 /obj/item/joint_wax
 	name = "joint wax"

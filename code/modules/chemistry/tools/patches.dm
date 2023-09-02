@@ -99,6 +99,11 @@
 			src.UpdateIcon()
 			return 1
 
+	set_loc(newloc, storage_check)
+		. = ..()
+		if (src.active && newloc != null)
+			qdel(src)
+
 	attackby(obj/item/W, mob/user)
 		return
 
@@ -190,9 +195,8 @@
 			if (L.bleeding <= 3)
 				repair_bleeding_damage(M, 25, 1)
 
-		else 
+		else
 			repair_bleeding_damage(M, 25, 1)
-		active = 1
 
 		if (reagents?.total_volume)
 			if (!borg)
@@ -219,6 +223,7 @@
 				qdel(src)
 			else
 				src.in_use = 0
+		active = 1
 
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		.= 0
