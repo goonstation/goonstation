@@ -2735,6 +2735,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		..()
 		active_buttons = list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Add Button",PROC_REF(addButton))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Edit Button",PROC_REF(editButton))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove Button",PROC_REF(removeButton))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT, "Add Button", PROC_REF(signalAddButton))
 
@@ -2759,6 +2760,35 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			tooltip_rebuild = 1
 			return 1
 		return 0
+
+	proc/editButton(obj/item/W as obj, mob/user as mob)
+		if(!length(src.active_buttons))
+			boutput(user, "<span class='alert'>[src] has no active buttons - there's nothing to edit!</span>")
+			return 0
+
+		var/to_edit = input(user, "Choose button to edit", "Button Panel") in src.active_buttons + "*CANCEL*"
+		if(!in_interact_range(src, user) || !isalive(user))
+			return 0
+		if(!to_edit || to_edit == "*CANCEL*")
+			return 0
+		var/new_label = input(user, "Button label", "Button Panel", to_edit) as text
+		var/new_signal = input(user, "Button signal", "Button Panel", src.active_buttons[to_edit]) as text
+		if(!length(new_label) || !length(new_signal))
+			return 0
+		new_label = adminscrub(new_label)
+		new_signal = adminscrub(new_signal)
+		if(to_edit != new_label)
+			if(new_label in src.active_buttons)
+				boutput(user, "<span class='alert'>There's already a button with that label.")
+				return 0
+			var/button_index = src.active_buttons.Find(to_edit)
+			src.active_buttons.Insert(button_index, new_label)
+			src.active_buttons.Remove(to_edit)
+		src.active_buttons[new_label] = new_signal
+		boutput(user, "Edited button with new label: [new_label] and new value: [new_signal]")
+		tooltip_rebuild = 1
+		return 1
+
 
 	proc/removeButton(obj/item/W as obj, mob/user as mob)
 		if(!length(src.active_buttons))

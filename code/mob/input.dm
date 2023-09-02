@@ -181,9 +181,8 @@
 								src.inertia_dir = 0
 					else if (isrobot(src) || isghostdrone(src) || isshell(src))
 						if (src:jetpack)
-							if (!src:jeton)
-								spacemove = 0
-								src.inertia_dir = 0
+							spacemove = 0
+							src.inertia_dir = 0
 
 					if (!spacemove) // yes, this is dumb
 						// also fuck it.

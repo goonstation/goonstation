@@ -208,7 +208,7 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/misc, SLOT_W_UNIFORM)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/prisoner, SLOT_W_UNIFORM)
 			src.equip_new_if_possible(/obj/item/clothing/head/beret/prisoner, SLOT_HEAD)
 			if(prob(80)) // couldnt figure out how to hide it in the debris field, so i just chucked it in a monkey
 				var/obj/item/disk/data/cartridge/ringtone_numbers/idk = new
@@ -748,7 +748,7 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/suit, SLOT_W_UNIFORM)
+			src.equip_new_if_possible(/obj/item/clothing/under/suit/black, SLOT_W_UNIFORM)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/black, SLOT_SHOES)
 
 #undef IS_NPC_HATED_ITEM

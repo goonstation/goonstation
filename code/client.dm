@@ -1397,6 +1397,7 @@ var/global/curr_day = null
 		H.hud.add_object(H.stamina_bar, initial(H.stamina_bar.layer), "EAST-1, NORTH")
 		if(H.sims)
 			H.sims.add_hud()
+		H.update_equipment_screen_loc()
 
 /client/verb/set_tg_layout()
 	set hidden = 1
