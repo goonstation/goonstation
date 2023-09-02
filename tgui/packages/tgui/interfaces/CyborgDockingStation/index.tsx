@@ -89,7 +89,7 @@ const OccupantTabContents = (props) => {
         <LabeledList>
           <LabeledList.Item label="Name" buttons={(
             <>
-              {(occupant.kind ==="robot" || occupant.kind ==="adrone")  && <DockingAllowedButton onClick={() => act("occupant-rename")} icon="edit" tooltip="Change the occupant's designation" />}
+              {(occupant.kind ==="robot" || occupant.kind ==="adrone") && <DockingAllowedButton onClick={() => act("occupant-rename")} icon="edit" tooltip="Change the occupant's designation" />}
               {<DockingAllowedButton onClick={() => act("occupant-eject")} icon="eject" tooltip="Eject the occupant" /> }
             </>
           )}>
@@ -317,9 +317,9 @@ const DamageReportDrone = (props) => {
         <DockingAllowedButton disabled={cabling < 1} icon="fire" backgroundColor={COLORS.damageType.burn} tooltip="Fix wiring damage" onClick={() => act("repair-wiring")} />
       </>
     }>
-    <LabeledList>
-      <PartDisplay label="Brute" partData={occupant.get_brute_damage} />
-      <PartDisplay label="Burn" partData={occupant.get_burn_damage} />
+      <LabeledList>
+        <PartDisplay label="Brute" partData={occupant.get_brute_damage} />
+        <PartDisplay label="Burn" partData={occupant.get_burn_damage} />
       </LabeledList>
     </Section>
   );
