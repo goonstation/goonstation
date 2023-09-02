@@ -1,5 +1,9 @@
 
 (t)sat sep 02 23
+(u)Amylizzle
+(p)15569
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)You can now make shoddy fuel rods using a glowstick in the nuclear fabricator.
 (u)Glamurio (Ryou)
 (p)15536
 (e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
