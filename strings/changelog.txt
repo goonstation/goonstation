@@ -1,5 +1,9 @@
 
 (t)sat sep 02 23
+(u)Flappybat
+(p)15478
+(e)🗺🎨🔄📦🎩|A-Mapping, C-Sprites, C-Rework, A-Game-Objects, A-Clothing
+(+)Trash bags now must be converted into clothing using snipping tools instead of just wearing them directly. They will still function as clothing with storage afterwards.
 (u)Tyrant
 (p)15628
 (e)🗺💅|A-Mapping, C-QoL
