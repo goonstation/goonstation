@@ -6529,9 +6529,7 @@
 /obj/item/storage/box/evidence,
 /obj/item/spraybottle/detective,
 /obj/item/camera,
-/obj/item/clothing/under/suit{
-	name = "Mortician Suit"
-	},
+/obj/item/clothing/under/suit/mortician,
 /obj/item/hand_labeler,
 /obj/machinery/light{
 	dir = 4;

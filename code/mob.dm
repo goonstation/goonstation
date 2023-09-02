@@ -672,7 +672,7 @@
 						if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
 							tmob.now_pushing = 0
 
-		if (!issilicon(AM))
+		if (!issilicon(AM) && !issilicon(src))
 			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled &&!src.throwing && !tmob.throwing) // mutual brohugs all around!
 				var/turf/oldloc = src.loc
 				var/turf/newloc = tmob.loc
@@ -2916,7 +2916,7 @@
 
 	var/mob/living/carbon/human/newbody = new()
 	newbody.set_loc(reappear_turf)
-	newbody.equip_new_if_possible(/obj/item/clothing/under/misc, SLOT_W_UNIFORM)
+	newbody.equip_new_if_possible(/obj/item/clothing/under/misc/prisoner, SLOT_W_UNIFORM)
 
 	newbody.real_name = src.real_name
 

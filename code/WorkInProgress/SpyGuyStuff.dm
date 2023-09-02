@@ -159,7 +159,7 @@ proc/Create_Tommyname()
 			O.layer = initial(O.layer)
 
 	src.equip_new_if_possible(/obj/item/clothing/shoes/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , SLOT_SHOES)
-	src.equip_new_if_possible(/obj/item/clothing/under/suit {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , SLOT_W_UNIFORM)
+	src.equip_new_if_possible(/obj/item/clothing/under/suit/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , SLOT_W_UNIFORM)
 	src.equip_new_if_possible(/obj/item/football, SLOT_IN_BACKPACK)
 
 	src.sound_scream = 'sound/voice/tommy_you-are-tearing-me-apart-lisauh.ogg'

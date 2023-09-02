@@ -140,9 +140,12 @@
 		src.visible_message("<span class='alert'><b>[src] grows up!</b></span>",\
 		"<span class='notice'><b>You grow up!</b></span>")
 		SPAWN(0)
-			var/mob/new_mob = src.make_critter(src.adultpath)
+			var/mob/living/critter/spider/new_mob = src.make_critter(src.adultpath)
 			if (has_implant)
 				new /obj/item/implant/access/infinite/assistant(new_mob)
+			new_mob.ai_retaliate_patience = src.ai_retaliate_patience
+			if(!istype(new_mob.ai, src.ai_type))
+				new_mob.ai = new src.ai_type(new_mob)
 
 	valid_target(mob/living/C)
 		if (C.bioHolder.HasEffect("husk")) return FALSE
