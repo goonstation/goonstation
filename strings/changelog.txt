@@ -1,5 +1,9 @@
 
 (t)sat sep 02 23
+(u)Glamurio (Ryou)
+(p)15536
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(+)Added industrial chairs. You can craft them out of reinforced metal.
 (u)Flappybat
 (p)15478
 (e)🗺🎨🔄📦🎩|A-Mapping, C-Sprites, C-Rework, A-Game-Objects, A-Clothing
