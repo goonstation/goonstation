@@ -1,4 +1,9 @@
 
+(t)sat sep 02 23
+(u)Tyrant
+(p)15619
+(e)🗺💅💡|A-Mapping, C-QoL, A-Station-Systems
+(+)Cables are colour coded in the following way: Red=Station, Orange=Engine, Blue=PTL, Yellow=Solars
 (t)fri sep 01 23
 (u)DimWhat
 (p)15610
