@@ -1,6 +1,10 @@
 
 (t)sat sep 02 23
 (u)Tyrant
+(p)15628
+(e)🗺💅|A-Mapping, C-QoL
+(+)All bars now have an ashtray and a nearby cigarette vendor.
+(u)Tyrant
 (p)15619
 (e)🗺💅💡|A-Mapping, C-QoL, A-Station-Systems
 (+)Cables are colour coded in the following way: Red=Station, Orange=Engine, Blue=PTL, Yellow=Solars
