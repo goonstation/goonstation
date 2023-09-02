@@ -2005,6 +2005,18 @@
 	dir = 4
 	},
 /area/station/science/tenebrae)
+"eU" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-10"
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
+	})
 "eV" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Owl Zone Access"
@@ -6868,6 +6880,16 @@
 /area/station/security/main{
 	name = "Hammer Primary Concourse"
 	})
+"pD" = (
+/obj/table/wood/auto,
+/obj/displaycase{
+	displayed = /obj/item/captaingun;
+	pixel_y = 6
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/captain{
+	name = "Meridian Command"
+	})
 "pE" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -7503,6 +7525,19 @@
 /turf/space,
 /area/station/solar/south{
 	name = "Dionysus Solar Array"
+	})
+"qY" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/obj/machinery/portableowl/attached{
+	desc = "A particularily large space owl.";
+	name = "space owl";
+	pixel_y = 4
+	},
+/turf/simulated/floor/carpet/green/fancy/edge/east,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
 	})
 "qZ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -10971,18 +11006,6 @@
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
 	})
-"yk" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/landmark/start/job/assistant,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/cafeteria{
-	name = "Dionysus Primary Zone"
-	})
 "yl" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10994,19 +11017,6 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine{
 	pixel_y = 6
 	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/cafeteria{
-	name = "Dionysus Primary Zone"
-	})
-"ym" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light,
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/landmark/start/job/assistant,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
@@ -13622,18 +13632,6 @@
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
-"DG" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/stool/chair/wooden{
-	dir = 1
-	},
-/obj/landmark/start/job/assistant,
-/turf/simulated/floor/grass,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
 "DH" = (
 /obj/shrub,
 /turf/simulated/floor/grass,
@@ -14454,19 +14452,6 @@
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
-"Fo" = (
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/landmark/start/job/assistant,
-/turf/simulated/floor/grass,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
 "Fp" = (
 /obj/shrub{
 	dir = 6
@@ -14641,12 +14626,6 @@
 	})
 "FH" = (
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
-"FI" = (
-/obj/stool/chair/wooden,
-/turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -14831,19 +14810,6 @@
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
-"Ge" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/machinery/portableowl/attached{
-	desc = "A particularily large space owl.";
-	name = "space owl";
-	pixel_y = 4
-	},
-/turf/simulated/floor/carpet/green/fancy/edge/east,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
 "Gf" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8;
@@ -14916,25 +14882,8 @@
 /area/station/maintenance/west{
 	name = "Meridian Maintenance"
 	})
-"Gn" = (
-/obj/stool/chair/wooden{
-	dir = 1
-	},
-/turf/simulated/floor/carpet/green/fancy/edge/south,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
 "Go" = (
 /turf/simulated/floor/carpet/green/fancy/edge/se,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
-"Gp" = (
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/landmark/start/job/assistant,
-/turf/simulated/floor/grass,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -14945,18 +14894,6 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/grass,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
-"Gr" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/landmark/start/job/assistant,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
@@ -15121,18 +15058,6 @@
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
-"GI" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-10"
-	},
-/obj/landmark/start/job/assistant,
-/turf/simulated/floor/grass,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
 "GJ" = (
 /obj/shrub,
 /obj/cable{
@@ -15204,15 +15129,6 @@
 /obj/machinery/light,
 /obj/table/wood/round/auto,
 /obj/item/boardgame/chess,
-/turf/simulated/floor/grass,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
-"GT" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/landmark/start/job/assistant,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
@@ -19028,25 +18944,6 @@
 /area/station/medical/medbay{
 	name = "Asclepius Primary Zone"
 	})
-"OP" = (
-/obj/table/auto,
-/obj/item/clothing/mask/surgical,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/device/detective_scanner,
-/obj/item/clothing/under/suit/mortician,
-/obj/item/stamp,
-/obj/item/clothing/gloves/latex,
-/obj/item/spraybottle/cleaner,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/machinery/light_switch/west,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "OQ" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
@@ -19408,6 +19305,22 @@
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
+"Pq" = (
+/obj/stool/chair/dining/wood,
+/mob/living/critter/small_animal/bird/owl,
+/turf/simulated/floor/carpet/green/fancy/edge/north,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
+	})
+"Pr" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
+	})
 "Ps" = (
 /obj/shrub{
 	dir = 8
@@ -19559,20 +19472,6 @@
 	},
 /area/station/solar/east{
 	name = "Demeter Solar Array"
-	})
-"PD" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
-	},
-/obj/landmark/start/job/assistant,
-/turf/simulated/floor/grass,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
 	})
 "PE" = (
 /obj/machinery/camera{
@@ -21093,13 +20992,6 @@
 /area/station/engine/power{
 	name = "Erebus Power Room"
 	})
-"SD" = (
-/obj/stool/chair/wooden,
-/mob/living/critter/small_animal/bird/owl,
-/turf/simulated/floor/carpet/green/fancy/edge/north,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
 "SF" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -21284,6 +21176,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest{
 	name = "Erebus Maintenance Room"
+	})
+"SY" = (
+/obj/stool/chair/dining/wood,
+/turf/simulated/floor/carpet/green/fancy/edge/north,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
 	})
 "Tb" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -22159,6 +22057,19 @@
 /mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor/specialroom/arcade,
 /area/research_outpost/indigo_rye)
+"Vq" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light,
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria{
+	name = "Dionysus Primary Zone"
+	})
 "Vr" = (
 /obj/machinery/light,
 /obj/disposalpipe/segment/transport{
@@ -22176,6 +22087,25 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/space,
 /area/space)
+"Vw" = (
+/obj/table/auto,
+/obj/item/clothing/mask/surgical,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/item/device/detective_scanner,
+/obj/item/clothing/under/suit/mortician,
+/obj/item/stamp,
+/obj/item/clothing/gloves/latex,
+/obj/item/spraybottle/cleaner,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/machinery/light_switch/west,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "Vx" = (
 /obj/machinery/disposal_pipedispenser,
 /turf/simulated/floor/plating,
@@ -22443,9 +22373,35 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Wa" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
+	})
 "Wb" = (
 /mob/living/critter/small_animal/seal,
 /turf/simulated/floor/pool/no_animate,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
+	})
+"Wc" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13"
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/grass,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -22497,16 +22453,6 @@
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/security/secwing)
-"Wl" = (
-/obj/table/wood/auto,
-/obj/displaycase{
-	displayed = /obj/item/captaingun;
-	pixel_y = 6
-	},
-/turf/simulated/floor/black,
-/area/station/bridge/captain{
-	name = "Meridian Command"
-	})
 "Wn" = (
 /obj/grille/catwalk{
 	dir = 10;
@@ -22680,6 +22626,14 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
+	})
+"WK" = (
+/obj/stool/chair/dining/wood{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/green/fancy/edge/south,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
 	})
 "WN" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -23117,6 +23071,19 @@
 /area/station/science/research_director{
 	name = "Tenebrae Command Center"
 	})
+"XW" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
+	})
 "XX" = (
 /obj/decal/poster/wallsign/stencil/right/e{
 	pixel_x = 13
@@ -23506,6 +23473,18 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"YS" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria{
+	name = "Dionysus Primary Zone"
+	})
 "YT" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -23655,6 +23634,18 @@
 /obj/mapping_helper/access/research,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
+"Zp" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/stool/chair/dining/wood{
+	dir = 1
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
+	})
 "Zs" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -23838,6 +23829,15 @@
 	},
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
+	})
+"ZS" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
 	})
 "ZT" = (
 /obj/machinery/door/poddoor/pyro{
@@ -49477,9 +49477,9 @@ aa
 aa
 DI
 EU
-FI
+SY
 Gd
-Gn
+WK
 EU
 DI
 aa
@@ -49779,9 +49779,9 @@ aa
 aa
 DI
 EU
-SD
+Pq
 Gd
-Gn
+WK
 EU
 DI
 aa
@@ -50082,7 +50082,7 @@ aa
 DI
 Fl
 FK
-Ge
+qY
 Go
 Fl
 DI
@@ -51590,7 +51590,7 @@ Ck
 Uq
 Ps
 EV
-Fo
+XW
 FN
 Dh
 Dh
@@ -52499,12 +52499,12 @@ Dh
 Eb
 EY
 Qf
-Gp
-Gp
+Pr
+Pr
 Dh
 Dh
 Eb
-GT
+ZS
 Ck
 BH
 BJ
@@ -52794,7 +52794,7 @@ PC
 PL
 PN
 Dd
-DG
+Zp
 Ec
 Dh
 Dh
@@ -53103,8 +53103,8 @@ EW
 Fq
 FQ
 Fq
-Gr
-GI
+Wa
+eU
 Fp
 Dh
 Dh
@@ -54917,7 +54917,7 @@ Dh
 Dh
 Dh
 Dh
-Gp
+Pr
 He
 Ho
 Hx
@@ -55521,7 +55521,7 @@ Fa
 Fa
 Gt
 Dh
-PD
+Wc
 Hg
 Hq
 Hz
@@ -57910,7 +57910,7 @@ vP
 wA
 xg
 xe
-yk
+YS
 si
 yZ
 zn
@@ -58514,7 +58514,7 @@ vR
 wF
 xg
 xe
-ym
+Vq
 uj
 za
 zo
@@ -59436,7 +59436,7 @@ aa
 aa
 BM
 Cl
-Wl
+pD
 Dm
 DN
 Eg
@@ -66357,7 +66357,7 @@ aa
 aa
 rX
 rX
-OP
+Vw
 tu
 tT
 uC
