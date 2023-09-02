@@ -22,7 +22,7 @@
 	frequency = 1448;
 	name = "Toxins Lab Intercom"
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/cable{
@@ -446,7 +446,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "zx" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/item/device/radio/intercom/engineering{

@@ -169,11 +169,11 @@
 	},
 /area/shuttle/arrival/station)
 "aC" = (
-/obj/machinery/atmospherics/pipe/tank/air,
+/obj/machinery/atmospherics/unary/tank/air,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aD" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/securearea{
 	desc = "";
 	icon_state = "shock";

@@ -10257,7 +10257,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aUF" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 4
 	},
 /turf/simulated/floor/grime,
@@ -10277,7 +10277,7 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "aUI" = (
-/obj/machinery/atmospherics/pipe/tank/oxygen{
+/obj/machinery/atmospherics/unary/tank/oxygen{
 	dir = 8
 	},
 /turf/simulated/floor/grime,
@@ -10432,7 +10432,7 @@
 /turf/space,
 /area/iss)
 "aVd" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/empty,

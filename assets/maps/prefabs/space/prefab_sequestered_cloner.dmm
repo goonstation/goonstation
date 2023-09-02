@@ -109,7 +109,7 @@
 /turf/simulated/floor,
 /area/prefab/sequestered_cloner)
 "jJ" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -355,7 +355,7 @@
 /turf/simulated/floor/purple/side,
 /area/prefab/sequestered_cloner)
 "xn" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/plating,

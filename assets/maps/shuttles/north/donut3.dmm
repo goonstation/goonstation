@@ -250,7 +250,7 @@
 	},
 /area/centcom)
 "he" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/fakeobjects{
@@ -726,7 +726,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Ei" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -1201,7 +1201,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';

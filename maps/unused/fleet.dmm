@@ -1561,7 +1561,7 @@
 /area/station/science/tenebrae)
 "dS" = (
 /obj/machinery/light_switch/east,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/purplewhite{
@@ -18274,7 +18274,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "NO" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/tile_edge/line/red,
@@ -18337,7 +18337,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "NW" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/decal/poster/wallsign/stencil/right/one{
@@ -18945,7 +18945,7 @@
 	name = "Asclepius Primary Zone"
 	})
 "OQ" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -20766,7 +20766,7 @@
 	pixel_x = 17;
 	pixel_y = 12
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/disposalpipe/segment/vertical,
@@ -21220,7 +21220,7 @@
 	})
 "Te" = (
 /obj/machinery/light,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -22131,7 +22131,7 @@
 	name = "Erebus Primary Zone"
 	})
 "VA" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/engine,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
@@ -22181,7 +22181,7 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "VH" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -22552,7 +22552,7 @@
 	})
 "Ww" = (
 /obj/machinery/light,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/poster/wallsign/stencil/right/two{
@@ -22651,7 +22651,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "WP" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 4
 	},
 /obj/machinery/light_switch/west,
@@ -22764,7 +22764,7 @@
 	name = "Erebus Primary Zone"
 	})
 "Xg" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/purple{
@@ -22851,7 +22851,7 @@
 	pixel_x = 15;
 	pixel_y = 12
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/disposalpipe/junction/left/south,
@@ -23178,7 +23178,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/engine,
@@ -23383,7 +23383,7 @@
 /area/space)
 "YK" = (
 /obj/decal/tile_edge/line/blue,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/darkpurple,
@@ -23658,7 +23658,7 @@
 	name = "Erebus Primary Zone"
 	})
 "Zt" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/decal/poster/wallsign/stencil/right/two{
@@ -23850,7 +23850,7 @@
 	name = "Erebus Maintenance Room"
 	})
 "ZU" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/poster/wallsign/stencil/right/one{

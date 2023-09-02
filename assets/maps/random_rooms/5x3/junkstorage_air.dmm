@@ -11,7 +11,7 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "u" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -27,7 +27,7 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "P" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/plating,

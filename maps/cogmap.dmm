@@ -351,13 +351,13 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/northwest)
 "acc" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "Crew Quarters Repressurization West"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "ace" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "Central Primary Hallway Repressurization West"
 	},
 /obj/machinery/light/small{
@@ -366,7 +366,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "acg" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "Cafeterial Repressurization West"
 	},
 /turf/simulated/floor/plating,
@@ -478,7 +478,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "acD" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 4;
 	name = "Air Hookup Reserve Tank (Air)"
 	},
@@ -7889,13 +7889,13 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "aAF" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	dir = 8;
 	name = "High-Capacity Pressure Tank (Carbon Dioxide)";
 	volume = 1000
@@ -8102,7 +8102,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aBl" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	name = "Air Hookup Reserve Tank (Air)"
 	},
 /turf/simulated/floor/plating,
@@ -9511,7 +9511,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/solar/west)
 "aEL" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	name = "Brig Repressurization West"
 	},
@@ -10146,7 +10146,7 @@
 	},
 /area/station/hydroponics/bay)
 "aGr" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	name = "Courtroom Repressurization West"
 	},
@@ -10962,7 +10962,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/solar/west)
 "aIE" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	name = "Bridge Repressurization West"
 	},
@@ -16519,7 +16519,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/detectives_office)
 "aXD" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	name = "Air Hookup Reserve Tank (Air)"
 	},
 /turf/simulated/floor/plating,
@@ -18572,7 +18572,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bdE" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Chapel Repressurization West"
 	},
@@ -21346,14 +21346,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bmD" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Market Repressurization West"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bmE" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	name = "Air Hookup Reserve Tank (Air)"
 	},
 /turf/simulated/floor/plating,
@@ -24594,7 +24594,7 @@
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload_foyer)
 "bzJ" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
@@ -25608,7 +25608,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
 "bEA" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Cold Loop Gas Supply 1"
 	},
@@ -26569,7 +26569,7 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	name = "Air Hookup Reserve Tank (Air)"
 	},
 /turf/simulated/floor/blue,
@@ -28509,13 +28509,13 @@
 /turf/simulated/floor/grime,
 /area/station/science/lab)
 "bPA" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/blue,
 /area/station/science/lab)
 "bPB" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/red,
@@ -28911,7 +28911,7 @@
 /turf/simulated/floor/grime,
 /area/station/science/lab)
 "bQN" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/red,
@@ -30909,7 +30909,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "bXw" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/machinery/portable_atmospherics/canister/empty,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/white,
@@ -31711,7 +31711,7 @@
 	},
 /area/mining/magnet)
 "caf" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -31734,7 +31734,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "caj" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
@@ -31747,7 +31747,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
 "cam" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -31755,7 +31755,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "cap" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -32030,13 +32030,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "cbf" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "Medbay Repressurization West"
 	},
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/east)
 "cbj" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "Supply Lobby Repressurization West"
 	},
 /obj/machinery/portable_atmospherics/canister/air,
@@ -36158,7 +36158,7 @@
 /turf/simulated/floor,
 /area/station/science/testchamber)
 "cof" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor,
 /area/station/science/testchamber)
 "cog" = (
@@ -38518,7 +38518,7 @@
 /area/station/routing/medsci)
 "cvC" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/redwhite{
 	dir = 9
 	},
@@ -44042,7 +44042,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "fxU" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	name = "Hot Loop Gas Supply 2"
 	},
@@ -47365,7 +47365,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "iuK" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Cold Loop Gas Supply 2"
 	},
@@ -47685,7 +47685,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "iLZ" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/firealarm/north,
@@ -47817,7 +47817,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Mixing West"
 	},
@@ -54184,7 +54184,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "Mixing West"
 	},
 /obj/cable{
@@ -57065,7 +57065,7 @@
 /turf/simulated/floor/neutral/side,
 /area/station/crew_quarters/market)
 "reZ" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "Escape Hallway Repressurization West"
 	},
 /obj/machinery/camera{
@@ -59081,7 +59081,7 @@
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Combustion Chamber West 2"
 	},
@@ -61963,7 +61963,7 @@
 	},
 /area/station/medical/staff)
 "vnI" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Combustion Chamber West 1"
 	},
@@ -62019,7 +62019,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "vpY" = (
-/obj/machinery/atmospherics/pipe/tank,
+/obj/machinery/atmospherics/unary/tank,
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
 "vqd" = (
@@ -62919,7 +62919,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "wfR" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	name = "Hot Loop Gas Supply 1"
 	},

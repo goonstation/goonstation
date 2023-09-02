@@ -12782,7 +12782,7 @@
 	},
 /area/station/hallway/primary/west)
 "dPp" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/camera{
@@ -15392,7 +15392,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "eFQ" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 4
 	},
 /turf/simulated/floor/black/grime,
@@ -16310,7 +16310,7 @@
 /area/station/ai_monitored/armory)
 "eUq" = (
 /obj/decal/tile_edge/line/red,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/decal/mule/dropoff,
@@ -18445,7 +18445,7 @@
 /area/station/ai_monitored/storage/eva)
 "fCU" = (
 /obj/decal/tile_edge/line/blue,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/decal/mule/dropoff,
@@ -27272,7 +27272,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "ioq" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/plating/jen,
 /area/station/science/storage)
@@ -31459,7 +31459,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "jEt" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/black/grime,
@@ -32520,7 +32520,7 @@
 	},
 /area/station/hydroponics/bay)
 "jVm" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
@@ -36451,7 +36451,7 @@
 	},
 /area/spacehabitat/pool)
 "ljV" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -36988,7 +36988,7 @@
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/arcade/dungeon)
 "lrL" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light/emergency{
@@ -40166,7 +40166,7 @@
 	},
 /area/station/mining/staff_room)
 "mnt" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/air,
@@ -41402,7 +41402,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
 "mHh" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 8;
 	name = "Air Hookup Reserve Tank (Air)"
 	},
@@ -47861,7 +47861,7 @@
 /turf/simulated/floor/carpet/green/standard/narrow/east,
 /area/station/medical/medbay/lobby)
 "oIB" = (
-/obj/machinery/atmospherics/pipe/tank/sleeping_agent{
+/obj/machinery/atmospherics/unary/tank/sleeping_agent{
 	dir = 8
 	},
 /obj/decal/mule/dropoff,
@@ -50002,7 +50002,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "psb" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -52436,7 +52436,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "qdK" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/air/large,
@@ -54847,7 +54847,7 @@
 	name = "Funeral Parlor"
 	})
 "qNw" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/tile_edge/line/yellow,
@@ -55802,7 +55802,7 @@
 	},
 /area/station/hallway/primary/west)
 "rbw" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -60736,7 +60736,7 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "sIL" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
@@ -65971,7 +65971,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "ura" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 1
 	},
 /turf/simulated/floor,
@@ -74883,7 +74883,7 @@
 	},
 /area/listeningpost)
 "wUY" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	dir = 1
 	},
 /obj/disposalpipe/segment/food,

@@ -1480,7 +1480,7 @@
 /turf/simulated/floor/white,
 /area/russian)
 "aei" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/white,
@@ -8501,9 +8501,8 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aCS" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 8;
-	
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
 	},
 /obj/machinery/light{
 	dir = 4
@@ -8981,9 +8980,8 @@
 /turf/simulated/floor,
 /area/station/atmos/highcap_storage)
 "aEP" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 8;
-	
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -9728,7 +9726,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aIi" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -10666,7 +10664,7 @@
 	},
 /area/station/hallway/primary/south)
 "aLI" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor,
 /area/station/atmos/highcap_storage)
 "aLJ" = (
@@ -23709,7 +23707,7 @@
 	},
 /area/station/science/lobby)
 "bCl" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/red,
@@ -23722,7 +23720,7 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "bCp" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/cable{
@@ -24159,7 +24157,7 @@
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "bDr" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/cable{
@@ -24440,7 +24438,7 @@
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "bEi" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/cable{
@@ -24459,7 +24457,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/red,
@@ -26545,7 +26543,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "gxE" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -27217,7 +27215,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "iHB" = (
-/obj/machinery/atmospherics/pipe/tank/air{
+/obj/machinery/atmospherics/unary/tank/air{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -32087,7 +32085,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "xgS" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/item/wrench,

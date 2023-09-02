@@ -1787,7 +1787,7 @@
 	name = "Arrival Shuttle Hallway"
 	})
 "aRM" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /obj/machinery/portable_atmospherics/canister/air/large,
@@ -14640,7 +14640,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quarters_west)
 "gAA" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/engine/caution/corner2{
@@ -19894,7 +19894,7 @@
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
 "iDm" = (
-/obj/machinery/atmospherics/pipe/tank/oxygen{
+/obj/machinery/atmospherics/unary/tank/oxygen{
 	dir = 2
 	},
 /turf/simulated/floor/industrial,
@@ -22702,7 +22702,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/medical/robotics)
 "jQr" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/engine/caution/corner{
@@ -26086,7 +26086,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "lgN" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -29244,7 +29244,7 @@
 	name = "Net Cafe"
 	})
 "mvp" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/engine/caution/corner{
@@ -43912,7 +43912,7 @@
 /turf/simulated/floor/engine/caution/south,
 /area/station/medical/medbay/pharmacy)
 "tfw" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/item/device/radio/intercom/medical,
 /turf/simulated/floor/blueblack,

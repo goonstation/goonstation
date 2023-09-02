@@ -1,0 +1,2 @@
+/obj/machinery/atmospherics/pipe/tank/@SUBTYPES : /obj/machinery/atmospherics/unary/tank/@SUBTYPES{@OLD}
+/obj/machinery/atmospherics/portables_connector : /obj/machinery/atmospherics/unary/portables_connector{@OLD}

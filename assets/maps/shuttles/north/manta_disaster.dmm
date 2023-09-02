@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "at" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/fakeobjects{
@@ -157,7 +157,7 @@
 /turf/unsimulated/floor/arrival,
 /area/centcom)
 "hi" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -627,7 +627,7 @@
 	icon_state = "line1";
 	tag = "icon-line1 (NORTH)"
 	},
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';

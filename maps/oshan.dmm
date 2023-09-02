@@ -6046,7 +6046,7 @@
 	},
 /area/station/medical/medbay)
 "atN" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -6177,7 +6177,7 @@
 /area/station/hangar/science)
 "aun" = (
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/blue,
@@ -7738,7 +7738,7 @@
 /area/station/hallway/primary/north)
 "azl" = (
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/red,
@@ -8265,7 +8265,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "aAN" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -10803,7 +10803,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "aJj" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -11359,7 +11359,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aLc" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -14143,7 +14143,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/space)
 "aVi" = (
-/obj/machinery/atmospherics/pipe/tank/oxygen{
+/obj/machinery/atmospherics/unary/tank/oxygen{
 	dir = 8
 	},
 /turf/simulated/floor/grime,
@@ -15266,7 +15266,7 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "baW" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -15756,7 +15756,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/toxins)
 "bdi" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/red,
@@ -15945,7 +15945,7 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "bel" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/blue,
@@ -17864,7 +17864,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/catering)
 "blN" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide,
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -18231,7 +18231,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/catering)
 "bmS" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/light_switch/auto,
@@ -18375,7 +18375,7 @@
 	},
 /area/station/hallway/primary/east)
 "bnt" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -36827,7 +36827,7 @@
 	},
 /area/station/bridge)
 "hXO" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "hYI" = (
@@ -39552,7 +39552,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "mwr" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	name = "Mixing Port"
 	},
@@ -40805,7 +40805,7 @@
 /turf/simulated/floor,
 /area/station/security/processing)
 "okS" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "Mixing Port"
 	},
 /obj/machinery/light/incandescent/netural,
@@ -44832,7 +44832,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/chapel)
 "voC" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Mixing Port"
 	},

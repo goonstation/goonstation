@@ -168,7 +168,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "lL" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -657,7 +657,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "IY" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/fakeobjects{
@@ -865,7 +865,7 @@
 	},
 /area/centcom/outside)
 "RW" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/fakeobjects{

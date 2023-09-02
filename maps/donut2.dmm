@@ -1285,7 +1285,7 @@
 	},
 /area/station/science/artifact)
 "afS" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/decal/tile_edge/line/red,
@@ -1584,7 +1584,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "ahd" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -2022,7 +2022,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "aiw" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -2130,7 +2130,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/bot_storage)
 "ajm" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "ajn" = (
@@ -13194,7 +13194,7 @@
 /area/station/medical/medbay/lobby)
 "bbC" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/bluewhite{
@@ -19173,25 +19173,25 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/east)
 "bDi" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization,
+/obj/machinery/atmospherics/unary/tank/air_repressurization,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "bDj" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization,
+/obj/machinery/atmospherics/unary/tank/air_repressurization,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "bDm" = (
-/obj/machinery/atmospherics/pipe/tank/nitrogen,
+/obj/machinery/atmospherics/unary/tank/nitrogen,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/atmos/highcap_storage)
 "bDn" = (
-/obj/machinery/atmospherics/pipe/tank/toxins,
+/obj/machinery/atmospherics/unary/tank/toxins,
 /turf/simulated/floor/plating,
 /area/station/atmos/highcap_storage)
 "bDo" = (
@@ -19254,7 +19254,7 @@
 /area/station/engine/elect)
 "bDH" = (
 /obj/decal/tile_edge/line/blue,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/black,
@@ -19414,32 +19414,32 @@
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb"
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "bEu" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/atmos/highcap_storage)
 "bEv" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "bEw" = (
 /obj/machinery/light/small,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/station/atmos/highcap_storage)
 "bEx" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/plating/damaged3,
@@ -20119,7 +20119,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bGS" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -22318,7 +22318,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
 "cMl" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/firealarm/east,
@@ -25169,7 +25169,7 @@
 /area/station/science/lobby)
 "eNh" = (
 /obj/decal/cleanable/cobweb,
-/obj/machinery/atmospherics/pipe/tank/sleeping_agent{
+/obj/machinery/atmospherics/unary/tank/sleeping_agent{
 	dir = 2
 	},
 /turf/simulated/floor/plating,
@@ -25504,7 +25504,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "eZZ" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/light/incandescent,
@@ -26328,7 +26328,7 @@
 	},
 /area/station/science/chemistry)
 "fGu" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -30947,7 +30947,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/east,
 /area/station/crew_quarters/ce)
 "jjc" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/freezer{
@@ -32422,7 +32422,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "kmo" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/grime,
@@ -35153,7 +35153,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -35398,7 +35398,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/equipment)
 "moN" = (
-/obj/machinery/atmospherics/pipe/tank/oxygen,
+/obj/machinery/atmospherics/unary/tank/oxygen,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "moP" = (
@@ -40182,7 +40182,7 @@
 /area/station/engine/inner)
 "pGy" = (
 /obj/decal/cleanable/cobweb2,
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide,
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "pGD" = (
@@ -42685,7 +42685,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "rBT" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	dir = 2
 	},
 /obj/machinery/light/incandescent,
@@ -51132,7 +51132,7 @@
 	},
 /area/station/security/main)
 "xHP" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -51641,7 +51641,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "xYo" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/grime,

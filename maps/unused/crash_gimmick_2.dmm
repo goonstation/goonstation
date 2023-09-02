@@ -155,7 +155,7 @@
 	},
 /area/space)
 "hC" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/securearea{
 	desc = "";
 	icon_state = "shock";
@@ -1195,7 +1195,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "Sl" = (
-/obj/machinery/atmospherics/pipe/tank/air,
+/obj/machinery/atmospherics/unary/tank/air,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "SE" = (

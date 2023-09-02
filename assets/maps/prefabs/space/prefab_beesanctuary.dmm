@@ -43,7 +43,7 @@
 /area/prefab/bee_sanctuary)
 "bo" = (
 /obj/decal/cleanable/cobweb,
-/obj/machinery/atmospherics/pipe/tank/oxygen{
+/obj/machinery/atmospherics/unary/tank/oxygen{
 	volume = 0
 	},
 /turf/unsimulated/floor/plating,
@@ -52,7 +52,7 @@
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	volume = 0
 	},
 /obj/machinery/light/small{
@@ -589,7 +589,7 @@
 /area/prefab/bee_sanctuary)
 "wg" = (
 /obj/decal/cleanable/dirt/dirt5,
-/obj/machinery/atmospherics/pipe/tank/toxins{
+/obj/machinery/atmospherics/unary/tank/toxins{
 	volume = 0
 	},
 /turf/unsimulated/floor,
@@ -1308,7 +1308,7 @@
 /area/prefab/bee_sanctuary)
 "NE" = (
 /obj/decal/cleanable/cobweb,
-/obj/machinery/atmospherics/pipe/tank/toxins{
+/obj/machinery/atmospherics/unary/tank/toxins{
 	volume = 0
 	},
 /turf/unsimulated/floor,

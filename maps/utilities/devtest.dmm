@@ -660,7 +660,7 @@
 /turf/simulated/floor,
 /area/devzone)
 "jo" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/engine{
@@ -850,7 +850,7 @@
 /turf/simulated/floor,
 /area/devzone)
 "me" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -1323,7 +1323,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/devzone)
 "sr" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/engine,
@@ -1418,7 +1418,7 @@
 	},
 /area/devzone)
 "tU" = (
-/obj/machinery/atmospherics/pipe/tank,
+/obj/machinery/atmospherics/unary/tank,
 /turf/simulated/floor,
 /area/devzone)
 "ue" = (
@@ -1514,7 +1514,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/devzone)
 "vG" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -1524,7 +1524,7 @@
 /turf/simulated/floor/bluewhite,
 /area/devzone)
 "vX" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor,
 /area/devzone)
@@ -1580,7 +1580,7 @@
 /turf/simulated/floor,
 /area/devzone)
 "xf" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor,
@@ -1960,7 +1960,7 @@
 /turf/simulated/floor,
 /area/devzone)
 "Ct" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	layer = 2.9
 	},
@@ -2025,7 +2025,7 @@
 /turf/simulated/floor,
 /area/devzone)
 "Dc" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	layer = 2.9
 	},
@@ -2161,7 +2161,7 @@
 /turf/simulated/floor,
 /area/devzone)
 "Fa" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	name = "autoname  - SS13";
@@ -2398,7 +2398,7 @@
 /turf/simulated/floor,
 /area/devzone)
 "Id" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/toxins,
@@ -2463,7 +2463,7 @@
 /turf/simulated/floor,
 /area/devzone)
 "JC" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 1
 	},
 /turf/simulated/floor,
@@ -2530,7 +2530,7 @@
 	mouse_opacity = 0;
 	name = "Untouchable Permanent Atmospheric/Liquid Forcefield"
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/railing/red{
@@ -2539,7 +2539,7 @@
 /turf/simulated/floor/airless,
 /area/devzone)
 "Kx" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -3343,7 +3343,7 @@
 /area/devzone)
 "UI" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/item/wrench,
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -3426,7 +3426,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor,
 /area/devzone)
 "Wj" = (
@@ -3704,7 +3704,7 @@
 	},
 /area/devzone)
 "YC" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor,
 /area/devzone)
 "YD" = (

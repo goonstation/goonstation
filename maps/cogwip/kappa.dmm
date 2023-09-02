@@ -2102,9 +2102,8 @@
 /turf/simulated/floor/plating,
 /area/space)
 "gv" = (
-/obj/machinery/atmospherics/pipe/tank/oxygen{
-	dir = 1;
-	
+/obj/machinery/atmospherics/unary/tank/oxygen{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/space)

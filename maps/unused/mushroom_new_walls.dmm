@@ -7404,7 +7404,7 @@
 "aRJ" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/apc/autoname_west,
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/cable,
 /obj/cable{
@@ -13782,7 +13782,7 @@
 	},
 /area/station/hallway/primary/central)
 "cxk" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -18105,7 +18105,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "gKa" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor,
 /area/station/science/lab)
 "gKu" = (
@@ -20808,7 +20808,7 @@
 	},
 /area/station/chapel/sanctuary)
 "jbB" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/disposalpipe/segment{
@@ -22386,7 +22386,7 @@
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
 "kBd" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
@@ -22398,7 +22398,7 @@
 /turf/simulated/floor/circuit/red,
 /area/station/turret_protected/ai)
 "kCx" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/red,
@@ -27111,7 +27111,7 @@
 /area/station/crew_quarters/fitness)
 "oXM" = (
 /obj/lattice,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/space,
@@ -27589,7 +27589,7 @@
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/west)
 "pxo" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 1
 	},
 /obj/decal/cleanable/dirt,
@@ -28890,7 +28890,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
 "qzc" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide,
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "qzg" = (
@@ -29256,7 +29256,7 @@
 	},
 /area/station/security/processing)
 "qNM" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "qNU" = (
@@ -29439,7 +29439,7 @@
 /area/station/crew_quarters/pool)
 "qVl" = (
 /obj/lattice,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/space,
@@ -31335,7 +31335,7 @@
 /area/station/security/hos)
 "sBj" = (
 /obj/lattice,
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/space,
 /area/station/engine/proto)
 "sBx" = (
@@ -32867,7 +32867,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "tID" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/freezer,
@@ -34898,7 +34898,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/barber_shop)
 "vDV" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
@@ -35053,7 +35053,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/processing)
 "vMg" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -36075,7 +36075,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "wIn" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/blue,
@@ -36646,7 +36646,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "xgK" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/plating,

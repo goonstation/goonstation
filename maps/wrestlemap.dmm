@@ -684,7 +684,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/processing)
 "alp" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Bridge Repressurization Hookup"
 	},
@@ -1640,7 +1640,7 @@
 /turf/simulated/floor/carpet/purple/standard/edge/se,
 /area/ghostdrone_factory)
 "aHX" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 2
 	},
 /turf/simulated/floor/plating,
@@ -1881,7 +1881,7 @@
 /turf/simulated/grass,
 /area/station/garden/owlery)
 "aMS" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -2682,7 +2682,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry)
 "bjg" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Mixing Port"
 	},
@@ -4652,7 +4652,7 @@
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/south)
 "caI" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2;
 	name = "Cooler Port"
 	},
@@ -8251,7 +8251,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/the_cage)
 "dGG" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Research Repressurization Hookup"
 	},
@@ -9609,7 +9609,7 @@
 	name = "Corpse Tunnel"
 	})
 "eih" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	name = "Mixing Port"
 	},
@@ -12078,7 +12078,7 @@
 /turf/simulated/floor/wood,
 /area/station/medical/head)
 "fmF" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -16070,7 +16070,7 @@
 /turf/simulated/floor/black,
 /area/station/maintenance/inner/the_cage)
 "gZx" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Cargo Repressurization Hookup"
 	},
@@ -16738,7 +16738,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -18458,7 +18458,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/head)
 "igt" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 4;
 	name = "Air Hookup Reserve Tank"
 	},
@@ -19942,7 +19942,7 @@
 	},
 /area/station/engine/elect)
 "iLF" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Chamber 1 Inlet Port"
 	},
@@ -21164,7 +21164,7 @@
 	name = "Seating Area"
 	})
 "jhx" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Chambe 2 Inlet Port"
 	},
@@ -21411,7 +21411,7 @@
 /turf/space,
 /area/space)
 "jml" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	dir = 1;
 	name = "High-Capacity Pressure Tank (Carbon Dioxide)";
 	volume = 1000
@@ -22655,7 +22655,7 @@
 	},
 /area/station/science/lobby)
 "jPe" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2;
 	name = "Medbay Repressurization Hookup"
 	},
@@ -24817,7 +24817,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "kPc" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Heater Loop Port"
 	},
@@ -25226,7 +25226,7 @@
 /area/station/storage/warehouse)
 "kYD" = (
 /obj/machinery/light/small,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Engineering Repressurization Hookup"
 	},
@@ -31447,7 +31447,7 @@
 	name = "Boardroom"
 	})
 "nNA" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2;
 	name = "Hallway Repressurization Hookup"
 	},
@@ -35105,7 +35105,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "puz" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
@@ -36260,7 +36260,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/captain)
 "pWk" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 8
 	},
 /obj/decal/tile_edge/stripe{
@@ -38006,7 +38006,7 @@
 /turf/space,
 /area/space)
 "qFQ" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	name = "Air Hookup Reserve Tank (Air)"
 	},
 /turf/simulated/floor/plating,
@@ -41210,7 +41210,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "scv" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "Mixing Port"
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -42591,7 +42591,7 @@
 	},
 /area/station/bridge)
 "sKu" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2;
 	name = "The Ring Repressurization Hookup"
 	},
@@ -42729,7 +42729,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "sMI" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Chamber 2 Outlet Port"
 	},
@@ -43092,7 +43092,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "sUs" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
@@ -47029,7 +47029,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "uIs" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Escape Repressurization Hookup"
 	},
@@ -48552,7 +48552,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/hallway/secondary/entry)
 "vpw" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Security Repressurization Hookup"
 	},
@@ -52645,7 +52645,7 @@
 /area/station/science/lab)
 "xaA" = (
 /obj/decal/cleanable/cobweb,
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 2
 	},
 /turf/simulated/floor/plating,
@@ -55305,7 +55305,7 @@
 	name = "Boardroom"
 	})
 "yhv" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Waste Port"
 	},
@@ -55492,7 +55492,7 @@
 /turf/simulated/floor/green,
 /area/station/hallway/primary/central)
 "ykL" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Chamber 1 Outlet Port"
 	},

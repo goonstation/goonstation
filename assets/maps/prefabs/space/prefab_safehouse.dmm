@@ -728,7 +728,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/safehouse)
 "Dc" = (
-/obj/machinery/atmospherics/pipe/tank/air{
+/obj/machinery/atmospherics/unary/tank/air{
 	volume = 0
 	},
 /obj/machinery/light/incandescent/broken{
