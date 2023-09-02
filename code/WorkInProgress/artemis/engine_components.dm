@@ -1,4 +1,4 @@
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 ABSTRACT_TYPE(/obj/item/artemis_engine_component)
 /obj/item/artemis_engine_component
 		name = "default engine component"

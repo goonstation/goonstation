@@ -1,4 +1,4 @@
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 
 /////////////////////TANK/////////////////////
 /obj/machinery/atmospherics/unary/ion_drive/plasma_tank
