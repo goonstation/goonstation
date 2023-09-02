@@ -1713,7 +1713,7 @@
 						/obj/item/furniture_parts/bench/green,
 						/obj/item/furniture_parts/bench/yellow,
 						/obj/item/furniture_parts/bench,
-						/obj/item/furniture_parts/wood_chair,
+						/obj/item/furniture_parts/dining_chair/wood,
 						/obj/item/furniture_parts/office_chair,
 						/obj/item/furniture_parts/office_chair/red,
 						/obj/item/furniture_parts/office_chair/green,

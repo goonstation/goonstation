@@ -1,4 +1,4 @@
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 
 #define HAS_ARTEMIS_SCAN (1 << 19) //the object has an artemis scan
 
@@ -15,7 +15,7 @@
 		..()
 		src.myhud = new /datum/hud/flight_computer(src)
 		SPAWN(1 SECOND)
-			for(var/obj/artemis/S in world)
+			for_by_tcl(S, /obj/artemis)
 				if(S.stars_id == src.stars_id)
 					src.ship = S
 					src.ship.controls = src

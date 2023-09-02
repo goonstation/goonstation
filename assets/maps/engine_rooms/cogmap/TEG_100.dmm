@@ -11,7 +11,7 @@
 /obj/item/extinguisher,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/decal/stripe_delivery,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/engine,
@@ -38,7 +38,7 @@
 /obj/machinery/meter{
 	pixel_y = 1
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -111,7 +111,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "eZ" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/storage/crate/furnacefuel,
@@ -129,7 +129,7 @@
 /obj/stool/chair{
 	dir = 1
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-4"
 	},
 /obj/landmark/start{
@@ -285,7 +285,7 @@
 	dir = 8;
 	level = 2
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -308,7 +308,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "sq" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/machinery/light{
@@ -379,10 +379,10 @@
 /obj/machinery/power/generatorTemp,
 /obj/item/paper/engine,
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-2"
 	},
-/obj/cable/brown,
+/obj/cable/orange,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -430,7 +430,7 @@
 	},
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/firedoor_spawn,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/decal/stripe_delivery,
@@ -575,7 +575,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "JD" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -619,7 +619,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -628,7 +628,7 @@
 /obj/machinery/atmospherics/binary/valve{
 	name = "outlet purge valve"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grey,
@@ -654,7 +654,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "Sf" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,

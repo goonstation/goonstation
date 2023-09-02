@@ -1,5 +1,5 @@
 
-var/global/list/material_cache = buildMaterialCache()
+var/global/list/material_cache
 
 /atom/var/datum/material/material = null
 /atom/var/material_amt = 1
