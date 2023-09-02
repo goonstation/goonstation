@@ -1,4 +1,42 @@
 
+(t)sat sep 02 23
+(u)Amylizzle
+(p)15569
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)You can now make shoddy fuel rods using a glowstick in the nuclear fabricator.
+(u)Glamurio (Ryou)
+(p)15536
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(+)Added industrial chairs. You can craft them out of reinforced metal.
+(u)Flappybat
+(p)15478
+(e)🗺🎨🔄📦🎩|A-Mapping, C-Sprites, C-Rework, A-Game-Objects, A-Clothing
+(+)Trash bags now must be converted into clothing using snipping tools instead of just wearing them directly. They will still function as clothing with storage afterwards.
+(u)Tyrant
+(p)15628
+(e)🗺💅|A-Mapping, C-QoL
+(+)All bars now have an ashtray and a nearby cigarette vendor.
+(u)Tyrant
+(p)15619
+(e)🗺💅💡|A-Mapping, C-QoL, A-Station-Systems
+(+)Cables are colour coded in the following way: Red=Station, Orange=Engine, Blue=PTL, Yellow=Solars
+(t)fri sep 01 23
+(u)DimWhat
+(p)15610
+(e)🎨⚖🎩|C-Sprites, C-Balance, A-Clothing
+(*)Added a new HoS themed helmet to the HoS locker.
+(u)MeggalBozale
+(p)15622
+(e)🗺💅|A-Mapping, C-QoL
+(+)Miners on Clarion now have more space in their lobby.
+(u)ZWRh3
+(p)15550
+(e)⚖💅🔨📦|C-Balance, C-QoL, A-Player-Actions, A-Game-Objects
+(+)Lockers with leg holes are now 5x faster.
+(u)Garsh
+(p)15522
+(e)🔄📄|C-Rework, A-UI
+(+)New UI for the Oxygen Vending Machine
 (t)thu aug 31 23
 (u)Cheffie
 (p)15572
