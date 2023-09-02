@@ -1,6 +1,6 @@
 // Most of these aren't in use anymore, but there's enough of them that they may as well get their own file.
 
-/obj/item/storage/box/trackimp_kit2
+/obj/item/storage/box/trackimp_kit
 	name = "tracking implant kit"
 	icon_state = "implant"
 	desc = "A box containing an implanting tool, four tracking implant cases, and two GPS devices. The implanter can remove the implants from their cases and inject them in a person, and the GPS devices can tell you where they are."

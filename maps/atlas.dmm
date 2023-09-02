@@ -7878,7 +7878,7 @@
 /obj/table/reinforced/chemistry/auto,
 /obj/item/device/gps,
 /obj/item/device/gps,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/cable{
 	icon_state = "1-2"
 	},

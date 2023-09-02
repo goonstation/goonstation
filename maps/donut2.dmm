@@ -2252,7 +2252,7 @@
 /area/station/science/teleporter)
 "ajw" = (
 /obj/table/auto,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = 6;
 	pixel_y = 6
 	},
@@ -16884,7 +16884,7 @@
 	c_tag = "Security";
 	network = "SS13"
 	},
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = -8
 	},
 /obj/item/implanter,
