@@ -42442,7 +42442,6 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/machinery/vending/cigarette,
 /turf/simulated/floor/black/corner{
 	dir = 1
 	},

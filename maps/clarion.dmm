@@ -7170,7 +7170,6 @@
 	dir = 4
 	},
 /obj/decal/stage_edge,
-/obj/machinery/vending/cigarette,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "aCv" = (

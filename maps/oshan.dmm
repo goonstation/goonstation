@@ -39876,10 +39876,6 @@
 /obj/machinery/navbeacon/mule/hydroponics_north,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
-"lpX" = (
-/obj/machinery/vending/cigarette,
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/bar)
 "lqc" = (
 /obj/decal/fakeobjects/skeleton,
 /obj/item/mining_tool/powerhammer,
@@ -82272,7 +82268,7 @@ nyX
 cLa
 aQl
 dwx
-lpX
+biB
 bjh
 bjX
 bjX
