@@ -45,7 +45,7 @@
 
 	var/desc = tgui_input_list(user, "Area to jump to","Teleportation", sortList(L, /proc/cmp_text_asc))
 
-	if (!user || !src || src.loc != user || !isrobot(user))
+	if (!user || !src || src.loc != user || !iscyborg(user))
 		if (user)
 			user.show_text("Teleportation failed.", "red")
 		return

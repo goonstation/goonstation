@@ -1213,6 +1213,341 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		qdel(src)
 		return
 
+/obj/item/parts/robot_parts/adrone_frame
+	name = "drone frame"
+	icon_state = "frame"
+	max_health = 5000
+	/// This will make the borg a syndie one
+	var/syndicate = FALSE
+	var/emagged = 0
+	var/freemodule = TRUE
+	var/build_step = 0
+	var/shelltypetoapply = "eyebot"
+	var/obj/item/cell/cell = null
+	var/obj/item/organ/brain/brain = null
+	var/obj/item/ai_interface/ai_interface = null
+	var/obj/item/ = null
+	appearance_flags = KEEP_TOGETHER
+
+	var/image/image_plate_overlay = null
+	var/image/image_wire_overlay = null
+	var/image/image_radio_overlay = null
+	var/image/image_brain_overlay = null
+	var/image/image_interface_overlay = null
+	var/image/image_cell_overlay = null
+
+	New()
+		..()
+		src.icon_state = "frame-" + src.shelltypetoapply;
+		src.UpdateIcon()
+
+	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		if(!emagged)
+			emagged = 1
+			if (user)
+				logTheThing(LOG_STATION, user, "emags a drone frame at [log_loc(user)].")
+				boutput(user, "<span class='notice'>You short out the behavior restrictors on the frame's motherboard.</span>")
+			return 1
+		else if(user)
+			boutput(user, "<span class='alert'>This frame's behavior restrictors have already been shorted out.</span>")
+		return 0
+
+	demag(var/mob/user)
+		if (!emagged)
+			return 0
+		if (user)
+			user.show_text("You repair the behavior restrictors on the frame's motherboard.", "blue")
+		emagged = 0
+		return 1
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/sheet))
+			if (src.build_step < 1)
+				var/obj/item/sheet/M = W
+				if (M.change_stack_amount(-1))
+					src.build_step++
+					boutput(user, "You add the plating to [src]!")
+					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+					src.UpdateIcon()
+					return
+				else
+					boutput(user, "You need at least one metal sheet to add plating! How are you even seeing this message?! How do you have a metal sheet that has no metal sheets in it?!?!")
+					user.drop_item()
+					qdel(W) // no bizarro nega-sheets for you :v
+					return
+			else
+				boutput(user, "\The [src] already has plating!")
+				return
+
+		else if (istype(W, /obj/item/cable_coil))
+			if (src.build_step == 1)
+				var/obj/item/cable_coil/coil = W
+				if (coil.amount >= 3)
+					src.build_step++
+					boutput(user, "You add \the cable to [src]!")
+					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+					src.UpdateIcon()
+					coil.use(3)
+					if (coil.amount < 1)
+						user.drop_item()
+						qdel(coil)
+					return
+				else
+					boutput(user, "You need at least three lengths of cable to install it in [src].")
+					return
+			else if (src.build_step > 1)
+				boutput(user, "\The [src] already has wiring!")
+
+			else
+				boutput(user, "You need to plate the frame before you can add wires to it!")
+				return
+
+		if (istype(W, /obj/item/device/radio))
+			if (src.build_step == 2)
+				var/obj/item/device/radio/M = W
+				src.build_step++
+				boutput(user, "You add the radio to [src]!")
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				src.UpdateIcon()
+				user.drop_item()
+				qdel(M) // no bizarro nega-sheets for you :v
+				return
+			else if (src.build_step > 2)
+				boutput(user, "\The [src] already has a radio!")
+			else if  (src.build_step < 1)
+				boutput(user, "<span class='alert'>You need to add plating before you can put in a radio!</span>")
+			else if  (src.build_step == 1)
+				boutput(user, "<span class='alert'>You need to add wiring before you can put in a radio!</span>")
+
+		else if (istype(W, /obj/item/cell))
+			if (src.build_step == 3)
+				if (src.cell)
+					boutput(user, "<span class='alert'>There is already a cell in there. Use a wrench to remove it.</span>")
+				else
+					user.drop_item()
+					W.set_loc(src)
+					src.cell = W
+					boutput(user, "<span class='notice'>You insert [W].</span>")
+					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+					src.UpdateIcon()
+			else if  (src.build_step < 1)
+				boutput(user, "<span class='alert'>You need to add plating before you can put in a cell!</span>")
+			else if  (src.build_step == 1)
+				boutput(user, "<span class='alert'>You need to add wiring before you can put in a cell!</span>")
+			else if  (src.build_step == 2)
+				boutput(user, "<span class='alert'>You need to add a radio before you can put in a cell!</span>")
+
+		if (istype(W,/obj/item/organ/brain))
+			if (src.build_step == 3)
+				if (src.brain)
+					boutput(user, "<span class='alert'>There is already a brain in there. Use a wrench to remove it.</span>")
+
+				if (src.ai_interface)
+					boutput(user, "<span class='alert'>There is already \an [src.ai_interface] in there. Use a wrench to remove it.</span>")
+
+				if (!src.brain && !src.ai_interface)
+					var/obj/item/organ/brain/B = W
+					if ( !(B.owner && B.owner.key) && !istype(W, /obj/item/organ/brain/latejoin) )
+						boutput(user, "<span class='alert'>This brain doesn't look any good to use.</span>")
+					else if ( B.owner  &&  (jobban_isbanned(B.owner.current,"Cyborg") || B.owner.get_player().dnr) ) //If the borg-to-be is jobbanned or has DNR set
+						boutput(user, "<span class='alert'>The brain disintigrates in your hands!</span>")
+						user.drop_item(B)
+						qdel(B)
+						var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+						smoke.set_up(1, 0, user.loc)
+						smoke.start()
+					user.drop_item()
+					B.set_loc(src)
+					src.brain = B
+					boutput(user, "<span class='notice'>You insert the brain.</span>")
+					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+					src.UpdateIcon()
+
+		else if (istype(W, /obj/item/ai_interface))
+			if (src.build_step == 3)
+				if (src.brain)
+					boutput(user, "<span class='alert'>There is already a brain in there. Use a wrench to remove it.</span>")
+
+				if (src.ai_interface)
+					boutput(user, "<span class='alert'>There is already \an [src.ai_interface] in there. Use a wrench to remove it.</span>")
+
+				if (!src.brain && !src.ai_interface)
+					var/obj/item/ai_interface/I = W
+					user.drop_item()
+					I.set_loc(src)
+					src.ai_interface = I
+					boutput(user, "<span class='notice'>You insert [I].</span>")
+					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+					src.UpdateIcon()
+
+		if (iswrenchingtool(W))
+			var/list/actions = list("Do nothing")
+			if(src.check_completion())
+				actions.Add("Finish and Activate the Drone")
+			if(src.brain)
+				actions.Add("Remove the Brain")
+			if(src.ai_interface)
+				actions.Add("Remove the AI Interface")
+			if(src.cell)
+				actions.Add("Remove the Power cell")
+			if(!actions.len)
+				boutput(user, "<span class='alert'>You can't think of anything to do with the frame.</span>")
+				return
+
+			var/action = tgui_input_list(user, "What do you want to do?", "Drone Frame", actions)
+			if (!action)
+				return
+			if (action == "Do nothing")
+				return
+			if (BOUNDS_DIST(src.loc, user.loc) > 0 && !user.bioHolder.HasEffect("telekinesis"))
+				boutput(user, "<span class='alert'>You need to move closer!</span>")
+				return
+
+			switch(action)
+				if("Finish and Activate the Drone")
+					src.finish_adrone()
+				if("Remove the Brain")
+					src.brain?.set_loc( get_turf(src) )
+					src.brain = null
+					src.UpdateIcon()
+				if("Remove the AI Interface")
+					src.ai_interface.set_loc( get_turf(src) )
+					src.ai_interface = null
+					src.UpdateIcon()
+				if("Remove the Power cell")
+					src.cell.set_loc( get_turf(src) )
+					src.cell = null
+					src.UpdateIcon()
+			playsound(src, 'sound/items/Ratchet.ogg', 40, 1)
+			src.UpdateIcon()
+			return
+
+	update_icon()
+		if(build_step > 0)
+			src.UpdateOverlays(image('icons/mob/hivebot.dmi', "plating-c-" + src.shelltypetoapply, FLOAT_LAYER, 2),"plating")
+		else
+			src.UpdateOverlays(null,"plating")
+
+		if(build_step > 1)
+			src.UpdateOverlays(image('icons/mob/hivebot.dmi', "wires-c-" + src.shelltypetoapply, FLOAT_LAYER, 2),"wires")
+		else
+			src.UpdateOverlays(null,"wires")
+
+		if(build_step > 2)
+			src.UpdateOverlays(image('icons/mob/hivebot.dmi', "radio-c-" + src.shelltypetoapply, FLOAT_LAYER, 3),"radio")
+		else
+			src.UpdateOverlays(null,"radio")
+
+		if(src.brain)
+			src.UpdateOverlays(image('icons/mob/hivebot.dmi', "brain-c-" + src.shelltypetoapply, FLOAT_LAYER, 3),"brain")
+		else
+			src.UpdateOverlays(null,"brain")
+
+		if(src.ai_interface)
+			src.UpdateOverlays(image('icons/mob/hivebot.dmi', "interface-c-" + src.shelltypetoapply, FLOAT_LAYER, 3),"interface")
+		else
+			src.UpdateOverlays(null,"interface")
+
+		if(src.cell)
+			src.UpdateOverlays(image('icons/mob/hivebot.dmi', "cell-c-" + src.shelltypetoapply, FLOAT_LAYER, 4),"cell")
+		else
+			src.UpdateOverlays(null,"cell")
+
+
+	proc/check_completion()
+		if (build_step == 3)
+			if ((src.brain || src.ai_interface) && src.cell)
+				return 1
+		return 0
+
+	proc/finish_adrone()
+		var/mob/living/silicon/adrone/drone = null
+		drone = new /mob/living/silicon/adrone(get_turf(src.loc),src,0,src.syndicate,src.emagged)
+		// there was a big transferring list of parts from the frame to the compborg here at one point, but it didn't work
+		// because the cyborg's process proc would kill it for having no chest piece set up after New() finished but
+		// before it could get around to this list, so i tweaked their New() proc instead to grab all the shit out of
+		// the frame before process could go off resulting in a borg that doesn't instantly die
+
+		drone.name = "Drone"
+		drone.real_name = "Drone"
+
+		if(drone.brain?.owner?.key)
+			if(drone.brain.owner.current)
+				drone.gender = drone.brain.owner.current.gender
+				if(drone.brain.owner.current.client)
+					drone.lastKnownIP = drone.brain.owner.current.client.address
+			var/mob/M = find_ghost_by_key(drone.brain.owner.key)
+			drone.brain = src.brain
+			drone.brain.set_loc(drone)
+			if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
+				src.visible_message("<span class='alert'><b>[src]</b> remains inactive, as the conciousness associated with that brain could not be reached.</span>")
+				drone.death()
+				qdel(src)
+				return
+			if (!isdead(M)) // so if they're in VR, the afterlife bar, or a ghostcritter
+				boutput(M, "<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
+				drone.brain.owner = M.ghostize()?.mind
+				qdel(M)
+			else
+				boutput(M, "<span class='alert'>You feel yourself being dragged out of the afterlife!</span>")
+			drone.brain.owner.transfer_to(drone)
+			if (isdead(M) && !isliving(M))
+				qdel(M)
+
+		else if (src.ai_interface)
+			if (!(drone in available_ai_shells))
+				available_ai_shells += drone
+			for_by_tcl(AI, /mob/living/silicon/ai)
+				boutput(AI, "<span class='success'>[src] has been connected to you as a controllable drone.</span>")
+			playsound(src, 'sound/weapons/radxbow.ogg', 40, 1)
+			drone.ai_interface = src.ai_interface
+			drone.ai_interface.set_loc(drone)
+			drone.shell = 1
+		else if (istype(drone.brain, /obj/item/organ/brain/latejoin))
+			boutput(usr, "<span class='notice'>You activate the frame and it plays an audible beep.</span>")
+			playsound(src, 'sound/weapons/radxbow.ogg', 40, 1)
+		else
+			stack_trace("We finished adrone [identify_object(drone)] from frame [identify_object(src)] with a brain, but somehow lost the brain??? Where did it go")
+			drone.death()
+			qdel(src)
+			return
+
+		if (src.cell)
+			drone.cell = src.cell
+			drone.cell.set_loc(drone)
+
+		if (drone.mind && !drone.ai_interface)
+			drone.set_loc(get_turf(src))
+
+			boutput(drone, "<B>You are playing a Drone. The Drone can interact with most electronic objects in its view point.</B>")
+			boutput(drone, "To use something, simply click it.")
+			boutput(drone, "Use the prefix <B>:s</B> to speak to fellow silicons through binary.")
+
+			if (src.emagged || src.syndicate)
+				if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && drone.mind)
+					ticker.mode:revolutionaries += drone.mind
+				if (src.emagged)
+					drone.emagged = 1
+					drone.mind.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
+					SPAWN(0)
+					drone.update_appearance()
+				else if (src.syndicate)
+					drone.syndicate = 1
+				drone.make_syndicate("activated by [usr]")
+			else
+				boutput(drone, "<B>You must follow the AI's laws to the best of your ability.</B>")
+				drone.show_laws() // The antagonist proc does that too.
+
+			drone.job = "Cyborg"
+
+		drone.update_appearance()
+
+		qdel(src)
+		return
+
+/obj/item/parts/robot_parts/adrone_frame/gpcs
+	shelltypetoapply = "gpcs"
+
 /obj/item/parts/robot_parts/robot_frame/syndicate
 	syndicate = TRUE
 

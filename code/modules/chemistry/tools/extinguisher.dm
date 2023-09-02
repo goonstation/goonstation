@@ -247,6 +247,13 @@
 	name = "fire extinguisher XL"
 	initial_volume = 300
 
+/obj/item/extinguisher/cyborg
+	reinforced = TRUE
+	New()
+		..()
+		src.banned_reagents += src.melting_reagents
+		src.melting_reagents = list()
+
 /obj/item/extinguisher/large/cyborg // because borgs can't replace their extinguishers
 	reinforced = TRUE
 	New()

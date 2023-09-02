@@ -363,6 +363,12 @@ or don't if it uses a custom topopen overlay
 			if (!(E in available_ai_shells))
 				available_ai_shells += E
 
+		for (var/mob/living/silicon/adrone/D in mobs)
+			if (D.brain || !D.ai_interface || D.dependent)
+				continue
+			if (!(D in available_ai_shells))
+				available_ai_shells += D
+
 		for (var/mob/living/silicon/robot/R in mobs)
 			if (!R.part_head || R.part_head.brain || !R.part_head.ai_interface || R.dependent)
 				continue
@@ -1870,6 +1876,10 @@ or don't if it uses a custom topopen overlay
 		if (R.shell && !R.dependent && !isdead(R) && get_step(R, 0)?.z == get_step(src, 0)?.z)
 			bodies += R
 
+	for (var/mob/living/silicon/adrone/D in available_ai_shells)
+		if (D.shell && !D.dependent && !isdead(D))
+			bodies += D
+
 	var/mob/living/silicon/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies, /proc/cmp_text_asc))
 
 	if (!target_shell || isdead(target_shell) || !(isshell(target_shell) || isrobot(target_shell)))
@@ -1944,7 +1954,12 @@ or don't if it uses a custom topopen overlay
 					var/mob/living/silicon/hivebot/H = user
 					H.shell = 1
 					H.dependent = 0
-				else if (isrobot(user))
+				else if (isadrone(user))
+					var/mob/living/silicon/adrone/D = user
+					if (!isnull(D?.ai_interface))
+						D.shell = 1
+					D.dependent = 0
+				else if (iscyborg(user))
 					var/mob/living/silicon/robot/R = user
 					if (!isnull(R.part_head?.ai_interface))
 						R.shell = 1

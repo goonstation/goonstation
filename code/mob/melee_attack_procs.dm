@@ -721,7 +721,7 @@
 	var/damage = 0
 	var/send_flying = 0 // 1: a little bit | 2: across the room
 
-	if (isrobot(target))
+	if (iscyborg(target))
 		var/mob/living/silicon/robot/BORG = target
 		if (!BORG.part_head)
 			user.visible_message("<span class='alert'><B>[user] smashes [BORG.name] to pieces!</B></span>")

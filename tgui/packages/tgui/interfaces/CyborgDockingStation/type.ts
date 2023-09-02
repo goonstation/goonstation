@@ -38,6 +38,13 @@ interface OccupantDataRobot extends OccupantData {
   cosmetics?: CyborgCosmeticsData,
 }
 
+interface OccupantDataDrone extends OccupantData {
+  parts?: PartListData,
+  cell?: PowerCellData,
+  module?: string,
+  cosmetics?: DroneCosmeticsData,
+}
+
 interface OccupantDataHuman extends OccupantData {
   health: number,
   max_health: number,
@@ -93,5 +100,10 @@ interface CyborgCosmeticsData {
   arms: string,
   legs: string,
   paint: string, // hex colour rep
+  fx: Array<number>, // R,G,B rep
+}
+
+interface DroneCosmeticsData {
+  hat: string,
   fx: Array<number>, // R,G,B rep
 }

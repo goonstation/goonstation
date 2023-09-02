@@ -74,9 +74,13 @@
 			var/mob/dead/observer/GO = usr
 			GO.hud.remove_screen(C)
 
-		else if (isrobot(src))
+		else if (iscyborg(src))
 			var/mob/living/silicon/robot/robot = src
 			robot.hud.remove_screen(C)
+
+		else if (isadrone(src))
+			var/mob/living/silicon/adrone/adrone = src
+			adrone.hud.remove_screen(C)
 
 		else if (isghostdrone(src))
 			var/mob/living/silicon/ghostdrone/drone = src
@@ -222,9 +226,13 @@
 			var/mob/living/intangible/wraith/wraith = user
 			wraith.hud.remove_screen(src)
 
-		else if (isrobot(user))
+		else if (iscyborg(user))
 			var/mob/living/silicon/robot/robot = user
 			robot.hud.remove_screen(src)
+
+		else if (isadrone(user))
+			var/mob/living/silicon/adrone/adrone = user
+			adrone.hud.remove_screen(src)
 
 		else if (isghostdrone(user))
 			var/mob/living/silicon/ghostdrone/drone = user

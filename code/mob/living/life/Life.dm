@@ -9,6 +9,7 @@
 
 	var/mob/living/carbon/human/human_owner = null
 	var/mob/living/silicon/hivebot/hivebot_owner = null
+	var/mob/living/silicon/adrone/adrone_owner = null
 	var/mob/living/silicon/robot/robot_owner = null
 	var/mob/living/critter/critter_owner = null
 
@@ -21,6 +22,8 @@
 			human_owner = owner
 		if (istype(owner,/mob/living/silicon/hivebot))
 			hivebot_owner = owner
+		if (istype(owner,/mob/living/silicon/adrone))
+			adrone_owner = owner
 		if (istype(owner,/mob/living/silicon/robot))
 			robot_owner = owner
 		if (istype(owner,/mob/living/critter))
@@ -31,6 +34,7 @@
 		owner = null
 		human_owner = null
 		hivebot_owner = null
+		adrone_owner = null
 		robot_owner = null
 		critter_owner = null
 
@@ -204,6 +208,15 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/hivebot_signal)
 
+
+/mob/living/silicon/adrone/restore_life_processes()
+	..()
+	add_lifeprocess(/datum/lifeprocess/canmove)
+	add_lifeprocess(/datum/lifeprocess/hud)
+	add_lifeprocess(/datum/lifeprocess/sight)
+	add_lifeprocess(/datum/lifeprocess/robot_statusupdate)
+	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/silicon/robot/restore_life_processes()
 	..()
@@ -409,6 +422,20 @@
 		var/msg = pick("can't see...","feels bad...","leave me...", "you're cold...", "unwelcome...")
 		src.show_text(voidSpeak(msg))
 		src.emagged = 1
+
+/mob/living/silicon/adrone/Life(datum/controller/process/mobs/parent)
+	if (..(parent))
+		return 1
+
+	src.mainframe_check()
+
+	if (!isdead(src)) //Alive.
+		if (src.health < 0)
+			death()
+
+	process_killswitch()
+	process_locks()
+	update_canmove()
 
 /mob/living/silicon/ai/Life(datum/controller/process/mobs/parent)
 	if (..(parent))

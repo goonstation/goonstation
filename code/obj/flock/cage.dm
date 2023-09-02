@@ -189,7 +189,7 @@
 				var/mob/living/carbon/human/H = occupant
 				getHumanPiece(H) //cut off a human part and add it to contents, set it to target
 				H?.reagents?.add_reagent(target_fluid,2) //you get a bit of juice, just to complicate life
-			else if(occupant && isrobot(occupant))
+			else if(occupant && iscyborg(occupant))
 				var/mob/living/silicon/robot/H = occupant
 				getRobotPiece(H) //cut off a robot part and add it to contents, set it to target
 			else if(isliving(occupant))

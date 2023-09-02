@@ -3,6 +3,7 @@
 	desc = "Tools for use in the excavation and transportation of valuable minerals."
 	icon_state = "mining"
 	mod_hudicon = "mining"
+	moduletype = "cyborg"
 	included_cosmetic = /datum/robot_cosmetic/mining
 	included_tools = /datum/robot/module_tool_creator/recursive/module/mining
 	radio_type = /obj/item/device/radio/headset/miner

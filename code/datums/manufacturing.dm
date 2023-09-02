@@ -1552,10 +1552,19 @@ ABSTRACT_TYPE(/datum/manufacture)
 	category = "Component"
 
 /datum/manufacture/shell_frame
-	name = "AI Shell Frame"
+	name = "Eyebot Frame"
 	item_paths = list("MET-2")
 	item_amounts = list(12)
-	item_outputs = list(/obj/item/shell_frame)
+	item_outputs = list(/obj/item/parts/robot_parts/adrone_frame)
+	time = 25 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/drone_frame
+	name = "Drone Frame"
+	item_paths = list("MET-2")
+	item_amounts = list(12)
+	item_outputs = list(/obj/item/parts/robot_parts/adrone_frame/gpcs)
 	time = 25 SECONDS
 	create = 1
 	category = "Component"

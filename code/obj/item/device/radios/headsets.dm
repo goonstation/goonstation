@@ -323,6 +323,21 @@
 	icon_override = "med"
 	icon_tooltip = "Medical"
 
+/obj/item/device/radio/headset/medsci
+	name = "medsci headset"
+	desc = ""
+	icon_state = "med headset"
+	secure_frequencies = list(
+		"m" = R_FREQ_MEDICAL,
+		"r" = R_FREQ_RESEARCH,
+		)
+	secure_classes = list(
+		"m" = RADIOCL_MEDICAL,
+		"r" = RADIOCL_RESEARCH,
+		)
+	icon_override = "med"
+	icon_tooltip = "Medical"
+
 /obj/item/device/radio/headset/research
 	name = "research headset"
 	desc = "A science headset, for science. Whether directly or by proxy, these are frequently burned, exploded, corroded, dissolved, shot, and teleported, to name a few."

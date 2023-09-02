@@ -324,13 +324,6 @@
 /obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor,
 /area/devzone)
-"fc" = (
-/obj/decal/tile_edge/line/blue{
-	icon_state = "line2"
-	},
-/obj/machinery/dialysis,
-/turf/simulated/floor/white,
-/area/devzone)
 "fs" = (
 /obj/machinery/manufacturer/medical,
 /turf/simulated/floor,
@@ -584,6 +577,10 @@
 /obj/machinery/vehicle/miniputt/gold,
 /turf/simulated/floor/engine/glow/blue,
 /area/space)
+"ip" = (
+/obj/item/parts/robot_parts/adrone_frame,
+/turf/simulated/floor/black,
+/area/devzone)
 "iu" = (
 /obj/forcefield/energyshield/perma{
 	dir = 5
@@ -719,6 +716,14 @@
 "jP" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor/grass/random,
+/area/devzone)
+"kh" = (
+/obj/item/cell/cerenkite/charged,
+/obj/item/cell/erebite/charged,
+/obj/item/cell/hypercell/charged,
+/obj/item/cell/shell_cell/charged,
+/obj/item/cell/charged,
+/turf/simulated/floor/orangeblack,
 /area/devzone)
 "kk" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -1212,6 +1217,16 @@
 	icon_state = "engine_caution_west"
 	},
 /area/devzone)
+"qe" = (
+/obj/item/sheet/steel/fullstack,
+/obj/item/cable_coil,
+/obj/item/cable_coil,
+/obj/item/cable_coil,
+/obj/item/cable_coil,
+/obj/item/cable_coil,
+/obj/item/cable_coil,
+/turf/simulated/floor/orangeblack,
+/area/devzone)
 "qm" = (
 /obj/machinery/computer/robot_module_rewriter,
 /turf/simulated/floor/black,
@@ -1222,6 +1237,13 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
+/area/devzone)
+"qp" = (
+/obj/decal/tile_edge/line/blue{
+	icon_state = "line2"
+	},
+/obj/machinery/dialysis,
+/turf/simulated/floor/white,
 /area/devzone)
 "qs" = (
 /obj/machinery/power/apc/autoname_east,
@@ -1841,6 +1863,10 @@
 /obj/machinery/navbeacon/mule/hydroponics_north,
 /turf/simulated/floor/grass/random,
 /area/devzone)
+"Ai" = (
+/obj/item/shell_frame,
+/turf/simulated/floor/orangeblack,
+/area/devzone)
 "Ak" = (
 /obj/machinery/sleeper/compact{
 	dir = 4
@@ -2073,6 +2099,10 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
+/area/devzone)
+"DD" = (
+/obj/item/parts/robot_parts/adrone_frame/gpcs,
+/turf/simulated/floor/black,
 /area/devzone)
 "DE" = (
 /obj/machinery/networked/test_apparatus/impact_pad,
@@ -3252,6 +3282,29 @@
 /obj/map/light/brighterwhite,
 /turf/simulated/floor,
 /area/station/turret_protected/ai)
+"TB" = (
+/obj/item/device/radio,
+/obj/item/device/radio,
+/obj/item/device/radio,
+/obj/item/device/radio,
+/obj/item/device/radio,
+/obj/item/device/radio,
+/obj/item/ai_interface,
+/obj/item/ai_interface,
+/obj/item/ai_interface,
+/obj/item/ai_interface,
+/obj/item/ai_interface,
+/obj/item/ai_interface,
+/obj/item/organ/brain/latejoin,
+/obj/item/organ/brain/latejoin,
+/obj/item/organ/brain/latejoin,
+/obj/item/organ/brain/latejoin,
+/obj/item/organ/brain/latejoin,
+/obj/item/organ/brain/latejoin,
+/obj/item/organ/brain/latejoin,
+/obj/item/organ/brain/latejoin,
+/turf/simulated/floor/orangeblack,
+/area/devzone)
 "TF" = (
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
@@ -5040,7 +5093,7 @@ ng
 SG
 oj
 RE
-fc
+qp
 lU
 ng
 Yx
@@ -5256,8 +5309,8 @@ yX
 TZ
 Ud
 OP
-yr
-ng
+ip
+qe
 Yx
 "}
 (35,1,1) = {"
@@ -5299,8 +5352,8 @@ qm
 yr
 NI
 HA
-yr
-ng
+DD
+TB
 Yx
 "}
 (36,1,1) = {"
@@ -5342,8 +5395,8 @@ ng
 ng
 ng
 ng
-ng
-ng
+Ai
+kh
 Yx
 "}
 (37,1,1) = {"

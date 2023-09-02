@@ -158,7 +158,7 @@
 						boutput(M, "You can feel intense heat on the lower part of your torso.")
 						visible_message("<span class='alert'>[M] continues to remain too close to the lava, if they had any legs, they would have melted away!</span>")
 
-				if (isrobot(M))
+				if (iscyborg(M))
 					var/mob/living/silicon/robot/R = M
 					R.canmove = 0
 					R.TakeDamage("chest", pick(20,40), 0, DAMAGE_BURN)

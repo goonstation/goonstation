@@ -179,7 +179,7 @@
 		return ..() && (!frenzy.disabled && !fadeout.disabled) // so they can't attack you while frenzying or while invisible (kinda)
 
 	proc/fuck_up_silicons(var/mob/living/silicon/silicon) // modified orginal object critter behaviour scream
-		if (isrobot(silicon) && !ON_COOLDOWN(src, "brullbar_messup_cyborg", 30 SECONDS))
+		if (iscyborg(silicon) && !ON_COOLDOWN(src, "brullbar_messup_cyborg", 30 SECONDS))
 			var/mob/living/silicon/robot/cyborg = silicon
 			if (cyborg.part_head.ropart_get_damage_percentage() >= 85)
 				src.visible_message("<span class='alert'><B>[src] grabs [cyborg.name]'s head and wrenches it right off!</B></span>")

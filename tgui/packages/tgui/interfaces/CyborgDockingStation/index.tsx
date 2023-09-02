@@ -89,7 +89,7 @@ const OccupantTabContents = (props) => {
         <LabeledList>
           <LabeledList.Item label="Name" buttons={(
             <>
-              {occupant.kind ==="robot" && <DockingAllowedButton onClick={() => act("occupant-rename")} icon="edit" tooltip="Change the occupant's designation" />}
+              {(occupant.kind ==="robot" || occupant.kind ==="adrone")  && <DockingAllowedButton onClick={() => act("occupant-rename")} icon="edit" tooltip="Change the occupant's designation" />}
               {<DockingAllowedButton onClick={() => act("occupant-eject")} icon="eject" tooltip="Eject the occupant" /> }
             </>
           )}>
@@ -99,6 +99,7 @@ const OccupantTabContents = (props) => {
         </LabeledList>
         <Section title="Status">
           {occupant.kind === "robot" && <OccupantStatusRobot occupant={occupant} fuel={fuel} cabling={cabling} act={act} />}
+          {occupant.kind === "adrone" && <OccupantStatusDrone occupant={occupant} fuel={fuel} cabling={cabling} act={act} />}
           {occupant.kind === "human" && <OccupantStatusHuman occupant={occupant} />}
           {occupant.kind === "eyebot" && <OccupantStatusEyebot occupant={occupant} />}
         </Section>
@@ -131,6 +132,26 @@ const OccupantStatusRobot = (props) => {
         act={act} />
       <DecorationReport cosmetics={occupant.cosmetics} act={act} />
       <ClothingReport clothes={occupant.clothing} act={act} />
+    </>);
+};
+const OccupantStatusDrone = (props) => {
+  const { occupant, fuel, cabling, act } = props;
+  return (
+    <>
+      <LabeledList>
+        <OccupantCellDisplay cellData={occupant.cell} act={act} />
+        <LabeledList.Item label="Module" buttons={
+          <DockingAllowedButton
+            onClick={() => act("module-remove")}
+            icon="minus"
+            tooltip="Remove the occupant's module"
+            disabled={!occupant.module} />
+        }>
+          {occupant.module || <Box as="span" color="red">No Module Installed</Box>}
+        </LabeledList.Item>
+      </LabeledList>
+      <DamageReportDrone parts={occupant.parts} fuel={fuel} cabling={cabling} act={act} />
+      <DecorationReportDrone cosmetics={occupant.cosmetics} act={act} />
     </>);
 };
 const OccupantStatusHuman = (props) => {
@@ -168,8 +189,12 @@ const OccupantType = (props) => {
       if (user === "brain") return <>Mk.2-Type Cyborg</>;
       if (user === "ai") return <>Mk.2-Type AI Shell</>;
       break;
+    case "adrone":
+      if (user === "brain") return <>Mk.1-Type Drone</>;
+      if (user === "ai") return <>Mk.1-Type AI Shell</>;
+      break;
     case "human":
-      return <>Mk.2-Type Carbon</>;
+      return <>Mk.UNDEF-Type Carbon</>;
     case "eyebot":
       return <>Mk.1-Type Eyebot</>;
     default:
@@ -221,6 +246,11 @@ const DecorationReport = (props) => {
           <DockingAllowedButton icon="sync-alt" tooltip="Change legs decoration" onClick={() => act("cosmetic-change-legs")} />
         }>{cosmetics.legs || "None"}
         </LabeledList.Item>
+        <LabeledList.Item label="Hat" buttons={
+          <DockingAllowedButton icon="sync-alt" tooltip="Change decoration" onClick={() => act("cosmetic-change-hat")} />
+        }>
+          {cosmetics.hat || "None"}
+        </LabeledList.Item>
         <LabeledList.Item label="Paint" buttons={
           <>
             {!cosmetics.paint && <DockingAllowedButton icon="plus" tooltip="Add paint" onClick={() => act("occupant-paint-add")} />}
@@ -229,6 +259,25 @@ const DecorationReport = (props) => {
           </>
         }>
           {cosmetics.paint ? <ColorBox color={cosmetics.paint} /> : "No paint applied"}
+        </LabeledList.Item>
+        <LabeledList.Item label="Eyes" buttons={
+          <DockingAllowedButton icon="tint" tooltip="Change eye glow" onClick={() => act("occupant-fx")} />
+        }>
+          <ColorBox color={"rgb(" + cosmetics.fx[0] + "," + cosmetics.fx[1] + "," + cosmetics.fx[2] + ")"} />
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
+  );
+};
+const DecorationReportDrone = (props) => {
+  const { cosmetics, act } = props;
+  return (
+    <Section title="Decoration">
+      <LabeledList>
+        <LabeledList.Item label="Hat" buttons={
+          <DockingAllowedButton icon="sync-alt" tooltip="Change decoration" onClick={() => act("cosmetic-change-hat")} />
+        }>
+          {cosmetics.hat || "None"}
         </LabeledList.Item>
         <LabeledList.Item label="Eyes" buttons={
           <DockingAllowedButton icon="tint" tooltip="Change eye glow" onClick={() => act("occupant-fx")} />
@@ -255,6 +304,22 @@ const DamageReport = (props) => {
         <PartDisplay label="Right Arm" partData={parts.arm_r} />
         <PartDisplay label="Left Leg" partData={parts.leg_l} />
         <PartDisplay label="Right Leg" partData={parts.leg_r} />
+      </LabeledList>
+    </Section>
+  );
+};
+const DamageReportDrone = (props) => {
+  const { occupant, fuel, cabling, act } = props;
+  return (
+    <Section title="Damage Report" buttons={
+      <>
+        <DockingAllowedButton disabled={fuel < 1} icon="wrench" backgroundColor={COLORS.damageType.brute} tooltip="Fix structural damage" onClick={() => act("repair-fuel")} />
+        <DockingAllowedButton disabled={cabling < 1} icon="fire" backgroundColor={COLORS.damageType.burn} tooltip="Fix wiring damage" onClick={() => act("repair-wiring")} />
+      </>
+    }>
+    <LabeledList>
+      <PartDisplay label="Brute" partData={occupant.get_brute_damage} />
+      <PartDisplay label="Burn" partData={occupant.get_burn_damage} />
       </LabeledList>
     </Section>
   );

@@ -25,9 +25,13 @@ var/list/datum/contextAction/globalContextActions = null
 		var/mob/living/intangible/wraith/W = target
 		W.hud.add_screen(C)
 
-	else if (isrobot(target))
+	else if (iscyborg(target))
 		var/mob/living/silicon/robot/robot = target
 		robot.hud.add_screen(C)
+
+	else if (isadrone(target))
+		var/mob/living/silicon/adrone/adrone = target
+		adrone.hud.add_screen(C)
 
 	else if (isghostdrone(target))
 		var/mob/living/silicon/ghostdrone/drone = target

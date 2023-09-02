@@ -198,7 +198,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 		boutput(user, "<span class='alert'>\The [src] is already occupied!</span>")
 		return
 
-	if (isrobot(AM))
+	if (iscyborg(AM))
 		var/mob/living/silicon/robot/R = AM
 		if (isdead(R))
 			boutput(user, "<span class='alert'>[R] is dead and cannot enter [src].</span>")
@@ -213,6 +213,24 @@ TYPEINFO(/obj/machinery/recharge_station)
 		src.occupant = R
 		if (R.client)
 			src.Attackhand(R)
+		src.add_fingerprint(user)
+		src.build_icon()
+
+	if (isadrone(AM))
+		var/mob/living/silicon/adrone/D = AM
+		if (isdead(D))
+			boutput(user, "<span class='alert'>[D] is dead and cannot enter [src].</span>")
+			return
+		if (user != D)
+			if (isunconscious(user))
+				return
+			else
+				user.visible_message("<b>[user]</b> moves [D] into [src].")
+		D.remove_pulling()
+		D.set_loc(src)
+		src.occupant = D
+		if (D.client)
+			src.Attackhand(D)
 		src.add_fingerprint(user)
 		src.build_icon()
 
@@ -406,7 +424,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 		.["disabled"] = TRUE
 
 	var/list/occupant_data = list()
-	if (isrobot(src.occupant))
+	if (iscyborg(src.occupant))
 		var/mob/living/silicon/robot/R = src.occupant
 		occupant_data["name"] = R.name
 		occupant_data["kind"] = "robot"
@@ -532,6 +550,27 @@ TYPEINFO(/obj/machinery/recharge_station)
 		occupant_data["health"] = H.health
 		occupant_data["max_health"] = H.max_health
 
+	if (isadrone(src.occupant)) // drone handling
+		var/mob/living/silicon/adrone/D = src.occupant
+		occupant_data["name"] = D.name
+		occupant_data["kind"] = "adrone"
+		if (D.brain)
+			occupant_data["user"] = "brain"
+		else if (D.ai_interface)
+			occupant_data["user"] = "ai"
+		else
+			occupant_data["user"] = "unknown"
+		if (D.cell)
+			var/list/this_cell = list()
+			var/obj/item/cell/C = D.cell
+			this_cell["name"] = C.name
+			this_cell["current"] = C.charge
+			this_cell["max"] = C.maxcharge
+			occupant_data["cell"] = this_cell
+		if (D.module)
+			var/obj/item/robot_module/M = D.module
+			occupant_data["module"] = M.name
+
 	if (isshell(src.occupant)) // eyebot handling
 		var/mob/living/silicon/hivebot/eyebot/E = src.occupant
 		occupant_data["name"] = E.name
@@ -608,30 +647,51 @@ TYPEINFO(/obj/machinery/recharge_station)
 		if("occupant-rename")
 			if (!isrobot(src.occupant))
 				return
-			var/mob/living/silicon/robot/R = src.occupant
-			if (R.shell || R.dependent) //no renaming AI shells
-				return
-			var/newname = copytext(strip_html(sanitize(tgui_input_text(user, "What do you want to rename [R]?", "Cyborg Maintenance", R.name))), 1, 64)
-			if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat || !newname)
-				return
-			if (url_regex?.Find(newname))
-				boutput(user, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
-				boutput(user, "<span class='alert'>&emsp;<b>\"[newname]</b>\"</span>")
-				return
-			if(newname && newname != R.name)
-				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
-			logTheThing(LOG_STATION, user, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
-			R.real_name = "[newname]"
-			R.UpdateName()
-			if (R.internal_pda)
-				R.internal_pda.name = "[R.name]'s Internal PDA Unit"
-				R.internal_pda.owner = "[R.name]"
-			. = TRUE
+			if (iscyborg(src.occupant))
+				var/mob/living/silicon/robot/R = src.occupant
+				if (R.shell) //no renaming AI shells
+					return
+				var/newname = copytext(strip_html(sanitize(tgui_input_text(user, "What do you want to rename [R]?", "Cyborg Maintenance", R.name))), 1, 64)
+				if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat || !newname)
+					return
+				if (url_regex?.Find(newname))
+					boutput(user, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
+					boutput(user, "<span class='alert'>&emsp;<b>\"[newname]</b>\"</span>")
+					return
+				if(newname && newname != R.name)
+					phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
+				logTheThing(LOG_STATION, user, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
+				R.real_name = "[newname]"
+				R.UpdateName()
+				if (R.internal_pda)
+					R.internal_pda.name = "[R.name]'s Internal PDA Unit"
+					R.internal_pda.owner = "[R.name]"
+				. = TRUE
+			if (isadrone(src.occupant))
+				var/mob/living/silicon/adrone/R = src.occupant
+				if (R.shell || R.dependent) //no renaming AI shells
+					return
+				var/newname = copytext(strip_html(sanitize(tgui_input_text(user, "What do you want to rename [R]?", "Cyborg Maintenance", R.name))), 1, 64)
+				if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat || !newname)
+					return
+				if (url_regex?.Find(newname))
+					boutput(user, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
+					boutput(user, "<span class='alert'>&emsp;<b>\"[newname]</b>\"</span>")
+					return
+				if(newname && newname != R.name)
+					phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
+				logTheThing(LOG_STATION, user, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
+				R.real_name = "[newname]"
+				R.UpdateName()
+				if (R.internal_pda)
+					R.internal_pda.name = "[R.name]'s Internal PDA Unit"
+					R.internal_pda.owner = "[R.name]"
+				. = TRUE
 		if("occupant-eject")
 			src.go_out()
 			. = TRUE
 		if("occupant-paint-add")
-			if (!isrobot(src.occupant))
+			if (!iscyborg(src.occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/datum/robot_cosmetic/C = null
@@ -646,7 +706,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			R.update_bodypart()
 			. = TRUE
 		if("occupant-paint-remove")
-			if (!isrobot(src.occupant))
+			if (!iscyborg(src.occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/datum/robot_cosmetic/C = null
@@ -660,7 +720,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			R.update_bodypart()
 			. = TRUE
 		if("occupant-paint-change")
-			if (!isrobot(src.occupant))
+			if (!iscyborg(src.occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/datum/robot_cosmetic/C = null
@@ -674,7 +734,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			R.update_bodypart("all")
 			. = TRUE
 		if("occupant-fx")
-			if (!isrobot(src.occupant))
+			if (!iscyborg(src.occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/datum/robot_cosmetic/C = null
@@ -690,7 +750,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 				R.update_bodypart("head")
 			. = TRUE
 		if("cosmetic-change-chest")
-			if (!isrobot(src.occupant))
+			if (!iscyborg(src.occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/datum/robot_cosmetic/C = null
@@ -710,7 +770,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			R.update_appearance()
 			. = TRUE
 		if("cosmetic-change-head")
-			if (!isrobot(src.occupant))
+			if (!iscyborg(src.occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/datum/robot_cosmetic/C = null
@@ -730,7 +790,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			R.update_appearance()
 			. = TRUE
 		if("cosmetic-change-arms")
-			if (!isrobot(src.occupant))
+			if (!iscyborg(src.occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/datum/robot_cosmetic/C = null
@@ -751,7 +811,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			R.update_appearance()
 			. = TRUE
 		if("cosmetic-change-legs")
-			if (!isrobot(src.occupant))
+			if (!iscyborg(src.occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/datum/robot_cosmetic/C = null
@@ -772,6 +832,20 @@ TYPEINFO(/obj/machinery/recharge_station)
 			R.update_appearance()
 			. = TRUE
 
+		if("cosmetic-change-hat")
+			if (!isadrone(src.occupant))
+				return
+			var/mob/living/silicon/adrone/R = src.occupant
+			var/mod = tgui_input_list(user, "Please select a decoration!", "Drone Decoration", list("Nothing", "Medical Mirror", "Beret", "Hard Hat", "Goggles"))
+			if (!mod)
+				mod = "Nothing"
+			if (mod == "Nothing")
+				R.hat = null
+			else
+				R.hat = mod
+			R.update_appearance()
+			. = TRUE
+
 		if("self-service")
 			if (isrobot(user))
 				boutput(user, "<span class='alert'>Cyborgs are not allowed to toggle this option.</span>")
@@ -781,7 +855,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			. = TRUE
 
 		if("repair-fuel")
-			if (!isrobot(occupant))
+			if (!iscyborg(occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			if (src.reagents.get_reagent_amount("fuel") < 1)
@@ -799,7 +873,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			. = TRUE
 
 		if("repair-wiring")
-			if (!isrobot(occupant))
+			if (!iscyborg(occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			if (src.cabling < 1)
@@ -825,6 +899,9 @@ TYPEINFO(/obj/machinery/recharge_station)
 			var/moduleRef = params["moduleRef"]
 			if(moduleRef)
 				var/obj/item/robot_module/module = locate(moduleRef) in src.modules
+				if (isadrone(src.occupant) && module.moduletype != "drone")
+					boutput(user, "<span class='alert'>There's no way that module will fit in this drone! It's way too big!</span>")
+					return
 				if (module)
 					if (R.module) // Remove installed module to make room for new module
 						var/obj/item/robot_module/removed_module = R.remove_module()
@@ -856,7 +933,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			. = TRUE
 
 		if("upgrade-install")
-			if (!isrobot(src.occupant))
+			if (!iscyborg(src.occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/upgradeRef = params["upgradeRef"]
@@ -876,7 +953,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 					R.hud.update_upgrades()
 			. = TRUE
 		if("upgrade-remove")
-			if (!isrobot(src.occupant))
+			if (!iscyborg(src.occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/upgradeRef = params["upgradeRef"]
@@ -904,7 +981,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			. = TRUE
 
 		if("clothing-install")
-			if (!isrobot(src.occupant))
+			if (!iscyborg(src.occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/clothingRef = params["clothingRef"]
@@ -946,7 +1023,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			R.update_appearance()
 			. = TRUE
 		if("clothing-remove")
-			if (!isrobot(src.occupant))
+			if (!iscyborg(src.occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/clothingRef = params["clothingRef"]
@@ -989,12 +1066,12 @@ TYPEINFO(/obj/machinery/recharge_station)
 					src.cells.Add(cell_to_remove)
 					cell_to_remove.set_loc(src)
 					R.cell = null
-					R.part_chest?.cell = null
+					if (iscyborg(src.occupant)) R.part_chest?.cell = null
 					boutput(R, "<span class='notice'>Your power cell is being swapped...</span>")
 				src.cells.Remove(cell_to_install)
 				cell_to_install.set_loc(R)
 				R.cell = cell_to_install
-				R.part_chest?.cell = cell_to_install
+				if (iscyborg(src.occupant)) R.part_chest?.cell = cell_to_install
 				boutput(R, "<span class='notice'>Power cell installed: [cell_to_install].</span>")
 				R.hud.update_charge()
 			. = TRUE
@@ -1012,7 +1089,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			src.cells += R.cell
 			cell_to_remove.set_loc(src)
 			R.cell = null
-			R.part_chest?.cell = null
+			if (iscyborg(src.occupant)) R.part_chest?.cell = null
 			boutput(R, "<span class='alert'>Your power cell was removed!</span>")
 			logTheThing(LOG_COMBAT, user, "removes [constructTarget(R,"combat")]'s power cell at [log_loc(user)].")
 			R.hud.update_charge()

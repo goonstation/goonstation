@@ -1566,6 +1566,8 @@
 					hud.update_upgrades()
 
 				if ("Remove the Module")
+					if (!src.module)
+						return
 					if (istype(src.module,/obj/item/robot_module/))
 						var/obj/item/robot_module/RM = src.remove_module()
 						user.put_in_hand_or_drop(RM)
@@ -1830,6 +1832,7 @@
 			if(!H.mutantrace.exclusive_language)
 				return 1
 		if (ishivebot(other)) return 1
+		if (isadrone(other)) return 1
 		return ..()
 
 	say_quote(var/text)
@@ -1913,7 +1916,7 @@
 		if(!upgrade) return
 
 		if (upgrade.active)
-			if (!upgrade || upgrade.loc != src || (src.mind && src.mind.current != src) || !isrobot(src)) // Blame the teleport upgrade.
+			if (!upgrade || upgrade.loc != src || (src.mind && src.mind.current != src) || !iscyborg(src)) // Blame the teleport upgrade.
 				return
 			if (!src.cell)
 				src.show_text("You do not have a power cell!", "red")

@@ -1348,7 +1348,7 @@ datum
 				. = ..()
 				if (volume)
 					if (method == TOUCH)
-						if (isrobot(M))
+						if (iscyborg(M))
 							var/mob/living/silicon/robot/R = M
 							R.add_oil(volume * 2)
 							boutput(R, "<span class='notice'>Your joints and servos begin to run more smoothly.</span>")

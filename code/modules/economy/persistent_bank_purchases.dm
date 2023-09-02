@@ -746,7 +746,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		icon_dir = SOUTH
 
 		Create(var/mob/living/M)
-			if (isrobot(M))
+			if (iscyborg(M))
 				var/mob/living/silicon/robot/R = M
 				R.alohamaton_skin = 1
 				R.update_appearance()

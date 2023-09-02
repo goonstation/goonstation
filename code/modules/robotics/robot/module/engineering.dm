@@ -3,6 +3,7 @@
 	desc = "A module designed to allow for station maintenance and repair work."
 	icon_state = "engineering"
 	mod_hudicon = "engineering"
+	moduletype = "cyborg"
 	included_cosmetic = /datum/robot_cosmetic/engineering
 	included_tools = /datum/robot/module_tool_creator/recursive/module/engineering
 	radio_type = /obj/item/device/radio/headset/engineer

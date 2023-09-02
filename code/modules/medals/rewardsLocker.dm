@@ -1165,7 +1165,7 @@
 	required_medal = "Icarus"
 
 	rewardActivate(var/mob/activator)
-		if (isrobot(activator))
+		if (iscyborg(activator))
 			var/mob/living/silicon/robot/C = activator
 			C.automaton_skin = 1
 			C.update_appearance()

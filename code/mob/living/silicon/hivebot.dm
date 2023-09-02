@@ -1036,7 +1036,7 @@ Frequency:
 			if(src.client)
 				if(pixel_y)
 					if (src.beebot == 1)
-						src.icon_state = "eyebot-bee"
+						src.icon_state = "bee"
 					else
 						src.icon_state = "[initial(icon_state)]"
 				else
@@ -1045,19 +1045,19 @@ Frequency:
 							src.pixel_y++
 							sleep(0.1 SECONDS)
 						if (src.beebot == 1)
-							src.icon_state = "eyebot-bee"
+							src.icon_state = "bee"
 						else
 							src.icon_state = "[initial(icon_state)]"
 					return
 			else
 				if (src.beebot == 1)
-					src.icon_state = "eyebot-bee-logout"
+					src.icon_state = "bee-logout"
 				else
 					src.icon_state = "[initial(icon_state)]-logout"
 				src.pixel_y = 0
 		else
 			if (src.beebot == 1)
-				src.icon_state = "eyebot-bee-dead"
+				src.icon_state = "bee-dead"
 			else
 				src.icon_state = "[initial(icon_state)]-dead"
 			src.pixel_y = 0
@@ -1100,8 +1100,8 @@ Frequency:
 	name = "\improper AI shell frame"
 	desc = "An empty frame for an AI shell."
 	icon = 'icons/mob/hivebot.dmi'
-	icon_state = "shell-frame"
-	item_state = "shell-frame"
+	icon_state = "frame-eyebot"
+	item_state = "frame-eyebot"
 	w_class = W_CLASS_SMALL
 	var/build_step = 0
 	var/obj/item/cell/cell = null
@@ -1140,7 +1140,7 @@ Frequency:
 				boutput(user, "You add \the cable to [src]!")
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				coil.amount -= 3
-				src.icon_state = "shell-cable"
+				src.icon_state = "plating-c-eyebot"
 				if (coil.amount < 1)
 					user.drop_item()
 					qdel(coil)

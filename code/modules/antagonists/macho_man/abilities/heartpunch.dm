@@ -33,7 +33,7 @@
 					if (isalive(holder.owner))
 						holder.owner.emote("sigh")
 
-		else if (isrobot(M)) //Extra mean to borgs.
+		else if (iscyborg(M)) //Extra mean to borgs.
 
 			var/mob/living/silicon/robot/R = M
 			if (R.part_chest)
