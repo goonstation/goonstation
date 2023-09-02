@@ -451,6 +451,7 @@
 /mob/Login()
 	if (!src.client)
 		stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
+	src.client.set_layout(src.client.tg_layout)
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
