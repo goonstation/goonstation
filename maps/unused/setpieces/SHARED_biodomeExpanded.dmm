@@ -220,6 +220,12 @@
 	name = "swamp wall"
 	},
 /area/swampzone/deeps)
+"aow" = (
+/obj/stool/chair/dining/wood,
+/turf/unsimulated/floor/setpieces/rootfloor{
+	icon_state = "rootfloor_3"
+	},
+/area/swampzone/ground)
 "apa" = (
 /turf/unsimulated/floor/stairs/medical/wide{
 	dir = 8
@@ -1046,6 +1052,12 @@
 	},
 /turf/unsimulated/floor/sanitary,
 /area/swampzone/interiors/bonktek/maintenance)
+"bkz" = (
+/obj/stool/chair/dining/wood,
+/turf/unsimulated/floor/wood/eight{
+	dir = 8
+	},
+/area/swampzone/interiors/outbuildings)
 "bmG" = (
 /obj/spacevine{
 	density = 1;
@@ -1119,12 +1131,6 @@
 	},
 /turf/space/fluid/cenote,
 /area/crater)
-"bqh" = (
-/obj/stool/chair/dining/wood{
-	dir = 4
-	},
-/turf/unsimulated/floor/wood/seven,
-/area/swampzone/interiors/outbuildings)
 "bqm" = (
 /turf/unsimulated/floor/neutral/side{
 	dir = 1
@@ -1717,14 +1723,6 @@
 	name = "strange stairs"
 	},
 /area/crater/cave/lower)
-"bXq" = (
-/obj/stool/chair/dining/wood{
-	dir = 4
-	},
-/turf/unsimulated/floor/setpieces/rootfloor{
-	icon_state = "rootfloor_3"
-	},
-/area/swampzone/ground)
 "bZm" = (
 /obj/decal/tile_edge/line/grey{
 	dir = 8;
@@ -2618,6 +2616,22 @@
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/interiors/bonktek)
+"dhE" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/wood/four,
+/area/swampzone/interiors/outbuildings)
+"diu" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/turf/unsimulated/floor/cave,
+/area/swampzone/deeps)
 "diQ" = (
 /turf/unsimulated/floor/carpet{
 	dir = 6;
@@ -2865,6 +2879,12 @@
 	},
 /turf/unsimulated/floor/cave,
 /area/crater)
+"dxy" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/swampzone/interiors/outbuildings)
 "dxM" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/mining_tools/pick,
@@ -3286,6 +3306,14 @@
 	dir = 1
 	},
 /area/swampzone/interiors/outbuildings)
+"dVv" = (
+/obj/stool/chair/dining/wood{
+	dir = 1
+	},
+/turf/unsimulated/floor/setpieces/rootfloor{
+	icon_state = "rootfloor_3"
+	},
+/area/swampzone/ground)
 "dVB" = (
 /obj/river{
 	dir = 10
@@ -5017,12 +5045,6 @@
 	dir = 6
 	},
 /area/swampzone/interiors/outbuildings)
-"fPF" = (
-/obj/stool/chair/dining/wood,
-/turf/unsimulated/floor/wood/eight{
-	dir = 8
-	},
-/area/swampzone/interiors/outbuildings)
 "fQE" = (
 /obj/spacevine{
 	density = 1;
@@ -6572,14 +6594,6 @@
 /obj/item/reagent_containers/syringe,
 /turf/unsimulated/floor/sanitary,
 /area/crypt/sigma/morgue)
-"hKq" = (
-/obj/stool/chair/dining/wood{
-	dir = 1
-	},
-/turf/unsimulated/floor/setpieces/rootfloor{
-	icon_state = "rootfloor_3"
-	},
-/area/swampzone/ground)
 "hKF" = (
 /obj/railing/orange,
 /turf/unsimulated/floor/stairs/wood{
@@ -6668,14 +6682,6 @@
 "hOF" = (
 /turf/unsimulated/floor/stairs/dark,
 /area/swampzone/ground/canyon)
-"hOZ" = (
-/obj/stool/chair/dining/wood{
-	dir = 8
-	},
-/turf/unsimulated/floor/setpieces/rootfloor{
-	icon_state = "rootfloor_3"
-	},
-/area/swampzone/ground)
 "hPv" = (
 /turf/unsimulated/wall/setpieces/rootwall{
 	desc = "This wall is made of damp stone.";
@@ -7347,12 +7353,6 @@
 	icon_state = "fred2"
 	},
 /area/swampzone/interiors)
-"iIq" = (
-/obj/stool/chair/dining/wood{
-	dir = 4
-	},
-/turf/unsimulated/floor/cave,
-/area/crater/cave)
 "iIA" = (
 /obj/effects/harmless_smoke{
 	name = "mist";
@@ -7804,6 +7804,10 @@
 	name = "rock"
 	},
 /area/swampzone/deeps)
+"jjr" = (
+/obj/item/trash_bag,
+/turf/unsimulated/floor/auto/dirt,
+/area/swampzone/ground)
 "jjI" = (
 /obj/railing/cyan{
 	dir = 8
@@ -7866,23 +7870,6 @@
 	dir = 8
 	},
 /area/swampzone/interiors/outbuildings)
-"joS" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/turf/unsimulated/floor/sanitary,
-/area/crypt/sigma/morgue)
 "jpO" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/goodybag,
@@ -8631,12 +8618,6 @@
 	},
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
-"kjO" = (
-/obj/stool/chair/dining/wood{
-	dir = 8
-	},
-/turf/unsimulated/floor/wood/seven,
-/area/swampzone/interiors/outbuildings)
 "kjZ" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/someplace)
@@ -8827,16 +8808,6 @@
 /obj/item/record/random/chronoquest/riverdancer,
 /turf/unsimulated/floor/wood,
 /area/swampzone/interiors/bonktek/funktek)
-"kve" = (
-/obj/stool/chair/dining/wood{
-	dir = 4
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/turf/unsimulated/floor/wood/four,
-/area/swampzone/interiors/outbuildings)
 "kvw" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/kitchen)
@@ -9516,12 +9487,6 @@
 	name = "Dark Pit"
 	},
 /area/space)
-"lgW" = (
-/obj/stool/chair/dining/wood,
-/turf/unsimulated/floor/setpieces/rootfloor{
-	icon_state = "rootfloor_3"
-	},
-/area/swampzone/ground)
 "lhj" = (
 /obj/railing/cyan{
 	dir = 1
@@ -9886,14 +9851,6 @@
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crater/biodome/south)
-"lGm" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
-	pixel_x = 9;
-	pixel_y = 6
-	},
-/turf/unsimulated/floor/sanitary/white,
-/area/swampzone/interiors/outbuildings)
 "lGo" = (
 /turf/unsimulated/floor/stairs/dark{
 	dir = 4
@@ -10348,6 +10305,14 @@
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor/specialroom/bar,
 /area/crater/biodome/maint)
+"mjL" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/turf/unsimulated/floor/setpieces/rootfloor{
+	icon_state = "rootfloor_3"
+	},
+/area/swampzone/ground)
 "mky" = (
 /obj/decal/cleanable/cobweb,
 /turf/unsimulated/floor/setpieces{
@@ -13634,6 +13599,12 @@
 /obj/decal/fakeobjects/palmtree,
 /turf/unsimulated/nicegrass/random,
 /area/swampzone/interiors/outbuildings)
+"qmo" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/swampzone/interiors/outbuildings)
 "qmq" = (
 /obj/sneaky_wall_trigger,
 /turf/unsimulated/floor/cave,
@@ -14794,12 +14765,6 @@
 "rHL" = (
 /turf/unsimulated/floor/carpet/green,
 /area/swampzone/interiors/outbuildings)
-"rJh" = (
-/obj/stool/chair/dining/wood{
-	dir = 4
-	},
-/turf/unsimulated/floor/cave,
-/area/swampzone/deeps)
 "rKs" = (
 /obj/table/auto,
 /turf/unsimulated/floor/setpieces/rootfloor{
@@ -17368,6 +17333,23 @@
 	icon_state = "fred2"
 	},
 /area/crypt/sigma/mainhall)
+"uLO" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/turf/unsimulated/floor/sanitary,
+/area/crypt/sigma/morgue)
 "uMY" = (
 /obj/decal/fakeobjects/pipe/heat,
 /obj/railing/cyan{
@@ -17395,6 +17377,14 @@
 /obj/table/wood/auto,
 /turf/unsimulated/floor/carpet/grime,
 /area/space)
+"uOx" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
+	pixel_x = 9;
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/sanitary/white,
+/area/swampzone/interiors/outbuildings)
 "uOy" = (
 /obj/table/wood/round/champagne,
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/south,
@@ -19863,6 +19853,12 @@
 /obj/item/raw_material/rock,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
+"xLw" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/turf/unsimulated/floor/cave,
+/area/crater/cave)
 "xLJ" = (
 /obj/machinery/door/airlock/pyro,
 /turf/unsimulated/floor/red,
@@ -20047,10 +20043,6 @@
 	dir = 8
 	},
 /area/swampzone/interiors/bonktek)
-"xVP" = (
-/obj/item/clothing/under/trash_bag,
-/turf/unsimulated/floor/auto/dirt,
-/area/swampzone/ground)
 "xWd" = (
 /obj/railing/reinforced{
 	dir = 4
@@ -20267,6 +20259,14 @@
 "ygc" = (
 /obj/machinery/conveyor/SN,
 /turf/unsimulated/floor/plating,
+/area/swampzone/ground)
+"ygd" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/rootfloor{
+	icon_state = "rootfloor_3"
+	},
 /area/swampzone/ground)
 "ygi" = (
 /obj/machinery/light/incandescent/small{
@@ -22444,8 +22444,8 @@ dXN
 dXN
 dXN
 dXN
-bqh
-bqh
+qmo
+qmo
 dXN
 dXN
 dXN
@@ -23652,8 +23652,8 @@ pPv
 rhP
 dXN
 dXN
-kjO
-kjO
+dxy
+dxy
 dXN
 dXN
 dXN
@@ -30358,15 +30358,15 @@ roE
 jxC
 fhv
 ayq
-hKq
+dVv
 hEP
-lgW
+aow
 nQQ
 hEP
 hEP
-lgW
+aow
 nQQ
-hKq
+dVv
 hEP
 nnB
 roE
@@ -30659,7 +30659,7 @@ sHe
 roE
 jxC
 fhv
-hOZ
+mjL
 hEP
 hEP
 hEP
@@ -31565,7 +31565,7 @@ sHe
 roE
 jxC
 fhv
-bXq
+ygd
 hEP
 aBz
 eZD
@@ -32095,7 +32095,7 @@ exZ
 rhP
 amJ
 uEW
-fPF
+bkz
 icd
 rhP
 jqP
@@ -32169,7 +32169,7 @@ sHe
 roE
 jxC
 fhv
-hOZ
+mjL
 hEP
 hEP
 hEP
@@ -32773,7 +32773,7 @@ sHe
 roE
 jxC
 fhv
-bXq
+ygd
 hEP
 hEP
 okM
@@ -33377,7 +33377,7 @@ sHe
 roE
 jxC
 fhv
-hOZ
+mjL
 hEP
 hEP
 rKs
@@ -33981,7 +33981,7 @@ sHe
 roE
 jxC
 fhv
-bXq
+ygd
 hEP
 aBz
 eZD
@@ -34284,7 +34284,7 @@ roE
 jxC
 fhv
 nQQ
-hKq
+dVv
 hEP
 eZD
 eZD
@@ -50735,7 +50735,7 @@ mwe
 dal
 dal
 wue
-kve
+dhE
 qCk
 dal
 qon
@@ -51438,7 +51438,7 @@ fja
 roE
 mDX
 uwP
-lGm
+uOx
 oJX
 mDX
 tKt
@@ -69852,7 +69852,7 @@ xsW
 mHz
 xZk
 sHe
-xVP
+jjr
 nVH
 vFP
 ryy
@@ -71058,7 +71058,7 @@ sHe
 sHe
 xsW
 tWJ
-xVP
+jjr
 sHe
 ogR
 ixV
@@ -73752,7 +73752,7 @@ pVY
 pVY
 pVY
 pVY
-iIq
+xLw
 iej
 hJR
 pVY
@@ -91592,7 +91592,7 @@ lLz
 lLz
 sVc
 qOE
-joS
+uLO
 qRJ
 tKz
 hKo
@@ -164354,7 +164354,7 @@ ier
 ier
 ier
 ier
-rJh
+diu
 sbR
 bdq
 ier
