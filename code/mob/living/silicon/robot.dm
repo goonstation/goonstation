@@ -578,7 +578,9 @@
 								src.buckled = null
 								if(isunconscious(src))
 									setalive(src) //reset stat to ensure emote comes out
-
+					if (src.brainexposed && src.part_head && src.part_head.brain)
+						src.eject_brain(fling = TRUE)
+						message = "<B>[src]</B> does a flip but their brain is sent flying!"
 			if("flex", "flexmuscles")
 				if(!part_arm_r || !part_arm_l)
 					boutput(src, "<span class='notice'>You don't even have both arms to flex!</span>")
