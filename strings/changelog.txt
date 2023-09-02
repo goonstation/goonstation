@@ -1,4 +1,21 @@
 
+(t)fri sep 01 23
+(u)DimWhat
+(p)15610
+(e)🎨⚖🎩|C-Sprites, C-Balance, A-Clothing
+(*)Added a new HoS themed helmet to the HoS locker.
+(u)MeggalBozale
+(p)15622
+(e)🗺💅|A-Mapping, C-QoL
+(+)Miners on Clarion now have more space in their lobby.
+(u)ZWRh3
+(p)15550
+(e)⚖💅🔨📦|C-Balance, C-QoL, A-Player-Actions, A-Game-Objects
+(+)Lockers with leg holes are now 5x faster.
+(u)Garsh
+(p)15522
+(e)🔄📄|C-Rework, A-UI
+(+)New UI for the Oxygen Vending Machine
 (t)thu aug 31 23
 (u)Cheffie
 (p)15572

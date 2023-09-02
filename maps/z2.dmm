@@ -74488,7 +74488,11 @@
 	dir = 1
 	},
 /obj/table/wood/auto,
-/obj/machinery/computer/pod/old/swf{
+/obj/machinery/door_control/podbay{
+	id = "hangar_wizard";
+	pixel_x = -21
+	},
+/obj/machinery/computer/wizard_teleport_computer{
 	id = "hangar_wizard";
 	pixel_x = -4;
 	pixel_y = 8
@@ -77626,7 +77630,7 @@ oUi
 oUi
 oUi
 lRx
-tGW
+lRx
 lNz
 lNz
 tGW
