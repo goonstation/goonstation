@@ -40,7 +40,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "aB" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 8
 	},
@@ -114,7 +114,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "cM" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 4
 	},
@@ -227,7 +227,7 @@
 	},
 /area/shuttle/escape/centcom)
 "ft" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/innercorner{
@@ -250,7 +250,7 @@
 	},
 /area/shuttle/escape/centcom)
 "fW" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/innercorner{
@@ -975,7 +975,7 @@
 	},
 /area/shuttle/escape/centcom)
 "xw" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 1
 	},
@@ -1058,7 +1058,7 @@
 	},
 /area/shuttle/escape/centcom)
 "Ad" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 1
 	},
@@ -1116,7 +1116,7 @@
 	},
 /area/shuttle/escape/centcom)
 "CK" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 1
 	},
@@ -1140,7 +1140,7 @@
 	},
 /area/shuttle/escape/centcom)
 "DK" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -1164,7 +1164,7 @@
 	},
 /area/shuttle/escape/centcom)
 "DY" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 4
 	},

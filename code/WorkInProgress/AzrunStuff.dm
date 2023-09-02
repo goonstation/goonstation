@@ -110,9 +110,9 @@
 			var/datum/plantgenes/DNA = POT.plantgenes
 			var/datum/reagents/reagents_temp = new/datum/reagents(max(1,(50 + DNA.cropsize))) // Creating a temporary chem holder
 			reagents_temp.my_atom = POT
-
-			for (var/plantReagent in assoc_reagents)
-				reagents_temp.add_reagent(plantReagent, 2 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * length(assoc_reagents))))))
+			var/list/plant_complete_reagents = HYPget_assoc_reagents(src, DNA)
+			for (var/plantReagent in plant_complete_reagents)
+				reagents_temp.add_reagent(plantReagent, 2 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * length(plant_complete_reagents))))))
 
 			SPAWN(0) // spawning to kick fluid processing out of machine loop
 				reagents_temp.smoke_start()
@@ -155,11 +155,12 @@
 		..()
 		projectile = new
 
-	proc/alter_projectile(var/obj/projectile/P)
+	proc/alter_projectile(var/datum/plantgenes/DNA, var/obj/projectile/P)
 		if (!P.reagents)
 			P.reagents = new /datum/reagents(P.proj_data.cost)
 			P.reagents.my_atom = P
-		for (var/plantReagent in assoc_reagents)
+		var/list/plant_complete_reagents = HYPget_assoc_reagents(src, DNA)
+		for (var/plantReagent in plant_complete_reagents)
 			P.reagents.add_reagent(plantReagent, 2)
 
 	HYPspecial_proc(var/obj/machinery/plantpot/POT)
@@ -181,11 +182,11 @@
 					stuffnearby += X
 			if(length(stuffnearby))
 				var/mob/living/target = pick(stuffnearby)
-				var/datum/callback/C = new(src, PROC_REF(alter_projectile))
+				var/datum/callback/C = new(src, PROC_REF(alter_projectile), DNA)
 				if(prob(10))
-					shoot_projectile_ST(POT, projectile, get_step(target, pick(ordinal)), alter_proj=C)
+					shoot_projectile_ST_pixel_spread(POT, projectile, get_step(target, pick(ordinal)), alter_proj=C)
 				else
-					shoot_projectile_ST(POT, projectile, target, alter_proj=C)
+					shoot_projectile_ST_pixel_spread(POT, projectile, target, alter_proj=C)
 				POT.growth -= rand(1,5)
 			return
 

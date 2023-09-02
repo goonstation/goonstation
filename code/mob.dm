@@ -55,7 +55,7 @@
 	var/memory = ""
 	var/atom/movable/pulling = null
 	var/mob/pulled_by = null
-	var/stat = 0
+	var/stat = STAT_ALIVE
 	var/next_click = 0
 	var/transforming = null
 	var/hand = 0
@@ -291,8 +291,7 @@
 	if (src.buckled?.anchored && istype(src.buckled))
 		return
 
-	if (src.dir_locked)
-		b = src.dir
+	var/orig_dir = src.dir
 
 	//for item specials
 	if (src.restrain_time > TIME)
@@ -312,6 +311,9 @@
 	if (src.s_active && !(s_active.master?.linked_item in src))
 		src.detach_hud(src.s_active)
 		src.s_active = null
+
+	if(src.dir_locked && src.dir != orig_dir)
+		src.dir = orig_dir
 
 /mob/proc/update_grab_loc()
 	//robust grab : keep em close
@@ -408,9 +410,11 @@
 		src.buckled.buckled_guy = null
 
 	mobs.Remove(src)
-	if (ai)
+
+	if (src.ai)
 		qdel(ai)
 		ai = null
+
 	mind = null
 	ckey = null
 	client = null
@@ -447,6 +451,7 @@
 /mob/Login()
 	if (!src.client)
 		stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
+	src.client.set_layout(src.client.tg_layout)
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
@@ -668,7 +673,7 @@
 						if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
 							tmob.now_pushing = 0
 
-		if (!issilicon(AM))
+		if (!issilicon(AM) && !issilicon(src))
 			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled &&!src.throwing && !tmob.throwing) // mutual brohugs all around!
 				var/turf/oldloc = src.loc
 				var/turf/newloc = tmob.loc
@@ -1189,8 +1194,10 @@
 	icon_rebuild_flag &= ~BODY
 
 /mob/proc/UpdateDamage()
+	SHOULD_CALL_PARENT(TRUE)
+	var/prev_health = src.health
 	updatehealth()
-	return
+	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_DAMAGE, prev_health)
 
 /mob/proc/set_damage_icon_dirty()
 	icon_rebuild_flag |= DAMAGE
@@ -1496,8 +1503,7 @@
 
 /mob/verb/cmd_rules()
 	set name = "Rules"
-	// src.Browse(rules, "window=rules;size=480x320")
-	src << browse(rules, "window=rules;size=480x320")
+	src << link("http://wiki.ss13.co/Rules")
 
 /mob/verb/succumb()
 	set hidden = 1
@@ -2437,7 +2443,7 @@
 	if (src.hasStatus("handcuffed"))
 		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp
-	if (src.stat > 1)
+	if (isdead(src))
 		setalive(src)
 
 /mob/proc/infected(var/datum/pathogen/P)
@@ -2911,7 +2917,7 @@
 
 	var/mob/living/carbon/human/newbody = new()
 	newbody.set_loc(reappear_turf)
-	newbody.equip_new_if_possible(/obj/item/clothing/under/misc, newbody.slot_w_uniform)
+	newbody.equip_new_if_possible(/obj/item/clothing/under/misc/prisoner, SLOT_W_UNIFORM)
 
 	newbody.real_name = src.real_name
 

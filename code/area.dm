@@ -1410,6 +1410,10 @@ ABSTRACT_TYPE(/area/prefab)
 	icon_state = "orange"
 	requires_power = FALSE
 
+/area/prefab/crashed_shuttle
+	name = "Crashed Shuttle"
+	icon_state = "purple"
+
 /area/prefab/vault
 	name = "Secure Vault"
 
@@ -4101,6 +4105,12 @@ ABSTRACT_TYPE(/area/mining)
 	sound_environment = 2
 	teleport_blocked = 1
 	icon_state = "purple"
+
+/area/devzone
+	name = "Super Radical Awesone Dev Area"
+	requires_power = FALSE
+	icon_state = "green"
+	ambient_light = "#FFFFE6"
 
 /* ================================================== */
 

@@ -1713,7 +1713,7 @@
 						/obj/item/furniture_parts/bench/green,
 						/obj/item/furniture_parts/bench/yellow,
 						/obj/item/furniture_parts/bench,
-						/obj/item/furniture_parts/wood_chair,
+						/obj/item/furniture_parts/dining_chair/wood,
 						/obj/item/furniture_parts/office_chair,
 						/obj/item/furniture_parts/office_chair/red,
 						/obj/item/furniture_parts/office_chair/green,
@@ -1767,11 +1767,67 @@
 /obj/random_item_spawner/kineticgun // used in the 4th of july admin button.
 	name = "firearm spawner"
 	icon_state = "rand_gun"
-	amt2spawn = 1
+	min_amt2spawn = 1 // doing it this way to preserve current use of spawner while allowing random amounts
+	max_amt2spawn = 1
 	items2spawn = null
 	New()
 		items2spawn = concrete_typesof(/obj/item/gun/kinetic) - /obj/item/gun/kinetic/meowitzer //No, just no
 		. = ..()
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+/obj/random_item_spawner/kineticgun/safer // safe...ish list for reasonable random gun spawns. less admin guns
+	name = "firearm spawner"
+	icon_state = "rand_gun"
+	min_amt2spawn = 1
+	max_amt2spawn = 4
+	items2spawn = list(/obj/item/gun/kinetic/clock_188,
+	/obj/item/gun/kinetic/clock_188/boomerang,
+	/obj/item/gun/kinetic/derringer,
+	/obj/item/gun/kinetic/derringer/empty,
+	/obj/item/gun/kinetic/detectiverevolver,
+	/obj/item/gun/kinetic/flaregun,
+	/obj/item/gun/kinetic/foamdartgun,
+	/obj/item/gun/kinetic/pistol,
+	/obj/item/gun/kinetic/pistol/empty,
+	/obj/item/gun/kinetic/riot40mm,
+	/obj/item/gun/kinetic/riotgun,
+	/obj/item/gun/kinetic/riotgun,
+	/obj/item/gun/kinetic/riotgun,
+	/obj/item/gun/kinetic/sawnoff,
+	/obj/item/gun/kinetic/sawnoff,
+	/obj/item/gun/kinetic/single_action/colt_saa,
+	/obj/item/gun/kinetic/single_action/flintlock,
+	/obj/item/gun/kinetic/zipgun)
+
+	one
+		amt2spawn = 1
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	one_or_two
+		min_amt2spawn = 1
+		max_amt2spawn = 2
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	maybe_few
+		min_amt2spawn = 0
+		max_amt2spawn = 3
+
+	some
+		min_amt2spawn = 3
+		max_amt2spawn = 5
+
+	lots
+		min_amt2spawn = 5
+		max_amt2spawn = 7
 
 /obj/random_item_spawner/ai_experimental //used to spawn 'experimental' AI law modules
 //intended to add random chance to what pre-fab 'gimmicky' law modules are available at round-start, such as Equality
@@ -1897,3 +1953,62 @@
 			pixel_x = -4;
 			pixel_y = 3
 		}(src.loc)
+
+/obj/random_item_spawner/flowers
+	name = "random flower spawner"
+	icon_state = "rand_flowers"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+
+	New()
+		// Get a list of all flowers
+		items2spawn = concrete_typesof(/obj/item/clothing/head/flower)
+		items2spawn += concrete_typesof(/obj/item/plant/flower)
+
+		// Add some herbs that are basically flowers
+		items2spawn += list(/obj/item/plant/herb/poppy, /obj/item/plant/herb/catnip, /obj/item/plant/herb/hcordata)
+
+		// Exclude the non-natural ones
+		items2spawn -= list(/obj/item/plant/flower/rose/holorose)
+		..()
+
+	one
+		amt2spawn = 1
+
+	two
+		amt2spawn = 2
+
+	three
+		amt2spawn = 3
+
+	four
+		amt2spawn = 4
+
+	five
+		amt2spawn = 5
+
+	six
+		amt2spawn = 6
+
+	seven
+		amt2spawn = 7
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	maybe_few
+		min_amt2spawn = 0
+		max_amt2spawn = 2
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	some
+		min_amt2spawn = 3
+		max_amt2spawn = 5
+
+	lots
+		min_amt2spawn = 5
+		max_amt2spawn = 7

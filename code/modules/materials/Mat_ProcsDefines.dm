@@ -1,5 +1,5 @@
 
-var/global/list/material_cache = buildMaterialCache()
+var/global/list/material_cache
 
 /atom/var/datum/material/material = null
 /atom/var/material_amt = 1
@@ -417,6 +417,12 @@ var/global/list/material_cache = buildMaterialCache()
 	for(var/datum/material_recipe/R in materialRecipes)
 		if(R.validate(M)) return R
 	return null
+
+/proc/findRecipeName(var/obj/item/One,var/obj/item/Two)
+	var/tempmerge = getFusedMaterial(One.material, Two.material)
+	for(var/datum/material_recipe/R in materialRecipes)
+		if(R.validate(tempmerge)) return R
+	return getInterpolatedName(One.material.getName(), Two.material.getName(), 0.5)
 
 /**
 	* Searches the parent materials of the given material, up to a given generation, for an id.

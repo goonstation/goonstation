@@ -220,7 +220,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 			for (var/mob/M in thing)
 				M.ghostize()
 		qdel(thing)
-		thing = new /obj/item/reagent_containers/food/snacks/yuckburn (src)
+		thing = new /obj/item/reagent_containers/food/snacks/yuck/burn (src)
 		if (!thing.reagents)
 			thing.create_reagents(50)
 
@@ -310,7 +310,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	var/shivers = 1
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if ((H.mind.assigned_role in list("Detective", "Vice Officer", "Part-time Vice Officer")) || (H.job in list("Detective", "Vice Officer", "Part-time Vice Officer")))
+		if ((H.mind.assigned_role in list("Detective", "Vice Officer")) || (H.job in list("Detective", "Vice Officer")))
 			shivers = 20
 	if (prob(0.5 * shivers))
 		fed_ice = M // asked this mob
