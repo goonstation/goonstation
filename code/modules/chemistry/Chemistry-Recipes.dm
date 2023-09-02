@@ -2542,19 +2542,34 @@
 		name = "Sulfuric Acid" // COGWERKS CHEM REVISION PROJECT: This could be Fluorosulfuric Acid instead
 		id = "acid"
 		result = "acid"
-		required_reagents = list("sulfur" = 1, "hydrogen" = 1, "oxygen" = 1) // tobba chem revision: change to SO3 + H2O
+		required_reagents = list("sulfur" = 1, "water" = 1, "oxygen" = 1)
 		result_amount = 2
-		//max_temperature = 160
 		mix_phrase = "The mixture gives off a sharp acidic tang."
-		on_reaction(var/datum/reagents/holder, created_volume)
+		instant = FALSE
+		reaction_speed = 3
+		temperature_change = 10
+
+		on_reaction(var/datum/reagents/holder)
 			var/location = get_turf(holder.my_atom)
-			for (var/mob/living/carbon/human/H in location)
-				if (ishuman(H))
-					if (!H.wear_mask)
-						boutput(H, "<span class='alert'>The acidic vapors burn you!</span>")
-						H.TakeDamage("head", 0, created_volume, 0, DAMAGE_BURN) // why are the acids doing brute????
-						H.emote("scream")
-			return
+			if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
+				var/smoke_to_create = clamp((holder.total_temperature - T20C), 0, 15) / 10 //for every degree over 20C, make .1u of smoke (up to 15u)...
+				if(smoke_to_create > 0)                                     //...but if under 20C, don't make any
+					var/datum/reagents/smokeContents = new/datum/reagents/
+					smokeContents.add_reagent("acid", smoke_to_create)
+					smoke_reaction(smokeContents, 2, location, do_sfx = FALSE)
+			else
+				if(holder.total_temperature > T20C)
+					var/extra_product = ceil(clamp((holder.total_temperature - T20C) / 10, 1, 15))
+					var/extra_heat = clamp(extra_product + 10, 10, 30)
+					if(istype(holder.my_atom, /obj) && (holder.maximum_volume <= holder.total_volume)) //not enough space for the extra sulfuric acid = beaker shattered + acid vapors leak out
+						var/obj/container = holder.my_atom
+						if(container.shatter_chemically())
+							var/datum/reagents/smokeContents = new/datum/reagents/
+							smokeContents.add_reagent("acid", 20)
+							smoke_reaction(smokeContents, 2, location, do_sfx = FALSE)
+						return
+					holder.add_reagent("acid", extra_product, temp_new = holder.total_temperature, chemical_reaction = TRUE)
+					holder.temperature_reagents(holder.total_temperature + extra_heat)
 
 	clacid
 		name = "Hydrochloric Acid"
