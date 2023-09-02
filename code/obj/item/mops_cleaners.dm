@@ -1200,9 +1200,9 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	name = "trash bag"
 	desc = "A flimsy bag for filling with things that are no longer wanted."
 	icon = 'icons/obj/janitor.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'	// Avoid icon duplication with the clothing
 	icon_state = "trashbag-f"
-	item_state = "trashbag-f"
+	item_state = "trashbag"
 	uses_multiple_icon_states = TRUE
 	w_class = W_CLASS_TINY
 	rand_pos = TRUE
@@ -1233,18 +1233,17 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 					for(var/obj/item/contents as anything in src.storage.get_contents())
 						src.storage.transfer_stored_item(contents, trash_outfit, TRUE)
 					usr.put_in_hand_or_drop(trash_outfit)
+					user.visible_message("<span class='notice'>[user] cuts their [src] into an outfit of questionably fashionable.</span>")
 					qdel(src)
 					return
 		..()
 
 	update_icon(mob/user)
 		if (!src.storage || !length(src.storage.get_contents()))
-			src.icon_state = initial(src.icon_state)
-			src.item_state = ""
+			src.icon_state = src.base_state + "-f"
 
 		else if (length(src.storage.get_contents()))
 			src.icon_state = src.base_state
-			src.item_state = src.base_state
 
 		if (ismob(user))
 			user.update_inhands()
@@ -1262,5 +1261,6 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	name = "hazardous waste bag"
 	desc = "A flimsy bag for filling with things that are no longer wanted and are also covered in blood or puke or other gross biohazards. It's not any sturdier than a normal trash bag, though, so be careful with the needles!"
 	icon_state = "biobag-f"
+	item_state = "biobag"
 	base_state = "biobag"
 	clothing_type = /obj/item/clothing/under/gimmick/trashsinglet/biohazard
