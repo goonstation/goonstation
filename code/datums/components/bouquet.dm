@@ -16,14 +16,10 @@ TYPEINFO(/datum/component/bullet_holes)
 
 /// the bouquet component, that allows flowers of various parentage to be wrapped into bouquets
 /datum/component/bouquet
-	can_bouquet = TRUE
 
 /datum/component/bouquet/Initialize()
 	. = ..()
 	if(!istype(parent, /obj/item/clothing/head/flower) && !istype(parent, /obj/item/plant))
-		return COMPONENT_INCOMPATIBLE
-	src.can_bouquet = can_bouquet
-	if (!can_bouquet)
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/construct_bouquet)
 

@@ -15,8 +15,8 @@ ABSTRACT_TYPE(/obj/item/plant)
 	var/can_bouquet = FALSE
 
 	New()
-		if (can_bouquet) // prevents holo roses entering bouquet
-			src.AddComponent(/datum/component/bouquet, can_bouquet)
+		if (can_bouquet)
+			src.AddComponent(/datum/component/bouquet)
 		..()
 		make_reagents()
 

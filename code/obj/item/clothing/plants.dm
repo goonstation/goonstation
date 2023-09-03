@@ -8,7 +8,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 
 	New()
 		if (can_bouquet)
-			src.AddComponent(/datum/component/bouquet, can_bouquet)
+			src.AddComponent(/datum/component/bouquet)
 		..()
 
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
