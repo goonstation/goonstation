@@ -172,7 +172,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 /proc/insertChestItem(var/mob/living/carbon/human/patient, var/mob/surgeon, var/obj/item/chest_item)
 	// Check if surgeon is targeting chest while there's a hole in patient's chest
-	if (surgeon.zone_sel.selecting == "chest" && patient.chest_cavity_open == 1)
+	if (surgeon.zone_sel.selecting == "chest" && patient.organHolder?.chest?.op_stage > 1)
 		// Check if patient has item in chest already
 		if (patient.chest_item == null)
 			if(chest_item.w_class > W_CLASS_NORMAL && !(chest_item.type in chestitem_whitelist))
@@ -931,47 +931,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ---------- SUTURE - CHEST ---------- */
 
 	else if (surgeon.zone_sel.selecting == "chest")
-		if (patient.organHolder.chest && patient.organHolder.chest.op_stage > 0.0 && patient.organHolder.chest.op_stage < 10.0)
-			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest closed with [src].</span>",\
-				"<span class='notice'>You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] chest closed with [src].</span>",\
-				"<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your chest closed with [src].</span>")
 
-			patient.organHolder.chest.op_stage = 0
-			patient.TakeDamage("chest", 2, 0)
-			if (patient.bleeding)
-				repair_bleeding_damage(patient, 50, rand(1,3))
-			return TRUE
-
-		else if (patient.organHolder.chest && patient.organHolder.chest.op_stage >= 10.0)
-			if (patient.organHolder.tail && istype(patient.organHolder.tail, /obj/item/organ/tail)) // If tail, then sew it on
-				surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> sews [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] tail into place with [src].</span>",\
-					"<span class='notice'>You sew [surgeon == patient ? "your" : "[patient]'s"] tail into place with [src].</span>",\
-					"<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] your tail into place with [src].</span>")
-			else
-				surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> sews the incision just above [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt closed with [src].</span>",\
-					"<span class='notice'>You sew the incision just above [surgeon == patient ? "your" : "[patient]'s"] butt closed with [src].</span>",\
-					"<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision just above your butt closed with [src].</span>")
-
-			patient.organHolder.chest.op_stage = 0
-			patient.TakeDamage("chest", 2, 0)
-			if (patient.bleeding)
-				repair_bleeding_damage(patient, 50, rand(1,3))
-			return TRUE
-
-		// Sew chest cavity closed
-		else if (patient.chest_cavity_open == 1 && surgeon.a_intent == "grab")
-			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> pulls the sides of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest cavity closed and sew them together with [src].</span>",\
-				"<span class='notice'>You pull the sides of [surgeon == patient ? "your" : "[patient]'s"] chest cavity closed and sew them together with [src].</span>",\
-				"<span class='notice'>[patient == surgeon ? "You pull" : "<b>[surgeon]</b> pulls"] your chest cavity closed and [patient == surgeon ? "sew" : "sews"] them together with [src].</span>")
-
-			patient.chest_cavity_open = 0
-			patient.TakeDamage("chest", 2 * surgCheck * surgCheck, 0)
-			if (patient.bleeding)
-				repair_bleeding_damage(patient, 50, rand(1,3))
-			return TRUE
-
-		// Sew chest item securely into chest cavity
-		else if (patient.chest_cavity_open == 1 && patient.chest_item != null && patient.chest_item_sewn == 0 && surgeon.a_intent != "grab")
+		if (patient.organHolder?.chest?.op_stage > 1 && patient.chest_item != null && patient.chest_item_sewn == 0 && surgeon.a_intent == "grab")
 			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> sews the [patient.chest_item] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest cavity with [src].</span>",\
 				"<span class='notice'>You sew the [patient.chest_item] securely into [surgeon == patient ? "your" : "[patient]'s"] chest cavity with [src].</span>",\
 				"<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the [patient.chest_item] into your chest cavity with [src].</span>")
@@ -982,7 +943,20 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				repair_bleeding_damage(patient, 50, rand(1,3))
 			return TRUE
 
-		else if (patient.organHolder.back_op_stage > 0.0 && patient.organHolder.back_op_stage < 4.0)
+		else if (patient.organHolder.chest && patient.organHolder.chest.op_stage > 0.0)
+			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest closed with [src].</span>",\
+				"<span class='notice'>You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] chest closed with [src].</span>",\
+				"<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your chest closed with [src].</span>")
+
+			patient.organHolder.chest.op_stage = 0
+			patient.TakeDamage("chest", 2, 0)
+			if (patient.bleeding)
+				repair_bleeding_damage(patient, 50, rand(1,3))
+			return TRUE
+
+			//todo see about securing butts and tails
+
+		else if (patient.organHolder.back_op_stage > 0.0 && surgeon.a_intent == "grab")
 			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt closed with [src].</span>",\
 				"<span class='notice'>You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] butt closed with [src].</span>",\
 				"<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your butt closed with [src].</span>")
@@ -1094,7 +1068,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 /* ---------- CAUTERY - BUTT ---------- */
 
-	else if (surgeon.zone_sel.selecting == "chest" && patient.organHolder.back_op_stage == 4.0)
+	else if (surgeon.zone_sel.selecting == "chest" && patient.organHolder.back_op_stage == 3.0)
 
 		if (!lit)
 			surgeon.tri_message(patient, "<b>[surgeon]</b> tries to use [src] on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] incision, but [src] isn't lit! Sheesh.",\
@@ -1109,7 +1083,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				"<span class='notice'>You cauterize the incision on [surgeon == patient ? "your" : "[patient]'s"] butt closed with [src].</span>",\
 				"<span class='notice'>[patient == surgeon ? "You cauterize" : "<b>[surgeon]</b> cauterizes"] the incision on your butt closed with [src].</span>")
 
-			patient.organHolder.back_op_stage = 5
+			patient.organHolder.back_op_stage = 0
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
 			return TRUE
@@ -1124,7 +1098,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					"<span class='notice'>You cauterize the incision on [surgeon == patient ? "your" : "[patient]'s"] butt closed with [src].</span>",\
 					"<span class='notice'>[patient == surgeon ? "You cauterize" : "<b>[surgeon]</b> cauterizes"] the incision on your butt closed with [src].</span>")
 
-				patient.organHolder.back_op_stage = 5
+				patient.organHolder.back_op_stage = 0
 				if (patient.bleeding)
 					repair_bleeding_damage(patient, 50, rand(1,3))
 				return TRUE
@@ -1348,7 +1322,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low)
 					patient.organHolder.chest.op_stage ++
-					patient.chest_cavity_open = TRUE
 					return TRUE
 				if (2 to 3)
 					if (!patient.organHolder.build_organ_buttons())

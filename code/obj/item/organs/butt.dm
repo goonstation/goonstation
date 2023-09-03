@@ -103,14 +103,6 @@ TYPEINFO(/obj/item/clothing/head/butt)
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, "butt", 3.0)
 			return 1
-		else if (H.organHolder.back_op_stage == 5.0)
-			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[his_or_her(H)]" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
-				"<span class='alert'>You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
-				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>")
-			if (user.find_in_hand(src))
-				user.u_equip(src)
-				set_loc(get_turf(H))
-			return null
 		else
 			return 0
 
