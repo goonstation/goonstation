@@ -641,7 +641,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 				boutput(user, "<span class='alert'>ERROR: Cannot find cyborg's decorations.</span>")
 				return
 			C.painted = TRUE
-			C.paint = input(user) as color
+			C.paint = tgui_color_picker(user, "Please select a color!","Chasis Color",C.paint)
 			R.update_appearance()
 			R.update_bodypart()
 			. = TRUE
@@ -669,7 +669,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			else
 				boutput(user, "<span class='alert'>ERROR: Cannot find cyborg's decorations.</span>")
 				return
-			C.paint = input(user) as color
+			C.paint = tgui_color_picker(user, "Please select a color!","Chasis Color",C.paint)
 			R.update_appearance()
 			R.update_bodypart("all")
 			. = TRUE
@@ -683,7 +683,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			else
 				boutput(user, "<span class='alert'>ERROR: Cannot find cyborg's decorations.</span>")
 				return
-			var/selected_color = input(user) as color
+			var/selected_color = tgui_color_picker(user, "Please select a color!","Eye Color",C.fx)
 			if(selected_color)
 				C.fx = hex_to_rgb_list(selected_color)
 				R.update_appearance()
