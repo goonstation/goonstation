@@ -1350,6 +1350,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			var/makeores
 			for(makeores = src.amount, makeores > 0, makeores--)
 				var/obj/item/raw_material/MAT = new ore_to_create
+
+				// rocks don't deserve quality; moreover this speeds up big explosions since rocks don't need to copyMaterial() anymore
+				if(ore_to_create ==  /obj/item/raw_material/rock)
+					continue
+
 				MAT.set_loc(src)
 
 				if(MAT.material)

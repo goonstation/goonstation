@@ -1,4 +1,9 @@
 
+(t)sun sep 03 23
+(u)cringe
+(p)15548
+(e)🧫💨|C-Experimental, A-Atmospherics
+(*)The rate at which pipe_networks and atmospheric machines do stuff has been doubled. Experience things such as vents, injectors, pumps, and probably more are no longer painfully slow. Also observe as nothing is done to preserve balance.
 (t)sat sep 02 23
 (u)MeggalBozale
 (p)15305
