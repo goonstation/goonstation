@@ -13,7 +13,7 @@ var/global/list/material_cache_type
 
 
 
-/// Returns one of the base materials by id.
+/// Returns one of the base materials by id or by typepath.
 /proc/getMaterial(mat)
 	#ifdef CHECK_MORE_RUNTIMES
 	if (!ispath(mat) && !istext(mat))
@@ -78,9 +78,14 @@ var/global/list/material_cache_type
 
 
 /// Sets the material of an object. PLEASE USE THIS TO SET MATERIALS UNLESS YOU KNOW WHAT YOU'RE DOING.
-/atom/proc/setMaterial(datum/material/mat1, appearance = TRUE, setname = TRUE, mutable = FALSE, use_descriptors = FALSE)
-	if(istext(mat1))
-		CRASH("setMaterial() called with a string instead of a material datum.")
+/atom/proc/setMaterial(datum/material/mat1 = null, appearance = TRUE, setname = TRUE, mutable = FALSE, use_descriptors = FALSE)
+	if (isnull(mat1))
+		return
+	if(istext(mat1) && !mutable)
+		// cursed, but allows material ids to be used instead
+		mat1 = get_material(mat1)
+	else if (istext(mat1))
+		CRASH("mutable setMaterial() called with a string instead of a material datum.")
 	if(!mat1 ||!istype(mat1, /datum/material))
 		return
 	if(mutable)
