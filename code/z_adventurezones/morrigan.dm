@@ -262,6 +262,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 //fake objects
 
+/obj/decal/fakeobjects/missile
+	name = "Escape Missile"
+	icon = 'icons/obj/large/32x64.dmi'
+	bound_width = 32
+	bound_height = 64
+
+/obj/decal/fakeobjects/missile/syndicate
+	icon_state = "arrival_missile_synd"
+
+
 /obj/decal/fakeobjects/pod
 	name = "Pod"
 	icon = 'icons/effects/64x64.dmi'
@@ -768,6 +778,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	name = "Derelict Maintenance"
 	icon_state = "green"
 	ambient_light = "#131414"
+	sound_loop = 'sound/ambience/morrigan/deriambience.ogg'
+	sound_loop_vol = 75
 
 /area/morrigan/derelict/hobo
 	name = "Hobo Hovel"
@@ -844,6 +856,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /area/morrigan/station/engineering/eng
 	name = "Morrigan Engineering"
 	icon_state = "engineering"
+	sound_loop = 'sound/ambience/morrigan/ambientfactoryrobo.ogg'
+	sound_loop_vol = 75
 
 /area/morrigan/station/engineering/specialist
 	name = "Morrigan R&D"
@@ -941,6 +955,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /area/morrigan/station/factory
 	name = "Manufacturing Line"
 	icon_state = "robotics"
+	sound_loop = 'sound/ambience/morrigan/ambientfactory.ogg'
+	sound_loop_vol = 75
 
 /area/morrigan/station/passage
 	name = "Manufacturing Passage"
@@ -1864,9 +1880,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /obj/testobjformorrigan
 	name = "GTFO teleporter"
-	desc = "A precise teleporter that only works across short distances."
-	icon = 'icons/misc/32x64.dmi'
-	icon_state = "lrport"
+	icon = 'icons/misc/mark.dmi'
+	icon_state = "ydn"
+	invisibility = INVIS_ALWAYS
+	anchored = ANCHORED
+	density = 0
 
 	Crossed(atom/movable/AM)
 		..()
@@ -2047,10 +2065,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 			return
 		src.timing = TRUE
 		command_alert("Attention all personnel aboard Morrigan, this is an urgent self-destruction alert. Please remain calm and follow the evacuation protocols immediately. Detonation in T-[src.time] seconds", "Self Destruct Activated", alert_origin = ALERT_STATION)
-		playsound_global(src.z, 'sound/misc/airraid_loop.ogg', 25)
+		playsound_global(src.z, 'sound/ambience/morrigan/selfdestruct.ogg', 50)
 
 	proc/detonate()
-		playsound_global(src.z, 'sound/effects/kaboom.ogg', 70)
+		playsound_global(src.z, 'sound/ambience/morrigan/boomnoise.ogg', 70)
 		for (var/mob/living/carbon/human/H in mobs) //so people wouldn't just survive station's self destruct
 			if (istype(get_area(H), /area/morrigan/station))
 				SPAWN(1 SECONDS)
@@ -2646,3 +2664,61 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
+
+//sound triggers
+
+/obj/sound_trigger/morrigan
+	icon = 'icons/misc/mark.dmi'
+	icon_state = "ydn"
+	invisibility = INVIS_ALWAYS
+	anchored = ANCHORED
+	density = 0
+	var/active = 0
+
+/obj/sound_trigger/morrigan/steam_trigger
+
+	Crossed(atom/movable/AM as mob|obj)
+		..()
+		if(active) return
+		if(ismob(AM))
+			if(AM:client)
+				if(prob(100))
+					active = 1
+					SPAWN(15 SECONDS) active = 0
+					playsound(AM, pick('sound/machines/hiss.ogg'), 75, 0)
+
+/obj/sound_trigger/morrigan/enginepowerdown_trigger
+
+	Crossed(atom/movable/AM as mob|obj)
+		..()
+		if(active) return
+		if(ismob(AM))
+			if(AM:client)
+				if(prob(100))
+					active = 1
+					SPAWN(2 MINUTES) active = 0
+					playsound(AM, pick('sound/machines/lavamoon_rotors_stopping.ogg'), 75, 0)
+
+/obj/sound_trigger/morrigan/pry_trigger
+
+	Crossed(atom/movable/AM as mob|obj)
+		..()
+		if(active) return
+		if(ismob(AM))
+			if(AM:client)
+				if(prob(100))
+					active = 1
+					SPAWN(2 MINUTES) active = 0
+					playsound(AM, pick('sound/machines/airlock_pry.ogg'), 75, 0)
+
+/obj/sound_trigger/morrigan/doorknock_trigger
+
+	Crossed(atom/movable/AM as mob|obj)
+		..()
+		if(active) return
+		if(ismob(AM))
+			if(AM:client)
+				if(prob(100))
+					active = 1
+					SPAWN(2 MINUTES) active = 0
+					playsound(AM, pick('sound/impact_sounds/Door_Metal_Knock_1.ogg'), 75, 0)
