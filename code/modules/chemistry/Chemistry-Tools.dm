@@ -746,8 +746,14 @@ proc/ui_describe_reagents(atom/A)
 		if (istype(over_object, /obj/reagent_dispensers/chemicalbarrel)) //barrels don't need to be open for condensers because it would be annoying I think
 			try_adding_container(over_object, usr)
 
+	set_loc(newloc, storage_check)
+		if (src.loc != newloc && src.current_container)
+			src.remove_container()
+		. = ..()
+
 	Move()
-		check_container_range()
+		if (src.current_container)
+			src.remove_container()
 		..()
 
 	attack_hand(var/mob/user)
@@ -772,10 +778,6 @@ proc/ui_describe_reagents(atom/A)
 			src.fluid_image.color = average.to_rgba()
 			src.UpdateOverlays(src.fluid_image, "fluid_image")
 
-	proc/check_container_range()
-		if(current_container && GET_DIST(current_container, src) > 1)
-			remove_container()
-
 	proc/try_adding_container(var/obj/container, var/mob/user)
 		if (!istype(src.loc, /turf/) || !istype(container.loc, /turf/)) //if the condenser or container isn't on the floor you cannot hook it up
 			return
@@ -789,8 +791,10 @@ proc/ui_describe_reagents(atom/A)
 			boutput(user, "<span class='alert'>The [src.name] is already connected to the [current_container.name]!</span>")
 		else
 			boutput(user, "<span class='notice'>You hook the [container.name] up to the [src.name].</span>")
+			//this is a mess but we need it to disconnect if ANYTHING happens
 			RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container)) //empty hand on either condenser or its connected container should disconnect
-			RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(check_container_range))
+			RegisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container))
+			RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
 			var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + get_chemical_effect_position())
 			result.lineImage.pixel_x = -src.pixel_x
 			result.lineImage.pixel_y = -src.pixel_y
@@ -800,6 +804,7 @@ proc/ui_describe_reagents(atom/A)
 	proc/remove_container()
 		src.UpdateOverlays(null, "tube")
 		UnregisterSignal(current_container, COMSIG_ATTACKHAND)
+		UnregisterSignal(current_container, XSIG_OUTERMOST_MOVABLE_CHANGED)
 		UnregisterSignal(current_container, COMSIG_MOVABLE_MOVED)
 		current_container = null
 
