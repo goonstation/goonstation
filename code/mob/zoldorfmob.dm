@@ -161,7 +161,7 @@
 			else
 				return 0
 
-		if (isrobot(other) || isshell(other))
+		if (isrobot(other))
 			return 1
 		return ..()
 

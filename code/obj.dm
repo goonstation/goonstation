@@ -141,7 +141,7 @@
 			if((mainframe.z == src.z) || (inunrestrictedz(src) && inonstationz(mainframe)))
 				. = TRUE
 		else if(issilicon(user))
-			if (ishivebot(user) || isrobot(user))
+			if (isrobot(user))
 				var/mob/living/silicon/robot/R = user
 				return !R.module_active
 			else if(isghostdrone(user))

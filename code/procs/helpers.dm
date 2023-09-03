@@ -651,12 +651,6 @@ proc/get_angle(atom/a, atom/b)
 	for(var/mob/living/silicon/adrone/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
-	for(var/mob/living/silicon/hivebot/M in mobs)
-		. += M
-		LAGCHECK(LAG_REALTIME)
-	for(var/mob/living/silicon/hive_mainframe/M in mobs)
-		. += M
-		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/carbon/human/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)

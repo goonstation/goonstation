@@ -234,24 +234,6 @@ TYPEINFO(/obj/machinery/recharge_station)
 		src.add_fingerprint(user)
 		src.build_icon()
 
-	if (isshell(AM))
-		var/mob/living/silicon/hivebot/H = AM
-		if (isdead(H))
-			boutput(user, "<span class='alert'>[H] is dead and cannot enter [src].</span>")
-			return
-		if (user != H)
-			if (isunconscious(user))
-				return
-			else
-				user.visible_message("<b>[user]</b> moves [H] into [src].")
-		H.remove_pulling()
-		H.set_loc(src)
-		src.occupant = H
-		if (H.client)
-			src.Attackhand(H)
-		src.add_fingerprint(user)
-		src.build_icon()
-
 	if (ishuman(AM))
 		src.move_human_inside(user, AM)
 
@@ -586,18 +568,6 @@ TYPEINFO(/obj/machinery/recharge_station)
 		occupant_data["health"] = H.health
 		occupant_data["max_health"] = H.max_health
 
-	if (isshell(src.occupant)) // eyebot handling
-		var/mob/living/silicon/hivebot/eyebot/E = src.occupant
-		occupant_data["name"] = E.name
-		occupant_data["kind"] = "eyebot"
-		if (E.cell)
-			var/list/this_cell = list()
-			var/obj/item/cell/C = E.cell
-			this_cell["name"] = C.name
-			this_cell["current"] = C.charge
-			this_cell["max"] = C.maxcharge
-			occupant_data["cell"] = this_cell
-
 	.["occupant"] = occupant_data
 
 	var/list/power_cells_available = list()
@@ -648,10 +618,6 @@ TYPEINFO(/obj/machinery/recharge_station)
 	if (isrobot(user))
 		if (user != src.occupant)
 			boutput(user, "<span class='alert'>You must be inside the docking station to use the functions.</span>")
-			return
-	else
-		if (user == src.occupant && !isshell(user))
-			boutput(user, "<span class='alert'>Non-cyborgs cannot use the docking station functions.</span>")
 			return
 
 	if (!src.allow_self_service && user == src.occupant)

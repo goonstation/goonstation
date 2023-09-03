@@ -2046,7 +2046,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 	. = list(
 		"userStates" = list(
 			"distance" = GET_DIST(src, user),
-			"isBorg" = ishivebot(user) || isrobot(user),
+			"isBorg" = isrobot(user),
 			"isAi" = isAI(user),
 			"isCarbon" = iscarbon(user),
 		),
@@ -2101,13 +2101,13 @@ TYPEINFO(/obj/machinery/door/airlock)
 	. = ..()
 	if (.)
 		return
-	if(src.arePowerSystemsOn() && (ishivebot(usr) || isrobot(usr) || isAI(usr)))
+	if(src.arePowerSystemsOn() && (isrobot(usr) || isAI(usr)))
 		switch(action)
 			if("hackAirlock")
 				if (src.canAIHack() && !src.aiHacking)
 					src.hack(usr)
 					. = TRUE
-	if(src.arePowerSystemsOn() && src.canAIControl() && (ishivebot(usr) || isrobot(usr) || isAI(usr)))
+	if(src.arePowerSystemsOn() && src.canAIControl() && (isrobot(usr) || isAI(usr)))
 		switch(action)
 			if("disruptMain")
 				if(!secondsMainPowerLost)

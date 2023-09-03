@@ -93,10 +93,6 @@
 				A = AE.mainframe
 			A.hud.remove_screen(C)
 
-		else if (ishivebot(src))
-			var/mob/living/silicon/hivebot/hivebot = src
-			hivebot.hud.remove_screen(C)
-
 		else if (istype(src, /mob/living/intangible/flock))
 			var/mob/living/intangible/flock/flock_entity = src
 			flock_entity.render_special.remove_screen(C)
@@ -237,9 +233,5 @@
 		else if (isghostdrone(user))
 			var/mob/living/silicon/ghostdrone/drone = user
 			drone.hud.remove_screen(src)
-
-		else if (ishivebot(user))
-			var/mob/living/silicon/hivebot/hivebot = user
-			hivebot.hud.remove_screen(src)
 
 		..()

@@ -251,7 +251,6 @@ var/global/logLength = 0
 		if (ismonkey(mobRef)) mobType = "Monkey"
 		else if (iscyborg(mobRef)) mobType = "Robot"
 		else if (isadrone(mobRef)) mobType = "Drone"
-		else if (isshell(mobRef)) mobType = "AI Shell"
 		else if (isAI(mobRef)) mobType = "AI"
 		else if (!ckey && !mobRef.last_ckey) mobType = "NPC"
 
@@ -260,9 +259,6 @@ var/global/logLength = 0
 		if(isAIeye(mobRef))
 			var/mob/living/intangible/aieye/aieye = mobRef
 			lawrack = aieye?.mainframe?.law_rack_connection
-		else if(isshell(mobRef))
-			var/mob/living/silicon/sil = mobRef
-			lawrack = sil?.mainframe?.law_rack_connection
 		else
 			var/mob/living/silicon/sil = mobRef
 			lawrack = sil?.law_rack_connection

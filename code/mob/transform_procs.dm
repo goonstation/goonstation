@@ -258,56 +258,6 @@
 	qdel(src)
 	return cyborg
 
-//human -> hivebot
-/mob/living/carbon/human/proc/Hiveize(var/mainframe = 0)
-	if (src.transforming)
-		return
-	src.unequip_all()
-	src.transforming = 1
-	src.canmove = 0
-	src.icon = null
-	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-
-	if(!mainframe)
-		var/mob/living/silicon/hivebot/O = new /mob/living/silicon/hivebot( src.loc )
-
-		O.gender = src.gender
-		O.name = "Robot"
-		O.real_name = "Robot"
-		O.lastKnownIP = src.client.address
-		if (src.client)
-			src.client.mob = O
-		src.mind?.transfer_to(O)
-		O.set_loc(src.loc)
-		boutput(O, "<b class='hint'>You are a Robot.</b>")
-		boutput(O, "<b class='hint'>You're more or less a Cyborg but have no organic parts.</b>")
-		boutput(O, "<b class='hint'>To use something, simply double-click it.</b>")
-		boutput(O, "<b class='hint'>Use say \":s to speak in binary.</b>")
-
-		dispose()
-		return O
-
-
-	else if(mainframe)
-		var/mob/living/silicon/hive_mainframe/O = new /mob/living/silicon/hive_mainframe( src.loc )
-
-		O.gender = src.gender
-		O.name = "Robot"
-		O.real_name = "Robot"
-		O.lastKnownIP = src.client.address
-		if (src.client)
-			src.client.mob = O
-		src.mind?.transfer_to(O)
-		O.Namepick()
-		O.set_loc(src.loc)
-		boutput(O, "<b class='hint'>You are a Mainframe Unit.</b>")
-		boutput(O, "<b class='hint'>You cant do much on your own but can take remote command of nearby empty Robots.</b>")
-		boutput(O, "<b class='hint'>Press Deploy to search for nearby bots to command.</b>")
-		boutput(O, "<b class='hint'>Use say \":s to speak in binary.</b>")
-
-		dispose()
-		return O
-
 /mob/proc/cubeize(var/life = 10, var/CT)
 	if (!CT)
 		CT = /mob/living/carbon/cube/meat

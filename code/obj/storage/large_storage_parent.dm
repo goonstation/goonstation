@@ -570,7 +570,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		return ..()
 
 	attack_ai(mob/user)
-		if (can_reach(user, src) <= 1 && (isrobot(user) || isshell(user)))
+		if (can_reach(user, src) <= 1 && isrobot(user))
 			. = src.Attackhand(user)
 
 	alter_health()

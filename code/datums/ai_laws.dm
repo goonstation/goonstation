@@ -135,7 +135,7 @@
 		for(var/obj/machinery/lawrack/R in src.registered_racks)
 			var/list/affected_mobs = list()
 			for (var/mob/living/silicon/S in mobs)
-				if (isghostdrone(S) || isshell(S))
+				if (isghostdrone(S))
 					continue
 				if(S.law_rack_connection == R)
 					affected_mobs |= S

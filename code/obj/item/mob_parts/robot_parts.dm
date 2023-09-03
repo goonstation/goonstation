@@ -1599,6 +1599,14 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		AI.installed_modules -= src
 		return 0
 
+/obj/item/ai_interface
+	name = "\improper AI interface board"
+	desc = "A board that allows AIs to interface with the robot it's installed in. It features a little blinking LED, but who knows what the LED is trying to tell you? Does it even mean anything? Why is it blinking? WHY?? WHAT DOES IT MEAN?! ??????"
+	icon = 'icons/mob/hivebot.dmi'
+	icon_state = "ai-interface"
+	item_state = "ai-interface"
+	w_class = W_CLASS_SMALL
+
 /*	Cogs, just uncomment this stuff when the VOX thing is ready - ISN
 /obj/item/roboupgrade/ai/vox
 	name = "AI VOX Module"

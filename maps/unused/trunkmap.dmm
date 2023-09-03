@@ -5394,10 +5394,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
-"arD" = (
-/mob/living/silicon/hivebot/eyebot,
-/turf/simulated/floor/grass/leafy,
-/area/station/medical/research)
 "arE" = (
 /turf/simulated/wall/r_wall,
 /area/station/crew_quarters/captain)
@@ -9222,18 +9218,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/atmos/highcap_storage)
-"aFY" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Upload APC";
-	pixel_y = 24
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/mob/living/silicon/hivebot/eyebot,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/ai_upload)
 "aFZ" = (
 /turf/simulated/wall,
 /area/station/turret_protected/ai_upload)
@@ -10673,10 +10657,6 @@
 /obj/machinery/sleep_console,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"aLR" = (
-/mob/living/silicon/hivebot/eyebot,
-/turf/simulated/floor,
-/area/station/medical/robotics)
 "aLS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -23153,10 +23133,6 @@
 /obj/window/reinforced/north,
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
-"bzF" = (
-/obj/landmark/shuttle_subwoofer,
-/turf/space,
-/area/space)
 "bzL" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -26111,6 +26087,16 @@
 "fdw" = (
 /turf/space,
 /area/station/maintenance/southwest)
+"fdx" = (
+/obj/item/device/radio/intercom{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "ffJ" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -26700,6 +26686,13 @@
 "hdg" = (
 /turf/simulated/floor/caution/east,
 /area/station/quartermaster/storage)
+"heD" = (
+/obj/strip_door,
+/obj/machinery/conveyor/WE{
+	id = "QM"
+	},
+/turf/simulated/floor/grime,
+/area/station/quartermaster/office)
 "hfV" = (
 /obj/reagent_dispensers/heliumtank,
 /turf/simulated/floor/plating,
@@ -26804,16 +26797,6 @@
 /obj/stool,
 /turf/simulated/floor,
 /area/station/science/chemistry)
-"hCF" = (
-/obj/item/device/radio/intercom{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/item/clothing/glasses/toggleable/meson,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
 "hDv" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -28504,6 +28487,16 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/quarters)
+"meX" = (
+/obj/rack{
+	dir = 1
+	},
+/obj/item/clothing/suit/fire,
+/obj/item/tank/emergency_oxygen,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "meZ" = (
 /obj/machinery/door/airlock/engineering{
 	aiControlDisabled = 1;
@@ -28957,6 +28950,10 @@
 	icon_state = "carpetNE"
 	},
 /area/station/security/hos)
+"nTc" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "nUw" = (
 /obj/grille/steel,
 /obj/window/reinforced/east,
@@ -28973,18 +28970,6 @@
 "nUR" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
-"nVB" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	id = "qm_dock_out"
-	},
-/obj/machinery/door/poddoor{
-	id = "QM-dock-out";
-	name = "Supply Dock Selling Door"
-	},
-/obj/strip_door,
-/turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
 "nWH" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -29810,13 +29795,6 @@
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
 /area/russian)
-"qNi" = (
-/obj/strip_door,
-/obj/machinery/conveyor/WE{
-	id = "QM"
-	},
-/turf/simulated/floor/grime,
-/area/station/quartermaster/office)
 "qNl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -30063,6 +30041,17 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
+"rqF" = (
+/obj/machinery/conveyor/WE{
+	id = "QMLoad"
+	},
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor";
+	name = "Supply Dock Loading Door"
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/storage)
 "rrd" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
@@ -30336,16 +30325,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
-"sdi" = (
-/obj/rack{
-	dir = 1
-	},
-/obj/item/clothing/suit/fire,
-/obj/item/tank/emergency_oxygen,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/toggleable/meson,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
 "sdH" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -30495,6 +30474,18 @@
 	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
+"sBW" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	id = "qm_dock_out"
+	},
+/obj/machinery/door/poddoor{
+	id = "QM-dock-out";
+	name = "Supply Dock Selling Door"
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/storage)
 "sHS" = (
 /obj/disposalpipe/trunk{
 	dir = 1
@@ -30613,6 +30604,18 @@
 	dir = 1
 	},
 /area/station/security/prison)
+"tab" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Upload APC";
+	pixel_y = 24
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/item/parts/robot_parts/adrone_frame/complete_shell,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai_upload)
 "tdh" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/field_generator,
@@ -30909,6 +30912,10 @@
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/caution/east,
 /area/station/hangar/engine)
+"tNV" = (
+/obj/item/parts/robot_parts/adrone_frame/complete_shell,
+/turf/simulated/floor,
+/area/station/medical/robotics)
 "tPy" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -31576,6 +31583,10 @@
 "vDM" = (
 /turf/simulated/floor/caution/north,
 /area/station/hangar/engine)
+"vEl" = (
+/obj/item/parts/robot_parts/adrone_frame/complete_shell,
+/turf/simulated/floor/grass/leafy,
+/area/station/medical/research)
 "vHi" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -31982,17 +31993,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
-"wPP" = (
-/obj/machinery/conveyor/WE{
-	id = "QMLoad"
-	},
-/obj/machinery/door/poddoor{
-	id = "QMLoaddoor";
-	name = "Supply Dock Loading Door"
-	},
-/obj/strip_door,
-/turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
 "wQi" = (
 /obj/machinery/access_button{
 	dir = 1;
@@ -58513,7 +58513,7 @@ ayc
 aze
 aAR
 aDB
-hCF
+fdx
 aHI
 aHY
 aMi
@@ -61261,12 +61261,12 @@ aaa
 aaa
 aab
 amK
-nVB
+sBW
 amK
 aab
 aab
 amK
-wPP
+rqF
 bFA
 aaa
 aaa
@@ -61870,7 +61870,7 @@ bxX
 apA
 apA
 bDA
-wPP
+rqF
 bFB
 apA
 aqK
@@ -65761,7 +65761,7 @@ atm
 atm
 atm
 atm
-aFY
+tab
 aIn
 aDD
 aMp
@@ -66704,7 +66704,7 @@ bCK
 jul
 aoa
 aoJ
-sdi
+meX
 bAL
 bAL
 uDx
@@ -66989,8 +66989,8 @@ aQO
 aPt
 ahm
 ahu
-qNi
-qNi
+heD
+heD
 boz
 ahX
 bqB
@@ -67006,7 +67006,7 @@ amX
 amS
 anX
 aoJ
-sdi
+meX
 bAL
 bAL
 asT
@@ -67308,7 +67308,7 @@ amX
 amS
 aoa
 aoJ
-sdi
+meX
 bAL
 sOw
 asT
@@ -93245,7 +93245,7 @@ aCV
 aFp
 aHv
 aJw
-aLR
+tNV
 aFp
 aOC
 aQy
@@ -93836,7 +93836,7 @@ aaa
 aaa
 aab
 aqJ
-arD
+vEl
 aeA
 aqJ
 auB
@@ -102636,7 +102636,7 @@ bgN
 bgN
 bgN
 bgN
-bzF
+nTc
 aaa
 aaa
 aaa

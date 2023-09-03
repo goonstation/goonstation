@@ -666,9 +666,9 @@ var/global/current_state = GAME_STATE_INVALID
 
 			job_wage = job_wage_converted
 
-			if (isrobot(player))
+			if (iscyborg(player))
 				job_wage = PAY_DOCTORATE
-			if (isAI(player) || isshell(player))
+			if (isAI(player) || isdrone(player))
 				job_wage = PAY_IMPORTANT
 
 			//if part-time, reduce wage
@@ -704,7 +704,7 @@ var/global/current_state = GAME_STATE_INVALID
 				player_body_escaped = 0
 
 			//AI doesn't need to escape
-			if (isAI(player) || isshell(player))
+			if (isAI(player))
 				player_body_escaped = 1
 				if (isAIeye(player))
 					var/mob/living/intangible/aieye/E = player

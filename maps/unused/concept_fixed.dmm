@@ -8086,10 +8086,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/space)
-"aqy" = (
-/mob/living/silicon/hivebot/eyebot,
-/turf/simulated/floor/circuit,
-/area/space)
 "aqz" = (
 /obj/window/reinforced,
 /obj/cable{
@@ -34394,6 +34390,14 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/space)
+"bVD" = (
+/obj/table{
+	icon_state = "tabledir";
+	dir = 4
+	},
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "bYj" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -35233,6 +35237,13 @@
 "cqb" = (
 /turf/space,
 /area/space)
+"dmb" = (
+/obj/machinery/conveyor/WE{
+	id = "cargo"
+	},
+/obj/strip_door,
+/turf/simulated/floor,
+/area/station/quartermaster/storage)
 "dmQ" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -35248,6 +35259,10 @@
 /obj/machinery/lawrack,
 /turf/simulated/floor/purple,
 /area/space)
+"gvN" = (
+/obj/strip_door,
+/turf/simulated/floor/caution/northsouth,
+/area/space)
 "hkr" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -35256,10 +35271,6 @@
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
-"mjU" = (
-/obj/strip_door,
-/turf/simulated/floor/caution/northsouth,
-/area/space)
 "nhs" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -35273,12 +35284,6 @@
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
-"nAt" = (
-/obj/strip_door{
-	name = "Beepsky's room"
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/courtroom)
 "ozv" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -35295,14 +35300,16 @@
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
-"pcx" = (
-/obj/table{
-	icon_state = "tabledir";
-	dir = 4
+"pNw" = (
+/obj/item/parts/robot_parts/adrone_frame/complete_shell,
+/turf/simulated/floor/circuit,
+/area/space)
+"qkb" = (
+/obj/strip_door{
+	name = "Beepsky's room"
 	},
-/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/plating,
-/area/station/storage/tech)
+/area/station/crew_quarters/courtroom)
 "qyw" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
@@ -35353,13 +35360,6 @@
 /obj/item/coin,
 /turf/simulated/floor,
 /area/station/crew_quarters/heads)
-"xTf" = (
-/obj/machinery/conveyor/WE{
-	id = "cargo"
-	},
-/obj/strip_door,
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
 
 (1,1,1) = {"
 cqb
@@ -53142,7 +53142,7 @@ alU
 alU
 amQ
 anp
-pcx
+bVD
 aop
 aoM
 apn
@@ -56077,8 +56077,8 @@ ags
 ags
 ags
 ags
-xTf
-xTf
+dmb
+dmb
 aiS
 ajd
 ajv
@@ -57304,7 +57304,7 @@ beU
 beU
 bez
 bez
-nAt
+qkb
 bez
 bez
 cqb
@@ -66994,11 +66994,11 @@ cqb
 cqb
 apF
 cae
-aqy
+pNw
 aqZ
 gcn
 asi
-aqy
+pNw
 cae
 apF
 cqb
@@ -81011,7 +81011,7 @@ ckz
 bmf
 ckW
 bmG
-mjU
+gvN
 ckW
 cmd
 cmd

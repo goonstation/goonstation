@@ -1327,7 +1327,7 @@
 /mob/proc/equipped()
 	RETURN_TYPE(/obj/item)
 	if (issilicon(src))
-		if (ishivebot(src)||isrobot(src))
+		if (isrobot(src))
 			if (src:module_active)
 				return src:module_active
 	else
@@ -1367,7 +1367,7 @@
 
 /mob/living/silicon/equipped_list(check_for_magtractor = 1) //lool copy paste fix later
 	.= 0
-	if (ishivebot(src)||isrobot(src))
+	if (isrobot(src))
 		if (src:module_active)
 			.= list(src:module_active)
 	else if (isghostdrone(src))

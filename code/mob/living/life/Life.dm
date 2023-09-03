@@ -8,7 +8,6 @@
 	var/const/cap_tick_spacing = LIFE_PROCESS_CAP_TICK_SPACING
 
 	var/mob/living/carbon/human/human_owner = null
-	var/mob/living/silicon/hivebot/hivebot_owner = null
 	var/mob/living/silicon/adrone/adrone_owner = null
 	var/mob/living/silicon/robot/robot_owner = null
 	var/mob/living/critter/critter_owner = null
@@ -20,8 +19,6 @@
 		owner = new_owner
 		if (ishuman(owner))
 			human_owner = owner
-		if (istype(owner,/mob/living/silicon/hivebot))
-			hivebot_owner = owner
 		if (istype(owner,/mob/living/silicon/adrone))
 			adrone_owner = owner
 		if (istype(owner,/mob/living/silicon/robot))
@@ -33,7 +30,6 @@
 		..()
 		owner = null
 		human_owner = null
-		hivebot_owner = null
 		adrone_owner = null
 		robot_owner = null
 		critter_owner = null
@@ -197,17 +193,6 @@
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/disability)
-
-/mob/living/silicon/hivebot/restore_life_processes()
-	..()
-	add_lifeprocess(/datum/lifeprocess/canmove)
-	add_lifeprocess(/datum/lifeprocess/hud)
-	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/hivebot_statusupdate)
-	add_lifeprocess(/datum/lifeprocess/stuns_lying)
-	add_lifeprocess(/datum/lifeprocess/blindness)
-	add_lifeprocess(/datum/lifeprocess/hivebot_signal)
-
 
 /mob/living/silicon/adrone/restore_life_processes()
 	..()
@@ -454,18 +439,6 @@
 
 	hud.update()
 	process_killswitch()
-
-/mob/living/silicon/hivebot/Life(datum/controller/process/mobs/parent)
-	if (..(parent))
-		return 1
-
-	if(health <= 0)
-		gib(1)
-
-	if(client)
-		src.shell = 0
-		if(dependent)
-			mainframe_check()
 
 /mob/living/silicon/ghostdrone/Life(datum/controller/process/mobs/parent)
 	if (..(parent))

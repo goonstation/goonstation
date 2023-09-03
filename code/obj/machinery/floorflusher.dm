@@ -112,7 +112,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 					return
 				else if (G.active_tool == I)
 					return
-			else if (isrobot(user) || isshell(user)) // neither of these guys should be able to drop things in here!!
+			else if (isrobot(user)) // neither of these guys should be able to drop things in here!!
 				return
 			user.drop_item()
 			I.set_loc(src)

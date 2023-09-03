@@ -251,9 +251,7 @@
 				return 1
 		if (isrobot(other))
 			return 1
-		if (isshell(other))
-			return 1
-		if (ismainframe(other))
+		if (isAI(other))
 			return 1
 		return ..()
 

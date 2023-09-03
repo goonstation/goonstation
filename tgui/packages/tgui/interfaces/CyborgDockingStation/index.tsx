@@ -101,7 +101,6 @@ const OccupantTabContents = (props) => {
           {occupant.kind === "robot" && <OccupantStatusRobot occupant={occupant} fuel={fuel} cabling={cabling} act={act} />}
           {occupant.kind === "adrone" && <OccupantStatusDrone occupant={occupant} fuel={fuel} cabling={cabling} act={act} />}
           {occupant.kind === "human" && <OccupantStatusHuman occupant={occupant} />}
-          {occupant.kind === "eyebot" && <OccupantStatusEyebot occupant={occupant} />}
         </Section>
       </>
     );
@@ -174,14 +173,6 @@ const OccupantStatusHuman = (props) => {
   );
 
 };
-const OccupantStatusEyebot = (props) => {
-  const { occupant } = props;
-  return (
-    <LabeledList>
-      <LabeledList.Item label={occupant.cell.name}><CellChargeBar cellData={occupant.cell} /></LabeledList.Item>
-    </LabeledList>
-  );
-};
 const OccupantType = (props) => {
   const { kind, user } = props;
   switch (kind) {
@@ -195,8 +186,6 @@ const OccupantType = (props) => {
       break;
     case "human":
       return <>Mk.UNDEF-Type Carbon</>;
-    case "eyebot":
-      return <>Mk.1-Type Eyebot</>;
     default:
       return <>Unknown type</>;
   }

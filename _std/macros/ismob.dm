@@ -30,11 +30,8 @@
 #define isrobot(x) (istype (x, /mob/living/silicon/robot) || istype (x, /mob/living/silicon/adrone))
 #define iscyborg(x) istype(x, /mob/living/silicon/robot)
 #define isadrone(x) istype(x, /mob/living/silicon/adrone)
-#define ishivebot(x) istype(x, /mob/living/silicon/hivebot)
-#define ismainframe(x) istype(x, /mob/living/silicon/hive_mainframe)
 #define isAI(x) (istype(x, /mob/living/silicon/ai) || istype (x, /mob/living/intangible/aieye))
 #define isAIeye(x) istype (x, /mob/living/intangible/aieye)
-#define isshell(x) istype(x, /mob/living/silicon/hivebot/eyebot)//istype(x, /mob/living/silicon/shell)
 #define isdrone(x) istype(x, /mob/living/silicon/hivebot/drone)
 #define isghostdrone(x) istype(x, /mob/living/silicon/ghostdrone)
 

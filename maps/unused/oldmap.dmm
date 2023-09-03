@@ -1896,13 +1896,6 @@
 "eB" = (
 /turf/simulated/floor,
 /area/bridge)
-"eC" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/mob/living/silicon/hivebot/eyebot,
-/turf/simulated/floor,
-/area/bridge)
 "eD" = (
 /obj/table,
 /obj/window/reinforced{
@@ -3142,6 +3135,10 @@
 	},
 /turf/simulated/floor,
 /area/crew_quarters/captain)
+"hz" = (
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor,
+/area/storage/tech)
 "hA" = (
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (WEST)";
@@ -8307,6 +8304,10 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor,
 /area/atmos)
+"uN" = (
+/obj/strip_door,
+/turf/simulated/floor/caution/northsouth,
+/area/zeta/bot_storage)
 "uO" = (
 /obj/machinery/door/airlock/maintenance{
 	icon_state = "door_locked";
@@ -19637,6 +19638,13 @@
 	icon_state = "sw1"
 	},
 /area/space)
+"Ui" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/item/parts/robot_parts/adrone_frame/complete_shell,
+/turf/simulated/floor,
+/area/bridge)
 "Up" = (
 /obj/landmark/start/job/bartender,
 /turf/simulated/floor/specialroom/bar,
@@ -19712,10 +19720,6 @@
 	},
 /turf/simulated/floor,
 /area/hallway/primary/east)
-"UO" = (
-/obj/item/clothing/glasses/toggleable/meson,
-/turf/simulated/floor,
-/area/storage/tech)
 "UU" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -19975,10 +19979,6 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
 /area/hallway/primary/central)
-"XK" = (
-/obj/strip_door,
-/turf/simulated/floor/caution/northsouth,
-/area/zeta/bot_storage)
 "XL" = (
 /obj/machinery/atmospherics/trinary/filter{
 	dir = 1;
@@ -29950,8 +29950,8 @@ en
 aO
 eW
 fk
-UO
-UO
+hz
+hz
 fj
 gu
 gu
@@ -33138,7 +33138,7 @@ aI
 dt
 dN
 ef
-eC
+Ui
 Vd
 fg
 fA
@@ -96285,7 +96285,7 @@ FC
 IU
 EM
 JB
-XK
+uN
 KB
 KE
 KE

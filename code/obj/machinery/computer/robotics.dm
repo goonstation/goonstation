@@ -53,7 +53,7 @@
 		else
 			dat += "Operating Normally<BR>"
 
-		if(!isrobot(user)&&!ishivebot(user))
+		if(!isrobot(user))
 			//if(!A.weapon_lock)
 				//dat += "<A href='?src=\ref[src];lock=1;ai=\ref[A]'>Emergency Lockout AI *Swipe ID*</A><BR>"
 			//else
@@ -99,7 +99,7 @@
 					else
 						dat += "Time left:[R.weaponlock_time] | "
 						dat += "<A href='?src=\ref[src];lock=2;bot=\ref[R]'>Cancel Lockdown</A><BR>"
-			else if(!isrobot(user)&&!ishivebot(user))
+			else if(!isrobot(user))
 				if(!R.killswitch)
 					dat += "<A href='?src=\ref[src];gib=1;bot=\ref[R]'>Kill Switch *Swipe ID*</A><BR>"
 				else

@@ -7871,38 +7871,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
-"aPb" = (
-/obj/rack,
-/obj/item/tank/oxygen{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/obj/item/clothing/shoes/magnetic{
-	pixel_x = 5;
-	pixel_y = -11
-	},
-/obj/item/clothing/suit/space/engineer{
-	pixel_x = 7;
-	pixel_y = -1
-	},
-/obj/item/crowbar{
-	pixel_x = 4;
-	pixel_y = -1
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = 4;
-	pixel_y = 5
-	},
-/obj/item/clothing/head/helmet/space/engineer{
-	pixel_x = 4;
-	pixel_y = 10
-	},
-/obj/item/clothing/glasses/toggleable/meson{
-	pixel_x = -5;
-	pixel_y = -1
-	},
-/turf/simulated/floor/black,
-/area/station/engine/storage)
 "aPf" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9968,15 +9936,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/inner)
-"baH" = (
-/obj/machinery/conveyor/WE{
-	id = "qmout"
-	},
-/obj/strip_door{
-	dir = 4
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
 "baI" = (
 /obj/lattice{
 	dir = 6;
@@ -16677,6 +16636,15 @@
 /obj/table/auto,
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/robotics)
+"dWg" = (
+/obj/machinery/conveyor/WE{
+	id = "qmout"
+	},
+/obj/strip_door{
+	dir = 4
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/quartermaster/office)
 "dWR" = (
 /obj/machinery/light_switch{
 	name = "W light switch";
@@ -17274,6 +17242,38 @@
 	icon_state = "carpetS"
 	},
 /area/station/security/detectives_office)
+"eEj" = (
+/obj/rack,
+/obj/item/tank/oxygen{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_x = 5;
+	pixel_y = -11
+	},
+/obj/item/clothing/suit/space/engineer{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/item/crowbar{
+	pixel_x = 4;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/helmet/space/engineer{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/item/clothing/glasses/toggleable/meson{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/turf/simulated/floor/black,
+/area/station/engine/storage)
 "eEk" = (
 /mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor/engine,
@@ -18825,6 +18825,21 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/security/hos)
+"glZ" = (
+/obj/strip_door{
+	name = "Beepsky's room"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/courtroom)
+"gma" = (
+/obj/machinery/conveyor/WE{
+	id = "qmin"
+	},
+/obj/strip_door{
+	dir = 4
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/quartermaster/office)
 "gmw" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating,
@@ -19559,39 +19574,6 @@
 	icon_state = "fgreen2"
 	},
 /area/station/bridge)
-"hcf" = (
-/obj/rack,
-/obj/item/tank/oxygen{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/obj/item/clothing/shoes/magnetic{
-	pixel_x = 5;
-	pixel_y = -11
-	},
-/obj/item/clothing/suit/space/engineer{
-	pixel_x = 7;
-	pixel_y = -1
-	},
-/obj/item/crowbar{
-	pixel_x = 4;
-	pixel_y = -1
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = 4;
-	pixel_y = 5
-	},
-/obj/item/clothing/head/helmet/space/engineer{
-	pixel_x = 4;
-	pixel_y = 10
-	},
-/obj/item/clothing/glasses/toggleable/meson{
-	pixel_x = -5;
-	pixel_y = -1
-	},
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/black,
-/area/station/engine/storage)
 "hci" = (
 /obj/machinery/atmospherics/binary/circulatorTemp,
 /turf/simulated/floor/plating/airless,
@@ -25333,15 +25315,6 @@
 	dir = 10
 	},
 /area/station/engine/engineering/breakroom)
-"ntb" = (
-/obj/machinery/conveyor/WE{
-	id = "qmin"
-	},
-/obj/strip_door{
-	dir = 4
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
 "ntO" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -26356,10 +26329,6 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
-"osI" = (
-/mob/living/silicon/hivebot/eyebot,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/ai)
 "osP" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -27464,20 +27433,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
-"pjC" = (
-/obj/machinery/conveyor/EW{
-	id = "qmoutput"
-	},
-/obj/strip_door{
-	dir = 4
-	},
-/obj/machinery/door/poddoor{
-	id = "cargosto2";
-	name = "Storage Shutter";
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/quartermaster/office)
 "pjH" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -28226,6 +28181,20 @@
 	dir = 1
 	},
 /area/station/hallway/primary/central)
+"pOZ" = (
+/obj/machinery/conveyor/EW{
+	id = "qmoutput"
+	},
+/obj/strip_door{
+	dir = 4
+	},
+/obj/machinery/door/poddoor{
+	id = "cargosto2";
+	name = "Storage Shutter";
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "pPd" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet{
@@ -28833,6 +28802,39 @@
 	dir = 1
 	},
 /area/station/science/lobby)
+"qrT" = (
+/obj/rack,
+/obj/item/tank/oxygen{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_x = 5;
+	pixel_y = -11
+	},
+/obj/item/clothing/suit/space/engineer{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/item/crowbar{
+	pixel_x = 4;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/helmet/space/engineer{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/item/clothing/glasses/toggleable/meson{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/black,
+/area/station/engine/storage)
 "qsd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -30392,6 +30394,36 @@
 	dir = 1
 	},
 /area/station/science/lobby)
+"rCa" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/item/paper_bin{
+	pixel_x = 9;
+	pixel_y = 6
+	},
+/obj/item/stamp/ce{
+	pixel_x = 11;
+	pixel_y = -4
+	},
+/obj/item/pen{
+	pixel_x = 12;
+	pixel_y = 7
+	},
+/obj/item/clothing/glasses/toggleable/meson{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/machinery/phone{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/rocko,
+/turf/simulated/floor/carpet/green/fancy/edge/south,
+/area/station/engine/engineering/ce)
 "rCb" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -31343,12 +31375,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"swi" = (
-/obj/strip_door{
-	name = "Beepsky's room"
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/courtroom)
 "swA" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
@@ -32121,36 +32147,6 @@
 	icon_state = "carpetNW"
 	},
 /area/station/crew_quarters/arcade)
-"tds" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/table/reinforced/bar/auto{
-	name = "table"
-	},
-/obj/item/paper_bin{
-	pixel_x = 9;
-	pixel_y = 6
-	},
-/obj/item/stamp/ce{
-	pixel_x = 11;
-	pixel_y = -4
-	},
-/obj/item/pen{
-	pixel_x = 12;
-	pixel_y = 7
-	},
-/obj/item/clothing/glasses/toggleable/meson{
-	pixel_x = -4;
-	pixel_y = -4
-	},
-/obj/machinery/phone{
-	pixel_x = -6;
-	pixel_y = 3
-	},
-/obj/item/rocko,
-/turf/simulated/floor/carpet/green/fancy/edge/south,
-/area/station/engine/engineering/ce)
 "tdE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -34458,6 +34454,10 @@
 	dir = 8
 	},
 /area/station/hallway/primary/central)
+"vfc" = (
+/obj/item/parts/robot_parts/adrone_frame/complete_shell,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/ai)
 "vfi" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/main)
@@ -35147,6 +35147,13 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/turret_protected/Zeta)
+"vPf" = (
+/obj/table/auto,
+/obj/item/device/flash,
+/obj/item/screwdriver,
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "vPu" = (
 /obj/machinery/light_switch{
 	name = "N light switch";
@@ -37438,13 +37445,6 @@
 	dir = 9
 	},
 /area/station/engine/gas)
-"xXf" = (
-/obj/table/auto,
-/obj/item/device/flash,
-/obj/item/screwdriver,
-/obj/item/clothing/glasses/toggleable/meson,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
 "xXH" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/blue/side{
@@ -71684,7 +71684,7 @@ kqQ
 lWf
 axL
 lNm
-aPb
+eEj
 amh
 amF
 anc
@@ -71986,7 +71986,7 @@ dUN
 axu
 axL
 iVl
-hcf
+qrT
 amh
 amG
 and
@@ -72288,7 +72288,7 @@ dUN
 axu
 axL
 iVl
-aPb
+eEj
 awd
 amH
 anf
@@ -72590,7 +72590,7 @@ dUN
 axu
 axL
 iVl
-aPb
+eEj
 awd
 amI
 anf
@@ -74078,7 +74078,7 @@ aqs
 akk
 aMx
 aNL
-xXf
+vPf
 aPS
 nJv
 urh
@@ -75013,7 +75013,7 @@ anl
 bqp
 amV
 aoL
-tds
+rCa
 apJ
 aaa
 aaa
@@ -76174,9 +76174,9 @@ ahN
 aJw
 aJw
 aCm
-baH
+dWg
 bAn
-ntb
+gma
 aCm
 ycc
 ycc
@@ -77696,7 +77696,7 @@ uRU
 hZI
 kZU
 fIv
-pjC
+pOZ
 aJw
 axD
 aLx
@@ -79590,7 +79590,7 @@ aQj
 xEQ
 upu
 upu
-swi
+glZ
 upu
 upu
 aaa
@@ -108033,7 +108033,7 @@ xjf
 rRc
 nBH
 cVH
-osI
+vfc
 wPL
 tRY
 jiP

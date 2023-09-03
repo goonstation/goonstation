@@ -359,10 +359,6 @@ or don't if it uses a custom topopen overlay
 
 		update_terminal()
 
-		for (var/mob/living/silicon/hivebot/eyebot/E in mobs)
-			if (!(E in available_ai_shells))
-				available_ai_shells += E
-
 		for (var/mob/living/silicon/adrone/D in mobs)
 			if (D.brain || !D.ai_interface || D.dependent)
 				continue
@@ -1539,9 +1535,7 @@ or don't if it uses a custom topopen overlay
 			return 1
 	if (isrobot(other))
 		return 1
-	if (isshell(other))
-		return 1
-	if (ismainframe(other))
+	if (isAI(other))
 		return 1
 	return ..()
 
@@ -1868,10 +1862,6 @@ or don't if it uses a custom topopen overlay
 
 	var/list/bodies = new/list()
 
-	for (var/mob/living/silicon/hivebot/H in available_ai_shells)
-		if (H.shell && !H.dependent && !isdead(H))
-			bodies += H
-
 	for (var/mob/living/silicon/robot/R in available_ai_shells)
 		if (R.shell && !R.dependent && !isdead(R) && get_step(R, 0)?.z == get_step(src, 0)?.z)
 			bodies += R
@@ -1882,7 +1872,7 @@ or don't if it uses a custom topopen overlay
 
 	var/mob/living/silicon/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies, /proc/cmp_text_asc))
 
-	if (!target_shell || isdead(target_shell) || !(isshell(target_shell) || isrobot(target_shell)))
+	if (!target_shell || isdead(target_shell) || !isrobot(target_shell))
 		return
 
 	if (src.deployed_to_eyecam)
@@ -1950,11 +1940,7 @@ or don't if it uses a custom topopen overlay
 		src.eyecam.set_loc(src.loc)
 		SPAWN(2 SECONDS)
 			if (ismob(user)) // bluhh who the fuck knows, this at least checks that user isn't null as well
-				if (isshell(user))
-					var/mob/living/silicon/hivebot/H = user
-					H.shell = 1
-					H.dependent = 0
-				else if (isadrone(user))
+				if (isadrone(user))
 					var/mob/living/silicon/adrone/D = user
 					if (!isnull(D?.ai_interface))
 						D.shell = 1

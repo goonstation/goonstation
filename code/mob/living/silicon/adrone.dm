@@ -845,7 +845,7 @@ var/global/list/adrone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 		src.material_trigger_on_bullet(src, P)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		if(isshell(src) || src.ai_interface)
+		if(src.shell || src.ai_interface)
 			boutput(user, "<span class='alert'>Emagging an AI shell wouldn't work, their laws can't be overwritten!</span>")
 			return 0 //emags don't do anything to AI shells
 		if (!src.emaggable)
@@ -931,7 +931,7 @@ var/global/list/adrone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 			if(!opened)
 				boutput(user, "You need to open [src.name]'s cover before you can change their law rack link.")
 				return
-			if(isshell(src) || src.ai_interface)
+			if(src.shell || src.ai_interface)
 				boutput(user,"You need to use this on the AI core directly!")
 				return
 
@@ -1407,8 +1407,7 @@ var/global/list/adrone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 			var/mob/living/carbon/human/H = other
 			if(!H.mutantrace.exclusive_language)
 				return 1
-		if (ishivebot(other)) return 1
-		if (isadrone(other)) return 1
+		if (isrobot(other)) return 1
 		return ..()
 
 	say_quote(var/text)

@@ -199,17 +199,11 @@
 /datum/robot/module_tool_creator/recursive/module/civilian_d
 	definitions = list(
 		/obj/item/extinguisher/cyborg,
-		/obj/item/seedplanter,
 		/obj/item/plantanalyzer,
-		/obj/item/gardentrowel,
-		/obj/item/satchel/hydro,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 		/obj/item/pen/omni,
-		/obj/item/c_tube,
 		/obj/item/spraybottle/cleaner/robot,
 		/obj/item/sponge,
-		/obj/item/device/light/zippo/borg,
-		/obj/item/device/camera_viewer,
 	)
 
 // engineer. miner.
@@ -220,13 +214,7 @@
 		/obj/item/device/t_scanner,
 		/obj/item/electronics/scanner,
 		/obj/item/electronics/soldering,
-		/obj/item/room_planner,
 		/obj/item/lamp_manufacturer,
-		/obj/item/pinpointer/category/apcs/station,
-		/obj/item/cargotele,
-		/obj/item/mining_tool/drill,
-		/obj/item/ore_scoop/borg,
-		/obj/item/satchel/mining,
 	)
 
 // medical doctor. scientist.
@@ -236,12 +224,6 @@
 		/obj/item/reagent_containers/mender/burn/medbot,
 		/obj/item/robospray, // TODO: make large version
 		/obj/item/reagent_containers/syringe,
-		/obj/item/suture,
 		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/dropper,
 		/obj/item/hand_labeler,
-		/obj/item/pen,
-		/obj/item/item_box/assorted/stickers/robot/science,
-		/obj/item/device/gps,
 	)

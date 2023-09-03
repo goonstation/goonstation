@@ -20,10 +20,6 @@
 			adrone_owner.hud.update_pulling()
 			adrone_owner.hud.update_environment()
 
-		if (hivebot_owner)
-			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/construction))
-				hivebot_owner.see_invisible = INVIS_CONSTRUCTION
-
 		if (critter_owner)
 			critter_owner.hud.update_health()
 			critter_owner.hud.update_temp_indicator()

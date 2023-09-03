@@ -172,6 +172,17 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
+"iB" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/item/parts/robot_parts/adrone_frame/complete_shell,
+/turf/simulated/floor/shuttle,
+/area/shuttle/arrival/station)
 "iQ" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -303,17 +314,6 @@
 /area/space)
 "mz" = (
 /turf/simulated/floor/shuttlebay,
-/area/shuttle/arrival/station)
-"mT" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/obj/landmark/shuttle_subwoofer,
-/turf/simulated/floor/shuttlebay{
-	desc = " It is made of steel.";
-	name = "steel shuttle bay plating"
-	},
 /area/shuttle/arrival/station)
 "nn" = (
 /obj/cable{
@@ -559,10 +559,6 @@
 /obj/landmark/start/latejoin,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
-"yf" = (
-/mob/living/silicon/hivebot/eyebot,
-/turf/simulated/floor/shuttle,
-/area/shuttle/arrival/station)
 "yu" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -600,6 +596,10 @@
 	name = "steel shuttle bay plating"
 	},
 /area/space)
+"yW" = (
+/obj/item/parts/robot_parts/adrone_frame/complete_shell,
+/turf/simulated/floor/shuttle,
+/area/shuttle/arrival/station)
 "yX" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/shuttlebay,
@@ -887,6 +887,17 @@
 /obj/item/tripod,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"HO" = (
+/obj/grille/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/obj/landmark/shuttle_subwoofer,
+/turf/simulated/floor/shuttlebay{
+	desc = " It is made of steel.";
+	name = "steel shuttle bay plating"
+	},
+/area/shuttle/arrival/station)
 "HX" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -1133,17 +1144,6 @@
 /obj/machinery/vending/floppy{
 	profit = 0
 	},
-/turf/simulated/floor/shuttle,
-/area/shuttle/arrival/station)
-"Qd" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "Qn" = (
@@ -38292,7 +38292,7 @@ oM
 oM
 OK
 bi
-mT
+HO
 OK
 oM
 oM
@@ -46456,7 +46456,7 @@ SL
 aq
 SL
 xd
-yf
+yW
 KL
 gs
 ap
@@ -47664,7 +47664,7 @@ SL
 aq
 SL
 KD
-Qd
+iB
 Ge
 qX
 ap

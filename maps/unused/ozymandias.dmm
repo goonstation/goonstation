@@ -471,11 +471,6 @@
 /area/station/crew_quarters/juryroom{
 	name = "Jury Sequestration"
 	})
-"agV" = (
-/obj/machinery/recharge_station,
-/mob/living/silicon/hivebot/eyebot,
-/turf/simulated/floor/engine,
-/area/station/turret_protected/ai)
 "ahb" = (
 /turf/simulated/floor/blackwhite{
 	dir = 1
@@ -3786,6 +3781,22 @@
 	dir = 8
 	},
 /area/station/quartermaster/office)
+"aZm" = (
+/obj/strip_door,
+/obj/forcefield/energyshield/perma,
+/obj/machinery/conveyor/SN{
+	id = "cannedfartbelt";
+	name = "gas transit belt"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/poddoor/pyro{
+	id = "ozygasbelt";
+	name = "Gas Transit Door"
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/engine/hotloop)
 "aZn" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 4;
@@ -7815,6 +7826,22 @@
 	},
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
+"cgr" = (
+/obj/strip_door,
+/obj/forcefield/energyshield/perma,
+/obj/machinery/conveyor/SN{
+	id = "cannedfartbelt";
+	name = "gas transit belt"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/poddoor/pyro{
+	id = "ozygasbelt";
+	name = "Gas Transit Door"
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/engine/gas)
 "cgt" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2,
@@ -11523,15 +11550,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
-"dfL" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/toggleable/meson,
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/station/engine/storage)
 "dfO" = (
 /turf/simulated/floor/yellow/checker,
 /area/station/routing{
@@ -22564,6 +22582,16 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/black/side,
 /area/station/hangar/main)
+"fXW" = (
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/storage/crate,
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor/grime,
+/area/station/storage/warehouse)
 "fYf" = (
 /obj/reagent_dispensers/foamtank,
 /obj/machinery/light/small{
@@ -27476,22 +27504,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
-"hhY" = (
-/obj/strip_door,
-/obj/forcefield/energyshield/perma,
-/obj/machinery/conveyor/SN{
-	id = "cannedfartbelt";
-	name = "gas transit belt"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/poddoor/pyro{
-	id = "ozygasbelt";
-	name = "Gas Transit Door"
-	},
-/turf/simulated/floor/caution/westeast,
-/area/station/engine/hotloop)
 "hih" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -29347,6 +29359,11 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/west)
+"hFJ" = (
+/obj/machinery/recharge_station,
+/obj/item/parts/robot_parts/adrone_frame/complete_shell,
+/turf/simulated/floor/engine,
+/area/station/turret_protected/ai)
 "hFW" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
@@ -29436,6 +29453,15 @@
 /obj/mapping_helper/access/engineering_mechanic,
 /turf/simulated/floor,
 /area/station/hangar/engine)
+"hHK" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/engine/storage)
 "hHM" = (
 /obj/storage/secure/closet/engineering/engineer,
 /turf/simulated/floor/yellow/side{
@@ -29525,12 +29551,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"hJA" = (
-/obj/item/sheet/wood,
-/turf/simulated/floor/industrial,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "hJB" = (
 /obj/item/storage/wall/clothingrack/dresses{
 	dir = 4
@@ -30115,6 +30135,16 @@
 	},
 /turf/simulated/floor/red,
 /area/station/science/lab)
+"hRp" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/glasses/toggleable/meson,
+/obj/item/device/radio/intercom/engineering,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/engine/storage)
 "hRA" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -33670,15 +33700,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grey,
 /area/station/medical/breakroom)
-"iPV" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/toggleable/meson,
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
-/area/station/engine/storage)
 "iQg" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment/food,
@@ -38536,23 +38557,6 @@
 	},
 /turf/simulated/floor/green,
 /area/station/crewquarters/garbagegarbs)
-"kfD" = (
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "cargo_swapabout";
-	layer = 3.2;
-	name = "Cargo Transfer";
-	opacity = 0
-	},
-/obj/machinery/conveyor/SN{
-	id = "qmswapabout"
-	},
-/obj/strip_door{
-	layer = 3
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/office)
 "kfN" = (
 /obj/stool/chair/blue,
 /obj/machinery/light{
@@ -42490,6 +42494,12 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/west,
 /area/station/crew_quarters/hop)
+"liG" = (
+/obj/item/sheet/wood,
+/turf/simulated/floor/industrial,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "liH" = (
 /obj/machinery/light{
 	dir = 4;
@@ -48712,16 +48722,6 @@
 	dir = 4
 	},
 /area/station/crewquarters/garbagegarbs)
-"mJp" = (
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/storage/crate,
-/obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/floor/grime,
-/area/station/storage/warehouse)
 "mJy" = (
 /obj/machinery/conveyor/SN{
 	id = "qmswapabout"
@@ -51201,16 +51201,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
-"nxL" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/toggleable/meson,
-/obj/item/device/radio/intercom/engineering,
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/station/engine/storage)
 "nyi" = (
 /obj/machinery/conveyor/SN{
 	id = "qmin"
@@ -55956,6 +55946,21 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
+"oFD" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/glasses/toggleable/meson,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/storage)
 "oFO" = (
 /obj/stool/bench/red/auto,
 /obj/machinery/camera{
@@ -63467,6 +63472,15 @@
 "qCN" = (
 /turf/simulated/floor/engine,
 /area/station/engine/power)
+"qCP" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/storage)
 "qCU" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -65415,21 +65429,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/west)
-"rbA" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/toggleable/meson,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
-/area/station/engine/storage)
 "rbG" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/light/lamp/black,
@@ -73826,18 +73825,6 @@
 "tdn" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/data)
-"tdt" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/toggleable/meson,
-/obj/machinery/status_display{
-	pixel_y = 30
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/station/engine/storage)
 "tdA" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
@@ -77907,6 +77894,18 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/storage)
+"uff" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/glasses/toggleable/meson,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/engine/storage)
 "ufn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -81653,22 +81652,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargobay)
-"uXY" = (
-/obj/strip_door,
-/obj/forcefield/energyshield/perma,
-/obj/machinery/conveyor/SN{
-	id = "cannedfartbelt";
-	name = "gas transit belt"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/poddoor/pyro{
-	id = "ozygasbelt";
-	name = "Gas Transit Door"
-	},
-/turf/simulated/floor/caution/westeast,
-/area/station/engine/gas)
 "uXZ" = (
 /obj/machinery/conveyor/NS{
 	id = "qmsend"
@@ -89004,6 +88987,23 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/west)
+"wJs" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "cargo_swapabout";
+	layer = 3.2;
+	name = "Cargo Transfer";
+	opacity = 0
+	},
+/obj/machinery/conveyor/SN{
+	id = "qmswapabout"
+	},
+/obj/strip_door{
+	layer = 3
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/quartermaster/office)
 "wJu" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2/middle,
@@ -125582,7 +125582,7 @@ nvM
 nvM
 tqB
 teh
-hJA
+liG
 fXG
 fXG
 fXG
@@ -139366,7 +139366,7 @@ loj
 xUw
 rqB
 upu
-agV
+hFJ
 asi
 wAu
 iHi
@@ -141178,7 +141178,7 @@ cOI
 urb
 iMo
 upu
-agV
+hFJ
 eey
 wAu
 iHi
@@ -153347,7 +153347,7 @@ cqJ
 sZO
 bFI
 pOH
-mJp
+fXW
 uDV
 cqr
 sOO
@@ -154524,7 +154524,7 @@ tyo
 cTK
 pZK
 mJy
-kfD
+wJs
 raf
 aRz
 aRz
@@ -158664,9 +158664,9 @@ gyr
 wQX
 mdK
 eob
-hhY
+aZm
 oBo
-uXY
+cgr
 cjF
 pHd
 qws
@@ -160205,7 +160205,7 @@ utO
 jUJ
 xSP
 ykD
-iPV
+qCP
 sTd
 gDq
 xwt
@@ -161111,7 +161111,7 @@ utO
 bNF
 iQH
 ykD
-tdt
+uff
 xXP
 bTw
 xwt
@@ -161715,7 +161715,7 @@ utO
 bNF
 iQH
 ykD
-rbA
+oFD
 sTd
 gDq
 xwt
@@ -162621,7 +162621,7 @@ cpH
 flA
 iQH
 ykD
-nxL
+hRp
 xXP
 bTw
 xwt
@@ -163225,7 +163225,7 @@ utO
 eQS
 iQH
 ykD
-iPV
+qCP
 sTd
 gDq
 xwt
@@ -164131,7 +164131,7 @@ utO
 uoN
 xSP
 ykD
-dfL
+hHK
 xXP
 bTw
 xwt

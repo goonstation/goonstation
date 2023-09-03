@@ -186,11 +186,6 @@
 			if(!isturf(cam.loc))
 				continue
 
-			if(istype(cam, /mob/living/silicon/hivebot/eyebot))
-				if (issilicon(cam))
-					var/mob/living/silicon/S = cam
-					if(S?.cell.charge < P.cost)
-						continue
 			else if(!istype_exact(cam,/obj/machinery/camera))
 				continue
 

@@ -180,7 +180,7 @@
 							if (J.allow_thrust(0.01, src))
 								spacemove = 0
 								src.inertia_dir = 0
-					else if (isrobot(src) || isghostdrone(src) || isshell(src))
+					else if (isrobot(src) || isghostdrone(src))
 						if (src:jetpack)
 							spacemove = 0
 							src.inertia_dir = 0

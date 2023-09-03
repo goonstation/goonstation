@@ -826,7 +826,7 @@
 							message = copytext(message, 3)
 
 				else
-					if (ishuman(src) || ismobcritter(src) || isrobot(src) || isshell(src)) // this is shit
+					if (ishuman(src) || ismobcritter(src) || isrobot(src)) // this is shit
 						message_mode = "secure headset"
 						secure_headset_mode = lowertext(copytext(message,2,3))
 					message = copytext(message, 3)

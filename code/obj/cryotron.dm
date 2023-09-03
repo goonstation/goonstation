@@ -257,7 +257,7 @@
 		// That's a goddamn robot
 		if (istype(R))
 			// That's the goddamn AI
-			if (R.mainframe || isAI(R) || isshell(R))
+			if (R.mainframe || isAI(R))
 				boutput(user, "<b>You can't put the AI in cryogenic storage!</b>")
 				return FALSE
 			// That's a goddamn cyborg
