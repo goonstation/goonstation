@@ -469,7 +469,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 						if (prob(80))
 							F.break_tile_to_plating()
 							if(!F.intact)
-								new/obj/item/tile (F)
+								var/obj/item/tile/tile = new(F)
+								tile.setMaterial(F.material)
 						else
 							F.break_tile()
 				else if (istype(T, /turf/simulated/wall))
