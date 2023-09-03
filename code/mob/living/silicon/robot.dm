@@ -70,6 +70,8 @@
 	var/alohamaton_skin = 0 // for the bank purchase
 	var/metalman_skin = 0	//mbc : i'm getting tired of copypasting this, i promise to fix this somehow next time i add a cyborg skin ok
 	var/glitchy_speak = 0
+	///how many flips with our head exposed have we done?
+	var/brainlose = 0
 
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
 	var/sound_automaton_scratch = 'sound/misc/automaton_scratch.ogg'
@@ -579,8 +581,13 @@
 								if(isunconscious(src))
 									setalive(src) //reset stat to ensure emote comes out
 					if (src.brainexposed && src.part_head && src.part_head.brain)
-						src.eject_brain(fling = TRUE)
-						message = "<B>[src]</B> does a flip but their brain is sent flying!"
+						if (src.brainlose > 2)
+							src.eject_brain(fling = TRUE)
+							message = "<B>[src]</B> does a flip but their brain is sent flying!"
+						else
+							src.brainlose += 1
+							message = "<B>[src]</B> does a flip and their head unit shakes a bit!"
+
 			if("flex", "flexmuscles")
 				if(!part_arm_r || !part_arm_l)
 					boutput(src, "<span class='notice'>You don't even have both arms to flex!</span>")
@@ -1230,6 +1237,8 @@
 					src.locking = 0
 				brainexposed = !brainexposed
 				boutput(user, "The head compartment has been [brainexposed ? "opened" : "closed"].")
+				if (brainexposed == TRUE)
+					brainlose = 0
 			src.update_appearance()
 
 		else if (istype(get_id_card(W), /obj/item/card/id))	// trying to unlock the interface with an ID card
@@ -2126,6 +2135,7 @@
 			src.visible_message("<span class='alert'>[src]'s panel slams shut!</span>")
 		if (src.brainexposed)
 			brainexposed = 0
+			brainlose = 0
 			src.visible_message("<span class='alert'>[src]'s head compartment slams shut!</span>")
 			opened = 1
 			src.visible_message("<span class='alert'>[src]'s panel blows open!</span>")
