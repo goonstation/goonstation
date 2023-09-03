@@ -621,3 +621,7 @@ toxic - poisons
 			hit.delStatus("cornicened2")
 		else
 			hit.setStatus("cornicened")
+
+/datum/projectile/laser/makeshift
+	cost = 33
+	damage = 20
