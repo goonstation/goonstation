@@ -1,82 +1,82 @@
 var/global/list/available_ai_shells = list()
 var/atom/movable/minimap_ui_handler/ai_minimap_ui
-var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
-	"Annoyed (Inverted)" = "ai_annoyed-lod", \
-	"Baffled" = "ai_baffled-dol",\
-	"Baffled (Inverted)" = "ai_baffled-lod",\
-	"Blank" = "ai_blank-lod",\
-	"Blank (Inverted)" = "ai_blank-dol",\
-	"Cheeky" = "ai_cheeky-dol",\
-	"Cheeky (Inverted)" = "ai_cheeky-lod",\
-	"Colourbars" = "ai_colourbars",\
-	"Confused" = "ai_confused-dol",\
-	"Confused (Inverted)" = "ai_confused-lod",\
-	"Content" = "ai_content-dol",\
-	"Content (Inverted)" = "ai_content-lod",\
-	"Crecent" = "ai_crecent-dol",\
-	"Crecent (Inverted)" = "ai_crecent-lod",\
-	"Cursor" = "ai_cursor-dol",\
-	"Cursor (Inverted)" = "ai_cursor-lod",\
-	"Exclamation" = "ai_exclamation-dol",\
-	"Exclamation (Inverted)" = "ai_exclamation-lod",\
-	"Eye" = "ai_eye-dol",\
-	"Eye (Inverted)" = "ai_eye-lod",\
-	"Fidgety" = "ai_fidget-dol",\
-	"Fidgety (Inverted)" = "ai_fidget-lod",\
-	"Glitch" = "ai_glitch-dol",\
-	"Glitch (Inverted)" = "ai_glitch-lod",\
-	"Happy" = "ai_happy-dol", \
-	"Happy (Inverted)" = "ai_happy-lod", \
-	"Heart" = "ai_heart-dol",\
-	"Heart (Inverted)" = "ai_heart-lod",\
-	"Line" = "ai_line-dol",\
-	"Line (Inverted)" = "ai_line-lod",\
-	"Loading Bar" = "ai_loading-dol",\
-	"Loading Bar (Inverted)" = "ai_loading-lod",\
-	"Mad" = "ai_mad-dol",\
-	"Mad (Inverted)" = "ai_mad-lod",\
-	"Musical" = "ai_music-dol",\
-	"Musical (Inverted)" = "ai_music-lod",\
-	"Nanotrasen" = "ai_nanotrasen-dol",\
-	"Nanotrasen (Inverted)" = "ai_nanotrasen-lod",\
-	"Nervous" = "ai_nervous-dol",\
-	"Nervous (Inverted)" = "ai_nervous-lod",\
-	"Neutral" = "ai_neutral-dol",\
-	"Neutral (Inverted)" = "ai_neutral-lod",\
-	"Pensive" = "ai_pensive-dol",\
-	"Pensive (Inverted)" = "ai_pensive-lod",\
-	"Question" = "ai_question-dol",\
-	"Question (Inverted)" = "ai_question-lod",\
-	"Sad" = "ai_sad-dol",\
-	"Sad (Inverted)" = "ai_sad-lod",\
-	"Silly" = "ai_silly-dol",\
-	"Silly (Inverted)" = "ai_silly-lod",\
-	"Smug" = "ai_smug-dol",\
-	"Smug (Inverted)" = "ai_smug-lod",\
-	"Snoozing" = "ai_zzz-dol",\
-	"Snoozing (Inverted)" = "ai_zzz-lod",\
-	"Spooky" = "ai_spooky-dol",\
-	"Spooky (Inverted)" = "ai_spooky-lod",\
-	"Square" = "ai_square-dol",\
-	"Square (Inverted)" = "ai_square-lod",\
-	"Surprised" = "ai_surprised-dol",\
-	"Surprised (Inverted)" = "ai_surprised-lod",\
-	"Suspicious" = "ai_eyesemoji-dol",\
-	"Suspicious (Inverted)" = "ai_eyesemoji-lod",\
-	"Text" = "ai_text-dol",\
-	"Text (Inverted)" = "ai_text-lod",\
-	"Tired" = "ai_tired-dol",\
-	"Tired (Inverted)" = "ai_tired-lod",\
-	"Triangle" = "ai_triangle-dol",\
-	"Triangle (Inverted)" = "ai_triangle-lod",\
-	"Unimpressed" = "ai_unimpressed-dol",\
-	"Unimpressed (Inverted)" = "ai_unimpressed-lod",\
-	"Unsure" = "ai_unsure-dol",\
-	"Unsure (Inverted)" = "ai_unsure-lod",\
-	"Very Happy" = "ai_veryhappy-dol",\
-	"Very Happy (Inverted)" = "ai_veryhappy-lod",\
-	"Wink" = "ai_wink-dol",\
-	"Wink (Inverted)" = "ai_wink-lod") // this should be in typeinfo
+var/global/list/ai_emotions = list("Annoyed" = "ai-annoyed_dol", \
+	"Annoyed (Inverted)" = "ai-annoyed_lod", \
+	"Baffled" = "ai-baffled_dol",\
+	"Baffled (Inverted)" = "ai-baffled_lod",\
+	"Blank" = "ai-blank_lod",\
+	"Blank (Inverted)" = "ai-blank_dol",\
+	"Cheeky" = "ai-cheeky_dol",\
+	"Cheeky (Inverted)" = "ai-cheeky_lod",\
+	"Colourbars" = "ai-colourbars",\
+	"Confused" = "ai-confused_dol",\
+	"Confused (Inverted)" = "ai-confused_lod",\
+	"Content" = "ai-content_dol",\
+	"Content (Inverted)" = "ai-content_lod",\
+	"Crecent" = "ai-crecent_dol",\
+	"Crecent (Inverted)" = "ai-crecent_lod",\
+	"Cursor" = "ai-cursor_dol",\
+	"Cursor (Inverted)" = "ai-cursor_lod",\
+	"Exclamation" = "ai-exclamation_dol",\
+	"Exclamation (Inverted)" = "ai-exclamation_lod",\
+	"Eye" = "ai-eye_dol",\
+	"Eye (Inverted)" = "ai-eye_lod",\
+	"Fidgety" = "ai-fidget_dol",\
+	"Fidgety (Inverted)" = "ai-fidget_lod",\
+	"Glitch" = "ai-glitch_dol",\
+	"Glitch (Inverted)" = "ai-glitch_lod",\
+	"Happy" = "ai-happy_dol", \
+	"Happy (Inverted)" = "ai-happy_lod", \
+	"Heart" = "ai-heart_dol",\
+	"Heart (Inverted)" = "ai-heart_lod",\
+	"Line" = "ai-line_dol",\
+	"Line (Inverted)" = "ai-line_lod",\
+	"Loading Bar" = "ai-loading_dol",\
+	"Loading Bar (Inverted)" = "ai-loading_lod",\
+	"Mad" = "ai-mad_dol",\
+	"Mad (Inverted)" = "ai-mad_lod",\
+	"Musical" = "ai-music_dol",\
+	"Musical (Inverted)" = "ai-music_lod",\
+	"Nanotrasen" = "ai-nanotrasen_dol",\
+	"Nanotrasen (Inverted)" = "ai-nanotrasen_lod",\
+	"Nervous" = "ai-nervous_dol",\
+	"Nervous (Inverted)" = "ai-nervous_lod",\
+	"Neutral" = "ai-neutral_dol",\
+	"Neutral (Inverted)" = "ai-neutral_lod",\
+	"Pensive" = "ai-pensive_dol",\
+	"Pensive (Inverted)" = "ai-pensive_lod",\
+	"Question" = "ai-question_dol",\
+	"Question (Inverted)" = "ai-question_lod",\
+	"Sad" = "ai-sad_dol",\
+	"Sad (Inverted)" = "ai-sad_lod",\
+	"Silly" = "ai-silly_dol",\
+	"Silly (Inverted)" = "ai-silly_lod",\
+	"Smug" = "ai-smug_dol",\
+	"Smug (Inverted)" = "ai-smug_lod",\
+	"Snoozing" = "ai-zzz_dol",\
+	"Snoozing (Inverted)" = "ai-zzz_lod",\
+	"Spooky" = "ai-spooky_dol",\
+	"Spooky (Inverted)" = "ai-spooky_lod",\
+	"Square" = "ai-square_dol",\
+	"Square (Inverted)" = "ai-square_lod",\
+	"Surprised" = "ai-surprised_dol",\
+	"Surprised (Inverted)" = "ai-surprised_lod",\
+	"Suspicious" = "ai-eyesemoji_dol",\
+	"Suspicious (Inverted)" = "ai-eyesemoji_lod",\
+	"Text" = "ai-text_dol",\
+	"Text (Inverted)" = "ai-text_lod",\
+	"Tired" = "ai-tired_dol",\
+	"Tired (Inverted)" = "ai-tired_lod",\
+	"Triangle" = "ai-triangle_dol",\
+	"Triangle (Inverted)" = "ai-triangle_lod",\
+	"Unimpressed" = "ai-unimpressed_dol",\
+	"Unimpressed (Inverted)" = "ai-unimpressed_lod",\
+	"Unsure" = "ai-unsure_dol",\
+	"Unsure (Inverted)" = "ai-unsure_lod",\
+	"Very Happy" = "ai-veryhappy_dol",\
+	"Very Happy (Inverted)" = "ai-veryhappy_lod",\
+	"Wink" = "ai-wink_dol",\
+	"Wink (Inverted)" = "ai-wink_lod") // this should be in typeinfo
 /mob/living/silicon/ai
 	name = "AI"
 	voice_name = "synthesized voice"
@@ -127,7 +127,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/status_message = null
 	var/mob/living/silicon/deployed_shell = null
 
-	var/faceEmotion = "ai_happy-dol"
+	var/faceEmotion = "ai-happy_dol"
 	var/faceColor = "#66B2F2"
 	var/list/custom_emotions = null
 
@@ -2257,12 +2257,12 @@ or don't if it uses a custom topopen overlay
 		if (src.cell && src.cell.charge < 100)
 			src.icon_state = coreSkin // I think just removing all icon_state updates should be fine but ai code is so
 		else // convoluted that I'm terrified of breaking some super specific thing by doing that
-			UpdateOverlays(get_image("ai_bsod"), "temp_face")
+			UpdateOverlays(get_image("ai-bsod"), "temp_face")
 
 
 	else if (src.power_mode == -1 || src.health < 25 || src.getStatusDuration("paralysis"))
 		clearFaceOverlays(1)
-		UpdateOverlays(get_image("ai-stun-screen"), "temp_face")
+		UpdateOverlays(get_image("ai-stun_screen"), "temp_face")
 
 	else
 		src.icon_state = coreSkin
@@ -2823,7 +2823,7 @@ proc/get_mobs_trackable_by_AI()
 		qdel(src.brain)
 		src.brain = new /obj/item/organ/brain/latejoin(src)
 		src.set_color(000000)
-		src.faceEmotion = "ai_blank"
+		src.faceEmotion = "ai-blank"
 		src.coreSkin = "cardboard"
 		src.update_appearance()
 		src.job = "AI"
