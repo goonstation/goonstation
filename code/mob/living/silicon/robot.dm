@@ -1204,12 +1204,17 @@
 				src.update_appearance()
 
 		else if (istype(W, /obj/item/robot_module) && opened) // module changing
-			if(wiresexposed) boutput(user, "<span class='alert'>You need to get the wires out of the way first.</span>")
-			else if(src.module) boutput(user, "<span class='alert'>[src] already has a module!</span>")
+			var/obj/item/robot_module/module = W
+			if(wiresexposed)
+				boutput(user, "<span class='alert'>You need to get the wires out of the way first.</span>")
+			else if(src.module)
+				boutput(user, "<span class='alert'>[src] already has a module!</span>")
+			else if(module.moduletype != "cyborg")
+				boutput(user, "<span class='alert'>That module isn't compatible with cyborgs!</span>")
 			else
 				user.drop_item()
-				src.set_module(W)
-				boutput(user, "You insert [W].")
+				src.set_module(module)
+				boutput(user, "You insert [module].")
 
 		else if	(isscrewingtool(W))
 			if (src.locked)

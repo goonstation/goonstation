@@ -3,7 +3,8 @@
 #define ADRONE_BATTERY_DISTRESS_THRESHOLD 100
 #define ADRONE_BATTERY_WIRELESS_CHARGERATE 50
 
-var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
+var/global/list/adrone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
+	"Content" = "gpcs-s-content", \
 	"Exclaimation" = "gpcs-s-exclamation",\
 	"Eye" = "gpcs-s-eye",\
 	"Heart" = "gpcs-s-heart",\
@@ -79,7 +80,6 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 
 	var/image/i_details
 	var/image/i_panel
-	var/image/i_hat
 
 
 	// moved up to silicon.dm
@@ -102,6 +102,25 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 
 		if (frame)
 			src.freemodule = frame.freemodule
+		if (starter && !(src.dependent || src.shell))
+			src.cell = new /obj/item/cell/charged(src)
+			for(var/obj/item/parts/robot_parts/P in src.contents)
+				P.holder = src
+
+
+			if (!src.custom)
+				SPAWN(0)
+					src.choose_name(3)
+
+		else if (src.cell && (src.brain ||src.ai_interface)) // some wee child of ours sent us some parts, how nice c:
+			if (src.cell.loc != src)
+				src.cell.set_loc(src)
+			if (src.brain &&src.brain.loc != src)
+				src.brain.set_loc(src)
+			if (src.ai_interface && src.ai_interface.loc != src)
+				src.ai_interface.set_loc(src)
+			for (var/obj/item/parts/robot_parts/P in src.contents)
+				P.holder = src
 
 		else
 			if (!frame)
@@ -116,13 +135,15 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 					qdel(src)
 					return
 
+		update_appearance()
+		update_details()
+
 		if (src.shell)
 			if (!(src in available_ai_shells))
 				available_ai_shells += src
 			for_by_tcl(AI, /mob/living/silicon/ai)
 				boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
-			if (!src.ai_interface)
-				src.ai_interface = new(src)
+			src.ai_interface = new(src)
 
 		if (!src.dependent && !src.shell)
 			boutput(src, "<span class='notice'>Your icons have been generated!</span>")
@@ -159,6 +180,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 			src.camera.c_tag = src.real_name
 			src.camera.network = "Robots"
 			src.update_appearance()
+			src.update_details()
 
 		SPAWN(1.5 SECONDS)
 			if (!src.brain && src.key && !(src.dependent || src.shell || src.ai_interface))
@@ -215,7 +237,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 			for(var/obj/item/robot_module/M in src.contents)
 				M.set_loc(T)
 
-			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
+			var/obj/item/parts/robot_parts/adrone_frame/frame =  new(T)
 			frame.emagged = src.emagged
 			frame.syndicate = src.syndicate
 			frame.freemodule = src.freemodule
@@ -718,6 +740,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 			src.update_name_tag()
 
 		update_appearance()
+		update_details()
 		return
 
 	Logout()
@@ -729,6 +752,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 			return
 
 		update_appearance()
+		update_details()
 
 	blob_act(var/power)
 		if (!isdead(src))
@@ -784,20 +808,15 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 		health_update_queue |= src
 
 	bullet_act(var/obj/projectile/P)
-		var/dmgtype = 0 // 0 for brute, 1 for burn
 		var/dmgmult = 1.2
 		switch (P.proj_data.damage_type)
 			if(D_PIERCING)
 				dmgmult = 2
 			if(D_SLASHING)
 				dmgmult = 0.6
-			if(D_ENERGY)
-				dmgtype = 1
 			if(D_BURNING)
-				dmgtype = 1
 				dmgmult = 0.75
 			if(D_RADIOACTIVE)
-				dmgtype = 1
 				dmgmult = 0.2
 			if(D_TOXIC)
 				dmgmult = 0
@@ -837,6 +856,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 				logTheThing(LOG_STATION, src, "[key_name(src)] is emagged by [key_name(user)] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
 				src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
 				update_appearance()
+				update_details()
 				return 1
 			return 0
 
@@ -943,6 +963,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 					src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s body.</span>")
 				else boutput(user, "<span class='alert'>There's no structural damage on [src.name] to mend.</span>")
 				src.update_appearance()
+				src.update_details()
 
 		else if (istype(W, /obj/item/cable_coil) && opened)
 			var/obj/item/cable_coil/coil = W
@@ -953,6 +974,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 				src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
 			else boutput(user, "<span class='alert'>There's no burn damage on [src.name]'s wiring to mend.</span>")
 			src.update_appearance()
+			src.update_details()
 
 		else if (ispryingtool(W))
 			if (opened)
@@ -969,6 +991,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 					if (src.locking)
 						src.locking = 0
 			src.update_appearance()
+			src.update_details()
 
 		else if (istype(W, /obj/item/cell) && opened)	// trying to put a cell inside
 			if (cell)
@@ -980,14 +1003,18 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 				src.cell = W
 				boutput(user, "You insert [W].")
 				src.update_appearance()
+				src.update_details()
 
 		else if (istype(W, /obj/item/robot_module) && opened) // module changing
-			if(src.module) boutput(user, "<span class='alert'>[src] already has a module!</span>")
-			else if(src.module.moduletype != "drone") boutput(user, "<span class='alert'>There's no way that module will fit in this drone! It's way too big!</span>")
+			var/obj/item/robot_module/module = W
+			if(src.module)
+				boutput(user, "<span class='alert'>[src] already has a module!</span>")
+			else if(module.moduletype != "drone")
+				boutput(user, "<span class='alert'>There's no way that module will fit, it's way too big!</span>")
 			else
 				user.drop_item()
-				src.set_module(W)
-				boutput(user, "You insert [W].")
+				src.set_module(module)
+				boutput(user, "You insert [module].")
 
 		else if (istype(get_id_card(W), /obj/item/card/id))	// trying to unlock the interface with an ID card
 			if (opened)
@@ -1038,6 +1065,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 					src.show_laws()
 
 				src.update_appearance()
+				src.update_details()
 
 		else if (istype(W, /obj/item/ai_interface) && src.opened)
 			if (src.brain || src.ai_interface)
@@ -1061,11 +1089,13 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 					boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
 				src.shell = 1
 				update_appearance()
+				update_details()
 
 		else if (istype(W, /obj/item/clothing/suit/bee) && src.shelltype == "eyebot")
 			boutput(user, "You stuff [src] into [W]! It fits surprisingly well.")
 			src.shelltype = "bee"
 			update_appearance()
+			update_details()
 			qdel(W)
 
 		else if (istype(W,/obj/item/) && src.opened)
@@ -1140,11 +1170,11 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 						src.radio = src.module.radio
 					src.ears = src.radio
 					src.radio.set_loc(src)
+					src.shell = 0
 					src.ai_interface = null
 					if(src.ai_radio)
 						qdel(src.ai_radio)
 						src.ai_radio = null
-					src.shell = 0
 
 					if (mainframe)
 						mainframe.return_to(src)
@@ -1157,9 +1187,11 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 					if (!src.module)
 						return
 					if (istype(src.module,/obj/item/robot_module/))
+						var/obj/item/robot_module/_module = src.module
+						user.put_in_hand_or_drop(_module)
 						src.remove_module()
-						user.put_in_hand_or_drop(src.module)
 						user.show_text("You remove [src.module].")
+						src.module = null
 
 				if ("Remove the Power Cell")
 					if (!src.cell)
@@ -1173,6 +1205,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 					_cell.UpdateIcon()
 					src.cell = null
 			update_appearance()
+			update_details()
 
 		else //We're just bapping the borg
 			user.lastattacked = src
@@ -1217,14 +1250,10 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 		if (src.mind && src.mind.special_role && src.syndicate)
 			src.remove_syndicate("brain_removed")
 
-		if (user)
-			src.visible_message("<span class='alert'>[user] removes [src]'s brain!</span>")
-			logTheThing(LOG_STATION, user, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
-		else
-			src.visible_message("<span class='alert'>[src]'s brain is ejected from its head!</span>")
-			playsound(src, "sound/misc/boing/[rand(1,6)].ogg", 40, 1)
-
-		src.uneq_active()
+		// Brain box is forced open if it wasn't already (suicides, killswitch)
+		src.locked = 0
+		src.locking = 0
+		src.opened = 1
 
 		// Stick the player (if one exists) in a ghost mob
 		if (src.mind)
@@ -1236,20 +1265,22 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 				for (var/datum/antagonist/antag in newmob.mind.antagonists) //we do this after they die to avoid un-emagging the frame
 					antag.on_death()
 
-		// Brain box is forced open if it wasn't already (suicides, killswitch)
-		src.locked = 0
-		src.locking = 0
-		src.opened = 1
-
 		if (user)
+			src.visible_message("<span class='alert'>[user] removes [src]'s brain!</span>")
+			logTheThing(LOG_STATION, user, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
 			user.put_in_hand_or_drop(src.brain)
 		else
+			src.visible_message("<span class='alert'>[src]'s brain is ejected from its head!</span>")
+			playsound(src, "sound/misc/boing/[rand(1,6)].ogg", 40, 1)
 			src.brain.set_loc(get_turf(src))
 			if (fling)
 				src.brain.throw_at(get_edge_cheap(get_turf(src), pick(cardinal)), 5, 1) // heh
 
+		src.uneq_active()
+
 		src.brain = null
 		src.update_appearance()
+		src.update_details()
 
 	Topic(href, href_list)
 		..()
@@ -1289,6 +1320,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 			else boutput(src, "Module isn't activated")
 
 		src.update_appearance()
+		src.update_details()
 		src.installed_modules()
 
 	swap_hand(var/switchto = 0)
@@ -1320,7 +1352,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 		return ..()
 
 	movement_delay()
-		if (!isitem(src.pulling))
+		if (src.pulling && !isitem(src.pulling))
 			return ..()
 		return 1 + movement_delay_modifier
 
@@ -1433,6 +1465,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 		hud.update_equipment()
 
 		update_appearance()
+		update_details()
 
 	proc/uneq_all()
 		uneq_slot(1)
@@ -1451,6 +1484,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 		RM.set_loc(src)
 		src.module = RM
 		src.update_appearance()
+		src.update_details()
 		hud.update_module()
 		hud.module_added()
 		if(istype(RM.radio))
@@ -1650,6 +1684,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 			if (newEmotion)
 				src.faceEmotion = L[newEmotion]
 				update_appearance()
+				update_details()
 			return 1
 		else
 			boutput(src, "<span class='alert'>You don't have a screen, silly.</span>")
@@ -1672,6 +1707,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 			colors[2] = colors[2] / 255
 			colors[3] = colors[3] / 255
 			update_appearance()
+			update_details()
 
 	verb/access_internal_pda()
 		set category = "Drone Commands"
@@ -1705,27 +1741,28 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 		if(src.module) return
 		if(!src.freemodule) return
 		boutput(src, "<span class='notice'>You may choose a starter module.</span>")
-		var/list/starter_modules = list("Civilian Lite", "Engineering Lite", "Medical Lite")
+		var/list/starter_modules = list("Civilian", "Engineering", "Medsci")
 		var/mod = tgui_input_list(src, "Please, select a module!", "Drone", starter_modules)
 		if (!mod || !freemodule)
 			return
 
 		switch(mod)
-			if("Civilian Lite")
+			if("Civilian")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Civilian module.</span>")
 				src.set_module(new /obj/item/robot_module/civilian_d(src))
-			if("Engineering Lite")
+			if("Engineering")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Engineering module.</span>")
 				src.set_module(new /obj/item/robot_module/engineering_d(src))
-			if("Medical Lite")
+			if("Medsci")
 				src.freemodule = 0
-				boutput(src, "<span class='notice'>You chose the Medical module.</span>")
+				boutput(src, "<span class='notice'>You chose the Medsci module.</span>")
 				src.set_module(new /obj/item/robot_module/medical_d(src))
 
 		hud.update_module()
 		update_appearance()
+		update_details()
 
 	proc/get_poweruse_count()
 		if (src.cell)
@@ -1872,6 +1909,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 				// Pop the head ompartment open and eject the brain
 				src.eject_brain(fling = TRUE)
 				src.update_appearance()
+				src.update_details()
 				src.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
 
 	proc/update_appearance()
@@ -1903,6 +1941,8 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 		else
 			UpdateOverlays(null, "adrone-emagged")
 
+	proc/update_details()
+
 		if (src.hovering == "a")
 			var/image/I = SafeGetOverlayImage("faceplate", 'icons/mob/hivebot.dmi', src.shelltype + "-bg", src.layer)
 			I.color = faceColor
@@ -1932,9 +1972,9 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 			src.ClearSpecificOverlays("opanel", "ocell", "obrain", "ointerface")
 
 		if (src.hat)
-			src.i_hat = image('icons/mob/hivebot.dmi', src.shelltype + "-" + src.hovering + "-" + src.hat, src.layer+0.4)
+			UpdateOverlays(SafeGetOverlayImage("hat", 'icons/mob/robots_decor.dmi', "hat-" + src.shelltype + "-" + src.hovering + "-" + src.hat, src.layer+0.4), "hat")
 		else
-			src.i_hat = null
+			src.ClearSpecificOverlays("hat")
 
 
 	proc/compborg_force_unequip(var/slot = 0)
@@ -1949,6 +1989,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 		hud.update_tools()
 		hud.set_active_tool(null)
 		src.update_appearance()
+		src.update_details()
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		bruteloss += brute
@@ -1981,6 +2022,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 		src.i_batterydistress = image('icons/mob/robots_decor.dmi', "battery-distress", layer = MOB_EFFECT_LAYER )
 		src.i_batterydistress.pixel_y = 6 // Lined up bottom edge with speech bubbles
 		update_appearance()
+		update_details()
 
 	if (src.batteryDistress == ADRONE_BATTERY_DISTRESS_INACTIVE) // We only need to apply the indicator when we first enter distress
 		UpdateOverlays(src.i_batterydistress, "batterydistress") // Help me humans!
@@ -1998,6 +2040,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 	src.batteryDistress = ADRONE_BATTERY_DISTRESS_INACTIVE
 	ClearSpecificOverlays("batterydistress")
 	update_appearance()
+	update_details()
 
 /mob/living/silicon/adrone/verb/open_nearest_door()
 	set category = "Drone Commands"
@@ -2015,6 +2058,7 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 /mob/living/silicon/adrone/return_mainframe()
 	..()
 	src.update_appearance()
+	src.update_details()
 
 /mob/living/silicon/adrone/ghostize()
 	if (src.mainframe)
@@ -2103,38 +2147,6 @@ var/global/list/adrone_emotions = list("Content" = "gpcs-s-content", \
 
 /mob/living/silicon/adrone/handle_event(var/event, var/sender)
 	hud.handle_event(event, sender)	// the HUD will handle icon_updated events, so proxy those
-
-///////////////////////////////////////////////////
-// Specific instances of robots can go down here //
-///////////////////////////////////////////////////
-
-/mob/living/silicon/adrone/spawnable // can be spawned via the admin panel in properly unlike the parent
-	New(loc, var/obj/item/parts/robot_parts/adrone_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
-		..(loc, frame, starter, syndie, frame_emagged)
-		icon_state = "eyebot-logout"
-		cell = new/obj/item/cell/shell_cell/charged
-
-	shell
-		New(loc, var/obj/item/parts/robot_parts/adrone_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
-			ai_interface = new/obj/item/ai_interface
-			src.shell = 1
-			..(loc, frame, starter, syndie, frame_emagged)
-			src.icon_state = "eyebot-logout"
-
-	gpcs
-		New(loc, var/obj/item/parts/robot_parts/adrone_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
-			brain = new/obj/item/organ/brain
-			..(loc, frame, starter, syndie, frame_emagged)
-			src.shelltype = "gpcs"
-			src.icon_state = "gpcs-logout"
-
-	gpcs_shell
-		New(loc, var/obj/item/parts/robot_parts/adrone_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
-			ai_interface = new/obj/item/ai_interface
-			src.shell = 1
-			..(loc, frame, starter, syndie, frame_emagged)
-			shelltype = "gpcs"
-			icon_state = "gpcs-logout"
 
 #define can_step_sfx(H) (H.footstep >= 4 || (H.m_intent != "run" && H.footstep >= 3))
 

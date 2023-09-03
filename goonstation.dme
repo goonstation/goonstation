@@ -1401,6 +1401,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\robotics\robot\module\construction_ai.dm"
 #include "code\modules\robotics\robot\module\construction_worker.dm"
 #include "code\modules\robotics\robot\module\empty.dm"
+#include "code\modules\robotics\robot\module\empty_d.dm"
 #include "code\modules\robotics\robot\module\engineering.dm"
 #include "code\modules\robotics\robot\module\engineering_d.dm"
 #include "code\modules\robotics\robot\module\medical.dm"

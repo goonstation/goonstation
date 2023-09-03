@@ -543,13 +543,6 @@ TYPEINFO(/obj/machinery/recharge_station)
 
 		occupant_data["cosmetics"] = occupant_cosmetics
 
-	if (src.conversion_chamber && ishuman(src.occupant))
-		var/mob/living/carbon/human/H = src.occupant
-		occupant_data["name"] = H.name
-		occupant_data["kind"] = "human"
-		occupant_data["health"] = H.health
-		occupant_data["max_health"] = H.max_health
-
 	if (isadrone(src.occupant)) // drone handling
 		var/mob/living/silicon/adrone/D = src.occupant
 		occupant_data["name"] = D.name
@@ -560,6 +553,24 @@ TYPEINFO(/obj/machinery/recharge_station)
 			occupant_data["user"] = "ai"
 		else
 			occupant_data["user"] = "unknown"
+
+		var/list/parts = list()
+		var/list/chassis = list()
+		if (D.health >= 0)
+			chassis["exists"] = TRUE
+			chassis["max_health"] = D.max_health
+			chassis["dmg_blunt"] = D.bruteloss
+			chassis["dmg_burns"] = D.fireloss
+		else
+			chassis["exists"] = FALSE
+
+		parts["chassis"] = chassis
+		occupant_data["parts"] = parts
+
+		var/list/occupant_cosmetics = list()
+		occupant_cosmetics["hat"] = D.hat
+		occupant_data["cosmetics"] = occupant_cosmetics
+
 		if (D.cell)
 			var/list/this_cell = list()
 			var/obj/item/cell/C = D.cell
@@ -570,6 +581,13 @@ TYPEINFO(/obj/machinery/recharge_station)
 		if (D.module)
 			var/obj/item/robot_module/M = D.module
 			occupant_data["module"] = M.name
+
+	if (src.conversion_chamber && ishuman(src.occupant))
+		var/mob/living/carbon/human/H = src.occupant
+		occupant_data["name"] = H.name
+		occupant_data["kind"] = "human"
+		occupant_data["health"] = H.health
+		occupant_data["max_health"] = H.max_health
 
 	if (isshell(src.occupant)) // eyebot handling
 		var/mob/living/silicon/hivebot/eyebot/E = src.occupant
@@ -671,7 +689,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 				var/mob/living/silicon/adrone/R = src.occupant
 				if (R.shell || R.dependent) //no renaming AI shells
 					return
-				var/newname = copytext(strip_html(sanitize(tgui_input_text(user, "What do you want to rename [R]?", "Cyborg Maintenance", R.name))), 1, 64)
+				var/newname = copytext(strip_html(sanitize(tgui_input_text(user, "What do you want to rename [R]?", "Drone Maintenance", R.name))), 1, 64)
 				if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat || !newname)
 					return
 				if (url_regex?.Find(newname))
@@ -679,7 +697,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 					boutput(user, "<span class='alert'>&emsp;<b>\"[newname]</b>\"</span>")
 					return
 				if(newname && newname != R.name)
-					phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
+					phrase_log.log_phrase("name-drone", newname, no_duplicates=TRUE)
 				logTheThing(LOG_STATION, user, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
 				R.real_name = "[newname]"
 				R.UpdateName()
@@ -836,14 +854,13 @@ TYPEINFO(/obj/machinery/recharge_station)
 			if (!isadrone(src.occupant))
 				return
 			var/mob/living/silicon/adrone/R = src.occupant
-			var/mod = tgui_input_list(user, "Please select a decoration!", "Drone Decoration", list("Nothing", "Medical Mirror", "Beret", "Hard Hat", "Goggles"))
+			var/mod = tgui_input_list(user, "Please select a decoration!", "Drone Decoration", list("Nothing", "Beret", "Hard Hat")) //just two for now but it's a start
 			if (!mod)
 				mod = "Nothing"
-			if (mod == "Nothing")
-				R.hat = null
 			else
 				R.hat = mod
 			R.update_appearance()
+			R.update_details()
 			. = TRUE
 
 		if("self-service")
@@ -892,6 +909,42 @@ TYPEINFO(/obj/machinery/recharge_station)
 			R.update_appearance()
 			. = TRUE
 
+		if("repair-fuel-drone")
+			if (!isadrone(occupant))
+				return
+			var/mob/living/silicon/adrone/D = src.occupant
+			if (src.reagents.get_reagent_amount("fuel") < 1)
+				boutput(user, "<span class='alert'>Not enough welding fuel for repairs.</span>")
+				return
+			if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat)
+				return
+			var/usage = min(src.reagents.get_reagent_amount("fuel"), D.bruteloss)
+			if (usage < 1)
+				return
+			D.HealDamage(usage, 0)
+			src.reagents.remove_reagent("fuel", usage)
+			D.update_appearance()
+			. = TRUE
+
+		if("repair-wiring-drone")
+			if (!isadrone(occupant))
+				return
+			var/mob/living/silicon/adrone/D = src.occupant
+			if (src.cabling < 1)
+				boutput(user, "<span class='alert'>Not enough wiring for repairs.</span>")
+				return
+			if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat)
+				return
+			var/usage =  min(src.cabling, D.fireloss)
+			if (usage < 1)
+				return
+			D.HealDamage(0, usage)
+			src.cabling -= usage
+			if (src.cabling < 0)
+				src.cabling = 0
+			D.update_appearance()
+			. = TRUE
+
 		if("module-install")
 			if (!isrobot(src.occupant))
 				return
@@ -900,7 +953,10 @@ TYPEINFO(/obj/machinery/recharge_station)
 			if(moduleRef)
 				var/obj/item/robot_module/module = locate(moduleRef) in src.modules
 				if (isadrone(src.occupant) && module.moduletype != "drone")
-					boutput(user, "<span class='alert'>There's no way that module will fit in this drone! It's way too big!</span>")
+					boutput(user, "<span class='alert'>There's no way that module will fit, it's way too big!</span>")
+					return
+				if (iscyborg(src.occupant) && module.moduletype != "cyborg")
+					boutput(user, "<span class='alert'>That module isn't compatible with cyborgs!</span>")
 					return
 				if (module)
 					if (R.module) // Remove installed module to make room for new module

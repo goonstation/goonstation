@@ -1548,6 +1548,24 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 /obj/item/parts/robot_parts/adrone_frame/gpcs
 	shelltypetoapply = "gpcs"
 
+/obj/item/parts/robot_parts/adrone_frame/complete_latejoin
+	shelltypetoapply = "eyebot"
+	build_step = 3
+	cell = new/obj/item/cell/shell_cell/charged
+	brain = new/obj/item/organ/brain/latejoin
+	New()
+		..()
+		src.finish_adrone()
+
+/obj/item/parts/robot_parts/adrone_frame/complete_shell
+	shelltypetoapply = "eyebot"
+	build_step = 3
+	cell = new/obj/item/cell/shell_cell/charged
+	ai_interface = new/obj/item/ai_interface
+	New()
+		..()
+		src.finish_adrone()
+
 /obj/item/parts/robot_parts/robot_frame/syndicate
 	syndicate = TRUE
 

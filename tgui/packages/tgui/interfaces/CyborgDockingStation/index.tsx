@@ -246,11 +246,6 @@ const DecorationReport = (props) => {
           <DockingAllowedButton icon="sync-alt" tooltip="Change legs decoration" onClick={() => act("cosmetic-change-legs")} />
         }>{cosmetics.legs || "None"}
         </LabeledList.Item>
-        <LabeledList.Item label="Hat" buttons={
-          <DockingAllowedButton icon="sync-alt" tooltip="Change decoration" onClick={() => act("cosmetic-change-hat")} />
-        }>
-          {cosmetics.hat || "None"}
-        </LabeledList.Item>
         <LabeledList.Item label="Paint" buttons={
           <>
             {!cosmetics.paint && <DockingAllowedButton icon="plus" tooltip="Add paint" onClick={() => act("occupant-paint-add")} />}
@@ -279,11 +274,6 @@ const DecorationReportDrone = (props) => {
         }>
           {cosmetics.hat || "None"}
         </LabeledList.Item>
-        <LabeledList.Item label="Eyes" buttons={
-          <DockingAllowedButton icon="tint" tooltip="Change eye glow" onClick={() => act("occupant-fx")} />
-        }>
-          <ColorBox color={"rgb(" + cosmetics.fx[0] + "," + cosmetics.fx[1] + "," + cosmetics.fx[2] + ")"} />
-        </LabeledList.Item>
       </LabeledList>
     </Section>
   );
@@ -309,17 +299,16 @@ const DamageReport = (props) => {
   );
 };
 const DamageReportDrone = (props) => {
-  const { occupant, fuel, cabling, act } = props;
+  const { parts, fuel, cabling, act } = props;
   return (
     <Section title="Damage Report" buttons={
       <>
-        <DockingAllowedButton disabled={fuel < 1} icon="wrench" backgroundColor={COLORS.damageType.brute} tooltip="Fix structural damage" onClick={() => act("repair-fuel")} />
-        <DockingAllowedButton disabled={cabling < 1} icon="fire" backgroundColor={COLORS.damageType.burn} tooltip="Fix wiring damage" onClick={() => act("repair-wiring")} />
+        <DockingAllowedButton disabled={fuel < 1} icon="wrench" backgroundColor={COLORS.damageType.brute} tooltip="Fix structural damage" onClick={() => act("repair-fuel-drone")} />
+        <DockingAllowedButton disabled={cabling < 1} icon="fire" backgroundColor={COLORS.damageType.burn} tooltip="Fix wiring damage" onClick={() => act("repair-wiring-drone")} />
       </>
     }>
       <LabeledList>
-        <PartDisplay label="Brute" partData={occupant.get_brute_damage} />
-        <PartDisplay label="Burn" partData={occupant.get_burn_damage} />
+        <PartDisplay label="Chassis" partData={parts.chassis} />
       </LabeledList>
     </Section>
   );
