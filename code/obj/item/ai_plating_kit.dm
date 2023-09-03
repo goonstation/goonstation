@@ -38,5 +38,3 @@ ABSTRACT_TYPE(/obj/item/ai_plating_kit)
 	desc = "A kit for putting the plating on an AI! It seems to be... pulsing."
 	icon_state = "kit-flock"
 	skin = "flock"
-
-// ai_stun-screen
