@@ -220,7 +220,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 			for (var/mob/M in thing)
 				M.ghostize()
 		qdel(thing)
-		thing = new /obj/item/reagent_containers/food/snacks/yuckburn (src)
+		thing = new /obj/item/reagent_containers/food/snacks/yuck/burn (src)
 		if (!thing.reagents)
 			thing.create_reagents(50)
 

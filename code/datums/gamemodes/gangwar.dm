@@ -4,6 +4,7 @@
 	config_tag = "gang"
 	regular = FALSE
 
+	/// Makes it so gang members are chosen randomly at roundstart instead of being recruited.
 	var/random_gangs = FALSE
 
 	antag_token_support = TRUE
@@ -526,7 +527,6 @@ proc/broadcast_to_all_gangs(var/message)
 		"owl suit" = /obj/item/clothing/under/gimmick/owl,
 		"pinstripe suit" = /obj/item/clothing/under/suit/pinstripe,
 		"purple suit" = /obj/item/clothing/under/suit/purple,
-		"assless chaps" = /obj/item/clothing/under/gimmick/chaps,
 		"mailman's jumpsuit" = /obj/item/clothing/under/misc/mail,
 		"comfy sweater" = /obj/item/clothing/under/gimmick/sweater,
 		"party princess uniform" = /obj/item/clothing/under/gimmick/princess,
@@ -552,7 +552,6 @@ proc/broadcast_to_all_gangs(var/message)
 		"red lawyer's suit" = /obj/item/clothing/under/misc/lawyer/red,
 		"lawyer suit" = /obj/item/clothing/under/misc/lawyer,
 		"blue tracksuit" = /obj/item/clothing/under/gimmick/chav,
-		"aged hipster clothes" = /obj/item/clothing/under/gimmick/dawson,
 		"diver jumpsuit" = /obj/item/clothing/under/gimmick/sealab,
 		"spiderman suit" = /obj/item/clothing/under/gimmick/spiderman,
 		"Vault 13 jumpsuit" = /obj/item/clothing/under/gimmick/vault13,

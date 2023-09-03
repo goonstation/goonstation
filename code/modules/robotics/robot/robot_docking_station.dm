@@ -609,6 +609,8 @@ TYPEINFO(/obj/machinery/recharge_station)
 			if (!isrobot(src.occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
+			if (R.shell || R.dependent) //no renaming AI shells
+				return
 			var/newname = copytext(strip_html(sanitize(tgui_input_text(user, "What do you want to rename [R]?", "Cyborg Maintenance", R.name))), 1, 64)
 			if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat || !newname)
 				return

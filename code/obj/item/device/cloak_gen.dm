@@ -19,6 +19,7 @@ TYPEINFO(/obj/item/cloak_gen)
 	var/list/fields = new/list()
 	is_syndicate = TRUE
 	contraband = 2
+	HELP_MESSAGE_OVERRIDE({"Place the cloaking field generator on the floor, then use the associated remote to turn it on or off. While on, the cloaking field generator is immovable."})
 
 	New()
 		..()
@@ -128,6 +129,9 @@ TYPEINFO(/obj/item/cloak_gen)
 	var/obj/item/cloak_gen/my_gen = null
 	var/anti_spam = 0 // Creating and deleting overlays en masse can cause noticeable lag (Convair880).
 	contraband = 2
+	HELP_MESSAGE_OVERRIDE({"Use the remote in hand to turn the generator on or off.
+							Right click the remote to access a list of parameters that will affect the generator.
+							Hit the remote on a generator to link it to that generator."})
 
 	attack_self(mob/user)
 		. = ..()

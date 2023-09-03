@@ -241,3 +241,12 @@
 	// Takes x and y of a normalised vector to set direction of smoke.
 	proc/setdir(var/dir_x, var/dir_y)
 		particles.velocity = generator("box", list(50*dir_x - 0.5, 50*dir_y - 0.5, 0), list(40*dir_x + 0.5, 40*dir_y + 0.5, 0), UNIFORM_RAND)
+
+/particles/sprinkle
+	color = "#3399ff"
+	spawning = 3
+	count = 30
+	lifespan = 4.5
+	position = generator("box", list(-6,-5,0), list(6,20,0), UNIFORM_RAND)
+	gravity = list(0, -1, 0)
+	scale = list(1.5, 1.5)

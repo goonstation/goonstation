@@ -231,7 +231,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 			Turfspawn_Asteroid_SeedEvents(turfs)
 
 	proc/place_prefabs(prefabs_to_place, flags)
-		for (var/n = 1, n <= prefabs_to_place, n++)
+		var/failsafe = 800
+		for (var/n = 1, n <= prefabs_to_place && failsafe-- > 0)
 			var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet)
 			if (P)
 				var/maxX = (world.maxx - AST_MAPBORDER)
@@ -239,7 +240,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 				var/stop = 0
 				var/count= 0
 				var/maxTries = (P.required ? 200 : 80)
-				while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+				while (!stop && count < maxTries && failsafe-- > 0) //Kinda brute forcing it. Dumb but whatever.
 					var/turf/target = locate(rand(AST_MAPBORDER, maxX), rand(AST_MAPBORDER, maxY), Z_LEVEL_STATION)
 					if(!P.check_biome_requirements(target))
 						count++
@@ -256,13 +257,14 @@ ABSTRACT_TYPE(/datum/terrainify)
 								space_turfs -= T
 						station_repair.repair_turfs(space_turfs)
 
-						logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
+						logTheThing(LOG_DEBUG, null, "Prefab Z1 placement #[n] [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
+						n++
 						stop = 1
 					else
-						logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type] failed due to blocked area. [target] @ [log_loc(target)]")
+						logTheThing(LOG_DEBUG, null, "Prefab Z1 placement #[n] [P.type] failed due to blocked area. [target] @ [log_loc(target)]")
 					count++
 				if (count == maxTries)
-					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type] failed due to maximum tries [maxTries][P.required?" WARNING: REQUIRED FAILED":""].")
+					logTheThing(LOG_DEBUG, null, "Prefab Z1 placement #[n] [P.type] failed due to maximum tries [maxTries][P.required?" WARNING: REQUIRED FAILED":""].")
 			else break
 
 	proc/convert_turfs(list/turfs)
@@ -713,6 +715,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/storehouse
 	name = "Storehouse"
 	desc = "Load some nearby storehouse (Run before other Generators!)"
+	additional_toggles = list("Fill Z-Level"=FALSE)
 
 	convert_station_level(params, datum/tgui/ui)
 		if (!..())
@@ -721,7 +724,14 @@ ABSTRACT_TYPE(/datum/terrainify)
 		for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 			space += S
 		var/datum/map_generator/storehouse_generator/generator = new/datum/map_generator/storehouse_generator
-		generator.generate_map()
+		station_repair.station_generator = generator
+
+		if(params["Fill Z-Level"])
+			generator.wall_path = /turf/unsimulated/wall/auto/lead/gray
+			generator.floor_path = /turf/unsimulated/floor/industrial
+			generator.fill_map()
+		else
+			generator.generate_map()
 
 		var/list/turfs_to_clear = shippingmarket.get_path_to_market()
 		turfs_to_clear += station_repair.get_mass_driver_turfs()

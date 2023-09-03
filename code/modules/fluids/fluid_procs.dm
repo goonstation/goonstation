@@ -265,6 +265,15 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (!src.active_liquid && (length(cleanables) < 3 && !grab_any_amount))
 		return 0	//If the tile has an active liquid already, there is no requirement
 
+	// count actually valid cleanables
+	var/valid_cleanables = 0
+	for (var/obj/decal/cleanable/C in cleanables)
+		if (C.reagents || C.can_sample && C.sample_reagent)
+			valid_cleanables++
+
+	if (valid_cleanables < 3 && !grab_any_amount)
+		return 0
+
 	for (var/obj/decal/cleanable/C in cleanables)
 		if (C?.reagents)
 			for(var/reagent_id in C.reagents.reagent_list)
