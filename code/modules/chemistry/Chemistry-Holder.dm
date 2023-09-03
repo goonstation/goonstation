@@ -788,7 +788,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			return
 		if(!isnum(amount) || amount <= 0 || src.disposed)
 			return 1
-		var/added_new = 0
+		var/added_new = FALSE
+		//this needs to be separate var because reagents added below 1u aren't real apparently
+		var/check_reactions = FALSE
 		if (!donotupdate)
 			update_total()
 		amount = round(amount, CHEM_EPSILON)
@@ -811,12 +813,15 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				current_reagent.holder = src
 				current_reagent.volume = 0
 				current_reagent.data = sdata
-				added_new = 1
+				added_new = TRUE
+				check_reactions = TRUE
 			else
 				CRASH("Invalid reagent [reagent] in [src.my_atom] [src.my_atom?.type] (add_reagent))")
 		// Else, if the reagent datum already exists, we'll just be adding to that and won't update with our new reagent datum data
 
 		var/new_amount = (current_reagent.volume + amount)
+		if (current_reagent.volume < 1 && new_amount >= 1)
+			check_reactions = TRUE
 		current_reagent.volume = new_amount
 		if(!current_reagent.data) current_reagent.data = sdata
 
@@ -841,7 +846,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if (!donotupdate)
 			reagents_changed(1)
 
-		if(added_new && !current_reagent.disposed)
+		if((added_new || check_reactions) && !current_reagent.disposed)
 			append_possible_reactions(current_reagent.id) //Experimental reaction possibilities
 			if (!donotreact)
 				src.handle_reactions()
