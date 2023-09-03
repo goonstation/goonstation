@@ -24,6 +24,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/obj/item/beaker = null
 	var/list/dispensable_reagents = null
+	///Should always be a type of /obj/item/reagent_containers
 	var/glass_path = /obj/item/reagent_containers/glass
 	var/glass_name = "beaker"
 	var/dispenser_name = "Chemical"
@@ -324,12 +325,15 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 					src.UpdateIcon()
 					. = TRUE
 				else
-					var/obj/item/I = usr.equipped()
-					if (istype(I, glass_path))
-						if(!I.cant_drop) // borgs and item arms
+					var/obj/item/reagent_containers/beaker = usr.equipped()
+					if (istype(beaker, glass_path))
+						if (beaker.current_lid)
+							boutput(ui.user, "<span class='alert'>You cannot put the [beaker.name] in the [src.name] while it has a lid on it.</span>")
+							return
+						if(!beaker.cant_drop) // borgs and item arms
 							usr.drop_item()
-							I.set_loc(src)
-						src.beaker = I
+							beaker.set_loc(src)
+						src.beaker = beaker
 						src.UpdateIcon()
 						. = TRUE
 			if ("remove")
