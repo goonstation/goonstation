@@ -19,6 +19,6 @@ Ctrl-RMB on buildmode button = select material
 
 	click_mode_right(ctrl, alt, shift)
 		if (ctrl)
-			src.transmute_material = tgui_input_list(usr, "Pick material", "Meteor material", material_cache)
+			src.transmute_material = tgui_input_list(usr, "Pick material", "Meteor material", material_cache_matid)
 		else
 			src.meteor_type = tgui_input_list(usr, "Pick meteor type", "Meteor type", concrete_typesof(/obj/newmeteor)) || src.meteor_type

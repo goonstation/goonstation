@@ -201,8 +201,14 @@
 			prefix = "MYTHIC"
 
 	if(doMaterial)
-		var/list/material = pick(material_cache - list("cerenkite","ohshitium","plasmastone","koshmarite"))
-		I.setMaterial(material_cache[material], appearance = 1, setname = 1)
+		var/list/material = pick(material_cache_matid - list(
+			/datum/material/metal/cerenkite,
+			/datum/material/crystal/plasmastone,
+			/datum/material/organic/koshmarite
+			// the parent was in there too which is weird, since it shouldn't be in the cache
+			// hello reviewer. Tell me if it was correct to remove ohshitium and i'll remove these comments
+		))
+		I.setMaterial(material_cache_matid[material], appearance = 1, setname = 1)
 
 	I.name_prefix(prefix)
 

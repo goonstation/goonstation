@@ -89,7 +89,7 @@
 		if(mat)
 			src.setMaterial(mat)
 		else
-			src.setMaterial(material_cache["steel"])
+			src.setMaterial(material_cache_matid[/datum/material/metal/steel])
 		..()
 		START_TRACKING
 		src.UpdateIcon()

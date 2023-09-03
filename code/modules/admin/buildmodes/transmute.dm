@@ -9,11 +9,11 @@ Right Mouse Button on buildmode    = Set material ID<br>
 	var/mat_id = null
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
-		if (!material_cache.len)
+		if (!material_cache_matid.len)
 			boutput(usr, "<span class='alert'>Error detected in material cache, attempting rebuild. Please try again.</span>")
 			buildMaterialCache()
 			return
-		var/mat = tgui_input_list(usr, "Select material: ", "Material", material_cache)
+		var/mat = tgui_input_list(usr, "Select material: ", "Material", material_cache_matid)
 		if(!mat)
 			return
 		mat_id = mat

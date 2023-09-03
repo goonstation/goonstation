@@ -45,11 +45,11 @@ var/global/atom_emergency_stop = 0
 		if (!sleep_time)
 			return
 
-		if (!material_cache.len)
+		if (!material_cache_matid.len)
 			boutput(usr, "<span class='alert'>Error detected in material cache, attempting rebuild. Please try again.</span>")
 			buildMaterialCache()
 			return
-		var/mat = input(usr,"Select Material:","Material",null) in material_cache
+		var/mat = input(usr,"Select Material:","Material",null) in material_cache_matid
 		if(!mat)
 			return
 
