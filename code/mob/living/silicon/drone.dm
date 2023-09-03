@@ -3,23 +3,23 @@
 #define DRONE_BATTERY_DISTRESS_THRESHOLD 100
 #define DRONE_BATTERY_WIRELESS_CHARGERATE 50
 
-var/global/list/drone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
-	"Content" = "gpcs-s-content", \
-	"Curious" = "gpcs-s-curious", \
-	"Exclaimation" = "gpcs-s-exclamation",\
-	"Eye" = "gpcs-s-eye",\
-	"Heart" = "gpcs-s-heart",\
-	"Line" = "gpcs-s-line",\
-	"Mad" = "gpcs-s-mad",\
-	"Neutral" = "gpcs-s-neutral",\
-	"Sad" = "gpcs-s-sad",\
-	"Silly" = "gpcs-s-silly",\
-	"Happy" = "gpcs-s-happy",\
-	"Square" = "gpcs-s-square",\
-	"Triangle" = "gpcs-s-triangle",\
-	"Unsure" = "gpcs-s-unsure",\
-	"Very Happy" = "gpcs-s-veryhappy",\
-	"Wink" = "gpcs-s-wink") // this should be in typeinfo
+var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
+	"Content" = "ailes-s-content", \
+	"Curious" = "ailes-s-curious", \
+	"Exclaimation" = "ailes-s-exclamation",\
+	"Eye" = "ailes-s-eye",\
+	"Heart" = "ailes-s-heart",\
+	"Line" = "ailes-s-line",\
+	"Mad" = "ailes-s-mad",\
+	"Neutral" = "ailes-s-neutral",\
+	"Sad" = "ailes-s-sad",\
+	"Silly" = "ailes-s-silly",\
+	"Happy" = "ailes-s-happy",\
+	"Square" = "ailes-s-square",\
+	"Triangle" = "ailes-s-triangle",\
+	"Unsure" = "ailes-s-unsure",\
+	"Very Happy" = "ailes-s-veryhappy",\
+	"Wink" = "ailes-s-wink") // this should be in typeinfo
 
 /mob/living/silicon/drone
 	name = "Drone"
@@ -73,7 +73,7 @@ var/global/list/drone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 	var/bruteloss = 0
 	var/fireloss = 0
 
-	var/faceEmotion = "gpcs-s-smile"
+	var/faceEmotion = "ailes-s-smile"
 	var/faceColor = "#66B2F2"
 	var/shelltype = "eyebot"
 	var/hovering = "a"
@@ -1684,7 +1684,7 @@ var/global/list/drone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 		set name = "Change facial expression (Screen only)"
 
 		var/list/L = drone_emotions
-		if(src.shelltype == "gpcs")
+		if(src.shelltype == "ailes")
 			var/newEmotion = tgui_input_list(src, "Select a status!", "AI Status", sortList(L, /proc/cmp_text_asc))
 			if (newEmotion)
 				src.faceEmotion = L[newEmotion]
@@ -1957,7 +1957,7 @@ var/global/list/drone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 			I.color = faceColor
 			UpdateOverlays(I, "faceplate")
 
-			if (src.shelltype == "gpcs")
+			if (src.shelltype == "ailes")
 				UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/hivebot.dmi', faceEmotion, src.layer+0.2), "actual_face")
 		else
 			src.ClearSpecificOverlays("faceplate", "actual_face")

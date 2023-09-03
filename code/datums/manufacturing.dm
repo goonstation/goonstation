@@ -1564,7 +1564,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Drone Frame"
 	item_paths = list("MET-2")
 	item_amounts = list(12)
-	item_outputs = list(/obj/item/parts/robot_parts/drone_frame/gpcs)
+	item_outputs = list(/obj/item/parts/robot_parts/drone_frame/ailes)
 	time = 25 SECONDS
 	create = 1
 	category = "Component"

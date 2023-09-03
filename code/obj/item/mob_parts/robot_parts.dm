@@ -1552,8 +1552,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		qdel(src)
 		return
 
-/obj/item/parts/robot_parts/drone_frame/gpcs
-	shelltypetoapply = "gpcs"
+/obj/item/parts/robot_parts/drone_frame/ailes
+	shelltypetoapply = "ailes"
 
 /obj/item/parts/robot_parts/drone_frame/complete_latejoin
 	shelltypetoapply = "eyebot"
