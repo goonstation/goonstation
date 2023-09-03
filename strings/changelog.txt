@@ -1,5 +1,9 @@
 
 (t)sun sep 03 23
+(u)444explorer
+(p)15660
+(e)⚗|A-Chemistry
+(+)NARC Turrets now make sure you have Security or Bridge access before firing, instead of ID band
 (u)cringe
 (p)15548
 (e)🧫💨|C-Experimental, A-Atmospherics
