@@ -4218,8 +4218,8 @@
 		id = "acetone-phenol"
 		result = "acetone"
 		eventual_result = list("acetone", "phenol")
-		required_reagents = list("oil" = 1, "fuel" = 1, "chlorine" = 0.1) //oil and welding fuel for benzene and propylene, then chlorine for the radical initiator
-		result_amount = 1
+		required_reagents = list("oil" = 1, "fuel" = 3, "chlorine" = 0.1) //oil and welding fuel for benzene and propylene, then chlorine for the radical initiator
+		result_amount = 2
 		mix_phrase = "The smell of paint thinner assaults you as the solution bubbles."
 		instant = FALSE
 		reaction_speed = 1
