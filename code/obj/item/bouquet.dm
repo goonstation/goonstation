@@ -155,10 +155,10 @@
 					src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[flower.icon_state]_r")
 					src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flower.icon_state]_r")
 				else if (counter == 1)
-					src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[frontflowerindex[2].icon_state]_l")
+					src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[flower.icon_state]_l")
 					src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flower.icon_state]_l")
 				else
-					src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[frontflowerindex[3].icon_state]_m")
+					src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[flower.icon_state]_m")
 					src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flower.icon_state]_m")
 				counter += 1
 
