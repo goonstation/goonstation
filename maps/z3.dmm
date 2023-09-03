@@ -14871,10 +14871,6 @@
 	},
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
-"blh" = (
-/obj/item/storage/firstaid/old,
-/turf/simulated/floor/white/grime,
-/area/derelict_ai_sat)
 "bli" = (
 /obj/table/auto,
 /obj/item/motherboard{
@@ -63745,7 +63741,7 @@ amV
 amV
 biB
 biI
-blh
+aRo
 aRo
 bmg
 aSl

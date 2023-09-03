@@ -67,7 +67,7 @@
 			var/self = FALSE
 			if (M != user)
 				self = TRUE
-			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/medical/proc/do_use, list(M, user),\
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/medical/proc/do_use, list(M, user),\
 			src.icon, src.icon_state, "<span class='alert'>[user] applies [src] to [self ? "[M]" : "[himself_or_herself(M)]"].</span>", null)
 
 	proc/do_use(mob/M, mob/user)
