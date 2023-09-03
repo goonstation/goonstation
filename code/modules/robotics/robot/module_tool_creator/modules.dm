@@ -199,11 +199,11 @@
 /datum/robot/module_tool_creator/recursive/module/civilian_d
 	definitions = list(
 		/obj/item/extinguisher/cyborg,
-		/obj/item/plantanalyzer,
-		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
-		/obj/item/pen/omni,
 		/obj/item/spraybottle/cleaner/robot,
 		/obj/item/sponge,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+		/obj/item/pen/omni,
+		/obj/item/c_tube, //okay listen I know we want these modules to be small but it's really funny though. The tube is really funny. - paai
 	)
 
 // engineer. miner.
@@ -211,10 +211,10 @@
 	definitions = list(
 		/obj/item/extinguisher/cyborg,
 		/obj/item/weldingtool,
-		/obj/item/device/t_scanner,
 		/obj/item/electronics/scanner,
 		/obj/item/electronics/soldering,
 		/obj/item/lamp_manufacturer,
+		/obj/item/cargotele,
 	)
 
 // medical doctor. scientist.
@@ -222,7 +222,7 @@
 	definitions = list(
 		/obj/item/reagent_containers/mender/brute/medbot,
 		/obj/item/reagent_containers/mender/burn/medbot,
-		/obj/item/robospray, // TODO: make large version
+		/obj/item/robospray,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/hand_labeler,
