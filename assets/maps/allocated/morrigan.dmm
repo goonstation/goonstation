@@ -23244,6 +23244,7 @@
 /area/morrigan/routing/transport)
 "xiY" = (
 /obj/machinery/disposal/small/south,
+/obj/disposalpipe/trunk,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/security/brig)
 "xjb" = (
