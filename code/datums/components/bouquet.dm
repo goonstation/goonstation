@@ -11,11 +11,20 @@
 4. Optionally, at the bottom of code/obj/item/bouquet.dm, create a subtype of premade monotype bouquets
 */
 
+TYPEINFO(/datum/component/bullet_holes)
+	initialization_args = list(ARG_INFO("can_bouquet", DATA_INPUT_BOOL, "Whether this object can be put in bouquet", TRUE))
+
 /// the bouquet component, that allows flowers of various parentage to be wrapped into bouquets
 /datum/component/bouquet
+	can_bouquet = TRUE
 
 /datum/component/bouquet/Initialize()
 	. = ..()
+	if(!istype(parent, /obj/item/clothing/head/flower) && !istype(parent, /obj/item/plant))
+		return COMPONENT_INCOMPATIBLE
+	src.can_bouquet = can_bouquet
+	if (!can_bouquet)
+		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/construct_bouquet)
 
 /datum/component/bouquet/UnregisterFromParent()

@@ -6,6 +6,11 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	item_state = "flower_gard"
 	var/can_bouquet = FALSE
 
+	New()
+		if (can_bouquet)
+			src.AddComponent(/datum/component/bouquet, can_bouquet)
+		..()
+
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
 		return src
@@ -29,30 +34,20 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	item_state = "flower_bop"
 	can_bouquet = TRUE
 
-	New()
-		. = ..()
-		src.AddComponent(/datum/component/bouquet, can_bouquet)
+/obj/item/clothing/head/flower/hydrangea/pink
+	name = "pink hydrangea"
+	icon_state = "flower_hyd-pink"
+	item_state = "flower_hyd-pink"
 
-/obj/item/clothing/head/flower/hydrangea
-	name = "hydrangea"
-	desc = "Hydrangeas are popular ornamental flowers due to their colourful, pastel flower arrangements; this one has been trimmed nicely for wear as an accessory."
-	icon_state = "flower_hyd"
-	item_state = "flower_hyd"
+/obj/item/clothing/head/flower/hydrangea/blue
+	name = "blue hydrangea"
+	icon_state = "flower_hyd-blue"
+	item_state = "flower_hyd-blue"
 
-	pink
-		name = "pink hydrangea"
-		icon_state = "flower_hyd-pink"
-		item_state = "flower_hyd-pink"
-
-	blue
-		name = "blue hydrangea"
-		icon_state = "flower_hyd-blue"
-		item_state = "flower_hyd-blue"
-
-	purple
-		name = "purple hydrangea"
-		icon_state = "flower_hyd-purple"
-		item_state = "flower_hyd-purple"
+/obj/item/clothing/head/flower/hydrangea/purple
+	name = "purple hydrangea"
+	icon_state = "flower_hyd-purple"
+	item_state = "flower_hyd-purple"
 
 /obj/item/clothing/head/flower/lavender
 	name = "lavender"
@@ -62,6 +57,5 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	can_bouquet = TRUE
 
 	New()
-		src.AddComponent(/datum/component/bouquet, can_bouquet)
 		src.create_reagents(100)
 		..()
