@@ -4,6 +4,9 @@
 	var/name = null
 	var/id = null
 	var/result = null
+	///Used for complex reactions to show what they actually produce at the end (chem request console needs this)
+	///Can be a list or a single string ID
+	var/eventual_result = null
 	var/list/required_reagents = new/list()
 	var/list/inhibitors = list()
 	var/instant = 1
@@ -410,7 +413,7 @@
 	synthflesh
 		name = "Synthetic Flesh"
 		id = "synthflesh"
-		//result = "synthflesh"
+		eventual_result = "synthflesh"
 		required_reagents = list("blood" = 0, "styptic_powder" = 0) //removed in on_reaction
 		result_amount = 1
 		instant = FALSE
@@ -2697,7 +2700,7 @@
 	silver_sulfadiazine // COGWERKS CHEM REVISION PROJECT: marked for revision. maybe something like Silvadene?
 		name = "silver sulfadiazine"
 		id = "silver_sulfadiazine"
-		// result = "silver_sulfadiazine" //added in on_end_reaction()
+		eventual_result = "silver_sulfadiazine"
 		required_reagents = list("chlorine" = 1, "ammonia" = 1) // more required in does_react(), multiple recipes possible...
 		inhibitors = list("water") //an easily removable way to stop the reaction whenever you want
 		stateful = TRUE
@@ -2879,6 +2882,8 @@
 		id = "salbutamol_salicylic_acid"
 		required_reagents = list("sodium" = 1, "phenol" = 1, "carbon" = 1, "oxygen" = 1)
 		result = null //this changes in on_reaction
+		//technically it's either or, but for the purposes of the request console this makes both
+		eventual_result = list("salbutamol", "salicylic_acid")
 		result_amount = 4
 		instant = FALSE
 		reaction_speed = 4
@@ -3028,7 +3033,7 @@
 	styptic_powder // COGWERKS CHEM REVISION PROJECT: no idea, probably a magic drug
 		name = "Styptic Powder"
 		id = "styptic_powder"
-		//result = "styptic_powder" added in on_reaction()
+		eventual_result = "styptic_powder"
 		required_reagents = list("aluminium" = 0, "oxygen" = 0, "hydrogen" = 0, "acid" = 0) //reagents removed at the very end of reaction
 		result_amount = 1
 		mix_phrase = "The solution slowly crackles and reacts."
@@ -4212,6 +4217,7 @@
 		name = "Acetone-phenol production"
 		id = "acetone-phenol"
 		result = "acetone"
+		eventual_result = list("acetone", "phenol")
 		required_reagents = list("oil" = 1, "fuel" = 1, "chlorine" = 0.1) //oil and welding fuel for benzene and propylene, then chlorine for the radical initiator
 		result_amount = 1
 		mix_phrase = "The smell of paint thinner assaults you as the solution bubbles."
