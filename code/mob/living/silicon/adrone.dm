@@ -77,7 +77,7 @@ var/global/list/adrone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 	var/faceColor = "#66B2F2"
 	var/shelltype = "eyebot"
 	var/hovering = "a"
-	var/hat = "nothing"
+	var/hat = "Nothing"
 
 	var/image/i_details
 	var/image/i_panel
@@ -1148,7 +1148,7 @@ var/global/list/adrone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 
 		if (available_actions.len)
 			available_actions.Insert(1, "Cancel")
-			var/action = tgui_input_list(user, "What do you want to do?", "Cyborg Maintenance", available_actions)
+			var/action = tgui_input_list(user, "What do you want to do?", "Drone Maintenance", available_actions)
 			if (!action || action == "Cancel")
 				return
 			if (BOUNDS_DIST(src.loc, user.loc) > 0 && !src.bioHolder?.HasEffect("telekinesis"))
@@ -1811,6 +1811,8 @@ var/global/list/adrone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 					sleep(0)
 					src.lastgasp()
 				setunconscious(src)
+				update_appearance()
+				update_details()
 			else if (src.cell.charge <= 100)
 				src.module_active = null
 
