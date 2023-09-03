@@ -359,7 +359,7 @@ or don't if it uses a custom topopen overlay
 
 		update_terminal()
 
-		for (var/mob/living/silicon/adrone/D in mobs)
+		for (var/mob/living/silicon/drone/D in mobs)
 			if (D.brain || !D.ai_interface || D.dependent)
 				continue
 			if (!(D in available_ai_shells))
@@ -1866,7 +1866,7 @@ or don't if it uses a custom topopen overlay
 		if (R.shell && !R.dependent && !isdead(R) && get_step(R, 0)?.z == get_step(src, 0)?.z)
 			bodies += R
 
-	for (var/mob/living/silicon/adrone/D in available_ai_shells)
+	for (var/mob/living/silicon/drone/D in available_ai_shells)
 		if (D.shell && !D.dependent && !isdead(D))
 			bodies += D
 
@@ -1940,8 +1940,8 @@ or don't if it uses a custom topopen overlay
 		src.eyecam.set_loc(src.loc)
 		SPAWN(2 SECONDS)
 			if (ismob(user)) // bluhh who the fuck knows, this at least checks that user isn't null as well
-				if (isadrone(user))
-					var/mob/living/silicon/adrone/D = user
+				if (isdrone(user))
+					var/mob/living/silicon/drone/D = user
 					if (!isnull(D?.ai_interface))
 						D.shell = 1
 					D.dependent = 0

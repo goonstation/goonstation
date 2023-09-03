@@ -14,11 +14,11 @@
 			robot_owner.hud.update_pulling()
 			robot_owner.hud.update_environment()
 
-		if (adrone_owner)
-			adrone_owner.hud.update_health()
-			adrone_owner.hud.update_charge()
-			adrone_owner.hud.update_pulling()
-			adrone_owner.hud.update_environment()
+		if (drone_owner)
+			drone_owner.hud.update_health()
+			drone_owner.hud.update_charge()
+			drone_owner.hud.update_pulling()
+			drone_owner.hud.update_environment()
 
 		if (critter_owner)
 			critter_owner.hud.update_health()

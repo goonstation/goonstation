@@ -172,7 +172,7 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
-"iB" = (
+"hT" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
@@ -180,7 +180,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/item/parts/robot_parts/adrone_frame/complete_shell,
+/obj/item/parts/robot_parts/drone_frame/complete_shell,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "iQ" = (
@@ -225,6 +225,10 @@
 /area/built_zone)
 "jT" = (
 /obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/shuttle,
+/area/shuttle/arrival/station)
+"ku" = (
+/obj/item/parts/robot_parts/drone_frame/complete_shell,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "ky" = (
@@ -596,9 +600,16 @@
 	name = "steel shuttle bay plating"
 	},
 /area/space)
-"yW" = (
-/obj/item/parts/robot_parts/adrone_frame/complete_shell,
-/turf/simulated/floor/shuttle,
+"yT" = (
+/obj/grille/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/obj/landmark/shuttle_subwoofer,
+/turf/simulated/floor/shuttlebay{
+	desc = " It is made of steel.";
+	name = "steel shuttle bay plating"
+	},
 /area/shuttle/arrival/station)
 "yX" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
@@ -886,17 +897,6 @@
 /obj/item/tripod,
 /obj/item/tripod,
 /turf/simulated/floor/shuttle,
-/area/shuttle/arrival/station)
-"HO" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/obj/landmark/shuttle_subwoofer,
-/turf/simulated/floor/shuttlebay{
-	desc = " It is made of steel.";
-	name = "steel shuttle bay plating"
-	},
 /area/shuttle/arrival/station)
 "HX" = (
 /obj/cable{
@@ -38292,7 +38292,7 @@ oM
 oM
 OK
 bi
-HO
+yT
 OK
 oM
 oM
@@ -46456,7 +46456,7 @@ SL
 aq
 SL
 xd
-yW
+ku
 KL
 gs
 ap
@@ -47664,7 +47664,7 @@ SL
 aq
 SL
 KD
-iB
+hT
 Ge
 qX
 ap

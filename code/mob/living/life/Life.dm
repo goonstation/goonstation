@@ -8,7 +8,7 @@
 	var/const/cap_tick_spacing = LIFE_PROCESS_CAP_TICK_SPACING
 
 	var/mob/living/carbon/human/human_owner = null
-	var/mob/living/silicon/adrone/adrone_owner = null
+	var/mob/living/silicon/drone/drone_owner = null
 	var/mob/living/silicon/robot/robot_owner = null
 	var/mob/living/critter/critter_owner = null
 
@@ -19,8 +19,8 @@
 		owner = new_owner
 		if (ishuman(owner))
 			human_owner = owner
-		if (istype(owner,/mob/living/silicon/adrone))
-			adrone_owner = owner
+		if (istype(owner,/mob/living/silicon/drone))
+			drone_owner = owner
 		if (istype(owner,/mob/living/silicon/robot))
 			robot_owner = owner
 		if (istype(owner,/mob/living/critter))
@@ -30,7 +30,7 @@
 		..()
 		owner = null
 		human_owner = null
-		adrone_owner = null
+		drone_owner = null
 		robot_owner = null
 		critter_owner = null
 
@@ -194,7 +194,7 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/disability)
 
-/mob/living/silicon/adrone/restore_life_processes()
+/mob/living/silicon/drone/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
@@ -408,7 +408,7 @@
 		src.show_text(voidSpeak(msg))
 		src.emagged = 1
 
-/mob/living/silicon/adrone/Life(datum/controller/process/mobs/parent)
+/mob/living/silicon/drone/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return 1
 

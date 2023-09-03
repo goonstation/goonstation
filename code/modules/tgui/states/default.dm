@@ -40,7 +40,7 @@ var/global/datum/ui_state/tgui_default_state/tgui_default_state = new /datum/ui_
 
 	return UI_DISABLED // Otherwise they can keep the UI open.
 
-/mob/living/silicon/adrone/default_can_use_topic(src_object)
+/mob/living/silicon/drone/default_can_use_topic(src_object)
 	. = shared_ui_interaction(src_object)
 	if(. <= UI_DISABLED)
 		return

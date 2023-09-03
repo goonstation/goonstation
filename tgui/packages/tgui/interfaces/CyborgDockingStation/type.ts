@@ -50,12 +50,6 @@ interface OccupantDataHuman extends OccupantData {
   max_health: number,
 }
 
-interface OccupantDataEyebot extends OccupantData {
-  health: number,
-  max_health: number,
-  cell?: PowerCellData,
-}
-
 interface PartListData {
   head: PartData,
   chest: PartData,

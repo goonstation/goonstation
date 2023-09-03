@@ -78,9 +78,9 @@
 			var/mob/living/silicon/robot/robot = src
 			robot.hud.remove_screen(C)
 
-		else if (isadrone(src))
-			var/mob/living/silicon/adrone/adrone = src
-			adrone.hud.remove_screen(C)
+		else if (isdrone(src))
+			var/mob/living/silicon/drone/drone = src
+			drone.hud.remove_screen(C)
 
 		else if (isghostdrone(src))
 			var/mob/living/silicon/ghostdrone/drone = src
@@ -226,9 +226,9 @@
 			var/mob/living/silicon/robot/robot = user
 			robot.hud.remove_screen(src)
 
-		else if (isadrone(user))
-			var/mob/living/silicon/adrone/adrone = user
-			adrone.hud.remove_screen(src)
+		else if (isdrone(user))
+			var/mob/living/silicon/drone/drone = user
+			drone.hud.remove_screen(src)
 
 		else if (isghostdrone(user))
 			var/mob/living/silicon/ghostdrone/drone = user

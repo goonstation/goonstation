@@ -1170,18 +1170,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
-"cY" = (
-/obj/decal/cleanable/dirt,
-/obj/stool/chair/syndicate,
-/obj/npc/trader/exclown,
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/plating/random,
-/area/station/crew_quarters/clown)
 "cZ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/clown)
@@ -5216,10 +5204,6 @@
 /obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"ma" = (
-/obj/machinery/atmospherics/unary/cryo_cell,
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "mb" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -6437,17 +6421,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"qQ" = (
-/obj/strip_door,
-/obj/machinery/door/poddoor{
-	id = "cargodock_out";
-	name = "Cargo Routing Door"
-	},
-/obj/machinery/conveyor/WE{
-	id = "qmout"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
+"qP" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "qT" = (
 /obj/machinery/lawrack{
 	dir = 8
@@ -6475,10 +6452,6 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
-"ui" = (
-/obj/strip_door,
-/turf/simulated/floor/plating,
-/area/station/security/main)
 "uG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -6499,6 +6472,11 @@
 /obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"wq" = (
+/obj/item/room_planner,
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/red,
+/area/station/storage/warehouse)
 "wZ" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -6518,10 +6496,17 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
-"Ca" = (
-/obj/landmark/shuttle_subwoofer,
-/turf/space,
-/area/space)
+"Cg" = (
+/obj/strip_door,
+/obj/machinery/door/poddoor{
+	id = "cargodock_out";
+	name = "Cargo Routing Door"
+	},
+/obj/machinery/conveyor/WE{
+	id = "qmout"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/quartermaster/office)
 "Ch" = (
 /obj/storage/secure/closet/security/forensics,
 /obj/item/reagent_containers/glass/bottle/formaldehyde,
@@ -6547,12 +6532,36 @@
 /obj/machinery/clonepod,
 /turf/simulated/floor/white,
 /area/station/medical/research)
+"Dl" = (
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/security/main)
 "GM" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
-"Im" = (
+"Hs" = (
+/obj/machinery/conveyor/SN{
+	id = "garbage";
+	operating = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/janitor/supply)
+"HG" = (
+/obj/decal/cleanable/dirt,
+/obj/stool/chair/syndicate,
+/obj/npc/trader/exclown,
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/clown)
+"Is" = (
 /obj/strip_door,
 /obj/machinery/door/poddoor{
 	id = "cargodock_in";
@@ -6563,30 +6572,36 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
-"Ok" = (
-/obj/machinery/recharge_station,
-/obj/item/parts/robot_parts/adrone_frame/complete_shell,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
-"PK" = (
-/obj/machinery/conveyor/SN{
-	id = "garbage";
-	operating = 1
+"Nn" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
 	},
-/obj/strip_door,
-/turf/simulated/floor/plating,
-/area/station/janitor/supply)
+/obj/item/room_planner,
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/red,
+/area/station/storage/warehouse)
 "Ri" = (
 /obj/machinery/recharger/wall/sticky{
 	dir = 1
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
+"Ux" = (
+/obj/machinery/atmospherics/unary/cryo_cell,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "UN" = (
 /obj/table/wood/auto,
 /obj/item/card_box/plain,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
+"Vm" = (
+/obj/machinery/recharge_station,
+/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "WP" = (
 /obj/stool/chair/dining/wood,
 /obj/cable{
@@ -6597,21 +6612,6 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
-"WW" = (
-/obj/item/room_planner,
-/obj/item/clothing/glasses/toggleable/meson,
-/turf/simulated/floor/red,
-/area/station/storage/warehouse)
-"Xm" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
-/obj/item/room_planner,
-/obj/item/clothing/glasses/toggleable/meson,
-/turf/simulated/floor/red,
-/area/station/storage/warehouse)
 
 (1,1,1) = {"
 aa
@@ -43317,7 +43317,7 @@ aa
 aa
 aa
 aa
-Ca
+qP
 aa
 aa
 aa
@@ -46609,11 +46609,11 @@ aa
 aa
 aa
 ei
-Xm
+Nn
 ke
-WW
+wq
 ke
-WW
+wq
 bX
 cF
 df
@@ -52644,9 +52644,9 @@ ab
 nr
 aq
 ax
-ui
+Dl
 aO
-ui
+Dl
 ax
 bl
 bu
@@ -54490,7 +54490,7 @@ li
 lu
 lG
 lN
-ma
+Ux
 mo
 mx
 nz
@@ -55094,7 +55094,7 @@ lj
 lw
 lH
 lN
-ma
+Ux
 mq
 mz
 lT
@@ -55978,9 +55978,9 @@ bR
 cK
 cK
 cU
-Im
+Is
 bL
-qQ
+Cg
 bL
 fx
 fS
@@ -56292,7 +56292,7 @@ fx
 hF
 qT
 iz
-Ok
+Vm
 jw
 hC
 ks
@@ -56888,7 +56888,7 @@ dA
 eb
 eA
 fd
-PK
+Hs
 fV
 gq
 gT
@@ -57185,7 +57185,7 @@ fm
 fm
 fm
 ab
-cY
+HG
 dB
 ec
 eB

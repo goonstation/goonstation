@@ -3135,10 +3135,6 @@
 	},
 /turf/simulated/floor,
 /area/crew_quarters/captain)
-"hz" = (
-/obj/item/clothing/glasses/toggleable/meson,
-/turf/simulated/floor,
-/area/storage/tech)
 "hA" = (
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (WEST)";
@@ -8304,10 +8300,6 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor,
 /area/atmos)
-"uN" = (
-/obj/strip_door,
-/turf/simulated/floor/caution/northsouth,
-/area/zeta/bot_storage)
 "uO" = (
 /obj/machinery/door/airlock/maintenance{
 	icon_state = "door_locked";
@@ -19638,13 +19630,6 @@
 	icon_state = "sw1"
 	},
 /area/space)
-"Ui" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/obj/item/parts/robot_parts/adrone_frame/complete_shell,
-/turf/simulated/floor,
-/area/bridge)
 "Up" = (
 /obj/landmark/start/job/bartender,
 /turf/simulated/floor/specialroom/bar,
@@ -20078,6 +20063,13 @@
 	},
 /turf/simulated/floor,
 /area/hydroponics)
+"Yx" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/turf/simulated/floor,
+/area/bridge)
 "Yy" = (
 /obj/landmark/start/job/research_director,
 /turf/simulated/floor/white,
@@ -20102,6 +20094,10 @@
 	},
 /turf/simulated/floor,
 /area/hallway/primary/central)
+"YI" = (
+/obj/strip_door,
+/turf/simulated/floor/caution/northsouth,
+/area/zeta/bot_storage)
 "YO" = (
 /obj/landmark/pest,
 /obj/cable{
@@ -20124,6 +20120,10 @@
 	},
 /turf/simulated/floor,
 /area/atmos)
+"YZ" = (
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor,
+/area/storage/tech)
 "Za" = (
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor,
@@ -29950,8 +29950,8 @@ en
 aO
 eW
 fk
-hz
-hz
+YZ
+YZ
 fj
 gu
 gu
@@ -33138,7 +33138,7 @@ aI
 dt
 dN
 ef
-Ui
+Yx
 Vd
 fg
 fA
@@ -96285,7 +96285,7 @@ FC
 IU
 EM
 JB
-uN
+YI
 KB
 KE
 KE

@@ -250,7 +250,7 @@ var/global/logLength = 0
 	if (mobRef && isnull(mobRef))
 		if (ismonkey(mobRef)) mobType = "Monkey"
 		else if (iscyborg(mobRef)) mobType = "Robot"
-		else if (isadrone(mobRef)) mobType = "Drone"
+		else if (isdrone(mobRef)) mobType = "Drone"
 		else if (isAI(mobRef)) mobType = "AI"
 		else if (!ckey && !mobRef.last_ckey) mobType = "NPC"
 

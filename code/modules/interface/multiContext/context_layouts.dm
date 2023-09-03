@@ -29,9 +29,9 @@ var/list/datum/contextAction/globalContextActions = null
 		var/mob/living/silicon/robot/robot = target
 		robot.hud.add_screen(C)
 
-	else if (isadrone(target))
-		var/mob/living/silicon/adrone/adrone = target
-		adrone.hud.add_screen(C)
+	else if (isdrone(target))
+		var/mob/living/silicon/drone/drone = target
+		drone.hud.add_screen(C)
 
 	else if (isghostdrone(target))
 		var/mob/living/silicon/ghostdrone/drone = target

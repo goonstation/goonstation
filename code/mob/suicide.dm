@@ -170,7 +170,7 @@
 		return TRUE
 	return FALSE
 
-/mob/living/silicon/adrone/do_suicide()
+/mob/living/silicon/drone/do_suicide()
 	var/confirm = tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"), 15 SECONDS)
 	if (confirm == "Yes")
 		var/mob/living/silicon/robot/R = src

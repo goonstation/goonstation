@@ -284,7 +284,7 @@ var/list/headset_channel_lookup
 		ai_sender = 1
 	else if (iscyborg(M))
 		eqjobname = "Cyborg"
-	else if (isadrone(M))
+	else if (isdrone(M))
 		eqjobname = "Drone"
 	else if (istype(M, /obj/machinery/computer)) // :v
 		eqjobname = "Computer"

@@ -89,7 +89,7 @@ const OccupantTabContents = (props) => {
         <LabeledList>
           <LabeledList.Item label="Name" buttons={(
             <>
-              {(occupant.kind ==="robot" || occupant.kind ==="adrone") && <DockingAllowedButton onClick={() => act("occupant-rename")} icon="edit" tooltip="Change the occupant's designation" />}
+              {(occupant.kind ==="robot" || occupant.kind ==="drone") && <DockingAllowedButton onClick={() => act("occupant-rename")} icon="edit" tooltip="Change the occupant's designation" />}
               {<DockingAllowedButton onClick={() => act("occupant-eject")} icon="eject" tooltip="Eject the occupant" /> }
             </>
           )}>
@@ -99,7 +99,7 @@ const OccupantTabContents = (props) => {
         </LabeledList>
         <Section title="Status">
           {occupant.kind === "robot" && <OccupantStatusRobot occupant={occupant} fuel={fuel} cabling={cabling} act={act} />}
-          {occupant.kind === "adrone" && <OccupantStatusDrone occupant={occupant} fuel={fuel} cabling={cabling} act={act} />}
+          {occupant.kind === "drone" && <OccupantStatusDrone occupant={occupant} fuel={fuel} cabling={cabling} act={act} />}
           {occupant.kind === "human" && <OccupantStatusHuman occupant={occupant} />}
         </Section>
       </>
@@ -180,7 +180,7 @@ const OccupantType = (props) => {
       if (user === "brain") return <>Mk.2-Type Cyborg</>;
       if (user === "ai") return <>Mk.2-Type AI Shell</>;
       break;
-    case "adrone":
+    case "drone":
       if (user === "brain") return <>Mk.1-Type Drone</>;
       if (user === "ai") return <>Mk.1-Type AI Shell</>;
       break;

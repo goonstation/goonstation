@@ -1218,7 +1218,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 
 
-/obj/item/parts/robot_parts/adrone_frame
+/obj/item/parts/robot_parts/drone_frame
 	name = "drone frame"
 	icon_state = "frame"
 	max_health = 5000
@@ -1410,7 +1410,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 			switch(action)
 				if("Finish and Activate the Drone")
-					src.finish_adrone()
+					src.finish_drone()
 				if("Remove the Brain")
 					src.brain?.set_loc( get_turf(src) )
 					src.brain = null
@@ -1467,9 +1467,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 				return 1
 		return 0
 
-	proc/finish_adrone()
-		var/mob/living/silicon/adrone/drone = null
-		drone = new /mob/living/silicon/adrone(get_turf(src.loc),src,0,src.syndicate,src.emagged)
+	proc/finish_drone()
+		var/mob/living/silicon/drone/drone = null
+		drone = new /mob/living/silicon/drone(get_turf(src.loc),src,0,src.syndicate,src.emagged)
 		// there was a big transferring list of parts from the frame to the compborg here at one point, but it didn't work
 		// because the cyborg's process proc would kill it for having no chest piece set up after New() finished but
 		// before it could get around to this list, so i tweaked their New() proc instead to grab all the shit out of
@@ -1514,7 +1514,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			boutput(usr, "<span class='notice'>You activate the frame and it plays an audible beep.</span>")
 			playsound(src, 'sound/weapons/radxbow.ogg', 40, 1)
 		else
-			stack_trace("We finished adrone [identify_object(drone)] from frame [identify_object(src)] with a brain, but somehow lost the brain??? Where did it go")
+			stack_trace("We finished drone [identify_object(drone)] from frame [identify_object(src)] with a brain, but somehow lost the brain??? Where did it go")
 			drone.death()
 			qdel(src)
 			return
@@ -1552,26 +1552,26 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		qdel(src)
 		return
 
-/obj/item/parts/robot_parts/adrone_frame/gpcs
+/obj/item/parts/robot_parts/drone_frame/gpcs
 	shelltypetoapply = "gpcs"
 
-/obj/item/parts/robot_parts/adrone_frame/complete_latejoin
+/obj/item/parts/robot_parts/drone_frame/complete_latejoin
 	shelltypetoapply = "eyebot"
 	build_step = 3
 	cell = new/obj/item/cell/shell_cell/charged
 	brain = new/obj/item/organ/brain/latejoin
 	New()
 		..()
-		src.finish_adrone()
+		src.finish_drone()
 
-/obj/item/parts/robot_parts/adrone_frame/complete_shell
+/obj/item/parts/robot_parts/drone_frame/complete_shell
 	shelltypetoapply = "eyebot"
 	build_step = 3
 	cell = new/obj/item/cell/shell_cell/charged
 	ai_interface = new/obj/item/ai_interface
 	New()
 		..()
-		src.finish_adrone()
+		src.finish_drone()
 
 // UPGRADES
 // Cyborg

@@ -27,12 +27,11 @@
 #define isrobocritter(x) istype(x, /mob/living/critter/robotic)
 
 #define issilicon(x) istype(x, /mob/living/silicon)
-#define isrobot(x) (istype (x, /mob/living/silicon/robot) || istype (x, /mob/living/silicon/adrone))
+#define isrobot(x) (istype (x, /mob/living/silicon/robot) || istype (x, /mob/living/silicon/drone))
 #define iscyborg(x) istype(x, /mob/living/silicon/robot)
-#define isadrone(x) istype(x, /mob/living/silicon/adrone)
+#define isdrone(x) istype(x, /mob/living/silicon/drone)
 #define isAI(x) (istype(x, /mob/living/silicon/ai) || istype (x, /mob/living/intangible/aieye))
 #define isAIeye(x) istype (x, /mob/living/intangible/aieye)
-#define isdrone(x) istype(x, /mob/living/silicon/hivebot/drone)
 #define isghostdrone(x) istype(x, /mob/living/silicon/ghostdrone)
 
 #define iscube(x) (istype(x, /mob/living/carbon/cube))

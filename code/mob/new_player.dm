@@ -301,8 +301,8 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 			var/obj/item/organ/brain/latejoin/latejoin = R.part_head?.brain
 			if (istype(latejoin) && !latejoin.activated)
 				return latejoin
-		if (istype(S,/mob/living/silicon/adrone))
-			var/mob/living/silicon/adrone/A = S
+		if (istype(S,/mob/living/silicon/drone))
+			var/mob/living/silicon/drone/A = S
 			var/obj/item/organ/brain/latejoin/latejoin = A.brain
 			if (istype(latejoin) && !latejoin.activated)
 				return latejoin

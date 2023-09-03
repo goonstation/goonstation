@@ -148,6 +148,10 @@
 	icon_state = "engine_caution_west"
 	},
 /area/devzone)
+"cD" = (
+/obj/machinery/vending/kitchen,
+/turf/simulated/floor/white,
+/area/devzone)
 "cK" = (
 /obj/forcefield/energyshield/perma{
 	dir = 4
@@ -221,6 +225,13 @@
 "dG" = (
 /obj/storage/secure/closet/research/chemical,
 /turf/simulated/floor,
+/area/devzone)
+"dH" = (
+/obj/decal/tile_edge/line/blue{
+	icon_state = "line2"
+	},
+/obj/machinery/dialysis,
+/turf/simulated/floor/white,
 /area/devzone)
 "dL" = (
 /obj/table/reinforced/chemistry/auto/chemstorage,
@@ -1851,10 +1862,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/devzone)
-"Ax" = (
-/obj/machinery/vending/kitchen,
-/turf/simulated/floor/white,
-/area/devzone)
 "AC" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -1901,6 +1908,10 @@
 	},
 /turf/simulated/floor,
 /area/devzone)
+"Bh" = (
+/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/turf/simulated/floor,
+/area/station/turret_protected/ai)
 "Bq" = (
 /obj/window/auto/reinforced/indestructible/extreme,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -2392,6 +2403,12 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor,
 /area/devzone)
+"In" = (
+/obj/machinery/atmospherics/unary/cryo_cell,
+/turf/simulated/floor/bluewhite{
+	dir = 9
+	},
+/area/devzone)
 "Ip" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2400,10 +2417,6 @@
 	icon_state = "1-4"
 	},
 /obj/map/light/brighterwhite,
-/turf/simulated/floor,
-/area/station/turret_protected/ai)
-"Iq" = (
-/obj/item/parts/robot_parts/adrone_frame/complete_shell,
 /turf/simulated/floor,
 /area/station/turret_protected/ai)
 "It" = (
@@ -2494,6 +2507,11 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/devzone)
+"JN" = (
+/obj/map/light/brighterwhite,
+/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/turf/simulated/floor,
+/area/station/turret_protected/ai)
 "JS" = (
 /obj/machinery/bot/mulebot/QM1,
 /obj/machinery/navbeacon/mule/QM1_north/west,
@@ -3285,13 +3303,6 @@
 /obj/landmark/start/job/roboticist,
 /turf/simulated/floor/black,
 /area/devzone)
-"Uc" = (
-/obj/decal/tile_edge/line/blue{
-	icon_state = "line2"
-	},
-/obj/machinery/dialysis,
-/turf/simulated/floor/white,
-/area/devzone)
 "Ud" = (
 /obj/machinery/drainage/big,
 /obj/machinery/optable,
@@ -3473,12 +3484,6 @@
 	dir = 1
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/devzone)
-"WH" = (
-/obj/machinery/atmospherics/unary/cryo_cell,
-/turf/simulated/floor/bluewhite{
-	dir = 9
-	},
 /area/devzone)
 "WI" = (
 /obj/rack,
@@ -3727,11 +3732,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/devzone)
-"Zb" = (
-/obj/map/light/brighterwhite,
-/obj/item/parts/robot_parts/adrone_frame/complete_shell,
-/turf/simulated/floor,
-/area/station/turret_protected/ai)
 "Zd" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
@@ -4259,7 +4259,7 @@ Zk
 Ni
 FQ
 Gi
-Ax
+cD
 II
 PO
 yE
@@ -4638,8 +4638,8 @@ Bf
 TR
 Yx
 ng
-Iq
-Iq
+Bh
+Bh
 ze
 ng
 Fe
@@ -4681,8 +4681,8 @@ Bf
 TR
 Yx
 ng
-Zb
-Iq
+JN
+Bh
 qs
 ng
 Si
@@ -4739,7 +4739,7 @@ ng
 ti
 Yx
 ng
-WH
+In
 Yn
 ng
 Yx
@@ -5040,7 +5040,7 @@ ng
 SG
 oj
 RE
-Uc
+dH
 lU
 ng
 Yx
