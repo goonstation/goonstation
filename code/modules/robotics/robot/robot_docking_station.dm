@@ -918,7 +918,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			var/usage = min(src.reagents.get_reagent_amount("fuel"), D.bruteloss)
 			if (usage < 1)
 				return
-			D.HealDamage(usage, 0)
+			D.HealDamage("all", usage, 0)
 			src.reagents.remove_reagent("fuel", usage)
 			D.update_appearance()
 			. = TRUE
@@ -935,7 +935,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			var/usage =  min(src.cabling, D.fireloss)
 			if (usage < 1)
 				return
-			D.HealDamage(0, usage)
+			D.HealDamage("all", 0, usage)
 			src.cabling -= usage
 			if (src.cabling < 0)
 				src.cabling = 0

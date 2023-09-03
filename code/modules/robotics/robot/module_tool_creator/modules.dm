@@ -203,7 +203,6 @@
 		/obj/item/plantanalyzer,
 		/obj/item/gardentrowel,
 		/obj/item/satchel/hydro,
-		/obj/item/satchel/hydro,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 		/obj/item/pen/omni,
 		/obj/item/c_tube,
@@ -223,18 +222,16 @@
 		/obj/item/electronics/soldering,
 		/obj/item/room_planner,
 		/obj/item/lamp_manufacturer,
-		/obj/item/deconstructor/borg,
 		/obj/item/pinpointer/category/apcs/station,
 		/obj/item/cargotele,
 		/obj/item/mining_tool/drill,
 		/obj/item/ore_scoop/borg,
-		/obj/item/satchel/mining/large,
+		/obj/item/satchel/mining,
 	)
 
 // medical doctor. scientist.
 /datum/robot/module_tool_creator/recursive/module/medical_d
 	definitions = list(
-		/obj/item/robodefibrillator,
 		/obj/item/reagent_containers/mender/brute/medbot,
 		/obj/item/reagent_containers/mender/burn/medbot,
 		/obj/item/robospray, // TODO: make large version

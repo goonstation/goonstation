@@ -160,9 +160,21 @@
 	var/confirm = tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"), 15 SECONDS)
 	if (confirm == "Yes")
 		var/mob/living/silicon/robot/R = src
-		src.visible_message("<span class='alert'><b>[src] is clutching its head strangely!</b></span>")
+		src.visible_message("<span class='alert'><b>[src] is clutching \his head strangely!</b></span>")
 		SPAWN(2 SECONDS)
 			R.emote("scream")
+		SPAWN(3 SECONDS)
+			R.unlock_medal("Damned", 1)
+			R.eject_brain()
+			R.borg_death_alert(ROBOT_DEATH_MOD_SUICIDE)
+		return TRUE
+	return FALSE
+
+/mob/living/silicon/adrone/do_suicide()
+	var/confirm = tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"), 15 SECONDS)
+	if (confirm == "Yes")
+		var/mob/living/silicon/robot/R = src
+		src.visible_message("<span class='alert'><b>[src] is emitting a high-pitched whine!</b></span>")
 		SPAWN(3 SECONDS)
 			R.unlock_medal("Damned", 1)
 			R.eject_brain()

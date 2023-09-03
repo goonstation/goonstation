@@ -5,6 +5,7 @@
 
 var/global/list/adrone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 	"Content" = "gpcs-s-content", \
+	"Curious" = "gpcs-s-curious", \
 	"Exclaimation" = "gpcs-s-exclamation",\
 	"Eye" = "gpcs-s-eye",\
 	"Heart" = "gpcs-s-heart",\
@@ -236,11 +237,15 @@ var/global/list/adrone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 				C.set_loc(T)
 			for(var/obj/item/robot_module/M in src.contents)
 				M.set_loc(T)
+			for(var/obj/item/ai_interface/I in src.contents)
+				I.set_loc(T)
 
 			var/obj/item/parts/robot_parts/adrone_frame/frame =  new(T)
+			frame.shelltypetoapply = src.shelltype
 			frame.emagged = src.emagged
 			frame.syndicate = src.syndicate
 			frame.freemodule = src.freemodule
+			frame.update_icon()
 
 			src.ghostize()
 			qdel(src)
@@ -1169,6 +1174,7 @@ var/global/list/adrone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 					src.ears = src.radio
 					src.radio.set_loc(src)
 					src.shell = 0
+					src.dependent = 0
 					src.ai_interface = null
 					if(src.ai_radio)
 						qdel(src.ai_radio)
@@ -1958,15 +1964,15 @@ var/global/list/adrone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 		if (src.opened)
 			var/image/i_panel = SafeGetOverlayImage("opanel", 'icons/mob/hivebot.dmi', "panel-" + src.hovering + "-" + src.shelltype, src.layer)
 			if (src.cell)
-				UpdateOverlays(SafeGetOverlayImage("ocell", 'icons/mob/hivebot.dmi', "cell-" + src.hovering + "-" + src.shelltype, src.layer+0.2), "ocell")
+				UpdateOverlays(SafeGetOverlayImage("ocell", 'icons/mob/hivebot.dmi', "cell-" + src.hovering + "-" + src.shelltype, src.layer+0.15), "ocell")
 			else
 				src.ClearSpecificOverlays("ocell")
 			if (src.brain)
-				UpdateOverlays(SafeGetOverlayImage("obrain", 'icons/mob/hivebot.dmi', "brain-" + src.hovering + "-" + src.shelltype, src.layer+0.15), "obrain")
+				UpdateOverlays(SafeGetOverlayImage("obrain", 'icons/mob/hivebot.dmi', "brain-" + src.hovering + "-" + src.shelltype, src.layer+0.1), "obrain")
 			else
 				src.ClearSpecificOverlays("obrain")
 			if (src.ai_interface)
-				UpdateOverlays(SafeGetOverlayImage("ointerface", 'icons/mob/hivebot.dmi', "interface-" + src.hovering + "-" + src.shelltype, src.layer+0.15), "ointerface")
+				UpdateOverlays(SafeGetOverlayImage("ointerface", 'icons/mob/hivebot.dmi', "interface-" + src.hovering + "-" + src.shelltype, src.layer+0.1), "ointerface")
 			else
 				src.ClearSpecificOverlays("ointerface")
 			UpdateOverlays(i_panel, "opanel")
@@ -1974,7 +1980,7 @@ var/global/list/adrone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 			src.ClearSpecificOverlays("opanel", "ocell", "obrain", "ointerface")
 
 		if (src.hat)
-			UpdateOverlays(SafeGetOverlayImage("hat", 'icons/mob/robots_decor.dmi', "hat-" + src.shelltype + "-" + src.hovering + "-" + src.hat, src.layer+0.4), "hat")
+			UpdateOverlays(SafeGetOverlayImage("hat", 'icons/mob/robots_decor.dmi', "hat-" + src.shelltype + "-" + src.hovering + "-" + src.hat, src.layer+0.2), "hat")
 		else
 			src.ClearSpecificOverlays("hat")
 

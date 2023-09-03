@@ -1213,6 +1213,11 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		qdel(src)
 		return
 
+/obj/item/parts/robot_parts/robot_frame/syndicate
+	syndicate = TRUE
+
+
+
 /obj/item/parts/robot_parts/adrone_frame
 	name = "drone frame"
 	icon_state = "frame"
@@ -1423,6 +1428,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			return
 
 	update_icon()
+		src.icon_state = "frame-" + src.shelltypetoapply;
+
 		if(build_step > 0)
 			src.UpdateOverlays(image('icons/mob/hivebot.dmi', "plating-c-" + src.shelltypetoapply, FLOAT_LAYER, 2),"plating")
 		else
@@ -1565,9 +1572,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	New()
 		..()
 		src.finish_adrone()
-
-/obj/item/parts/robot_parts/robot_frame/syndicate
-	syndicate = TRUE
 
 // UPGRADES
 // Cyborg
