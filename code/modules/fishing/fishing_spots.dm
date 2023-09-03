@@ -707,7 +707,7 @@ datum/fishing_spot/golden_toilet
 
 	generate_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
 		var/atom/result = ..()
-		result.setMaterial(getMaterial("gold"))
+		result.setMaterial(getMaterial(/datum/material/metal/gold))
 		return result
 
 //crusher

@@ -56,5 +56,5 @@
 					SPAWN(0)
 						if (H)
 							H.desc = "A really dumb looking statue. Very shiny, though."
-							H.become_statue(getMaterial("gold"), survive=TRUE)
+							H.become_statue(getMaterial(/datum/material/metal/gold), survive=TRUE)
 							H.transforming = 0

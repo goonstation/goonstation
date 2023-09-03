@@ -179,7 +179,7 @@
 			return 1
 
 		#ifdef APRIL_FOOLS
-		transmute_random_stuff(getMaterial("jean"))
+		transmute_random_stuff(getMaterial(/datum/material/fabric/jean))
 		if(prob(1))
 			animate(src)
 			animate_levitate(src)

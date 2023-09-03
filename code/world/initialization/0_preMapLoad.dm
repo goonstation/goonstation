@@ -223,7 +223,7 @@
 	for(var/datum/material/mat as anything in materialList)
 		if(initial(mat.cached))
 			var/datum/material/M = new mat()
-			material_cache_matid[M.getID] = M.getImmutable()
+			material_cache_matid[M.getID()] = M.getImmutable()
 			material_cache_type[M.type] = M.getImmutable()
 
 #ifdef TRACY_PROFILER_HOOK

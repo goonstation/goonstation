@@ -56,7 +56,7 @@
 						playsound(holder.owner.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 100, 1)
 						var/obj/victimjim = new /obj/item/reagent_containers/food/snacks/slimjim(HU.loc)
 						HU.visible_message("<span class='alert'><B>The only thing that remains after [H] is a Slim Jim!</B></span>", "<span class='alert'><B>Your body is snapped into a Slim Jim!</B></span>")
-						victimjim.setMaterial(getMaterial("flesh"))
+						victimjim.setMaterial(getMaterial(/datum/material/organic/flesh))
 						victimjim.name = "Slim [HU.real_name]"
 						HU.ghostize()
 						qdel(HU)
@@ -64,7 +64,7 @@
 						H.visible_message("<span class='alert'><B>[holder.owner] snaps [H] into a Slim Jim with his bare hands!</B></span>", "<span class='alert'><B>Your body is snapped into a Slim Jim!</B></span>")
 						playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 100, 1)
 						var/obj/victimjim = new /obj/item/reagent_containers/food/snacks/slimjim(H.loc)
-						victimjim.setMaterial(getMaterial("flesh"))
+						victimjim.setMaterial(getMaterial(/datum/material/organic/flesh))
 						victimjim.name = "Slim [H.real_name]"
 						H.ghostize()
 						qdel(H)

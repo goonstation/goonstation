@@ -35,7 +35,7 @@
 	build(amount, obj/machinery/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/device/light/glowstick/stick = getObjectByPartName("Glowstick")
-			var/datum/material/glowstick_mat = getMaterial("glowstick")
+			var/datum/material/glowstick_mat = getMaterial(/datum/material/metal/glowstick)
 			glowstick_mat = glowstick_mat.getMutable()
 			glowstick_mat.setColor(rgb(stick.col_r*255, stick.col_g*255, stick.col_b*255))
 			var/obj/item/reactor_component/fuel_rod/glowsticks/result_rod = new /obj/item/reactor_component/fuel_rod/glowsticks(glowstick_mat)

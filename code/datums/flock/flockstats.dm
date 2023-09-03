@@ -122,7 +122,7 @@ proc/save_flock_stats()
 
 	New()
 		..()
-		src.setMaterialAppearance(getMaterial("gnesis")) //we just want the appearance, not actually the material
+		src.setMaterialAppearance(getMaterial(/datum/material/crystal/gnesis)) //we just want the appearance, not actually the material
 		src.stat_store = list()
 		var/players = world.load_intra_round_value("flock_plays_total") || 0
 		var/builders = world.load_intra_round_value("flock_relays_total") || 0

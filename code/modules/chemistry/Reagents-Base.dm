@@ -513,12 +513,12 @@ datum
 						var/obj/item/ammo/bullets/bullet_holder = I
 						var/datum/projectile/ammo_type = bullet_holder.ammo_type
 						if (ammo_type && !(ammo_type.material && ammo_type.material.getID() == "silver"))
-							ammo_type.material = getMaterial("silver")
+							ammo_type.material = getMaterial(/datum/material/metal/silver)
 							holder.remove_reagent(src.id, 20)
 							.= 0
 				if (volume >= 50)
 					if (I.type == /obj/item/handcuffs)
-						I.setMaterial(getMaterial("silver"))
+						I.setMaterial(getMaterial(/datum/material/metal/silver))
 						holder.remove_reagent(src.id, 50)
 						.= 0
 

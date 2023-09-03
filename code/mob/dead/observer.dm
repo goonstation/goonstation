@@ -124,7 +124,7 @@
 
 	wig = new
 	wig.mat_changename = 0
-	var/datum/material/wigmat = getMaterial("ectofibre")
+	var/datum/material/wigmat = getMaterial(/datum/material/fabric/ectofibre)
 	wigmat = wigmat.getMutable()
 	wigmat.setColor(P.AH.customization_first_color)
 	wig.setMaterial(wigmat)
@@ -263,7 +263,7 @@
 
 	SPAWN(0.5 SECONDS)
 		if (src.mind && istype(src.mind.purchased_bank_item, /datum/bank_purchaseable/golden_ghost))
-			src.setMaterial(getMaterial("gold"))
+			src.setMaterial(getMaterial(/datum/material/metal/gold))
 //#ifdef HALLOWEEN
 //	src.sd_SetLuminosity(GHOST_LUM) // comment all of these back out after hallowe'en
 //#endif
@@ -414,7 +414,7 @@
 
 		O.wig = new
 		O.wig.mat_changename = 0
-		var/datum/material/wigmat = getMaterial("ectofibre")
+		var/datum/material/wigmat = getMaterial(/datum/material/fabric/ectofibre)
 		wigmat = wigmat.getMutable()
 		wigmat.setColor(src.bioHolder.mobAppearance.customization_first_color)
 		O.wig.setMaterial(wigmat)

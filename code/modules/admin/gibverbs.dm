@@ -138,7 +138,7 @@
 			message_admins("[key_name(usr)] has goldgibbed [key_name(M)]")
 
 		M.desc = "A dumb looking statue. Very shiny, though."
-		M.become_statue(getMaterial("gold"))
+		M.become_statue(getMaterial(/datum/material/metal/gold))
 
 /client/proc/cmd_admin_spidergib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)

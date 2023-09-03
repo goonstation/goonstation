@@ -1283,7 +1283,7 @@
 				the_object.setMaterial(getMaterial(linked.transmute_material))
 			else
 				owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to gold!</span>")
-				the_object.setMaterial(getMaterial("gold"))
+				the_object.setMaterial(getMaterial(/datum/material/metal/gold))
 		linked_power.using = 0
 
 	cast_misfire()
@@ -1319,7 +1319,7 @@
 			owner.visible_message("[owner] touches [the_object].")
 		else
 			owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to flesh!</span>")
-			the_object.setMaterial(getMaterial("flesh"))
+			the_object.setMaterial(getMaterial(/datum/material/organic/flesh))
 		linked_power.using = 0
 		return
 

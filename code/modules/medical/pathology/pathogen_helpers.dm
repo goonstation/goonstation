@@ -69,10 +69,10 @@
 	return statueperson
 
 /mob/proc/become_statue_ice()
-	become_statue(getMaterial("ice"), "We here at Space Station 13 believe in the transparency of our employees. It doesn't look like a functioning human can be retrieved from this.")
+	become_statue(getMaterial(/datum/material/crystal/ice), "We here at Space Station 13 believe in the transparency of our employees. It doesn't look like a functioning human can be retrieved from this.")
 
 /mob/proc/become_statue_rock()
-	become_statue(getMaterial("rock"), "Its not too uncommon for our employees to be stoned at work but this is just ridiculous!")
+	become_statue(getMaterial(/datum/material/metal/rock), "Its not too uncommon for our employees to be stoned at work but this is just ridiculous!")
 
 /proc/generate_random_pathogen()
 	var/datum/pathogen/P = new /datum/pathogen

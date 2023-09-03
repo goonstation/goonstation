@@ -858,11 +858,11 @@
 			if(0 to 45)
 				B = new /obj/item/raw_material/scrap_metal
 				B.set_loc(my_turf)
-				B.setMaterial(getMaterial("gnesis"))
+				B.setMaterial(getMaterial(/datum/material/crystal/gnesis))
 			if(46 to 90)
 				B = new /obj/item/raw_material/shard
 				B.set_loc(my_turf)
-				B.setMaterial(getMaterial("gnesisglass"))
+				B.setMaterial(getMaterial(/datum/material/crystal/gnesis/transparent))
 			if(91 to 100)
 				B = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock(my_turf)
 

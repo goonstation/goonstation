@@ -145,7 +145,7 @@
 					. = ..()
 					if (!src.random_blob_materials)
 						src.random_blob_materials = list()
-						var/datum/material/base_mat = getMaterial("blob")
+						var/datum/material/base_mat = getMaterial(/datum/material/organic/blob)
 						for (var/i in 1 to 10)
 							var/datum/material/new_mat = base_mat.getMutable()
 							new_mat.setColor(rgb(rand(1,255), rand(1,255), rand(1,255), 255))

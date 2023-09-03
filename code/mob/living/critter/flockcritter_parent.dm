@@ -698,7 +698,7 @@ TYPEINFO(/mob/living/critter/flock)
 			if(the_window.material)
 				A.setMaterial(the_window.material)
 			else
-				var/datum/material/M = getMaterial("glass")
+				var/datum/material/M = getMaterial(/datum/material/crystal/glass)
 				A.setMaterial(M)
 			if(!(the_window.dir in cardinal)) // full window takes two sheets to make
 				A.amount += 1
