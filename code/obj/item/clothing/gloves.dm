@@ -380,24 +380,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "swat_NT"
 	item_state = "swat_NT"
 
-/obj/item/clothing/gloves/swat/captain
-	name = "captain's gloves"
-	desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
-	icon_state = "capgloves"
-	item_state = "capgloves"
-
-	centcomm
-		name = "commander's gloves"
-		desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant."
-		icon_state = "centcomgloves"
-		item_state = "centcomgloves"
-
-	centcommred
-		name = "commander's gloves"
-		desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant."
-		icon_state = "centcomredgloves"
-		item_state = "centcomredgloves"
-
 /obj/item/clothing/gloves/stungloves
 	name = "stun gloves"
 	desc = "These gloves are electrically charged."
