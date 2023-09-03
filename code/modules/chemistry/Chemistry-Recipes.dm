@@ -432,7 +432,7 @@
 			if(count < 15) //the delayed count is to give people time to pour in all the reagents they want to use
 				count += 1
 			else
-				if(holder.get_reagent_amount("styptic_powder") < 40 || holder.get_reagent_amount("carbon") > 10) //you can use carbon to force the reaction to make a bunch of tiny pustules if you want
+				if(holder.get_reagent_amount("styptic_powder") < 40 || holder.get_reagent_amount("carbon") >= 10) //you can use carbon to force the reaction to make a bunch of tiny pustules if you want
 					var/obj/item/reagent_containers/synthflesh_pustule/small/pustule = new /obj/item/reagent_containers/synthflesh_pustule/small
 					pustule.set_loc(get_turf(holder.my_atom))
 					holder.remove_reagent("carbon", 10)
