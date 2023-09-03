@@ -83,7 +83,7 @@ var/global/list/material_cache_type
 		return
 	if(istext(mat1) && !mutable)
 		// cursed, but allows material ids to be used instead
-		mat1 = get_material(mat1)
+		mat1 = getMaterial(mat1)
 	else if (istext(mat1))
 		CRASH("mutable setMaterial() called with a string instead of a material datum.")
 	if(!mat1 ||!istype(mat1, /datum/material))
