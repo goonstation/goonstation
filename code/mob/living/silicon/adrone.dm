@@ -911,7 +911,6 @@ var/global/list/adrone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 
 	cancelAlarm(var/class, area/A as area, obj/origin)
 		var/list/L = src.alarms[class]
-		var/cleared = 0
 		for (var/I in L)
 			if (I == A.name)
 				var/list/alarm = L[I]
@@ -919,7 +918,6 @@ var/global/list/adrone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 				if (origin in srcs)
 					srcs -= origin
 				if (length(srcs) == 0)
-					cleared = 1
 					L -= I
 
 	attackby(obj/item/W, mob/user)
@@ -1225,6 +1223,8 @@ var/global/list/adrone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 							boutput(user, "You pull [B] off of [src]!")
 							src.shelltype = "eyebot"
 							src.UpdateIcon()
+							src.update_appearance()
+							src.update_details()
 						playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 30, 1, -2)
 						user.visible_message("<span class='alert'>[user] shakes [src] [pick_string("descriptors.txt", "borg_shake")]!</span>")
 					if(INTENT_HARM) //Dumbo
@@ -1774,6 +1774,7 @@ var/global/list/adrone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 				power_use_tally += 5
 
 			power_use_tally += 1
+
 			if (src.cell.genrate) power_use_tally -= src.cell.genrate
 
 			if (power_use_tally < 0) power_use_tally = 0
@@ -1809,7 +1810,6 @@ var/global/list/adrone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 
 				uneq_slot(1)
 				uneq_slot(2)
-				uneq_slot(3)
 				src.cell.use(1)
 			else
 				var/fix = 0
@@ -1820,6 +1820,8 @@ var/global/list/adrone_emotions = list("Annoyed" = "gpcs-s-annoyed", \
 					power_use_tally += 5
 				if(src.module_states[2])
 					power_use_tally += 5
+
+				power_use_tally += 1
 
 				src.cell.use(power_use_tally)
 

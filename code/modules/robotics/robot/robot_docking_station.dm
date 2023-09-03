@@ -556,13 +556,10 @@ TYPEINFO(/obj/machinery/recharge_station)
 
 		var/list/parts = list()
 		var/list/chassis = list()
-		if (D.health >= 0)
-			chassis["exists"] = TRUE
-			chassis["max_health"] = D.max_health
-			chassis["dmg_blunt"] = D.bruteloss
-			chassis["dmg_burns"] = D.fireloss
-		else
-			chassis["exists"] = FALSE
+		chassis["exists"] = TRUE
+		chassis["max_health"] = D.max_health
+		chassis["dmg_blunt"] = D.bruteloss
+		chassis["dmg_burns"] = D.fireloss
 
 		parts["chassis"] = chassis
 		occupant_data["parts"] = parts
