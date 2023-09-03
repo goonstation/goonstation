@@ -741,6 +741,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 
 		signal_event("icon_updated")
 
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/reagent_containers/mender))
+			src.do_refill(W, user)
+			return
+		..()
+
 	proc/do_refill(var/obj/item/reagent_containers/mender, var/mob/user)
 		if (src?.reagents.total_volume > 0)
 			src.reagents.trans_to(mender, src.reagents.total_volume)
