@@ -574,7 +574,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					src.surgeryConfusion(patient, surgeon, damage_high)
 					return TRUE
 				if (2 to 3)
-					if (!patient.organHolder.build_organ_buttons())
+					if (!patient.organHolder.build_region_buttons())
 						boutput(surgeon, "[patient] has no more organs!")
 						return TRUE
 					surgeon.showContextActions(patient.organHolder.contexts, patient, patient.organHolder.contextLayout)
@@ -819,7 +819,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					actions.start(new/datum/action/bar/icon/open_ribcage(surgeon, patient), surgeon)
 					return TRUE
 				if (3)
-					if (!patient.organHolder.build_organ_buttons())
+					if (!patient.organHolder.build_region_buttons())
 						boutput(surgeon, "[patient] has no more organs!")
 						return TRUE
 					surgeon.showContextActions(patient.organHolder.contexts, patient, patient.organHolder.contextLayout)
@@ -949,6 +949,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				"<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your chest closed with [src].</span>")
 
 			patient.organHolder.chest.op_stage = 0
+			patient.organHolder.close_surgery_regions()
 			patient.TakeDamage("chest", 2, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
@@ -1324,7 +1325,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.organHolder.chest.op_stage ++
 					return TRUE
 				if (2 to 3)
-					if (!patient.organHolder.build_organ_buttons())
+					if (!patient.organHolder.build_region_buttons())
 						boutput(surgeon, "[patient] has no more organs!")
 						return TRUE
 					surgeon.showContextActions(patient.organHolder.contexts, patient, patient.organHolder.contextLayout)
@@ -1616,3 +1617,5 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 //Todo, update surgery book to reflect all this
 //Todo, change background color for organs that can be removed
+//Todo, remove saw surgery, use the saw button from the ribs region as the defining factor
+//Todo, build_subregion_buttons doesnt work for multiple surgeons at once

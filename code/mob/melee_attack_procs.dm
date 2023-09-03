@@ -22,7 +22,7 @@
 		M.resist()
 	//If we use an empty hand on a cut up person, we might wanna rip out their organs by hand
 	else if (surgeryCheck(M, src) && M.organHolder?.chest?.op_stage >= 2 && ishuman(src))
-		if (M.organHolder.build_organ_buttons())
+		if (M.organHolder.build_region_buttons())
 			src.showContextActions(M.organHolder.contexts, M, M.organHolder.contextLayout)
 			return
 	else if ((M.health <= 0 || M.find_ailment_by_type(/datum/ailment/malady/flatline)) && src.health >= -75.0)

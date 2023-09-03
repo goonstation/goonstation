@@ -744,6 +744,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 				else
 					user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to close!", "red")
 					H.organHolder.chest.op_stage = 0
+					H.organHolder.close_surgery_regions()
 					src.in_use = 0
 					return
 		else
