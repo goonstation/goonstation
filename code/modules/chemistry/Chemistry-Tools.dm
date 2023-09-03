@@ -942,7 +942,7 @@ proc/ui_describe_reagents(atom/A)
 		if(reagents.total_volume >= reagents.maximum_volume)
 			return
 		if (!convertible_reagents.Find(id))
-			boutput(world, "no [id] found")
+			// boutput(world, "no [id] found")
 			return
 		holder_reagents.remove_reagent(id, volume)
 		playsound(src.loc, 'sound/items/drink.ogg', 50, 1)
