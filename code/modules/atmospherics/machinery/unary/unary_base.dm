@@ -32,7 +32,7 @@
 	if(reference == node)
 		network = new_network
 
-	if(src in new_network)
+	if(src in new_network.normal_members)
 		return FALSE
 
 	new_network.normal_members += src
