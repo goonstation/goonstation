@@ -1545,6 +1545,14 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 				name = "hollow pipe frame"
 			src.flags |= NOSPLASH
 
+		if(iswrenchingtool(W) && src.state == 2) //makeshift laser gun assembly
+			user.u_equip(src)
+			boutput(user, "<span class='notice'>You wrench the pipe frame into one long pipe.</span>")
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			var/obj/item/makeshift_laser_barrel/B = new/obj/item/makeshift_laser_barrel
+			user.put_in_hand_or_drop(B)
+			qdel(src)
+
 		if(issnippingtool(W) && src.state == 2) //pipeshot crafting
 			name = "hollow pipe hulls"
 			boutput(user, "<span class='notice'>You cut the pipe into four neat hulls.</span>")
