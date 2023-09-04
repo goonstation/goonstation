@@ -4,7 +4,7 @@
 	regular = FALSE
 
 	/// Makes it so gang members are chosen randomly at roundstart instead of being recruited.
-	var/random_gangs = FALSE
+	var/random_gangs = TRUE
 
 	antag_token_support = TRUE
 	var/list/gangs = list()
@@ -17,16 +17,13 @@
 	var/list/potential_hot_zones = null
 	var/area/hot_zone = null
 	var/area/drop_zone = null
-#ifdef RP_MODE
-	var/hot_zone_timer = 10 MINUTES
-#else
-	var/hot_zone_timer = 5 MINUTES
-#endif
-	var/hot_zone_score = 1000
 
-	var/crate_drop_frequency = 10 MINUTES
+#ifdef RP_MODE
+	var/crate_drop_frequency = 40 MINUTES
+#else
+	var/crate_drop_frequency = 25 MINUTES
+#endif
 	var/crate_drop_timer = 5 MINUTES
-	var/crate_drop_score = 1000
 	var/loot_drop_frequency = 5 MINUTES
 	var/loot_drop_count = 3
 
@@ -526,6 +523,9 @@ proc/broadcast_to_all_gangs(var/message)
 	var/score_event = 0
 	var/static/list/first_names = strings("gangwar.txt", "part1")
 	var/static/list/second_names = strings("gangwar.txt", "part2")
+
+	/// Whether or not the leader of this gang has claimed a recruitment briefcase
+	var/claimed_briefcase = FALSE
 
 	/// Starting price of the janktank II (gang member revival syringe)
 	var/current_revival_price = GANG_REVIVE_COST
@@ -1031,9 +1031,11 @@ proc/broadcast_to_all_gangs(var/message)
 	var/HTML = null
 	var/list/buyable_items = list()
 	var/ghost_confirmation_delay  = 30 SECONDS
-
+	var/stored_cash = 0
+	var/damage_warning_timeout = 60 SECONDS
 	var/hunting_for_ghosts = FALSE //are we hunting for gang members atm?
 	var/given_flyers = FALSE
+	var/superlaunder_stacks = 0
 
 	var/static/janktank_price = 300
 
@@ -1044,19 +1046,14 @@ proc/broadcast_to_all_gangs(var/message)
 		buyable_items = list(
 			new/datum/gang_item/consumable/medkit,
 			new/datum/gang_item/consumable/quickhack,
-			new/datum/gang_item/misc/janktank,
+			new/datum/gang_item/consumable/omnizine,
 			new/datum/gang_item/misc/ratstick,
 			new/datum/gang_item/ninja/throwing_knife,
 			new/datum/gang_item/ninja/shuriken,
 			new/datum/gang_item/ninja/sneaking_suit,
 			new/datum/gang_item/ninja/discount_katana,
-			//new/datum/gang_item/space/phaser_gun,
-			//new/datum/gang_item/space/laser_gun,
 			new/datum/gang_item/space/discount_csaber,
-			// new/datum/gang_item/space/csaber,
-			// new/datum/gang_item/ninja/katana,
 			new/datum/gang_item/street/cop_car,
-
 			new/datum/gang_item/space/stims)
 
 	examine()
@@ -1216,9 +1213,16 @@ proc/broadcast_to_all_gangs(var/message)
 
 
 	proc/handle_respawn_syringe(var/mob/living/carbon/human/user)
-		var/datum/gang/G = user.get_gang()
-		if (G != null && G.leader == user.mind)
-			var/obj/item/i = new/obj/item/tool/janktanktwo(src.loc)
+		if (!src.gang.leader == user.mind)
+			boutput(user, "You're not this gang's leader!")
+			return
+		if (gang.street_cred < gang.current_revival_price)
+			boutput(user, "You don't have enough cred for a revival syringe!")
+			return
+		gang.street_cred -= gang.current_revival_price
+
+		new/obj/item/tool/janktanktwo(src.loc)
+		gang.current_revival_price += gang.revival_price_gain
 
 
 	proc/handle_gang_gear(var/mob/living/carbon/human/user)
@@ -1251,7 +1255,6 @@ proc/broadcast_to_all_gangs(var/message)
 
 		var/has_gang_uniform = FALSE
 		var/has_gang_headwear = FALSE
-		var/has_spray_paint = FALSE
 		var/has_gang_headset = FALSE
 
 		for(var/obj/item/I in user.contents)
@@ -1259,8 +1262,6 @@ proc/broadcast_to_all_gangs(var/message)
 				has_gang_uniform = TRUE
 			else if(istype(I, src.gang.headwear))
 				has_gang_headwear = TRUE
-			else if(istype(I, /obj/item/spray_paint))
-				has_spray_paint = TRUE
 			else if(istype(I, /obj/item/device/radio/headset))
 				var/obj/item/device/radio/headset/headset = I
 				if (istype(headset.wiretap, /obj/item/device/radio_upgrade/gang))
@@ -1306,13 +1307,11 @@ proc/broadcast_to_all_gangs(var/message)
 				headset.remove_radio_upgrade()
 			headset.install_radio_upgrade(new /obj/item/device/radio_upgrade/gang(frequency = src.gang.gang_frequency))
 
-		if(!has_spray_paint)
-			user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
-
-		if(user.mind.special_role == ROLE_GANG_LEADER)
+		if(user.mind.special_role == ROLE_GANG_LEADER && !src.gang.claimed_briefcase)
 			var/datum/game_mode/gang/gamemode = ticker.mode
+			src.gang.claimed_briefcase = TRUE
 			if(gamemode.random_gangs)
-				boutput(user, "<span class='alert'>Your gang is already formed, you get no recruitment flyers.</span>")
+				user.put_in_hand_or_drop(new /obj/item/storage/box/gang_flyers/random_gangs(user.loc, src.gang))
 			else
 				user.put_in_hand_or_drop(new /obj/item/storage/box/gang_flyers(user.loc, src.gang))
 
@@ -1331,6 +1330,20 @@ proc/broadcast_to_all_gangs(var/message)
 			src.UpdateOverlays(image('icons/obj/large_storage.dmi', "greenlight"), "light")
 		else
 			src.UpdateOverlays(image('icons/obj/large_storage.dmi', "redlight"), "light")
+
+	proc/take_damage(var/amount)
+		// Alert the gang that owns the closet.
+		if(src.stored_cash > 0)
+			var/stolenCash = min(src.stored_cash, round(amount * rand(900, 1100)/10)) //if you're laundering money, you gotta watch your locker
+			src.stored_cash -= stolenCash
+			var/obj/item/currency/spacecash/cashObj = new/obj/item/currency/spacecash(src.loc,stolenCash)
+			ThrowRandom(cashObj, 1, bonus_throwforce = -10)
+			superlaunder_stacks = min(superlaunder_stacks, round(src.stored_cash/(GANG_LAUNDER_RATE*1.5)))
+			if (src.damage_warning_timeout == FALSE)
+				src.gang.broadcast_to_gang("Your locker is under attack!")
+				src.damage_warning_timeout = TRUE
+				SPAWN(1 MINUTE)
+					src.damage_warning_timeout = FALSE
 
 
 	proc/respawn_member(var/mob/H)
@@ -1364,13 +1377,24 @@ proc/broadcast_to_all_gangs(var/message)
 			return 0
 
 		//cash score
-		if (istype(item, /obj/item/spacecash))
-			var/obj/item/spacecash/S = item
-			if (S.amount > 10000)
-				boutput(user, "<span class='alert'><b>You can't physically cram more than 10,000[CREDIT_SIGN] into the [src.name] at once!<b></span>")
+		if (istype(item, /obj/item/currency/spacecash))
+			var/obj/item/currency/spacecash/S = item
+
+			var/cash_to_take = max(0,min(GANG_LAUNDER_CAP-stored_cash, S.amount))
+
+			if (S.hasStatus("freshly_laundered"))
+				superlaunder_stacks = superlaunder_stacks + round(cash_to_take/(GANG_LAUNDER_RATE*1.5))
+
+			if (cash_to_take == 0)
+				boutput(user, "<span class='alert'><b>You've crammed the money laundering slot full! Let it launder some.<b></span>")
 				return 0
-			gang.score_cash += round(S.amount/CASH_DIVISOR)
-			gang.add_points(round(S.amount/CASH_DIVISOR))
+			else if (cash_to_take < S.amount)
+				stored_cash += cash_to_take
+				S.amount -= cash_to_take
+				boutput(user, "<span class='alert'><b>You load [cash_to_take][CREDIT_SIGN] into the [src.name], the laundering slot is full.<b></span>")
+				S.UpdateStackAppearance()
+				return 0
+			stored_cash += S.amount
 
 		//gun score
 		else if (istype(item, /obj/item/gun))
@@ -1391,6 +1415,8 @@ proc/broadcast_to_all_gangs(var/message)
 			var/temp_score_drug = get_I_score_drug(item)
 			gang.score_drug += temp_score_drug
 			gang.spendable_points += temp_score_drug
+			if(temp_score_drug == 0)
+				return 0
 
 		user.u_equip(item)
 		item.dropped(user)
@@ -1469,10 +1495,16 @@ proc/broadcast_to_all_gangs(var/message)
 			return
 
 
-		if(istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/gun) || istype(W,/obj/item/currency/spacecash) || (W.reagents != null && W.reagents.total_volume > 0))
+		if(istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/gun) || istype(W,/obj/item/currency/spacecash))
 			if (insert_item(W,user))
 				user.visible_message("<span class='notice'>[user] puts [W] into [src]!</span>")
 			return
+
+		//split this out because fire extinguishers should probably not just get stored
+		if (W.reagents != null && W.reagents.total_volume > 0)
+			if (insert_item(W,user))
+				user.visible_message("<span class='notice'>[user] puts [W] into [src]!</span>")
+				return
 
 		if(istype(W,/obj/item/satchel))
 			var/obj/item/satchel/S = W
@@ -1491,7 +1523,18 @@ proc/broadcast_to_all_gangs(var/message)
 			return
 
 		user.lastattacked = src
-		user.visible_message("<span class='alert'>[user] ineffectually hits the [src] with [W]!</span>")
+		switch(W.hit_type)
+			if (DAMAGE_BURN)
+				user.visible_message("<span class='alert'>[user] ineffectually hits the [src] with [W]!</span>")
+			else
+				if (src.stored_cash > 0) //if it isn't obvious hitting an empty locker does nothing
+					attack_particle(user,src)
+					hit_twitch(src)
+					if (W.hitsound)
+						playsound(src.loc, W.hitsound, 50, 1)
+				take_damage(W.force)
+				user.visible_message("<span class='alert'><b>[user] hits the [src] with [W]!<b></span>")
+
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if(!istype(O, /obj/item/plant/herb/cannabis))
@@ -1708,6 +1751,9 @@ proc/broadcast_to_all_gangs(var/message)
 		src.gang = gang
 		..()
 
+	random_gangs
+		spawn_contents = list(/obj/item/spray_paint = 3, /obj/item/tool/quickhack = 2, /obj/item/switchblade = 1)
+
 	make_my_stuff()
 		..()
 
@@ -1829,13 +1875,6 @@ proc/broadcast_to_all_gangs(var/message)
 	price = 1000
 	item_path = /obj/item/dagger/throwing_knife
 
-/datum/gang_item/ninja/nunchucks
-	name = "Throwing Knive"
-	desc = "A knife made to be thrown."
-	class2 = "weapon"
-	price = 1000
-	// item_path = /obj/item/nunchucks
-
 /datum/gang_item/ninja/sneaking_suit
 	name = "Sneaking Suit"
 	desc = "Become the shadows."
@@ -1929,10 +1968,17 @@ proc/broadcast_to_all_gangs(var/message)
 /////////////////////////////////////////////////////////
 /datum/gang_item/consumable/medkit
 	name = "First Aid Kit"
-	desc = "A set of medicines for those expecting to be beaten up."
+	desc = "A simple box of medicine for those expecting to be beaten up."
 	class2 = "Healing"
 	price = 500
 	item_path = /obj/item/storage/firstaid/regular
+
+/datum/gang_item/consumable/omnizine
+	name = "Omnizine Injector"
+	desc = "A single, convenient dose of omnizine."
+	class2 = "Healing"
+	price = 900
+	item_path = /obj/item/reagent_containers/emergency_injector/omnizine
 
 /datum/gang_item/consumable/quickhack
 	name = "Doorjack"

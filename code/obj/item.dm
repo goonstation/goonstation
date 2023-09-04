@@ -645,7 +645,9 @@ ABSTRACT_TYPE(/obj/item)
 
 	if(src.material)
 		P.setMaterial(src.material, mutable = src.material.isMutable())
-
+	if(src.statusEffects)
+		for (var/datum/statusEffect/effect in src.statusEffects)
+			P.changeStatus(effect.id, effect.duration)
 	src.change_stack_amount(-toRemove)
 	P.change_stack_amount(toRemove - P.amount)
 	return P

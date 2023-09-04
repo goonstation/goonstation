@@ -61,7 +61,6 @@
 
 	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/currency) && src.amount < src.max_stack)
-
 			user.visible_message("<span class='notice'>[user] stacks some [display_name].</span>")
 			stack_item(I)
 		else
@@ -99,6 +98,22 @@
 		src.amount = max(1, passed_genes?.get_effective_value("potency") * rand(2,4))
 		src.UpdateStackAppearance()
 		return src
+
+	attackby(var/obj/item/I, mob/user)
+		if (istype(I,/obj/item/currency/spacecash))
+			var/obj/item/currency/spacecash/other = I
+			if (src.hasStatus("freshly_laundered") && other.hasStatus("freshly_laundered"))
+				..()
+				return
+			else
+				boutput(user, "Ew, this other cash is FILTHY. It's ruined the whole stack!")
+				I.delStatus("freshly_laundered")
+				src.delStatus("freshly_laundered")
+		..()
+
+	get_desc()
+		if (src.hasStatus("freshly_laundered"))
+			. += "It feels warm & soft."
 
 	_update_stack_appearance()
 		src.UpdateName()
