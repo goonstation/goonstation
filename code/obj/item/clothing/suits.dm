@@ -1221,7 +1221,9 @@
 				src.dropped(user)
 				qdel(src)
 		#else
-		src.receives_storage = TRUE
+		New()
+			src.receives_storage = TRUE
+			..()
 		#endif
 
 		setupProperties()
@@ -1293,7 +1295,6 @@
 			item_state = "syndie_specialist-firebrand"
 
 			protective_temperature = 100000
-
 			receives_storage = TRUE
 
 			setupProperties()
@@ -1313,7 +1314,6 @@
 			name = "specialist operative marksman's suit"
 			icon_state = "syndie_specialist-sniper"
 			item_state = "syndie_specialist-sniper"
-
 			receives_storage = TRUE
 
 			setupProperties()
