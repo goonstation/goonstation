@@ -11,10 +11,21 @@
 	icon_state = "beaker"
 	item_state = "beaker"
 	initial_volume = 50
-	var/image/fluid_image
 	var/icon_style = "beaker"
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	object_flags = NO_GHOSTCRITTER
+	var/solid_volume
+	var/liquid_volume
+	var/gas_volume
+	var/datum/reagents/solids
+	var/datum/reagents/liquids
+	var/datum/reagents/gases
+	var/solid_fluid_state
+	var/liquid_fluid_state
+	var/image/solid_fluid_image
+	var/image/liquid_fluid_image
+	var/image/gas_fluid_image
+
 
 	on_reagent_change()
 		..()
@@ -23,17 +34,79 @@
 	update_icon()
 		src.underlays = null
 		if (reagents.total_volume)
-			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
-			if (!src.fluid_image)
-				src.fluid_image = image(src.icon, "fluid-[src.icon_style][fluid_state]", -1)
+			solids = new /datum/reagents()
+			liquids = new /datum/reagents()
+			gases = new /datum/reagents()
+
+			// Sort out every reagent into lists
+			for(var/reagent_id in src.reagents.reagent_list)
+				var/datum/reagent/reagent = src.reagents.reagent_list[reagent_id]
+				if(reagent.reagent_state == SOLID)
+					solid_volume += reagent.volume
+					liquid_volume += reagent.volume
+					solids.reagent_list[reagent_id] = reagent
+				if(reagent.reagent_state == LIQUID)
+					liquid_volume += reagent.volume
+					liquids.reagent_list[reagent_id] = reagent
+				if(reagent.reagent_state == GAS)
+					gases.reagent_list[reagent_id] = reagent // Gases will fill up all of a container so no need to track volume
+					gas_volume += reagent.volume // that being said Ill do so anyways solely to make some code farther down work better
+
+			// Get what fluid state each thing should be
+			if(solid_volume != 0)
+				solid_fluid_state = round(clamp((solid_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
+			if(liquid_volume != solid_volume)
+				liquid_fluid_state = round(clamp((liquid_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
+			if(solid_fluid_state == liquid_fluid_state) // This is so liquids are always visible if present
+				liquid_fluid_state += 1
+
+			// Okay lets actually turn what we stored into images
+			if (!src.solid_fluid_image)
+				src.solid_fluid_image = image(src.icon, "fluid-[src.icon_style][solid_fluid_state]", -2)
 			else
-				src.fluid_image.icon_state = "fluid-[src.icon_style][fluid_state]"
-			src.icon_state = "[src.icon_style][fluid_state]"
-			var/datum/color/average = reagents.get_average_color()
-			src.fluid_image.color = average.to_rgba()
-			src.underlays += src.fluid_image
+				src.solid_fluid_image.icon_state = "fluid-[src.icon_style][solid_fluid_state]"
+			if (!src.liquid_fluid_image)
+				src.liquid_fluid_image = image(src.icon, "fluid-[src.icon_style][liquid_fluid_state]", -1)
+			else
+				src.liquid_fluid_image.icon_state = "fluid-[src.icon_style][liquid_fluid_state]"
+			if (!src.gas_fluid_image)
+				src.gas_fluid_image = image(src.icon, "fluid-[src.icon_style]5", -3)
+			else
+				src.gas_fluid_image.icon_state = "fluid-[src.icon_style]5"
+			// Where we cut off the container
+			if(gas_volume == null)
+				src.icon_state = "[src.icon_style][liquid_fluid_state]"
+			else
+				src.icon_state = "[src.icon_style]5"
+
+			// Now lets add color to everything
+			if(solids)
+				var/datum/color/solid_average = solids.get_average_color()
+				src.solid_fluid_image.color = solid_average.to_rgba()
+				src.underlays += src.solid_fluid_image
+			if(liquids)
+				var/datum/color/liquid_average = liquids.get_average_color()
+				src.liquid_fluid_image.color = liquid_average.to_rgba()
+				src.underlays += src.liquid_fluid_image
+			if(gases)
+				var/datum/color/gas_average = gases.get_average_color()
+				src.gas_fluid_image.color = gas_average.to_rgba()
+				src.underlays += src.gas_fluid_image
 		else
 			src.icon_state = src.icon_style
+
+		// Fuck you burn it all down
+		solid_volume = null
+		liquid_volume = null
+		gas_volume = null
+		solids = null
+		liquids = null
+		gases = null
+		solid_fluid_state = null
+		liquid_fluid_state = null
+		solid_fluid_image = null
+		liquid_fluid_image = null
+		gas_fluid_image = null
 
 		if (istype(src.master,/obj/item/assembly))
 			var/obj/item/assembly/A = src.master

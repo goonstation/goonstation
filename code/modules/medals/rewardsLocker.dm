@@ -374,7 +374,6 @@
 			skin_target.desc = "A large round-bottom flask, for all your chemistry needs. (Base Item: [prev])"
 			skin_target.icon_style = "flask"
 			skin_target.item_state = "flask"
-			skin_target.fluid_image = image(skin_target.icon, "fluid-flask")
 			skin_target.UpdateIcon()
 			activator.set_clothing_icon_dirty()
 			return 1
