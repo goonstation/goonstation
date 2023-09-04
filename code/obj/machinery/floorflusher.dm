@@ -272,7 +272,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 
 		H.init(src)	// copy the contents of disposer to holder
 
-		air_contents.zero() // empty gas
+		ZERO_GASES(air_contents)
 
 		sleep(1 SECOND)
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)

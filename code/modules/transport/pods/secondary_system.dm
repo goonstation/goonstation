@@ -313,11 +313,11 @@
 	return C
 
 /obj/item/shipcomponent/secondary_system/cargo/on_shipdeath(var/obj/machinery/vehicle/ship)
-	while(length(load))
-		var/obj/O = src.unload(pick(load))
-		if (O)
-			O.visible_message("<span class='alert'><b>[O]</b> is flung out of [src.ship]!</span>")
-			O.throw_at(get_edge_target_turf(O, pick(alldirs)), rand(3,7), 3)
+	shuffle_list(src.load)
+	for(var/atom/movable/AM in src.load)
+		if (src.unload(AM))
+			AM.visible_message("<span class='alert'><b>[AM]</b> is flung out of [src.ship]!</span>")
+			AM.throw_at(get_edge_target_turf(AM, pick(alldirs)), rand(3,7), 3)
 		else
 			break
 	..()

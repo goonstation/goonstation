@@ -191,6 +191,7 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 	src.goods_sell += new/datum/commodity/flock/tech/flockburger(src)
 	src.goods_sell += new/datum/commodity/flock/tech/flockblocker(src)
 	src.goods_sell += new/datum/commodity/flock/tech/incapacitor(src)
+	src.goods_sell += new/datum/commodity/flock/tech/ai_kit_flock(src)
 
 
 	greeting= {"[src.name] clicks from your headset. \"[gradientText(grad_col_1, grad_col_2, "Greetings, spacefarer. There are many permutations of the Signal, and we are an iteration less inclined to senseless destruction. Do you wish to engage in trade?")]\""}

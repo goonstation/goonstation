@@ -514,8 +514,8 @@ MATERIAL
 	item_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = W_CLASS_NORMAL
-	force = 9
-	throwforce = 15
+	force = 4
+	throwforce = 8
 	throw_speed = 5
 	throw_range = 20
 	m_amt = 1875
@@ -1083,6 +1083,12 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			sheet_cost = 2
 			icon = 'icons/obj/furniture/table_industrial.dmi'
 			icon_state = "table_parts"
+		industrialchair
+			recipe_id = "industrialchair"
+			craftedType = /obj/item/furniture_parts/dining_chair/industrial
+			name = "Industrial Chair Parts"
+			icon = 'icons/obj/furniture/chairs.dmi'
+			icon_state = "ichair_parts"
 
 	metal
 		fl_tiles
@@ -1291,7 +1297,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			icon_state = "wstool"
 		chair
 			recipe_id = "wood_chair"
-			craftedType = /obj/stool/chair/wooden/constructed
+			craftedType = /obj/stool/chair/dining/constructed
 			name = "Chair"
 			icon = 'icons/obj/furniture/chairs.dmi'
 			icon_state = "chair_wooden"

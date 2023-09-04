@@ -230,6 +230,43 @@ ABSTRACT_TYPE(/datum/terrainify)
 		for(var/i in 1 to ore/2)
 			Turfspawn_Asteroid_SeedEvents(turfs)
 
+	proc/place_prefabs(prefabs_to_place, flags)
+		var/failsafe = 800
+		for (var/n = 1, n <= prefabs_to_place && failsafe-- > 0)
+			var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet)
+			if (P)
+				var/maxX = (world.maxx - AST_MAPBORDER)
+				var/maxY = (world.maxy - AST_MAPBORDER)
+				var/stop = 0
+				var/count= 0
+				var/maxTries = (P.required ? 200 : 80)
+				while (!stop && count < maxTries && failsafe-- > 0) //Kinda brute forcing it. Dumb but whatever.
+					var/turf/target = locate(rand(AST_MAPBORDER, maxX), rand(AST_MAPBORDER, maxY), Z_LEVEL_STATION)
+					if(!P.check_biome_requirements(target))
+						count++
+						continue
+					if(istype(target.loc, /area/station))
+						count++
+						continue
+
+					var/datum/loadedProperties/ret = P.applyTo(target)
+					if (ret)
+						var/space_turfs = block(locate(ret.sourceX, ret.sourceY, ret.sourceZ), locate(ret.maxX, ret.maxY, ret.maxZ))
+						for(var/turf/T in space_turfs)
+							if(!istype(T, /turf/space))
+								space_turfs -= T
+						station_repair.repair_turfs(space_turfs)
+
+						logTheThing(LOG_DEBUG, null, "Prefab Z1 placement #[n] [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
+						n++
+						stop = 1
+					else
+						logTheThing(LOG_DEBUG, null, "Prefab Z1 placement #[n] [P.type] failed due to blocked area. [target] @ [log_loc(target)]")
+					count++
+				if (count == maxTries)
+					logTheThing(LOG_DEBUG, null, "Prefab Z1 placement #[n] [P.type] failed due to maximum tries [maxTries][P.required?" WARNING: REQUIRED FAILED":""].")
+			else break
+
 	proc/convert_turfs(list/turfs)
 		station_repair.station_generator.generate_terrain(turfs, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
 
@@ -237,14 +274,14 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Desert Station"
 	desc = "Turn space into into a nice desert full of sand and stones."
 	additional_options = list("Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj")
+	additional_toggles = list("Ambient Light Obj"=TRUE)
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
 			var/const/ambient_light = "#cfcfcf"
 			station_repair.station_generator = new/datum/map_generator/desert_generator
 			if(params["Ambient Light Obj"])
-				station_repair.ambient_obj = new /obj/ambient
+				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
 				station_repair.ambient_obj.color = ambient_light
 			else
 				station_repair.ambient_light = new /image/ambient
@@ -320,7 +357,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Ice Moon Station"
 	desc = "Turns space into the Outpost Theta... CO2 + Ice. Ice Spiders, Seal Pups, Brullbar, and the occasional Yeti."
 	additional_options = list("Snowing"=list("Yes","No","Particles"), "Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Pitch Black")
+	additional_toggles = list("Pitch Black"=FALSE)
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
@@ -383,7 +420,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Swamp Station"
 	desc = "Turns space into a swamp"
 	additional_options = list("Rain"=list("Yes","No", "Particles"), "Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj")
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
@@ -402,7 +439,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 
 			if(params["Ambient Light Obj"])
-				station_repair.ambient_obj = new /obj/ambient
+				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
 				station_repair.ambient_obj.color = ambient_light
 			else
 				station_repair.ambient_light = new /image/ambient
@@ -425,6 +462,9 @@ ABSTRACT_TYPE(/datum/terrainify)
 					S.vis_contents |= station_repair.ambient_obj
 				else
 					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+
+			if(params["Prefabs"])
+				place_prefabs(10)
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 			handle_mining(params, space)
@@ -497,7 +537,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/trenchify
 	name = "Trench Station"
 	desc = "Generates trench caves on the station Z"
-	additional_toggles = list("Hostile Mobs")
+	additional_toggles = list("Hostile Mobs"=TRUE)
 	allow_underwater = TRUE
 
 	convert_station_level(params, datum/tgui/ui)
@@ -569,7 +609,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Winter Station"
 	desc = "Turns space into a colder snowy place"
 	additional_options = list("Weather"=list("Snow", "Light Snow", "None"), "Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj")
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
@@ -577,7 +617,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			station_repair.station_generator = new/datum/map_generator/snow_generator
 
 			if(params["Ambient Light Obj"])
-				station_repair.ambient_obj = new /obj/ambient
+				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
 				station_repair.ambient_obj.color = ambient_light
 			else
 				station_repair.ambient_light = new /image/ambient
@@ -604,6 +644,9 @@ ABSTRACT_TYPE(/datum/terrainify)
 				if(snow)
 					new station_repair.weather_effect(S)
 
+			if(params["Prefabs"])
+				place_prefabs(10)
+
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 			handle_mining(params, space)
 
@@ -615,7 +658,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Forest Station"
 	desc = "Turns space into a lush and wooden place"
 	additional_options = list("Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj")
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
@@ -623,7 +666,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			station_repair.station_generator = new/datum/map_generator/forest_generator
 
 			if(params["Ambient Light Obj"])
-				station_repair.ambient_obj = new /obj/ambient
+				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
 				station_repair.ambient_obj.color = ambient_light
 			else
 				station_repair.ambient_light = new /image/ambient
@@ -638,6 +681,9 @@ ABSTRACT_TYPE(/datum/terrainify)
 					S.vis_contents |= station_repair.ambient_obj
 				else
 					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+
+			if(params["Prefabs"])
+				place_prefabs(10)
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 			handle_mining(params, space)
@@ -669,6 +715,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/storehouse
 	name = "Storehouse"
 	desc = "Load some nearby storehouse (Run before other Generators!)"
+	additional_toggles = list("Fill Z-Level"=FALSE)
 
 	convert_station_level(params, datum/tgui/ui)
 		if (!..())
@@ -677,7 +724,14 @@ ABSTRACT_TYPE(/datum/terrainify)
 		for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 			space += S
 		var/datum/map_generator/storehouse_generator/generator = new/datum/map_generator/storehouse_generator
-		generator.generate_map()
+		station_repair.station_generator = generator
+
+		if(params["Fill Z-Level"])
+			generator.wall_path = /turf/unsimulated/wall/auto/lead/gray
+			generator.floor_path = /turf/unsimulated/floor/industrial
+			generator.fill_map()
+		else
+			generator.generate_map()
 
 		var/list/turfs_to_clear = shippingmarket.get_path_to_market()
 		turfs_to_clear += station_repair.get_mass_driver_turfs()
@@ -698,7 +752,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	var/terrain
 	var/fabricator
 	var/cars
-	var/allowVehicles
+	var/allowVehicles=TRUE
 	var/terrain_toggles
 	var/terrain_options
 
@@ -759,7 +813,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 					active_terrain = T
 					active_toggles = list()
 					for(var/toggle in active_terrain.additional_toggles)
-						active_toggles[toggle] = FALSE
+						src.active_toggles[toggle] = active_terrain.additional_toggles[toggle] | FALSE
 					active_options = list()
 					for(var/option in active_terrain.additional_options)
 						active_options[option] = active_terrain.additional_options[option][1]

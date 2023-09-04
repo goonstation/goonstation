@@ -60,6 +60,9 @@ ABSTRACT_TYPE(/obj/item)
 
 	var/attack_verbs = "attacks" //! Verb used when you attack someone with this, as in [attacker] [attack_verbs] [victim]. Can be a list or single entry
 
+	/// when attacking, this item can leave a slash wound
+	var/leaves_slash_wound = FALSE
+
 	/*_________*/
 	/*Inventory*/
 	/*‾‾‾‾‾‾‾‾‾*/
@@ -641,7 +644,7 @@ ABSTRACT_TYPE(/obj/item)
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)
-		P.setMaterial(src.material)
+		P.setMaterial(src.material, mutable = src.material.isMutable())
 
 	src.change_stack_amount(-toRemove)
 	P.change_stack_amount(toRemove - P.amount)
@@ -729,8 +732,6 @@ ABSTRACT_TYPE(/obj/item)
 				if (try_put_hand_mousedrop(usr))
 					if (can_reach(usr, over_object))
 						usr.click(over_object, params, src_location, over_control)
-			else
-				actions.start(new /datum/action/bar/private/icon/pickup/then_obj_click(src, over_object, params), usr)
 
 	//Click-drag tk stuff.
 /obj/item/proc/click_drag_tk(atom/over_object, src_location, over_location, over_control, params)
@@ -823,7 +824,7 @@ ABSTRACT_TYPE(/obj/item)
 					user.u_equip(src)
 					. = user.put_in_hand(src, 0)
 				else if (!user.l_hand)
-					if (!target?.can_equip(src, target.slot_l_hand))
+					if (!target?.can_equip(src, SLOT_L_HAND))
 						user.show_text("You need a free hand to do that!", "blue")
 						.= 0
 					else
@@ -840,7 +841,7 @@ ABSTRACT_TYPE(/obj/item)
 					user.u_equip(src)
 					. = user.put_in_hand(src, 1)
 				else if (!user.r_hand)
-					if (!target?.can_equip(src, target.slot_r_hand))
+					if (!target?.can_equip(src, SLOT_R_HAND))
 						user.show_text("You need a free hand to do that!", "blue")
 						.= 0
 					else
@@ -1083,18 +1084,21 @@ ABSTRACT_TYPE(/obj/item)
 					HH.limb.attack_hand(src,M,1)
 				M.next_click = world.time + src.click_delay
 				return
-	else if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/obj/item/parts/arm = null
-		if (H.limbs) //Wire: fix for null.r_arm and null.l_arm
-			arm = H.hand ? H.limbs.l_arm : H.limbs.r_arm // I'm so sorry I couldent kill all this shitcode at once
-		if (H.equipped())
-			H.drop_item()
+	else if(ishuman(M) || iscritter(M))
+		var/datum/limb/active_limb = null
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			active_limb = H.hand ? H.limbs?.l_arm?.limb_data : H.limbs?.r_arm?.limb_data // I'm so sorry I couldent kill all this shitcode at once
+		if(iscritter(M))
+			var/mob/living/critter/C = M
+			active_limb = C.get_active_hand().limb
+		if (M.equipped())
+			M.drop_item()
 			SPAWN(1 DECI SECOND)
-				if (arm)
-					arm.limb_data.attack_hand(src, H, can_reach(H, src))
-		else if (arm)
-			arm.limb_data.attack_hand(src, H, can_reach(H, src))
+				if (active_limb)
+					active_limb.attack_hand(src, M, can_reach(M, src))
+		else if (active_limb)
+			active_limb.attack_hand(src, M, can_reach(M, src))
 
 	else
 		//the verb is PICK-UP, not 'smack this object with that object'
@@ -1346,6 +1350,14 @@ ABSTRACT_TYPE(/obj/item)
 		if(power <= 0)
 			fuckup_attack_particle(user)
 			armor_blocked = 1
+
+	if (src.leaves_slash_wound && power > 0 && hit_area == "chest" && ishuman(M))
+		var/num = rand(0, 2)
+		var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = "slash_wound-[num]", layer = MOB_EFFECT_LAYER)
+		var/mob/living/carbon/human/H = M
+		var/datum/reagent/mob_blood = reagents_cache[H.blood_id]
+		I.color = rgb(mob_blood.fluid_r, mob_blood.fluid_g, mob_blood.fluid_b, mob_blood.transparency)
+		M.UpdateOverlays(I, "slash_wound-[num]")
 
 	if (src.can_disarm && !((src.temp_flags & IS_LIMB_ITEM) && user == M))
 		msgs = user.calculate_disarm_attack(M, 0, 0, 0, is_shove = 1, disarming_item = src)

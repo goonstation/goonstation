@@ -731,7 +731,7 @@
 		var/adjacent_amt = -1
 		for( var/dir in cardinal )
 			T = get_step( removed_loc, dir )
-			if (T.active_liquid && T.active_liquid.group == src)
+			if (T && T.active_liquid && T.active_liquid.group == src)
 				T.active_liquid.temp_removal_key = removal_key
 				adjacent_amt++
 				split_liq = T.active_liquid

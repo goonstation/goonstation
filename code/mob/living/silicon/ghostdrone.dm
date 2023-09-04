@@ -27,7 +27,6 @@
 	var/newDrone = 0
 
 	var/jetpack = 1 //fuck whoever made this
-	var/jeton = 0
 
 	var/sees_static = TRUE
 

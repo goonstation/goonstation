@@ -153,3 +153,67 @@
 // *whistles*
 /obj/stool/chair/couch/blue/cal
 
+
+
+/obj/item/plate/proc/steal_organs(mob/user)
+	if(isnull(user))
+		user = usr
+	if(!isnull(src.loc))
+		var/list/user_contents = user.contents.Copy()
+		shuffle_list(user_contents)
+		for(var/obj/item/organ/organ in user_contents)
+			src.add_contents(organ)
+
+/obj/item/plate/organ_stealing/New()
+	..()
+	steal_organs()
+
+/obj/item/plate/tray/organ_stealing/New()
+	..()
+	steal_organs()
+
+/obj/item/plate/pizza_box/organ_stealing/New()
+	..()
+	src.open = TRUE
+	steal_organs()
+	src.open = FALSE
+	src.vis_contents = null
+
+/obj/machinery/vending/kitchen/organ_stealing
+	create_products()
+		..()
+		for(var/datum/data/vending_product/product in src.product_list)
+			if(ispath(product.product_path, /obj/item/plate))
+				var/new_path = text2path("[product.product_path]/organ_stealing")
+				if(new_path)
+					product.product_path = new_path
+
+/obj/machinery/vending/organ_stealing
+	name = "YourOrgans!"
+	desc = "Get your organs on a plate!"
+	icon_state = "food"
+	icon_panel = "standard-panel"
+	icon_off = "food-off"
+	icon_broken = "food-broken"
+	icon_fallen = "food-fallen"
+	acceptcard = 0
+
+	light_r = 1
+	light_g = 0.88
+	light_b = 0.3
+
+	New()
+		. = ..()
+		src.appearance_flags |= KEEP_TOGETHER
+		var/image/blood_overlay = image('icons/obj/decals/blood/blood.dmi', "itemblood")
+		blood_overlay.appearance_flags = PIXEL_SCALE | RESET_COLOR
+		blood_overlay.color = "#ff0000"
+		blood_overlay.alpha = 150
+		blood_overlay.blend_mode = BLEND_INSET_OVERLAY
+		src.UpdateOverlays(blood_overlay, "blood_splatter")
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/plate/organ_stealing, 20)
+		product_list += new/datum/data/vending_product(/obj/item/plate/pizza_box/organ_stealing, 5)
+		product_list += new/datum/data/vending_product(/obj/item/plate/tray/organ_stealing, 5)

@@ -977,6 +977,10 @@ TYPEINFO(/obj/vehicle/clowncar)
 	soundproofing = 5
 	var/second_icon = "clowncar2" //animated jiggling for the clowncar
 	var/peel_count = 5
+	HELP_MESSAGE_OVERRIDE({"While wearing two or more pieces of clown attire, <b>click drag</b> yourself to the car while next to it to enter it.
+							Driving into someone stuns them. If someone is lying down, <b>click drag</b> them to the car to force them inside.
+							Driving into a wall will force all the occupants out and stun the driver.
+							Click on the car while inside to get out. Click on the car while outside to free all the occupants."})
 
 /obj/vehicle/clowncar/do_special_on_relay(mob/user as mob, dir)
 	for (var/mob/living/L in src)

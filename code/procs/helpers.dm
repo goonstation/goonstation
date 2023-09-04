@@ -2600,3 +2600,9 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 			token = replacetext(token, lowertext(token), replacement)
 		modded_tokens += token
 	. = jointext(modded_tokens, "")
+
+/// Returns the sum of densities of all atoms in the given turf including the turf itself
+proc/total_density(turf/T)
+	. = T.density
+	for (var/atom/A in T)
+		. += A.density
