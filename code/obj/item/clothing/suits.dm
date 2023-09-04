@@ -1169,10 +1169,15 @@
 	contraband = 3
 	team_num = TEAM_SYNDICATE
 	item_function_flags = IMMUNE_TO_ACID
+	/// if it has storage for holding grenades and similar
+	var/receives_storage = FALSE // /obj/item/clothing/suit/space/industrial/syndicate/specialist has similar storage addition
 
 	New()
 		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+		if (src.receives_storage)
+			src.create_storage(/datum/storage, can_hold = list(/obj/item/chem_grenade, /obj/item/old_grenade, /obj/item/firebot_deployer), slots = 6, opens_if_worn = TRUE)
 
 	setupProperties()
 		..()
@@ -1216,9 +1221,7 @@
 				src.dropped(user)
 				qdel(src)
 		#else
-		New()
-			..()
-			src.create_storage(/datum/storage, can_hold = list(/obj/item/chem_grenade, /obj/item/old_grenade, /obj/item/firebot_deployer), slots = 6, opens_if_worn = TRUE)
+		src.receives_storage = TRUE
 		#endif
 
 		setupProperties()
@@ -1257,9 +1260,7 @@
 			setProperty("radprot", 50)
 
 		assault
-			New()
-				..()
-				src.create_storage(/datum/storage, can_hold = list(/obj/item/chem_grenade/flashbang, /obj/item/old_grenade/stinger), slots = 6, opens_if_worn = TRUE)
+			receives_storage = TRUE
 
 		medic
 			name = "specialist operative medic uniform"
@@ -1293,10 +1294,7 @@
 
 			protective_temperature = 100000
 
-			New()
-				..()
-				src.create_storage(/datum/storage, can_hold = list(/obj/item/chem_grenade/napalm, /obj/item/chem_grenade/incendiary,
-					/obj/item/chem_grenade/very_incendiary, /obj/item/firebot_deployer), slots = 6, opens_if_worn = TRUE)
+			receives_storage = TRUE
 
 			setupProperties()
 				..()
@@ -1316,9 +1314,7 @@
 			icon_state = "syndie_specialist-sniper"
 			item_state = "syndie_specialist-sniper"
 
-			New()
-				..()
-				src.create_storage(/datum/storage, can_hold = list(/obj/item/old_grenade/smoke), slots = 6, opens_if_worn = TRUE)
+			receives_storage = TRUE
 
 			setupProperties()
 				..()
@@ -1326,10 +1322,7 @@
 
 		grenadier
 			name = "specialist operative bombsuit"
-
-			New()
-				..()
-				src.create_storage(/datum/storage, can_hold = list(/obj/item/old_grenade/stinger), slots = 6, opens_if_worn = TRUE)
+			receives_storage = TRUE
 
 			setupProperties()
 				..()
@@ -1567,7 +1560,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 
 		New()
 			..()
-			src.create_storage(/datum/storage, can_hold = list(/obj/item/old_grenade/high_explosive), slots = 6, opens_if_worn = TRUE)
+			src.create_storage(/datum/storage, can_hold = list(/obj/item/chem_grenade, /obj/item/old_grenade, /obj/item/firebot_deployer), slots = 6, opens_if_worn = TRUE)
 
 TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	mats = list("MET-3"=20, "uqil"=10, "CON-2" = 10, "POW-2" = 10)
