@@ -689,7 +689,7 @@
 		if (isghostdrone(user))
 			return
 		. += "<span class='notice'>*---------*</span><br>"
-		. += "<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span><br>"
+		. += "<span class='notice'>This is [bicon(src)] <B>[src.name] ([src.get_pronouns()])</B>!</span><br>"
 
 		var/brute = get_brute_damage()
 		var/burn = get_burn_damage()
@@ -705,6 +705,8 @@
 		else
 			. += "<span class='alert'>[src.name] is completely dormant.</span><br>"
 
+		if (src.shell)
+			. += "<span class='success'>[src.name] appears to be an AI-controlled shell.</span><br>"
 
 		if (brute)
 			if (brute < 75)
@@ -727,7 +729,7 @@
 		if (src.module)
 			. += "[src.name] has a [src.module.name] "
 			if (src.module.swappable == 0)
-				. += "built in.<br>"
+				. += "hardwired in.<br>"
 			else
 				. += "installed.<br>"
 		else

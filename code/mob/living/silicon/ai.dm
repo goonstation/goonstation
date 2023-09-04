@@ -1005,25 +1005,30 @@ or don't if it uses a custom topopen overlay
 	if (isghostdrone(user))
 		return list()
 
-	. = list("<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span> [skinsList[coreSkin]]<br>") // skinList[coreSkin] points to the appropriate desc for the current core skin
+	. = list()
+	. += "<span class='notice'>*---------*</span><br>"
+	. += "<span class='notice'>This is [bicon(src)] <B>[src.name] ([src.get_pronouns()])</B>!</span><br>"
+	. += "[skinsList[coreSkin]]<br>" // skinList[coreSkin] points to the appropriate desc for the current core skin
 	if (src.hat)
-		. += "<span class='notice'>[src.name] is wearing the [bicon(src.hat)] [src.hat.name].</span>"
+		. += "<span class='notice'>[src.name] is wearing the [bicon(src.hat)] [src.hat.name].</span><br>"
 
 	if (isdead(src))
-		. += "<span class='alert'>[src.name] is nonfunctional...</span>"
+		. += "<span class='alert'>[src.name] is nonfunctional...</span><br>"
 	else if (isunconscious(src))
-		. += "<span class='alert'>[src.name] doesn't seem to be responding.</span>"
+		. += "<span class='alert'>[src.name] doesn't seem to be responding.</span><br>"
 
 	if (src.bruteloss)
 		if (src.bruteloss < 30)
-			. += "<span class='alert'>[src.name] looks slightly dented.</span>"
+			. += "<span class='alert'>[src.name] looks slightly dented.</span><br>"
 		else
-			. += "<span class='alert'><B>[src.name] looks severely dented!</B></span>"
+			. += "<span class='alert'><B>[src.name] looks severely dented!</B></span><br>"
 	if (src.fireloss)
 		if (src.fireloss < 30)
-			. += "<span class='alert'>[src.name] looks slightly burnt!</span>"
+			. += "<span class='alert'>[src.name] looks slightly burnt!</span><br>"
 		else
-			. += "<span class='alert'><B>[src.name] looks severely burnt!</B></span>"
+			. += "<span class='alert'><B>[src.name] looks severely burnt!</B></span><br>"
+
+	. += "<span class='notice'>*---------*</span><br>"
 
 	if(issilicon(user) || isAI(user))
 		var/lr = null
