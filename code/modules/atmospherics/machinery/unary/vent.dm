@@ -51,7 +51,7 @@
 	UpdateIcon()
 
 /obj/machinery/atmospherics/pipe/vent/hide(var/intact) //to make the little pipe section invisible, the icon changes.
-	if (intact && istype(loc, /turf/simulated) && level == UNDERFLOOR)
+	if (intact && issimulatedturf(src.loc) && level == UNDERFLOOR)
 		src.icon_state = "hvent"
 	else
 		src.icon_state = src.node1 ? "intact" : ""
