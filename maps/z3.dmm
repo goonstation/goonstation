@@ -18571,9 +18571,9 @@
 /turf/simulated/floor/black,
 /area/radiostation/bedroom)
 "jGH" = (
-/obj/decal/fakeobjects/cargopad,
 /obj/storage/secure/crate/morrigan,
 /obj/landmark/morrigan_crate,
+/obj/decal/fakeobjects/teleport_pad,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/helldrone)
 "jIB" = (
@@ -21163,7 +21163,6 @@
 /area/diner/hangar)
 "qrv" = (
 /obj/storage/crate,
-/obj/item/clothing/mask/medical,
 /obj/item/clothing/suit/space/syndicate_worn,
 /obj/item/clothing/mask/gas/swat,
 /obj/item/clothing/under/misc/syndicate,
@@ -23624,11 +23623,6 @@
 	},
 /turf/simulated/floor/scorched2,
 /area/diner/hangar)
-"wuL" = (
-/obj/storage/secure/crate/morrigan,
-/obj/decal/fakeobjects/cargopad,
-/turf/unsimulated/floor/red/redblackchecker,
-/area/helldrone)
 "wuN" = (
 /obj/decal/cleanable/dirt,
 /obj/shrub{
@@ -37170,7 +37164,7 @@ aaa
 aaa
 aaa
 bgu
-wuL
+krR
 oua
 oua
 fYQ
