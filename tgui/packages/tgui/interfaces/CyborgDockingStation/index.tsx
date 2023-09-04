@@ -139,13 +139,7 @@ const OccupantStatusDrone = (props) => {
     <>
       <LabeledList>
         <OccupantCellDisplay cellData={occupant.cell} act={act} />
-        <LabeledList.Item label="Module" buttons={
-          <DockingAllowedButton
-            onClick={() => act("module-remove")}
-            icon="minus"
-            tooltip="Remove the occupant's module"
-            disabled={!occupant.module} />
-        }>
+        <LabeledList.Item label="Module">
           {occupant.module || <Box as="span" color="red">No Module Installed</Box>}
         </LabeledList.Item>
       </LabeledList>

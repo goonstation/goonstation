@@ -235,8 +235,6 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 			var/turf/T = get_turf(src)
 			for(var/obj/item/cell/C in src.contents)
 				C.set_loc(T)
-			for(var/obj/item/robot_module/M in src.contents)
-				M.set_loc(T)
 			for(var/obj/item/ai_interface/I in src.contents)
 				I.set_loc(T)
 
@@ -244,7 +242,6 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 			frame.shelltypetoapply = src.shelltype
 			frame.emagged = src.emagged
 			frame.syndicate = src.syndicate
-			frame.freemodule = src.freemodule
 			frame.update_icon()
 
 			src.ghostize()
@@ -1141,8 +1138,6 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 				available_actions.Add("Remove the Brain")
 			if (src.ai_interface)
 				available_actions.Add("Remove the AI Interface")
-			if (src.module && src.module != "empty")
-				available_actions.Add("Remove the Module")
 			if (cell)
 				available_actions.Add("Remove the Power Cell")
 
@@ -1186,16 +1181,6 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 
 					if (src in available_ai_shells)
 						available_ai_shells -= src
-
-				if ("Remove the Module")
-					if (!src.module)
-						return
-					if (istype(src.module,/obj/item/robot_module/))
-						var/obj/item/robot_module/_module = src.module
-						user.put_in_hand_or_drop(_module)
-						src.remove_module()
-						user.show_text("You remove [src.module].")
-						src.module = null
 
 				if ("Remove the Power Cell")
 					if (!src.cell)
@@ -1503,28 +1488,6 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 				src.internal_pda.alertgroups = RM.alertgroups
 			src.ears = src.radio
 			src.radio.set_loc(src)
-
-	proc/remove_module()
-		if(!istype(src.module))
-			return null
-		var/obj/item/robot_module/RM = src.module
-		RM.icon_state = initial(RM.icon_state)
-		src.show_text("Your module was removed!", "red")
-		uneq_all()
-		src.module = null
-		hud.module_removed()
-		if(istype(src.radio) && src.radio != src.default_radio)
-			src.radio.set_loc(RM)
-			if (src.shell)
-				if(isnull(src.ai_radio))
-					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
-				src.radio = src.ai_radio
-			else
-				src.radio = src.default_radio
-				src.internal_pda.mailgroups = initial(src.internal_pda.mailgroups)
-				src.internal_pda.alertgroups = initial(src.internal_pda.alertgroups)
-			src.ears = src.radio
-		return RM
 
 	proc/activated(obj/item/O)
 		if(src.module_states[1] == O) return 1

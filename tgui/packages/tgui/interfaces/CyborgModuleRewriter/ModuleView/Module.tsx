@@ -32,19 +32,6 @@ const resetOptions = [
   },
 ];
 
-const resetOptionsDrone = [
-  {
-    id: 'civilian_d',
-    name: 'Civilian',
-  }, {
-    id: 'engineering_d',
-    name: 'Engineering',
-  }, {
-    id: 'medical_d',
-    name: 'Medsci',
-  },
-];
-
 interface ModuleProps {
   onMoveToolDown: (toolRef: string) => void,
   onMoveToolUp: (toolRef: string) => void,
@@ -65,44 +52,23 @@ export const Module: SFC<ModuleProps> = props => {
   return (
     <>
       <Section title="Module Presets">
-        <Section title="Cyborg">
-          {
-            resetOptions.map(resetOption => {
-              const {
-                id,
-                name,
-              } = resetOption;
-              return (
-                <Button
-                  key={id}
-                  onClick={() => onResetModule(id)}
-                  title={name}
-                >
-                  {name}
-                </Button>
-              );
-            })
-          }
-        </Section>
-        <Section title="Drone">
-          {
-            resetOptionsDrone.map(resetOptionDrone => {
-              const {
-                id,
-                name,
-              } = resetOptionDrone;
-              return (
-                <Button
-                  key={id}
-                  onClick={() => onResetModule(id)}
-                  title={name}
-                >
-                  {name}
-                </Button>
-              );
-            })
-          }
-        </Section>
+        {
+          resetOptions.map(resetOption => {
+            const {
+              id,
+              name,
+            } = resetOption;
+            return (
+              <Button
+                key={id}
+                onClick={() => onResetModule(id)}
+                title={name}
+              >
+                {name}
+              </Button>
+            );
+          })
+        }
       </Section>
       <Section title="Tools">
         <Tools
