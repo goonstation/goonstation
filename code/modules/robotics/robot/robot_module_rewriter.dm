@@ -168,4 +168,3 @@
 							module.tools -= tool
 							qdel(tool)
 			. = TRUE
-
