@@ -1228,6 +1228,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	var/freemodule = TRUE
 	var/build_step = 0
 	var/shelltypetoapply = "eyebot"
+	var/moduletoapply = null
 	var/obj/item/cell/cell = null
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/ai_interface/ai_interface = null
@@ -1523,6 +1524,12 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			drone.cell = src.cell
 			drone.cell.set_loc(drone)
 
+		if (src.moduletoapply)
+			drone.module = (moduletoapply)
+			drone.module.set_loc(drone)
+			drone.hud.update_module()
+			drone.hud.module_added()
+
 		if (drone.mind && !drone.ai_interface)
 			drone.set_loc(get_turf(src))
 
@@ -1566,6 +1573,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 /obj/item/parts/robot_parts/drone_frame/complete_shell
 	shelltypetoapply = "eyebot"
+	moduletoapply = new/obj/item/robot_module/default_d
+	freemodule = FALSE
 	build_step = 3
 	cell = new/obj/item/cell/shell_cell/charged
 	ai_interface = new/obj/item/ai_interface

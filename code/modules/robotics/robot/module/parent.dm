@@ -16,6 +16,7 @@ ADMIN_INTERACT_PROCS(/obj/item/robot_module, proc/admin_add_tool, proc/admin_rem
 	var/include_common_tools = TRUE
 	var/included_tools = null
 	var/moduletype = "cyborg"
+	var/swappable = 1
 	var/included_cosmetic = null
 	var/radio_type = null
 	var/obj/item/device/radio/radio = null

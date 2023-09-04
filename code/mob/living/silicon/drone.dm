@@ -236,7 +236,8 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 			for(var/obj/item/cell/C in src.contents)
 				C.set_loc(T)
 			for(var/obj/item/robot_module/M in src.contents)
-				M.set_loc(T)
+				if(M.swappable == 1) //no insertable unswappable modules for you if you smash open an eyebot
+					M.set_loc(T)
 			for(var/obj/item/ai_interface/I in src.contents)
 				I.set_loc(T)
 
@@ -1192,10 +1193,13 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 						return
 					if (istype(src.module,/obj/item/robot_module/))
 						var/obj/item/robot_module/_module = src.module
-						user.put_in_hand_or_drop(_module)
-						src.remove_module()
-						user.show_text("You remove [src.module].")
-						src.module = null
+						if (_module.swappable == 0)
+							boutput(user, "<span class='alert'>You cannot remove a hardwired module!</span>")
+						else
+							user.put_in_hand_or_drop(_module)
+							src.remove_module()
+							user.show_text("You remove [src.module].")
+							src.module = null
 
 				if ("Remove the Power Cell")
 					if (!src.cell)

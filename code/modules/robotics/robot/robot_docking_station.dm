@@ -915,6 +915,9 @@ TYPEINFO(/obj/machinery/recharge_station)
 			var/moduleRef = params["moduleRef"]
 			if(moduleRef)
 				var/obj/item/robot_module/module = locate(moduleRef) in src.modules
+				if (module.swappable == 0 || R.module.swappable == 0)
+					boutput(user, "<span class='alert'>You cannot swap out a hardwired module!</span>")
+					return
 				if (isdrone(src.occupant) && module.moduletype != "drone")
 					boutput(user, "<span class='alert'>There's no way that module will fit, it's way too big!</span>")
 					return
@@ -935,7 +938,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			if (!isrobot(src.occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
-			if (R.module)
+			if (R.module && R.module.swappable == 1)
 				var/obj/item/robot_module/removed_module = R.remove_module()
 				src.modules.Add(removed_module)
 				removed_module.set_loc(src)

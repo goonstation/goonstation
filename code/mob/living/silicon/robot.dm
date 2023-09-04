@@ -1575,8 +1575,11 @@
 						return
 					if (istype(src.module,/obj/item/robot_module/))
 						var/obj/item/robot_module/RM = src.remove_module()
-						user.put_in_hand_or_drop(RM)
-						user.show_text("You remove [RM].")
+						if (RM.swappable == 0)
+							boutput(user, "<span class='alert'>You cannot remove a hardwired module!</span>")
+						else
+							user.put_in_hand_or_drop(RM)
+							user.show_text("You remove [RM].")
 
 				if ("Remove the Power Cell")
 					if (!src.cell)
