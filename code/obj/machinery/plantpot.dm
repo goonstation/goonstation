@@ -660,8 +660,8 @@ TYPEINFO(/obj/machinery/plantpot)
 			user.u_equip(SEED)
 			SEED.set_loc(src)
 			if(SEED.planttype)
-				src.HYPnewplant(SEED)
 				logTheThing(LOG_STATION, user, "plants a [SEED.planttype?.name] [SEED.planttype?.type] seed at [log_loc(src)].")
+				src.HYPnewplant(SEED)
 				if(!(user in src.contributors))
 					src.contributors += user
 			else
