@@ -5,4 +5,4 @@
 /datum/component/transform_on_pickup/proc/fix_transform(source)
 	var/obj/O = parent
 	O.transform = matrix()
-	del(src)
+	qdel(src)
