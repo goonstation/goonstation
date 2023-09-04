@@ -220,10 +220,10 @@
 // medical doctor. scientist.
 /datum/robot/module_tool_creator/recursive/module/medical_d
 	definitions = list(
-		/obj/item/reagent_containers/mender/brute,
-		/obj/item/reagent_containers/mender/burn,
-		/obj/item/robospray,
+		/obj/item/reagent_containers/mender/brute/mini,
+		/obj/item/reagent_containers/mender/burn/mini,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/hand_labeler,
+		/obj/item/device/gps,
 	)

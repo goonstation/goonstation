@@ -617,6 +617,9 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 		name = "brute auto-mender"
 		borg = 1
 
+	mini
+		initial_volume = 50
+
 	high_capacity
 		initial_volume = 500
 
@@ -626,6 +629,9 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 	medbot
 		name = "burn auto-mender"
 		borg = 1
+
+	mini
+		initial_volume = 50
 
 	high_capacity
 		initial_volume = 500
