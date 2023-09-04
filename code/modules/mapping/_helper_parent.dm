@@ -24,7 +24,7 @@ ABSTRACT_TYPE(/obj/mapping_helper)
 #ifdef CHECK_MORE_RUNTIMES
 		for(var/obj/mapping_helper/helper in src.loc)
 			if(helper.type == src.type && helper != src)
-				CRASH("Two or more mapping helpers of type [src.type] found on [x], [y], [z]")
+				CRASH("Two or more mapping helpers of type [src.type] found on [x], [y], [z] at area [get_area(src)]")
 #endif
 		if(src.disposed)
 			return
