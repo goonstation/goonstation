@@ -650,16 +650,16 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 
 
 		if (brute)
-			if (brute < 10)
+			if (brute < 15)
 				. += "<span class='alert'>[src.name] looks slightly dented.</span><br>"
 			else
 				. += "<span class='alert'><B>[src.name] looks severely dented!</B></span><br>"
 		if (burn)
-			if (burn < 10)
+			if (burn < 15)
 				. += "<span class='alert'>[src.name] has slightly burnt wiring.</span><br>"
 			else
 				. += "<span class='alert'><B>[src.name] has severely burnt wiring!</B></span><br>"
-		if (src.health <= 15)
+		if (src.health <= 20)
 			. += "<span class='alert'>[src.name] is twitching and sparking!</span><br>"
 		if (isunconscious(src))
 			. += "<span class='alert'>[src.name] doesn't seem to be responding.</span><br>"
@@ -668,7 +668,11 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 		. += "The power cell display reads: [ cell ? "[round(cell.percent())]%" : "WARNING: No cell installed."]<br>"
 
 		if (src.module)
-			. += "[src.name] has a [src.module.name] installed.<br>"
+			. += "[src.name] has a [src.module.name] "
+			if (src.module.swappable == 0)
+				. += "built in.<br>"
+			else
+				. += "installed.<br>"
 		else
 			. += "[src.name] does not appear to have a module installed.<br>"
 

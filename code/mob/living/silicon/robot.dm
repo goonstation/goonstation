@@ -725,7 +725,11 @@
 		. += "The power cell display reads: [ cell ? "[round(cell.percent())]%" : "WARNING: No cell installed."]<br>"
 
 		if (src.module)
-			. += "[src.name] has a [src.module.name] installed.<br>"
+			. += "[src.name] has a [src.module.name] "
+			if (src.module.swappable == 0)
+				. += "built in.<br>"
+			else
+				. += "installed.<br>"
 		else
 			. += "[src.name] does not appear to have a module installed.<br>"
 
