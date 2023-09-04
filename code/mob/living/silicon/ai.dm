@@ -1028,8 +1028,6 @@ or don't if it uses a custom topopen overlay
 		else
 			. += "<span class='alert'><B>[src.name] looks severely burnt!</B></span><br>"
 
-	. += "<span class='notice'>*---------*</span><br>"
-
 	if(issilicon(user) || isAI(user))
 		var/lr = null
 		if(isAIeye(user))
@@ -1042,6 +1040,8 @@ or don't if it uses a custom topopen overlay
 			. += "<span class='alert'>[src.name] is not connected to your law rack!</span><br>"
 		else
 			. += "[src.name] follows the same laws you do.<br>"
+
+	. += "<span class='notice'>*---------*</span><br>"
 
 /mob/living/silicon/ai/emote(var/act, var/voluntary = 0)
 	..()

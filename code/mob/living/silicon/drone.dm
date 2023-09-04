@@ -653,12 +653,12 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 			. += "<span class='success'>[src.name] appears to be an AI-controlled shell.</span><br>"
 
 		if (brute)
-			if (brute < 15)
+			if (brute < 20)
 				. += "<span class='alert'>[src.name] looks slightly dented.</span><br>"
 			else
 				. += "<span class='alert'><B>[src.name] looks severely dented!</B></span><br>"
 		if (burn)
-			if (burn < 15)
+			if (burn < 20)
 				. += "<span class='alert'>[src.name] has slightly burnt wiring.</span><br>"
 			else
 				. += "<span class='alert'><B>[src.name] has severely burnt wiring!</B></span><br>"
