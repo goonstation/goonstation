@@ -169,6 +169,9 @@
 		on = FALSE
 
 
+/obj/machinery/atmospherics/unary/vent_pump/overfloor
+	level = OVERFLOOR
+
 /obj/machinery/atmospherics/unary/vent_pump/security
 	name = "Air Vent (Security)"
 	frequency = 1274
