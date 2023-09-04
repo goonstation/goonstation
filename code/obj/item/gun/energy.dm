@@ -1860,13 +1860,17 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		..()
 
 // Makeshift Laser Rifle
+TYPEINFO(/obj/item/gun/energy/makeshift)
+	mats = 0
+
 /obj/item/gun/energy/makeshift
 	name = "makeshift laser rifle"
 	icon_state = "laser"
 	item_state = "laser" //TODO better sprites
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
-	force = 9
+	force = 7
 	two_handed = TRUE
+	can_dual_wield = FALSE
 	desc = "A laser gun cobbled together from various supplies found around the station, probably not the most reliable weapon in a firefight."
 	muzzle_flash = "muzzle_flash_laser"
 	charge_icon_state = "laser"
@@ -1880,9 +1884,9 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 
 	examine()
 		. = ..()
-		if (heat > 90) // danger zone
+		if (heat > 100) // danger zone
 			. += "The rifle is smoking and emitting heat! This looks very unsafe!"
-		else if(heat > 60) // safe but might fail
+		else if(heat > 80)
 			. += "The rifle is emitting a small amount of heat."
 
 	proc/fall_apart(var/mob/M, var/do_explosive = FALSE)
@@ -1898,11 +1902,11 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			qdel(src)
 
-	//shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
-	//	if (canshoot(user))
-	//		heat += rand(15,20)
-	//		if (heat > 120)
-	//			fall_apart(user, do_explosive = TRUE)
-	//		else if (heat > 80 && prob(100))
-	//			fall_apart(user, do_explosive = FALSE)
-	//	return ..(target, start, user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if (canshoot(user))
+			heat += rand(15,20)
+			if (heat > 120)
+				fall_apart(user, do_explosive = TRUE)
+			else if (heat > 100 && prob(45))
+				fall_apart(user, do_explosive = FALSE)
+		return ..(target, start, user)
