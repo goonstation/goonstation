@@ -661,7 +661,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			SEED.set_loc(src)
 			if(SEED.planttype)
 				src.HYPnewplant(SEED)
-				logTheThing(LOG_STATION, user, "plants a [SEED.planttype] seed at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "plants a [SEED.planttype.name] [SEED.planttype.type] seed at [log_loc(src)].")
 				if(!(user in src.contributors))
 					src.contributors += user
 			else
@@ -677,7 +677,6 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(!SP.selected)
 				boutput(user, "<span class='alert'>You need to select something to plant first.</span>")
 				return
-			user.visible_message("<span class='notice'>[user] plants a seed in the [src].</span>")
 			var/obj/item/seed/SEED
 			if(SP.selected.unique_seed)
 				SEED = new SP.selected.unique_seed
@@ -688,7 +687,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(SEED.planttype)
 				src.HYPnewplant(SEED)
 				if(SEED && istype(SEED.planttype,/datum/plant/maneater)) // Logging for man-eaters, since they can't be harvested (Convair880).
-					logTheThing(LOG_STATION, user, "plants a [SEED.planttype] seed at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "plants a [SEED.planttype.name] [SEED.planttype.type] seed at [log_loc(src)] using the seedplanter.")
 				if(!(user in src.contributors))
 					src.contributors += user
 			else

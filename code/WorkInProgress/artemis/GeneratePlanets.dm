@@ -6,7 +6,7 @@ var/list/planetModifiers = list()
 var/list/planetModifiersUsed = list()//Assoc list, type:times used
 var/list/planet_seeds = list()
 
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 /proc/makePlanetLevel()
 	//var/list/turf/planetZ = list()
 	var/startTime = world.timeofday

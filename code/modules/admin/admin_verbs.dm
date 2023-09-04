@@ -1523,6 +1523,10 @@ var/list/fun_images = list()
 	set desc = "Sends a message as voice to all players"
 	set popup_menu = 0
 
+	if (!isadmin(src) && !src.non_admin_dj)
+		boutput(src, "Only administrators or those with access may use this command.")
+		return FALSE
+
 	var/msg
 	if (length(args))
 		msg = args[1]

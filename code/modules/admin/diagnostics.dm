@@ -352,7 +352,7 @@ proc/debug_map_apc_count(delim,zlim)
 			if(!(area in processed_areas))
 				var/text_charge
 				if(!apc || apc.disposed)
-					text_charge = "N/A"
+					text_charge = "no APC"
 				else if(apc.status & BROKEN)
 					text_charge = "broken"
 				else if(!cell)
@@ -367,6 +367,8 @@ proc/debug_map_apc_count(delim,zlim)
 					if(apc.environ <= 2) off += "env"
 					if(length(off))
 						text_charge += "<br>OFF: [off.Join(" ")]"
+				if(!area.requires_power)
+					text_charge += "<br>inf power area"
 				img.app.overlays = list(src.makeText(text_charge, align_left=TRUE))
 				processed_areas += area
 

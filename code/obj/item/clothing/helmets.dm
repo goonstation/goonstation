@@ -652,6 +652,19 @@
 			src.icon_state = "helmet-sec"
 			src.item_state = "helmet-sec"
 
+obj/item/clothing/head/helmet/hardhat/security/hos
+	name = "head of security helmet"
+	icon_state = "helmet-hos"
+	item_state = "helmet-hos"
+	desc = "Somewhat protects your head from being bashed in a little more than an ordinary helmet. It has a cool stripe too to distinguish it from less cool helmets."
+
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 7)
+
+	attack_self(mob/user as mob)
+		return
+
 /obj/item/clothing/head/helmet/hardhat/security/improved // Azungar's more out of style helmet that can only be bought through QM.
 	name = "elite helmet"
 	icon_state = "helmet-sec-elite"

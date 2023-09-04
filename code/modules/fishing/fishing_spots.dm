@@ -401,7 +401,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 /datum/fishing_spot/disposal_chute // doesn't work yet
 	fishing_atom_type = /obj/machinery/disposal
 	rod_tier_required = 1
-	fish_available = list(/obj/item/clothing/under/trash_bag = 10,\
+	fish_available = list(/obj/item/trash_bag = 10,\
 	/mob/living/critter/small_animal/cockroach = 10,\
 	/obj/item/c_tube = 10,\
 	/obj/item/raw_material/shard/glass = 10,\
@@ -714,7 +714,7 @@ datum/fishing_spot/golden_toilet
 /datum/fishing_spot/crusher
 	fishing_atom_type = /obj/machinery/crusher
 	rod_tier_required = 2
-	fish_available = list(/obj/item/clothing/under/trash_bag = 10,\
+	fish_available = list(/obj/item/trash_bag = 10,\
 	/mob/living/critter/small_animal/cockroach = 10,\
 	/obj/item/c_tube = 10,\
 	/obj/item/raw_material/shard/glass = 10,\

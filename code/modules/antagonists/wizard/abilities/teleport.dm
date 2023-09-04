@@ -93,7 +93,7 @@
 				return 0
 
 		if (2)
-			var/obj/machinery/computer/pod/comp_check = item_to_check
+			var/obj/machinery/computer/comp_check = item_to_check
 			if (!comp_check || !istype(comp_check))
 				src.show_text("The computer appears to have been destroyed.", "red")
 				return 0
