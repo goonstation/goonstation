@@ -198,6 +198,9 @@
 			if ("gang_member")
 				window_title = "You've joined a Gang!"
 				filename = "html/traitorTips/gang_member_added.html"
+			if ("ganglead_death")
+				window_title = "You've died for your gang!"
+				filename = "html/traitorTips/gang_leader_died.html"
 
 			// vamp/changeling
 			if ("vampire")
