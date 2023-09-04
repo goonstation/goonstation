@@ -7,6 +7,7 @@
 	icon_state = "stomach"
 	fail_damage = 100
 	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING
+	region = ABDOMINAL
 
 	//Do something with this when you figure out what the guy who made digestion and handle stomach was doing with stomach_contents and stomach_process - kyle
 	// on_transplant()

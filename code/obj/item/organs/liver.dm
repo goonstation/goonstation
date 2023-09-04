@@ -8,6 +8,7 @@
 	icon_state = "liver"
 	failure_disease = /datum/ailment/disease/liver_failure
 	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING
+	region = SUBCOSTAL
 
 	on_life(var/mult = 1)
 		if (!..())

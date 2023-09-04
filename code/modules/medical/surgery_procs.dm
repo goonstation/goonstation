@@ -6,9 +6,9 @@
 Step 1 - dont
 Step 2 - uhg, fine
 
-Most organs are in the chest and most organs use patient.organHolder.chest.op_stage (ranges from 0.0 to 3.0) to determine the current state of the chest
+Most organs are in the chest and most organs use patient.organHolder.chest.op_stage (ranges from 0.0 to 2.0) to determine the current state of the chest
 To operate on organs you need to open the chest. To do that you use tools in a specific order to increment chest op_stage.
-The basic combo is Scalpel -> Scissors to operate on most chest organs (chest op_stage 2). To operate on the lungs/heart you need one use of a saw to go to chest op_stage 3
+The basic combo is Scalpel -> Scissors to operate on most chest organs (chest op_stage 1 and 2).
 And finally suture resets the op_stage to zero (representing closing the cuts you've made), though for reasons you might need to do it more than once.
 So op_stage is a number that tells you how cut up the meatbag is.
 
@@ -573,14 +573,14 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				if (1)
 					src.surgeryConfusion(patient, surgeon, damage_high)
 					return TRUE
-				if (2 to 3)
+				if (2)
 					if (!patient.organHolder.build_region_buttons())
 						boutput(surgeon, "[patient] has no more organs!")
 						return TRUE
 					surgeon.showContextActions(patient.organHolder.contexts, patient, patient.organHolder.contextLayout)
 					return TRUE
 
-				if (4 to INFINITY)
+				if (3 to INFINITY)
 					boutput(surgeon, "<span class='alert'>[patient]'s op_stage is above intended parameters. Dial 1-800 CODER.</span>")
 					return TRUE
 		else
@@ -815,16 +815,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					src.surgeryConfusion(patient, surgeon, damage_high)
 					return TRUE
 				if (2)
-					//open ribcage here. And allow heart + lungs to be surgery'd.
-					actions.start(new/datum/action/bar/icon/open_ribcage(surgeon, patient), surgeon)
-					return TRUE
-				if (3)
 					if (!patient.organHolder.build_region_buttons())
 						boutput(surgeon, "[patient] has no more organs!")
 						return TRUE
 					surgeon.showContextActions(patient.organHolder.contexts, patient, patient.organHolder.contextLayout)
 					return TRUE
-				if (4 to INFINITY)
+				if (3 to INFINITY)
 					boutput(surgeon, "<span class='alert'>[patient]'s op_stage is above intended parameters. Dial 1-800 CODER.</span>")
 					return TRUE
 		else
@@ -1324,13 +1320,13 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					take_bleeding_damage(patient, surgeon, damage_low)
 					patient.organHolder.chest.op_stage ++
 					return TRUE
-				if (2 to 3)
+				if (2)
 					if (!patient.organHolder.build_region_buttons())
 						boutput(surgeon, "[patient] has no more organs!")
 						return TRUE
 					surgeon.showContextActions(patient.organHolder.contexts, patient, patient.organHolder.contextLayout)
 					return TRUE
-				if (4 to INFINITY)
+				if (3 to INFINITY)
 					boutput(surgeon, "<span class='alert'>[patient]'s op_stage is above intended parameters. Dial 1-800 CODER.</span>")
 					return TRUE
 		else
@@ -1560,62 +1556,4 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			playsound(src.target, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 			src.target.TakeDamage("chest", rand(5, 15), 0)
 
-/datum/action/bar/icon/open_ribcage
-	duration = 4 SECONDS
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ACTION
-	id = "open_ribcage"
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "saw"
-	resumable = FALSE
-	var/surgeon_duration = 2 SECONDS
-	var/mob/surgeon = null
-	var/mob/living/carbon/human/target = null
-
-	New(mob, patient)
-		src.surgeon = mob
-		src.target = patient
-		if (!surgeryCheck(src.target, src.surgeon))
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		if (src.surgeon.traitHolder.hasTrait("training_medical"))
-			src.duration = src.surgeon_duration
-		..()
-
-	onUpdate()
-		..()
-		if(BOUNDS_DIST(surgeon, target) > 0 || surgeon == null || target == null || !src.target.organHolder?.chest?.op_stage == 2 || !surgeryCheck(src.target, src.surgeon))
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
-	onInterrupt()
-		..()
-		var/damage = calc_surgery_damage(src.surgeon, damage = rand(5,15))
-		do_slipup(src.surgeon, src.target, "chest", damage, "slips up and cracks one of [src.target]'s ribs!")
-		if (isalive(src.target))
-			src.target.emote("scream")
-
-	onStart()
-		..()
-		if(BOUNDS_DIST(src.surgeon, src.target) > 0 || src.surgeon == null || src.target == null || !src.target.organHolder?.chest?.op_stage == 2 || !surgeryCheck(src.target, src.surgeon))
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		src.surgeon.visible_message("<span class='notice'>[src.surgeon] begins sawing open [src.target]'s ribcage.</span>")
-
-	onEnd()
-		..()
-		if(BOUNDS_DIST(src.surgeon, src.target) > 0 || src.target == null || src.surgeon == null || !src.target.organHolder?.chest?.op_stage == 2 || !surgeryCheck(src.target, src.surgeon))
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		var/screw_up_prob = calc_screw_up_prob(src.target, src.surgeon)
-		if (prob(screw_up_prob))
-			var/damage = calc_surgery_damage(src.surgeon, screw_up_prob, rand(10,15))
-			do_slipup(src.surgeon, src.target, "chest", damage, "blinks at the wrong moment and cracks one of [src.target]'s ribs")
-			return
-		src.target.organHolder.chest.op_stage++
-		src.surgeon.visible_message("<span class='notice'>[src.surgeon] saws open [src.target]'s ribcage!</span>")
-		src.target.TakeDamage("chest", rand(5, 15), 0)
-
 //Todo, update surgery book to reflect all this
-//Todo, change background color for organs that can be removed
-//Todo, remove saw surgery, use the saw button from the ribs region as the defining factor
-//Todo, build_subregion_buttons doesnt work for multiple surgeons at once

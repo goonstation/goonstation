@@ -5,3 +5,8 @@
 #define SURGERY_SNIPPING (1 << 2)
 /// surgery requires a saw or other sawing tool
 #define SURGERY_SAWING (1 << 3)
+
+#define RIBS 0
+#define SUBCOSTAL 1
+#define ABDOMINAL 2
+#define FLANKS 3

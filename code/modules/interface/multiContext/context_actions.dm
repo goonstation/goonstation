@@ -1429,10 +1429,10 @@
 					boutput(user, "<span class='alert'>The patient's [src.name] region cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
 					return
 			if (H.organHolder.rib_contexts && length(H.organHolder.rib_contexts) <= 0)
-				if (!H.organHolder.build_subregion_buttons(/datum/contextAction/organs/ribs))
+				if (!H.organHolder.build_inside_ribs_buttons())
 					boutput(user, "<span class='notice'>[H] doesn't have any organs in their [src.name] region!</span>")
 					return
-				user.showContextActions(H.organHolder.inside_region_contexts, H, H.organHolder.contextLayout)
+				user.showContextActions(H.organHolder.inside_ribs_contexts, H, H.organHolder.contextLayout)
 			else
 				user.showContextActions(H.organHolder.rib_contexts, H, H.organHolder.contextLayout)
 				boutput(user, "<span class='alert'>You begin surgery on [H]'s [src.name] region.</span>")
@@ -1453,10 +1453,10 @@
 					boutput(user, "<span class='alert'>The patient's [src.name] region cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
 					return
 			if (H.organHolder.subcostal_contexts && length(H.organHolder.subcostal_contexts) <= 0)
-				if (!H.organHolder.build_subregion_buttons(/datum/contextAction/organs/subcostal))
+				if (!H.organHolder.build_inside_subcostal_buttons())
 					boutput(user, "<span class='notice'>[H] doesn't have any organs in their [src.name] region!</span>")
 					return
-				user.showContextActions(H.organHolder.inside_region_contexts, H, H.organHolder.contextLayout)
+				user.showContextActions(H.organHolder.inside_subcostal_contexts, H, H.organHolder.contextLayout)
 			else
 				user.showContextActions(H.organHolder.subcostal_contexts, H, H.organHolder.contextLayout)
 				boutput(user, "<span class='alert'>You begin surgery on [H]'s [src.name] region.</span>")
@@ -1477,10 +1477,10 @@
 					boutput(user, "<span class='alert'>The patient's [src.name] region cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
 					return
 			if (H.organHolder.abdomen_contexts && length(H.organHolder.abdomen_contexts) <= 0)
-				if (!H.organHolder.build_subregion_buttons(/datum/contextAction/organs/abdominal))
+				if (!H.organHolder.build_inside_abdomen_buttons())
 					boutput(user, "<span class='notice'>[H] doesn't have any organs in their [src.name] region!</span>")
 					return
-				user.showContextActions(H.organHolder.inside_region_contexts, H, H.organHolder.contextLayout)
+				user.showContextActions(H.organHolder.inside_abdomen_contexts, H, H.organHolder.contextLayout)
 			else
 				user.showContextActions(H.organHolder.abdomen_contexts, H, H.organHolder.contextLayout)
 				boutput(user, "<span class='alert'>You begin surgery on [H]'s [src.name] region.</span>")
@@ -1501,10 +1501,10 @@
 					boutput(user, "<span class='alert'>The patient's [src.name] region cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
 					return
 			if (H.organHolder.flanks_contexts && length(H.organHolder.flanks_contexts) <= 0)
-				if (!H.organHolder.build_subregion_buttons(/datum/contextAction/organs/flanks))
+				if (!H.organHolder.build_inside_flanks_buttons())
 					boutput(user, "<span class='notice'>[H] doesn't have any organs in their [src.name] region!</span>")
 					return
-				user.showContextActions(H.organHolder.inside_region_contexts, H, H.organHolder.contextLayout)
+				user.showContextActions(H.organHolder.inside_flanks_contexts, H, H.organHolder.contextLayout)
 			else
 				user.showContextActions(H.organHolder.flanks_contexts, H, H.organHolder.contextLayout)
 				boutput(user, "<span class='alert'>You begin surgery on [H]'s [src.name] region.</span>")
@@ -1517,7 +1517,6 @@
 	icon_state = "heart"
 	var/organ = null
 	var/organ_path
-	var/requires_open_ribcage = FALSE
 
 	execute(atom/target, mob/user)
 		if (ishuman(target))
@@ -1717,10 +1716,54 @@
 					if (O.holder?.donor)
 						playsound(O.holder.donor, src.success_sound, 50, 1)
 				O.surgery_contexts -= src
+				O.removal_stage = 1
+				switch (O.region)
+					if (RIBS)
+						if (!H.organHolder.build_inside_ribs_buttons())
+							boutput(user, "<span class='notice'>The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!</span>")
+							return
+					if (SUBCOSTAL)
+						if (!H.organHolder.build_inside_subcostal_buttons())
+							boutput(user, "<span class='notice'>The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!</span>")
+							return
+					if (ABDOMINAL)
+						if (!H.organHolder.build_inside_abdomen_buttons())
+							boutput(user, "<span class='notice'>The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!</span>")
+							return
+					if (FLANKS)
+						if (!H.organHolder.build_inside_flanks_buttons())
+							boutput(user, "<span class='notice'>The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!</span>")
+							return
 				if (length(O.surgery_contexts) <= 0)
 					boutput(user, "<span class='notice'>It seems the organ is ready to be removed.</span>")
 					if (O.holder)
-						user.showContextActions(O.holder.inside_region_contexts, O.holder.donor, O.holder.contextLayout)
+						O.removal_stage = 2
+						switch (O.region)
+							if (RIBS)
+								if (!H.organHolder.build_inside_ribs_buttons())
+									boutput(user, "<span class='notice'>The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!</span>")
+									return
+							if (SUBCOSTAL)
+								if (!H.organHolder.build_inside_subcostal_buttons())
+									boutput(user, "<span class='notice'>The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!</span>")
+									return
+							if (ABDOMINAL)
+								if (!H.organHolder.build_inside_abdomen_buttons())
+									boutput(user, "<span class='notice'>The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!</span>")
+									return
+							if (FLANKS)
+								if (!H.organHolder.build_inside_flanks_buttons())
+									boutput(user, "<span class='notice'>The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!</span>")
+									return
+						switch (O.region)
+							if (RIBS)
+								user.showContextActions(O.holder.inside_ribs_contexts, O.holder.donor, O.holder.contextLayout)
+							if (SUBCOSTAL)
+								user.showContextActions(O.holder.inside_subcostal_contexts, O.holder.donor, O.holder.contextLayout)
+							if (ABDOMINAL)
+								user.showContextActions(O.holder.inside_abdomen_contexts, O.holder.donor, O.holder.contextLayout)
+							if (FLANKS)
+								user.showContextActions(O.holder.inside_flanks_contexts, O.holder.donor, O.holder.contextLayout)
 					return
 				else
 					user.showContextActions(O.surgery_contexts, O, O.contextLayout)
@@ -1811,8 +1854,16 @@
 						if (src.success_sound)
 							playsound(H, src.success_sound, 50, 1)
 						H.organHolder.rib_contexts -= src
+						H.organHolder.ribs_stage = 1
+						if (!H.organHolder.build_region_buttons())
+							boutput(user, "[H] has no more organs!")
+							return
 					if (length(H.organHolder.rib_contexts) <= 0)
 						boutput(user, "<span class='notice'>It seems the region is ready to be operated on.</span>")
+						H.organHolder.ribs_stage = 2
+						if (!H.organHolder.build_region_buttons())
+							boutput(user, "[H] has no more organs!")
+							return
 						user.showContextActions(H.organHolder.contexts, H, H.organHolder.contextLayout)
 						return
 					else
@@ -1825,8 +1876,16 @@
 						if (src.success_sound)
 							playsound(H, src.success_sound, 50, 1)
 						H.organHolder.subcostal_contexts -= src
+						H.organHolder.subcostal_stage = 1
+						if (!H.organHolder.build_region_buttons())
+							boutput(user, "[H] has no more organs!")
+							return
 					if (length(H.organHolder.subcostal_contexts) <= 0)
 						boutput(user, "<span class='notice'>It seems the region is ready to be operated on.</span>")
+						H.organHolder.subcostal_stage = 2
+						if (!H.organHolder.build_region_buttons())
+							boutput(user, "[H] has no more organs!")
+							return
 						user.showContextActions(H.organHolder.contexts, H, H.organHolder.contextLayout)
 						return
 					else
@@ -1839,8 +1898,16 @@
 						if (src.success_sound)
 							playsound(H, src.success_sound, 50, 1)
 						H.organHolder.abdomen_contexts -= src
+						if (!H.organHolder.build_region_buttons())
+							boutput(user, "[H] has no more organs!")
+							return
+						H.organHolder.abdominal_stage = 1
 					if (length(H.organHolder.abdomen_contexts) <= 0)
 						boutput(user, "<span class='notice'>It seems the region is ready to be operated on.</span>")
+						H.organHolder.abdominal_stage = 2
+						if (!H.organHolder.build_region_buttons())
+							boutput(user, "[H] has no more organs!")
+							return
 						user.showContextActions(H.organHolder.contexts, H, H.organHolder.contextLayout)
 						return
 					else
@@ -1853,8 +1920,16 @@
 						if (src.success_sound)
 							playsound(H, src.success_sound, 50, 1)
 						H.organHolder.flanks_contexts -= src
+						H.organHolder.flanks_stage = 1
+						if (!H.organHolder.build_region_buttons())
+							boutput(user, "[H] has no more organs!")
+							return
 					if (length(H.organHolder.flanks_contexts) <= 0)
 						boutput(user, "<span class='notice'>It seems the region is ready to be operated on.</span>")
+						H.organHolder.flanks_stage = 2
+						if (!H.organHolder.build_region_buttons())
+							boutput(user, "[H] has no more organs!")
+							return
 						user.showContextActions(H.organHolder.contexts, H, H.organHolder.contextLayout)
 						return
 					else

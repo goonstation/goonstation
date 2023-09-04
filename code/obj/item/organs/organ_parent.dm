@@ -77,6 +77,8 @@
 	contextLayout = new /datum/contextLayout/experimentalcircle
 	///Which type of surgery tools do we need to operate on this organ?
 	var/surgery_flags = SURGERY_NONE
+	var/removal_stage = 0
+	var/region = null
 
 	attack(var/mob/living/carbon/M, var/mob/user)
 		if (!ismob(M))
@@ -354,28 +356,42 @@
 		/* Checks if an organ can be attached to a target mob */
 		if (istype(/obj/item/organ/chest/, src))
 			// We can't transplant a chest
-			return 0
+			return FALSE
 
 		if (user.zone_sel.selecting != src.organ_holder_location)
-			return 0
+			return FALSE
 
 		if (!can_act(user))
-			return 0
+			return FALSE
 
 		if (!surgeryCheck(M, user))
-			return 0
+			return FALSE
 
 		var/mob/living/carbon/human/H = M
 		if (!H.organHolder)
-			return 0
-		//Hearts and lungs require the ribcage to be sawed open
-		if ((istype(src, /obj/item/organ/heart) || istype(src, /obj/item/organ/lung)) && H.organHolder?.chest?.op_stage >= 3)
-			return 1
-		//Other organs dont need the ribcage to be open
-		if (H.organHolder?.chest?.op_stage >= 2)
-			return 1
+			return FALSE
+		if (H.organHolder.chest?.op_stage >= 2)
+			//Check if our relevant region is opened up. For example hearts need the ribs to be opened up
+			switch (src.region)
+				if (null)
+					return TRUE
+				if (RIBS)
+					if (H.organHolder.ribs_stage == 2)
+						return TRUE
+					return FALSE
+				if (ABDOMINAL)
+					if (H.organHolder.abdominal_stage == 2)
+						return TRUE
+					return FALSE
+				if (SUBCOSTAL)
+					if (H.organHolder.subcostal_stage == 2)
+						return TRUE
+				if (FLANKS)
+					if (H.organHolder.flanks_stage == 2)
+						return TRUE
+			return TRUE
 
-		return 0
+		return FALSE
 
 	proc/attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Attempts to attach this organ to the target mob M, if sucessful, displays surgery notifications and updates states in both user and target.

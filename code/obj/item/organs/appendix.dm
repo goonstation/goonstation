@@ -6,6 +6,7 @@
 	icon_state = "appendix"
 	failure_disease = /datum/ailment/disease/appendicitis
 	surgery_flags = SURGERY_SNIPPING
+	region = ABDOMINAL
 
 	on_life(var/mult = 1)
 		if (!..())

@@ -7,6 +7,7 @@
 	icon_state = "kidneys"
 	failure_disease = /datum/ailment/disease/kidney_failure
 	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING
+	region = FLANKS
 	var/chem_metabolism_modifier = 1
 	// this is just used for setting them, so I will use the *100 values
 	var/min_chem_metabolism_modifier = 100

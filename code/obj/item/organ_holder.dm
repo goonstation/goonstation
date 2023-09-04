@@ -52,13 +52,28 @@
 	var/datum/contextLayout/contextLayout = new /datum/contextLayout/experimentalcircle
 	///List of buttons used in back surgery (tail/butt)
 	var/list/datum/contextAction/back_contexts = list()
+
+	//List of buttons used to open specific regions of the person
 	var/list/datum/contextAction/rib_contexts = null
 	var/list/datum/contextAction/abdomen_contexts = null
 	var/list/datum/contextAction/flanks_contexts = null
 	var/list/datum/contextAction/subcostal_contexts = null
-	var/list/datum/contextAction/inside_region_contexts = null
+
+	//List of buttons showing all the organs inside a region
+	var/list/datum/contextAction/inside_ribs_contexts = null
+	var/list/datum/contextAction/inside_abdomen_contexts = null
+	var/list/datum/contextAction/inside_flanks_contexts = null
+	var/list/datum/contextAction/inside_subcostal_contexts = null
 	///How cut up is our back for surgery purposes
 	var/back_op_stage = 0
+	///How cut up are our ribs? 0 = Not. 1 = Halfway. 2 = Open.
+	var/ribs_stage = 0
+	///How cut up is our subcostal region? 0 = Not. 1 = Halfway. 2 = Open.
+	var/subcostal_stage = 0
+	///How cut up is our abdominal region? 0 = Not. 1 = Halfway. 2 = Open.
+	var/abdominal_stage = 0
+	///How cut up are our flanks? 0 = Not. 1 = Halfway. 2 = Open.
+	var/flanks_stage = 0
 
 	New(var/mob/living/L, var/ling)
 		..()
@@ -77,12 +92,40 @@
 
 		//begin by adding regions
 		var/datum/contextAction/surgery_region/ribs/ribs_action = new /datum/contextAction/surgery_region/ribs()
+		switch (src.ribs_stage)
+			if (0)
+				ribs_action.icon_background = "bg"
+			if (1)
+				ribs_action.icon_background = "yellowbg"
+			if (2)
+				ribs_action.icon_background = "greenbg"
 		src.contexts += ribs_action
 		var/datum/contextAction/surgery_region/subcostal/subcostal_action = new /datum/contextAction/surgery_region/subcostal()
+		switch (src.subcostal_stage)
+			if (0)
+				subcostal_action.icon_background = "bg"
+			if (1)
+				subcostal_action.icon_background = "yellowbg"
+			if (2)
+				subcostal_action.icon_background = "greenbg"
 		src.contexts += subcostal_action
 		var/datum/contextAction/surgery_region/abdomen/abdomen_action = new /datum/contextAction/surgery_region/abdomen()
+		switch (src.abdominal_stage)
+			if (0)
+				abdomen_action.icon_background = "bg"
+			if (1)
+				abdomen_action.icon_background = "yellowbg"
+			if (2)
+				abdomen_action.icon_background = "greenbg"
 		src.contexts += abdomen_action
 		var/datum/contextAction/surgery_region/flanks/flanks_action = new /datum/contextAction/surgery_region/flanks()
+		switch (src.flanks_stage)
+			if (0)
+				flanks_action.icon_background = "bg"
+			if (1)
+				flanks_action.icon_background = "yellowbg"
+			if (2)
+				flanks_action.icon_background = "greenbg"
 		src.contexts += flanks_action
 
 		//possible parasite removal surgery
@@ -113,6 +156,10 @@
 		src.abdomen_contexts = null
 		src.flanks_contexts = null
 		src.subcostal_contexts = null
+		src.ribs_stage = 0
+		src.abdominal_stage = 0
+		src.flanks_stage = 0
+		src.subcostal_stage = 0
 
 	proc/build_back_surgery_buttons()
 		src.back_contexts = list()
@@ -203,17 +250,85 @@
 			src.flanks_contexts += action
 		.+= length(src.flanks_contexts)
 
-	proc/build_subregion_buttons(var/datum/contextAction/organs/organ_parent)
+	proc/build_inside_ribs_buttons()
 		.= null
 
-		src.inside_region_contexts = list()
+		src.inside_ribs_contexts = list()
 
-		for(var/actionType in childrentypesof(organ_parent))
-			var/datum/contextAction/organs/action = new actionType()
+		for(var/actionType in childrentypesof(/datum/contextAction/organs/ribs))
+			var/datum/contextAction/organs/ribs/action = new actionType()
 			if (src.organ_list[action.organ_path])
-				src.inside_region_contexts += action
+				var/obj/item/organ/O = src.get_organ(action.organ_path)
+				switch (O.removal_stage)
+					if (0)
+						action.icon_background = "bg"
+					if (1)
+						action.icon_background = "yellowbg"
+					if (2)
+						action.icon_background = "greenbg"
+				src.inside_ribs_contexts += action
 
-		.+= length(inside_region_contexts)
+		.+= length(inside_ribs_contexts)
+
+	proc/build_inside_abdomen_buttons()
+		.= null
+
+		src.inside_abdomen_contexts = list()
+
+		for(var/actionType in childrentypesof(/datum/contextAction/organs/abdominal))
+			var/datum/contextAction/organs/abdominal/action = new actionType()
+			if (src.organ_list[action.organ_path])
+				var/obj/item/organ/O = src.get_organ(action.organ_path)
+				switch (O.removal_stage)
+					if (0)
+						action.icon_background = "bg"
+					if (1)
+						action.icon_background = "yellowbg"
+					if (2)
+						action.icon_background = "greenbg"
+				src.inside_abdomen_contexts += action
+
+		.+= length(inside_abdomen_contexts)
+
+	proc/build_inside_subcostal_buttons()
+		.= null
+
+		src.inside_subcostal_contexts = list()
+
+		for(var/actionType in childrentypesof(/datum/contextAction/organs/subcostal))
+			var/datum/contextAction/organs/subcostal/action = new actionType()
+			if (src.organ_list[action.organ_path])
+				var/obj/item/organ/O = src.get_organ(action.organ_path)
+				switch (O.removal_stage)
+					if (0)
+						action.icon_background = "bg"
+					if (1)
+						action.icon_background = "yellowbg"
+					if (2)
+						action.icon_background = "greenbg"
+				src.inside_subcostal_contexts += action
+
+		.+= length(inside_subcostal_contexts)
+
+	proc/build_inside_flanks_buttons()
+		.= null
+
+		src.inside_flanks_contexts = list()
+
+		for(var/actionType in childrentypesof(/datum/contextAction/organs/flanks))
+			var/datum/contextAction/organs/flanks/action = new actionType()
+			if (src.organ_list[action.organ_path])
+				var/obj/item/organ/O = src.get_organ(action.organ_path)
+				switch (O.removal_stage)
+					if (0)
+						action.icon_background = "bg"
+					if (1)
+						action.icon_background = "yellowbg"
+					if (2)
+						action.icon_background = "greenbg"
+				src.inside_flanks_contexts += action
+
+		.+= length(inside_flanks_contexts)
 
 	disposing()
 		src.organ_list.len = 0

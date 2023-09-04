@@ -11,6 +11,7 @@
 	icon_state = "lung_R"
 	failure_disease = /datum/ailment/disease/respiratory_failure
 	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING | SURGERY_SAWING
+	region = RIBS
 	var/temp_tolerance = T0C+66
 
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa

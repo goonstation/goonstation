@@ -7,6 +7,7 @@
 	body_side = R_ORGAN
 	failure_disease = /datum/ailment/disease/pancreatitis
 	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING
+	region = SUBCOSTAL
 
 	on_life(var/mult = 1)
 		if (!..())

@@ -6,6 +6,7 @@
 	organ_holder_location = "chest"
 	icon_state = "intestines"
 	surgery_flags = SURGERY_SAWING | SURGERY_CUTTING
+	region = ABDOMINAL
 	var/digestion_efficiency = 1
 
 	// on_transplant()

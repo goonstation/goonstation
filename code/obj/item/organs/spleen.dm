@@ -6,6 +6,7 @@
 	icon_state = "spleen"
 	body_side = L_ORGAN
 	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING
+	region = SUBCOSTAL
 
 
 	on_life(var/mult = 1)
