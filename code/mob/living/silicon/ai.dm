@@ -1238,7 +1238,7 @@ or don't if it uses a custom topopen overlay
 				if (narrator_mode)
 					playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				else
-					playsound(src.loc, pick(src.sound-flip1, src.sound-flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				message = "<B>[src]</B> does a flip!"
 
 				//flick("ai-flip", src)
