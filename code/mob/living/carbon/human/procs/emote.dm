@@ -1480,7 +1480,7 @@
 							for (var/obj/item/C as anything in src.get_equipped_items())
 								if ((locate(/obj/item/switchblade) in C) != null)
 									var/obj/item/switchblade/B = (locate(/obj/item/switchblade) in C)
-									var/drophand = (src.hand == RIGHT_HAND ? slot_r_hand : slot_l_hand)
+									var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
 									drop_item()
 									B.set_loc(src)
 									equip_if_possible(B, drophand)
