@@ -44856,7 +44856,8 @@
 /area/space)
 "gfX" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1
+	dir = 1;
+	pipe_direction = 1
 	},
 /turf/simulated/floor/redwhite{
 	dir = 6
@@ -53584,8 +53585,8 @@
 /area/listeningpost)
 "ojC" = (
 /mob/living/critter/small_animal/bird/owl{
-	health_brute = 200;
-	health_burn = 200;
+	health_brute = 50;
+	health_burn = 50;
 	name = "Hooty McOwlface"
 	},
 /turf/simulated/floor/grass/leafy,
@@ -60846,7 +60847,8 @@
 	pixel_x = -10
 	},
 /obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1
+	dir = 1;
+	pipe_direction = 1
 	},
 /turf/simulated/floor/redwhite{
 	dir = 10
