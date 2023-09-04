@@ -153,6 +153,7 @@ const OccupantStatusDrone = (props) => {
       <DecorationReportDrone cosmetics={occupant.cosmetics} act={act} />
     </>);
 };
+
 const OccupantStatusHuman = (props) => {
   const { occupant } = props;
   return (
@@ -178,11 +179,11 @@ const OccupantType = (props) => {
   switch (kind) {
     case "robot":
       if (user === "brain") return <>Mk.2-Type Cyborg</>;
-      if (user === "ai") return <>Mk.2-Type AI Shell</>;
+      if (user === "ai") return <>Mk.2-Type AI-controlled Cyborg</>;
       break;
     case "drone":
       if (user === "brain") return <>Mk.1-Type Drone</>;
-      if (user === "ai") return <>Mk.1-Type AI Shell</>;
+      if (user === "ai") return <>Mk.1-Type AI-controlled Drone</>;
       break;
     case "human":
       return <>Mk.UNDEF-Type Carbon</>;
