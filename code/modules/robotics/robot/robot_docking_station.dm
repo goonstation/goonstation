@@ -909,12 +909,18 @@ TYPEINFO(/obj/machinery/recharge_station)
 			. = TRUE
 
 		if("module-install")
-			if (!iscyborg(src.occupant))
+			if (!isrobot(src.occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/moduleRef = params["moduleRef"]
 			if(moduleRef)
 				var/obj/item/robot_module/module = locate(moduleRef) in src.modules
+				if (isdrone(src.occupant) && module.moduletype != "drone")
+					boutput(user, "<span class='alert'>There's no way that module will fit, it's way too big!</span>")
+					return
+				if (iscyborg(src.occupant) && module.moduletype != "cyborg")
+					boutput(user, "<span class='alert'>That module isn't compatible with cyborgs!</span>")
+					return
 				if (module)
 					if (R.module) // Remove installed module to make room for new module
 						var/obj/item/robot_module/removed_module = R.remove_module()
@@ -926,7 +932,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 					R.update_appearance()
 			. = TRUE
 		if("module-remove")
-			if (!iscyborg(src.occupant))
+			if (!isrobot(src.occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			if (R.module)
