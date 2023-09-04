@@ -733,7 +733,6 @@
 	},
 /area/listeningpost)
 "ahF" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -1112,12 +1111,6 @@
 	dir = 4
 	},
 /area/spacehabitat/pool)
-"anu" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/space)
 "anF" = (
 /obj/storage/closet/dresser/random,
 /obj/machinery/light/small/sticky,
@@ -13433,11 +13426,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"dXF" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/medical/breakroom)
 "dXN" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -40307,7 +40295,6 @@
 	pixel_x = -7;
 	pixel_y = 3
 	},
-/obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
 /obj/item/paper_bin{
@@ -53990,14 +53977,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood/six,
 /area/station/library/reading1)
-"qAA" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/window_blinds/cog2/middle{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/science/lab)
 "qAI" = (
 /obj/decal/tile_edge/line/green{
 	dir = 10;
@@ -61210,7 +61189,6 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
 "sRk" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/window_blinds/cog2/right{
 	dir = 8
@@ -73929,7 +73907,6 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/mapping_helper/access/cargo,
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg{
 	pixel_y = 5
@@ -116398,7 +116375,7 @@ dRa
 dRa
 sRk
 qKE
-qAA
+dRa
 hyr
 xof
 qyQ
@@ -117563,7 +117540,7 @@ nYQ
 rBo
 nYQ
 nYQ
-dXF
+uND
 uND
 jpQ
 tHf
@@ -150928,8 +150905,8 @@ rdj
 rdj
 rdj
 nsX
-anu
-anu
+nsX
+nsX
 cNV
 cNV
 yly

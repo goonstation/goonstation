@@ -11016,13 +11016,11 @@
 /area/listeningpost/power)
 "aKm" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/morgue,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/medical/morgue,
 /obj/mapping_helper/access/morgue,
-/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "aKn" = (
@@ -14249,8 +14247,6 @@
 	},
 /obj/mapping_helper/access/morgue,
 /obj/machinery/door/airlock/pyro/medical/morgue,
-/obj/mapping_helper/access/morgue,
-/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "aUJ" = (
