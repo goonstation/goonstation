@@ -760,7 +760,7 @@ var/global/in_replace_with = 0
 			if (oldair) //Simulated tile -> Simulated tile
 				N.air = oldair
 			else if(zero_new_turf_air && istype(N.air)) // fix runtime: Cannot execute null.zero()
-				N.air.zero()
+				N.air.reset_to_space_gas()
 
 			#define _OLD_GAS_VAR_NOT_NULL(GAS, ...) GAS ## _old ||
 			if (N.air && (APPLY_TO_GASES(_OLD_GAS_VAR_NOT_NULL) 0)) //Unsimulated tile w/ static atmos -> simulated floor handling

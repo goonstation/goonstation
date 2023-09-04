@@ -733,3 +733,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				attacker.visible_message("<span class='alert'>Cuts apart [owner], revealing space!</span>","<span class='alert'>You finish cutting apart [owner], revealing space.</span>","The sound of cutting cardboard stops.")
 				floor_owner.ReplaceWithSpace()
 				return
+
+/datum/materialProc/glowstick_add
+	desc = "It has a chemical glow."
+	max_generations = 1
+	var/datum/component/loctargeting/sm_light/light_c
+
+	execute(var/atom/owner)
+		var/list/color = rgb2num(owner.material.getColor())
+		light_c = owner.AddComponent(/datum/component/loctargeting/sm_light, color[1], color[2], color[3], 255 * 0.33)
+		light_c.update(1)

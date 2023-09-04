@@ -161,7 +161,7 @@
 	initialize_mail_system()
 	#endif
 
-	#if ENABLE_ARTEMIS && !defined(SKIP_PLANETS_SETUP)
+	#if defined(ENABLE_ARTEMIS) && !defined(SKIP_PLANETS_SETUP)
 	UPDATE_TITLE_STATUS("Building planet level")
 	Z_LOG_DEBUG("World/Init", "Setting up planet level...")
 	makePlanetLevel()
