@@ -1412,9 +1412,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/devzone)
 "tS" = (
-/obj/machinery/atmospherics/unary/cryo_cell{
-	pipe_direction = 2
-	},
+/obj/machinery/atmospherics/unary/cryo_cell,
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
