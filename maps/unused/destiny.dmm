@@ -17007,9 +17007,7 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/machinery/atmospherics/unary/cryo_cell{
-	pipe_direction = 2
-	},
+/obj/machinery/atmospherics/unary/cryo_cell,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -20
@@ -36153,9 +36151,7 @@
 	dir = 5;
 	icon_state = "line2"
 	},
-/obj/machinery/atmospherics/unary/cryo_cell{
-	pipe_direction = 2
-	},
+/obj/machinery/atmospherics/unary/cryo_cell,
 /obj/cable{
 	icon_state = "4-8"
 	},

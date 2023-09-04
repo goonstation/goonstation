@@ -461,6 +461,9 @@
 	if(src.skipped_mobs_list & SKIPPED_AI_MOBS_LIST)
 		skipped_mobs_list &= ~SKIPPED_AI_MOBS_LIST
 		global.ai_mobs |= src
+	if(src.skipped_mobs_list & SKIPPED_STAMINA_MOBS)
+		OTHER_START_TRACKING_CAT(src, TR_CAT_STAMINA_MOBS)
+		src.skipped_mobs_list &= ~SKIPPED_STAMINA_MOBS
 
 	if(!src.last_ckey)
 		SPAWN(0)

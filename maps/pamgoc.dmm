@@ -58544,8 +58544,7 @@
 	pixel_x = 10
 	},
 /obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1;
-	pipe_direction = 1
+	dir = 1
 	},
 /turf/simulated/floor/redwhite{
 	dir = 6
@@ -59688,8 +59687,7 @@
 /area/station/routing/sortingRoom)
 "iNj" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1;
-	pipe_direction = 1
+	dir = 1
 	},
 /turf/simulated/floor/redwhite{
 	dir = 10

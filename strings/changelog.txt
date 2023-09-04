@@ -1,4 +1,14 @@
-
+(t)sun sep 03 23
+(u)LeahTheTech
+(+)Telepad teleportation now has a visible distortion effect at the target location for 0.5 seconds before activating. The activation delay remains unchanged.
+(u)444explorer
+(p)15660
+(e)⚗|A-Chemistry
+(+)NARC Turrets now make sure you have Security or Bridge access before firing, instead of ID band
+(u)cringe
+(p)15548
+(e)🧫💨|C-Experimental, A-Atmospherics
+(*)The rate at which pipe_networks and atmospheric machines do stuff has been doubled. Experience things such as vents, injectors, pumps, and probably more are no longer painfully slow. Also observe as nothing is done to preserve balance.
 (t)sat sep 02 23
 (u)MeggalBozale
 (p)15305

@@ -17741,8 +17741,7 @@
 /area/station/crew_quarters/baroffice)
 "eNp" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1;
-	pipe_direction = 4
+	dir = 1
 	},
 /obj/window/reinforced/west{
 	dir = 2
@@ -17827,8 +17826,7 @@
 /area/station/bridge)
 "eRs" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1;
-	pipe_direction = 8
+	dir = 1
 	},
 /obj/window/reinforced/west{
 	dir = 2
