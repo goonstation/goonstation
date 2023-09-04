@@ -1005,17 +1005,6 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 				src.update_appearance()
 				src.update_details()
 
-		else if (istype(W, /obj/item/robot_module) && opened) // module changing
-			var/obj/item/robot_module/module = W
-			if(src.module)
-				boutput(user, "<span class='alert'>[src] already has a module!</span>")
-			else if(module.moduletype != "drone")
-				boutput(user, "<span class='alert'>There's no way that module will fit, it's way too big!</span>")
-			else
-				user.drop_item()
-				src.set_module(module)
-				boutput(user, "You insert [module].")
-
 		else if (istype(get_id_card(W), /obj/item/card/id))	// trying to unlock the interface with an ID card
 			if (opened)
 				boutput(user, "<span class='alert'>You must close the cover to swipe an ID card.</span>")
