@@ -233,6 +233,7 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 		if (!gibbed)
 			src.visible_message("<span class='alert'><b>[src]</b> falls apart into a pile of components!</span>")
 			var/turf/T = get_turf(src)
+			robogibs(T)
 			for(var/obj/item/cell/C in src.contents)
 				C.set_loc(T)
 			for(var/obj/item/robot_module/M in src.contents)
