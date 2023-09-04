@@ -1878,7 +1878,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	charge_icon_state = "laser"
 	///What assembly was this created from
 	var/obj/item/makeshift_laser_barrel/assembly
-	///What assembly was this created from
+	///What battery this gun uses
 	var/obj/item/cell/our_cell
 	///How much heat this weapon has after firing, explodes if it gets too high
 	var/heat = 0
