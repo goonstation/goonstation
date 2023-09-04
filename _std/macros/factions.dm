@@ -20,3 +20,5 @@
 #define FACTION_CLOWN			(1<<8)
 /// Void stuff / disaster portal / old robots
 #define FACTION_DERELICT		(1<<9)
+/// Generic
+#define FACTION_GENERIC			(1<<10)

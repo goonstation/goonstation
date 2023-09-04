@@ -548,6 +548,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	desc = "They have a crazed look in their eyes"
 	health_brute = 20
 	health_burn = 20
+	faction = FACTION_GENERIC
 	ai_type = /datum/aiHolder/aggressive
 	human_to_copy = /mob/living/carbon/human/hobo
 
@@ -861,9 +862,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /area/morrigan/station/engineering/specialist
 	name = "Morrigan R&D"
+	sound_loop = 'sound/ambience/morrigan/calibrationambi.ogg'
+	sound_loop_vol = 75
 
 /area/morrigan/station/engineering/exports
 	name = "Morrigan Exports"
+	sound_loop = 'sound/ambience/morrigan/cargoambi.ogg'
+	sound_loop_vol = 75
 
 // Civilian areas
 
@@ -909,24 +914,34 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /area/morrigan/station/command/MD
 	name = "Morrigan Medical Director's Office"
+	sound_loop = 'sound/ambience/morrigan/officeambi.ogg'
+	sound_loop_vol = 75
 
 /area/morrigan/station/command/HOP
 	name = "Morrigan Customs Office"
+	sound_loop = 'sound/ambience/morrigan/officeambi.ogg'
+	sound_loop_vol = 75
 
 /area/morrigan/station/command/HOS
 	name = "Morrigan Commanders Quarters"
 
 /area/morrigan/station/command/captain
 	name = "Morrigan Captains Quarters"
+	sound_loop = 'sound/ambience/morrigan/officeambi.ogg'
+	sound_loop_vol = 75
 
 /area/morrigan/station/command/eva
 	name = "Morrigan EVA Storage"
 
 /area/morrigan/station/command/bridge
 	name = "Morrigan Bridge"
+	sound_loop = 'sound/ambience/morrigan/bridgeambi.ogg'
+	sound_loop_vol = 75
 
 /area/morrigan/station/command/meeting
 	name = "Morrigan Conference Room"
+	sound_loop = 'sound/ambience/morrigan/printer.ogg'
+	sound_loop_vol = 75
 
 // Misc areas
 
@@ -1655,6 +1670,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	ai_type = /datum/aiHolder/aggressive
 	eye_light_icon = "clawbot-eye"
 
+	New()
+		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
+		abilityHolder.addAbility(/datum/targetable/critter/spiker/hook)
+
 	seek_target(range)
 		. = ..()
 
@@ -1676,6 +1696,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		HH.icon_state = "handr"
 		HH.name = "right arm"
 		HH.limb_name = "mauler claws"
+
+
+	critter_ability_attack(mob/target)
+		var/datum/targetable/critter/spiker/hook = src.abilityHolder.getAbility(/datum/targetable/critter/spiker/hook)
+		if (!hook.disabled && hook.cooldowncheck())
+			hook.handleCast(target)
+			return TRUE
 
 	get_melee_protection(zone, damage_type)
 		return 4
@@ -1724,6 +1751,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		HH.can_hold_items = FALSE
 		HH.can_attack = TRUE
 		HH.can_range_attack = TRUE
+
+	critter_ability_attack(mob/target)
+		var/datum/targetable/werewolf/werewolf_defense = src.abilityHolder.getAbility(/datum/targetable/werewolf/werewolf_defense)
+		if (!werewolf_defense.disabled && werewolf_defense.cooldowncheck())
+			werewolf_defense.handleCast(target)
+			return TRUE
+
 
 	get_melee_protection(zone, damage_type)
 		return 4
@@ -2685,21 +2719,9 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 				if(prob(100))
 					active = 1
 					SPAWN(15 SECONDS) active = 0
-					playsound(AM, pick('sound/machines/hiss.ogg'), 75, 0)
+					playsound(AM, pick('sound/ambience/morrigan/steamhiss.ogg'), 75, 0)
 
-/obj/sound_trigger/morrigan/enginepowerdown_trigger
-
-	Crossed(atom/movable/AM as mob|obj)
-		..()
-		if(active) return
-		if(ismob(AM))
-			if(AM:client)
-				if(prob(100))
-					active = 1
-					SPAWN(2 MINUTES) active = 0
-					playsound(AM, pick('sound/machines/lavamoon_rotors_stopping.ogg'), 75, 0)
-
-/obj/sound_trigger/morrigan/pry_trigger
+/obj/sound_trigger/morrigan/broken_phone
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
@@ -2709,7 +2731,19 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 				if(prob(100))
 					active = 1
 					SPAWN(2 MINUTES) active = 0
-					playsound(AM, pick('sound/machines/airlock_pry.ogg'), 75, 0)
+					playsound(AM, pick('sound/ambience/morrigan/brokenphone.ogg'), 75, 0)
+
+/obj/sound_trigger/morrigan/creak_metal
+
+	Crossed(atom/movable/AM as mob|obj)
+		..()
+		if(active) return
+		if(ismob(AM))
+			if(AM:client)
+				if(prob(100))
+					active = 1
+					SPAWN(2 MINUTES) active = 0
+					playsound(AM, pick('sound/ambience/morrigan/creakmetal.ogg'), 75, 0)
 
 /obj/sound_trigger/morrigan/doorknock_trigger
 
@@ -2721,4 +2755,53 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 				if(prob(100))
 					active = 1
 					SPAWN(2 MINUTES) active = 0
-					playsound(AM, pick('sound/impact_sounds/Door_Metal_Knock_1.ogg'), 75, 0)
+					playsound(AM, pick('sound/ambience/morrigan/knockamb.ogg'), 75, 0)
+
+/obj/sound_trigger/morrigan/glass_break
+
+	Crossed(atom/movable/AM as mob|obj)
+		..()
+		if(active) return
+		if(ismob(AM))
+			if(AM:client)
+				if(prob(100))
+					active = 1
+					SPAWN(2 MINUTES) active = 0
+					playsound(AM, pick('sound/ambience/morrigan/glassbreak.ogg'), 75, 0)
+
+/obj/sound_trigger/morrigan/metal_drop
+
+	Crossed(atom/movable/AM as mob|obj)
+		..()
+		if(active) return
+		if(ismob(AM))
+			if(AM:client)
+				if(prob(100))
+					active = 1
+					SPAWN(2 MINUTES) active = 0
+					playsound(AM, pick('sound/ambience/morrigan/metaldrop.ogg'), 75, 0)
+
+
+/obj/sound_trigger/morrigan/glass_drop
+
+	Crossed(atom/movable/AM as mob|obj)
+		..()
+		if(active) return
+		if(ismob(AM))
+			if(AM:client)
+				if(prob(100))
+					active = 1
+					SPAWN(2 MINUTES) active = 0
+					playsound(AM, pick('sound/ambience/morrigan/glassdrop.ogg'), 75, 0)
+
+/obj/sound_trigger/morrigan/sparks
+
+	Crossed(atom/movable/AM as mob|obj)
+		..()
+		if(active) return
+		if(ismob(AM))
+			if(AM:client)
+				if(prob(100))
+					active = 1
+					SPAWN(2 MINUTES) active = 0
+					playsound(AM, pick(list('sound/effects/sparks1.ogg','sound/effects/sparks2.ogg','sound/effects/sparks3.ogg','sound/effects/sparks4.ogg','sound/effects/sparks5.ogg','sound/effects/sparks6.ogg'), 75, 0))

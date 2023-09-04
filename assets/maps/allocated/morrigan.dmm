@@ -72,6 +72,7 @@
 /area/morrigan/station/exit)
 "adF" = (
 /obj/decal/fakeobjects/console_lever,
+/obj/map/light/screen,
 /turf/unsimulated/floor/engine/caution/south,
 /area/morrigan/station/engineering/eng)
 "adR" = (
@@ -782,6 +783,11 @@
 	},
 /turf/unsimulated/floor/black/side,
 /area/morrigan/routing/transport)
+"aMQ" = (
+/obj/map/light,
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/twotone/yellow,
+/area/morrigan/station/engineering/eng)
 "aMS" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 1;
@@ -4283,6 +4289,7 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor5"
 	},
+/obj/sound_trigger/morrigan/creak_metal,
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
 "eqA" = (
@@ -6200,6 +6207,7 @@
 /area/morrigan/overseer)
 "gfM" = (
 /obj/decal/fakeobjects/cabinet1,
+/obj/map/light/screen,
 /turf/unsimulated/floor/engine/caution/south,
 /area/morrigan/station/engineering/eng)
 "ggw" = (
@@ -6251,6 +6259,7 @@
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi'
 	},
+/obj/sound_trigger/morrigan/steam_trigger,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "ghY" = (
@@ -7193,6 +7202,7 @@
 	icon_state = "smear2";
 	dir = 1
 	},
+/obj/sound_trigger/morrigan/creak_metal,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "gYy" = (
@@ -7741,6 +7751,7 @@
 	icon_state = "bdoor_pyro";
 	name = "rusted airlock"
 	},
+/obj/sound_trigger/morrigan/glass_drop,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict/hobo)
 "hyH" = (
@@ -7866,6 +7877,7 @@
 	icon_state = "vent";
 	name = "grimy vent"
 	},
+/obj/sound_trigger/morrigan/steam_trigger,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "hHo" = (
@@ -8596,6 +8608,10 @@
 /mob/living/critter/robotic/gunbot/morrigan/riotbot,
 /turf/unsimulated/floor/darkblue,
 /area/morrigan/station/command/bridge)
+"ixe" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/twotone/yellow,
+/area/morrigan/station/engineering/eng)
 "ixj" = (
 /obj/decal/fakeobjects/mantacontainer/upwards/yellow,
 /turf/unsimulated/floor/twotone/yellow,
@@ -9703,6 +9719,7 @@
 /area/morrigan/station/hallway)
 "jAq" = (
 /obj/machinery/computer3/terminal/console_lower,
+/obj/map/light/screen,
 /turf/unsimulated/floor/engine/caution/corner{
 	dir = 1
 	},
@@ -9739,6 +9756,7 @@
 /obj/railing/red/reinforced,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/floatingtiles,
+/obj/sound_trigger/morrigan/glass_drop,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "jCz" = (
@@ -10023,6 +10041,7 @@
 /area/morrigan/derelict)
 "jNK" = (
 /obj/decal/fakeobjects/cabinet3,
+/obj/map/light/screen,
 /turf/unsimulated/floor/engine/caution/corner,
 /area/morrigan/station/engineering/eng)
 "jNL" = (
@@ -12078,6 +12097,7 @@
 	icon_state = "bdoor_pyro";
 	name = "rusted airlock"
 	},
+/obj/sound_trigger/morrigan/metal_drop,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "lVr" = (
@@ -13775,6 +13795,7 @@
 	icon_state = "bdoor_pyro";
 	name = "rusted airlock"
 	},
+/obj/sound_trigger/morrigan/sparks,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "nwZ" = (
@@ -16587,13 +16608,6 @@
 /obj/item/cable_coil/blue/cut,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"qpj" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 4
-	},
-/obj/steam_trigger,
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict)
 "qpO" = (
 /obj/machinery/light/emergencyflashing,
 /turf/unsimulated/floor/caution/south,
@@ -16876,6 +16890,7 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/paper,
 /obj/decal/fakeobjects/lightbulb_broken,
+/obj/sound_trigger/morrigan/glass_break,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "qDs" = (
@@ -17557,6 +17572,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 9
 	},
+/obj/sound_trigger/morrigan/doorknock_trigger,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "rlr" = (
@@ -17694,6 +17710,7 @@
 	icon_state = "smear1";
 	dir = 4
 	},
+/obj/sound_trigger/morrigan/broken_phone,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "rsL" = (
@@ -20375,6 +20392,7 @@
 /obj/machinery/door/unpowered/wood/stall{
 	dir = 1
 	},
+/obj/sound_trigger/morrigan/glass_break,
 /turf/unsimulated/floor/carpet/grime,
 /area/morrigan/derelict)
 "uqa" = (
@@ -20484,6 +20502,7 @@
 /obj/decal/cleanable/rust/jen,
 /obj/decal/stripe_caution,
 /mob/living/critter/human/hobo/machete,
+/obj/sound_trigger/morrigan/steam_trigger,
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
 "uvc" = (
@@ -21679,6 +21698,7 @@
 	dir = 1
 	},
 /obj/machinery/door/window/southleft,
+/obj/sound_trigger/morrigan/creak_metal,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "vDu" = (
@@ -22024,6 +22044,7 @@
 /area/morrigan/derelict)
 "vYr" = (
 /obj/decal/fakeobjects/cabinet2,
+/obj/map/light/screen,
 /turf/unsimulated/floor/engine/caution/south,
 /area/morrigan/station/engineering/eng)
 "vYD" = (
@@ -23287,6 +23308,7 @@
 	dir = 9;
 	icon_state = "xtra_bigstripe-corner2"
 	},
+/obj/sound_trigger/morrigan/steam_trigger,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "xjt" = (
@@ -30251,7 +30273,7 @@ eVN
 qqu
 jNK
 tgf
-qIE
+ixe
 iRr
 nXf
 oir
@@ -30663,7 +30685,7 @@ cUv
 bUP
 jAq
 ewA
-qTT
+aMQ
 iRr
 jOX
 qIE
@@ -35614,7 +35636,7 @@ eZB
 tim
 kqQ
 hrP
-qpj
+rCM
 oZN
 qOf
 hrP
