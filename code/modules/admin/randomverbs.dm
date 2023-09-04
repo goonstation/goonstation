@@ -2483,10 +2483,10 @@ var/global/night_mode_enabled = 0
 	medals = params2list(medals)
 	for (var/client/C in clients)
 		LAGCHECK(LAG_LOW)
-		if (C.key == new_key)
+		if (C.ckey == ckey(new_key))
 			M = C.mob
-	if (M.key == old_key)
-		M.key = new_key
+	if (M.ckey == ckey(old_key))
+		M.ckey = ckey(new_key)
 	for (var/medal in medals)
 		var/result = world.SetMedal(medal, M, config.medal_hub, config.medal_password)
 		if (isnull(result))
