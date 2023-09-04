@@ -1,5 +1,6 @@
-
 (t)sun sep 03 23
+(u)LeahTheTech
+(+)Telepad teleportation now has a visible distortion effect at the target location for 0.5 seconds before activating. The activation delay remains unchanged.
 (u)444explorer
 (p)15660
 (e)⚗|A-Chemistry
