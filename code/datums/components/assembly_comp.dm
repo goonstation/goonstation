@@ -2,7 +2,7 @@ TYPEINFO(/datum/component/assembly)
 	initialization_args = list(
 		ARG_INFO("to_combine_item", DATA_INPUT_TYPE, "path or list of items that will trigger this proc when used on. Can take tool-bitflags like TOOL_CUTTING."),
 		ARG_INFO("proc_to_call", DATA_INPUT_REF, "The proc reference that will be called when the item can be assembled"),
-		ARG_INFO("on_tool_attack", DATA_INPUT_NUM, "Set this to TRUE if you want the component to fire if the construction should go two-ways.", FALSE),
+		ARG_INFO("on_tool_attack", DATA_INPUT_BOOL, "Set this to TRUE if you want the component to fire if the construction should go two-ways.", FALSE),
 	)
 
 ///This component calls a procref with a assembly_information string on the atom it was added to when it gets attacked with an object specified in the to_combine_item
