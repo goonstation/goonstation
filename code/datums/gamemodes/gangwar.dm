@@ -322,7 +322,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /datum/gang
 	/// The maximum number of gang members per gang.
-	var/static/current_max_gang_members = 5
+	var/static/current_max_gang_members = 4
 	/// Gang tag icon states that are being used by other gangs.
 	var/static/list/used_tags
 	/// Gang names that are being used by other gangs.

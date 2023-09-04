@@ -451,6 +451,7 @@
 /mob/Login()
 	if (!src.client)
 		stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
+	src.client.set_layout(src.client.tg_layout)
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
@@ -460,6 +461,9 @@
 	if(src.skipped_mobs_list & SKIPPED_AI_MOBS_LIST)
 		skipped_mobs_list &= ~SKIPPED_AI_MOBS_LIST
 		global.ai_mobs |= src
+	if(src.skipped_mobs_list & SKIPPED_STAMINA_MOBS)
+		OTHER_START_TRACKING_CAT(src, TR_CAT_STAMINA_MOBS)
+		src.skipped_mobs_list &= ~SKIPPED_STAMINA_MOBS
 
 	if(!src.last_ckey)
 		SPAWN(0)

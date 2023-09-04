@@ -68,6 +68,7 @@
 //skipped_mobs_list flags
 #define SKIPPED_MOBS_LIST (1 << 0)
 #define SKIPPED_AI_MOBS_LIST (1 << 1)
+#define SKIPPED_STAMINA_MOBS (1 << 2)
 
 // decomp_stage defines
 #define DECOMP_STAGE_NO_ROT 0
