@@ -1067,6 +1067,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		worldgenCandidates += src
 		if(current_state <= GAME_STATE_PREGAME)
 			src.color = src.stone_color
+		else
+			SPAWN(1)
+				space_overlays()
 
 	generate_worldgen()
 		. = ..()
@@ -1217,14 +1220,27 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			src.UpdateOverlays(ore_overlay, "ast_ore")
 
 	proc/space_overlays()
-		for (var/turf/space/A in orange(src,1))
-			var/image/edge_overlay = image('icons/turf/walls_asteroid.dmi', "edge[get_dir(A,src)]")
+		for (var/turf/A in orange(src,1))
+			var/dir_from = get_dir(A, src)
+			var/dir_to = get_dir(src, A)
+			var/skip_this = !istype(A, /turf/space)
+			if (!skip_this && !is_cardinal(dir_to))
+				for (var/cardinal_dir in cardinal)
+					if (dir_to & cardinal_dir)
+						var/turf/T = get_step(src, cardinal_dir)
+						if (!istype(T, /turf/space))
+							skip_this = TRUE
+							break
+			if (skip_this)
+				A.ClearSpecificOverlays("ast_edge_[dir_from]")
+				continue
+			var/image/edge_overlay = image('icons/turf/walls_asteroid.dmi', "edge[dir_from]")
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.layer = src.layer + 1
 			edge_overlay.plane = PLANE_WALL-1
 			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
-			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
+			A.UpdateOverlays(edge_overlay, "ast_edge_[dir_from]")
 			src.space_overlays += edge_overlay
 
 	Del()
@@ -1334,6 +1350,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			var/makeores
 			for(makeores = src.amount, makeores > 0, makeores--)
 				var/obj/item/raw_material/MAT = new ore_to_create
+
+				// rocks don't deserve quality; moreover this speeds up big explosions since rocks don't need to copyMaterial() anymore
+				if(ore_to_create ==  /obj/item/raw_material/rock)
+					continue
+
 				MAT.set_loc(src)
 
 				if(MAT.material)
@@ -1452,6 +1473,9 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		coloration_overlay.blend_mode = 4
 		UpdateIcon()
 		worldgenCandidates += src
+		if(current_state > GAME_STATE_PREGAME)
+			SPAWN(1)
+				space_overlays()
 
 	generate_worldgen()
 		. = ..()
@@ -1491,13 +1515,26 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		src.UpdateOverlays(weather, "weather")
 
 	proc/space_overlays() //For overlays ON THE SPACE TILE
-		for (var/turf/space/A in orange(src,1))
-			var/image/edge_overlay = image('icons/turf/walls_asteroid.dmi', "edge[get_dir(A,src)]")
+		for (var/turf/A in orange(src,1))
+			var/dir_from = get_dir(A, src)
+			var/dir_to = get_dir(src, A)
+			var/skip_this = !istype(A, /turf/space)
+			if (!skip_this && !is_cardinal(dir_to))
+				for (var/cardinal_dir in cardinal)
+					if (dir_to & cardinal_dir)
+						var/turf/T = get_step(src, cardinal_dir)
+						if (!istype(T, /turf/space))
+							skip_this = TRUE
+							break
+			if (skip_this)
+				A.ClearSpecificOverlays("ast_edge_[dir_from]")
+				continue
+			var/image/edge_overlay = image('icons/turf/walls_asteroid.dmi', "edge[dir_from]")
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.plane = PLANE_FLOOR
 			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
-			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
+			A.UpdateOverlays(edge_overlay, "ast_edge_[dir_from]")
 			src.space_overlays += edge_overlay
 
 	Del()

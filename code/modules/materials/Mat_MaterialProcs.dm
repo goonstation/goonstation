@@ -144,14 +144,12 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/generic_fireflash
-	var/lastTrigger = 0
-
-	execute(var/atom/location, var/temp)
+	execute(var/atom/owner, var/temp)
 		if(temp < T0C + 200)
 			return
-		if(world.time - lastTrigger < 1200) return
-		lastTrigger = world.time
-		fireflash(get_turf(location), 1)
+		if(ON_COOLDOWN(owner, "generic_mat_fireflash", 120 SECONDS))
+			return
+		fireflash(get_turf(owner), 1)
 		return
 
 /datum/materialProc/generic_itchy_onlife
@@ -256,41 +254,35 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/generic_explosive
-	var/lastTrigger = 0
-
-	execute(var/atom/location, var/temp)
+	execute(var/atom/owner, var/temp)
 		if(temp < T0C + 100)
 			return
-		if(world.time - lastTrigger < 100) return
-		lastTrigger = world.time
-		var/turf/tloc = get_turf(location)
-		explosion(location, tloc, 1, 2, 3, 4)
-		location.visible_message("<span class='alert'>[location] explodes!</span>")
+		if(ON_COOLDOWN(owner, "generic_mat_explosive", 10 SECONDS))
+			return
+		var/turf/tloc = get_turf(owner)
+		explosion(owner, tloc, 1, 2, 3, 4)
+		owner.visible_message("<span class='alert'>[owner] explodes!</span>")
 		return
 
 /datum/materialProc/flash_hit
-	var/last_trigger = 0
 	desc = "Every now and then it produces some bright sparks."
 
 	execute(var/atom/owner, var/mob/attacker, var/atom/attacked, var/atom/weapon)
-		if((world.time - last_trigger) >= 600)
-			last_trigger = world.time
-			attacked.visible_message("<span class='alert'>[owner] emits a flash of light!</span>")
-			for (var/mob/living/carbon/M in all_viewers(5, attacked))
-				M.apply_flash(8, 0, 0, 0, 3)
-		return
+		if(ON_COOLDOWN(owner, "mat_flash_hit", 60 SECONDS))
+			return
+		attacked.visible_message("<span class='alert'>[owner] emits a flash of light!</span>")
+		for (var/mob/living/carbon/M in all_viewers(5, attacked))
+			M.apply_flash(8, 0, 0, 0, 3)
 
 /datum/materialProc/smoke_hit
 	desc = "Faint wisps of smoke rise from it."
-	var/last_trigger = 0
 
 	execute(var/atom/owner, var/mob/attacker, var/atom/attacked, var/atom/weapon)
-		if((world.time - last_trigger) >= 200)
-			last_trigger = world.time
-			attacked.visible_message("<span class='alert'>[owner] emits a puff of smoke!</span>")
-			for(var/turf/T in view(1, attacked))
-				harmless_smoke_puff(get_turf(T))
-		return
+		if(ON_COOLDOWN(owner, "mat_flash_hit", 20 SECONDS))
+			return
+		attacked.visible_message("<span class='alert'>[owner] emits a puff of smoke!</span>")
+		for(var/turf/T in view(1, attacked))
+			harmless_smoke_puff(get_turf(T))
 
 /datum/materialProc/gold_add
 	desc = "It's very shiny."
@@ -351,8 +343,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/plasmastone
-	var/total_plasma = 200
-
 	execute(var/atom/location) //exp and temp both have the location as first argument so i can use this for both.
 		var/turf/T = get_turf(location)
 		if(!T || T.density || !istype(location))
@@ -360,24 +350,29 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(!location.material.isMutable()) //this is a little hacky, but basically ensure it's mutable and then do the trigger
 			location.material = location.material.getMutable()
 			return location.material.triggerTemp(location, 0)
+		var/total_plasma = location.material.getProperty("plasma_offgas")
 		if(total_plasma <= 0)
 			if(prob(2) && location)
 				location.visible_message("<span class='alert>[location] dissipates.</span>")
 				qdel(location)
 			return
+		if(ON_COOLDOWN(location, "plasmastone_plasma_generate", 5 SECONDS)) return
+		var/list/turf/simulated/floor/valid_turfs = list()
 		for (var/turf/simulated/floor/target in range(1,location))
-			if(ON_COOLDOWN(target, "plasmastone_plasma_generate", 10 SECONDS)) continue
-			if(!target.gas_impermeable && target.air)
-				if(target.parent?.group_processing)
-					target.parent.suspend_group_processing()
+			if(target.gas_cross(target) && target.air)
+				valid_turfs += target
+		if(length(valid_turfs))
+			var/turf/simulated/floor/target = pick(valid_turfs)
+			if(target.parent?.group_processing)
+				target.parent.suspend_group_processing()
 
-				var/datum/gas_mixture/payload = new /datum/gas_mixture
-				payload.toxins = 25 * location.material_amt
-				total_plasma -= payload.toxins / location.material_amt
-				payload.temperature = T20C
-				payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
-				target.air.merge(payload)
-		return
+			var/datum/gas_mixture/payload = new /datum/gas_mixture
+			payload.toxins = 25 * location.material_amt
+			total_plasma -= 1
+			payload.temperature = T20C
+			payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
+			target.air.merge(payload)
+			location.material.setProperty("plasma_offgas", total_plasma)
 
 /datum/materialProc/plasmastone_on_hit
 	execute(var/atom/owner)
@@ -399,8 +394,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/datum/material/crystal/molitz/molitz = src.find_molitz(owner.material)
 		if (!istype(molitz))
 			CRASH("Molitz_temp material proc applied to non-molitz thing") //somehow applied to non-molitz
-
-		if(molitz.iterations <= 0) return
+		var/iterations = owner.material.getProperty("molitz_bubbles")
+		if(iterations <= 0) return
 
 		var/datum/gas_mixture/air
 		if(hasvar(owner, "air_contents"))
@@ -441,7 +436,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
 
 
-		molitz.iterations -= 1
+		molitz.setProperty("molitz_bubbles", iterations-1)
 
 
 /datum/materialProc/molitz_temp/agent_b
@@ -456,23 +451,22 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(!istype(owner.material, /datum/material/crystal/molitz))
 			return
 		var/datum/material/crystal/molitz/molitz = owner.material
-		if(molitz.unexploded <= 0)
-			return
+		var/iterations = molitz.getProperty("molitz_bubbles")
+		if(iterations <= 0) return
 		if(!owner.material.isMutable()) //this is a little hacky, but basically ensure it's mutable and then do the trigger
 			owner.material = owner.material.getMutable()
 			return owner.material.triggerExp(owner, sev)
 		var/turf/target = get_turf(owner)
 		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
-			if(molitz.iterations >= 1)
+			if(iterations >= 1)
 				playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
-			if(molitz.iterations == 0)
+			if(iterations == 0)
 				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, 1, 5)
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
 			payload.oxygen = 50
 			payload.temperature = T20C
 			target.assume_air(payload)
-			molitz.iterations = 2
-			molitz.unexploded = 0
+			molitz.setProperty("molitz_bubbles", iterations-2)
 
 
 /datum/materialProc/miracle_add
@@ -512,35 +506,31 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/erebite_temp
-	var/lastTrigger = 0
-
-	execute(var/atom/location, var/temp)
+	execute(var/atom/owner, var/temp)
 		if(temp < T0C + 900) return
-		if(world.time - lastTrigger < 100) return
-		lastTrigger = world.time
+		if(ON_COOLDOWN(owner, "erebite_temp", 10 SECONDS))
+			return
 		if((temp < T0C + 1200) && prob(80)) return //some leeway for triggering at lower temps
-		var/turf/tloc = get_turf(location)
-		explosion(location, tloc, 0, 1, 2, 3)
-		location.visible_message("<span class='alert'>[location] explodes!</span>")
+		var/turf/tloc = get_turf(owner)
+		explosion(owner, tloc, 0, 1, 2, 3)
+		owner.visible_message("<span class='alert'>[owner] explodes!</span>")
 		return
 
 /datum/materialProc/erebite_exp
-	var/lastTrigger = 0
-
-	execute(var/atom/location, var/sev)
-		if(world.time - lastTrigger < 100) return
-		lastTrigger = world.time
-		var/turf/tloc = get_turf(location)
+	execute(var/atom/owner, var/sev)
+		if(ON_COOLDOWN(owner, "erebite_exp", 10 SECONDS))
+			return
+		var/turf/tloc = get_turf(owner)
 		if(sev > 0 && sev < 4)
-			location.visible_message("<span class='alert'>[location] explodes!</span>")
+			owner.visible_message("<span class='alert'>[owner] explodes!</span>")
 			switch(sev)
 				if(1)
-					explosion(location, tloc, 0, 1, 2, 3)
+					explosion(owner, tloc, 0, 1, 2, 3)
 				if(2)
-					explosion(location, tloc, -1, 0, 1, 2)
+					explosion(owner, tloc, -1, 0, 1, 2)
 				if(3)
-					explosion(location, tloc, -1, -1, 0, 1)
-			qdel(location)
+					explosion(owner, tloc, -1, -1, 0, 1)
+			qdel(owner)
 		return
 
 /datum/materialProc/slippery_attack
@@ -575,16 +565,14 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/soulsteel_entered
-	var/lastTrigger = 0
 	execute(var/obj/item/owner, var/atom/movable/entering)
 		if (!isobj(owner)) return
 		if (istype(entering, /mob/dead/observer) && prob(33))
 			var/mob/dead/observer/O = entering
 			if(O.observe_round) return
-			if(world.time - lastTrigger < 1800)
+			if(ON_COOLDOWN(owner, "soulsteel_revive", 3 MINUTES))
 				boutput(entering, "<span class='alert'>[owner] can not be possessed again so soon!</span>")
 				return
-			lastTrigger = world.time
 			var/mob/mobenter = entering
 			logTheThing(LOG_COMBAT, mobenter, "soulsteel-possesses [owner] at [log_loc(owner)].")
 			if(mobenter.client)
@@ -593,8 +581,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				OB.max_health = 8
 				OB.canspeak = 0
 				OB.show_antag_popup("soulsteel")
-
-		return
 
 /datum/materialProc/reflective_onbullet
 	execute(var/atom/owner, var/atom/attacked, var/obj/projectile/projectile)
@@ -747,3 +733,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				attacker.visible_message("<span class='alert'>Cuts apart [owner], revealing space!</span>","<span class='alert'>You finish cutting apart [owner], revealing space.</span>","The sound of cutting cardboard stops.")
 				floor_owner.ReplaceWithSpace()
 				return
+
+/datum/materialProc/glowstick_add
+	desc = "It has a chemical glow."
+	max_generations = 1
+	var/datum/component/loctargeting/sm_light/light_c
+
+	execute(var/atom/owner)
+		var/list/color = rgb2num(owner.material.getColor())
+		light_c = owner.AddComponent(/datum/component/loctargeting/sm_light, color[1], color[2], color[3], 255 * 0.33)
+		light_c.update(1)

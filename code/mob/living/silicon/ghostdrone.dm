@@ -27,7 +27,6 @@
 	var/newDrone = 0
 
 	var/jetpack = 1 //fuck whoever made this
-	var/jeton = 0
 
 	var/sees_static = TRUE
 
@@ -39,7 +38,6 @@
 		..()
 		remove_lifeprocess(/datum/lifeprocess/radiation)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
-		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		START_TRACKING
 		hud = new(src)
 		src.attach_hud(hud)
@@ -203,7 +201,7 @@
 	full_heal()
 		var/before = src.stat
 		..()
-		if (before == 2 && src.stat < 2) //if we were dead, and now arent
+		if (before == STAT_DEAD && !isdead(src)) //if we were dead, and now arent
 			src.updateSprite()
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)

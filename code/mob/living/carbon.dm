@@ -88,7 +88,7 @@
 	for(var/mob/M in src)
 		if(M in src.stomach_contents)
 			src.stomach_contents.Remove(M)
-		if (!isobserver(M))
+		if (!isobserver(M) && !isintangible(M))
 			src.visible_message("<span class='alert'><B>[M] bursts out of [src]!</B></span>")
 		else if (istype(M, /mob/dead/target_observer))
 			M.cancel_camera()

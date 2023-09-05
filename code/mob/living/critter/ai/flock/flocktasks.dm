@@ -139,7 +139,7 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/replicate/precondition()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if (!F?.flock || F.flock.flockmind.tutorial)
+	if (!F?.flock || F.flock.flockmind?.tutorial)
 		return
 	return F.can_afford(src.current_egg_cost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT
 
@@ -198,7 +198,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/nest/precondition()
 	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if (!F?.flock || F.flock.flockmind.tutorial)
+	if (!F?.flock || F.flock.flockmind?.tutorial)
 		return
 	if(F.can_afford(FLOCK_CONVERT_COST + src.current_egg_cost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT)
 		. = TRUE

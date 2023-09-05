@@ -313,3 +313,8 @@
 	name = "Enzymatic"
 	desc = "Produce harvested from this plant may contain powerful enzymes."
 	reagents_to_add = list ("booster_enzyme")
+
+/datum/plant_gene_strain/reagent_blacklist
+	name = "Inhibited Potential"
+	desc = "Produce harvested from this plant won't contain special dangerous chemicals"
+	var/list/reagents_to_remove = list("ghostchilijuice", "potassium", "lithium")

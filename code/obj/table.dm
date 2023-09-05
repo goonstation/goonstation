@@ -785,11 +785,13 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	drawer_contents = list(/obj/item/storage/box/beakerbox,
 				/obj/item/storage/box/patchbox,
 				/obj/item/storage/box/syringes,
-				/obj/item/reagent_containers/glass/beaker/large,
-				/obj/item/clothing/glasses/spectro = 2,
+				/obj/item/clothing/glasses/spectro,
 				/obj/item/device/reagentscanner = 2,
 				/obj/item/reagent_containers/dropper/mechanical,
-				/obj/item/clothing/gloves/latex = 4)
+				/obj/item/storage/box/lglo_kit,
+				/obj/item/storage/box/beaker_lids,
+				/obj/item/reagent_containers/glass/condenser = 4)
+
 
 
 /obj/table/reinforced/chemistry/auto/clericalsup
@@ -813,7 +815,8 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 /obj/table/reinforced/chemistry/auto/chemstorage
 	name = "chemical storage lab counter"
 	desc = "A set of basic precursor chemicals to expedite order fulfillment, increase efficiency, and synergize your workflow. Whatever the fuck that means."
-	drawer_contents = list(/obj/item/reagent_containers/glass/bottle/oil,
+	drawer_contents = list(/obj/item/reagent_containers/food/drinks/fueltank,
+				/obj/item/reagent_containers/glass/bottle/oil,
 				/obj/item/reagent_containers/glass/bottle/phenol,
 				/obj/item/reagent_containers/glass/bottle/acid,
 				/obj/item/reagent_containers/glass/bottle/acetone,

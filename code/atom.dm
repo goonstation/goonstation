@@ -195,6 +195,11 @@ TYPEINFO(/atom)
 				src.delStatus(effect)
 			src.statusEffects = null
 		ClearAllParticles()
+
+		if (!isnull(chat_text))
+			qdel(chat_text)
+			chat_text = null
+
 		atom_properties = null
 		if(!ismob(src)) // I want centcom cloner to look good, sue me
 			ClearAllOverlays()
@@ -237,6 +242,15 @@ TYPEINFO(/atom)
 	  */
 	proc/is_open_container()
 		return flags & OPENCONTAINER
+
+	/// Set a container to be open or closed and handle chemistry reactions that might happen as a result
+	proc/set_open_container(value)
+		if (value)
+			ADD_FLAG(src.flags, OPENCONTAINER)
+		else
+			REMOVE_FLAG(src.flags, OPENCONTAINER)
+		src.reagents?.handle_reactions()
+
 
 	proc/transfer_all_reagents(var/atom/A as turf|obj|mob, var/mob/user as mob)
 		// trans from src to A
@@ -282,7 +296,7 @@ TYPEINFO(/atom)
 /atom/proc/ex_act(var/severity=0,var/last_touched=0)
 	return
 
-/atom/proc/reagent_act(var/reagent_id,var/volume)
+/atom/proc/reagent_act(var/reagent_id,var/volume,var/datum/reagentsholder_reagents)
 	if (!istext(reagent_id) || !isnum(volume) || volume < 1)
 		return 1
 	return 0
@@ -367,6 +381,7 @@ TYPEINFO(/atom)
 
 /// Changes the icon state and returns TRUE if the icon state changed.
 /atom/proc/set_icon_state(var/new_state)
+	SHOULD_CALL_PARENT(TRUE)
 	. = new_state != src.icon_state
 	src.icon_state = new_state
 	if(. && src.material_applied_appearance && src.material)

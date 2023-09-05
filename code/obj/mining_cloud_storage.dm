@@ -125,7 +125,7 @@
 		src.updateUsrDialog()
 
 	proc/quickload(var/mob/living/user,var/obj/item/O)
-		if (!user || !O)
+		if (!user || QDELETED(O))
 			return
 		if(istype(O,/obj/item/raw_material/))
 			var/obj/item/raw_material/R = O

@@ -156,15 +156,27 @@
 		if (. && islist(scoot_sounds) && scoot_sounds.len && prob(75))
 			playsound( get_turf(src), pick( scoot_sounds ), 50, 1 )
 
+/obj/stool/pet_bed
+	name = "pet bed"
+	icon_state = "petbed"
+	desc = "A soft bed designed for small animals to snuggle up in."
+	parts_type = /obj/item/furniture_parts/stool/pet_bed
+
+/obj/stool/pet_bed/jones
+	name = "cat bed"
+	desc = "Though it was made to suit him, Jones still seems to sleep in every spot that is NOT this little bed."
+
 /obj/stool/bee_bed
 	// idk. Not a bed proper since humans can't lay in it. Weirdos.
 	// would also be cool to make these work with bees.
 	// it's hip to tuck bees!
 	name = "bee bed"
-	icon = 'icons/misc/critter.dmi'
 	icon_state = "beebed"
 	desc = "A soft little bed the general size and shape of a space bee."
 	parts_type = /obj/item/furniture_parts/stool/bee_bed
+
+/obj/stool/bee_bed/heisenbee
+	name = "heisenbed"
 
 /obj/stool/bee_bed/double // Prefab variant
 	name = "double bee bed"
@@ -189,6 +201,7 @@ TYPEINFO(/obj/stool/wooden)
 /obj/stool/wooden
 	name = "wooden stool"
 	icon_state = "wstool"
+	default_material = "wood"
 	desc = "Like a stool, but just made out of wood."
 	parts_type = /obj/item/furniture_parts/woodenstool
 
@@ -1170,35 +1183,48 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 		unbuckle()
 
 /* ======================================================= */
-/* -------------------- Wooden Chairs -------------------- */
+/* -------------------- Dining Chairs -------------------- */
 /* ======================================================= */
 
-TYPEINFO(/obj/stool/chair/wooden)
+TYPEINFO(/obj/stool/chair/dining/wood)
 	mat_appearances_to_ignore = list("wood")
-/obj/stool/chair/wooden
-	name = "wooden chair"
-	icon_state = "chair_wooden" // this sprite is bad I will fix it at some point
+/obj/stool/chair/dining/
+	name = "dining chair"
+	icon_state = "chair_wooden"
+	desc = "You shouldn't be seeing this!"
 	comfort_value = 3
 	foldable = 0
 	anchored = UNANCHORED
 	//deconstructable = 0
-	parts_type = /obj/item/furniture_parts/wood_chair
 
 	constructed //no "wood wood chair"
 		name = "chair"
+
+	wood
+		name = "wooden chair"
+		icon_state = "chair_wooden" // this sprite is bad I will fix it at some point
+		parts_type = /obj/item/furniture_parts/dining_chair/wood
+
 	regal
 		name = "regal chair"
 		desc = "Much more comfortable than the average dining chair, and much more expensive."
 		icon_state = "regalchair"
 		comfort_value = 7
-		parts_type = /obj/item/furniture_parts/wood_chair/regal
+		parts_type = /obj/item/furniture_parts/dining_chair/regal
 
 	scrap
 		name = "scrap chair"
 		desc = "Hopefully you didn't pay actual money for this."
 		icon_state = "scrapchair"
 		comfort_value = 7
-		parts_type = /obj/item/furniture_parts/wood_chair/scrap
+		parts_type = /obj/item/furniture_parts/dining_chair/scrap
+
+	industrial
+		name = "industrial chair"
+		desc = "Repurposed scaffolding in the shape of a chair."
+		icon_state = "chair_industrial"
+		comfort_value = 7
+		parts_type = /obj/item/furniture_parts/dining_chair/industrial
 
 /* ============================================== */
 /* -------------------- Pews -------------------- */

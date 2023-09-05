@@ -1130,7 +1130,7 @@
 
 		owner.visible_message("<span class='alert'><b>[owner.name]</b> shoots eye beams!</span>")
 		var/datum/projectile/laser/eyebeams/PJ = new projectile_path
-		shoot_projectile_ST(owner, PJ, T)
+		shoot_projectile_ST_pixel_spread(owner, PJ, T)
 
 	cast_misfire(atom/target)
 		if (..())
@@ -1885,24 +1885,20 @@
 		return
 
 	OnLife(var/mult)
-		if(..()) return
-		if (isliving(owner))
-			var/mob/living/L = owner
-			var/turf/T = get_turf(L)
+		if(..())
+			return
+		if (!src.active)
+			return
+		if (!isliving(owner))
+			return
 
-			if (T && isturf(T))
-				var/area/A = get_area(T)
-				if (istype(T, /turf/space) || (A && (istype(A, /area/shuttle/) || istype(A, /area/shuttle_transit_space) || A.name == "Space" || A.name == "Ocean")))
-					src.cloak_decloak(2)
+		var/mob/living/L = owner
+		var/turf/T = get_turf(L)
 
-				else
-					if (T.RL_GetBrightness() < 0.2 && can_act(owner) && src.active)
-						src.cloak_decloak(1)
-					else
-						src.cloak_decloak(2)
-			else
-				src.cloak_decloak(2)
-		return
+		if (!isturf(T) || T.is_lit())
+			src.cloak_decloak(2)
+		else if (can_act(src.owner))
+			src.cloak_decloak(1)
 
 /datum/targetable/geneticsAbility/darkcloak
 	name = "Cloak of Darkness"
@@ -1918,6 +1914,7 @@
 		if (DC.active)
 			boutput(usr, "You stop using your cloak of darkness.")
 			DC.active = 0
+			DC.cloak_decloak(2)
 		else
 			boutput(usr, "You start using your cloak of darkness.")
 			DC.active = 1

@@ -207,8 +207,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 		ADMIN_ONLY
 		world.SetConfig( "APP/admin", src.key, "role=admin" )
-		input( src, "Enter '.debug profile' in the next command box. Blame BYOND.", "BYONDSucks", ".debug profile" )
-		winset( usr, null, "command=.command" )
+		winset( usr, null, "command=.profile" )
 		if (tgui_alert(usr, "Do you disable automatic profiling for 5 minutes.", "Debug",
 				list("Yes", "No"), timeout = 10 SECOND) == "Yes")
 			lag_detection_process.delay_disable_manual_profiling(5 MINUTES)
@@ -353,7 +352,7 @@ proc/debug_map_apc_count(delim,zlim)
 			if(!(area in processed_areas))
 				var/text_charge
 				if(!apc || apc.disposed)
-					text_charge = "N/A"
+					text_charge = "no APC"
 				else if(apc.status & BROKEN)
 					text_charge = "broken"
 				else if(!cell)
@@ -368,6 +367,8 @@ proc/debug_map_apc_count(delim,zlim)
 					if(apc.environ <= 2) off += "env"
 					if(length(off))
 						text_charge += "<br>OFF: [off.Join(" ")]"
+				if(!area.requires_power)
+					text_charge += "<br>inf power area"
 				img.app.overlays = list(src.makeText(text_charge, align_left=TRUE))
 				processed_areas += area
 

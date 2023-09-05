@@ -303,6 +303,17 @@ datum
 			taste = "fruity"
 			reagent_state = LIQUID
 
+		fooddrink/alcoholic/schnapps
+			name = "schnapps"
+			id = "schnapps"
+			fluid_r = 240
+			fluid_g = 240
+			fluid_b = 240
+			alch_strength = 0.6
+			description = "An alcoholic beverage typically made from fermented fruits. Contains a lot of alcohol."
+			taste = "fruity"
+			reagent_state = LIQUID
+
 		fooddrink/alcoholic/mead
 			name = "mead"
 			id = "mead"
@@ -729,7 +740,7 @@ datum
 									var/obj/item/clothing/glasses/eyepatch/E = new /obj/item/clothing/glasses/eyepatch(H)
 									E.name = "Pirate Eyepatch"
 									E.desc = "Arr!"
-									H.equip_if_possible(E,H.slot_glasses)
+									H.equip_if_possible(E,SLOT_GLASSES)
 					H.update_colorful_parts()
 				else
 					random_brute_damage(M, 5)
@@ -2022,9 +2033,10 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				var/odds = rand(1,1000000)
-				if(odds == 1)
+				var/odds = rand() * 1000000
+				if(odds <= 1 * mult)
 					M.visible_message("<span class='alert'>[M] suddenly drops dead!</span>")
+					//M.unlock_medal("Too Spicy!", 1) //uncomment when we actually make the medal
 					M.death()
 				..()
 				return
@@ -3598,6 +3610,18 @@ datum
 			bladder_value = -1.5
 			taste = "earthy"
 
+		fooddrink/juice_banana
+			name = "banana juice"
+			id = "juice_banana"
+			fluid_r = 255
+			fluid_g = 245
+			fluid_b = 150
+			description = "A juice which has a smooth, naturally sweet flavor with subtle hints of tropical freshness."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			bladder_value = -1.5
+			taste = "tropical"
+
 		fooddrink/juice_grapefruit
 			name = "grapefruit juice"
 			id = "juice_grapefruit"
@@ -3641,6 +3665,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 1
 			bladder_value = -1
+			taste = "tropical"
 
 		fooddrink/turmeric
 			name = "turmeric powder"
@@ -3696,6 +3721,68 @@ datum
 					if(probmult(10) && istype(virus.master,/datum/ailment/disease/food_poisoning))
 						M.cure_disease(virus)
 						boutput(M,"<span class= 'notice'>You feel a little less sickly.</span>")
+				..()
+
+		fooddrink/cinnamon
+			name = "cinnamon"
+			id = "cinnamon"
+			description = "With a sweet and aromatic scent, it is commonly used in various culinary applications. Consuming large quantities may be a challenge."
+			reagent_state = SOLID
+			fluid_r = 197
+			fluid_g = 140
+			fluid_b = 102
+			transparency = 255
+			overdose = 20
+			taste = list("sweet", "aromatic")
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+
+				if (prob(80))
+					M.losebreath += (2 * mult)
+					volume -= overdose
+					M.changeStatus("stunned", 3 SECONDS)
+					particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(M.loc, M.dir, "#C58C66"))
+
+					switch(rand(1, 6))
+						if (1) M.emote("cough")
+						if (2) M.emote("wheeze")
+						if (3) M.emote("gasp")
+						if (4) M.emote("sputter")
+						if (5) M.emote("groan")
+						if (6) M.emote("choke")
+
+					var/mob/living/target
+					var/check_loc = get_step(M, M.dir)
+					for (var/mob/living/L in check_loc)
+						target = L
+						break
+
+					if (target)
+						var/message_append = ""
+						if (prob(60))
+							switch(rand(1, 9))
+								if (1) message_append = " Ouch!"
+								if (2) message_append = " Looks painful."
+								if (3) message_append = " Whoa!"
+								if (4) message_append = " What an idiot."
+								if (5) message_append = " That's so stupid."
+								if (6) message_append = " Careless."
+								if (7) message_append = " Huh."
+								if (8) message_append = " Why?"
+								if (9) message_append = " Wow!"
+						M.visible_message("<span class='alert'><B>[M]</B> blows cinnamon right into <B>[target]</B>'s face![message_append]</span>", group = "[M]_blow_smoke_at_[target]")
+
+						if (target)
+							SPAWN(0) target.emote("cough")
+					else
+						var/message
+						switch(rand(1, 4))
+							if (1) message = "<B>[M]</B> puffs out a cinnamon cloud!"
+							if (2) message = "<B>[M]</B> exhales a huge cloud of cinnamon!"
+							if (3) message = "<B>[M]</B> blows out a cinnamon cloud!"
+							if (4) message = "<B>[M]</B> exhales some cinnamon from [his_or_her(M)] mouth!"
+						M.visible_message("<span class='alert'>[message]</span>", group = "blow_smoke")
 				..()
 
 		fooddrink/juice_pickle
@@ -4013,6 +4100,18 @@ datum
 			fluid_b = 0
 			transparency = 20
 			bioeffect_id = "accent_swedish"
+
+		fooddrink/temp_bioeffect/liquid_code
+			name = "liquid code"
+			id = "liquid_code"
+			description = "A tangy substance with numbers shimmering in it."
+			fluid_r = 50
+			fluid_g = 185
+			fluid_b = 120
+			transparency = 65
+			taste = list("spaghetti-like")
+			bioeffect_id = "accent_hacker"
+
 
 		fooddrink/temp_bioeffect/innitium
 			name = "innitium"

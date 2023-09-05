@@ -62,6 +62,8 @@ datum
 		var/threshold = null
 		/// Has this chem been in the person's bloodstream for at least one cycle?
 		var/initial_metabolized = FALSE
+		///Is it banned from various fluid types, see _std/defines/reagents.dm
+		var/fluid_flags = 0
 
 		New()
 			..()
@@ -167,10 +169,11 @@ datum
 				if(INGEST)
 					var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
 					if (AD)
-						boutput(M, "<span class='notice'><b>You feel slightly better, but for how long?</b></span>")
 						M.make_jittery(-5)
 						AD.last_reagent_dose = world.timeofday
-						AD.stage = 1
+						if (AD.stage != 1)
+							boutput(M, "<span class='notice'><b>You feel slightly better, but for how long?</b></span>")
+							AD.stage = 1
 
 			M.material_trigger_on_chems(src, volume)
 			for(var/atom/A in M)

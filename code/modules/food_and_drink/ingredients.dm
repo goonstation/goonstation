@@ -131,7 +131,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
-		if (src.cybermeat == 1)
+		if (src.cybermeat)
 			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			if (istype(T))
 				make_cleanable(/obj/decal/cleanable/oil,T)
@@ -141,11 +141,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 
 /// Meat which is butchered from changeling critters (and gibbered changelings)
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
-	 name = "mutagenic meat"
-	 desc = "Are those eyes?"
-	 icon_state = "meat-changeling"
-	 initial_volume = 30
-	 initial_reagents = list("neurotoxin" = 20, "bloodc" = 10)
+	name = "mutagenic meat"
+	desc = "Are those eyes?"
+	icon_state = "meat-changeling"
+	initial_volume = 30
+	initial_reagents = list("neurotoxin" = 20, "bloodc" = 10)
+
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody
+	name = "meaty bit"
+	desc = "grody."
+	icon = 'icons/obj/decals/gibs/human.dmi'
+	icon_state = "gibmid2"
+
+	New()
+		..()
+		src.name = pick("meaty bit", "gross organs", "grody thing")
+		src.icon_state = pick("gibmid1", "gibmid2", "gibarm", "gibtorso", "gibhead")
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
 	name = "bacon"
@@ -263,7 +274,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
 	icon_state = "rice-sprig"
 	food_color = "#FFFFAA"
-	brew_result = "ricewine"
+	brew_result = list("ricewine"=20)
 
 /obj/item/reagent_containers/food/snacks/ingredient/rice
 	name = "rice"
@@ -279,7 +290,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	custom_food = 1
 	initial_volume = 50
 	initial_reagents = list("sugar"=25)
-	brew_result = "rum"
+	brew_result = list("rum"=20)
 
 /obj/item/reagent_containers/food/snacks/ingredient/peanutbutter
 	name = "peanut butter"
@@ -345,7 +356,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	doants = 0
 	initial_volume = 50
 	initial_reagents = list("honey"=15)
-	brew_result = "mead"
+	brew_result = list("mead"=20)
 	mat_changename = "honey"
 	default_material = "honey"
 

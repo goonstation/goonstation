@@ -19,7 +19,7 @@
 		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
 		return
 
-	var/msg = input("Please enter your help request to admins.\nAdminhelps are also sent to admins via Discord.\n\nFor questions on game mechanics, use Mentorhelp (F3).", "Adminhelp") as null|message
+	var/msg = input("Please enter your help request or rule violation report to admins.\nAdminhelps are also sent to admins via Discord.\nIf someone is breaking a rule tell us who did what and when.\n\nFor questions on game mechanics, use Mentorhelp (F3).", "Adminhelp") as null|message
 
 	msg = copytext(html_encode(msg), 1, MAX_MESSAGE_LEN * 4)
 
@@ -220,7 +220,7 @@
 			if (!M.client.holder.hear_prayers || (M.client.player_mode == 1 && M.client.player_mode_ahelp == 0)) //XOR for admin prayer setting and player mode w/ no ahelps
 				continue
 			else
-				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.1em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST) " : ""]</B><a href='?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'>: <I>[msg]</I></span>")
+				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.1em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST) " : ""]</B><a href='?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign' />: <I>[msg]</I></span>")
 				if(M.client.holder.audible_prayers == 1)
 					M << sound("sound/misc/boing/[rand(1,6)].ogg", volume=50, wait=0)
 				else if(M.client.holder.audible_prayers == 2) // this is a terrible idea
