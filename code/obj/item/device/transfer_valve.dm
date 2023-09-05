@@ -360,7 +360,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 						throw_repeat--
 						step_away(L,get_turf(src),throw_speed)
 
-				T.air_contents.zero() //I could also make it vent the gas, I guess, but then it'd be off-limits to non-antagonists. Challenge mode: make a safe ttb?
+				ZERO_GASES(T.air_contents) //I could also make it vent the gas, I guess, but then it'd be off-limits to non-antagonists. Challenge mode: make a safe ttb?
 				qdel(B)
 				SPAWN(1 SECOND)
 					UpdateIcon()

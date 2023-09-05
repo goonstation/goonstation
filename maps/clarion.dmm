@@ -16054,13 +16054,6 @@
 /obj/lattice,
 /turf/space,
 /area/space)
-"bCK" = (
-/obj/machinery/light{
-	dir = 8;
-	pixel_x = -10
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
 "bCQ" = (
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -38704,6 +38697,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"sNj" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/obj/machinery/light,
+/turf/simulated/floor,
+/area/station/quartermaster/storage)
 "sOc" = (
 /obj/item/device/radio/beacon,
 /obj/landmark/gps_waypoint,
@@ -78698,8 +78698,8 @@ gck
 bzk
 fho
 bBB
-bCK
-rpX
+buG
+sNj
 bFo
 roW
 jkc

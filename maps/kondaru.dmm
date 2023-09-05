@@ -7767,12 +7767,8 @@
 /turf/simulated/floor/blueblack,
 /area/station/engine/coldloop)
 "aDl" = (
-/obj/item/device/radio/intercom{
-	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show.";
-	device_color = "#32BC2D";
-	icon = 'icons/obj/radiostation.dmi';
-	icon_state = "mixtable-1";
-	name = "broadcast radio"
+/obj/item/device/radio/intercom/radiostation{
+	device_color = "#32BC2D"
 	},
 /obj/table/wood/auto,
 /turf/simulated/floor/darkblue/checker/other,

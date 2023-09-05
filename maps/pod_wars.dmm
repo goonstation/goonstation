@@ -2785,13 +2785,7 @@
 /turf/simulated/floor/purple,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "kV" = (
-/obj/item/device/radio/intercom{
-	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show.";
-	device_color = "#E52780";
-	icon = 'icons/obj/radiostation.dmi';
-	icon_state = "mixtable-1";
-	name = "broadcast radio"
-	},
+/obj/item/device/radio/intercom/radiostation,
 /obj/table/wood/auto,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)

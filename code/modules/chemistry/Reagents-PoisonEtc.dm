@@ -57,6 +57,7 @@ datum
 			transparency = 20
 			blob_damage = 1
 			value = 3 // 1c + 1c + 1c
+			var/melts_items = FALSE //!does this melt items? sulfuric acid doesn't since it smokes on reaction and that's Brutal
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -113,7 +114,7 @@ datum
 					return 1
 				if (istype(O,/obj/item/clothing/head/chemhood || /obj/item/clothing/suit/chemsuit))
 					return 1
-				if (isitem(O) && prob(40))
+				if (isitem(O) && prob(40) && volume >= 10 && melts_items)
 					var/obj/item/toMelt = O
 					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
 						if(!O.hasStatus("acid"))
@@ -139,6 +140,7 @@ datum
 			fluid_g = 200
 			fluid_b = 255
 			blob_damage = 1.2
+			melts_items = TRUE
 
 		harmful/acid/nitric_acid
 			name = "nitric acid"
@@ -148,6 +150,7 @@ datum
 			fluid_g = 200
 			fluid_b = 255
 			blob_damage = 0.7
+			melts_items = TRUE
 
 		harmful/acetic_acid
 			name = "acetic acid"

@@ -53584,8 +53584,8 @@
 /area/listeningpost)
 "ojC" = (
 /mob/living/critter/small_animal/bird/owl{
-	health_brute = 200;
-	health_burn = 200;
+	health_brute = 50;
+	health_burn = 50;
 	name = "Hooty McOwlface"
 	},
 /turf/simulated/floor/grass/leafy,
