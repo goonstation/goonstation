@@ -1,5 +1,9 @@
 
 (t)tue sep 05 23
+(u)Azrun
+(p)15698
+(e)🆕🎨⚖💅💨|C-Feature, C-Sprites, C-Balance, C-QoL, A-Atmospherics
+(+)New visual effect when hotspots (atmos) are affected by a catalyst! Fire! Fire! Fire!
 (u)Flaborized and LeahTheTech
 (p)15634
 (e)⚖⚗|C-Balance, A-Chemistry
