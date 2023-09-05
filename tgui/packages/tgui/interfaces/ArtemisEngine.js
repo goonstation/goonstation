@@ -1,6 +1,6 @@
 import { round } from '../../common/math';
 import { useBackend } from '../backend';
-import { Button, Knob, LabeledControls, LabeledList, RoundGauge, Section } from '../components';
+import { Button, LabeledControls, LabeledList, RoundGauge, Section } from '../components';
 import { Window } from '../layouts';
 
 
@@ -9,8 +9,6 @@ export const ArtemisEngine = (props, context) => {
   // Extract `health` and `color` variables from the `data` object.
   const {
     fuel_tank,
-    fuel_buffer,
-    target_fuel,
     engine_on,
     tank_on,
     exciter_stat,
@@ -19,16 +17,9 @@ export const ArtemisEngine = (props, context) => {
     casing_rate,
     coil_strength,
     min_pressure,
-    max_target,
     max_tank_pressure,
-    max_buffer_pressure,
   } = data;
-  //  temp_target=target_fuel;
-  const handleSetPressure = target_fuel => {
-    act('adjust-flowrate', {
-      target_fuel,
-    });
-  };
+
 
   const handleTogglePower = () => {
     act('toggle-power');
@@ -58,26 +49,6 @@ export const ArtemisEngine = (props, context) => {
                   "average": [max_tank_pressure * 0.25, max_tank_pressure * 0.5],
                   "bad": [0, max_tank_pressure * 0.25],
                 }}
-              />
-            </LabeledControls.Item>
-            <LabeledControls.Item label="Buffered Fuel">
-              <RoundGauge
-                value={fuel_buffer}
-                minValue={min_pressure}
-                maxValue={max_buffer_pressure}
-                ranges={{
-                  "good": [max_buffer_pressure * 0.5, max_buffer_pressure],
-                  "average": [max_buffer_pressure * 0.25, max_buffer_pressure * 0.5],
-                  "bad": [0, max_buffer_pressure * 0.25],
-                }}
-              />
-            </LabeledControls.Item>
-            <LabeledControls.Item label="buffer target">
-              <Knob
-                minValue={min_pressure}
-                maxValue={max_target}
-                value={target_fuel}
-                onDrag={(e, target_fuel) => handleSetPressure(target_fuel)}
               />
             </LabeledControls.Item>
           </LabeledControls>

@@ -1,5 +1,5 @@
 #ifdef ENABLE_ARTEMIS
-
+#define PLASMA_TANK_VOL 1000
 /////////////////////TANK/////////////////////
 /obj/machinery/atmospherics/unary/ion_drive/plasma_tank
 		name = "plasma tank"
@@ -7,22 +7,23 @@
 		icon = 'icons/misc/artemis/artemis_engine.dmi'
 		icon_state = "engine_tank"
 		density = 1
-
+		dir=NORTH
+		initialize_directions=NORTH
 		var/max_pressure =150 * ONE_ATMOSPHERE
 		var/on = FALSE
-		var/volume=1000
 		var/stars_id = "artemis"
 
-		var/datum/gas_mixture/stored_fuel = null
+		var/datum/gas_mixture/stored_fuel
+
 
 /obj/machinery/atmospherics/unary/ion_drive/plasma_tank/New()
-		src.dir=NORTH
-		src.initialize_directions=NORTH
+
 		..()
 		src.stored_fuel= new /datum/gas_mixture
-		src.stored_fuel.volume = src.volume
+
 		src.stored_fuel.temperature = T20C
-		src.stored_fuel.toxins = (src.max_pressure / 2) * src.volume / (T20C * R_IDEAL_GAS_EQUATION)
+		src.stored_fuel.volume = PLASMA_TANK_VOL
+		src.stored_fuel.toxins = (src.max_pressure / 2) * PLASMA_TANK_VOL / (T20C * R_IDEAL_GAS_EQUATION)
 
 
 
@@ -72,22 +73,19 @@
 
 		var/stars_id = "artemis"
 		var/on=FALSE
-		var/max_pressure = 10 * ONE_ATMOSPHERE
+		//var/max_pressure = 10 * ONE_ATMOSPHERE
 		var/multiplier= null
 		var/penalty=0//expressed as a
 
 		var/obj/item/artemis_engine_component/plasma_exciter/drive_exciter
 		var/obj/item/artemis_engine_component/casing/drive_casing
 		var/obj/item/artemis_engine_component/coil/drive_coil
-		var/datum/gas_mixture/fuel_buffer
+		//var/datum/gas_mixture/fuel_buffer
 
 
 /obj/machinery/ion_drive/drive/New()
 		..()
 
-		src.fuel_buffer = new /datum/gas_mixture
-		src.fuel_buffer.volume = 1000
-		src.fuel_buffer.temperature = T20C
 
 		src.drive_exciter = new /obj/item/artemis_engine_component/plasma_exciter
 		src.drive_exciter.New("plasmastone")
@@ -99,20 +97,7 @@
 		src.drive_coil.New("copper")
 
 		src.multiplier=src.drive_exciter.conversion_rate//come up with something better
-/obj/machinery/ion_drive/drive/proc/usefuel(var/throttle)
-		if(src.fuel_buffer.toxins<src.drive_exciter.conversion_rate || src.drive_casing.integrity <= 0)
-				return FALSE
 
-		src.fuel_buffer.toxins -= src.drive_exciter.conversion_rate
-
-		src.drive_casing.integrity -= src.drive_casing.degredation_rate
-		if(src.drive_casing.integrity < 0)
-				src.drive_casing.integrity=0
-		src.use_power(1000*src.drive_coil.field_strength)
-
-		if(throttle)
-				return src.usefuel(FALSE)
-		return TRUE
 /////////////////////INTERFACE/////////////////////
 /obj/machinery/ion_drive/interface
 		name = "Ion Drive Interface"
@@ -123,7 +108,6 @@
 
 		var/throttle
 		var/on = FALSE
-		var/target_pressure=ONE_ATMOSPHERE
 		var/stars_id = "artemis"
 
 		var/obj/machinery/atmospherics/unary/ion_drive/plasma_tank/artemis_tank = null
@@ -133,7 +117,7 @@
 /obj/machinery/ion_drive/interface/New()
 		..()
 		SPAWN(1 SECONDS)
-				for(var/obj/artemis/S in world)
+				for_by_tcl(S, /obj/artemis)
 						if(S.stars_id == src.stars_id)
 								src.ship = S
 								src.ship.engines.drive = src
@@ -157,14 +141,14 @@
 		. = ..()
 		if(!src.on)
 				return FALSE
-		src.transfer_fuel(src.artemis_tank.stored_fuel,src.artemis_drive.fuel_buffer)
+
 
 
 /obj/machinery/ion_drive/interface/proc/process_move()
 		if(!src.on)
 				return FALSE
-		if(!src.artemis_drive.usefuel(src.ship.full_throttle))
-				src.on=FALSE;
+		if(!src.usefuel(src.ship.full_throttle))
+				src.on=FALSE
 
 
 
@@ -179,8 +163,6 @@
 /obj/machinery/ion_drive/interface/ui_data(mob/user)
 		. = list(
 			"fuel_tank" = MIXTURE_PRESSURE(src.artemis_tank.stored_fuel),
-			"fuel_buffer" = MIXTURE_PRESSURE(src.artemis_drive.fuel_buffer),
-			"target_fuel"=src.target_pressure,
 			"engine_on"=src.on,
 			"tank_on"=src.artemis_tank.on,
 			"exciter_stat" = src.artemis_drive.drive_exciter.conversion_rate,
@@ -192,9 +174,7 @@
 /obj/machinery/ion_drive/interface/ui_static_data(mob/user)
 	. = list(
 			"min_pressure" = 0,
-			"max_target" = 5 * ONE_ATMOSPHERE,
 			"max_tank_pressure" = src.artemis_tank.max_pressure,
-			"max_buffer_pressure" = src.artemis_drive.max_pressure,
 		)
 /obj/machinery/ion_drive/interface/ui_act(action, params)
 		. = ..()
@@ -203,7 +183,7 @@
 		switch(action)
 
 				if("toggle-power")
-						if(src.artemis_drive.fuel_buffer.temperature>0)
+						if(src.artemis_tank.stored_fuel.temperature>0)
 								src.on = !src.on
 								src.artemis_drive.on = !src.artemis_drive.on
 								. = TRUE
@@ -214,31 +194,22 @@
 						src.artemis_tank.on = !src.artemis_tank.on
 						. = TRUE
 
-				if("adjust-flowrate")
-						var/new_target_pressure = params["target_fuel"]
-						if(isnum(new_target_pressure))
-								src.target_pressure = clamp(new_target_pressure, 0, 10*ONE_ATMOSPHERE)
-								. =TRUE
 
 /// Transfer fuel from fuel tank to the drives fuel buffer
-/obj/machinery/ion_drive/interface/proc/transfer_fuel(datum/gas_mixture/source,datum/gas_mixture/destination)
-
-
-		var/destination_pressure = MIXTURE_PRESSURE(destination)
-		if(destination_pressure>=src.target_pressure)
-				return TRUE
-
-		var/pressure_delta = src.target_pressure-destination_pressure
-		var/transfer_moles
-
-		if(src.artemis_tank.stored_fuel.temperature>0)
-				transfer_moles = pressure_delta * destination.volume / (source.temperature * R_IDEAL_GAS_EQUATION)
-		if(transfer_moles>0)
-				var/datum/gas_mixture/removed = source.remove(transfer_moles)
-				destination.merge(removed)
-
-		return TRUE
 
 /obj/machinery/ion_drive/interface/proc/getMultiplier()
 		return src.artemis_drive.multiplier
+
+/obj/machinery/ion_drive/interface/proc/usefuel(var/throttle)
+		var/mul=1
+		if(throttle)
+				mul=2
+		if(src.artemis_tank.stored_fuel.toxins<src.artemis_drive.drive_exciter.conversion_rate || src.artemis_drive.drive_casing.integrity <= 0)
+				return FALSE
+
+		src.artemis_tank.stored_fuel.toxins = max(src.artemis_tank.stored_fuel.toxins-(mul*src.artemis_drive.drive_exciter.conversion_rate),0)
+
+		src.artemis_drive.drive_casing.integrity = mul*max(src.artemis_drive.drive_casing.integrity-(mul*src.artemis_drive.drive_casing.degredation_rate),0)
+		src.use_power(mul*1000*src.artemis_drive.drive_coil.field_strength)
+		return TRUE
 #endif
