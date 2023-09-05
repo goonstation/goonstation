@@ -2203,6 +2203,7 @@
 	logTheThing(LOG_COMBAT, src, "is anvil-gibbed at [log_loc(src)].")
 	src.transforming = TRUE
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "anvilgib")
+	src.anchored = ANCHORED_ALWAYS
 
 	var/obj/anvil = new anvil_type(get_turf(src))
 	anvil.anchored = ANCHORED_ALWAYS
