@@ -58,17 +58,21 @@
 /obj/item/clothing/head/wig/spawnable/random
 
 	New()
-		var/list/possible_hairstyles = null
+		src.name = "wig"
+		var/list/possible_hairstyles
+
 		if (prob(50))
 			possible_hairstyles = filtered_concrete_typesof(/datum/customization_style, /proc/ismasc)
 		else
 			possible_hairstyles = filtered_concrete_typesof(/datum/customization_style, /proc/isfem)
-		var/datum/customization_style/hair_type = null
+
+		var/datum/customization_style/hair_type
 		var/picked_color = rgb(rand(0,255),rand(0,255),rand(0,255))
 		hair_type = pick(possible_hairstyles)
 		first_id = initial(hair_type.id)
 		first_color = picked_color
 		if (prob(33))
+			hair_type = pick(possible_hairstyles)
 			second_id = initial(hair_type.id)
 			second_color = picked_color
 		..()

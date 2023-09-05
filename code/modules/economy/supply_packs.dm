@@ -1188,7 +1188,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Haberdasher's Crate"
 
 /datum/supply_packs/random_wigs
-	name = "Wigs"
+	name = "Spare wigs crate"
 	desc = "7x assorted wigs."
 	category = "Civilian Department"
 	contains = list(/obj/item/clothing/head/wig/spawnable/random = 7)
