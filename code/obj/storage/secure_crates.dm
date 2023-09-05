@@ -101,9 +101,11 @@
 	/obj/item/storage/box/cocktail_doodads,\
 	/obj/item/storage/box/straws,\
 	/obj/item/storage/box/fruit_wedges,\
+	/obj/item/storage/box/beer,\
+	/obj/item/storage/box/glassbox,\
+	/obj/item/reagent_containers/food/drinks/drinkingglass/random_style = 4,\
 	/obj/item/reagent_containers/food/drinks/bottle/vodka = 3,\
-	/obj/item/reagent_containers/food/drinks/curacao,\
-	/obj/item/storage/box/beer)
+	/obj/item/reagent_containers/food/drinks/curacao)
 
 /obj/storage/secure/crate/bee
 	name = "Secure Bee crate"
