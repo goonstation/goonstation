@@ -18416,7 +18416,7 @@
 /turf/simulated/floor/red,
 /area/station/science/lab)
 "pkT" = (
-/obj/submachine/fishing_upload_terminal,
+/obj/submachine/fishing_upload_terminal/portable,
 /turf/simulated/floor,
 /area/station/ranch)
 "plm" = (
