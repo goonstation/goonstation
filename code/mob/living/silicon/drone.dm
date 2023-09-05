@@ -1955,12 +1955,6 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 			src.hovering = "d"
 			src.pixel_y = 0
 
-		if (src.emagged)
-			src.i_details.icon_state = "drone-emagged"
-			UpdateOverlays(src.i_details, "drone-emagged")
-		else
-			UpdateOverlays(null, "drone-emagged")
-
 	proc/update_details()
 
 		if (src.hovering == "a")
@@ -1995,6 +1989,11 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 			UpdateOverlays(SafeGetOverlayImage("hat", 'icons/mob/robots_decor.dmi', "hat-" + src.shelltype + "-" + src.hovering + "-" + src.hat, src.layer+0.2), "hat")
 		else
 			src.ClearSpecificOverlays("hat")
+
+		if (src.emagged)
+			UpdateOverlays(SafeGetOverlayImage("emagged", 'icons/mob/hivebot.dmi', "emagged-" + src.hovering, src.layer+0.25), "emagged")
+		else
+			src.ClearSpecificOverlays("emagged")
 
 
 	proc/compborg_force_unequip(var/slot = 0)

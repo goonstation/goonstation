@@ -394,7 +394,7 @@
 			else if (1 || last_health != master.health)
 
 				var/list/hp = list(
-					"[!master.health ? "H/C " : "STATUS "][maptext_health_percent(master)]",
+					"["STATUS "][maptext_health_percent(master)]",
 					)
 
 				health.maptext = "<span class='ol r vt ps2p'>[jointext(hp, "")]</span>"
