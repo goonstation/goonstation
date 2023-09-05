@@ -67,7 +67,7 @@
 	disposing()
 		src.owner = null
 		for (var/datum/cloner_defect/defect as anything in src.active_cloner_defects)
-			defect.dispose()
+			qdel(defect)
 		..()
 
 	/// Add a cloner defect of the given severity
