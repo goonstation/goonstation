@@ -340,11 +340,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 				for(var/obj/item/reagent_containers/glass/G in range(4,T))
 					if(G.can_recycle)
-						G.smash()
+						G.shatter_chemically()
 
 				for(var/obj/item/reagent_containers/food/drinks/drinkingglass/G in range(4,T))
 					if(G.can_recycle)
-						G.smash()
+						G.shatter_chemically()
 
 				for(var/atom/movable/A in view(3, T)) // wreck shit
 					if(A.anchored) continue

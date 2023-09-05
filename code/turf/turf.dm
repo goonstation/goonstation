@@ -176,6 +176,26 @@
 		catwalk.setMaterial(rods?.material)
 		catwalk.set_loc(src)
 
+	///A very loose approximation of "is there some light shining on this thing", taking into account all lighting systems and byond internal crap
+	///Performance warning since simple light checks are NOT CHEAP
+	proc/is_lit(RL_threshold = 0.3)
+		if (src.fullbright || src.RL_GetBrightness() > RL_threshold)
+			return TRUE
+
+		var/area/area = get_area(src)
+		if (area.luminosity || area.force_fullbright)
+			return TRUE
+
+		for (var/dir in cardinal) //check for neighbouring starlit turfs
+			var/turf/T = get_step(src, dir)
+			if (istype(T, /turf/space))
+				var/turf/space/space_turf = T
+				if (space_turf.GetOverlayImage("starlight"))
+					return TRUE
+
+		if (src.SL_lit())
+			return TRUE
+
 /obj/overlay/tile_effect
 	name = ""
 	anchored = ANCHORED

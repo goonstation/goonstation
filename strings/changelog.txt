@@ -1,3 +1,19 @@
+
+(t)tue sep 05 23
+(u)pali
+(+)Resisting now starts the ungluing action bar if you are glued to something.
+(u)Lord_Earthfire
+(p)15624
+(e)🆕⚗🤖|C-Feature, A-Chemistry, A-Silicons
+(+)Master anglers are able to fish in AIs now!
+(+)Code worms seem to be filled with a new chemical, liquid code.
+(t)mon sep 04 23
+(u)Glamurio (Ryou)
+(p)14794
+(e)🆕🗺🎨⚖⚗|C-Feature, A-Mapping, C-Sprites, C-Balance, A-Chemistry
+(+)Adds a new strong alcoholic beverage, Schnapps.
+(+)More fruits are now brewable in the still.
+(+)New scientific breakthroughs have led to the discovery of banana juice.
 (t)sun sep 03 23
 (u)LeahTheTech
 (+)Telepad teleportation now has a visible distortion effect at the target location for 0.5 seconds before activating. The activation delay remains unchanged.
