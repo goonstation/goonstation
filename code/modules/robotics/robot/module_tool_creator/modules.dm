@@ -213,16 +213,16 @@
 		/obj/item/weldingtool,
 		/obj/item/electronics/scanner,
 		/obj/item/electronics/soldering,
-		/obj/item/lamp_manufacturer,
+		/datum/robot/module_tool_creator/item_type/amount/steel_sheet/drone,
 		/obj/item/cargotele,
 	)
 
 // medical doctor. scientist.
 /datum/robot/module_tool_creator/recursive/module/medical_d
 	definitions = list(
-		/obj/item/reagent_containers/mender/brute/mini,
-		/obj/item/reagent_containers/mender/burn/mini,
+		/obj/item/robospray/drone,
 		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/hand_labeler,
 		/obj/item/device/gps,

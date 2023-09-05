@@ -43,6 +43,11 @@
 	amount = 200
 	item_type = /obj/item/sheet/steel
 
+/datum/robot/module_tool_creator/item_type/amount/steel_sheet/drone
+	name = "steel sheets"
+	amount = 0
+	item_type = /obj/item/sheet/steel
+
 /datum/robot/module_tool_creator/item_type/amount/steel_tile
 	name = "steel tiles"
 	amount = 200
