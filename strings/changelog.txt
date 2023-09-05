@@ -1,3 +1,11 @@
+
+(t)mon sep 04 23
+(u)Glamurio (Ryou)
+(p)14794
+(e)🆕🗺🎨⚖⚗|C-Feature, A-Mapping, C-Sprites, C-Balance, A-Chemistry
+(+)Adds a new strong alcoholic beverage, Schnapps.
+(+)More fruits are now brewable in the still.
+(+)New scientific breakthroughs have led to the discovery of banana juice.
 (t)sun sep 03 23
 (u)LeahTheTech
 (+)Telepad teleportation now has a visible distortion effect at the target location for 0.5 seconds before activating. The activation delay remains unchanged.
