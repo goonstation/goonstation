@@ -1551,8 +1551,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Component"
 
-/datum/manufacture/shell_frame
-	name = "Eyebot Frame"
+/datum/manufacture/drone_frame_eyebot
+	name = "Eyebot Drone Frame"
 	item_paths = list("MET-2")
 	item_amounts = list(12)
 	item_outputs = list(/obj/item/parts/robot_parts/drone_frame)
@@ -1560,8 +1560,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Component"
 
-/datum/manufacture/drone_frame
-	name = "Drone Frame"
+/datum/manufacture/drone_frame_ailes
+	name = "GPCS Drone Frame"
 	item_paths = list("MET-2")
 	item_amounts = list(12)
 	item_outputs = list(/obj/item/parts/robot_parts/drone_frame/ailes)

@@ -617,9 +617,6 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 		name = "brute auto-mender"
 		borg = 1
 
-	mini
-		initial_volume = 50
-
 	high_capacity
 		initial_volume = 500
 
@@ -629,9 +626,6 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 	medbot
 		name = "burn auto-mender"
 		borg = 1
-
-	mini
-		initial_volume = 50
 
 	high_capacity
 		initial_volume = 500
@@ -746,12 +740,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 			src.ClearSpecificOverlays("fluid")
 
 		signal_event("icon_updated")
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/reagent_containers/mender))
-			src.do_refill(W, user)
-			return
-		..()
 
 	proc/do_refill(var/obj/item/reagent_containers/mender, var/mob/user)
 		if (src?.reagents.total_volume > 0)

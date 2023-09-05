@@ -35209,10 +35209,6 @@
 "cqb" = (
 /turf/space,
 /area/space)
-"cQw" = (
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
-/turf/simulated/floor/circuit,
-/area/space)
 "dmQ" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -35223,6 +35219,18 @@
 	},
 /turf/simulated/floor/white,
 /area/space)
+"fvt" = (
+/obj/cable{
+	icon_state = "1-2";
+	
+	},
+/obj/table{
+	icon_state = "tabledir";
+	dir = 9
+	},
+/obj/item/storage/box/trackimp_kit,
+/turf/simulated/floor/carpet,
+/area/station/bridge)
 "gcn" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/lawrack,
@@ -35236,12 +35244,25 @@
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
-"jow" = (
-/obj/strip_door{
-	name = "Beepsky's room"
+"hAO" = (
+/obj/table{
+	icon_state = "tabledir";
+	dir = 6
 	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/courtroom)
+/obj/item/storage/box/trackimp_kit,
+/turf/simulated/floor,
+/area/space)
+"jRq" = (
+/obj/strip_door,
+/turf/simulated/floor/caution/northsouth,
+/area/space)
+"mwV" = (
+/obj/machinery/conveyor/WE{
+	id = "cargo"
+	},
+/obj/strip_door,
+/turf/simulated/floor,
+/area/station/quartermaster/storage)
 "nhs" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -35255,10 +35276,12 @@
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
-"nPP" = (
-/obj/strip_door,
-/turf/simulated/floor/caution/northsouth,
-/area/space)
+"nUK" = (
+/obj/strip_door{
+	name = "Beepsky's room"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/courtroom)
 "ozv" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -35275,6 +35298,14 @@
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
+"qtz" = (
+/obj/table{
+	icon_state = "tabledir";
+	dir = 4
+	},
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "qyw" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
@@ -35291,6 +35322,10 @@
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
+"sXv" = (
+/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/turf/simulated/floor/circuit,
+/area/space)
 "tBe" = (
 /obj/decal/fakeobjects/skeleton,
 /obj/item/clothing/suit/chef,
@@ -35298,14 +35333,6 @@
 /obj/decal/cleanable/cobweb,
 /turf/simulated/aprilfools,
 /area/station/hallway/primary/west)
-"uGQ" = (
-/obj/table{
-	icon_state = "tabledir";
-	dir = 6
-	},
-/obj/item/storage/box/trackimp_kit,
-/turf/simulated/floor,
-/area/space)
 "vEx" = (
 /obj/rack,
 /obj/item/circuitboard/teleporter,
@@ -35333,33 +35360,6 @@
 /obj/item/coin,
 /turf/simulated/floor,
 /area/station/crew_quarters/heads)
-"vUU" = (
-/obj/table{
-	icon_state = "tabledir";
-	dir = 4
-	},
-/obj/item/clothing/glasses/toggleable/meson,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
-"wxm" = (
-/obj/machinery/conveyor/WE{
-	id = "cargo"
-	},
-/obj/strip_door,
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
-"ydz" = (
-/obj/cable{
-	icon_state = "1-2";
-	
-	},
-/obj/table{
-	icon_state = "tabledir";
-	dir = 9
-	},
-/obj/item/storage/box/trackimp_kit,
-/turf/simulated/floor/carpet,
-/area/station/bridge)
 
 (1,1,1) = {"
 cqb
@@ -53142,7 +53142,7 @@ alU
 alU
 amQ
 anp
-vUU
+qtz
 aop
 aoM
 apn
@@ -56077,8 +56077,8 @@ ags
 ags
 ags
 ags
-wxm
-wxm
+mwV
+mwV
 aiS
 ajd
 ajv
@@ -57304,7 +57304,7 @@ beU
 beU
 bez
 bez
-jow
+nUK
 bez
 bez
 cqb
@@ -59134,7 +59134,7 @@ bhv
 bhW
 bii
 bir
-ydz
+fvt
 biL
 biY
 bjd
@@ -64542,7 +64542,7 @@ cqb
 cqb
 cae
 aSX
-uGQ
+hAO
 aUF
 cae
 cae
@@ -66994,11 +66994,11 @@ cqb
 cqb
 apF
 cae
-cQw
+sXv
 aqZ
 gcn
 asi
-cQw
+sXv
 cae
 apF
 cqb
@@ -81011,7 +81011,7 @@ ckz
 bmf
 ckW
 bmG
-nPP
+jRq
 ckW
 cmd
 cmd
