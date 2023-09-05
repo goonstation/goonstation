@@ -2033,9 +2033,10 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				var/odds = rand(1,1000000)
-				if(odds == 1)
+				var/odds = rand() * 1000000
+				if(odds <= 1 * mult)
 					M.visible_message("<span class='alert'>[M] suddenly drops dead!</span>")
+					//M.unlock_medal("Too Spicy!", 1) //uncomment when we actually make the medal
 					M.death()
 				..()
 				return
