@@ -209,6 +209,12 @@
 
 	proc/initialize()
 
+	proc/shatter_chemically(var/projectiles = TRUE) //!shatter effect, caused by chemicals inside object, should return TRUE if object actually shatters
+		return FALSE
+
+	proc/get_chemical_effect_position() //!how many pixels up or down chemistry reaction animations should shift, to fit the item it's reacting in
+		return 7 //default is up a bit since most objects are centered
+
 	attackby(obj/item/I, mob/user)
 // grabsmash
 		if (istype(I, /obj/item/grab/))

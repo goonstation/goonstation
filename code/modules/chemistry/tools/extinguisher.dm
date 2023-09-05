@@ -11,6 +11,7 @@
 	var/initial_volume = 100
 	///Does it get destroyed from exploding
 	var/reinforced = FALSE
+	var/shattered = FALSE
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | OPENCONTAINER
 	tooltip_flags = REBUILD_DIST
@@ -75,7 +76,7 @@
 
 /obj/item/extinguisher/attack(mob/M, mob/user)
 	src.hide_attack = ATTACK_VISIBLE
-	if(user.a_intent == "help" && !safety) //don't smack people with a deadly weapon while you're trying to extinguish them, thanks
+	if(user.a_intent == "help" && !safety &&!shattered) //don't smack people with a deadly weapon while you're trying to extinguish them, thanks
 		src.hide_attack = ATTACK_FULLY_HIDDEN
 		return
 	..()
@@ -84,10 +85,30 @@
 	..()
 	//src.afterattack(target, user)
 
+/obj/item/extinguisher/shatter_chemically(var/projectiles = FALSE) //needs sound probably definitely for sure
+	for(var/mob/M in AIviewers(src))
+		boutput(M, "<span class='alert'>The <B>[src.name]</B> breaks open!</span>")
+	if(projectiles)
+		var/datum/projectile/special/spreader/uniform_burst/circle/circle = new /datum/projectile/special/spreader/uniform_burst/circle/(get_turf(src))
+		circle.shot_sound = null //no grenade sound ty
+		circle.spread_projectile_type = /datum/projectile/bullet/shrapnel/shrapnel_implant
+		circle.pellet_shot_volume = 0
+		circle.pellets_to_fire = 10
+		shoot_projectile_ST_pixel_spread(get_turf(src), circle, get_step(src, NORTH))
+	src.reagents.reaction(get_turf(src), TOUCH, src.reagents.total_volume)
+	icon_state = "fire_extinguisher_shattered"
+	src.desc = "It's shattered beyond all use."
+	shattered = TRUE
+	return TRUE
+
 /obj/item/extinguisher/afterattack(atom/target, mob/user , flag)
 	//TODO; Add support for reagents in water.
 	if (!src.reagents)
 		boutput(user, "<span class='alert'>Man, the handle broke off, you won't spray anything with this.</span>")
+		return
+
+	if (src.shattered)
+		boutput(user, "<span class='alert'>The extinguisher is too damaged!</span>")
 		return
 
 	if ( is_reagent_dispenser(target) && BOUNDS_DIST(src, target) == 0)
@@ -194,13 +215,15 @@
 	return
 
 /obj/item/extinguisher/attack_self(mob/user as mob)
+	if(shattered)
+		return
 	if (safety)
 		src.item_state = "fireextinguisher1"
 		set_icon_state("fire_extinguisher1")
 		user.update_inhands()
 		src.desc = "The safety is off."
 		boutput(user, "The safety is off.")
-		ADD_FLAG(src.flags, OPENCONTAINER)
+		src.set_open_container(TRUE)
 		safety = FALSE
 	else
 		src.item_state = "fireextinguisher0"
@@ -208,7 +231,7 @@
 		user.update_inhands()
 		src.desc = "The safety is on."
 		boutput(user, "The safety is on.")
-		REMOVE_FLAG(src.flags, OPENCONTAINER)
+		src.set_open_container(FALSE)
 		safety = TRUE
 
 /obj/item/extinguisher/move_trigger(var/mob/M, kindof)
@@ -227,3 +250,6 @@
 		..()
 		src.banned_reagents += src.melting_reagents
 		src.melting_reagents = list()
+
+	shatter_chemically(var/projectiles = FALSE)
+		return
