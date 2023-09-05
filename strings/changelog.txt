@@ -1,6 +1,10 @@
 
 (t)tue sep 05 23
 (u)TealSeer
+(p)15611
+(e)🪲🏅|C-Bug, A-Medal
+(+)Rocko should now count as a pet for the Noah's Shuttle medal.
+(u)TealSeer
 (p)15651
 (e)🪲🔨|C-Bug, A-Player-Actions
 (+)Using an ability while incapacitated or otherwise unable to will no longer trigger the cooldown anyways.
