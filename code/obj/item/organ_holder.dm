@@ -160,6 +160,9 @@
 		src.abdominal_stage = 0
 		src.flanks_stage = 0
 		src.subcostal_stage = 0
+		for (var/organ in src.organ_list)
+			var/obj/item/organ/O = src.get_organ(organ)
+			O.surgery_contexts = null
 
 	proc/build_back_surgery_buttons()
 		src.back_contexts = list()

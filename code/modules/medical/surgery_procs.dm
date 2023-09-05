@@ -1065,7 +1065,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 /* ---------- CAUTERY - BUTT ---------- */
 
-	else if (surgeon.zone_sel.selecting == "chest" && patient.organHolder.back_op_stage == 3.0)
+	else if (surgeon.zone_sel.selecting == "chest" && patient.organHolder.back_op_stage > 0)
 
 		if (!lit)
 			surgeon.tri_message(patient, "<b>[surgeon]</b> tries to use [src] on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] incision, but [src] isn't lit! Sheesh.",\

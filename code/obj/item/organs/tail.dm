@@ -98,8 +98,6 @@
 			H.organHolder.receive_organ(src, "tail", 3.0)
 			if (boned)
 				H.organHolder.back_op_stage = 0
-			else
-				H.organHolder.tail.op_stage = 0
 			src.build_mob_tail_image()
 			H.update_body()
 			H.bioHolder.RemoveEffect(src.failure_ability)
