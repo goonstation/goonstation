@@ -4,6 +4,7 @@
 
 	var/obj/machinery/atmospherics/portables_connector/connected_port
 	var/obj/item/tank/holding
+	var/allows_tank = TRUE
 
 	var/volume = 0
 	var/destroyed = 0
@@ -105,7 +106,7 @@
 	return
 
 /obj/machinery/portable_atmospherics/attackby(var/obj/item/W, var/mob/user)
-	if(istype(W, /obj/item/tank))
+	if(istype(W, /obj/item/tank) && src.allows_tank)
 		if(!src.holding)
 			boutput(user, "<span class='notice'>You attach the [W.name] to the the [src.name]</span>")
 			user.drop_item()

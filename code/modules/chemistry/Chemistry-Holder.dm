@@ -55,6 +55,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	var/postfoam = 0
 	///can be heated by external sources
 	var/can_be_heated = TRUE
+	///Multiplicative modifier for reaction speed
+	var/reaction_speed = 1
 
 	New(maximum=100)
 		..()
