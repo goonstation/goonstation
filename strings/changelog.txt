@@ -1,5 +1,18 @@
 
 (t)tue sep 05 23
+(u)Flaborized and LeahTheTech
+(p)15634
+(e)⚖⚗|C-Balance, A-Chemistry
+(*)The following chemicals have had their recipes changed: Acetone, phenol, diethylamine, sulfuric acid, oil, charcoal, silver sulfadiazine, styptic powder, synthflesh, cyanide, pentetic acid, salbutamol, salicylic acid.
+(*)For full details of the new recipes please see this PR's description.
+(*)New chemical: Photophosphide. Creates a small non-scaling explosion when it comes into contact with any form of light. Recipe: Plasma(1) + Phosphorous(1) + Iron(1) + Diethylamine(1)
+(*)Added beaker lids which make beakers they are applied to act as closed containers.
+(*)Added chemical condensers, can be click-drag attached to glassware to cause any reactions that occur in the condenser to output into the linked glassware.
+(+)Chemicals will now retain the temperature of their precursor reagents.
+(+)Reactions not inside inventories or puddles will display little animations on their container. Beakers will visually bubble, puff out flames, smoke, and more!
+(+)Barrels now have more clear open/closed sprites, a gauge on the side, can be connected to ChemMasters, and can be clicked with an empty hand to toggle between filling the barrel or the beaker.
+(+)Barium + water is now a delayed explosion that occurs when the reaction finishes.
+(+)Sulfuric acid no longer melts items, so that production of it in an open container doesn't melt an entire set of lab equipment.
 (u)pali
 (+)Resisting now starts the ungluing action bar if you are glued to something.
 (u)Lord_Earthfire
