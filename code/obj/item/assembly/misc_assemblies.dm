@@ -206,9 +206,7 @@ Contains:
 	boutput(user, "You attach the timer/igniter assembly to the beaker.")
 
 	//Since we completed the assembly, remove all assembly components
-	var/list/assembly_component_list = src.GetComponents(/datum/component/assembly)
-	for (var/datum/component/component_to_remove in assembly_component_list)
-		component_to_remove.RemoveComponent()
+	src.RemoveComponentsOfType(/datum/component/assembly)
 	// Since the assembly was done, return TRUE
 	return TRUE
 
@@ -229,9 +227,7 @@ Contains:
 	message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
 
 	//Since we completed the assembly, remove all assembly components
-	var/list/assembly_component_list = src.GetComponents(/datum/component/assembly)
-	for (var/datum/component/component_to_remove in assembly_component_list)
-		component_to_remove.RemoveComponent()
+	src.RemoveComponentsOfType(/datum/component/assembly)
 	// Since the assembly was done, return TRUE
 	return TRUE
 
@@ -269,9 +265,7 @@ Contains:
 	message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
 
 	//Since we completed the assembly, remove all assembly components
-	var/list/assembly_component_list = src.GetComponents(/datum/component/assembly)
-	for (var/datum/component/component_to_remove in assembly_component_list)
-		component_to_remove.RemoveComponent()
+	src.RemoveComponentsOfType(/datum/component/assembly)
 	// Since the assembly was done, return TRUE
 	return TRUE
 
@@ -472,9 +466,7 @@ Contains:
 	boutput(user, "You attach the proximity/igniter assembly to the beaker.")
 
 	//Since we completed the assembly, remove all assembly components
-	var/list/assembly_component_list = src.GetComponents(/datum/component/assembly)
-	for (var/datum/component/component_to_remove in assembly_component_list)
-		component_to_remove.RemoveComponent()
+	src.RemoveComponentsOfType(/datum/component/assembly)
 	// Since the assembly was done, return TRUE
 	return TRUE
 
@@ -495,9 +487,7 @@ Contains:
 	message_admins("[key_name(user)] made a Proximity/Igniter/Beaker Assembly at [log_loc(src)].")
 
 	//Since we completed the assembly, remove all assembly components
-	var/list/assembly_component_list = src.GetComponents(/datum/component/assembly)
-	for (var/datum/component/component_to_remove in assembly_component_list)
-		component_to_remove.RemoveComponent()
+	src.RemoveComponentsOfType(/datum/component/assembly)
 	// Since the assembly was done, return TRUE
 	return TRUE
 
@@ -534,9 +524,7 @@ Contains:
 	message_admins("[key_name(user)] made a Proximity/Igniter/Pipebomb Assembly at [log_loc(src)].")
 
 	//Since we completed the assembly, remove all assembly components
-	var/list/assembly_component_list = src.GetComponents(/datum/component/assembly)
-	for (var/datum/component/component_to_remove in assembly_component_list)
-		component_to_remove.RemoveComponent()
+	src.RemoveComponentsOfType(/datum/component/assembly)
 	// Since the assembly was done, return TRUE
 	return TRUE
 
@@ -721,9 +709,7 @@ Contains:
 	boutput(user, "You attach the radio/igniter assembly to the beaker.")
 
 	//Since we completed the assembly, remove all assembly components
-	var/list/assembly_component_list = src.GetComponents(/datum/component/assembly)
-	for (var/datum/component/component_to_remove in assembly_component_list)
-		component_to_remove.RemoveComponent()
+	src.RemoveComponentsOfType(/datum/component/assembly)
 	// Since the assembly was done, return TRUE
 	return TRUE
 
@@ -744,9 +730,7 @@ Contains:
 	message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
 
 	//Since we completed the assembly, remove all assembly components
-	var/list/assembly_component_list = src.GetComponents(/datum/component/assembly)
-	for (var/datum/component/component_to_remove in assembly_component_list)
-		component_to_remove.RemoveComponent()
+	src.RemoveComponentsOfType(/datum/component/assembly)
 	// Since the assembly was done, return TRUE
 	return TRUE
 
@@ -783,9 +767,7 @@ Contains:
 
 
 	//Since we completed the assembly, remove all assembly components
-	var/list/assembly_component_list = src.GetComponents(/datum/component/assembly)
-	for (var/datum/component/component_to_remove in assembly_component_list)
-		component_to_remove.RemoveComponent()
+	src.RemoveComponentsOfType(/datum/component/assembly)
 	// Since the assembly was done, return TRUE
 	return TRUE
 

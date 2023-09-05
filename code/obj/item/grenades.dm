@@ -1544,9 +1544,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			src.name = "hollow pipe frame"
 		src.flags |= NOSPLASH
 		//Since we changed the state, remove all assembly components and add the next state ones
-		var/list/assembly_component_list = src.GetComponents(/datum/component/assembly)
-		for (var/datum/component/component_to_remove in assembly_component_list)
-			component_to_remove.RemoveComponent()
+		src.RemoveComponentsOfType(/datum/component/assembly)
 		// hollow frame + cutters  -> unfilled pipeshot
 		src.AddComponent(/datum/component/assembly, TOOL_SNIPPING, PROC_REF(pipeshot_crafting), FALSE)
 		// hollow frame + *stuff*  -> hollow frame + pipebomb special effects
@@ -1611,9 +1609,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 		src.icon_state = "Pipeshot"
 		src.desc = "Four open pipe shells. They're currently empty."
 		//Since we changed the state, remove all assembly components and add the next state ones
-		var/list/assembly_component_list = src.GetComponents(/datum/component/assembly)
-		for (var/datum/component/component_to_remove in assembly_component_list)
-			component_to_remove.RemoveComponent()
+		src.RemoveComponentsOfType(/datum/component/assembly)
 		// unfilled pipeshot + fuel  -> filled pipeshot
 		src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/drinks,), PROC_REF(pipeshot_filling), FALSE)
 		// Since the assembly was done, return TRUE
@@ -1629,9 +1625,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			stuffable_item.set_loc(src)
 			//once we begun stuffing items in the frame, only pipebombs are the way to go
 			if (length(item_mods) == 1)
-				var/list/assembly_component_list = src.GetComponents(/datum/component/assembly)
-				for (var/datum/component/component_to_remove in assembly_component_list)
-					component_to_remove.RemoveComponent()
+				src.RemoveComponentsOfType(/datum/component/assembly)
 				// hollow frame + *stuff*  -> hollow frame + pipebomb special effects
 				src.AddComponent(/datum/component/assembly, src.allowed_items, PROC_REF(pipebomb_stuffing), TRUE)
 				// hollow frame + fuel  -> unwired pipebombs
@@ -1676,9 +1670,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			else
 				src.name = "filled pipe frame"
 			//Since we changed the state, remove all assembly components and add the next state ones
-			var/list/assembly_component_list = src.GetComponents(/datum/component/assembly)
-			for (var/datum/component/component_to_remove in assembly_component_list)
-				component_to_remove.RemoveComponent()
+			src.RemoveComponentsOfType(/datum/component/assembly)
 			// cables + unwired pipebomb -> wired pipebomb
 			src.AddComponent(/datum/component/assembly, /obj/item/cable_coil, PROC_REF(pipebomb_cabling), TRUE)
 
@@ -1731,9 +1723,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 		src.desc = "Two small pipes joined together, filled with explosives and connected with a cable. It needs some kind of ignition switch."
 		src.flags &= ~NOSPLASH
 		//Since we changed the state, remove all assembly components and add the next state ones
-		var/list/assembly_component_list = src.GetComponents(/datum/component/assembly)
-		for (var/datum/component/component_to_remove in assembly_component_list)
-			component_to_remove.RemoveComponent()
+		src.RemoveComponentsOfType(/datum/component/assembly)
 		// timer + wired pipebomb -> standard pipebomb
 		src.AddComponent(/datum/component/assembly, /obj/item/device/timer, PROC_REF(standard_pipebomb_crafting), TRUE)
 		// Since the assembly was done, return TRUE
