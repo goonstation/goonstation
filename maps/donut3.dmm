@@ -25078,8 +25078,8 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "hBZ" = (
-/obj/storage/secure/closet/security/armory,
 /obj/machinery/light_switch/north,
+/obj/random_item_spawner/armory_breaching_supplies,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "hCf" = (
@@ -60113,17 +60113,6 @@
 /obj/item/breaching_hammer{
 	pixel_x = 3;
 	pixel_y = 3
-	},
-/obj/item/breaching_charge{
-	pixel_x = 8
-	},
-/obj/item/breaching_charge{
-	pixel_x = 6;
-	pixel_y = -3
-	},
-/obj/item/breaching_charge{
-	pixel_x = 3;
-	pixel_y = -6
 	},
 /obj/machinery/light/incandescent/warm/very{
 	dir = 8
