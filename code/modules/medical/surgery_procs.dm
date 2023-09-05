@@ -951,8 +951,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				repair_bleeding_damage(patient, 50, rand(1,3))
 			return TRUE
 
-			//todo see about securing butts and tails
-
 		else if (patient.organHolder.back_op_stage > 0.0 && surgeon.a_intent == "grab")
 			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt closed with [src].</span>",\
 				"<span class='notice'>You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] butt closed with [src].</span>",\
