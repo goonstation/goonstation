@@ -96,7 +96,7 @@
 
 /obj/storage/secure/crate/gear/armory/alcohol
 	name = "secure alcohol crate"
-	desc = "for the most dire of situations"
+	desc = "For the most dire of situations."
 	spawn_contents = list(/obj/item/storage/box/cocktail_umbrellas,\
 	/obj/item/storage/box/cocktail_doodads,\
 	/obj/item/storage/box/straws,\
