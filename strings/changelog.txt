@@ -1,5 +1,7 @@
 
 (t)tue sep 05 23
+(u)pali
+(+)Resisting now starts the ungluing action bar if you are glued to something.
 (u)Lord_Earthfire
 (p)15624
 (e)🆕⚗🤖|C-Feature, A-Chemistry, A-Silicons
