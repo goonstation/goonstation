@@ -1915,7 +1915,6 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/item/instrument/banjo)
 	containertype = /obj/storage/crate/wooden
 
-//Western
 /datum/supply_packs/electricguitar
 	name = "Electric Guitar Kit"
 	desc = "1x Electric Guitar"
@@ -1925,7 +1924,17 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/item/instrument/electricguitar)
 	containertype = /obj/storage/crate/wooden
 
+/datum/supply_packs/guitar
+	name = "Acoustic Guitar Kit"
+	desc = "1x Acoustic Guitar"
+	category = "Civilian Department"
+	cost = 2000
+	containername = "Acoustic Guitar Kit"
+	contains = list(/obj/item/instrument/guitar)
+	containertype = /obj/storage/crate/wooden
 
+
+//Western
 /datum/supply_packs/west_coats
 	name = "Dusty Old Coats"
 	desc = "4x coats in various colors."
