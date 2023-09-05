@@ -247,7 +247,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/suit/armor/hoscape,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/suit/armor/vest,
-	/obj/item/clothing/head/helmet/hardhat/security,
+	/obj/item/clothing/head/helmet/hardhat/security/hos,
 	/obj/item/clothing/glasses/sunglasses/sechud,
 	/obj/item/gun/energy/egun/head_of_security,
 	/obj/item/device/radio/headset/security,

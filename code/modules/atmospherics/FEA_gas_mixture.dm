@@ -48,7 +48,7 @@ What are the archived variables for?
 // For specific events
 
 /// Removes all gases except if in an underwater map, in which case the gas is set to be hot low pressure air.
-/datum/gas_mixture/proc/zero()
+/datum/gas_mixture/proc/reset_to_space_gas()
 	ZERO_GASES(src)
 	if (map_currently_underwater)
 		src.oxygen = MOLES_O2STANDARD * 0.5

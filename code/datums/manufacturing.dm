@@ -811,6 +811,24 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/condenser
+	name = "Chemical Condenser"
+	item_paths = list("molitz")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/reagent_containers/glass/condenser)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/beaker_lid_box
+	name = "Beaker Lid Box"
+	item_paths = list("RUB")
+	item_amounts = list(2)
+	item_outputs = list(/obj/item/storage/box/beaker_lids)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 
 ////////////////////////////////
 
@@ -1280,7 +1298,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Resource"
 
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 /******************** Artemis **************************/
 
 /datum/manufacture/nav_sat

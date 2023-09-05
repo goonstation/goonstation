@@ -2055,7 +2055,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_TRADESMAN
 	limit = 1
 	change_name_on_spawn = 1
-	slot_jump = list(/obj/item/clothing/under/trash_bag)
+	slot_jump = list(/obj/item/clothing/under/gimmick/trashsinglet)
 	slot_foot = list(/obj/item/clothing/shoes/sandal)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_back = list(/obj/item/storage/backpack/satchel/anello)
