@@ -279,8 +279,8 @@
 	if(src.catalyst_active)
 		var/image/catalyst_overlay = SafeGetOverlayImage("catalyst", src.icon, src.icon_state)
 		var/list/rgb =  rgb2num(src.color)
-		var/list/hsl = rgb2hsl(rgb[1],rgb[2],rgb[3]*0.8)
-		var/new_color = hsl2rgb(hsl[1]+60%255, hsl[2], hsl[3])
+		var/list/hsl = rgb2hsl(rgb[1],rgb[2],rgb[3])
+		var/new_color = hsl2rgb(hsl[1]+60%255, clamp(hsl[2],50,180), hsl[3]*0.8)
 		var/hue_shift = normalize_color_to_matrix(new_color)
 
 		catalyst_overlay.appearance_flags = RESET_COLOR
