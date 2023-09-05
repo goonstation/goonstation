@@ -35570,7 +35570,6 @@
 /area/station/bridge/hos)
 "fEv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/bar)
 "fEz" = (

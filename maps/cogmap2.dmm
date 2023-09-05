@@ -71884,7 +71884,6 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_mechanic,
-/obj/mapping_helper/access/engineering_mechanic,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "thb" = (
@@ -74755,7 +74754,6 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/catering)
 "xij" = (
-/obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/classic{
 	name = "Bathroom"
 	},
