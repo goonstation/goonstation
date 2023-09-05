@@ -303,6 +303,17 @@ datum
 			taste = "fruity"
 			reagent_state = LIQUID
 
+		fooddrink/alcoholic/schnapps
+			name = "schnapps"
+			id = "schnapps"
+			fluid_r = 240
+			fluid_g = 240
+			fluid_b = 240
+			alch_strength = 0.6
+			description = "An alcoholic beverage typically made from fermented fruits. Contains a lot of alcohol."
+			taste = "fruity"
+			reagent_state = LIQUID
+
 		fooddrink/alcoholic/mead
 			name = "mead"
 			id = "mead"
@@ -3598,6 +3609,18 @@ datum
 			bladder_value = -1.5
 			taste = "earthy"
 
+		fooddrink/juice_banana
+			name = "banana juice"
+			id = "juice_banana"
+			fluid_r = 255
+			fluid_g = 245
+			fluid_b = 150
+			description = "A juice which has a smooth, naturally sweet flavor with subtle hints of tropical freshness."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			bladder_value = -1.5
+			taste = "tropical"
+
 		fooddrink/juice_grapefruit
 			name = "grapefruit juice"
 			id = "juice_grapefruit"
@@ -3641,6 +3664,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 1
 			bladder_value = -1
+			taste = "tropical"
 
 		fooddrink/turmeric
 			name = "turmeric powder"
