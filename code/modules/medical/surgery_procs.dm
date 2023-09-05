@@ -1555,5 +1555,3 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			src.target.organHolder.drop_organ(src.organ_path)
 			playsound(src.target, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 			src.target.TakeDamage("chest", rand(5, 15), 0)
-
-//Todo, update surgery book to reflect all this
