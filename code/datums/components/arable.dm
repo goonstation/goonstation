@@ -73,8 +73,7 @@ TYPEINFO(/datum/component/arable)
 			user.visible_message("<span class='notice'>[user] plants a seed in \the [A].</span>")
 			user.u_equip(SEED)
 			SEED.set_loc(P)
-			if(SEED && istype(SEED.planttype,/datum/plant/maneater)) // Logging for man-eaters, since they can't be harvested (Convair880).
-				logTheThing(LOG_STATION, user, "plants a [SEED.planttype] seed at [log_loc(P)].")
+			logTheThing(LOG_STATION, user, "plants a [SEED.planttype?.name] [SEED.planttype?.type] seed at [log_loc(P)].")
 			if(!(user in P.contributors))
 				P.contributors += user
 		else

@@ -1,4 +1,4 @@
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 
 /datum/galactic_object/nav_sat
 	name = "Navigation Satellite"
@@ -58,7 +58,7 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			for(var/obj/artemis/S in world)
+			for_by_tcl(S, /obj/artemis)
 				if(S.stars_id == src.stars_id)
 					src.ship = S
 					break

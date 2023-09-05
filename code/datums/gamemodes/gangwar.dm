@@ -322,7 +322,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /datum/gang
 	/// The maximum number of gang members per gang.
-	var/static/current_max_gang_members = 5
+	var/static/current_max_gang_members = 4
 	/// Gang tag icon states that are being used by other gangs.
 	var/static/list/used_tags
 	/// Gang names that are being used by other gangs.
@@ -527,7 +527,6 @@ proc/broadcast_to_all_gangs(var/message)
 		"owl suit" = /obj/item/clothing/under/gimmick/owl,
 		"pinstripe suit" = /obj/item/clothing/under/suit/pinstripe,
 		"purple suit" = /obj/item/clothing/under/suit/purple,
-		"assless chaps" = /obj/item/clothing/under/gimmick/chaps,
 		"mailman's jumpsuit" = /obj/item/clothing/under/misc/mail,
 		"comfy sweater" = /obj/item/clothing/under/gimmick/sweater,
 		"party princess uniform" = /obj/item/clothing/under/gimmick/princess,
@@ -553,7 +552,6 @@ proc/broadcast_to_all_gangs(var/message)
 		"red lawyer's suit" = /obj/item/clothing/under/misc/lawyer/red,
 		"lawyer suit" = /obj/item/clothing/under/misc/lawyer,
 		"blue tracksuit" = /obj/item/clothing/under/gimmick/chav,
-		"aged hipster clothes" = /obj/item/clothing/under/gimmick/dawson,
 		"diver jumpsuit" = /obj/item/clothing/under/gimmick/sealab,
 		"spiderman suit" = /obj/item/clothing/under/gimmick/spiderman,
 		"Vault 13 jumpsuit" = /obj/item/clothing/under/gimmick/vault13,

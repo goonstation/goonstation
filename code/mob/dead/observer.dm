@@ -307,7 +307,7 @@
 		var/mob/dead/our_ghost = null
 
 		// if we already have a ghost, just go get that instead
-		if (src.ghost && !src.ghost.disposed)
+		if (src.ghost && !src.ghost.disposed && src.ghost.last_ckey == src.ckey)
 			our_ghost = src.ghost
 		// no existing ghost, make a new one
 		else

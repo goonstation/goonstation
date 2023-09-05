@@ -3045,7 +3045,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	blueprint = /datum/manufacture/mechanics/gunbot
 	override_name_desc = FALSE
 
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 /obj/machinery/manufacturer/artemis
 	name = "Scout Vessel Manufacturer"
 	desc = "A manufacturing unit that can produce equipment for scouting vessels."

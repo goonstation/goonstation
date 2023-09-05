@@ -796,6 +796,7 @@ datum
 				var/reacted = 0
 				var/mob/living/M = target
 				if(istype(M))
+					var/list/covered = holder.covered_turf()
 					if(by_type[/obj/machinery/playerzoldorf] && length(by_type[/obj/machinery/playerzoldorf]))
 						var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]
 						if(M in pz.brandlist)
@@ -808,7 +809,7 @@ datum
 						for(var/mob/O in AIviewers(M, null))
 							O.show_message(text("<span class='alert'><b>[] begins to crisp and burn!</b></span>", M), 1)
 						boutput(M, "<span class='alert'>Holy Water! It burns!</span>")
-						var/burndmg = raw_volume * 1.25 //the sanctification inflicts the pain, not the water that carries it.
+						var/burndmg = raw_volume * 1.25 / length(covered) //the sanctification inflicts the pain, not the water that carries it.
 						burndmg = min(burndmg, 80) //cap burn at 110(80 now >:) so we can't instant-kill vampires. just crit em ok.
 						M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
 						M.change_vampire_blood(-burndmg)

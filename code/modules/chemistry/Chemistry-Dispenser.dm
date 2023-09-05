@@ -408,6 +408,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 					src.eject_card()
 					src.update_account()
 					update_static_data(usr,ui)
+					. = TRUE
 				else
 					var/obj/item/I = usr.equipped()
 					if (istype(I, /obj/item/card/id) || istype(I, /obj/item/card/data))
@@ -416,11 +417,14 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 						src.user_id = I
 						src.update_account()
 						update_static_data(usr,ui)
+						. = TRUE
 				return
 			if ("record")
 				src.recording_state = !src.recording_state
+				. = TRUE
 			if ("clear_recording")
 				src.recording_queue = list()
+				. = TRUE
 
 /obj/machinery/chem_dispenser/chemical
 	New()

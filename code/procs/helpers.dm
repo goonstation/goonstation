@@ -2587,3 +2587,10 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 	for (var/point in points)
 		. += point - prev
 		prev = point
+
+
+/// Returns the sum of densities of all atoms in the given turf including the turf itself
+proc/total_density(turf/T)
+	. = T.density
+	for (var/atom/A in T)
+		. += A.density

@@ -275,7 +275,7 @@
 		var/obj/item/card/id/the_id = H.wear_id
 
 		if(H.w_uniform && findtext("[H.w_uniform.type]","clown"))
-			H.w_uniform = new /obj/item/clothing/under/suit(H)
+			H.w_uniform = new /obj/item/clothing/under/suit/black(H)
 			qdel(old_uniform)
 
 		if(H.shoes && findtext("[H.shoes.type]","clown"))

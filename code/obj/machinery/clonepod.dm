@@ -256,9 +256,6 @@ TYPEINFO(/obj/machinery/clonepod)
 		ghost.mind.transfer_to(src.occupant)
 		src.occupant.is_npc = FALSE
 
-		if(src.occupant.client) // gross hack for resetting tg layout bleh bluh
-			src.occupant.client.set_layout(src.occupant.client.tg_layout)
-
 		if (!defects)
 			stack_trace("Clone [identify_object(src.occupant)] generating with a null `defects` holder.")
 			defects = new /datum/cloner_defect_holder

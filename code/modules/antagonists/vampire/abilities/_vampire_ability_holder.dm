@@ -141,13 +141,13 @@
 		.["Total:"] = round(src.vamp_blood)
 		return
 
-	onAttach()
+	onAttach(mob/to_whom)
 		..()
-		RegisterSignal(owner, COMSIG_MOB_FLIP, PROC_REF(launch_bat_orbiters))
+		RegisterSignal(to_whom, COMSIG_MOB_FLIP, PROC_REF(launch_bat_orbiters))
 
-	onRemove()
+	onRemove(mob/from_who)
 		..()
-		UnregisterSignal(owner, COMSIG_MOB_FLIP)
+		UnregisterSignal(from_who, COMSIG_MOB_FLIP)
 
 	onLife(var/mult = 1)
 		..()
