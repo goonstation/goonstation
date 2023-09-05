@@ -1,10 +1,13 @@
 
 (t)tue sep 05 23
+(u)TealSeer
+(p)15651
+(e)🪲🔨|C-Bug, A-Player-Actions
+(+)Using an ability while incapacitated or otherwise unable to will no longer trigger the cooldown anyways.
 (u)Flappybat
 (p)15701
 (e)🗺⚖|A-Mapping, C-Balance
 (*)The second armory locker on Donut 3 has been removed.
-(*)The breaching charges in the Donut 3 armory have been put in a secure crate.
 (u)Azrun
 (p)15698
 (e)🆕🎨⚖💅💨|C-Feature, C-Sprites, C-Balance, C-QoL, A-Atmospherics

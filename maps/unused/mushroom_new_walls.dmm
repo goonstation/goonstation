@@ -17571,8 +17571,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "eIr" = (
-/obj/item/storage/box/trackimp_kit2,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/device/gps,
 /obj/item/device/gps,
 /obj/item/device/gps,
@@ -25836,7 +25836,7 @@
 /area/station/chapel/sanctuary)
 "nDA" = (
 /obj/table/wood/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fgreen3"
@@ -32494,7 +32494,7 @@
 /area/station/security/main)
 "tlw" = (
 /obj/table/auto,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = -8
 	},
 /obj/item/storage/box/revimp_kit{

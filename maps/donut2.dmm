@@ -15761,7 +15761,7 @@
 	c_tag = "Security";
 	network = "SS13"
 	},
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = -8
 	},
 /obj/item/implanter,
@@ -17414,11 +17414,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
-"bvs" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/medical/medbay/treatment)
 "bvv" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -40371,15 +40366,6 @@
 	dir = 2
 	},
 /area/station/medical/medbay)
-"pQM" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/turf/simulated/floor/plating,
-/area/station/medical/research)
 "pRA" = (
 /obj/railing/orange/reinforced{
 	dir = 1
@@ -49205,7 +49191,7 @@
 /area/station/hallway/primary/east)
 "wke" = (
 /obj/table/auto,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = 6;
 	pixel_y = 6
 	},
@@ -51170,11 +51156,6 @@
 /obj/machinery/lawrack,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai_upload)
-"xIe" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/medical/research)
 "xIm" = (
 /obj/machinery/lrteleporter/mining,
 /turf/simulated/floor/yellow,
@@ -65729,7 +65710,7 @@ aXH
 swW
 nVO
 pEL
-bvs
+swW
 swW
 aXH
 seZ
@@ -68757,7 +68738,7 @@ kfd
 mLC
 aXw
 beF
-xIe
+beC
 aPk
 aIF
 aIF
@@ -71171,7 +71152,7 @@ aLX
 aLX
 aLX
 bdG
-pQM
+aKf
 beC
 beC
 beD

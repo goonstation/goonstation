@@ -8088,7 +8088,7 @@
 /area/station/medical/medbay/lobby)
 "dCQ" = (
 /obj/table/glass/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/signaler,
 /turf/simulated/floor/caution/south,
