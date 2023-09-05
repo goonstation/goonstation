@@ -68,6 +68,7 @@
 		src.owner = null
 		for (var/datum/cloner_defect/defect as anything in src.active_cloner_defects)
 			qdel(defect)
+		src.active_cloner_defects = null
 		..()
 
 	/// Add a cloner defect of the given severity
