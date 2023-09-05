@@ -612,6 +612,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "agz" = (
@@ -7913,6 +7916,13 @@
 /obj/landmark/start/job/chef,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"clg" = (
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "clh" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/fuq3,
@@ -8867,6 +8877,15 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/white,
 /area/station/garden/owlery)
+"cAu" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/stool,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/ai_monitored/armory)
 "cAG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -67659,6 +67678,10 @@
 	dir = 1
 	},
 /obj/machinery/computer3/generic/communications,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -102405,7 +102428,7 @@ gYc
 xqk
 jJd
 uQK
-vjW
+cAu
 wWw
 vSY
 wWw
@@ -102707,7 +102730,7 @@ gOG
 xqk
 jJd
 hBZ
-cWk
+clg
 cWk
 cWk
 cWk
