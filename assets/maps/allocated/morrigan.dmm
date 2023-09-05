@@ -1852,6 +1852,10 @@
 /obj/machinery/computer3/generic/personal/personel_alt,
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/station/security/brig)
+"bPI" = (
+/obj/item/clothing/head/morrigan/shos,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/morrigan/station/maintenance)
 "bPS" = (
 /obj/machinery/computer3/generic/shield_control/console_lower,
 /turf/unsimulated/floor/black,
@@ -16083,17 +16087,12 @@
 /obj/item/storage/backpack/satchel/studdedblack,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/device/pda2/pod_wars/syndicate,
-/obj/item/clothing/head/NTberet{
-	item_state = "space_helmet_syndicate";
-	icon_state = "syndie_commander";
-	desc = "Reused content ??";
-	name = "Syndicate HoS Beret"
-	},
 /obj/storage/secure/closet/morrigan/hos,
 /obj/item/clothing/under/suit/syndiehos,
 /obj/item/clothing/suit/space/syndiehos,
 /obj/item/clothing/mask/gas/eyemask,
 /obj/item/storage/belt/gun/peacebringer,
+/obj/item/clothing/head/morrigan/shos,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOS)
 "pKC" = (
@@ -31930,7 +31929,7 @@ aOR
 gML
 jeI
 gML
-uRB
+bPI
 eYx
 dCz
 pnz

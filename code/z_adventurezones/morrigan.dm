@@ -2064,6 +2064,36 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon_state = "hafberet"
 	item_state = "tinfoil"
 
+/obj/item/clothing/head/morrigan/shos
+	name = "Head of Security's Peak Cap"
+	desc = "Sleek, evil and definitely not for you."
+	uses_multiple_icon_states = 1
+	icon_state = "shos"
+	item_state = "tinfoil"
+	var/folds = 0
+
+/obj/item/clothing/head/morrigan/shos/attack_self(mob/user as mob)
+	if(user.r_hand == src || user.l_hand == src)
+		if(!src.folds)
+			src.folds = 1
+			src.name = "Head Of Security's Beret"
+			src.icon_state = "sberetdec"
+			src.item_state = "tinfoil"
+			boutput(user, "<span class='notice'>You fold the hat into a beret.</span>")
+		else
+			src.folds = 0
+			src.name = "Head of Security's Peak Cap"
+			src.icon_state = "shos"
+			src.item_state = "tinfoil"
+			boutput(user, "<span class='notice'>You unfold the beret back into a hat.</span>")
+		return
+
+/obj/item/clothing/head/morrigan/sberetdec
+	name = "Head Of Security's Beret"
+	desc = "More fucking berets..."
+	icon_state = "sberetdec"
+	item_state = "tinfoil"
+
 /obj/item/clothing/head/morrigan/rdberet
 	name = "Research Director's Beret"
 	desc = "A purple beret for the research director"
