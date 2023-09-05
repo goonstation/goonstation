@@ -536,6 +536,10 @@
 		organHolder.dispose()
 		organHolder = null
 
+	if (src.cloner_defects)
+		qdel(src.cloner_defects)
+		src.cloner_defects = null
+
 	if (src.inventory)
 		src.inventory.dispose()
 		src.inventory = null
