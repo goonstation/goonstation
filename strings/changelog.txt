@@ -1,5 +1,9 @@
 
 (t)tue sep 05 23
+(u)TealSeer
+(p)15651
+(e)🪲🔨|C-Bug, A-Player-Actions
+(+)Using an ability while incapacitated or otherwise unable to will no longer trigger the cooldown anyways.
 (u)Flappybat
 (p)15701
 (e)🗺⚖|A-Mapping, C-Balance
