@@ -25067,7 +25067,6 @@
 /area/station/crew_quarters/fitness)
 "hBZ" = (
 /obj/machinery/light_switch/north,
-/obj/random_item_spawner/armory_breaching_supplies,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "hCf" = (
@@ -26969,9 +26968,6 @@
 	},
 /area/station/com_dish/comdish)
 "iko" = (
-/obj/table/reinforced/auto{
-	icon_state = "3"
-	},
 /obj/item/gun/kinetic/dart_rifle{
 	pixel_x = 2;
 	pixel_y = 10
@@ -26995,6 +26991,9 @@
 /obj/item/ammo/bullets/tranq_darts/anti_mutant{
 	pixel_x = 3;
 	pixel_y = -6
+	},
+/obj/table/reinforced/auto{
+	icon_state = "2"
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
@@ -60082,20 +60081,10 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "swv" = (
-/obj/table/reinforced/auto{
-	icon_state = "2"
-	},
-/obj/item/breaching_hammer{
-	pixel_x = 1;
-	pixel_y = 7
-	},
-/obj/item/breaching_hammer{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /obj/machinery/light/incandescent/warm/very{
 	dir = 8
 	},
+/obj/random_item_spawner/armory_breaching_supplies,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "sww" = (
