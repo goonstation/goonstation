@@ -16996,7 +16996,7 @@
 /area/station/crew_quarters/garden)
 "ffU" = (
 /obj/table/wood/round/auto,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = -5;
 	pixel_y = 1
 	},
@@ -31990,7 +31990,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = 8;
 	pixel_y = 3
 	},
@@ -69487,7 +69487,7 @@
 /area/station/maintenance/outer/nw)
 "vtw" = (
 /obj/table/auto,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = 7;
 	pixel_y = -2
 	},

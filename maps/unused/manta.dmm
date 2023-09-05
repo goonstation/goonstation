@@ -572,7 +572,7 @@
 /area/station/bridge)
 "abJ" = (
 /obj/table/wood/round/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/paper/book/from_file/space_law,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)

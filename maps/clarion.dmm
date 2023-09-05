@@ -37304,7 +37304,7 @@
 	},
 /obj/disposalpipe/segment,
 /obj/table/reinforced/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/hand_labeler,
 /obj/item/storage/firstaid/regular,
 /obj/machinery/camera{

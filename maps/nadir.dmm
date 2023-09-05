@@ -9682,7 +9682,7 @@
 /area/station/medical/medbay/cloner)
 "exP" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/signaler,
@@ -27403,8 +27403,8 @@
 /area/station/hallway/primary/southwest)
 "lIL" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/trackimp_kit2,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
+/obj/item/storage/box/trackimp_kit,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -50382,7 +50382,7 @@
 	pixel_x = -4;
 	pixel_y = 7
 	},
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = 3;
 	pixel_y = 1
 	},
