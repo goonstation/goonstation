@@ -194,12 +194,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 		if (!W)
 			return
 		if (istype(W,/obj/item/organ/brain))
-			if (src.brain)
-				boutput(user, "<span class='alert'>There is already a brain in there. Use a wrench to remove it.</span>")
-				return
-
-			if (src.ai_interface)
-				boutput(user, "<span class='alert'>There is already \an [src.ai_interface] in there. Use a wrench to remove it.</span>")
+			if (src.brain || src.ai_interface)
+				boutput(user, "<span class='alert'>There is already a processing core in there. Use a wrench to remove it.</span>")
 				return
 
 			var/obj/item/organ/brain/B = W
@@ -222,7 +218,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			return
 
 		else if (istype(W, /obj/item/ai_interface))
-			if (src.brain)
+			boutput(user, "<span class='alert'>There's no way you can fit the interface board in there! It's too big for the head!</span>")
+			/*if (src.brain)
 				boutput(user, "<span class='alert'>There is already a brain in there. Use a wrench to remove it.</span>")
 				return
 
@@ -240,7 +237,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 
 		else if (iswrenchingtool(W))
 			if (!src.brain && !src.ai_interface)
-				boutput(user, "<span class='alert'>There's no brain or AI interface chip in there to remove.</span>")
+				boutput(user, "<span class='alert'>There's no processing core in there to remove.</span>")
 				return
 			playsound(src, 'sound/items/Ratchet.ogg', 40, TRUE)
 			if (src.ai_interface)
@@ -1343,8 +1340,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			else if  (src.build_step == 2)
 				boutput(user, "<span class='alert'>You need to add a radio before you can put in a cell!</span>")
 
-/*		if (istype(W,/obj/item/organ/brain))
-			if (src.build_step == 3)
+		if (istype(W,/obj/item/organ/brain))
+			boutput(user, "<span class='alert'>There's no possible way you could fit this brain into the drone!</span>")
+		/*	if (src.build_step == 3)
 				if (src.brain)
 					boutput(user, "<span class='alert'>There is already a brain in there. Use a wrench to remove it.</span>")
 
@@ -1488,16 +1486,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			drone.ai_interface = src.ai_interface
 			drone.ai_interface.set_loc(drone)
 			drone.shell = 1
-		else if (istype(drone.brain, /obj/item/organ/brain/latejoin))
-			boutput(usr, "<span class='notice'>You activate the frame and it plays an audible beep.</span>")
-			playsound(src, 'sound/weapons/radxbow.ogg', 40, 1)
-		else
-			stack_trace("We finished drone [identify_object(drone)] from frame [identify_object(src)] with a brain, but somehow lost the brain??? Where did it go")
-			drone.death()
-			qdel(src)
-			return
-
-		/*else if(drone.brain?.owner?.key)
+		else if(drone.brain?.owner?.key)
 			if(drone.brain.owner.current)
 				drone.gender = drone.brain.owner.current.gender
 				if(drone.brain.owner.current.client)
@@ -1518,7 +1507,15 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 				boutput(M, "<span class='alert'>You feel yourself being dragged out of the afterlife!</span>")
 			drone.brain.owner.transfer_to(drone)
 			if (isdead(M) && !isliving(M))
-				qdel(M)*/
+				qdel(M)
+		else if (istype(drone.brain, /obj/item/organ/brain/latejoin))
+			boutput(usr, "<span class='notice'>You activate the frame and it plays an audible beep.</span>")
+			playsound(src, 'sound/weapons/radxbow.ogg', 40, 1)
+		else
+			stack_trace("We finished drone [identify_object(drone)] from frame [identify_object(src)] with a brain, but somehow lost the brain??? Where did it go")
+			drone.death()
+			qdel(src)
+			return
 
 		if (src.cell)
 			drone.cell = src.cell
@@ -1559,11 +1556,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		qdel(src)
 		return
 
-/obj/item/parts/robot_parts/drone_frame/ailes
-	shelltypetoapply = "ailes"
-
 /obj/item/parts/robot_parts/drone_frame/complete_latejoin
-	shelltypetoapply = "eyebot"
 	build_step = 3
 	cell = new/obj/item/cell/shell_cell/charged
 	brain = new/obj/item/organ/brain/latejoin
@@ -1572,7 +1565,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		src.finish_drone()
 
 /obj/item/parts/robot_parts/drone_frame/complete_shell
-	shelltypetoapply = "eyebot"
 	moduletoapply = new/obj/item/robot_module/default_d
 	freemodule = FALSE
 	build_step = 3

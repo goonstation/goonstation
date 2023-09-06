@@ -1298,7 +1298,8 @@
 				src.update_appearance()
 
 		else if (istype(W, /obj/item/ai_interface) && src.brainexposed)
-			if (!src.part_head)
+			boutput(user, "<span class='alert'>There's no way you can fit the interface board in there! It's too big for the head!</span>")
+		/*	if (!src.part_head)
 				boutput(user, "<span class='alert'>That cyborg doesn't even have a head. Where are you going to put [W]?</span>")
 				return
 			if (src.part_head.brain || src.part_head.ai_interface)
@@ -1322,7 +1323,7 @@
 				for_by_tcl(AI, /mob/living/silicon/ai)
 					boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
 				src.shell = 1
-				update_appearance()
+				update_appearance()*/
 
 		else if (iswrenchingtool(W) && src.wiresexposed)
 			var/list/actions = list("Do nothing")

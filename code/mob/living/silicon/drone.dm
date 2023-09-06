@@ -3,24 +3,6 @@
 #define DRONE_BATTERY_DISTRESS_THRESHOLD 100
 #define DRONE_BATTERY_WIRELESS_CHARGERATE 50
 
-var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
-	"Content" = "ailes-s-content", \
-	"Curious" = "ailes-s-curious", \
-	"Exclaimation" = "ailes-s-exclamation",\
-	"Eye" = "ailes-s-eye",\
-	"Heart" = "ailes-s-heart",\
-	"Line" = "ailes-s-line",\
-	"Mad" = "ailes-s-mad",\
-	"Neutral" = "ailes-s-neutral",\
-	"Sad" = "ailes-s-sad",\
-	"Silly" = "ailes-s-silly",\
-	"Happy" = "ailes-s-happy",\
-	"Square" = "ailes-s-square",\
-	"Triangle" = "ailes-s-triangle",\
-	"Unsure" = "ailes-s-unsure",\
-	"Very Happy" = "ailes-s-veryhappy",\
-	"Wink" = "ailes-s-wink")
-
 /mob/living/silicon/drone
 	name = "Drone"
 	voice_name = "synthesized voice"
@@ -73,7 +55,6 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 	var/bruteloss = 0
 	var/fireloss = 0
 
-	var/faceEmotion = "ailes-s-smile"
 	var/faceColor = "#66B2F2"
 	var/shelltype = "eyebot"
 	var/hovering = "a"
@@ -1038,8 +1019,9 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 		else if (istype(W, /obj/item/card/emag))
 			return
 
-/*		else if (istype(W, /obj/item/organ/brain) && src.opened)
-			if (src.brain || src.ai_interface)
+		else if (istype(W, /obj/item/organ/brain) && src.opened)
+			boutput(user, "<span class='alert'>There's no possible way you could fit this brain into the drone!</span>")
+		/*	if (src.brain || src.ai_interface)
 				boutput(user, "<span class='alert'>There's already a processor core in the drone! Use a wrench to remove it before trying to insert something else.</span>")
 			else
 				var/obj/item/organ/brain/B = W
@@ -1103,31 +1085,6 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 			update_appearance()
 			update_details()
 			qdel(W)
-
-		else if (istype(W,/obj/item/) && src.opened)
-			var/obj/item/parts/robot_parts/RP = W
-			switch(RP.slot)
-				if("brain")
-					if(src.brain)
-						boutput(user, "<span class='alert'>[src] already has a brain.</span>")
-						return
-					src.brain = RP
-					if(src.brain.owner)
-						if(src.brain.owner.current)
-							src.gender = src.brain.owner.current.gender
-							if(src.brain.owner.current.client)
-								src.lastKnownIP = src.brain.owner.current.client.address
-						src.brain.owner.transfer_to(src)
-				if("cell")
-					if(src.cell)
-						boutput(user, "<span class='alert'>[src] already has a power cell.</span>")
-						return
-					src.cell = RP
-
-			user.drop_item()
-			RP.set_loc(src)
-			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
-			boutput(user, "<span class='notice'>You successfully attach the piece to [src.name].</span>")
 		else
 			return ..()
 
@@ -1685,21 +1642,6 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 					src.locking = 0
 					boutput(src, "<span class='alert'>You have locked your interface.</span>")
 
-	verb/cmd_alter_screen()
-		set category = "Drone Commands"
-		set name = "Change facial expression (Screen only)"
-
-		var/list/L = drone_emotions
-		if(src.shelltype == "ailes")
-			var/newEmotion = tgui_input_list(src, "Select a status!", "AI Status", sortList(L, /proc/cmp_text_asc))
-			if (newEmotion)
-				src.faceEmotion = L[newEmotion]
-				update_appearance()
-				update_details()
-			return 1
-		else
-			boutput(src, "<span class='alert'>You don't have a screen, silly.</span>")
-
 
 	verb/cmd_alter_color()
 		set category = "Drone Commands"
@@ -1956,11 +1898,6 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 			var/image/I = SafeGetOverlayImage("faceplate", 'icons/mob/hivebot.dmi', src.shelltype + "-bg", src.layer)
 			I.color = faceColor
 			UpdateOverlays(I, "faceplate")
-
-			if (src.shelltype == "ailes")
-				UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/hivebot.dmi', faceEmotion, src.layer+0.2), "actual_face")
-		else
-			src.ClearSpecificOverlays("faceplate", "actual_face")
 
 		if (src.opened)
 			var/image/i_panel = SafeGetOverlayImage("opanel", 'icons/mob/hivebot.dmi', "panel-" + src.hovering + "-" + src.shelltype, src.layer)
