@@ -337,7 +337,7 @@ TYPEINFO(/obj/machinery/chem_shaker)
 
 	attack_hand(mob/user)
 		if (!can_act(user)) return
-		boutput(user, "You [src.active && "de"]activate [src].")
+		boutput(user, "You [src.active ? "de" : ""]activate [src].")
 		switch (src.active)
 			if (TRUE)
 				src.set_inactive()
@@ -379,14 +379,10 @@ TYPEINFO(/obj/machinery/chem_shaker)
 		// This offset code sucks. Remember to fix round() when we switch to 515.
 		for (var/i in 1 to length(src.held_containers))
 			if (!src.held_containers[i]) return
-			var/current_y
-			if (!(i % src.container_row_length))
-				current_y = (i % src.container_row_length) + 1
-			else
-				current_y = round(i / src.container_row_length) + 1
+			var/current_y = ceil(i / src.container_row_length)
 			var/current_x = i - (src.container_row_length * (current_y - 1))
 			src.held_containers[i].pixel_x = src.first_container_offsets["X"] + ((current_x - 1) * src.container_offsets["X"])
-			src.held_containers[i].pixel_y = (src.first_container_offsets["Y"] * current_y) + src.pixel_y
+			src.held_containers[i].pixel_y = src.first_container_offsets["Y"] + ((current_y - 1) *src.container_offsets["Y"])
 
 	proc/count_held_containers()
 		var/count_buffer = 0
@@ -461,7 +457,7 @@ TYPEINFO(/obj/machinery/chem_shaker/large)
 	icon_state = "orbital_shaker_large"
 	max_containers = 4
 	container_row_length = 2
-	first_container_offsets = list("X" = -5, "Y" = 8)
+	first_container_offsets = list("X" = -5, "Y" = 9)
 
 	chemistry
 		icon = 'icons/obj/shaker_chem.dmi'
