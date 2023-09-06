@@ -7,9 +7,6 @@
 	if (src.transforming || loop_blocker)
 		return
 
-	if (!blood_image)
-		blood_image = image('icons/obj/decals/blood/blood.dmi')
-
 	// lol
 	var/head_offset = src.mutantrace.head_offset
 	var/hand_offset = src.mutantrace.hand_offset
