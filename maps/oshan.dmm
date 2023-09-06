@@ -3846,6 +3846,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/item/storage/toolbox/artistic,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fred2"
@@ -4114,8 +4115,7 @@
 	},
 /area/station/crew_quarters/quartersA)
 "anF" = (
-/obj/storage/secure/closet/civilian/chaplain,
-/obj/item/storage/toolbox/artistic,
+/obj/machinery/vending/jobclothing/chaplain,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;

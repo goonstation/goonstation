@@ -26674,7 +26674,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "lFq" = (
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/jobclothing/chaplain,
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
 	pixel_y = 21

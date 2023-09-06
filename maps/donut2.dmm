@@ -7109,6 +7109,13 @@
 	pixel_x = 1;
 	pixel_y = 27
 	},
+/obj/item/device/light/zippo,
+/obj/item/clothing/head/helmet/greek,
+/obj/item/clothing/suit/greek,
+/obj/item/clothing/under/gimmick/toga,
+/obj/item/clothing/head/laurels,
+/obj/item/clothing/head/laurels/gold,
+/obj/storage/crate,
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "aCU" = (
@@ -15775,8 +15782,7 @@
 /area/station/hallway/primary/south)
 "bnk" = (
 /obj/storage/crate{
-	desc = "A private crate that isn't yours.";
-	name = "Beepsky's stuff"
+	name = "Dress up party supplies"
 	},
 /obj/item/clothing/head/NTberet{
 	desc = "It's a momento, I guess. An old keepsake. And maybe a reminder of the things we've left behind.";
@@ -36856,13 +36862,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "nvT" = (
-/obj/storage/secure/closet/civilian/chaplain,
-/obj/item/device/light/zippo,
-/obj/item/clothing/head/helmet/greek,
-/obj/item/clothing/suit/greek,
-/obj/item/clothing/under/gimmick/toga,
-/obj/item/clothing/head/laurels,
-/obj/item/clothing/head/laurels/gold,
+/obj/machinery/vending/jobclothing/chaplain,
 /obj/decal/poster/wallsign/poster_sol{
 	pixel_y = 31
 	},

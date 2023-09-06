@@ -1765,13 +1765,12 @@
 	},
 /area/station/hallway/secondary/exit)
 "afJ" = (
-/obj/item/ghostboard,
 /obj/machinery/light_switch/auto,
 /obj/machinery/crema_switch{
 	pixel_x = 5;
 	pixel_y = 28
 	},
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/jobclothing/chaplain,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "afK" = (
@@ -13536,6 +13535,7 @@
 	pixel_x = 23;
 	pixel_y = 2
 	},
+/obj/item/ghostboard,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "aSA" = (
