@@ -1,7 +1,7 @@
 /obj/machinery/portable_atmospherics/chem_mixer
 	name = "chemical mixer"
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "blender" //lol
+	icon = 'icons/obj/atmospherics/atmos.dmi'
+	icon_state = "chem_mixer-off"
 	volume = 100
 	allows_tank = FALSE
 	density = FALSE
@@ -35,6 +35,7 @@
 		if (src.air_contents.temperature < src.min_operating_temp)
 			return
 		src.on = !src.on
+		src.icon_state = src.on ? "chem_mixer-on" : "chem_mixer-off"
 		return TRUE
 
 /obj/machinery/portable_atmospherics/chem_mixer/process()
