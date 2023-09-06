@@ -428,21 +428,25 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 						src.bottle.set_loc(src.loc)
 						usr.put_in_hand_or_eject(src.bottle) // try to eject it into the users hand, if we can
 						src.bottle = null
+
 				if("fillb")
 					if(src.bottle)
 						bottle.customization_first_color = params["selectedColor"]
 						bottle.uses_left = 3
 						bottle.dye_image.color = bottle.customization_first_color
 						bottle.UpdateOverlays(bottle.dye_image, "dye_color")
+
 				if("emptyb")
 					if(src.bottle)
 						bottle.uses_left = 0
 						bottle.customization_first_color = initial(bottle.customization_first_color)
 						bottle.ClearSpecificOverlays("dye_color")
+
 				if("insertb")
 					var/obj/item/I = usr.equipped()
 					if(istype(I, /obj/item/dye_bottle))
 						insert_bottle(I, usr)
+
 			. = TRUE
 
 
