@@ -573,18 +573,23 @@
 		for(var/turf/simulated/T in view())
 			if(!T.air)
 				continue
-			ZERO_GASES(T.air)
-#ifdef ATMOS_ARCHIVING
-			ZERO_ARCHIVED_GASES(T.air)
-			T.air.ARCHIVED(temperature) = null
-#endif
-			T.air.oxygen = MOLES_O2STANDARD
-			T.air.nitrogen = MOLES_N2STANDARD
-			T.air.fuel_burnt = 0
-			T.air.temperature = T20C
-			if(T.parent?.group_processing)
-				T.parent?.suspend_group_processing()
+			T.stabilize()
 			LAGCHECK(LAG_LOW)
+
+/client/proc/stabilize_station()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	set name = "Stabilize All Atmos"
+	set desc = "Resets the air contents of THE ENTIRE STATION to normal."
+	ADMIN_ONLY
+	if (alert(usr, "This will reset the air of ALL TURFS IN THE ENTIRE STATION, are you sure you want to continue?", "Cause big lag", "Yes", "No") != "Yes")
+		return
+	SPAWN(0)
+		for (var/turf/simulated/T in world)
+			if (inonstationz(T))
+				if(!T.air)
+					continue
+				T.stabilize()
+				LAGCHECK(LAG_LOW)
 
 /client/proc/flip_view()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -1649,7 +1654,7 @@
 		LAGCHECK(LAG_LOW)
 		if (isdead(Cat))
 			Cat.full_heal()
-			Cat.icon_state = initial(Cat.icon_state)
+			Cat.set_icon_state(Cat.icon_state_alive)
 			Cat.visible_message("<span class='alert'>[Cat] seems to rise from the dead!</span>")
 			revived ++
 	logTheThing(LOG_ADMIN, src, "revived [revived] cat[revived == 1 ? "" : "s"].")
@@ -2478,10 +2483,10 @@ var/global/night_mode_enabled = 0
 	medals = params2list(medals)
 	for (var/client/C in clients)
 		LAGCHECK(LAG_LOW)
-		if (C.key == new_key)
+		if (C.ckey == ckey(new_key))
 			M = C.mob
-	if (M.key == old_key)
-		M.key = new_key
+	if (M.ckey == ckey(old_key))
+		M.ckey = ckey(new_key)
 	for (var/medal in medals)
 		var/result = world.SetMedal(medal, M, config.medal_hub, config.medal_password)
 		if (isnull(result))

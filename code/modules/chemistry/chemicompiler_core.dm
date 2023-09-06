@@ -705,6 +705,10 @@
 		qdel(src)
 		return
 	if(istype(reservoirs[resId], /obj/item/reagent_containers/glass))
+		var/obj/item/reagent_containers/glass/beaker = reservoirs[resId]
+		if (QDELETED(beaker))
+			reservoirs[resId] = null
+			return
 		// Taking a res out
 		if(!usr.equipped())
 			boutput(usr, "<span class='notice'>You remove the [reservoirs[resId]] from the [src.holder].</span>")

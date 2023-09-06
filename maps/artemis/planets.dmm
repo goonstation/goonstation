@@ -431,7 +431,7 @@
 /turf/cordon,
 /area/cordon)
 "kD" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/specialroom/medbay,
 /area/ship/artemis)
 "kF" = (
@@ -523,7 +523,7 @@
 	},
 /area/ship/artemis)
 "mp" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/specialroom/medbay,
 /area/ship/arjuna)
 "mt" = (

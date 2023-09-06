@@ -420,7 +420,7 @@
 			src.alert_ringtones[T] = null
 
 	if (src.pen)
-		src.pen.set_loc(get_turf(src))
+		qdel(src.pen)
 		src.pen = null
 
 	if (src.hd)

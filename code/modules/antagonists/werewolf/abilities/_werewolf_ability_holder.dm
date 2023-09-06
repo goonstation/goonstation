@@ -336,9 +336,9 @@
 				qdel(H.sims)
 				H.sims = new /datum/simsHolder/rp/wolf(H)
 
-	onRemove()
+	onRemove(mob/from_who)
 		. = ..()
-		var/mob/living/carbon/human/H = src.owner
+		var/mob/living/carbon/human/H = from_who
 		if (istype(H.sims, /datum/simsHolder/rp/wolf))
 			qdel(H.sims)
 			H.sims = new /datum/simsHolder/rp(H)

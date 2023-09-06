@@ -357,6 +357,9 @@ TYPEINFO(/area)
 				if(M.skipped_mobs_list & SKIPPED_MOBS_LIST && !(M.mob_flags & LIGHTWEIGHT_AI_MOB))
 					global.mobs |= M
 					M.skipped_mobs_list &= ~SKIPPED_MOBS_LIST
+				if(M.skipped_mobs_list & SKIPPED_STAMINA_MOBS)
+					OTHER_START_TRACKING_CAT(M, TR_CAT_STAMINA_MOBS)
+					M.skipped_mobs_list &= ~SKIPPED_STAMINA_MOBS
 			src.mobs_not_in_global_mobs_list = null
 			for (var/mob/living/critter/M as anything in src.registered_mob_critters)
 				M.wake_from_hibernation()
@@ -1409,6 +1412,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Prefab"
 	icon_state = "orange"
 	requires_power = FALSE
+
+/area/prefab/crashed_shuttle
+	name = "Crashed Shuttle"
+	icon_state = "purple"
 
 /area/prefab/vault
 	name = "Secure Vault"

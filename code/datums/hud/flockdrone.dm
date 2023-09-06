@@ -19,7 +19,7 @@
 				if (!F.flock) //we are a lone drone!
 					boutput(user, "<span class='alert'>You have no flock to return to.")
 					return
-				if (!F.flock.flockmind.tutorial || F.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_DRONE_RELEASE))
+				if (!F.flock.flockmind?.tutorial || F.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_DRONE_RELEASE))
 					F.release_control()
 			else if(id == "spawn")
 				F.create_egg()

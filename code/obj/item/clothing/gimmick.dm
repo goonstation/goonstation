@@ -1893,3 +1893,66 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	desc = "JC stands for Jesus Christ."
 	icon_state = "jcdenton"
 	item_state = "jcdenton"
+
+/obj/item/clothing/under/gimmick/trashsinglet
+	name = "trash bag singlet"
+	desc = "It's time for the trashman to eat garbage and smash opponents!"
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "trashbag"
+	item_state = "trashbag"
+	w_class = W_CLASS_TINY
+	rand_pos = TRUE
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	tooltip_flags = REBUILD_DIST
+	body_parts_covered = TORSO
+
+	New()
+		..()
+		src.create_storage(/datum/storage/no_hud, prevent_holding = list(/obj/item/clothing/under/gimmick/trashsinglet), max_wclass = W_CLASS_NORMAL, slots = 20,
+			params = list("use_inventory_counter" = TRUE, "variable_weight" = TRUE, "max_weight" = 20))
+
+	equipped(mob/user)
+		..()
+		for (var/i = 1 to round(length(src.storage.get_contents()) / 3))
+			src.remove_random_item(user)
+
+	attackby(obj/item/W, mob/user)
+		..()
+		if (prob(33))
+			return
+		if (!(W in src.storage.get_contents()))
+			return
+		var/mob/living/carbon/human/H = src.loc
+		if (istype(H) && H.w_uniform == src)
+			src.remove_random_item(H)
+
+	attack_hand(mob/user)
+		..()
+		if (prob(33))
+			return
+		var/mob/living/carbon/human/H = src.loc
+		if (istype(H) && H.w_uniform == src)
+			src.remove_random_item(H)
+
+	get_desc(dist)
+		..()
+		if (dist > 2)
+			return
+		if (src.storage.is_full())
+			. += "It's totally full."
+		else
+			. += "There's still some room to hold something."
+
+	proc/remove_random_item(mob/user)
+		if (!length(src.storage.get_contents()))
+			return
+		var/obj/item/I = pick(src.storage.get_contents())
+		src.storage.transfer_stored_item(I, get_turf(src))
+		if (user)
+			user.visible_message("\An [I] falls out of [user]'s [src.name]!", "<span class='alert'>\An [I] falls out of your [src.name]!</span>")
+		else
+			src.loc.visible_message("\An [I] falls out of [src]!")
+
+/obj/item/clothing/under/gimmick/trashsinglet/biohazard
+	icon_state = "biobag"
+	item_state = "biobag"

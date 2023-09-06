@@ -167,8 +167,9 @@ var/datum/job_controller/job_controls
 			if (src.load_another_ckey)
 				dat += "<b> (Showing [src.load_another_ckey]'s jobs)</b>"
 			dat += "<br><small>"
-			for (var/i=1, i <= CUSTOMJOB_SAVEFILE_PROFILES_MAX, i++)
-				dat += " <a href='?src=\ref[src];Load=[i]'>[src.savefile_get_job_name(usr,i) || i]</a>"
+			var/list/job_names = src.savefile_get_job_names(usr)
+			for (var/i in 1 to length(job_names))
+				dat += " <a href='?src=\ref[src];Load=[i]'>[job_names[i] || i]</a>"
 				dat += "&nbsp;"
 				if (!src.load_another_ckey)
 					dat += " <a href='?src=\ref[src];Save=[i]'>(Save here)</a>"
@@ -220,6 +221,7 @@ var/datum/job_controller/job_controls
 			src.job_config()
 
 		if(href_list["JobCreator"])
+			savefile_fix(usr.client)
 			src.job_creator()
 
 		// JOB CREATOR COMMANDS
@@ -897,7 +899,11 @@ var/datum/job_controller/job_controls
 			src.job_creator()
 
 		if(href_list["CreateJob"])
-			var/datum/job/match_check = find_job_in_controller_by_string(src.job_creator.name)
+			var/datum/job/match_check
+			try
+				match_check = find_job_in_controller_by_string(src.job_creator.name)
+			catch
+				;
 			if (match_check)
 				boutput(usr, "<span class='alert'><b>A job with this name already exists. It cannot be created.</b></span>")
 				return
@@ -980,9 +986,12 @@ var/datum/job_controller/job_controls
 		logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job with bad string in controller detected")
 		return null
 	var/list/excluded_strings = list("Special Respawn","Custom Names","Everything Except Assistant",
-	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars", "Syndicate", "Construction Worker")
+	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars", "Syndicate", "Construction Worker", "MODE", "Ghostdrone")
 	#ifndef MAP_OVERRIDE_MANTA
 	excluded_strings += "Communications Officer"
+	#endif
+	#ifndef CREATE_PATHOGENS
+	excluded_strings += "Pathologist"
 	#endif
 	if (string in excluded_strings)
 		return null

@@ -299,8 +299,8 @@
 				.["target_card_look"] = src.modify.icon_state
 
 				.["target_accesses"] = src.modify.access
-
-				user.unlock_medal("Identity Theft", 1)
+				if(!isobserver(user))
+					user.unlock_medal("Identity Theft", 1)
 
 			else
 				.["mode"] = "unauthenticated"

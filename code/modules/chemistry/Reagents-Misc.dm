@@ -1291,25 +1291,26 @@ datum
 			fluid_g = 255
 			fluid_b = 204
 			transparency = 150
+			fluid_flags = FLUID_BANNED
 
 			reaction_turf(var/turf/T, var/volume)
 				if (volume >= 5)
 					for (var/obj/decal/bloodtrace/B in T)
 						B.invisibility = INVIS_NONE
 						SPAWN(30 SECONDS)
-							if (B)
-								B.invisibility = INVIS_ALWAYS
-					for (var/obj/item/W in T)
-						if (W.get_forensic_trace("bDNA"))
-							var/icon/icon_old = W.icon
-							var/icon/I = new /icon(W.icon, W.icon_state)
-							I.Blend(new /icon('icons/effects/blood.dmi', "thisisfuckingstupid"),ICON_ADD)
-							I.Blend(new /icon('icons/effects/blood.dmi', "lum-item"),ICON_MULTIPLY)
-							I.Blend(new /icon(W.icon, W.icon_state),ICON_UNDERLAY)
-							W.icon = I
+							B?.invisibility = INVIS_ALWAYS
+					for (var/obj/item/I in T)
+						if (I.get_forensic_trace("bDNA"))
+							var/image/blood_overlay = image('icons/obj/decals/blood/blood.dmi', "itemblood")
+							blood_overlay.appearance_flags = PIXEL_SCALE | RESET_COLOR
+							blood_overlay.color = "#3399FF"
+							blood_overlay.alpha = 100
+							blood_overlay.blend_mode = BLEND_INSET_OVERLAY
+							I.appearance_flags |= KEEP_TOGETHER
+							I.UpdateOverlays(blood_overlay, "blood_traces")
 							SPAWN(30 SECONDS)
-								if (W && icon_old)
-									W.icon = icon_old
+								I?.appearance_flags &= ~KEEP_TOGETHER
+								I?.UpdateOverlays(null, "blood_traces")
 
 		oil
 			name = "oil"
@@ -1953,16 +1954,16 @@ datum
 				. = ..()
 				if (method == INGEST)
 					if (isliving(M))
-						M:blood_color = "#[num2hex(rand(0, 255),2)][num2hex(rand(0, 255), 2)][num2hex(rand(0, 255), 2)]"
-				return
+						var/mob/living/L = M
+						var/color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+						L.blood_color = color
+						L.bioHolder?.bloodColor = color
 
 			reaction_obj(var/obj/O, var/volume)
 				O.color = rgb(rand(0,255),rand(0,255),rand(0,255))
-				return
 
 			reaction_turf(var/turf/T, var/volume)
 				T.color = rgb(rand(0,255),rand(0,255),rand(0,255))
-				return
 
 		gypsum //gypsum, made with waste sulfur gas and calcium carbonate or calcium oxide (sulfur + oxygen(4) + water + calcium_carbonate)
 			name = "calcium sulfate"
@@ -2076,6 +2077,7 @@ datum
 			value = 5
 			hunger_value = 0.8
 			threshold = THRESHOLD_INIT
+			fluid_flags = FLUID_BANNED
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
@@ -2290,6 +2292,7 @@ datum
 			fluid_g = 255
 			fluid_b = 255
 			transparency = 255
+			fluid_flags = FLUID_BANNED
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
@@ -3107,6 +3110,7 @@ datum
 			fluid_r = 0
 			fluid_g = 0
 			fluid_b = 0
+			fluid_flags = FLUID_STACKING_BANNED
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				if (prob(80))
@@ -3196,7 +3200,12 @@ datum
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/blood) in T)
 						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-						make_cleanable(/obj/decal/cleanable/blood,T)
+						var/obj/decal/cleanable/blood/blood = make_cleanable(/obj/decal/cleanable/blood,T)
+						var/datum/bioHolder/bioHolder = src.data
+						if(bioHolder)
+							blood.blood_type = bioHolder.bloodType
+							blood.blood_DNA = bioHolder.Uid
+						blood.reagents.add_reagent(src.id, volume, src.data)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
@@ -3408,6 +3417,7 @@ datum
 			transparency = 255
 			hygiene_value = -5
 			viscosity = 0.5
+			fluid_flags = FLUID_STACKING_BANNED
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				if (prob(66))
@@ -3423,6 +3433,7 @@ datum
 			fluid_g = 190
 			fluid_b = 230
 			transparency = 160
+			fluid_flags = FLUID_STACKING_BANNED
 
 		big_bang
 			name = "quark-gluon plasma"
@@ -3435,7 +3446,7 @@ datum
 			fluid_b = 250
 			transparency = 255
 			viscosity = 0.7
-
+			fluid_flags = FLUID_SMOKE_BANNED
 			pierces_outerwear = 1//shoo, biofool
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
@@ -4167,6 +4178,7 @@ datum
 			fluid_b = 124
 			transparency = 255
 			overdose = 70
+			fluid_flags = FLUID_SMOKE_BANNED
 			var/concrete_strength = 0
 
 			reaction_turf(var/turf/T, var/volume)

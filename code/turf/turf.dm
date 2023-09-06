@@ -176,6 +176,26 @@
 		catwalk.setMaterial(rods?.material)
 		catwalk.set_loc(src)
 
+	///A very loose approximation of "is there some light shining on this thing", taking into account all lighting systems and byond internal crap
+	///Performance warning since simple light checks are NOT CHEAP
+	proc/is_lit(RL_threshold = 0.3)
+		if (src.fullbright || src.RL_GetBrightness() > RL_threshold)
+			return TRUE
+
+		var/area/area = get_area(src)
+		if (area.luminosity || area.force_fullbright)
+			return TRUE
+
+		for (var/dir in cardinal) //check for neighbouring starlit turfs
+			var/turf/T = get_step(src, dir)
+			if (istype(T, /turf/space))
+				var/turf/space/space_turf = T
+				if (space_turf.GetOverlayImage("starlight"))
+					return TRUE
+
+		if (src.SL_lit())
+			return TRUE
+
 /obj/overlay/tile_effect
 	name = ""
 	anchored = ANCHORED
@@ -760,7 +780,7 @@ var/global/in_replace_with = 0
 			if (oldair) //Simulated tile -> Simulated tile
 				N.air = oldair
 			else if(zero_new_turf_air && istype(N.air)) // fix runtime: Cannot execute null.zero()
-				N.air.zero()
+				N.air.reset_to_space_gas()
 
 			#define _OLD_GAS_VAR_NOT_NULL(GAS, ...) GAS ## _old ||
 			if (N.air && (APPLY_TO_GASES(_OLD_GAS_VAR_NOT_NULL) 0)) //Unsimulated tile w/ static atmos -> simulated floor handling
