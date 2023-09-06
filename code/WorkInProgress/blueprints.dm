@@ -1,3 +1,18 @@
+// balance defines
+#define REBUILD_COST_OBJECT_METAL 1 // each of these measured in sheets. integers only pls
+#define REBUILD_COST_OBJECT_CRYSTAL 1
+#define REBUILD_COST_TURF_METAL 4
+#define REBUILD_COST_TURF_CRYSTAL 0
+#define BAR_SHEET_VALUE 10
+// code defines
+#define SELECT_SKIP 0
+#define SELECT_FIRST_CORNER 1
+#define DESELECT_FIRST_CORNER 2
+#define SELECT_SECOND_CORNER 3
+#define DESELECT_SECOND_CORNER 4
+// debug stuff
+#define USE_MATERIALS 0
+
 /obj/abcuMarker
 	desc = "Denotes a valid tile."
 	icon = 'icons/obj/objects.dmi'
@@ -16,8 +31,6 @@
 	density = 0
 	layer = TURF_LAYER
 
-#define USE_MATERIALS 0
-
 /obj/machinery/abcu
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "builder"
@@ -29,19 +42,22 @@
 	processing_tier = PROCESSING_FULL
 
 	var/invalidCount = 0
+	var/building = 0
+	var/BuildIndex = 1
+	var/BuildEnd = 0
+	var/list/markers = new/list()
+	var/list/apclist = new/list()
+	var/MetalOwed = 0
+	var/CrystalOwed = 0
+	var/TileCostProcessed = 0
 
 	var/obj/item/blueprint/currentBp = null
 	var/locked = 0
-	var/building = 0
 	var/Paused = 0
-	var/BuildIndex = 1
-	var/BuildEnd = 0
-
 	var/off_x = 0
 	var/off_y = 0
 
-	var/list/markers = new/list()
-	var/list/apclist = new/list()
+
 
 	New()
 		..()
@@ -74,16 +90,14 @@
 			//boutput(user, "<span class='alert'>The machine is currently constructing something. Best not touch it until it's done.</span>")
 			if (!Paused)
 				if (alert(usr, "Pause the construction?", "ABCU", "Yes", "No") == "Yes")
-					Paused = 1
-					UnsubscribeProcess()
+					pauseBuild()
 					return
 				return
 			else
 				//var/inputbuilding = input(user,"The build job is currently paused. Choose:","ABCU") in list("Resume Construction", "Cancel Build")
 				switch (input(user,"The build job is currently paused. Choose:","ABCU") in list("Resume Construction", "Cancel Build"))
 					if ("Resume Construction")
-						Paused = 0
-						SubscribeToProcess()
+						unpauseBuild()
 						return
 					if ("Cancel Build")
 						endBuild()
@@ -156,16 +170,80 @@
 
 		if (BuildIndex > BuildEnd)
 			endBuild()
-		else if (building)
-			var/datum/tileinfo/Tile = currentBp.roominfo[BuildIndex] // list index out of bounds
-			var/turf/pos = locate(text2num(Tile.posx) + src.x,text2num(Tile.posy) + src.y, src.z)
+			return
+		if (building)
+			var/datum/tileinfo/Tile = currentBp.roominfo[BuildIndex]
+			if (isnull(Tile.tiletype))
+				BuildIndex++
+				return
 
+			// try to consume materials for this tile
+			if (!TileCostProcessed)
+				var/ObjCount = length(Tile.objects)
+				MetalOwed += REBUILD_COST_TURF_METAL + REBUILD_COST_OBJECT_METAL * ObjCount
+				CrystalOwed += REBUILD_COST_TURF_CRYSTAL + REBUILD_COST_OBJECT_CRYSTAL * ObjCount
+				TileCostProcessed = TRUE
+			for (var/obj/Item in src)
+				if (Item == currentBp) continue
+
+				if (istype(Item, /obj/item/sheet))
+					var/obj/item/sheet/Sheets = Item
+					if (!Sheets.material) continue
+					if (MetalOwed && Sheets.material.material_flags & MATERIAL_METAL)
+						if (Sheets.amount >= MetalOwed)
+							Sheets.change_stack_amount(-MetalOwed)
+							MetalOwed = 0
+							continue
+						else
+							MetalOwed -= Sheets.amount
+							Sheets.change_stack_amount(-Sheets.amount)
+							continue
+					if (CrystalOwed && Sheets.material.material_flags & MATERIAL_CRYSTAL)
+						if (Sheets.amount >= CrystalOwed)
+							Sheets.change_stack_amount(-CrystalOwed)
+							CrystalOwed = 0
+							continue
+						else
+							CrystalOwed -= Sheets.amount
+							Sheets.change_stack_amount(-Sheets.amount)
+							continue
+
+				else if (istype(Item, /obj/item/material_piece))
+					var/obj/item/sheet/Bars = Item
+					if (!Bars.material) continue
+					if (MetalOwed && Bars.material.material_flags & MATERIAL_METAL)
+						if (Bars.amount * BAR_SHEET_VALUE >= MetalOwed)
+							Bars.change_stack_amount(-ceil(MetalOwed / BAR_SHEET_VALUE))
+							MetalOwed = MetalOwed % BAR_SHEET_VALUE ? BAR_SHEET_VALUE - MetalOwed % BAR_SHEET_VALUE : 0
+							continue
+						else
+							MetalOwed -= Bars.amount * BAR_SHEET_VALUE
+							Bars.change_stack_amount(-Bars.amount)
+							continue
+					if (CrystalOwed && Bars.material.material_flags & MATERIAL_CRYSTAL)
+						if (Bars.amount * BAR_SHEET_VALUE >= CrystalOwed)
+							Bars.change_stack_amount(-ceil(CrystalOwed / BAR_SHEET_VALUE))
+							CrystalOwed = CrystalOwed % BAR_SHEET_VALUE ? BAR_SHEET_VALUE - CrystalOwed % BAR_SHEET_VALUE : 0
+							continue
+						else
+							CrystalOwed -= Bars.amount * BAR_SHEET_VALUE
+							Bars.change_stack_amount(-Bars.amount)
+							continue
+
+			if (MetalOwed > 0 || CrystalOwed > 0)
+				pauseBuild()
+				src.visible_message("<span class='alert'>[src] does not have enough materials to continue construction of [src.currentBp.name].</span>")
+				playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 20)
+				return
+			// now build the tile if we paid for it
+			var/turf/Pos = locate(text2num(Tile.posx) + src.x,text2num(Tile.posy) + src.y, src.z)
 			for(var/obj/O in markers)
-				if(O.loc == pos)
+				if(O.loc == Pos)
 					qdel(O)
 					break
 
-			makeTile(Tile, pos)
+			makeTile(Tile, Pos)
+			TileCostProcessed = FALSE
 			BuildIndex++
 
 	proc/makeTile(var/datum/tileinfo/Info, var/turf/Pos)
@@ -211,7 +289,7 @@
 			boutput(usr, "<span class='alert'>The machine can not build on anything but empty space. Check for red markers.</span>")
 			return
 
-		BuildEnd = currentBp.roominfo.len
+		BuildEnd = length(currentBp.roominfo)
 		if (BuildEnd > 0)
 			building = 1
 			Paused = 0
@@ -231,6 +309,30 @@
 
 		icon_state = "builder"
 		makepowernets()
+
+	proc/auditInventory()
+		var/MetalCount = 0
+		var/CrystalCount = 0
+		for(var/obj/O in src)
+			if(O == currentBp) continue
+			if(istype(O, /obj/item/sheet))
+				var/obj/item/sheet/S = O
+				if (S.material)
+					if (S.material.material_flags & MATERIAL_METAL)
+						MetalCount += S.amount
+					if (S.material.material_flags & MATERIAL_CRYSTAL)
+						CrystalCount += S.amount
+		return list(MetalCount, CrystalCount)
+
+	proc/unpauseBuild()
+		Paused = 0
+		icon_state = "builder1"
+		SubscribeToProcess()
+
+	proc/pauseBuild()
+		Paused = 1
+		icon_state = "builder"
+		UnsubscribeProcess()
 
 	proc/deactivate()
 		for(var/obj/O in markers)
@@ -510,12 +612,6 @@
 
 			//rebuild powernets etc.
 */
-
-#define SELECT_SKIP 0
-#define SELECT_FIRST_CORNER 1
-#define DESELECT_FIRST_CORNER 2
-#define SELECT_SECOND_CORNER 3
-#define DESELECT_SECOND_CORNER 4
 
 /obj/item/blueprint_marker
 	name = "Blueprint Marker"
@@ -953,6 +1049,11 @@
 		updateOverlays()
 		return
 
+#undef REBUILD_COST_OBJECT_METAL
+#undef REBUILD_COST_OBJECT_CRYSTAL
+#undef REBUILD_COST_TURF_METAL
+#undef REBUILD_COST_TURF_CRYSTAL
+#undef BAR_SHEET_VALUE
 #undef SELECT_SKIP
 #undef SELECT_FIRST_CORNER
 #undef DESELECT_FIRST_CORNER
