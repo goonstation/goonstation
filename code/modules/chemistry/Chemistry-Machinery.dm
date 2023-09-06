@@ -320,7 +320,10 @@ TYPEINFO(/obj/machinery/chem_shaker)
 	var/container_row_length = 1
 	/// Also acts as the number of containers in the Y direction when divided by `src.container_row_length`.
 	var/max_containers = 1
-	var/rotation_period = 0.5 SECONDS
+	/// The time it takes for the platform to complete one orbit.
+	var/orbital_period = 0.8 SECONDS
+	/// Radius of the platform's orbit in pixels.
+	var/radius = 2
 
 	New()
 		..()
@@ -395,18 +398,14 @@ TYPEINFO(/obj/machinery/chem_shaker)
 	proc/set_active()
 		src.active = TRUE
 		src.power_usage = 200
-		animate(src.platform_holder, pixel_y = -2, time = 0.5 SECONDS, easing = SINE_EASING, flags = ANIMATION_LINEAR_TRANSFORM | ANIMATION_RELATIVE)
-		animate(src.platform_holder, pixel_x = 2, time = src.rotation_period/4, loop = -1, easing = SINE_EASING | EASE_OUT)
-		animate(pixel_y = 2, time = src.rotation_period/4, loop = -1, easing = SINE_EASING | EASE_OUT)
-		animate(pixel_x = -2, time = src.rotation_period/4, loop = -1, easing = SINE_EASING | EASE_OUT)
-		animate(pixel_y = -2, time = src.rotation_period/4, loop = -1, easing = SINE_EASING | EASE_OUT)
+		animate_orbit(src.platform_holder, radius = src.radius, time = src.orbital_period, loops = -1)
 		src.audible_message("<span class='notice'>[src] whirs to life, rotating its platform!</span>")
 		processing_items.Add(src)
 
 	proc/set_inactive()
 		src.active = FALSE
 		src.power_usage = 0
-		animate(src.platform_holder, pixel_x = 0, pixel_y = 0, time = 0.5 SECONDS, easing = SINE_EASING, flags = ANIMATION_LINEAR_TRANSFORM)
+		animate(src.platform_holder, pixel_x = 0, pixel_y = 0, time = src.orbital_period/2, easing = SINE_EASING, flags = ANIMATION_LINEAR_TRANSFORM)
 		src.audible_message("<span class='notice'>[src] dies down, returning its platform to its initial position.</span>")
 		processing_items.Remove(src)
 
