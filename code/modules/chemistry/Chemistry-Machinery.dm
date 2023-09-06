@@ -291,6 +291,181 @@ TYPEINFO(/obj/machinery/chem_heater)
 	chemistry
 		icon = 'icons/obj/heater_chem.dmi'
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+TYPEINFO(/obj/machinery/chem_shaker)
+	mats = 10
+
+// A lot of boilerplate code from this is borrowed from `/obj/machinery/chem_heater`.
+/obj/machinery/chem_shaker
+	name = "\improper Orbital Shaker"
+	desc = "A machine which continuously agitates beakers and flasks when activated."
+	icon = 'icons/obj/shaker.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "orbital_shaker-map"
+#else
+	icon_state = "orbital_shaker"
+#endif
+	density = 1
+	anchored = ANCHORED
+	flags = NOSPLASH
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
+	pixel_y = 4
+
+	var/list/obj/item/reagent_containers/glass/held_containers = list()
+	var/obj/dummy/platform_holder
+	var/list/first_container_offsets = list("X" = 0, "Y" = 8)
+	var/list/container_offsets = list ("X" = 10, "Y" = -4)
+	var/active = FALSE
+	/// The arrangement of the containers on the platform in the X direction.
+	var/container_row_length = 1
+	/// Also acts as the number of containers in the Y direction when divided by `src.container_row_length`.
+	var/max_containers = 1
+
+	New()
+		..()
+		src.platform_holder = new()
+		src.platform_holder.icon = src.icon
+		src.platform_holder.icon_state = "[src.icon_state]-platform"
+		src.platform_holder.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
+		src.platform_holder.appearance_flags |= KEEP_TOGETHER
+		src.vis_contents.Add(src.platform_holder)
+
+	disposing()
+		for (var/obj/item/reagent_containers/glass/B in src.held_containers)
+			MOVE_OUT_TO_TURF_SAFE(B, src)
+		..()
+
+	attack_hand(mob/user)
+		if (!can_act(user)) return
+		boutput(user, "You [src.active && "de"]activate [src].")
+		switch (src.active)
+			if (TRUE)
+				src.set_inactive()
+			if (FALSE)
+				src.set_active()
+
+	attackby(obj/item/reagent_containers/glass/B, var/mob/user)
+		if(istype(B, /obj/item/reagent_containers/glass))
+			src.try_insert(B, user)
+
+	ex_act(severity)
+		switch(severity)
+			if(1)
+				qdel(src)
+				return
+			if(2)
+				if (prob(50))
+					qdel(src)
+					return
+
+	blob_act(var/power)
+		if(prob(25 * power/20))
+			qdel(src)
+
+	meteorhit()
+		qdel(src)
+		return
+
+	attack_ai(mob/user as mob)
+		return src.Attackhand(user)
+
+	process(mult)
+		..()
+		if (src.status & (NOPOWER|BROKEN)) return src.set_inactive()
+		for (var/obj/item/reagent_containers/glass/container in src.held_containers)
+			container.reagents?.physical_shock(5)
+
+	proc/arrange_containers()
+		// This offset code sucks. Remember to fix round() when we switch to 515.
+		for (var/i in 1 to length(src.held_containers))
+			if (!src.held_containers[i]) return
+			var/current_y
+			if (!(i % src.container_row_length))
+				current_y = (i % src.container_row_length) + 1
+			else
+				current_y = round(i / src.container_row_length) + 1
+			var/current_x = i - (src.container_row_length * (current_y - 1))
+			src.held_containers[i].pixel_x = src.first_container_offsets["X"] + ((current_x - 1) * src.container_offsets["X"])
+			src.held_containers[i].pixel_y = (src.first_container_offsets["Y"] * current_y) + src.pixel_y
+
+	proc/count_held_containers()
+		var/count_buffer = 0
+		for (var/i in 1 to length(src.held_containers))
+			if (src.held_containers[i])
+				++count_buffer
+		return count_buffer
+
+	proc/set_active()
+		src.active = TRUE
+		src.power_usage = 200
+		src.audible_message("<span class='notice'>[src] whirs to life, rotating its platform!</span>")
+		processing_items.Add(src)
+
+	proc/set_inactive()
+		src.active = FALSE
+		src.power_usage = 0
+		src.audible_message("<span class='notice'>[src] dies down, returning its platform to its initial position.</span>")
+		processing_items.Remove(src)
+
+	proc/try_insert(obj/item/reagent_containers/glass/B, var/mob/user)
+		if (src.status & (NOPOWER|BROKEN))
+			user.show_text("[src] seems to be out of order.", "red")
+			return
+
+		if (src.count_held_containers() >= src.max_containers)
+			boutput(user, "There's too many beakers on the platform already!")
+			return
+
+		if (isrobot(user))
+			boutput(user, "Robot beakers won't work with this!")
+			return
+
+		user.drop_item()
+		B.set_loc(src)
+		B.appearance_flags |= RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		B.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
+		B.event_handler_flags |= NO_MOUSEDROP_QOL
+		var/append_container = TRUE
+		for (var/i in 1 to length(src.held_containers))
+			if (!src.held_containers[i])
+				src.held_containers[i] = B
+				append_container = FALSE
+				break
+		if (append_container)
+			src.held_containers += B
+		src.platform_holder.vis_contents += B
+		src.arrange_containers()
+		RegisterSignal(B, COMSIG_ATTACKHAND, PROC_REF(remove_container))
+		boutput(user, "You add the beaker to the machine!")
+
+	proc/remove_container(obj/item/reagent_containers/glass/B)
+		if (!(B in src.contents)) return
+		for (var/i in 1 to length(src.held_containers))
+			if (src.held_containers[i] == B)
+				src.held_containers[i] = null
+		MOVE_OUT_TO_TURF_SAFE(B, src)
+		B.appearance_flags = initial(B.appearance_flags)
+		B.vis_flags = initial(B.vis_flags)
+		B.event_handler_flags = initial(B.event_handler_flags)
+		src.platform_holder.vis_contents -= B
+		src.arrange_containers()
+		UnregisterSignal(B, COMSIG_ATTACKHAND)
+
+	chemistry
+		icon = 'icons/obj/shaker_chem.dmi'
+
+TYPEINFO(/obj/machinery/chem_shaker/large)
+	mats = 25
+/obj/machinery/chem_shaker/large
+	name = "\improper Large Orbital Shaker"
+	icon_state = "orbital_shaker_large"
+	max_containers = 4
+	container_row_length = 2
+	first_container_offsets = list("X" = -5, "Y" = 8)
+
+	chemistry
+		icon = 'icons/obj/shaker_chem.dmi'
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
