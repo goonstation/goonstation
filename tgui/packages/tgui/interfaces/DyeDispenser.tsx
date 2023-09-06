@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2023
+ * @author Garash (https://github.com/Garash2k)
+ * @license ISC
+ */
+
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 import { Stack, Button, Dimmer, ColorBox } from '../components';
