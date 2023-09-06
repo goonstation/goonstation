@@ -5,8 +5,6 @@
 	desc = "A holy scripture of some kind."
 	icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
 	icon_state = "Bible"
-	/// the name of the kind of book, so that we can close it later.
-	var/unopened_icon_state = "Bible"
 	inhand_image_icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
 	item_state = "Book"
 	/// the name of the kind of inhand sprite used, so that we can close it again.
@@ -19,7 +17,12 @@
 	custom_suicide = TRUE
 	suicide_distance = 0
 	var/mob/affecting = null
+	/// how much to heal by
 	var/heal_amt = 10
+	/// the name of the kind of book, so that we can close it later.
+	var/unopened_icon_state = "Bible"
+	/// the sprite to show when the book is opened
+	var/opened_icon_state_override = null
 	/// will it force people to fart when they walk over it?
 	var/evil = FALSE
 	/// does it do the special death animation?
@@ -30,6 +33,7 @@
 	var/opened = FALSE
 	/// can this bible be opened up to view the insides?
 	var/unopenable = FALSE
+
 
 	New()
 		// so that i don't have to have duplicate lines in the subtypes
@@ -257,9 +261,13 @@
 			src.item_state = src.unopened_item_state
 			src.opened = FALSE
 		else
-			src.icon_state += "_Open"
-			src.item_state += "_Open"
 			src.opened = TRUE
+			src.item_state += "Open"
+			if (src.opened_icon_state_override)
+				src.icon_state - src.opened_icon_state_override
+			else
+				src.icon_state += "Open"
+
 
 	Crossed(atom/movable/AM as mob)
 		..()
@@ -274,7 +282,7 @@
 	name = "frayed Holy Texts"
 	evil = TRUE
 
-/// syndicate item for killing people when they fart
+/// syndicate item for killing people when they fart. it's smol
 /obj/item/bible/mini
 	//Grif
 	name = "O.C. Holy Texts"
@@ -365,6 +373,7 @@
 	item_state = "PacoXBook"
 
 // the sprites have vanished wtf
+// todo: find the damn sprites and put them in the dmi
 /obj/item/bible/sulphur
 	name = "Sacred Sulphuric Script"
 	desc = "A holy scripture of some kind?"
@@ -374,11 +383,13 @@
 /obj/item/bible/bluewhite
 	icon_state = "PacoBlueWhite"
 	item_state = "PacoBlueWhiteBook"
-// note that redwhite open and bluewhite open are identical
+
 /obj/item/bible/redwhite
 	icon_state = "PacoRedWhite"
 	item_state = "PacoRedWhiteBook"
+	opened_icon_state_override = "PacoWhiteOpen"
 
 /obj/item/bible/redwhite/dark
 	icon_state = "PacoRedDark"
-	item_state = "PacoRedDarkBook" //todo
+	item_state = "PacoRedDarkBook"
+	opened_icon_state_override = "PacoWhiteOpen"
