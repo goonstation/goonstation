@@ -30,8 +30,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 					if(H.mutantrace.head_offset)
 						face_pie.pixel_y = H.mutantrace.head_offset
 					M.UpdateOverlays(face_pie, overlay_key)
-					var/old_invis = src.invisibility
-					src.invisibility = INVIS_ALWAYS
 					src.set_loc(M)
 					M.bioHolder?.AddEffect("bad_eyesight")
 					JOB_XP(thrower, "Clown", 1)
@@ -43,7 +41,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 						if (QDELETED(src))
 							return
 						src.visible_message("<span class='notice'>[src] falls off of [M]'s face.</span>")
-						src.invisibility = old_invis
 						src.set_loc(M.loc)
 						qdel(face_pie)
 					return
