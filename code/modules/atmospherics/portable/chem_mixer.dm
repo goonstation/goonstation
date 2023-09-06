@@ -30,12 +30,19 @@
 		"maxPressure" = src.maximum_pressure,
 	)
 
+/obj/machinery/portable_atmospherics/chem_mixer/proc/set_on(state)
+	src.on = state
+	src.icon_state = src.on ? "chem_mixer-on" : "chem_mixer-off"
+	if (!src.on)
+		src.speed = 1
+		for (var/obj/reagent_dispensers/chemicalbarrel/barrel in get_turf(src))
+			barrel.reagents.reaction_speed = src.speed
+
 /obj/machinery/portable_atmospherics/chem_mixer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if (action == "toggle-power")
 		if (src.air_contents.temperature < src.min_operating_temp)
 			return
-		src.on = !src.on
-		src.icon_state = src.on ? "chem_mixer-on" : "chem_mixer-off"
+		src.set_on(!src.on)
 		return TRUE
 
 /obj/machinery/portable_atmospherics/chem_mixer/process()
@@ -46,6 +53,7 @@
 	if (!src.on)
 		return
 	if (src.air_contents.temperature < src.min_operating_temp)
+		src.set_on(FALSE)
 		return
 
 	var/energy = THERMAL_ENERGY(src.air_contents)
@@ -56,12 +64,12 @@
 	var/sound_played = FALSE
 	for (var/obj/reagent_dispensers/chemicalbarrel/barrel in get_turf(src))
 		barrel.reagents.reaction_speed = src.speed
-		if (!sound_played && barrel.reagents.total_volume > 50)
+		if (!sound_played && barrel.reagents.total_volume > CHEM_EPSILON)
 			playsound(src, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 40, 1)
 			sound_played = TRUE
 	//maths adapted from freezer code
 	var/combined_heat_capacity = current_heat_capacity + HEAT_CAPACITY(src.air_contents)
-	var/combined_energy = THERMAL_ENERGY(src.air_contents) + src.min_operating_temp * src.current_heat_capacity
+	var/combined_energy = THERMAL_ENERGY(src.air_contents) + (src.min_operating_temp - 500) * src.current_heat_capacity
 	src.air_contents.temperature = combined_energy/combined_heat_capacity
 
 	if (src.connected_port?.network)

@@ -2287,7 +2287,7 @@
 		on_reaction(datum/reagents/holder)
 			if(holder.total_temperature > (T0C + 30)) //requires *some* outside heating to start reacting more quickly
 				var/temperature_over_30C = holder.total_temperature - (T0C + 30)
-				var/amount_of_oil_mixed = round((temperature_over_30C * 1.5)/(temperature_over_30C + 40), 0.01) //more heat = more oil more quickly, but with diminishing returns that never go over 0.5u per reaction
+				var/amount_of_oil_mixed = round((temperature_over_30C * 1.5)/(temperature_over_30C + 40) * holder.reaction_speed, 0.01) //more heat = more oil more quickly, but with diminishing returns that never go over 0.5u per reaction
 				var/amount_of_fuel_to_use = amount_of_oil_mixed + round(clamp(0.1 * (1.1 ** temperature_over_30C), 0, 0.5), 0.01) //more heat = exponentially more welding fuel used, clamped to 1u per reaction + however much oil is made
 				holder.add_reagent("oil", amount_of_oil_mixed, temp_new = holder.total_temperature, chemical_reaction = TRUE)
 				holder.remove_reagent("fuel", amount_of_fuel_to_use)
