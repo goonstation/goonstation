@@ -166,7 +166,6 @@ datum
 				return
 
 			reaction_obj(var/obj/O, var/volume)
-				var/id = src.id
 				if (isnull(O)) return
 				if(isitem(O))
 					var/obj/item/I = O
@@ -180,7 +179,7 @@ datum
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
 						ether_fireflash(volume)
-				return 1
+				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
