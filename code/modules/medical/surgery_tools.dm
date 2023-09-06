@@ -1130,7 +1130,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 			if (user.a_intent == INTENT_HELP)
 				return
 			return ..()
-		if (H.chest_cavity_clamped)
+		if (H.chest_cavity_clamped && !H.bleeding)
 			boutput(user, "<span class='notice'>[M]'s blood vessels are already clamped.</span>")
 			return
 		if (H.organHolder.chest.op_stage > 0 || H.bleeding)
@@ -1138,19 +1138,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 				"<span class='alert'>You begin clamping the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
 				"<span class='alert'>[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src].</span>")
 
-			if (!do_mob(user, H, clamp(surgery_status * 4, 0, 100)))
-				user.visible_message("<span class='alert'><b>[user]</b> was interrupted!</span>",\
-				"<span class='alert'>You were interrupted!</span>")
-				return
-
-			user.tri_message(H, "<span class='notice'><b>[user]</b> clamps the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
-				"<span class='notice'>You clamp the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
-				"<span class='notice'>[H == user ? "You clamp" : "<b>[user]</b> clamps"] the bleeders in your incision with [src].</span>")
-
-			if (H.organHolder.chest.op_stage > 0)
-				H.chest_cavity_clamped = TRUE
-			if (H.bleeding)
-				repair_bleeding_damage(H, 50, rand(2,5))
+			actions.start(new/datum/action/bar/icon/clamp_bleeders(user, H), user)
 			return
 
 /* ======================================================= */

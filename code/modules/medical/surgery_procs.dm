@@ -1501,7 +1501,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return
 		if (src.rip_out_organ)
 			src.surgeon.visible_message("<span class='alert'>[src.surgeon] begins ripping out [src.target]'s [src.organ_name] with [his_or_her(src.surgeon)] bare hands!</span>")
-			ON_COOLDOWN(src, "rip_out_damage", 4 SECOND)
+			ON_COOLDOWN(src.surgeon, "rip_out_damage", 4 SECOND)
 		else
 			src.surgeon.visible_message("<span class='notice'>[src.surgeon] begins cutting out [src.target]'s [src.organ_name].</span>")
 
@@ -1511,7 +1511,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (!ON_COOLDOWN(src, "rip_out_damage", 4 SECONDS))
+		if (!ON_COOLDOWN(src.surgeon, "rip_out_damage", 4 SECONDS))
 			random_brute_damage(src.target, rand(10, 20))
 			take_bleeding_damage(src.target, src.surgeon, rand(5, 15))
 
@@ -1552,3 +1552,56 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			src.target.organHolder.drop_organ(src.organ_path)
 			playsound(src.target, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 			src.target.TakeDamage("chest", rand(5, 15), 0)
+
+/datum/action/bar/icon/clamp_bleeders
+	duration = 3 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ACTION
+	id = "clamp_bleeders"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "hemostat"
+	resumable = FALSE
+	var/mob/surgeon = null
+	var/mob/living/carbon/human/target = null
+	var/surgeon_duration = 1.5 SECONDS
+
+	New(mob, patient)
+		src.surgeon = mob
+		src.target = patient
+		if (!surgeryCheck(src.target, src.surgeon))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (src.surgeon.traitHolder.hasTrait("training_medical"))
+			src.duration = src.surgeon_duration
+		..()
+
+	onStart()
+		..()
+		if(BOUNDS_DIST(src.surgeon, src.target) > 0 || src.surgeon == null || src.target == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		else
+			src.surgeon.visible_message("<span class='notice'>[src.surgeon] begins clamping the bleeders on [src.target]'s chest wound.</span>")
+
+	onUpdate()
+		..()
+		if(BOUNDS_DIST(surgeon, target) > 0 || surgeon == null || target == null || !surgeryCheck(src.target, src.surgeon))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onInterrupt()
+		..()
+		var/damage = calc_surgery_damage(src.surgeon, damage = rand(5,10))
+		do_slipup(src.surgeon, src.target, "chest", damage, "clamps a little too hard")
+
+	onEnd()
+		..()
+		if(BOUNDS_DIST(src.surgeon, src.target) > 0 || src.target == null || src.surgeon == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		src.surgeon.tri_message(src.target, "<span class='notice'><b>[src.surgeon]</b> clamps the bleeders on [src.surgeon == src.target ? "[his_or_her(src.target)]" : "[src.target]'s"] chest wound.</span>",\
+			"<span class='notice'>You clamp the bleeders on [src.surgeon == src.target ? "your" : "[src.target]'s"] chest wound.</span>",\
+			"<span class='alert'>[src.target == src.surgeon ? "You clamp" : "<b>[src.surgeon]</b> clamps"] the bleeders on your chest wound!</span>")
+		if (src.target.organHolder.chest.op_stage > 0)
+			src.target.chest_cavity_clamped = TRUE
+		if (src.target.bleeding)
+			repair_bleeding_damage(src.target, 50, rand(2,5))
