@@ -187,6 +187,7 @@
 	src.attach_hud(hud)
 	src.zone_sel = new(src)
 	src.attach_hud(zone_sel)
+	src.update_equipment_screen_loc()
 
 	if (src.stamina_bar)
 		hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
@@ -534,6 +535,15 @@
 	if (organHolder)
 		organHolder.dispose()
 		organHolder = null
+
+	if (src.cloner_defects)
+		qdel(src.cloner_defects)
+		src.cloner_defects = null
+
+	if (src.inventory)
+		src.inventory.dispose()
+		src.inventory = null
+
 	..()
 
 	//blah, this might not be effective for ref clearing but ghost observers inside me NEED this list to be populated in base mob/disposing

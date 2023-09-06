@@ -99,7 +99,7 @@
 		H.init(src)	// copy the contents of disposer to holder
 		H.mail_tag = src.destination_tag
 
-		air_contents.zero()		// new empty gas resv.
+		ZERO_GASES(air_contents)
 
 		sleep(1 SECOND)
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)

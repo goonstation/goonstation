@@ -3721,26 +3721,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/chapel/sanctuary)
-"iF" = (
-/obj/stool/chair/wooden,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fred2"
-	},
-/area/station/chapel/sanctuary)
-"iG" = (
-/obj/stool/chair/wooden,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fred2"
-	},
-/area/station/chapel/sanctuary)
 "iH" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -5296,9 +5276,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "ma" = (
-/obj/machinery/atmospherics/unary/cryo_cell{
-	pipe_direction = 2
-	},
+/obj/machinery/atmospherics/unary/cryo_cell,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "mb" = (
@@ -6518,27 +6496,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"qo" = (
-/obj/storage/secure/closet/security/forensics,
-/obj/item/reagent_containers/glass/bottle/formaldehyde,
-/obj/item/reagent_containers/food/drinks/bottle/bojackson,
-/obj/item/clothing/head/fedora{
-	pixel_y = 11
-	},
-/obj/item/device/detective_scanner,
-/obj/item/storage/box/evidence,
-/obj/item/spraybottle/detective,
-/obj/item/camera,
-/obj/item/clothing/under/suit/mortician,
-/obj/item/hand_labeler,
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/specialroom/freezer,
-/area/station/security/main)
 "qT" = (
 /obj/machinery/lawrack{
 	dir = 8
@@ -6556,6 +6513,16 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"ry" = (
+/obj/stool/chair/dining/wood,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fred2"
+	},
+/area/station/chapel/sanctuary)
 "uG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -6595,6 +6562,27 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
+"Ch" = (
+/obj/storage/secure/closet/security/forensics,
+/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/obj/item/reagent_containers/food/drinks/bottle/bojackson,
+/obj/item/clothing/head/fedora{
+	pixel_y = 11
+	},
+/obj/item/device/detective_scanner,
+/obj/item/storage/box/evidence,
+/obj/item/spraybottle/detective,
+/obj/item/camera,
+/obj/item/clothing/under/suit/mortician,
+/obj/item/hand_labeler,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/security/main)
 "Ct" = (
 /obj/machinery/clonepod,
 /turf/simulated/floor/white,
@@ -6615,6 +6603,16 @@
 /obj/item/card_box/plain,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
+"WP" = (
+/obj/stool/chair/dining/wood,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fred2"
+	},
+/area/station/chapel/sanctuary)
 
 (1,1,1) = {"
 aa
@@ -45121,7 +45119,7 @@ ha
 hp
 hp
 nS
-iF
+ry
 jj
 jB
 jY
@@ -45423,7 +45421,7 @@ de
 hq
 cE
 cE
-iG
+WP
 jk
 jC
 jZ
@@ -56277,7 +56275,7 @@ bd
 bj
 bt
 as
-qo
+Ch
 bJ
 bS
 bU
