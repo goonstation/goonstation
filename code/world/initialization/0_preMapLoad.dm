@@ -224,7 +224,7 @@
 		if(initial(mat.cached))
 			var/datum/material/M = new mat()
 			material_cache_matid[M.getID()] = M.getImmutable()
-			material_cache_type[M.type] = M.getImmutable()
+			material_cache_type[M.type] = material_cache_matid[M.getID()]
 
 #ifdef TRACY_PROFILER_HOOK
 /proc/prof_init()
