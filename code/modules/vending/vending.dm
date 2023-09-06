@@ -3384,7 +3384,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 				"Prescribe [src.pick_product_name()] today!"
 			)
 
-/obj/machinery/vending/chaplain
+/obj/machinery/vending/jobclothing/chaplain
 	name = "chaplain equipment"
 	desc = "An equipment vendor for those with religious inclination."
 	icon_state = "chaplain"
@@ -3399,12 +3399,30 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 
 	create_products()
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/bible			, 3)
-		product_list += new/datum/data/vending_product(/obj/item/bible/blank	, 1)
-		product_list += new/datum/data/vending_product(/obj/item/bible/eye		, 1)
-		product_list += new/datum/data/vending_product(/obj/item/bible/eye/dark	, 1)
-		product_list += new/datum/data/vending_product(/obj/item/bible/green	, 1)
-		product_list += new/datum/data/vending_product(/obj/item/bible/blue		, 1)
-		product_list += new/datum/data/vending_product(/obj/item/bible/bluewhite, 1)
-		product_list += new/datum/data/vending_product(/obj/item/bible/burned	, 1)
-		product_list += new/datum/data/vending_product(/obj/item/bible/clown	, 1)
+		// can rebalance this later if needed.
+		product_list += new/datum/data/vending_product(/obj/item/bible				, 2)
+		product_list += new/datum/data/vending_product(/obj/item/bible/blank		, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/eye			, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/eye/dark		, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/green		, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/blue			, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/purple		, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/bluewhite	, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/redwhite		, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/redwhite/dark, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/x			, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/clown		, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/clown/cluwne	, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/burned		, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/skeleton		, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bible/sulphur		, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/greenrobe, 	3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/greenmask, 	3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/weirdo,		3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/weirdomask,	3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/burntrobe,	3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/burntmask,	3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/lightrobe,	3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/light,		3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/naturerobe,	3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nature,		3)

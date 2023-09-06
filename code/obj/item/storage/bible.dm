@@ -40,6 +40,9 @@
 		ritualComponent = new/datum/ritualComponent/sanctus(src)
 		ritualComponent.autoActive = 1
 		#endif
+		if (src.loaded)
+			new /obj/item/gun/kinetic/faith(src)
+			src.desc += " This is the chaplain's personal copy."
 		BLOCK_SETUP(BLOCK_BOOK)
 
 	disposing()
@@ -294,11 +297,9 @@
 	desc = "Huh."
 	hungry = TRUE
 
+/// this is the bible the chaplain spawns with, and has faith inside
 /obj/item/bible/loaded
-	New()
-		..()
-		new /obj/item/gun/kinetic/faith(src)
-		src.desc += " This is the chaplain's personal copy."
+	loaded = TRUE
 
 /obj/item/bible/blank
 	name = "Blank Holy Text"
