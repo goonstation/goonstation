@@ -12,6 +12,7 @@
 	pointCost = 0
 	when_stunned = 0
 	not_when_handcuffed = 1
+
 	cast(mob/target)
 		if (!holder)
 			return 1

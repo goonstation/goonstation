@@ -2,7 +2,6 @@
 	name = "Kick"
 	desc = "A powerful kick, sends people flying away from you. Also useful for escaping from bad situations."
 	icon_state = "Kick"
-	target_nodamage_check = 1
 	targeted = 1
 	target_anything = 0
 	target_nodamage_check = 1
