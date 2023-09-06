@@ -1601,6 +1601,17 @@ datum/projectile/bullet/autocannon
 	casing = null
 	impact_image_state = "bhole-staple"
 
+	shrapnel_implant
+		implanted = /obj/item/implant/projectile/shrapnel
+
+/datum/projectile/bullet/glass_shard // for explosions of glass
+	name = "glass"
+	damage_type = D_PIERCING
+	icon_state = "glass"
+	implanted = /obj/item/implant/projectile/glass_shard
+	window_pass = FALSE
+	damage = 6
+
 /datum/projectile/bullet/howitzer
 	name = "howitzer round"
 	brightness = 0.7

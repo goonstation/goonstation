@@ -6,7 +6,7 @@
 // PLEASE JUST MAKE A MESS OF make_my_stuff() INSTEAD
 // CALL YOUR PARENTS
 
-#define RELAYMOVE_DELAY 50
+#define RELAYMOVE_DELAY 1 SECOND
 
 ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 /obj/storage

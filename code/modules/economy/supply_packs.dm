@@ -1156,7 +1156,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Scrap Furnishings Crate"
 	desc = "A flat-packed set of...trash and scrap parts. I guess you could make furniture out of it?"
 	contains = list(/obj/item/furniture_parts/table/scrap = 4,
-					/obj/item/furniture_parts/wood_chair/scrap = 4)
+					/obj/item/furniture_parts/dining_chair/scrap = 4)
 	cost = 20000
 	containertype = /obj/storage/crate/wooden
 	containername = "Scrap Furnishings Crate"
@@ -1164,7 +1164,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 /datum/supply_packs/furniture_regal
 	name = "Regal Furnishings Crate"
 	desc = "A set of very fancy flat-packed, regal furniture."
-	contains = list(/obj/item/furniture_parts/wood_chair/regal = 4,
+	contains = list(/obj/item/furniture_parts/dining_chair/regal = 4,
 					/obj/item/furniture_parts/table/regal = 4,
 					/obj/item/furniture_parts/decor/regallamp = 2)
 	cost = 80000
