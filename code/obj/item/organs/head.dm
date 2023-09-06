@@ -38,8 +38,7 @@
 	var/head_icon = null
 	var/head_state = null
 
-	var/image/head_image_eyes_L = null
-	var/image/head_image_eyes_R = null
+	var/image/head_image_eyes = null
 	var/image/head_image_nose = null
 	var/image/head_image_cust_one = null
 	var/image/head_image_cust_two = null
@@ -189,29 +188,10 @@
 		// The rest of this shit gets sent to update_face
 		// get and install eyes, if any.
 		if (src.head_appearance_flags & HAS_HUMAN_EYES)
-			src.head_image_eyes_L = image(AHead.e_icon, "[AHead.e_state]_L", layer = MOB_FACE_LAYER)
-			src.head_image_eyes_R = image(AHead.e_icon, "[AHead.e_state]_R", layer = MOB_FACE_LAYER)
+			src.head_image_eyes = image(AHead.e_icon, AHead.e_state, layer = MOB_FACE_LAYER)
 		else if (src.head_appearance_flags & HAS_NO_EYES)
-			src.head_image_eyes_L = image('icons/mob/human_hair.dmi', "none", layer = MOB_FACE_LAYER)
-			src.head_image_eyes_R = image('icons/mob/human_hair.dmi', "none", layer = MOB_FACE_LAYER)
-
-		if (AHead.customization_first.id == "hetcroL")
-			src.head_image_eyes_L.color = AHead.customization_first_color
-		else if (AHead.customization_second.id == "hetcroL")
-			src.head_image_eyes_L.color = AHead.customization_second_color
-		else if (AHead.customization_third.id == "hetcroL")
-			src.head_image_eyes_L.color = AHead.customization_third_color
-		else
-			src.head_image_eyes_L.color = AHead.e_color
-
-		if (AHead.customization_first.id == "hetcroR")
-			src.head_image_eyes_R.color = AHead.customization_first_color
-		else if (AHead.customization_second.id == "hetcroR")
-			src.head_image_eyes_R.color = AHead.customization_second_color
-		else if (AHead.customization_third.id == "hetcroR")
-			src.head_image_eyes_R.color = AHead.customization_third_color
-		else
-			src.head_image_eyes_R.color = AHead.e_color
+			src.head_image_eyes = image('icons/mob/human_hair.dmi', "none", layer = MOB_FACE_LAYER)
+		src.head_image_eyes.color = AHead.e_color
 
 		// Add long nose if they have one
 		if (src.head_appearance_flags & HAS_LONG_NOSE)
@@ -285,22 +265,9 @@
 		src.head_image.pixel_x = 0
 		src.head_image.pixel_y = 0
 		actual_head.appearance = src.head_image
-		src.head_image_eyes_L.pixel_x = 0
-		src.head_image_eyes_L.pixel_y = 0
-		if(src.left_eye)
-			src.head_image_eyes_L.color = left_eye.iris_color
-		else
-			src.head_image_eyes_L.color = "#FFFFFF"
-			src.head_image_eyes_L.alpha = 0
-		actual_head.overlays += src.head_image_eyes_L
-		src.head_image_eyes_R.pixel_x = 0
-		src.head_image_eyes_R.pixel_y = 0
-		if(src.right_eye)
-			src.head_image_eyes_R.color = right_eye.iris_color
-		else
-			src.head_image_eyes_R.color = "#FFFFFF"
-			src.head_image_eyes_R.alpha = 0
-		actual_head.overlays += src.head_image_eyes_R
+		src.head_image_eyes.pixel_x = 0
+		src.head_image_eyes.pixel_y = 0
+		actual_head.overlays += src.head_image_eyes
 
 		if(src.head_image_nose)
 			actual_head.overlays += src.head_image_nose

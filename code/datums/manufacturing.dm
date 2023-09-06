@@ -1203,7 +1203,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Cybereye"
 	item_paths = list("CRY-1","MET-1","CON-1","INS-1")
 	item_amounts = list(2,1,2,1)
-	item_outputs = list(/obj/item/organ/eye/cyber/configurable)
+	item_outputs = list(/obj/item/organ/eye/cyber)
 	time = 20 SECONDS
 	create = 1
 	category = "Component"
