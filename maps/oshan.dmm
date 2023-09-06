@@ -16793,12 +16793,10 @@
 /obj/machinery/vending/fortune,
 /obj/machinery/light/incandescent/warm,
 /obj/decal/tile_edge/line/black{
-	dir = 4;
+	dir = 8;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/darkblue{
-	dir = 10
-	},
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "bhS" = (
 /obj/table/wood/round/auto,
@@ -16930,6 +16928,10 @@
 	dir = 9;
 	icon_state = "line1"
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/darkblue{
 	dir = 10
 	},
@@ -16937,10 +16939,6 @@
 "bix" = (
 /obj/dartboard{
 	pixel_y = 32
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -17304,15 +17302,6 @@
 "bjS" = (
 /obj/disposalpipe/junction/right/east,
 /obj/stool/bar,
-/turf/simulated/floor/darkblue{
-	dir = 10
-	},
-/area/station/crew_quarters/bar)
-"bjT" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/stool/bar,
 /obj/decal/tile_edge/line/black{
 	dir = 4;
 	icon_state = "line1"
@@ -17578,7 +17567,7 @@
 /obj/item/reagent_containers/food/snacks/cookie/jaffa{
 	pixel_y = 6
 	},
-/turf/simulated/floor/carpet/blue/fancy/narrow/T_east,
+/turf/simulated/floor/carpet/blue/fancy/narrow/ne,
 /area/station/crew_quarters/bar)
 "bkW" = (
 /obj/disposalpipe/segment/morgue,
@@ -17690,15 +17679,16 @@
 	name = "Bar persistent notice board";
 	persistent_id = "bar"
 	},
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/carpet/blue/fancy/narrow/nw,
 /area/station/crew_quarters/bar)
 "blv" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/drinks/drinkingglass/wine,
-/obj/item/reagent_containers/food/drinks/drinkingglass/wine,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shot,
-/obj/item/reagent_containers/food/drinks/drinkingglass/cocktail,
-/turf/simulated/floor/carpet/blue/fancy/narrow/ne,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/stool/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "blw" = (
 /obj/disposalpipe/segment/morgue,
@@ -18333,15 +18323,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/space)
 "bnH" = (
-/turf/simulated/floor/darkblue{
-	dir = 10
-	},
-/area/station/crew_quarters/bar)
-"bnI" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
+/obj/stool/bar,
 /turf/simulated/floor/darkblue{
 	dir = 10
 	},
@@ -25803,7 +25785,7 @@
 /obj/drink_rack/cup{
 	pixel_y = 32
 	},
-/turf/simulated/floor/carpet/blue/fancy/innercorner/sw_triple,
+/turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
 /area/station/crew_quarters/bar)
 "bMy" = (
 /obj/cable{
@@ -33585,10 +33567,6 @@
 /area/evilreaver/security)
 "daS" = (
 /obj/stool/bar,
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -34002,16 +33980,14 @@
 /turf/simulated/shuttle/wall/flock,
 /area/space)
 "dCS" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/darkblue{
-	dir = 10
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
 	},
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "dDM" = (
 /obj/machinery/light/incandescent/netural,
@@ -34552,6 +34528,10 @@
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/darkblue{
 	dir = 10
@@ -35423,10 +35403,6 @@
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/space)
-"fzw" = (
-/obj/machinery/vending/alcohol/with_ammo,
-/turf/simulated/floor/carpet/blue/fancy/narrow/sw,
-/area/station/crew_quarters/bar)
 "fzx" = (
 /obj/stool/chair/comfy{
 	dir = 4
@@ -36073,6 +36049,12 @@
 	},
 /turf/simulated/floor,
 /area/station/storage/eeva)
+"guN" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
 "gvv" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/barber_pole{
@@ -36605,7 +36587,7 @@
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
 "huw" = (
-/turf/simulated/floor/carpet/blue/fancy/innercorner/nw_triple,
+/turf/simulated/floor/carpet/blue/fancy/narrow/T_south,
 /area/station/crew_quarters/bar)
 "hvu" = (
 /turf/simulated/wall/auto/martian,
@@ -39093,6 +39075,11 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
 "lMQ" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/cocktail,
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot,
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/se_triple,
 /area/station/crew_quarters/bar)
 "lNY" = (
@@ -39413,6 +39400,10 @@
 /obj/item/device/radio/intercom/catering,
 /obj/decal/tile_edge/line/black{
 	dir = 8;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
 	icon_state = "line1"
 	},
 /turf/simulated/floor/darkblue{
@@ -44764,6 +44755,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
+/obj/stool/bar,
 /turf/simulated/floor/darkblue{
 	dir = 10
 	},
@@ -45262,10 +45254,6 @@
 /area/station/hallway/primary/west)
 "weV" = (
 /obj/stool/bar,
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "weY" = (
@@ -45398,10 +45386,6 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
 "wpH" = (
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -45708,7 +45692,7 @@
 /obj/item/implant/projectile/body_visible/dart/bardart{
 	pixel_x = 3
 	},
-/turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
+/turf/simulated/floor/carpet/blue/fancy/narrow/ne,
 /area/station/crew_quarters/bar)
 "wJj" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -78904,7 +78888,7 @@ bMx
 bkQ
 iUd
 huw
-fzw
+biC
 bot
 jBW
 bpE
@@ -80406,9 +80390,9 @@ bfM
 bgu
 aLL
 bhM
-bnI
+bjX
 dCS
-bjT
+eSf
 blv
 bkV
 haa
@@ -80710,8 +80694,8 @@ aLL
 biC
 bix
 wpH
-eSf
-weV
+guN
+biB
 weV
 weV
 daS
