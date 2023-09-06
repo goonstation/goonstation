@@ -465,6 +465,7 @@ var/datum/magpie_manager/magpie_man = new
 	proc/setup()
 		src.magpie = locate("M4GP13")
 
+
 /obj/npc/trader/salvager
 	name = "M4GP13 Salvage and Barter System"
 	icon = 'icons/obj/trader.dmi'
@@ -550,6 +551,7 @@ var/datum/magpie_manager/magpie_man = new
 /obj/item/clothing/glasses/salvager
 #ifndef SECRETS_ENABLED
 	icon_state = "construction"
+	item_state = "construction"
 #endif
 /obj/salvager_cryotron
 /obj/item/salvager_hand_tele
