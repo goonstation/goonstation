@@ -243,20 +243,7 @@ datum
 			fluid_g = 200
 			fluid_b = 200
 			transparency = 230
-			minimum_reaction_temperature = T0C+25
-			var/ignited = 0
-
-			reaction_temperature(exposed_temperature, exposed_volume)
-				var/datum/reagents/myholder = holder
-				var/vol = volume
-				myholder.del_reagent(id)
-				if(!myholder?.my_atom?.is_open_container() && !istype(myholder, /datum/reagents/fluid_group))
-					if(myholder.my_atom)
-						for(var/mob/M in AIviewers(5, get_turf(myholder.my_atom)))
-							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
-				else if(!ignited)
-					ignited = 1
-					myholder.smoke_start(vol) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
+			// Heat reaction moved to reactions to account for opening and closing containers
 
 		combustible/propellant
 			name = "aerosol propellant"
