@@ -78,8 +78,8 @@
 				W.set_loc(src)
 				currentBp = W
 				return
-		else if (istype(W, /obj/item/sheet))
-			boutput(user, "<span class='notice'>You insert the sheet into the machine.</span>")
+		else if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
+			boutput(user, "<span class='notice'>You insert the material into the machine.</span>")
 			user.drop_item()
 			W.set_loc(src)
 			return
@@ -185,50 +185,35 @@
 				TileCostProcessed = TRUE
 			for (var/obj/Item in src)
 				if (Item == currentBp) continue
+				if (MetalOwed <= 0 && CrystalOwed <= 0) break
 
 				if (istype(Item, /obj/item/sheet))
 					var/obj/item/sheet/Sheets = Item
 					if (!Sheets.material) continue
 					if (MetalOwed && Sheets.material.material_flags & MATERIAL_METAL)
-						if (Sheets.amount >= MetalOwed)
-							Sheets.change_stack_amount(-MetalOwed)
-							MetalOwed = 0
-							continue
-						else
-							MetalOwed -= Sheets.amount
-							Sheets.change_stack_amount(-Sheets.amount)
-							continue
+						var/SheetsConsumed = min(Sheets.amount, ceil(MetalOwed))
+						Sheets.change_stack_amount(-SheetsConsumed)
+						MetalOwed -= SheetsConsumed
+						continue
 					if (CrystalOwed && Sheets.material.material_flags & MATERIAL_CRYSTAL)
-						if (Sheets.amount >= CrystalOwed)
-							Sheets.change_stack_amount(-CrystalOwed)
-							CrystalOwed = 0
-							continue
-						else
-							CrystalOwed -= Sheets.amount
-							Sheets.change_stack_amount(-Sheets.amount)
-							continue
+						var/SheetsConsumed = min(Sheets.amount, ceil(CrystalOwed))
+						Sheets.change_stack_amount(-SheetsConsumed)
+						CrystalOwed -= SheetsConsumed
+						continue
 
 				else if (istype(Item, /obj/item/material_piece))
-					var/obj/item/sheet/Bars = Item
+					var/obj/item/material_piece/Bars = Item
 					if (!Bars.material) continue
 					if (MetalOwed && Bars.material.material_flags & MATERIAL_METAL)
-						if (Bars.amount * BAR_SHEET_VALUE >= MetalOwed)
-							Bars.change_stack_amount(-ceil(MetalOwed / BAR_SHEET_VALUE))
-							MetalOwed = MetalOwed % BAR_SHEET_VALUE ? BAR_SHEET_VALUE - MetalOwed % BAR_SHEET_VALUE : 0
-							continue
-						else
-							MetalOwed -= Bars.amount * BAR_SHEET_VALUE
-							Bars.change_stack_amount(-Bars.amount)
-							continue
+						var/BarsConsumed = min(Bars.amount, ceil(MetalOwed / BAR_SHEET_VALUE))
+						Bars.change_stack_amount(-BarsConsumed)
+						MetalOwed -= BarsConsumed * BAR_SHEET_VALUE
+						continue
 					if (CrystalOwed && Bars.material.material_flags & MATERIAL_CRYSTAL)
-						if (Bars.amount * BAR_SHEET_VALUE >= CrystalOwed)
-							Bars.change_stack_amount(-ceil(CrystalOwed / BAR_SHEET_VALUE))
-							CrystalOwed = CrystalOwed % BAR_SHEET_VALUE ? BAR_SHEET_VALUE - CrystalOwed % BAR_SHEET_VALUE : 0
-							continue
-						else
-							CrystalOwed -= Bars.amount * BAR_SHEET_VALUE
-							Bars.change_stack_amount(-Bars.amount)
-							continue
+						var/BarsConsumed = min(Bars.amount, ceil(CrystalOwed / BAR_SHEET_VALUE))
+						Bars.change_stack_amount(-BarsConsumed)
+						CrystalOwed -= BarsConsumed * BAR_SHEET_VALUE
+						continue
 
 			if (MetalOwed > 0 || CrystalOwed > 0)
 				pauseBuild()
