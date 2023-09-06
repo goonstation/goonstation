@@ -11832,7 +11832,13 @@
 	dir = 8;
 	name = "armory turret"
 	},
-/turf/simulated/floor/black,
+/obj/decal/tile_edge/stripe/corner{
+	dir = 9
+	},
+/obj/decal/tile_edge/stripe/corner{
+	dir = 6
+	},
+/turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "dyz" = (
 /obj/decal/cleanable/rust/jen,
@@ -31798,6 +31804,16 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/shuttlebay,
 /area/station/garden/owlery)
+"jJH" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/floor/wood/eight,
+/area/station/ai_monitored/armory)
 "jJJ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -56129,13 +56145,6 @@
 /turf/simulated/wall/auto/jen/red,
 /area/station/maintenance/solar/west)
 "rnn" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
 /obj/machinery/light/incandescent/blueish{
 	dir = 4
 	},
@@ -98776,13 +98785,13 @@ rdj
 rdj
 rdj
 rdj
-sIK
-sIK
-sIK
-sIK
-sIK
-sIK
-sIK
+rdj
+rdj
+rdj
+rdj
+rdj
+rdj
+rdj
 sIK
 sIK
 sIK
@@ -104524,7 +104533,7 @@ uqB
 nSp
 eDP
 rnn
-vDc
+jJH
 vDc
 fzx
 jJd
