@@ -395,21 +395,22 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 
 		ui_interact(user)
 
-	attackby(obj/item/W, mob/user as mob)
-		if(istype(W, /obj/item/dye_bottle))
-			if(src.bottle)
-				boutput(user, "<span class='notice'>The dispenser already has a dye bottle in it.</span>")
-			else
-				boutput(user, "<span class='notice'>You insert the dye bottle into the dispenser.</span>")
-				if(W)
-					user.drop_item(W)
-					W.set_loc(src)
-					src.bottle = W
-					tgui_process.update_uis(src)
+	attackby(obj/item/I, mob/user as mob)
+		if(istype(I, /obj/item/dye_bottle))
+			insert_bottle(I, user)
+			tgui_process.update_uis(src)
 			return
 		..()
-		return
 
+	proc/insert_bottle(obj/item/dye_bottle/bottle, mob/user)
+		if(src.bottle)
+			boutput(user, "<span class='notice'>The dispenser already has a dye bottle in it.</span>")
+		else
+			boutput(user, "<span class='notice'>You insert the dye bottle into the dispenser.</span>")
+			if(bottle)
+				user.drop_item(bottle)
+				bottle.set_loc(src)
+				src.bottle = bottle
 
 	ui_act(action, params)
 		if(status & BROKEN)
@@ -427,7 +428,6 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 						src.bottle.set_loc(src.loc)
 						usr.put_in_hand_or_eject(src.bottle) // try to eject it into the users hand, if we can
 						src.bottle = null
-
 				if("fillb")
 					if(src.bottle)
 						bottle.customization_first_color = params["selectedColor"]
@@ -442,15 +442,7 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 				if("insertb")
 					var/obj/item/I = usr.equipped()
 					if(istype(I, /obj/item/dye_bottle))
-						if(src.bottle)
-							boutput(usr, "<span class='notice'>The dispenser already has a dye bottle in it.</span>")
-						else
-							boutput(usr, "<span class='notice'>You insert the dye bottle into the dispenser.</span>")
-							if(I)
-								usr.drop_item(I)
-								I.set_loc(src)
-								src.bottle = I
-
+						insert_bottle(I, usr)
 			. = TRUE
 
 
