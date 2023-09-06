@@ -2674,7 +2674,7 @@
 			var/location = get_turf(holder.my_atom)
 			var/ether_mix_speed = min((holder.total_temperature - (T0C + 30))/4, 1) //reacts faster than normally the hotter the reaction, careful with ether's burn temperature though
 			holder.add_reagent("ether", ether_mix_speed, temp_new = holder.total_temperature, chemical_reaction = TRUE)
-			holder.remove_reagent("fuel", ether_mix_speed)
+			holder.remove_reagent("ethanol", ether_mix_speed)
 			if(holder?.my_atom?.is_open_container())
 				reaction_icon_state = list("reaction_smoke-1", "reaction_smoke-2")
 				var/datum/reagents/smokeContents = new/datum/reagents/
