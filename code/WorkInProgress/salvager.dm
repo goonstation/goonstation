@@ -457,6 +457,14 @@
 		if((POD_ACCESS_SALVAGER in src.access_type) && length(landmarks[LANDMARK_SALVAGER_BEACON]))
 			. = pick(landmarks[LANDMARK_SALVAGER_BEACON])
 
+
+var/datum/magpie_manager/magpie_man = new
+/datum/magpie_manager
+	var/obj/npc/trader/salvager/magpie
+
+	proc/setup()
+		src.magpie = locate("M4GP13")
+
 /obj/npc/trader/salvager
 	name = "M4GP13 Salvage and Barter System"
 	icon = 'icons/obj/trader.dmi'
@@ -539,6 +547,10 @@
 // Stubs for the public
 /obj/item/clothing/suit/space/salvager
 /obj/item/clothing/head/helmet/space/engineer/salvager
+/obj/item/clothing/glasses/salvager
+#ifndef SECRETS_ENABLED
+	icon_state = "construction"
+#endif
 /obj/salvager_cryotron
 /obj/item/salvager_hand_tele
 /obj/item/device/pda2/salvager

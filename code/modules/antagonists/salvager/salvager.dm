@@ -24,6 +24,8 @@
 
 		H.equip_if_possible(new /obj/item/clothing/head/helmet/space/engineer/salvager(H), SLOT_HEAD)
 		H.equip_if_possible(new /obj/item/clothing/suit/space/salvager(H), SLOT_WEAR_SUIT)
+		H.equip_if_possible(new /obj/item/clothing/glasses/salvager(H), SLOT_GLASSES)
+
 
 		var/obj/item/device/radio/headset/headset = H.ears
 		if(!headset)
