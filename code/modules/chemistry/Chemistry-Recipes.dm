@@ -2651,13 +2651,73 @@
 		mix_phrase = "It smells like vinegar and a bad hangover in here."
 
 	ether
-		name = "Ether"
+		name = "Diethyl Ether"
 		id = "ether"
 		result = "ether"
 		required_reagents = list("ethanol" = 1, "clacid" = 1, "oxygen" = 1)
 		result_amount = 1
-		max_temperature = T0C + 150
+		instant = FALSE
+		reaction_speed = 0.5 // Slow-ish by default
+		stateful = TRUE
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		reaction_icon_color = "#c5d1d3"
+		min_temperature = T0C + 30
 		mix_phrase = "The mixture yields a pungent odor, which makes you tired."
+
+		does_react(var/datum/reagents/holder) // Reaction will stop at equilibrium between ethanol and ether, can overshoot a bit if warm enough
+			if(holder.get_reagent_amount("ether") < holder.get_reagent_amount("ethanol"))
+				return TRUE
+			else
+				return FALSE
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			var/location = get_turf(holder.my_atom)
+			var/ether_mix_speed = min((holder.total_temperature - (T0C + 30))/4, 1) //reacts faster than normally the hotter the reaction, careful with ether's burn temperature though
+			holder.add_reagent("ether", ether_mix_speed, temp_new = holder.total_temperature, chemical_reaction = TRUE)
+			holder.remove_reagent("fuel", ether_mix_speed)
+			if(holder?.my_atom?.is_open_container())
+				reaction_icon_state = list("reaction_smoke-1", "reaction_smoke-2")
+				var/datum/reagents/smokeContents = new/datum/reagents/
+				smokeContents.add_reagent("ether", 1)
+				smoke_reaction(smokeContents, 2, location, do_sfx = FALSE)
+
+			else
+				reaction_icon_state = list("reaction_bubble-1", "reaction_bubble-2")
+				holder.add_reagent("ether", 1) // You get to keep what would have been in the smoke
+
+	ether_offgas
+		name = "Ether Offgas"
+		id = "ether_offgas"
+		required_reagents = list("ether" = 0) // Removed in on_reaction
+		result_amount = 1
+		mix_phrase = "The mixture slowly gives off fumes."
+		mix_sound = null
+		instant = FALSE
+		stateful = TRUE
+		min_temperature = T0C + 10 // Generates vapor in room temperature
+		reaction_icon_color = "#c5d1d3"
+		var/count = 0
+		var/amount_to_smoke = 1
+
+		does_react(var/datum/reagents/holder)
+			if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
+				return TRUE
+			else
+				return FALSE
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			amount_to_smoke = 1
+			if(count < 6)
+				count++
+				reaction_icon_state = null
+			else
+				var/location = get_turf(holder.my_atom)
+				reaction_icon_state = list("reaction_smoke-1", "reaction_smoke-2")
+				var/datum/reagents/smokeContents = new/datum/reagents/
+				smokeContents.add_reagent("ether", 1)
+				smoke_reaction(smokeContents, amount_to_smoke, location, do_sfx = FALSE)
+				holder.remove_reagent("ether", amount_to_smoke)
+				count = 0
 
 	cyclopentanol
 		name = "Cyclopentanol"

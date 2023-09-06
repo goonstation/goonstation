@@ -119,9 +119,9 @@ datum
 				return
 
 		medical/ether
-			name = "ether"
+			name = "diethyl ether"
 			id = "ether"
-			description = "A strong but highly addictive anesthetic and sedative."
+			description = "A strong but highly addictive and flammable anesthetic and sedative."
 			reagent_state = LIQUID
 			fluid_r = 169
 			fluid_g = 251
@@ -129,15 +129,18 @@ datum
 			transparency = 30
 			addiction_prob = 10//50
 			addiction_min = 15
-			overdose = 20
+			depletion_rate = 0.2
+			overdose = 40   //Ether is known for having a big difference in effective to toxic dosage
 			var/counter = 1 //Data is conserved...so some jerkbag could inject a monkey with this, wait for data to build up, then extract some instant KO juice.  Dumb.
+			minimum_reaction_temperature = T0C + 80 //This stuff is extremely flammable
+			var/temp_reacted = 0
 			value = 5
 			threshold = THRESHOLD_INIT
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_ether", -5)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_ether", -4)
 				..()
 
 			cross_threshold_under()
@@ -146,20 +149,62 @@ datum
 					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_ether")
 				..()
 
+			proc/ether_fireflash(var/volume) // Proc for all of the fireflash reactions
+				if(!temp_reacted)
+					temp_reacted = 1
+					var/radius = clamp(volume*0.25, 0, 3) // Even the smoke might make a big problem here
+					var/list/covered = holder.covered_turf()
+					for(var/turf/t in covered)
+						radius = clamp((volume/covered.len)*0.25, 0, 5)
+						fireflash_s(t, radius, rand(2000, 3000), 500)
+				holder?.del_reagent(id)
+
+			reaction_temperature(exposed_temperature, exposed_volume)
+				if (ismob(holder?.my_atom) && volume < 50) // We don't want this stuff exploding inside people..
+					return
+				ether_fireflash(volume)
+				return
+
+			reaction_obj(var/obj/O, var/volume)
+				var/id = src.id
+				if (isnull(O)) return
+				if(isitem(O))
+					var/obj/item/I = O
+					if(I.firesource) // Direct contact with any firesource is enough to cause the ether to combust
+						ether_fireflash(volume)
+				return
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if(method == TOUCH)
+					var/mob/living/L = M
+					if(istype(L) && L.getStatusDuration("burning"))
+						ether_fireflash(volume)
+				return 1
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(!counter) counter = 1
 				M.jitteriness = max(M.jitteriness-25,0)
 				if(M.hasStatus("stimulants"))
-					M.changeStatus("stimulants", -7.5 SECONDS * mult)
+					M.changeStatus("stimulants", -4 SECONDS * mult)
+				if(M.hasStatus("recent_trauma")) // can be used to help fix recent trauma
+					M.changeStatus("recent_trauma", -2 SECONDS * mult)
+				if(holder.has_reagent(src.id,10)) // large doses progress somewhat faster than small ones
+					counter += mult
+					depletion_rate = 0.4 * mult // depletes faster in large doses as well
+				else
+					depletion_rate = 0.2 * mult
 
 				switch(counter += 1 * mult)
-					if(1 to 15)
+					if(1 to 12)
 						if(probmult(7)) M.emote("yawn")
-					if(16 to 35)
+					if(12 to 40)
 						M.setStatus("drowsy", 40 SECONDS)
-					if(36 to INFINITY)
-						M.setStatusMin("paralysis", 3 SECONDS * mult)
+						if(probmult(9)) M.emote(pick("smile","giggle","yawn"))
+					if(40 to INFINITY)
+						depletion_rate = 0.4 * mult  // depletes itself faster once it reaches KO levels
+						M.setStatusMin("paralysis", 6 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 				..()
 				return
