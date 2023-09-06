@@ -704,7 +704,7 @@ var/global/current_state = GAME_STATE_INVALID
 				player_body_escaped = 0
 
 			//AI doesn't need to escape
-			if (isAI(player))
+			if (isAI(player) || isdrone(player))
 				player_body_escaped = 1
 				if (isAIeye(player))
 					var/mob/living/intangible/aieye/E = player

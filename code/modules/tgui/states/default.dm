@@ -42,18 +42,11 @@ var/global/datum/ui_state/tgui_default_state/tgui_default_state = new /datum/ui_
 
 /mob/living/silicon/drone/default_can_use_topic(src_object)
 	. = shared_ui_interaction(src_object)
-	if(. <= UI_DISABLED)
+	if(. < UI_INTERACTIVE)
 		return
 
-	// Robots can interact with anything they can see.
-	if(GET_DIST(src, src_object) <= ((WIDE_TILE_WIDTH - 1)/ 2))
-		return UI_INTERACTIVE
-
-	// AI Borgs can receive updates from anything that the AI can see.
-	if (src.connected_ai)
-		return UI_UPDATE
-
-	return UI_DISABLED // Otherwise they can keep the UI open.
+	// Drones can interact with anything the AI can.
+	return UI_INTERACTIVE
 
 /mob/living/intangible/aieye/default_can_use_topic(src_object)
 	. = shared_ui_interaction(src_object)

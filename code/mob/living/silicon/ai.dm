@@ -360,7 +360,7 @@ or don't if it uses a custom topopen overlay
 		update_terminal()
 
 		for (var/mob/living/silicon/drone/D in mobs)
-			if (D.brain || !D.ai_interface || D.dependent)
+			if (!D.ai_interface || D.dependent)
 				continue
 			if (!(D in available_ai_shells))
 				available_ai_shells += D
@@ -1943,6 +1943,7 @@ or don't if it uses a custom topopen overlay
 		src.deployed_shell = null
 		src.deployed_to_eyecam = 0
 		src.eyecam.set_loc(src.loc)
+		src.internal_pda.set_loc(src)
 		SPAWN(2 SECONDS)
 			if (ismob(user)) // bluhh who the fuck knows, this at least checks that user isn't null as well
 				if (isdrone(user))

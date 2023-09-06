@@ -1226,7 +1226,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	var/shelltypetoapply = "eyebot"
 	var/moduletoapply = null
 	var/obj/item/cell/cell = null
-	var/obj/item/organ/brain/brain = null
 	var/obj/item/ai_interface/ai_interface = null
 	var/obj/item/ = null
 	appearance_flags = KEEP_TOGETHER
@@ -1242,25 +1241,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		..()
 		src.icon_state = "frame-" + src.shelltypetoapply;
 		src.UpdateIcon()
-
-	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		if(!emagged)
-			emagged = 1
-			if (user)
-				logTheThing(LOG_STATION, user, "emags a drone frame at [log_loc(user)].")
-				boutput(user, "<span class='notice'>You short out the behavior restrictors on the frame's motherboard.</span>")
-			return 1
-		else if(user)
-			boutput(user, "<span class='alert'>This frame's behavior restrictors have already been shorted out.</span>")
-		return 0
-
-	demag(var/mob/user)
-		if (!emagged)
-			return 0
-		if (user)
-			user.show_text("You repair the behavior restrictors on the frame's motherboard.", "blue")
-		emagged = 0
-		return 1
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/sheet))
@@ -1312,7 +1292,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 				src.UpdateIcon()
 				user.drop_item()
-				qdel(M) // no bizarro nega-sheets for you :v
+				qdel(M)
 				return
 			else if (src.build_step > 2)
 				boutput(user, "\The [src] already has a radio!")
@@ -1340,41 +1320,16 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 				boutput(user, "<span class='alert'>You need to add a radio before you can put in a cell!</span>")
 
 		if (istype(W,/obj/item/organ/brain))
-			boutput(user, "<span class='alert'>There's no possible way you could fit this brain into the drone!</span>")
-		/*	if (src.build_step == 3)
-				if (src.brain)
-					boutput(user, "<span class='alert'>There is already a brain in there. Use a wrench to remove it.</span>")
-
-				if (src.ai_interface)
-					boutput(user, "<span class='alert'>There is already \an [src.ai_interface] in there. Use a wrench to remove it.</span>")
-
-				if (!src.brain && !src.ai_interface)
-					var/obj/item/organ/brain/B = W
-					if ( !(B.owner && B.owner.key) && !istype(W, /obj/item/organ/brain/latejoin) )
-						boutput(user, "<span class='alert'>This brain doesn't look any good to use.</span>")
-					else if ( B.owner  &&  (jobban_isbanned(B.owner.current,"Cyborg") || B.owner.get_player().dnr) ) //If the borg-to-be is jobbanned or has DNR set
-						boutput(user, "<span class='alert'>The brain disintigrates in your hands!</span>")
-						user.drop_item(B)
-						qdel(B)
-						var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-						smoke.set_up(1, 0, user.loc)
-						smoke.start()
-					user.drop_item()
-					B.set_loc(src)
-					src.brain = B
-					boutput(user, "<span class='notice'>You insert the brain.</span>")
-					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
-					src.UpdateIcon()*/
+			if (src.build_step == 3)
+				boutput(user, "<span class='alert'>There's no possible way you could fit a brain into the drone! No possible way!</span>")
 
 		else if (istype(W, /obj/item/ai_interface))
 			if (src.build_step == 3)
-				if (src.brain)
-					boutput(user, "<span class='alert'>There is already a brain in there. Use a wrench to remove it.</span>")
 
 				if (src.ai_interface)
 					boutput(user, "<span class='alert'>There is already \an [src.ai_interface] in there. Use a wrench to remove it.</span>")
 
-				if (!src.brain && !src.ai_interface)
+				if (!src.ai_interface)
 					var/obj/item/ai_interface/I = W
 					user.drop_item()
 					I.set_loc(src)
@@ -1387,8 +1342,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			var/list/actions = list("Do nothing")
 			if(src.check_completion())
 				actions.Add("Finish and Activate the Drone")
-			if(src.brain)
-				actions.Add("Remove the Brain")
 			if(src.ai_interface)
 				actions.Add("Remove the AI Interface")
 			if(src.cell)
@@ -1409,10 +1362,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			switch(action)
 				if("Finish and Activate the Drone")
 					src.finish_drone()
-				if("Remove the Brain")
-					src.brain?.set_loc( get_turf(src) )
-					src.brain = null
-					src.UpdateIcon()
 				if("Remove the AI Interface")
 					src.ai_interface.set_loc( get_turf(src) )
 					src.ai_interface = null
@@ -1443,11 +1392,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		else
 			src.UpdateOverlays(null,"radio")
 
-		if(src.brain)
-			src.UpdateOverlays(image('icons/mob/hivebot.dmi', "brain-c-" + src.shelltypetoapply, FLOAT_LAYER, 3),"brain")
-		else
-			src.UpdateOverlays(null,"brain")
-
 		if(src.ai_interface)
 			src.UpdateOverlays(image('icons/mob/hivebot.dmi', "interface-c-" + src.shelltypetoapply, FLOAT_LAYER, 3),"interface")
 		else
@@ -1461,17 +1405,13 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 	proc/check_completion()
 		if (build_step == 3)
-			if ((src.brain || src.ai_interface) && src.cell)
+			if ((src.ai_interface) && src.cell)
 				return 1
 		return 0
 
 	proc/finish_drone()
 		var/mob/living/silicon/drone/drone = null
 		drone = new /mob/living/silicon/drone(get_turf(src.loc),src,0,src.syndicate,src.emagged)
-		// there was a big transferring list of parts from the frame to the compborg here at one point, but it didn't work
-		// because the cyborg's process proc would kill it for having no chest piece set up after New() finished but
-		// before it could get around to this list, so i tweaked their New() proc instead to grab all the shit out of
-		// the frame before process could go off resulting in a borg that doesn't instantly die
 
 		drone.name = "Drone"
 		drone.real_name = "Drone"
@@ -1485,31 +1425,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			drone.ai_interface = src.ai_interface
 			drone.ai_interface.set_loc(drone)
 			drone.shell = 1
-		else if(drone.brain?.owner?.key)
-			if(drone.brain.owner.current)
-				drone.gender = drone.brain.owner.current.gender
-				if(drone.brain.owner.current.client)
-					drone.lastKnownIP = drone.brain.owner.current.client.address
-			var/mob/M = find_ghost_by_key(drone.brain.owner.key)
-			drone.brain = src.brain
-			drone.brain.set_loc(drone)
-			if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
-				src.visible_message("<span class='alert'><b>[src]</b> remains inactive, as the conciousness associated with that brain could not be reached.</span>")
-				drone.death()
-				qdel(src)
-				return
-			if (!isdead(M)) // so if they're in VR, the afterlife bar, or a ghostcritter
-				boutput(M, "<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
-				drone.brain.owner = M.ghostize()?.mind
-				qdel(M)
-			else
-				boutput(M, "<span class='alert'>You feel yourself being dragged out of the afterlife!</span>")
-			drone.brain.owner.transfer_to(drone)
-			if (isdead(M) && !isliving(M))
-				qdel(M)
-		else if (istype(drone.brain, /obj/item/organ/brain/latejoin))
-			boutput(usr, "<span class='notice'>You activate the frame and it plays an audible beep.</span>")
-			playsound(src, 'sound/weapons/radxbow.ogg', 40, 1)
 		else
 			stack_trace("We finished drone [identify_object(drone)] from frame [identify_object(src)] with a brain, but somehow lost the brain??? Where did it go")
 			drone.death()
@@ -1555,10 +1470,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		qdel(src)
 		return
 
-/obj/item/parts/robot_parts/drone_frame/complete_latejoin
+/obj/item/parts/robot_parts/drone_frame/complete_shell_choosable
 	build_step = 3
 	cell = new/obj/item/cell/shell_cell/charged
-	brain = new/obj/item/organ/brain/latejoin
+	ai_interface = new/obj/item/ai_interface
 	New()
 		..()
 		src.finish_drone()

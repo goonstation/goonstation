@@ -529,9 +529,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 		var/mob/living/silicon/drone/D = src.occupant
 		occupant_data["name"] = D.name
 		occupant_data["kind"] = "drone"
-		if (D.brain)
-			occupant_data["user"] = "brain"
-		else if (D.ai_interface)
+		if (D.ai_interface)
 			occupant_data["user"] = "ai"
 		else
 			occupant_data["user"] = "unknown"
@@ -827,7 +825,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			. = TRUE
 
 		if("self-service")
-			if (isrobot(user))
+			if (iscyborg(user))
 				boutput(user, "<span class='alert'>Cyborgs are not allowed to toggle this option.</span>")
 				return
 			else
@@ -1073,7 +1071,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 		if("cell-install")
 			if (!isrobot(src.occupant))
 				return
-			if (user == src.occupant)
+			if (user == src.occupant && !isdrone(user))
 				boutput(user, "<span class='alert'>You can't modify your own power cell!</span>")
 				return
 			if (isAIeye(user))

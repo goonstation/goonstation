@@ -26,14 +26,11 @@
 	var/module_active = null
 	var/list/module_states = list(null,null,null)
 
-	var/obj/item/device/radio/default_radio = null // radio used when there's no module radio
 	var/obj/item/device/radio/radio = null
-	var/obj/item/device/radio/ai_radio = null // Radio used for when this is an AI-controlled shell.
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/machinery/camera/camera = null
 	var/obj/item/robot_module/module = null
 	var/obj/item/device/pda2/internal_pda = null
-	var/obj/item/organ/brain/brain = null
 	var/obj/item/ai_interface/ai_interface = null
 
 	var/opened = 0
@@ -74,11 +71,7 @@
 	New(loc, var/obj/item/parts/robot_parts/drone_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
-		src.internal_pda = new /obj/item/device/pda2/cyborg(src)
-		src.internal_pda.name = "[src]'s Internal PDA Unit"
-		src.internal_pda.owner = "[src]"
 		src.cell = frame.cell
-		src.brain = frame.brain
 		src.ai_interface = frame.ai_interface
 		src.shelltype = frame.shelltypetoapply
 
@@ -94,15 +87,11 @@
 				SPAWN(0)
 					src.choose_name(3)
 
-		else if (src.cell && (src.brain ||src.ai_interface)) // some wee child of ours sent us some parts, how nice c:
+		else if (src.cell && (src.ai_interface)) // some wee child of ours sent us some parts, how nice c:
 			if (src.cell.loc != src)
 				src.cell.set_loc(src)
-			if (src.brain &&src.brain.loc != src)
-				src.brain.set_loc(src)
 			if (src.ai_interface && src.ai_interface.loc != src)
 				src.ai_interface.set_loc(src)
-			for (var/obj/item/parts/robot_parts/P in src.contents)
-				P.holder = src
 
 		else
 			if (!frame)
@@ -122,11 +111,6 @@
 				boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
 			src.ai_interface = new(src)
 
-		if (!src.dependent && !src.shell)
-			boutput(src, "<span class='notice'>Your icons have been generated!</span>")
-			src.syndicate = syndie
-			src.emagged = frame_emagged
-
 		. = ..(loc) //must be called before hud is attached
 
 		hud = new(src)
@@ -137,7 +121,7 @@
 		src.attach_hud(zone_sel)
 
 		SPAWN(0.4 SECONDS)
-			if (!src.connected_ai && !syndicate && !(src.dependent || src.shell))
+			if (!src.connected_ai && !(src.dependent || src.shell))
 				for_by_tcl(A, /mob/living/silicon/ai)
 					src.connected_ai = A
 					A.connected_robots += src
@@ -146,12 +130,8 @@
 			src.botcard.access = get_all_accesses()
 			src.botcard.registered = "Cyborg"
 			src.botcard.assignment = "Cyborg"
-			src.default_radio = new /obj/item/device/radio(src)
-			if (src.shell)
-				src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
-				src.radio = src.ai_radio
-			else
-				src.radio = src.default_radio
+			src.radio = new /obj/item/device/radio/headset/command/ai(src)
+			src.radio.name = "Primary Radio"
 			src.ears = src.radio
 			src.camera = new /obj/machinery/camera(src)
 			src.camera.c_tag = src.real_name
@@ -160,26 +140,6 @@
 			src.update_details()
 
 		SPAWN(1.5 SECONDS)
-			if (!src.brain && src.key && !(src.dependent || src.shell || src.ai_interface))
-				var/obj/item/organ/brain/B = new /obj/item/organ/brain(src)
-				B.owner = src.mind
-				B.icon_state = "borg_brain"
-				if (!B.owner) //Oh no, they have no mind!
-					logTheThing(LOG_DEBUG, null, "<b>Mind</b> Drone spawn forced to create new mind for key \[[src.key ? src.key : "INVALID KEY"]]")
-					stack_trace("[identify_object(src)] was created without a mind, somehow. Mind force-created for key \[[src.key ? src.key : "INVALID KEY"]]. That's bad.")
-					var/datum/mind/newmind = new
-					newmind.ckey = ckey
-					newmind.key = src.key
-					newmind.current = src
-					B.owner = newmind
-					src.mind = newmind
-				if (src.brain)
-					src.brain = B
-				else
-					// how the hell would this happen. oh well
-					stack_trace("[identify_object(src)] was created without a brain, somehow. That's bad.")
-					src.brain = B
-					B.set_loc(src)
 			if (src.shell && !src.ai_interface)
 				var/obj/item/ai_interface/I = new /obj/item/ai_interface(src)
 				src.ai_interface = I
@@ -187,8 +147,6 @@
 			if(!isnull(src.client))
 				src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 				src.update_name_tag()
-			if (src.syndicate)
-				src.show_antag_popup("syndieborg")
 
 		if (prob(50))
 			src.sound_scream = 'sound/voice/screams/Robot_Scream_2.ogg'
@@ -202,10 +160,7 @@
 		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		src.mind?.register_death()
-		if (src.syndicate)
-			src.remove_syndicate("death")
 
-		src.eject_brain(fling = TRUE) //EJECT
 		if (!gibbed)
 			src.visible_message("<span class='alert'><b>[src]</b> falls apart into a pile of components!</span>")
 			var/turf/T = get_turf(src)
@@ -221,7 +176,6 @@
 			var/obj/item/parts/robot_parts/drone_frame/frame =  new(T)
 			frame.shelltypetoapply = src.shelltype
 			frame.emagged = src.emagged
-			frame.syndicate = src.syndicate
 			frame.freemodule = src.freemodule
 			frame.update_icon()
 
@@ -617,7 +571,7 @@
 		// If we have no brain or an inactive spont core, we're dormant.
 		// If we have a brain but no client, we're in hiberation mode.
 		// Otherwise, fully operational.
-		if ((src.brain || src.ai_interface) && !(istype(src.brain, /obj/item/organ/brain/latejoin) && !src.brain:activated))
+		if ((src.ai_interface))
 			if (src.client)
 				. += "<span class='success'>[src.name] is fully operational.</span><br>"
 			else
@@ -670,63 +624,18 @@
 
 		. += "<span class='notice'>*---------*</span>"
 
-	choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
-		var/newname
-		if(isnull(default_name))
-			default_name = src.real_name
-		for (retries, retries > 0, retries--)
-			if(force_instead)
-				newname = default_name
-			else
-				newname = tgui_input_text(src, "You are a Drone. Would you like to change your name to something else?", "Name Change", client?.preferences?.robot_name || default_name)
-				if(newname && newname != default_name)
-					phrase_log.log_phrase("name-drone", newname, no_duplicates=TRUE)
-			if (!newname)
-				src.real_name = borgify_name("Drone")
-				break
-			else
-				newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
-				if (!length(newname))
-					src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
-					continue
-				else if (is_blank_string(newname))
-					src.show_text("Your name cannot be blank. Please choose a different name.", "red")
-					continue
-				else
-					if (tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
-						src.real_name = newname
-						break
-					else
-						continue
-		if (!newname)
-			src.real_name = borgify_name("Drone")
-
-		src.UpdateName()
-		src.internal_pda.name = "[src.name]'s Internal PDA Unit"
-		src.internal_pda.owner = "[src.name]"
 
 	Login()
 		..()
 
-		if (src.custom)
-			src.choose_name(3)
-
-		if (src.real_name == "Drone")
-			src.real_name = borgify_name(src.real_name)
-			src.UpdateName()
-			src.internal_pda.name = "[src.name]'s Internal PDA Unit"
-			src.internal_pda.owner = "[src]"
-		if (!src.syndicate && !src.connected_ai)
-			for_by_tcl(A, /mob/living/silicon/ai)
-				src.connected_ai = A
-				A.connected_robots += src
-				break
-
-		if (src.shell && src.mainframe)
-			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
-			src.real_name = "SHELL/[src.mainframe]"
-			src.UpdateName()
-			src.update_name_tag()
+		src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
+		src.real_name = "SHELL/[src.mainframe]"
+		src.internal_pda = mainframe.internal_pda // this way you dont have a seperate PDA in a shell then in your core
+		src.internal_pda.name = "[mainframe.internal_pda.name]'s Internal PDA Unit"
+		src.internal_pda.owner = "[mainframe.internal_pda.owner]"
+		src.internal_pda.set_loc(src)
+		src.UpdateName()
+		src.update_name_tag()
 
 		update_appearance()
 		update_details()
@@ -734,11 +643,9 @@
 
 	Logout()
 		..()
-		if (src.shell)
-			src.real_name = "AI Drone Shell [copytext("\ref[src]", 6, 11)]"
-			src.name = src.real_name
-			src.update_name_tag()
-			return
+		src.real_name = "AI Drone Shell [copytext("\ref[src]", 6, 11)]"
+		src.name = src.real_name
+		src.update_name_tag()
 
 		update_appearance()
 		update_details()
@@ -819,39 +726,18 @@
 		if (damage < 1)
 			return
 
-		if(P.proj_data.stun && P.proj_data.damage <= 5)
-			src.do_disorient(clamp(P.power*4, P.proj_data.stun*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
-			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
-
 		if (P.proj_data.damage < 1)
 			return
 
 		src.material_trigger_on_bullet(src, P)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		if(src.shell || src.ai_interface)
-			boutput(user, "<span class='alert'>Emagging an AI shell wouldn't work, their laws can't be overwritten!</span>")
-			return 0 //emags don't do anything to AI shells
-		if (!src.emaggable)
-			boutput(user, "<span class='alert'>You try to swipe your emag along [src]'s interface, but it grows hot in your hand and you almost drop it!")
-			return FALSE
-
-		if (!src.emagged)	// trying to unlock with an emag card
-			if (src.opened && user) boutput(user, "You must close the cover to swipe an ID card.")
-			else
-				if (user)
-					boutput(user, "You emag [src]'s interface.")
-				src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
-				logTheThing(LOG_STATION, src, "[key_name(src)] is emagged by [key_name(user)] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
-				src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
-				update_appearance()
-				update_details()
-				return 1
-			return 0
+		boutput(user, "<span class='alert'>Emagging an AI shell wouldn't work, their laws can't be overwritten!</span>")
+		return 0 //emags don't do anything to AI shells
 
 	emp_act()
 		vision.noise(60)
-		src.changeStatus("stunned", 5 SECONDS, optional=null)
+		src.changeStatus("stunned", 3 SECONDS, optional=null)
 		boutput(src, "<span class='alert'><B>*BZZZT*</B></span>")
 
 	meteorhit(obj/O as obj)
@@ -927,20 +813,6 @@
 
 			if(!linker.linked_rack)
 				return
-
-			if(linker.linked_rack in ticker.ai_law_rack_manager.registered_racks)
-				if(src.emagged || src.syndicate)
-					boutput(user, "The link port sparks violently! It didn't work!")
-					logTheThing(LOG_STATION, src, "[constructName(user)] tried to connect [src] to the rack [constructName(src.law_rack_connection)] but they are [src.emagged ? "emagged" : "syndicate"], so it failed.")
-					elecflash(src,power=2)
-					return
-				if(src.law_rack_connection)
-					var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
-					if (raw == "Yes")
-						src.set_law_rack(linker.linked_rack, user)
-			else
-				boutput(user,"Linker lost connection to the stored law rack!")
-			return
 
 		if (isweldingtool(W))
 			if(W:try_weld(user, 1))
@@ -1020,7 +892,7 @@
 			return
 
 		else if (istype(W, /obj/item/organ/brain) && src.opened)
-			boutput(user, "<span class='alert'>There's no possible way you could fit this brain into the drone!</span>")
+			boutput(user, "<span class='alert'>There's no possible way you could fit a brain into the drone! No possible way!</span>")
 		/*	if (src.brain || src.ai_interface)
 				boutput(user, "<span class='alert'>There's already a processor core in the drone! Use a wrench to remove it before trying to insert something else.</span>")
 			else
@@ -1056,7 +928,7 @@
 				src.update_details()*/
 
 		else if (istype(W, /obj/item/ai_interface) && src.opened)
-			if (src.brain || src.ai_interface)
+			if (src.ai_interface)
 				boutput(user, "<span class='alert'>There's already a processor core in the drone! Use a wrench to remove it before trying to insert something else.</span>")
 			else
 				var/obj/item/ai_interface/I = W
@@ -1065,11 +937,6 @@
 				src.ai_interface = I
 				I.set_loc(src)
 				if (!(src in available_ai_shells))
-					if(isnull(src.ai_radio))
-						src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
-					src.radio = src.ai_radio
-					src.ears = src.radio
-					src.radio.set_loc(src)
 					available_ai_shells += src
 					src.real_name = "AI Drone Shell [copytext("\ref[src]", 6, 11)]"
 					src.name = src.real_name
@@ -1097,8 +964,6 @@
 
 		var/list/available_actions = list()
 		if (src.opened)
-			if (src.brain)
-				available_actions.Add("Remove the Brain")
 			if (src.ai_interface)
 				available_actions.Add("Remove the AI Interface")
 			if (src.module && src.module != "empty")
@@ -1116,10 +981,6 @@
 				return
 
 			switch(action)
-				if ("Remove the Brain")
-					//Wire: Fix for multiple players queuing up brain removals, triggering this again
-					src.eject_brain(user)
-
 				if ("Remove the AI Interface")
 
 					src.visible_message("<span class='alert'>[user] removes [src]'s AI interface!</span>")
@@ -1128,17 +989,10 @@
 					src.uneq_active()
 
 					user.put_in_hand_or_drop(src.ai_interface)
-					src.radio = src.default_radio
-					if (src.module && istype(src.module.radio))
-						src.radio = src.module.radio
-					src.ears = src.radio
 					src.radio.set_loc(src)
 					src.shell = 0
 					src.dependent = 0
 					src.ai_interface = null
-					if(src.ai_radio)
-						qdel(src.ai_radio)
-						src.ai_radio = null
 
 					if (mainframe)
 						mainframe.return_to(src)
@@ -1211,45 +1065,6 @@
 							if(prob(10)) user.show_text("Your hand hurts...", "red")
 
 		add_fingerprint(user)
-
-	proc/eject_brain(var/mob/user = null, var/fling = FALSE)
-		if (!src.brain)
-			return
-
-		if (src.mind && src.mind.special_role && src.syndicate)
-			src.remove_syndicate("brain_removed")
-
-		// Brain box is forced open if it wasn't already (suicides, killswitch)
-		src.locked = 0
-		src.locking = 0
-		src.opened = 1
-
-		// Stick the player (if one exists) in a ghost mob
-		if (src.mind)
-			var/mob/dead/observer/newmob = src.ghostize()
-			if (newmob)
-				newmob.corpse = null // Otherwise they could return to a brainless body.And that is weird.
-				newmob.mind.brain = src.brain
-				src.brain.owner = newmob.mind
-				for (var/datum/antagonist/antag in newmob.mind.antagonists) //we do this after they die to avoid un-emagging the frame
-					antag.on_death()
-
-		if (user)
-			src.visible_message("<span class='alert'>[user] removes [src]'s brain!</span>")
-			logTheThing(LOG_STATION, user, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
-			user.put_in_hand_or_drop(src.brain)
-		else
-			src.visible_message("<span class='alert'>[src]'s brain is ejected from its head!</span>")
-			playsound(src, "sound/misc/boing/[rand(1,6)].ogg", 40, 1)
-			src.brain.set_loc(get_turf(src))
-			if (fling)
-				src.brain.throw_at(get_edge_cheap(get_turf(src), pick(cardinal)), 5, 1) // heh
-
-		src.uneq_active()
-
-		src.brain = null
-		src.update_appearance()
-		src.update_details()
 
 	Topic(href, href_list)
 		..()
@@ -1455,17 +1270,6 @@
 		src.update_details()
 		hud.update_module()
 		hud.module_added()
-		if(istype(RM.radio))
-			if (src.shell)
-				if(isnull(src.ai_radio))
-					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
-				src.radio = src.ai_radio
-			else
-				src.radio = RM.radio
-				src.internal_pda.mailgroups = RM.mailgroups
-				src.internal_pda.alertgroups = RM.alertgroups
-			src.ears = src.radio
-			src.radio.set_loc(src)
 
 	proc/remove_module()
 		if(!istype(src.module))
@@ -1476,17 +1280,6 @@
 		uneq_all()
 		src.module = null
 		hud.module_removed()
-		if(istype(src.radio) && src.radio != src.default_radio)
-			src.radio.set_loc(RM)
-			if (src.shell)
-				if(isnull(src.ai_radio))
-					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
-				src.radio = src.ai_radio
-			else
-				src.radio = src.default_radio
-				src.internal_pda.mailgroups = initial(src.internal_pda.mailgroups)
-				src.internal_pda.alertgroups = initial(src.internal_pda.alertgroups)
-			src.ears = src.radio
 		return RM
 
 	proc/activated(obj/item/O)
@@ -1634,7 +1427,7 @@
 		else if (!src.locked && !src.opened && !src.locking)
 			src.locking = 1
 			boutput(src, "<span class='alert'>Locking interface...</span>")
-			SPAWN(12 SECONDS)
+			SPAWN(5 SECONDS)
 				if (!src.locking)
 					boutput(src, "<span class='alert'>The lock was interrupted before it could finish!</span>")
 				else
@@ -1667,8 +1460,8 @@
 		set name = "Drone PDA"
 		set desc = "Access your internal PDA device."
 
-		if (src.internal_pda && istype(src.internal_pda, /obj/item/device/pda2/))
-			src.internal_pda.AttackSelf(src)
+		if (mainframe.internal_pda && istype(mainframe.internal_pda, /obj/item/device/pda2/))
+			mainframe.internal_pda.AttackSelf(src)
 		else
 			boutput(usr, "<span class='alert'><b>Internal PDA not found!</span>")
 
@@ -1828,8 +1621,6 @@
 				message = "CONTACT LOST: [src] in [myarea]"
 			if (ROBOT_DEATH_MOD_SUICIDE) //suicide
 				message = "SELF-TERMINATION DETECTED: [src] in [myarea]"
-			if (ROBOT_DEATH_MOD_KILLSWITCH) //killswitch
-				message = "KILLSWITCH ACTIVATED: [src] in [myarea]"
 			else	//Someone passed us an unkown modifier
 				message = "UNKNOWN ERROR: [src] in [myarea]"
 
@@ -1854,20 +1645,6 @@
 				mainframe.return_to(src)
 		else
 			death()
-
-	process_killswitch()
-		if(killswitch)
-			if(killswitch_at <= TIME)
-				if(src.client)
-					boutput(src, "<span class='alert'><B>Killswitch Activated!</B></span>")
-				killswitch = 0
-				logTheThing(LOG_COMBAT, src, "has died to the killswitch drone self destruct protocol")
-
-				// Pop the head ompartment open and eject the brain
-				src.eject_brain(fling = TRUE)
-				src.update_appearance()
-				src.update_details()
-				src.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
 
 	proc/update_appearance()
 
@@ -1905,17 +1682,13 @@
 				UpdateOverlays(SafeGetOverlayImage("ocell", 'icons/mob/hivebot.dmi', "cell-" + src.hovering + "-" + src.shelltype, src.layer+0.15), "ocell")
 			else
 				src.ClearSpecificOverlays("ocell")
-			if (src.brain)
-				UpdateOverlays(SafeGetOverlayImage("obrain", 'icons/mob/hivebot.dmi', "brain-" + src.hovering + "-" + src.shelltype, src.layer+0.1), "obrain")
-			else
-				src.ClearSpecificOverlays("obrain")
 			if (src.ai_interface)
 				UpdateOverlays(SafeGetOverlayImage("ointerface", 'icons/mob/hivebot.dmi', "interface-" + src.hovering + "-" + src.shelltype, src.layer+0.1), "ointerface")
 			else
 				src.ClearSpecificOverlays("ointerface")
 			UpdateOverlays(i_panel, "opanel")
 		else
-			src.ClearSpecificOverlays("opanel", "ocell", "obrain", "ointerface")
+			src.ClearSpecificOverlays("opanel", "ocell", "ointerface")
 
 		if (src.hat)
 			UpdateOverlays(SafeGetOverlayImage("hat", 'icons/mob/robots_decor.dmi', "hat-" + src.shelltype + "-" + src.hovering + "-" + src.hat, src.layer+0.2), "hat")
