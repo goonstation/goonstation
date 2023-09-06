@@ -183,18 +183,19 @@
 			return TRUE
 
 		var/area/area = get_area(src)
-		if (area.luminosity || area.force_fullbright)
+		if (area.force_fullbright)
 			return TRUE
 
 		for (var/dir in cardinal) //check for neighbouring starlit turfs
 			var/turf/T = get_step(src, dir)
 			if (istype(T, /turf/space))
 				var/turf/space/space_turf = T
-				if (space_turf.starlight in space_turf.underlays)
+				if (length(space_turf.underlays))
 					return TRUE
 
 		if (src.SL_lit())
 			return TRUE
+		return FALSE
 
 /obj/overlay/tile_effect
 	name = ""
