@@ -377,26 +377,23 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "DyeDispenser", name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = list()
+		.["bottle"] = src.bottle
+		.["uses_left"] = src.bottle?.uses_left
+		.["bottle_color"] = src.bottle?.customization_first_color
+
 	attack_hand(mob/user)
 		if(status & BROKEN)
 			return
-		src.add_dialog(user)
 
-		var/dat = "<TT><B>Dye Bottle Dispenser Unit</B><BR><HR><BR>"
-
-		if(src.bottle)
-			dat += {"Dye Bottle Loaded: <A href='?src=\ref[src];eject=1'>(Eject)</A><BR><BR><BR>Dye Color:<BR>"}
-
-			if(src.bottle.uses_left)
-				dat += "<A href='?src=\ref[src];emptyb=1'>Empty Dye Bottle</A><BR>"
-			else
-				dat += {"<A href='?src=\ref[src];fillb=1'>Fill Dye Bottle</A>"}
-		else
-			dat += "No Dye Bottle Loaded<BR>"
-
-		user.Browse(dat, "window=dye_dispenser")
-		onclose(user, "dye_dispenser")
-		return
+		ui_interact(user)
 
 	attackby(obj/item/W, mob/user as mob)
 		if(istype(W, /obj/item/dye_bottle))
@@ -408,12 +405,13 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 					user.drop_item(W)
 					W.set_loc(src)
 					src.bottle = W
+					tgui_process.update_uis(src)
 			return
 		..()
 		return
 
 
-	Topic(href, href_list)
+	ui_act(action, params)
 		if(status & BROKEN)
 			return
 		if(usr.stat || usr.restrained())
@@ -423,37 +421,37 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 			return
 
 		if ((usr.contents.Find(src) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))))
-			src.add_dialog(usr)
+			switch(action)
+				if ("eject")
+					if(src.bottle)
+						src.bottle.set_loc(src.loc)
+						usr.put_in_hand_or_eject(src.bottle) // try to eject it into the users hand, if we can
+						src.bottle = null
 
-			if (href_list["eject"])
-				if(src.bottle)
-					src.bottle.set_loc(src.loc)
-					usr.put_in_hand_or_eject(src.bottle) // try to eject it into the users hand, if we can
-					src.bottle = null
-
-			if(href_list["fillb"])
-				if(src.bottle)
-					var/new_dye = input(usr, "Please select hair color.", "Dye Color") as color
-					if(new_dye)
-						bottle.customization_first_color = new_dye
+				if("fillb")
+					if(src.bottle)
+						bottle.customization_first_color = params["selectedColor"]
 						bottle.uses_left = 3
 						bottle.dye_image.color = bottle.customization_first_color
 						bottle.UpdateOverlays(bottle.dye_image, "dye_color")
-					src.updateDialog()
-			if(href_list["emptyb"])
-				if(src.bottle)
-					bottle.uses_left = 0
-					bottle.ClearSpecificOverlays("dye_color")
-				src.updateDialog()
+				if("emptyb")
+					if(src.bottle)
+						bottle.uses_left = 0
+						bottle.customization_first_color = initial(bottle.customization_first_color)
+						bottle.ClearSpecificOverlays("dye_color")
+				if("insertb")
+					var/obj/item/I = usr.equipped()
+					if(istype(I, /obj/item/dye_bottle))
+						if(src.bottle)
+							boutput(usr, "<span class='notice'>The dispenser already has a dye bottle in it.</span>")
+						else
+							boutput(usr, "<span class='notice'>You insert the dye bottle into the dispenser.</span>")
+							if(I)
+								usr.drop_item(I)
+								I.set_loc(src)
+								src.bottle = I
 
-			src.add_fingerprint(usr)
-			for(var/mob/M in viewers(1, src))
-				if (M.using_dialog_of(src))
-					src.Attackhand(M)
-		else
-			usr.Browse(null, "window=dye_dispenser")
-			return
-		return
+			. = TRUE
 
 
 // Barber stuff
