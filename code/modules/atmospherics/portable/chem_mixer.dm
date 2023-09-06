@@ -52,8 +52,12 @@
 	//stupid asymptotic curve (im bad at maths): https://www.desmos.com/calculator/knc4pbcbie
 	src.speed = -13/(energy * energy/20 + energy + 4) + 3
 	src.speed = max(1, speed)
+	var/sound_played = FALSE
 	for (var/obj/reagent_dispensers/chemicalbarrel/barrel in get_turf(src))
-		barrel.reagents?.reaction_speed = src.speed
+		barrel.reagents.reaction_speed = src.speed
+		if (!sound_played && barrel.reagents.total_volume > 50)
+			playsound(src, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 40, 1)
+			sound_played = TRUE
 	//maths adapted from freezer code
 	var/combined_heat_capacity = current_heat_capacity + HEAT_CAPACITY(src.air_contents)
 	var/combined_energy = THERMAL_ENERGY(src.air_contents) + src.min_operating_temp * src.current_heat_capacity
@@ -66,9 +70,9 @@
 /obj/machinery/portable_atmospherics/chem_mixer/Crossed(obj/reagent_dispensers/chemicalbarrel/barrel)
 	. = ..()
 	if (istype(barrel))
-		barrel.reagents?.reaction_speed = src.speed
+		barrel.reagents.reaction_speed = src.speed
 
 /obj/machinery/portable_atmospherics/chem_mixer/Uncrossed(obj/reagent_dispensers/chemicalbarrel/barrel)
 	. = ..()
 	if (istype(barrel))
-		barrel.reagents?.reaction_speed = 1
+		barrel.reagents.reaction_speed = 1
