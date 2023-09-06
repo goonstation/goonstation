@@ -1219,7 +1219,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	icon_state = "frame"
 	max_health = 5000
 	/// This will make the borg a syndie one
-	var/syndicate = FALSE
 	var/emagged = 0
 	var/freemodule = TRUE
 	var/build_step = 0
@@ -1411,7 +1410,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 	proc/finish_drone()
 		var/mob/living/silicon/drone/drone = null
-		drone = new /mob/living/silicon/drone(get_turf(src.loc),src,0,src.syndicate,src.emagged)
+		drone = new /mob/living/silicon/drone(get_turf(src.loc),src,0,src.emagged)
 
 		drone.name = "Drone"
 		drone.real_name = "Drone"
@@ -1440,30 +1439,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			drone.module.set_loc(drone)
 			drone.hud.update_module()
 			drone.hud.module_added()
-
-		if (drone.mind && !drone.ai_interface)
-			drone.set_loc(get_turf(src))
-
-			boutput(drone, "<B>You are playing a Drone. The Drone can interact with most electronic objects in its view point.</B>")
-			boutput(drone, "To use something, simply click it.")
-			boutput(drone, "Use the prefix <B>:s</B> to speak to fellow silicons through binary.")
-
-			if (src.emagged || src.syndicate)
-				if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && drone.mind)
-					ticker.mode:revolutionaries += drone.mind
-				if (src.emagged)
-					drone.emagged = 1
-					drone.mind.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
-					SPAWN(0)
-					drone.update_appearance()
-				else if (src.syndicate)
-					drone.syndicate = 1
-				drone.make_syndicate("activated by [usr]")
-			else
-				boutput(drone, "<B>You must follow the AI's laws to the best of your ability.</B>")
-				drone.show_laws() // The antagonist proc does that too.
-
-			drone.job = "Cyborg"
 
 		drone.update_appearance()
 
