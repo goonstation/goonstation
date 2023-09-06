@@ -936,7 +936,7 @@
 /obj/item/paper/newspaper
 	name = "Newspaper"
 	desc = "This is a newspaper. It appears to lack a headline. And text."
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/writing.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	icon_state = "newspaper"
 	item_state = "newspaper"
@@ -948,7 +948,6 @@
 
 /// a rolled up newspaper
 /obj/item/paper/newspaper/rolled
-	icon = 'icons/obj/writing.dmi'
 	icon_state = "newspaper_rolled"
 	item_state = "paper"
 	two_handed = FALSE
@@ -963,43 +962,8 @@
 	if (prob(20))
 		src.info = "<br><br>[pick_smart_string("newspaper.txt", "article")]"
 	else // randomly generate an article oh god
-		var/temporary = ""
-		for (var/count in 1 to rand(4, 8))
-			var/name1 = pick_smart_string("newspaper.txt", "name")
-			var/name2 = pick_smart_string("newspaper.txt", "name")
-			if (prob(80)) //80% chance of a random name as opposed to an "important" one.
-				name1 = capitalize(pick_string_autokey(pick("names/first_female.txt", "names/first_male.txt")))
-				name1 += " [capitalize(pick_string_autokey("names/last.txt"))]"
-			if (prob(80))
-				name2 = capitalize(pick_string_autokey(pick("names/first_female.txt", "names/first_male.txt")))
-				name2 += " [capitalize(pick_string_autokey("names/last.txt"))]"
-			var/location1 = pick_smart_string("newspaper.txt", "location")
-			if (prob(30))
-				location1 = pick_smart_string("newspaper.txt", "betterlocation")
-			var/noun1 = pick_smart_string("newspaper.txt", "noun")
-			var/title1 = pick_smart_string("newspaper.txt", "title")
-			var/event1 = pick_smart_string("newspaper.txt", "event")
-			var/emotion1 = pick_smart_string("newspaper.txt", "emotion")
-			switch(rand(1, 9))
-				if (1)
-					temporary += "<br><br>The [title1], [name1], was found in [location1]."
-				if (2)
-					temporary += "<br><br>A [noun1] was found on site in [location1]."
-				if (3)
-					temporary += "<br><br>Employees of NT were shocked when [name1] was discovered to have [event1]."
-				if (4)
-					temporary += "<br><br>The [noun1] has drawn strong criticism from [name1] and sparked protests in [location1], despite [title1] [name2] approving it."
-				if (5)
-					temporary += "<br><br>[capitalize(title1)] [name1] condemns [name2] for [event1]."
-				if (6)
-					temporary += "<br><br>[name1] declined to comment."
-				if (7)
-					temporary += "<br><br>Residents of [location1] expressed [emotion1] at the news."
-				if (8)
-					temporary += "<br><br>[capitalize(title1)] [name1] tells [src.publisher] that they personally blame [name2]."
-				if (9)
-					temporary += "<br><br>When [name1] [event1], there was some mild [emotion1] visible from [name2]."
-		src.info += temporary
+		src.generate_article()
+
 /obj/item/paper/newspaper/attack_self(mob/user)
 	src.force_drop(user)
 	src.rollup()
@@ -1008,12 +972,49 @@
 /obj/item/paper/newspaper/proc/rollup()
 	if (src.two_handed) // rolling it up
 		src.two_handed = FALSE
-		src.icon = 'icons/obj/writing.dmi'
 		src.icon_state = "newspaper_rolled"
 		src.item_state = "paper"
 	else // unrolling it
 		src.two_handed = TRUE
-		src.icon = 'icons/obj/large/64x32.dmi'
 		src.icon_state = "newspaper"
 		src.item_state = "newspaper"
 
+/// generates a random newspaper article. The grammar is horrendous and I cannot figure out how to grammar enough to fix it.
+/obj/item/paper/newspaper/proc/generate_article()
+	var/temporary = ""
+	for (var/count in 1 to rand(4, 8))
+		var/name1 = pick_smart_string("newspaper.txt", "name")
+		var/name2 = pick_smart_string("newspaper.txt", "name")
+		if (prob(80)) //80% chance of a random name as opposed to an "important" one.
+			name1 = capitalize(pick_string_autokey(pick("names/first_female.txt", "names/first_male.txt")))
+			name1 += " [capitalize(pick_string_autokey("names/last.txt"))]"
+		if (prob(80))
+			name2 = capitalize(pick_string_autokey(pick("names/first_female.txt", "names/first_male.txt")))
+			name2 += " [capitalize(pick_string_autokey("names/last.txt"))]"
+		var/location1 = pick_smart_string("newspaper.txt", "location")
+		if (prob(30))
+			location1 = pick_smart_string("newspaper.txt", "betterlocation")
+		var/noun1 = pick_smart_string("newspaper.txt", "noun")
+		var/title1 = pick_smart_string("newspaper.txt", "title")
+		var/event1 = pick_smart_string("newspaper.txt", "event")
+		var/emotion1 = pick_smart_string("newspaper.txt", "emotion")
+		switch(rand(1, 9))
+			if (1)
+				temporary += "<br><br>The [title1], [name1], was found in [location1]."
+			if (2)
+				temporary += "<br><br>A [noun1] was found on site in [location1]."
+			if (3)
+				temporary += "<br><br>Employees of NT were shocked when [name1] was discovered to have [event1]."
+			if (4)
+				temporary += "<br><br>The [noun1] has drawn strong criticism from [name1] and sparked protests in [location1], despite [title1] [name2] approving it."
+			if (5)
+				temporary += "<br><br>[capitalize(title1)] [name1] condemns [name2] for [event1]."
+			if (6)
+				temporary += "<br><br>[name1] declined to comment."
+			if (7)
+				temporary += "<br><br>Residents of [location1] expressed [emotion1] at the news."
+			if (8)
+				temporary += "<br><br>[capitalize(title1)] [name1] tells [src.publisher] that they personally blame [name2]."
+			if (9)
+				temporary += "<br><br>When [name1] [event1], there was some mild [emotion1] visible from [name2]."
+	src.info += temporary
