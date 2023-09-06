@@ -376,9 +376,9 @@ TYPEINFO(/obj/machinery/chem_shaker)
 			container.reagents?.physical_shock(5)
 
 	proc/arrange_containers()
-		// This offset code sucks. Remember to fix round() when we switch to 515.
+		if (!src.count_held_containers()) return
 		for (var/i in 1 to length(src.held_containers))
-			if (!src.held_containers[i]) return
+			if (!src.held_containers[i]) continue
 			var/current_y = ceil(i / src.container_row_length)
 			var/current_x = i - (src.container_row_length * (current_y - 1))
 			src.held_containers[i].pixel_x = src.first_container_offsets["X"] + ((current_x - 1) * src.container_offsets["X"])
