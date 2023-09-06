@@ -363,6 +363,8 @@ proc/generate_space_color()
 	if(!isnull(space_color) && !istype(src, /turf/space/fluid))
 		src.color = space_color
 
+	// underlays are chacked in CI for duplicate turfs on a dmm tile
+	#ifndef CI_RUNTIME_CHECKING
 	if(fullbright)
 		if(!starlight)
 			starlight = image('icons/effects/overlays/simplelight.dmi', "3x3", pixel_x = -32, pixel_y = -32)
@@ -377,6 +379,7 @@ proc/generate_space_color()
 		src.underlays += starlight
 	else
 		src.underlays -= starlight
+	#endif
 
 // override for space turfs, since they should never hide anything
 /turf/space/levelupdate()
