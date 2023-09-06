@@ -65,15 +65,15 @@
 	var/list/datum/contextAction/inside_flanks_contexts = null
 	var/list/datum/contextAction/inside_subcostal_contexts = null
 	///How cut up is our back for surgery purposes
-	var/back_op_stage = 0
-	///How cut up are our ribs? 0 = Not. 1 = Halfway. 2 = Open.
-	var/ribs_stage = 0
-	///How cut up is our subcostal region? 0 = Not. 1 = Halfway. 2 = Open.
-	var/subcostal_stage = 0
-	///How cut up is our abdominal region? 0 = Not. 1 = Halfway. 2 = Open.
-	var/abdominal_stage = 0
-	///How cut up are our flanks? 0 = Not. 1 = Halfway. 2 = Open.
-	var/flanks_stage = 0
+	var/back_op_stage = BACK_SURGERY_CLOSED
+	///How cut up are our ribs?
+	var/ribs_stage = REGION_CLOSED
+	///How cut up is our subcostal region?
+	var/subcostal_stage = REGION_CLOSED
+	///How cut up is our abdominal region?
+	var/abdominal_stage = REGION_CLOSED
+	///How cut up are our flanks?
+	var/flanks_stage = REGION_CLOSED
 
 	New(var/mob/living/L, var/ling)
 		..()
@@ -93,38 +93,38 @@
 		//begin by adding regions
 		var/datum/contextAction/surgery_region/ribs/ribs_action = new /datum/contextAction/surgery_region/ribs()
 		switch (src.ribs_stage)
-			if (0)
+			if (REGION_CLOSED)
 				ribs_action.icon_background = "bg"
-			if (1)
+			if (REGION_HALFWAY)
 				ribs_action.icon_background = "yellowbg"
-			if (2)
+			if (REGION_OPENED)
 				ribs_action.icon_background = "greenbg"
 		src.contexts += ribs_action
 		var/datum/contextAction/surgery_region/subcostal/subcostal_action = new /datum/contextAction/surgery_region/subcostal()
 		switch (src.subcostal_stage)
-			if (0)
+			if (REGION_CLOSED)
 				subcostal_action.icon_background = "bg"
-			if (1)
+			if (REGION_HALFWAY)
 				subcostal_action.icon_background = "yellowbg"
-			if (2)
+			if (REGION_OPENED)
 				subcostal_action.icon_background = "greenbg"
 		src.contexts += subcostal_action
 		var/datum/contextAction/surgery_region/abdomen/abdomen_action = new /datum/contextAction/surgery_region/abdomen()
 		switch (src.abdominal_stage)
-			if (0)
+			if (REGION_CLOSED)
 				abdomen_action.icon_background = "bg"
-			if (1)
+			if (REGION_HALFWAY)
 				abdomen_action.icon_background = "yellowbg"
-			if (2)
+			if (REGION_OPENED)
 				abdomen_action.icon_background = "greenbg"
 		src.contexts += abdomen_action
 		var/datum/contextAction/surgery_region/flanks/flanks_action = new /datum/contextAction/surgery_region/flanks()
 		switch (src.flanks_stage)
-			if (0)
+			if (REGION_CLOSED)
 				flanks_action.icon_background = "bg"
-			if (1)
+			if (REGION_HALFWAY)
 				flanks_action.icon_background = "yellowbg"
-			if (2)
+			if (REGION_OPENED)
 				flanks_action.icon_background = "greenbg"
 		src.contexts += flanks_action
 
@@ -156,10 +156,10 @@
 		src.abdomen_contexts = null
 		src.flanks_contexts = null
 		src.subcostal_contexts = null
-		src.ribs_stage = 0
-		src.abdominal_stage = 0
-		src.flanks_stage = 0
-		src.subcostal_stage = 0
+		src.ribs_stage = REGION_CLOSED
+		src.abdominal_stage = REGION_CLOSED
+		src.flanks_stage = REGION_CLOSED
+		src.subcostal_stage = REGION_CLOSED
 		for(var/thing in src.organ_list)
 			if(thing == "all")
 				continue
@@ -609,7 +609,7 @@
 		if (!src.butt)
 			src.butt = new /obj/item/clothing/head/butt(src.donor, src)
 			organ_list["butt"] = butt
-			src.back_op_stage = 0
+			src.back_op_stage = BACK_SURGERY_CLOSED
 			src.donor.update_body()
 
 		if (!src.left_kidney)

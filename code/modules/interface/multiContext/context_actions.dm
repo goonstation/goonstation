@@ -1862,13 +1862,13 @@
 						if (src.success_sound)
 							playsound(H, src.success_sound, 50, 1)
 						H.organHolder.rib_contexts -= src
-						H.organHolder.ribs_stage = 1
+						H.organHolder.ribs_stage = REGION_HALFWAY
 						if (!H.organHolder.build_region_buttons())
 							boutput(user, "[H] has no more organs!")
 							return
 					if (length(H.organHolder.rib_contexts) <= 0)
 						boutput(user, "<span class='notice'>It seems the region is ready to be operated on.</span>")
-						H.organHolder.ribs_stage = 2
+						H.organHolder.ribs_stage = REGION_OPENED
 						if (!H.organHolder.build_region_buttons())
 							boutput(user, "[H] has no more organs!")
 							return
@@ -1892,13 +1892,13 @@
 						if (src.success_sound)
 							playsound(H, src.success_sound, 50, 1)
 						H.organHolder.subcostal_contexts -= src
-						H.organHolder.subcostal_stage = 1
+						H.organHolder.subcostal_stage = REGION_HALFWAY
 						if (!H.organHolder.build_region_buttons())
 							boutput(user, "[H] has no more organs!")
 							return
 					if (length(H.organHolder.subcostal_contexts) <= 0)
 						boutput(user, "<span class='notice'>It seems the region is ready to be operated on.</span>")
-						H.organHolder.subcostal_stage = 2
+						H.organHolder.subcostal_stage = REGION_OPENED
 						if (!H.organHolder.build_region_buttons())
 							boutput(user, "[H] has no more organs!")
 							return
@@ -1922,13 +1922,13 @@
 						if (src.success_sound)
 							playsound(H, src.success_sound, 50, 1)
 						H.organHolder.abdomen_contexts -= src
+						H.organHolder.abdominal_stage = REGION_HALFWAY
 						if (!H.organHolder.build_region_buttons())
 							boutput(user, "[H] has no more organs!")
 							return
-						H.organHolder.abdominal_stage = 1
 					if (length(H.organHolder.abdomen_contexts) <= 0)
 						boutput(user, "<span class='notice'>It seems the region is ready to be operated on.</span>")
-						H.organHolder.abdominal_stage = 2
+						H.organHolder.abdominal_stage = REGION_OPENED
 						if (!H.organHolder.build_region_buttons())
 							boutput(user, "[H] has no more organs!")
 							return
@@ -1952,13 +1952,13 @@
 						if (src.success_sound)
 							playsound(H, src.success_sound, 50, 1)
 						H.organHolder.flanks_contexts -= src
-						H.organHolder.flanks_stage = 1
+						H.organHolder.flanks_stage = REGION_HALFWAY
 						if (!H.organHolder.build_region_buttons())
 							boutput(user, "[H] has no more organs!")
 							return
 					if (length(H.organHolder.flanks_contexts) <= 0)
 						boutput(user, "<span class='notice'>It seems the region is ready to be operated on.</span>")
-						H.organHolder.flanks_stage = 2
+						H.organHolder.flanks_stage = REGION_OPENED
 						if (!H.organHolder.build_region_buttons())
 							boutput(user, "[H] has no more organs!")
 							return

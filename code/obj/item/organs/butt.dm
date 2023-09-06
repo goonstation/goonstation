@@ -94,7 +94,7 @@ TYPEINFO(/obj/item/clothing/head/butt)
 		var/fluff = pick("shove", "place", "drop")
 		var/fluff2 = pick("hole", "gaping hole", "incision", "wound")
 
-		if (H.organHolder?.back_op_stage >= 3.0)
+		if (H.organHolder?.back_op_stage >= BACK_SURGERY_OPENED)
 			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[his_or_her(H)]" : "[H]'s"] butt used to be!</span>",\
 				"<span class='alert'>You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be!</span>",\
 				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be!</span>")

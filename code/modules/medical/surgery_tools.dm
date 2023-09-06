@@ -922,7 +922,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 						if (target.organHolder.chest)
 							target.organHolder.chest.op_stage = 0
 						if (target.organHolder.back_op_stage)
-							target.organHolder.back_op_stage = 0
+							target.organHolder.back_op_stage = BACK_SURGERY_CLOSED
 						target.TakeDamage("chest", 2, 0)
 					else if (zone == "head")
 						if (target.organHolder.head)

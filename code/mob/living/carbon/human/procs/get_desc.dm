@@ -223,11 +223,11 @@
 					else
 						. += "<br><span class='notice'>[src.name] has [src.organHolder.tail.name] attached just above [t_his] butt.</span>"
 				// don't bother telling people that you have the tail you're supposed to have. nobody congratulates me for having all my legs
-				if (src.organHolder.back_op_stage >= 2.0 && src.mob_flags & ~IS_BONEY) // assive ass wound? and not a skeleton?
+				if (src.organHolder.back_op_stage >= BACK_SURGERY_OPENED && src.mob_flags & ~IS_BONEY) // assive ass wound? and not a skeleton?
 					. += "<br><span class='alert'><B>[src.name] has a long incision around the base of [t_his] tail!</B></span>"
 
 			else // missing a tail?
-				if (src.organHolder.back_op_stage >= 2.0) // first person to call this a tailhole is getting dropkicked into the sun
+				if (src.organHolder.back_op_stage >= BACK_SURGERY_OPENED) // first person to call this a tailhole is getting dropkicked into the sun
 					if (src.mob_flags & SHOULD_HAVE_A_TAIL) // Are they supposed to have a tail?
 						if (!src.organHolder.butt) // Also missing a butt?
 							. += "<br><span class='alert'><B>[src.name] has a large incision at the base of [t_his] back where [t_his] tail should be!</B></span>"
@@ -245,7 +245,7 @@
 			. += "<br><span class='alert'><B>[src.name]'s entire chest is missing!</B></span>"
 
 
-		if (src.organHolder.back_op_stage > 0)
+		if (src.organHolder.back_op_stage > BACK_SURGERY_CLOSED)
 			if (!src.organHolder.butt)
 				. += "<br><span class='alert'><B>[src.name]'s butt seems to be missing!</B></span>"
 			else

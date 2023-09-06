@@ -271,7 +271,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		//I'd like to see the heart thing use the chest for surgery. I think it makes more sense than having each organ have a surgery stage...
 		if (oH.chest)
 			return_thing += oH.chest.op_stage
-		else if (oH.back_op_stage < 4)
+		else if (oH.back_op_stage <= BACK_SURGERY_OPENED)
 			return_thing += oH.back_op_stage
 
 	if (zone in list("l_arm","r_arm","l_leg","r_leg"))
@@ -491,7 +491,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ---------- SCALPEL - BUTT ---------- */
 	if (surgeon.zone_sel.selecting == "chest" && surgeon.a_intent == INTENT_GRAB)
 		switch (patient.organHolder.back_op_stage)
-			if (0)
+			if (BACK_SURGERY_CLOSED)
 				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 
 				if (prob(screw_up_prob))
@@ -504,10 +504,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				patient.TakeDamage("chest", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low)
-				patient.organHolder.back_op_stage = 1
+				patient.organHolder.back_op_stage = BACK_SURGERY_STEP_ONE
 				return TRUE
 
-			if (2)
+			if (BACK_SURGERY_STEP_TWO)
 				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 
 				if (prob(screw_up_prob))
@@ -520,10 +520,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				patient.TakeDamage("chest", damage_high, 0)
 				take_bleeding_damage(patient, surgeon, damage_low)
-				patient.organHolder.back_op_stage = 3
+				patient.organHolder.back_op_stage = BACK_SURGERY_OPENED
 				return TRUE
 
-			if (3)
+			if (BACK_SURGERY_OPENED)
 				if (!patient.organHolder.build_back_surgery_buttons())
 					boutput(surgeon, "[patient] has no butt or tail!")
 					return TRUE
@@ -779,7 +779,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	else if (surgeon.zone_sel.selecting == "chest" && surgeon.a_intent == INTENT_GRAB)
 		switch (patient.organHolder.back_op_stage)
-			if (1)
+			if (BACK_SURGERY_STEP_ONE)
 				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 
 				if (prob(screw_up_prob))
@@ -792,10 +792,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				patient.TakeDamage("chest", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low)
-				patient.organHolder.back_op_stage = 2
+				patient.organHolder.back_op_stage = BACK_SURGERY_STEP_TWO
 				return TRUE
 
-			if (3)
+			if (BACK_SURGERY_OPENED)
 				if (!patient.organHolder.build_back_surgery_buttons())
 					boutput(surgeon, "[patient] has no butt or tail!")
 					return TRUE
@@ -951,12 +951,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				repair_bleeding_damage(patient, 50, rand(1,3))
 			return TRUE
 
-		else if (patient.organHolder.back_op_stage > 0.0 && surgeon.a_intent == "grab")
+		else if (patient.organHolder.back_op_stage > BACK_SURGERY_CLOSED && surgeon.a_intent == "grab")
 			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt closed with [src].</span>",\
 				"<span class='notice'>You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] butt closed with [src].</span>",\
 				"<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your butt closed with [src].</span>")
 
-			patient.organHolder.back_op_stage = 0
+			patient.organHolder.back_op_stage = BACK_SURGERY_CLOSED
 			patient.TakeDamage("chest", 2 * surgCheck * surgCheck, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
@@ -1063,7 +1063,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 /* ---------- CAUTERY - BUTT ---------- */
 
-	else if (surgeon.zone_sel.selecting == "chest" && patient.organHolder.back_op_stage > 0)
+	else if (surgeon.zone_sel.selecting == "chest" && patient.organHolder.back_op_stage > BACK_SURGERY_CLOSED)
 
 		if (!lit)
 			surgeon.tri_message(patient, "<b>[surgeon]</b> tries to use [src] on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] incision, but [src] isn't lit! Sheesh.",\
@@ -1078,7 +1078,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				"<span class='notice'>You cauterize the incision on [surgeon == patient ? "your" : "[patient]'s"] butt closed with [src].</span>",\
 				"<span class='notice'>[patient == surgeon ? "You cauterize" : "<b>[surgeon]</b> cauterizes"] the incision on your butt closed with [src].</span>")
 
-			patient.organHolder.back_op_stage = 0
+			patient.organHolder.back_op_stage = BACK_SURGERY_CLOSED
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
 			return TRUE
@@ -1093,7 +1093,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					"<span class='notice'>You cauterize the incision on [surgeon == patient ? "your" : "[patient]'s"] butt closed with [src].</span>",\
 					"<span class='notice'>[patient == surgeon ? "You cauterize" : "<b>[surgeon]</b> cauterizes"] the incision on your butt closed with [src].</span>")
 
-				patient.organHolder.back_op_stage = 0
+				patient.organHolder.back_op_stage = BACK_SURGERY_CLOSED
 				if (patient.bleeding)
 					repair_bleeding_damage(patient, 50, rand(1,3))
 				return TRUE

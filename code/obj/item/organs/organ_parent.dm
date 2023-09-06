@@ -376,18 +376,18 @@
 				if (null)
 					return TRUE
 				if (RIBS)
-					if (H.organHolder.ribs_stage == 2)
+					if (H.organHolder.ribs_stage == REGION_OPENED)
 						return TRUE
 					return FALSE
 				if (ABDOMINAL)
-					if (H.organHolder.abdominal_stage == 2)
+					if (H.organHolder.abdominal_stage == REGION_OPENED)
 						return TRUE
 					return FALSE
 				if (SUBCOSTAL)
-					if (H.organHolder.subcostal_stage == 2)
+					if (H.organHolder.subcostal_stage == REGION_OPENED)
 						return TRUE
 				if (FLANKS)
-					if (H.organHolder.flanks_stage == 2)
+					if (H.organHolder.flanks_stage == REGION_OPENED)
 						return TRUE
 			return TRUE
 
