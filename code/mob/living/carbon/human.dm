@@ -49,7 +49,8 @@
 	var/image/l_leg_damage_standing = null
 	var/image/r_leg_damage_standing = null
 
-	var/image/image_eyes = null
+	var/image/image_eyes_L = null
+	var/image/image_eyes_R = null
 	var/image/image_cust_one = null
 	var/image/image_cust_two = null
 	var/image/image_cust_three = null
@@ -176,7 +177,8 @@
 /mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	. = ..()
 
-	image_eyes = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
+	image_eyes_L = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
+	image_eyes_R = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
 	image_cust_one = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
 	image_cust_two = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
 	image_cust_three = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
