@@ -1313,6 +1313,16 @@
 		boutput(user, "<span class='notice'>You need some sort of surgery tool!</span>")
 		return FALSE
 
+	New(var/region_state = null)
+		..()
+		switch (region_state)
+			if (REGION_CLOSED)
+				src.icon_background = "bg"
+			if (REGION_HALFWAY)
+				src.icon_background = "yellowbg"
+			if (REGION_OPENED)
+				src.icon_background = "greenbg"
+
 	implant
 		name = "implant"
 		desc = "Cut out an implant"

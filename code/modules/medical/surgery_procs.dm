@@ -1501,6 +1501,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return
 		if (src.rip_out_organ)
 			src.surgeon.visible_message("<span class='alert'>[src.surgeon] begins ripping out [src.target]'s [src.organ_name] with [his_or_her(src.surgeon)] bare hands!</span>")
+			ON_COOLDOWN(src, "rip_out_damage", 4 SECOND)
 		else
 			src.surgeon.visible_message("<span class='notice'>[src.surgeon] begins cutting out [src.target]'s [src.organ_name].</span>")
 
@@ -1510,9 +1511,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		var/done = src.time_spent()
-		var/complete = clamp((done / duration), 0, 1)
-		if (src.rip_out_organ && (complete == 0.35 || complete == 0.65))
+		if (!ON_COOLDOWN(src, "rip_out_damage", 4 SECONDS))
 			random_brute_damage(src.target, rand(10, 20))
 			take_bleeding_damage(src.target, src.surgeon, rand(5, 15))
 

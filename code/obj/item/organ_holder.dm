@@ -91,41 +91,13 @@
 		src.contexts = list()
 
 		//begin by adding regions
-		var/datum/contextAction/surgery_region/ribs/ribs_action = new /datum/contextAction/surgery_region/ribs()
-		switch (src.ribs_stage)
-			if (REGION_CLOSED)
-				ribs_action.icon_background = "bg"
-			if (REGION_HALFWAY)
-				ribs_action.icon_background = "yellowbg"
-			if (REGION_OPENED)
-				ribs_action.icon_background = "greenbg"
+		var/datum/contextAction/surgery_region/ribs/ribs_action = new /datum/contextAction/surgery_region/ribs(src.ribs_stage)
 		src.contexts += ribs_action
-		var/datum/contextAction/surgery_region/subcostal/subcostal_action = new /datum/contextAction/surgery_region/subcostal()
-		switch (src.subcostal_stage)
-			if (REGION_CLOSED)
-				subcostal_action.icon_background = "bg"
-			if (REGION_HALFWAY)
-				subcostal_action.icon_background = "yellowbg"
-			if (REGION_OPENED)
-				subcostal_action.icon_background = "greenbg"
+		var/datum/contextAction/surgery_region/subcostal/subcostal_action = new /datum/contextAction/surgery_region/subcostal(src.subcostal_stage)
 		src.contexts += subcostal_action
-		var/datum/contextAction/surgery_region/abdomen/abdomen_action = new /datum/contextAction/surgery_region/abdomen()
-		switch (src.abdominal_stage)
-			if (REGION_CLOSED)
-				abdomen_action.icon_background = "bg"
-			if (REGION_HALFWAY)
-				abdomen_action.icon_background = "yellowbg"
-			if (REGION_OPENED)
-				abdomen_action.icon_background = "greenbg"
+		var/datum/contextAction/surgery_region/abdomen/abdomen_action = new /datum/contextAction/surgery_region/abdomen(src.abdominal_stage)
 		src.contexts += abdomen_action
-		var/datum/contextAction/surgery_region/flanks/flanks_action = new /datum/contextAction/surgery_region/flanks()
-		switch (src.flanks_stage)
-			if (REGION_CLOSED)
-				flanks_action.icon_background = "bg"
-			if (REGION_HALFWAY)
-				flanks_action.icon_background = "yellowbg"
-			if (REGION_OPENED)
-				flanks_action.icon_background = "greenbg"
+		var/datum/contextAction/surgery_region/flanks/flanks_action = new /datum/contextAction/surgery_region/flanks(src.flanks_stage)
 		src.contexts += flanks_action
 
 		//possible parasite removal surgery
