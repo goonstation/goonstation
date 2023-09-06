@@ -19,7 +19,7 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 	"Triangle" = "ailes-s-triangle",\
 	"Unsure" = "ailes-s-unsure",\
 	"Very Happy" = "ailes-s-veryhappy",\
-	"Wink" = "ailes-s-wink") // this should be in typeinfo
+	"Wink" = "ailes-s-wink")
 
 /mob/living/silicon/drone
 	name = "Drone"
@@ -130,11 +130,6 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 				logTheThing(LOG_DEBUG, null, "<b>I Said No/Composite Drone:</b> Composite drone attempted to spawn with null frame")
 				qdel(src)
 				return
-			else
-				if (!frame.cell || !frame.brain)
-					logTheThing(LOG_DEBUG, null, "<b>I Said No/Composite Drone:</b> Composite drone attempted to spawn from incomplete frame")
-					qdel(src)
-					return
 
 		update_appearance()
 		update_details()
@@ -1043,7 +1038,7 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 		else if (istype(W, /obj/item/card/emag))
 			return
 
-		else if (istype(W, /obj/item/organ/brain) && src.opened)
+/*		else if (istype(W, /obj/item/organ/brain) && src.opened)
 			if (src.brain || src.ai_interface)
 				boutput(user, "<span class='alert'>There's already a processor core in the drone! Use a wrench to remove it before trying to insert something else.</span>")
 			else
@@ -1076,7 +1071,7 @@ var/global/list/drone_emotions = list("Annoyed" = "ailes-s-annoyed", \
 					src.show_laws()
 
 				src.update_appearance()
-				src.update_details()
+				src.update_details()*/
 
 		else if (istype(W, /obj/item/ai_interface) && src.opened)
 			if (src.brain || src.ai_interface)

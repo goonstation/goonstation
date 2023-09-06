@@ -1343,7 +1343,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			else if  (src.build_step == 2)
 				boutput(user, "<span class='alert'>You need to add a radio before you can put in a cell!</span>")
 
-		if (istype(W,/obj/item/organ/brain))
+/*		if (istype(W,/obj/item/organ/brain))
 			if (src.build_step == 3)
 				if (src.brain)
 					boutput(user, "<span class='alert'>There is already a brain in there. Use a wrench to remove it.</span>")
@@ -1367,7 +1367,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 					src.brain = B
 					boutput(user, "<span class='notice'>You insert the brain.</span>")
 					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
-					src.UpdateIcon()
+					src.UpdateIcon()*/
 
 		else if (istype(W, /obj/item/ai_interface))
 			if (src.build_step == 3)
@@ -1479,7 +1479,25 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		drone.name = "Drone"
 		drone.real_name = "Drone"
 
-		if(drone.brain?.owner?.key)
+		if (src.ai_interface)
+			if (!(drone in available_ai_shells))
+				available_ai_shells += drone
+			for_by_tcl(AI, /mob/living/silicon/ai)
+				boutput(AI, "<span class='success'>[src] has been connected to you as a controllable drone.</span>")
+			playsound(src, 'sound/weapons/radxbow.ogg', 40, 1)
+			drone.ai_interface = src.ai_interface
+			drone.ai_interface.set_loc(drone)
+			drone.shell = 1
+		else if (istype(drone.brain, /obj/item/organ/brain/latejoin))
+			boutput(usr, "<span class='notice'>You activate the frame and it plays an audible beep.</span>")
+			playsound(src, 'sound/weapons/radxbow.ogg', 40, 1)
+		else
+			stack_trace("We finished drone [identify_object(drone)] from frame [identify_object(src)] with a brain, but somehow lost the brain??? Where did it go")
+			drone.death()
+			qdel(src)
+			return
+
+		/*else if(drone.brain?.owner?.key)
 			if(drone.brain.owner.current)
 				drone.gender = drone.brain.owner.current.gender
 				if(drone.brain.owner.current.client)
@@ -1500,25 +1518,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 				boutput(M, "<span class='alert'>You feel yourself being dragged out of the afterlife!</span>")
 			drone.brain.owner.transfer_to(drone)
 			if (isdead(M) && !isliving(M))
-				qdel(M)
-
-		else if (src.ai_interface)
-			if (!(drone in available_ai_shells))
-				available_ai_shells += drone
-			for_by_tcl(AI, /mob/living/silicon/ai)
-				boutput(AI, "<span class='success'>[src] has been connected to you as a controllable drone.</span>")
-			playsound(src, 'sound/weapons/radxbow.ogg', 40, 1)
-			drone.ai_interface = src.ai_interface
-			drone.ai_interface.set_loc(drone)
-			drone.shell = 1
-		else if (istype(drone.brain, /obj/item/organ/brain/latejoin))
-			boutput(usr, "<span class='notice'>You activate the frame and it plays an audible beep.</span>")
-			playsound(src, 'sound/weapons/radxbow.ogg', 40, 1)
-		else
-			stack_trace("We finished drone [identify_object(drone)] from frame [identify_object(src)] with a brain, but somehow lost the brain??? Where did it go")
-			drone.death()
-			qdel(src)
-			return
+				qdel(M)*/
 
 		if (src.cell)
 			drone.cell = src.cell
