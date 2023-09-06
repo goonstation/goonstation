@@ -15,24 +15,18 @@
 	custom_suicide = TRUE
 	suicide_distance = 0
 	var/mob/affecting = null
-	/// how much to heal by
-	var/heal_amt = 10
-	/// the name of the kind of book, so that we can close it later.
+	var/heal_amt = 10	//! how much to heal by
+	// the name of the kind of book, so that we can close it later.
 	var/unopened_icon_state = "Bible"
-	/// the sprite to show when the book is opened instead of just appending "Open"
+	var/unopened_item_state = "Book"
+	// the sprite to show when the book is opened instead of just appending "Open"
 	var/opened_icon_state_override = null
-	/// the inhand sprite to show when the book is opened instead of just appending "Open"
 	var/opened_item_state_override = null
-	/// will it force people to fart when they walk over it?
-	var/evil = FALSE
-	/// does it do the special death animation?
-	var/hungry = FALSE
-	/// does this bible have faith in it?
-	var/loaded = FALSE
-	/// is this bible opened within the hand?
-	var/opened = FALSE
-	/// can this bible be opened up to view the insides?
-	var/unopenable = FALSE
+	var/evil = FALSE	//! will it force people to fart when they walk over it?
+	var/hungry = FALSE	//! does it do the special death animation?
+	var/loaded = FALSE	//! does this bible have faith in it?
+	var/opened = FALSE	//! is this bible opened within the hand?
+	var/unopenable = FALSE	//! can this bible be opened up to view the insides?
 
 
 	New()
@@ -176,7 +170,11 @@
 				return
 		else
 			. = ..()
-			src.toggle_open()
+
+	attack_self(mob/user)
+		src.toggle_open()
+		..()
+
 
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
