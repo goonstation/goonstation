@@ -385,7 +385,7 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 
 	ui_data(mob/user)
 		. = list()
-		.["bottle"] = src.bottle
+		.["bottle"] = !!src.bottle
 		.["uses_left"] = src.bottle?.uses_left
 		.["bottle_color"] = src.bottle?.customization_first_color
 
