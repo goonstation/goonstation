@@ -482,10 +482,8 @@
 /mob/living/carbon/human/proc/update_handcuffs(hand_offset)
 	if (src.hasStatus("handcuffed"))
 		src.remove_pulling()
-		handcuff_img.icon_state = "handcuff1"
-		handcuff_img.pixel_x = 0
+		var/image/handcuff_img = SafeGetOverlayImage("handcuffs", 'icons/mob/mob.dmi', "handcuff1", MOB_HANDCUFF_LAYER)
 		handcuff_img.pixel_y = hand_offset
-		handcuff_img.layer = MOB_HANDCUFF_LAYER
 		src.UpdateOverlays(handcuff_img, "handcuffs")
 	else
 		src.UpdateOverlays(null, "handcuffs")
