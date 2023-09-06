@@ -3400,6 +3400,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	create_products()
 		..()
 		// can rebalance this later if needed.
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/clothing/witchfinder	, 1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/clothing/chaplain		, 1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/holywaterkit			, 1)
 		product_list += new/datum/data/vending_product(/obj/item/bible				, 2)
 		product_list += new/datum/data/vending_product(/obj/item/bible/blank		, 1)
 		product_list += new/datum/data/vending_product(/obj/item/bible/eye			, 1)
@@ -3416,13 +3419,37 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/bible/burned		, 1)
 		product_list += new/datum/data/vending_product(/obj/item/bible/skeleton		, 1)
 		product_list += new/datum/data/vending_product(/obj/item/bible/sulphur		, 1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/greenrobe, 	3)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/greenmask, 	3)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/weirdo,		3)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/weirdomask,	3)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/burntrobe,	3)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/burntmask,	3)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/lightrobe,	3)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/light,		3)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/naturerobe,	3)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nature,		3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/chaplain/atheist	, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/chaplain			, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/chaplain/rabbi		, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/rabbihat					, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/chaplain/siropa_robe, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/chaplain/buddhist	, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/chaplain/muslim	, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/turban					, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/formal_turban			, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/adeptus					, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/sandal/magic			, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/chaplain/nun		, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nunhood					, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/flockcultist				, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/greenrobe				, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/greenmask				, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/weirdo					, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/weirdomask				, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/burntrobe				, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/burntmask				, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/lightrobe				, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/light					, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/naturerobe				, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nature					, 3)
+
+	,\
+	,\
+	,\
+	,\
+	,\
+	,\
+	,\
+	,\
+	,\
