@@ -3385,7 +3385,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 			)
 
 /obj/machinery/vending/jobclothing/chaplain
-	name = "chaplain equipment"
+	name = "Chaplain Equipment"
 	desc = "An equipment vendor for those with religious inclination."
 	icon_state = "chaplain"
 	icon_panel = "chaplain-panel"

@@ -4,13 +4,13 @@
 	name = "Holy Texts"
 	desc = "A holy scripture of some kind."
 	icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
-	icon_state = "bible"
+	icon_state = "Bible"
 	/// the name of the kind of book, so that we can close it later.
-	var/unopened_icon_state = "bible"
+	var/unopened_icon_state = "Bible"
 	inhand_image_icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
-	item_state = "book"
+	item_state = "Book"
 	/// the name of the kind of inhand sprite used, so that we can close it again.
-	var/unopened_item_state = "book"
+	var/unopened_item_state = "Book"
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -352,13 +352,14 @@
 /obj/item/bible/skeleton
 	name = "\the Skeleton Scriptures"
 	desc = "A strange holy text written in sharp spidery handwriting. There's something inhuman about it."
-	icon_state = "Rubi_Skeleton"
-	item_state = "Rubi_SkeletonBook"
+	icon_state = "RubiSkeleton"
+	item_state = "RubiSkeletonBook"
 
 /obj/item/bible/x
-	icon_state = "Paco_X"
-	item_state = "Paco_XBook"
+	icon_state = "PacoX"
+	item_state = "PacoXBook"
 
+// the sprites have vanished wtf
 /obj/item/bible/sulphur
 	name = "Sacred Sulphuric Script"
 	desc = "A holy scripture of some kind?"
@@ -366,13 +367,13 @@
 	item_state = "SulphurBook"
 
 /obj/item/bible/bluewhite
-	icon_state = "Paco_BlueWhite"
-	item_state = "" //todo
+	icon_state = "PacoBlueWhite"
+	item_state = "PacoBlueWhiteBook"
 // note that redwhite open and bluewhite open are identical
 /obj/item/bible/redwhite
-	icon_state = "Paco_RedWhite"
-	item_state = "" //todo
+	icon_state = "PacoRedWhite"
+	item_state = "PacoRedWhiteBook"
 
 /obj/item/bible/redwhite/dark
-	icon_state = "Paco_RedDark"
-	item_state = "" //todo
+	icon_state = "PacoRedDark"
+	item_state = "PacoRedDarkBook" //todo
