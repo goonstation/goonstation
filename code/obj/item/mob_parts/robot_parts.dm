@@ -218,8 +218,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			return
 
 		else if (istype(W, /obj/item/ai_interface))
-			boutput(user, "<span class='alert'>There's no way you can fit the interface board in there! It's too big for the head!</span>")
-			/*if (src.brain)
+			if (src.brain)
 				boutput(user, "<span class='alert'>There is already a brain in there. Use a wrench to remove it.</span>")
 				return
 
@@ -232,7 +231,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			I.set_loc(src)
 			src.ai_interface = I
 			boutput(user, "<span class='notice'>You insert [I].</span>")
-			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)*/
 			return
 
 		else if (iswrenchingtool(W))

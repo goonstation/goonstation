@@ -1323,7 +1323,7 @@
 	movement_delay()
 		if (src.pulling && !isitem(src.pulling))
 			return ..()
-		return 1 + movement_delay_modifier
+		return 0.5 + movement_delay_modifier
 
 	hotkey(name)
 		switch (name)
