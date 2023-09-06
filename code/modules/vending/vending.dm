@@ -3443,13 +3443,3 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/light					, 3)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/naturerobe				, 3)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nature					, 3)
-
-	,\
-	,\
-	,\
-	,\
-	,\
-	,\
-	,\
-	,\
-	,\
