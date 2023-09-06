@@ -49,8 +49,7 @@
 	var/image/l_leg_damage_standing = null
 	var/image/r_leg_damage_standing = null
 
-	var/image/image_eyes_L = null
-	var/image/image_eyes_R = null
+	var/image/image_eyes = null
 	var/image/image_cust_one = null
 	var/image/image_cust_two = null
 	var/image/image_cust_three = null
@@ -124,14 +123,11 @@
 	var/static/image/human_head_image = image('icons/mob/human_head.dmi')
 	var/static/image/human_detail_image = image('icons/mob/human.dmi', layer = MOB_OVERSUIT_LAYER2)
 	var/static/image/human_tail_image = image('icons/mob/human.dmi')
-	var/static/image/human_hair_image = image('icons/mob/human_hair.dmi')
 	var/static/image/human_untoned_image = image('icons/mob/human.dmi')
 	var/static/image/human_decomp_image = image('icons/mob/human_decomp.dmi')
 	var/static/image/human_untoned_decomp_image = image('icons/mob/human.dmi')
 	var/static/image/undies_image = image('icons/mob/human_underwear.dmi') //, layer = MOB_UNDERWEAR_LAYER)
 	var/static/image/bandage_image = image('icons/obj/surgery.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
-	var/static/image/blood_image = image('icons/obj/decals/blood/blood.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
-	var/static/image/handcuff_img = image('icons/mob/mob.dmi')
 	var/static/image/heart_image = image('icons/mob/human.dmi')
 	var/static/image/heart_emagged_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/spider_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
@@ -177,8 +173,7 @@
 /mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	. = ..()
 
-	image_eyes_L = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
-	image_eyes_R = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
+	image_eyes = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
 	image_cust_one = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
 	image_cust_two = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
 	image_cust_three = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)

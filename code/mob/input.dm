@@ -10,7 +10,8 @@
 			return controller.hotkey(src, name)
 	return ..()
 
-/mob/keys_changed(keys, changed)
+/mob/proc/keys_changed(keys, changed)
+	set waitfor = 0
 	if (changed & KEY_EXAMINE && src.client)
 		if (keys & KEY_EXAMINE)
 			if (HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
