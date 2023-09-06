@@ -328,8 +328,10 @@
 	item_state = "EyeBook"
 
 /obj/item/bible/eye/dark
+	name = "The Dark Peer"
 	icon_state = "EyeDark"
 	item_state = "EyeBookDark"
+	opened_item_state_override = "EyeBookOpen" // uses the same sprite as the original
 
 /obj/item/bible/green
 	name = "\the Green Texts"
@@ -384,6 +386,7 @@
 /obj/item/bible/bluewhite
 	icon_state = "PacoBlueWhite"
 	item_state = "PacoBlueWhiteBook"
+	opened_icon_state_override = "PacoWhiteOpen"
 
 /obj/item/bible/redwhite
 	icon_state = "PacoRedWhite"
@@ -393,4 +396,4 @@
 /obj/item/bible/redwhite/dark
 	icon_state = "PacoRedDark"
 	item_state = "PacoRedDarkBook"
-	opened_icon_state_override = "PacoWhiteOpen"
+	opened_icon_state_override = "PacoDarkOpen"
