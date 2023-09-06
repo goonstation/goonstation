@@ -3925,18 +3925,28 @@
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
 "asb" = (
-/obj/item/raw_material/shard/glass,
-/obj/item/reagent_containers/dropper/mechanical,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
+	dir = 1;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "tapedrive0";
+	name = "broken tape drive"
+	},
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
 "asc" = (
-/obj/computerframe{
-	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
-	icon_state = "datamedb";
-	name = "smashed computer"
-	},
 /obj/map/light/white,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
+	dir = 1;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "sovcomp3";
+	name = "broken computer"
+	},
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
 "asd" = (
@@ -4026,7 +4036,8 @@
 /area/space)
 "asu" = (
 /obj/machinery/door/unpowered/shuttle{
-	autoclose = 1
+	autoclose = 1;
+	dir = 8
 	},
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
@@ -4052,7 +4063,12 @@
 /turf/simulated/wall/auto/supernorn,
 /area/radiostation/engineering)
 "asB" = (
-/obj/machinery/door/poddoor/pyro/podbay_autoclose/soviet_horizontal/vertical,
+/obj/machinery/door/poddoor/blast{
+	icon = 'icons/obj/doors/sovblastdoor.dmi';
+	icon_state = "bdoorleft1";
+	id = "hangar_soviet";
+	name = "pod bay (salyut)"
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -5101,7 +5117,8 @@
 /area/flock_trader)
 "ayX" = (
 /obj/machinery/door/unpowered/shuttle{
-	autoclose = 1
+	autoclose = 1;
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/salyut)
@@ -5110,7 +5127,8 @@
 /area/salyut)
 "ayZ" = (
 /obj/machinery/door/unpowered/shuttle{
-	autoclose = 1
+	autoclose = 1;
+	dir = 8
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
@@ -5125,9 +5143,12 @@
 	drive_range = 4;
 	id = "salyut"
 	},
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/blast/single{
+	icon = 'icons/obj/doors/sovblastdoor.dmi';
+	dir = 8;
 	id = "salyut";
-	name = "Launcher Door"
+	name = "Launcher Door";
+	desc = null
 	},
 /turf/simulated/floor/plating/airless,
 /area/salyut)
@@ -6063,7 +6084,9 @@
 /turf/simulated/floor/black,
 /area/radiostation/engineering)
 "aHw" = (
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "aHx" = (
@@ -6702,7 +6725,8 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "door1";
 	name = "broken door";
-	icon = 'icons/obj/doors/shuttle.dmi'
+	icon = 'icons/obj/doors/shuttle.dmi';
+	dir = 8
 	},
 /area/abandonedmedicalship)
 "aJy" = (
@@ -7128,7 +7152,8 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "salvage_out";
-	name = "GLOMAR Salvager"
+	name = "GLOMAR Salvager";
+	dir = 8
 	},
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
@@ -12497,7 +12522,9 @@
 /area/space)
 "bci" = (
 /obj/creepy_sound_trigger,
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "bcj" = (
@@ -13025,7 +13052,9 @@
 /area/h7/lab)
 "bev" = (
 /obj/creepy_sound_trigger,
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
 /turf/simulated/floor/plating/airless,
 /area/abandonedship)
 "bew" = (
@@ -13302,12 +13331,14 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/computerframe{
-	desc = "It is highly unlikely that this still works.";
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
 	dir = 8;
-	icon = 'icons/obj/computer.dmi';
-	icon_state = "datamedb";
-	name = "smashed computer"
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "sovcomp1";
+	name = "broken computer"
 	},
 /turf/simulated/floor/shuttle{
 	icon = 'icons/turf/floors.dmi';
@@ -14644,13 +14675,9 @@
 /area/space)
 "bkw" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Due to what must be a substantial amount of neglect, this air scrubber seems to be out of working condition.";
-	icon = 'icons/obj/atmospherics/atmos.dmi';
-	icon_state = "scrubber:0";
-	name = "Air Scrubber"
+/obj/decal/fakeobjects/tallsmes{
+	desc = "An ultra-high-capacity superconducting magnetic energy storage (SMES) unit, except communist.";
+	icon = 'icons/misc/hospital.dmi'
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
@@ -15302,7 +15329,9 @@
 	},
 /area/space)
 "bnD" = (
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
 /turf/simulated/floor/shuttle{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "delivery"
@@ -16714,6 +16743,11 @@
 "frd" = (
 /turf/simulated/floor/plating,
 /area/diner/hallway/docking)
+"ftP" = (
+/obj/item/reagent_containers/dropper/mechanical,
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/plating/damaged1,
+/area/salyut)
 "fvE" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt/mars{
@@ -18201,6 +18235,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
+"jHU" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
+	icon = 'icons/obj/doors/shuttle.dmi';
+	name = "rusted hatch";
+	dir = 8
+	},
+/turf/unsimulated/floor/white,
+/area/space_hive)
 "jIB" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 9;
@@ -18434,7 +18477,8 @@
 /turf/unsimulated/wall/generic{
 	icon = 'icons/obj/doors/shuttle.dmi';
 	icon_state = "door1";
-	name = "broken door"
+	name = "broken door";
+	dir = 8
 	},
 /area/space_hive)
 "kse" = (
@@ -18728,6 +18772,18 @@
 	},
 /turf/space,
 /area/timewarp)
+"lob" = (
+/obj/machinery/door/poddoor/blast{
+	icon = 'icons/obj/doors/sovblastdoor.dmi';
+	icon_state = "bdoorleft1";
+	id = "hangar_soviet";
+	dir = 1;
+	name = "pod bay (salyut)"
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/salyut)
 "lpI" = (
 /obj/machinery/door/unpowered/shuttle{
 	autoclose = 1;
@@ -19832,7 +19888,8 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "salvage_in";
-	name = "GLOMAR Salvager"
+	name = "GLOMAR Salvager";
+	dir = 8
 	},
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
@@ -20333,7 +20390,8 @@
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
 	icon = 'icons/obj/doors/shuttle.dmi';
-	name = "rusted hatch"
+	name = "rusted hatch";
+	dir = 8
 	},
 /turf/unsimulated/floor,
 /area/space_hive)
@@ -42414,7 +42472,7 @@ aaf
 acc
 acc
 aaf
-jcK
+jHU
 aaf
 aaf
 aaf
@@ -67278,7 +67336,7 @@ aaa
 aaa
 awq
 nYg
-asB
+lob
 asB
 azH
 aAh
@@ -69996,7 +70054,7 @@ boP
 boP
 nYg
 asb
-asl
+ftP
 asP
 asT
 atn
