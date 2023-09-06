@@ -457,24 +457,7 @@
 		set category = "AI Commands"
 		set name = "Toggle Cover Lock"
 		if(mainframe)
-			if (mainframe.dismantle_stage >= 2)
-				boutput(src, "<span class='alert'>You can't lock your cover when it's open!</span>")
-			else
-				if (mainframe.locking)
-					boutput(src, "<span class='alert'>Your cover is currently locking, please be patient.</span>")
-				else if (mainframe.dismantle_stage == 1)
-					mainframe.locking = 1
-					boutput(src, "<span class='alert'>Locking cover...</span>")
-					SPAWN(12 SECONDS)
-						if (!mainframe.locking)
-							boutput(src, "<span class='alert'>The lock was interrupted before it could finish!</span>")
-						else
-							mainframe.dismantle_stage = 0
-							mainframe.locking = 0
-							boutput(src, "<span class='alert'>You lock your cover lock.</span>")
-				else
-					mainframe.dismantle_stage = 1
-					boutput(src, "<span class='alert'>You unlock your cover lock.</span>")
+			mainframe.toggle_lock()
 
 	verb/open_nearest_door()
 		set category = "AI Commands"
