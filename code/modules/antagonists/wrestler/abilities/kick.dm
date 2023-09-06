@@ -3,6 +3,10 @@
 	desc = "A powerful kick, sends people flying away from you. Also useful for escaping from bad situations."
 	icon_state = "Kick"
 	target_nodamage_check = 1
+	targeted = 1
+	target_anything = 0
+	target_nodamage_check = 1
+	target_selection_check = 1
 	max_range = 1
 	cooldown = 200
 	start_on_cooldown = 1
@@ -16,17 +20,12 @@
 
 		var/mob/living/M = holder.owner
 
-		if (!M)
+		if (!M || !target)
 			return 1
 
 		if (M == target)
 			boutput(M, "<span class='alert'>Why would you want to wrestle yourself?</span>")
 			return 1
-
-		if (!ismob(target))
-			target = src.get_nearest_target()
-			if (!target)
-				return TRUE
 
 		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")

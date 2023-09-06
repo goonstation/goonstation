@@ -3,6 +3,35 @@
 
 /* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 
+/atom/movable/screen/ability/topBar/wrestler
+	clicked(params)
+		var/datum/targetable/wrestler/spell = owner
+		if (!istype(spell))
+			return
+		if (!spell.holder)
+			return
+		if (owner.holder.owner) //how even
+			if (!isturf(owner.holder.owner.loc))
+				boutput(owner.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
+				return
+		if (spell.targeted && usr.targeting_ability == owner)
+			usr.targeting_ability = null
+			usr.update_cursor()
+			return
+
+		var/use_targeted = src.do_target_selection_check()
+		if (use_targeted == 2)
+			return
+		if (spell.targeted || use_targeted == 1)
+			if (world.time < spell.last_cast)
+				return
+			owner.holder.owner.targeting_ability = owner
+			owner.holder.owner.update_cursor()
+		else
+			SPAWN(0)
+				spell.handleCast()
+		return
+
 /datum/abilityHolder/wrestler
 	usesPoints = 0
 	regenRate = 0
@@ -25,6 +54,36 @@
 	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
 	var/fake = 0
+
+	New()
+		var/atom/movable/screen/ability/topBar/wrestler/B = new /atom/movable/screen/ability/topBar/wrestler(null)
+		B.icon = src.icon
+		B.icon_state = src.icon_state
+		B.owner = src
+		B.name = src.name
+		B.desc = src.desc
+		src.object = B
+		return
+
+	updateObject()
+		..()
+		if (!src.object)
+			src.object = new /atom/movable/screen/ability/topBar/wrestler()
+			object.icon = src.icon
+			object.owner = src
+		if (src.last_cast > world.time)
+			var/pttxt = ""
+			if (pointCost)
+				pttxt = " \[[pointCost]\]"
+			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
+			object.icon_state = src.icon_state + "_cd"
+		else
+			var/pttxt = ""
+			if (pointCost)
+				pttxt = " \[[pointCost]\]"
+			object.name = "[src.name][pttxt]"
+			object.icon_state = src.icon_state
+		return
 
 	proc/incapacitation_check(var/stunned_only_is_okay = 0)
 		if (!holder)
@@ -94,17 +153,3 @@
 		SPAWN(rand(200, 900))
 			if (src.holder && src.holder.owner && ismob(src.holder.owner))
 				src.holder.owner.emote("flex")
-
-	/// gets nearest mob target to the user that an ability can be used on
-	proc/get_nearest_target(prone_check)
-		var/list/nearby_mobs = list()
-		for (var/mob/living/M in viewers(1, src.holder.owner))
-			if (M == src.holder.owner)
-				continue
-			if (isintangible(M))
-				continue
-			if (prone_check && !M.lying)
-				continue
-			nearby_mobs += M
-		if (length(nearby_mobs))
-			return pick(nearby_mobs)

@@ -2,31 +2,28 @@
 	name = "Drop (prone)"
 	desc = "Smash down onto on an opponent."
 	icon_state = "Drop"
+	targeted = 1
+	target_anything = 0
 	target_nodamage_check = 1
+	target_selection_check = 1
 	max_range = 1
 	cooldown = 250
 	start_on_cooldown = 1
 	pointCost = 0
 	when_stunned = 0
 	not_when_handcuffed = 1
-
 	cast(mob/target)
 		if (!holder)
 			return 1
 
 		var/mob/living/M = holder.owner
 
-		if (!M)
+		if (!M || !target)
 			return 1
 
 		if (M == target)
 			boutput(M, "<span class='alert'>Why would you want to wrestle yourself?</span>")
 			return 1
-
-		if (!ismob(target))
-			target = src.get_nearest_target(TRUE)
-			if (!target)
-				return TRUE
 
 		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
