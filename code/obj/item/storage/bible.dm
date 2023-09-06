@@ -7,8 +7,6 @@
 	icon_state = "Bible"
 	inhand_image_icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
 	item_state = "Book"
-	/// the name of the kind of inhand sprite used, so that we can close it again.
-	var/unopened_item_state = "Book"
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -21,8 +19,10 @@
 	var/heal_amt = 10
 	/// the name of the kind of book, so that we can close it later.
 	var/unopened_icon_state = "Bible"
-	/// the sprite to show when the book is opened
+	/// the sprite to show when the book is opened instead of just appending "Open"
 	var/opened_icon_state_override = null
+	/// the inhand sprite to show when the book is opened instead of just appending "Open"
+	var/opened_item_state_override = null
 	/// will it force people to fart when they walk over it?
 	var/evil = FALSE
 	/// does it do the special death animation?
@@ -262,11 +262,14 @@
 			src.opened = FALSE
 		else
 			src.opened = TRUE
-			src.item_state += "Open"
 			if (src.opened_icon_state_override)
 				src.icon_state = src.opened_icon_state_override
 			else
 				src.icon_state += "Open"
+			if (src.opened_item_state_override)
+				src.item_state = src.opened_item_state_override
+			else
+				src.item_state += "Open"
 
 
 	Crossed(atom/movable/AM as mob)
