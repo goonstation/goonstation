@@ -190,7 +190,7 @@
 			var/turf/T = get_step(src, dir)
 			if (istype(T, /turf/space))
 				var/turf/space/space_turf = T
-				if (space_turf.GetOverlayImage("starlight"))
+				if (space_turf.starlight in space_turf.underlays)
 					return TRUE
 
 		if (src.SL_lit())
@@ -373,9 +373,9 @@ proc/generate_space_color()
 		starlight.color = starlight_color_override ? starlight_color_override : src.color
 		if(!isnull(starlight_alpha))
 			starlight.alpha = starlight_alpha
-		UpdateOverlays(starlight, "starlight")
+		src.underlays += starlight
 	else
-		UpdateOverlays(null, "starlight")
+		src.underlays -= starlight
 
 // override for space turfs, since they should never hide anything
 /turf/space/levelupdate()
