@@ -17,7 +17,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (ismob(hit_atom) && src.splat)
 			var/mob/M = hit_atom
-			var/mob/thrower = usr
+			var/mob/thrower = thr.thrown_by
 			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			if (thrower.mind?.assigned_role == "Clown")
 				if (ishuman(M) && (prob(50) || M.mind?.assigned_role == "Captain") && !M.GetOverlayImage("face_pie"))
