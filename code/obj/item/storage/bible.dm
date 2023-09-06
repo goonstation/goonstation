@@ -28,6 +28,8 @@
 	var/loaded = FALSE
 	/// is this bible opened within the hand?
 	var/opened = FALSE
+	/// can this bible be opened up to view the insides?
+	var/unopenable = FALSE
 
 	New()
 		// so that i don't have to have duplicate lines in the subtypes
@@ -248,6 +250,8 @@
 		M.smite_gib()
 
 	proc/toggle_open()
+		if (src.unopenable)
+			return
 		if (src.opened)
 			src.icon_state = src.unopened_icon_state
 			src.item_state = src.unopened_item_state
@@ -276,6 +280,7 @@
 	name = "O.C. Holy Texts"
 	desc = "For when you don't want the good book to take up too much space in your life."
 	icon_state = "mini"
+	unopenable = TRUE
 	item_state = null
 	w_class = W_CLASS_SMALL
 
