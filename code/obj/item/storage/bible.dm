@@ -1,7 +1,7 @@
 // rest in peace the_very_holy_global_bible_list_amen (??? - 2020)
 
 /obj/item/bible
-	name = "Holy Texts"
+	name = "Holy Text"
 	desc = "A holy scripture of some kind."
 	icon = 'icons/obj/items/chaplain/ChaplainStuff.dmi'
 	icon_state = "Bible"
@@ -264,7 +264,7 @@
 			src.opened = TRUE
 			src.item_state += "Open"
 			if (src.opened_icon_state_override)
-				src.icon_state - src.opened_icon_state_override
+				src.icon_state = src.opened_icon_state_override
 			else
 				src.icon_state += "Open"
 
@@ -327,8 +327,8 @@
 	item_state = "EyeBook"
 
 /obj/item/bible/eye/dark
-	icon_state = "Eye_Dark"
-	item_state = "EyeBook_Dark"
+	icon_state = "EyeDark"
+	item_state = "EyeBookDark"
 
 /obj/item/bible/green
 	name = "\the Green Texts"
