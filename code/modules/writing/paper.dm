@@ -123,19 +123,9 @@
 		qdel(src)
 
 /obj/item/paper/attack_ai(var/mob/AI as mob)
-	var/mob/living/silicon/ai/user
-	if (isAIeye(AI))
-		var/mob/living/intangible/aieye/E = AI
-		user = E.mainframe
-	else
-		user = AI
-	if (!isAI(user) || (user.current && GET_DIST(src, user.current) < 2)) //Wire: fix for undefined variable /mob/living/silicon/robot/var/current
-		var/font_junk = ""
-		for (var/i in src.fonts)
-			font_junk += "<link href='http://fonts.googleapis.com/css?family=[i]' rel='stylesheet' type='text/css'>"
-		usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE>[font_junk]</HEAD><BODY><TT>[src.info]</TT></BODY></HTML>", "window=[src.name]")
-		onclose(usr, "[src.name]")
-	return
+	//Papers can be alt+click inspected from anywhere, let's give attack_ai the same freedom
+	//	instead of doing dubious /mob/living/silicon/ai.current checks
+	ui_interact(AI)
 
 /obj/item/paper/proc/stamp(x, y, r, stamp_png, icon_state)
 	if(length(stamps) < PAPER_MAX_STAMPS)
@@ -351,6 +341,8 @@
 	src.field_counter++
 	return {"\[<input type="text" style="font:'12x Georgia';color:'null';min-width:[pixel_width]px;max-width:[pixel_width]px;" id="paperfield_[field_counter]" maxlength=[length] size=[length] />\]"}
 
+/obj/item/paper/proc/show_through_camera(mob/living/user)
+	return ui_interact(user)
 
 /obj/item/paper/thermal
 	name = "thermal paper"
