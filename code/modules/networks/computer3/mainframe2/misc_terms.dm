@@ -2257,6 +2257,8 @@ TYPEINFO(/obj/machinery/networked/printer)
 					if (istype(mag.holding, /obj/item/paper) || istype(mag.holding, /obj/item/photo))
 						I = mag.holding
 						mag.dropItem(0)
+					else
+						return
 				else if (istype(I, /obj/item/paper) || istype(I, /obj/item/photo))
 					usr.drop_item()
 				else
