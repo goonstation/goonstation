@@ -329,12 +329,14 @@
 
 
 
-
 	connection_scan()
 		..()
 		destinations = global.map_settings.shipping_destinations
 
 
+	New()
+		..()
+		connection_scan()
 
 	proc/print(var/destination, var/amount)
 		if (printing)
@@ -422,7 +424,6 @@
 
 	New()
 		..()
-		connection_scan()
 	ui_static_data(mob/user)
 		. = ..()
 		var/list/traders = new()
