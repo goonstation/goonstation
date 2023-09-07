@@ -2094,6 +2094,7 @@
 	mexicanhotchocolate/cinnamon
 		id = "mexicanhotchocolate_cinnamon"
 		required_reagents = list("cinnamon" = 1, "chocolate_milk"= 2)
+		result_amount = 3
 
 	pumpkinspicelatte
 		name = "Pumpkin Spice Latte"
