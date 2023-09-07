@@ -4411,7 +4411,19 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		src.density = TRUE
 	loosen()
 		. = ..()
+		if (heldItem && (heldItem in src))
+			heldItem.set_loc(get_turf(src))
 		src.density = FALSE
+
+	pickup(mob/user) // attempt to update layering when picked up
+		. = ..()
+		SPAWN(1)
+			src.UpdateIcon()
+
+	dropped(mob/user) // attempt to update layering when dropped
+		. = ..()
+		SPAWN(1)
+			src.UpdateIcon()
 
 	set_dir()
 		. = ..()
