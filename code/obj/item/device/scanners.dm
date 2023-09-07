@@ -127,7 +127,7 @@ TYPEINFO(/obj/item/device/t_scanner)
 						continue
 				else if(isobj(A))
 					var/obj/O = A
-					if (O.level == OVERFLOOR)
+					if (O.level == OVERFLOOR && !istype(O, /obj/disposalpipe))
 						continue
 					if (!show_cables && istype(O, /obj/cable))
 						continue
