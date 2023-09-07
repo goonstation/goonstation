@@ -45,8 +45,8 @@
 	var/building = 0
 	var/BuildIndex = 1
 	var/BuildEnd = 0
-	var/list/markers = new/list()
-	var/list/apclist = new/list()
+	var/list/markers = list()
+	var/list/apclist = list()
 	var/MetalOwed = 0
 	var/CrystalOwed = 0
 	var/TileCostProcessed = 0
@@ -86,42 +86,71 @@
 		return
 
 	attack_hand(mob/user)
-		if(building)
-			//boutput(user, "<span class='alert'>The machine is currently constructing something. Best not touch it until it's done.</span>")
-			if (!Paused)
-				if (alert(usr, "Pause the construction?", "ABCU", "Yes", "No") == "Yes")
-					pauseBuild()
-					return
+		if(building && !Paused)
+			if (tgui_alert(user, "Pause the construction?", "ABCU", list("Yes", "No")) == "Yes")
+			//if (alert(usr, "Pause the construction?", "ABCU", "Yes", "No") == "Yes")
+				src.pauseBuild()
 				return
-			else
-				//var/inputbuilding = input(user,"The build job is currently paused. Choose:","ABCU") in list("Resume Construction", "Cancel Build")
-				switch (input(user,"The build job is currently paused. Choose:","ABCU") in list("Resume Construction", "Cancel Build"))
-					if ("Resume Construction")
-						unpauseBuild()
-						return
-					if ("Cancel Build")
-						endBuild()
-						return
 			return
+		/* else
+			switch (input(user,"The build job is currently paused. Choose:","ABCU") in list("Resume Construction", "Cancel Build"))
+				if ("Resume Construction")
+					unpauseBuild()
+					return
+				if ("Cancel Build")
+					endBuild()
+					return
+		return */
 
-		var/list/options = list(locked ? "Unlock":"Lock", "Begin Building", "Dump Materials", "Check Materials" ,currentBp ? "Eject Blueprint":null)
-		var/input = input(user,"Select option:","ABCU") in options
-		switch(input)
+		/* var/list/OptionList = list(
+			building ? "Resume Construction" : null,
+			building ? "Cancel Build" : null,
+			locked && !building ? "Unlock" : null,
+			!locked && !building ? "Lock" : null,
+			!building ? "Begin Building" : null,
+			"Dump Materials",
+			"Check Materials",
+			currentBp && !building ? "Eject Blueprint" : null,
+			building ? "Cancel Build" : null,
+		) */
+		var/list/OptionList = list(
+			"Check Materials",
+			"Resume Construction",
+			locked ? "Unlock" : "Lock",
+			"Begin Building",
+			"Dump Materials",
+			"Eject Blueprint",
+			"Cancel Build",
+		)
+		var/UserInput = tgui_input_list(user, building ? "The build job is currently paused. Choose:" : "Select an action.", "ABCU", OptionList)
+		if (!UserInput) return
+
+		//var/list/options = list(locked ? "Unlock":"Lock", "Begin Building", "Dump Materials", "Check Materials" ,currentBp ? "Eject Blueprint":null)
+		//var/input = input(user,"Select option:","ABCU") in options
+		switch(UserInput)
 			if("Unlock")
-				if(!locked || building) return
+				if (building)
+					boutput(user, "<span class='alert'>Lock status can't be changed with a build in progress.</span>")
+					return
+				if(!locked) return
 				boutput(user, "<span class='notice'>The machine unlocks and shuts down.</span>")
 				deactivate()
 
 			if("Lock")
-				if(locked || building) return
+				if (building)
+					boutput(user, "<span class='alert'>Lock status can't be changed with a build in progress.</span>")
+					return
+				if(locked) return
 				if(!currentBp)
-					boutput(user, "<span class='alert'>The machine requires a blueprint before it can be locked</span>")
+					boutput(user, "<span class='alert'>The machine requires a blueprint before it can be locked.</span>")
 					return
 				boutput(user, "<span class='notice'>The machine locks into place and begins humming softly.</span>")
 				activate()
 
 			if("Begin Building")
-				if(building) return
+				if(building)
+					boutput(user, "<span class='alert'>A build job is already in progress.</span>")
+					return
 				if(!locked)
 					boutput(user, "<span class='alert'>The machine must be locked into place before activating it.</span>")
 					return
@@ -132,21 +161,24 @@
 				prepareBuild()
 
 			if("Eject Blueprint")
-				if(building) return
-				if(locked)
-					boutput(user, "<span class='alert'>Can not eject blueprint while machine is locked.</span>")
+				//if(building) return
+				if(locked || building)
+					boutput(user, "<span class='alert'>Can not eject blueprint while machine is locked or building.</span>")
+					return
+				if (!currentBp)
+					boutput(user, "<span class='alert'>No blueprint to eject.</span>")
 					return
 				currentBp.set_loc(src.loc)
 				currentBp = null
 
 			if("Dump Materials")
-				if(building) return
+				//if(building) return
 				for(var/obj/o in src)
 					if(o == currentBp) continue
 					o.set_loc(src.loc)
 
 			if("Check Materials")
-				if(building) return
+				//if(building) return
 				var/metal_cnt = 0
 				var/glass_cnt = 0
 
@@ -163,6 +195,21 @@
 				boutput(user, "<span class='notice'>Currently loaded :</span>")
 				boutput(user, "<span class='notice'>[metal_cnt] of [currentBp ? currentBp.req_metal : "-"] required metal</span>")
 				boutput(user, "<span class='notice'>[glass_cnt] of [currentBp ? currentBp.req_glass : "-"] required glass</span>")
+
+			if ("Resume Construction")
+				if (!building)
+					boutput(user, "<span class='alert'>There's no build in progress.</span>")
+					return
+				if (!Paused)
+					boutput(user, "<span class='alert'>It's already unpaused.</span>")
+					return
+				src.unpauseBuild()
+
+			if ("Cancel Build")
+				if (!building)
+					boutput(user, "<span class='alert'>There's no build in progress.</span>")
+					return
+				src.endBuild()
 		return
 
 	process()
@@ -542,7 +589,7 @@
 /verb/adminDumpBlueprint()
 	set name = "Blueprint Dump"
 	set desc = "Dumps readable HTML blueprint, of any user, to your client folder."
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 	var/list/userlist = flist("data/blueprints/")
 	var/inputuser = tgui_input_list(usr, "Select a user by ckey.", "Users", userlist)
@@ -557,7 +604,7 @@
 	usr.client.Export("data/blueprints/[inputuser]/[inputbp].txt")
 	fdel("data/blueprints/[inputuser]/[inputbp].txt")
 
-	boutput(usr, "<span class='notice'>Dumped blueprint to BYOND user data folder.</span>") // leaves a trailing slash
+	boutput(usr, "<span class='notice'>Dumped blueprint to BYOND user data folder.</span>")
 
 /obj/item/blueprint
 	name = "Blueprint"
