@@ -244,7 +244,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 	New()
 		..()
-		access = morrigan_access() - list(access_morrigan_exit)
+		access = morrigan_access() - list(access_morrigan_exit, access_morrigan_HOS)
 
 /obj/item/card/id/morrigan/all_access
 	name = "Number 3 (Hafgan Executive)"
@@ -510,7 +510,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 			return 1
 
 		if (prob(10) && !src.stat)
-			src.say(pick( "I neeeda zzrink...", "Fugh...", "Where me am...", "I pischd on duh floor...","Why duh bluee ann sen how..."))
+			src.say(pick( "I neeeda zzrink...", "Fugh...", "Where me am...", "I pischd on duh floor...","Why duh bluee ann sen how...","AAAAAAAAAAAAAAAAH CHOOO!"))
+
+	initializeBioholder()
+		. = ..()
+		randomize_look(src, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, src)
 
 /mob/living/carbon/human/hobo/laraman
 	real_name = "The Lara Man"
@@ -524,7 +528,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 		src.setStatusMin("weakened", 10 SECONDS)
 		if (prob(10))
-			src.say(pick( "Don't look for Lara...", "Lara??", "Lara the oven!", "Please don't talk to Lara", "LAAAAARRRAAAAAAAA!!!" ,"L-Lara."))
+			src.say(pick( "Don't look for Lara...", "Lara??", "Lara the oven!", "Please don't talk to Lara", "LAAAAARRRAAAAAAAA!!!" ,"L-Lara.","Do you know where Lara is?"))
+
+	initializeBioholder()
+		. = ..()
+		randomize_look(src, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, src)
+
 
 /mob/living/carbon/human/morrigansec
 	New()
@@ -535,6 +544,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		src.equip_new_if_possible((/obj/item/clothing/suit/armor/vest), SLOT_WEAR_SUIT)
 		src.equip_new_if_possible((/obj/item/clothing/shoes/swat), SLOT_SHOES)
 
+	initializeBioholder()
+		. = ..()
+		randomize_look(src, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, src)
+
 /mob/living/carbon/human/morriganntop
 	New()
 		..()
@@ -542,6 +555,23 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		src.equip_new_if_possible((/obj/item/storage/backpack/brown), SLOT_BACK)
 		src.equip_new_if_possible((/obj/item/card/id/morrigan/captain), SLOT_IN_BACKPACK)
 		src.equip_new_if_possible((/obj/item/clothing/shoes/swat), SLOT_SHOES)
+
+	initializeBioholder()
+		. = ..()
+		randomize_look(src, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, src)
+
+mob/living/carbon/human/morrigan_prisoner
+	New()
+		..()
+		src.equip_new_if_possible((/obj/item/clothing/under/misc/prisoner), SLOT_W_UNIFORM)
+		src.equip_new_if_possible((/obj/item/storage/backpack/brown), SLOT_BACK)
+		src.equip_new_if_possible((/obj/item/weldingtool), SLOT_IN_BACKPACK)
+		src.equip_new_if_possible((/obj/item/clothing/shoes/orange), SLOT_SHOES)
+
+	initializeBioholder()
+		. = ..()
+		randomize_look(src, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, src)
+
 
 /mob/living/critter/human/hobo
 	name = "Hobo"
@@ -551,6 +581,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	faction = FACTION_GENERIC
 	ai_type = /datum/aiHolder/aggressive
 	human_to_copy = /mob/living/carbon/human/hobo
+	var/speak_lines
 
 /mob/living/critter/human/hobo/dagger
 	hand_count = 2
@@ -575,6 +606,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		HH.can_hold_items = FALSE
 		HH.object_for_inhand = /obj/item/scrapweapons/weapons/dagger
 
+	seek_target(range)
+		. = ..()
+
+		if (length(.) && prob(10) && src.speak_lines)
+			src.say(pick("FUCK FUCK FUCK!", "CR-CRANK BABY!", "MORMGHRMGINIAD!", "YOU WERE THERE!!", "Ohh...oohhh....", "BUTTER THEY HAD MY BUTTER!!!", "Shrughaldin...AAAAAH!", "SPIDER FACE!!"))
+
+
 /mob/living/critter/human/hobo/club
 	hand_count = 2
 
@@ -598,6 +636,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		HH.icon_state = "handr"
 		HH.limb_name = "right arm"
 
+	seek_target(range)
+		. = ..()
+
+		if (length(.) && prob(10) && src.speak_lines)
+			src.say(pick("WOOOOOSHHH WEEEEEEE!", "ORDER 3 SANDWICHES, 3 OF THEM!", "IS THAT YOU MOM ??!", "Urgh...piss...", "If you are injured, I advise applying pressure to the wound until the medics arrive.", "KAAAAAAAWAAAAAAAAAAAAA!", "Rat FOOD!!", "XDEOBLD....EOWA"))
+
+
 /mob/living/critter/human/hobo/machete
 	hand_count = 2
 
@@ -620,6 +665,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		HH.suffix = "-R"
 		HH.icon_state = "handr"
 		HH.limb_name = "right arm"
+
+	seek_target(range)
+		. = ..()
+
+		if (length(.) && prob(10) && src.speak_lines)
+			src.say(pick("WEEEEWOOOOOWEEEEWOOOOO.", "A B C D E ....", "LOOK AT ME, I AM THE CAPTAIN NOW.", "Fuckers got my cash...", "WANNA SCRAP YOU WIMP?", "TOENAILS, TOENAILS...", "Mmmmerghh...mmm....", "OWNED??"))
+
 
 /mob/living/carbon/human/syndicatemorrigan
 	New()
@@ -754,6 +806,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /area/morrigan/routing/transport
 	name = "Prisoner Transport"
+	sound_loop = 'sound/ambience/morrigan/secamb.ogg'
+	sound_loop_vol = 75
 
 /area/morrigan/construction
 	name = "Construction Area"
@@ -798,6 +852,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 // Security areas
 
 /area/morrigan/station/security
+	sound_loop = 'sound/ambience/morrigan/secamb.ogg'
+	sound_loop_vol = 75
 
 /area/morrigan/station/security/brig
 	name = "Morrigan Brig"
@@ -819,6 +875,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /area/morrigan/station/medical
 	icon_state = "blue"
+	sound_loop = 'sound/ambience/morrigan/medbayambi.ogg'
+	sound_loop_vol = 75
 
 /area/morrigan/station/medical/main
 	name = "Morrigan Medical Centre"
@@ -835,20 +893,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /area/morrigan/station/medical/robotics
 	name = "Morrigan Robotics"
-
-/area/morrigan/station/medical/cloning
-	name = "Morrigan Cloning"
-
-/area/morrigan/station/medical/genetics
-	name = "Morrigan Genetics"
-
-/area/morrigan/station/medical/biological
-	name = "Morrigan Bio-Lab"
-	icon_state = "medcdc"
+	sound_loop = 'sound/ambience/morrigan/repairamb.ogg'
+	sound_loop_vol = 75
 
 /area/morrigan/station/science
 	name = "Morrigan Science Centre"
 	icon_state = "science"
+	sound_loop = 'sound/ambience/morrigan/sciamb.ogg'
+	sound_loop_vol = 75
 
 // Engineering areas
 
@@ -877,22 +929,25 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /area/morrigan/station/civilian/bar
 	name = "Morrigan Bar"
 	icon_state = "bar"
+	sound_loop = 'sound/ambience/morrigan/kitchenamb.ogg'
+	sound_loop_vol = 75
 
 /area/morrigan/station/civilian/kitchen
 	name = "Morrigan Kitchen"
 	icon_state = "kitchen"
-
+	sound_loop = 'sound/ambience/morrigan/kitchenamb.ogg'
+	sound_loop_vol = 75
 /area/morrigan/station/civilian/cafe
 	name = "Morrigan Mess Hall"
 	icon_state = "cafeteria"
-/area/morrigan/station/civilian/chapel
-	name = "Morrigan Chapel"
-	icon_state = "chapel"
+	sound_loop = 'sound/ambience/morrigan/kitchenamb.ogg'
+	sound_loop_vol = 75
 
 /area/morrigan/station/civilian/crewquarters
 	name = "Morrigan Crew Lounge"
 	icon_state = "crewquarters"
-
+	sound_loop = 'sound/ambience/morrigan/crewquateramb.ogg'
+	sound_loop_vol = 75
 /area/morrigan/station/civilian/janitor
 	name = "Morrigan Janitor's Office"
 	icon_state = "janitor"
@@ -948,6 +1003,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /area/morrigan/station/hallway
 	name = "Morrigan Hall"
 	icon_state = "yellow"
+	sound_loop = 'sound/ambience/morrigan/hallwaysamb.ogg'
+	sound_loop_vol = 75
 
 /area/morrigan/station/exit
 	name = "Morrigan Escape Wing"
@@ -989,9 +1046,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /area/morrigan/station/podbay
 	icon_state = "hangar"
-
-/area/morrigan/station/podbay/security
-	name = "Morrigan Security Podbay"
 
 /area/morrigan/station/podbay/medical
 	name = "Morrigan Medical Podbay"
@@ -1369,7 +1423,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /obj/storage/secure/closet/morrigan/hos
 	name = "Head of Security's locker"
 	reinforced = TRUE
-	req_access = list(access_morrigan_HOS, access_morrigan_exit)
+	req_access = list(access_morrigan_HOS)
 	spawn_contents = list()
 
 /obj/storage/secure/closet/morrigan/ce
@@ -1449,15 +1503,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon_state = "medical"
 	icon_closed = "medical"
 	icon_opened = "secure_white-open"
-	spawn_contents = list()
-
-/obj/storage/secure/closet/morrigan/patho
-	name = "Pathology Locker"
-	reinforced = TRUE
-	req_access = list(access_morrigan_medical, access_morrigan_mdir, access_morrigan_captain, access_morrigan_exit)
-	icon_state = "secure_oj"
-	icon_closed = "secure_oj"
-	icon_opened = "secure_oj-open"
 	spawn_contents = list()
 
 // Secure Crates
@@ -2344,13 +2389,13 @@ TYPEINFO(/obj/item/gun/energy/peacebringer)
 			charge_icon_state = "peacebringer"
 			muzzle_flash = "muzzle_flash_laser"
 			item_state = "peacebringer"
-			playsound('sound/weapons/peacebringerswap.ogg', 100, 100)
+			playsound('sound/weapons/peacebringerswap.ogg', 50, 0)
 		else if (current_projectile.type == /datum/projectile/laser/peacebringerless)
 			icon = 'icons/obj/adventurezones/morrigan/weapons/gun.dmi'
 			charge_icon_state = "peaceless"
 			muzzle_flash = "muzzle_flash_waveg"
 			item_state = "peacebringerless"
-			playsound('sound/weapons/peacebringerswap2.ogg', 100, 100)
+			playsound('sound/weapons/peacebringerswap2.ogg', 50, 0)
 		..()
 
 	attack_self(var/mob/M)
@@ -2417,12 +2462,49 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 	uses_charge_overlay = TRUE
 	muzzle_flash = "muzzle_flash_bluezap"
 	charge_icon_state = "lasershotgun"
-	spread_angle = 2
+	var/racked_slide = FALSE
+
 
 	New()
-		set_current_projectile(new/datum/projectile/laser/lasershotgun)
-		projectiles = list(new/datum/projectile/laser/lasershotgun)
+		set_current_projectile(new/datum/projectile/special/spreader/tasershotgunspread/morriganshotgun)
+		projectiles = list(new/datum/projectile/special/spreader/tasershotgunspread/morriganshotgun)
 		..()
+
+	canshoot(mob/user)
+		return(..() && src.racked_slide)
+
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if(cell_type > 50 && !racked_slide)
+			boutput(user, "<span class='notice'>You need to vent before you can fire!</span>")
+		..()
+		src.racked_slide = FALSE
+
+	shoot_point_blank(atom/target, mob/user, second_shot)
+		if(cell_type > 50 && !racked_slide)
+			boutput(user, "<span class='notice'>You need to vent before you can fire!</span>")
+			return
+		..()
+		src.racked_slide = FALSE
+
+	attack_self(mob/user as mob)
+		..()
+		src.rack(user)
+
+	proc/rack(var/atom/movable/user)
+		var/mob/mob_user = null
+		if(ismob(user))
+			mob_user = user
+		if (!src.racked_slide)
+			if (src.cell_type < 50)
+				boutput(mob_user, "<span class ='notice'>You are out of energy!</span>")
+
+			else
+				src.racked_slide = TRUE
+				boutput(mob_user, "<span class='notice'>You release some heat from the shotgun!</span>")
+				playsound(user.loc, 'sound/ambience/morrigan/steamrelease.ogg', 50, 1)
+
+
+
 
 //projectiles
 /datum/projectile/bullet/optio/hitscanrail
@@ -2594,20 +2676,29 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 		. = ..()
 		O.AddComponent(/datum/component/proj_mining, 0.2, 2)
 
-/datum/projectile/laser/lasershotgun
-	name = "RLP Mode"
-	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "optio"
-	shot_sound = 'sound/weapons/shotgunlaser.ogg'
-	dissipation_delay = 5
-	dissipation_rate = 8
-	cost = 200
-	damage = 25
+/datum/projectile/special/spreader/tasershotgunspread/morriganshotgun
+	name = "laser"
+	sname = "shotgun spread"
+	cost = 50
+	damage = 15
 	damage_type = D_ENERGY
-	shot_number = 2
-	color_red = 0
-	color_green = 0
-	color_blue = 1
+	pellets_to_fire = 3
+	spread_projectile_type = /datum/projectile/laser/lasershotgun
+	split_type = 0
+	shot_sound = 'sound/weapons/shotgunlaser.ogg'
+
+/datum/projectile/laser/lasershotgun
+	name = "Lethal Mode"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "redbolt"
+	shot_sound = 'sound/weapons/shotgunlaser.ogg'
+	cost = 50
+	damage = 15
+	shot_number = 1
+
+	sname = "lethal"
+	damage_type = D_ENERGY
+	hit_ground_chance = 30
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if(!ismob(hit))
