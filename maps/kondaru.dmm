@@ -44825,7 +44825,7 @@
 /area/station/security/secwing)
 "mVi" = (
 /obj/fluid_spawner{
-	amount = 2100
+	amount = 3600
 	},
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
