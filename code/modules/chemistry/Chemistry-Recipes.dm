@@ -3461,6 +3461,26 @@
 		max_temperature = 0
 
 
+	aerosol  //aerosol's reaction when crossing the heat threshold
+		name = "Aerosol"
+		id   = "aerosolheat"
+		required_reagents = list("propellant" = 1)
+		result_amount = 1
+		mix_phrase = "The mixture quickly turns into a pall of smoke!"
+		hidden = TRUE
+		min_temperature = T0C + 100
+
+		does_react(var/datum/reagents/holder) //making sure it doesn't smoke itself while inside a closed container
+			if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
+				return TRUE
+			else
+				return FALSE
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			if (holder)
+				SPAWN(1 DECI SECOND)
+					holder.smoke_start(created_volume,classic = 1)
+
 	smokepowder
 		name = "Smoke Powder"
 		id = "smokepowder"
