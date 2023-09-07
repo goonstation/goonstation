@@ -397,7 +397,7 @@
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/tscanner_toggle
-	name = "Toggle T-Scanner"
+	name = "Toggle T-Ray Scanner"
 	icon_state = "lightoff" //TODO: make bespoke sprites for this I guess
 
 	execute_ability()

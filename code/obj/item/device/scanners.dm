@@ -31,9 +31,9 @@ TYPEINFO(/obj/item/device/t_scanner)
 	var/find_interesting = TRUE
 	var/list/setting_context_actions
 	contextLayout = new /datum/contextLayout/experimentalcircle
-	var/show_cables = TRUE
-	var/show_current_pipes = TRUE
-	var/show_initial_pipes = TRUE
+	var/show_underfloor_cables = TRUE
+	var/show_underfloor_disposal_pipes = TRUE
+	var/show_blueprint_disposal_pipes = TRUE
 
 	New()
 		..()
@@ -52,20 +52,20 @@ TYPEINFO(/obj/item/device/t_scanner)
 		else
 			processing_items |= src
 
-	proc/set_cables(state, mob/user=null)
-		show_cables = state
+	proc/set_underfloor_cables(state, mob/user=null)
+		show_underfloor_cables = state
 		if(user)
-			boutput(user, "You turn [show_cables ? "on" : "off"] showing underfloor cables on [src].")
+			boutput(user, "You switch [src] to [show_underfloor_cables ? "show" : "hide"] underfloor cables.")
 
-	proc/set_current_pipes(state, mob/user=null)
-		show_current_pipes = state
+	proc/set_underfloor_disposal_pipes(state, mob/user=null)
+		show_underfloor_disposal_pipes = state
 		if(user)
-			boutput(user, "You turn [show_current_pipes ? "on" : "off"] showing underfloor pipes on [src].")
+			boutput(user, "You switch [src] to [show_underfloor_disposal_pipes ? "show" : "hide"] underfloor disposal pipes.")
 
-	proc/set_initial_pipes(state, mob/user=null)
-		show_initial_pipes = state
+	proc/set_blueprint_disposal_pipes(state, mob/user=null)
+		show_blueprint_disposal_pipes = state
 		if(user)
-			boutput(user, "You turn [show_initial_pipes ? "on" : "off"] showing pipe blueprints on [src].")
+			boutput(user, "You switch [src] to [show_blueprint_disposal_pipes ? "show" : "hide"] disposal pipe blueprints.")
 
 	attack_self(mob/user)
 		user.showContextActions(setting_context_actions, src, contextLayout)
@@ -128,11 +128,11 @@ TYPEINFO(/obj/item/device/t_scanner)
 				else if(isobj(A))
 					var/obj/O = A
 					if (O.level == OVERFLOOR && !istype(O, /obj/disposalpipe))
+						continue // show unsecured pipes behind walls
+					if (!show_underfloor_cables && istype(O, /obj/cable))
 						continue
-					if (!show_cables && istype(O, /obj/cable))
+					if (!show_underfloor_disposal_pipes && istype(O, /obj/disposalpipe))
 						continue
-					if (!show_current_pipes && istype(O, /obj/disposalpipe))
-						continue // initial pipes view toggle controlled below
 				var/image/img = image(A.icon, icon_state=A.icon_state, dir=A.dir)
 				img.plane = PLANE_SCREEN_OVERLAYS
 				img.color = A.color
@@ -141,7 +141,7 @@ TYPEINFO(/obj/item/device/t_scanner)
 				img.appearance_flags = RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 				display.overlays += img
 
-			if (show_initial_pipes && T.disposal_image)
+			if (show_underfloor_disposal_pipes && T.disposal_image)
 				display.overlays += T.disposal_image
 
 			if(length(display.overlays))

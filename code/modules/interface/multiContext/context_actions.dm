@@ -1301,7 +1301,6 @@
 
 	active
 		name = "Turn on/off"
-		desc = ""
 		icon_state = "bulb"
 
 		execute(var/obj/item/device/t_scanner/t_scanner, mob/user)
@@ -1309,26 +1308,26 @@
 			var/obj/ability_button/tscanner_toggle/tscanner_button = locate(/obj/ability_button/tscanner_toggle) in t_scanner.ability_buttons
 			tscanner_button.icon_state = t_scanner.on ? "lighton" : "lightoff"
 
-	cables
-		name = "Underfloor cables"
-		desc = "Toggle displaying wires under the floor"
+	underfloor_cables
+		name = "Underfloor Power Cables"
+		desc = "Toggle showing power cables located under the floor."
 		icon_state = "cut"
 
-		execute(var/obj/item/device/t_scanner/t_scanner, mob/user)
-			t_scanner.set_cables(!t_scanner.show_cables, user)
+		execute(obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_underfloor_cables(!t_scanner.show_underfloor_cables, user)
 
-	current_pipes
-		name = "Underfloor pipes"
-		desc = "Toggle displaying current pipes under the floor"
+	underfloor_disposal_pipes
+		name = "Underfloor Disposal Pipes"
+		desc = "Toggle showing disposal pipes located under the floor."
 		icon_state = "weld"
 
-		execute(var/obj/item/device/t_scanner/t_scanner, mob/user)
-			t_scanner.set_current_pipes(!t_scanner.show_current_pipes, user)
+		execute(obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_underfloor_disposal_pipes(!t_scanner.show_underfloor_disposal_pipes, user)
 
-	initial_pipes
-		name = "Pipe blueprint"
-		desc = "Toggle displaying the station's pipe blueprint"
+	blueprint_disposal_pipes
+		name = "Disposal Pipe Blueprints"
+		desc = "Toggle showing the original blueprints for disposal pipes."
 		icon_state = "cog"
 
-		execute(var/obj/item/device/t_scanner/t_scanner, mob/user)
-			t_scanner.set_initial_pipes(!t_scanner.show_initial_pipes, user)
+		execute(obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_blueprint_disposal_pipes(!t_scanner.show_blueprint_disposal_pipes, user)
