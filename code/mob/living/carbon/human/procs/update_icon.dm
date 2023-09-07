@@ -28,14 +28,23 @@
 					thing.dropped(src)
 					thing.layer = initial(thing.layer)
 
-	src.UpdateOverlays(src.body_standing, "body")
-	src.UpdateOverlays(src.hands_standing, "hands")
-	src.UpdateOverlays(src.body_damage_standing, "body_damage")
-	src.UpdateOverlays(src.head_damage_standing, "head_damage")
-	src.UpdateOverlays(src.l_arm_damage_standing, "l_arm_damage")
-	src.UpdateOverlays(src.r_arm_damage_standing, "r_arm_damage")
-	src.UpdateOverlays(src.l_leg_damage_standing, "l_leg_damage")
-	src.UpdateOverlays(src.r_leg_damage_standing, "r_leg_damage")
+	#define UPDATE_OVERLAY(X) \
+		if(src.X ## _standing?.icon_state && src.X ## _standing.icon_state != "00") {\
+			src.UpdateOverlays(src.X ## _standing, #X); \
+		} else { \
+			src.UpdateOverlays(null, #X, 1, 1); \
+		}
+
+	UPDATE_OVERLAY(body)
+	UPDATE_OVERLAY(hands)
+	UPDATE_OVERLAY(body_damage)
+	UPDATE_OVERLAY(head_damage)
+	UPDATE_OVERLAY(l_arm_damage)
+	UPDATE_OVERLAY(r_arm_damage)
+	UPDATE_OVERLAY(l_leg_damage)
+	UPDATE_OVERLAY(r_leg_damage)
+
+	#undef UPDATE_OVERLAY
 
 	UpdateOverlays(src.fire_standing, "fire")
 
