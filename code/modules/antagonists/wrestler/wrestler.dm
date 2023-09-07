@@ -13,9 +13,43 @@
 
 	give_equipment(fake_equipment = FALSE)
 		src.fake = fake_equipment
+		src.owner.current.add_wrestle_powers(fake_equipment)
 		if (ismobcritter(src))
 			display_name = "wrestledoodle"
-		src.owner.current.add_wrestle_powers(fake_equipment)
+			return
+
+		// Assign wrestle attire.
+		if (ishuman(src.owner.current))
+			var/mob/living/carbon/human/H = src.owner.current
+			H.unequip_all(TRUE)
+			H.equip_new_if_possible(/obj/item/storage/backpack, SLOT_BACK)
+			H.equip_new_if_possible(/obj/item/device/radio/headset/civilian, SLOT_EARS)
+			H.equip_new_if_possible(/obj/item/tank/emergency_oxygen/extended, SLOT_L_STORE)
+			if (prob(50)) // Are they a luchador or not?
+				var/obj/item/clothing/mask/rand_mask = get_random_subtype (/obj/item/clothing/mask/wrestling)
+				H.equip_new_if_possible(rand_mask, SLOT_WEAR_MASK)
+				var/obj/item/clothing/under/shorts/luchador/rand_shorts = get_random_subtype (/obj/item/clothing/under/shorts/luchador)
+				H.equip_new_if_possible(rand_shorts, SLOT_W_UNIFORM)
+			else
+				if (prob(50))
+					var/obj/item/clothing/under/shorts/rand_shorts = get_random_subtype (/obj/item/clothing/under/shorts)
+					H.equip_new_if_possible(rand_shorts, SLOT_W_UNIFORM)
+				else
+					H.equip_new_if_possible(/obj/item/clothing/under/gimmick/macho/random_color, SLOT_W_UNIFORM)
+				if (prob(33))
+					H.equip_new_if_possible(/obj/item/clothing/head/bandana/random_color, SLOT_HEAD)
+			var/obj/item/clothing/under/shorts/rand_shoes
+			switch(pick(1, 2, 3, 4))
+				if(1)
+					rand_shoes = /obj/item/clothing/shoes/macho
+				if(2)
+					rand_shoes = /obj/item/clothing/shoes/cowboy
+				if(3)
+					rand_shoes = pick(/obj/item/clothing/shoes/bootsblk, /obj/item/clothing/shoes/bootswht, /obj/item/clothing/shoes/bootsblu)
+				if(4)
+					rand_shoes = /obj/item/clothing/shoes/black
+			H.equip_new_if_possible(rand_shoes, SLOT_SHOES)
+			H.equip_new_if_possible(/obj/item/storage/belt/macho_belt, SLOT_BELT)
 
 	remove_equipment()
 		src.owner.current.remove_wrestle_powers(src.fake)

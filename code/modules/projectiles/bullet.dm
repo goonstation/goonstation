@@ -479,7 +479,7 @@ toxic - poisons
 	drop_as_ammo(obj/projectile/P)
 		var/obj/item/ammo/bullets/foamdarts/dropped = ..()
 		if (dropped)
-			dropped.changeStatus("acid", 3 SECONDS) // this will probably bug out if someone manages to load it into a gun. problem for later
+			dropped.changeStatus("acid", 3 SECONDS, list("message" = null)) // this will probably bug out if someone manages to load it into a gun. problem for later
 
 //0.40
 /datum/projectile/bullet/blow_dart
@@ -1235,6 +1235,7 @@ datum/projectile/bullet/autocannon
 	window_pass = 0
 	icon_state = "40mm_lethal"
 	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
 	damage = 25
 	dissipation_delay = 20
 	cost = 1
@@ -1265,10 +1266,12 @@ datum/projectile/bullet/autocannon
 			if (src.has_grenade == 0)
 				if (istype(W,/obj/item/chem_grenade))
 					src.CHEM = W
+					src.damage = CHEM.launcher_damage
 					src.has_grenade = 1
 					return 1
 				else if (istype(W, /obj/item/old_grenade))
 					src.OLD = W
+					src.damage = OLD.launcher_damage
 					src.has_grenade = 1
 					return 1
 				else
@@ -1390,7 +1393,7 @@ datum/projectile/bullet/autocannon
 					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 
 			T.hotspot_expose(700,125)
-			explosion_new(null, T, 36, 0.45)
+			explosion_new(null, T, 36, range_cutoff_fraction = 0.45)
 		return
 
 /datum/projectile/bullet/homing
@@ -1486,7 +1489,7 @@ datum/projectile/bullet/autocannon
 					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 
 			T.hotspot_expose(700,125)
-			explosion_new(null, T, 15, 0.45)
+			explosion_new(null, T, 15, range_cutoff_fraction = 0.45)
 		return
 
 /datum/projectile/bullet/antisingularity
@@ -1597,6 +1600,17 @@ datum/projectile/bullet/autocannon
 	icon_state = "2metal0"
 	casing = null
 	impact_image_state = "bhole-staple"
+
+	shrapnel_implant
+		implanted = /obj/item/implant/projectile/shrapnel
+
+/datum/projectile/bullet/glass_shard // for explosions of glass
+	name = "glass"
+	damage_type = D_PIERCING
+	icon_state = "glass"
+	implanted = /obj/item/implant/projectile/glass_shard
+	window_pass = FALSE
+	damage = 6
 
 /datum/projectile/bullet/howitzer
 	name = "howitzer round"
@@ -1728,3 +1742,26 @@ datum/projectile/bullet/autocannon
 	shot_sound = null
 	projectile_speed = 12
 	implanted = null
+
+/datum/projectile/bullet/wall_buster_shrapnel // for nuclear meltdowns
+	name = "shrapnel"
+	damage = 70
+	damage_type = D_PIERCING
+	armor_ignored = 0.66
+	hit_type = DAMAGE_CUT
+	window_pass = 0
+	icon = 'icons/obj/scrap.dmi'
+	icon_state = "2metal0"
+	casing = null
+	impact_image_state = "bhole-staple"
+	implanted = /obj/item/implant/projectile/shrapnel/radioactive
+
+	on_hit(atom/hit, angle, obj/projectile/O)
+		if(!ismob(hit))
+			//I'm onto you with your stacks of thindows
+			if(!isturf(hit)) //did you know that turf.loc is /area? because I didn't
+				for(var/obj/window/maybe_thindow in hit.loc)
+					maybe_thindow.ex_act(2)
+			//let's pretend these walls/objects were destroyed in the explosion
+			hit.ex_act(2)
+		. = ..()

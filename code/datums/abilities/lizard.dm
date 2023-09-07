@@ -83,13 +83,13 @@
 		if (..())
 			return 1
 
-		if (L.mutantrace && !istype(L.mutantrace, /datum/mutantrace/lizard) || !L.organHolder)
+		if (!istype(L.mutantrace, /datum/mutantrace/lizard) || !L.organHolder)
 			boutput(L, "<span class='notice'>You don't have any chromatophores.</span>")
 			return 1
 
 		//shoot off tail
 		if (L.organHolder?.tail)
-			var/obj/critter/livingtail/C = new /obj/critter/livingtail(get_turf(src.holder.owner))
+			var/mob/living/critter/small_animal/livingtail/C = new /mob/living/critter/small_animal/livingtail(get_turf(src.holder.owner))
 			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 			make_cleanable(/obj/decal/cleanable/blood/splatter, L.loc)
 			C.tail_memory = L.organHolder.tail
@@ -114,7 +114,7 @@
 		if (..())
 			return 1
 
-		if (L.mutantrace && !istype(L.mutantrace, /datum/mutantrace/lizard))
+		if (!istype(L.mutantrace, /datum/mutantrace/lizard))
 			boutput(L, "<span class='notice'>You don't have any chromatophores.</span>")
 			return 1
 
@@ -144,7 +144,7 @@
 		if (..())
 			return 1
 
-		if (L.mutantrace && !istype(L.mutantrace, /datum/mutantrace/lizard))
+		if (!istype(L.mutantrace, /datum/mutantrace/lizard))
 			boutput(L, "<span class='notice'>You're fresh out of chromatophores.</span>")
 			return 1
 
@@ -208,5 +208,5 @@
 		..()
 
 	onInterrupt()
-		boutput(L, "You were interrupted, snapping your [region_name] back to the color it was!")
+		boutput(L, "<span class='alert'>You were interrupted, snapping your [region_name] back to the color it was!")
 		..()

@@ -3,17 +3,17 @@
 	icon_state = "fireball"
 	icon = 'icons/obj/wizard.dmi'
 	shot_sound = 'sound/effects/mag_fireballlaunch.ogg'
-	damage = 20
+	damage = 30
 	
 	is_magical = 1
 
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
 		var/turf/T = get_turf(hit)
 		if (projectile.mob_shooter && projectile.mob_shooter:wizard_spellpower(projectile.mob_shooter:abilityHolder:getAbility(/datum/targetable/spell/fireball)))
-			explosion(projectile, T, -1, -1, 2, 2)
+			explosion_new(null, T, 3, 1.5, turf_safe = TRUE, range_cutoff_fraction = 0.75)
 		else if(projectile.mob_shooter)
 			if(prob(50))
-				explosion(projectile, T, -1, -1, 1, 1)
+				explosion_new(null, T, 2, 1.2, turf_safe = TRUE)
 			boutput(projectile.mob_shooter, "<span class='notice'>Your spell is weakened without a staff to channel it.</span>")
 		fireflash(T, 1, 1)
 
@@ -31,7 +31,7 @@
 	icon_state = "fireball"
 	targeted = 1
 	target_anything = 1
-	cooldown = 350
+	cooldown = 400
 	requires_robes = 1
 	requires_being_on_turf = TRUE
 	offensive = 1
@@ -48,7 +48,7 @@
 			holder.owner.say("MHOL HOTTOV", FALSE, maptext_style, maptext_colors)
 		..()
 
-		var/obj/projectile/P = initialize_projectile_ST( holder.owner, fb_proj, target)
+		var/obj/projectile/P = initialize_projectile_pixel_spread( holder.owner, fb_proj, target)
 		if (P)
 			P.mob_shooter = holder.owner
 			P.launch()
@@ -64,7 +64,7 @@
 	var/datum/projectile/fireball/fire_elemental/fb_proj = new
 
 	cast(atom/target)
-		var/obj/projectile/P = initialize_projectile_ST( holder.owner, fb_proj, target )
+		var/obj/projectile/P = initialize_projectile_pixel_spread( holder.owner, fb_proj, target )
 		logTheThing(LOG_COMBAT, usr, "used their [src.name] ability at [log_loc(usr)]")
 		if (P)
 			P.mob_shooter = holder.owner

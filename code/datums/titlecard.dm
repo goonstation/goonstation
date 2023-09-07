@@ -3,35 +3,35 @@
 	var/global/last_pregame_html = ""
 
 	#if defined(MAP_OVERRIDE_OSHAN)
-	var/image_url = "images/oshan_titlecard.png"
+	var/image_url = "images/titlecards/oshan_titlecard.png"
 	#elif defined(MAP_OVERRIDE_MANTA)
-	var/image_url = "images/manta_titlecard.png"
+	var/image_url = "images/titlecards/manta_titlecard.png"
 	#else
-	var/image_url = "images/main_titlecard.gif"
+	var/image_url = "images/titlecards/main_titlecard.gif"
 	#endif
 	var/is_game_mode = FALSE
 	var/add_html = ""
 	var/overlay_image_url = null
 
 	heisenbee
-		image_url = "images/heisenbee_titlecard.png"
+		image_url = "images/titlecards/heisenbee_titlecard.png"
 		add_html = {"<a href="https://www.deviantart.com/alexbluebird" target="_blank" style="position:absolute;bottom:3px;right:3px;color:white;opacity:0.7;">by AlexBlueBird</a>"}
 
 	hehe
-		image_url = "images/hehe_titlecard.png"
+		image_url = "images/titlecards/hehe_titlecard.png"
 
 	s
-		image_url = "images/s_titlecard.png"
+		image_url = "images/titlecards/s_titlecard.png"
 
 	nightshade
-		image_url = "images/nightshade_titlecard.png"
+		image_url = "images/titlecards/nightshade_titlecard.png"
 
 	disaster
-		overlay_image_url = "images/disaster_titlecard.gif"
+		overlay_image_url = "images/titlecards/disaster_titlecard.gif"
 		is_game_mode = TRUE
 
 	battleroyale
-		overlay_image_url = "images/battleroyale_titlecard.png"
+		overlay_image_url = "images/titlecards/battleroyale_titlecard.png"
 		is_game_mode = TRUE
 
 /datum/titlecard/proc/set_pregame_html()

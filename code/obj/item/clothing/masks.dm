@@ -270,6 +270,7 @@ TYPEINFO(/obj/item/voice_changer)
 	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discretely fits inside most masks, and can be removed with wirecutters."
 	icon_state = "voicechanger"
 	is_syndicate = 1
+	HELP_MESSAGE_OVERRIDE({"Use the voice changer on a face-concealing mask to fit it inside. You will speak as and appear in chat as the name of your worn ID, or as "unknown" if you aren't wearing your ID. Use wirecutters on the mask to remove the voice changer."})
 
 TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	mats = 12	// 2x voice changer cost. It's complicated ok
@@ -391,6 +392,8 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	color_b = 1
 	w_class = W_CLASS_SMALL
 	var/mob/living/carbon/human/victim
+	HELP_MESSAGE_OVERRIDE({"Wearing this mask as a clown traitor will allow it to be used as a gasmask.\n
+							You can force the mask directly onto someone's face by aiming at the head while they are lying down and click on them with the mask on any intent other than <span class='help'>help</span>."})
 
 	equipped(var/mob/user, var/slot)
 		. = ..()
@@ -439,7 +442,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		if ( reach <= 1 && user.mind && user.mind.assigned_role == "Clown" && istraitor(user) && istype(user,/mob/living/carbon/human) && istype(target,/mob/living/carbon/human) )
 			var/mob/living/carbon/human/U = user
 			var/mob/living/carbon/human/T = target
-			if ( U.a_intent != INTENT_HELP && U.zone_sel.selecting == "head" && T.can_equip(src,T.slot_wear_mask) )
+			if ( U.a_intent != INTENT_HELP && U.zone_sel.selecting == "head" && T.can_equip(src, SLOT_WEAR_MASK) )
 				U.visible_message("<span class='alert'>[src] latches onto [T]'s face!</span>","<span class='alert'>You slap [src] onto [T]'s face!'</span>")
 				logTheThing(LOG_COMBAT, user, "forces [T] to wear [src] (cursed clown mask) at [log_loc(T)].")
 				U.u_equip(src)
@@ -447,7 +450,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 				// If we don't empty out that slot first, it could blip the mask out of existence
 				T.drop_from_slot(T.wear_mask)
 
-				T.equip_if_possible(src,T.slot_wear_mask)
+				T.equip_if_possible(src, SLOT_WEAR_MASK)
 
 
 /obj/item/clothing/mask/medical
@@ -583,6 +586,11 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	item_state = "melons"
 	see_face = 0
 
+TYPEINFO(/obj/item/clothing/mask/wrestling)
+	random_subtypes = list(/obj/item/clothing/mask/wrestling,
+		/obj/item/clothing/mask/wrestling/black,
+		/obj/item/clothing/mask/wrestling/green,
+		/obj/item/clothing/mask/wrestling/blue)
 /obj/item/clothing/mask/wrestling
 	name = "wrestling mask"
 	desc = "A mask that will greatly enhance your wrestling prowess! Not, like, <i>physically</i>, but mentally. In your heart. In your soul. Something like that."
@@ -590,17 +598,17 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	item_state = "silvermask"
 	see_face = 0
 
-	black
-		icon_state = "blackmask"
-		item_state = "blackmask"
+/obj/item/clothing/mask/wrestling/black
+	icon_state = "blackmask"
+	item_state = "blackmask"
 
-	green
-		icon_state = "greenmask"
-		item_state = "greenmask"
+/obj/item/clothing/mask/wrestling/green
+	icon_state = "greenmask"
+	item_state = "greenmask"
 
-	blue
-		icon_state = "bluemask"
-		item_state = "bluemask"
+/obj/item/clothing/mask/wrestling/blue
+	icon_state = "bluemask"
+	item_state = "bluemask"
 
 /obj/item/clothing/mask/anime
 	name = "moeblob mask"

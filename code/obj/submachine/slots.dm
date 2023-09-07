@@ -292,10 +292,10 @@ TYPEINFO(/obj/submachine/slot_machine)
 	var/play_money = 0
 
 	attackby(var/obj/item/I, user)
-		if(istype(I, /obj/item/spacecash/))
+		if(istype(I, /obj/item/currency/spacecash/))
 			boutput(user, "<span class='notice'>You insert the cash into [src].</span>")
 
-			if(istype(I, /obj/item/spacecash/buttcoin))
+			if(istype(I, /obj/item/currency/spacecash/buttcoin))
 				boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
 			else
 				src.play_money += I.amount
@@ -402,7 +402,7 @@ TYPEINFO(/obj/submachine/slot_machine)
 					src.icon_state = "slots-off"
 					updateUsrDialog()
 			if(operation == 2) // Eject Card
-				new /obj/item/spacecash(src.loc, src.play_money)
+				new /obj/item/currency/spacecash(src.loc, src.play_money)
 				src.play_money = 0
 				src.working = 0
 				src.icon_state = "slots-off" // just in case, some fucker broke it earlier

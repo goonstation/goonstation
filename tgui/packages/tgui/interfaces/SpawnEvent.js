@@ -117,7 +117,12 @@ export const SpawnEvent = (props, context) => {
           </LabeledList>
         </Section>
         <Section align="center">
-          <Button onClick={() => act("spawn")}>Spawn</Button>
+          <Button
+            onClick={() => act("spawn")}
+            disabled={!thing_to_spawn || thing_to_spawn === '[0x0]'}
+          >
+            Spawn
+          </Button>
         </Section>
       </Window.Content>
     </Window>

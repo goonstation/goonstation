@@ -128,12 +128,26 @@ ADMIN_INTERACT_PROCS(/obj/machinery/traymachine, proc/eject_tray, proc/collect_t
 ///Tray comes out - probably override this if your tray should move weirdly
 /obj/machinery/traymachine/proc/eject_tray()
 	set name = "open"
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+
+	if (!is_cardinal(src.dir))
+		src.set_dir(src.dir & (NORTH | SOUTH))
 
 	var/turf/T_src = get_turf(src)
 	var/turf/T = T_src
 	for(var/i in 1 to src.bound_width / world.icon_size)
 		T = get_step(T, src.dir)
+
+	// stop the tray from extending into solid things
+	if (T.density && !istype(get_area(src), /area/solarium)) // Solarium gets an exception because this is a hilarious way to get Helios
+		playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
+		return
+	for(var/obj/O in T) // we still want to extend into mobs, no iterating over them
+		if (O.density && O.anchored) // it's ok to pull in unanchored stuff I guess!
+			playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
+			return
+
+	my_tray.set_dir(src.dir)
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 	//handle animation and ejection of contents
 	for(var/atom/movable/AM as anything in src)
@@ -150,6 +164,21 @@ ADMIN_INTERACT_PROCS(/obj/machinery/traymachine, proc/eject_tray, proc/collect_t
 		animate(AM, 1 SECOND, easing = BOUNCE_EASING, pixel_x = 0, pixel_y = 0)
 		animate(layer = orig_layer, easing = JUMP_EASING)
 	update()
+
+/obj/machinery/traymachine/set_dir(new_dir)
+	if(src.my_tray && src.my_tray.loc != src)
+		return
+	. = ..()
+
+/obj/machinery/traymachine/set_loc(atom/target)
+	if(src.my_tray && src.my_tray.loc != src)
+		return
+	. = ..()
+
+/obj/machinery/traymachine/Move(atom/target)
+	if(src.my_tray && src.my_tray.loc != src)
+		return
+	. = ..()
 
 ///Tray goes in
 /obj/machinery/traymachine/proc/collect_tray()
@@ -321,46 +350,57 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	var/ashes = 0
 	power_usage = powerdraw_use //gotta chug them watts
 	icon_state = "crema_active"
+	playsound(src.loc, 'sound/machines/crematorium.ogg', 90, 0)
 
-	for (var/M in contents)
-		if (M in non_tray_contents) continue
-		if (M == my_tray) continue //no cremating the tray tyvm
-		if (isliving(M))
-			var/mob/living/L = M
-			SPAWN(0)
-				L.changeStatus("stunned", 10 SECONDS)
+	for (var/mob/living/L in contents)
+		if (L in non_tray_contents)
+			continue
+		L.changeStatus("stunned", 10 SECONDS)
 
-				var/i
-				for (i = 0, i < 10, i++)
-					sleep(1 SECOND)
-					L.TakeDamage("chest", 0, 30)
-					if (!isdead(L) && prob(25))
-						L.emote("scream")
+	sleep(1 SECOND)
+	for (var/i in 1 to 10)
+		if(isnull(src))
+			return
+		for (var/mob/living/L in contents)
+			if (L in non_tray_contents)
+				continue
+			L.TakeDamage("chest", 0, 30)
+			if (!isdead(L) && prob(25))
+				L.emote("scream")
+		sleep(1 SECOND)
 
-				for (var/obj/item/W in L)
-					if (prob(10))
-						W.set_loc(L.loc)
+	if(isnull(src))
+		return
+	for (var/I in contents)
+		if (I in non_tray_contents)
+			continue
+		if (I == my_tray)	//no cremating the tray tyvm
+			continue
+		if (isliving(I))
+			var/mob/living/L = I
+			for (var/obj/item/W in L)
+				if (prob(10))
+					W.set_loc(L.loc)
 
-				logTheThing(LOG_COMBAT, user, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
-				L.remove()
-				ashes += 1
-
-		else if (!ismob(M))
+			logTheThing(LOG_COMBAT, user, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
+			L.remove()
+			ashes += 1
+		else if (!ismob(I))
 			if (prob(max(0, 100 - (ashes * 10))))
 				ashes += 1
-			qdel(M)
+		qdel(I)
 
-	SPAWN(10 SECONDS)
-		if (src)
-			src.visible_message("<span class='alert'>\The [src.name] finishes and shuts down.</span>")
-			src.locked = FALSE
-			power_usage = initial(power_usage)
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+	if(isnull(src))
+		return
+	src.visible_message("<span class='alert'>\The [src.name] finishes and shuts down.</span>")
+	src.locked = FALSE
+	power_usage = initial(power_usage)
+	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 
-			while (ashes > 0)
-				make_cleanable( /obj/decal/cleanable/ash,src)
-				ashes -= 1
-			update() //get rid of the active sprite
+	while (ashes > 0)
+		make_cleanable( /obj/decal/cleanable/ash,src)
+		ashes -= 1
+	update() //get rid of the active sprite
 
 
 //-----------------------------------------------------
@@ -496,18 +536,40 @@ ABSTRACT_TYPE(/obj/machine_tray)
 							if (H.limbs)
 								H.limbs.reset_stone()
 							H.update_colorful_parts()
+						if (isvampire(H))
+							H.TakeDamage("All", 0, 15, 0, DAMAGE_BURN)
+							if (prob(15) && isalive(H))
+								H.emote("scream")
+							if (i % (2 SECONDS))
+								boutput(H, "<span class='alert'>[pick("Your skin is melting!", "This false sun burns just like a real one!", "The light! <b>IT BURNS</b>!")]</span>")
+								playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+							if (isdead(H))
+								make_cleanable(/obj/decal/cleanable/ash, src)
+								H.unequip_all()
+								H.remove()
+								src.visible_message("<span class='alert'>A puff of smoke erupts from the machine as it grinds to a halt! It smells like a graveyard caught fire!</span>")
+								var/turf/T = get_turf(src)
+								if (istype(T))
+									var/datum/effects/system/bad_smoke_spread/smoke_effect = new /datum/effects/system/bad_smoke_spread/(T)
+									smoke_effect.set_up(15, 0, T, null, "#000000")
+									smoke_effect.start()
+								end_tanning()
+
+								return
 				if (emagged && isdead(M))
 					M.remove()
 					make_cleanable( /obj/decal/cleanable/ash,src)
 
 		SPAWN(src.settime)
 			if (src)
-				src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
-				src.locked = FALSE
-				power_usage = initial(power_usage)
-				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-				update() //clear the active sprite
+				end_tanning()
 
+	proc/end_tanning()
+		src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
+		src.locked = FALSE
+		power_usage = initial(power_usage)
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		update()
 
 //-----------------------------------------------------
 /*~ Tanning Bed Tray ~*/

@@ -158,14 +158,8 @@
 			SPAWN(0)
 				H.JobEquipSpawned(H.mind.assigned_role)
 
-		if (!ishuman(H))
-			boutput(H, "something went wrong. Horribly wrong. Call 1-800-CODER")
-			return
-
 		H.set_clothing_icon_dirty()
-		// H.set_loc(pick(pod_pilot_spawns[team_num]))
-		boutput(H, "You're in the [name] faction!")
-		// bestow_objective(player,/datum/objective/battle_royale/win)
+		boutput(H, "<h3 class='hint'>You're in the <b>[name]</b> faction!</b>")
 		if (show_popup)
 			H.show_antag_popup("podwars")
 		if (istype(mode))

@@ -7,8 +7,11 @@
 	organ_name = "eye"
 	desc = "Here's lookin' at you! Er, maybe not so much, anymore."
 	organ_holder_location = "head"
+	icon = 'icons/obj/items/organs/eye.dmi'
 	icon_state = "eye"
 	var/change_iris = 1
+	var/iris_color = "#0D84A8"
+	var/iris_state_override = null
 	var/color_r = 1 // same as glasses/helmets/masks/etc, used for vision color modifications, see human/handle_regular_hud_updates()
 	var/color_g = 1
 	var/color_b = 1
@@ -27,20 +30,43 @@
 				holder.right_eye = null
 		..()
 
+	on_transplant(mob/M)
+		. = ..()
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.update_face()
+
+	on_removal()
+		if(ishuman(donor))
+			var/mob/living/carbon/human/H = donor
+			SPAWN(0) //need to delay until after the eye is actually removed from the organholder
+				H.update_face()
+		. = ..()
+
 	update_icon()
 		if (!src.change_iris)
 			return
-		var/image/iris_image = image(src.icon, src, "[icon_state]-iris")
-		iris_image.color = "#0D84A8"
+		var/side = "L"
+		if(src.body_side == R_ORGAN)
+			side = "R"
 		if (src.donor && src.donor.bioHolder && src.donor.bioHolder.mobAppearance) // good lord
-			var/datum/appearanceHolder/AH = src.donor.bioHolder.mobAppearance // I ain't gunna type that a billion times thanks
-			if ((src.body_side == L_ORGAN && AH.customization_second.id == "hetrcoL") || (src.body_side == R_ORGAN && AH.customization_second.id == "hetcroR")) // dfhsgfhdgdapeiffert
-				iris_image.color = AH.customization_second_color
-			else if ((src.body_side == L_ORGAN && AH.customization_third.id == "hetcroL") || (src.body_side == R_ORGAN && AH.customization_third == "hetcroR")) // gbhjdghgfdbldf
-				iris_image.color = AH.customization_third_color
-			else
-				iris_image.color = AH.e_color
+			var/datum/appearanceHolder/AH = src.donor.bioHolder.mobAppearance
+			src.update_color(AH, side)
+		change_iris = FALSE //only inherit color once if possible, if spawned without a doner, don't change color!
+
+	proc/update_color(datum/appearanceHolder/AH, side)
+		if (AH.customization_first.id == "hetcro[side]")
+			src.iris_color = AH.customization_first_color
+		else if (AH.customization_second.id == "hetcro[side]")
+			src.iris_color = AH.customization_second_color
+		else if (AH.customization_third.id == "hetcro[side]")
+			src.iris_color = AH.customization_third_color
+		else
+			src.iris_color = AH.e_color
+		var/image/iris_image = image(src.icon, src, "[iris_state_override || icon_state]-iris")
+		iris_image.color = iris_color
 		src.UpdateOverlays(iris_image, "iris")
+
 
 	attach_organ(var/mob/living/carbon/M, var/mob/user)
 		/* Overrides parent function to handle special case for attaching eyes.
@@ -105,6 +131,8 @@
 	icon_state = "eye-synth"
 	item_state = "plant"
 	synthetic = 1
+	iris_state_override = "eye"
+	iris_color = "#2dca2d"
 
 TYPEINFO(/obj/item/organ/eye/cyber)
 	mats = 6
@@ -120,6 +148,7 @@ TYPEINFO(/obj/item/organ/eye/cyber)
 	edible = 0
 	made_from = "pharosium"
 	show_on_examine = TRUE
+	change_iris = FALSE
 
 	emp_act()
 		..()
@@ -127,6 +156,21 @@ TYPEINFO(/obj/item/organ/eye/cyber)
 			src.take_damage(20, 20, 0)
 			if (src.holder && src.holder.donor)
 				src.holder.donor.show_text("<b>Your [src.organ_name] [pick("crackles and sparks", "makes a weird crunchy noise", "buzzes strangely")]!</b>", "red")
+
+/obj/item/organ/eye/cyber/configurable
+	iris_state_override = "eye"
+	change_iris = TRUE
+
+	attackby(obj/item/W, mob/user)
+		if(ispulsingtool(W)) //TODO kyle's robotics configuration console/machine/thing
+			var/new_color = tgui_color_picker(usr, "Choose a color", "Cybereye", "#0D84A8")
+			if (!isnull(new_color))
+				iris_color = new_color
+			var/image/iris_image = image(src.icon, src, "eye-iris")
+			iris_image.color = iris_color
+			src.UpdateOverlays(iris_image, "iris")
+		else
+			. = ..()
 
 TYPEINFO(/obj/item/organ/eye/cyber/sunglass)
 	mats = 7
@@ -140,7 +184,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/sunglass)
 	color_r = 0.95 // darken a little
 	color_g = 0.95
 	color_b = 0.975 // kinda blue
-	change_iris = 0
+	iris_color = "#202020"
 
 	on_transplant(mob/M)
 		. = ..()
@@ -164,7 +208,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/sechud)
 	color_r = 0.975 // darken a little, kinda red
 	color_g = 0.95
 	color_b = 0.95
-	change_iris = 0
+	iris_color = "#3a0404"
 
 	process()
 		if (src.broken)
@@ -195,7 +239,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/thermal)
 	color_r = 1
 	color_g = 0.9 // red tint
 	color_b = 0.9
-	change_iris = 0
+	iris_color = "#a01f1f"
 
 	on_transplant(mob/M)
 		. = ..()
@@ -217,10 +261,10 @@ TYPEINFO(/obj/item/organ/eye/cyber/meson)
 	color_r = 0.925
 	color_g = 1
 	color_b = 0.9
-	change_iris = 0
 	organ_abilities = list(/datum/targetable/organAbility/meson)
 	var/on = 1
 	var/mob/living/carbon/human/assigned = null
+	iris_color = "#45bb00"
 
 	on_transplant(var/mob/M)
 		..()
@@ -262,7 +306,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/spectro)
 	color_r = 1 // pink tint?
 	color_g = 0.9
 	color_b = 0.95
-	change_iris = 0
+	iris_color = "#d12ab5"
 
 	on_transplant(mob/M)
 		. = ..()
@@ -284,7 +328,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/prodoc)
 	color_r = 0.925
 	color_g = 1
 	color_b = 0.925
-	change_iris = 0
+	iris_color = "#1dd144"
 
 	// stolen from original prodocs
 	process()
@@ -320,7 +364,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/ecto)
 	color_r = 0.925
 	color_g = 1
 	color_b = 0.925
-	change_iris = 0
+	iris_color = "#65e681"
 
 	on_transplant(mob/M)
 		. = ..()
@@ -342,7 +386,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/camera)
 	var/camera_tag = "Eye Cam"
 	var/camera_network = "Zeta"
 	made_from = "pharosium"
-	change_iris = 0
+	iris_color = "#0d0558"
 
 	New()
 		..()
@@ -367,7 +411,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/nightvision)
 	color_r = 0.7
 	color_g = 1
 	color_b = 0.7
-	change_iris = 0
+	iris_color = "#027e17"
 
 	on_transplant(mob/M)
 		. = ..()
@@ -389,8 +433,8 @@ TYPEINFO(/obj/item/organ/eye/cyber/laser)
 	color_r = 1
 	color_g = 0.85
 	color_b = 0.85
-	change_iris = 0
 	organ_abilities = list(/datum/targetable/organAbility/eyebeam)
+	iris_color = "#ff0000"
 	var/eye_proj_override = null
 
 	add_ability(var/datum/abilityHolder/aholder, var/abil)

@@ -103,12 +103,12 @@ TYPEINFO(/obj/item/remote/porter)
 
 		src.machinerylist = list()
 		src.get_machinery()
-		if (!src.machinerylist || (src.machinerylist && src.machinerylist.len == 0))
+		if (!src.machinerylist || (src.machinerylist && length(src.machinerylist) == 0))
 			user.show_text("Couldn't find any linkable machinery.", "red")
 			return
 
 		var/t1
-		if (src.machinerylist.len == 1)
+		if (length(src.machinerylist) == 1)
 			t1 = src.machinerylist[1]
 		else
 			t1 = input("Please select a [src.machinery_name] to control", "Target Selection", null, null) as null|anything in src.machinerylist
@@ -434,16 +434,9 @@ TYPEINFO(/obj/machinery/port_a_brig)
 			actions.start(new /datum/action/bar/portabrig_shove_in(src, user, G.affecting, G), user)
 
 		else if (ispryingtool(W))
-			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Prying door open.</span>")
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-			sleep(15 SECONDS)
-			if ((user.loc == T && user.equipped() == W))
-				src.locked = 0
-				boutput(user, "<span class='notice'>You pried the door open.</span>")
-			else if((isrobot(user) && (user.loc == T)))
-				src.locked = 0
-				boutput(user, "<span class='notice'>You pried the door open.</span>")
+			SETUP_GENERIC_ACTIONBAR(user, src, 15 SECONDS, /obj/machinery/port_a_brig/proc/pry_open, list(user), W.icon, W.icon_state,
+				"<span class='alert'>[user] pries open [src].</span>", INTERRUPT_ACT | INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_ATTACKED | INTERRUPT_STUNNED)
 
 	proc/build_icon()
 		if(src.occupant)
@@ -501,7 +494,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 
 	onEnd()
 		..()
-		if (!src.owner || !src.victim || QDELETED(G))
+		if (!src.owner || !src.victim || QDELETED(G) || brig?.occupant)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
@@ -515,6 +508,9 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		src.brig.build_icon()
 		qdel(G)
 
+/obj/machinery/port_a_brig/proc/pry_open()
+	playsound(src.loc, 'sound/items/Crowbar.ogg', 100, TRUE)
+	src.locked = FALSE
 
 /obj/item/paper/Port_A_Brig
 	name = "paper - 'A-97 Port-A-Brig Manual"
@@ -767,7 +763,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 				var/list/mob/body_list = list()
 				for(var/mob/living/carbon/M in src.contents) //Don't think you're gonna get lucky, ghosts!
 					if(!isdead(M)) body_list += M
-				if(body_list.len > 1)
+				if(length(body_list) > 1)
 
 					for(var/I = 1, I <= body_list.len , I++)
 						var/next_in_line = ((I % body_list.len) + 1)

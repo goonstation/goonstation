@@ -100,7 +100,7 @@
 				src.desc = "A green popsicle, which appears to be \"Green Apple Gastroenteritis\" flavor, which boasts a more active digestive system."
 				R.add_reagent("juice_apple", 5)
 				R.add_reagent("cider", 5)
-				R.add_reagent("space_ipecac", 5) //?
+				R.add_reagent("ipecac", 5) //?
 				R.add_reagent("gcheese", 5)
 				R.add_reagent("hunchback", 5)
 			if("blueberry")

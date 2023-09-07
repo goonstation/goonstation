@@ -95,8 +95,8 @@ proc/is_weak_rollable_contract(type)
 		animate_clownspell(H)
 		H.drop_from_slot(H.wear_suit)
 		H.drop_from_slot(H.wear_mask)
-		H.equip_if_possible(new /obj/item/clothing/suit/cultist/cursed(H), H.slot_wear_suit)
-		H.equip_if_possible(new /obj/item/clothing/mask/horse_mask/cursed(H), H.slot_wear_mask)
+		H.equip_if_possible(new /obj/item/clothing/suit/cultist/cursed(H), SLOT_WEAR_SUIT)
+		H.equip_if_possible(new /obj/item/clothing/mask/horse_mask/cursed(H), SLOT_WEAR_MASK)
 		H.real_name = "HORSE"
 
 /proc/neigh(var/string)
@@ -838,7 +838,7 @@ obj/item/contract/greed
 			return 0
 		SPAWN(1 DECI SECOND)
 			for(var/i in 1 to number_of_cash_piles)
-				var/obj/item/spacecash/random/tourist/S = new /obj/item/spacecash/random/tourist
+				var/obj/item/currency/spacecash/tourist/S = new /obj/item/currency/spacecash/tourist
 				S.setup(user.loc)
 			boutput(user, "<span class='notice'>Some money appears at your feet. What, did you expect some sort of catch or trick?</span>")
 			if (prob(90)) //used to be 50/50, now it's only a 10% chance to get midased

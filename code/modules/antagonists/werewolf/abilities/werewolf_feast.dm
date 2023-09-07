@@ -72,7 +72,7 @@
 			return
 
 		// What do we do if the body is dead?
-		if (target.stat == 2)
+		if (isdead(target))
 			if (target.reagents)
 				if (target.reagents.has_reagent("formaldehyde", 15))
 					boutput(M, "<span class='alert'>Urgh, this cadaver tastes horrible. Better find some chemical free meat.</span>")
@@ -104,7 +104,7 @@
 			ON_COOLDOWN(M, "ww feast", 2.5 SECONDS) // Enough time between attacks for them to happen 9 times
 			times_attacked += 1
 
-		if (HH.decomp_stage <= DECOMP_STAGE_DECAYED && !(isnpcmonkey(HH)) && (times_attacked >= 7)) // Can't farm npc monkeys.
+		if (HH.decomp_stage <= DECOMP_STAGE_DECAYED && !(isnpc(HH)) && (times_attacked >= 7)) // Can't farm npc monkeys.
 			src.do_we_get_points = TRUE
 
 	onEnd()

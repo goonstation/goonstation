@@ -222,14 +222,14 @@
 	icon_state = "flocktrace"
 
 /mob/living/intangible/flock/flockmind/proc/receive_ghosts(var/list/ghosts)
-	if(!ghosts || ghosts.len <= 0)
+	if(!ghosts || length(ghosts) <= 0)
 		boutput(src, "<span class='alert'>Unable to partition, please try again later.</span>")
 		return
 	var/list/valid_ghosts = list()
 	for(var/mob/dead/observer/O in ghosts)
 		if(O?.client)
 			valid_ghosts |= O
-	if(valid_ghosts.len <= 0)
+	if(length(valid_ghosts) <= 0)
 		SPAWN(1 SECOND)
 			boutput(src, "<span class='alert'>Unable to partition, please try again later.</span>")
 		return

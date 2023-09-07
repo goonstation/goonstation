@@ -390,25 +390,22 @@ TYPEINFO(/turf/simulated/floor/void)
 	proc/can_operate()
 		return valid_mindswap(chair1?.buckled_guy) && valid_mindswap(chair2?.buckled_guy)
 
-	proc/valid_mindswap(mob/M)
-		. = 0
-		if(isliving(M))
-			. = 1
+	proc/valid_mindswap(mob/living/L)
+		. = 1
+		if(!istype(L))
+			return
 
-		if(issilicon(M))
-			. = 0
-
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
 			if(H.on_chair)
 				. = 0
-		if(istype(M, /mob/living/critter))
-			var/mob/living/critter/C = M
+
+		if(istype(L, /mob/living/critter))
+			var/mob/living/critter/C = L
 			if(C.dormant || C.ghost_spawned)
 				. = 0
-			if(C.max_health >= 75)
-				. = 0
-		if(istype(M, /mob/living/critter/small_animal/mouse/weak/mentor) || istype(M, /mob/living/critter/robotic) || istype(M, /mob/living/critter/flock) || istype(M, /mob/living/intangible))
+
+		if(!L.void_mindswappable)
 			. = 0
 
 	proc/do_swap()

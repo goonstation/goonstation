@@ -42,8 +42,10 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	the_tuff_stuff
 		explosion_resistance = 3
 
-	New()
-		..()
+	New(loc, dir_override=null)
+		..(loc)
+		if(!isnull(dir_override))
+			src.dir = dir_override
 		src.ini_dir = src.dir
 		update_nearby_tiles(need_rebuild=1,selfnotify=1) // self notify to stop fluid jankness
 		if (default_reinforcement)
@@ -139,12 +141,12 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			stab_resist 	= material.getProperty("hard") * 10
 			corrode_resist 	= material.getProperty("chemical") * 10
 
-			if (material.alpha > 220)
+			if (material.getAlpha() > 220)
 				set_opacity(1) // useless opaque window)
 			else
 				set_opacity(0)
 
-			if(src.material.special_naming)
+			if(src.material.usesSpecialNaming())
 				name = src.material.specialNaming(src)
 
 		if (istype(reinforcement))
@@ -157,7 +159,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			stab_resist 	+= round(reinforcement.getProperty("hard") * 5)
 			corrode_resist 	+= round(reinforcement.getProperty("chemical") * 5)
 
-			name = "[reinforcement.name]-reinforced " + name
+			name = "[reinforcement.getName()]-reinforced " + name
 
 	proc/set_reinforcement(var/datum/material/M)
 		if (!M)
@@ -325,6 +327,18 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			the_text += " ...you can't see through it at all. What kind of idiot made this?"
 		return the_text
 
+	get_help_message(dist, mob/user)
+		switch(src.state)
+			if(0)
+				if(!src.anchored)
+					. = "You can use a <b>wrench</b> to disassemble the window, or a <b>screwdriver</b> to fasten the frame to the floor."
+				else
+					. = "You can use a <b>screwdriver</b> to unfasten the frame from the floor, or a <b>crowbar</b> to pry the window into the frame."
+			if(1)
+				. = "You can use a <b>crowbar</b> to pry the window out of the frame, or a <b>screwdriver</b> to fasten the window to the frame."
+			if(2)
+				. = "You can use a <b>screwdriver</b> to unfasten the window from the frame."
+
 	Cross(atom/movable/mover)
 		if(!src.density)
 			return TRUE
@@ -450,16 +464,11 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		else if (iswrenchingtool(W) && src.state == 0 && !src.anchored)
 			actions.start(new /datum/action/bar/icon/deconstruct_window(src, W), user)
-
-		else if (istype(W, /obj/item/grab))
-			var/obj/item/grab/G = W
-			if (ishuman(G.affecting) && BOUNDS_DIST(G.affecting, src) == 0)
-				src.visible_message("<span class='alert'><B>[user] slams [G.affecting]'s head into [src]!</B></span>")
-				logTheThing(LOG_COMBAT, user, "slams [constructTarget(user,"combat")]'s head into [src]")
-				playsound(src.loc, src.hitsound , 100, 1)
-				G.affecting.TakeDamage("head", 5, 0)
-				src.damage_blunt(G.affecting.throwforce)
-				qdel(W)
+		else if (src.health < src.health_max && istype(W, /obj/item/sheet) && W.material.isSameMaterial(src.material))
+			var/time = 4 SECONDS
+			if (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
+				time = 2 SECONDS
+			SETUP_GENERIC_ACTIONBAR(user, src, time, /obj/window/proc/fix_window, list(W), null, null, "<span class='notice'> [user] repairs \the [src] with \the [W] </span>", null)
 		else
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 75, 1)
@@ -563,6 +572,12 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			T.selftilenotify() //for fluids
 
 		return 1
+
+	proc/fix_window(var/obj/item/sheet/S)
+		health = health_max
+		UpdateIcon(src)
+		if (S)
+			S.change_stack_amount(-1)
 
 
 /datum/action/bar/icon/deconstruct_window
@@ -853,7 +868,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		if (!src.damage_image)
 			src.damage_image = image('icons/obj/window_damage.dmi')
 			src.damage_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
-			if(src.material?.mat_id == "plasmaglass") //plasmaglass gets hand-picked alpha since it's so common and looks odd with default
+			if(src.material?.getID() == "plasmaglass") //plasmaglass gets hand-picked alpha since it's so common and looks odd with default
 				src.damage_image.alpha = 85
 			else
 				src.damage_image.alpha = 180
@@ -973,137 +988,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	icon_state = "mapwin_r"
 	default_material = "uqillglass"
 	default_reinforcement = "bohrum"
+
 	the_tuff_stuff
 		explosion_resistance = 5
-
-/obj/wingrille_spawn
-	name = "window grille spawner"
-	icon = 'icons/obj/window.dmi'
-	icon_state = "wingrille"
-	density = 1
-	anchored = ANCHORED
-	invisibility = INVIS_ALWAYS
-	//layer = 99
-	pressure_resistance = 4*ONE_ATMOSPHERE
-	var/win_path = "/obj/window"
-	var/grille_path = "/obj/grille/steel"
-	var/full_win = 0 // adds a full window as well
-	var/no_dirs = 0 //ignore directional
-
-	New()
-		..()
-		if(current_state >= GAME_STATE_WORLD_INIT)
-			SPAWN(0)
-				initialize()
-
-	initialize()
-		. = ..()
-		src.set_up()
-		qdel(src)
-
-	proc/set_up()
-		if (!locate(text2path(src.grille_path)) in get_turf(src))
-			var/obj/grille/new_grille = text2path(src.grille_path)
-			new new_grille(src.loc)
-
-		if (!no_dirs)
-			for (var/dir in cardinal)
-				var/turf/T = get_step(src, dir)
-				if ((!locate(/obj/wingrille_spawn) in T) && (!locate(/obj/grille) in T))
-					var/obj/window/new_win = text2path("[src.win_path]/[dir2text(dir)]")
-					if(new_win)
-						new new_win(src.loc)
-					else
-						CRASH("Invalid path: [src.win_path]/[dir2text(dir)]")
-		if (src.full_win)
-			if(!no_dirs || !locate(text2path(src.win_path)) in get_turf(src))
-				// if we have directional windows, there's already a window (or windows) from directional windows
-				// only check if there's no window if we're expecting there to be no window so spawn a full window
-				var/obj/window/new_win = text2path(src.win_path)
-				new new_win(src.loc)
-
-	full
-		icon_state = "wingrille_f"
-		full_win = 1
-
-	reinforced
-		name = "reinforced window grille spawner"
-		icon_state = "r-wingrille"
-		win_path = "/obj/window/reinforced"
-
-		full
-			icon_state = "r-wingrille_f"
-			full_win = 1
-
-	crystal
-		name = "crystal window grille spawner"
-		icon_state = "p-wingrille"
-		win_path = "/obj/window/crystal"
-
-		full
-			icon_state = "p-wingrille_f"
-			full_win = 1
-
-	reinforced_crystal
-		name = "reinforced crystal window grille spawner"
-		icon_state = "pr-wingrille"
-		win_path = "/obj/window/crystal/reinforced"
-
-		full
-			icon_state = "pr-wingrille_f"
-			full_win = 1
-
-	bulletproof
-		name = "bulletproof window grille spawner"
-		icon_state = "br-wingrille"
-		win_path = "/obj/window/bulletproof"
-
-		full
-			name = "bulletproof window grille spawner"
-			icon_state = "br-wingrille"
-			icon_state = "b-wingrille_f"
-			full_win = 1
-
-	hardened
-		name = "hardened window grille spawner"
-		icon_state = "br-wingrille"
-		win_path = "/obj/window/hardened"
-
-		full
-			name = "hardened window grille spawner"
-			icon_state = "br-wingrille"
-			icon_state = "b-wingrille_f"
-			full_win = 1
-
-	auto
-		name = "autowindow grille spawner"
-		win_path = "/obj/window/auto"
-		full_win = 1
-		no_dirs = 1
-		icon_state = "wingrille_new"
-		color = "#A3DCFF"
-
-		reinforced
-			name = "reinforced autowindow grille spawner"
-			win_path = "/obj/window/auto/reinforced"
-			icon_state = "r-wingrille_new"
-			color = "#72c8fd"
-
-		crystal
-			name = "crystal autowindow grille spawner"
-			win_path = "/obj/window/auto/crystal"
-			icon_state = "wingrille_new"
-			color = "#9e53cf"
-
-			reinforced
-				name = "reinforced crystal autowindow grille spawner"
-				win_path = "/obj/window/auto/crystal/reinforced"
-				icon_state = "r-wingrille_new"
-				color = "#8713d4"
-
-		tuff
-			name = "tuff stuff reinforced autowindow grille spawner"
-			win_path = "/obj/window/auto/reinforced/the_tuff_stuff"
 
 //Cubicle walls! Also for the crunch. - from halloween.dm
 /obj/window/cubicle

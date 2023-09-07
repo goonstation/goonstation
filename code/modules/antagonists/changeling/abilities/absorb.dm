@@ -31,6 +31,21 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		if (!ON_COOLDOWN(target, "changeling_remove_limb", 1.5 SECONDS))
+			var/list/valid_limbs = list("l_leg", "r_arm", "r_leg", "l_arm")
+			var/mob/living/carbon/human/H = target
+			H.TakeDamage("All", 15, 0, 0)
+			take_bleeding_damage(H, null, 8, DAMAGE_STAB, TRUE)
+			for (var/L in valid_limbs)
+				var/obj/item/parts/possible_limb = H.limbs?[L]
+				if (possible_limb)
+					ownerMob.visible_message("<span class='combat bold'>[ownerMob] viciously devours [H]'s [possible_limb]!</span>")
+					possible_limb.remove(FALSE)
+					qdel(possible_limb)
+					playsound(H, 'sound/voice/burp_alien.ogg', 35)
+					H.emote("scream", FALSE)
+					break
+
 	onStart()
 		..()
 		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour)
@@ -39,6 +54,7 @@
 
 		var/mob/ownerMob = owner
 		ownerMob.show_message("<span class='notice'>We must hold still for a moment...</span>", 1)
+		ON_COOLDOWN(target, "changeling_remove_limb", 1 SECOND) //don't eat a limb right away
 
 	onEnd()
 		..()
@@ -89,6 +105,10 @@
 		if (T.bioHolder.HasEffect("husk"))
 			boutput(usr, "<span class='alert'>This creature has already been drained...</span>")
 			return 1
+		if (isnpc(T))
+			boutput(C, "<span class='alert'>The DNA of this target seems inferior somehow, you have no desire to feed on it.</span>")
+			return 1
+
 
 		actions.start(new/datum/action/bar/icon/abominationDevour(T, src), C)
 		return 0

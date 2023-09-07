@@ -1,0 +1,314 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"c" = (
+/obj/machinery/plantpot/bareplant{
+	opacity = 1;
+	spawn_plant = "/datum/plant/veg/corn"
+	},
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"h" = (
+/obj/item/device/light/zippo,
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"v" = (
+/mob/living/critter/robotic/gunbot{
+	name = "garden defender 04"
+	},
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"x" = (
+/obj/item/reagent_containers/glass/water_pipe,
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"C" = (
+/mob/living/critter/robotic/gunbot{
+	name = "garden defender 02"
+	},
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"G" = (
+/obj/machinery/plantpot/bareplant{
+	spawn_plant = "/datum/plant/herb/cannabis"
+	},
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"N" = (
+/mob/living/critter/robotic/gunbot{
+	name = "garden defender 01"
+	},
+/turf/variableTurf/clear,
+/area/allowGenerate)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+N
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+C
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+c
+a
+a
+a
+a
+a
+c
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+c
+c
+c
+c
+c
+a
+G
+a
+G
+a
+c
+c
+c
+c
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+c
+a
+G
+v
+G
+a
+c
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+c
+c
+c
+c
+c
+a
+G
+G
+G
+a
+c
+c
+c
+c
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+c
+a
+a
+x
+h
+a
+c
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

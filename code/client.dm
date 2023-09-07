@@ -197,7 +197,7 @@
 	login_success = 0
 
 	if(findtext(src.key, "Telnet @"))
-		boutput(src, "Sorry, this game does not support Telnet.")
+		boutput(src, "<h1 class='alert'>Sorry, this game does not support Telnet.</span>")
 		preferences = new
 		sleep(5 SECONDS)
 		del(src)
@@ -229,16 +229,6 @@
 
 	if (!isnewplayer(src.mob))
 		src.loadResources()
-
-/*
-	SPAWN(rand(4,18))
-		if(proxy_check(src.address))
-			logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Using a Tor Proxy Exit Node", "access")
-			if (announce_banlogin) message_admins("<span class='internal'>Failed Login: [src] - Using a Tor Proxy Exit Node (IP: [src.address], ID: [src.computer_id])</span>")
-			boutput(src, "You may not connect through TOR.")
-			SPAWN(0) del(src)
-			return
-*/
 
 	src.volumes = default_channel_volumes.Copy()
 
@@ -598,9 +588,6 @@
 	if(winget(src, "menu.fullscreen", "is-checked") == "true")
 		winset(src, null, "mainwindow.titlebar=false;mainwindow.is-maximized=true")
 
-	if(winget(src, "menu.hide_status_bar", "is-checked") == "true")
-		winset(src, null, "mainwindow.statusbar=false")
-
 	if(winget(src, "menu.hide_menu", "is-checked") == "true")
 		winset(src, null, "mainwindow.menu='';menub.is-visible = true")
 
@@ -929,7 +916,7 @@ var/global/curr_day = null
 
 /client/verb/ping()
 	set name = "Ping"
-	boutput(usr, "Pong")
+	boutput(usr, "<span class='hint'>Pong</span>")
 
 #ifdef RP_MODE
 /client/proc/cmd_rp_rules()
@@ -955,7 +942,7 @@ var/global/curr_day = null
 	var/datum/game_server/game_server = global.game_servers.find_server(server)
 
 	if (server)
-		boutput(usr, "You are being redirected to [game_server.name]...")
+		boutput(usr, "<h3 class='success'>You are being redirected to [game_server.name]...</span>")
 		usr << link(game_server.url)
 
 /client/verb/download_sprite(atom/A as null|mob|obj|turf in view(1))
@@ -970,13 +957,13 @@ var/global/curr_day = null
 		src.mob.update_cursor()
 		A = promise.wait_for_value()
 	if(!A)
-		boutput(src, "No target selected.")
+		boutput(src, "<span class='alert'>No target selected.</span>")
 		return
 	if(GET_DIST(src.mob, A) > 1 && !(src.holder || istype(src.mob, /mob/dead)))
-		boutput(src, "Target is too far away (it needs to be next to you).")
+		boutput(src, "<span class='alert'>Target is too far away (it needs to be next to you).</span>")
 		return
 	if(!src.holder && ON_COOLDOWN(src.player, "download_sprite", 5 SECONDS))
-		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src.player, "download_sprite", 0))].")
+		boutput(src, "<span class='alert'>Verb on cooldown for [time_to_text(ON_COOLDOWN(src.player, "download_sprite", 0))].</span>")
 		return
 	var/icon/icon = getFlatIcon(A)
 	src << ftp(icon, "[ckey(A.name)]_[time2text(world.realtime,"YYYY-MM-DD")].png")
@@ -1209,7 +1196,7 @@ var/global/curr_day = null
 	var/client/C = input("For who", "For who", null) in clients
 	var/wavelength_shift = input("Shift wavelength bounds by <x> nm, should be in the range of -370 to 370", "Wavelength shift", 0) as num
 	if (wavelength_shift < -370 || wavelength_shift > 370)
-		boutput(usr, "Invalid value.")
+		boutput(usr, "<span class='admin'>Invalid value.</span>")
 		return
 	var/s_r = 0
 	var/s_g = 0
@@ -1410,6 +1397,7 @@ var/global/curr_day = null
 		H.hud.add_object(H.stamina_bar, initial(H.stamina_bar.layer), "EAST-1, NORTH")
 		if(H.sims)
 			H.sims.add_hud()
+		H.update_equipment_screen_loc()
 
 /client/verb/set_tg_layout()
 	set hidden = 1

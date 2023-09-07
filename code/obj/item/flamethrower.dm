@@ -23,7 +23,7 @@ A Flamethrower in various states of assembly
 
 #define MODE_TO_STRING(mode) mode == FLAMER_MODE_AUTO ? "auto" : mode == FLAMER_MODE_BURST ? "burst" :  mode == FLAMER_MODE_SINGLE ? "single" :  mode == FLAMER_MODE_BACKTANK ? "backtank" : "error"
 
-/obj/item/gun/flamethrower/
+/obj/item/gun/flamethrower
 	name = "flamethrower"
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
@@ -164,8 +164,8 @@ A Flamethrower in various states of assembly
 				P_special_data["speed_mult"] = 0.6
 				P_special_data["chem_pct_app_tile"] = 0.15
 			if(FLAMER_MODE_BURST)
-				P_special_data["speed_mult"] = 0.5
-				P_special_data["chem_pct_app_tile"] = 0.25
+				P_special_data["speed_mult"] = 0.6
+				P_special_data["chem_pct_app_tile"] = 0.20
 			if(FLAMER_MODE_SINGLE)
 				P_special_data["speed_mult"] = 1
 				P_special_data["chem_pct_app_tile"] = 0.1
@@ -180,6 +180,7 @@ A Flamethrower in various states of assembly
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	desc = "You are a firestarter!"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	c_flags = EQUIPPED_WHILE_HELD | NOT_EQUIPPED_WHEN_WORN
 	force = 3
 	throwforce = 10
 	throw_speed = 1
@@ -189,6 +190,10 @@ A Flamethrower in various states of assembly
 	var/obj/item/rods/rod = null
 	var/obj/item/device/igniter/igniter = null
 	inventory_counter_enabled = 1
+
+	setupProperties()
+		. = ..()
+		setProperty("movespeed", 0.5)
 
 /obj/item/tank/jetpack/backtank
 	name = "fuelpack"
@@ -356,7 +361,7 @@ A Flamethrower in various states of assembly
 	..()
 	return
 
-/obj/item/gun/flamethrower/assembled/loaded/
+/obj/item/gun/flamethrower/assembled/loaded
 	icon_state = "flamethrower_oxy_fuel"
 
 	New()
@@ -665,7 +670,7 @@ A Flamethrower in various states of assembly
 			icon_state = "flamethrower_no_oxy[fuel]"
 			item_state = "flamethrower0"
 			playsound(src, 'sound/effects/valve_creak.ogg', 15, 1)
-			var/remove_sound = "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg"
+			var/remove_sound = "sound/items/pickup_[clamp(round(src.w_class), 1, 3)].ogg"
 			if(A?.pickup_sfx)
 				remove_sound = A.pickup_sfx
 			SPAWN(0.2 SECONDS)
@@ -689,7 +694,7 @@ A Flamethrower in various states of assembly
 				oxy = "_oxy"
 			icon_state = "flamethrower[oxy]_no_fuel"
 			item_state = "flamethrower0"
-			var/remove_sound = "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg"
+			var/remove_sound = "sound/items/pickup_[clamp(round(src.w_class), 1, 3)].ogg"
 			if(A?.pickup_sfx)
 				remove_sound = A.pickup_sfx
 			playsound(src, remove_sound, 30, 1)
@@ -706,14 +711,17 @@ A Flamethrower in various states of assembly
 				if("auto") // mid-range automatic
 					src.mode = FLAMER_MODE_AUTO
 					src.spread_angle = 15
-					src.shoot_delay = 2 DECI SECONDS
-					src.chem_divisor = 5 //5 shots per second
+					src.shoot_delay = 4 DECI SECONDS
+					src.chem_divisor = 2
+					src.current_projectile.shot_number = 2
+					src.current_projectile.shot_delay = 2 DECI SECONDS
 				if("burst") // close range burst
 					src.mode = FLAMER_MODE_BURST
-					src.spread_angle = 30
+					src.spread_angle = 33
 					src.current_projectile.shot_number = 4
 					src.chem_divisor = 4 //4 shots per burst
 					src.shoot_delay = 1 SECOND
+					src.current_projectile.fullauto_valid = 0
 				if("semi_auto") // single line (default)
 					src.mode = FLAMER_MODE_SINGLE
 					src.current_projectile.fullauto_valid = 0

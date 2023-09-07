@@ -97,6 +97,10 @@ TYPEINFO(/obj/item/baton)
 		if (!src || !istype(src))
 			return
 
+		// when swapping a zero charge cell into the baton
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
+			src.is_active = FALSE
+
 		if (src.is_active)
 			src.set_icon_state("[src.icon_on][src.flipped ? "-f" : ""]") //if flipped is true, attach -f to the icon state. otherwise leave it as normal
 			src.item_state = "[src.item_on][src.flipped ? "-f" : ""]"
@@ -276,7 +280,7 @@ TYPEINFO(/obj/item/baton)
 				if (!src.is_active || (src.is_active && src.can_stun() == 0))
 					src.do_stun(user, M, "failed_stun", 1)
 				else
-					if (user.mind && user.mind.special_role == ROLE_VAMPTHRALL && isvampire(M) && user.is_mentally_dominated_by(M))
+					if (user.mind && M.mind && (user.mind.get_master(ROLE_VAMPTHRALL) == M.mind))
 						boutput(user, "<span class='alert'>You cannot harm your master!</span>")
 						return
 					if (M.do_dodge(user, src) || M.parry_or_dodge(user, src))
@@ -348,7 +352,7 @@ TYPEINFO(/obj/item/baton/beepsky)
 	cell_type = /obj/item/ammo/power_cell
 
 TYPEINFO(/obj/item/baton/cane)
-	mats = list("MET-3"=10, "CON-2"=10, "gem"=1, "gold"=1)
+	mats = list("MET-3"=10, "CON-2"=10, "GEM-1"=10, "gold"=1)
 
 /obj/item/baton/cane
 	name = "stun cane"

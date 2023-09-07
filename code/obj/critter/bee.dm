@@ -18,7 +18,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 	firevuln = 0.5
 	brutevuln = 0.8
 	angertext = "buzzes threateningly at"
-	butcherable = 2
+	butcherable = BUTCHER_YOU_MONSTER
 	flying = 1
 	min_quality = -60
 	p_class = 2
@@ -224,16 +224,8 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 				src.task = "thinking"
 				src.attacking = 0
 				return
-
-			if (planter.current.assoc_reagents.len || (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents)))
-				var/list/additional_reagents = planter.current.assoc_reagents
-				if (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents))
-					additional_reagents = additional_reagents | planter.plantgenes.mutation.assoc_reagents
-
-				/*var/associated_reagent = planter.current.associated_reagent
-				if (planter.plantgenes && planter.plantgenes.mutation && planter.plantgenes.mutation.associated_reagent)
-					associated_reagent = planter.plantgenes.mutation.associated_reagent*/
-
+			var/list/additional_reagents = HYPget_assoc_reagents(planter.current, planter.plantgenes)
+			if (length(additional_reagents))
 				planter.reagents.remove_reagent("nectar", nectarTransferAmt*0.75)
 				src.reagents.add_reagent("honey", nectarTransferAmt*0.75)
 				for (var/X in additional_reagents)
@@ -414,7 +406,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 				src.puke_honey()
 			qdel(W)
 		else if (istype(W, /obj/item/reagent_containers/glass))
-			if (W.reagents.has_reagent("menthol") && W.reagents.reagent_list.len == 1)
+			if (W.reagents.has_reagent("menthol") && length(W.reagents.reagent_list) == 1)
 				src.visible_message("<b>[src]</b> sniffles a bit.", 1)
 				src.health = min(initial(src.health), src.health+5)
 		else
@@ -1590,7 +1582,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 	firevuln = 1
 	brutevuln = 1
 	angertext = "squeals at"
-	butcherable = 2
+	butcherable = BUTCHER_YOU_MONSTER
 	generic = 0
 	var/growth_timer = 60
 	var/royal = 0
@@ -1717,7 +1709,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 
 			if (!src.attacking)
 				src.attacking = 1
-				src.visible_message("<b>[src]</b> [pick("nibbles on", "nips at", "chews on", "gnaws")] [target]!")
+				src.visible_message("<b>[src]</b> [pick("nibbles on", "nips at", "chews on", "gnaws")] [target]!", group="larva_nibble")
 				SPAWN(10 SECONDS)
 					src.attacking = 0
 		else
@@ -2091,7 +2083,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 	firevuln = 0.8
 	brutevuln = 0.8
 	angertext = "bozzes angrily at"
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	sleeping_icon_state = "fakebee-sleep"
 	max_quality = 25
 	flying = 1

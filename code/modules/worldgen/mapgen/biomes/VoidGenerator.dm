@@ -64,10 +64,10 @@
 
 
 /datum/biome/void/oddities
-	flora_types = list(/obj/decal/floatingtiles/random=1, /obj/item/spook=1, /obj/map/light/void=2)
+	flora_types = list(/obj/decal/floatingtiles/random = 1, /obj/item/spook = 1, /obj/map/light/void = 2)
 	flora_density = 1
 
-	fauna_types = list( /obj/critter/floateye=4, /obj/item/spook=1)
+	fauna_types = list(/mob/living/critter/small_animal/floateye = 4, /obj/item/spook= 1)
 	fauna_density = 0.6
 
 	corridor_density = 0.3

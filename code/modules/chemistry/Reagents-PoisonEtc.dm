@@ -57,6 +57,7 @@ datum
 			transparency = 20
 			blob_damage = 1
 			value = 3 // 1c + 1c + 1c
+			var/melts_items = FALSE //!does this melt items? sulfuric acid doesn't since it smokes on reaction and that's Brutal
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -113,7 +114,7 @@ datum
 					return 1
 				if (istype(O,/obj/item/clothing/head/chemhood || /obj/item/clothing/suit/chemsuit))
 					return 1
-				if (isitem(O) && prob(40))
+				if (isitem(O) && prob(40) && volume >= 10 && melts_items)
 					var/obj/item/toMelt = O
 					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
 						if(!O.hasStatus("acid"))
@@ -139,6 +140,7 @@ datum
 			fluid_g = 200
 			fluid_b = 255
 			blob_damage = 1.2
+			melts_items = TRUE
 
 		harmful/acid/nitric_acid
 			name = "nitric acid"
@@ -148,6 +150,7 @@ datum
 			fluid_g = 200
 			fluid_b = 255
 			blob_damage = 0.7
+			melts_items = TRUE
 
 		harmful/acetic_acid
 			name = "acetic acid"
@@ -917,7 +920,7 @@ datum
 
 			reaction_obj(var/obj/O, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 16)
+				if (length(covered) > 16)
 					volume = (volume/covered.len)
 
 				if (istype(O,/obj/fluid))
@@ -1117,16 +1120,19 @@ datum
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
 				switch(counter += (1 * mult))
-					if (1 to 5)
+					if (3 to 9)
 						if (probmult(10))
 							M.emote(pick("drool", "tremble"))
-					if (6 to 10)
-						if (prob(8))
-							boutput(M, "<span class='alert'><b>You feel [pick("weak", "horribly weak", "numb", "like you can barely move", "tingly")].</b></span>")
-							M.setStatusMin("stunned", 2 SECONDS * mult)
+					if (9 to 18)
+						if (prob(4))
+							boutput(M, "<span class='alert'><b>You feel [pick("weak", "like you can barely move", "tingly")].</b></span>")
+							M.setStatusMin("slowed", 2 SECONDS * mult)
+						else if (prob(4))
+							boutput(M, "<span class='alert'><b>You feel [pick("horribly weak", "numb")].</b></span>")
+							M.setStatusMin("stunned", 1 SECOND * mult)
 						else if (probmult(8))
 							M.emote(pick("drool", "tremble"))
-					if (11 to INFINITY)
+					if (18 to INFINITY)
 						M.setStatusMin("weakened", 20 SECONDS * mult)
 						if (prob(10))
 							M.emote(pick("drool", "tremble", "gasp"))
@@ -2207,7 +2213,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				. = ..()
-				var/poison_amount = holder.get_reagent_amount(src.id)
+				var/poison_amount = holder?.get_reagent_amount(src.id) // need to check holder as the reagent could be fully removed in the parent call
 				if(poison_amount > 5)
 					for(var/obj/item/I in oview(M,5))
 						if(probmult(2))

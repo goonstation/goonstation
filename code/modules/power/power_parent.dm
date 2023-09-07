@@ -15,20 +15,32 @@
 	..()
 	if (current_state > GAME_STATE_PREGAME)
 		SPAWN(0.1 SECONDS) // aaaaaaaaaaaaaaaa
-			src.netnum = 0
-			if(makingpowernets)
-				return // TODO queue instead
-			for(var/obj/cable/C in src.get_connections())
-				if(src.netnum == 0 && C.netnum != 0)
-					src.netnum = C.netnum
-				else if(C.netnum != 0 && C.netnum != src.netnum) // could be a join instead but this won't happen often so screw it
-					makepowernets()
-					return
-			if(src.netnum)
-				src.powernet = powernets[src.netnum]
-				src.powernet.nodes += src
-				if(src.use_datanet)
-					src.powernet.data_nodes += src
+			recheck_powernet()
+
+/obj/machinery/power/set_loc(atom/target)
+	. = ..()
+	recheck_powernet()
+
+/obj/machinery/power/Move(atom/target)
+	. = ..()
+	recheck_powernet()
+
+/obj/machinery/power/proc/recheck_powernet()
+	src.netnum = 0
+	src.powernet = null
+	if(makingpowernets)
+		return // TODO queue instead
+	for(var/obj/cable/C in src.get_connections())
+		if(src.netnum == 0 && C.netnum != 0)
+			src.netnum = C.netnum
+		else if(C.netnum != 0 && C.netnum != src.netnum) // could be a join instead but this won't happen often so screw it
+			makepowernets()
+			return
+	if(src.netnum)
+		src.powernet = powernets[src.netnum]
+		src.powernet.nodes += src
+		if(src.use_datanet)
+			src.powernet.data_nodes += src
 
 /obj/machinery/power/disposing()
 	if(src.powernet)
@@ -51,7 +63,9 @@
 #endif
 
 /obj/machinery/power/proc/add_load(var/amount)
-	powernet?.newload += amount
+	if(powernet && powernet.newload + amount <= powernet.avail)
+		powernet.newload += amount
+		. = TRUE
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
@@ -359,31 +373,65 @@ var/makingpowernetssince = 0
 			PN.data_nodes += M
 
 /datum/powernet/proc/reset()
-	load = newload
-	newload = 0
-	avail = newavail
-	newavail = 0
-
-	viewload = 0.8*viewload + 0.2*load
-
-	viewload = round(viewload)
-
-	var/numapc = 0
+	var/non_full_apcs = 0
 
 	if (!nodes)
 		nodes = list()
 
+	var/list/our_apcs = list()
+
+	var/apcload = 0
+
+	//index working APCs and perform some initial setup, gathering their load
 	for(var/obj/machinery/power/terminal/term in nodes)
 		if( istype( term.master, /obj/machinery/power/apc ) )
-			numapc++
+			var/obj/machinery/power/apc/check_apc = term.master
+			if(check_apc.load_cycle())
+				apcload += check_apc.cycle_load
+				our_apcs += check_apc
+				if(check_apc.charging != 2)
+					non_full_apcs++
 
-	if(numapc)
-		perapc = avail/numapc
+	//determine what proportion of APC load can be supplied by remaining power
+	var/charge_percentile = 0
+	if(apcload > 0)
+		var/end_cycle_draw = avail - newload
+		charge_percentile = min(end_cycle_draw/apcload,1)
 
+	//mark down the part of load that isn't from APC load restitution (for power reporting later)
+	var/non_restitution_load = newload
+
+	//then tell each APC to supply that proportion of its load
+	for(var/obj/machinery/power/apc/netapc in our_apcs)
+		netapc.cell_cycle(charge_percentile)
+
+	//mandatory load's done! bring in the outgoing tick's load
+	load = newload
+	newload = 0
+
+	//check how much of that load depleted the outgoing tick's available power
 	netexcess = avail - load
 
-	if(netexcess > 100)		// if there was excess power last cycle
-		for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
-			S.restore()				// and restore some of the power that was used
-		for(var/obj/machinery/power/sword_engine/SW in nodes)	//Finds the SWORD Engines in the network.
-			SW.restore()				//Restore some of the power that was used.
+	//then bring in the generation for the next tick
+	avail = newavail
+	newavail = 0
+
+	apc_charge_share = netexcess / max(1,non_full_apcs)
+
+	for(var/obj/machinery/power/apc/netapc in our_apcs)					// go to each APC in the network
+		var/expended = netapc.accept_excess(min(apc_charge_share,netexcess))	// and give them first share of any power not used by mandatory load,
+		if(expended)
+			netexcess -= expended												// subtracting it from netexcess
+			non_restitution_load += expended									// and letting the power computer know it's appreciated
+			load += expended
+
+	//then notify other devices they can attempt to reclaim any power that didn't go used, and update their reporting on effective output
+	for(var/obj/machinery/power/smes/S in nodes)
+		S.restore()
+	for(var/obj/machinery/power/sword_engine/SW in nodes)
+		SW.restore()
+
+	//report overall consumption, including ALL APC load (even if not fully satisfied) to give a better impression of supply vs demand
+	viewload = 0.6 * viewload + 0.4 * (non_restitution_load + apcload)
+
+	viewload = round(viewload)

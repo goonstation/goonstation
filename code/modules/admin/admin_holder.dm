@@ -43,6 +43,7 @@
 	var/datum/color_matrix_editor/color_matrix_editor = null
 	var/datum/centcomviewer/centcomviewer = null
 	var/datum/bioeffectmanager/bioeffectmanager = null
+	var/datum/abilitymanager/abilitymanager = null
 
 	var/list/hidden_categories = null
 
@@ -57,7 +58,7 @@
 				C.chatOutput.getContextFlag()
 				src.load_admin_prefs()
 
-		if (!admin_interact_atom_verbs || admin_interact_atom_verbs.len <= 0)
+		if (!admin_interact_atom_verbs || length(admin_interact_atom_verbs) <= 0)
 			admin_interact_atom_verbs = list(\
 			"Spin",\
 			"Rotate",\
@@ -65,7 +66,7 @@
 			"Emag",\
 			)
 
-		if (!admin_interact_verbs || admin_interact_verbs.len <= 0)
+		if (!admin_interact_verbs || length(admin_interact_verbs) <= 0)
 			admin_interact_verbs = list()
 			admin_interact_verbs["obj"] = list(\
 			"Get Thing",\

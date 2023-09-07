@@ -75,6 +75,16 @@
 		src.open()
 		playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
 
+	Crossed(atom/movable/AM)
+		. = ..()
+		if (src.open && ismob(AM) && AM.throwing)
+			var/datum/thrown_thing/thr = global.throwing_controller.throws_of_atom(AM)[1]
+			AM.throw_impact(src, thr)
+			AM.throwing = FALSE
+			AM.changeStatus("weakened", 1 SECOND)
+			AM.set_loc(src.loc)
+			src.close()
+
 /obj/storage/closet/emergency
 	name = "emergency supplies closet"
 	desc = "It's a closet! This one can be opened AND closed. Comes prestocked with emergency equipment. <i>Hopefully</i>."
@@ -295,7 +305,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	name = "wrestling supplies closet"
 	desc = "A handy closet full of everything an aspiring fake showboater wrestler needs to launch his career."
 	spawn_contents = list(/obj/item/storage/belt/wrestling/fake = 3,
-	/obj/item/clothing/under/shorts/random = 3,
+	/obj/item/clothing/under/shorts/random_color = 3,
 	/obj/item/clothing/mask/wrestling/black = 1,
 	/obj/item/clothing/mask/wrestling/blue = 1,
 	/obj/item/clothing/mask/wrestling/green = 1)

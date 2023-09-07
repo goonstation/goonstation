@@ -1,32 +1,6 @@
 /var/const/OPEN = 1
 /var/const/CLOSED = 2
 
-/obj/firedoor_spawn
-	name = "firedoor spawn"
-	desc = "Place this over a door to spawn a firedoor underneath. Sets direction, too!"
-	icon = 'icons/obj/doors/Doorfire.dmi'
-	icon_state = "f_spawn"
-	layer = OBJ_LAYER + 1 // yeah let's consistently be above doors
-
-/obj/firedoor_spawn/New()
-	..()
-	SPAWN(1 DECI SECOND)
-		src.setup()
-		sleep(1 SECOND)
-		qdel(src)
-
-/obj/firedoor_spawn/proc/setup()
-	for (var/obj/machinery/door/D in src.loc)
-		var/obj/machinery/door/firedoor/pyro/P = new/obj/machinery/door/firedoor/pyro(src.loc)
-		P.set_dir(D.dir)
-		P.layer = D.layer + 0.01
-		#ifdef UPSCALED_MAP
-		P.bound_height = 64
-		P.bound_width = 64
-		P.transform = list(2, 0, 16, 0, 2, 16)
-		#endif
-		break
-
 TYPEINFO(/obj/machinery/door/firedoor)
 	mats = 30 // maybe a bit high??
 
@@ -149,10 +123,7 @@ TYPEINFO(/obj/machinery/door/firedoor)
 				sleep(1.5 SECONDS)
 				src.set_density(0)
 				src.update_nearby_tiles()
-				if (ignore_light_or_cam_opacity)
-					src.set_opacity(0)
-				else
-					src.RL_SetOpacity(0)
+				src.set_opacity(0)
 				src.operating = 0
 				return
 		else //close it up again
@@ -165,10 +136,7 @@ TYPEINFO(/obj/machinery/door/firedoor)
 				src.update_nearby_tiles()
 				sleep(1.5 SECONDS)
 
-				if (ignore_light_or_cam_opacity)
-					src.set_opacity(1)
-				else
-					src.RL_SetOpacity(1)
+				src.set_opacity(1)
 				src.operating = 0
 				return
 		playsound(src, 'sound/machines/airlock_pry.ogg', 50, 1)

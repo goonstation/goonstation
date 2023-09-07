@@ -127,7 +127,7 @@
 
 			M.changeStatus("weakened", 3 SECONDS)
 
-		if(!src.to_transfer.len || src.to_transfer.len == 1)
+		if(!src.to_transfer.len || length(src.to_transfer) == 1)
 			src.visible_message("The [src] buzzes.")
 			src.last_switch = 0
 			if(src.teleport_next_switch)

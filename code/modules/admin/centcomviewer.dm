@@ -33,6 +33,8 @@
 	var/list/ban_data
 	if (rustg_json_is_valid(response.body))
 		ban_data = json_decode(response.body)
+		if (ban_data["errors"])
+			ban_data = list()
 	else
 		ban_data = list()
 	. = list(
@@ -45,11 +47,15 @@
 			"filterInactive" = filterInactive
 		)
 
-/datum/centcomviewer/ui_act(action, params)
+/datum/centcomviewer/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if (.)
 		return
 	switch(action)
 		if("toggle-filterInactive")
 			filterInactive = !filterInactive
+			. = TRUE
+		if("updateKey")
+			target_key = copytext(ckeyEx(params["value"]), 1, 100)
+			update_static_data(ui.user, ui)
 			. = TRUE

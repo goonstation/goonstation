@@ -1,76 +1,16 @@
-// -----------------------------------
-// Devour using an action as the timer
-// -----------------------------------
-
-/datum/action/bar/icon/zombifyAbility
-	duration = 40
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "critter_devour"
-	icon = 'icons/mob/critter_ui.dmi'
-	icon_state = "zomb_over"
-	var/mob/living/target
-	var/datum/targetable/critter/zombify/zombify
-
-	New(Target, Zombify)
-		target = Target
-		zombify = Zombify
-		..()
-
-	onUpdate()
-		..()
-
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !zombify || !zombify.cooldowncheck())
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
-	onStart()
-		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !zombify || !zombify.cooldowncheck())
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
-		for(var/mob/O in AIviewers(owner))
-			O.show_message("<span class='alert'><B>[owner] attempts to gnaw into [target]!</B></span>", 1)
-
-	onEnd()
-		..()
-		var/mob/ownerMob = owner
-
-		if(isdead(target) || target.health <= -100) //If basically dead, instaconvert.
-			target.set_mutantrace(/datum/mutantrace/zombie/can_infect)
-			if (target.ghost?.mind && !target.mind.get_player()?.dnr) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
-				target.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
-				target.ghost.mind.transfer_to(target)
-		if(owner && ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && zombify?.cooldowncheck())
-
-			logTheThing(LOG_COMBAT, ownerMob, "zombifies [constructTarget(target,"combat")].")
-			for(var/mob/O in AIviewers(ownerMob))
-				O.show_message("<span class='alert'><B>[owner] successfully infected [target]!</B></span>", 1)
-			playsound(ownerMob, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, 0)
-			ownerMob.health = ownerMob.max_health
-
-			target.TakeDamageAccountArmor("head", 30, 0, 0, DAMAGE_CRUSH)
-			target.changeStatus("stunned", 4 SECONDS)
-			target.contract_disease(/datum/ailment/disease/necrotic_degeneration/can_infect_more, null, null, 1) // path, name, strain, bypass resist
-
-			zombify.actionFinishCooldown()
-
 /datum/targetable/critter/zombify
 	name = "Zombify"
 	desc = "After a short delay, instantly convert a human into a zombie."
 	icon_state = "critter_bite"
-	cooldown = 0
-	var/actual_cooldown = 200
-	targeted = 1
-	target_anything = 1
-
-	proc/actionFinishCooldown()
-		cooldown = actual_cooldown
-		doCooldown()
-		cooldown = initial(cooldown)
+	cooldown = 200
+	cooldown_after_action = TRUE
+	disabled = FALSE
+	targeted = TRUE
 
 	cast(atom/target)
 		if (..())
+			return 1
+		if (disabled)
 			return 1
 		if (isobj(target))
 			target = get_turf(target)
@@ -89,5 +29,104 @@
 		if (istype(H.mutantrace, /datum/mutantrace/zombie))
 			boutput(holder.owner, "<span class='alert'>You can't infect another zombie!</span>")
 			return 1
-		actions.start(new/datum/action/bar/icon/zombifyAbility(target, src), holder.owner)
+		actions.start(new/datum/action/bar/icon/zombify_ability(target, src), holder.owner)
 		return 0
+
+
+/datum/action/bar/icon/zombify_ability
+	duration = 6 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "critter_zombify"
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "zomb_over"
+	var/mob/living/target
+	var/datum/targetable/critter/zombify/zombify
+
+	var/image/mask = null
+	var/image/head = null
+	var/image/uniform = null
+	var/image/back = null
+	var/image/suit = null
+
+	New(Target, Zombify)
+		target = Target
+		zombify = Zombify
+		..()
+
+	onUpdate()
+		..()
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !zombify || !zombify.cooldowncheck())
+			zombify.disabled = FALSE
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !zombify || !zombify.cooldowncheck())
+			zombify.disabled = FALSE
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		owner.visible_message("<span class='alert'><B>[owner] attempts to gnaw into [target]!</B></span>", 1)
+		zombify.disabled = TRUE
+
+	onEnd()
+		..()
+		if (BOUNDS_DIST(owner, target) > 0 || !target || !is_incapacitated(target))
+			owner.visible_message("<span class='alert'><B>[owner]</B> gnashes its teeth in fustration!</span>")
+			zombify.disabled = FALSE
+			return
+		if(iscarbon(target))
+			owner.visible_message("<span class='alert'><B>[owner]</B> slurps up [target]'s brain!</span>")
+			playsound(owner.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
+			logTheThing(LOG_COMBAT, target, "was critter zombified by [owner] at [log_loc(owner)].") // Some logging for instakill critters would be nice (Convair880).
+			APPLY_ATOM_PROPERTY(target, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
+			target.death(TRUE)
+			target.ghostize()
+			var/mob/living/critter/zombie/zombie = new /mob/living/critter/zombie(target.loc)
+			zombie.visible_message("<span class='alert'>[target]'s corpse reanimates!</span>")
+			var/stealthy = 0 //High enough and people won't even see it's undead right away.
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				//Uniform
+				if(H.w_uniform)
+					if (istype(H.w_uniform, /obj/item/clothing/under))
+						ENSURE_IMAGE(src.uniform, H.w_uniform.wear_image_icon, H.w_uniform.item_state)
+						zombie.UpdateOverlays(src.uniform, "uniform")
+						stealthy += 4
+				//Suit
+				if(H.wear_suit)
+					if (istype(H.wear_suit, /obj/item/clothing/suit))
+						ENSURE_IMAGE(src.suit, H.wear_suit.wear_image_icon, H.wear_suit.item_state)
+						zombie.UpdateOverlays(src.suit, "suit")
+						stealthy += 3
+				//Back
+				if(H.back)
+					ENSURE_IMAGE(src.back, H.back.wear_image_icon, H.back.item_state)
+					zombie.UpdateOverlays(src.back, "back")
+					stealthy++
+				//Mask
+				if (H.wear_mask)
+					if (istype(H.wear_mask, /obj/item/clothing/mask))
+						ENSURE_IMAGE(src.mask, H.wear_mask.wear_image_icon, H.wear_mask.item_state)
+						zombie.UpdateOverlays(src.mask, "mask")
+						if (H.wear_mask.c_flags & COVERSEYES)
+							stealthy += 2
+						if (H.head.c_flags & COVERSMOUTH)
+							stealthy += 2
+				//Head
+				if (H.head)
+					ENSURE_IMAGE(src.head, H.head.wear_image_icon, H.head.icon_state)
+					zombie.UpdateOverlays(src.head, "head")
+					if (H.head.c_flags & COVERSEYES)
+						stealthy += 2
+					if (H.head.c_flags & COVERSMOUTH)
+						stealthy += 2
+
+			if(stealthy >= 10)
+				zombie.name = target.real_name
+			else
+				zombie.name += " [target.real_name]"
+
+			qdel(target)
+			zombify.disabled = FALSE
+			zombify.afterAction()

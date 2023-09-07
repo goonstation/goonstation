@@ -643,6 +643,8 @@
 
 /obj/item/paper_bin/get_desc()
 	var/n = src.amount
+	if (n == INFINITY)
+		return "There's an infinite amount of paper in \the [src], the wonders of future technology."
 	for(var/obj/item/paper/P in src)
 		n++
 	return "There's [(n > 0) ? n : "no" ] paper[s_es(n)] in \the [src]."

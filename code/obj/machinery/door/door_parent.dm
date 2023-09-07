@@ -181,6 +181,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 /obj/machinery/door/disposing()
 		src.update_nearby_tiles()
+		if(ignore_light_or_cam_opacity)
+				ignore_light_or_cam_opacity = FALSE
+				src.set_opacity(0)
 		STOP_TRACKING
 		..()
 
@@ -451,7 +454,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	if (damage < 1)
 		return
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 
 	switch(P.proj_data.damage_type)
 		if(D_KINETIC)
@@ -505,10 +508,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		play_animation("opening")
 		next_timeofday_opened = world.timeofday + (src.operation_time)
 		SPAWN(-1)
-			if (ignore_light_or_cam_opacity)
-				src.set_opacity(0)
-			else
-				src.RL_SetOpacity(0)
+			src.set_opacity(0)
 		src.use_power(100)
 		sleep(src.operation_time / 2)
 		src.set_density(0)
@@ -566,12 +566,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 					continue
 				var/mob_layer = L.layer	//Make it look like we're inside the door
 				L.layer = src.layer - 0.01
-				playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 100, 1)
-				L.emote("scream")
+				if(!ON_COOLDOWN(L, "doorcrush", 0.5 SECONDS))
+					playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 100, 1)
+					L.emote("scream")
 
-				L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
+					L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
 
-				L.changeStatus("weakened", 3 SECONDS)
+					L.changeStatus("weakened", 3 SECONDS)
 				L.stuttering += 10
 				did_crush = 1
 				SPAWN(src.operation_time * 1.5 + crush_delay)
@@ -580,10 +581,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		sleep(src.operation_time)
 
 		if(src.visible)
-			if (ignore_light_or_cam_opacity)
-				src.set_opacity(1)
-			else
-				src.RL_SetOpacity(1)
+			src.set_opacity(1)
 
 		src.closed()
 
@@ -643,6 +641,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if(!istype(D, /obj/machinery/door/window) && D.density)
 			return 0
 	return 1
+
+/obj/machinery/door/set_opacity(newopacity)
+	if(ignore_light_or_cam_opacity)
+		src.opacity = newopacity
+	else
+		. = ..()
 
 /turf/simulated/wall/proc/checkForMultipleDoors()
 	if(!src.loc)
@@ -763,7 +767,7 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 
 /obj/machinery/door/unpowered/wood/attackby(obj/item/I, mob/user)
 	if (I) // eh, this'll work well enough.
-		src.material?.triggerOnHit(src, I, user, 1)
+		src.material_trigger_when_attacked(I, user, 1)
 	if (src.operating)
 		return
 	src.add_fingerprint(user)
@@ -812,23 +816,23 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 	playsound(src, 'sound/machines/door_close.ogg', 50, 1)
 	. = ..()
 
-/obj/machinery/door/unpowered/wood/verb/simple_lock(mob/user)
+/obj/machinery/door/unpowered/wood/verb/simple_lock()
 	set name = "Lock Door"
 	set category = "Local"
 	set src in oview(1)
 
-	if (isdead(user) || isintangible(user))
+	if (isdead(usr) || isintangible(usr))
 		return
 	if (!src.density || src.operating)
-		boutput(user, "<span class='alert'>You COULD flip the lock on [src] while it's open, but it wouldn't actually accomplish anything!</span>")
+		boutput(usr, "<span class='alert'>You COULD flip the lock on [src] while it's open, but it wouldn't actually accomplish anything!</span>")
 		return
 	if (src.lock_dir)
-		var/checkdir = get_dir(src, user)
+		var/checkdir = get_dir(src, usr)
 		if (!(checkdir & src.lock_dir))
-			boutput(user, "<span class='alert'>[src]'s lock isn't on this side!</span>")
+			boutput(usr, "<span class='alert'>[src]'s lock isn't on this side!</span>")
 			return
 	src.toggle_locked()
-	src.visible_message("<span class='notice'><B>[user] [!src.locked ? "un" : null]locks [src].</B></span>")
+	src.visible_message("<span class='notice'><B>[usr] [!src.locked ? "un" : null]locks [src].</B></span>")
 	return
 
 /datum/action/bar/icon/door_lockpick

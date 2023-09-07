@@ -340,7 +340,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			H.sound_fart = fartsounds[fartsound || "default"] || fartsounds["default"]
 			H.voice_type = voicetype || RANDOM_HUMAN_VOICE
 
-			if (H.mutantrace && H.mutantrace.voice_override)
+			if (H.mutantrace.voice_override)
 				H.voice_type = H.mutantrace.voice_override
 
 			H.update_name_tag()
@@ -669,7 +669,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 			return 0
 
 		var/datum/bioEffect/newEffect = bioEffectList[idToAdd]
-		if(!newEffect) return 0
+		if(!newEffect)
+			CRASH("Invalid bioEffect ID [idToAdd]")
 
 		newEffect = new newEffect.type
 

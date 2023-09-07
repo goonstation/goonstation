@@ -1,16 +1,13 @@
 ////Martian Turf stuff//////////////
-ABSTRACT_TYPE(/turf/simulated/martian)
-/turf/simulated/martian
+/turf/simulated/floor/martian
+	name = "organic floor"
+	icon_state = "floor1"
 	name = "martian"
 	icon = 'icons/turf/martian.dmi'
 	thermal_conductivity = 0.05
 	heat_capacity = 0
 
-/turf/simulated/martian/floor
-	name = "organic floor"
-	icon_state = "floor1"
-
-/turf/unsimulated/martian/floor
+/turf/unsimulated/floor/martian
 	icon = 'icons/turf/martian.dmi'
 	name = "organic floor"
 	icon_state = "floor1"
@@ -59,8 +56,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/martian)
 			return
 
 		else
-			if(src.material)
-				src.material.triggerOnHit(src, W, user, 1)
+			src.material_trigger_when_attacked(W, user, 1)
 			attack_particle(user, src)
 			src.visible_message("<span class='alert'>[user ? user : "Someone"] hits [src] with [W].</span>", "<span class='alert'>You hit [src] with [W].</span>")
 			src.take_damage(W.force / 2)

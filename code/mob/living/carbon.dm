@@ -1,5 +1,5 @@
 
-/mob/living/carbon/
+/mob/living/carbon
 	gender = MALE // WOW RUDE
 	var/last_eating = 0
 
@@ -45,14 +45,13 @@
 							return
 					if (2) //lube
 						src.remove_pulling()
-						src.changeStatus("weakened", 3.5 SECONDS)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						playsound(T, 'sound/misc/slip.ogg', 50, 1, -3)
 						var/atom/target = get_edge_target_turf(src, src.dir)
 						src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
 					if (3) // superlube
 						src.remove_pulling()
-						src.changeStatus("weakened", 6 SECONDS)
+						src.changeStatus("weakened", 3.5 SECONDS)
 						playsound(T, 'sound/misc/slip.ogg', 50, 1, -3)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						var/atom/target = get_edge_target_turf(src, src.dir)
@@ -89,7 +88,7 @@
 	for(var/mob/M in src)
 		if(M in src.stomach_contents)
 			src.stomach_contents.Remove(M)
-		if (!isobserver(M))
+		if (!isobserver(M) && !isintangible(M))
 			src.visible_message("<span class='alert'><B>[M] bursts out of [src]!</B></span>")
 		else if (istype(M, /mob/dead/target_observer))
 			M.cancel_camera()

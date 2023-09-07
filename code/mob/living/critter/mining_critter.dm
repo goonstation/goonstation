@@ -34,7 +34,7 @@
 	speechverb_ask = "chitters"
 	speechverb_gasp = "rattles"
 	speechverb_stammer = "click-clacks"
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	can_throw = TRUE
 	can_grab = TRUE
 	can_disarm = TRUE
@@ -50,6 +50,7 @@
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid)
+	no_stamina_stuns = TRUE
 
 	New()
 		..()
@@ -122,7 +123,6 @@
 		return ..()
 
 	death()
-		src.can_lie = FALSE
 		src.reagents.add_reagent("atropine", 50, null)
 		src.reagents.add_reagent("haloperidol", 50, null)
 		return ..()
@@ -219,6 +219,7 @@
 				return
 			if(prob(40))
 				src.tamed = TRUE
+				src.ai_retaliates = FALSE
 				src.visible_message("[src] enjoyed the [I] and seems more docile!")
 				src.emote("burp")
 			src.aftereat()
@@ -247,10 +248,6 @@
 		HH.name = "mouth"
 		HH.limb_name = "teeth"
 		HH.can_hold_items = FALSE
-
-	death()
-		src.can_lie = FALSE
-		..()
 
 	proc/aftereat()
 		var/datum/targetable/critter/vomit_ore/vomit = src.abilityHolder.getAbility(/datum/targetable/critter/vomit_ore)

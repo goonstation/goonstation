@@ -34,7 +34,7 @@
 	can_disarm = 1
 	var/good_grip = 1
 
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	skinresult = /obj/item/material_piece/cloth/spidersilk
 	max_skins = 4
 
@@ -132,11 +132,20 @@
 	proc/grow_up()
 		if (!src.babyspider || !ispath(src.adultpath))
 			return 0
+		var/has_implant = FALSE
+		//antag critter spiders have a maintenance implant. Transfer it when they grow up
+		for (var/obj/item/implant/access/infinite/assistant/I in src.contents)
+			has_implant = TRUE
 		src.unequip_all()
 		src.visible_message("<span class='alert'><b>[src] grows up!</b></span>",\
 		"<span class='notice'><b>You grow up!</b></span>")
 		SPAWN(0)
-			src.make_critter(src.adultpath)
+			var/mob/living/critter/spider/new_mob = src.make_critter(src.adultpath)
+			if (has_implant)
+				new /obj/item/implant/access/infinite/assistant(new_mob)
+			new_mob.ai_retaliate_patience = src.ai_retaliate_patience
+			if(!istype(new_mob.ai, src.ai_type))
+				new_mob.ai = new src.ai_type(new_mob)
 
 	valid_target(mob/living/C)
 		if (C.bioHolder.HasEffect("husk")) return FALSE
@@ -249,7 +258,7 @@
 	encase_in_web = 0
 	max_skins = 4
 	reacting = 0
-
+	no_stamina_stuns = TRUE
 	faction = FACTION_ICEMOON
 
 /mob/living/critter/spider/ice/nice
@@ -318,7 +327,7 @@
 	can_throw = 0
 	can_grab = 0
 	can_disarm = 0
-	butcherable = 0
+	butcherable = BUTCHER_NOT_ALLOWED
 	health_brute = 5
 	health_burn = 5
 	babyspider = 1

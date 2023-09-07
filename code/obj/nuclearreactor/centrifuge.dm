@@ -43,6 +43,7 @@
 					playsound(src, sound_process, 40, 1)
 				else
 					playsound(src, sound_grump, 40, 1)
+				waste.setMaterial(getMaterial(waste.default_material), FALSE, FALSE, TRUE, FALSE)
 				waste.material.setProperty("spent_fuel", extracted_fuel)
 				extracted_fuel = 0
 				doing_stuff = FALSE

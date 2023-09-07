@@ -80,7 +80,7 @@
 
 				else
 					// Antagonist check.
-					if (checktraitor(H))
+					if (H.mind?.is_antagonist())
 						switch (H.mind.special_role) // Ordered by skull value.
 							if (ROLE_OMNITRAITOR)
 								skull_type = /obj/item/skull/crystal
@@ -351,8 +351,6 @@
 		src.handcuffs.destroy_handcuffs(src)
 	src.buckled = null
 
-	if (src.mutantrace)
-		qdel(src.mutantrace)
 	src.set_mutantrace(/datum/mutantrace/hunter)
 
 	var/datum/abilityHolder/hunter/A = src.get_ability_holder(/datum/abilityHolder/hunter)
@@ -367,16 +365,16 @@
 
 	new /obj/item/implant/revenge/microbomb/hunter(src)
 
-	src.equip_if_possible(new /obj/item/clothing/under/gimmick/hunter(src), slot_w_uniform) // srcust be at the top of the list.
-	src.equip_if_possible(new /obj/item/clothing/mask/hunter(src), slot_wear_mask)
-	src.equip_if_possible(new /obj/item/storage/belt/hunter(src), slot_belt)
-	src.equip_if_possible(new /obj/item/clothing/shoes/cowboy/hunter(src), slot_shoes)
-	src.equip_if_possible(new /obj/item/device/radio/headset(src), slot_ears)
-	src.equip_if_possible(new /obj/item/storage/backpack(src), slot_back)
-	src.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(src), slot_l_store)
-	src.equip_if_possible(new /obj/item/cloaking_device/hunter(src), slot_r_store)
-	src.equip_if_possible(new /obj/item/knife/butcher/hunterspear(src), slot_in_backpack)
-	src.equip_if_possible(new /obj/item/gun/energy/plasma_gun/hunter(src), slot_in_backpack)
+	src.equip_if_possible(new /obj/item/clothing/under/gimmick/hunter(src), SLOT_W_UNIFORM) // srcust be at the top of the list.
+	src.equip_if_possible(new /obj/item/clothing/mask/hunter(src), SLOT_WEAR_MASK)
+	src.equip_if_possible(new /obj/item/storage/belt/hunter(src), SLOT_BELT)
+	src.equip_if_possible(new /obj/item/clothing/shoes/cowboy/hunter(src), SLOT_SHOES)
+	src.equip_if_possible(new /obj/item/device/radio/headset(src), SLOT_EARS)
+	src.equip_if_possible(new /obj/item/storage/backpack(src), SLOT_BACK)
+	src.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(src), SLOT_L_STORE)
+	src.equip_if_possible(new /obj/item/cloaking_device/hunter(src), SLOT_R_STORE)
+	src.equip_if_possible(new /obj/item/knife/butcher/hunterspear(src), SLOT_IN_BACKPACK)
+	src.equip_if_possible(new /obj/item/gun/energy/plasma_gun/hunter(src), SLOT_IN_BACKPACK)
 
 	src.set_face_icon_dirty()
 	src.set_body_icon_dirty()

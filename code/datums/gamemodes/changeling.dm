@@ -58,7 +58,7 @@
 /datum/game_mode/changeling/post_setup()
 	for(var/datum/mind/changeling in src.traitors)
 		if(istype(changeling))
-			changeling.add_antagonist(ROLE_CHANGELING)
+			changeling.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_ROUND_START)
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()

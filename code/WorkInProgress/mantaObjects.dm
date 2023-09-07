@@ -465,7 +465,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			if(attached)
 				var/datum/powernet/PN = attached.get_powernet()
 				if(PN)
-					var/drained = min ( drain_rate, PN.avail )
+					var/drained = min ( drain_rate, (PN.avail - PN.newload) )
 					PN.newload += drained
 					power_drained += drained
 
@@ -969,7 +969,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		if(isnull(OldLoc)) // hack, remove later pls thx
 			return ..(Obj, OldLoc)
 		if(y <= 3 || y >= world.maxy - 3 || x <= 3 || x >= world.maxx - 3)
-			if (!L || L.len == 0)
+			if (!L || length(L) == 0)
 				for(var/turf/T in get_area_turfs(/area/trench_landing))
 					L+=T
 
@@ -1569,8 +1569,8 @@ var/obj/manta_speed_lever/mantaLever = null
 	configure_mode = 0
 	random_code = 1
 	spawn_contents = list(/obj/item/card/id/polaris,
-	/obj/item/paper/manta_polarisnote,/obj/item/reagent_containers/emergency_injector/random,/obj/item/spacecash/thousand,
-	/obj/item/spacecash/thousand,/obj/item/spacecash/thousand)
+	/obj/item/paper/manta_polarisnote,/obj/item/reagent_containers/emergency_injector/random,/obj/item/currency/spacecash/thousand,
+	/obj/item/currency/spacecash/thousand,/obj/item/currency/spacecash/thousand)
 
 /obj/item/card/id/polaris
 	name = "Sergeant's spare ID"

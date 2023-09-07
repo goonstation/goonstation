@@ -14,7 +14,7 @@ TYPEINFO(/datum/component/analyzable)
 
 /datum/component/analyzable/Initialize(type_override)
 	. = ..()
-	if (isatommovable(parent))
+	if (ismovable(parent))
 		var/atom/movable/O = parent
 		if (O.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED)
 			return COMPONENT_INCOMPATIBLE
