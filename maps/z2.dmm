@@ -8,7 +8,7 @@
 "aaw" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/floor{
@@ -20,7 +20,7 @@
 /obj/map/light/lava,
 /obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/floor{
@@ -36,7 +36,7 @@
 /obj/map/light/lava,
 /obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/floor{
@@ -47,7 +47,7 @@
 /obj/map/light/lava,
 /obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/floor/lava,
@@ -55,7 +55,7 @@
 "aaF" = (
 /obj/map/light/lava,
 /obj/indestructible/shuttle_corner{
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/floor/lava,
@@ -63,7 +63,7 @@
 "aaJ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/ancient_floor,
@@ -76,7 +76,7 @@
 "aaR" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/floor,
@@ -84,7 +84,7 @@
 "aaS" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/floor,
@@ -105,7 +105,7 @@
 "abe" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/floor{
@@ -120,7 +120,7 @@
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/floor,
@@ -128,7 +128,7 @@
 "abm" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/ancient_floor,
@@ -141,7 +141,7 @@
 "abo" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/floor,
@@ -155,7 +155,7 @@
 "abs" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/ancient_floor,
@@ -201,7 +201,7 @@
 /area/hospital/samostrel)
 "abC" = (
 /obj/indestructible/shuttle_corner{
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/floor,
@@ -1712,7 +1712,7 @@
 "agv" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/unsimulated/floor/void,
@@ -1720,7 +1720,7 @@
 "agw" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/unsimulated/floor/void,
@@ -2169,7 +2169,7 @@
 "ahG" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/unsimulated/floor/plating,
@@ -2177,7 +2177,7 @@
 "ahH" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/unsimulated/floor/plating,
@@ -2185,7 +2185,7 @@
 "ahJ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/floor{
@@ -2305,7 +2305,7 @@
 /area/moon)
 "aib" = (
 /obj/indestructible/shuttle_corner{
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/floor{
@@ -2320,7 +2320,7 @@
 "aid" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/floor{
@@ -2331,7 +2331,7 @@
 "aie" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/floor{
@@ -8026,7 +8026,7 @@
 /area/crater/cave)
 "aJr" = (
 /turf/unsimulated/wall/setpieces/stranger{
-	icon = 'icons/turf/walls_ancient.dmi';
+	icon = 'icons/turf/walls/ancient.dmi';
 	icon_state = "ancient-12"
 	},
 /area/crater/cave)
@@ -15049,7 +15049,7 @@
 "bgh" = (
 /obj/decal/fakeobjects{
 	dir = 1;
-	icon = 'icons/turf/walls_icemoon.dmi';
+	icon = 'icons/turf/walls/icemoon.dmi';
 	icon_state = "details";
 	name = "symbols"
 	},
@@ -15193,7 +15193,7 @@
 /area/precursor)
 "bgF" = (
 /obj/decal/fakeobjects{
-	icon = 'icons/turf/walls_icemoon.dmi';
+	icon = 'icons/turf/walls/icemoon.dmi';
 	icon_state = "details";
 	name = "symbols"
 	},
@@ -15357,7 +15357,7 @@
 /obj/map/light/cyan,
 /obj/decal/fakeobjects{
 	dir = 1;
-	icon = 'icons/turf/walls_icemoon.dmi';
+	icon = 'icons/turf/walls/icemoon.dmi';
 	icon_state = "details";
 	name = "symbols"
 	},
@@ -16463,7 +16463,7 @@
 /area/crater/cave/lower)
 "bkc" = (
 /turf/unsimulated/wall/setpieces/stranger{
-	icon = 'icons/turf/walls_ancient.dmi';
+	icon = 'icons/turf/walls/ancient.dmi';
 	icon_state = "ancient-2"
 	},
 /area/crater/cave/lower)
@@ -18042,7 +18042,7 @@
 "bop" = (
 /obj/map/light/dimreddish,
 /turf/unsimulated/wall/setpieces/stranger{
-	icon = 'icons/turf/walls_ancient.dmi';
+	icon = 'icons/turf/walls/ancient.dmi';
 	icon_state = "ancient-2"
 	},
 /area/crater/cave/lower)
@@ -20276,7 +20276,7 @@
 /area/iomoon/caves)
 "bxa" = (
 /obj/indestructible/shuttle_corner{
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/floor/lava,
@@ -21809,7 +21809,7 @@
 "bDL" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/floor/lava,
@@ -22309,7 +22309,7 @@
 /area/iomoon/robot_ruins/boss_chamber)
 "bFY" = (
 /obj/decal/fakeobjects{
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	icon_state = "details";
 	name = "symbols"
 	},
@@ -49508,7 +49508,7 @@
 "dpH" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon = 'icons/turf/walls_hospital.dmi'
+	icon = 'icons/turf/walls/hospital.dmi'
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/hospital/underground)
@@ -57625,7 +57625,7 @@
 /area/crater/biodome/research)
 "dWW" = (
 /obj/indestructible/shuttle_corner{
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/floor{
@@ -59706,7 +59706,7 @@
 "gkL" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/floor/lava,
@@ -62903,7 +62903,7 @@
 /area/marsoutpost)
 "jMx" = (
 /obj/indestructible/shuttle_corner{
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/floor/plating,
@@ -63372,7 +63372,7 @@
 /obj/map/light/lava,
 /obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/floor/lava{
@@ -64772,7 +64772,7 @@
 "lJy" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/floor/lava,
@@ -64870,7 +64870,7 @@
 /obj/map/light/lava,
 /obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/floor/lava,
@@ -66193,7 +66193,7 @@
 "noq" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/unsimulated/floor/martian,
@@ -67718,7 +67718,7 @@
 "oLy" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/unsimulated/floor/martian,
@@ -67742,7 +67742,7 @@
 "oOy" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/floor{
@@ -68563,7 +68563,7 @@
 "pAZ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/iomoon/floor{
@@ -69929,7 +69929,7 @@
 /area/iomoon/base)
 "rae" = (
 /obj/decal/fakeobjects{
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	icon_state = "details";
 	name = "symbols"
 	},
@@ -71584,7 +71584,7 @@
 "sHX" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/unsimulated/floor/martian,
@@ -71849,7 +71849,7 @@
 "tdn" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/unsimulated/floor/martian,
@@ -72068,7 +72068,7 @@
 "tuk" = (
 /obj/decal/fakeobjects{
 	dir = 1;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	icon_state = "details";
 	name = "symbols"
 	},
@@ -74354,7 +74354,7 @@
 "wcY" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon = 'icons/turf/walls_iomoon.dmi';
+	icon = 'icons/turf/walls/iomoon.dmi';
 	name = "silicate crust"
 	},
 /turf/unsimulated/floor/plating,
@@ -75209,7 +75209,7 @@
 "wPi" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon = 'icons/turf/walls_hospital.dmi'
+	icon = 'icons/turf/walls/hospital.dmi'
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)

@@ -10152,7 +10152,7 @@
 "cWr" = (
 /turf/simulated/wall/false_wall{
 	color = "";
-	icon = 'icons/turf/walls_jen.dmi';
+	icon = 'icons/turf/walls/jen.dmi';
 	icon_state = "12"
 	},
 /area/station/crew_quarters/arcade/dungeon)
@@ -24580,7 +24580,7 @@
 	},
 /turf/simulated/wall/false_wall{
 	color = "";
-	icon = 'icons/turf/walls_jen.dmi';
+	icon = 'icons/turf/walls/jen.dmi';
 	icon_state = "12"
 	},
 /area/station/crew_quarters/arcade/dungeon)
@@ -28707,7 +28707,7 @@
 "iMz" = (
 /turf/simulated/wall/false_wall{
 	color = "#87befd";
-	icon = 'icons/turf/walls_jen.dmi';
+	icon = 'icons/turf/walls/jen.dmi';
 	icon_state = "3"
 	},
 /area/station/medical/asylum/bathroom)
@@ -34483,7 +34483,7 @@
 "kCz" = (
 /turf/simulated/wall/false_wall{
 	color = "";
-	icon = 'icons/turf/walls_jen.dmi';
+	icon = 'icons/turf/walls/jen.dmi';
 	icon_state = "12"
 	},
 /area/station/chapel/sanctuary)
@@ -42188,7 +42188,7 @@
 "mVJ" = (
 /turf/simulated/wall/false_wall{
 	color = "#87befd";
-	icon = 'icons/turf/walls_jen.dmi';
+	icon = 'icons/turf/walls/jen.dmi';
 	icon_state = "12"
 	},
 /area/station/medical/asylum/rec)
@@ -52341,7 +52341,7 @@
 "qcH" = (
 /turf/simulated/wall/false_wall{
 	color = "";
-	icon = 'icons/turf/walls_jen.dmi';
+	icon = 'icons/turf/walls/jen.dmi';
 	icon_state = "3"
 	},
 /area/station/chapel/sanctuary)
@@ -54150,7 +54150,7 @@
 "qEl" = (
 /turf/simulated/wall/false_wall{
 	color = "#87befd";
-	icon = 'icons/turf/walls_jen.dmi';
+	icon = 'icons/turf/walls/jen.dmi';
 	icon_state = "3"
 	},
 /area/station/maintenance/inner/west)
@@ -59070,7 +59070,7 @@
 	},
 /turf/simulated/wall/false_wall{
 	color = "#ff9999";
-	icon = 'icons/turf/walls_jen.dmi';
+	icon = 'icons/turf/walls/jen.dmi';
 	icon_state = "12"
 	},
 /area/station/maintenance/outer/west)
@@ -71231,7 +71231,7 @@
 "vTJ" = (
 /turf/simulated/wall/false_wall{
 	color = "#87befd";
-	icon = 'icons/turf/walls_jen.dmi';
+	icon = 'icons/turf/walls/jen.dmi';
 	icon_state = "12"
 	},
 /area/station/maintenance/inner/east)

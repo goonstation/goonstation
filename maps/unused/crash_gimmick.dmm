@@ -2847,7 +2847,7 @@
 	floorintact = 1;
 	floorname = "plating";
 	gas_impermeable = 1;
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-R-3";
 	layer = 1.9;
 	mod = "norn-R-"
@@ -6413,7 +6413,7 @@
 	floorintact = 1;
 	floorname = "plating";
 	gas_impermeable = 1;
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-R-3";
 	layer = 1.9;
 	mod = "norn-R-"

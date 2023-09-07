@@ -13985,7 +13985,7 @@
 "aUH" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -14089,7 +14089,7 @@
 "aVb" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -14565,7 +14565,7 @@
 "aXf" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -14588,7 +14588,7 @@
 "aXh" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -33363,7 +33363,7 @@
 "cEW" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -33396,7 +33396,7 @@
 "cFH" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -33417,7 +33417,7 @@
 "cFR" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /obj/lattice,
@@ -33773,7 +33773,7 @@
 "dhg" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -34398,7 +34398,7 @@
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -34528,7 +34528,7 @@
 "ehn" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -34710,7 +34710,7 @@
 "ert" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /obj/lattice,
@@ -35512,7 +35512,7 @@
 "fCj" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -35632,7 +35632,7 @@
 "fHY" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -35700,7 +35700,7 @@
 "fMQ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /obj/lattice,
@@ -35816,7 +35816,7 @@
 "fWn" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -36748,7 +36748,7 @@
 "hGJ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -36976,7 +36976,7 @@
 "iey" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -37683,7 +37683,7 @@
 "jlN" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -38617,7 +38617,7 @@
 "laC" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -39271,7 +39271,7 @@
 "lYX" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -39667,7 +39667,7 @@
 "mCk" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/space/fluid,
@@ -40802,7 +40802,7 @@
 "ojY" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /obj/decal/fakeobjects/pipe{
@@ -41275,7 +41275,7 @@
 "pbD" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -42441,7 +42441,7 @@
 "qYb" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -42513,7 +42513,7 @@
 "rfp" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -42528,7 +42528,7 @@
 "rhj" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /obj/decal/fakeobjects/pipe{
@@ -43759,7 +43759,7 @@
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -44517,7 +44517,7 @@
 "uTL" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/space/fluid,
@@ -44994,7 +44994,7 @@
 "vRv" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/space/fluid,
@@ -45185,7 +45185,7 @@
 "wdo" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/space/fluid,
@@ -45659,7 +45659,7 @@
 "wIn" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
