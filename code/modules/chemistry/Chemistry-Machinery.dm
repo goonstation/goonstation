@@ -27,7 +27,6 @@ TYPEINFO(/obj/machinery/chem_heater)
 	var/target_temp = T0C
 	var/output_target = null
 	var/mob/roboworking = null
-	var/static/image/icon_beaker = image('icons/obj/heater.dmi', "heater-beaker")
 	// The chemistry APC was largely meaningless, so I made dispensers/heaters require a power supply (Convair880).
 
 	New()
@@ -246,9 +245,8 @@ TYPEINFO(/obj/machinery/chem_heater)
 		tgui_process.update_uis(src)
 
 	update_icon()
-		src.overlays -= src.icon_beaker
 		if (src.beaker)
-			src.overlays += src.icon_beaker
+			src.UpdateOverlays(SafeGetOverlayImage("beaker", 'icons/obj/heater.dmi', "heater-beaker"), "beaker")
 			if (src.active && src.beaker:reagents && src.beaker:reagents:total_volume)
 				if (target_temp > src.beaker:reagents:total_temperature)
 					src.icon_state = "heater-heat"
@@ -259,6 +257,7 @@ TYPEINFO(/obj/machinery/chem_heater)
 			else
 				src.icon_state = "heater-closed"
 		else
+			src.UpdateOverlays(null, "beaker", retain_cache=TRUE)
 			src.icon_state = "heater"
 
 	mouse_drop(over_object, src_location, over_location)
