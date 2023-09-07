@@ -1,5 +1,7 @@
 
 (t)wed sep 06 23
+(u)Tarmunora
+(+)Basic cybereyes can now be recolored by using a multitool on them. This required a total refactor of eye color so report bugs related to that I guess.
 (u)UnfunnyPerson
 (p)15482
 (e)🗺⚖|A-Mapping, C-Balance
