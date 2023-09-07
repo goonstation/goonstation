@@ -304,12 +304,6 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 	icon_state = "leadwall"
 	can_be_auto = 0
 
-
-/turf/simulated/wall/false_wall/tempus
-	desc = "The pattern on the wall seems to have a seam on it"
-	icon = 'icons/turf/walls_tempus-green.dmi'
-	icon_state = "0"
-
 /obj/shifting_wall
 	name = "r wall"
 	desc = ""
