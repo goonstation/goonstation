@@ -367,7 +367,8 @@ var/global/totally_random_jobs = FALSE
 	if (JOB.slot_ears && length(JOB.slot_ears) > 1)
 		H.equip_new_if_possible(weighted_pick(JOB.slot_ears), SLOT_EARS)
 	else if (length(JOB.slot_ears))
-		if (!(H.traitHolder && H.traitHolder.hasTrait("allears") && ispath(JOB.slot_ears[1],/obj/item/device/radio/headset)))
+		if (!(H.traitHolder && H.traitHolder.hasTrait("allears") && ispath(JOB.slot_ears[1],
+	/obj/item/device/radio/headset)))
 			H.equip_new_if_possible(JOB.slot_ears[1], SLOT_EARS)
 	// Mask
 	if (JOB.slot_mask && length(JOB.slot_mask) > 1)
@@ -846,7 +847,8 @@ var/global/totally_random_jobs = FALSE
 /////////////////////////////////////////////
 
 var/list/trinket_safelist = list(
-	/obj/item/basketball,/obj/item/instrument/bikehorn,
+	/obj/item/basketball,
+	/obj/item/instrument/bikehorn,
 	/obj/item/brick,
 	/obj/item/clothing/glasses/eyepatch,
 	/obj/item/clothing/glasses/regular,
@@ -882,7 +884,8 @@ var/list/trinket_safelist = list(
 	/obj/item/pen/fancy,
 	/obj/item/pen/odd,
 	/obj/item/plant/herb/cannabis/spawnable,
-	/obj/item/razor_blade,/obj/item/rubberduck,
+	/obj/item/razor_blade,
+	/obj/item/rubberduck,
 	/obj/item/instrument/saxophone,
 	/obj/item/scissors,
 	/obj/item/screwdriver,
@@ -898,10 +901,13 @@ var/list/trinket_safelist = list(
 	/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
 	/obj/item/reagent_containers/food/snacks/burger,
 	/obj/item/reagent_containers/food/snacks/burger/cheeseburger,
-	/obj/item/reagent_containers/food/snacks/burger/moldy,/obj/item/reagent_containers/food/snacks/candy/chocolate,
+	/obj/item/reagent_containers/food/snacks/burger/moldy,
+	/obj/item/reagent_containers/food/snacks/candy/chocolate,
 	/obj/item/reagent_containers/food/snacks/chips,
-	/obj/item/reagent_containers/food/snacks/cookie,/obj/item/reagent_containers/food/snacks/ingredient/egg,
-	/obj/item/reagent_containers/food/snacks/ingredient/egg/bee,/obj/item/reagent_containers/food/snacks/plant/apple,
+	/obj/item/reagent_containers/food/snacks/cookie,
+	/obj/item/reagent_containers/food/snacks/ingredient/egg,
+	/obj/item/reagent_containers/food/snacks/ingredient/egg/bee,
+	/obj/item/reagent_containers/food/snacks/plant/apple,
 	/obj/item/reagent_containers/food/snacks/plant/banana,
 	/obj/item/reagent_containers/food/snacks/plant/potato,
 	/obj/item/reagent_containers/food/snacks/sandwich/pb,
@@ -914,12 +920,16 @@ var/list/trinket_safelist = list(
 	/obj/item/reagent_containers/glass/bucket,
 	/obj/item/reagent_containers/glass/beaker,
 	/obj/item/reagent_containers/food/drinks/drinkingglass,
-	/obj/item/reagent_containers/food/drinks/drinkingglass/shot,/obj/item/storage/pill_bottle/bathsalts,
+	/obj/item/reagent_containers/food/drinks/drinkingglass/shot,
+	/obj/item/storage/pill_bottle/bathsalts,
 	/obj/item/storage/pill_bottle/catdrugs,
 	/obj/item/storage/pill_bottle/crank,
 	/obj/item/storage/pill_bottle/cyberpunk,
 	/obj/item/storage/pill_bottle/methamphetamine,
-	/obj/item/spraybottle,/obj/item/staple_gun,/obj/item/clothing/head/NTberet,/obj/item/clothing/head/biker_cap,
+	/obj/item/spraybottle,
+	/obj/item/staple_gun,
+	/obj/item/clothing/head/NTberet,
+	/obj/item/clothing/head/biker_cap,
 	/obj/item/clothing/head/black,
 	/obj/item/clothing/head/blue,
 	/obj/item/clothing/head/chav,
