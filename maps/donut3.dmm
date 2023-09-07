@@ -1783,6 +1783,7 @@
 	dir = 8;
 	pixel_x = -23
 	},
+/obj/decal/stripe_caution,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "awX" = (
@@ -4072,14 +4073,14 @@
 	},
 /area/station/chapel/sanctuary)
 "bcw" = (
-/obj/decal/tile_edge/stripe/corner{
-	dir = 10
-	},
-/obj/decal/stripe_caution,
-/obj/storage/secure/closet/security/armory,
 /obj/machinery/light/incandescent/blueish{
 	dir = 1
 	},
+/obj/decal/stripe_caution,
+/obj/decal/tile_edge/stripe/corner{
+	dir = 10
+	},
+/obj/storage/secure/crate/plasma/armory/anti_biological,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bcE" = (
@@ -13332,11 +13333,8 @@
 	name = "Restricted Area"
 	})
 "dWp" = (
-/obj/machinery/weapon_stand/rifle_rack/recharger,
+/obj/machinery/vending/security_ammo,
 /obj/decal/stripe_caution,
-/obj/machinery/light/incandescent/warm/very{
-	dir = 1
-	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "dWB" = (
@@ -13545,31 +13543,40 @@
 /turf/simulated/floor/black,
 /area/station/security/visitation)
 "dZs" = (
-/obj/item/gun/kinetic/dart_rifle{
-	pixel_x = 2;
+/obj/item/chem_grenade/pepper{
+	pixel_x = -7;
 	pixel_y = 10
 	},
-/obj/item/gun/kinetic/dart_rifle{
-	pixel_x = 2;
-	pixel_y = 4
+/obj/item/chem_grenade/pepper{
+	pixel_x = -1;
+	pixel_y = 10
 	},
-/obj/item/ammo/bullets/tranq_darts/anti_mutant{
-	pixel_x = -10;
-	pixel_y = -6
+/obj/item/chem_grenade/pepper{
+	pixel_x = 5;
+	pixel_y = 10
 	},
-/obj/item/ammo/bullets/tranq_darts/anti_mutant{
-	pixel_x = -4;
-	pixel_y = -6
+/obj/item/chem_grenade/pepper{
+	pixel_x = 11;
+	pixel_y = 10
 	},
-/obj/item/ammo/bullets/tranq_darts/anti_mutant{
-	pixel_x = 9;
-	pixel_y = -6
+/obj/item/clothing/mask/gas{
+	pixel_x = -9;
+	pixel_y = -5
 	},
-/obj/item/ammo/bullets/tranq_darts/anti_mutant{
-	pixel_x = 3;
-	pixel_y = -6
+/obj/item/clothing/mask/gas{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = 4;
+	pixel_y = -5
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = 10;
+	pixel_y = -5
 	},
 /obj/table/reinforced/auto,
+/obj/decal/stripe_caution,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "dZz" = (
@@ -16991,15 +16998,43 @@
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "fgs" = (
-/obj/item/clothing/mask/muzzle,
-/obj/item/clothing/mask/muzzle{
+/obj/item/ammo/bullets/tranq_darts{
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/obj/item/ammo/bullets/tranq_darts{
+	pixel_x = 3;
+	pixel_y = 8
+	},
+/obj/item/ammo/bullets/tranq_darts{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/ammo/bullets/tranq_darts{
+	pixel_x = -10;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/syringe/haloperidol{
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/syringe/haloperidol{
+	pixel_x = 4;
 	pixel_y = -3
 	},
-/obj/item/clothing/mask/muzzle{
+/obj/item/reagent_containers/syringe/haloperidol{
+	pixel_x = -5;
 	pixel_y = -6
 	},
-/obj/machinery/light/incandescent/warm/very,
+/obj/item/reagent_containers/syringe/haloperidol{
+	pixel_x = 4;
+	pixel_y = -9
+	},
 /obj/table/reinforced/auto,
+/obj/machinery/recharger/wall/sticky{
+	dir = 8;
+	pixel_x = -23
+	},
+/obj/decal/stripe_caution,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "fgt" = (
@@ -38779,10 +38814,11 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "lQY" = (
+/obj/storage/secure/closet/security/armory,
 /obj/machinery/light/incandescent/warm/very{
 	dir = 8
 	},
-/obj/machinery/vending/security_ammo,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "lRd" = (
@@ -41232,8 +41268,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/firealarm/south,
-/obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/decal/mule/beacon,
 /turf/simulated/floor/redwhite,
 /area/station/security/quarters)
 "mET" = (
@@ -55320,39 +55354,12 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "qZf" = (
-/obj/item/chem_grenade/pepper{
-	pixel_x = -7;
-	pixel_y = 10
+/obj/machinery/weapon_stand/rifle_rack/recharger,
+/obj/decal/stripe_caution,
+/obj/machinery/light/incandescent/warm/very{
+	dir = 1
 	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = -1;
-	pixel_y = 10
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = 5;
-	pixel_y = 10
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = 11;
-	pixel_y = 10
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = -9;
-	pixel_y = -5
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = 4;
-	pixel_y = -5
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = 10;
-	pixel_y = -5
-	},
-/obj/table/reinforced/auto,
+/obj/decal/stripe_caution,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "qZz" = (
@@ -71711,6 +71718,7 @@
 	tag = ""
 	},
 /obj/random_item_spawner/armory_breaching_supplies,
+/obj/decal/stripe_caution,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "vYW" = (
@@ -75900,42 +75908,32 @@
 	},
 /area/station/chapel/sanctuary)
 "xiy" = (
-/obj/item/ammo/bullets/tranq_darts{
-	pixel_x = 9;
-	pixel_y = 8
+/obj/item/gun/kinetic/dart_rifle{
+	pixel_x = 2;
+	pixel_y = 10
 	},
-/obj/item/ammo/bullets/tranq_darts{
-	pixel_x = 3;
-	pixel_y = 8
+/obj/item/gun/kinetic/dart_rifle{
+	pixel_x = 2;
+	pixel_y = 4
 	},
-/obj/item/ammo/bullets/tranq_darts{
-	pixel_x = -4;
-	pixel_y = 8
-	},
-/obj/item/ammo/bullets/tranq_darts{
+/obj/item/ammo/bullets/tranq_darts/anti_mutant{
 	pixel_x = -10;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/syringe/haloperidol{
-	pixel_x = -5
-	},
-/obj/item/reagent_containers/syringe/haloperidol{
-	pixel_x = 4;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/syringe/haloperidol{
-	pixel_x = -5;
 	pixel_y = -6
 	},
-/obj/item/reagent_containers/syringe/haloperidol{
-	pixel_x = 4;
-	pixel_y = -9
+/obj/item/ammo/bullets/tranq_darts/anti_mutant{
+	pixel_x = -4;
+	pixel_y = -6
+	},
+/obj/item/ammo/bullets/tranq_darts/anti_mutant{
+	pixel_x = 9;
+	pixel_y = -6
+	},
+/obj/item/ammo/bullets/tranq_darts/anti_mutant{
+	pixel_x = 3;
+	pixel_y = -6
 	},
 /obj/table/reinforced/auto,
-/obj/machinery/recharger/wall/sticky{
-	dir = 8;
-	pixel_x = -23
-	},
+/obj/decal/stripe_caution,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "xiC" = (
