@@ -178,7 +178,8 @@
 					o.set_loc(src.loc)
 
 			if("Check Materials")
-				//if(building) return
+				src.auditInventory(user)
+				/* //if(building) return
 				var/metal_cnt = 0
 				var/glass_cnt = 0
 
@@ -194,7 +195,7 @@
 
 				boutput(user, "<span class='notice'>Currently loaded :</span>")
 				boutput(user, "<span class='notice'>[metal_cnt] of [currentBp ? currentBp.req_metal : "-"] required metal</span>")
-				boutput(user, "<span class='notice'>[glass_cnt] of [currentBp ? currentBp.req_glass : "-"] required glass</span>")
+				boutput(user, "<span class='notice'>[glass_cnt] of [currentBp ? currentBp.req_glass : "-"] required glass</span>") */
 
 			if ("Resume Construction")
 				if (!building)
@@ -342,18 +343,31 @@
 		icon_state = "builder"
 		makepowernets()
 
-	proc/auditInventory()
+	proc/auditInventory(mob/user)
 		var/MetalCount = 0
 		var/CrystalCount = 0
 		for(var/obj/O in src)
 			if(O == currentBp) continue
-			if(istype(O, /obj/item/sheet))
-				var/obj/item/sheet/S = O
-				if (S.material)
-					if (S.material.material_flags & MATERIAL_METAL)
-						MetalCount += S.amount
-					if (S.material.material_flags & MATERIAL_CRYSTAL)
-						CrystalCount += S.amount
+			if (istype(O, /obj/item/sheet))
+				var/obj/item/sheet/Sheets = O
+				if (!Sheets.material) continue
+				if (Sheets.material.material_flags & MATERIAL_METAL)
+					MetalCount += Sheets.amount
+				if (Sheets.material.material_flags & MATERIAL_CRYSTAL)
+					CrystalCount += Sheets.amount
+			else if (istype(O, /obj/item/material_piece))
+				var/obj/item/material_piece/Bars = O
+				if (!Bars.material) continue
+				if (Bars.material.material_flags & MATERIAL_METAL)
+					MetalCount += Bars.amount * BAR_SHEET_VALUE
+				if (Bars.material.material_flags & MATERIAL_CRYSTAL)
+					CrystalCount += Bars.amount * BAR_SHEET_VALUE
+		if (user)
+			var/Message = "<span class='notice'>The machine is holding [MetalCount] metal, and [CrystalCount] crystal, measured in sheets.</span>"
+			if (src.currentBp)
+				Message += "<br><span class='notice'>Its current blueprint requires [src.currentBp.req_metal] metal,"
+				Message += " and [src.currentBp.req_glass] crystal, measured in sheets.</span>"
+			boutput(user, Message)
 		return list(MetalCount, CrystalCount)
 
 	proc/unpauseBuild()
