@@ -8905,7 +8905,7 @@
 /area/station/maintenance/inner/central)
 "aKo" = (
 /obj/fluid_spawner{
-	amount = 3600
+	amount = 4200
 	},
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
