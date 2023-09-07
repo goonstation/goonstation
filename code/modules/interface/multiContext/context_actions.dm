@@ -1289,3 +1289,47 @@
 		return robospray in user
 	execute(var/obj/item/robospray/robospray, var/mob/user)
 		robospray.change_reagent(src.reagent_id, user)
+
+/datum/contextAction/bunsen
+	icon = 'icons/ui/context16x16.dmi'
+	name = "you shouldnt see me"
+	icon_state = "wrench"
+	icon_background = "bunsen_bg"
+	close_moved = TRUE
+
+	var/temperature = null
+
+	checkRequirements(var/obj/item/bunsen_burner/bunsen_burner, var/mob/user)
+		if(GET_DIST(bunsen_burner, user) > 1)
+			return FALSE
+		else
+			return TRUE
+
+	execute(var/obj/item/bunsen_burner/bunsen_burner, mob/user)
+		bunsen_burner.change_status(temperature)
+		bunsen_burner.UpdateIcon()
+		boutput(user, "<span class='notice'>You set the [bunsen_burner] to [temperature].</span>")
+
+	heat_off
+		name = "Off"
+		icon_state = "bunsen_off"
+
+		execute(var/obj/item/bunsen_burner/bunsen_burner, mob/user)
+			bunsen_burner.change_status("off")
+			boutput(user, "<span class='notice'>You turn the [bunsen_burner] off.</span>")
+			bunsen_burner.UpdateIcon()
+
+	heat_low
+		name = "Low"
+		icon_state = "bunsen_1"
+		temperature = "low"
+
+	heat_medium
+		name = "Medium"
+		icon_state = "bunsen_2"
+		temperature = "medium"
+
+	heat_high
+		name = "High"
+		icon_state = "bunsen_3"
+		temperature = "high"

@@ -996,3 +996,122 @@ proc/ui_describe_reagents(atom/A)
 		amount_of_reagent_to_use = 5 //slow but...
 		chemical_efficiency = 2 //...lots of synthflesh per unit of blood
 		organ_efficiency = 2
+
+/obj/item/bunsen_burner
+	name = "Bunsen burner"
+	desc = "A Bunsen burner capable of holding up chemical containers and heating them at three different heat levels."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bunsen"
+	w_class = W_CLASS_NORMAL
+	var/temperature_setting = "low" //medium, high
+	var/is_currently_burning = FALSE //keep seperate from temp setting so it stays on the same setting if you turn it off and on
+	var/obj/item/reagent_containers/current_container = null
+	var/list/datum/contextAction/contexts = list()
+	var/image/light_image = null
+	var/current_temp_to_heat = 20 //!how much the bunsen burner heats per processing tick
+	var/current_temp_cap = 110 //!how hot the container will have to be before it stops heating
+	contextLayout = new /datum/contextLayout/experimentalcircle
+
+	New()
+		contexts += new /datum/contextAction/bunsen/heat_low
+		contexts += new /datum/contextAction/bunsen/heat_medium
+		contexts += new /datum/contextAction/bunsen/heat_high
+		contexts += new /datum/contextAction/bunsen/heat_off
+		..()
+
+	disposing()
+		STOP_TRACKING
+		..()
+
+	process()
+		if(is_currently_burning && current_container)
+			heat_container()
+		..()
+
+	update_icon()
+		if(!is_currently_burning)
+			icon_state = "bunsen"
+		else switch(temperature_setting)
+			if("low")
+				icon_state = "bunsen_low"
+			if("medium")
+				icon_state = "bunsen_medium"
+			if("high")
+				icon_state = "bunsen_high"
+		if(current_container)
+			if (!src.light_image)
+				src.light_image = image(src.icon)
+				src.light_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+				src.light_image.icon_state = "bunsen_light"
+			src.UpdateOverlays(light_image, "light")
+		else
+			src.UpdateOverlays(null, "light")
+
+	proc/change_status(var/status)
+		src.remove_simple_light("bunsen_flame")
+		if(status != "off")
+			switch(status)
+				if("low")
+					add_simple_light("bunsen_flame", list(245, 181, 61, 0.7 * 255))
+					current_temp_to_heat = 20
+					current_temp_cap = 110
+				if("medium")
+					add_simple_light("bunsen_flame", list(235, 54, 245, 0.7 * 255))
+					current_temp_to_heat = 40
+					current_temp_cap = 400
+				if("high")
+					add_simple_light("bunsen_flame", list(53, 196, 240, 0.4 * 255))
+					current_temp_to_heat = 65
+					current_temp_cap = 900
+			temperature_setting = status
+			if(!is_currently_burning)
+				playsound(src.loc, pick('sound/effects/flame.ogg'), 75, 1) //only play the 'turning on burner' sound when turning on... the burner
+				is_currently_burning = TRUE
+				processing_items.Add(src)
+		if(is_currently_burning && status == "off")
+			processing_items.Remove(src)
+			playsound(src.loc, pick('sound/effects/poff.ogg'), 25, 1)
+			is_currently_burning = FALSE
+		src.UpdateIcon()
+
+	proc/heat_container()
+		current_container.reagents.set_reagent_temp(clamp(current_container.reagents.total_temperature += current_temp_to_heat, 0, current_temp_cap), react = TRUE)
+
+	attack_hand(var/mob/user)
+		if(current_container) //if it has a container loaded you fiddle with the controls instead of picking it up
+			user.showContextActions(src.contexts, src, contextLayout)
+		else
+			..()
+
+	attack_self(var/mob/user)
+		user.showContextActions(src.contexts, src, contextLayout)
+
+	attackby(I, mob/user)
+		if (istype(I, /obj/item/reagent_containers))
+			try_to_put_on_bunsen_burner(I, user)
+
+	proc/try_to_put_on_bunsen_burner(var/obj/item/reagent_containers/container, var/mob/user)
+		if (!istype(src.loc, /turf/)) //can't use bunsen burners if not on a turf
+			return
+		if(current_container)
+			return
+		user.drop_item(container)
+		container.set_loc(get_turf(src))
+		container.layer = src.layer+0.1
+		container.pixel_x = src.pixel_x
+		container.pixel_y = src.pixel_y + 12
+		current_container = container
+		src.UpdateIcon()
+		RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container)) //only register this on the container since attackhand opens menu
+		for(var/item in list(src, container))
+			RegisterSignal(item, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container))
+			RegisterSignal(item, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
+
+	proc/remove_container()
+		UnregisterSignal(current_container, COMSIG_ATTACKHAND, PROC_REF(remove_container))
+		for(var/item in list(src, current_container))
+			UnregisterSignal(item, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container))
+			UnregisterSignal(item, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
+		current_container.pixel_y -= 12 //this isn't vital, but adds a visual cue if it gets disconnected by dragging or something
+		current_container = null
+		src.UpdateIcon()
