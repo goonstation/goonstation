@@ -13335,6 +13335,9 @@
 "dWp" = (
 /obj/machinery/vending/security_ammo,
 /obj/decal/stripe_caution,
+/obj/machinery/light/incandescent/warm/very{
+	dir = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "dWB" = (
@@ -17030,11 +17033,8 @@
 	pixel_y = -9
 	},
 /obj/table/reinforced/auto,
-/obj/machinery/recharger/wall/sticky{
-	dir = 8;
-	pixel_x = -23
-	},
 /obj/decal/stripe_caution,
+/obj/machinery/light/incandescent/warm/very,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "fgt" = (
@@ -55356,9 +55356,6 @@
 "qZf" = (
 /obj/machinery/weapon_stand/rifle_rack/recharger,
 /obj/decal/stripe_caution,
-/obj/machinery/light/incandescent/warm/very{
-	dir = 1
-	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
@@ -75934,6 +75931,10 @@
 	},
 /obj/table/reinforced/auto,
 /obj/decal/stripe_caution,
+/obj/machinery/recharger/wall/sticky{
+	dir = 8;
+	pixel_x = -23
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "xiC" = (
