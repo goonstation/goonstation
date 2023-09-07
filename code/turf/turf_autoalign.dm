@@ -436,9 +436,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/yellow)
 /turf/simulated/wall/auto/reinforced/supernorn/yellow
 	icon = 'icons/turf/walls_manta.dmi'
 #ifdef PERSPECTIVE_EDITOR_WALL
-	icon_state = "perspective-mapwall_r-Y"
+	icon_state = "perspective-mapwall-Y"
 #else
-	icon_state = "mapwall_r-Y"
+	icon_state = "mapwall-Y"
 #endif
 	mod = "norn-Y-"
 	light_mod = "wall-"
@@ -463,9 +463,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/orange)
 /turf/simulated/wall/auto/reinforced/supernorn/orange
 	icon = 'icons/turf/walls_manta.dmi'
 #ifdef PERSPECTIVE_EDITOR_WALL
-	icon_state = "perspective-mapwall_r-O"
+	icon_state = "perspective-mapwall-O"
 #else
-	icon_state = "mapwall_r-O"
+	icon_state = "mapwall-O"
 #endif
 	mod = "norn-O-"
 	light_mod = "wall-"
@@ -516,9 +516,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/blackred)
 /turf/simulated/wall/auto/reinforced/supernorn/blackred
 	icon = 'icons/turf/walls_manta.dmi'
 #ifdef PERSPECTIVE_EDITOR_WALL
-	icon_state = "perspective-mapwall_r-BR"
+	icon_state = "perspective-mapwall-BR"
 #else
-	icon_state = "mapwall_r-BR"
+	icon_state = "mapwall-BR"
 #endif
 	mod = "norn-BR-"
 	light_mod = "wall-"
