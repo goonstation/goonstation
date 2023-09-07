@@ -1,5 +1,12 @@
 
+(t)thu sep 07 23
+(u)FlameArrow57
+(p)15527
+(e)🆕⚖🔊📦|C-Feature, C-Balance, C-Sound, A-Game-Objects
+(+)Common lethal bullets and grenade shrapnel now have a low chance to ricochet off walls. Ricocheted projectiles have reduced damage and don't travel as far.
 (t)wed sep 06 23
+(u)Tarmunora
+(+)Basic cybereyes can now be recolored by using a multitool on them. This required a total refactor of eye color so report bugs related to that I guess.
 (u)UnfunnyPerson
 (p)15482
 (e)🗺⚖|A-Mapping, C-Balance
