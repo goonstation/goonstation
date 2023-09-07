@@ -1269,12 +1269,21 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 			src.r_leg_damage_standing = SafeGetOverlayImage("r_leg_damage", 'icons/mob/dam_human.dmi',"00")
 
 		if(burn_state || brute_state)
-			UpdateOverlays(src.body_damage_standing, "body_damage")
-			UpdateOverlays(src.head_damage_standing, "head_damage")
-			UpdateOverlays(src.l_arm_damage_standing, "l_arm_damage")
-			UpdateOverlays(src.r_arm_damage_standing, "r_arm_damage")
-			UpdateOverlays(src.l_leg_damage_standing, "l_leg_damage")
-			UpdateOverlays(src.r_leg_damage_standing, "r_leg_damage")
+			#define UPDATE_OVERLAY(X) \
+				if(src.X ## _standing?.icon_state && src.X ## _standing.icon_state != "00") {\
+					src.UpdateOverlays(src.X ## _standing, #X); \
+				} else { \
+					src.UpdateOverlays(null, #X, 1, 1); \
+				}
+
+			UPDATE_OVERLAY(body_damage)
+			UPDATE_OVERLAY(head_damage)
+			UPDATE_OVERLAY(l_arm_damage)
+			UPDATE_OVERLAY(r_arm_damage)
+			UPDATE_OVERLAY(l_leg_damage)
+			UPDATE_OVERLAY(r_leg_damage)
+
+			#undef UPDATE_OVERLAY
 		else
 			UpdateOverlays(null, "body_damage",0,1)
 			UpdateOverlays(null, "head_damage",0,1)
