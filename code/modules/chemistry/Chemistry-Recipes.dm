@@ -2087,21 +2087,13 @@
 		name = "Mexican Hot Chocolate"
 		id = "mexicanhotchocolate"
 		result = "mexicanhotchocolate"
-		required_reagents = list("chocolate" = 2, "capsaicin" = 1, "milk" = 1)
-		result_amount = 4
+		required_reagents = list("capsaicin" = 1, "chocolate_milk"= 2)
+		result_amount = 3
 		mix_phrase = "A spicy smell drifts up from the chocolate."
 
-	mexicanhotchocolate/milk
-		id = "mexicanhotchocolate2"
-		required_reagents = list("capsaicin" = 1, "chocolate_milk"= 3)
-
 	mexicanhotchocolate/cinnamon
-		id = "mexicanhotchocolate3"
-		required_reagents = list("chocolate" = 2, "cinnamon" = 1, "milk" = 1)
-
-	mexicanhotchocolate/cinnamon/milk
-		id = "mexicanhotchocolate4"
-		required_reagents = list("cinnamon" = 1, "chocolate_milk"= 3)
+		id = "mexicanhotchocolate_cinnamon"
+		required_reagents = list("cinnamon" = 1, "chocolate_milk"= 2)
 
 	pumpkinspicelatte
 		name = "Pumpkin Spice Latte"
