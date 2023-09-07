@@ -198,7 +198,6 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				user.show_text("You try moving, but [src] seems to be stuck to the floor!", "red")
 				return
 
-
 		if (!src.open(user=user))
 			if (!src.is_short && src.legholes)
 				if (!src.anchored)
