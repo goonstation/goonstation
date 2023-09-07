@@ -1,8 +1,8 @@
 // balance defines
-#define REBUILD_COST_OBJECT_METAL 1 // each of these measured in sheets. integers only pls
-#define REBUILD_COST_OBJECT_CRYSTAL 1
-#define REBUILD_COST_TURF_METAL 4
-#define REBUILD_COST_TURF_CRYSTAL 0
+#define REBUILD_COST_OBJECT_METAL 0.9 // each of these measured in sheets.
+#define REBUILD_COST_OBJECT_CRYSTAL 1.5
+#define REBUILD_COST_TURF_METAL 1
+#define REBUILD_COST_TURF_CRYSTAL 0.5
 #define BAR_SHEET_VALUE 10
 // code defines
 #define SELECT_SKIP 0
@@ -184,19 +184,19 @@
 				CrystalOwed += REBUILD_COST_TURF_CRYSTAL + REBUILD_COST_OBJECT_CRYSTAL * ObjCount
 				TileCostProcessed = TRUE
 			for (var/obj/Item in src)
-				if (Item == currentBp) continue
 				if (MetalOwed <= 0 && CrystalOwed <= 0) break
+				if (Item == currentBp) continue
 
 				if (istype(Item, /obj/item/sheet))
 					var/obj/item/sheet/Sheets = Item
 					if (!Sheets.material) continue
 					if (MetalOwed && Sheets.material.material_flags & MATERIAL_METAL)
-						var/SheetsConsumed = min(Sheets.amount, ceil(MetalOwed))
+						var/SheetsConsumed = ceil(min(Sheets.amount, MetalOwed))
 						Sheets.change_stack_amount(-SheetsConsumed)
 						MetalOwed -= SheetsConsumed
 						continue
 					if (CrystalOwed && Sheets.material.material_flags & MATERIAL_CRYSTAL)
-						var/SheetsConsumed = min(Sheets.amount, ceil(CrystalOwed))
+						var/SheetsConsumed = ceil(min(Sheets.amount, CrystalOwed))
 						Sheets.change_stack_amount(-SheetsConsumed)
 						CrystalOwed -= SheetsConsumed
 						continue
@@ -205,12 +205,12 @@
 					var/obj/item/material_piece/Bars = Item
 					if (!Bars.material) continue
 					if (MetalOwed && Bars.material.material_flags & MATERIAL_METAL)
-						var/BarsConsumed = min(Bars.amount, ceil(MetalOwed / BAR_SHEET_VALUE))
+						var/BarsConsumed = ceil(min(Bars.amount, MetalOwed / BAR_SHEET_VALUE))
 						Bars.change_stack_amount(-BarsConsumed)
 						MetalOwed -= BarsConsumed * BAR_SHEET_VALUE
 						continue
 					if (CrystalOwed && Bars.material.material_flags & MATERIAL_CRYSTAL)
-						var/BarsConsumed = min(Bars.amount, ceil(CrystalOwed / BAR_SHEET_VALUE))
+						var/BarsConsumed = ceil(min(Bars.amount, CrystalOwed / BAR_SHEET_VALUE))
 						Bars.change_stack_amount(-BarsConsumed)
 						CrystalOwed -= BarsConsumed * BAR_SHEET_VALUE
 						continue
