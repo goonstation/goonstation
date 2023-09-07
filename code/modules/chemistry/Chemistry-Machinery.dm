@@ -321,7 +321,7 @@ TYPEINFO(/obj/machinery/chem_shaker)
 	/// Also acts as the number of containers in the Y direction when divided by `src.container_row_length`.
 	var/max_containers = 1
 	/// The time it takes for the platform to complete one orbit.
-	var/orbital_period = 0.8 SECONDS
+	var/orbital_period = 0.6 SECONDS
 	/// Radius of the platform's orbit in pixels.
 	var/radius = 2
 
