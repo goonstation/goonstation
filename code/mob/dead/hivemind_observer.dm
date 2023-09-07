@@ -95,7 +95,7 @@
 	proc/try_launch_attack(atom/shoot_target)
 		.= 0
 		if (isabomination(hivemind_owner.owner) && world.time > (last_attack + src.combat_click_delay))
-			var/obj/projectile/proj = initialize_projectile_ST(target, new /datum/projectile/special/acidspit, shoot_target)
+			var/obj/projectile/proj = initialize_projectile_pixel_spread(target, new /datum/projectile/special/acidspit, shoot_target)
 			if (proj) //ZeWaka: Fix for null.launch()
 				proj.launch()
 				last_attack = world.time

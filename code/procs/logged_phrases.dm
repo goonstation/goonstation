@@ -78,8 +78,8 @@ var/global/datum/phrase_log/phrase_log = new
 			@"\bmorb(?!id)")
 		non_freeform_laws = regex(jointext(non_freeform_laws_list, "|"), "i")
 		var/list/sussy_word_list = list(
-			@"\bsus(:?|sy)\b",
-			@"\bpog(:?|gers|gies)\b",
+			@"\bsus(?:sy)?\b",
+			@"\bpog(?:gers|gies)?\b",
 			@"\bbaka\b",
 			@"😳",
 			@"amon?g",
@@ -95,7 +95,7 @@ var/global/datum/phrase_log/phrase_log = new
 			@"ligma",
 			@"ඞ",
 			@"we do a little .",
-			@"\b.ower\s?gam(:?er?|ing)",
+			@"\b.ower\s?gam(?:er?|ing)",
 			@"\bowo",
 			@"\buwu",
 			@"forgor",
@@ -106,7 +106,7 @@ var/global/datum/phrase_log/phrase_log = new
 		)
 		sussy_words = regex(jointext(sussy_word_list, "|"), "i")
 		var/list/ic_sussy_word_list = list(
-			@"\bl(:?ol)+\b",
+			@"\bl(?:ol)+\b",
 			@"\blmao+",
 			@"\bwt[hf]+\b",
 			@"\bsmh\b",
@@ -115,7 +115,7 @@ var/global/datum/phrase_log/phrase_log = new
 			@"\bid[ck]\b",
 			@"\bic\b",
 			@"\bl?ooc\b",
-			@"\b(:?fail\s?)?rp\b"
+			@"\b(?:fail\s?)?rp\b"
 		)
 		ic_sussy_words = regex(jointext(ic_sussy_word_list, "|"), "i")
 
@@ -199,7 +199,6 @@ var/global/datum/phrase_log/phrase_log = new
 		if(fexists(src.uncool_words_filename))
 			fdel(src.uncool_words_filename)
 		text2file(file2text(new_uncool), src.uncool_words_filename)
-		boutput(usr, "ok")
 
 	proc/save()
 		if(isnull(src.phrases))

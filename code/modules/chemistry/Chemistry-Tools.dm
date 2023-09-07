@@ -22,11 +22,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	move_triggered = 1
 	var/last_new_initial_reagents = 0 //fuck
 
+	var/accepts_lid = FALSE //!if true, container will accept beaker lids. lids should not go onto containers that aren't open
+	var/obj/item/beaker_lid/current_lid = null //!the lid applied to the container
+	var/image/lid_image = null
+	var/original_icon_state = null
+
 	New(loc, new_initial_reagents)
 		..()
 		last_new_initial_reagents = new_initial_reagents
 		ensure_reagent_holder()
 		create_initial_reagents(new_initial_reagents)
+		original_icon_state = icon_state
 
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
@@ -66,6 +72,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	attack(mob/M, mob/user, def_zone)
 		return
 	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/beaker_lid))
+			try_to_apply_lid(I, user)
 		if (reagents)
 			reagents.physical_shock(I.force)
 		return
@@ -111,6 +119,34 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			return
 
 		src.transfer_all_reagents(over_object, usr)
+
+	proc/try_to_apply_lid(obj/item/beaker_lid/lid, mob/user)
+		if(!src.accepts_lid)
+			boutput(user, "<span class='alert'>The [lid] won't fit on the [src]!</span>")
+			return
+		else if(src.current_lid)
+			boutput(user, "<span class='alert'>You could never, ever, fit a second lid on the [src]!</span>")
+			return
+		else
+			boutput(user, "<span class='notice'>You click the [lid] onto the [src].</span>")
+			apply_lid(lid, user)
+
+	proc/apply_lid(obj/item/beaker_lid/lid, mob/user) //todo: add a sound?
+		src.set_open_container(FALSE)
+		current_lid = lid
+		user.u_equip(lid)
+		lid.set_loc(src)
+		if (!src.lid_image)
+			src.lid_image = image(src.icon)
+			src.lid_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+			src.lid_image.icon_state = "[src.original_icon_state]-lid"
+		src.UpdateOverlays(src.lid_image, "lid")
+
+	proc/remove_current_lid(mob/user)
+		src.set_open_container(TRUE)
+		user.put_in_hand_or_drop(src.current_lid)
+		current_lid = null
+		src.UpdateOverlays(null, "lid")
 
 ///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
 ///Note that this is not a built in TGUI proc
@@ -159,12 +195,14 @@ proc/ui_describe_reagents(atom/A)
 	amount_per_transfer_from_this = 10
 	can_recycle = TRUE //can this be put in a glass recycler?
 	var/splash_all_contents = 1
+	///For internal tanks and other things that definitely should not shatter
+	var/shatter_immune = FALSE
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 
 	// this proc is a mess ow
 	afterattack(obj/target, mob/user , flag)
 		user.lastattacked = target
-		if (ismob(target) && !target.is_open_container()) // pour reagents down their neck (if possible)
+		if (ismob(target) && !target.is_open_container() && src.is_open_container()) // pour reagents down their neck (if possible)
 			if (!src.reagents.total_volume)
 				boutput(user, "<span class='alert'>Your [src.name] is empty!</span>")
 				return
@@ -209,7 +247,7 @@ proc/ui_describe_reagents(atom/A)
 					src.reagents.reaction(target, TOUCH, min(src.amount_per_transfer_from_this, src.reagents.total_volume))
 					src.reagents.remove_any(src.amount_per_transfer_from_this)
 
-		else if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
+		else if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne) && src.is_open_container()) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
 			var/obj/fluid/F = target
 			if (!src.reagents.total_volume)
 				if (!F.group || !F.group.reagents.total_volume)
@@ -235,7 +273,21 @@ proc/ui_describe_reagents(atom/A)
 
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
-		else if (is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
+		else if (is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume) && src.is_open_container()) //A dispenser. Transfer FROM it TO us.
+			if (istype(target, /obj/reagent_dispensers/chemicalbarrel))
+				var/obj/reagent_dispensers/chemicalbarrel/target_barrel = target
+				if(target_barrel.funnel_active)
+					if (!src.reagents.total_volume)
+						boutput(user, "<span class='alert'>Your [src.name] is empty!</span>")
+						return
+					if (target.reagents.total_volume >= target.reagents.maximum_volume)
+						boutput(user, "<span class='alert'>[target.name] is already full!</span>")
+						return
+					src.reagents.trans_to(target, src.amount_per_transfer_from_this)
+					user.visible_message("<span class='alert'>[user.name] pours some reagent from the [src.name] into the [target.name].</span>")
+					playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
+					return
+
 			if (target.reagents && !target.reagents.total_volume)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return
@@ -250,7 +302,12 @@ proc/ui_describe_reagents(atom/A)
 
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
-		else if (target.is_open_container() && target.reagents && !isturf(target)) //Something like a glass. Player probably wants to transfer TO it.
+		else if (target.is_open_container() && target.reagents && !isturf(target) && src.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
+			if(istype(target, /obj/item/reagent_containers))
+				var/obj/item/reagent_containers/t = target
+				if(t.current_lid)
+					boutput(user, "<span class='alert'>You cannot transfer liquids to the [target.name] while it has a lid on it!</span>")
+					return
 			if (!reagents.total_volume)
 				boutput(user, "<span class='alert'>[src] is empty.</span>")
 				return
@@ -265,7 +322,7 @@ proc/ui_describe_reagents(atom/A)
 
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
-		else if (istype(target, /obj/item/sponge)) // dump contents onto it
+		else if (istype(target, /obj/item/sponge) && src.is_open_container()) // dump contents onto it
 			if (!reagents.total_volume)
 				boutput(user, "<span class='alert'>[src] is empty.</span>")
 				return
@@ -278,7 +335,7 @@ proc/ui_describe_reagents(atom/A)
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, "<span class='notice'>You dump [trans] units of the solution to [target].</span>")
 
-		else if (istype(target, /turf/space/fluid)) //specific exception for seafloor rn, since theres no others
+		else if (istype(target, /turf/space/fluid) && src.is_open_container()) //specific exception for seafloor rn, since theres no others
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
@@ -286,7 +343,7 @@ proc/ui_describe_reagents(atom/A)
 				src.reagents.add_reagent("silicon_dioxide", src.reagents.maximum_volume - src.reagents.total_volume) //should add like, 100 - 85 sand or something
 			boutput(user, "<span class='notice'>You scoop some of the sand into [src].</span>")
 
-		else if (reagents.total_volume)
+		else if (reagents.total_volume && src.is_open_container())
 			if (isobj(target) && (target:flags & NOSPLASH))
 				return
 
@@ -329,6 +386,18 @@ proc/ui_describe_reagents(atom/A)
 				return
 
 			boutput(user, "<span class='notice'>You crack [I] into [src].</span>")
+
+			I.reagents.trans_to(src, I.reagents.total_volume)
+			user.u_equip(I)
+			qdel(I)
+
+		if (istype(I, /obj/item/reagent_containers/synthflesh_pustule))
+			if (src.reagents.total_volume >= src.reagents.maximum_volume)
+				boutput(user, "<span class='alert'>[src] is full.</span>")
+				return
+
+			boutput(user, "<span class='notice'>You squeeze the [I] into the [src]. Gross.</span>")
+			playsound(src.loc, pick('sound/effects/splort.ogg'), 100, 1)
 
 			I.reagents.trans_to(src, I.reagents.total_volume)
 			user.u_equip(I)
@@ -420,21 +489,16 @@ proc/ui_describe_reagents(atom/A)
 		return
 
 	attack_self(mob/user as mob)
-		if (src.splash_all_contents)
+		if(current_lid)
+			boutput(user, "<span class='notice'>You pop the lid off of the [src].</span>")
+			remove_current_lid(user)
+		else if (src.splash_all_contents)
 			boutput(user, "<span class='notice'>You tighten your grip on the [src]. You will now splash in [src.amount_per_transfer_from_this] unit increments.</span>")
 			src.splash_all_contents = 0
 		else
 			boutput(user, "<span class='notice'>You loosen your grip on the [src]. You will now splash all of the [src]'s contents.</span>")
 			src.splash_all_contents = 1
 		return
-
-	proc/smash()
-		playsound(src.loc, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
-		var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
-		G.set_loc(src.loc)
-		var/turf/U = src.loc
-		src.reagents.reaction(U)
-		qdel(src)
 
 	on_spin_emote(var/mob/living/carbon/human/user as mob)
 		. = ..()
@@ -446,8 +510,27 @@ proc/ui_describe_reagents(atom/A)
 				src.reagents.reaction(get_turf(user), TOUCH)
 				src.reagents.clear_reagents()
 
+	shatter_chemically(var/projectiles = FALSE)
+		if (src.shatter_immune)
+			return FALSE
+		for(var/mob/M in AIviewers(src))
+			boutput(M, "<span class='alert'>The <B>[src.name]</B> shatters!</span>")
+		if(projectiles)
+			var/datum/projectile/special/spreader/uniform_burst/circle/circle = new /datum/projectile/special/spreader/uniform_burst/circle/(get_turf(src))
+			circle.shot_sound = null //no grenade sound ty
+			circle.spread_projectile_type = /datum/projectile/bullet/glass_shard
+			circle.pellet_shot_volume = 0
+			circle.pellets_to_fire = 10
+			shoot_projectile_ST_pixel_spread(get_turf(src), circle, get_step(src, NORTH))
+		playsound(src.loc, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
+		src.reagents.reaction(get_turf(src), TOUCH, src.reagents.total_volume)
+		var/obj/item/raw_material/shard/glass/shard = new /obj/item/raw_material/shard/glass
+		shard.set_loc(get_turf(src))
+		qdel(src)
+		return TRUE
+
 	is_open_container()
-		if(!istype(src.loc, /obj/machinery/chem_dispenser))
+		if(..() && !istype(src.loc, /obj/machinery/chem_dispenser))
 			return 1
 
 /* =================================================== */
@@ -566,7 +649,7 @@ proc/ui_describe_reagents(atom/A)
 				var/mob/living/carbon/human/H = AM
 				var/obj/item/clothing/head/helmet/bucket/hat/bucket_hat = new src.hat_bucket_type(src.loc)
 				if(isnull(H.head))
-					H.equip_if_possible(bucket_hat, H.slot_head)
+					H.equip_if_possible(bucket_hat, SLOT_HEAD)
 					H.set_clothing_icon_dirty()
 					H.visible_message("<span class='alert'>[src] falls from \the [targetDoor], landing on [H] like a hat[splash? ", and splashing [him_or_her(H)] with its contents" : ""]! [pick("Peak comedy!","Hilarious!","What a tool!")]</span>", \
 										"<span class='alert'>[src] falls from \the [targetDoor], landing on your head like a hat[splash? ", and splashing you with its contents" : ""]!</span>")
@@ -623,3 +706,293 @@ proc/ui_describe_reagents(atom/A)
 	name = "reagent glass (surfactant)"
 	icon_state = "liquid"
 	initial_reagents = list("fluorosurfactant"=20)
+
+/obj/item/storage/box/beaker_lids
+	name = "box of beaker lids"
+	desc = "A box full of beaker lids, for putting lids on your beakers. For when you need something that's open... closed."
+	spawn_contents = list(/obj/item/beaker_lid = 7)
+
+/obj/item/beaker_lid
+	name = "beaker lid"
+	desc = "A one-size fits all beaker lid, capable of an airtight seal on any compatible beaker."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "lid"
+	w_class = W_CLASS_TINY
+
+	attackby(obj/item/reagent_containers/container, mob/user)
+		if (istype(container))
+			container.try_to_apply_lid(src, user)
+
+/obj/item/reagent_containers/glass/condenser
+	name = "chemical condenser"
+	desc = "A set of glass tubes useful for seperating reactants from products. Can be hooked up to many types of containers."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "condenser"
+	amount_per_transfer_from_this = 10
+	incompatible_with_chem_dispensers = TRUE //could maybe be ok? idk
+	can_recycle = FALSE //made of glass, but would be a waste and almost certainly accidental so no
+	splash_all_contents = FALSE
+	object_flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
+	initial_volume = 100
+	accepts_lid = TRUE
+	var/obj/item/current_container = null //! the container currently attached to the condenser
+	var/image/fluid_image = null
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if(over_object == src)
+			return
+		if (istype(over_object, /obj/item/reagent_containers) && (over_object.is_open_container()))
+			try_adding_container(over_object, usr)
+		if (istype(over_object, /obj/reagent_dispensers/chemicalbarrel)) //barrels don't need to be open for condensers because it would be annoying I think
+			try_adding_container(over_object, usr)
+
+	set_loc(newloc, storage_check)
+		if (src.loc != newloc && src.current_container)
+			src.remove_container()
+		. = ..()
+
+	Move()
+		if (src.current_container)
+			src.remove_container()
+		..()
+
+	attack_hand(var/mob/user)
+		if(current_container)
+			remove_container()
+			boutput(user, "<span class='alert'>You remove the connection to the [src.name].</span>")
+		..()
+
+	on_reagent_change()
+		..()
+		src.UpdateIcon()
+
+	update_icon()
+		src.UpdateOverlays(null, "fluid_image")
+		if (reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
+			if (!src.fluid_image)
+				src.fluid_image = image(src.icon, "fluid-condenser[fluid_state]", -1)
+			else
+				src.fluid_image.icon_state = "fluid-condenser[fluid_state]"
+			var/datum/color/average = reagents.get_average_color()
+			src.fluid_image.color = average.to_rgba()
+			src.UpdateOverlays(src.fluid_image, "fluid_image")
+
+	proc/try_adding_container(var/obj/container, var/mob/user)
+		if (!istype(src.loc, /turf/) || !istype(container.loc, /turf/)) //if the condenser or container isn't on the floor you cannot hook it up
+			return
+		if (BOUNDS_DIST(src, user) > 0)
+			boutput(user, "<span class='alert'>The [src.name] is too for away for you to mess with it!</span>")
+			return
+		if (GET_DIST(container, src) > 1)
+			usr.show_text("The [src.name] is too far away from the [container.name]!", "red")
+			return
+		if(current_container)
+			boutput(user, "<span class='alert'>The [src.name] is already connected to the [current_container.name]!</span>")
+		else
+			boutput(user, "<span class='notice'>You hook the [container.name] up to the [src.name].</span>")
+			//this is a mess but we need it to disconnect if ANYTHING happens
+			RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container)) //empty hand on either condenser or its connected container should disconnect
+			RegisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container))
+			RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
+			var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + get_chemical_effect_position())
+			result.lineImage.pixel_x = -src.pixel_x
+			result.lineImage.pixel_y = -src.pixel_y
+			src.UpdateOverlays(result.lineImage, "tube")
+			current_container = container
+
+	proc/remove_container()
+		src.UpdateOverlays(null, "tube")
+		UnregisterSignal(current_container, COMSIG_ATTACKHAND)
+		UnregisterSignal(current_container, XSIG_OUTERMOST_MOVABLE_CHANGED)
+		UnregisterSignal(current_container, COMSIG_MOVABLE_MOVED)
+		current_container = null
+
+	proc/try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate) //called when a reaction occurs inside the condenser flagged with "chemical_reaction = TRUE"
+		if(!current_container) //if we have no beaker, dump the reagents into condenser
+			src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+		else
+			var/remaining_container_space = current_container.reagents.maximum_volume - current_container.reagents.total_volume
+			if(remaining_container_space < amount) 																			//if there's more reagent to add than the beaker can hold...
+				current_container.reagents.add_reagent(reagent, remaining_container_space, sdata, temp_new, donotreact, donotupdate) //...add what we can to the beaker...
+				src.reagents.add_reagent(reagent, amount - remaining_container_space, sdata, temp_new, donotreact, donotupdate)  //...then backflow remaining chems into the condenser
+
+			else
+				current_container.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+
+	disposing()
+		src.remove_container()
+		. = ..()
+
+/obj/item/reagent_containers/synthflesh_pustule
+	name = "synthetic pustule"
+	desc = "A disgusting beating mass of synthetic meat. Could probably be plopped into a beaker..."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "pustule-medium"
+	w_class = W_CLASS_NORMAL
+	initial_volume = 100
+	incompatible_with_chem_dispensers = TRUE
+	can_recycle = FALSE
+	var/amount_of_reagent_to_use = 30 //!how much blood to remove per process tick, medium pustule is very fast
+	var/chemical_efficiency = 1 //!how much chemical you get per unit of chemical in
+	var/organ_efficiency = 0.5 //!synthflesh organ multiplier
+	var/makes_noise_when_full = TRUE //here so the tiny ones don't burp on creation lol
+	var/angry = FALSE
+	var/angry_timer = 15
+	var/list/convertible_reagents = list("blood","bloodc","bloody_mary","bloody_scary","hemolymph")
+
+	New()
+		START_TRACKING
+		processing_items.Add(src)
+		original_icon_state = icon_state
+		flick("[icon_state]-plop", src)
+		..()
+
+	disposing()
+		STOP_TRACKING
+		..()
+
+	proc/convert_reagent(reagent_id, volume)
+		var/reagent_to_add
+		switch(reagent_id)
+			if("blood", "hemolypmh")
+				reagent_to_add = "synthflesh"
+			if("bloodc")
+				reagent_to_add = "meat_slurry"
+			if("bloody_mary", "bloody_scary")
+				reagent_to_add = "ethanol"
+		src.reagents.remove_reagent(reagent_id, volume)
+		src.reagents.add_reagent(reagent_to_add, volume * chemical_efficiency)
+
+	proc/become_angry() //become dangerous to pick up
+		if (reagents.total_volume >= reagents.maximum_volume) //can't be angry on a full stomach
+			return
+		icon_state = "[original_icon_state]-irregular"
+		angry = TRUE
+
+	proc/become_unangry()
+		icon_state = original_icon_state
+		angry = FALSE
+		angry_timer = rand(10,20)
+
+	proc/eat_arm(var/mob/living/carbon/human/H, var/which_arm = "left")
+		H.visible_message("<span class = 'alert'>The [src.name] rips off [H.name]'s arm! Shit!</span>")
+		playsound(src.loc, 'sound/items/eatfoodshort.ogg', 100, 1)
+		playsound(src.loc, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 50, 1)
+		animate_shake(src, 2 , 0, 3, 0, 0)
+		reagents.add_reagent("synthflesh", 40 * organ_efficiency)
+		H.emote("scream")
+		become_unangry()
+		if(which_arm == "right")
+			H.limbs.r_arm?.delete()
+		else if(which_arm == "left")
+			H.limbs.l_arm?.delete()
+
+	process()
+		if(angry && istype(src.loc, /mob/living/carbon/human/))
+			var/mob/living/carbon/human/H = src.loc
+			if(H.find_in_hand(src, "left"))
+				H.put_in_hand_or_drop(src)
+				eat_arm(H, "left")
+			if(H.find_in_hand(src, "right"))
+				H.put_in_hand_or_drop(src)
+				eat_arm(H, "right")
+		if(angry_timer > 0 && !angry)
+			angry_timer--
+		else
+			if(prob(10))
+				become_angry()
+		for(var/reagent_id in convertible_reagents)
+			var/reagent_present = src.reagents.get_reagent_amount(reagent_id)
+			if(reagent_present > 0)
+				if(reagent_present < amount_of_reagent_to_use)
+					convert_reagent(reagent_id, reagent_present)
+				else
+					convert_reagent(reagent_id, amount_of_reagent_to_use)
+		..()
+
+	attackby(var/obj/item/W, mob/user)
+		if(istype(W, /obj/item/organ))
+			var/obj/item/organ/organ = W
+			if(organ.made_from != "flesh")
+				boutput(user, "<span class='alert'>The [src] rejects the non-organic organ!</span>")
+			else if (reagents.total_volume >= reagents.maximum_volume)
+				boutput(user, "<span class='alert'>The [src] is too full!</span>")
+			else
+				user.visible_message("<span class = 'alert'>[user.name] stuffs the [organ.name] into the [src.name].</span>")
+				playsound(src.loc, 'sound/items/eatfoodshort.ogg', 50, 1)
+				animate_shake(src, 2 , 0, 3, 0, 0)
+				qdel(organ)
+				reagents.add_reagent("synthflesh", 40 * organ_efficiency)
+				become_unangry()
+
+		else
+			if (W.force >= 5) //gotta smack it with something a little hefty at least
+				user.lastattacked = src
+				attack_particle(user,src)
+				hit_twitch(src)
+				playsound(src, 'sound/impact_sounds/Generic_Slap_1.ogg', 50,1)
+				user.visible_message("<span class='alert'><b>[user.name] smacks the [src.name] with the [W.name]!</b></span>")
+				if(angry)
+					become_unangry()
+				else
+					angry_timer = rand(5,20)
+
+	reagent_act(id, volume, var/datum/reagents/holder_reagents)
+		if(reagents.total_volume >= reagents.maximum_volume)
+			return
+		if (!convertible_reagents.Find(id))
+			// boutput(world, "no [id] found")
+			return
+		holder_reagents.remove_reagent(id, volume)
+		playsound(src.loc, 'sound/items/drink.ogg', 50, 1)
+		animate_shake(src, 2 , 0, 3, 0, 0)
+		reagents.add_reagent(id, volume)
+		become_unangry()
+
+	on_reagent_change(add) //it burps once it's full of reagents it cannot convert aka product
+		if(reagents.total_volume >= reagents.maximum_volume && makes_noise_when_full)
+			for(var/id in convertible_reagents)
+				if (reagents.reagent_list.Find(id))
+					return
+			playsound(src.loc, 'sound/voice/burp.ogg', 50, 1)
+		..()
+
+	attack_hand(var/mob/user)
+		if(angry && ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.hand == 0)
+				eat_arm(H, "right")
+			else
+				eat_arm(H, "left")
+			return
+		..()
+
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+		var/turf/T = get_turf(A)
+		if(src.reagents.get_reagent_amount("blood") >= 10)
+			src.reagents.remove_reagent("blood", 10) //blood decals give you 10 blood in a beaker. so you remain blood neutral here
+			make_cleanable(/obj/decal/cleanable/blood,T)
+
+	small
+		desc = "An icky, tiny, beating blop of synthetic meat. Could probably be plipped into a beaker..."
+		icon_state = "pustule-small"
+		w_class = W_CLASS_TINY
+		initial_volume = 10
+		initial_reagents = list("synthflesh"=10) //these things won't be efficient at all for making synthflesh anyways so they come pre-loaded.
+		makes_noise_when_full = FALSE
+
+		throw_impact(atom/A, datum/thrown_thing/thr)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
+			src.reagents.reaction(A,TOUCH) //you can use small ones to throw synthflesh at people, gross but fun maybe
+			qdel(src)
+
+	large
+		desc = "A vile, large, beating globule of synthetic meat. Could probably be kerplopped into a beaker... or better, a barrel."
+		icon_state = "pustule-large"
+		w_class = W_CLASS_BULKY
+		initial_volume = 800
+		amount_of_reagent_to_use = 5 //slow but...
+		chemical_efficiency = 2 //...lots of synthflesh per unit of blood
+		organ_efficiency = 2

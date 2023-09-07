@@ -503,8 +503,6 @@
 /area/devzone)
 "hS" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/orangeblack,
@@ -561,7 +559,6 @@
 /area/devzone)
 "if" = (
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/cable{
@@ -691,7 +688,6 @@
 	dir = null
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/cable{
@@ -748,7 +744,6 @@
 /area/devzone)
 "kM" = (
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/cable,
@@ -908,7 +903,6 @@
 "nh" = (
 /obj/machinery/vending/standard,
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/cable{
@@ -1224,8 +1218,6 @@
 "qn" = (
 /obj/landmark/start/job/scientist,
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
@@ -1233,7 +1225,6 @@
 "qs" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/debug_generator{
@@ -1250,8 +1241,6 @@
 "qL" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
@@ -1423,9 +1412,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/devzone)
 "tS" = (
-/obj/machinery/atmospherics/unary/cryo_cell{
-	pipe_direction = 2
-	},
+/obj/machinery/atmospherics/unary/cryo_cell,
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -1440,8 +1427,6 @@
 /area/devzone)
 "ur" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
@@ -1478,8 +1463,6 @@
 "uG" = (
 /obj/machinery/bot/firebot,
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
@@ -1820,8 +1803,6 @@
 /area/devzone)
 "zT" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
@@ -1989,8 +1970,6 @@
 /area/devzone)
 "Cv" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
@@ -2084,16 +2063,12 @@
 /area/devzone)
 "Dz" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "1-2"
 	},
 /obj/cable{
 	icon_state = "1-4"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
@@ -2415,8 +2390,6 @@
 /area/devzone)
 "Ic" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "1-2"
 	},
 /obj/cable{
@@ -2433,8 +2406,6 @@
 /area/devzone)
 "Ip" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "1-2"
 	},
 /obj/cable{
@@ -2609,7 +2580,6 @@
 "KV" = (
 /obj/machinery/networked/telepad,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
@@ -2758,7 +2728,7 @@
 /turf/simulated/floor/engine,
 /area/devzone)
 "MH" = (
-/obj/kitchenspike,
+/obj/machinery/vending/kitchen,
 /turf/simulated/floor/white,
 /area/devzone)
 "MI" = (

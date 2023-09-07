@@ -1,23 +1,3 @@
-var/list/ban_from_fluid = list(
-	"paper",\
-	"fungus",\
-	"martian_flesh",\
-	"blackpowder",\
-	"thermite",\
-	"luminol",\
-)
-//todo : make thermite work
-var/list/ban_stacking_into_fluid = list( //ban these from producing fluid from a 'cleanable'
-	"water",\
-	"sodium",\
-	"magnesium",\
-	"carbon",\
-	"ash",\
-	"blackpowder",\
-	"leaves",\
-	"poo",\
-)
-
 ///////////////////
 ////Fluid Object///
 ///////////////////
@@ -280,11 +260,10 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 
 
 	proc/add_tracked_blood(atom/movable/AM as mob|obj)
-		AM.tracked_blood = list("bDNA" = src.blood_DNA, "btype" = src.blood_type, "color" = src.color, "count" = rand(2,6))
+		AM.tracked_blood = list("bDNA" = src.blood_DNA, "btype" = src.blood_type, "color" = src.color, "count" = rand(2,6), "sample_reagent" = src.group?.master_reagent_id)
 		if (ismob(AM))
 			var/mob/M = AM
 			M.set_clothing_icon_dirty()
-
 
 	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 		..()
@@ -798,25 +777,24 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		entered_group = 0
 
 	//BLOODSTAINS
-	if (F.group.master_reagent_id =="blood" || F.group.master_reagent_id == "bloodc")
-		if (F.group.master_reagent_id == "blood")
-			//if (ishuman(M))
-			if (src.lying)
-				if (src.wear_suit)
-					src.wear_suit.add_blood(F)
-					src.set_clothing_icon_dirty()
-				else if (src.w_uniform)
-					src.w_uniform.add_blood(F)
-					src.set_clothing_icon_dirty()
+	if (F.group.master_reagent_id == "blood" || F.group.master_reagent_id == "bloodc" || F.group.master_reagent_id == "hemolymph") // Replace with a blood reagent check proc
+		if (src.lying)
+			if (src.wear_suit)
+				src.wear_suit.add_blood(F)
+				src.update_bloody_suit()
+			else if (src.w_uniform)
+				src.w_uniform.add_blood(F)
+				src.update_bloody_uniform()
+		else
+			if (src.shoes)
+				src.shoes.add_blood(F)
+				src.update_bloody_shoes()
 			else
-				if (src.shoes)
-					src.shoes.add_blood(F)
-					src.set_clothing_icon_dirty()
-			F.add_tracked_blood(src)
-			//else if (isliving(M))// || isobj(AM))
-			//	M.add_blood(F)
-			//	if (!M.anchored)
-			//		F.add_tracked_blood(M)
+				src.add_blood(F)
+
+		F.add_tracked_blood(src)
+		src.update_bloody_feet()
+
 	var/do_reagent_reaction = 1
 
 	if (F.my_depth_level == 1)

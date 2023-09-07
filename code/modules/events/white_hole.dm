@@ -53,7 +53,9 @@
 		if (!istype(T,/turf/))
 			if(isnull(random_floor_turfs))
 				build_random_floor_turf_list()
-			T = pick(random_floor_turfs)
+			while(isnull(T) || istype(T, /turf/simulated/floor/airless/plating/catwalk) || total_density(T) > 0)
+				T = pick(random_floor_turfs)
+				if(prob(1)) break // prevent infinite loop
 
 		if(isnull(grow_duration))
 			grow_duration = 2 MINUTES + rand(-30 SECONDS, 30 SECONDS)
@@ -67,6 +69,7 @@
 		logTheThing(LOG_ADMIN, usr, "Spawned a white hole anomaly with origin [whitehole.source_location] at [log_loc(T)]")
 
 
+ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 /obj/whitehole
 	name = "white hole"
 	icon = 'icons/effects/160x160.dmi'
@@ -526,7 +529,7 @@
 			/obj/item/hand_tele = 2,
 			/obj/machinery/shipalert = 1,
 			/obj/item/storage/box/PDAbox = 1,
-			/obj/item/storage/box/trackimp_kit2 = 1,
+			/obj/item/storage/box/trackimp_kit = 1,
 			/obj/item/cigarbox/gold = 2,
 			/obj/item/paper/book/from_file/captaining_101 = 1,
 			/obj/shrub/captainshrub = 0.5,
@@ -620,7 +623,7 @@
 			/obj/item/device/flash = 3,
 			/obj/item/clothing/head/beret/prisoner = 5,
 			/obj/item/clothing/shoes/orange = 5,
-			/obj/item/clothing/under/misc = 5,
+			/obj/item/clothing/under/misc/prisoner = 5,
 			/obj/item/clothing/shoes/swat = 2,
 			/obj/item/clothing/head/red = 4,
 			/obj/item/clothing/head/helmet/siren = 2,
@@ -801,6 +804,10 @@
 
 		processing_items |= src
 
+	proc/admin_activate()
+		set name = "Activate"
+		start_time = TIME - grow_duration
+
 	bullet_act(obj/projectile/P)
 		shoot_reflected_to_sender(P, src)
 		P.die()
@@ -934,7 +941,7 @@
 				target = src.get_target_mob()
 			if(isnull(target))
 				target = locate(rand(-7, 7) + src.x, rand(-7, 7) + src.y, src.z)
-			. = shoot_projectile_ST(src, new spawn_type, target)
+			. = shoot_projectile_ST_pixel_spread(src, new spawn_type, target)
 		else if(ispath(spawn_type, /datum/reagent))
 			var/datum/reagent/dummy = spawn_type
 			var/reagent_id = initial(dummy.id)
@@ -1302,7 +1309,9 @@
 		var/obj/whitehole/whitehole = target
 		if(!istype(whitehole))
 			CRASH("generate_fish called on whitehole fishing spot with non-whitehole target")
-		. = whitehole.generate_thing(whitehole.source_location)
+		var/atom/fish = whitehole.generate_thing(whitehole.source_location)
+		fish.name += "fish"
+		return fish
 
 	try_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)
 		. = ..()

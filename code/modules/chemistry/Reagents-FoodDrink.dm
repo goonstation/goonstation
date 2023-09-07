@@ -303,6 +303,17 @@ datum
 			taste = "fruity"
 			reagent_state = LIQUID
 
+		fooddrink/alcoholic/schnapps
+			name = "schnapps"
+			id = "schnapps"
+			fluid_r = 240
+			fluid_g = 240
+			fluid_b = 240
+			alch_strength = 0.6
+			description = "An alcoholic beverage typically made from fermented fruits. Contains a lot of alcohol."
+			taste = "fruity"
+			reagent_state = LIQUID
+
 		fooddrink/alcoholic/mead
 			name = "mead"
 			id = "mead"
@@ -729,7 +740,7 @@ datum
 									var/obj/item/clothing/glasses/eyepatch/E = new /obj/item/clothing/glasses/eyepatch(H)
 									E.name = "Pirate Eyepatch"
 									E.desc = "Arr!"
-									H.equip_if_possible(E,H.slot_glasses)
+									H.equip_if_possible(E,SLOT_GLASSES)
 					H.update_colorful_parts()
 				else
 					random_brute_damage(M, 5)
@@ -2022,9 +2033,10 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				var/odds = rand(1,1000000)
-				if(odds == 1)
+				var/odds = rand() * 1000000
+				if(odds <= 1 * mult)
 					M.visible_message("<span class='alert'>[M] suddenly drops dead!</span>")
+					//M.unlock_medal("Too Spicy!", 1) //uncomment when we actually make the medal
 					M.death()
 				..()
 				return
@@ -3598,6 +3610,18 @@ datum
 			bladder_value = -1.5
 			taste = "earthy"
 
+		fooddrink/juice_banana
+			name = "banana juice"
+			id = "juice_banana"
+			fluid_r = 255
+			fluid_g = 245
+			fluid_b = 150
+			description = "A juice which has a smooth, naturally sweet flavor with subtle hints of tropical freshness."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			bladder_value = -1.5
+			taste = "tropical"
+
 		fooddrink/juice_grapefruit
 			name = "grapefruit juice"
 			id = "juice_grapefruit"
@@ -3641,6 +3665,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 1
 			bladder_value = -1
+			taste = "tropical"
 
 		fooddrink/turmeric
 			name = "turmeric powder"
@@ -4075,6 +4100,18 @@ datum
 			fluid_b = 0
 			transparency = 20
 			bioeffect_id = "accent_swedish"
+
+		fooddrink/temp_bioeffect/liquid_code
+			name = "liquid code"
+			id = "liquid_code"
+			description = "A tangy substance with numbers shimmering in it."
+			fluid_r = 50
+			fluid_g = 185
+			fluid_b = 120
+			transparency = 65
+			taste = list("spaghetti-like")
+			bioeffect_id = "accent_hacker"
+
 
 		fooddrink/temp_bioeffect/innitium
 			name = "innitium"

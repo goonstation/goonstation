@@ -7,20 +7,6 @@
 #define ABSTRACT_VIOLATION_CRASH
 #endif
 
-#ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
-#define SKIP_FEA_SETUP 1
-#define SKIP_Z5_SETUP 1
-#define SKIP_PLANETS_SETUP 1
-#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME 1 //Skip changelogs
-#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO 1 //Automatically ready up and start the game ASAP. No input required.
-#endif
-
-#ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE
-#define SKIP_FEA_SETUP 0 //Skip atmos setup
-#define SKIP_Z5_SETUP 0 //Skip z5 gen
-#define SKIP_PLANETS_SETUP 0
-#endif
-
 // Server side profiler stuff for when you want to profile how laggy the game is
 // FULL_ROUND
 //   Start profiling immediately, save profiler data when world is rebooting (data/profile/xxxxxxxx-full.log)
@@ -41,22 +27,22 @@
 // all this does is set the z-level to be ignored by erebite explosion admin log messages
 // if you want to see all erebite explosions set this to 0 or -1 or something
 
-// gameticker
-#define GAME_STATE_MAP_LOAD		0
-#define GAME_STATE_WORLD_INIT	1
-#define GAME_STATE_WORLD_NEW	2
-#define GAME_STATE_PREGAME		3
-#define GAME_STATE_SETTING_UP	4
-#define GAME_STATE_PLAYING		5
-#define GAME_STATE_FINISHED		6
+/// values for the current_state var
+#define GAME_STATE_INVALID 0
+#define GAME_STATE_PRE_MAP_LOAD 1
+#define GAME_STATE_MAP_LOAD 2
+#define GAME_STATE_WORLD_INIT 3 //! unused currently, probably convert to WORLD_NEW
+#define GAME_STATE_WORLD_NEW 4
+#define GAME_STATE_PREGAME 5
+#define GAME_STATE_SETTING_UP 6
+#define GAME_STATE_PLAYING 7
+#define GAME_STATE_FINISHED 8
 
 #define DATALOGGER
 
 #define CREW_OBJECTIVES
 
 //#define RESTART_WHEN_ALL_DEAD 1
-
-//#define PLAYSOUND_LIMITER
 
 #define LOOC_RANGE 8
 
@@ -75,7 +61,7 @@
 // other toggles
 
 #define FOOTBALL_MODE 1
-#define ENABLE_ARTEMIS 0
+//#define ENABLE_ARTEMIS
 //#define RP_MODE
 
 #ifdef Z_LOG_ENABLE

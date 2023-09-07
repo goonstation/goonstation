@@ -521,7 +521,7 @@ var/global/meteor_shower_active = 0
 		for(var/turf/T in range(src,1))
 			if (T.density || prob(40))
 				continue
-			var/turf/simulated/wall/auto/asteroid/asteroid = new(T)
+			var/turf/simulated/wall/auto/asteroid/asteroid = T.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, force = TRUE)
 			if (src.transmute_material)
 				asteroid.setMaterial(src.transmute_material)
 			turfs += asteroid
