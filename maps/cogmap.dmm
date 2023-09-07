@@ -3710,9 +3710,6 @@
 	dir = 8
 	},
 /obj/rack,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
 /obj/item/tank/air{
 	pixel_x = -6;
 	pixel_y = 4
