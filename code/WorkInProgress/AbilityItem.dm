@@ -402,9 +402,8 @@
 
 	execute_ability()
 		var/obj/item/device/t_scanner/J = the_item
-		J.AttackSelf(the_mob)
-		if(J.on) icon_state = "lighton"
-		else  icon_state = "lightoff"
+		J.set_on(!J.on, the_mob) // only turns on/off
+		icon_state = J.on ? "lighton" : "lightoff"
 		..()
 
 ////////////////////////////////////////////////////////////

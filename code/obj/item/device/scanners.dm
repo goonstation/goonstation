@@ -16,9 +16,9 @@ TYPEINFO(/obj/item/device/t_scanner)
 
 /obj/item/device/t_scanner
 	name = "T-ray scanner"
-	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
+	desc = "A tuneable terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
-	var/on = 0
+	var/on = FALSE
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
@@ -29,6 +29,18 @@ TYPEINFO(/obj/item/device/t_scanner)
 	var/client/last_client = null
 	var/image/last_display = null
 	var/find_interesting = TRUE
+	var/list/setting_context_actions
+	contextLayout = new /datum/contextLayout/experimentalcircle
+	var/show_cables = TRUE
+	var/show_current_pipes = TRUE
+	var/show_initial_pipes = TRUE
+
+	New()
+		..()
+		setting_context_actions = list()
+		for(var/actionType in childrentypesof(/datum/contextAction/t_scanner)) //see context_actions.dm for those
+			var/datum/contextAction/t_scanner/action = new actionType(src)
+			setting_context_actions += action
 
 	proc/set_on(new_on, mob/user=null)
 		on = new_on
@@ -40,8 +52,23 @@ TYPEINFO(/obj/item/device/t_scanner)
 		else
 			processing_items |= src
 
+	proc/set_cables(state, mob/user=null)
+		show_cables = state
+		if(user)
+			boutput(user, "You turn [show_cables ? "on" : "off"] showing underfloor cables on [src].")
+
+	proc/set_current_pipes(state, mob/user=null)
+		show_current_pipes = state
+		if(user)
+			boutput(user, "You turn [show_current_pipes ? "on" : "off"] showing underfloor pipes on [src].")
+
+	proc/set_initial_pipes(state, mob/user=null)
+		show_initial_pipes = state
+		if(user)
+			boutput(user, "You turn [show_initial_pipes ? "on" : "off"] showing pipe blueprints on [src].")
+
 	attack_self(mob/user)
-		set_on(!on, user)
+		user.showContextActions(setting_context_actions, src, contextLayout)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (istype(A, /turf))
@@ -100,8 +127,12 @@ TYPEINFO(/obj/item/device/t_scanner)
 						continue
 				else if(isobj(A))
 					var/obj/O = A
-					if(O.level == OVERFLOOR && !istype(O, /obj/disposalpipe)) // disposal pipes handled below
+					if (O.level == OVERFLOOR)
 						continue
+					if (!show_cables && istype(O, /obj/cable))
+						continue
+					if (!show_current_pipes && istype(O, /obj/disposalpipe))
+						continue // initial pipes view toggle controlled below
 				var/image/img = image(A.icon, icon_state=A.icon_state, dir=A.dir)
 				img.plane = PLANE_SCREEN_OVERLAYS
 				img.color = A.color
@@ -110,10 +141,10 @@ TYPEINFO(/obj/item/device/t_scanner)
 				img.appearance_flags = RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 				display.overlays += img
 
-			if (T.disposal_image)
+			if (show_initial_pipes && T.disposal_image)
 				display.overlays += T.disposal_image
 
-			if( length(display.overlays))
+			if(length(display.overlays))
 				display.plane = PLANE_SCREEN_OVERLAYS
 				display.pixel_x = (T.x - center.x) * 32
 				display.pixel_y = (T.y - center.y) * 32
@@ -134,6 +165,7 @@ TYPEINFO(/obj/item/device/t_scanner)
 
 /obj/item/device/t_scanner/pda
 	name = "PDA T-ray scanner"
+	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	find_interesting = FALSE
 
 /*

@@ -1289,3 +1289,46 @@
 		return robospray in user
 	execute(var/obj/item/robospray/robospray, var/mob/user)
 		robospray.change_reagent(src.reagent_id, user)
+
+/datum/contextAction/t_scanner
+	icon = 'icons/ui/context16x16.dmi'
+	close_clicked = TRUE
+	close_moved = FALSE
+	desc = ""
+
+	checkRequirements(var/obj/item/device/t_scanner/t_scanner, mob/user)
+		return t_scanner in user
+
+	active
+		name = "Turn on/off"
+		desc = ""
+		icon_state = "bulb"
+
+		execute(var/obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_on(!t_scanner.on)
+			var/obj/ability_button/tscanner_toggle/tscanner_button = locate(/obj/ability_button/tscanner_toggle) in t_scanner.ability_buttons
+			tscanner_button.icon_state = t_scanner.on ? "lighton" : "lightoff"
+
+	cables
+		name = "Underfloor cables"
+		desc = "Toggle displaying wires under the floor"
+		icon_state = "cut"
+
+		execute(var/obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_cables(!t_scanner.show_cables, user)
+
+	current_pipes
+		name = "Underfloor pipes"
+		desc = "Toggle displaying current pipes under the floor"
+		icon_state = "weld"
+
+		execute(var/obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_current_pipes(!t_scanner.show_current_pipes, user)
+
+	initial_pipes
+		name = "Pipe blueprint"
+		desc = "Toggle displaying the station's pipe blueprint"
+		icon_state = "cog"
+
+		execute(var/obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_initial_pipes(!t_scanner.show_initial_pipes, user)
