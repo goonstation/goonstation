@@ -48,7 +48,7 @@
 			<li><b>Circular Saw</b> - Used for sawing.
 			<li><b>Enucleation Spoon</b>  - Used for melon-balling eyes out of a patient's head.
 			<li><b>Garden Snips</b> - Used for snipping.
-			<li><b>Hemostat</b> - Used for clamping down bleeders. Clamp them on an opened up patient or they'll bleed all over the place and you'll have to deal with the janitor.
+			<li><b>Hemostat</b> - Used for clamping down bleeders. Hold this in your off hand to make most surgery cause less bleeding. Clamp them on an opened up patient or they'll bleed all over the place and you'll have to deal with the janitor.
 			<br>
 			<li><b>Health Analyzer Organ Upgrade</b> - Until now, it was only possible for health analyzers to crudely detect brain damage in a subject. With this upgrade, health analyzers will be able to crudely detect the health of ANY organ!
 			<li>The last tool, if it can be called such, is the operating table or bed. For some reason that continues to baffle medical science, the type of surface that the patient is placed on in surgery is important for being able to perform surgery. Operating tables are the gold standard for surgery, next comes regular beds, these work just as well. Finally you can perform surgery on any old table, provided the patient is knocked out, stunned, or otherwise sufficiently anesthetized/drunk.

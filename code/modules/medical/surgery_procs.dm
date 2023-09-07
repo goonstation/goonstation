@@ -91,7 +91,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			"<span class='alert'><b>[surgeon]</b> makes a [fluff]cut into your [target_area] with [src]!</span>")
 
 		patient.TakeDamage(surgeon.zone_sel.selecting, damage, 0)
-		take_bleeding_damage(patient, surgeon, damage)
+		take_bleeding_damage(patient, surgeon, damage, surgery_bleed = TRUE)
 		create_blood_sploosh(patient)
 		display_slipup_image(surgeon, patient.loc)
 
@@ -362,7 +362,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					"<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] the skin of your neck open with [src]!</span>")
 
 				patient.TakeDamage("head", damage_low, 0)
-				take_bleeding_damage(patient, surgeon, damage_low)
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 				patient.organHolder.head.op_stage = 1
 				return TRUE
 
@@ -378,7 +378,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					"<span class='alert'>[patient == surgeon ? "You slice" : "<b>[surgeon]</b> slices"] the tissue around your spine with [src]!</span>")
 
 				patient.TakeDamage("head", damage_high, 0)
-				take_bleeding_damage(patient, surgeon, damage_low)
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 				patient.organHolder.head.op_stage = 3
 				return TRUE
 
@@ -394,7 +394,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				"<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] away the flesh holding your right eye in with [src]!</span>")
 
 			patient.TakeDamage("head", damage_low, 0)
-			take_bleeding_damage(patient, surgeon, damage_low)
+			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 			patient.organHolder.right_eye.op_stage = 2
 			return TRUE
 
@@ -410,7 +410,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				"<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] away the flesh holding your left eye in with [src]!</span>")
 
 			patient.TakeDamage("head", damage_low, 0)
-			take_bleeding_damage(patient, surgeon, damage_low)
+			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 			patient.organHolder.left_eye.op_stage = 2
 			return TRUE
 
@@ -434,7 +434,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					"<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your head open with [src]!</span>")
 
 				patient.TakeDamage("head", damage_low, 0)
-				take_bleeding_damage(patient, surgeon, damage_low)
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 				patient.organHolder.head.scalp_op_stage = 1
 				return TRUE
 
@@ -456,7 +456,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						"<span class='alert'>[patient == surgeon ? "You open" : "<b>[surgeon]</b> opens"] the area around your brain cavity with [src]!</span>")
 
 				patient.TakeDamage("head", damage_high, 0)
-				take_bleeding_damage(patient, surgeon, damage_low)
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 				patient.organHolder.head.scalp_op_stage = 3
 				return TRUE
 			else if (patient.organHolder.head.scalp_op_stage == 4.0)
@@ -477,7 +477,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						"<span class='alert'>[patient == surgeon ? "You open" : "<b>[surgeon]</b> opens"] your skull cavity with [src]!</span>")
 
 				patient.TakeDamage("head", damage_low, 0)
-				take_bleeding_damage(patient, surgeon, damage_low)
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 				patient.organHolder.head.scalp_op_stage = 5
 				return TRUE
 
@@ -503,7 +503,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					"<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your lower back open with [src]!</span>")
 
 				patient.TakeDamage("chest", damage_low, 0)
-				take_bleeding_damage(patient, surgeon, damage_low)
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 				patient.organHolder.back_op_stage = BACK_SURGERY_STEP_ONE
 				return TRUE
 
@@ -519,7 +519,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					"<span class='alert'>[patient == surgeon ? "You sever" : "<b>[surgeon]</b> severs"] your intestines with [src]!</span>")
 
 				patient.TakeDamage("chest", damage_high, 0)
-				take_bleeding_damage(patient, surgeon, damage_low)
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 				patient.organHolder.back_op_stage = BACK_SURGERY_OPENED
 				return TRUE
 
@@ -566,7 +566,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						"<span class='alert'>You make a cut on [surgeon == patient ? "your" : "[patient]'s"] chest with [src]!</span>",\
 						"<span class='alert'>[patient == surgeon ? "You make a cut" : "<b>[surgeon]</b> makes a cut"] on chest with [src]!</span>")
 					patient.TakeDamage("chest", damage_low, 0)
-					take_bleeding_damage(patient, surgeon, damage_low)
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 					patient.organHolder.chest.op_stage ++
 					patient.chest_cavity_clamped = FALSE	//Start bleeding all over the place until we are clamped or sutured
 					return TRUE
@@ -669,7 +669,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					"<span class='alert'>[patient == surgeon ? "You sever" : "<b>[surgeon]</b> severs"] most of your neck with [src]!</span>")
 
 				patient.TakeDamage("head", damage_low, 0)
-				take_bleeding_damage(patient, surgeon, damage_low)
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 				patient.organHolder.head.op_stage = 2
 				return TRUE
 
@@ -685,7 +685,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					"<span class='alert'>[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] through the last of your head's connection to your body with [src]!</span>")
 
 				patient.TakeDamage("head", damage_low, 0)
-				take_bleeding_damage(patient, surgeon, damage_low)
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 				if (patient.organHolder.brain)
 					logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s head and brain with [src].")
 					patient.death()
@@ -714,7 +714,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					"<span class='alert'>[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] open your skull [missing_fluff] with [src]!</span>")
 
 				patient.TakeDamage("head", damage_low, 0)
-				take_bleeding_damage(patient, surgeon, damage_low)
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 				patient.organHolder.head.scalp_op_stage = 2
 				return TRUE
 
@@ -738,7 +738,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						"<span class='alert'>[patient == surgeon ? "You cut open" : "<b>[surgeon]</b> cuts open "] your brain cavity with [src]!</span>")
 
 				patient.TakeDamage("head", damage_low, 0)
-				take_bleeding_damage(patient, surgeon, damage_low)
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 				logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s brain with [src].")
 				patient.death()
 				patient.organHolder.head.scalp_op_stage = 4
@@ -766,7 +766,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						"<span class='alert'>[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] the top of your head open with [src]!</span>")
 
 				patient.TakeDamage("head", damage_low, 0)
-				take_bleeding_damage(patient, surgeon, damage_low)
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 				patient.real_name = "Unknown"
 				patient.unlock_medal("Red Hood", 1)
 				patient.set_clothing_icon_dirty()
@@ -791,7 +791,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					"<span class='alert'>[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] open your back with [src]!</span>")
 
 				patient.TakeDamage("chest", damage_low, 0)
-				take_bleeding_damage(patient, surgeon, damage_low)
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 				patient.organHolder.back_op_stage = BACK_SURGERY_STEP_TWO
 				return TRUE
 
@@ -1221,7 +1221,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				"<span class='alert'>[patient == surgeon ? "You insert" : "<b>[surgeon]</b> inserts"] [src] into your [target_side] eye socket!</span>")
 
 			patient.TakeDamage("head", damage_low, 0)
-			take_bleeding_damage(patient, surgeon, damage_low)
+			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 			target_eye.op_stage = 1
 			return TRUE
 
@@ -1237,7 +1237,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				"<span class='alert'>[patient == surgeon ? "You remove" : "<b>[surgeon]</b> removes"] your [target_side] eye with [src]!</span>")
 
 			patient.TakeDamage("head", damage_low, 0)
-			take_bleeding_damage(patient, surgeon, damage_low)
+			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s [target_side] eye with [src].")
 
 			if (target_eye == patient.organHolder.right_eye)
@@ -1315,7 +1315,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						"<span class='alert'>You make a cut on [surgeon == patient ? "your" : "[patient]'s"] chest with [src]!</span>",\
 						"<span class='alert'>[patient == surgeon ? "You make a cut" : "<b>[surgeon]</b> makes a cut"] on chest with [src]!</span>")
 					patient.TakeDamage("chest", damage_low, 0)
-					take_bleeding_damage(patient, surgeon, damage_low)
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 					patient.organHolder.chest.op_stage ++
 					return TRUE
 				if (2)
@@ -1438,7 +1438,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /proc/do_slipup(var/mob/surgeon, var/mob/patient, var/damage_target, var/damage_value, var/fluff_text)
 	surgeon.visible_message("<span class='alert'><b>[surgeon][fluff_text]!</b></span>")
 	patient.TakeDamage(damage_target, damage_value, 0)
-	take_bleeding_damage(patient, surgeon, damage_value)
+	take_bleeding_damage(patient, surgeon, damage_value, surgery_bleed = TRUE)
 	create_blood_sploosh(patient)
 	display_slipup_image(surgeon, patient.loc)
 
