@@ -138,7 +138,8 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 	if(I)
 		for(var/ikey in overlay_refs)
 			if(ikey != key && overlay_refs[ikey][P_INDEX] > 0 && overlay_refs[ikey][P_ISTATE] == ref(I.appearance))
-				CRASH("Attempt to add duplicate overlay appearances on [identify_object(src)] with keys [key] and [ikey].")
+				logTheThing(LOG_DEBUG, null, "Attempt to add duplicate overlay appearances on [identify_object(src)] with keys [key] and [ikey].")
+				I.layer += 0.0000001
 
 	var/index = prev_data[P_INDEX]
 	if(index > 0) //There is an existing overlay in place in this slot, remove it
