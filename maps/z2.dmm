@@ -19965,31 +19965,6 @@
 	},
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
-"bvA" = (
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
-	},
-/obj/item/scalpel,
-/obj/item/staple_gun{
-	pixel_x = 5
-	},
-/obj/item/weldingtool,
-/obj/item/hemostat,
-/obj/item/surgical_spoon,
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "bot2"
-	},
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "bot2"
-	},
-/obj/item/suture,
-/obj/item/scissors/surgical_scissors,
-/turf/unsimulated/floor/white,
-/area/syndicate_station/medbay)
 "bvE" = (
 /obj/juggleplaque{
 	desc = "Syndicate Battlecruiser Cairngorm - Out of these mountains, Out of the defiant torment of Plutonic rock, Out of fire, terror, blackness and upheaval, Leap the clear burns, Living water.";
@@ -34211,13 +34186,7 @@
 /area/afterlife/hell/hellspawn)
 "cvJ" = (
 /obj/table/wood/auto,
-/obj/item/device/radio/intercom{
-	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show.";
-	device_color = "#E52780";
-	icon = 'icons/obj/radiostation.dmi';
-	icon_state = "mixtable-1";
-	name = "broadcast radio"
-	},
+/obj/item/device/radio/intercom/radiostation,
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/battlecruiser)
 "cvK" = (
@@ -56903,10 +56872,6 @@
 	icon_state = "tile1"
 	},
 /obj/table/reinforced/bar/auto,
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "tile1"
-	},
 /obj/machinery/glass_recycler{
 	glass_amt = 50
 	},
@@ -66778,7 +66743,7 @@
 	icon_state = "blue"
 	})
 "nOw" = (
-/obj/stool/chair/dining/{
+/obj/stool/chair/dining/wood{
 	anchored = 1;
 	dir = 8
 	},
@@ -102657,7 +102622,7 @@ bqW
 btp
 lzl
 dhr
-bvA
+bwa
 dhP
 did
 dim

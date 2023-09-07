@@ -3931,9 +3931,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "anb" = (
-/obj/machinery/atmospherics/unary/cryo_cell{
-	pipe_direction = 8
-	},
+/obj/machinery/atmospherics/unary/cryo_cell,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "anc" = (
@@ -4048,9 +4046,7 @@
 	},
 /area/station/medical/medbay)
 "ans" = (
-/obj/machinery/atmospherics/unary/cryo_cell{
-	pipe_direction = 8
-	},
+/obj/machinery/atmospherics/unary/cryo_cell,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -28480,13 +28476,7 @@
 /obj/table/wood/auto{
 	pixel_w = -1
 	},
-/obj/item/device/radio/intercom{
-	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show.";
-	device_color = "#E52780";
-	icon = 'icons/obj/radiostation.dmi';
-	icon_state = "mixtable-1";
-	name = "broadcast radio"
-	},
+/obj/item/device/radio/intercom/radiostation,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "bUx" = (
@@ -28983,7 +28973,7 @@
 /area/station/bridge/customs)
 "bWn" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/hand_labeler,
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/science/teleporter)
@@ -35579,7 +35569,6 @@
 	},
 /area/station/bridge/hos)
 "fEv" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/bar)

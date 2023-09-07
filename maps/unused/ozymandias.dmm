@@ -11828,7 +11828,7 @@
 /area/station/mining/staff_room)
 "dkw" = (
 /obj/table/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/signaler,
@@ -63966,7 +63966,7 @@
 	})
 "qKd" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -84826,7 +84826,7 @@
 "vJl" = (
 /obj/machinery/manufacturer/general/grody{
 	free_resource_amt = 2;
-	
+
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{

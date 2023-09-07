@@ -572,7 +572,7 @@
 /area/station/bridge)
 "abJ" = (
 /obj/table/wood/round/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/paper/book/from_file/space_law,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
@@ -15566,13 +15566,7 @@
 /area/station/communications/office)
 "aTn" = (
 /obj/table/wood/auto,
-/obj/item/device/radio/intercom{
-	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show.";
-	device_color = "#E52780";
-	icon = 'icons/obj/radiostation.dmi';
-	icon_state = "mixtable-1";
-	name = "broadcast radio"
-	},
+/obj/item/device/radio/intercom/radiostation,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications/office)
 "aTo" = (

@@ -306,7 +306,7 @@ or don't if it uses a custom topopen overlay
 	src.coreSkin = skinToApply
 	src.set_color(global.random_color())
 	src.faceEmotion = global.ai_emotions[pick(global.ai_emotions)]
-	src.UpdateOverlays(get_image("ai_blank"), "backscreen")
+	src.UpdateOverlays(SafeGetOverlayImage("backscreen", 'icons/mob/ai.dmi', "ai_blank"), "backscreen")
 	update_appearance()
 
 	src.eyecam = new /mob/living/intangible/aieye(src)
@@ -2257,12 +2257,20 @@ or don't if it uses a custom topopen overlay
 		if (src.cell && src.cell.charge < 100)
 			src.icon_state = coreSkin // I think just removing all icon_state updates should be fine but ai code is so
 		else // convoluted that I'm terrified of breaking some super specific thing by doing that
+<<<<<<< HEAD
 			UpdateOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai-bsod"), "temp_face")
+=======
+			UpdateOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai_bsod"), "temp_face")
+>>>>>>> master
 
 
 	else if (src.power_mode == -1 || src.health < 25 || src.getStatusDuration("paralysis"))
 		clearFaceOverlays(1)
+<<<<<<< HEAD
 		UpdateOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai-stun_screen"), "temp_face")
+=======
+		UpdateOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai-stun-screen"), "temp_face")
+>>>>>>> master
 
 	else
 		src.icon_state = coreSkin
@@ -2280,9 +2288,9 @@ or don't if it uses a custom topopen overlay
 		UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
 
 		if (src.power_mode == 1) // e.g get_image("batterymode-dwaine") which is the icon_state we want if coreSkin is "dwaine"
-			src.UpdateOverlays(get_image("batmode-[coreSkin]"), "power-status")
+			src.UpdateOverlays(SafeGetOverlayImage("power-status", 'icons/mob/ai.dmi', "batmode-[coreSkin]"), "power-status")
 		else
-			src.UpdateOverlays(get_image("apcmode-[coreSkin]"), "power-status")
+			src.UpdateOverlays(SafeGetOverlayImage("power-status", 'icons/mob/ai.dmi', "apcmode-[coreSkin]"), "power-status")
 
 		if (src.moustache_mode == 1)
 			src.UpdateOverlays(SafeGetOverlayImage("moustache", 'icons/mob/ai.dmi', "moustache", src.layer+0.3), "moustache")
@@ -2292,17 +2300,17 @@ or don't if it uses a custom topopen overlay
 // ------ IF ADDING NEW CORE FRAMES PLEASE DEFINE WHICH OPEN OVERLAY TO USE HERE ------ //
 	if (src.dismantle_stage > 1)
 		if(coreSkin == "default" || coreSkin == "science" || coreSkin == "medical" || coreSkin == "syndicate" || coreSkin == "ntold" || coreSkin == "bee" || coreSkin == "shock")
-			src.UpdateOverlays(get_image("topopen-default"), "top")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "topopen-default"), "top")
 		else if(coreSkin == "gold" || coreSkin == "engineering" || coreSkin == "soviet")
-			src.UpdateOverlays(get_image("topopen-full"), "top")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "topopen-full"), "top")
 		else if(coreSkin == "dwaine" || coreSkin == "ailes" || coreSkin == "salvage" || coreSkin == "gardengear" || coreSkin == "telegun")
-			src.UpdateOverlays(get_image("topopen-split"), "top")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "topopen-split"), "top")
 		else if(coreSkin == "nt" || coreSkin == "industrial" || coreSkin == "lgun")
-			src.UpdateOverlays(get_image("topopen-uneven"), "top")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "topopen-uneven"), "top")
 		else if(coreSkin == "kingsway" || coreSkin == "clown" || coreSkin == "mime" || coreSkin == "tactical" || coreSkin == "mauxite")
-			src.UpdateOverlays(get_image("topopen-bulky"), "top")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "topopen-bulky"), "top")
 		else
-			src.UpdateOverlays(get_image("topopen-[coreSkin]"), "top")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "topopen-[coreSkin]"), "top")
 
 	else
 		src.UpdateOverlays(null, "top")
@@ -2311,20 +2319,20 @@ or don't if it uses a custom topopen overlay
 		if (-INFINITY to 24)
 			src.UpdateOverlays(null, "burn")
 		if(25 to 49)
-			src.UpdateOverlays(get_image("burn25"), "burn")
+			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "burn25"), "burn")
 		if(50 to 74)
-			src.UpdateOverlays(get_image("burn50"), "burn")
+			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "burn50"), "burn")
 		if(75 to INFINITY)
-			src.UpdateOverlays(get_image("burn75"), "burn")
+			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "burn75"), "burn")
 	switch(src.bruteloss)
 		if (-INFINITY to 24)
 			src.UpdateOverlays(null, "brute")
 		if(25 to 49)
-			src.UpdateOverlays(get_image("brute25"), "brute")
+			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "brute25"), "brute")
 		if(50 to 74)
-			src.UpdateOverlays(get_image("brute50"), "brute")
+			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "brute50"), "brute")
 		if(75 to INFINITY)
-			src.UpdateOverlays(get_image("brute75"), "brute")
+			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "brute75"), "brute")
 
 /// Clears all overlays which constitute the displayed face/screen
 /mob/living/silicon/ai/proc/clearFaceOverlays(var/retain_cache=0)
@@ -2343,13 +2351,6 @@ or don't if it uses a custom topopen overlay
 		return
 	coreSkin = skin
 	update_appearance()
-
-/mob/living/silicon/ai/proc/get_image(var/icon_state)
-	if(!cached_image)
-		cached_image = image('icons/mob/ai.dmi', "moustache")
-	cached_image.icon_state = icon_state
-	return cached_image
-
 
 /mob/living/silicon/ai/proc/set_power_mode(var/mode)
 	switch(mode)

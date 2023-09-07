@@ -16054,13 +16054,6 @@
 /obj/lattice,
 /turf/space,
 /area/space)
-"bCK" = (
-/obj/machinery/light{
-	dir = 8;
-	pixel_x = -10
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
 "bCQ" = (
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -23438,8 +23431,7 @@
 /area/station/hallway/primary/north)
 "gNH" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1;
-	pipe_direction = 1
+	dir = 1
 	},
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
@@ -37312,7 +37304,7 @@
 	},
 /obj/disposalpipe/segment,
 /obj/table/reinforced/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/hand_labeler,
 /obj/item/storage/firstaid/regular,
 /obj/machinery/camera{
@@ -38705,6 +38697,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"sNj" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/obj/machinery/light,
+/turf/simulated/floor,
+/area/station/quartermaster/storage)
 "sOc" = (
 /obj/item/device/radio/beacon,
 /obj/landmark/gps_waypoint,
@@ -42562,8 +42561,7 @@
 	tag = ""
 	},
 /obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1;
-	pipe_direction = 1
+	dir = 1
 	},
 /turf/simulated/floor/redwhite{
 	dir = 6
@@ -78700,8 +78698,8 @@ gck
 bzk
 fho
 bBB
-bCK
-rpX
+buG
+sNj
 bFo
 roW
 jkc

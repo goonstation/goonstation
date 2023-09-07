@@ -529,7 +529,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/hand_tele = 2,
 			/obj/machinery/shipalert = 1,
 			/obj/item/storage/box/PDAbox = 1,
-			/obj/item/storage/box/trackimp_kit2 = 1,
+			/obj/item/storage/box/trackimp_kit = 1,
 			/obj/item/cigarbox/gold = 2,
 			/obj/item/paper/book/from_file/captaining_101 = 1,
 			/obj/shrub/captainshrub = 0.5,

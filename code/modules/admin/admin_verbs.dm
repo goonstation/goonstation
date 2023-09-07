@@ -295,6 +295,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_buttgib,
 		/client/proc/cmd_admin_tysongib,
 		/client/proc/cmd_admin_smitegib,
+		/client/proc/cmd_admin_anvilgib,
 		/client/proc/removeOther,
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
@@ -1276,7 +1277,7 @@ var/list/fun_images = list()
 				S.icon = 'icons/effects/ULIcons.dmi'
 				S.icon_state = "etc"
 				S.color = transparentColor
-				S.UpdateOverlays(null, "starlight", 1)
+				S.underlays -= S.starlight
 
 	var/confirm5 = tgui_alert(src.mob, "Make everything full bright?", "Fullbright?", list("Yes", "No"))
 	if (confirm5 == "Yes")

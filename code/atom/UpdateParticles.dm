@@ -1,13 +1,17 @@
 /atom/var/list/particle_refs = null
 
+/obj/effects/particle_holder
+	mouse_opacity = 0
+	name = "particle holder"
+
 /atom/proc/UpdateParticles(particles/P, key, effect_appearance_flags, force=0, plane=null)
 	if(!key)
 		CRASH("UpdateParticles called without a key.")
 	LAZYLISTINIT(particle_refs)
-	var/obj/effects/holder
+	var/obj/effects/particle_holder/holder
 	holder = particle_refs[key]
 	if(!holder && P)
-		holder = new /obj/effects
+		holder = new /obj/effects/particle_holder
 	else if(!holder)
 		return
 

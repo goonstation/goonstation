@@ -64,11 +64,13 @@
 				user.show_text("You can't seem to find any flesh on this patient.", "red")
 			return
 		if (user)
+			var/self = FALSE
 			if (M != user)
-				M.visible_message("<span class='alert'>[user] applies [src] to [M].</span>",)
-			else
-				M.visible_message("<span class='alert'>[M] applies [src] to [himself_or_herself(M)].</span>")
+				self = TRUE
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/medical/proc/do_use, list(M, user),\
+			src.icon, src.icon_state, "<span class='alert'>[user] applies [src] to [self ? "[M]" : "[himself_or_herself(M)]"].</span>", null)
 
+	proc/do_use(mob/M, mob/user)
 		if (M != user && ishuman(M) && ishuman(user))
 			if (M.gender != user.gender)
 				M.unlock_medal("Oh, Doctor!", 1)

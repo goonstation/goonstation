@@ -712,7 +712,7 @@
 
 		H.init(src)
 
-		air_contents.zero()
+		ZERO_GASES(air_contents)
 
 		flick("comp_flush1", src)
 		sleep(1 SECOND)

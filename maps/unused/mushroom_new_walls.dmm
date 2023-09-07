@@ -17571,8 +17571,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "eIr" = (
-/obj/item/storage/box/trackimp_kit2,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/device/gps,
 /obj/item/device/gps,
 /obj/item/device/gps,
@@ -17741,8 +17741,7 @@
 /area/station/crew_quarters/baroffice)
 "eNp" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1;
-	pipe_direction = 4
+	dir = 1
 	},
 /obj/window/reinforced/west{
 	dir = 2
@@ -17827,8 +17826,7 @@
 /area/station/bridge)
 "eRs" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1;
-	pipe_direction = 8
+	dir = 1
 	},
 /obj/window/reinforced/west{
 	dir = 2
@@ -25838,7 +25836,7 @@
 /area/station/chapel/sanctuary)
 "nDA" = (
 /obj/table/wood/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fgreen3"
@@ -32496,7 +32494,7 @@
 /area/station/security/main)
 "tlw" = (
 /obj/table/auto,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = -8
 	},
 /obj/item/storage/box/revimp_kit{

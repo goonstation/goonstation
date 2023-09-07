@@ -12678,7 +12678,7 @@
 	icon_state = "line3"
 	},
 /obj/table/reinforced/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/hand_labeler,
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 1
@@ -17007,9 +17007,7 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/machinery/atmospherics/unary/cryo_cell{
-	pipe_direction = 2
-	},
+/obj/machinery/atmospherics/unary/cryo_cell,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -20
@@ -36153,9 +36151,7 @@
 	dir = 5;
 	icon_state = "line2"
 	},
-/obj/machinery/atmospherics/unary/cryo_cell{
-	pipe_direction = 2
-	},
+/obj/machinery/atmospherics/unary/cryo_cell,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -43977,7 +43973,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/reinforced/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "pNd" = (

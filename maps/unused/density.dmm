@@ -5276,9 +5276,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "ma" = (
-/obj/machinery/atmospherics/unary/cryo_cell{
-	pipe_direction = 2
-	},
+/obj/machinery/atmospherics/unary/cryo_cell,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "mb" = (
