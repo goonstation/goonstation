@@ -6100,7 +6100,6 @@
 	pixel_y = 9;
 	pixel_x = 6
 	},
-/obj/decal/stripe_caution,
 /turf/simulated/floor/wood/eight,
 /area/station/ai_monitored/armory)
 "bIi" = (
@@ -16428,7 +16427,6 @@
 /obj/item/decoration/ashtray{
 	pixel_x = -4
 	},
-/obj/decal/stripe_caution,
 /turf/simulated/floor/wood/eight,
 /area/station/ai_monitored/armory)
 "eWs" = (
@@ -45488,7 +45486,6 @@
 	pixel_y = -10;
 	pixel_x = 5
 	},
-/obj/decal/stripe_caution,
 /turf/simulated/floor/wood/eight,
 /area/station/ai_monitored/armory)
 "nVa" = (
