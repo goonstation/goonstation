@@ -492,6 +492,176 @@ datum
 				..()
 				return
 
+		drug/caffeine        //Unified chem for lots of caffeinated drinks, similar to how ethanol functions
+			name = "caffeine"
+			id = "caffeine"
+			description = "An addictive stimulant contained in coffee beans and many caffeinated beverages."
+			reagent_state = LIQUID
+			fluid_r = 230
+			fluid_g = 220
+			fluid_b = 230
+			addiction_prob = 10
+			addiction_min = 10
+			max_addiction_severity = "LOW"
+			depletion_rate = 0.1
+			taste = "bitter"
+			overdose = 60
+			target_organs = list("heart")
+			var/caffeine_rush = 1 //based off of amount
+
+			proc/update_stam_regen(caffeine_rush) //changing the stamina regen
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush")
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush", caffeine_rush)
+
+			proc/caffeine_message(var/mob, var/power) // condensing all the messages in the same place
+				switch(power)
+					if(1)
+						boutput(mob, pick("<span class='notice'>You feel refreshingly energised.</span>",\
+									"<span class='notice'>You feel sharp and aware.</span>",\
+									"<span class='notice'>You feel motivated to do something.</span>",\
+									"<span class='notice'>You suddenly become aware of your own breathing.</span>"))
+					if(2)
+						boutput(mob, pick("<span class='notice'>You a slight twitch in your arm.</span>",\
+									"<span class='notice'>You feel a slight tension in your shoulders.</span>",\
+									"<span class='notice'>You feel resltess and anxious.</span>",\
+									"<span class='alert'>You feel ready for anything!</span>",\
+									"<span class='alert'>You feel a rush of energy.</span>",\
+									"<span class='alert'>You can feel a slight pressure in your skull.</span>"))
+					if(3)
+						boutput(mob, pick("<span class='alert'>You feel your chest clutching for a moment.</span>",\
+									"<span class='alert'>YOU ARE ENERGY INCARNATE.</span>",\
+									"<span class='alert'>YOU FEEL LIKE YOU COULD CONQUER THE WORLD.</span>",\
+									"<span class='alert'>YOU CAN DO EVERYTHING, YOU ARE READY FOR ANY CHALLENGE.</span>",\
+									"<span class='alert'>Your chest burns slightly.</span>",\
+									"<span class='alert'>You feel a flash of pain in your head.</span>",\
+									"<span class='alert'>You are speed.</span>",\
+									"<span class='notice'>Something is wrong.</span>"))
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush", src.caffeine_rush)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush")
+				..()
+
+			on_remove() // Removal both on cross_threshold_under and on_remove to avoid caffeine_rush jank
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush")
+				..()
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				var/caffeine_amt = holder.get_reagent_amount(src.id)
+				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
+					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
+
+				if (caffeine_amt > 30) //Large amounts don't last as much as smaller trace amounts
+					depletion_rate = 0.2 * mult
+					M.sleeping = 0 //Causes insomnia
+				else
+					depletion_rate = 0.1 * mult
+
+				switch(caffeine_amt)
+					if(0 to 5)   //This is your trace amount of caffeine, doesn't do much
+						if (M.get_eye_blurry() && prob(50)) //reducess vision blurryness
+							M.change_eye_blurry(-1 * mult)
+						stun_resist = 3
+
+						if(caffeine_rush != 1)
+							caffeine_rush = 1
+							update_stam_regen(caffeine_rush)
+
+					if(5 to 20)  //A regular coffe mug's worth
+						if (M.get_eye_blurry() && prob(75))
+							M.change_eye_blurry(-1 * mult)
+						stun_resist = 6
+						M.dizziness = max(0,M.dizziness-3)
+						M.changeStatus("drowsy", -3 SECONDS) //Helps combat that morning fatigue
+						if (prob(25))
+							M.make_jittery(10 * mult)
+						if (probmult(6))
+							caffeine_message(M, 1)
+
+						if(caffeine_rush != 2)
+							caffeine_rush = 2
+							update_stam_regen(caffeine_rush)
+
+					if(20 to 40) //A significant amount of caffeine
+						if (M.get_eye_blurry())
+							M.change_eye_blurry(-1 * mult)
+						stun_resist = 10
+						M.changeStatus("drowsy", -5 SECONDS)
+						M.dizziness = max(0,M.dizziness-5)
+
+						if (prob(35))
+							M.make_jittery(10 * mult)
+						if (probmult(9))
+							caffeine_message(M, pick(1,2))
+
+						if(caffeine_rush != 3)
+							caffeine_rush = 3
+							update_stam_regen(caffeine_rush)
+
+					if(40 to 60) //A unhealthy amount of caffeine
+						M.take_toxin_damage(0.25 * mult)
+						if (M.get_eye_blurry())
+							M.change_eye_blurry(-2 * mult)
+						stun_resist = 15
+						M.changeStatus("drowsy", -10 SECONDS)
+						M.dizziness = max(0,M.dizziness-7)
+						M.make_jittery(10 * mult)
+
+						if (probmult(9))
+							caffeine_message(M, pick(2,3))
+						else if (probmult(9))
+							M.emote(pick("twitch","sigh","blink_r"))
+
+						if(caffeine_rush != 4)
+							caffeine_rush = 4
+							update_stam_regen(caffeine_rush)
+
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (H.organHolder)
+								H.organHolder.damage_organs(0.5*mult, 0, 0.5*mult, target_organs, 15)
+
+					if(60 to INFINITY)  //Too much coffee. Way bad for you.
+						M.take_toxin_damage(0.5 * mult)
+						if (M.get_eye_blurry())
+							M.change_eye_blurry(-1 * mult)
+						stun_resist = 20
+						M.changeStatus("drowsy", -15 SECONDS)
+						M.dizziness = max(0,M.dizziness-10)
+						M.make_jittery(15 * mult)
+
+						if (probmult(9))
+							caffeine_message(M, 3)
+						else if (probmult(9))
+							M.emote(pick("shiver","twitch_v","blink_r"))
+						else if(probmult(9) && !ON_COOLDOWN(M, "feeling_own heartbeat", 120 SECONDS)) //This can't be good for you
+							M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 20, 1)
+
+						if(caffeine_rush != 5)
+							caffeine_rush = 5
+							update_stam_regen(caffeine_rush)
+
+						var/damage_chance = clamp((20 + (caffeine_amt - 60)), 20, 100) //Increasing chance of heart damage
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (H.organHolder) // Directly hurts your heart
+								H.organHolder.damage_organs(0.5*mult, 0, 1*mult, target_organs, damage_chance)
+
+				..()
+				return
+
 		drug/solipsizine
 			name = "solipsizine"
 			id = "solipsizine"
