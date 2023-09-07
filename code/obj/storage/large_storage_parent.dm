@@ -204,7 +204,6 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 					step(src, pick(alldirs))
 				else
 					user.show_text("You try moving, but [src] seems to be stuck to the floor!", "red")
-
 			if (!src.jiggled)
 				src.jiggled = 1
 				user.show_text("You kick at [src], but it doesn't budge!", "red")
