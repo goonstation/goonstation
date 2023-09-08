@@ -162,7 +162,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				user.show_text("You can't unload this gun.", "red")
 				return
 			src.eject_magazine(user)
-
+			playsound(src, src.ammo.sound_load, 50, 1)
 		return ..()
 
 	attack(mob/M, mob/user)
