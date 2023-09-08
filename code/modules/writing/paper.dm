@@ -265,7 +265,7 @@
 			var/obj/item/portable_typewriter/typewriter = src.loc
 			if(istype(typewriter.pen, /obj/item/pen))
 				O = typewriter.pen
-	if(istype(O, /obj/item/pen))
+	if(istype(O, /obj/item/pen) && in_interact_range(src, user))
 		var/obj/item/pen/PEN = O
 		. += list(
 			"penFont" = PEN.font,
@@ -274,7 +274,7 @@
 			"isCrayon" = FALSE,
 			"stampClass" = "FAKE",
 		)
-	else if(istype(O, /obj/item/stamp))
+	else if(istype(O, /obj/item/stamp) && in_interact_range(src, user))
 		var/obj/item/stamp/stamp = O
 		stamp.current_state = stamp_assets[STAMP_IDS[stamp.current_mode]]
 		. += list(
@@ -340,9 +340,6 @@
 	var/pixel_width = (14 + (12 * (length-1)))
 	src.field_counter++
 	return {"\[<input type="text" style="font:'12x Georgia';color:'null';min-width:[pixel_width]px;max-width:[pixel_width]px;" id="paperfield_[field_counter]" maxlength=[length] size=[length] />\]"}
-
-/obj/item/paper/proc/show_through_camera(mob/living/user)
-	return ui_interact(user)
 
 /obj/item/paper/thermal
 	name = "thermal paper"
