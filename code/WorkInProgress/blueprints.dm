@@ -42,18 +42,18 @@
 	processing_tier = PROCESSING_FULL
 
 	var/invalidCount = 0
-	var/building = 0
+	var/building = FALSE
 	var/BuildIndex = 1
 	var/BuildEnd = 0
 	var/list/markers = list()
 	var/list/apclist = list()
 	var/MetalOwed = 0
 	var/CrystalOwed = 0
-	var/TileCostProcessed = 0
+	var/TileCostProcessed = FALSE
 
 	var/obj/item/blueprint/currentBp = null
-	var/locked = 0
-	var/Paused = 0
+	var/locked = FALSE
+	var/Paused = FALSE
 	var/off_x = 0
 	var/off_y = 0
 
@@ -69,14 +69,14 @@
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/blueprint))
-			if(currentBp)
+			if(src.currentBp)
 				boutput(user, "<span class='alert'>Theres already a blueprint in the machine.</span>")
 				return
 			else
 				boutput(user, "<span class='notice'>You insert the blueprint into the machine.</span>")
 				user.drop_item()
 				W.set_loc(src)
-				currentBp = W
+				src.currentBp = W
 				return
 		else if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
 			boutput(user, "<span class='notice'>You insert the material into the machine.</span>")
@@ -86,7 +86,7 @@
 		return
 
 	attack_hand(mob/user)
-		if(building && !Paused)
+		if(src.building && !src.Paused)
 			if (tgui_alert(user, "Pause the construction?", "ABCU", list("Yes", "No")) == "Yes")
 			//if (alert(usr, "Pause the construction?", "ABCU", "Yes", "No") == "Yes")
 				src.pauseBuild()
@@ -110,71 +110,71 @@
 			!building ? "Begin Building" : null,
 			"Dump Materials",
 			"Check Materials",
-			currentBp && !building ? "Eject Blueprint" : null,
+			src.currentBp && !building ? "Eject Blueprint" : null,
 			building ? "Cancel Build" : null,
 		) */
 		var/list/OptionList = list(
 			"Check Materials",
 			"Resume Construction",
-			locked ? "Unlock" : "Lock",
+			src.locked ? "Unlock" : "Lock",
 			"Begin Building",
 			"Dump Materials",
 			"Eject Blueprint",
 			"Cancel Build",
 		)
-		var/UserInput = tgui_input_list(user, building ? "The build job is currently paused. Choose:" : "Select an action.", "ABCU", OptionList)
+		var/UserInput = tgui_input_list(user, src.building ? "The build job is currently paused. Choose:" : "Select an action.", "ABCU", OptionList)
 		if (!UserInput) return
 
-		//var/list/options = list(locked ? "Unlock":"Lock", "Begin Building", "Dump Materials", "Check Materials" ,currentBp ? "Eject Blueprint":null)
+		//var/list/options = list(locked ? "Unlock":"Lock", "Begin Building", "Dump Materials", "Check Materials" ,src.currentBp ? "Eject Blueprint":null)
 		//var/input = input(user,"Select option:","ABCU") in options
 		switch(UserInput)
 			if("Unlock")
-				if (building)
+				if (src.building)
 					boutput(user, "<span class='alert'>Lock status can't be changed with a build in progress.</span>")
 					return
-				if(!locked) return
+				if(!src.locked) return
 				boutput(user, "<span class='notice'>The machine unlocks and shuts down.</span>")
 				deactivate()
 
 			if("Lock")
-				if (building)
+				if (src.building)
 					boutput(user, "<span class='alert'>Lock status can't be changed with a build in progress.</span>")
 					return
-				if(locked) return
-				if(!currentBp)
+				if(src.locked) return
+				if(!src.currentBp)
 					boutput(user, "<span class='alert'>The machine requires a blueprint before it can be locked.</span>")
 					return
 				boutput(user, "<span class='notice'>The machine locks into place and begins humming softly.</span>")
 				activate()
 
 			if("Begin Building")
-				if(building)
+				if(src.building)
 					boutput(user, "<span class='alert'>A build job is already in progress.</span>")
 					return
-				if(!locked)
+				if(!src.locked)
 					boutput(user, "<span class='alert'>The machine must be locked into place before activating it.</span>")
 					return
-				if(!currentBp)
+				if(!src.currentBp)
 					boutput(user, "<span class='alert'>The machine requires a blueprint before it can build anything.</span>")
 					return
 				//build()
 				prepareBuild()
 
 			if("Eject Blueprint")
-				//if(building) return
-				if(locked || building)
+				//if(src.building) return
+				if(src.locked || src.building)
 					boutput(user, "<span class='alert'>Can not eject blueprint while machine is locked or building.</span>")
 					return
-				if (!currentBp)
+				if (!src.currentBp)
 					boutput(user, "<span class='alert'>No blueprint to eject.</span>")
 					return
-				currentBp.set_loc(src.loc)
-				currentBp = null
+				src.currentBp.set_loc(src.loc)
+				src.currentBp = null
 
 			if("Dump Materials")
 				//if(building) return
 				for(var/obj/o in src)
-					if(o == currentBp) continue
+					if(o == src.currentBp) continue
 					o.set_loc(src.loc)
 
 			if("Check Materials")
@@ -184,7 +184,7 @@
 				var/glass_cnt = 0
 
 				for(var/obj/O in src)
-					if(O == currentBp) continue
+					if(O == src.currentBp) continue
 					if(istype(O, /obj/item/sheet))
 						var/obj/item/sheet/S = O
 						if (S.material)
@@ -194,20 +194,20 @@
 								glass_cnt += S.amount
 
 				boutput(user, "<span class='notice'>Currently loaded :</span>")
-				boutput(user, "<span class='notice'>[metal_cnt] of [currentBp ? currentBp.req_metal : "-"] required metal</span>")
-				boutput(user, "<span class='notice'>[glass_cnt] of [currentBp ? currentBp.req_glass : "-"] required glass</span>") */
+				boutput(user, "<span class='notice'>[metal_cnt] of [src.currentBp ? src.currentBp.req_metal : "-"] required metal</span>")
+				boutput(user, "<span class='notice'>[glass_cnt] of [src.currentBp ? src.currentBp.req_glass : "-"] required glass</span>") */
 
 			if ("Resume Construction")
-				if (!building)
+				if (!src.building)
 					boutput(user, "<span class='alert'>There's no build in progress.</span>")
 					return
-				if (!Paused)
+				if (!src.Paused)
 					boutput(user, "<span class='alert'>It's already unpaused.</span>")
 					return
 				src.unpauseBuild()
 
 			if ("Cancel Build")
-				if (!building)
+				if (!src.building)
 					boutput(user, "<span class='alert'>There's no build in progress.</span>")
 					return
 				src.endBuild()
@@ -216,68 +216,68 @@
 	process()
 		..()
 
-		if (BuildIndex > BuildEnd)
+		if (src.BuildIndex > src.BuildEnd)
 			endBuild()
 			return
-		if (building)
-			var/datum/tileinfo/Tile = currentBp.roominfo[BuildIndex]
+		if (src.building)
+			var/datum/tileinfo/Tile = src.currentBp.roominfo[src.BuildIndex]
 			if (isnull(Tile.tiletype))
-				BuildIndex++
+				src.BuildIndex++
 				return
 
 			// try to consume materials for this tile
-			if (!TileCostProcessed)
+			if (!src.TileCostProcessed)
 				var/ObjCount = length(Tile.objects)
-				MetalOwed += REBUILD_COST_TURF_METAL + REBUILD_COST_OBJECT_METAL * ObjCount
-				CrystalOwed += REBUILD_COST_TURF_CRYSTAL + REBUILD_COST_OBJECT_CRYSTAL * ObjCount
-				TileCostProcessed = TRUE
+				src.MetalOwed += REBUILD_COST_TURF_METAL + REBUILD_COST_OBJECT_METAL * ObjCount
+				src.CrystalOwed += REBUILD_COST_TURF_CRYSTAL + REBUILD_COST_OBJECT_CRYSTAL * ObjCount
+				src.TileCostProcessed = TRUE
 			for (var/obj/Item in src)
-				if (MetalOwed <= 0 && CrystalOwed <= 0) break
-				if (Item == currentBp) continue
+				if (src.MetalOwed <= 0 && src.CrystalOwed <= 0) break
+				if (Item == src.currentBp) continue
 
 				if (istype(Item, /obj/item/sheet))
 					var/obj/item/sheet/Sheets = Item
 					if (!Sheets.material) continue
-					if (MetalOwed && Sheets.material.material_flags & MATERIAL_METAL)
-						var/SheetsConsumed = ceil(min(Sheets.amount, MetalOwed))
+					if (src.MetalOwed && Sheets.material.material_flags & MATERIAL_METAL)
+						var/SheetsConsumed = ceil(min(Sheets.amount, src.MetalOwed))
 						Sheets.change_stack_amount(-SheetsConsumed)
-						MetalOwed -= SheetsConsumed
+						src.MetalOwed -= SheetsConsumed
 						continue
-					if (CrystalOwed && Sheets.material.material_flags & MATERIAL_CRYSTAL)
-						var/SheetsConsumed = ceil(min(Sheets.amount, CrystalOwed))
+					if (src.CrystalOwed && Sheets.material.material_flags & MATERIAL_CRYSTAL)
+						var/SheetsConsumed = ceil(min(Sheets.amount, src.CrystalOwed))
 						Sheets.change_stack_amount(-SheetsConsumed)
-						CrystalOwed -= SheetsConsumed
+						src.CrystalOwed -= SheetsConsumed
 						continue
 
 				else if (istype(Item, /obj/item/material_piece))
 					var/obj/item/material_piece/Bars = Item
 					if (!Bars.material) continue
-					if (MetalOwed && Bars.material.material_flags & MATERIAL_METAL)
-						var/BarsConsumed = ceil(min(Bars.amount, MetalOwed / BAR_SHEET_VALUE))
+					if (src.MetalOwed && Bars.material.material_flags & MATERIAL_METAL)
+						var/BarsConsumed = ceil(min(Bars.amount, src.MetalOwed / BAR_SHEET_VALUE))
 						Bars.change_stack_amount(-BarsConsumed)
-						MetalOwed -= BarsConsumed * BAR_SHEET_VALUE
+						src.MetalOwed -= BarsConsumed * BAR_SHEET_VALUE
 						continue
-					if (CrystalOwed && Bars.material.material_flags & MATERIAL_CRYSTAL)
-						var/BarsConsumed = ceil(min(Bars.amount, CrystalOwed / BAR_SHEET_VALUE))
+					if (src.CrystalOwed && Bars.material.material_flags & MATERIAL_CRYSTAL)
+						var/BarsConsumed = ceil(min(Bars.amount, src.CrystalOwed / BAR_SHEET_VALUE))
 						Bars.change_stack_amount(-BarsConsumed)
-						CrystalOwed -= BarsConsumed * BAR_SHEET_VALUE
+						src.CrystalOwed -= BarsConsumed * BAR_SHEET_VALUE
 						continue
 
-			if (MetalOwed > 0 || CrystalOwed > 0)
+			if (src.MetalOwed > 0 || src.CrystalOwed > 0)
 				pauseBuild()
 				src.visible_message("<span class='alert'>[src] does not have enough materials to continue construction of [src.currentBp.name].</span>")
 				playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 20)
 				return
 			// now build the tile if we paid for it
 			var/turf/Pos = locate(text2num(Tile.posx) + src.x,text2num(Tile.posy) + src.y, src.z)
-			for(var/obj/O in markers)
+			for(var/obj/O in src.markers)
 				if(O.loc == Pos)
 					qdel(O)
 					break
 
 			makeTile(Tile, Pos)
-			TileCostProcessed = FALSE
-			BuildIndex++
+			src.TileCostProcessed = FALSE
+			src.BuildIndex++
 
 	proc/makeTile(var/datum/tileinfo/Info, var/turf/Pos)
 		set waitfor = 0
@@ -305,7 +305,7 @@
 			for(var/datum/objectinfo/O in Info.objects)
 				if (O.objecttype == null) continue
 				if (ispath(O.objecttype, /obj/machinery/power/apc))
-					apclist[O] = Pos
+					src.apclist[O] = Pos
 					continue
 				var/dmm_suite/preloader/blah = new(Pos, list( // this doesn't spawn the objects, only presets their properties
 					"layer" = O.layer,
@@ -318,25 +318,25 @@
 		return
 
 	proc/prepareBuild()
-		if(invalidCount)
+		if(src.invalidCount)
 			boutput(usr, "<span class='alert'>The machine can not build on anything but empty space. Check for red markers.</span>")
 			return
 
-		BuildEnd = length(currentBp.roominfo)
-		if (BuildEnd > 0)
-			building = 1
-			Paused = 0
-			BuildIndex = 1
+		src.BuildEnd = length(src.currentBp.roominfo)
+		if (src.BuildEnd > 0)
+			src.building = TRUE
+			src.Paused = FALSE
+			src.BuildIndex = 1
 			icon_state = "builder1"
 			SubscribeToProcess()
-		boutput(usr, "<span class='notice'>Tried to start build of [BuildEnd] tiles</span>")
+		boutput(usr, "<span class='notice'>Tried to start build of [src.BuildEnd] tiles</span>")
 
 	proc/endBuild()
-		for (var/datum/objectinfo/N in apclist)
-			new N.objecttype(apclist[N])
-		apclist = new/list
+		for (var/datum/objectinfo/N in src.apclist)
+			new N.objecttype(src.apclist[N])
+		src.apclist = new/list
 
-		building = 0
+		src.building = FALSE
 		UnsubscribeProcess()
 		deactivate()
 
@@ -347,7 +347,7 @@
 		var/MetalCount = 0
 		var/CrystalCount = 0
 		for(var/obj/O in src)
-			if(O == currentBp) continue
+			if(O == src.currentBp) continue
 			if (istype(O, /obj/item/sheet))
 				var/obj/item/sheet/Sheets = O
 				if (!Sheets.material) continue
@@ -371,27 +371,27 @@
 		return list(MetalCount, CrystalCount)
 
 	proc/unpauseBuild()
-		Paused = 0
+		src.Paused = FALSE
 		icon_state = "builder1"
 		SubscribeToProcess()
 
 	proc/pauseBuild()
-		Paused = 1
+		src.Paused = TRUE
 		icon_state = "builder"
 		UnsubscribeProcess()
 
 	proc/deactivate()
-		for(var/obj/O in markers)
+		for(var/obj/O in src.markers)
 			qdel(O)
-		locked = 0
-		anchored = UNANCHORED
+		src.locked = FALSE
+		src.anchored = UNANCHORED
 		return
 
 	proc/activate()
-		locked = 1
-		anchored = ANCHORED
-		invalidCount = 0
-		for(var/datum/tileinfo/T in currentBp.roominfo)
+		src.locked = TRUE
+		src.anchored = ANCHORED
+		src.invalidCount = 0
+		for(var/datum/tileinfo/T in src.currentBp.roominfo)
 			var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)
 			var/obj/abcuMarker/O = null
 
@@ -399,13 +399,13 @@
 				O = new/obj/abcuMarker(pos)
 			else
 				O = new/obj/abcuMarker/red(pos)
-				invalidCount++
+				src.invalidCount++
 
-			markers.Add(O)
-		boutput(usr, "<span class='notice'>Building this will require [currentBp.req_metal] metal and [currentBp.req_glass] glass sheets.</span>")
+			src.markers.Add(O)
+		boutput(usr, "<span class='notice'>Building this will require [src.currentBp.req_metal] metal and [src.currentBp.req_glass] glass sheets.</span>")
 		return
 
-	proc/build()
+	/* proc/build()
 		var/metal_cnt = 0
 		var/glass_cnt = 0
 
@@ -494,7 +494,7 @@
 			makepowernets()
 			qdel(src) //Blah
 
-		return
+		return */
 
 /datum/objectinfo
 	var/objecttype = null
