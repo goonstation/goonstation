@@ -190,6 +190,10 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			return
 		src.last_relaymove_time = world.time
 
+		if (istype(get_turf(src), /turf/space))
+			if (!istype(get_turf(src), /turf/space/fluid))
+				return
+
 		if (src.legholes)
 			if (!src.anchored)
 				step(src,user.dir)
