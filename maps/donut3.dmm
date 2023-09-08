@@ -34353,6 +34353,12 @@
 /area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
+"kyV" = (
+/obj/machinery/door_control/podbay/qm{
+	pixel_y = 9
+	},
+/turf/simulated/wall/auto/reinforced/jen/yellow,
+/area/station/hangar/qm)
 "kyX" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -42659,6 +42665,12 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
+"ncb" = (
+/obj/machinery/door_control/podbay/mainpod2{
+	pixel_y = 1
+	},
+/turf/simulated/wall/auto/jen,
+/area/station/hangar/main)
 "ncn" = (
 /obj/tree{
 	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
@@ -130225,7 +130237,7 @@ vcG
 vcG
 ocq
 cvl
-vYX
+kyV
 oag
 rah
 jIH
@@ -137740,7 +137752,7 @@ aeQ
 mxH
 aiP
 tSd
-tSd
+ncb
 xca
 aSO
 sNb
