@@ -69962,14 +69962,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/north)
 "sjJ" = (
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /turf/simulated/floor,
 /area/listeningpost)
 "sjR" = (
@@ -71158,9 +71151,7 @@
 /turf/simulated/floor/grey,
 /area/ghostdrone_factory)
 "sxd" = (
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /obj/stool/chair,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
@@ -84826,7 +84817,7 @@
 "vJl" = (
 /obj/machinery/manufacturer/general/grody{
 	free_resource_amt = 2;
-
+	
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
