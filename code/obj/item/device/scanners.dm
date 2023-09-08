@@ -141,7 +141,7 @@ TYPEINFO(/obj/item/device/t_scanner)
 				img.appearance_flags = RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 				display.overlays += img
 
-			if (show_underfloor_disposal_pipes && T.disposal_image)
+			if (show_blueprint_disposal_pipes && T.disposal_image)
 				display.overlays += T.disposal_image
 
 			if(length(display.overlays))
