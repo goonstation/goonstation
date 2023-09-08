@@ -304,7 +304,6 @@ TYPEINFO(/obj/machinery/chem_shaker)
 #else
 	icon_state = "orbital_shaker"
 #endif
-	density = 1
 	anchored = ANCHORED
 	flags = NOSPLASH
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
@@ -315,6 +314,7 @@ TYPEINFO(/obj/machinery/chem_shaker)
 	var/list/first_container_offsets = list("X" = 0, "Y" = 8)
 	var/list/container_offsets = list ("X" = 10, "Y" = -4)
 	var/active = FALSE
+	var/emagged = FALSE
 	/// The arrangement of the containers on the platform in the X direction.
 	var/container_row_length = 1
 	/// Also acts as the number of containers in the Y direction when divided by `src.container_row_length`.
@@ -341,29 +341,40 @@ TYPEINFO(/obj/machinery/chem_shaker)
 
 	attack_hand(mob/user)
 		if (!can_act(user)) return
-		boutput(user, "You [src.active ? "de" : ""]activate [src].")
 		switch (src.active)
 			if (TRUE)
+				if (src.emagged)
+					boutput(user, "<span class='alert'>[src] refuses to shut off!</span>")
+					return FALSE
 				src.set_inactive()
 			if (FALSE)
 				src.set_active()
+		boutput(user, "<span class='notice'>You [!src.active ? "de" : ""]activate [src].</span>")
 
 	attackby(obj/item/reagent_containers/glass/glass_container, var/mob/user)
 		if(istype(glass_container, /obj/item/reagent_containers/glass))
 			src.try_insert(glass_container, user)
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (!src.emagged)
+			src.emagged = TRUE
+			boutput(user, "<span class='alert'>[src]'s safeties have been disabled.</span>")
+			src.set_active()
+			return TRUE
+		return FALSE
+
 	ex_act(severity)
-		switch(severity)
-			if(1)
+		switch (severity)
+			if (1)
 				qdel(src)
 				return
-			if(2)
+			if (2)
 				if (prob(50))
 					qdel(src)
 					return
 
-	blob_act(var/power)
-		if(prob(25 * power/20))
+	blob_act(power)
+		if (prob(25 * power/20))
 			qdel(src)
 
 	meteorhit()
@@ -377,6 +388,10 @@ TYPEINFO(/obj/machinery/chem_shaker)
 		..()
 		if (src.status & (NOPOWER|BROKEN)) return src.set_inactive()
 		for (var/obj/item/reagent_containers/glass/glass_container in src.held_containers)
+			if (src.emagged)
+				src.remove_container(glass_container)
+				glass_container.throw_at(pick(range(5, src)), 5, 1)
+				continue
 			glass_container.reagents?.physical_shock(5)
 
 	proc/arrange_containers()
@@ -397,10 +412,14 @@ TYPEINFO(/obj/machinery/chem_shaker)
 
 	proc/set_active()
 		src.active = TRUE
-		src.power_usage = 200
-		animate_orbit(src.platform_holder, radius = src.radius, time = src.orbital_period, loops = -1)
-		src.audible_message("<span class='notice'>[src] whirs to life, rotating its platform!</span>")
-		processing_items.Add(src)
+		src.power_usage = src.emagged ? 1000 : 200
+		animate_orbit(src.platform_holder, radius = src.radius, time = src.emagged ? src.orbital_period / 5 : src.orbital_period, loops = -1)
+		if (src.emagged)
+			src.audible_message("<span class='alert'>[src] is rotating a bit too fast!</span>")
+		else
+			src.audible_message("<span class='notice'>[src] whirs to life, rotating its platform!</span>")
+		if (!(src in processing_items))
+			processing_items.Add(src)
 
 	proc/set_inactive()
 		src.active = FALSE
@@ -415,14 +434,14 @@ TYPEINFO(/obj/machinery/chem_shaker)
 			return
 
 		if (src.count_held_containers() >= src.max_containers)
-			boutput(user, "There's too many beakers on the platform already!")
+			boutput(user, "<span class='alert'>There's too many beakers on the platform already!</span>")
 			return
 
 		if (isrobot(user))
 			boutput(user, "Robot beakers won't work with this!")
 			return
 
-		user.drop_item()
+		user.drop_item(glass_container)
 		glass_container.set_loc(src)
 		glass_container.appearance_flags |= RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 		glass_container.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
