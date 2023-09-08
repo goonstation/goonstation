@@ -955,12 +955,12 @@
 /obj/item/paper/newspaper/New()
 	. = ..()
 	// it picks a random set of info at new, then the printing press overrides it
-	src.headline = pick_smart_string("newspaper.txt", "headline")
 	src.publisher = pick_smart_string("newspaper.txt", "publisher")
-	src.name = "[src.publisher] newspaper"
-	src.desc = "Its from <b>[src.publisher]</b>. Its headline reads: <b>[src.headline]</b>"
+	src.name = "[src.publisher]"
+	src.generate_headline()
 	src.info = "<b>[src.headline]</b><br>"
 	src.generate_article()
+	src.desc = "Its from <b>[src.publisher]</b>. Its headline reads: <b>[src.headline]</b>"
 
 /obj/item/paper/newspaper/attack_self(mob/user)
 	src.force_drop(user)
@@ -977,6 +977,11 @@
 		src.two_handed = TRUE
 		src.icon_state = "newspaper"
 		src.item_state = "newspaper"
+
+/obj/item/paper/newspaper/proc/generate_headline()
+	if (prob(80))
+		return pick_smart_string("newspaper.txt", "headline")
+	// todo: generate headlines randomly. Personally i'd rather keep handwritten ones only as they're better.
 
 /// generates a random newspaper article.
 /obj/item/paper/newspaper/proc/generate_article()
