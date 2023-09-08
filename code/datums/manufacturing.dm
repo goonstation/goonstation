@@ -830,6 +830,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	category = "Tool"
 
 
+/datum/manufacture/bunsen_burner
+	name = "Bunsen Burner"
+	item_paths = list("pharosium")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/bunsen_burner)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 ////////////////////////////////
 
 /datum/manufacture/player_module
