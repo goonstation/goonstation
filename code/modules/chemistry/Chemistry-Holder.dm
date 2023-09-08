@@ -1012,6 +1012,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if(rc_flags & RC_VISIBLE)
 			if(rc_flags & RC_SCALE)
 				. += "<span class='notice'>It contains [total_volume] units of \a [t]-colored [state_text].</span>"
+			//blurgh
+			else if (full_text && istype(src, /datum/reagents/fluid_group))
+				. += "<span class='notice'>It is \a [full_text] [t]-colored [state_text].</span>"
 			else if (full_text)
 				. += "<span class='notice'>It is [full_text] of \a [t]-colored [state_text].</span>"
 			else

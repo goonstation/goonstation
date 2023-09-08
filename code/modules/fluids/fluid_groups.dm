@@ -73,6 +73,13 @@
 			playsound(pick(my_group.members), mix_sound, 80, 1)
 			if (i > 8) break
 
+	get_state_description()
+		if (istype(src.my_group, /datum/fluid_group/airborne))
+			. = "vapor"
+		else
+			. = "fluid"
+
+
 //We use datum/controller/process/fluid_group to do evaporation
 
 /datum/fluid_group
