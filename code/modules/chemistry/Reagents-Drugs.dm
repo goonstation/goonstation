@@ -564,10 +564,10 @@ datum
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
 
 				if (caffeine_amt > 30) //Large amounts don't last as much as smaller trace amounts
-					depletion_rate = 0.2 * mult
+					depletion_rate = 0.2
 					M.sleeping = 0 //Causes insomnia
 				else
-					depletion_rate = 0.1 * mult
+					depletion_rate = 0.1
 
 				switch(caffeine_amt)
 					if(0 to 5)   //This is your trace amount of caffeine, doesn't do much
