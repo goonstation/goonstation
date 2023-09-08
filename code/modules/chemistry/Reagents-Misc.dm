@@ -2614,7 +2614,7 @@ datum
 				..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
-					M.reagents.add_reagent("water", severity * mult)
+				M.reagents.add_reagent("water", severity * mult)
 
 		transparium
 			name = "transparium"
