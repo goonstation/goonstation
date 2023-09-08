@@ -134,7 +134,7 @@
 					return
 				if(!src.locked) return
 				boutput(user, "<span class='notice'>The machine unlocks and shuts down.</span>")
-				deactivate()
+				src.deactivate()
 
 			if("Lock")
 				if (src.building)
@@ -145,7 +145,7 @@
 					boutput(user, "<span class='alert'>The machine requires a blueprint before it can be locked.</span>")
 					return
 				boutput(user, "<span class='notice'>The machine locks into place and begins humming softly.</span>")
-				activate()
+				src.activate()
 
 			if("Begin Building")
 				if(src.building)
@@ -158,7 +158,7 @@
 					boutput(user, "<span class='alert'>The machine requires a blueprint before it can build anything.</span>")
 					return
 				//build()
-				prepareBuild()
+				src.prepareBuild()
 
 			if("Eject Blueprint")
 				//if(src.building) return
@@ -217,7 +217,7 @@
 		..()
 
 		if (src.BuildIndex > src.BuildEnd)
-			endBuild()
+			src.endBuild()
 			return
 		if (src.building)
 			var/datum/tileinfo/Tile = src.currentBp.roominfo[src.BuildIndex]
@@ -264,8 +264,8 @@
 						continue
 
 			if (src.MetalOwed > 0 || src.CrystalOwed > 0)
-				pauseBuild()
-				src.visible_message("<span class='alert'>[src] does not have enough materials to continue construction of [src.currentBp.name].</span>")
+				src.pauseBuild()
+				src.visible_message("<span class='alert'>[src] does not have enough materials to continue construction.</span>")
 				playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 20)
 				return
 			// now build the tile if we paid for it
@@ -275,7 +275,7 @@
 					qdel(O)
 					break
 
-			makeTile(Tile, Pos)
+			src.makeTile(Tile, Pos)
 			src.TileCostProcessed = FALSE
 			src.BuildIndex++
 
@@ -327,9 +327,9 @@
 			src.building = TRUE
 			src.Paused = FALSE
 			src.BuildIndex = 1
-			icon_state = "builder1"
+			src.icon_state = "builder1"
 			SubscribeToProcess()
-		boutput(usr, "<span class='notice'>Tried to start build of [src.BuildEnd] tiles</span>")
+		//boutput(usr, "<span class='notice'>Tried to start build of [src.BuildEnd] tiles</span>")
 
 	proc/endBuild()
 		for (var/datum/objectinfo/N in src.apclist)
@@ -338,9 +338,9 @@
 
 		src.building = FALSE
 		UnsubscribeProcess()
-		deactivate()
+		src.deactivate()
 
-		icon_state = "builder"
+		src.icon_state = "builder"
 		makepowernets()
 
 	proc/auditInventory(mob/user)
@@ -372,12 +372,12 @@
 
 	proc/unpauseBuild()
 		src.Paused = FALSE
-		icon_state = "builder1"
+		src.icon_state = "builder1"
 		SubscribeToProcess()
 
 	proc/pauseBuild()
 		src.Paused = TRUE
-		icon_state = "builder"
+		src.icon_state = "builder"
 		UnsubscribeProcess()
 
 	proc/deactivate()
@@ -910,7 +910,8 @@
 			save["type"] << curr.type
 			save["dir"] << curr.dir
 			save["state"] << curr.icon_state
-			save["icon"] << "[curr.icon]" // string this or it saves the entire .dmi file
+			if (curr.icon != initial(curr.icon))
+				save["icon"] << "[curr.icon]" // string this or it saves the entire .dmi file
 			//save.dir.Add("objects")
 
 			for(var/obj/o in curr)
