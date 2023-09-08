@@ -526,13 +526,13 @@ TYPEINFO(/obj/item/room_planner)
 		"shuttle white" = 'icons/turf/walls/shuttle/white.dmi',
 		"shuttle dark" = 'icons/turf/walls/shuttle/dark.dmi',
 		"overgrown" = 'icons/turf/walls/overgrown.dmi',
-		"meat" = 'icons/turf/walls/meat.dmi',
+		"meat" = 'icons/turf/walls/meat/meaty.dmi',
 		"ancient" = 'icons/turf/walls/ancient.dmi',
 		"cave" = 'icons/turf/walls/cave.dmi',
 		"lead blue" = 'icons/turf/walls/lead/blue.dmi',
 		"lead gray" = 'icons/turf/walls/lead/gray.dmi',
 		"lead white" = 'icons/turf/walls/lead/white.dmi',
-		"ancient smooth" = 'icons/turf/walls/iomoon.dmi',
+		"ancient smooth" = 'icons/turf/walls/ancient_smooth.dmi',
 	)
 	var/list/wallmods = list(
 		"diner" = "oldr-",

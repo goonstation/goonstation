@@ -930,9 +930,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure)
 
 ABSTRACT_TYPE(/turf/unsimulated/wall/auto/adventure) // Re abstract this it is not meant for spawning, the icons aren't even right for lead
 /turf/unsimulated/wall/auto/adventure // azone fancy walls
-	name = "lead wall"
-	icon = 'icons/turf/walls/overgrown.dmi'
-	icon_state = "root-0"
+	name = "adventure wall"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
@@ -940,9 +938,8 @@ ABSTRACT_TYPE(/turf/unsimulated/wall/auto/adventure) // Re abstract this it is n
 	name = "overgrown wall"
 	desc = "This wall is covered in vines."
 	icon = 'icons/turf/walls/overgrown.dmi'
-	mod = "root-"
 	icon_state = "root-0"
-
+	mod = "root-"
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/overgrown2)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/overgrown2)
@@ -951,9 +948,9 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/overgrown2)
 /turf/unsimulated/wall/auto/adventure/overgrown2
 	name = "Rock Wall"
 	desc = "This wall is made of damp stone."
-	icon = 'icons/turf/walls/overgrown.dmi'
-	mod = "rock-"
+	icon = 'icons/turf/walls/mossy_rock.dmi'
 	icon_state = "rock-0"
+	mod = "rock-"
 
 /turf/unsimulated/wall/auto/adventure/ancient
 	name = "strange wall"
@@ -1041,15 +1038,15 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/iomoon)
 	connect_overlay = 0
 /turf/unsimulated/wall/auto/adventure/iomoon // fancy walls part 3: the rest of z2
 	name = "silicate crust"
-	icon = 'icons/turf/walls/iomoon.dmi'
+	icon = 'icons/turf/walls/silicate.dmi'
 	icon_state = "silicate-0"
 	mod = "silicate-"
 
-	interior
-		name = "strange wall"
-		mod = "interior-"
-		icon_state = "interior-0"
-
+/turf/unsimulated/wall/auto/adventure/iomoon/interior
+	name = "strange wall"
+	icon = 'icons/turf/walls/ancient_smooth.dmi'
+	mod = "interior-"
+	icon_state = "interior-0"
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/hospital)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/hospital)
@@ -1057,7 +1054,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/hospital)
 	connect_overlay = 0
 /turf/unsimulated/wall/auto/adventure/hospital
 	name = "asteroid"
-	icon = 'icons/turf/walls/hospital.dmi'
+	icon = 'icons/turf/walls/asteroid_dark.dmi'
 	mod = "exterior-"
 	icon_state = "exterior-0"
 
@@ -1073,9 +1070,9 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/hospital/interior)
 	))
 /turf/unsimulated/wall/auto/adventure/hospital/interior
 	name = "panel wall"
+	icon = 'icons/turf/walls/panel.dmi'
 	mod = "interior-"
 	icon_state = "interior-0"
-
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/icemoon)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/icemoon)
@@ -1083,15 +1080,15 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/icemoon)
 	connect_overlay = 0
 /turf/unsimulated/wall/auto/adventure/icemoon
 	name = "ice wall"
-	icon = 'icons/turf/walls/icemoon.dmi'
+	icon = 'icons/turf/walls/ice.dmi'
 	mod = "ice-"
 	icon_state = "ice-0"
 
-	interior
-		name = "blue wall"
-		mod = "interior-"
-		icon_state = "interior-0"
-
+/turf/unsimulated/wall/auto/adventure/icemooninterior
+	name = "blue wall"
+	icon = 'icons/turf/walls/precursor.dmi'
+	mod = "interior-"
+	icon_state = "interior-0"
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/moon)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/moon)
@@ -1099,7 +1096,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/moon)
 	connect_overlay = 0
 /turf/unsimulated/wall/auto/adventure/moon
 	name = "moon rock"
-	icon = 'icons/turf/walls/planet.dmi'
+	icon = 'icons/turf/walls/moon.dmi'
 	mod = "moon-"
 	icon_state = "moon-0"
 
@@ -1109,7 +1106,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/mars)
 	connect_overlay = 0
 /turf/unsimulated/wall/auto/adventure/mars
 	name = "martian rock"
-	icon = 'icons/turf/walls/planet.dmi'
+	icon = 'icons/turf/walls/mars.dmi'
 	mod = "mars-"
 	icon_state = "mars-0"
 
@@ -1145,18 +1142,19 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/meat)
 	))
 /turf/unsimulated/wall/auto/adventure/meat
 	name = "wall"
-	icon = 'icons/turf/walls/meat.dmi'
+	icon = 'icons/turf/walls/meat/meaty.dmi'
 	mod = "meaty-"
 	icon_state = "meaty-0"
 
-	meatier
-		mod = "meatier-"
-		icon_state = "meatier-0"
+/turf/unsimulated/wall/auto/adventure/meat/meatier
+	icon = 'icons/turf/walls/meat/meatier.dmi'
+	mod = "meatier-"
+	icon_state = "meatier-0"
 
-	eyes
-		mod = "meateyes-"
-		icon_state = "meateyes-0"
-
+/turf/unsimulated/wall/auto/adventure/meat/eyes
+	icon = 'icons/turf/walls/meat/eyes.dmi'
+	mod = "meateyes-"
+	icon_state = "meateyes-0"
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/old)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/old)
