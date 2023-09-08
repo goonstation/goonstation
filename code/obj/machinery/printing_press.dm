@@ -650,16 +650,16 @@
 			break
 
 		var/obj/item/paper/newspaper/rolled/NP = new
-		NP.desc = ""
-		if (src.newspaper_publisher)
-			NP.publisher = src.newspaper_publisher
-			NP.name = "[NP.publisher]"
-		if (src.newspaper_headline)
-			NP.headline = src.newspaper_headline
-			NP.info += "<b>[src.newspaper_headline]</b><br>"
+		NP.info = ""
+		// it can auto generate headlines and publisher if left alone, that's handled in New() and overwritten here.
+		if (src.newspaper_publisher)	NP.publisher = src.newspaper_publisher
+		NP.name = "[NP.publisher]"
+		if (src.newspaper_headline)		NP.headline = src.newspaper_headline
+		NP.info += "<b>[src.newspaper_headline]</b><br>"
 		if (src.newspaper_info)
 			NP.info += src.newspaper_info
-		// it can auto generate headlines and publisher if left alone, that's handled in New() and overwritten here.
+		else
+			NP.info += NP.generate_article()
 		NP.update_desc()
 		TRANSFER_OR_DROP(src, NP)
 		newspapers_to_print--
