@@ -1300,10 +1300,14 @@
 
 	if (target.level <= 1)
 		var/turf/T = get_turf(target)
-		if (T.active_liquid)
-			src.check_reagents_internal(T.active_liquid, refresh)
-		if (T.active_airborne_liquid)
-			src.check_reagents_internal(T.active_airborne_liquid, refresh)
+		if (T.active_liquid || T.active_airborne_liquid)
+			// possibly asinine but I feel the rule helps contain the turf-fluid-smoke trifecta into a 'group'
+			// if you're scanning multiple things in a row
+			boutput(usr, "<hr>")
+			if (T.active_liquid)
+				src.check_reagents_internal(T.active_liquid, refresh)
+			if (T.active_airborne_liquid)
+				src.check_reagents_internal(T.active_airborne_liquid, refresh)
 
 	var/datum/reagents/reagents = 0
 	if (!target.reagents) // || !target.reagents.total_volume)
