@@ -1,5 +1,7 @@
 
 (t)fri sep 08 23
+(u)Tarmunora
+(+)Added NOP instruction "*" to chemicompiler.
 (u)Chasu
 (p)15731
 (e)💅⚗🍝|C-QoL, A-Chemistry, A-Catering
