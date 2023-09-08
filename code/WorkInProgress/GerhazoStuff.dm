@@ -90,7 +90,7 @@
 	name = "Cyalume Knight Helmet"
 	desc = "An ominous armored article of clothing."
 	icon_state = "cknight_hood"
-	see_face = 0
+	see_face = FALSE
 
 /atom/movable/screen/ability/topBar/cyalume_knight
 	clicked(params)
