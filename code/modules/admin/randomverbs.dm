@@ -566,23 +566,30 @@
 
 /client/proc/cmd_admin_remove_plasma()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
-	set name = "Stabilize Atmos."
+	set name = "Stabilize Atmos"
 	set desc = "Resets the air contents of every turf in view to normal."
 	ADMIN_ONLY
 	SPAWN(0)
 		for(var/turf/simulated/T in view())
 			if(!T.air)
 				continue
-			ZERO_GASES(T.air)
-#ifdef ATMOS_ARCHIVING
-			ZERO_ARCHIVED_GASES(T.air)
-			T.air.ARCHIVED(temperature) = null
-#endif
-			T.air.oxygen = MOLES_O2STANDARD
-			T.air.nitrogen = MOLES_N2STANDARD
-			T.air.fuel_burnt = 0
-			T.air.temperature = T20C
+			T.stabilize()
 			LAGCHECK(LAG_LOW)
+
+/client/proc/stabilize_station()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	set name = "Stabilize All Atmos"
+	set desc = "Resets the air contents of THE ENTIRE STATION to normal."
+	ADMIN_ONLY
+	if (alert(usr, "This will reset the air of ALL TURFS IN THE ENTIRE STATION, are you sure you want to continue?", "Cause big lag", "Yes", "No") != "Yes")
+		return
+	SPAWN(0)
+		for (var/turf/simulated/T in world)
+			if (inonstationz(T))
+				if(!T.air)
+					continue
+				T.stabilize()
+				LAGCHECK(LAG_LOW)
 
 /client/proc/flip_view()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -637,10 +644,10 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/cursed = M
-		cursed.equip_if_possible(new /obj/item/clothing/under/gimmick/cursedclown(cursed), cursed.slot_w_uniform)
-		cursed.equip_if_possible(new /obj/item/clothing/shoes/cursedclown_shoes(cursed), cursed.slot_shoes)
-		cursed.equip_if_possible(new /obj/item/clothing/mask/cursedclown_hat(cursed), cursed.slot_wear_mask)
-		cursed.equip_if_possible(new /obj/item/clothing/gloves/cursedclown_gloves(cursed), cursed.slot_gloves)
+		cursed.equip_if_possible(new /obj/item/clothing/under/gimmick/cursedclown(cursed), SLOT_W_UNIFORM)
+		cursed.equip_if_possible(new /obj/item/clothing/shoes/cursedclown_shoes(cursed), SLOT_SHOES)
+		cursed.equip_if_possible(new /obj/item/clothing/mask/cursedclown_hat(cursed), SLOT_WEAR_MASK)
+		cursed.equip_if_possible(new /obj/item/clothing/gloves/cursedclown_gloves(cursed), SLOT_GLOVES)
 
 		logTheThing(LOG_ADMIN, usr, "clownified [constructTarget(M,"admin")]")
 		logTheThing(LOG_DIARY, usr, "clownified [constructTarget(M,"diary")]", "admin")
@@ -958,9 +965,9 @@
 				qdel(target_mob.head)
 				qdel(target_mob.shoes)
 				qdel(target_mob.r_hand)
-				target_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe, target_mob.slot_wear_suit)
-				target_mob.equip_if_possible(new /obj/item/clothing/head/wizard, target_mob.slot_head)
-				target_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/magic/wizard, target_mob.slot_shoes)
+				target_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe, SLOT_WEAR_SUIT)
+				target_mob.equip_if_possible(new /obj/item/clothing/head/wizard, SLOT_HEAD)
+				target_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/magic/wizard, SLOT_SHOES)
 				target_mob.put_in_hand(new /obj/item/staff(target_mob))
 
 				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -1653,7 +1660,7 @@
 		LAGCHECK(LAG_LOW)
 		if (isdead(Cat))
 			Cat.full_heal()
-			Cat.icon_state = initial(Cat.icon_state)
+			Cat.set_icon_state(Cat.icon_state_alive)
 			Cat.visible_message("<span class='alert'>[Cat] seems to rise from the dead!</span>")
 			revived ++
 	logTheThing(LOG_ADMIN, src, "revived [revived] cat[revived == 1 ? "" : "s"].")
@@ -1744,112 +1751,6 @@
 		usr.mind = new /datum/mind(usr)
 		ticker.minds += usr.mind
 		.()
-
-// Tweaked this to implement log entries and make it feature-complete with regard to every antagonist roles (Convair880).
-/proc/remove_antag(var/mob/M, var/mob/admin, var/new_mind_only = 0, var/show_message = 0)
-	set name = "Remove Antag"
-	set desc = "Removes someone's traitor status."
-
-	if (!M || !M.mind || !M.mind.special_role)
-		return
-
-	var/former_role
-	former_role = text("[M.mind.special_role]")
-
-	message_admins("[key_name(M)]'s antagonist status ([former_role]) was removed. Source: [admin ? "[key_name(admin)]" : "*automated*"].")
-	if (admin)
-		logTheThing(LOG_ADMIN, admin, "removed the antagonist status of [constructTarget(M,"admin")].")
-		logTheThing(LOG_DIARY, admin, "removed the antagonist status of [constructTarget(M,"diary")].", "admin")
-
-	if (show_message == 1)
-		M.show_text("<h2><font color=red><B>Your antagonist status has been revoked by an admin! If this is an unexpected development, please inquire about it in adminhelp.</B></font></h2>", "red")
-		M.show_antag_popup("antagremoved")
-
-	// Replace the mind first, so the new mob doesn't automatically end up with changeling etc. abilities.
-	var/datum/mind/newMind = new /datum/mind()
-	newMind.ckey = M.ckey
-	newMind.key = M.key
-	newMind.current = M
-	newMind.assigned_role = M.mind.assigned_role
-	newMind.brain = M.mind.brain
-	newMind.is_target = M.mind.is_target
-	if (M.mind.former_antagonist_roles.len)
-		newMind.former_antagonist_roles.Add(M.mind.former_antagonist_roles)
-	if (M.mind in ticker.mode.Agimmicks)
-		ticker.mode.Agimmicks -= M.mind
-	qdel(M.mind)
-	if (!(newMind in ticker.minds))
-		ticker.minds.Add(newMind)
-	M.mind = newMind
-	M.mind.brain?.owner = M.mind
-
-	if (new_mind_only)
-		return
-
-	// Then spawn a new mob to delete all mob-/client-bound antagonist verbs.
-	// Complete overkill for mindhacks, though. Blobs and wraiths need special treatment as well.
-	// Synthetic mobs aren't really included yet, because it would be a complete pain to account for them properly.
-	if (issilicon(M))
-		var/mob/living/silicon/S = M
-		S.emagged = 0
-		S.syndicate = 0
-		if (S.mainframe && S != S.mainframe)
-			var/mob/living/silicon/ai/MF = S.mainframe
-			MF.emagged = 0
-			MF.syndicate = 0
-
-
-		for (var/mob/living/silicon/S2 in mobs)
-			if (S2.emagged || S2.syndicate) continue
-			if (isghostdrone(S2)) continue
-			S2.law_rack_connection = ticker.ai_law_rack_manager.default_ai_rack
-			logTheThing(LOG_STATION, S2, "[S2.name] is connected to the default rack at [constructName(S2.law_rack_connection)] by admemery")
-			S2.show_text("<b>Your laws have been changed!</b>", "red")
-			S2.playsound_local(S2, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
-			S2.show_laws()
-		for (var/mob/living/intangible/aieye/E in mobs)
-			E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
-
-	switch (former_role)
-		if (ROLE_MINDHACK) M.delStatus("mindhack")
-		if (ROLE_VAMPTHRALL) return
-		if ("spyminion") return
-		if (ROLE_BLOB, ROLE_WRAITH, ROLE_FLOCKMIND, ROLE_FLOCKTRACE) M.humanize(TRUE)
-		else
-			if (ishuman(M))
-				// They could be in a pod or whatever, which would have unfortunate results when respawned.
-				if (!isturf(M.loc))
-					return
-				var/mob/living/carbon/human/H = M
-
-				// Get rid of those uplinks first.
-				var/list/L = H.get_all_items_on_mob()
-				if (length(L))
-					for (var/obj/item/device/pda2/PDA in L)
-						if (PDA?.uplink)
-							qdel(PDA.uplink)
-							PDA.uplink = null
-					for (var/obj/item/device/radio/R in L)
-						if (R?.traitorradio)
-							qdel(R.traitorradio)
-							R.traitorradio = null
-							R.traitor_frequency = 0
-					for (var/obj/item/uplink/U in L)
-						if (U) qdel(U)
-					for (var/obj/item/SWF_uplink/WZ in L)
-						if (WZ) qdel(WZ)
-
-				H.unkillable_respawn(1)
-
-			if (isobserver(M)) // Ugly but necessary.
-				var/mob/dead/observer/O = M
-				var/mob/dead/observer/newO = new/mob/dead/observer(O)
-				if (O.corpse)
-					newO.corpse = O.corpse
-				O.mind.transfer_to(newO)
-				qdel(O)
-
-	return
 
 //flourish told me this was broken... if you want admin foam brew it yourself!!
 /*
@@ -2090,9 +1991,9 @@
 		if (!M.client || istype(M, /mob/new_player))
 			continue
 		if (what_group != "Everyone")
-			if ((what_group == "Traitors Only") && !checktraitor(M))
+			if ((what_group == "Traitors Only") && !M.mind?.is_antagonist())
 				continue
-			else if ((what_group == "Non-Traitors Only") && checktraitor(M))
+			else if ((what_group == "Non-Traitors Only") && M.mind?.is_antagonist())
 				continue
 		if (choose_from_dead != "Everyone")
 			if ((choose_from_dead == "Living Only") && M.stat)
@@ -2588,10 +2489,10 @@ var/global/night_mode_enabled = 0
 	medals = params2list(medals)
 	for (var/client/C in clients)
 		LAGCHECK(LAG_LOW)
-		if (C.key == new_key)
+		if (C.ckey == ckey(new_key))
 			M = C.mob
-	if (M.key == old_key)
-		M.key = new_key
+	if (M.ckey == ckey(old_key))
+		M.ckey = ckey(new_key)
 	for (var/medal in medals)
 		var/result = world.SetMedal(medal, M, config.medal_hub, config.medal_password)
 		if (isnull(result))
@@ -2861,7 +2762,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 						M.u_equip(G)
 						qdel(G)
 					var/obj/item/clothing/glasses/blindfold/B = new()
-					M.force_equip(B, M.slot_glasses)
+					M.force_equip(B, SLOT_GLASSES)
 
 				logTheThing(LOG_ADMIN, src, "has blindfolded every monkey.")
 				logTheThing(LOG_DIARY, src, "has blindfolded every monkey.", "admin")
@@ -3011,7 +2912,7 @@ var/global/force_radio_maptext = FALSE
 			doomguy.u_equip(I)
 			I.set_loc(doomguy.loc)
 
-		doomguy.force_equip(backpack_full_of_ammo, doomguy.slot_back)
+		doomguy.force_equip(backpack_full_of_ammo, SLOT_BACK)
 
 	else
 		backpack_full_of_ammo.set_loc(get_turf(src.mob))

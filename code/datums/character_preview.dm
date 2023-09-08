@@ -111,6 +111,7 @@
 /mob/living/carbon/human/preview
 	name = "character preview"
 	real_name = "character preview"
+	unobservable = TRUE
 
 /**
  * # Character Preview
@@ -139,9 +140,10 @@
 		src.flat_icon = null
 		var/mob/living/carbon/human/preview_mob = src.preview_thing
 		preview_mob.dir = direction
-		preview_mob.set_mutantrace(null)
 		preview_mob.bioHolder.mobAppearance.CopyOther(AH)
 		preview_mob.set_mutantrace(MR)
+		preview_mob.organHolder.left_eye?.update_color(AH, "L")
+		preview_mob.organHolder.right_eye?.update_color(AH, "R")
 		preview_mob.organHolder.head.donor = preview_mob
 		preview_mob.organHolder.head.donor_appearance.CopyOther(preview_mob.bioHolder.mobAppearance)
 		preview_mob.update_colorful_parts()

@@ -50,7 +50,7 @@
 			if(length(missile_targets))
 				var/mob/living/L = pick(missile_targets)
 				var/turf/target = get_turf(L)
-				var/obj/projectile/P = shoot_projectile_ST(holder.owner, src.the_missile, target)
+				var/obj/projectile/P = shoot_projectile_ST_pixel_spread(holder.owner, src.the_missile, target)
 				if (P)
 					P.targets = list(L)
 					P.mob_shooter = holder.owner

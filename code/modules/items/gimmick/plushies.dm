@@ -80,8 +80,8 @@ TYPEINFO(/obj/submachine/claw_machine)
 	if (!src.user_can_suicide(user))
 		return FALSE
 	src.visible_message("<span class='alert'><b>[user] crams [his_or_her(user)] whole body up through the prize chute! That looked painful!</b></span>")
-	user.unequip_all()
 	user.set_loc(src) // contents is used as prize list, no special handling
+	user.unequip_all()
 	bleed(user, 50, 50)
 	random_brute_damage(user, 200, FALSE)
 	playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 80)

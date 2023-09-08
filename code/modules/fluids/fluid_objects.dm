@@ -245,8 +245,6 @@ TYPEINFO(/obj/machinery/fluid_canister)
 
 	var/contained = 0
 
-	var/static/image/overlay_image = image('icons/obj/fluid.dmi')
-
 	New()
 		..()
 		src.reagents = new /datum/reagents(bladder)
@@ -304,14 +302,15 @@ TYPEINFO(/obj/machinery/fluid_canister)
 		var/amt = round((src.reagents.total_volume / bladder) * 12,1)
 		icon_state = "[base_icon][amt]"
 
+		var/overlay_istate = "w_off"
 		if (slurping)
-			overlay_image.icon_state = "w_2"
+			overlay_istate = "w_2"
 		else if (pissing)
-			overlay_image.icon_state = "w_1"
+			overlay_istate = "w_1"
 		else
-			overlay_image.icon_state = "w_off"
+			overlay_istate = "w_off"
 
-		UpdateOverlays(overlay_image, "working")
+		UpdateOverlays(SafeGetOverlayImage("working", 'icons/obj/fluid.dmi', overlay_istate), "working")
 
 	Topic(href, href_list)
 		if (usr.stat || usr.restrained())

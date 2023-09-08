@@ -85,7 +85,7 @@
 	proc/cache_round_stats_blocking()
 		var/list/response = null
 		try
-			response = apiHandler.queryAPI("playerInfo/get", list("ckey" = src.ckey), forceResponse = 1)
+			response = apiHandler?.queryAPI("playerInfo/get", list("ckey" = src.ckey), forceResponse = 1)
 		catch
 			return 0
 		if (!response)

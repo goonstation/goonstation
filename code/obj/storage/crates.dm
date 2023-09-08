@@ -254,10 +254,6 @@
 				new /obj/item/pen/crayon/rainbow(src)
 			return 1
 
-/obj/storage/crate/materials
-	name = "building materials crate"
-	spawn_contents = list(/obj/item/sheet/steel/fullstack,
-	/obj/item/sheet/glass/fullstack)
 /obj/storage/crate/radio
 	name = "radio headsets crate"
 	spawn_contents = list(

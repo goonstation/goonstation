@@ -55,6 +55,7 @@
 		/obj/item/gun/energy/phaser_huge = 10,\
 		/obj/item/clothing/ears/earmuffs/yeti = 20,\
 		/obj/item/clothing/lanyard = 20,\
+		/obj/item/kitchen/utensil/knife/tracker = 10,
 	// fun
 		/obj/item/gun/bling_blaster = 20,\
 		/obj/item/clothing/under/gimmick/frog = 20,\

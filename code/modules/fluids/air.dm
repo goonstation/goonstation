@@ -1,8 +1,6 @@
 
 /turf/var/obj/fluid/active_airborne_liquid = null
 
-var/list/ban_from_airborne_fluid = list()
-
 /datum/fluid_group/airborne
 
 	base_evaporation_time = 30 SECONDS

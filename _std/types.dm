@@ -217,6 +217,7 @@ var/list/list/by_cat = list()
 #define TR_CAT_RANCID_STUFF "rancid_stuff"
 #define TR_CAT_GHOST_OBSERVABLES "ghost_observables"
 #define TR_CAT_STATION_EMERGENCY_LIGHTS "emergency_lights"
+#define TR_CAT_STAMINA_MOBS "stamina_mobs"
 // powernets? processing_items?
 // mobs? ai-mobs?
 
@@ -458,7 +459,10 @@ proc/find_all_by_type(type, procedure=null, procedure_src=null, arguments=null, 
 		IT_TYPE(/turf) \
 		IT_TYPE(/atom/movable) \
 		IT_TYPE(/atom) \
-		IT_TYPE(/datum)
+		IT_TYPE(/datum) \
+		IT_TYPE(/client) \
+		else
+			CRASH("find_all_by_type: invalid type: [type]")
 	#undef IT_TYPE
 
 /// istype but for checking a list of types

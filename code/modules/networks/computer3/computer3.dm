@@ -10,6 +10,7 @@
 	var/base_icon_state = "computer_generic"
 	var/temp = "<b>Thinktronic BIOS V2.1</b><br>"
 	var/temp_add = null
+	var/do_scroll_bottom = FALSE
 	var/obj/item/disk/data/fixed_disk/hd = null
 	var/datum/computer/file/terminal_program/active_program
 	var/datum/computer/file/terminal_program/host_program //active is set to this when the normal active quits, if available
@@ -286,45 +287,46 @@
 		src.UpdateOverlays(screen_image, "screen_image")
 
 	SPAWN(0.4 SECONDS)
-		if(ispath(src.setup_starting_peripheral1))
-			new src.setup_starting_peripheral1(src) //Peripherals add themselves automatically if spawned inside a computer3
+		if(!length(src.peripherals)) // make sure this is the first time we're initializing this computer
+			if(ispath(src.setup_starting_peripheral1))
+				new src.setup_starting_peripheral1(src) //Peripherals add themselves automatically if spawned inside a computer3
 
-		if(ispath(src.setup_starting_peripheral2))
-			new src.setup_starting_peripheral2(src)
+			if(ispath(src.setup_starting_peripheral2))
+				new src.setup_starting_peripheral2(src)
 
 
-		if(src.setup_idscan_path)
-			new src.setup_idscan_path(src)
+			if(src.setup_idscan_path)
+				new src.setup_idscan_path(src)
 
-		if(!hd && (setup_drive_size > 0))
-			if(src.setup_drive_type)
-				src.hd = new src.setup_drive_type
-				src.hd.set_loc(src)
-			else
-				src.hd = new /obj/item/disk/data/fixed_disk(src)
-			src.hd.file_amount = src.setup_drive_size
+			if(!hd && (setup_drive_size > 0))
+				if(src.setup_drive_type)
+					src.hd = new src.setup_drive_type
+					src.hd.set_loc(src)
+				else
+					src.hd = new /obj/item/disk/data/fixed_disk(src)
+				src.hd.file_amount = src.setup_drive_size
 
-		if(ispath(src.setup_starting_program))
-			var/datum/computer/file/terminal_program/starting = new src.setup_starting_program
+			if(ispath(src.setup_starting_program))
+				var/datum/computer/file/terminal_program/starting = new src.setup_starting_program
 
-			src.hd.file_amount = max(src.hd.file_amount, starting.size)
+				src.hd.file_amount = max(src.hd.file_amount, starting.size)
 
-			starting.transfer_holder(src.hd)
-			//src.processing_programs += src.active_program
+				starting.transfer_holder(src.hd)
+				//src.processing_programs += src.active_program
 
-		if(ispath(src.setup_starting_os) && src.hd)
-			var/datum/computer/file/terminal_program/os/os = new src.setup_starting_os
-			if((src.hd.root.size + os.size) >= src.hd.file_amount)
-				src.hd.file_amount += os.size
+			if(ispath(src.setup_starting_os) && src.hd)
+				var/datum/computer/file/terminal_program/os/os = new src.setup_starting_os
+				if((src.hd.root.size + os.size) >= src.hd.file_amount)
+					src.hd.file_amount += os.size
 
-			os.setup_string = src.setup_os_string
-			src.host_program = os
-			src.host_program.master = src
-			src.processing_programs += src.host_program
-			if(!src.active_program)
-				src.active_program = os
+				os.setup_string = src.setup_os_string
+				src.host_program = os
+				src.host_program.master = src
+				src.processing_programs += src.host_program
+				if(!src.active_program)
+					src.active_program = os
 
-			src.hd.root.add_file(os)
+				src.hd.root.add_file(os)
 
 		src.post_system()
 
@@ -337,297 +339,112 @@
 					setup_bg_color = "#4242E7"
 
 	return
+/obj/machinery/computer3/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		src.do_scroll_bottom = TRUE
+		ui = new(user, src, "Terminal")
+		ui.open()
 
-/obj/machinery/computer3/attack_hand(mob/user)
-	if(..() && !istype(user, /mob/dead/target_observer/mentor_mouse_observer))
-		return
+/obj/machinery/computer3/ui_static_data(mob/user)
+	. = list()
+	if(src.setup_has_internal_disk) // the magic internal floppy drive is in here
+		. += list("peripherals" = list(list(
+		"icon" = "save",
+		"card" = "internal",
+		"color" = src.diskette,
+		"contents" = src.diskette,
+		"label" = "Disk"
+		)))
+	for (var/i in 1 to length(src.peripherals)) // originally i had all this stuff in static data, but the buttons didnt update.
+		var/obj/item/peripheral/periph = src.peripherals[i]
+		if(periph.setup_has_badge)
+			var/pdata = periph.return_badge() // reduces copy pasting
+			pdata["index"] = i
+			if(pdata)
+				var/bcolor = pdata["contents"]
+				pdata += list("color" = bcolor, "card" = periph.type)
+				.["peripherals"] += list(pdata)
 
-	if(!user.literate)
-		boutput(user, "<span class='alert'>You don't know how to read or write, operating a computer isn't going to work!</span>")
-		return
+/obj/machinery/computer3/ui_data(mob/user)
+	. = list(
+		"displayHTML" = src.temp, // display data
+		"TermActive" = src.active_program, // is the terminal running or restarting
+		"fdisk" = src.diskette, // for showing if the internal diskette slot is filled
+		"windowName" = src.name,
+		"user" = user,
+		"fontColor" = src.setup_font_color, // display monochrome values
+		"bgColor" = src.setup_bg_color,
+		"doScrollBottom" = src.do_scroll_bottom
+	)
+	src.do_scroll_bottom = FALSE
 
-	if (user.using_dialog_of(src))
-		if (!src.temp)
-			user << output(null, "comp3.browser:con_clear")
+/obj/machinery/computer3/ui_act(action, params)
+	. = ..()
+	if (.) return
 
-		if (src.temp_add)
-			user << output(url_encode(src.temp_add), "comp3.browser:con_output")
-/*
-			if (src.current_user == user)
-				src.temp += temp_add
-				src.temp_add = null
-*/
-		update_peripheral_menu(user)
-	else
-		src.add_dialog(user)
-
-		if (src.temp_add)
-			src.temp += temp_add
-			temp_add = null
-
-		// preference is in a percentage of the default
-		var/font_size = user.client ? (((user.client.preferences.font_size/100) * 10) || 10) : 10 // font size pref is null if you haven't changed it from the default, so we need extra logic
-		var/dat = {"<title>Computer Terminal</title>
-		<style type="text/css">
-		body
-		{
-			background-color:#999876;
-		}
-
-		img
-		{
-			border-style: none;
-		}
-
-		#consolelog
-		{
-			border: 1px grey solid;
-			height: 280px;
-			width: 410px;
-			overflow-y: scroll;
-			word-wrap: break-word;
-			word-break: break-all;
-			background-color:[src.setup_bg_color];
-			color:[src.setup_font_color];
-			font-family: "Consolas", monospace;
-			font-size:[font_size]pt;
-		}
-
-		#consoleshell
-		{
-			border: 1px grey solid;
-			height: 280px;
-			width: 410px;
-			overflow-x: hidden;
-			overflow-y: hidden;
-			word-wrap: break-word;
-			word-break: break-all;
-			background-color:#1B1E1B;
-			color:#19A319;
-			font-family: "Consolas", monospace;
-			font-size:10pt;
-		}
-
-		</style>
-		<body scroll=no>
-		<div id=\"consolelog\">[src.temp]</div>
-		<script language="JavaScript">
-			var objDiv = document.getElementById("consolelog");
-			objDiv.scrollTop = objDiv.scrollHeight;
-
-var lastVals = new Array();
-var lastValsOffset = 0;
-function keydownfunc (event)
-{
-	var theKey = (event.which) ? event.which : event.keyCode;
-	if (theKey == 38)
-	{
-		if (lastVals.length > lastValsOffset)
-		{
-			document.getElementById("consoleinput_text").value = lastVals\[lastVals.length - lastValsOffset - 1];
-			lastValsOffset++;
-			if (lastValsOffset >= lastVals.length)
-			{
-				lastValsOffset = 0;
-			}
-		}
-	}
-	else if (theKey == 40)
-	{
-		if (lastValsOffset > 0)
-		{
-			lastValsOffset--;
-			document.getElementById("consoleinput_text").value = lastVals\[lastVals.length - lastValsOffset - 1];
-		}
-	}
-}
-
-function lineEnter (ev)
-{
-	if (document.getElementById("consoleinput_text").value != null)
-	{
-		lastVals.push(document.getElementById("consoleinput_text").value);
-		document.location = "byond://?src=\ref[src]&command=" + encodeURIComponent(document.getElementById("consoleinput_text").value);
-		document.getElementById("consoleinput_text").focus();
-		if (lastVals.length > 10)
-		{
-			lastVals.shift();
-		}
-	}
-	ev.preventDefault();
-	return false;
-}
-
-		</script>
-		<br>
-		<form name="consoleinput" action="byond://?src=\ref[src]" method="get" onsubmit="javascript:return lineEnter(event)">
-			<input id = "consoleinput_text" type="text" name="command" maxlength="300" size="40" onKeyDown="javascript:return keydownfunc(event)">
-			<input type="submit" value="Enter">
-		</form>
-		<table cellspacing=5><tr>"}
-		if(setup_has_internal_disk)
-			dat += "<td id=\"internaldisk\">Disk: <a href='byond://?src=\ref[src];disk=1'>[src.diskette ? "Eject" : "-----"]</a></td>"
-		else
-			dat += "<td id = \"internaldisk\" style=\"display: none;\"></td>"
-
-		//Show up to two card "badges," so ID scanners can present a slot, etc
-		var/count = 0
-		for(var/obj/item/peripheral/C in src.peripherals)
-			if(C.setup_has_badge) //If it has an interface to present here, let it
-				dat += "<td id=\"badge[count]\">[C.return_badge()]</td>"
-				count++
-
-		if(!count)
-			dat += "<td></td><td></td>"
-
-		dat += {"<script language="JavaScript">
-		document.consoleinput.command.focus();
-		var printing = "";
-		var t_count = 0;
-		var last_output;
-
-		function input_clear()
-		{
-			document.getElementById("consoleinput_text").value = '';
-		}
-
-		function setInternalDisk(t)
-		{
-			document.getElementById("internaldisk").innerHTML = t;
-		}
-
-		function setBadge0(t)
-		{
-			document.getElementById("badge0").innerHTML = t;
-		}
-
-		function setBadge1(t)
-		{
-			document.getElementById("badge1").innerHTML = t;
-		}
-
-
-		function setBadge2(t)
-		{
-			document.getElementById("badge2").innerHTML = t;
-		}
-
-		function con_output(t)
-		{
-			if (printing.length > 0)
-			{
-				var toadd = t.split("<br>");
-				if (t.substr(t.length - 4,4) == "<br>")
-				{
-					toadd.pop();
-				}
-				printing = printing.concat(toadd);
-			}
-			else
-			{
-				printing = t.split("<br>");
-				if (t.substr(t.length - 4,4) == "<br>")
-				{
-					printing.pop();
-				}
-				last_output = window.setInterval((function () {real_con_output();}), 10);
-			}
-
-		}
-
-		function real_con_output()
-		{
-			if (printing.length > 0)
-			{
-				var t_bit = printing.shift();
-				if (t_bit != undefined)
-				{
-					objDiv.innerHTML += t_bit + "<br>";
-				}
-				objDiv.scrollTop = objDiv.scrollHeight;
-				return;
-			}
-
-			window.clearTimeout(last_output);
-			return;
-		}
-
-		function con_clear()
-		{
-			printing.length = 0;
-			objDiv.innerHTML = "";
-		}
-
-		</script>"}
-
-		dat += {"<td><a href='byond://?src=\ref[src];restart=1'>Restart</a></td>
-		</body>"}
-
-		user.Browse(dat,"window=comp3;size=455x405")
-		onclose(user,"comp3")
-	return
-
-/obj/machinery/computer3/proc/update_peripheral_menu(mob/user as mob)
-	var/count = 0
-	for (var/obj/item/peripheral/pCard in src.peripherals)
-		if (pCard.setup_has_badge)
-			user <<  output(url_encode(pCard.return_badge()),"comp3.browser:setBadge[count]")
-			count++
-
-	return
-
-/obj/machinery/computer3/Topic(href, href_list)
-	if(..())
-		return
-
-	src.add_dialog(usr)
-
-	if((href_list["command"]) && src.active_program)
-		usr << output(null, "comp3.browser:input_clear")
-		src.active_program.input_text(href_list["command"])
-		playsound(src.loc, "keyboard", 50, 1, -15)
-
-	else if(href_list["disk"])
-		if (src.diskette)
-			//Ai/cyborgs cannot press a physical button from a room away.
-			if((issilicon(usr) || isAI(usr)) && BOUNDS_DIST(src, usr) > 0)
-				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
-				return
-
-			for(var/datum/computer/file/terminal_program/P in src.processing_programs)
-				P.disk_ejected(src.diskette)
-
-			usr.put_in_hand_or_eject(src.diskette) // try to eject it into the users hand, if we can
-			src.diskette = null
-			usr << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>-----</a>"),"comp3.browser:setInternalDisk")
-		else
-			var/obj/item/I = usr.equipped()
-			if (istype(I, /obj/item/disk/data/floppy))
-				usr.drop_item()
-				I.set_loc(src)
-				src.diskette = I
-				usr << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>Eject</a>"),"comp3.browser:setInternalDisk")
-			else if (istype(I, /obj/item/magtractor))
-				var/obj/item/magtractor/mag = I
-				if (istype(mag.holding, /obj/item/disk/data/floppy))
-					I = mag.holding
-					mag.dropItem(0)
-					I.set_loc(src)
+	switch(action)
+		if("restart")
+			src.restart()
+			src.updateUsrDialog()
+		if("text")
+			if(src.active_program && params["value"]) // haha it fucking works WOOOOOO
+				if(params["value"] == "term_clear")
+					src.temp = "Cleared\n"
+					return
+				src.active_program.input_text(params["value"])
+				playsound(src.loc, "keyboard", 50, 1, -15)
+				src.updateUsrDialog()
+		if("buttonPressed")
+			var/obj/item/I = usr.equipped() // how the old code did it
+			if(params["card"] == "internal") // the hacky magic floppy disk reader
+				if(src.diskette)
+					//Ai/cyborgs cannot press a physical button from a room away.
+					if((issilicon(usr) || isAI(usr)) && BOUNDS_DIST(src, usr) > 0)
+						boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
+						return
+					for(var/datum/computer/file/terminal_program/P in src.processing_programs)
+						P.disk_ejected(src.diskette)
+					usr.put_in_hand_or_eject(src.diskette)
+					src.diskette= null
+				else if(istype(I,/obj/item/disk/data/floppy))
+					usr.drop_item()
+					I.loc = src
 					src.diskette = I
-					usr << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>Eject</a>"),"comp3.browser:setInternalDisk")
+				update_static_data(usr)
+			else
+				//What type of drive are we?
+				if (findtext(params["card"], "/obj/item/peripheral/card_scanner"))
+					//A card drive!
+					var/obj/item/peripheral/card_scanner/dv = src.peripherals[params["index"]]
+					if(dv.authid)
+						usr.put_in_hand_or_eject(dv.authid)
+						dv.authid = null
+					else if(istype(I, /obj/item/card/id))
+						usr.drop_item()
+						I.loc = src
+						dv.authid = I
+					update_static_data(usr)
 
-	else if(href_list["restart"] && !src.restarting)
-		src.restart()
-
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
-	return
+				else if (findtext(params["card"], "/obj/item/peripheral/drive"))
+					//A disk drive!
+					var/obj/item/peripheral/drive/dv = src.peripherals[params["index"]]
+					if(dv.disk)
+						usr.put_in_hand_or_eject(dv.disk)
+						dv.disk = null
+					else if(istype(I, dv.setup_disk_type))
+						usr.drop_item()
+						I.loc = src
+						dv.disk = I
+					update_static_data(usr)
+	. = TRUE
 
 /obj/machinery/computer3/updateUsrDialog()
 	..()
 	if (src.temp_add)
 		src.temp += src.temp_add
 		src.temp_add = null
+		src.do_scroll_bottom = TRUE
 
 /obj/machinery/computer3/process()
 	if(status & BROKEN)
@@ -671,9 +488,7 @@ function lineEnter (ev)
 			W.set_loc(src)
 			src.diskette = W
 			boutput(user, "You insert [W].")
-			if(user.using_dialog_of(src))
-				src.updateUsrDialog()
-				user << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>Eject</a>"),"comp3.browser:setInternalDisk")
+			update_static_data(usr)
 			return
 		else if(src.diskette)
 			boutput(user, "<span class='alert'>There's already a disk inside!</span>")
@@ -685,9 +500,33 @@ function lineEnter (ev)
 		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer3/proc/unscrew_monitor,\
 		list(W, user), W.icon, W.icon_state, null, null)
 
+	else if(istype(W, /obj/item/card/id))
+		var/obj/item/peripheral/card_scanner/dv = get_card_scanner()
+		if (!dv)
+			src.Attackhand(user)
+			return
+
+		if (dv.authid)
+			boutput(user, "<span class='alert'>There is already a card inserted!</span>")
+		else
+			usr.drop_item()
+			W.loc = src
+			dv.authid = W
+			update_static_data(usr)
+		return
+
 	else
 		src.Attackhand(user)
 	return
+
+/obj/machinery/computer3/proc/get_card_scanner()
+	. = locate(/obj/item/peripheral/card_scanner) in src.peripherals
+	if (!.)
+		. = locate(/obj/item/peripheral/card_scanner/editor) in src.peripherals
+	if (!.)
+		. = locate(/obj/item/peripheral/card_scanner/register) in src.peripherals
+	if (!.)
+		. = locate(/obj/item/peripheral/card_scanner/clownifier) in src.peripherals
 
 /obj/machinery/computer3/proc/unscrew_monitor(obj/item/W as obj, mob/user as mob)
 	if(!ispath(setup_frame_type, /obj/computer3frame))
@@ -884,7 +723,7 @@ function lineEnter (ev)
 		src.host_program?.restart()
 		src.host_program = null
 		src.processing_programs = new
-		src.temp = null
+		src.temp = ""
 		src.temp_add = "Restarting system...<br>"
 		src.updateUsrDialog()
 		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
@@ -1080,10 +919,7 @@ function lineEnter (ev)
 				W.set_loc(src)
 				src.diskette = W
 				boutput(user, "You insert [W].")
-				if(user.using_dialog_of(src))
-					src.updateUsrDialog()
-					user << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>Eject</a>"),"comp3.browser:setInternalDisk")
-				return
+				update_static_data(usr)
 			else if(src.diskette)
 				boutput(user, "<span class='alert'>There's already a disk inside!</span>")
 			else if(!src.setup_has_internal_disk)
@@ -1099,6 +935,7 @@ function lineEnter (ev)
 			src.cell = null
 			user.visible_message("<span class='alert'>[user] removes the power cell from [src]!.</span>","<span class='alert'>You remove the power cell from [src]!</span>")
 			src.power_change()
+			update_static_data(usr)
 			return
 
 		else if (istype(W, /obj/item/cell))
@@ -1111,13 +948,25 @@ function lineEnter (ev)
 				src.cell = W
 				boutput(user, "You insert [W].")
 				src.power_change()
-				src.updateUsrDialog()
-
+				update_static_data(usr)
 			return
 
+		else if(istype(W, /obj/item/card/id))
+			var/obj/item/peripheral/card_scanner/dv = get_card_scanner()
+			if (!dv)
+				src.Attackhand(user)
+				return
+
+			if (dv.authid)
+				boutput(user, "<span class='alert'>There is already a card inserted!</span>")
+			else
+				usr.drop_item()
+				W.loc = src
+				dv.authid = W
+				update_static_data(usr)
+			return
 		else
 			src.Attackhand(user)
-
 		return
 
 	powered()

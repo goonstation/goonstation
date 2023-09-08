@@ -245,7 +245,7 @@
 	else
 		if (istype(W, /obj/item/sheet))
 			var/obj/item/sheet/S = W
-			if (S.material.material_flags & MATERIAL_METAL)
+			if (S.material.getMaterialFlags() & MATERIAL_METAL)
 				if (src.metal_ammo == src.max_ammo)
 					boutput(user, "The lamp manufacturer is full.")
 				else

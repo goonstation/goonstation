@@ -352,45 +352,55 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	icon_state = "crema_active"
 	playsound(src.loc, 'sound/machines/crematorium.ogg', 90, 0)
 
-	for (var/M in contents)
-		if (M in non_tray_contents) continue
-		if (M == my_tray) continue //no cremating the tray tyvm
-		if (isliving(M))
-			var/mob/living/L = M
-			SPAWN(0)
-				L.changeStatus("stunned", 10 SECONDS)
+	for (var/mob/living/L in contents)
+		if (L in non_tray_contents)
+			continue
+		L.changeStatus("stunned", 10 SECONDS)
 
-				var/i
-				for (i = 0, i < 10, i++)
-					sleep(1 SECOND)
-					L.TakeDamage("chest", 0, 30)
-					if (!isdead(L) && prob(25))
-						L.emote("scream")
+	sleep(1 SECOND)
+	for (var/i in 1 to 10)
+		if(isnull(src))
+			return
+		for (var/mob/living/L in contents)
+			if (L in non_tray_contents)
+				continue
+			L.TakeDamage("chest", 0, 30)
+			if (!isdead(L) && prob(25))
+				L.emote("scream")
+		sleep(1 SECOND)
 
-				for (var/obj/item/W in L)
-					if (prob(10))
-						W.set_loc(L.loc)
+	if(isnull(src))
+		return
+	for (var/I in contents)
+		if (I in non_tray_contents)
+			continue
+		if (I == my_tray)	//no cremating the tray tyvm
+			continue
+		if (isliving(I))
+			var/mob/living/L = I
+			for (var/obj/item/W in L)
+				if (prob(10))
+					W.set_loc(L.loc)
 
-				logTheThing(LOG_COMBAT, user, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
-				L.remove()
-				ashes += 1
-
-		else if (!ismob(M))
+			logTheThing(LOG_COMBAT, user, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
+			L.remove()
+			ashes += 1
+		else if (!ismob(I))
 			if (prob(max(0, 100 - (ashes * 10))))
 				ashes += 1
-			qdel(M)
+		qdel(I)
 
-	SPAWN(10 SECONDS)
-		if (src)
-			src.visible_message("<span class='alert'>\The [src.name] finishes and shuts down.</span>")
-			src.locked = FALSE
-			power_usage = initial(power_usage)
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+	if(isnull(src))
+		return
+	src.visible_message("<span class='alert'>\The [src.name] finishes and shuts down.</span>")
+	src.locked = FALSE
+	power_usage = initial(power_usage)
+	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 
-			while (ashes > 0)
-				make_cleanable( /obj/decal/cleanable/ash,src)
-				ashes -= 1
-			update() //get rid of the active sprite
+	while (ashes > 0)
+		make_cleanable( /obj/decal/cleanable/ash,src)
+		ashes -= 1
+	update() //get rid of the active sprite
 
 
 //-----------------------------------------------------
@@ -526,18 +536,40 @@ ABSTRACT_TYPE(/obj/machine_tray)
 							if (H.limbs)
 								H.limbs.reset_stone()
 							H.update_colorful_parts()
+						if (isvampire(H))
+							H.TakeDamage("All", 0, 15, 0, DAMAGE_BURN)
+							if (prob(15) && isalive(H))
+								H.emote("scream")
+							if (i % (2 SECONDS))
+								boutput(H, "<span class='alert'>[pick("Your skin is melting!", "This false sun burns just like a real one!", "The light! <b>IT BURNS</b>!")]</span>")
+								playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+							if (isdead(H))
+								make_cleanable(/obj/decal/cleanable/ash, src)
+								H.unequip_all()
+								H.remove()
+								src.visible_message("<span class='alert'>A puff of smoke erupts from the machine as it grinds to a halt! It smells like a graveyard caught fire!</span>")
+								var/turf/T = get_turf(src)
+								if (istype(T))
+									var/datum/effects/system/bad_smoke_spread/smoke_effect = new /datum/effects/system/bad_smoke_spread/(T)
+									smoke_effect.set_up(15, 0, T, null, "#000000")
+									smoke_effect.start()
+								end_tanning()
+
+								return
 				if (emagged && isdead(M))
 					M.remove()
 					make_cleanable( /obj/decal/cleanable/ash,src)
 
 		SPAWN(src.settime)
 			if (src)
-				src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
-				src.locked = FALSE
-				power_usage = initial(power_usage)
-				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-				update() //clear the active sprite
+				end_tanning()
 
+	proc/end_tanning()
+		src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
+		src.locked = FALSE
+		power_usage = initial(power_usage)
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		update()
 
 //-----------------------------------------------------
 /*~ Tanning Bed Tray ~*/

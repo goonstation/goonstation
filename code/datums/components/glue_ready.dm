@@ -87,6 +87,10 @@ TYPEINFO(/datum/component/glue_ready)
 			boutput(user, "<span class='alert'>\The [glued_to]'s radiation dissolves the glue.</span>")
 		qdel(src)
 		return FALSE
+	if(istype(glued_to, /mob/living/critter) && !isitem(thing_glued))
+		if(user)
+			boutput(user, "<span class='alert'>You can only glue items to [glued_to].</span>")
+		return FALSE
 	if(istype(thing_glued, /obj/machinery/portapuke))
 		return FALSE
 	if(isturf(glued_to))

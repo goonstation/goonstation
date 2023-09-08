@@ -31,7 +31,7 @@
 /turf/simulated/floor/grey,
 /area/prefab/synd_lab)
 "h" = (
-/obj/critter/gunbot/heavy{
+/mob/living/critter/robotic/gunbot{
 	desc = "A 2030's-era security robot, retrofitted for Syndicate purposes.";
 	dir = 4;
 	name = "syndicate security robot"
@@ -232,7 +232,7 @@
 /turf/simulated/floor/black,
 /area/prefab/synd_lab)
 "H" = (
-/obj/critter/gunbot/heavy{
+/mob/living/critter/robotic/gunbot{
 	desc = "A 2030's-era security robot, retrofitted for Syndicate purposes.";
 	dir = 8;
 	name = "syndicate security robot"

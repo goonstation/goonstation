@@ -1,5 +1,5 @@
 var/global/datum/controller/gameticker/ticker
-var/global/current_state = GAME_STATE_WORLD_INIT
+var/global/current_state = GAME_STATE_INVALID
 
 /datum/controller/gameticker
 	var/hide_mode = TRUE
@@ -111,7 +111,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
 		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
-		if("intrigue") src.mode = config.pick_mode(pick(prob(300);"mixed_rp", prob(200); "traitor", prob(75);"changeling","vampire", prob(50); "spy_theft","arcfiend","salvager", prob(50); "extended", prob(25); "gang", "conspiracy"))
+		if("intrigue") src.mode = config.pick_mode(pick(prob(300);"mixed_rp", prob(200); "traitor", prob(75);"changeling","vampire", prob(50); "spy_theft","arcfiend","salvager", prob(50); "extended", prob(50); "gang"))
 		if("pod_wars") src.mode = config.pick_mode("pod_wars")
 		else src.mode = config.pick_mode(master_mode)
 
@@ -193,6 +193,13 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	//Create objectives for the non-traitor/nogoodnik crew.
 	generate_crew_objectives()
 #endif
+	//picky eater trait handling
+	for (var/mob/living/carbon/human/H in mobs)
+		if (H.client && H.traitHolder?.hasTrait("picky_eater"))
+			var/datum/trait/picky_eater/eater_trait = H.traitHolder.getTrait("picky_eater")
+			if (length(eater_trait.fav_foods) > 0)
+				boutput(H, eater_trait.explanation_text)
+				H.mind.store_memory(eater_trait.explanation_text)
 
 	//Equip characters
 	equip_characters()
@@ -244,6 +251,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		//Tell the participation recorder that we're done FAFFING ABOUT
 		participationRecorder.releaseHold()
 
+#ifdef BAD_MONKEY_NO_BANANA
+	for_by_tcl(monke, /mob/living/carbon/human/npc/monkey)
+		qdel(monke)
+#endif
+
 #ifdef MAP_OVERRIDE_NADIR
 	SPAWN(30 MINUTES) // special catalytic engine warning
 		for(var/obj/machinery/power/catalytic_generator/CG in machine_registry[MACHINES_POWER])
@@ -261,9 +273,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			break
 #endif
 
-	for(var/turf/T in job_start_locations["AI"])
-		if(isnull(locate(/mob/living/silicon/ai) in T))
-			new /obj/item/clothing/suit/cardboard_box/ai(T)
+	if(!countJob("AI")) // There is no roundstart AI, spawn in a Latejoin AI on the spawn landmark.
+		for(var/turf/T in job_start_locations["AI"])
+			new /mob/living/silicon/ai/latejoin(T)
 	if(!processScheduler.isRunning)
 		processScheduler.start()
 
@@ -514,6 +526,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		else if(ismobcritter(pet))
 			var/mob/living/critter/P = pet
 			if(isalive(P) && in_centcom(P)) pets_rescued++
+		else if(istype(pet, /obj/item/rocko) && in_centcom(pet)) pets_rescued++
 
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] Processing end-of-round generic medals")
 	var/list/all_the_baddies = ticker.mode.traitors + ticker.mode.token_players + ticker.mode.Agimmicks + ticker.mode.former_antagonists

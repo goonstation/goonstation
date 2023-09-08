@@ -8,7 +8,7 @@
 		..()
 		var/list/potential_victims = list()
 		for (var/mob/living/carbon/human/H in mobs)
-			if (H.stat == 2)
+			if (isdead(H))
 				continue
 			potential_victims += H
 		if (potential_victims.len)

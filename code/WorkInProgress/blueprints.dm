@@ -117,9 +117,9 @@
 					if(istype(O, /obj/item/sheet))
 						var/obj/item/sheet/S = O
 						if (S.material)
-							if (S.material.material_flags & MATERIAL_METAL)
+							if (S.material.getMaterialFlags() & MATERIAL_METAL)
 								metal_cnt += S.amount
-							if (S.material.material_flags & MATERIAL_CRYSTAL)
+							if (S.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 								glass_cnt += S.amount
 
 				boutput(user, "<span class='notice'>Currently loaded :</span>")
@@ -165,9 +165,9 @@
 			if(istype(O, /obj/item/sheet))
 				var/obj/item/sheet/S = O
 				if (S.material)
-					if (S.material.material_flags & MATERIAL_METAL)
+					if (S.material.getMaterialFlags() & MATERIAL_METAL)
 						metal_cnt += S.amount
-					if (S.material.material_flags & MATERIAL_CRYSTAL)
+					if (S.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 						glass_cnt += S.amount
 
 		if(metal_cnt < currentBp.req_metal || glass_cnt < currentBp.req_glass)
@@ -365,6 +365,12 @@
 			//rebuild powernets etc.
 */
 
+#define SELECT_SKIP 0
+#define SELECT_FIRST_CORNER 1
+#define DESELECT_FIRST_CORNER 2
+#define SELECT_SECOND_CORNER 3
+#define DESELECT_SECOND_CORNER 4
+
 /obj/item/blueprint_marker
 	name = "Blueprint Marker"
 	desc = "A tool used to map rooms for the creation of blueprints."
@@ -379,6 +385,9 @@
 	var/prints_left = 5
 
 	var/mob/using = null
+	var/selecting = 0
+	var/turf/selectcorner1
+	var/image/corner1img
 
 	var/roomname = "NewRoom"
 	var/list/turf/roomList = new/list()
@@ -436,18 +445,18 @@
 
 	var/static/savefile/save = new/savefile("data/blueprints.dat")
 
-	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(GET_DIST(src,target) > 2) return
+	pixelaction(atom/target, params, mob/user)
+		if(GET_DIST(src,target) > 10) return
 
 		if(!isturf(target)) target = get_turf(target)
-
-		var/maxSize = 20
 
 		var/minx = 100000000
 		var/miny = 100000000
 
 		var/maxx = 0
 		var/maxy = 0
+
+		var/maxSize = 20
 
 		var/permitted = 0
 		for(var/p in permittedTileTypes)
@@ -460,7 +469,7 @@
 			boutput(user, "<span class='alert'>Unsupported Tile type detected.</span>")
 			return
 
-		for(var/turf/t as anything in roomList)
+		for(var/turf/t as anything in roomList) // is this better than storing min/max permanently?
 			if(t.x < minx) minx = t.x
 			if(t.y < miny) miny = t.y
 
@@ -477,16 +486,80 @@
 
 		if(abs(minx - maxx) >= maxSize || abs(miny - maxy) >= maxSize)
 			boutput(user, "<span class='alert'>Tile exceeds maximum size of blueprint.</span>")
+			playsound(src.loc, 'sound/machines/button.ogg', 25)
 			return
+
+		switch (selecting)
+			if (SELECT_SKIP)
+
+			if (SELECT_FIRST_CORNER, DESELECT_FIRST_CORNER) // set to 1 or 2 by use-in-hand option list
+				qdel(corner1img)
+				selectcorner1 = target
+				selecting += 2 // if 3 then select second corner, if 4 then deselect second corner
+				corner1img = image('icons/misc/old_or_unused.dmi', selectcorner1, "marker", layer = HUD_LAYER)
+				user << corner1img
+				playsound(src.loc, 'sound/machines/tone_beep.ogg', 15)
+				return
+
+			if (SELECT_SECOND_CORNER, DESELECT_SECOND_CORNER)
+				var/diffx = abs(target.x - selectcorner1.x)
+				var/diffy = abs(target.y - selectcorner1.y)
+				if(diffx >= maxSize || diffy >= maxSize)
+					boutput(user, "<span class='alert'>Tile exceeds maximum size of blueprint.</span>")
+					playsound(src.loc, 'sound/machines/button.ogg', 25)
+					return
+
+				var/selectedz = selectcorner1.z
+				var/currx = min(target.x, selectcorner1.x)
+				var/curry = min(target.y, selectcorner1.y)
+				var/startx = currx
+				var/endx = currx + diffx
+
+				var/ix
+				for (ix=0, ix < (diffx + 1) * (diffy + 1), ix++) // add 1 to diffs or a whole row/column of tiles are left out by math
+					var/turf/t = locate(currx, curry, selectedz)
+
+					currx++
+					if (currx > endx)
+						currx = startx
+						curry++
+
+					var/perm = 0
+					for(var/p in permittedTileTypes)
+						var/ttype = text2path(p)
+						if(istype(t, ttype))
+							perm = 1
+							break
+					if(!perm) continue
+
+					if (selecting == SELECT_SECOND_CORNER)
+						if (!roomList.Find(t))
+							roomList.Add(t)
+							roomList[t] = image('icons/misc/old_or_unused.dmi', t, "tiletag", layer = HUD_LAYER)
+					else
+						if (using?.client)
+							using.client.images -= roomList[t]
+						roomList.Remove(t)
+
+
+				selecting = SELECT_SKIP
+				qdel(corner1img)
+				playsound(src.loc, 'sound/machines/tone_beep.ogg', 15)
+				updateOverlays()
+				return
+
+			else selecting = SELECT_SKIP
 
 		if(roomList.Find(target))
 			if (using?.client)
 				using.client.images -= roomList[target]
 			roomList.Remove(target)
+			playsound(src.loc, 'sound/machines/button.ogg', 25, 0.1)
 		else
 			roomList.Add(target)
 			roomList[target] = image('icons/misc/old_or_unused.dmi',target,"tiletag", layer = HUD_LAYER)
 			updateOverlays()
+			playsound(src.loc, 'sound/machines/tone_beep.ogg', 15, 0.1)
 
 		return
 
@@ -515,6 +588,8 @@
 		save.cd = "/[usr.client.ckey]"
 
 		if(save.dir.Find(name))
+			if (alert(usr, "A blueprint of this name already exists. Really overwrite?", "Overwrite Blueprint", "Yes", "No") == "No")
+				return
 			save.dir.Remove(name)
 			save.dir.Add(name)
 			save.cd = "/[usr.client.ckey]/" + name
@@ -579,6 +654,8 @@
 					save["layer"] << o.layer
 					save["pixelx"] << o.pixel_x
 					save["pixely"] << o.pixel_y
+
+		boutput(usr, "<span class='notice'>Saved blueprint as '[name]'. </span>")
 		return
 
 	proc/printSaved(var/name = "")
@@ -635,6 +712,9 @@
 		if(save.dir.Find("[usr.client.ckey]"))
 			save.cd = "/[usr.client.ckey]/"
 			if(save.dir.Find(name))
+				if (strip_html(input(usr,"Really delete this blueprint? Input blueprint name to confirm.","Blueprint Deletion","") as text) != name)
+					boutput(usr, "<span class='alert'>Failed to delete blueprint '[name]': input did not match blueprint name.</span>")
+					return
 				save.dir.Remove(name)
 				boutput(usr, "<span class='alert'>Blueprint [name] deleted..</span>")
 			else
@@ -646,10 +726,25 @@
 	attack_self(mob/user as mob)
 		if(!user.client)
 			return
-		var/list/options = list("Reset", "Set Blueprint Name", "Print Saved Blueprint", "Save Blueprint", "Delete Blueprint" , "Information")
+
+		if (selecting)
+			selecting = SELECT_SKIP
+			qdel(corner1img)
+			boutput(user, "<span class='notice'>Cancelled rectangle select.</span>")
+			playsound(src.loc, 'sound/machines/button.ogg', 25)
+			return
+
+		var/list/options = list("Select Rectangle", "Deselect Rectangle", "Reset", "Set Blueprint Name", "Print Saved Blueprint",
+			"Save Blueprint", "Delete Blueprint" , "Information",)
 		var/input = input(user,"Select option:","Option") in options
 
 		switch(input)
+			if("Select Rectangle")
+				selecting = SELECT_FIRST_CORNER
+
+			if("Deselect Rectangle")
+				selecting = DESELECT_FIRST_CORNER
+
 			if("Reset")
 				boutput(user, "<span class='notice'>Resetting ...</span>")
 				removeOverlays()
@@ -680,12 +775,15 @@
 				return
 
 			if("Information")
-				var/message = "<span class='notice'>Blueprint Marker Tool Usage Information:</span><br><br>"
+				var/message = "<span class='notice'>This tool is used for making, saving and loading room blueprints on the server.</span><br>"
+				message += "<span class='notice'>Saved blueprints persist between rounds, but are limited to a size of 20 tiles on each axis, making 20x20 the largest blueprint.</span><br><br>"
+				message += "<span class='notice'>(De)Select Rectangle: Mass-selects or deselects tiles in a filled rectangle shape, defined by 2 corners.</span><br>"
 				message += "<span class='notice'>Reset: Resets the tools and clears all marked areas.</span><br>"
-				message += "<span class='notice'>Set Blueprint Name: Allows you to set the name that will appear on the blueprint.</span><br>"
-				//message += "<span class='notice'>Create Clone Blueprint: Creates a blueprint for an exact copy of the marked area. This type of blueprint can not be saved and costs slightly more to build.</span><br>"
-				message += "<span class='notice'>Print Saved Blueprint: Prints a previously saved blueprint.</span><br>"
-				message += "<span class='notice'>Save Blueprint: Saves a blueprint of the marked area to the server. This type of blueprint can be saved but it can not save all types of objects.</span>"
+				message += "<span class='notice'>Set Blueprint Name: Sets the active blueprint that print/save/delete functions will access.</span><br>"
+				message += "<span class='notice'>Print Saved Blueprint: Prints the active blueprint for usage in the ABCU builder device.</span><br>"
+				message += "<span class='notice'>Save Blueprint: Saves a blueprint of the marked area to the server. Most structures will be saved, but it can not save all types of objects.</span><br>"
+				message += "<span class='notice'>Your saved blueprints are accessed solely by its Blueprint Name, so note it down.</span><br>"
+				message += "<span class='notice'>Delete Blueprint: Permanently deletes the active blueprint from the server.</span><br>"
 				boutput(user, message)
 				return
 
@@ -693,6 +791,8 @@
 
 	dropped(mob/user as mob)
 		removeOverlays()
+		selecting = 0
+		qdel(corner1img)
 		using = null
 		return
 
@@ -706,3 +806,9 @@
 		using = user
 		updateOverlays()
 		return
+
+#undef SELECT_SKIP
+#undef SELECT_FIRST_CORNER
+#undef DESELECT_FIRST_CORNER
+#undef SELECT_SECOND_CORNER
+#undef DESELECT_SECOND_CORNER

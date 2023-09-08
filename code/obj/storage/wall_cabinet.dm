@@ -131,7 +131,7 @@ TYPEINFO(/obj/item/storage/wall)
 	icon_state = "miniorange"
 	pixel_y = 32
 	spawn_contents = list(/obj/item/clothing/under/color/orange = 2,
-	/obj/item/clothing/under/misc = 2,
+	/obj/item/clothing/under/misc/prisoner = 2,
 	/obj/item/clothing/shoes/orange = 3)
 
 /obj/item/storage/wall/blue
@@ -264,7 +264,7 @@ TYPEINFO(/obj/item/storage/wall)
 	spawn_contents = list(/obj/item/clothing/under/gimmick/utena = 1,
 	/obj/item/clothing/suit/hoodie = 1,
 	/obj/item/clothing/suit/wintercoat = 1,
-	/obj/item/clothing/suit/labcoat/hitman = 1,
+	/obj/item/clothing/suit/hitman = 1,
 	/obj/item/clothing/suit/johnny_coat = 1,
 	/obj/item/clothing/under/gimmick/chaps= 1,
 	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
