@@ -944,8 +944,8 @@
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<B>[user.name]</B> deconstructs [target].")
 
-		var/obj/item/electronics/frame/F = new(target_loc)
 		var/turf/target_loc = get_turf(target)
+		var/obj/item/electronics/frame/F = new(target_loc)
 		F.name = "[target.name] frame"
 		if(O.deconstruct_flags & DECON_DESTRUCT)
 			F.store_type = O.type
