@@ -1,5 +1,9 @@
 
 (t)fri sep 08 23
+(u)Chasu
+(p)15731
+(e)💅⚗🍝|C-QoL, A-Chemistry, A-Catering
+(+)Banana juice has replaced colorful reagent in the Honky Tonic recipe.
 (u)Bisar
 (p)15344
 (e)🪲🗺|C-Bug, A-Mapping
