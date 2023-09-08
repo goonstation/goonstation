@@ -954,15 +954,13 @@
 
 /obj/item/paper/newspaper/New()
 	. = ..()
+	// it picks a random set of info at new, then the printing press overrides it
 	src.headline = pick_smart_string("newspaper.txt", "headline")
 	src.publisher = pick_smart_string("newspaper.txt", "publisher")
 	src.name = "[src.publisher] newspaper"
-	src.desc = "Its from [src.publisher]. Its headline reads: [src.headline]"
+	src.desc = "Its from <b>[src.publisher]</b>. Its headline reads: <b>[src.headline]</b>"
 	src.info = "<b>[src.headline]</b><br>"
-	if (prob(20))
-		src.info = "<br><br>[pick_smart_string("newspaper.txt", "article")]"
-	else // randomly generate an article oh god
-		src.generate_article()
+	src.generate_article()
 
 /obj/item/paper/newspaper/attack_self(mob/user)
 	src.force_drop(user)
@@ -980,8 +978,14 @@
 		src.icon_state = "newspaper"
 		src.item_state = "newspaper"
 
-/// generates a random newspaper article. The grammar is horrendous and I cannot figure out how to grammar enough to fix it.
+/// generates a random newspaper article.
 /obj/item/paper/newspaper/proc/generate_article()
+	if (prob(20)) // low chance to get a manually written one.
+		src.info += "<br><br>[pick_smart_string("newspaper.txt", "article")]"
+		return
+	// The grammar is horrendous and I cannot figure out how to grammar enough to fix it.
+	// this could also be done much better using a far better system like better smart strings or something
+	// you're welcome to the challenge but this has absorbed too many hours of my life already, it's good enough.
 	var/temporary = ""
 	for (var/count in 1 to rand(4, 8))
 		var/name1 = pick_smart_string("newspaper.txt", "name")
