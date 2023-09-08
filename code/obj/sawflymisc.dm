@@ -110,10 +110,10 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 		if (ON_COOLDOWN(src, "button_pushy", 1.5 SECONDS))
 			return
 		flick("sawfly_remote-pressed", src)
-		for (var/mob/living/critter/robotic/sawfly/S in orange(get_turf(src), 5)) // folds active sawflies
+		for (var/mob/living/critter/robotic/sawfly/S in range(get_turf(src), 5)) // folds active sawflies
 			SPAWN(0.1 SECONDS)
 				S.foldself()
-		for (var/obj/item/old_grenade/S in orange(get_turf(src), 5)) // unfolds passive sawflies
+		for (var/obj/item/old_grenade/S in range(get_turf(src), 5)) // unfolds passive sawflies
 			var/area/A = get_area(S)
 			if (A.sanctuary == TRUE && !istype(A, /area/syndicate_station/battlecruiser)) // salvager vessel, vr, THE SHAMECUBE, but not the battlecruiser
 				continue
