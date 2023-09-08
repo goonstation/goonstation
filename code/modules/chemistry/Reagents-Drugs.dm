@@ -501,7 +501,7 @@ datum
 			fluid_g = 220
 			fluid_b = 230
 			addiction_prob = 1 //It lasts a while, it's not as low as it seems
-			addiction_min = 10
+			addiction_min = 20
 			max_addiction_severity = "LOW"
 			depletion_rate = 0.1
 			taste = "bitter"
