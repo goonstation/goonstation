@@ -1622,7 +1622,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "cultist"
 	item_state = "cultist"
-	see_face = 0
+	see_face = FALSE
 	magical = 1
 	over_hair = TRUE
 	wear_layer = MOB_FULL_SUIT_LAYER
@@ -1663,7 +1663,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "flockcultist"
 	item_state = "flockcultistt"
-	see_face = 0
+	see_face = FALSE
 	wear_layer = MOB_FULL_SUIT_LAYER
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
