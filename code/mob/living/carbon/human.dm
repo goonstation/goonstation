@@ -1357,21 +1357,15 @@
 		. = "<span class='name'>"
 	else
 		. = "<span class='name' data-ctx='\ref[src.mind]'>"
-	if (src.wear_mask.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
-		if (src.wear_mask)
-			if (src.wear_id)
-				if (just_name_itself)
-					return src.wear_id:registered
-				. += "[src.wear_id:registered]</span>"
-			else
-				if (just_name_itself)
-					return "Unknown"
-				. += "Unknown</span>"
+	if (src.wear_mask.vchange && src.wear_mask)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
+		if (src.wear_id)
+			if (just_name_itself)
+				return src.wear_id:registered
+			. += "[src.wear_id:registered]</span>"
 		else
-			for (var/obj/item/hand in list(src.l_hand, src.r_hand))
-				if (istype(hand, /obj/item/paper/newspaper))
-					if (hand.two_handed)
-						return "Unknown"
+			if (just_name_itself)
+				return "Unknown"
+			. += "Unknown</span>"
 	else if (src.vdisfigured)
 		if (just_name_itself)
 			return "Unknown"
