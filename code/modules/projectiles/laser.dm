@@ -623,5 +623,5 @@ toxic - poisons
 			hit.setStatus("cornicened")
 
 /datum/projectile/laser/makeshift
-	cost = 33
-	damage = 20
+	cost = 5000 // large because the makeshift gun uses large cells, cant crit someone from one cell either
+	damage = 25 // slightly better than a zipgun due to the fact the rile is 2 handed

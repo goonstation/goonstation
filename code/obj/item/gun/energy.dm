@@ -1867,7 +1867,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	name = "makeshift laser rifle"
 	icon_state = "laser"
 	item_state = "laser" //TODO better sprites
-	cell_type = /obj/item/ammo/power_cell/self_charging/lawbringer
+	cell_type = null
 	can_swap_cell = FALSE
 	rechargeable = FALSE
 	force = 7
@@ -1876,8 +1876,6 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	desc = "A laser rifle cobbled together from various supplies found around the station, probably not the most reliable weapon in a firefight."
 	muzzle_flash = "muzzle_flash_laser"
 	charge_icon_state = "laser"
-	///What material should we use to determine projectile
-	var/datum/material/lens_material
 	///What light source we use for the rifle
 	var/obj/item/device/light/flashlight/our_flashlight
 	///What battery this gun uses
@@ -1887,22 +1885,49 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	///Is the panel open, if TRUE we can swap out the flashlight
 	var/welded_open = FALSE
 
-	proc/break_light(mob/user)
-		boutput(user,"<span class='alert'>[src]'s light source breaks due to the excess heat within!</span>")
+	proc/break_light()
 		elecflash(get_turf(src), 1, 3)
 		our_flashlight.broken = TRUE
 		our_flashlight.name = "broken [our_flashlight.name]"
 
-	proc/finish_setup()
-		if(!our_cell)
-			our_cell = new /obj/item/cell/supercell/charged
-			our_cell.set_loc(src)
+	proc/attach_cell(var/obj/item/cell/C, mob/user)
+		if (user)
+			user.u_equip(C)
+		our_cell = C
+		our_cell.set_loc(src)
+		our_cell.AddComponent(/datum/component/power_cell, our_cell.maxcharge, our_cell.charge, our_cell.genrate, 0, FALSE)
+		SEND_SIGNAL(src, COMSIG_CELL_SWAP, our_cell)
+
+	New()
+		processing_items |= src
+		set_current_projectile(new/datum/projectile/laser/makeshift)
+		projectiles = list(current_projectile)
+		..()
+
+	Exited(Obj, newloc)
+		var/obj/item/cell/C = Obj
+		if (istype(C))
+			var/datum/component/power_cell/comp = C.GetComponent(/datum/component/power_cell)
+			comp.UnregisterFromParent()
+			comp.RemoveComponent()
+			our_cell = null
+			update_icon()
+		. = ..()
+
+
+	process()
+		if (heat > 0)
+			var/remove_amount = 2
+			if (welded_open) // air cooling
+				remove_amount = 4
+			heat = max(0, heat - remove_amount)
+		return
 
 	canshoot(mob/user)
-		if (src.welded_open)
-			boutput(user,"<span class='alert'>Firing this with an exposed barrel would be a terrible idea.</span>")
+		if (!our_cell)
+			boutput(user,"<span class='alert'>[src] needs a power source to function!</span>")
 			return FALSE
-		else if (!our_flashlight)
+		if (!our_flashlight)
 			boutput(user,"<span class='alert'>[src] needs a light source to function!</span>")
 			return FALSE
 		else if (our_flashlight.broken)
@@ -1911,20 +1936,29 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		else
 			return ..()
 
-	attack_hand(mob/user)
-		if (src.welded_open && our_flashlight)
-			boutput(user,"<span class='alert'>You remove [our_flashlight] from [src].</span>")
-			user.put_in_hand_or_drop(our_flashlight)
-			our_flashlight = null
-			return
-		..()
-
 	attackby(obj/item/W, mob/user, params)
-		if (isweldingtool(W) && W:try_weld(user, 1))
+		if (iswrenchingtool(W) && our_cell)
+			SEND_SIGNAL(src, COMSIG_CELL_SWAP, null)
+			boutput(user,"<span class='notice'>You disconnect [our_cell] from [src].</span>")
+			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+			user.put_in_hand_or_drop(our_cell)
+			return
+		else if (istype(W, /obj/item/cell) && !our_cell)
+			user.u_equip(W)
+			boutput(user,"<span class='notice'>You attach [W] to [src].</span>")
+			attach_cell(W, user)
+			return
+		else if (isweldingtool(W) && W:try_weld(user, 1))
 			welded_open = !welded_open
 			boutput(user,"<span class='notice'>You weld [src]'s barrel [welded_open ? "open" : "closed"].</span>")
 			return
-		else if (istype(W, /obj/item/device/light/flashlight))
+		else if (issnippingtool(W) && welded_open)
+			boutput(user,"<span class='notice'>You remove [our_flashlight] from the barrel.</span>")
+			playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
+			our_flashlight.set_loc(get_turf(user))
+			our_flashlight = null
+			return
+		else if (istype(W, /obj/item/device/light/flashlight) && !our_flashlight && welded_open)
 			var/obj/item/device/light/flashlight/F = W
 			boutput(user,"<span class='notice'>You attach the flashlight inside of the barrel and redo the wiring.</span>")
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
@@ -1933,20 +1967,6 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			our_flashlight = F
 			F.set_loc(src)
 			return
-		..()
-
-	attack_self(mob/user)
-		if (welded_open && our_flashlight)
-			boutput(user,"<span class='notice'>You remove [our_flashlight] from the barrel.</span>")
-			our_flashlight.set_loc(get_turf(user))
-			our_flashlight = null
-			return
-		. = ..()
-
-
-	New()
-		set_current_projectile(new/datum/projectile/laser/makeshift)
-		projectiles = list(current_projectile)
 		..()
 
 	examine()
@@ -1962,9 +1982,18 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user))
+			if (src.welded_open) // bad idea
+				boutput(user,"<span class='alert'>[src] explodes!</span>")
+				explosion(src, get_turf(src), -1, -1, 1, 2)
+				qdel(src)
+				return
 			heat += rand(20,25)
+			our_cell.use(current_projectile.cost)
+			update_icon()
 			if (heat > 120 || (heat > 100 && prob(40)))
-				break_light(user)
+				boutput(user,"<span class='alert'>[src]'s light source breaks due to the excess heat within!</span>")
+				break_light()
+				return
 		return ..(target, start, user)
 
 /obj/item/makeshift_laser_barrel
@@ -1975,7 +2004,6 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "rods_5" // TODO get sprites
 
-	var/datum/material/lens_material
 	var/obj/item/device/light/flashlight/our_flashlight
 	var/step = 0
 
@@ -1996,25 +2024,23 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		else if (step == 2 && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_CRYSTAL && W.amount >= 3) // 3 sheets so you have to deconstruct more than 1 window
 			boutput(user,"<span class='notice'>You create a lens using [W] and stuff it inside [src].</span>")
 			W.change_stack_amount(-3)
-			lens_material = W.material
 			step++
-			desc = "A long pipe with wires inside of it. The end is welded into a point. You can see [lens_material] inside."
+			desc = "A long pipe with wires inside of it. The end is welded into a point."
 			icon_state = "rods_3"
 			return
 		else if (step == 3 && isweldingtool(W) && W:try_weld(user, 1))
 			boutput(user,"<span class='notice'>You weld holes into the barrel in order to increase ventilation.</span>")
 			step++
-			desc = "A long pipe with wires inside of it and holes welded into the sides. You can see [lens_material] inside."
+			desc = "A long pipe with wires inside of it and holes welded into the sides. You can see a lens inside."
 			icon_state = "rods_4"
 			return
 		else if (step == 4 && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_METAL && W.amount >= 4)
 			boutput(user,"<span class='notice'>You construct a stock for the barrel.</span>")
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
 			step++
-			lens_material = W.material
 			W.change_stack_amount(-4)
 			name = "pipe/stock assembly"
-			desc = "A gun of some kind? It seems unfinished. You can see [lens_material] inside."
+			desc = "A gun of some kind? It seems unfinished."
 			icon_state = "rods_5"
 			return
 		else if (step == 5 && istype(W, /obj/item/device/light/flashlight))
@@ -2033,27 +2059,24 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			W.change_stack_amount(-1)
 			step++
 			icon_state = "rods_5"
-			desc = "A gun of some kind? It seems almost finished. You can see [lens_material] inside."
+			desc = "A gun of some kind? It seems almost finished."
 			return
 		else if (step == 7 && isweldingtool(W) && W:try_weld(user, 1) )
 			boutput(user,"<span class='notice'>You weld the stock and barrel together.</span>")
 			step++
 			name = "makeshift energy rifle"
-			desc = "A makeshift gun? Seems like it needs a power source. You can see [lens_material] inside."
+			desc = "A makeshift gun? Seems like it needs a power source."
 			return
 		else if (step == 8 && istype(W, /obj/item/cell))
 			boutput(user,"<span class='notice'>You connect [W] to the rifle. It is ready to fire!</span>")
 			user.u_equip(src)
-			user.u_equip(W)
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
 			var/obj/item/gun/energy/makeshift/M = new/obj/item/gun/energy/makeshift
-			M.lens_material = lens_material
 			M.our_flashlight = our_flashlight
-			M.our_cell = W
-			W.set_loc(M)
 			our_flashlight.set_loc(M)
-			M.finish_setup()
+			M.attach_cell(W, user)
 			user.put_in_hand_or_drop(M)
+			qdel(src)
 			return
 		..()
 
@@ -2063,6 +2086,5 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 	New()
 		..()
-		lens_material = getMaterial("glass")
 		our_flashlight = new /obj/item/device/light/flashlight
 		our_flashlight.set_loc(src)
