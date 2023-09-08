@@ -968,6 +968,7 @@
 	src.force_drop(user)
 	src.rollup()
 	user.put_in_hand_or_drop(src)
+	user.UpdateName()
 
 /obj/item/paper/newspaper/proc/rollup()
 	if (src.two_handed) // rolling it up

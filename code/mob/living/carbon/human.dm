@@ -1177,19 +1177,19 @@
 /mob/living/carbon/human/proc/face_visible()
 	. = TRUE
 	if (istype(src.wear_mask) && !src.wear_mask.see_face)
-		. = FALSE
+		return FALSE
 	else if (istype(src.head) && !src.head.see_face)
-		. = FALSE
+		return FALSE
 	else if (istype(src.wear_suit) && !src.wear_suit.see_face)
-		. = FALSE
+		return FALSE
 	else if (istype(src.back, /obj/item/clothing))
 		var/obj/item/clothing/hider = src.back
 		if (!hider.see_face)
-			. = FALSE
+			return FALSE
 	for (var/obj/item/hand in list(src.l_hand, src.r_hand))
 		if (istype(hand, /obj/item/paper/newspaper))
 			if (hand.two_handed)
-				. = FALSE
+				return FALSE
 
 
 
@@ -1353,30 +1353,33 @@
 		else if (!src.wear_id)
 			alt_name = " (as Unknown)"
 
-	var/rendered
 	if (src.is_npc)
-		rendered = "<span class='name'>"
+		. = "<span class='name'>"
 	else
-		rendered = "<span class='name' data-ctx='\ref[src.mind]'>"
-	if (src.wear_mask && src.wear_mask.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
-		if (src.wear_id)
-			if (just_name_itself)
-				return src.wear_id:registered
-			rendered += "[src.wear_id:registered]</span>"
+		. = "<span class='name' data-ctx='\ref[src.mind]'>"
+	if (src.wear_mask.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
+		if (src.wear_mask)
+			if (src.wear_id)
+				if (just_name_itself)
+					return src.wear_id:registered
+				. += "[src.wear_id:registered]</span>"
+			else
+				if (just_name_itself)
+					return "Unknown"
+				. += "Unknown</span>"
 		else
-			if (just_name_itself)
-				return "Unknown"
-			rendered += "Unknown</span>"
+			for (var/obj/item/hand in list(src.l_hand, src.r_hand))
+				if (istype(hand, /obj/item/paper/newspaper))
+					if (hand.two_handed)
+						return "Unknown"
 	else if (src.vdisfigured)
 		if (just_name_itself)
 			return "Unknown"
-		rendered += "Unknown</span>"
+		. += "Unknown</span>"
 	else
 		if (just_name_itself)
 			return src.real_name
-		rendered += "[src.real_name]</span>[alt_name]"
-
-	return rendered
+		. += "[src.real_name]</span>[alt_name]"
 
 /mob/living/carbon/human/say(var/message, var/ignore_stamina_winded = FALSE, var/unique_maptext_style, var/maptext_animation_colors)
 	var/original_language = src.say_language
