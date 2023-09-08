@@ -26479,7 +26479,7 @@
 "bzq" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/from_file/space_law,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = 8;
 	pixel_y = 3
 	},
@@ -29768,7 +29768,7 @@
 	pixel_x = -24;
 	pixel_y = 8
 	},
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -42291,8 +42291,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/construction)
 "crR" = (
-/obj/item/storage/box/trackimp_kit2,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/device/gps,
 /obj/item/device/gps,
 /obj/item/device/gps,
@@ -71884,7 +71884,6 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_mechanic,
-/obj/mapping_helper/access/engineering_mechanic,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "thb" = (
@@ -74755,7 +74754,6 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/catering)
 "xij" = (
-/obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/classic{
 	name = "Bathroom"
 	},

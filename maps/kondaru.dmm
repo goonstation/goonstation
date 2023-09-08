@@ -25245,7 +25245,7 @@
 /area/station/science/lobby)
 "bWd" = (
 /obj/table/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/signaler,
@@ -31261,7 +31261,7 @@
 /area/station/science/testchamber)
 "cNP" = (
 /obj/table/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/device/radio,
 /obj/item/device/radio,
 /obj/item/device/radio,
@@ -36832,8 +36832,8 @@
 /area/station/hangar/medical)
 "gLk" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/trackimp_kit2,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
+/obj/item/storage/box/trackimp_kit,
 /obj/machinery/light/emergency,
 /obj/item/device/radio/intercom/security{
 	dir = 4
@@ -44825,7 +44825,7 @@
 /area/station/security/secwing)
 "mVi" = (
 /obj/fluid_spawner{
-	amount = 2100
+	amount = 3600
 	},
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)

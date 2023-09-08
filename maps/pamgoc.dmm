@@ -42971,7 +42971,7 @@
 /area/station/ai_monitored/storage/eva)
 "bVZ" = (
 /obj/rack,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = 8;
 	pixel_y = 8
 	},
@@ -48465,7 +48465,7 @@
 /area/station/bridge)
 "chO" = (
 /obj/table/auto,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_y = 15
 	},
 /obj/item/device/gps{
@@ -52986,7 +52986,7 @@
 /area/station/bridge)
 "coy" = (
 /obj/table/wood/round/auto,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = 8;
 	pixel_y = 13
 	},

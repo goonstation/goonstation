@@ -2728,7 +2728,7 @@
 /turf/simulated/floor/engine,
 /area/devzone)
 "MH" = (
-/obj/kitchenspike,
+/obj/machinery/vending/kitchen,
 /turf/simulated/floor/white,
 /area/devzone)
 "MI" = (

@@ -998,7 +998,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "Spookier!"
 	icon_state = "pumpkin"
 	c_flags = COVERSEYES | COVERSMOUTH
-	see_face = 0
+	see_face = FALSE
 	item_state = "pumpkin"
 
 	attackby(obj/item/W, mob/user)
@@ -1040,7 +1040,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "Cute!"
 	icon_state = "pumpkinlatte"
 	c_flags = COVERSEYES | COVERSMOUTH
-	see_face = 0
+	see_face = FALSE
 	item_state = "pumpkinlatte"
 
 	attackby(obj/item/W, mob/user)
