@@ -471,7 +471,6 @@ var/datum/magpie_manager/magpie_man = new
 	icon = 'icons/obj/trader.dmi'
 	icon_state = "crate_dispenser"
 	picture = "generic.png"
-	trader_area = "/area/syndicate/salvager"
 	angrynope = "Unable to process request."
 	whotext = "I am the salvage reclamation and supply commissary.  In short I will provide goods in exchange for reclaimed materials and equipment."
 	barter = TRUE
