@@ -337,6 +337,7 @@ TYPEINFO(/obj/machinery/chem_shaker)
 	disposing()
 		for (var/obj/item/reagent_containers/glass/glass_container in src.held_containers)
 			MOVE_OUT_TO_TURF_SAFE(glass_container, src)
+			src.held_containers -= glass_container
 		..()
 
 	attack_hand(mob/user)
