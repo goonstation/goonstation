@@ -1920,9 +1920,9 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 	process()
 		if (heat > 0)
-			var/remove_amount = 2
+			var/remove_amount = 10
 			if (welded_open) // air cooling
-				remove_amount = 4
+				remove_amount = 20
 			heat = max(0, heat - remove_amount)
 		return
 
@@ -1990,7 +1990,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 				explosion(src, get_turf(src), -1, -1, 1, 2)
 				qdel(src)
 				return
-			heat += rand(5,7)
+			heat += rand(8,11)
 			update_icon()
 			if (heat > 120 || (heat > 100 && prob(25)))
 				boutput(user,"<span class='alert'>[src]'s light source breaks due to the excess heat within!</span>")
