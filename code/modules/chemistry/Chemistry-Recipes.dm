@@ -2176,13 +2176,11 @@
 				explosion(my_atom, location, -1,-1,0,1)
 				fireflash(location, 0)
 			else
-				var/amt = max(1, (holder.covered_cache.len * (total_volume_created / holder.covered_cache_volume)))
-				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
+				var/amt = length(holder.covered_cache) * (total_volume_created / holder.covered_cache_volume)
+				for (var/i = 0, i < amt && length(holder.covered_cache), i++)
 					location = pick(holder.covered_cache)
 					holder.covered_cache -= location
 					explosion_new(my_atom, location, 2.25/amt)
-					fireflash(location, 0)
-			return
 
 	explosion_magnesium // get in
 		name = "Magnesium Explosion"
