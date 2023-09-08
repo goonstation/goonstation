@@ -1,4 +1,9 @@
 
+(t)fri sep 08 23
+(u)Tyrant, Flaborized
+(p)14928
+(e)🆕🎨|C-Feature, C-Sprites
+(+)Added newspapers! You can open them up to hide your face behind them, and read the headlines. Make some at the printing press!
 (t)thu sep 07 23
 (u)Cheffie
 (p)15708
