@@ -34,7 +34,7 @@ export const DyeDispenser = (_props, context) => {
   return (
     <Window width={500} height={340}>
       <Window.Content>
-        <Stack mb={1}>
+        <Stack mb={1} textAlign="center">
           <Stack.Item grow>
             <Button
               fontSize={1.5} bold width="100%"
