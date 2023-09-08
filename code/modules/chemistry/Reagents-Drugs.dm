@@ -506,16 +506,12 @@ datum
 			depletion_rate = 0.1
 			taste = "bitter"
 			overdose = 60
-			target_organs = list("heart")
-			var/caffeine_rush = 1 //based off of amount
-
-			proc/update_stam_regen(caffeine_rush) //changing the stamina regen
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush")
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush", caffeine_rush)
+			threshold = THRESHOLD_INIT
+			var/heart_failure_counter = 0
 
 			proc/caffeine_message(var/mob/M, var/power) // condensing all the messages in the same place
+				if (ON_COOLDOWN(M, "Caffeine Message", 10 SECONDS)) //Reduce chat spam
+					return
 				switch(power)
 					if(1)
 						boutput(M, pick("<span class='notice'>You feel refreshingly energised.</span>",\
@@ -523,21 +519,14 @@ datum
 									"<span class='notice'>You feel motivated to do something.</span>",\
 									"<span class='notice'>You suddenly become aware of your own breathing.</span>"))
 					if(2)
-						if(prob(60))
-							boutput(M, pick("<span class='notice'>You a slight twitch in your arm.</span>",\
+						boutput(M, pick("<span class='notice'>You a slight twitch in your arm.</span>",\
 									"<span class='notice'>You feel a slight tension in your shoulders.</span>",\
 									"<span class='notice'>You feel resltess and anxious.</span>",\
 									"<span class='alert'>You feel ready for anything!</span>",\
 									"<span class='alert'>You feel a rush of energy.</span>",\
 									"<span class='alert'>You can feel a slight pressure in your skull.</span>"))
-						else
-							M.visible_message(pick("<span class='alert'><b>[M.name]</b> fidgets incessantly.</span>",\
-													"<span class='alert'><b>[M.name]</b> breathes heavily.</span>",\
-													"<span class='alert'><b>[M.name]</b> looks nervous.</span>",\
-													"<span class='alert'><b>[M.name]</b>'s eyes move erratically.</span>"))
 					if(3)
-						if(prob(60))
-							boutput(M, pick("<span class='alert'>You feel your chest clutching for a moment.</span>",\
+						boutput(M, pick("<span class='alert'>You feel your chest clutching for a moment.</span>",\
 									"<span class='alert'>YOU ARE ENERGY INCARNATE.</span>",\
 									"<span class='alert'>YOU FEEL LIKE YOU COULD CONQUER THE WORLD.</span>",\
 									"<span class='alert'>YOU CAN DO EVERYTHING, YOU ARE READY FOR ANY CHALLENGE.</span>",\
@@ -545,17 +534,11 @@ datum
 									"<span class='alert'>You feel a flash of pain in your head.</span>",\
 									"<span class='alert'>You are speed.</span>",\
 									"<span class='notice'>Something is wrong.</span>"))
-						else
-							M.visible_message(pick("<span class='alert'><b>[M.name]</b>'s limbs move about restlessly.</span>",\
-													"<span class='alert'><b>[M.name]</b> looks extremely nervous.</span>",\
-													"<span class='alert'><b>[M.name]</b> breathes heavily.</span>",\
-													"<span class='alert'><b>[M.name]</b> looks weirdly euphoric.</span>",\
-													"<span class='alert'><b>[M.name]</b> sweats profusely!</span>"))
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush", src.caffeine_rush)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush", 3)
 				..()
 
 			cross_threshold_under()
@@ -564,17 +547,17 @@ datum
 					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush")
 				..()
 
-			on_remove() // Removal both on cross_threshold_under and on_remove to avoid caffeine_rush jank
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush")
-				..()
-
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				var/caffeine_amt = holder.get_reagent_amount(src.id)
-				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
+				if (M.get_eye_blurry()) //reducess vision blurryness
+					M.change_eye_blurry(-1 * mult)
+				if (M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
+				if (heart_failure_counter > 150 && ishuman(M)) // This has to get pretty high for bad things to happen
+					var/mob/living/L = M
+					L.contract_disease(/datum/ailment/malady/heartfailure, null, null, 1)
+					heart_failure_counter = 0
 
 				if (caffeine_amt > 30) //Large amounts don't last as much as smaller trace amounts
 					depletion_rate = 0.2
@@ -584,13 +567,7 @@ datum
 
 				switch(caffeine_amt)
 					if(0 to 5)   //This is your trace amount of caffeine, doesn't do much
-						if (M.get_eye_blurry() && prob(50)) //reducess vision blurryness
-							M.change_eye_blurry(-1 * mult)
 						stun_resist = 3
-
-						if(caffeine_rush != 1)
-							caffeine_rush = 1
-							update_stam_regen(caffeine_rush)
 
 					if(5 to 20)  //A regular coffe mug's worth
 						if (M.get_eye_blurry() && prob(75))
@@ -603,86 +580,46 @@ datum
 						if (probmult(6))
 							caffeine_message(M, 1)
 
-						if(caffeine_rush != 2)
-							caffeine_rush = 2
-							update_stam_regen(caffeine_rush)
-
 					if(20 to 40) //A significant amount of caffeine
 						if (M.get_eye_blurry())
 							M.change_eye_blurry(-1 * mult)
 						stun_resist = 10
 						M.changeStatus("drowsy", -5 SECONDS)
 						M.dizziness = max(0,M.dizziness-5)
-
 						if (prob(35))
 							M.make_jittery(10 * mult)
 						if (probmult(9))
 							caffeine_message(M, pick(1,2))
 
-						if(caffeine_rush != 3)
-							caffeine_rush = 3
-							update_stam_regen(caffeine_rush)
-
 					if(40 to 60) //A unhealthy amount of caffeine
-						M.take_toxin_damage(0.25 * mult)
 						if (M.get_eye_blurry())
 							M.change_eye_blurry(-2 * mult)
 						stun_resist = 15
 						M.changeStatus("drowsy", -10 SECONDS)
 						M.dizziness = max(0,M.dizziness-7)
 						M.make_jittery(10 * mult)
-
 						if (probmult(10))
 							caffeine_message(M, pick(2,3))
 						else if (probmult(9))
 							M.emote(pick("twitch","twitch_v","blink_r", "shiver"))
-
-						if(caffeine_rush != 4)
-							caffeine_rush = 4
-							update_stam_regen(caffeine_rush)
-
-						if (ishuman(M))
-							var/mob/living/carbon/human/H = M
-							if (H.organHolder)
-								H.organHolder.damage_organs(0.5*mult, 0, 0.5*mult, target_organs, 15)
+						heart_failure_counter += mult //This can be bad for you over time
 
 					if(60 to INFINITY)  //Too much coffee. Way bad for you.
-						M.take_toxin_damage(0.5 * mult)
 						if (M.get_eye_blurry())
 							M.change_eye_blurry(-1 * mult)
 						stun_resist = 20
 						M.changeStatus("drowsy", -15 SECONDS)
 						M.dizziness = max(0,M.dizziness-10)
 						M.make_jittery(15 * mult)
-
 						if (probmult(13))
 							caffeine_message(M, 3)
 						else if (probmult(12))
 							M.emote(pick("shiver","twitch_v","blink_r","wheeze"))
 						else if(probmult(9) && !ON_COOLDOWN(M, "feeling_own heartbeat", 60 SECONDS)) //This can't be good for you
 							M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 20, 1)
-						else if(M.canmove && isturf(M.loc) && probmult(9) && !ON_COOLDOWN(M, "caffeine_pacing", 15 SECONDS))
-							M.visible_message("<span class='alert'><b>[M.name]</b> paces about restlessly.</span>")
+						else if(M.canmove && isturf(M.loc) && probmult(20))
 							step(M, pick(cardinal)) //Makes it hard for you to stay still
-							SPAWN(3 DECI SECONDS)
-								if(M.canmove && isturf(M.loc))
-									step(M, pick(cardinal))
-							SPAWN(6 DECI SECONDS)
-								if(M.canmove && isturf(M.loc))
-									step(M, pick(cardinal))
-							SPAWN(9 DECI SECONDS)
-								if(M.canmove && isturf(M.loc))
-									step(M, pick(cardinal))
-
-						if(caffeine_rush != 5)
-							caffeine_rush = 5
-							update_stam_regen(caffeine_rush)
-
-						var/damage_chance = clamp((20 + (caffeine_amt - 60)), 20, 100) //Increasing chance of heart damage
-						if (ishuman(M))
-							var/mob/living/carbon/human/H = M
-							if (H.organHolder) // Directly hurts your heart
-								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, damage_chance)
+						heart_failure_counter += 5 * mult // This can be really bad for you
 
 				..()
 				return
