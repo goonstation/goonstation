@@ -78,7 +78,7 @@
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
-	ui_interact(user)
+	src.ui_interact(user)
 
 /obj/item/paper/custom_suicide = 1
 /obj/item/paper/suicide(var/mob/user as mob)
@@ -958,11 +958,8 @@
 	src.publisher = pick_smart_string("newspaper.txt", "publisher")
 	src.name = "[src.publisher]"
 	src.generate_headline()
-	src.info = "<b>[src.headline]</b><br>"
 	src.generate_article()
-	src.desc = "Its from <b>[src.publisher]</b>. Its headline reads: <b>[src.headline]</b>"
-	if (prob(20)) // use a prewritten one instead of a randomly generated one
-		src.info += "<b>[src.headline]</b><br><br>[pick_smart_string("newspaper.txt", "article")]"
+	src.update_desc()
 
 /obj/item/paper/newspaper/ui_interact(mob/user, datum/tgui/ui)
 	if (!src.two_handed)
@@ -971,12 +968,12 @@
 
 /obj/item/paper/newspaper/attack_self(mob/user)
 	src.force_drop(user)
-	src.rollup()
+	src.rollup(user)
 	user.put_in_hand_or_drop(src)
 	user.UpdateName()
 	// todo: figure out how to make the thing ruffle so it doesn't look like the opening is as instant as it is.
 
-/obj/item/paper/newspaper/proc/rollup()
+/obj/item/paper/newspaper/proc/rollup(mob/user)
 	if (src.two_handed) // rolling it up
 		src.two_handed = FALSE
 		src.icon_state = "newspaper_rolled"
@@ -985,15 +982,21 @@
 		src.two_handed = TRUE
 		src.icon_state = "newspaper"
 		src.item_state = "newspaper"
+		src.ui_interact(user)
+
+/obj/item/paper/newspaper/proc/update_desc()
+	src.desc = "It's a newspaper from [src.publisher]. Its headline reads: '[src.headline]'"
 
 /obj/item/paper/newspaper/proc/generate_headline()
-	if (prob(80))
-		src.headline = pick_smart_string("newspaper.txt", "headline")
-		return
+	src.headline = pick_smart_string("newspaper.txt", "headline")
 	// todo: generate headlines randomly. Personally i'd rather keep handwritten ones only as they're better.
 
 /// generates a random newspaper article.
 /obj/item/paper/newspaper/proc/generate_article()
+	src.info += "<b>[src.headline]</b><br>"
+	if (prob(20)) // use a prewritten article instead of a randomly generated one
+		src.info += pick_smart_string("newspaper.txt", "article")
+		return
 	// The grammar is horrendous and I cannot figure out how to grammar enough to fix it.
 	// this could also be done much better using a far better system like better smart strings or something
 	// you're welcome to the challenge but this has absorbed too many hours of my life already, it's good enough.

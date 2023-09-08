@@ -361,7 +361,7 @@
 			boutput(user, "Information set.")
 			return
 		if ("set newspaper contents")
-			var/info_sel = input(user, "What do you want the article to read?", "Information Control", src.newspaper_info_raw)
+			var/info_sel = input(user, "What do you want the article to say?", "Information Control", src.newspaper_info_raw)
 			if (!info_sel)
 				return
 			src.declare_contents(info_sel, src.newspaper_info_raw, src.newspaper_info)
@@ -653,12 +653,14 @@
 		NP.desc = ""
 		if (src.newspaper_publisher)
 			NP.publisher = src.newspaper_publisher
-			NP.name = "[NP.publisher] newspaper"
+			NP.name = "[NP.publisher]"
 		if (src.newspaper_headline)
 			NP.headline = src.newspaper_headline
-		// it can auto generate headlines and publisher if left alone.
-		NP.desc = "Its from [NP.publisher]. Its headline reads: [NP.headline]"
-		NP.info = pick_smart_string("newspaper.txt", "article")
+			NP.info += "<b>[src.headline]</b><br>"
+		if (src.newspaper_info)
+			NP.info += src.newspaper_info
+		// it can auto generate headlines and publisher if left alone, that's handled in New() and overwritten here.
+		NP.update_desc()
 		TRANSFER_OR_DROP(src, NP)
 		newspapers_to_print--
 		src.ink_level -= 1
