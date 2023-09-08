@@ -191,9 +191,9 @@ datum
 					M.changeStatus("recent_trauma", -2 SECONDS * mult)
 				if(holder.has_reagent(src.id,10)) // large doses progress somewhat faster than small ones
 					counter += mult
-					depletion_rate = 0.4 * mult // depletes faster in large doses as well
+					depletion_rate = 0.4 // depletes faster in large doses as well
 				else
-					depletion_rate = 0.2 * mult
+					depletion_rate = 0.2
 
 				switch(counter += 1 * mult)
 					if(1 to 12)
@@ -202,7 +202,7 @@ datum
 						M.setStatus("drowsy", 40 SECONDS)
 						if(probmult(9)) M.emote(pick("smile","giggle","yawn"))
 					if(40 to INFINITY)
-						depletion_rate = 0.4 * mult  // depletes itself faster once it reaches KO levels
+						depletion_rate = 0.4  // depletes itself faster once it reaches KO levels
 						M.setStatusMin("paralysis", 6 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 				..()
