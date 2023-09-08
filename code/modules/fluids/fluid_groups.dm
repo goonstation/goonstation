@@ -58,9 +58,9 @@
 			if (my_group.last_depth_level == 1)
 				. = "very shallow"
 			else if (my_group.last_depth_level == 2)
-				. = "at knee height"
+				. = "knee height"
 			else if (my_group.last_depth_level == 3)
-				. = "at chest height"
+				. = "chest height"
 			else if (my_group.last_depth_level == 4)
 				. = "very deep"
 

@@ -175,7 +175,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 			return
 		if (!src.group || !src.group.reagents)
 			return
-		. += "<br><b class='notice'>[src.name] reagent analysis:</b>"
+		. += "<br><b class='notice'>[src.name] analysis:</b>"
 		. += "<br><span class='notice'>[src.group.reagents.get_description(user,(RC_VISIBLE | RC_SPECTRO))]</span>"
 
 
