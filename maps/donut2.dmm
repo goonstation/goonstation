@@ -51763,10 +51763,6 @@
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/black{
-	dir = 5;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/black{
 	dir = 9;
 	icon_state = "line1"
 	},

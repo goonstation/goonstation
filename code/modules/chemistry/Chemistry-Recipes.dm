@@ -583,7 +583,7 @@
 		instant = 1
 		mix_phrase = "The mixture implodes suddenly."
 		hidden = TRUE
-#ifdef CHEM_REACTION_PRIORITY
+#ifdef CHEM_REACTION_PRIORITIES
 		priority = 20
 #endif
 		on_reaction(var/datum/reagents/holder, var/created_volume)
@@ -3468,7 +3468,7 @@
 		required_reagents = list("potassium" = 1, "sugar" = 1, "phosphorus" = 1, "stabiliser" = 1)
 		result_amount = 3
 		mix_phrase = "The mixture sets into a greyish powder!"
-#ifdef CHEM_REACTION_PRIORITY
+#ifdef CHEM_REACTION_PRIORITIES
 		priority = 9
 #endif
 
@@ -3482,7 +3482,7 @@
 		result_amount = 3
 		mix_phrase = "The mixture quickly turns into a pall of smoke!"
 		hidden = TRUE
-#ifdef CHEM_REACTION_PRIORITY
+#ifdef CHEM_REACTION_PRIORITIES
 		priority = 9
 #endif
 		on_reaction(var/datum/reagents/holder, var/created_volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
