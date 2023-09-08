@@ -1867,6 +1867,8 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	name = "makeshift laser rifle"
 	icon_state = "laser"
 	item_state = "laser" //TODO better sprites
+	w_class = W_CLASS_BULKY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	cell_type = null
 	can_swap_cell = FALSE
 	rechargeable = FALSE
@@ -1874,7 +1876,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	two_handed = TRUE
 	can_dual_wield = FALSE
 	desc = "A laser rifle cobbled together from various supplies found around the station, probably not the most reliable weapon in a firefight."
-	muzzle_flash = "muzzle_flash_laser"
+	muzzle_flash = "muzzle_flash_phaser"
 	charge_icon_state = "laser"
 	///What light source we use for the rifle
 	var/obj/item/device/light/flashlight/our_flashlight
@@ -1902,6 +1904,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		processing_items |= src
 		set_current_projectile(new/datum/projectile/laser/makeshift)
 		projectiles = list(current_projectile)
+		AddComponent(/datum/component/holdertargeting/fullauto, 3, 3, 1)
 		..()
 
 	Exited(Obj, newloc)
@@ -1987,13 +1990,13 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 				explosion(src, get_turf(src), -1, -1, 1, 2)
 				qdel(src)
 				return
-			heat += rand(20,25)
-			our_cell.use(current_projectile.cost)
+			heat += rand(5,7)
 			update_icon()
-			if (heat > 120 || (heat > 100 && prob(40)))
+			if (heat > 120 || (heat > 100 && prob(25)))
 				boutput(user,"<span class='alert'>[src]'s light source breaks due to the excess heat within!</span>")
 				break_light()
 				return
+			our_cell.use(current_projectile.cost)
 		return ..(target, start, user)
 
 /obj/item/makeshift_laser_barrel
