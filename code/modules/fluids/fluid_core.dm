@@ -11,7 +11,7 @@ var/mutable_appearance/fluid_ma
 ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 
 /obj/fluid
-	name = "fluid"
+	name = "Fluid"
 	desc = "It's a free-flowing liquid state of matter!"
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "15"
@@ -175,7 +175,8 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 			return
 		if (!src.group || !src.group.reagents)
 			return
-		. = "<br><span class='notice'>[src.group.reagents.get_description(user,(RC_VISIBLE | RC_SPECTRO))]</span>"
+		. += "<br><b class='notice'>[src.name] reagent analysis:</b>"
+		. += "<br><span class='notice'>[src.group.reagents.get_description(user,(RC_VISIBLE | RC_SPECTRO))]</span>"
 
 
 	attack_hand(mob/user)

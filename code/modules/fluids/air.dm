@@ -20,7 +20,7 @@
 // This is messy as fuck, but its the fastest solution i could think of CPU wise
 
 /obj/fluid/airborne
-	name = "gas"
+	name = "Vapor"
 	desc = "It's a free-flowing airborne state of matter!"
 	icon_state = "airborne"
 	do_iconstate_updates = 0

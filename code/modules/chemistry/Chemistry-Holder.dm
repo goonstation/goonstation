@@ -940,6 +940,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	/// returns text description of reagent(s)
 	/// plus exact text of reagents if using correct equipment
 	proc/get_description(mob/user, rc_flags=0)
+
 		if (rc_flags == 0)	// Report nothing about the reagents in this case
 			return null
 
@@ -947,20 +948,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			. += get_inexact_description(rc_flags)
 			if(rc_flags & RC_SPECTRO)
 				. += get_exact_description(user)
-		// If we click something on/under the floor, then analyze fluid/smoke as well
-		if (src.my_atom.level <= 1)
-			var/turf/T = get_turf(src.my_atom)
-			var/obj/fluid/liquid = T.active_liquid
-			var/obj/fluid/airborne/gas = T.active_airborne_liquid
-
-			// Bit roundabout to use get_desc here instead of keeping it all in reagent code,
-			// but we can't actually identify which fluid obj is being examined from within'
-			// fluid group code, as my_atom is null. Thus we need to go through the obj for the
-			// distance check.
-			if (liquid)
-				. += liquid.get_desc(get_dist(T, user), user)
-			if (gas)
-				. += gas.get_desc(get_dist(T, user), user)
 		// if we didn't add ANY text in the above code, add this placeholder text
 		if (!length(.))
 			. += "<span class='notice'>Nothing in it.</span>"
@@ -982,6 +969,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 			SEND_SIGNAL(src, COMSIG_REAGENTS_ANALYZED, user)
 
+
+			if (istype(src, /datum/reagents/fluid_group))
 			. += "<br><span class='alert'>Spectroscopic analysis:</span>"
 
 			for(var/current_id in reagent_list)
@@ -1022,15 +1011,16 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		if(rc_flags & RC_VISIBLE)
 			if(rc_flags & RC_SCALE)
-				. += "<span class='notice'>[src.my_atom] contains [total_volume] units of \a [t]-colored [state_text].</span>"
+				. += "<span class='notice'>It contains [total_volume] units of \a [t]-colored [state_text].</span>"
+			else if (full_text)
+				. += "<span class='notice'>It is [full_text] of \a [t]-colored [state_text].</span>"
 			else
-				. += "<span class='notice'>[src.my_atom] is [full_text] of \a [t]-colored [state_text].</span>"
+				. += "<span class='notice'>It is \a [t]-colored [state_text].</span>"
 		else
 			if(rc_flags & RC_SCALE)
-				. += "<span class='notice'>[src.my_atom] contains [total_volume] units.</span>"
-			else
-				if(rc_flags & RC_FULLNESS)
-					. += "<span class='notice'>[src.my_atom] is [full_text].</span>"
+				. += "<span class='notice'>It contains [total_volume] units.</span>"
+			else if((rc_flags & RC_FULLNESS) && full_text)
+				. += "<span class='notice'>It is [full_text].</span>"
 
 		return .
 

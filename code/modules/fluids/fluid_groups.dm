@@ -53,16 +53,16 @@
 				my_group.drain(remove_source, fluids_to_remove, remove_reagent = 0)
 
 	get_reagents_fullness()
-		.= "empty"
+		. = null
 		if (my_group)
-			if(my_group.last_depth_level == 1)
-				.= "very shallow"
+			if (my_group.last_depth_level == 1)
+				. = "very shallow"
 			else if (my_group.last_depth_level == 2)
-				.= "at knee height"
-			if(my_group.last_depth_level == 3)
-				.= "at chest height"
-			if(my_group.last_depth_level == 4)
-				.= "very deep"
+				. = "at knee height"
+			else if (my_group.last_depth_level == 3)
+				. = "at chest height"
+			else if (my_group.last_depth_level == 4)
+				. = "very deep"
 
 	temperature_reagents(exposed_temperature, exposed_volume = 100, exposed_heat_capacity = 100, change_cap = 15, change_min = 0.0000001, loud = 0)
 		..()
