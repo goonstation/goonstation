@@ -656,7 +656,7 @@
 			NP.name = "[NP.publisher]"
 		if (src.newspaper_headline)
 			NP.headline = src.newspaper_headline
-			NP.info += "<b>[src.headline]</b><br>"
+			NP.info += "<b>[src.newspaper_headline]</b><br>"
 		if (src.newspaper_info)
 			NP.info += src.newspaper_info
 		// it can auto generate headlines and publisher if left alone, that's handled in New() and overwritten here.
