@@ -476,7 +476,7 @@ var/datum/artifact_controller/artifact_controls
 		'sound/musical_instruments/artifact/Artifact_Eldritch_3.ogg',
 		'sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg')
 	fault_types = list(
-		/datum/artifact_fault/murder = 2,
+//		/datum/artifact_fault/murder = 2,
 		/datum/artifact_fault/messager/creepy_whispers = 5,
 		/datum/artifact_fault/messager/what_dead_people_said = 5,
 		/datum/artifact_fault/poison = 10,
