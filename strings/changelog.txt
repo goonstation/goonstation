@@ -1,5 +1,9 @@
 
 (t)fri sep 08 23
+(u)Bisar
+(p)15344
+(e)🪲🗺|C-Bug, A-Mapping
+(*)QM Barcode computers have been brought in line with all other computer terminals. Now you can disassemble them for repair, renovation... or larceny!
 (u)Glamurio (Ryou)
 (p)15730
 (e)💅🍝|C-QoL, A-Catering
