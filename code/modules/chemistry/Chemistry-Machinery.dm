@@ -335,8 +335,8 @@ TYPEINFO(/obj/machinery/chem_shaker)
 		src.vis_contents.Add(src.platform_holder)
 
 	disposing()
-		for (var/obj/item/reagent_containers/glass/B in src.held_containers)
-			MOVE_OUT_TO_TURF_SAFE(B, src)
+		for (var/obj/item/reagent_containers/glass/glass_container in src.held_containers)
+			MOVE_OUT_TO_TURF_SAFE(glass_container, src)
 		..()
 
 	attack_hand(mob/user)
@@ -348,9 +348,9 @@ TYPEINFO(/obj/machinery/chem_shaker)
 			if (FALSE)
 				src.set_active()
 
-	attackby(obj/item/reagent_containers/glass/B, var/mob/user)
-		if(istype(B, /obj/item/reagent_containers/glass))
-			src.try_insert(B, user)
+	attackby(obj/item/reagent_containers/glass/glass_container, var/mob/user)
+		if(istype(glass_container, /obj/item/reagent_containers/glass))
+			src.try_insert(glass_container, user)
 
 	ex_act(severity)
 		switch(severity)
@@ -376,8 +376,8 @@ TYPEINFO(/obj/machinery/chem_shaker)
 	process(mult)
 		..()
 		if (src.status & (NOPOWER|BROKEN)) return src.set_inactive()
-		for (var/obj/item/reagent_containers/glass/container in src.held_containers)
-			container.reagents?.physical_shock(5)
+		for (var/obj/item/reagent_containers/glass/glass_container in src.held_containers)
+			glass_container.reagents?.physical_shock(5)
 
 	proc/arrange_containers()
 		if (!src.count_held_containers()) return
@@ -409,7 +409,7 @@ TYPEINFO(/obj/machinery/chem_shaker)
 		src.audible_message("<span class='notice'>[src] dies down, returning its platform to its initial position.</span>")
 		processing_items.Remove(src)
 
-	proc/try_insert(obj/item/reagent_containers/glass/B, var/mob/user)
+	proc/try_insert(obj/item/reagent_containers/glass/glass_container, var/mob/user)
 		if (src.status & (NOPOWER|BROKEN))
 			user.show_text("[src] seems to be out of order.", "red")
 			return
@@ -423,35 +423,35 @@ TYPEINFO(/obj/machinery/chem_shaker)
 			return
 
 		user.drop_item()
-		B.set_loc(src)
-		B.appearance_flags |= RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-		B.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
-		B.event_handler_flags |= NO_MOUSEDROP_QOL
+		glass_container.set_loc(src)
+		glass_container.appearance_flags |= RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		glass_container.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
+		glass_container.event_handler_flags |= NO_MOUSEDROP_QOL
 		var/append_container = TRUE
 		for (var/i in 1 to length(src.held_containers))
 			if (!src.held_containers[i])
-				src.held_containers[i] = B
+				src.held_containers[i] = glass_container
 				append_container = FALSE
 				break
 		if (append_container)
-			src.held_containers += B
-		src.platform_holder.vis_contents += B
+			src.held_containers += glass_container
+		src.platform_holder.vis_contents += glass_container
 		src.arrange_containers()
-		RegisterSignal(B, COMSIG_ATTACKHAND, PROC_REF(remove_container))
+		RegisterSignal(glass_container, COMSIG_ATTACKHAND, PROC_REF(remove_container))
 		boutput(user, "You add the beaker to the machine!")
 
-	proc/remove_container(obj/item/reagent_containers/glass/B)
-		if (!(B in src.contents)) return
+	proc/remove_container(obj/item/reagent_containers/glass/glass_container)
+		if (!(glass_container in src.contents)) return
 		for (var/i in 1 to length(src.held_containers))
-			if (src.held_containers[i] == B)
+			if (src.held_containers[i] == glass_container)
 				src.held_containers[i] = null
-		MOVE_OUT_TO_TURF_SAFE(B, src)
-		B.appearance_flags = initial(B.appearance_flags)
-		B.vis_flags = initial(B.vis_flags)
-		B.event_handler_flags = initial(B.event_handler_flags)
-		src.platform_holder.vis_contents -= B
+		MOVE_OUT_TO_TURF_SAFE(glass_container, src)
+		glass_container.appearance_flags = initial(glass_container.appearance_flags)
+		glass_container.vis_flags = initial(glass_container.vis_flags)
+		glass_container.event_handler_flags = initial(glass_container.event_handler_flags)
+		src.platform_holder.vis_contents -= glass_container
 		src.arrange_containers()
-		UnregisterSignal(B, COMSIG_ATTACKHAND)
+		UnregisterSignal(glass_container, COMSIG_ATTACKHAND)
 
 	chemistry
 		icon = 'icons/obj/shaker_chem.dmi'
