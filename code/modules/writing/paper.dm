@@ -961,12 +961,20 @@
 	src.info = "<b>[src.headline]</b><br>"
 	src.generate_article()
 	src.desc = "Its from <b>[src.publisher]</b>. Its headline reads: <b>[src.headline]</b>"
+	if (prob(20)) // use a prewritten one instead of a randomly generated one
+		src.info += "<b>[src.headline]</b><br><br>[pick_smart_string("newspaper.txt", "article")]"
+
+/obj/item/paper/newspaper/ui_interact(mob/user, datum/tgui/ui)
+	if (!src.two_handed)
+		return // only read the contents if the newspaper is unfurled
+	..()
 
 /obj/item/paper/newspaper/attack_self(mob/user)
 	src.force_drop(user)
 	src.rollup()
 	user.put_in_hand_or_drop(src)
 	user.UpdateName()
+	// todo: figure out how to make the thing ruffle so it doesn't look like the opening is as instant as it is.
 
 /obj/item/paper/newspaper/proc/rollup()
 	if (src.two_handed) // rolling it up
@@ -980,14 +988,12 @@
 
 /obj/item/paper/newspaper/proc/generate_headline()
 	if (prob(80))
-		return pick_smart_string("newspaper.txt", "headline")
+		src.headline = pick_smart_string("newspaper.txt", "headline")
+		return
 	// todo: generate headlines randomly. Personally i'd rather keep handwritten ones only as they're better.
 
 /// generates a random newspaper article.
 /obj/item/paper/newspaper/proc/generate_article()
-	if (prob(20)) // low chance to get a manually written one.
-		src.info += "<br><br>[pick_smart_string("newspaper.txt", "article")]"
-		return
 	// The grammar is horrendous and I cannot figure out how to grammar enough to fix it.
 	// this could also be done much better using a far better system like better smart strings or something
 	// you're welcome to the challenge but this has absorbed too many hours of my life already, it's good enough.
