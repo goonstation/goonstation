@@ -940,7 +940,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	/// returns text description of reagent(s)
 	/// plus exact text of reagents if using correct equipment
 	proc/get_description(mob/user, rc_flags=0)
-
 		if (rc_flags == 0)	// Report nothing about the reagents in this case
 			return null
 
@@ -969,8 +968,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 			SEND_SIGNAL(src, COMSIG_REAGENTS_ANALYZED, user)
 
-
-			if (istype(src, /datum/reagents/fluid_group))
 			. += "<br><span class='alert'>Spectroscopic analysis:</span>"
 
 			for(var/current_id in reagent_list)
