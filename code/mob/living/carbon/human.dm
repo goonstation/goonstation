@@ -1356,7 +1356,7 @@
 		. = "<span class='name'>"
 	else
 		. = "<span class='name' data-ctx='\ref[src.mind]'>"
-	if (src.wear_mask.vchange && src.wear_mask)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
+	if (src.wear_mask?.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
 		if (src.wear_id)
 			if (just_name_itself)
 				return src.wear_id:registered
