@@ -688,9 +688,6 @@ datum
 					elecflash(location)
 					SPAWN(rand(5,15))
 						if(!holder || !holder.my_atom) return // runtime error fix
-						if(istype(holder.my_atom, /obj))
-							var/obj/container = holder.my_atom
-							container.shatter_chemically(projectiles = TRUE)
 						switch(our_amt)
 							if(0 to 20)
 								holder.my_atom.visible_message("<b>The black powder ignites!</b>")
@@ -732,6 +729,9 @@ datum
 									holder.remove_reagent(id, our_amt)
 								else
 									holder.del_reagent(id)
+						if(istype(holder.my_atom, /obj))
+							var/obj/container = holder.my_atom
+							container.shatter_chemically(projectiles = TRUE)
 
 			reaction_obj(var/obj/O, var/volume)
 				return

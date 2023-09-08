@@ -2124,9 +2124,6 @@
 		reaction_icon_state = list("reaction_explode-1", "reaction_explode-2")
 		reaction_icon_color = "#ffffff"
 		on_reaction(var/datum/reagents/holder, var/created_volume)
-			if(istype(holder.my_atom, /obj))
-				var/obj/container = holder.my_atom
-				container.shatter_chemically(projectiles = TRUE)
 			if (holder.last_basic_explosion >= ticker.round_elapsed_ticks - 3)
 				return
 			holder.last_basic_explosion = ticker.round_elapsed_ticks
@@ -2135,6 +2132,9 @@
 				var/turf/location = get_turf(my_atom)
 				explosion(my_atom, location, -1,-1,0,1)
 				fireflash(location, 0)
+				if(istype(holder.my_atom, /obj))
+					var/obj/container = holder.my_atom
+					container.shatter_chemically(projectiles = TRUE)
 			else
 				var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
@@ -2142,7 +2142,6 @@
 					holder.covered_cache -= location
 					explosion_new(my_atom, location, 2.25/amt)
 					fireflash(location, 0)
-			return
 
 	explosion_barium // get in
 		name = "Barium Explosion"
@@ -2169,12 +2168,12 @@
 
 			var/turf/location = 0
 			if (my_atom)
-				if(istype(holder.my_atom, /obj))
-					var/obj/container = holder.my_atom
-					container.shatter_chemically(projectiles = TRUE)
 				location = get_turf(my_atom)
 				explosion(my_atom, location, -1,-1,0,1)
 				fireflash(location, 0)
+				if(istype(holder.my_atom, /obj))
+					var/obj/container = holder.my_atom
+					container.shatter_chemically(projectiles = TRUE)
 			else
 				var/amt = max(1, (holder.covered_cache.len * (total_volume_created / holder.covered_cache_volume)))
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
@@ -2199,12 +2198,12 @@
 
 			var/turf/location = 0
 			if (my_atom)
-				if(istype(holder.my_atom, /obj))
-					var/obj/container = holder.my_atom
-					container.shatter_chemically(projectiles = TRUE)
 				location = get_turf(my_atom)
 				explosion(my_atom, location, -1,-1,0,1)
 				fireflash(location, 0)
+				if(istype(holder.my_atom, /obj))
+					var/obj/container = holder.my_atom
+					container.shatter_chemically(projectiles = TRUE)
 			else
 				var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
@@ -3008,12 +3007,12 @@
 				SPAWN(6 DECI SECONDS) //you get a slight moment to react/be surprised
 					qdel(shine)
 					holder.del_reagent("photophosphide")
-					if(istype(holder.my_atom, /obj))
-						var/obj/container = holder.my_atom
-						container.shatter_chemically(projectiles = TRUE)
 					explosion(holder.my_atom, T, -1,-1,0,1)
 					playsound(get_turf(holder.my_atom), 'sound/effects/Explosion1.ogg', 50, 1)
 					fireflash(T, 0)
+					if(istype(holder.my_atom, /obj))
+						var/obj/container = holder.my_atom
+						container.shatter_chemically(projectiles = TRUE)
 
 	photophosphide_decay //decays in low amounts
 		name = "Photophosphide Decay"
@@ -3316,11 +3315,11 @@
 
 			var/turf/location = 0
 			if (my_atom)
+				location = get_turf(my_atom)
+				explosion(my_atom, location, 0, 1, 4, 5)
 				if(istype(holder.my_atom, /obj))
 					var/obj/container = holder.my_atom
 					container.shatter_chemically(projectiles = TRUE)
-				location = get_turf(my_atom)
-				explosion(my_atom, location, 0, 1, 4, 5)
 			else
 				var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
@@ -3343,11 +3342,11 @@
 
 			var/turf/location = 0
 			if (my_atom)
+				location = get_turf(my_atom)
+				explosion(my_atom, location, -1, 0, 2, 3)
 				if(istype(holder.my_atom, /obj))
 					var/obj/container = holder.my_atom
 					container.shatter_chemically(projectiles = TRUE)
-				location = get_turf(my_atom)
-				explosion(my_atom, location, -1, 0, 2, 3)
 			else
 				var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
@@ -4078,12 +4077,12 @@
 
 			var/turf/location = 0
 			if (my_atom)
-				if(istype(holder.my_atom, /obj))
-					var/obj/container = holder.my_atom
-					container.shatter_chemically(projectiles = TRUE)
 				location = get_turf(my_atom)
 				fireflash(holder.my_atom, 1)
 				explosion(my_atom, get_turf(my_atom), -1, -1, 1, 2)
+				if(istype(holder.my_atom, /obj))
+					var/obj/container = holder.my_atom
+					container.shatter_chemically(projectiles = TRUE)
 			else
 				var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
