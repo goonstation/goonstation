@@ -659,7 +659,7 @@ datum
 							caffeine_message(M, 3)
 						else if (probmult(12))
 							M.emote(pick("shiver","twitch_v","blink_r","wheeze"))
-						else if(probmult(9) && !ON_COOLDOWN(M, "feeling_own heartbeat", 40 SECONDS)) //This can't be good for you
+						else if(probmult(9) && !ON_COOLDOWN(M, "feeling_own heartbeat", 60 SECONDS)) //This can't be good for you
 							M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 20, 1)
 						else if(M.canmove && isturf(M.loc) && probmult(9) && !ON_COOLDOWN(M, "caffeine_pacing", 15 SECONDS))
 							M.visible_message("<span class='alert'><b>[M.name]</b> paces about restlessly.</span>")
