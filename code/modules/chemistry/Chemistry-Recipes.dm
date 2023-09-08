@@ -3015,7 +3015,7 @@
 	photophosphide_decay //decays in low amounts
 		name = "Photophosphide Decay"
 		id = "photophosphide_decay"
-		required_reagents = list("photophosphide" = 1)
+		required_reagents = list("photophosphide" = 0)
 		instant = FALSE
 		result_amount = 1
 		reaction_speed = 3
@@ -3026,6 +3026,9 @@
 				return TRUE
 			else
 				return FALSE
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			holder.remove_reagent("photophosphide", src.reaction_speed)
 
 	styptic_powder // COGWERKS CHEM REVISION PROJECT: no idea, probably a magic drug
 		name = "Styptic Powder"
