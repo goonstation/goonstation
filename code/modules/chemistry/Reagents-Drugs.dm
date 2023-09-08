@@ -644,7 +644,7 @@ datum
 						if (ishuman(M))
 							var/mob/living/carbon/human/H = M
 							if (H.organHolder)
-								H.organHolder.damage_organs(0.5*mult, 0, 0.5*mult, target_organs, 15)
+								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 15)
 
 					if(60 to INFINITY)  //Too much coffee. Way bad for you.
 						M.take_toxin_damage(0.5 * mult)
