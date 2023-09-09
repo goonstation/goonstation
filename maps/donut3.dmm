@@ -50200,15 +50200,6 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/station/security/hos)
-"pwL" = (
-/obj/machinery/conveyor/EW{
-	id = "disposals";
-	move_lag = 30;
-	operating = 1
-	},
-/obj/plasticflaps,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "pwN" = (
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -55950,7 +55941,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/storage/tech)
 "rjl" = (
-/obj/plasticflaps,
 /obj/machinery/conveyor/WE{
 	id = "disposals";
 	move_lag = 30;
@@ -55959,6 +55949,9 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "crusher1";
 	name = "crusher door"
+	},
+/obj/plasticflaps{
+	dir = 4
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
@@ -60090,6 +60083,17 @@
 "sxd" = (
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
+"sxg" = (
+/obj/machinery/conveyor/EW{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/plasticflaps{
+	dir = 4
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "sxh" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -105821,7 +105825,7 @@ fXF
 nrz
 kEQ
 ieL
-ltH
+sxg
 ieL
 rdj
 rdj
@@ -106424,8 +106428,8 @@ uOO
 uOO
 cWf
 qMP
-ieL
-pwL
+pFp
+ltH
 ieL
 rdj
 rdj
