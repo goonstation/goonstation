@@ -42,21 +42,21 @@ TYPEINFO(/datum/component/assembly)
 	return try_combination(to_combine_atom, user)
 
 /datum/component/assembly/proc/try_combination(var/atom/checked_atom, var/mob/user)
-	var/is_combineable = FALSE
+	var/is_combinable = FALSE
 	//if to_combine_item is a list, we look if we find the item in there
 	if (islist(src.to_combine_item))
-		var/list/combineable_items = src.to_combine_item
-		for(var/to_checked_type in combineable_items)
+		var/list/combinable_items = src.to_combine_item
+		for(var/to_checked_type in combinable_items)
 			if(istype(checked_atom, to_checked_type))
-				is_combineable = TRUE
+				is_combinable = TRUE
 	//if it is a number, it most likely is a bitflag we passed
 	else if (isnum_safe(src.to_combine_item))
 		if (istool(checked_atom, src.to_combine_item))
-			is_combineable = TRUE
+			is_combinable = TRUE
 	else if (istype(checked_atom, src.to_combine_item))
-		is_combineable = TRUE
+		is_combinable = TRUE
 
-	if(is_combineable)
+	if(is_combinable)
 		//if the assembly is valid, we go and call the proc
 		//we need to return true so onattack does not trigger. Else we would still attack a completed assembly
 		return call(src.parent, src.valid_assembly_proc)(checked_atom, user)
