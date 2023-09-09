@@ -11,7 +11,7 @@ var/mutable_appearance/fluid_ma
 ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 
 /obj/fluid
-	name = "Fluid"
+	name = "fluid"
 	desc = "It's a free-flowing liquid state of matter!"
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "15"
@@ -175,7 +175,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 			return
 		if (!src.group || !src.group.reagents)
 			return
-		. += "<br><b class='notice'>[src.name] analysis:</b>"
+		. += "<br><b class='notice'>[capitalize(src.name)] analysis:</b>"
 		. += "<br><span class='notice'>[src.group.reagents.get_description(user,(RC_VISIBLE | RC_SPECTRO))]</span>"
 
 
@@ -525,6 +525,8 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 	update_icon(var/neighbor_was_removed = 0)  //BE WARNED THIS PROC HAS A REPLICA UP ABOVE IN FLUID GROUP UPDATE_LOOP. DO NOT CHANGE THIS ONE WITHOUT MAKING THE SAME CHANGES UP THERE OH GOD I HATE THIS
 
 		if (!src.group || !src.group.reagents) return
+
+
 
 		var/color_changed = 0
 		var/datum/color/average = src.group.average_color ? src.group.average_color : src.group.reagents.get_average_color()
