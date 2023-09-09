@@ -19,7 +19,7 @@
 /obj/crevice{
 	pixel_x = -30
 	},
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "g" = (
@@ -38,7 +38,7 @@
 /area/prefab/martian_glomp)
 "k" = (
 /obj/decal/cleanable/slime,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "l" = (
@@ -194,7 +194,7 @@
 /turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "U" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "Z" = (

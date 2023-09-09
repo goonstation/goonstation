@@ -8,6 +8,7 @@
 	icon_state = "interdictor"
 	power_usage = 1250 //drawn while interdiction field is active; charging is a separate usage value that can be concurrent
 	density = 1
+	var/resisted = FALSE //Changes if someone is being protected from a radstorm
 	anchored = UNANCHORED
 	req_access = list(access_engineering)
 
@@ -267,11 +268,14 @@
 		message_admins("Interdictor at ([log_loc(src)]) is missing a power cell. This is not supposed to happen, yell at kubius")
 		return
 	if(anchored)
+		if (src.resisted)
+			radstorm_interdict(src)
+			src.resisted = FALSE
 		if(intcap.charge < intcap.maxcharge && powered())
 			var/amount_to_add = min(round(intcap.maxcharge - intcap.charge, 10), src.chargerate)
 			if(amount_to_add)
 				var/added = intcap.give(amount_to_add)
-				if(!src.canInterdict)
+				if(!src.canInterdict && !ON_COOLDOWN(src, "interdictor_noise", 20 SECONDS))
 					playsound(src.loc, src.sound_interdict_run, 5, 0, 0, 0.8)
 				use_power(added / CELLRATE)
 		if(intcap.charge >= (intcap.maxcharge * 0.7) && !src.canInterdict)
@@ -286,7 +290,7 @@
 	if(src.cumulative_cost)
 		if(src.cumulative_cost >= 50) //if the cost was very minor, don't even make a sound
 			var/sound_strength = clamp(cumulative_cost/10,5,25)
-			if(src.canInterdict)
+			if(src.canInterdict && !ON_COOLDOWN(src, "interdictor_noise", 20 SECONDS))
 				playsound(src.loc, src.sound_interdict_run, sound_strength, 0)
 		src.cumulative_cost = 0
 	if(src.radstorm_paid)
@@ -331,11 +335,11 @@
 		return 1
 
 ///Specialized radiation storm interdiction proc that allows multiple protections under a single unified cost per process.
-/obj/machinery/interdictor/proc/radstorm_interdict(var/target = null)
-	var/use_cost = 400 //how much it costs per machine tick to interdict radstorms, regardless of number of mobs protected
+/obj/machinery/interdictor/proc/radstorm_interdict()
+	var/use_cost = 350 //how much it costs per machine tick to interdict radstorms, regardless of number of mobs protected
+	if (!src.resisted) //Don't spend power if no one is around to protect
+		return
 	if (status & BROKEN || !src.canInterdict)
-		return 0
-	if (!target || !IN_RANGE(src,target,src.interdict_range))
 		return 0
 	if (!intcap)
 		src.stop_interdicting()
@@ -577,7 +581,7 @@ TYPEINFO(/obj/item/interdictor_board)
 			if(6)
 				if (istype(I, /obj/item/sheet))
 					var/obj/item/sheet/sheets = I
-					if (sheets.amount < 4 || !(sheets.material.material_flags & MATERIAL_METAL))
+					if (sheets.amount < 4 || !(sheets.material.getMaterialFlags() & MATERIAL_METAL))
 						boutput(user, "<span style=\"color:red\">You don't have enough metal to install the outer covers (4 required).</span>")
 					else
 						actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)

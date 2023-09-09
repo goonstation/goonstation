@@ -2,7 +2,6 @@
 //Turfs
 //Areas
 //Logs
-//Critters
 //Decor stuff
 //Items
 //Clothing
@@ -497,47 +496,6 @@ var/sound/iomoon_alarm_sound = null
 			"fascinating, but that's no reason to ignore existing regulations",
 			"and safety procedures in place for the magma chamber area.")
 
-//Critters
-/obj/critter/lavacrab
-	name = "magma crab"
-	desc = "A strange beast resembling a crab boulder.  Not to be confused with a rock lobster."
-	icon_state = "lavacrab"
-	density = 1
-	anchored = ANCHORED
-	health = 30
-	aggressive = 1
-	defensive = 1
-	wanderer = 0
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	atkcarbon = 0
-	atksilicon = 0
-	firevuln = 0.1
-	brutevuln = 0.4
-	angertext = "grumbles at"
-	death_text = "%src% flops over dead!"
-	butcherable = 0
-
-	CritterAttack(mob/M)
-		src.attacking = 1
-		src.visible_message("<span class='alert'><B>[src]</B> pinches [M] with its claws!</span>")
-		random_brute_damage(M, 3,1)
-		if (M.stat || M.getStatusDuration("paralysis"))
-			src.task = "thinking"
-			src.attacking = 0
-			return
-		SPAWN(3.5 SECONDS)
-			src.attacking = 0
-
-	ChaseAttack(mob/M)
-		return CritterAttack(M)
-
-	CritterDeath()
-		..()
-
-	ai_think()
-		. = ..()
-		anchored = alive
-
 //Decor
 
 /obj/shrub/dead
@@ -1004,6 +962,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				START_TRACKING_CAT(TR_CAT_CRITTERS)
 
 			process()
+				SHOULD_NOT_SLEEP(TRUE)
 				if (last_noise_time + last_noise_length < ticker.round_elapsed_ticks)
 					if (health <= 10)
 						playsound(src.loc, 'sound/machines/lavamoon_rotors_fast.ogg', 50, 0)
@@ -1321,10 +1280,10 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	. = ..()
 	if(isnull(src.material))
 		return
-	var/found_negative = (src.material.mat_id == "negativematter")
+	var/found_negative = (src.material.getID() == "negativematter")
 	if(!found_negative)
-		for(var/datum/material/parent_mat in src.material.parent_materials)
-			if(parent_mat.mat_id == "negativematter")
+		for(var/datum/material/parent_mat in src.material.getParentMaterials())
+			if(parent_mat.getID() == "negativematter")
 				found_negative = TRUE
 				break
 	if(found_negative)

@@ -119,6 +119,8 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	var/right_spinning //! boolean for the spaghettification animation spin direction
 	///Count for rate-limiting the spaghettification effect
 	var/spaget_count = 0
+	var/katamari_mode = FALSE //! If true the sucked-in objects will get stuck to the singularity
+	var/num_absorbed = 0 //! Number of objects absorbed by the singularity
 
 
 #ifdef SINGULARITY_TIME
@@ -280,7 +282,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if(QDELETED(A)) // Don't bump that which no longer exists
 		return
 
-	if(src.spaget_count < 25)
+	num_absorbed++
+
+	if(src.spaget_count < 25 && !katamari_mode)
 		src.spaget_count++
 		var/spaget_time = 15 SECONDS
 		var/obj/dummy/spaget_overlay = new()
@@ -309,6 +313,24 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.spaget_count--
 			qdel(spaget_overlay)
 			qdel(spaget_turner)
+	else if(katamari_mode)
+		var/obj/dummy/kat_overlay = new()
+		kat_overlay.appearance = A.appearance
+		kat_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE | RESET_TRANSFORM
+		kat_overlay.pixel_x = 0
+		kat_overlay.pixel_y = 0
+		kat_overlay.vis_flags = 0
+		kat_overlay.plane = PLANE_NOSHADOW_ABOVE
+		kat_overlay.layer = src.layer + rand()
+		kat_overlay.mouse_opacity = 0
+		kat_overlay.alpha = 64
+		var/matrix/tr = new
+		tr.Turn(randfloat(0, 360))
+		tr.Translate(sqrt(num_absorbed) * 3 + 16 - 16, -16)
+		tr.Turn(randfloat(0, 360))
+		tr.Translate(-pixel_x, -pixel_y)
+		kat_overlay.transform = tr
+		src.underlays += kat_overlay
 
 	if (isliving(A) && !isintangible(A))//if its a mob
 		var/mob/living/L = A
@@ -351,8 +373,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		//if (istype(A, /obj/item/graviton_grenade))
 			//src.warp = 100
 		if (istype(A.material))
-			gain += A.material.getProperty("density") * 2
-			gain += A.material.getProperty("radioactive") * 2
+			gain += A.material.getProperty("density") * 2 * A.material_amt
+			gain += A.material.getProperty("radioactive") * 2 * A.material_amt
 		if (A.reagents)
 			gain += min(A.reagents.total_volume/4, 50)
 		if (istype(A, /obj/decal/cleanable)) //MBC : this check sucks, but its far better than cleanables doing hard-delete at the whims of the singularity. replace ASAP when i figure out cleanablessssss
@@ -366,6 +388,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				for (var/i in 1 to 5)
 					src.grow()
 					sleep(0.5 SECONDS)
+			qdel(A)
+		else if (istype(A, /obj/mechbeam)) //let's not make lazy feeders with trip lasers
+			gain += 0.25
 			qdel(A)
 		else
 			var/obj/O = A
@@ -466,7 +491,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 						if (prob(80))
 							F.break_tile_to_plating()
 							if(!F.intact)
-								new/obj/item/tile (F)
+								var/obj/item/tile/tile = new(F)
+								tile.setMaterial(F.material)
 						else
 							F.break_tile()
 				else if (istype(T, /turf/simulated/wall))

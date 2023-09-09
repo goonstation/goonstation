@@ -43,6 +43,7 @@ TYPEINFO(/obj/item/sword)
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	is_syndicate = 1
+	leaves_slash_wound = TRUE
 	contraband = 5
 	desc = "An illegal, recalled Super Protector Friend glow sword. When activated, uses energized cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
 	stamina_damage = 40 // This gets applied by obj/item/attack, regardless of if the saber is active.
@@ -58,6 +59,7 @@ TYPEINFO(/obj/item/sword)
 	var/off_w_class = W_CLASS_SMALL
 	var/datum/component/loctargeting/simple_light/light_c
 	var/do_stun = 0
+	HELP_MESSAGE_OVERRIDE({"Use the saber in hand to turn it on/off. <span class='grab'>Block</span> with the activated saber in hand to deflect most bullets shot at you back to the sender."})
 
 	stunner
 		do_stun = 1
@@ -572,6 +574,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 /obj/item/dagger/syndicate
 	name = "syndicate dagger"
 	desc = "An ornamental dagger for syndicate higher-ups. It sounds fancy, but it's basically the munitions company equivalent of those glass cubes with the company logo frosted on."
+	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to instantly incapacitate them for a short while."})
 
 /obj/item/dagger/syndicate/specialist //Infiltrator class knife
 	name = "syndicate fighting utility knife"
@@ -787,7 +790,9 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_STAB
+	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	var/makemeat = 1
+	HELP_MESSAGE_OVERRIDE({"Throw the knife at someone for a guaranteed short stun. Use the knife on a dead body to instantly turn it into meat."})
 
 /obj/item/knife/butcher/New()
 	..()
@@ -807,6 +812,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		take_bleeding_damage(C, null, 10, DAMAGE_CUT)
 
 		playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
+		logTheThing(LOG_COMBAT, C, "is struck by [src] at [log_loc(C)] (likely thrown by [ismob(usr) ? constructName(usr) : "a non-mob"].")
 	else
 		..()
 
@@ -815,7 +821,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		if (scalpel_surgery(target,user))
 			return
 
-	playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 
 	if (iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -824,6 +829,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			take_bleeding_damage(C, user, 10, DAMAGE_STAB)
 		else
 			if (src.makemeat)
+				playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 				logTheThing(LOG_COMBAT, user, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
 				for (var/i in 0 to 2)
 					new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C),C)
@@ -861,6 +867,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throw_range = 10
 	makemeat = 0
 	var/hunter_key = "" // The owner of this spear.
+	HELP_MESSAGE_OVERRIDE({"Throw the spear at someone for a guaranteed short stun."})
 
 	New()
 		..()
@@ -955,6 +962,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	object_flags = NO_ARM_ATTACH
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items do 4 times as much damage to doors.
 	hit_type = DAMAGE_CUT
+	leaves_slash_wound = TRUE
 	click_delay = 10
 	two_handed = 0
 
@@ -1109,6 +1117,7 @@ TYPEINFO(/obj/item/bat)
 	attack_verbs = "slashes"
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 	is_syndicate = TRUE
+	leaves_slash_wound = TRUE
 	var/delimb_prob = 1
 	var/midair_fruit_slice = FALSE //! if this is TRUE, blocking with this weapon can slice thrown food items midair
 	var/midair_fruit_slice_stamina_cost = 7 //! The amount of stamina it costs to slice food midair
@@ -1222,6 +1231,8 @@ TYPEINFO(/obj/item/swords/katana)
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 	hitsound = 'sound/impact_sounds/katana_slash.ogg'
 	midair_fruit_slice = TRUE
+	HELP_MESSAGE_OVERRIDE({"Hit someone while aiming at a specific limb to immediatly slice off the targeted limb. If both arms and legs are sliced off, you can decapitate your target by aiming for the head.\n
+							While on any intent other than <span class='help'>help</span>, click a tile away from you to quickly dash forward to it's location, slicing those in the way."})
 
 
 	// pickup_sfx = 'sound/items/blade_pull.ogg'
@@ -1349,6 +1360,7 @@ TYPEINFO(/obj/item/swords/captain)
 	hit_type = DAMAGE_BLUNT
 	attack_verbs = "bonks"
 	hitsound = null // do this in attack
+	leaves_slash_wound = FALSE
 
 	New()
 		..()
@@ -1905,6 +1917,7 @@ obj/item/whetstone
 	flags = FPRINT | TABLEPASS | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 	item_function_flags = USE_INTENT_SWITCH_TRIGGER | USE_SPECIALS_ON_ALL_INTENTS
+	leaves_slash_wound = TRUE
 
 	New()
 		..()

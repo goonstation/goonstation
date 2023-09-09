@@ -515,6 +515,12 @@
 			//rebuild powernets etc.
 */
 
+#define SELECT_SKIP 0
+#define SELECT_FIRST_CORNER 1
+#define DESELECT_FIRST_CORNER 2
+#define SELECT_SECOND_CORNER 3
+#define DESELECT_SECOND_CORNER 4
+
 /obj/item/blueprint_marker
 	name = "blueprint marker"
 	desc = "A tool used to map rooms for the creation of blueprints. \

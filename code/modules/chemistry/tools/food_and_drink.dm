@@ -84,8 +84,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
 			for (var/i in 1 to src.slice_amount)
-				var/obj/item/reagent_containers/food/slice = new src.slice_product(T)
-				src.process_sliced_products(slice, amount_to_transfer)
+				var/atom/slice_result = new src.slice_product(T)
+				if(istype(slice_result, /obj/item/reagent_containers/food))
+					var/obj/item/reagent_containers/food/slice = slice_result
+					src.process_sliced_products(slice, amount_to_transfer)
 			qdel (src)
 		else
 			..()
@@ -248,6 +250,21 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but they have no head!</span>",\
 					"<span class='notice'>You try to take a bite of [src], but you have no head to chew with!</span>")
 					return 0
+				if (H.traitHolder.hasTrait("picky_eater"))
+					var/datum/trait/picky_eater/eater_trait = H.traitHolder.getTrait("picky_eater")
+					if (length(eater_trait.fav_foods) > 0)
+						if (H.sims)
+							if (!check_favorite_food(H))
+								if (H.sims.getValue("Hunger") > SIMS_HUNGER_FAMISHED)
+									M.visible_message("<span class='notice'>[M] looks at [src] with a disgusted expression!</span>",\
+									"<span class='notice'>You won't eat [src], it just seems too disgusting to you! You're not hungry or desperate enough to eat that.</span>")
+									return 0
+								else
+									boutput(H, "<span class='notice'>Famished, starving, you reluctantly take a bite of [src].</span>")
+						else if (!check_favorite_food(H))
+							M.visible_message("<span class='notice'>[M] looks at [src] with a disgusted expression!</span>",\
+							"<span class='notice'>You won't eat [src], it just seems too disgusting to you!</span>")
+							return 0
 
 			src.take_a_bite(M, user)
 			return 1
@@ -303,6 +320,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if(!ethereal_eater)
 			src.bites_left--
 		consumer.nutrition += src.heal_amt * 10
+		if (ishuman(consumer))
+			var/mob/living/carbon/human/H = consumer
+			if (H.traitHolder.hasTrait("picky_eater"))
+				var/datum/trait/picky_eater/eater_trait = H.traitHolder.getTrait("picky_eater")
+				if (length(eater_trait.fav_foods) > 0)
+					if (!check_favorite_food(H))
+						displease_picky_eater(H)
+					else
+						H.sims?.affectMotive("Hunger", 20)
+				else
+					logTheThing(LOG_DEBUG, src, "Empty favorite foods list for [src] despite having the picky_eater trait.")
 		src.heal(consumer)
 		playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 		on_bite(consumer, feeder, ethereal_eater)
@@ -329,7 +357,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 						var/datum/plantgenes/DNA = P.plantgenes
 						var/datum/plantgenes/PDNA = S.plantgenes
 						if (!stored.hybrid && !stored.unique_seed)
-							S.generic_seed_setup(stored)
+							S.generic_seed_setup(stored, TRUE)
 						HYPpassplantgenes(DNA,PDNA)
 						if (stored.hybrid)
 							var/plantType = stored.type
@@ -384,8 +412,30 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					boutput(usr,"<span class='notice'><b>[href_list["name"]]:</b></span> [href_list["txt"]]")
 
 
+	///Check wether the current food is in the list of favorite foods for a human
+	proc/check_favorite_food(var/mob/living/carbon/human/H)
+		var/datum/trait/picky_eater/eater_trait = H.traitHolder.getTrait("picky_eater")
+		for (var/food in eater_trait.fav_foods)
+			if (istype(src, food))
+				return TRUE
+		return FALSE
 
-
+	///What happens when a picky eater is fed something they do not like
+	proc/displease_picky_eater(var/mob/living/carbon/human/H)
+		if (prob(30))
+			boutput(H, pick("<span class='alert'>That tasted <b>HORRIBLE</b>! Your mouth feels numb!</span>", "<span class='alert'>You feel like you're about to puke!</span>"))
+		else
+			if (prob(30))
+				H.setStatus("paralysis", 2.5 SECONDS)
+				boutput(H, pick("<span class='alert'>The sudden assault of displeasing flavors on your tongue dazes you!</span>", "<span class='alert'>This ignoble meal makes you blank out!</span>"))
+			else if (prob(30))
+				boutput(H, pick("<span class='alert'>You can't keep down this <i>food</i>!</span>", "<span class='alert'>You fail to swallow this horrific meal!</span>"))
+				SPAWN(1 SECOND)
+					H.vomit()
+			else
+				boutput(H, pick("<span class='alert'>It takes all your willpower to keep that food down! You feel dizzy!</span>", "<span class='alert'>The sensation of the displeasing chunk sliding down your throat makes you feel lightheaded!</span>"))
+				H.make_dizzy(10)
+				H.change_misstep_chance(25)
 
 	proc/on_bite(mob/eater, mob/feeder, ethereal_eater)
 
@@ -1669,8 +1719,9 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	                 "juice_strawberry", "juice_cherry", "juice_pineapple", "juice_apple",
 	                 "coconut_milk", "juice_pickle", "cocktail_citrus", "lemonade",
 	                 "halfandhalf", "swedium", "caledonium", "essenceofelvis", "pizza",
-									 "mint_tea", "tomcollins", "sangria", "peachschnapps", "mintjulep",
-									 "mojito", "cremedementhe", "grasshopper", "freeze", "limeade", "juice_peach")
+					 "mint_tea", "tomcollins", "sangria", "peachschnapps", "mintjulep",
+					 "mojito", "cremedementhe", "grasshopper", "freeze", "limeade", "juice_peach",
+					 "juice_banana")
 
 /obj/item/reagent_containers/food/drinks/duo
 	name = "red duo cup"
@@ -1872,7 +1923,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		var/obj/O = new /obj/item/raw_material/shard/glass
 		O.set_loc(get_turf(M))
 		if (src.material)
-			O.setMaterial(copyMaterial(src.material))
+			O.setMaterial(src.material)
 		if (src.reagents)
 			src.reagents.reaction(M)
 			qdel(src)

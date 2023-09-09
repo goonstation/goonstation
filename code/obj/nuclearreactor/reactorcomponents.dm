@@ -43,9 +43,12 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	var/thermal_mass = 420*250//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
 
-	New(material_name="steel")
+	New(material="steel")
 		..()
-		src.setMaterial(getMaterial(material_name))
+		if(istype(material, /datum/material))
+			src.setMaterial(material)
+		else
+			src.setMaterial(getMaterial(material))
 		melt_health = _max_health
 		var/img_check = ui_image_base64_cache[src.type]
 		if (img_check)
@@ -55,27 +58,27 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			src.ui_image = icon2base64(dummy_icon)
 			ui_image_base64_cache[src.type] = src.ui_image
 
-	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/copy = TRUE, var/use_descriptors = FALSE)
+	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = TRUE, var/use_descriptors = FALSE) //mutable is the default here, for obvious reasons
 		. = ..()
 		src.cap_icon = icon(src.icon, src.icon_state_cap)
 		if(appearance) //some mildly cursed code to set material appearance on the end caps
-			if (mat1.mat_id in src.get_typeinfo().mat_appearances_to_ignore)
+			if (mat1.getID() in src.get_typeinfo().mat_appearances_to_ignore)
 				return
-			if (src.mat_changeappearance && mat1.applyColor)
-				var/list/setcolor = mat1.color
-				if(istext(mat1.color))
-					setcolor = rgb2num(mat1.color)
-				if(islist(mat1.color))
-					setcolor = mat1.color
+			if (src.mat_changeappearance && mat1.shouldApplyColor())
+				var/list/setcolor = mat1.getColor()
+				if(istext(mat1.getColor()))
+					setcolor = rgb2num(mat1.getColor())
+				if(islist(mat1.getColor()))
+					setcolor = mat1.getColor()
 
 				if(length(setcolor) == 4)
-					setcolor[4] = mat1.alpha
+					setcolor[4] = mat1.getAlpha()
 				else if(length(setcolor) == 3)
-					setcolor += mat1.alpha
+					setcolor += mat1.getAlpha()
 
-				if (mat1.texture)
+				if (mat1.getTexture())
 					var/icon_mode = null
-					switch(mat1.texture_blend) //fucking byond...
+					switch(mat1.getTextureBlendMode()) //fucking byond...
 						if(BLEND_DEFAULT) icon_mode = ICON_OVERLAY
 						if(BLEND_OVERLAY) icon_mode = ICON_OVERLAY
 						if(BLEND_ADD) icon_mode = ICON_ADD
@@ -83,15 +86,12 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 						if(BLEND_MULTIPLY) icon_mode = ICON_MULTIPLY
 						if(BLEND_INSET_OVERLAY) icon_mode = ICON_OVERLAY
 
-					src.cap_icon.Blend(getTexturedIcon(src.cap_icon, mat1.texture), icon_mode)
+					src.cap_icon.Blend(getTexturedIcon(src.cap_icon, mat1.getTexture()), icon_mode)
 
 				if(length(setcolor) > 4) //ie, if it's a color matrix
 					src.cap_icon.MapColors(arglist(setcolor))
 				else
 					src.cap_icon.Blend(rgb(setcolor[1],setcolor[2],setcolor[3],setcolor[4]), ICON_MULTIPLY)
-
-
-
 
 	proc/melt()
 		if(melted)
@@ -130,8 +130,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 
 			if(RC.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
-			RC.material.triggerTemp(RC,RC.temperature)
-			src.material.triggerTemp(src,src.temperature)
+			RC.material_trigger_on_temp(RC.temperature)
+			src.material_trigger_on_temp(src.temperature)
 		//heat transfer with reactor vessel
 		var/obj/machinery/atmospherics/binary/nuclear_reactor/holder = src.loc
 		if(istype(holder))
@@ -143,8 +143,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			if(holder.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
 
-			holder.material.triggerTemp(holder,holder.temperature)
-			src.material.triggerTemp(src,src.temperature)
+			holder.material_trigger_on_temp(holder.temperature)
+			src.material_trigger_on_temp(src.temperature)
 		if((src.temperature > src.melting_point) && (src.melt_health > 0))
 			src.melt_health -= rand(10,50)
 		if(src.melt_health <= 0)
@@ -243,6 +243,17 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	extra_info()
 		. = ..()
 		. += "Radioactivity: [max(src.material.getProperty("n_radioactive")*10,src.material.getProperty("radioactive")*10)]%"
+
+/obj/item/reactor_component/fuel_rod/glowsticks
+	name = "makeshift fuel rod"
+	desc = "A fuel rod fo- hey this is just a bundle of glowsticks!"
+	melting_point = T0C+400 //plastic glowsticks melt easy
+
+	New(material)
+		if(isnull(material))
+			.=..("glowstick") //force material
+		else
+			.=..()
 ////////////////////////////////////////////////////////////////
 //Control rod
 /obj/item/reactor_component/control_rod
@@ -395,7 +406,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 					T.assume_air(air_contents)
 			else
 				. = src.air_contents
-		if(inGas)
+		if(inGas && (THERMAL_ENERGY(inGas) > 0))
 			src.air_contents = inGas.remove((src.gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
 			src.air_contents?.volume = gas_volume
 			if(src.air_contents && TOTAL_MOLES(src.air_contents) < 1)
@@ -479,7 +490,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		15;"cardboard",\
 		15;"frozenfart",\
 		5;"negativematter",\
-		5;"plutonium"
+		5;"plutonium",\
+		100; "glowstick"
 
 /obj/item/reactor_component/fuel_rod/random_material
 	New()

@@ -33,6 +33,7 @@ TYPEINFO(/obj/item/saw)
 	w_class = W_CLASS_BULKY
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SAWING
+	leaves_slash_wound = TRUE
 	var/sawnoise = 'sound/machines/chainsaw_green.ogg'
 	arm_icon = "chainsaw-D"
 	var/base_arm = "chainsaw"
@@ -444,7 +445,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 				S = new /obj/item/seed
 				S.set_loc(src.loc)
 				S.removecolor()
-			S.generic_seed_setup(selected)
+			S.generic_seed_setup(selected, FALSE)
 
 
 

@@ -24,11 +24,6 @@
 "cZ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/torpedo_deposit)
-"dg" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor/plating/random,
-/area/prefab/torpedo_deposit)
 "dj" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles4"
@@ -568,7 +563,7 @@
 /area/prefab/torpedo_deposit)
 "WB" = (
 /obj/decal/cleanable/dirt/dirt3,
-/obj/critter/gunbot/heavy,
+/mob/living/critter/robotic/gunbot,
 /turf/simulated/floor/black,
 /area/prefab/torpedo_deposit)
 "WO" = (
@@ -835,7 +830,7 @@ jo
 pX
 wV
 cZ
-dg
+kU
 cZ
 Ns
 jN
@@ -1036,7 +1031,7 @@ RK
 RK
 "}
 (18,1,1) = {"
-dg
+kU
 gm
 lL
 sm

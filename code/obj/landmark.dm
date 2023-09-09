@@ -406,34 +406,9 @@ var/global/list/job_start_locations = list()
 	name = "spawner"
 	add_to_landmarks = FALSE
 	deleted_on_start = FALSE
+	/// Type this landmark should spawn. Do not edit this on a map instance. Create a subtype.
 	var/type_to_spawn = null
 	var/spawnchance = 100
-	var/static/list/name_to_type = list(
-		"juicer_gene" = /mob/living/carbon/human/geneticist,
-		"shitty_bill" = /mob/living/carbon/human/biker,
-		"john_bill" = /mob/living/carbon/human/john,
-		"big_yank" = /mob/living/carbon/human/big_yank,
-		"father_jack" = /mob/living/carbon/human/fatherjack,
-		"don_glab" = /mob/living/carbon/human/don_glab,
-		"monkeyspawn_normal" = /mob/living/carbon/human/npc/monkey,
-		"monkeyspawn_albert" = /mob/living/carbon/human/npc/monkey/albert,
-		"monkeyspawn_rathen" = /mob/living/carbon/human/npc/monkey/mr_rathen,
-		"monkeyspawn_mrmuggles" = /mob/living/carbon/human/npc/monkey/mr_muggles,
-		"monkeyspawn_mrsmuggles" = /mob/living/carbon/human/npc/monkey/mrs_muggles,
-		"monkeyspawn_syndicate" = /mob/living/carbon/human/npc/monkey/oppenheimer,
-		"monkeyspawn_horse" = /mob/living/carbon/human/npc/monkey/horse,
-		"monkeyspawn_krimpus" = /mob/living/carbon/human/npc/monkey/krimpus,
-		"monkeyspawn_tanhony" = /mob/living/carbon/human/npc/monkey/tanhony,
-		"monkeyspawn_stirstir" = /mob/living/carbon/human/npc/monkey/stirstir,
-		"seamonkeyspawn" = /mob/living/carbon/human/npc/monkey/sea,
-		"seamonkeyspawn_gang" = /mob/living/carbon/human/npc/monkey/sea/gang,
-		"seamonkeyspawn_gang_gun" = /mob/living/carbon/human/npc/monkey/sea/gang_gun,
-		"seamonkeyspawn_rich" = /mob/living/carbon/human/npc/monkey/sea/rich,
-		"seamonkeyspawn_lab" = /mob/living/carbon/human/npc/monkey/sea/lab,
-		"waiter" = /mob/living/carbon/human/waiter,
-		"monkeyspawn_inside" = /mob/living/carbon/human/npc/monkey,
-		"dolly" = /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled
-	)
 
 	New()
 		if(current_state >= GAME_STATE_WORLD_INIT && prob(spawnchance) && !src.disposed)
@@ -448,8 +423,6 @@ var/global/list/job_start_locations = list()
 		..()
 
 	proc/spawn_the_thing()
-		if(isnull(src.type_to_spawn))
-			src.type_to_spawn = name_to_type[src.name]
 		if(isnull(src.type_to_spawn))
 			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
 
@@ -470,6 +443,7 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/spawner/inside/monkey
 	name = "monkeyspawn_inside"
+	type_to_spawn = /mob/living/carbon/human/npc/monkey
 
 /obj/landmark/spawner/loot
 	name = "Loot Spawn (10%)"

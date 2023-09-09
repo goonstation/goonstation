@@ -2252,19 +2252,24 @@ TYPEINFO(/obj/machinery/networked/printer)
 				scanned_thing = null
 			else
 				var/obj/item/I = usr.equipped()
-				if (istype(I, /obj/item/paper) || istype(I, /obj/item/photo))
-					usr.drop_item()
-					I.set_loc(src)
-					src.scanned_thing = I
-					boutput(usr, "You insert [I].")
-				else if (istype(I, /obj/item/magtractor))
+				if (istype(I, /obj/item/magtractor))
 					var/obj/item/magtractor/mag = I
 					if (istype(mag.holding, /obj/item/paper) || istype(mag.holding, /obj/item/photo))
 						I = mag.holding
 						mag.dropItem(0)
-						I.set_loc(src)
-						src.scanned_thing = I
-						boutput(usr, "You insert [I].")
+					else
+						return
+				else if (istype(I, /obj/item/paper) || istype(I, /obj/item/photo))
+					usr.drop_item()
+				else
+					return
+				I.set_loc(src)
+				src.scanned_thing = I
+				boutput(usr, "You insert [I].")
+				SPAWN(0)
+					if(!scan_document())
+						use_power(200)
+
 			src.power_change()
 			src.updateUsrDialog()
 
@@ -4485,9 +4490,8 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				src.temperature -= min(5, src.temperature-src.temptarget)
 
 			if (src.temperature != 310)
-				for (var/obj/M in src.loc.contents)
-					if (istype(M.artifact,/datum/artifact/))
-						M.ArtifactStimulus("heat", temperature)
+				for (var/atom/movable/AM in src.loc.contents)
+					AM.temperature_expose(null, src.temperature, CELL_VOLUME)
 
 			if (src.stopattarget && src.temperature == src.temptarget)
 				src.active = 0

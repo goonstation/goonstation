@@ -18,7 +18,9 @@
 	var/viewload = 0
 
 	var/number = 0
-	/// per-apc avilability
+	/// Estimate of per-APC proportion of output
 	var/perapc = 0
 
 	var/netexcess = 0
+	/// Each APC's share of excess power, offered for recharge
+	var/apc_charge_share = 0

@@ -159,7 +159,7 @@
 	},
 /area/prefab/zoo)
 "W" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating,
 /area/prefab/zoo)
 "X" = (

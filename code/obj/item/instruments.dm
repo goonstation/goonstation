@@ -371,13 +371,27 @@
 /obj/item/instrument/guitar
 	name = "guitar"
 	desc = "This machine kills syndicates."
-	icon_state = "guitar"
-	item_state = "guitar"
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "guitar1"
+	item_state = "guitar1"
 	two_handed = 1
 	force = 10
+	note_range = list("d2", "c6")
+	instrument_sound_directory = "sound/musical_instruments/guitar/notes/"
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
+	use_new_interface = TRUE
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROD)
+
+	New()
+		src.icon_state = "guitar[rand(1,5)]"
+		src.item_state = src.icon_state
+		..()
+
 
 	New()
 		if (sounds_instrument == null)
@@ -385,6 +399,43 @@
 			for (var/i in 1 to 12)
 				sounds_instrument += "sound/musical_instruments/guitar/guitar_[i].ogg"
 		..()
+
+	attack(mob/M, mob/user)
+		if(ismob(M))
+			playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
+		..()
+
+
+
+/* -------------------- Electric Guitar -------------------- */
+
+/obj/item/instrument/electricguitar
+	name = "electric guitar"
+	desc = "Somehow works without an amp. Comes in a variety of colors."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "elecguitar1"
+	item_state = "elecguitar1"
+	two_handed = 1
+	force = 10
+	note_range = list("e2", "c6")
+	instrument_sound_directory = "sound/musical_instruments/elecguitar/notes/"
+	note_time = 0.18 SECONDS
+	sounds_instrument = null
+	randomized_pitch = 0
+	use_new_interface = TRUE
+	//Start at E1
+	key_offset = 5
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROD)
+
+	New()
+		src.icon_state = "elecguitar[rand(1,8)]"
+		src.item_state = src.icon_state
+		..()
+
+
 
 	attack(mob/M, mob/user)
 		if(ismob(M))

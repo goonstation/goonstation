@@ -14,14 +14,14 @@
 /mob/living/intangible/aieye
 	name = "AI Eye"
 	icon = 'icons/mob/ai.dmi'
-	icon_state = "a-eye"
+	icon_state = "ai-eye"
 	density = 0
 	layer = 101
 	see_in_dark = SEE_DARK_FULL
-	stat = 0
+	stat = STAT_ALIVE
 	mob_flags = SEE_THRU_CAMERAS | USR_DIALOG_UPDATES_RANGE
 
-	can_lie = 0 //can't lie down, you're a floating ghostly eyeball
+	can_lie = FALSE //can't lie down, you're a floating ghostly eyeball
 	can_bleed = FALSE
 	metabolizes = FALSE
 	blood_id = null
@@ -57,13 +57,15 @@
 		var/client_color = src.client.color
 		src.client.color = "#000000"
 		SPAWN(0) //let's try not hanging the entire server for 6 seconds every time an AI has wonky internet
-			for(var/key in aiImages)
-				var/image/I = aiImages[key]
-				src.client << I
+			src.client.images += aiImages
+			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
+			src.update_name_tag()
+			src.job = "AI"
+			if (src.mind)
+				src.mind.assigned_role = "AI"
 			animate(src.client, 0.3 SECONDS, color = client_color)
 			var/sleep_counter = 0
-			for(var/key in aiImagesLowPriority)
-				var/image/I = aiImagesLowPriority[key]
+			for(var/image/I as anything in aiImagesLowPriority)
 				src.client << I
 				if(sleep_counter++ % (300 * 10) == 0)
 					LAGCHECK(LAG_LOW)
@@ -73,12 +75,9 @@
 		if (!cl)
 			return ..()
 		SPAWN(0)
-			for(var/key in aiImages)
-				var/image/I = aiImages[key]
-				cl?.images -= I
+			cl?.images -= aiImages
 			var/sleep_counter = 0
-			for(var/key in aiImagesLowPriority)
-				var/image/I = aiImagesLowPriority[key]
+			for(var/image/I as anything in aiImagesLowPriority)
 				cl?.images -= I
 				if(sleep_counter++ % (300 * 10) == 0)
 					LAGCHECK(LAG_LOW)

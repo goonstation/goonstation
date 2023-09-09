@@ -9,24 +9,24 @@
 		real_name = "Cyalume Knight"
 		desc = "A knight of modern times."
 
-		src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/clothing/suit/armor/cknight_robe, slot_wear_suit)
-		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
-		src.equip_new_if_possible(/obj/item/clothing/head/helmet/cknight_hood, slot_head)
-		src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
-		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
-		src.equip_new_if_possible(/obj/item/card/id/syndicate, slot_wear_id)
+		src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/suit/armor/cknight_robe, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, SLOT_GLASSES)
+		src.equip_new_if_possible(/obj/item/clothing/head/helmet/cknight_hood, SLOT_HEAD)
+		src.equip_new_if_possible(/obj/item/storage/backpack, SLOT_BACK)
+		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
+		src.equip_new_if_possible(/obj/item/card/id/syndicate, SLOT_WEAR_ID)
 		var/obj/item/clothing/mask/gas/my_mask = new /obj/item/clothing/mask/gas/swat(src)
 		my_mask.vchange = new(src) // apply voice changer on the mask
-		src.equip_if_possible(my_mask, slot_wear_mask)
-		src.equip_new_if_possible(/obj/item/storage/belt/security, slot_belt)
+		src.equip_if_possible(my_mask, SLOT_WEAR_MASK)
+		src.equip_new_if_possible(/obj/item/storage/belt/security, SLOT_BELT)
 
-		src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, slot_r_store)
+		src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, SLOT_R_STORE)
 
 		my_sword = new /obj/item/sword(src)
 		my_sword.bladecolor = "P"
-		src.equip_if_possible(my_sword, slot_l_store)
+		src.equip_if_possible(my_sword, SLOT_L_STORE)
 
 		src.add_ability_holder(/datum/abilityHolder/cyalume_knight)
 		abilityHolder.addAbility(/datum/targetable/cyalume_knight/recall_sword)
@@ -90,7 +90,7 @@
 	name = "Cyalume Knight Helmet"
 	desc = "An ominous armored article of clothing."
 	icon_state = "cknight_hood"
-	see_face = 0
+	see_face = FALSE
 
 /atom/movable/screen/ability/topBar/cyalume_knight
 	clicked(params)
@@ -305,7 +305,7 @@
 		var/current_angle = start_angle
 		var/i
 		for(i = 0; i < num_projectiles; i++)
-			var/obj/projectile/P = initialize_projectile_ST(holder.owner, fired_projectile, target)
+			var/obj/projectile/P = initialize_projectile_pixel_spread(holder.owner, fired_projectile, target)
 			if (P)
 				P.mob_shooter = holder.owner
 				P.rotateDirection(current_angle)

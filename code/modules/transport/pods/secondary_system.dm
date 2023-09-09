@@ -118,6 +118,9 @@
 			boutput(user, "<span class='alert'>That tile too far away.</span>")
 			return
 
+		if (T.density)
+			return
+
 		for(var/obj/O in T.contents)
 			if(O.density)
 				boutput(user, "<span class='alert'>That tile is blocked by [O].</span>")
@@ -221,6 +224,9 @@
 		boutput(user, "<span class='alert'>That tile too far away.</span>")
 		return
 
+	if (T.density)
+		return
+
 	for(var/obj/O in T.contents)
 		if(O.density)
 			boutput(user, "<span class='alert'>That tile is blocked by [O].</span>")
@@ -307,11 +313,11 @@
 	return C
 
 /obj/item/shipcomponent/secondary_system/cargo/on_shipdeath(var/obj/machinery/vehicle/ship)
-	while(length(load))
-		var/obj/O = src.unload(pick(load))
-		if (O)
-			O.visible_message("<span class='alert'><b>[O]</b> is flung out of [src.ship]!</span>")
-			O.throw_at(get_edge_target_turf(O, pick(alldirs)), rand(3,7), 3)
+	shuffle_list(src.load)
+	for(var/atom/movable/AM in src.load)
+		if (src.unload(AM))
+			AM.visible_message("<span class='alert'><b>[AM]</b> is flung out of [src.ship]!</span>")
+			AM.throw_at(get_edge_target_turf(AM, pick(alldirs)), rand(3,7), 3)
 		else
 			break
 	..()
@@ -922,9 +928,7 @@
 			var/turf/target = get_edge_target_turf(ship, ship.dir)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-			if(O.bound_width==32 && O.bound_height==32)
-				O.anchored = UNANCHORED
-			O.throw_at(target, 4, 2)
+			O.throw_at(target, 20, 3, allow_anchored = TRUE, bonus_throwforce = 15)
 			if (istype(O, /obj/machinery/vehicle))
 				A.meteorhit(src)
 				crashhits -= 3
