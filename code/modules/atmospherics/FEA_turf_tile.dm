@@ -195,8 +195,11 @@ var/global/list/turf/hotly_processed_turfs = list()
 		src.air.temperature = src.temperature
 
 		if(air_master)
-			air_master.tiles_to_update |= src
-			src.find_group()
+			if(explosions.exploding)
+				air_master.tiles_to_rebuild |= src
+			else
+				air_master.tiles_to_update |= src
+				src.find_group()
 
 	else
 		if(!air_master)

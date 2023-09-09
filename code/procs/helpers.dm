@@ -2150,10 +2150,10 @@ var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "
 		if (S == "glassware")
 			for (var/obj/item/reagent_containers/glass/G in view(CT, range))
 				if(G.can_recycle)
-					G.smash()
+					G.shatter_chemically()
 			for (var/obj/item/reagent_containers/food/drinks/drinkingglass/G2 in range(CT, range))
 				if(G2.can_recycle)
-					G2.smash()
+					G2.shatter_chemically()
 
 	return 1
 

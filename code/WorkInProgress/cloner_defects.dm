@@ -64,6 +64,13 @@
 					// lazylistassoc when (wici)
 					sublist[defect_type] = initial(defect_type:weight) // we can use initial to get initial values of a type without an instance
 
+	disposing()
+		src.owner = null
+		for (var/datum/cloner_defect/defect as anything in src.active_cloner_defects)
+			qdel(defect)
+		src.active_cloner_defects = null
+		..()
+
 	/// Add a cloner defect of the given severity
 	proc/add_cloner_defect(severity)
 		if (!severity)
@@ -148,7 +155,8 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 		src.on_add()
 
 	disposing()
-		LAZYLISTREMOVE(src.owner?.cloner_defects, src)
+		LAZYLISTREMOVE(src.owner?.cloner_defects.active_cloner_defects, src)
+		src.owner = null
 		..()
 
 	proc/on_add()
