@@ -1241,9 +1241,9 @@ or don't if it uses a custom topopen overlay
 					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				message = "<B>[src]</B> does a flip!"
 
-				//flick("ai_flip", src)
+				//flick("ai-flip", src)
 				if(faceEmotion != "ai_red" && faceEmotion != "ai_tetris")
-					UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', "[faceEmotion]_flip", src.layer+0.2), "actual_face")
+					UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', "[faceEmotion]-flip", src.layer+0.2), "actual_face")
 					SPAWN(0.5 SECONDS)
 						UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
 
