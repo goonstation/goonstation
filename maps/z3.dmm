@@ -3925,15 +3925,8 @@
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
 "asb" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
-	dir = 1;
-	icon = 'icons/misc/hospital.dmi';
-	icon_state = "tapedrive0";
-	name = "broken tape drive"
-	},
+/obj/item/raw_material/shard/glass,
+/obj/item/reagent_containers/dropper/mechanical,
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
 "asc" = (
@@ -4064,10 +4057,12 @@
 /area/radiostation/engineering)
 "asB" = (
 /obj/machinery/door/poddoor/blast{
-	icon = 'icons/obj/doors/sovblastdoor.dmi';
+	autoclose = 1;
+	dir = 1;
 	icon_state = "bdoorleft1";
 	id = "hangar_soviet";
-	name = "pod bay (salyut)"
+	name = "pod bay (salyut)";
+	icon = 'icons/obj/doors/sovblastdoor.dmi'
 	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -5143,12 +5138,9 @@
 	drive_range = 4;
 	id = "salyut"
 	},
-/obj/machinery/door/poddoor/blast/single{
-	icon = 'icons/obj/doors/sovblastdoor.dmi';
-	dir = 8;
+/obj/machinery/door/poddoor{
 	id = "salyut";
-	name = "Launcher Door";
-	desc = null
+	name = "Launcher Door"
 	},
 /turf/simulated/floor/plating/airless,
 /area/salyut)
@@ -7152,8 +7144,7 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "salvage_out";
-	name = "GLOMAR Salvager";
-	dir = 8
+	name = "GLOMAR Salvager"
 	},
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
@@ -13337,7 +13328,7 @@
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
 	dir = 8;
 	icon = 'icons/misc/hospital.dmi';
-	icon_state = "sovcomp1";
+	icon_state = "sovcomp0";
 	name = "broken computer"
 	},
 /turf/simulated/floor/shuttle{
@@ -16210,6 +16201,19 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
+"dqf" = (
+/obj/machinery/door/poddoor/blast{
+	autoclose = 1;
+	dir = 1;
+	icon_state = "bdoorright1";
+	id = "hangar_soviet";
+	name = "pod bay (salyut)";
+	icon = 'icons/obj/doors/sovblastdoor.dmi'
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/salyut)
 "dqw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -16743,11 +16747,6 @@
 "frd" = (
 /turf/simulated/floor/plating,
 /area/diner/hallway/docking)
-"ftP" = (
-/obj/item/reagent_containers/dropper/mechanical,
-/obj/item/raw_material/shard/glass,
-/turf/simulated/floor/plating/damaged1,
-/area/salyut)
 "fvE" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt/mars{
@@ -18235,15 +18234,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
-"jHU" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/obj/doors/shuttle.dmi';
-	name = "rusted hatch";
-	dir = 8
-	},
-/turf/unsimulated/floor/white,
-/area/space_hive)
 "jIB" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 9;
@@ -18477,8 +18467,7 @@
 /turf/unsimulated/wall/generic{
 	icon = 'icons/obj/doors/shuttle.dmi';
 	icon_state = "door1";
-	name = "broken door";
-	dir = 8
+	name = "broken door"
 	},
 /area/space_hive)
 "kse" = (
@@ -18772,18 +18761,6 @@
 	},
 /turf/space,
 /area/timewarp)
-"lob" = (
-/obj/machinery/door/poddoor/blast{
-	icon = 'icons/obj/doors/sovblastdoor.dmi';
-	icon_state = "bdoorleft1";
-	id = "hangar_soviet";
-	dir = 1;
-	name = "pod bay (salyut)"
-	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/salyut)
 "lpI" = (
 /obj/machinery/door/unpowered/shuttle{
 	autoclose = 1;
@@ -19888,8 +19865,7 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "salvage_in";
-	name = "GLOMAR Salvager";
-	dir = 8
+	name = "GLOMAR Salvager"
 	},
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
@@ -20390,8 +20366,7 @@
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
 	icon = 'icons/obj/doors/shuttle.dmi';
-	name = "rusted hatch";
-	dir = 8
+	name = "rusted hatch"
 	},
 /turf/unsimulated/floor,
 /area/space_hive)
@@ -21945,6 +21920,12 @@
 /obj/storage/closet/fire,
 /turf/simulated/floor/grime,
 /area/iss)
+"tQJ" = (
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
 "tRh" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 8
@@ -22273,6 +22254,18 @@
 	icon_state = "floor6"
 	},
 /area/diner/jucer_trader)
+"uNF" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
+	dir = 1;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "tapedrive0";
+	name = "broken tape drive"
+	},
+/turf/simulated/floor/plating/damaged1,
+/area/salyut)
 "uOv" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/green/standard/edge/sw,
@@ -42472,7 +42465,7 @@ aaf
 acc
 acc
 aaf
-jHU
+jcK
 aaf
 aaf
 aaf
@@ -49648,7 +49641,7 @@ aHr
 rzX
 nQg
 aHU
-aMm
+tQJ
 xiB
 aaa
 aaa
@@ -67336,8 +67329,8 @@ aaa
 aaa
 awq
 nYg
-lob
 asB
+dqf
 azH
 aAh
 aaa
@@ -70053,8 +70046,8 @@ afD
 boP
 boP
 nYg
+uNF
 asb
-ftP
 asP
 asT
 atn
