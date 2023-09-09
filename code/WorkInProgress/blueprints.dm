@@ -10,8 +10,6 @@
 #define DESELECT_FIRST_CORNER 2
 #define SELECT_SECOND_CORNER 3
 #define DESELECT_SECOND_CORNER 4
-// debug stuff
-#define USE_MATERIALS 0
 
 /obj/abcuMarker
 	desc = "Denotes a valid tile."
@@ -171,69 +169,69 @@
 
 	process()
 		..()
-
+		if (!src.building) return
 		if (src.BuildIndex > src.BuildEnd)
 			src.endBuild()
 			return
-		if (src.building)
-			var/datum/tileinfo/Tile = src.currentBp.roominfo[src.BuildIndex]
-			if (isnull(Tile.tiletype))
-				src.BuildIndex++
-				return
 
-			// try to consume materials for this tile
-			if (!src.TileCostProcessed)
-				var/ObjCount = length(Tile.objects)
-				src.MetalOwed += REBUILD_COST_TURF_METAL + REBUILD_COST_OBJECT_METAL * ObjCount
-				src.CrystalOwed += REBUILD_COST_TURF_CRYSTAL + REBUILD_COST_OBJECT_CRYSTAL * ObjCount
-				src.TileCostProcessed = TRUE
-			for (var/obj/Item in src)
-				if (src.MetalOwed <= 0 && src.CrystalOwed <= 0) break
-				if (Item == src.currentBp) continue
-
-				if (istype(Item, /obj/item/sheet))
-					var/obj/item/sheet/Sheets = Item
-					if (!Sheets.material) continue
-					if (src.MetalOwed && Sheets.material.material_flags & MATERIAL_METAL)
-						var/SheetsConsumed = ceil(min(Sheets.amount, src.MetalOwed))
-						Sheets.change_stack_amount(-SheetsConsumed)
-						src.MetalOwed -= SheetsConsumed
-						continue
-					if (src.CrystalOwed && Sheets.material.material_flags & MATERIAL_CRYSTAL)
-						var/SheetsConsumed = ceil(min(Sheets.amount, src.CrystalOwed))
-						Sheets.change_stack_amount(-SheetsConsumed)
-						src.CrystalOwed -= SheetsConsumed
-						continue
-
-				else if (istype(Item, /obj/item/material_piece))
-					var/obj/item/material_piece/Bars = Item
-					if (!Bars.material) continue
-					if (src.MetalOwed && Bars.material.material_flags & MATERIAL_METAL)
-						var/BarsConsumed = ceil(min(Bars.amount, src.MetalOwed / BAR_SHEET_VALUE))
-						Bars.change_stack_amount(-BarsConsumed)
-						src.MetalOwed -= BarsConsumed * BAR_SHEET_VALUE
-						continue
-					if (src.CrystalOwed && Bars.material.material_flags & MATERIAL_CRYSTAL)
-						var/BarsConsumed = ceil(min(Bars.amount, src.CrystalOwed / BAR_SHEET_VALUE))
-						Bars.change_stack_amount(-BarsConsumed)
-						src.CrystalOwed -= BarsConsumed * BAR_SHEET_VALUE
-						continue
-
-			if (src.MetalOwed > 0 || src.CrystalOwed > 0)
-				src.pauseBuild()
-				src.visible_message("<span class='alert'>[src] does not have enough materials to continue construction.</span>")
-				playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 20)
-				return
-			// now build the tile if we paid for it
-			var/turf/Pos = locate(text2num(Tile.posx) + src.x,text2num(Tile.posy) + src.y, src.z)
-			for(var/obj/O in src.markers)
-				if(O.loc == Pos)
-					qdel(O)
-					break
-
-			src.makeTile(Tile, Pos)
-			src.TileCostProcessed = FALSE
+		var/datum/tileinfo/Tile = src.currentBp.roominfo[src.BuildIndex]
+		if (isnull(Tile.tiletype))
 			src.BuildIndex++
+			return
+
+		// try to consume materials for this tile
+		if (!src.TileCostProcessed)
+			var/ObjCount = length(Tile.objects)
+			src.MetalOwed += REBUILD_COST_TURF_METAL + REBUILD_COST_OBJECT_METAL * ObjCount
+			src.CrystalOwed += REBUILD_COST_TURF_CRYSTAL + REBUILD_COST_OBJECT_CRYSTAL * ObjCount
+			src.TileCostProcessed = TRUE
+		for (var/obj/Item in src)
+			if (src.MetalOwed <= 0 && src.CrystalOwed <= 0) break
+			if (Item == src.currentBp) continue
+
+			if (istype(Item, /obj/item/sheet))
+				var/obj/item/sheet/Sheets = Item
+				if (!Sheets.material) continue
+				if (src.MetalOwed && Sheets.material.getMaterialFlags() & MATERIAL_METAL)
+					var/SheetsConsumed = ceil(min(Sheets.amount, src.MetalOwed))
+					Sheets.change_stack_amount(-SheetsConsumed)
+					src.MetalOwed -= SheetsConsumed
+					continue
+				if (src.CrystalOwed && Sheets.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+					var/SheetsConsumed = ceil(min(Sheets.amount, src.CrystalOwed))
+					Sheets.change_stack_amount(-SheetsConsumed)
+					src.CrystalOwed -= SheetsConsumed
+					continue
+
+			else if (istype(Item, /obj/item/material_piece))
+				var/obj/item/material_piece/Bars = Item
+				if (!Bars.material) continue
+				if (src.MetalOwed && Bars.material.getMaterialFlags() & MATERIAL_METAL)
+					var/BarsConsumed = ceil(min(Bars.amount, src.MetalOwed / BAR_SHEET_VALUE))
+					Bars.change_stack_amount(-BarsConsumed)
+					src.MetalOwed -= BarsConsumed * BAR_SHEET_VALUE
+					continue
+				if (src.CrystalOwed && Bars.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+					var/BarsConsumed = ceil(min(Bars.amount, src.CrystalOwed / BAR_SHEET_VALUE))
+					Bars.change_stack_amount(-BarsConsumed)
+					src.CrystalOwed -= BarsConsumed * BAR_SHEET_VALUE
+					continue
+
+		if (src.MetalOwed > 0 || src.CrystalOwed > 0)
+			src.pauseBuild()
+			src.visible_message("<span class='alert'>[src] does not have enough materials to continue construction.</span>")
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 20)
+			return
+		// now build the tile if we paid for it
+		var/turf/Pos = locate(text2num(Tile.posx) + src.x,text2num(Tile.posy) + src.y, src.z)
+		for(var/obj/O in src.markers)
+			if(O.loc == Pos)
+				qdel(O)
+				break
+
+		src.makeTile(Tile, Pos)
+		src.TileCostProcessed = FALSE
+		src.BuildIndex++
 
 	proc/makeTile(var/datum/tileinfo/Info, var/turf/Pos)
 		set waitfor = 0
@@ -313,16 +311,16 @@
 			if (istype(O, /obj/item/sheet))
 				var/obj/item/sheet/Sheets = O
 				if (!Sheets.material) continue
-				if (Sheets.material.material_flags & MATERIAL_METAL)
+				if (Sheets.material.getMaterialFlags() & MATERIAL_METAL)
 					MetalCount += Sheets.amount
-				if (Sheets.material.material_flags & MATERIAL_CRYSTAL)
+				if (Sheets.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 					CrystalCount += Sheets.amount
 			else if (istype(O, /obj/item/material_piece))
 				var/obj/item/material_piece/Bars = O
 				if (!Bars.material) continue
-				if (Bars.material.material_flags & MATERIAL_METAL)
+				if (Bars.material.getMaterialFlags() & MATERIAL_METAL)
 					MetalCount += Bars.amount * BAR_SHEET_VALUE
-				if (Bars.material.material_flags & MATERIAL_CRYSTAL)
+				if (Bars.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 					CrystalCount += Bars.amount * BAR_SHEET_VALUE
 		if (user)
 			var/Message = "<span class='notice'>The machine is holding [MetalCount] metal, and [CrystalCount] crystal, measured in sheets.</span>"
@@ -514,12 +512,6 @@
 
 			//rebuild powernets etc.
 */
-
-#define SELECT_SKIP 0
-#define SELECT_FIRST_CORNER 1
-#define DESELECT_FIRST_CORNER 2
-#define SELECT_SECOND_CORNER 3
-#define DESELECT_SECOND_CORNER 4
 
 /obj/item/blueprint_marker
 	name = "blueprint marker"
@@ -970,4 +962,3 @@
 #undef DESELECT_FIRST_CORNER
 #undef SELECT_SECOND_CORNER
 #undef DESELECT_SECOND_CORNER
-#undef USE_MATERIALS
