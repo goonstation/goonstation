@@ -1290,7 +1290,7 @@
 	execute(var/obj/item/robospray/robospray, var/mob/user)
 		robospray.change_reagent(src.reagent_id, user)
 
-/// Organ context action to pick an organ to operate on
+/// Organ context action to pick a region to operate on
 /datum/contextAction/surgery_region
 	name = "Open up surgery region"
 	icon = 'icons/ui/context16x16.dmi'
@@ -1436,16 +1436,16 @@
 			if (H.organHolder)
 				var/region_complexity = H.organHolder.build_rib_region_buttons(src)
 				if (!region_complexity)
-					boutput(user, "<span class='alert'>The patient's [src.name] region cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
+					boutput(user, "<span class='alert'>The patient's ribs region cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
 					return
 			if (H.organHolder.rib_contexts && length(H.organHolder.rib_contexts) <= 0)
 				if (!H.organHolder.build_inside_ribs_buttons())
-					boutput(user, "<span class='notice'>[H] doesn't have any organs in their [src.name] region!</span>")
+					boutput(user, "<span class='notice'>[H] doesn't have any organs in their ribs region!</span>")
 					return
 				user.showContextActions(H.organHolder.inside_ribs_contexts, H, H.organHolder.contextLayout)
 			else
 				user.showContextActions(H.organHolder.rib_contexts, H, H.organHolder.contextLayout)
-				boutput(user, "<span class='alert'>You begin surgery on [H]'s [src.name] region.</span>")
+				boutput(user, "<span class='alert'>You begin surgery on [H]'s ribs region.</span>")
 				return
 
 	subcostal
@@ -1460,16 +1460,16 @@
 			if (H.organHolder)
 				var/region_complexity = H.organHolder.build_subcostal_region_buttons(src)
 				if (!region_complexity)
-					boutput(user, "<span class='alert'>The patient's [src.name] region cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
+					boutput(user, "<span class='alert'>The patient's subcostal region cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
 					return
 			if (H.organHolder.subcostal_contexts && length(H.organHolder.subcostal_contexts) <= 0)
 				if (!H.organHolder.build_inside_subcostal_buttons())
-					boutput(user, "<span class='notice'>[H] doesn't have any organs in their [src.name] region!</span>")
+					boutput(user, "<span class='notice'>[H] doesn't have any organs in their subcostal region!</span>")
 					return
 				user.showContextActions(H.organHolder.inside_subcostal_contexts, H, H.organHolder.contextLayout)
 			else
 				user.showContextActions(H.organHolder.subcostal_contexts, H, H.organHolder.contextLayout)
-				boutput(user, "<span class='alert'>You begin surgery on [H]'s [src.name] region.</span>")
+				boutput(user, "<span class='alert'>You begin surgery on [H]'s subcostal region.</span>")
 				return
 
 	abdomen
@@ -1484,16 +1484,16 @@
 			if (H.organHolder)
 				var/region_complexity = H.organHolder.build_abdomen_region_buttons(src)
 				if (!region_complexity)
-					boutput(user, "<span class='alert'>The patient's [src.name] region cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
+					boutput(user, "<span class='alert'>The patient's abdominal region cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
 					return
 			if (H.organHolder.abdomen_contexts && length(H.organHolder.abdomen_contexts) <= 0)
 				if (!H.organHolder.build_inside_abdomen_buttons())
-					boutput(user, "<span class='notice'>[H] doesn't have any organs in their [src.name] region!</span>")
+					boutput(user, "<span class='notice'>[H] doesn't have any organs in their abdominal region!</span>")
 					return
 				user.showContextActions(H.organHolder.inside_abdomen_contexts, H, H.organHolder.contextLayout)
 			else
 				user.showContextActions(H.organHolder.abdomen_contexts, H, H.organHolder.contextLayout)
-				boutput(user, "<span class='alert'>You begin surgery on [H]'s [src.name] region.</span>")
+				boutput(user, "<span class='alert'>You begin surgery on [H]'s abdominal region.</span>")
 				return
 
 	flanks
@@ -1508,16 +1508,16 @@
 			if (H.organHolder)
 				var/region_complexity = H.organHolder.build_flanks_region_buttons(src)
 				if (!region_complexity)
-					boutput(user, "<span class='alert'>The patient's [src.name] region cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
+					boutput(user, "<span class='alert'>The patient's flanks cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
 					return
 			if (H.organHolder.flanks_contexts && length(H.organHolder.flanks_contexts) <= 0)
 				if (!H.organHolder.build_inside_flanks_buttons())
-					boutput(user, "<span class='notice'>[H] doesn't have any organs in their [src.name] region!</span>")
+					boutput(user, "<span class='notice'>[H] doesn't have any organs in their flanks!</span>")
 					return
 				user.showContextActions(H.organHolder.inside_flanks_contexts, H, H.organHolder.contextLayout)
 			else
 				user.showContextActions(H.organHolder.flanks_contexts, H, H.organHolder.contextLayout)
-				boutput(user, "<span class='alert'>You begin surgery on [H]'s [src.name] region.</span>")
+				boutput(user, "<span class='alert'>You begin surgery on [H]'s flanks.</span>")
 				return
 
 /// Organ context action to pick an organ to operate on
@@ -1556,7 +1556,7 @@
 					playsound(H, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 				else
 					user.showContextActions(organ_target.surgery_contexts, organ_target, organ_target.contextLayout)
-					boutput(user, "<span class='alert'>You begin surgery on [H]'s [src.name].</span>")
+					boutput(user, "<span class='notice'>You begin surgery on [H]'s [src.name].</span>")
 					return
 		else
 			target.removeContextAction(src.type)
@@ -1791,33 +1791,33 @@
 		icon_state = "scalpel"
 		success_text = "cuts some tissues"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		slipup_text = "slips up and slices some important looking tissue"
+		slipup_text = "slips up and slices something important looking"
 
 		checkRequirements(atom/target, mob/user)
 			if (!user.equipped())
-				boutput(user, "<span class='notice'>You do not have a tool in hand!</span>")
+				boutput(user, "<span class='notice'>You do not have a tool in hand.</span>")
 				return FALSE
 			var/obj/item/I = user.equipped()
 			if (!iscuttingtool(I))
-				boutput(user, "<span class='notice'>You need a cutting tool!</span>")
+				boutput(user, "<span class='notice'>You need a cutting tool.</span>")
 				return FALSE
 			return TRUE
 
 	saw
 		name = "Saw"
-		desc = "Saw out bits of bones around the organ."
+		desc = "Saw out the organ."
 		icon_state = "saw"
-		success_text = "saws some bits of bones surrounding the organ"
+		success_text = "saws various connections to the organ"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		slipup_text = "doesn't hold the saw properly"
+		slipup_text = "doesn't hold the saw properly and messes up"
 
 		checkRequirements(atom/target, mob/user)
 			if (!user.equipped())
-				boutput(user, "<span class='notice'>You do not have a tool in hand!</span>")
+				boutput(user, "<span class='notice'>You do not have a tool in hand.</span>")
 				return FALSE
 			var/obj/item/I = user.equipped()
 			if (!issawingtool(I))
-				boutput(user, "<span class='notice'>You need a sawing tool!</span>")
+				boutput(user, "<span class='notice'>You need a sawing tool.</span>")
 				return FALSE
 			return TRUE
 
@@ -1831,11 +1831,11 @@
 
 		checkRequirements(atom/target, mob/user)
 			if (!user.equipped())
-				boutput(user, "<span class='notice'>You do not have a tool in hand!</span>")
+				boutput(user, "<span class='notice'>You do not have a tool in hand.</span>")
 				return FALSE
 			var/obj/item/I = user.equipped()
 			if (!issnippingtool(I))
-				boutput(user, "<span class='notice'>You need a snipping tool!</span>")
+				boutput(user, "<span class='notice'>You need a snipping tool.</span>")
 				return FALSE
 			return TRUE
 
@@ -1987,15 +1987,15 @@
 		icon_state = "scalpel"
 		success_text = "slices open the flesh potecting the organs"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		slipup_text = "slips up and slices some important looking tissue"
+		slipup_text = "slips up and stabs into the patient"
 
 		checkRequirements(atom/target, mob/user)
 			if (!user.equipped())
-				boutput(user, "<span class='notice'>You do not have a tool in hand!</span>")
+				boutput(user, "<span class='notice'>You do not have a tool in hand.</span>")
 				return FALSE
 			var/obj/item/I = user.equipped()
 			if (!iscuttingtool(I))
-				boutput(user, "<span class='notice'>You need a cutting tool!</span>")
+				boutput(user, "<span class='notice'>You need a cutting tool.</span>")
 				return FALSE
 			return TRUE
 
@@ -2003,17 +2003,17 @@
 		name = "Saw"
 		desc = "Saw open the ribcage."
 		icon_state = "saw"
-		success_text = "Saws open the ribcage"
+		success_text = "saws open the ribcage"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		slipup_text = "doesn't hold the saw properly"
+		slipup_text = "doesn't hold the saw properly and cracks a rib"
 
 		checkRequirements(atom/target, mob/user)
 			if (!user.equipped())
-				boutput(user, "<span class='notice'>You do not have a tool in hand!</span>")
+				boutput(user, "<span class='notice'>You do not have a tool in hand.</span>")
 				return FALSE
 			var/obj/item/I = user.equipped()
 			if (!issawingtool(I))
-				boutput(user, "<span class='notice'>You need a sawing tool!</span>")
+				boutput(user, "<span class='notice'>You need a sawing tool.</span>")
 				return FALSE
 			return TRUE
 
@@ -2023,14 +2023,14 @@
 		icon_state = "scissor"
 		success_text = "snips out various tissues and tendons"
 		success_sound = 'sound/items/Scissor.ogg'
-		slipup_text = "snips directly into the organ"
+		slipup_text = "loses control of the scissors and drags it across the patient's entire chest"
 
 		checkRequirements(atom/target, mob/user)
 			if (!user.equipped())
-				boutput(user, "<span class='notice'>You do not have a tool in hand!</span>")
+				boutput(user, "<span class='notice'>You do not have a tool in hand.</span>")
 				return FALSE
 			var/obj/item/I = user.equipped()
 			if (!issnippingtool(I))
-				boutput(user, "<span class='notice'>You need a snipping tool!</span>")
+				boutput(user, "<span class='notice'>You need a snipping tool.</span>")
 				return FALSE
 			return TRUE
