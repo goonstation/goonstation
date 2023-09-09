@@ -393,87 +393,69 @@
 	set desc = "Allows creation of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 
-	var/list/bps = new/list()
-	var/savefile/save = new/savefile("data/blueprints.dat")
-	save.cd = "/"
+	var/list/userlist = flist("data/blueprints/")
+	var/inputuser = tgui_input_list(usr, "Select a user by ckey.", "Users", userlist)
+	if(!inputuser) return
+	var/list/bplist = flist("data/blueprints/[inputuser]")
+	var/inputbp = tgui_input_list(usr, "Pick a blueprint belonging to this user.", "Blueprints", bplist)
+	if(!inputbp) return
 
-	for(var/currckey in save.dir)
-		save.cd = "/[currckey]"
-		for(var/currroom in save.dir)
-			save.cd = "/[currckey]/[currroom]"
-			bps.Add("[currckey]/[currroom]")
+	var/savefile/selectedbp = new/savefile("data/blueprints/[inputuser]/[inputbp]")
+	var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(usr))
 
-	save.cd = "/"
+	selectedbp.cd = "/"
+	var/roomname = selectedbp["roomname"]
+	bp.size_x = selectedbp["sizex"]
+	bp.size_y = selectedbp["sizey"]
+	bp.author = selectedbp["author"]
 
-	if(!length(bps))
-		boutput(usr, "<span class='alert'>No blueprints found.</span>")
-		return
-	var/input = tgui_input_list(usr, "Select a blueprint to create.", "Blueprints", bps)
-	if(!input) return
-	var/list/split = splittext(input, "/")
-	var/key = input
-	if(save.dir.Find("[split[1]]"))
-		save.cd = "/[split[1]]"
-		if(save.dir.Find("[split[2]]"))
-			var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(usr))
+	selectedbp.cd = "/tiles" // cd to tiles
+	for (var/A in selectedbp.dir) // and now loop on every listing in tiles
+		selectedbp.cd = "/tiles/[A]"
+		var/list/coords = splittext(A, ",")
+		var/datum/tileinfo/tf = new/datum/tileinfo()
+		tf.posx = coords[1]
+		tf.posy = coords[2]
+		tf.tiletype = selectedbp["type"]
+		tf.state = selectedbp["state"]
+		tf.direction = selectedbp["dir"]
+		tf.icon = selectedbp["icon"]
+		bp.req_metal += 1
+		bp.req_glass += 0.5
+		selectedbp.cd = "/tiles/[A]/objects"
+		for (var/B in selectedbp.dir)
+			selectedbp.cd = "/tiles/[A]/objects/[B]"
+			var/datum/objectinfo/O = new/datum/objectinfo()
+			O.objecttype = selectedbp["type"]
+			O.direction = selectedbp["dir"]
+			O.layer = selectedbp["layer"]
+			O.px = selectedbp["pixelx"]
+			O.py = selectedbp["pixely"]
+			O.icon_state = selectedbp["icon_state"]
+			bp.req_metal += 0.9
+			bp.req_glass += 1.5
+			tf.objects.Add(O)
+		bp.roominfo.Add(tf)
+	bp.name = "Blueprint '[roomname]'"
+	bp.req_metal = round(bp.req_metal)
+	bp.req_glass = round(bp.req_glass)
 
-			save.cd = "/[key]"
-			boutput(usr, "<span class='notice'>Printed Blueprint for '[save["roomname"]]'</span>")
-			var/roomname = save["roomname"]
-			bp.size_x = save["sizex"]
-			bp.size_y = save["sizey"]
-
-			for (var/A in save.dir)
-				if(A == "sizex" || A == "sizey" || A == "roomname") continue
-				save.cd = "/[key]/[A]"
-				var/list/coords = splittext(A, ",")
-				var/datum/tileinfo/tf = new/datum/tileinfo()
-				tf.posx = coords[1]
-				tf.posy = coords[2]
-				tf.tiletype = save["type"]
-				tf.state = save["state"]
-				tf.direction = save["dir"]
-				for (var/B in save.dir)
-					if(B == "type" || B == "state") continue
-					save.cd = "/[key]/[A]/[B]"
-					var/datum/objectinfo/O = new/datum/objectinfo()
-					O.objecttype = save["type"]
-					O.direction = save["dir"]
-					O.layer = save["layer"]
-					O.px = save["pixelx"]
-					O.py = save["pixely"]
-					tf.objects.Add(O)
-				bp.roominfo.Add(tf)
-				bp.name = "Blueprint '[roomname]'"
+	boutput(usr, "<span class='notice'>Printed blueprint for '[roomname]'.</span>")
+	return
 
 /verb/adminDeleteBlueprint()
 	set name = "Blueprint Delete"
 	set desc = "Allows deletion of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 
-	var/list/bps = new/list()
-	var/savefile/save = new/savefile("data/blueprints.dat")
-	save.cd = "/"
-
-	for(var/currckey in save.dir)
-		save.cd = "/[currckey]"
-		for(var/currroom in save.dir)
-			save.cd = "/[currckey]/[currroom]"
-			bps.Add("[currckey]/[currroom]")
-
-	save.cd = "/"
-
-	if(!length(bps))
-		boutput(usr, "<span class='alert'>No blueprints found.</span>")
-		return
-	var/input = tgui_input_list(usr, "Select a blueprint to create.", "Blueprints", bps)
-	if(!input) return
-	var/list/split = splittext(input, "/")
-	if(save.dir.Find("[split[1]]"))
-		save.cd = "/[split[1]]"
-		if(save.dir.Find("[split[2]]"))
-			save.dir.Remove("[split[2]]")
-			boutput(usr, "<span class='alert'>Blueprint [split[2]] deleted..</span>")
+	var/list/userlist = flist("data/blueprints/")
+	var/inputuser = tgui_input_list(usr, "Select a user by ckey.", "Users", userlist)
+	if(!inputuser) return
+	var/list/bplist = flist("data/blueprints/[inputuser]")
+	var/inputbp = tgui_input_list(usr, "Pick a blueprint belonging to this user.", "Blueprints", bplist)
+	if(!inputbp) return
+	fdel("data/blueprints/[inputuser]/[inputbp]")
+	boutput(usr, "<span class='notice'>Deleted [inputuser]'s [inputbp].</span>")
 
 /verb/adminDumpBlueprint()
 	set name = "Blueprint Dump"
@@ -488,7 +470,6 @@
 	if(!inputbp) return
 
 	var/savefile/selectedbp = new/savefile("data/blueprints/[inputuser]/[inputbp]")
-	//var/savetxt = file("data/blueprints/[inputuser]/[inputbp].txt")
 	selectedbp.ExportText("/","data/blueprints/[inputuser]/[inputbp].txt")
 	usr.client.Export("data/blueprints/[inputuser]/[inputbp].txt")
 	fdel("data/blueprints/[inputuser]/[inputbp].txt")
