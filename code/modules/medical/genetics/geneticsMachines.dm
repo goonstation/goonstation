@@ -556,7 +556,7 @@
 			if (addEffect) // re-mutantify if we would have been able to anyway
 				subject.bioHolder.AddEffect(addEffect)
 			if (genResearch.emitter_radiation > 0)
-				subject.take_radiation_dose((genResearch.emitter_radiation/75) * 0.5 SIEVERTS)
+				subject.take_radiation_dose((genResearch.emitter_radiation/75) * 1.5 SIEVERTS)
 			src.equipment_cooldown(GENETICS_EMITTERS, 1200)
 			scanner_alert(ui.user, "Genes successfully scrambled.")
 			on_ui_interacted(ui.user)
@@ -575,7 +575,7 @@
 				return
 			src.log_me(subject, "gene scrambled", E)
 			if (genResearch.emitter_radiation > 0)
-				subject.take_radiation_dose((genResearch.emitter_radiation/75) * 0.1 SIEVERTS)
+				subject.take_radiation_dose((genResearch.emitter_radiation/75) * 0.4 SIEVERTS)
 			subject.bioHolder.RemovePoolEffect(E)
 			subject.bioHolder.AddRandomNewPoolEffect()
 			src.equipment_cooldown(GENETICS_EMITTERS, 600)

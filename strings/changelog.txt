@@ -1,5 +1,37 @@
 
+(t)fri sep 08 23
+(u)Tarmunora
+(*)Reagent heater/coolers are more effective (and use more power).
+(+)Added NOP instruction "*" to chemicompiler.
+(+)Fixed bug allowing reagent heater/coolers to process beakers in multiple loops at once.
+(u)Chasu
+(p)15731
+(e)💅⚗🍝|C-QoL, A-Chemistry, A-Catering
+(+)Banana juice has replaced colorful reagent in the Honky Tonic recipe.
+(u)Bisar
+(p)15344
+(e)🪲🗺|C-Bug, A-Mapping
+(*)QM Barcode computers have been brought in line with all other computer terminals. Now you can disassemble them for repair, renovation... or larceny!
+(u)Glamurio (Ryou)
+(p)15730
+(e)💅🍝|C-QoL, A-Catering
+(+)Mexican Hot Chocolate is now made with cinnamon.
+(u)Tyrant, Flaborized
+(p)14928
+(e)🆕🎨|C-Feature, C-Sprites
+(+)Added newspapers! You can open them up to hide your face behind them, and read the headlines. Make some at the printing press!
+(t)thu sep 07 23
+(u)Cheffie
+(p)15708
+(e)🗺|A-Mapping
+(+)The armoury on donut 3 has been renovated
+(u)FlameArrow57
+(p)15527
+(e)🆕⚖🔊📦|C-Feature, C-Balance, C-Sound, A-Game-Objects
+(+)Common lethal bullets and grenade shrapnel now have a low chance to ricochet off walls. Ricocheted projectiles have reduced damage and don't travel as far.
 (t)wed sep 06 23
+(u)Tarmunora
+(+)Basic cybereyes can now be recolored by using a multitool on them. This required a total refactor of eye color so report bugs related to that I guess.
 (u)UnfunnyPerson
 (p)15482
 (e)🗺⚖|A-Mapping, C-Balance

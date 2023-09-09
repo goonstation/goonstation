@@ -14,7 +14,7 @@
 /mob/living/intangible/aieye
 	name = "AI Eye"
 	icon = 'icons/mob/ai.dmi'
-	icon_state = "a-eye"
+	icon_state = "ai-eye"
 	density = 0
 	layer = 101
 	see_in_dark = SEE_DARK_FULL
