@@ -251,7 +251,7 @@
 /obj/item/material_piece/rubber
 	name = "piece"
 	desc = "A sheet of rubber."
-	icon_state = "bar"
+	icon_state = "block"
 	default_material = "latex"
 
 	setup_material()

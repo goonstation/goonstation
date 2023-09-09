@@ -126,7 +126,7 @@ ABSTRACT_TYPE(/area/supply)
 	if (isscrewingtool(I))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 30, 1, -2)
 		SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/plasticflaps/proc/screw_flaps, null, I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
-	if (istype(I, /obj/item/material_piece/rubber/plastic))
+	if (istype(I, /obj/item/material_piece/rubber))
 		SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/plasticflaps/proc/insert_flaps, I, I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 	..()
 
@@ -135,6 +135,7 @@ ABSTRACT_TYPE(/area/supply)
 	src.has_flaps = TRUE
 	icon_state = "plasticflaps"
 	src.UpdateIcon()
+	src.flap_type = I.type
 	qdel(I)
 
 /obj/plasticflaps/proc/snip_flaps(mob/user)
