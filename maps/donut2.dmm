@@ -35761,6 +35761,7 @@
 	pixel_y = 7
 	},
 /obj/random_item_spawner/desk_stuff/few,
+/obj/item/storage/toolbox/artistic,
 /turf/simulated/floor/black/corner{
 	dir = 1
 	},
@@ -51261,6 +51262,7 @@
 	pixel_x = -2;
 	pixel_y = 6
 	},
+/obj/item/storage/toolbox/artistic,
 /turf/simulated/floor/grime,
 /area/station/quartermaster/refinery)
 "xMi" = (
