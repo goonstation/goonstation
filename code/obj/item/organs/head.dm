@@ -57,7 +57,7 @@
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/glasses/glasses = null
 
-	appearance_flags = KEEP_TOGETHER
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 
 	New()
 		..()
