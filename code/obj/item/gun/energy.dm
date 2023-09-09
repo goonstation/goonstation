@@ -1924,12 +1924,10 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			if (welded_open) // air cooling
 				remove_amount = 20
 			heat = max(0, heat - remove_amount)
+			message_admins(heat)
 		return
 
 	canshoot(mob/user)
-		if (!our_cell)
-			boutput(user,"<span class='alert'>[src] needs a power source to function!</span>")
-			return FALSE
 		if (!our_flashlight)
 			boutput(user,"<span class='alert'>[src] needs a light source to function!</span>")
 			return FALSE
@@ -2011,33 +2009,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	var/step = 0
 
 	attackby(obj/item/W, mob/user, params)
-		if (step == 0 && istype(W, /obj/item/cable_coil))
-			boutput(user,"<span class='notice'>You attach wiring to the inside of the pipe.</span>")
-			W.change_stack_amount(-1)
-			step++
-			desc = "A long pipe with wires inside of it."
-			icon_state = "rods_2"
-			return
-		else if (step == 1 && isweldingtool(W) && W:try_weld(user, 1))
-			boutput(user,"<span class='notice'>You weld the wiring to the pipe and create the muzzle.</span>")
-			step++
-			desc = "A long pipe with wires inside of it. The end is welded into a point."
-			icon_state = "rods_3"
-			return
-		else if (step == 2 && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_CRYSTAL && W.amount >= 3) // 3 sheets so you have to deconstruct more than 1 window
-			boutput(user,"<span class='notice'>You create a lens using [W] and stuff it inside [src].</span>")
-			W.change_stack_amount(-3)
-			step++
-			desc = "A long pipe with wires inside of it. The end is welded into a point."
-			icon_state = "rods_3"
-			return
-		else if (step == 3 && isweldingtool(W) && W:try_weld(user, 1))
-			boutput(user,"<span class='notice'>You weld holes into the barrel in order to increase ventilation.</span>")
-			step++
-			desc = "A long pipe with wires inside of it and holes welded into the sides. You can see a lens inside."
-			icon_state = "rods_4"
-			return
-		else if (step == 4 && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_METAL && W.amount >= 4)
+		if (step == 0 && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_METAL && W.amount >= 4)
 			boutput(user,"<span class='notice'>You construct a stock for the barrel.</span>")
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
 			step++
@@ -2046,7 +2018,13 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			desc = "A gun of some kind? It seems unfinished."
 			icon_state = "rods_5"
 			return
-		else if (step == 5 && istype(W, /obj/item/device/light/flashlight))
+		else if (step == 1 && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_CRYSTAL && W.amount >= 3) // 3 sheets so you have to deconstruct more than 1 window
+			boutput(user,"<span class='notice'>You create a lens using [W] and stuff it inside [src].</span>")
+			W.change_stack_amount(-3)
+			step++
+			icon_state = "rods_3"
+			return
+		else if (step == 2 && istype(W, /obj/item/device/light/flashlight))
 			var/obj/item/device/light/flashlight/F = W
 			boutput(user,"<span class='notice'>You attach the flashlight inside of the barrel.</span>")
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
@@ -2057,20 +2035,26 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			step++
 			name = "pipe/stock/flashlight assembly"
 			return
-		else if (step == 6 && istype(W, /obj/item/cable_coil))
-			boutput(user,"<span class='notice'>You wire the flashlight into the assembly.</span>")
-			W.change_stack_amount(-1)
+		else if (step == 3 && istype(W, /obj/item/device/timer))
+			boutput(user,"<span class='notice'>You attach the timer to [src].</span>")
+			playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
+			user.u_equip(W)
+			qdel(W)
 			step++
-			icon_state = "rods_5"
-			desc = "A gun of some kind? It seems almost finished."
+			name = "pipe/stock/flashlight/timer assembly"
 			return
-		else if (step == 7 && isweldingtool(W) && W:try_weld(user, 1) )
-			boutput(user,"<span class='notice'>You weld the stock and barrel together.</span>")
+		else if (step == 4 && isweldingtool(W) && W:try_weld(user, 1) )
+			boutput(user,"<span class='notice'>You weld [src] together.</span>")
 			step++
 			name = "makeshift energy rifle"
+			return
+		else if (step == 5 && istype(W, /obj/item/cable_coil))
+			boutput(user,"<span class='notice'>You wire [src] together.</span>")
+			W.change_stack_amount(-1)
+			step++
 			desc = "A makeshift gun? Seems like it needs a power source."
 			return
-		else if (step == 8 && istype(W, /obj/item/cell))
+		else if (step == 6 && istype(W, /obj/item/cell))
 			boutput(user,"<span class='notice'>You connect [W] to the rifle. It is ready to fire!</span>")
 			user.u_equip(src)
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
@@ -2085,7 +2069,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 
 /obj/item/makeshift_laser_barrel/glass
-	step = 8
+	step = 6
 
 	New()
 		..()
