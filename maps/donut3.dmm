@@ -14886,17 +14886,11 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "ewD" = (
-/obj/machinery/floorflusher/industrial{
-	desc = "For flushing disposed waste. ";
-	name = "Processed Waste Flusher";
-	open = 1
-	},
-/obj/disposalpipe/trunk{
-	dir = 4
-	},
 /obj/machinery/light/small/sticky{
 	dir = 8
 	},
+/obj/machinery/crusher,
+/obj/machinery/conveyor/SE,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "ewH" = (
@@ -34731,10 +34725,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "kEQ" = (
-/obj/disposaloutlet/north,
-/obj/disposalpipe/trunk{
-	dir = 8
-	},
+/obj/machinery/conveyor/WN,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "kES" = (
@@ -50203,6 +50194,15 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/station/security/hos)
+"pwL" = (
+/obj/machinery/conveyor/EW{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/plasticflaps,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "pwN" = (
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -55943,6 +55943,15 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/storage/tech)
+"rjl" = (
+/obj/plasticflaps,
+/obj/machinery/conveyor/WE,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "crusher1";
+	name = "crusher door"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "rjn" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -62944,20 +62953,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/main)
-"tvm" = (
-/obj/plasticflaps,
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 8;
-	id = "crusher1";
-	name = "crusher door"
-	},
-/obj/machinery/conveyor/EW{
-	id = "disposals";
-	move_lag = 30;
-	operating = 1
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "tvv" = (
 /obj/machinery/conveyor/EW{
 	id = "ghostdrone"
@@ -66643,12 +66638,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/engine/engineering/breakroom)
 "uAc" = (
-/obj/machinery/crusher,
-/obj/machinery/conveyor/SN{
-	id = "disposals";
-	move_lag = 30;
-	operating = 1
-	},
+/obj/machinery/conveyor/EN,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "uAh" = (
@@ -105509,9 +105499,9 @@ kXR
 pFp
 juN
 ieL
-iGm
+rjl
 ieL
-tvm
+ltH
 ieL
 cNV
 glP
@@ -106417,7 +106407,7 @@ uOO
 cWf
 qMP
 ieL
-ltH
+pwL
 ieL
 rdj
 rdj
