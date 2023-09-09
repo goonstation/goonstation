@@ -1,5 +1,9 @@
 
 (t)sat sep 09 23
+(u)Garash
+(p)15714
+(e)🔄📄|C-Rework, A-UI
+(+)Modernized UI for the Hair Dye Mixer 3000, it now lives up to it's name!
 (u)pali
 (*)Opening a tank-transfer valve now plays the valve-turning sound giving people a bit of time to react.
 (t)fri sep 08 23
