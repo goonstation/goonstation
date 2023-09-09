@@ -654,7 +654,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	if (istype(theBoss))
 		theBoss.base.icon_state = "powercore_base_start"
 		theBoss.top.icon_state = "powercore_core_start"
-		SPAWN(3.3 SECONDS)
+		SPAWN(3.1 SECONDS)
 			theBoss.base.icon_state = "powercore_base_active"
 			theBoss.top.icon_state = "powercore_core_active"
 		SPAWN(1.9 SECONDS)
@@ -895,7 +895,14 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 						aSpawner.spawn_bot()
 				if (base)
 					base.icon_state = "powercore_base_fast"
+					top.icon_state = "powercore_core_hit"
+					sleep(0.6 SECONDS)
 					top.icon_state = "powercore_core_fast"
+			else
+				if (base || iomoon_blowout_state == 1)
+					top.icon_state = "powercore_core_hit"
+					sleep(0.6 SECONDS)
+					top.icon_state = "powercore_core_active"
 
 
 		attack_hand(var/mob/user)
