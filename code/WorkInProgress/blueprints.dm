@@ -34,8 +34,9 @@
 /obj/machinery/abcu
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "builder"
-	name = "Automated Blueprint Construction Unit (ABC-U)"
-	desc = "This fine piece of machinery can construct entire rooms from blueprints."
+	name = "ABC Unit"
+	desc = "An Automated Blueprint Construction Unit. \
+		This fine piece of machinery can construct entire rooms from blueprints."
 	density = 1
 	opacity = 0
 	anchored = UNANCHORED
@@ -133,7 +134,7 @@
 					boutput(user, "<span class='alert'>Lock status can't be changed with a build in progress.</span>")
 					return
 				if(!src.locked) return
-				boutput(user, "<span class='notice'>The machine unlocks and shuts down.</span>")
+				//boutput(user, "<span class='notice'>The machine unlocks and shuts down.</span>")
 				src.deactivate()
 
 			if("Lock")
@@ -144,8 +145,8 @@
 				if(!src.currentBp)
 					boutput(user, "<span class='alert'>The machine requires a blueprint before it can be locked.</span>")
 					return
-				boutput(user, "<span class='notice'>The machine locks into place and begins humming softly.</span>")
-				src.activate()
+				//boutput(user, "<span class='notice'>The machine locks into place and begins humming softly.</span>")
+				src.activate(user)
 
 			if("Begin Building")
 				if(src.building)
@@ -158,7 +159,7 @@
 					boutput(user, "<span class='alert'>The machine requires a blueprint before it can build anything.</span>")
 					return
 				//build()
-				src.prepareBuild()
+				src.prepareBuild(user)
 
 			if("Eject Blueprint")
 				//if(src.building) return
@@ -297,7 +298,7 @@
 			if(Info.tiletype != null)
 				var/turf/newTile = Pos //get_turf(pos)
 				newTile.ReplaceWith(Info.tiletype)
-				var/LoadIcon = get_cached_file(Info.icon)
+				//var/LoadIcon = get_cached_file(Info.icon)
 				//if (!isnull(LoadIcon)) // now this works, but auto-walls override icon state when spawned :)
 					//newTile.icon = LoadIcon // disabled for now because unfinished and breaks icons
 				newTile.icon_state = Info.state
@@ -333,9 +334,8 @@
 		src.BuildIndex = 1
 		src.icon_state = "builder1"
 		SubscribeToProcess()
-		src.visible_message("<span class='notice'>[src] </span>")
+		src.visible_message("<span class='notice'>[src] starts to buzz and vibrate. The operation light blinks on.</span>")
 		logTheThing(LOG_STATION, src, "[user] started ABCU build at [log_loc(src)], with blueprint [src.currentBp.name], authored by [src.currentBp.author]")
-		//boutput(usr, "<span class='notice'>Tried to start build of [src.BuildEnd] tiles</span>")
 
 	proc/endBuild()
 		for (var/datum/objectinfo/N in src.apclist)
@@ -348,6 +348,7 @@
 
 		src.icon_state = "builder"
 		makepowernets()
+		src.visible_message("<span class='notice'>[src] whirrs to a stop. The operation light flashes twice and turns off.</span>")
 
 	proc/auditInventory(mob/user)
 		var/MetalCount = 0
@@ -380,20 +381,23 @@
 		src.Paused = FALSE
 		src.icon_state = "builder1"
 		SubscribeToProcess()
+		src.visible_message("<span class='notice'>[src] starts to buzz and vibrate.</span>")
 
 	proc/pauseBuild()
 		src.Paused = TRUE
 		src.icon_state = "builder"
 		UnsubscribeProcess()
+		src.visible_message("<span class='notice'>[src] releases a small puff of steam, then quiets down.</span>")
 
 	proc/deactivate()
 		for(var/obj/O in src.markers)
 			qdel(O)
 		src.locked = FALSE
 		src.anchored = UNANCHORED
+		src.visible_message("[src] disengages its anchors.")
 		return
 
-	proc/activate()
+	proc/activate(mob/user)
 		src.locked = TRUE
 		src.anchored = ANCHORED
 		src.invalidCount = 0
@@ -408,7 +412,8 @@
 				src.invalidCount++
 
 			src.markers.Add(O)
-		boutput(usr, "<span class='notice'>Building this will require [src.currentBp.req_metal] metal and [src.currentBp.req_glass] glass sheets.</span>")
+		boutput(user, "<span class='notice'>Building this will require [src.currentBp.req_metal] metal and [src.currentBp.req_glass] glass sheets.</span>")
+		src.visible_message("[src] makes a loud clunk as its stabilization anchors engage.")
 		return
 
 	/* proc/build()
