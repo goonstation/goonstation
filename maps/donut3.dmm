@@ -5956,6 +5956,10 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/machinery/light/small{
+	dir = 4;
+	status = 2
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "bGD" = (
@@ -14886,11 +14890,12 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "ewD" = (
-/obj/machinery/light/small/sticky{
-	dir = 8
-	},
 /obj/machinery/crusher,
-/obj/machinery/conveyor/SE,
+/obj/machinery/conveyor/SE{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "ewH" = (
@@ -19725,6 +19730,14 @@
 	},
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
+"fXF" = (
+/obj/machinery/conveyor/SW{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "fXG" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -30812,17 +30825,6 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
-"juN" = (
-/obj/machinery/conveyor/EW{
-	id = "disposals";
-	move_lag = 30;
-	operating = 1
-	},
-/obj/machinery/light/small/sticky{
-	dir = 1
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "jvb" = (
 /turf/simulated/wall/auto/jen,
 /area/station/hangar/science)
@@ -34725,7 +34727,11 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "kEQ" = (
-/obj/machinery/conveyor/WN,
+/obj/machinery/conveyor/WN{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "kES" = (
@@ -55945,7 +55951,11 @@
 /area/station/storage/tech)
 "rjl" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor/WE,
+/obj/machinery/conveyor/WE{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "crusher1";
 	name = "crusher door"
@@ -61107,15 +61117,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
-"sPA" = (
-/obj/machinery/conveyor/EW{
-	id = "disposals";
-	move_lag = 30;
-	operating = 1
-	},
-/obj/machinery/light/small/sticky,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "sPP" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -64917,6 +64918,15 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/engine/singcore)
+"tWY" = (
+/obj/machinery/conveyor/EW{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "tXj" = (
 /obj/item/reagent_containers/hypospray{
 	pixel_x = -6;
@@ -66638,7 +66648,15 @@
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/engine/engineering/breakroom)
 "uAc" = (
-/obj/machinery/conveyor/EN,
+/obj/machinery/conveyor/EN{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	status = 2
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "uAh" = (
@@ -105497,7 +105515,7 @@ cZE
 uOO
 kXR
 pFp
-juN
+tWY
 ieL
 rjl
 ieL
@@ -105799,11 +105817,11 @@ pBV
 iSC
 tsg
 pFp
-ltH
+fXF
 nrz
 kEQ
 ieL
-sPA
+ltH
 ieL
 rdj
 rdj
@@ -106105,7 +106123,7 @@ pyG
 pFp
 pFp
 ieL
-ltH
+tWY
 ieL
 rdj
 rdj
@@ -107011,7 +107029,7 @@ tzh
 eTr
 gNr
 jAi
-sPA
+ltH
 ieL
 rdj
 rdj
