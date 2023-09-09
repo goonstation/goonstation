@@ -291,18 +291,12 @@
 		src.head_image_eyes_L.pixel_y = 0
 		if(src.left_eye)
 			src.head_image_eyes_L.color = left_eye.iris_color
-		else
-			src.head_image_eyes_L.color = "#FFFFFF"
-			src.head_image_eyes_L.alpha = 0
-		actual_head.overlays += src.head_image_eyes_L
+			actual_head.overlays += src.head_image_eyes_L
 		src.head_image_eyes_R.pixel_x = 0
 		src.head_image_eyes_R.pixel_y = 0
 		if(src.right_eye)
 			src.head_image_eyes_R.color = right_eye.iris_color
-		else
-			src.head_image_eyes_R.color = "#FFFFFF"
-			src.head_image_eyes_R.alpha = 0
-		actual_head.overlays += src.head_image_eyes_R
+			actual_head.overlays += src.head_image_eyes_R
 
 		if(src.head_image_nose)
 			actual_head.overlays += src.head_image_nose
