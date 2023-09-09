@@ -297,7 +297,9 @@
 			if(Info.tiletype != null)
 				var/turf/newTile = Pos //get_turf(pos)
 				newTile.ReplaceWith(Info.tiletype)
-				//newTile.icon = text2path(T.icon) // not working
+				var/LoadIcon = get_cached_file(Info.icon)
+				//if (!isnull(LoadIcon)) // now this works, but auto-walls override icon state when spawned :)
+					//newTile.icon = LoadIcon // disabled for now because unfinished and breaks icons
 				newTile.icon_state = Info.state
 				newTile.set_dir(Info.direction)
 				newTile.inherit_area()
@@ -317,18 +319,22 @@
 				new O.objecttype(Pos) // need this part to also spawn the objects
 		return
 
-	proc/prepareBuild()
+	proc/prepareBuild(mob/user)
 		if(src.invalidCount)
 			boutput(usr, "<span class='alert'>The machine can not build on anything but empty space. Check for red markers.</span>")
 			return
 
 		src.BuildEnd = length(src.currentBp.roominfo)
-		if (src.BuildEnd > 0)
-			src.building = TRUE
-			src.Paused = FALSE
-			src.BuildIndex = 1
-			src.icon_state = "builder1"
-			SubscribeToProcess()
+		if (src.BuildEnd <= 0)
+			return
+
+		src.building = TRUE
+		src.Paused = FALSE
+		src.BuildIndex = 1
+		src.icon_state = "builder1"
+		SubscribeToProcess()
+		src.visible_message("<span class='notice'>[src] </span>")
+		logTheThing(LOG_STATION, src, "[user] started ABCU build at [log_loc(src)], with blueprint [src.currentBp.name], authored by [src.currentBp.author]")
 		//boutput(usr, "<span class='notice'>Tried to start build of [src.BuildEnd] tiles</span>")
 
 	proc/endBuild()
@@ -910,7 +916,8 @@
 			save["type"] << curr.type
 			save["dir"] << curr.dir
 			save["state"] << curr.icon_state
-			save["icon"] << "[curr.icon]" // string this or it saves the entire .dmi file
+			if (curr.icon != initial(curr.icon))
+				save["icon"] << "[curr.icon]" // string this or it saves the entire .dmi file
 			//save.dir.Add("objects")
 
 			for(var/obj/o in curr)
@@ -940,7 +947,7 @@
 					save["pixelx"] << o.pixel_x
 					save["pixely"] << o.pixel_y
 					save["icon_state"] << o.icon_state
-					save["icon"] << "[o.icon]"
+					//save["icon"] << "[o.icon]"
 
 		boutput(usr, "<span class='notice'>Saved blueprint as '[name]'. </span>")
 		return
@@ -974,6 +981,7 @@
 			tf.tiletype = save["type"]
 			tf.state = save["state"]
 			tf.direction = save["dir"]
+			tf.icon = save["icon"]
 			bp.req_metal += 1
 			bp.req_glass += 0.5
 			save.cd = "/tiles/[A]/objects"
