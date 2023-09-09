@@ -121,23 +121,31 @@ ABSTRACT_TYPE(/area/supply)
 				qdel(src)
 
 /obj/plasticflaps/attackby(obj/item/I, mob/user)
-	..()
-	if (issnippingtool(W))
-		SETUP_GENERIC_ACTIONBAR(src, src, 0.5 SECOND, /obj/plasticflaps/proc/snip_flaps, null, W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
-	if (isscrewingtool(W))
+	if (issnippingtool(I))
+		SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/plasticflaps/proc/snip_flaps, user, I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+	if (isscrewingtool(I))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 30, 1, -2)
-		SETUP_GENERIC_ACTIONBAR(src, src, 0.5 SECOND, /obj/plasticflaps/proc/screw_flaps, null, W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
-	if (istype(W, /obj/item/material_piece/rubber/plastic))
-		src.has_flaps = TRUE
-		qdel(W)
+		SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/plasticflaps/proc/screw_flaps, null, I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+	if (istype(I, /obj/item/material_piece/rubber/plastic))
+		SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/plasticflaps/proc/insert_flaps, I, I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+	..()
+
+/obj/plasticflaps/proc/insert_flaps(obj/item/I)
+	playsound(src.loc, 'sound/items/sticker.ogg', 30, 1, -2)
+	src.has_flaps = TRUE
+	icon_state = "plasticflaps"
+	src.UpdateIcon()
+	qdel(I)
 
 /obj/plasticflaps/proc/snip_flaps(mob/user)
 	playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 	var/snip_flaps = new src.flap_type(user.loc)
 	user.put_in_hand_or_drop(snip_flaps)
 	src.has_flaps = FALSE
+	icon_state = "plasticflaps_open"
+	src.UpdateIcon()
 
-/obj/plasticflaps/proc/screw_flaps // hehe
+/obj/plasticflaps/proc/screw_flaps() // hehe
 	if (!src.anchored)
 		src.anchored = ANCHORED
 	else
