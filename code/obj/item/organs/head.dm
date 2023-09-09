@@ -284,7 +284,7 @@
 
 		src.head_image.pixel_x = 0
 		src.head_image.pixel_y = 0
-		actual_head.appearance = src.head_image
+		actual_head.overlays += src.head_image
 		src.head_image_eyes_L.pixel_x = 0
 		src.head_image_eyes_L.pixel_y = 0
 		if(src.left_eye)
