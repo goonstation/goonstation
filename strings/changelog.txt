@@ -1,5 +1,9 @@
 
 (t)sat sep 09 23
+(u)Mantwerp and Mcdangus
+(p)15704
+(e)🎨🔊📦|C-Sprites, C-Sound, A-Game-Objects
+(*)Redid the acoustic guitar entirely, now also available from cargo! Sprites and sounds by Mcdangus.
 (u)Garash
 (p)15714
 (e)🔄📄|C-Rework, A-UI
