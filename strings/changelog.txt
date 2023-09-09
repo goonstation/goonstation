@@ -1,7 +1,9 @@
 
 (t)fri sep 08 23
 (u)Tarmunora
+(*)Reagent heater/coolers are more effective (and use more power).
 (+)Added NOP instruction "*" to chemicompiler.
+(+)Fixed bug allowing reagent heater/coolers to process beakers in multiple loops at once.
 (u)Chasu
 (p)15731
 (e)💅⚗🍝|C-QoL, A-Chemistry, A-Catering

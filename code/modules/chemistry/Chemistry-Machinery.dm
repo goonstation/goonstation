@@ -22,6 +22,7 @@ TYPEINFO(/obj/machinery/chem_heater)
 	flags = NOSPLASH | TGUI_INTERACTIVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	power_usage = 50
+	processing_tier = PROCESSING_HALF
 	var/obj/beaker = null
 	var/active = 0
 	var/target_temp = T0C
@@ -177,7 +178,6 @@ TYPEINFO(/obj/machinery/chem_heater)
 				if (!container?.reagents.total_volume)
 					return
 				src.active = 1
-				active()
 				src.UpdateIcon()
 			if("stop")
 				set_inactive()
@@ -195,25 +195,22 @@ TYPEINFO(/obj/machinery/chem_heater)
 		return ..(AM)
 	*/
 
-	process()
-		..()
-
-	proc/active()
+	process(mult)
 		if (!active) return
 		if (status & (NOPOWER|BROKEN) || !beaker || !beaker.reagents.total_volume)
 			set_inactive()
 			return
 
 		var/datum/reagents/R = beaker:reagents
-		R.temperature_reagents(target_temp, 400)
+		R.temperature_reagents(target_temp, exposed_volume = (400 + R.total_volume * 5) * mult, change_cap = 100) //it uses juice in if the beaker is filled more. Or something.
 
-		src.power_usage = 1000
+		src.power_usage = 2000 + R.total_volume * 25
 
-		if(abs(R.total_temperature - target_temp) <= 3) active = 0
+		if(abs(R.total_temperature - target_temp) <= 3)
+			active = 0
 
 		tgui_process.update_uis(src)
-
-		SPAWN(1 SECOND) active()
+		..()
 
 	proc/robot_disposal_check()
 		// Without this, the heater might occasionally show that a beaker is still inserted
