@@ -61,24 +61,23 @@
 
 	New()
 		..()
-		SPAWN(0)
-			if (src.donor)
-				if(!src.bones)
-					src.bones = new /datum/bone(src)
-				src.bones.donor = src.donor
-				src.bones.parent_organ = src.organ_name
-				src.bones.name = "skull"
-				if (src.donor?.bioHolder?.mobAppearance)
-					src.donor_appearance = src.donor.bioHolder.mobAppearance
-					src.UpdateIcon(/*makeshitup*/ 0)
-				else //The heck?
-					src.UpdateIcon(/*makeshitup*/ 1)
-				if (src.donor.eye != null)
-					src.donor.set_eye(null)
-			else
+		if (src.donor)
+			if(!src.bones)
+				src.bones = new /datum/bone(src)
+			src.bones.donor = src.donor
+			src.bones.parent_organ = src.organ_name
+			src.bones.name = "skull"
+			if (src.donor?.bioHolder?.mobAppearance)
+				src.donor_appearance = src.donor.bioHolder.mobAppearance
+				src.UpdateIcon(/*makeshitup*/ 0)
+			else //The heck?
 				src.UpdateIcon(/*makeshitup*/ 1)
-			if (!src.chat_text)
-				src.chat_text = new(null, src)
+			if (src.donor.eye != null)
+				src.donor.set_eye(null)
+		else
+			src.UpdateIcon(/*makeshitup*/ 1)
+		if (!src.chat_text)
+			src.chat_text = new(null, src)
 
 	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
 			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
