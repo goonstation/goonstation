@@ -89,31 +89,10 @@
 	attack_hand(mob/user)
 		if(src.building && !src.Paused)
 			if (tgui_alert(user, "Pause the construction?", "ABCU", list("Yes", "No")) == "Yes")
-			//if (alert(usr, "Pause the construction?", "ABCU", "Yes", "No") == "Yes")
 				src.pauseBuild()
 				return
 			return
-		/* else
-			switch (input(user,"The build job is currently paused. Choose:","ABCU") in list("Resume Construction", "Cancel Build"))
-				if ("Resume Construction")
-					unpauseBuild()
-					return
-				if ("Cancel Build")
-					endBuild()
-					return
-		return */
 
-		/* var/list/OptionList = list(
-			building ? "Resume Construction" : null,
-			building ? "Cancel Build" : null,
-			locked && !building ? "Unlock" : null,
-			!locked && !building ? "Lock" : null,
-			!building ? "Begin Building" : null,
-			"Dump Materials",
-			"Check Materials",
-			src.currentBp && !building ? "Eject Blueprint" : null,
-			building ? "Cancel Build" : null,
-		) */
 		var/list/OptionList = list(
 			"Check Materials",
 			"Resume Construction",
@@ -126,15 +105,12 @@
 		var/UserInput = tgui_input_list(user, src.building ? "The build job is currently paused. Choose:" : "Select an action.", "ABCU", OptionList)
 		if (!UserInput) return
 
-		//var/list/options = list(locked ? "Unlock":"Lock", "Begin Building", "Dump Materials", "Check Materials" ,src.currentBp ? "Eject Blueprint":null)
-		//var/input = input(user,"Select option:","ABCU") in options
 		switch(UserInput)
 			if("Unlock")
 				if (src.building)
 					boutput(user, "<span class='alert'>Lock status can't be changed with a build in progress.</span>")
 					return
 				if(!src.locked) return
-				//boutput(user, "<span class='notice'>The machine unlocks and shuts down.</span>")
 				src.deactivate()
 
 			if("Lock")
@@ -145,7 +121,6 @@
 				if(!src.currentBp)
 					boutput(user, "<span class='alert'>The machine requires a blueprint before it can be locked.</span>")
 					return
-				//boutput(user, "<span class='notice'>The machine locks into place and begins humming softly.</span>")
 				src.activate(user)
 
 			if("Begin Building")
@@ -158,11 +133,9 @@
 				if(!src.currentBp)
 					boutput(user, "<span class='alert'>The machine requires a blueprint before it can build anything.</span>")
 					return
-				//build()
 				src.prepareBuild(user)
 
 			if("Eject Blueprint")
-				//if(src.building) return
 				if(src.locked || src.building)
 					boutput(user, "<span class='alert'>Can not eject blueprint while machine is locked or building.</span>")
 					return
@@ -173,30 +146,12 @@
 				src.currentBp = null
 
 			if("Dump Materials")
-				//if(building) return
 				for(var/obj/o in src)
 					if(o == src.currentBp) continue
 					o.set_loc(src.loc)
 
 			if("Check Materials")
 				src.auditInventory(user)
-				/* //if(building) return
-				var/metal_cnt = 0
-				var/glass_cnt = 0
-
-				for(var/obj/O in src)
-					if(O == src.currentBp) continue
-					if(istype(O, /obj/item/sheet))
-						var/obj/item/sheet/S = O
-						if (S.material)
-							if (S.material.material_flags & MATERIAL_METAL)
-								metal_cnt += S.amount
-							if (S.material.material_flags & MATERIAL_CRYSTAL)
-								glass_cnt += S.amount
-
-				boutput(user, "<span class='notice'>Currently loaded :</span>")
-				boutput(user, "<span class='notice'>[metal_cnt] of [src.currentBp ? src.currentBp.req_metal : "-"] required metal</span>")
-				boutput(user, "<span class='notice'>[glass_cnt] of [src.currentBp ? src.currentBp.req_glass : "-"] required glass</span>") */
 
 			if ("Resume Construction")
 				if (!src.building)
@@ -296,11 +251,11 @@
 			qdel(V)
 
 			if(Info.tiletype != null)
-				var/turf/newTile = Pos //get_turf(pos)
+				var/turf/newTile = Pos
 				newTile.ReplaceWith(Info.tiletype)
 				//var/LoadIcon = get_cached_file(Info.icon)
 				//if (!isnull(LoadIcon)) // now this works, but auto-walls override icon state when spawned :)
-					//newTile.icon = LoadIcon // disabled for now because unfinished and breaks icons
+					//newTile.icon = LoadIcon // disabled for now because of the walls thing.
 				newTile.icon_state = Info.state
 				newTile.set_dir(Info.direction)
 				newTile.inherit_area()
@@ -413,99 +368,8 @@
 
 			src.markers.Add(O)
 		boutput(user, "<span class='notice'>Building this will require [src.currentBp.req_metal] metal and [src.currentBp.req_glass] glass sheets.</span>")
-		src.visible_message("[src] makes a loud clunk as its stabilization anchors engage.")
+		src.visible_message("[src] locks into place and begins humming softly.")
 		return
-
-	/* proc/build()
-		var/metal_cnt = 0
-		var/glass_cnt = 0
-
-		if(invalidCount)
-			boutput(usr, "<span class='alert'>The machine can not build on anything but empty space. Check for red markers.</span>")
-			return
-
-		for(var/obj/O in src)
-			if(O == currentBp) continue
-			if(istype(O, /obj/item/sheet))
-				var/obj/item/sheet/S = O
-				if (S.material)
-					if (S.material.material_flags & MATERIAL_METAL)
-						metal_cnt += S.amount
-					if (S.material.material_flags & MATERIAL_CRYSTAL)
-						glass_cnt += S.amount
-
-		if(USE_MATERIALS & (metal_cnt < currentBp.req_metal || glass_cnt < currentBp.req_glass))
-			boutput(usr, "<span class='alert'>The machine buzzes in protest. Seems like it doesn't have enough material to work with.</span>")
-			return
-
-		boutput(usr, "<span class='notice'>The machine starts to buzz and vibrate.</span>")
-		logTheThing(LOG_STATION, src, "[usr] started ABCU build at [log_loc(src)], with blueprint [currentBp.name], authored by [currentBp.author]")
-
-		building = 1
-		icon_state = "builder1"
-
-		SPAWN(0)
-
-			var/list/apclist = new/list()
-
-			for(var/datum/tileinfo/T in currentBp.roominfo)
-				var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)
-
-				var/obj/overlay/V = new/obj/overlay(pos)
-				V.icon = 'icons/obj/objects.dmi'
-				V.icon_state = "buildeffect"
-				V.name = "energy"
-				V.anchored = ANCHORED
-				V.set_density(0)
-				V.layer = EFFECTS_LAYER_BASE
-
-				sleep(1.5 SECONDS)
-
-				qdel(V)
-
-				for(var/obj/O in markers)
-					if(O.loc == pos)
-						qdel(O)
-						break
-				if(T.tiletype != null)
-					var/turf/newTile = get_turf(pos)
-					newTile.ReplaceWith(T.tiletype)
-					//newTile.icon = text2path(T.icon) // not working
-					newTile.icon_state = T.state
-					newTile.set_dir(T.direction)
-					newTile.inherit_area()
-
-				for(var/datum/objectinfo/O in T.objects)
-					if (O.objecttype == null) continue
-					if (ispath(O.objecttype, /obj/machinery/power/apc))
-						apclist[O] = pos
-						continue
-					var/dmm_suite/preloader/blah = new(pos, list( // this doesn't spawn the objects, only presets their properties
-                        "layer" = O.layer,
-                        "pixel_x" = O.px,
-                        "pixel_y" = O.py,
-                        "dir" = O.direction,
-                        "icon_state" = O.icon_state,
-                    ))
-					new O.objecttype(pos) // need this part to also spawn the objects
-
-			for (var/datum/objectinfo/N in apclist)
-				//var/atom/newapc =
-				new N.objecttype(apclist[N])
-				/* newapc.set_dir(N.direction)
-				newapc.layer = N.layer
-				newapc.pixel_x = N.px
-				newapc.pixel_y = N.py */
-
-			for(var/obj/J in src)
-				qdel(J)
-
-			building = 0
-			icon_state = "builder"
-			makepowernets()
-			qdel(src) //Blah
-
-		return */
 
 /datum/objectinfo
 	var/objecttype = null
