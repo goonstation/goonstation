@@ -625,4 +625,5 @@ toxic - poisons
 /datum/projectile/laser/makeshift
 	cost = 1000
 	fullauto_valid = TRUE
+	icon_state = "laser_tiny"
 	damage = 8

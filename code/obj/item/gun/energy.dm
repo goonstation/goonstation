@@ -1859,6 +1859,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		projectiles = list(current_projectile)
 		..()
 
+#define HEAT_REMOVED_PER_PROCESS 10
 // Makeshift Laser Rifle
 TYPEINFO(/obj/item/gun/energy/makeshift)
 	mats = 0
@@ -1878,6 +1879,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	desc = "A laser rifle cobbled together from various supplies found around the station, probably not the most reliable weapon in a firefight."
 	muzzle_flash = "muzzle_flash_phaser"
 	charge_icon_state = "laser"
+	spread_angle = 10
 	///What light source we use for the rifle
 	var/obj/item/device/light/flashlight/our_flashlight
 	///What battery this gun uses
@@ -1920,11 +1922,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 	process()
 		if (heat > 0)
-			var/remove_amount = 10
-			if (welded_open) // air cooling
-				remove_amount = 20
-			heat = max(0, heat - remove_amount)
-			message_admins(heat)
+			heat = max(0, heat - HEAT_REMOVED_PER_PROCESS)
 		return
 
 	canshoot(mob/user)
@@ -2075,3 +2073,5 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		..()
 		our_flashlight = new /obj/item/device/light/flashlight
 		our_flashlight.set_loc(src)
+
+#undef HEAT_REMOVED_PER_PROCESS
