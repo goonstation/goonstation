@@ -441,8 +441,8 @@ var/datum/signal_holder/global_signal_holder
   */
 
 /datum/proc/RemoveComponentsOfType(c_type)
-	var/list/component_to_remove_list = src.GetComponents(c_type)
-	for (var/datum/component/component_to_remove in component_to_remove_list)
+	var/list/datum/component/component_to_remove_list = src.GetComponents(c_type)
+	for (var/datum/component/component_to_remove as anything in component_to_remove_list)
 		component_to_remove.RemoveComponent()
 
 /**
