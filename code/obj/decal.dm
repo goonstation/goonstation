@@ -659,6 +659,12 @@ obj/decal/fakeobjects/teleport_pad
 				M.visible_message("<span class='alert'><b>[M]</b> hits their head on [src]!</span>")
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
 
+/obj/decal/icefloor/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	. = ..()
+	if (exposed_temperature > T0C)
+		if(prob((exposed_temperature - T0C) * 0.1))
+			qdel(src)
+
 // These used to be static turfs derived from the standard grey floor tile and thus didn't always blend in very well (Convair880).
 /obj/decal/mule
 	name = "Don't spawn me"
