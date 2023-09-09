@@ -1,5 +1,15 @@
 
 (t)fri sep 08 23
+(u)Tarmunora
+(+)Added NOP instruction "*" to chemicompiler.
+(u)Chasu
+(p)15731
+(e)💅⚗🍝|C-QoL, A-Chemistry, A-Catering
+(+)Banana juice has replaced colorful reagent in the Honky Tonic recipe.
+(u)Bisar
+(p)15344
+(e)🪲🗺|C-Bug, A-Mapping
+(*)QM Barcode computers have been brought in line with all other computer terminals. Now you can disassemble them for repair, renovation... or larceny!
 (u)Glamurio (Ryou)
 (p)15730
 (e)💅🍝|C-QoL, A-Catering

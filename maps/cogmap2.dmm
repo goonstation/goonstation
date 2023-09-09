@@ -48509,9 +48509,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "cJZ" = (
-/obj/machinery/computer/barcode/qm{
-	destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","Trader","QM")
-	},
+/obj/machinery/computer/barcode/qm,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -50559,9 +50557,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "cPP" = (
-/obj/machinery/computer/barcode/qm{
-	destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","Trader","QM")
-	},
+/obj/machinery/computer/barcode/qm,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -53059,9 +53055,7 @@
 	},
 /area/station/hangar/qm)
 "cWP" = (
-/obj/machinery/computer/barcode/qm{
-	destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","Trader","QM")
-	},
+/obj/machinery/computer/barcode/qm,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
