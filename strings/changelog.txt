@@ -1,4 +1,7 @@
 
+(t)sat sep 09 23
+(u)pali
+(*)Opening a tank-transfer valve now plays the valve-turning sound giving people a bit of time to react.
 (t)fri sep 08 23
 (u)Tarmunora
 (*)Reagent heater/coolers are more effective (and use more power).
