@@ -184,10 +184,7 @@
 			else
 				src.skintone = AHead.s_tone
 			src.head_image.color = src.skintone
-			if(src.donor_name)
-				src.name = "[src.donor_name]'s [src.organ_name]"
-			else
-				src.name = src.organ_name
+			src.name = "[src.donor_name]'s [src.organ_name]"
 
 		// The rest of this shit gets sent to update_face
 		// get and install eyes, if any.
@@ -287,6 +284,8 @@
 
 		src.head_image.pixel_x = 0
 		src.head_image.pixel_y = 0
+		actual_head.appearance = src.head_image
+		actual_head.color = null
 		actual_head.overlays += src.head_image
 		src.head_image_eyes_L.pixel_x = 0
 		src.head_image_eyes_L.pixel_y = 0
