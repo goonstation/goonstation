@@ -436,6 +436,15 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">3</td>
 	<td align="right" class="unavaib">n/a</td>
 	</tr>
+	<tr><td align="right">Plastic</td>
+	<td align="right">2</td>
+	<td align="right">3</td>
+	<td align="right">1</td>
+	<td align="right">3</td>
+	<td align="right">1</td>
+	<td align="right">5</td>
+	<td align="right" class="unavaib">n/a</td>
+	</tr>
 	<tr><td align="right">Leather</td>
 	<td align="right">3</td>
 	<td align="right">3</td>
@@ -859,6 +868,7 @@ Thank you for your service to Nanotrasen.</i></p>
 
 <b>Rubber</b>
 <ul><li>Latex</li>
+<li>Plastic</li>
 <li>Synthrubber</li>
 <li>Synthblubber</li></ul>
 

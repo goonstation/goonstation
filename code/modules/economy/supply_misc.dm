@@ -57,6 +57,8 @@ ABSTRACT_TYPE(/area/supply)
 	layer = EFFECTS_LAYER_UNDER_1
 	event_handler_flags = USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS
+	var/flap_type = /obj/item/material_piece/rubber/plastic
+	var/has_flaps = TRUE
 
 	var/static/list/connects_to = typecacheof(list(
 		/obj/machinery/door,
@@ -93,6 +95,8 @@ ABSTRACT_TYPE(/area/supply)
 		G.UpdateIcon()
 
 /obj/plasticflaps/Cross(atom/A)
+	if (!src.has_flaps)
+		return TRUE
 	if (isliving(A)) // You Shall Not Pass!
 		var/mob/living/M = A
 		if (isghostdrone(M)) // except for drones
@@ -115,6 +119,29 @@ ABSTRACT_TYPE(/area/supply)
 		if (3)
 			if (prob(5))
 				qdel(src)
+
+/obj/plasticflaps/attackby(obj/item/I, mob/user)
+	..()
+	if (issnippingtool(W))
+		SETUP_GENERIC_ACTIONBAR(src, src, 0.5 SECOND, /obj/plasticflaps/proc/snip_flaps, null, W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+	if (isscrewingtool(W))
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 30, 1, -2)
+		SETUP_GENERIC_ACTIONBAR(src, src, 0.5 SECOND, /obj/plasticflaps/proc/screw_flaps, null, W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+	if (istype(W, /obj/item/material_piece/rubber/plastic))
+		src.has_flaps = TRUE
+		qdel(W)
+
+/obj/plasticflaps/proc/snip_flaps(mob/user)
+	playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+	var/snip_flaps = new src.flap_type(user.loc)
+	user.put_in_hand_or_drop(snip_flaps)
+	src.has_flaps = FALSE
+
+/obj/plasticflaps/proc/screw_flaps // hehe
+	if (!src.anchored)
+		src.anchored = ANCHORED
+	else
+		src.anchored = UNANCHORED
 
 /obj/marker/supplymarker
 	icon_state = "X"

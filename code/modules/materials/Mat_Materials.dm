@@ -1810,6 +1810,19 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 3)
 		setProperty("thermal", 4)
 
+/datum/material/rubber/plastic
+	mat_id = "plastic"
+	name = "plastic"
+	desc = "A synthetic material made of polymers. Great for polluting oceans."
+	color = "#baccd3"
+
+	New()
+		..()
+		setProperty("density", 3)
+		setProperty("hard", 1)
+		setProperty("electrical", 2)
+		setProperty("thermal", 3)
+		setProperty("chemical", 5)
 
 /datum/material/rubber/synthrubber
 	mat_id = "synthrubber"
