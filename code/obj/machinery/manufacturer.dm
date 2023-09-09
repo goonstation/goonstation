@@ -2324,6 +2324,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/vuvuzela,
 		/datum/manufacture/harmonica,
 		/datum/manufacture/bikehorn,
+		/datum/manufacture/flute,
 		/datum/manufacture/bullet_22,
 		/datum/manufacture/bullet_smoke,
 		/datum/manufacture/stapler,

@@ -349,6 +349,25 @@
 	else
 		. = ..()
 
+		/* -------------------- Flute -------------------- */
+
+/obj/item/instrument/flute
+	name = "flute"
+	desc = "This thing BLOWS. Hahahaha."
+	icon_state = "flute"
+	item_state = "flute"
+	note_range = list("c4", "c7")
+	instrument_sound_directory = "sound/musical_instruments/flute/notes/"
+	note_time = 0.18 SECONDS
+	sounds_instrument = null
+	randomized_pitch = 0
+	use_new_interface = TRUE
+	w_class = W_CLASS_TINY
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROD)
+
 /* -------------------- Bagpipe -------------------- */
 
 /obj/item/instrument/bagpipe
