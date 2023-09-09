@@ -1330,9 +1330,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
 "aek" = (
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
@@ -12829,14 +12827,7 @@
 	invisibility = 101;
 	name = "glow - WHITE"
 	},
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /turf/simulated/floor/red,
 /area/listeningpost)
 "aQM" = (
@@ -21413,13 +21404,7 @@
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 4
 	},
-/obj/npc/trader/robot{
-	icon_state = "medibot0";
-	name = "D.O.C.";
-	productset = 4;
-	trader_area = "/area/abandonedmedicalship/robot_trader";
-	icon = 'icons/misc/evilreaverstation.dmi'
-	},
+/obj/npc/trader/robot/medical,
 /obj/map/light/white,
 /obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/white/grime,

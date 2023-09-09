@@ -1192,9 +1192,7 @@
 "cY" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /obj/machinery/light{
 	dir = 1;
 	icon_state = "tube1";

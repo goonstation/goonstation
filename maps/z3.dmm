@@ -7064,11 +7064,7 @@
 /turf/space,
 /area/space)
 "aKG" = (
-/obj/npc/trader/robot{
-	name = "Thrifty B.O.B.";
-	picture = "loungebuddy.png";
-	trader_area = "/area/evilreaver/storage/engineering"
-	},
+/obj/npc/trader/robot/robuddy/salvage,
 /obj/map/light/white,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
@@ -10843,13 +10839,7 @@
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 4
 	},
-/obj/npc/trader/robot{
-	icon_state = "medibot0";
-	name = "D.O.C.";
-	productset = 4;
-	trader_area = "/area/abandonedmedicalship/robot_trader";
-	icon = 'icons/misc/evilreaverstation.dmi'
-	},
+/obj/npc/trader/robot/medical,
 /obj/map/light/white,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
@@ -17776,13 +17766,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/kitchen)
 "iDz" = (
-/obj/npc/trader/robot{
-	desc = "The robot proprieter of the Diner. Deals in food that's to dine for!";
-	name = "B.I.F.F.";
-	picture = "loungebuddy.png";
-	productset = 2;
-	trader_area = "/area/diner/dining"
-	},
+/obj/npc/trader/robot/robuddy/diner,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/diner/dining)
@@ -18050,15 +18034,7 @@
 /turf/space,
 /area/diner/tug)
 "jiP" = (
-/obj/npc/trader/robot{
-	desc = "The robot equivelant of that guy back on Earth who tried to sell you stolen military gear and drugs in the bathroom of an old greasy spoon.";
-	greeting = "I got what you need.";
-	illegal = 1;
-	name = "Sketchy D-5";
-	picture = "loungebuddy.png";
-	productset = 1;
-	trader_area = "/area/diner/bathroom"
-	},
+/obj/npc/trader/robot/robuddy/drugs,
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
 "jiQ" = (
