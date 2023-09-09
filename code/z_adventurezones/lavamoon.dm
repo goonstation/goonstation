@@ -650,6 +650,18 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	if (iomoon_blowout_state)
 		return
 
+	var/obj/iomoon_boss/core/theBoss = locate("IOMOON_BOSS")
+	if (istype(theBoss))
+		theBoss.base.icon_state = "powercore_base_start"
+		theBoss.top.icon_state = "powercore_core_start"
+		SPAWN(3.3 SECONDS)
+			theBoss.base.icon_state = "powercore_base_active"
+			theBoss.top.icon_state = "powercore_core_active"
+		SPAWN(1.9 SECONDS)
+			playsound(theBoss.loc, 'sound/machines/lavamoon_rotors_starting.ogg', 50, 0)
+			theBoss.last_noise_time = ticker.round_elapsed_ticks
+			theBoss.last_noise_length = 80
+	sleep(1.9 SECONDS)
 	iomoon_blowout_state = 1
 
 	message_admins("EVENT: IOMOON mini-blowout event triggered.")
@@ -663,7 +675,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		adjustedArea.irradiated = adjustedArea.radiation_level
 
 		for(var/mob/N in adjustedArea)
-			N.flash(3 SECONDS)
+			N.flash(1 SECONDS)
 
 			SPAWN(0)
 				shake_camera(N, 210, 16)
@@ -680,7 +692,6 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 				break
 
-	var/obj/iomoon_boss/core/theBoss = locate("IOMOON_BOSS")
 	if (istype(theBoss))
 		theBoss.activate()
 
@@ -744,7 +755,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			src.icon_state = "boss_button1"
 
 			playsound(src.loc, 'sound/machines/lavamoon_alarm1.ogg', 70,0)
-			sleep(5 SECONDS)
+			sleep(4 SECONDS)
 			event_iomoon_blowout()
 
 	bot_spawner
@@ -819,12 +830,12 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		name = "mechanism core"
 		desc = "An enormous artifact of some sort. You feel uncomfortable just being near it."
 		icon = 'icons/misc/worlds.dmi'
-		icon_state = "powercore_core_dead"
-		layer = 4.5 // TODO LAYER
+		icon_state = "powercore_core"
+		layer = 10 // TODO LAYER
 
 		var/active = 0
 		var/health = 100
-		var/obj/iomoon_boss/rotor/rotors = null
+		var/obj/iomoon_boss/top/top = null
 		var/obj/iomoon_boss/base/base = null
 		var/obj/iomoon_boss/zap_marker/zapMarker = null
 		var/last_state_time = 0
@@ -853,11 +864,10 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				//target_marker = image('icons/misc/worlds.dmi', "boss_marker")
 				//target_marker.layer = FLY_LAYER
 
-				rotors = new /obj/iomoon_boss/rotor (locate(src.x - 2, src.y - 2, src.z))
-				rotors.core = src
-
-				base = new /obj/iomoon_boss/base (rotors.loc)
+				base = new /obj/iomoon_boss/base (locate(src.x - 2, src.y - 2, src.z))
 				base.core = src
+
+				top = new /obj/iomoon_boss/top (base.loc)
 
 				zapMarker = new /obj/iomoon_boss/zap_marker (src)
 
@@ -883,8 +893,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				if (spawners)
 					for (var/obj/iomoon_boss/bot_spawner/aSpawner in spawners)
 						aSpawner.spawn_bot()
-				if (rotors)
-					rotors.icon_state = "powercore_rotors_fast"
+				if (base)
+					base.icon_state = "powercore_base_fast"
+					top.icon_state = "powercore_core_fast"
 
 
 		attack_hand(var/mob/user)
@@ -906,8 +917,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					if (spawners)
 						for (var/obj/iomoon_boss/bot_spawner/aSpawner in spawners)
 							aSpawner.spawn_bot()
-					if (rotors)
-						rotors.icon_state = "powercore_rotors_fast"
+					if (base)
+						base.icon_state = "powercore_base_fast"
+						top.icon_state = "powercore_core_fast"
 
 			else
 				src.visible_message("<span class='alert'><b>[user]</b> pets [src]!  For some reason!</span>")
@@ -927,14 +939,15 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				if (spawners)
 					for (var/obj/iomoon_boss/bot_spawner/aSpawner in spawners)
 						aSpawner.spawn_bot()
-				if (rotors)
-					rotors.icon_state = "powercore_rotors_fast"
+				if (base)
+					base.icon_state = "powercore_base_fast"
+					top.icon_state = "powercore_core_fast"
 
 			return
 
 		disposing()
-			rotors = null
 			base = null
+			top = null
 			zapMarker = null
 			if (spawners)
 				spawners.len = 0
@@ -947,17 +960,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					return
 
 				active = 1
-				src.icon_state = "powercore_core_startup"
-				SPAWN(0.6 SECONDS)
-					src.icon_state = "powercore_core"
 
-				if (rotors)
-					rotors.icon_state = "powercore_rotors_start"
-					SPAWN(2.4 SECONDS)
-						rotors.icon_state = "powercore_rotors"
-					playsound(src.loc, 'sound/machines/lavamoon_rotors_starting.ogg', 50, 0)
-					last_noise_time = ticker.round_elapsed_ticks
-					last_noise_length = 80
 
 				START_TRACKING_CAT(TR_CAT_CRITTERS)
 
@@ -1045,17 +1048,11 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					var/datum/effects/system/spark_spread/E = new /datum/effects/system/spark_spread
 					E.set_up(8,0, src.loc)
 					E.start()
-					src.icon_state = "powercore_core_die"
-					if (rotors)
-						rotors.icon_state = "powercore_rotors_stop"
-						playsound(src.loc, 'sound/machines/lavamoon_rotors_stopping.ogg', 50, 1)
-					sleep (50)
-					if (rotors)
-						rotors.icon_state = "powercore_rotors_off"
-					sleep(2.5 SECONDS)
-					src.icon_state = "powercore_core_dead"
 					if (base)
-						base.icon_state = "powercore_base_off"
+						base.icon_state = "powercore_base_stop"
+						top.icon_state = "powercore_core_stop"
+						playsound(src.loc, 'sound/machines/lavamoon_rotors_stopping.ogg', 50, 1)
+					sleep (20)
 
 					var/obj/overlay/O = new/obj/overlay( src.loc )
 					O.anchored = ANCHORED
@@ -1066,6 +1063,8 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					O.icon = 'icons/effects/214x246.dmi'
 					O.icon_state = "explosion"
 					playsound(src.loc, "explosion", 75, 1)
+					base.icon_state = "powercore_base_dead"
+					top.icon_state = "powercore_core_dead"
 					sleep(2.5 SECONDS)
 					//qdel(rotors)
 					src.invisibility = INVIS_ALWAYS_ISH
@@ -1076,7 +1075,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 						portalOut.target = get_turf(exitMarker)
 						portalOut.icon = 'icons/misc/worlds.dmi'
 						portalOut.icon_state = "jitterportal"
-						portalOut.layer = 4 // TODO layer
+						portalOut.layer = 8 // TODO layer
 						portalOut.set_loc(src.loc)
 
 					sleep(1 SECOND)
@@ -1110,29 +1109,29 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 				return 0
 
-
-	rotor
-		name = "giant rotors"
-		desc = "An enormous artifact of some sort. You feel uncomfortable just being near it. Probably because it is a giant piece of dangerous machinery."
-		icon = 'icons/effects/160x160.dmi'
-		icon_state = "powercore_rotors_off"
-		bound_height = 160
-		bound_width = 160
-		layer = 3.9 // TODO layer
-		density = 0
-
-		var/obj/iomoon_boss/core/core = null
-
 	base
 		name = "huge contraption"
-		desc = "An enormous artifact of some sort. You feel uncomfortable just being near it."
+		desc = "An enormous artifact of some sort. You feel uncomfortable just being near it. Probably because it is a giant piece of dangerous machinery."
 		anchored = ANCHORED
 		density = 0
 		icon = 'icons/effects/160x160.dmi'
 		icon_state = "powercore_base"
 		bound_height = 160
 		bound_width = 160
-		layer = 3.7 // TODO layer
+		layer = 3.2 // TODO layer
+
+		var/obj/iomoon_boss/core/core = null
+
+	top
+		name = "mechanism core"
+		desc = "An enormous artifact of some sort. You feel uncomfortable just being near it. Probably because it is a giant piece of dangerous machinery."
+		anchored = ANCHORED
+		density = 0
+		icon = 'icons/effects/160x160.dmi'
+		icon_state = "powercore_core"
+		bound_height = 160
+		bound_width = 160
+		layer = 7 // TODO layer
 
 		var/obj/iomoon_boss/core/core = null
 

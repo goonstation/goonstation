@@ -4248,7 +4248,7 @@
 "aqy" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "A pod door.  One that is definitely stuck.";
-	dir = 1;
+	dir = 8;
 	icon = 'icons/obj/doors/sovblastdoor.dmi';
 	icon_state = "bdoorsinglebroke";
 	name = "pod bay door"
@@ -19966,31 +19966,6 @@
 	},
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
-"bvA" = (
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
-	},
-/obj/item/scalpel,
-/obj/item/staple_gun{
-	pixel_x = 5
-	},
-/obj/item/weldingtool,
-/obj/item/hemostat,
-/obj/item/surgical_spoon,
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "bot2"
-	},
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "bot2"
-	},
-/obj/item/suture,
-/obj/item/scissors/surgical_scissors,
-/turf/unsimulated/floor/white,
-/area/syndicate_station/medbay)
 "bvE" = (
 /obj/juggleplaque{
 	desc = "Syndicate Battlecruiser Cairngorm - Out of these mountains, Out of the defiant torment of Plutonic rock, Out of fire, terror, blackness and upheaval, Leap the clear burns, Living water.";
@@ -56900,10 +56875,6 @@
 	icon_state = "tile1"
 	},
 /obj/table/reinforced/bar/auto,
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "tile1"
-	},
 /obj/machinery/glass_recycler{
 	glass_amt = 50
 	},
@@ -62963,18 +62934,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/main)
-"jNH" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "This shuttle door is really jammed.  What's the point of it then?  WHAT IS THE POINT";
-	icon = 'icons/obj/doors/shuttle.dmi';
-	name = "rusted hatch";
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/hospital/samostrel)
 "jNP" = (
 /obj/stool/chair/couch/yellow{
 	dir = 4;
@@ -63094,7 +63053,7 @@
 "jUW" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This blast door looks rusted over.  Junk.";
-	dir = 10;
+	dir = 1;
 	icon = 'icons/obj/doors/blastdoor.dmi';
 	icon_state = "bdoorbroken";
 	name = "rusty blastdoor"
@@ -64150,14 +64109,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/centcom/lobby)
-"lbx" = (
-/turf/unsimulated/wall/generic{
-	icon = 'icons/obj/doors/shuttle.dmi';
-	icon_state = "door1";
-	name = "broken door";
-	dir = 8
-	},
-/area/meat_derelict/soviet)
 "lcu" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -66061,6 +66012,15 @@
 	},
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
+"neB" = (
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/hospital/samostrel)
 "nfK" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -66795,6 +66755,10 @@
 	icon_state = "blue"
 	})
 "nOw" = (
+/obj/stool/chair/dining/wood{
+	anchored = 1;
+	dir = 8
+	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 6
 	},
@@ -70363,6 +70327,18 @@
 "rtI" = (
 /turf/unsimulated/floor/martian,
 /area/crunch)
+"rtJ" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
+	dir = 4;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "sovcomp1";
+	name = "broken computer"
+	},
+/turf/unsimulated/floor/caution/east,
+/area/hospital/samostrel)
 "rtM" = (
 /obj/crevice/meatland,
 /turf/unsimulated/floor/setpieces/bloodfloor{
@@ -70985,15 +70961,6 @@
 	dir = 6
 	},
 /area/centcom/offices/varshie)
-"rYe" = (
-/obj/machinery/door/unpowered/shuttle{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/hospital/samostrel)
 "rYg" = (
 /obj/rack,
 /obj/item/crowbar,
@@ -71792,6 +71759,18 @@
 	dir = 4
 	},
 /area/iomoon/base)
+"sQU" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This shuttle door is really jammed.  What's the point of it then?  WHAT IS THE POINT";
+	icon = 'icons/obj/doors/shuttle.dmi';
+	name = "rusted hatch";
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/hospital/samostrel)
 "sRi" = (
 /turf/unsimulated/floor/grey/corner{
 	dir = 4
@@ -74582,6 +74561,14 @@
 	},
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
+"wmD" = (
+/turf/unsimulated/wall/generic{
+	icon = 'icons/obj/doors/shuttle.dmi';
+	icon_state = "door1";
+	name = "broken door";
+	dir = 8
+	},
+/area/meat_derelict/soviet)
 "wmE" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access_txt = ""
@@ -76456,18 +76443,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"yay" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
-	dir = 4;
-	icon = 'icons/misc/hospital.dmi';
-	icon_state = "sovcomp1";
-	name = "broken computer"
-	},
-/turf/unsimulated/floor/caution/east,
-/area/hospital/samostrel)
 "yaC" = (
 /turf/unsimulated/floor/arrival/corner{
 	dir = 1
@@ -102692,7 +102667,7 @@ bqW
 btp
 lzl
 dhr
-bvA
+bwa
 dhP
 did
 dim
@@ -141305,7 +141280,7 @@ cli
 cli
 cly
 cli
-lbx
+wmD
 cli
 cli
 ckB
@@ -142209,7 +142184,7 @@ cba
 ckB
 cli
 cli
-lbx
+wmD
 jhl
 pDK
 cli
@@ -160263,7 +160238,7 @@ abr
 abr
 abr
 abr
-rYe
+neB
 abr
 rnA
 adt
@@ -160561,7 +160536,7 @@ abF
 abT
 abr
 acn
-yay
+rtJ
 abr
 eQe
 aea
@@ -162075,7 +162050,7 @@ abr
 abr
 abr
 abr
-rYe
+neB
 abr
 eQe
 aeU
@@ -163597,13 +163572,13 @@ abB
 abB
 abB
 abr
-jNH
+sQU
 abr
 abr
-rYe
+neB
 abr
 abr
-rYe
+neB
 abr
 lac
 lph
