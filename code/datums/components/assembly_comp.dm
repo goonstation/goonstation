@@ -35,7 +35,7 @@ TYPEINFO(/datum/component/assembly)
 	UnregisterSignal(src.parent, COMSIG_ATTACKBY)
 
 
-/datum/component/assembly/proc/on_pre_attack(var/atom/affected_parent ,var/atom/to_combine_atom, var/mob/user, var/damage)
+/datum/component/assembly/proc/on_pre_attack(var/atom/affected_parent, var/atom/to_combine_atom, var/mob/user, var/damage)
 	return try_combination(to_combine_atom, user)
 
 /datum/component/assembly/proc/attackby(var/atom/affected_parent, var/atom/to_combine_atom, var/mob/user, var/params, var/is_special)
