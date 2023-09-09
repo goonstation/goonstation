@@ -34,7 +34,7 @@
 /obj/machinery/abcu
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "builder"
-	name = "ABC Unit"
+	name = "\improper ABC Unit"
 	desc = "An Automated Blueprint Construction Unit. \
 		This fine piece of machinery can construct entire rooms from blueprints."
 	density = 1
@@ -516,8 +516,9 @@
 */
 
 /obj/item/blueprint_marker
-	name = "Blueprint Marker"
-	desc = "A tool used to map rooms for the creation of blueprints."
+	name = "blueprint marker"
+	desc = "A tool used to map rooms for the creation of blueprints. \
+		Blueprints can be used in an ABC Unit to reconstruct a saved room."
 	icon = 'icons/obj/items/device.dmi'
 
 	icon_state = "blueprintmarker"
