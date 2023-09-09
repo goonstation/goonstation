@@ -323,6 +323,8 @@ TYPEINFO(/obj/machinery/chem_shaker)
 	var/orbital_period = 0.6 SECONDS
 	/// Radius of the platform's orbit in pixels.
 	var/radius = 2
+	/// How much force does the shaker apply on `process()`?
+	var/physical_shock_force = 5
 
 	New()
 		..()
@@ -392,7 +394,7 @@ TYPEINFO(/obj/machinery/chem_shaker)
 				src.remove_container(glass_container)
 				glass_container.throw_at(pick(range(5, src)), 5, 1)
 				continue
-			glass_container.reagents?.physical_shock(5)
+			glass_container.reagents?.physical_shock(src.physical_shock_force)
 
 	proc/arrange_containers()
 		if (!src.count_held_containers()) return
