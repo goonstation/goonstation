@@ -250,7 +250,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 	New()
 		contextLayout = new /datum/contextLayout/experimentalcircle
 		..()
-		for(var/actionType in concrete_typesof(/datum/contextAction/fluid_canister))
+		for(var/actionType in childrentypesof(/datum/contextAction/fluid_canister))
 			src.contexts += new actionType()
 
 		src.reagents = new /datum/reagents(bladder)
@@ -354,7 +354,6 @@ TYPEINFO(/obj/machinery/fluid_canister)
 			pissing = 1
 			UpdateIcon()
 
-ABSTRACT_TYPE(/datum/contextAction/fluid_canister)
 /datum/contextAction/fluid_canister
 	icon = 'icons/ui/context16x16.dmi'
 	close_clicked = TRUE
