@@ -65737,6 +65737,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/purpleblack/corner{
 	dir = 4
 	},

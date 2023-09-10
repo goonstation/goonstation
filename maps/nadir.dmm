@@ -30494,6 +30494,7 @@
 "mZj" = (
 /obj/table/reinforced/chemistry/auto/basicsup,
 /obj/machinery/light,
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "mZs" = (

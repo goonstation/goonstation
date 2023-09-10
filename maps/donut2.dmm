@@ -43506,6 +43506,7 @@
 /area/station/security/checkpoint/research)
 "sht" = (
 /obj/table/reinforced/chemistry/auto,
+/obj/machinery/chem_shaker/large/chemistry,
 /obj/item/crowbar,
 /turf/simulated/floor/purplewhite{
 	dir = 9
