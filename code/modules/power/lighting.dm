@@ -625,9 +625,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		..()
 		autoposition()
 
-	disposing()
-		..()
-
 	name = "incandescent light fixture"
 	light_type = /obj/item/light/tube/neutral
 
