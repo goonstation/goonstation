@@ -837,6 +837,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		plane = PLANE_NOSHADOW_ABOVE
 
 		var/IOCORE_ONLINE = 0
+		var/IOCORE_DEAD = 0
 		var/health = 100
 		var/obj/iomoon_boss/top/top = null
 		var/obj/iomoon_boss/base/base = null
@@ -878,7 +879,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					spawners += spawner
 
 		attackby(obj/item/I, mob/user as mob)
-			if (!I.force || !IOCORE_ONLINE)
+			if (!I.force || !IOCORE_ONLINE || IOCORE_DEAD)
 				return
 
 			user.lastattacked = src
@@ -898,16 +899,20 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 						aSpawner.spawn_bot()
 				if (base || iomoon_blowout_state == 1)
 					base.icon_state = "powercore_base_fast"
-			top.icon_state = "powercore_core_hit"
-			SPAWN(0.6 SECONDS)
-				if (IOCORE_ONLINE && src.health <= PANIC_HEALTH_LEVEL)
-					top.icon_state = "powercore_core_fast"
-				else if (IOCORE_ONLINE)
-					top.icon_state = "powercore_core_active"
+
+			if (!ON_COOLDOWN(top, "hit_effect", 0.7 SECONDS))
+				top.icon_state = "powercore_core_hit"
+				SPAWN(0.6 SECONDS)
+					if (IOCORE_ONLINE && !IOCORE_DEAD && src.health <= PANIC_HEALTH_LEVEL)
+						top.icon_state = "powercore_core_fast"
+					else if (IOCORE_ONLINE && !IOCORE_DEAD)
+						top.icon_state = "powercore_core_active"
+					else if (IOCORE_DEAD)
+						top.icon_state = "powercore_core_dead"
 
 
 		attack_hand(var/mob/user)
-			if (!IOCORE_ONLINE)
+			if (!IOCORE_ONLINE || IOCORE_DEAD)
 				return
 
 			user.lastattacked = src
@@ -921,7 +926,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 		bullet_act(var/obj/projectile/P)
 
-			if (!IOCORE_ONLINE)
+			if (!IOCORE_ONLINE || IOCORE_DEAD)
 				return
 
 			if(P.proj_data.damage_type == D_KINETIC || P.proj_data.damage_type == D_PIERCING)
@@ -951,7 +956,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 		proc
 			activate()
-				if (IOCORE_ONLINE)
+				if (IOCORE_ONLINE || IOCORE_DEAD)
 					return
 
 				IOCORE_ONLINE = 1
@@ -1028,12 +1033,12 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				return 0
 
 			death()
-				if (IOCORE_ONLINE == -1)
+				if (IOCORE_DEAD)
 					return
 
 				STOP_TRACKING_CAT(TR_CAT_CRITTERS)
 
-				IOCORE_ONLINE = -1
+				IOCORE_DEAD = 1
 				if (src.zapMarker)
 					src.zapMarker.dispose()
 					src.zapMarker = null
