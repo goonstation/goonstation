@@ -22879,34 +22879,6 @@
 	},
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins/boss_chamber)
-"bIe" = (
-/obj/decal/glow{
-	anchored = 1;
-	brightness = 2;
-	color_b = 0.8;
-	color_g = 1;
-	color_r = 0;
-	desc = "Some manner of glowing power conveyor.";
-	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
-	icon_state = "";
-	name = "power conduit"
-	},
-/obj/overlay{
-	bound_height = 64;
-	bound_width = 64;
-	desc = "An enormous artifact of some sort. You feel uncomfortable just being near it.";
-	icon = 'icons/effects/64x64.dmi';
-	icon_state = "powercore_ring2";
-	layer = 3.9;
-	name = "central ring";
-	pixel_x = 16;
-	pixel_y = 17
-	},
-/turf/unsimulated/iomoon/ancient_floor{
-	icon_state = "ancientfloor2"
-	},
-/area/iomoon/robot_ruins/boss_chamber)
 "bIf" = (
 /obj/decal/glow{
 	anchored = 1;
@@ -23063,20 +23035,6 @@
 "bIA" = (
 /obj/decal/cleanable/ash,
 /turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins/boss_chamber)
-"bIB" = (
-/obj/overlay{
-	bound_height = 160;
-	bound_width = 160;
-	desc = "An enormous artifact of some sort. You feel uncomfortable just being near it.";
-	icon = 'icons/effects/160x160.dmi';
-	icon_state = "powercore_ring3";
-	layer = 3.9;
-	name = "enormous artifact"
-	},
-/turf/unsimulated/iomoon/ancient_floor{
-	icon_state = "ancientfloor2"
-	},
 /area/iomoon/robot_ruins/boss_chamber)
 "bIC" = (
 /obj/machinery/shuttle/engine/propulsion{
@@ -128814,7 +128772,7 @@ bGa
 bHq
 bGa
 bHq
-bIB
+bGa
 bGw
 bGw
 bFN
@@ -129115,7 +129073,7 @@ bGa
 bGa
 bHq
 bGa
-bIe
+bHq
 bGa
 bGa
 bGw
