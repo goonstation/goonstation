@@ -576,48 +576,39 @@
 	var/active = 0
 	var/location = 1 // 0 for bottom, 1 for top
 
+/obj/machinery/computer/sea_elevator/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Elevator", name)
+		ui.open()
+
+/obj/machinery/computer/sea_elevator/ui_data(mob/user)
+	. = list()
+	.["location"] = location ? "Upper level" : "Lower Level"
+	.["active"] = active
+
 /obj/machinery/computer/sea_elevator/attack_hand(mob/user)
 	if(..())
 		return
-	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"
 
-	if(location)
-		dat += "Elevator Location: Upper level"
-	else
-		dat += "Elevator Location: Lower Level"
-	dat += "<BR>"
-	if(active)
-		dat += "Moving"
-	else
-		dat += "<a href='byond://?src=\ref[src];send=1'>Move Elevator</a><BR><BR>"
+	ui_interact(user)
 
-	user.Browse(dat, "window=sea_elevator")
-	onclose(user, "sea_elevator")
-	return
-
-/obj/machinery/computer/sea_elevator/Topic(href, href_list)
+/obj/machinery/computer/sea_elevator/ui_act(action, params)
 	if(..())
 		return
+
 	if (((src in usr.contents) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		src.add_dialog(usr)
+		switch(action)
+			if ("send")
+				if(!active)
+					for(var/obj/machinery/computer/sea_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
+						active = 1
+						C.visible_message("<span class='alert'>The elevator begins to move!</span>")
+						playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
+					SPAWN(5 SECONDS)
+						call_shuttle()
 
-		if (href_list["send"])
-			if(!active)
-				for(var/obj/machinery/computer/sea_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
-					active = 1
-					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
-					playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
-				SPAWN(5 SECONDS)
-					call_shuttle()
-
-		if (href_list["close"])
-			src.remove_dialog(usr)
-			usr.Browse(null, "window=sea_elevator")
-
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
-	return
-
+	. = TRUE
 
 /obj/machinery/computer/sea_elevator/proc/call_shuttle()
 
@@ -643,10 +634,7 @@
 		C.visible_message("<span class='alert'>The elevator has moved.</span>")
 		C.location = src.location
 
-	return
-
-
-
+	tgui_process.update_uis(src)
 
 proc/fluid_turf_setup(first_time=FALSE)
 	if(QDELETED(ocean_fluid_obj))
