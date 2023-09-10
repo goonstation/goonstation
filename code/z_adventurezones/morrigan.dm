@@ -805,7 +805,7 @@ mob/living/carbon/human/morrigan_prisoner
 
 /area/morrigan/routing/transport
 	name = "Prisoner Transport"
-	sound_loop = 'sound/ambience/morrigan/secamb.ogg'
+	sound_loop = 'sound/ambience/morrigan/entranceamb.ogg'
 	sound_loop_vol = 75
 
 /area/morrigan/construction
