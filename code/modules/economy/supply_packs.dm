@@ -1942,6 +1942,15 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/item/instrument/guitar)
 	containertype = /obj/storage/crate/wooden
 
+/datum/supply_packs/bass
+	name = "Bass Guitar Kit"
+	desc = "1x Bass Guitar"
+	category = "Civilian Department"
+	cost = 2000
+	containername = "Bass Guitar Kit"
+	contains = list(/obj/item/instrument/bass)
+	containertype = /obj/storage/crate/wooden
+
 
 //Western
 /datum/supply_packs/west_coats

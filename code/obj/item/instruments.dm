@@ -443,6 +443,42 @@
 		..()
 
 
+/* -------------------- Bass Guitar -------------------- */
+
+/obj/item/instrument/bass
+	name = "bass"
+	desc = "It's like a guitar. But cooler."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "bass1"
+	item_state = "bass1"
+	two_handed = 1
+	force = 10
+	note_range = list("d2", "d5")
+	instrument_sound_directory = "sound/musical_instruments/bass/notes/"
+	note_time = 0.18 SECONDS
+	sounds_instrument = null
+	randomized_pitch = 0
+	use_new_interface = TRUE
+	//Start at D
+	key_offset = 3
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROD)
+
+	New()
+		src.icon_state = "bass[rand(1,9)]"
+		src.item_state = src.icon_state
+		..()
+
+
+
+	attack(mob/M, mob/user)
+		if(ismob(M))
+			playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
+		..()
+
+
 
 /* -------------------- Bike Horn -------------------- */
 
