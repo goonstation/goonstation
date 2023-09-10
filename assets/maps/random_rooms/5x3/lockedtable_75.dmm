@@ -41,7 +41,7 @@
 /turf/simulated/floor/airless/grime,
 /area/dmm_suite/clear_area)
 "S" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/airless/grime,

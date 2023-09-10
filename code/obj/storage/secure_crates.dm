@@ -78,7 +78,6 @@
 	icon_closed = "secgearcrate"
 
 // Armory secure crates
-
 /obj/storage/secure/crate/gear/armory
 	name = "secure weapons crate"
 	req_access = list(access_maxsec)
@@ -89,6 +88,19 @@
 	/obj/item/storage/box/QM_grenadekit_experimentalweapons,\
 	/obj/item/storage/box/stinger_kit,\
 	/obj/item/storage/box/stun_landmines)
+
+/obj/storage/secure/crate/gear/armory/alcohol
+	name = "secure alcohol crate"
+	desc = "For the most dire of situations."
+	spawn_contents = list(/obj/item/storage/box/cocktail_umbrellas,\
+	/obj/item/storage/box/cocktail_doodads,\
+	/obj/item/storage/box/straws,\
+	/obj/item/storage/box/fruit_wedges,\
+	/obj/item/storage/box/beer,\
+	/obj/item/storage/box/glassbox,\
+	/obj/item/reagent_containers/food/drinks/drinkingglass/random_style = 4,\
+	/obj/item/reagent_containers/food/drinks/bottle/vodka = 3,\
+	/obj/item/reagent_containers/food/drinks/curacao)
 
 // Saxitoxin grenade crates
 

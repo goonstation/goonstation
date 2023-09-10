@@ -867,6 +867,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throw_range = 10
 	makemeat = 0
 	var/hunter_key = "" // The owner of this spear.
+	HELP_MESSAGE_OVERRIDE({"Throw the spear at someone for a guaranteed short stun."})
 
 	New()
 		..()

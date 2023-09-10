@@ -42,6 +42,9 @@ var/global/total_gas_mixtures = 0
 	 *	This is done before air system calculations for a cycle. */
 	var/list/datum/air_group/groups_to_rebuild = list()
 
+	/// List of single turfs to rebuild together with [groups_to_rebuild].
+	var/list/turf/simulated/tiles_to_rebuild = list()
+
 	/// Turfs to be converted to space on the next cycle in case we're busy right now.
 	/// Use [/turf/proc/delay_space_conversion] instead of adding to this list directly.
 	var/list/turf/tiles_to_space = list()
@@ -159,7 +162,7 @@ var/global/total_gas_mixtures = 0
 	src.is_busy = TRUE
 
 	if(!explosions.exploding)
-		if(length(groups_to_rebuild))
+		if(length(groups_to_rebuild) || length(tiles_to_rebuild))
 			src.process_rebuild_select_groups()
 		LAGCHECK(LAG_REALTIME)
 
@@ -225,11 +228,18 @@ var/global/total_gas_mixtures = 0
 			src.assemble_group_turf(S)
 	LAGCHECK(LAG_REALTIME)
 
+	for(var/turf/simulated/S in tiles_to_rebuild) // update the singletons
+		if(!S.parent)
+			src.assemble_group_turf(S)
+		turf_list += S
+	LAGCHECK(LAG_REALTIME)
+
 	for(var/turf/simulated/S as anything in turf_list)
 		S.update_air_properties()
 	LAGCHECK(LAG_REALTIME)
 
 	groups_to_rebuild.len = 0
+	tiles_to_rebuild.len = 0
 
 /// Process all air groups.
 /// Do not call. Used by [/datum/controller/air_system/proc/process].

@@ -146,8 +146,8 @@
 
 	proc/add_client(client/C)
 		check_objects()
-		C.screen += src.objects
-		src.clients += C
+		C.screen |= src.objects
+		src.clients |= C
 
 	proc/remove_client(client/C)
 		src.clients -= C

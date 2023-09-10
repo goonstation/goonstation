@@ -18,7 +18,7 @@
 /turf/simulated/floor/carpet/blue/standard/edge/east,
 /area/dmm_suite/clear_area)
 "s" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	dir = 8
 	},
 /obj/machinery/bot/floorbot{
@@ -34,7 +34,7 @@
 /turf/simulated/floor/carpet/blue/standard/edge/south,
 /area/dmm_suite/clear_area)
 "z" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	dir = 8
 	},
 /obj/machinery/bot/firebot{
@@ -60,7 +60,7 @@
 /turf/simulated/floor/carpet/blue/standard/edge/west,
 /area/dmm_suite/clear_area)
 "Y" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	dir = 4
 	},
 /obj/machinery/bot/mining{
@@ -69,7 +69,7 @@
 /turf/simulated/floor/carpet/blue/standard/edge/west,
 /area/dmm_suite/clear_area)
 "Z" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	dir = 4
 	},
 /obj/machinery/bot/secbot{

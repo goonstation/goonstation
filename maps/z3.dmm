@@ -1306,17 +1306,6 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/hallway)
-"aem" = (
-/obj/table/wood/auto,
-/obj/item/device/radio/intercom{
-	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show.";
-	device_color = "#E52780";
-	icon = 'icons/obj/radiostation.dmi';
-	icon_state = "mixtable-1";
-	name = "broadcast radio"
-	},
-/turf/simulated/floor/carpet/grime,
-/area/radiostation/studio)
 "aen" = (
 /obj/table/wood/auto,
 /obj/submachine/mixing_desk,
@@ -1791,14 +1780,6 @@
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
 /area/diner/motel/observatory)
-"agI" = (
-/obj/decal/cleanable/dirt,
-/obj/stool/chair/wooden{
-	dir = 8;
-	icon_state = "chair_wooden"
-	},
-/turf/simulated/floor/carpet/green/fancy/edge/north,
-/area/diner/motel/observatory)
 "agJ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/radiostation/bedroom)
@@ -1868,14 +1849,6 @@
 /obj/item/kitchen/utensil/spoon/plastic,
 /obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal,
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
-/area/diner/motel/observatory)
-"ahe" = (
-/obj/decal/cleanable/dirt,
-/obj/stool/chair/wooden{
-	dir = 4;
-	icon_state = "chair_wooden"
-	},
-/turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/diner/motel/observatory)
 "ahf" = (
 /turf/simulated/wall/auto/supernorn,
@@ -1965,13 +1938,6 @@
 /obj/item/kitchen/utensil/knife/plastic,
 /obj/item/kitchen/utensil/spoon/plastic,
 /turf/simulated/floor/carpet/green/fancy/edge/west,
-/area/diner/motel/observatory)
-"ahV" = (
-/obj/stool/chair/wooden{
-	dir = 8;
-	icon_state = "chair_wooden"
-	},
-/turf/simulated/floor/carpet/green/fancy,
 /area/diner/motel/observatory)
 "ahW" = (
 /turf/simulated/floor/carpet/green/fancy,
@@ -7109,17 +7075,6 @@
 /obj/decal/fakeobjects/pipe,
 /turf/space,
 /area/space)
-"aKG" = (
-/obj/npc/trader/robot{
-	name = "Thrifty B.O.B.";
-	picture = "loungebuddy.png";
-	trader_area = "/area/evilreaver/storage/engineering"
-	},
-/obj/map/light/white,
-/turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
 "aKH" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
@@ -9412,16 +9367,6 @@
 	tag = "icon-red2 (SOUTHWEST)"
 	},
 /area/derelict_ai_sat)
-"aSa" = (
-/obj/stool/chair/wooden{
-	dir = 1
-	},
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "red2";
-	tag = "icon-red2 (SOUTHEAST)"
-	},
-/area/derelict_ai_sat)
 "aSb" = (
 /turf/simulated/wall/auto/asteroid,
 /area/fermid_hive)
@@ -10891,23 +10836,6 @@
 	name = "BIOHAZARD";
 	pixel_x = -32
 	},
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
-"aWl" = (
-/obj/stool/chair{
-	dir = 8
-	},
-/obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
-	},
-/obj/npc/trader/robot{
-	icon_state = "medibot0";
-	name = "D.O.C.";
-	productset = 4;
-	trader_area = "/area/abandonedmedicalship/robot_trader";
-	icon = 'icons/misc/evilreaverstation.dmi'
-	},
-/obj/map/light/white,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aWn" = (
@@ -14704,10 +14632,6 @@
 	},
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
-"blh" = (
-/obj/item/storage/firstaid/old,
-/turf/simulated/floor/white/grime,
-/area/derelict_ai_sat)
 "bli" = (
 /obj/table/auto,
 /obj/item/motherboard{
@@ -14846,16 +14770,6 @@
 	pixel_x = 32
 	},
 /turf/simulated/floor/white/grime,
-/area/derelict_ai_sat)
-"blB" = (
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "red2";
-	tag = "icon-red2 (NORTHWEST)"
-	},
 /area/derelict_ai_sat)
 "blC" = (
 /obj/table/wood/round/auto,
@@ -16301,6 +16215,16 @@
 	},
 /turf/space,
 /area/space)
+"dEx" = (
+/obj/stool/chair/dining/wood{
+	dir = 1
+	},
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "red2";
+	tag = "icon-red2 (SOUTHEAST)"
+	},
+/area/derelict_ai_sat)
 "dGH" = (
 /obj/decal/fakeobjects/cpucontroller{
 	pixel_y = -3
@@ -16431,6 +16355,10 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/helldrone/core)
+"ecT" = (
+/obj/npc/trader/robot/robuddy/drugs,
+/turf/simulated/floor/grime,
+/area/diner/bathroom)
 "edv" = (
 /turf/simulated/floor/grime,
 /area/diner/motel/chemstorage)
@@ -16631,6 +16559,12 @@
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
+"eVP" = (
+/obj/storage/secure/crate/morrigan,
+/obj/landmark/morrigan_crate,
+/obj/decal/fakeobjects/teleport_pad,
+/turf/unsimulated/floor/red/redblackchecker,
+/area/helldrone)
 "eWM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17248,6 +17182,13 @@
 /obj/submachine/chef_sink,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
+"guL" = (
+/obj/stool/chair/dining/wood{
+	dir = 4;
+	icon_state = "chair_wooden"
+	},
+/turf/simulated/floor/carpet/green/fancy,
+/area/diner/motel/observatory)
 "gvP" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -17302,13 +17243,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
-"gyi" = (
-/obj/stool/chair/wooden{
-	dir = 4;
-	icon_state = "chair_wooden"
-	},
-/turf/simulated/floor/carpet/green/fancy,
-/area/diner/motel/observatory)
 "gzA" = (
 /obj/lattice{
 	dir = 2;
@@ -17933,6 +17867,14 @@
 "ijr" = (
 /turf/simulated/floor/scorched2,
 /area/diner/kitchen)
+"iko" = (
+/obj/decal/cleanable/dirt,
+/obj/stool/chair/dining/wood{
+	dir = 8;
+	icon_state = "chair_wooden"
+	},
+/turf/simulated/floor/carpet/green/fancy/edge/north,
+/area/diner/motel/observatory)
 "ikA" = (
 /obj/overlay{
 	density = 1;
@@ -18082,17 +18024,6 @@
 "iDu" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/kitchen)
-"iDz" = (
-/obj/npc/trader/robot{
-	desc = "The robot proprieter of the Diner. Deals in food that's to dine for!";
-	name = "B.I.F.F.";
-	picture = "loungebuddy.png";
-	productset = 2;
-	trader_area = "/area/diner/dining"
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/diner/dining)
 "iEV" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -18421,18 +18352,6 @@
 	},
 /turf/space,
 /area/diner/tug)
-"jiP" = (
-/obj/npc/trader/robot{
-	desc = "The robot equivelant of that guy back on Earth who tried to sell you stolen military gear and drugs in the bathroom of an old greasy spoon.";
-	greeting = "I got what you need.";
-	illegal = 1;
-	name = "Sketchy D-5";
-	picture = "loungebuddy.png";
-	productset = 1;
-	trader_area = "/area/diner/bathroom"
-	},
-/turf/simulated/floor/grime,
-/area/diner/bathroom)
 "jiQ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 2;
@@ -18570,12 +18489,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/radiostation/bedroom)
-"jGH" = (
-/obj/storage/secure/crate/morrigan,
-/obj/landmark/morrigan_crate,
-/obj/decal/fakeobjects/teleport_pad,
-/turf/unsimulated/floor/red/redblackchecker,
-/area/helldrone)
 "jIB" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 9;
@@ -19573,6 +19486,11 @@
 	icon_state = "red4"
 	},
 /area/diner/dining)
+"meJ" = (
+/obj/table/wood/auto,
+/obj/item/device/radio/intercom/radiostation,
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
 "meT" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
@@ -19829,6 +19747,13 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/helldrone)
+"mUE" = (
+/obj/stool/chair/dining/wood{
+	dir = 8;
+	icon_state = "chair_wooden"
+	},
+/turf/simulated/floor/carpet/green/fancy,
+/area/diner/motel/observatory)
 "mWz" = (
 /obj/machinery/light/small{
 	brightness = 2;
@@ -20209,6 +20134,14 @@
 	},
 /turf/space,
 /area/space)
+"nXw" = (
+/obj/decal/cleanable/dirt,
+/obj/stool/chair/dining/wood{
+	dir = 4;
+	icon_state = "chair_wooden"
+	},
+/turf/simulated/floor/carpet/green/fancy/edge/north,
+/area/diner/motel/observatory)
 "nYg" = (
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/salyut)
@@ -21161,13 +21094,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hangar)
-"qrv" = (
-/obj/storage/crate,
-/obj/item/clothing/suit/space/syndicate_worn,
-/obj/item/clothing/mask/gas/swat,
-/obj/item/clothing/under/misc/syndicate,
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "qrK" = (
 /obj/stool/bar,
 /mob/living/carbon/human/don_glab,
@@ -21636,6 +21562,13 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/diner/motel/observatory)
+"rEA" = (
+/obj/npc/trader/robot/robuddy/salvage,
+/obj/map/light/white,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
 "rGA" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8;
@@ -22201,6 +22134,11 @@
 	},
 /turf/unsimulated/floor/black,
 /area/helldrone)
+"taE" = (
+/obj/npc/trader/robot/robuddy/diner,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/diner/dining)
 "tbl" = (
 /obj/machinery/power/apc/autoname_east/nopoweralert,
 /obj/cable{
@@ -22534,6 +22472,17 @@
 /obj/window_blinds/cog2,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
+"tHQ" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/decal/fakeobjects/lightbulb_broken{
+	dir = 4
+	},
+/obj/npc/trader/robot/medical,
+/obj/map/light/white,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "tIa" = (
 /turf/simulated/floor/plating,
 /area/diner/hangar)
@@ -23623,6 +23572,13 @@
 	},
 /turf/simulated/floor/scorched2,
 /area/diner/hangar)
+"wux" = (
+/obj/storage/crate,
+/obj/item/clothing/suit/space/syndicate_worn,
+/obj/item/clothing/mask/gas/swat,
+/obj/item/clothing/under/misc/syndicate,
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "wuN" = (
 /obj/decal/cleanable/dirt,
 /obj/shrub{
@@ -24067,6 +24023,16 @@
 /obj/map/light/dimred,
 /turf/simulated/floor/circuit/red,
 /area/helldrone/core)
+"xQD" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "red2";
+	tag = "icon-red2 (NORTHWEST)"
+	},
+/area/derelict_ai_sat)
 "xRo" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 8
@@ -36862,7 +36828,7 @@ aaa
 aaa
 aaa
 bgu
-jGH
+eVP
 blH
 nUk
 bgu
@@ -37770,7 +37736,7 @@ aaa
 bgu
 uuj
 onq
-qrv
+wux
 bgu
 onT
 krR
@@ -64598,7 +64564,7 @@ amV
 amV
 biB
 biI
-blh
+aRo
 aRo
 bmg
 aSl
@@ -68525,7 +68491,7 @@ biz
 biF
 biK
 amR
-blB
+xQD
 aRZ
 aSv
 aRW
@@ -68828,7 +68794,7 @@ biG
 biM
 amR
 blC
-aSa
+dEx
 bAc
 aRW
 amR
@@ -73313,7 +73279,7 @@ aIz
 aJN
 aKX
 aKx
-aKG
+rEA
 aKW
 aLf
 aJN
@@ -73818,7 +73784,7 @@ iDu
 smF
 pdj
 bmX
-iDz
+taE
 tkr
 wli
 tkr
@@ -76533,7 +76499,7 @@ laI
 afD
 aeZ
 apQ
-jiP
+ecT
 apy
 cEM
 apQ
@@ -79535,7 +79501,7 @@ aaa
 ahT
 ahd
 svo
-ahV
+mUE
 aod
 fbg
 usy
@@ -79835,7 +79801,7 @@ aaa
 aaa
 aaa
 ahT
-agI
+iko
 ahW
 ahW
 aod
@@ -81949,7 +81915,7 @@ aaa
 aaa
 aaa
 ahT
-ahe
+nXw
 ahW
 ahW
 aod
@@ -82253,7 +82219,7 @@ aaa
 ahT
 jng
 nUA
-gyi
+guL
 aod
 afy
 usy
@@ -92718,7 +92684,7 @@ wAy
 aVE
 aVM
 aWe
-aWl
+tHQ
 aWA
 wAy
 aLx
@@ -107010,7 +106976,7 @@ oSY
 adx
 adK
 adQ
-aem
+meJ
 aeD
 adg
 aga

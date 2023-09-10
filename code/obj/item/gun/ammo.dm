@@ -1182,7 +1182,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	name = "Airzooka Tactical Replacement Trashbag"
 	sname = "air"
 	desc = "A tactical trashbag for use in a Donk Co Airzooka."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "trashbag"
 	m_amt = 40000
 	g_amt = 0
@@ -1195,7 +1195,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	name = "Airzooka Tactical Replacement Trashbag: Xtreme Edition"
 	sname = "air"
 	desc = "A tactical trashbag for use in a Donk Co Airzooka, now with plasma lining."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "biobag"
 	m_amt = 40000
 	g_amt = 0

@@ -53,6 +53,8 @@
 			if (!MT.reagents)
 				boutput(holder.owner, "<span class='alert'>That does not hold reagents, apparently.</span>")
 				return 1
+			if (target == holder.owner)
+				return 1
 			// make some room in the target
 			if (MT.reagents.total_volume + toxin_holder.total_volume > MT.reagents.maximum_volume)
 				MT.reagents.remove_any((MT.reagents.total_volume + toxin_holder.total_volume) - MT.reagents.maximum_volume)
@@ -64,6 +66,7 @@
 			holder.owner.show_message("<span class='notice'>We stealthily sting [target].</span>")
 		toxin_holder.trans_to(target, toxin_holder.total_volume)
 		logTheThing(LOG_COMBAT, holder.owner, "stings [constructTarget(target,"combat")] with [name] as a changeling [log_loc(holder.owner)].")
+		return 0
 
 	neurotoxin
 		name = "Neurotoxic Sting"

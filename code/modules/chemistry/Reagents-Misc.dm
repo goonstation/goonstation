@@ -1291,6 +1291,7 @@ datum
 			fluid_g = 255
 			fluid_b = 204
 			transparency = 150
+			fluid_flags = FLUID_BANNED
 
 			reaction_turf(var/turf/T, var/volume)
 				if (volume >= 5)
@@ -2076,6 +2077,7 @@ datum
 			value = 5
 			hunger_value = 0.8
 			threshold = THRESHOLD_INIT
+			fluid_flags = FLUID_BANNED
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
@@ -2290,6 +2292,7 @@ datum
 			fluid_g = 255
 			fluid_b = 255
 			transparency = 255
+			fluid_flags = FLUID_BANNED
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
@@ -3107,6 +3110,7 @@ datum
 			fluid_r = 0
 			fluid_g = 0
 			fluid_b = 0
+			fluid_flags = FLUID_STACKING_BANNED
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				if (prob(80))
@@ -3413,6 +3417,7 @@ datum
 			transparency = 255
 			hygiene_value = -5
 			viscosity = 0.5
+			fluid_flags = FLUID_STACKING_BANNED
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				if (prob(66))
@@ -3428,6 +3433,7 @@ datum
 			fluid_g = 190
 			fluid_b = 230
 			transparency = 160
+			fluid_flags = FLUID_STACKING_BANNED
 
 		big_bang
 			name = "quark-gluon plasma"
@@ -3440,7 +3446,7 @@ datum
 			fluid_b = 250
 			transparency = 255
 			viscosity = 0.7
-
+			fluid_flags = FLUID_SMOKE_BANNED
 			pierces_outerwear = 1//shoo, biofool
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
@@ -4172,6 +4178,7 @@ datum
 			fluid_b = 124
 			transparency = 255
 			overdose = 70
+			fluid_flags = FLUID_SMOKE_BANNED
 			var/concrete_strength = 0
 
 			reaction_turf(var/turf/T, var/volume)

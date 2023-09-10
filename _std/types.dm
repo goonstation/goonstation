@@ -220,6 +220,7 @@ var/list/list/by_cat = list()
 //morrigan
 #define TR_CAT_MORRIGAN_LIGHTS "morrigan_lights"
 #define TR_CAT_MORRIGAN_EMERGENCY_LIGHTS "morrigan_elights"
+#define TR_CAT_STAMINA_MOBS "stamina_mobs"
 // powernets? processing_items?
 // mobs? ai-mobs?
 
@@ -461,7 +462,10 @@ proc/find_all_by_type(type, procedure=null, procedure_src=null, arguments=null, 
 		IT_TYPE(/turf) \
 		IT_TYPE(/atom/movable) \
 		IT_TYPE(/atom) \
-		IT_TYPE(/datum)
+		IT_TYPE(/datum) \
+		IT_TYPE(/client) \
+		else
+			CRASH("find_all_by_type: invalid type: [type]")
 	#undef IT_TYPE
 
 /// istype but for checking a list of types

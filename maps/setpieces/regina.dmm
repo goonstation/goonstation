@@ -48,9 +48,7 @@
 	},
 /area/space)
 "aQ" = (
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/left_station"
-	},
+/obj/npc/trader/random,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -270,9 +268,7 @@
 /area/shuttle/merchant_shuttle/diner_centcom)
 "gP" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -542,9 +538,7 @@
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "kL" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -1204,9 +1198,7 @@
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
 "wR" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -1624,9 +1616,7 @@
 /area/space)
 "Fc" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -1848,9 +1838,7 @@
 /area/regina)
 "Ki" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -2169,9 +2157,7 @@
 /turf/space,
 /area/regina)
 "Qf" = (
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -2430,9 +2416,7 @@
 /area/regina)
 "Vv" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/left_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -2708,9 +2692,7 @@
 /area/shuttle/merchant_shuttle/diner_centcom)
 "ZW" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
