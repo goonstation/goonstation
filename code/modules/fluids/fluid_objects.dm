@@ -368,7 +368,7 @@ ABSTRACT_TYPE(/datum/contextAction/fluid_canister)
 		fluid_canister.change_mode(src.mode)
 
 	checkRequirements(var/obj/machinery/fluid_canister/fluid_canister, var/mob/user)
-		if (usr.stat || usr.restrained())
+		if (user.stat || user.restrained())
 			return FALSE
 		if (!in_interact_range(fluid_canister, user))
 			return FALSE
