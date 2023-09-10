@@ -509,32 +509,6 @@ datum
 			threshold = THRESHOLD_INIT
 			var/heart_failure_counter = 0
 
-			proc/caffeine_message(var/mob/M, var/power) // condensing all the messages in the same place
-				if (ON_COOLDOWN(M, "Caffeine Message", 10 SECONDS)) //Reduce chat spam
-					return
-				switch(power)
-					if(1)
-						boutput(M, pick("<span class='notice'>You feel refreshingly energised.</span>",\
-									"<span class='notice'>You feel sharp and aware.</span>",\
-									"<span class='notice'>You feel motivated to do something.</span>",\
-									"<span class='notice'>You suddenly become aware of your own breathing.</span>"))
-					if(2)
-						boutput(M, pick("<span class='notice'>You a slight twitch in your arm.</span>",\
-									"<span class='notice'>You feel a slight tension in your shoulders.</span>",\
-									"<span class='notice'>You feel resltess and anxious.</span>",\
-									"<span class='alert'>You feel ready for anything!</span>",\
-									"<span class='alert'>You feel a rush of energy.</span>",\
-									"<span class='alert'>You can feel a slight pressure in your skull.</span>"))
-					if(3)
-						boutput(M, pick("<span class='alert'>You feel your chest clutching for a moment.</span>",\
-									"<span class='alert'>YOU ARE ENERGY INCARNATE.</span>",\
-									"<span class='alert'>YOU FEEL LIKE YOU COULD CONQUER THE WORLD.</span>",\
-									"<span class='alert'>YOU CAN DO EVERYTHING, YOU ARE READY FOR ANY CHALLENGE.</span>",\
-									"<span class='alert'>Your chest burns slightly.</span>",\
-									"<span class='alert'>You feel a flash of pain in your head.</span>",\
-									"<span class='alert'>You are speed.</span>",\
-									"<span class='notice'>Something is wrong.</span>"))
-
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
@@ -577,8 +551,6 @@ datum
 						M.changeStatus("drowsy", -3 SECONDS) //Helps combat that morning fatigue
 						if (prob(25))
 							M.make_jittery(10 * mult)
-						if (probmult(6))
-							caffeine_message(M, 1)
 
 					if(20 to 40) //A significant amount of caffeine
 						if (M.get_eye_blurry())
@@ -588,8 +560,13 @@ datum
 						M.dizziness = max(0,M.dizziness-5)
 						if (prob(35))
 							M.make_jittery(10 * mult)
-						if (probmult(9))
-							caffeine_message(M, pick(1,2))
+						if (probmult(9) && !ON_COOLDOWN(M, "Caffeine Message", 12 SECONDS)) // Keeps down that emote span
+							boutput(M, pick("<span class='notice'>You a slight twitch in your arm.</span>",\
+									"<span class='notice'>You feel a slight tension in your shoulders.</span>",\
+									"<span class='notice'>You feel resltess and anxious.</span>",\
+									"<span class='alert'>You feel ready for anything!</span>",\
+									"<span class='alert'>You feel a rush of energy.</span>",\
+									"<span class='alert'>You can feel a slight pressure in your skull.</span>"))
 
 					if(40 to 60) //A unhealthy amount of caffeine
 						if (M.get_eye_blurry())
@@ -598,8 +575,13 @@ datum
 						M.changeStatus("drowsy", -10 SECONDS)
 						M.dizziness = max(0,M.dizziness-7)
 						M.make_jittery(10 * mult)
-						if (probmult(10))
-							caffeine_message(M, pick(2,3))
+						if (probmult(9) && !ON_COOLDOWN(M, "Caffeine Message", 12 SECONDS)) // Keeps down that emote span
+							boutput(M, pick("<span class='notice'>You a slight twitch in your arm.</span>",\
+									"<span class='notice'>You feel a slight tension in your shoulders.</span>",\
+									"<span class='notice'>You feel resltess and anxious.</span>",\
+									"<span class='alert'>You feel ready for anything!</span>",\
+									"<span class='alert'>You feel a rush of energy.</span>",\
+									"<span class='alert'>You can feel a slight pressure in your skull.</span>"))
 						else if (probmult(9))
 							M.emote(pick("twitch","twitch_v","blink_r", "shiver"))
 						heart_failure_counter += mult //This can be bad for you over time
@@ -611,8 +593,15 @@ datum
 						M.changeStatus("drowsy", -15 SECONDS)
 						M.dizziness = max(0,M.dizziness-10)
 						M.make_jittery(15 * mult)
-						if (probmult(13))
-							caffeine_message(M, 3)
+						if (probmult(13) && !ON_COOLDOWN(M, "Caffeine Message", 8 SECONDS))
+							boutput(M, pick("<span class='alert'>You feel your chest clutching for a moment.</span>",\
+									"<span class='alert'>YOU ARE ENERGY INCARNATE.</span>",\
+									"<span class='alert'>YOU FEEL LIKE YOU COULD CONQUER THE WORLD.</span>",\
+									"<span class='alert'>YOU CAN DO EVERYTHING, YOU ARE READY FOR ANY CHALLENGE.</span>",\
+									"<span class='alert'>Your chest burns slightly.</span>",\
+									"<span class='alert'>You feel a flash of pain in your head.</span>",\
+									"<span class='alert'>You are speed.</span>",\
+									"<span class='notice'>Something is wrong.</span>"))
 						else if (probmult(12))
 							M.emote(pick("shiver","twitch_v","blink_r","wheeze"))
 						else if(probmult(9) && !ON_COOLDOWN(M, "feeling_own heartbeat", 60 SECONDS)) //This can't be good for you
