@@ -27,10 +27,11 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 
 	is_dangerous = TRUE
 	is_syndicate = TRUE
-	issawfly = TRUE //used to tell the sawfly remote if it can or can't prime() the grenade
+	issawfly = TRUE //used to tell the sawfly remote if it can or can't detonate() the grenade
 	contraband = 2
 	overlays = null
-	state = 0
+	armed = FALSE
+	HELP_MESSAGE_OVERRIDE({"Use the sawfly in hand or use the remote to deploy it. Use the remote or click on the sawfly on <span class='help'>help</span> or <span class='grab'>grab</span> intent to deactivate it."})
 
 	//used in dictating behavior when deployed from grenade
 	var/mob/living/critter/robotic/sawfly/heldfly = null
@@ -42,12 +43,12 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 			return
 		..()
 
-	prime()
+	detonate()
 		var/turf/T =  get_turf(src)
 		if (T && heldfly)
 			heldfly.set_loc(T)
 			heldfly.is_npc = TRUE
-			heldfly.ai = new /datum/aiHolder/sawfly(heldfly)
+			heldfly.ai = new /datum/aiHolder/aggressive(heldfly)
 
 		qdel(src)
 /obj/item/old_grenade/sawfly/firsttime//super important- traitor uplinks and sawfly pouches use this specific version
@@ -102,6 +103,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	icon = 'icons/obj/items/device.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
 	icon_state = "sawflycontr"
+	HELP_MESSAGE_OVERRIDE({"Use the remote in hand to activate/deactivate any sawflies within a 5 tile radius."})
 
 	attack_self(mob/user as mob)
 		for (var/mob/living/critter/robotic/sawfly/S in range(get_turf(src), 5)) // folds active sawflies
@@ -118,7 +120,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 					S.icon_state = "sawflyunfolding"
 					SPAWN(S.det_time)
 						if(S)
-							S.prime()
+							S.detonate()
 
 				if (istype(S, /obj/item/old_grenade/spawner/sawflycluster))
 					S.visible_message("<span class='alert'>The [S] suddenly begins beeping as it is primed!</span>")
@@ -128,7 +130,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 						S.icon_state = "clusterflyB1"
 					SPAWN(S.det_time)
 						if(S)
-							S.prime()
+							S.detonate()
 			else
 				continue
 

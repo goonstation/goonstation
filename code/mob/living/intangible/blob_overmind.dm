@@ -8,7 +8,7 @@
 	density = 0
 	canmove = 1
 	blinded = 0
-	anchored = 1
+	anchored = ANCHORED
 	use_stamina = 0
 	mob_flags = SPEECH_BLOB
 
@@ -41,6 +41,16 @@
 	var/image/nucleus_overlay
 	var/total_placed = 0
 	var/next_pity_point = 100
+#ifdef BONUS_POINTS
+	bio_points = 999
+	bio_points_max = 999
+	bio_points_max_bonus = 999
+	base_gen_rate = 999
+	gen_rate_bonus = 999
+	gen_rate_used = 999
+	evo_points = 999
+#endif
+
 
 	var/datum/blob_ability/shift_power = null
 	var/datum/blob_ability/ctrl_power = null
@@ -88,9 +98,10 @@
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = INVIS_SPOOKY
 		src.see_in_dark = SEE_DARK_FULL
-		my_material = copyMaterial(getMaterial("blob"))
-		my_material.color = "#ffffff"
-		initial_material = copyMaterial(getMaterial("blob"))
+		src.my_material = getMaterial("blob")
+		src.my_material = src.my_material.getMutable()
+		src.my_material.setColor("#ffffff")
+		initial_material = getMaterial("blob")
 
 		//set start grace-period timestamp
 		var/extraGrace = rand(600, 1800) //add between 1 min and 3 mins extra
@@ -126,19 +137,16 @@
 		if (..(parent))
 			return 1
 
-		if (started && (nuclei.len == 0 || blobs.len == 0))
+		if (started && (length(nuclei) == 0 || length(blobs) == 0))
 			death()
 			return
-
-		if (src.client)
-			src.antagonist_overlay_refresh(0, 0)
 
 		//time to un-apply the nucleus-destroyed debuff
 		if (src.debuff_timestamp && world.timeofday >= src.debuff_timestamp)
 			src.debuff_timestamp = 0
 			out(src, "<span class='alert'><b>You can feel your former power returning!</b></span>")
 
-		if (blobs.len > 0)
+		if (length(blobs) > 0)
 			/**
 			 * at 2175 blobs, blob points max will reach about 350. It will begin decreasing sharply after that
 			 * This is a size penalty. Basically if the blob gets too damn big, the crew has some chance of
@@ -168,11 +176,11 @@
 				return
 
 		if (starter_buff == 1)
-			if (blobs.len >= 25)
+			if (length(blobs) >= 25)
 				boutput(src, "<span class='alert'><b>You no longer have the starter assistance.</b></span>")
 				starter_buff = 0
 
-		if (blobs.len >= next_evo_point)
+		if (length(blobs) >= next_evo_point)
 			next_evo_point += initial(next_evo_point)
 			evo_points++
 			boutput(src, "<span class='notice'><b>You have expanded enough to earn one evo point! You will be granted another at size [next_evo_point]. Good luck!</b></span>")
@@ -182,12 +190,12 @@
 			evo_points++
 			boutput(src, "<span class='notice'><b>You have perfomed enough spreads to earn one evo point! You will be granted another after placing [next_pity_point] tiles. Good luck!</b></span>")
 
-		if (blobs.len >= next_extra_nucleus)
+		if (length(blobs) >= next_extra_nucleus)
 			next_extra_nucleus += initial(next_extra_nucleus)
 			extra_nuclei++
 			boutput(src, "<span class='notice'><b>You have expanded enough to earn one extra nucleus! You will be granted another at size [next_extra_nucleus]. Good luck!</b></span>")
 
-		src.nucleus_reflectivity = src.blobs.len < 151 ? 100 : 100 - ((src.blobs.len - 150)/2)
+		src.nucleus_reflectivity = length(src.blobs) < 151 ? 100 : 100 - ((src.blobs.len - 150)/2)
 		var/old_alpha = src.nucleus_overlay.alpha
 		var/new_alpha = clamp(src.nucleus_reflectivity * 2, 0, 255)
 		if(abs(old_alpha - new_alpha) >= 25 || (old_alpha != new_alpha && (new_alpha == 0 || old_alpha == 0)))
@@ -346,9 +354,10 @@
 		src.upgrade_id = 1
 		src.lipids = new()
 		src.nuclei = new()
-		src.my_material = copyMaterial(getMaterial("blob"))
-		src.my_material.color = "#ffffff"
-		src.initial_material = copyMaterial(getMaterial("blob"))
+		src.my_material = getMaterial("blob")
+		src.my_material = src.my_material.getMutable()
+		src.my_material.setColor("#ffffff")
+		src.initial_material = getMaterial("blob")
 		src.organ_color = initial(src.organ_color)
 		src.debuff_timestamp = 0
 
@@ -395,6 +404,7 @@
 		for (var/datum/blob_upgrade/U in src.available_upgrades)
 			src.available_upgrades -= U
 			qdel(U)
+		src.update_buttons()
 
 	proc/remove_ability(var/ability_type)
 		if (!ispath(ability_type))
@@ -768,40 +778,3 @@
 /mob/living/intangible/blob_overmind/checkContextActions(atom/target)
 	// a bit oh a hack, no multicontext for blobs now because it keeps overriding attacking pods :/
 	return list()
-
-/mob/proc/make_blob()
-	if (!src.client && !src.mind)
-		return null
-	var/mob/living/intangible/blob_overmind/W = new/mob/living/intangible/blob_overmind(src)
-
-	var/turf/T = get_turf(src)
-	if (!(T && isturf(T)) || (isghostrestrictedz(T.z) && !(src.client && src.client.holder)))
-		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-		if (ASLoc)
-			W.set_loc(ASLoc)
-		else
-			W.z = 1
-	else
-		W.set_loc(pick_landmark(LANDMARK_LATEJOIN))
-
-	if (src.mind)
-		src.mind.transfer_to(W)
-	else
-		var/key = src.client.key
-		if (src.client)
-			src.client.mob = W
-		W.mind = new /datum/mind()
-		W.mind.ckey = ckey
-		W.mind.key = key
-		W.mind.current = W
-		ticker.minds += W.mind
-
-	var/this = src
-	src = null
-	qdel(this)
-
-	boutput(W, "<b>You are a blob! Grow in size and devour the station.</b>")
-	boutput(W, "Your hivemind will cease to exist if your body is entirely destroyed.")
-	boutput(W, "Use the question mark button in the lower right corner to get help on your abilities.")
-
-	return W

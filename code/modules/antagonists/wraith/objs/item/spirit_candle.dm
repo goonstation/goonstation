@@ -6,7 +6,7 @@
 	icon_state = "unmelted-unlit"
 	w_class = W_CLASS_SMALL
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	opacity = 0
 	col_r = 0.2
 	col_g = 0.2

@@ -5,7 +5,7 @@
 	cooldown = 0
 	targeted = 0
 	target_anything = 0
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	ignore_holder_lock = 1
 
 	cast(atom/target)
@@ -24,7 +24,7 @@
 	cooldown = 0
 	targeted = 0
 	target_anything = 0
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	ignore_holder_lock = 1
 
 	cast(atom/target)
@@ -44,7 +44,7 @@
 	cooldown = 0
 	targeted = 0
 	target_anything = 0
-	dont_lock_holder = 1 // Dunno about your WIP stuff. Adjust as needed.
+	lock_holder = FALSE // Dunno about your WIP stuff. Adjust as needed.
 	ignore_holder_lock = 1
 
 
@@ -65,7 +65,7 @@
 	cooldown = 10
 	targeted = 0
 	target_anything = 0
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	ignore_holder_lock = 1
 
 	cast(atom/target)
@@ -87,7 +87,7 @@
 	targeted = 1
 	target_anything = 1
 	sticky = 1
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	ignore_holder_lock = 1
 
 	cast(atom/target)
@@ -106,7 +106,7 @@
 	cooldown = 200
 	targeted = 0
 	target_anything = 0
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	ignore_holder_lock = 1
 
 	cast(atom/target)
@@ -125,7 +125,7 @@
 	cooldown = 250
 	targeted = 0
 	target_anything = 0
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	ignore_holder_lock = 1
 
 	cast(atom/target)
@@ -144,7 +144,7 @@
 	cooldown = 10
 	targeted = 0
 	target_anything = 0
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	ignore_holder_lock = 1
 
 	cast(atom/target)
@@ -163,7 +163,7 @@
 	cooldown = 0
 	targeted = 0
 	target_anything = 0
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	ignore_holder_lock = 1
 
 	cast(atom/target)
@@ -182,7 +182,7 @@
 	cooldown = 100
 	targeted = 0
 	target_anything = 0
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	ignore_holder_lock = 1
 
 	cast(atom/target)

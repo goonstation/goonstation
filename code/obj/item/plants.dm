@@ -20,6 +20,11 @@ ABSTRACT_TYPE(/obj/item/plant)
 		if (!src.reagents)
 			src.create_reagents(100)
 
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
+		return src
+
+
 ABSTRACT_TYPE(/obj/item/plant/herb)
 /obj/item/plant/herb
 	name = "herb base"
@@ -34,10 +39,10 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 		if (!src.reagents)
 			src.make_reagents()
 
-		if (istype(W, /obj/item/spacecash) || istype(W, /obj/item/paper))
+		if (istype(W, /obj/item/currency/spacecash) || istype(W, /obj/item/paper))
 			boutput(user, "<span class='alert'>You roll up [W] into a cigarette.</span>")
 			var/obj/item/clothing/mask/cigarette/custom/P = new(user.loc)
-			if(istype(W, /obj/item/spacecash))
+			if(istype(W, /obj/item/currency/spacecash))
 				P.icon_state = "cig-[W.icon_state]"
 				P.item_state = "cig-[W.icon_state]"
 				P.litstate = "ciglit-[W.icon_state]"
@@ -95,13 +100,13 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 		..()
 
 	proc/build_name(obj/item/W)
-		return "[istype(W, /obj/item/spacecash) ? "[W.amount]-credit " : ""][pick("joint","doobie","spliff","roach","blunt","roll","fatty","reefer")]"
+		return "[istype(W, /obj/item/currency/spacecash) ? "[W.amount]-credit " : ""][pick("joint","doobie","spliff","roach","blunt","roll","fatty","reefer")]"
 
-/obj/item/plant/herb/cannabis/
+/obj/item/plant/herb/cannabis
 	name = "cannabis leaf"
 	desc = "Leafs for reefin'!"
 	icon_state = "cannabisleaf"
-	brew_result = list("THC", "CBD")
+	brew_result = list("THC"=20, "CBD"=20)
 	contraband = 1
 	w_class = W_CLASS_TINY
 
@@ -116,7 +121,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	crop_prefix = "rainbow "
 	desc = "Is it supposed to be glowing like that...?"
 	icon_state = "megaweedleaf"
-	brew_result = list("THC", "LSD")
+	brew_result = list("THC"=20, "LSD"=20)
 
 /obj/item/plant/herb/cannabis/mega/spawnable
 	make_reagents()
@@ -129,7 +134,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	crop_prefix = "black "
 	desc = "Looks a bit dark. Oh well."
 	icon_state = "blackweedleaf"
-	brew_result = list("THC", "cyanide")
+	brew_result = list("THC"=20, "cyanide"=20)
 
 /obj/item/plant/herb/cannabis/black/spawnable
 	make_reagents()
@@ -142,7 +147,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	crop_prefix = "white "
 	desc = "It feels smooth and nice to the touch."
 	icon_state = "whiteweedleaf"
-	brew_result = list("THC", "omnizine")
+	brew_result = list("THC"=20, "omnizine"=20)
 
 /obj/item/plant/herb/cannabis/white/spawnable
 	make_reagents()
@@ -155,8 +160,9 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	crop_prefix = "glowing "
 	desc = "You feel dizzy looking at it. What the fuck?"
 	icon_state = "Oweedleaf"
-	brew_result = list("THC", "LSD", "suicider", "space_drugs", "mercury", "lithium", "atropine", "haloperidol", "methamphetamine",\
-	"capsaicin", "psilocybin", "hairgrownium", "ectoplasm", "bathsalts", "itching", "crank", "krokodil", "catdrugs", "histamine")
+	brew_result = list("THC"=20, "LSD"=20, "suicider"=20, "space_drugs"=20, "mercury"=20, "lithium"=20, "atropine"=20, "haloperidol"=20,\
+	"methamphetamine"=20, "capsaicin"=20, "psilocybin"=20, "hairgrownium"=20, "ectoplasm"=20, "bathsalts"=20, "itching"=20, "crank"=20,\
+	"krokodil"=20, "catdrugs"=20, "histamine"=20)
 
 /obj/item/plant/herb/cannabis/omega/spawnable
 	make_reagents()
@@ -186,34 +192,34 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	name = "tobacco leaf"
 	desc = "A leaf from a tobacco plant. This could probably be smoked..."
 	icon_state = "tobacco"
-	brew_result = list("nicotine")
+	brew_result = list("nicotine"=20)
 
 	build_name(obj/item/W)
-		return "[istype(W, /obj/item/spacecash) ? "[W.amount]-credit " : ""]rolled cigarette"
+		return "[istype(W, /obj/item/currency/spacecash) ? "[W.amount]-credit " : ""]rolled cigarette"
 
 /obj/item/plant/herb/tobacco/twobacco
 	name = "twobacco leaf"
 	desc = "A leaf from the twobacco plant. This could probably be smoked- wait, is it already smoking?"
 	icon_state = "twobacco"
-	brew_result = list("nicotine2")
+	brew_result = list("nicotine2"=20)
 
 /obj/item/plant/wheat
 	name = "wheat"
 	desc = "Never eat shredded wheat."
 	icon_state = "wheat"
-	brew_result = "beer"
+	brew_result = list("beer"=20)
 
 /obj/item/plant/wheat/durum
 	name = "durum wheat"
 	desc = "A harder wheat for a harder palate."
 	icon_state = "wheat"
-	brew_result = "beer"
+	brew_result = list("beer"=20)
 
 /obj/item/plant/wheat/metal
 	name = "steelwheat"
 	desc = "Never eat iron filings."
 	icon_state = "metalwheat"
-	brew_result = list("beer", "iron")
+	brew_result = list("beer"=20, "iron"=20)
 
 	make_reagents()
 		..()
@@ -229,12 +235,12 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	desc = "A salty but healthy cereal crop. Just don't eat too much without water."
 	icon_state = "saltedoat"
 
-/obj/item/plant/sugar/
+/obj/item/plant/sugar
 	name = "sugar cane"
 	crop_suffix	= " cane"
 	desc = "Grown lovingly in our space plantations."
 	icon_state = "sugarcane"
-	brew_result = "rum"
+	brew_result = list("rum"=20)
 
 /obj/item/plant/herb/grass
 	name = "grass"
@@ -280,14 +286,14 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	crop_suffix	= " bark"
 	desc = "Often regarded as a delicacy when used for tea, Asomna also has stimulant properties."
 	icon_state = "asomna"
-	brew_result = "tea"
+	brew_result = list("tea"=20)
 
 /obj/item/plant/herb/asomna/robust
 	name = "asomna bark"
 	crop_suffix = " bark"
 	desc = "Often regarded as a delicacy when used for tea, Asomna also has stimulant properties. This particular chunk looks extra spicy."
 	icon_state = "asomnarobust"
-	brew_result = "tea"
+	brew_result = list("tea"=20)
 
 /obj/item/plant/herb/commol
 	name = "commol root"
@@ -318,14 +324,14 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	crop_suffix = " root"
 	desc = "This thick root is covered in abnormal ammounts of bark. A powerful emetic can be extracted from it. This one looks particularly revolting"
 	icon_state = "ipecacuanhabilious"
-	brew_result = "gvomit"
+	brew_result = list("gvomit"=20)
 
 /obj/item/plant/herb/sassafras
 	name = "sassafras root"
 	crop_suffix	= " root"
 	desc = "Roots from a Sassafras tree. Can be fermented into delicious sarsaparilla."
 	icon_state = "sassafras"
-	brew_result = "sarsaparilla"
+	brew_result = list("sarsaparilla"=20)
 
 /obj/item/plant/herb/venne
 	name = "venne fibers"
@@ -350,7 +356,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	crop_suffix	= " leaves"
 	desc = "Aromatic leaves with a clean flavor."
 	icon_state = "mint"
-	brew_result = "menthol"
+	brew_result = list("menthol"=20)
 
 /obj/item/plant/herb/nettle
 	name = "nettle leaves"
@@ -383,7 +389,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	crop_suffix	= ""
 	desc = "Otherwise known as catnip or catswort.  Cat drugs."
 	icon_state = "catnip"
-	brew_result = "catdrugs"
+	brew_result = list("catdrugs"=20)
 
 /obj/item/plant/herb/poppy
 	name = "poppy"
@@ -396,7 +402,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	crop_suffix = " leaves"
 	desc = "Leaves from a green tea plant, which can be used to create matcha."
 	icon_state = "tealeaves"
-	brew_result = "matcha"
+	brew_result = list("matcha"=20)
 
 /obj/item/plant/herb/aconite
 	name = "aconite"
@@ -407,8 +413,8 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	// module_research_type = /obj/item/plant/herb/cannabis
 	attack_hand(var/mob/user)
 		if (iswerewolf(user))
-			user.changeStatus("weakened", 3 SECONDS)
-			user.TakeDamage("All", 0, 5, 0, DAMAGE_BURN)
+			user.changeStatus("weakened", 4 SECONDS)
+			user.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
 			boutput(user, "<span class='alert'>You try to pick up [src], but it hurts and you fall over!</span>")
 			return
 		else ..()
@@ -416,11 +422,15 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	Crossed(atom/movable/AM as mob|obj)
 		var/mob/M = AM
 		if(iswerewolf(M))
-			M.changeStatus("weakened", 3 SECONDS)
-			M.force_laydown_standup()
-			M.TakeDamage("All", 0, 5, 0, DAMAGE_BURN)
-			M.visible_message("<span class='alert'>The [M] steps too close to [src] and falls down!</span>")
-			return
+			var/stun_duration
+			if (!GET_COOLDOWN(M, "aconite_stun"))
+				var/datum/statusEffect/stun_effect = M.changeStatus("weakened", 4 SECONDS)
+				M.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
+				M.visible_message("<span class='alert'>The [M] steps too close to [src] and falls down!</span>")
+				if (stun_effect)
+					stun_duration = stun_effect.duration //makes cooldown last the same as stun because the actual duration of applied effect is lower
+				ON_COOLDOWN(M, "aconite_stun", stun_duration)
+				return
 		..()
 	attack(mob/M, mob/user)
 		//if a wolf attacks with this, which they shouldn't be able to, they'll just drop it

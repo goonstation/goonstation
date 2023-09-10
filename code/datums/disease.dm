@@ -245,9 +245,9 @@
 /datum/ailment_data/parasite
 	var/was_setup = 0
 	var/surgery_prob = 50
-
-	var/source = null // for headspiders
+	var/mob/living/critter/changeling/headspider/source = null // for headspiders
 	var/stealth_asymptomatic = 0
+
 	proc/setup()
 		src.stage_prob = master.stage_prob
 		src.cure = master.cure
@@ -261,7 +261,7 @@
 			affected_mob.cure_disease(src)
 			return
 
-		if (istype(master, /datum/ailment/parasite/headspider) && !ismind(source))
+		if (istype(master, /datum/ailment/parasite/headspider) && !ismind(source?.mind))
 			affected_mob.cure_disease(src)
 			return
 
@@ -276,7 +276,7 @@
 
 
 		if(!stealth_asymptomatic)
-			master.stage_act(affected_mob,src,mult,source)
+			master.stage_act(affected_mob,src,mult)
 
 		return
 
@@ -312,7 +312,7 @@
 				mob_type = "Monkey"
 			else if (ishuman(src))
 				var/mob/living/carbon/human/H = src
-				if (H.mutantrace && !H.mutantrace.human_compatible)
+				if (!H.mutantrace.human_compatible)
 					mob_type = capitalize(H.mutantrace.name)
 				else
 					mob_type = "Human"
@@ -370,6 +370,8 @@
 
 	if (!bypass_resistance && !src.disease_resistance_check(null,A.name))
 		return null
+
+	logTheThing(LOG_COMBAT, src, " gained the [ailment_name] ([ailment_path]) disease.")
 
 	if (istype(A, /datum/ailment/disease/))
 		var/datum/ailment/disease/D = A

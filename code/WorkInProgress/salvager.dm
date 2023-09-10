@@ -2,7 +2,7 @@
 
 /obj/item/salvager
 	name = "salvage reclaimer"
-	desc = "A strange hodgepodge of industrial equipment used to break part equipment and structures and reclaim the material.  A retractable crank acts as a great belt hook and recharging aid."
+	desc = "A strange hodgepodge of industrial equipment used to break apart equipment and structures and reclaim the material.  A retractable crank acts as a great belt hook and recharging aid."
 #ifndef SECRETS_ENABLED
 	icon_state = "broken_egun"
 #endif
@@ -48,29 +48,39 @@
 
 		if (BOUNDS_DIST(get_turf(src), get_turf(A)) > 0)
 			return
-
-		if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced))
-			. = 25 SECONDS
 		else if (istype(A, /turf/simulated/wall))
-			if (istype(A, /turf/simulated/wall/auto/shuttle))
-				return
 			. = 20 SECONDS
+			if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced))
+				. += 5 SECONDS
+			else if (istype(A, /turf/simulated/wall/auto/shuttle))
+				return
+
+			var/turf/simulated/wall/W = A
+			. *= max(W.health/initial(W.health),0.1)
+
 		else if (istype(A, /turf/simulated/floor))
+			var/turf/simulated/floor/floor_turf
 #ifdef UNDERWATER_MAP
 			. = 45 SECONDS
 #else
 			. = 30 SECONDS
 #endif
+			if(floor_turf.broken)
+				. -= 5 SECONDS
+			if(!floor_turf.intact)
+				. -= 5 SECONDS
 		else if (istype(A, /obj/machinery/door/airlock)||istype(A, /obj/machinery/door/unpowered/wood))
 			var/obj/machinery/door/airlock/AL = A
 			if (AL.hardened == 1)
 				boutput(user, "<span class='alert'>\The [AL] is reinforced against deconstruction!</span>")
 				return
-			. = 35 SECONDS
+			. = 30 SECONDS
 		else if (istype(A, /obj/structure/girder))
 			. = 10 SECONDS
 		else if (istype(A, /obj/grille))
 			. = 6 SECONDS
+			var/obj/grille/the_grille = A
+			. *= max(the_grille.health/the_grille.health_max,0.1)
 		else if (istype(A, /obj/window))
 			. = 10 SECONDS
 		else if (istype(A, /obj/lattice))
@@ -84,6 +94,10 @@
 				boutput(user, "<span class='alert'>[O] cannot be deconstructed.</span>")
 				return
 
+			if (istext(decon_complexity))
+				boutput(user, "<span class='alert'>[decon_complexity]</span>")
+				return
+
 			if(locate(/mob/living) in O)
 				boutput(user, "<span class='alert'>You cannot deconstruct [O] while someone is inside it!</span>")
 				return
@@ -92,7 +106,7 @@
 				boutput(user, "<span class='alert'>You cannot bring yourself to deconstruct [O] in this area.</span>")
 				return
 
-			. = 5 SECONDS
+			. += 5 SECONDS
 			. += decon_complexity * 3 SECONDS
 			boutput(user, "You start to destructively deconstruct [A].")
 
@@ -100,6 +114,7 @@
 			. = round(. * 0.75)
 
 		if(.)
+			. = max(., 2 SECONDS)
 #ifdef SECRETS_ENABLED
 			icon_state = "salvager-on"
 			item_state = "salvager-on"
@@ -234,11 +249,20 @@
 			return TRUE
 
 /datum/action/bar/private/welding/salvage
+
 	onUpdate()
+		if(QDELETED(target))
+			interrupt(INTERRUPT_ALWAYS)
+			return
 		..()
 		if(istype(target, /turf/simulated/wall))
 			var/turf/simulated/wall/W = target
 			W.health -= 5
+			if (istype(W, /turf/simulated/wall/r_wall) || istype(W, /turf/simulated/wall/auto/reinforced))
+				W.health -= 5
+		else if(istype(target, /obj/grille))
+			var/obj/grille/the_grille = target
+			the_grille.health -= 5
 
 		var/obj/item/salvager/S = src.call_proc_on
 		if(istype(S))
@@ -264,20 +288,19 @@
 
 /obj/item/storage/box/salvager_frame_compartment
 	name = "electronics frame compartment"
-	desc = "A special compartment designed to neatly and safely store deconstructed eletronics and machinery frames."
+	desc = "A special compartment designed to neatly and safely store deconstructed electronics and machinery frames."
 	max_wclass = W_CLASS_HUGE
 	can_hold = list(/obj/item/electronics/frame)
 	slots = 8
 
 	attack_hand(mob/user)
-		if(istype(src.loc, /obj/item/storage/backpack))
+		if (src.stored)
+			src.stored.hide_hud(user)
+			// in case its somehow attacked without opening where its stored
 			if (user.s_active)
 				user.detach_hud(user.s_active)
 				user.s_active = null
-			user.s_active = src.hud
-			hud.update(user)
-			user.attach_hud(src.hud)
-			return
+			src.storage.show_hud(user)
 		else
 			. = ..()
 
@@ -288,14 +311,45 @@
 	spawn_contents = list()
 	slots = 10
 	can_hold = list(/obj/item/electronics/frame, /obj/item/salvager)
-	in_list_or_max = 1
+	check_wclass = 1
 	color = "#ff9933"
+	satchel_compatible = FALSE
 
 /obj/item/device/radio/headset/salvager
 	protected_radio = 1 // Ops can spawn with the deaf trait.
 
+/obj/salvager_putt_spawner
+	name = "syndiputt spawner"
+	icon = 'icons/obj/ship.dmi'
+	icon_state = "syndi_mini_spawn"
+	New()
+		..()
+#ifdef UNDERWATER_MAP
+		new/obj/machinery/vehicle/tank/minisub/salvsub(src.loc)
+#else
+		new/obj/machinery/vehicle/miniputt/armed/salvager(src.loc)
+#endif
+		qdel(src)
+
+/obj/machinery/vehicle/tank/minisub/salvsub
+	body_type = "minisub"
+	icon_state = "whitesub_body"
+	health = 150
+	maxhealth = 150
+	acid_damage_multiplier = 0.5
+	init_comms_type = /obj/item/shipcomponent/communications/salvager
+	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
+
+	New()
+		..()
+		name = "salvager minisub"
+		Install(new /obj/item/shipcomponent/mainweapon/taser(src))
+		Install(new /obj/item/shipcomponent/secondary_system/cargo(src))
+		Install(new /obj/item/shipcomponent/secondary_system/lock/bioscan(src))
+
 // MAGPIE Equipment
 /obj/machinery/vehicle/miniputt/armed/salvager
+	desc = "A repeatedly rebuilt and refitted pod.  Looks like it has seen some things."
 	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
 	init_comms_type = /obj/item/shipcomponent/communications/salvager
 
@@ -306,7 +360,7 @@
 
 	New()
 		..()
-		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
+		src.lock = new /obj/item/shipcomponent/secondary_system/lock/bioscan(src)
 		src.lock.ship = src
 		src.components += src.lock
 		myhud.update_systems()
@@ -326,7 +380,8 @@
 	desc = "Exterior plating for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
-	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager)
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager,
+						 "/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/salvsub )
 
 /obj/item/shipcomponent/communications/salvager
 	name = "Salvager Communication Array"
@@ -380,11 +435,13 @@
 				if(ship.health_percentage < (health_perc - 30))
 					boutput(usr, "[ship.ship_message("Trajectory calculation failure! Ship characteristics changed from calculations!")]")
 				else if(ship.engine.active && ship.engine.ready && src.active)
+					var/old_color = ship.color
 					animate_teleport(ship)
 					sleep(0.8 SECONDS)
 					ship.set_loc(target)
+					ship.color = old_color // revert color from teleport color-shift
 				else
-					boutput(usr, "[ship.ship_message("Trajectory calculatoin failure! Loss of systems!")]")
+					boutput(usr, "[ship.ship_message("Trajectory calculation failure! Loss of systems!")]")
 
 				ship.engine.ready = 0
 				ship.engine.warp_autopilot = 0
@@ -400,12 +457,20 @@
 		if((POD_ACCESS_SALVAGER in src.access_type) && length(landmarks[LANDMARK_SALVAGER_BEACON]))
 			. = pick(landmarks[LANDMARK_SALVAGER_BEACON])
 
+
+var/datum/magpie_manager/magpie_man = new
+/datum/magpie_manager
+	var/obj/npc/trader/salvager/magpie
+
+	proc/setup()
+		src.magpie = locate("M4GP13")
+
+
 /obj/npc/trader/salvager
 	name = "M4GP13 Salvage and Barter System"
 	icon = 'icons/obj/trader.dmi'
 	icon_state = "crate_dispenser"
 	picture = "generic.png"
-	trader_area = "/area/syndicate/salvager"
 	angrynope = "Unable to process request."
 	whotext = "I am the salvage reclamation and supply commissary.  In short I will provide goods in exchange for reclaimed materials and equipment."
 	barter = TRUE
@@ -414,20 +479,12 @@
 	New()
 		..()
 
-		src.chat_text = new
-		src.vis_contents += src.chat_text
+		src.chat_text = new(null, src)
 
 		for(var/sell_type in concrete_typesof(/datum/commodity/magpie/sell))
 			src.goods_sell += new sell_type(src)
 
-#ifdef SECRETS_ENABLED
-		src.goods_buy += new /datum/commodity/magpie/random_buy/rare_items(src)
-		src.goods_buy += new /datum/commodity/magpie/random_buy/rare_items(src)
-		src.goods_buy += new /datum/commodity/magpie/random_buy/station_items(src)
-		src.goods_buy += new /datum/commodity/magpie/random_buy/station_items(src)
-#endif
-
-		for(var/buy_type in concrete_typesof(/datum/commodity/magpie/buy))
+		for(var/buy_type in (concrete_typesof(/datum/commodity/magpie/buy) - concrete_typesof(/datum/commodity/magpie/buy/random_buy)))
 			src.goods_buy += new buy_type(src)
 
 		greeting= {"[src.name]'s light flash, and he states, \"Greetings, welcome to my shop. Please select from my available equipment.\""}
@@ -486,12 +543,22 @@
 		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"[message]\"", just_maptext = just_float, assoc_maptext = chatbot_text)
 		playsound(src, 'sound/misc/talk/bottalk_1.ogg', 40, 1)
 
+
 // Stubs for the public
 /obj/item/clothing/suit/space/salvager
 /obj/item/clothing/head/helmet/space/engineer/salvager
+/obj/item/clothing/glasses/salvager
+#ifndef SECRETS_ENABLED
+	icon_state = "construction"
+	item_state = "construction"
+#endif
 /obj/salvager_cryotron
 /obj/item/salvager_hand_tele
+/obj/item/device/pda2/salvager
+
 ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 /datum/commodity/magpie/sell
 ABSTRACT_TYPE(/datum/commodity/magpie/buy)
 /datum/commodity/magpie/buy
+ABSTRACT_TYPE(/datum/commodity/magpie/buy/random_buy)
+/datum/commodity/magpie/buy/random_buy

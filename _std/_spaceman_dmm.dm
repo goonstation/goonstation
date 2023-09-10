@@ -33,13 +33,13 @@
 /proc/enable_auxtools_debugger()
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)
-		call(debug_server, "auxtools_init")()
+		LIBCALL(debug_server, "auxtools_init")()
 		enable_debugging()
 
 /proc/disable_auxtools_debugger()
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)
-		call(debug_server, "auxtools_shutdown")()
+		LIBCALL(debug_server, "auxtools_shutdown")()
 
 /proc/auxtools_stack_trace(msg)
 	CRASH(msg)

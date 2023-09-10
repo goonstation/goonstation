@@ -4,8 +4,8 @@
 	if (src.abilityHolder)
 		if (istype(src.abilityHolder,/datum/abilityHolder/composite))
 			var/datum/abilityHolder/composite/C = src.abilityHolder
-			if (!C.getHolder(/datum/abilityHolder/generic))
-				C.addHolder(/datum/abilityHolder/generic)
+			if (!C.getHolder(/datum/abilityHolder/hidden))
+				C.addHolder(/datum/abilityHolder/hidden)
 		if (!chair_flip_ability)
 			chair_flip_ability = src.abilityHolder.addAbility(/datum/targetable/chairflip)
 
@@ -22,16 +22,15 @@
 		src.chair_flip_ability.extrarange = 0
 
 /datum/abilityHolder/generic
+	usesPoints = FALSE
+	regenRate = 0
+
+/datum/abilityHolder/hidden
 	usesPoints = 0
 	regenRate = 0
 	topBarRendered = 0
 	rendered = 0
-
-	//updateButtons(var/called_by_owner = 0, var/start_x = 1, var/start_y = 0)
-	//	any_abilities_displayed = 0
-	//	x_occupied = start_x
-	//	y_occupied = start_y
-	//	return
+	hidden = TRUE
 
 /datum/targetable/chairflip
 	name = "Chair Flip"
@@ -40,7 +39,7 @@
 	targeted = 1
 	target_anything = 1
 	cooldown = 1
-	preferred_holder_type = /datum/abilityHolder/generic
+	preferred_holder_type = /datum/abilityHolder/hidden
 	icon = null
 	icon_state = null
 	var/extrarange = 0 //affects next flip only
@@ -172,7 +171,7 @@
 	onAttach(datum/abilityHolder/holder)
 		. = ..()
 		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image('icons/obj/surgery.dmi', "brain1"), "brain_state")
+		B.UpdateOverlays(image('icons/obj/items/organs/brain.dmi', "brain1"), "brain_state")
 
 	castcheck()
 		. = isadmin(holder.owner)
@@ -193,7 +192,7 @@
 	updateObject()
 		var/mob/living/M = holder.owner
 		var/atom/movable/screen/ability/topBar/B = src.object
-		var/image/I = B.SafeGetOverlayImage("brain_state", 'icons/obj/surgery.dmi', "brain1")
+		var/image/I = B.SafeGetOverlayImage("brain_state", 'icons/obj/items/organs/brain.dmi', "brain1")
 		if(M.ai?.enabled || M.ai_active)
 			I.icon_state = "ai_brain"
 		else
@@ -219,5 +218,5 @@
 		. = ..()
 		var/turf/T = get_turf(target)
 		for(var/obj/O in T.cameras)
-			shoot_projectile_ST(O, current_projectile, T)
+			shoot_projectile_ST_pixel_spread(O, current_projectile, T)
 

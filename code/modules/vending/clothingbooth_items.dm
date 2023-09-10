@@ -619,8 +619,16 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/outerwear)
 	path = /obj/item/clothing/suit/merchant
 
 /datum/clothingbooth_item/outerwear/jean_jacket
-	name = "Jean Jackett"
+	name = "Jean Jacket"
 	path = /obj/item/clothing/suit/jean_jacket
+
+/datum/clothingbooth_item/outerwear/jacketsjacket
+	name = "Baseball Jacket"
+	path = /obj/item/clothing/suit/jacketsjacket
+
+/datum/clothingbooth_item/outerwear/hitman
+	name = "Black Jacket"
+	path = /obj/item/clothing/suit/hitman
 
 /datum/clothingbooth_item/outerwear/tuxedojacket
 	name = "Tuxedo Jacket"
@@ -1045,7 +1053,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/summer)
 //Masquerade
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/masquerade)
-/datum/clothingbooth_item/masquerade/
+/datum/clothingbooth_item/masquerade
 	name = "masquerade"
 	category = "Masquerade"
 

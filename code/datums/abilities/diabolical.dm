@@ -175,8 +175,8 @@
 	not_when_handcuffed = 0
 
 	New()
-		..()
 		desc = "Spend [CONTRACT_COST] souls to summon a random new contract to your location"
+		..()
 
 	cast(mob/target)
 		if (!holder)
@@ -217,7 +217,7 @@
 	cast(mob/target)
 		var/mob/living/carbon/human/H = target
 		if (!istype(H))
-			boutput(holder.owner, "Your target must be human!")
+			boutput(holder.owner, "<span class='alert'>Your target must be human!</span>")
 			return 1
 
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] shoots finger guns in [target]s direction.</b></span>")
@@ -316,8 +316,8 @@
 	tryCast()
 		if (is_incapacitated(holder.owner))
 			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
-			src.holder.locked = 0
-			return 999
+			src.holder.locked = FALSE
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		. = ..()
 
 	cast(atom/T)

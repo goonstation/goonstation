@@ -215,7 +215,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "fragments"
 	sname = "fragments"
 	cost = 1
-	pellets_to_fire = 4
+	pellets_to_fire = 6
 	casing = /obj/item/casing/shotgun/pipe
 	spread_projectile_type = /datum/projectile/bullet/improvplasglass
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
@@ -229,7 +229,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "glass"
 	sname = "glass"
 	cost = 1
-	pellets_to_fire = 6
+	pellets_to_fire = 7
 	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	speed_max = 36
@@ -242,7 +242,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "fragments"
 	sname = "fragments"
 	cost = 1
-	pellets_to_fire = 3
+	pellets_to_fire = 5
 	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	speed_max = 40
@@ -287,6 +287,18 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	shot_sound = 'sound/weapons/radxbow.ogg'
 
 
+/datum/projectile/special/spreader/buckshot_burst/foamdarts
+	name = "foam dart"
+	sname = "foam dart"
+	spread_angle_variance = 22.5
+	damage = 0
+	speed_max = 32
+	speed_min = 20
+	cost = 6
+	casing = null
+	pellets_to_fire = 6
+	spread_projectile_type = /datum/projectile/bullet/foamdart
+	shot_sound = 'sound/effects/syringeproj.ogg'
 
 // Really crazy shit
 
@@ -946,7 +958,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_hit(atom/hit, direction, projectile)
 		if(src.hit_sound)
 			playsound(hit, src.hit_sound, 50, 1)
-		if(ismob(hit) && typetospawn)
+		if(ismob(hit) && typetospawn && !hasspawned)
 			hasspawned = TRUE
 			. = new typetospawn(get_turf(hit))
 		return

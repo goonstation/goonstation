@@ -34,7 +34,7 @@
 
 		var/list/wishes = list("I wish to become rich!","I wish for great power!")
 
-		var/wish = input("Make a wish?","[O]") as null|anything in wishes
+		var/wish = input(user, "Make a wish?","[O]") as null|anything in wishes
 		if (user.key in wish_granted)
 			boutput(user, "<b>[O]</b> resonates, \"<big>FOOLISH MORTAL, YOU TRY TO FOOL ME???</big>\"")
 			return
@@ -82,7 +82,7 @@
 					for(var/turf/T in range(user,1))
 						if (T.density)
 							continue
-						var/obj/item/spacecash/million/S = new /obj/item/spacecash/million
+						var/obj/item/currency/spacecash/million/S = new /obj/item/currency/spacecash/million
 						S.setup(T)
 
 				if("I wish for great power!")

@@ -4,9 +4,10 @@
 	icon_state = "podfire"
 	density = 1
 	flags = FPRINT | USEDELAY
-	anchored = 1
+	anchored = ANCHORED
 	stops_space_move = 1
 	status = REQ_PHYSICAL_ACCESS
+	var/numbers_in_name = TRUE //! Whether to append a random number to the name of the vehicle
 	var/datum/effects/system/ion_trail_follow/ion_trail = null
 	var/mob/pilot = null //The mob which actually flys the ship
 	var/capacity = 3 //How many passengers the ship can hold
@@ -50,13 +51,13 @@
 	var/view_offset_y = 0
 	var/datum/movement_controller/movement_controller
 
-	var/req_smash_velocity = 9 //7 is the 'normal' cap right now
+	var/req_smash_velocity = 7 //7 is the 'normal' cap right now
 	var/hitmob = 0
-	var/ram_self_damage_multiplier = 0.09
+	var/ram_self_damage_multiplier = 0.5
 
 	/// I got sick of having the comms type swapping code in 17 New() ship types
 	/// so this is the initial type of comms array this vehicle will have
-	var/init_comms_type = /obj/item/shipcomponent/communications/
+	var/init_comms_type = /obj/item/shipcomponent/communications
 
 	//////////////////////////////////////////////////////
 	///////Life Support Stuff ////////////////////////////
@@ -87,8 +88,7 @@
 			return atmostank.remove_air(amount)
 
 		else
-			if (life_support) //ZeWaka: Fix for null.power_used
-				life_support.power_used = 0
+			life_support?.power_used = 0
 			var/turf/T = get_turf(src)
 			return T.remove_air(amount)
 
@@ -186,7 +186,7 @@
 
 		switch(W.hit_type)
 			if (DAMAGE_BURN)
-				src.material?.triggerTemp(src, W.force * 1000)
+				src.material_trigger_on_temp(W.force * 1000)
 				if (prob(W.force*2))
 					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1, -1)
 					for (var/mob/M in src)
@@ -343,6 +343,9 @@
 
 			else if (href_list["unm_w"])
 				if (src.m_w_system)
+					if (!src.m_w_system.removable)
+						boutput(usr, "<span class='alert'>[src.m_w_system] is fused to the hull and cannot be removed.</span>")
+						return
 					m_w_system.deactivate()
 					components -= m_w_system
 					if (uses_weapon_overlays && m_w_system.appearanceString)
@@ -442,6 +445,23 @@
 		if (src.m_w_system?.muzzle_flash)
 			muzzle_flash_any(src, dir_to_angle(shoot_dir), src.m_w_system.muzzle_flash)
 
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = 'sound/impact_sounds/Metal_Clang_3.ogg'
+		if (isitem(AM))
+			var/obj/item/I = AM
+			switch(I.hit_type)
+				if (DAMAGE_BLUNT, DAMAGE_CRUSH)
+					src.health -= AM.throwforce / 1.5
+				if (DAMAGE_CUT, DAMAGE_STAB)
+					src.health -= AM.throwforce / 2
+				if (DAMAGE_BURN)
+					src.health -= AM.throwforce / 3
+		else
+			src.health -= AM.throwforce / 1.5 // assuming most non-items aren't sharp
+		src.visible_message("<span class='alert'>[src] has been hit by \the [AM].")
+		checkhealth()
+		..()
+
 	bullet_act(var/obj/projectile/P)
 		if(P.shooter == src)
 			return
@@ -451,12 +471,9 @@
 
 		log_shot(P, src)
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
-		var/damage = 0
-		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
-		if (damage <= 10 && P.proj_data.ks_ratio <= 0.1) //make stun weapons do some damage
-			damage = round(P.power, 1.0)
+		var/damage = round(P.power, 1.0)
 
 		var/hitsound = null
 		switch(P.proj_data.damage_type)
@@ -473,7 +490,7 @@
 				src.health -= damage/2
 				hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
 			if(D_BURNING)
-				src.material?.triggerTemp(src, 5000)
+				src.material_trigger_on_temp(5000)
 				src.health -= damage/3
 				hitsound = 'sound/items/Welder.ogg'
 			if(D_SPECIAL) //blob
@@ -586,7 +603,7 @@
 		if (get_move_velocity_magnitude() > 5)
 			var/power = get_move_velocity_magnitude()
 
-			src.health -= min(power * ram_self_damage_multiplier,5)
+			src.health -= min(power * ram_self_damage_multiplier,10)
 			checkhealth()
 
 			if (istype(target, /obj/machinery/vehicle/))
@@ -637,15 +654,8 @@
 							D.try_force_open(src)
 					if (istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 						qdel(O)
-
-				if (istype(target, /obj/window))
-					var/obj/window/W = target
-					W.health = 0
-					W.smash()
-
-				if (istype(O, /obj/grille))
-					var/obj/grille/G = target
-					G.damage_slashing(15)
+				var/obj_damage = 5 * power
+				target.damage_blunt(obj_damage)
 
 				if (istype(O, /obj/table))
 					var/obj/table/table = target
@@ -654,10 +664,6 @@
 				if (istype(O,/obj/machinery/vending))
 					var/obj/machinery/vending/V = O
 					V.fall(src)
-				if (istype(O,/obj/machinery/portable_atmospherics/canister))
-					var/obj/machinery/portable_atmospherics/canister/C = O
-					C.health -= power
-					C.healthcheck()
 				logTheThing(LOG_COMBAT, src, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
@@ -1013,6 +1019,10 @@
 		boutput(boarder, "There is no more room!")
 		return
 
+	if(!src.pilot && (ismobcritter(boarder)))
+		boutput(boarder, "<span class='alert'>You don't know how to pilot a pod, you can only enter as a passenger!</span>")
+		return
+
 	actions.start(new/datum/action/bar/board_pod(src,boarder), boarder)
 
 /obj/machinery/vehicle/proc/finish_board_pod(var/mob/boarder)
@@ -1025,7 +1035,7 @@
 	M.set_loc(src, src.view_offset_x, src.view_offset_y)
 	M.reset_keymap()
 	M.recheck_keys()
-	if(!src.pilot && !isghostcritter(boarder))
+	if(!src.pilot && !(ismobcritter(boarder)))
 		src.ion_trail.start()
 	src.find_pilot()
 	if (M.client)
@@ -1163,7 +1173,7 @@
 	if(src.pilot && (src.pilot.disposed || isdead(src.pilot) || src.pilot.loc != src))
 		src.pilot = null
 	for(var/mob/living/M in src) // fuck's sake stop assigning ghosts and observers to be the pilot
-		if(!src.pilot && !M.stat && M.client && !isghostcritter(M))
+		if(!src.pilot && !M.stat && M.client && !(ismobcritter(M)))
 			src.pilot = M
 			break
 
@@ -1413,7 +1423,8 @@
 
 /obj/machinery/vehicle/New()
 	..()
-	name += "[pick(rand(1, 999))]"
+	if(src.name == initial(src.name) && numbers_in_name)
+		name += "[pick(rand(1, 999))]"
 	if(prob(1))
 		var/new_name = phrase_log.random_phrase("vehicle")
 		if(new_name)
@@ -1480,19 +1491,19 @@
 		boutput(user, "<span class='alert'>[src] is locked!</span>")
 		return
 
-	if(isliving(O) && O:stat != 2)
-		if (O == user)
-			src.board_pod(O)
-		else
-			boutput(user, "<span class='alert'>You can't shove someone else into a pod.</span>")
-
-		return
+	if(isliving(O))
+		var/mob/living/M = O
+		if (M == user)
+			src.board_pod(M)
+			return
+		else if (!isdead(M))
+			boutput(user, "<span class='alert'>You can't shove someone else into a pod unless they are dead!</span>")
+			return
 
 	var/obj/item/shipcomponent/secondary_system/SS = src.sec_system
 	if (!SS)
 		return
 	SS.Clickdrag_ObjectToPod(user,O)
-	return
 
 /obj/machinery/vehicle/mouse_drop(over_object, src_location, over_location)
 	if (!usr.client || !isliving(usr) || isintangible(usr))
@@ -1705,6 +1716,7 @@
 	name = "tank"
 	icon = 'icons/obj/machines/8dirvehicles.dmi'
 	icon_state = "minisub_body"
+	numbers_in_name = FALSE
 	var/body_type = "minisub"
 	var/obj/item/shipcomponent/locomotion/locomotion = null //wheels treads hovermagnets etc
 	uses_weapon_overlays = 0
@@ -1717,10 +1729,6 @@
 	var/prev_velocity = 0
 	ram_self_damage_multiplier = 0.14
 	//var/datum/movement_controller/pod/movement_controller
-
-	New()
-		..()
-		name = "minisub"
 
 	Move(NewLoc,Dir=0,step_x=0,step_y=0)
 		.=..(NewLoc,Dir,step_x,step_y)
@@ -1763,6 +1771,7 @@
 			locomotion = null
 
 /obj/machinery/vehicle/tank/minisub
+	name = "minisub"
 	body_type = "minisub"
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_MANTA_PUSH
 	acid_damage_multiplier = 0.5
@@ -1927,7 +1936,7 @@
 	proc/escape()
 		if(!launched)
 			launched = 1
-			anchored = 0
+			anchored = UNANCHORED
 			var/opened_door = 0
 			var/turf_in_front = get_step(src,src.dir)
 			for(var/obj/machinery/door/poddoor/D in turf_in_front)

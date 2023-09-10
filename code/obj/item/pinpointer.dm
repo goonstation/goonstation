@@ -62,7 +62,7 @@ TYPEINFO(/obj/item/pinpointer)
 		active = TRUE
 		src.work()
 		var/mob/user = src.loc
-		if (istype(user))
+		if (istype(user) && src.target)
 			user.AddComponent(/datum/component/tracker_hud, src.target, src.hudarrow_color)
 
 	proc/turn_off()
@@ -90,7 +90,7 @@ TYPEINFO(/obj/item/pinpointer)
 				var/mob/user = src.loc
 				if (istype(user))
 					var/datum/component/tracker_hud/arrow = user.GetComponent(/datum/component/tracker_hud)
-					arrow.change_target(src.target)
+					arrow?.change_target(src.target)
 			work_check()
 			var/turf/ST = get_turf(src)
 			var/turf/T = get_turf(target)
@@ -214,7 +214,7 @@ TYPEINFO(/obj/item/pinpointer)
 	icon_state = "semi_pinoff"
 	icon_type = "semi"
 	hudarrow_color = "#adad00"
-	target_criteria = /obj/item/teg_semiconductor
+	target_criteria = /obj/item/teg_semiconductor/prototype
 
 /obj/item/pinpointer/trench
 	name = "pinpointer (sea elevator)"
@@ -234,6 +234,14 @@ TYPEINFO(/obj/item/pinpointer)
 				return
 			target_ref = "\ref[A.find_middle()]"
 		. = ..()
+
+/obj/item/pinpointer/gold_bee
+	name = "pinpointer (Gold Bee Statue)"
+	desc = "Points in the direction of the Gold Bee Statue."
+	icon_state = "disk_pinoff"
+	icon_type = "disk"
+	target_criteria = /obj/gold_bee
+	hudarrow_color = "#e1940d"
 
 /obj/item/pinpointer/idtracker
 	name = "ID pinpointer"
@@ -544,7 +552,7 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 
 /obj/item/pinpointer/category/bibles
 	name = "bible pinpointer"
-	category = /obj/item/storage/bible
+	category = /obj/item/bible
 	thing_name = "bible"
 
 /obj/item/pinpointer/category/gps

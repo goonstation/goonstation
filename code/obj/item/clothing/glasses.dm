@@ -32,7 +32,7 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			if(src.material.alpha >= 190)
+			if(src.material.getAlpha() >= 190)
 				desc = "You can't see through these. G.R.E.A.T."
 				block_vision = 1
 			alpha = 255
@@ -46,6 +46,10 @@
 	desc = "A strip of cloth painstakingly designed to wear around your eyes so you cannot see."
 	block_vision = 1
 
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 100)
+
 	attack(mob/M, mob/user, def_zone) //this is for equipping blindfolds on head attack.
 		if (user.zone_sel.selecting == "head" && ishuman(M)) //ishuman() works on monkeys too apparently.
 			if(user == M) //Accidentally blindfolding yourself might be annoying so I'm leaving that out.
@@ -55,7 +59,7 @@
 			if(target.glasses)
 				boutput(user, "<span class='alert'>[target] is already wearing something on their eyes!</span>")
 				return
-			actions.start(new/datum/action/bar/icon/otherItem(user, target, user.equipped(), target.slot_glasses, 1.3 SECONDS) , user) //Uses extended timer to make up for previously having to manually equip to someone's eyes.
+			actions.start(new/datum/action/bar/icon/otherItem(user, target, user.equipped(), SLOT_GLASSES, 1.3 SECONDS) , user) //Uses extended timer to make up for previously having to manually equip to someone's eyes.
 			return
 		..() //if not selecting the head of a human or monkey, just do normal attack.
 
@@ -375,6 +379,20 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		boutput(user, "You flip [src] around.")
 		if (pinhole)
 			block_eye = null
+
+	pirate
+		name = "pirate's eyepatch"
+		pinhole = TRUE
+		block_eye = null
+
+		New()
+			..()
+			var/eye_covered
+			if (prob(50))
+				eye_covered = "L"
+			else
+				eye_covered = "R"
+			src.icon_state = "eyepatch-[eye_covered]"
 
 /obj/item/clothing/glasses/vr
 	name = "\improper VR goggles"

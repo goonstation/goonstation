@@ -4,6 +4,8 @@ SPACE CLEANER
 MOP
 SPONGES??
 WET FLOOR SIGN
+HANDHELD VACUUM
+TRASH BAG
 
 */
 /obj/item/spraybottle
@@ -45,7 +47,7 @@ WET FLOOR SIGN
 		..()
 		reagents.add_reagent("luminol", initial_volume)
 
-/obj/item/spraybottle/cleaner/
+/obj/item/spraybottle/cleaner
 	name = "cleaner spray bottle"
 	desc = "A spray bottle labeled 'Poo-b-Gone Space Cleaner'."
 
@@ -88,7 +90,7 @@ WET FLOOR SIGN
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "tsunami"
 	alpha = 175
-	anchored = 1
+	anchored = ANCHORED
 
 	New(var/_loc, var/atom/target)
 		..()
@@ -181,7 +183,7 @@ WET FLOOR SIGN
 	var/lastUse = null
 
 	afterattack(atom/A as mob|obj, mob/user as mob)
-		if (istype(A, /obj/item/storage))
+		if (A.storage)
 			return
 		if (!isturf(user.loc))
 			return
@@ -206,7 +208,7 @@ WET FLOOR SIGN
 	return
 
 /obj/item/spraybottle/afterattack(atom/A as mob|obj, mob/user as mob)
-	if (istype(A, /obj/item/storage))
+	if (A.storage)
 		return
 	if (!isturf(user.loc)) // Hi, I'm hiding in a closet like a wuss while spraying people with death chems risk-free.
 		return
@@ -329,7 +331,7 @@ WET FLOOR SIGN
 
 	// Some people use mops for heat-delayed fireballs and stuff.
 	// Mopping the floor with just water isn't of any interest, however (Convair880).
-	if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && src.reagents.reagent_list.len > 1)))
+	if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && length(src.reagents.reagent_list) > 1)))
 		logTheThing(LOG_CHEMISTRY, user, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
 
 	if (U && isturf(U))
@@ -345,10 +347,10 @@ WET FLOOR SIGN
 		if (mopcount > 0)
 			mopcount--
 	else if (U && isturf(U))
-		//U.clean_forensic()
+		U.clean_forensic()
 		user.show_text("You have mopped up [A]!", "blue", group = "mop")
 	else
-		//A.clean_forensic()
+		A.clean_forensic()
 		user.show_text("You have mopped up [A]!", "blue", group = "mop")
 
 	if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
@@ -411,7 +413,7 @@ WET FLOOR SIGN
 
 			// Some people use mops for heat-delayed fireballs and stuff.
 			// Mopping the floor with just water isn't of any interest, however (Convair880).
-			if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && src.reagents.reagent_list.len > 1)))
+			if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && length(src.reagents.reagent_list) > 1)))
 				logTheThing(LOG_COMBAT, user, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
 
 			mopcount++
@@ -579,7 +581,7 @@ WET FLOOR SIGN
 			return
 
 		var/selection
-		if (choices.len == 1) // at spy's request the sponge will default to the only thing it can do ARE YOU HAPPY NOW SPY
+		if (length(choices) == 1) // at spy's request the sponge will default to the only thing it can do ARE YOU HAPPY NOW SPY
 			selection = choices[1]
 		else
 			selection = input(user, "What do you want to do with [src]?", "Selection") as null|anything in choices
@@ -729,10 +731,15 @@ WET FLOOR SIGN
 			src.payload = W
 			W.set_loc(src)
 			return
+		else if (isscrewingtool(W))
+			user.show_message("You [src.anchored ? "un" : ""]screw [src] [src.anchored ? "from" : "to"] the floor.")
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			src.anchored = !src.anchored
+			return
 		. = ..()
 
 	HasProximity(atom/movable/AM)
-		if(iscarbon(AM) && isturf(src.loc) && prob(20) && !ON_COOLDOWN(src, "spray", 3 SECONDS) && src.payload?.reagents)
+		if(iscarbon(AM) && isturf(src.loc) && !ON_COOLDOWN(src, "spray", 1.5 SECONDS) && src.payload?.reagents)
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				if(istype(H.shoes, /obj/item/clothing/shoes/galoshes))
@@ -760,7 +767,7 @@ WET FLOOR SIGN
 	throw_spin = 0
 	var/currentSelection = "wet"
 	var/ownerKey = null
-	anchored = 0
+	anchored = UNANCHORED
 
 	attack_hand(mob/user)
 		if(user.key != ownerKey && ownerKey != null)
@@ -822,7 +829,7 @@ WET FLOOR SIGN
 	icon_state = "holo-wet"
 	alpha = 230
 	pixel_y = 16
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_BASE
 	var/datum/light/light
 	var/obj/holoparticles/holoparticles
@@ -858,7 +865,7 @@ WET FLOOR SIGN
 	name = ""
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "holoparticles"
-	anchored = 1
+	anchored = ANCHORED
 	alpha= 230
 	pixel_y = 14
 	layer = EFFECTS_LAYER_BASE
@@ -879,7 +886,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	item_function_flags = USE_SPECIALS_ON_ALL_INTENTS
 	var/obj/item/reagent_containers/glass/bucket/bucket
-	var/obj/item/clothing/under/trash_bag/trashbag
+	var/obj/item/trash_bag/trashbag
 
 	New()
 		..()
@@ -942,18 +949,16 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			special.pixelaction(target, params, user, reach) // a hack to let people disarm when clicking at close range
 		else if(istype(target, /obj/storage) && src.trashbag)
 			var/obj/storage/storage = target
-			for(var/obj/item/I in src.trashbag)
+			for(var/obj/item/I in src.trashbag.storage.get_contents())
 				I.set_loc(storage)
-			src.trashbag.calc_w_class(null)
 			boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
 			src.tooltip_rebuild = 1
 			return
 		else if(istype(target, /obj/machinery/disposal))
 			var/obj/machinery/disposal/disposal = target
 			if(src.trashbag)
-				for(var/obj/item/I in src.trashbag)
+				for(var/obj/item/I in src.trashbag.storage.get_contents())
 					I.set_loc(disposal)
-				src.trashbag.calc_w_class(null)
 				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
 				src.tooltip_rebuild = 1
 				disposal.update()
@@ -1027,7 +1032,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			if(isnull(src.trashbag))
 				boutput(user, "<span class='alert'>\The [src] tries to suck up [item_desc] but has no trashbag!</span>")
 				. = FALSE
-			else if(src.trashbag.current_stuff >= src.trashbag.max_stuff)
+			else if(src.trashbag.storage.is_full())
 				boutput(user, "<span class='alert'>\The [src] tries to suck up [item_desc] but its [src.trashbag] is full!</span>")
 				. = FALSE
 			else
@@ -1036,18 +1041,17 @@ TYPEINFO(/obj/item/handheld_vacuum)
 						I.set_loc(get_turf(user))
 				success = TRUE
 				SPAWN(0.5 SECONDS)
-					for(var/obj/item/I as anything in items_to_suck) // yes, this can go over capacity of the bag, that's intended
-						if(!I.anchored)
-							I.set_loc(src.trashbag)
-					src.trashbag.calc_w_class(null)
-					if(src.trashbag.current_stuff >= src.trashbag.max_stuff)
-						boutput(user, "<span class='notice'>[src]'s [src.trashbag] is now full.</span>")
+					for(var/obj/item/I as anything in items_to_suck)
+						src.trashbag.storage.add_contents_safe(I)
+						if(src.trashbag.storage.is_full())
+							boutput(user, "<span class='notice'>[src]'s [src.trashbag] is now full.</span>")
+							break
 
 		src.tooltip_rebuild = 1
 		. |= success
 
 	attackby(obj/item/W, mob/user, params, is_special=0)
-		if(istype(W, /obj/item/clothing/under/trash_bag))
+		if(istype(W, /obj/item/trash_bag))
 			if(isnull(src.trashbag))
 				boutput(user, "<span class='notice'>You insert \the [W] into \the [src].")
 				src.trashbag = W
@@ -1176,7 +1180,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 			playsound(master, 'sound/effects/suck.ogg', 40, TRUE, 0, 0.5)
 
 /obj/effect/suck
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	mouse_opacity = FALSE
 	plane = PLANE_NOSHADOW_BELOW
 	icon = 'icons/effects/effects.dmi'
@@ -1190,3 +1194,73 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		animate(alpha=0, time=0.21 SECONDS, easing=SINE_EASING)
 		SPAWN(0.5 SECONDS)
 			qdel(src)
+
+
+/obj/item/trash_bag
+	name = "trash bag"
+	desc = "A flimsy bag for filling with things that are no longer wanted."
+	icon = 'icons/obj/janitor.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'	// Avoid icon duplication with the clothing
+	icon_state = "trashbag-f"
+	item_state = "trashbag"
+	uses_multiple_icon_states = TRUE
+	w_class = W_CLASS_TINY
+	rand_pos = TRUE
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	tooltip_flags = REBUILD_DIST
+	var/base_state = "trashbag"
+	var/clothing_type = /obj/item/clothing/under/gimmick/trashsinglet
+
+	New()
+		..()
+		src.create_storage(/datum/storage/no_hud, prevent_holding = list(/obj/item/trash_bag), max_wclass = W_CLASS_NORMAL, slots = 20,
+			params = list("use_inventory_counter" = TRUE, "variable_weight" = TRUE, "max_weight" = 20))
+
+	attackby(obj/item/I, mob/user)
+		if (issnippingtool(I))
+			var/action = tgui_input_list(user, "What do you want to do with [src]?", "Trash Bag", list("Cut into an outfit", "Add to contents"))
+			if (!action)
+				return
+			if (action == "Cut into an outfit")
+				boutput(user, "You begin cutting up [src].")
+				if (!do_after(user, 3 SECONDS))
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					return
+				else
+					var/obj/item/clothing/under/gimmick/trashsinglet/trash_outfit = new clothing_type(get_turf(src))
+					playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
+					user.u_equip(src)
+					for(var/obj/item/contents as anything in src.storage.get_contents())
+						src.storage.transfer_stored_item(contents, trash_outfit, TRUE)
+					usr.put_in_hand_or_drop(trash_outfit)
+					user.visible_message("<span class='notice'>[user] cuts their [src] into an outfit of questionably fashionable.</span>")
+					qdel(src)
+					return
+		..()
+
+	update_icon(mob/user)
+		if (!src.storage || !length(src.storage.get_contents()))
+			src.icon_state = src.base_state + "-f"
+
+		else if (length(src.storage.get_contents()))
+			src.icon_state = src.base_state
+
+		if (ismob(user))
+			user.update_inhands()
+
+	get_desc(dist)
+		..()
+		if (dist > 2)
+			return
+		if (src.storage.is_full())
+			. += "It's totally full."
+		else
+			. += "There's still some room to hold something."
+
+/obj/item/trash_bag/biohazard
+	name = "hazardous waste bag"
+	desc = "A flimsy bag for filling with things that are no longer wanted and are also covered in blood or puke or other gross biohazards. It's not any sturdier than a normal trash bag, though, so be careful with the needles!"
+	icon_state = "biobag-f"
+	item_state = "biobag"
+	base_state = "biobag"
+	clothing_type = /obj/item/clothing/under/gimmick/trashsinglet/biohazard

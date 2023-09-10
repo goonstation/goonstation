@@ -349,14 +349,18 @@
 			playsound(user.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50)
 			user.visible_message("<span class='combat'><b>[uppertext(user.name)] WINS THE GAME!</b></span>")
 			if(!foiled)
+				logTheThing(LOG_COMBAT, user, "was instantly braindeath killed by [src] at [log_loc(src)].")
 				user.take_brain_damage(1000)
 			else
 				logTheThing(LOG_COMBAT, user, "was partygibbed by [src] at [log_loc(src)].")
 				user.partygib(1)
 
-/obj/item/card_group //since "playing_card"s are singular cards, card_groups handling groups of playing_cards in the form of either a deck or hand
+ABSTRACT_TYPE(/obj/item/card_group)
+/// since "playing_card"s are singular cards, card_groups handling groups of playing_cards in the form of either a deck or hand
+/obj/item/card_group
 	name = "deck of cards"
 	icon = 'icons/obj/items/playing_card.dmi'
+	icon_state = "plain_deck_4"
 	dir = NORTH
 	w_class = W_CLASS_TINY
 	burn_point = 220
@@ -430,7 +434,7 @@
 			..()
 
 	special_desc(dist, mob/user) //handles the special chat output for examining hands and decks!
-		if(is_hand && in_interact_range(src,user))
+		if(is_hand && dist == 0)
 			hand_examine(user,"self")
 		else
 			..()
@@ -831,6 +835,7 @@
 	card_style = "tarot"
 	total_cards = 78
 	card_name = "tarot"
+	icon_state = "tarot_deck_4"
 
 	New()
 		..()
@@ -899,6 +904,7 @@
 	card_style = "hanafuda"
 	total_cards = 48
 	card_name = "hanafuda"
+	icon_state = "hanafuda_deck_4"
 
 	New()
 		..()
@@ -990,6 +996,7 @@
 	card_style = "stg"
 	total_cards = 40
 	card_name = "Spacemen the Griffening"
+	icon_state = "stg_deck_4"
 
 	New()
 		..()
@@ -1002,6 +1009,7 @@
 	card_style = "clow"
 	total_cards = 52
 	card_name = "Clow"
+	icon_state = "clow_deck_4"
 
 	New()
 		..()
@@ -1218,7 +1226,7 @@ proc/riffle_shuffle(list/deck)
 
 	// Markovian model of the shuffle
 	var/currentStack = rand() > 0.5
-	while(D1.len > 0 && D2.len > 0)
+	while(length(D1) > 0 && length(D2) > 0)
 		var/item
 
 		if(currentStack)

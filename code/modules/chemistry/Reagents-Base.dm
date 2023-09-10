@@ -51,6 +51,7 @@ datum
 			fluid_b = 0
 			hygiene_value = -0.5
 			transparency = 255
+			fluid_flags = FLUID_STACKING_BANNED
 
 			reaction_turf(var/turf/T, var/volume)
 				if(!istype(T, /turf/space))
@@ -192,8 +193,8 @@ datum
 							if(prob(4))
 								H.change_misstep_chance(20 * mult)
 							if(probmult(6))
-								H.visible_message("<span class='alert'>[H] pukes all over [himself_or_herself(H)].</span>")
-								H.vomit()
+								var/vomit_message = "<span class='alert'>[H] pukes all over [himself_or_herself(H)].</span>"
+								H.vomit(0, null, vomit_message)
 							if(prob(15))
 								H.make_dizzy(5 * mult)
 						if (ethanol_amt >= 60)
@@ -294,9 +295,8 @@ datum
 				M.take_toxin_damage(1 * mult) // Iron overdose fucks you up bad
 				if(probmult(5))
 					if (M.nutrition > 10) // Not good for your stomach either
-						for(var/mob/O in viewers(M, null))
-							O.show_message(text("<span class='alert'>[] vomits on the floor profusely!</span>", M), 1)
-						M.vomit()
+						var/vomit_message = "<span class='alert'>[M] vomits on the floor profusely!</span>"
+						M.vomit(0, null, vomit_message)
 						M.nutrition -= rand(3,5)
 						M.take_toxin_damage(10) // im bad
 						M.setStatusMin("stunned", 3 SECONDS * mult)
@@ -329,6 +329,7 @@ datum
 			fluid_g = 255
 			fluid_b = 255
 			transparency = 255
+			fluid_flags = FLUID_STACKING_BANNED
 
 			reaction_turf(var/turf/T, var/volume)
 				if (volume >= 10)
@@ -504,7 +505,7 @@ datum
 			taste = "metallic"
 
 			reaction_obj(var/obj/item/I, var/volume)
-				if (I.material && I.material.mat_id == "silver")
+				if (I.material && I.material.getID() == "silver")
 					return 1
 
 				.= 1
@@ -513,13 +514,13 @@ datum
 					if (istype(I, /obj/item/ammo/bullets/bullet_22HP) || istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || istype(I,/datum/projectile/bullet/revolver_38))
 						var/obj/item/ammo/bullets/bullet_holder = I
 						var/datum/projectile/ammo_type = bullet_holder.ammo_type
-						if (ammo_type && !(ammo_type.material && ammo_type.material.mat_id == "silver"))
+						if (ammo_type && !(ammo_type.material && ammo_type.material.getID() == "silver"))
 							ammo_type.material = getMaterial("silver")
 							holder.remove_reagent(src.id, 20)
 							.= 0
 				if (volume >= 50)
 					if (I.type == /obj/item/handcuffs)
-						I.setMaterial(getMaterial("silver"), copy = FALSE)
+						I.setMaterial(getMaterial("silver"))
 						holder.remove_reagent(src.id, 50)
 						.= 0
 
@@ -697,6 +698,7 @@ datum
 			fluid_b = 200
 			transparency = 255
 			pathogen_nutrition = list("sodium")
+			fluid_flags = FLUID_STACKING_BANNED
 
 		uranium
 			name = "uranium"
@@ -740,6 +742,7 @@ datum
 #else
 			description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 #endif
+			fluid_flags = FLUID_STACKING_BANNED
 
 			on_mob_life(var/mob/living/L, var/mult = 1)
 				..()
@@ -756,37 +759,6 @@ datum
 					holder?.add_reagent("ice", prev_vol, null, (T0C - 1))
 					if(holder)
 						holder.del_reagent(id)
-				else if (exposed_temperature > T0C && exposed_temperature <= T0C + 100 )
-					name = "water"
-					description = initial(description)
-				else if (exposed_temperature > (T0C + 100) )
-					if (!istype(holder,/datum/reagents/fluid_group))
-						name = "steam"
-						description = "Water turned steam."
-					if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
-						//boil off
-						var/list/covered = holder.covered_turf()
-						if (covered.len < 5)
-							for(var/turf/t in covered)
-								if (covered.len > 2 && prob(50)) continue //lol look guys i 'fixed' it!
-								var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-								smoke.set_up(1, 0, t)
-								smoke.start()
-								t.visible_message("The water boils off.")
-
-						if (covered.len > 1)
-							if (volume/covered.len < 10)
-								holder.del_reagent(src.id)
-							else
-								holder.remove_reagent(src.id, max(1, volume * 0.2))
-
-								var/difference = (T20C - holder.total_temperature)
-								var/change = difference * 0.6
-								holder.set_reagent_temp(holder.total_temperature + change)
-						else
-							holder.del_reagent(src.id)
-
-				return
 
 			reaction_turf(var/turf/target, var/volume)
 				return 1//fluid is better. remove this later probably
@@ -824,6 +796,7 @@ datum
 				var/reacted = 0
 				var/mob/living/M = target
 				if(istype(M))
+					var/list/covered = holder.covered_turf()
 					if(by_type[/obj/machinery/playerzoldorf] && length(by_type[/obj/machinery/playerzoldorf]))
 						var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]
 						if(M in pz.brandlist)
@@ -836,7 +809,7 @@ datum
 						for(var/mob/O in AIviewers(M, null))
 							O.show_message(text("<span class='alert'><b>[] begins to crisp and burn!</b></span>", M), 1)
 						boutput(M, "<span class='alert'>Holy Water! It burns!</span>")
-						var/burndmg = raw_volume * 1.25 //the sanctification inflicts the pain, not the water that carries it.
+						var/burndmg = raw_volume * 1.25 / length(covered) //the sanctification inflicts the pain, not the water that carries it.
 						burndmg = min(burndmg, 80) //cap burn at 110(80 now >:) so we can't instant-kill vampires. just crit em ok.
 						M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
 						M.change_vampire_blood(-burndmg)
@@ -897,16 +870,16 @@ datum
 					if (holder.my_atom && holder.my_atom.is_open_container())
 						//boil off
 						var/list/covered = holder.covered_turf()
-						if (covered.len < 5)
+						if (length(covered) < 5)
 							for(var/turf/t in covered)
-								if (covered.len > 2 && prob(50)) continue //lol look guys i 'fixed' it!
+								if (length(covered) > 2 && prob(50)) continue //lol look guys i 'fixed' it!
 								var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 								smoke.set_up(1, 0, t)
 								smoke.start()
 								t.visible_message("The water boils off.")
 
-						if (covered.len > 1)
-							if (volume/covered.len < 10)
+						if (length(covered) > 1)
+							if (volume/length(covered) < 10)
 								holder.del_reagent(src.id)
 							else
 								holder.remove_reagent(src.id, max(1, volume * 0.4))
@@ -955,6 +928,26 @@ datum
 				if (volume >= 5 && !(locate(/obj/item/raw_material/ice) in T))
 					var/obj/item/raw_material/ice/I = new /obj/item/raw_material/ice
 					I.set_loc(T)
+				return
+
+		steam
+			name = "steam"
+			id = "steam"
+			description = "Water turned steam."
+			reagent_state = GAS
+			fluid_r = 225
+			fluid_g = 247
+			fluid_b = 247
+			transparency = 180
+			thirst_value = 0.3
+			bladder_value = -0.1
+			taste = "steamy"
+
+			reaction_turf(var/turf/t, var/volume)
+				if (volume >= 10)
+					var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+					smoke.set_up(1, 0, t)
+					smoke.start()
 				return
 
 		phenol

@@ -51,13 +51,14 @@ ABSTRACT_TYPE(/datum/plant/flower)
 		if (.) return
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
-		var/spray_prob = max(33,(33 + DNA.endurance / 5))
-		var/datum/reagents/reagents_temp = new/datum/reagents(max(1,(50 + DNA.cropsize))) // Creating a temporary chem holder
+		var/spray_prob = max(33,(33 + DNA?.get_effective_value("endurance") / 5))
+		var/datum/reagents/reagents_temp = new/datum/reagents(max(1,(50 + DNA?.get_effective_value("cropsize")))) // Creating a temporary chem holder
 		reagents_temp.my_atom = POT
 
-		if (POT.growth > (P.harvtime - DNA.growtime) && prob(spray_prob))
-			for (var/plantReagent in assoc_reagents)
-				reagents_temp.add_reagent(plantReagent, 3 * round(max(1,(1 + DNA.potency / (10 * length(assoc_reagents))))))
+		if (POT.growth > (P.harvtime - DNA?.get_effective_value("growtime")) && prob(spray_prob))
+			var/list/plant_complete_reagents = HYPget_assoc_reagents(P, DNA)
+			for (var/plantReagent in plant_complete_reagents)
+				reagents_temp.add_reagent(plantReagent, 3 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * length(plant_complete_reagents))))))
 			reagents_temp.smoke_start()
 			qdel(reagents_temp)
 
@@ -66,7 +67,8 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	seedcolor = "#d5b984"
 	crop = /obj/item/clothing/head/flower/gardenia
 	cropsize = 3
-	commuts = list(/datum/plant_gene_strain/metabolism_fast, /datum/plant_gene_strain/splicing/disabled)
+	commuts = list(/datum/plant_gene_strain/metabolism_fast)
+	innate_commuts = list(/datum/plant_gene_strain/splicing/disabled)
 
 /datum/plant/flower/bird_of_paradise
 	name = "Bird of Paradise"
@@ -78,7 +80,8 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	cropsize = 1
 	nectarlevel = 15
 	endurance = 5
-	commuts = list(/datum/plant_gene_strain/damage_res, /datum/plant_gene_strain/splicing/disabled)
+	commuts = list(/datum/plant_gene_strain/damage_res)
+	innate_commuts = list(/datum/plant_gene_strain/splicing/disabled)
 
 /datum/plant/flower/hydrangea
 	name = "Hydrangea"
@@ -87,7 +90,8 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	growtime = 70
 	harvtime = 120
 	harvests = 3
-	commuts = list(/datum/plant_gene_strain/yield, /datum/plant_gene_strain/variable_harvest, /datum/plant_gene_strain/splicing/disabled)
+	commuts = list(/datum/plant_gene_strain/yield, /datum/plant_gene_strain/variable_harvest)
+	innate_commuts = list(/datum/plant_gene_strain/splicing/disabled)
 	mutations = list(/datum/plantmutation/hydrangea/pink, /datum/plantmutation/hydrangea/blue, /datum/plantmutation/hydrangea/purple)
 
 	getIconOverlay(grow_level, datum/plantmutation/MUT)

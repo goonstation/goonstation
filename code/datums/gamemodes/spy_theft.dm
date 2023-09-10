@@ -116,17 +116,15 @@
 		playsound(pda_turf, "warp", 15, 1, 0.2, 1.2)
 		animate_portal_tele(hostpda)
 
-		if (user.mind)
-			user.mind.purchased_traitor_items += reward
-
+		var/datum/antagonist/spy_thief/antag_role = user.mind?.get_antagonist(ROLE_SPY_THIEF)
 		if (reward.item)
 			var/obj/item = new reward.item(pda_turf)
 			logTheThing(LOG_DEBUG, user, "spy thief reward spawned: [item] at [log_loc(user)]")
 			user.show_text("Your PDA accepts the bounty and spits out [reward] in exchange.", "red")
 			reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
 			user.put_in_hand_or_drop(item)
-			//if (src.is_VR_uplink == 0)
-			//	statlog_traitor_item(user, reward.name, reward.cost)
+			if (istype(antag_role))
+				antag_role.redeemed_item_paths.Add(reward.type)
 		if (reward.item2)
 			new reward.item2(pda_turf)
 		if (reward.item3)
@@ -182,22 +180,8 @@
 	return 1
 
 /datum/game_mode/spy_theft/post_setup()
-	var/objective_set_path = null
 	for(var/datum/mind/spy in traitors)
-		objective_set_path = null // Gotta reset this.
-
-		objective_set_path = pick(typesof(/datum/objective_set/spy_theft))
-
-		new objective_set_path(spy)
-		SPAWN(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs (can't find PDA)
-			equip_spy_theft(spy.current)
-
-		var/obj_count = 1
-		for(var/datum/objective/objective in spy.objectives)
-			boutput(spy.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-			obj_count++
-
-		//spy_name_list += spy.current.real_name
+		spy.add_antagonist(ROLE_SPY_THIEF, source = ANTAGONIST_SOURCE_ROUND_START)
 
 	SPAWN(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
 		build_bounty_list()
@@ -388,10 +372,6 @@
 	station_bounties[/obj/item/storage/belt/utility] = 1
 	station_bounties[/obj/item/storage/belt/security] = 2
 
-	station_bounties[/obj/item/instrument/large/piano/grand] = 1
-	station_bounties[/obj/item/instrument/large/piano] = 1
-	station_bounties[/obj/item/instrument/large/organ] = 1
-	station_bounties[/obj/item/instrument/large/jukebox] = 1
 	station_bounties[/obj/item/instrument/saxophone] = 1
 	station_bounties[/obj/item/instrument/bagpipe] = 1
 	station_bounties[/obj/item/instrument/bikehorn/dramatic] = 1
@@ -483,7 +463,6 @@
 	big_station_bounties[/obj/machinery/computer/card] = 2
 	big_station_bounties[/obj/machinery/computer/genetics] = 2
 	big_station_bounties[/obj/machinery/computer/robotics] = 2
-	big_station_bounties[/obj/machinery/lawrack] = 3
 	big_station_bounties[/obj/machinery/turret] = 3
 
 	big_station_bounties[/obj/machinery/vending/medical] = 1
@@ -530,10 +509,15 @@
 	big_station_bounties[/obj/reagent_dispensers/still] = 2
 
 	big_station_bounties[/obj/machinery/communications_dish] = 2
-	big_station_bounties[/obj/item/teg_semiconductor] = 2
+	big_station_bounties[/obj/item/teg_semiconductor/prototype] = 2
 	big_station_bounties[/obj/machinery/power/smes] = 2
 	big_station_bounties[/obj/machinery/rkit] = 2
 	big_station_bounties[/obj/machinery/crusher] = 3
+
+	big_station_bounties[/obj/item/instrument/large/piano/grand] = 1
+	big_station_bounties[/obj/item/instrument/large/piano] = 1
+	big_station_bounties[/obj/item/instrument/large/organ] = 1
+	big_station_bounties[/obj/item/instrument/large/jukebox] = 1
 
 	active_bounties.len = 0
 
@@ -597,7 +581,7 @@
 	var/obj/obj_existing = null
 	var/big_picked=1
 	while(big_picked<=big_station_bounty_amt)
-		if (big_station_bounties.len <= 0)
+		if (length(big_station_bounties) <= 0)
 			logTheThing(LOG_DEBUG, src, "spy_theft.dm was unable to create enough big station bounties.")
 			message_admins("Spy bounty logic was unable to create enough big station bounties.")
 			break
@@ -636,7 +620,7 @@
 	var/obj/item_existing = null
 	var/item_picked=1
 	while(item_picked<=station_bounty_amt)
-		if (station_bounties.len <= 0)
+		if (length(station_bounties) <= 0)
 			logTheThing(LOG_DEBUG, src, "spy_theft.dm was unable to create enough item bounties.")
 			message_admins("Spy bounty logic was unable to create enough item bounties.")
 			break

@@ -2,8 +2,10 @@
 	var/mob/living/owner
 	var/last_process = 0
 
-	var/const/tick_spacing = LIFE_PROCESS_TICK_SPACING //This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
-	var/const/cap_tick_spacing = LIFE_PROCESS_CAP_TICK_SPACING //highest TIME allowance between ticks to try to play catchup with realtime thingo
+	/// This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
+	var/const/tick_spacing = LIFE_PROCESS_TICK_SPACING
+	/// highest TIME allowance between ticks to try to play catchup with realtime thingo
+	var/const/cap_tick_spacing = LIFE_PROCESS_CAP_TICK_SPACING
 
 	var/mob/living/carbon/human/human_owner = null
 	var/mob/living/silicon/hivebot/hivebot_owner = null
@@ -39,6 +41,7 @@
 
 	proc/process(datum/gas_mixture/environment)
 		PROTECTED_PROC(TRUE)
+		//SHOULD_NOT_SLEEP(TRUE)
 
 	proc/get_multiplier()
 		.= clamp(TIME - last_process, tick_spacing, cap_tick_spacing) / tick_spacing
@@ -67,7 +70,8 @@
 		return L
 
 	proc/remove_lifeprocess(type)
-		var/datum/lifeprocess/L = lifeprocesses?[type]
+		if(!lifeprocesses) return //sometimes list is null, causes runtime.
+		var/datum/lifeprocess/L = lifeprocesses[type]
 		lifeprocesses -= type
 		qdel(L)
 
@@ -107,6 +111,14 @@
 	..()
 	//wel gosh, its important that we do this otherwisde the crew could spawn into an airless room and then immediately die
 	last_life_tick = TIME
+	restore_life_processes()
+
+/mob/living/full_heal()
+	. = ..()
+	if (src.ai && src.is_npc) src.ai.enable()
+	src.remove_ailments()
+	src.change_misstep_chance(-INFINITY)
+	restore_life_processes()
 
 /mob/living/disposing()
 	for (var/datum/lifeprocess/L in lifeprocesses)
@@ -119,7 +131,7 @@
 	var/list/heartbeatOverlays = list()
 	var/last_human_life_tick = 0
 
-/mob/living/critter/New()
+/mob/living/critter/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/blood)
 	//add_lifeprocess(/datum/lifeprocess/bodytemp) //maybe enable per-critter
@@ -139,7 +151,7 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
 
-/mob/living/carbon/human/New()
+/mob/living/carbon/human/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/blood)
@@ -163,7 +175,7 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
 
-/mob/living/carbon/cube/New()
+/mob/living/carbon/cube/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/chems)
@@ -176,12 +188,13 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
 
-/mob/living/silicon/ai/New()
+/mob/living/silicon/ai/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/disability)
 
-/mob/living/silicon/hivebot/New()
+/mob/living/silicon/hivebot/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
@@ -190,7 +203,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 
-/mob/living/silicon/robot/New()
+/mob/living/silicon/robot/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
@@ -200,15 +213,19 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/robot_oil)
 	add_lifeprocess(/datum/lifeprocess/robot_locks)
+	add_lifeprocess(/datum/lifeprocess/disability)
 
 
-/mob/living/silicon/drone/New()
+/mob/living/silicon/drone/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 
+/mob/living/intangible/aieye/restore_life_processes()
+	. = ..()
+	add_lifeprocess(/datum/lifeprocess/disability) // for misstep
+
 /mob/living/Life(datum/controller/process/mobs/parent)
-	set invisibility = INVIS_NONE
 	if (..())
 		return 1
 
@@ -245,8 +262,6 @@
 
 		update_item_abilities()
 
-		update_objectives()
-
 		if (!isdead(src)) //still breathing
 			//do on_life things for components?
 			SEND_SIGNAL(src, COMSIG_LIVING_LIFE_TICK, life_mult)
@@ -259,10 +274,20 @@
 					animate(src, transform = matrix(), time = 1)
 				last_no_gravity = src.no_gravity
 
-			// Zephyr-class interdictor: carbon mobs in range gain a buff to stamina recovery, which can accumulate to linger briefly
-			if (iscarbon(src))
+			//Interdictor's protections for mobs
+			if (isliving(src) && !isintangible(src))
 				for_by_tcl(IX, /obj/machinery/interdictor)
-					if (IX.expend_interdict(10,src,TRUE,ITDR_ZEPHYR))
+					var/area/area = get_area(src)
+					if (IX.expend_interdict(6,src,TRUE)) //This protects mobs from radstorms/wormholes/magnetic biofields
+						src.changeStatus("spatial_protection", 3 SECONDS)
+					if (istype(area) && area.irradiated)
+						IX.resisted = TRUE
+					if (!iscarbon(src)) //Prevents non-carbons from getting the Zephyr stam boost, but still protects other mobs
+						break
+					if (IX.expend_interdict(1,src,TRUE,ITDR_DEVERA)) // Devera-class interdictor: prevents hygiene loss for mobs in range, which can accumulate to linger briefly
+						src.changeStatus("devera_field", 3 SECONDS * life_mult)
+						break
+					if (IX.expend_interdict(4,src,TRUE,ITDR_ZEPHYR)) // Zephyr-class interdictor: carbon mobs in range gain a buff to stamina recovery, which can accumulate to linger briefly
 						src.changeStatus("zephyr_field", 3 SECONDS * life_mult)
 						break
 
@@ -279,7 +304,6 @@
 		if (src.client) //ov1
 			// overlays
 			src.updateOverlaysClient(src.client)
-			src.antagonist_overlay_refresh(0, 0)
 
 		if (src.observers.len)
 			for (var/mob/x in src.observers)
@@ -309,6 +333,8 @@
 
 	var/mult = (max(tick_spacing, TIME - last_human_life_tick) / tick_spacing)
 
+	src.mutantrace?.onLife(mult)
+
 	if (farty_party)
 		src.emote("fart")
 
@@ -330,9 +356,6 @@
 			var/obj/item/parts/human_parts/leg/D = src.limbs.r_leg
 			if(D.original_holder && src != D.original_holder)
 				D.foreign_limb_effect()
-
-	if (src.mutantrace)
-		src.mutantrace.onLife(mult)
 
 	if (!isdead(src)) // Marq was here, breaking everything.
 
@@ -429,7 +452,7 @@
 		hud.update_charge()
 		hud.update_tools()
 
-/mob/living/seanceghost/Life(parent)
+/mob/living/intangible/seanceghost/Life(parent)
 	if (..(parent))
 		return 1
 	if (!src.abilityHolder)
@@ -489,8 +512,10 @@
 				location.hotspot_expose(T0C + 300, 400)
 
 			for (var/atom/A in src.contents)
-				if (A.material)
-					A.material.triggerTemp(A, T0C + 900)
+				A.material_trigger_on_temp(T0C + 900)
+
+			for (var/atom/equipped_stuff in src.equipped())
+				equipped_stuff.material_trigger_on_temp(T0C + 900)
 
 			if(src.traitHolder && src.traitHolder.hasTrait("burning"))
 				if(prob(50))
@@ -506,36 +531,6 @@
 					C.vomit()
 					C.changeStatus("stunned", 2 SECONDS)
 					boutput(C, "<span class='alert'>[stinkString()]</span>")
-
-
-	proc/update_objectives()
-		if (!src.mind)
-			return
-		if (!src.mind.objectives)
-			return
-		if (!istype(src.mind.objectives, /list))
-			return
-		if (src.mind.stealth_objective)
-			for (var/datum/objective/O in src.mind.objectives)
-				if (istype(O, /datum/objective/specialist/stealth))
-					var/turf/T = get_turf(src)
-					if (T && isturf(T) && (istype(T, /turf/space) || T.loc.name == "Space" || T.loc.name == "Ocean" || T.z != 1))
-						O:score = max(0, O:score - 1)
-						if (prob(20))
-							boutput(src, "<span class='alert'><B>Being away from the station is making you lose your composure...</B></span>")
-						src << sound('sound/effects/env_damage.ogg')
-						continue
-					if (T && isturf(T) && T.RL_GetBrightness() < 0.2)
-						O:score++
-					else
-						var/spotted_by_mob = 0
-						for (var/mob/living/M in oviewers(src, 5))
-							if (M.client && M.sight_check(1))
-								O:score = max(0, O:score - 5)
-								spotted_by_mob = 1
-								break
-						if (!spotted_by_mob)
-							O:score++
 
 	proc/update_sight()
 		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/sight]
@@ -562,7 +557,7 @@
 
 		if (src.client)
 			updateOverlaysClient(src.client)
-		if (src.observers.len)
+		if (length(src.observers))
 			for (var/mob/x in src.observers)
 				if (x.client)
 					src.updateOverlaysClient(x.client)
@@ -634,9 +629,6 @@
 					if (src.wear_mask)
 						if (src.internal)
 							resist_prob += 100
-				else if (D.spread == "Sight")
-					if (src.eyes_protected_from_light())
-						resist_prob += 190
 
 		for (var/obj/item/C as anything in src.get_equipped_items())
 			resist_prob += C.getProperty("viralprot")

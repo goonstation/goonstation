@@ -6,7 +6,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	desc = "An industrial deep fryer.  A big hit at state fairs!"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "fryer0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	flags = NOSPLASH
 	status = REQ_PHYSICAL_ACCESS
@@ -79,10 +79,11 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		src.reagents.reaction(G.affecting, TOUCH)
 		return
 
-	if (W.w_class > src.max_wclass || istype(W, /obj/item/storage) || istype(W, /obj/item/storage/secure) || istype(W, /obj/item/plate))
+	if (W.w_class > src.max_wclass || W.storage || istype(W, /obj/item/plate))
 		boutput(user, "<span class='alert'>There is no way that could fit!</span>")
 		return
 
+	logTheThing(LOG_STATION, user, "puts the [log_object(W)] into the [log_object(src)] at [log_loc(src)].")
 	src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 	user.u_equip(W)
 	W.dropped(user)
@@ -97,6 +98,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		return src.Attackby(W, user)
 
 /obj/machinery/deep_fryer/onVarChanged(variable, oldval, newval)
+	. = ..()
 	if (variable == "fryitem")
 		if (!oldval && newval)
 			SubscribeToProcess()
@@ -143,7 +145,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	else
 		src.cooktime++
 
-	if (src.fryitem.material?.mat_id == "ice" && !ON_COOLDOWN(src, "ice_explosion", 10 SECONDS))
+	if (src.fryitem.material?.getID() == "ice" && !ON_COOLDOWN(src, "ice_explosion", 10 SECONDS))
 		if (ismob(fed_ice)) // have we asked someone for ice?
 			var/mob/ice_feeder = fed_ice
 			fed_ice = TRUE
@@ -152,6 +154,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 					<span class='name'>[src.name] [bicon(src)]</span> <span class='message'> says, \"[msg]\"</span></span>",
 					assoc_maptext = make_chat_maptext(src, msg, "color: #e8ae2a;"))
 			ADD_FLAG(src.status, BROKEN)
+			name = "Satiated [initial(src.name)]"
 			ice_feeder = ice_feeder || ckey_to_mob(src.fryitem.fingerprintslast) // in case someone else had to fufill, no direct ref
 			ice_feeder?.unlock_medal("Deep Freeze", TRUE)
 
@@ -217,7 +220,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 			for (var/mob/M in thing)
 				M.ghostize()
 		qdel(thing)
-		thing = new /obj/item/reagent_containers/food/snacks/yuckburn (src)
+		thing = new /obj/item/reagent_containers/food/snacks/yuck/burn (src)
 		if (!thing.reagents)
 			thing.create_reagents(50)
 
@@ -255,7 +258,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	fryholder.overlays = thing.overlays
 	if (isitem(thing))
 		var/obj/item/item = thing
-		fryholder.bites_left = item.w_class
+		fryholder.bites_left = round(item.w_class)
 		fryholder.w_class = item.w_class
 	else
 		fryholder.bites_left = 5
@@ -307,9 +310,9 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	var/shivers = 1
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if ((H.mind.assigned_role in list("Detective", "Vice Officer", "Part-time Vice Officer")) || (H.job in list("Detective", "Vice Officer", "Part-time Vice Officer")))
-			shivers = 3
-	if (prob(0.03 * shivers))
+		if ((H.mind.assigned_role in list("Detective", "Vice Officer")) || (H.job in list("Detective", "Vice Officer")))
+			shivers = 20
+	if (prob(0.5 * shivers))
 		fed_ice = M // asked this mob
 		src.name = "Absolutely Famished [src.name]"
 		var/msg = "I'm SO hungry! Please feed me a 20 pound bag of ice!"

@@ -294,7 +294,7 @@
 /obj/effect/smoketemp
 	name = "smoke"
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	opacity = 0
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "smoke"
@@ -716,7 +716,7 @@
 // please just use ..() instead of copy/pasting this stuff unless you have a REALLY GOOD REASON to override New()!!
 // tia, with love, haine
 
-/obj/item/
+/obj/item
 
 	var/list/abilities = null//list("")
 	var/list/ability_buttons = null//new/list()
@@ -737,7 +737,7 @@
 			for(var/obj/ability_button/B in ability_buttons)
 				B.the_item = src
 				B.name = B.name + " ([src.name])"
-//		if(ability_buttons.len > 0)
+//		if(length(ability_buttons) > 0)
 //			SPAWN(0) check_abilities()
 		..()
 
@@ -840,7 +840,7 @@
 	icon_state = "test"
 	layer = HUD_LAYER
 	plane = PLANE_HUD
-	anchored = 1
+	anchored = ANCHORED
 	flags = NOSPLASH
 	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 

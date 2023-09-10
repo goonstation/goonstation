@@ -33,15 +33,16 @@
 
 	var/maptext_out = 0
 	var/message = null
-	if (src.mutantrace)
-		var/list/mutantrace_emote_stuff = src.mutantrace.emote(act, voluntary)
-		if(!islist(mutantrace_emote_stuff))
-			message = mutantrace_emote_stuff
-		else
-			if(length(mutantrace_emote_stuff) >= 1)
-				message = mutantrace_emote_stuff[1]
-			if(length(mutantrace_emote_stuff) >= 2)
-				maptext_out = mutantrace_emote_stuff[2]
+
+	var/list/mutantrace_emote_stuff = src.mutantrace.emote(act, voluntary)
+	if(!islist(mutantrace_emote_stuff))
+		message = mutantrace_emote_stuff
+	else
+		if(length(mutantrace_emote_stuff) >= 1)
+			message = mutantrace_emote_stuff[1]
+		if(length(mutantrace_emote_stuff) >= 2)
+			maptext_out = mutantrace_emote_stuff[2]
+
 	if (!message)
 		switch (lowertext(act))
 			// most commonly used emotes first for minor performance improvements
@@ -141,8 +142,8 @@
 											src.add_karma(10)
 									fart_on_other = 1
 									break
-								else if (istype(A,/obj/item/storage/bible))
-									var/obj/item/storage/bible/B = A
+								else if (istype(A,/obj/item/bible))
+									var/obj/item/bible/B = A
 									B.farty_heresy(src)
 									fart_on_other = 1
 									break
@@ -235,7 +236,7 @@
 									var/found_bible = 0
 									for (var/atom/A as anything in H.loc)
 										if (A.event_handler_flags & IS_FARTABLE)
-											if (istype(A,/obj/item/storage/bible))
+											if (istype(A,/obj/item/bible))
 												found_bible = 1
 									if (found_bible)
 										src.visible_message("<span class='alert'><b>A mysterious force smites [src.name] for inciting blasphemy!</b></span>")
@@ -347,7 +348,7 @@
 								message = "<B>[src]</B> blows a kiss to [M]."
 								maptext_out = "<I>blows a kiss to [M]</I>"
 								//var/atom/U = get_turf(param)
-								//shoot_projectile_ST(src, new/datum/projectile/special/kiss(), U) //I gave this all of 5 minutes of my time I give up
+								//shoot_projectile_ST_pixel_spread(src, new/datum/projectile/special/kiss(), U) //I gave this all of 5 minutes of my time I give up
 							if ("fingerguns")
 								message = "<B>[src]</B> points finger guns at [M]!"
 								maptext_out = "<I>points finger guns at [M]!</I>"
@@ -471,7 +472,7 @@
 				if (IS_TWITCH_CONTROLLED(src)) return
 				if (!param)
 					return
-				param = copytext(sanitize(html_encode(param)), 1, MAX_MESSAGE_LEN)
+				param = copytext(sanitize(param), 1, MAX_MESSAGE_LEN)
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
@@ -501,9 +502,9 @@
 							for (var/mob/living/carbon/human/M in view(1, src))
 								if (M != src && can_act(M, TRUE))
 									possible_recipients += M
-							if (possible_recipients.len > 1)
+							if (length(possible_recipients) > 1)
 								H = input(src, "Who would you like to hand your [thing] to?", "Choice") as null|anything in possible_recipients
-							else if (possible_recipients.len == 1)
+							else if (length(possible_recipients) == 1)
 								H = possible_recipients[1]
 
 #ifdef TWITCH_BOT_ALLOWED
@@ -814,7 +815,7 @@
 					maptext_out = "<I>struggles to move</I>"
 				m_type = 1
 
-			if ("cough","hiccup","sigh","mumble","grumble","groan","moan","sneeze","wheeze","sniff","snore","whimper","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle","wheeze","sputter","scoff",)
+			if ("cough","hiccup","sigh","mumble","grumble","groan","moan","sneeze","wheeze","sniff","snore","whimper","noncontagiousyawn","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle","wheeze","sputter","scoff",)
 				// basic audible single-word emotes
 				if (!muzzled)
 					if (lowertext(act) == "sigh" && prob(1)) act = "singh" //1% chance to change sigh to singh. a bad joke for drsingh fans.
@@ -828,12 +829,15 @@
 						var/obj/HK = new /obj/item/cloth/handkerchief/random(get_turf(src))
 						var/turf/T = get_edge_target_turf(src, pick(alldirs))
 						HK.throw_at(T, 5, 1)
+					else if (act == "noncontagiousyawn")
+						message = "<B>[src]</B> yawns."
+						maptext_out = "<I>yawns</I>"
 					else if (act == "yawn")
 						message = "<B>[src]</B> [act]s."
 						maptext_out = "<I>[act]s</I>"
 						for (var/mob/living/carbon/C in view(5,get_turf(src)))
 							if (prob(5) && !ON_COOLDOWN(C, "contagious_yawn", 5 SECONDS))
-								C.emote("yawn")
+								C.emote("noncontagiousyawn")
 					else
 						message = "<B>[src]</B> [act]s."
 						maptext_out = "<I>[act]s</I>"
@@ -1076,7 +1080,7 @@
 				for (var/obj/item/C as anything in src.get_equipped_items())
 					if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
 						var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
-						var/drophand = (src.hand == RIGHT_HAND ? slot_r_hand : slot_l_hand)
+						var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
 						drop_item()
 						O.set_loc(src)
 						equip_if_possible(O, drophand)
@@ -1329,7 +1333,7 @@
 								boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
 								return
 					if (M)
-						if (!M.restrained() && M.stat != 1 && !isunconscious(M) && !isdead(M))
+						if (can_act(M))
 							if (tgui_alert(M, "[src] offers you a handshake. Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
 								if (M in view(1,null))
 									message = "<B>[src]</B> shakes hands with [M]."
@@ -1406,7 +1410,7 @@
 
 			if ("highfive")
 				m_type = 1
-				if (!src.restrained() && src.stat != 1 && !isunconscious(src) && !isdead(src))
+				if (can_act(src))
 					if (src.emote_check(voluntary))
 						var/mob/M = null
 						if (param)
@@ -1427,7 +1431,7 @@
 									return
 
 						if (M)
-							if (!M.restrained() && M.stat != 1 && !isunconscious(M) && !isdead(M))
+							if (can_act(M))
 								if (tgui_alert(M, "[src] offers you a highfive! Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
 									if (M in view(1,null))
 										message = "<B>[src]</B> and [M] highfive!"
@@ -1601,7 +1605,7 @@
 				for (var/obj/item/C as anything in src.get_equipped_items())
 					if ((locate(/obj/item/gun/kinetic/derringer) in C) != null)
 						var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
-						var/drophand = (src.hand == RIGHT_HAND ? slot_r_hand : slot_l_hand)
+						var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
 						drop_item()
 						D.set_loc(src)
 						equip_if_possible(D, drophand)
@@ -1776,8 +1780,8 @@
 
 							LAGCHECK(LAG_MED)
 							var/crabMax = 5
-							for (var/obj/critter/crab/party/responseCrab in range(7, src))
-								if (!responseCrab.alive)
+							for (var/mob/living/critter/small_animal/crab/party/responseCrab in range(7, src))
+								if (is_incapacitated(responseCrab))
 									continue
 								if (crabMax-- < 0)
 									break
@@ -1804,6 +1808,11 @@
 
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
+
+					var/stop_here = SEND_SIGNAL(src, COMSIG_MOB_FLIP, voluntary)
+					if (stop_here)
+						goto showmessage
+
 					var/list/combatflipped = list()
 					//TODO: space flipping
 					//if ((!src.restrained()) && (!src.lying) && (istype(src.loc, /turf/space)))
@@ -1968,7 +1977,7 @@
 							else
 								playsound(src, src.sound_burp, 70, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 							return
-					else if ((src.charges >= 1) && (muzzled))
+					else if ((src.charges >= 1) && (muzzled) && !src.reagents?.get_reagent_amount("promethazine"))
 						for (var/mob/O in viewers(src, null))
 							O.show_message("<B>[src]</B> vomits in [his_or_her(src)] own mouth a bit.")
 						src.TakeDamage("head", 0, 50, 0, DAMAGE_BURN)
@@ -2236,11 +2245,7 @@
 				var/mob/living/carbon/human/H = null
 				if(ishuman(src))
 					H = src
-				var/obj/item/I = src.wear_id
-				if (istype(I, /obj/item/device/pda2))
-					var/obj/item/device/pda2/P = I
-					if(P.ID_card)
-						I = P.ID_card
+				var/obj/item/I = get_id_card(src.wear_id)
 				if(H && (!H.limbs.l_arm || !H.limbs.r_arm || H.restrained()))
 					src.show_text("You can't do that without free arms!")
 				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isconspirator(H) || isnukeop(H) || isnukeopgunbot(H) || istype(src.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
@@ -2299,7 +2304,7 @@
 						dab_id?.brain_damage_count += 10
 						if(src.get_brain_damage() > 60)
 							src.show_text("<span class='alert'>Your head hurts!</span>")
-					if(locate(/obj/item/storage/bible) in src.loc)
+					if(locate(/obj/item/bible) in src.loc)
 						if(H.limbs.l_arm)
 							src.limbs.l_arm.sever()
 							dab_id?.arm_count++
@@ -2314,17 +2319,13 @@
 				else
 					src.show_text("You don't know how to do that but you feel deeply ashamed for trying", "red")
 
-/*			if ("wedgie")
-				if (src.emote_check(voluntary))
-					var/mob/living/carbon/human/H = null
-					if(ishuman(src))
-						H = src
-					if(H && (!H.limbs.l_arm || !H.limbs.r_arm))
-						src.show_text("You can't do that without arms!")
-						return
-					if(/mob/living/carbon/human in get_step(H.loc, 1).contents)
-						return
-*/
+			if ("woof")
+				if (!ispug(src)) // not accounting for critter dogs since they have their own bark handling
+					src.say("Woof.")
+					return
+				else
+					message = "<b>[src]</b> woofs!"
+					playsound(src.loc, 'sound/voice/urf.ogg', 60, channel=VOLUME_CHANNEL_EMOTE)
 			else
 				src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
 				return
@@ -2381,7 +2382,6 @@
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/gas = new /datum/gas_mixture
-	gas.vacuum()
 	if(oxyplasmafart == 1)
 		gas.toxins += 1
 	if(oxyplasmafart == 2)
@@ -2454,7 +2454,7 @@
 	var/obj/table/tabl = locate() in src.loc.contents
 	var/turf/newloc = src.loc
 	G.affecting.set_loc(newloc)
-	if (!G.affecting.reagents.has_reagent("fliptonium"))
+	if (!G.affecting.reagents?.has_reagent("fliptonium"))
 		animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 
 	if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))

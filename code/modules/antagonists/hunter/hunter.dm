@@ -1,6 +1,7 @@
 /datum/antagonist/hunter
 	id = ROLE_HUNTER
 	display_name = "hunter"
+	antagonist_icon = "predator"
 
 	/// The ability holder of this hunter, containing their respective abilities. We also use this for tracking power, at the moment.
 	var/datum/abilityHolder/hunter/ability_holder
@@ -38,7 +39,7 @@
 		M.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
 	assign_objectives()
-		new /datum/objective_set/hunter(src.owner)
+		new /datum/objective_set/hunter(src.owner, src)
 
 	handle_round_end(log_data)
 		var/list/dat = ..()
@@ -79,7 +80,7 @@
 
 				else
 					// Antagonist check.
-					if (checktraitor(H))
+					if (H.mind?.is_antagonist())
 						switch (H.mind.special_role) // Ordered by skull value.
 							if (ROLE_OMNITRAITOR)
 								skull_type = /obj/item/skull/crystal
@@ -129,7 +130,7 @@
 						// Everything's still default, so check for assigned_role. Could be a lizard captain or whatever.
 						if (isnull(skull_type) && skull_value == default_skull_value && skull_desc == default_skull_desc)
 							if (H.mind)
-								if (H.mind.special_role == "macho man") // Not in ticker.Agimmicks.
+								if (H.mind.special_role == ROLE_MACHO_MAN) // Not in ticker.Agimmicks.
 									skull_type = /obj/item/skull/gold
 									skull_desc = "A trophy taken from a legendary wrestler. It is an immeasurable honor."
 								else
@@ -157,24 +158,22 @@
 											skull_desc = "A meaningless trophy from a weak opponent. You feel disgusted to even look at it."
 
 				// Assign new skull or change value/desc.
-				if (!isnull(skull_type))
-					var/obj/item/skull/new_skull = new skull_type
-					skull_value = new_skull.value // Defined in organ.dm. Copied because there isn't always a need to replace the skull.
+				if (isnull(skull_type))
+					skull_type = /obj/item/skull
 
-					if (S.type != new_skull.type)
-						//setup skull AFTER the qdel! otherwise skull gets set to null
-						qdel(S)
-						new_skull.donor = H
-						new_skull.preddesc = skull_desc
-						new_skull.set_loc(H)
-						H.organHolder.skull = new_skull
-						//DEBUG_MESSAGE("[H]'s skull: [new_skull.type] (V: [new_skull.value], D: [new_skull.preddesc])")
-					else
-						qdel(new_skull)
-						S.value = skull_value
-						S.preddesc = skull_desc
-						//DEBUG_MESSAGE("[H]'s skull: [S.type] (V: [S.value], D: [S.preddesc])")
+				var/obj/item/skull/new_skull = new skull_type
+				skull_value = new_skull.value // Defined in organ.dm. Copied because there isn't always a need to replace the skull.
+
+				if (S.type != new_skull.type)
+					//setup skull AFTER the qdel! otherwise skull gets set to null
+					qdel(S)
+					new_skull.donor = H
+					new_skull.preddesc = skull_desc
+					new_skull.set_loc(H)
+					H.organHolder.skull = new_skull
+					//DEBUG_MESSAGE("[H]'s skull: [new_skull.type] (V: [new_skull.value], D: [new_skull.preddesc])")
 				else
+					qdel(new_skull)
 					S.value = skull_value
 					S.preddesc = skull_desc
 					//DEBUG_MESSAGE("[H]'s skull: [S.type] (V: [S.value], D: [S.preddesc])")
@@ -352,8 +351,6 @@
 		src.handcuffs.destroy_handcuffs(src)
 	src.buckled = null
 
-	if (src.mutantrace)
-		qdel(src.mutantrace)
 	src.set_mutantrace(/datum/mutantrace/hunter)
 
 	var/datum/abilityHolder/hunter/A = src.get_ability_holder(/datum/abilityHolder/hunter)
@@ -368,16 +365,16 @@
 
 	new /obj/item/implant/revenge/microbomb/hunter(src)
 
-	src.equip_if_possible(new /obj/item/clothing/under/gimmick/hunter(src), slot_w_uniform) // srcust be at the top of the list.
-	src.equip_if_possible(new /obj/item/clothing/mask/hunter(src), slot_wear_mask)
-	src.equip_if_possible(new /obj/item/storage/belt/hunter(src), slot_belt)
-	src.equip_if_possible(new /obj/item/clothing/shoes/cowboy/hunter(src), slot_shoes)
-	src.equip_if_possible(new /obj/item/device/radio/headset(src), slot_ears)
-	src.equip_if_possible(new /obj/item/storage/backpack(src), slot_back)
-	src.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(src), slot_l_store)
-	src.equip_if_possible(new /obj/item/cloaking_device/hunter(src), slot_r_store)
-	src.equip_if_possible(new /obj/item/knife/butcher/hunterspear(src), slot_in_backpack)
-	src.equip_if_possible(new /obj/item/gun/energy/plasma_gun/hunter(src), slot_in_backpack)
+	src.equip_if_possible(new /obj/item/clothing/under/gimmick/hunter(src), SLOT_W_UNIFORM) // srcust be at the top of the list.
+	src.equip_if_possible(new /obj/item/clothing/mask/hunter(src), SLOT_WEAR_MASK)
+	src.equip_if_possible(new /obj/item/storage/belt/hunter(src), SLOT_BELT)
+	src.equip_if_possible(new /obj/item/clothing/shoes/cowboy/hunter(src), SLOT_SHOES)
+	src.equip_if_possible(new /obj/item/device/radio/headset(src), SLOT_EARS)
+	src.equip_if_possible(new /obj/item/storage/backpack(src), SLOT_BACK)
+	src.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(src), SLOT_L_STORE)
+	src.equip_if_possible(new /obj/item/cloaking_device/hunter(src), SLOT_R_STORE)
+	src.equip_if_possible(new /obj/item/knife/butcher/hunterspear(src), SLOT_IN_BACKPACK)
+	src.equip_if_possible(new /obj/item/gun/energy/plasma_gun/hunter(src), SLOT_IN_BACKPACK)
 
 	src.set_face_icon_dirty()
 	src.set_body_icon_dirty()

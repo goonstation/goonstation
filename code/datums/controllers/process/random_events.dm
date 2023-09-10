@@ -10,4 +10,6 @@ datum/controller/process/randomevents
 		schedule_interval = 2.5 MINUTES
 
 	doWork()
+		#ifndef NO_RANDOM_EVENTS
 		random_events.process()
+		#endif

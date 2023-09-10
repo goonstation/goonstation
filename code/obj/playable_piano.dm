@@ -18,7 +18,7 @@ TYPEINFO(/obj/player_piano)
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "player_piano"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/timing = 0.5 //values from 0.25 to 0.5 please
 	var/items_claimed = 0 //set to 1 when items are claimed
 	var/is_looping = 0 //is the piano looping? 0 is no, 1 is yes, 2 is never more looping
@@ -40,10 +40,10 @@ TYPEINFO(/obj/player_piano)
 		if (!items_claimed)
 			src.desc += " The free user essentials box is untouched!" //jank
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "play", .proc/mechcompPlay)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set notes", .proc/mechcompNotes)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set timing", .proc/mechcompTiming)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "reset", .proc/reset_piano)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "play", PROC_REF(mechcompPlay))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set notes", PROC_REF(mechcompNotes))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set timing", PROC_REF(mechcompTiming))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "reset", PROC_REF(reset_piano))
 
 	// requires it's own proc because else the mechcomp input will be taken as first argument of ready_piano()
 	proc/mechcompPlay(var/datum/mechanicsMessage/input)
@@ -91,7 +91,7 @@ TYPEINFO(/obj/player_piano)
 				if (!do_after(user, 3 SECONDS) || anchored != 1)
 					return
 				playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				SEND_SIGNAL(src, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 				user.visible_message("[user] loosens the piano's castors!", "You loosen the piano's castors!")
 				return
@@ -100,7 +100,7 @@ TYPEINFO(/obj/player_piano)
 				if (!do_after(user, 3 SECONDS) || anchored != 0)
 					return
 				playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
-				src.anchored = 1
+				src.anchored = ANCHORED
 				user.visible_message("[user] tightens the piano's castors!", "You tighten the piano's castors!")
 				return
 
@@ -228,16 +228,19 @@ TYPEINFO(/obj/player_piano)
 			var/list/curr_notes = splittext("[string]", ",")
 			if (length(curr_notes) < 4) // Music syntax not followed
 				break
+			if (lowertext(curr_notes[2]) == "b") // Correct enharmonic pitches to conform to music syntax; transforming flats to sharps
+				if (lowertext(curr_notes[1]) == "a")
+					curr_notes[1] = "g"
+				else
+					curr_notes[1] = ascii2text(text2ascii(curr_notes[1]) - 1)
 			note_names += curr_notes[1]
 			switch(lowertext(curr_notes[4]))
 				if ("r")
 					curr_notes[4] = "r"
 			note_octaves += curr_notes[4]
 			switch(lowertext(curr_notes[2]))
-				if ("s")
-					curr_notes[2] = "s"
-				if ("b")
-					curr_notes[2] = "b"
+				if ("s", "b")
+					curr_notes[2] = "-"
 				if ("n")
 					curr_notes[2] = ""
 				if ("r")
@@ -273,7 +276,7 @@ TYPEINFO(/obj/player_piano)
 			var/string = lowertext("[note_names[i]][note_accidentals[i]][note_octaves[i]]")
 			compiled_notes += string
 		for (var/i = 1, i <= compiled_notes.len, i++)
-			var/string = "sound/musical_instruments/player_piano/"
+			var/string = "sound/musical_instruments/piano/notes/"
 			string += "[compiled_notes[i]].ogg"
 			if (!(string in soundCache))
 				src.visible_message("<span class='alert'>\The [src] makes an atrocious racket and beeps [i] times.</span>")
@@ -288,7 +291,7 @@ TYPEINFO(/obj/player_piano)
 		play_notes(1)
 
 	proc/play_notes(var/is_master) //how notes are handled, using while and spawn to set a very strict interval, solo piano process loop was too variable to work for music
-		if (linked_pianos.len > 0 && is_master)
+		if (length(linked_pianos) > 0 && is_master)
 			for (var/obj/player_piano/p in linked_pianos)
 				SPAWN(0)
 					p.ready_piano(1)
@@ -308,7 +311,7 @@ TYPEINFO(/obj/player_piano)
 			sleep((timing * 10)) //to get delay into 10ths of a second
 			if (!curr_note) // else we get runtimes when the piano is reset while playing
 				return
-			var/sound_name = "sound/musical_instruments/player_piano/[compiled_notes[curr_note]].ogg"
+			var/sound_name = "sound/musical_instruments/piano/notes/[compiled_notes[curr_note]].ogg"
 			playsound(src, sound_name, note_volumes[curr_note],0,10,0)
 
 	proc/set_notes(var/given_notes)

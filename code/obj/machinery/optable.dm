@@ -8,7 +8,7 @@ TYPEINFO(/obj/machinery/optable)
 	pass_unstable = TRUE
 	desc = "A table that allows qualified professionals to perform delicate surgeries."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 	var/mob/living/carbon/human/victim = null
 	var/strapped = 0

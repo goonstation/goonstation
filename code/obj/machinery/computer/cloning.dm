@@ -5,7 +5,7 @@
 #define MESSAGE_SHOW_TIME 	5 SECONDS
 
 var/global/cloning_with_records = TRUE
-
+ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/clone_someone)
 /obj/machinery/computer/cloning
 	name = "Cloning Console"
 	desc = "Use this console to operate a cloning scanner and pod. There is a slot to insert modules - they can be removed with a screwdriver."
@@ -117,7 +117,8 @@ var/global/cloning_with_records = TRUE
 
 /obj/machinery/computer/cloning/process()
 	..()
-	src.records_scan()
+	if (!(src.status & (NOPOWER | BROKEN)))
+		src.records_scan()
 
 /obj/machinery/computer/cloning/connection_scan()
 	if (src.portable)
@@ -132,7 +133,7 @@ var/global/cloning_with_records = TRUE
 		if (!isnull(src.scanner))
 			src.scanner.connected = src
 			P.connected = src
-		if (src.linked_pods.len >= src.max_pods)
+		if (length(src.linked_pods) >= src.max_pods)
 			break
 
 /obj/machinery/computer/cloning/special_deconstruct(var/obj/computerframe/frame as obj)
@@ -153,8 +154,8 @@ var/global/cloning_with_records = TRUE
 
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
-	if (wagesystem.clones_for_cash && istype(W, /obj/item/spacecash))
-		var/obj/item/spacecash/cash = W
+	if (wagesystem.clones_for_cash && istype(W, /obj/item/currency/spacecash))
+		var/obj/item/currency/spacecash/cash = W
 		src.held_credit += cash.amount
 		cash.amount = 0
 		user.show_text("<span class='notice'>You add [cash] to the credit in [src].</span>")
@@ -237,7 +238,7 @@ var/global/cloning_with_records = TRUE
 		show_message("Error: Unable to locate valid genetic data.", "danger")
 		return
 	if(!allow_dead_scanning && subject.decomp_stage)
-		show_message("Error: Failed to read genetic data from subject.<br>Necrosis of tissue has been detected.")
+		show_message("Error: Failed to read genetic data from subject. Necrosis of tissue has been detected.")
 		return
 	if (!subject.bioHolder || subject.bioHolder.HasEffect("husk"))
 		show_message("Error: Extreme genetic degredation present.", "danger")
@@ -249,7 +250,7 @@ var/global/cloning_with_records = TRUE
 		show_message("Error: Incompatible cellular structure.", "danger")
 		return
 	if (subject.mob_flags & IS_BONEY)
-		show_message("Error: No tissue mass present.<br>Total ossification of subject detected.", "danger")
+		show_message("Error: No tissue mass present. Total ossification of subject detected.", "danger")
 		return
 	if (!cloning_with_records && isalive(subject))
 		show_message("Error: Unable to scan alive patient.")
@@ -317,6 +318,16 @@ var/global/cloning_with_records = TRUE
 			selected_record = R
 			break
 	return selected_record
+
+/obj/machinery/computer/cloning/proc/scan_someone()
+	src.scan_mob(src.scanner?.occupant)
+
+/obj/machinery/computer/cloning/proc/clone_someone()
+	for (var/datum/db_record/record in src.records)
+		var/mob/ghost = find_ghost_by_key(record["ckey"])
+		if (ghost?.mind && !ghost.mind.get_player()?.dnr)
+			src.clone_record(record)
+			return
 
 /obj/machinery/computer/cloning/proc/clone_record(datum/db_record/C)
 	if (!istype(C))
@@ -440,7 +451,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 	density = 1
 	var/locked = 0
 	var/mob/occupant = null
-	anchored = 1
+	anchored = ANCHORED
 	soundproofing = 10
 	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/computer/cloning/connected = null
@@ -787,7 +798,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 				. = TRUE
 
 			for (var/datum/computer/file/clone/R in src.diskette.root.contents)
-				if (R["ckey"] == selected_record["ckey"])
+				if (R.fields["ckey"] == selected_record.get_field("ckey"))
 					show_message("Record already exists on disk.", "info")
 					. = TRUE
 

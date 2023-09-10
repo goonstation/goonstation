@@ -50,6 +50,8 @@
 	var/joined_observer = FALSE
 	/// Last time this person died (used for critter respawns)
 	var/last_death_time
+	/// real_names this person has joined as
+	var/joined_names = list()
 
 	/// sets up vars, caches player stats, adds by_type list entry for this datum
 	New(key)
@@ -74,12 +76,16 @@
 			src.client = null
 		..()
 
-	/// queries api to cache stats so its only done once per player per round (please update this proc when adding more player stat vars)
+	/// queries api to cache stats so its only done once per player per round
 	proc/cache_round_stats()
 		set waitfor = FALSE
+		. = cache_round_stats_blocking()
+
+	/// blocking version of cache_round_stats, queries api to cache stats so its only done once per player per round (please update this proc when adding more player stat vars)
+	proc/cache_round_stats_blocking()
 		var/list/response = null
 		try
-			response = apiHandler.queryAPI("playerInfo/get", list("ckey" = src.ckey), forceResponse = 1)
+			response = apiHandler?.queryAPI("playerInfo/get", list("ckey" = src.ckey), forceResponse = 1)
 		catch
 			return 0
 		if (!response)
@@ -92,10 +98,14 @@
 		return 1
 
 	/// returns an assoc list of cached player stats (please update this proc when adding more player stat vars)
-	proc/get_round_stats()
+	proc/get_round_stats(allow_blocking = FALSE)
 		if ((isnull(src.rounds_participated) || isnull(src.rounds_seen) || isnull(src.rounds_participated_rp) || isnull(src.rounds_seen_rp) || isnull(src.last_seen))) //if the stats havent been cached yet
-			if (!src.cache_round_stats()) //if trying to set them fails
-				return null
+			if (allow_blocking) // whether or not we are OK with possibly sleeping the thread
+				if (!src.cache_round_stats_blocking())
+					return null
+			else
+				if (!src.cache_round_stats()) //if trying to set them fails
+					return null
 		return list("participated" = src.rounds_participated, "seen" = src.rounds_seen, "participated_rp" = src.rounds_participated_rp, "seen_rp" = src.rounds_seen_rp, "last_seen" = src.last_seen)
 
 	/// returns the number of rounds that the player has played by joining in at roundstart
@@ -167,7 +177,7 @@
 		var/list/data = cloud_fetch_target_ckey(target)
 		if(!data)
 			return FALSE
-		data[key] = "[json_encode(value)]"
+		data[key] = "[value]"
 
 #ifdef LIVE_SERVER
 		// Via rust-g HTTP
@@ -379,8 +389,7 @@ proc/cloud_put_bulk(json)
 	request.prepare(RUSTG_HTTP_METHOD_POST, "[config.spacebee_api_url]/api/cloudsave", sanitized_json, headers)
 	request.begin_async()
 #else
-// temp disabled
-/* 		var/save_json
+	var/save_json
 	var/list/decoded_save
 	if (fexists("data/simulated_cloud.json"))
 		save_json = file2text("data/simulated_cloud.json")
@@ -392,10 +401,19 @@ proc/cloud_put_bulk(json)
 		if (!decoded_save[sani_ckey])
 			decoded_save[sani_ckey] = list(cdata = list())
 		for (var/data_key in sanitized[sani_ckey])
-			decoded_save[sani_ckey]["cdata"][data_key] = sanitized[sani_ckey][data_key]
+			var/value = sanitized[sani_ckey][data_key]["value"]
+			var/command = sanitized[sani_ckey][data_key]["command"]
+			switch(command)
+				if("add")
+					if (data_key in decoded_save[sani_ckey])
+						decoded_save[sani_ckey][data_key] = "[text2num(decoded_save[sani_ckey][data_key]) + value]"
+					else
+						decoded_save[sani_ckey][data_key] = "[value]"
+				if("replace")
+					decoded_save[sani_ckey][data_key] = "[value]"
 
 	//t2f appends, but need to to replace
 	fdel("data/simulated_cloud.json")
-	text2file(json_encode(decoded_save),"data/simulated_cloud.json") */
+	text2file(json_encode(decoded_save),"data/simulated_cloud.json")
 #endif
 	return TRUE

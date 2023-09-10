@@ -115,7 +115,7 @@
 			return 1
 
 		MayAdvance()
-			return must_spread_to.len == 0
+			return length(must_spread_to) == 0
 
 	attack
 		name = "Destroying obstacles"
@@ -251,7 +251,7 @@
 				sleep(4 SECONDS)
 				W.sprayAt(locate(tx, ty + 5, tz), 8)
 				sleep(4 SECONDS)
-				gibs(get_turf(W), list(), list())
+				gibs(get_turf(W))
 				qdel(W)
 				tutorial.Advance()
 
@@ -328,7 +328,7 @@
 				sleep(4 SECONDS)
 				W.sprayAt(locate(tx, ty + 5, tz), 8)
 				sleep(4 SECONDS)
-				gibs(get_turf(W), list(), list())
+				gibs(get_turf(W))
 				qdel(W)
 				tutorial.Advance()
 
@@ -560,7 +560,7 @@ proc/AddBlobSteps(var/datum/tutorial_base/regional/blob/T)
 		L.lit = 1
 
 	proc/sprayAt(var/turf/T)
-		L.shoot(T, src.loc, src)
+		L.shoot(T, src.loc, src, called_target = T)
 
 	disposing()
 		..()

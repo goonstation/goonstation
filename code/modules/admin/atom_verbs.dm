@@ -70,7 +70,7 @@ var/global/atom_emergency_stop = 0
 				message_admins("[key_name(usr)]'s type transmute command terminated due to an emergency stop!")
 				break
 			else
-				A.setMaterial(getMaterial(mat), copy = FALSE)
+				A.setMaterial(getMaterial(mat))
 				transmute ++
 				transmute_total ++
 				if (transmute >= amount_to_transmute)
@@ -727,3 +727,119 @@ var/global/atom_emergency_stop = 0
 		return
 
 // cmd_get_target() isn't needed since we already have get_mobject()
+
+
+
+
+/client/proc/cmd_addComponentType()
+	set name = "Add Component Type"
+	set desc = "Adds a component to all atoms of a type."
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
+	ADMIN_ONLY
+
+	var/pathpart = input("Part of component path.", "Part of component path.", "") as null|text
+	if(!pathpart)
+		pathpart = "/"
+	var/comptype = get_one_match(pathpart, /datum/component)
+	if(!comptype)
+		return
+
+	var/typeinfo/datum/component/TI = get_type_typeinfo(comptype)
+
+	var/list/listargs = src.get_proccall_arglist(TI.initialization_args)
+
+	var/typ_part = input("Enter path of the things you want to add [comptype] to", "Enter Path", "") as null|text
+	if (!typ_part)
+		return
+	var/typ = get_one_match(typ_part, /atom/movable, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
+	if (!typ)
+		return
+
+	if (alert(src, "Are you sure you want to add [comptype] to all atoms of type [typ]?", "Confirmation", "Yes", "No") == "No")
+		return
+
+	var/amount = input(usr, "amount of things to do between each pause", "Amount to Get", 500) as null|num
+	if (!amount)
+		return
+
+	logTheThing(LOG_ADMIN, usr, "started adding [comptype] to all atoms of type [typ].")
+	logTheThing(LOG_DIARY, usr, "started adding [comptype] to all atoms of type [typ].", "admin")
+	message_admins("[key_name(usr)] started adding [comptype] to all atoms of type [typ].")
+
+	var/done = 0
+	var/done_total = 0
+
+	for (var/atom/movable/A as anything in find_all_by_type(typ))
+		LAGCHECK(LAG_LOW)
+		if (atom_emergency_stop)
+			logTheThing(LOG_ADMIN, usr, "add-component command terminated due to an emergency stop.")
+			logTheThing(LOG_DIARY, usr, "add-component command terminated due to an emergency stop.", "admin")
+			message_admins("[key_name(usr)]'s add-component command terminated due to an emergency stop!")
+			break
+		else
+			A._AddComponent(list(comptype) + listargs)
+			done ++
+			done_total ++
+			if (done >= amount)
+				done = 0
+				sleep(0.1 SECONDS)
+
+	logTheThing(LOG_ADMIN, usr, "finished adding [comptype] to all [done_total] atoms of type [typ].")
+	logTheThing(LOG_DIARY, usr, "finished adding [comptype] to all [done_total] atoms of type [typ].", "admin")
+	message_admins("[key_name(usr)] finished adding [comptype] to all [done_total] atoms of type [typ].")
+
+
+
+/client/proc/cmd_removeComponentType()
+	set name = "Remove Component Type"
+	set desc = "Removes a component from all atoms of a type."
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
+	ADMIN_ONLY
+
+	var/pathpart = input("Part of component path.", "Part of component path.", "") as null|text
+	if(!pathpart)
+		pathpart = "/"
+	var/comptype = get_one_match(pathpart, /datum/component)
+	if(!comptype)
+		return
+
+	var/typ_part = input("Enter path of the things you want to remove [comptype] from", "Enter Path", "") as null|text
+	if (!typ_part)
+		return
+	var/typ = get_one_match(typ_part, /atom/movable, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
+	if (!typ)
+		return
+
+	if (alert(src, "Are you sure you want to remove [comptype] from all atoms of type [typ]?", "Confirmation", "Yes", "No") == "No")
+		return
+
+	var/amount = input(usr, "amount of things to do between each pause", "Amount to Get", 500) as null|num
+	if (!amount)
+		return
+
+	logTheThing(LOG_ADMIN, usr, "started removing [comptype] from all atoms of type [typ].")
+	logTheThing(LOG_DIARY, usr, "started removing [comptype] from all atoms of type [typ].", "admin")
+	message_admins("[key_name(usr)] started removing [comptype] from all atoms of type [typ].")
+
+	var/done = 0
+	var/done_total = 0
+
+	for (var/atom/movable/A as anything in find_all_by_type(typ))
+		LAGCHECK(LAG_LOW)
+		if (atom_emergency_stop)
+			logTheThing(LOG_ADMIN, usr, "remove-component command terminated due to an emergency stop.")
+			logTheThing(LOG_DIARY, usr, "remove-component command terminated due to an emergency stop.", "admin")
+			message_admins("[key_name(usr)]'s remove-component command terminated due to an emergency stop!")
+			break
+		else
+			var/datum/component/comp = A.GetComponent(comptype)
+			comp?.RemoveComponent()
+			done ++
+			done_total ++
+			if (done >= amount)
+				done = 0
+				sleep(0.1 SECONDS)
+
+	logTheThing(LOG_ADMIN, usr, "finished removing [comptype] from all [done_total] atoms of type [typ].")
+	logTheThing(LOG_DIARY, usr, "finished removing [comptype] from all [done_total] atoms of type [typ].", "admin")
+	message_admins("[key_name(usr)] finished removing [comptype] from all [done_total] atoms of type [typ].")

@@ -1,12 +1,12 @@
 //Floor Flushing Mechanism.
-
+ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 /obj/machinery/floorflusher
 	name = "\improper Floor Flusher"
 	desc = "It's totally not just a gigantic disposal chute!"
 	//icon = 'icons/obj/disposal.dmi'
 	icon = 'icons/obj/delivery.dmi' // new icon
 	icon_state = "floorflush_c"
-	anchored = 1
+	anchored = ANCHORED
 	power_usage = 100
 	density = 0
 	flags = NOSPLASH
@@ -223,7 +223,7 @@
 			return
 
 		// 	check for items in disposal - if there is a mob in there, flush.
-		if(contents.len > 0)
+		if(length(contents) > 0)
 			var/mob/living/M = locate() in contents
 			if(M)
 				flush = 1
@@ -272,7 +272,7 @@
 
 		H.init(src)	// copy the contents of disposer to holder
 
-		air_contents.zero() // empty gas
+		ZERO_GASES(air_contents)
 
 		sleep(1 SECOND)
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
@@ -326,7 +326,7 @@
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
-			AM.set_loc(src.loc)
+			AM.set_loc(get_turf(src))
 			AM.pipe_eject(0)
 			AM?.throw_at(target, 5, 1)
 

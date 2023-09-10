@@ -45,5 +45,5 @@
 				if (src.mob.mind)
 					thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
 				boutput(M, thisR)
-			else if(isdead(M))
+			else
 				M.show_message(rendered, 2)

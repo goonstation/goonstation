@@ -23,8 +23,11 @@
 	else if ((M.health <= 0 || M.find_ailment_by_type(/datum/ailment/malady/flatline)) && src.health >= -75.0)
 		if (src == M && src.is_bleeding())
 			src.staunch_bleeding(M) // if they've got SOMETHING to do let's not just harass them for trying to do CPR on themselves
-		else
+		else if (ishuman(M))
 			src.administer_CPR(M)
+		else
+			src.visible_message("<span class='notice'>[src] shakes [M], trying to wake them up!</span>")
+			hit_twitch(M)
 	else if (M.is_bleeding())
 		src.staunch_bleeding(M)
 	else if (src.health > 0)
@@ -203,17 +206,19 @@
 
 	if (block_it_up)
 		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src, src)
-		src.put_in_hand(G, src.hand)
+		if(src.put_in_hand(G, src.hand))
+			playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
+			src.visible_message("<span class='alert'>[src] starts blocking!</span>")
+			SEND_SIGNAL(src, COMSIG_UNARMED_BLOCK_BEGIN, G)
+			src.setStatus("blocking", duration = INFINITE_STATUS)
+			block_begin(src)
+		else
+			qdel(G)
 
-		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-		src.visible_message("<span class='alert'>[src] starts blocking!</span>")
-		SEND_SIGNAL(src, COMSIG_UNARMED_BLOCK_BEGIN, G)
-		src.setStatus("blocking", duration = INFINITE_STATUS)
-		block_begin(src)
 		src.next_click = world.time + (COMBAT_CLICK_DELAY)
 
 /mob/living/proc/grab_block() //this is sorta an ugly but fuck it!!!!
-	if (src.grabbed_by && src.grabbed_by.len > 0)
+	if (src.grabbed_by && length(src.grabbed_by) > 0)
 		return 0
 
 	.= 1
@@ -313,6 +318,10 @@
 
 	//if (target.melee_attack_test(src, null, null, 1) != 1)
 	//	return
+	for(var/obj/item/grab/grab in target.equipped_list()) //if we're disarming the person grabbing us then resist instead
+		if (grab.affecting == src)
+			grab.do_resist()
+			return
 
 	var/datum/attackResults/disarm/msgs = calculate_disarm_attack(target, 0, 0, extra_damage, is_special)
 	msgs.damage_type = damtype
@@ -600,11 +609,12 @@
 		else
 			msgs.played_sound = pick(sounds_punch)
 		msgs.visible_message_self("<span class='alert'><B>[src] [src.punchMessage] [target], but it does absolutely nothing!</B></span>")
-		return
+		CRASH("calculate_melee_attack for mob [src] attacking mob [target] had a target_damage_multiplier of 0.")
+
 	if (!self_damage_multiplier)
 		msgs.played_sound = 'sound/impact_sounds/Generic_Snap_1.ogg'
 		msgs.visible_message_self("<span class='alert'><B>[src] hits [target] with a ridiculously feeble attack!</B></span>")
-		return
+		CRASH("calculate_melee_attack for mob [src] attacking mob [target] had a self_damage_multiplier of 0.")
 
 	msgs.played_sound = "punch"
 	var/do_punch = FALSE
@@ -676,11 +686,12 @@
 	if (!(src.traitHolder && src.traitHolder.hasTrait("glasscannon")))
 		msgs.stamina_self -= STAMINA_HTH_COST
 
-	//set attack message
-	if(pre_armor_damage > 0 && damage <= 0 )
-		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target], but [target]'s armor blocks it!</B></span>"
-	else
-		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
+	if(!do_kick)
+		//set attack message
+		if(pre_armor_damage > 0 && damage <= 0 )
+			msgs.base_attack_message = "<span class='alert'><B>[src] [do_punch ? src.punchMessage : "attacks"] [target], but [target]'s armor blocks it!</B></span>"
+		else
+			msgs.base_attack_message = "<span class='alert'><B>[src] [do_punch ? src.punchMessage : "attacks"] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
 
 	//check godmode/sanctuary/etc
 	var/attack_resistance = msgs.target.check_attack_resistance()
@@ -1009,33 +1020,28 @@
 				target.attackby_finished(owner)
 			target.UpdateDamageIcon()
 
+			if (damage > 1)
+				if (isrevolutionary(owner))	//attacker is rev, all heads who see the attack get mutiny buff
+					for (var/datum/mind/M in ticker?.mode?.get_living_heads())
+						if (M.current)
+							if (GET_DIST(owner,M.current) <= 7)
+								if (owner in viewers(7,M.current))
+									M.current.changeStatus("mutiny", 10 SECONDS)
 
-			if (ticker.mode && ticker.mode.type == /datum/game_mode/revolution)
-				var/datum/game_mode/revolution/R = ticker.mode
-
-				if (damage > 1)
-					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))	//attacker is rev, all heads who see the attack get mutiny buff
-						for (var/datum/mind/M in R.get_living_heads())
-							if (M.current)
-								if (GET_DIST(owner,M.current) <= 7)
-									if (owner in viewers(7,M.current))
-										M.current.changeStatus("mutiny", 10 SECONDS)
-
-				if(target.client && target.health < 0 && ishuman(target)) //Only do rev stuff if they have a client and are low health
-					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
-						if (R.add_revolutionary(target.mind))
-							for (var/datum/mind/M in target)
-								if (M.current)
-									M.current.changeStatus("newcause", 5 SECONDS)
-							target.HealDamage("All", max(30 - target.health,0), 0)
-							target.HealDamage("All", 0, max(30 - target.health,0))
+			if(target.client && target.health < 0 && ishuman(target)) //Only do rev stuff if they have a client and are low health
+				var/mob/living/carbon/human/H = target
+				if (H.can_be_converted_to_the_revolution())
+					if (isrevolutionary(owner))
+						if (H.mind?.add_antagonist(ROLE_REVOLUTIONARY, source = ANTAGONIST_SOURCE_CONVERTED))
+							H.changeStatus("newcause", 5 SECONDS)
+							H.HealDamage("All", max(30 - H.health,0), 0)
+							H.HealDamage("All", 0, max(30 - H.health,0))
 					else
-						if (R.remove_revolutionary(target.mind))
-							for (var/datum/mind/M in target)
-								if (M.current)
-									M.current.changeStatus("newcause", 5 SECONDS)
-							target.HealDamage("All", max(30 - target.health,0), 0)
-							target.HealDamage("All", 0, max(30 - target.health,0))
+						if (H.mind?.remove_antagonist(ROLE_REVOLUTIONARY))
+							H.delStatus("derevving") //Make sure they lose this status upon completion
+							H.changeStatus("newcause", 5 SECONDS)
+							H.HealDamage("All", max(30 - H.health,0), 0)
+							H.HealDamage("All", 0, max(30 - H.health,0))
 		clear(null)
 
 /datum/attackResults/disarm
@@ -1298,24 +1304,27 @@
 		if (istype(gloves, /obj/item/clothing/gloves/boxing))
 			sims.affectMotive("fun", 2.5)
 
-//return 1 on successful dodge or parry, 0 on fail
-/mob/living/proc/parry_or_dodge(mob/M, obj/item/W)
-	.= 0
-	if (prob(60) && M && src.stance == "defensive" && iswerewolf(src) && src.stat)
+/// return 1 on successful dodge or parry, 0 on fail
+/mob/proc/parry_or_dodge(mob/M, obj/item/W)
+	return 0
+
+/mob/living/parry_or_dodge(mob/M, obj/item/W)
+	if(!(M && src.stance == "defensive" && !src.stat))
+		return ..()
+	if(iswerewolf(src) && prob(60) || !iswerewolf(src) && prob(40))//dodge more likely, we're more agile than macho
 		src.set_dir(get_dir(src, M))
 		playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1)
-		//dodge more likely, we're more agile than macho
 		if (prob(60))
 			src.visible_message("<span class='alert'><B>[src] dodges the blow by [M]!</B></span>")
 		else
-			src.visible_message("<span class='alert'><B>[src] parries [M]'s attack, knocking them to the ground!</B></span>")
 			if (prob(50))
 				step_away(M, src, 15)
 			else
+				src.visible_message("<span class='alert'><B>[src] parries [M]'s attack, knocking them to the ground!</B></span>")
 				M.changeStatus("weakened", 4 SECONDS)
 				M.force_laydown_standup()
 		playsound(src.loc, 'sound/impact_sounds/kendo_parry_1.ogg', 65, 1)
-		.= 1
+		return 1
 
 /mob/living/proc/werewolf_tainted_saliva_transfer(var/mob/target)
 	if (iswerewolf(src))

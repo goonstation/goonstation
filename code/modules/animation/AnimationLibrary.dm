@@ -243,6 +243,8 @@
 //	..()
 /proc/attack_particle(var/mob/M, var/atom/target)
 	if (!M || !target || !M.attack_particle) return
+	if(istype(M, /mob/dead))
+		return
 	var/diff_x = target.x - M.x
 	var/diff_y = target.y - M.y
 
@@ -287,6 +289,8 @@
 /mob/var/last_interact_particle = 0
 
 /proc/interact_particle(var/mob/M, var/atom/target)
+	if(istype(M, /mob/dead))
+		return
 	if (!M || !target) return
 	if (world.time <= M.last_interact_particle + M.combat_click_delay) return
 	var/diff_x = target.x - M.x
@@ -604,6 +608,37 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		if (M.sprint_particle.loc == T)
 			M.sprint_particle.loc = null
 
+/obj/particle/chemical_reaction
+	icon = 'icons/effects/chemistry_effects.dmi'
+	plane = PLANE_OVERLAY_EFFECTS
+
+/obj/particle/chemical_shine
+	icon = 'icons/effects/chemistry_effects.dmi'
+	icon_state = "shine"
+	plane = PLANE_OVERLAY_EFFECTS
+
+/proc/chemistry_particle(var/datum/reagents/holder, var/datum/chemical_reaction/reaction)
+	if(!istype(holder.my_atom, /obj) || !holder.my_atom.loc)
+		return
+	var/obj/holder_object = holder.my_atom
+
+	var/obj/particle/chemical_reaction/chemical_reaction = new /obj/particle/chemical_reaction
+	var/y_offset = 0
+
+	if(!reaction.reaction_icon_color)
+		chemical_reaction.color = holder.get_average_rgb()
+	else
+		chemical_reaction.color = reaction.reaction_icon_color
+
+	y_offset = holder_object.get_chemical_effect_position()
+	chemical_reaction.set_loc(holder_object.loc)
+	chemical_reaction.icon_state = pick(reaction.reaction_icon_state)
+	chemical_reaction.pixel_x = holder_object.pixel_x
+	chemical_reaction.pixel_y = holder_object.pixel_y + y_offset
+
+	SPAWN(2 SECONDS)
+		qdel(chemical_reaction)
+
 /proc/attack_twitch(var/atom/A, move_multiplier=1, angle_multiplier=1)
 	if (!istype(A) || islivingobject(A))
 		return		//^ possessed objects use an animate loop that is important for readability. let's not interrupt that with this dumb animation
@@ -795,6 +830,27 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			animate(pixel_y = initial_y, transform = null, time = floatspeed, loop = loopnum, easing = SINE_EASING)
 	return
 
+/proc/animate_lag(atom/A, steps=15, loopnum=-1, magnitude=10, step_time_low=0.2 SECONDS, step_time_high = 0.25 SECONDS)
+	if (!istype(A))
+		return
+	for (var/i in 1 to steps)
+		if (i == 1)
+			animate(A,
+				pixel_x = rand(-magnitude, magnitude),
+				pixel_y = rand(-magnitude, magnitude),
+				time = randfloat(step_time_low, step_time_high),
+				loop = loopnum,
+				easing = JUMP_EASING
+			)
+		else
+			animate(
+				pixel_x = rand(-magnitude, magnitude),
+				pixel_y = rand(-magnitude, magnitude),
+				time = randfloat(step_time_low, step_time_high),
+				loop = loopnum,
+				easing = JUMP_EASING
+			)
+
 /proc/animate_revenant_shockwave(var/atom/A, var/loopnum = -1, floatspeed = 20, random_side = 1)
 	if (!istype(A))
 		return
@@ -896,15 +952,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(color = "#0000FF", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 	return
 
-/proc/animate_rainbow_glow(var/atom/A)
+/proc/animate_rainbow_glow(var/atom/A, min_time = 5, max_time = 10)
 	if (!istype(A) && !isclient(A) && !istype(A, /image/chat_maptext))
 		return
-	animate(A, color = "#FF0000", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-	animate(color = "#FFFF00", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-	animate(color = "#00FF00", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-	animate(color = "#00FFFF", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-	animate(color = "#0000FF", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-	animate(color = "#FF00FF", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
+	animate(A, color = "#FF0000", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
+	animate(color = "#FFFF00", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
+	animate(color = "#00FF00", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
+	animate(color = "#00FFFF", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
+	animate(color = "#0000FF", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
+	animate(color = "#FF00FF", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
 	return
 
 /proc/oscillate_colors(var/atom/A, var/list/colors_to_swap)
@@ -1105,7 +1161,19 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(!istype(A))
 		return
 
-	animate(A, pixel_x = px, pixel_y = py, time = T, easing = ease, flags=ANIMATION_PARALLEL)
+	var/image/underlay
+	if (isturf(A))
+		underlay = image('icons/turf/floors.dmi', icon_state = "solid_black")
+		underlay.appearance_flags |= RESET_TRANSFORM
+		underlay.plane = PLANE_UNDERFLOOR
+		A.underlays += underlay
+
+	animate(A, transform = list(1, 0, px, 0, 1, py), time = T, easing = ease, flags=ANIMATION_PARALLEL)
+
+	if (underlay)
+		SPAWN(T)
+			A.underlays -= underlay
+			qdel(underlay)
 
 /proc/animate_rest(var/atom/A, var/stand)
 	if(!istype(A))
@@ -1353,7 +1421,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/oldlayer = A.layer
 	var/old_canbegrabbed = null
 	A.layer = EFFECTS_LAYER + 1
-	A.anchored = 1
+	A.anchored = ANCHORED
 	if (!reverse)
 		A.alpha = 0
 		A.pixel_y = 176
@@ -1409,7 +1477,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if (!center) return
 
 	A.plane = PLANE_UNDERFLOOR
-	A.anchored = TRUE
+	A.anchored = ANCHORED
 	A.density = FALSE
 	if (ismob(A))
 		var/mob/M = A
@@ -1449,7 +1517,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	desc = "just standing next to it burns your very soul."
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "lava_floor"
-	anchored = TRUE
+	anchored = ANCHORED
 	plane = PLANE_UNDERFLOOR
 	layer = -100
 
@@ -1517,7 +1585,6 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	orig.color = T.color
 	orig.appearance_flags |= RESET_TRANSFORM
 	T.ReplaceWith(new_turf_type)
-	T.underlays += orig
 	T.layer--
 	switch(dir)
 		if(WEST)
@@ -1687,6 +1754,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 			M.update_canmove()
 
 /obj/decal/laserbeam
+	anchored = ANCHORED
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
 
@@ -1715,4 +1783,45 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	SPAWN(beam_time)
 		qdel(beam)
 
+proc/animate_orbit(atom/orbiter, center_x = 0, center_y = 0, radius = 32, time=8 SECONDS, loops=-1, clockwise=FALSE)
+	orbiter.pixel_x = center_x + radius
+	orbiter.pixel_y = center_y
 
+	animate(orbiter,
+		time = time/4,
+		easing = SINE_EASING | EASE_IN,
+		pixel_x = center_x,
+		flags = ANIMATION_PARALLEL,
+		loop = loops)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_OUT,
+		pixel_x = center_x - radius)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_IN,
+		pixel_x = center_x)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_OUT,
+		pixel_x = center_x + radius)
+
+	var/cw_factor = clockwise ? -1 : 1
+	animate(orbiter,
+		time = time/4,
+		easing = SINE_EASING | EASE_OUT,
+		pixel_y = center_y + radius * cw_factor,
+		flags = ANIMATION_PARALLEL,,
+		loop = loops)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_IN,
+		pixel_y = center_y)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_OUT,
+		pixel_y = center_y - radius * cw_factor)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_IN,
+		pixel_y = center_y)

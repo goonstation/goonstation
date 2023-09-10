@@ -1,24 +1,23 @@
+/** Basically, join any nearby valid groups.
+ *  If more than one, pick one with most members at my borders.
+ *  If can not find any but there was an ungrouped at border with me, call for group assembly. */
 /turf/simulated/proc/find_group()
-	//Basically, join any nearby valid groups
-	//	If more than one, pick one with most members at my borders
-	// If can not find any but there was an ungrouped at border with me, call for group assembly
-
 	var/turf/simulated/floor/north = get_step(src,NORTH)
 	var/turf/simulated/floor/south = get_step(src,SOUTH)
 	var/turf/simulated/floor/east = get_step(src,EAST)
 	var/turf/simulated/floor/west = get_step(src,WEST)
 
 	//Clear those we do not have access to
-	if(!gas_cross(north) || !istype(north))
+	if(!gas_cross(north) || !issimulatedturf(north))
 		north = null
-	if(!gas_cross(south) || !istype(south))
+	if(!gas_cross(south) || !issimulatedturf(south))
 		south = null
-	if(!gas_cross(east) || !istype(east))
+	if(!gas_cross(east) || !issimulatedturf(east))
 		east = null
-	if(!gas_cross(west) || !istype(west))
+	if(!gas_cross(west) || !issimulatedturf(west))
 		west = null
 
-	var/new_group_possible = 0
+	var/new_group_possible = FALSE
 
 	var/north_votes = 0
 	var/south_votes = 0
@@ -40,7 +39,7 @@
 				north_votes++
 				west = null
 		else
-			new_group_possible = 1
+			new_group_possible = TRUE
 
 	if(south)
 		if(south.parent)
@@ -54,7 +53,7 @@
 				south_votes++
 				west = null
 		else
-			new_group_possible = 1
+			new_group_possible = TRUE
 
 	if(east)
 		if(east.parent)
@@ -64,9 +63,7 @@
 				east_votes++
 				west = null
 		else
-			new_group_possible = 1
-
-//	boutput(world, "[north_votes], [south_votes], [east_votes]")
+			new_group_possible = TRUE
 
 	if(west)
 		if(west.parent)
@@ -76,10 +73,10 @@
 			parent = west.parent
 
 			air_master.tiles_to_update += west.parent.members
-			return 1
+			return TRUE
 
 		else
-			new_group_possible = 1
+			new_group_possible = TRUE
 
 	if(north_votes && (north_votes >= south_votes) && (north_votes >= east_votes))
 		if(north.parent.group_processing)
@@ -88,7 +85,7 @@
 		parent = north.parent
 
 		air_master.tiles_to_update += north.parent.members
-		return 1
+		return TRUE
 
 
 	if(south_votes  && (south_votes >= east_votes))
@@ -98,7 +95,7 @@
 		parent = south.parent
 
 		air_master.tiles_to_update += south.parent.members
-		return 1
+		return TRUE
 
 	if(east_votes)
 		if(east.parent.group_processing)
@@ -107,12 +104,12 @@
 		parent = east.parent
 
 		air_master.tiles_to_update += east.parent.members
-		return 1
+		return TRUE
 
 	if(new_group_possible)
 		air_master.assemble_group_turf(src)
-		return 1
+		return TRUE
 
 	else
 		air_master.active_singletons += src
-		return 1
+		return TRUE

@@ -1,7 +1,7 @@
 
 var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
-mob/new_player
-	anchored = 1
+/mob/new_player
+	anchored = ANCHORED
 
 	var/ready = 0
 	var/spawning = 0
@@ -12,14 +12,14 @@ mob/new_player
 	var/antag_fallthrough = FALSE
 
 #ifdef TWITCH_BOT_ALLOWED
-	var/twitch_bill_spawn = 0
+	var/twitch_bill_spawn = FALSE
 #endif
 
-	density = 0
-	stat = 2
+	density = FALSE
+	stat = STAT_DEAD
 	canmove = 0
 
-	anchored = 1	//  don't get pushed around
+	anchored = ANCHORED	//  don't get pushed around
 
 	var/datum/spend_spacebux/bank_menu
 
@@ -27,7 +27,7 @@ mob/new_player
 		. = ..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_ALWAYS)
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
-		ready = 1
+		ready = TRUE
 	#endif
 
 	// How could this even happen? Regardless, no log entries for unaffected mobs (Convair880).
@@ -205,7 +205,11 @@ mob/new_player
 						latejoin.color = json_decode("\[-0.152143,1.02282,-0.546681,1.28769,-0.143153,0.610996,-0.135547,0.120332,0.935685\]") //spriters beware
 						latejoin.owner = src.mind
 						src.mind.transfer_to(S)
+						if (S.emagged)
+							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an emagged cyborg.")
+							S.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
 						SPAWN(1 DECI SECOND)
+							S.bioHolder?.mobAppearance?.pronouns = S.client.preferences.AH.pronouns
 							S.choose_name()
 							qdel(src)
 					else
@@ -272,7 +276,9 @@ mob/new_player
 	proc/AttemptLateSpawn(var/datum/job/JOB, force=0)
 		if (!JOB)
 			return
-
+		if (src.is_respawned_player && (src.client.preferences.real_name in src.client.player.joined_names))
+			tgui_alert(src, "Please pick a different character to respawn as, you've already joined this round as [src.client.preferences.real_name].")
+			return
 		global.latespawning.lock()
 
 		if (JOB && (force || IsJobAvailable(JOB)))
@@ -314,12 +320,13 @@ mob/new_player
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
 			else if (character.traitHolder && character.traitHolder.hasTrait("pilot"))
-				boutput(character.mind.current,"<h3 class='notice'>You've become lost on your way to the station! Good luck!</h3>")
+				if (istype(character.loc, /obj/machinery/vehicle))
+					boutput(character.mind.current,"<h3 class='notice'>You've become lost on your way to the station! Good luck!</h3>")
 			else if (character.traitHolder && character.traitHolder.hasTrait("sleepy"))
 				SPAWN(10 SECONDS) //ugly hardcoding- matches the duration you're asleep for
 					boutput(character?.mind?.current,"<h3 class='notice'>Hey, you! You're finally awake!</h3>")
 				//As with the Stowaway trait, location setting is handled elsewhere.
-			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
+			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner))
 				// Location is set in bank_purchaseable Create()
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived through an alternative mode of travel! Good luck!</h3>")
 			else if (istype(ticker.mode, /datum/game_mode/assday))
@@ -366,6 +373,17 @@ mob/new_player
 				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
 				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
 					participationRecorder.record(character.mind.ckey)
+
+			// Apply any roundstart mutators to late join if applicable
+			roundstart_events(character)
+
+			//picky eater trait handling
+			if (ishuman(character) && character.traitHolder?.hasTrait("picky_eater"))
+				var/datum/trait/picky_eater/eater_trait = character.traitHolder.getTrait("picky_eater")
+				if (length(eater_trait.fav_foods) > 0)
+					boutput(character, eater_trait.explanation_text)
+					character.mind.store_memory(eater_trait.explanation_text)
+
 			SPAWN(0)
 				qdel(src)
 			global.latespawning.unlock()
@@ -375,6 +393,11 @@ mob/new_player
 			tgui_alert(src, "[JOB.name] is not available. Please try another.", "Job unavailable")
 
 		return
+
+	proc/roundstart_events(mob/living/player)
+		for(var/datum/random_event/start/until_playing/RE in random_events.delayed_start)
+			if(RE.include_latejoin && RE.is_crew_affected(player))
+				RE.apply_to_player(player)
 
 	proc/LateJoinLink(var/datum/job/J)
 		// This is pretty ugly but: whatever! I don't care.
@@ -625,7 +648,9 @@ a.latejoin-card:hover {
 			// the middle of the map is GeNeRaLlY part of the actual station. moreso than 1,1,1 at least
 			var/midx = round(world.maxx / 2)
 			var/midy = round(world.maxy / 2)
-			boutput(world, "No latejoin landmarks placed, dumping [src] to ([midx], [midy], 1)")
+			var/msg = "No latejoin landmarks placed, dumping [src] to ([midx], [midy], 1)"
+			message_admins(msg)
+			stack_trace(msg)
 			src.set_loc(locate(midx,midy,1))
 		else
 			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
@@ -640,6 +665,9 @@ a.latejoin-card:hover {
 			new_character = new J.mob_type(src.loc, client.preferences.AH, client.preferences)
 		else
 			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH, client.preferences) // fallback
+		new_character.dir = pick(NORTH, EAST, SOUTH, WEST)
+
+		src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)
 
 		close_spawn_windows()
 
@@ -649,6 +677,8 @@ a.latejoin-card:hover {
 
 		mind.transfer_to(new_character)
 
+		// Latejoin antag stuff
+
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/assday))
 			var/bad_type = ROLE_TRAITOR
 			makebad(new_character, bad_type)
@@ -656,15 +686,15 @@ a.latejoin-card:hover {
 			logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
 		else
 			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !src.is_respawned_player) // no new evils for the first 10 minutes or last 5 before shuttle
-				if (late_traitors && ticker.mode && ticker.mode.latejoin_antag_compatible == 1 && !(jobban_isbanned(new_character, "Syndicate")))
+				if (late_traitors && ticker.mode.latejoin_antag_compatible && !(jobban_isbanned(new_character, "Syndicate")))
 					var/livingtraitor = 0
 
 					for(var/datum/mind/brain in ticker.minds)
-						if(brain.current && checktraitor(brain.current)) // if a traitor
-							if (issilicon(brain.current) || brain.current.stat & 2 || brain.current.client == null) // if a silicon mob, dead or logged out, skip
+						if(brain.current && brain.is_antagonist())
+							if (issilicon(brain.current) || isdead(brain.current) || brain.current.client == null) // if a silicon mob, dead or logged out, skip
 								continue
 
-							livingtraitor = 1
+							livingtraitor = TRUE
 							logTheThing(LOG_DEBUG, null, "<b>Late join</b>: checking [new_character.ckey], found livingtraitor [brain.key].")
 							break
 
@@ -678,11 +708,15 @@ a.latejoin-card:hover {
 					else
 						bad_type = ROLE_TRAITOR
 
-					if ((!livingtraitor && prob(40)) || (livingtraitor && ticker.mode.latejoin_only_if_all_antags_dead == 0 && prob(4)))
-						makebad(new_character, bad_type)
-						new_character.mind.late_special_role = 1
-						logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
-						antagWeighter.record(role = bad_type, ckey = new_character.ckey, latejoin = 1)
+					// Check if they have this antag type enabled. If not, too bad!
+					// get_preference_for_role can't handle antag types under 'misc' like wrestler or wolf, so we need to special case those
+					var/antag_enabled = new_character.client?.preferences.vars[get_preference_for_role(bad_type) || get_preference_for_role(ROLE_MISC)]
+					if (antag_enabled)
+						if ((!livingtraitor && prob(40)) || (livingtraitor && !ticker.mode.latejoin_only_if_all_antags_dead && prob(4)))
+							makebad(new_character, bad_type)
+							new_character.mind.late_special_role = TRUE
+							logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
+							antagWeighter.record(role = bad_type, ckey = new_character.ckey, latejoin = 1)
 
 
 
@@ -690,10 +724,9 @@ a.latejoin-card:hover {
 		if(new_character?.client)
 			new_character.client.loadResources()
 
-
-
 		new_character.temporary_attack_alert(1200) //Messages admins if this new character attacks someone within 2 minutes of signing up. Might help detect grief, who knows?
 		new_character.temporary_suicide_alert(1500) //Messages admins if this new character commits suicide within 2 1/2 minutes. probably a bit much but whatever
+
 		return new_character
 
 	Move()
@@ -712,76 +745,18 @@ a.latejoin-card:hover {
 		var/datum/mind/traitor = traitormob.mind
 		ticker.mode.traitors += traitor
 
-		var/objective_set_path = null
-		// This is temporary for the new antagonist system, to prevent creating objectives for roles that have an associated datum.
-		// It should be removed when all antagonists are on the new system.
-		var/do_objectives = TRUE
 		switch (type)
 			if (ROLE_TRAITOR)
 				if (traitor.assigned_role)
 					traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
 				else // this proc is potentially called on latejoining players before they have job equipment - we set the antag up afterwards if this is the case
 					traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN, late_setup = TRUE)
-				do_objectives = FALSE
 
-			if (ROLE_ARCFIEND)
+			if (ROLE_ARCFIEND, ROLE_SALVAGER, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF, ROLE_WRESTLER, ROLE_HUNTER, ROLE_GRINCH, ROLE_WRAITH, ROLE_FLOCKMIND)
 				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				do_objectives = FALSE
-
-			if (ROLE_CHANGELING)
-				traitor.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				do_objectives = FALSE
-
-			if (ROLE_VAMPIRE)
-				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				do_objectives = FALSE
-
-			if (ROLE_WRESTLER)
-				traitor.special_role = ROLE_WRESTLER
-				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-				traitormob.make_wrestler(1)
-
-			if (ROLE_GRINCH)
-				traitor.special_role = ROLE_GRINCH
-				objective_set_path = /datum/objective_set/grinch
-				traitormob.make_grinch()
-
-			if (ROLE_HUNTER)
-				traitor.add_antagonist(type, do_equip = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				do_objectives = FALSE
-
-			if (ROLE_WEREWOLF)
-				traitor.special_role = ROLE_WEREWOLF
-				objective_set_path = /datum/objective_set/werewolf
-				traitormob.make_werewolf()
-
-			if (ROLE_WRAITH)
-				traitor.special_role = ROLE_WRAITH
-				traitormob.make_wraith()
-				generate_wraith_objectives(traitor)
 
 			else // Fallback if role is unrecognized.
 				traitor.special_role = ROLE_TRAITOR
-			#ifdef RP_MODE
-				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-			#else
-				objective_set_path = pick(typesof(/datum/objective_set/traitor))
-			#endif
-
-		if (do_objectives)
-			if (!isnull(objective_set_path))
-				if (ispath(objective_set_path, /datum/objective_set))
-					new objective_set_path(traitor)
-				else if (ispath(objective_set_path, /datum/objective))
-					ticker.mode.bestow_objective(traitor, objective_set_path)
-
-			var/obj_count = 1
-			for(var/datum/objective/objective in traitor.objectives)
-				#ifdef CREW_OBJECTIVES
-				if (istype(objective, /datum/objective/crew)) continue
-				#endif
-				boutput(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-				obj_count++
 
 	proc/close_spawn_windows()
 		if(client)
@@ -883,7 +858,7 @@ a.latejoin-card:hover {
 		if (src.client.has_login_notice_pending(TRUE))
 			return
 
-		if(tgui_alert(src, "By choosing to observe the round, your DNR will be set and you forfeit the chance to participate. Are you sure you wish to do this?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
+		if(tgui_alert(src, "Join the round as an observer?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
 			if(!src.client) return
 			var/mob/dead/observer/observer = new(src)
 			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
@@ -907,12 +882,13 @@ a.latejoin-card:hover {
 			observer.UpdateName()
 
 			if(!src.mind) src.mind = new(src)
-
-			src.mind.get_player()?.dnr = TRUE
+			ticker.minds |= src.mind
 			src.mind.get_player()?.joined_observer = TRUE
 			src.mind.transfer_to(observer)
 			if(observer?.client)
 				observer.client.loadResources()
+
+			respawn_controller.subscribeNewRespawnee(observer?.client?.ckey)
 
 			qdel(src)
 

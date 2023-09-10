@@ -7,9 +7,10 @@ var/datum/explosion_controller/explosions
 	var/list/queued_turfs_blame = list()
 	var/distant_sound = 'sound/effects/explosionfar.ogg'
 	var/exploding = 0
+	var/kaboom_ready = FALSE
 	var/next_turf_safe = FALSE
 
-	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE)
+	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE, range_cutoff_fraction=1)
 		SEND_SIGNAL(source, COMSIG_ATOM_EXPLODE, args)
 		if(istype(source)) // Oshan hotspots rudely send a datum here 😐
 			for(var/atom/movable/loc_ancestor in obj_loc_chain(source))
@@ -30,7 +31,7 @@ var/datum/explosion_controller/explosions
 			return
 		if (epicenter.loc:sanctuary)
 			return//no boom boom in sanctuary
-		var/datum/explosion/E = new/datum/explosion(source, epicenter, power, brisance, angle, width, usr, turf_safe)
+		var/datum/explosion/E = new/datum/explosion(source, epicenter, power, brisance, angle, width, usr, turf_safe, range_cutoff_fraction)
 		if(exploding)
 			queued_explosions += E
 		else
@@ -45,6 +46,7 @@ var/datum/explosion_controller/explosions
 			queued_turfs_blame[T] = new_blame[T]
 			if(c++ % 100 == 0)
 				LAGCHECK(LAG_HIGH)
+		kaboom_ready = TRUE
 
 	proc/highest_explosion_power(obj/object)
 		for (var/turf/T in object.locs)
@@ -56,7 +58,6 @@ var/datum/explosion_controller/explosions
 		exploding = 1
 		RL_Suspend()
 
-		var/needrebuild = 0
 		var/p
 		var/datum/explosion/explosion
 
@@ -64,7 +65,6 @@ var/datum/explosion_controller/explosions
 			queued_turfs[T] = 2 * (queued_turfs[T])**(1 / (2 * RSS_SCALE))
 			p = queued_turfs[T]
 			explosion = queued_turfs_blame[T]
-			//boutput(world, "P1 [p]")
 			if (p >= 6)
 				for (var/mob/M in T)
 					M.ex_act(1, explosion?.last_touched, p)
@@ -86,12 +86,8 @@ var/datum/explosion_controller/explosions
 				var/severity
 				if (power >= 6)
 					severity = 1
-					if (istype(O, /obj/cable)) // these two are hacky, newcables should relieve the need for this
-						needrebuild = 1
 				else if (power > 3)
 					severity = 2
-					if (istype(O, /obj/cable))
-						needrebuild = 1
 				else
 					severity = 3
 				O.ex_act(severity, explosion?.last_touched, power)
@@ -107,7 +103,6 @@ var/datum/explosion_controller/explosions
 #endif
 			p = queued_turfs[T]
 			explosion = queued_turfs_blame[T]
-			//boutput(world, "P2 [p]")
 #ifdef EXPLOSION_MAPTEXT_DEBUGGING
 			if (p >= 6)
 				T.maptext = "<span style='color: #ff0000;' class='pixel c sh'>[p]</span>"
@@ -127,13 +122,16 @@ var/datum/explosion_controller/explosions
 #endif
 		LAGCHECK(LAG_HIGH)
 
+		kaboom_ready = FALSE
 		queued_turfs.len = 0
 		queued_turfs_blame.len = 0
 		defer_powernet_rebuild = 0
 		defer_camnet_rebuild = 0
 		exploding = 0
 		RL_Resume()
-		if (needrebuild)
+
+		if(length(deferred_powernet_objs))
+			deferred_powernet_objs = list()
 			makepowernets()
 
 		rebuild_camera_network()
@@ -142,7 +140,7 @@ var/datum/explosion_controller/explosions
 	proc/process()
 		if (exploding)
 			return
-		else if (length(queued_turfs))
+		else if (kaboom_ready)
 			kaboom()
 
 		if (length(queued_explosions))
@@ -169,9 +167,10 @@ var/datum/explosion_controller/explosions
 	var/width
 	var/user
 	var/turf_safe
+	var/range_cutoff_fraction
 	var/last_touched = "*null*"
 
-	New(atom/source, turf/epicenter, power, brisance, angle, width, user, turf_safe=FALSE)
+	New(atom/source, turf/epicenter, power, brisance, angle, width, user, turf_safe=FALSE, range_cutoff_fraction=1)
 		..()
 		src.source = source
 		src.epicenter = epicenter
@@ -181,6 +180,7 @@ var/datum/explosion_controller/explosions
 		src.width = width
 		src.user = user
 		src.turf_safe = turf_safe
+		src.range_cutoff_fraction = range_cutoff_fraction
 
 	proc/logMe(var/power)
 		if(istype(src.source))
@@ -216,7 +216,7 @@ var/datum/explosion_controller/explosions
 			E.set_up(epicenter)
 			E.start()
 
-		var/radius = round(sqrt(power), 1) * brisance
+		var/radius = round(sqrt(power), 1) * brisance * range_cutoff_fraction
 
 		if (istype(source)) // Cannot read null.fingerprintslast
 			last_touched = source.fingerprintslast
@@ -262,9 +262,8 @@ var/datum/explosion_controller/explosions
 				nodes[target] = new_value
 				next_open[target] = 1
 
-		radius += 1 // avoid a division by zero
 		for (var/turf/T as anything in nodes) // inverse square law (IMPORTANT) and pre-stun
-			var/p = power / ((radius-nodes[T])**2)
+			var/p = power / (((radius-nodes[T]) / brisance + 1)**2)
 			nodes[T] = p**RSS_SCALE
 			blame[T] = src
 			p = min(p, 10)
@@ -279,5 +278,9 @@ var/datum/explosion_controller/explosions
 				C.set_clothing_icon_dirty()
 
 		explosions.queue_damage(nodes, blame)
+
+		// cleanup, we're done
+		src.source = null
+		src.epicenter = null
 
 #undef RSS_SCALE

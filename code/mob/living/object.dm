@@ -19,10 +19,12 @@
 	gender = NEUTER
 
 	blinded = FALSE
-	anchored = FALSE
+	anchored = UNANCHORED
 	a_intent = "disarm"
 	can_bleed = FALSE
 	var/name_prefix = "living "
+
+	faction = FACTION_WRAITH
 
 	New(var/atom/loc, var/obj/possessed, var/mob/controller)
 		..(loc, null, null)
@@ -35,9 +37,6 @@
 		src.attach_hud(hud)
 		src.zone_sel = new(src)
 		src.attach_hud(zone_sel)
-
-		if (controller)
-			message_admins("[key_name(controller)] possessed [possessed_thing] at [log_loc(loc)].")
 
 		if (src.possessed_item)
 			src.possessed_item.cant_drop = TRUE
@@ -67,7 +66,7 @@
 		src.pixel_x = possessed_thing.pixel_x
 		src.pixel_y = possessed_thing.pixel_y
 		src.set_density(possessed_thing.density)
-		src.RL_SetOpacity(possessed_thing.opacity)
+		src.set_opacity(possessed_thing.opacity)
 		src.create_submerged_images()
 		src.flags = possessed_thing.flags
 		src.event_handler_flags = src.flags
@@ -255,6 +254,7 @@
 				src.possessed_thing.set_loc(get_turf(src))
 			if (src.possessed_item)
 				possessed_item.cant_drop = initial(possessed_item.cant_drop)
+			qdel(src.dummy)
 
 		if (src.owner)
 			src.owner.set_loc(get_turf(src))
@@ -471,6 +471,5 @@
 		else
 			spooker.set_a_intent(INTENT_HARM)
 			spooker.zone_sel.select_zone("head") // head for plates n stuff
-		spooker.hud.update_intent()
 
 	//TODO make guns fire at range?, c saber deflect (if possible i forget if arbitrary mobs can block)

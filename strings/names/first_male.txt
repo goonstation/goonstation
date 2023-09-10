@@ -12,7 +12,6 @@ names@=
 	Aden
 	Adrian
 	Ahmed
-	Ai
 	Aidan
 	Aiden
 	Akeem
@@ -64,14 +63,11 @@ names@=
 	Avery
 	Axel
 	Ayden
-	Ba
-	Baek-Hyun
+	Baekhyun
 	Bahadurjit
-	Bai
 	Baihu
 	Baldric
 	Balvan
-	Bao
 	Bartholomew
 	Beau
 	Beckett
@@ -83,8 +79,6 @@ names@=
 	Binah
 	Binh
 	Blake
-	Bon-Hwa
-	Boon-nam
 	Botan
 	Braden
 	Bradley
@@ -119,7 +113,6 @@ names@=
 	Butch
 	Byrne
 	Byron
-	Ca
 	Cade
 	Caden
 	Caiden
@@ -152,13 +145,15 @@ names@=
 	Charlie
 	Charlton
 	Chase
+	Chihtian
 	Chiko
 	Chinh
 	Chip
 	Chris
 	Christian
 	Christopher
-	Chung-Hee
+	Chunghee
+	Cixin
 	Clark
 	Claudius
 	Clayton
@@ -187,7 +182,7 @@ names@=
 	Cruz
 	Curtis
 	Cy
-	Dae-Hyun
+	Daehyun
 	Dai
 	Dakota
 	Dallas
@@ -199,7 +194,6 @@ names@=
 	Daniel
 	Danny
 	Dante
-	Daoming
 	Dapper
 	Darcey
 	Darell
@@ -217,6 +211,7 @@ names@=
 	Deandre
 	Deangelo
 	Declan
+	Demetrius
 	Denholm
 	Dennis
 	Derek
@@ -233,7 +228,7 @@ names@=
 	Dominic
 	Dominick
 	Donald
-	Dong-Hyun
+	Donghyun
 	Donny
 	Donovan
 	Dorian
@@ -280,6 +275,7 @@ names@=
 	Ezekiel
 	Ezra
 	Fabian
+	Fabin
 	Faheem
 	Faisal
 	Fayez
@@ -296,7 +292,9 @@ names@=
 	Frank
 	Frankie
 	Franklin
+	Franz
 	Fridge
+	Frazer
 	Fulton
 	Gabriel
 	Gael
@@ -308,6 +306,7 @@ names@=
 	Gavin
 	George
 	Gerardo
+	Gian
 	Giovanni
 	Goddard
 	Godwin
@@ -331,12 +330,12 @@ names@=
 	Guohua
 	Guoqiang
 	Gustavo
+	Guy
 	Hafeez
-	Hai
 	Halvar
 	Hampus
-	Han
 	Hansuke
+	Hanwen
 	Haoyu
 	Happy
 	Harish
@@ -353,6 +352,7 @@ names@=
 	Hector
 	Henderson
 	Henry
+	Herbert
 	Hinata
 	Holden
 	Homer
@@ -364,6 +364,7 @@ names@=
 	Hungry
 	Hunter
 	Ian
+	Igor
 	Irvine
 	Isaac
 	Isaiah
@@ -381,6 +382,7 @@ names@=
 	Jackson
 	Jacob
 	Jacoby
+	Jacques
 	Jaden
 	Jadon
 	Jaiden
@@ -402,6 +404,7 @@ names@=
 	Jasper
 	Javier
 	Javon
+	Jawad
 	Jaxon
 	Jaxson
 	Jay
@@ -412,12 +415,13 @@ names@=
 	Jaylen
 	Jayne
 	Jayson
+	Jazz
 	Jean-Luc
 	Jeb
 	Jed
 	Jeffrey
 	Jemmy
-	Jeong-Hoon
+	Jeonghoon
 	Jeremiah
 	Jeremy
 	Jermaine
@@ -425,7 +429,7 @@ names@=
 	Jerry
 	Jesse
 	Jesus
-	Ji-Hoon
+	Jihoon
 	Jianguo
 	Jianjun
 	Jianping
@@ -460,7 +464,10 @@ names@=
 	Julian
 	Julio
 	Julius
+	Jumbo
 	Jun
+	Junguo
+	Junior
 	Junjie
 	Justice
 	Justin
@@ -473,7 +480,6 @@ names@=
 	Kaleb
 	Kameron
 	Kane
-	Kao
 	Kareem
 	Karson
 	Kayden
@@ -496,6 +502,7 @@ names@=
 	Koji
 	Kolton
 	Krishiv
+	Kristian
 	Kristopher
 	Kyle
 	Kyler
@@ -521,14 +528,13 @@ names@=
 	Leonel
 	Leroy
 	Levi
-	Li
 	Liam
 	Lief
 	Lijun
 	Lincoln
 	Linden
 	Linton
-	Liu
+	Linus
 	Logan
 	Lorde
 	Lorenzo
@@ -551,6 +557,7 @@ names@=
 	Manley
 	Manuel
 	Marc
+	Marcello
 	Marco
 	Marcos
 	Marcus
@@ -585,7 +592,7 @@ names@=
 	Miles
 	Milo
 	Milton
-	Min
+	Ming
 	Minghao
 	Minoru
 	Mister
@@ -608,7 +615,6 @@ names@=
 	Nehemiah
 	Nelson
 	Nerdy
-	Nguyen
 	Nicholas
 	Nick
 	Nickolas
@@ -617,6 +623,7 @@ names@=
 	Noah
 	Noel
 	Nolan
+	Octavio
 	Oddball
 	Ojasvat
 	Oliver
@@ -634,6 +641,7 @@ names@=
 	Paget
 	Parker
 	Patrick
+	Patryk
 	Patton
 	Paul
 	Pavel
@@ -654,16 +662,16 @@ names@=
 	Prem
 	Preston
 	Punyaa
-	Puyi
 	Qianfan
 	Qiang
+	Qiufeng
 	Quentin
-	Qui
 	Quinn
 	Quinton
 	Rafael
 	Ramon
 	Randy
+	Rahmat
 	Rasheed
 	Rastus
 	Raul
@@ -704,6 +712,7 @@ names@=
 	Romayne
 	Romeo
 	Ronald
+	Rongpei
 	Roscoe
 	Roswell
 	Rowan
@@ -728,12 +737,13 @@ names@=
 	Santiago
 	Saul
 	Sawyer
+	Sayed
 	Scott
 	Scotty
 	Sean
 	Sebastian
 	Seiji
-	Seo-Jun
+	Seojun
 	Sergio
 	Seth
 	Seymour
@@ -743,7 +753,6 @@ names@=
 	Shawn
 	Shen
 	Shiloh
-	Shuai
 	Sigurd
 	Silas
 	Simon
@@ -755,14 +764,15 @@ names@=
 	Sorrel
 	Spencer
 	Spike
+	Stan
 	Stephen
 	Steven
-	Sung-Min
+	Stuart
+	Sungmin
 	Suveer
 	Sybil
 	Syd
-	Tae-Hyun
-	Tai
+	Taehyun
 	Talon
 	Tamsin
 	Tanet
@@ -772,6 +782,8 @@ names@=
 	Tate
 	Taylor
 	Teiji
+	Ted
+	Teddy
 	Tel
 	Terrell
 	Terry
@@ -817,29 +829,27 @@ names@=
 	Ward
 	Warner
 	Wayne
-	Wei
 	Wesley
 	Weston
 	Whitaker
 	William
 	Willy
 	Winifred
+	Winston
 	Woodrow
 	Woody
 	Wyatt
 	Xander
 	Xavier
-	Xiao
-	Xin
+	Xiaofeng
 	Yahir
-	Yan
 	Yanghao
-	Yao
 	Yaseen
-	Young-Chin
-	Young-Soo
-	Yu
+	Youngchin
+	Youngsoo
+	Yixiang
 	Yuhang
+	Yunxi
 	Yuxuan
 	Yuze
 	Zachariah
@@ -852,7 +862,7 @@ names@=
 	Zehaan
 	Zeke
 	Zhi
-	Zhi-Ming
+	Zhiming
 	Zhu
 	Zihai
 	Zion

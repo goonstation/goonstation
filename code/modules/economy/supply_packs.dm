@@ -45,7 +45,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 	proc/create(var/mob/creator)
 		var/obj/storage/S
-		if (!ispath(containertype) && contains.len > 1)
+		if (!ispath(containertype) && length(contains) > 1)
 			containertype = text2path(containertype)
 			if (!ispath(containertype))
 				containertype = /obj/storage/crate // this did not need to be a string
@@ -164,6 +164,26 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Glass Sheets Crate - 50 pack"
 
+/datum/supply_packs/wood10
+	name = "10 Wooden Sheets"
+	desc = "x10 Wooden Sheets"
+	category = "Basic Materials"
+	contains = list(/obj/item/sheet/wood)
+	amount = 10
+	cost = 500
+	containertype = /obj/storage/crate/wooden
+	containername = "Wooden Sheets Crate - 10 pack"
+
+/datum/supply_packs/wood50
+	name = "50 Wooden Sheets"
+	desc = "x50 Wooden Sheets"
+	category = "Basic Materials"
+	contains = list(/obj/item/sheet/wood)
+	amount = 50
+	cost = 2500
+	containertype = /obj/storage/crate/wooden
+	containername = "Wooden Sheets Crate - 50 pack"
+
 /datum/supply_packs/dryfoods
 	name = "Catering: Dry Goods Crate"
 	desc = "x25 Assorted Cooking Ingredients"
@@ -188,8 +208,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/food/drinks/milk = 4,
 					/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = 3,
-					/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/salmon,
-					/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/white,
+					/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/salmon,
+					/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/white,
 					/obj/item/kitchen/food_box/egg_box = 3,
 					/obj/item/storage/box/bacon_kit = 2)
 	cost = 1500
@@ -246,7 +266,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Engineering Crate"
 	desc = "x2 Mechanical Toolbox, x2 Welding Mask, x2 Insulated Coat"
 	category = "Engineering Department"
-	contains = list(/obj/item/storage/toolbox/mechanical = 2,
+	contains = list(/obj/item/storage/toolbox/mechanical/orange_tools = 2,
 					/obj/item/clothing/head/helmet/welding = 2,
 					/obj/item/clothing/suit/wintercoat/engineering = 2)
 	cost = 1000
@@ -257,8 +277,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Electrical Maintenance Crate"
 	desc = "x2 Electrical Toolbox, x2 Multi-Tool, x2 Insulated Gloves"
 	category = "Engineering Department"
-	contains = list(/obj/item/storage/toolbox/electrical = 2,
-					/obj/item/device/multitool = 2,
+	contains = list(/obj/item/storage/toolbox/electrical/orange_tools = 2,
+					/obj/item/device/multitool/orange = 2,
 					/obj/item/clothing/gloves/yellow = 2)
 	cost = 2500
 	containertype = /obj/storage/crate
@@ -449,6 +469,19 @@ ABSTRACT_TYPE(/datum/supply_packs)
 		for(var/obj/item/bee_egg_carton/carton in beez)
 			carton.ourEgg.blog = "ordered by [key_name(creator)]|"
 		return beez
+
+/datum/supply_packs/fishing
+	name = "Angling Starter Kit"
+	desc = "A full complement of fishing tools for the amateur angler."
+	category = "Civilian Department"
+	contains = list(/obj/item/fishing_rod/basic,
+					/obj/item/wrench,
+					/obj/submachine/fishing_upload_terminal/portable,
+					/obj/submachine/weapon_vendor/fishing/portable,
+					/obj/fishing_pool/portable)
+	cost = 500
+	containertype = /obj/storage/crate
+	containername = "Angling Starter Kit"
 
 /datum/supply_packs/chemical
 	name = "Chemistry Resupply Crate"
@@ -652,6 +685,19 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Party Supplies"
 
+/datum/supply_packs/wedding
+	name = "Wedding Supplies"
+	desc = "Your very own DIY wedding! Chaplain not included."
+	contains = list(/obj/item/clothing/under/gimmick/wedding_dress = 2,
+					/obj/item/clothing/head/veil = 2,
+					/obj/item/clothing/under/misc/fancy_vest = 2,
+					/obj/item/clothing/suit/tuxedo_jacket = 2,
+					/obj/item/clothing/gloves/ring = 2,
+					/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne = 1)
+	cost = 10000
+	containertype = /obj/storage/crate
+	containername = "Wedding Supplies"
+
 /datum/supply_packs/glowsticks
 	name = "Emergency Glowsticks Crate - 4 pack"
 	desc = "x4 Glowsticks Box (28 glowsticks total)"
@@ -751,6 +797,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = 2000
 	containertype = /obj/storage/crate/packing
 	containername = "Animal Import Kit"
+
+/datum/supply_packs/pet_carrier
+	name = "Pet Carrier"
+	desc = "A hand-held crate used in the convenient storage and transportation of small animals. Warranty voided if used to transport pet rocks or \
+			tortoises."
+	category = "Civilian Department"
+	contains = list(/obj/item/pet_carrier)
+	cost = 1000
+	containertype = /obj/storage/crate/packing
+	containername = "Pet Carrier"
 
 /datum/supply_packs/takeout_chinese
 	name = "Golden Gannet Delivery"
@@ -893,7 +949,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/body_bag = 10,
 					/obj/item/reagent_containers/glass/bottle/formaldehyde,
 					/obj/item/reagent_containers/syringe,
-					/obj/item/storage/bible)
+					/obj/item/bible)
 	cost = 10000
 	containertype = /obj/storage/closet/coffin
 	containername = "Morgue Supplies"
@@ -1100,7 +1156,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Scrap Furnishings Crate"
 	desc = "A flat-packed set of...trash and scrap parts. I guess you could make furniture out of it?"
 	contains = list(/obj/item/furniture_parts/table/scrap = 4,
-					/obj/item/furniture_parts/wood_chair/scrap = 4)
+					/obj/item/furniture_parts/dining_chair/scrap = 4)
 	cost = 20000
 	containertype = /obj/storage/crate/wooden
 	containername = "Scrap Furnishings Crate"
@@ -1108,7 +1164,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 /datum/supply_packs/furniture_regal
 	name = "Regal Furnishings Crate"
 	desc = "A set of very fancy flat-packed, regal furniture."
-	contains = list(/obj/item/furniture_parts/wood_chair/regal = 4,
+	contains = list(/obj/item/furniture_parts/dining_chair/regal = 4,
 					/obj/item/furniture_parts/table/regal = 4,
 					/obj/item/furniture_parts/decor/regallamp = 2)
 	cost = 80000
@@ -1170,6 +1226,27 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = 5000
 	containertype = /obj/storage/crate/wooden
 	containername = "Kendo Crate"
+
+/datum/supply_packs/obon
+	name = "Obon Festival Crate"
+	desc = {"Contains traditional Space Japanese robes and fireworks for the observance of Obon; a syncretic summer festival fusing indigenous Japanese spiritual beliefs
+			with the Buddhist tradition of reverence for the dead."}
+	contains = list(/obj/item/clothing/under/gimmick/yukata/plain/gray,
+					/obj/item/clothing/under/gimmick/yukata/plain/black,
+					/obj/item/clothing/under/gimmick/yukata/plain/cream,
+					/obj/item/clothing/under/gimmick/yukata/plain/navy,
+					/obj/item/clothing/under/gimmick/yukata/plain/teal,
+					/obj/item/clothing/under/gimmick/yukata/floral/blue,
+					/obj/item/clothing/under/gimmick/yukata/floral/orange,
+					/obj/item/clothing/under/gimmick/yukata/floral/yellow,
+					/obj/item/clothing/under/gimmick/yukata/floral/red,
+					/obj/item/clothing/under/gimmick/yukata/floral/black,
+					/obj/item/clothing/shoes/sandal = 10,
+					/obj/fireworksbox = 2,
+					/obj/item/firework = 5)
+	cost = 3000
+	containertype = /obj/storage/crate/wooden
+	containername = "Obon Festival Crate"
 
 /datum/supply_packs/sponge
 	name = "Sponge Capsule Crate"
@@ -1349,6 +1426,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/secure/crate
 	containername = "Construction Equipment"
 
+/datum/supply_packs/lawrack
+	name = "AI Law Rack ManuDrive Crate"
+	desc = "A single-use ManuDrive for creating a replacement Law Rack for your Automated Intelligence unit. Note: Bring your own law modules."
+	category = "Engineering Department"
+	contains = list(/obj/item/disk/data/floppy/manudrive/law_rack/singleuse)
+	cost = 30000
+	containertype = /obj/storage/secure/crate
+	containername = "AI Law Rack ManuDrive Crate (Cardlocked \[Heads])"
+	access = access_heads
+
 /* ================================================= */
 /* -------------------- Complex -------------------- */
 /* ================================================= */
@@ -1474,8 +1561,6 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/crate
 	containername = "Cargo Bay Kit"
 
-//Nadir is not intended to have station pods/submarines
-#ifndef MAP_OVERRIDE_NADIR
 /datum/supply_packs/complex/pod_kit
 	name = "Pod Production Kit"
 	desc = "Frames: 1x Ship Component Fabricator, 1x Reclaimer"
@@ -1484,7 +1569,6 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	cost = 5000
 	containertype = /obj/storage/crate
 	containername = "Pod Production Kit"
-#endif
 
 /datum/supply_packs/complex/turret_kit
 	name = "Defense Turret Kit"
@@ -1539,6 +1623,15 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	cost = 20000
 	containertype = /obj/storage/crate
 	containername = "Power Kit"
+
+/datum/supply_packs/complex/basic_power_kit
+	name = "Emergency Power Equipment"
+	desc = "Frames: 2x Circular Power Treadmills"
+	category = "Engineering Department"
+	frames = list(/obj/machinery/power/power_wheel/hamster = 2)
+	cost = 15000
+	containertype = /obj/storage/crate
+	containername = "Crew Power Generation Kit"
 
 /datum/supply_packs/complex/mainframe_kit
 	name = "Computer Core Kit"
@@ -1822,8 +1915,35 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/item/instrument/banjo)
 	containertype = /obj/storage/crate/wooden
 
-//Western
+/datum/supply_packs/news
+	name = "Old Newspaper Set"
+	desc = "A bunch of old newspapers that we wanted to get rid of. Please take them off our hands."
+	cost = 200
+	containername = "Newspaper Crate"
+	contains = list(/obj/item/paper/newspaper/rolled)
+	amount = 8
+	containertype = /obj/storage/crate/packing
 
+/datum/supply_packs/electricguitar
+	name = "Electric Guitar Kit"
+	desc = "1x Electric Guitar"
+	category = "Civilian Department"
+	cost = 2000
+	containername = "Electric Guitar Kit"
+	contains = list(/obj/item/instrument/electricguitar)
+	containertype = /obj/storage/crate/wooden
+
+/datum/supply_packs/guitar
+	name = "Acoustic Guitar Kit"
+	desc = "1x Acoustic Guitar"
+	category = "Civilian Department"
+	cost = 2000
+	containername = "Acoustic Guitar Kit"
+	contains = list(/obj/item/instrument/guitar)
+	containertype = /obj/storage/crate/wooden
+
+
+//Western
 /datum/supply_packs/west_coats
 	name = "Dusty Old Coats"
 	desc = "4x coats in various colors."

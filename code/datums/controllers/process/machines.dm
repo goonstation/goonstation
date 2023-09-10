@@ -25,12 +25,12 @@
 
 	proc/d_print()
 		for(var/obj/machinery/machine in src.machines)
-			boutput(world,"[machine.name] : [machine.type]")
+			boutput(world,"<span class='admin'>[machine.name] : [machine.type]</span>")
 
 	doWork()
 		var/c = 0
 
-		if (ticker % 8 == 0)
+		if (ticker % 4 == 0)
 			src.atmos_machines = by_cat[TR_CAT_ATMOS_MACHINES]
 			for (var/obj/machinery/machine as anything in atmos_machines)
 				if( !machine || machine.z == 4 && !Z4_ACTIVE || istype(machine.loc, /obj/item/electronics/frame) ) continue
@@ -45,7 +45,7 @@
 
 				if (!(c++ % 100))
 					scheck()
-		if (ticker % 8 == 1)
+		if (ticker % 4 == 1)
 			src.pipe_networks = global.pipe_networks
 			for(var/X in src.pipe_networks)
 				if(!X) continue
@@ -74,9 +74,9 @@
 	#ifdef MACHINE_PROCESSING_DEBUG
 				register_machine_time(PN, world.time - t)
 
-				if(length(detailed_machine_power))
-					detailed_machine_power_prev = detailed_machine_power
-					detailed_machine_power = list()
+				if(length(detailed_power_data.areas))
+					detailed_power_data_last = detailed_power_data
+					detailed_power_data = new
 	#endif
 				if (!(c++ % 100))
 					scheck()
@@ -118,5 +118,29 @@ proc/register_machine_time(var/datum/machine, var/time)
 	mtl[1] += time
 	mtl[2]++
 
+/datum/machine_power_data
+	var/list/area/areas
+	var/list/obj/machinery/machines
 
-#endif
+	New()
+		. = ..()
+		areas = list()
+		machines = list()
+
+	proc/add_machinery(machine)
+		var/area/A = get_area(machine)
+		if(isnull(areas[A]))
+			areas[A] = list()
+		areas[A] += machine
+		machines[machine] = 0
+
+	proc/log_machine(obj/machinery/machine, amount)
+		if(detailed_machine_power_log_zlevels & (1<<machine.z))
+			if(isnull(machines[machine]))
+				add_machinery(machine)
+			machines[machine]+=amount
+
+#endif MACHINE_PROCESSING_DEBUG
+
+
+

@@ -11,7 +11,7 @@ on:
 jobs:
   lint:
     name: Run Linters
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v3
@@ -23,7 +23,7 @@ jobs:
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v1.4.0
+        uses: hecrj/setup-rust-action@v1.4.1
 
       - name: Install Dependencies
         run: |
@@ -38,6 +38,7 @@ jobs:
           tools/ci/check_filedirs.sh goonstation.dme
           tools/ci/build_tgui.sh
           tools/ci/check_grep.sh
+          tools/bootstrap/python tools/ci/validate_dme.py <goonstation.dme
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
 
@@ -48,17 +49,10 @@ jobs:
 
   compile:
     name: Compile
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v3
-
-      - name: Install Dependencies
-        run: |
-          sudo dpkg --add-architecture i386
-          sudo sed -i 's/azure\.//' /etc/apt/sources.list
-          sudo apt-get update
-          sudo apt install -o Acquire::Retries=3 libstdc++6:i386
 
       - name: Cache BYOND
         uses: actions/cache@v3
@@ -95,7 +89,7 @@ jobs:
 
   compile_full:
     name: "Compile and Lint with Secret Submodule"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: |
       ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
     steps:
@@ -103,13 +97,6 @@ jobs:
         with:
           submodules: true
           token: '${{ secrets.ROBUDDYBOT_PAT }}'
-
-      - name: Install Dependencies
-        run: |
-          sudo dpkg --add-architecture i386
-          sudo sed -i 's/azure\.//' /etc/apt/sources.list
-          sudo apt-get update
-          sudo apt install -o Acquire::Retries=3 libstdc++6:i386
 
       - name: Cache BYOND
         uses: actions/cache@v3
@@ -134,7 +121,7 @@ jobs:
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v1.4.0
+        uses: hecrj/setup-rust-action@v1.4.1
 
       - name: Install Dependencies
         run: |
@@ -148,7 +135,8 @@ jobs:
         run: |
           tools/ci/check_filedirs.sh goonstation.dme
           tools/ci/build_tgui.sh
-          tools/ci/check_grep.sh
+          tools/ci/check_grep_secret.sh
+          tools/bootstrap/python tools/ci/validate_dme.py <goonstation.dme
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
 

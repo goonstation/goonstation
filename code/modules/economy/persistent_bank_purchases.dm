@@ -1,6 +1,7 @@
 
 var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/reset,\
+	new /datum/bank_purchaseable/candy_heart,\
 	new /datum/bank_purchaseable/human_item/crayon,\
 	new /datum/bank_purchaseable/human_item/paint_rainbow,\
 	new /datum/bank_purchaseable/human_item/crayon_box,\
@@ -36,7 +37,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 	new /datum/bank_purchaseable/limbless,\
 	new /datum/bank_purchaseable/space_diner,\
-	new /datum/bank_purchaseable/mail_order,\
 	new /datum/bank_purchaseable/missile_arrival,\
 	new /datum/bank_purchaseable/lunchbox,\
 
@@ -82,18 +82,18 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			I.name = "[H.real_name][pick_string("trinkets.txt", "modifiers")] [I.name]"
 			I.quality = rand(5,80)
 			var/equipped = 0
-			if (istype(H.back, /obj/item/storage) && H.equip_if_possible(I, H.slot_in_backpack))
+			if (H.back?.storage && H.equip_if_possible(I, SLOT_IN_BACKPACK))
 				equipped = 1
-			else if (istype(H.belt, /obj/item/storage) && H.equip_if_possible(I, H.slot_in_belt))
+			else if (H.belt?.storage && H.equip_if_possible(I, SLOT_IN_BELT))
 				equipped = 1
 			if (!equipped)
-				if (!H.l_store && H.equip_if_possible(I, H.slot_l_store))
+				if (!H.l_store && H.equip_if_possible(I, SLOT_L_STORE))
 					equipped = 1
-				else if (!H.r_store && H.equip_if_possible(I, H.slot_r_store))
+				else if (!H.r_store && H.equip_if_possible(I, SLOT_R_STORE))
 					equipped = 1
-				else if (!H.l_hand && H.equip_if_possible(I, H.slot_l_hand))
+				else if (!H.l_hand && H.equip_if_possible(I, SLOT_L_HAND))
 					equipped = 1
-				else if (!H.r_hand && H.equip_if_possible(I, H.slot_r_hand))
+				else if (!H.r_hand && H.equip_if_possible(I, SLOT_R_HAND))
 					equipped = 1
 
 				if (!equipped)
@@ -201,16 +201,21 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		stickers
 			name = "Sticker Box"
 			cost = 300
-			path = /obj/item/item_box/assorted/stickers/
+			path = /obj/item/item_box/assorted/stickers
 			icon = 'icons/obj/items/storage.dmi'
 			icon_state = "sticker_box_assorted"
 
 		handkerchief
 			name = "Handkerchief"
 			cost = 1000
-			path = /obj/item/cloth/handkerchief/random
+			path = null
 			icon = 'icons/obj/items/cloths.dmi'
 			icon_state = "hanky_pink"
+
+			Create(mob/living/M)
+				// equivalent to /obj/item/cloth/handkerchief/random, but that deletes itself in new(), so this is used
+				path = pick(concrete_typesof(/obj/item/cloth/handkerchief/colored))
+				..()
 
 		bee_egg
 			name = "Bee Egg"
@@ -453,36 +458,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				M.set_loc(start)
 			return 1
 
-	mail_order
-		name = "Mail Order"
-		cost = 5000
-		icon = 'icons/obj/large_storage.dmi'
-		icon_state = "woodencrate1"
-
-		Create(var/mob/living/M)
-			var/obj/storage/S
-			if (istype(M.loc, /obj/storage)) // also for stowaways; we really should have a system for integrating this stuff
-				S = M.loc
-			else
-				S = new /obj/storage/crate/wooden()
-				M.set_loc(S)
-			SPAWN(1)
-				if(transception_array) //hand off delivery to array's management systems
-					transception_array.direct_queue += S
-				else
-					for(var/i in 1 to 3)
-						shippingmarket.receive_crate(S)
-						sleep(randfloat(10 SECONDS, 20 SECONDS))
-						if(istype(get_area(S), /area/station))
-							return
-						boutput(M, "<span class='alert'><b>Something went wrong with mail order, retrying!</b></span>")
-					var/list/turf/last_chance_turfs = get_area_turfs(/area/station/quartermaster/office, 1)
-					if(length(last_chance_turfs))
-						S.set_loc(pick(last_chance_turfs))
-					else
-						S.set_loc(get_random_station_turf())
-			return 1
-
 	frog
 		name = "Adopt a Frog"
 		cost = 6000
@@ -491,7 +466,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		icon_dir = SOUTH
 
 		Create(var/mob/living/M)
-			var/obj/critter/frog/froggo = new(M.loc)
+			var/mob/living/critter/small_animal/frog/froggo = new(M.loc)
 			SPAWN(1 SECOND)
 				froggo.real_name = input(M.client, "Name your frog:", "Name your frog!", "frog")
 				phrase_log.log_phrase("name-frog", froggo.real_name, TRUE)
@@ -507,10 +482,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		icon_dir = SOUTH
 
 		Create(var/mob/living/M)
-			if(istype(M.back, /obj/item/storage))
-				var/obj/item/storage/backpack = M.back
-				new /obj/item/tank/emergency_oxygen(backpack) // oh boy they'll need this if they are unlucky
-				backpack.hud.update(M)
+			M.back?.storage?.add_contents(new /obj/item/tank/emergency_oxygen(M.back)) // oh boy they'll need this if they are unlucky
 			var/mob/living/carbon/human/H = M
 			if(istype(H))
 				H.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
@@ -677,10 +649,37 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				var/obj/item/storage/lunchbox/L = pick(childrentypesof(/obj/item/storage/lunchbox))
-				if ((!H.l_hand && H.equip_if_possible(new L(H), H.slot_l_hand)) || (!H.r_hand && H.equip_if_possible(new L(H), H.slot_r_hand)) || (istype(H.back, /obj/item/storage) && H.equip_if_possible(new L(H), H.slot_in_backpack)))
+				if ((!H.l_hand && H.equip_if_possible(new L(H), SLOT_L_HAND)) || (!H.r_hand && H.equip_if_possible(new L(H), SLOT_R_HAND)) || (H.back?.storage && H.equip_if_possible(new L(H), SLOT_IN_BACKPACK)))
 					return 1
 			return 0
 
+	candy_heart
+		name = "Send Candy Heart"
+		cost = 2500
+		icon = 'icons/obj/foodNdrink/food_candy.dmi'
+		icon_state = "heart-1"
+
+		Create(var/mob/M)
+			SPAWN(rand(3 SECONDS, 15 SECONDS)) // stagger in case multiple purchases
+				var/datum/db_record/R = pick(data_core.general.records)
+				var/obj/storage/S = new /obj/storage/crate/packing
+				S.name = "special delivery ([R["name"]])"
+				var/obj/item/I = new /obj/item/reagent_containers/food/snacks/candy/candyheart(S)
+				I.name = "candy heart (to: [R["name"]] from: [M])"
+				if(transception_array) //hand off delivery to array's management systems
+					transception_array.direct_queue += S
+				else
+					for(var/i in 1 to 3)
+						shippingmarket.receive_crate(S)
+						sleep(randfloat(10 SECONDS, 20 SECONDS))
+						if(istype(get_area(S), /area/station))
+							return
+					var/list/turf/last_chance_turfs = get_area_turfs(/area/station/quartermaster/office, 1)
+					if(length(last_chance_turfs))
+						S.set_loc(pick(last_chance_turfs))
+					else
+						S.set_loc(get_random_station_turf())
+			return TRUE
 
 	/////////////////////////////////////
 	//CLOTHING (FITS HUMAN AND CYBORGS)//

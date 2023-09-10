@@ -242,7 +242,7 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 			//if we're not charging a cell yet, figure out what we'd be billing the powernet if we were
 			var/total_load = src.intcap_charging ? powernet.load : powernet.load + src.intcap_draw_rate
 
-			if(powernet.avail - total_load >= src.grid_surplus_threshold) //netexcess exists but... isn't ever actually set up?
+			if(powernet.avail - total_load >= src.grid_surplus_threshold)
 				src.intcap_charging = TRUE
 				if(src.intcap.charge < src.intcap.maxcharge)
 					var/yield_to_cell = src.intcap_draw_rate * CELLRATE
@@ -251,10 +251,10 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 					if(intcap.charge + yield_to_cell > src.intcap.maxcharge)
 						yield_to_cell = src.intcap.maxcharge - src.intcap.charge
 						final_draw = yield_to_cell * 500
-					src.intcap.give(yield_to_cell)
-					powernet.newload += final_draw
-					var/area/arrayarea = get_area(src) //gotta let the grid know!
-					arrayarea.use_power(final_draw,EQUIP)
+					//double check that we have the power we're supposed to, then expend it
+					if(powernet.newload + final_draw <= powernet.avail)
+						src.intcap.give(yield_to_cell)
+						powernet.newload += final_draw
 			else
 				src.intcap_charging = FALSE
 		else
@@ -339,7 +339,7 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 		else if(istype(I, /obj/item/sheet))
 			if (src.repair_status == ARRAY_INTEG_ADD_SHEET)
 				var/obj/item/sheet/S = I
-				if (S.material && S.material.material_flags & MATERIAL_METAL)
+				if (S.material && S.material.getMaterialFlags() & MATERIAL_METAL)
 					S.change_stack_amount(-1)
 					boutput(user, "You install a new compartment door.")
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -350,7 +350,7 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 		else if(istype(I, /obj/item/rods))
 			if (src.repair_status == ARRAY_INTEG_ADD_RODS)
 				var/obj/item/rods/R = I
-				if (R.material && R.material.material_flags & MATERIAL_METAL && R.amount > 1)
+				if (R.material && R.material.getMaterialFlags() & MATERIAL_METAL && R.amount > 1)
 					R.change_stack_amount(-2)
 					boutput(user, "You install new structural rods.")
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -633,10 +633,11 @@ TYPEINFO(/obj/machinery/transception_pad)
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "neopad"
 	name = "\proper transception pad"
-	anchored = 1
+	desc = "A sophisticated cargo pad capable of utilizing the station's transception antenna when connected by cable. Keep clear during operation."
+	anchored = ANCHORED
 	density = 0
 	layer = FLOOR_EQUIP_LAYER1
-	desc = "A sophisticated cargo pad capable of utilizing the station's transception antenna when connected by cable. Keep clear during operation."
+	processing_tier = PROCESSING_32TH //processes infrequently to check for stuck mobs
 	var/is_transceiving = FALSE
 	var/frequency = FREQ_TRANSCEPTION_SYS
 	var/net_id
@@ -745,7 +746,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 			var/atom/movable/inbound_target
 			if(manual_receive)
 				inbound_target = manual_receive
-			else if(shippingmarket.pending_crates[cargo_index])
+			else if(length(shippingmarket.pending_crates) >= cargo_index)
 				inbound_target = shippingmarket.pending_crates[cargo_index]
 			else
 				return
@@ -870,6 +871,24 @@ TYPEINFO(/obj/machinery/transception_pad)
 			M.emote("scream")
 			M.changeStatus("stunned", 5 SECONDS)
 			M.changeStatus("weakened", 5 SECONDS)
+
+	//if anyone gets stuck inside, eject them. (violently. you got stuck in a prototype teleporter)
+	process()
+		..()
+		if(src.is_transceiving)
+			return
+		var/mob/M = locate() in src.contents
+		if(M)
+			src.is_transceiving = TRUE
+			src.visible_message("<span class='alert'><B>[src]</B> emits a buffer error alert!</span>")
+			playsound(src.loc, 'sound/machines/pod_alarm.ogg', 30, 0)
+			flick("neopad_activate",src)
+			SPAWN(0.4 SECONDS)
+				M.set_loc(src.loc)
+				showswirl(src.loc)
+				use_power(200)
+				telefrag(M)
+				src.is_transceiving = FALSE
 
 /obj/machinery/computer/transception
 	name = "\improper Transception Interlink"

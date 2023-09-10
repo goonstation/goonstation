@@ -9,6 +9,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	icon = 'icons/misc/reactorcomponents.dmi'
 	icon_state = "fuel_rod"
 	w_class = W_CLASS_BULKY
+	material_amt = 1 //cannot efficiently recycle these
 
 	/// Icon that appears in the UI
 	var/icon_state_inserted = "base"
@@ -21,7 +22,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	/// Temperature of this component, starts at room temp Kelvin by default
 	var/temperature = T20C
 	/// How much does this component share heat with surrounding components? Basically surface area in contact (m2)
-	var/thermal_cross_section = 0.01
+	var/thermal_cross_section = 10
 	/// How adept is this component at interacting with neutrons - fuel rods are set up to capture them, heat exchangers are set up not to
 	var/neutron_cross_section = 0.5
 	/// Control rods don't moderate neutrons, they absorb them.
@@ -38,10 +39,16 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	var/static/list/ui_image_base64_cache = list()
 	/// How much gas this component can hold, and will be processed per tick
 	var/gas_volume = 0
+	/// Thermal mass. Basically how much energy it takes to heat this up 1Kelvin
+	var/thermal_mass = 420*250//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
-	New(material_name="steel")
+
+	New(material="steel")
 		..()
-		src.setMaterial(getMaterial(material_name))
+		if(istype(material, /datum/material))
+			src.setMaterial(material)
+		else
+			src.setMaterial(getMaterial(material))
 		melt_health = _max_health
 		var/img_check = ui_image_base64_cache[src.type]
 		if (img_check)
@@ -51,28 +58,27 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			src.ui_image = icon2base64(dummy_icon)
 			ui_image_base64_cache[src.type] = src.ui_image
 
-	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/copy = TRUE, var/use_descriptors = FALSE)
+	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = TRUE, var/use_descriptors = FALSE) //mutable is the default here, for obvious reasons
 		. = ..()
 		src.cap_icon = icon(src.icon, src.icon_state_cap)
 		if(appearance) //some mildly cursed code to set material appearance on the end caps
-			if (islist(src.mat_appearances_to_ignore) && length(src.mat_appearances_to_ignore))
-				if (mat1.name in src.mat_appearances_to_ignore)
-					return
-			if (src.mat_changeappearance && mat1.applyColor)
-				var/list/setcolor = mat1.color
-				if(istext(mat1.color))
-					setcolor = rgb2num(mat1.color)
-				if(islist(mat1.color))
-					setcolor = mat1.color
+			if (mat1.getID() in src.get_typeinfo().mat_appearances_to_ignore)
+				return
+			if (src.mat_changeappearance && mat1.shouldApplyColor())
+				var/list/setcolor = mat1.getColor()
+				if(istext(mat1.getColor()))
+					setcolor = rgb2num(mat1.getColor())
+				if(islist(mat1.getColor()))
+					setcolor = mat1.getColor()
 
 				if(length(setcolor) == 4)
-					setcolor[4] = mat1.alpha
+					setcolor[4] = mat1.getAlpha()
 				else if(length(setcolor) == 3)
-					setcolor += mat1.alpha
+					setcolor += mat1.getAlpha()
 
-				if (mat1.texture)
+				if (mat1.getTexture())
 					var/icon_mode = null
-					switch(mat1.texture_blend) //fucking byond...
+					switch(mat1.getTextureBlendMode()) //fucking byond...
 						if(BLEND_DEFAULT) icon_mode = ICON_OVERLAY
 						if(BLEND_OVERLAY) icon_mode = ICON_OVERLAY
 						if(BLEND_ADD) icon_mode = ICON_ADD
@@ -80,23 +86,26 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 						if(BLEND_MULTIPLY) icon_mode = ICON_MULTIPLY
 						if(BLEND_INSET_OVERLAY) icon_mode = ICON_OVERLAY
 
-					src.cap_icon.Blend(getTexturedIcon(src.cap_icon, mat1.texture), icon_mode)
+					src.cap_icon.Blend(getTexturedIcon(src.cap_icon, mat1.getTexture()), icon_mode)
 
 				if(length(setcolor) > 4) //ie, if it's a color matrix
 					src.cap_icon.MapColors(arglist(setcolor))
 				else
 					src.cap_icon.Blend(rgb(setcolor[1],setcolor[2],setcolor[3],setcolor[4]), ICON_MULTIPLY)
 
-
-
-
 	proc/melt()
 		if(melted)
 			return
 		src.melted = TRUE
 		src.name = "melted "+src.name
+		src.icon_state_cap += "_melted_[rand(1,4)]"
+		src.setMaterial(src.material, TRUE, FALSE, FALSE)
+		var/obj/machinery/atmospherics/binary/nuclear_reactor/parent = src.loc
+		if(istype(parent))
+			parent.MarkGridForUpdate()
+			parent.UpdateIcon()
 		src.neutron_cross_section = 5.0
-		src.thermal_cross_section = 1.0
+		src.thermal_cross_section = 20.0
 		src.is_control_rod = FALSE
 
 	proc/extra_info()
@@ -109,32 +118,35 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		for(var/obj/item/reactor_component/RC as anything in adjacentComponents)
 			if(isnull(RC))
 				continue
-			//heat transfer equation = hA(T2-T1)
-			//assume A = 1m^2
-			var/deltaT = RC.temperature - src.temperature
-			//heat transfer coefficient
-			var/hTC = calculateHeatTransferCoefficient(RC.material,src.material)
-			RC.temperature += thermal_cross_section*-deltaT*hTC
-			src.temperature += thermal_cross_section*deltaT*hTC
+			//first, define some helpful vars
+			// temperature differential
+			var/deltaT = src.temperature - RC.temperature
+			//thermal conductivity
+			var/k = calculateHeatTransferCoefficient(RC.material,src.material)
+			//surface area in thermal contact (m^2)
+			var/A = min(src.thermal_cross_section,RC.thermal_cross_section)
+			src.temperature = src.temperature - (k * A * (MACHINE_PROC_INTERVAL*8)/src.thermal_mass)*deltaT //8 because machines are ticked when % 8 == 0
+			RC.temperature = RC.temperature - (k * A * (MACHINE_PROC_INTERVAL*8)/RC.thermal_mass)*-deltaT
+
 			if(RC.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
-			RC.material.triggerTemp(RC,RC.temperature)
-			src.material.triggerTemp(src,src.temperature)
+			RC.material_trigger_on_temp(RC.temperature)
+			src.material_trigger_on_temp(src.temperature)
 		//heat transfer with reactor vessel
 		var/obj/machinery/atmospherics/binary/nuclear_reactor/holder = src.loc
 		if(istype(holder))
-			var/deltaT = holder.temperature - src.temperature
-			var/hTC = calculateHeatTransferCoefficient(holder.material,src.material)
-
-			holder.temperature += thermal_cross_section*-deltaT*hTC
-			src.temperature += thermal_cross_section*deltaT*hTC
+			var/deltaT = src.temperature - holder.temperature
+			var/k = calculateHeatTransferCoefficient(holder.material,src.material)
+			var/A = src.thermal_cross_section
+			src.temperature = src.temperature - (k * A * (MACHINE_PROC_INTERVAL*8)/src.thermal_mass)*deltaT
+			holder.temperature = holder.temperature - (k * A * (MACHINE_PROC_INTERVAL*8)/holder.thermal_mass)*-deltaT
 			if(holder.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
 
-			holder.material.triggerTemp(holder,holder.temperature)
-			src.material.triggerTemp(src,src.temperature)
+			holder.material_trigger_on_temp(holder.temperature)
+			src.material_trigger_on_temp(src.temperature)
 		if((src.temperature > src.melting_point) && (src.melt_health > 0))
-			src.melt_health -= 10
+			src.melt_health -= rand(10,50)
 		if(src.melt_health <= 0)
 			src.melt() //oh no
 
@@ -144,12 +156,16 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			if(prob(src.material.getProperty("density")*10*src.neutron_cross_section)) //dense materials capture neutrons, configuration influences that
 				//if a neutron is captured, we either do fission or we slow it down
 				if(N.velocity <= 1 & prob(src.material.getProperty("n_radioactive")*10)) //neutron stimulated emission
+					src.material.adjustProperty("n_radioactive", -0.01)
+					src.material.setProperty("radioactive", src.material.getProperty("radioactive") + 0.005)
 					for(var/i in 1 to 5)
 						inNeutrons += new /datum/neutron(pick(alldirs), pick(2,3))
 					inNeutrons -= N
 					qdel(N)
 					src.temperature += 50
 				else if(N.velocity <= 1 & prob(src.material.getProperty("radioactive")*10)) //stimulated emission
+					src.material.adjustProperty("radioactive", -0.01)
+					src.material.setProperty("spent_fuel", src.material.getProperty("spent_fuel") + 0.005)
 					for(var/i in 1 to 5)
 						inNeutrons += new /datum/neutron(pick(alldirs), pick(1,2,3))
 					inNeutrons -= N
@@ -206,7 +222,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	pickup(mob/user)
 		. = ..()
 		if(src.mob_holding_temp_react(user, 1))
-			RegisterSignal(user, COMSIG_LIVING_LIFE_TICK, .proc/mob_holding_temp_react)
+			RegisterSignal(user, COMSIG_LIVING_LIFE_TICK, PROC_REF(mob_holding_temp_react))
 
 	dropped(mob/user)
 		. = ..()
@@ -221,11 +237,23 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	icon_state_inserted = "fuel"
 	icon_state_cap = "fuel_cap"
 	neutron_cross_section = 1.0
-	thermal_cross_section = 0.02
+	thermal_cross_section = 10
+	thermal_mass = 420*1000//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
 	extra_info()
 		. = ..()
 		. += "Radioactivity: [max(src.material.getProperty("n_radioactive")*10,src.material.getProperty("radioactive")*10)]%"
+
+/obj/item/reactor_component/fuel_rod/glowsticks
+	name = "makeshift fuel rod"
+	desc = "A fuel rod fo- hey this is just a bundle of glowsticks!"
+	melting_point = T0C+400 //plastic glowsticks melt easy
+
+	New(material)
+		if(isnull(material))
+			.=..("glowstick") //force material
+		else
+			.=..()
 ////////////////////////////////////////////////////////////////
 //Control rod
 /obj/item/reactor_component/control_rod
@@ -233,6 +261,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	desc = "A control rod assembly for a nuclear reactor."
 	icon_state_inserted = "control"
 	icon_state_cap = "control_cap"
+	thermal_cross_section = 10
 	/// Control rods have a variable neutron_cross_section, which is essentially *actual* insertion level
 	neutron_cross_section = 1.0
 	/// Target insertion level, will be approached by up to 0.1 per tick
@@ -260,7 +289,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	desc = "A heat exchanger component for a nuclear reactor."
 	icon_state_inserted = "heat"
 	icon_state_cap = "heat_cap"
-	thermal_cross_section = 0.4
+	thermal_cross_section = 25
 	neutron_cross_section = 0.1
 
 ////////////////////////////////////////////////////////////////
@@ -270,10 +299,13 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	desc = "A gas coolant channel component for a nuclear reactor."
 	icon_state_inserted = "gas"
 	icon_state_cap = "gas_cap"
-	thermal_cross_section = 0.05
-	var/gas_thermal_cross_section = 0.95
+	thermal_cross_section = 15
+	var/gas_thermal_cross_section = 15
 	var/datum/gas_mixture/air_contents
 	gas_volume = 100
+	thermal_mass = 420*50//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
+	var/const/plasma_react_mols = 25
+	var/const/co2_react_mols = 10
 
 	melt()
 		..()
@@ -281,41 +313,112 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 
 	processNeutrons(list/datum/neutron/inNeutrons)
 		. = ..()
-		if(air_contents && air_contents.toxins > 0)
+		if(air_contents)
 			for(var/datum/neutron/N in .)
-				if(N.velocity > 0 && prob(air_contents.toxins/10))
-					N.velocity++
-					air_contents.toxins--
-					air_contents.radgas+=10
+				if(N.velocity > 0)
+					var/continue_reacting = TRUE
+					if(continue_reacting && air_contents.toxins > 1) //plasma acts crazy, producing fallout and a random bunch of neutrons
+						//number of neutrons directly proportional to number of moles
+						//for every 100 mol, one extra neutron, with the remainder acting as a prob
+						//couple cans of plasma at room temp is about 50 mol in each gas channel with standard setup
+						var/plasma_react_count = round((air_contents.toxins - (air_contents.toxins % src.plasma_react_mols))/src.plasma_react_mols) + prob(air_contents.toxins % src.plasma_react_mols)
+						for(var/i in 1 to plasma_react_count)
+							if(prob(50))
+								continue //so it's a bit probabilistic - basically each 25mol has a 50/50 chance to interact
+							. += new /datum/neutron(pick(alldirs), rand(1,3))
+							air_contents.toxins-=0.5
+							air_contents.radgas+=2
+							continue_reacting = FALSE
+					if(continue_reacting && air_contents.carbon_dioxide > 1) //CO2 acts like a gaseous control rod
+						var/co2_react_count = round((air_contents.carbon_dioxide - (air_contents.carbon_dioxide % src.co2_react_mols))/src.co2_react_mols) + prob(air_contents.carbon_dioxide % src.co2_react_mols)
+						for(var/i in 1 to co2_react_count)
+							if(prob(50))
+								. -= N
+								qdel(N)
+								air_contents.temperature += 1
+								continue_reacting = FALSE
+								break
+					if(continue_reacting && air_contents.radgas > 1)
+						//rare chance for radgas to decompose into a random gas when hit by a neutron
+						if(prob(air_contents.radgas))
+							air_contents.radgas -= 1
+							air_contents.temperature += 5
+							. -= N
+							qdel(N)
+							switch(rand(1,5))
+								if(1)
+									air_contents.oxygen += 0.5
+								if(2)
+									air_contents.nitrogen += 0.5
+								if(3)
+									air_contents.farts += 0.1
+								if(4)
+									air_contents.nitrous_oxide += 0.1
+								if(5)
+									air_contents.oxygen_agent_b += 0.01
+							continue_reacting = FALSE
 
 	processGas(var/datum/gas_mixture/inGas)
 		if(src.air_contents)
-			//heat transfer equation = hA(T2-T1)
-			//assume A = 1m^2
-			var/deltaT = src.air_contents.temperature - src.temperature
-			//heat transfer coefficient
-			var/hTC = calculateHeatTransferCoefficient(null, src.material)
-			if(hTC>0)
-				//gas density << metal density, so energy to heat gas to T is much small than energy to heat metal to T
-				//basically, we just need a specific heat capactiy factor in here
-				//fortunately, atmos has macros for that - for everything else, let's just assume steel's heat capacity and density
-				//shc * moles/(shc of steel * density of steel * volume / molar mass of steel)
-				var/gas_thermal_e = THERMAL_ENERGY(air_contents)
-				src.air_contents.temperature += gas_thermal_cross_section*-deltaT*hTC
-				//Q = mcT
-				//dQ = mc(dT)
-				//dQ/mc = dT
-				src.temperature += (gas_thermal_e - THERMAL_ENERGY(air_contents))/(420*7700*0.05) //specific heat capacity of steel (420 J/KgC) * density of steel (7700 Kg/m^3) * volume of material the gas channel is made of (m^3)
-				if(src.air_contents.temperature < 0 || src.temperature < 0)
-					CRASH("TEMP WENT NEGATIVE")
-			. = src.air_contents
+			//first, define some helpful vars
+			// temperature differential
+			var/deltaT = src.temperature - src.air_contents.temperature
+			// temp differential for radiative heating
+			//this is equivelant to (src.temperature ** 4) - (src.current_gas.temperature ** 4), but factored so its less likely to hit overflow
+			var/deltaTr = (src.temperature + src.air_contents.temperature)*(src.temperature - src.air_contents.temperature)*((src.temperature**2) + (src.air_contents.temperature**2))
+
+			//thermal conductivity
+			var/k = calculateHeatTransferCoefficient(null,src.material)
+			//surface area in thermal contact (m^2)
+			var/A = src.gas_thermal_cross_section * (MACHINE_PROC_INTERVAL*8) //multipied by process time to approximate flow rate
+
+			var/thermal_e = THERMAL_ENERGY(air_contents)
+			//commented out for later debugging purposes
+			//var/coe_check = thermal_e + src.temperature*src.thermal_mass
+
+			//okay, we're slightly abusing some things here. Notably we're using the thermal conductivity as a stand-in
+			//for the convective heat transfer coefficient(h). It's wrong, since h generally depends on flow rate, but we
+			//can assume a constant flow rate and then a dependence on the thermal conductivity of the material it's flowing over
+			//which in this case is given by k
+			//also radiative heating given by Steffan-Boltzman constant * area * (T1^4 - T2^4) ( + (5.67037442e-8 * A * deltaTr))
+			//since this is a discrete approximation, it breaks down when the temperature diffs are low. As such, we linearise the equation
+			//by clamping between hottest and coldest. It's not pretty, but it works.
+			var/hottest = max(src.air_contents.temperature, src.temperature)
+			var/coldest = min(src.air_contents.temperature, src.temperature)
+			//max limit on the energy transfered is bounded between the coldest and hottest temperature of the thermal mass, to ensure that the
+			//gas can't suck out more heat from the component than exists
+			var/max_delta_e = clamp(((k * A * deltaT) + (5.67037442e-8 * A * deltaTr)), src.temperature*src.thermal_mass - hottest*src.thermal_mass, src.temperature*src.thermal_mass - coldest*src.thermal_mass)
+			src.air_contents.temperature = clamp(src.air_contents.temperature + max_delta_e/HEAT_CAPACITY(src.air_contents), coldest, hottest)
+			//after we've transferred heat to the gas, we remove that energy from the gas channel to preserve CoE
+			src.temperature = clamp(src.temperature - (THERMAL_ENERGY(air_contents) - thermal_e)/src.thermal_mass, coldest, hottest)
+
+			//commented out for later debugging purposes
+			//var/coe2 = (THERMAL_ENERGY(air_contents) + src.temperature*src.thermal_mass)
+			//if(abs(coe2 - coe_check) > 64)
+			//	CRASH("COE VIOLATION COMPONENT")
+			if(src.air_contents.temperature < 0 || src.temperature < 0)
+				CRASH("TEMP WENT NEGATIVE")
+
+
 			if(src.melted)
 				var/turf/T = get_turf(src.loc)
 				if(T)
 					T.assume_air(air_contents)
-		if(inGas)
+			else
+				. = src.air_contents
+		if(inGas && (THERMAL_ENERGY(inGas) > 0))
 			src.air_contents = inGas.remove((src.gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
-			src.air_contents.volume = gas_volume
+			src.air_contents?.volume = gas_volume
+			if(src.air_contents && TOTAL_MOLES(src.air_contents) < 1)
+				if(istype(., /datum/gas_mixture))
+					var/datum/gas_mixture/result = .
+					result.merge(src.air_contents)
+					src.air_contents = null
+					return result
+				else
+					. = src.air_contents
+					src.air_contents = null
+					return .
 
 #define SANE_COMPONENT_MATERIALS \
 		100;"gold",\
@@ -387,7 +490,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		15;"cardboard",\
 		15;"frozenfart",\
 		5;"negativematter",\
-		5;"plutonium"
+		5;"plutonium",\
+		100; "glowstick"
 
 /obj/item/reactor_component/fuel_rod/random_material
 	New()

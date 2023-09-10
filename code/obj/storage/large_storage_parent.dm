@@ -6,8 +6,9 @@
 // PLEASE JUST MAKE A MESS OF make_my_stuff() INSTEAD
 // CALL YOUR PARENTS
 
-#define RELAYMOVE_DELAY 50
+#define RELAYMOVE_DELAY 1 SECOND
 
+ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 /obj/storage
 	name = "storage"
 	desc = "this is a parent item you shouldn't see!!"
@@ -189,13 +190,24 @@
 			return
 		src.last_relaymove_time = world.time
 
+		if (istype(get_turf(src), /turf/space))
+			if (!istype(get_turf(src), /turf/space/fluid))
+				return
+
 		if (src.legholes)
-			step(src,user.dir)
-			return
+			if (!src.anchored)
+				step(src,user.dir)
+				return
+			else
+				user.show_text("You try moving, but [src] seems to be stuck to the floor!", "red")
+				return
 
 		if (!src.open(user=user))
 			if (!src.is_short && src.legholes)
-				step(src, pick(alldirs))
+				if (!src.anchored)
+					step(src, pick(alldirs))
+				else
+					user.show_text("You try moving, but [src] seems to be stuck to the floor!", "red")
 			if (!src.jiggled)
 				src.jiggled = 1
 				user.show_text("You kick at [src], but it doesn't budge!", "red")
@@ -357,14 +369,14 @@
 		. = ..()
 		if(isnull(src.material))
 			return
-		var/found_negative = (src.material.mat_id == "negativematter")
+		var/found_negative = (src.material.getID() == "negativematter")
 		if(!found_negative)
-			for(var/datum/material/parent_mat in src.material.parent_materials)
-				if(parent_mat.mat_id == "negativematter")
+			for(var/datum/material/parent_mat in src.material.getParentMaterials())
+				if(parent_mat.getID() == "negativematter")
 					found_negative = TRUE
 					break
 		if(found_negative)
-			src.AddComponent(/datum/component/extradimensional_storage)
+			src.AddComponent(/datum/component/extradimensional_storage/storage)
 
 	proc/weld_action(obj/item/W, mob/user)
 		if(src.open)
@@ -476,10 +488,9 @@
 			user.u_equip(O)
 			O.set_loc(get_turf(user))
 
-		else if(istype(O.loc, /obj/item/storage))
-			var/obj/item/storage/storage = O.loc
-			O.set_loc(get_turf(O))
-			storage.hud.remove_item(O)
+		else if(istype(O, /obj/item))
+			var/obj/item/I = O
+			I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 
 		SPAWN(0.5 SECONDS)
 			var/stuffed = FALSE
@@ -490,7 +501,8 @@
 				/obj/item/raw_material = "materials",
 				/obj/item/material_piece = "processed materials",
 				/obj/item/paper = "paper",
-				/obj/item/tile = "floor tiles")
+				/obj/item/tile = "floor tiles",
+				/obj/item/reagent_containers/food/fish = "fish")
 			for(var/drag_type in draggable_types)
 				if(!istype(O, drag_type))
 					continue
@@ -501,6 +513,8 @@
 				var/staystill = user.loc
 				for (var/obj/thing in view(1,user))
 					if(!istype(thing, drag_type))
+						continue
+					if (thing.anchored)
 						continue
 					if (thing in user)
 						continue
@@ -634,11 +648,14 @@
 				O.set_loc(src)
 
 		for (var/mob/M in get_turf(src))
+			if (isobserver(M) || iswraith(M) || isintangible(M) || islivingobject(M))
+				continue
 			if (M.anchored || M.buckled)
 				continue
-			if (src.is_short && !M.lying && ( M != src.loc ) ) // ignore movement when container is inside the mob (possessed)
-				step_away(M, src, 1)
-				continue
+			if (src.is_short && (M != src.loc) && !isdead(M))
+				if (!M.lying)
+					step_away(M, src, 1)
+					continue
 #ifdef HALLOWEEN
 			if (halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 				var/list/obj/storage/myPals = list()
@@ -653,8 +670,6 @@
 				M.playsound_local(M.loc, "warp", 50, 1)
 				continue
 #endif
-			if (isobserver(M) || iswraith(M) || isintangible(M) || islivingobject(M))
-				continue
 			if (src.crunches_contents)
 				src.crunch(M)
 			M.set_loc(src)
@@ -692,6 +707,8 @@
 		for(var/obj/O in T.contents)
 			if(!isitem(O) || O == src || O.anchored)
 				crate_contents--
+			if(O.cannot_be_stored)
+				crate_contents = INFINITY //too big to fit on the locker, it wont close
 		return crate_contents
 
 	proc/can_close()
@@ -719,7 +736,7 @@
 			if(istype(O,/obj/item/mousetrap))
 				var/obj/item/mousetrap/our_trap = O
 				if(our_trap.armed && user)
-					INVOKE_ASYNC(our_trap, /obj/item/mousetrap.proc/triggered,user)
+					INVOKE_ASYNC(our_trap, TYPE_PROC_REF(/obj/item/mousetrap, triggered), user)
 
 		for (var/mob/M in src)
 			M.set_loc(newloc)
@@ -731,7 +748,16 @@
 
 	proc/unlock()
 		if (src.locked)
-			src.locked = !src.locked
+			src.locked = FALSE
+			src.visible_message("[src] clicks[src.open ? "" : " unlocked"].")
+			src.UpdateIcon()
+
+	//why is everything defined on the parent type aa
+	proc/lock()
+		if (!src.locked)
+			src.locked = TRUE
+			src.visible_message("[src] clicks[src.open ? "" : " locked"].")
+			src.UpdateIcon()
 
 	proc/bust_out()
 		if (src.flip_health)
@@ -816,14 +842,14 @@
 			return
 
 		if (src.open)
-			step_towards(usr, src)
+			usr.step_towards_movedelay(src)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
 					usr.lying = 1
 				src.close()
 		else if (src.open(user=usr))
-			step_towards(usr, src)
+			usr.step_towards_movedelay(src)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
@@ -888,7 +914,11 @@
 			I.setMaterial(M)
 		qdel(the_storage)
 
-
+//this is written out manually because the linter got very angry when I tried to use .. in the macro version
+TYPEINFO(/obj/storage/secure)
+TYPEINFO_NEW(/obj/storage/secure)
+	. = ..()
+	admin_procs += list(/obj/storage/proc/lock, /obj/storage/proc/unlock)
 /obj/storage/secure
 	name = "secure storage"
 	icon_state = "secure"
@@ -964,9 +994,7 @@
 					. = 0
 					if (signal.data["pass"] == netpass_security)
 						. = 1
-						src.locked = !src.locked
-						src.visible_message("[src] clicks[src.open ? "" : " locked"].")
-						src.UpdateIcon()
+						src.lock()
 					if (.)
 						reply.data["command"] = "ack"
 					else
@@ -976,9 +1004,7 @@
 					. = 0
 					if (signal.data["pass"] == netpass_security)
 						. = 1
-						src.locked = !src.locked
-						src.visible_message("[src] clicks[src.open ? "" : " unlocked"].")
-						src.UpdateIcon()
+						src.unlock()
 					if (.)
 						reply.data["command"] = "ack"
 					else

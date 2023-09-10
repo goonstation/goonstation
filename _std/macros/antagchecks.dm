@@ -1,10 +1,11 @@
 
 // Macros with abilityHolder or mutantrace defines are used for more than antagonist checks, so don't replace them with mind.special_role.
-#define istraitor(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:special_role == ROLE_TRAITOR || x:mind:special_role == ROLE_HARDMODE_TRAITOR))
-#define isconspirator(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:special_role == ROLE_CONSPIRATOR)
+#define istraitor(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_TRAITOR) || x:mind:get_antagonist(ROLE_HARDMODE_TRAITOR)))
+#define isrevolutionary(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_HEAD_REVOLUTIONARY) || x:mind:get_antagonist(ROLE_REVOLUTIONARY)))
+#define isconspirator(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_CONSPIRATOR))
 #define ischangeling(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/changeling) != null)
 #define isabomination(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/abomination))
-#define isnukeop(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:special_role == ROLE_NUKEOP || x:mind:special_role == ROLE_NUKEOP_COMMANDER))
+#define isnukeop(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_NUKEOP) || x:mind:get_antagonist(ROLE_NUKEOP_COMMANDER)))
 #define isvampire(x) ((istype(x, /mob/living/carbon/human) || istype(x, /mob/living/critter)) && x:get_ability_holder(/datum/abilityHolder/vampire) != null)
 #define isvampiricthrall(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/vampiric_thrall) != null)
 #define iswizard(x) ((istype(x, /mob/living/carbon/human) || istype(x, /mob/living/critter)) && x:get_ability_holder(/datum/abilityHolder/wizard) != null)
@@ -14,12 +15,13 @@
 #define iswraith(x) istype(x, /mob/living/intangible/wraith)
 #define ispoltergeist(x) istype(x, /mob/living/intangible/wraith/poltergeist)
 #define isarcfiend(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/arcfiend) != null)
+#define ispirate(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_PIRATE) || x:mind:get_antagonist(ROLE_PIRATE_FIRST_MATE) || x:mind:get_antagonist(ROLE_PIRATE_CAPTAIN)))
 #define issawflybuddy(x) ((istraitor(x)) || isnukeop(x) || isspythief(x) || isnukeopgunbot(x))
 
 #define isblob(x) istype(x, /mob/living/intangible/blob_overmind)
-#define isspythief(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:special_role == ROLE_SPY_THIEF)
-#define isfloorgoblin(x) (x:mind && x:mind:special_role == ROLE_FLOOR_GOBLIN)
-#define isslasher(x) (istype(x, /mob/living/carbon/human/slasher) && x:mind:special_role == ROLE_SLASHER)
+#define isspythief(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_SPY_THIEF))
+#define isfloorgoblin(x) (x:mind && x:mind:get_antagonist(ROLE_FLOOR_GOBLIN))
+#define isslasher(x) (istype(x, /mob/living/carbon/human/slasher) && x:mind:get_antagonist(ROLE_SLASHER))
 
 // Why the separate mask check? NPCs don't use assigned_role and we still wanna play the cluwne-specific sound effects.
 #define iscluwne(x) ((x?.job == "Cluwne") || istype(x.wear_mask, /obj/item/clothing/mask/cursedclown_hat))
@@ -28,6 +30,6 @@
 #define ismartian(x) (istype(x, /mob/living/critter/martian) || (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/martian)))
 #define isprematureclone(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/premature_clone))
 #define iskudzuman(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/kudzu))
-#define isnukeopgunbot(x) (istype(x, /mob/living/critter/robotic/gunbot/syndicate) && x:mind && x:mind:special_role == ROLE_NUKEOP_GUNBOT)
+#define isnukeopgunbot(x) (istype(x, /mob/living/critter/robotic/gunbot/syndicate) && x:mind && x:mind:get_antagonist(ROLE_NUKEOP_GUNBOT))
 #define issawfly(x) (istype(x, /mob/living/critter/robotic/sawfly))
-#define iszombie(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/zombie))
+#define iszombie(x) (istype(x, /mob/living/critter/zombie) || istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/zombie))

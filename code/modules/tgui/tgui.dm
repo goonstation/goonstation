@@ -269,6 +269,8 @@
 /datum/tgui/proc/process_status()
 	var/prev_status = status
 	status = src_object.ui_status(user, state)
+	if(user.client?.holder?.ghost_interaction)
+		status = max(status, UI_INTERACTIVE)
 	return prev_status != status
 
 /**

@@ -4,45 +4,37 @@
 	config_tag = "gang"
 	regular = FALSE
 
+	/// Makes it so gang members are chosen randomly at roundstart instead of being recruited.
+	var/random_gangs = FALSE
+
 	antag_token_support = TRUE
-	var/list/leaders = list()
 	var/list/gangs = list()
 
-	//List of gang stuff already used so that there are no repeats.
-	var/list/tags_used = list()
-	var/list/part1_used = list()
-	var/list/part2_used = list()
-	var/list/fullnames_used = list()
-	var/list/item1_used = list()
-	var/list/item2_used = list()
-	var/list/frequencies_used = list()
-
-	var/list/gang_lockers = list() //list of all existing gang lockers
-	var/list/under_list = list()
-	var/list/headwear_list = list()
-
-	var/const/setup_min_teams = 3
-	var/const/setup_max_teams = 5
+	var/const/setup_min_teams = 2
+	var/const/setup_max_teams = 6
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
-	var/current_max_gang_members = 5 //maximum number of gang members, not including the leader
-	//var/const/absolute_max_gang_members = 9
-
 	var/list/potential_hot_zones = null
 	var/area/hot_zone = null
+#ifdef RP_MODE
+	var/hot_zone_timer = 10 MINUTES
+#else
 	var/hot_zone_timer = 5 MINUTES
+#endif
 	var/hot_zone_score = 1000
 
+#ifdef RP_MODE
+	var/const/kidnapping_timer = 15 MINUTES 	//Time to find and kidnap the victim.
+	var/const/delay_between_kidnappings = 12 MINUTES
+#else
 	var/const/kidnapping_timer = 8 MINUTES 	//Time to find and kidnap the victim.
 	var/const/delay_between_kidnappings = 5 MINUTES
+#endif
 	var/kidnapping_score = 20000
 	var/kidnap_success = 0			//true if the gang successfully kidnaps.
 
-	var/obj/item/device/radio/headset/gang/announcer_radio = new /obj/item/device/radio/headset/gang()
-	var/datum/generic_radio_source/announcer_source = new /datum/generic_radio_source()
 	var/slow_process = 0			//number of ticks to skip the extra gang process loops
-	var/janktank_price = 300		//should start the same as /datum/gang_item/misc/janktank.
 	var/shuttle_called = FALSE
 	var/mob/kidnapping_target
 
@@ -58,56 +50,51 @@
 		if (!istype(player)) continue
 		if(player.ready) num_players++
 
-	var/num_teams = clamp(round((num_players) / 9), setup_min_teams, setup_max_teams) //1 gang per 9 players
+#ifdef RP_MODE
+#define PLAYERS_PER_GANG_GENERATED 15
+#else
+#define PLAYERS_PER_GANG_GENERATED 9
+#endif
+	var/num_teams = clamp(round((num_players) / PLAYERS_PER_GANG_GENERATED), setup_min_teams, setup_max_teams) //1 gang per 9 players, 15 on RP
+#undef PLAYERS_PER_GANG_GENERATED
 
 	var/list/leaders_possible = get_possible_enemies(ROLE_GANG_LEADER, num_teams)
-	if (num_teams > leaders_possible.len)
+	if (num_teams > length(leaders_possible))
 		num_teams = length(leaders_possible)
 
-	if (!leaders_possible.len)
+	if (!length(leaders_possible))
 		return 0
 
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
-		if (!token_players.len)
+		if (!length(token_players))
 			break
-		leaders += tplayer
+		src.traitors += tplayer
 		token_players.Remove(tplayer)
 		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 
 	var/list/chosen_leader = antagWeighter.choose(pool = leaders_possible, role = ROLE_GANG_LEADER, amount = num_teams, recordChosen = 1)
-	leaders |= chosen_leader
-	for (var/datum/mind/leader in leaders)
-		leader.special_role = ROLE_GANG_LEADER
+	src.traitors |= chosen_leader
+	for (var/datum/mind/leader in src.traitors)
 		leaders_possible.Remove(leader)
+		leader.special_role = ROLE_GANG_LEADER
 
 	return 1
 
 /datum/game_mode/gang/post_setup()
-	make_item_lists()
-	//under_list = list(/obj/item/clothing/under/gimmick/owl,/obj/item/clothing/under/suit/pinstripe,/obj/item/clothing/under/suit/purple,/obj/item/clothing/under/gimmick/chaps,/obj/item/clothing/under/misc/mail,/obj/item/clothing/under/gimmick/sweater,/obj/item/clothing/under/gimmick/princess,/obj/item/clothing/under/gimmick/merchant,/obj/item/clothing/under/gimmick/birdman,/obj/item/clothing/under/gimmick/safari,/obj/item/clothing/under/rank/det,/obj/item/clothing/under/shorts/red,/obj/item/clothing/under/shorts/blue,/obj/item/clothing/under/jersey/black,/obj/item/clothing/under/jersey,/obj/item/clothing/under/gimmick/rainbow,/obj/item/clothing/under/gimmick/johnny,/obj/item/clothing/under/misc/chaplain/rasta,/obj/item/clothing/under/misc/chaplain/atheist,/obj/item/clothing/under/misc/barber,/obj/item/clothing/under/rank/mechanic,/obj/item/clothing/under/misc/vice,/obj/item/clothing/under/gimmick,/obj/item/clothing/under/gimmick/bowling,/obj/item/clothing/under/misc/syndicate,/obj/item/clothing/under/misc/lawyer/black,/obj/item/clothing/under/misc/lawyer/red,/obj/item/clothing/under/misc/lawyer,/obj/item/clothing/under/gimmick/chav,/obj/item/clothing/under/gimmick/dawson,/obj/item/clothing/under/gimmick/sealab,/obj/item/clothing/under/gimmick/spiderman,/obj/item/clothing/under/gimmick/vault13,/obj/item/clothing/under/gimmick/duke,/obj/item/clothing/under/gimmick/psyche,/obj/item/clothing/under/misc/tourist)
-	//headwear_list = list(/obj/item/clothing/mask/owl_mask,/obj/item/clothing/mask/smile,/obj/item/clothing/mask/balaclava,/obj/item/clothing/mask/horse_mask,/obj/item/clothing/mask/melons,/obj/item/clothing/head/waldohat,/obj/item/clothing/head/that/purple,/obj/item/clothing/head/cakehat,/obj/item/clothing/head/wizard,/obj/item/clothing/head/that,/obj/item/clothing/head/wizard/red,/obj/item/clothing/head/wizard/necro,/obj/item/clothing/head/pumpkin,/obj/item/clothing/head/flatcap,/obj/item/clothing/head/mj_hat,/obj/item/clothing/head/genki,/obj/item/clothing/head/butt,/obj/item/clothing/head/mailcap,/obj/item/clothing/head/turban,/obj/item/clothing/head/helmet/bobby,/obj/item/clothing/head/helmet/viking,/obj/item/clothing/head/helmet/batman,/obj/item/clothing/head/helmet/welding,/obj/item/clothing/head/biker_cap,/obj/item/clothing/head/NTberet,/obj/item/clothing/head/rastacap,/obj/item/clothing/head/XComHair,/obj/item/clothing/head/chav,/obj/item/clothing/head/psyche,/obj/item/clothing/head/formal_turban,/obj/item/clothing/head/snake,/obj/item/clothing/head/powdered_wig,/obj/item/clothing/mask/spiderman,/obj/item/clothing/mask/gas/swat,/obj/item/clothing/mask/skull,/obj/item/clothing/mask/surgical)
-	for (var/datum/mind/leaderMind in leaders)
-		if (!leaderMind.current)
-			continue
+	for(var/datum/mind/antag_mind in src.traitors)
+		if(antag_mind.special_role == ROLE_GANG_LEADER)
+			antag_mind.add_antagonist(ROLE_GANG_LEADER, silent=TRUE)
 
-		generate_gang(leaderMind)
-		bestow_objective(leaderMind,/datum/objective/specialist/gang)
+	if(src.random_gangs)
+		fill_gangs()
 
-		//ToDo: One of those goofy popup windows?
-		// boutput(leaderMind.current, "<h1><font color=red>You are the leader of the [leaderMind.gang.gang_name] gang!</font></h1>")
-		boutput(leaderMind.current, "<h1><font color=red>You are the leader of a gang!</font></h1>")
-		boutput(leaderMind.current, "<span class='alert'>You must recruit people to your gang and compete for wealth and territory!</span>")
-		boutput(leaderMind.current, "<span class='alert'>You can harm whoever you want, but be careful - the crew can harm gang members too!</span>")
-		boutput(leaderMind.current, "<span class='alert'>To set your gang's home turf and spawn your locker, use the Set Gang Base ability in the top left. Make sure to pick somewhere safe, as your locker can be broken into and looted. You can only do this once!</span>")
-		boutput(leaderMind.current, "<span class='alert'>Build up a stash of cash, guns and drugs. Use the items on your locker to store them.</span>")
-		boutput(leaderMind.current, "<span class='alert'>Use recruitment flyers obtained from the locker to invite new members, up to a limit of [current_max_gang_members].</span>")
-//		boutput(leaderMind.current, "<span class='alert'>Once all active gangs are at the current maximum size, the member cap will increase, up to an absolute maximum of [absolute_max_gang_members].</span>")
-		boutput(leaderMind.current, "<span class='alert'><b>Turf, cash, guns and drugs all count towards victory, and your survival gives your gang bonus points!</b></span>")
+	// we delay announcement to make sure everyone gets information about the other members
+	for(var/datum/mind/antag_mind in src.traitors)
+		antag_mind.get_antagonist(ROLE_GANG_LEADER)?.unsilence()
+		antag_mind.get_antagonist(ROLE_GANG_MEMBER)?.unsilence()
 
-		equip_leader(leaderMind.current)
-		// uniform_prompt(leaderMind)
 
 	find_potential_hot_zones()
 
@@ -122,6 +109,28 @@
 
 	return 1
 
+/datum/game_mode/gang/proc/fill_gangs(list/datum/mind/candidates = null, max_member_count = INFINITY)
+	var/num_teams = length(src.gangs)
+	var/num_people_needed = 0
+	for(var/datum/gang/gang in src.gangs)
+		num_people_needed += min(gang.current_max_gang_members, max_member_count) - length(gang.members)
+	if(isnull(candidates))
+		candidates = get_possible_enemies(ROLE_GANG_LEADER, num_people_needed, allow_carbon=TRUE, filter_proc=PROC_REF(can_join_gangs))
+	var/num_people_available = min(num_people_needed, length(candidates))
+	var/people_added_per_gang = round(num_people_available / num_teams)
+	num_people_available = people_added_per_gang * num_teams
+	shuffle_list(candidates)
+	var/i = 1
+	for(var/datum/gang/gang in src.gangs)
+		for(var/j in 1 to people_added_per_gang)
+			var/datum/mind/candidate = candidates[i++]
+			candidate.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = gang.leader, silent=TRUE)
+			traitors |= candidate
+
+/datum/game_mode/gang/proc/can_join_gangs(mob/M)
+	var/datum/job/job = find_job_in_controller_by_string(M.mind.assigned_role)
+	. = !job || job.can_join_gangs
+
 /datum/game_mode/gang/proc/force_shuttle()
 	if (!emergency_shuttle.online)
 		emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
@@ -129,46 +138,7 @@
 		command_alert("Centcom is very disappointed in you all for this 'gang' silliness. The shuttle has been called.","Emergency Shuttle Update")
 
 /datum/game_mode/gang/send_intercept()
-	..(src.leaders)
-/datum/game_mode/gang/proc/equip_leader(mob/living/carbon/human/leader)
-	// leader.verbs += /client/proc/set_gang_base
-	var/datum/abilityHolder/holder = leader.add_ability_holder(/datum/abilityHolder/gang)
-	holder.addAbility(/datum/targetable/gang/set_gang_base)
-
-	//add gang channel to headset
-	if(leader.ears != null && istype(leader.ears,/obj/item/device/radio/headset))
-		var/obj/item/device/radio/headset/H = leader.ears
-		H.set_secure_frequency("g",leader.mind.gang.gang_frequency)
-		H.secure_classes["g"] = RADIOCL_SYNDICATE
-		boutput(leader, "Your headset has been tuned to your gang's frequency. Prefix a message with :g to communicate on this channel.")
-
-	return
-
-//prompts a gang leader to choose their gang outfit.
-//if they choose an outfit item some other leader chose, then they have to choose again
-/datum/game_mode/gang/proc/uniform_prompt(var/datum/mind/leaderMind)
-	var/temp_item1 = input(leaderMind.current, "Select your gang uniform jumpsuit slot item","Gang Jumpsuit")in under_list
-	leaderMind.gang.item1 = under_list[temp_item1]
-	while(leaderMind.gang.item1 in item1_used)
-		boutput(leaderMind.current , "<h4><span class='alert'>That item has been claimed by another gang.</span></h4>")
-		temp_item1 = input(leaderMind.current, "Select jumpsuit slot item","Gang Jumpsuit")in under_list
-		leaderMind.gang.item1 = under_list[temp_item1]
-	item1_used += leaderMind.gang.item1
-
-	if(leaderMind.gang.gang_name == "NICOLAS CAGE FAN CLUB")
-		leaderMind.gang.item2 = /obj/item/clothing/mask/niccage
-	else
-		var/temp_item2 = input(leaderMind.current, "Select head slot item","Gang Headwear")in headwear_list
-		leaderMind.gang.item2 = headwear_list[temp_item2]
-
-	while(leaderMind.gang.item2 in item2_used)
-		boutput(leaderMind.current , "<h4><span class='alert'>That item has been claimed by another gang.</span></h4>")
-		var/temp_item2 = input(leaderMind.current, "Select head slot item","Gang Headwear")in headwear_list
-		leaderMind.gang.item2 = headwear_list[temp_item2]
-
-	item2_used += leaderMind.gang.item2
-
-	return
+	..(src.traitors)
 
 /datum/game_mode/gang/check_finished()
 	if(emergency_shuttle.location == SHUTTLE_LOC_RETURNED)
@@ -178,19 +148,26 @@
 		return 0
 
 	var/leadercount = 0
-	for (var/datum/mind/L in ticker.mode:leaders)
+	for (var/datum/mind/L in ticker.mode:traitors)
 		leadercount++
 
 	if(leadercount <= 1 && ticker.round_elapsed_ticks > 12000 && !emergency_shuttle.online)
+#ifndef RP_MODE
 		force_shuttle()
+		return 1
+#else
+		return 0
+#endif
 
 	else return 0
 
 /datum/game_mode/gang/process()
 	..()
+#ifndef RP_MODE
 	if (ticker.round_elapsed_ticks >= 55 MINUTES && !shuttle_called)
 		shuttle_called = TRUE
 		force_shuttle()
+#endif //RP_MODE
 	slow_process ++
 	if (slow_process < 60)
 		return
@@ -218,163 +195,34 @@
 					else
 						H.delStatus("ganger")
 
-/datum/game_mode/gang/proc/increase_janktank_price()
-	janktank_price = round(janktank_price*1.1)
-	for(var/datum/gang/G in gangs)
-		var/datum/gang_item/misc/janktank/JT = locate(/datum/gang_item/misc/janktank) in G.locker.buyable_items
-		JT.price = janktank_price
-
 /datum/game_mode/gang/declare_completion()
-
-	var/text = ""
-
-	boutput(world, "<FONT size = 2><B>The gang leaders were: </B></FONT><br>")
-	for(var/datum/mind/leader_mind in leaders)
-		text = ""
-		text += "<b>[leader_mind.gang.gang_name]</b><br>"
-		if(leader_mind.current)
-			text += "<b>Leader: </b>[leader_mind.current.real_name]"
-			if(isdead(leader_mind.current)) text += " (Dead)"
-			else text += " (Survived)"
-		else
-			text += "<b>Leader: </b>[leader_mind.key] (Destroyed)"
-		text += "<br><b>Members:</b> "
-		if(!leader_mind.gang.members.len) text += "None!"
-		else
-			var/count = 0
-			for(var/datum/mind/member in leader_mind.gang.members)
-				count++
-				if(member.current) text += "[member.current.real_name] ([member.key])[count==leader_mind.gang.members.len ? "." : ", " ]"
-				else text += "Unknown ([member.key])[count==leader_mind.gang.members.len ? "." : ", " ]"
-		text += "<br>Items Purchased<br>"
-		var/items = ""
-		for (var/i in leader_mind.gang.items_purchased)
-			items += "<b>[i]</b>([leader_mind.gang.items_purchased[i]]x) - "
-		if (items == "")
-			items = "None"
-		text += items
-		text += "<br><b>Areas Owned:</b> [leader_mind.gang.num_areas_controlled()]"
-		text += "<br><b>Turf Score:</b> [leader_mind.gang.score_turf]"
-		text += "<br><b>Cash Pile:</b> [leader_mind.gang.score_cash*CASH_DIVISOR][CREDIT_SIGN]"
-		text += "<br><b>Guns Stashed:</b> [leader_mind.gang.score_gun]"
-		text += "<br><b>Drug Score:</b> [leader_mind.gang.score_drug]"
-		text += "<br><b>Event Score:</b> [leader_mind.gang.score_event]"
-		text += "<br><b>Total Score: [leader_mind.gang.gang_score()]</b>"
-		text += "<br>"
-		boutput(world, text)
-
 	if (!check_winner())
 		boutput(world, "<h2><b>The round was a draw!</b></h2>")
 
 	else
-		var/datum/mind/winner = check_winner()
+		var/datum/gang/winner = check_winner()
 		if (istype(winner))
-			boutput(world, "<h2><b>[winner.gang.gang_name], led by [winner.current.real_name], won the round!</b></h2>")
+			boutput(world, "<h2><b>[winner.gang_name], led by [winner.leader.current.real_name], won the round!</b></h2>")
 
-	..() // Admin-assigned antagonists or whatever.
-
-/datum/game_mode/gang/proc/generate_gang(datum/mind/leaderMind)
-	leaderMind.gang = new /datum/gang
-	leaderMind.gang.leader = leaderMind
-
-	leaderMind.gang.gang_tag = rand(0,22) // increase if you add more tags!
-
-	while(leaderMind.gang.gang_tag in tags_used)
-		leaderMind.gang.gang_tag = rand(0,22) // increase if you add more tags!
-
-	tags_used += leaderMind.gang.gang_tag
-
-	leaderMind.gang.gang_frequency = rand(1360,1420)
-
-	while(leaderMind.gang.gang_frequency in frequencies_used)
-		leaderMind.gang.gang_frequency = rand(1360,1420)
-
-	frequencies_used += leaderMind.gang.gang_frequency
-
-	SPAWN(0)
-		pick_name(leaderMind)
-		pick_theme(leaderMind)
-
-	gangs += leaderMind.gang
-
-//choose name with no user input
-/datum/game_mode/gang/proc/auto_choose_name(datum/mind/leaderMind)
-	var/part1chosen = null
-	var/part2chosen = null
-	var/fullchosen = null
-	while(leaderMind.gang.gang_name == "Gang Name")
-		if(prob(10)) //Unique name.
-			fullchosen = pick_string("gangwar.txt", "fullchosen")
-			part1chosen = null
-			part2chosen = null
-			if (!(fullchosen in fullnames_used))
-				leaderMind.gang.gang_name = fullchosen
-				fullnames_used += fullchosen
-		else
-			var/list/part1 = pick_string("gangwar.txt", "part1")
-			var/list/part2 = pick_string("gangwar.txt", "part2")
-			part1chosen = pick(part1)
-			part2chosen = pick(part2)
-			fullchosen = null
-			if (!(part1chosen in part1_used) && !(part2chosen in part2_used))
-				leaderMind.gang.gang_name = part1chosen + " " + part2chosen
-				part1_used += part1chosen
-				part2_used += part2chosen
-
-/datum/game_mode/gang/proc/pick_theme(datum/mind/leaderMind)
-	return
-/datum/game_mode/gang/proc/pick_name(datum/mind/leaderMind)
-	var/part1chosen = null
-	var/part2chosen = null
-	var/fullchosen = null
-	var/temp_name = ""
-	while(leaderMind.gang.gang_name == "Gang Name")
-		if (prob(10))
-			temp_name = pick_string("gangwar.txt", "fullchosen")
-			fullchosen = temp_name
-		else
-			var/list/part1 = pick_string("gangwar.txt", "part1")
-			var/list/part2 = pick_string("gangwar.txt", "part2")
-			part1chosen = pick(part1)
-			part2chosen = pick(part2)
-			temp_name = part1chosen + " " + part2chosen
-
-		switch(tgui_alert(leaderMind.current, "Name: [temp_name].", "Approve your gang's name", list("Accept", "Randomize")))
-			if ("Accept")
-				//make sure no other gangs have this name
-				if (fullchosen)
-					if (locate(fullchosen) in fullnames_used)
-						boutput(leaderMind.current, "<span class='alert'>Another gang has this name.</span>")
-						continue
-					fullnames_used += fullchosen
-
-				else if (part1chosen && part2chosen)
-				//make sure no other gangs have this name
-					if (locate(part1chosen) in part1_used && locate(part2chosen) in part2_used)
-						boutput(leaderMind.current, "<h3><span class='alert'>Another gang has this name. Sorry, you have to roll again!</span></h3>")
-						continue
-					part1_used += part1chosen
-					part2_used += part2chosen
-				leaderMind.gang.gang_name = temp_name
-				boutput(leaderMind.current, "<h1><font color=red>Your gang name is [temp_name]!</font></h1>")
-			else
-				continue
+	..()
 
 /datum/game_mode/gang/proc/check_winner()
-	var/datum/mind/current_winner = null
+	var/datum/gang/victorius_gang = null
 
-	for(var/datum/mind/leader_mind in leaders) // Find the highest score
-		if(!current_winner)
-			current_winner = leader_mind
-		else if(current_winner.gang.gang_score() < leader_mind.gang.gang_score())
-			current_winner = leader_mind
+	// Find the highest scoring gang.
+	for (var/datum/gang/gang in src.gangs)
+		if(!victorius_gang)
+			victorius_gang = gang
+		else if(victorius_gang.gang_score() < gang.gang_score())
+			victorius_gang = gang
 
-	for(var/datum/mind/leader_mind in leaders) // See if two gangs have the highest score ie. it's a draw
-		if(current_winner != leader_mind && current_winner.gang.gang_score() == leader_mind.gang.gang_score())
+	// Check if the highest score is a draw.
+	for (var/datum/gang/gang in src.gangs)
+		if((victorius_gang != gang) && (victorius_gang.gang_score() == gang.gang_score()))
 			return 0
 
-	if (istype(current_winner))
-		return current_winner
+	if (istype(victorius_gang))
+		return victorius_gang
 
 /// hot zone thing
 
@@ -393,7 +241,7 @@
 
 	broadcast_to_all_gangs("The [hot_zone.name] is a high priority area. Ensure that your gang has control of it five minutes from now!")
 
-	SPAWN(hot_zone_timer-600)
+	SPAWN(hot_zone_timer - 1 MINUTE)
 		if(hot_zone != null) broadcast_to_all_gangs("You have a minute left to control the [hot_zone.name]!")
 		sleep(1 MINUTE)
 		if(hot_zone != null && hot_zone.gang_owners != null)
@@ -422,10 +270,10 @@
 	//get possible targets. Looks for ckey, if they are not dead, and if they are not in the top gang.
 	var/list/potential_targets = list()
 	for (var/mob/living/carbon/human/H in mobs)
-		if (H.ckey && !isdead(H) && H.mind?.gang != top_gang && !istype(H.mutantrace, /datum/mutantrace/virtual))
+		if (H.ckey && !isdead(H) && H.get_gang() != top_gang && !istype(H.mutantrace, /datum/mutantrace/virtual))
 			potential_targets += H
 
-	if (!potential_targets.len)
+	if (!length(potential_targets))
 		logTheThing(LOG_DEBUG, null, "No players found to be kidnapping targets.")
 		message_admins("No kidnapping target has been chosen for kidnapping event. This should be pretty unlikely, unless there's only like 1 person on.")
 		return 0
@@ -439,9 +287,9 @@
 	//alert gangs, alert target which gang to be wary of.
 	for (var/datum/gang/G in gangs)
 		if (G == top_gang)
-			broadcast_to_gang("A bounty has been placed on the capture of [target_name]. Shove them into your gang locker <ALIVE>, within 8 minutes for a massive reward!", G)
+			G.broadcast_to_gang("A bounty has been placed on the capture of [target_name]. Shove them into your gang locker <ALIVE>, within 8 minutes for a massive reward!")
 		else
-			broadcast_to_gang("[target_name] is the target of a kidnapping by [top_gang.gang_name]. Ensure that [target_name] is alive and well for the next 8 minutes for a reward!", G)
+			G.broadcast_to_gang("[target_name] is the target of a kidnapping by [top_gang.gang_name]. Ensure that [target_name] is alive and well for the next 8 minutes for a reward!")
 
 	boutput(kidnapping_target, "<span class='alert'>You get the feeling that [top_gang.gang_name] wants you dead! Run and hide or ask security for help!</span>")
 
@@ -452,10 +300,10 @@
 		//if they didn't kidnap em, then give points to other gangs depending on whether they are alive or not.
 		if(!kidnap_success)
 			//if the kidnapping target is null or dead, nobody gets points. (the target will be "gibbed" if successfully "kidnapped" and points awarded there)
-			if (kidnapping_target && kidnapping_target.stat != 2)
+			if (kidnapping_target && !isdead(kidnapping_target))
 				for (var/datum/gang/G in gangs)
 					if (G != top_gang)
-						G.score_event += kidnapping_score/gangs.len 	//This is less than the total points the top_gang would get, so it behooves security to help the non-top gangs keep the target safe.
+						G.score_event += kidnapping_score / length(gangs)	//This is less than the total points the top_gang would get, so it behooves security to help the non-top gangs keep the target safe.
 				broadcast_to_all_gangs("[top_gang.gang_name] has failed to kidnap [target_name] and the other gangs have been rewarded for thwarting the kidnapping attempt!")
 			else
 				broadcast_to_all_gangs("[target_name] has died in one way or another. No gangs have been rewarded for this futile exercise.")
@@ -464,64 +312,173 @@
 		process_kidnapping_event()
 
 
-//bleh
-/datum/game_mode/gang/proc/broadcast_to_all_gangs(var/message)
-	if(announcer_source.name == "Unknown")
-		announcer_source.set_name("The [pick("Kingpin","Cabal","Council","Boss")]")
-
-	//set up message
+proc/broadcast_to_all_gangs(var/message)
 	var/datum/language/L = languages.language_cache["english"]
 	var/list/messages = L.get_messages(message)
 
-	//send the message on each gang frequency
-	for(var/datum/gang/G in gangs)
-		announcer_radio.set_secure_frequency("g",G.gang_frequency)
-		announcer_radio.talk_into(announcer_source, messages, "g", announcer_source.name, "english")
-
-/datum/game_mode/gang/proc/broadcast_to_gang(var/message,var/datum/gang/gang)
-	if(announcer_source.name == "Unknown")
-		announcer_source.set_name("The [pick("Kingpin","Cabal","Council","Boss")]")
-
-	//set up message
-	var/datum/language/L = languages.language_cache["english"]
-	var/list/messages = L.get_messages(message)
-
-	//send message
-	announcer_radio.set_secure_frequency("g",gang.gang_frequency)
-	announcer_radio.talk_into(announcer_source, messages, "g", announcer_source.name, "english")
+	for (var/datum/gang/gang in get_all_gangs())
+		gang.announcer_radio.set_secure_frequency("g", gang.gang_frequency)
+		gang.announcer_radio.talk_into(gang.announcer_source, messages, "g", gang.announcer_source.name, "english")
 
 /datum/gang
+	/// The maximum number of gang members per gang.
+	var/static/current_max_gang_members = 4
+	/// Gang tag icon states that are being used by other gangs.
+	var/static/list/used_tags
+	/// Gang names that are being used by other gangs.
+	var/static/list/used_names
+	/// Radio frequencies that are being used by other gangs.
+	var/static/list/used_frequencies
+	/// Jumpsuit items that are being used by other gangs as part of their gang uniform.
+	var/static/list/uniform_list
+	/// Mask or hat items that are being used by other gangs as part of their gang uniform.
+	var/static/list/headwear_list
+
+	/// The radio source for the gang's announcer, who will announce various messages of importance over the gang's frequency.
+	var/datum/generic_radio_source/announcer_source
+	/// The radio headset that the gang's announcer will use.
+	var/obj/item/device/radio/headset/gang/announcer_radio
+
+	/// The chosen name of this gang.
 	var/gang_name = "Gang Name"
+	/// The randomly selected tag of this gang.
 	var/gang_tag = 0
+	/// The unique radio frequency that members of this gang will communicate over.
 	var/gang_frequency = 0
-	var/obj/item/clothing/item1 = null
-	var/obj/item/clothing/item2 = null
+	/// The chosen jumpsuit item of this gang.
+	var/obj/item/clothing/uniform = null
+	/// The chosen mask or hat item of this gang.
+	var/obj/item/clothing/headwear = null
+	/// The location of this gang's locker.
 	var/area/base = null
-	var/list/members = list()
-	var/list/gear_cooldown = list()
+	/// The various areas that this gang currently controls.
+	var/list/area/controlled_areas = list()
+	/// The mind of this gang's leader.
 	var/datum/mind/leader = null
+	/// The minds of gang members associated with this gang. Does not include the gang leader.
+	var/list/members = list()
+	var/list/tags = list()
+	/// The minds of members of this gang who are currently on cooldown from redeeming their gear from the gang locker.
+	var/list/gear_cooldown = list()
+	/// The gang locker of this gang.
 	var/obj/ganglocker/locker = null
-	var/spendable_points = 0						//The usable number of points that a gang has to spend with
-	var/theme = "misc"					//determines the type of items they can buy from lockers
+	/// The usable number of points that this gang has to spend with.
+	var/spendable_points = 0
+#ifdef BONUS_POINTS
+	spendable_points = 99999
+#endif
+	/// An associative list of the items that this gang has purchased and the quantity in which they have been purchased.
 	var/list/items_purchased = list()
 
-	var/score_turf = 0					//points gained from owning turfs
-	var/score_cash = 0					//The total amount of cash a gang has deposited
-	var/score_gun = 0					//points gained from gun deposits
-	var/score_drug = 0					//points gained from drugs
-	var/score_event = 0					//points from hotzones
+	/// Points gained by this gang from owning areas.
+	var/score_turf = 0
+	/// The total quantity of cash that this gang has deposited.
+	var/score_cash = 0
+	/// Points gained by this gang from gun deposits.
+	var/score_gun = 0
+	/// Points gained by this gang from drug deposits.
+	var/score_drug = 0
+	/// Points gained by this gang from completing events.
+	var/score_event = 0
 
+	var/static/list/first_names = strings("gangwar.txt", "part1")
+	var/static/list/second_names = strings("gangwar.txt", "part2")
+
+	New()
+		. = ..()
+		if (!src.used_tags)
+			src.used_tags = list()
+		if (!src.used_names)
+			src.used_names = list()
+		if (!src.used_frequencies)
+			src.used_frequencies = list()
+		if (!src.uniform_list || !src.headwear_list)
+			src.make_item_lists()
+
+		src.gang_tag = rand(0, 22)
+		while(src.gang_tag in src.used_tags)
+			src.gang_tag = rand(0, 22)
+		src.used_tags += src.gang_tag
+
+		src.gang_frequency = rand(1360, 1420)
+		while(src.gang_frequency in src.used_frequencies)
+			src.gang_frequency = rand(1360, 1420)
+		src.used_frequencies += src.gang_frequency
+
+		src.announcer_source = new /datum/generic_radio_source()
+		src.announcer_source.set_name("The [pick("Kingpin","Cabal","Council","Boss")]")
+		src.announcer_radio = new /obj/item/device/radio/headset/gang()
+
+		if (istype(ticker?.mode, /datum/game_mode/gang))
+			var/datum/game_mode/gang/gamemode = ticker.mode
+			gamemode.gangs += src
+
+	proc/generate_random_name()
+		if (prob(70))
+			. = pick_string("gangwar.txt", "fullchosen")
+		else
+			. = "[pick(first_names)] [pick(second_names)]"
+
+	proc/select_gang_name()
+		var/temporary_name = generate_random_name()
+
+		while(src.gang_name == "Gang Name")
+			var/choice = "Accept"
+			if(src.leader?.current)
+				choice = tgui_alert(src.leader?.current, "Name: [temporary_name].", "Approve Your Gang's Name", list("Accept", "Reselect", "Randomise"))
+			switch(choice)
+				if ("Accept")
+					if (temporary_name in src.used_names)
+						boutput(src.leader.current, "<span class='alert'>Another gang has this name.</span>")
+						continue
+
+					src.gang_name = temporary_name
+					src.used_names += temporary_name
+
+					for(var/datum/mind/member in src.members + list(src.leader))
+						boutput(member.current, "<h4><span class='alert'>Your gang name is [src.gang_name]!</span></h4>")
+
+				if ("Reselect")
+					var/first_name = tgui_input_list(src.leader.current, "Select the first word in your gang's name:", "Gang Name Selection", first_names)
+					var/second_name = tgui_input_list(src.leader.current, "Select the second word in your gang's name:", "Gang Name Selection", second_names)
+					temporary_name = "[first_name] [second_name]"
+
+				if ("Randomise")
+					temporary_name = generate_random_name()
+
+	proc/select_gang_uniform()
+		// Jumpsuit Selection.
+		var/temporary_jumpsuit = tgui_input_list(src.leader.current, "Select your gang's uniform slot item:", "Gang Uniform Selection", src.uniform_list)
+
+		while (!src.uniform_list[temporary_jumpsuit])
+			boutput(src.leader.current , "<span class='alert'>That uniform has been claimed by another gang.</span>")
+			temporary_jumpsuit = tgui_input_list(src.leader.current, "Select your gang's uniform slot item:", "Gang Uniform Selection", src.uniform_list)
+
+		src.uniform = src.uniform_list[temporary_jumpsuit]
+		src.uniform_list -= temporary_jumpsuit
+
+		// Mask/Headwear Selection.
+		if(src.gang_name == "NICOLAS CAGE FAN CLUB")
+			src.headwear = /obj/item/clothing/mask/niccage
+		else
+			var/temporary_headwear = tgui_input_list(src.leader.current, "Select your gang's mask or head slot item:", "Gang Uniform Selection", src.headwear_list)
+
+			while(!src.headwear_list[temporary_headwear])
+				boutput(src.leader.current , "<span class='alert'>That mask or hat has been claimed by another gang.</span>")
+				temporary_headwear = tgui_input_list(src.leader.current, "Select your gang's mask or head slot item:", "Gang Uniform Selection", src.headwear_list)
+
+			src.headwear = src.headwear_list[temporary_headwear]
+			src.headwear_list -= temporary_headwear
+
+	proc/broadcast_to_gang(var/message)
+		var/datum/language/L = languages.language_cache["english"]
+		var/list/messages = L.get_messages(message)
+
+		src.announcer_radio.set_secure_frequency("g", src.gang_frequency)
+		src.announcer_radio.talk_into(src.announcer_source, messages, "g", src.announcer_source.name, "english")
 
 	proc/num_areas_controlled()
-		var/areacount = 0
-		var/list/counted_areas = list()
-		for(var/area/A in world)
-			if(A.gang_owners == src && !(A in counted_areas))
-				areacount ++
-				counted_areas += A
-
-			LAGCHECK(LAG_LOW)
-		return areacount
+		return length(src.controlled_areas)
 
 	proc/gang_score()
 		var/score = 0
@@ -535,73 +492,113 @@
 		return round(score)
 
 	proc/can_be_joined() //basic for now but might be expanded on so I'm making it a proc of its own
-		if(members.len >= ticker.mode:current_max_gang_members)
-			return 0
-		return 1
+		if(length(src.members) >= src.current_max_gang_members)
+			return FALSE
+		return TRUE
 
 	proc/gear_worn(var/mob/living/carbon/human/M)
-		if(!istype(M)) return 0
+		if(!istype(M))
+			return FALSE
 
 		var/count = 0
 
-		if(istype(M.w_uniform,item1))
+		if(istype(M.w_uniform, src.uniform))
 			count++
 
-		if(istype(M.head, item2) || istype(M.wear_mask,item2))
+		if(istype(M.head, src.headwear) || istype(M.wear_mask, src.headwear))
 			count++
 
 		return count
 
-// Deprecated by /datum/targetable/gang/set_gang_base
-/client/proc/set_gang_base()
-	set category = "Gang"
-	set name = "Set Gang Base"
-	set desc = "Permanently sets the area you're currently in as your gang's base and spawns your gang's locker."
+	proc/make_tag(turf/T)
+		var/obj/decal/cleanable/gangtag/tag = make_cleanable(/obj/decal/cleanable/gangtag, T)
+		tag.icon_state = "gangtag[src.gang_tag]"
+		tag.name = "[src.gang_name] tag"
+		tag.owners = src
+		src.tags |= tag
+		tag.delete_same_tags()
+		T.tagged = TRUE
+		var/area/area = T.loc
+		area.gang_owners = src
 
-	var/area/area = get_area(usr)
+	proc/make_item_lists()
+		// Must be jumpsuit. `/obj/item/clothing/under`
+		src.uniform_list = list(
+		"owl suit" = /obj/item/clothing/under/gimmick/owl,
+		"pinstripe suit" = /obj/item/clothing/under/suit/pinstripe,
+		"purple suit" = /obj/item/clothing/under/suit/purple,
+		"mailman's jumpsuit" = /obj/item/clothing/under/misc/mail,
+		"comfy sweater" = /obj/item/clothing/under/gimmick/sweater,
+		"party princess uniform" = /obj/item/clothing/under/gimmick/princess,
+		"salesman's uniform" = /obj/item/clothing/under/gimmick/merchant,
+		"birdman suit" = /obj/item/clothing/under/gimmick/birdman,
+		"safari clothing" = /obj/item/clothing/under/gimmick/safari,
+		"hard worn suit" = /obj/item/clothing/under/rank/det,
+		"red athletic shorts" = /obj/item/clothing/under/shorts/red,
+		"blue athletic shorts" = /obj/item/clothing/under/shorts/blue,
+		"black basketball jersey" = /obj/item/clothing/under/jersey/black,
+		"white basketball jersey" = /obj/item/clothing/under/jersey,
+		"rainbow jumpsuit" = /obj/item/clothing/under/gimmick/rainbow,
+		"johnny" = /obj/item/clothing/under/gimmick/johnny,
+		"rastafarian's shirt" = /obj/item/clothing/under/misc/chaplain/rasta,
+		"atheist's sweater" = /obj/item/clothing/under/misc/chaplain/atheist,
+		"barber's uniform" = /obj/item/clothing/under/misc/barber,
+		"mechanic's uniform" = /obj/item/clothing/under/rank/mechanic,
+		"vice officer's suit" = /obj/item/clothing/under/misc/vice,
+		"sailor uniform" = /obj/item/clothing/under/gimmick/sailor,
+		"bowling suit" = /obj/item/clothing/under/gimmick/bowling,
+		"tactical turtleneck" = /obj/item/clothing/under/misc/syndicate,
+		"black lawyer's suit" = /obj/item/clothing/under/misc/lawyer/black,
+		"red lawyer's suit" = /obj/item/clothing/under/misc/lawyer/red,
+		"lawyer suit" = /obj/item/clothing/under/misc/lawyer,
+		"blue tracksuit" = /obj/item/clothing/under/gimmick/chav,
+		"diver jumpsuit" = /obj/item/clothing/under/gimmick/sealab,
+		"spiderman suit" = /obj/item/clothing/under/gimmick/spiderman,
+		"Vault 13 jumpsuit" = /obj/item/clothing/under/gimmick/vault13,
+		"duke's suit" = /obj/item/clothing/under/gimmick/duke,
+		"psychedelic jumpsuit" = /obj/item/clothing/under/gimmick/psyche,
+		"hawaiian shirt" = /obj/item/clothing/under/misc/tourist,
+		"western shirt and pants" = /obj/item/clothing/under/misc/western)
 
-	if(area.gang_base)
-		boutput(usr, "<span class='alert'>Another gang's base is in this area!</span>")
-		return
-
-	if(usr.stat)
-		boutput(usr, "<span class='alert'>Not when you're incapacitated.</span>")
-		return
-
-	// if (istype(ticker.mode, /datum/game_mode/gang))
-	// 	var/datum/game_mode/gang/mode = ticker.mode
-	// 	mode.uniform_prompt(mind)
-
-	if (istype(ticker.mode, /datum/game_mode/gang))
-		var/datum/game_mode/gang/mode = ticker.mode
-		mode.uniform_prompt(usr.mind)
-	else
-		boutput(usr, "<span class='alert'>The round's mode isn't Gang, you can't place a locker here!.</span>")
-		return
-
-	usr.mind.gang.base = area
-	area.gang_base = 1
-
-	for(var/obj/decal/cleanable/gangtag/G in area)
-		if(G.owners == usr.mind.gang) continue
-		var/obj/decal/cleanable/gangtag/T = make_cleanable(/obj/decal/cleanable/gangtag,G.loc)
-		T.icon_state = "gangtag[usr.mind.gang.gang_tag]"
-		T.name = "[usr.mind.gang.gang_name] tag"
-		T.owners = usr.mind.gang
-		T.delete_same_tags()
-		break
-
-	var/obj/ganglocker/locker = new /obj/ganglocker(usr.loc)
-	locker.name = "[usr.mind.gang.gang_name] Locker"
-	locker.desc = "A locker with a small screen attached to the door, and the words 'Property of [usr.mind.gang.gang_name] - DO NOT TOUCH!' scratched into both sides."
-	locker.gang = usr.mind.gang
-	ticker.mode:gang_lockers += locker
-	usr.mind.gang.locker = locker
-	locker.UpdateIcon()
-
-	usr.verbs -= /client/proc/set_gang_base
-
-	return
+		// Must be mask or hat. `/obj/item/clothing/mask` or `/obj/item/clothing/head`
+		src.headwear_list = list(
+		"owl mask" = /obj/item/clothing/mask/owl_mask,
+		"smiling face" = /obj/item/clothing/mask/smile,
+		"balaclava" = /obj/item/clothing/mask/balaclava,
+		"horse mask" = /obj/item/clothing/mask/horse_mask,
+		"'George Melons' mask" = /obj/item/clothing/mask/melons,
+		"spiderman mask" = /obj/item/clothing/mask/spiderman,
+		"SWAT mask" = /obj/item/clothing/mask/gas/swat,
+		"skull mask" = /obj/item/clothing/mask/skull,
+		"sterile mask" = /obj/item/clothing/mask/surgical,
+		"bobble hat and glasses" = /obj/item/clothing/head/waldohat,
+		"top hat" = /obj/item/clothing/head/that,
+		"purple top hat" = /obj/item/clothing/head/that/purple,
+		"cakehat" = /obj/item/clothing/head/cakehat,
+		"blue wizard hat" = /obj/item/clothing/head/wizard,
+		"red wizard hat" = /obj/item/clothing/head/wizard/red,
+		"necromancer hood" = /obj/item/clothing/head/wizard/necro,
+		"carved pumpkin" = /obj/item/clothing/head/pumpkin,
+		"flat cap" = /obj/item/clothing/head/flatcap,
+		"smooth criminal's hat" = /obj/item/clothing/head/mj_hat,
+		"genki" = /obj/item/clothing/head/genki,
+		"purple butt hat" = /obj/item/clothing/head/purplebutt,
+		"mailman's hat" = /obj/item/clothing/head/mailcap,
+		"turban" = /obj/item/clothing/head/turban,
+		"formal turban" = /obj/item/clothing/head/formal_turban,
+		"constable's helmet" = /obj/item/clothing/head/helmet/bobby,
+		"viking helmet" = /obj/item/clothing/head/helmet/viking,
+		"batcowl" = /obj/item/clothing/head/helmet/batman,
+		"welding helmet" = /obj/item/clothing/head/helmet/welding,
+		"biker cap" = /obj/item/clothing/head/biker_cap,
+		"NT beret" = /obj/item/clothing/head/NTberet,
+		"rastafarian cap" = /obj/item/clothing/head/rastacap,
+		"XComHair" = /obj/item/clothing/head/XComHair,
+		"burberry cap" = /obj/item/clothing/head/chav,
+		"psychedelic hat" = /obj/item/clothing/head/psyche,
+		"Snake's bandana" = /obj/item/clothing/head/snake,
+		"powdered wig" = /obj/item/clothing/head/powdered_wig,
+		"black ten-gallon hat" = /obj/item/clothing/head/westhat/black)
 
 /obj/item/spray_paint
 	name = "Spraypaint Can"
@@ -614,7 +611,8 @@
 	var/in_use = 0
 
 	afterattack(target as turf|obj, mob/user as mob)
-		if(!istype(target,/turf) && !istype(target,/obj/decal/cleanable/gangtag)) return
+		if(!istype(target, /turf) && !istype(target, /obj/decal/cleanable/gangtag))
+			return
 
 		if (!user)
 			return
@@ -625,9 +623,12 @@
 
 		var/turf/turftarget = get_turf(target)
 
-		if(turftarget == loc || BOUNDS_DIST(src, target) > 0) return
+		if((turftarget == loc) || (BOUNDS_DIST(src, target) > 0))
+			return
 
-		if(!user.mind || !user.mind.gang)
+		var/datum/gang/gang = user.get_gang()
+
+		if(!gang)
 			boutput(user, "<span class='alert'>You aren't in a gang, why would you do that?</span>")
 			return
 
@@ -646,13 +647,26 @@
 			return
 		if(!ishuman(user))
 			boutput(user, "<span class='alert'>You don't have the dexterity to spray paint a gang tag!</span>")
-		if(getarea.gang_owners && getarea.gang_owners != user.mind.gang && !turftarget.tagged)
+		if(getarea.gang_owners && getarea.gang_owners != gang && !turftarget.tagged)
 			boutput(user, "<span class='alert'>[getarea.gang_owners.gang_name] own this area! You must paint over their tag to capture it!</span>")
+			if (user.GetComponent(/datum/component/tracker_hud))
+				return
+			var/datum/game_mode/gang/mode = ticker.mode
+			if (!istype(mode))
+				return
+			for (var/datum/gang/other_gang in mode.gangs)
+				for (var/obj/decal/cleanable/gangtag/tag in other_gang.tags)
+					if (get_area(tag) == getarea)
+						user.AddComponent(/datum/component/tracker_hud/gang, get_turf(tag))
+						SPAWN(3 SECONDS)
+							var/datum/component/tracker_hud/gang/component = user.GetComponent(/datum/component/tracker_hud/gang)
+							component.RemoveComponent()
+						return
 			return
 		if(getarea.being_captured)
 			boutput(user, "<span class='alert'>Somebody is already tagging that area!</span>")
 			return
-		if(getarea.gang_owners == user.mind.gang)
+		if(getarea.gang_owners == gang)
 			boutput(user, "<span class='alert'>This place is already owned by your gang!</span>")
 			return
 
@@ -669,6 +683,7 @@
 	var/area/target_area
 	var/obj/item/spray_paint/S
 	var/mob/M
+	var/datum/gang/gang
 
 	New(var/turf/target_turf as turf, var/obj/item/spray_paint/S)
 		src.target_turf = target_turf
@@ -682,10 +697,11 @@
 		try
 			if (ismob(owner))
 				M = owner
-			if (M?.mind?.gang)
+				src.gang = M?.get_gang()
+			if (gang)
 				icon = 'icons/obj/decals/graffiti.dmi'
-				icon_state = "gangtag[M.mind.gang.gang_tag]"
-				var/speedup = M.mind.gang.gear_worn(M) + (owner.hasStatus("janktank") ? 1: 0)
+				icon_state = "gangtag[src.gang.gang_tag]"
+				var/speedup = src.gang.gear_worn(M) + (owner.hasStatus("janktank") ? 1: 0)
 				switch (speedup)
 					if (1)
 						duration = 13 SECONDS
@@ -729,16 +745,13 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		S.in_use = 0
-		target_area.being_captured = 0
+		S.in_use = FALSE
+		target_area.being_captured = FALSE
+		target_area.gang_owners?.controlled_areas -= target_area
+		target_area.gang_owners = src.gang
+		src.gang.controlled_areas += target_area
 
-		var/obj/decal/cleanable/gangtag/T = make_cleanable(/obj/decal/cleanable/gangtag,target_turf)
-		T.icon_state = "gangtag[M.mind.gang.gang_tag]"
-		T.name = "[M.mind.gang.gang_name] tag"
-		T.owners = M.mind.gang
-		T.delete_same_tags()
-		target_turf.tagged = 1
-		target_area.gang_owners = M.mind.gang
+		src.gang.make_tag(target_turf)
 		boutput(M, "<span class='notice'>You have claimed this area for your gang!</span>")
 
 /obj/ganglocker
@@ -747,7 +760,7 @@
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "gang"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/datum/gang/gang = null
 	var/max_health = 200
 	var/health = 200
@@ -756,6 +769,8 @@
 	var/image/default_screen_overlay = null
 	var/HTML = null
 	var/list/buyable_items = list()
+
+	var/static/janktank_price = 300
 
 	New()
 		..()
@@ -822,12 +837,11 @@
 	//puts the html string in the var/HTML on src
 	proc/generate_HTML()
 		var/janktank = ""
-		if (istype(ticker.mode, /datum/game_mode/gang))
-			janktank += "<p><b>JankTank purchasers:</b></p>"
-			for(var/datum/gang/G in ticker.mode:gangs)
-				if (G.gang_name)
-					var/num = !G.items_purchased["JankTank Implant"] ? 0 : G.items_purchased["JankTank Implant"]
-					janktank += "[G.gang_name] - [num] implant(s)<BR>"
+		janktank += "<p><b>JankTank purchasers:</b></p>"
+		for(var/datum/gang/G in get_all_gangs())
+			if (G.gang_name)
+				var/num = !G.items_purchased[/obj/item/implanter/gang] ? 0 : G.items_purchased[/obj/item/implanter/gang]
+				janktank += "[G.gang_name] - [num] implant(s)<BR>"
 
 		var/dat = {"<HTML>
 		<div style="width: 100%; overflow: hidden;">
@@ -851,6 +865,10 @@
 		</tr>
 		"}
 		for (var/datum/gang_item/GI in buyable_items)
+			if (istype(GI, /datum/gang_item/misc/janktank))
+				var/datum/gang_item/misc/janktank/JT = GI
+				JT.price = src.janktank_price
+
 			dat += "<tr><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td><td>[GI.class1]</td><td>[GI.class2]</td>  </tr>"
 
 		dat += "</table></HTML>"
@@ -866,7 +884,7 @@
 		if (href_list["get_gear"])
 			handle_gang_gear(usr)
 		if (href_list["buy_item"])
-			if (usr.mind && usr.mind.gang != src.gang)
+			if (usr.get_gang() != src.gang)
 				boutput(usr, "<span class='alert'>You are not a member of this gang, you cannot purchase items from it.</span>")
 				return
 			var/datum/gang_item/GI = locate(href_list["buy_item"])
@@ -875,36 +893,121 @@
 					gang.spendable_points -= GI.price
 					new GI.item_path(src.loc)
 					boutput(usr, "<span class='notice'>You purchase [GI.name] for [GI.price]. Remaining balance = [gang.spendable_points] points.</span>")
-					gang.items_purchased[GI.name]++
+					gang.items_purchased[GI.item_path]++
 					if (istype(GI, /datum/gang_item/misc/janktank))
-						ticker.mode:increase_janktank_price()
+						src.increase_janktank_price()
 						updateDialog()
 				else
 					boutput(usr, "<span class='alert'>Insufficient funds.</span>")
 
+	proc/increase_janktank_price()
+		src.janktank_price = round(src.janktank_price * 1.1)
 
-	//Okay, this is fucked up. I don't know why get_gang_gear is a global proc and I don't care. - Kyle
+		for (var/datum/gang/gang in get_all_gangs())
+			var/datum/gang_item/misc/janktank/JT = locate(/datum/gang_item/misc/janktank) in gang.locker.buyable_items
+			JT.price = janktank_price
+
 	proc/handle_gang_gear(var/mob/living/carbon/human/user)
 		var/image/overlay = null
-		if(user.mind.gang == src.gang)
-			switch(get_gang_gear(user))
-				if(0)
-					boutput(user, "<span class='alert'>The locker's screen briefly displays the message \"Access Denied\".</span>")
-					overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
-				if(1)
-					boutput(user, "<span class='alert'>The locker's screen briefly displays the message \"Access Denied\".</span>")
-					boutput(user, "You may only receive one set of gang gear every five minutes.")
-					overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
-				if(2)
-					boutput(user, "<span class='alert'>The locker's screen briefly displays the message \"Access Granted\". A set of gang equipment drops out of a slot.</span>")
-					overlay = image('icons/obj/large_storage.dmi', "gang_overlay_green")
-		else
-			boutput(user, "<span class='alert'>The locker's screen briefly displays the message \"Access Denied\".</span>")
-			overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
+		switch(src.get_gang_gear(user))
+			if(0)
+				boutput(user, "<b class='alert'>The locker's screen briefly displays the message \"Access Denied\".</b>")
+				overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
+			if(1)
+				boutput(user, "<b class='alert'>The locker's screen briefly displays the message \"Access Denied\".</b>")
+				boutput(user, "<span class='alert'>You may only receive one set of gang gear every five minutes.</span>")
+				overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
+			if(2)
+				boutput(user, "<span class='success'>The locker's screen briefly displays the message \"Access Granted\". A set of gang equipment drops out of a slot.</span>")
+				overlay = image('icons/obj/large_storage.dmi', "gang_overlay_green")
 
 		src.UpdateOverlays(overlay, "screen")
 		SPAWN(1 SECOND)
 			src.UpdateOverlays(default_screen_overlay, "screen")
+
+	proc/get_gang_gear(var/mob/living/carbon/human/user)
+		if (!istype(user))
+			return 0
+
+		if(!(user.mind in src.gang.members) && user.mind != src.gang.leader)
+			return 0
+
+		if (user in src.gang.gear_cooldown)
+			return 1
+
+		var/has_gang_uniform = FALSE
+		var/has_gang_headwear = FALSE
+		var/has_spray_paint = FALSE
+		var/has_gang_headset = FALSE
+
+		for(var/obj/item/I in user.contents)
+			if(istype(I, src.gang.uniform))
+				has_gang_uniform = TRUE
+			else if(istype(I, src.gang.headwear))
+				has_gang_headwear = TRUE
+			else if(istype(I, /obj/item/spray_paint))
+				has_spray_paint = TRUE
+			else if(istype(I, /obj/item/device/radio/headset))
+				var/obj/item/device/radio/headset/headset = I
+				if (istype(headset.wiretap, /obj/item/device/radio_upgrade/gang))
+					has_gang_headset = TRUE
+
+		if(!has_gang_uniform)
+			var/obj/item/clothing/uniform = new src.gang.uniform(user.loc)
+			// Effectively a copy of the `autoequip_slot` macro in `code\datums\hud\human.dm`.
+			if (user.can_equip(uniform, SLOT_W_UNIFORM))
+				var/obj/item/current_uniform = user.w_uniform
+				if (current_uniform)
+					current_uniform.unequipped(user)
+					user.hud.remove_item(current_uniform)
+					user.w_uniform = null
+					user.drop_from_slot(current_uniform, get_turf(current_uniform))
+				user.force_equip(uniform, SLOT_W_UNIFORM)
+
+		if(!has_gang_headwear)
+			var/obj/item/clothing/headwear = new src.gang.headwear(user.loc)
+			if (istype(headwear, /obj/item/clothing/head))
+				user.drop_from_slot(user.head)
+				user.equip_if_possible(headwear, SLOT_HEAD)
+			else if (istype(headwear, /obj/item/clothing/mask))
+				user.drop_from_slot(user.wear_mask)
+				user.equip_if_possible(headwear, SLOT_WEAR_MASK)
+
+		if(!has_gang_headset)
+			var/obj/item/device/radio/headset/headset
+			if (istype(user.ears, /obj/item/device/radio/headset))
+				headset = user.ears
+			else
+				headset = new /obj/item/device/radio/headset(user)
+				if (!user.r_store)
+					user.equip_if_possible(headset, SLOT_R_STORE)
+				else if (!user.l_store)
+					user.equip_if_possible(headset, SLOT_L_STORE)
+				else if (user.back?.storage && !user.back.storage.is_full())
+					user.equip_if_possible(headset, SLOT_IN_BACKPACK)
+				else
+					user.put_in_hand_or_drop(headset)
+
+			if (headset.wiretap)
+				headset.remove_radio_upgrade()
+			headset.install_radio_upgrade(new /obj/item/device/radio_upgrade/gang(frequency = src.gang.gang_frequency))
+
+		if(!has_spray_paint)
+			user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
+
+		if(user.mind.special_role == ROLE_GANG_LEADER)
+			var/datum/game_mode/gang/gamemode = ticker.mode
+			if(gamemode.random_gangs)
+				boutput(user, "<span class='alert'>Your gang is already formed, you get no recruitment flyers.</span>")
+			else
+				user.put_in_hand_or_drop(new /obj/item/storage/box/gang_flyers(user.loc, src.gang))
+
+		src.gang.gear_cooldown += user
+		SPAWN(300 SECONDS)
+			if(user.mind != null && src.gang != null)
+				src.gang.gear_cooldown -= user
+
+		return 2
 
 	update_icon()
 		if(health <= 0)
@@ -922,13 +1025,13 @@
 	proc/insert_item(var/obj/item/item,var/mob/user)
 		if(!user)
 			return 0
-		if (user.mind && user.mind.gang != src.gang)
+		if (user.get_gang() != src.gang)
 			boutput(user, "<span class='alert'>You are not a member of this gang, you cannot add items to it.</span>")
 			return 0
 
 		//cash score
-		if (istype(item, /obj/item/spacecash))
-			var/obj/item/spacecash/S = item
+		if (istype(item, /obj/item/currency/spacecash))
+			var/obj/item/currency/spacecash/S = item
 			if (S.amount > 500)
 				boutput(user, "<span class='alert'><b>[src.name] beeps, it don't accept bills larger than 500[CREDIT_SIGN]!<b></span>")
 				return 0
@@ -982,7 +1085,7 @@
 	proc/cash_amount()
 		var/number = 0
 
-		for(var/obj/item/spacecash/S in contents)
+		for(var/obj/item/currency/spacecash/S in contents)
 			number += S.amount
 
 		return round(number)
@@ -996,20 +1099,19 @@
 		return round(number) //no point rounding it really but fuck it
 
 	proc/take_damage(var/amount)
-		health = max(0,health-amount)
+		src.health = max(0, src.health - amount)
 
-		//alert owning gang
-		if(istype(ticker.mode,/datum/game_mode/gang) && damage_warning_timeout == 0)
-			ticker.mode:broadcast_to_gang("Your locker is under attack!",src.gang)
-			damage_warning_timeout = 1
+		// Alert the gang that owns the closet.
+		if(src.damage_warning_timeout == FALSE)
+			src.gang.broadcast_to_gang("Your locker is under attack!")
+			src.damage_warning_timeout = TRUE
 			SPAWN(1 MINUTE)
-				damage_warning_timeout = 0
+				src.damage_warning_timeout = FALSE
 
-		if(health <= 0)
-			break_open()
-			if(istype(ticker.mode,/datum/game_mode/gang))
-				gang.spendable_points = round(gang.spendable_points*0.8)
-				ticker.mode:broadcast_to_gang("Your locker has been destroyed! Your amount of spendable points has been almost decimated!",src.gang)
+		if(src.health <= 0)
+			src.break_open()
+			src.gang.spendable_points = round(src.gang.spendable_points * 0.8)
+			src.gang.broadcast_to_gang("Your locker has been destroyed! Your amount of spendable points has been almost decimated!")
 			src.visible_message("<span class='alert'><b>[src.name] bursts open, spilling its contents!<b></span>")
 
 	proc/repair_damage(var/amount)
@@ -1045,15 +1147,16 @@
 
 		//kidnapping event here
 		//if they're the target
+		var/datum/gang/user_gang = user.get_gang()
 		if (istype(W, /obj/item/grab))
-			if (user?.mind.gang != src.gang)
+			if (user_gang != src.gang)
 				boutput(user, "<span class='alert'>You can't kidnap someone for a different gang!</span>")
 				return
 			if (istype(ticker.mode, /datum/game_mode/gang))	//gotta be gang mode to kidnap
 				var/datum/game_mode/gang/mode = ticker.mode
 				var/obj/item/grab/G = W
 				if (G.affecting == mode.kidnapping_target)		//Can only shove the target in, nobody else. target must be not dead and must have a kill or pin grab on em.
-					if (G.affecting.stat == 2)
+					if (isdead(G.affecting))
 						boutput(user, "<span class='alert'>[G.affecting] is dead, you can't kidnap a dead person!</span>")
 					else if (G.state < GRAB_AGGRESSIVE)
 						boutput(user, "<span class='alert'>You'll need a stronger grip to successfully kinapp this person!")
@@ -1062,8 +1165,8 @@
 						G.affecting.set_loc(src)
 						//assign poitns, gangs
 
-						user.mind.gang.score_event += mode.kidnapping_score
-						mode.broadcast_to_all_gangs("[src.gang.gang_name] has successfully kidnapped [mode.kidnapping_target] and has been rewarded for their efforts.")
+						user_gang.score_event += mode.kidnapping_score
+						broadcast_to_all_gangs("[src.gang.gang_name] has successfully kidnapped [mode.kidnapping_target] and has been rewarded for their efforts.")
 
 						mode.kidnapping_target = null
 						mode.kidnap_success = 1
@@ -1072,7 +1175,7 @@
 			return
 
 
-		if(istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/gun) || istype(W,/obj/item/spacecash) || (W.reagents != null && W.reagents.total_volume > 0))
+		if(istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/gun) || istype(W,/obj/item/currency/spacecash) || (W.reagents != null && W.reagents.total_volume > 0))
 			if (insert_item(W,user))
 				user.visible_message("<span class='notice'>[user] puts [W] into [src]!</span>")
 			return
@@ -1084,6 +1187,7 @@
 			for(var/obj/item/plant/herb/cannabis/C in S.contents)
 				insert_item(C,null)
 				S.UpdateIcon()
+				S.tooltip_rebuild = 1
 				hadcannabis = 1
 
 			if(hadcannabis)
@@ -1160,7 +1264,7 @@
 			user.visible_message("<b>[user]</b> attaches [src] to [A].","You attach [src] to [A].")
 			user.u_equip(src)
 			src.set_loc(A)
-			src.anchored = 1
+			src.anchored = ANCHORED
 		else
 			return ..()
 
@@ -1170,13 +1274,18 @@
 
 		var/turf/T = src.loc
 		user.visible_message("<span class='alert'><b>[user]</b> rips down [src] from [T]!</span>", "<span class='alert'>You rip down [src] from [T]!</span>")
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		user.put_in_hand_or_drop(src)
 
 	attack_self(mob/living/carbon/human/user as mob)
 		induct_to_gang(user)
 
 	proc/induct_to_gang(var/mob/living/carbon/human/target)
+		var/datum/game_mode/gang/gamemode = ticker.mode
+		if(gamemode.random_gangs)
+			boutput(target, "<span class='alert'>You can't join a gang, they're already preformed!</span>")
+			return
+
 		if(gang == null)
 			boutput(target, "<span class='alert'>The flyer doesn't specify which gang it's advertising!</span>")
 			return
@@ -1195,23 +1304,25 @@
 				boutput(target, "<span class='alert'>Your spectral brain can't comprehend the concept of a gang!</span>")
 				return
 
-		if(target.mind.gang == gang)
+		var/datum/gang/target_gang = target.get_gang()
+		if(target_gang == gang)
 			boutput(target, "<span class='alert'>You're already in that gang!</span>")
 			return
 
-		if(target.mind.gang != null)
-			boutput(target, "<span class='alert'>You're already in a gang, you can't switch sides!</span>")
-			return
-
-		if(target.mind.assigned_role in list("Security Officer", "Security Assistant", "Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Consultant", "Nanotrasen Special Operative"))
-			boutput(target, "<span class='alert'>You are too responsible to join a gang!</span>")
-			return
-
-		if(target.mind in ticker.mode:leaders)
+		if(target_gang && (target == target_gang.leader))
 			boutput(target, "<span class='alert'>You can't join a gang, you run your own!</span>")
 			return
 
-		if(src.gang.members.len >= ticker.mode:current_max_gang_members)
+		if(target_gang)
+			boutput(target, "<span class='alert'>You're already in a gang, you can't switch sides!</span>")
+			return
+
+		var/datum/job/job = find_job_in_controller_by_string(target.mind.assigned_role)
+		if(job && !job.can_join_gangs)
+			boutput(target, "<span class='alert'>You are too responsible to join a gang!</span>")
+			return
+
+		if(length(src.gang.members) >= src.gang.current_max_gang_members)
 			boutput(target, "<span class='alert'>That gang is full!</span>")
 			return
 
@@ -1219,40 +1330,7 @@
 		if (joingang != "Yes")
 			return
 
-		target.mind.gang = gang
-		src.gang.members += target.mind
-		if (!target.mind.special_role)
-			target.mind.special_role = ROLE_GANG_MEMBER
-		target.show_antag_popup("gang_member")
-		new /datum/objective/specialist/gang(
-			"Protect your boss, recruit new members, tag up the station and beware the other gangs! [src.gang.gang_name] FOR LIFE!",
-			target.mind)
-		boutput(target, "<span class='notice'>You are now a member of [src.gang.gang_name]!</span>")
-		boutput(target, "<span class='notice'>Your boss has the blue G and your fellow gang members have the red G! Work together and do some crime!</span>")
-		boutput(target, "<span class='notice'>You are free to harm anyone who isn't in your gang, but be careful, they can do the same to you!</span>")
-		boutput(target, "<span class='notice'>You should only use bombs if you have a good reason to, and also run any bombings past your gang!</span>")
-		boutput(target, "<span class='notice'>Capture areas for your gang by using spraypaint on other gangs' tags (or on any turf if the area is unclaimed).</span>")
-		boutput(target, "<span class='notice'>You can get spraypaint, an outfit and a gang headset from your locker.</span>")
-		boutput(target, "<span class='notice'>Your gang will earn points for cash, drugs and guns stored in your locker.</span>")
-		boutput(target, "<span class='notice'>Make sure to defend your locker, as other gangs can break it open to loot it!</span>")
-		if(gang.base == null)
-			boutput(target, "<span class='notice'>Your gang doesn't have a base or locker yet.</span>")
-		else
-			boutput(target, "<span class='notice'>Your gang's base is located in [gang.base], along with your locker.</span>")
-
-		//add gang channel to headset
-		if(target.ears != null && istype(target.ears,/obj/item/device/radio/headset))
-			var/obj/item/device/radio/headset/H = target.ears
-			H.set_secure_frequency("g",src.gang.gang_frequency)
-			H.secure_classes["g"] = RADIOCL_SYNDICATE
-			boutput(target, "Your headset has been tuned to your gang's frequency. Prefix a message with :g to communicate on this channel.")
-
-//		update_max_members()
-
-		//update gang overlays for all members so they can see the new join
-		for(var/datum/mind/M in src.gang.members)
-			if(M.current) M.current.antagonist_overlay_refresh(1, 0)
-		src.gang.leader.current?.antagonist_overlay_refresh(1, 0)
+		target.mind?.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = src.gang.leader)
 
 		return
 
@@ -1276,154 +1354,20 @@
 	spawn_contents = list(/obj/item/gang_flyer = 7)
 	var/datum/gang/gang = null
 
-	make_my_stuff()
-		..() //spawn the flyers
+	New(turf/newloc, datum/gang/gang)
+		src.name = "[gang.gang_name] recruitment material"
+		src.desc = "A briefcase full of flyers advertising the [gang.gang_name] gang."
+		src.gang = gang
+		..()
 
-		for(var/obj/item/gang_flyer/flyer in contents)
+	make_my_stuff()
+		..()
+
+		for(var/obj/item/gang_flyer/flyer in src.storage.get_contents())
 			var/gang_name = gang?.gang_name || "C0D3R"
 			flyer.name = "[gang_name] recruitment flyer"
 			flyer.desc = "A flyer offering membership in the [gang_name] gang."
 			flyer.gang = gang
-
-proc/get_gang_gear(var/mob/living/carbon/human/user)
-	if (!istype(user)) return 0
-
-	if(user.mind.gang != null) // Needs new gear? Maybe!
-		for(var/mob/living/carbon/human/has_cooldown in user.mind.gang.gear_cooldown) //does byond have a .contains() proc? idk this will do
-			if(user == has_cooldown)
-				return 1
-
-		var/hasitem1 = 0
-		var/hasitem2 = 0
-		var/haspaint = 0
-		var/hasheadset = 0
-		for(var/obj/item/I in user.contents)
-			if(istype(I,user.mind.gang.item1))
-				hasitem1 = 1
-			else if(istype(I,user.mind.gang.item2))
-				hasitem2 = 1
-			else if(istype(I,/obj/item/spray_paint))
-				haspaint = 1
-			else if(istype(I,/obj/item/device/radio/headset/gang) && I:secure_frequencies && I:secure_frequencies["g"] == user.mind.gang.gang_frequency)
-				hasheadset = 1
-		if(!hasitem1)
-			var/obj/item/clothing/C = new user.mind.gang.item1(user.loc)
-			// if (user.w_uniform)
-			// 	user.drop_from_slot(user.w_uniform)
-			user.equip_if_possible(C, user.slot_w_uniform)
-
-		if(!hasitem2)
-			var/obj/item/clothing/C = new user.mind.gang.item2(user.loc)
-			if (istype(C, /obj/item/clothing/head))
-				user.drop_from_slot(user.head)
-				user.equip_if_possible(C, user.slot_head)
-			else if (istype(C, /obj/item/clothing/mask))
-				user.drop_from_slot(user.wear_mask)
-				user.equip_if_possible(C, user.slot_wear_mask)
-
-		if(!hasheadset)
-			var/obj/item/device/radio/headset/gang/headset = new /obj/item/device/radio/headset/gang(user.loc)
-			headset.set_secure_frequency("g",user.mind.gang.gang_frequency)
-			if (user.ears)
-				user.drop_from_slot(user.ears)
-			user.equip_if_possible(headset, user.slot_ears)
-
-		if(!haspaint)
-			user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
-
-		if(user.mind.special_role == ROLE_GANG_LEADER)
-			var/obj/item/storage/box/gang_flyers/case = new /obj/item/storage/box/gang_flyers(user.loc)
-			case.name = "[user.mind.gang.gang_name] recruitment material"
-			case.desc = "A briefcase full of flyers advertising the [user.mind.gang.gang_name] gang."
-			case.gang = user.mind.gang //this updates the flyers once they are spawned
-			user.put_in_hand_or_drop(case)
-
-		user.mind.gang.gear_cooldown += user
-		sleep(3000)
-		if(user.mind != null && user.mind.gang != null)
-			user.mind.gang.gear_cooldown -= user
-		return 2
-
-//Must be jumpsuit. /obj/item/clothing/under
-/datum/game_mode/gang/proc/make_item_lists()
-	under_list = list(
-	"owl" = /obj/item/clothing/under/gimmick/owl,
-	"pinstripe" = /obj/item/clothing/under/suit/pinstripe,
-	"purple" = /obj/item/clothing/under/suit/purple,
-	"chaps" = /obj/item/clothing/under/gimmick/chaps,
-	"mail" = /obj/item/clothing/under/misc/mail,
-	"sweater" = /obj/item/clothing/under/gimmick/sweater,
-	"princess" = /obj/item/clothing/under/gimmick/princess,
-	"merchant" = /obj/item/clothing/under/gimmick/merchant,
-	"birdman" = /obj/item/clothing/under/gimmick/birdman,
-	"safari" = /obj/item/clothing/under/gimmick/safari,
-	"det" = /obj/item/clothing/under/rank/det,
-	"red" = /obj/item/clothing/under/shorts/red,
-	"blue" = /obj/item/clothing/under/shorts/blue,
-	"black" = /obj/item/clothing/under/jersey/black,
-	"jersey" = /obj/item/clothing/under/jersey,
-	"rainbow" = /obj/item/clothing/under/gimmick/rainbow,
-	"johnny" = /obj/item/clothing/under/gimmick/johnny,
-	"rasta" = /obj/item/clothing/under/misc/chaplain/rasta,
-	"atheist" = /obj/item/clothing/under/misc/chaplain/atheist,
-	"barber" = /obj/item/clothing/under/misc/barber,
-	"mechanic" = /obj/item/clothing/under/rank/mechanic,
-	"vice" = /obj/item/clothing/under/misc/vice,
-	"gimmick" = /obj/item/clothing/under/gimmick,
-	"bowling" = /obj/item/clothing/under/gimmick/bowling,
-	"syndicate" = /obj/item/clothing/under/misc/syndicate,
-	"black" = /obj/item/clothing/under/misc/lawyer/black,
-	"red" = /obj/item/clothing/under/misc/lawyer/red,
-	"lawyer" = /obj/item/clothing/under/misc/lawyer,
-	"chav" = /obj/item/clothing/under/gimmick/chav,
-	"dawson" = /obj/item/clothing/under/gimmick/dawson,
-	"sealab" = /obj/item/clothing/under/gimmick/sealab,
-	"spiderman" = /obj/item/clothing/under/gimmick/spiderman,
-	"vault13" = /obj/item/clothing/under/gimmick/vault13,
-	"duke" = /obj/item/clothing/under/gimmick/duke,
-	"psyche" = /obj/item/clothing/under/gimmick/psyche,
-	"tourist" = /obj/item/clothing/under/misc/tourist,
-	"western" = /obj/item/clothing/under/misc/western)
-
-	//must be mask or hat. type /obj/item/clothing/mask or /obj/item/clothing/head
-	headwear_list = list(
-	"owl_mask" = /obj/item/clothing/mask/owl_mask,
-	"smile" = /obj/item/clothing/mask/smile,
-	"balaclava" = /obj/item/clothing/mask/balaclava,
-	"horse_mask" = /obj/item/clothing/mask/horse_mask,
-	"melons" = /obj/item/clothing/mask/melons,
-	"spiderman" = /obj/item/clothing/mask/spiderman,
-	"swat" = /obj/item/clothing/mask/gas/swat,
-	"skull" = /obj/item/clothing/mask/skull,
-	"surgical" = /obj/item/clothing/mask/surgical,
-	"waldohat" = /obj/item/clothing/head/waldohat,
-	"purple" = /obj/item/clothing/head/that/purple,
-	"cakehat" = /obj/item/clothing/head/cakehat,
-	"wizard" = /obj/item/clothing/head/wizard,
-	"that" = /obj/item/clothing/head/that,
-	"red" = /obj/item/clothing/head/wizard/red,
-	"necro" = /obj/item/clothing/head/wizard/necro,
-	"pumpkin" = /obj/item/clothing/head/pumpkin,
-	"flatcap" = /obj/item/clothing/head/flatcap,
-	"mj_hat" = /obj/item/clothing/head/mj_hat,
-	"genki" = /obj/item/clothing/head/genki,
-	"butt" = /obj/item/clothing/head/purplebutt,
-	"mailcap" = /obj/item/clothing/head/mailcap,
-	"turban" = /obj/item/clothing/head/turban,
-	"bobby" = /obj/item/clothing/head/helmet/bobby,
-	"viking" = /obj/item/clothing/head/helmet/viking,
-	"batman" = /obj/item/clothing/head/helmet/batman,
-	"welding" = /obj/item/clothing/head/helmet/welding,
-	"biker_cap" = /obj/item/clothing/head/biker_cap,
-	"NTberet" = /obj/item/clothing/head/NTberet,
-	"rastacap" = /obj/item/clothing/head/rastacap,
-	"XComHair" = /obj/item/clothing/head/XComHair,
-	"chav" = /obj/item/clothing/head/chav,
-	"psyche" = /obj/item/clothing/head/psyche,
-	"formal_turban" = /obj/item/clothing/head/formal_turban,
-	"snake" = /obj/item/clothing/head/snake,
-	"powdered_wig" = /obj/item/clothing/head/powdered_wig,
-	"westhat_black" = /obj/item/clothing/head/westhat/black)
 
 	//items purchasable from gangs
 /datum/gang_item
@@ -1532,7 +1476,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	desc = "A pouch of 4 Shuriken throwing stars."
 	class2 = "weapon"
 	price = 1200
-	item_path = /obj/item/storage/box/shuriken_pouch
+	item_path = /obj/item/storage/pouch/shuriken
 
 /datum/gang_item/ninja/throwing_knife
 	name = "Throwing Knive"

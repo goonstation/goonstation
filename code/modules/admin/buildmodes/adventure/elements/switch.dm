@@ -73,7 +73,7 @@
 	icon_state = "button_red_unpressed"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/button_type
 	var/pressed = 0
 

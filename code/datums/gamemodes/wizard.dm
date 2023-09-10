@@ -60,44 +60,8 @@
 		if(!wizard || !istype(wizard))
 			src.traitors.Remove(wizard)
 			continue
-		if(istype(wizard))
-			wizard.special_role = ROLE_WIZARD
-			if(!pick(job_start_locations["wizard"]))
-				boutput(wizard.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
-			else
-				wizard.current.set_loc(pick(job_start_locations["wizard"]))
-			bestow_objective(wizard,/datum/objective/regular/assassinate)
-			bestow_objective(wizard,/datum/objective/regular/assassinate)
-			bestow_objective(wizard,/datum/objective/regular/assassinate)
 
-			wizard.current.antagonist_overlay_refresh(1, 0)
-
-			equip_wizard(wizard.current)
-			boutput(wizard.current, "<B><span class='alert'>You are a Wizard!</span></B>")
-			boutput(wizard.current, "<B>The Space Wizards Federation has sent you to perform a ritual on the [station_or_ship()]:</B>")
-
-			var/obj_count = 1
-			for(var/datum/objective/objective in wizard.objectives)
-				boutput(wizard.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-				obj_count++
-			boutput(wizard.current, "<B>Complete all steps of the ritual, and the Dark Gods shall have the [station_or_ship()]! Work together with any partner you may have!</B>")
-
-	for(var/datum/mind/wizard in src.traitors)
-		var/randomname
-		if (wizard.current.gender == "female") randomname = pick_string_autokey("names/wizard_female.txt")
-		else randomname = pick_string_autokey("names/wizard_male.txt")
-		SPAWN(0)
-			var/newname = adminscrub(tgui_input_text(wizard.current, "You are a Wizard. Would you like to change your name to something else?", "Name change", randomname))
-			if(newname && newname != randomname)
-				phrase_log.log_phrase("name-wizard", newname, no_duplicates=TRUE)
-			if (length(ckey(newname)) == 0)
-				newname = randomname
-
-			if (newname)
-				if (length(newname) >= 26) newname = copytext(newname, 1, 26)
-				newname = strip_html(newname)
-				wizard.current.real_name = newname
-				wizard.current.UpdateName()
+		equip_antag(wizard)
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
@@ -134,30 +98,3 @@ datum/game_mode/wizard/check_finished()
 		return 0
 
 	return 0
-
-//	OK fuck this shit
-/*	//Latejoin bad guys come now if all the wizards are dead rather than the round ending.
-
-	var/wizcount = 0
-	//var/wizdeathcount = 0
-	var/wincount = 0
-
-	if(ticker.mode.Agimmicks.len > 0)
-		for(var/datum/mind/W in ticker.mode.Agimmicks)
-			if(!(W in src.traitors))
-				wizards += W
-
-	for (var/datum/mind/W in wizards)
-		wizcount++
-		var/objectives_completed = 0
-		for(var/datum/objective/objective in W.objectives)
-			if(objective.check_completion()) objectives_completed++
-		if(objectives_completed == W.objectives.len) wincount++
-		//if(!W.current || isdead(W.current)) wizdeathcount++
-
-	//if (wizcount == wizdeathcount) return 1
-	if (wizcount == wincount)
-		boutput(world, "wizcount [wizcount], wincount [wincount], ending round")
-		return 1
-
-	else return 0*/

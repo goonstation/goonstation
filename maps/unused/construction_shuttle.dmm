@@ -83,18 +83,16 @@
 "an" = (
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /obj/machinery/power/rtg,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "ao" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
@@ -122,16 +120,12 @@
 "at" = (
 /obj/landmark/start/latejoin,
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "au" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -154,8 +148,6 @@
 "ay" = (
 /obj/machinery/door/unpowered/shuttle,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -194,8 +186,6 @@
 /area/shuttle/arrival/station)
 "aE" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/shuttle,
@@ -227,7 +217,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aJ" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aK" = (
@@ -376,8 +366,6 @@
 "bb" = (
 /obj/landmark/start/latejoin,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/shuttle,
@@ -544,43 +532,34 @@
 "bz" = (
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /turf/simulated/floor/plating,
 /area/space)
 "bA" = (
 /obj/machinery/door/airlock/external,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "bB" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "bC" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "bD" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
@@ -634,9 +613,7 @@
 /area/shuttle/arrival/station)
 "bM" = (
 /obj/item/device/radio/beacon,
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "bN" = (

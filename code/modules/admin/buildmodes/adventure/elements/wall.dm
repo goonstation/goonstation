@@ -31,7 +31,7 @@
 	desc = "A wall. Something seems off about it."
 	density = 1
 	opacity = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "door_normal_closed"
 	var/sliding = 0
 

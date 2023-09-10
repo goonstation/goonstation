@@ -210,9 +210,6 @@
 	html += " &middot; <a href='byond://?src=\ref[src];ListProcs=\ref[D]'>List Procs</a>"
 	html += " &middot; <a href='byond://?src=\ref[src];DMDump=\ref[D]'>DM Dump</a>"
 
-	if (src.holder.level >= LEVEL_CODER && D != "GLOB")
-		html += " &middot; <a href='byond://?src=\ref[src];ViewReferences=\ref[D]'>View References</a>"
-
 	html += "<br>"
 	html += {"<a href='byond://?src=\ref[src];Refresh=\ref[D]'>Refresh</a>"}
 
@@ -410,11 +407,11 @@
 
 	else if (islist(value))
 		var/list/L = value
-		html += "\[[name]\]</th><td>List ([(!isnull(L) && L.len > 0) ? "[L.len] items" : "<em>empty</em>"])"
+		html += "\[[name]\]</th><td>List ([(!isnull(L) && length(L) > 0) ? "[L.len] items" : "<em>empty</em>"])"
 
 		if (L?.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || name == "verbs"))
 			// not sure if this is completely right...
-			//if (0) // (L.vars.len > 0)
+			//if (0) // (length(L.vars) > 0)
 			//	html += "<ol>"
 			//	for (var/entry in L)
 			//		html += debug_variable(entry, L[entry], level + 1)
@@ -432,7 +429,7 @@
 					html += debug_variable(L[index], L[L[index]], value, level + 1, max_list_len)
 				else
 					html += debug_variable("[index]", L[index], value, level + 1, max_list_len)
-			if(L.len > max_list_len)
+			if(length(L) > max_list_len)
 				html += "<tr><th>\[...\]</th><td><em class='value'>...</em></td>"
 
 			html += "</tbody></table>"
@@ -641,14 +638,6 @@
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
 		return
-	if (href_list["ViewReferences"])
-		USR_ADMIN_ONLY
-		if(holder && src.holder.level >= LEVEL_CODER)
-			var/datum/D = locate(href_list["ViewReferences"])
-			usr.client.view_references(D, href_list["window_name"])
-		else
-			audit(AUDIT_ACCESS_DENIED, "tried to view references.")
-		return
 	if (href_list["AddPathogen"])
 		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
@@ -813,10 +802,11 @@
 		else
 			original_name = D:name
 
-	var/datum/data_input_result/result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_NUM_ADJUST, DATA_INPUT_TYPE, DATA_INPUT_MOB_REFERENCE, \
-											DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_ICON, DATA_INPUT_FILE, \
-											DATA_INPUT_COLOR, DATA_INPUT_LIST_EDIT, DATA_INPUT_JSON, DATA_INPUT_LIST_BUILD, DATA_INPUT_MATRIX, \
-											DATA_INPUT_NULL, DATA_INPUT_REF, DATA_INPUT_RESTORE, DATA_INPUT_PARTICLE_EDITOR, DATA_INPUT_FILTER_EDITOR), \
+	var/datum/data_input_result/result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_NUM_ADJUST, DATA_INPUT_TYPE, \
+											DATA_INPUT_MOB_REFERENCE, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, \
+											DATA_INPUT_ICON, DATA_INPUT_FILE, DATA_INPUT_COLOR, DATA_INPUT_LIST_EDIT, DATA_INPUT_JSON, \
+											DATA_INPUT_LIST_BUILD, DATA_INPUT_MATRIX, DATA_INPUT_NULL, DATA_INPUT_REF, DATA_INPUT_RESTORE, \
+											DATA_INPUT_PARTICLE_EDITOR, DATA_INPUT_FILTER_EDITOR, DATA_INPUT_COLOR_MATRIX_EDITOR), \
 											default = var_value, default_type = default)
 
 	switch(result.output_type) // specified cases are special handling. everything in the `else` is generic cases
@@ -845,6 +835,11 @@
 			if(src.holder)
 				src.holder.particool = new /datum/particle_editor(D)
 				src.holder.particool.ui_interact(mob)
+
+		if (DATA_INPUT_COLOR_MATRIX_EDITOR)
+			if(src.holder)
+				src.holder.color_matrix_editor = new /datum/color_matrix_editor(src, D)
+				src.holder.color_matrix_editor.ui_interact(mob)
 
 		if (DATA_INPUT_NUM_ADJUST)
 			if (!isnum(var_value))

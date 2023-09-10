@@ -10,7 +10,7 @@
 	not_when_in_an_object = FALSE
 	when_stunned = 2
 	not_when_handcuffed = 0
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	ignore_holder_lock = 1
 
 	cast(mob/target)

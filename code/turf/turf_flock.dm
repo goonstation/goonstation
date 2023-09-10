@@ -1,6 +1,8 @@
 // -----
 // FLOOR
 // -----
+TYPEINFO(/turf/simulated/floor/feather)
+	mat_appearances_to_ignore = list("steel","gnesis")
 /turf/simulated/floor/feather
 	name = "weird floor"
 	desc = "I don't like the looks of that whatever-it-is."
@@ -8,9 +10,9 @@
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "floor"
 	flags = USEDELAY
-	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 	broken = FALSE
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
@@ -28,7 +30,6 @@
 
 /turf/simulated/floor/feather/New()
 	..()
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	light = new /datum/light/point
 	light.set_brightness(src.brightness)
 	light.set_color(col_r, col_g, col_b)
@@ -178,6 +179,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
 	connect_diagonal = TRUE
 	connects_to = typecacheof(list(/turf/simulated/wall/auto/feather, /obj/machinery/door, /obj/window))
 	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window))
+TYPEINFO(/turf/simulated/wall/auto/feather)
+	mat_appearances_to_ignore = list("steel", "gnesis")
 /turf/simulated/wall/auto/feather
 	name = "weird glowing wall"
 	desc = "You can feel it thrumming and pulsing."
@@ -189,9 +192,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
 	var/max_health = 250
 	var/repair_per_resource = 5
 	flags = USEDELAY | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-	mat_appearances_to_ignore = list("steel", "gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 	var/broken = FALSE
 	var/on = FALSE
 
@@ -208,7 +211,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
 
 /turf/simulated/wall/auto/feather/New()
 	..()
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	src.health = src.max_health
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)
@@ -312,10 +314,10 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
 	for (var/i = 1 to rand(3, 6))
 		if (prob(70))
 			B = new /obj/item/raw_material/scrap_metal(T)
-			B.setMaterial(getMaterial("gnesis"), copy = FALSE)
+			B.setMaterial(getMaterial("gnesis"))
 		else
 			B = new /obj/item/raw_material/shard(T)
-			B.setMaterial(getMaterial("gnesisglass"), copy = FALSE)
+			B.setMaterial(getMaterial("gnesisglass"))
 
 	src.ReplaceWith("/turf/simulated/floor/feather", FALSE)
 
@@ -337,7 +339,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
 		src.desc = initial(src.desc)
 		src.broken = FALSE
 		src.UpdateIcon()
-		src.setMaterial(getMaterial("gnesis"), copy = FALSE)
+		src.setMaterial(getMaterial("gnesis"))
 	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.max_health - src.health)
 	src.health += health_given
 	return ceil(health_given / src.repair_per_resource)

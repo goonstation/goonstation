@@ -96,10 +96,16 @@ TYPEINFO(/obj/tug_cart)
 		if (BOUNDS_DIST(C, src) > 0 || load)
 			return
 
-		// if a create, close before loading
+		// if a crate, close before loading
 		var/obj/storage/crate/crate = C
 		if (istype(crate))
 			crate.close()
+
+		// if an item, ensure any mob holding it isn't anymore
+		var/obj/item/holdable = C
+		if (istype(holdable))
+			holdable.force_drop()
+
 		C.set_loc(src.loc)
 		SPAWN(0.2 SECONDS)
 			if (C && C.loc == src.loc)
@@ -140,8 +146,10 @@ TYPEINFO(/obj/tug_cart)
 		. = ..()
 		if (src.loc == oldloc)
 			return
-		if (next_cart)
+		if (!QDELETED(next_cart))
 			next_cart.Move(oldloc)
+		else if(next_cart)
+			next_cart = null
 
 	disposing()
 		load = null
@@ -214,7 +222,7 @@ TYPEINFO(/obj/vehicle/tug)
 		if (start_with_cart)
 			cart = new/obj/tug_cart/(get_turf(src))
 
-	eject_rider(var/crashed, var/selfdismount)
+	eject_rider(var/crashed, var/selfdismount, ejectall=TRUE)
 		var/mob/living/rider = src.rider
 		..()
 		if(rider)
@@ -349,8 +357,10 @@ TYPEINFO(/obj/vehicle/tug)
 		. = ..()
 		if (src.loc == oldloc)
 			return
-		if (cart)
+		if (!QDELETED(cart))
 			cart.Move(oldloc)
+		else if(cart)
+			cart = null
 
 /obj/ability_button/vehicle_speed
 	name = "Vehicle Speed"

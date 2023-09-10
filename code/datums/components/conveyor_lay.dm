@@ -11,7 +11,7 @@ TYPEINFO(/datum/component/conveyorplacer)
 	. = ..()
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/place_conveyors)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(place_conveyors))
 	src.conveyors = conveyors
 	src.conv_id = conv_id
 

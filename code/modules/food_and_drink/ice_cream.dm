@@ -82,7 +82,7 @@
 		SPAWN(0)
 			if (src.reagents)
 				var/flavor = null
-				if (all_functional_reagent_ids.len > 1)
+				if (length(all_functional_reagent_ids) > 1)
 					flavor = pick(all_functional_reagent_ids)
 				else
 					flavor = "vanilla"
@@ -98,7 +98,7 @@
 	desc = "A plain yoghurt."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "yoghurt"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 1
 

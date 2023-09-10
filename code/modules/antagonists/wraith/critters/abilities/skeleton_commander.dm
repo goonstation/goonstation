@@ -7,18 +7,18 @@
 	//List of critters we can buff, same as the one the wraith portal has.
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "harbinger_frame"
-	var/list/critter_list = list(/obj/critter/shade,
-	/obj/critter/crunched,
+	var/list/critter_list = list(/mob/living/critter/shade,
+	/mob/living/critter/crunched,
 	/obj/critter/ancient_thing,
-	/obj/critter/ancient_repairbot/security,
+	/mob/living/critter/robotic/repairbot/security,
 	/obj/critter/gunbot/drone/buzzdrone,
-	/obj/critter/mechmonstrositycrawler,
+	/mob/living/critter/robotic/crawler,
 	/obj/critter/bat/buff,
-	/obj/critter/lion,
-	/obj/critter/wraithskeleton,
-	/obj/critter/gunbot/heavy,
-	/obj/critter/bear,
-	/obj/critter/brullbar,
+	/mob/living/critter/lion,
+	/mob/living/critter/skeleton/wraith,
+	/mob/living/critter/robotic/gunbot,
+	/mob/living/critter/bear,
+	/mob/living/critter/brullbar,
 	/obj/critter/gunbot/drone)
 
 	cast()
@@ -54,7 +54,7 @@
 			return 1
 		var/turf/T = get_turf(target)
 		if (isturf(T))
-			var/obj/critter/wraithskeleton/S = new /obj/critter/wraithskeleton(T)
+			var/mob/living/critter/skeleton/wraith/S = new /mob/living/critter/skeleton/wraith(T)
 			S.alpha = 0
 			animate(S, alpha=255, time=2 SECONDS)
 			playsound(S.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)

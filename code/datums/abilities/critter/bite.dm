@@ -4,6 +4,7 @@
 /datum/targetable/critter/bite
 	name = "Chomp"
 	desc = "Chomp down on a mob, causing damage and a short stun."
+	icon_state = "critter_bite"
 	cooldown = 150
 	targeted = 1
 	target_anything = 1
@@ -15,8 +16,6 @@
 	var/verb_self = "bite"
 	var/hit_type = DAMAGE_CRUSH
 	var/bleed = 0
-
-	var/datum/projectile/slam/proj = new
 
 	cast(atom/target)
 		if (..())
@@ -40,15 +39,16 @@
 		if(bleed)
 			take_bleeding_damage(MT, null, bleed, DAMAGE_CUT, bleed-5, get_turf(MT))
 
-		holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites [MT]!</b></span>", "<span class='combat'>You bite [MT]!</span>")
+		holder.owner.visible_message("<span class='combat'><b>[holder.owner] [verb_other] [MT]!</b></span>", "<span class='combat'>You [verb_self] [MT]!</span>")
 		return 0
 
 /datum/targetable/critter/bite/big
 	name = "Bite"
 	desc = "Bite down on a mob, causing some damage."
-	cooldown = 100
+	cooldown = 30 SECONDS
 	sound_bite = 'sound/impact_sounds/Flesh_Crush_1.ogg'
-	brute_damage = 36
+	brute_damage = 30
+	bleed = 15
 	sound_volume = 100
 	verb_other = "savagely bites"
 	verb_self = "savagely bite"

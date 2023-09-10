@@ -3,15 +3,33 @@
 	*
   * Lots of functionality resides in this type.
   */
+TYPEINFO(/atom)
+	/// A list of procs that should appear on the admin interact menu (must support being called without arguments)
+	var/list/admin_procs = null
+	/// A list of material IDs that should be ignored when applying appearance
+	var/list/mat_appearances_to_ignore = null
 /atom
 	layer = TURF_LAYER
 	plane = PLANE_DEFAULT
-	var/level = 2
+	/// Are we above or below the floor tile?
+	var/level = OVERFLOOR
 	var/flags = FPRINT
 	var/event_handler_flags = 0
 	var/tmp/temp_flags = 0
 	var/shrunk = 0
 	var/list/cooldowns
+
+	/// Material id of this object as a material id (lowercase string), set on New()
+	var/default_material = null
+	/// Does this object use appearance from the material?
+	var/uses_material_appearance = FALSE
+
+	/// The message displayed when the atom is alt+doubleclicked, should contain a description of the atom's functionality.
+	/// You can also override get_help_message() to return a message dynamically (based on atom state or the user etc.)
+	/// Try to highlight the tools used to do stuff with <b></b> tags.
+	/// DO NOT override this directly, use HELP_MESSAGE_OVERRIDE instead.
+	/// Example: HELP_MESSAGE_OVERRIDE("Use a <b>screwdriver</b> to unscrew the cover.")
+	var/help_message = null
 
 	/// Override for the texture size used by setTexture.
 	var/texture_size = 0
@@ -41,6 +59,9 @@
 	/// Whether pathfinding is forbidden from caching the passability of this atom. See [/turf/passability_cache]
 	var/tmp/pass_unstable = TRUE
 
+	/// Storage for items
+	var/datum/storage/storage = null
+
 /* -------------------- name stuff -------------------- */
 	/*
 	to change names: either add or remove something with the appropriate proc(s) and then call atom.UpdateName()
@@ -64,11 +85,18 @@
 	/// Whether the last material applied updated appearance. Used for re-applying material appearance on icon update
 	var/material_applied_appearance = FALSE
 
+	New(turf/newLoc)
+		. = ..()
+		// Lets stop having 5 implementations of this that all do it differently
+		if (!src.material && default_material)
+			var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
+			src.setMaterial(mat, src.uses_material_appearance, src.mat_changename)
+
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()
 		var/prefix = ""
 		if (istext(text_to_add) && length(text_to_add) && islist(src.name_prefixes))
-			if (src.name_prefixes.len >= src.num_allowed_prefixes)
+			if (length(src.name_prefixes) >= src.num_allowed_prefixes)
 				src.remove_prefixes(1)
 			if(prepend)
 				src.name_prefixes.Insert(1, strip_html(text_to_add))
@@ -91,7 +119,7 @@
 		if( !name_suffixes ) name_suffixes = list()
 		var/suffix = ""
 		if (istext(text_to_add) && length(text_to_add) && islist(src.name_suffixes))
-			if (src.name_suffixes.len >= src.num_allowed_suffixes)
+			if (length(src.name_suffixes) >= src.num_allowed_suffixes)
 				src.remove_suffixes(1)
 			src.name_suffixes += strip_html(text_to_add)
 		if (return_suffixes)
@@ -167,9 +195,16 @@
 				src.delStatus(effect)
 			src.statusEffects = null
 		ClearAllParticles()
+
+		if (!isnull(chat_text))
+			qdel(chat_text)
+			chat_text = null
+
 		atom_properties = null
 		if(!ismob(src)) // I want centcom cloner to look good, sue me
 			ClearAllOverlays()
+
+		src.remove_storage()
 		..()
 
 	proc/Turn(var/rot)
@@ -200,14 +235,22 @@
 
 	proc/return_air()
 		return null
-
-/**
-  * Convenience proc to see if a container is open for chemistry handling
-	*
-  * * returns true if open, false if closed
-	*/
+	/**
+	  * Convenience proc to see if a container is open for chemistry handling
+	  *
+	  * returns true if open, false if closed
+	  */
 	proc/is_open_container()
 		return flags & OPENCONTAINER
+
+	/// Set a container to be open or closed and handle chemistry reactions that might happen as a result
+	proc/set_open_container(value)
+		if (value)
+			ADD_FLAG(src.flags, OPENCONTAINER)
+		else
+			REMOVE_FLAG(src.flags, OPENCONTAINER)
+		src.reagents?.handle_reactions()
+
 
 	proc/transfer_all_reagents(var/atom/A as turf|obj|mob, var/mob/user as mob)
 		// trans from src to A
@@ -253,13 +296,13 @@
 /atom/proc/ex_act(var/severity=0,var/last_touched=0)
 	return
 
-/atom/proc/reagent_act(var/reagent_id,var/volume)
+/atom/proc/reagent_act(var/reagent_id,var/volume,var/datum/reagentsholder_reagents)
 	if (!istext(reagent_id) || !isnum(volume) || volume < 1)
 		return 1
 	return 0
 
 /atom/proc/emp_act()
-	return
+	src.storage?.storage_emp_act()
 
 /atom/proc/emag_act(var/mob/user, var/obj/item/card/emag/E) //This is gonna be fun!
 	return 0
@@ -313,6 +356,13 @@
 	#endif
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, OldLoc)
 
+/atom/Uncrossed(atom/movable/AM)
+	SHOULD_CALL_PARENT(TRUE)
+	#ifdef SPACEMAN_DMM //im also cargo culter
+	..()
+	#endif
+	SEND_SIGNAL(src, COMSIG_ATOM_UNCROSSED, AM)
+
 /atom/proc/ProximityLeave(atom/movable/AM as mob|obj)
 	return
 
@@ -331,6 +381,7 @@
 
 /// Changes the icon state and returns TRUE if the icon state changed.
 /atom/proc/set_icon_state(var/new_state)
+	SHOULD_CALL_PARENT(TRUE)
 	. = new_state != src.icon_state
 	src.icon_state = new_state
 	if(. && src.material_applied_appearance && src.material)
@@ -391,7 +442,7 @@
 
 /atom/movable/overlay
 	var/atom/master = null
-	anchored = 1
+	anchored = ANCHORED
 	pass_unstable = FALSE
 
 /atom/movable/overlay/gibs
@@ -412,7 +463,7 @@
 	layer = OBJ_LAYER
 	var/tmp/turf/last_turf = 0
 	var/tmp/last_move = null
-	var/anchored = 0
+	var/anchored = UNANCHORED
 	var/move_speed = 10
 	var/tmp/l_move_time = 1
 	var/throwing = 0
@@ -450,9 +501,10 @@
 				T2.neighcheckinghasproximity++
 		if(src.opacity)
 			T.opaque_atom_count++
-		for(var/turf/covered_turf as anything in src.locs)
-			covered_turf.pass_unstable += src.pass_unstable
-			covered_turf.passability_cache = null
+		if(src.pass_unstable || src.density)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.pass_unstable += src.pass_unstable
+				covered_turf.passability_cache = null
 	if(!isnull(src.loc))
 		src.loc.Entered(src, null)
 		if(isturf(src.loc)) // call it on the area too
@@ -570,18 +622,20 @@
 		return
 
 	if (isturf(last_turf))
-		for(var/turf/covered_turf as anything in old_locs)
-			covered_turf.pass_unstable -= src.pass_unstable
-			covered_turf.passability_cache = null
+		if(src.pass_unstable || src.density)
+			for(var/turf/covered_turf as anything in old_locs)
+				covered_turf.pass_unstable -= src.pass_unstable
+				covered_turf.passability_cache = null
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
 			for (var/turf/T2 in range(1, last_turf))
 				T2.neighcheckinghasproximity--
 	if(isturf(src.loc))
 		var/turf/T = src.loc
-		for(var/turf/covered_turf as anything in src.locs)
-			covered_turf.pass_unstable += src.pass_unstable
-			covered_turf.passability_cache = null
+		if(src.pass_unstable || src.density)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.pass_unstable += src.pass_unstable
+				covered_turf.passability_cache = null
 		if (src.event_handler_flags & USE_PROXIMITY)
 			T.checkinghasproximity++
 			for (var/turf/T2 in range(1, T))
@@ -648,6 +702,12 @@
 		update_mdir_light_visibility(src.dir)
 
 /atom/proc/get_desc(dist, mob/user)
+
+/// Override this if you want the alt+doubleclick help message to be dynamic (for example based on the state of deconstruction).
+/// For consistency you should always also override help_message at least to a placeholder never-to-be-seen string, this is important
+/// for the context menu functionality. Use the [HELP_MESSAGE_OVERRIDE] macro to do that.
+/atom/proc/get_help_message(dist, mob/user)
+	. = src.help_message
 
 /**
   * a proc to completely override the standard formatting for examine text
@@ -734,9 +794,9 @@
 
 /atom/proc/attack_hand(mob/user)
 	PROTECTED_PROC(TRUE)
+	src.storage?.storage_item_attack_hand(user)
 	if (flags & TGUI_INTERACTIVE)
 		return ui_interact(user)
-	return
 
 /atom/proc/attack_ai(mob/user as mob)
 	return
@@ -754,7 +814,9 @@
 ///internal proc for when an atom is attacked by an item. Override this, but do not call it,
 /atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0)
 	PROTECTED_PROC(TRUE)
-	src.material?.triggerOnHit(src, W, user, 1)
+	if (src.storage?.storage_item_attack_by(W, user))
+		return
+	src.material_trigger_when_attacked(W, user, 1)
 	if (user && W && !(W.flags & SUPPRESSATTACK))
 		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
 	return
@@ -762,8 +824,6 @@
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
 /atom/proc/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")
 	var/image/I = isnull(texture) ? null : getTexturedImage(src, texture, blendMode)//, key)
-	if (!I)
-		return
 	src.UpdateOverlays(I, key)
 
 	if(isitem(src) && key == "material")
@@ -858,6 +918,25 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!isatom(over_object))
 		return
+	if (ismovable(src) && isobserver(usr) && usr.client?.holder?.ghost_interaction)
+		var/atom/movable/movablesrc = src
+		var/list/params_list = params2list(params)
+		if ((isturf(over_object) || over_object == src) && !movablesrc.anchored)
+			if ((over_object in movablesrc.locs) || over_object == src)
+				animate(src,
+					pixel_x = text2num(params_list["icon-x"]) - 16,
+					pixel_y = text2num(params_list["icon-y"]) - 16,
+					time = 0.1 SECONDS,
+					easing = LINEAR_EASING
+				)
+			else if (BOUNDS_DIST(src, over_object) <= 1)
+				movablesrc.set_loc(over_object)
+			else
+				movablesrc.throw_at(over_object, 1000, 1, params=params_list)
+			return
+		else if(isitem(movablesrc))
+			over_object.Attackby(movablesrc, usr, params_list)
+			return
 	if (isalive(usr) && !isintangible(usr) && isghostdrone(usr) && ismob(src) && src != usr)
 		return // Stops ghost drones from MouseDropping mobs
 	if (isAIeye(usr) || (isobserver(usr) && src != usr))
@@ -869,7 +948,7 @@
 
 /atom/proc/mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
 	PROTECTED_PROC(TRUE)
-	return
+	src.storage?.storage_item_mouse_drop(usr, over_object, src_location, over_location)
 
 /atom/proc/relaymove(mob/user, direction, delay, running)
 	.= 0
@@ -877,6 +956,9 @@
 /atom/proc/on_reagent_change(var/add = 0) // if the reagent container just had something added, add will be 1.
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_REAGENT_CHANGE)
+	return
+
+/atom/proc/on_reagent_transfer()
 	return
 
 /atom/proc/Bumped(AM as mob|obj)
@@ -915,7 +997,7 @@
 //Return an atom if you want to make the projectile's effects affect that instead.
 
 /atom/proc/bullet_act(var/obj/projectile/P)
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 	return
 
 
@@ -960,9 +1042,10 @@
 	oldloc?.Exited(src, newloc)
 
 	if(isturf(oldloc))
-		for(var/turf/covered_turf as anything in oldlocs)
-			covered_turf.pass_unstable -= src.pass_unstable
-			covered_turf.passability_cache = null
+		if(src.pass_unstable || src.density)
+			for(var/turf/covered_turf as anything in oldlocs)
+				covered_turf.pass_unstable -= src.pass_unstable
+				covered_turf.passability_cache = null
 		for(var/atom/A in oldloc)
 			if(A != src)
 				A.Uncrossed(src)
@@ -974,9 +1057,10 @@
 	newloc?.Entered(src, oldloc)
 
 	if(isturf(newloc))
-		for(var/turf/covered_turf as anything in src.locs)
-			covered_turf.pass_unstable += src.pass_unstable
-			covered_turf.passability_cache = null
+		if(src.pass_unstable || src.density)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.pass_unstable += src.pass_unstable
+				covered_turf.passability_cache = null
 		for(var/atom/A in newloc)
 			if(A != src)
 				A.Crossed(src)
@@ -1010,6 +1094,15 @@
 
 	return src
 
+/atom/movable/proc/move_trigger(mob/M, kindof)
+	var/atom/movable/AM = src.loc
+	while (AM && !isarea(AM) && AM != M)
+		AM = AM.loc
+	if (!AM || isarea(AM))
+		return FALSE
+	src.storage?.storage_item_move_triggered(M, kindof)
+	return TRUE
+
 //reason for having this proc is explained below
 /atom/proc/set_density(var/newdensity)
 	var/old_density = src.density
@@ -1017,6 +1110,7 @@
 	if(old_density != src.density && isturf(src.loc))
 		var/turf/loc = src.loc // invalidate JPS cache on density changes
 		loc.passability_cache = null
+		SEND_SIGNAL(loc, COMSIG_TURF_CONTENTS_SET_DENSITY, old_density, src)
 
 /atom/proc/set_opacity(var/newopacity)
 	SHOULD_CALL_PARENT(TRUE)
@@ -1024,21 +1118,57 @@
 	if (newopacity == src.opacity)
 		return // Why even bother
 
+	var/on_turf = isturf(src.loc)
+
 	var/oldopacity = src.opacity
-	src.opacity = newopacity
+
+	if(!on_turf)
+		src.opacity = newopacity
+		SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
+		return
+
+	// the following happens only if we are on a turf
+	var/turf/our_turf = get_turf(src)
+
+	var/old_turf_total_opacity = our_turf.opacity + our_turf.opaque_atom_count
+	var/total_opacity_changed = (old_turf_total_opacity == 0) || (old_turf_total_opacity == 1 && newopacity == 0)
+
+	if(RL_Started && total_opacity_changed)
+		var/list/datum/light/lights = list()
+		for (var/turf/T in view(RL_MaxRadius, src))
+			if (T.RL_Lights)
+				lights |= T.RL_Lights
+
+		var/list/affected = list()
+		for (var/datum/light/light as anything in lights)
+			if (light.enabled)
+				affected |= light.strip(++RL_Generation)
+
+		if (src != our_turf)
+			our_turf.opaque_atom_count += newopacity ? 1 : -1
+		src.opacity = newopacity
+
+		for (var/datum/light/light as anything in lights)
+			if (light.enabled)
+				affected |= light.apply()
+		if (RL_Started)
+			for (var/turf/T as anything in affected)
+				RL_UPDATE_LIGHT(T)
+	else
+		our_turf.opaque_atom_count += newopacity ? 1 : -1
+		src.opacity = newopacity
 
 	SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
 
-	if (isturf(src.loc))
-		// Not a turf, so we must send a signal to the turf
-		SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY, oldopacity, src)
+	// Not a turf, so we must send a signal to the turf
+	SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY, oldopacity, src)
 
 	// Below is a "smart" signal on a turf that only get called when the opacity
 	// actually changes in a meaningfull way. If atom is on a turf and we are
 	// obscuring vision in a turf that was originally not obscured. Or we are on a
 	// turf that is not obscuring vision, we were obscuring vision and are not
 	// anymore.
-	if (isturf(src.loc) && ((src.loc.opacity == 0 && src.opacity == 1) || (src.loc.opacity == 0 && oldopacity == 1 && src.opacity == 0)))
+	if (total_opacity_changed)
 		var/turf/T = src.loc
 		T.contents_set_opacity_smart(oldopacity, src)
 
@@ -1218,3 +1348,19 @@
 	G.gift = src
 
 	return G
+
+/atom/onVarChanged(variable, oldval, newval)
+	. = ..()
+	switch(variable)
+		if("opacity")
+			src.opacity = oldval
+			src.set_opacity(newval)
+		if("density")
+			src.density = oldval
+			src.set_density(newval)
+		if("dir")
+			src.dir = oldval
+			src.set_dir(newval)
+		if("icon_state")
+			src.icon_state = oldval
+			src.set_icon_state(newval)

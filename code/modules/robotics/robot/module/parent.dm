@@ -1,3 +1,5 @@
+ADMIN_INTERACT_PROCS(/obj/item/robot_module, proc/admin_add_tool, proc/admin_remove_tool)
+
 /// Job/tool modules for cyborgs
 /obj/item/robot_module
 	name = "blank cyborg module"
@@ -71,3 +73,23 @@
 				// N.B. this will flatten lists, which is desired behavior here
 				added += resolved_member
 		return added
+
+/// Admin interact menu for adding tools to the module
+/obj/item/robot_module/proc/admin_add_tool()
+	set name = "Add Tool"
+	var/type = get_one_match(tgui_input_text(usr, "Item type", "Item type"), /obj/item)
+	if (!type)
+		return
+	var/obj/item/I = new type(src)
+	src.add_contents(I)
+	boutput(usr, "Added [I] to [src].")
+
+/// Admin interact menu for removing tools from the module
+/obj/item/robot_module/proc/admin_remove_tool()
+	set name = "Remove Tool"
+	var/obj/item/I = tgui_input_list(usr, "Tool to remove", "Tool to remove", src.tools)
+	if (!I)
+		return
+	src.tools -= I
+	qdel(I)
+	boutput(usr, "Removed [I] from [src].")

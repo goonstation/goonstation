@@ -1,114 +1,8 @@
 /*
 CONTAINS:
-LOCATOR
 HAND_TELE
 
 */
-/obj/item/locator
-	name = "locator"
-	icon = 'icons/obj/items/device.dmi'
-	icon_state = "locator"
-	var/temp = null
-	var/frequency = FREQ_TRACKING_IMPLANT
-	var/broadcasting = null
-	var/listening = 1
-	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = W_CLASS_SMALL
-	item_state = "electronic"
-	throw_speed = 4
-	throw_range = 20
-	m_amt = 400
-
-/obj/item/locator/attack_self(mob/user as mob)
-	src.add_dialog(user)
-	var/dat
-	if (src.temp)
-		dat = "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
-	else
-		dat = {"
-<B>Persistent Signal Locator</B><HR>
-Frequency:
-<A href='byond://?src=\ref[src];freq=-10'>-</A>
-<A href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(src.frequency)]
-<A href='byond://?src=\ref[src];freq=2'>+</A>
-<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
-
-<A href='?src=\ref[src];refresh=1'>Refresh</A>"}
-	user.Browse(dat, "window=radio")
-	onclose(user, "radio")
-	return
-
-/obj/item/locator/Topic(href, href_list)
-	..()
-	if (usr.stat || usr.restrained())
-		return
-	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
-		src.add_dialog(usr)
-		if (href_list["refresh"])
-			src.temp = "<B>Persistent Signal Locator</B><HR>"
-			var/turf/sr = get_turf(src)
-
-			if (sr)
-				src.temp += "<B>Located Beacons:</B><BR>"
-
-				for_by_tcl(W, /obj/item/device/radio/beacon)
-					if (W.frequency == src.frequency)
-						var/turf/tr = get_turf(W)
-						if (tr.z == sr.z && tr)
-							var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-							if (direct < 5)
-								direct = "very strong"
-							else
-								if (direct < 10)
-									direct = "strong"
-								else
-									if (direct < 20)
-										direct = "weak"
-									else
-										direct = "very weak"
-							src.temp += "[dir2text(get_dir(sr, tr))]-[direct]<BR>"
-
-				src.temp += "<B>Extranneous Signals:</B><BR>"
-				for_by_tcl(W, /obj/item/implant/tracking)
-					if (W.frequency == src.frequency)
-						if (!W.implanted || !ismob(W.loc))
-							continue
-						else
-							var/mob/M = W.loc
-							if (isdead(M))
-								if (M.timeofdeath + 6000 < world.time)
-									continue
-
-						var/turf/tr = get_turf(W)
-						if (tr.z == sr.z && tr)
-							var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-							if (direct < 20)
-								if (direct < 5)
-									direct = "very strong"
-								else
-									if (direct < 10)
-										direct = "strong"
-									else
-										direct = "weak"
-								src.temp += "[W.id]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
-
-				src.temp += "<B>You are at \[[sr.x],[sr.y],[sr.z]\]</B> in orbital coordinates.<BR><BR><A href='byond://?src=\ref[src];refresh=1'>Refresh</A><BR>"
-			else
-				src.temp += "<B><FONT color='red'>Processing Error:</FONT></B> Unable to locate orbital position.<BR>"
-		else
-			if (href_list["freq"])
-				src.frequency += text2num(href_list["freq"])
-				src.frequency = sanitize_frequency(src.frequency)
-			else
-				if (href_list["temp"])
-					src.temp = null
-		if (ismob(src.loc))
-			attack_self(src.loc)
-		else
-			for(var/mob/M in viewers(1, src))
-				if (M.client)
-					src.attack_self(M)
-	return
 
 /// HAND TELE
 
@@ -179,7 +73,7 @@ TYPEINFO(/obj/item/hand_tele)
 			user.show_text("[src] doesn't have sufficient cell charge to function!", "red")
 			return 0
 
-		if (src.portals.len >= 2)
+		if (length(src.portals) >= 2)
 			user.show_text("The hand teleporter cannot sustain more than 2 portals!", "red")
 			return
 
@@ -238,7 +132,7 @@ TYPEINFO(/obj/item/hand_tele)
 			else
 				continue
 
-		if (L.len < 2) // Shouldn't happen, but you never know.
+		if (length(L) < 2) // Shouldn't happen, but you never know.
 			user.show_text("Error: couldn't find valid coordinates or working teleporters.", "red")
 			return
 

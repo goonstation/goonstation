@@ -19,7 +19,7 @@
 			real_name = name
 		src.flags |= UNCRUSHABLE
 
-	proc/setup(var/L,var/list/viral_list)
+	proc/setup(var/L)
 		if (random_icon_states && length(src.random_icon_states) > 0)
 			src.icon_state = pick(src.random_icon_states)
 		if (src.random_dir)
@@ -58,7 +58,7 @@
 	icon_state = "ceshield"
 	layer = EFFECTS_LAYER_BASE
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	pixel_y = 0
 	pixel_x = 0
 	mouse_opacity = 0
@@ -74,7 +74,7 @@
 	desc = "These tiles are just floating around in the void."
 	opacity = 0
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "floattiles1"
 
@@ -84,7 +84,7 @@
 	icon_state = "dimplo"
 	layer = EFFECTS_LAYER_BASE
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	pixel_y = -16
 	pixel_x = -16
 	mouse_opacity = 0
@@ -100,7 +100,7 @@
 	icon_state = "explocom"
 	layer = EFFECTS_LAYER_BASE
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	pixel_y = -16
 	pixel_x = -16
 	mouse_opacity = 0
@@ -117,7 +117,8 @@
 	icon_state = "arrow"
 	layer = EFFECTS_LAYER_1
 	plane = PLANE_HUD
-	anchored = 1
+	anchored = ANCHORED
+	mouse_opacity = 0
 
 proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=INVIS_NONE, atom/movable/pointer)
 	// note that `target` can also be a turf, but byond sux and I can't declare the var as atom because areas don't have vis_contents
@@ -161,11 +162,12 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	icon_state = "jukebox"
 	desc = "This doesn't seem to be working anymore."
 	layer = OBJ_LAYER
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 */
 
 /obj/decal/nav_danger
+	anchored = ANCHORED
 	name = "DANGER"
 	desc = "This navigational marker indicates a hazardous zone of space."
 	icon = 'icons/obj/decals/misc.dmi'
@@ -188,7 +190,7 @@ obj/decal/fakeobjects
 	desc = "The remains of a human."
 	opacity = 0
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "skeleton_l"
 	plane = PLANE_DEFAULT
@@ -200,7 +202,7 @@ obj/decal/fakeobjects
 		icon_state = "body1"
 
 	unanchored
-		anchored = 0
+		anchored = UNANCHORED
 
 		summon
 			New()
@@ -213,7 +215,7 @@ obj/decal/fakeobjects
 		desc = "The remains of the captain of this station ..."
 		opacity = 0
 		density = 0
-		anchored = 1
+		anchored = ANCHORED
 		icon = 'icons/obj/adventurezones/void.dmi'
 		icon_state = "skeleton_l"
 
@@ -221,10 +223,10 @@ obj/decal/fakeobjects
 	name = "Barber Pole"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "pole"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	desc = "Barber poles historically were signage used to convey that the barber would perform services such as blood letting and other medical procedures, with the red representing blood, and the white representing the bandaging. In America, long after the time when blood-letting was offered, a third colour was added to bring it in line with the colours of their national flag. This one is in space."
-	layer = OBJ_LAYER
+	layer = EFFECTS_LAYER_UNDER_2
 	plane = PLANE_DEFAULT
 
 /obj/decal/fakeobjects/oven
@@ -232,7 +234,7 @@ obj/decal/fakeobjects
 	desc = "An old oven."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "oven_off"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = OBJ_LAYER
 	plane = PLANE_DEFAULT
@@ -242,7 +244,7 @@ obj/decal/fakeobjects
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "sink"
 	desc = "The sink doesn't appear to be connected to a waterline."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = OBJ_LAYER
 	plane = PLANE_DEFAULT
@@ -270,28 +272,41 @@ obj/decal/fakeobjects/cargopad
 	desc = "Used to receive objects transported by a Cargo Transporter."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "cargopad"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/fakeobjects/robot
 	name = "Inactive Robot"
 	desc = "The robot looks to be in good condition."
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "robot"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
+
+/obj/decal/fakeobjects/robot/security
+	name = "robot"
+	real_name = "robot"
+	desc = "A Security Robot, something seems a bit off."
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "mars_sec_bot"
+
+	hugo
+		name = "HUGO"
+
+	henk
+		name = "HENK"
 
 /obj/decal/fakeobjects/apc_broken
 	name = "broken APC"
 	desc = "A smashed local power unit."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "apc-b"
-	anchored = 1
+	anchored = ANCHORED
 
 obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pad0"
 	name = "teleport pad"
-	anchored = 1
+	anchored = ANCHORED
 	layer = FLOOR_EQUIP_LAYER1
 	desc = "A pad used for scientific teleportation."
 
@@ -300,21 +315,21 @@ obj/decal/fakeobjects/teleport_pad
 	desc = "This fire alarm is burnt out, ironically."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "firex"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/fakeobjects/firelock_broken
 	name = "rusted firelock"
 	desc = "Rust has rendered this firelock useless."
 	icon = 'icons/obj/doors/door_fire2.dmi'
 	icon_state = "door0"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/fakeobjects/airlock_broken
 	name = "rusted airlock"
 	desc = "Rust has rendered this airlock useless."
 	icon = 'icons/obj/doors/Door1.dmi';
 	icon_state = "doorl";
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 1
 
@@ -323,28 +338,28 @@ obj/decal/fakeobjects/teleport_pad
 	desc = "Something has broken this light."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-broken"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/fakeobjects/lightbulb_broken
 	name = "shattered light bulb"
 	desc = "Something has broken this light."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "bulb-broken"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/fakeobjects/airmonitor_broken
 	name = "broken air monitor"
 	desc = "Something has broken this air monitor."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarmx"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/fakeobjects/shuttlethruster
 	name = "propulsion unit"
 	desc = "A small impulse drive that moves the shuttle."
 	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "alt_propulsion"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 
@@ -353,7 +368,7 @@ obj/decal/fakeobjects/teleport_pad
 	desc = "A weapons system for shuttles and similar craft."
 	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "shuttle_laser"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 
@@ -363,9 +378,10 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/pipe
 	name = "rusted pipe"
 	desc = "Good riddance."
-	icon = 'icons/obj/atmospherics/pipes/regular_pipe.dmi'
+	icon = 'icons/obj/atmospherics/pipes/pipe.dmi'
 	icon_state = "intact"
-	anchored = 1
+	anchored = ANCHORED
+	layer = DECAL_LAYER
 
 	heat
 		icon = 'icons/obj/atmospherics/pipes/heat_pipe.dmi'
@@ -375,7 +391,7 @@ obj/decal/fakeobjects/teleport_pad
 	desc = "All the gas in it seems to be long gone."
 	icon = 'icons/misc/evilreaverstation.dmi'
 	icon_state = "old_oxy"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 
 
@@ -389,7 +405,7 @@ obj/decal/fakeobjects/teleport_pad
 	desc = "A generator unit that uses complex technology."
 	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "heater"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 
@@ -398,7 +414,7 @@ obj/decal/fakeobjects/teleport_pad
 	desc = "The ladder is blocked, you can't get down there."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "ladder"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 /obj/decal/fakeobjects/sealedsleeper
@@ -406,8 +422,49 @@ obj/decal/fakeobjects/teleport_pad
 	desc = "This one appears to still be sealed. Who's in there?"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sealedsleeper"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
+
+// Laundry machines
+
+/obj/decal/fakeobjects/Laundry
+	name = "laundry machine"
+	desc = "The door has been pried off..."
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "laundry"
+	anchored = ANCHORED
+	density = 1
+	var/image/cycle = null
+	var/image/light = null
+
+	New()
+		..()
+		src.UpdateOverlays(src.cycle, "door")
+
+	drying
+		desc = "Will those clothes ever be dry?"
+		New()
+			icon_state = "laundry-d1"
+			ENSURE_IMAGE(src.cycle, src.icon, "laundry0")
+			ENSURE_IMAGE(src.light, src.icon, "laundry-dlight")
+			src.UpdateOverlays(src.light, "light")
+			..()
+
+	washing
+		desc = "Around and around..."
+		New()
+			icon_state = "laundry-w1"
+			ENSURE_IMAGE(src.cycle, src.icon, "laundry0")
+			ENSURE_IMAGE(src.light, src.icon, "laundry-wlight")
+			src.UpdateOverlays(src.light, "light")
+			..()
+
+	open
+		desc = "Who left these clothes?"
+		New()
+			icon_state = "laundry-p"
+			ENSURE_IMAGE(src.cycle, src.icon, "laundry1")
+			..()
 
 //sealab prefab fakeobjs
 
@@ -416,7 +473,7 @@ obj/decal/fakeobjects/teleport_pad
 	desc = "A combination pick and place machine and wave soldering gizmo.  For making boards.  Buddy boards.   Well, it would if the interface wasn't broken."
 	icon = 'icons/obj/manufacturer.dmi'
 	icon_state = "fab-general"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/palmtree
@@ -424,7 +481,7 @@ obj/decal/fakeobjects/teleport_pad
 	desc = "This is a palm tree. Smells like plastic."
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "palm"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 /obj/decal/fakeobjects/brokenportal
@@ -432,15 +489,15 @@ obj/decal/fakeobjects/teleport_pad
 	desc = "This portal ring looks completely fried."
 	icon = 'icons/obj/teleporter.dmi'
 	icon_state = "tele_fuzz"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/lawrack
 	name = "defunct AI Law Mount Rack"
-	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behaivor of connected AIs. This one looks non-functional."
+	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs. This one looks non-functional."
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "airack_empty"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_DEFAULT
@@ -448,17 +505,20 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/bloodtrace
 	name = "blood trace"
 	desc = "Oh my!!"
-	icon = 'icons/effects/blood.dmi'
-	icon_state = "lum"
+	icon = 'icons/obj/decals/blood/blood.dmi'
+	icon_state = "floor2"
+	color = "#3399FF"
+	alpha = 100
 	invisibility = INVIS_ALWAYS
 	blood_DNA = null
 	blood_type = null
+	anchored = ANCHORED
 
 /obj/decal/boxingrope
 	name = "Boxing Ropes"
 	desc = "Do not exit the ring."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	plane = PLANE_DEFAULT
@@ -490,7 +550,7 @@ obj/decal/fakeobjects/teleport_pad
 	name = "Boxing Ropes"
 	desc = "Do not exit the ring."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
@@ -540,7 +600,7 @@ obj/decal/fakeobjects/teleport_pad
 	name = "Ring entrance"
 	desc = "Do not exit the ring."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
@@ -551,6 +611,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
 	random_dir = 8
+	anchored = ANCHORED
 	plane = PLANE_DEFAULT
 
 	New()
@@ -578,8 +639,9 @@ obj/decal/fakeobjects/teleport_pad
 	icon_state = "icefloor"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_FLOOR
+	mouse_opacity = 0
 
 /obj/decal/icefloor/Crossed(atom/movable/AM)
 	..()
@@ -597,12 +659,18 @@ obj/decal/fakeobjects/teleport_pad
 				M.visible_message("<span class='alert'><b>[M]</b> hits their head on [src]!</span>")
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
 
+/obj/decal/icefloor/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	. = ..()
+	if (exposed_temperature > T0C)
+		if(prob((exposed_temperature - T0C) * 0.1))
+			qdel(src)
+
 // These used to be static turfs derived from the standard grey floor tile and thus didn't always blend in very well (Convair880).
 /obj/decal/mule
 	name = "Don't spawn me"
 	mouse_opacity = 0
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "blank"
 	layer = TURF_LAYER + 0.1 // Should basically be part of a turf.
@@ -652,6 +720,7 @@ obj/decal/fakeobjects/teleport_pad
 	real_name = "ball pit"
 	layer = 25
 	mouse_opacity = 0
+	anchored = ANCHORED_ALWAYS
 
 //Decals that glow.
 /obj/decal/glow
@@ -660,6 +729,7 @@ obj/decal/fakeobjects/teleport_pad
 	var/color_g = 0.35
 	var/color_b = 0.21
 	var/datum/light/light
+	anchored = ANCHORED_ALWAYS
 
 	New()
 		..()
@@ -679,7 +749,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon_state = "rudder"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_DEFAULT
 
 
@@ -767,3 +837,61 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/tile_edge/floorguide/arrow_s
 	name = "Directional Navigation Guide"
 	icon_state = "endpiece_s"
+
+/obj/decal/slipup
+	name = ""
+	desc = ""
+	anchored = ANCHORED
+	mouse_opacity = 0
+	icon = null
+	icon_state = null
+	alpha = 0
+	opacity = 0
+	pixel_x = 0
+	pixel_y = 8
+	plane = PLANE_NOSHADOW_ABOVE
+
+	New(var/location = null, var/state = null, var/mob/target = null)
+		if(location)
+			src.set_loc(location)
+		else
+			src.set_loc(usr.loc)
+
+		animate_slipup(src, state, target)
+		..()
+
+	proc/animate_slipup(var/obj/slipup_decal, var/state = null, var/mob/target = null)
+		var/new_state = "slipup"
+		if(state)
+			new_state = state
+
+		if (target)
+			var/image/image = image('icons/effects/effects.dmi', src, new_state)
+			target << image
+
+		var/matrix/original = matrix()
+		original.Scale(0.05)
+		src.transform = original
+
+		animate(src,transform = matrix(1, MATRIX_SCALE), time = 1 SECONDS, alpha = 255, pixel_y = 16, pixel_x = rand(-32, 32), easing = ELASTIC_EASING)
+		animate(time = 1 SECOND, alpha = 0, pixel_y = 8, easing = CIRCULAR_EASING)
+		SPAWN(2 SECONDS)
+			qdel(src)
+
+/obj/decal/slipup/clumsy
+	pixel_x = -32
+	pixel_y = 16
+
+	animate_slipup(var/obj/decal/slipup_decal, var/state = null, var/mob/target = null)
+		var/new_state = "slipup_clown1"
+		if(state)
+			new_state = state
+
+		if (target)
+			var/image/image = image('icons/effects/96x32.dmi', src, new_state)
+			target << image
+
+		animate(src, time = 0.5 SECOND, alpha = 255)
+		animate(pixel_y = 64, pixel_x = rand(-64, 0), alpha = 0, time = 1.5 SECONDS, easing = SINE_EASING)
+		SPAWN(2 SECONDS)
+			qdel(src)

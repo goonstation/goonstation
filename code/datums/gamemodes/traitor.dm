@@ -13,7 +13,7 @@
 #ifdef RP_MODE
 	var/const/pop_divisor = 10
 #else
-	var/const/pop_divisor = 6
+	var/const/pop_divisor = 7
 #endif
 
 
@@ -31,7 +31,7 @@
 		if(player.ready)
 			num_players++
 
-	var/randomizer = rand(12)
+	var/randomizer = rand(7)
 	var/num_traitors = 1
 	var/num_wraiths = 0
 	var/token_wraith = 0
@@ -39,7 +39,7 @@
 	if(traitor_scaling)
 		num_traitors = clamp(round((num_players + randomizer) / pop_divisor), 1, traitors_possible) // adjust the randomizer as needed
 
-	if(num_traitors > 2 && prob(10))
+	if(num_traitors >= 4 && prob(10))
 		num_traitors -= 1
 		num_wraiths = 1
 
@@ -70,16 +70,16 @@
 		possible_traitors.Remove(traitor)
 
 	if(num_wraiths)
-		add_wraith()
+		add_wraith(num_wraiths)
 
 	return 1
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
 		if (traitor.special_role == ROLE_WRAITH) // agony.
-			generate_wraith_objectives(traitor)
+			traitor.add_antagonist(ROLE_WRAITH, source = ANTAGONIST_SOURCE_ROUND_START)
 		else
-			traitor.add_antagonist(ROLE_TRAITOR)
+			traitor.add_antagonist(ROLE_TRAITOR, source = ANTAGONIST_SOURCE_ROUND_START)
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 

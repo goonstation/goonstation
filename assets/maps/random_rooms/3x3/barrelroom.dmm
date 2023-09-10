@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/decal/cleanable/dirt,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/scorched,
 /area/dmm_suite/clear_area)
 "k" = (
@@ -21,7 +21,6 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/scorched,
-/turf/simulated/floor/plating/damaged2,
 /area/dmm_suite/clear_area)
 "r" = (
 /obj/storage/crate,

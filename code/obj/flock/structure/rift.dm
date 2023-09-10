@@ -26,8 +26,8 @@
 	var/elapsed = getTimeInSecondsSinceTime(src.time_started)
 	src.info_tag.set_info_tag("Entry time: [round(src.build_time - elapsed)] seconds")
 	if(elapsed >= build_time)
-		if (src.flock.flockmind.tutorial) //simplify down to a single drone during tutorial
-			flockdronegibs(src.loc, null, list(new /obj/flock_structure/egg/tutorial(src.contents, src.flock)))
+		if (src.flock.flockmind?.tutorial) //simplify down to a single drone during tutorial
+			flockdronegibs(src.loc, list(new /obj/flock_structure/egg/tutorial(src.contents, src.flock)))
 			src.flock.flockmind.started = TRUE
 			src.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_RIFT_COMPLETE)
 			qdel(src)
@@ -38,6 +38,8 @@
 		animate_shake(src, severity, severity)
 
 /obj/flock_structure/rift/proc/open()
+	src.flock.center_x = src.x
+	src.flock.center_y = src.y
 	src.visible_message("<span class='text-blue'>Multiple shapes exit out of [src]!</span>")
 	for(var/i in 1 to 4)
 		var/obj/item/flockcache/x = new(src.contents)
@@ -71,7 +73,7 @@
 			if (sentinels_made >= sentinel_count)
 				break
 
-	flockdronegibs(src.loc, null, eject) //ejectables ejected here
+	flockdronegibs(src.loc, eject) //ejectables ejected here
 	src.flock.flockmind.started = TRUE
 	qdel(src)
 

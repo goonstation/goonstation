@@ -1,4 +1,4 @@
-/datum/plantmutation/
+/datum/plantmutation
 	var/name = null // If this is set, plants will use this instead of regular plant name
 	var/crop = null // What crop does it give?
 	var/plant_icon = null // same as in base plant thing really
@@ -59,6 +59,27 @@
 			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			attacked_proc_override = 0
 		return lasterr
+
+	//I'm continuing this bizzare naming convention only because not doing so would be worse
+	///When the plant matures
+	proc/HYPmatured_proc_M(var/obj/machinery/plantpot/POT)
+		return
+
+	///When the plant is destroyed or picked up by a trowel
+	proc/HYPdestroyplant_proc_M(var/obj/machinery/plantpot/POT)
+		return
+
+	///When the plant is put in a decorative pot
+	proc/HYPpotted_proc_M(var/obj/decorative_pot/POT, var/grow_level)
+		return
+
+	///When the plant mutates to this mutation and you need to adjusted its stats/commuts (either in seed in plantmaster or pot)
+	proc/HYPon_mutation_general(var/datum/plant/parent_plant, var/datum/plantgenes/passed_genes)
+		return
+
+	///When the plant mutates to this mutation and you want something special (like mutates with a burst of flames)
+	proc/HYPon_mutation_pot(var/datum/plant/parent_plant, var/obj/machinery/plantpot/passed_plantpot, var/datum/plantgenes/passed_genes)
+		return
 
 // Tomato Mutations
 
@@ -188,7 +209,7 @@
 		if (.) return
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		var/thud_prob = clamp(DNA.endurance / 2, 0, 100)
+		var/thud_prob = clamp(DNA?.get_effective_value("endurance") / 2, 0, 100)
 
 		if (prob(thud_prob))
 			playsound(POT, 'sound/effects/exlow.ogg', 30, 1)
@@ -308,9 +329,9 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		var/fart_prob = clamp(100, 0, DNA.potency)
+		var/fart_prob = clamp(100, 0, DNA?.get_effective_value("potency"))
 
-		if (POT.growth > (P.growtime - DNA.growtime) && prob(fart_prob))
+		if (POT.growth > (P.growtime - DNA?.get_effective_value("growtime")) && prob(fart_prob))
 			POT.visible_message("<span class='alert'><b>[POT]</b> farts!</span>")
 			playsound(POT, 'sound/voice/farts/poo2.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 			// coder.Life()
@@ -490,8 +511,16 @@
 /datum/plantmutation/hcordata/fish
 	name = "Wholetuna Cordata"
 	iconmod = "Wholetuna"
-	crop = /obj/item/fish/random
+	crop = list(/obj/item/reagent_containers/food/fish/salmon,
+				/obj/item/reagent_containers/food/fish/carp,
+				/obj/item/reagent_containers/food/fish/bass)
+	assoc_reagents = list("fishoil")
+	dont_rename_crop = TRUE
 	special_proc_override = TRUE
+
+	HYPon_mutation_general(var/datum/plant/parent_plant, var/datum/plantgenes/passed_genes)
+		HYPaddCommut(passed_genes, /datum/plant_gene_strain/inert)
+		return
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
@@ -499,7 +528,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA.harvtime) && prob(10))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime")) && prob(10))
 			var/list/nerds = list()
 			// I know that this seems weird, but consider how many plants clutter botany at any given time. Looping through mobs and checking distance is
 			// less of a pain than looping through potentially hundreds of random seeds and crap in view(1) to see if they're mobs.
@@ -508,7 +537,7 @@
 					nerds += L
 				else
 					continue
-			if (nerds.len >= 1)
+			if (length(nerds) >= 1)
 				POT.visible_message("<span class='alert'><b>[POT.name]</b> slaps [pick(nerds)] with a fish!</span>")
 				playsound(POT, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
 
@@ -589,7 +618,7 @@
 	dont_rename_crop = TRUE
 	iconmod = "LasherBerries"
 	harvest_override = 1
-	crop = /obj/item/reagent_containers/food/snacks/plant/lashberry/
+	crop = /obj/item/reagent_containers/food/snacks/plant/lashberry
 	chance = 20
 
 
@@ -608,12 +637,12 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime - DNA.harvtime) && prob(10))
+		if (POT.growth > (P.harvtime - DNA?.get_effective_value("harvtime")) && prob(10))
 			var/obj/overlay/B = new /obj/overlay( get_turf(POT) )
 			B.icon = 'icons/effects/hydroponics.dmi'
 			B.icon_state = "radpulse"
 			B.name = "radioactive pulse"
-			B.anchored = 1
+			B.anchored = ANCHORED
 			B.set_density(0)
 			B.layer = 5 // TODO what layer should this be on?
 			SPAWN(2 SECONDS)
@@ -679,7 +708,7 @@
 	dont_rename_crop = TRUE
 	name_prefix = "Money "
 	iconmod = "TreeCash"
-	crop = /obj/item/spacecash
+	crop = /obj/item/currency/spacecash
 	required_mutation = /datum/plantmutation/tree/paper
 	PTrange = list(30, null)
 	chance = 50
@@ -706,7 +735,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.growtime + DNA.growtime) && prob(5))
+		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(5))
 			POT.visible_message("<span class='combat'><b>[POT.name]</b> [pick("howls","bays","whines","barks","croons")]!</span>")
 			playsound(POT, pick('sound/voice/animal/howl1.ogg','sound/voice/animal/howl2.ogg','sound/voice/animal/howl3.ogg','sound/voice/animal/howl4.ogg','sound/voice/animal/howl5.ogg','sound/voice/animal/howl6.ogg'), 30, 1,-1)
 
@@ -716,7 +745,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth < (P.growtime + DNA.growtime)) return 0
+		if (POT.growth < (P.growtime + DNA?.get_effective_value("growtime"))) return 0
 		playsound(POT, pick('sound/voice/animal/howl1.ogg','sound/voice/animal/howl2.ogg','sound/voice/animal/howl3.ogg','sound/voice/animal/howl4.ogg','sound/voice/animal/howl5.ogg','sound/voice/animal/howl6.ogg'), 30, 1,-1)
 		boutput(user, "<span class='alert'>[POT.name] angrily bites you!</span>")
 		random_brute_damage(user, 3)
@@ -743,6 +772,36 @@
 	name_prefix = "Glowstick "
 	iconmod = "TreeGlow"
 	crop = /obj/item/device/light/glowstick
+
+	proc/add_glow(obj/object)
+		object.add_simple_light("glowstick_tree", list(255, 0, 255, 100))
+		animate_rainbow_glow(object.simple_light, 5 SECONDS, 10 SECONDS)
+		var/image/glowverlay = object.SafeGetOverlayImage("glowverlay", 'icons/obj/hydroponics/plants_crop.dmi', "TreeGlow-glow")
+		if (istype(object, /obj/decorative_pot)) //*dies of cringe*
+			glowverlay.pixel_x = 2
+		glowverlay.plane = PLANE_ABOVE_LIGHTING
+		object.UpdateOverlays(glowverlay, "glowverlay", 0, 1)
+
+	proc/remove_glow(obj/object)
+		object.remove_simple_light("glowstick_tree")
+		object.UpdateOverlays(null, "glowverlay")
+
+	HYPmatured_proc_M(obj/machinery/plantpot/POT)
+		. = ..()
+		src.add_glow(POT)
+
+	HYPpotted_proc_M(obj/decorative_pot/POT, grow_level)
+		. = ..()
+		if (grow_level >= 4)
+			src.add_glow(POT)
+
+	HYPharvested_proc_M(obj/machinery/plantpot/POT, mob/user)
+		. = ..()
+		src.remove_glow(POT)
+
+	HYPdestroyplant_proc_M(obj/machinery/plantpot/POT, mob/user)
+		. = ..()
+		src.remove_glow(POT)
 
 //peanuuts
 

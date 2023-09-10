@@ -48,7 +48,8 @@
 		for (var/i = 1 to src.num_crew)
 			if (!length(candidates))
 				return
-			var/datum/mind/mind = pick(candidates)
+			var/datum/mind/mind = candidates[1]
+			log_respawn_event(mind, src.respawn_job, source)
 			src.spawn_as_job(src.respawn_job, mind.current, src.custom_spawn_turf || pick_landmark(LANDMARK_LATEJOIN))
 			candidates -= mind
 			if (src.objective_text)
@@ -67,10 +68,13 @@
 
 		if(!player.mind)
 			player.mind = new (player)
+		var/datum/mind/mind = player.mind
+		mind.wipe_antagonists()
+		player = mind.current
+
 		player.mind.assigned_role = job.name
 		M.job = job.name
 		player.mind.transfer_to(M)
-		remove_antag(M, usr, 1, 1)
 		SPAWN(5 SECONDS)
 			if(player && !player:client)
 				qdel(player)

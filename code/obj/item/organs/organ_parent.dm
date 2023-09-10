@@ -9,7 +9,7 @@
 	var/organ_holder_name = "organ"
 	var/organ_holder_location = "chest"
 	var/organ_holder_required_op_stage = 0
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/brain.dmi'
 	icon_state = "brain1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "brain"
@@ -141,6 +141,11 @@
 			src.blood_reagent = src.donor.blood_id
 		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
 
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		src.max_damage += passed_genes?.get_effective_value("endurance")
+		src.fail_damage += passed_genes?.get_effective_value("endurance")
+		return src
+
 	disposing()
 		if (src.holder)
 			for(var/thing in holder.organ_list)
@@ -151,7 +156,7 @@
 				if(thing in holder.vars && holder.vars[thing] == src) // organ holders suck, refactor when they no longer suck
 					holder.vars[thing] = null
 
-
+		donor_original = null
 		donor = null
 
 		if (bones)
@@ -214,6 +219,8 @@
 		if(!istype(src.donor_original)) // If we were spawned without an owner, they're our new original owner
 			src.donor_original = H
 
+		if (src.robotic)
+			H.robotic_organs++
 
 		//Kinda repeated below too. Cure the organ failure disease if this organ is above a certain HP
 		if (src.donor)
@@ -238,6 +245,9 @@
 		if (src.donor)
 			if (failure_disease)
 				src.donor.cure_disease(failure_disease)
+
+			if (src.robotic)
+				src.donor.robotic_organs--
 
 		if (!src.donor_DNA && src.donor && src.donor.bioHolder)
 			src.donor_DNA = src.donor.bioHolder.Uid
@@ -281,7 +291,7 @@
 
 	emp_act()
 		if (robotic)
-			src.take_damage(20, 20, 0)
+			src.take_damage(20, 20, 20)
 
 	proc/add_ability(var/datum/abilityHolder/aholder, var/abil) // in case things wanna do stuff instead of just straight-up adding/removing the abilities (see: laser eyes)
 		if (!aholder || !abil)

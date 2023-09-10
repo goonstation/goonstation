@@ -118,3 +118,15 @@
 	proc/make_inspector()
 		icon_state = "scuttlebot_inspector"
 		src.is_inspector = TRUE
+
+/mob/living/critter/robotic/scuttlebot/ghostplayable // admin gimmick ghost spawnable version
+
+	add_abilities = list(/datum/targetable/critter/takepicture)
+
+	var/obj/item/clothing/head/det_hat/gadget/linked_hat = null
+
+	setup_hands()
+
+	proc/make_inspector()
+		icon_state = "scuttlebot_inspector"
+		src.is_inspector = TRUE

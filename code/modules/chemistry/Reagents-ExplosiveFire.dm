@@ -32,7 +32,7 @@ datum
 
 				var/list/covered = holder.covered_turf()
 
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 
 				var/radius = clamp(volume/SD, 0, 8)
@@ -159,7 +159,7 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 				if (!holder)
 					return
-				if (volume >= 5 && holder.total_temperature >= T0C + 400 && (istype(O, /obj/steel_beams) || (O.material && O.material.mat_id == "steel")))
+				if (volume >= 5 && holder.total_temperature >= T0C + 400 && (istype(O, /obj/steel_beams) || (O.material && O.material.getID() == "steel")))
 					O.visible_message("<span class='alert'>[O] melts!</span>")
 					qdel(O)
 
@@ -182,7 +182,7 @@ datum
 					return
 				if (!istype(T) || volume < 5 || holder.total_temperature < T0C + 400)
 					return
-				if (T.material && T.material.mat_id == "steel")
+				if (T.material && T.material.getID() == "steel")
 					//T.visible_message("<span class='alert'>[T] melts!</span>")
 					T.ex_act(2)
 
@@ -197,6 +197,7 @@ datum
 			transparency = 255
 			volatility = 1.5
 			minimum_reaction_temperature = T0C+100
+			fluid_flags = FLUID_BANNED
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/turf/simulated/A = holder.my_atom
@@ -472,6 +473,7 @@ datum
 			transparency = 150
 			viscosity = 0.7
 			minimum_reaction_temperature = 1000
+			fluid_flags = FLUID_SMOKE_BANNED
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				holder.del_reagent(id)
@@ -602,8 +604,8 @@ datum
 					return
 				else
 					var/list/covered = holder.covered_turf()
-					if (covered.len < 4 || (volume / holder.total_volume) > min_req_fluid)
-						if(covered.len > 0) //possible fix for bug where caused_fireflash was set to 1 without fireflash going off, allowing fuel to reach any temp without igniting
+					if (length(covered) < 4 || (volume / holder.total_volume) > min_req_fluid)
+						if(length(covered) > 0) //possible fix for bug where caused_fireflash was set to 1 without fireflash going off, allowing fuel to reach any temp without igniting
 							caused_fireflash = 1
 						for(var/turf/turf in covered)
 							var/radius = clamp(((volume/covered.len) * volume_radius_multiplier + volume_radius_modifier), min_radius, max_radius)
@@ -645,8 +647,8 @@ datum
 				if((M.health > 20) && (prob(33)))
 					M.take_toxin_damage(1 * mult)
 				if(probmult(1))
-					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>You puke all over yourself!</span>")
-					M.vomit()
+					var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>"
+					M.vomit(0, null, vomit_message)
 				..()
 
 			on_plant_life(var/obj/machinery/plantpot/P)
@@ -667,6 +669,7 @@ datum
 			depletion_rate = 0.05
 			penetrates_skin = 1 // think of it as just being all over them i guess
 			minimum_reaction_temperature = T0C+200
+			fluid_flags = FLUID_BANNED | FLUID_STACKING_BANNED
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(src.reacting)
@@ -678,7 +681,7 @@ datum
 				for(var/turf/location in covered)
 					var/our_amt = holder.get_reagent_amount(src.id) / length(covered)
 
-					if (our_amt < 10 && covered.len > 5)
+					if (our_amt < 10 && length(covered) > 5)
 						if (prob(min(covered.len/3,85)))
 							continue
 
@@ -688,12 +691,12 @@ datum
 						switch(our_amt)
 							if(0 to 20)
 								holder.my_atom.visible_message("<b>The black powder ignites!</b>")
-								if (covered.len < 5 || prob(5))
+								if (length(covered) < 5 || prob(5))
 									var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 									smoke.set_up(1, 0, location)
 									smoke.start()
 								explosion(holder.my_atom, location, -1, -1, pick(0,1), 1)
-								if (covered.len > 1)
+								if (length(covered) > 1)
 									holder.remove_reagent(id, our_amt)
 								else
 									holder.del_reagent(id)
@@ -701,31 +704,34 @@ datum
 								holder.my_atom.visible_message("<b>[holder.my_atom] flares up!</b>")
 								fireflash(location,0)
 								explosion(holder.my_atom, location, -1, -1, 1, 2)
-								if (covered.len > 1)
+								if (length(covered) > 1)
 									holder.remove_reagent(id, our_amt)
 								else
 									holder.del_reagent(id)
 							if(81 to 160)
 								holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
 								explosion(holder.my_atom, location, -1, 1, 2, 3)
-								if (covered.len > 1)
+								if (length(covered) > 1)
 									holder.remove_reagent(id, our_amt)
 								else
 									holder.del_reagent(id)
 							if(161 to 300)
 								holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] violently explodes!</b></span>")
 								explosion(holder.my_atom, location, 1, 3, 6, 8)
-								if (covered.len > 1)
+								if (length(covered) > 1)
 									holder.remove_reagent(id, our_amt)
 								else
 									holder.del_reagent(id)
 							if(301 to INFINITY)
 								holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] detonates in a huge blast!</b></span>")
 								explosion(holder.my_atom, location, 3, 6, 12, 15)
-								if (covered.len > 1)
+								if (length(covered) > 1)
 									holder.remove_reagent(id, our_amt)
 								else
 									holder.del_reagent(id)
+						if(istype(holder.my_atom, /obj))
+							var/obj/container = holder.my_atom
+							container.shatter_chemically(projectiles = TRUE)
 
 			reaction_obj(var/obj/O, var/volume)
 				return
@@ -835,3 +841,19 @@ datum
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				bang()
+
+		combustible/photophosphide
+			id = "photophosphide"
+			name = "photophosphide"
+			random_chem_blacklisted = TRUE //probably for the best ??
+			description = "A photosensitive explosive reagent that detonates when exposed to relatively small amounts of light."
+			reagent_state = SOLID
+			fluid_r = 149
+			fluid_g = 119
+			fluid_b = 163
+			transparency = 255
+			taste = "sandy"
+			fluid_flags = FLUID_BANNED | FLUID_STACKING_BANNED | FLUID_SMOKE_BANNED
+
+			reaction_turf()
+				return

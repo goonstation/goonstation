@@ -1,8 +1,8 @@
 /datum/projectile/bfg
 	name = "BFG shot"
 	icon_state = "bfg"
-	power = 400
-	damage = 100
+	damage = 400
+	cost = 100
 	sname = "plasma blast"
 	shot_sound = null
 	shot_number = 1

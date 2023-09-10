@@ -11,9 +11,8 @@
 	blockGaps = 2
 	stability_loss = 10
 	var/using = 0
-	var/safety = 0
 	var/ability_path = /datum/targetable/geneticsAbility/cryokinesis
-	var/datum/targetable/geneticsAbility/ability = /datum/targetable/geneticsAbility/cryokinesis
+	var/datum/targetable/geneticsAbility/ability = null
 
 	New()
 		..()
@@ -22,35 +21,39 @@
 	disposing()
 		src.owner = null
 		if (ability)
-			ability.dispose()
 			ability.owner = null
+			qdel(ability)
 		src.ability = null
 		..()
 
 	OnAdd()
 		..()
-		if (ishuman(owner))
-			check_ability_owner()
-			var/mob/living/carbon/human/H = owner
-			H.hud.update_ability_hotbar()
-		return
+		check_ability_owner()
 
 	OnRemove()
 		..()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.hud)
-				H.hud.update_ability_hotbar()
-		return
+		if (src.ability)
+			src.ability.holder.removeAbilityInstance(src.ability)
 
 	proc/check_ability_owner()
 		if (ispath(ability_path))
-			var/datum/targetable/geneticsAbility/AB = new ability_path(src)
+			var/datum/targetable/geneticsAbility/AB = src.owner?.abilityHolder?.addAbility(src.ability_path)
+			if (!AB)
+				return
 			ability = AB
+			AB.cooldown = src.cooldown
 			AB.linked_power = src
 			icon = AB.icon
 			icon_state = AB.icon_state
 			AB.owner = src.owner
+			src.owner.abilityHolder.updateButtons() //have to manually update because the cooldown is stored on the bioeffect
+
+	//varedit support for cooldowns
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if (variable == "cooldown" && istype(src.ability))
+			src.ability.cooldown = newval
+			src.ability.holder?.updateButtons()
 
 /datum/targetable/geneticsAbility/cryokinesis
 	name = "Cryokinesis"
@@ -122,7 +125,7 @@
 	blockGaps = 2
 	stability_loss = 5
 	ability_path = /datum/targetable/geneticsAbility/mattereater
-	var/target_path = /obj/item/
+	var/target_path = /obj/item
 
 /datum/targetable/geneticsAbility/mattereater
 	name = "Matter Eater"
@@ -192,6 +195,7 @@
 			var/obj/item/I = the_object
 			if(I)
 				if(I.Eat(owner, owner, TRUE)) //eating can return false to indicate it failed
+					logTheThing(LOG_COMBAT, owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(owner)].")
 					// Organs and body parts have special behaviors we need to account for
 					if (ishuman(owner))
 						var/mob/living/carbon/human/H = owner
@@ -206,6 +210,7 @@
 			else //Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
 				owner.visible_message("<span class='alert'>[owner] eats [the_object].</span>")
 				playsound(owner.loc, 'sound/items/eatfood.ogg', 50, FALSE)
+				logTheThing(LOG_COMBAT, owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(owner)].")
 				qdel(the_object)
 
 
@@ -1017,7 +1022,7 @@
 					animate_shake(T,5,rand(3,8),rand(3,8))
 
 			// Superfarted on the bible? Off to hell.
-			for (var/obj/item/storage/bible/B in owner.loc)
+			for (var/obj/item/bible/B in owner.loc)
 				if(gib_user)
 					owner.mind.damned = TRUE
 				else
@@ -1125,7 +1130,7 @@
 
 		owner.visible_message("<span class='alert'><b>[owner.name]</b> shoots eye beams!</span>")
 		var/datum/projectile/laser/eyebeams/PJ = new projectile_path
-		shoot_projectile_ST(owner, PJ, T)
+		shoot_projectile_ST_pixel_spread(owner, PJ, T)
 
 	cast_misfire(atom/target)
 		if (..())
@@ -1235,28 +1240,32 @@
 
 	cast(atom/target)
 		if (..())
-			return 1
+			return TRUE
 		if(linked_power.using)
-			return 1
+			return TRUE
 
 		var/obj/the_object = target
 
-		if(!target)
-			var/base_path = /obj/item/
-			if (linked_power.power > 1)
-				base_path = /obj/
+		var/base_path = /obj/item
+		if (linked_power.power > 1)
+			base_path = /obj
 
-			var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
+		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
+
+		if(target)
+			if (!(target in items))
+				return TRUE
+		else
 			if (!items.len)
-				boutput(usr, "/red You can't find anything nearby to touch.")
-				return 1
+				boutput(usr, "<span class='alert'>You can't find anything nearby to touch.</span>")
+				return TRUE
 
 			linked_power.using = 1
 			the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
 			if (!the_object)
 				last_cast = 0
 				linked_power.using = 0
-				return 1
+				return TRUE
 
 		if(isitem(the_object))
 			var/obj/item/the_item = the_object
@@ -1274,9 +1283,8 @@
 				the_object.setMaterial(getMaterial(linked.transmute_material))
 			else
 				owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to gold!</span>")
-				the_object.setMaterial(getMaterial("gold"), copy = FALSE)
+				the_object.setMaterial(getMaterial("gold"))
 		linked_power.using = 0
-		return
 
 	cast_misfire()
 		if (..())
@@ -1284,9 +1292,9 @@
 		if(linked_power.using)
 			return 1
 
-		var/base_path = /obj/item/
+		var/base_path = /obj/item
 		if (linked_power.power > 1)
-			base_path = /obj/
+			base_path = /obj
 
 		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
 		if (!items.len)
@@ -1311,7 +1319,7 @@
 			owner.visible_message("[owner] touches [the_object].")
 		else
 			owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to flesh!</span>")
-			the_object.setMaterial(getMaterial("flesh"), copy = FALSE)
+			the_object.setMaterial(getMaterial("flesh"))
 		linked_power.using = 0
 		return
 
@@ -1410,8 +1418,8 @@
 	occur_in_genepools = 0
 	stability_loss = 15
 	ability_path = /datum/targetable/geneticsAbility/dimension_shift
-	var/active = 0
-	var/processing = 0
+	var/active = FALSE
+	var/processing = FALSE
 	var/atom/last_loc = null
 	acceptable_in_mutini = 0
 
@@ -1432,8 +1440,8 @@
 			SPAWN(0.7 SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
-				active = 0
-			processing = 0
+				active = FALSE
+				processing = FALSE
 		return
 
 /datum/targetable/geneticsAbility/dimension_shift
@@ -1479,7 +1487,7 @@
 				var/obj/dummy/spell_invis/invis_object = new /obj/dummy/spell_invis(get_turf(owner))
 				invis_object.canmove = 0
 				owner.set_loc(invis_object)
-			P.processing = FALSE
+				P.processing = FALSE
 			return TRUE
 		else
 			var/obj/dummy/spell_invis/invis_object
@@ -1498,8 +1506,8 @@
 			SPAWN(0.7 SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
-				P.active = 0
-			P.processing = 0
+				P.active = FALSE
+				P.processing = FALSE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1550,7 +1558,7 @@
 	name = ""
 	desc = ""
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	mouse_opacity = 0
 	icon = null
 	icon_state = null
@@ -1706,7 +1714,7 @@
 		for (var/mob/living/L in range(7,owner))
 			if (L.hearing_check(1))
 				if(count++ > (4 + src.linked_power.power * 3)) break
-				if(locate(/obj/item/storage/bible) in get_turf(L))
+				if(locate(/obj/item/bible) in get_turf(L))
 					owner.visible_message("<span class='alert'><b>A mysterious force smites [owner.name] for inciting blasphemy!</b></span>")
 					owner.gib()
 				else
@@ -1877,24 +1885,20 @@
 		return
 
 	OnLife(var/mult)
-		if(..()) return
-		if (isliving(owner))
-			var/mob/living/L = owner
-			var/turf/T = get_turf(L)
+		if(..())
+			return
+		if (!src.active)
+			return
+		if (!isliving(owner))
+			return
 
-			if (T && isturf(T))
-				var/area/A = get_area(T)
-				if (istype(T, /turf/space) || (A && (istype(A, /area/shuttle/) || istype(A, /area/shuttle_transit_space) || A.name == "Space" || A.name == "Ocean")))
-					src.cloak_decloak(2)
+		var/mob/living/L = owner
+		var/turf/T = get_turf(L)
 
-				else
-					if (T.RL_GetBrightness() < 0.2 && can_act(owner) && src.active)
-						src.cloak_decloak(1)
-					else
-						src.cloak_decloak(2)
-			else
-				src.cloak_decloak(2)
-		return
+		if (!isturf(T) || T.is_lit())
+			src.cloak_decloak(2)
+		else if (can_act(src.owner))
+			src.cloak_decloak(1)
 
 /datum/targetable/geneticsAbility/darkcloak
 	name = "Cloak of Darkness"
@@ -1910,6 +1914,7 @@
 		if (DC.active)
 			boutput(usr, "You stop using your cloak of darkness.")
 			DC.active = 0
+			DC.cloak_decloak(2)
 		else
 			boutput(usr, "You start using your cloak of darkness.")
 			DC.active = 1
@@ -2102,10 +2107,9 @@
 			return 1
 
 		var/obj/the_object = target
-
+		var/base_path = /obj
+		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
 		if(!the_object)
-			var/base_path = /obj
-			var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
 			if (!items.len)
 				boutput(usr, "/red You can't find anything nearby to spray ink on.")
 				return 1
@@ -2114,6 +2118,8 @@
 			if (!the_object)
 				last_cast = 0
 				return 1
+		if (!(the_object in items))
+			return 1
 
 		var/datum/bioEffect/power/ink/I = linked_power
 		if (!linked_power)
@@ -2183,7 +2189,6 @@
 			hit.changeStatus("weakened", 5 SECONDS)
 			hit.force_laydown_standup()
 			break
-		return 0
 
 	cast(atom/target)
 		if (..())

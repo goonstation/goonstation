@@ -3,6 +3,7 @@
 	desc = "Generates a force field that stops meteors."
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "shieldgen"
+	density = FALSE
 
 	nocell
 		starts_with_cell = FALSE
@@ -29,7 +30,7 @@
 			S.deployer = src
 			src.deployed_shields += S
 
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.active = 1
 		playsound(src.loc, src.sound_on, 50, 1)
 		build_icon()

@@ -25,6 +25,7 @@ TYPEINFO(/obj/item/device/powersink)
 	var/mode = POWERSINK_OFF		// 0 = off, 1=clamped (off), 2=operating
 	is_syndicate = 1
 	rand_pos = 0
+	HELP_MESSAGE_OVERRIDE({"To anchor the powersink, use a <b>screwdriver</b> on it while it is on exposed wiring. To turn the powersink on/off click it with an empty hand."})
 
 	var/obj/cable/attached		// the attached cable
 	var/datum/light/light
@@ -46,7 +47,7 @@ TYPEINFO(/obj/item/device/powersink)
 						boutput(user, "No exposed cable here to attach to.")
 						return
 					else
-						anchored = 1
+						anchored = ANCHORED
 						mode = POWERSINK_CLAMPED
 						boutput(user, "You attach the device to the cable.")
 						for(var/mob/M in AIviewers(user))
@@ -69,9 +70,9 @@ TYPEINFO(/obj/item/device/powersink)
 										power_drained -= charge_amt * 5
 										A.cell.charge += charge_amt
 
-				anchored = 0
+				anchored = UNANCHORED
 				mode = POWERSINK_OFF
-				boutput(user, "You detach	the device from the cable.")
+				boutput(user, "You detach the device from the cable.")
 				for(var/mob/M in AIviewers(user))
 					if(M == user) continue
 					boutput(M, "[user] detaches the power sink from the cable.")
@@ -111,7 +112,7 @@ TYPEINFO(/obj/item/device/powersink)
 
 				// found a powernet, so drain up to max power from it
 
-				var/drained = min ( drain_rate, PN.avail )
+				var/drained = min ( drain_rate, (PN.avail - PN.newload) )
 				PN.newload += drained
 				power_drained += drained
 

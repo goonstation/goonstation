@@ -1,9 +1,10 @@
+ABSTRACT_TYPE(/obj/item/clothing)
 /obj/item/clothing
 	name = "clothing"
 	//var/obj/item/clothing/master = null
 	w_class = W_CLASS_SMALL
 
-	var/see_face = 1
+	var/see_face = TRUE
 	///Makes it so the item doesn't show up upon examining, currently only applied for gloves
 	var/nodescripition = FALSE
 
@@ -28,6 +29,8 @@
 	var/fallen_offset_x = 1
 	var/fallen_offset_z = -6
 	/// we want to use Z rather than Y incase anything gets rotated, it would look all jank
+
+	var/material_piece = /obj/item/material_piece/cloth/cottonfabric
 
 	stamina_damage = 0
 	stamina_cost = 0
@@ -82,18 +85,49 @@
 	// here for consistency; not all clothing can be ripped up
 	proc/try_rip_up(mob/user)
 		boutput(user, "You begin ripping up [src].")
-		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, .proc/finish_rip_up, list(user), null, null, "You rip up [src].", null)
+		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(finish_rip_up), list(user), null, null, "You rip up [src].", null)
 		return TRUE
 
 	proc/finish_rip_up(mob/user)
 		for (var/i in 1 to 3)
-			var/obj/item/material_piece/cloth/cottonfabric/CF = new /obj/item/material_piece/cloth/cottonfabric
+			var/obj/item/material_piece/CF = new material_piece
 			CF.pixel_x = rand(-4,4)
 			CF.pixel_y = rand(-4,4)
 			CF.set_loc(get_turf(src))
 		user.u_equip(src)
 		qdel(src)
 
+/obj/item/clothing/material_trigger_on_mob_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/situation_modifier)
+	// if someone wearing this gets attacked, only trigger this if the corresponding zone is hit
+	if (src.material && (src.equipped_in_slot))
+		var/targeted_zone = "chest"
+		if (situation_modifier && istext(situation_modifier))
+			targeted_zone = parse_zone(situation_modifier)
+		if (src.check_for_covered(targeted_zone))
+			src.material.triggerOnAttacked(src, attacker, attacked, weapon)
+		return
+	..()
+
+///This proc returns true if the zone specified is covered by the clothing in question
+/obj/item/clothing/proc/check_for_covered(var/checked_zone)
+	if (!istext(checked_zone))
+		return FALSE
+	var/target_zone = parse_zone(checked_zone)
+	var/list/head_list = list("head", "brain", "left eye", "right eye", "both eyes")
+	var/list/torso_list = list("torso", "butt", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
+	var/list/legs_list = list("left leg", "right leg", "both legs")
+	var/list/arms_list = list("right arm", "left arm", "both arms")
+	if ((src && src.body_parts_covered & HEAD) && (target_zone in head_list))
+		return TRUE
+	if ((src && src.body_parts_covered & TORSO) && (target_zone in torso_list))
+		return TRUE
+	if ((src && src.body_parts_covered & LEGS) && (target_zone in legs_list))
+		return TRUE
+	if ((src && src.body_parts_covered & ARMS) && (target_zone in arms_list))
+		return TRUE
+	return FALSE
+
+ABSTRACT_TYPE(/obj/item/clothing/under)
 /obj/item/clothing/under
 	equipped(var/mob/user, var/slot)
 		..()

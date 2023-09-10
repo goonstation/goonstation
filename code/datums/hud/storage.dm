@@ -3,7 +3,7 @@
 		boxes
 		close
 		sel
-	var/obj/item/storage/master
+	var/datum/storage/master
 	var/list/obj_locs = null // hi, haine here, I'm gunna crap up this efficient code with REGEX BULLSHIT YEAHH!!
 	var/empty_obj_loc = null
 
@@ -31,61 +31,16 @@
 	relay_click(id, mob/user, params)
 		switch (id)
 			if ("boxes")
-				if (params && islist(src.obj_locs))
-					var/list/prams = params
-					if (!islist(prams))
-						prams = params2list(prams)
-					if (islist(prams))
-						var/clicked_loc = prams["screen-loc"] // should be in the format 1:16,1:16 (tile x : pixel offset x, tile y : pixel offset y)
-						//DEBUG_MESSAGE(clicked_loc)
-						//var/regex/loc_regex = regex("(\\d*):\[^,]*,(\\d*):\[^\n]*")
-						//clicked_loc = loc_regex.Replace(clicked_loc, "$1,$2")
-						//DEBUG_MESSAGE(clicked_loc)
-
-						//MBC : I DONT KNOW REGEX BUT THE ABOVE IS NOT WORKING LETS DO THIS INSTEAD
-
-
-						var/firstcolon = findtext(clicked_loc,":")
-						var/comma = findtext(clicked_loc,",")
-						var/secondcolon = findtext(clicked_loc,":",comma)
-						if (firstcolon == secondcolon)
-							if (firstcolon > comma)
-								firstcolon = 0
-							else
-								secondcolon = 0
-
-						var/x = copytext(clicked_loc,1,firstcolon ? firstcolon : comma)
-						var/px = firstcolon ? copytext(clicked_loc,firstcolon+1,comma) : 0
-						var/y = copytext(clicked_loc,comma+1,secondcolon ? secondcolon : 0)
-						var/py = secondcolon ? copytext(clicked_loc,secondcolon+1) : 0
-
-						if (user.client && user.client.byond_version == 512 && user.client.byond_build == 1469) //sWAP EM BECAUSE OF BAD BYOND BUG
-							var/temp = y
-							y = px
-							px = temp
-
-						//ddumb hack for offset storage
-						var/turfd = (isturf(master.loc) && !istype(master, /obj/item/storage/bible))
-
-						var/pixel_y_adjust = 0
-						if (user && user.client && user.client.tg_layout && !turfd)
-							pixel_y_adjust = 1
-
-						if (pixel_y_adjust && text2num(py) > 16)
-							y = text2num(y) + 1
-							py = text2num(py) - 16
-						//end dumb hack
-
-						clicked_loc = "[x],[y]"
-
-
-						var/obj/item/I = src.obj_locs[clicked_loc]
-						if (I)
-							//DEBUG_MESSAGE("clicking [I] with params [list2params(params)]")
-							user.click(I, params)
-						else if (user.equipped())
-							//DEBUG_MESSAGE("clicking [src.master] with [user.equipped()] with params [list2params(params)]")
-							user.click(src.master, params)
+				var/clicked_loc = src.get_clicked_position(user, params)
+				if (!clicked_loc)
+					return
+				var/obj/item/I = src.obj_locs[clicked_loc]
+				if (I)
+					//DEBUG_MESSAGE("clicking [I] with params [list2params(params)]")
+					user.click(I, params)
+				else if (user.equipped())
+					//DEBUG_MESSAGE("clicking [src.master.linked_item] with [user.equipped()] with params [list2params(params)]")
+					user.click(src.master.linked_item, params)
 
 			if ("close")
 				user.detach_hud(src)
@@ -97,13 +52,78 @@
 		if (!H || H.id != "boxes") return
 		if (usr)
 			var/obj/item/I = usr.equipped()
-			if (src.master && I && src.master.loc == usr && src.master.check_can_hold(I)>0)
+			if (src.master && I && src.master.linked_item.loc == usr && src.master.check_can_hold(I) == STORAGE_CAN_HOLD)
 				sel.screen_loc = empty_obj_loc
 
 
 	MouseExited(var/atom/movable/screen/hud/H)
 		if (!H) return
 		sel.screen_loc = null
+
+	MouseDrop_T(atom/movable/screen/hud/H, atom/movable/O, mob/user, params)
+		if (!(user in src.mobs))
+			return
+		if (!(O in src.master.get_contents()))
+			return
+		var/clicked_position = src.get_clicked_position(user, params)
+		if (!clicked_position)
+			return
+		if (src.obj_locs[clicked_position] == O)
+			user.click(O, params2list(params))
+
+	/// returns position of the hud clicked
+	proc/get_clicked_position(mob/user, list/params)
+		if (!params)
+			return
+		if (!islist(src.obj_locs))
+			return
+
+		var/list/prams = params
+		if (!islist(prams))
+			prams = params2list(prams)
+		if (!islist(prams))
+			return
+
+		var/clicked_loc = prams["screen-loc"] // should be in the format 1:16,1:16 (tile x : pixel offset x, tile y : pixel offset y)
+		//DEBUG_MESSAGE(clicked_loc)
+		//var/regex/loc_regex = regex("(\\d*):\[^,]*,(\\d*):\[^\n]*")
+		//clicked_loc = loc_regex.Replace(clicked_loc, "$1,$2")
+		//DEBUG_MESSAGE(clicked_loc)
+
+		//MBC : I DONT KNOW REGEX BUT THE ABOVE IS NOT WORKING LETS DO THIS INSTEAD
+
+		var/firstcolon = findtext(clicked_loc,":")
+		var/comma = findtext(clicked_loc,",")
+		var/secondcolon = findtext(clicked_loc,":",comma)
+		if (firstcolon == secondcolon)
+			if (firstcolon > comma)
+				firstcolon = 0
+			else
+				secondcolon = 0
+
+		var/x = copytext(clicked_loc,1,firstcolon ? firstcolon : comma)
+		var/px = firstcolon ? copytext(clicked_loc,firstcolon+1,comma) : 0
+		var/y = copytext(clicked_loc,comma+1,secondcolon ? secondcolon : 0)
+		var/py = secondcolon ? copytext(clicked_loc,secondcolon+1) : 0
+
+		if (user.client && user.client.byond_version == 512 && user.client.byond_build == 1469) //sWAP EM BECAUSE OF BAD BYOND BUG
+			var/temp = y
+			y = px
+			px = temp
+
+		//ddumb hack for offset storage
+		var/turfd = (isturf(master.linked_item.loc) && !istype(master.linked_item, /obj/item/bible))
+
+		var/pixel_y_adjust = 0
+		if (user && user.client && user.client.tg_layout && !turfd)
+			pixel_y_adjust = 1
+
+		if (pixel_y_adjust && text2num(py) > 16)
+			y = text2num(y) + 1
+			py = text2num(py) - 16
+		//end dumb hack
+
+		return "[x],[y]"
 
 //idk if i can even use the params of mousedrop for this
 /*
@@ -119,7 +139,7 @@
 		var sy = master.slots + 1
 		var/turfd = 0
 
-		if (isturf(master.loc) && !istype(master, /obj/item/storage/bible)) // goddamn BIBLES (prevents conflicting positions within different bibles)
+		if (isturf(master.linked_item.loc) && !istype(master.linked_item, /obj/item/bible)) // goddamn BIBLES (prevents conflicting positions within different bibles)
 			x = 7
 			y = 8
 			sx = (master.slots + 1) / 2
@@ -127,26 +147,24 @@
 
 			turfd = 1
 
-		if (istype(user,/mob/living/carbon/human))
-			if (user.client && user.client.tg_layout) //MBC TG OVERRIDE IM SORTY
-				x = 11 - round(master.slots / 2)
-				y = 3
-				sx = master.slots + 1
-				sy = 1
+		if (user && user.client?.tg_layout) //MBC TG OVERRIDE IM SORTY
+			x = 11 - round(master.slots / 2)
+			y = 3
+			sx = master.slots + 1
+			sy = 1
 
-				if (turfd) // goddamn BIBLES (prevents conflicting positions within different bibles)
-					x = 8
-					y = 8
-					sx = (master.slots + 1) / 2
-					sy = 2
+			if (turfd) // goddamn BIBLES (prevents conflicting positions within different bibles)
+				x = 8
+				y = 8
+				sx = (master.slots + 1) / 2
+				sy = 2
 
 		if (!boxes)
 			return
-		if (ishuman(user))
-			var/mob/living/carbon/human/player = user
-			var/icon/hud_style = hud_style_selection[get_hud_style(player)]
-			if (isicon(hud_style) && boxes.icon != hud_style)
-				boxes.icon = hud_style
+
+		var/icon/hud_style = hud_style_selection[get_hud_style(user)]
+		if (isicon(hud_style) && boxes.icon != hud_style)
+			boxes.icon = hud_style
 
 		var/pixel_y_adjust = 0
 		if (user && user.client && user.client.tg_layout && !turfd)
@@ -157,7 +175,7 @@
 			src.close = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
 		close.screen_loc = "[x+sx-1]:[pixel_y_adjust],[y-sy+1]:[pixel_y_adjust]"
 
-		if (!turfd && istype(user,/mob/living/carbon/human))
+		if (!turfd)
 			if (user && user.client?.tg_layout) //MBC TG OVERRIDE IM SORTY
 				boxes.screen_loc = "[x-1],[y]:[pixel_y_adjust] to [x+sx-2],[y-sy+1]:[pixel_y_adjust]"
 				close.screen_loc = "[x-1],[y-sy+1]:[pixel_y_adjust]"
@@ -173,14 +191,11 @@
 			src.obj_locs[obj_loc] = I
 			i++
 		empty_obj_loc =  "[x+(i%sx)],[y-round(i/sx)]:[pixel_y_adjust]"
-		if(isitem(master))
-			var/obj/item/I = master
-			I.tooltip_rebuild = 1
-		master.UpdateIcon()
+		master.linked_item.UpdateIcon()
 
 	proc/add_item(obj/item/I, mob/user = usr)
 		update(user)
 
-	proc/remove_item(obj/item/I)
+	proc/remove_item(obj/item/I, mob/user = usr)
 		remove_object(I)
-		update()
+		update(user)

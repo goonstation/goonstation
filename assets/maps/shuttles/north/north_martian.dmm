@@ -156,16 +156,6 @@
 	icon_state = "floor1"
 	},
 /area/shuttle/escape/centcom)
-"dD" = (
-/obj/stool/chair/comfy/shuttle/pilot{
-	dir = 1
-	},
-/obj/critter/martian/warrior,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor1"
-	},
-/area/shuttle/escape/centcom)
 "ec" = (
 /turf/unsimulated/floor/arrival{
 	dir = 4
@@ -388,16 +378,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
-"lQ" = (
-/obj/stool/chair/comfy/shuttle/brown{
-	dir = 1
-	},
-/obj/critter/martian/warrior,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor1"
-	},
-/area/shuttle/escape/centcom)
 "lU" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -597,13 +577,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
-"sU" = (
-/obj/critter/martian/warrior,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor1"
-	},
-/area/shuttle/escape/centcom)
 "tL" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10;
@@ -612,8 +585,11 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"ub" = (
-/obj/critter/martian/soldier,
+"uq" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 1
+	},
+/mob/living/critter/martian/warrior,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"
@@ -680,6 +656,13 @@
 "AQ" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"AS" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"
@@ -760,14 +743,6 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"FP" = (
-/obj/map/light/dimred,
-/obj/critter/martian/warrior,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor1"
-	},
-/area/shuttle/escape/centcom)
 "Gq" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
@@ -792,7 +767,7 @@
 	},
 /area/centcom/outside)
 "HA" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -849,6 +824,13 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"Mo" = (
+/mob/living/critter/martian/soldier,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
 "Mw" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -1008,7 +990,7 @@
 	},
 /area/centcom/outside)
 "Rs" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -1074,6 +1056,14 @@
 	icon_state = "floor"
 	},
 /area/centcom)
+"Tf" = (
+/obj/map/light/dimred,
+/mob/living/critter/martian/warrior,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
 "Tl" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
@@ -1083,8 +1073,18 @@
 	icon_state = "floor1"
 	},
 /area/shuttle/escape/centcom)
-"TB" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+"TT" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 1
+	},
+/mob/living/critter/martian/warrior,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"Uo" = (
+/mob/living/critter/martian/warrior,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"
@@ -1333,12 +1333,12 @@ Pb
 kX
 Mw
 As
-TB
+AS
 Vg
-TB
-TB
+AS
+AS
 Vg
-TB
+AS
 or
 or
 or
@@ -1397,7 +1397,7 @@ ML
 DA
 DA
 or
-ub
+Mo
 ML
 du
 bQ
@@ -1413,20 +1413,20 @@ RL
 RF
 Mw
 As
-TB
-TB
+AS
+AS
 or
 DA
 DA
-sU
+Uo
 mx
 ML
-ub
-FP
+Mo
+Tf
 ML
 DE
 ML
-sU
+Uo
 ML
 dv
 eF
@@ -1467,7 +1467,7 @@ HA
 Gq
 pW
 Qp
-TB
+AS
 nH
 ML
 ML
@@ -1495,22 +1495,22 @@ Gq
 Gq
 RL
 Qp
-TB
+AS
 QD
-dD
+uq
 ML
 or
 DA
 DA
 ML
-sU
+Uo
 ML
 ML
 ML
 ML
 DE
 dv
-sU
+Uo
 gy
 or
 oQ
@@ -1523,16 +1523,16 @@ Gq
 HA
 RL
 Qp
-TB
+AS
 ru
 dy
-ub
+Mo
 or
 DA
 DA
 ML
 ML
-ub
+Mo
 ML
 ML
 ML
@@ -1551,7 +1551,7 @@ HA
 Gq
 pW
 Qp
-TB
+AS
 nH
 ML
 ML
@@ -1609,12 +1609,12 @@ RL
 Fa
 HE
 eZ
-TB
-TB
+AS
+AS
 or
 DA
 DA
-sU
+Uo
 mx
 ML
 ML
@@ -1623,7 +1623,7 @@ ML
 DE
 ML
 ML
-sU
+Uo
 dv
 eF
 Hm
@@ -1646,11 +1646,11 @@ ML
 DA
 DA
 ML
-lQ
+TT
 DA
 or
 ML
-ub
+Mo
 pP
 ib
 Od
@@ -1697,12 +1697,12 @@ Pb
 tL
 HE
 eZ
-TB
+AS
 Vg
-TB
-TB
+AS
+AS
 Vg
-TB
+AS
 or
 or
 or

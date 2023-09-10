@@ -1,6 +1,7 @@
 /datum/antagonist/traitor
 	id = ROLE_TRAITOR
 	display_name = "traitor"
+	antagonist_icon = "traitor"
 
 	/// Our initial uplink. This is only used to determine the popup shown to the player, so it isn't too important to track.
 	var/obj/item/uplink/uplink
@@ -54,7 +55,7 @@
 			src.uplink = S
 			uplink_source = S
 			S.lock_code_autogenerate = TRUE
-			if (!(H.equip_if_possible(S, H.slot_in_backpack)))
+			if (!(H.equip_if_possible(S, SLOT_IN_BACKPACK)))
 				loc_string = "on the ground beneath you"
 			else
 				loc_string = "in [H.back] on your back"
@@ -75,6 +76,16 @@
 			logTheThing(LOG_DEBUG, H, "Traitor standalone uplink created: [uplink_source.name]. Location given: [loc_string]. Frequency: [uplink.lock_code]")
 			src.owner.store_memory("<b>Uplink frequency:</b> [uplink.lock_code].")
 
+	add_to_image_groups()
+		. = ..()
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		var/datum/client_image_group/image_group = get_image_group(ROLE_TRAITOR)
+		image_group.add_mind_mob_overlay(src.owner, image)
+
+	remove_from_image_groups()
+		. = ..()
+		get_image_group(ROLE_TRAITOR).remove_mind_mob_overlay(src.owner)
+
 	assign_objectives()
 		var/datum/objective_set/objective_set_path
 		#ifdef RP_MODE
@@ -82,7 +93,7 @@
 		#else
 		objective_set_path = pick(typesof(/datum/objective_set/traitor))
 		#endif
-		new objective_set_path(src.owner)
+		new objective_set_path(src.owner, src)
 
 	do_popup(override)
 		if (!override) // Display a different popup depending on the type of uplink we got

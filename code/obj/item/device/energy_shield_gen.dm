@@ -5,7 +5,7 @@
 	icon_state = "cloakgen_off"
 	density = 0
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 	health = 5
 	w_class = W_CLASS_SMALL
 	pressure_resistance = 2*ONE_ATMOSPHERE
@@ -97,7 +97,7 @@
 					created.health = 16 - (range*2)
 
 		icon_state = "cloakgen_on"
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.active = 1
 
 		var/list/breakables = tiles.Copy()
@@ -121,7 +121,7 @@
 			qdel(A)
 		tiles = new/list()
 		icon_state = "cloakgen_off"
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.active = 0
 
 	verb/toggle()
@@ -145,7 +145,7 @@
 	icon_state = "shield1"
 	density = 1
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	layer=12
 	event_handler_flags = USE_FLUID_ENTER
 	var/health_max = 10

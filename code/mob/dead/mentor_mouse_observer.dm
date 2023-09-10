@@ -24,6 +24,7 @@
 		src.ping.blend_mode = BLEND_ADD
 		src.ping.layer = HUD_LAYER_3
 		src.ping.plane = PLANE_HUD
+		src.ping.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA
 
 	process_move(keys)
 		if(keys && src.move_dir && !src.leave_popup_open)

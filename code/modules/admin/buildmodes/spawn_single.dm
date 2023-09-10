@@ -198,3 +198,7 @@ change the direction of created objects.<br>
 		else
 			if(isobj(object))
 				qdel(object)
+#ifdef QUICK_MOB_DELETION
+			if (ismob(object))
+				qdel(object)
+#endif

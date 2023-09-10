@@ -31,6 +31,8 @@
 	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 65
+	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mountain
+	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/mountain
 
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/jungle_generator/generate_terrain(list/turfs, reuse_seed, flags)
@@ -117,17 +119,9 @@
 /turf/simulated/floor/plating/airless/asteroid/mountain
 	name = "mountain"
 	desc = "a rocky mountain"
-	// color = "#957a59"
-	// stone_color = "#957a59"
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
+	temperature = T20C
 	fullbright = 0
 
-	update_icon()
-		var/image/ambient_light = src.GetOverlayImage("ambient")
-		var/image/weather = src.GetOverlayImage("weather")
-		..()
-		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
-			overlay_refs.len = 0
-		src.UpdateOverlays(ambient_light, "ambient")
-		src.UpdateOverlays(weather, "weather")
+#undef BIOME_RANDOM_SQUARE_DRIFT

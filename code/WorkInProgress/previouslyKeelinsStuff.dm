@@ -458,7 +458,7 @@ var/reverse_mode = 0
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x4"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 	New()
@@ -508,7 +508,7 @@ var/reverse_mode = 0
 	name = ""
 	desc = ""
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	var/mob/living/carbon/human/my_target = null
 	var/weapon_name = null
@@ -643,7 +643,7 @@ var/reverse_mode = 0
 /proc/fake_blood(var/mob/target)
 	var/obj/overlay/O = new/obj/overlay(target.loc)
 	O.name = "blood"
-	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
+	var/image/I = image('icons/obj/decals/blood/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
 	target << I
 	SPAWN(30 SECONDS)
 		qdel(O)

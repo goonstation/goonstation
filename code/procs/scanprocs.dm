@@ -1,6 +1,7 @@
 
 
-/proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0, syndicate = FALSE)
+/proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0, syndicate = FALSE,
+	admin = FALSE)
 	if (!M)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
 
@@ -148,7 +149,7 @@
 		if (ishuman)
 			var/mob/living/carbon/human/H = M
 			if (H.pathogens.len)
-				pathogen_data = "<span class='alert'>Scans indicate the presence of [H.pathogens.len > 1 ? "[H.pathogens.len] " : null]pathogenic bodies.</span>"
+				pathogen_data = "<span class='alert'>Scans indicate the presence of [length(H.pathogens) > 1 ? "[H.pathogens.len] " : null]pathogenic bodies.</span>"
 				for (var/uid in H.pathogens)
 					var/datum/pathogen/P = H.pathogens[uid]
 					pathogen_data += "<br>&emsp;<span class='alert'>Strain [P.name] seems to be in stage [P.stage]. Suggested suppressant: [P.suppressant.therapy].</span>."
@@ -200,6 +201,8 @@
 				//Joke in case there is no organHolder
 				if (!H.organHolder)
 					organ_data = "<span class='alert'>Subject has no organs. Veeeerrrry curious.</span>"
+			else if (H.robotic_organs > 0)
+				organ_data = "<span style='color:purple'><b>Unknown augmented organs detected.</b></span>"
 
 
 	var/datum/statusEffect/simpledot/radiation/R = M.hasStatus("radiation")
@@ -212,7 +215,7 @@
 
 	if (M.reagents)
 		if (verbose_reagent_info)
-			reagent_data = scan_reagents(M, 0, 0, 0, 1)
+			reagent_data = scan_reagents(M, 0, 0, 0, 1, admin = admin)
 		else
 			var/ephe_amt = M.reagents:get_reagent_amount("ephedrine")
 			var/epi_amt = M.reagents:get_reagent_amount("epinephrine")
@@ -268,7 +271,7 @@
 				return null
 
 	else
-		return "<br><span style='color:purple'><b>[input]</b> - missing!</span>"
+		return "<br><span class='alert'><b>[input]</b> - missing!</span>"
 
 //Using input here because it get's the organs name in an easy and clear way. using name or organ_name in obj/item/organ is not any better really
 /proc/obfuscate_organ_health(var/obj/item/organ/O)
@@ -462,7 +465,7 @@
 	record_prog.mode = 1
 	pda.AttackSelf(usr)
 
-/proc/scan_reagents(var/atom/A as turf|obj|mob, var/show_temp = 1, var/single_line = 0, var/visible = 0, var/medical = 0)
+/proc/scan_reagents(atom/A as turf|obj|mob, show_temp = TRUE, var/single_line = FALSE, visible = FALSE, medical = FALSE, admin = FALSE)
 	if (!A)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
 
@@ -482,12 +485,14 @@
 			reagents = P.occupant.reagents
 
 	if (reagents)
-		if (reagents.reagent_list.len > 0)
+		if (length(reagents.reagent_list) > 0)
 			if("cloak_juice" in reagents.reagent_list)
 				var/datum/reagent/cloaker = reagents.reagent_list["cloak_juice"]
 				if(cloaker.volume >= 5)
 					data = "<span class='alert'>ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
 					return data
+			if (!admin)
+				SEND_SIGNAL(reagents, COMSIG_REAGENTS_ANALYZED, usr)
 
 			var/reagents_length = length(reagents.reagent_list)
 			data = "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found in [A].</span>"
@@ -547,7 +552,7 @@
 		if (H.gunshot_residue) // Left by firing a kinetic gun.
 			forensic_data += "<br><span class='notice'>Gunshot residue found.</span>"
 
-		if (H.implant && H.implant.len > 0)
+		if (H.implant && length(H.implant) > 0)
 			var/wounds = null
 			for (var/obj/item/implant/I in H.implant)
 				if (istype(I, /obj/item/implant/projectile))
@@ -781,7 +786,7 @@
 			Pressure: [round(pressure, 0.1)] kPa<br>\
 			Temperature: [round(check_me.temperature)] K<br>\
 			Volume: [check_me.volume] L<br>\
-			[CONCENTRATION_REPORT(check_me, "<br>")]"
+			[SIMPLE_CONCENTRATION_REPORT(check_me, "<br>")]"
 
 	else
 		// Only used for "Atmospheric Scan" accessible through the PDA interface, which targets the turf

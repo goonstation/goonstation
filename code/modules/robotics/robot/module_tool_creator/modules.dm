@@ -33,12 +33,15 @@
 		/obj/item/device/camera_viewer,
 		/obj/item/hand_labeler,
 		/obj/item/device/ticket_writer,
+		/obj/item/sec_tape/vended,
 	)
 
 // scientist.
-/datum/robot/module_tool_creator/recursive/module/chemistry
+/datum/robot/module_tool_creator/recursive/module/science
 	definitions = list(
 		/obj/item/hand_labeler,
+		/obj/item/pen,
+		/obj/item/item_box/assorted/stickers/robot/science,
 		/obj/item/robot_chemaster,
 		// TODO: utility grenade fabricator?
 		/obj/item/reagent_containers/syringe,
@@ -51,6 +54,7 @@
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/extinguisher/large/cyborg,
+		/obj/item/device/gps, // Let's them assist with telesci
 	)
 
 // botanist. chef. janitor.
@@ -60,6 +64,7 @@
 		/obj/item/pen, // TODO: make more versatile version
 		/obj/item/seedplanter,
 		/obj/item/plantanalyzer,
+		/obj/item/gardentrowel,
 		/obj/item/device/igniter,
 		/obj/item/saw/cyborg,
 		/obj/item/satchel/hydro, // TODO: make more versatile version
@@ -78,6 +83,7 @@
 		/obj/item/ladle,
 		/obj/item/kitchen/rollingpin/light,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+		/obj/item/fishing_rod/basic,
 	)
 
 /datum/robot/module_tool_creator/recursive/module/common
@@ -139,6 +145,9 @@
 		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,
 		/datum/robot/module_tool_creator/item_type/amount/glass_sheet,
 		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
+		#ifdef MAP_OVERRIDE_OSHAN
+			/datum/robot/module_tool_creator/item_type/amount/cable_coil/reinforced,
+		#endif
 	)
 
 // medical doctor.

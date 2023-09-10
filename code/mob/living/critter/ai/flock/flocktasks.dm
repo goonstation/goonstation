@@ -109,7 +109,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/rally
 	name = "rallying"
 	weight = 0
-	can_be_adjacent_to_target = FALSE
+	distance_from_target = 0
 	max_dist = 0
 
 	New()
@@ -131,7 +131,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/replicate
 	name = "replicating"
 	weight = 7
-	can_be_adjacent_to_target = FALSE
+	distance_from_target = 0
 
 /datum/aiTask/sequence/goalbased/flock/replicate/New(parentHolder, transTask)
 	..(parentHolder, transTask)
@@ -139,7 +139,7 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/replicate/precondition()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if (!F?.flock || F.flock.flockmind.tutorial)
+	if (!F?.flock || F.flock.flockmind?.tutorial)
 		return
 	return F.can_afford(src.current_egg_cost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT
 
@@ -188,7 +188,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/nest
 	name = "nesting"
 	weight = 6
-	can_be_adjacent_to_target = TRUE
+	distance_from_target = 1
 	max_dist = 2
 
 /datum/aiTask/sequence/goalbased/flock/nest/New(parentHolder, transTask)
@@ -198,7 +198,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/nest/precondition()
 	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if (!F?.flock || F.flock.flockmind.tutorial)
+	if (!F?.flock || F.flock.flockmind?.tutorial)
 		return
 	if(F.can_afford(FLOCK_CONVERT_COST + src.current_egg_cost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT)
 		. = TRUE
@@ -405,7 +405,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_HELP)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/flock/repair/valid_target(atom/target)
@@ -484,7 +483,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_HELP)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/flock/deposit/valid_target(obj/flock_structure/ghost/target)
@@ -606,8 +604,8 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/rummage/get_targets()
 	. = list()
-	for(var/obj/item/storage/I in view(max_dist, holder.owner))
-		if(length(I.contents) && I.loc != holder.owner && I.does_not_open_in_pocket)
+	for(var/obj/item/storage/I in view(max_dist, holder.owner)) // flock can only see /obj/item/storage
+		if(length(I.storage.get_contents()) && I.loc != holder.owner)
 			. += I
 
 
@@ -627,7 +625,7 @@ stare
 	var/obj/item/storage/container_target = holder.target
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(container_target) // fix runtime Cannot read null.contents
-		return !length(container_target.contents) || (F.absorber.item == container_target)
+		return !length(container_target.storage.get_contents()) || (F.absorber.item == container_target)
 
 	else
 		return FALSE
@@ -651,7 +649,7 @@ stare
 				return
 			else
 				// we've opened a HUD, do a fake HUD click
-				container_target.hud.relay_click("boxes", F, dummy_params)
+				container_target.storage.hud.relay_click("boxes", F, dummy_params)
 				if(isitem(F.equipped()))
 					F.drop_item()
 					return
@@ -867,7 +865,7 @@ stare
 	name = "capturing"
 	weight = 15
 	max_dist = 12
-	can_be_adjacent_to_target = TRUE
+	distance_from_target = 1
 	ai_turbo = TRUE
 
 /datum/aiTask/sequence/goalbased/flock/flockdrone_capture/New(parentHolder, transTask)
@@ -948,7 +946,6 @@ stare
 	if (drone)
 		drone.set_hand(2) // nanite spray
 		drone.set_a_intent(INTENT_DISARM)
-		drone.hud?.update_intent()
 		drone.hud?.update_hands()
 	has_started = FALSE
 
@@ -972,7 +969,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_HARM)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/flock/butcher/valid_target(mob/living/critter/flock/drone/target)
@@ -1021,7 +1017,7 @@ stare
 ///Since we don't want flockdrones building barricades randomly, this task only exists for the targetable version to inherit from
 /datum/aiTask/sequence/goalbased/flock/barricade
 	name = "barricading"
-	can_be_adjacent_to_target = TRUE
+	distance_from_target = 1
 
 /datum/aiTask/sequence/goalbased/flock/barricade/New(parentHolder, transTask)
 	..(parentHolder, transTask)
@@ -1035,7 +1031,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_DISARM)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/succeedable/barricade
@@ -1079,7 +1074,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/deconstruct
 	name = "deconstructing"
 	weight = 8
-	can_be_adjacent_to_target = TRUE
+	distance_from_target = 1
 
 /datum/aiTask/sequence/goalbased/flock/deconstruct/New(parentHolder, transTask)
 	..(parentHolder, transTask)
@@ -1097,7 +1092,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_HARM)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/flock/deconstruct/get_targets()

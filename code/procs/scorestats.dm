@@ -283,15 +283,18 @@ var/datum/score_tracker/score_tracker
 
 	proc/get_cash_in_thing(var/atom/A)
 		. = 0
-		for (var/I in A)
-			if (istype(I, /obj/item/storage))
+		if (istype(A, /obj/item/currency/spacecash))
+			var/obj/item/currency/spacecash/SC = A
+			. += SC.amount
+		else if (istype(A, /obj/item/card/id))
+			var/obj/item/card/id/ID = A
+			. += ID.money
+		else if (A.storage)
+			for (var/obj/item/I as anything in A.storage.get_contents())
 				. += get_cash_in_thing(I)
-			if (istype(I, /obj/item/spacecash))
-				var/obj/item/spacecash/SC = I
-				. += SC.amount
-			if (istype(I, /obj/item/card/id))
-				var/obj/item/card/id/ID = I
-				. += ID.amount
+		else
+			for (var/I in A)
+				. += get_cash_in_thing(I)
 
 	proc/heisenhat_stats()
 		. = list()

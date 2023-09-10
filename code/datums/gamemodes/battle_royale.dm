@@ -52,18 +52,7 @@ var/global/area/current_battle_spawn = null
 				living_battlers.Add(player.mind)
 
 	boutput(world, "<span class='notice'><h2>Preparing the [station_or_ship()]. Please be patient!</h2></span>")
-	// Stolen from /datum/terrainify/void
-	var/datum/station_zlevel_repair/station_repair = new
-	station_repair.ambient_light = new /image/ambient
-	station_repair.ambient_light.color = rgb(6.9, 4.20, 6.9)
-	station_repair.station_generator = new/datum/map_generator/void_generator
-	var/list/space = list()
-	for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
-		space += S
-	station_repair.station_generator.generate_terrain(space, flags=MAPGEN_IGNORE_FAUNA)
-	for (var/turf/S in space)
-		S.UpdateOverlays(station_repair.ambient_light, "ambient")
-	station_repair.clean_up_station_level()
+	generate_void()
 	map_settings.space_turf_replacement = /turf/simulated/floor/void
 
 	// Dense borders to prevent leaving the station Z
@@ -364,7 +353,7 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/swords_sheaths/captain)
 	weapon_supplies.Add(/obj/item/swords_sheaths/nukeop)
 	weapon_supplies.Add(/obj/item/sword/discount)
-	weapon_supplies.Add(/obj/item/storage/box/shuriken_pouch)
+	weapon_supplies.Add(/obj/item/storage/pouch/shuriken)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/frag)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/high_explosive)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/incendiary)
@@ -381,8 +370,8 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/EOD)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/hoscape)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/heavy)
-	armor_supplies.Add(/obj/item/clothing/suit/armor/centcomm)
-	armor_supplies.Add(/obj/item/clothing/suit/armor/centcommcoat)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/captain/centcomm)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/capcoat/centcomm)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/captain)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/batman)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/football)
@@ -455,7 +444,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 	if (!ishuman(battler))
 		return
 
-	battler.equip_if_possible(new /obj/item/device/radio/headset(battler), battler.slot_ears)
+	battler.equip_if_possible(new /obj/item/device/radio/headset(battler), SLOT_EARS)
 
 	// Battle royale crewmembers are rainbow flavored
 	var/obj/item/clothing/under/jumpsuit = null
@@ -543,22 +532,22 @@ proc/equip_battler(mob/living/carbon/human/battler)
 	hat.setProperty("meleeprot_head", 3)
 	hat.setProperty("coldprot", 5)
 	hat.setProperty("heatprot", 5)
-	battler.equip_if_possible(jumpsuit, battler.slot_w_uniform)
-	battler.equip_if_possible(hat, battler.slot_head)
-	battler.equip_if_possible(new /obj/item/clothing/shoes/swat/noslip(battler), battler.slot_shoes)
+	battler.equip_if_possible(jumpsuit, SLOT_W_UNIFORM)
+	battler.equip_if_possible(hat, SLOT_HEAD)
+	battler.equip_if_possible(new /obj/item/clothing/shoes/swat/noslip(battler), SLOT_SHOES)
 	var/obj/item/clothing/head/vest = new /obj/item/clothing/suit/armor/vest/light
 	vest.delProperty("heatprot")
 	vest.delProperty("coldprot")
-	battler.equip_if_possible(vest, battler.slot_wear_suit)
-	battler.equip_if_possible(new /obj/item/storage/backpack/empty(battler), battler.slot_back)
-	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donut/custom/robusted(battler), battler.slot_l_store)
-	battler.equip_if_possible(new /obj/item/reagent_containers/mender/both/mini(battler), battler.slot_r_store)
+	battler.equip_if_possible(vest, SLOT_WEAR_SUIT)
+	battler.equip_if_possible(new /obj/item/storage/backpack/empty(battler), SLOT_BACK)
+	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donut/custom/robusted(battler), SLOT_L_STORE)
+	battler.equip_if_possible(new /obj/item/reagent_containers/mender/both/mini(battler), SLOT_R_STORE)
 
 	var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare // for whatever reason, this is neccessary
 	I.registered = "[battler.name]"
 	I.assignment = "Battler"
 	I.access |= access_maxsec
-	battler.equip_if_possible(I, battler.slot_wear_id)
+	battler.equip_if_possible(I, SLOT_WEAR_ID)
 	//battler.Equip_Bank_Purchase(battler.mind.purchased_bank_item)
 	battler.set_clothing_icon_dirty()
 

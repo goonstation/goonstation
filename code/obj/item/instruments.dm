@@ -94,7 +94,7 @@
 
 		if (prob(5))
 			if (src.dog_bark)
-				for_by_tcl(george, /obj/critter/dog/george)
+				for_by_tcl(george, /mob/living/critter/small_animal/dog/george)
 					if (IN_RANGE(george, T, 6) && prob(60))
 						if(ON_COOLDOWN(george, "george howl", 10 SECONDS))
 							continue
@@ -235,7 +235,7 @@
 	p_class = 2 // if they're anchored you can't move them anyway so this should default to making them easy to move
 	throwforce = 40
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	desc_verb = list("plays", "performs", "composes", "arranges")
 	desc_sound = list("nice", "classic", "classical", "great", "impressive", "terrible", "awkward", "striking", "grand", "majestic")
 	desc_music = list("melody", "aria", "ballad", "chorus", "concerto", "fugue", "tune")
@@ -273,7 +273,7 @@
 	desc = "Not very grand, is it?"
 	icon_state = "piano"
 	item_state = "piano"
-	note_range = list("c4", "c7")
+	note_range = list("c2", "c7")
 	instrument_sound_directory = "sound/musical_instruments/piano/notes/"
 	sounds_instrument = null
 	note_time = 0.18 SECONDS
@@ -306,7 +306,7 @@
 /obj/item/instrument/large/jukebox
 	name = "old jukebox"
 	desc = "I wonder who fixed this thing?"
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "jukebox"
 	item_state = "jukebox"
@@ -371,13 +371,27 @@
 /obj/item/instrument/guitar
 	name = "guitar"
 	desc = "This machine kills syndicates."
-	icon_state = "guitar"
-	item_state = "guitar"
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "guitar1"
+	item_state = "guitar1"
 	two_handed = 1
 	force = 10
+	note_range = list("d2", "c6")
+	instrument_sound_directory = "sound/musical_instruments/guitar/notes/"
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
+	use_new_interface = TRUE
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROD)
+
+	New()
+		src.icon_state = "guitar[rand(1,5)]"
+		src.item_state = src.icon_state
+		..()
+
 
 	New()
 		if (sounds_instrument == null)
@@ -385,6 +399,43 @@
 			for (var/i in 1 to 12)
 				sounds_instrument += "sound/musical_instruments/guitar/guitar_[i].ogg"
 		..()
+
+	attack(mob/M, mob/user)
+		if(ismob(M))
+			playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
+		..()
+
+
+
+/* -------------------- Electric Guitar -------------------- */
+
+/obj/item/instrument/electricguitar
+	name = "electric guitar"
+	desc = "Somehow works without an amp. Comes in a variety of colors."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "elecguitar1"
+	item_state = "elecguitar1"
+	two_handed = 1
+	force = 10
+	note_range = list("e2", "c6")
+	instrument_sound_directory = "sound/musical_instruments/elecguitar/notes/"
+	note_time = 0.18 SECONDS
+	sounds_instrument = null
+	randomized_pitch = 0
+	use_new_interface = TRUE
+	//Start at E1
+	key_offset = 5
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROD)
+
+	New()
+		src.icon_state = "elecguitar[rand(1,8)]"
+		src.item_state = src.icon_state
+		..()
+
+
 
 	attack(mob/M, mob/user)
 		if(ismob(M))
@@ -635,24 +686,23 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	pick_random_note = TRUE
 	affect_fun = 200 //because come on this shit's hilarious
 
-	play(mob/user as mob)
+	attack_self(mob/user as mob)
 		if(GET_COOLDOWN(user, "instrument_play"))
 			boutput(user, "<span class='alert'>\The [src] needs time to recharge its spooky strength!</span>")
 			return
 		else
-			..()
+			playsound(src, 'sound/musical_instruments/Bikehorn_2.ogg', 70, 0, 0, 0.5)
+			var/turf/T = get_turf(src)
+			if (!T)
+				return
+			for (var/mob/living/carbon/human/H in viewers(3, T))
+				if (user && H == user)
+					continue
+				else
+					SPAWN(1 SECOND)
+						src.dootize(H, user)
 
-	post_play_effect(mob/user as mob)
-		var/turf/T = get_turf(src)
-		if (!T)
-			return
-		for (var/mob/living/carbon/human/H in viewers(T, null))
-			if (user && H == user)
-				continue
-			else
-				src.dootize(H)
-
-	proc/dootize(var/mob/living/carbon/human/S as mob)
+	proc/dootize(var/mob/living/carbon/human/S as mob, var/mob/M)
 		if (!istype(S))
 			return
 		if (S.mob_flags & IS_BONEY)
@@ -660,6 +710,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			playsound(S.loc, 'sound/items/Scissor.ogg', 50, 0)
 			return
 		else
+			logTheThing(LOG_COMBAT, S, "was skeletonized by a dootdoot trumpet played by [constructTarget(M,"combat")] at [log_loc(src)].")
 			S.visible_message("<span class='alert'><b>[S.name]'s skeleton rips itself free upon hearing the song of its people!</b></span>")
 			playsound(S, S.gender == "female" ? 'sound/voice/screams/female_scream.ogg' : 'sound/voice/screams/male_scream.ogg', 50, 0, 0, S.get_age_pitch())
 			playsound(S, 'sound/effects/bubbles.ogg', 50, 0)
@@ -669,7 +720,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			if (S.bioHolder.Uid && S.bioHolder.bloodType)
 				bdna = S.bioHolder.Uid
 				btype = S.bioHolder.bloodType
-			gibs(S.loc, null, null, bdna, btype)
+			gibs(S.loc, null, bdna, btype)
 
 			S.set_mutantrace(/datum/mutantrace/skeleton)
 			S.real_name = "[S.name]'s skeleton"

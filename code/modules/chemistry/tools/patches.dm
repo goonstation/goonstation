@@ -99,6 +99,11 @@
 			src.UpdateIcon()
 			return 1
 
+	set_loc(newloc, storage_check)
+		. = ..()
+		if (src.active && newloc != null)
+			qdel(src)
+
 	attackby(obj/item/W, mob/user)
 		return
 
@@ -185,8 +190,13 @@
 		return 0
 
 	proc/apply_to(mob/M as mob, mob/user as mob)
-		repair_bleeding_damage(M, 25, 1)
-		active = 1
+		if(isliving(M))
+			var/mob/living/L = M
+			if (L.bleeding <= 3)
+				repair_bleeding_damage(M, 25, 1)
+
+		else
+			repair_bleeding_damage(M, 25, 1)
 
 		if (reagents?.total_volume)
 			if (!borg)
@@ -213,6 +223,7 @@
 				qdel(src)
 			else
 				src.in_use = 0
+		active = 1
 
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		.= 0
@@ -432,11 +443,9 @@
 				if (ismob(target.loc))
 					var/mob/U = target.loc
 					U.u_equip(target)
-				else if (istype(target.loc, /obj/item/storage))
-					var/obj/item/storage/U = target.loc
-					U.contents -= target
-					if (U.hud)
-						U.hud.update()
+				else if (istype(target, /obj/item))
+					var/obj/item/I = target
+					I.stored?.transfer_stored_item(I, src, user = user)
 				target.set_loc(src)
 				patches += target
 				update_overlay()

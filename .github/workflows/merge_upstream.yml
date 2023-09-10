@@ -6,7 +6,7 @@ on:
 jobs:
   merge-upstream:
     if: ${{ github.event.issue.pull_request && github.event.comment.body == '!merge_upstream' }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
 
     - name: PR Data

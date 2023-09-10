@@ -7,7 +7,7 @@
 // responsible for: selecting a target (and reporting back the evaluation score based on its value)
 // and moving through the following two tasks:
 // moving to a selected target, performing a /datum/action on the selected target
-/datum/aiTask/sequence/goalbased/
+/datum/aiTask/sequence/goalbased
 	name = "goal parent"
 
 /datum/aiTask/sequence/goalbased/New(parentHolder, transTask)
@@ -36,8 +36,8 @@
 		// make sure we both set our target and move to our target correctly
 		var/datum/aiTask/succeedable/move/M = subtasks[subtask_index]
 		if(M && !M.move_target)
-			M.can_be_adjacent_to_target = src.can_be_adjacent_to_target
-			M.move_target = get_turf(holder.target)
+			M.distance_from_target = src.distance_from_target
+			M.move_target = holder.target
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // WANDER TASK
@@ -55,8 +55,8 @@
 	// thanks byond forums for letting me know that the byond native implentation FUCKING SUCKS
 	holder.owner.move_dir = pick(alldirs)
 	holder.owner.process_move()
-	holder.stop_move()
-	holder.owner.move_dir = null // clear out direction so it doesn't get latched when client is attached
+	holder?.stop_move() // Just in case they yeet themselves out of existance
+	holder?.owner.move_dir = null // clear out direction so it doesn't get latched when client is attached
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TARGETED TASK
@@ -81,14 +81,14 @@
 
 // use the target from our holder
 /datum/aiTask/succeedable/move/proc/get_path()
-	if(!move_target)
+	if(QDELETED(src.move_target))
 		fails++
 		return
-	if(length(holder.target_path) && GET_DIST(holder.target_path[length(holder.target_path)], move_target) <= can_be_adjacent_to_target)
+	if(length(holder.target_path) && GET_DIST(holder.target_path[length(holder.target_path)], move_target) <= distance_from_target)
 		src.found_path = holder.target_path
 	else
-		src.found_path = get_path_to(holder.owner, move_target, src.max_path_dist, can_be_adjacent_to_target, null, !move_through_space)
-		if(GET_DIST(get_turf(holder.target), move_target) <= can_be_adjacent_to_target)
+		src.found_path = get_path_to(holder.owner, move_target, src.max_path_dist, distance_from_target, null, !move_through_space)
+		if(GET_DIST(get_turf(holder.target), move_target) <= distance_from_target)
 			holder.target_path = src.found_path
 	if(!src.found_path) // no path :C
 		fails++
@@ -109,7 +109,7 @@
 
 /datum/aiTask/succeedable/move/succeeded()
 	if(move_target)
-		. = (GET_DIST(holder.owner, src.move_target) <= can_be_adjacent_to_target)
+		. = (GET_DIST(holder.owner, src.move_target) <= distance_from_target)
 		if(.)
 			holder.stop_move()
 		return

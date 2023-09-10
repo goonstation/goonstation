@@ -26,7 +26,7 @@
 	G["full_name"] = H.real_name
 	if (H.client && H.client.preferences && length(H.client.preferences.name_middle))
 		var/list/namecheck = splittext(H.real_name, " ")
-		if (namecheck.len >= 2)
+		if (length(namecheck) >= 2)
 			namecheck.Insert(2, H.client.preferences.name_middle)
 			G["full_name"] = jointext(namecheck, " ")
 	G["id"] = "[add_zero(num2hex(rand(1, 1.6777215E7), 0), 6)]"
@@ -44,6 +44,8 @@
 		G["sex"] = "Female"
 	else
 		G["sex"] = "Male"
+
+	G["pronouns"] = H.get_pronouns().name
 
 	G["age"] ="[H.bioHolder.age]"
 	G["fingerprint"] = "[H.bioHolder.fingerprints]"

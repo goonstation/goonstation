@@ -60,8 +60,9 @@
 		src.hudarrow.alpha = 0
 		return
 	if (isatom(src.parent))
-		var/atom/A = src.parent
-		if (src.target.z != A.z)
+		var/turf/target_turf = get_turf(src.target)
+		var/turf/parent_turf = get_turf(src.parent)
+		if (target_turf?.z != parent_turf?.z)
 			src.hudarrow.alpha = 0
 			return
 	src.hudarrow.alpha = 127
@@ -84,6 +85,9 @@
 	src.master = vamp.client?.player
 
 /datum/component/tracker_hud/vampthrall/process()
+	if (!src.master) //something very broken
+		src.RemoveComponent()
+		return
 	//you might be asking "what is this fucking mess", so we want to track a specific player's body but ONLY if they currently have vampire abilities
 	//can't track the abilityHolder directly since it gets replaced with a copy on clone so we do this mess instead
 	var/datum/abilityHolder/vampire/holder = src.master.client?.mob?.get_ability_holder(/datum/abilityHolder/vampire)
@@ -91,4 +95,8 @@
 	..()
 
 /datum/component/tracker_hud/flock
+	dupe_mode = COMPONENT_DUPE_UNIQUE
 	color = "#15ccb4"
+
+/datum/component/tracker_hud/gang
+	color = "#5a6edd"

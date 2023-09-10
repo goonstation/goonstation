@@ -149,8 +149,11 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, "<span class='alert'>That is too far away to bite.</span>")
 			return TRUE
-		var/mob/MT = target
 		var/mob/living/critter/wraith/plaguerat/P = holder.owner
+		if (!isturf(P.loc))
+			boutput(holder.owner, "<span class='alert'>You definitely can't bite through [istype(P.loc,/obj/dummy/disposalmover) ? "a disposal pipe" : "\the [P.loc]"].")
+			return TRUE
+		var/mob/MT = target
 		MT.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_BLUNT)
 		MT.changeStatus("slowed", 2 SECONDS)
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites [MT]!</b></span>",\

@@ -64,6 +64,7 @@
 				boutput(user, "<b>[O]</b> [recharge_phrase]")
 			on_cooldown = 0
 
+		logTheThing(LOG_COMBAT, user, "was teleported by Telewand artifact [O] from [log_loc(user)] to [log_loc(T)].")
 		user.set_loc(T)
 
 		var/turf/start_loc = get_turf(user)

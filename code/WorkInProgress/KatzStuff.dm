@@ -73,14 +73,14 @@ TYPEINFO(/datum/component/mimic_item)
 	icon_state = "power_kick"
 	name = "Toggle Legs"
 	desc = "Toggle legs to run around with."
-	targeted = 0
-	cooldown = 2
+	targeted = FALSE
+	cooldown = 0.2 SECONDS
 
 	tryCast()
 		if (is_incapacitated(holder.owner))
 			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
-			src.holder.locked = 0
-			return 999
+			src.holder.locked = FALSE
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		. = ..()
 
 	cast(atom/T)
@@ -103,7 +103,7 @@ TYPEINFO(/datum/component/mimic_item)
 	can_throw = FALSE
 	can_grab = TRUE
 	can_disarm = FALSE
-	butcherable = FALSE
+	butcherable = BUTCHER_NOT_ALLOWED
 	name_the_meat = FALSE
 	max_skins = 0
 	health_brute = 100

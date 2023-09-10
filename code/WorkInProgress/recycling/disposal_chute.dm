@@ -11,13 +11,13 @@
 
 TYPEINFO(/obj/machinery/disposal)
 	mats = 20			// whats the point of letting people build trunk pipes if they cant build new disposals?
-
+ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 /obj/machinery/disposal
 	name = "disposal unit"
 	desc = "A pressurized trashcan that flushes things you put into it through pipes, usually to disposals."
 	icon = 'icons/obj/disposal.dmi'
 	icon_state = "disposal"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	flags = NOSPLASH | TGUI_INTERACTIVE
 	var/datum/gas_mixture/air_contents	// internal reservoir
@@ -42,24 +42,24 @@ TYPEINFO(/obj/machinery/disposal)
 		src.AddComponent(/datum/component/obj_projectile_damage)
 		SPAWN(0.5 SECONDS)
 			if (src)
-				trunk = locate() in src.loc
-				if(!trunk)
-					mode = DISPOSAL_CHUTE_OFF
-					flush = 0
+				src.trunk = locate() in src.loc
+				if(!src.trunk)
+					src.mode = DISPOSAL_CHUTE_OFF
+					src.flush = 0
 				else
-					trunk.linked = src	// link the pipe trunk to self
+					src.trunk.linked = src	// link the pipe trunk to self
 
 				initair()
 				update()
 
 	disposing()
-		if (trunk)
-			trunk.linked = null
+		if (src.trunk && src.trunk.linked == src)
+			src.trunk.linked = null
 		else
-			trunk = locate() in src.loc //idk maybe this can happens
-			if (trunk)
-				trunk.linked = null
-		trunk = null
+			src.trunk = locate() in src.loc //idk maybe this can happens
+			if (src.trunk && src.trunk.linked == src)
+				src.trunk.linked = null
+		src.trunk = null
 
 		if(air_contents)
 			qdel(air_contents)
@@ -67,13 +67,13 @@ TYPEINFO(/obj/machinery/disposal)
 		..()
 
 	was_deconstructed_to_frame(mob/user)
-		if (trunk)
-			trunk.linked = null
+		if (src.trunk && src.trunk.linked == src)
+			src.trunk.linked = null
 		else
-			trunk = locate() in src.loc //idk maybe this can happens
-			if (trunk)
-				trunk.linked = null
-		trunk = null
+			src.trunk = locate() in src.loc //idk maybe this can happens
+			if (src.trunk && src.trunk.linked == src)
+				src.trunk.linked = null
+		src.trunk = null
 
 		var/turf/T = get_turf(src)
 		for (var/atom in src)
@@ -81,6 +81,17 @@ TYPEINFO(/obj/machinery/disposal)
 			A.set_loc(T)
 
 		return ..()
+
+	was_built_from_frame(mob/user, newly_built)
+		if (!newly_built)
+			src.trunk = locate() in src.loc
+			if(!src.trunk)
+				src.mode = DISPOSAL_CHUTE_OFF
+				src.flush = 0
+			else
+				src.trunk.linked = src	// link the pipe trunk to self
+		return ..()
+
 
 	onDestroy()
 		if (src.powered())
@@ -95,8 +106,12 @@ TYPEINFO(/obj/machinery/disposal)
 		air_contents.oxygen = 4.4
 		air_contents.temperature = 293.15
 
+	proc/fits_in(atom/movable/AM)
+		return TRUE
+
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
+		var/obj/item/storage/mechanics/mechitem = null
 		if(status & BROKEN)
 			return
 		if (istype(I,/obj/item/deconstructor))
@@ -113,33 +128,36 @@ TYPEINFO(/obj/machinery/disposal)
 				return
 			if (action == "Empty it into the Chute")
 				var/obj/item/satchel/S = I
-				for(var/obj/item/O in S.contents) O.set_loc(src)
+				for(var/obj/item/O in S.contents)
+					if (src.fits_in(O))
+						O.set_loc(src)
 				S.UpdateIcon()
+				S.tooltip_rebuild = 1
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
+				src.update()
 				return
+		if(istype(I, /obj/item/storage/mechanics))
+			mechitem = I
 		//first time they click with a storage, it gets dumped. second time container itself is added
-		if ((istype(I,/obj/item/storage/) && I.contents.len) && user.a_intent == INTENT_HELP) //if they're not on help intent it'll default to placing it in while full
-			var/obj/item/storage/S = I
-
-			if(istype(S, /obj/item/storage/secure))
-				var/obj/item/storage/secure/secS = S
-				if(secS.locked)
-					boutput("<span class='alert'> Unable to open it, you place the whole [secS] into the container.</span>")
-					I.set_loc(src)
-					actions.interrupt(user, INTERRUPT_ACT)
+		if (length(I.storage?.get_contents()) && user.a_intent == INTENT_HELP && (!mechitem || mechitem.open)) //if they're not on help intent it'll default to placing it in while full.
+			if(istype(I, /obj/item/storage/secure))
+				var/obj/item/storage/secure/secS = I
+				if (!src.fits_in(secS))
 					return
-			for(var/obj/item/O in S)
-				O.set_loc(src)
-				S.hud.remove_object(O)
-			user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
+				if(secS.locked)
+					user.visible_message("[user.name] places \the [secS] into \the [src].",\
+						"You place \the [secS] into \the [src].")
+					user.drop_item()
+					secS.set_loc(src)
+					actions.interrupt(user, INTERRUPT_ACT)
+					src.update()
+					return
+			for(var/obj/item/O in I.storage.get_contents())
+				if (src.fits_in(O))
+					I.storage.transfer_stored_item(O, src, user = user)
+			user.visible_message("<b>[user.name]</b> dumps out [I] into [src].")
 			actions.interrupt(user, INTERRUPT_ACT)
-			return
-
-		if (istype(I, /obj/item/storage/mechanics/housing_handheld)) //override to normal activity
-			I.set_loc(src)
-			user.visible_message("[user.name] places \the [I] into \the [src].",\
-			"You place \the [I] into \the [src].")
-			actions.interrupt(user, INTERRUPT_ACT)
+			src.update()
 			return
 
 		var/obj/item/magtractor/mag
@@ -153,7 +171,7 @@ TYPEINFO(/obj/machinery/disposal)
 		if(istype(G))	// handle grabbed mob
 			if (ismob(G.affecting))
 				var/mob/GM = G.affecting
-				if (istype(src, /obj/machinery/disposal/mail) && !GM.canRideMailchutes())
+				if (istype(src, /obj/machinery/disposal/mail) && !GM.canRideMailchutes() || !src.fits_in(GM))
 					boutput(user, "<span class='alert'>That won't fit!</span>")
 					return
 				actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, GM, user), user)
@@ -161,7 +179,7 @@ TYPEINFO(/obj/machinery/disposal)
 		else
 			if (istype(mag))
 				actions.stopId("magpickerhold", user)
-			else if (!user.drop_item())
+			else if (!src.fits_in(I) || !user.drop_item())
 				return
 			I.set_loc(src)
 			user.visible_message("[user.name] places \the [I] into \the [src].",\
@@ -174,9 +192,12 @@ TYPEINFO(/obj/machinery/disposal)
 	//
 	MouseDrop_T(atom/target, mob/user)
 		//jesus fucking christ
-		if (BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(target, src) > 0 || isAI(user) || is_incapacitated(user) || isghostcritter(user))
+		if (BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(target, src) > 0 || isAI(user) || is_incapacitated(user) || isghostcritter(user) || !src.fits_in(target))
 			return
-
+		if (istype(target, /obj/machinery/bot))
+			var/obj/machinery/bot/bot = target
+			bot.set_loc(src)
+			return
 		if (iscritter(target))
 			var/obj/critter/corpse = target
 			if (!corpse.alive)
@@ -199,6 +220,8 @@ TYPEINFO(/obj/machinery/disposal)
 			actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, mobtarget, user), user)
 
 	hitby(atom/movable/MO, datum/thrown_thing/thr)
+		if (!src.fits_in(MO))
+			return
 		// This feature interferes with mail delivery, i.e. objects bouncing back into the chute.
 		// Leaves people wondering where the stuff is, assuming they received a PDA alert at all.
 		if (istype(src, /obj/machinery/disposal/mail))
@@ -335,7 +358,7 @@ TYPEINFO(/obj/machinery/disposal)
 			return
 
 		// 	check for items in disposal - occupied light
-		if (contents.len > 0)
+		if (length(contents) > 0)
 			var/image/I = GetOverlayImage("content_light")
 			if (!I)
 				I = image(src.icon, "[light_style]-full")
@@ -419,7 +442,7 @@ TYPEINFO(/obj/machinery/disposal)
 		if (!isnull(src.destination_tag))
 			H.mail_tag = src.destination_tag
 
-		air_contents.zero()
+		ZERO_GASES(src.air_contents)
 
 		sleep(1 SECOND)
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
@@ -453,7 +476,7 @@ TYPEINFO(/obj/machinery/disposal)
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
-			AM.set_loc(src.loc)
+			AM.set_loc(get_turf(src))
 			AM.pipe_eject(0)
 			AM.throw_at(target, 5, 1)
 
@@ -525,6 +548,12 @@ TYPEINFO(/obj/machinery/disposal)
 	icon_state = "scichute"
 	desc = "A pneumatic delivery chute for sending completed research to the public."
 	icon_style = "sci"
+
+/obj/machinery/disposal/botany
+	name = "produce chute"
+	icon_state = "botanchute"
+	desc = "A pneumatic delivery chute for sending produce to the kitchen."
+	icon_style = "botan"
 
 /obj/machinery/disposal/ore
 	name = "ore chute"
@@ -644,6 +673,117 @@ TYPEINFO(/obj/machinery/disposal)
 	attack_hand(mob/user)
 		return
 
+
+/obj/machinery/disposal/chemlink
+	name = "dispensary supply chute"
+	desc = "A small chute designed to send chemical supplies to medbay. An attached monitoring console shows the levels of supplies present."
+	icon_state = "chemlink_on"
+	destination_tag = "chemlink"
+	//stuff to emulate computer look
+	var/datum/light/light
+	var/image/screen_image
+	///A dummy object in vis_contents so we can use flick() to animate the flush overlay
+	var/obj/dummy/flush_dummy = null
+	///The vendor at the other end
+	var/obj/machinery/vending/player/chemicals/linked = null
+	///Copied from the vendor on link
+	var/list/allowed_types = null
+	var/static_data_invalid = FALSE
+
+	New()
+		..()
+		light = new/datum/light/point
+		light.set_brightness(0.4)
+		light.set_color(0.7, 1, 0.7)
+		light.attach(src)
+
+		src.screen_image = image('icons/obj/disposal.dmi', "chemlink_screen", -1)
+		screen_image.plane = PLANE_LIGHTING
+		screen_image.blend_mode = BLEND_ADD
+		screen_image.layer = LIGHTING_LAYER_BASE
+		screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+		src.UpdateOverlays(screen_image, "screen_image")
+
+		src.flush_dummy = new()
+		src.flush_dummy.icon = src.icon
+		src.flush_dummy.layer = src.layer + 1
+		src.flush_dummy.mouse_opacity = FALSE
+		src.vis_contents += src.flush_dummy
+
+		SPAWN(1)
+			for_by_tcl(vendor, /obj/machinery/vending/player/chemicals)
+				if (vendor.id == src.destination_tag)
+					src.linked = vendor
+					vendor.linked = src
+					return
+
+	disposing()
+		. = ..()
+		src.vis_contents -= src.flush_dummy
+		qdel(src.flush_dummy)
+		src.flush_dummy = null
+
+	fits_in(atom/movable/AM)
+		return src.linked?.acceptsProduct(AM)
+
+	attackby(obj/item/I, mob/user)
+		. = ..()
+		if (length(src.contents))
+			src.flush()
+		else
+
+
+	hitby(atom/movable/MO, datum/thrown_thing/thr)
+		if (!src.linked?.acceptsProduct(MO))
+			return
+		. = ..()
+		src.flush()
+
+	MouseDrop_T(atom/target, mob/user)
+		return
+
+	flush()
+		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
+																// travels through the pipes.
+		H.init(src)	// copy the contents of disposer to holder
+		if (!isnull(src.destination_tag))
+			H.mail_tag = src.destination_tag
+		H.start(src)
+		flick("chemlink_flush", src.flush_dummy)
+		playsound(src, 'sound/misc/handle_click.ogg', 50, 1)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ChemChute")
+			ui.open()
+
+	ui_static_data(mob/user)
+		. = ..() || list()
+		. += src.linked?.ui_static_data(user)
+
+	power_change()
+		if(src.powered())
+			icon_state = initial(icon_state)
+			status &= ~NOPOWER
+			light.enable()
+			src.UpdateOverlays(screen_image, "screen_image")
+		else
+			SPAWN(rand(0, 15))
+				src.icon_state = "chemlink_off"
+				status |= NOPOWER
+				light.disable()
+				src.ClearSpecificOverlays("screen_image")
+
+	//no overlays
+	update()
+		return
+
+	process()
+		if (src.static_data_invalid)
+			src.static_data_invalid = FALSE
+			for (var/datum/tgui/ui as anything in tgui_process.get_uis(src))
+				src.update_static_data(null, ui)
 
 /datum/action/bar/icon/shoveMobIntoChute
 	duration = 0.2 SECONDS

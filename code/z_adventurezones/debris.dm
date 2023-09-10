@@ -1,66 +1,85 @@
 ////Martian Turf stuff//////////////
-/turf/simulated/martian
+/turf/simulated/floor/martian
+	name = "organic floor"
+	icon_state = "floor1"
 	name = "martian"
 	icon = 'icons/turf/martian.dmi'
 	thermal_conductivity = 0.05
 	heat_capacity = 0
 
-/turf/simulated/martian/floor
-	name = "organic floor"
-	icon_state = "floor1"
-
-/turf/unsimulated/martian/floor
+/turf/unsimulated/floor/martian
 	icon = 'icons/turf/martian.dmi'
 	name = "organic floor"
 	icon_state = "floor1"
 
-/turf/simulated/martian/wall
+TYPEINFO(/turf/simulated/wall/auto/martian)
+	connect_overlay = FALSE
+	connect_diagonal = TRUE
+TYPEINFO_NEW(/turf/simulated/wall/auto/martian)
+	. = ..()
+	connects_to = typecacheof(list(
+		/obj/machinery/door/unpowered/martian, /turf/simulated/wall/auto/old,
+		/obj/indestructible/shuttle_corner, /turf/unsimulated/wall/auto/adventure,
+		/obj/machinery/door, /obj/window, /turf/simulated/wall/auto/martian,
+		/turf/simulated/wall/auto/reinforced/old
+		))
+
+/turf/simulated/wall/auto/martian
 	name = "organic wall"
-	icon_state = "wall1"
-	opacity = 1
-	density = 1
-	gas_impermeable = 1
+	icon = 'icons/turf/walls_martian.dmi'
+	icon_state = "martian-0"
+	mod = "martian-"
 
-	var/health = 40
+	exterior
+		icon_state = "martout-0"
+		mod = "martout-"
 
-	proc/checkhealth()
-		if(src.health <= 0)
-			SPAWN(0)
-				gib(src.loc)
-				ReplaceWithSpace()
+	health = 40
 
-/turf/simulated/martian/wall/ex_act(severity)
-	switch(severity)
-		if(1)
-			src.health -= 40
-			checkhealth()
-		if(2)
-			src.health -= 20
-			checkhealth()
-		if(3)
-			src.health -= 5
-			checkhealth()
+	proc/take_damage(var/damage) // Let other walls support this later
+		src.health -= damage
+		if (src.health <= 0)
+			src.gib()
 
-/turf/simulated/martian/wall/proc/gib(atom/location)
-	if (!location) return
+	attackby(obj/item/W, mob/user, params)
+		user.lastattacked = src
+		if(istype(W, /obj/item/spray_paint) || istype(W, /obj/item/gang_flyer))
+			return
 
-	var/obj/decal/cleanable/machine_debris/gib = null
-	var/obj/decal/cleanable/blood/gibs/gib2 = null
+		if (istype(W, /obj/item/pen))
+			var/obj/item/pen/P = W
+			P.write_on_turf(src, user, params)
+			return
 
-	// NORTH
-	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
-	if (prob(25))
-		gib.icon_state = "gibup1"
-	gib.streak_cleanable(NORTH)
-	LAGCHECK(LAG_LOW)
+		else if (istype(W, /obj/item/light_parts))
+			src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
+			return
 
-	// SOUTH
-	gib2 = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
-	if (prob(25))
-		gib2.icon_state = "gibdown1"
-	gib2.streak_cleanable(SOUTH)
-	LAGCHECK(LAG_LOW)
+		else
+			src.material_trigger_when_attacked(W, user, 1)
+			attack_particle(user, src)
+			src.visible_message("<span class='alert'>[user ? user : "Someone"] hits [src] with [W].</span>", "<span class='alert'>You hit [src] with [W].</span>")
+			src.take_damage(W.force / 2)
 
-	// RANDOM
-	gib2 = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
-	gib2.streak_cleanable(cardinal)
+	dismantle_wall(devastated=0, keep_material = 1)
+		src.gib()
+
+	meteorhit()
+		src.gib()
+
+	ex_act(severity)
+		switch(severity)
+			if(1)
+				src.gib()
+			if(2)
+				src.take_damage(20)
+			if(3)
+				src.take_damage(5)
+
+	blob_act(var/power)
+		src.take_damage(20)
+
+	proc/gib()
+		ReplaceWithFloor()
+		gibs(src)
+

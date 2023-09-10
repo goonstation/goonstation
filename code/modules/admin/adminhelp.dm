@@ -19,7 +19,7 @@
 		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
 		return
 
-	var/msg = input("Please enter your help request to admins.\nAdminhelps are also sent to admins via Discord.\n\nFor questions on game mechanics, use Mentorhelp (F3).", "Adminhelp") as null|text
+	var/msg = input("Please enter your help request or rule violation report to admins.\nAdminhelps are also sent to admins via Discord.\nIf someone is breaking a rule tell us who did what and when.\n\nFor questions on game mechanics, use Mentorhelp (F3).", "Adminhelp") as null|message
 
 	msg = copytext(html_encode(msg), 1, MAX_MESSAGE_LEN * 4)
 
@@ -112,9 +112,9 @@
 		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
 		return
 
-	var/msg = input("Enter your help request to mentors.\nMentorhelps are sent to mentors via Discord.\n\nPlease use Adminhelp (F1) for rules questions.", "mentorhelp") as null|text
+	var/msg = input("Enter your help request to mentors.\nMentorhelps are sent to mentors via Discord.\n\nPlease use Adminhelp (F1) for rules questions.", "mentorhelp") as null|message
 
-	msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN * 4)
+	msg = copytext(strip_html(msg, strip_newlines=FALSE), 1, MAX_MESSAGE_LEN * 4)
 	if (client.can_see_mentor_pms())
 		msg = linkify(msg)
 
@@ -220,7 +220,7 @@
 			if (!M.client.holder.hear_prayers || (M.client.player_mode == 1 && M.client.player_mode_ahelp == 0)) //XOR for admin prayer setting and player mode w/ no ahelps
 				continue
 			else
-				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.1em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST)" : ""]</B><a href='?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'>: <I>[msg]</I></span>")
+				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.1em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST) " : ""]</B><a href='?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign' />: <I>[msg]</I></span>")
 				if(M.client.holder.audible_prayers == 1)
 					M << sound("sound/misc/boing/[rand(1,6)].ogg", volume=50, wait=0)
 				else if(M.client.holder.audible_prayers == 2) // this is a terrible idea
@@ -245,7 +245,7 @@
 
 		var/client/user_client = user.client
 
-		var/t = input("Message:", text("Private message to [admin_key(M.client, 1)]")) as null|text
+		var/t = input("Message:", text("Private message to [admin_key(M.client, 1)]")) as null|message
 
 		M = ckey_to_mob(C)
 		user = user_client.mob
@@ -260,7 +260,7 @@
 			boutput(M, {"
 				<div style='border: 2px solid red; font-size: 110%;'>
 					<div style="color: black; background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
-						Admin PM from [key_name(user, 0, 0)]
+						Admin PM from [key_name(user, 0, 0, ckey_and_alt_key = TRUE)]
 					</div>
 					<div style="padding: 0.2em 0.5em;">
 					[t]
@@ -277,10 +277,10 @@
 			// Sender is not admin
 			if (M.client && M.client.holder)
 				// But recipient is
-				boutput(M, "<span class='ahelp' class=\"bigPM\">Reply PM from-<b>[key_name(user, 0, 0)][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
+				boutput(M, "<span class='ahelp' class=\"bigPM\">Reply PM from-<b>[key_name(user, 0, 0, ckey_and_alt_key = TRUE)][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
 				M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
 			else
-				boutput(M, "<span class='alert' class=\"bigPM\">Reply PM from-<b>[key_name(user, 0, 0)]</b>: [t]</span>")
+				boutput(M, "<span class='alert' class=\"bigPM\">Reply PM from-<b>[key_name(user, 0, 0, ckey_and_alt_key = TRUE)]</b>: [t]</span>")
 				M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
 			boutput(user, "<span class='ahelp' class=\"bigPM\">Reply PM to-<b>[key_name(M, 0, 0)]</b>: [t]</span>")
 
@@ -303,4 +303,4 @@
 				if (K.client.player_mode && !K.client.player_mode_ahelp)
 					continue
 				else
-					boutput(K, "<span class='ahelp'><b>PM: [key_name(user,0,0)][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
+					boutput(K, "<span class='ahelp'><b>PM: [key_name(user,0,0, ckey_and_alt_key = TRUE)][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")

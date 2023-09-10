@@ -43,7 +43,7 @@
 
 		SPAWN(1 DECI SECOND)
 			for(var/i = 0, i<spawn_amount, i++)
-				if(closets.len > 0)
+				if(length(closets) > 0)
 					var/obj/storage/temp = pick(closets)
 					if(temp.open)
 						temp.close()
@@ -60,7 +60,7 @@
 						sleep(0.1 SECONDS)
 					temp.pixel_x = 0
 					temp.pixel_y = 0
-					new/obj/critter/magiczombie(temp)
+					new/mob/living/critter/skeleton(temp)
 					closets -= temp
 				else
 					break

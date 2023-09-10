@@ -197,11 +197,12 @@
 	if (!user)
 		return
 
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (!istype(W, /obj/item/card/id))
+	var/obj/item/card/id/id_card = get_id_card(W)
+
+	if (!istype(id_card, /obj/item/card/id))
 		boutput(user, "No ID given.")
 		return
+	W = id_card
 
 	if (!W:access) //no access
 		src.add_fingerprint(user)

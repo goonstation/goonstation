@@ -22,7 +22,8 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 			rebuildEventList(using)
 
 	proc/boot_if_away()
-		if(using && (!using.client || using.client.inactivity >= 600 || !in_interact_range(src, using)))
+		if(using && (!using.client || using.client.inactivity >= 600 || !in_interact_range(src, using) || (!isAI(using) && !(GET_DIST(src, using) <= ((WIDE_TILE_WIDTH - 1)/ 2))))) // copied last bit from default.dm tgui code
+			src.remove_dialog(using)
 			using.Browse(null, "window=qtelescope;override_setting=1")
 			using = null
 		return
@@ -43,7 +44,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 
 		user.Browse(grabResource("html/telescope.html"), "window=qtelescope;size=974x560;title=Quantum Telescope;can_resize=0", 1)
 
-		onclose(user, "telescope", src)
+		onclose(user, "qtelescope", src)
 
 		SPAWN(1 SECOND)
 			callJsFunc(user, "setRef", list("\ref[src]")) //This is shit but without it, it calls the JS before the window is open and doesn't work. (Is this still true?!?!)

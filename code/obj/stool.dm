@@ -26,6 +26,8 @@
 	throwforce = 10
 	pressure_resistance = 3*ONE_ATMOSPHERE
 	layer = STORAGE_LAYER //dumb
+	default_material = "steel"
+	uses_material_appearance = FALSE
 	var/allow_unbuckle = 1
 	var/mob/living/buckled_guy = null
 	var/deconstructable = 1
@@ -107,6 +109,9 @@
 		if (!can_buckle(to_buckle,user))
 			return FALSE
 
+		if (to_buckle.pulling == src)
+			to_buckle.remove_pulling()
+
 		if (to_buckle == user)
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
 		else
@@ -130,6 +135,7 @@
 	proc/deconstruct()
 		if (!src.deconstructable)
 			return
+		unbuckle()
 		if (ispath(src.parts_type))
 			var/obj/item/furniture_parts/P = new src.parts_type(src.loc)
 			if (P && src.material)
@@ -150,15 +156,27 @@
 		if (. && islist(scoot_sounds) && scoot_sounds.len && prob(75))
 			playsound( get_turf(src), pick( scoot_sounds ), 50, 1 )
 
+/obj/stool/pet_bed
+	name = "pet bed"
+	icon_state = "petbed"
+	desc = "A soft bed designed for small animals to snuggle up in."
+	parts_type = /obj/item/furniture_parts/stool/pet_bed
+
+/obj/stool/pet_bed/jones
+	name = "cat bed"
+	desc = "Though it was made to suit him, Jones still seems to sleep in every spot that is NOT this little bed."
+
 /obj/stool/bee_bed
 	// idk. Not a bed proper since humans can't lay in it. Weirdos.
 	// would also be cool to make these work with bees.
 	// it's hip to tuck bees!
 	name = "bee bed"
-	icon = 'icons/misc/critter.dmi'
 	icon_state = "beebed"
 	desc = "A soft little bed the general size and shape of a space bee."
 	parts_type = /obj/item/furniture_parts/stool/bee_bed
+
+/obj/stool/bee_bed/heisenbee
+	name = "heisenbed"
 
 /obj/stool/bee_bed/double // Prefab variant
 	name = "double bee bed"
@@ -178,11 +196,17 @@
 	desc = "Like a bar stool, but in electric blue."
 	parts_type = /obj/item/furniture_parts/stool/neon
 
+TYPEINFO(/obj/stool/wooden)
+	mat_appearances_to_ignore = list("wood")
 /obj/stool/wooden
 	name = "wooden stool"
 	icon_state = "wstool"
+	default_material = "wood"
 	desc = "Like a stool, but just made out of wood."
 	parts_type = /obj/item/furniture_parts/woodenstool
+
+	constructed //no "wood wood stool"
+		name = "stool"
 /* ================================================= */
 /* -------------------- Benches -------------------- */
 /* ================================================= */
@@ -192,7 +216,7 @@
 	desc = "It's a bench! You can sit on it!"
 	icon = 'icons/obj/furniture/bench.dmi'
 	icon_state = "0"
-	anchored = 1
+	anchored = ANCHORED
 	var/auto = 0
 	var/auto_path = null
 	parts_type = /obj/item/furniture_parts/bench
@@ -295,7 +319,7 @@
 	name = "bed"
 	desc = "A solid metal frame with some padding on it, useful for sleeping on."
 	icon_state = "bed"
-	anchored = 1
+	anchored = ANCHORED
 	var/security = 0
 	var/obj/item/clothing/suit/bedsheet/sheet = null
 	parts_type = /obj/item/furniture_parts/bed
@@ -310,7 +334,7 @@
 	moveable
 		name = "roller bed"
 		desc = "A solid metal frame with some padding on it, useful for sleeping on. This one has little wheels on it, neat!"
-		anchored = 0
+		anchored = UNANCHORED
 		securable = 1
 		icon_state = "rollerbed"
 		parts_type = /obj/item/furniture_parts/bed/roller
@@ -375,6 +399,10 @@
 		if (!can_buckle(to_buckle,user))
 			return FALSE
 
+		if (to_buckle.pulling == src)
+			to_buckle.remove_pulling()
+
+
 		if (to_buckle == user)
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> lies down on [src], fastening the buckles!</span>", "<span class='notice'>You lie down and buckle yourself in.</span>")
 		else
@@ -382,7 +410,7 @@
 
 		to_buckle.lying = 1
 		if (src.anchored)
-			to_buckle.anchored = 1
+			to_buckle.anchored = ANCHORED
 		to_buckle.buckled = src
 		src.buckled_guy = to_buckle
 		to_buckle.set_loc(src.loc)
@@ -519,10 +547,13 @@
 /* ================================================ */
 /* -------------------- Chairs -------------------- */
 /* ================================================ */
+TYPEINFO(/obj/stool/chair)
+	mat_appearances_to_ignore = list("steel")
 
 /obj/stool/chair
 	name = "chair"
 	desc = "A four-legged metal chair, rigid and slightly uncomfortable. Helpful when you don't want to use your legs at the moment."
+	HELP_MESSAGE_OVERRIDE("")
 	icon_state = "chair"
 	var/comfort_value = 3
 	var/buckledIn = 0
@@ -534,13 +565,22 @@
 	var/obj/item/clothing/head/butt/has_butt = null // time for mature humour
 	var/image/butt_img
 	securable = 1
-	anchored = 1
+	anchored = ANCHORED
 	scoot_sounds = list( 'sound/misc/chair/normal/scoot1.ogg', 'sound/misc/chair/normal/scoot2.ogg', 'sound/misc/chair/normal/scoot3.ogg', 'sound/misc/chair/normal/scoot4.ogg', 'sound/misc/chair/normal/scoot5.ogg' )
 	parts_type = null
 	material_amt = 0.1
 
 	moveable
-		anchored = 0
+		anchored = UNANCHORED
+
+	get_help_message(dist, mob/user)
+		. = "You can <b>sit</b> on it by standing on the same tile then click draging yourself to the chair or using the Block hotkey with any intent except <b>Grab</b>. "
+		if (src.climbable)
+			. += "It will be <b>climbed on</b> if you are using the <b>Grab intent</b>. "
+		if (src.foldable)
+			. += "It can be <b>folded</b> up to carry by clicking on it. "
+		if (src.securable)
+			. += "It can be <b>secured to the floor</b> with a screwing tool."
 
 	New()
 		if (src.dir == NORTH)
@@ -571,7 +611,7 @@
 			src.unbuckle()
 
 	toggle_secure(mob/user as mob)
-		if (istype(get_turf(src), /turf/space))
+		if (!src.anchored && istype(get_turf(src), /turf/space))
 			if (user)
 				user.show_text("What exactly are you gunna secure [src] to?", "red")
 			return
@@ -702,6 +742,9 @@
 		if (!can_buckle(to_buckle,user))
 			return FALSE
 
+		if (to_buckle.pulling == src)
+			to_buckle.remove_pulling()
+
 		if(stand && ishuman(to_buckle))
 			if(ON_COOLDOWN(to_buckle, "chair_stand", 1 SECOND))
 				return
@@ -711,7 +754,7 @@
 			to_buckle.set_loc(src.loc)
 			to_buckle.pixel_y = 10
 			if (src.anchored)
-				to_buckle.anchored = 1
+				to_buckle.anchored = ANCHORED
 			H.on_chair = src
 			to_buckle.buckled = src
 			src.buckled_guy = to_buckle
@@ -725,7 +768,7 @@
 				user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
 
 			if (src.anchored)
-				to_buckle.anchored = 1
+				to_buckle.anchored = ANCHORED
 			to_buckle.buckled = src
 			src.buckled_guy = to_buckle
 			to_buckle.set_loc(src.loc)
@@ -860,12 +903,32 @@
 		return
 
 /* ======================================================= */
+/* -------------------- Material Chairs ------------------ */
+/* ======================================================= */
+
+/obj/stool/chair/material
+	name = "material chair"
+	desc = "A chair made from a material"
+	uses_material_appearance = TRUE
+	mat_changename = TRUE
+
+/obj/stool/chair/material/mauxite
+	name = "chair"
+	icon_state = "chair$$mauxite"
+	desc = "A sturdy chair. It doesn't look very comfortable..."
+	comfort_value = -2
+	default_material = "mauxite"
+
+/* ======================================================= */
 /* -------------------- Folded Chairs -------------------- */
 /* ======================================================= */
 
+TYPEINFO(/obj/item/chair/folded)
+	mat_appearances_to_ignore = list("steel")
 /obj/item/chair/folded
 	name = "chair"
 	desc = "A folded chair. Good for smashing noggin-shaped things."
+	HELP_MESSAGE_OVERRIDE("It can be unfolded back into a chair by <b>using it<b> with the C key.")
 	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "folded_chair"
 	item_state = "folded_chair"
@@ -877,6 +940,7 @@
 	stamina_cost = 21
 	stamina_crit_chance = 10
 	material_amt = 0.1
+	hitsound = 'sound/impact_sounds/folding_chair.ogg'
 	var/c_color = null
 
 	New()
@@ -911,8 +975,6 @@
 	var/oldcrit = src.stamina_crit_chance
 	if(iswrestler(user))
 		src.stamina_crit_chance = 100
-	if (ishuman(target))
-		playsound(src.loc, pick(sounds_punch), 100, 1)
 	..()
 	src.stamina_crit_chance = oldcrit
 
@@ -1004,7 +1066,7 @@
 	icon_state = "thronegold"
 	arm_icon_state = "thronegold-arm"
 	comfort_value = 7
-	anchored = 0
+	anchored = UNANCHORED
 	deconstructable = 1
 	parts_type = /obj/item/furniture_parts/throne_gold
 
@@ -1042,19 +1104,20 @@
 TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	mats = 15
 
+TYPEINFO(/obj/stool/chair/comfy/wheelchair)
+	mat_appearances_to_ignore = list("steel")
 /obj/stool/chair/comfy/wheelchair
 	name = "wheelchair"
 	desc = "It's a chair that has wheels attached to it. Do I really have to explain this to you? Can you not figure this out on your own? Wheelchair. Wheel, chair. Chair that has wheels."
 	icon_state = "wheelchair"
 	arm_icon_state = "arm-wheelchair"
-	anchored = 0
+	anchored = UNANCHORED
 	comfort_value = 3
 	buckle_move_delay = 1
 	p_class = 2
 	scoot_sounds = list('sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg')
 	var/lying = 0 // didja get knocked over? fall down some stairs?
 	parts_type = /obj/item/furniture_parts/wheelchair
-	mat_appearances_to_ignore = list("steel")
 
 	New()
 		..()
@@ -1120,31 +1183,48 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 		unbuckle()
 
 /* ======================================================= */
-/* -------------------- Wooden Chairs -------------------- */
+/* -------------------- Dining Chairs -------------------- */
 /* ======================================================= */
 
-/obj/stool/chair/wooden
-	name = "wooden chair"
-	icon_state = "chair_wooden" // this sprite is bad I will fix it at some point
+TYPEINFO(/obj/stool/chair/dining/wood)
+	mat_appearances_to_ignore = list("wood")
+/obj/stool/chair/dining/
+	name = "dining chair"
+	icon_state = "chair_wooden"
+	desc = "You shouldn't be seeing this!"
 	comfort_value = 3
 	foldable = 0
-	anchored = 0
+	anchored = UNANCHORED
 	//deconstructable = 0
-	parts_type = /obj/item/furniture_parts/wood_chair
+
+	constructed //no "wood wood chair"
+		name = "chair"
+
+	wood
+		name = "wooden chair"
+		icon_state = "chair_wooden" // this sprite is bad I will fix it at some point
+		parts_type = /obj/item/furniture_parts/dining_chair/wood
 
 	regal
 		name = "regal chair"
 		desc = "Much more comfortable than the average dining chair, and much more expensive."
 		icon_state = "regalchair"
 		comfort_value = 7
-		parts_type = /obj/item/furniture_parts/wood_chair/regal
+		parts_type = /obj/item/furniture_parts/dining_chair/regal
 
 	scrap
 		name = "scrap chair"
 		desc = "Hopefully you didn't pay actual money for this."
 		icon_state = "scrapchair"
 		comfort_value = 7
-		parts_type = /obj/item/furniture_parts/wood_chair/scrap
+		parts_type = /obj/item/furniture_parts/dining_chair/scrap
+
+	industrial
+		name = "industrial chair"
+		desc = "Repurposed scaffolding in the shape of a chair."
+		icon_state = "chair_industrial"
+		comfort_value = 7
+		parts_type = /obj/item/furniture_parts/dining_chair/industrial
 
 /* ============================================== */
 /* -------------------- Pews -------------------- */
@@ -1154,7 +1234,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	name = "pew"
 	desc = "It's like a bench, but more holy. No, not <i>holey</i>, <b>holy</b>. Like, godly, divine. That kinda thing.<br>Okay, it's actually kind of holey, too, now that you look at it closer."
 	icon_state = "pew"
-	anchored = 1
+	anchored = ANCHORED
 	rotatable = 0
 	foldable = 0
 	comfort_value = 2
@@ -1227,10 +1307,10 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	/obj/item/plant/herb/cannabis/spawnable,
 	/obj/item/reagent_containers/food/snacks/candy/candyheart,
 	/obj/item/bananapeel,
-	/obj/item/reagent_containers/food/snacks/lollipop/random_medical,
-	/obj/item/spacecash/random/small,
-	/obj/item/spacecash/random/tourist,
-	/obj/item/spacecash/buttcoin)
+	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical,
+	/obj/item/currency/spacecash/small,
+	/obj/item/currency/spacecash/tourist,
+	/obj/item/currency/spacecash/buttcoin)
 
 	New()
 		..()
@@ -1319,7 +1399,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	icon_state = "office_chair"
 	comfort_value = 4
 	foldable = 0
-	anchored = 0
+	anchored = UNANCHORED
 	buckle_move_delay = 3
 	//deconstructable = 0
 	parts_type = /obj/item/furniture_parts/office_chair
@@ -1477,7 +1557,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 
 		if (netnum)
 			var/datum/powernet/PN
-			if (powernets && powernets.len >= netnum)
+			if (powernets && length(powernets) >= netnum)
 				PN = powernets[netnum]
 				return PN.avail
 
@@ -1521,9 +1601,8 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 				L.shock(src, 2500, "chest", 1, 1)
 				L.changeStatus("stunned", 10 SECONDS)
 
-			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-				if ((L.mind in ticker.mode:revolutionaries) && !(L.mind in ticker.mode:head_revolutionaries) && prob(66))
-					ticker.mode:remove_revolutionary(L.mind)
+			if((L.mind?.get_antagonist(ROLE_REVOLUTIONARY)) && !(L.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)) && prob(66))
+				L.mind?.remove_antagonist(ROLE_REVOLUTIONARY)
 
 		A.UpdateIcon()
 		return

@@ -10,14 +10,14 @@
 	desc = "Pipe section allowing a catalytic rod to contact outside fluid for catalysis."
 	icon = 'icons/obj/machines/catalysis.dmi'
 	icon_state = "doodad"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/machinery/power/catalytic_generator
 	name = "catalytic generator core"
 	desc = "Harnesses catalysts' reactions with a large body of appropriate fluid to generate electricity."
 	icon = 'icons/obj/machines/catalysis.dmi'
 	icon_state = "core"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	var/obj/machinery/catalytic_rod_unit/anode_unit
@@ -161,7 +161,7 @@
 	desc = "Accepts a rod of catalytic material for use in electricity generation."
 	icon = 'icons/obj/machines/catalysis.dmi'
 	icon_state = "nonvis"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	//Overlay objects
@@ -461,7 +461,7 @@
 		var/decay_ratio_adjustment = src.material.getProperty("chemical") * 0.00023
 		src.decay_ratio = min(src.decay_ratio + decay_ratio_adjustment,1)
 		src.anode_viability = max(0,src.material.getProperty("electrical") * 17)
-		if(src.material.material_flags & MATERIAL_ENERGY && src.anode_viability)
+		if(src.material.getMaterialFlags() & MATERIAL_ENERGY && src.anode_viability)
 			src.anode_viability = round(src.anode_viability * 1.3)
 		var/cathode_density_factor = 180 - (abs(5-src.material.getProperty("density")) * 45)
 		var/cathode_hardness_factor = 100 - (abs(5-src.material.getProperty("hard")) * 12)

@@ -5,7 +5,6 @@
 	max_stages = 3
 	spread = "The patient's respiratory is starting to fail"
 	cure = "Oxygen-healing drugs or surgery"
-	reagentcure = list("organ_drug1")
 	recureprob = 10
 	affected_species = list("Human")
 	stage_prob = 1
@@ -30,7 +29,7 @@
 		H.cure_disease(D)
 		return
 
-	//so you only need to remove the one lung to cure the disease. 
+	//so you only need to remove the one lung to cure the disease.
 	if ((failing_organ == "l" && !H.organHolder.left_lung) || (failing_organ == "r" && !H.organHolder.right_lung))
 		H.cure_disease(D)
 		return

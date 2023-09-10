@@ -139,6 +139,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 			Console.active = TRUE
 			if (src.transit_delay)
 				Console.visible_message("<span class='alert'>[src.shuttlename] is moving to [end_location]!</span>")
+				playsound(Console.loc, 'sound/machines/transport_move.ogg', 75, 0)
 	return (currentlocation && end_location)
 
 /obj/machinery/computer/transit_shuttle/proc/call_shuttle(area/end_location)
@@ -328,7 +329,12 @@ var/bombini_saved
 	var/location = 1 // 0 for bottom, 1 for top
 
 /obj/machinery/computer/shuttle/emag_act(var/mob/user, var/obj/item/card/emag/E)
-	if(emergency_shuttle.location != SHUTTLE_LOC_STATION) return
+	if(emergency_shuttle.location != SHUTTLE_LOC_STATION)
+		return
+	for (var/datum/flock/flock in flocks)
+		if (flock.relay_in_progress)
+			boutput(user, "<span class='alert'>[src] emits a pained burst of static, but nothing happens!</span>")
+			return
 
 	if (user)
 		var/choice = tgui_alert(user, "Would you like to launch the shuttle?", "Shuttle control", list("Launch", "Cancel"))
@@ -345,8 +351,11 @@ var/bombini_saved
 /obj/machinery/computer/shuttle/attackby(var/obj/item/W, var/mob/user)
 	if(status & (BROKEN|NOPOWER))
 		return
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
+
+	var/obj/item/card/id/id_card = get_id_card(W)
+	if (istype(id_card))
+		W = id_card
+
 	if ((!( istype(W, /obj/item/card) ) || !( ticker ) || emergency_shuttle.location != SHUTTLE_LOC_STATION || !( user )))
 		return
 
@@ -370,11 +379,15 @@ var/bombini_saved
 		if(!choice || emergency_shuttle.location != SHUTTLE_LOC_STATION || BOUNDS_DIST(user, src) > 0) return
 		switch(choice)
 			if("Authorize")
+				for (var/datum/flock/flock in flocks)
+					if (flock.relay_in_progress)
+						boutput(user, "Unable to contact central command, authorization rejected.")
+						return
 				if(emergency_shuttle.timeleft() < 60)
 					boutput(user, "The shuttle is already leaving in less than 60 seconds!")
 					return
 				src.authorized |= W:registered
-				if (src.auth_need - src.authorized.len > 0)
+				if (src.auth_need - length(src.authorized) > 0)
 					boutput(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
 				else
 					boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 60 seconds!</B></span>")
@@ -538,7 +551,7 @@ var/bombini_saved
 	icon_state = "accidents_sign"
 	flags = FPRINT
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	get_desc()
 		return "It says \"[bioele_shifts_since_accident] shifts since the last elevator accident. ([bioele_accidents] accidents in total.)\"."

@@ -119,7 +119,7 @@
 	icon_state = "hld0"
 	opacity = 1
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	examine()
 		. = ..()
@@ -171,7 +171,7 @@
 	attack_hand(var/mob/user)
 		if (!density)
 			return
-		if (unlocked.len == expected.len)
+		if (length(unlocked) == expected.len)
 			open()
 		else
 			boutput(user, "<span class='alert'>The door won't budge!</span>")
@@ -200,13 +200,13 @@
 /obj/nerd_trap_door/voidoor
 	name = "V O I D O O R"
 	desc = "This door cannot be returned. You see, the warranty is void."
-	expected = list("silver key", /*"skeleton key",*/ /*"literal skeleton key",*/ "hot iron key", "cold steel key", "onyx key", /*"key lime pie",*/ /*"futuristic key"*/, /*"virtual key",*/ "golden key", "bee key", "iron key", /*"iridium key",*/ "lunar key")
+	expected = list("silver key", /*"skeleton key",*/ "literal skeleton key", "hot iron key", "cold steel key", "onyx key", /*"key lime pie",*/ /*"futuristic key",*/ /*"virtual key",*/ "golden key", /*"bee key",*/ "iron key", /*"iridium key",*/ "lunar key")
 	icon_state = "hld2"
 
 /obj/steel_beams
 	name = "steel beams"
 	desc = "A bunch of unfortunately placed, tightly packed steel beams. You cannot get a meaningful glimpse of what's on the other side."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 1
 	icon = 'icons/obj/stationobjs.dmi'
@@ -227,7 +227,7 @@
 /obj/faint_shimmer
 	name = "faint shimmer"
 	desc = "Huh."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	invisibility = INVIS_CLOAK
 	blend_mode = 4
@@ -253,7 +253,7 @@
 
 	onStart()
 		..()
-		playsound(owner, 'sound/effects/bow_aim.ogg', 75, 1)
+		playsound(owner, 'sound/effects/bow_pull.ogg', 80, 1)
 		owner.visible_message("<span class='alert'>[owner] pulls the string on [bow]!</span>", "<span class='notice'>You pull the string on [bow]!</span>")
 
 	onDelete()
@@ -316,13 +316,13 @@
 		var/obj/item/arrow/A = O
 
 		if(A.head_material && src.head_material)
-			if(!isSameMaterial(A.head_material, src.head_material))
+			if(!A.head_material.isSameMaterial(src.head_material))
 				return 0
 		else if ((A.head_material && !src.head_material) || (!A.head_material && src.head_material))
 			return 0
 
 		if(A.shaft_material && src.shaft_material)
-			if(!isSameMaterial(A.shaft_material, src.shaft_material))
+			if(!A.shaft_material.isSameMaterial(src.shaft_material))
 				return 0
 		else if ((A.shaft_material && !src.shaft_material) || (!A.shaft_material && src.shaft_material))
 			return 0
@@ -388,11 +388,11 @@
 			name = "[amount] steel-headed arrow[amount > 1 ? "s":""]"
 
 	proc/setHeadMaterial(var/datum/material/M)
-		head_material = copyMaterial(M)
+		head_material = M
 		overlays -= head
 		if (M)
-			head.color = M.color
-			head.alpha = M.alpha
+			head.color = M.getColor()
+			head.alpha = M.getAlpha()
 		else
 			head.color = null
 			head.alpha = 255
@@ -400,12 +400,12 @@
 		setName()
 
 	proc/setShaftMaterial(var/datum/material/M)
-		shaft_material = copyMaterial(M)
-		src.setMaterial(shaft_material,copy = 0, appearance = 0, setname = 0)
+		shaft_material = M
+		src.setMaterial(shaft_material, appearance = 0, setname = 0)
 		overlays -= shaft
 		if (M)
-			shaft.color = M.color
-			shaft.alpha = M.alpha
+			shaft.color = M.getColor()
+			shaft.alpha = M.getAlpha()
 		else
 			shaft.color = null
 			shaft.alpha = 255
@@ -567,7 +567,7 @@
 	damage = 17
 	dissipation_delay = 12
 	dissipation_rate = 5
-	shot_sound = 'sound/effects/bow_fire.ogg'
+	shot_sound = 'sound/effects/bow_release.ogg'
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB
 	implanted = null
@@ -579,8 +579,7 @@
 			playsound(A, 'sound/impact_sounds/Flesh_Stab_1.ogg', 75, 1)
 			var/obj/item/implant/projectile/body_visible/arrow/B = P.implanted
 			if (istype(B))
-				if (B.material)
-					B.material.triggerOnAttack(B, null, A)
+				B.material_on_attack_use(null, A)
 				B.arrow.reagents?.reaction(A, 2)
 				B.arrow.reagents?.trans_to(A, B.arrow.reagents.total_volume)
 			take_bleeding_damage(A, null, round(src.power / 2), src.hit_type)
@@ -693,7 +692,7 @@
 		current_projectile.name = loaded.name
 		loaded.set_loc(A)
 		current_projectile.implanted = A
-		current_projectile.material = copyMaterial(loaded.head_material)
+		current_projectile.material = loaded.head_material
 		var/default_damage = 20
 		if(loaded.head_material)
 			if(loaded.head_material.hasProperty("hard"))
@@ -725,6 +724,7 @@
 				loadFromQuiver(user)
 				if(loaded)
 					boutput(user, "<span class='alert'>You load an arrow from the quiver.</span>")
+					playsound(user, 'sound/effects/bow_nock.ogg', 60, 0)
 				return
 			if(reach)
 				return
@@ -750,9 +750,10 @@
 
 	attackby(var/obj/item/arrow/I, var/mob/user)
 		if (!istype(I))
-			return
+			return ..()
 		if (loaded)
 			boutput(user, "<span class='alert'>An arrow is already loaded onto the bow.</span>")
+			return
 
 		if(I.amount > 1)
 			var/obj/item/arrow/C = I.clone(src)
@@ -764,3 +765,4 @@
 			user.u_equip(I)
 			loaded = I
 			I.set_loc(src)
+			playsound(user, 'sound/effects/bow_nock.ogg', 60, 0)

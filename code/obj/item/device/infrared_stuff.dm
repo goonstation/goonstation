@@ -15,7 +15,6 @@ TYPEINFO(/obj/item/device/infra)
 	name = "Laser Tripwire"
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
 	icon_state = "infrared0"
-	var/obj/beam/i_beam/first = null
 	var/state = 0
 	var/visible = 0
 	flags = FPRINT | TABLEPASS| CONDUCT

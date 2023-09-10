@@ -3,7 +3,7 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "centrifuge0"
 	desc = "A large machine that can be used to separate radioactive isotopes from spent fuel."
-	anchored = TRUE
+	anchored = ANCHORED
 	density = TRUE
 	var/doing_stuff = FALSE
 	var/active_icon_state = "centrifuge1"
@@ -43,6 +43,7 @@
 					playsound(src, sound_process, 40, 1)
 				else
 					playsound(src, sound_grump, 40, 1)
+				waste.setMaterial(getMaterial(waste.default_material), FALSE, FALSE, TRUE, FALSE)
 				waste.material.setProperty("spent_fuel", extracted_fuel)
 				extracted_fuel = 0
 				doing_stuff = FALSE

@@ -21,7 +21,7 @@ TYPEINFO(/obj/item/remote/porter)
 	icon_state = "locator"
 	item_state = "electronic"
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	w_class = W_CLASS_SMALL
 	var/list/machinerylist = list()
 	var/machinery_name = "" // For user prompt stuff.
@@ -103,12 +103,12 @@ TYPEINFO(/obj/item/remote/porter)
 
 		src.machinerylist = list()
 		src.get_machinery()
-		if (!src.machinerylist || (src.machinerylist && src.machinerylist.len == 0))
+		if (!src.machinerylist || (src.machinerylist && length(src.machinerylist) == 0))
 			user.show_text("Couldn't find any linkable machinery.", "red")
 			return
 
 		var/t1
-		if (src.machinerylist.len == 1)
+		if (length(src.machinerylist) == 1)
 			t1 = src.machinerylist[1]
 		else
 			t1 = input("Please select a [src.machinery_name] to control", "Target Selection", null, null) as null|anything in src.machinerylist
@@ -303,7 +303,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 	icon_state = "port_a_brig_0"
 	desc = "A portable holding cell with teleporting capabilites."
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	p_class = 1.8
 	req_access = list(access_security)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
@@ -407,9 +407,8 @@ TYPEINFO(/obj/machinery/port_a_brig)
 				UnsubscribeProcess()
 
 	attackby(obj/item/W, mob/user as mob)
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
-		if (istype(W, /obj/item/card/id))
+		var/obj/item/card/id/id_card = get_id_card(W)
+		if (istype(id_card, /obj/item/card/id))
 			if (src.allowed(user))
 				src.locked = !src.locked
 				boutput(user, "You [ src.locked ? "lock" : "unlock"] the [src].")
@@ -435,16 +434,9 @@ TYPEINFO(/obj/machinery/port_a_brig)
 			actions.start(new /datum/action/bar/portabrig_shove_in(src, user, G.affecting, G), user)
 
 		else if (ispryingtool(W))
-			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Prying door open.</span>")
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-			sleep(15 SECONDS)
-			if ((user.loc == T && user.equipped() == W))
-				src.locked = 0
-				boutput(user, "<span class='notice'>You pried the door open.</span>")
-			else if((isrobot(user) && (user.loc == T)))
-				src.locked = 0
-				boutput(user, "<span class='notice'>You pried the door open.</span>")
+			SETUP_GENERIC_ACTIONBAR(user, src, 15 SECONDS, /obj/machinery/port_a_brig/proc/pry_open, list(user), W.icon, W.icon_state,
+				"<span class='alert'>[user] pries open [src].</span>", INTERRUPT_ACT | INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_ATTACKED | INTERRUPT_STUNNED)
 
 	proc/build_icon()
 		if(src.occupant)
@@ -502,10 +494,12 @@ TYPEINFO(/obj/machinery/port_a_brig)
 
 	onEnd()
 		..()
-		if (!src.owner || !src.victim || QDELETED(G))
+		if (!src.owner || !src.victim || QDELETED(G) || brig?.occupant)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		src.brig.visible_message("<span class='alert'>[owner] shoves [victim] into [src.brig]!</span>")
 		src.brig.occupant = victim
 		victim.set_loc(src.brig)
@@ -514,6 +508,9 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		src.brig.build_icon()
 		qdel(G)
 
+/obj/machinery/port_a_brig/proc/pry_open()
+	playsound(src.loc, 'sound/items/Crowbar.ogg', 100, TRUE)
+	src.locked = FALSE
 
 /obj/item/paper/Port_A_Brig
 	name = "paper - 'A-97 Port-A-Brig Manual"
@@ -536,7 +533,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 	var/image/image_lid = null
 	desc = "An emergency transportation device for critically injured patients."
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	p_class = 1.2
 	event_handler_flags = USE_FLUID_ENTER
 	var/mob/occupant = null
@@ -681,7 +678,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 	icon_closed = "portasci"
 	icon_opened = "portasci-open"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	p_class = 6
 	//mats = 30 // Nope! We don't need multiple personal teleporters without any z-level restrictions (Convair880).
 	var/homeloc = null
@@ -700,8 +697,8 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 
 		src.homeloc = src.loc
 
-		possible_new_friend = typesof(/obj/critter/bear) + typesof(/mob/living/critter/spider/ice) + typesof(/mob/living/critter/small_animal/cat) + typesof(/obj/critter/parrot)\
-						+ list(/obj/critter/aberration, /obj/critter/domestic_bee, /obj/critter/domestic_bee/chef, /obj/critter/bat/buff, /obj/critter/bat, /obj/critter/bloodling, /obj/critter/wraithskeleton, /obj/critter/magiczombie, /obj/critter/brullbar)\
+		possible_new_friend = typesof(/mob/living/critter/bear) + typesof(/mob/living/critter/spider/ice) + typesof(/mob/living/critter/small_animal/cat) + typesof(/obj/critter/parrot)\
+						+ list(/mob/living/critter/aberration, /obj/critter/domestic_bee, /obj/critter/domestic_bee/chef, /obj/critter/bat/buff, /obj/critter/bat, /obj/critter/bloodling, /mob/living/critter/skeleton/wraith, /mob/living/critter/skeleton, /mob/living/critter/brullbar)\
 						- list(/mob/living/critter/spider/ice/queen)
 
 	disposing()
@@ -766,7 +763,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 				var/list/mob/body_list = list()
 				for(var/mob/living/carbon/M in src.contents) //Don't think you're gonna get lucky, ghosts!
 					if(!isdead(M)) body_list += M
-				if(body_list.len > 1)
+				if(length(body_list) > 1)
 
 					for(var/I = 1, I <= body_list.len , I++)
 						var/next_in_line = ((I % body_list.len) + 1)
@@ -785,10 +782,10 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 					if(81 to INFINITY) //Travel sickness!
 						for(var/mob/living/carbon/M in src.contents)
 							SPAWN(rand(10,40))
-								M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>Oh god, that was terrible!</span>", "<span class='alert'>You hear a splat!</span>")
+								var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>"
+								M.vomit(0, null, vomit_message)
 								M.change_misstep_chance(40)
 								M.changeStatus("drowsy", 10 SECONDS)
-								M.vomit()
 
 					if(51 to 70) //A nice tan
 						for(var/mob/living/carbon/M in src.contents)
@@ -845,9 +842,9 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 	icon_state = "vend"
 	icon_deny = "vend-deny"
 	layer = FLOOR_EQUIP_LAYER1
-	req_access_txt = "5"
+	req_access = list(access_medical_lockers)
 	acceptcard = 0
-	anchored = 0
+	anchored = UNANCHORED
 	p_class = 1.2
 	can_fall = 0
 	ai_control_enabled = 1

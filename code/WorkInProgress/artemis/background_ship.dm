@@ -1,3 +1,5 @@
+#ifdef ENABLE_ARTEMIS
+
 /datum/galactic_object/ship
 	var/rotation = 0
 	var/body_icon = null
@@ -51,22 +53,22 @@
 	process()
 		var/animate = 0
 		var/datum/galactic_object/ship/G = master
-		while(start)
-			if(!rot_mag && !vel_mag && !G.vel_mag)
-				src.start = 0
-			if(rot_mag)
-				animate = 1
-				src.stars_rotate(rot_mag)
-			if(vel_mag)
-				animate = 1
-				src.stars_pan(vel_mag,vel_angle)
-			if(G.vel_mag)
-				animate = 1
-				src.stars_pan(G.vel_mag,G.vel_angle)
-			if(animate)
-				animate_stars()
-				animate = 0
-			sleep(animation_speed)
+		//while(start)
+		if(!rot_mag && !vel_mag && !G.vel_mag)
+			src.start = 0
+		if(rot_mag)
+			animate = 1
+			src.stars_rotate(rot_mag)
+		if(vel_mag)
+			animate = 1
+			src.stars_pan(vel_mag,vel_angle)
+		if(G.vel_mag)
+			animate = 1
+			src.stars_pan(G.vel_mag,G.vel_angle)
+		if(animate)
+			animate_stars()
+			animate = 0
+			//sleep(animation_speed)
 		return
 
 	stars_update(mag_pan,mag_rot,angle,ship_ang)
@@ -117,3 +119,5 @@
 
 		x_old = src.actual_x
 		y_old = src.actual_y
+
+#endif

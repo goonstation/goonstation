@@ -64,7 +64,7 @@
 		if (!isturf(T))
 			return
 		//spatial interdictor: nullify radiation pulses
-		//consumes 100 units of charge per tile protected
+		//consumes 100 units of charge (50,000 joules) per tile protected
 		for_by_tcl(IX, /obj/machinery/interdictor)
 			if (IX.expend_interdict(100,T,1))
 				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
@@ -116,7 +116,7 @@
 		if (!isturf(T))
 			return
 		//spatial interdictor: nullify radiation pulses
-		//consumes 150 units of charge per tile protected
+		//consumes 150 units of charge (75,000 joules) per tile protected
 		for_by_tcl(IX, /obj/machinery/interdictor)
 			if (IX.expend_interdict(150,T,1))
 				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)

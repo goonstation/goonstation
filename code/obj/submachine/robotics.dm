@@ -6,12 +6,133 @@
 	desc = "Used by cyborgs for emergency recharging of APCs."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "robojumper-plus"
-	var/positive = 1 //boolean, if positive, then you will charge an APC with your cell, if negative, you will take charge from apc
+	var/positive = TRUE //boolean, if positive, then you will charge an APC with your cell, if negative, you will take charge from apc
+	var/charge_amount = 250
 
 	attack_self(var/mob/user as mob)
 		positive = !positive
 		icon_state = "robojumper-[positive? "plus": "minus"]"
 		boutput(user, "<span class='alert'>The jumper cables will now transfer charge [positive ? "from you to the other device" : "from the other device to you"].</span>")
+
+	afterattack(var/atom/target, mob/user, flag)
+		if (!isobj(target))
+			..()
+			return
+		if(istype(target,/obj/machinery/power/apc))
+			actions.start(new/datum/action/bar/private/icon/robojumper(user, target), user)
+
+/datum/action/bar/private/icon/robojumper
+	duration = 1 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION | INTERRUPT_ACT
+	id = "robojumper"
+	icon = 'icons/mob/hud_robot.dmi'
+	icon_state = "robocable_charge"
+
+	var/mob/user
+	var/atom/movable/target
+	var/particles/P
+
+	New(mob/user, target)
+		var/obj/item/robojumper/jumper = user.equipped()
+		if(istype(jumper) && jumper.positive)
+			icon_state = "robocable_discharge"
+		. = ..()
+		src.user = user
+		src.target = target
+		P = src.user.GetParticles("robojumper")
+		if (!P) // only needs to be made on the mob once
+			src.user.UpdateParticles(new/particles/arcfiend/robojumper, "robojumper")
+			P = src.user.GetParticles("robojumper")
+
+	onUpdate()
+		..()
+		if (!(BOUNDS_DIST(src.user, src.target) == 0))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onStart()
+		..()
+
+		P.spawning = initial(P.spawning)
+		if (!(BOUNDS_DIST(src.user, src.target) == 0))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		src.loopStart()
+
+	onInterrupt(flag)
+		if(INTERRUPT_MOVE==flag && (BOUNDS_DIST(src.user, src.target) == 0))
+			state = ACTIONSTATE_RUNNING
+			interrupt_start = -1
+			return
+		P.spawning = 0
+		. = ..()
+
+	onEnd()
+		var/restart = FALSE
+		if (!(BOUNDS_DIST(src.user, src.target) == 0))
+			..()
+			interrupt(INTERRUPT_ALWAYS)
+
+		var/obj/item/robojumper/jumper = user.equipped()
+		var/mob/living/silicon/S = user
+		var/obj/machinery/power/apc/apc = target
+		if (istype(jumper) && istype(S) && istype(apc) )
+			var/obj/item/cell/donor_cell = null
+			var/obj/item/cell/recipient_cell = null
+			if (jumper.positive)
+				donor_cell = S.cell
+				recipient_cell = apc.cell
+			else
+				donor_cell = apc.cell
+				recipient_cell = S.cell
+
+			if (isnull(donor_cell))
+				boutput(user, "<span class='alert'>You have no cell installed!</span>")
+				..()
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			else if (isnull(recipient_cell))
+				boutput(user, "<span class='alert'>[jumper.positive? "[apc] has" : "you have"] no cell installed!</span>")
+				..()
+				interrupt(INTERRUPT_ALWAYS)
+				return
+
+			var/overspill = jumper.charge_amount - recipient_cell.charge
+			if (recipient_cell.charge >= recipient_cell.maxcharge)
+				boutput(user, "<span class='notice'>[jumper.positive ? "[apc]" : "Your cell"] is already fully charged.</span>")
+			else if (donor_cell.charge <= jumper.charge_amount)
+				boutput(user, "<span class='alert'>[jumper.positive ? "You don't" : "[apc] doesn't"] have enough power to transfer!</span>")
+			else if (overspill >= jumper.charge_amount)
+				donor_cell.use(overspill)
+				recipient_cell.charge += overspill
+				if (jumper.positive)
+					user.visible_message("<span class='notice'>[user] transfers some of their power to [apc]!</span>", "<span class='notice'>You transfer [overspill] charge. The APC is now fully charged.</span>")
+				else
+					user.visible_message("<span class='notice'>[user] transfers some of the power from [apc] to themselves!</span>", "<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>")
+					logTheThing(LOG_STATION, user, "drains [overspill] power from the APC [apc] now [100*apc.cell.charge/apc.cell.maxcharge]% [log_loc(apc)]")
+			else
+				donor_cell.use(jumper.charge_amount)
+				recipient_cell.charge += jumper.charge_amount
+				if (jumper.positive)
+					user.visible_message("<span class='notice'>[user] transfers some of their power to [apc]!</span>", "<span class='notice'>You transfer [jumper.charge_amount] charge.</span>")
+				else
+					user.visible_message("<span class='notice'>[user] transfers some of the power from [apc] to yourself!</span>", "<span class='notice'>You transfer [jumper.charge_amount] charge.</span>")
+					logTheThing(LOG_STATION, user, "drains [jumper.charge_amount] power from the APC [apc] now [100*apc.cell.charge/apc.cell.maxcharge]% [log_loc(apc)]")
+				restart = TRUE
+			apc.charging = apc.chargemode
+
+			if (prob(35))
+				playsound(owner.loc, 'sound/effects/electric_shock_short.ogg', 20, TRUE, -2, pitch = 0.7)
+			user.set_dir(get_dir(user, src.target))
+			src.target.add_fingerprint(user)
+			if(restart)
+				src.onRestart()
+			else
+				P.spawning = 0
+				..()
+		else
+			..()
+			interrupt(INTERRUPT_ALWAYS)
+
 
 /obj/item/atmosporter
 	name = "atmospherics transporter"
@@ -21,7 +142,7 @@
 	var/capacity = 2
 
 	attack_self(var/mob/user as mob)
-		if (src.contents.len == 0) boutput(user, "<span class='alert'>You have nothing stored!</span>")
+		if (length(src.contents) == 0) boutput(user, "<span class='alert'>You have nothing stored!</span>")
 		else
 			if (user.loc != get_turf(user.loc))
 				boutput(user, "<span class='alert'>You're in too small a space to drop anything!</span>")
@@ -124,7 +245,7 @@
 	else
 		if (istype(W, /obj/item/sheet))
 			var/obj/item/sheet/S = W
-			if (S.material.material_flags & MATERIAL_METAL)
+			if (S.material.getMaterialFlags() & MATERIAL_METAL)
 				if (src.metal_ammo == src.max_ammo)
 					boutput(user, "The lamp manufacturer is full.")
 				else
@@ -200,7 +321,7 @@
 	if (issilicon(user))
 		var/mob/living/silicon/S = user
 		if (S.cell)
-			S.cell.charge -= cost
+			S.cell.use(cost)
 	else
 		if (metal_ammo > 0) //shouldn't be possible to fail
 			metal_ammo--
@@ -379,7 +500,7 @@
 
 			if (isrobot(user)) // Carbon mobs might end up using the synthesizer somehow, I guess?
 				var/mob/living/silicon/robot/R = user
-				if (R.cell) R.cell.charge -= 100
+				if (R.cell) R.cell.use(100)
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] dispenses a [src.vend_this]!</span>", "<span class='notice'>You dispense a [src.vend_this]!</span>")
 			src.last_use = world.time

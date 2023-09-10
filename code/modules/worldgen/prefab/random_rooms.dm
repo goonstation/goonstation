@@ -32,6 +32,8 @@ proc/buildRandomRooms()
 	shuffle_list(by_type[/obj/landmark/random_room])
 	for_by_tcl(landmark, /obj/landmark/random_room)
 		landmark.apply()
+	for_by_tcl(landmark, /obj/landmark/engine_room)
+		landmark.apply()
 
 
 /obj/landmark/random_room
@@ -71,3 +73,7 @@ proc/buildRandomRooms()
 	size5x3
 		size = "5x3"
 		icon = 'icons/effects/mapeditor/5x3tiles.dmi'
+
+	size7x5
+		size = "7x5"
+		icon = 'icons/effects/mapeditor/7x5tiles.dmi'

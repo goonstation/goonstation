@@ -17,18 +17,19 @@ TYPEINFO_NEW(/obj/table/flock)
 	. = ..()
 	smooth_list = typecacheof(/obj/table/flock/auto)
 
+TYPEINFO(/obj/table/flock)
+	mat_appearances_to_ignore = list("gnesis")
 /obj/table/flock
 	name = "humming surface"
 	desc = "A table? An alien supercomputer? Well, it's flat, you can put stuff on it."
 	icon = 'icons/obj/furniture/table_flock.dmi'
 	parts_type = /obj/item/furniture_parts/table/flock
-	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 
 /obj/table/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_attack=FALSE)
 
@@ -56,18 +57,16 @@ TYPEINFO_NEW(/obj/table/flock)
 /obj/table/flock/auto
 	auto = TRUE
 
+TYPEINFO(/obj/item/furniture_parts/table/flock)
+	mat_appearances_to_ignore = list("gnesis")
 /obj/item/furniture_parts/table/flock
 	name = "collapsed disk"
 	desc = "An extendable... <i>thing</i> that can be stretched out to make, uh, probably a table of some kind? Where's the goddamn instructions?!"
 	icon = 'icons/obj/furniture/table_flock.dmi'
 	furniture_type = /obj/table/flock/auto
-	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-
-/obj/item/furniture_parts/table/flock/New()
-	..()
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
+	default_material = "gnesis"
 
 /obj/item/furniture_parts/table/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -81,6 +80,8 @@ TYPEINFO_NEW(/obj/table/flock)
 // CHAIR & PARTS
 ///////////////////////////
 
+TYPEINFO(/obj/stool/chair/comfy/flock)
+	mat_appearances_to_ignore = list("gnesis")
 /obj/stool/chair/comfy/flock
 	name = "thrumming alcove"
 	desc = "It's like an egg chair, but gaudy. Okay, more gaudy."
@@ -91,13 +92,12 @@ TYPEINFO_NEW(/obj/table/flock)
 	climbable = FALSE
 	parts_type = /obj/item/furniture_parts/flock_chair
 	scoot_sounds = list( 'sound/misc/chair/glass/scoot1.ogg', 'sound/misc/chair/glass/scoot2.ogg', 'sound/misc/chair/glass/scoot3.ogg', 'sound/misc/chair/glass/scoot4.ogg', 'sound/misc/chair/glass/scoot5.ogg' )
-	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 
 /obj/stool/chair/comfy/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE, report_attack=FALSE)
 
@@ -108,6 +108,8 @@ TYPEINFO_NEW(/obj/table/flock)
 		<br><span class='bold'>ID:</span> Resting Chamber
 		<br><span class='bold'>###=-</span></span>"}
 
+TYPEINFO(/obj/item/furniture_parts/flock_chair)
+	mat_appearances_to_ignore = list("gnesis")
 /obj/item/furniture_parts/flock_chair
 	name = "pulsing orb"
 	desc = "It feels dense and like it wants to pop open. If you fumble around, maybe you can find some sort of catch or button."
@@ -118,13 +120,9 @@ TYPEINFO_NEW(/obj/table/flock)
 	stamina_cost = 10
 	furniture_type = /obj/stool/chair/comfy/flock
 	furniture_name = "thrumming alcove"
-	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-
-/obj/item/furniture_parts/flock_chair/New()
-	..()
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
+	default_material = "gnesis"
 
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -139,6 +137,8 @@ TYPEINFO_NEW(/obj/table/flock)
 // LOCKER
 ///////////////////////////
 
+TYPEINFO(/obj/storage/closet/flock)
+	mat_appearances_to_ignore = list("steel","gnesis")
 /obj/storage/closet/flock
 	name = "flashy capsule"
 	desc = "It looks kinda like a closet. There's no handle, though. Also, it looks like a giant bar of soap."
@@ -148,9 +148,9 @@ TYPEINFO_NEW(/obj/table/flock)
 	icon_opened = "flock-open"
 	open_sound = 'sound/misc/flockmind/flockdrone_locker_open.ogg'
 	close_sound = 'sound/misc/flockmind/flockdrone_locker_close.ogg'
-	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 	var/health_attack = 100
 	var/health_max = 100
 	var/repair_per_resource = 2.5
@@ -165,14 +165,13 @@ TYPEINFO_NEW(/obj/table/flock)
 			playsound(T, 'sound/impact_sounds/Glass_Shatter_3.ogg', 25, 1)
 			var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard
 			S.set_loc(T)
-			S.setMaterial(getMaterial("gnesisglass"), copy = FALSE)
+			S.setMaterial(getMaterial("gnesisglass"))
 			src.dump_contents()
 			make_cleanable( /obj/decal/cleanable/flockdrone_debris, T)
 			qdel(src)
 
 /obj/storage/closet/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE, report_attack=FALSE)
 
@@ -251,6 +250,8 @@ TYPEINFO_NEW(/obj/table/flock)
 // LIGHT FITTING
 ///////////////////////////
 
+TYPEINFO(/obj/machinery/light/flock)
+	mat_appearances_to_ignore = list("gnesis")
 /obj/machinery/light/flock
 	name = "shining cabochon"
 	desc = "It pulses and flares to a strange rhythm."
@@ -261,13 +262,12 @@ TYPEINFO_NEW(/obj/table/flock)
 	power_usage = 0
 	on = TRUE
 	removable_bulb = FALSE
-	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 
 /obj/machinery/light/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"))
 	light.set_color(0.45, 0.75, 0.675)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE)
@@ -299,19 +299,20 @@ TYPEINFO_NEW(/obj/table/flock)
 /////////////
 // FIBRENET
 /////////////
+TYPEINFO(/obj/lattice/flock)
+	mat_appearances_to_ignore = list("steel","gnesis")
 /obj/lattice/flock
 	desc = "Some sort of floating mesh in space, like a bendy lattice. Those wacky flock things."
 	name = "fibrenet"
 	var/flock_id = "Structural foundation"
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "fibrenet"
-	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 
 /obj/lattice/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"), appearance=FALSE, setname=FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_attack=FALSE)
 
@@ -339,6 +340,8 @@ TYPEINFO_NEW(/obj/table/flock)
 /////////////
 // BARRICADE
 /////////////
+TYPEINFO(/obj/grille/flock)
+	mat_appearances_to_ignore = list("steel","gnesis")
 /obj/grille/flock
 	desc = "A glowing mesh of metallic fibres."
 	name = "barricade"
@@ -350,12 +353,12 @@ TYPEINFO_NEW(/obj/table/flock)
 	var/repair_per_resource = 1
 	shock_when_entered = FALSE
 	auto = FALSE
-	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	can_be_snipped = FALSE
 	can_be_unscrewed = FALSE
 	can_build_window = FALSE
+	default_material = "gnesis"
 
 	update_icon(special_icon_state, override_parent = TRUE) //fix for perspective grilles fucking these up
 		if (ruined)
@@ -378,7 +381,6 @@ TYPEINFO_NEW(/obj/table/flock)
 
 /obj/grille/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"), appearance=FALSE, setname=FALSE)
 	src.UpdateIcon()
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)

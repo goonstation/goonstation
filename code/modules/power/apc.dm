@@ -21,11 +21,13 @@ var/zapLimiter = 0
 TYPEINFO(/obj/machinery/power/apc)
 	mats = 10
 
+ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapStuff)
+
 /obj/machinery/power/apc
 	name = "area power controller"
 	desc = "The smaller, more numerous sibling of the SMES. Controls the power of entire rooms, and if the generator goes offline, can supply electricity from an internal cell."
 	icon_state = "apc0"
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_ABOVE
 	req_access = list(access_engineering_power)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
@@ -58,6 +60,7 @@ TYPEINFO(/obj/machinery/power/apc)
 	var/lastused_equip = 0
 	var/lastused_environ = 0
 	var/lastused_total = 0
+	var/cycle_load = 0 //distinct from lastused_total; tracks state of expended power through the cycling process
 	var/main_status = 0
 	var/light_consumption = 0
 	var/equip_consumption = 0
@@ -232,6 +235,10 @@ TYPEINFO(/obj/machinery/power/apc)
 		else
 			. += "The cover is closed."
 
+/obj/machinery/power/apc/proc/toggle_operating()
+	src.operating = !src.operating
+	src.update()
+	UpdateIcon()
 
 /obj/machinery/power/apc/proc/getMaxExcess()
 	var/netexcess = 0
@@ -245,6 +252,7 @@ TYPEINFO(/obj/machinery/power/apc)
 	return netexcess
 
 /obj/machinery/power/apc/proc/zapStuff() // COGWERKS NOTE: disabling calls to this proc for now, it is ruining the live servers
+	set name = "Zap Stuff"
 	var/atom/target = null
 	var/atom/last = src
 
@@ -494,52 +502,9 @@ TYPEINFO(/obj/machinery/power/apc)
 
 	else if (issilicon(user))
 		if (istype(W, /obj/item/robojumper))
-			var/mob/living/silicon/S = user
-			var/obj/item/robojumper/jumper = W
-			var/obj/item/cell/donor_cell = null
-			var/obj/item/cell/recipient_cell = null
-			if (jumper.positive)
-				donor_cell = S.cell
-				recipient_cell = src.cell
-			else
-				donor_cell = src.cell
-				recipient_cell = S.cell
-
-			if (isnull(donor_cell))
-				boutput(user, "<span class='alert'>You have no cell installed!</span>")
-				return
-			else if (isnull(recipient_cell))
-				boutput(user, "<span class='alert'>[jumper.positive? "[src] has" : "you have"] no cell installed!</span>")
-				return
-
-			var/overspill = 250 - recipient_cell.charge
-			if (recipient_cell.charge >= recipient_cell.maxcharge)
-				boutput(user, "<span class='notice'>[jumper.positive ? "[src]" : "Your"] cell is already fully charged.</span>")
-			else if (donor_cell.charge <= 250)
-				boutput(user, "<span class='alert'>You do not have enough charge left to do this!</span>")
-			else if (overspill >= 250)
-				donor_cell.charge -= overspill
-				recipient_cell.charge += overspill
-				if (jumper.positive)
-					user.visible_message("<span class='notice'>[user] transfers some of their power to [src]!</span>", "<span class='notice'>You transfer [overspill] charge. The APC is now fully charged.</span>")
-				else
-					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>")
-					logTheThing(LOG_STATION, user, "drains [overspill] power from the APC [src] [log_loc(src)]")
-			else
-				donor_cell.charge -= 250
-				recipient_cell.charge += 250
-				if (jumper.positive)
-					user.visible_message("<span class='notice'>[user] transfers some of their power to [src]!</span>", "<span class='notice'>You transfer 250 charge.</span>")
-				else
-					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer 250 charge.</span>")
-					logTheThing(LOG_STATION, user, "drains [250] power from the APC [src] [log_loc(src)]")
-			charging = chargemode
-
+			return
 		else return src.Attackhand(user)
-
-	else if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (istype(W, /obj/item/card/id))			// trying to unlock the interface with an ID card
+	else if (istype(get_id_card(W), /obj/item/card/id))			// trying to unlock the interface with an ID card
 		if(emagged)
 			boutput(user, "The interface is broken")
 		else if(opened)
@@ -1175,8 +1140,8 @@ TYPEINFO(/obj/machinery/power/apc)
 		return 0
 
 /obj/machinery/power/apc/add_load(var/amount)
-	if(terminal?.powernet && !circuit_disabled)
-		terminal.powernet.newload += amount
+	if(!circuit_disabled)
+		. = terminal?.add_load(amount)
 
 /obj/machinery/power/apc/avail()
 	if(terminal && !circuit_disabled)
@@ -1185,6 +1150,12 @@ TYPEINFO(/obj/machinery/power/apc)
 		return 0
 
 /obj/machinery/power/apc/process()
+	if(!terminal || !terminal.powernet) // if no powernet is managing our cycling, do it on the APC
+		if(load_cycle())
+			cell_cycle()
+
+///APC cycle phase 1: load cycle. Check if the APC's able to operate, and if so, combine and prepare the load for phase 2 where it gets expended.
+/obj/machinery/power/apc/proc/load_cycle()
 	if(debug) boutput(world, "PROCESS [world.timeofday / 10]")
 
 	if(status & BROKEN)
@@ -1193,9 +1164,11 @@ TYPEINFO(/obj/machinery/power/apc)
 		if(!area.requires_power)
 			return
 	else
-		qdel(src)
+		SPAWN(1)
+			qdel(src)
 		CRASH("Broken-ass APC [identify_object(src)] @[x],[y],[z] on [map_settings ? map_settings.name : "UNKNOWN"]")
 
+	. = TRUE //APC is working and can proceed to the next phase
 
 	/*
 	if (equipment > 1) // off=0, off auto=1, on=2, on auto=3
@@ -1213,6 +1186,7 @@ TYPEINFO(/obj/machinery/power/apc)
 	area.clear_usage()
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ
+	cycle_load = lastused_total
 
 	if (src.setup_networkapc && host_id && terminal)
 		if(src.timeout == 0)
@@ -1226,24 +1200,20 @@ TYPEINFO(/obj/machinery/power/apc)
 				src.timeout_alert = 1
 				src.post_status(src.host_id, "command","term_ping","data","reply")
 
+///APC cycle phase 2: cell cycle. Debit the load from cell, and if any external power is available, attempt to use it to "settle up"
+/obj/machinery/power/apc/proc/cell_cycle(var/charge_percentile = 1)
 	//store states to update icon if any change
 	var/last_lt = lighting
 	var/last_eq = equipment
 	var/last_en = environ
 	var/last_ch = charging
 
-	var/excess = surplus()
-
 	if(!src.avail())
 		main_status = 0
-	else if(excess < 0)
+	else if(!(terminal?.powernet?.apc_charge_share))
 		main_status = 1
 	else
 		main_status = 2
-
-	var/perapc = 0
-	if(terminal?.powernet)
-		perapc = terminal.powernet.perapc
 
 	if(zapLimiter < APC_ZAP_LIMIT_PER_5 && prob(6) && !shorted && avail() > 3000000)
 		SPAWN(0)
@@ -1254,29 +1224,40 @@ TYPEINFO(/obj/machinery/power/apc)
 
 	if(cell && !shorted)
 
-		// draw power from cell as before
+		// First, draw power from cell to the extent we're able
 
-		var/cellused = min(cell.charge, CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
+		var/cellused = min(cell.charge, CELLRATE * lastused_total) // Clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
-		if(excess > 0 || perapc > lastused_total)		// if power excess, or enough anyway, recharge the cell
-														// by the same amount just used
+		// Current status: cell has had this update's power drawn to the extent possible
+		// Next step: attempt to square up with the grid
 
+		// If our load is supposed to be fully covered, double check that it actually is, and if so we're good to go!
+		if(charge_percentile == 1 && add_load(cycle_load))
 			cell.give(cellused)
-			add_load(cellused/CELLRATE)		// add the load used to recharge the cell
+			cycle_load = 0
 
+		// If not, see if we can reimburse enough to stay online, or fall over and die otherwise
+		else
+			//Charge based on the share we're supposed to have or the actual remaining power (whichever is lower)
+			var/attempt_to_supply = min(lastused_total * charge_percentile, terminal?.powernet?.avail - terminal?.powernet?.newload)
+			if(!add_load(attempt_to_supply))
+				attempt_to_supply = 0
+			if( (cell.charge/CELLRATE) + attempt_to_supply >= cycle_load )
+				// do we have enough power in the cell + apc allotment to run?
+				// if yes, reimburse what power we can and don't enter a failure state
+				cell.charge = min(cell.maxcharge, cell.charge + (attempt_to_supply * CELLRATE))
+				cycle_load -= attempt_to_supply
 
-		else		// no excess, and not enough per-apc
+				// status: core allotment is empty and we recharged the cell
+				// we can pop a power usage change here: the total we couldn't recharge
+				if (zamus_dumb_power_popups)
+					new /obj/maptext_junk/power(get_turf(src), change = -(cycle_load - attempt_to_supply), channel = -1)
 
-			if( (cell.charge/CELLRATE+perapc) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
-
-				cell.charge = min(cell.maxcharge, cell.charge + CELLRATE * perapc)	//recharge with what we can
-				add_load(perapc)		// so draw what we can from the grid
+			else
+				// not enough power available to run the last tick!
+				// we are 100% out of power.
 				charging = 0
-
-			else	// not enough power available to run the last tick!
-				charging = 0
-				chargecount = 0
 				// This turns everything off in the case that there is still a charge left on the battery, just not enough to run the room.
 				equipment = autoset(equipment, 0)
 				lighting = autoset(lighting, 0)
@@ -1285,46 +1266,9 @@ TYPEINFO(/obj/machinery/power/apc)
 		// set channels depending on how much charge we have left
 		check_channel_thresholds()
 
-		// now trickle-charge the cell
-
-		if(chargemode && charging == 1 && operating)
-			if(excess > 0)		// check to make sure we have enough to charge
-				// Max charge is perapc share, capped to cell capacity, or % per second constant (Whichever is smallest)
-				var/ch = min(perapc, (cell.maxcharge - cell.charge), (cell.maxcharge*CHARGELEVEL))
-				add_load(ch) // Removes the power we're taking from the grid
-				cell.give(ch) // actually recharge the cell
-
-			else
-				charging = 0		// stop charging
-				chargecount = 0
-
-		// show cell as fully charged if so
-
-		if(cell.charge >= cell.maxcharge)
-			charging = 2
-		else if (charging == 2)
-			charging = 0 // we lost power somehow; move to failure mode
-
-		if(chargemode)
-			if(!charging)
-				if(excess > cell.maxcharge*CHARGELEVEL)
-					chargecount++
-				else
-					chargecount = 0
-
-				if(chargecount == 10)
-
-					chargecount = 0
-					charging = 1
-
-		else // chargemode off
-			charging = 0
-			chargecount = 0
-
 	else // no cell, switch everything off
 
 		charging = 0
-		chargecount = 0
 		equipment = autoset(equipment, 0)
 		lighting = autoset(lighting, 0)
 		environ = autoset(environ, 0)
@@ -1336,6 +1280,39 @@ TYPEINFO(/obj/machinery/power/apc)
 		UpdateIcon()
 		update()
 
+///Post-cycle APC proc; updates charging status, and delivers discretionary recharging if excess power is available.
+/obj/machinery/power/apc/proc/accept_excess(var/allocated_excess)
+	var/last_ch = charging
+	if(cell && !shorted && chargemode)
+		if(cell.charge < cell.maxcharge) // check to make sure we're still at a net positive and actually need to charge
+			if(allocated_excess > cycle_load)
+				charging = 1
+			else
+				charging = 0
+
+			//adjust the charge rate cap for APC's current processing tier
+			var/chargelevel_adj = CHARGELEVEL * PROCESSING_TIER_MULTI(src)
+
+			//determine how much charge we can (or should) give the cell
+			var/charge_to_add = min(allocated_excess*CELLRATE, (cell.maxcharge - cell.charge), (cell.maxcharge*chargelevel_adj))
+			//then apply that charge
+			cell.give(charge_to_add)
+
+			if(cell.charge >= cell.maxcharge) charging = 2 // capped off for this tick? report fully charged
+
+			. = charge_to_add / CELLRATE // return the amount of consumed power for subtraction from netexcess
+
+			if (zamus_dumb_power_popups)
+				new /obj/maptext_junk/power(get_turf(src), change = charge_to_add / CELLRATE, channel = -1)
+		else
+			charging = 2	// didn't need to charge but power is still good. report fully charged
+
+	else // chargemode off
+		charging = 0
+
+	if(last_ch != charging)
+		UpdateIcon()
+		update()
 
 // set channels depending on how much charge we have left
 /obj/machinery/power/apc/proc/check_channel_thresholds()
@@ -1389,7 +1366,7 @@ TYPEINFO(/obj/machinery/power/apc)
 /obj/machinery/power/apc/meteorhit(var/obj/O as obj)
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
-		explosion(src, src.loc, 1, 2, 4, 6, 1)
+		explosion(src, src.loc, 1, 2, 4, 6)
 		SPAWN(1 DECI SECOND)
 			qdel(src)
 	else set_broken()
@@ -1398,7 +1375,7 @@ TYPEINFO(/obj/machinery/power/apc)
 /obj/machinery/power/apc/ex_act(severity)
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
-		explosion(src, src.loc, 1, 2, 4, 6, 1)
+		explosion(src, src.loc, 1, 2, 4, 6)
 		SPAWN(1 DECI SECOND)
 			qdel(src)
 	else
@@ -1419,7 +1396,7 @@ TYPEINFO(/obj/machinery/power/apc)
 /obj/machinery/power/apc/temperature_expose(null, temp, volume)
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
-		explosion(src, src.loc, 1, 2, 4, 6, 1)
+		explosion(src, src.loc, 1, 2, 4, 6)
 		SPAWN(1 DECI SECOND)
 			qdel (src)
 
@@ -1442,7 +1419,7 @@ TYPEINFO(/obj/machinery/power/apc)
 	if(!get_connection() || !operating || shorted)
 		return
 	if( cell?.charge>=20)
-		cell.charge-=20;
+		cell.use(20)
 		SPAWN(0)
 			for(var/obj/machinery/light/L in area)
 				if (L.type == /obj/machinery/light/emergency && omit_emergency_lights)
@@ -1542,10 +1519,8 @@ TYPEINFO(/obj/machinery/power/apc)
 					if (!isnull(newEnviron))
 						environ = round(clamp(newEnviron, 0, 3))
 
-					if (newCover)
-						coverlocked = 1
-					else
-						coverlocked = 0
+					if (!isnull(newCover))
+						coverlocked = newCover ? TRUE : FALSE
 
 					UpdateIcon()
 					update()

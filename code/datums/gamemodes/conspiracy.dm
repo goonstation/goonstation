@@ -51,7 +51,9 @@
 	var/antag_role = pick(other_antag_roles)
 
 	var/list/chosen_conspirator = antagWeighter.choose(pool = potentialAntags, role = ROLE_CONSPIRATOR, amount = numConspirators, recordChosen = 1)
-	var/list/chosen_other_antags = antagWeighter.choose(pool = potentialAntags - chosen_conspirator, role = antag_role, amount = num_other_antags - length(other_antags), recordChosen = 1)
+	var/list/chosen_other_antags = list()
+	if (length(potentialAntags - chosen_conspirator))
+		chosen_other_antags = antagWeighter.choose(pool = potentialAntags - chosen_conspirator, role = antag_role, amount = num_other_antags - length(other_antags), recordChosen = 1)
 	traitors |= chosen_conspirator
 	other_antags |= chosen_other_antags
 	for (var/datum/mind/conspirator in traitors)
@@ -65,30 +67,9 @@
 	return 1
 
 /datum/game_mode/conspiracy/post_setup()
-	var/meetingPoint = "Your initial meet-up point is <b>[pick("the chapel", "the bar", "disposals", "the arcade", "the escape wing", "crew quarters", "the pool", "the aviary")].</b>"
-
-	var/conspiratorList = "The conspiracy consists of: "
-	for (var/datum/mind/conspirator in traitors)
-		var/conspirator_name
-		if (conspirator.assigned_role == "Clown")
-			conspirator_name = "a Clown"
-		else
-			conspirator_name = conspirator.current.real_name
-		conspiratorList += "<b>[conspirator_name]</b>, "
-
-	var/pickedObjective = pick(typesof(/datum/objective/conspiracy))
 	for(var/datum/mind/conspirator in traitors)
-		ticker.mode.bestow_objective(conspirator, pickedObjective)
-
-		conspirator.store_memory(meetingPoint)
-		conspirator.store_memory(conspiratorList)
-		for(var/datum/objective/objective in conspirator.objectives)
-			boutput(conspirator.current, "<B>Objective</B>: [objective.explanation_text]")
-
-		equip_conspirator(conspirator.current)
-
-		boutput(conspirator.current, conspiratorList)
-		boutput(conspirator.current, meetingPoint)
+		if(istype(conspirator))
+			conspirator.add_antagonist(ROLE_CONSPIRATOR, source = ANTAGONIST_SOURCE_ROUND_START)
 
 	for (var/datum/mind/traitor in other_antags)
 		equip_antag(traitor)

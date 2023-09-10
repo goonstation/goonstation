@@ -31,7 +31,7 @@
 	name = "sea plant"
 	icon = 'icons/obj/sealab_objects.dmi'
 	desc = "It's thriving."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = EFFECTS_LAYER_UNDER_1
 	var/database_id = null
@@ -74,7 +74,7 @@
 		if (!has_fluid_move_gear)
 			if (ishuman(A))
 				var/mob/living/carbon/human/H = A
-				if (H.mutantrace && H.mutantrace.aquatic)
+				if (H.mutantrace.aquatic)
 					has_fluid_move_gear = 1
 
 		if (!has_fluid_move_gear)
@@ -178,7 +178,7 @@
 	name = "strange thing"
 	icon = 'icons/obj/nadir_seaobj.dmi'
 	desc = "Is it a plant? A rock? Probably a rock plant."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/random_color = TRUE
 	var/luminant = FALSE //automatically propagates a light overlay based on icon state name

@@ -12,6 +12,7 @@
 /obj/machinery/plantpot/hightech
 	name = "high-tech hydroponics tray"
 	desc = "A mostly debug-only plant tray that is capable of revealing more information about your plants."
+	more_info = TRUE
 
 	New()
 		..()
@@ -58,7 +59,7 @@
 
 		var/datum/plant/growing = src.current
 		var/datum/plantgenes/DNA = src.plantgenes
-		var/growthlimit = growing.harvtime - DNA.harvtime
+		var/growthlimit = growing.harvtime - DNA?.get_effective_value("harvtime")
 		return "Generation [src.generation] - Health: [src.health] / [growing.starthealth] - Growth: [src.growth] / [growthlimit] - Harvests: [src.harvests] left."
 
 	process()
@@ -91,7 +92,7 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 /obj/machinery/plantpot/bareplant
 	name = "arable soil"
 	desc = "A small mound of arable soil for planting and plant based activities."
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = 0
 	icon_state = null
 	power_usage = 0
@@ -121,11 +122,11 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 			else if(P)
 				var/obj/item/seed/S = new /obj/item/seed
 
-				S.generic_seed_setup(P)
+				S.generic_seed_setup(P, FALSE)
 				src.HYPnewplant(S)
 
 				for(var/commutes in spawn_commuts)
-					HYPaddCommut(src.current, src.plantgenes, commutes)
+					HYPaddCommut(src.plantgenes, commutes)
 
 				if(spawn_growth)
 					src.grow_level = spawn_growth
@@ -133,11 +134,11 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 					src.grow_level = pick(3,4,4)
 				switch(grow_level)
 					if(2)
-						src.growth = (src.current.growtime - src.plantgenes.growtime) / 2
+						src.growth = (src.current.growtime - src.plantgenes?.get_effective_value("growtime")) / 2
 					if(3)
-						src.growth = src.current.growtime - src.plantgenes.growtime
+						src.growth = src.current.growtime - src.plantgenes?.get_effective_value("growtime")
 					if(4)
-						src.growth = src.current.harvtime - src.plantgenes.harvtime
+						src.growth = src.current.harvtime - src.plantgenes?.get_effective_value("harvtime")
 				UpdateIcon()
 			else
 				if(!src.current)
@@ -181,7 +182,7 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 
 	flower
 		New()
-			spawn_plant = pick(/datum/plant/flower/rose)
+			spawn_plant = pick(/datum/plant/flower/rose, /datum/plant/flower/gardenia, /datum/plant/flower/hydrangea)
 			..()
 
 	crop
@@ -211,7 +212,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	desc = "A tray filled with nutrient solution capable of sustaining plantlife."
 	icon = 'icons/obj/hydroponics/machines_hydroponics.dmi'
 	icon_state = "tray"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
 	flags = NOSPLASH|ACCEPTS_MOUSEDROP_REAGENTS
@@ -247,6 +248,8 @@ TYPEINFO(/obj/machinery/plantpot)
 		// Originally plantpots updated constantly but this was found to be rather expensive, so
 		// now it only does that if it needs to.
 	var/actionpassed 	//holds defines for action bar harvesting yay :D
+	var/more_info = FALSE // debug tray: show more info
+
 	New()
 		..()
 		src.plantgenes = new /datum/plantgenes(src)
@@ -264,18 +267,63 @@ TYPEINFO(/obj/machinery/plantpot)
 			net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, report_freq)
 
-	proc/post_alert(var/alert_msg)
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "scan plant", PROC_REF(mechcompScanPlant))
+
+	proc/post_alert(var/list/alert_data)
 		if(status & (NOPOWER|BROKEN)) return
-		if(!alert_msg) return
+		if(!alert_data) return
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
 		signal.transmission_method = 1
-		signal.data["data"] = alert_msg
+		// merge the alert data with the signal data to combine them
+		// signal.data["data"] = alert_msg
+		signal.data += alert_data
 		signal.data["netid"] = net_id
 		signal.data["address_tag"] = "plantpot_listener" // prevents unnecessarily sending to other plantpots
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+		// the alert data is a list of fields already, so just send that as a signal
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, list2params(alert_data))
+
+
+	proc/mechcompScanPlant(var/datum/mechanicsMessage/input)
+		if (!input) return
+		if (!src.current)
+			input.signal = "error=noplant"
+			SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
+			return
+		if (src.current.cantscan)
+			input.signal = "error=cantscan"
+			SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
+			return
+
+		var/list/plant_data = new
+		plant_data["event"] = "scan"
+		plant_data["plant"] = src.current.name
+		plant_data["generation"] = src.generation
+		plant_data["mat_rate"] = src.plantgenes.growtime
+		plant_data["prod_rate"] = src.plantgenes.harvtime
+		plant_data["yield"] = src.plantgenes.cropsize
+		plant_data["lifespan"] = src.plantgenes.harvests
+		plant_data["potency"] = src.plantgenes.potency
+		plant_data["endurance"] = src.plantgenes.endurance
+		plant_data["reagent_level"] = (src.reagents ? src.reagents.total_volume : 0)
+		plant_data["water_level"] = (src.reagents ? src.reagents.get_reagent_amount("water") : 0)
+
+		if (src.more_info)
+			// for the debug tray
+			var/datum/plant/growing = src.current
+			var/datum/plantgenes/DNA = src.plantgenes
+			var/growthlimit = growing.harvtime - DNA?.get_effective_value("harvtime")
+			plant_data["hp"] = src.health
+			plant_data["hpmax"] = growing.starthealth
+			plant_data["growth"] = src.growth
+			plant_data["growthmax"] = growthlimit
+
+		input.signal = list2params(plant_data)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
 
 	proc/update_water_level() //checks reagent contents of the pot, then returns the cuurent water level
 		var/current_total_volume = (src.reagents ? src.reagents.total_volume : 0)
@@ -429,11 +477,11 @@ TYPEINFO(/obj/machinery/plantpot)
 		// This is entirely for updating the icon. Check how far the plant has grown and update
 		// if it's gone a level beyond what the tracking says it is.
 
-		if(src.growth >= growing.harvtime - DNA.harvtime)
+		if(src.growth >= growing.harvtime - DNA?.get_effective_value("harvtime"))
 			current_growth_level = 4
-		else if(src.growth >= growing.growtime - DNA.growtime)
+		else if(src.growth >= growing.growtime - DNA?.get_effective_value("growtime"))
 			current_growth_level = 3
-		else if(src.growth >= (growing.growtime - DNA.growtime) / 2)
+		else if(src.growth >= (growing.growtime - DNA?.get_effective_value("growtime")) / 2)
 			current_growth_level = 2
 		else
 			current_growth_level = 1
@@ -446,6 +494,8 @@ TYPEINFO(/obj/machinery/plantpot)
 		if(!harvest_warning && HYPcheck_if_harvestable())
 			src.harvest_warning = 1
 			do_update_icon = TRUE
+			post_alert(list("event" = "harvestable", "plant" = src.current.name))
+			src.HYPplant_matured()
 		else if(harvest_warning && !HYPcheck_if_harvestable())
 			src.harvest_warning = 0
 			do_update_icon = TRUE
@@ -524,11 +574,11 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(src.anchored)
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor.")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
-				src.anchored = 0
+				src.anchored = UNANCHORED
 			else
 				user.visible_message("<b>[user]</b> secures the [src] to the floor.")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
-				src.anchored = 1
+				src.anchored = ANCHORED
 
 		else if(isweldingtool(W) || istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/device/igniter))
 			// These are for burning down plants with.
@@ -610,9 +660,8 @@ TYPEINFO(/obj/machinery/plantpot)
 			user.u_equip(SEED)
 			SEED.set_loc(src)
 			if(SEED.planttype)
+				logTheThing(LOG_STATION, user, "plants a [SEED.planttype?.name] [SEED.planttype?.type] seed at [log_loc(src)].")
 				src.HYPnewplant(SEED)
-				if(SEED && istype(SEED.planttype,/datum/plant/maneater)) // Logging for man-eaters, since they can't be harvested (Convair880).
-					logTheThing(LOG_STATION, user, "plants a [SEED.planttype] seed at [log_loc(src)].")
 				if(!(user in src.contributors))
 					src.contributors += user
 			else
@@ -628,18 +677,16 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(!SP.selected)
 				boutput(user, "<span class='alert'>You need to select something to plant first.</span>")
 				return
-			user.visible_message("<span class='notice'>[user] plants a seed in the [src].</span>")
 			var/obj/item/seed/SEED
 			if(SP.selected.unique_seed)
 				SEED = new SP.selected.unique_seed
 			else
 				SEED = new /obj/item/seed
-			SEED.generic_seed_setup(SP.selected)
+			SEED.generic_seed_setup(SP.selected, FALSE)
 			SEED.set_loc(src)
 			if(SEED.planttype)
 				src.HYPnewplant(SEED)
-				if(SEED && istype(SEED.planttype,/datum/plant/maneater)) // Logging for man-eaters, since they can't be harvested (Convair880).
-					logTheThing(LOG_STATION, user, "plants a [SEED.planttype] seed at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "plants a [SEED.planttype?.name] [SEED.planttype?.type] seed at [log_loc(src)] using the seedplanter.")
 				if(!(user in src.contributors))
 					src.contributors += user
 			else
@@ -652,9 +699,10 @@ TYPEINFO(/obj/machinery/plantpot)
 				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 				return
 			else
-				user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
+				//corrects the amount of reagents shown to have been used when pouring into a tray
+				var/trans = W.reagents.trans_to(src, W:amount_per_transfer_from_this)
+				user.visible_message("<span class='notice'>[user] pours [trans] units of [W]'s contents into [src].</span>")
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if(!(user in src.contributors))
 					src.contributors += user
 				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
@@ -868,6 +916,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			UpdateOverlays(null, "health_display")
 			UpdateOverlays(null, "plant")
 			UpdateOverlays(null, "plantdeath")
+			UpdateOverlays(null, "plantoverlay")
 			if(status & (NOPOWER|BROKEN))
 				UpdateOverlays(null, "water_meter")
 			return
@@ -948,11 +997,11 @@ TYPEINFO(/obj/machinery/plantpot)
 		if(plantgenes.mutation)
 			var/datum/plantmutation/MUT = plantgenes.mutation
 			if(MUT.harvest_override && MUT.crop)
-				if(src.growth >= current.harvtime - plantgenes.harvtime) return TRUE
+				if(src.growth >= current.harvtime - plantgenes?.get_effective_value("harvtime")) return TRUE
 				else return FALSE
 		if(!current.crop || !current.harvestable) return FALSE
 
-		if(src.growth >= current.harvtime - plantgenes.harvtime) return TRUE
+		if(src.growth >= current.harvtime - plantgenes?.get_effective_value("harvtime")) return TRUE
 		else return FALSE
 
 	proc/HYPharvesting(var/mob/living/user,var/obj/item/satchel/SA)
@@ -961,7 +1010,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		if(!user) return
 		var/satchelpick = 0
 		if(SA)
-			if(SA.contents.len >= SA.maxitems)
+			if(length(SA.contents) >= SA.maxitems)
 				boutput(user, "<span class='alert'>Your satchel is already full! Free some space up first.</span>")
 				return
 			else
@@ -1005,10 +1054,10 @@ TYPEINFO(/obj/machinery/plantpot)
 		if(MUT?.harvest_cap)
 			harvest_cap = MUT.harvest_cap
 
-		src.growth = max(0, growing.growtime - DNA.growtime)
+		src.growth = max(0, growing.growtime - DNA?.get_effective_value("growtime"))
 		// Reset the growth back to the beginning of maturation so we can wait out the
 		// harvest time again.
-		var/getamount = growing.cropsize + DNA.cropsize
+		var/getamount = growing.cropsize + DNA?.get_effective_value("cropsize")
 		if(src.health >= growing.starthealth * 2 && prob(30))
 			boutput(user, "<span class='notice'>This looks like a good harvest!</span>")
 			base_quality_score += 5
@@ -1092,10 +1141,10 @@ TYPEINFO(/obj/machinery/plantpot)
 				var/quality_score = base_quality_score
 				quality_score += rand(-2,2)
 				// Just a bit of natural variance to make it interesting
-				if(DNA.potency)
-					quality_score += round(DNA.potency / 6)
-				if(DNA.endurance)
-					quality_score += round(DNA.endurance / 6)
+				if(DNA?.get_effective_value("potency"))
+					quality_score += round(DNA?.get_effective_value("potency") / 6)
+				if(DNA?.get_effective_value("endurance"))
+					quality_score += round(DNA?.get_effective_value("endurance") / 6)
 				if(HYPCheckCommut(DNA,/datum/plant_gene_strain/unstable))
 					quality_score += rand(-7,7)
 				var/quality_status = null
@@ -1112,6 +1161,30 @@ TYPEINFO(/obj/machinery/plantpot)
 				// this loop is for one item each.
 				var/obj/CROP = new itemtype
 				CROP.set_loc(src)
+
+				//This calculates produce quality and quality status. We need this for changing the name of the produce
+				switch(quality_score)
+					if(25 to INFINITY)
+						// as quality approaches 115, rate of getting jumbo increases
+						if(prob(min(100, quality_score - 15)))
+							quality_status = "jumbo"
+					if(20 to 24)
+						if(prob(4))
+							quality_status = "jumbo"
+					if(-9999 to -11)
+						quality_status = "rotten"
+				if(HYPCheckCommut(DNA,/datum/plant_gene_strain/unstable) && prob(33))
+					// The unstable gene can do weird shit to your produce and happily stomp on your jumbo produce.
+					quality_status = "malformed"
+
+				//We call HYPsetup_DNA on each item created before we manipulate it further
+				//This proc handles all crop-related scaling and quirks of produce
+				//This proc also on some items remove the respectable produce and returns a new one, which we will handle further as CROP
+				//This proc calls HYPadd_harvest_reagents on it's respectable items
+				if(istype(CROP, /obj/item))
+					var/obj/item/manipulated_item = CROP
+					CROP = manipulated_item.HYPsetup_DNA(DNA, src, growing, quality_status)
+
 				// I bet this will go real well.
 				if(!dont_rename_crop)
 					CROP.name = growing.name
@@ -1132,160 +1205,47 @@ TYPEINFO(/obj/machinery/plantpot)
 
 				CROP.name = lowertext(CROP.name)
 
-				switch(quality_score)
-					if(25 to INFINITY)
-						// as quality approaches 115, rate of getting jumbo increases
-						if(prob(min(100, quality_score - 15)))
-							CROP.name = "jumbo [CROP.name]"
-							quality_status = "jumbo"
-						else
-							CROP.name = "[pick("perfect","amazing","incredible","supreme")] [CROP.name]"
-					if(20 to 24)
-						if(prob(4))
-							CROP.name = "jumbo [CROP.name]"
-							quality_status = "jumbo"
-						else
-							CROP.name = "[pick("superior","excellent","exceptional","wonderful")] [CROP.name]"
-					if(15 to 19)
-						CROP.name = "[pick("quality","prime","grand","great")] [CROP.name]"
-					if(10 to 14)
-						CROP.name = "[pick("fine","large","good","nice")] [CROP.name]"
-					if(-10 to -5)
-						CROP.name = "[pick("feeble","poor","small","shrivelled")] [CROP.name]"
-					if(-14 to -11)
-						CROP.name = "[pick("bad","sickly","terrible","awful")] [CROP.name]"
-						quality_status = "rotten"
-					if(-99 to -15)
-						CROP.name = "[pick("putrid","moldy","rotten","spoiled")] [CROP.name]"
-						quality_status = "rotten"
-					if(-9999 to -100)
-						// this will never happen. but why not!
-						CROP.name = "[pick("horrific","hideous","disgusting","abominable")] [CROP.name]"
-						quality_status = "rotten"
-
 				switch(quality_status)
 					if("jumbo")
+						CROP.name = "jumbo [CROP.name]"
 						CROP.quality = quality_score * 2
 					if("rotten")
+						switch(quality_score)
+							if(-14 to -11)
+								CROP.name = "[pick("bad","sickly","terrible","awful")] [CROP.name]"
+							if(-99 to -15)
+								CROP.name = "[pick("putrid","moldy","rotten","spoiled")] [CROP.name]"
+							if(-9999 to -100)
+								// this will never happen. but why not!
+								CROP.name = "[pick("horrific","hideous","disgusting","abominable")] [CROP.name]"
 						CROP.quality = quality_score - 20
+					if("malformed")
+						CROP.quality = quality_score + rand(10,-10)
+						CROP.name = "[pick("awkward","irregular","crooked","lumpy","misshapen","abnormal","malformed")] [CROP.name]"
 					else
+						switch(quality_score)
+							if(25 to INFINITY)
+								CROP.name = "[pick("perfect","amazing","incredible","supreme")] [CROP.name]"
+							if(20 to 24)
+								CROP.name = "[pick("superior","excellent","exceptional","wonderful")] [CROP.name]"
+							if(15 to 19)
+								CROP.name = "[pick("quality","prime","grand","great")] [CROP.name]"
+							if(10 to 14)
+								CROP.name = "[pick("fine","large","good","nice")] [CROP.name]"
+							if(-10 to -5)
+								CROP.name = "[pick("feeble","poor","small","shrivelled")] [CROP.name]"
 						CROP.quality = quality_score
 
 				if(!growing.stop_size_scaling) //Keeps plant sprite from scaling if variable is enabled.
 					CROP.transform = matrix() * clamp((quality_score + 100) / 100, 0.35, 2)
 
-				if(istype(CROP,/obj/item/reagent_containers/food/snacks/plant/))
-					// If we've got a piece of fruit or veg that contains seeds. More often than
-					// not this is fruit but some veg do this too.
-					var/obj/item/reagent_containers/food/snacks/plant/F = CROP
-					var/datum/plantgenes/FDNA = F.plantgenes
 
-					HYPpassplantgenes(DNA,FDNA)
-					F.generation = src.generation
-					// Copy the genes from the plant we're harvesting to the new piece of produce.
-
-					if(growing.hybrid)
-						// We need to do special shit with the genes if the plant is a spliced
-						// hybrid since they run off instanced datums rather than referencing
-						// a specific already-existing one.
-						var/plantType = growing.type
-						var/datum/plant/hybrid = new plantType(F)
-						for(var/V in growing.vars)
-							if(issaved(growing.vars[V]) && V != "holder")
-								hybrid.vars[V] = growing.vars[V]
-						F.planttype = hybrid
-
-					// Now we calculate the final quality of the item!
-					if(HYPCheckCommut(DNA,/datum/plant_gene_strain/unstable) && prob(33))
-						// The unstable gene can do weird shit to your produce.
-						F.name = "[pick("awkward","irregular","crooked","lumpy","misshapen","abnormal","malformed")] [F.name]"
-						F.heal_amt += rand(-2,2)
-						F.bites_left += rand(-2,2)
-
-					if(quality_status == "jumbo")
-						F.heal_amt *= 2
-						F.bites_left *= 2
-					else if(quality_status == "rotten")
-						F.heal_amt = 0
-
-					HYPadd_harvest_reagents(F,growing,DNA,quality_status)
-					// We also want to put any reagents the plant produces into the new item.
-
-				else if(istype(CROP,/obj/item/plant/) || istype(CROP,/obj/item/reagent_containers) || istype(CROP,/obj/item/clothing/head/flower/))
-					// If we've got a herb or some other thing like wheat or shit like that.
-					HYPadd_harvest_reagents(CROP,growing,DNA,quality_status)
-
-				else if(istype(CROP,/obj/item/seed/))
-					// If the crop is just straight up seeds. Don't need reagents, but we do
-					// need to pass genes and whatnot along like we did for fruit.
-					var/obj/item/seed/S = CROP
-					if(growing.unique_seed)
-						S = new growing.unique_seed
-						S.set_loc(src)
-					else
-						S = new /obj/item/seed
-						S.set_loc(src)
-						S.removecolor()
-
-					var/datum/plantgenes/HDNA = src.plantgenes
-					var/datum/plantgenes/SDNA = S.plantgenes
-					if(!growing.unique_seed && !growing.hybrid)
-						S.generic_seed_setup(growing)
-					HYPpassplantgenes(HDNA,SDNA)
-					S.generation = src.generation
-					if(growing.hybrid)
-						var/datum/plant/hybrid = new /datum/plant(S)
-						for(var/V in growing.vars)
-							if(issaved(growing.vars[V]) && V != "holder")
-								hybrid.vars[V] = growing.vars[V]
-						S.planttype = hybrid
-
-				else if(istype(CROP,/obj/item/reagent_containers/food/snacks/mushroom/))
-					// Mushrooms mostly act the same as herbs, except you can eat them.
-					var/obj/item/reagent_containers/food/snacks/mushroom/M = CROP
-
-					if(HYPCheckCommut(DNA,/datum/plant_gene_strain/unstable) && prob(33))
-						M.name = "[pick("awkward","irregular","crooked","lumpy","misshapen","abnormal","malformed")] [M.name]"
-						M.heal_amt += rand(-2,2)
-						M.bites_left += rand(-2,2)
-
-					if(quality_status == "jumbo")
-						M.heal_amt *= 2
-						M.amount *= 2
-					else if(quality_status == "rotten")
-						M.heal_amt = 0
-
-					HYPadd_harvest_reagents(CROP,growing,DNA,quality_status)
-
-				else if(istype(CROP,/obj/critter/))
+				if(istype(CROP,/obj/critter/))
 					// If it's a critter we don't need to do reagents or shit like that but
 					// we do need to make sure they don't attack the botanist that grew it.
 					var/obj/critter/C = CROP
 					C.friends = C.friends | src.contributors
 
-				else if (istype(CROP,/obj/item/organ))
-					var/obj/item/organ/O = CROP
-					if(istype(CROP,/obj/item/organ/heart))
-						O.quality = quality_score
-					O.max_damage += DNA.endurance
-					O.fail_damage += DNA.endurance
-
-				else if(istype(CROP,/obj/item/reagent_containers/balloon))
-					var/obj/item/reagent_containers/balloon/B = CROP
-					B.reagents.maximum_volume = B.reagents.maximum_volume + DNA.endurance // more endurance = larger and more sturdy balloons!
-					HYPadd_harvest_reagents(CROP,growing,DNA,quality_status)
-
-				else if(istype(CROP,/obj/item/spacecash)) // Ugh
-					var/obj/item/spacecash/S = CROP
-					S.amount = max(1, DNA.potency * rand(2,4))
-					S.UpdateStackAppearance()
-				else if (istype(CROP,/obj/item/device/light/glowstick))
-					var/type = pick(concrete_typesof(/obj/item/device/light/glowstick/))
-					var/obj/item/device/light/glowstick/newstick = new type(CROP.loc)
-					newstick.light_c.a = clamp(DNA.potency/60, 0.33, 1) * 255
-					newstick.turnon()
-					qdel(CROP)
-					CROP = newstick
 				if(((growing.isgrass || growing.force_seed_on_harvest) && prob(80)) && !istype(CROP,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless))
 					// Same shit again. This isn't so much the crop as it is giving you seeds
 					// incase you couldn't get them otherwise, though.
@@ -1300,7 +1260,7 @@ TYPEINFO(/obj/machinery/plantpot)
 					var/datum/plantgenes/HDNA = src.plantgenes
 					var/datum/plantgenes/SDNA = S.plantgenes
 					if(!growing.unique_seed && !growing.hybrid)
-						S.generic_seed_setup(growing)
+						S.generic_seed_setup(growing, TRUE)
 
 					var/seedname = "[growing.name]"
 					if(istype(MUT,/datum/plantmutation/))
@@ -1342,6 +1302,11 @@ TYPEINFO(/obj/machinery/plantpot)
 					JOB_XP(user, "Botanist", 1)
 
 			boutput(user, "<span class='notice'>You harvest [cropcount] item[s_es(cropcount)][seedcount ? " and [seedcount] seed[s_es(seedcount)]" : ""].</span>")
+			post_alert(list("event" = "harvest", "plant" = src.current.name, "produce" = cropcount, "seeds" = seedcount))
+#ifdef DATALOGGER
+			game_stats.Increment("hydro_harvests")
+			game_stats.IncrementBy("hydro_produce", cropcount)
+#endif
 
 			// Mostly for dangerous produce (explosive tomatoes etc) that should show up somewhere in the logs (Convair880).
 			if(istype(MUT,/datum/plantmutation/))
@@ -1356,18 +1321,19 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(SA)
 				// If we're putting stuff in a satchel, this is where we do it.
 				for(var/obj/item/I in src.contents)
-					if(SA.contents.len >= SA.maxitems)
+					if(length(SA.contents) >= SA.maxitems)
 						boutput(user, "<span class='alert'>Your satchel is full! You dump the rest on the floor.</span>")
 						break
 					if(istype(I,/obj/item/seed/))
-						if(!satchelpick || seeds_only)
+						if(SA.check_valid_content(I) && (!satchelpick || seeds_only))
 							I.set_loc(SA)
 							I.add_fingerprint(user)
 					else
-						if(!satchelpick || produce_only)
+						if(SA.check_valid_content(I) && (!satchelpick || produce_only))
 							I.set_loc(SA)
 							I.add_fingerprint(user)
 				SA.UpdateIcon()
+				SA.tooltip_rebuild = 1
 
 			// if the satchel got filled up this will dump any unharvested items on the floor
 			// if we're harvesting by hand it'll just default to this anyway! truly magical~
@@ -1397,7 +1363,7 @@ TYPEINFO(/obj/machinery/plantpot)
 				// else just don't reduce the harvests
 			else
 				src.harvests--
-		if(growing.isgrass)
+		if(growing.isgrass || src.harvests <= 0)
 			// Vegetable-style plants always die after one harvest irregardless of harvests
 			// remaining, though they do get bonuses for having a good harvests gene.
 			HYPkillplant()
@@ -1436,16 +1402,16 @@ TYPEINFO(/obj/machinery/plantpot)
 		// Now we deal with various health bonuses and penalties for the plant.
 
 		if(growing.isgrass)
-			src.health += src.plantgenes.harvests * 2
+			src.health += src.plantgenes?.get_effective_value("harvests") * 2
 			// If we have a single-harvest vegetable plant, the harvests gene (which is otherwise
 			// useless) adds 2 health for every point. This works negatively also!
 
-		if(growing.cropsize + SDNA.cropsize > 30)
-			src.health += (growing.cropsize + SDNA.cropsize) - 30
+		if(growing.cropsize + SDNA?.get_effective_value("cropsize") > 30)
+			src.health += (growing.cropsize + SDNA?.get_effective_value("cropsize")) - 30
 			// If we have a total crop yield above the maximum harvest size, we add it to the
 			// plant's starting health.
 
-		src.health += SEED.planttype.endurance + SDNA.endurance
+		src.health += SEED.planttype.endurance + SDNA?.get_effective_value("endurance")
 		// Add the plant's total endurance score to the health.
 
 		if(SEED.seeddamage > 0)
@@ -1465,6 +1431,14 @@ TYPEINFO(/obj/machinery/plantpot)
 		DNA.harvests = SDNA.harvests
 		DNA.potency = SDNA.potency
 		DNA.endurance = SDNA.endurance
+		// now we transfer gene dominance + recessiveness as well
+		DNA.d_species = SDNA.d_species
+		DNA.d_growtime = SDNA.d_growtime
+		DNA.d_harvtime = SDNA.d_harvtime
+		DNA.d_cropsize = SDNA.d_cropsize
+		DNA.d_harvests = SDNA.d_harvests
+		DNA.d_potency = SDNA.d_potency
+		DNA.d_endurance = SDNA.d_endurance
 		// we use the same list as the seed here, as new lists are created only on mutation to avoid making way more lists than we need
 		DNA.commuts = SDNA.commuts
 		if(SDNA.mutation)
@@ -1473,12 +1447,12 @@ TYPEINFO(/obj/machinery/plantpot)
 
 		// Finally set the harvests, make sure we always have at least one harvest,
 		// then get rid of the seed, mutate the genes a little and update the pot sprite.
-		if(growing.harvestable) src.harvests = growing.harvests + DNA.harvests
+		if(growing.harvestable) src.harvests = growing.harvests + DNA?.get_effective_value("harvests")
 		if(src.harvests < 1) src.harvests = 1
 		qdel(SEED)
 
 		HYPmutateplant(1)
-		post_alert("event_new")
+		post_alert(list("event" = "new", "plant" = src.current.name))
 		src.recently_harvested = 0
 		UpdateIcon()
 		update_name()
@@ -1491,7 +1465,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.dead = 1
 		src.recently_harvested = 0
 		src.grow_level = 0
-		post_alert("event_death")
+		post_alert(list("event" = "death", "plant" = src.current.name))
 		src.health_warning = 0
 		src.harvest_warning = 0
 		UpdateIcon()
@@ -1509,21 +1483,13 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.health_warning = 0
 		src.harvest_warning = 0
 		src.contributors = list()
-		var/datum/plantgenes/DNA = src.plantgenes
-
-		DNA.growtime = 0
-		DNA.harvtime = 0
-		DNA.cropsize = 0
-		DNA.harvests = 0
-		DNA.potency = 0
-		DNA.endurance = 0
-		DNA.commuts = null
-		DNA.mutation = null
+		src.plantgenes.mutation?.HYPdestroyplant_proc_M(src)
+		src.plantgenes = new(random_alleles = FALSE)
 
 		src.generation = 0
 		UpdateIcon()
 		update_name()
-		post_alert("event_cleared")
+		post_alert(list("event" = "cleared"))
 
 	proc/HYPdamageplant(var/damage_source, var/damage_amount, var/bypass_resistance = 0)
 		// The proc to use for causing health damage to plants. You can just directly alter
@@ -1559,23 +1525,57 @@ TYPEINFO(/obj/machinery/plantpot)
 						if(damage_amount && D.damage_mult)
 							damage_amount /= D.damage_mult
 
-			damage_prob -= growing.endurance + DNA.endurance
+			damage_prob -= growing.endurance + DNA?.get_effective_value("endurance")
 			if(damage_prob < 1) return 0
 			if(damage_prob > 100) damage_prob = 100
 
-		if(growing.endurance + DNA.endurance < 0) damage_amount -= growing.endurance + DNA.endurance
+		if(growing.endurance + DNA?.get_effective_value("endurance") < 0) damage_amount -= growing.endurance + DNA?.get_effective_value("endurance")
 		if(prob(damage_prob))
 			src.health -= damage_amount
 			return 1
 		else return 0
 
+	proc/HYPplant_matured()
+		src.plantgenes?.mutation?.HYPmatured_proc_M(src)
+
 // Hydroponics procs not specific to the plantpot start here.
+
+proc/HYPget_assoc_reagents(var/datum/plant/passed_plant, var/datum/plantgenes/passed_plantgenes)
+	//This proc returns a list with all reagents (or none) the plant currently is able to produce.
+	var/reagent_list = list()
+	if (!passed_plant || !passed_plantgenes)
+		return reagent_list
+
+	var/datum/plantmutation/current_mutation = passed_plantgenes.mutation
+	if(HYPCheckCommut(passed_plantgenes,/datum/plant_gene_strain/inert) && prob(95)) // inert just outputs an empty list
+		return reagent_list
+
+	reagent_list = reagent_list | passed_plant.assoc_reagents
+	if(current_mutation)
+		reagent_list = reagent_list | current_mutation.assoc_reagents
+
+	if(passed_plantgenes.commuts)
+		for (var/datum/plant_gene_strain/reagent_adder/adding_gene_strain in passed_plantgenes.commuts)
+			reagent_list |= adding_gene_strain.reagents_to_add
+		for (var/datum/plant_gene_strain/reagent_blacklist/removing_gene_strain in passed_plantgenes.commuts)
+			reagent_list -= removing_gene_strain.reagents_to_remove
+
+	//Now the list is complete and we can just return it, ready to be used
+	return reagent_list
 
 proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/plantgenes/DNA,var/special_condition = null)
 	// This is called during harvest to add reagents from the plant to a new piece of produce.
 	if(!I || !DNA || !I.reagents) return
 
-	var/datum/plantmutation/MUT = DNA.mutation
+	// Build the list of all what reagents need to go into the new item.
+	var/list/putreagents = HYPget_assoc_reagents(growing, DNA)
+	// harvest can be rotten, so here we add a bit of a treat
+	if(special_condition == "rotten")
+		putreagents += "yuck"
+
+	//if we don't got any chems to add to the plant, we can stop right here
+	if(!length(putreagents))
+		return
 
 	var/basecapacity = 8
 	if(istype(I,/obj/item/plant/)) basecapacity = 15
@@ -1583,38 +1583,18 @@ proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/pl
 	else if(istype(I,/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat)) basecapacity = 2 //I foresee a growing if tree here, should probably break these values out.
 	// First we decide how much reagents to begin with certain items should hold.
 
-	if(DNA.commuts)
-		for (var/datum/plant_gene_strain/quality/Q in DNA.commuts)
-			if(Q.negative)
-				if(basecapacity && Q.quality_mult)
-					basecapacity /= Q.quality_mult
-			else
-				basecapacity *= Q.quality_mult
 
 	if(special_condition == "jumbo")
 		basecapacity *= 2
 
-	var/to_add = basecapacity + DNA.potency
-	I.reagents.maximum_volume = max(basecapacity + DNA.potency, I.reagents.maximum_volume)
+	var/to_add = basecapacity + DNA?.get_effective_value("potency")
+	I.reagents.maximum_volume = max(to_add, I.reagents.maximum_volume)
 	if(I.reagents.maximum_volume < 1)
 		I.reagents.maximum_volume = 1
 	// Now we add the plant's potency to their max reagent capacity. If this causes it to fall
 	// below one, we allow them at least that much because otherwise what's the damn point!!!
 
-	var/list/putreagents = list()
-	putreagents = growing.assoc_reagents
-	if(MUT)
-		putreagents = putreagents | MUT.assoc_reagents
-	// Build the list of all what reagents need to go into the new item.
-
-	if(special_condition == "rotten")
-		putreagents += "yuck"
-
-	if(DNA.commuts)
-		for (var/datum/plant_gene_strain/reagent_adder/R in DNA.commuts)
-			putreagents |= R.reagents_to_add
-
-	if(putreagents.len && I.reagents.maximum_volume)
+	if(I.reagents.maximum_volume)
 		var/putamount = round(to_add / putreagents.len)
 		for(var/X in putreagents)
 			I?.reagents?.add_reagent(X,putamount,,, 1) // ?. runtime fix
@@ -1635,6 +1615,9 @@ proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
 	// using the same list as the parent as adding new items is what creates a new list
 	CHILD.commuts = PARENT.commuts
 	if(MUT) CHILD.mutation = new MUT.type(CHILD)
+	if (length(CHILD.commuts))
+		for (var/datum/plant_gene_strain/checked_strain in CHILD.commuts)
+			checked_strain.on_passing(CHILD)
 
 proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,var/datum/plantgenes/DNA)
 	// This is the proc plant analyzers use to pop up their readout for the player.
@@ -1740,11 +1723,13 @@ proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/mach
 			if(prob(chance))
 				if(HYPmutationcheck_full(P,DNA,MUT))
 					DNA.mutation = HY_get_mutation_from_path(MUT.type)
+					MUT.HYPon_mutation_general(P, DNA)
 					if(PP)
 						playsound(PP, MUT.mutation_sfx, 10, 1)
 						PP.UpdateIcon()
 						PP.update_name()
 						animate_wiggle_then_reset(PP, 1, 2)
+						MUT.HYPon_mutation_pot(P, PP, DNA)
 					else if(S)
 						// If it is not in a pot, it is most likely in PlantMaster Mk3
 						playsound(S, MUT.mutation_sfx, 20, 1)
@@ -1763,7 +1748,7 @@ proc/HYPnewcommutcheck(var/datum/plant/P,var/datum/plantgenes/DNA, var/frequency
 	if(!P || !DNA) return
 	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/stabilizer))
 		return
-	if(P.commuts.len > 0)
+	if(length(P.commuts) > 0)
 		var/datum/plant_gene_strain/MUT = null
 		for (var/datum/plant_gene_strain/X in P.commuts)
 			if(HYPCheckCommut(DNA,X.type))
@@ -1779,20 +1764,40 @@ proc/HYPnewcommutcheck(var/datum/plant/P,var/datum/plantgenes/DNA, var/frequency
 			else
 				// new list containing new mutation
 				DNA.commuts = list(MUT)
+			//now, if the gene strain needs to do anything, we do it now
+			MUT.on_addition(DNA)
 
-proc/HYPaddCommut(var/datum/plant/P,var/datum/plantgenes/DNA,var/commut)
+proc/HYPaddCommut(var/datum/plantgenes/DNA, var/commut)
 	// And this one is for forcibly adding specific strains.
-	if(!P || !DNA || !commut) return
+	if(!DNA || !commut) return
 	if(!ispath(commut)) return
 	if(DNA.commuts)
 		for (var/datum/plant_gene_strain/X in DNA.commuts)
 			if(X.type == commut)
 				return
+	var/datum/plant_gene_strain/added_commut = HY_get_strain_from_path(commut)
 	// create a new list here (i.e. do not use +=) so as to not affect related seeds/plants
-	if(DNA.commuts)
-		DNA.commuts = DNA.commuts + HY_get_strain_from_path(commut)
-	else
-		DNA.commuts = list(HY_get_strain_from_path(commut))
+	if(added_commut)
+		if(DNA.commuts)
+			DNA.commuts = DNA.commuts + added_commut
+		else
+			DNA.commuts = list(added_commut)
+		//now, if the gene strain needs to do anything, we do it now
+		added_commut.on_addition(DNA)
+
+
+proc/HYPremoveCommut(var/datum/plantgenes/DNA, var/commut)
+	// And this one is for forcibly removing specific strains.
+	if(!DNA || !commut || !DNA.commuts) return
+	if(!ispath(commut)) return
+	if(!HYPCheckCommut(DNA, commut)) return
+	// create a new list here (i.e. do not use -=) so as to not affect related seeds/plants
+	var/datum/plant_gene_strain/removed_commut = HY_get_strain_from_path(commut)
+	if(removed_commut)
+		DNA.commuts = DNA.commuts - removed_commut
+		removed_commut.on_removal(DNA)
+
+
 
 proc/HYPmutateDNA(var/datum/plantgenes/DNA,var/severity = 1)
 	// This proc jumbles up the variables in a plant's genes. It's fundamental to breeding.
@@ -1843,7 +1848,7 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 	icon = 'icons/obj/hydroponics/machines_hydroponics.dmi'
 	icon_state = "growlamp0" // sprites by Clarks
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/active = 0
 	var/datum/light/light
 
@@ -1860,10 +1865,13 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 			light.disable()
 
 
-	process()
+	process(mult)
 		..()
-		if(src.active && powered())
-			for (var/obj/machinery/plantpot/P in view(2,src))
+		if(!src.active || !powered())
+			return
+		for (var/atom/A in view(2,src))
+			if (istype(A, /obj/machinery/plantpot))
+				var/obj/machinery/plantpot/P = A
 				if(!P.current || P.dead)
 					continue
 				P.growth += 2
@@ -1871,7 +1879,11 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 					var/datum/plantgenes/DNA = P.plantgenes
 					if(HYPCheckCommut(DNA,/datum/plant_gene_strain/photosynthesis))
 						P.growth += 4
-			use_power(ACTIVE_POWER_USAGE)
+			else if (ismob(A))
+				var/mob/M = A
+				if (M.bodytemperature < M.base_body_temp)
+					M.bodytemperature += 15 * mult
+		use_power(ACTIVE_POWER_USAGE)
 
 	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
@@ -1907,13 +1919,15 @@ TYPEINFO(/obj/machinery/hydro_mister)
 /obj/machinery/hydro_mister
 	name = "\improper Botanical Mister"
 	desc = "A device that constantly sprays small amounts of chemical onto nearby plants."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "fogmachine0"
+	icon = 'icons/obj/large/32x48.dmi'
+	icon_state = "hydro_mister0"
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | ACCEPTS_MOUSEDROP_REAGENTS | OPENCONTAINER
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/active = 0
 	var/mode = 1
+	var/emagged = FALSE
+	var/mist_range = 2
 
 	New()
 		if (prob(1))
@@ -1923,23 +1937,58 @@ TYPEINFO(/obj/machinery/hydro_mister)
 		reagents.add_reagent("water", 1000)
 
 	get_desc()
+		var/complete_description = "<br>It's [!src.active ? "off" : (!src.mode ? "on low" : "on high")]. It's about [round(src.reagents.total_volume / src.reagents.maximum_volume * 100, 1)]% full."
+		if (src.emagged)
+			complete_description += " It is humming with an oddly disturbing sound."
 		var/reag_list = ""
 		for(var/current_id in src.reagents.reagent_list)
 			var/datum/reagent/current_reagent = src.reagents.reagent_list[current_id]
 			reag_list += "[reag_list ? ", " : " "][current_reagent.name]"
-		return "<br>It's [!src.active ? "off" : (!src.mode ? "on low" : "on high")]. It's about [round(src.reagents.total_volume / src.reagents.maximum_volume * 100, 1)]% full. It seems to contain [reag_list]."
+		complete_description += " It seems to contain [reag_list]."
+		return complete_description
 
 	process()
 		..()
 		if(src.active)
-			for (var/obj/machinery/plantpot/P in view(2,src))
-				if(P.reagents.get_reagent_amount("water") >= 195)
+			for (var/obj/potential_target in view(mist_range,src))
+				if(isnull(potential_target.reagents) || istype(potential_target, /obj/machinery/hydro_mister))
+					//we never pour chems in stuff without reagents or other botanical misters
 					continue
-				src.reagents.trans_to(P, 1 + (mode * 4))
+				if(!istype(potential_target, /obj/machinery/plantpot) && !src.emagged || !is_open_container(potential_target))
+					//if we are not emagged, we never transfer in non-plantpots
+					//if emagged, we only transfer into open containers
+					continue
+				if(istype(potential_target, /obj/machinery/plantpot) && potential_target?.reagents.get_reagent_amount("water") >= 195)
+					//we never transfer in plantpots with too much water in them
+					continue
+				// if we don't got enough chems, let's rather not continue
+				if(src.reagents.total_volume < 10)
+					break
+				//Now we sorted all cases out and can fill them with our chemicals
+				var/particles/sprinkle/sprinkles = new
+				sprinkles.spawning = src.mode ? 3 : 2
+				sprinkles.color = src.reagents.get_average_rgb()
+				potential_target.UpdateParticles(sprinkles, "mister_sprinkles")
+				SPAWN(0.6 SECONDS)
+					sprinkles.spawning = FALSE
+					sleep(1 SECOND)
+					potential_target.ClearSpecificParticles("mister_sprinkles")
+				src.reagents.trans_to(potential_target, 1 + (mode * 4))
+
+
 			if(src.reagents.total_volume < 10)
 				src.visible_message("\The [src] sputters and runs out of liquid.")
 				src.active = 0
 				src.mode = 0
+
+	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		if (src.emagged)
+			return 0
+		if (user)
+			user.show_text("The [src] gives out an oddly disturbing sound.", "red")
+		src.emagged = TRUE
+		src.mist_range = 3 // place one in chemistry and make the nerds suffer
+		return 1
 
 	attackby(obj/item/W, mob/user)
 		if(isscrewingtool(W) || iswrenchingtool(W))
@@ -1966,18 +2015,20 @@ TYPEINFO(/obj/machinery/hydro_mister)
 		if(!src.active)
 			src.active = 1
 			src.mode = 0
+			src.icon_state = "hydro_mister1"
 			user.visible_message("<b>[user]</b> switches [src.name] on to low power mode.")
 			src.visible_message("\The [src] starts to hum, emitting a fine mist.")
 		else
 			if(!src.mode)
 				src.mode = 1
+				src.icon_state = "hydro_mister2"
 				user.visible_message("<b>[user]</b> switches [src.name] to high power mode.")
 				src.visible_message("\The [src] starts to <em>really</em> emit a fine mist!")
 			else
 				src.active = 0
 				src.mode = 0
+				src.icon_state = "hydro_mister0"
 				user.visible_message("<b>[user]</b> switches [src.name] off.")
 				src.visible_message("\The [src] goes quiet.")
 
-		src.icon_state = "fogmachine[src.active]"
 		playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)

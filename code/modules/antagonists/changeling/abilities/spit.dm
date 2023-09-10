@@ -31,7 +31,7 @@
 			A.icon_state = "acidspit"
 			A.icon = 'icons/obj/projectiles.dmi'
 			A.name = "acid"
-			A.anchored = 0
+			A.anchored = UNANCHORED
 			A.set_density(0)
 			A.layer = EFFECTS_LAYER_UNDER_1
 			A.flags += TABLEPASS
@@ -44,7 +44,7 @@
 			B.icon_state = "acidspit"
 			B.icon = 'icons/obj/projectiles.dmi'
 			B.name = "acid"
-			B.anchored = 1
+			B.anchored = ANCHORED
 			B.set_density(0)
 			B.layer = OBJ_LAYER
 			animate_spin(B, "R", 1.4, -1)

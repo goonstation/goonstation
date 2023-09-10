@@ -663,7 +663,7 @@
 		if (length(members) && src.members[1] != drain_source)
 			if (length(src.members) <= 30)
 				var/list/L = drain_source.get_connected_fluids()
-				if (L.len == length(members))
+				if (length(L) == length(members))
 					src.members = L.Copy()// this is a bit of an ouch, but drains need to be able to finish off smallish puddles properly
 
 		var/list/fluids_removed = list()
@@ -679,7 +679,7 @@
 			fluids_removed += F
 			fluids_removed_avg_viscosity += F.avg_viscosity
 
-			if (fluids_removed.len >= fluids_to_remove)
+			if (length(fluids_removed) >= fluids_to_remove)
 				break
 
 		var/removed_len = length(fluids_removed)
@@ -731,7 +731,7 @@
 		var/adjacent_amt = -1
 		for( var/dir in cardinal )
 			T = get_step( removed_loc, dir )
-			if (T.active_liquid && T.active_liquid.group == src)
+			if (T && T.active_liquid && T.active_liquid.group == src)
 				T.active_liquid.temp_removal_key = removal_key
 				adjacent_amt++
 				split_liq = T.active_liquid
@@ -740,7 +740,7 @@
 			//pass in adjacent_amt: get_connected will check the removal_key of each fluid, which will trigger an early abort if we determine no split is necessary
 			connected = split_liq.get_connected_fluids(adjacent_amt)
 
-		if (!connected || connected.len == length(src.members))
+		if (!connected || length(connected) == length(src.members))
 			return 0
 
 		if (!removed_loc || src.qdeled || !src.reagents || !src.reagents.total_volume) //trying to stop the weird bug were a bunch of simultaneous splits removes all reagents

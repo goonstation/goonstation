@@ -20,18 +20,18 @@ TYPEINFO(/datum/component/cell_holder)
 	if(SEND_SIGNAL(new_cell, COMSIG_CELL_IS_CELL))
 		src.cell = new_cell
 		new_cell.set_loc(parent)
-		RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/UpdateIcon)
+		RegisterSignal(cell, COMSIG_UPDATE_ICON, PROC_REF(UpdateIcon))
 	can_be_recharged = chargable
 	max_cell_size = max_cell
 	swappable_cell = swappable
 
-	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/attackby)
-	RegisterSignal(parent, COMSIG_CELL_SWAP, .proc/do_swap)
-	RegisterSignal(parent, COMSIG_CELL_TRY_SWAP, .proc/try_swap)
-	RegisterSignal(parent, COMSIG_CELL_CHARGE, .proc/do_charge)
-	RegisterSignal(parent, COMSIG_CELL_CAN_CHARGE, .proc/can_charge)
-	RegisterSignal(parent, COMSIG_CELL_USE, .proc/use)
-	RegisterSignal(parent, COMSIG_CELL_CHECK_CHARGE, .proc/check_charge)
+	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(attackby))
+	RegisterSignal(parent, COMSIG_CELL_SWAP, PROC_REF(do_swap))
+	RegisterSignal(parent, COMSIG_CELL_TRY_SWAP, PROC_REF(try_swap))
+	RegisterSignal(parent, COMSIG_CELL_CHARGE, PROC_REF(do_charge))
+	RegisterSignal(parent, COMSIG_CELL_CAN_CHARGE, PROC_REF(can_charge))
+	RegisterSignal(parent, COMSIG_CELL_USE, PROC_REF(use))
+	RegisterSignal(parent, COMSIG_CELL_CHECK_CHARGE, PROC_REF(check_charge))
 
 
 /datum/component/cell_holder/InheritComponent(datum/component/cell_holder/C, i_am_original, new_cell = null, chargable = null, max_cell = null, swappable = null)
@@ -49,7 +49,7 @@ TYPEINFO(/datum/component/cell_holder)
 				qdel(src.cell)
 				src.cell = new_cell
 				src.cell.set_loc(parent)
-				RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/UpdateIcon)
+				RegisterSignal(cell, COMSIG_UPDATE_ICON, PROC_REF(UpdateIcon))
 		else if(istype(new_cell, /datum/component/power_cell))
 			src.cell.AddComponent(new_cell)
 		else if(islist(new_cell))
@@ -85,18 +85,30 @@ TYPEINFO(/datum/component/cell_holder)
 /datum/component/cell_holder/proc/do_swap(source, atom/movable/P, mob/user)
 	var/atom/movable/old_cell = src.cell
 	var/atom/old_loc = get_turf(parent)
+	var/atom/new_cell_stored = null
 	if(P)
-		old_loc = P.loc
+		if (istype(P, /obj/item))
+			var/obj/item/I = P
+			if (I.stored)
+				new_cell_stored = I.stored.linked_item
+				I.stored.transfer_stored_item(I, get_turf(I), user = user)
+			else
+				old_loc = P.loc
+		else
+			old_loc = P.loc
 		if(user)
 			user.u_equip(P)
 			P.add_fingerprint(user)
 		src.cell = P
-		RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/UpdateIcon)
+		RegisterSignal(cell, COMSIG_UPDATE_ICON, PROC_REF(UpdateIcon))
 		P.set_loc(src.parent)
 		SEND_SIGNAL(P, COMSIG_UPDATE_ICON)
 
 	if(old_cell)
-		old_cell.set_loc(old_loc)
+		if (new_cell_stored)
+			new_cell_stored.storage.add_contents(old_cell, user, FALSE)
+		else
+			old_cell.set_loc(old_loc)
 		SEND_SIGNAL(old_cell, COMSIG_UPDATE_ICON)
 		UnregisterSignal(old_cell, COMSIG_UPDATE_ICON)
 		if(!P)

@@ -14,20 +14,20 @@ TYPEINFO(/obj/machinery/chem_heater)
 
 /obj/machinery/chem_heater
 	name = "Reagent Heater/Cooler"
-	desc = "A device used for the slow but precise heating and cooling of chemicals. It looks like a cross between an oven and a urinal."
+	desc = "A device used for the slow but precise heating and cooling of chemicals."
 	density = 1
-	anchored = 1
-	icon = 'icons/obj/chemical.dmi'
+	anchored = ANCHORED
+	icon = 'icons/obj/heater.dmi'
 	icon_state = "heater"
 	flags = NOSPLASH | TGUI_INTERACTIVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	power_usage = 50
+	processing_tier = PROCESSING_HALF
 	var/obj/beaker = null
 	var/active = 0
 	var/target_temp = T0C
 	var/output_target = null
 	var/mob/roboworking = null
-	var/static/image/icon_beaker = image('icons/obj/chemical.dmi', "heater-beaker")
 	// The chemistry APC was largely meaningless, so I made dispensers/heaters require a power supply (Convair880).
 
 	New()
@@ -101,6 +101,8 @@ TYPEINFO(/obj/machinery/chem_heater)
 
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if (src.beaker)
+			SEND_SIGNAL(src.beaker.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "ChemHeater", src.name)
@@ -176,7 +178,6 @@ TYPEINFO(/obj/machinery/chem_heater)
 				if (!container?.reagents.total_volume)
 					return
 				src.active = 1
-				active()
 				src.UpdateIcon()
 			if("stop")
 				set_inactive()
@@ -194,25 +195,22 @@ TYPEINFO(/obj/machinery/chem_heater)
 		return ..(AM)
 	*/
 
-	process()
-		..()
-
-	proc/active()
+	process(mult)
 		if (!active) return
 		if (status & (NOPOWER|BROKEN) || !beaker || !beaker.reagents.total_volume)
 			set_inactive()
 			return
 
 		var/datum/reagents/R = beaker:reagents
-		R.temperature_reagents(target_temp, 400)
+		R.temperature_reagents(target_temp, exposed_volume = (400 + R.total_volume * 5) * mult, change_cap = 100) //it uses juice in if the beaker is filled more. Or something.
 
-		src.power_usage = 1000
+		src.power_usage = 2000 + R.total_volume * 25
 
-		if(abs(R.total_temperature - target_temp) <= 3) active = 0
+		if(abs(R.total_temperature - target_temp) <= 3)
+			active = 0
 
 		tgui_process.update_uis(src)
-
-		SPAWN(1 SECOND) active()
+		..()
 
 	proc/robot_disposal_check()
 		// Without this, the heater might occasionally show that a beaker is still inserted
@@ -244,19 +242,19 @@ TYPEINFO(/obj/machinery/chem_heater)
 		tgui_process.update_uis(src)
 
 	update_icon()
-		src.overlays -= src.icon_beaker
 		if (src.beaker)
-			src.overlays += src.icon_beaker
+			src.UpdateOverlays(SafeGetOverlayImage("beaker", 'icons/obj/heater.dmi', "heater-beaker"), "beaker")
 			if (src.active && src.beaker:reagents && src.beaker:reagents:total_volume)
 				if (target_temp > src.beaker:reagents:total_temperature)
 					src.icon_state = "heater-heat"
 				else if (target_temp < src.beaker:reagents:total_temperature)
 					src.icon_state = "heater-cool"
 				else
-					src.icon_state = "heater"
+					src.icon_state = "heater-closed"
 			else
-				src.icon_state = "heater"
+				src.icon_state = "heater-closed"
 		else
+			src.UpdateOverlays(null, "beaker", retain_cache=TRUE)
 			src.icon_state = "heater"
 
 	mouse_drop(over_object, src_location, over_location)
@@ -286,6 +284,209 @@ TYPEINFO(/obj/machinery/chem_heater)
 			src.UpdateIcon()
 			tgui_process.update_uis(src)
 
+	chemistry
+		icon = 'icons/obj/heater_chem.dmi'
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+TYPEINFO(/obj/machinery/chem_shaker)
+	mats = 10
+
+// A lot of boilerplate code from this is borrowed from `/obj/machinery/chem_heater`.
+/obj/machinery/chem_shaker
+	name = "\improper Orbital Shaker"
+	desc = "A machine which continuously agitates beakers and flasks when activated."
+	icon = 'icons/obj/shaker.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "orbital_shaker-map"
+#else
+	icon_state = "orbital_shaker"
+#endif
+	anchored = ANCHORED
+	flags = NOSPLASH
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
+	pixel_y = 4
+
+	var/list/obj/item/reagent_containers/glass/held_containers = list()
+	var/obj/dummy/platform_holder
+	var/list/first_container_offsets = list("X" = 0, "Y" = 8)
+	var/list/container_offsets = list ("X" = 10, "Y" = -4)
+	var/active = FALSE
+	var/emagged = FALSE
+	/// The arrangement of the containers on the platform in the X direction.
+	var/container_row_length = 1
+	/// Also acts as the number of containers in the Y direction when divided by `src.container_row_length`.
+	var/max_containers = 1
+	/// The time it takes for the platform to complete one orbit.
+	var/orbital_period = 0.6 SECONDS
+	/// Radius of the platform's orbit in pixels.
+	var/radius = 2
+	/// How much force does the shaker apply on `process()`?
+	var/physical_shock_force = 5
+
+	New()
+		..()
+		src.platform_holder = new()
+		src.platform_holder.icon = src.icon
+		src.platform_holder.icon_state = "[src.icon_state]-platform"
+		src.platform_holder.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
+		src.platform_holder.appearance_flags |= KEEP_TOGETHER
+		src.vis_contents.Add(src.platform_holder)
+
+	disposing()
+		for (var/obj/item/reagent_containers/glass/glass_container in src.held_containers)
+			MOVE_OUT_TO_TURF_SAFE(glass_container, src)
+			src.held_containers -= glass_container
+		UnsubscribeProcess()
+		..()
+
+	attack_hand(mob/user)
+		if (!can_act(user)) return
+		switch (src.active)
+			if (TRUE)
+				if (src.emagged)
+					boutput(user, "<span class='alert'>[src] refuses to shut off!</span>")
+					return FALSE
+				src.set_inactive()
+			if (FALSE)
+				src.set_active()
+		boutput(user, "<span class='notice'>You [!src.active ? "de" : ""]activate [src].</span>")
+
+	attackby(obj/item/reagent_containers/glass/glass_container, var/mob/user)
+		if(istype(glass_container, /obj/item/reagent_containers/glass))
+			src.try_insert(glass_container, user)
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (!src.emagged)
+			src.emagged = TRUE
+			boutput(user, "<span class='alert'>[src]'s safeties have been disabled.</span>")
+			src.set_active()
+			return TRUE
+		return FALSE
+
+	ex_act(severity)
+		switch (severity)
+			if (1)
+				qdel(src)
+				return
+			if (2)
+				if (prob(50))
+					qdel(src)
+					return
+
+	blob_act(power)
+		if (prob(25 * power/20))
+			qdel(src)
+
+	meteorhit()
+		qdel(src)
+		return
+
+	attack_ai(mob/user as mob)
+		return src.Attackhand(user)
+
+	process(mult)
+		..()
+		if (src.status & (NOPOWER|BROKEN)) return src.set_inactive()
+		for (var/obj/item/reagent_containers/glass/glass_container in src.held_containers)
+			if (src.emagged)
+				src.remove_container(glass_container)
+				glass_container.throw_at(pick(range(5, src)), 5, 1)
+				continue
+			glass_container.reagents?.physical_shock(src.physical_shock_force)
+
+	proc/arrange_containers()
+		if (!src.count_held_containers()) return
+		for (var/i in 1 to length(src.held_containers))
+			if (!src.held_containers[i]) continue
+			var/current_y = ceil(i / src.container_row_length)
+			var/current_x = i - (src.container_row_length * (current_y - 1))
+			src.held_containers[i].pixel_x = src.first_container_offsets["X"] + ((current_x - 1) * src.container_offsets["X"])
+			src.held_containers[i].pixel_y = src.first_container_offsets["Y"] + ((current_y - 1) *src.container_offsets["Y"])
+
+	proc/count_held_containers()
+		var/count_buffer = 0
+		for (var/i in 1 to length(src.held_containers))
+			if (src.held_containers[i])
+				++count_buffer
+		return count_buffer
+
+	proc/set_active()
+		src.active = TRUE
+		src.power_usage = src.emagged ? 1000 : 200
+		animate_orbit(src.platform_holder, radius = src.radius, time = src.emagged ? src.orbital_period / 5 : src.orbital_period, loops = -1)
+		if (src.emagged)
+			src.audible_message("<span class='alert'>[src] is rotating a bit too fast!</span>")
+		else
+			src.audible_message("<span class='notice'>[src] whirs to life, rotating its platform!</span>")
+		if (!(src in processing_machines))
+			SubscribeToProcess()
+
+	proc/set_inactive()
+		src.active = FALSE
+		src.power_usage = 0
+		animate(src.platform_holder, pixel_x = 0, pixel_y = 0, time = src.orbital_period/2, easing = SINE_EASING, flags = ANIMATION_LINEAR_TRANSFORM)
+		src.audible_message("<span class='notice'>[src] dies down, returning its platform to its initial position.</span>")
+		UnsubscribeProcess()
+
+	proc/try_insert(obj/item/reagent_containers/glass/glass_container, var/mob/user)
+		if (src.status & (NOPOWER|BROKEN))
+			user.show_text("[src] seems to be out of order.", "red")
+			return
+
+		if (src.count_held_containers() >= src.max_containers)
+			boutput(user, "<span class='alert'>There's too many beakers on the platform already!</span>")
+			return
+
+		if (isrobot(user))
+			boutput(user, "Robot beakers won't work with this!")
+			return
+
+		user.drop_item(glass_container)
+		glass_container.set_loc(src)
+		glass_container.appearance_flags |= RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		glass_container.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
+		glass_container.event_handler_flags |= NO_MOUSEDROP_QOL
+		var/append_container = TRUE
+		for (var/i in 1 to length(src.held_containers))
+			if (!src.held_containers[i])
+				src.held_containers[i] = glass_container
+				append_container = FALSE
+				break
+		if (append_container)
+			src.held_containers += glass_container
+		src.platform_holder.vis_contents += glass_container
+		src.arrange_containers()
+		RegisterSignal(glass_container, COMSIG_ATTACKHAND, PROC_REF(remove_container))
+		boutput(user, "You add the beaker to the machine!")
+
+	proc/remove_container(obj/item/reagent_containers/glass/glass_container)
+		if (!(glass_container in src.contents)) return
+		for (var/i in 1 to length(src.held_containers))
+			if (src.held_containers[i] == glass_container)
+				src.held_containers[i] = null
+		MOVE_OUT_TO_TURF_SAFE(glass_container, src)
+		glass_container.appearance_flags = initial(glass_container.appearance_flags)
+		glass_container.vis_flags = initial(glass_container.vis_flags)
+		glass_container.event_handler_flags = initial(glass_container.event_handler_flags)
+		src.platform_holder.vis_contents -= glass_container
+		src.arrange_containers()
+		UnregisterSignal(glass_container, COMSIG_ATTACKHAND)
+
+	chemistry
+		icon = 'icons/obj/shaker_chem.dmi'
+
+TYPEINFO(/obj/machinery/chem_shaker/large)
+	mats = 25
+/obj/machinery/chem_shaker/large
+	name = "\improper Large Orbital Shaker"
+	icon_state = "orbital_shaker_large"
+	max_containers = 4
+	container_row_length = 2
+	first_container_offsets = list("X" = -5, "Y" = 9)
+
+	chemistry
+		icon = 'icons/obj/shaker_chem.dmi'
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -301,17 +502,19 @@ TYPEINFO(/obj/machinery/chem_master)
 	name = "CheMaster 3000"
 	desc = "A computer-like device used in the production of various pharmaceutical items. It has a slot for a beaker on the top."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
 	flags = NOSPLASH
+	power_usage = 50
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
-	var/obj/item/beaker = null
+	var/obj/beaker = null
 	var/list/beaker_cache = null
+	///If TRUE, the beaker cache will be rebuilt on ui_data
+	var/rebuild_cache = FALSE
 	var/mob/roboworking = null
 	var/emagged = FALSE
 	var/list/whitelist = list()
-	var/item_name = null
 
 	var/list/regular_bottles = list(
 		/obj/item/reagent_containers/ampoule, // 5u ampoule
@@ -334,7 +537,7 @@ TYPEINFO(/obj/machinery/chem_master)
 		if (src.status & (NOPOWER|BROKEN))
 			user.show_text("[src] seems to be out of order.", "red")
 			return
-		
+
 		if (src.beaker && src.beaker == B)
 			return
 
@@ -375,10 +578,14 @@ TYPEINFO(/obj/machinery/chem_master)
 		if(!src.beaker)
 			return FALSE
 
+		if(istype(src.beaker, /obj/reagent_dispensers/chemicalbarrel))
+			remove_barrel(src.beaker)
+			return
+
 		if(!src.roboworking)
 			var/obj/item/I = src.beaker
 			TRANSFER_OR_DROP(src, I) // causes Exited proc to be called
-			user.put_in_hand_or_eject(I)
+			user?.put_in_hand_or_eject(I)
 		else // robos dont want exited proc
 			src.beaker = null
 			src.roboworking = null
@@ -462,6 +669,8 @@ TYPEINFO(/obj/machinery/chem_master)
 		return TRUE
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if (src.beaker)
+			SEND_SIGNAL(src.beaker.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "ChemMaster", "Chemical Master 3000")
@@ -513,7 +722,7 @@ TYPEINFO(/obj/machinery/chem_master)
 		.["patch_icons"] = patch_icons
 
 	proc/rebuild_beaker_cache()
-		if(!src.beaker)
+		if(QDELETED(src.beaker))
 			src.beaker_cache = null
 			return
 
@@ -541,23 +750,95 @@ TYPEINFO(/obj/machinery/chem_master)
 					volume = current_reagent.volume
 				)))
 
+	proc/invalidate_cache()
+		src.rebuild_cache = TRUE
+
+	proc/manufacture_name(var/param_name)
+		var/name = param_name
+		name = trim(copytext(sanitize(html_encode(name)), 1, CHEMMASTER_ITEMNAME_MAXSIZE))
+		if(isnull(name) || !length(name) || name == " ")
+			name = null
+			if(src.beaker)
+				name = src.beaker.reagents.get_master_reagent_name()
+		return name
+
+	proc/try_attach_barrel(var/obj/reagent_dispensers/chemicalbarrel/barrel, var/mob/user)
+		if (src.status & (NOPOWER|BROKEN))
+			user.show_text("[src] seems to be out of order.", "red")
+			return
+
+		if (src.beaker == barrel)
+			user.show_text("The [barrel.name] is already connected to the [src.name]!", "red")
+			return
+
+		if(BOUNDS_DIST(src, user) > 0)
+			user.show_text("The [src.name] is too far away to mess with!", "red")
+			return
+
+		if (GET_DIST(barrel, src) > 1)
+			usr.show_text("The [src.name] is too far away from the [barrel.name] to hook up!", "red")
+			return
+
+		if(src.beaker)
+			src.eject_beaker(user)
+
+		src.beaker = barrel
+		barrel.linked_machine = src
+		boutput(user, "You hook the [src.beaker] up to the [src.name].")
+		RegisterSignal(barrel, COMSIG_MOVABLE_MOVED, PROC_REF(remove_barrel))
+		RegisterSignal(barrel, COMSIG_ATOM_REAGENT_CHANGE, PROC_REF(invalidate_cache))
+
+		var/tube_x = 5 //where the tube connects to the chemmaster (changes with dir)
+		var/tube_y = -5
+		if(dir == EAST)
+			tube_x = 7
+			tube_y = 6
+		if(dir == WEST)
+			tube_x = -8
+			tube_y = 0
+		var/datum/lineResult/result = drawLine(src, barrel, "chemmaster", "chemmaster_end", src.pixel_x + tube_x, src.pixel_y + tube_y, barrel.pixel_x + 6, barrel.pixel_y + 8)
+		result.lineImage.pixel_x = -src.pixel_x
+		result.lineImage.pixel_y = -src.pixel_y
+		if(src.layer > barrel.layer) //this should ensure it renders above both the barrel and chemmaster
+			result.lineImage.layer = src.layer + 0.1
+		else
+			result.lineImage.layer = barrel.layer + 0.1
+		src.UpdateOverlays(result.lineImage, "tube")
+
+		rebuild_beaker_cache()
+		global.tgui_process.update_uis(src)
+		src.UpdateIcon()
+
+	proc/remove_barrel(var/obj/reagent_dispensers/chemicalbarrel/barrel)
+		barrel.linked_machine = null
+		UnregisterSignal(src.beaker, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(src.beaker, COMSIG_ATOM_REAGENT_CHANGE)
+		src.beaker = null
+		rebuild_beaker_cache()
+		src.UpdateIcon()
+		global.tgui_process.update_uis(src)
+		src.UpdateOverlays(null, "tube")
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if (istype(over_object, /obj/reagent_dispensers/chemicalbarrel))
+			try_attach_barrel(over_object, usr)
+		..()
+
 	ui_data(mob/user)
 		. = list()
 
-		if(src.beaker)
-			.["item_name"] = isnull(src.item_name) ? src.beaker.reagents.get_master_reagent_name() : src.item_name
+		if(!QDELETED(src.beaker))
+			.["default_name"] = src.beaker.reagents.get_master_reagent_name()
 		else
-			.["item_name"] = null
+			.["default_name"] = null
+		if (src.rebuild_cache)
+			src.rebuild_beaker_cache()
 		.["container"] = beaker_cache
 
 	ui_act(action, list/params, datum/tgui/ui)
 		. = ..()
 		if(.)
 			return
-
-		if(!src.item_name && src.beaker?.reagents)
-			src.item_name = src.beaker.reagents.get_master_reagent_name()
-			. = TRUE
 
 		switch(action)
 			if("insert")
@@ -609,18 +890,12 @@ TYPEINFO(/obj/machinery/chem_master)
 					. = TRUE
 
 			// Operations
-			if("setname")
-				var/name = params["name"]
-				name = trim(copytext(sanitize(html_encode(name)), 1, CHEMMASTER_ITEMNAME_MAXSIZE))
-				if(isnull(name) || !length(name) || name == " ")
-					name = null
-				src.item_name = name
-				. = TRUE
 			if("makepill")
 				if(!src.beaker || !src.beaker.reagents.total_volume)
 					return
 
-				if(!src.item_name) // how did we get here?
+				var/item_name = manufacture_name(params["item_name"])
+				if(!item_name) // how did we get here?
 					boutput(ui.user, "[src] pill labeller makes a weird buzz. That can't be good.")
 					return
 
@@ -629,10 +904,10 @@ TYPEINFO(/obj/machinery/chem_master)
 				var/pill_icon = params["icon"] // handled in design_pill
 
 				var/obj/item/reagent_containers/pill/P = new(src)
-				P.name = "[src.item_name] pill"
+				P.name = "[item_name] pill"
 				src.beaker.reagents.trans_to(P, reagent_amount)
 				design_pill(P, pill_icon)
-				global.phrase_log.log_phrase("pill", src.item_name, no_duplicates=TRUE)
+				global.phrase_log.log_phrase("pill", item_name, no_duplicates=TRUE)
 				logTheThing(LOG_COMBAT, usr, "used [src] to create a [P] pill containing [log_reagents(P)] at [log_loc(src)].")
 
 				TRANSFER_OR_DROP(src, P)
@@ -647,7 +922,8 @@ TYPEINFO(/obj/machinery/chem_master)
 				if(!src.beaker || !src.beaker.reagents.total_volume)
 					return
 
-				if(!src.item_name) // how did we get here?
+				var/item_name = manufacture_name(params["item_name"])
+				if(!item_name) // how did we get here?
 					boutput(ui.user, "[src] pill labeller makes a weird buzz. That can't be good.")
 					return
 
@@ -656,7 +932,7 @@ TYPEINFO(/obj/machinery/chem_master)
 				var/use_pill_bottle = params["use_bottle"]
 				var/pill_icon = params["icon"] // handled in design_pill
 
-				global.phrase_log.log_phrase("pill", src.item_name, no_duplicates=TRUE)
+				global.phrase_log.log_phrase("pill", item_name, no_duplicates=TRUE)
 
 				var/pillcount = round(src.beaker.reagents.total_volume / reagent_amount)
 				if(!pillcount)
@@ -673,7 +949,7 @@ TYPEINFO(/obj/machinery/chem_master)
 
 				for(var/i = 0, i < pillcount, ++i)
 					var/obj/item/reagent_containers/pill/P = new(src)
-					P.name = "[src.item_name] pill"
+					P.name = "[item_name] pill"
 					src.beaker.reagents.trans_to(P, reagent_amount)
 					design_pill(P, pill_icon)
 					if(pill_bottle)
@@ -694,7 +970,8 @@ TYPEINFO(/obj/machinery/chem_master)
 				if(!src.beaker || !src.beaker.reagents.total_volume)
 					return
 
-				if(!src.item_name) // how did we get here?
+				var/item_name = manufacture_name(params["item_name"])
+				if(!item_name) // how did we get here?
 					boutput(ui.user, "[src] bottle labeller makes a weird buzz. That can't be good.")
 					return
 
@@ -706,9 +983,9 @@ TYPEINFO(/obj/machinery/chem_master)
 					return
 				var/reagent_amount = clamp(round(params["amount"]), CHEMMASTER_MINIMUM_REAGENT, bottle.initial_volume)
 
-				global.phrase_log.log_phrase("bottle", src.item_name, no_duplicates=TRUE)
+				global.phrase_log.log_phrase("bottle", item_name, no_duplicates=TRUE)
 
-				bottle.name = "[src.item_name] [bottle.name]"
+				bottle.name = "[item_name] [bottle.name]"
 				src.beaker.reagents.trans_to(bottle, reagent_amount)
 
 				logTheThing(LOG_COMBAT, usr, "used the [src] to create [bottle] containing [log_reagents(bottle)] at [log_loc(src)].")
@@ -725,7 +1002,8 @@ TYPEINFO(/obj/machinery/chem_master)
 				if(!src.beaker || !src.beaker.reagents.total_volume)
 					return
 
-				if(!src.item_name) // how did we get here?
+				var/item_name = manufacture_name(params["item_name"])
+				if(!item_name) // how did we get here?
 					boutput(ui.user, "[src] patcher labeller makes a weird buzz. That can't be good.")
 					return
 
@@ -740,7 +1018,7 @@ TYPEINFO(/obj/machinery/chem_master)
 				// unused by log_phrase?
 				//global.phrase_log.log_phrase("patch", src.item_name, no_duplicates=TRUE)
 
-				patch.name = "[src.item_name] patch"
+				patch.name = "[item_name] patch"
 				patch.medical = src.check_patch_whitelist()
 				src.beaker.reagents.trans_to(patch, reagent_amount)
 
@@ -760,7 +1038,8 @@ TYPEINFO(/obj/machinery/chem_master)
 				if(!src.beaker || !src.beaker.reagents.total_volume)
 					return
 
-				if(!src.item_name) // how did we get here?
+				var/item_name = manufacture_name(params["item_name"])
+				if(!item_name) // how did we get here?
 					boutput(ui.user, "[src] patcher labeller makes a weird buzz. That can't be good.")
 					return
 
@@ -797,11 +1076,11 @@ TYPEINFO(/obj/machinery/chem_master)
 						patch_box.icon_open = "patchbox-open"
 						patch_box.icon_empty = "patchbox-empty"
 
-				logTheThing(LOG_COMBAT, usr, "used the [src.name] to create [patchcount] [src.item_name] patches from [log_reagents(src.beaker)] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, usr, "used the [src.name] to create [patchcount] [item_name] patches from [log_reagents(src.beaker)] at [log_loc(src)].")
 
 				for(var/i = 0, i < patchcount, ++i)
 					var/obj/item/reagent_containers/patch/P = new patch_path(src)
-					P.name = "[src.item_name] [P.name]"
+					P.name = "[item_name] [P.name]"
 					P.medical = is_medical_patch
 					src.beaker.reagents.trans_to(P, reagent_amount)
 					P.on_reagent_change()
@@ -822,7 +1101,10 @@ TYPEINFO(/obj/machinery/chem_master)
 
 	update_icon()
 		if(src.beaker)
-			icon_state = "mixer1"
+			if(istype(src.beaker, /obj/reagent_dispensers/chemicalbarrel))
+				icon_state = "mixer_barrel"
+			else
+				icon_state = "mixer1"
 		else
 			icon_state = "mixer0"
 
@@ -882,7 +1164,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 	name = "ChemiCompiler CCS1001"
 	desc = "This device looks very difficult to use."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "chemicompiler_st_off"
 	flags = NOSPLASH
@@ -894,7 +1176,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 	New()
 		..()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Run Script", .proc/runscript)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Run Script", PROC_REF(runscript))
 		executor = new(src, /datum/chemicompiler_core/stationaryCore)
 		light = new /datum/light/point
 		light.set_brightness(0.4)
@@ -993,7 +1275,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 	name = "fractional still"
 	desc = "A towering piece of industrial equipment. It reeks of hydrocarbons."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	power_usage = 500
 	var/active = 0
 	var/overall_temp = T20C
@@ -1260,6 +1542,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 
 			S.UpdateIcon()
+			S.tooltip_rebuild = 1
 			src.updateUsrDialog()
 
 		else

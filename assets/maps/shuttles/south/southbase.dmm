@@ -147,7 +147,7 @@
 /obj/machinery/door/airlock/pyro/glass/command{
 	hardened = 1
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -233,15 +233,6 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom)
-"lJ" = (
-/obj/indestructible/shuttle_corner{
-	dir = 0;
-	icon_state = "7"
-	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "3"
-	},
-/area/shuttle/escape/centcom)
 "lL" = (
 /obj/machinery/atmospherics/portables_connector,
 /obj/decal/fakeobjects{
@@ -276,7 +267,7 @@
 	},
 /area/shuttle/escape/centcom)
 "mr" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "nb" = (
@@ -362,7 +353,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "qO" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -506,7 +497,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "xT" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -583,11 +574,9 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Bh" = (
-/obj/indestructible/shuttle_corner{
-	dir = 0;
+/turf/simulated/wall/auto/shuttle{
 	icon_state = "7"
 	},
-/turf/space,
 /area/shuttle/escape/centcom)
 "Bj" = (
 /obj/decal/tile_edge/line/black{
@@ -615,14 +604,13 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "CB" = (
-/obj/indestructible/shuttle_corner{
-	dir = 0
-	},
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
 	icon_state = "alt_heater-R"
 	},
-/turf/space,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "14"
+	},
 /area/shuttle/escape/centcom)
 "CH" = (
 /obj/indestructible/shuttle_corner{
@@ -721,7 +709,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "Gm" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -775,14 +763,13 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
 "Io" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1
-	},
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
 	icon_state = "alt_heater-L"
 	},
-/turf/space,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "14"
+	},
 /area/shuttle/escape/centcom)
 "Ir" = (
 /obj/machinery/light/small/floor,
@@ -927,7 +914,7 @@
 	name = "Secure Transport";
 	hardened = 1
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
@@ -1655,7 +1642,7 @@ XE
 uD
 CH
 NG
-lJ
+ve
 ve
 ve
 sx

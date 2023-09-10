@@ -17,7 +17,7 @@
 	flags =  FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | DOORPASS
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	req_access = list(access_engineering_atmos)
 	on = 1
 	health = 20
@@ -154,9 +154,7 @@
 		//Swedenfact:
 		//"Fart" means "speed", so if a policeman pulls you over with the words "fartkontroll" you should not pull your pants down
 		return
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (istype(W, /obj/item/card/id))
+	if (istype(get_id_card(W), /obj/item/card/id))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
@@ -383,7 +381,7 @@
 		new /obj/item/parts/robot_parts/arm/left/standard(Tsec)
 
 	var/obj/item/storage/toolbox/emergency/emptybox = new /obj/item/storage/toolbox/emergency(Tsec)
-	for(var/obj/item/I in emptybox.contents) //Empty the toolbox so we don't have infinite crowbars or whatever
+	for(var/obj/item/I in emptybox.storage.get_contents()) //Empty the toolbox so we don't have infinite crowbars or whatever
 		qdel(I)
 
 	elecflash(src, radius=1, power=3, exclude_center = 0)
@@ -425,7 +423,7 @@
 		..()
 		return
 
-	if(src.contents.len >= 1)
+	if(length(src.contents) >= 1)
 		boutput(user, "<span class='alert'>You need to empty [src] out first!</span>")
 		return
 

@@ -6,11 +6,17 @@
 	desc = "A huge pipe segment used for constructing disposal systems."
 	icon = 'icons/obj/disposal.dmi'
 	icon_state = "conpipe-s"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 0
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	m_amt = 1850
 	level = 2
+	HELP_MESSAGE_OVERRIDE({"
+		You can use a <b>wrench</b> to (un)anchor the pipe segment,
+		a <b>crowbar</b> to rotate it,
+		a <b>screwdriver</b> to disassemble it,
+		and a <b>welding tool</b> to turn it into a functional immovable pipe."})
+
 	var/ptype = 0
 	// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk, 6 & 7=switching junction, 8 & 9=mob filter junction, 10 = loafer, 11 = mechanics controlled junction
 
@@ -69,7 +75,7 @@
 	// hide called by levelupdate if turf intact status changes
 	// change visibility status and force update of icon
 	hide(var/intact)
-		invisibility = (intact && level==1) ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
+		invisibility = (intact && level == UNDERFLOOR) ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
 		update()
 
 	// returns the type path of disposalpipe corresponding to this item dtype
@@ -146,13 +152,13 @@
 
 		if (iswrenchingtool(I))
 			if(anchored)
-				anchored = 0
-				level = 2
+				anchored = UNANCHORED
+				level = OVERFLOOR
 				set_density(1)
 				boutput(user, "You detach the pipe from the underfloor.")
 			else
-				anchored = 1
-				level = 1
+				anchored = ANCHORED
+				level = UNDERFLOOR
 				set_density(0)
 				boutput(user, "You attach the pipe to the underfloor.")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
@@ -183,6 +189,10 @@
 					P.set_dir(dir)
 					P.dpdir = dpdir
 					P.mail_tag = mail_tag
+					P.color = src.color
+					P.name = src.name
+					if (src.material)
+						P.setMaterial(src.material)
 					P.UpdateIcon()
 					boutput(user, "You weld [P] in place.")
 					logTheThing(LOG_STATION, user, "welded the disposal pipe in place at [log_loc(P)]")

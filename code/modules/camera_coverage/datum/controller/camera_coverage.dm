@@ -9,7 +9,7 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
  * Called at world setup, creates an image on all turfs that will overlay for the AI when a turf is not visible in the camera coverage. At the end will update all camera coverage.
  */
 /datum/controller/camera_coverage/proc/setup()
-#if defined(IM_REALLY_IN_A_FUCKING_HURRY_HERE) && !defined(SPACEMAN_DMM)
+#if defined(SKIP_CAMERA_COVERAGE) && !defined(SPACEMAN_DMM)
 	return
 #endif
 #if !defined(MAP_OVERRIDE_POD_WARS) && !defined(UPSCALED_MAP) && !defined(MAP_OVERRIDE_EVENT)
@@ -28,6 +28,7 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 	var/lastpct = 0
 	var/thispct = 0
 	var/donecount = 0
+	var/totalcount = length(cam_candidates) / 100
 
 	for(var/turf/T as anything in cam_candidates) //ugh
 		T.aiImage = new
@@ -35,10 +36,17 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 		T.aiImage.dir = pick(alldirs)
 		T.aiImage.loc = T
 
-		addAIImage(T.aiImage, "aiImage_\ref[T.aiImage]", low_priority=istype(T, /turf/space))
+
+		if(istype(T, /turf/space))
+			aiImagesLowPriority += T.aiImage
+		else
+			aiImages += T.aiImage
+		for_by_tcl(M, /mob/living/silicon/ai)
+			if (M.client)
+				M << T.aiImage
 
 		donecount++
-		thispct = round(donecount / length(cam_candidates) * 100)
+		thispct = round(donecount / totalcount)
 		if (thispct != lastpct)
 			lastpct = thispct
 			game_start_countdown?.update_status("Updating cameras...\n[thispct]%")
@@ -61,9 +69,11 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 /datum/controller/camera_coverage/proc/update_turfs(list/turf/turfs_to_update)
 	if (!length(turfs_to_update))
 		return
+
+	LAZYLISTINIT(src.turf_update_queue)
 	for(var/turf/T as anything in turfs_to_update)
 		if (global.explosions.exploding || ON_COOLDOWN(T, "camera_coverage_update", CAM_TURF_UPDATE_COOLDOWN))
-			LAZYLISTADDUNIQUE(src.turf_update_queue, turfs_to_update)
+			src.turf_update_queue |= turfs_to_update
 			return
 		T.aiImage?.loc = length(T.camera_coverage_emitters) ? null : T
 
@@ -74,7 +84,7 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 	PRIVATE_PROC(TRUE)
 	// This is a list of turfs that require an update.
 	. = list()
-#if defined(IM_REALLY_IN_A_FUCKING_HURRY_HERE) && !defined(SPACEMAN_DMM)
+#if defined(SKIP_CAMERA_COVERAGE) && !defined(SPACEMAN_DMM)
 	return
 #endif
 	var/list/turf/prev_coverage = emitter.coverage ? emitter.coverage : list()
@@ -122,9 +132,10 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 
 	var/list/turf/turfs_to_update = list()
 
+	LAZYLISTINIT(src.emitter_update_queue)
 	for (var/datum/component/camera_coverage_emitter/emitter as anything in emitters)
 		if (global.explosions.exploding || ON_COOLDOWN(emitter, "camera_coverage_update", CAM_UPDATE_COOLDOWN))
-			LAZYLISTADDUNIQUE(src.emitter_update_queue, emitter)
+			src.emitter_update_queue |= emitter
 			continue
 		turfs_to_update |= src.update_emitter_internal(emitter)
 

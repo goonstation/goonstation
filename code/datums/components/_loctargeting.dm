@@ -1,6 +1,6 @@
 /datum/component/loctargeting
 	var/list/signals = list()
-	var/proctype // = .proc/pass
+	var/proctype // = PROC_REF(pass)
 	var/loctype = /atom/movable
 	var/atom/current_loc
 
@@ -27,7 +27,7 @@ TYPEINFO(/datum/component/loctargeting)
 	UnregisterSignal(old_loc, signals)
 
 /datum/component/loctargeting/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, .proc/on_change_loc)
+	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, PROC_REF(on_change_loc))
 	var/atom/movable/source = parent
 	if(istype(source.loc, loctype))
 		src.current_loc = source.loc

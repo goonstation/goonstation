@@ -1,5 +1,6 @@
 #define VALID_WHITE_HOLE_LOCATIONS list("artlab", "teg", "flock", "chapel", "trench", "asteroid", \
-	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", "medbay", "security", "cargo", "nuclear")
+	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", \
+	"medbay", "security", "cargo", "nuclear", "janitorial")
 
 /datum/random_event/major/white_hole
 	name = "White Hole"
@@ -52,7 +53,9 @@
 		if (!istype(T,/turf/))
 			if(isnull(random_floor_turfs))
 				build_random_floor_turf_list()
-			T = pick(random_floor_turfs)
+			while(isnull(T) || istype(T, /turf/simulated/floor/airless/plating/catwalk) || total_density(T) > 0)
+				T = pick(random_floor_turfs)
+				if(prob(1)) break // prevent infinite loop
 
 		if(isnull(grow_duration))
 			grow_duration = 2 MINUTES + rand(-30 SECONDS, 30 SECONDS)
@@ -63,9 +66,10 @@
 		var/obj/whitehole/whitehole = new (T, grow_duration, duration, source_location, TRUE)
 		whitehole.activity_modifier = activity_modifier
 		message_admins("White Hole anomaly with origin [whitehole.source_location] spawning in [log_loc(T)]")
-		logTheThing("admin", usr, null, "Spawned a white hole anomaly with origin [whitehole.source_location] at [log_loc(T)]")
+		logTheThing(LOG_ADMIN, usr, "Spawned a white hole anomaly with origin [whitehole.source_location] at [log_loc(T)]")
 
 
+ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 /obj/whitehole
 	name = "white hole"
 	icon = 'icons/effects/160x160.dmi'
@@ -73,7 +77,7 @@
 	icon_state = "whole"
 	opacity = 0
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	pixel_x = -64
 	pixel_y = -64
 	event_handler_flags = IMMUNE_SINGULARITY
@@ -175,7 +179,7 @@
 			/datum/reagent/flockdrone_fluid = 3,
 		),
 		"chapel" = list(
-			/obj/item/storage/bible = 2,
+			/obj/item/bible = 2,
 			/obj/item/device/light/candle = 10,
 			/obj/item/device/light/candle/small = 15,
 			/obj/item/device/light/candle/spooky = 2,
@@ -220,7 +224,7 @@
 			/obj/item/seashell = 2,
 			"trenchloot" = 5,
 			"ore" = 5,
-			/obj/critter/shark = 1,
+			/mob/living/critter/aquatic/shark = 1,
 			/obj/critter/gunbot/drone/gunshark = 0.5,
 			/obj/critter/gunbot/drone/buzzdrone/fish = 0.8,
 			/obj/naval_mine/standard = 0.2,
@@ -268,8 +272,8 @@
 		),
 		"asteroid" = list(
 			"ore" = 200,
-			/obj/critter/rockworm = 3,
-			/obj/critter/fermid = 10,
+			/mob/living/critter/rockworm = 3,
+			/mob/living/critter/fermid = 10,
 			/obj/storage/crate/loot = 2,
 			/obj/storage/crate/loot/puzzle = 2,
 			/mob/living/carbon/human/normal/miner = 0.1,
@@ -377,7 +381,7 @@
 			/obj/stool/chair/office/syndie = 1,
 			/obj/item/paper/book/from_file/syndies_guide = 0.5,
 			/obj/item/beartrap/armed = 1,
-			/datum/reagent/harmful/sarin = 0.1,
+			/datum/reagent/harmful/saxitoxin = 0.1,
 			/datum/reagent/blood = 1,
 			/mob/living/critter/robotic/sawfly = 2,
 			/obj/item/reagent_containers/food/snacks/donkpocket_w = 1,
@@ -386,7 +390,7 @@
 		"hell" = list(
 			"fireflash" = 15,
 			/obj/hotspot = 10,
-			/obj/critter/lavacrab = 5,
+			/mob/living/critter/small_animal/crab/lava = 5,
 			/obj/submachine/slot_machine = 5,
 			#ifdef SECRETS_ENABLED
 			/obj/critter/slime/magma = 2,
@@ -427,6 +431,9 @@
 			/obj/item/reagent_containers/glass/water_pipe = 1,
 			/obj/item/device/light/lava_lamp = 1,
 			/obj/item/paper = 3,
+			/obj/critter/killertomato = 0.5,
+			/mob/living/critter/small_animal/cat/synth = 1,
+			/mob/living/critter/maneater = 0.3,
 		),
 		"maint" = list(
 			/obj/decal/cleanable/rust = 10,
@@ -508,7 +515,7 @@
 			/mob/living/critter/small_animal/cat/jones = 5,
 			/obj/item/clothing/suit/bedsheet/captain = 2,
 			/obj/item/card/id/captains_spare = 0.1,
-			/obj/item/spacecash/random = 5,
+			/obj/item/currency/spacecash/small = 5,
 			/obj/item/stamp/hop = 1,
 			/obj/item/stamp/cap = 1,
 			/obj/item/stamp/centcom = 1,
@@ -522,7 +529,7 @@
 			/obj/item/hand_tele = 2,
 			/obj/machinery/shipalert = 1,
 			/obj/item/storage/box/PDAbox = 1,
-			/obj/item/storage/box/trackimp_kit2 = 1,
+			/obj/item/storage/box/trackimp_kit = 1,
 			/obj/item/cigarbox/gold = 2,
 			/obj/item/paper/book/from_file/captaining_101 = 1,
 			/obj/shrub/captainshrub = 0.5,
@@ -616,7 +623,7 @@
 			/obj/item/device/flash = 3,
 			/obj/item/clothing/head/beret/prisoner = 5,
 			/obj/item/clothing/shoes/orange = 5,
-			/obj/item/clothing/under/misc = 5,
+			/obj/item/clothing/under/misc/prisoner = 5,
 			/obj/item/clothing/shoes/swat = 2,
 			/obj/item/clothing/head/red = 4,
 			/obj/item/clothing/head/helmet/siren = 2,
@@ -631,12 +638,12 @@
 			/obj/item/sticker/postit = 0.5,
 		),
 		"cargo" = list(
-			/obj/item/spacecash/five = 10,
-			/obj/item/spacecash/ten = 10,
-			/obj/item/spacecash/twenty = 10,
-			/obj/item/spacecash/fifty = 5,
-			/obj/item/spacecash/hundred = 3,
-			/obj/item/spacecash/fivehundred = 0.3,
+			/obj/item/currency/spacecash/five = 10,
+			/obj/item/currency/spacecash/ten = 10,
+			/obj/item/currency/spacecash/twenty = 10,
+			/obj/item/currency/spacecash/fifty = 5,
+			/obj/item/currency/spacecash/hundred = 3,
+			/obj/item/currency/spacecash/fivehundred = 0.3,
 			/obj/item/paper = 15,
 			/obj/item/paper_bin = 5,
 			/obj/item/hand_labeler = 5,
@@ -720,6 +727,34 @@
 			/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake = 1,
 			/obj/item/material_piece/plutonium = 1,
 			/obj/item/raw_material/cerenkite = 10,
+		),
+		"janitorial" = list(
+			/obj/machinery/bot/cleanbot = 5,
+			/obj/machinery/bot/cleanbot/emagged = 3,
+			/obj/item/caution = 10,
+			/obj/item/caution/traitor = 2,
+			/obj/item/spraybottle/cleaner = 5,
+			/obj/item/reagent_containers/glass/bottle/cleaner = 3,
+			/obj/item/reagent_containers/glass/bottle/acetone/janitors = 3,
+			"body_bag" = 2,
+			/obj/item/mop = 5,
+			/obj/item/sponge = 5,
+			/datum/reagent/water = 10,
+			/datum/reagent/space_cleaner = 5,
+			/obj/item/mousetrap/armed = 5,
+			/obj/item/chem_grenade/cleaner = 10,
+			/obj/item/clothing/gloves/long = 3,
+			/obj/item/clothing/suit/bio_suit = 1,
+			/obj/item/clothing/head/bio_hood = 1,
+			/obj/item/clothing/shoes/white = 1,
+			/obj/mopbucket = 3,
+			/obj/submachine/laundry_machine = 1,
+			/obj/item/reagent_containers/bath_bomb = 10,
+			/obj/storage/cart/trash = 2,
+			/obj/item/scrap = 5,
+			/obj/item/reagent_containers/glass/bucket = 4,
+			/obj/vehicle/floorbuffer = 1,
+			/obj/item/handheld_vacuum = 1
 		)
 	)
 
@@ -769,6 +804,10 @@
 
 		processing_items |= src
 
+	proc/admin_activate()
+		set name = "Activate"
+		start_time = TIME - grow_duration
+
 	bullet_act(obj/projectile/P)
 		shoot_reflected_to_sender(P, src)
 		P.die()
@@ -805,6 +844,7 @@
 
 		if(triggered_by_event)
 			//spatial interdictor: can't stop the white hole, but it can mitigate it
+			//consumes 500 units of charge (250,000 joules) to reduce white hole duration
 			for_by_tcl(IX, /obj/machinery/interdictor)
 				if (IX.expend_interdict(500, src))
 					if(prob(20))
@@ -901,7 +941,7 @@
 				target = src.get_target_mob()
 			if(isnull(target))
 				target = locate(rand(-7, 7) + src.x, rand(-7, 7) + src.y, src.z)
-			. = shoot_projectile_ST(src, new spawn_type, target)
+			. = shoot_projectile_ST_pixel_spread(src, new spawn_type, target)
 		else if(ispath(spawn_type, /datum/reagent))
 			var/datum/reagent/dummy = spawn_type
 			var/reagent_id = initial(dummy.id)
@@ -991,7 +1031,8 @@
 			if ("organ")
 				spawn_type = pick(concrete_typesof(/obj/item/organ))
 				. = new spawn_type(src.loc)
-			if ("corpse")
+			if ("corpse", "body_bag")
+				var/bag_it = (spawn_type == "body_bag")
 				spawn_type = pick( //safe jobs that don't introduce too much loot
 					1; /mob/living/carbon/human/normal/assistant,
 					1; /mob/living/carbon/human/normal/clown,
@@ -1008,6 +1049,11 @@
 				human.death()
 				human.set_loc(src.loc)
 				. = human
+				if (bag_it)
+					var/obj/item/body_bag/bag = new(src.loc)
+					bag.UpdateIcon()
+					human.set_loc(bag)
+					. = bag
 			if("geneinjector")
 				var/datum/bioEffect/effect = global.mutini_effects[pick(global.mutini_effects)]
 				for(var/i in pick(100; 0,   80; 1,   25; 2,   10; 3,   1; 4))
@@ -1078,7 +1124,7 @@
 			var/obj/item/old_grenade/grenade = .
 			if(prob(50))
 				SPAWN(rand(1 SECOND, 10 SECONDS))
-					grenade.prime()
+					grenade.detonate()
 		else if(istype(., /obj/item/chem_grenade))
 			var/obj/item/chem_grenade/grenade = .
 			if(prob(50))
@@ -1256,13 +1302,16 @@
 
 
 /datum/fishing_spot/whitehole
+	rod_tier_required = 2
 	fishing_atom_type = /obj/whitehole
 
 	generate_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)
 		var/obj/whitehole/whitehole = target
 		if(!istype(whitehole))
 			CRASH("generate_fish called on whitehole fishing spot with non-whitehole target")
-		. = whitehole.generate_thing(whitehole.source_location)
+		var/atom/fish = whitehole.generate_thing(whitehole.source_location)
+		fish.name += "fish"
+		return fish
 
 	try_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)
 		. = ..()

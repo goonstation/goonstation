@@ -17,9 +17,9 @@
 	desc = "Adjustable metal rings joined by cable, made to be applied to a person in such a way that they are unable to use their hands. Difficult to remove from oneself."
 	custom_suicide = 1
 
-/obj/item/handcuffs/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
+/obj/item/handcuffs/setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = FALSE, var/use_descriptors = FALSE)
 	..()
-	if (mat1.mat_id == "silver")
+	if (mat1.getID() == "silver")
 		name = "silver handcuffs"
 		icon_state = "handcuff-silver"
 		desc = "These handcuffs are perfect for containing evil creatures, but they're fragile otherwise as a result."
@@ -61,9 +61,8 @@
 */
 		for (var/mob/living/carbon/human/O in AIviewers(user, null))
 			if (O != user && prob(33))
-				O.visible_message("<span class='alert'>[O] pukes all over [himself_or_herself(O)]. Thanks, [user].</span>",\
-				"<span class='alert'>You feel ill from watching that. Thanks, [user].</span>")
-				O.vomit()
+				var/vomit_message = "<span class='alert'>[O] pukes all over [himself_or_herself(O)].</span>"
+				O.vomit(0, null, vomit_message)
 
 		SPAWN(0.5 SECONDS)
 			if (user && skull)
@@ -134,7 +133,7 @@
 	..()
 
 /obj/item/handcuffs/proc/werewolf_cant_rip()
-	.= src.material && src.material.mat_id == "silver"
+	.= src.material?.getID() == "silver"
 
 /obj/item/handcuffs/proc/drop_handcuffs(mob/user)
 	user.handcuffs = null
@@ -142,7 +141,7 @@
 	user.drop_item(src)
 	user.update_clothing()
 	if (src.strength == 1) // weak cuffs break
-		if (src.material && src.material.mat_id == "silver")
+		if (src.material && src.material.getID() == "silver")
 			src.visible_message("<span class='alert'>[src] disintegrate.</span>")
 		else if ((istype(src, /obj/item/handcuffs/guardbot)))
 			src.visible_message("<span class='alert'>[src] biodegrade instantly. [prob (10) ? "DO NOT QUESTION THIS" : null]</span>")

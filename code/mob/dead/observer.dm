@@ -4,22 +4,23 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	plane = PLANE_NOSHADOW_ABOVE
+	plane = PLANE_NOSHADOW_ABOVE_NOWARP
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP
-	density = 0
-	canmove = 1
-	blinded = 0
-	anchored = 1	//  don't get pushed around
-	var/observe_round = 0
-	var/health_shown = 0
-	var/arrest_shown = 0
-	var/delete_on_logout = 1
-	var/delete_on_logout_reset = 1
+	density = FALSE
+	canmove = TRUE
+	blinded = FALSE
+	anchored = ANCHORED	//  don't get pushed around
+	var/observe_round = FALSE
+	var/health_shown = FALSE
+	var/arrest_shown = FALSE
+	var/delete_on_logout = TRUE
+	var/delete_on_logout_reset = TRUE
 	var/obj/item/clothing/head/wig/wig = null
-	var/in_point_mode = 0
+	var/in_point_mode = FALSE
 	var/datum/hud/ghost_observer/hud
 	var/auto_tgui_open = TRUE
-
+	/// Observer menu TGUI datum. Can be null.
+	var/datum/observe_menu/observe_menu = null
 	mob_flags = MOB_HEARS_ALL
 
 /mob/dead/observer/disposing()
@@ -124,7 +125,8 @@
 	wig = new
 	wig.mat_changename = 0
 	var/datum/material/wigmat = getMaterial("ectofibre")
-	wigmat.color = P.AH.customization_first_color
+	wigmat = wigmat.getMutable()
+	wigmat.setColor(P.AH.customization_first_color)
 	wig.setMaterial(wigmat)
 	wig.name = "ectofibre [name]'s hair"
 	wig.icon = 'icons/mob/human_hair.dmi'
@@ -152,23 +154,25 @@
 		src.bioHolder = newbio
 
 
-//#ifdef HALLOWEEN
+// Make sure to keep this JPS-cache safe
 /mob/dead/observer/Cross(atom/movable/mover)
 	if (src.icon_state != "doubleghost" && istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
 		if (proj.proj_data?.hits_ghosts)
 			return 0
+
+	return 1
+
 #ifdef HALLOWEEN
+/mob/dead/observer/Crossed(atom/movable/mover)
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
 		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
 		if (GH.spooking)
 			GH.stop_spooking()
 #endif
 
-	return 1
-
 /mob/dead/observer/bullet_act(var/obj/projectile/P)
-	if (src.icon_state == "doubleghost")
+	if (src.icon_state == "doubleghost" || !P.proj_data?.hits_ghosts)
 		return
 
 #ifdef HALLOWEEN
@@ -205,10 +209,6 @@
 #endif
 	if (..(parent))
 		return 1
-	if (src.client && src.client.holder) //ov1
-		// overlays
-		//src.updateOverlaysClient(src.client)
-		src.antagonist_overlay_refresh(0, 0) // Observer Life() only runs for admin ghosts (Convair880).
 
 #ifdef TWITCH_BOT_ALLOWED
 	if (IS_TWITCH_CONTROLLED(src))
@@ -299,7 +299,7 @@
 	if(src.key || src.client)
 
 		if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
-			INVOKE_ASYNC(src, /mob.proc/hell_respawn, src.mind)
+			INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, hell_respawn), src.mind)
 			return null
 		var/datum/mind/mind = src.mind
 
@@ -307,7 +307,7 @@
 		var/mob/dead/our_ghost = null
 
 		// if we already have a ghost, just go get that instead
-		if (src.ghost && !src.ghost.disposed)
+		if (src.ghost && !src.ghost.disposed && src.ghost.last_ckey == src.ckey)
 			our_ghost = src.ghost
 		// no existing ghost, make a new one
 		else
@@ -415,7 +415,8 @@
 		O.wig = new
 		O.wig.mat_changename = 0
 		var/datum/material/wigmat = getMaterial("ectofibre")
-		wigmat.color = src.bioHolder.mobAppearance.customization_first_color
+		wigmat = wigmat.getMutable()
+		wigmat.setColor(src.bioHolder.mobAppearance.customization_first_color)
 		O.wig.setMaterial(wigmat)
 		O.wig.name = "[O.name]'s hair"
 		O.wig.icon = 'icons/mob/human_hair.dmi'
@@ -442,11 +443,11 @@
 	if (!health_shown)
 		health_shown = 1
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(src)
-		boutput(src, "Health status toggled on.")
+		boutput(src, "<span class='success'>Health status toggled on.</span>")
 	else
 		health_shown = 0
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(src)
-		boutput(src, "Health status toggled off.")
+		boutput(src, "<span class='alert'>Health status toggled off.</span>")
 
 /mob/dead/observer/verb/show_arrest()
 	set category = "Ghost"
@@ -543,7 +544,7 @@
 /mob/dead/observer/proc/reenter_corpse()
 	set category = null
 	set name = "Re-enter Corpse"
-	if(!corpse || corpse.disposed)
+	if(QDELETED(corpse) || corpse.loc == null)
 		tgui_alert(src, "You don't have a corpse! If you're very sure you do, and this seems wrong, make a bug report!", "No corpse")
 		return
 	if(src.client && src.client.holder && src.client.holder.state == 2)
@@ -651,75 +652,13 @@
 	set name = "Observe"
 	set category = null
 
-	var/list/names = list()
-	var/list/namecounts = list()
-	var/list/creatures = list()
-
-	for (var/client/C in clients)
-		LAGCHECK(LAG_LOW)
-		// not sure how this could happen, but be safe about it
-		if (!C?.mob)
-			continue
-		var/mob/M = C.mob
-		// remove some types you cannot observe
-		if (!isliving(M) && !iswraith(M) && !isAI(M))
-			continue
-		// admins aren't observable unless they're in player mode
-		if (C.holder && !C.player_mode)
-			continue
-		// remove any secret mobs that someone is controlling
-		if (M.unobservable)
-			continue
-		// add to list
-		var/name = M.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		if (M.real_name && M.real_name != M.name)
-			name += " \[[M.real_name]\]"
-		if (isliving(M) && isdead(M) && !isAI(M))
-			name += " \[dead\]"
-		creatures[name] = M
-
-	var/eye_name = null
-	sortList(creatures, /proc/cmp_text_asc)
-	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
-
-	if (!eye_name)
-		return
-
-	insert_observer(creatures[eye_name])
+	if(isnull(src.observe_menu))
+		src.observe_menu = new()
+	src.observe_menu.ui_interact(src)
 
 
-/mob/dead/observer/verb/observe_object()
-	set name = "Observe Objects"
-	set category = "Ghost"
 
-	var/list/all_observables = machine_registry[MACHINES_BOTS] + by_cat[TR_CAT_GHOST_OBSERVABLES]
-	var/list/observable_map = list() // List mapping label -> object (so we can include area in the label)
-
-	for (var/atom/A in all_observables)
-		// isghostrestrictedz also filters out objects in NULL
-		// bomb is only tracked in nuclear mode
-		if (isghostrestrictedz(A.z) && !istype(A, /obj/machinery/nuclearbomb) && !istype(A, /obj/item/football/the_big_one))
-			continue
-		// this doesn't distinguish objects with the same name on the same tile. that's fine
-		var/area/area = get_area(A)
-		var/turf/turf = get_turf(A)
-		observable_map["[A.name] at ([turf.x], [turf.y], [turf.z]) in [area.name]"] = A
-
-	sortList(observable_map, /proc/cmp_text_asc)
-	var/picked_label = tgui_input_list(src, "Please, select a target!", "Observe", observable_map)
-
-	if (!picked_label)
-		return
-
-	insert_observer(observable_map[picked_label])
-
-mob/dead/observer/proc/insert_observer(var/atom/target)
+/mob/dead/observer/proc/insert_observer(var/atom/target)
 	var/mob/dead/target_observer/newobs = new /mob/dead/target_observer
 	src.set_loc(newobs)
 	newobs.attach_hud(hud)
@@ -739,7 +678,7 @@ mob/dead/observer/proc/insert_observer(var/atom/target)
 	else if (src.client) //Wire: Fix for Cannot modify null.mob.
 		src.client.mob = newobs
 
-mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had to create a new proc aaaaaa
+/mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had to create a new proc aaaaaa
 	var/mob/dead/target_observer/slasher_ghost/newobs = new /mob/dead/target_observer/slasher_ghost
 	newobs.attach_hud(hud)
 	newobs.set_observe_target(target)

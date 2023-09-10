@@ -87,7 +87,7 @@
 	harm(atom/target, var/mob/living/user)
 		if(istype(target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/M = target
-			var/list/all_slots = list(M.slot_back, M.slot_wear_mask, M.slot_l_hand, M.slot_r_hand, M.slot_belt, M.slot_wear_id, M.slot_ears, M.slot_glasses, M.slot_gloves, M.slot_head, M.slot_shoes, M.slot_wear_suit, M.slot_l_store, M.slot_r_store)
+			var/list/all_slots = list(SLOT_BACK, SLOT_WEAR_MASK, SLOT_L_HAND, SLOT_R_HAND, SLOT_BELT, SLOT_WEAR_ID, SLOT_EARS, SLOT_GLASSES, SLOT_GLOVES, SLOT_HEAD, SLOT_SHOES, SLOT_WEAR_SUIT, SLOT_L_STORE, SLOT_R_STORE)
 			var/list/slots = list()
 			for(var/slot in all_slots)
 				if(M.get_slot(slot))
@@ -121,6 +121,11 @@
 	add_abilities = list(/datum/targetable/critter/peck,
 						/datum/targetable/critter/tackle)
 	blood_id = "crime"
+
+	New(loc, nspecies)
+		..()
+		// apparently the fact that blood_id is crime and the goose adds crime to itself means that it bloodgibs nowadays eventually...
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_BLOODGIB_IMMUNE, src)
 
 	setup_hands()
 		..()
@@ -185,7 +190,7 @@
 	pixel_x = -16
 	pixel_y = -16
 	var/number_left = 5
-	var/critter_type = /obj/critter/zombie
+	var/critter_type = /mob/living/critter/zombie
 
 /obj/hellportal/New()
 	..()
@@ -290,6 +295,7 @@
 	var/size = 0
 	var/obj/item/implant/access/access
 	var/obj/item/last_item_bump
+	var/can_grab_mobs = TRUE
 
 	New()
 		. = ..()
@@ -348,32 +354,36 @@
 			var/turf/simulated/floor/floor = new_turf
 			floor.pry_tile(src.equipped(), src)
 		var/found = 0
-		for(var/obj/O in new_turf)
-			if(istype(O, /obj/overlay))
+		for(var/atom/movable/AM in new_turf)
+			if(istype(AM, /obj/overlay) || istype(AM, /obj/effect) || istype(AM, /obj/effects))
 				continue
-			if(O.invisibility > INVIS_GHOST)
+			if(AM.invisibility >= INVIS_GHOST)
 				continue
-			var/obj/item/I = O
-			if(size < 60 && (!istype(O, /obj/item) || I.w_class > size / 10 + 1))
+			var/obj/item/I = AM
+			if(size < 60 && (!istype(AM, /obj/item) || I.w_class > size / 10 + 1))
 				continue
-			if(size < 90 && O.anchored)
+			if(size < 90 && AM.anchored)
+				continue
+			if(size < 120 && AM.density)
+				continue
+			if(size < 140 && ismob(AM) || !can_grab_mobs)
 				continue
 			if(istype(I, /obj/item/card/id))
 				var/obj/item/card/id/id = I
 				src.access.access.access |= id.access // access
-			O.set_loc(src)
-			src.vis_contents += O
-			O.pixel_x = 0
-			O.pixel_y = 0
+			AM.set_loc(src)
+			src.vis_contents += AM
+			AM.pixel_x = 0
+			AM.pixel_y = 0
 			var/matrix/tr = new
 			tr.Turn(rand(360))
 			tr.Translate(sqrt(size) * 3 / 2, sqrt(size) * 3)
 			tr.Turn(rand(360))
-			O.transform = tr
+			AM.transform = tr
 			size += 0.3
 			found = 1
 			break
-		if(size > 140 && !found && new_turf.density && !isrestrictedz(new_turf.z) && prob(20))
+		if(size > 180 && !found && new_turf.density && !isrestrictedz(new_turf.z) && prob(20))
 			new_turf.ex_act(prob(1) ? 1 : 2)
 		. = ..()
 
@@ -458,7 +468,7 @@
 
 /proc/populate_station(chance=100)
 	for(var/job_name in job_start_locations)
-		if(job_name == "AI")
+		if(job_name == "AI" || job_name == "JoinLate")
 			continue
 		for(var/turf/T in job_start_locations[job_name])
 			if(prob(chance))
@@ -469,9 +479,7 @@
 
 
 /obj/storage/closet/extradimensional
-	New()
-		..()
-		src.setMaterial(getMaterial("negativematter"))
+	default_material = "negativematter"
 
 
 
@@ -520,3 +528,161 @@ proc/get_upscaled_icon(icon, icon_state, dx, dy)
 	..()
 	fix_upscale()
 #endif
+
+
+
+/// catball
+/obj/item/basketball/catball
+	name = "catball"
+	icon_state = "catball"
+	base_icon_state = "catball"
+	spinning_icon_state = "catball"
+	item_state = "catball"
+	desc = "<img src='https://pali.link/catball.gif'><br>"
+	contraband = 0 // catball is legal smh my head
+
+
+ADMIN_INTERACT_PROCS(/obj/portal/to_space, proc/give_counter)
+/obj/portal/to_space
+	name = "unstable wormhole"
+	desc = "It seems like this wormhole is unstable and you might land in a random place in space."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "anom"
+	failchance = 0
+	color = list(0.4, 0, 0,   0, 0.4, 0,   0, 0, 0.4)
+	var/tele_throw_speed = 2
+	var/living_mob_counter = 0
+
+	proc/animate_self()
+		animate_lag(src, magnitude=5, step_time_low=0.5 SECONDS, step_time_high=1 SECOND)
+
+	New()
+		. = ..()
+		animate_self()
+
+	teleport(atom/movable/AM)
+		src.target = random_space_turf() || random_nonrestrictedz_turf()
+		var/turf/throw_target = locate(rand(1, world.maxx), rand(1, world.maxy), src.target.z)
+		. = ..()
+		if (tele_throw_speed > 0)
+			AM.throw_at(throw_target, INFINITY, tele_throw_speed)
+		animate_self()
+		if(isliving(AM) && AM.loc != src.loc)
+			living_mob_counter++
+			var/mob/living/L = AM
+			for (var/mob/M in AIviewers(Center=src))
+				if (M == L)
+					boutput(M, "<span class='alert'>You are sucked into \the [src]!</span>")
+				else if (isadmin(M) && !M.client.player_mode)
+					boutput(M, "<span class='alert'>[L] ([key_name(L, admins=FALSE, user=M)]) is sucked into \the [src], landing <a href='?src=\ref[M.client.holder];action=jumptocoords;target=[target.x],[target.y],[target.z]' title='Jump to Coords'>here</a></span></span>")
+				else
+					boutput(M, "<span class='alert'>[L] is sucked into \the [src]!</span>")
+
+	proc/give_counter()
+		set name = "give counter"
+		var/turf/target_turf = get_step(src, NORTH)
+		if (locate(/obj/machinery/maptext_monitor) in target_turf)
+			return
+		var/obj/machinery/maptext_monitor/counter = new(target_turf)
+		counter.monitored = src
+		counter.name = "wormhole visitors"
+		counter.desc = "Could also be number of victims I guess!"
+		counter.maptext_prefix = "<span class='c pixel sh'>Wormhole Visitors: <span class='xfont'>"
+		counter.monitored_var = "living_mob_counter"
+		counter.display_mode = "round"
+		counter.update_delay = 1 SECOND
+		counter.update_monitor()
+
+/obj/portal/to_space/with_monitor
+	New()
+		. = ..()
+		give_counter()
+
+
+/mob/living/carbon/human/npc/monkey/extremely_fast
+	blood_id = "triplemeth"
+	var/fastness_factor = 5 //! Expected value of number of ai_process() calls per tick
+
+	New()
+		..()
+		src.AddComponent(/datum/component/afterimage, 20, 0.03 SECONDS)
+		src.name = "\proper extremely fast [src.name]"
+		src.real_name = src.name
+
+		var/datum/movement_modifier/mod = new
+		mod.multiplicative_slowdown = 0.1
+		src.movement_modifiers += mod
+
+	ai_init()
+		. = ..()
+		src.ai_movedelay = 1
+		src.ai_actiondelay = 1
+
+	ai_process()
+		. = ..()
+		src.ai_actiondelay = 0
+
+		if(prob(100 * (1 - 1 / src.fastness_factor)))
+			SPAWN(0.2 SECONDS)
+				src.ai_process()
+
+ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, proc/toggle_can_switch_target)
+/obj/item/kitchen/utensil/knife/tracker
+	name = "target tracker knife"
+	icon_state = "knife_onedir"
+	desc = "Poor man's pinpointer. Just stab someone to track where they are!"
+	force = 4
+	throwforce = 6
+	var/can_switch_target = TRUE
+
+	attack(mob/living/carbon/M, mob/living/carbon/user)
+		. = ..()
+		if(can_switch_target)
+			src.AddComponent(/datum/component/angle_watcher, M, base_transform=matrix())
+
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		. = ..()
+		if(ismob(hit_atom) && can_switch_target)
+			src.AddComponent(/datum/component/angle_watcher, hit_atom, base_transform=matrix())
+
+	clean_forensic()
+		. = ..()
+		if(can_switch_target)
+			src.GetComponent(/datum/component/angle_watcher)?.RemoveComponent()
+			animate(src, transform=null, time=2 SECONDS, flags=ANIMATION_PARALLEL, easing=ELASTIC_EASING)
+
+	proc/set_target()
+		set name = "Set Target"
+		var/mob/target = usr.client.input_data(
+				list(DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, DATA_INPUT_REFPICKER),
+				"Set Knife Tracking Target",
+				"Select a target to track with this knife.")?.output
+		if(target)
+			src.AddComponent(/datum/component/angle_watcher, target, base_transform=matrix())
+		else
+			src.GetComponent(/datum/component/angle_watcher)?.RemoveComponent()
+			animate(src, transform=null, time=2 SECONDS, flags=ANIMATION_PARALLEL, easing=ELASTIC_EASING)
+
+	proc/toggle_can_switch_target()
+		set name = "Toggle Target Switching"
+		can_switch_target = !can_switch_target
+		if(can_switch_target)
+			boutput(usr, "<span class='notice'>Knife user can now stab someone else to track them.</span>")
+		else
+			boutput(usr, "<span class='notice'>Knife user can no longer switch targets.</span>")
+
+
+
+/obj/spawner/knife_loop
+	New()
+		..()
+		var/how_many_knives = tgui_input_number(usr, "How many knives to spawn?", "Knife loop", 2, 100, 2)
+		var/list/obj/item/kitchen/utensil/knife/tracker/knives = list()
+		for(var/i = 1 to how_many_knives)
+			var/obj/item/kitchen/utensil/knife/tracker/knife = new(src.loc)
+			knife.can_switch_target = FALSE
+			if(i > 1)
+				knife.AddComponent(/datum/component/angle_watcher, knives[i - 1], base_transform=matrix())
+			knives += knife
+		knives[1].AddComponent(/datum/component/angle_watcher, knives[how_many_knives], base_transform=matrix())
+		qdel(src)

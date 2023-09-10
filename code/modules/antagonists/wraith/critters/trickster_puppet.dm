@@ -19,16 +19,19 @@
 	var/traps_laid = 0
 	var/datum/abilityHolder/wraith/AH = null
 
-	New(var/turf/T, var/mob/living/intangible/wraith/wraith_trickster/M = null)
+	faction = FACTION_WRAITH
+
+	New(var/turf/T, var/mob/living/intangible/wraith/wraith_trickster/M = null, var/new_name = "Trickster puppet", var/new_real_name = "Trickster puppet")
 		..(T)
 		if(M != null)
 			src.master = M
 
 		last_life_update = TIME
+		src.name = new_name
+		src.real_name = new_real_name
 
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
-		src.abilityHolder = new /datum/abilityHolder/wraith(src)
-		AH = src.abilityHolder
+		AH = src.add_ability_holder(/datum/abilityHolder/wraith)
 		var/datum/abilityHolder/wraith/master_ability_holder = master.abilityHolder
 		AH.points = master_ability_holder.points
 		AH.possession_points = master_ability_holder.possession_points

@@ -59,7 +59,7 @@ TYPEINFO(/obj/item/light_parts)
 	name = "Area Lighting"
 	event_handler_flags = IMMUNE_SINGULARITY | USE_FLUID_ENTER
 	invisibility = INVIS_ALWAYS_ISH
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/area/my_area = null
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
@@ -76,6 +76,8 @@ TYPEINFO(/obj/item/light_parts)
 
 // the standard tube light fixture
 
+ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/admin_fix)
+
 /var/global/stationLights = new/list()
 /obj/machinery/light
 	name = "light fixture"
@@ -83,7 +85,7 @@ TYPEINFO(/obj/item/light_parts)
 	var/base_state = "tube"		// base description and icon_state
 	icon_state = "tube1"
 	desc = "A lighting fixture."
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
@@ -148,7 +150,7 @@ TYPEINFO(/obj/item/light_parts)
 					directions = cardinal
 				for (var/dir in directions)
 					T = get_step(src,dir)
-					if (istype(T,/turf/simulated/wall) || istype(T,/turf/unsimulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
+					if (istype(T,/turf/simulated/wall) || istype(T,/turf/unsimulated/wall) || (locate(/obj/mapping_helper/wingrille_spawn) in T) || (locate(/obj/window) in T))
 						var/is_jen_wall = 0 // jen walls' ceilings are narrower, so let's move the lights a bit further inward!
 						if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
 							is_jen_wall = 1
@@ -178,7 +180,7 @@ TYPEINFO(/obj/item/light_parts)
 	name = "floor lamp"
 	icon = 'icons/obj/lighting.dmi'
 	desc = "A tall and thin lamp that rests comfortably on the floor."
-	anchored = 1
+	anchored = ANCHORED
 	light_type = /obj/item/light/bulb
 	allowed_type = /obj/item/light/bulb
 	fitting = "bulb"
@@ -237,6 +239,7 @@ TYPEINFO(/obj/item/light_parts)
 
 	broken //Made at first to replace a decal in cog1's wreckage area
 		name = "shattered light bulb"
+		icon_state = "bulb-broken"
 
 		New()
 			..()
@@ -250,6 +253,9 @@ TYPEINFO(/obj/item/light_parts)
 			..()
 			autoposition()
 
+		netural
+			name = "incandescent light bulb"
+			light_type = /obj/item/light/bulb/neutral
 		greenish
 			name = "greenish incandescent light bulb"
 			light_type = /obj/item/light/bulb/greenish
@@ -283,6 +289,14 @@ TYPEINFO(/obj/item/light_parts)
 			very
 				name = "very harsh incandescent light bulb"
 				light_type = /obj/item/light/bulb/harsh/very
+
+		broken //Made at first to replace a decal in cog1's wreckage area
+			name = "shattered light bulb"
+			icon_state = "bulb-broken"
+
+			New()
+				..()
+				current_lamp.light_status = LIGHT_BROKEN
 
 
 
@@ -335,6 +349,14 @@ TYPEINFO(/obj/item/light_parts)
 			name = "very harsh incandescent light fixture"
 			light_type = /obj/item/light/bulb/harsh/very
 
+	broken
+		name = "shattered floor light"
+		icon_state = "floor-broken"
+
+		New()
+			..()
+			current_lamp.light_status = LIGHT_BROKEN
+
 /obj/machinery/light/emergency
 	icon_state = "ebulb1"
 	base_state = "ebulb"
@@ -345,6 +367,16 @@ TYPEINFO(/obj/item/light_parts)
 	allowed_type = /obj/item/light/bulb/emergency
 	on = 0
 	removable_bulb = 1
+
+	New()
+		..()
+		var/turf/T = get_turf(src)
+		if (T.z == Z_LEVEL_STATION && istype(T.loc, /area/station))
+			START_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
+
+	disposing()
+		..()
+		STOP_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
 
 	exitsign
 		name = "illuminated exit sign"
@@ -409,7 +441,7 @@ TYPEINFO(/obj/item/light_parts)
 	New()
 		..()
 		if(src.connected_dock)
-			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, .proc/dock_signal_handler)
+			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, PROC_REF(dock_signal_handler))
 
 	proc/dock_signal_handler(datum/holder, var/signal)
 		switch(signal)
@@ -474,7 +506,7 @@ TYPEINFO(/obj/item/light_parts)
 	name = "tripod light"
 	desc = "A large portable light tripod."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "tripod1"
 	base_state = "tripod"
 	fitting = "bulb"
@@ -627,6 +659,8 @@ TYPEINFO(/obj/item/light_parts)
 			light_type = /obj/item/light/tube/harsh/very
 
 	broken
+		name = "shattered light fixture"
+		icon_state = "tube-broken"
 
 		New()
 			..()
@@ -756,14 +790,15 @@ TYPEINFO(/obj/item/light_parts)
 			boutput(user, "This fitting isn't user-serviceable.")
 			return
 
+		var/lamp_cost = null
 		if (!inserted_lamp) //Taking charge/sheets
 			if (!M.check_ammo(user, M.cost_empty))
 				return
-			M.take_ammo(user, M.cost_empty)
+			lamp_cost = M.cost_empty
 		else
 			if (!M.check_ammo(user, M.cost_broken))
 				return
-			M.take_ammo(user, M.cost_broken)
+			lamp_cost = M.cost_broken
 		var/obj/item/light/L = null
 
 		if (fitting == "tube")
@@ -779,6 +814,7 @@ TYPEINFO(/obj/item/light_parts)
 		insert(user, L)
 		if (!isghostdrone(user)) // Same as ghostdrone RCDs, no sparks
 			elecflash(user)
+		M.take_ammo(user, lamp_cost)
 		return
 
 
@@ -926,6 +962,8 @@ TYPEINFO(/obj/item/light_parts)
 // break the light and make sparks if was on
 
 /obj/machinery/light/proc/broken(var/nospark = 0)
+	set name = "Break"
+
 	if(current_lamp.light_status == LIGHT_EMPTY || current_lamp.light_status == LIGHT_BROKEN)
 		return
 
@@ -962,6 +1000,20 @@ TYPEINFO(/obj/item/light_parts)
 /obj/machinery/light/blob_act(var/power)
 	if(prob(power * 2.5))
 		broken()
+
+/obj/machinery/light/proc/admin_toggle()
+	set name = "Toggle"
+	on = (!on && current_lamp.light_status == LIGHT_OK)
+	update()
+
+/obj/machinery/light/proc/admin_fix()
+	set name = "Fix"
+	if(isnull(current_lamp))
+		current_lamp = new light_type
+	current_lamp.light_status = LIGHT_OK
+	current_lamp.update()
+	on = TRUE
+	update()
 
 //mbc : i threw away this stuff in favor of a faster machine loop process
 /*
@@ -1039,7 +1091,7 @@ TYPEINFO(/obj/item/light)
 	force = 2
 	throwforce = 5
 	w_class = W_CLASS_SMALL
-	var/light_status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
+	var/light_status = LIGHT_OK		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/breakprob = 0	// number of times switched
 	m_amt = 60
@@ -1251,6 +1303,9 @@ TYPEINFO(/obj/item/light)
 		color_r = 0.95
 		color_g = 0.95
 		color_b = 0.2
+
+		broken
+			light_status = LIGHT_BROKEN
 	yellowish
 		name = "yellowish light bulb"
 		desc = "Fancy."

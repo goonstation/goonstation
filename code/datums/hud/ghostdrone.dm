@@ -355,8 +355,6 @@
 			if(isdead(master))
 				return
 
-			for(var/atom/movable/screen/ability/topBar/genetics/G in master.client.screen)
-				master.client.screen -= G
 			for(var/atom/movable/screen/pseudo_overlay/PO in master.client.screen)
 				master.client.screen -= PO
 			for(var/obj/ability_button/B in master.client.screen)

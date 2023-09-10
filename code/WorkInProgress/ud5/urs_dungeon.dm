@@ -33,7 +33,7 @@
 		if(length(adventure_elements_by_id[src.triggerable_id]))
 			src.triggerables = adventure_elements_by_id[src.triggerable_id]
 
-		if((src.triggerers.len > 0) && (src.triggerables.len > 0))
+		if((length(src.triggerers) > 0) && (length(src.triggerables) > 0))
 
 			for(var/Z in src.triggerers)
 
@@ -86,7 +86,7 @@
 	icon_state = "Pipe_Timed"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/trap_delay = 100
 	var/next_trap = 0
 	var/power = 100
@@ -126,7 +126,7 @@
 	icon_state = "portal"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	target = null
 	var/my_portal = null
 	var/start_on = 0
@@ -269,7 +269,7 @@
 				if (clear)
 					L += T3
 
-		if(!(L.len > 0))
+		if(!(length(L) > 0))
 			for (var/turf/T3 in get_area_turfs(/area/station,0))
 				if (!T3.density)
 					var/clear = 1
@@ -302,7 +302,7 @@
 /obj/adventurepuzzle/triggerable/adventure_announcement
 	name = "announcer"
 	desc = "A strange device that emits a very loud sound, truly the future."
-	anchored = 1
+	anchored = ANCHORED
 	var/speaker_type
 	var/message = null
 	var/text_color = "#FF0000"
@@ -344,7 +344,7 @@
 	desc = "Some kind of coloured tile."
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 
 
 
@@ -538,7 +538,7 @@
 	icon_state = "urs_prize"
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	var/ursium = 0
 	var/s_time = 1
 	var/content = null
@@ -642,7 +642,7 @@ var/johnbill_ursdungeon_code = "0420"
 /obj/item/storage/secure/ssafe/diner_arcade
 	configure_mode = 0
 	random_code = 0
-	spawn_contents = list(/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/spacecash/random/small,/obj/item/spacecash/random/small)
+	spawn_contents = list(/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/currency/spacecash/small,/obj/item/currency/spacecash/small)
 	New()
 		..()
 		src.code = johnbill_ursdungeon_code

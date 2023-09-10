@@ -83,11 +83,9 @@
 	if (!istype(leader))
 		return
 
-	//equip_traitor(leader) <- Quad mindhacks and the starter gear are more than sufficient. Spies really don't need a traitor uplink on top of that.
-
 	var/the_slot = null
-	if (istype(leader.back, /obj/item/storage/) && leader.back.contents.len < 7)
-		leader.equip_if_possible(new /obj/item/storage/box/spykit(leader), leader.slot_in_backpack)
+	if (leader.back?.storage && !leader.back.storage.is_full())
+		leader.equip_if_possible(new /obj/item/storage/box/spykit(leader), SLOT_IN_BACKPACK)
 		the_slot = "backpack"
 	else
 		var/obj/K2 = new /obj/item/storage/box/spykit(get_turf(leader))
@@ -113,14 +111,12 @@
 	src.spies.Add(spymind)
 	src.spies[spymind] = leadermind
 	spymind.special_role = "spyminion"
-	spymind.master = leader.ckey
 
 	return 1
 
 /datum/game_mode/spy/proc/remove_spy(mob/living/spy)
 	src.spies.Remove(spy)
 	spy.mind.special_role = null
-	spy.mind.master = null
 	return 1
 
 /datum/game_mode/spy/declare_completion()
@@ -301,7 +297,7 @@
 			src.linked_objective.explanation_text = "Obey [leader_name]'s every order."
 
 		if (leader_mind?.current && M.client)
-			var/I = image(antag_spyleader, loc = leader_mind.current)
+			var/I = image('icons/mob/antag_overlays.dmi', icon_state = "spy", loc = leader_mind.current)
 			M.client.images += I
 
 		spymode.add_spy(M, Implanter)
