@@ -430,12 +430,13 @@ var/bombini_saved
 			if ("send")
 				if(!active)
 					for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
-						active = 1
+						C.active = 1
 						C.visible_message("<span class='alert'>The elevator begins to move!</span>")
 						playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
-						. = TRUE
+						tgui_process.update_uis(C)
 					SPAWN(5 SECONDS)
 						call_shuttle()
+					. = TRUE
 
 
 /obj/machinery/computer/icebase_elevator/proc/call_shuttle()
@@ -457,11 +458,10 @@ var/bombini_saved
 		location = 0
 
 	for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
-		active = 0
+		C.active = 0
 		C.visible_message("<span class='alert'>The elevator has moved.</span>")
 		C.location = src.location
-
-	tgui_process.update_uis(src)
+		tgui_process.update_uis(C)
 
 /obj/machinery/computer/biodome_elevator/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -488,12 +488,13 @@ var/bombini_saved
 			if ("send")
 				if(!active)
 					for(var/obj/machinery/computer/biodome_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
-						active = 1
+						C.active = 1
 						C.visible_message("<span class='alert'>The elevator begins to move!</span>")
 						playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
-						. = TRUE
+						tgui_process.update_uis(C)
 					SPAWN(5 SECONDS)
 						call_shuttle()
+					. = TRUE
 
 
 // Biodome elevator code
@@ -519,11 +520,10 @@ var/bombini_saved
 		location = 0
 
 	for(var/obj/machinery/computer/biodome_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
-		active = 0
+		C.active = 0
 		C.visible_message("<span class='alert'>The elevator has moved.</span>")
 		C.location = src.location
-
-	tgui_process.update_uis(src)
+		tgui_process.update_uis(C)
 
 /obj/sign_accidents
 	name = "Elevator Safety Sign"
@@ -600,11 +600,10 @@ proc/bioele_accident()
 			location = 0
 
 		for_by_tcl(O, /obj/submachine/centcom_elevator)
-			active = FALSE
+			O.active = FALSE
 			O.visible_message("<span class='alert'>The elevator has moved.</span>")
 			O.location = src.location
-
-		tgui_process.update_uis(src)
+			tgui_process.update_uis(O)
 
 	ui_interact(mob/user, datum/tgui/ui)
 		if (!isadmin(user))
@@ -637,12 +636,13 @@ proc/bioele_accident()
 					USR_ADMIN_ONLY
 					if(!active)
 						for_by_tcl(O, /obj/submachine/centcom_elevator)
-							active = TRUE
+							O.active = TRUE
 							O.visible_message("<span class='alert'>The elevator begins to move!</span>")
 							playsound(O.loc, 'sound/machines/elevator_move.ogg', 100, 0)
-							. = TRUE
+							tgui_process.update_uis(O)
 						SPAWN(5 SECONDS)
 							call_shuttle()
+						. = TRUE
 
 
 #undef MINING_OUTPOST_NAME

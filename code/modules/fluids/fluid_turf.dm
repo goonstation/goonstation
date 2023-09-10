@@ -602,12 +602,13 @@
 			if ("send")
 				if(!active)
 					for(var/obj/machinery/computer/sea_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
-						active = 1
+						C.active = 1
 						C.visible_message("<span class='alert'>The elevator begins to move!</span>")
 						playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
-						. = TRUE
+						tgui_process.update_uis(C)
 					SPAWN(5 SECONDS)
 						call_shuttle()
+					. = TRUE
 
 /obj/machinery/computer/sea_elevator/proc/call_shuttle()
 
@@ -629,11 +630,10 @@
 		location = 0
 
 	for(var/obj/machinery/computer/sea_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
-		active = 0
+		C.active = 0
 		C.visible_message("<span class='alert'>The elevator has moved.</span>")
 		C.location = src.location
-
-	tgui_process.update_uis(src)
+		tgui_process.update_uis(C)
 
 proc/fluid_turf_setup(first_time=FALSE)
 	if(QDELETED(ocean_fluid_obj))
