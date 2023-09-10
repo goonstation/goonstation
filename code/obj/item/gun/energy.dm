@@ -1870,7 +1870,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	icon_state = "makeshift-energy"
 	item_state = "laser" //TODO better sprites
 	w_class = W_CLASS_BULKY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	cell_type = null
 	can_swap_cell = FALSE
 	rechargeable = FALSE
