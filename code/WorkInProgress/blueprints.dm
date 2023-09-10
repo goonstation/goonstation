@@ -263,7 +263,7 @@
 				if (ispath(O.objecttype, /obj/machinery/power/apc))
 					src.apclist[O] = Pos
 					continue
-				var/dmm_suite/preloader/blah = new(Pos, list( // this doesn't spawn the objects, only presets their properties
+				new/dmm_suite/preloader(Pos, list( // this doesn't spawn the objects, only presets their properties
 					"layer" = O.layer,
 					"pixel_x" = O.px,
 					"pixel_y" = O.py,
