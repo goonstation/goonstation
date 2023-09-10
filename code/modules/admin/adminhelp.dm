@@ -65,9 +65,14 @@
 		ircbot.export_async("help", ircmsg)
 
 	var/dead = isdead(client.mob) ? "Dead " : ""
+	var/antags = list()
+	for (var/datum/antagonist/antag in client.mob.mind.antagonists)
+		antags += antag.display_name
+	var/antag_text = jointext(antags, " ")
+
 	var/ircmsg[] = new()
 	ircmsg["key"] = client.key
-	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.mind?.special_role] [client.mob.job]]" : (istype(client.mob, /mob/new_player) ? "<not ingame>" : "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.mind?.special_role]]")
+	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead][antag_text] [client.mob.job]]" : (istype(client.mob, /mob/new_player) ? "<not ingame>" : "[stripTextMacros(client.mob.real_name)] \[[dead][antag_text]]")
 	ircmsg["msg"] = html_decode(msg)
 	ircmsg["log_link"] = "https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html#l[logLine]"
 	ircbot.export_async("help", ircmsg)
