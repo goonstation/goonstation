@@ -605,10 +605,9 @@
 						active = 1
 						C.visible_message("<span class='alert'>The elevator begins to move!</span>")
 						playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
+						. = TRUE
 					SPAWN(5 SECONDS)
 						call_shuttle()
-
-	. = TRUE
 
 /obj/machinery/computer/sea_elevator/proc/call_shuttle()
 
