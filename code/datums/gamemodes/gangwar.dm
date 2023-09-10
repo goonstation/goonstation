@@ -447,11 +447,11 @@ proc/broadcast_to_all_gangs(var/message)
 					temporary_name = generate_random_name()
 
 		// add the gang to their displayed name for antag and round end stuff. works hopefully??
-		var/datum/antagonist/leader_antag = src.leader.mind.get_antag(ROLE_GANG_LEADER)
-		leader_antag.display_name = "[src.gang_name] [leader.display_name]"
+		var/datum/antagonist/leader_antag = src.leader.get_antagonist(ROLE_GANG_LEADER)
+		leader_antag.display_name = "[src.gang_name] [leader_antag.display_name]"
 
-		for (var/mind/ganger in src.members)
-			var/datum/antagonist/antag = ganger.mind.get_antagonist(ROLE_GANG_MEMBER)
+		for (var/datum/mind/ganger in src.members)
+			var/datum/antagonist/antag = ganger.get_antagonist(ROLE_GANG_MEMBER)
 			antag.display_name = "[src.gang_name] [antag.display_name]"
 
 	proc/select_gang_uniform()
