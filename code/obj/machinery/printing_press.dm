@@ -652,9 +652,11 @@
 		var/obj/item/paper/newspaper/rolled/NP = new
 		NP.info = ""
 		// it can auto generate headlines and publisher if left alone, that's handled in New() and overwritten here.
-		if (src.newspaper_publisher)	NP.publisher = src.newspaper_publisher
+		if (src.newspaper_publisher)
+			NP.publisher = src.newspaper_publisher
 		NP.name = "[NP.publisher]"
-		if (src.newspaper_headline)		NP.headline = src.newspaper_headline
+		if (src.newspaper_headline)
+			NP.headline = src.newspaper_headline
 		NP.info += "<b>[src.newspaper_headline]</b><br>"
 		if (src.newspaper_info)
 			NP.info += src.newspaper_info
