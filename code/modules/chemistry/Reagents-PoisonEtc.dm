@@ -213,6 +213,7 @@ datum
 				if (!istype(M)) return
 				M.take_toxin_damage(damage_counter)
 				logTheThing(LOG_COMBAT, M, "took [damage_counter] TOX damage from amanitin.")
+				damage_counter = 0
 
 
 		harmful/chemilin
