@@ -90,6 +90,7 @@ TYPEINFO(/obj/strip_door)
 		src.flap_icon.color = color
 	else
 		src.flap_icon.color ="#333333"
+	src.flap_icon.alpha = src.flap_material.getAlpha()
 	src.underlays += src.flap_icon
 	src.UpdateIcon()
 
