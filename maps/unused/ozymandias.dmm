@@ -42161,7 +42161,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "ldO" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/forcefield/energyshield/perma,
 /obj/machinery/conveyor/SN{
 	id = "cannedfartbelt";
@@ -68499,7 +68499,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
 "rQv" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/forcefield/energyshield/perma,
 /obj/machinery/conveyor/SN{
 	id = "cannedfartbelt";
@@ -84826,7 +84826,7 @@
 "vJl" = (
 /obj/machinery/manufacturer/general/grody{
 	free_resource_amt = 2;
-
+	
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
@@ -92789,7 +92789,7 @@
 /obj/machinery/conveyor/SN{
 	id = "qmswapabout"
 	},
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /turf/simulated/floor/orangeblack,

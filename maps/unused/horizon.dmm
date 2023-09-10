@@ -20424,7 +20424,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "bgm" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -26968,7 +26968,7 @@
 	name = "Permanent Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bzu" = (
@@ -42080,7 +42080,7 @@
 	name = "cargo belt - east";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se)
 "cpH" = (
@@ -49161,7 +49161,7 @@
 	name = "Permanent Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "hfe" = (
@@ -52373,7 +52373,7 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/blast{
 	dir = 4;
 	doordir = "single";
@@ -52779,7 +52779,7 @@
 	name = "cargo belt - east";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/blast{
 	dir = 4;
 	doordir = "single";

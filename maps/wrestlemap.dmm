@@ -17268,7 +17268,7 @@
 /obj/machinery/conveyor/EW{
 	id = "cargobuy"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "hDr" = (
@@ -22575,7 +22575,7 @@
 	dir = 1
 	},
 /obj/decal/tile_edge/stripe,
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/science/bot_storage)
 "jNK" = (
@@ -31548,7 +31548,7 @@
 	operating = 1;
 	move_lag = 16
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -35677,7 +35677,7 @@
 /obj/machinery/conveyor/EW{
 	id = "cargodesk"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/decal/tile_edge/stripe{
 	dir = 1
 	},
@@ -42650,7 +42650,7 @@
 /obj/machinery/conveyor/WE{
 	id = "cargosell"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "sLE" = (

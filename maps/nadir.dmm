@@ -3333,7 +3333,7 @@
 	layer = 4;
 	name = "Crusher Door"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/disposal)
 "bxc" = (
@@ -17786,7 +17786,7 @@
 /area/station/security/brig/genpop)
 "hNg" = (
 /obj/disposalpipe/segment/transport,
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3.1
 	},
 /obj/machinery/door/poddoor/blast/pyro{
@@ -40113,7 +40113,7 @@
 /obj/machinery/conveyor/WE{
 	id = "nadir_qmio"
 	},
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3.1
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -42280,7 +42280,7 @@
 	},
 /area/station/hallway/primary/southwest)
 "suY" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -53528,7 +53528,7 @@
 	},
 /area/station/hallway/primary/northwest)
 "xyW" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/firedoor/pyro,
 /obj/disposalpipe/segment/ejection{
 	dir = 2
@@ -53866,7 +53866,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "xHa" = (
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3.1
 	},
 /obj/machinery/door/poddoor/blast/pyro{

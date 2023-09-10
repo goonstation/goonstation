@@ -3661,7 +3661,7 @@
 	dir = 8;
 	layer = 3
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/mining/manufacturing)
 "GL" = (
@@ -5013,7 +5013,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/mining/dock)
 "PD" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/NS{
 	id = "MINSouth"
 	},

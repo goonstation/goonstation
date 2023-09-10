@@ -13106,7 +13106,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "bst" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -20044,7 +20044,7 @@
 	name = "Disposals Safety Door";
 	opacity = 0
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "dPX" = (
@@ -21837,7 +21837,7 @@
 /obj/machinery/conveyor/WE{
 	id = "mining2qm"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/blast/single{
 	doordir = "noblasts";
 	icon_state = "bdoornoblasts1";
@@ -26405,7 +26405,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /obj/cable{
@@ -28009,7 +28009,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -29251,7 +29251,7 @@
 	id = "disposals";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "icC" = (
@@ -39744,7 +39744,7 @@
 /obj/machinery/conveyor/WE{
 	id = "mining2qm"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/blast/single{
 	doordir = "noblasts";
 	icon_state = "bdoornoblasts1";
@@ -46610,7 +46610,7 @@
 /obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/blast/single{
 	doordir = "noblasts";
 	icon_state = "bdoornoblasts1";
@@ -47838,7 +47838,7 @@
 	},
 /area/station/crew_quarters/quartersA)
 "rMc" = (
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /turf/simulated/floor/plating/random,
@@ -53344,7 +53344,7 @@
 /obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/blast/single{
 	doordir = "noblasts";
 	icon_state = "bdoornoblasts1";
@@ -53788,7 +53788,7 @@
 /obj/machinery/conveyor/NS{
 	id = "cargo_out"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/blast/single{
 	doordir = "noblasts";
 	icon_state = "bdoornoblasts1";
@@ -58518,7 +58518,7 @@
 /obj/machinery/conveyor/NS{
 	id = "cargo_out"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/mass_driver{
 	id = "qm_dock_out"
 	},

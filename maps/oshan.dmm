@@ -11121,7 +11121,7 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/science/chemistry)
 "aKf" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/SN/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
@@ -23956,7 +23956,7 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
 "bFN" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/forcefield/energyshield/perma,
 /obj/machinery/conveyor/NS{
 	id = "south";
@@ -25152,7 +25152,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/quartermaster/office)
 "bJC" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
@@ -25989,7 +25989,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "bMP" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/WE{
 	id = "inbound"
 	},
@@ -26673,7 +26673,7 @@
 /turf/simulated/floor/plating/random,
 /area/space)
 "bPf" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/EW{
 	id = "outbound"
 	},
@@ -28784,7 +28784,7 @@
 	},
 /area/station/crew_quarters/lounge/port)
 "bVH" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/SN{
 	id = "garbage";
 	move_lag = 30;
@@ -31757,7 +31757,7 @@
 /area/station/maintenance/south)
 "cfQ" = (
 /obj/machinery/conveyor/WE/carousel,
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "cfR" = (
@@ -32050,7 +32050,7 @@
 	},
 /area/station/storage/warehouse)
 "cgX" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/EW/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
@@ -32522,7 +32522,7 @@
 /area/station/maintenance/inner/central)
 "cjO" = (
 /obj/forcefield/energyshield/perma,
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/NS/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
@@ -32967,7 +32967,7 @@
 /turf/simulated/floor,
 /area/station/storage/tools)
 "clC" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/SN{
 	id = "north";
 	move_lag = 10;
@@ -34039,7 +34039,7 @@
 /turf/simulated/floor/grass,
 /area/space)
 "dzC" = (
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /obj/machinery/door/airlock/pyro/security/alt{
@@ -34219,7 +34219,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/genetics)
 "dJO" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/forcefield/energyshield/perma{
 	dir = 8
 	},
@@ -43812,7 +43812,7 @@
 /area/evilreaver/storage/tools)
 "tul" = (
 /obj/machinery/conveyor/SN/carousel,
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "tux" = (
@@ -43963,7 +43963,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/forcefield/energyshield/perma{
 	dir = 8
 	},
@@ -44465,7 +44465,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "uOI" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/mapping_helper/access/tech_storage,
 /turf/simulated/floor,
 /area/station/storage/tech)

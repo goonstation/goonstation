@@ -4196,7 +4196,7 @@
 	dir = 1
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -4609,7 +4609,7 @@
 /obj/machinery/conveyor/WE{
 	id = "qm_tohall"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -8684,7 +8684,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
 "cxu" = (
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /obj/cable{
@@ -16761,7 +16761,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "faV" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/SN{
 	id = "disposals";
 	move_lag = 30;
@@ -17446,7 +17446,7 @@
 	name = "cargo belt - east";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -33761,7 +33761,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "koZ" = (
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /turf/simulated/floor/plating,
@@ -34379,7 +34379,7 @@
 /obj/machinery/conveyor/EW{
 	id = "qm_out"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -37542,7 +37542,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
 "lzu" = (
@@ -38028,7 +38028,7 @@
 /obj/machinery/conveyor/WE{
 	id = "qm_in"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -48361,7 +48361,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/turret_protected/AIsat)
 "oQB" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/mass_driver{
 	dir = 8;
 	drive_range = 83;
@@ -51283,7 +51283,7 @@
 	})
 "pNo" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /obj/machinery/conveyor/EW{
@@ -53681,7 +53681,7 @@
 /area/station/ranch)
 "qzn" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /obj/machinery/conveyor/EW{
@@ -62945,7 +62945,7 @@
 /turf/simulated/floor,
 /area/station/hangar/main)
 "tvm" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 8;
 	id = "crusher1";
@@ -63231,7 +63231,7 @@
 	id = "toxins_o2";
 	operating = 1
 	},
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /turf/simulated/floor/plating/jen,
@@ -68508,7 +68508,7 @@
 /area/station/science/artifact)
 "vdN" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /obj/machinery/conveyor/WE{

@@ -16069,7 +16069,7 @@
 	layer = 4;
 	name = "Outbound Cargo Belt"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
@@ -19942,7 +19942,7 @@
 	layer = 4;
 	name = "Inbound Cargo Belt"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
@@ -22111,7 +22111,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -27041,7 +27041,7 @@
 	id = "disposals";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/disposal)
 "jwm" = (
@@ -28006,7 +28006,7 @@
 	layer = 4;
 	name = "Inbound Cargo Belt"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "kow" = (
@@ -28609,7 +28609,7 @@
 	id = "disposals";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
 	},
@@ -33971,7 +33971,7 @@
 	layer = 4;
 	name = "Outbound Cargo Belt"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "oWK" = (
@@ -34111,7 +34111,7 @@
 	},
 /area/station/crew_quarters/bar)
 "pdz" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -34215,7 +34215,7 @@
 	layer = 4;
 	name = "QM Security Door"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/caution/misc{
 	dir = 1
 	},
@@ -35834,7 +35834,7 @@
 /obj/machinery/conveyor/EW{
 	id = "mining2qm"
 	},
-/obj/plasticflaps{
+/obj/strip_door{
 	dir = 4
 	},
 /obj/machinery/door/poddoor/blast/single{

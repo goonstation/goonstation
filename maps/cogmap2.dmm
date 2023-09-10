@@ -45874,7 +45874,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/bot_storage)
 "cCp" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/disposalpipe/segment,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -60030,7 +60030,7 @@
 	name = "Engineering Control Room"
 	})
 "eVM" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
@@ -61027,7 +61027,7 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 8;
 	id = "qm_tohall_shutter";
@@ -62236,7 +62236,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -66051,7 +66051,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /obj/machinery/door/airlock/pyro/security{
@@ -67403,7 +67403,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "nXH" = (
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -67715,7 +67715,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/office)
 "ooM" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -72730,7 +72730,7 @@
 	name = "cargo belt - east";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "ugH" = (
@@ -73257,7 +73257,7 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/escape)
 "uQr" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
@@ -73529,7 +73529,7 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "vom" = (
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /obj/machinery/door/airlock/pyro/security{
@@ -74778,7 +74778,7 @@
 	layer = 4;
 	name = "Cargo Routing Door"
 	},
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /turf/simulated/floor/plating,
@@ -75365,7 +75365,7 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "xZZ" = (
@@ -75388,7 +75388,7 @@
 	layer = 4;
 	name = "Cargo Routing Door"
 	},
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /turf/simulated/floor/plating,

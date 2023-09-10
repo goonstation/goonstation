@@ -8294,7 +8294,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/h7/computer_core)
 "aOK" = (

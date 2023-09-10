@@ -4259,7 +4259,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crater/biodome/north)
 "eYF" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/railing{
 	dir = 1
 	},
@@ -14411,7 +14411,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "rkg" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/railing{
 	dir = 1
 	},
@@ -18656,7 +18656,7 @@
 	},
 /area/crypt/mausoleum)
 "wmg" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/railing,
 /turf/unsimulated/floor/wood/four{
 	desc = "May be slippery.";

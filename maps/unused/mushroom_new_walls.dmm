@@ -8778,7 +8778,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
 "aSR" = (
-/obj/plasticflaps{
+/obj/strip_door{
 	name = "Beepsky's room"
 	},
 /turf/simulated/floor/plating,
@@ -19293,7 +19293,7 @@
 /obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
-/obj/plasticflaps{
+/obj/strip_door{
 	dir = 4
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -22714,7 +22714,7 @@
 /obj/machinery/conveyor/EW{
 	id = "qmoutput"
 	},
-/obj/plasticflaps{
+/obj/strip_door{
 	dir = 4
 	},
 /obj/machinery/door/poddoor{
@@ -27911,7 +27911,7 @@
 /obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
-/obj/plasticflaps{
+/obj/strip_door{
 	dir = 4
 	},
 /turf/simulated/floor/caution/northsouth,

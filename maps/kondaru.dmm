@@ -16555,7 +16555,7 @@
 /area/station/mining/refinery)
 "boi" = (
 /obj/machinery/cargo_router/kd_mining,
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3.1
 	},
 /turf/simulated/floor/black/grime,
@@ -34180,7 +34180,7 @@
 	id = "imports_door";
 	name = "Cargo Import"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/cargobay)
 "eJO" = (
@@ -37087,6 +37087,7 @@
 /area/station/turret_protected/Zeta)
 "gRM" = (
 /obj/machinery/computer/barcode/qm{
+	
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -40992,7 +40993,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/engine/ptl)
 "jSP" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/cargo_router/kd_cater_flap,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -41158,6 +41159,7 @@
 /area/station/maintenance/southeast)
 "jYt" = (
 /obj/machinery/computer/barcode{
+	
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -41964,7 +41966,7 @@
 	},
 /area/station/ai_monitored/armory)
 "kJk" = (
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -44902,7 +44904,7 @@
 	id = "kondaru_qmio"
 	},
 /obj/disposalpipe/segment/mail/vertical,
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3.1
 	},
 /turf/simulated/floor/orangeblack,
@@ -45219,7 +45221,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "niK" = (
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -48327,7 +48329,7 @@
 	},
 /area/station/hallway/primary/south)
 "pEn" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
 	id = "kdrgasbelt";
@@ -49107,7 +49109,7 @@
 /turf/simulated/floor/white/grime,
 /area/station/hangar/medical)
 "qgH" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/cargo_router/kd_qm_flap,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -50425,18 +50427,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"riM" = (
-/obj/machinery/computer/barcode/qm{
-	dir = 8
-	},
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 20
-	},
-/turf/simulated/floor/orangeblack/side{
-	dir = 4
-	},
-/area/station/quartermaster/office)
 "riU" = (
 /obj/shrub,
 /turf/simulated/floor/grass,
@@ -51077,7 +51067,7 @@
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
 "rJA" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -53298,7 +53288,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "tuJ" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/cargo_router/kd_sec_flap,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -57224,7 +57214,7 @@
 	name = "Secure Release Foyer"
 	})
 "wxu" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
 	id = "kdrgasbelt";
@@ -59529,7 +59519,7 @@
 	id = "mports_door";
 	name = "Cargo Export"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/cargobay)
 "xYi" = (
@@ -107114,7 +107104,7 @@ lTF
 bNf
 bOL
 bQb
-riM
+bZR
 bSW
 bJr
 cnU

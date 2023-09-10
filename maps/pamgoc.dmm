@@ -25487,7 +25487,7 @@
 /obj/machinery/conveyor/WE{
 	id = "mining"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -30785,7 +30785,7 @@
 	name = "cargo belt - north";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
@@ -30848,7 +30848,7 @@
 /obj/machinery/conveyor/EW{
 	id = "cargo"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 8;
 	id = "cargosto";
@@ -31096,7 +31096,7 @@
 /obj/machinery/conveyor/WE{
 	id = "enginesupply"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -31160,7 +31160,7 @@
 	id = "garbage";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bus" = (
@@ -31310,7 +31310,7 @@
 /obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -31717,7 +31717,7 @@
 	name = "cargo belt - south";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
@@ -41801,7 +41801,7 @@
 	},
 /area/station/medical/dome)
 "bUI" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/WE{
 	id = "enginesupply"
 	},
@@ -41824,7 +41824,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "bUK" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
@@ -41835,7 +41835,7 @@
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "bUL" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/NS{
 	id = "garbage";
 	move_lag = 30;
@@ -41844,7 +41844,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bUM" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -57900,7 +57900,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "fbz" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/disposalpipe/segment,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
@@ -58649,7 +58649,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)
 "gNY" = (
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /obj/machinery/door/airlock/pyro/security{
@@ -60173,7 +60173,7 @@
 /obj/machinery/conveyor/NS{
 	id = "cargo"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -60587,7 +60587,7 @@
 	name = "cargo belt - north";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/disposalpipe/switch_junction{
 	dir = 8;
 	icon_state = "pipe-sj2";
@@ -60913,7 +60913,7 @@
 /obj/machinery/conveyor/NS{
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/firedoor/pyro{
 	layer = 29.1
 	},
@@ -62350,7 +62350,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /obj/machinery/door/airlock/pyro/security{
@@ -63652,7 +63652,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/northwest)
 "rLv" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/WE{
 	id = "enginesupply"
 	},
@@ -63705,7 +63705,7 @@
 /obj/machinery/conveyor/NS{
 	id = "cargo"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"

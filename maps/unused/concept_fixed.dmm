@@ -4140,7 +4140,7 @@
 /obj/machinery/conveyor/WE{
 	id = "cargo"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "aiu" = (
@@ -29217,7 +29217,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
 "bfK" = (
-/obj/plasticflaps{
+/obj/strip_door{
 	name = "Beepsky's room"
 	},
 /turf/simulated/floor/plating,
@@ -32995,7 +32995,7 @@
 	},
 /area/space)
 "bmV" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/caution/northsouth,
 /area/space)
 "bmW" = (

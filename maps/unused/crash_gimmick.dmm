@@ -24827,7 +24827,7 @@
 	},
 /area/russian/radiation)
 "cJA" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -67300,7 +67300,7 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -67979,7 +67979,7 @@
 	name = "cargo belt - east";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -70795,7 +70795,7 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	icon_state = "platingdmg2";

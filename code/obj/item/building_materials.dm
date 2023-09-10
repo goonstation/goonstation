@@ -1120,6 +1120,12 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			name = "Railing"
 			icon = 'icons/obj/objects.dmi'
 			icon_state = "railing"
+		strip_door
+			recipe_id = "strip_door"
+			craftedType = /obj/strip_door/constructed
+			name = "Strip Door Frame"
+			icon = 'icons/obj/stationobjs.dmi'
+			icon_state = "strip_door_open"
 		stool
 			recipe_id = "stool"
 			craftedType = /obj/stool

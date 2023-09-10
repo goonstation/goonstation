@@ -42119,7 +42119,7 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
 "cSr" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/river{
 	dir = 4
 	},
@@ -64618,7 +64618,7 @@
 /obj/machinery/conveyor/SN{
 	id = "owlery_trash"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "lDq" = (
@@ -64979,7 +64979,7 @@
 /obj/machinery/conveyor/SN{
 	id = "owlery_trash"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/unsimulated/floor/grime,
 /area/owlery/Owlmait)
 "lWU" = (

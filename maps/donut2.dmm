@@ -2121,7 +2121,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/bot_storage)
 "ajh" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/caution/northsouth,
 /area/station/science/bot_storage)
@@ -3056,7 +3056,7 @@
 	id = "zeta_mail_in";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aoc" = (
@@ -3463,7 +3463,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "apM" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/SN{
 	id = "cargobelt_out";
 	operating = 1
@@ -3471,7 +3471,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "apN" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/NS{
 	id = "cargobelt_in";
 	operating = 1
@@ -4521,7 +4521,7 @@
 /obj/machinery/conveyor/NS{
 	id = "cargo"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor{
 	id = "cargosto2";
 	name = "Storage Shutter"
@@ -8020,7 +8020,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aGi" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/NS{
 	id = "zeta_mail_out";
 	operating = 1
@@ -25144,7 +25144,7 @@
 	},
 /area/station/crew_quarters/kitchen/freezer)
 "eMM" = (
-/obj/plasticflaps{
+/obj/strip_door{
 	layer = 3
 	},
 /obj/cable{
@@ -29035,7 +29035,7 @@
 /obj/machinery/conveyor/EW{
 	id = "cargo-art-in"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "hKZ" = (
@@ -34179,7 +34179,7 @@
 	id = "zetadispdoor";
 	name = "Disposals Door"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
 "lwy" = (
@@ -40691,7 +40691,7 @@
 	id = "zetadisposals";
 	move_lag = 15
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
 "qfo" = (
@@ -47157,7 +47157,7 @@
 	id = "disp-vent";
 	name = "Disposal Vents"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "uIt" = (

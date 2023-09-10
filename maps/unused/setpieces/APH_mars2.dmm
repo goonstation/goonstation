@@ -1086,7 +1086,7 @@
 	name = "factory conveyor belt";
 	pixel_y = 2
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/unsimulated/floor{
 	icon_state = "engine_caution_we"
 	},

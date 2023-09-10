@@ -10838,7 +10838,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen/freezer)
 "aFx" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -10949,7 +10949,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/bot_storage)
 "aFM" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -19499,7 +19499,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen/therustykrab)
 "bdV" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/SN{
 	id = "north"
 	},
@@ -26716,7 +26716,7 @@
 	name = "Cargo Bay Shutters";
 	opacity = 0
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/SN{
 	id = "qmdelivery"
 	},
@@ -27093,7 +27093,7 @@
 	move_lag = 30;
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "crusher";
@@ -27663,7 +27663,7 @@
 	id = "crusher";
 	name = "crusher door"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/SN{
 	id = "disposals";
 	move_lag = 30;
@@ -30296,7 +30296,7 @@
 	operating = 1
 	},
 /obj/machinery/launcher_loader/south,
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bHK" = (
@@ -30317,7 +30317,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
 "bHQ" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/NS{
 	id = "south"
 	},

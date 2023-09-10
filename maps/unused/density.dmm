@@ -265,7 +265,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "aI" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "aJ" = (
@@ -1406,7 +1406,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "dy" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor{
 	id = "cargodock_in";
 	name = "Cargo Routing Door"
@@ -1799,7 +1799,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "ey" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor{
 	id = "cargodock_out";
 	name = "Cargo Routing Door"
@@ -2251,7 +2251,7 @@
 	id = "garbage";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
 "fz" = (

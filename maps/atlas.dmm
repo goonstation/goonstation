@@ -992,7 +992,7 @@
 /turf/simulated/floor/engine,
 /area/station/mining/staff_room)
 "adt" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
@@ -1782,7 +1782,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "afM" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -6528,7 +6528,7 @@
 	name = "cargo belt - north";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "cargo_outbound";
 	name = "Cargo Door"
@@ -6859,7 +6859,7 @@
 	name = "cargo belt - south";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "awV" = (
@@ -12942,7 +12942,7 @@
 	name = "cargo belt - east";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "cargo_shutter";
@@ -12989,7 +12989,7 @@
 	name = "cargo belt - south";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "cargo_inbound";
 	name = "Cargo Door"
@@ -14853,7 +14853,7 @@
 	name = "cargo belt - east";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "crusher";
@@ -15577,7 +15577,7 @@
 	name = "cargo belt - north";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "aYY" = (

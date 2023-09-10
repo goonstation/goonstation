@@ -2408,7 +2408,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/quartermaster/office)
 "ahH" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/WE{
 	id = "QM"
 	},
@@ -22264,7 +22264,7 @@
 	id = "QM-dock-out";
 	name = "Supply Dock Selling Door"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "bwx" = (
@@ -24568,7 +24568,7 @@
 	id = "QMLoaddoor";
 	name = "Supply Dock Loading Door"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "bEz" = (

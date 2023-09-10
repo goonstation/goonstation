@@ -15062,7 +15062,7 @@
 /turf/simulated/wall,
 /area/zeta/bot_storage)
 "JV" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/caution/northsouth,
 /area/zeta/bot_storage)
 "JW" = (
