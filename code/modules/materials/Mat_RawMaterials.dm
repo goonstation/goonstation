@@ -250,16 +250,17 @@
 
 ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 /obj/item/material_piece/rubber
-	setup_material()
-		src.create_reagents(10)
-		reagents.add_reagent("rubber", 10)
-		return ..()
 
 /obj/item/material_piece/rubber/latex
 	name = "sheet"
 	desc = "A sheet of latex."
 	icon_state = "latex"
 	default_material = "latex"
+
+	setup_material()
+		src.create_reagents(10)
+		reagents.add_reagent("rubber", 10)
+		return ..()
 
 /obj/item/material_piece/rubber/plastic
 	name = "flap"
