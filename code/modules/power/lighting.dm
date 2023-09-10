@@ -119,6 +119,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			stationLights += src
 
 		var/area/A = get_area(src)
+		if (A.z == Z_LEVEL_DYNAMIC && istype(A, /area/morrigan/station))
+			START_TRACKING_CAT(TR_CAT_MORRIGAN_LIGHTS)
 		if (A)
 			UnsubscribeProcess()
 			A.add_light(src)
@@ -136,6 +138,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			A.remove_light(src)
 		if (light)
 			light.dispose()
+		STOP_TRACKING_CAT(TR_CAT_MORRIGAN_LIGHTS)
 		..()
 
 	proc/autoposition(setdir = null)
@@ -371,14 +374,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	New()
 		..()
 		var/area/A = get_area(src)
-		if (istype(A, /area/morrigan/station))
-			START_TRACKING_CAT(TR_CAT_MORRIGAN_EMERGENCY_LIGHTS)
-		else if (A.z == Z_LEVEL_STATION && istype(A, /area/station))
+		if (A.z == Z_LEVEL_STATION && istype(A, /area/station))
 			START_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
-		STOP_TRACKING_CAT(TR_CAT_MORRIGAN_EMERGENCY_LIGHTS)
 		..()
 
 	exitsign
@@ -622,13 +622,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	New()
 		..()
-		var/area/A = get_area(src)
-		if (istype(A, /area/morrigan/station))
-			START_TRACKING_CAT(TR_CAT_MORRIGAN_LIGHTS)
 		autoposition()
 
 	disposing()
-		STOP_TRACKING_CAT(TR_CAT_MORRIGAN_LIGHTS)
 		..()
 
 	name = "incandescent light fixture"

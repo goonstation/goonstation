@@ -478,7 +478,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		/obj/item/clothing/head/bandana/random_color), SLOT_HEAD)
 		src.equip_new_if_possible(pick(/obj/item/clothing/under/gimmick/yay, /obj/item/clothing/under/misc/casualjeansgrey, /obj/item/clothing/under/misc/dirty_vest,
 		/obj/item/clothing/under/misc/yoga/communist, /obj/item/clothing/under/patient_gown, /obj/item/clothing/under/shorts/random_color,
-		/obj/item/clothing/under/shorts/trashsinglet, /obj/item/clothing/under/misc/flannel), SLOT_W_UNIFORM)
+		/obj/item/clothing/under/misc/flannel), SLOT_W_UNIFORM)
 		src.equip_new_if_possible(pick(/obj/item/clothing/suit/walpcardigan, /obj/item/clothing/suit/gimmick/hotdog, /obj/item/clothing/suit/loosejacket,
 		/obj/item/clothing/suit/torncloak/random, /obj/item/clothing/suit/gimmick/guncoat/dirty, /obj/item/clothing/suit/bathrobe, /obj/item/clothing/suit/apron,
 		/obj/item/clothing/suit/apron/botanist, /obj/item/clothing/suit/bedsheet/random), SLOT_WEAR_SUIT)
@@ -2187,12 +2187,13 @@ mob/living/carbon/human/morrigan_prisoner
 	proc/lockdown()
 	//eventually i will find a better way to update lights
 		for(var/obj/machinery/light/light in by_cat[TR_CAT_MORRIGAN_LIGHTS])
-			light.seton(FALSE)
-			LAGCHECK(LAG_LOW)
-		for(var/obj/machinery/light/emergency/e_light in by_cat[TR_CAT_MORRIGAN_EMERGENCY_LIGHTS])
-			e_light.on = TRUE
-			e_light.update() //you have to update it for it to work
-			LAGCHECK(LAG_LOW)
+			if (!istype(light, /obj/machinery/light/emergency))
+				light.seton(FALSE)
+				LAGCHECK(LAG_LOW)
+			else
+				light.on = TRUE
+				light.update() //you have to update it for it to work
+				LAGCHECK(LAG_LOW)
 		for (var/obj/machinery/door/poddoor/buff/morrigan_lockdown/door in by_type[/obj/machinery/door/poddoor/buff/morrigan_lockdown])
 			door.close()
 
