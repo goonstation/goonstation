@@ -339,6 +339,7 @@ TYPEINFO(/obj/machinery/chem_shaker)
 		for (var/obj/item/reagent_containers/glass/glass_container in src.held_containers)
 			MOVE_OUT_TO_TURF_SAFE(glass_container, src)
 			src.held_containers -= glass_container
+		UnsubscribeProcess()
 		..()
 
 	attack_hand(mob/user)
@@ -421,14 +422,14 @@ TYPEINFO(/obj/machinery/chem_shaker)
 		else
 			src.audible_message("<span class='notice'>[src] whirs to life, rotating its platform!</span>")
 		if (!(src in processing_machines))
-			processing_machines.Add(src)
+			SubscribeToProcess()
 
 	proc/set_inactive()
 		src.active = FALSE
 		src.power_usage = 0
 		animate(src.platform_holder, pixel_x = 0, pixel_y = 0, time = src.orbital_period/2, easing = SINE_EASING, flags = ANIMATION_LINEAR_TRANSFORM)
 		src.audible_message("<span class='notice'>[src] dies down, returning its platform to its initial position.</span>")
-		processing_machines.Remove(src)
+		UnsubscribeProcess()
 
 	proc/try_insert(obj/item/reagent_containers/glass/glass_container, var/mob/user)
 		if (src.status & (NOPOWER|BROKEN))
