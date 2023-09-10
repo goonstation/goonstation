@@ -420,15 +420,15 @@ TYPEINFO(/obj/machinery/chem_shaker)
 			src.audible_message("<span class='alert'>[src] is rotating a bit too fast!</span>")
 		else
 			src.audible_message("<span class='notice'>[src] whirs to life, rotating its platform!</span>")
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		if (!(src in processing_machines))
+			processing_machines.Add(src)
 
 	proc/set_inactive()
 		src.active = FALSE
 		src.power_usage = 0
 		animate(src.platform_holder, pixel_x = 0, pixel_y = 0, time = src.orbital_period/2, easing = SINE_EASING, flags = ANIMATION_LINEAR_TRANSFORM)
 		src.audible_message("<span class='notice'>[src] dies down, returning its platform to its initial position.</span>")
-		processing_items.Remove(src)
+		processing_machines.Remove(src)
 
 	proc/try_insert(obj/item/reagent_containers/glass/glass_container, var/mob/user)
 		if (src.status & (NOPOWER|BROKEN))
