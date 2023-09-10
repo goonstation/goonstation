@@ -19,7 +19,7 @@
 	name = "space helmet"
 	icon_state = "space"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
-	see_face = 0
+	see_face = FALSE
 	item_state = "s_helmet"
 	desc = "Helps protect against vacuum."
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
@@ -48,7 +48,7 @@
 	icon_state = "espace0"
 	uses_multiple_icon_states = 1
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
-	see_face = 0
+	see_face = FALSE
 	item_state = "s_helmet"
 	var/on = 0
 
@@ -271,7 +271,7 @@
 	desc = "A lightweight space helmet."
 	icon_state = "spacelight-e" // if I add more light suits/helmets change this to nuetral suit/helmet
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
-	see_face = 0
+	see_face = FALSE
 	item_state = "s_helmet"
 	hides_from_examine = C_EARS|C_MASK // Light space suit helms have transparent fronts
 	seal_hair = 1
@@ -340,7 +340,7 @@
 		icon_state = "syndie_commander"
 		desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
 		seal_hair = 0
-		see_face = 1
+		see_face = TRUE
 		team_num = TEAM_SYNDICATE
 
 		setupProperties()
@@ -390,7 +390,7 @@
 			icon_state = "syndie_specialist"
 			item_state = "syndie_specialist"
 			c_flags = SPACEWEAR | COVERSEYES
-			see_face = 0
+			see_face = FALSE
 			protective_temperature = 1300
 			abilities = list(/obj/ability_button/nukie_meson_toggle)
 			var/on = 0
@@ -651,6 +651,19 @@
 		else
 			src.icon_state = "helmet-sec"
 			src.item_state = "helmet-sec"
+
+obj/item/clothing/head/helmet/hardhat/security/hos
+	name = "head of security helmet"
+	icon_state = "helmet-hos"
+	item_state = "helmet-hos"
+	desc = "Somewhat protects your head from being bashed in a little more than an ordinary helmet. It has a cool stripe too to distinguish it from less cool helmets."
+
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 7)
+
+	attack_self(mob/user as mob)
+		return
 
 /obj/item/clothing/head/helmet/hardhat/security/improved // Azungar's more out of style helmet that can only be bought through QM.
 	name = "elite helmet"
@@ -919,7 +932,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/siren)
 	item_state = "nthelm"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
-	see_face = 0
+	see_face = FALSE
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 8)

@@ -165,7 +165,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define XMAS 1
 //#define CANADADAY 1
 //#define FOOTBALL_MODE 1
-
+//#define ENABLE_ARTEMIS // Enables artemis for development
 
 //Don't comment this ty
 #ifdef STOP_DISTRACTING_ME
