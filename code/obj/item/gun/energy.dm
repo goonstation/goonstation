@@ -1866,7 +1866,8 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 /obj/item/gun/energy/makeshift
 	name = "makeshift laser rifle"
-	icon_state = "laser"
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "makeshift-energy"
 	item_state = "laser" //TODO better sprites
 	w_class = W_CLASS_BULKY
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
@@ -1881,18 +1882,18 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	charge_icon_state = "laser"
 	spread_angle = 10
 	///What light source we use for the rifle
-	var/obj/item/device/light/flashlight/our_flashlight
+	var/obj/item/light/tube/our_light
 	///What battery this gun uses
 	var/obj/item/cell/our_cell
 	///How much heat this weapon has after firing, the flashlight breaks if this gets too high
 	var/heat = 0
-	///Is the panel open, if TRUE we can swap out the flashlight
-	var/welded_open = FALSE
+	///
+	var/battery_image
 
 	proc/break_light()
 		elecflash(get_turf(src), 1, 3)
-		our_flashlight.broken = TRUE
-		our_flashlight.name = "broken [our_flashlight.name]"
+		our_light.light_status = LIGHT_BURNED
+		our_light.update()
 
 	proc/attach_cell(var/obj/item/cell/C, mob/user)
 		if (user)
@@ -1901,6 +1902,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		our_cell.set_loc(src)
 		our_cell.AddComponent(/datum/component/power_cell, our_cell.maxcharge, our_cell.charge, our_cell.genrate, 0, FALSE)
 		SEND_SIGNAL(src, COMSIG_CELL_SWAP, our_cell)
+		update_icon()
 
 	New()
 		processing_items |= src
@@ -1912,6 +1914,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	Exited(Obj, newloc)
 		var/obj/item/cell/C = Obj
 		if (istype(C))
+			C.update_icon()
 			var/datum/component/power_cell/comp = C.GetComponent(/datum/component/power_cell)
 			comp.UnregisterFromParent()
 			comp.RemoveComponent()
@@ -1926,10 +1929,10 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		return
 
 	canshoot(mob/user)
-		if (!our_flashlight)
+		if (!our_light)
 			boutput(user,"<span class='alert'>[src] needs a light source to function!</span>")
 			return FALSE
-		else if (our_flashlight.broken)
+		else if (our_light.light_status != LIGHT_OK)
 			boutput(user,"<span class='alert'>[src] has no reaction when you pull the trigger!</span>")
 			return FALSE
 		else
@@ -1947,24 +1950,20 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			boutput(user,"<span class='notice'>You attach [W] to [src].</span>")
 			attach_cell(W, user)
 			return
-		else if (isweldingtool(W) && W:try_weld(user, 1))
-			welded_open = !welded_open
-			boutput(user,"<span class='notice'>You weld [src]'s barrel [welded_open ? "open" : "closed"].</span>")
-			return
-		else if (issnippingtool(W) && welded_open)
-			boutput(user,"<span class='notice'>You remove [our_flashlight] from the barrel.</span>")
+		else if (issnippingtool(W) && our_light)
+			boutput(user,"<span class='notice'>You remove [our_light] from the barrel.</span>")
 			playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
-			our_flashlight.set_loc(get_turf(user))
-			our_flashlight = null
+			our_light.set_loc(get_turf(user))
+			our_light = null
+			update_icon()
 			return
-		else if (istype(W, /obj/item/device/light/flashlight) && !our_flashlight && welded_open)
-			var/obj/item/device/light/flashlight/F = W
-			boutput(user,"<span class='notice'>You attach the flashlight inside of the barrel and redo the wiring.</span>")
+		else if (istype(W, /obj/item/light/tube) && !our_light)
+			boutput(user,"<span class='notice'>You place [W] inside of the barrel and redo the wiring.</span>")
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
-			F.on = FALSE
-			user.u_equip(F)
-			our_flashlight = F
-			F.set_loc(src)
+			user.u_equip(W)
+			our_light = W
+			W.set_loc(src)
+			update_icon()
 			return
 		..()
 
@@ -1976,19 +1975,29 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			. += "The rifle is emitting a small amount of heat."
 
 	update_icon()
-		//TODO sprites for smoking/emitting heat
+		if(our_cell)
+			var/image/overlay_image = SafeGetOverlayImage("gun_cell", 'icons/obj/large/64x32.dmi', "makeshift-battery")
+			src.UpdateOverlays(overlay_image, "gun_cell")
+		else
+			src.UpdateOverlays(null, "gun_cell")
+
+		if(our_light)
+			var/image/overlay_image = SafeGetOverlayImage("gun_light", 'icons/obj/large/64x32.dmi', "makeshift-light")
+			src.UpdateOverlays(overlay_image, "gun_light")
+		else
+			src.UpdateOverlays(null, "gun_light")
 		..()
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user))
-			if (src.welded_open) // bad idea
+			if (our_light.rigged) // bad idea
 				boutput(user,"<span class='alert'>[src] explodes!</span>")
 				explosion(src, get_turf(src), -1, -1, 1, 2)
 				qdel(src)
 				return
 			heat += rand(8,11)
 			update_icon()
-			if (heat > 120 || (heat > 100 && prob(25)))
+			if (heat > 120 || (heat > 100 && prob(10)))
 				boutput(user,"<span class='alert'>[src]'s light source breaks due to the excess heat within!</span>")
 				break_light()
 				return
@@ -2003,7 +2012,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "rods_5" // TODO get sprites
 
-	var/obj/item/device/light/flashlight/our_flashlight
+	var/obj/item/light/tube/our_light
 	var/step = 0
 
 	attackby(obj/item/W, mob/user, params)
@@ -2022,16 +2031,15 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			step++
 			icon_state = "rods_3"
 			return
-		else if (step == 2 && istype(W, /obj/item/device/light/flashlight))
+		else if (step == 2 && istype(W, /obj/item/light/tube))
 			var/obj/item/device/light/flashlight/F = W
-			boutput(user,"<span class='notice'>You attach the flashlight inside of the barrel.</span>")
+			boutput(user,"<span class='notice'>You place [W] inside of the barrel.</span>")
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
-			F.on = FALSE
 			user.u_equip(F)
-			our_flashlight = F
+			our_light = F
 			F.set_loc(src)
 			step++
-			name = "pipe/stock/flashlight assembly"
+			name = "pipe/stock/light assembly"
 			return
 		else if (step == 3 && istype(W, /obj/item/device/timer))
 			boutput(user,"<span class='notice'>You attach the timer to [src].</span>")
@@ -2039,7 +2047,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			user.u_equip(W)
 			qdel(W)
 			step++
-			name = "pipe/stock/flashlight/timer assembly"
+			name = "pipe/stock/light/timer assembly"
 			return
 		else if (step == 4 && isweldingtool(W) && W:try_weld(user, 1) )
 			boutput(user,"<span class='notice'>You weld [src] together.</span>")
@@ -2057,8 +2065,8 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			user.u_equip(src)
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
 			var/obj/item/gun/energy/makeshift/M = new/obj/item/gun/energy/makeshift
-			M.our_flashlight = our_flashlight
-			our_flashlight.set_loc(M)
+			M.our_light = our_light
+			our_light.set_loc(M)
 			M.attach_cell(W, user)
 			user.put_in_hand_or_drop(M)
 			qdel(src)
@@ -2071,7 +2079,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 	New()
 		..()
-		our_flashlight = new /obj/item/device/light/flashlight
-		our_flashlight.set_loc(src)
+		our_light = new /obj/item/light/tube
+		our_light.set_loc(src)
 
 #undef HEAT_REMOVED_PER_PROCESS
