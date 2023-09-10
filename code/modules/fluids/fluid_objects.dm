@@ -376,15 +376,15 @@ ABSTRACT_TYPE(/datum/contextAction/fluid_canister)
 
 	off
 		name = "OFF"
-		icon_state = "bar"
+		icon_state = "off"
 		mode = FLUID_CANISTER_MODE_OFF
 	slurp
 		name = "IN"
-		icon_state = "screw"
+		icon_state = "in"
 		mode = FLUID_CANISTER_MODE_SLURP
 	piss
 		name = "OUT"
-		icon_state = "pulse"
+		icon_state = "out"
 		mode = FLUID_CANISTER_MODE_PISS
 
 ///////////////////
