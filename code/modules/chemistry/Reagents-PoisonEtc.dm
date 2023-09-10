@@ -1388,6 +1388,9 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
+				if (istype(M, /mob/living/critter/small_animal/rattlesnake))
+					M.reagents.remove_reagent(id, M.reagents.get_reagent_amount(id))
+					return // Snake venom shouldn't poison snakes when they consume what they bit
 				M.take_toxin_damage(mult)
 
 				if (isliving(M))

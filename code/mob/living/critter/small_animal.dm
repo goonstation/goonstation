@@ -2003,7 +2003,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("rattle", "snap")
 				if (src.emote_check(voluntary, 50) && icon_state == "rattlesnake")
 					icon_state = "rattlesnake_rattle"
-					playsound(src, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 120, 1, 5, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECONDS)
 						icon_state = "rattlesnake"
 					return "<span class='emote'><b>[src]</b> rattles it's tail!</span>"
@@ -2027,10 +2027,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if(GET_DIST(src, C) <= 3 && GET_DIST(src, C) >= 1) //it will only actually target humans and silicons if in very close proximity
 				if(!ON_COOLDOWN(src, "rattle", 3 SECONDS))      //it will rattle defensively if somewhat close
 					icon_state = "rattlesnake_rattle"
-					playsound(src, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 120, 1, 5, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECONDS)
 						icon_state = "rattlesnake"
-					src.visible_message("<span class='combat'><B>[src]</B> rattles, better not get much closer!</span>")
+					src.visible_message("<span class='combat'><B>[src] rattles, better not get much closer!</B></span>")
 				return FALSE
 			else if(GET_DIST(src, C) > 3) //humans and silicons that are farther than 3 tiles do not interest the snake
 				return FALSE
