@@ -581,7 +581,6 @@ mob/living/carbon/human/morrigan_prisoner
 	faction = FACTION_GENERIC
 	ai_type = /datum/aiHolder/aggressive
 	human_to_copy = /mob/living/carbon/human/hobo
-	var/speak_lines
 
 /mob/living/critter/human/hobo/dagger
 	hand_count = 2
@@ -609,7 +608,7 @@ mob/living/carbon/human/morrigan_prisoner
 	seek_target(range)
 		. = ..()
 
-		if (length(.) && prob(10) && src.speak_lines)
+		if (length(.) && prob(10))
 			src.say(pick("FUCK FUCK FUCK!", "CR-CRANK BABY!", "MORMGHRMGINIAD!", "YOU WERE THERE!!", "Ohh...oohhh....", "BUTTER THEY HAD MY BUTTER!!!", "Shrughaldin...AAAAAH!", "SPIDER FACE!!"))
 
 
@@ -639,7 +638,7 @@ mob/living/carbon/human/morrigan_prisoner
 	seek_target(range)
 		. = ..()
 
-		if (length(.) && prob(10) && src.speak_lines)
+		if (length(.) && prob(10))
 			src.say(pick("WOOOOOSHHH WEEEEEEE!", "ORDER 3 SANDWICHES, 3 OF THEM!", "IS THAT YOU MOM ??!", "Urgh...piss...", "If you are injured, I advise applying pressure to the wound until the medics arrive.", "KAAAAAAAWAAAAAAAAAAAAA!", "Rat FOOD!!", "XDEOBLD....EOWA"))
 
 
@@ -669,7 +668,7 @@ mob/living/carbon/human/morrigan_prisoner
 	seek_target(range)
 		. = ..()
 
-		if (length(.) && prob(10) && src.speak_lines)
+		if (length(.) && prob(10))
 			src.say(pick("WEEEEWOOOOOWEEEEWOOOOO.", "A B C D E ....", "LOOK AT ME, I AM THE CAPTAIN NOW.", "Fuckers got my cash...", "WANNA SCRAP YOU WIMP?", "TOENAILS, TOENAILS...", "Mmmmerghh...mmm....", "OWNED??"))
 
 
@@ -2371,7 +2370,7 @@ TYPEINFO(/obj/item/gun/energy/peacebringer)
 	icon_state = "peacebringer"
 	desc = "A scary albeit it, silly, energy revolver custom made for the Morrigan head of security."
 	item_state = "peacebringer"
-	force = 5
+	force = 10
 	can_swap_cell = FALSE
 	rechargeable = FALSE
 	uses_charge_overlay = TRUE
@@ -2380,7 +2379,7 @@ TYPEINFO(/obj/item/gun/energy/peacebringer)
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/optio/peacebringer)
-		projectiles = list(current_projectile,new/datum/projectile/laser/peacebringerless)
+		projectiles = list(current_projectile,new/datum/projectile/bullet/optio/peacebringerlesslethal)
 		..()
 
 	update_icon()
@@ -2389,13 +2388,11 @@ TYPEINFO(/obj/item/gun/energy/peacebringer)
 			charge_icon_state = "peacebringer"
 			muzzle_flash = "muzzle_flash_laser"
 			item_state = "peacebringer"
-			playsound('sound/weapons/peacebringerswap.ogg', 50, 0)
-		else if (current_projectile.type == /datum/projectile/laser/peacebringerless)
+		else if (current_projectile.type == /datum/projectile/bullet/optio/peacebringerlesslethal)
 			icon = 'icons/obj/adventurezones/morrigan/weapons/gun.dmi'
 			charge_icon_state = "peaceless"
 			muzzle_flash = "muzzle_flash_waveg"
 			item_state = "peacebringerless"
-			playsound('sound/weapons/peacebringerswap2.ogg', 50, 0)
 		..()
 
 	attack_self(var/mob/M)
@@ -2460,10 +2457,10 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 	can_swap_cell = FALSE
 	rechargeable = FALSE
 	uses_charge_overlay = TRUE
-	muzzle_flash = "muzzle_flash_bluezap"
+	muzzle_flash = "muzzle_flash_red"
 	charge_icon_state = "lasershotgun"
 	var/racked_slide = FALSE
-
+	var/shotcount = 0
 
 	New()
 		set_current_projectile(new/datum/projectile/special/spreader/tasershotgunspread/morriganshotgun)
@@ -2474,34 +2471,48 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 		return(..() && src.racked_slide)
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
-		if(cell_type > 50 && !racked_slide)
-			boutput(user, "<span class='notice'>You need to vent before you can fire!</span>")
-		..()
-		src.racked_slide = FALSE
-
-	shoot_point_blank(atom/target, mob/user, second_shot)
-		if(cell_type > 50 && !racked_slide)
-			boutput(user, "<span class='notice'>You need to vent before you can fire!</span>")
+		if (!shoot_check(user))
 			return
 		..()
-		src.racked_slide = FALSE
+		if (src.shotcount++ >= 1)
+			src.racked_slide = FALSE
+
+	shoot_point_blank(atom/target, mob/user, second_shot)
+		if (!shoot_check(user))
+			return
+		..()
+		if (src.shotcount++ >= 2)
+			src.racked_slide = FALSE
+
+	proc/shoot_check(var/mob/user)
+		if (SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, amount) & CELL_INSUFFICIENT_CHARGE)
+			boutput(user, "<span class ='notice'>You are out of energy!</span>")
+			return FALSE
+
+		if (!src.racked_slide)
+			boutput(user, "<span class='notice'>You need to vent before you can fire!</span>")
+			return FALSE
+
+		if (GET_COOLDOWN(src, "rack delay"))
+			boutput(user, "<span class ='notice'>Still cooling!</span>")
+			return FALSE
+		return TRUE
 
 	attack_self(mob/user as mob)
 		..()
 		src.rack(user)
 
-	proc/rack(var/atom/movable/user)
-		var/mob/mob_user = null
-		if(ismob(user))
-			mob_user = user
+	proc/rack(var/mob/user)
 		if (!src.racked_slide)
-			if (src.cell_type < 50)
-				boutput(mob_user, "<span class ='notice'>You are out of energy!</span>")
+			if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, amount) & CELL_INSUFFICIENT_CHARGE)
+				boutput(user, "<span class ='notice'>You are out of energy!</span>")
 
 			else
 				src.racked_slide = TRUE
-				boutput(mob_user, "<span class='notice'>You release some heat from the shotgun!</span>")
-				playsound(user.loc, 'sound/ambience/morrigan/steamrelease.ogg', 50, 1)
+				src.shotcount = 0
+				boutput(user, "<span class='notice'>You release some heat from the shotgun!</span>")
+				playsound(src, 'sound/ambience/morrigan/steamrelease.ogg', 70, 1)
+				ON_COOLDOWN(src, "rack delay", 1 SECONDS)
 
 
 
@@ -2633,28 +2644,60 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 			qdel(start)
 			qdel(end)
 
-/datum/projectile/laser/peacebringerless
+/datum/projectile/bullet/optio/peacebringerlesslethal
 	name = "Peacekeeper"
 	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "relibullet"
-	shot_sound = 'sound/weapons/hafpless.ogg'
+	shot_sound = 'sound/weapons/peacebringerlesslethal.ogg'
 	cost = 7
-	damage = 10
+	damage = 5
 
 	sname = "less-lethal"
 	damage_type = D_ENERGY
+	hit_type = DAMAGE_BURN
 	hit_ground_chance = 30
+	impact_image_state = "burn1"
+	color_red = 0.1
+	color_green = 0.8
+	color_blue = 0.2
+	projectile_speed = 1000
+	max_range = PROJ_INFINITE_RANGE
+	dissipation_rate = 0
+	armor_ignored = 0
+	window_pass = FALSE
 	color_red = 0.1
 	color_green = 1
 	color_blue = 0.3
 
 	disruption = 2
 
-	on_hit(atom/hit, angle, obj/projectile/O)
+	on_hit(atom/hit, angle, obj/projectile/P)
 		. = ..()
+		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
+		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
+
+		var/Sx = P.orig_turf.x*32 + P.orig_turf.pixel_x
+		var/Sy = P.orig_turf.y*32 + P.orig_turf.pixel_y
+
+		var/Hx = hit.x*32 + hit.pixel_x
+		var/Hy = hit.y*32 + hit.pixel_y
+
+		var/dist = sqrt((Hx-Sx)**2 + (Hy-Sy)**2)
+
+		var/Px = Sx + sin(P.angle) * dist
+		var/Py = Sy + cos(P.angle) * dist
+
+		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrailGreen",1,0,"HalfStartTrailGreen","HalfEndTrailGreen",OBJ_LAYER, 0, Sx, Sy, Px, Py)
+		for(var/obj/O in affected)
+			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
+		SPAWN(1 SECOND)
+			for(var/obj/O in affected)
+				O.alpha = initial(O.alpha)
+				qdel(O)
+			qdel(start)
+			qdel(end)
 		if(isliving(hit))
 			var/mob/living/L = hit
-			L.do_disorient(stamina_damage = 5, weakened = 0 SECONDS, stunned = 0 SECONDS, disorient = 7 SECONDS, remove_stamina_below_zero = 0)
+			L.do_disorient(stamina_damage = 35, weakened = 0 SECONDS, stunned = 0 SECONDS, disorient = 7 SECONDS, remove_stamina_below_zero = 0)
 
 /datum/projectile/laser/mining/smgmine
 	name = "AC Shot"
@@ -2680,7 +2723,7 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 	name = "laser"
 	sname = "shotgun spread"
 	cost = 50
-	damage = 15
+	damage = 20
 	damage_type = D_ENERGY
 	pellets_to_fire = 3
 	spread_projectile_type = /datum/projectile/laser/lasershotgun

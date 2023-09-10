@@ -131,10 +131,6 @@
 /obj/map/light/dimred,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"afJ" = (
-/obj/machinery/networked/telepad,
-/turf/unsimulated/floor/caution,
-/area/morrigan/station/exit)
 "agc" = (
 /obj/decal/cleanable/blood{
 	icon_state = "smear3"
@@ -5542,8 +5538,6 @@
 /area/morrigan/derelict)
 "fzA" = (
 /obj/storage/secure/closet/morrigan/captain,
-/obj/item/ammo/bullets/nine_mm_NATO,
-/obj/item/ammo/bullets/nine_mm_NATO,
 /obj/item/storage/backpack/satchel/captain/red,
 /obj/item/clothing/shoes/swat,
 /obj/item/clothing/glasses/sunglasses,
@@ -7965,10 +7959,6 @@
 /obj/machinery/conveyor/WS,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"hKX" = (
-/obj/critter/gunbot/drone/cutterdrone,
-/turf/unsimulated/floor/engine/glow,
-/area/morrigan/station/factory)
 "hKY" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -9784,11 +9774,6 @@
 /mob/living/critter/human/hobo/machete,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"jCr" = (
-/obj/table/syndicate/auto,
-/obj/item/gun/energy/hafpistol,
-/turf/unsimulated/floor/black,
-/area/morrigan/station/invest)
 "jCy" = (
 /obj/railing/red/reinforced,
 /obj/decal/tile_edge/stripe/extra_big,
@@ -10580,13 +10565,6 @@
 /obj/mapping_helper/access/morrigan/medical,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/medical/reception)
-"ktz" = (
-/obj/decal/poster/wallsign/poster_nt{
-	icon_state = "wall_poster_syndicate";
-	name = "Syndicate Poster"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/routing/transport)
 "ktC" = (
 /obj/storage/cart/trash,
 /turf/unsimulated/floor/purple,
@@ -13608,6 +13586,13 @@
 	},
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/main)
+"nlB" = (
+/obj/table/syndicate/auto,
+/obj/item/gun/energy/lasershotgun{
+	pixel_x = -4
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan/station/invest)
 "nlK" = (
 /turf/unsimulated/floor/redblack/corner{
 	dir = 4
@@ -15820,13 +15805,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict)
-"pti" = (
-/obj/decal/poster/wallsign/poster_nt{
-	icon_state = "wall_poster_syndicate";
-	name = "Syndicate Poster"
-	},
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/morrigan/warden)
 "puC" = (
 /obj/lattice{
 	dir = 6;
@@ -16521,7 +16499,6 @@
 	pixel_y = -3
 	},
 /obj/item/clothing/suit/bio_suit/armored,
-/obj/mapping_helper/access/morrigan/rd,
 /obj/decoration/clock{
 	pixel_y = 30
 	},
@@ -17103,12 +17080,6 @@
 	dir = 8
 	},
 /area/morrigan/station/science)
-"qLj" = (
-/obj/decal/poster/wallsign/poster_nt{
-	icon_state = "wall_poster_syndicate"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/routing/transport)
 "qLl" = (
 /obj/item/raw_material/shard/glass,
 /obj/machinery/conveyor/NS,
@@ -18674,7 +18645,6 @@
 	pixel_x = 7;
 	pixel_y = 7
 	},
-/obj/item/gun/energy/lasershotgun,
 /turf/unsimulated/floor/longtile/black,
 /area/morrigan/station/command/meeting)
 "svW" = (
@@ -19575,6 +19545,7 @@
 "ttH" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/mapping_helper/airlock/hardener,
+/obj/mapping_helper/access/morrigan/rd,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/RD)
 "ttK" = (
@@ -19653,10 +19624,6 @@
 /obj/reagent_dispensers/fueltank,
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/podbay/medical)
-"tvV" = (
-/obj/critter/gunbot/drone/buzzdrone,
-/turf/unsimulated/floor/engine/glow,
-/area/morrigan/station/factory)
 "tws" = (
 /obj/table/auto,
 /obj/item/paper_bin{
@@ -21940,9 +21907,6 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"vOn" = (
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/morrigan/station/command/RD)
 "vOz" = (
 /obj/table/reinforced/chemistry/auto/drugs,
 /obj/item/reagent_containers/iv_drip,
@@ -25610,7 +25574,7 @@ aaL
 hGh
 lWV
 lWV
-afJ
+vuL
 qpO
 nui
 kPv
@@ -28973,9 +28937,9 @@ vxp
 qyO
 odW
 ebs
-jCr
-nSv
 wmz
+nSv
+nlB
 nSv
 vDE
 dDb
@@ -29431,7 +29395,7 @@ cBm
 gLw
 uZM
 sEg
-vOn
+cBm
 kvO
 grW
 aBj
@@ -30295,7 +30259,7 @@ pBJ
 mYy
 uXe
 pvs
-hKX
+ykr
 uJx
 cKI
 aQu
@@ -31326,7 +31290,7 @@ xNR
 oup
 uSM
 dKY
-tvV
+ykr
 fLl
 ykr
 pFw
@@ -33100,7 +33064,7 @@ vwJ
 vwJ
 vwJ
 vwJ
-ktz
+qVO
 scb
 inM
 czk
@@ -34339,7 +34303,7 @@ bhc
 eSI
 fBQ
 inM
-qLj
+qVO
 kap
 qVO
 gwB
@@ -36799,7 +36763,7 @@ aSq
 qky
 aoh
 aoh
-pti
+aoh
 aoh
 aoh
 aoh
