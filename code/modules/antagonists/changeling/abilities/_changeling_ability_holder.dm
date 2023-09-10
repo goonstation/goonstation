@@ -172,6 +172,12 @@
 				return 1//what could possibly go wrong
 		return 0
 
+	cast(atom/target)
+		. = ..()
+		if (!isturf(src.holder.owner.loc) && !src.can_use_in_container)
+			boutput(src.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
+			return TRUE
+
 	Stat()
 		if (!human_only && !abomination_only)
 			..()

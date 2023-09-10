@@ -400,6 +400,10 @@
 			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
+		if (!isturf(src.holder.owner.loc))
+			boutput(src.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
+			return FALSE
+
 		return 1
 
 	cast(atom/target)
