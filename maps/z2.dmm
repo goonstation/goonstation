@@ -68414,7 +68414,7 @@
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
 "pwh" = (
-/obj/decal/poster/wallsign/lesb_flag,
+/obj/decal/poster/flag/lesb_flag,
 /turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
