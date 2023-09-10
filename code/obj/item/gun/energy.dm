@@ -1859,7 +1859,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		projectiles = list(current_projectile)
 		..()
 
-#define HEAT_REMOVED_PER_PROCESS 10
+#define HEAT_REMOVED_PER_PROCESS 25
 // Makeshift Laser Rifle
 TYPEINFO(/obj/item/gun/energy/makeshift)
 	mats = 0
@@ -1881,6 +1881,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	muzzle_flash = "muzzle_flash_phaser"
 	charge_icon_state = "laser"
 	spread_angle = 10
+	shoot_delay = 5 DECI SECONDS
 	///What light source we use for the rifle
 	var/obj/item/light/tube/our_light
 	///What battery this gun uses
@@ -1908,7 +1909,6 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		processing_items |= src
 		set_current_projectile(new/datum/projectile/laser/makeshift)
 		projectiles = list(current_projectile)
-		AddComponent(/datum/component/holdertargeting/fullauto, 3, 3, 1)
 		..()
 
 	Exited(Obj, newloc)
@@ -1974,6 +1974,13 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		else if(heat > 80)
 			. += "The rifle is emitting a small amount of heat."
 
+	attack_self(mob/user)
+		var/I = tgui_input_number(user, "Input a firerate (In deciseconds)", "Timer Adjustment", shoot_delay, 10, 2)
+		if (!I || BOUNDS_DIST(src, user) > 0)
+			return
+		shoot_delay = I
+		boutput(user, "<span class='notice'>You adjust [src] to fire every [I / 10] seconds.</span>")
+
 	update_icon()
 		if(our_cell)
 			var/image/overlay_image = SafeGetOverlayImage("gun_cell", 'icons/obj/large/64x32.dmi', "makeshift-battery")
@@ -1995,9 +2002,9 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 				explosion(src, get_turf(src), -1, -1, 1, 2)
 				qdel(src)
 				return
-			heat += rand(8,11)
+			heat += rand(15,20)
 			update_icon()
-			if (heat > 120 || (heat > 100 && prob(10)))
+			if (heat > 120 || (heat > 100 && prob(25)))
 				boutput(user,"<span class='alert'>[src]'s light source breaks due to the excess heat within!</span>")
 				break_light()
 				return

@@ -623,8 +623,8 @@ toxic - poisons
 			hit.setStatus("cornicened")
 
 /datum/projectile/laser/makeshift
-	cost = 1000
+	cost = 1500
 	fullauto_valid = TRUE
 	shot_sound = 'sound/weapons/laserlight.ogg'
 	icon_state = "laser_tiny"
-	damage = 8
+	damage = 12
