@@ -24,12 +24,12 @@ export const Elevator = (_props, context) => {
     <Window
       theme="ntos"
       width={400}
-      height={140}>
-      <Window.Content textAlign="center" fontSize="16px">
+      height={130}>
+      <Window.Content textAlign="center">
         <Section width="70%" mx="auto">
-          Elevator Location: {location}
+          Location: <em>{location}</em>
         </Section>
-        <Section width="70%" mx="auto">
+        <Section width="70%" mx="auto" fontSize="16px">
           <Button onClick={handleSend}
             enabled={!active} color={active ? "grey" : "green"}
             icon="elevator" fluid>
