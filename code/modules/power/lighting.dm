@@ -119,7 +119,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			stationLights += src
 
 		var/area/A = get_area(src)
-		if (A.z == Z_LEVEL_DYNAMIC && istype(A, /area/morrigan/station))
+		var/turf/T = get_turf(src)
+		if (T.z == Z_LEVEL_DYNAMIC && istype(T.loc, /area/morrigan/station))
 			START_TRACKING_CAT(TR_CAT_MORRIGAN_LIGHTS)
 		if (A)
 			UnsubscribeProcess()
@@ -138,8 +139,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			A.remove_light(src)
 		if (light)
 			light.dispose()
-		STOP_TRACKING_CAT(TR_CAT_MORRIGAN_LIGHTS)
 		..()
+		STOP_TRACKING_CAT(TR_CAT_MORRIGAN_LIGHTS)
 
 	proc/autoposition(setdir = null)
 		//auto position these lights so i don't have to mess with dirs in the map editor that's annoying!!!
@@ -373,13 +374,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	New()
 		..()
-		var/area/A = get_area(src)
-		if (A.z == Z_LEVEL_STATION && istype(A, /area/station))
+		var/turf/T = get_turf(src)
+		if (T.z == Z_LEVEL_STATION && istype(T.loc, /area/station))
 			START_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
 
 	disposing()
-		STOP_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
 		..()
+		STOP_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
 
 	exitsign
 		name = "illuminated exit sign"
