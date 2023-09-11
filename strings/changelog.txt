@@ -1,4 +1,32 @@
 
+(t)sun sep 10 23
+(u)Froggit Dogget
+(p)15732
+(e)|
+(+)Amanitin now does its damage when flushed out of the system.
+(u)Mantwerp
+(p)15793
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added the acoustic guitar to the afterlife bar.
+(u)FlameArrow57
+(p)15542
+(e)⚖💅🧛🔨|C-Balance, C-QoL, A-Gamemodes, A-Player-Actions
+(*)Vampires, werewolves, and changelings can now bind abilities to Shift, Alt, and Ctrl.
+(u)Valtsu0
+(p)15747
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)New chemical: Capsizin. Makes you harmlessly capsize. Recipe: Reversium(1) + Capsaicin(4) = Capsizin(5)
+(t)sat sep 09 23
+(u)Mantwerp and Mcdangus
+(p)15704
+(e)🎨🔊📦|C-Sprites, C-Sound, A-Game-Objects
+(*)Redid the acoustic guitar entirely, now also available from cargo! Sprites and sounds by Mcdangus.
+(u)Garash
+(p)15714
+(e)🔄📄|C-Rework, A-UI
+(+)Modernized UI for the Hair Dye Mixer 3000, it now lives up to it's name!
+(u)pali
+(*)Opening a tank-transfer valve now plays the valve-turning sound giving people a bit of time to react.
 (t)fri sep 08 23
 (u)Tarmunora
 (*)Reagent heater/coolers are more effective (and use more power).

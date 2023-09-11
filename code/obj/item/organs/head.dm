@@ -57,7 +57,7 @@
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/glasses/glasses = null
 
-	appearance_flags = KEEP_TOGETHER
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 
 	New()
 		..()
@@ -184,7 +184,10 @@
 			else
 				src.skintone = AHead.s_tone
 			src.head_image.color = src.skintone
-			src.name = "[src.donor_name]'s [src.organ_name]"
+			if(src.donor_name)
+				src.name = "[src.donor_name]'s [src.organ_name]"
+			else
+				src.name = src.organ_name
 
 		// The rest of this shit gets sent to update_face
 		// get and install eyes, if any.
@@ -285,22 +288,18 @@
 		src.head_image.pixel_x = 0
 		src.head_image.pixel_y = 0
 		actual_head.appearance = src.head_image
+		actual_head.color = null
+		actual_head.overlays += src.head_image
 		src.head_image_eyes_L.pixel_x = 0
 		src.head_image_eyes_L.pixel_y = 0
 		if(src.left_eye)
 			src.head_image_eyes_L.color = left_eye.iris_color
-		else
-			src.head_image_eyes_L.color = "#FFFFFF"
-			src.head_image_eyes_L.alpha = 0
-		actual_head.overlays += src.head_image_eyes_L
+			actual_head.overlays += src.head_image_eyes_L
 		src.head_image_eyes_R.pixel_x = 0
 		src.head_image_eyes_R.pixel_y = 0
 		if(src.right_eye)
 			src.head_image_eyes_R.color = right_eye.iris_color
-		else
-			src.head_image_eyes_R.color = "#FFFFFF"
-			src.head_image_eyes_R.alpha = 0
-		actual_head.overlays += src.head_image_eyes_R
+			actual_head.overlays += src.head_image_eyes_R
 
 		if(src.head_image_nose)
 			actual_head.overlays += src.head_image_nose
