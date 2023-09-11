@@ -325,9 +325,18 @@
 	// log account information for QM sales
 	var/obj/item/card/id/scan = null
 	var/datum/db_record/account = null
+	var/list/destinations = null
 
 
-	var/list/destinations = list("Airbridge", "Cafeteria", "EVA", "Engine", "Disposals", "QM", "Catering", "MedSci", "Security") //These have to match the ones on the cargo routers for the routers to work.
+
+	connection_scan()
+		..()
+		destinations = global.map_settings.shipping_destinations
+
+
+	New()
+		..()
+		connection_scan()
 
 	proc/print(var/destination, var/amount)
 		if (printing)
@@ -404,17 +413,17 @@
 			else
 				boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 				src.scan = null
-		else src.Attackhand(user)
+		else ..()
 		return
 
 /obj/machinery/computer/barcode/qm //has trader tags if there is one
 	name = "QM Barcode Computer"
 	desc = "Used to print barcode stickers for the cargo routing system, and to mark crates for sale to traders."
 	icon_state = "qm_barcode_comp"
+	circuit_type = /obj/item/circuitboard/barcode_qm
 
 	New()
 		..()
-
 	ui_static_data(mob/user)
 		. = ..()
 		var/list/traders = new()

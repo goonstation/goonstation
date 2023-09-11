@@ -1,4 +1,4 @@
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 
 var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 
