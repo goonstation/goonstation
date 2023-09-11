@@ -261,6 +261,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	access_morrigan_mdir, access_morrigan_security, access_morrigan_janitor, access_morrigan_specialist)
 
 //fake objects
+/obj/decal/fakeobjects/hafmech
+	name = "Strange Machine"
+	icon = 'icons/obj/adventurezones/morrigan/decoration.dmi'
+	bound_width = 128
+	bound_height = 128
 
 /obj/decal/fakeobjects/missile
 	name = "Escape Missile"
