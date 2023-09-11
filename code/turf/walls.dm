@@ -340,6 +340,32 @@ TYPEINFO(/turf/simulated/wall)
 	logTheThing(LOG_STATION, user, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([log_loc(user)])")
 	dismantle_wall()
 
+/turf/simulated/wall/bullet_act(obj/projectile/P)
+	..()
+	if (!istype(P.proj_data, /datum/projectile/bullet))
+		return
+	var/datum/projectile/bullet/bullet = P.proj_data
+	if (!bullet.ricochets)
+		return
+	if (prob(90))
+		return
+
+	var/proj_name = P.name
+	var/obj/projectile/p_copy = SEMI_DEEP_COPY(P)
+	p_copy.proj_data.shot_sound = "sound/weapons/ricochet/ricochet-[rand(1, 4)].ogg"
+	p_copy.proj_data.power = sqrt(p_copy.proj_data.power)
+	p_copy.proj_data.dissipation_delay *= 0.5
+	p_copy.proj_data.armor_ignored /= 0.25
+	var/obj/projectile/p_reflected = shoot_reflected_bounce(p_copy, src, 1)
+	P.die()
+	p_copy.die()
+	if (!p_reflected)
+		return
+
+	p_reflected.rotateDirection(rand(-15, 15))
+
+	src.visible_message("<span class='alert'>\The [proj_name] richochets off [src]!</span>")
+
 /turf/simulated/wall/r_wall
 	name = "reinforced wall"
 	desc = "Looks a lot tougher than a regular wall."

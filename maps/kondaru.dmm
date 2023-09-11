@@ -1897,9 +1897,7 @@
 /area/space)
 "ahg" = (
 /obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Clowntainment"
@@ -4738,7 +4736,7 @@
 /area/station/medical/crematorium)
 "aqV" = (
 /turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-12"
 	},
 /area/station/chapel/office)
@@ -7767,12 +7765,8 @@
 /turf/simulated/floor/blueblack,
 /area/station/engine/coldloop)
 "aDl" = (
-/obj/item/device/radio/intercom{
-	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show.";
-	device_color = "#32BC2D";
-	icon = 'icons/obj/radiostation.dmi';
-	icon_state = "mixtable-1";
-	name = "broadcast radio"
+/obj/item/device/radio/intercom/radiostation{
+	device_color = "#32BC2D"
 	},
 /obj/table/wood/auto,
 /turf/simulated/floor/darkblue/checker/other,
@@ -25249,7 +25243,7 @@
 /area/station/science/lobby)
 "bWd" = (
 /obj/table/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/signaler,
@@ -25907,6 +25901,18 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
+"bZR" = (
+/obj/machinery/computer/barcode/qm{
+	dir = 8
+	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 20
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/station/quartermaster/office)
 "bZV" = (
 /turf/simulated/floor/purple/side{
 	dir = 8
@@ -29291,14 +29297,7 @@
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)
 "clL" = (
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.35;
@@ -31265,7 +31264,7 @@
 /area/station/science/testchamber)
 "cNP" = (
 /obj/table/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/device/radio,
 /obj/item/device/radio,
 /obj/item/device/radio,
@@ -36814,7 +36813,6 @@
 /area/station/medical/robotics)
 "gJa" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod    Bay","Research","Security","QM");
 	dir = 8
 	},
 /obj/cable{
@@ -36836,8 +36834,8 @@
 /area/station/hangar/medical)
 "gLk" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/trackimp_kit2,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
+/obj/item/storage/box/trackimp_kit,
 /obj/machinery/light/emergency,
 /obj/item/device/radio/intercom/security{
 	dir = 4
@@ -37080,7 +37078,6 @@
 /area/station/turret_protected/Zeta)
 "gRM" = (
 /obj/machinery/computer/barcode/qm{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod    Bay","Security","QM")
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -41152,7 +41149,6 @@
 /area/station/maintenance/southeast)
 "jYt" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod    Bay","Security","QM")
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -44829,7 +44825,7 @@
 /area/station/security/secwing)
 "mVi" = (
 /obj/fluid_spawner{
-	amount = 2100
+	amount = 3600
 	},
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
@@ -47394,7 +47390,6 @@
 /area/station/crew_quarters/radio/news_office)
 "oSW" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod    Bay","Research","Security","QM");
 	dir = 4
 	},
 /obj/cable{
@@ -50423,7 +50418,6 @@
 /area/station/maintenance/southwest)
 "riM" = (
 /obj/machinery/computer/barcode/qm{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod    Bay","Security","QM");
 	dir = 8
 	},
 /obj/machinery/alarm{
@@ -50633,9 +50627,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "rse" = (
-/obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod    Bay","Security","QM")
-	},
+/obj/machinery/computer/barcode,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -51888,7 +51880,6 @@
 /area/station/mining/magnet)
 "swb" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod    Bay","Research","Security","QM");
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
@@ -52193,7 +52184,6 @@
 /area/station/medical/medbooth)
 "sEZ" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod    Bay","Research","Security","QM");
 	dir = 4
 	},
 /obj/disposalpipe/segment/transport{
@@ -53006,7 +52996,6 @@
 /area/station/crew_quarters/showers)
 "tjb" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Ejection","Engineering","Export","Medbay","Mining","Pod    Bay","Research","Security","QM");
 	dir = 4
 	},
 /obj/cable{

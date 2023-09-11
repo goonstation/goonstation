@@ -501,14 +501,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.35;
@@ -8905,7 +8898,7 @@
 /area/station/maintenance/inner/central)
 "aKo" = (
 /obj/fluid_spawner{
-	amount = 3600
+	amount = 4200
 	},
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
@@ -15761,7 +15754,7 @@
 	c_tag = "Security";
 	network = "SS13"
 	},
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = -8
 	},
 /obj/item/implanter,
@@ -17414,11 +17407,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
-"bvs" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/medical/medbay/treatment)
 "bvv" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -24492,9 +24480,7 @@
 /area/station/maintenance/inner/central)
 "enT" = (
 /obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
@@ -40371,15 +40357,6 @@
 	dir = 2
 	},
 /area/station/medical/medbay)
-"pQM" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/turf/simulated/floor/plating,
-/area/station/medical/research)
 "pRA" = (
 /obj/railing/orange/reinforced{
 	dir = 1
@@ -49205,7 +49182,7 @@
 /area/station/hallway/primary/east)
 "wke" = (
 /obj/table/auto,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = 6;
 	pixel_y = 6
 	},
@@ -51170,11 +51147,6 @@
 /obj/machinery/lawrack,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai_upload)
-"xIe" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/medical/research)
 "xIm" = (
 /obj/machinery/lrteleporter/mining,
 /turf/simulated/floor/yellow,
@@ -51775,10 +51747,6 @@
 /area/station/hydroponics/bay)
 "yer" = (
 /obj/decal/tile_edge/line/black{
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 5;
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/black{
@@ -65729,7 +65697,7 @@ aXH
 swW
 nVO
 pEL
-bvs
+swW
 swW
 aXH
 seZ
@@ -68757,7 +68725,7 @@ kfd
 mLC
 aXw
 beF
-xIe
+beC
 aPk
 aIF
 aIF
@@ -71171,7 +71139,7 @@ aLX
 aLX
 aLX
 bdG
-pQM
+aKf
 beC
 beC
 beD
