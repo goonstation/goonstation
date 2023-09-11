@@ -1783,4 +1783,45 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	SPAWN(beam_time)
 		qdel(beam)
 
+proc/animate_orbit(atom/orbiter, center_x = 0, center_y = 0, radius = 32, time=8 SECONDS, loops=-1, clockwise=FALSE)
+	orbiter.pixel_x = center_x + radius
+	orbiter.pixel_y = center_y
 
+	animate(orbiter,
+		time = time/4,
+		easing = SINE_EASING | EASE_IN,
+		pixel_x = center_x,
+		flags = ANIMATION_PARALLEL,
+		loop = loops)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_OUT,
+		pixel_x = center_x - radius)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_IN,
+		pixel_x = center_x)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_OUT,
+		pixel_x = center_x + radius)
+
+	var/cw_factor = clockwise ? -1 : 1
+	animate(orbiter,
+		time = time/4,
+		easing = SINE_EASING | EASE_OUT,
+		pixel_y = center_y + radius * cw_factor,
+		flags = ANIMATION_PARALLEL,,
+		loop = loops)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_IN,
+		pixel_y = center_y)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_OUT,
+		pixel_y = center_y - radius * cw_factor)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_IN,
+		pixel_y = center_y)

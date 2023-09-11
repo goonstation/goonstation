@@ -836,7 +836,7 @@ TYPEINFO(/obj/laser_sink/splitter)
 /obj/linked_laser/ptl/try_propagate()
 	. = ..()
 	var/turf/T = get_next_turf()
-	if (!T) //edge of z_level
+	if (!T || istype(T, /turf/unsimulated/wall/trench)) //edge of z_level or oshan trench
 		var/obj/laser_sink/ptl_seller/seller = get_singleton(/obj/laser_sink/ptl_seller)
 		if (seller.incident(src))
 			src.sink = seller

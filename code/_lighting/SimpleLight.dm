@@ -447,11 +447,12 @@
 		var/list/turf/turfs = list() //build a list of the three lines of turfs in this direction to check for light sources
 		for (var/i in -1 to 1)
 			var/turf/start_turf = get_steps(src, turn(scan_dir, 90), i)
-			if (start_turf.opacity)
+			if (start_turf?.opacity)
 				continue
 			var/turf/target_turf = get_steps(src, scan_dir, 5) //apparently all directional lights are exactly 5 tiles long??
-			var/turf/reached_turf = getlineopaqueblocked(src,target_turf)
-			turfs += block(start_turf, reached_turf)
+			if(target_turf)
+				var/turf/reached_turf = getlineopaqueblocked(src,target_turf)
+				turfs += block(start_turf, reached_turf)
 
 		for (var/turf/T in turfs)
 			for (var/atom/movable/thing in T.contents) //find something with a directional light

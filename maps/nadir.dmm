@@ -5767,6 +5767,14 @@
 	dir = 8
 	},
 /area/station/turret_protected/ai)
+"cHa" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/machinery/vending/jobclothing/chaplain,
+/turf/simulated/floor/black,
+/area/station/chapel/office)
 "cHd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/eva)
@@ -8295,17 +8303,6 @@
 /obj/machinery/vending/medical,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay)
-"dNQ" = (
-/obj/stool/chair,
-/obj/npc/trader/robot{
-	icon_state = "medibot0";
-	name = "D.O.C.";
-	productset = 4;
-	trader_area = "/area/abandonedmedicalship/robot_trader";
-	icon = 'icons/misc/evilreaverstation.dmi'
-	},
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
 "dOb" = (
 /obj/machinery/door_control{
 	id = "nadir_bhull_nw";
@@ -11329,6 +11326,12 @@
 /obj/machinery/r_door_control/podbay/security,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"fkq" = (
+/obj/fluid_spawner{
+	amount = 3000
+	},
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
 "fkS" = (
 /obj/machinery/door/airlock/pyro/medical/alt,
 /obj/mapping_helper/access/medical,
@@ -12694,14 +12697,6 @@
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/hallway/primary/southeast)
-"fMQ" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/machinery/vending/jobclothing/chaplain,
-/turf/simulated/floor/black,
-/area/station/chapel/office)
 "fNc" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/shuttle/sea_elevator_room)
@@ -15939,6 +15934,18 @@
 	dir = 8
 	},
 /area/shuttle/arrival/station)
+"hca" = (
+/obj/npc/trader/exclown,
+/obj/stool/chair/syndicate,
+/obj/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Honkington's Abode"
+	})
 "hcb" = (
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker/botany,
@@ -16050,12 +16057,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/hall)
-"hex" = (
-/obj/fluid_spawner{
-	amount = 2100
-	},
-/turf/simulated/floor/pool/no_animate,
-/area/station/crew_quarters/pool)
 "heB" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/blue,
@@ -21291,6 +21292,11 @@
 /obj/landmark/start/job/security_assistant,
 /turf/simulated/floor/red,
 /area/station/security/brig)
+"jki" = (
+/obj/stool/chair,
+/obj/npc/trader/robot/medical,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "jkD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -21754,20 +21760,6 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
-"jvs" = (
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
-/obj/stool/chair/syndicate,
-/obj/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Honkington's Abode"
-	})
 "jvJ" = (
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/bootleg,
@@ -28442,26 +28434,6 @@
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/bridge)
-"mdr" = (
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
-/area/listeningpost)
 "mdz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -43806,6 +43778,19 @@
 	dir = 1
 	},
 /area/station/hallway/primary/southeast)
+"tdP" = (
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/listeningpost)
 "teq" = (
 /obj/decal/cleanable/machine_debris{
 	icon_state = "gib7"
@@ -81349,7 +81334,7 @@ bzS
 bzS
 lmL
 tjr
-dNQ
+jki
 icZ
 hvz
 tjr
@@ -83022,7 +83007,7 @@ csW
 kYe
 eNp
 lSt
-mdr
+tdP
 fXu
 qWP
 cYP
@@ -93630,7 +93615,7 @@ jBH
 aiQ
 xKk
 xKk
-hex
+fkq
 xKk
 gUR
 fxR
@@ -106691,7 +106676,7 @@ aUZ
 bcV
 fle
 uoh
-jvs
+hca
 pAx
 nPt
 rkv
@@ -108735,7 +108720,7 @@ aDn
 mIG
 nYt
 dcH
-fMQ
+cHa
 wOn
 rKb
 wOn

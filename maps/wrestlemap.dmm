@@ -2548,6 +2548,18 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/north)
+"bfD" = (
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/obj/machinery/light,
+/turf/simulated/floor/caution/north,
+/area/listeningpost)
 "bfT" = (
 /obj/item/device/radio/intercom/cargo{
 	pixel_y = 28
@@ -26673,14 +26685,6 @@
 /obj/storage/closet/coffin,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"lFq" = (
-/obj/machinery/vending/jobclothing/chaplain,
-/obj/machinery/light/incandescent/warm{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/wood/two,
-/area/station/chapel/office)
 "lFE" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -40644,6 +40648,12 @@
 /area/station/maintenance/northwest{
 	name = "Corpse Tunnel"
 	})
+"rPG" = (
+/obj/fluid_spawner{
+	amount = 3000
+	},
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
 "rPH" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/boxing,
@@ -41486,12 +41496,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
-"sig" = (
-/obj/fluid_spawner{
-	amount = 2700
-	},
-/turf/simulated/floor/pool/no_animate,
-/area/station/crew_quarters/pool)
 "sio" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -44955,25 +44959,6 @@
 /area/station/maintenance/central{
 	name = "Maintenance Shack"
 	})
-"tIR" = (
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/obj/machinery/light,
-/turf/simulated/floor/caution/north,
-/area/listeningpost)
 "tIX" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -54033,6 +54018,14 @@
 	},
 /turf/simulated/floor/plating/airless/random,
 /area/station/solar/east)
+"xCn" = (
+/obj/machinery/vending/jobclothing/chaplain,
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
 "xCG" = (
 /obj/machinery/shower{
 	dir = 8
@@ -62963,7 +62956,7 @@ xxT
 pLE
 nnW
 ite
-tIR
+bfD
 xxT
 jGe
 jGe
@@ -93457,7 +93450,7 @@ mbw
 bpr
 lZG
 ezA
-lFq
+xCn
 ptp
 bLw
 arC
@@ -112781,7 +112774,7 @@ mRP
 pCu
 aNV
 ohJ
-sig
+rPG
 aZY
 uav
 uRW

@@ -4443,16 +4443,6 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
-"atB" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/vending/jobclothing/chaplain,
-/obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/carpet/grime,
-/area/station/chapel/office{
-	name = "Chaplain's Office"
-	})
 "atC" = (
 /obj/machinery/printing_press,
 /turf/simulated/floor/carpet/grime,
@@ -5716,13 +5706,6 @@
 "ayy" = (
 /turf/simulated/floor/caution/west,
 /area/station/maintenance/east)
-"ayB" = (
-/obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown)
 "ayD" = (
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -22351,6 +22334,11 @@
 	dir = 9
 	},
 /area/station/medical/medbay/lobby)
+"fRw" = (
+/obj/stool/chair/syndicate,
+/obj/npc/trader/exclown,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown)
 "fRy" = (
 /obj/machinery/firealarm/east,
 /obj/stool/chair/office/purple{
@@ -39686,6 +39674,20 @@
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters M03"
 	})
+"tAY" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost)
 "tAZ" = (
 /obj/machinery/networked/storage/scanner{
 	bank_id = "research"
@@ -41184,27 +41186,6 @@
 /area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
-"uIp" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/turf/simulated/floor/red,
-/area/listeningpost)
 "uIz" = (
 /obj/stool/bed,
 /obj/landmark/start/job/assistant,
@@ -42976,6 +42957,16 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/chapel/funeral_parlor)
+"wqm" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/vending/jobclothing/chaplain,
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office{
+	name = "Chaplain's Office"
+	})
 "wqV" = (
 /obj/storage/crate,
 /obj/item/hand_labeler,
@@ -68884,7 +68875,7 @@ okl
 okl
 awY
 axR
-ayB
+fRw
 azd
 pAG
 aAR
@@ -73246,7 +73237,7 @@ apr
 jsG
 arq
 asX
-atB
+wqm
 aun
 auW
 tvY
@@ -103179,7 +103170,7 @@ fDM
 wCL
 wCL
 wCL
-uIp
+tAY
 bKK
 aab
 aab

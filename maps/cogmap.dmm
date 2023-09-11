@@ -1249,18 +1249,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
-"afl" = (
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/generic,
-/obj/stool/chair/syndicate,
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/clown)
 "afm" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -3698,41 +3686,6 @@
 	dir = 1
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/sec)
-"any" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/crowbar,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/obj/rack,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/obj/item/tank/air{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/clothing/suit/space/emerg{
-	pixel_x = 6
-	},
-/obj/item/crowbar{
-	pixel_x = 3;
-	pixel_y = -1
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = 5;
-	pixel_y = 1
-	},
-/obj/item/clothing/head/emerg{
-	pixel_x = 5;
-	pixel_y = 10
-	},
-/turf/simulated/floor,
 /area/station/hangar/sec)
 "anH" = (
 /obj/machinery/computer/arcade{
@@ -17005,16 +16958,6 @@
 "aYS" = (
 /turf/simulated/wall/false_wall,
 /area/station/chapel/sanctuary)
-"aYU" = (
-/obj/machinery/vending/jobclothing/chaplain,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/black,
-/area/station/chapel/office)
 "aYW" = (
 /obj/stool/chair{
 	dir = 8
@@ -32429,6 +32372,20 @@
 /obj/lattice,
 /turf/space,
 /area/space)
+"cci" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost)
 "cck" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -39838,27 +39795,6 @@
 	dir = 4
 	},
 /area/listeningpost)
-"cAN" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/turf/simulated/floor/red,
-/area/listeningpost)
 "cAO" = (
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -42139,6 +42075,16 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"dWq" = (
+/obj/machinery/vending/jobclothing/chaplain,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/black,
+/area/station/chapel/office)
 "dWz" = (
 /obj/machinery/conveyor/WE{
 	id = "garbage";
@@ -55100,6 +55046,16 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/security/main)
+"pxQ" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/obj/stool/chair/syndicate,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/npc/trader/exclown,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
 "pxW" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -59681,6 +59637,38 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/east)
+"tsu" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/crowbar,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/rack,
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
+	},
+/obj/item/crowbar{
+	pixel_x = 3;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/turf/simulated/floor,
+/area/station/hangar/sec)
 "tsL" = (
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
@@ -93833,7 +93821,7 @@ nxc
 nxc
 nxc
 amr
-any
+tsu
 aoK
 wJN
 arA
@@ -107716,7 +107704,7 @@ sFS
 abY
 anW
 aeF
-afl
+pxQ
 age
 eTP
 ahJ
@@ -119532,7 +119520,7 @@ aTI
 aUT
 aTJ
 aTJ
-aYU
+dWq
 aSD
 baA
 bbA
@@ -145648,7 +145636,7 @@ cAc
 czY
 czY
 czY
-cAN
+cci
 sAI
 cBQ
 cBQ

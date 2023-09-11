@@ -1277,7 +1277,7 @@ var/list/fun_images = list()
 				S.icon = 'icons/effects/ULIcons.dmi'
 				S.icon_state = "etc"
 				S.color = transparentColor
-				S.UpdateOverlays(null, "starlight", 1)
+				S.underlays -= S.starlight
 
 	var/confirm5 = tgui_alert(src.mob, "Make everything full bright?", "Fullbright?", list("Yes", "No"))
 	if (confirm5 == "Yes")

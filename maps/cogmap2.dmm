@@ -1522,17 +1522,6 @@
 "aeY" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/north)
-"afa" = (
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/generic,
-/obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Clown's Quarters"
-	})
 "afb" = (
 /obj/item/bananapeel,
 /obj/cable{
@@ -3617,18 +3606,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/crematorium)
-"alC" = (
-/obj/machinery/vending/jobclothing/chaplain,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Chapel Office APC";
-	pixel_y = 24
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/chapel/office)
 "alD" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -48508,13 +48485,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"cJZ" = (
-/obj/machinery/computer/barcode/qm{
-	destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","Trader","QM")
-	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "cKa" = (
 /turf/simulated/floor/plating/damaged2,
 /area/station/quartermaster/office)
@@ -50555,13 +50525,6 @@
 	pixel_y = 28
 	},
 /obj/machinery/manufacturer/qm,
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/quartermaster/office)
-"cPP" = (
-/obj/machinery/computer/barcode/qm{
-	destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","Trader","QM")
-	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -53054,14 +53017,6 @@
 /area/station/hangar/qm)
 "cWO" = (
 /obj/machinery/space_heater,
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/hangar/qm)
-"cWP" = (
-/obj/machinery/computer/barcode/qm{
-	destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","Trader","QM")
-	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -58675,27 +58630,6 @@
 	dir = 4
 	},
 /area/listeningpost)
-"dor" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/turf/simulated/floor/red,
-/area/listeningpost)
 "dos" = (
 /turf/simulated/floor/redwhite{
 	dir = 8
@@ -64258,6 +64192,11 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/ce)
+"kca" = (
+/obj/machinery/computer/barcode/qm,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "kcr" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
@@ -65571,6 +65510,20 @@
 /obj/effects/background_objects/mundus,
 /turf/space,
 /area/space)
+"lEd" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost)
 "lFg" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -66823,6 +66776,15 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"ndW" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/obj/stool/chair/syndicate,
+/obj/npc/trader/exclown,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Clown's Quarters"
+	})
 "neD" = (
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/circuit,
@@ -70057,6 +70019,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
+"rcN" = (
+/obj/machinery/computer/barcode/qm,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/hangar/qm)
 "rdX" = (
 /obj/grille/catwalk,
 /obj/landmark/magnet_shield,
@@ -72778,6 +72746,18 @@
 	icon_state = "carpetW"
 	},
 /area/station/crew_quarters/quartersA)
+"ujU" = (
+/obj/machinery/vending/jobclothing/chaplain,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Chapel Office APC";
+	pixel_y = 24
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office)
 "uky" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
@@ -74621,6 +74601,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"wXX" = (
+/obj/machinery/computer/barcode/qm,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "wZj" = (
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -110444,7 +110429,7 @@ aaa
 adg
 adE
 aer
-afa
+ndW
 adH
 biF
 bYU
@@ -120719,7 +120704,7 @@ aaa
 aaa
 aaa
 akr
-alC
+ujU
 amW
 kmy
 apg
@@ -121734,7 +121719,7 @@ cRn
 cSP
 cUu
 cVK
-cWP
+rcN
 cYk
 cZn
 cZn
@@ -123541,7 +123526,7 @@ cJT
 cLx
 cNa
 cOq
-cPP
+wXX
 cRo
 cSS
 cJP
@@ -125349,7 +125334,7 @@ cEa
 dhj
 cHr
 cIu
-cJZ
+kca
 cLB
 cLr
 cOt
@@ -155929,7 +155914,7 @@ dnV
 dnM
 dnM
 dnM
-dor
+lEd
 dnA
 aab
 aab

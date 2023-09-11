@@ -19,7 +19,7 @@
 	icon_state = "hunter"
 	item_state = "helmet"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
-	see_face = 0
+	see_face = FALSE
 	item_function_flags = IMMUNE_TO_ACID
 
 	New()
@@ -58,7 +58,7 @@
 	item_state = "santahat"
 	hides_from_examine = C_EARS
 	c_flags = null
-	see_face = 1
+	see_face = TRUE
 
 	noslow
 		setupProperties()
@@ -85,7 +85,7 @@
 	desc = "Twoooo!"
 	icon_state = "owl"
 	item_state = "owl_mask"
-	see_face = 0
+	see_face = FALSE
 
 	equipped(var/mob/user)
 		..()
@@ -151,7 +151,7 @@
 	name = "Smiling Face"
 	desc = ":)"
 	icon_state = "smiles"
-	see_face = 0
+	see_face = FALSE
 
 TYPEINFO(/obj/item/clothing/under/gimmick/waldo)
 	mat_appearances_to_ignore = list("jean")
@@ -356,7 +356,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	item_state = "bl_suit"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | MASKINTERNALS //The bat respirator is a real thing. See also: Batman can breathe in space.
 	hides_from_examine = C_EARS
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/head/helmet/batman
 	name = "batcowl"
@@ -365,7 +365,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	item_state = "batcowl"
 	c_flags = COVERSEYES | COVERSMOUTH
 	hides_from_examine = C_EARS
-	see_face = 0
+	see_face = FALSE
 
 // see procitizen.dm for batman verbs
 
@@ -652,7 +652,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "Hold hostages, rob a bank, shoot up an airport, the primitive yet flexible balaclava does it all!"
 	icon_state = "balaclava"
 	item_state = "balaclava"
-	see_face = 0
+	see_face = FALSE
 
 // Sweet Bro and Hella Jeff
 
@@ -681,7 +681,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "WARNING: Provides no protection from falling bricks."
 	icon_state = "spiderman"
 	item_state = "bogloves"
-	see_face = 0
+	see_face = FALSE
 	hides_from_examine = C_GLASSES|C_EARS
 
 /obj/item/clothing/under/gimmick/spiderman
@@ -696,7 +696,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	icon_state = "horse"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
 	hides_from_examine = C_GLASSES|C_EARS
-	see_face = 0
+	see_face = FALSE
 
 	cursed
 		cant_drop = 1
@@ -720,7 +720,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "birdman helmet"
 	desc = "bird bird bird"
 	icon_state = "birdman"
-	see_face = 0
+	see_face = FALSE
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | MASKINTERNALS //FACT: space birds can breathe in space
 	hides_from_examine = C_EARS
 
@@ -747,7 +747,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	hides_from_examine = C_EARS|C_GLASSES|C_MASK
 	c_flags = COVERSEYES | COVERSMOUTH
 	seal_hair = 1
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/suit/power
 	name = "unpainted cardboard space marine armor"
@@ -873,7 +873,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	icon = 'icons/obj/items/organs/skull.dmi'
 	icon_state = "skull"
 	item_state = "death"
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/suit/robuddy
 	name = "guardbuddy costume"
@@ -918,21 +918,21 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	desc = "An eerily realistic mask of 20th century film actor Nicolas Cage."
 	icon_state = "niccage"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/mask/waltwhite
 	name = "meth scientist mask"
 	desc = "A crappy looking mask that you swear you've seen a million times before. 'Spook*Corp Costumes' is embedded on the side of it."
 	icon_state = "waltwhite"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS //| SPACEWEAR Walter White is like Batman in many ways. Breathing in space is not one of them.
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/mask/mmyers
 	name = "murderer mask"
 	desc = "This looks strangely like another mask you've seen somewhere else, but painted white. Huh."
 	icon_state = "mmyers"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
-	see_face = 0
+	see_face = FALSE
 
 
 /obj/item/clothing/suit/gimmick
@@ -949,7 +949,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	wear_layer = MOB_FULL_SUIT_LAYER
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 	over_hair = TRUE
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/under/gimmick/utena //YJHTGHTFH's utena suit
 	name = "revolutionary suit"
@@ -986,7 +986,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	c_flags = COVERSMOUTH | COVERSEYES
 	hides_from_examine = C_GLASSES|C_EARS|C_MASK
 	seal_hair = 1
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/suit/armor/sneaking_suit
 	name = "sneaking suit"
@@ -1077,7 +1077,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	name = "mime mask"
 	desc = "The charming mask of the mime. Very emotive! Wait, isn't this usually face-paint?"
 	icon_state = "mime"
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/under/misc/mime
 	name = "mime suit"
@@ -1806,7 +1806,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	c_flags = COVERSMOUTH | COVERSEYES
 	hides_from_examine = C_EARS|C_GLASSES|C_MASK
 	seal_hair = 1
-	see_face = 0
+	see_face = FALSE
 
 
 //sock hats

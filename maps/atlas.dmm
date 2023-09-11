@@ -1764,15 +1764,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
-"afJ" = (
-/obj/machinery/light_switch/auto,
-/obj/machinery/crema_switch{
-	pixel_x = 5;
-	pixel_y = 28
-	},
-/obj/machinery/vending/jobclothing/chaplain,
-/turf/simulated/floor/carpet/grime,
-/area/station/chapel/office)
 "afK" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -12035,32 +12026,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit/red,
 /area/listeningpost)
-"aNP" = (
-/obj/stool/chair/office/red{
-	dir = 8
-	},
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/redblack{
-	dir = 9
-	},
-/area/listeningpost)
 "aNQ" = (
 /turf/simulated/floor/redblack{
 	dir = 5
@@ -13526,18 +13491,6 @@
 	dir = 1
 	},
 /area/station/science/teleporter)
-"aSz" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/phone/wall{
-	pixel_x = 23;
-	pixel_y = 2
-	},
-/obj/item/ghostboard,
-/turf/simulated/floor/carpet/grime,
-/area/station/chapel/office)
 "aSA" = (
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
@@ -16656,6 +16609,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
+"fdW" = (
+/obj/machinery/light_switch/auto,
+/obj/machinery/crema_switch{
+	pixel_x = 5;
+	pixel_y = 28
+	},
+/obj/machinery/vending/jobclothing/chaplain,
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office)
 "ffY" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4;
@@ -18763,6 +18725,25 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"qVo" = (
+/obj/stool/chair/office/red{
+	dir = 8
+	},
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/listeningpost)
 "qWS" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/submachine/cargopad/engineering,
@@ -19731,6 +19712,18 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"wzj" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/phone/wall{
+	pixel_x = 23;
+	pixel_y = 2
+	},
+/obj/item/ghostboard,
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office)
 "wJs" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable{
@@ -75397,7 +75390,7 @@ mes
 aek
 aew
 aew
-afJ
+fdW
 agm
 abn
 aiO
@@ -76000,7 +75993,7 @@ aaa
 ach
 rxv
 aew
-aSz
+wzj
 mGr
 ajf
 ahX
@@ -93060,7 +93053,7 @@ aaa
 aaa
 ohq
 aNG
-aNP
+qVo
 aOi
 aOu
 aNG

@@ -497,29 +497,6 @@
 	dir = 4
 	},
 /area/listeningpost)
-"abJ" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_g = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	luminosity = 0;
-	name = "glow - WHITE"
-	},
-/turf/simulated/floor/red,
-/area/listeningpost)
 "abK" = (
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -7096,28 +7073,6 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/office)
-"aCT" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 10;
-	icon_state = "line2"
-	},
-/obj/decoration/bookcase{
-	pixel_x = 1;
-	pixel_y = 27
-	},
-/obj/item/device/light/zippo,
-/obj/item/clothing/head/helmet/greek,
-/obj/item/clothing/suit/greek,
-/obj/item/clothing/under/gimmick/toga,
-/obj/item/clothing/head/laurels,
-/obj/item/clothing/head/laurels/gold,
-/obj/storage/crate,
-/turf/simulated/floor/wood/two,
-/area/station/chapel/office)
 "aCU" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -8910,12 +8865,6 @@
 /obj/item/spook,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"aKo" = (
-/obj/fluid_spawner{
-	amount = 3600
-	},
-/turf/simulated/floor/pool/no_animate,
-/area/station/crew_quarters/pool)
 "aKq" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -10589,6 +10538,13 @@
 /obj/random_item_spawner/med_tool/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"aRi" = (
+/obj/machinery/vending/jobclothing/chaplain,
+/obj/decal/poster/wallsign/poster_sol{
+	pixel_y = 31
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/office)
 "aRj" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/greenwhite,
@@ -15780,27 +15736,6 @@
 /obj/machinery/vending/air_vendor,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"bnk" = (
-/obj/storage/crate{
-	name = "Dress up party supplies"
-	},
-/obj/item/clothing/head/NTberet{
-	desc = "It's a momento, I guess. An old keepsake. And maybe a reminder of the things we've left behind.";
-	name = "Old Beret"
-	},
-/obj/item/storage/photo_album/beepsky,
-/obj/item/clothing/suit/det_suit/beepsky,
-/obj/item/diary,
-/obj/item/clothing/shoes/black{
-	desc = "You have no idea how a robot with wheels for locomotion could possibly require these.";
-	name = "Beepsky's Shoes"
-	},
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/security/beepsky)
 "bno" = (
 /obj/machinery/vending/coffee,
 /obj/disposalpipe/segment/brig{
@@ -21190,6 +21125,22 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
+"bPn" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_g = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	luminosity = 0;
+	name = "glow - WHITE"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost)
 "bPo" = (
 /obj/machinery/door_control{
 	id = "hangar_security";
@@ -21402,6 +21353,12 @@
 	name = "very reinforced wall"
 	},
 /area/station/science/lobby)
+"bZQ" = (
+/obj/fluid_spawner{
+	amount = 4200
+	},
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
 "cav" = (
 /obj/shrub{
 	dir = 6;
@@ -24491,14 +24448,6 @@
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"enT" = (
-/obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/clown)
 "eoa" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
@@ -32541,6 +32490,12 @@
 	dir = 4
 	},
 /area/station/science/lobby)
+"kqm" = (
+/obj/stool/chair/syndicate,
+/obj/npc/trader/exclown,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
 "kqw" = (
 /obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4
@@ -36601,6 +36556,27 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
+"niD" = (
+/obj/storage/crate{
+	name = "Dress up party supplies"
+	},
+/obj/item/clothing/head/NTberet{
+	desc = "It's a momento, I guess. An old keepsake. And maybe a reminder of the things we've left behind.";
+	name = "Old Beret"
+	},
+/obj/item/storage/photo_album/beepsky,
+/obj/item/clothing/suit/det_suit/beepsky,
+/obj/item/diary,
+/obj/item/clothing/shoes/black{
+	desc = "You have no idea how a robot with wheels for locomotion could possibly require these.";
+	name = "Beepsky's Shoes"
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/beepsky)
 "niE" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -36861,13 +36837,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"nvT" = (
-/obj/machinery/vending/jobclothing/chaplain,
-/obj/decal/poster/wallsign/poster_sol{
-	pixel_y = 31
-	},
-/turf/simulated/floor/wood/seven,
-/area/station/chapel/office)
 "nwq" = (
 /obj/lattice{
 	dir = 2;
@@ -39342,6 +39311,28 @@
 /obj/landmark/pest,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
+"pec" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
+	},
+/obj/decoration/bookcase{
+	pixel_x = 1;
+	pixel_y = 27
+	},
+/obj/item/device/light/zippo,
+/obj/item/clothing/head/helmet/greek,
+/obj/item/clothing/suit/greek,
+/obj/item/clothing/under/gimmick/toga,
+/obj/item/clothing/head/laurels,
+/obj/item/clothing/head/laurels/gold,
+/obj/storage/crate,
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
 "pep" = (
 /obj/item/reagent_containers/glass/bottle/bubblebath,
 /obj/item/sponge{
@@ -50990,6 +50981,24 @@
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor,
 /area/station/science/testchamber)
+"xCi" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line1"
+	},
+/obj/landmark/pest,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/gym/alt,
+/area/station/crew_quarters/fitness)
 "xCj" = (
 /obj/machinery/vehicle/pod_smooth/heavy/security{
 	dir = 4
@@ -51754,28 +51763,6 @@
 	},
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
-"yer" = (
-/obj/decal/tile_edge/line/black{
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 5;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 5;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 9;
-	icon_state = "line1"
-	},
-/obj/landmark/pest,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/specialroom/gym/alt,
-/area/station/crew_quarters/fitness)
 "yeE" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/supernorn,
@@ -71009,7 +70996,7 @@ abn
 abj
 abj
 abj
-abJ
+bPn
 vrb
 aac
 aab
@@ -80178,7 +80165,7 @@ aES
 aYB
 eAg
 oFj
-enT
+kqm
 wgf
 eAg
 aaa
@@ -86221,7 +86208,7 @@ xnD
 aIa
 aIb
 aIb
-aKo
+bZQ
 hvh
 jbQ
 aMG
@@ -89254,7 +89241,7 @@ aQK
 ptj
 qup
 dYF
-yer
+xCi
 fPg
 aPr
 hll
@@ -93459,7 +93446,7 @@ azm
 wNr
 aBi
 avj
-nvT
+aRi
 axt
 hRa
 avj
@@ -93761,7 +93748,7 @@ dJU
 dJU
 aBi
 avj
-aCT
+pec
 fEU
 eIT
 aFt
@@ -94130,7 +94117,7 @@ dUF
 ogh
 sva
 cGj
-bnk
+niD
 sgA
 tVH
 cGj

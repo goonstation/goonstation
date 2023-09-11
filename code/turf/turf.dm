@@ -183,18 +183,19 @@
 			return TRUE
 
 		var/area/area = get_area(src)
-		if (area.luminosity || area.force_fullbright)
+		if (area.force_fullbright)
 			return TRUE
 
 		for (var/dir in cardinal) //check for neighbouring starlit turfs
 			var/turf/T = get_step(src, dir)
 			if (istype(T, /turf/space))
 				var/turf/space/space_turf = T
-				if (space_turf.GetOverlayImage("starlight"))
+				if (length(space_turf.underlays))
 					return TRUE
 
 		if (src.SL_lit())
 			return TRUE
+		return FALSE
 
 /obj/overlay/tile_effect
 	name = ""
@@ -362,6 +363,8 @@ proc/generate_space_color()
 	if(!isnull(space_color) && !istype(src, /turf/space/fluid))
 		src.color = space_color
 
+	// underlays are chacked in CI for duplicate turfs on a dmm tile
+	#ifndef CI_RUNTIME_CHECKING
 	if(fullbright)
 		if(!starlight)
 			starlight = image('icons/effects/overlays/simplelight.dmi', "3x3", pixel_x = -32, pixel_y = -32)
@@ -373,9 +376,10 @@ proc/generate_space_color()
 		starlight.color = starlight_color_override ? starlight_color_override : src.color
 		if(!isnull(starlight_alpha))
 			starlight.alpha = starlight_alpha
-		UpdateOverlays(starlight, "starlight")
+		src.underlays += starlight
 	else
-		UpdateOverlays(null, "starlight")
+		src.underlays -= starlight
+	#endif
 
 // override for space turfs, since they should never hide anything
 /turf/space/levelupdate()
