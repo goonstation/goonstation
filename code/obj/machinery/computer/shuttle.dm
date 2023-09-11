@@ -314,20 +314,6 @@ var/bombini_saved
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "syndiepc4"
 
-/obj/machinery/computer/icebase_elevator
-	name = "Elevator Control"
-	icon_state = "shuttle"
-	machine_registry_idx = MACHINES_ELEVATORCOMPS
-	var/active = 0
-	var/location = 1 // 0 for bottom, 1 for top
-
-/obj/machinery/computer/biodome_elevator
-	name = "Elevator Control"
-	icon_state = "shuttle"
-	machine_registry_idx = MACHINES_ELEVATORCOMPS
-	var/active = 0
-	var/location = 1 // 0 for bottom, 1 for top
-
 /obj/machinery/computer/shuttle/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(emergency_shuttle.location != SHUTTLE_LOC_STATION)
 		return
@@ -405,31 +391,87 @@ var/bombini_saved
 				src.authorized = list(  )
 	return
 
-/obj/machinery/computer/icebase_elevator/ui_interact(mob/user, datum/tgui/ui)
+ABSTRACT_TYPE(/obj/machinery/computer/elevator)
+/obj/machinery/computer/elevator
+	name = "Elevator Control"
+	icon_state = "shuttle"
+	var/active = 0
+	var/location = 1 // 0 for bottom, 1 for top
+
+	var/areaLower
+	var/areaUpper
+	var/startTurfToLeave = /turf/simulated/floor/plating
+	var/endTurfToLeave = /turf/simulated/floor/plating
+	var/logBioeleAccident = 0
+	var/adminOnly = 0
+	var/ignore_fluid = 0
+
+/obj/machinery/computer/elevator/icebase
+	machine_registry_idx = MACHINES_ELEVATORICEBASE
+	areaLower = /area/shuttle/icebase_elevator/lower
+	areaUpper = /area/shuttle/icebase_elevator/upper
+	endTurfToLeave = /turf/simulated/floor/arctic_elevator_shaft
+
+/obj/machinery/computer/elevator/biodome
+	machine_registry_idx = MACHINES_ELEVATORBIODOME
+	areaLower = /area/shuttle/biodome_elevator/lower
+	areaUpper = /area/shuttle/biodome_elevator/upper
+	endTurfToLeave = /turf/unsimulated/floor/setpieces/ancient_pit/shaft
+
+/obj/machinery/computer/elevator/sea
+	machine_registry_idx = MACHINES_ELEVATORSEA
+	areaLower = /area/shuttle/sea_elevator/lower
+	areaUpper = /area/shuttle/sea_elevator/upper
+	endTurfToLeave = /turf/simulated/floor/specialroom/sea_elevator_shaft
+	ignore_fluid = 1
+
+/obj/machinery/computer/elevator/centcomm
+	machine_registry_idx = MACHINES_ELEVATORCENTCOM
+	areaLower = /area/shuttle/centcom_elevator/lower
+	areaUpper = /area/shuttle/centcom_elevator/upper
+	endTurfToLeave = /turf/unsimulated/floor/glassblock/transparent_cyan
+	location = 0
+	logBioeleAccident = 1
+	adminOnly = 1
+
+/obj/machinery/computer/elevator/centcomm/hidden
+	name = "toilet paper holder";
+	desc = "a not at all suspicious toilet paper holder.";
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "toiletholder";
+
+/obj/machinery/computer/elevator/ui_interact(mob/user, datum/tgui/ui)
+	if (adminOnly && !isadmin(user))
+		return
+
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Elevator", name)
 		ui.open()
 
-/obj/machinery/computer/icebase_elevator/ui_data(mob/user)
+/obj/machinery/computer/elevator/ui_data(mob/user)
 	. = list()
 	.["location"] = location ? "Upper level" : "Lower Level"
 	.["active"] = active
 
-/obj/machinery/computer/icebase_elevator/attack_hand(mob/user)
+/obj/machinery/computer/elevator/attack_hand(mob/user)
+	if (adminOnly && !isadmin(user))
+		return
 	if(..())
 		return
 
 	ui_interact(user)
 
-/obj/machinery/computer/icebase_elevator/ui_act(action, params)
+/obj/machinery/computer/elevator/ui_act(action, params)
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		switch(action)
 			if ("send")
+				if (adminOnly)
+					USR_ADMIN_ONLY
 				if(!active)
-					for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
+					for(var/obj/machinery/computer/elevator/C in machine_registry[machine_registry_idx])
 						C.active = 1
 						C.visible_message("<span class='alert'>The elevator begins to move!</span>")
 						playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
@@ -439,87 +481,27 @@ var/bombini_saved
 					. = TRUE
 
 
-/obj/machinery/computer/icebase_elevator/proc/call_shuttle()
+/obj/machinery/computer/elevator/proc/call_shuttle()
 
 	if(location == 0) // at bottom
-		var/area/start_location = locate(/area/shuttle/icebase_elevator/lower)
-		var/area/end_location = locate(/area/shuttle/icebase_elevator/upper)
-		start_location.move_contents_to(end_location, /turf/simulated/floor/plating)
+		var/area/start_location = locate(areaLower)
+		var/area/end_location = locate(areaUpper)
+		start_location.move_contents_to(end_location, startTurfToLeave, ignore_fluid = ignore_fluid)
 		location = 1
 	else // at top
-		var/area/start_location = locate(/area/shuttle/icebase_elevator/upper)
-		var/area/end_location = locate(/area/shuttle/icebase_elevator/lower)
+		var/area/start_location = locate(areaUpper)
+		var/area/end_location = locate(areaLower)
 		for(var/mob/living/L in end_location) // oh dear, stay behind the yellow line kids
 			if(!isintangible(L))
 				SPAWN(1 DECI SECOND)
 					logTheThing(LOG_COMBAT, L, "was gibbed by an elevator at [log_loc(L)].")
 					L.gib()
-		start_location.move_contents_to(end_location, /turf/simulated/floor/arctic_elevator_shaft)
+				if (logBioeleAccident)
+					bioele_accident()
+		start_location.move_contents_to(end_location, endTurfToLeave, ignore_fluid = ignore_fluid)
 		location = 0
 
-	for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
-		C.active = 0
-		C.visible_message("<span class='alert'>The elevator has moved.</span>")
-		C.location = src.location
-		tgui_process.update_uis(C)
-
-/obj/machinery/computer/biodome_elevator/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "Elevator", name)
-		ui.open()
-
-/obj/machinery/computer/biodome_elevator/ui_data(mob/user)
-	. = list()
-	.["location"] = location ? "Upper level" : "Lower Level"
-	.["active"] = active
-
-/obj/machinery/computer/biodome_elevator/attack_hand(mob/user)
-	if(..())
-		return
-
-	ui_interact(user)
-
-/obj/machinery/computer/biodome_elevator/ui_act(action, params)
-	if(..())
-		return
-	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		switch(action)
-			if ("send")
-				if(!active)
-					for(var/obj/machinery/computer/biodome_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
-						C.active = 1
-						C.visible_message("<span class='alert'>The elevator begins to move!</span>")
-						playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
-						tgui_process.update_uis(C)
-					SPAWN(5 SECONDS)
-						call_shuttle()
-					. = TRUE
-
-
-// Biodome elevator code
-
-
-/obj/machinery/computer/biodome_elevator/proc/call_shuttle()
-
-	if(location == 0) // at bottom
-		var/area/start_location = locate(/area/shuttle/biodome_elevator/lower)
-		var/area/end_location = locate(/area/shuttle/biodome_elevator/upper)
-		start_location.move_contents_to(end_location, /turf/simulated/floor/plating)
-		location = 1
-	else // at top
-		var/area/start_location = locate(/area/shuttle/biodome_elevator/upper)
-		var/area/end_location = locate(/area/shuttle/biodome_elevator/lower)
-		for(var/mob/living/L in end_location) // oh dear, stay behind the yellow line kids
-			if(!isintangible(L))
-				SPAWN(1 DECI SECOND)
-					logTheThing(LOG_COMBAT, L, "was gibbed by an elevator at [log_loc(L)].")
-					L.gib()
-			bioele_accident()
-		start_location.move_contents_to(end_location, /turf/unsimulated/floor/setpieces/ancient_pit/shaft)
-		location = 0
-
-	for(var/obj/machinery/computer/biodome_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
+	for(var/obj/machinery/computer/elevator/C in machine_registry[machine_registry_idx])
 		C.active = 0
 		C.visible_message("<span class='alert'>The elevator has moved.</span>")
 		C.location = src.location
@@ -564,85 +546,5 @@ proc/bioele_accident()
 	bioele_accidents++
 	bioele_shifts_since_accident = 0
 	bioele_save_stats()
-
-
-/obj/submachine/centcom_elevator
-	name = "elevator Control"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "shuttle"
-	var/active = FALSE
-	var/location = 0 // 0 for bottom, 1 for top
-
-	New()
-		. = ..()
-		START_TRACKING
-
-	disposing()
-		STOP_TRACKING
-		. = ..()
-
-	proc/call_shuttle()
-		if(location == 0) // at bottom
-			var/area/start_location = locate(/area/shuttle/centcom_elevator/lower)
-			var/area/end_location = locate(/area/shuttle/centcom_elevator/upper)
-			start_location.move_contents_to(end_location, /turf/simulated/floor/plating)
-			location = 1
-		else // at top
-			var/area/start_location = locate(/area/shuttle/centcom_elevator/upper)
-			var/area/end_location = locate(/area/shuttle/centcom_elevator/lower)
-			for(var/mob/living/L in end_location) // oh dear, stay behind the yellow line kids
-				if(!isintangible(L))
-					SPAWN(1 DECI SECOND)
-						logTheThing(LOG_COMBAT, L, "was gibbed by an elevator at [log_loc(L)].")
-						L.gib()
-				bioele_accident()
-			start_location.move_contents_to(end_location, /turf/unsimulated/floor/glassblock/transparent_cyan)
-			location = 0
-
-		for_by_tcl(O, /obj/submachine/centcom_elevator)
-			O.active = FALSE
-			O.visible_message("<span class='alert'>The elevator has moved.</span>")
-			O.location = src.location
-			tgui_process.update_uis(O)
-
-	ui_interact(mob/user, datum/tgui/ui)
-		if (!isadmin(user))
-			return
-
-		ui = tgui_process.try_update_ui(user, src, ui)
-		if(!ui)
-			ui = new(user, src, "Elevator", name)
-			ui.open()
-
-	ui_data(mob/user)
-		. = list()
-		.["location"] = location ? "Upper level" : "Lower Level"
-		.["active"] = active
-
-	attack_hand(mob/user)
-		if (!isadmin(user))
-			return
-		if(..())
-			return
-
-		ui_interact(user)
-
-	ui_act(action, params)
-		if(..())
-			return
-		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			switch(action)
-				if ("send")
-					USR_ADMIN_ONLY
-					if(!active)
-						for_by_tcl(O, /obj/submachine/centcom_elevator)
-							O.active = TRUE
-							O.visible_message("<span class='alert'>The elevator begins to move!</span>")
-							playsound(O.loc, 'sound/machines/elevator_move.ogg', 100, 0)
-							tgui_process.update_uis(O)
-						SPAWN(5 SECONDS)
-							call_shuttle()
-						. = TRUE
-
 
 #undef MINING_OUTPOST_NAME

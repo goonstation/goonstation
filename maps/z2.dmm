@@ -10233,7 +10233,7 @@
 /turf/unsimulated/floor/grime,
 /area/lower_arctic/mining)
 "aQo" = (
-/obj/machinery/computer/icebase_elevator,
+/obj/machinery/computer/elevator/icebase,
 /turf/unsimulated/floor/grime,
 /area/lower_arctic/mining)
 "aQr" = (
@@ -11207,7 +11207,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/crew)
 "aTM" = (
-/obj/machinery/computer/biodome_elevator,
+/obj/machinery/computer/elevator/biodome,
 /turf/unsimulated/floor/caution/corner/nw{
 	dir = 1
 	},
@@ -13775,7 +13775,7 @@
 /turf/unsimulated/floor/grime,
 /area/upper_arctic/mining)
 "bck" = (
-/obj/machinery/computer/icebase_elevator,
+/obj/machinery/computer/elevator/icebase,
 /turf/unsimulated/floor/grime,
 /area/upper_arctic/mining)
 "bcl" = (
@@ -26081,7 +26081,7 @@
 	},
 /area/crypt/sigma)
 "bTc" = (
-/obj/machinery/computer/biodome_elevator,
+/obj/machinery/computer/elevator/biodome,
 /turf/unsimulated/floor/caution/corner/ne,
 /area/crypt/sigma)
 "bTd" = (
@@ -56315,11 +56315,7 @@
 	name = "hand rail";
 	pixel_y = 16
 	},
-/obj/submachine/centcom_elevator{
-	desc = "a not at all suspicious toilet paper holder.";
-	icon = 'icons/obj/decoration.dmi';
-	icon_state = "toiletholder";
-	name = "toilet paper holder";
+/obj/machinery/computer/elevator/centcomm/hidden{
 	pixel_y = 32
 	},
 /obj/machinery/light{
