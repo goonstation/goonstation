@@ -4501,7 +4501,7 @@
 /area/pod_wars/team1/bridge)
 "rr" = (
 /turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_old = null;
 	icon_state = "norn-R-3"
 	},

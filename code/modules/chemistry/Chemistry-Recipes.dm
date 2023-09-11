@@ -4719,6 +4719,16 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		hidden = TRUE
 
+	capsizin
+		name = "capsizin"
+		id = "capsizin"
+		result = "capsizin"
+		required_reagents = list("reversium" = 1, "capsaicin" = 4)
+		result_amount = 5
+		mix_phrase = "The solution begins to capsize. What does that even mean?"
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		hidden = TRUE
+
 	transparium
 		name = "transparium"
 		id = "transparium"

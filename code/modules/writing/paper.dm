@@ -123,19 +123,9 @@
 		qdel(src)
 
 /obj/item/paper/attack_ai(var/mob/AI as mob)
-	var/mob/living/silicon/ai/user
-	if (isAIeye(AI))
-		var/mob/living/intangible/aieye/E = AI
-		user = E.mainframe
-	else
-		user = AI
-	if (!isAI(user) || (user.current && GET_DIST(src, user.current) < 2)) //Wire: fix for undefined variable /mob/living/silicon/robot/var/current
-		var/font_junk = ""
-		for (var/i in src.fonts)
-			font_junk += "<link href='http://fonts.googleapis.com/css?family=[i]' rel='stylesheet' type='text/css'>"
-		usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE>[font_junk]</HEAD><BODY><TT>[src.info]</TT></BODY></HTML>", "window=[src.name]")
-		onclose(usr, "[src.name]")
-	return
+	//Papers can be alt+click inspected from anywhere, let's give attack_ai the same freedom
+	//	instead of doing dubious /mob/living/silicon/ai.current checks
+	ui_interact(AI)
 
 /obj/item/paper/proc/stamp(x, y, r, stamp_png, icon_state)
 	if(length(stamps) < PAPER_MAX_STAMPS)
@@ -275,7 +265,7 @@
 			var/obj/item/portable_typewriter/typewriter = src.loc
 			if(istype(typewriter.pen, /obj/item/pen))
 				O = typewriter.pen
-	if(istype(O, /obj/item/pen))
+	if(istype(O, /obj/item/pen) && in_interact_range(src, user))
 		var/obj/item/pen/PEN = O
 		. += list(
 			"penFont" = PEN.font,
@@ -284,7 +274,7 @@
 			"isCrayon" = FALSE,
 			"stampClass" = "FAKE",
 		)
-	else if(istype(O, /obj/item/stamp))
+	else if(istype(O, /obj/item/stamp) && in_interact_range(src, user))
 		var/obj/item/stamp/stamp = O
 		stamp.current_state = stamp_assets[STAMP_IDS[stamp.current_mode]]
 		. += list(
@@ -350,7 +340,6 @@
 	var/pixel_width = (14 + (12 * (length-1)))
 	src.field_counter++
 	return {"\[<input type="text" style="font:'12x Georgia';color:'null';min-width:[pixel_width]px;max-width:[pixel_width]px;" id="paperfield_[field_counter]" maxlength=[length] size=[length] />\]"}
-
 
 /obj/item/paper/thermal
 	name = "thermal paper"
