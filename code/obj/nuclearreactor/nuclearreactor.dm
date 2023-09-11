@@ -535,8 +535,8 @@
 			glowstick_mat.setColor(rgb(stick.col_r*255, stick.col_g*255, stick.col_b*255))
 			var/obj/item/reactor_component/fuel_rod/glowsticks/result_rod = new /obj/item/reactor_component/fuel_rod/glowsticks(glowstick_mat)
 			src.component_grid[x][y]=result_rod
+			result_rod.set_loc(src)
 			user.u_equip(equipped)
-			equipped.set_loc(src)
 			qdel(equipped)
 		else
 			src.component_grid[x][y]=equipped
