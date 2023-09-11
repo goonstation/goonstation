@@ -4673,7 +4673,7 @@ datum
 			thirst_value = 0.25
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				M.reagents.add_reagent("capulettium", 2 * mult)
+				M.reagents.add_reagent("capulettium", 1 * mult)
 				..()
 
 		fooddrink/matcha
