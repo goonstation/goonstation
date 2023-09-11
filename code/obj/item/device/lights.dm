@@ -735,3 +735,133 @@ TYPEINFO(/obj/item/device/light/floodlight)
 	rotatable = FALSE
 	infinite_power = TRUE
 	power_usage = 0 WATTS
+
+#define FLARE_UNLIT 1
+#define FLARE_LIT 2
+#define FLARE_BURNT 3
+
+/obj/item/roadflare
+	name = "emergency flare"
+	desc = "Space grade emergency flare that can burn in an 02 free environment. "
+	icon = 'icons/obj/lighting.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	icon_state = "roadflare"
+	uses_multiple_icon_states = 1
+	w_class = W_CLASS_TINY
+	throwforce = 1
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	stamina_damage = 0
+	stamina_cost = 0
+	stamina_crit_chance = 1
+	burn_point = 220
+	burn_output = 1200
+	burn_possible = 1
+
+	var/on = FLARE_UNLIT
+
+	var/light_mob = 0
+	var/life_timer = 0
+	rand_pos = 1
+
+	var/col_r = 0.95
+	var/col_g = 0.7
+	var/col_b = 0.25
+	var/brightness = 1.0
+	var/datum/component/loctargeting/simple_light/light_c
+
+	New()
+		..()
+		src.life_timer = rand(120,360)
+		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
+		light_c.update(0)
+
+
+	process()
+		if (src.on == FLARE_LIT)
+			if (src.life_timer >= 0)
+				life_timer--
+			var/location = src.loc
+			if (ismob(location))
+				var/mob/M = location
+				if (src.life_timer <= 0)
+					src.put_out(M)
+					return
+			var/turf/T = get_turf(src.loc)
+			if (T)
+				T.hotspot_expose(900,5)
+			if (src.life_timer <= 0)
+				src.put_out()
+				return
+
+	proc/light(var/mob/user as mob)
+		src.on = FLARE_LIT
+		src.firesource = FIRESOURCE_OPEN_FLAME
+		src.icon_state = "roadflare-lit"
+
+		playsound(user, 'sound/items/matchstick_light.ogg', 80, 0.5)
+		light_c.enable()
+
+		processing_items |= src
+		if (istype(user))
+			user.update_inhands()
+
+	proc/put_out(var/mob/user as mob)
+		src.on = FLARE_BURNT
+		src.firesource = FALSE
+		src.life_timer = 0
+		src.icon_state = "roadflare-burnt"
+		src.item_state = "roadflare"
+		src.name = "burnt-out emergency flare"
+
+		light_c.disable()
+
+		processing_items.Remove(src)
+
+	temperature_expose(datum/gas_mixture/air, temperature, volume)
+		if (src.on == FLARE_UNLIT)
+			if (temperature > T0C+200)
+				src.visible_message("<span class='alert'>The [src] ignites!</span>")
+				src.light()
+
+	ex_act(severity)
+		if (src.on == FLARE_UNLIT)
+			src.visible_message("<span class='alert'>The [src] ignites!</span>")
+			src.light()
+
+	afterattack(atom/target, mob/user as mob)
+		if (src.on == FLARE_LIT)
+			if (!ismob(target) && target.reagents)
+				user.show_text("You heat [target].", "blue")
+				target.reagents.temperature_reagents(4000,10)
+				return
+
+	attack(mob/M, mob/user)
+		if (ishuman(M))
+			if (src.on > 0)
+				var/mob/living/carbon/human/fella = M
+				if (fella.bleeding || (fella.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
+					src.cautery_surgery(fella, user, 5, src.on)
+					return ..()
+				else
+					user.visible_message("<span class='alert'><b>[user]</b> pushes the burning [src] against [fella]!</span>",\
+					"<span class='alert'>You use the burning [src] on [fella]!</span>")
+					fella.TakeDamage("All", 0, rand(3,7))
+					if (!fella.stat)
+						fella.emote("scream")
+					return
+		else
+			return ..()
+
+	attack_self(mob/user)
+		if (user.find_in_hand(src))
+			if (src.on == FLARE_UNLIT)
+				user.visible_message("<b>[user]</b> lights [src] with the striker cap.","You light [src] with the striker cap.")
+				src.light(user)
+				src.add_fingerprint(user)
+				return
+		else
+			return ..()
+
+#undef FLARE_UNLIT
+#undef FLARE_LIT
+#undef FLARE_BURNT
