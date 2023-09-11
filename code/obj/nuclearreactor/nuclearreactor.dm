@@ -378,7 +378,6 @@
 		//explode, throw radioactive components everywhere, dump rad gas, throw radioactive debris everywhere
 		src.melted = TRUE
 		var/meltdown_badness = 0
-		var/turf/epicentre = get_turf(src)
 		if(!src.current_gas)
 			src.current_gas = new/datum/gas_mixture()
 
