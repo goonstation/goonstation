@@ -1,5 +1,9 @@
 
 (t)sun sep 10 23
+(u)Froggit Dogget
+(p)15732
+(e)|
+(+)Amanitin now does its damage when flushed out of the system.
 (u)Mantwerp
 (p)15793
 (e)🗺💅|A-Mapping, C-QoL
