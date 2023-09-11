@@ -6,30 +6,54 @@
 1.	create three sprites for them in bouquets.dmi. names them name_l, name_m, and name_r for left middle and right.
 	Visually, the middle ones cover the ones at the sides. Keep that in mind.
 2.	Go to the flower involved and add the component in the New() proc. Look at lavender to see how it's done.
-3.	If your flower has spaces in its name, reference how bird of paradise is handled. Give its icon_state an alternate name.
-	At around line 108 of code/obj/item/bouquet.dm, add in the exception. the format is shown in the surrounding code.
-4. Optionally, at the bottom of code/obj/item/bouquet.dm, create a subtype of premade monotype bouquets
+3. Optionally, at the bottom of code/obj/item/bouquet.dm, create a subtype of premade monotype bouquets
 */
 
-TYPEINFO(/datum/component/bullet_holes)
-	initialization_args = list(ARG_INFO("can_bouquet", DATA_INPUT_BOOL, "Whether this object can be put in bouquet", TRUE))
+TYPEINFO(/datum/component/bouquet)
+	initialization_args = list()
 
 /// the bouquet component, that allows flowers of various parentage to be wrapped into bouquets
 /datum/component/bouquet
 
 /datum/component/bouquet/Initialize()
 	. = ..()
-	if(!istype(parent, /obj/item/clothing/head/flower) && !istype(parent, /obj/item/plant))
+	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/construct_bouquet)
+	var/obj/item/W = parent
+	if (!W.is_valid_icon_state("[W.icon_state]_l", 'icons/obj/items/bouquets.dmi'))
+		return COMPONENT_INCOMPATIBLE // it doesn't a matching left icon
+	if (!W.is_valid_icon_state("[W.icon_state]_m", 'icons/obj/items/bouquets.dmi'))
+		return COMPONENT_INCOMPATIBLE // it doesn't a matching middle icon
+	if (!W.is_valid_icon_state("[W.icon_state]_r", 'icons/obj/items/bouquets.dmi'))
+		return COMPONENT_INCOMPATIBLE // it doesn't a matching right icon
+	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/attackby)
+	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/attack)
 
 /datum/component/bouquet/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATTACKBY)
+	UnregisterSignal(parent, COMSIG_ITEM_AFTERATTACK)
 	. = ..()
 
-/datum/component/bouquet/proc/construct_bouquet(obj/item/source, obj/item/W, mob/user)
-	// if it isnt paper, wrapping paper, or a bouquet, dont care
-	if (!istype(W, /obj/item/paper) && !istype(W, /obj/item/wrapping_paper) && !istype(W, /obj/item/bouquet))
+/datum/component/bouquet/proc/attack(obj/item/source, atom/W, mob/user, reach, params)
+	// if we attack a bouquet with a flower, add it.
+	if (!istype(W, /obj/item/bouquet))
+		return
+	var/obj/item/bouquet/B = W
+	if (B.flowernum >= B.max_flowers)
+		boutput(user, "This bouquet is full!")
+		return
+	B.add_flower(source, user)
+
+/datum/component/bouquet/proc/attackby(obj/item/source, obj/item/W, mob/user)
+	// if we attack a flower with a bouquet, add it
+	if (istype(W, /obj/item/bouquet))
+		var/obj/item/bouquet/B = W
+		if (B.flowernum >= B.max_flowers)
+			boutput(user, "This bouquet is full!")
+			return
+		B.add_flower(source, user)
+	// if it isnt paper or wrapping paper, dont care
+	if (!istype(W, /obj/item/paper) && !istype(W, /obj/item/wrapping_paper))
 		return
 	// certain paper subtypes not accepted
 	if (istype(W, /obj/item/paper/fortune) || istype(W, /obj/item/paper/printout))
@@ -43,8 +67,8 @@ TYPEINFO(/datum/component/bullet_holes)
 		// drop both bits just in case
 		W.force_drop(user)
 		source.force_drop(user)
-		// in case flower stacks become a thing, just put one single flower in
-		if (source.amount > 1)
+		// now we add the flower to contents
+		if (source.amount > 1)// in case flower stacks become a thing, just put one single flower in. Futureproofing.
 			var/obj/item/clothing/head/flower/allocated_flower = source.split_stack(1)
 			allocated_flower.set_loc(new_bouquet)
 		else
@@ -59,9 +83,5 @@ TYPEINFO(/datum/component/bullet_holes)
 		W.set_loc(new_bouquet)
 		new_bouquet.refresh()
 		new_bouquet.ruffle()
-		user.visible_message("[user] rolls up the [source.name] into a bouquet.", "You roll up the [source.name] into a bouquet.")
+		user.visible_message("[user] rolls up \the [source.name] into a bouquet.", "You roll up \the [source.name] into a bouquet.")
 		user.put_in_hand_or_drop(new_bouquet)
-	// hit the flower with the bouquet, i.e. add self to existing bouquet
-	if (istype(W, /obj/item/bouquet))
-		var/obj/item/bouquet/bouquet_holder = W
-		bouquet_holder.add_to_bouquet(source, user)

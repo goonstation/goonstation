@@ -26,63 +26,42 @@
 	the inhand versions are exactly the same except preceded by inhand_
  */
 /obj/item/bouquet/attackby(obj/item/W, mob/user)
-	// should give us back the paper and flowers when done with snipping tool
-	if (issnippingtool(W))
+	if (isnull(W))
+		return
+	if (W.w_class > W_CLASS_SMALL) // item too big
+		boutput("That won't fit!")
+		return
+	if (issnippingtool(W))// should give us back the paper and flowers when done with snipping tool
 		boutput(user, "<span class='notice'>You disassemble the [src].</span>")
 		playsound(src.loc, 'sound/items/Scissor.ogg', 30, 1)
-		var/tempfloor = get_turf(src)
 		for (var/obj/content in src.contents)
-			content.set_loc(tempfloor)
+			content.set_loc(get_turf(src))
 		qdel(src)
 		return
-	else
-		src.add_to_bouquet(W, user)
+	if (W in src.contents)
+		return // a flower may be put in before afterattack is called
+	// try to hide an item inside
+	if (hiddenitem) // only one hidden item allowed
+		boutput("This bouquet already has something hidden in it!")
+		return
+	// successfully hide item
+	src.flags |= SUPPRESSATTACK
+	W.set_loc(src)
+	src.hiddenitem = TRUE
+	boutput("You stuff \the [W.name] into \the [src.name].")
 
 /obj/item/bouquet/attack_self(mob/user)
 	. = ..()
 	src.refresh()
 	src.ruffle()
 
-/// attempts to add a flower or item to the bouquet, with error handling
-/obj/item/bouquet/proc/add_to_bouquet(obj/item/W, mob/user)
-	// first check plants (i.e. for roses)
-	if (istype(W, /obj/item/plant))
-		var/obj/item/plant/dummy = W
-		if (!dummy.can_bouquet)
-			boutput(user, "This can't be added into a bouquet!")
-			return
-		if (flowernum >= src.max_flowers)
-			boutput(user, "This bouquet is full!")
-			return
-		src.add_flower(W, user)
-	// most flowers are under this subtyping, so check this too
-	else if (istype(W, /obj/item/clothing/head/flower))
-		var/obj/item/clothing/head/flower/dummy_flower = W
-		if (!dummy_flower.can_bouquet)
-			boutput(user, "This can't be added into a bouquet!")
-			return
-		if (flowernum >= src.max_flowers)
-			boutput(user, "This bouquet is full!")
-			return
-		src.add_flower(W, user)
-	// if its not a flower we know of, try to hide an item inside
-	else if (hiddenitem) // only one hidden item allowed
-		boutput("This bouquet already has something hidden in it!")
-		return
-	else if (W.w_class > W_CLASS_SMALL) // item too big
-		boutput("That won't fit!")
-		return
-	else // successfully hide item
-		src.flags |= SUPPRESSATTACK
-		W.set_loc(src)
-		src.hiddenitem = TRUE
 
 /obj/item/bouquet/proc/add_flower(obj/item/W, mob/user)
 	src.flags |= SUPPRESSATTACK
 	W.force_drop(user)
 	src.force_drop(user)
 	W.set_loc(src)
-	user.visible_message("[user] adds a [W.name] to the bouquet.", "You add a [W.name] to the bouquet.")
+	user.visible_message("[user] adds \the [W.name] to the bouquet.", "You add \the [W.name] to the bouquet.")
 	src.flowernum += 1
 	src.refresh()
 	user.put_in_hand_or_drop(src)
@@ -122,7 +101,7 @@
 			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.wrapstyle]_front")
 			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flower1.icon_state]_m")
 			src.name = "[flower1[2]] bouquet"
-			src.desc = "A [flower1[2]] in a nice wrapping. Try adding more flowers to it!"
+			src.desc = "\A [flower1[2]] in a nice wrapping. Try adding more flowers to it!"
 		if (2)
 			var/rightorleft = pick("r", "l")
 			frontflowerindex = pick(list(flower1,flower2),list(flower2,flower1))
@@ -140,10 +119,10 @@
 
 			if (flower1[1] == flower2[1]) // say its a bouquet with a single type of flower
 				src.name = "[flower1.name] bouquet"
-				src.desc = "A bouquet of beautiful flowers. This one contains [flower1.name]."
+				src.desc = "A bouquet of beautiful flowers. This one contains [flower1.name]\s."
 			else
 				src.name = "mixed bouquet"
-				src.desc = "A bouquet of beautiful flowers. This one contains [flower2.name] and [flower1.name]."
+				src.desc = "A bouquet of beautiful flowers. This one contains [flower2.name]\s and [flower1.name]\s."
 		if (3)
 			frontflowerindex = pick(
 				list(flower1, flower2, flower3), list(flower2, flower1, flower3),\
@@ -167,7 +146,7 @@
 			// all match
 			if ((flower1.icon_state == flower2.icon_state) && (flower2.icon_state == flower3.icon_state))
 				src.name = "[flower1.name] bouquet"
-				src.desc = "A bouquet of beautiful flowers. This one contains [flower1.name]."
+				src.desc = "A bouquet of beautiful flowers. This one contains [flower1.name]\s."
 			// two match
 			else if ((flower1.icon_state == flower2.icon_state) || (flower2.icon_state == flower3.icon_state) || (flower1.icon_state == flower3.icon_state))
 				var/doubledflower = "" // the name of flower that matches
@@ -182,11 +161,11 @@
 					doubledflower = flower2.name
 					otherflower = flower1.name
 				src.name = "mixed bouquet"
-				src.desc = "A bouquet of beautiful flowers. This one contains [doubledflower] and [otherflower]."
+				src.desc = "A bouquet of beautiful flowers. This one contains [doubledflower]\s and [otherflower]\s."
 			// all different
 			else
 				src.name = "mixed bouquet"
-				src.desc = "A bouquet of beautiful flowers. This one contains [flower3.name], [flower2.name] and [flower1.name]."
+				src.desc = "A bouquet of beautiful flowers. This one contains [flower3.name]\s, [flower2.name]\s and [flower1.name]\s."
 		if (4)
 			CRASH("Bouquet at [get_turf(src)] somehow has 4 flowers in it")
 	src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.wrapstyle]_front")
@@ -225,7 +204,7 @@
 	animate(pixel_x = movepx, pixel_y = movepy, time = 2, easing = EASE_IN)
 
 // pre prepared ones, for mapping
-ABSTRACT_TYPE(/obj/item/bouquet/premade)
+// this one shouldn't be used btw
 /obj/item/bouquet/premade
 	flowernum = 3
 	var/flowertype = null
