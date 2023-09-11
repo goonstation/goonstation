@@ -185,7 +185,7 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 	name = "weird glowing wall"
 	desc = "You can feel it thrumming and pulsing."
 	var/flock_id = "Nanite block"
-	icon = 'icons/turf/walls_flock.dmi'
+	icon = 'icons/turf/walls/flock.dmi'
 	icon_state = "flock0"
 	mod = "flock"
 	health = 250

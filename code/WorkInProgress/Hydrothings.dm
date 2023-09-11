@@ -591,7 +591,7 @@
 /obj/owldoor
 	name = "Strange Looking Wall"
 	desc = "This wall has a small slit in middle, huh."
-	icon = 'icons/turf/walls_auto.dmi'
+	icon = 'icons/turf/walls/auto.dmi'
 	icon_state = "mapwall_r"
 	density = 1
 	opacity = 1
