@@ -723,6 +723,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 #define REZAP_WAIT 10
 #define PANIC_HEALTH_LEVEL 30
 #define STATE_DEFAULT 0
+#define IOCORE_INACTIVE 0
+#define IOCORE_ACTIVE 1
+#define IOCORE_DEAD 2
 #define STATE_MARKER_OUT 1
 #define STATE_RECHARGING 2
 
@@ -739,7 +742,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		icon = 'icons/misc/worlds.dmi'
 		icon_state = "boss_button0"
 		layer = OBJ_LAYER
-		var/b_pressed = 0
+		var/b_pressed = FALSE
 
 		attack_hand(mob/user)
 			if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands())
@@ -750,7 +753,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				boutput(user, "Nothing happens.")
 				return
 
-			b_pressed = 1
+			b_pressed = TRUE
 			flick("boss_button_activate", src)
 			src.icon_state = "boss_button1"
 
@@ -763,8 +766,8 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		desc = "It looks like a tesla coil mated with a crab."
 		icon = 'icons/misc/worlds.dmi'
 		icon_state = "bot_spawner"
-		var/functional = 1
-		var/makingbot = 0
+		var/functional = TRUE
+		var/makingbot = FALSE
 		var/health = 20
 		var/max_bots = 5
 
@@ -785,9 +788,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				src.health -= I.force * 0.5
 
 
-			if (src.health <= 0 && functional != -1)
+			if (src.health <= 0 && src.functional)
 				src.icon_state = "bot_spawner_dead"
-				src.functional = 0
+				src.functional = FALSE
 				src.visible_message("<span class='alert'>[src] shuts down. Forever.</span>")
 				return
 
@@ -797,7 +800,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (makingbot || !functional || (max_bots  < 1))
 				return -1
 
-			makingbot = 1
+			makingbot = TRUE
 			src.icon_state = "bot_spawner_start"
 			SPAWN(0.7 SECONDS)
 				src.icon_state = "bot_spawner_active"
@@ -824,7 +827,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				max_bots--
 
 				src.visible_message("<span class='alert'>[src] plunks out a robot! Oh dear!</span>")
-				makingbot = 0
+				makingbot = FALSE
 
 			return
 
@@ -836,8 +839,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		layer = 10 // TODO LAYER
 		plane = PLANE_NOSHADOW_ABOVE
 
-		var/IOCORE_ONLINE = 0
-		var/IOCORE_DEAD = 0
+		var/status = IOCORE_INACTIVE
 		var/health = 100
 		var/obj/iomoon_boss/top/top = null
 		var/obj/iomoon_boss/base/base = null
@@ -879,7 +881,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					spawners += spawner
 
 		attackby(obj/item/I, mob/user as mob)
-			if (!I.force || !IOCORE_ONLINE || IOCORE_DEAD)
+			if (!I.force || src.status != IOCORE_ACTIVE)
 				return
 
 			user.lastattacked = src
@@ -902,17 +904,18 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 			if (!ON_COOLDOWN(top, "hit_effect", 0.7 SECONDS))
 				top.icon_state = "powercore_core_hit"
+				playsound(src.loc, 'sound/machines/lavamoon_core_hit.ogg', 50, 0)
 				SPAWN(0.6 SECONDS)
-					if (IOCORE_ONLINE && !IOCORE_DEAD && src.health <= PANIC_HEALTH_LEVEL)
+					if (src.status == IOCORE_ACTIVE && src.health <= PANIC_HEALTH_LEVEL)
 						top.icon_state = "powercore_core_fast"
-					else if (IOCORE_ONLINE && !IOCORE_DEAD)
+					else if (src.status == IOCORE_ACTIVE)
 						top.icon_state = "powercore_core_active"
-					else if (IOCORE_DEAD)
+					else if (src.status == IOCORE_DEAD)
 						top.icon_state = "powercore_core_dead"
 
 
 		attack_hand(var/mob/user)
-			if (!IOCORE_ONLINE || IOCORE_DEAD)
+			if (src.status != IOCORE_ACTIVE)
 				return
 
 			user.lastattacked = src
@@ -926,7 +929,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 		bullet_act(var/obj/projectile/P)
 
-			if (!IOCORE_ONLINE || IOCORE_DEAD)
+			if (src.status != IOCORE_ACTIVE)
 				return
 
 			if(P.proj_data.damage_type == D_KINETIC || P.proj_data.damage_type == D_PIERCING)
@@ -956,10 +959,10 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 		proc
 			activate()
-				if (IOCORE_ONLINE || IOCORE_DEAD)
+				if (src.status != IOCORE_INACTIVE)
 					return
 
-				IOCORE_ONLINE = 1
+				src.status = IOCORE_ACTIVE
 
 
 				START_TRACKING_CAT(TR_CAT_CRITTERS)
@@ -1033,12 +1036,12 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				return 0
 
 			death()
-				if (IOCORE_DEAD)
+				if (src.status == IOCORE_DEAD)
 					return
 
 				STOP_TRACKING_CAT(TR_CAT_CRITTERS)
 
-				IOCORE_DEAD = 1
+				src.status = IOCORE_DEAD
 				if (src.zapMarker)
 					src.zapMarker.dispose()
 					src.zapMarker = null
@@ -1052,7 +1055,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 						base.icon_state = "powercore_base_stop"
 						top.icon_state = "powercore_core_stop"
 						playsound(src.loc, 'sound/machines/lavamoon_rotors_stopping.ogg', 50, 1)
-					sleep (20)
+					sleep (2 SECONDS)
 
 					var/obj/overlay/O = new/obj/overlay( src.loc )
 					O.anchored = ANCHORED
@@ -1148,6 +1151,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 #undef PREZAP_WAIT
 #undef REZAP_WAIT
 #undef PANIC_HEALTH_LEVEL
+#undef IOCORE_INACTIVE
+#undef IOCORE_ACTIVE
+#undef IOCORE_DEAD
 #undef STATE_DEFAULT
 #undef STATE_MARKER_OUT
 #undef STATE_RECHARGING
