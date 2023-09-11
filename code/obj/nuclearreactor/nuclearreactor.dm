@@ -396,15 +396,6 @@
 					if(istype(comp, /obj/item/reactor_component/gas_channel))
 						var/obj/item/reactor_component/gas_channel/gascomp = comp
 						src.current_gas.merge(gascomp.air_contents) //grab all the gas in the channels and put it back in the reactor so it can be vented into engineering
-					if(prob(50))
-						var/obj/item/reactor_component/throwcomp = src.component_grid[x][y]
-						throwcomp.set_loc(epicentre)
-						throwcomp.throw_at(get_ranged_target_turf(epicentre,pick(alldirs),rand(1,20)),rand(1,20),rand(1,20))
-					else
-						qdel(src.component_grid[x][y])
-						var/obj/decal/cleanable/debris = make_cleanable(/obj/decal/cleanable/machine_debris/radioactive, epicentre)
-						debris.streak_cleanable(dist_upper=20)
-					src.component_grid[x][y] = null //get rid of the internal ref once we've thrown it out
 
 		src.current_gas.radgas += meltdown_badness*15
 		src.current_gas.temperature = max(src.temperature, src.current_gas.temperature)
@@ -415,7 +406,6 @@
 			shoot_projectile_XY(src, new /datum/projectile/bullet/wall_buster_shrapnel(), rand(-10,10), rand(-10,10))
 
 		logTheThing(LOG_STATION, src, "[src] CATASTROPHICALLY OVERLOADS (this is bad) meltdown badness: [meltdown_badness]")
-		qdel(src) //spawns the molten reactor, for cases where the explosion is too small to do so
 
 		explosion_new(src, current_loc, max(100, meltdown_badness*7), TRUE, 0, 360, TRUE)
 		SPAWN(15 SECONDS)
