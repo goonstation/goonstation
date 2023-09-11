@@ -2332,6 +2332,15 @@ TYPEINFO(/obj/item/gun/energy/railgun_experimental)
 		projectiles = list(new/datum/projectile/bullet/optio/hitscanrail)
 		..()
 
+	equipped(var/mob/user, var/slot)
+		if (slot == SLOT_BELT)
+			wear_image_icon = 'icons/mob/clothing/belt.dmi'
+			wear_layer = MOB_BACK_SUIT_LAYER
+		else if (slot == SLOT_BACK)
+			wear_image_icon = 'icons/mob/clothing/back.dmi'
+			wear_layer = MOB_BACK_LAYER
+		..()
+
 //pistol
 TYPEINFO(/obj/item/gun/energy/hafpistol)
 	mats = null
@@ -2498,6 +2507,15 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 		..()
 		if (src.shotcount++ >= 2)
 			src.racked_slide = FALSE
+
+	equipped(var/mob/user, var/slot)
+		if (slot == SLOT_BELT)
+			wear_image_icon = 'icons/mob/clothing/belt.dmi'
+			wear_layer = MOB_BACK_SUIT_LAYER
+		else if (slot == SLOT_BACK)
+			wear_image_icon = 'icons/mob/clothing/back.dmi'
+			wear_layer = MOB_BACK_LAYER
+		..()
 
 	proc/shoot_check(var/mob/user)
 		if (SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, amount) & CELL_INSUFFICIENT_CHARGE)
@@ -2765,6 +2783,7 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 			shot_volume = 100
 		if(proj.reflectcount >= 2)
 			elecflash(get_turf(hit),radius=0, power=3, exclude_center = 0)
+
 /datum/projectile/laser/smgminelethal
 	name = "Lethal Mode"
 	icon = 'icons/obj/projectiles.dmi'
@@ -2984,3 +3003,21 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 					active = 1
 					SPAWN(2 MINUTES) active = 0
 					playsound(AM, pick(list('sound/effects/sparks1.ogg','sound/effects/sparks2.ogg','sound/effects/sparks3.ogg','sound/effects/sparks4.ogg','sound/effects/sparks5.ogg','sound/effects/sparks6.ogg'), 75, 0))
+
+/datum/targetable/critter/defensive
+	name = "strong guard"
+	desc = "Defend against damage for a time, at the cost of speed."
+
+/datum/targetable/critter/nano_repair
+	name = "nano-bot repair"
+	desc = "Send out nano-bots to repair robotics in a 5 tile radius."
+	icon_state = "critter_bite"
+	cooldown = 20 SECONDS
+	targeted = FALSE
+
+	cast(atom/target)
+		if (..())
+			return 1
+		for (var/mob/living/critter/robotic/robo in range(5, holder.owner))
+			robo.HealDamage("all", 10, 10, 0)
+		return 0
