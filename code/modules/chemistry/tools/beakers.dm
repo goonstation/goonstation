@@ -182,8 +182,7 @@
 	initial_reagents = "silver_sulfadiazine"
 
 /obj/item/reagent_containers/glass/beaker/large/cyborg
-	shatter_chemically(var/projectiles = FALSE)
-		return FALSE
+	shatter_immune = TRUE
 
 /*  Now found in hydroponics.dm!
 
