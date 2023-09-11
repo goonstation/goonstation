@@ -1625,7 +1625,7 @@
 
 /datum/commodity/bodyparts/cybereye
 	comname = "Cybereye"
-	comtype = /obj/item/organ/eye/cyber
+	comtype = /obj/item/organ/eye/cyber/configurable
 	price = 1500
 	baseprice = 1500
 	upperfluc = 750

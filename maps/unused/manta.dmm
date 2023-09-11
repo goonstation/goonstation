@@ -572,7 +572,7 @@
 /area/station/bridge)
 "abJ" = (
 /obj/table/wood/round/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/paper/book/from_file/space_law,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
@@ -1728,12 +1728,7 @@
 /area/abandonedmedicalship/robot_trader)
 "agf" = (
 /obj/stool/chair,
-/obj/npc/trader/robot{
-	icon_state = "medibot0";
-	name = "D.O.C.";
-	productset = 4;
-	trader_area = "/area/abandonedmedicalship/robot_trader"
-	},
+/obj/npc/trader/robot/medical,
 /obj/map/light/white,
 /obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/white/grime,
@@ -3218,14 +3213,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "alp" = (
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.35;
@@ -39355,9 +39343,7 @@
 /area/station/medical/medbay/lobby)
 "rfE" = (
 /obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
 	pixel_y = 20

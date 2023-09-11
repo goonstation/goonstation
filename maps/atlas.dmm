@@ -7742,7 +7742,7 @@
 /obj/table/reinforced/chemistry/auto,
 /obj/item/device/gps,
 /obj/item/device/gps,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -11016,13 +11016,11 @@
 /area/listeningpost/power)
 "aKm" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/morgue,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/medical/morgue,
 /obj/mapping_helper/access/morgue,
-/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "aKn" = (
@@ -12042,14 +12040,7 @@
 /obj/stool/chair/office/red{
 	dir = 8
 	},
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.35;
@@ -14249,8 +14240,6 @@
 	},
 /obj/mapping_helper/access/morgue,
 /obj/machinery/door/airlock/pyro/medical/morgue,
-/obj/mapping_helper/access/morgue,
-/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "aUJ" = (
@@ -18420,7 +18409,7 @@
 /turf/simulated/floor/red,
 /area/station/science/lab)
 "pkT" = (
-/obj/submachine/fishing_upload_terminal,
+/obj/submachine/fishing_upload_terminal/portable,
 /turf/simulated/floor,
 /area/station/ranch)
 "plm" = (

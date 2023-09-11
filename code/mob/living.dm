@@ -1495,6 +1495,9 @@
 		return
 	src.last_resist = world.time + 20
 
+	if(SEND_SIGNAL(src, COMSIG_MOB_RESIST))
+		return TRUE
+
 	if (isobj(src.loc))
 		var/obj/container = src.loc
 		if (container.mob_resist_inside(src))

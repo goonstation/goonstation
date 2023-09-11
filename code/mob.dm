@@ -2203,6 +2203,7 @@
 	logTheThing(LOG_COMBAT, src, "is anvil-gibbed at [log_loc(src)].")
 	src.transforming = TRUE
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "anvilgib")
+	src.anchored = ANCHORED_ALWAYS
 
 	var/obj/anvil = new anvil_type(get_turf(src))
 	anvil.anchored = ANCHORED_ALWAYS
@@ -2232,7 +2233,7 @@
 	playsound(get_turf(src), 'sound/effects/cartoon_fall.ogg', 50, FALSE)
 	SPAWN(1.8 SECONDS)
 		src.gib()
-		anvil.anchored = initial(anvil.anchored)
+		anvil.anchored = anvil_type == anvil_type ? FALSE : initial(anvil.anchored)
 		anvil.plane = initial(anvil.plane)
 		if(shadow)
 			qdel(shadow)
