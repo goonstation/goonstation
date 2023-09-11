@@ -266,6 +266,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon = 'icons/obj/adventurezones/morrigan/decoration.dmi'
 	bound_width = 128
 	bound_height = 128
+/obj/decal/fakeobjects/hafmech
+	name = "Big Machine"
+	desc = "This does not come in smaller sizes..."
+	icon_state = "mech"
 
 /obj/decal/fakeobjects/missile
 	name = "Escape Missile"

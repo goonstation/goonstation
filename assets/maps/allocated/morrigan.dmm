@@ -7471,14 +7471,6 @@
 /area/morrigan/station/factory)
 "hke" = (
 /obj/decal/cleanable/rust,
-/obj/overlay{
-	density = 1;
-	desc = "Part of a drone chassis.";
-	dir = 8;
-	icon = 'icons/obj/ship.dmi';
-	icon_state = "drone_construction";
-	name = "drone parts"
-	},
 /turf/unsimulated/floor/engine/caution/north,
 /area/morrigan/station/factory)
 "hkj" = (
@@ -7749,6 +7741,11 @@
 /obj/sound_trigger/morrigan/glass_drop,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict/hobo)
+"hyz" = (
+/obj/lattice,
+/obj/decal/fakeobjects/hafmech,
+/turf/space,
+/area/morrigan/station/space)
 "hyH" = (
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/rust/jen,
@@ -9841,19 +9838,6 @@
 /obj/machinery/light/incandescent/warm,
 /turf/unsimulated/floor/sanitary/blue,
 /area/morrigan/routing/transport)
-"jFd" = (
-/obj/overlay{
-	bound_height = 96;
-	bound_width = 96;
-	density = 1;
-	desc = "An enormous Omega-class battledrone. Luckily, it appears to be inactive at the moment.";
-	icon = 'icons/effects/96x96.dmi';
-	icon_state = "battledrone-inactive";
-	name = "mostly assembled drone"
-	},
-/obj/decal/fakeobjects/safehouse/conduit,
-/turf/unsimulated/floor/engine/glow,
-/area/morrigan/station/factory)
 "jFP" = (
 /obj/decoration/decorativeplant/plant7,
 /obj/machinery/light/incandescent/netural{
@@ -32103,7 +32087,7 @@ ykr
 iLy
 xVh
 gMk
-iVk
+hyz
 iVk
 elx
 fby
@@ -32207,7 +32191,7 @@ ykr
 hke
 dXF
 udo
-jFd
+dXF
 iVk
 iVk
 tjd
