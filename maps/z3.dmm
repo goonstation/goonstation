@@ -316,7 +316,7 @@
 /area/space_hive)
 "abj" = (
 /turf/simulated/wall/false_wall/hive{
-	icon = 'icons/turf/walls_beehive.dmi';
+	icon = 'icons/turf/walls/beehive.dmi';
 	icon_state = "bee-3"
 	},
 /area/space_hive)
