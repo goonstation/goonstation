@@ -1883,7 +1883,7 @@
 		name = "Honky Tonic"
 		id = "honky_tonic"
 		result = "honky_tonic"
-		required_reagents = list("tonic" = 1, "lube" = 1, "colors" = 1, "neurotoxin" = 1)
+		required_reagents = list("tonic" = 1, "lube" = 1, "neurotoxin" = 1, "juice_banana" = 1)
 		result_amount = 4
 		mix_phrase = "The drink honks at you! What the fuck?"
 		mix_sound = 'sound/misc/drinkfizz_honk.ogg'
@@ -4716,6 +4716,16 @@
 		//max_temperature = T0C - 100
 		result_amount = 1
 		mix_phrase = ".ylegnarts dnuora lriws ot snigeb erutxim ehT"
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		hidden = TRUE
+
+	capsizin
+		name = "capsizin"
+		id = "capsizin"
+		result = "capsizin"
+		required_reagents = list("reversium" = 1, "capsaicin" = 4)
+		result_amount = 5
+		mix_phrase = "The solution begins to capsize. What does that even mean?"
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		hidden = TRUE
 

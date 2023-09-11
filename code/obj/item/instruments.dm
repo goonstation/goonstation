@@ -371,13 +371,27 @@
 /obj/item/instrument/guitar
 	name = "guitar"
 	desc = "This machine kills syndicates."
-	icon_state = "guitar"
-	item_state = "guitar"
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "guitar1"
+	item_state = "guitar1"
 	two_handed = 1
 	force = 10
+	note_range = list("d2", "c6")
+	instrument_sound_directory = "sound/musical_instruments/guitar/notes/"
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
+	use_new_interface = TRUE
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROD)
+
+	New()
+		src.icon_state = "guitar[rand(1,5)]"
+		src.item_state = src.icon_state
+		..()
+
 
 	New()
 		if (sounds_instrument == null)

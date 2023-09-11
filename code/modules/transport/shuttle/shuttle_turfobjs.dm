@@ -114,7 +114,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 /turf/simulated/wall/auto/shuttle
 	name = "shuttle wall"
 	desc = "A shuttle wall. Pretty reinforced."
-	icon = 'icons/turf/walls_shuttle.dmi'
+	icon = 'icons/turf/walls/shuttle/blue.dmi'
 #ifdef PERSPECTIVE_EDITOR_WALL
 	icon_state = "perspective-mapwall"
 #else
@@ -199,7 +199,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 	plane = PLANE_WALL
 	name = "shuttle wall"
 	desc = "A shuttle wall. Pretty reinforced. This appears to be a corner."
-	icon = 'icons/turf/walls_shuttle.dmi'
+	icon = 'icons/turf/walls/shuttle/corner.dmi'
 	icon_state = "corner"
 	density = 1
 	opacity = 0

@@ -313,6 +313,10 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			src.valve_open = !valve_open
 			SPAWN(1 SECOND)
 				signalled = FALSE
+			if(valve_open)
+				playsound(src, 'sound/effects/valve_creak.ogg', 50, 1)
+			else
+				playsound(src, 'sound/effects/valve_creak.ogg', 50, 1, pitch=-1)
 			if(valve_open && force_dud)
 				message_admins("A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [key_name(src.fingerprintslast)]")
 				logTheThing(LOG_BOMBING, null, "A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")

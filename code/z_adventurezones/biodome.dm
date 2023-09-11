@@ -575,7 +575,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "strange wall"
 	desc = "This wall seems strangely out-of-place."
 	icon_state = "cave-0"
-	icon = 'icons/turf/walls_cave.dmi'
+	icon = 'icons/turf/walls/cave.dmi'
 
 	var/active = 0
 
