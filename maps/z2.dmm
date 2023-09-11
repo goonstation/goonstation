@@ -57161,7 +57161,10 @@
 /obj/table/wood/round/auto,
 /obj/map/light/white,
 /obj/item/instrument/electricguitar{
-	pixel_y = 3
+	pixel_y = -3
+	},
+/obj/item/instrument/guitar{
+	pixel_y = 7
 	},
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
