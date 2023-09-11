@@ -8672,7 +8672,7 @@
 /obj/decal/tile_edge/stripe/corner{
 	dir = 6
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "cxc" = (
