@@ -1298,7 +1298,7 @@
 		return
 		//target = input(usr, "Target", "Target") as mob|obj|turf in world
 
-	if (target.level <= 1)
+	if (CHECK_LIQUID_CLICK(target))
 		var/turf/T = get_turf(target)
 		if (T.active_liquid || T.active_airborne_liquid)
 			// possibly asinine but I feel the rule helps contain the turf-fluid-smoke trifecta into a 'group'

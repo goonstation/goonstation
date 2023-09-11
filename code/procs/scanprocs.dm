@@ -510,7 +510,7 @@
 	else
 		data = "<b class='notice'>No significant chemical agents found in [A].</b>"
 
-	if (A.level <= 1)
+	if (CHECK_LIQUID_CLICK(A))
 		var/turf/T = get_turf(A)
 		var/obj/fluid/liquid = T.active_liquid
 		var/obj/fluid/airborne/gas = T.active_airborne_liquid
@@ -708,7 +708,7 @@
 	[interesting_data ? "<br><i>Energy signature analysis:</i><span class='notice'> [interesting_data]</span>" : null]\
 	"
 
-	if (A.level <= 1)
+	if (CHECK_LIQUID_CLICK(A))
 		var/turf/T = get_turf(A)
 		if (T.active_liquid)
 			data += scan_forensic(T.active_liquid, visible)

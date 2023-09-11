@@ -704,7 +704,7 @@ TYPEINFO(/atom)
 /atom/proc/get_desc(dist, mob/user)
 	// If we click something on/under the floor, then analyze fluid/smoke as well
 	// a million things don't call the parent for this but the things I care about don't override it so kicking it down the road
-	if (src.level <= 1)
+	if (CHECK_LIQUID_CLICK(target))
 		var/turf/T = get_turf(src)
 		var/obj/fluid/liquid = T.active_liquid
 		var/obj/fluid/airborne/gas = T.active_airborne_liquid

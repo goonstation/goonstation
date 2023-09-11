@@ -204,7 +204,7 @@ proc/ui_describe_reagents(atom/A)
 		user.lastattacked = target
 
 		// this shit sucks but this is an if-else so there's no space to fit a cast in there
-		var/turf/target_turf = target.level <= 1 ? get_turf(target) : null
+		var/turf/target_turf = CHECK_LIQUID_CLICK(target) ? get_turf(target) : null
 		if (ismob(target) && !target.is_open_container() && src.is_open_container()) // pour reagents down their neck (if possible)
 			if (!src.reagents.total_volume)
 				boutput(user, "<span class='alert'>Your [src.name] is empty!</span>")

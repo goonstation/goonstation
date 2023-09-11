@@ -687,7 +687,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			return
 		user.lastattacked = target
 		// this shit sucks but there's no space for a cast since the following section is an if-else
-		var/turf/target_turf = target.level <= 1 ? get_turf(target) : null
+		var/turf/target_turf = CHECK_LIQUID_CLICK(target) ? get_turf(target) : null
 		if (target_turf?.active_liquid) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
 			var/obj/fluid/F = target_turf.active_liquid
 			if (!src.reagents.total_volume)

@@ -309,7 +309,7 @@ TRASH BAG
 /obj/item/mop/afterattack(atom/A, mob/user)// the main utility of all moppage and mopkind
 	if (ismob(A))
 		return
-	if (A.level <= 1)
+	if (CHECK_LIQUID_CLICK(A))
 		var/turf/T = get_turf(A)
 		A = T.active_liquid || A // if we target a turf with an active liquid, target the liquid. else target the initial target
 
@@ -549,13 +549,13 @@ TRASH BAG
 		T.active_liquid.group.drain(T.active_liquid,1,src)
 
 /obj/item/sponge/proc/get_action_options(atom/target)
-	if (target.level <= 1)
+	if (CHECK_LIQUID_CLICK(target))
 		var/turf/T = get_turf(target)
 		if (T.active_liquid)
 			return list(SPONGE_SOAK) // only soak if we click a fluid
 
 	. = list()
-	if (target.level <= 1)
+	if (CHECK_LIQUID_CLICK(target))
 		var/turf/simulated/T = get_turf(target)
 		if (T.reagents?.total_volume)
 			. |= SPONGE_SOAK
