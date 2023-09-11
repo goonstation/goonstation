@@ -749,7 +749,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 	uses_multiple_icon_states = 1
 	w_class = W_CLASS_TINY
 	throwforce = 1
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
@@ -814,7 +814,8 @@ TYPEINFO(/obj/item/device/light/floodlight)
 		src.name = "burnt-out emergency flare"
 
 		light_c.disable()
-
+		if (istype(user))
+			user.update_inhands()
 		processing_items.Remove(src)
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
@@ -836,19 +837,21 @@ TYPEINFO(/obj/item/device/light/floodlight)
 				return
 
 	attack(mob/M, mob/user)
-		if (ishuman(M))
-			if (src.on > 0)
-				var/mob/living/carbon/human/fella = M
-				if (fella.bleeding || (fella.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
-					src.cautery_surgery(fella, user, 5, src.on)
-					return ..()
-				else
-					user.visible_message("<span class='alert'><b>[user]</b> pushes the burning [src] against [fella]!</span>",\
-					"<span class='alert'>You use the burning [src] on [fella]!</span>")
-					fella.TakeDamage("All", 0, rand(3,7))
-					if (!fella.stat)
-						fella.emote("scream")
-					return
+		if (src.on == FLARE_LIT)
+			if (ishuman(M))
+				if (src.on > 0)
+					var/mob/living/carbon/human/H = M
+					if (H.bleeding || (H.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
+						src.cautery_surgery(H, user, 5, src.on)
+						return ..()
+					else
+						user.visible_message("<span class='alert'><b>[user]</b> pushes the burning [src] against [H]!</span>",\
+						"<span class='alert'>You press the burning end of [src] against [H]!</span>")
+						playsound(src.loc, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+						H.TakeDamage("All", 0, rand(3,7))
+						if (!H.stat && !ON_COOLDOWN(H, "burn_scream", 4 SECONDS))
+							H.emote("scream")
+						return
 		else
 			return ..()
 
