@@ -5671,6 +5671,10 @@
 /area/morrigan/derelict)
 "fGR" = (
 /obj/disposalpipe/segment,
+/obj/lever/pipeswitch{
+	id = "pipe_one";
+	switch_type = /obj/disposalpipe/junction/left/west
+	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/security/brig)
 "fHm" = (
@@ -23962,7 +23966,9 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/morrigan/station/medical/main)
 "xNk" = (
-/obj/disposalpipe/junction/right/east,
+/obj/disposalpipe/junction/right/east{
+	id = "pipe_one"
+	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/brig)
 "xNr" = (
