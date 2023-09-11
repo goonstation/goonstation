@@ -4736,7 +4736,7 @@
 /area/station/medical/crematorium)
 "aqV" = (
 /turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-12"
 	},
 /area/station/chapel/office)
