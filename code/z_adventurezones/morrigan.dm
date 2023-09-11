@@ -2303,8 +2303,9 @@ TYPEINFO(/obj/item/gun/energy/railgun_experimental)
 	cell_type = /obj/item/ammo/power_cell/self_charging/railgun_experimental
 	icon = 'icons/obj/adventurezones/morrigan/weapons/gunlarge.dmi'
 	icon_state = "railgun"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	desc = "An experimental Hafgan weapon that draws a lot of power to fling projectiles are dangerous speeds, it seems to be in working condition."
-	item_state = "hafrailgun"
+	item_state = "railgun"
 	force = 10
 	shoot_delay = 1 SECONDS
 	two_handed = TRUE
@@ -2313,6 +2314,8 @@ TYPEINFO(/obj/item/gun/energy/railgun_experimental)
 	uses_charge_overlay = TRUE
 	muzzle_flash = "muzzle_flash_elec"
 	charge_icon_state = "railgun"
+	w_class = W_CLASS_BULKY
+	c_flags = ONBACK | ONBELT
 	cantshootsound = 'sound/weapons/railgunwait.ogg'
 
 	New()
@@ -2364,7 +2367,7 @@ TYPEINFO(/obj/item/gun/energy/hafpistol)
 TYPEINFO(/obj/item/gun/energy/peacebringer)
 	mats = null
 /obj/item/gun/energy/peacebringer
-	name = "PeaceBringer"
+	name = "Mod.98 Unbidden"
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/self_charging/peacebringer
 	icon = 'icons/obj/adventurezones/morrigan/weapons/gun.dmi'
@@ -2450,9 +2453,11 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 	uses_multiple_icon_states = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/lasershotgun
 	icon = 'icons/obj/adventurezones/morrigan/weapons/gun48.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "lasershotgun"
 	desc = "A burst shotgun with short range. Sold for heavy crowd control and shock tactics."
 	item_state = "lasershotgun"
+	c_flags = ONBACK | ONBELT
 	force = 10
 	two_handed = TRUE
 	can_swap_cell = FALSE

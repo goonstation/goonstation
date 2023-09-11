@@ -1865,13 +1865,6 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"bQn" = (
-/obj/decal/poster/wallsign/poster_nt{
-	icon_state = "wall_poster_syndicate";
-	name = "Syndicate Poster"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/civilian/cafe)
 "bQG" = (
 /obj/decal/floatingtiles{
 	dir = 4;
@@ -7021,9 +7014,6 @@
 	},
 /area/morrigan/routing/transport)
 "gSl" = (
-/obj/stool/chair/wooden{
-	dir = 4
-	},
 /mob/living/critter/robotic/gunbot/morrigan/engineerbot,
 /turf/unsimulated/floor/wood/seven,
 /area/morrigan/station/civilian/cafe)
@@ -11961,9 +11951,6 @@
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/exit)
 "lOv" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
 /mob/living/critter/robotic/gunbot/morrigan/medibot,
 /turf/unsimulated/floor/wood/seven,
 /area/morrigan/station/civilian/cafe)
@@ -14545,10 +14532,6 @@
 /mob/living/critter/robotic/gunbot/morrigan/medibot,
 /turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/engineering/specialist)
-"ocH" = (
-/obj/stool/chair/wooden,
-/turf/unsimulated/floor/wood/seven,
-/area/morrigan/station/civilian/cafe)
 "ocN" = (
 /obj/machinery/networked/teleconsole{
 	dir = 8
@@ -27038,9 +27021,9 @@ mqD
 mqD
 mqD
 hYi
-ocH
+mqD
 fgQ
-bQn
+wHi
 rjh
 bvF
 xkV
@@ -27759,7 +27742,7 @@ sYI
 mqD
 mqD
 mqD
-ocH
+mqD
 fHm
 wHi
 hcK
