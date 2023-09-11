@@ -195,6 +195,8 @@
 
 
 	var/image/pipeimg = null
+	///For manual switching
+	var/id = null
 
 	// new pipe, set the icon_state as on map
 	New()
@@ -203,6 +205,10 @@
 		pipeimg = image(src.icon, src.loc, src.icon_state, 3, dir)
 		pipeimg.layer = OBJ_LAYER
 		pipeimg.dir = dir
+
+		//So we don't have to shove every single disposal pipe in a by_type
+		if (src.id)
+			START_TRACKING_CAT(TR_CAT_SWITCHED_PIPES)
 
 		// done here instead of world setup in case you want to load a big map in before the round starts or something
 		if (src.z == Z_LEVEL_STATION && global.current_state <= GAME_STATE_PREGAME)

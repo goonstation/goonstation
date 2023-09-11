@@ -3021,3 +3021,28 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 		for (var/mob/living/critter/robotic/robo in range(5, holder.owner))
 			robo.HealDamage("all", 10, 10, 0)
 		return 0
+
+/obj/lever/pipeswitch
+	///The ID to match with the particular pipe
+	var/id = null
+	///The /obj/disposalpipe type to switch to, changes on switching
+	var/switch_type = null
+
+	on()
+		src.do_switch()
+	off()
+		src.do_switch()
+
+	proc/do_switch()
+		if (!src.id || !src.switch_type)
+			return
+
+		for (var/obj/disposalpipe/pipe in by_cat[TR_CAT_SWITCHED_PIPES])
+			if (pipe.id == src.id)
+				var/pipe_type = pipe.type
+				var/turf/T = get_turf(pipe)
+				qdel(pipe)
+				var/obj/disposalpipe/newpipe = new src.switch_type(T)
+				newpipe.id = src.id
+				OTHER_START_TRACKING_CAT(newpipe, TR_CAT_SWITCHED_PIPES)
+				src.switch_type = pipe_type //so we switch back next time
