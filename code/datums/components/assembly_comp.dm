@@ -13,7 +13,7 @@ TYPEINFO(/datum/component/assembly)
 	dupe_mode = COMPONENT_DUPE_ALLOWED //We want to have multiple differnt assembly types on an item for different assembly steps
 	///The item(s) that are used to combine with the atom this component is attached to
 	///use a tool-bitflags like TOOL_CUTTING, if you want to go with groups of tools
-	var/atom/to_combine_item = null
+	var/to_combine_item = null
 	///The Procref that will get called when the items are compatible
 	var/valid_assembly_proc = null
 
