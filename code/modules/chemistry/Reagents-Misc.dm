@@ -1291,6 +1291,7 @@ datum
 			fluid_g = 255
 			fluid_b = 204
 			transparency = 150
+			fluid_flags = FLUID_BANNED
 
 			reaction_turf(var/turf/T, var/volume)
 				if (volume >= 5)
@@ -2076,6 +2077,7 @@ datum
 			value = 5
 			hunger_value = 0.8
 			threshold = THRESHOLD_INIT
+			fluid_flags = FLUID_BANNED
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
@@ -2290,6 +2292,7 @@ datum
 			fluid_g = 255
 			fluid_b = 255
 			transparency = 255
+			fluid_flags = FLUID_BANNED
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
@@ -2584,6 +2587,34 @@ datum
 							M.visible_message("<span class='emote'><B>[M]</B> gives [some_idiot.name] the double deuce!</span>")
 				..()
 				return
+		capsizin
+			name = "capsizin"
+			id = "capsizin"
+			description = "This liquid doesn't seem to be self-righting..."
+			reagent_state = LIQUID
+			fluid_r = 23
+			fluid_g = 46
+			fluid_b = 111
+			transparency = 150
+			overdose = 30
+			threshold = THRESHOLD_INIT
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.Turn(180)
+					boutput(M, "You capsize!")
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.Turn(180)
+					boutput(M, "You manage to right yourself!")
+				..()
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				M.reagents.add_reagent("water", severity * mult)
 
 		transparium
 			name = "transparium"
@@ -3107,6 +3138,7 @@ datum
 			fluid_r = 0
 			fluid_g = 0
 			fluid_b = 0
+			fluid_flags = FLUID_STACKING_BANNED
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				if (prob(80))
@@ -3413,6 +3445,7 @@ datum
 			transparency = 255
 			hygiene_value = -5
 			viscosity = 0.5
+			fluid_flags = FLUID_STACKING_BANNED
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				if (prob(66))
@@ -3428,6 +3461,7 @@ datum
 			fluid_g = 190
 			fluid_b = 230
 			transparency = 160
+			fluid_flags = FLUID_STACKING_BANNED
 
 		big_bang
 			name = "quark-gluon plasma"
@@ -3440,7 +3474,7 @@ datum
 			fluid_b = 250
 			transparency = 255
 			viscosity = 0.7
-
+			fluid_flags = FLUID_SMOKE_BANNED
 			pierces_outerwear = 1//shoo, biofool
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
@@ -4172,6 +4206,7 @@ datum
 			fluid_b = 124
 			transparency = 255
 			overdose = 70
+			fluid_flags = FLUID_SMOKE_BANNED
 			var/concrete_strength = 0
 
 			reaction_turf(var/turf/T, var/volume)

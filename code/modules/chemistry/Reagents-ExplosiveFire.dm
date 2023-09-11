@@ -197,6 +197,7 @@ datum
 			transparency = 255
 			volatility = 1.5
 			minimum_reaction_temperature = T0C+100
+			fluid_flags = FLUID_BANNED
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/turf/simulated/A = holder.my_atom
@@ -472,6 +473,7 @@ datum
 			transparency = 150
 			viscosity = 0.7
 			minimum_reaction_temperature = 1000
+			fluid_flags = FLUID_SMOKE_BANNED
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				holder.del_reagent(id)
@@ -667,6 +669,7 @@ datum
 			depletion_rate = 0.05
 			penetrates_skin = 1 // think of it as just being all over them i guess
 			minimum_reaction_temperature = T0C+200
+			fluid_flags = FLUID_BANNED | FLUID_STACKING_BANNED
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(src.reacting)
@@ -726,6 +729,9 @@ datum
 									holder.remove_reagent(id, our_amt)
 								else
 									holder.del_reagent(id)
+						if(istype(holder.my_atom, /obj))
+							var/obj/container = holder.my_atom
+							container.shatter_chemically(projectiles = TRUE)
 
 			reaction_obj(var/obj/O, var/volume)
 				return
@@ -835,3 +841,19 @@ datum
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				bang()
+
+		combustible/photophosphide
+			id = "photophosphide"
+			name = "photophosphide"
+			random_chem_blacklisted = TRUE //probably for the best ??
+			description = "A photosensitive explosive reagent that detonates when exposed to relatively small amounts of light."
+			reagent_state = SOLID
+			fluid_r = 149
+			fluid_g = 119
+			fluid_b = 163
+			transparency = 255
+			taste = "sandy"
+			fluid_flags = FLUID_BANNED | FLUID_STACKING_BANNED | FLUID_SMOKE_BANNED
+
+			reaction_turf()
+				return

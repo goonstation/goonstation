@@ -273,8 +273,10 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			var/looper = rand(2,5)
 			while (looper > 0)
 				var/reagent = pick(potential_reagents)
-				if(payload_type == 3 && ban_from_fluid.Find(reagent)) // do not pick stuff that is banned from fluid dump
-					continue
+				if(payload_type == 3) // do not pick stuff that is banned from fluid dump
+					var/datum/reagent/cached = reagents_cache[reagent]
+					if (cached.fluid_flags & FLUID_BANNED)
+						continue
 				looper--
 				payload_reagents += reagent
 			log_addendum = "Payload: [payload_type_name], [kText.list2text(payload_reagents, ", ")]"

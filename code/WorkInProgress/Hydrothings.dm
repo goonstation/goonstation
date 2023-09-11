@@ -1405,7 +1405,6 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	picture = "robot.png"
 	name = "Greg"
 	desc = "Oh hey its Greg! Everyone loves him, but you don't seem to remember why."
-	trader_area = "/area/owlery/staffhall"
 
 	New()
 		..()

@@ -53,6 +53,9 @@
 	tele_man = new()
 	tele_man.setup()
 
+	Z_LOG_DEBUG("World/Init", "M4GP13 setup...")
+	magpie_man.setup()
+
 	Z_LOG_DEBUG("World/Init", "Mining setup...")
 	mining_controls.setup_mining_landmarks()
 
@@ -161,7 +164,7 @@
 	initialize_mail_system()
 	#endif
 
-	#if ENABLE_ARTEMIS && !defined(SKIP_PLANETS_SETUP)
+	#if defined(ENABLE_ARTEMIS) && !defined(SKIP_PLANETS_SETUP)
 	UPDATE_TITLE_STATUS("Building planet level")
 	Z_LOG_DEBUG("World/Init", "Setting up planet level...")
 	makePlanetLevel()

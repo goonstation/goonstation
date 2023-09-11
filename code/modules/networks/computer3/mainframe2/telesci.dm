@@ -239,7 +239,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 								src.message_host("command=nack&cause=interference")
 							else
 								message_host("command=ack")
-								sleep(1 SECOND)
+								sleep(0.5 SECONDS)
 								src.send(turfcheck)
 							sleep(0.5 SECONDS)
 
@@ -263,13 +263,13 @@ TYPEINFO(/obj/machinery/networked/telepad)
 									src.message_host("command=nack&cause=bad[turfcheck & 1 ? "x" : null][turfcheck & 2 ? "y" : null][turfcheck & 4 ? "z" : null]")
 								else
 									src.message_host("command=nack&cause=badxyz")
-								sleep(1 SECOND)
+								sleep(0.5 SECONDS)
 								src.badreceive()
 							else if(!is_teleportation_allowed(turfcheck))
 								src.message_host("command=nack&cause=interference")
 							else
 								message_host("command=ack")
-								sleep(1 SECOND)
+								sleep(0.5 SECONDS)
 								src.receive(turfcheck)
 							sleep(0.5 SECONDS)
 
@@ -473,6 +473,9 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		if (!target)
 			return 1
 
+		leaveresidual(target)
+		sleep(0.5 SECONDS)
+
 		var/list/stuff = list()
 		for(var/atom/movable/O as obj|mob in src.loc)
 			if(O.anchored) continue
@@ -491,7 +494,6 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		showswirl_out(src.loc)
 		leaveresidual(src.loc)
 		showswirl(target)
-		leaveresidual(target)
 		use_power(1500)
 		if(prob(2) && prob(2))
 			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
@@ -508,6 +510,9 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			//boutput(usr, "Unknown interference prevents teleportation from that location!")
 			return 1
 
+		leaveresidual(receiveturf)
+		sleep(0.5 SECONDS)
+
 		var/list/stuff = list()
 		for(var/atom/movable/O as obj|mob in receiveturf)
 			if(O.anchored) continue
@@ -522,7 +527,6 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		showswirl(src.loc)
 		leaveresidual(src.loc)
 		showswirl_out(receiveturf)
-		leaveresidual(receiveturf)
 		use_power(1500)
 		if(prob(2) && prob(2))
 			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")

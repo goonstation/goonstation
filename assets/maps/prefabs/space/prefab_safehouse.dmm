@@ -273,12 +273,12 @@
 	pixel_y = -8
 	},
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/suit,
+/obj/item/clothing/under/suit/black,
 /obj/decal/cleanable/wardrobe_scuff_marks,
-/obj/item/clothing/under/suit{
+/obj/item/clothing/under/suit/black{
 	pixel_x = 5
 	},
-/obj/item/clothing/under/suit{
+/obj/item/clothing/under/suit/black{
 	pixel_x = 2
 	},
 /obj/item/clothing/shoes/dress_shoes{

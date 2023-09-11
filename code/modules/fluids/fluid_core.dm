@@ -1,23 +1,3 @@
-var/list/ban_from_fluid = list(
-	"paper",\
-	"space_fungus",\
-	"martian_flesh",\
-	"blackpowder",\
-	"thermite",\
-	"luminol",\
-)
-//todo : make thermite work
-var/list/ban_stacking_into_fluid = list( //ban these from producing fluid from a 'cleanable'
-	"water",\
-	"sodium",\
-	"magnesium",\
-	"carbon",\
-	"ash",\
-	"blackpowder",\
-	"leaves",\
-	"poo",\
-)
-
 ///////////////////
 ////Fluid Object///
 ///////////////////
@@ -801,14 +781,14 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		if (src.lying)
 			if (src.wear_suit)
 				src.wear_suit.add_blood(F)
-				src.update_suit()
+				src.update_bloody_suit()
 			else if (src.w_uniform)
 				src.w_uniform.add_blood(F)
-				src.update_uniform()
+				src.update_bloody_uniform()
 		else
 			if (src.shoes)
 				src.shoes.add_blood(F)
-				src.update_shoes()
+				src.update_bloody_shoes()
 			else
 				src.add_blood(F)
 

@@ -274,7 +274,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
 	icon_state = "rice-sprig"
 	food_color = "#FFFFAA"
-	brew_result = "ricewine"
+	brew_result = list("ricewine"=20)
 
 /obj/item/reagent_containers/food/snacks/ingredient/rice
 	name = "rice"
@@ -290,7 +290,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	custom_food = 1
 	initial_volume = 50
 	initial_reagents = list("sugar"=25)
-	brew_result = "rum"
+	brew_result = list("rum"=20)
 
 /obj/item/reagent_containers/food/snacks/ingredient/peanutbutter
 	name = "peanut butter"
@@ -356,7 +356,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	doants = 0
 	initial_volume = 50
 	initial_reagents = list("honey"=15)
-	brew_result = "mead"
+	brew_result = list("mead"=20)
 	mat_changename = "honey"
 	default_material = "honey"
 
