@@ -2471,6 +2471,10 @@
 /obj/mapping_helper/access/morrigan/security,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/main)
+"cvx" = (
+/obj/lattice,
+/turf/space/dense,
+/area/morrigan/station/space)
 "cwk" = (
 /obj/decal/cleanable/rust/jen,
 /turf/unsimulated/floor/industrial,
@@ -6530,7 +6534,7 @@
 	id = "samostrel_nuke_outer";
 	opacity = 0
 	},
-/turf/unsimulated/floor/engine,
+/turf/space/dense,
 /area/morrigan/station/factory)
 "gtF" = (
 /obj/decoration/syndiepc/syndiepc18,
@@ -17496,6 +17500,9 @@
 /obj/item/electronics/board,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/engineering/eng)
+"rfb" = (
+/turf/space/dense,
+/area/morrigan/station/factory)
 "rfC" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
@@ -20245,7 +20252,7 @@
 	id = "samostrel_nuke_outer";
 	opacity = 0
 	},
-/turf/space,
+/turf/space/dense,
 /area/morrigan/station/space)
 "ufr" = (
 /obj/machinery/door/poddoor/blast/pyro,
@@ -21416,6 +21423,10 @@
 	},
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
+"vmh" = (
+/obj/structure/girder,
+/turf/space/dense,
+/area/morrigan/station/space)
 "vmq" = (
 /obj/table/auto,
 /obj/item/gun_parts,
@@ -31474,7 +31485,7 @@ dKY
 dKY
 dKY
 dKY
-dKY
+aDg
 dKY
 dKY
 dKY
@@ -31577,7 +31588,7 @@ dKY
 dKY
 dKY
 dKY
-dKY
+aDg
 dKY
 dKY
 dKY
@@ -31680,7 +31691,7 @@ uBD
 dKY
 dKY
 dKY
-udo
+rfb
 dKY
 dKY
 dKY
@@ -31783,7 +31794,7 @@ fby
 qyR
 nuH
 udo
-udo
+rfb
 dKY
 dKY
 dKY
@@ -32401,7 +32412,7 @@ bEZ
 mWq
 mhL
 udo
-iVk
+cvx
 dKY
 dKY
 dKY
@@ -32504,7 +32515,7 @@ xqP
 nSz
 ykr
 ykr
-ldm
+vmh
 dKY
 dKY
 dKY
