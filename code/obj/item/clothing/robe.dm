@@ -143,7 +143,7 @@
 	icon_state = "cultist"
 	item_state = "cultist"
 	see_face = FALSE
-	magical = TRUE
+	magical = 1
 	over_hair = TRUE
 	wear_layer = MOB_FULL_SUIT_LAYER
 	c_flags = COVERSEYES | COVERSMOUTH
@@ -183,7 +183,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "flockcultist"
 	item_state = "flockcultistt"
-	see_face = 0
+	see_face = FALSE
 	wear_layer = MOB_FULL_SUIT_LAYER
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
@@ -234,4 +234,3 @@
 	desc = "A ratty stinky black robe for wizards who are trying way too hard to be menacing."
 	icon_state = "wizardnec"
 	item_state = "wizardnec"
-
