@@ -145,7 +145,7 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		var/meat_pct = round( 100 * (src.meat_level / MAXIMUM_MEAT_LEVEL) )
 
-		if (CHECK_LIQUID_CLICK(A))
+		if (src.meat_level <= 1)
 			. += "<br><span class='alert'>Alert: Biomatter reserves depleted.</span>"
 		else if (src.meat_level <= MEAT_LOW_LEVEL)
 			. += "<br><span class='alert'>Alert: Biomatter reserves are low ([meat_pct]% full).</span>"
