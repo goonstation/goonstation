@@ -43,6 +43,7 @@ TYPEINFO(/datum/component/bouquet)
 		boutput(user, "This bouquet is full!")
 		return
 	B.add_flower(source, user)
+	B.notaddedflower = TRUE
 
 /datum/component/bouquet/proc/attackby(obj/item/source, obj/item/W, mob/user)
 	// if we attack a flower with a bouquet, add it

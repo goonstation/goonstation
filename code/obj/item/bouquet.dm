@@ -18,6 +18,8 @@
 	var/max_flowers = 3
 	/// is there a hidden item in the bouquet?
 	var/hiddenitem = FALSE
+	/// terrible workaround to make sure that flowers don't get added as hiddenitems
+	var/notaddedflower = FALSE
 
 /*	So anyway here's the naming convention for bouquet.dmi files
 	for the paper, it's either item/paper or item/wrapping_paper
@@ -45,10 +47,12 @@
 		boutput("This bouquet already has something hidden in it!")
 		return
 	// successfully hide item
-	src.flags |= SUPPRESSATTACK
-	W.set_loc(src)
-	src.hiddenitem = TRUE
-	boutput("You stuff \the [W.name] into \the [src.name].")
+	SPAWN(1 DECISECOND) // horrid workaround. Can't figure out a better way.
+		if (src.notaddedflower) // this is set in the component and cancels this bit
+			W.set_loc(src)
+			src.hiddenitem = TRUE
+			boutput("You stuff \the [W.name] into \the [src.name].")
+			src.notaddedflower = FALSE
 
 /obj/item/bouquet/attack_self(mob/user)
 	. = ..()
@@ -57,7 +61,6 @@
 
 
 /obj/item/bouquet/proc/add_flower(obj/item/W, mob/user)
-	src.flags |= SUPPRESSATTACK
 	W.force_drop(user)
 	src.force_drop(user)
 	W.set_loc(src)
