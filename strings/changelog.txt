@@ -1,5 +1,9 @@
 
 (t)sun sep 10 23
+(u)Mantwerp
+(p)15793
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added the acoustic guitar to the afterlife bar.
 (u)FlameArrow57
 (p)15542
 (e)⚖💅🧛🔨|C-Balance, C-QoL, A-Gamemodes, A-Player-Actions
