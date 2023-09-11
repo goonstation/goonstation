@@ -727,6 +727,10 @@ TYPEINFO(/atom)
 /atom/proc/get_help_message(dist, mob/user)
 	. = src.help_message
 
+/// A proc to give this item a special name when viewed in an admin context (just the tilde-rightclick menu for now but probably other places later)
+/atom/proc/admin_visible_name()
+	return src.name
+
 /**
   * a proc to completely override the standard formatting for examine text
 	* to prevent more copy paste

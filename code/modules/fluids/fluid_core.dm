@@ -178,6 +178,8 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		. += "<br><b class='notice'>[capitalize(src.name)] analysis:</b>"
 		. += "<br><span class='notice'>[src.group.reagents.get_description(user,(RC_VISIBLE | RC_SPECTRO))]</span>"
 
+	admin_visible_name()
+		return "[src.name] \[[src.group.reagents.get_master_reagent_name()]\]"
 
 	attack_hand(mob/user)
 		CRASH("[identify_object(user)] hit a fluid with their hand somehow. They shouldn't be able to do that.")
