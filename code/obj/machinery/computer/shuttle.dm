@@ -402,9 +402,8 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 	var/areaUpper
 	var/startTurfToLeave = /turf/simulated/floor/plating
 	var/endTurfToLeave = /turf/simulated/floor/plating
-	var/logBioeleAccident = 0
-	var/adminOnly = 0
-	var/ignore_fluid = 0
+	var/logBioeleAccident = FALSE
+	var/adminOnly = FALSE
 
 /obj/machinery/computer/elevator/icebase
 	machine_registry_idx = MACHINES_ELEVATORICEBASE
@@ -417,13 +416,13 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 	areaLower = /area/shuttle/biodome_elevator/lower
 	areaUpper = /area/shuttle/biodome_elevator/upper
 	endTurfToLeave = /turf/unsimulated/floor/setpieces/ancient_pit/shaft
+	logBioeleAccident = TRUE
 
 /obj/machinery/computer/elevator/sea
 	machine_registry_idx = MACHINES_ELEVATORSEA
 	areaLower = /area/shuttle/sea_elevator/lower
 	areaUpper = /area/shuttle/sea_elevator/upper
 	endTurfToLeave = /turf/simulated/floor/specialroom/sea_elevator_shaft
-	ignore_fluid = 1
 
 /obj/machinery/computer/elevator/centcomm
 	machine_registry_idx = MACHINES_ELEVATORCENTCOM
@@ -431,8 +430,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 	areaUpper = /area/shuttle/centcom_elevator/upper
 	endTurfToLeave = /turf/unsimulated/floor/glassblock/transparent_cyan
 	location = 0
-	logBioeleAccident = 1
-	adminOnly = 1
+	adminOnly = TRUE
 
 /obj/machinery/computer/elevator/centcomm/hidden
 	name = "toilet paper holder";
@@ -486,7 +484,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 	if(location == 0) // at bottom
 		var/area/start_location = locate(areaLower)
 		var/area/end_location = locate(areaUpper)
-		start_location.move_contents_to(end_location, startTurfToLeave, ignore_fluid = ignore_fluid)
+		start_location.move_contents_to(end_location, startTurfToLeave, ignore_fluid = TRUE)
 		location = 1
 	else // at top
 		var/area/start_location = locate(areaUpper)
@@ -498,7 +496,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 					L.gib()
 				if (logBioeleAccident)
 					bioele_accident()
-		start_location.move_contents_to(end_location, endTurfToLeave, ignore_fluid = ignore_fluid)
+		start_location.move_contents_to(end_location, endTurfToLeave, ignore_fluid = TRUE)
 		location = 0
 
 	for(var/obj/machinery/computer/elevator/C in machine_registry[machine_registry_idx])
