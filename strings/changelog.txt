@@ -1,5 +1,9 @@
 
 (t)tue sep 12 23
+(u)Paaiii
+(p)15595
+(e)⚖💅🤖|C-Balance, C-QoL, A-Silicons
+(+)Gives AIs a command to unlock their own core cover.
 (u)Bartimeus973
 (p)15564
 (e)🆕🎨🔨📦|C-Feature, C-Sprites, A-Player-Actions, A-Game-Objects
