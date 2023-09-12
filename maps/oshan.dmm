@@ -13973,18 +13973,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/iss)
-"aUH" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
-/area/space)
 "aUJ" = (
 /obj/table/auto,
 /obj/item/weldingtool,
@@ -14077,18 +14065,6 @@
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/grime,
 /area/iss)
-"aVb" = (
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
-/area/space)
 "aVc" = (
 /obj/decal/woodclutter,
 /obj/overlay{
@@ -14553,18 +14529,6 @@
 /obj/map/light/screen,
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
-"aXf" = (
-/obj/indestructible/shuttle_corner{
-	dir = 10;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
-/area/space)
 "aXg" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -14575,18 +14539,6 @@
 	name = "martian machine"
 	},
 /turf/simulated/floor/martian,
-/area/space)
-"aXh" = (
-/obj/indestructible/shuttle_corner{
-	dir = 6;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
 /area/space)
 "aXi" = (
 /obj/item/basketball,
@@ -33227,6 +33179,18 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"csZ" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/space)
 "ctr" = (
 /obj/item/pen/crayon/rainbow,
 /turf/simulated/floor/plating/random,
@@ -33345,18 +33309,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
-"cEW" = (
-/obj/indestructible/shuttle_corner{
-	dir = 6;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
-/area/evilreaver/atmospherics)
 "cFs" = (
 /obj/map/light/white,
 /turf/simulated/wall/auto/martian,
@@ -33378,14 +33330,6 @@
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/chapel)
-"cFH" = (
-/obj/indestructible/shuttle_corner{
-	dir = 10;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/martian,
-/area/evilreaver/chapel)
 "cFJ" = (
 /obj/item/device/radio/beacon,
 /obj/landmark/pest,
@@ -33399,15 +33343,6 @@
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
-"cFR" = (
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/obj/lattice,
-/turf/simulated/floor/martian,
-/area/evilreaver/security)
 "cGD" = (
 /obj/decal/poster{
 	pixel_y = 32
@@ -33755,14 +33690,15 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
-"dhg" = (
+"dfU" = (
 /obj/indestructible/shuttle_corner{
-	dir = 6;
+	dir = 5;
 	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
+/obj/lattice,
 /turf/simulated/floor/martian,
-/area/evilreaver/chapel)
+/area/evilreaver/security)
 "dhj" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -33978,6 +33914,14 @@
 	},
 /turf/simulated/floor/damaged2,
 /area/space)
+"dxe" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/martian,
+/area/evilreaver/bridge)
 "dxt" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/mapping_helper/access/kitchen,
@@ -34377,17 +34321,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/storage/eeva)
-"dXc" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 4
-	},
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/martian,
-/area/evilreaver/storage/tools)
 "dYU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -34443,6 +34376,14 @@
 /obj/machinery/vending/pizza,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
+"edw" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/martian,
+/area/evilreaver/storage/tools)
 "edA" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -34510,18 +34451,6 @@
 	dir = 4
 	},
 /area/station/hydroponics/bay)
-"ehn" = (
-/obj/indestructible/shuttle_corner{
-	dir = 6;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
-/area/evilreaver/storage/tools)
 "ehM" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	name = "Teleporter"
@@ -34692,19 +34621,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"ert" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/obj/lattice,
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
-/area/evilreaver/bridge)
 "erD" = (
 /obj/item/storage/box/beakerbox{
 	pixel_x = 8;
@@ -35078,6 +34994,18 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"eUA" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/space)
 "eUL" = (
 /obj/machinery/r_door_control/podbay/security/new_walls/east{
 	pixel_x = 24
@@ -35404,6 +35332,14 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"fps" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/martian,
+/area/evilreaver/bar)
 "fqp" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -35494,14 +35430,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
-"fCj" = (
-/obj/indestructible/shuttle_corner{
-	dir = 10;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/martian,
-/area/space)
 "fCn" = (
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/circuit,
@@ -35614,14 +35542,6 @@
 /obj/stool,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
-"fHY" = (
-/obj/indestructible/shuttle_corner{
-	dir = 10;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/martian,
-/area/evilreaver/bridge)
 "fJb" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
@@ -35682,15 +35602,6 @@
 /obj/machinery/conveyor/EW/carousel,
 /turf/space/fluid,
 /area/space)
-"fMQ" = (
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/obj/lattice,
-/turf/simulated/floor/martian,
-/area/evilreaver/chapel)
 "fMS" = (
 /obj/cable{
 	icon_state = "5-8"
@@ -35798,14 +35709,6 @@
 	icon_state = "floor4"
 	},
 /area/space)
-"fWn" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/martian,
-/area/evilreaver/storage/tools)
 "fWR" = (
 /obj/machinery/firealarm/east,
 /turf/simulated/floor,
@@ -35842,6 +35745,14 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
+"fZv" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/space/fluid,
+/area/space)
 "fZP" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -35997,6 +35908,18 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"gnh" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/evilreaver/bridge)
 "gog" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/grime,
@@ -36439,6 +36362,15 @@
 	icon_state = "fblue2"
 	},
 /area/station/medical/head)
+"gVN" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/obj/lattice,
+/turf/simulated/floor/martian,
+/area/evilreaver/chapel)
 "gWf" = (
 /obj/stool/chair/office/red{
 	dir = 8
@@ -36545,6 +36477,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/crew_quarters/quartersA)
+"hgK" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/martian,
+/area/evilreaver/bridge)
 "hhP" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -36730,14 +36670,6 @@
 /obj/machinery/glass_recycler/chemistry,
 /turf/space/fluid,
 /area/space)
-"hGJ" = (
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/martian,
-/area/evilreaver/bridge)
 "hGR" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 1;
@@ -36840,6 +36772,14 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/hangar/science)
+"hRQ" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/martian,
+/area/space)
 "hSD" = (
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/neutral/side{
@@ -36958,14 +36898,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
-"iey" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/martian,
-/area/evilreaver/atmospherics)
 "ieE" = (
 /obj/machinery/door/airlock/pyro/classic{
 	name = "rusty airlock"
@@ -37665,18 +37597,6 @@
 	icon_state = "green2"
 	},
 /area/station/bridge/customs)
-"jlN" = (
-/obj/indestructible/shuttle_corner{
-	dir = 6;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
-/area/evilreaver/bridge)
 "jlY" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor,
@@ -37890,6 +37810,18 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/science/lobby)
+"jHD" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/evilreaver/atmospherics)
 "jIt" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle,
@@ -38599,14 +38531,6 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/purple/side,
 /area/station/crew_quarters/arcade/dungeon)
-"laC" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/martian,
-/area/space)
 "lbd" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -38713,6 +38637,14 @@
 /obj/item/furniture_parts/comfy_chair,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
+"lfu" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/martian,
+/area/space)
 "lgA" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet{
@@ -38759,6 +38691,14 @@
 /obj/landmark/pest,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
+"llE" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/martian,
+/area/evilreaver/chapel)
 "lnl" = (
 /obj/machinery/conveyor/SW/carousel,
 /turf/simulated/floor/shuttlebay,
@@ -39253,14 +39193,6 @@
 /obj/submachine/fishing_upload_terminal/portable,
 /turf/simulated/floor/green,
 /area/station/maintenance/northwest)
-"lYX" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/martian,
-/area/evilreaver/security)
 "lZk" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -39649,14 +39581,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
-"mCk" = (
-/obj/indestructible/shuttle_corner{
-	dir = 6;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/space/fluid,
-/area/space)
 "mCF" = (
 /obj/stool/bed,
 /obj/landmark/start/job/botanist,
@@ -39963,6 +39887,18 @@
 /obj/machinery/firealarm/north,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"mUi" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/space)
 "mUm" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -40219,6 +40155,14 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
+"nka" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/martian,
+/area/evilreaver/atmospherics)
 "nkh" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -40272,6 +40216,18 @@
 	dir = 4
 	},
 /area/station/crew_quarters/quartersA)
+"noh" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/evilreaver/storage/tools)
 "nra" = (
 /obj/machinery/firealarm/east,
 /obj/decal/stripe_delivery,
@@ -40690,6 +40646,18 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/hallway/primary/west)
+"odF" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/space)
 "oeg" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
@@ -40709,6 +40677,17 @@
 	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
+"oeR" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/floor/martian,
+/area/evilreaver/storage/tools)
 "ofm" = (
 /obj/stool/chair/red,
 /obj/disposalpipe/segment/ejection{
@@ -40784,17 +40763,6 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/hangar)
-"ojY" = (
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 4
-	},
-/turf/simulated/floor/martian,
-/area/evilreaver/storage/tools)
 "okS" = (
 /obj/machinery/atmospherics/portables_connector{
 	name = "Mixing Port"
@@ -40975,6 +40943,14 @@
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
+"oCW" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/martian,
+/area/evilreaver/storage/tools)
 "oDC" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
@@ -41257,14 +41233,6 @@
 	},
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
-"pbD" = (
-/obj/indestructible/shuttle_corner{
-	dir = 6;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/martian,
-/area/evilreaver/security)
 "pcr" = (
 /obj/item/furniture_parts/wheelchair,
 /turf/simulated/floor/shuttlebay,
@@ -41890,6 +41858,13 @@
 	},
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
+"qaU" = (
+/obj/machinery/computer/elevator/sea,
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/shuttle/sea_elevator_room)
 "qbb" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -42423,14 +42398,6 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade/dungeon)
-"qYb" = (
-/obj/indestructible/shuttle_corner{
-	dir = 10;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/martian,
-/area/evilreaver/bar)
 "qZi" = (
 /obj/machinery/power/furnace{
 	active = 1;
@@ -42495,14 +42462,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/ranch)
-"rfp" = (
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/martian,
-/area/evilreaver/storage/tools)
 "rfq" = (
 /obj/disposalpipe/segment/mail,
 /obj/item/device/radio/intercom/engineering{
@@ -42510,17 +42469,6 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/crew_quarters/info)
-"rhj" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 4
-	},
-/turf/simulated/floor/martian,
-/area/evilreaver/storage/tools)
 "rih" = (
 /obj/stool/chair/pew/left{
 	name = "wooden bench"
@@ -42571,13 +42519,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
-"rkP" = (
-/obj/machinery/computer/sea_elevator,
-/obj/machinery/light/incandescent/netural{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/shuttle/sea_elevator_room)
 "rlA" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor,
@@ -42625,6 +42566,17 @@
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"roO" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/floor/martian,
+/area/evilreaver/storage/tools)
 "roP" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -42958,6 +42910,14 @@
 /obj/disposalpipe/junction/right/south,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"sfS" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/martian,
+/area/evilreaver/security)
 "shg" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -43553,6 +43513,14 @@
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
+"taq" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/martian,
+/area/evilreaver/chapel)
 "taN" = (
 /obj/submachine/weapon_vendor/fishing/portable,
 /turf/simulated/floor/green,
@@ -43726,6 +43694,17 @@
 /obj/landmark/start/job/head_of_personnel,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/east,
 /area/station/bridge)
+"tqt" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/martian,
+/area/evilreaver/storage/tools)
 "trY" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4;
@@ -43738,17 +43717,6 @@
 	},
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
-"tst" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 4
-	},
-/obj/indestructible/shuttle_corner{
-	dir = 10;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/martian,
-/area/evilreaver/storage/tools)
 "tsI" = (
 /obj/lattice,
 /mob/living/critter/martian/soldier,
@@ -43929,6 +43897,14 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
+"tKG" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/martian,
+/area/evilreaver/security)
 "tLH" = (
 /obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/white,
@@ -44128,6 +44104,14 @@
 	name = "astroturf"
 	},
 /area/station/medical/dome)
+"ubL" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/martian,
+/area/space)
 "ucd" = (
 /obj/landmark/spawner/artifact,
 /turf/space/fluid,
@@ -44258,6 +44242,19 @@
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/observatory)
+"uwe" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/obj/lattice,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/evilreaver/bridge)
 "uwH" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -44499,14 +44496,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
-"uTL" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/space/fluid,
-/area/space)
 "uTT" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	id = "Sleeper_Access";
@@ -44739,6 +44728,14 @@
 	},
 /turf/simulated/floor/darkpurple,
 /area/station/crew_quarters/data)
+"vuk" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/space/fluid,
+/area/space)
 "vvz" = (
 /obj/landmark/pest,
 /turf/simulated/floor/grass/random,
@@ -44976,14 +44973,6 @@
 /obj/forcefield/energyshield/perma,
 /turf/simulated/floor,
 /area/station/hallway/secondary/oshan_arrivals)
-"vRv" = (
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/space/fluid,
-/area/space)
 "vRy" = (
 /obj/lattice{
 	dir = 10;
@@ -45109,6 +45098,14 @@
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/medical)
+"vZM" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/space/fluid,
+/area/space)
 "vZV" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	req_access_txt = "1"
@@ -45167,14 +45164,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"wdo" = (
-/obj/indestructible/shuttle_corner{
-	dir = 10;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/space/fluid,
-/area/space)
 "wdA" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor,
@@ -45370,6 +45359,17 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
+"wrL" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/martian,
+/area/evilreaver/storage/tools)
 "wsH" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
@@ -45641,14 +45641,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
-"wIn" = (
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon = 'icons/turf/walls/martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/martian,
-/area/space)
 "wJj" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/machinery/light/small/floor/cool,
@@ -46540,6 +46532,14 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/baroffice)
+"yeS" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/space/fluid,
+/area/space)
 "yfl" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -87887,7 +87887,7 @@ aqn
 aqn
 aqn
 aLV
-rkP
+qaU
 cfR
 wLY
 xDt
@@ -121272,13 +121272,13 @@ aqn
 aqn
 aqn
 aqn
-mCk
-vRv
+vuk
+yeS
 aqn
 aqn
 aqn
-mCk
-vRv
+vuk
+yeS
 aqn
 aqn
 aqn
@@ -121573,7 +121573,7 @@ aqn
 aqn
 aqn
 aqn
-mCk
+vuk
 uvu
 uvu
 aWq
@@ -121581,7 +121581,7 @@ aWq
 aWq
 uvu
 uvu
-vRv
+yeS
 aqn
 aqn
 aqn
@@ -121874,14 +121874,14 @@ aqn
 aqn
 aqn
 aqn
-mCk
+vuk
 uvu
 uvu
-aUH
+odF
 aWq
 aWq
 aWq
-aXf
+mUi
 uvu
 uvu
 aqn
@@ -122186,9 +122186,9 @@ aWq
 aWq
 uvu
 uvu
-vRv
+yeS
 aqn
-mCk
+vuk
 hqS
 ydW
 ydW
@@ -122202,7 +122202,7 @@ uvu
 uvu
 uvu
 uvu
-vRv
+yeS
 aqn
 aqn
 aqn
@@ -122478,7 +122478,7 @@ aqn
 aqn
 aqn
 aqn
-wdo
+fZv
 uvu
 uvu
 dvJ
@@ -122505,7 +122505,7 @@ pkc
 pkc
 pkc
 uvu
-vRv
+yeS
 aqn
 aqn
 aqn
@@ -122783,11 +122783,11 @@ aqn
 aqn
 uvu
 uvu
-aVb
+eUA
 aWq
 aWq
 aWq
-aXh
+csZ
 oZW
 hyh
 hyh
@@ -122804,11 +122804,11 @@ xqA
 bgs
 tgH
 bjq
-qYb
+fps
 pkc
 pkc
 uvu
-vRv
+yeS
 aqn
 aqn
 aqn
@@ -123092,7 +123092,7 @@ uvu
 uvu
 hyh
 hyh
-fWn
+edw
 aYj
 aYv
 aYI
@@ -123100,14 +123100,14 @@ aZn
 aZn
 aZx
 aZE
-cFH
+llE
 iYD
 epr
 pcC
 bia
 bjy
 bkz
-qYb
+fps
 pkc
 pkc
 uvu
@@ -123385,7 +123385,7 @@ aqn
 aqn
 aqn
 aqn
-wdo
+fZv
 uvu
 uvu
 uvu
@@ -123393,7 +123393,7 @@ aWv
 uvu
 uvu
 hyh
-rhj
+oeR
 aXS
 jcD
 aYw
@@ -123413,7 +123413,7 @@ bli
 pkc
 pkc
 uvu
-vRv
+yeS
 aqn
 aqn
 aqn
@@ -123690,7 +123690,7 @@ aqn
 aqn
 uvu
 uvu
-laC
+lfu
 aWv
 uvu
 uvu
@@ -123704,7 +123704,7 @@ ydW
 aZn
 aZn
 aZn
-dhg
+taq
 iYD
 bax
 mlH
@@ -123989,7 +123989,7 @@ aqn
 aqn
 aqn
 aqn
-mCk
+vuk
 uvu
 uvu
 aWs
@@ -123997,7 +123997,7 @@ aWv
 uvu
 uvu
 uvu
-dXc
+wrL
 sVS
 aYm
 xhP
@@ -124592,12 +124592,12 @@ aqn
 aqn
 aqn
 aqn
-mCk
+vuk
 uvu
 uvu
-laC
+lfu
 aWv
-fCj
+hRQ
 cFs
 uvu
 wxP
@@ -124605,17 +124605,17 @@ aXM
 aXW
 aXT
 aXT
-tst
+tqt
 ydW
 ydW
-fMQ
+gVN
 aZx
 aZx
 baf
 hqS
 dax
 jot
-lYX
+sfS
 bgW
 lIc
 bma
@@ -124893,10 +124893,10 @@ aqn
 aqn
 aqn
 aqn
-mCk
+vuk
 uvu
 uvu
-laC
+lfu
 aVc
 aWv
 aWv
@@ -125207,7 +125207,7 @@ aVf
 aXq
 lxw
 hyh
-rfp
+oCW
 aXT
 wWv
 aXW
@@ -125821,7 +125821,7 @@ rmg
 aZV
 baj
 dax
-lYX
+sfS
 bgW
 bgW
 bgW
@@ -126101,7 +126101,7 @@ aqn
 aqn
 aqn
 aqn
-wdo
+fZv
 uvu
 wxP
 odc
@@ -126114,7 +126114,7 @@ aWA
 qLf
 aYm
 hyh
-rfp
+oCW
 aYM
 aXT
 lGI
@@ -126404,17 +126404,17 @@ aqn
 aqn
 aqn
 aqn
-wdo
+fZv
 wxP
 wxP
 uvu
 cFs
-wIn
+ubL
 aWv
 aXj
 aXt
 lxw
-ehn
+noh
 hyh
 hyh
 aYM
@@ -126730,7 +126730,7 @@ bak
 cHX
 aZV
 qhn
-pbD
+tKG
 rDE
 dax
 dax
@@ -127021,14 +127021,14 @@ dJs
 hyh
 hyh
 hyh
-ojY
+roO
 rqz
 hyh
 rDE
 dax
-cFR
+dfU
 lht
-pbD
+tKG
 jot
 dax
 bjD
@@ -127037,7 +127037,7 @@ rDE
 dax
 dax
 uvu
-uTL
+vZM
 aqn
 aqn
 aqn
@@ -127338,7 +127338,7 @@ lEK
 ncN
 lEK
 uvu
-uTL
+vZM
 aqn
 aqn
 aqn
@@ -127623,16 +127623,16 @@ aXp
 aXz
 dJs
 aYd
-iey
+nka
 eDl
 aYV
 aZg
 pTe
 coU
 lEK
-ert
+uwe
 ruq
-fHY
+dxe
 qaj
 lEK
 bjJ
@@ -129132,7 +129132,7 @@ aXn
 aXw
 xvG
 dJs
-cEW
+jHD
 pTe
 pTe
 pTe
@@ -129443,9 +129443,9 @@ uvu
 uvu
 lEK
 lEK
-hGJ
+hgK
 bgm
-jlN
+gnh
 lEK
 lEK
 lEK
@@ -129730,19 +129730,19 @@ aqn
 aUp
 aUp
 aUp
-wdo
+fZv
 uvu
 uvu
 uvu
 uvu
 uvu
 uvu
-uTL
+vZM
 aqn
 aqn
 aqn
 aqn
-wdo
+fZv
 uvu
 uvu
 uvu
@@ -129753,7 +129753,7 @@ uvu
 uvu
 uvu
 uvu
-uTL
+vZM
 aqn
 aqn
 aqn
@@ -130045,16 +130045,16 @@ aqn
 aqn
 aqn
 aqn
-wdo
+fZv
 uvu
 uvu
 uvu
 uvu
 uvu
-uTL
-wdo
+vZM
+fZv
 uvu
-uTL
+vZM
 aqn
 aqn
 aqn
