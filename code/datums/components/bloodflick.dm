@@ -52,9 +52,6 @@ TYPEINFO(/datum/component/bloodflick)
 		src.haswet = TRUE
 		src.iswet += 1
 	SPAWN(drytime)
-		// in case
-		if (!src)
-			return
 		// it could get cleaned while it's drying
 		if (!dummy.blood_DNA)
 			src.hasdry = FALSE
